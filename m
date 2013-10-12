@@ -1,630 +1,250 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v10 00/15] New git-related helper
-Date: Sat, 12 Oct 2013 02:06:10 -0500
-Message-ID: <1381561584-20529-2-git-send-email-felipe.contreras@gmail.com>
-References: <1381561584-20529-1-git-send-email-felipe.contreras@gmail.com>
-Cc: Duy Nguyen <pclouds@gmail.com>,
+Subject: [PATCH try2 5/8] branch: allow configuring the publish branch
+Date: Sat, 12 Oct 2013 02:06:01 -0500
+Message-ID: <1381561561-20459-9-git-send-email-felipe.contreras@gmail.com>
+References: <1381561561-20459-1-git-send-email-felipe.contreras@gmail.com>
+Cc: Matthieu Moy <matthieu.moy@imag.fr>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
 	Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 12 09:12:38 2013
+X-From: git-owner@vger.kernel.org Sat Oct 12 09:12:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VUtNL-0004uk-AL
-	for gcvg-git-2@plane.gmane.org; Sat, 12 Oct 2013 09:12:35 +0200
+	id 1VUtNK-0004uk-7j
+	for gcvg-git-2@plane.gmane.org; Sat, 12 Oct 2013 09:12:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754075Ab3JLHMb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Oct 2013 03:12:31 -0400
-Received: from mail-ob0-f181.google.com ([209.85.214.181]:41114 "EHLO
-	mail-ob0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752744Ab3JLHM2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Oct 2013 03:12:28 -0400
-Received: by mail-ob0-f181.google.com with SMTP id va2so3438032obc.40
-        for <git@vger.kernel.org>; Sat, 12 Oct 2013 00:12:28 -0700 (PDT)
+	id S1754037Ab3JLHMZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Oct 2013 03:12:25 -0400
+Received: from mail-oa0-f42.google.com ([209.85.219.42]:46643 "EHLO
+	mail-oa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754022Ab3JLHMX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Oct 2013 03:12:23 -0400
+Received: by mail-oa0-f42.google.com with SMTP id g12so3119986oah.1
+        for <git@vger.kernel.org>; Sat, 12 Oct 2013 00:12:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=V11d9a6AZaNlv4IdbWuHwIKbm4uZkw9Pm8W+fj94YrQ=;
-        b=NWcBuEyUyPeZoW+qGWEtZ0pCjejIvtJyF+rRlGjfLQ5dY/dP1e5IWuaN8pflssLPje
-         ZIMxoUFEOhx0T8m0Pmo4YUiSABP7gQdtQ8MHezHom2d51SCvo02LLQBj5bQvviAYryWX
-         /2mT2CDHEnoiKMWX7nCsMhyn+6l4KQGYgj5qwjbMwZaQ1k416xkiyu4EqDq8RsrKTAea
-         YwAf79fu0GsG1eC7paLi7ofpYxCt/aCMbHDkfBxOWZ/2FsU2M7dpNoj9HaaT4YwPW6Eu
-         KoiDQM5PPBEywzg9HrPM941xcNHPkZsHr7NeaymX3ALQf02N7MSXAEJn6s3mKTYB83Y5
-         mQxg==
-X-Received: by 10.60.131.197 with SMTP id oo5mr971674oeb.39.1381561948241;
-        Sat, 12 Oct 2013 00:12:28 -0700 (PDT)
+        bh=tSv4R6fT85BD4mMCh94M7qHFf4eC0onLjYxzPows1g0=;
+        b=I+vjALt4YCCx2DeX1qAmA9Mre7MfPdWNMWxJIdSo/FkAe4oLEzfBXwtAASxwMjGJtp
+         HZQBk1yVjjNg23+keGB02FHJ9Lh4rJFatyJwTpA1JjUJDcxNGGgRvwW2D5IdAwd259YW
+         jiehJZ+3xRhgG8M56aST1ds5v2BBDSCfjFw4uc5yR4bKH89b5OcqeOfmkSv+bO4yvO7h
+         YKI1mkTnpahReeWZXzZIMK1JUjXuWDOP1AgSxqMoWLXrrOqkyIfYKNz6dw2ZjICBUKZ+
+         E97GNI66HMgEb8dk2iM0WPnDnF7Sg43IAmnAaWQSocBI4Zo9SH7ZPHjjy4y1l4KYXZ3I
+         xlgQ==
+X-Received: by 10.60.62.101 with SMTP id x5mr17811522oer.24.1381561942916;
+        Sat, 12 Oct 2013 00:12:22 -0700 (PDT)
 Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
-        by mx.google.com with ESMTPSA id d8sm101381882oeu.6.1969.12.31.16.00.00
+        by mx.google.com with ESMTPSA id wd7sm28635856obc.3.1969.12.31.16.00.00
         (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 12 Oct 2013 00:12:27 -0700 (PDT)
+        Sat, 12 Oct 2013 00:12:22 -0700 (PDT)
 X-Mailer: git-send-email 1.8.4-fc
-In-Reply-To: <1381561584-20529-1-git-send-email-felipe.contreras@gmail.com>
+In-Reply-To: <1381561561-20459-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235990>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235991>
 
-This tool finds people that might be interested in a patch, by going
-back through the history for each single hunk modified, and finding
-people that reviewed, acknowledged, signed, or authored the code the
-patch is modifying.
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
+ Documentation/git-branch.txt | 11 +++++++++
+ branch.c                     | 43 ++++++++++++++++++++++++++++++++++
+ branch.h                     |  2 ++
+ builtin/branch.c             | 56 ++++++++++++++++++++++++++++++++++++++++----
+ 4 files changed, 108 insertions(+), 4 deletions(-)
 
-It does this by running `git blame` incrementally on each hunk, and
-then parsing the commit message. After gathering all the relevant
-people, it groups them to show what exactly was their role when the
-participated in the development of the relevant commit, and on how
-many relevant commits they participated. They are only displayed if
-they pass a minimum threshold of participation.
-
-For example:
-
-  % git related master..fc/transport/improv
-  Junio C Hamano <gitster@pobox.com> (signer: 90%, author: 5%)
-  Felipe Contreras <felipe.contreras@gmail.com> (author: 25%, reviewer: 2%)
-  Sverre Rabbelier <srabbelier@gmail.com> (author: 17%, acker: 2%, signer: 7%)
-  Jeff King <peff@peff.net> (acker: 17%, author: 10%)
-  Shawn O. Pearce <spearce@spearce.org> (author: 5%, signer: 2%, cced: 2%)
-  Elijah Newren <newren@gmail.com> (author: 10%)
-
-In addition, it has an option to output the list of commits, instead
-of the contributors, which allows you to easily find out the previous
-changes to the lines your patches modify.
-
-  % git related -c master..fc/transport/improv
-  99d9ec0 Merge branch 'fc/transport-helper-no-refspec'
-  67c9c78 transport-helper: barf when user tries old:new
-  0460ed2 documentation: trivial style cleanups
-  126aac5 transport-helper: fix remote helper namespace regression
-  21610d8 transport-helper: clarify pushing without refspecs
-  a93b4a0 transport-helper: warn when refspec is not used
-  664059f transport-helper: update remote helper namespace
-  c4458ec fast-export: Allow pruned-references in mark file
-  ...
-
-Moreover, when sending patches for review, you can configure `git
-send-email` to use `git related` to find relevant people that should
-be Cc'ed:
-
-  % git send-email --cc-cmd='git related' *.patch
-
-It has way many more features than git-contacts which is a rewrite in
-Perl of this script, but only the initial bare minimum stage.
-
-I've also added tests, and this is how git-contacts fares in comparison:
-
---- expected 2013-10-10 21:13:45.938291298 +0000
-+++ actual 2013-10-10 21:13:45.937291298 +0000
-@@ -1,2 +1,2 @@
--Jon Stewart <jon@stewart.com> (author: 50%)
--Pablo Escobar <pablo@escobar.com> (author: 50%)
-+Jon Stewart <jon@stewart.com>
-+Pablo Escobar <pablo@escobar.com>
-not ok 1 - basic
-
-git-contacts doesn't show the amount of involvement, but that's easy to fix.
-
---- expected 2013-10-10 21:13:45.975291299 +0000
-+++ actual 2013-10-10 21:13:45.974291299 +0000
-@@ -1,2 +1,3 @@
--John Poppins <john@doe.com> (author: 66%)
--Jon Stewart <jon@stewart.com> (reviewer: 33%, author: 33%)
-+John Doe <john@doe.com>
-+John Poppins <john@doe.com>
-+Jon Stewart <jon@stewart.com>
-not ok 2 - others
-
-git-contacts doesn't show the kind of involvement (reviewer, author)
-nor does it group people by their email address.
-
-(skip other failures)
-
-expecting success:
-git related -craw -1 master | git log --format='%s' --no-walk --stdin
-> actual &&
-cat > expected <<-EOF &&
-four
-three
-one
-EOF
-test_cmp expected actual
-
-not ok 7 - commits
-
-Also, it doesn't have the option to show the commits themselves, which
-is useful to investigate the diffs. This feature alone is what makes
-the make "git-contacts" not appropriate, because if this feature is
-implemented, 'git contacts --commits' wouldn't have anything to do
-with "contacts".
-
-For that matter it doesn't support any options at all (e.g.
---min-percent, --since), and doesn't have a usage helper (--help).
-
-Changes since v9:
-
-diff --git a/contrib/related/Makefile b/contrib/related/Makefile
-new file mode 100644
-index 0000000..1224fce
---- /dev/null
-+++ b/contrib/related/Makefile
-@@ -0,0 +1,17 @@
-+TESTS := $(wildcard test-*.t)
-+
-+export T := $(addprefix $(CURDIR)/,$(TESTS))
-+export MAKE := $(MAKE) -e
-+export PATH := $(CURDIR):$(PATH)
-+export TEST_LINT := test-lint-executable test-lint-shell-syntax
-+export TEST_DIRECTORY := $(CURDIR)/../../t
-+
-+all:
-+
-+test:
-+	$(MAKE) -C ../../t $@
-+
-+$(TESTS): all
-+	$(MAKE) -C ../../t $(CURDIR)/$@
-+
-+.PHONY: all test $(TESTS)
-diff --git a/contrib/related/README b/contrib/related/README
-new file mode 100644
-index 0000000..26188ca
---- /dev/null
-+++ b/contrib/related/README
-@@ -0,0 +1,65 @@
-+= git-related =
-+
-+This tool finds people that might be interested in a patch, by going
-+back through the history for each single hunk modified, and finding
-+people that reviewed, acknowledged, signed, or authored the code the
-+patch is modifying.
-+
-+It does this by running `git blame` incrementally on each hunk, and then
-+parsing the commit message. After gathering all the relevant people, it
-+groups them to show what exactly was their role when the participated in
-+the development of the relevant commit, and on how many relevant commits
-+they participated. They are only displayed if they pass a minimum
-+threshold of participation.
-+
-+For example:
-+
-+------------
-+% git related master..fc/transport/improv
-+Junio C Hamano <gitster@pobox.com> (signer: 90%, author: 5%)
-+Felipe Contreras <felipe.contreras@gmail.com> (author: 25%, reviewer: 2%)
-+Sverre Rabbelier <srabbelier@gmail.com> (author: 17%, acker: 2%, signer: 7%)
-+Jeff King <peff@peff.net> (acker: 17%, author: 10%)
-+Shawn O. Pearce <spearce@spearce.org> (author: 5%, signer: 2%, cced: 2%)
-+Elijah Newren <newren@gmail.com> (author: 10%)
-+------------
-+
-+In addition, it has an option to output the list of commits, instead of the
-+contributors, which allows you to easily find out the previous changes to the
-+lines your patches modify.
-+
-+------------
-+% git related -c master..fc/transport/improv
-+99d9ec0 Merge branch 'fc/transport-helper-no-refspec'
-+67c9c78 transport-helper: barf when user tries old:new
-+0460ed2 documentation: trivial style cleanups
-+126aac5 transport-helper: fix remote helper namespace regression
-+21610d8 transport-helper: clarify pushing without refspecs
-+a93b4a0 transport-helper: warn when refspec is not used
-+664059f transport-helper: update remote helper namespace
-+c4458ec fast-export: Allow pruned-references in mark file
-+...
-+------------
-+
-+Moreover, when sending patches for review, you can configure `git send-email`
-+to use `git related` to find relevant people that should be Cc'ed:
-+
-+------------
-+% git send-email --cc-cmd='git related' *.patch
-+------------
-+
-+== Installation ==
-+
-+To use this script, simply put `git-related` in your `$PATH` and make sure it
-+has executable permissions:
-+
-+------------
-+wget https://raw.github.com/felipec/git-related/master/git-related -O ~/bin/git-related
-+chmod +x ~/bin/git-related
-+------------
-+
-+And make sure `~/bin` is in your `$PATH`:
-+
-+------------
-+export PATH="$HOME/bin:$PATH"
-+------------
-diff --git a/contrib/related/git-related b/contrib/related/git-related
-index 7248f0f..b9c8619 100755
---- a/contrib/related/git-related
-+++ b/contrib/related/git-related
-@@ -17,9 +17,10 @@ $base_dir = File.dirname(git_dir)
- $cur_dir = Dir.pwd
+diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
+index b7cb625..1bf9b2a 100644
+--- a/Documentation/git-branch.txt
++++ b/Documentation/git-branch.txt
+@@ -14,7 +14,9 @@ SYNOPSIS
+ 	[(--merged | --no-merged | --contains) [<commit>]] [<pattern>...]
+ 'git branch' [--set-upstream | --track | --no-track] [-l] [-f] <branchname> [<start-point>]
+ 'git branch' (--set-upstream-to=<upstream> | -u <upstream>) [<branchname>]
++'git branch' (--set-publish-to=<publish> | -p <publish>) [<branchname>]
+ 'git branch' --unset-upstream [<branchname>]
++'git branch' --unset-publish [<branchname>]
+ 'git branch' (-m | -M) [<oldbranch>] <newbranch>
+ 'git branch' (-d | -D) [-r] <branchname>...
+ 'git branch' --edit-description [<branchname>]
+@@ -189,6 +191,15 @@ start-point is either a local or remote-tracking branch.
+ 	Remove the upstream information for <branchname>. If no branch
+ 	is specified it defaults to the current branch.
  
- KNOWN_ROLES = {
--  'Signed-off' => :signer,
--  'Reviewed' => :reviewer,
--  'Acked' => :acker,
-+  'Signed-off-by' => :signer,
-+  'Reviewed-by' => :reviewer,
-+  'Acked-by' => :acker,
-+  'Cc' => :cced,
++-p <publish>::
++--set-publish-to=<publish>::
++	Set up <branchname>'s publish tracking information. If no
++	<branchname> is specified, then it defaults to the current branch.
++
++--unset-publish::
++	Remove the publish information for <branchname>. If no branch
++	is specified it defaults to the current branch.
++
+ --edit-description::
+ 	Open an editor and edit the text to explain what the branch is
+ 	for, to be used by various other commands (e.g. `request-pull`).
+diff --git a/branch.c b/branch.c
+index c5c6984..02495e3 100644
+--- a/branch.c
++++ b/branch.c
+@@ -144,6 +144,49 @@ static int setup_tracking(const char *new_ref, const char *orig_ref,
+ 	return 0;
  }
  
- def get_mailmap(filename)
-@@ -45,17 +46,16 @@ get_mailmap(File.join($base_dir, '.mailmap'))
- mailmap_file = %x[git config mailmap.file].chomp
- get_mailmap(mailmap_file)
- 
--class SimpleParser
-+class ParseOpt
-   attr_writer :usage
- 
-   class Option
--    attr_reader :short, :long, :values, :help
-+    attr_reader :short, :long, :help
- 
--    def initialize(short, long, values, help, &block)
-+    def initialize(short, long, help, &block)
-       @block = block
-       @short = short
-       @long = long
--      @values = values
-       @help = help
-     end
- 
-@@ -68,49 +68,49 @@ class SimpleParser
-     @list = {}
-   end
- 
--  def on(*args, &block)
--    short = args.shift if args.first.is_a?(String)
--    long = args.shift if args.first.is_a?(String)
--    values = args.shift if args.first.is_a?(Array)
--    help = args.shift if args.first.is_a?(String)
--    opt = Option.new(short, long, values, help, &block)
-+  def on(short = nil, long = nil, help = nil, &block)
-+    opt = Option.new(short, long, help, &block)
-     @list[short] = opt if short
-     @list[long] = opt if long
-   end
- 
-   def parse
--    i = 0
-     if ARGV.member?('-h') or ARGV.member?('--help')
-       usage
--      exit 1
-+      exit 0
-     end
--    while cur = ARGV[i] do
--      if cur =~ /^(-.+?)(?:=(.*))?$/
-+    seen_dash = false
-+    ARGV.delete_if do |cur|
-+      opt = val = nil
-+      next false if cur[0] != '-' or seen_dash
-+      case cur
-+      when '--'
-+        seen_dash = true
-+        next true
-+      when /^--no-(.+)$/
-         opt = @list[$1]
--        if opt
--          v = $2
--          if not v
--            if not opt.values
--              extra = true
--            else
--              extra = !!opt.values.map(&:to_s).member?(ARGV[i + 1])
--            end
--            v = extra ? ARGV.delete_at(i + 1) : true
--          end
--          opt.call(v)
--          ARGV.delete_at(i)
--          next
--        end
-+        val = false
-+      when /^-([^-])(.+)?$/, /^--(.+?)(?:=(.+))?$/
-+        opt = @list[$1]
-+        val = $2 || true
-+      end
-+      if opt
-+        opt.call(val)
-+        true
-       end
--      i += 1
-     end
-   end
- 
-   def usage
-+    def fmt(prefix, str)
-+      return str ? prefix + str : nil
-+    end
-     puts 'usage: %s' % @usage
-     @list.values.uniq.each do |opt|
-       s = '    '
--      s << [opt.short, opt.long].compact.join(', ')
-+      s << ''
-+      s << [fmt('-', opt.short), fmt('--', opt.long)].compact.join(', ')
-+      s << ''
-       s << '%*s%s' % [26 - s.size, '', opt.help] if opt.help
-       puts s
-     end
-@@ -118,21 +118,18 @@ class SimpleParser
- 
- end
- 
--opts = SimpleParser.new
--opts.usage = 'usage: git related [options] <files | rev-list options>'
-+opts = ParseOpt.new
-+opts.usage = 'git related [options] <files | rev-list options>'
- 
--opts.on('-p', '--min-percent',
--        'Minium percentage of role participation') do |v|
-+opts.on('p', 'min-percent', 'Minium percentage of role participation') do |v|
-   $min_percent = v.to_i
- end
- 
--opts.on('-d', '--since',
--        'How far back to search for relevant commits') do |v|
-+opts.on('d', 'since', 'How far back to search for relevant commits') do |v|
-   $since = v
- end
- 
--opts.on('-c', '--commits', [:raw, :full],
--        'List commits instead of persons') do |v|
-+opts.on('c', 'commits', 'List commits instead of persons') do |v|
-   $show_commits = v
- end
- 
-@@ -207,19 +204,19 @@ class Commit
-   end
- 
-   def parse(data)
--    msg = author = nil
-+    in_body = author = nil
-     data.each_line do |line|
--      if not msg
-+      if not in_body
-         case line
-         when /^author ([^<>]+) <(\S+)> (.+)$/
-           author = Persons.get($1, $2)
-           author.add_role(@id, :author)
-         when /^$/
--          msg = true
-+          in_body = true
-         end
-       else
-         role_regex = KNOWN_ROLES.keys.join('|')
--        if line =~ /^(#{role_regex})-by: ([^<>]+) <(\S+?)>$/
-+        if line =~ /^(#{role_regex}): ([^<>]+) <(\S+?)>$/
-           person = Persons.get($2, $3)
-           role = KNOWN_ROLES[$1]
-           next if role == :signer and person == author
-@@ -276,29 +273,32 @@ class Commits
-       p.each do |line|
-         if line =~ /^\h{40}/
-           id = $&
--          @items[id] = Commit.new(id) if not @main_commits.include?(id)
-+          @items[id] ||= Commit.new(id) if not @main_commits.include?(id)
-         end
-       end
-     end
-     Dir.chdir($cur_dir)
-   end
- 
--  def from_patches(files)
-+  def scan_patch(f, id = nil)
-     source = nil
-+    f.each do |line|
-+      case line
-+      when /^From (\h+) (.+)$/
-+        id = $1
-+        @main_commits[id] = true
-+      when /^---\s+(\S+)/
-+        source = $1 != '/dev/null' ? $1[2..-1] : nil
-+      when /^@@ -(\d+)(?:,(\d+))?/
-+        get_blame(source, $1, $2, id) if source and id
-+      end
-+    end
-+  end
++void install_branch_publish(const char *name, const char *remote, const char *remote_ref)
++{
++	struct strbuf key = STRBUF_INIT;
 +
-+  def from_patches(files)
-     files.each do |file|
--      from = nil
-       File.open(file) do |f|
--        f.each do |line|
--          case line
--          when /^From (\h+) (.+)$/
--            from = $1
--            @main_commits[from] = true
--          when /^---\s+(\S+)/
--            source = $1 != '/dev/null' ? $1[2..-1] : nil
--          when /^@@ -(\d+)(?:,(\d+))?/
--            get_blame(source, $1, $2, from) if source and from
--          end
--        end
-+        scan_patch(f)
-       end
-     end
-   end
-@@ -319,20 +319,12 @@ class Commits
-       args = revs
-     end
- 
--    source = nil
-     File.popen(%w[git rev-list --reverse] + args) do |p|
-       p.each do |e|
-         id = e.chomp
-         @main_commits[id] = true
-         File.popen(%w[git show -C --oneline] + [id]) do |p|
--          p.each do |e|
--            case e
--            when /^---\s+(\S+)/
--              source = $1 != '/dev/null' ? $1[2..-1] : nil
--            when /^@@ -(\d+)(?:,(\d+))?/
--              get_blame(source, $1, $2, id) if source
--            end
--          end
-+          scan_patch(p, id)
-         end
-       end
-     end
-@@ -359,9 +351,9 @@ commits.import
- if $show_commits
-   cmd = nil
-   case $show_commits
--  when :raw
-+  when 'raw'
-     puts commits.list
--  when :full
-+  when 'full'
-     cmd = %w[git log --patch --no-walk]
-   else
-     cmd = %w[git log --oneline --no-walk]
-diff --git a/contrib/related/test-related.t b/contrib/related/test-related.t
-new file mode 100755
-index 0000000..f357e30
---- /dev/null
-+++ b/contrib/related/test-related.t
-@@ -0,0 +1,107 @@
-+#!/bin/sh
++	if (!remote && !strcmp(name, remote_ref + 11) && !prefixcmp(remote_ref, "refs/heads")) {
++		warning(_("Not setting branch %s as its own publish branch."), name);
++		return;
++	}
 +
-+test_description="Test git related"
++	strbuf_addf(&key, "branch.%s.pushremote", name);
++	git_config_set(key.buf, remote ? remote : ".");
 +
-+test -z "$TEST_DIRECTORY" && TEST_DIRECTORY="$PWD/../../t"
-+. "$TEST_DIRECTORY"/test-lib.sh
++	strbuf_reset(&key);
++	strbuf_addf(&key, "branch.%s.push", name);
++	git_config_set(key.buf, remote_ref);
 +
-+setup() {
-+	git init &&
-+	echo one > content &&
-+	git add content &&
-+	git commit -q -m one --author='Pablo Escobar <pablo@escobar.com>' &&
-+	echo two >> content &&
-+	git commit -q -a -m one --author='Jon Stewart <jon@stewart.com>' &&
-+	echo three >> content &&
-+	git commit -q -a -m three --author='John Doe <john@doe.com>' &&
-+	echo four >> content &&
-+	git branch basic &&
-+	git commit -q -a -F - --author='John Poppins <john@doe.com>' <<-EOF &&
-+	four
-+
-+	Reviewed-by: Jon Stewart <jon@stewart.com>
-+	EOF
-+	echo five >> content &&
-+	git commit -q -a -m five --author='Mary Poppins <mary@yahoo.com.uk>'
-+	git checkout -b next &&
-+	echo six >> content &&
-+	git commit -q -a -m six --author='Ocatio Paz <octavio.paz@gmail.com>'
++	strbuf_release(&key);
 +}
 +
-+setup
++int setup_publish(const char *name, const char *ref)
++{
++	struct tracking tracking;
++	const char *remote, *remote_ref;
 +
-+test_expect_success "basic" "
-+	git format-patch --stdout -1 basic > patch &&
-+	git related patch | sort > actual &&
-+	cat > expected <<-EOF &&
-+	Jon Stewart <jon@stewart.com> (author: 50%)
-+	Pablo Escobar <pablo@escobar.com> (author: 50%)
-+	EOF
-+	test_cmp expected actual
-+"
++	memset(&tracking, 0, sizeof(tracking));
++	tracking.spec.dst = (char*)ref;
++	if (for_each_remote(find_tracked_branch, &tracking))
++		return 1;
 +
-+test_expect_success "others" "
-+	git format-patch --stdout -1 master > patch &&
-+	git related patch | sort > actual &&
-+	cat > expected <<-EOF &&
-+	John Poppins <john@doe.com> (author: 66%)
-+	Jon Stewart <jon@stewart.com> (reviewer: 33%, author: 33%)
-+	EOF
-+	test_cmp expected actual
-+"
++	if (tracking.matches > 1)
++		return error(_("Not tracking: ambiguous information for ref %s"),
++				ref);
 +
-+test_expect_success "multiple patches" "
-+	git format-patch --stdout -1 master > patch1 &&
-+	git format-patch --stdout -1 master^ > patch2 &&
-+	git related patch1 patch2 | sort > actual &&
-+	cat > expected <<-EOF &&
-+	John Poppins <john@doe.com> (author: 50%)
-+	Jon Stewart <jon@stewart.com> (reviewer: 25%, author: 25%)
-+	Pablo Escobar <pablo@escobar.com> (author: 25%)
-+	EOF
-+	test_cmp expected actual
-+"
++	remote = tracking.remote;
++	remote_ref = tracking.src ? tracking.src : ref;
 +
-+test_expect_success "from committish" "
-+	git related -1 master | sort > actual &&
-+	cat > expected <<-EOF &&
-+	John Poppins <john@doe.com> (author: 66%)
-+	Jon Stewart <jon@stewart.com> (reviewer: 33%, author: 33%)
-+	EOF
-+	test_cmp expected actual
-+"
++	install_branch_publish(name, remote, remote_ref);
 +
-+test_expect_success "from single rev committish" "
-+	git related -1 master | sort > actual &&
-+	cat > expected <<-EOF &&
-+	John Poppins <john@doe.com> (author: 66%)
-+	Jon Stewart <jon@stewart.com> (reviewer: 33%, author: 33%)
-+	EOF
-+	test_cmp expected actual
-+"
++	free(tracking.src);
 +
-+test_expect_success "mailmap" "
-+	test_when_finished 'rm -rf .mailmap' &&
-+	cat > .mailmap <<-EOF &&
-+	Jon McAvoy <jon@stewart.com>
-+	John Poppins <john@poppins.com> <john@doe.com>
-+	EOF
-+	git related -1 master | sort > actual &&
-+	cat > expected <<-EOF &&
-+	John Poppins <john@poppins.com> (author: 66%)
-+	Jon McAvoy <jon@stewart.com> (reviewer: 33%, author: 33%)
-+	EOF
-+	test_cmp expected actual
-+"
++	return 0;
++}
 +
-+test_expect_success "commits" "
-+	git related -craw -1 master | git log --format='%s' --no-walk --stdin > actual &&
-+	cat > expected <<-EOF &&
-+	four
-+	three
-+	one
-+	EOF
-+	test_cmp expected actual
-+"
+ struct branch_desc_cb {
+ 	const char *config_name;
+ 	const char *value;
+diff --git a/branch.h b/branch.h
+index 64173ab..c9b6aa9 100644
+--- a/branch.h
++++ b/branch.h
+@@ -51,5 +51,7 @@ extern void install_branch_config(int flag, const char *local, const char *origi
+  * Read branch description
+  */
+ extern int read_branch_desc(struct strbuf *, const char *branch_name);
++extern int setup_publish(const char *name, const char *ref);
++extern void install_branch_publish(const char *name, const char *remote, const char *remote_ref);
+ 
+ #endif
+diff --git a/builtin/branch.c b/builtin/branch.c
+index baa1d31..cf33e1c 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -778,8 +778,8 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 	int delete = 0, rename = 0, force_create = 0, list = 0;
+ 	int verbose = 0, abbrev = -1, detached = 0;
+ 	int reflog = 0, edit_description = 0;
+-	int quiet = 0, unset_upstream = 0;
+-	const char *new_upstream = NULL;
++	int quiet = 0, unset_upstream = 0, unset_publish = 0;
++	const char *new_upstream = NULL, *publish = NULL;
+ 	enum branch_track track;
+ 	int kinds = REF_LOCAL_BRANCH;
+ 	struct commit_list *with_commit = NULL;
+@@ -794,7 +794,9 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 		OPT_SET_INT( 0, "set-upstream",  &track, N_("change upstream info"),
+ 			BRANCH_TRACK_OVERRIDE),
+ 		OPT_STRING('u', "set-upstream-to", &new_upstream, "upstream", "change the upstream info"),
++		OPT_STRING('p', "set-publish-to", &publish, "publish", "change the publish info"),
+ 		OPT_BOOLEAN(0, "unset-upstream", &unset_upstream, "Unset the upstream info"),
++		OPT_BOOLEAN(0, "unset-publish", &unset_publish, "Unset the publish info"),
+ 		OPT__COLOR(&branch_use_color, N_("use colored output")),
+ 		OPT_SET_INT('r', "remotes",     &kinds, N_("act on remote-tracking branches"),
+ 			REF_REMOTE_BRANCH),
+@@ -863,13 +865,15 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 	argc = parse_options(argc, argv, prefix, options, builtin_branch_usage,
+ 			     0);
+ 
+-	if (!delete && !rename && !edit_description && !new_upstream && !unset_upstream && argc == 0)
++	if (!delete && !rename && !edit_description && !new_upstream && !publish &&
++			!unset_upstream && !unset_publish && argc == 0)
+ 		list = 1;
+ 
+ 	if (with_commit || merge_filter != NO_FILTER)
+ 		list = 1;
+ 
+-	if (!!delete + !!rename + !!force_create + !!list + !!new_upstream + !!unset_upstream > 1)
++	if (!!delete + !!rename + !!force_create + !!list + !!new_upstream + !!publish +
++			!!unset_upstream + !! unset_publish > 1)
+ 		usage_with_options(builtin_branch_usage, options);
+ 
+ 	if (abbrev == -1)
+@@ -975,6 +979,50 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 		strbuf_addf(&buf, "branch.%s.merge", branch->name);
+ 		git_config_set_multivar(buf.buf, NULL, NULL, 1);
+ 		strbuf_release(&buf);
++	} else if (publish) {
++		struct branch *branch = branch_get(argv[0]);
++		char *real_ref = NULL;
++		unsigned char sha1[20];
 +
-+test_done
-
-Felipe Contreras (15):
-  Add new git-related helper to contrib
-  contrib: related: add tests
-  contrib: related: add support for multiple patches
-  contrib: related: add option to parse from committish
-  contrib: related: parse committish like format-patch
-  contrib: related: print the amount of involvement
-  contrib: related: add helper Person classes
-  contrib: related: show role count
-  contrib: related: add support for more roles
-  contrib: related: group persons with same email
-  contrib: related: allow usage on other directories
-  contrib: related: add mailmap support
-  contrib: related: add option parsing
-  contrib: related: add option to show commits
-  contrib: related: add README
-
- contrib/related/Makefile       |  17 ++
- contrib/related/README         |  65 +++++++
- contrib/related/git-related    | 377 +++++++++++++++++++++++++++++++++++++++++
- contrib/related/test-related.t | 107 ++++++++++++
- 4 files changed, 566 insertions(+)
- create mode 100644 contrib/related/Makefile
- create mode 100644 contrib/related/README
- create mode 100755 contrib/related/git-related
- create mode 100755 contrib/related/test-related.t
-
++		if (argc > 1)
++			die(_("too many branches to set new publish branch"));
++
++		if (!branch) {
++			if (!argc || !strcmp(argv[0], "HEAD"))
++				die(_("could not set publish branch of HEAD when "
++				      "it does not point to any branch."));
++			die(_("no such branch '%s'"), argv[0]);
++		}
++
++		if (!ref_exists(branch->refname))
++			die(_("branch '%s' does not exist"), branch->name);
++
++		if (dwim_ref(publish, strlen(publish), sha1, &real_ref) != 1 ||
++				setup_publish(branch->name, real_ref))
++			die(_("Cannot setup publish branch to '%s'."), publish);
++	} else if (unset_publish) {
++		struct branch *branch = branch_get(argv[0]);
++		struct strbuf buf = STRBUF_INIT;
++
++		if (argc > 1)
++			die(_("too many branches to unset publish branch"));
++
++		if (!branch) {
++			if (!argc || !strcmp(argv[0], "HEAD"))
++				die(_("could not unset publish branch of HEAD when "
++				      "it does not point to any branch."));
++			die(_("no such branch '%s'"), argv[0]);
++		}
++
++		if (!branch->push_name)
++			die(_("Branch '%s' has no publish information"), branch->name);
++
++		strbuf_addf(&buf, "branch.%s.pushremote", branch->name);
++		git_config_set_multivar(buf.buf, NULL, NULL, 1);
++		strbuf_reset(&buf);
++		strbuf_addf(&buf, "branch.%s.push", branch->name);
++		git_config_set_multivar(buf.buf, NULL, NULL, 1);
++		strbuf_release(&buf);
+ 	} else if (argc > 0 && argc <= 2) {
+ 		struct branch *branch = branch_get(argv[0]);
+ 		int branch_existed = 0, remote_tracking = 0;
 -- 
 1.8.4-fc
