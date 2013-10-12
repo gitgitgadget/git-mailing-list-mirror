@@ -1,123 +1,98 @@
-From: Stefan Saasen <ssaasen@atlassian.com>
-Subject: [PATCH v3] mergetools/diffmerge: support DiffMerge as a git mergetool
-Date: Sun, 13 Oct 2013 09:29:35 +1100
-Message-ID: <1381616975-13582-1-git-send-email-ssaasen@atlassian.com>
-Cc: davvid@gmail.com, git@vger.kernel.org,
-	Stefan Saasen <ssaasen@atlassian.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sun Oct 13 00:29:51 2013
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: My patches
+Date: Sat, 12 Oct 2013 17:33:22 -0500
+Message-ID: <CAMP44s0wWiedCXX-bes5ad6S67pWtyQPcs97y8UQzyUsanMr9Q@mail.gmail.com>
+References: <20131012072450.GA21165@nysa>
+	<5247B8D59AAE41F3A0D8BF165D2C2BAE@PhilipOakley>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Philip Oakley <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Sun Oct 13 00:33:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VV7h1-0002py-A9
-	for gcvg-git-2@plane.gmane.org; Sun, 13 Oct 2013 00:29:51 +0200
+	id 1VV7kZ-0004kW-7J
+	for gcvg-git-2@plane.gmane.org; Sun, 13 Oct 2013 00:33:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753355Ab3JLW3r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Oct 2013 18:29:47 -0400
-Received: from na3sys009aog137.obsmtp.com ([74.125.149.18]:52784 "HELO
-	na3sys009aog137.obsmtp.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1752641Ab3JLW3q (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 12 Oct 2013 18:29:46 -0400
-Received: from mail-pd0-f171.google.com ([209.85.192.171]) (using TLSv1) by na3sys009aob137.postini.com ([74.125.148.12]) with SMTP
-	ID DSNKUlnNWvlFExXqR6Lf8n3KXuXMVA7trRED@postini.com; Sat, 12 Oct 2013 15:29:46 PDT
-Received: by mail-pd0-f171.google.com with SMTP id g10so5842226pdj.16
-        for <git@vger.kernel.org>; Sat, 12 Oct 2013 15:29:46 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=WmmUfiWk6s7GDBY99SIdAWlK8agzWx/HV6VmVtsOEr4=;
-        b=alLH/0Dhnw3rrvOMKIPPwA4EZbs3rg2c59RPkK6c0+SN1BDSuCCZfdgYJKhIlxP9YE
-         A3QJXMXeSareQHb/o7CUbiHybZMf/T2CK8OhjK4NisAcFc7RVttl1gxce/kvV1vYu23h
-         GpWinDf7sJmqUPMoRIkPUHLf2O0aGivpva8GfLWxViZDg2YNvdQKcXMAH+Aeervuj6ab
-         Ek72uPwm7vt6QdNwfEW+n7g46FTFnw6dAF6Qit98CTUji9fnUFGUw29FqzWa145dWITO
-         5Xabp5GBsYpfPHRZHi+TAGhmmupJbAPsphD9hB8YHkkujjSwSVSwfC+KUsMVvxcGZ9YP
-         bQpA==
-X-Gm-Message-State: ALoCoQnSB1wFGImqO77KM06qwIg1J7AqYGkj6lAeETYKEBl3ZS3njQEjeHl+yjO1FV/zvqSbnVf/SN9c/PW3UYyUGi7PlCaWr92Xxi4NyvL0vSbfqs0SZhbrSAf0WLZ7cRbfpP4eXp1fv0LpKKNqjtTc+Gh2we7+JQ==
-X-Received: by 10.66.216.234 with SMTP id ot10mr29516741pac.122.1381616986022;
-        Sat, 12 Oct 2013 15:29:46 -0700 (PDT)
-X-Received: by 10.66.216.234 with SMTP id ot10mr29516727pac.122.1381616985880;
-        Sat, 12 Oct 2013 15:29:45 -0700 (PDT)
-Received: from monteiths.local (115-64-19-188.static.tpgi.com.au. [115.64.19.188])
-        by mx.google.com with ESMTPSA id pu5sm80084820pac.21.1969.12.31.16.00.00
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Sat, 12 Oct 2013 15:29:45 -0700 (PDT)
-Received: by monteiths.local (Postfix, from userid 501)
-	id BB7AC1F27345; Sun, 13 Oct 2013 09:29:39 +1100 (EST)
-X-Mailer: git-send-email 1.8.2.3
+	id S1752852Ab3JLWdY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Oct 2013 18:33:24 -0400
+Received: from mail-lb0-f174.google.com ([209.85.217.174]:49893 "EHLO
+	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752790Ab3JLWdY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Oct 2013 18:33:24 -0400
+Received: by mail-lb0-f174.google.com with SMTP id w6so4502636lbh.5
+        for <git@vger.kernel.org>; Sat, 12 Oct 2013 15:33:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=dLK0Ew83lDCCA9ZjXppy6qDmilDMRAwlJfAmSxy/9Vw=;
+        b=oNChoPOfVnQVEBPs3VXNGJ0siXQPnsNkQYTO1e5gAHh6z/PkZtsSzFMKcTZC04s53K
+         gvD8s1PFaSPNNi6yqL+SxbN1eC4vD9SnQkiw3uB5knja6EADHSEVh4idT1NYz5yPTx8x
+         pIXd5ds9URnLl5lfi62yptX8QXN5QGe/8IEfVRxA6xVuqsKLbRCyuAcDVEdhNkvjheAo
+         xd+LFefBxr5INaYh3ZXsXK1WDuoapQvc1+A0krHtxHq4SzvF+ftf3B4PjrqeZ66ikxt5
+         SBdOxWBHaSF8+rTIN9puo5CuvOPMO4/1UTAW3sgh1b8hwWr6/+c0rFwVHINxnzyLuKKQ
+         dfuA==
+X-Received: by 10.152.36.98 with SMTP id p2mr22953917laj.14.1381617202655;
+ Sat, 12 Oct 2013 15:33:22 -0700 (PDT)
+Received: by 10.114.91.230 with HTTP; Sat, 12 Oct 2013 15:33:22 -0700 (PDT)
+In-Reply-To: <5247B8D59AAE41F3A0D8BF165D2C2BAE@PhilipOakley>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236060>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236061>
 
-DiffMerge is a non-free (but gratis) tool that supports OS X, Windows and Linux.
+On Sat, Oct 12, 2013 at 11:18 AM, Philip Oakley <philipoakley@iee.org> wrote:
+> From: "Felipe Contreras" <felipe.contreras@gmail.com>
+> Sent: Saturday, October 12, 2013 8:24 AM
 
-    See http://www.sourcegear.com/diffmerge/
+>> Clearly, a lot of my patches have not been reviewed properly, so even
+>> though they are technically correct, and would benefit users, some have
+>> specifically been requested by them, and at least one would
+>> significantly improve Git's user interface...
+>
 
-DiffMerge includes a script `/usr/bin/diffmerge` that can be used to launch the
-graphical compare tool.
+> Given you have put a lot of work into your 16 patch series, is there any
+> particular order, or grouping that would help their review.
 
-This change adds mergetool support for DiffMerge and adds 'diffmerge' as an
-option to the mergetool help.
+I ordered them in order of importance, and chance of being merged. For
+example, the first patch series 'branch: improve verbose option' is
+relatively simple, it improves things significantly, and other
+developers have already argued this is the way to go. The last one
+'sha1-name: refactor get_sha1() parsing' doesn't have much of a chance
+of being merged, it's quite complicated, there isn't any particular
+change that is visible to the users, and there isn't probably much
+interest.
 
-Signed-off-by: Stefan Saasen <ssaasen@atlassian.com>
-Acked-by: David Aguilar <davvid@gmail.com>
----
- contrib/completion/git-completion.bash |  2 +-
- git-mergetool--lib.sh                  |  3 ++-
- mergetools/diffmerge                   | 15 +++++++++++++++
- 3 files changed, 18 insertions(+), 2 deletions(-)
- create mode 100644 mergetools/diffmerge
+> With so many patches to consider one (the reviewer(s)) gains another task of
+> simply trying to prioritise the patches (usually one can take big decisions
+> by simply remebering who's series one was interested in).
+>
+> I expect the clean-ups and 'trivials's' can be managed separately from the
+> 'improvements', which would again be separate from the "satging" and "Ruby"
+> philosophical discussions.
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index e1b7313..07b0ba5 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1188,7 +1188,7 @@ _git_diff ()
- 	__git_complete_revlist_file
- }
- 
--__git_mergetools_common="diffuse ecmerge emerge kdiff3 meld opendiff
-+__git_mergetools_common="diffuse diffmerge ecmerge emerge kdiff3 meld opendiff
- 			tkdiff vimdiff gvimdiff xxdiff araxis p4merge bc3 codecompare
- "
- 
-diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
-index feee6a4..858bc37 100644
---- a/git-mergetool--lib.sh
-+++ b/git-mergetool--lib.sh
-@@ -250,7 +250,8 @@ list_merge_tool_candidates () {
- 		else
- 			tools="opendiff kdiff3 tkdiff xxdiff meld $tools"
- 		fi
--		tools="$tools gvimdiff diffuse ecmerge p4merge araxis bc3 codecompare"
-+		tools="$tools gvimdiff diffuse diffmerge ecmerge"
-+		tools="$tools p4merge araxis bc3 codecompare"
- 	fi
- 	case "${VISUAL:-$EDITOR}" in
- 	*vim*)
-diff --git a/mergetools/diffmerge b/mergetools/diffmerge
-new file mode 100644
-index 0000000..85ac720
---- /dev/null
-+++ b/mergetools/diffmerge
-@@ -0,0 +1,15 @@
-+diff_cmd () {
-+	"$merge_tool_path" "$LOCAL" "$REMOTE" >/dev/null 2>&1
-+}
-+
-+merge_cmd () {
-+	if $base_present
-+	then
-+		"$merge_tool_path" --merge --result="$MERGED" \
-+			"$LOCAL" "$BASE" "$REMOTE"
-+	else
-+		"$merge_tool_path" --merge \
-+			--result="$MERGED" "$LOCAL" "$REMOTE"
-+	fi
-+	status=$?
-+}
+Maybe, but the trivial patches have a higher chance of being merged
+than 'Massive improvents to rebase and cherry-pick' or 'Support for
+Ruby', that's why I put them first.
+
+>>   they are going nowhere.
+>
+> I wouldn't expect 100% success. Every now and again one hears of the "here's
+> some patches I've had in my tree for a while" that probably had the same
+> early frustrations - they just feel worse the more you produce.
+
+Yeah, I'm aware of that, I have contributed to lots of open source
+projects. However, we are not talking about a couple of patches that
+now and again get lost, we are talking about 160 patches, some which
+have gone through several (even ten) iterations. I think that is
+different.
+
+Cheers.
+
 -- 
-1.8.2.3
+Felipe Contreras
