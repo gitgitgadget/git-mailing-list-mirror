@@ -1,7 +1,7 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v10 15/15] contrib: related: add README
-Date: Sat, 12 Oct 2013 02:06:16 -0500
-Message-ID: <1381561584-20529-8-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH v10 09/15] contrib: related: add support for more roles
+Date: Sat, 12 Oct 2013 02:06:17 -0500
+Message-ID: <1381561584-20529-9-git-send-email-felipe.contreras@gmail.com>
 References: <1381561584-20529-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Duy Nguyen <pclouds@gmail.com>,
 	Felipe Contreras <felipe.contreras@gmail.com>
@@ -12,117 +12,119 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VUtNg-00059v-Cm
-	for gcvg-git-2@plane.gmane.org; Sat, 12 Oct 2013 09:12:56 +0200
+	id 1VUtNg-00059v-Tg
+	for gcvg-git-2@plane.gmane.org; Sat, 12 Oct 2013 09:12:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754204Ab3JLHMp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Oct 2013 03:12:45 -0400
-Received: from mail-ob0-f182.google.com ([209.85.214.182]:55910 "EHLO
-	mail-ob0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754169Ab3JLHMo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Oct 2013 03:12:44 -0400
-Received: by mail-ob0-f182.google.com with SMTP id wn1so3477353obc.13
-        for <git@vger.kernel.org>; Sat, 12 Oct 2013 00:12:43 -0700 (PDT)
+	id S1754227Ab3JLHMs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Oct 2013 03:12:48 -0400
+Received: from mail-ob0-f180.google.com ([209.85.214.180]:61405 "EHLO
+	mail-ob0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754169Ab3JLHMq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Oct 2013 03:12:46 -0400
+Received: by mail-ob0-f180.google.com with SMTP id wn1so3396481obc.25
+        for <git@vger.kernel.org>; Sat, 12 Oct 2013 00:12:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=zqdkP7sXV1kNsw2PlXrKYW9U8Z2yJY9O09H0JZSDIgE=;
-        b=gkvjgSiCUL9JrNhAxvpRaRolZTgVuvBF5pjQ04r47ZcHIiPFgt+OAY+Pn9sr/c259t
-         1AJ2d9Uo7Q+T+LqhVDmFWBfF4BiZelwIyMx5fOZVKtmmbNmZWC05vJj3p/9+5QlR5irW
-         tMqdjB8+hVMQyGsYg534ks0A59YR0q92dzMiSv6YzN2zmptX6rxgS5rxt7+rsQGTfZjO
-         R5F4pWyeudXTKR8NEzFabdW5qPiXqD1sgb+8J7V7bLbyuWybYFhYBdmo4VHYpyjNG2Q0
-         WQqOX/FcmTy4vWzF54kME9Q5/k5tuQi2rqdTzUcAJ9PD1tGXXg3mjKd+bU4nIhtHRruv
-         UWvg==
-X-Received: by 10.182.121.137 with SMTP id lk9mr17889234obb.32.1381561963882;
-        Sat, 12 Oct 2013 00:12:43 -0700 (PDT)
+        bh=6go4evqludPHnJZJLg3b14plUJJVivAcr4/GVeGBBdU=;
+        b=BdxH4OMuIhWeTHWtB9ExGJF7GoZTcQ1u1rZikRmtaTtuvsx1N+nQWeLDS9QBKxjS77
+         UFwaenVH68jKbtWGnRnej5Saoyk6Am4EiSTa2cxI84rb/eMSSeJEHhX4RFtX7IOx/iEe
+         gLmjeqjstbA4GxrKXsW5e/7baFb+3LlhKlANr9ntgG7tUyQAfCsuRE6acbAJNcCUlUyc
+         p/2B/pJ58AOsrTX4uVhvOB/qW8INqTpJJrJnd7OTxSWKdrnpvbFEAnRVg4jHNxlRiZmc
+         /fsohXcGujbVfzDelcrcH2Ri+vTzwiwBCLDicP5VH/ZUPcZsedincdcV2HOtPLkMvB0h
+         HSOQ==
+X-Received: by 10.182.81.41 with SMTP id w9mr17811692obx.18.1381561966417;
+        Sat, 12 Oct 2013 00:12:46 -0700 (PDT)
 Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
-        by mx.google.com with ESMTPSA id it7sm28653755obb.11.1969.12.31.16.00.00
+        by mx.google.com with ESMTPSA id r6sm28672912obi.14.1969.12.31.16.00.00
         (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 12 Oct 2013 00:12:43 -0700 (PDT)
+        Sat, 12 Oct 2013 00:12:45 -0700 (PDT)
 X-Mailer: git-send-email 1.8.4-fc
 In-Reply-To: <1381561584-20529-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235998>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235999>
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- contrib/related/README | 65 ++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 65 insertions(+)
- create mode 100644 contrib/related/README
+ contrib/related/git-related    | 14 ++++++++++++--
+ contrib/related/test-related.t |  8 ++++----
+ 2 files changed, 16 insertions(+), 6 deletions(-)
 
-diff --git a/contrib/related/README b/contrib/related/README
-new file mode 100644
-index 0000000..26188ca
---- /dev/null
-+++ b/contrib/related/README
-@@ -0,0 +1,65 @@
-+= git-related =
+diff --git a/contrib/related/git-related b/contrib/related/git-related
+index 04c56f5..f94f5f4 100755
+--- a/contrib/related/git-related
++++ b/contrib/related/git-related
+@@ -8,6 +8,13 @@ $min_percent = 10
+ $files = []
+ $rev_args = []
+ 
++KNOWN_ROLES = {
++  'Signed-off-by' => :signer,
++  'Reviewed-by' => :reviewer,
++  'Acked-by' => :acker,
++  'Cc' => :cced,
++}
 +
-+This tool finds people that might be interested in a patch, by going
-+back through the history for each single hunk modified, and finding
-+people that reviewed, acknowledged, signed, or authored the code the
-+patch is modifying.
-+
-+It does this by running `git blame` incrementally on each hunk, and then
-+parsing the commit message. After gathering all the relevant people, it
-+groups them to show what exactly was their role when the participated in
-+the development of the relevant commit, and on how many relevant commits
-+they participated. They are only displayed if they pass a minimum
-+threshold of participation.
-+
-+For example:
-+
-+------------
-+% git related master..fc/transport/improv
-+Junio C Hamano <gitster@pobox.com> (signer: 90%, author: 5%)
-+Felipe Contreras <felipe.contreras@gmail.com> (author: 25%, reviewer: 2%)
-+Sverre Rabbelier <srabbelier@gmail.com> (author: 17%, acker: 2%, signer: 7%)
-+Jeff King <peff@peff.net> (acker: 17%, author: 10%)
-+Shawn O. Pearce <spearce@spearce.org> (author: 5%, signer: 2%, cced: 2%)
-+Elijah Newren <newren@gmail.com> (author: 10%)
-+------------
-+
-+In addition, it has an option to output the list of commits, instead of the
-+contributors, which allows you to easily find out the previous changes to the
-+lines your patches modify.
-+
-+------------
-+% git related -c master..fc/transport/improv
-+99d9ec0 Merge branch 'fc/transport-helper-no-refspec'
-+67c9c78 transport-helper: barf when user tries old:new
-+0460ed2 documentation: trivial style cleanups
-+126aac5 transport-helper: fix remote helper namespace regression
-+21610d8 transport-helper: clarify pushing without refspecs
-+a93b4a0 transport-helper: warn when refspec is not used
-+664059f transport-helper: update remote helper namespace
-+c4458ec fast-export: Allow pruned-references in mark file
-+...
-+------------
-+
-+Moreover, when sending patches for review, you can configure `git send-email`
-+to use `git related` to find relevant people that should be Cc'ed:
-+
-+------------
-+% git send-email --cc-cmd='git related' *.patch
-+------------
-+
-+== Installation ==
-+
-+To use this script, simply put `git-related` in your `$PATH` and make sure it
-+has executable permissions:
-+
-+------------
-+wget https://raw.github.com/felipec/git-related/master/git-related -O ~/bin/git-related
-+chmod +x ~/bin/git-related
-+------------
-+
-+And make sure `~/bin` is in your `$PATH`:
-+
-+------------
-+export PATH="$HOME/bin:$PATH"
-+------------
+ class Person
+ 
+   attr_reader :roles
+@@ -77,9 +84,12 @@ class Commit
+           in_body = true
+         end
+       else
+-        if line =~ /^(Signed-off-by|Reviewed-by|Acked-by|Cc): ([^<>]+) <(\S+?)>$/
++        role_regex = KNOWN_ROLES.keys.join('|')
++        if line =~ /^(#{role_regex}): ([^<>]+) <(\S+?)>$/
+           person = Persons.get($2, $3)
+-          person.add_role(@id, :signer) if person != author
++          role = KNOWN_ROLES[$1]
++          next if role == :signer and person == author
++          person.add_role(@id, role)
+         end
+       end
+     end
+diff --git a/contrib/related/test-related.t b/contrib/related/test-related.t
+index 90cc516..9da2693 100755
+--- a/contrib/related/test-related.t
++++ b/contrib/related/test-related.t
+@@ -46,7 +46,7 @@ test_expect_success "others" "
+ 	cat > expected <<-EOF &&
+ 	John Doe <john@doe.com> (author: 33%)
+ 	John Poppins <john@doe.com> (author: 33%)
+-	Jon Stewart <jon@stewart.com> (signer: 33%, author: 33%)
++	Jon Stewart <jon@stewart.com> (reviewer: 33%, author: 33%)
+ 	EOF
+ 	test_cmp expected actual
+ "
+@@ -58,7 +58,7 @@ test_expect_success "multiple patches" "
+ 	cat > expected <<-EOF &&
+ 	John Doe <john@doe.com> (author: 25%)
+ 	John Poppins <john@doe.com> (author: 25%)
+-	Jon Stewart <jon@stewart.com> (signer: 25%, author: 25%)
++	Jon Stewart <jon@stewart.com> (reviewer: 25%, author: 25%)
+ 	Pablo Escobar <pablo@escobar.com> (author: 25%)
+ 	EOF
+ 	test_cmp expected actual
+@@ -69,7 +69,7 @@ test_expect_success "from committish" "
+ 	cat > expected <<-EOF &&
+ 	John Doe <john@doe.com> (author: 33%)
+ 	John Poppins <john@doe.com> (author: 33%)
+-	Jon Stewart <jon@stewart.com> (signer: 33%, author: 33%)
++	Jon Stewart <jon@stewart.com> (reviewer: 33%, author: 33%)
+ 	EOF
+ 	test_cmp expected actual
+ "
+@@ -79,7 +79,7 @@ test_expect_success "from single rev committish" "
+ 	cat > expected <<-EOF &&
+ 	John Doe <john@doe.com> (author: 33%)
+ 	John Poppins <john@doe.com> (author: 33%)
+-	Jon Stewart <jon@stewart.com> (signer: 33%, author: 33%)
++	Jon Stewart <jon@stewart.com> (reviewer: 33%, author: 33%)
+ 	EOF
+ 	test_cmp expected actual
+ "
 -- 
 1.8.4-fc
