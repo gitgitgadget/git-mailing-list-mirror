@@ -1,7 +1,7 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v10 02/15] contrib: related: add tests
-Date: Sat, 12 Oct 2013 02:06:13 -0500
-Message-ID: <1381561584-20529-5-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH v10 10/15] contrib: related: group persons with same email
+Date: Sat, 12 Oct 2013 02:06:12 -0500
+Message-ID: <1381561584-20529-4-git-send-email-felipe.contreras@gmail.com>
 References: <1381561584-20529-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Duy Nguyen <pclouds@gmail.com>,
 	Felipe Contreras <felipe.contreras@gmail.com>
@@ -12,131 +12,104 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VUtNW-00052U-K9
+	id 1VUtNW-00052U-36
 	for gcvg-git-2@plane.gmane.org; Sat, 12 Oct 2013 09:12:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754148Ab3JLHMk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Oct 2013 03:12:40 -0400
-Received: from mail-ob0-f172.google.com ([209.85.214.172]:36924 "EHLO
-	mail-ob0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752744Ab3JLHMh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Oct 2013 03:12:37 -0400
-Received: by mail-ob0-f172.google.com with SMTP id vb8so3462414obc.17
-        for <git@vger.kernel.org>; Sat, 12 Oct 2013 00:12:36 -0700 (PDT)
+	id S1754113Ab3JLHMi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Oct 2013 03:12:38 -0400
+Received: from mail-oa0-f42.google.com ([209.85.219.42]:49960 "EHLO
+	mail-oa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754085Ab3JLHMd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Oct 2013 03:12:33 -0400
+Received: by mail-oa0-f42.google.com with SMTP id g12so3120046oah.1
+        for <git@vger.kernel.org>; Sat, 12 Oct 2013 00:12:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=tQXqxAACCjvngDw9dDLKvDQUmbSp1pUaolB76P8jlS4=;
-        b=lh+2tcMGaUBdSg9bNDOHD6b5sXD/aBQ3fnuF1t+YPIwMdpES2tf6WNU/KrwncsgnxE
-         L1EB2ihkuyqRvGnxs84jczxi7TrdHcCbh82sjsYjCnERnBEqd+/llrkuoCwVELd9Dyhk
-         nLZz6r1aXlMXAVXGARePav8uirZSGsxF3Qa/vZPDG7GjTmzRDezJ7jMt0kfKfanCk0b6
-         nawsQViXsIg2EEvgCVFCoo08z22bqIsj8fdGff4wu2l9oG9YalsQXBYiS5ngnL9crXE2
-         TkTScbZtIwy1Q3TjrCaF9uLsfvmsm4U81CXSuXlZ1F05H1X1xuC/oGj0m3tv6UUjd25n
-         VnOA==
-X-Received: by 10.182.242.11 with SMTP id wm11mr17971603obc.26.1381561956360;
-        Sat, 12 Oct 2013 00:12:36 -0700 (PDT)
+        bh=Gl5AZbQX2NNKOAFKC2EXTk4pJD9lGg9i6ygotN+e0TE=;
+        b=MqoEg+BTsCZMrNNrstJ5N8JYZKve52Tuz8JbYT13qWD7ytGmh62jy3RPC36UJLaNuZ
+         ytvveckJKqdWFZ5ZxtZsnJJebRSz+ZOAE1UuKWJNikIabB2TUhRMsaKZEODaoNs3bAr8
+         UNr04DWzzz3Tu2pA/oKbr5MU9gwVaIE7K5vPwJB4yu6pQWSN0I46AmTBVgvP7CWWqhao
+         obng5HTvk6+G7tLaSCsiCYeEC2BSThga6fPob2QHqowyKPkXMuBz/10dtlSFfM5d2GJ9
+         mE6XlqCnM1HxyKHFAm6iGJmq7dK96Yo8BN5bT94GfWkYlu2JnKYs4px7fPeywo2XK7BO
+         xzBw==
+X-Received: by 10.60.51.7 with SMTP id g7mr18185691oeo.6.1381561953427;
+        Sat, 12 Oct 2013 00:12:33 -0700 (PDT)
 Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
-        by mx.google.com with ESMTPSA id s14sm101394466oeo.1.1969.12.31.16.00.00
+        by mx.google.com with ESMTPSA id nw5sm28649121obc.9.1969.12.31.16.00.00
         (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 12 Oct 2013 00:12:35 -0700 (PDT)
+        Sat, 12 Oct 2013 00:12:32 -0700 (PDT)
 X-Mailer: git-send-email 1.8.4-fc
 In-Reply-To: <1381561584-20529-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235994>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235995>
 
+Suggested-by: Duy Nguyen <pclouds@gmail.com>
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- contrib/related/Makefile       | 17 +++++++++++++
- contrib/related/test-related.t | 54 ++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 71 insertions(+)
- create mode 100644 contrib/related/Makefile
- create mode 100755 contrib/related/test-related.t
+ contrib/related/git-related    |  2 +-
+ contrib/related/test-related.t | 12 ++++--------
+ 2 files changed, 5 insertions(+), 9 deletions(-)
 
-diff --git a/contrib/related/Makefile b/contrib/related/Makefile
-new file mode 100644
-index 0000000..1224fce
---- /dev/null
-+++ b/contrib/related/Makefile
-@@ -0,0 +1,17 @@
-+TESTS := $(wildcard test-*.t)
-+
-+export T := $(addprefix $(CURDIR)/,$(TESTS))
-+export MAKE := $(MAKE) -e
-+export PATH := $(CURDIR):$(PATH)
-+export TEST_LINT := test-lint-executable test-lint-shell-syntax
-+export TEST_DIRECTORY := $(CURDIR)/../../t
-+
-+all:
-+
-+test:
-+	$(MAKE) -C ../../t $@
-+
-+$(TESTS): all
-+	$(MAKE) -C ../../t $(CURDIR)/$@
-+
-+.PHONY: all test $(TESTS)
+diff --git a/contrib/related/git-related b/contrib/related/git-related
+index f94f5f4..3399307 100755
+--- a/contrib/related/git-related
++++ b/contrib/related/git-related
+@@ -56,7 +56,7 @@ class Persons
+   end
+ 
+   def self.get(name, email)
+-    id = [name, email]
++    id = email.downcase
+     person = @@index[id]
+     if not person
+       person = @@index[id] = Person.new(name, email)
 diff --git a/contrib/related/test-related.t b/contrib/related/test-related.t
-new file mode 100755
-index 0000000..b69684d
---- /dev/null
+index 9da2693..a19ad32 100755
+--- a/contrib/related/test-related.t
 +++ b/contrib/related/test-related.t
-@@ -0,0 +1,54 @@
-+#!/bin/sh
-+
-+test_description="Test git related"
-+
-+test -z "$TEST_DIRECTORY" && TEST_DIRECTORY="$PWD/../../t"
-+. "$TEST_DIRECTORY"/test-lib.sh
-+
-+setup() {
-+	git init &&
-+	echo one > content &&
-+	git add content &&
-+	git commit -q -m one --author='Pablo Escobar <pablo@escobar.com>' &&
-+	echo two >> content &&
-+	git commit -q -a -m one --author='Jon Stewart <jon@stewart.com>' &&
-+	echo three >> content &&
-+	git commit -q -a -m three --author='John Doe <john@doe.com>' &&
-+	echo four >> content &&
-+	git branch basic &&
-+	git commit -q -a -F - --author='John Poppins <john@doe.com>' <<-EOF &&
-+	four
-+
-+	Reviewed-by: Jon Stewart <jon@stewart.com>
-+	EOF
-+	echo five >> content &&
-+	git commit -q -a -m five --author='Mary Poppins <mary@yahoo.com.uk>'
-+	git checkout -b next &&
-+	echo six >> content &&
-+	git commit -q -a -m six --author='Ocatio Paz <octavio.paz@gmail.com>'
-+}
-+
-+setup
-+
-+test_expect_success "basic" "
-+	git format-patch --stdout -1 basic > patch &&
-+	git related patch | sort > actual &&
-+	cat > expected <<-EOF &&
-+	Jon Stewart <jon@stewart.com>
-+	Pablo Escobar <pablo@escobar.com>
-+	EOF
-+	test_cmp expected actual
-+"
-+
-+test_expect_success "others" "
-+	git format-patch --stdout -1 master > patch &&
-+	git related patch | sort > actual &&
-+	cat > expected <<-EOF &&
-+	John Doe <john@doe.com>
-+	John Poppins <john@doe.com>
-+	Jon Stewart <jon@stewart.com>
-+	EOF
-+	test_cmp expected actual
-+"
-+
-+test_done
+@@ -44,8 +44,7 @@ test_expect_success "others" "
+ 	git format-patch --stdout -1 master > patch &&
+ 	git related patch | sort > actual &&
+ 	cat > expected <<-EOF &&
+-	John Doe <john@doe.com> (author: 33%)
+-	John Poppins <john@doe.com> (author: 33%)
++	John Poppins <john@doe.com> (author: 66%)
+ 	Jon Stewart <jon@stewart.com> (reviewer: 33%, author: 33%)
+ 	EOF
+ 	test_cmp expected actual
+@@ -56,8 +55,7 @@ test_expect_success "multiple patches" "
+ 	git format-patch --stdout -1 master^ > patch2 &&
+ 	git related patch1 patch2 | sort > actual &&
+ 	cat > expected <<-EOF &&
+-	John Doe <john@doe.com> (author: 25%)
+-	John Poppins <john@doe.com> (author: 25%)
++	John Poppins <john@doe.com> (author: 50%)
+ 	Jon Stewart <jon@stewart.com> (reviewer: 25%, author: 25%)
+ 	Pablo Escobar <pablo@escobar.com> (author: 25%)
+ 	EOF
+@@ -67,8 +65,7 @@ test_expect_success "multiple patches" "
+ test_expect_success "from committish" "
+ 	git related -1 master | sort > actual &&
+ 	cat > expected <<-EOF &&
+-	John Doe <john@doe.com> (author: 33%)
+-	John Poppins <john@doe.com> (author: 33%)
++	John Poppins <john@doe.com> (author: 66%)
+ 	Jon Stewart <jon@stewart.com> (reviewer: 33%, author: 33%)
+ 	EOF
+ 	test_cmp expected actual
+@@ -77,8 +74,7 @@ test_expect_success "from committish" "
+ test_expect_success "from single rev committish" "
+ 	git related -1 master | sort > actual &&
+ 	cat > expected <<-EOF &&
+-	John Doe <john@doe.com> (author: 33%)
+-	John Poppins <john@doe.com> (author: 33%)
++	John Poppins <john@doe.com> (author: 66%)
+ 	Jon Stewart <jon@stewart.com> (reviewer: 33%, author: 33%)
+ 	EOF
+ 	test_cmp expected actual
 -- 
 1.8.4-fc
