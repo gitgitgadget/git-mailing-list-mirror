@@ -1,140 +1,167 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v10 06/15] contrib: related: print the amount of involvement
-Date: Sat, 12 Oct 2013 02:06:14 -0500
-Message-ID: <1381561584-20529-6-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH v10 07/15] contrib: related: add helper Person classes
+Date: Sat, 12 Oct 2013 02:06:11 -0500
+Message-ID: <1381561584-20529-3-git-send-email-felipe.contreras@gmail.com>
 References: <1381561584-20529-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Duy Nguyen <pclouds@gmail.com>,
 	Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 12 09:12:47 2013
+X-From: git-owner@vger.kernel.org Sat Oct 12 09:12:51 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VUtNX-00052U-5G
-	for gcvg-git-2@plane.gmane.org; Sat, 12 Oct 2013 09:12:47 +0200
+	id 1VUtNV-00052U-IN
+	for gcvg-git-2@plane.gmane.org; Sat, 12 Oct 2013 09:12:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754187Ab3JLHMo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Oct 2013 03:12:44 -0400
-Received: from mail-ob0-f172.google.com ([209.85.214.172]:54892 "EHLO
-	mail-ob0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754085Ab3JLHMj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Oct 2013 03:12:39 -0400
-Received: by mail-ob0-f172.google.com with SMTP id vb8so3469352obc.31
-        for <git@vger.kernel.org>; Sat, 12 Oct 2013 00:12:38 -0700 (PDT)
+	id S1754107Ab3JLHMe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Oct 2013 03:12:34 -0400
+Received: from mail-ob0-f178.google.com ([209.85.214.178]:33971 "EHLO
+	mail-ob0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752744Ab3JLHMb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Oct 2013 03:12:31 -0400
+Received: by mail-ob0-f178.google.com with SMTP id uz6so3483388obc.9
+        for <git@vger.kernel.org>; Sat, 12 Oct 2013 00:12:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=V9WlxHhwpV1PxX0+G8CjXv8augh4VHc+gK6Wyb7g7nM=;
-        b=wCJWmLLQH2tt07Ez4KmaZq2qQ9lwDfzivxaqaiW3XcWxFLMhlbhbW75DQdWR4Mns4A
-         WXdnYAZlm8+uq2f3V1vBIERsISaCmfzWjI4oxVDstkEb4fV4rrXTEi8z4fELXJI3wIdD
-         Ev4tstrWp4Pqjtwl3j3VWrxQ7/xIuzULBe2LSfTjUM0fpNbJcYkk+kg93ZVgd1e3vfk/
-         eUr78jNBDS6CigMTioW8Qj1Co4YZQbu7ItGbMWVUpN3anExROwOeCFjBgm5wiKjVkvpD
-         5MAtf2fiFWR1k506XNmtqmH8B2KBvnfJUIio+LNV/a901eiokSh0fqGOO6VMMpxu74Rl
-         ZbUw==
-X-Received: by 10.60.124.14 with SMTP id me14mr17714496oeb.4.1381561958898;
-        Sat, 12 Oct 2013 00:12:38 -0700 (PDT)
+        bh=4YURkA/TxIbirzAfQ/RQT51dyTAG8VvFxopGQTB3YYk=;
+        b=HkIn/Amc2K5s6+vqHvfDH+eVbXqXdCk7CHLr5rP4ko0ivgJUQgBFGud6C6AXqMsNZB
+         oGNGkEDhPz9sTV2ETmz7hPqOMJO2ZUfWbKDbeAOA4TFx11zRsRnYuSPD8BmEEKCF49+4
+         Zw/qiyj5XcVs3XUy4msk79wNFXyZMI6Lh4pq6ASwxFUUAvPhxeIGDBFKM6NXUnZwjpVt
+         4t47oDwnSBOTOruwNVbpLaT0HthQiJtImFANfS1ikRgg+eSmS7R98Wm4XEGmDJzSIc+3
+         5+2WCtXYqMmf0S3enPXSJBSNFbTmDy6UkOMHKpkFk+9s89yjIIOTzyYxAYrECLwrV+jk
+         Dm0Q==
+X-Received: by 10.182.45.195 with SMTP id p3mr17736977obm.29.1381561950954;
+        Sat, 12 Oct 2013 00:12:30 -0700 (PDT)
 Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
-        by mx.google.com with ESMTPSA id r3sm101384600oep.2.1969.12.31.16.00.00
+        by mx.google.com with ESMTPSA id y1sm101368264oek.4.1969.12.31.16.00.00
         (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 12 Oct 2013 00:12:38 -0700 (PDT)
+        Sat, 12 Oct 2013 00:12:29 -0700 (PDT)
 X-Mailer: git-send-email 1.8.4-fc
 In-Reply-To: <1381561584-20529-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235996>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235997>
 
-100% means the person was involved in all the commits, in one way or the
-other.
+No functional changes.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- contrib/related/git-related    |  2 +-
- contrib/related/test-related.t | 30 +++++++++++++++---------------
- 2 files changed, 16 insertions(+), 16 deletions(-)
+ contrib/related/git-related | 71 +++++++++++++++++++++++++++++++++++----------
+ 1 file changed, 56 insertions(+), 15 deletions(-)
 
 diff --git a/contrib/related/git-related b/contrib/related/git-related
-index 80e1f17..ffce839 100755
+index ffce839..3cac925 100755
 --- a/contrib/related/git-related
 +++ b/contrib/related/git-related
-@@ -163,5 +163,5 @@ end
- count_per_person.each do |person, count|
-   percent = count.to_f * 100 / commits.size
-   next if percent < $min_percent
--  puts person
-+  puts '%s (involved: %u%%)' % [person, percent]
+@@ -8,13 +8,59 @@ $min_percent = 10
+ $files = []
+ $rev_args = []
+ 
+-class Commit
++class Person
++
++  attr_reader :roles
++
++  def initialize(name, email)
++    @name = name
++    @email = email
++    @commits = {}
++  end
++
++  def add_role(commit)
++    @commits[commit] = true
++  end
++
++  def <=>(b)
++    self.size <=> b.size
++  end
++
++  def size
++    @commits.size
++  end
++
++  def to_s
++    '%s <%s>' % [@name, @email]
++  end
++
++end
+ 
+-  attr_reader :persons
++class Persons
++
++  @@index = {}
++
++  include Enumerable
++
++  def each(&block)
++    @@index.values.each(&block)
++  end
++
++  def self.get(name, email)
++    id = [name, email]
++    person = @@index[id]
++    if not person
++      person = @@index[id] = Person.new(name, email)
++    end
++    person
++  end
++
++end
++
++class Commit
+ 
+   def initialize(id)
+     @id = id
+-    @persons = []
+   end
+ 
+   def parse(data)
+@@ -23,17 +69,18 @@ class Commit
+       if not in_body
+         case line
+         when /^author ([^<>]+) <(\S+)> (.+)$/
+-          @persons << '%s <%s>' % [$1, $2]
++          author = Persons.get($1, $2)
++          author.add_role(@id)
+         when /^$/
+           in_body = true
+         end
+       else
+         if line =~ /^(Signed-off-by|Reviewed-by|Acked-by|Cc): ([^<>]+) <(\S+?)>$/
+-          @persons << '%s <%s>' % [$2, $3]
++          person = Persons.get($2, $3)
++          person.add_role(@id)
+         end
+       end
+     end
+-    @persons.uniq!
+   end
+ 
  end
-diff --git a/contrib/related/test-related.t b/contrib/related/test-related.t
-index 39b4fe9..ec2680a 100755
---- a/contrib/related/test-related.t
-+++ b/contrib/related/test-related.t
-@@ -34,8 +34,8 @@ test_expect_success "basic" "
- 	git format-patch --stdout -1 basic > patch &&
- 	git related patch | sort > actual &&
- 	cat > expected <<-EOF &&
--	Jon Stewart <jon@stewart.com>
--	Pablo Escobar <pablo@escobar.com>
-+	Jon Stewart <jon@stewart.com> (involved: 50%)
-+	Pablo Escobar <pablo@escobar.com> (involved: 50%)
- 	EOF
- 	test_cmp expected actual
- "
-@@ -44,9 +44,9 @@ test_expect_success "others" "
- 	git format-patch --stdout -1 master > patch &&
- 	git related patch | sort > actual &&
- 	cat > expected <<-EOF &&
--	John Doe <john@doe.com>
--	John Poppins <john@doe.com>
--	Jon Stewart <jon@stewart.com>
-+	John Doe <john@doe.com> (involved: 33%)
-+	John Poppins <john@doe.com> (involved: 33%)
-+	Jon Stewart <jon@stewart.com> (involved: 66%)
- 	EOF
- 	test_cmp expected actual
- "
-@@ -56,10 +56,10 @@ test_expect_success "multiple patches" "
- 	git format-patch --stdout -1 master^ > patch2 &&
- 	git related patch1 patch2 | sort > actual &&
- 	cat > expected <<-EOF &&
--	John Doe <john@doe.com>
--	John Poppins <john@doe.com>
--	Jon Stewart <jon@stewart.com>
--	Pablo Escobar <pablo@escobar.com>
-+	John Doe <john@doe.com> (involved: 25%)
-+	John Poppins <john@doe.com> (involved: 25%)
-+	Jon Stewart <jon@stewart.com> (involved: 50%)
-+	Pablo Escobar <pablo@escobar.com> (involved: 25%)
- 	EOF
- 	test_cmp expected actual
- "
-@@ -67,9 +67,9 @@ test_expect_success "multiple patches" "
- test_expect_success "from committish" "
- 	git related -1 master | sort > actual &&
- 	cat > expected <<-EOF &&
--	John Doe <john@doe.com>
--	John Poppins <john@doe.com>
--	Jon Stewart <jon@stewart.com>
-+	John Doe <john@doe.com> (involved: 33%)
-+	John Poppins <john@doe.com> (involved: 33%)
-+	Jon Stewart <jon@stewart.com> (involved: 66%)
- 	EOF
- 	test_cmp expected actual
- "
-@@ -77,9 +77,9 @@ test_expect_success "from committish" "
- test_expect_success "from single rev committish" "
- 	git related -1 master | sort > actual &&
- 	cat > expected <<-EOF &&
--	John Doe <john@doe.com>
--	John Poppins <john@doe.com>
--	Jon Stewart <jon@stewart.com>
-+	John Doe <john@doe.com> (involved: 33%)
-+	John Poppins <john@doe.com> (involved: 33%)
-+	Jon Stewart <jon@stewart.com> (involved: 66%)
- 	EOF
- 	test_cmp expected actual
- "
+@@ -152,16 +199,10 @@ else
+ end
+ commits.import
+ 
+-count_per_person = Hash.new(0)
+-
+-commits.each do |id, commit|
+-  commit.persons.each do |person|
+-    count_per_person[person] += 1
+-  end
+-end
++persons = Persons.new
+ 
+-count_per_person.each do |person, count|
+-  percent = count.to_f * 100 / commits.size
++persons.sort.reverse.each do |person|
++  percent = person.size.to_f * 100 / commits.size
+   next if percent < $min_percent
+   puts '%s (involved: %u%%)' % [person, percent]
+ end
 -- 
 1.8.4-fc
