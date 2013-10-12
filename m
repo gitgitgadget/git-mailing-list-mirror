@@ -1,78 +1,111 @@
-From: Gmail <eratos2000@gmail.com>
-Subject: Re: Git send-email fail on Mac OS X Lion
-Date: Sat, 12 Oct 2013 12:40:24 -0500
-Message-ID: <194068D5-0134-48CA-89E0-484CD296BD83@gmail.com>
-References: <04374E86-02D8-4E76-A7F5-7DEE34F25C7F@gmail.com> <20131012134711.GG79408@vauxhall.crustytoothpaste.net>
-Mime-Version: 1.0 (1.0)
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-X-From: git-owner@vger.kernel.org Sat Oct 12 19:40:34 2013
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH v2] mergetools/diffmerge: support DiffMerge as a git mergetool
+Date: Sat, 12 Oct 2013 12:55:41 -0700
+Message-ID: <CAJDDKr7LgCXjZLzZqKkkUnqt4EGdcA0wvf=uT8KZXba-+q00Sw@mail.gmail.com>
+References: <1381554070-12241-1-git-send-email-ssaasen@atlassian.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Stefan Saasen <ssaasen@atlassian.com>
+X-From: git-owner@vger.kernel.org Sat Oct 12 21:55:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VV3B1-0001jn-Iv
-	for gcvg-git-2@plane.gmane.org; Sat, 12 Oct 2013 19:40:31 +0200
+	id 1VV5Hu-0002pK-RJ
+	for gcvg-git-2@plane.gmane.org; Sat, 12 Oct 2013 21:55:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753253Ab3JLRk1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Oct 2013 13:40:27 -0400
-Received: from mail-oa0-f53.google.com ([209.85.219.53]:51626 "EHLO
-	mail-oa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752720Ab3JLRk1 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 12 Oct 2013 13:40:27 -0400
-Received: by mail-oa0-f53.google.com with SMTP id i7so3396566oag.12
-        for <git@vger.kernel.org>; Sat, 12 Oct 2013 10:40:26 -0700 (PDT)
+	id S1753438Ab3JLTzn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Oct 2013 15:55:43 -0400
+Received: from mail-pb0-f44.google.com ([209.85.160.44]:41767 "EHLO
+	mail-pb0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753406Ab3JLTzm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Oct 2013 15:55:42 -0400
+Received: by mail-pb0-f44.google.com with SMTP id xa7so5674400pbc.31
+        for <git@vger.kernel.org>; Sat, 12 Oct 2013 12:55:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=references:mime-version:in-reply-to:content-type
-         :content-transfer-encoding:message-id:cc:from:subject:date:to;
-        bh=NbVB2zPSqx62FbJQzcKWA16fyY9EdQ6IrP81iIdVlg0=;
-        b=L5kVd+Ja7dahKz0GMzQS3mIoCENQcrnnVk6AUyescHJwcpRi5O3vfZfp0TPXnI9x2r
-         aPLUHCdpgT6zfU7YOEy4Iuf9L6FSgFAHDobRveBTWk5iRYpZSXYyE9HbHyt8oCfOmNMp
-         drNLIn/B1BZThjQ5F2kB0vLIFOCma6ADBGMYI+bvoVOgVrjWSR2HmwPSBqaQ3d4Vh+bV
-         9wO1r66yx4vn08DnuEQZ8MrraUQTvM/p1RWB4iOvMTg2tbXrmqOTGgAUJXoko8lKqogM
-         hD+HL07PcpkXdr7BCuGTi+orMvn06JxVmmAnRXTtm6fIXZ09OivvpxVD5h7d+mmPVyLE
-         V7rw==
-X-Received: by 10.60.44.193 with SMTP id g1mr541450oem.47.1381599626426;
-        Sat, 12 Oct 2013 10:40:26 -0700 (PDT)
-Received: from [192.168.2.146] (ip70-180-90-249.no.no.cox.net. [70.180.90.249])
-        by mx.google.com with ESMTPSA id tz10sm31140037obc.10.1969.12.31.16.00.00
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 12 Oct 2013 10:40:25 -0700 (PDT)
-In-Reply-To: <20131012134711.GG79408@vauxhall.crustytoothpaste.net>
-X-Mailer: iPhone Mail (11A501)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=nBTE8vWBsPHePmWw2iPdop4iHrDga5dS/mjuLWqLVW4=;
+        b=phmNcS58FaQH9IzriFpp2B+RMdmDZtjUJUT6+Xf/Z9R82QK1dI1bf7B246XGDM5ZiU
+         YYiXKWTqSO925e/gy6wSHt5lyopjm8MEozGqVMntL5+grtDhQtquhao/61No+5c2MYnG
+         9ZhrybWYFgj9F5pbhn+OsjKsZgvDwFZfGSx+xSggmgHPb8AbfJFQ1qvzNacx4Z8RIzH8
+         gWqN+w0KiOPNQYJbVivDQZNqA0mZ0IIZBuUSs2qqdo8HG2ZxVincoERgaTJkyk7AsHLf
+         2zQlccuy2ln2/gFlWuaSQYhoErLQEbEf00Z7r8Wm7Wn6le06RKJT/MZY8cQSQUhiCh8A
+         TG7g==
+X-Received: by 10.68.216.67 with SMTP id oo3mr20081106pbc.117.1381607741818;
+ Sat, 12 Oct 2013 12:55:41 -0700 (PDT)
+Received: by 10.70.102.45 with HTTP; Sat, 12 Oct 2013 12:55:41 -0700 (PDT)
+In-Reply-To: <1381554070-12241-1-git-send-email-ssaasen@atlassian.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236053>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236054>
 
-Brian,
+Thanks for the re-roll.  We're very close; see below.
 
-I already tried to reinstall with cpan/m using -f -i options.  I even removed the PERL5LIB location and reinstalled the packages from scratch to no avail.
+On Fri, Oct 11, 2013 at 10:01 PM, Stefan Saasen <ssaasen@atlassian.com> wrote:
+> DiffMerge is a non-free (but gratis) tool that supports OS X, Windows and Linux.
+>
+>     See http://www.sourcegear.com/diffmerge/
+>
+> DiffMerge includes a script `/usr/bin/diffmerge` that can be used to launch the
+> graphical compare tool.
+>
+> This change adds mergetool support for DiffMerge and adds 'diffmerge' as an
+> option to the mergetool help.
+>
+> Signed-off-by: Stefan Saasen <ssaasen@atlassian.com>
+> Acked-by: David Aguilar <davvid@gmail.com>
+> ---
+>  contrib/completion/git-completion.bash |  2 +-
+>  git-mergetool--lib.sh                  |  3 ++-
+>  mergetools/diffmerge                   | 15 +++++++++++++++
+>  3 files changed, 18 insertions(+), 2 deletions(-)
+>  create mode 100644 mergetools/diffmerge
+>
+> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+> index e1b7313..07b0ba5 100644
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -1188,7 +1188,7 @@ _git_diff ()
+>         __git_complete_revlist_file
+>  }
+>
+> -__git_mergetools_common="diffuse ecmerge emerge kdiff3 meld opendiff
+> +__git_mergetools_common="diffuse diffmerge ecmerge emerge kdiff3 meld opendiff
+>                         tkdiff vimdiff gvimdiff xxdiff araxis p4merge bc3 codecompare
+>  "
+>
+> diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
+> index feee6a4..0fcb253 100644
+> --- a/git-mergetool--lib.sh
+> +++ b/git-mergetool--lib.sh
+> @@ -250,7 +250,8 @@ list_merge_tool_candidates () {
+>                 else
+>                         tools="opendiff kdiff3 tkdiff xxdiff meld $tools"
+>                 fi
+> -               tools="$tools gvimdiff diffuse ecmerge p4merge araxis bc3 codecompare"
+> +               tools="$tools gvimdiff diffuse diffmerge ecmerge "
+> +               tools+="p4merge araxis bc3 codecompare"
 
-Nando
+I don't believe "+=" is portable across all POSIX shells.
 
-Sent from my iPhone
+I tried this on "dash" (which is the default /bin/sh on Debian) and it
+was not understood there.
 
-> On Oct 12, 2013, at 8:47 AM, "brian m. carlson" <sandals@crustytoothpaste.net> wrote:
-> 
->> On Fri, Oct 11, 2013 at 11:06:17PM -0500, Fernando Ortiz (e2k) wrote:
->> I'm getting the following error when I do:
->> 
->> git send-email --compose --from Fernando Ortiz <eratos2000@gmail.com> --to fortiz2k@gmail.com --cc fortiz2k@gmail.com 0001-Change-zcat-to-gzcat-to-fix-build-restore-steps.patch
->> 
->> Net::SSLeay version 1.46 required--this is only version 1.36 at /Users/fortiz/perl5/perlbrew/perls/perl-5.14.4/lib/site_perl/5.14.4/IO/Socket/SSL.pm line 17.
-> 
-> Here's your answer: Net::SSLeay is too old for IO::Socket::SSL.  You
-> either need to use cpan or cpanm to install a newer Net::SSLeay, and
-> then it will work.
-> 
-> -- 
-> brian m. carlson / brian with sandals: Houston, Texas, US
-> +1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
-> OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
+$ f="1 2 3"
+$ f+=" 4"
+/bin/dash: 2: f+= 4: not found
+
+I think we should stick to the tools="$tools ....." style of concatenation.
+
+Everything else looks good to me.
+
+Thanks,
+-- 
+David
