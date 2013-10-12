@@ -1,139 +1,108 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v3 07/10] fast-import: add support to delete refs
-Date: Sat, 12 Oct 2013 02:05:32 -0500
-Message-ID: <1381561533-20381-10-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH v3 08/10] fast-export: add support to delete refs
+Date: Sat, 12 Oct 2013 02:05:30 -0500
+Message-ID: <1381561533-20381-8-git-send-email-felipe.contreras@gmail.com>
 References: <1381561533-20381-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Sverre Rabbelier <srabbelier@gmail.com>,
 	Richard Hansen <rhansen@bbn.com>,
 	Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 12 09:12:13 2013
+X-From: git-owner@vger.kernel.org Sat Oct 12 09:12:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VUtMx-0004bU-VT
-	for gcvg-git-2@plane.gmane.org; Sat, 12 Oct 2013 09:12:12 +0200
+	id 1VUtMw-0004bU-RW
+	for gcvg-git-2@plane.gmane.org; Sat, 12 Oct 2013 09:12:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753920Ab3JLHL6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Oct 2013 03:11:58 -0400
-Received: from mail-ob0-f180.google.com ([209.85.214.180]:64066 "EHLO
-	mail-ob0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752214Ab3JLHL5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Oct 2013 03:11:57 -0400
-Received: by mail-ob0-f180.google.com with SMTP id wn1so3482157obc.11
-        for <git@vger.kernel.org>; Sat, 12 Oct 2013 00:11:57 -0700 (PDT)
+	id S1753892Ab3JLHLy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Oct 2013 03:11:54 -0400
+Received: from mail-oa0-f48.google.com ([209.85.219.48]:45384 "EHLO
+	mail-oa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752214Ab3JLHLw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Oct 2013 03:11:52 -0400
+Received: by mail-oa0-f48.google.com with SMTP id m6so3079277oag.21
+        for <git@vger.kernel.org>; Sat, 12 Oct 2013 00:11:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=6GQ497KT6LL2kT7dqEkTm/fimDa1LZPr61XDRXfBXV4=;
-        b=MGfi/TkanFL672oPlRZUoJBo4g2NAwcSMxoukEZaycPJ0ykbDkzdYIEX+oSMMwg0Qj
-         gw8ExNC9lc4s77GUQYgLJkKPkr6A513BSM9+qbFp+EVzRNuWGoQhSEA1JXH5fprehWuP
-         z8mMdvxcEh8vsvdXBzrP3ubQ2s2EE6ePGhNSUfWav7/zVMCfc7QDkQfkWpVNdF0lRWV+
-         kSqco3DS1Ik0SrU7PlGIzUvgj9HYpznS6iZbLR11wYr7Goqc6ftDuismct+iOr54i1l0
-         Ct1UyhZ4XyeKqyJgsYoeU5h8H/zvbbYezHSY4TwBlMsYLCq85Vpd+WEsCQw+OrsNg3JL
-         5z+A==
-X-Received: by 10.182.99.231 with SMTP id et7mr17869354obb.10.1381561917016;
-        Sat, 12 Oct 2013 00:11:57 -0700 (PDT)
+        bh=6lGJHk4qmr1L8Ha1ymJPSamw7bQ/daMckNSGrvZQgi4=;
+        b=nxca780NB0VomPR0XdpFB7yo2RbTOYtNgV+ZDS5geXZxue72awHdA2xf4sDjfygAct
+         yYjnE9OJXDOCUpbkyOS0rGYjqoYK7CUYBe/y+OVtU4S7CFm0b9c3Sj1lFGiq/DHTzYxC
+         yo816TuZ0jfZ3nY4aobAoHlp0s7aYBXKXQcCfOBwyBhydtH4CLsI9LB/5MTKf6/g0Pg4
+         pq8xscT9HhdViv+jFXkUPAjr5rzoXELlSGk3rgcKdBFj87vPBKPotusLQ/aqgkigFYMT
+         Jsf1vW1PuIf7n6xQn1+mOxnb6lfefhGfE7v3gQdm1NV4kSXrTWzRUP9eLU8O+EXZwgbA
+         tZvw==
+X-Received: by 10.182.48.130 with SMTP id l2mr2567obn.44.1381561912005;
+        Sat, 12 Oct 2013 00:11:52 -0700 (PDT)
 Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
-        by mx.google.com with ESMTPSA id rl1sm101376765oeb.7.1969.12.31.16.00.00
+        by mx.google.com with ESMTPSA id u8sm28642007obd.7.1969.12.31.16.00.00
         (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 12 Oct 2013 00:11:56 -0700 (PDT)
+        Sat, 12 Oct 2013 00:11:51 -0700 (PDT)
 X-Mailer: git-send-email 1.8.4-fc
 In-Reply-To: <1381561533-20381-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235982>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235983>
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- Documentation/git-fast-import.txt |  3 +++
- fast-import.c                     | 13 ++++++++++---
- t/t9300-fast-import.sh            | 18 ++++++++++++++++++
- 3 files changed, 31 insertions(+), 3 deletions(-)
+ builtin/fast-export.c  | 14 ++++++++++++++
+ t/t9350-fast-export.sh | 11 +++++++++++
+ 2 files changed, 25 insertions(+)
 
-diff --git a/Documentation/git-fast-import.txt b/Documentation/git-fast-import.txt
-index bf1a02a..fe5c952 100644
---- a/Documentation/git-fast-import.txt
-+++ b/Documentation/git-fast-import.txt
-@@ -483,6 +483,9 @@ Marks must be declared (via `mark`) before they can be used.
- * Any valid Git SHA-1 expression that resolves to a commit.  See
-   ``SPECIFYING REVISIONS'' in linkgit:gitrevisions[7] for details.
+diff --git a/builtin/fast-export.c b/builtin/fast-export.c
+index 7f314f0..9b728ca 100644
+--- a/builtin/fast-export.c
++++ b/builtin/fast-export.c
+@@ -665,6 +665,19 @@ static void import_marks(char *input_file)
+ 	fclose(f);
+ }
  
-+* The special null SHA-1 (40 zeros) specifices that the branch is to be
-+  removed.
++static void handle_deletes(void)
++{
++	int i;
++	for (i = 0; i < refspecs_nr; i++) {
++		struct refspec *refspec = &refspecs[i];
++		if (*refspec->src)
++			continue;
 +
- The special case of restarting an incremental import from the
- current branch value should be written as:
- ----
-diff --git a/fast-import.c b/fast-import.c
-index 23f625f..b6be7a7 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -248,6 +248,7 @@ struct branch {
- 	uintmax_t last_commit;
- 	uintmax_t num_notes;
- 	unsigned active : 1;
-+	unsigned delete : 1;
- 	unsigned pack_id : PACK_ID_BITS;
- 	unsigned char sha1[20];
- };
-@@ -1674,10 +1675,13 @@ static int update_branch(struct branch *b)
- 	struct ref_lock *lock;
- 	unsigned char old_sha1[20];
- 
--	if (is_null_sha1(b->sha1))
--		return 0;
- 	if (read_ref(b->name, old_sha1))
- 		hashclr(old_sha1);
-+	if (is_null_sha1(b->sha1)) {
-+		if (b->delete)
-+			delete_ref(b->name, old_sha1, 0);
-+		return 0;
++		printf("reset %s\nfrom %s\n\n",
++				refspec->dst, sha1_to_hex(null_sha1));
 +	}
- 	lock = lock_any_ref_for_update(b->name, old_sha1, 0);
- 	if (!lock)
- 		return error("Unable to lock %s", b->name);
-@@ -2604,8 +2608,11 @@ static int parse_from(struct branch *b)
- 			free(buf);
- 		} else
- 			parse_from_existing(b);
--	} else if (!get_sha1(from, b->sha1))
-+	} else if (!get_sha1(from, b->sha1)) {
- 		parse_from_existing(b);
-+		if (is_null_sha1(b->sha1))
-+			b->delete = 1;
-+	}
- 	else
- 		die("Invalid ref name or SHA1 expression: %s", from);
++}
++
+ int cmd_fast_export(int argc, const char **argv, const char *prefix)
+ {
+ 	struct rev_info revs;
+@@ -755,6 +768,7 @@ int cmd_fast_export(int argc, const char **argv, const char *prefix)
+ 	}
  
-diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
-index ac6f3b6..0150aa6 100755
---- a/t/t9300-fast-import.sh
-+++ b/t/t9300-fast-import.sh
-@@ -2934,4 +2934,22 @@ test_expect_success 'S: ls with garbage after sha1 must fail' '
- 	test_i18ngrep "space after tree-ish" err
+ 	handle_tags_and_duplicates(&extra_refs);
++	handle_deletes();
+ 
+ 	if (export_filename && lastimportid != last_idnum)
+ 		export_marks(export_filename);
+diff --git a/t/t9350-fast-export.sh b/t/t9350-fast-export.sh
+index dc6666f..ea6c96c 100755
+--- a/t/t9350-fast-export.sh
++++ b/t/t9350-fast-export.sh
+@@ -511,4 +511,15 @@ test_expect_success 'use refspec' '
+ 	test_cmp expected actual
  '
  
-+test_expect_success 'T: delete branch' '
++test_expect_success 'delete refspec' '
 +	git branch to-delete &&
-+	git fast-import <<-EOF &&
++	git fast-export --refspec :refs/heads/to-delete to-delete ^to-delete > actual &&
++	cat > expected <<-EOF &&
 +	reset refs/heads/to-delete
 +	from 0000000000000000000000000000000000000000
-+	EOF
-+	test_must_fail git rev-parse --verify refs/heads/to-delete
-+'
 +
-+test_expect_success 'T: empty reset doesnt delete branch' '
-+	git branch not-to-delete &&
-+	git fast-import <<-EOF &&
-+	reset refs/heads/not-to-delete
 +	EOF
-+	git show-ref &&
-+	git rev-parse --verify refs/heads/not-to-delete
++	test_cmp expected actual
 +'
 +
  test_done
