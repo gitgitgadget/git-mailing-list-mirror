@@ -1,59 +1,56 @@
-From: "Fernando Ortiz (e2k)" <eratos2000@gmail.com>
-Subject: Git send-email fail on Mac OS X Lion
-Date: Fri, 11 Oct 2013 23:06:17 -0500
-Message-ID: <04374E86-02D8-4E76-A7F5-7DEE34F25C7F@gmail.com>
-Mime-Version: 1.0 (Apple Message framework v1283)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Fernando Ortiz <eratos2000@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 12 06:06:25 2013
+From: Richard Hansen <rhansen@bbn.com>
+Subject: Re: [PATCH v3 1/5] pull: rename pull.rename to pull.mode
+Date: Sat, 12 Oct 2013 00:40:51 -0400
+Message-ID: <5258D2D3.9030704@bbn.com>
+References: <1378689796-19305-1-git-send-email-felipe.contreras@gmail.com>	<1378689796-19305-2-git-send-email-felipe.contreras@gmail.com>	<522E3C6A.3070409@bbn.com>	<CAMP44s1OyST3S1HEdS38WPsjq6w9SekuwT4DRUgVvduATox9tw@mail.gmail.com>	<20130910022152.GA17154@sigill.intra.peff.net>	<CAMP44s1FfQ-1pAK8T1cmiZk4i17HnpvzPwuZrzHiiXSmGzbrRw@mail.gmail.com>	<vpqmwnljdmn.fsf@anie.imag.fr>	<52589027a4851_5dc4c2be742754f@nysa.mail>	<20131012005035.GA27939@sigill.intra.peff.net>	<CAMP44s2y0UZ9uS8xtG2WDD=k5pHSG+K+_WM2dj-DVaUDy4djdA@mail.gmail.com>	<20131012012515.GA1778@sigill.intra.peff.net> <CAMP44s3669E7JyEjP_ErYt7JN2eHv0mX4+p_=ZP4_LDatnw2vg@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org,
+	Andreas Krey <a.krey@gmx.de>,
+	John Keeping <john@keeping.me.uk>,
+	Philip Oakley <philipoakley@iee.org>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>
+To: Felipe Contreras <felipe.contreras@gmail.com>,
+	Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Oct 12 06:41:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VUqTB-000663-3r
-	for gcvg-git-2@plane.gmane.org; Sat, 12 Oct 2013 06:06:25 +0200
+	id 1VUr0o-0002jY-22
+	for gcvg-git-2@plane.gmane.org; Sat, 12 Oct 2013 06:41:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750714Ab3JLEGV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Oct 2013 00:06:21 -0400
-Received: from mail-ob0-f175.google.com ([209.85.214.175]:55652 "EHLO
-	mail-ob0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750701Ab3JLEGU convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 12 Oct 2013 00:06:20 -0400
-Received: by mail-ob0-f175.google.com with SMTP id uz6so3376711obc.20
-        for <git@vger.kernel.org>; Fri, 11 Oct 2013 21:06:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:content-type:content-transfer-encoding:subject:date:message-id
-         :cc:to:mime-version;
-        bh=TcBee9wwR/GASwGgUjeQ9kVLz7A9UxC/OtttV9Tmcu8=;
-        b=Vr4EEgY3x2KN2WGXIeflMqRrCuSjfsan7Vq5jtFiRvt0Z+ma29Povek1KwMpA0BI8J
-         tVB4GsHvlD5gAeraXzlMXSJ5ubi0zoDbwqR2pGbrBW2Ys9XlmNk/RVboq3Lqh3gvQO0M
-         nX+rlngr8nzKo/pOHZDeFPZG+qdVDn6k5KYqVS0pKtLgHWXHCBP75oqnqHWfGK6oXyM9
-         orsawEMh43hqI8LHmSj3LUcFNia7ivxoSUPdypMjvCI6ypZ5t3yFQ8w23l8pSp7WyceW
-         Imv8qs6YFsz8/bOwgvDgWCcvB5G7qtKtXptHVgMJb6NAx/4uls5VRd+qa+IXBNG5hAT4
-         v9rg==
-X-Received: by 10.182.29.233 with SMTP id n9mr13210159obh.38.1381550780028;
-        Fri, 11 Oct 2013 21:06:20 -0700 (PDT)
-Received: from [192.168.2.106] (ip70-180-90-249.no.no.cox.net. [70.180.90.249])
-        by mx.google.com with ESMTPSA id u3sm100429917oeq.3.1969.12.31.16.00.00
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 11 Oct 2013 21:06:19 -0700 (PDT)
-X-Mailer: Apple Mail (2.1283)
+	id S1750742Ab3JLElF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Oct 2013 00:41:05 -0400
+Received: from smtp.bbn.com ([128.33.1.81]:11825 "EHLO smtp.bbn.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750705Ab3JLElE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Oct 2013 00:41:04 -0400
+Received: from socket.bbn.com ([192.1.120.102]:43617)
+	by smtp.bbn.com with esmtps (TLSv1:AES256-SHA:256)
+	(Exim 4.77 (FreeBSD))
+	(envelope-from <rhansen@bbn.com>)
+	id 1VUr0Y-0006WH-0r; Sat, 12 Oct 2013 00:40:54 -0400
+X-Submitted: to socket.bbn.com (Postfix) with ESMTPSA id D2CE34097A
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.0
+In-Reply-To: <CAMP44s3669E7JyEjP_ErYt7JN2eHv0mX4+p_=ZP4_LDatnw2vg@mail.gmail.com>
+X-Enigmail-Version: 1.5.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235940>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235941>
 
-I'm getting the following error when I do:
+On 2013-10-11 22:08, Felipe Contreras wrote:
+> I'm fine with 'echo "warning: foo" >&2', but still, if you really
+> cared about consistency, there would be a warn() function
 
-git send-email --compose --from Fernando Ortiz <eratos2000@gmail.com> --to fortiz2k@gmail.com --cc fortiz2k@gmail.com 0001-Change-zcat-to-gzcat-to-fix-build-restore-steps.patch
+So add one!  It's only one simple line:
 
-Net::SSLeay version 1.46 required--this is only version 1.36 at /Users/fortiz/perl5/perlbrew/perls/perl-5.14.4/lib/site_perl/5.14.4/IO/Socket/SSL.pm line 17.
-BEGIN failed--compilation aborted at /Users/fortiz/perl5/perlbrew/perls/perl-5.14.4/lib/site_perl/5.14.4/IO/Socket/SSL.pm line 17.
-Compilation failed in require at /Users/fortiz/perl5/perlbrew/perls/perl-5.14.4/lib/site_perl/5.14.4/Net/SMTP/SSL.pm line 8.
-BEGIN failed--compilation aborted at /Users/fortiz/perl5/perlbrew/perls/perl-5.14.4/lib/site_perl/5.14.4/Net/SMTP/SSL.pm line 8.
-Compilation failed in require at /usr/local/Cellar/git/1.8.4/libexec/git-core/git-send-email line 1232.
+    warning() { printf %s\\n "warning: $*" >&2; }
+
+So much discussion for something so trivial...
+
+-Richard
