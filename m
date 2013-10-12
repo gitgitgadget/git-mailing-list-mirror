@@ -1,7 +1,7 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v2 2/5] build: fix installation of scripts
-Date: Sat, 12 Oct 2013 02:04:24 -0500
-Message-ID: <1381561465-20147-5-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH v2 5/5] remote-helpers: add exec-path links
+Date: Sat, 12 Oct 2013 02:04:21 -0500
+Message-ID: <1381561465-20147-2-git-send-email-felipe.contreras@gmail.com>
 References: <1381561465-20147-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
@@ -11,70 +11,85 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VUtLX-0003hL-6P
-	for gcvg-git-2@plane.gmane.org; Sat, 12 Oct 2013 09:10:43 +0200
+	id 1VUtLV-0003hL-DG
+	for gcvg-git-2@plane.gmane.org; Sat, 12 Oct 2013 09:10:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753089Ab3JLHKj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Oct 2013 03:10:39 -0400
-Received: from mail-oa0-f54.google.com ([209.85.219.54]:53425 "EHLO
-	mail-oa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753032Ab3JLHKh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Oct 2013 03:10:37 -0400
-Received: by mail-oa0-f54.google.com with SMTP id n5so3187755oag.27
-        for <git@vger.kernel.org>; Sat, 12 Oct 2013 00:10:37 -0700 (PDT)
+	id S1752209Ab3JLHKc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Oct 2013 03:10:32 -0400
+Received: from mail-oa0-f43.google.com ([209.85.219.43]:40364 "EHLO
+	mail-oa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750711Ab3JLHK3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Oct 2013 03:10:29 -0400
+Received: by mail-oa0-f43.google.com with SMTP id i3so3162500oag.30
+        for <git@vger.kernel.org>; Sat, 12 Oct 2013 00:10:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=rI0tl0HYFU9JwiRvzygmzhmgfIaxIA2acrJ+bD/vU/M=;
-        b=tv1/6MT6KGeLLcRjIHG7y99N+q/p5LjXwOeISQKc7NwZGmICLFIOf9epEwULdgWun1
-         8vRo+zmYtDjMzfpZx6F6LLVf+Aam3B8Rw8pPlJ2DrWhWFGaoMiBFI0yMgdKMkdzqtWN6
-         8w9OzaOAQf9/uBYf4+8i4gRNrYYWFsXnOrTRh9MRWbLV1+qOE9YUzsiPLvEfbLpdwQoL
-         GadP3Xxlca/OLXum2wP1ifAQ57FyNfU7gfzBq4bA63Z56moc4Qd2KCPUUQYyIhRvZO6F
-         D4/kA/xPiSlbH255djFe+0B5POpL+sBU/B5n5jBqmetxy8O8pyhW0FO5RKacxBzO1hWn
-         xKhA==
-X-Received: by 10.182.237.75 with SMTP id va11mr17904224obc.5.1381561837078;
-        Sat, 12 Oct 2013 00:10:37 -0700 (PDT)
+        bh=B6y2P3vF5msB2KBwLNLIF/kKnVSsfLac8Q3Aq5S6MBA=;
+        b=M44PndgoRpaRztMmFEyR7N2M0mntV1RMA1pA/UmGUgRHLszHrhZSmNXwxE9OLo3h5Z
+         gBFw/e7DYM9DqQTTmE6U0EPOAF2sPc1jYCFIokHiHvpxaIThXEqruJKouL4wR5ilUuY4
+         7tSGqzA/jQ5IDCpu+C3YOyUawgkoexYRN9RHg+MhnEjmFcv7cdVhTHPPadGqrRh+12Ko
+         57muDzSQDOGkfeLvv7Ei9fqzbuWmDenMgEjiKv5CH1/LAIf4rYquUu51FVsIwBvkVbk8
+         aeaZN//y1HQ7VkICN44KrPYtf3AhlYHAkcqqeIBeMeKN6luI2dZfGwWinCKr5pj0zt++
+         NORw==
+X-Received: by 10.182.22.5 with SMTP id z5mr24699obe.42.1381561828948;
+        Sat, 12 Oct 2013 00:10:28 -0700 (PDT)
 Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
-        by mx.google.com with ESMTPSA id y1sm101350547oek.4.1969.12.31.16.00.00
+        by mx.google.com with ESMTPSA id wd7sm28627504obc.3.1969.12.31.16.00.00
         (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 12 Oct 2013 00:10:36 -0700 (PDT)
+        Sat, 12 Oct 2013 00:10:28 -0700 (PDT)
 X-Mailer: git-send-email 1.8.4-fc
 In-Reply-To: <1381561465-20147-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235958>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235959>
 
-They need the gitexecdir.
+This way we don't have to modify the PATH ourselves and it's easier to
+test without 'make'.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- Makefile | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ contrib/remote-helpers/Makefile | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 3588ca1..e51b92e 100644
---- a/Makefile
-+++ b/Makefile
-@@ -511,12 +511,14 @@ build-perl-script: $(SCRIPT_PERL_GEN)
- build-sh-script: $(SCRIPT_SH_GEN)
- build-python-script: $(SCRIPT_PYTHON_GEN)
+diff --git a/contrib/remote-helpers/Makefile b/contrib/remote-helpers/Makefile
+index 8799c77..2e14b65 100644
+--- a/contrib/remote-helpers/Makefile
++++ b/contrib/remote-helpers/Makefile
+@@ -1,15 +1,15 @@
+ TESTS := $(wildcard test-*.t)
+ SCRIPTS := $(wildcard git-remote-*.py)
++LINKS := $(addprefix ../../,$(patsubst %.py,%,$(SCRIPTS)))
  
--.PHONY: install-perl-script install-sh-script install-python-script
--install-sh-script: $(SCRIPT_SH_INS)
-+.PHONY: install-gitexecdir install-perl-script install-sh-script install-python-script
-+install-gitexecdir:
-+	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
-+install-sh-script: $(SCRIPT_SH_INS) | install-gitexecdir
- 	$(INSTALL) $^ '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
--install-perl-script: $(SCRIPT_PERL_INS)
-+install-perl-script: $(SCRIPT_PERL_INS) | install-gitexecdir
- 	$(INSTALL) $^ '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
--install-python-script: $(SCRIPT_PYTHON_INS)
-+install-python-script: $(SCRIPT_PYTHON_INS) | install-gitexecdir
- 	$(INSTALL) $^ '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
+ export T := $(addprefix $(CURDIR)/,$(TESTS))
+ export MAKE := $(MAKE) -e
+-export PATH := $(CURDIR):$(PATH)
+ export TEST_LINT := test-lint-executable test-lint-shell-syntax
+ export TEST_DIRECTORY := $(CURDIR)/../../t
  
- .PHONY: clean-perl-script clean-sh-script clean-python-script
+ export SCRIPT_PYTHON := $(addprefix $(CURDIR)/,$(SCRIPTS))
+ 
+-all: $(SCRIPTS)
++all: $(LINKS)
+ 	$(MAKE) -C ../.. build-python-script
+ 
+ install:
+@@ -17,10 +17,14 @@ install:
+ 
+ clean:
+ 	$(MAKE) -C ../.. clean-python-script
++	$(RM) $(LINKS)
+ 
+ test: all
+ 	$(MAKE) -C ../../t $@
+ 
++$(LINKS):
++	ln -sf contrib/remote-helpers/$(notdir $@) ../..
++
+ $(TESTS): all
+ 	$(MAKE) -C ../../t $(CURDIR)/$@
+ 
 -- 
 1.8.4-fc
