@@ -1,132 +1,413 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH try2 10/14] apply: add --work, --no-work options
-Date: Sat, 12 Oct 2013 02:04:38 -0500
-Message-ID: <1381561488-20294-5-git-send-email-felipe.contreras@gmail.com>
-References: <1381561488-20294-1-git-send-email-felipe.contreras@gmail.com>
-Cc: Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>,
-	Jay Soffian <jaysoffian@gmail.com>,
-	Miles Bader <miles@gnu.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Philip Oakley <philipoakley@iee.org>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	William Swanson <swansontec@gmail.com>,
-	Ping Yin <pkufranky@gmail.com>,
-	Hilco Wijbenga <hilco.wijbenga@gmail.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
+Subject: My patches
+Date: Sat, 12 Oct 2013 02:24:50 -0500
+Message-ID: <20131012072450.GA21165@nysa>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 12 09:15:31 2013
+X-From: git-owner@vger.kernel.org Sat Oct 12 09:31:08 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VUtQA-0006tW-Jy
-	for gcvg-git-2@plane.gmane.org; Sat, 12 Oct 2013 09:15:30 +0200
+	id 1VUtfH-00084S-AQ
+	for gcvg-git-2@plane.gmane.org; Sat, 12 Oct 2013 09:31:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753396Ab3JLHLE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Oct 2013 03:11:04 -0400
-Received: from mail-ob0-f177.google.com ([209.85.214.177]:36185 "EHLO
-	mail-ob0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752095Ab3JLHLB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Oct 2013 03:11:01 -0400
-Received: by mail-ob0-f177.google.com with SMTP id wm4so3391963obc.8
-        for <git@vger.kernel.org>; Sat, 12 Oct 2013 00:11:01 -0700 (PDT)
+	id S1752214Ab3JLHax (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Oct 2013 03:30:53 -0400
+Received: from mail-oa0-f50.google.com ([209.85.219.50]:56530 "EHLO
+	mail-oa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750715Ab3JLHaw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Oct 2013 03:30:52 -0400
+Received: by mail-oa0-f50.google.com with SMTP id j1so3109141oag.37
+        for <git@vger.kernel.org>; Sat, 12 Oct 2013 00:30:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=fyX0nN++Q8GXeWdCjVjRKiW2pI/tYuO78Au0zTf+dCo=;
-        b=KnbFqYvs3hDIyZujNpMie0+WIiRacgnhanigZgAyT1WS4CFOJPJyHD+/Az0QI/8+D4
-         Un578Ik9FtiYzSbMUUu05+36bXt+G5P4HtVzw7I10cmw0n2ZBZtBOWyD9Bw/6R7Gmarf
-         CuBYog4qbScPMT3RP7SfuEDre+V0dKySglhlT4hPW9Sg6Cj1sv2FeBnxQusGsiRIpLV9
-         +qhNoxLYPyGjTgK3DRFQsojOD96VZ/ikin6MLxifBs0/oHfkineNMtOsREqkedQB1L0o
-         NT014G2FZQjZ7sy7L+R8psCV8os1q0ER1eWbe4ah78NApheix1h9nKGLcrmvHVwxEYZK
-         3ezQ==
-X-Received: by 10.60.95.229 with SMTP id dn5mr17830342oeb.26.1381561861352;
-        Sat, 12 Oct 2013 00:11:01 -0700 (PDT)
+        h=date:from:to:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent;
+        bh=fVih/MikKnZnhdWw/ob7A2XhmHM5FfPoO1GRgIiZsBA=;
+        b=vMxYgSfreL7QbqHfE3GtvoDNlZYIXHYWasA8CEuZc4dxJQKejRKGed0H3YUSOXpCVQ
+         rCmJaIaW8gsLTeRCEeP86gdI7eM923Rt+cycc0n9v5cCIHfzFbK/PbucCNHNFAdw8bKi
+         WcuqOnKQ5MfXUYHGXBsqiqIsN5Ba6B2UM0IH1yA348MpYHQcQ27lt1VOLkkXTqyL9Hhg
+         aBwb3ZMmJJqEtXribd+qnc90Wgos7zHj3LTuBEIdSzjY6OolFTjQVQVOBgwnJ+YcbmlM
+         XHUtVSQEmg9766qMur9AaJxRFv4IeMBP3Z6zhbRn/EaSOgYYYszwHWsV1km0Wvd/bcI3
+         7tTw==
+X-Received: by 10.182.16.201 with SMTP id i9mr17869578obd.21.1381563051974;
+        Sat, 12 Oct 2013 00:30:51 -0700 (PDT)
 Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
-        by mx.google.com with ESMTPSA id xr8sm28651678obc.12.1969.12.31.16.00.00
+        by mx.google.com with ESMTPSA id rr6sm101482934oeb.0.1969.12.31.16.00.00
         (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 12 Oct 2013 00:11:00 -0700 (PDT)
-X-Mailer: git-send-email 1.8.4-fc
-In-Reply-To: <1381561488-20294-1-git-send-email-felipe.contreras@gmail.com>
+        Sat, 12 Oct 2013 00:30:50 -0700 (PDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236040>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236041>
 
-'git apply', 'git apply --index', 'git apply --cached' do different
-things, but what they do is not precisely clear, specially since no
-other commands has similar distinctions.
+Hi,
 
-With --no-work (--work being the default), it's clear what the option
-would do; modify, or not, the working directory.
+Clearly, a lot of my patches have not been reviewed properly, so even
+though they are technically correct, and would benefit users, some have
+specifically been requested by them, and at least one would
+significantly improve Git's user interface... they are going nowhere.
 
-So, --work (the default), doesn't cause any changes, and --no-work
-enables the current --cache if used with --index.
+Here is the summary, and you can also find a web version:
+https://github.com/felipec/git/wiki/My-patches
 
-Eventually --work might replace --cache, if these options are
-standarized in the whole git toolset.
+Cheers.
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- Documentation/git-apply.txt | 6 +++++-
- builtin/apply.c             | 5 +++++
- 2 files changed, 10 insertions(+), 1 deletion(-)
+=== branch: improve verbose option ===
 
-diff --git a/Documentation/git-apply.txt b/Documentation/git-apply.txt
-index ce44327..6167061 100644
---- a/Documentation/git-apply.txt
-+++ b/Documentation/git-apply.txt
-@@ -16,7 +16,7 @@ SYNOPSIS
- 	  [--ignore-space-change | --ignore-whitespace ]
- 	  [--whitespace=(nowarn|warn|fix|error|error-all)]
- 	  [--exclude=<path>] [--include=<path>] [--directory=<root>]
--	  [--verbose] [<patch>...]
-+	  [--verbose] [--no-work] [<patch>...]
- 
- DESCRIPTION
- -----------
-@@ -75,6 +75,10 @@ OPTIONS
- 	cached data, apply the patch, and store the result in the index
- 	without using the working tree. This implies `--index`.
- 
-+--[no-]work::
-+	Apply a patch with or without touching the working tree, essentially
-+	`--no-work` plus `--index` are the equivalent of `--cached`.
-+
- -3::
- --3way::
- 	When the patch does not apply cleanly, fall back on 3-way merge if
-diff --git a/builtin/apply.c b/builtin/apply.c
-index 42b5a4b..a3dd89d 100644
---- a/builtin/apply.c
-+++ b/builtin/apply.c
-@@ -4350,6 +4350,7 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
- 	int errs = 0;
- 	int is_not_gitdir = !startup_info->have_repository;
- 	int force_apply = 0;
-+	int work = 1;
- 
- 	const char *whitespace_option = NULL;
- 
-@@ -4381,6 +4382,8 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
- 			N_("make sure the patch is applicable to the current index")),
- 		OPT_BOOLEAN(0, "cached", &cached,
- 			N_("apply a patch without touching the working tree")),
-+		OPT_BOOLEAN(0, "work", &work,
-+			N_("modify the working tree")),
- 		OPT_BOOLEAN(0, "apply", &force_apply,
- 			N_("also apply the patch (use with --stat/--summary/--check)")),
- 		OPT_BOOL('3', "3way", &threeway,
-@@ -4433,6 +4436,8 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
- 	argc = parse_options(argc, argv, prefix, builtin_apply_options,
- 			apply_usage, 0);
- 
-+	if (check_index && !work)
-+		cached = 1;
- 	if (apply_with_reject && threeway)
- 		die("--reject and --3way cannot be used together.");
- 	if (cached && threeway)
+People have commented that this is a good change, yet it's ignored.
+
+----
+Felipe Contreras (2):
+      branch: trivial cleanup
+      branch: reorganize verbose options
+----
+
+Link: https://github.com/felipec/git/commits/fc/branch/fast +
+Patches: http://mid.gmane.org/1381561229-19947-1-git-send-email-felipe.contreras@gmail.com +
+
+=== Reject non-ff pulls by default (v4) ===
+
+The conclusion of the discussions is that this change is good, yet it doesn't move forward.
+
+----
+Felipe Contreras (7):
+      pull: rename pull.rename to pull.mode
+      pull: refactor $rebase variable into $mode
+      pull: add --merge option
+      pull: add merge-ff-only option
+      pull: add warning on non-ff merges
+      pull: cleanup documentation
+      pull: add documentation about non-ff merges
+----
+
+Link: https://github.com/felipec/git/commits/fc/pull-merge-ff-only +
+Patches: http://mid.gmane.org/1381561322-20059-1-git-send-email-felipe.contreras@gmail.com +
+
+=== remote-helpers: test reorganization (v2) ===
+
+People have requested both that the scripts are autogenerated, and that we
+provide instructions how to install these for distributions, this fixes both,
+and yet is not merged.
+
+----
+Felipe Contreras (5):
+      remote-helpers: generate scripts
+      build: fix installation of scripts
+      remote-helpers: rename tests
+      remote-helpers: allow direct test execution
+      remote-helpers: add exec-path links
+----
+
+Link: https://github.com/felipec/git/commits/fc/remote/reorg +
+Patches: http://mid.gmane.org/1381561465-20147-1-git-send-email-felipe.contreras@gmail.com +
+
+=== build: add default aliases (v3) ===
+
+All version control systems out there have default aliases, except Git.
+Mercurial even allows overriding the main commands, like 'hg commit' so all the
+arguments that use the override of default aliases causing discrepancies as a
+reason to reject this change are void, since clearly Mercurial doesn't have
+such problems.
+
+----
+Felipe Contreras (1):
+      build: add default aliases
+----
+
+Link: https://github.com/felipec/git/commits/fc/default-aliases +
+Patches: http://mid.gmane.org/1381561482-20208-1-git-send-email-felipe.contreras@gmail.com +
+
+=== Add core.mode configuration (v3) ===
+
+Not even a reply.
+
+----
+Felipe Contreras (1):
+      Add core.mode configuration
+----
+
+Link: https://github.com/felipec/git/commits/fc/config-mode-next +
+Patches: http://mid.gmane.org/1381561485-20252-1-git-send-email-felipe.contreras@gmail.com +
+
+=== Officially start moving to the term 'staging area' ===
+
+Everybody agrees this is the way to go, and yet Junio doesn't comment on the way
+forward.
+
+----
+Felipe Contreras (14):
+      Add proper 'stage' command
+      stage: add edit command
+      diff: document --staged
+      grep: add --staged option
+      rm: add --staged option
+      stash: add --stage option to save
+      stash: add --stage to pop and apply
+      submodule: add --staged options
+      apply: add --stage option
+      apply: add --work, --no-work options
+      completion: update --staged options
+      reset: add --stage and --work options
+      reset: allow --keep with --stage
+      completion: update 'git reset' new stage options
+----
+
+Link: https://github.com/felipec/git/commits/fc/stage +
+Patches: http://mid.gmane.org/1381561488-20294-1-git-send-email-felipe.contreras@gmail.com +
+
+=== transport-helper: updates (v3) ===
+
+People have requested --foce --dry-run and old:new support for remote helpers,
+this introduces those options and it was rejected without any reason given.
+
+----
+Felipe Contreras (10):
+      transport-helper: add 'force' to 'export' helpers
+      transport-helper: fix extra lines
+      transport-helper: check for 'forced update' message
+      fast-export: improve argument parsing
+      fast-export: add new --refspec option
+      transport-helper: add support for old:new refspec
+      fast-import: add support to delete refs
+      fast-export: add support to delete refs
+      transport-helper: add support to delete branches
+      transport-helper: don't update refs in dry-run
+----
+
+Link: https://github.com/felipec/git/commits/fc/transport/improv +
+Patches: http://mid.gmane.org/1381561533-20381-1-git-send-email-felipe.contreras@gmail.com +
+
+=== Introduce publish tracking branch ===
+
+This improves the support for triangular workflows, which even Junio accepted
+is lacking, yet it didn't even receive comments.
+
+----
+Felipe Contreras (8):
+      branch: trivial cleanup
+      branch: reorganize verbose options
+      push: trivial reorganization
+      Add concept of 'publish' branch
+      branch: allow configuring the publish branch
+      t: branch add publish branch tests
+      push: add --set-publish option
+      branch: display publish branch
+----
+
+Link: https://github.com/felipec/git/commits/fc/publish +
+Patches: http://mid.gmane.org/1381561561-20459-1-git-send-email-felipe.contreras@gmail.com +
+
+=== New git-related helper (v10) ===
+
+This series was included in 'pu' and then silently dropped with no reason
+given. 'git contacts' implements a rudimentary version of this, but lacks all
+the features. I started an external project as a result.
+
+----
+Felipe Contreras (15):
+      Add new git-related helper to contrib
+      contrib: related: add tests
+      contrib: related: add support for multiple patches
+      contrib: related: add option to parse from committish
+      contrib: related: parse committish like format-patch
+      contrib: related: print the amount of involvement
+      contrib: related: add helper Person classes
+      contrib: related: show role count
+      contrib: related: add support for more roles
+      contrib: related: group persons with same email
+      contrib: related: allow usage on other directories
+      contrib: related: add mailmap support
+      contrib: related: add option parsing
+      contrib: related: add option to show commits
+      contrib: related: add README
+----
+
+Link: https://github.com/felipec/git/commits/fc/related +
+Patches: http://mid.gmane.org/1381561584-20529-1-git-send-email-felipe.contreras@gmail.com +
+
+=== fetch: add new fetch.default configuration ===
+
+No response whatsoever, even after a thorough expalanation of the issue.
+'git fetch .' is still braindead.
+
+----
+Felipe Contreras (1):
+      fetch: add new fetch.default configuration
+----
+
+Link: https://github.com/felipec/git/commits/fc/fetch/default +
+Patches: http://mid.gmane.org/1381561625-20624-1-git-send-email-felipe.contreras@gmail.com +
+
+=== Version fixes and cleanups (v4) ===
+
+Our git.spec is clearly broken for release candidates, and yet the patch
+doesn't receive feedback.
+
+----
+Felipe Contreras (2):
+      version-gen: cleanup
+      version-gen: fix versions
+----
+
+Link: https://github.com/felipec/git/commits/fc/version-fix +
+Patches: http://mid.gmane.org/1381561628-20665-1-git-send-email-felipe.contreras@gmail.com +
+
+=== Trivial paches ===
+
+----
+Felipe Contreras (20):
+      merge: simplify ff-only option
+      t: replace pulls with merges
+      pull: cleanup documentation
+      fetch: add missing documentation
+      remote: fix trivial memory leak
+      revision: add missing include
+      shortlog: add missing declaration
+      branch: trivial style fix
+      sha1-name: trivial style cleanup
+      doc: git-foo was obsoleted several years ago
+      symbolic-ref: trivial style fix
+      alias: trivial style fix
+      transport-helper: trivial style fix
+      describe: trivial style fixes
+      pretty: trivial style fix
+      revision: trivial style fixes
+      diff: trivial style fix
+      run-command: trivial style fixes
+      setup: trivial style fixes
+      add: avoid yoda conditions
+----
+
+Patches: http://mid.gmane.org/1381561636-20717-1-git-send-email-felipe.contreras@gmail.com +
+
+=== Massive improvents to rebase and cherry-pick (v6) ===
+
+People make a fuss that Ruby support is no-go because we need to move scripts
+to C, and when somebody does the work for that, the work gets ignored, even
+though it's fixing and simplyfing code.
+
+----
+Felipe Contreras (28):
+      cherry-pick: don't barf when there's nothing to do
+      cherry-pick: add --skip-empty option
+      revert/cherry-pick: add --quiet option
+      revert/cherry-pick: add --skip option
+      builtin: add rewrite helper
+      cherry-pick: store rewritten commits
+      cherry-pick: don't store skipped commit
+      builtin: move run_rewrite_hook() to rewrite.c
+      builtin: rewrite: add copy_rewrite_notes()
+      cherry-pick: add --action-name option
+      cherry-pick: copy notes and run hooks
+      cherry-pick: remember rerere-autoupdate
+      rebase: split the cherry-pick stuff
+      rebase: cherry-pick: fix mode storage
+      rebase: cherry-pick: fix sequence continuation
+      rebase: cherry-pick: fix abort of cherry mode
+      rebase: cherry-pick: fix command invocations
+      rebase: cherry-pick: fix status messages
+      rebase: cherry-pick: automatically commit stage
+      rebase: cherry-pick: set correct action-name
+      rebase: trivial cleanup
+      t: rebase-autostash: fix setup
+      sequencer: store progress information
+      prompt: parse cherry-pick rebase mode
+      rebase: use 'cherrypick' mode instead of 'am'
+      rebase: cherry-pick: add merge options
+      rebase: remove merge mode
+      rebase: cherry-pick: add copyright
+----
+
+Link: https://github.com/felipec/git/commits/fc/rebase +
+Patches: http://mid.gmane.org/1377842182-18724-1-git-send-email-felipe.contreras@gmail.com +
+
+=== Support for Ruby (v2) ===
+
+Ruby is clearly the way to move forward to replace shell and perl scripts with
+C, with a similar syntax to all three, and yet this comprehensive patch series
+doesn't even receive a response.
+
+----
+Felipe Contreras (44):
+      Add support for ruby commands
+      ruby: add support for internal ruby programs
+      request-pull: fix annotated tag check
+      request-pull: fix for specific branch
+      request-pull: use appropriate ref
+      request-pull: fix exact match checking
+      request-pull: trivial simplification
+      request-pull: t: trivial whitespace style fixes
+      request-pull: t: add missing cat
+      ruby: rewrite 'request-pull'
+      ruby: request-pull: rewrite perl script
+      ruby: request-pull: trivial simplifications
+      ruby: bind setup_git_directory()
+      ruby: bind dwim_ref()
+      ruby: request-pull: use native dwim_ref()
+      ruby: bind git_config()
+      ruby: request-pull: use native git_config()
+      ruby: bind read_ref()/peel_ref()
+      ruby: bind get_sha1()
+      ruby: request-pull: simplify tag fetching
+      ruby: request-pull: use get_sha1()
+      ruby: add Commit class
+      ruby: bind get_merge_bases()
+      ruby: request-pull: use get_merge_bases()
+      ruby: request-pull: trivial cleanups
+      ruby: bind remote and transport stuff
+      ruby: request-pull: use native remote and transport
+      ruby: bind find_unique_abbrev()
+      ruby: request-pull: use native commit info
+      ruby: bind read_sha1_file()
+      ruby: request-pull: use read_sha1_file()
+      revision: add missing include
+      shortlog: add missing declaration
+      shortlog: split builtin from common code
+      ruby: add RevInfo and DiffOptions
+      ruby: bind shortlog()
+      ruby: request-pull: use shortlog()
+      ruby: bind diff_tree_sha1()
+      ruby: bind log_tree_diff_flush()
+      ruby: request-pull: use native diff_tree stuff
+      ruby: request-pull: remove rescue block
+      ruby: remove GIT_PAGER from environment
+      ruby: add simpler option parser
+      request-pull: rewrite to C
+----
+
+Link: https://github.com/felipec/git/commits/fc/ruby +
+Patches: http://mid.gmane.org/1380405849-13000-11-git-send-email-felipe.contreras@gmail.com +
+
+=== revision: add --except option (v3) ===
+
+All comments were addressed, yet there doesn't seem to be any path forward.
+
+----
+Felipe Contreras (1):
+      revision: add --except option
+----
+
+Link: https://github.com/felipec/git/commits/fc/revision/except +
+Patches: http://mid.gmane.org/1381561690-20827-1-git-send-email-felipe.contreras@gmail.com +
+
+=== sha1-name: refactor get_sha1() parsing ===
+
+Duy Nguyen suggested that I do this, and now that I do the first step, the work gets ignored.
+
+----
+Felipe Contreras (1):
+      sha1-name: refactor get_sha1() parsing
+----
+
+Link: https://github.com/felipec/git/commits/fc/revision/refactor +
+Patches: http://mid.gmane.org/1381561692-20869-1-git-send-email-felipe.contreras@gmail.com +
+
 -- 
-1.8.4-fc
+Felipe Contreras
