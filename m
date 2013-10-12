@@ -1,123 +1,56 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v3 1/5] pull: rename pull.rename to pull.mode
-Date: Fri, 11 Oct 2013 21:08:00 -0500
-Message-ID: <CAMP44s3669E7JyEjP_ErYt7JN2eHv0mX4+p_=ZP4_LDatnw2vg@mail.gmail.com>
-References: <1378689796-19305-1-git-send-email-felipe.contreras@gmail.com>
-	<1378689796-19305-2-git-send-email-felipe.contreras@gmail.com>
-	<522E3C6A.3070409@bbn.com>
-	<CAMP44s1OyST3S1HEdS38WPsjq6w9SekuwT4DRUgVvduATox9tw@mail.gmail.com>
-	<20130910022152.GA17154@sigill.intra.peff.net>
-	<CAMP44s1FfQ-1pAK8T1cmiZk4i17HnpvzPwuZrzHiiXSmGzbrRw@mail.gmail.com>
-	<vpqmwnljdmn.fsf@anie.imag.fr>
-	<52589027a4851_5dc4c2be742754f@nysa.mail>
-	<20131012005035.GA27939@sigill.intra.peff.net>
-	<CAMP44s2y0UZ9uS8xtG2WDD=k5pHSG+K+_WM2dj-DVaUDy4djdA@mail.gmail.com>
-	<20131012012515.GA1778@sigill.intra.peff.net>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: pack-object's try_delta fast path for v2 trees?
+Date: Sat, 12 Oct 2013 10:42:17 +0700
+Message-ID: <CACsJy8Behb7PW=pFjH=wpjfHjUiyCo8n_ER+KyzcBwCzpyG6pg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Richard Hansen <rhansen@bbn.com>, git@vger.kernel.org,
-	Andreas Krey <a.krey@gmx.de>,
-	John Keeping <john@keeping.me.uk>,
-	Philip Oakley <philipoakley@iee.org>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Oct 12 04:08:09 2013
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Sat Oct 12 05:42:53 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VUoci-0006EH-Ic
-	for gcvg-git-2@plane.gmane.org; Sat, 12 Oct 2013 04:08:08 +0200
+	id 1VUq6O-0008JJ-Qp
+	for gcvg-git-2@plane.gmane.org; Sat, 12 Oct 2013 05:42:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752433Ab3JLCID (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Oct 2013 22:08:03 -0400
-Received: from mail-la0-f51.google.com ([209.85.215.51]:65387 "EHLO
-	mail-la0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751821Ab3JLCIC (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Oct 2013 22:08:02 -0400
-Received: by mail-la0-f51.google.com with SMTP id es20so4145668lab.10
-        for <git@vger.kernel.org>; Fri, 11 Oct 2013 19:08:00 -0700 (PDT)
+	id S1755566Ab3JLDmt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Oct 2013 23:42:49 -0400
+Received: from mail-oa0-f45.google.com ([209.85.219.45]:46927 "EHLO
+	mail-oa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754597Ab3JLDms (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Oct 2013 23:42:48 -0400
+Received: by mail-oa0-f45.google.com with SMTP id i4so197549oah.18
+        for <git@vger.kernel.org>; Fri, 11 Oct 2013 20:42:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=fsL1NUH0ts780PCytOJXfIxhv1mkK6S2sJZrXBB8bN4=;
-        b=hbOmhva3kL0Yabd8zHnfDqbDUeCrjmhJ85CAeBZz2gnX+SkqaBs791LuhU0BxxLVOi
-         591nRbTFkoEo7GKnmP+zb68cA/i/JjnRgnwp0pb8b94+yvt9syjuVxhjYOsCOrNcULsL
-         qpC9jGVspIFTw00Hq3TDOQ7mIuCE2MhDBA5UQxRxVj5jPSoNerIAr7bR/Gxf45VrQE5F
-         XFoWhzs551rT9aIOHsNUqOAO4YaFOGFiBDPmQEPyOzWG0HkpzN+bblcDjP5eYdL5+Uir
-         DndISp42l83XB5y7i/QUxI+iEkyOLtz5PQQj0pjh4FRm6JtTvWYQTmbnHNwTiJo0f9Qq
-         a8yQ==
-X-Received: by 10.112.172.137 with SMTP id bc9mr19246520lbc.21.1381543680331;
- Fri, 11 Oct 2013 19:08:00 -0700 (PDT)
-Received: by 10.114.91.230 with HTTP; Fri, 11 Oct 2013 19:08:00 -0700 (PDT)
-In-Reply-To: <20131012012515.GA1778@sigill.intra.peff.net>
+        h=mime-version:from:date:message-id:subject:to:cc:content-type;
+        bh=kBDeRjsI7IkkZmd2wyzQCmYpGwXdFGrt0Ycb1OaC5Nk=;
+        b=RHrKNLDCJ3E0tzjUkLK3BY/F17t4Q96xOth9bL4el91YbuRDfzNcVUHwXKGL0jqJzZ
+         p0gC3chpz9CF1WxiX5AeKYLzb6aZ5Aaoh+K7J2FNz1FgV/msx6c3PGIL8N3WDEpu2sFK
+         7SpNgSx+EfH+6vlsrrV5d5+2fprkMLRXezUdmUo9EsIIzChBKiFAdzedfOp/qKNAjVwh
+         3I07W7giI84DDdgSivQdLNxkEPysJHf2hCt6x2a2zVTj1MddRzAyczXfxai0u5M2uYEL
+         JkqqP8l9TBqrINfrDEixY72JmC4PgSwJ4U2gG0rQhh5xJq3kiw8fYseTWQJY+gG67k86
+         NY5Q==
+X-Received: by 10.60.96.169 with SMTP id dt9mr17082161oeb.27.1381549367841;
+ Fri, 11 Oct 2013 20:42:47 -0700 (PDT)
+Received: by 10.76.0.41 with HTTP; Fri, 11 Oct 2013 20:42:17 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235938>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235939>
 
-On Fri, Oct 11, 2013 at 8:25 PM, Jeff King <peff@peff.net> wrote:
-> On Fri, Oct 11, 2013 at 08:15:46PM -0500, Felipe Contreras wrote:
->
->> >> You are free to go ahead and implement 'warning ()' in git-sh-setup.sh, in the
->> >> meantime no shell script does that, and that's no reason to reject this patch
->> >> series.
->> >
->> > You are completely missing Matthieu's point that we attempt to be
->> > consistent in the format of messages, as well as where they are output,
->> > and from a user's perspective it does not matter what language the tool
->> > is implemented in.
->>
->> If we truly did that, there should be a warning () function, like in C.
->
-> Or people could hand-code them to look similar, which is exactly what
-> has happened.
+Hi,
 
-And by doing that be prone to make mistakes, like using 'WARNING',
-instead of 'warning'. But I guess you don't care about consistency
-_that much_.
-
-> If you want to factor out a warning function to clean up the code, be my
-> guest. But the lack of one does not provide an argument that you should
-> break consistency.
-
-Consistency is already broken.
-
->> > -               echo "The configurations pull.rebase and branch.<name>.rebase are deprecated."
->> > -               echo "Please use pull.mode and branch.<name>.pullmode instead."
->> > +               echo >&2 "warning: The configurations pull.rebase and branch.<name>.rebase are deprecated."
->> > +               echo >&2 "Please use pull.mode and branch.<name>.pullmode instead."
->> [...]
->>
->> Are you sure you want me to squash that in? Because the warnings
->> wouldn't be consistent. Some would be "WARNING: " and others would be
->> "warning: ". Personally I don't care, but if your argument is
->> consistency, you should. If we had a warning () function, we could
->> truly be consistent.
->
-> It is significant in the most important ways, which are labeling it at
-> all, and sending it to stderr. Capitalization is less important, in my
-> opinion.
-
-It's still inconsistent.
-
-> Using a lowercase version is much more consistent with the warnings
-> produced by C code, which is why I chose it over the capitalized
-> version. Again, if you want to change the existing WARNING cases in the
-> shell scripts to be consistent with C output, be my guest.
-
-It seems you are not that interested in consistency after all.
-
-> Do you actually have some reason for wanting to output to go to stdout?
-
-I'm fine with 'echo "warning: foo" >&2', but still, if you really
-cared about consistency, there would be a warn() function, precisely
-to avoid the mistakes of WARNING vs. warning which are already there,
-plus future ones.
-
+Just wondering if this has been considered and dropped before.
+Currently we use try_delta() for every object including trees. But
+trees are special. All tree entries must be unique and sorted. That
+helps simplify diff algorithm, as demonstrated by diff_tree() and
+pv4_encode_tree(). A quick and dirty test with test-delta shows that
+tree_diff only needs half the time of diff_delta(). As trees account
+for like half the objects in a repo, speeding up delta search might
+help performance, I think.
 -- 
-Felipe Contreras
+Duy
