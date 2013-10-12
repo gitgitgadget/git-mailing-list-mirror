@@ -1,7 +1,7 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH try2 05/14] rm: add --staged option
-Date: Sat, 12 Oct 2013 02:04:42 -0500
-Message-ID: <1381561488-20294-9-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH try2 11/14] completion: update --staged options
+Date: Sat, 12 Oct 2013 02:04:47 -0500
+Message-ID: <1381561488-20294-14-git-send-email-felipe.contreras@gmail.com>
 References: <1381561488-20294-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>,
 	Jay Soffian <jaysoffian@gmail.com>,
@@ -14,89 +14,100 @@ Cc: Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>,
 	Hilco Wijbenga <hilco.wijbenga@gmail.com>,
 	Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 12 09:11:49 2013
+X-From: git-owner@vger.kernel.org Sat Oct 12 09:11:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VUtMX-0004MJ-43
-	for gcvg-git-2@plane.gmane.org; Sat, 12 Oct 2013 09:11:45 +0200
+	id 1VUtMZ-0004MJ-P4
+	for gcvg-git-2@plane.gmane.org; Sat, 12 Oct 2013 09:11:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753638Ab3JLHLQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Oct 2013 03:11:16 -0400
-Received: from mail-oa0-f41.google.com ([209.85.219.41]:65324 "EHLO
+	id S1753813Ab3JLHLa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Oct 2013 03:11:30 -0400
+Received: from mail-oa0-f41.google.com ([209.85.219.41]:47750 "EHLO
 	mail-oa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753595Ab3JLHLO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Oct 2013 03:11:14 -0400
-Received: by mail-oa0-f41.google.com with SMTP id n10so3156292oag.0
-        for <git@vger.kernel.org>; Sat, 12 Oct 2013 00:11:13 -0700 (PDT)
+	with ESMTP id S1753775Ab3JLHL2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Oct 2013 03:11:28 -0400
+Received: by mail-oa0-f41.google.com with SMTP id n10so3149086oag.28
+        for <git@vger.kernel.org>; Sat, 12 Oct 2013 00:11:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=cgGNg6iL73Z/eeNgkG+FPWDUhJKSkw8Boo6R9JoegUQ=;
-        b=pzvl1cSpdTTrnN+mUBY3kq4vdR2jjrw8Zm38YU6Gay69lY4Dzgjuj9xTxZK1B/aP+m
-         9SStgQiS3NMjUgGGk3Kb2MK6cvNdTh/yySssXDbNp6uVlPsFLgjG0c3laguEwvXS4Ric
-         cQv2+l4jweoEJcbI3msA1BK5k9ItVHza8ZTqjQM+tUtbNymuJKbzB9cXvoGary1ZK7EN
-         fagHLd4e2hk76pYgbaVEJjJbcK5E8UAScp8re0CZnwaWTzyPK/pAY7PzZ7ApdSipcD0Q
-         bXCaL2BG0oZAXc3uj3JMCdmrMrI9sQ0XNNL6UaNmpxfTMgXnopU8UdIH/hXq7TCYXIU+
-         Lpmw==
-X-Received: by 10.182.18.9 with SMTP id s9mr10352457obd.15.1381561873506;
-        Sat, 12 Oct 2013 00:11:13 -0700 (PDT)
+        bh=7AkUHiGl19sYeDd7SqfgYLdqvrJhRnd11BtqE3CIMrI=;
+        b=er8zEpqUkA1nry674btzrHWPutQc6P1vIsNcShncGNOSaVyBWFmd2KTlg8k6aZ/SeS
+         +9aBEw1ulVhprgIlNZTtKKQoo6awuwHl3ilcDW19eUUnhnSgZroCZiMP/E/4xwf5UEcR
+         adr8SukAj497kNmWT105DOBpwDNA2CevTKsypABLsKDlzHbH9fTPk7HUsdIKFqWHbKx9
+         UUFkLig8Hh4f0fjjPuG5vkzhYP7f9Ihvqz6OY2s/uEXpQvNIdEZithW68RcG9DUreKPD
+         BWQONLONfZhBvAmWAdtc5VavZyGgnW1KSHiJfm/FwOKIPoDvqJyFhVZi1rVusPl8tq6o
+         B/xw==
+X-Received: by 10.182.130.131 with SMTP id oe3mr17757794obb.34.1381561888240;
+        Sat, 12 Oct 2013 00:11:28 -0700 (PDT)
 Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
-        by mx.google.com with ESMTPSA id j9sm101391112oef.8.1969.12.31.16.00.00
+        by mx.google.com with ESMTPSA id u3sm101371496oeq.3.1969.12.31.16.00.00
         (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 12 Oct 2013 00:11:12 -0700 (PDT)
+        Sat, 12 Oct 2013 00:11:27 -0700 (PDT)
 X-Mailer: git-send-email 1.8.4-fc
 In-Reply-To: <1381561488-20294-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235976>
-
-Synonym for --cached.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235977>
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- Documentation/git-rm.txt | 5 ++++-
- builtin/rm.c             | 1 +
- 2 files changed, 5 insertions(+), 1 deletion(-)
+ contrib/completion/git-completion.bash | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/Documentation/git-rm.txt b/Documentation/git-rm.txt
-index 1d876c2..156b40d 100644
---- a/Documentation/git-rm.txt
-+++ b/Documentation/git-rm.txt
-@@ -8,7 +8,7 @@ git-rm - Remove files from the working tree and from the index
- SYNOPSIS
- --------
- [verse]
--'git rm' [-f | --force] [-n] [-r] [--cached] [--ignore-unmatch] [--quiet] [--] <file>...
-+'git rm' [-f | --force] [-n] [-r] [--cached | --staged] [--ignore-unmatch] [--quiet] [--] <file>...
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 2b81e78..1dde51f 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -881,7 +881,7 @@ _git_apply ()
+ 		__gitcomp "
+ 			--stat --numstat --summary --check --index
+ 			--cached --index-info --reverse --reject --unidiff-zero
+-			--apply --no-add --exclude=
++			--apply --no-add --exclude= --staged
+ 			--ignore-whitespace --ignore-space-change
+ 			--whitespace= --inaccurate-eof --verbose
+ 			"
+@@ -1294,7 +1294,7 @@ _git_grep ()
+ 	case "$cur" in
+ 	--*)
+ 		__gitcomp "
+-			--cached
++			--cached --staged
+ 			--text --ignore-case --word-regexp --invert-match
+ 			--full-name --line-number
+ 			--extended-regexp --basic-regexp --fixed-strings
+@@ -2253,7 +2253,7 @@ _git_rm ()
+ {
+ 	case "$cur" in
+ 	--*)
+-		__gitcomp "--cached --dry-run --ignore-unmatch --quiet"
++		__gitcomp "--cached --staged --dry-run --ignore-unmatch --quiet"
+ 		return
+ 		;;
+ 	esac
+@@ -2320,7 +2320,7 @@ _git_show_branch ()
  
- DESCRIPTION
- -----------
-@@ -60,6 +60,9 @@ OPTIONS
- 	Working tree files, whether modified or not, will be
- 	left alone.
- 
-+--staged::
-+	Synonym for --cached.
-+
- --ignore-unmatch::
- 	Exit with a zero status even if no files matched.
- 
-diff --git a/builtin/rm.c b/builtin/rm.c
-index 0df0b4d..919911f 100644
---- a/builtin/rm.c
-+++ b/builtin/rm.c
-@@ -268,6 +268,7 @@ static struct option builtin_rm_options[] = {
- 	OPT__DRY_RUN(&show_only, N_("dry run")),
- 	OPT__QUIET(&quiet, N_("do not list removed files")),
- 	OPT_BOOLEAN( 0 , "cached",         &index_only, N_("only remove from the index")),
-+	OPT_BOOLEAN( 0 , "staged",         &index_only, N_("only remove from the index")),
- 	OPT__FORCE(&force, N_("override the up-to-date check")),
- 	OPT_BOOLEAN('r', NULL,             &recursive,  N_("allow recursive removal")),
- 	OPT_BOOLEAN( 0 , "ignore-unmatch", &ignore_unmatch,
+ _git_stash ()
+ {
+-	local save_opts='--keep-index --no-keep-index --quiet --patch'
++	local save_opts='--keep-index --no-keep-index --stage --no-stage --quiet --patch'
+ 	local subcommands='save list show apply clear drop pop create branch'
+ 	local subcommand="$(__git_find_on_cmdline "$subcommands")"
+ 	if [ -z "$subcommand" ]; then
+@@ -2340,7 +2340,7 @@ _git_stash ()
+ 			__gitcomp "$save_opts"
+ 			;;
+ 		apply,--*|pop,--*)
+-			__gitcomp "--index --quiet"
++			__gitcomp "--index --stage --quiet"
+ 			;;
+ 		show,--*|drop,--*|branch,--*)
+ 			;;
 -- 
 1.8.4-fc
