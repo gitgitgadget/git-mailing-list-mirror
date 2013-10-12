@@ -1,56 +1,122 @@
-From: Richard Hansen <rhansen@bbn.com>
-Subject: Re: [PATCH v3 1/5] pull: rename pull.rename to pull.mode
-Date: Sat, 12 Oct 2013 00:40:51 -0400
-Message-ID: <5258D2D3.9030704@bbn.com>
-References: <1378689796-19305-1-git-send-email-felipe.contreras@gmail.com>	<1378689796-19305-2-git-send-email-felipe.contreras@gmail.com>	<522E3C6A.3070409@bbn.com>	<CAMP44s1OyST3S1HEdS38WPsjq6w9SekuwT4DRUgVvduATox9tw@mail.gmail.com>	<20130910022152.GA17154@sigill.intra.peff.net>	<CAMP44s1FfQ-1pAK8T1cmiZk4i17HnpvzPwuZrzHiiXSmGzbrRw@mail.gmail.com>	<vpqmwnljdmn.fsf@anie.imag.fr>	<52589027a4851_5dc4c2be742754f@nysa.mail>	<20131012005035.GA27939@sigill.intra.peff.net>	<CAMP44s2y0UZ9uS8xtG2WDD=k5pHSG+K+_WM2dj-DVaUDy4djdA@mail.gmail.com>	<20131012012515.GA1778@sigill.intra.peff.net> <CAMP44s3669E7JyEjP_ErYt7JN2eHv0mX4+p_=ZP4_LDatnw2vg@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org,
-	Andreas Krey <a.krey@gmx.de>,
-	John Keeping <john@keeping.me.uk>,
-	Philip Oakley <philipoakley@iee.org>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>
-To: Felipe Contreras <felipe.contreras@gmail.com>,
-	Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Oct 12 06:41:11 2013
+From: Stefan Saasen <ssaasen@atlassian.com>
+Subject: [PATCH v2] mergetools/diffmerge: support DiffMerge as a git mergetool
+Date: Sat, 12 Oct 2013 16:01:10 +1100
+Message-ID: <1381554070-12241-1-git-send-email-ssaasen@atlassian.com>
+Cc: git@vger.kernel.org, Stefan Saasen <ssaasen@atlassian.com>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Sat Oct 12 07:01:42 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VUr0o-0002jY-22
-	for gcvg-git-2@plane.gmane.org; Sat, 12 Oct 2013 06:41:10 +0200
+	id 1VUrKe-0006t2-5t
+	for gcvg-git-2@plane.gmane.org; Sat, 12 Oct 2013 07:01:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750742Ab3JLElF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Oct 2013 00:41:05 -0400
-Received: from smtp.bbn.com ([128.33.1.81]:11825 "EHLO smtp.bbn.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750705Ab3JLElE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Oct 2013 00:41:04 -0400
-Received: from socket.bbn.com ([192.1.120.102]:43617)
-	by smtp.bbn.com with esmtps (TLSv1:AES256-SHA:256)
-	(Exim 4.77 (FreeBSD))
-	(envelope-from <rhansen@bbn.com>)
-	id 1VUr0Y-0006WH-0r; Sat, 12 Oct 2013 00:40:54 -0400
-X-Submitted: to socket.bbn.com (Postfix) with ESMTPSA id D2CE34097A
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.0
-In-Reply-To: <CAMP44s3669E7JyEjP_ErYt7JN2eHv0mX4+p_=ZP4_LDatnw2vg@mail.gmail.com>
-X-Enigmail-Version: 1.5.2
+	id S1750766Ab3JLFBb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Oct 2013 01:01:31 -0400
+Received: from na3sys009aog136.obsmtp.com ([74.125.149.85]:46944 "HELO
+	na3sys009aog136.obsmtp.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1750727Ab3JLFBa (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 12 Oct 2013 01:01:30 -0400
+Received: from mail-pb0-f54.google.com ([209.85.160.54]) (using TLSv1) by na3sys009aob136.postini.com ([74.125.148.12]) with SMTP
+	ID DSNKUljXqjcmlhj7qiCg/V5JE/g0St6eIiIU@postini.com; Fri, 11 Oct 2013 22:01:30 PDT
+Received: by mail-pb0-f54.google.com with SMTP id ro12so5134534pbb.27
+        for <git@vger.kernel.org>; Fri, 11 Oct 2013 22:01:29 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=yg8FbpmWDJO03uZ8Xj+gDo3sdXDY6an03MS2f6Imnso=;
+        b=QKbIlhGEB8xVoL3hWTx5LWFtcJzP3GhRze7c11/Ym8m1D23XwJbQgn5Oo3rAoGGoh2
+         o7ecrjXrBFe6ynWWUKVPkIs04d/dtlJGqiYgIW/3IR5Xwirm+sURzY3nYffNcoc+PCi0
+         h+dl0htuu7BVjpVlGAf26FonVThTwr5rAPO47LU7WXP1u7e+gr6iPtJQdXJHuLUjVENh
+         hS8FY3gSeQ/LaT/Byuh8b/jXs5NXtTO7GidxRekjaHo80M35CVlJKVgLrmcynn2cx6CP
+         kg2seafhx05/DokhVMSISy6UckaD+ssQ1iIoYjZFFEF8XIsiuXBvRXvxC74FF4SBhUXx
+         TGEw==
+X-Gm-Message-State: ALoCoQmt4CQAeEUFb57wzzN/80TU7xi1ygQ9Qp5Rr4QFYCFuBT1OQjA2Imh0pLg9EZgWRLcR77eYg1+6LsLTK18rVTimfDRWLCJkWSINI4gggeJYYKFQ9xOD9u8EVlcrMKjaoSYtMdFQH7w2g5rC4xACU2KBWRyIlA==
+X-Received: by 10.66.234.131 with SMTP id ue3mr24920386pac.35.1381554089720;
+        Fri, 11 Oct 2013 22:01:29 -0700 (PDT)
+X-Received: by 10.66.234.131 with SMTP id ue3mr24920381pac.35.1381554089569;
+        Fri, 11 Oct 2013 22:01:29 -0700 (PDT)
+Received: from monteiths.local (115-64-19-188.static.tpgi.com.au. [115.64.19.188])
+        by mx.google.com with ESMTPSA id ve9sm63608611pbc.19.1969.12.31.16.00.00
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Fri, 11 Oct 2013 22:01:28 -0700 (PDT)
+Received: by monteiths.local (Postfix, from userid 501)
+	id 824AF1F25186; Sat, 12 Oct 2013 16:01:23 +1100 (EST)
+X-Mailer: git-send-email 1.8.2.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235941>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235942>
 
-On 2013-10-11 22:08, Felipe Contreras wrote:
-> I'm fine with 'echo "warning: foo" >&2', but still, if you really
-> cared about consistency, there would be a warn() function
+DiffMerge is a non-free (but gratis) tool that supports OS X, Windows and Linux.
 
-So add one!  It's only one simple line:
+    See http://www.sourcegear.com/diffmerge/
 
-    warning() { printf %s\\n "warning: $*" >&2; }
+DiffMerge includes a script `/usr/bin/diffmerge` that can be used to launch the
+graphical compare tool.
 
-So much discussion for something so trivial...
+This change adds mergetool support for DiffMerge and adds 'diffmerge' as an
+option to the mergetool help.
 
--Richard
+Signed-off-by: Stefan Saasen <ssaasen@atlassian.com>
+Acked-by: David Aguilar <davvid@gmail.com>
+---
+ contrib/completion/git-completion.bash |  2 +-
+ git-mergetool--lib.sh                  |  3 ++-
+ mergetools/diffmerge                   | 15 +++++++++++++++
+ 3 files changed, 18 insertions(+), 2 deletions(-)
+ create mode 100644 mergetools/diffmerge
+
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index e1b7313..07b0ba5 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1188,7 +1188,7 @@ _git_diff ()
+ 	__git_complete_revlist_file
+ }
+ 
+-__git_mergetools_common="diffuse ecmerge emerge kdiff3 meld opendiff
++__git_mergetools_common="diffuse diffmerge ecmerge emerge kdiff3 meld opendiff
+ 			tkdiff vimdiff gvimdiff xxdiff araxis p4merge bc3 codecompare
+ "
+ 
+diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
+index feee6a4..0fcb253 100644
+--- a/git-mergetool--lib.sh
++++ b/git-mergetool--lib.sh
+@@ -250,7 +250,8 @@ list_merge_tool_candidates () {
+ 		else
+ 			tools="opendiff kdiff3 tkdiff xxdiff meld $tools"
+ 		fi
+-		tools="$tools gvimdiff diffuse ecmerge p4merge araxis bc3 codecompare"
++		tools="$tools gvimdiff diffuse diffmerge ecmerge "
++		tools+="p4merge araxis bc3 codecompare"
+ 	fi
+ 	case "${VISUAL:-$EDITOR}" in
+ 	*vim*)
+diff --git a/mergetools/diffmerge b/mergetools/diffmerge
+new file mode 100644
+index 0000000..85ac720
+--- /dev/null
++++ b/mergetools/diffmerge
+@@ -0,0 +1,15 @@
++diff_cmd () {
++	"$merge_tool_path" "$LOCAL" "$REMOTE" >/dev/null 2>&1
++}
++
++merge_cmd () {
++	if $base_present
++	then
++		"$merge_tool_path" --merge --result="$MERGED" \
++			"$LOCAL" "$BASE" "$REMOTE"
++	else
++		"$merge_tool_path" --merge \
++			--result="$MERGED" "$LOCAL" "$REMOTE"
++	fi
++	status=$?
++}
+-- 
+1.8.2.3
