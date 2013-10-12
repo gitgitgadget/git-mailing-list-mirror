@@ -1,111 +1,103 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v3 06/10] transport-helper: add support for old:new refspec
-Date: Sat, 12 Oct 2013 02:05:26 -0500
-Message-ID: <1381561533-20381-4-git-send-email-felipe.contreras@gmail.com>
-References: <1381561533-20381-1-git-send-email-felipe.contreras@gmail.com>
-Cc: Sverre Rabbelier <srabbelier@gmail.com>,
-	Richard Hansen <rhansen@bbn.com>,
+Subject: [PATCH try2 09/14] apply: add --stage option
+Date: Sat, 12 Oct 2013 02:04:40 -0500
+Message-ID: <1381561488-20294-7-git-send-email-felipe.contreras@gmail.com>
+References: <1381561488-20294-1-git-send-email-felipe.contreras@gmail.com>
+Cc: Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>,
+	Jay Soffian <jaysoffian@gmail.com>,
+	Miles Bader <miles@gnu.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Philip Oakley <philipoakley@iee.org>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	William Swanson <swansontec@gmail.com>,
+	Ping Yin <pkufranky@gmail.com>,
+	Hilco Wijbenga <hilco.wijbenga@gmail.com>,
 	Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 12 09:15:05 2013
+X-From: git-owner@vger.kernel.org Sat Oct 12 09:15:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VUtPj-0006cl-9i
-	for gcvg-git-2@plane.gmane.org; Sat, 12 Oct 2013 09:15:03 +0200
+	id 1VUtPp-0006gX-Qb
+	for gcvg-git-2@plane.gmane.org; Sat, 12 Oct 2013 09:15:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752558Ab3JLHLo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Oct 2013 03:11:44 -0400
-Received: from mail-oa0-f52.google.com ([209.85.219.52]:37592 "EHLO
-	mail-oa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752214Ab3JLHLm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Oct 2013 03:11:42 -0400
-Received: by mail-oa0-f52.google.com with SMTP id n2so3106531oag.39
-        for <git@vger.kernel.org>; Sat, 12 Oct 2013 00:11:42 -0700 (PDT)
+	id S1753571Ab3JLHLK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Oct 2013 03:11:10 -0400
+Received: from mail-ob0-f177.google.com ([209.85.214.177]:46804 "EHLO
+	mail-ob0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753550Ab3JLHLH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Oct 2013 03:11:07 -0400
+Received: by mail-ob0-f177.google.com with SMTP id wm4so3408948obc.22
+        for <git@vger.kernel.org>; Sat, 12 Oct 2013 00:11:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=N3QcLvTQb9N7K2fOjr+krLHt0tWT4EgV2i7TR4mXxmU=;
-        b=kwF3U12Ewwq8p5DO2y9yEMYXVvwpE0mkdjdUndpw0twXDZ+TEUewCqgEvPbTy7ha3S
-         uyymJy8Z/nspJdZx4huRXStZ3WUhAOBSF7mTv2ZUIWbyOG0gaB/KprvATotKgFs+bcb5
-         Qh7cR8DCvZfCKQ5ugxvVhrbTGh4qxl8Hwju2towb+Txo9TMgdMN1Jg0Wwl4HVEVnCsO2
-         VQ9WjMlFsMFvOJs0+sXl4jGkZqL/wTHrtrFaViVSulsEEoZSIovDoM2PoSgfTwb4Mai5
-         ELNNR8FybAbOK5dqWZF0Ck+DyuJIoh1a4hLK21ZMw79v2kSduNIIoNjfjRRx6sMn0W3+
-         ptVQ==
-X-Received: by 10.182.16.201 with SMTP id i9mr17809722obd.21.1381561901986;
-        Sat, 12 Oct 2013 00:11:41 -0700 (PDT)
+        bh=nDgyhO92KPcP+vVZsDDB4EnnCZZwqSs7IMonFod7jP8=;
+        b=mSTn7tM05HrFDwY8vBSPaxb63j9RWpLvleLhsKbfn+a7dl8Cg3XoZNlx6GRVN1cyqe
+         njW94tUo9AFSWanmhEdnXt/SEZgO7yOaA0nbesCIDuurcPFlkN2jjZOr3C3P83rfZe20
+         L2XHLo/t0IaK06RMUDUqNcSfdUydCZqWnqzqWk821sfEFBupswxD0Jc5KlT5rg43xmAb
+         AF+xHC3HbaSI33xR7PZiT6L8oCoC2/tzxyJka/WgujWI6oZUQT5uIcJZ/GQmG8RGwH7W
+         lcO4hhti6v7P4McUeSpBXHlHvL4zeM0RiuP5PTWPUH3RlJ4UB1zI43Z4RETzTwbquWSh
+         9ZWw==
+X-Received: by 10.60.70.134 with SMTP id m6mr17753964oeu.14.1381561867360;
+        Sat, 12 Oct 2013 00:11:07 -0700 (PDT)
 Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
-        by mx.google.com with ESMTPSA id s9sm28635959obu.4.1969.12.31.16.00.00
+        by mx.google.com with ESMTPSA id tz10sm28643636obc.10.1969.12.31.16.00.00
         (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 12 Oct 2013 00:11:41 -0700 (PDT)
+        Sat, 12 Oct 2013 00:11:06 -0700 (PDT)
 X-Mailer: git-send-email 1.8.4-fc
-In-Reply-To: <1381561533-20381-1-git-send-email-felipe.contreras@gmail.com>
+In-Reply-To: <1381561488-20294-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236037>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236038>
 
-By using fast-export's new --refspec option.
+Synonym for --index.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- t/t5801-remote-helpers.sh |  2 +-
- transport-helper.c        | 13 ++++++++++---
- 2 files changed, 11 insertions(+), 4 deletions(-)
+ Documentation/git-apply.txt | 5 ++++-
+ builtin/apply.c             | 2 ++
+ 2 files changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/t/t5801-remote-helpers.sh b/t/t5801-remote-helpers.sh
-index 8c4c539..8e2dd9f 100755
---- a/t/t5801-remote-helpers.sh
-+++ b/t/t5801-remote-helpers.sh
-@@ -87,7 +87,7 @@ test_expect_success 'push new branch by name' '
- 	compare_refs local HEAD server refs/heads/new-name
- '
+diff --git a/Documentation/git-apply.txt b/Documentation/git-apply.txt
+index f605327..ce44327 100644
+--- a/Documentation/git-apply.txt
++++ b/Documentation/git-apply.txt
+@@ -12,7 +12,7 @@ SYNOPSIS
+ 'git apply' [--stat] [--numstat] [--summary] [--check] [--index] [--3way]
+ 	  [--apply] [--no-add] [--build-fake-ancestor=<file>] [-R | --reverse]
+ 	  [--allow-binary-replacement | --binary] [--reject] [-z]
+-	  [-p<n>] [-C<n>] [--inaccurate-eof] [--recount] [--cached]
++	  [-p<n>] [-C<n>] [--inaccurate-eof] [--recount] [--cached|--staged]
+ 	  [--ignore-space-change | --ignore-whitespace ]
+ 	  [--whitespace=(nowarn|warn|fix|error|error-all)]
+ 	  [--exclude=<path>] [--include=<path>] [--directory=<root>]
+@@ -67,6 +67,9 @@ OPTIONS
+ 	up-to-date, it is flagged as an error.  This flag also
+ 	causes the index file to be updated.
  
--test_expect_failure 'push new branch with old:new refspec' '
-+test_expect_success 'push new branch with old:new refspec' '
- 	(cd local &&
- 	 git push origin new-name:new-refspec
- 	) &&
-diff --git a/transport-helper.c b/transport-helper.c
-index 46b3e57..cffeb9a 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -809,7 +809,7 @@ static int push_refs_with_export(struct transport *transport,
- 	struct ref *ref;
- 	struct child_process *helper, exporter;
- 	struct helper_data *data = transport->data;
--	struct string_list revlist_args = STRING_LIST_INIT_NODUP;
-+	struct string_list revlist_args = STRING_LIST_INIT_DUP;
- 	struct strbuf buf = STRBUF_INIT;
- 
- 	if (!data->refspecs)
-@@ -847,8 +847,13 @@ static int push_refs_with_export(struct transport *transport,
- 		free(private);
- 
- 		if (ref->peer_ref) {
--			if (strcmp(ref->peer_ref->name, ref->name))
--				die("remote-helpers do not support old:new syntax");
-+			if (strcmp(ref->name, ref->peer_ref->name)) {
-+				struct strbuf buf = STRBUF_INIT;
-+				strbuf_addf(&buf, "%s:%s", ref->peer_ref->name, ref->name);
-+				string_list_append(&revlist_args, "--refspec");
-+				string_list_append(&revlist_args, buf.buf);
-+				strbuf_release(&buf);
-+			}
- 			string_list_append(&revlist_args, ref->peer_ref->name);
- 		}
- 	}
-@@ -856,6 +861,8 @@ static int push_refs_with_export(struct transport *transport,
- 	if (get_exporter(transport, &exporter, &revlist_args))
- 		die("Couldn't run fast-export");
- 
-+	string_list_clear(&revlist_args, 1);
++--staged::
++	Synonym for --index.
 +
- 	if (finish_command(&exporter))
- 		die("Error while running fast-export");
- 	push_update_refs_status(data, remote_refs);
+ --cached::
+ 	Apply a patch without touching the working tree. Instead take the
+ 	cached data, apply the patch, and store the result in the index
+diff --git a/builtin/apply.c b/builtin/apply.c
+index 50912c9..42b5a4b 100644
+--- a/builtin/apply.c
++++ b/builtin/apply.c
+@@ -4377,6 +4377,8 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
+ 			N_("instead of applying the patch, see if the patch is applicable")),
+ 		OPT_BOOLEAN(0, "index", &check_index,
+ 			N_("make sure the patch is applicable to the current index")),
++		OPT_BOOLEAN(0, "stage", &check_index,
++			N_("make sure the patch is applicable to the current index")),
+ 		OPT_BOOLEAN(0, "cached", &cached,
+ 			N_("apply a patch without touching the working tree")),
+ 		OPT_BOOLEAN(0, "apply", &force_apply,
 -- 
 1.8.4-fc
