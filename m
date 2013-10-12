@@ -1,167 +1,128 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v10 07/15] contrib: related: add helper Person classes
-Date: Sat, 12 Oct 2013 02:06:11 -0500
-Message-ID: <1381561584-20529-3-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH v10 15/15] contrib: related: add README
+Date: Sat, 12 Oct 2013 02:06:16 -0500
+Message-ID: <1381561584-20529-8-git-send-email-felipe.contreras@gmail.com>
 References: <1381561584-20529-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Duy Nguyen <pclouds@gmail.com>,
 	Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 12 09:12:51 2013
+X-From: git-owner@vger.kernel.org Sat Oct 12 09:12:57 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VUtNV-00052U-IN
-	for gcvg-git-2@plane.gmane.org; Sat, 12 Oct 2013 09:12:45 +0200
+	id 1VUtNg-00059v-Cm
+	for gcvg-git-2@plane.gmane.org; Sat, 12 Oct 2013 09:12:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754107Ab3JLHMe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Oct 2013 03:12:34 -0400
-Received: from mail-ob0-f178.google.com ([209.85.214.178]:33971 "EHLO
-	mail-ob0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752744Ab3JLHMb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Oct 2013 03:12:31 -0400
-Received: by mail-ob0-f178.google.com with SMTP id uz6so3483388obc.9
-        for <git@vger.kernel.org>; Sat, 12 Oct 2013 00:12:31 -0700 (PDT)
+	id S1754204Ab3JLHMp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Oct 2013 03:12:45 -0400
+Received: from mail-ob0-f182.google.com ([209.85.214.182]:55910 "EHLO
+	mail-ob0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754169Ab3JLHMo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Oct 2013 03:12:44 -0400
+Received: by mail-ob0-f182.google.com with SMTP id wn1so3477353obc.13
+        for <git@vger.kernel.org>; Sat, 12 Oct 2013 00:12:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=4YURkA/TxIbirzAfQ/RQT51dyTAG8VvFxopGQTB3YYk=;
-        b=HkIn/Amc2K5s6+vqHvfDH+eVbXqXdCk7CHLr5rP4ko0ivgJUQgBFGud6C6AXqMsNZB
-         oGNGkEDhPz9sTV2ETmz7hPqOMJO2ZUfWbKDbeAOA4TFx11zRsRnYuSPD8BmEEKCF49+4
-         Zw/qiyj5XcVs3XUy4msk79wNFXyZMI6Lh4pq6ASwxFUUAvPhxeIGDBFKM6NXUnZwjpVt
-         4t47oDwnSBOTOruwNVbpLaT0HthQiJtImFANfS1ikRgg+eSmS7R98Wm4XEGmDJzSIc+3
-         5+2WCtXYqMmf0S3enPXSJBSNFbTmDy6UkOMHKpkFk+9s89yjIIOTzyYxAYrECLwrV+jk
-         Dm0Q==
-X-Received: by 10.182.45.195 with SMTP id p3mr17736977obm.29.1381561950954;
-        Sat, 12 Oct 2013 00:12:30 -0700 (PDT)
+        bh=zqdkP7sXV1kNsw2PlXrKYW9U8Z2yJY9O09H0JZSDIgE=;
+        b=gkvjgSiCUL9JrNhAxvpRaRolZTgVuvBF5pjQ04r47ZcHIiPFgt+OAY+Pn9sr/c259t
+         1AJ2d9Uo7Q+T+LqhVDmFWBfF4BiZelwIyMx5fOZVKtmmbNmZWC05vJj3p/9+5QlR5irW
+         tMqdjB8+hVMQyGsYg534ks0A59YR0q92dzMiSv6YzN2zmptX6rxgS5rxt7+rsQGTfZjO
+         R5F4pWyeudXTKR8NEzFabdW5qPiXqD1sgb+8J7V7bLbyuWybYFhYBdmo4VHYpyjNG2Q0
+         WQqOX/FcmTy4vWzF54kME9Q5/k5tuQi2rqdTzUcAJ9PD1tGXXg3mjKd+bU4nIhtHRruv
+         UWvg==
+X-Received: by 10.182.121.137 with SMTP id lk9mr17889234obb.32.1381561963882;
+        Sat, 12 Oct 2013 00:12:43 -0700 (PDT)
 Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
-        by mx.google.com with ESMTPSA id y1sm101368264oek.4.1969.12.31.16.00.00
+        by mx.google.com with ESMTPSA id it7sm28653755obb.11.1969.12.31.16.00.00
         (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 12 Oct 2013 00:12:29 -0700 (PDT)
+        Sat, 12 Oct 2013 00:12:43 -0700 (PDT)
 X-Mailer: git-send-email 1.8.4-fc
 In-Reply-To: <1381561584-20529-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235997>
-
-No functional changes.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235998>
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- contrib/related/git-related | 71 +++++++++++++++++++++++++++++++++++----------
- 1 file changed, 56 insertions(+), 15 deletions(-)
+ contrib/related/README | 65 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 65 insertions(+)
+ create mode 100644 contrib/related/README
 
-diff --git a/contrib/related/git-related b/contrib/related/git-related
-index ffce839..3cac925 100755
---- a/contrib/related/git-related
-+++ b/contrib/related/git-related
-@@ -8,13 +8,59 @@ $min_percent = 10
- $files = []
- $rev_args = []
- 
--class Commit
-+class Person
+diff --git a/contrib/related/README b/contrib/related/README
+new file mode 100644
+index 0000000..26188ca
+--- /dev/null
++++ b/contrib/related/README
+@@ -0,0 +1,65 @@
++= git-related =
 +
-+  attr_reader :roles
++This tool finds people that might be interested in a patch, by going
++back through the history for each single hunk modified, and finding
++people that reviewed, acknowledged, signed, or authored the code the
++patch is modifying.
 +
-+  def initialize(name, email)
-+    @name = name
-+    @email = email
-+    @commits = {}
-+  end
++It does this by running `git blame` incrementally on each hunk, and then
++parsing the commit message. After gathering all the relevant people, it
++groups them to show what exactly was their role when the participated in
++the development of the relevant commit, and on how many relevant commits
++they participated. They are only displayed if they pass a minimum
++threshold of participation.
 +
-+  def add_role(commit)
-+    @commits[commit] = true
-+  end
++For example:
 +
-+  def <=>(b)
-+    self.size <=> b.size
-+  end
++------------
++% git related master..fc/transport/improv
++Junio C Hamano <gitster@pobox.com> (signer: 90%, author: 5%)
++Felipe Contreras <felipe.contreras@gmail.com> (author: 25%, reviewer: 2%)
++Sverre Rabbelier <srabbelier@gmail.com> (author: 17%, acker: 2%, signer: 7%)
++Jeff King <peff@peff.net> (acker: 17%, author: 10%)
++Shawn O. Pearce <spearce@spearce.org> (author: 5%, signer: 2%, cced: 2%)
++Elijah Newren <newren@gmail.com> (author: 10%)
++------------
 +
-+  def size
-+    @commits.size
-+  end
++In addition, it has an option to output the list of commits, instead of the
++contributors, which allows you to easily find out the previous changes to the
++lines your patches modify.
 +
-+  def to_s
-+    '%s <%s>' % [@name, @email]
-+  end
++------------
++% git related -c master..fc/transport/improv
++99d9ec0 Merge branch 'fc/transport-helper-no-refspec'
++67c9c78 transport-helper: barf when user tries old:new
++0460ed2 documentation: trivial style cleanups
++126aac5 transport-helper: fix remote helper namespace regression
++21610d8 transport-helper: clarify pushing without refspecs
++a93b4a0 transport-helper: warn when refspec is not used
++664059f transport-helper: update remote helper namespace
++c4458ec fast-export: Allow pruned-references in mark file
++...
++------------
 +
-+end
- 
--  attr_reader :persons
-+class Persons
++Moreover, when sending patches for review, you can configure `git send-email`
++to use `git related` to find relevant people that should be Cc'ed:
 +
-+  @@index = {}
++------------
++% git send-email --cc-cmd='git related' *.patch
++------------
 +
-+  include Enumerable
++== Installation ==
 +
-+  def each(&block)
-+    @@index.values.each(&block)
-+  end
++To use this script, simply put `git-related` in your `$PATH` and make sure it
++has executable permissions:
 +
-+  def self.get(name, email)
-+    id = [name, email]
-+    person = @@index[id]
-+    if not person
-+      person = @@index[id] = Person.new(name, email)
-+    end
-+    person
-+  end
++------------
++wget https://raw.github.com/felipec/git-related/master/git-related -O ~/bin/git-related
++chmod +x ~/bin/git-related
++------------
 +
-+end
++And make sure `~/bin` is in your `$PATH`:
 +
-+class Commit
- 
-   def initialize(id)
-     @id = id
--    @persons = []
-   end
- 
-   def parse(data)
-@@ -23,17 +69,18 @@ class Commit
-       if not in_body
-         case line
-         when /^author ([^<>]+) <(\S+)> (.+)$/
--          @persons << '%s <%s>' % [$1, $2]
-+          author = Persons.get($1, $2)
-+          author.add_role(@id)
-         when /^$/
-           in_body = true
-         end
-       else
-         if line =~ /^(Signed-off-by|Reviewed-by|Acked-by|Cc): ([^<>]+) <(\S+?)>$/
--          @persons << '%s <%s>' % [$2, $3]
-+          person = Persons.get($2, $3)
-+          person.add_role(@id)
-         end
-       end
-     end
--    @persons.uniq!
-   end
- 
- end
-@@ -152,16 +199,10 @@ else
- end
- commits.import
- 
--count_per_person = Hash.new(0)
--
--commits.each do |id, commit|
--  commit.persons.each do |person|
--    count_per_person[person] += 1
--  end
--end
-+persons = Persons.new
- 
--count_per_person.each do |person, count|
--  percent = count.to_f * 100 / commits.size
-+persons.sort.reverse.each do |person|
-+  percent = person.size.to_f * 100 / commits.size
-   next if percent < $min_percent
-   puts '%s (involved: %u%%)' % [person, percent]
- end
++------------
++export PATH="$HOME/bin:$PATH"
++------------
 -- 
 1.8.4-fc
