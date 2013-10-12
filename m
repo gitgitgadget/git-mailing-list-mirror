@@ -1,130 +1,80 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v2 4/5] remote-helpers: allow direct test execution
-Date: Sat, 12 Oct 2013 02:04:22 -0500
-Message-ID: <1381561465-20147-3-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH v2 2/5] build: fix installation of scripts
+Date: Sat, 12 Oct 2013 02:04:24 -0500
+Message-ID: <1381561465-20147-5-git-send-email-felipe.contreras@gmail.com>
 References: <1381561465-20147-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 12 09:10:37 2013
+X-From: git-owner@vger.kernel.org Sat Oct 12 09:10:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VUtLQ-0003bR-Gy
-	for gcvg-git-2@plane.gmane.org; Sat, 12 Oct 2013 09:10:36 +0200
+	id 1VUtLX-0003hL-6P
+	for gcvg-git-2@plane.gmane.org; Sat, 12 Oct 2013 09:10:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752434Ab3JLHKd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Oct 2013 03:10:33 -0400
-Received: from mail-ob0-f179.google.com ([209.85.214.179]:59066 "EHLO
-	mail-ob0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752004Ab3JLHKb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Oct 2013 03:10:31 -0400
-Received: by mail-ob0-f179.google.com with SMTP id wp18so3466522obc.10
-        for <git@vger.kernel.org>; Sat, 12 Oct 2013 00:10:31 -0700 (PDT)
+	id S1753089Ab3JLHKj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Oct 2013 03:10:39 -0400
+Received: from mail-oa0-f54.google.com ([209.85.219.54]:53425 "EHLO
+	mail-oa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753032Ab3JLHKh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Oct 2013 03:10:37 -0400
+Received: by mail-oa0-f54.google.com with SMTP id n5so3187755oag.27
+        for <git@vger.kernel.org>; Sat, 12 Oct 2013 00:10:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=6QZZQcwbXmlkIgd4w7zXz1+Feb49fTHzpAHmueLgY54=;
-        b=FrPY+1SFE4++4mfKA8wXYcudy4XheYkxErHTskoAVaDYUE2bSn3wgf42/G8XdNmxvR
-         IZs6sLQmElOfrvAx1F+JKJGd+Uyiz1gpQYS01wcn2LTH+gPa9yCX6FqRRIV+dpypLR9m
-         oy78d5oT5VZgTePG/LIC2bUV71ZAFUhbFz1YEvPb5pHN8HcHmlYVIks5IGBr6yasBhV9
-         TDKKCt2BxpwKdHKPLViQHOTf4SMyhYZOt9dEjoGuYKjhX2ysDyBwUKNjXskIj32wvE47
-         PcKoChawyTp7vwpI1bZR5aG9VMR7PSePJbG+g3YeM0zN4xmEjQxxIyvEKs5q4rPcauQw
-         BpOA==
-X-Received: by 10.60.51.7 with SMTP id g7mr18179205oeo.6.1381561831379;
-        Sat, 12 Oct 2013 00:10:31 -0700 (PDT)
+        bh=rI0tl0HYFU9JwiRvzygmzhmgfIaxIA2acrJ+bD/vU/M=;
+        b=tv1/6MT6KGeLLcRjIHG7y99N+q/p5LjXwOeISQKc7NwZGmICLFIOf9epEwULdgWun1
+         8vRo+zmYtDjMzfpZx6F6LLVf+Aam3B8Rw8pPlJ2DrWhWFGaoMiBFI0yMgdKMkdzqtWN6
+         8w9OzaOAQf9/uBYf4+8i4gRNrYYWFsXnOrTRh9MRWbLV1+qOE9YUzsiPLvEfbLpdwQoL
+         GadP3Xxlca/OLXum2wP1ifAQ57FyNfU7gfzBq4bA63Z56moc4Qd2KCPUUQYyIhRvZO6F
+         D4/kA/xPiSlbH255djFe+0B5POpL+sBU/B5n5jBqmetxy8O8pyhW0FO5RKacxBzO1hWn
+         xKhA==
+X-Received: by 10.182.237.75 with SMTP id va11mr17904224obc.5.1381561837078;
+        Sat, 12 Oct 2013 00:10:37 -0700 (PDT)
 Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
-        by mx.google.com with ESMTPSA id s14sm101380091oeo.1.1969.12.31.16.00.00
+        by mx.google.com with ESMTPSA id y1sm101350547oek.4.1969.12.31.16.00.00
         (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 12 Oct 2013 00:10:30 -0700 (PDT)
+        Sat, 12 Oct 2013 00:10:36 -0700 (PDT)
 X-Mailer: git-send-email 1.8.4-fc
 In-Reply-To: <1381561465-20147-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235957>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235958>
 
-Previously 'make' was the only option, or manually specifying the
-'TEST_DIRECTORY'.
+They need the gitexecdir.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- contrib/remote-helpers/Makefile         | 1 +
- contrib/remote-helpers/test-bzr.t       | 3 ++-
- contrib/remote-helpers/test-hg-bidi.t   | 3 ++-
- contrib/remote-helpers/test-hg-hg-git.t | 3 ++-
- contrib/remote-helpers/test-hg.t        | 3 ++-
- 5 files changed, 9 insertions(+), 4 deletions(-)
+ Makefile | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/contrib/remote-helpers/Makefile b/contrib/remote-helpers/Makefile
-index 8d5e9be..8799c77 100644
---- a/contrib/remote-helpers/Makefile
-+++ b/contrib/remote-helpers/Makefile
-@@ -5,6 +5,7 @@ export T := $(addprefix $(CURDIR)/,$(TESTS))
- export MAKE := $(MAKE) -e
- export PATH := $(CURDIR):$(PATH)
- export TEST_LINT := test-lint-executable test-lint-shell-syntax
-+export TEST_DIRECTORY := $(CURDIR)/../../t
+diff --git a/Makefile b/Makefile
+index 3588ca1..e51b92e 100644
+--- a/Makefile
++++ b/Makefile
+@@ -511,12 +511,14 @@ build-perl-script: $(SCRIPT_PERL_GEN)
+ build-sh-script: $(SCRIPT_SH_GEN)
+ build-python-script: $(SCRIPT_PYTHON_GEN)
  
- export SCRIPT_PYTHON := $(addprefix $(CURDIR)/,$(SCRIPTS))
+-.PHONY: install-perl-script install-sh-script install-python-script
+-install-sh-script: $(SCRIPT_SH_INS)
++.PHONY: install-gitexecdir install-perl-script install-sh-script install-python-script
++install-gitexecdir:
++	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
++install-sh-script: $(SCRIPT_SH_INS) | install-gitexecdir
+ 	$(INSTALL) $^ '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
+-install-perl-script: $(SCRIPT_PERL_INS)
++install-perl-script: $(SCRIPT_PERL_INS) | install-gitexecdir
+ 	$(INSTALL) $^ '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
+-install-python-script: $(SCRIPT_PYTHON_INS)
++install-python-script: $(SCRIPT_PYTHON_INS) | install-gitexecdir
+ 	$(INSTALL) $^ '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
  
-diff --git a/contrib/remote-helpers/test-bzr.t b/contrib/remote-helpers/test-bzr.t
-index 435b280..7ca4a9c 100755
---- a/contrib/remote-helpers/test-bzr.t
-+++ b/contrib/remote-helpers/test-bzr.t
-@@ -5,7 +5,8 @@
- 
- test_description='Test remote-bzr'
- 
--. ./test-lib.sh
-+test -z "$TEST_DIRECTORY" && TEST_DIRECTORY="$PWD/../../t"
-+. "$TEST_DIRECTORY"/test-lib.sh
- 
- if ! test_have_prereq PYTHON; then
- 	skip_all='skipping remote-bzr tests; python not available'
-diff --git a/contrib/remote-helpers/test-hg-bidi.t b/contrib/remote-helpers/test-hg-bidi.t
-index 86a3f10..e978932 100755
---- a/contrib/remote-helpers/test-hg-bidi.t
-+++ b/contrib/remote-helpers/test-hg-bidi.t
-@@ -8,7 +8,8 @@
- 
- test_description='Test bidirectionality of remote-hg'
- 
--. ./test-lib.sh
-+test -z "$TEST_DIRECTORY" && TEST_DIRECTORY="$PWD/../../t"
-+. "$TEST_DIRECTORY"/test-lib.sh
- 
- if ! test_have_prereq PYTHON; then
- 	skip_all='skipping remote-hg tests; python not available'
-diff --git a/contrib/remote-helpers/test-hg-hg-git.t b/contrib/remote-helpers/test-hg-hg-git.t
-index 0217860..0caa493 100755
---- a/contrib/remote-helpers/test-hg-hg-git.t
-+++ b/contrib/remote-helpers/test-hg-hg-git.t
-@@ -8,7 +8,8 @@
- 
- test_description='Test remote-hg output compared to hg-git'
- 
--. ./test-lib.sh
-+test -z "$TEST_DIRECTORY" && TEST_DIRECTORY="$PWD/../../t"
-+. "$TEST_DIRECTORY"/test-lib.sh
- 
- if ! test_have_prereq PYTHON; then
- 	skip_all='skipping remote-hg tests; python not available'
-diff --git a/contrib/remote-helpers/test-hg.t b/contrib/remote-helpers/test-hg.t
-index 30f4ff6..9b6dd95 100755
---- a/contrib/remote-helpers/test-hg.t
-+++ b/contrib/remote-helpers/test-hg.t
-@@ -8,7 +8,8 @@
- 
- test_description='Test remote-hg'
- 
--. ./test-lib.sh
-+test -z "$TEST_DIRECTORY" && TEST_DIRECTORY="$PWD/../../t"
-+. "$TEST_DIRECTORY"/test-lib.sh
- 
- if ! test_have_prereq PYTHON; then
- 	skip_all='skipping remote-hg tests; python not available'
+ .PHONY: clean-perl-script clean-sh-script clean-python-script
 -- 
 1.8.4-fc
