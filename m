@@ -1,134 +1,114 @@
-From: Stefan Beller <stefanbeller@googlemail.com>
-Subject: Re: [PATCH 16/20] revision: trivial style fixes
-Date: Sat, 12 Oct 2013 11:08:16 +0200
-Message-ID: <52591180.3010103@googlemail.com>
-References: <1381561636-20717-1-git-send-email-felipe.contreras@gmail.com> <1381561636-20717-10-git-send-email-felipe.contreras@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 12 11:08:15 2013
+From: arnaud.brejeon@gmail.com
+Subject: [PATCH 1/2] Add password parameter to git svn commands and use it when provided instead of defaulting to end-user prompt
+Date: Sat, 12 Oct 2013 11:23:29 +0200
+Message-ID: <1381569810-2167-1-git-send-email-arnaud.brejeon@gmail.com>
+Cc: arnaudbrejeon <arnaud.brejeon@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Oct 12 11:23:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VUvBD-0004dV-9g
-	for gcvg-git-2@plane.gmane.org; Sat, 12 Oct 2013 11:08:11 +0200
+	id 1VUvQK-0006oO-5Z
+	for gcvg-git-2@plane.gmane.org; Sat, 12 Oct 2013 11:23:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752189Ab3JLJIB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Oct 2013 05:08:01 -0400
-Received: from mail-ee0-f43.google.com ([74.125.83.43]:58307 "EHLO
-	mail-ee0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752004Ab3JLJH7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Oct 2013 05:07:59 -0400
-Received: by mail-ee0-f43.google.com with SMTP id e52so2368057eek.30
-        for <git@vger.kernel.org>; Sat, 12 Oct 2013 02:07:58 -0700 (PDT)
+	id S1753480Ab3JLJXn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Oct 2013 05:23:43 -0400
+Received: from mail-wi0-f177.google.com ([209.85.212.177]:50488 "EHLO
+	mail-wi0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752720Ab3JLJXm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Oct 2013 05:23:42 -0400
+Received: by mail-wi0-f177.google.com with SMTP id hq4so184570wib.16
+        for <git@vger.kernel.org>; Sat, 12 Oct 2013 02:23:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:subject:references
-         :in-reply-to:content-type:content-transfer-encoding;
-        bh=6IQvYgt2I+Jub6AfeJ/YiQsl2fpxqXBUYkc5NbbQ3Fk=;
-        b=RdXuhaQhimxxRav3pJsPTfRsKrNNHdbAFQjSf8fpNcLEAv9cYa/YL6MkMXTCs658i3
-         7R2AP3PyA5HbwSbDqd9Owm/wak34PtU5l5Q6+1mrq74a0yfB67RYlcwrJmRD4EYI1jhL
-         +sqlMbIj6ZbOCx/m0Q+y23h0pR49oPabgQ8PlEaHoQI/R0mRnbeQ8xGprjWMxSD8lPhj
-         i5DGQot8RVIGTi6sy+04kxMnt0Txd3XTEC3B1fHsh/B+Nl3SbaF70xOL1fvtr05CxYFJ
-         peWiqLjzUMg2gB+K9Rd4oA2I+ea403YIXOXzG+Dy20IoeEESpiH9nf1aBPyOTUbcRk50
-         C//w==
-X-Received: by 10.14.101.6 with SMTP id a6mr43959eeg.81.1381568878120;
-        Sat, 12 Oct 2013 02:07:58 -0700 (PDT)
-Received: from [192.168.1.3] (ip-109-91-109-128.unitymediagroup.de. [109.91.109.128])
-        by mx.google.com with ESMTPSA id b45sm125137333eef.4.1969.12.31.16.00.00
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 12 Oct 2013 02:07:57 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.0
-In-Reply-To: <1381561636-20717-10-git-send-email-felipe.contreras@gmail.com>
-X-Enigmail-Version: 1.5.2
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=rE8B1O36gSTYJrdufvzQ+y533Uy0M08OojzaeWCsLOw=;
+        b=fh823CRcAwB/gs13H3ypMLmCG23L3Gi222Bmke0v2GSrl99zTyMo/GBGs9NOiBltRn
+         93e8VHpWYvKBjRoOUaVOo1TfnpsVL2Ne+Gggl36RxgZBWS98UuI7K73Lps+Me0o1zQ5+
+         cxSM4cC6i0lG2oInrF8oU8Ar9krFHaCGtJWGvaUzT6NMfgkJHx25kthnB5Vb8fokRurC
+         9iZpuu2QPDOft8iS+Eam6bC2YfUfe5zNFtVDWuhnsr3FB/qxMwfurhH9WaD8PPKgrCXd
+         6pgwJZQBaLVMydv8Il2rOTEdb0fpMGfQHYDv46MxO1+lcmMFDUJmclZzz9LbN+F8rO12
+         rPjQ==
+X-Received: by 10.180.73.134 with SMTP id l6mr6749535wiv.16.1381569820890;
+        Sat, 12 Oct 2013 02:23:40 -0700 (PDT)
+Received: from localhost.localdomain (APuteaux-552-1-53-143.w90-35.abo.wanadoo.fr. [90.35.84.143])
+        by mx.google.com with ESMTPSA id ma3sm13466473wic.1.1969.12.31.16.00.00
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Sat, 12 Oct 2013 02:23:40 -0700 (PDT)
+X-Mailer: git-send-email 1.7.10.2 (Apple Git-33)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236043>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236044>
 
-On 10/12/2013 09:07 AM, Felipe Contreras wrote:
-> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
-> ---
->  revision.c | 14 ++++++--------
->  1 file changed, 6 insertions(+), 8 deletions(-)
-> 
-> diff --git a/revision.c b/revision.c
-> index 0173e01..4049867 100644
-> --- a/revision.c
-> +++ b/revision.c
-> @@ -1503,7 +1503,7 @@ struct cmdline_pathspec {
->  static void append_prune_data(struct cmdline_pathspec *prune, const char **av)
->  {
->  	while (*av) {
-> -		ALLOC_GROW(prune->path, prune->nr+1, prune->alloc);
-> +		ALLOC_GROW(prune->path, prune->nr + 1, prune->alloc);
->  		prune->path[prune->nr++] = *(av++);
->  	}
->  }
-> @@ -1515,7 +1515,7 @@ static void read_pathspec_from_stdin(struct rev_info *revs, struct strbuf *sb,
->  		int len = sb->len;
->  		if (len && sb->buf[len - 1] == '\n')
->  			sb->buf[--len] = '\0';
-> -		ALLOC_GROW(prune->path, prune->nr+1, prune->alloc);
-> +		ALLOC_GROW(prune->path, prune->nr + 1, prune->alloc);
->  		prune->path[prune->nr++] = xstrdup(sb->buf);
->  	}
->  }
-> @@ -2118,7 +2118,7 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
->  		 *	call init_pathspec() to set revs->prune_data here.
->  		 * }
->  		 */
-> -		ALLOC_GROW(prune_data.path, prune_data.nr+1, prune_data.alloc);
-> +		ALLOC_GROW(prune_data.path, prune_data.nr + 1, prune_data.alloc);
->  		prune_data.path[prune_data.nr++] = NULL;
->  		parse_pathspec(&revs->prune_data, 0, 0,
->  			       revs->prefix, prune_data.path);
-> @@ -2971,7 +2971,7 @@ static struct commit *get_revision_internal(struct rev_info *revs)
->  	if (revs->max_count) {
->  		c = get_revision_1(revs);
->  		if (c) {
-> -			while (0 < revs->skip_count) {
-> +			while (revs->skip_count > 0) {
->  				revs->skip_count--;
->  				c = get_revision_1(revs);
->  				if (!c)
-> @@ -2986,9 +2986,8 @@ static struct commit *get_revision_internal(struct rev_info *revs)
->  	if (c)
->  		c->object.flags |= SHOWN;
->  
-> -	if (!revs->boundary) {
-> +	if (!revs->boundary)
->  		return c;
-> -	}
->  
->  	if (!c) {
->  		/*
-> @@ -3034,9 +3033,8 @@ struct commit *get_revision(struct rev_info *revs)
->  
->  	if (revs->reverse) {
->  		reversed = NULL;
-> -		while ((c = get_revision_internal(revs))) {
-> +		while ((c = get_revision_internal(revs)))
->  			commit_list_insert(c, &reversed);
-> -		}
+From: arnaudbrejeon <arnaud.brejeon@gmail.com>
 
-While talking about trivia, what is the projects stance on
-such constructs here?
-	while (foo)
-		bar();
-	foobar();
+Signed-off-by: Arnaud Brejeon <arnaud.brejeon <at> gmail.com>
+---
+ git-svn.perl           |    3 +++
+ perl/Git/SVN/Prompt.pm |   12 +++++++++---
+ 2 files changed, 12 insertions(+), 3 deletions(-)
 
-I've seen an empty line between the bar(); and the foobar(); often, which suits readability.
-What's the stance on such an empty line here?
-
->  		revs->commits = reversed;
->  		revs->reverse = 0;
->  		revs->reverse_output_stage = 1;
-> 
-
-Thanks,
-Stefan
+diff --git a/git-svn.perl b/git-svn.perl
+index ff1ce3d..07f0a6c 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -123,6 +123,7 @@ sub opt_prefix { return $_prefix || '' }
+ $Git::SVN::Fetcher::_placeholder_filename = ".gitignore";
+ $_q ||= 0;
+ my %remote_opts = ( 'username=s' => \$Git::SVN::Prompt::_username,
++                    'password=s' => \$Git::SVN::Prompt::_password,
+                     'config-dir=s' => \$Git::SVN::Ra::config_dir,
+                     'no-auth-cache' => \$Git::SVN::Prompt::_no_auth_cache,
+                     'ignore-paths=s' => \$Git::SVN::Fetcher::_ignore_regex,
+@@ -206,6 +207,7 @@ my %cmd = (
+ 	              'parents' => \$_parents,
+ 	              'tag|t' => \$_tag,
+ 	              'username=s' => \$Git::SVN::Prompt::_username,
++	              'password=s' => \$Git::SVN::Prompt::_password,
+ 	              'commit-url=s' => \$_commit_url } ],
+ 	tag => [ sub { $_tag = 1; cmd_branch(@_) },
+ 	         'Create a tag in the SVN repository',
+@@ -214,6 +216,7 @@ my %cmd = (
+ 	           'dry-run|n' => \$_dry_run,
+ 	           'parents' => \$_parents,
+ 	           'username=s' => \$Git::SVN::Prompt::_username,
++	           'password=s' => \$Git::SVN::Prompt::_password,
+ 	           'commit-url=s' => \$_commit_url } ],
+ 	'set-tree' => [ \&cmd_set_tree,
+ 	                "Set an SVN repository to a git tree-ish",
+diff --git a/perl/Git/SVN/Prompt.pm b/perl/Git/SVN/Prompt.pm
+index e940b08..a94a847 100644
+--- a/perl/Git/SVN/Prompt.pm
++++ b/perl/Git/SVN/Prompt.pm
+@@ -2,7 +2,7 @@ package Git::SVN::Prompt;
+ use strict;
+ use warnings;
+ require SVN::Core;
+-use vars qw/$_no_auth_cache $_username/;
++use vars qw/$_no_auth_cache $_username $_password/;
+ 
+ sub simple {
+ 	my ($cred, $realm, $default_username, $may_save, $pool) = @_;
+@@ -17,8 +17,14 @@ sub simple {
+ 	} else {
+ 		username($cred, $realm, $may_save, $pool);
+ 	}
+-	$cred->password(_read_password("Password for '" .
+-	                               $cred->username . "': ", $realm));
++
++	if (defined $_password && length $_password) {
++		$cred->password($_password);
++	} else {
++		$cred->password(_read_password("Password for '" .
++		                               $cred->username . "': ", $realm));
++	}
++
+ 	$cred->may_save($may_save);
+ 	$SVN::_Core::SVN_NO_ERROR;
+ }
+-- 
+1.7.10.2 (Apple Git-33)
