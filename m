@@ -1,103 +1,141 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH try2 0/8] Introduce publish tracking branch
-Date: Sat, 12 Oct 2013 02:05:53 -0500
-Message-ID: <1381561561-20459-1-git-send-email-felipe.contreras@gmail.com>
-Cc: Matthieu Moy <matthieu.moy@imag.fr>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
+Subject: [PATCH v3 07/10] fast-import: add support to delete refs
+Date: Sat, 12 Oct 2013 02:05:32 -0500
+Message-ID: <1381561533-20381-10-git-send-email-felipe.contreras@gmail.com>
+References: <1381561533-20381-1-git-send-email-felipe.contreras@gmail.com>
+Cc: Sverre Rabbelier <srabbelier@gmail.com>,
+	Richard Hansen <rhansen@bbn.com>,
 	Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 12 09:12:16 2013
+X-From: git-owner@vger.kernel.org Sat Oct 12 09:12:13 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VUtMz-0004bU-1t
-	for gcvg-git-2@plane.gmane.org; Sat, 12 Oct 2013 09:12:13 +0200
+	id 1VUtMx-0004bU-VT
+	for gcvg-git-2@plane.gmane.org; Sat, 12 Oct 2013 09:12:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753964Ab3JLHMI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Oct 2013 03:12:08 -0400
-Received: from mail-ob0-f176.google.com ([209.85.214.176]:58123 "EHLO
-	mail-ob0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752739Ab3JLHMC (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Oct 2013 03:12:02 -0400
-Received: by mail-ob0-f176.google.com with SMTP id wo20so3407505obc.7
-        for <git@vger.kernel.org>; Sat, 12 Oct 2013 00:12:02 -0700 (PDT)
+	id S1753920Ab3JLHL6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Oct 2013 03:11:58 -0400
+Received: from mail-ob0-f180.google.com ([209.85.214.180]:64066 "EHLO
+	mail-ob0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752214Ab3JLHL5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Oct 2013 03:11:57 -0400
+Received: by mail-ob0-f180.google.com with SMTP id wn1so3482157obc.11
+        for <git@vger.kernel.org>; Sat, 12 Oct 2013 00:11:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=SWrB/c1gDukHopLwNu5ZlOcYiQqTpParwCJNSIx7z7M=;
-        b=P/LvLqI8VOvBGx7H2PcjRQ479sMJa4vfQ83DUlavJFC2AhxahL3IlWZ0r9Td7PRb8b
-         fSmznf+IrKhJyfjugtkBCepkzdzxNiAFHnJckLdWApbSr6rzA7FheoDBUVTpUGoY48Ru
-         e1FxVl9Qoe5GpAEgRmV/xHzYrpsLg7iIfzcWsiKHUUIhtNoxWIndGq8rRT2OoMK4zYwx
-         9R9QxN2E2euhZ1xGViOypFJjFo6qDlPxfiSTFNl4lMfTJMeOzewDmG6+6y0K/dFi6Isl
-         H5ksk/iD/9uBqhCoFiFrkQO/j5wc7zQ9nwS/JSK0EXGhATm4pN87USBoFTPUEetkKHtr
-         P0Xw==
-X-Received: by 10.182.40.134 with SMTP id x6mr17794665obk.31.1381561922393;
-        Sat, 12 Oct 2013 00:12:02 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=6GQ497KT6LL2kT7dqEkTm/fimDa1LZPr61XDRXfBXV4=;
+        b=MGfi/TkanFL672oPlRZUoJBo4g2NAwcSMxoukEZaycPJ0ykbDkzdYIEX+oSMMwg0Qj
+         gw8ExNC9lc4s77GUQYgLJkKPkr6A513BSM9+qbFp+EVzRNuWGoQhSEA1JXH5fprehWuP
+         z8mMdvxcEh8vsvdXBzrP3ubQ2s2EE6ePGhNSUfWav7/zVMCfc7QDkQfkWpVNdF0lRWV+
+         kSqco3DS1Ik0SrU7PlGIzUvgj9HYpznS6iZbLR11wYr7Goqc6ftDuismct+iOr54i1l0
+         Ct1UyhZ4XyeKqyJgsYoeU5h8H/zvbbYezHSY4TwBlMsYLCq85Vpd+WEsCQw+OrsNg3JL
+         5z+A==
+X-Received: by 10.182.99.231 with SMTP id et7mr17869354obb.10.1381561917016;
+        Sat, 12 Oct 2013 00:11:57 -0700 (PDT)
 Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
-        by mx.google.com with ESMTPSA id wd7sm28636060obc.3.1969.12.31.16.00.00
+        by mx.google.com with ESMTPSA id rl1sm101376765oeb.7.1969.12.31.16.00.00
         (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 12 Oct 2013 00:12:01 -0700 (PDT)
+        Sat, 12 Oct 2013 00:11:56 -0700 (PDT)
 X-Mailer: git-send-email 1.8.4-fc
+In-Reply-To: <1381561533-20381-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235981>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235982>
 
-As it has been discussed before, our support for triangular workflows is
-lacking, and the following patch series aims to improve that situation.
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
+ Documentation/git-fast-import.txt |  3 +++
+ fast-import.c                     | 13 ++++++++++---
+ t/t9300-fast-import.sh            | 18 ++++++++++++++++++
+ 3 files changed, 31 insertions(+), 3 deletions(-)
 
-We have the concept of upstream branch (e.g. 'origin/master') which is to where
-our topic branches eventually should be merged to, so it makes sense that
-'git rebase' uses that as the destination, but most people would not push to
-such upstream branch, they would push to a publish branch
-(e.g.  'github/feature-a'). We could set our upstream to the place we push, and
-'git push' would be able to use that as default, and 'git branch --vv' would
-show how ahead/behind we are in comparisson to that branch, but then 'git
-rebase' (or 'git merge') would be using the wrong branch.
-
-This patch series adds:
-
- 1) git push --set-publish
- 2) git branch --set-publish
- 3) git branch -vv # uses and shows the publish branch when configured
-
-After this, it becomes much easier to track branches in a triangular workflow.
-
-  master          e230c56 [origin/master, gh/master] Git 1.8.4
-* fc/publish      0a105fd [master, gh/fc/publish: ahead 1] branch: display publish branch
-  fc/branch/fast  177dcad [master, gh/fc/branch/fast] branch: reorganize verbose options
-  fc/trivial      f289b9a [master: ahead 7] branch: trivial style fix
-  fc/leaks        d101af4 [master: ahead 2] read-cache: plug a possible leak
-  stable          e230c56 Git 1.8.4
-
-Felipe Contreras (8):
-  branch: trivial cleanup
-  branch: reorganize verbose options
-  push: trivial reorganization
-  Add concept of 'publish' branch
-  branch: allow configuring the publish branch
-  t: branch add publish branch tests
-  push: add --set-publish option
-  branch: display publish branch
-
- Documentation/git-branch.txt |  11 +++++
- Documentation/git-push.txt   |   9 +++-
- branch.c                     |  43 +++++++++++++++++
- branch.h                     |   2 +
- builtin/branch.c             | 107 +++++++++++++++++++++++++++++++++++++------
- builtin/push.c               |  52 +++++++++++++--------
- remote.c                     |  34 +++++++++++---
- remote.h                     |   4 ++
- t/t3200-branch.sh            |  76 ++++++++++++++++++++++++++++++
- t/t5529-push-publish.sh      |  70 ++++++++++++++++++++++++++++
- t/t6040-tracking-info.sh     |   8 ++--
- transport.c                  |  28 +++++++----
- transport.h                  |   1 +
- 13 files changed, 393 insertions(+), 52 deletions(-)
- create mode 100755 t/t5529-push-publish.sh
-
+diff --git a/Documentation/git-fast-import.txt b/Documentation/git-fast-import.txt
+index bf1a02a..fe5c952 100644
+--- a/Documentation/git-fast-import.txt
++++ b/Documentation/git-fast-import.txt
+@@ -483,6 +483,9 @@ Marks must be declared (via `mark`) before they can be used.
+ * Any valid Git SHA-1 expression that resolves to a commit.  See
+   ``SPECIFYING REVISIONS'' in linkgit:gitrevisions[7] for details.
+ 
++* The special null SHA-1 (40 zeros) specifices that the branch is to be
++  removed.
++
+ The special case of restarting an incremental import from the
+ current branch value should be written as:
+ ----
+diff --git a/fast-import.c b/fast-import.c
+index 23f625f..b6be7a7 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -248,6 +248,7 @@ struct branch {
+ 	uintmax_t last_commit;
+ 	uintmax_t num_notes;
+ 	unsigned active : 1;
++	unsigned delete : 1;
+ 	unsigned pack_id : PACK_ID_BITS;
+ 	unsigned char sha1[20];
+ };
+@@ -1674,10 +1675,13 @@ static int update_branch(struct branch *b)
+ 	struct ref_lock *lock;
+ 	unsigned char old_sha1[20];
+ 
+-	if (is_null_sha1(b->sha1))
+-		return 0;
+ 	if (read_ref(b->name, old_sha1))
+ 		hashclr(old_sha1);
++	if (is_null_sha1(b->sha1)) {
++		if (b->delete)
++			delete_ref(b->name, old_sha1, 0);
++		return 0;
++	}
+ 	lock = lock_any_ref_for_update(b->name, old_sha1, 0);
+ 	if (!lock)
+ 		return error("Unable to lock %s", b->name);
+@@ -2604,8 +2608,11 @@ static int parse_from(struct branch *b)
+ 			free(buf);
+ 		} else
+ 			parse_from_existing(b);
+-	} else if (!get_sha1(from, b->sha1))
++	} else if (!get_sha1(from, b->sha1)) {
+ 		parse_from_existing(b);
++		if (is_null_sha1(b->sha1))
++			b->delete = 1;
++	}
+ 	else
+ 		die("Invalid ref name or SHA1 expression: %s", from);
+ 
+diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
+index ac6f3b6..0150aa6 100755
+--- a/t/t9300-fast-import.sh
++++ b/t/t9300-fast-import.sh
+@@ -2934,4 +2934,22 @@ test_expect_success 'S: ls with garbage after sha1 must fail' '
+ 	test_i18ngrep "space after tree-ish" err
+ '
+ 
++test_expect_success 'T: delete branch' '
++	git branch to-delete &&
++	git fast-import <<-EOF &&
++	reset refs/heads/to-delete
++	from 0000000000000000000000000000000000000000
++	EOF
++	test_must_fail git rev-parse --verify refs/heads/to-delete
++'
++
++test_expect_success 'T: empty reset doesnt delete branch' '
++	git branch not-to-delete &&
++	git fast-import <<-EOF &&
++	reset refs/heads/not-to-delete
++	EOF
++	git show-ref &&
++	git rev-parse --verify refs/heads/not-to-delete
++'
++
+ test_done
 -- 
 1.8.4-fc
