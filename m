@@ -1,7 +1,7 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH try2 09/14] apply: add --stage option
-Date: Sat, 12 Oct 2013 02:04:40 -0500
-Message-ID: <1381561488-20294-7-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH try2 03/14] diff: document --staged
+Date: Sat, 12 Oct 2013 02:04:41 -0500
+Message-ID: <1381561488-20294-8-git-send-email-felipe.contreras@gmail.com>
 References: <1381561488-20294-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>,
 	Jay Soffian <jaysoffian@gmail.com>,
@@ -14,90 +14,75 @@ Cc: Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>,
 	Hilco Wijbenga <hilco.wijbenga@gmail.com>,
 	Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 12 09:15:11 2013
+X-From: git-owner@vger.kernel.org Sat Oct 12 09:15:14 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VUtPp-0006gX-Qb
-	for gcvg-git-2@plane.gmane.org; Sat, 12 Oct 2013 09:15:10 +0200
+	id 1VUtPu-0006ia-1R
+	for gcvg-git-2@plane.gmane.org; Sat, 12 Oct 2013 09:15:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753571Ab3JLHLK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1754914Ab3JLHPG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Oct 2013 03:15:06 -0400
+Received: from mail-ob0-f179.google.com ([209.85.214.179]:54131 "EHLO
+	mail-ob0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753550Ab3JLHLK (ORCPT <rfc822;git@vger.kernel.org>);
 	Sat, 12 Oct 2013 03:11:10 -0400
-Received: from mail-ob0-f177.google.com ([209.85.214.177]:46804 "EHLO
-	mail-ob0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753550Ab3JLHLH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Oct 2013 03:11:07 -0400
-Received: by mail-ob0-f177.google.com with SMTP id wm4so3408948obc.22
-        for <git@vger.kernel.org>; Sat, 12 Oct 2013 00:11:07 -0700 (PDT)
+Received: by mail-ob0-f179.google.com with SMTP id wp18so3452005obc.38
+        for <git@vger.kernel.org>; Sat, 12 Oct 2013 00:11:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=nDgyhO92KPcP+vVZsDDB4EnnCZZwqSs7IMonFod7jP8=;
-        b=mSTn7tM05HrFDwY8vBSPaxb63j9RWpLvleLhsKbfn+a7dl8Cg3XoZNlx6GRVN1cyqe
-         njW94tUo9AFSWanmhEdnXt/SEZgO7yOaA0nbesCIDuurcPFlkN2jjZOr3C3P83rfZe20
-         L2XHLo/t0IaK06RMUDUqNcSfdUydCZqWnqzqWk821sfEFBupswxD0Jc5KlT5rg43xmAb
-         AF+xHC3HbaSI33xR7PZiT6L8oCoC2/tzxyJka/WgujWI6oZUQT5uIcJZ/GQmG8RGwH7W
-         lcO4hhti6v7P4McUeSpBXHlHvL4zeM0RiuP5PTWPUH3RlJ4UB1zI43Z4RETzTwbquWSh
-         9ZWw==
-X-Received: by 10.60.70.134 with SMTP id m6mr17753964oeu.14.1381561867360;
-        Sat, 12 Oct 2013 00:11:07 -0700 (PDT)
+        bh=EWfoQi8P8ohugkgg06gXz2exYefLgNIxdOBiUilIm04=;
+        b=dWxoQuHg98VS0rTr0Nfb+K1O+HLJiLII1DxtdtLRXn0PfKbt2yBZnzaI/t/RZ5Rlae
+         WSTIgyb+vd4H3xQkwBE4L9OOapw7pi7QBojV7CjWNMy/yDYYYj143pOQ3E1heDc15MSm
+         QBjoMwgbYR5WxVwe5HreupQq5q8jDebE0TmFyoSpa+cZxTv8eR6WXMB2gKWC/Oxbg3lW
+         un8NqPgoKsCjleL5WUu61gKUntB6Scz/CbV9N1WT+rlpXNKKF8Q18ByDo+d3GOL59LEU
+         sZpVPywgDLV+G2Z3AMvrM4FsECB4nDY570KxznUOBGHHxF4826y6J5WznFK3V/P0XuSE
+         iy1Q==
+X-Received: by 10.182.16.201 with SMTP id i9mr17808067obd.21.1381561870160;
+        Sat, 12 Oct 2013 00:11:10 -0700 (PDT)
 Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
-        by mx.google.com with ESMTPSA id tz10sm28643636obc.10.1969.12.31.16.00.00
+        by mx.google.com with ESMTPSA id rr6sm101369714oeb.0.1969.12.31.16.00.00
         (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 12 Oct 2013 00:11:06 -0700 (PDT)
+        Sat, 12 Oct 2013 00:11:09 -0700 (PDT)
 X-Mailer: git-send-email 1.8.4-fc
 In-Reply-To: <1381561488-20294-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236038>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236039>
 
-Synonym for --index.
+Synonym for --cached.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- Documentation/git-apply.txt | 5 ++++-
- builtin/apply.c             | 2 ++
- 2 files changed, 6 insertions(+), 1 deletion(-)
+ Documentation/git-diff.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/git-apply.txt b/Documentation/git-apply.txt
-index f605327..ce44327 100644
---- a/Documentation/git-apply.txt
-+++ b/Documentation/git-apply.txt
-@@ -12,7 +12,7 @@ SYNOPSIS
- 'git apply' [--stat] [--numstat] [--summary] [--check] [--index] [--3way]
- 	  [--apply] [--no-add] [--build-fake-ancestor=<file>] [-R | --reverse]
- 	  [--allow-binary-replacement | --binary] [--reject] [-z]
--	  [-p<n>] [-C<n>] [--inaccurate-eof] [--recount] [--cached]
-+	  [-p<n>] [-C<n>] [--inaccurate-eof] [--recount] [--cached|--staged]
- 	  [--ignore-space-change | --ignore-whitespace ]
- 	  [--whitespace=(nowarn|warn|fix|error|error-all)]
- 	  [--exclude=<path>] [--include=<path>] [--directory=<root>]
-@@ -67,6 +67,9 @@ OPTIONS
- 	up-to-date, it is flagged as an error.  This flag also
- 	causes the index file to be updated.
+diff --git a/Documentation/git-diff.txt b/Documentation/git-diff.txt
+index 78d6d50..646e5cd 100644
+--- a/Documentation/git-diff.txt
++++ b/Documentation/git-diff.txt
+@@ -10,7 +10,7 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git diff' [options] [<commit>] [--] [<path>...]
+-'git diff' [options] --cached [<commit>] [--] [<path>...]
++'git diff' [options] [--cached|--staged] [<commit>] [--] [<path>...]
+ 'git diff' [options] <commit> <commit> [--] [<path>...]
+ 'git diff' [options] <blob> <blob>
+ 'git diff' [options] [--no-index] [--] <path> <path>
+@@ -33,7 +33,7 @@ If exactly two paths are given and at least one points outside
+ the current repository, 'git diff' will compare the two files /
+ directories. This behavior can be forced by --no-index.
  
-+--staged::
-+	Synonym for --index.
-+
- --cached::
- 	Apply a patch without touching the working tree. Instead take the
- 	cached data, apply the patch, and store the result in the index
-diff --git a/builtin/apply.c b/builtin/apply.c
-index 50912c9..42b5a4b 100644
---- a/builtin/apply.c
-+++ b/builtin/apply.c
-@@ -4377,6 +4377,8 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
- 			N_("instead of applying the patch, see if the patch is applicable")),
- 		OPT_BOOLEAN(0, "index", &check_index,
- 			N_("make sure the patch is applicable to the current index")),
-+		OPT_BOOLEAN(0, "stage", &check_index,
-+			N_("make sure the patch is applicable to the current index")),
- 		OPT_BOOLEAN(0, "cached", &cached,
- 			N_("apply a patch without touching the working tree")),
- 		OPT_BOOLEAN(0, "apply", &force_apply,
+-'git diff' [--options] --cached [<commit>] [--] [<path>...]::
++'git diff' [--options] [--cached|--staged] [<commit>] [--] [<path>...]::
+ 
+ 	This form is to view the changes you staged for the next
+ 	commit relative to the named <commit>.  Typically you
 -- 
 1.8.4-fc
