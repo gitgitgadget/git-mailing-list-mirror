@@ -1,8 +1,10 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v10 14/15] contrib: related: add option to show commits
-Date: Sat, 12 Oct 2013 02:06:09 -0500
-Message-ID: <1381561584-20529-1-git-send-email-felipe.contreras@gmail.com>
-Cc: Duy Nguyen <pclouds@gmail.com>,
+Subject: [PATCH try2 3/8] push: trivial reorganization
+Date: Sat, 12 Oct 2013 02:05:59 -0500
+Message-ID: <1381561561-20459-7-git-send-email-felipe.contreras@gmail.com>
+References: <1381561561-20459-1-git-send-email-felipe.contreras@gmail.com>
+Cc: Matthieu Moy <matthieu.moy@imag.fr>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
 	Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Sat Oct 12 09:12:40 2013
@@ -11,121 +13,126 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VUtNK-0004uk-Oe
-	for gcvg-git-2@plane.gmane.org; Sat, 12 Oct 2013 09:12:35 +0200
+	id 1VUtNJ-0004uk-Mi
+	for gcvg-git-2@plane.gmane.org; Sat, 12 Oct 2013 09:12:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754048Ab3JLHM2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Oct 2013 03:12:28 -0400
-Received: from mail-oa0-f50.google.com ([209.85.219.50]:34395 "EHLO
-	mail-oa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754022Ab3JLHM0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Oct 2013 03:12:26 -0400
-Received: by mail-oa0-f50.google.com with SMTP id j1so3067115oag.23
-        for <git@vger.kernel.org>; Sat, 12 Oct 2013 00:12:25 -0700 (PDT)
+	id S1754021Ab3JLHMV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Oct 2013 03:12:21 -0400
+Received: from mail-oa0-f43.google.com ([209.85.219.43]:50292 "EHLO
+	mail-oa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753950Ab3JLHMS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Oct 2013 03:12:18 -0400
+Received: by mail-oa0-f43.google.com with SMTP id i3so3163155oag.30
+        for <git@vger.kernel.org>; Sat, 12 Oct 2013 00:12:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=dv73BQabrEEVS6sYKuS7TSUKHZiZk7V6+bdzH/8NpR0=;
-        b=vl0eLVwR8tPJFfgenNBzEvLG6pi1ss8dpHzkg6tsHMQNGMDGkcE7ErMaDv25qZ/ygj
-         FBaMgmZrlgfomfQyhciGTV3Rc3Z8b6aaNqx/+dkBIf4V30fGfjP9KORsqBvcLZgbygTz
-         zrKE90Zi72jtb4NnYoFQR2fWBSR3bB1L6ubuUgLmYl6pDHfB5FwhXQc5pjPsMANE6AFh
-         wgjsxIs5ZAubeMEhU6r92NQtpQlC0m4km4NKMIVwg7eszvtfDRDRVB0KnLIzYSj0KYKp
-         WRblrJiVDMDHn6/6JAxnHgXHRrywEdKKpPucOBLliXjKfrPKRl/rI/C81p+FZWDRXm3U
-         SUmA==
-X-Received: by 10.60.80.8 with SMTP id n8mr17665121oex.33.1381561945681;
-        Sat, 12 Oct 2013 00:12:25 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=nv0oIs/Qiq+UngeNK70uWOOq/yHwb+h+E5N2eVh+JJo=;
+        b=xQRWUhHXDqo43NIpzU9Ql/2njiy6oIbKIeKNCkx9NLR+tznp+5svqLM75k9v9hk1EL
+         HxoQSP0VHrkA9ScYiabp6nwFl5t8gmkQOKtvq8b4/Ip/uTUIZWNDJsQNPYk1lcB0f+Oq
+         Vmv8WSX59pBhuVo6VthfaaRP5DteTt6iaSL/oi1QfkZxqN55rwyD9Gm6C8RJSZubDaLM
+         LNvy41EtRcuijjTer7cM33MvX8HipKYJu6WJztPuWU82pUYG5XA17uM0owinnCQExrOo
+         qkYrl46pQGWcoA3JWAC1VGOVfteab8abq79kAKJt7aXfi1AYKGQxhE6+qrkVm+WHpmd5
+         qGmw==
+X-Received: by 10.182.129.201 with SMTP id ny9mr17903197obb.0.1381561937706;
+        Sat, 12 Oct 2013 00:12:17 -0700 (PDT)
 Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
-        by mx.google.com with ESMTPSA id rl1sm101382909oeb.7.1969.12.31.16.00.00
+        by mx.google.com with ESMTPSA id s9sm28634232obu.4.1969.12.31.16.00.00
         (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 12 Oct 2013 00:12:24 -0700 (PDT)
+        Sat, 12 Oct 2013 00:12:16 -0700 (PDT)
 X-Mailer: git-send-email 1.8.4-fc
+In-Reply-To: <1381561561-20459-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235992>
-
-Instead of showing the authors and signers, show the commits themselves.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/235993>
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- contrib/related/git-related    | 23 +++++++++++++++++++++++
- contrib/related/test-related.t | 10 ++++++++++
- 2 files changed, 33 insertions(+)
+ builtin/push.c | 35 +++++++++++++++++++----------------
+ 1 file changed, 19 insertions(+), 16 deletions(-)
 
-diff --git a/contrib/related/git-related b/contrib/related/git-related
-index d6b44c7..b9c8619 100755
---- a/contrib/related/git-related
-+++ b/contrib/related/git-related
-@@ -7,6 +7,7 @@ $since = '5-years-ago'
- $min_percent = 10
- $files = []
- $rev_args = []
-+$show_commits = false
+diff --git a/builtin/push.c b/builtin/push.c
+index 04f0eaf..5dc06a3 100644
+--- a/builtin/push.c
++++ b/builtin/push.c
+@@ -113,20 +113,11 @@ static NORETURN int die_push_simple(struct branch *branch, struct remote *remote
+ 	    remote->name, branch->name, advice_maybe);
+ }
  
- $mailmaps = {}
- $mailmaps_complex = {}
-@@ -128,6 +129,10 @@ opts.on('d', 'since', 'How far back to search for relevant commits') do |v|
-   $since = v
- end
+-static const char message_detached_head_die[] =
+-	N_("You are not currently on a branch.\n"
+-	   "To push the history leading to the current (detached HEAD)\n"
+-	   "state now, use\n"
+-	   "\n"
+-	   "    git push %s HEAD:<name-of-remote-branch>\n");
+-
+ static void setup_push_upstream(struct remote *remote, struct branch *branch,
+ 				int triangular)
+ {
+ 	struct strbuf refspec = STRBUF_INIT;
  
-+opts.on('c', 'commits', 'List commits instead of persons') do |v|
-+  $show_commits = v
-+end
+-	if (!branch)
+-		die(_(message_detached_head_die), remote->name);
+ 	if (!branch->merge_nr || !branch->merge || !branch->remote_name)
+ 		die(_("The current branch %s has no upstream branch.\n"
+ 		    "To push the current branch and set the remote as upstream, use\n"
+@@ -156,8 +147,6 @@ static void setup_push_upstream(struct remote *remote, struct branch *branch,
+ 
+ static void setup_push_current(struct remote *remote, struct branch *branch)
+ {
+-	if (!branch)
+-		die(_(message_detached_head_die), remote->name);
+ 	add_refspec(branch->name);
+ }
+ 
+@@ -191,9 +180,23 @@ static int is_workflow_triangular(struct remote *remote)
+ 	return (fetch_remote && fetch_remote != remote);
+ }
+ 
+-static void setup_default_push_refspecs(struct remote *remote)
++static const char message_detached_head_die[] =
++	N_("You are not currently on a branch.\n"
++	   "To push the history leading to the current (detached HEAD)\n"
++	   "state now, use\n"
++	   "\n"
++	   "    git push %s HEAD:<name-of-remote-branch>\n");
 +
- opts.parse
- 
- class Person
-@@ -238,6 +243,10 @@ class Commits
-     @items.each(&block)
-   end
- 
-+  def list
-+    @items.keys
-+  end
++static struct branch *get_current_branch(struct remote *remote)
+ {
+ 	struct branch *branch = branch_get(NULL);
++	if (!branch)
++		die(_(message_detached_head_die), remote->name);
++	return branch;
++}
 +
-   def import
-     return if @items.empty?
-     File.popen(%w[git cat-file --batch], 'r+') do |p|
-@@ -339,6 +348,20 @@ else
- end
- commits.import
++static void setup_default_push_refspecs(struct remote *remote)
++{
+ 	int triangular = is_workflow_triangular(remote);
  
-+if $show_commits
-+  cmd = nil
-+  case $show_commits
-+  when 'raw'
-+    puts commits.list
-+  when 'full'
-+    cmd = %w[git log --patch --no-walk]
-+  else
-+    cmd = %w[git log --oneline --no-walk]
-+  end
-+  system(*cmd + commits.list) if cmd
-+  exit 0
-+end
-+
- persons = Persons.new
+ 	switch (push_default) {
+@@ -208,17 +211,17 @@ static void setup_default_push_refspecs(struct remote *remote)
  
- persons.sort.reverse.each do |person|
-diff --git a/contrib/related/test-related.t b/contrib/related/test-related.t
-index fa8c1a7..f357e30 100755
---- a/contrib/related/test-related.t
-+++ b/contrib/related/test-related.t
-@@ -94,4 +94,14 @@ test_expect_success "mailmap" "
- 	test_cmp expected actual
- "
+ 	case PUSH_DEFAULT_SIMPLE:
+ 		if (triangular)
+-			setup_push_current(remote, branch);
++			setup_push_current(remote, get_current_branch(remote));
+ 		else
+-			setup_push_upstream(remote, branch, triangular);
++			setup_push_upstream(remote, get_current_branch(remote), triangular);
+ 		break;
  
-+test_expect_success "commits" "
-+	git related -craw -1 master | git log --format='%s' --no-walk --stdin > actual &&
-+	cat > expected <<-EOF &&
-+	four
-+	three
-+	one
-+	EOF
-+	test_cmp expected actual
-+"
-+
- test_done
+ 	case PUSH_DEFAULT_UPSTREAM:
+-		setup_push_upstream(remote, branch, triangular);
++		setup_push_upstream(remote, get_current_branch(remote), triangular);
+ 		break;
+ 
+ 	case PUSH_DEFAULT_CURRENT:
+-		setup_push_current(remote, branch);
++		setup_push_current(remote, get_current_branch(remote));
+ 		break;
+ 
+ 	case PUSH_DEFAULT_NOTHING:
 -- 
 1.8.4-fc
