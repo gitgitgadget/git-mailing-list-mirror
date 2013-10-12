@@ -1,74 +1,121 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [BAD PATCH 0/9] v4-aware tree walker API
-Date: Sat, 12 Oct 2013 22:59:24 +0700
-Message-ID: <CACsJy8DZvdWyKSvLzPhS7OqKUU-OKG40M7M1HxN4eADsx0od6Q@mail.gmail.com>
-References: <1381329976-32082-1-git-send-email-pclouds@gmail.com>
- <alpine.LFD.2.03.1310091137310.3023@syhkavp.arg> <20131011122259.GA7776@lanh>
- <20131011130528.GA10014@lanh> <alpine.LFD.2.03.1310121001000.3023@syhkavp.arg>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: My patches
+Date: Sat, 12 Oct 2013 17:18:10 +0100
+Organization: OPDS
+Message-ID: <5247B8D59AAE41F3A0D8BF165D2C2BAE@PhilipOakley>
+References: <20131012072450.GA21165@nysa>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Sat Oct 12 18:00:26 2013
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+To: "Felipe Contreras" <felipe.contreras@gmail.com>,
+	<git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Oct 12 18:18:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VV1cA-0003DY-BJ
-	for gcvg-git-2@plane.gmane.org; Sat, 12 Oct 2013 18:00:26 +0200
+	id 1VV1tU-0004kH-L2
+	for gcvg-git-2@plane.gmane.org; Sat, 12 Oct 2013 18:18:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752566Ab3JLQAR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Oct 2013 12:00:17 -0400
-Received: from mail-oa0-f54.google.com ([209.85.219.54]:44565 "EHLO
-	mail-oa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752157Ab3JLP7y (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Oct 2013 11:59:54 -0400
-Received: by mail-oa0-f54.google.com with SMTP id n5so3364931oag.13
-        for <git@vger.kernel.org>; Sat, 12 Oct 2013 08:59:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=Ze69DzIoRvMRZKHrMzxP+dkfeYpLxBroAQvUFcJdC8w=;
-        b=tJPjb8ssFVXoLCuQTK+shlfG1XTmKbVGJxl6PEerAQlGQOGEUMjFIJWstVuMNv2p+w
-         otIcalz0pZ92oK6NUDDGQhcMxJvLjG+XkyUaI4/Bzrt5gHG9f2Ei1gqqS6YVgxiR7nKR
-         tUDMmcKyu1MSVPO3UOyiTIcpeT/FWn+KQ3tDCgQW7JHkzh53Q3rAnESVJqO1nNYdbGRF
-         goDJMz3Ulu0PtZhUsRVgOdpDEqFXNg0IM1uaejverMo0aF+7ndbhCFv/u9P0d+K96Avs
-         uouabe+J4iwu36e+MyO+6Ijvg5B2W2XcUcHY7WzGToZwVDgm+7jK4n1Ass2OH7yWFCxR
-         89Lw==
-X-Received: by 10.60.63.68 with SMTP id e4mr19440802oes.23.1381593594097; Sat,
- 12 Oct 2013 08:59:54 -0700 (PDT)
-Received: by 10.76.0.41 with HTTP; Sat, 12 Oct 2013 08:59:24 -0700 (PDT)
-In-Reply-To: <alpine.LFD.2.03.1310121001000.3023@syhkavp.arg>
+	id S1752525Ab3JLQSB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Oct 2013 12:18:01 -0400
+Received: from out1.ip04ir2.opaltelecom.net ([62.24.128.240]:5636 "EHLO
+	out1.ip04ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752244Ab3JLQSA (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 12 Oct 2013 12:18:00 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AooGACV1WVJOl3GZ/2dsb2JhbABZgwc4iTm4cgqBGBd0giAFAQEEAQgBAS4eAQEUEgYCAwUCAQMVAQslFAEECBIGBxcGARIIAgECAwGHYwMJCgizYw2JZwSMZII7g1mBBAOFJYNfhhOFEYF0jhMihTaDJTs
+X-IPAS-Result: AooGACV1WVJOl3GZ/2dsb2JhbABZgwc4iTm4cgqBGBd0giAFAQEEAQgBAS4eAQEUEgYCAwUCAQMVAQslFAEECBIGBxcGARIIAgECAwGHYwMJCgizYw2JZwSMZII7g1mBBAOFJYNfhhOFEYF0jhMihTaDJTs
+X-IronPort-AV: E=Sophos;i="4.93,480,1378854000"; 
+   d="scan'208";a="425300817"
+Received: from host-78-151-113-153.as13285.net (HELO PhilipOakley) ([78.151.113.153])
+  by out1.ip04ir2.opaltelecom.net with SMTP; 12 Oct 2013 17:17:59 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236051>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236052>
 
-On Sat, Oct 12, 2013 at 9:42 PM, Nicolas Pitre <nico@fluxnic.net> wrote:
-> On Fri, 11 Oct 2013, Duy Nguyen wrote:
+From: "Felipe Contreras" <felipe.contreras@gmail.com>
+Sent: Saturday, October 12, 2013 8:24 AM
+> Hi,
 >
->> On Fri, Oct 11, 2013 at 07:22:59PM +0700, Duy Nguyen wrote:
->> > > > Maybe we could make an exception and allow the tree walker to pass
->> > > > pv4_tree_cache* directly to decode_entries so it does not need to do
->> > > > the first lookup every time..
->> > > >
->> > > > Suggestions?
->>
->> Looking at decode_entries() traces I think the "one decode_entries()
->> for one tree_entry()" just amplifies the delta chain effect. If you
->> hide 3 entries behind 5 layers of copy sequences
->> (i.e. tree1->tree2->..->tree5->real-tree-entry), then every
->> decode_entries(count=1) will have to go through 5 layers.
->
-> Calling decode_entries() for every tree entry is a bad approach.  We
-> should really implement this as a state machine preserving the entire
-> state between entries so that moving to the next entry is just a matter
-> of advancing a pointer in most cases.
+> Clearly, a lot of my patches have not been reviewed properly, so even
+> though they are technically correct, and would benefit users, some 
+> have
+> specifically been requested by them, and at least one would
+> significantly improve Git's user interface...
 
-Yeah. Maybe first step is avoid recursion in decode_entries(). We need
-to do that eventually to avoid stack overlow due to long depths.
--- 
-Duy
+Hi Filipe,
+
+Given you have put a lot of work into your 16 patch series, is there any 
+particular order, or grouping that would help their review.
+
+With so many patches to consider one (the reviewer(s)) gains another 
+task of simply trying to prioritise the patches (usually one can take 
+big decisions by simply remebering who's series one was interested in).
+
+I expect the clean-ups and 'trivials's' can be managed separately from 
+the 'improvements', which would again be separate from the "satging" and 
+"Ruby" philosophical discussions.
+
+>   they are going nowhere.
+I wouldn't expect 100% success. Every now and again one hears of the 
+"here's some patches I've had in my tree for a while" that probably had 
+the same early frustrations - they just feel worse the more you produce.
+
+>
+> Here is the summary, and you can also find a web version:
+> https://github.com/felipec/git/wiki/My-patches
+>
+> Cheers.
+>
+
+Thanks for the summary.
+ Philip
+
+> === branch: improve verbose option ===
+> Felipe Contreras (2):
+> === Reject non-ff pulls by default (v4) ===
+> Felipe Contreras (7):
+> === remote-helpers: test reorganization (v2) ===
+> Felipe Contreras (5):
+> === build: add default aliases (v3) ===
+> Felipe Contreras (1):
+> === Add core.mode configuration (v3) ===
+> Felipe Contreras (1):
+> === Officially start moving to the term 'staging area' ===
+> Felipe Contreras (14):
+> === transport-helper: updates (v3) ===
+> Felipe Contreras (10):
+> === Introduce publish tracking branch ===
+> Felipe Contreras (8):
+> === New git-related helper (v10) ===
+> Felipe Contreras (15):
+> === fetch: add new fetch.default configuration ===
+> Felipe Contreras (1):
+> === Version fixes and cleanups (v4) ===
+> Felipe Contreras (2):
+> === Trivial paches ===
+> Felipe Contreras (20):
+> === Massive improvents to rebase and cherry-pick (v6) ===
+> Felipe Contreras (28):
+> === Support for Ruby (v2) ===
+> Felipe Contreras (44):
+> === revision: add --except option (v3) ===
+> Felipe Contreras (1):
+> === sha1-name: refactor get_sha1() parsing ===
+> Felipe Contreras (1):
+>      sha1-name: refactor get_sha1() parsing
+> -- 
+> Felipe Contreras
+> --
