@@ -1,533 +1,290 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH try2] sha1-name: refactor get_sha1() parsing
-Date: Sat, 12 Oct 2013 02:08:12 -0500
-Message-ID: <1381561692-20869-1-git-send-email-felipe.contreras@gmail.com>
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>, Matthieu Moy <matthieu.moy@imag.fr>,
-	Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH v3] revision: add --except option
+Date: Sat, 12 Oct 2013 02:08:10 -0500
+Message-ID: <1381561690-20827-1-git-send-email-felipe.contreras@gmail.com>
+Cc: Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 12 09:14:26 2013
+X-From: git-owner@vger.kernel.org Sat Oct 12 09:14:30 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VUtP7-0006B4-63
-	for gcvg-git-2@plane.gmane.org; Sat, 12 Oct 2013 09:14:25 +0200
+	id 1VUtPB-0006Ec-SA
+	for gcvg-git-2@plane.gmane.org; Sat, 12 Oct 2013 09:14:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752779Ab3JLHOS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Oct 2013 03:14:18 -0400
-Received: from mail-oa0-f44.google.com ([209.85.219.44]:50338 "EHLO
-	mail-oa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754860Ab3JLHOO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Oct 2013 03:14:14 -0400
-Received: by mail-oa0-f44.google.com with SMTP id l20so2585202oag.31
-        for <git@vger.kernel.org>; Sat, 12 Oct 2013 00:14:14 -0700 (PDT)
+	id S1754873Ab3JLHOZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Oct 2013 03:14:25 -0400
+Received: from mail-ob0-f180.google.com ([209.85.214.180]:48777 "EHLO
+	mail-ob0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752827Ab3JLHOL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Oct 2013 03:14:11 -0400
+Received: by mail-ob0-f180.google.com with SMTP id wn1so3482989obc.11
+        for <git@vger.kernel.org>; Sat, 12 Oct 2013 00:14:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id;
-        bh=JtwrURAHxJ9T+KSpIQnaQllshBNKNlfdsmzlokqxff4=;
-        b=YkRCHbfKSc7xPm5nsl2xSgB8ENDQaWrnvWa+m559ENs1y68/hCfQwBCojhXHEwDt3H
-         F68AaQRwh3ipmZlihJyH4Ayo9IoznSWPt8f64nBaqTpzX0UtZ4ia/JSIG4gfKPwg2UXE
-         3orexSHJZeZtx8ed1Lrz6p/8cYleH1c9VReJZcRfo64r8DpcWv8GVw+DkuNQerR23ceo
-         ib/4bGnsZJV4hunVvMm4paHGv4UQ6+hRiAgPBXuM2Sr9HakarpVlXgCIS9UKOf2x+hpW
-         1g+v42cyBBN2iQ5LxldPkmTCnKuR054Qsk1TS6Y1WbsbcTqHLvsYjmbzTlko86y1bi7d
-         lJ2w==
-X-Received: by 10.182.214.98 with SMTP id nz2mr13744784obc.37.1381562053989;
-        Sat, 12 Oct 2013 00:14:13 -0700 (PDT)
+        bh=s7c6RR+5kaFNt27G/Ykab43IYj6N6wC6AIEBTT0bGjA=;
+        b=CKlzjC+CZufjhClROkF4vx8osiq6UxkUYyOKD23T1JgtDTQD0vI6bhuSgPpEcaPya1
+         VdszCdh+r7TUpSNYvdm3TSBu8c1i6ZG4ZOwUtzUSYnLKSYpvQg4wfy7JZM1GTCy23Fka
+         beBsBCK7S+ftOFtO4+HkdNvVVzV8MxqXHo2PAlWlGx/PSEk3McBV1UPvgX2a4OFsBh2I
+         z752Eah468THHP/sAzoDk3qH5ynvOCLHKxRgOBgQVXABock119ivS8d/XVeQ+LXkxJBF
+         XLCLJ/SM5qBQdm0silaFwaI94sUWGzVXQKYUzHMGhU9bpk1raFVJ1Gryu+px478ALEfW
+         m7aA==
+X-Received: by 10.182.50.130 with SMTP id c2mr17837841obo.35.1381562051062;
+        Sat, 12 Oct 2013 00:14:11 -0700 (PDT)
 Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
-        by mx.google.com with ESMTPSA id d3sm101390634oek.5.1969.12.31.16.00.00
+        by mx.google.com with ESMTPSA id rr6sm101400060oeb.0.1969.12.31.16.00.00
         (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 12 Oct 2013 00:14:13 -0700 (PDT)
+        Sat, 12 Oct 2013 00:14:10 -0700 (PDT)
 X-Mailer: git-send-email 1.8.4-fc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236029>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236030>
 
-Instead of parsing left to right, do it right do left, this way it is
-much more natural and probably efficient too, as there's less
-recursivity.
+So that it's possible to remove certain refs from the list without
+removing the objects that are referenced by other refs.
 
-In theory there shouldn't be any functional changes, although there's at
-least one error message that has changed.
+For example this repository:
+
+  C (crap)
+  B (test)
+  A (HEAD, master)
+
+When using '--branches --except crap':
+
+  B (test)
+  A (HEAD, master)
+
+But when using '--branches --not crap' nothing will come out.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- sha1_name.c                    | 319 ++++++++++++++++++++++++-----------------
- t/t1506-rev-parse-diagnosis.sh |   2 +-
- 2 files changed, 185 insertions(+), 136 deletions(-)
+ Documentation/git-rev-parse.txt        |  6 +++
+ contrib/completion/git-completion.bash |  2 +-
+ revision.c                             | 54 +++++++++++++++++++++++-
+ revision.h                             |  3 +-
+ t/t6112-rev-list-except.sh             | 77 ++++++++++++++++++++++++++++++++++
+ 5 files changed, 139 insertions(+), 3 deletions(-)
+ create mode 100755 t/t6112-rev-list-except.sh
 
-diff --git a/sha1_name.c b/sha1_name.c
-index 65ad066..e66bda1 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -430,7 +430,6 @@ static inline int upstream_mark(const char *string, int len)
- 	return 0;
+diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.txt
+index 2b126c0..fe5cc6b 100644
+--- a/Documentation/git-rev-parse.txt
++++ b/Documentation/git-rev-parse.txt
+@@ -110,6 +110,12 @@ can be used.
+ 	strip '{caret}' prefix from the object names that already have
+ 	one.
+ 
++--except::
++	Skip the following object names. For example:
++	'--branches --except master' will show all the branches, except master.
++	This differs from --not in that --except will still show the object, if
++	they are referenced by another object name.
++
+ --symbolic::
+ 	Usually the object names are output in SHA-1 form (with
+ 	possible '{caret}' prefix); this option makes them output in a
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 5da920e..aed8c12 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1386,7 +1386,7 @@ _git_ls_tree ()
+ 
+ # Options that go well for log, shortlog and gitk
+ __git_log_common_options="
+-	--not --all
++	--not --except --all
+ 	--branches --tags --remotes
+ 	--first-parent --merges --no-merges
+ 	--max-count=
+diff --git a/revision.c b/revision.c
+index 84ccc05..c92f755 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1984,6 +1984,9 @@ static int handle_revision_pseudo_opt(const char *submodule,
+ 		handle_reflog(revs, *flags);
+ 	} else if (!strcmp(arg, "--not")) {
+ 		*flags ^= UNINTERESTING | BOTTOM;
++		*flags &= ~SKIP;
++	} else if (!strcmp(arg, "--except")) {
++		*flags |= SKIP;
+ 	} else if (!strcmp(arg, "--no-walk")) {
+ 		revs->no_walk = REVISION_WALK_NO_WALK_SORTED;
+ 	} else if (!prefixcmp(arg, "--no-walk=")) {
+@@ -2573,24 +2576,73 @@ void reset_revision_walk(void)
+ 	clear_object_flags(SEEN | ADDED | SHOWN);
  }
  
--static int get_sha1_1(const char *name, int len, unsigned char *sha1, unsigned lookup_flags);
- static int interpret_nth_prior_checkout(const char *name, struct strbuf *buf);
- 
- static int get_sha1_basic(const char *str, int len, unsigned char *sha1)
-@@ -571,29 +570,24 @@ static int get_sha1_basic(const char *str, int len, unsigned char *sha1)
- 	return 0;
- }
- 
--static int get_parent(const char *name, int len,
--		      unsigned char *result, int idx)
-+static int get_parent(unsigned char *sha1, int idx)
++static int refcmp(const char *a, const char *b)
++{
++	a = prettify_refname(a);
++	if (*a == '^')
++		a++;
++	b = prettify_refname(b);
++	if (*b == '^')
++		b++;
++	return strcmp(a, b);
++}
++
++static int recalculate_flag(struct rev_info *revs, unsigned char *sha1, const char *name)
++{
++	int flags = 0;
++	int i;
++	for (i = 0; i < revs->cmdline.nr; i++) {
++		struct object *object;
++		struct rev_cmdline_entry *ce;
++		ce = &revs->cmdline.rev[i];
++		object = ce->item;
++		while (object->type == OBJ_TAG) {
++			struct tag *tag = (struct tag *) object;
++			if (!tag->tagged)
++				continue;
++			object = parse_object(tag->tagged->sha1);
++			if (!object)
++				continue;
++		}
++		if (hashcmp(object->sha1, sha1))
++			continue;
++		if (!strcmp(ce->name, name))
++			continue;
++		flags |= ce->flags;
++	}
++	return flags;
++}
++
+ int prepare_revision_walk(struct rev_info *revs)
  {
--	unsigned char sha1[20];
--	int ret = get_sha1_1(name, len, sha1, GET_SHA1_COMMITTISH);
- 	struct commit *commit;
- 	struct commit_list *p;
+ 	int nr = revs->pending.nr;
+ 	struct object_array_entry *e, *list;
+ 	struct commit_list **next = &revs->commits;
++	int i;
  
--	if (ret)
--		return ret;
- 	commit = lookup_commit_reference(sha1);
- 	if (!commit)
- 		return -1;
- 	if (parse_commit(commit))
- 		return -1;
- 	if (!idx) {
--		hashcpy(result, commit->object.sha1);
-+		hashcpy(sha1, commit->object.sha1);
- 		return 0;
- 	}
- 	p = commit->parents;
- 	while (p) {
- 		if (!--idx) {
--			hashcpy(result, p->item->object.sha1);
-+			hashcpy(sha1, p->item->object.sha1);
- 			return 0;
+ 	e = list = revs->pending.objects;
+ 	revs->pending.nr = 0;
+ 	revs->pending.alloc = 0;
+ 	revs->pending.objects = NULL;
+ 	while (--nr >= 0) {
+-		struct commit *commit = handle_commit(revs, e->item, e->name);
++		struct commit *commit;
++		for (i = 0; i < revs->cmdline.nr; i++) {
++			struct rev_cmdline_entry *ce;
++			ce = &revs->cmdline.rev[i];
++			if ((ce->flags & SKIP) && !refcmp(ce->name, e->name) &&
++					((ce->flags & UNINTERESTING) == (e->item->flags & UNINTERESTING))) {
++				e->item->flags = recalculate_flag(revs, e->item->sha1, ce->name);
++				goto next;
++			}
++		}
++		commit = handle_commit(revs, e->item, e->name);
+ 		if (commit) {
+ 			if (!(commit->object.flags & SEEN)) {
+ 				commit->object.flags |= SEEN;
+ 				next = commit_list_append(commit, next);
+ 			}
  		}
- 		p = p->next;
-@@ -601,16 +595,10 @@ static int get_parent(const char *name, int len,
- 	return -1;
- }
- 
--static int get_nth_ancestor(const char *name, int len,
--			    unsigned char *result, int generation)
-+static int get_nth_ancestor(unsigned char *sha1, int generation)
- {
--	unsigned char sha1[20];
- 	struct commit *commit;
--	int ret;
- 
--	ret = get_sha1_1(name, len, sha1, GET_SHA1_COMMITTISH);
--	if (ret)
--		return ret;
- 	commit = lookup_commit_reference(sha1);
- 	if (!commit)
- 		return -1;
-@@ -620,7 +608,7 @@ static int get_nth_ancestor(const char *name, int len,
- 			return -1;
- 		commit = commit->parents->item;
- 	}
--	hashcpy(result, commit->object.sha1);
-+	hashcpy(sha1, commit->object.sha1);
- 	return 0;
- }
- 
-@@ -649,12 +637,10 @@ struct object *peel_to_type(const char *name, int namelen,
- 	}
- }
- 
--static int peel_onion(const char *name, int len, unsigned char *sha1)
-+static int peel_onion(const char *name, const char *str, int len, unsigned char *sha1)
- {
--	unsigned char outer[20];
--	const char *sp;
-+	const char *sp, *end = NULL;
- 	unsigned int expected_type = 0;
--	unsigned lookup_flags = 0;
- 	struct object *o;
- 
- 	/*
-@@ -665,18 +651,24 @@ static int peel_onion(const char *name, int len, unsigned char *sha1)
- 	 * "ref^{commit}".  "commit^{tree}" could be used to find the
- 	 * top-level tree of the given commit.
- 	 */
--	if (len < 4 || name[len-1] != '}')
--		return -1;
- 
--	for (sp = name + len - 1; name <= sp; sp--) {
--		int ch = *sp;
--		if (ch == '{' && name < sp && sp[-1] == '^')
-+	if (len < 3)
-+		return 0;
-+
-+	sp = str;
-+	if (sp[0] != '^' || sp[1] != '{')
-+		return 0;
-+
-+	for (end = sp; *end; end++)
-+		if (*end == '}')
- 			break;
--	}
--	if (sp <= name)
--		return -1;
-+	if (!end)
-+		return 0;
-+
-+	end++;
-+	len = end - str;
- 
--	sp++; /* beginning of type name, or closing brace for empty */
-+	sp += 2;
- 	if (!strncmp(commit_type, sp, 6) && sp[6] == '}')
- 		expected_type = OBJ_COMMIT;
- 	else if (!strncmp(tree_type, sp, 4) && sp[4] == '}')
-@@ -692,35 +684,28 @@ static int peel_onion(const char *name, int len, unsigned char *sha1)
- 	else
- 		return -1;
- 
--	if (expected_type == OBJ_COMMIT)
--		lookup_flags = GET_SHA1_COMMITTISH;
--	else if (expected_type == OBJ_TREE)
--		lookup_flags = GET_SHA1_TREEISH;
--
--	if (get_sha1_1(name, sp - name - 2, outer, lookup_flags))
--		return -1;
--
--	o = parse_object(outer);
-+	o = parse_object(sha1);
- 	if (!o)
- 		return -1;
- 	if (!expected_type) {
--		o = deref_tag(o, name, sp - name - 2);
-+		o = deref_tag(o, name, end - name);
- 		if (!o || (!o->parsed && !parse_object(o->sha1)))
- 			return -1;
- 		hashcpy(sha1, o->sha1);
--		return 0;
-+		return len;
- 	}
- 
- 	/*
--	 * At this point, the syntax look correct, so
-+	 * At this point, the syntax looks correct, so
- 	 * if we do not get the needed object, we should
- 	 * barf.
- 	 */
--	o = peel_to_type(name, len, o, expected_type);
-+	o = peel_to_type(name, end - name, o, expected_type);
- 	if (!o)
- 		return -1;
- 
- 	hashcpy(sha1, o->sha1);
-+
- 	if (sp[0] == '/') {
- 		/* "$commit^{/foo}" */
- 		char *prefix;
-@@ -732,15 +717,16 @@ static int peel_onion(const char *name, int len, unsigned char *sha1)
- 		 * We don't need regex anyway. '' pattern always matches.
- 		 */
- 		if (sp[1] == '}')
--			return 0;
-+			return len;
- 
--		prefix = xstrndup(sp + 1, name + len - 1 - (sp + 1));
-+		prefix = xstrndup(sp + 1, end - sp - 2);
- 		commit_list_insert((struct commit *)o, &list);
- 		ret = get_sha1_oneline(prefix, sha1, list);
- 		free(prefix);
--		return ret;
-+		if (ret)
-+			return -1;
- 	}
--	return 0;
-+	return len;
- }
- 
- static int get_describe_name(const char *name, int len, unsigned char *sha1)
-@@ -764,54 +750,6 @@ static int get_describe_name(const char *name, int len, unsigned char *sha1)
- 	return -1;
- }
- 
--static int get_sha1_1(const char *name, int len, unsigned char *sha1, unsigned lookup_flags)
--{
--	int ret, has_suffix;
--	const char *cp;
--
--	/*
--	 * "name~3" is "name^^^", "name~" is "name~1", and "name^" is "name^1".
--	 */
--	has_suffix = 0;
--	for (cp = name + len - 1; name <= cp; cp--) {
--		int ch = *cp;
--		if ('0' <= ch && ch <= '9')
--			continue;
--		if (ch == '~' || ch == '^')
--			has_suffix = ch;
--		break;
--	}
--
--	if (has_suffix) {
--		int num = 0;
--		int len1 = cp - name;
--		cp++;
--		while (cp < name + len)
--			num = num * 10 + *cp++ - '0';
--		if (!num && len1 == len - 1)
--			num = 1;
--		if (has_suffix == '^')
--			return get_parent(name, len1, sha1, num);
--		/* else if (has_suffix == '~') -- goes without saying */
--		return get_nth_ancestor(name, len1, sha1, num);
--	}
--
--	ret = peel_onion(name, len, sha1);
--	if (!ret)
--		return 0;
--
--	ret = get_sha1_basic(name, len, sha1);
--	if (!ret)
--		return 0;
--
--	/* It could be describe output that is "SOMETHING-gXXXX" */
--	ret = get_describe_name(name, len, sha1);
--	if (!ret)
--		return 0;
--
--	return get_short_sha1(name, len, sha1, lookup_flags);
--}
--
- /*
-  * This interprets names like ':/Initial revision of "git"' by searching
-  * through history and returning the first commit whose message starts
-@@ -1288,22 +1226,168 @@ static char *resolve_relative_path(const char *rel)
- 			   rel);
- }
- 
-+static int resolve_ancestry(const char *str, int len, unsigned char *sha1)
-+{
-+	int has_suffix;
-+	const char *cp, *end;
-+	int num = 0, ret;
-+
-+	/*
-+	 * "name~3" is "name^^^", "name~" is "name~1", and "name^" is "name^1".
-+	 */
-+	has_suffix = 0;
-+	for (cp = str; *cp; cp++) {
-+		int ch = *cp;
-+		if ('0' <= ch && ch <= '9')
-+			continue;
-+		if (ch == '~' || ch == '^') {
-+			if (has_suffix)
-+				break;
-+			has_suffix = ch;
-+			continue;
-+		}
-+		break;
-+	}
-+
-+	if (!has_suffix)
-+		return 0;
-+
-+	end = cp;
-+	cp = str + 1;
-+	if (cp == end)
-+		num = 1;
-+	else
-+		while (cp < end)
-+			num = num * 10 + *cp++ - '0';
-+	len = end - str;
-+	if (has_suffix == '^')
-+		ret = get_parent(sha1, num);
-+	else
-+		ret = get_nth_ancestor(sha1, num);
-+	if (ret)
-+		return ret;
-+	return len;
-+}
-+
-+static int resolve_tree(struct object_context *oc, const char *str, int len,
-+		unsigned char *sha1, unsigned char *tree_sha1)
-+{
-+	int ret;
-+	const char *filename = str + 1;
-+	char *new_filename = NULL;
-+
-+	new_filename = resolve_relative_path(filename);
-+	if (new_filename)
-+		filename = new_filename;
-+	hashcpy(tree_sha1, sha1);
-+	ret = get_tree_entry(tree_sha1, filename, sha1, &oc->mode);
-+	hashcpy(oc->tree, tree_sha1);
-+	strncpy(oc->path, filename, sizeof(oc->path));
-+	oc->path[sizeof(oc->path) - 1] = '\0';
-+
-+	free(new_filename);
-+	return ret;
-+}
-+
-+static int resolve(const char *name, int len, unsigned char *sha1,
-+		struct object_context *oc, const char *prefix, unsigned flags)
-+{
-+	const char *cp;
-+	int ret;
-+	int tmp_len;
-+	int bracket_depth;
-+	unsigned char tree_sha1[20];
-+	unsigned lookup_flags = flags;
-+
-+	for (cp = name, bracket_depth = 0; *cp; cp++) {
-+		if (*cp == '{')
-+			bracket_depth++;
-+		else if (bracket_depth && *cp == '}')
-+			bracket_depth--;
-+		else if (!bracket_depth) {
-+			if (*cp == '^') {
-+				if (cp[1] == '{') {
-+					const char *sp = cp + 2;
-+					if (!strncmp(commit_type, sp, 6) && sp[6] == '}')
-+						lookup_flags = GET_SHA1_COMMITTISH;
-+					else if (!strncmp(tree_type, sp, 4) && sp[4] == '}')
-+						lookup_flags = GET_SHA1_TREEISH;
-+					else if (sp[0] == '/')
-+						lookup_flags = GET_SHA1_COMMITTISH;
-+					else
-+						lookup_flags = 0;
-+				} else {
-+					lookup_flags = GET_SHA1_COMMITTISH;
-+				}
-+				break;
-+			}
-+			if (*cp == '~') {
-+				lookup_flags = GET_SHA1_COMMITTISH;
-+				break;
-+			}
-+			if (*cp == ':') {
-+				lookup_flags = GET_SHA1_TREEISH;
-+				break;
-+			}
-+		}
-+	}
-+
-+	tmp_len = cp - name;
-+	ret = get_sha1_basic(name, tmp_len, sha1);
-+	if (!ret)
-+		goto next;
-+	ret = get_short_sha1(name, tmp_len, sha1, lookup_flags);
-+	if (!ret)
-+		goto next;
-+	ret = get_describe_name(name, tmp_len, sha1);
-+	if (!ret)
-+		goto next;
-+
-+	return -1;
-+
 +next:
-+	if (!*cp)
-+		return 0;
-+	while (*cp == '^' || *cp == '~') {
-+		ret = peel_onion(name, cp, len - (cp - name), sha1);
-+		if (ret < 0)
-+			return ret;
-+		cp += ret;
-+		ret = resolve_ancestry(cp, len - (cp - name), sha1);
-+		if (ret < 0)
-+			return ret;
-+		cp += ret;
-+	}
-+	if (!*cp)
-+		return 0;
-+	if (*cp != ':')
-+		/* malformed */
-+		return -1;
-+	ret = resolve_tree(oc, cp, len - (cp - name), sha1, tree_sha1);
-+	if (ret < 0) {
-+		if (flags & GET_SHA1_ONLY_TO_DIE) {
-+			diagnose_invalid_sha1_path(prefix, oc->path,
-+						   tree_sha1,
-+						   name, cp - name);
-+		}
-+		return ret;
-+	}
-+	return 0;
-+}
-+
- static int get_sha1_with_context_1(const char *name,
- 				   unsigned flags,
- 				   const char *prefix,
- 				   unsigned char *sha1,
- 				   struct object_context *oc)
- {
--	int ret, bracket_depth;
- 	int namelen = strlen(name);
- 	const char *cp;
- 	int only_to_die = flags & GET_SHA1_ONLY_TO_DIE;
- 
- 	memset(oc, 0, sizeof(*oc));
- 	oc->mode = S_IFINVALID;
--	ret = get_sha1_1(name, namelen, sha1, flags);
--	if (!ret)
--		return ret;
-+
- 	/*
- 	 * sha1:path --> object name of path in ent sha1
- 	 * :path -> object name of absolute path in index
-@@ -1364,43 +1448,8 @@ static int get_sha1_with_context_1(const char *name,
- 		free(new_path);
- 		return -1;
+ 		e++;
  	}
--	for (cp = name, bracket_depth = 0; *cp; cp++) {
--		if (*cp == '{')
--			bracket_depth++;
--		else if (bracket_depth && *cp == '}')
--			bracket_depth--;
--		else if (!bracket_depth && *cp == ':')
--			break;
--	}
--	if (*cp == ':') {
--		unsigned char tree_sha1[20];
--		int len = cp - name;
--		if (!get_sha1_1(name, len, tree_sha1, GET_SHA1_TREEISH)) {
--			const char *filename = cp+1;
--			char *new_filename = NULL;
--
--			new_filename = resolve_relative_path(filename);
--			if (new_filename)
--				filename = new_filename;
--			ret = get_tree_entry(tree_sha1, filename, sha1, &oc->mode);
--			if (ret && only_to_die) {
--				diagnose_invalid_sha1_path(prefix, filename,
--							   tree_sha1,
--							   name, len);
--			}
--			hashcpy(oc->tree, tree_sha1);
--			strncpy(oc->path, filename,
--				sizeof(oc->path));
--			oc->path[sizeof(oc->path)-1] = '\0';
+ 	if (!revs->leak_pending)
+diff --git a/revision.h b/revision.h
+index 95859ba..89f5037 100644
+--- a/revision.h
++++ b/revision.h
+@@ -17,7 +17,8 @@
+ #define SYMMETRIC_LEFT	(1u<<8)
+ #define PATCHSAME	(1u<<9)
+ #define BOTTOM		(1u<<10)
+-#define ALL_REV_FLAGS	((1u<<11)-1)
++#define SKIP		(1u<<11)
++#define ALL_REV_FLAGS	((1u<<12)-1)
  
--			free(new_filename);
--			return ret;
--		} else {
--			if (only_to_die)
--				die("Invalid object name '%.*s'.", len, name);
--		}
--	}
--	return ret;
-+	return resolve(name, namelen, sha1, oc, prefix, flags);
- }
- 
- /*
-diff --git a/t/t1506-rev-parse-diagnosis.sh b/t/t1506-rev-parse-diagnosis.sh
-index f950c10..0f76d1f 100755
---- a/t/t1506-rev-parse-diagnosis.sh
-+++ b/t/t1506-rev-parse-diagnosis.sh
-@@ -104,7 +104,7 @@ test_expect_success 'correct relative file objects (6)' '
- 
- test_expect_success 'incorrect revision id' '
- 	test_must_fail git rev-parse foobar:file.txt 2>error &&
--	grep "Invalid object name '"'"'foobar'"'"'." error &&
-+	grep "unknown revision or path not in the working tree." error
- 	test_must_fail git rev-parse foobar 2> error &&
- 	grep "unknown revision or path not in the working tree." error
- '
+ #define DECORATE_SHORT_REFS	1
+ #define DECORATE_FULL_REFS	2
+diff --git a/t/t6112-rev-list-except.sh b/t/t6112-rev-list-except.sh
+new file mode 100755
+index 0000000..441e1da
+--- /dev/null
++++ b/t/t6112-rev-list-except.sh
+@@ -0,0 +1,77 @@
++#!/bin/sh
++
++test_description='test for rev-list --except'
++
++. ./test-lib.sh
++
++test_expect_success 'setup' '
++
++	echo one > content &&
++	git add content &&
++	git commit -m one &&
++	git checkout -b test master &&
++	echo two > content &&
++	git commit -a -m two &&
++	git checkout -b merge master &&
++	git merge test
++'
++
++test_expect_success 'rev-list --except' '
++
++	git rev-list --topo-order --branches --except merge > actual &&
++	git rev-list --topo-order test > expect &&
++	test_cmp expect actual
++'
++
++test_expect_success 'rev-list --except with extra' '
++
++	echo three > content &&
++	git commit -a -m three &&
++	git rev-list --topo-order --branches --except merge > actual &&
++	git rev-list --topo-order test > expect &&
++	test_cmp expect actual
++'
++
++test_expect_success 'rev-list --except with full ref' '
++
++	git rev-list --topo-order --branches --except refs/heads/merge > actual &&
++	git rev-list --topo-order test > expect &&
++	test_cmp expect actual
++'
++
++test_expect_success 'rev-list --except and --not' '
++
++	git rev-list --topo-order test --not master --except master > actual &&
++	git rev-list --topo-order test > expect &&
++	test_cmp expect actual
++'
++
++test_expect_success 'rev-list --except and --not with proper flags' '
++
++	git checkout -b maint master &&
++	git checkout -b next test &&
++	echo four > content &&
++	git commit -a -m four &&
++	git rev-list --topo-order next --not master maint --except maint > actual &&
++	git rev-list --topo-order next --not master > expect &&
++	test_cmp expect actual
++'
++
++test_expect_success 'rev-list --not ranges' '
++
++	git rev-list --topo-order test --not master --except master test > actual &&
++	git rev-list --topo-order test > expect &&
++	test_cmp expect actual
++'
++
++test_expect_success 'rev-list multiple --not ranges' '
++
++	git checkout -b extra test &&
++	echo five > content &&
++	git commit -a -m five &&
++	git rev-list --topo-order test --not master --except master test --not extra > actual &&
++	git rev-list --topo-order test extra > expect &&
++	test_cmp expect actual
++'
++
++test_done
 -- 
 1.8.4-fc
