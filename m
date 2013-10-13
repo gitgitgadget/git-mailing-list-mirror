@@ -1,64 +1,71 @@
-From: Thomas Rast <trast@inf.ethz.ch>
-Subject: [PATCH] .mailmap: switch to Thomas Rast's personal address
-Date: Sun, 13 Oct 2013 16:07:49 +0200
-Message-ID: <e20acd8f94a8b2524cfc1ec9665f998fbd5dbf68.1381645346.git.trast@inf.ethz.ch>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] mv: Fix spurious warning when moving a file in presence of submodules
+Date: Sun, 13 Oct 2013 17:05:02 +0200
+Message-ID: <vpqr4bp6wkh.fsf@anie.imag.fr>
+References: <vpq38o7nao9.fsf@anie.imag.fr> <52583B00.8040700@web.de>
+	<525A8965.3040407@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Oct 13 16:08:12 2013
+Cc: git <git@vger.kernel.org>, Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Sun Oct 13 17:05:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VVML6-0007oY-5i
-	for gcvg-git-2@plane.gmane.org; Sun, 13 Oct 2013 16:08:12 +0200
+	id 1VVNEQ-0008HE-K4
+	for gcvg-git-2@plane.gmane.org; Sun, 13 Oct 2013 17:05:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753926Ab3JMOHx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Oct 2013 10:07:53 -0400
-Received: from edge10.ethz.ch ([82.130.75.186]:33197 "EHLO edge10.ethz.ch"
+	id S1754432Ab3JMPFQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Oct 2013 11:05:16 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:35913 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753566Ab3JMOHw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Oct 2013 10:07:52 -0400
-Received: from CAS12.d.ethz.ch (172.31.38.212) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Sun, 13 Oct
- 2013 16:07:49 +0200
-Received: from linux-k42r.v.cablecom.net (213.55.184.223) by CAS12.d.ethz.ch
- (172.31.38.212) with Microsoft SMTP Server (TLS) id 14.2.298.4; Sun, 13 Oct
- 2013 16:07:49 +0200
-X-Mailer: git-send-email 1.8.4.1.661.g6b832f5
-X-Originating-IP: [213.55.184.223]
+	id S1753703Ab3JMPFP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Oct 2013 11:05:15 -0400
+Received: from globule.imag.fr (globule.imag.fr [129.88.34.238])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r9DF56Zq016230
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sun, 13 Oct 2013 17:05:06 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	(authenticated bits=0)
+	by globule.imag.fr (8.13.8/8.13.8) with ESMTP id r9DF52Sv010974
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Sun, 13 Oct 2013 17:05:08 +0200
+In-Reply-To: <525A8965.3040407@web.de> (Jens Lehmann's message of "Sun, 13 Oct
+	2013 13:52:05 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sun, 13 Oct 2013 17:05:07 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r9DF56Zq016230
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1382281507.86862@Bipka4W6DgP5SotcxGxXlg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236076>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236077>
 
-Normalize to my personal address, as my ETH addresses will expire
-soon.  Also add my new corp account to be somewhat futureproof.
+Jens Lehmann <Jens.Lehmann@web.de> writes:
 
-Note that despite the private address being first, Google owns the
-copyright as long as I am employed there.
+>  static struct lock_file lock_file;
+> +#define SUBMODULE_WITH_GITDIR ((const char *)1)
 
-Signed-off-by: Thomas Rast <trast@inf.ethz.ch>
----
- .mailmap | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+I don't like very much hardcoded addresses like this. Are you 100% sure
+address 1 will never be returned by xstrdup on any platform? The risk is
+small if not negligible, but I'm unconfortable with this. Isn't there an
+alternative (NULL, or empty string) that is guaranteed to never happen?
 
-diff --git a/.mailmap b/.mailmap
-index 1c1f5ec..11057cb 100644
---- a/.mailmap
-+++ b/.mailmap
-@@ -218,7 +218,9 @@ Tay Ray Chuan <rctay89@gmail.com>
- Ted Percival <ted@midg3t.net> <ted.percival@quest.com>
- Theodore Ts'o <tytso@mit.edu>
- Thomas Ackermann <th.acker@arcor.de> <th.acker66@arcor.de>
--Thomas Rast <trast@inf.ethz.ch> <trast@student.ethz.ch>
-+Thomas Rast <tr@thomasrast.ch> <trast@student.ethz.ch>
-+Thomas Rast <tr@thomasrast.ch> <trast@inf.ethz.ch>
-+Thomas Rast <tr@thomasrast.ch> <trast@google.com>
- Timo Hirvonen <tihirvon@gmail.com> <tihirvon@ee.oulu.fi>
- Toby Allsopp <Toby.Allsopp@navman.co.nz> <toby.allsopp@navman.co.nz>
- Tom Grennan <tmgrennan@gmail.com> <tgrennan@redback.com>
+> +test_expect_success 'git mv moves a submodule with a .git directory and .gitmodules' '
+
+This doesn't seem to test the problem I was having (move a file, not a
+submodule). Is this intentional?
+
+In any case, this fixes my problem, thanks!
+
 -- 
-1.8.4.1.661.g6b832f5
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
