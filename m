@@ -1,155 +1,83 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] http: enable keepalive on TCP sockets
-Date: Mon, 14 Oct 2013 17:40:35 -0400
-Message-ID: <20131014214035.GB7007@sigill.intra.peff.net>
-References: <20131012222939.GA24255@dcvr.yhbt.net>
- <alpine.DEB.2.00.1310131142080.22193@tvnag.unkk.fr>
- <20131014052739.GA16129@dcvr.yhbt.net>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v3] Add core.mode configuration
+Date: Mon, 14 Oct 2013 16:35:50 -0500
+Message-ID: <525c63b6711fa_197a905e845b@nysa.notmuch>
+References: <1381561485-20252-1-git-send-email-felipe.contreras@gmail.com>
+ <20131014205908.GA17089@shrek.podlesie.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Daniel Stenberg <daniel@haxx.se>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Mon Oct 14 23:40:44 2013
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Krzysztof Mazur <krzysiek@podlesie.net>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 14 23:45:49 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VVpsY-0007Aa-V2
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Oct 2013 23:40:43 +0200
+	id 1VVpxU-0001l0-I6
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Oct 2013 23:45:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757215Ab3JNVkj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Oct 2013 17:40:39 -0400
-Received: from cloud.peff.net ([50.56.180.127]:49298 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757151Ab3JNVki (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Oct 2013 17:40:38 -0400
-Received: (qmail 18221 invoked by uid 102); 14 Oct 2013 21:40:38 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 14 Oct 2013 16:40:38 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 14 Oct 2013 17:40:35 -0400
-Content-Disposition: inline
-In-Reply-To: <20131014052739.GA16129@dcvr.yhbt.net>
+	id S1757070Ab3JNVpo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Oct 2013 17:45:44 -0400
+Received: from mail-oa0-f43.google.com ([209.85.219.43]:46363 "EHLO
+	mail-oa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755614Ab3JNVpn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Oct 2013 17:45:43 -0400
+Received: by mail-oa0-f43.google.com with SMTP id i3so5055303oag.16
+        for <git@vger.kernel.org>; Mon, 14 Oct 2013 14:45:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=iRVsWFMt+d/3pFGKzUgltkhBbIAVGc3Ck7ozsR0DNho=;
+        b=HfEyHIRFsbEmallYXf4HJow0cpNFmsLRDjlenplpw5WDjDGKvXcpNXztnOctoCKJBs
+         yiaa9wtHt0hECPm3t5bUPvwM2OTdsW11WGBl+4KXq53WqhgVF2OKD29Y+BeR9+Ue5iwU
+         WppzNg6cG4jDsLMOmciy9+AWVxteJNYyk3WkiQMZ/pjJIp6vxmRGa6vPH7RIIlAzXLyr
+         e4v91dpoBMOrL26AMFiObaznS2jQUuK91onlXqBcKLZWfNDfbfckdeHIiAr7b5e6T2A+
+         64ONAg2xIHrr0C+8BSzVAMSalmhKwtYhLDAv7WV6UedDxhy3gJcBKEkFwMgSpXgpVbgE
+         ZJJg==
+X-Received: by 10.182.61.44 with SMTP id m12mr2735743obr.52.1381787142970;
+        Mon, 14 Oct 2013 14:45:42 -0700 (PDT)
+Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
+        by mx.google.com with ESMTPSA id r3sm121550798oep.2.1969.12.31.16.00.00
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 14 Oct 2013 14:45:41 -0700 (PDT)
+In-Reply-To: <20131014205908.GA17089@shrek.podlesie.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236121>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236122>
 
-On Mon, Oct 14, 2013 at 05:27:39AM +0000, Eric Wong wrote:
-
-> Daniel Stenberg <daniel@haxx.se> wrote:
-> > On Sat, 12 Oct 2013, Eric Wong wrote:
+Krzysztof Mazur wrote:
+> On Sat, Oct 12, 2013 at 02:04:45AM -0500, Felipe Contreras wrote:
+> > So that we can specify general modes of operation, specifically, add the
+> > 'next' mode, which makes Git pre v2.0 behave as Git v2.0.
 > > 
-> > >This is a follow up to commit
-> > >e47a8583a20256851e7fc882233e3bd5bf33dc6e (enable SO_KEEPALIVE for
-> > >connected TCP sockets).
-> > 
-> > Just keep in mind that TCP keep-alive is enabled in awkwardly many
-> > different ways on different systems and this patch only supports one
-> > of them. Feel free to take inspiration from libcurl's source code
-> > for doing this. See:
-> > 
-> >   https://github.com/bagder/curl/blob/master/lib/connect.c#L108
+> > Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+> > ---
 > 
-> Thanks.  I think the Linux-specific TCP_KEEP* knobs are overkill for git.
-> (since this is mainly for non-interactive users, I went at least a day
->  before realizing the process was stuck on my machine).
-> I cannot comment on the knobs for other OSes.
+> I don't think that single option it's a good idea. From the user's
+> point of view I think that the way push.default was introduced and
+> will be changed is much better. So maybe it's better to just add
+> "core.addremove" option instead?
 
-I don't think we should get into having a big compatibility layer that
-just reproduces what is in curl.
+Maybe, but what happens when we start doing changes for v3.0? As a user, I
+don't and to figure out which are the new configurations that will turn v3.0
+behavior on, I just want to be testing that mode, even if I'm not following Git
+development closely. If I find something annoying with core.mode = next, I
+report the problem to the mailing list, which is good, we want to know problems
+with the backward-incompatible changes that will be introduced before it's too
+late, don't we?
 
-But is there any reason not to use CURLOPT_TCP_KEEPALIVE when it is
-available, falling back to CURLOPT_SOCKOPTFUNCTION, and then finally to
-nothing? That lets people on modern curl benefit from curl's more
-portable code, without punishing people on older versions.
+I'd be fine with having *both* a fine-tuned option to trigger each specific
+behavior, and another one that turns all those fine-tuned options on that are
+meant for v2.0.
 
-I.e., something like:
+Unfortunately, I don't see much interest from Git developers in either.
 
----
-diff --git a/http.c b/http.c
-index 5834c9b..e221efb 100644
---- a/http.c
-+++ b/http.c
-@@ -254,36 +254,54 @@ static int sockopt_callback(void *client, curl_socket_t fd, curlsocktype type)
- 	if (!cert_auth.password) {
- 		cert_auth.protocol = xstrdup("cert");
- 		cert_auth.username = xstrdup("");
- 		cert_auth.path = xstrdup(ssl_cert);
- 		credential_fill(&cert_auth);
- 	}
- 	return 1;
- }
- 
--/* curl 7.25.0 has CURLOPT_TCP_KEEPALIVE, too, but we support older curl */
-+#if LIBCURL_VERSION_NUM >= 0x071900
-+static void set_curl_keepalive(CURL *c)
-+{
-+	curl_easy_setopt(c, CURLOPT_TCP_KEEPALIVE, 1);
-+}
-+
-+#elif LIBCURL_VERSION_NUM >= 0x071000
- static int sockopt_callback(void *client, curl_socket_t fd, curlsocktype type)
- {
- 	int ka = 1;
- 	int rc;
- 	socklen_t len = (socklen_t)sizeof(ka);
- 
- 	if (type != CURLSOCKTYPE_IPCXN)
- 		return 0;
- 
- 	rc = setsockopt(fd, SOL_SOCKET, SO_KEEPALIVE, (void *)&ka, len);
- 	if (rc < 0)
- 		warning("unable to set SO_KEEPALIVE on socket %s",
- 			strerror(errno));
- 
- 	return 0; /* CURL_SOCKOPT_OK only exists since curl 7.21.5 */
- }
- 
-+static void set_curl_keepalive(CURL *c)
-+{
-+	curl_easy_setopt(c, CURLOPT_SOCKOPTFUNCTION, sockopt_callback);
-+}
-+
-+#else
-+static void set_curl_keepalive(CURL *c)
-+{
-+	/* not supported on older curl versions */
-+}
-+#endif
-+
- static CURL *get_curl_handle(void)
- {
- 	CURL *result = curl_easy_init();
- 
- 	if (!curl_ssl_verify) {
- 		curl_easy_setopt(result, CURLOPT_SSL_VERIFYPEER, 0);
- 		curl_easy_setopt(result, CURLOPT_SSL_VERIFYHOST, 0);
- 	} else {
- 		/* Verify authenticity of the peer's certificate */
-@@ -344,21 +362,19 @@ static CURL *get_curl_handle(void)
- 	if (curl_ssl_try)
- 		curl_easy_setopt(result, CURLOPT_USE_SSL, CURLUSESSL_TRY);
- #endif
- 
- 	if (curl_http_proxy) {
- 		curl_easy_setopt(result, CURLOPT_PROXY, curl_http_proxy);
- 		curl_easy_setopt(result, CURLOPT_PROXYAUTH, CURLAUTH_ANY);
- 	}
- 
--#if LIBCURL_VERSION_NUM >= 0x071000
--	curl_easy_setopt(result, CURLOPT_SOCKOPTFUNCTION, sockopt_callback);
--#endif
-+	set_curl_keepalive(result);
- 
- 	return result;
- }
- 
- static void set_from_env(const char **var, const char *envname)
- {
- 	const char *val = getenv(envname);
- 	if (val)
- 		*var = val;
+-- 
+Felipe Contreras
