@@ -1,7 +1,7 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v2 03/14] diff: document --staged
-Date: Mon, 14 Oct 2013 17:29:22 -0500
-Message-ID: <1381789769-9893-8-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH v2 05/14] rm: add --staged option
+Date: Mon, 14 Oct 2013 17:29:23 -0500
+Message-ID: <1381789769-9893-9-git-send-email-felipe.contreras@gmail.com>
 References: <1381789769-9893-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>,
 	Jay Soffian <jaysoffian@gmail.com>,
@@ -14,75 +14,89 @@ Cc: Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>,
 	Miles Bader <miles@gnu.org>,
 	Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 15 00:36:16 2013
+X-From: git-owner@vger.kernel.org Tue Oct 15 00:36:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VVqkI-0007HQ-P6
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Oct 2013 00:36:15 +0200
+	id 1VVqkJ-0007HQ-RW
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Oct 2013 00:36:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932189Ab3JNWgF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Oct 2013 18:36:05 -0400
-Received: from mail-oa0-f46.google.com ([209.85.219.46]:50079 "EHLO
-	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932150Ab3JNWgE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Oct 2013 18:36:04 -0400
-Received: by mail-oa0-f46.google.com with SMTP id g12so770450oah.5
-        for <git@vger.kernel.org>; Mon, 14 Oct 2013 15:36:03 -0700 (PDT)
+	id S932229Ab3JNWgL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Oct 2013 18:36:11 -0400
+Received: from mail-ob0-f172.google.com ([209.85.214.172]:50870 "EHLO
+	mail-ob0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932172Ab3JNWgH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Oct 2013 18:36:07 -0400
+Received: by mail-ob0-f172.google.com with SMTP id vb8so5307992obc.17
+        for <git@vger.kernel.org>; Mon, 14 Oct 2013 15:36:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=EWfoQi8P8ohugkgg06gXz2exYefLgNIxdOBiUilIm04=;
-        b=gqnX4c4aqqC2zl5ov4tERK1iXCwy+x+NR07ZnVBRAQsRTiD4OITLANP7lyiSm3ZWcS
-         PxmkePRTuN6o4nhRBTSUlgZg2+OYyZj1RGPIxboXLPKzqXEPSNEtoLatYyF1x6qrlRYu
-         2YsEyY4WHogofjmo4tuqlzqvmGhdtXuV2pxe33ecoVVglJKLdOxDooktndkyD/3wl7ed
-         UCJFIQ76Zls7DSZH8Jce9sbWejSNBmA5rq50twW8D+G/M9ILZfqAdM7j/C5H0vhkqukT
-         aZHpePfMkOYZCu5HkdTcpVY0h2NgbG0A/7tp4OAIVsv8IXmHvImt+LbNk88eIFrEDvir
-         33Kg==
-X-Received: by 10.182.214.98 with SMTP id nz2mr8386320obc.37.1381790163683;
-        Mon, 14 Oct 2013 15:36:03 -0700 (PDT)
+        bh=cgGNg6iL73Z/eeNgkG+FPWDUhJKSkw8Boo6R9JoegUQ=;
+        b=VGcY62ql60wanIEpQJmss2RSm7qtw3fo6m8QeaSiFc2kq7llYbBXhXB5+Hdysr5yCs
+         TSW125fKvaw7mHWeuFPTqg34Ergf0gg2uw16WvXG6Nm3luue3xSZv/6AqFmjp3EGCXHE
+         nGzw2rtBdJt6vdrWF3NejqejTTxSmBdHm4OdD50C8BVeuDqB/9Bdj5GhnG+EcXb04utP
+         zQtn7cM+hUbQC4d+Rpil+L5K/hNpvQx9OxKy9IPLUGFfH6aramMMvC2TlLSok+G8dnjl
+         3UIKJ0i8h3wRUU40gpTYnJly7xk8aIMIcIfAtIOMLuZId33liYKc4XwiQVERxkBJdhoO
+         PDwA==
+X-Received: by 10.60.41.164 with SMTP id g4mr3599419oel.44.1381790167316;
+        Mon, 14 Oct 2013 15:36:07 -0700 (PDT)
 Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
-        by mx.google.com with ESMTPSA id r6sm44564297obi.14.1969.12.31.16.00.00
+        by mx.google.com with ESMTPSA id tz10sm44541277obc.10.1969.12.31.16.00.00
         (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 14 Oct 2013 15:36:02 -0700 (PDT)
+        Mon, 14 Oct 2013 15:36:06 -0700 (PDT)
 X-Mailer: git-send-email 1.8.4-fc
 In-Reply-To: <1381789769-9893-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236135>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236136>
 
 Synonym for --cached.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- Documentation/git-diff.txt | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ Documentation/git-rm.txt | 5 ++++-
+ builtin/rm.c             | 1 +
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/git-diff.txt b/Documentation/git-diff.txt
-index 78d6d50..646e5cd 100644
---- a/Documentation/git-diff.txt
-+++ b/Documentation/git-diff.txt
-@@ -10,7 +10,7 @@ SYNOPSIS
+diff --git a/Documentation/git-rm.txt b/Documentation/git-rm.txt
+index 1d876c2..156b40d 100644
+--- a/Documentation/git-rm.txt
++++ b/Documentation/git-rm.txt
+@@ -8,7 +8,7 @@ git-rm - Remove files from the working tree and from the index
+ SYNOPSIS
  --------
  [verse]
- 'git diff' [options] [<commit>] [--] [<path>...]
--'git diff' [options] --cached [<commit>] [--] [<path>...]
-+'git diff' [options] [--cached|--staged] [<commit>] [--] [<path>...]
- 'git diff' [options] <commit> <commit> [--] [<path>...]
- 'git diff' [options] <blob> <blob>
- 'git diff' [options] [--no-index] [--] <path> <path>
-@@ -33,7 +33,7 @@ If exactly two paths are given and at least one points outside
- the current repository, 'git diff' will compare the two files /
- directories. This behavior can be forced by --no-index.
+-'git rm' [-f | --force] [-n] [-r] [--cached] [--ignore-unmatch] [--quiet] [--] <file>...
++'git rm' [-f | --force] [-n] [-r] [--cached | --staged] [--ignore-unmatch] [--quiet] [--] <file>...
  
--'git diff' [--options] --cached [<commit>] [--] [<path>...]::
-+'git diff' [--options] [--cached|--staged] [<commit>] [--] [<path>...]::
+ DESCRIPTION
+ -----------
+@@ -60,6 +60,9 @@ OPTIONS
+ 	Working tree files, whether modified or not, will be
+ 	left alone.
  
- 	This form is to view the changes you staged for the next
- 	commit relative to the named <commit>.  Typically you
++--staged::
++	Synonym for --cached.
++
+ --ignore-unmatch::
+ 	Exit with a zero status even if no files matched.
+ 
+diff --git a/builtin/rm.c b/builtin/rm.c
+index 0df0b4d..919911f 100644
+--- a/builtin/rm.c
++++ b/builtin/rm.c
+@@ -268,6 +268,7 @@ static struct option builtin_rm_options[] = {
+ 	OPT__DRY_RUN(&show_only, N_("dry run")),
+ 	OPT__QUIET(&quiet, N_("do not list removed files")),
+ 	OPT_BOOLEAN( 0 , "cached",         &index_only, N_("only remove from the index")),
++	OPT_BOOLEAN( 0 , "staged",         &index_only, N_("only remove from the index")),
+ 	OPT__FORCE(&force, N_("override the up-to-date check")),
+ 	OPT_BOOLEAN('r', NULL,             &recursive,  N_("allow recursive removal")),
+ 	OPT_BOOLEAN( 0 , "ignore-unmatch", &ignore_unmatch,
 -- 
 1.8.4-fc
