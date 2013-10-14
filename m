@@ -1,69 +1,87 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] split_ident: parse timestamp from end of line
-Date: Mon, 14 Oct 2013 15:45:42 -0700
-Message-ID: <xmqqsiw3eajt.fsf@gitster.dls.corp.google.com>
-References: <20131014202734.GA7007@sigill.intra.peff.net>
-	<xmqqwqlfebhi.fsf@gitster.dls.corp.google.com>
-	<20131014223137.GA12744@sigill.intra.peff.net>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v2 00/14] Officially start moving to the term 'staging area'
+Date: Mon, 14 Oct 2013 17:51:12 -0500
+Message-ID: <CAMP44s3u_SMyZOe5jxkvoGn5MBJ_g70iHRT5v_3u1rZwFoqiVA@mail.gmail.com>
+References: <1381789769-9893-1-git-send-email-felipe.contreras@gmail.com>
+	<1381789769-9893-4-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Oct 15 00:45:51 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>,
+	Jay Soffian <jaysoffian@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Philip Oakley <philipoakley@iee.org>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	William Swanson <swansontec@gmail.com>,
+	Ping Yin <pkufranky@gmail.com>,
+	Hilco Wijbenga <hilco.wijbenga@gmail.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 15 00:51:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VVqtZ-0004cC-Mv
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Oct 2013 00:45:50 +0200
+	id 1VVqys-00082T-Oq
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Oct 2013 00:51:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757742Ab3JNWpq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Oct 2013 18:45:46 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40128 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757523Ab3JNWpp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Oct 2013 18:45:45 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E2C604ACD1;
-	Mon, 14 Oct 2013 22:45:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=5X2LTMrcyenxY6KZ95aJ4c3jW14=; b=gCsQNP
-	F5mQUOVOAJrbS+cbIzIcIcWxJmn9o++2TdkRvkw9kbPXoLax8KPH6vBDJ5kLEFH8
-	9JVdTeVauNwkTSM9Dj5godcUbHpHHaI9V9WbccH5a8TB/b4/bzojT2YXZeMeEjwG
-	XP/2BdI+HXekxH/5OFVKCYcJU22PE07zTnAs8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=iShN7AiQEuuJF46FERNy3LUIEWGz1RYc
-	czQyFlxkJJgL2x9dxzQSCoapGket8pYX8FYdhbtQQ4Ld6jAF2snOGwFcPUIjMlPe
-	YH1FJz+/1OyaBQNMCu6TkB1022iHrY0y9HvA91a8YnHhf4q/s8F5IMVgEOCpe5ad
-	43LfSJN+3V4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D6ACC4ACD0;
-	Mon, 14 Oct 2013 22:45:44 +0000 (UTC)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 541FE4ACCE;
-	Mon, 14 Oct 2013 22:45:44 +0000 (UTC)
-In-Reply-To: <20131014223137.GA12744@sigill.intra.peff.net> (Jeff King's
-	message of "Mon, 14 Oct 2013 18:31:37 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 5C36F64E-3522-11E3-92E5-8F264F2CC097-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757443Ab3JNWvP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Oct 2013 18:51:15 -0400
+Received: from mail-la0-f49.google.com ([209.85.215.49]:42311 "EHLO
+	mail-la0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756676Ab3JNWvO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Oct 2013 18:51:14 -0400
+Received: by mail-la0-f49.google.com with SMTP id ev20so6046026lab.8
+        for <git@vger.kernel.org>; Mon, 14 Oct 2013 15:51:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=S9lkuHR99tD0qAX2cnRteSXHwpmYx6UWwwHMZsLmj2g=;
+        b=KwRHlj5fZekBocCVHNkPR5EeYxlDOV7kpzdw1bJHywmnwHnCeo3OkP8cj48aMB6jiI
+         UFC0OK1F+CpSMv/Jn7uf024/Uf2mph+llVyv6qS1imvy70uvt9Asn9z8SDO2KtSqZSiQ
+         6UEHV5w4rlkliRt9EP0jaAz/PnyzzXysIWVjO9zbcedOWH1P3fKTfPmx6xcGU8a+V2IK
+         gwcL1QcveCJ+QsavoR9ihAihf1R4pMxHF1HovZlWi7Bt32fPP2UY8n5w/FGDKrF2o3FN
+         TA5KJuzLbYYgAr5Q17hjBtQeEhwe8LPJ1pFjNEbexZDxQqwSGn/Il0bOuq1Cee5nmpGa
+         3MKw==
+X-Received: by 10.112.57.49 with SMTP id f17mr32703540lbq.26.1381791072866;
+ Mon, 14 Oct 2013 15:51:12 -0700 (PDT)
+Received: by 10.114.91.230 with HTTP; Mon, 14 Oct 2013 15:51:12 -0700 (PDT)
+In-Reply-To: <1381789769-9893-4-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236144>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236145>
 
-Jeff King <peff@peff.net> writes:
+On Mon, Oct 14, 2013 at 5:29 PM, Felipe Contreras
+<felipe.contreras@gmail.com> wrote:
+> tl;dr: everyone except Junio C Hamano and Drew Northup agrees; we should move
+> away from the name "the index".
 
-> Yeah, you are right[1]. I'm happy to re-roll. I wonder if we even need
-> to worry about a compatibility wrapper. We are already doing pointer
-> manipulations, and it is probably just as readable to roll the loop by
-> hand.
+Junio, can you make an exception and reply to this thread? The change
+to move away from the term "the index" has been suggested many times
+since many years ago, it is an extremely important change to users,
+and all the Git developers agree it must be done.
 
-Yeah, unrolling the loop is probably better.  You may even be able
-to do so in a single pass with an extra "last > seen" pointer
-variable without too much additional code complexity, I would think.
+Virtually everyone has agreed already that the term "staging area" is
+the best option and this patch series is a good first step. Other than
+the --work patches, this series could easily be merged to the 'pu'
+branch. Yet not only is this series not there, but you haven't said
+what needs to be done to get there.
+
+It has been more than a month that I demonstrated to you that virtual
+nobody has any problems with moving away from term "the index"[1][2],
+and yet you haven't even responded.
+
+I'm not even asking about this series, all I want to know is if any
+change that tries to move away from the term "the index" towards
+"staging area" would ever be considered for inclusion. Yes or no.
+
+All I want is a simple answer to a simple question. Is that too much to ask?
+
+[1] http://article.gmane.org/gmane.comp.version-control.git/233469
+[2] http://article.gmane.org/gmane.comp.version-control.git/233468
+
+-- 
+Felipe Contreras
