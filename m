@@ -1,93 +1,72 @@
-From: Dennis van der Wal <d.vanderwal@comparegroup.eu>
-Subject: Git line ending trouble
-Date: Mon, 14 Oct 2013 11:21:47 +0000
-Message-ID: <CE8193B5.3913E%d.vanderwal@comparegroup.eu>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] mv: Fix spurious warning when moving a file in presence of submodules
+Date: Mon, 14 Oct 2013 14:33:57 +0200
+Message-ID: <vpqfvs42fre.fsf@anie.imag.fr>
+References: <vpq38o7nao9.fsf@anie.imag.fr> <52583B00.8040700@web.de>
+	<525A8965.3040407@web.de> <vpqr4bp6wkh.fsf@anie.imag.fr>
+	<20131014054048.GC25344@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Oct 14 13:37:00 2013
+Content-Type: text/plain
+Cc: Jens Lehmann <Jens.Lehmann@web.de>, git <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 14 14:34:12 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VVgSJ-00082j-Tp
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Oct 2013 13:37:00 +0200
+	id 1VVhLf-0008T0-2A
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Oct 2013 14:34:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755750Ab3JNLgz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Oct 2013 07:36:55 -0400
-Received: from mail-db3lp0084.outbound.protection.outlook.com ([213.199.154.84]:19107
-	"EHLO emea01-db3-obe.outbound.protection.outlook.com"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1753797Ab3JNLgy convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 14 Oct 2013 07:36:54 -0400
-X-Greylist: delayed 905 seconds by postgrey-1.27 at vger.kernel.org; Mon, 14 Oct 2013 07:36:54 EDT
-Received: from AMXPR05MB184.eurprd05.prod.outlook.com (10.242.72.151) by
- AMXPR05MB183.eurprd05.prod.outlook.com (10.242.72.149) with Microsoft SMTP
- Server (TLS) id 15.0.785.10; Mon, 14 Oct 2013 11:21:47 +0000
-Received: from AMXPR05MB184.eurprd05.prod.outlook.com ([169.254.10.217]) by
- AMXPR05MB184.eurprd05.prod.outlook.com ([169.254.10.217]) with mapi id
- 15.00.0785.001; Mon, 14 Oct 2013 11:21:47 +0000
-Thread-Topic: Git line ending trouble
-Thread-Index: AQHOyM+RT5msfcaC6USNmQRMYB20DA==
-Accept-Language: nl-NL, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-user-agent: Microsoft-MacOutlook/14.3.7.130812
-x-originating-ip: [78.152.32.28]
-x-forefront-prvs: 0999136621
-x-forefront-antispam-report: SFV:NSPM;SFS:(11905935001)(53754006)(199002)(189002)(54356001)(74366001)(81342001)(53806001)(83322001)(46102001)(19580395003)(51856001)(63696002)(81542001)(80022001)(74662001)(65816001)(77096001)(74502001)(47446002)(74482001)(74706001)(56816003)(80976001)(31966008)(74876001)(83072001)(69226001)(66066001)(76796001)(76786001)(15975445006)(54316002)(76482001)(49866001)(50986001)(47736001)(47976001)(83506001)(76176001)(4396001)(59766001)(77982001)(81686001)(36756003)(85306002)(81816001)(56776001)(79102001)(140573001);DIR:OUT;SFP:;SCL:1;SRVR:AMXPR05MB183;H:AMXPR05MB184.eurprd05.prod.outlook.com;CLIP:78.152.32.28;FPR:;RD:InfoNoRecords;A:1;MX:1;LANG:en;
-Content-ID: <426C47A53FB7A742ACE92BAF575FF4F6@eurprd05.prod.outlook.com>
-X-OriginatorOrg: comparegroup.eu
+	id S1755770Ab3JNMeG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Oct 2013 08:34:06 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:34594 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754583Ab3JNMeE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Oct 2013 08:34:04 -0400
+Received: from globule.imag.fr (globule.imag.fr [129.88.34.238])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r9ECXuUt032506
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 14 Oct 2013 14:33:56 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	(authenticated bits=0)
+	by globule.imag.fr (8.13.8/8.13.8) with ESMTP id r9ECXvbu021801
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Mon, 14 Oct 2013 14:33:57 +0200
+In-Reply-To: <20131014054048.GC25344@google.com> (Jonathan Nieder's message of
+	"Sun, 13 Oct 2013 22:40:48 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 14 Oct 2013 14:33:56 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r9ECXuUt032506
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1382358838.04928@q8NIsx1ILFfNXArNOjrYFw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236098>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236099>
 
-Hello everyone,
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-Recently we have migrated from Subversion to Git in a multiplatform,
-though mostly Windows oriented working environment. During the course of
-this migration we ran into newline issues between people using Mac and
-Windows. When investigating the issue we noticed that the migration
-process had created many entries in the .gitattributes like "path/to/file
--text", explaining the problem.
+> Matthieu Moy wrote:
+>> Jens Lehmann <Jens.Lehmann@web.de> writes:
+>
+>>>  static struct lock_file lock_file;
+>>> +#define SUBMODULE_WITH_GITDIR ((const char *)1)
+>>
+>> I don't like very much hardcoded addresses like this. Are you 100% sure
+>> address 1 will never be returned by xstrdup on any platform? The risk is
+>> small if not negligible, but I'm unconfortable with this.
+>
+> I haven't checked what the standards say, but in practice I think it's
+> okay.  [...]  We use (void *) 1 in the same way a few places currently.
 
-To fix this problem we tried cleaning up the .gitattributes file and then
-re-adding the files to Git so they would be stored with LF type line
-endings (https://help.github.com/articles/dealing-with-line-endings). This
-seemed to work until I noticed some weird behaviour, namely that whenever
-I executed the aforementioned steps the number of files changed would
-differ.
+OK, fine with me.
 
-To verify this observation I tried the following experiment. I cloned one
-of the migrated repositories 4 times, each of them cloned cleanly into a
-different directory. Then for each, on master, I executed the following
-commands:
-  echo "* text=auto" > .gitattributes
-  git add .
-  git commit -m "Create basic .gitattributes file."
-  git rm -r --cached .
-  git reset --hard
-  git add .
-  git commit -m "Normalise line endings."
-Note that the .gitattributes used to consist of one line "* text=auto
-!eol" and many of the "path/to/file -text" entries I mentioned before, but
-now has all content replaced with "* text=auto".
-
-Each time the second commit command yielded a different result, ranging
-from 0 files changed to 738 files changed and most of them hovering around
-the 500+ mark. I tried with both version 1.7.12.4 and 1.8.4 on Mac OSX
-Mountain Lion (10.8.5).
-
-So my question to this mailing list is: Is this deviation in number of
-files changed a known problem and if so is there a known workaround? I
-tried looking for this particular observation, but I found it hard to come
-up with a search query describing this issue.
-
-Sincerely,
-Dennis van der Wal
-Java Developer at Compare Group
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
