@@ -1,95 +1,61 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v2 01/14] Add proper 'stage' command
-Date: Mon, 14 Oct 2013 18:15:26 -0500
-Message-ID: <CAMP44s0qXui4DM6ejdwNYTR__q0zsish2+-JsphrmNT15zoeAg@mail.gmail.com>
-References: <1381789769-9893-1-git-send-email-felipe.contreras@gmail.com>
-	<1381789769-9893-6-git-send-email-felipe.contreras@gmail.com>
-	<CAPig+cTu8k7c2JtxdYLqn+9s-rZ4C_Th3GNDBXABQVtz0hviaQ@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 0/6] miscellaneous patches
+Date: Mon, 14 Oct 2013 16:25:10 -0700
+Message-ID: <20131014232510.GZ9464@google.com>
+References: <5251CC66.30004@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>,
-	Jay Soffian <jaysoffian@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Philip Oakley <philipoakley@iee.org>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	William Swanson <swansontec@gmail.com>,
-	Ping Yin <pkufranky@gmail.com>,
-	Hilco Wijbenga <hilco.wijbenga@gmail.com>,
-	Miles Bader <miles@gnu.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Tue Oct 15 01:15:34 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: GIT Mailing-list <git@vger.kernel.org>
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Tue Oct 15 01:25:23 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VVrML-0005bG-Hl
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Oct 2013 01:15:33 +0200
+	id 1VVrVq-0002qt-Pb
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Oct 2013 01:25:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757474Ab3JNXP3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Oct 2013 19:15:29 -0400
-Received: from mail-la0-f54.google.com ([209.85.215.54]:34231 "EHLO
-	mail-la0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756918Ab3JNXP2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Oct 2013 19:15:28 -0400
-Received: by mail-la0-f54.google.com with SMTP id ea20so6158193lab.41
-        for <git@vger.kernel.org>; Mon, 14 Oct 2013 16:15:27 -0700 (PDT)
+	id S1757870Ab3JNXZP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Oct 2013 19:25:15 -0400
+Received: from mail-pd0-f176.google.com ([209.85.192.176]:40595 "EHLO
+	mail-pd0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757855Ab3JNXZN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Oct 2013 19:25:13 -0400
+Received: by mail-pd0-f176.google.com with SMTP id q10so8022403pdj.35
+        for <git@vger.kernel.org>; Mon, 14 Oct 2013 16:25:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=CsBIaSI7J6OcpbL7oOuyXah7+bvn1/QzjzGv8SV0ih0=;
-        b=G5yIXpSA3IJ6EZcCd7Jc9Z2TMT6la3aXC4dHOIFH8tnZg1siszDA0pqKdDdNpEGkXq
-         4pUGOBL2LdsTTDwZqt4HaffY+1Pedq3vQPG/pN9XymRHaR4JDMKYgci1n/vi4rKXliap
-         JXi/c8sdepmfB7nQ88j0BMX8e7IT/9biU10aLRyuXfvfZPMHZu9G36eZeqU47C97tUzf
-         eBnenxIq9bjTzCZLxouiifCcdwkkllq2Nv93/BDHmXFqv7UHKtzJoUOtQtlRMRaXsUiF
-         zBAkb+r8zu4jCVJctl7tgDpUzHSyEj7Z92DDQHvFMFoC9FDx3wG2MRZNoqip6Tx8Nwn6
-         lDbQ==
-X-Received: by 10.152.180.139 with SMTP id do11mr22949850lac.23.1381792526983;
- Mon, 14 Oct 2013 16:15:26 -0700 (PDT)
-Received: by 10.114.91.230 with HTTP; Mon, 14 Oct 2013 16:15:26 -0700 (PDT)
-In-Reply-To: <CAPig+cTu8k7c2JtxdYLqn+9s-rZ4C_Th3GNDBXABQVtz0hviaQ@mail.gmail.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=pKkWk3hGutJAWgG0tLuS/SQ1WjfwqcWNYDZlNZPJdlY=;
+        b=AeIJqh4U3Jxldl2e6mDCR5jNkMYkUiPmTmj6rrx3tSHZ1Q2pJx05MTBEvwJKk/s7xT
+         x0K4R3gk509yvytK09KmIhoRj2HQqLXOJkKQzzUtZNf5YSI6876RTM/f7vz5XNDLuUwa
+         rgB225tGQXyQPVv8ORLRk5udrToJ8yJzOPCuKGhkdI3ZaeHfpMtEgqClgj1DO7j2GbCm
+         gKxzB26wbELuqan2SRXHkMd9WxBS3HEZfilZJa5r998n8W8WYmyQ/AvrXrxmZAmYifSh
+         Gzup8Zwuf9kcXezBTk4EiDRiKYFM7L3dbJcshsetL5TTKYNtFbsr9L1zf0FdPpB4LlFE
+         hdqQ==
+X-Received: by 10.66.250.138 with SMTP id zc10mr40731389pac.72.1381793113380;
+        Mon, 14 Oct 2013 16:25:13 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id va8sm80386560pbc.16.1969.12.31.16.00.00
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 14 Oct 2013 16:25:12 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <5251CC66.30004@ramsay1.demon.co.uk>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236147>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236148>
 
-On Mon, Oct 14, 2013 at 6:06 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Mon, Oct 14, 2013 at 6:29 PM, Felipe Contreras
-> <felipe.contreras@gmail.com> wrote:
->> diff --git a/builtin/stage.c b/builtin/stage.c
->> new file mode 100644
->> index 0000000..3023d17
->> --- /dev/null
->> +++ b/builtin/stage.c
->> @@ -0,0 +1,52 @@
->> +/*
->> + * 'git stage' builtin command
->> + *
->> + * Copyright (C) 2013 Felipe Contreras
->> + */
->> +
->> +#include "builtin.h"
->> +#include "parse-options.h"
->> +
->> +static const char *const stage_usage[] = {
->> +       N_("git stage [options] [--] <paths>..."),
->> +       N_("git stage add [options] [--] <paths>..."),
->> +       N_("git stage reset [-q|--patch] [--] <paths>..."),
->> +       N_("git stage diff [options] [<commit]> [--] <paths>..."),
->> +       N_("git stage rm [options] [--] <paths>..."),
->> +       NULL
->> +};
->
-> Sent the wrong set of patches? The interdiff in the cover letter
-> showed usage for "git stage apply", but it's not here in the actual
-> patch.
+Ramsay Jones wrote:
 
-No, it's the right series, but apparently I added the change to the
-wrong commit: stage: add edit command. I've fixed that and will send
-it on the next reroll (if there's any).
+> These patches don't have too much in common, hence the subject
+> line, except perhaps that 4 of them fix sparse warnings.
 
--- 
-Felipe Contreras
+Thanks.  These look good.
+
+I tweaked the descriptions a bit to focus on what sparse was warning
+about instead of our having quieted sparse. :)
