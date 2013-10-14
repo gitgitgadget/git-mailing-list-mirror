@@ -1,72 +1,74 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH] http: enable keepalive on TCP sockets
-Date: Mon, 14 Oct 2013 23:38:39 +0000
-Message-ID: <20131014233839.GA26323@dcvr.yhbt.net>
-References: <20131012222939.GA24255@dcvr.yhbt.net>
- <alpine.DEB.2.00.1310131142080.22193@tvnag.unkk.fr>
- <20131014052739.GA16129@dcvr.yhbt.net>
- <20131014214035.GB7007@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Daniel Stenberg <daniel@haxx.se>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Oct 15 01:38:49 2013
+From: Nicolas Vigier <boklm@mars-attacks.org>
+Subject: [PATCH] git-merge: document the -S option
+Date: Tue, 15 Oct 2013 01:41:05 +0200
+Message-ID: <1381794065-6657-1-git-send-email-boklm@mars-attacks.org>
+Cc: Nicolas Vigier <boklm@mars-attacks.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 15 01:41:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VVrim-0002Wb-EY
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Oct 2013 01:38:44 +0200
+	id 1VVrlX-0004Kj-Nt
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Oct 2013 01:41:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932129Ab3JNXik (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Oct 2013 19:38:40 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:59089 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757158Ab3JNXik (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Oct 2013 19:38:40 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2458A44C006;
-	Mon, 14 Oct 2013 23:38:40 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <20131014214035.GB7007@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S932158Ab3JNXlc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Oct 2013 19:41:32 -0400
+Received: from mx0.mars-attacks.org ([92.243.25.60]:56598 "EHLO
+	mx0.mars-attacks.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757110Ab3JNXlb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Oct 2013 19:41:31 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mx0.mars-attacks.org (Postfix) with ESMTP id BE0BE4238
+	for <git@vger.kernel.org>; Tue, 15 Oct 2013 01:41:43 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at mars-attacks.org
+Received: from mx0.mars-attacks.org ([127.0.0.1])
+	by localhost (mx0.mars-attacks.org [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id VQxd8ny4REt1; Tue, 15 Oct 2013 01:41:43 +0200 (CEST)
+Received: from wxy.mars-attacks.org (moow.mars-attacks.org [82.242.116.57])
+	by mx0.mars-attacks.org (Postfix) with ESMTPS id 2342915CE;
+	Tue, 15 Oct 2013 01:41:43 +0200 (CEST)
+Received: by wxy.mars-attacks.org (Postfix, from userid 500)
+	id BE3D043920; Tue, 15 Oct 2013 01:41:28 +0200 (CEST)
+X-Mailer: git-send-email 1.8.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236151>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236152>
 
-Jeff King <peff@peff.net> wrote:
-> On Mon, Oct 14, 2013 at 05:27:39AM +0000, Eric Wong wrote:
-> > Daniel Stenberg <daniel@haxx.se> wrote:
-> > > On Sat, 12 Oct 2013, Eric Wong wrote:
-> > > 
-> > > >This is a follow up to commit
-> > > >e47a8583a20256851e7fc882233e3bd5bf33dc6e (enable SO_KEEPALIVE for
-> > > >connected TCP sockets).
-> > > 
-> > > Just keep in mind that TCP keep-alive is enabled in awkwardly many
-> > > different ways on different systems and this patch only supports one
-> > > of them. Feel free to take inspiration from libcurl's source code
-> > > for doing this. See:
-> > > 
-> > >   https://github.com/bagder/curl/blob/master/lib/connect.c#L108
-> > 
-> > Thanks.  I think the Linux-specific TCP_KEEP* knobs are overkill for git.
-> > (since this is mainly for non-interactive users, I went at least a day
-> >  before realizing the process was stuck on my machine).
-> > I cannot comment on the knobs for other OSes.
-> 
-> I don't think we should get into having a big compatibility layer that
-> just reproduces what is in curl.
-> 
-> But is there any reason not to use CURLOPT_TCP_KEEPALIVE when it is
-> available, falling back to CURLOPT_SOCKOPTFUNCTION, and then finally to
-> nothing? That lets people on modern curl benefit from curl's more
-> portable code, without punishing people on older versions.
+The option to gpg sign a merge commit is available but was not
+documented. Use wording from the git-commit(1) manpage.
 
-I wanted it to work as older curl first (since I noticed this
-on an old server).  But your patch on top of mine looks reasonable,
-thanks.
+Signed-off-by: Nicolas Vigier <boklm@mars-attacks.org>
+---
+ Documentation/git-merge.txt | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
+index a74c371..c7915a6 100644
+--- a/Documentation/git-merge.txt
++++ b/Documentation/git-merge.txt
+@@ -10,7 +10,7 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git merge' [-n] [--stat] [--no-commit] [--squash] [--[no-]edit]
+-	[-s <strategy>] [-X <strategy-option>]
++	[-s <strategy>] [-X <strategy-option>] [-S[<keyid>]]
+ 	[--[no-]rerere-autoupdate] [-m <msg>] [<commit>...]
+ 'git merge' <msg> HEAD <commit>...
+ 'git merge' --abort
+@@ -65,6 +65,10 @@ OPTIONS
+ -------
+ include::merge-options.txt[]
+ 
++-S[<keyid>]::
++--gpg-sign[=<keyid>]::
++	GPG-sign commit.
++
+ -m <msg>::
+ 	Set the commit message to be used for the merge commit (in
+ 	case one is created).
+-- 
+1.8.4
