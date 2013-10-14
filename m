@@ -1,109 +1,71 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH try2 01/14] Add proper 'stage' command
-Date: Mon, 14 Oct 2013 17:22:33 -0500
-Message-ID: <525c6ea918b6a_235dd2be7837@nysa.notmuch>
-References: <1381561488-20294-1-git-send-email-felipe.contreras@gmail.com>
- <1381561488-20294-6-git-send-email-felipe.contreras@gmail.com>
- <CAPig+cQN5e8hOKTvHRKUQoLmctUWbAqTydgfY10Kr4AzHtB7kg@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] split_ident: parse timestamp from end of line
+Date: Mon, 14 Oct 2013 18:31:37 -0400
+Message-ID: <20131014223137.GA12744@sigill.intra.peff.net>
+References: <20131014202734.GA7007@sigill.intra.peff.net>
+ <xmqqwqlfebhi.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>,
-	Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>,
-	Jay Soffian <jaysoffian@gmail.com>,
-	Miles Bader <miles@gnu.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Philip Oakley <philipoakley@iee.org>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	William Swanson <swansontec@gmail.com>,
-	Ping Yin <pkufranky@gmail.com>,
-	Hilco Wijbenga <hilco.wijbenga@gmail.com>
-To: Eric Sunshine <sunshine@sunshineco.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 15 00:28:58 2013
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Oct 15 00:31:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VVqdG-0002fE-Cc
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Oct 2013 00:28:58 +0200
+	id 1VVqfw-0004JO-1O
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Oct 2013 00:31:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757800Ab3JNW2x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Oct 2013 18:28:53 -0400
-Received: from mail-oa0-f48.google.com ([209.85.219.48]:43304 "EHLO
-	mail-oa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757771Ab3JNW2u (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Oct 2013 18:28:50 -0400
-Received: by mail-oa0-f48.google.com with SMTP id m6so5015937oag.21
-        for <git@vger.kernel.org>; Mon, 14 Oct 2013 15:28:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:content-transfer-encoding;
-        bh=9S7mSKiBOj2W/kY8ykK9/p1hedSNFcTjrlOKR2qNgHg=;
-        b=qdBD9vLlzgSTwnqYk9BaGj9PkKYLQENsgGzdm2iOA38gZLgF6c69VBqz8OvND3aTAa
-         g4i5+6u0KywAH+dTBc3hSywSqb9A8A+v115rjY8WQ9ZtzlJJeGE7P3S6E68xSvQ7HE7S
-         TvEAqZAE5Uw8tqk9x9d573Byoxs3/Ugod8JjnZLWIg+i23FnVZpIgvjhKCTgHZhiKI++
-         S4pr2Xwv5J3Y/pivt8XQp88HJFmXOIL6ViNOoTgRItfm5c7t5mPo8nVwEy33IhLImf6Q
-         UueEA+cPRZDDacRRnwKjGLGeOSeQKQOPlMXeycuZiQeuoltOFgWs+bJ7anq4+4AI5g3G
-         PVFQ==
-X-Received: by 10.182.48.130 with SMTP id l2mr3521558obn.44.1381789730420;
-        Mon, 14 Oct 2013 15:28:50 -0700 (PDT)
-Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
-        by mx.google.com with ESMTPSA id m7sm6020790obo.7.1969.12.31.16.00.00
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 14 Oct 2013 15:28:49 -0700 (PDT)
-In-Reply-To: <CAPig+cQN5e8hOKTvHRKUQoLmctUWbAqTydgfY10Kr4AzHtB7kg@mail.gmail.com>
+	id S1756880Ab3JNWbk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Oct 2013 18:31:40 -0400
+Received: from cloud.peff.net ([50.56.180.127]:49327 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756397Ab3JNWbj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Oct 2013 18:31:39 -0400
+Received: (qmail 20709 invoked by uid 102); 14 Oct 2013 22:31:39 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 14 Oct 2013 17:31:39 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 14 Oct 2013 18:31:37 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqwqlfebhi.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236125>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236126>
 
-Eric Sunshine wrote:
-> On Sat, Oct 12, 2013 at 3:04 AM, Felipe Contreras
-> <felipe.contreras@gmail.com> wrote:
-> >  SYNOPSIS
-> >  --------
-> >  [verse]
-> > -'git stage' args...
-> > -
-> > +'git stage' [options] [--] [<paths>...]
-> > +'git stage add' [options] [--] [<paths>...]
-> > +'git stage reset' [-q|--patch] [--] [<paths>...]
-> > +'git stage diff' [options] [<commit>] [--] [<paths>...]
-> > +'git stage rm' [options] [--] [<paths>...]
-> > +'git stage apply' [options] [--] [<paths>...]
-> >
-> > diff --git a/builtin/stage.c b/builtin/stage.c
-> > new file mode 100644
-> > index 0000000..3023d17
-> > --- /dev/null
-> > +++ b/builtin/stage.c
-> > @@ -0,0 +1,52 @@
-> > +/*
-> > + * 'git stage' builtin command
-> > + *
-> > + * Copyright (C) 2013 Felipe Contreras
-> > + */
-> > +
-> > +#include "builtin.h"
-> > +#include "parse-options.h"
-> > +
-> > +static const char *const stage_usage[] = {
-> > +       N_("git stage [options] [--] <paths>..."),
-> > +       N_("git stage add [options] [--] <paths>..."),
-> > +       N_("git stage reset [-q|--patch] [--] <paths>..."),
-> > +       N_("git stage diff [options] [<commit]> [--] <paths>..."),
-> > +       N_("git stage rm [options] [--] <paths>..."),
-> > +       NULL
-> > +};
+On Mon, Oct 14, 2013 at 03:25:29PM -0700, Junio C Hamano wrote:
+
+> > +	/*
+> > +	 * Look from the end-of-line to find the trailing ">" of the mail
+> > +	 * address, even though we should already know it as split->mail_end.
+> > +	 * This can help in cases of broken idents with an extra ">" somewhere
+> > +	 * in the email address.  Note that we are assuming the timestamp will
+> > +	 * never have a ">" in it.
+> > +	 *
+> > +	 * Note also that this memchr can never return NULL, as we would
+> > +	 * always find at least the split->mail_end closing bracket.
+> > +	 */
+> > +	cp = memrchr(split->mail_end, '>', len - (split->mail_end - line));
+> > +	for (cp = cp + 1; cp < line + len && isspace(*cp); cp++)
+> >  		;
 > 
-> Missing usage for "git stage apply".
+> "git grep" tells me this is the first use of memrchr(), which,
+> unlike memchr(), is _GNU_SOURCE-only if I am not mistaken, so we may
+> need a fallback definition in the compat/ and NEEDS_MEMRCHR in the
+> Makefile, I think.
 
-Right. Will add
+Yeah, you are right[1]. I'm happy to re-roll. I wonder if we even need
+to worry about a compatibility wrapper. We are already doing pointer
+manipulations, and it is probably just as readable to roll the loop by
+hand.
 
--- 
-Felipe Contreras
+-Peff
+
+[1] I even looked at "man memrchr" on my glibc system and was surprised
+    to see it mentioned above the "#define _GNU_SOURCE" fold. But that
+    "fold" is used only sometimes (e.g., strchrnul), and not others (in
+    memrchr, the portability bits are listed at the end of the
+    synopsis). Grr.
