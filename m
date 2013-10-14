@@ -1,90 +1,67 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 12/20] alias: trivial style fix
-Date: Mon, 14 Oct 2013 07:18:06 -0700
-Message-ID: <20131014141806.GB21200@google.com>
-References: <1381561636-20717-1-git-send-email-felipe.contreras@gmail.com>
- <1381561636-20717-18-git-send-email-felipe.contreras@gmail.com>
- <52590E97.6060308@googlemail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
-To: Stefan Beller <stefanbeller@googlemail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 14 16:18:24 2013
+From: Nicolas Vigier <boklm@mars-attacks.org>
+Subject: [PATCH] rev-parse doc: clarify use of optional / required arguments
+Date: Mon, 14 Oct 2013 16:23:31 +0200
+Message-ID: <1381760611-9573-1-git-send-email-boklm@mars-attacks.org>
+Cc: Nicolas Vigier <boklm@mars-attacks.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 14 16:23:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VViyN-00052I-Tz
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Oct 2013 16:18:16 +0200
+	id 1VVj3e-0008Sx-Ts
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Oct 2013 16:23:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754751Ab3JNOSL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Oct 2013 10:18:11 -0400
-Received: from mail-pb0-f52.google.com ([209.85.160.52]:38119 "EHLO
-	mail-pb0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750884Ab3JNOSK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Oct 2013 10:18:10 -0400
-Received: by mail-pb0-f52.google.com with SMTP id wz12so7307411pbc.25
-        for <git@vger.kernel.org>; Mon, 14 Oct 2013 07:18:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=XO60FAsO3epDKMNQmrFF/KLlKXCjKt81MJz5sF0JIS8=;
-        b=IzmBk0DMr3fgn21GT2VX+xe8k2z1cf4Thcyf7qrTFoGb2F0m0Ard2wAwTrX4Y5sgyN
-         rBaBsMDiItRM9/FcCOmYDkbrsf1PB0XGxop9kDhtcpnadPe+k/XHWdmWErx4biUdBWPI
-         7D4e5DXitJDYhcPvm9Bql2+PICTMupvrPP58czMZFrejPzMnJopgqKjuNcwROVpoti33
-         QHgkD/u3Wo09Ud/BCa7lF/HYYaQnL7zwxBw0G0HVwNbD7zuGAF4U3HxqYXMsEKXvjxuo
-         lXVXcL3ipVr8AGUTKcEZutKhfa2bdpmJbXMGuZGGeM0lk3Jk3riAZnb45eckW9qYRIse
-         wfRg==
-X-Received: by 10.68.98.36 with SMTP id ef4mr36496693pbb.27.1381760289487;
-        Mon, 14 Oct 2013 07:18:09 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id fa4sm91710000pab.17.1969.12.31.16.00.00
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 14 Oct 2013 07:18:09 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <52590E97.6060308@googlemail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753455Ab3JNOXj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Oct 2013 10:23:39 -0400
+Received: from mx0.mars-attacks.org ([92.243.25.60]:45278 "EHLO
+	mx0.mars-attacks.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751002Ab3JNOXj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Oct 2013 10:23:39 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mx0.mars-attacks.org (Postfix) with ESMTP id 66A00489C
+	for <git@vger.kernel.org>; Mon, 14 Oct 2013 16:23:51 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at mars-attacks.org
+Received: from mx0.mars-attacks.org ([127.0.0.1])
+	by localhost (mx0.mars-attacks.org [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 6Z3k8MiIb9oY; Mon, 14 Oct 2013 16:23:50 +0200 (CEST)
+Received: from wxy.mars-attacks.org (moow.mars-attacks.org [82.242.116.57])
+	by mx0.mars-attacks.org (Postfix) with ESMTPS id 8A83547B6;
+	Mon, 14 Oct 2013 16:23:50 +0200 (CEST)
+Received: by wxy.mars-attacks.org (Postfix, from userid 500)
+	id 4EB8F43920; Mon, 14 Oct 2013 16:23:36 +0200 (CEST)
+X-Mailer: git-send-email 1.8.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236101>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236102>
 
-Stefan Beller wrote:
-> On 10/12/2013 09:07 AM, Felipe Contreras wrote:
+"the option is optional" was confusing as it is not the option but its
+argument which is optional.
 
->> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
->
-> Not sure if it's worth by a newcomer. ;)
+Signed-off-by: Nicolas Vigier <boklm@mars-attacks.org>
+---
+ Documentation/git-rev-parse.txt | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-A second set of eyes is always welcome.
-
-My thoughts: I have to admit I don't see much value in mechanical
-replacements like this one when done piecemeal and without other more
-significant changes on top.  If this was fixing some particular
-eyesore, I would understand, and a little preparatory cleanup to make
-another patch on top more readable is always welcome, but this kind of
-thing:
-
->> --- a/alias.c
->> +++ b/alias.c
->> @@ -5,7 +5,7 @@ static char *alias_val;
->>  
->>  static int alias_lookup_cb(const char *k, const char *v, void *cb)
->>  {
->> -	if (!prefixcmp(k, "alias.") && !strcmp(k+6, alias_key)) {
->> +	if (!prefixcmp(k, "alias.") && !strcmp(k + 6, alias_key)) {
-
-does not look worth the churn and mailing list noise to me.
-
-A patch that globally took care of these var+constant constructs
-without surrounding space and did nothing else, once and for all to
-avoid later noise, may or may not be useful.  I suspect even that
-wouldn't be worth it, since "k+6" already seems perfectly readable.
-
-So, not too excited by this change.
-
-Hope that helps,
-Jonathan
+diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.txt
+index 2b126c0..7ec9221 100644
+--- a/Documentation/git-rev-parse.txt
++++ b/Documentation/git-rev-parse.txt
+@@ -259,9 +259,10 @@ Each line of options has this format:
+ 
+ `<flags>`::
+ 	`<flags>` are of `*`, `=`, `?` or `!`.
+-	* Use `=` if the option takes an argument.
++	* Use `=` if the option requires an argument.
+ 
+-	* Use `?` to mean that the option is optional (though its use is discouraged).
++	* Use `?` if the option takes an optional argument (though its use is
++	  discouraged).
+ 
+ 	* Use `*` to mean that this option should not be listed in the usage
+ 	  generated for the `-h` argument. It's shown for `--help-all` as
+-- 
+1.8.4
