@@ -1,7 +1,7 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v2 01/14] Add proper 'stage' command
-Date: Mon, 14 Oct 2013 17:29:20 -0500
-Message-ID: <1381789769-9893-6-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH v2 09/14] apply: add --stage option
+Date: Mon, 14 Oct 2013 17:29:21 -0500
+Message-ID: <1381789769-9893-7-git-send-email-felipe.contreras@gmail.com>
 References: <1381789769-9893-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>,
 	Jay Soffian <jaysoffian@gmail.com>,
@@ -14,260 +14,90 @@ Cc: Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>,
 	Miles Bader <miles@gnu.org>,
 	Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 15 00:36:08 2013
+X-From: git-owner@vger.kernel.org Tue Oct 15 00:36:13 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VVqk5-00079L-Oi
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Oct 2013 00:36:02 +0200
+	id 1VVqkD-0007Do-0l
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Oct 2013 00:36:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932142Ab3JNWf6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Oct 2013 18:35:58 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:47405 "EHLO
+	id S932169Ab3JNWgC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Oct 2013 18:36:02 -0400
+Received: from mail-ob0-f174.google.com ([209.85.214.174]:45287 "EHLO
 	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756848Ab3JNWf5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Oct 2013 18:35:57 -0400
-Received: by mail-ob0-f174.google.com with SMTP id wm4so5298368obc.33
-        for <git@vger.kernel.org>; Mon, 14 Oct 2013 15:35:56 -0700 (PDT)
+	with ESMTP id S932150Ab3JNWgA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Oct 2013 18:36:00 -0400
+Received: by mail-ob0-f174.google.com with SMTP id wm4so5298409obc.33
+        for <git@vger.kernel.org>; Mon, 14 Oct 2013 15:36:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=GmskeSuoFYI0trhb+bb7EBuO4FJbCYK9FrYGR51QPrI=;
-        b=g4Fyl+TNUQCV+kSM8qihJjoX96hCVsHn5J9D2QlgGtJqqkjas9O3czVxBMrjO/R6J8
-         c6ahoHDUHXAeJcu586Xek4/miNyVdTtS++V64s4NfwZeIngykXAAniFOyLDxXBV8OLNK
-         zG/FXXNQ0c99cUzUm5iPZbIPH8VX7jkPL6rOxg7IcluxmAt1tZE+n8zQfkHliqSF4xIz
-         3C6ThnJ3KVfwJfE4XHC/PAj8j5XSPINM9zZZZamqhfmYzywPoNBOTTz/vnRWGsoq5E5/
-         D4cwlTLAOMM3eWJ7Ry2LRJ3Tlvw6rG8wDLK4rK6xQYNa9lt2djw4vZJbdbfeAQN6yzSw
-         +RDw==
-X-Received: by 10.60.145.207 with SMTP id sw15mr3919330oeb.38.1381790156796;
-        Mon, 14 Oct 2013 15:35:56 -0700 (PDT)
+        bh=jD5wzQWJ1KOkWo7cjHb42rVMetPlCmESWfYIrU26wMk=;
+        b=ygKoZhfxjOvXdXt4ZHZ4nackiN9mf9hq6OmYLZ/4ALdwt0ybTsK7P5DGpVkIeFAjLn
+         +kafVUvDeOYU1uSfJUx3lPN1Xbrn2er2GRxqVaY9CzjpZXd2wGT8vHoIrUY85yW9rHFo
+         5tThpGGBsRPG9nWjvC2tF5F3Lel7KF+xOKe3uJHAhJo+liGkogkAaVRwgPBb5lt7NDDR
+         ehIUNWliYslkB2lxSCKQV/lA6FtOzRiE8nVO0Pw0bB3MTZzzLXm/wmbI5iu1GJMpFIlT
+         to5e35V8acWjhNy0/EM+P+/YUCpynRrnNJLgG/dSXCR0a5r2XQxeKKdEADatF9AXJM8A
+         s6jQ==
+X-Received: by 10.60.60.105 with SMTP id g9mr30105410oer.8.1381790160363;
+        Mon, 14 Oct 2013 15:36:00 -0700 (PDT)
 Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
-        by mx.google.com with ESMTPSA id rl1sm121866149oeb.7.1969.12.31.16.00.00
+        by mx.google.com with ESMTPSA id bq4sm44531530obb.1.1969.12.31.16.00.00
         (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 14 Oct 2013 15:35:55 -0700 (PDT)
+        Mon, 14 Oct 2013 15:35:59 -0700 (PDT)
 X-Mailer: git-send-email 1.8.4-fc
 In-Reply-To: <1381789769-9893-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236132>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236133>
+
+Synonym for --index.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- Documentation/git-stage.txt            | 45 +++++++++++++++++++++++++----
- Makefile                               |  2 +-
- builtin.h                              |  1 +
- builtin/stage.c                        | 52 ++++++++++++++++++++++++++++++++++
- contrib/completion/git-completion.bash | 24 +++++++++++++++-
- git.c                                  |  2 +-
- 6 files changed, 118 insertions(+), 8 deletions(-)
- create mode 100644 builtin/stage.c
+ Documentation/git-apply.txt | 5 ++++-
+ builtin/apply.c             | 2 ++
+ 2 files changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/git-stage.txt b/Documentation/git-stage.txt
-index ba3fe0d..318bf45 100644
---- a/Documentation/git-stage.txt
-+++ b/Documentation/git-stage.txt
-@@ -3,20 +3,55 @@ git-stage(1)
- 
- NAME
- ----
--git-stage - Add file contents to the staging area
-+git-stage - manage the staging area
- 
- 
+diff --git a/Documentation/git-apply.txt b/Documentation/git-apply.txt
+index f605327..8c047ef 100644
+--- a/Documentation/git-apply.txt
++++ b/Documentation/git-apply.txt
+@@ -9,7 +9,7 @@ git-apply - Apply a patch to files and/or to the index
  SYNOPSIS
  --------
  [verse]
--'git stage' args...
--
-+'git stage' [options] [--] [<paths>...]
-+'git stage add' [options] [--] [<paths>...]
-+'git stage reset' [-q|--patch] [--] [<paths>...]
-+'git stage diff' [options] [<commit>] [--] [<paths>...]
-+'git stage rm' [options] [--] [<paths>...]
-+'git stage apply' [options] [--] [<paths>...]
+-'git apply' [--stat] [--numstat] [--summary] [--check] [--index] [--3way]
++'git apply' [--stat] [--numstat] [--summary] [--check] [--index|--stage] [--3way]
+ 	  [--apply] [--no-add] [--build-fake-ancestor=<file>] [-R | --reverse]
+ 	  [--allow-binary-replacement | --binary] [--reject] [-z]
+ 	  [-p<n>] [-C<n>] [--inaccurate-eof] [--recount] [--cached]
+@@ -67,6 +67,9 @@ OPTIONS
+ 	up-to-date, it is flagged as an error.  This flag also
+ 	causes the index file to be updated.
  
- DESCRIPTION
- -----------
- 
--This is a synonym for linkgit:git-add[1].  Please refer to the
--documentation of that command.
++--stage::
++	Synonym for --index.
 +
-+COMMANDS
-+--------
-+
-+With no arguments, it's a synonym for linkgit:git-add[1].
-+
-+'add'::
-+
-+Adds file contents to the staging area. See linkgit:git-add[1].
-+
-+'reset'::
-+
-+Resets the staging area. See linkgit:git-reset[1].
-+
-+'diff'::
-+
-+View the changes you staged for the next commit. See linkgit:git-diff[1] --staged.
-+
-+'rm'::
-+
-+Remove files from the staging area only. See linkgit:git-rm[1] --staged.
-+
-+'apply'::
-+
-+Apply a patch to the staging area. See linkgit:git-rm[1] --staged.
-+
-+SEE ALSO
-+--------
-+linkgit:git-add[1]
-+linkgit:git-reset[1]
-+linkgit:git-diff[1]
-+linkgit:git-rm[1]
-+linkgit:git-apply[1]
- 
- GIT
- ---
-diff --git a/Makefile b/Makefile
-index 3588ca1..1f7ddf3 100644
---- a/Makefile
-+++ b/Makefile
-@@ -598,7 +598,6 @@ BUILT_INS += git-merge-subtree$X
- BUILT_INS += git-peek-remote$X
- BUILT_INS += git-repo-config$X
- BUILT_INS += git-show$X
--BUILT_INS += git-stage$X
- BUILT_INS += git-status$X
- BUILT_INS += git-whatchanged$X
- 
-@@ -982,6 +981,7 @@ BUILTIN_OBJS += builtin/send-pack.o
- BUILTIN_OBJS += builtin/shortlog.o
- BUILTIN_OBJS += builtin/show-branch.o
- BUILTIN_OBJS += builtin/show-ref.o
-+BUILTIN_OBJS += builtin/stage.o
- BUILTIN_OBJS += builtin/stripspace.o
- BUILTIN_OBJS += builtin/symbolic-ref.o
- BUILTIN_OBJS += builtin/tag.o
-diff --git a/builtin.h b/builtin.h
-index 8afa2de..baf3a0f 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -113,6 +113,7 @@ extern int cmd_send_pack(int argc, const char **argv, const char *prefix);
- extern int cmd_shortlog(int argc, const char **argv, const char *prefix);
- extern int cmd_show(int argc, const char **argv, const char *prefix);
- extern int cmd_show_branch(int argc, const char **argv, const char *prefix);
-+extern int cmd_stage(int argc, const char **argv, const char *prefix);
- extern int cmd_status(int argc, const char **argv, const char *prefix);
- extern int cmd_stripspace(int argc, const char **argv, const char *prefix);
- extern int cmd_symbolic_ref(int argc, const char **argv, const char *prefix);
-diff --git a/builtin/stage.c b/builtin/stage.c
-new file mode 100644
-index 0000000..3023d17
---- /dev/null
-+++ b/builtin/stage.c
-@@ -0,0 +1,52 @@
-+/*
-+ * 'git stage' builtin command
-+ *
-+ * Copyright (C) 2013 Felipe Contreras
-+ */
-+
-+#include "builtin.h"
-+#include "parse-options.h"
-+
-+static const char *const stage_usage[] = {
-+	N_("git stage [options] [--] <paths>..."),
-+	N_("git stage add [options] [--] <paths>..."),
-+	N_("git stage reset [-q|--patch] [--] <paths>..."),
-+	N_("git stage diff [options] [<commit]> [--] <paths>..."),
-+	N_("git stage rm [options] [--] <paths>..."),
-+	NULL
-+};
-+
-+int cmd_stage(int argc, const char **argv, const char *prefix)
-+{
-+	struct option options[] = { OPT_END() };
-+
-+	argc = parse_options(argc, argv, prefix, options, stage_usage,
-+			PARSE_OPT_KEEP_ARGV0 | PARSE_OPT_KEEP_UNKNOWN | PARSE_OPT_KEEP_DASHDASH);
-+
-+	if (argc > 1) {
-+		if (!strcmp(argv[1], "add"))
-+			return cmd_add(argc - 1, argv + 1, prefix);
-+		if (!strcmp(argv[1], "reset"))
-+			return cmd_reset(argc - 1, argv + 1, prefix);
-+		if (!strcmp(argv[1], "diff")) {
-+			argv[0] = "diff";
-+			argv[1] = "--staged";
-+
-+			return cmd_diff(argc, argv, prefix);
-+		}
-+		if (!strcmp(argv[1], "rm")) {
-+			argv[0] = "rm";
-+			argv[1] = "--cached";
-+
-+			return cmd_rm(argc, argv, prefix);
-+		}
-+		if (!strcmp(argv[1], "apply")) {
-+			argv[0] = "apply";
-+			argv[1] = "--cached";
-+
-+			return cmd_apply(argc, argv, prefix);
-+		}
-+	}
-+
-+	return cmd_add(argc, argv, prefix);
-+}
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 5da920e..8cf26e2 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1691,7 +1691,29 @@ _git_send_email ()
- 
- _git_stage ()
- {
--	_git_add
-+	__git_has_doubledash && return
-+
-+	local subcommands="add reset diff rm apply"
-+	local subcommand="$(__git_find_on_cmdline "$subcommands")"
-+	if [ -z "$subcommand" ]; then
-+		__gitcomp "$subcommands"
-+		return
-+	fi
-+
-+	case "$subcommand" in
-+	add)
-+		_git_add;;
-+	reset)
-+		_git_reset;;
-+	diff)
-+		_git_diff;;
-+	rm)
-+		_git_rm;;
-+	apply)
-+		_git_apply;;
-+	*)
-+		_git_add;
-+	esac
- }
- 
- __git_config_get_set_variables ()
-diff --git a/git.c b/git.c
-index 2025f77..0e639aa 100644
---- a/git.c
-+++ b/git.c
-@@ -409,7 +409,7 @@ static void handle_internal_command(int argc, const char **argv)
- 		{ "show", cmd_show, RUN_SETUP },
- 		{ "show-branch", cmd_show_branch, RUN_SETUP },
- 		{ "show-ref", cmd_show_ref, RUN_SETUP },
--		{ "stage", cmd_add, RUN_SETUP | NEED_WORK_TREE },
-+		{ "stage", cmd_stage, RUN_SETUP | NEED_WORK_TREE },
- 		{ "status", cmd_status, RUN_SETUP | NEED_WORK_TREE },
- 		{ "stripspace", cmd_stripspace },
- 		{ "symbolic-ref", cmd_symbolic_ref, RUN_SETUP },
+ --cached::
+ 	Apply a patch without touching the working tree. Instead take the
+ 	cached data, apply the patch, and store the result in the index
+diff --git a/builtin/apply.c b/builtin/apply.c
+index 50912c9..42b5a4b 100644
+--- a/builtin/apply.c
++++ b/builtin/apply.c
+@@ -4377,6 +4377,8 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
+ 			N_("instead of applying the patch, see if the patch is applicable")),
+ 		OPT_BOOLEAN(0, "index", &check_index,
+ 			N_("make sure the patch is applicable to the current index")),
++		OPT_BOOLEAN(0, "stage", &check_index,
++			N_("make sure the patch is applicable to the current index")),
+ 		OPT_BOOLEAN(0, "cached", &cached,
+ 			N_("apply a patch without touching the working tree")),
+ 		OPT_BOOLEAN(0, "apply", &force_apply,
 -- 
 1.8.4-fc
