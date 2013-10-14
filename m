@@ -1,12 +1,13 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v2 00/14] Officially start moving to the term 'staging area'
-Date: Mon, 14 Oct 2013 17:51:12 -0500
-Message-ID: <CAMP44s3u_SMyZOe5jxkvoGn5MBJ_g70iHRT5v_3u1rZwFoqiVA@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 01/14] Add proper 'stage' command
+Date: Mon, 14 Oct 2013 19:06:37 -0400
+Message-ID: <CAPig+cTu8k7c2JtxdYLqn+9s-rZ4C_Th3GNDBXABQVtz0hviaQ@mail.gmail.com>
 References: <1381789769-9893-1-git-send-email-felipe.contreras@gmail.com>
-	<1381789769-9893-4-git-send-email-felipe.contreras@gmail.com>
+	<1381789769-9893-6-git-send-email-felipe.contreras@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>,
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git List <git@vger.kernel.org>,
+	Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>,
 	Jay Soffian <jaysoffian@gmail.com>,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	Philip Oakley <philipoakley@iee.org>,
@@ -14,74 +15,73 @@ Cc: Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>,
 	William Swanson <swansontec@gmail.com>,
 	Ping Yin <pkufranky@gmail.com>,
 	Hilco Wijbenga <hilco.wijbenga@gmail.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 15 00:51:20 2013
+	Miles Bader <miles@gnu.org>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 15 01:06:44 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VVqys-00082T-Oq
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Oct 2013 00:51:19 +0200
+	id 1VVrDn-0000Rd-Tz
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Oct 2013 01:06:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757443Ab3JNWvP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Oct 2013 18:51:15 -0400
-Received: from mail-la0-f49.google.com ([209.85.215.49]:42311 "EHLO
-	mail-la0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756676Ab3JNWvO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Oct 2013 18:51:14 -0400
-Received: by mail-la0-f49.google.com with SMTP id ev20so6046026lab.8
-        for <git@vger.kernel.org>; Mon, 14 Oct 2013 15:51:12 -0700 (PDT)
+	id S1757525Ab3JNXGk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Oct 2013 19:06:40 -0400
+Received: from mail-lb0-f169.google.com ([209.85.217.169]:45322 "EHLO
+	mail-lb0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757390Ab3JNXGj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Oct 2013 19:06:39 -0400
+Received: by mail-lb0-f169.google.com with SMTP id z5so6354662lbh.0
+        for <git@vger.kernel.org>; Mon, 14 Oct 2013 16:06:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=S9lkuHR99tD0qAX2cnRteSXHwpmYx6UWwwHMZsLmj2g=;
-        b=KwRHlj5fZekBocCVHNkPR5EeYxlDOV7kpzdw1bJHywmnwHnCeo3OkP8cj48aMB6jiI
-         UFC0OK1F+CpSMv/Jn7uf024/Uf2mph+llVyv6qS1imvy70uvt9Asn9z8SDO2KtSqZSiQ
-         6UEHV5w4rlkliRt9EP0jaAz/PnyzzXysIWVjO9zbcedOWH1P3fKTfPmx6xcGU8a+V2IK
-         gwcL1QcveCJ+QsavoR9ihAihf1R4pMxHF1HovZlWi7Bt32fPP2UY8n5w/FGDKrF2o3FN
-         TA5KJuzLbYYgAr5Q17hjBtQeEhwe8LPJ1pFjNEbexZDxQqwSGn/Il0bOuq1Cee5nmpGa
-         3MKw==
-X-Received: by 10.112.57.49 with SMTP id f17mr32703540lbq.26.1381791072866;
- Mon, 14 Oct 2013 15:51:12 -0700 (PDT)
-Received: by 10.114.91.230 with HTTP; Mon, 14 Oct 2013 15:51:12 -0700 (PDT)
-In-Reply-To: <1381789769-9893-4-git-send-email-felipe.contreras@gmail.com>
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=9J0vRXhvYINKjUXszuL2MiyoxQ7LLHbjRfs5TVwl8b0=;
+        b=kStnQXtzUsEv06wdxu+C3WJOpWCEvW17It19zxtS8O7IePhcBGBKS+UjktA0s0BH+F
+         FXkZ6/kjZ53+U4w9ArEXMB8VdZSt3Qe8Mhza6vPzrdI5YdRZCFXGhWrThOp9dTJeoaKz
+         hSgB4Mn0p632N5Pa1oD8mlGPGrQewz9zhKD/sNw+htTorTdZ2uCB3c1HCj9KYKUr94ww
+         x5XwWoL6Gw6+LwILf1X8RFy3uCEAcmndvqEYCY58VCwtuVQdbE8l0IUTeGP8xzp9mAUA
+         2gNLGwEMsFTV2kPNpEmeRoOFKdNOskJVhMV96mIkc91Uw7E//0vvVLJppZk5PyjzYa3A
+         TqJg==
+X-Received: by 10.152.22.97 with SMTP id c1mr4183715laf.31.1381791997937; Mon,
+ 14 Oct 2013 16:06:37 -0700 (PDT)
+Received: by 10.114.182.236 with HTTP; Mon, 14 Oct 2013 16:06:37 -0700 (PDT)
+In-Reply-To: <1381789769-9893-6-git-send-email-felipe.contreras@gmail.com>
+X-Google-Sender-Auth: WXVaTV6VFkv1wR8OiMV8fwjydSI
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236145>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236146>
 
-On Mon, Oct 14, 2013 at 5:29 PM, Felipe Contreras
+On Mon, Oct 14, 2013 at 6:29 PM, Felipe Contreras
 <felipe.contreras@gmail.com> wrote:
-> tl;dr: everyone except Junio C Hamano and Drew Northup agrees; we should move
-> away from the name "the index".
+> diff --git a/builtin/stage.c b/builtin/stage.c
+> new file mode 100644
+> index 0000000..3023d17
+> --- /dev/null
+> +++ b/builtin/stage.c
+> @@ -0,0 +1,52 @@
+> +/*
+> + * 'git stage' builtin command
+> + *
+> + * Copyright (C) 2013 Felipe Contreras
+> + */
+> +
+> +#include "builtin.h"
+> +#include "parse-options.h"
+> +
+> +static const char *const stage_usage[] = {
+> +       N_("git stage [options] [--] <paths>..."),
+> +       N_("git stage add [options] [--] <paths>..."),
+> +       N_("git stage reset [-q|--patch] [--] <paths>..."),
+> +       N_("git stage diff [options] [<commit]> [--] <paths>..."),
+> +       N_("git stage rm [options] [--] <paths>..."),
+> +       NULL
+> +};
 
-Junio, can you make an exception and reply to this thread? The change
-to move away from the term "the index" has been suggested many times
-since many years ago, it is an extremely important change to users,
-and all the Git developers agree it must be done.
-
-Virtually everyone has agreed already that the term "staging area" is
-the best option and this patch series is a good first step. Other than
-the --work patches, this series could easily be merged to the 'pu'
-branch. Yet not only is this series not there, but you haven't said
-what needs to be done to get there.
-
-It has been more than a month that I demonstrated to you that virtual
-nobody has any problems with moving away from term "the index"[1][2],
-and yet you haven't even responded.
-
-I'm not even asking about this series, all I want to know is if any
-change that tries to move away from the term "the index" towards
-"staging area" would ever be considered for inclusion. Yes or no.
-
-All I want is a simple answer to a simple question. Is that too much to ask?
-
-[1] http://article.gmane.org/gmane.comp.version-control.git/233469
-[2] http://article.gmane.org/gmane.comp.version-control.git/233468
-
--- 
-Felipe Contreras
+Sent the wrong set of patches? The interdiff in the cover letter
+showed usage for "git stage apply", but it's not here in the actual
+patch.
