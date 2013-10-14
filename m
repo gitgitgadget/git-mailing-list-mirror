@@ -1,7 +1,7 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v2 02/14] stage: add edit command
-Date: Mon, 14 Oct 2013 17:29:24 -0500
-Message-ID: <1381789769-9893-10-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH v2 13/14] reset: allow --keep with --stage
+Date: Mon, 14 Oct 2013 17:29:25 -0500
+Message-ID: <1381789769-9893-11-git-send-email-felipe.contreras@gmail.com>
 References: <1381789769-9893-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>,
 	Jay Soffian <jaysoffian@gmail.com>,
@@ -14,201 +14,104 @@ Cc: Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>,
 	Miles Bader <miles@gnu.org>,
 	Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 15 00:36:28 2013
+X-From: git-owner@vger.kernel.org Tue Oct 15 00:36:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VVqkV-0007Oh-Pm
+	id 1VVqkW-0007Oh-As
 	for gcvg-git-2@plane.gmane.org; Tue, 15 Oct 2013 00:36:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932242Ab3JNWgN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Oct 2013 18:36:13 -0400
-Received: from mail-ob0-f177.google.com ([209.85.214.177]:51281 "EHLO
-	mail-ob0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932226Ab3JNWgL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Oct 2013 18:36:11 -0400
-Received: by mail-ob0-f177.google.com with SMTP id wm4so5270967obc.36
-        for <git@vger.kernel.org>; Mon, 14 Oct 2013 15:36:11 -0700 (PDT)
+	id S932263Ab3JNWgS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Oct 2013 18:36:18 -0400
+Received: from mail-oa0-f42.google.com ([209.85.219.42]:59003 "EHLO
+	mail-oa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932218Ab3JNWgO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Oct 2013 18:36:14 -0400
+Received: by mail-oa0-f42.google.com with SMTP id k14so1242862oag.15
+        for <git@vger.kernel.org>; Mon, 14 Oct 2013 15:36:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=hYjMXUllkJtC0TMTsRjyPtq2Lzkkde2LxaM1289HM9A=;
-        b=p8ITOHBp+ooQ5I6s31n5jAJzmjEyEjoRz753T9EshwadybD9CQ8mbl4+0xQ2FgLthU
-         1BR3khmP8o9mhJrVaczenMpXs9LEieMQoezhaoy8FabzFJXoUBG/4XIAsPjrDsZjKHX3
-         sk7eh3FWZjcOoUxgMnSO1pp6tJROkV8U3riCKfM1j+WYFnXfWSvKQljY5eWD0V9E8RxW
-         80PtPcu6dlPTv8zhLmA3qtOWylqRvUQOO6FvrdfyRpU1OqyZOKIeep8u2MXiTQgmx3qE
-         kfc577ZBYfIIkPYZ6jqWEMIqAQ1Oe6ypJ260qDhykVQ9Cvl1mYAHpinRrEnU6DM4417+
-         lQqA==
-X-Received: by 10.60.174.75 with SMTP id bq11mr30084244oec.17.1381790170912;
-        Mon, 14 Oct 2013 15:36:10 -0700 (PDT)
+        bh=l3+oVgeYwGrwMweYjMi8Zq27EiMSe+K6cbeCM+Huxe0=;
+        b=jMwaykDHymLdvAIOy2Dnzbv/HopxTQwd16enFwE8j60UQhPcsuzBbiaTGzDtnNLsi5
+         SgwPRhCLwQD14wtOHax6FFNJMT+QE8ghXQ5+jMQTI3In7Cp3ZNmi538r31O8Q6ThiSuu
+         dR7wuQOoLU8273LOzXEiYxXvay2eN3P3mIazum2zilAgXOh13vVIMbh/RqJFEUisoEED
+         Lnj7zohigfoSUCtZKbx9M3B57SDQfu/mLpN6wbm7/wMkmqAMtsNcN+lYl1VZ74u6oTdt
+         gtvBjXRHtjyf6hxXmXiS1W3VCq11S7k2eOKvW+FcGNhTqJX+iVVj5iC1X79qq3/9mRRF
+         A8kQ==
+X-Received: by 10.182.18.9 with SMTP id s9mr22843894obd.15.1381790174226;
+        Mon, 14 Oct 2013 15:36:14 -0700 (PDT)
 Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
-        by mx.google.com with ESMTPSA id hs4sm44537080obb.5.1969.12.31.16.00.00
+        by mx.google.com with ESMTPSA id s9sm44533730obu.4.1969.12.31.16.00.00
         (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 14 Oct 2013 15:36:09 -0700 (PDT)
+        Mon, 14 Oct 2013 15:36:13 -0700 (PDT)
 X-Mailer: git-send-email 1.8.4-fc
 In-Reply-To: <1381789769-9893-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236137>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236138>
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- Documentation/git-stage.txt            |  5 +++
- builtin/stage.c                        | 75 ++++++++++++++++++++++++++++++++++
- contrib/completion/git-completion.bash |  4 +-
- 3 files changed, 83 insertions(+), 1 deletion(-)
+ Documentation/git-reset.txt |  2 +-
+ builtin/reset.c             | 13 ++++++++++---
+ 2 files changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/git-stage.txt b/Documentation/git-stage.txt
-index 318bf45..3e52a66 100644
---- a/Documentation/git-stage.txt
-+++ b/Documentation/git-stage.txt
-@@ -15,6 +15,7 @@ SYNOPSIS
- 'git stage diff' [options] [<commit>] [--] [<paths>...]
- 'git stage rm' [options] [--] [<paths>...]
- 'git stage apply' [options] [--] [<paths>...]
-+'git stage edit'
+diff --git a/Documentation/git-reset.txt b/Documentation/git-reset.txt
+index 5cd75a8..a1419c9 100644
+--- a/Documentation/git-reset.txt
++++ b/Documentation/git-reset.txt
+@@ -11,7 +11,7 @@ SYNOPSIS
+ 'git reset' [-q] [<tree-ish>] [--] <paths>...
+ 'git reset' (--patch | -p) [<tree-ish>] [--] [<paths>...]
+ 'git reset' [--soft | --mixed | --hard | --merge | --keep] [-q] [<commit>]
+-'git reset' [--stage | --work] [-q] [<commit>]
++'git reset' [--stage | --work | --keep] [-q] [<commit>]
  
  DESCRIPTION
  -----------
-@@ -45,6 +46,10 @@ Remove files from the staging area only. See linkgit:git-rm[1] --staged.
+diff --git a/builtin/reset.c b/builtin/reset.c
+index fbc1abc..dde03a7 100644
+--- a/builtin/reset.c
++++ b/builtin/reset.c
+@@ -23,7 +23,7 @@
  
- Apply a patch to the staging area. See linkgit:git-rm[1] --staged.
- 
-+'edit'::
-+
-+Manually edit the staging area (as a diff).
-+
- SEE ALSO
- --------
- linkgit:git-add[1]
-diff --git a/builtin/stage.c b/builtin/stage.c
-index 3023d17..f537c1d 100644
---- a/builtin/stage.c
-+++ b/builtin/stage.c
-@@ -6,16 +6,88 @@
- 
- #include "builtin.h"
- #include "parse-options.h"
-+#include "diff.h"
-+#include "diffcore.h"
-+#include "revision.h"
- 
- static const char *const stage_usage[] = {
- 	N_("git stage [options] [--] <paths>..."),
- 	N_("git stage add [options] [--] <paths>..."),
-+	N_("git stage apply [options] [<patch>...]"),
- 	N_("git stage reset [-q|--patch] [--] <paths>..."),
- 	N_("git stage diff [options] [<commit]> [--] <paths>..."),
- 	N_("git stage rm [options] [--] <paths>..."),
+ static const char * const git_reset_usage[] = {
+ 	N_("git reset [--mixed | --soft | --hard | --merge | --keep] [-q] [<commit>]"),
+-	N_("git reset [--stage | --work] [-q] [<commit>]"),
++	N_("git reset [--stage | --work | --keep] [-q] [<commit>]"),
+ 	N_("git reset [-q] <tree-ish> [--] <paths>..."),
+ 	N_("git reset --patch [<tree-ish>] [--] [<paths>...]"),
  	NULL
- };
- 
-+static int do_reset(const char *prefix)
-+{
-+	const char *argv[] = { "reset", "--quiet", NULL };
-+	return cmd_reset(2, argv, prefix);
-+}
-+
-+static int do_apply(const char *file, const char *prefix)
-+{
-+	const char *argv[] = { "apply", "--recount", "--cached", file, NULL };
-+	return cmd_apply(4, argv, prefix);
-+}
-+
-+static int edit(int argc, const char **argv, const char *prefix)
-+{
-+	char *file = git_pathdup("STAGE_EDIT.patch");
-+	int out;
-+	struct rev_info rev;
-+	int ret = 0;
-+	struct stat st;
-+
-+	read_cache();
-+
-+	init_revisions(&rev, prefix);
-+	rev.diffopt.context = 7;
-+
-+	argc = setup_revisions(argc, argv, &rev, NULL);
-+	add_head_to_pending(&rev);
-+	if (!rev.pending.nr) {
-+		struct tree *tree;
-+		tree = lookup_tree(EMPTY_TREE_SHA1_BIN);
-+		add_pending_object(&rev, &tree->object, "HEAD");
-+	}
-+
-+	rev.diffopt.output_format = DIFF_FORMAT_PATCH;
-+	rev.diffopt.use_color = 0;
-+	DIFF_OPT_SET(&rev.diffopt, IGNORE_DIRTY_SUBMODULES);
-+
-+	out = open(file, O_CREAT | O_WRONLY, 0666);
-+	if (out < 0)
-+		die(_("Could not open '%s' for writing."), file);
-+	rev.diffopt.file = xfdopen(out, "w");
-+	rev.diffopt.close_file = 1;
-+
-+	if (run_diff_index(&rev, 1))
-+		die(_("Could not write patch"));
-+	if (launch_editor(file, NULL, NULL))
-+		exit(1);
-+
-+	if (stat(file, &st))
-+		die_errno(_("Could not stat '%s'"), file);
-+
-+	ret = do_reset(prefix);
-+	if (ret)
-+		goto leave;
-+
-+	if (!st.st_size)
-+		goto leave;
-+
-+	ret = do_apply(file, prefix);
-+	if (ret)
-+		goto leave;
-+
-+leave:
-+	unlink(file);
-+	free(file);
-+	return ret;
-+}
-+
- int cmd_stage(int argc, const char **argv, const char *prefix)
- {
- 	struct option options[] = { OPT_END() };
-@@ -46,6 +118,9 @@ int cmd_stage(int argc, const char **argv, const char *prefix)
- 
- 			return cmd_apply(argc, argv, prefix);
- 		}
-+		if (!strcmp(argv[1], "edit")) {
-+			return edit(argc - 1, argv + 1, prefix);
-+		}
+@@ -295,8 +295,15 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
  	}
  
- 	return cmd_add(argc, argv, prefix);
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 8cf26e2..2b81e78 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1693,7 +1693,7 @@ _git_stage ()
- {
- 	__git_has_doubledash && return
+ 	if (stage >= 0 || working_tree >= 0) {
+-		if (reset_type != NONE)
++		int keep = 0;
++
++		if (reset_type == KEEP) {
++			if (working_tree == 1)
++				die(_("--keep is incompatible with --work"));
++			keep = 1;
++		} else if (reset_type != NONE) {
+ 			die(_("--{stage,work} are incompatible with --{hard,mixed,soft,merge}"));
++		}
  
--	local subcommands="add reset diff rm apply"
-+	local subcommands="add reset diff rm apply edit"
- 	local subcommand="$(__git_find_on_cmdline "$subcommands")"
- 	if [ -z "$subcommand" ]; then
- 		__gitcomp "$subcommands"
-@@ -1711,6 +1711,8 @@ _git_stage ()
- 		_git_rm;;
- 	apply)
- 		_git_apply;;
-+	edit)
-+		;;
- 	*)
- 		_git_add;
- 	esac
+ 		if (working_tree == 1) {
+ 			if (stage == 0)
+@@ -304,7 +311,7 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+ 			reset_type = HARD;
+ 		} else {
+ 			if (stage == 1)
+-				reset_type = NONE;
++				reset_type = keep ? KEEP : NONE;
+ 			else
+ 				reset_type = SOFT;
+ 		}
 -- 
 1.8.4-fc
