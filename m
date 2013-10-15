@@ -1,93 +1,141 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH] rev-parse doc: clarify use of optional / required
- arguments
-Date: Mon, 14 Oct 2013 23:57:42 +0000
-Message-ID: <20131014235742.GF865149@vauxhall.crustytoothpaste.net>
-References: <1381760611-9573-1-git-send-email-boklm@mars-attacks.org>
- <20131014143632.GD21200@google.com>
- <20131014152529.GU4589@mars-attacks.org>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] http: use curl's tcp keepalive if available
+Date: Mon, 14 Oct 2013 20:06:14 -0400
+Message-ID: <20131015000614.GA10905@sigill.intra.peff.net>
+References: <20131012222939.GA24255@dcvr.yhbt.net>
+ <alpine.DEB.2.00.1310131142080.22193@tvnag.unkk.fr>
+ <20131014052739.GA16129@dcvr.yhbt.net>
+ <20131014214035.GB7007@sigill.intra.peff.net>
+ <20131014233839.GA26323@dcvr.yhbt.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="OzxllxdKGCiKxUZM"
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	Pierre Habouzit <madcoder@debian.org>
-To: Nicolas Vigier <boklm@mars-attacks.org>
-X-From: git-owner@vger.kernel.org Tue Oct 15 01:58:02 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Daniel Stenberg <daniel@haxx.se>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Tue Oct 15 02:06:22 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VVs1M-0006RG-Cc
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Oct 2013 01:57:56 +0200
+	id 1VVs9V-0003Tl-Jk
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Oct 2013 02:06:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756848Ab3JNX5w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Oct 2013 19:57:52 -0400
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:33037 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753884Ab3JNX5v (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 14 Oct 2013 19:57:51 -0400
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:6680:99ff:fe4f:73a0])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id BBDD62807C;
-	Mon, 14 Oct 2013 23:57:48 +0000 (UTC)
+	id S1756880Ab3JOAGS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Oct 2013 20:06:18 -0400
+Received: from cloud.peff.net ([50.56.180.127]:49401 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753884Ab3JOAGR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Oct 2013 20:06:17 -0400
+Received: (qmail 25690 invoked by uid 102); 15 Oct 2013 00:06:17 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 14 Oct 2013 19:06:17 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 14 Oct 2013 20:06:14 -0400
 Content-Disposition: inline
-In-Reply-To: <20131014152529.GU4589@mars-attacks.org>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 3.11-trunk-amd64)
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <20131014233839.GA26323@dcvr.yhbt.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236153>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236154>
 
+On Mon, Oct 14, 2013 at 11:38:39PM +0000, Eric Wong wrote:
 
---OzxllxdKGCiKxUZM
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> I wanted it to work as older curl first (since I noticed this
+> on an old server).  But your patch on top of mine looks reasonable,
+> thanks.
 
-On Mon, Oct 14, 2013 at 05:25:29PM +0200, Nicolas Vigier wrote:
-> The reason that I looked at this documentation in the first place was
-> that I was looking at adding an option '-S[<keyid>], --gpg-sign[=3D<keyid=
->]'
-> to git-rebase, similar to the option in git-commit, so that rebased
-> commits can be signed. In git-commit this option takes an optional argume=
-nt,
-> so I think it would make sense to make it optional in git-rebase too.
+Makes sense. Here it is with a real commit message (on top of the
+ew/keepalive topic).
 
-It's funny you say that, because I literally started on that yesterday.
-I have cherry-pick and revert working, but I haven't gotten to anything
-else yet.  Feel free to work on it if you're interested, as I probably
-won't get around to finishing it for some time.
+-- >8 --
+Subject: http: use curl's tcp keepalive if available
 
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
+Commit a15d069 taught git to use curl's SOCKOPTFUNCTION hook
+to turn on TCP keepalives. However, modern versions of curl
+have a TCP_KEEPALIVE option, which can do this for us. As an
+added bonus, the curl code knows how to turn on keepalive
+for a much wider variety of platforms. The only downside to
+using this option is that not everybody has a new enough curl.
+Let's split our keepalive options into three conditionals:
 
---OzxllxdKGCiKxUZM
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+  1. With curl 7.25.0 and newer, we rely on curl to do it
+     right.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
+  2. With older curl that still knows SOCKOPTFUNCTION, we
+     use the code from a15d069.
 
-iQIcBAEBCgAGBQJSXIT2AAoJEL9TXYEfUvaLjGYP/0OG1TsyHypSsxNzUhgzDqzC
-ONW6OaGL0T/sWIFxiiHPnc17htROdRsp9+66N4jGr27Psfchss+c5I3j58+3DB+M
-49dfgqiMCmUHi+SAkH66QsKVAwk4PeFLW21LFU4nhTCaEbD9CXUEPpfeg+M7O9Yi
-a1DwX4Ou0/8GFitcb0q8TT5bnSKl+AocT+4LGC86/fpz+ar6UVhXYBLWxo1KpNpE
-GgOs1K6AdHZoGSuI/7rdJkOYvH3jup8Aal7E3zeU8c7yamEDZd2HuluIszn3Sxed
-CY1AgY39O1uQAaLp8tQPcKWdVOw7B9qcpMDrB2Rwo4H/pBuOAwENgqQnPoAefrs8
-CFMfez0NF4KCbeLahTA4k4JpiItxTE1u9D4K3gnOATM/4ztlc1RLwYPdWwW2P2sv
-caAkgSp9crpfb3zjilW1veXe5r+IAeQZdgwPLSv1L6OF3IBNdhvhPA3ioAq9QWpp
-7qxGwx8svCfvYfx3n4NgeMs/+Mjm4v2zYQP3mxKPr5pO9xaZ5my+DPGoHtybSLBl
-pi9QpW+AhVTbAhzyw5vHNa07gShD4xG4+B4wa0SPUf2RCCcnhblyMvUUa1lOlpqG
-0BP6kPEj+Crk+b4r6X847AZYCnW7+tFkKBD8YiQXQsyZ7qvZRdLuv672zqVIk34E
-WyB+I8OXWNItESrjmo9J
-=ADdQ
------END PGP SIGNATURE-----
+  3. Otherwise, we are out of luck, and the call is a no-op.
 
---OzxllxdKGCiKxUZM--
+Signed-off-by: Jeff King <peff@peff.net>
+---
+Given the #ifdefs in curl's keepalive code, I suspect we may see build
+problems for people in case 2 on some systems, with or without my patch.
+I think this patch is a strict improvement, though; if they have a new
+enough curl, they will not even look at the case 2 code. And if they do
+not, our previous options were:
+
+  a. Add platform-specific code for them.
+  
+  b. Tell them they are out of luck, and add an #ifdef to push them into
+     case 3.
+
+Now we have an extra option:
+
+  c. Tell them to upgrade curl. :)
+
+ http.c | 24 ++++++++++++++++++++----
+ 1 file changed, 20 insertions(+), 4 deletions(-)
+
+diff --git a/http.c b/http.c
+index a2c1819..6359526 100644
+--- a/http.c
++++ b/http.c
+@@ -233,7 +233,13 @@ static int has_cert_password(void)
+ 		return 0;
+ }
+ 
+-/* curl 7.25.0 has CURLOPT_TCP_KEEPALIVE, too, but we support older curl */
++#if LIBCURL_VERSION_NUM >= 0x071900
++static void set_curl_keepalive(CURL *c)
++{
++	curl_easy_setopt(c, CURLOPT_TCP_KEEPALIVE, 1);
++}
++
++#elif LIBCURL_VERSION_NUM >= 0x071000
+ static int sockopt_callback(void *client, curl_socket_t fd, curlsocktype type)
+ {
+ 	int ka = 1;
+@@ -251,6 +257,18 @@ static int sockopt_callback(void *client, curl_socket_t fd, curlsocktype type)
+ 	return 0; /* CURL_SOCKOPT_OK only exists since curl 7.21.5 */
+ }
+ 
++static void set_curl_keepalive(CURL *c)
++{
++	curl_easy_setopt(c, CURLOPT_SOCKOPTFUNCTION, sockopt_callback);
++}
++
++#else
++static void set_curl_keepalive(CURL *c)
++{
++	/* not supported on older curl versions */
++}
++#endif
++
+ static CURL *get_curl_handle(void)
+ {
+ 	CURL *result = curl_easy_init();
+@@ -316,9 +334,7 @@ static CURL *get_curl_handle(void)
+ 	if (curl_http_proxy)
+ 		curl_easy_setopt(result, CURLOPT_PROXY, curl_http_proxy);
+ 
+-#if LIBCURL_VERSION_NUM >= 0x071000
+-	curl_easy_setopt(result, CURLOPT_SOCKOPTFUNCTION, sockopt_callback);
+-#endif
++	set_curl_keepalive(result);
+ 
+ 	return result;
+ }
+-- 
+1.8.4.1.4.gf327177
