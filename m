@@ -1,72 +1,114 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] split_ident: parse timestamp from end of line
-Date: Tue, 15 Oct 2013 11:48:47 -0700
-Message-ID: <xmqqeh7me5f4.fsf@gitster.dls.corp.google.com>
-References: <20131014202734.GA7007@sigill.intra.peff.net>
-	<xmqqwqlfebhi.fsf@gitster.dls.corp.google.com>
-	<20131014223137.GA12744@sigill.intra.peff.net>
-	<xmqqsiw3eajt.fsf@gitster.dls.corp.google.com>
-	<20131014232949.GA10415@sigill.intra.peff.net>
-	<xmqqob6qe808.fsf@gitster.dls.corp.google.com>
-	<20131015180312.GA26845@sigill.intra.peff.net>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v3] Add core.mode configuration
+Date: Tue, 15 Oct 2013 13:51:41 -0500
+Message-ID: <525d8ebd19c67_5feab61e8037@nysa.notmuch>
+References: <1381561485-20252-1-git-send-email-felipe.contreras@gmail.com>
+ <20131014205908.GA17089@shrek.podlesie.net>
+ <525c63b6711fa_197a905e845b@nysa.notmuch>
+ <20131015123505.GA3097@shrek.podlesie.net>
+ <525d35e766ad4_55661275e7426@nysa.notmuch>
+ <20131015133327.GA22723@shrek.podlesie.net>
+ <525d4354a5436_5844e73e843d@nysa.notmuch>
+ <20131015145139.GA3977@shrek.podlesie.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Oct 15 20:49:57 2013
+To: Krzysztof Mazur <krzysiek@podlesie.net>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 15 21:02:52 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VW9go-0004CQ-JA
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Oct 2013 20:49:54 +0200
+	id 1VW9tK-0003lS-Nz
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Oct 2013 21:02:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933611Ab3JOStu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Oct 2013 14:49:50 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51048 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932760Ab3JOSto (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Oct 2013 14:49:44 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 90A404A353;
-	Tue, 15 Oct 2013 18:49:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=FFACzFMzGrs/EAqv3ZXxz6zsM9c=; b=g7cmPE
-	D3yyFswY8rd4sM07NjvjEXS4nZTJQnLSzg8ERuUtgyPhwv2MtxtL0zug/RcRdSz2
-	Gi0ZBPDi20GERHopCGm41r67FQJbn+mxd3Q2k0UpYmCDb+MueMlswpHUpUSsnegH
-	t66/IyamSj5d+a5kNxiZileXWeBG3U26t8b2s=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=og01f3+m+hqJZpGeh6XcYJ+05n7tuSZz
-	/hz1RZLsHoTZCQwUAlEw4HdMuLOaV4lLMqSrDWF4RxuPsshBA3PHxD+GJEDFJLe1
-	zCTieoc92FGNdJh/I2D+BV5OpZy/ssQrNPh/LdsVQ5IVtsX6edBOa2icASwz1EXD
-	1comCJKlm00=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 340DB4A320;
-	Tue, 15 Oct 2013 18:49:25 +0000 (UTC)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7CDD64A271;
-	Tue, 15 Oct 2013 18:48:52 +0000 (UTC)
-In-Reply-To: <20131015180312.GA26845@sigill.intra.peff.net> (Jeff King's
-	message of "Tue, 15 Oct 2013 14:03:12 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 7A8A78B6-35CA-11E3-A35A-8F264F2CC097-77302942!b-pb-sasl-quonix.pobox.com
+	id S1759677Ab3JOTCr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Oct 2013 15:02:47 -0400
+Received: from mail-oa0-f46.google.com ([209.85.219.46]:65113 "EHLO
+	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759580Ab3JOTCq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Oct 2013 15:02:46 -0400
+Received: by mail-oa0-f46.google.com with SMTP id g12so1686057oah.19
+        for <git@vger.kernel.org>; Tue, 15 Oct 2013 12:02:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=iQEq4VvA9kVj1L2phMoTvCjnrajhho304PlFoWc3m0Y=;
+        b=kUVfRI2R1qnP+wyeqxfQm5alzYAkN6Fgal91Gd6T2yFVeth9NtyKdKKrTWuO2/J6CS
+         O1B30oEjnemFsPkiTgKqQu81CDe7SENjJm6P8PqWn+Bct1grW+ian1A6ISBYvp62QocK
+         44QDnoCCIk9yDn84BZ+7KXPKVR6wQF+ePj1uQCByovct4VDsrbq5u+6tB3n4AEj01tKX
+         /NycLL+yifPJRAIKhgL7n82gPYAE07FqhdABb1nHZVviq7lBF9H8aKVaDvZveH4j/IQI
+         G7LtUGz6gdfc1qleX8ySKuNlmmsKC5kSJDPbTZwrq1/PjggbAjINVIfrWVkAL9lodZZ4
+         NmeQ==
+X-Received: by 10.182.73.231 with SMTP id o7mr11273619obv.34.1381863765285;
+        Tue, 15 Oct 2013 12:02:45 -0700 (PDT)
+Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
+        by mx.google.com with ESMTPSA id r6sm52535381obi.14.1969.12.31.16.00.00
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 15 Oct 2013 12:02:44 -0700 (PDT)
+In-Reply-To: <20131015145139.GA3977@shrek.podlesie.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236193>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236194>
 
-Jeff King <peff@peff.net> writes:
+Krzysztof Mazur wrote:
+> On Tue, Oct 15, 2013 at 08:29:56AM -0500, Felipe Contreras wrote:
+> > Krzysztof Mazur wrote:
+> > > On Tue, Oct 15, 2013 at 07:32:39AM -0500, Felipe Contreras wrote:
+> > > > Krzysztof Mazur wrote:
+> > > > > 
+> > > > > But with core.mode = next after upgrade you may experience incompatible
+> > > > > change without any warning.
+> > > > 
+> > > > Yes, and that is actually what the user wants. I mean, why would the user set
+> > > > core.mode=next, if the user doesn't want to experencie incompatible changes? A
+> > > > user that sets this mode is expecting incompatible changes, and will be willing
+> > > > to test them, and report back if there's any problem with them.
+> > > 
+> > > With your patch, because it's the only way to have 'git add' v2.0.
+> > 
+> > Yeah, but that's not what I'm suggesting. I suggested to have *both* a
+> > fined-tunned way to have this behavior, say core.addremove = true, and a way to
+> > enable *all* v2.0 behaviors (core.mode = next).
+> 
+> I'm just not sure if a lot of users would use core.mode=next,
 
-> My version seems a little clearer to me, but that is probably because I
-> wrote it. If you strongly prefer the other, feel free to mark up my
-> patch.
+I'm not sure if a lot of urser would even notice the difference.
 
-I do not have strong preference either way. Just that I thought two
-loops would be shorter and easier to understand than three, that's
-all.
+> because of possible different behavior without any warning.
+
+I don't see what is the problem. We haven't had the need for push.default =
+simplewarning, have we? If you want the warning, you don't change anything, if
+you want to specify something, you already know what you are doing.
+
+> Maybe we should also add core.mode=next-warn that changes defaults like next
+> but keeps warnings enabled until the user accepts that change by setting
+> appropriate config option?
+
+Maybe, but would you actually use that option?
+
+> That's safer than next (at least for interactive use) and maybe more users
+> would use that, but I don't think that's worth adding.
+
+Maybe, but I don't think many users would use either mode, and that's good.
+
+> For me, old behavior by default and warnings with information how to
+> enable new incompatible features, is sufficient. So I don't need
+> core.mode option, but as long it will be useful for other users I have
+> nothing against it.
+
+OK, but that seems to mean you don't need core.mode = next-warn either. I'm not
+against adding such a mode, but I would like to hear about _somebody_ that
+would like to actually use it. I don't like to program for ghosts.
+
+Cheers.
+
+-- 
+Felipe Contreras
