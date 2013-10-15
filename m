@@ -1,114 +1,112 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v3] Add core.mode configuration
-Date: Tue, 15 Oct 2013 13:51:41 -0500
-Message-ID: <525d8ebd19c67_5feab61e8037@nysa.notmuch>
-References: <1381561485-20252-1-git-send-email-felipe.contreras@gmail.com>
- <20131014205908.GA17089@shrek.podlesie.net>
- <525c63b6711fa_197a905e845b@nysa.notmuch>
- <20131015123505.GA3097@shrek.podlesie.net>
- <525d35e766ad4_55661275e7426@nysa.notmuch>
- <20131015133327.GA22723@shrek.podlesie.net>
- <525d4354a5436_5844e73e843d@nysa.notmuch>
- <20131015145139.GA3977@shrek.podlesie.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: What's cooking in git.git (Oct 2013, #02; Mon, 14)
+Date: Tue, 15 Oct 2013 12:16:56 -0700
+Message-ID: <20131015191656.GD9464@google.com>
+References: <20131014184524.GW9464@google.com>
+ <20131015001231.GA9464@google.com>
+ <xmqqiowye66r.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Krzysztof Mazur <krzysiek@podlesie.net>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 15 21:02:52 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Anders Kaseorg <andersk@MIT.EDU>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Oct 15 21:17:08 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VW9tK-0003lS-Nz
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Oct 2013 21:02:51 +0200
+	id 1VWA79-0003x8-UN
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Oct 2013 21:17:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759677Ab3JOTCr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Oct 2013 15:02:47 -0400
-Received: from mail-oa0-f46.google.com ([209.85.219.46]:65113 "EHLO
-	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759580Ab3JOTCq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Oct 2013 15:02:46 -0400
-Received: by mail-oa0-f46.google.com with SMTP id g12so1686057oah.19
-        for <git@vger.kernel.org>; Tue, 15 Oct 2013 12:02:45 -0700 (PDT)
+	id S1759579Ab3JOTRD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Oct 2013 15:17:03 -0400
+Received: from mail-pd0-f179.google.com ([209.85.192.179]:48912 "EHLO
+	mail-pd0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759113Ab3JOTRB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Oct 2013 15:17:01 -0400
+Received: by mail-pd0-f179.google.com with SMTP id v10so9254939pde.24
+        for <git@vger.kernel.org>; Tue, 15 Oct 2013 12:17:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:content-transfer-encoding;
-        bh=iQEq4VvA9kVj1L2phMoTvCjnrajhho304PlFoWc3m0Y=;
-        b=kUVfRI2R1qnP+wyeqxfQm5alzYAkN6Fgal91Gd6T2yFVeth9NtyKdKKrTWuO2/J6CS
-         O1B30oEjnemFsPkiTgKqQu81CDe7SENjJm6P8PqWn+Bct1grW+ian1A6ISBYvp62QocK
-         44QDnoCCIk9yDn84BZ+7KXPKVR6wQF+ePj1uQCByovct4VDsrbq5u+6tB3n4AEj01tKX
-         /NycLL+yifPJRAIKhgL7n82gPYAE07FqhdABb1nHZVviq7lBF9H8aKVaDvZveH4j/IQI
-         G7LtUGz6gdfc1qleX8ySKuNlmmsKC5kSJDPbTZwrq1/PjggbAjINVIfrWVkAL9lodZZ4
-         NmeQ==
-X-Received: by 10.182.73.231 with SMTP id o7mr11273619obv.34.1381863765285;
-        Tue, 15 Oct 2013 12:02:45 -0700 (PDT)
-Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
-        by mx.google.com with ESMTPSA id r6sm52535381obi.14.1969.12.31.16.00.00
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 15 Oct 2013 12:02:44 -0700 (PDT)
-In-Reply-To: <20131015145139.GA3977@shrek.podlesie.net>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=opmxiaQfGT/exSt0CWTQHpTFRK+DjjrIIwwVfkYIo9s=;
+        b=hr2LQ99qqZFyqYvyWjdCnKvOwdJAsgaFl7i/lywqqNzuylh6C/bg/W+VM3Xv3EhnWl
+         cGto6KLqxJ1MPcA22U6rx4d1BhcRVvlZUSnPF9KLkN7DrTMyoOlJr47TTbNd+LgSQS7M
+         4VzH/wSoOFdaT7anAHsGKX6raJYS13aPFFqb4Ud1tofTbOw/x15Ps1HwQg1rQekkjrTt
+         n+7ROoj2TEsPj2IedosshMpL+z5M73BwD5Y8aKj0b9qfNWt7pp6pH/HQ6nSz0efO8IjQ
+         ff6KSzcyXRbuENkSrnKRK+yYP9NfJAjZcJ8kNmK2peJOicNRi14CcH2HdOdxNmlR3PhM
+         wXew==
+X-Received: by 10.66.196.168 with SMTP id in8mr44092834pac.18.1381864621213;
+        Tue, 15 Oct 2013 12:17:01 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id yo2sm100958630pab.8.1969.12.31.16.00.00
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 15 Oct 2013 12:17:00 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <xmqqiowye66r.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236194>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236195>
 
-Krzysztof Mazur wrote:
-> On Tue, Oct 15, 2013 at 08:29:56AM -0500, Felipe Contreras wrote:
-> > Krzysztof Mazur wrote:
-> > > On Tue, Oct 15, 2013 at 07:32:39AM -0500, Felipe Contreras wrote:
-> > > > Krzysztof Mazur wrote:
-> > > > > 
-> > > > > But with core.mode = next after upgrade you may experience incompatible
-> > > > > change without any warning.
-> > > > 
-> > > > Yes, and that is actually what the user wants. I mean, why would the user set
-> > > > core.mode=next, if the user doesn't want to experencie incompatible changes? A
-> > > > user that sets this mode is expecting incompatible changes, and will be willing
-> > > > to test them, and report back if there's any problem with them.
-> > > 
-> > > With your patch, because it's the only way to have 'git add' v2.0.
-> > 
-> > Yeah, but that's not what I'm suggesting. I suggested to have *both* a
-> > fined-tunned way to have this behavior, say core.addremove = true, and a way to
-> > enable *all* v2.0 behaviors (core.mode = next).
-> 
-> I'm just not sure if a lot of users would use core.mode=next,
+Junio C Hamano wrote:
 
-I'm not sure if a lot of urser would even notice the difference.
+> I'll try:
+>
+>  - slurping your integration branches,
+>  - teasing the topics apart out of your 'pu',
+>  - populating my rerere database to match your confict resolution,
+>  - reconstructing the Meta/Reintegrate insn for 'pu', and
+>  - rebuilding 'pu' to make sure the end result matches yours
+>
+> and then push the result out to the usual places
 
-> because of possible different behavior without any warning.
+Sounds good.  The teased-apart topics can also be found at
 
-I don't see what is the problem. We haven't had the need for push.default =
-simplewarning, have we? If you want the warning, you don't change anything, if
-you want to specify something, you already know what you are doing.
+    https://github.com/jrn/git
 
-> Maybe we should also add core.mode=next-warn that changes defaults like next
-> but keeps warnings enabled until the user accepts that change by setting
-> appropriate config option?
+[...]
+>>  This patch preserves the old "just pass it to the shell" behavior
+>>  when a single argument is passed to 'git submodule foreach' and
+>>  moves to a new "skip the shell and use the arguments passed
+>>  unmolested" behavior when more than one argument is passed.
+>
+> When scripts give 'echo' and '$path' (two args), does this change
+> allow the 'echo' command to see the value of $path (coming from
+> $sm_path), or just the not-useful-because-not-exported variable name
+> '$path'?
 
-Maybe, but would you actually use that option?
+The latter.  A quick search (web search + codesearch.debian.net)
+reveals that most callers to submodule foreach either pass a script as
+a single quoted argument (e.g.,
+http://stackoverflow.com/questions/8364738/bash-git-submodule-foreach:
 
-> That's safer than next (at least for interactive use) and maybe more users
-> would use that, but I don't think that's worth adding.
+	git submodule foreach '[ "$path" = "Libraries/JSONKit" ] \
+	  && branch=experimental \
+	  || branch=master; git co $branch'
 
-Maybe, but I don't think many users would use either mode, and that's good.
+or http://sources.debian.net/src/jquery/1.7.2+dfsg-3/Makefile?hl=131#L131:
 
-> For me, old behavior by default and warnings with information how to
-> enable new incompatible features, is sufficient. So I don't need
-> core.mode option, but as long it will be useful for other users I have
-> nothing against it.
+	git submodule foreach "git pull \$(git config remote.origin.url)"
 
-OK, but that seems to mean you don't need core.mode = next-warn either. I'm not
-against adding such a mode, but I would like to hear about _somebody_ that
-would like to actually use it. I don't like to program for ghosts.
+) or pass a one-off command with no arguments intended for the shell
+(e.g., http://sources.debian.net/src/libreoffice/1:4.1.1-1/g?hl=352#L352,
+http://sources.debian.net/src/swi-prolog/6.4.1-3/scripts/newversion?hl=81#L81):
 
-Cheers.
+	git submodule foreach git push "$@"
+	git submodule foreach git tag -s -f -F $tmp  $gittag
 
--- 
-Felipe Contreras
+So I suspect this will fix more scripts than it breaks, though it may
+still break some. :/
+
+It might make sense to warn when passed multiple arguments and some
+include shell metacharacters, since that's probably rare, too, except
+it's punishing people who use multiple arguments as a way to avoid
+quoting issues.  Probably there's no replacement for just advertising
+the change loudly and seeking out scripts it could break.
+
+Thanks,
+Jonathan
