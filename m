@@ -1,112 +1,64 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
 Subject: Re: What's cooking in git.git (Oct 2013, #02; Mon, 14)
-Date: Tue, 15 Oct 2013 12:16:56 -0700
-Message-ID: <20131015191656.GD9464@google.com>
-References: <20131014184524.GW9464@google.com>
- <20131015001231.GA9464@google.com>
- <xmqqiowye66r.fsf@gitster.dls.corp.google.com>
+Date: Tue, 15 Oct 2013 21:42:14 +0200
+Message-ID: <525D9A96.6050209@web.de>
+References: <20131014184524.GW9464@google.com> <20131015001231.GA9464@google.com> <xmqqiowye66r.fsf@gitster.dls.corp.google.com> <20131015191656.GD9464@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org, Anders Kaseorg <andersk@MIT.EDU>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Oct 15 21:17:08 2013
+To: Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Oct 15 21:42:27 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VWA79-0003x8-UN
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Oct 2013 21:17:08 +0200
+	id 1VWAVd-0002JL-Pp
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Oct 2013 21:42:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759579Ab3JOTRD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Oct 2013 15:17:03 -0400
-Received: from mail-pd0-f179.google.com ([209.85.192.179]:48912 "EHLO
-	mail-pd0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759113Ab3JOTRB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Oct 2013 15:17:01 -0400
-Received: by mail-pd0-f179.google.com with SMTP id v10so9254939pde.24
-        for <git@vger.kernel.org>; Tue, 15 Oct 2013 12:17:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=opmxiaQfGT/exSt0CWTQHpTFRK+DjjrIIwwVfkYIo9s=;
-        b=hr2LQ99qqZFyqYvyWjdCnKvOwdJAsgaFl7i/lywqqNzuylh6C/bg/W+VM3Xv3EhnWl
-         cGto6KLqxJ1MPcA22U6rx4d1BhcRVvlZUSnPF9KLkN7DrTMyoOlJr47TTbNd+LgSQS7M
-         4VzH/wSoOFdaT7anAHsGKX6raJYS13aPFFqb4Ud1tofTbOw/x15Ps1HwQg1rQekkjrTt
-         n+7ROoj2TEsPj2IedosshMpL+z5M73BwD5Y8aKj0b9qfNWt7pp6pH/HQ6nSz0efO8IjQ
-         ff6KSzcyXRbuENkSrnKRK+yYP9NfJAjZcJ8kNmK2peJOicNRi14CcH2HdOdxNmlR3PhM
-         wXew==
-X-Received: by 10.66.196.168 with SMTP id in8mr44092834pac.18.1381864621213;
-        Tue, 15 Oct 2013 12:17:01 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id yo2sm100958630pab.8.1969.12.31.16.00.00
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 15 Oct 2013 12:17:00 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <xmqqiowye66r.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1759563Ab3JOTmU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Oct 2013 15:42:20 -0400
+Received: from mout.web.de ([212.227.15.4]:54036 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759122Ab3JOTmU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Oct 2013 15:42:20 -0400
+Received: from [192.168.178.41] ([91.3.172.217]) by smtp.web.de (mrweb002)
+ with ESMTPA (Nemesis) id 0LoYJu-1Vz9Od3vaM-00gYJy for <git@vger.kernel.org>;
+ Tue, 15 Oct 2013 21:42:18 +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.0.1
+In-Reply-To: <20131015191656.GD9464@google.com>
+X-Enigmail-Version: 1.5.2
+X-Provags-ID: V03:K0:fGePWCKrXNmGZLJHW/HcKDz5Tazehiq9beIIoPhClTRAZteaPOF
+ T47vmwtBqeZPZbnh6VBxvI1rmI2t9bqIxa4XCqa24doHqeiheuAb4EV+JsobF5rOMQSGxpg
+ RZ/mh/m8LXtLOTEtlhw42q4ctunXsTxpjHBGzArHtW4AiWrMPzsQTo6fYrllmE95RggLalM
+ zaQJatyf2l/PLA001xs2A==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236195>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236196>
 
-Junio C Hamano wrote:
+Am 15.10.2013 21:16, schrieb Jonathan Nieder:
+> So I suspect this will fix more scripts than it breaks, though it may
+> still break some. :/
 
-> I'll try:
->
->  - slurping your integration branches,
->  - teasing the topics apart out of your 'pu',
->  - populating my rerere database to match your confict resolution,
->  - reconstructing the Meta/Reintegrate insn for 'pu', and
->  - rebuilding 'pu' to make sure the end result matches yours
->
-> and then push the result out to the usual places
+Hmm, I'm really not sure if we should do this or not.
 
-Sounds good.  The teased-apart topics can also be found at
+> It might make sense to warn when passed multiple arguments and some
+> include shell metacharacters, since that's probably rare, too, except
+> it's punishing people who use multiple arguments as a way to avoid
+> quoting issues.  Probably there's no replacement for just advertising
+> the change loudly and seeking out scripts it could break.
 
-    https://github.com/jrn/git
+And maybe only change that on a major version bump where people should
+not be terribly surprised about such a change in behavior and are more
+likely to read release notes?
 
-[...]
->>  This patch preserves the old "just pass it to the shell" behavior
->>  when a single argument is passed to 'git submodule foreach' and
->>  moves to a new "skip the shell and use the arguments passed
->>  unmolested" behavior when more than one argument is passed.
->
-> When scripts give 'echo' and '$path' (two args), does this change
-> allow the 'echo' command to see the value of $path (coming from
-> $sm_path), or just the not-useful-because-not-exported variable name
-> '$path'?
-
-The latter.  A quick search (web search + codesearch.debian.net)
-reveals that most callers to submodule foreach either pass a script as
-a single quoted argument (e.g.,
-http://stackoverflow.com/questions/8364738/bash-git-submodule-foreach:
-
-	git submodule foreach '[ "$path" = "Libraries/JSONKit" ] \
-	  && branch=experimental \
-	  || branch=master; git co $branch'
-
-or http://sources.debian.net/src/jquery/1.7.2+dfsg-3/Makefile?hl=131#L131:
-
-	git submodule foreach "git pull \$(git config remote.origin.url)"
-
-) or pass a one-off command with no arguments intended for the shell
-(e.g., http://sources.debian.net/src/libreoffice/1:4.1.1-1/g?hl=352#L352,
-http://sources.debian.net/src/swi-prolog/6.4.1-3/scripts/newversion?hl=81#L81):
-
-	git submodule foreach git push "$@"
-	git submodule foreach git tag -s -f -F $tmp  $gittag
-
-So I suspect this will fix more scripts than it breaks, though it may
-still break some. :/
-
-It might make sense to warn when passed multiple arguments and some
-include shell metacharacters, since that's probably rare, too, except
-it's punishing people who use multiple arguments as a way to avoid
-quoting issues.  Probably there's no replacement for just advertising
-the change loudly and seeking out scripts it could break.
-
-Thanks,
-Jonathan
+I've thought about issuing a warning on certain quoting patterns too,
+but dismissed that for not helping much in the scripting case. E.g. at
+$dayjob we have foreach commands running in the shell execution for
+quite some jobs on our Jenkins server; nobody would see any warnings
+there until we'd have the reason to dig deeper int the logs because
+something breaks.
