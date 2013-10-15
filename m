@@ -1,93 +1,81 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: What's cooking in git.git (Oct 2013, #02; Mon, 14)
-Date: Tue, 15 Oct 2013 13:05:28 -0700
-Message-ID: <20131015200528.GE9464@google.com>
-References: <20131014184524.GW9464@google.com>
- <20131015001231.GA9464@google.com>
- <xmqqiowye66r.fsf@gitster.dls.corp.google.com>
- <20131015191656.GD9464@google.com>
- <525D9A96.6050209@web.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 00/17] np/pack-v4 updates
+Date: Tue, 15 Oct 2013 14:45:15 -0700
+Message-ID: <xmqqvc0yciok.fsf@gitster.dls.corp.google.com>
+References: <1379771883-10278-1-git-send-email-pclouds@gmail.com>
+	<alpine.LFD.2.03.1309211205550.312@syhkavp.arg>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Anders Kaseorg <andersk@MIT.EDU>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Tue Oct 15 22:05:37 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	git@vger.kernel.org
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Tue Oct 15 23:45:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VWAs4-0007z4-F6
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Oct 2013 22:05:36 +0200
+	id 1VWCQf-0000cC-CC
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Oct 2013 23:45:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759608Ab3JOUFc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Oct 2013 16:05:32 -0400
-Received: from mail-pb0-f50.google.com ([209.85.160.50]:59261 "EHLO
-	mail-pb0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759439Ab3JOUFb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Oct 2013 16:05:31 -0400
-Received: by mail-pb0-f50.google.com with SMTP id uo5so9318221pbc.9
-        for <git@vger.kernel.org>; Tue, 15 Oct 2013 13:05:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=2bZxWjeIJeXZdqT09/Ibt+SM4xLV0mWNqYMVkVr/e+k=;
-        b=bdW3gMJ/LEfr3l3CkTXlG+v7Kr0e7D3bO6gyHMgQh7t7a+YGE+pmPT0G3EVfPFV0yq
-         BTjBgVbn45l0eRBTFacgoZbIIUVKN1L2YQ3Q/oPfqXcGuZei9cYzblln12bX+ComrsIB
-         OReXCrQFLCHB2IT5R8wr7TZoT6bHqyXlLxePRGTg58/EcewnWXNEE5ydh+SGWNKUtiUn
-         da6Mql9CCIhL/z1M4hSMZY75+i/DpYhQhQ5hzPv7Uu6gp+vWY0xZRb6gsTjBn2KKMH6Q
-         BxhkMYUllvgW598gnF4U01zOyOgyJdiQepUaQm1thHI985qzjkxIDcD5O2AbPWZqemC/
-         TdKw==
-X-Received: by 10.68.125.198 with SMTP id ms6mr40994099pbb.98.1381867531483;
-        Tue, 15 Oct 2013 13:05:31 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id 7sm101120963paf.22.1969.12.31.16.00.00
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 15 Oct 2013 13:05:30 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <525D9A96.6050209@web.de>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S933768Ab3JOVpV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Oct 2013 17:45:21 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57490 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759432Ab3JOVpU convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 15 Oct 2013 17:45:20 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D1B4E4A3EE;
+	Tue, 15 Oct 2013 21:45:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=2HnynffZjrxc
+	0fBY5do2u6z922w=; b=XOadTEcGl7/FQDhkIF6/W7nIpN1sbafcsPpPmywsPvQq
+	mMJ+oelQ6/Xdyqi5J9xryq+iE1AUhlIHoBFJ/15fUqc5S/4qSeiuobOpl0ZasjHj
+	dkBaOnV0wPzyoLsthu5JTHH6uMZv/0gX6zJTaXG5XOkXdjMgzVVT8oPSJHVwV1E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=J2lJFJ
+	5d4aynNsPkFvoKpF1vroRQEGxoUuM3+9BoSm9X+GNWieGRl5c8pFEADaXHZGtQhE
+	AngirgbdQw+7HJEJaYv03LkYL92YbM25k3Hol4O8zs2T3FHue9yXE6VbmaP+izuo
+	h1QqYquytd36Yuchk0L+GJ526+RdCU7vuHCPc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C57E44A3ED;
+	Tue, 15 Oct 2013 21:45:17 +0000 (UTC)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 23F064A3EA;
+	Tue, 15 Oct 2013 21:45:17 +0000 (UTC)
+In-Reply-To: <alpine.LFD.2.03.1309211205550.312@syhkavp.arg> (Nicolas Pitre's
+	message of "Sat, 21 Sep 2013 12:07:42 -0400 (EDT)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 14A68B34-35E3-11E3-B5AD-8F264F2CC097-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236198>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236199>
 
-Jens Lehmann wrote:
-> Am 15.10.2013 21:16, schrieb Jonathan Nieder:
+Nicolas Pitre <nico@fluxnic.net> writes:
 
->> So I suspect this will fix more scripts than it breaks, though it may
->> still break some. :/
+> On Sat, 21 Sep 2013, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
 >
-> Hmm, I'm really not sure if we should do this or not.
+>> This contains many bug fixes or cleanups. Also you can now run the
+>> test suite with v4 by setting GIT_TEST_OPTS=3D--packv4. The test sui=
+te
+>> passes now. pack size limit is not officially not supported with v4.
+>> index-pack also learns to convert appended trees to v4 for completin=
+g
+>> thin packs (still need to convert commits though)
+>>=20
+>> PS. Nico do you still take patches and then send pull requests to
+>> Junio occasionally, or should I start to CC Junio?
+>
+> I'm still willing to act as the middle man if that suits everybody. =20
+> That gives me the opportunity to review those patches and stay minima=
+lly=20
+> involved.
 
-What convinced me was Anders's observation that the current behavior
-can have very bad consequences if a script is passing untrusted input
-in multiple arguments to git submodule foreach.
-
-I still haven't found any examples that pass input intended for the
-shell to git submodule foreach in multiple arguments.  I suspect no
-one will notice, except that some scripts (like libreoffice's "g")
-start to work better when passed arguments containing shell
-metacharacters.
-
-> And maybe only change that on a major version bump where people should
-> not be terribly surprised about such a change in behavior and are more
-> likely to read release notes?
-
-Ok with me, but please don't make it 2.0. :)
-
-[...]
->                                                                E.g. at
-> $dayjob we have foreach commands running in the shell execution for
-> quite some jobs on our Jenkins server; nobody would see any warnings
-> there until we'd have the reason to dig deeper int the logs because
-> something breaks.
-
-Yes, I think that's typical.  Warning to stderr probably wouldn't
-help.
-
-Thanks,
-Jonathan
+Your reviews in this area are greatly appreciated.
