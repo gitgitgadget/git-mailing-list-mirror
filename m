@@ -1,71 +1,103 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] symbolic-ref: trivial style fix
-Date: Tue, 15 Oct 2013 16:34:37 -0700
-Message-ID: <xmqqbo2q9khe.fsf@gitster.dls.corp.google.com>
-References: <1379780993-4190-1-git-send-email-felipe.contreras@gmail.com>
-	<xmqq4n8ich89.fsf@gitster.dls.corp.google.com>
-	<20131015231628.GG9464@google.com>
+From: Nicolas Vigier <boklm@mars-attacks.org>
+Subject: Re: [PATCH] rev-parse --parseopt: fix handling of optional arguments
+Date: Wed, 16 Oct 2013 01:47:01 +0200
+Message-ID: <20131015234701.GY4589@mars-attacks.org>
+References: <1381838425-18244-1-git-send-email-boklm@mars-attacks.org>
+ <xmqq4n8ib0uv.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 16 01:34:46 2013
+Content-Type: text/plain; charset=iso-8859-1
+Cc: git@vger.kernel.org, Pierre Habouzit <madcoder@debian.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Oct 16 01:47:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VWE8S-00071q-7v
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Oct 2013 01:34:44 +0200
+	id 1VWEKV-0005jG-7V
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Oct 2013 01:47:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933952Ab3JOXek (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Oct 2013 19:34:40 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37220 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933597Ab3JOXek (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Oct 2013 19:34:40 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A7A454BB83;
-	Tue, 15 Oct 2013 23:34:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=riVF9GMCHB3MRItv9fs21aEGbWI=; b=VxjVzn
-	L/FcvOyGI4p7gxDC6SreO3UIMNNFxbaCZPzAeTv9ZDQe9/nJqMFIXLU38Xpri/5k
-	7pVGCsIcB/9PyIMhcRVlHWY6p/41Oda2VM0/kar+QkpheDIwsqMZcHEG69KPEVIi
-	OATgxEc38GhVyrFxszP7oTQuiGpV6v4zQWcK4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=mzrUvYaMFwRBj4/6jfs8+z1X+zJYzpgr
-	oEOPTc5HV8KubV1BJaBYWvirZgMP37kn7KuNSVyPDbJP7n8ntY6tQZE/K8E1TbIP
-	oSYI1KKcTHasPNu3TJlVPQX6dWQKWbQgZ3NEdiTEZqalANG0uhB5vcmEnxfGMHV2
-	NpYRaFniQe0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 930F54BB82;
-	Tue, 15 Oct 2013 23:34:39 +0000 (UTC)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EC4AA4BB81;
-	Tue, 15 Oct 2013 23:34:38 +0000 (UTC)
-In-Reply-To: <20131015231628.GG9464@google.com> (Jonathan Nieder's message of
-	"Tue, 15 Oct 2013 16:16:28 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 5BCD40DE-35F2-11E3-8311-8F264F2CC097-77302942!b-pb-sasl-quonix.pobox.com
+	id S1759878Ab3JOXrG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Oct 2013 19:47:06 -0400
+Received: from mx0.mars-attacks.org ([92.243.25.60]:42912 "EHLO
+	mx0.mars-attacks.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759861Ab3JOXrF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Oct 2013 19:47:05 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mx0.mars-attacks.org (Postfix) with ESMTP id D334F422A;
+	Wed, 16 Oct 2013 01:47:16 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at mars-attacks.org
+Received: from mx0.mars-attacks.org ([127.0.0.1])
+	by localhost (mx0.mars-attacks.org [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id gKjIFxtTsRUo; Wed, 16 Oct 2013 01:47:16 +0200 (CEST)
+Received: from wxy.mars-attacks.org (moow.mars-attacks.org [82.242.116.57])
+	by mx0.mars-attacks.org (Postfix) with ESMTPS id 299964E73;
+	Wed, 16 Oct 2013 01:47:16 +0200 (CEST)
+Received: by wxy.mars-attacks.org (Postfix, from userid 500)
+	id 9B78543928; Wed, 16 Oct 2013 01:47:01 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <xmqq4n8ib0uv.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236220>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236221>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+On Tue, 15 Oct 2013, Junio C Hamano wrote:
 
->> -		     &&	dfa->nodes[node].type == CHARACTER
->> +		     && dfa->nodes[node].type == CHARACTER
->
-> It took a little staring to see what changed here.  The preimage has
-> a tab, probably from an autoformatter gone wild.  I don't think fixing
-> it should interfere with importing new versions of compat/regex, so
-> the change seems fine.
+> Nicolas Vigier <boklm@mars-attacks.org> writes:
+> 
+> > git rev-parse --parseopt does not allow us to see the difference
+> > between an option with an optional argument starting with a dash, and an
+> > option with an unset optional argument followed by an other option.
+> >
+> > If I use this script :
+> >
+> >   $ cat /tmp/opt.sh
+> >   #!/bin/sh
+> >   OPTIONS_SPEC="\
+> >   git [options]
+> >   --
+> >   q,quiet         be quiet
+> >   S,gpg-sign?     GPG-sign commit"
+> >   echo "$OPTIONS_SPEC" | git rev-parse --parseopt $parseopt_extra -- "$@"
+> >
+> > Then the following two commands give us the same result :
+> >
+> >   $ /tmp/opt.sh -S -q
+> >   set -- -S -q --
+> >   $ /tmp/opt.sh -S-q
+> >   set -- -S '-q' --
+> >
+> > We cannot know if '-q' is an argument to '-S' or a new option.
+> >
+> > With this patch, rev-parse --parseopt will always give an argument to
+> > optional options, as an empty string if the argument is unset.
+> >
+> > The same two commands now give us :
+> >
+> >   $ /tmp/opt.sh -S -q
+> >   set -- -S '' -q --
+> >   $ /tmp/opt.sh -S-q
+> >   set -- -S '-q' --
+> 
+> Two are different, but the former "set -- -S '' -q --" is not what
+> you want, either, no?  -S with an explicit empty argument and -S
+> alone without argument may mean two totally different things, which
+> is the whole point of "option with an optional parameter".  If some
+> code that have been using "rev-parse --parseopt" was happy with
+> 
+> 	$ /tmp/opt.sh -S
+>         set -- -S --
+> 
+> and then your updated version gave it this instead:
+> 
+> 	$ /tmp/opt.sh -S
+>         set -- -S '' --
+> 
+> wouldn't it be a regression to them?
 
-xdiff/xemit.c had the breakage of the same nature. Perhaps the
-commit log message should mention these two.
+Indeed, this could be a regression to them. I couldn't find any script
+using "rev-parse --parseopt" with an option with an optional argument,
+but yes, it doesn't mean that nobody uses that.
