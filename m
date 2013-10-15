@@ -1,52 +1,52 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: return of the maintainer
-Date: Tue, 15 Oct 2013 10:51:05 +0530
-Message-ID: <CALkWK0mCPMJv64cjrKMeWxPcoJfu1tftXPYjv+oOFtuYLvabxQ@mail.gmail.com>
-References: <xmqq1u3nhhxw.fsf@gitster.dls.corp.google.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] http: use curl's tcp keepalive if available
+Date: Tue, 15 Oct 2013 06:03:22 +0000
+Message-ID: <20131015060322.GA10714@dcvr.yhbt.net>
+References: <20131012222939.GA24255@dcvr.yhbt.net>
+ <alpine.DEB.2.00.1310131142080.22193@tvnag.unkk.fr>
+ <20131014052739.GA16129@dcvr.yhbt.net>
+ <20131014214035.GB7007@sigill.intra.peff.net>
+ <20131014233839.GA26323@dcvr.yhbt.net>
+ <20131015000614.GA10905@sigill.intra.peff.net>
+ <20131015045814.GA12312@dcvr.yhbt.net>
+ <20131015050028.GA8150@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Oct 15 07:23:07 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Daniel Stenberg <daniel@haxx.se>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Oct 15 08:03:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VVx5z-0005yL-V3
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Oct 2013 07:23:04 +0200
+	id 1VVxj5-0004eV-9h
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Oct 2013 08:03:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758416Ab3JOFVv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Oct 2013 01:21:51 -0400
-Received: from mail-ie0-f170.google.com ([209.85.223.170]:34372 "EHLO
-	mail-ie0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758390Ab3JOFVq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Oct 2013 01:21:46 -0400
-Received: by mail-ie0-f170.google.com with SMTP id x13so17453029ief.29
-        for <git@vger.kernel.org>; Mon, 14 Oct 2013 22:21:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=T9DWOA0wwKkmoN6F21D3Oa746R/0pkVCYGTHiUw/KmY=;
-        b=SnhguHg/AlWNdk/Jby5ZjyPU7Dsn/fecu7auh2llwzgNQ3AtWQd+XzH+xwyKm9BsL4
-         HupJIEEIfpUut7/OFflsHtE06isBzGSJ3hZoKkizYsyGuqgEGpdMeAS+2wVvJkUPbZ5B
-         MSKVn8Hoh8ZYP4Q6k07q3sScNv4IDnTq4BXCA8/v2knU/t7bATa4ZAn65bPsgfL2n3lB
-         EUtDfCyQA+obngYD/w2+fltAxG6MOZt8WVwVbDYSAgwsGZsoDNB/OHW6Qd5snXzBhnYH
-         3rrv7FgdbWUU8gTebrOuPs4jZiKjODTLeDcOl3Fwj05MrXdV913lrojukyz4ZKoHNymu
-         nUgg==
-X-Received: by 10.50.97.35 with SMTP id dx3mr15709323igb.55.1381814505778;
- Mon, 14 Oct 2013 22:21:45 -0700 (PDT)
-Received: by 10.64.73.36 with HTTP; Mon, 14 Oct 2013 22:21:05 -0700 (PDT)
-In-Reply-To: <xmqq1u3nhhxw.fsf@gitster.dls.corp.google.com>
+	id S1757467Ab3JOGDX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Oct 2013 02:03:23 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:34546 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752336Ab3JOGDW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Oct 2013 02:03:22 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6969844C004;
+	Tue, 15 Oct 2013 06:03:22 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <20131015050028.GA8150@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236166>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236167>
 
-IIRC, this was the longest period of absence you've taken in the last
-4 years: ~20 days.
+Jeff King <peff@peff.net> wrote:
+> I am more concerned with Windows, which may not compile your original
+> patch at all.
 
-Welcome back.
+The code I introduced in e47a8583a20256851e7fc882233e3bd5bf33dc6e
+("enable SO_KEEPALIVE for connected TCP sockets" Dec 2011)
+didn't trigger the addition of any new #ifdef guards.  I think we're
+fine (but I'll let others confirm it).
