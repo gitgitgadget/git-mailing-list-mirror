@@ -1,63 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 00/16] Make Gnome Credential helper more Gnome-y and support ancient distros
-Date: Tue, 15 Oct 2013 15:40:45 -0700
-Message-ID: <xmqqppr6b1jl.fsf@gitster.dls.corp.google.com>
-References: <1379962157-1338-1-git-send-email-bcasey@nvidia.com>
+From: Keshav Kini <keshav.kini@gmail.com>
+Subject: Re: [BUG?] inconsistent `git reflog show` output, possibly `git fsck` output
+Date: Tue, 15 Oct 2013 17:43:24 -0500
+Message-ID: <87a9iayx2r.fsf@gmail.com>
+References: <871u4hzusr.fsf@gmail.com> <523F749E.5030306@gmail.com>
+	<xmqqtxgib1qm.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>, <john@szakmeister.net>, <pah@qo.cx>,
-	<felipe.contreras@gmail.com>, Brandon Casey <drafnel@gmail.com>
-To: Brandon Casey <bcasey@nvidia.com>
-X-From: git-owner@vger.kernel.org Wed Oct 16 00:40:53 2013
+Content-Type: text/plain
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 16 00:43:44 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VWDIL-0007Ep-EW
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Oct 2013 00:40:53 +0200
+	id 1VWDL3-0000Sg-Rz
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Oct 2013 00:43:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933880Ab3JOWkt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Oct 2013 18:40:49 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36589 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933634Ab3JOWks (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Oct 2013 18:40:48 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 57DC44AD24;
-	Tue, 15 Oct 2013 22:40:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=GyGtsjie3qlhqmwl81nZ+FLmrvo=; b=cSzl7d
-	+awrRQ+8ETkfPXCelwlMBbnII249FZicmz1XNTKiE/DPwlDu1FDUD+O1HyeGHd1C
-	o/E1goo6KsPZIA8O747rpGHIordtHoUc6lySVw2/fpRuh+fsM0y8mCHRxvtC4pz4
-	0om2i4RspelfUx3tsODwxwH/RDadEO8ql4+00=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ByNLhXRSGvpyEotst+6PegSB+OFMF3j2
-	uTcsef9XawJidHEjl8JvvzK/6RFLHO9jCQYKz7g5/xXQ7jWCCNObk6WonGb74Aal
-	DRrmZqPqTihoq7inm3RZ8ADfnzohqiysMOEJV3EukoE5iEhS6sZuQI4fFnOUz3xb
-	KQ1AuAotRaY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 46F034AD23;
-	Tue, 15 Oct 2013 22:40:48 +0000 (UTC)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A56AB4AD16;
-	Tue, 15 Oct 2013 22:40:47 +0000 (UTC)
-In-Reply-To: <1379962157-1338-1-git-send-email-bcasey@nvidia.com> (Brandon
-	Casey's message of "Mon, 23 Sep 2013 11:49:01 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: D5CD7C12-35EA-11E3-AD88-8F264F2CC097-77302942!b-pb-sasl-quonix.pobox.com
+	id S933952Ab3JOWni (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Oct 2013 18:43:38 -0400
+Received: from plane.gmane.org ([80.91.229.3]:38375 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933522Ab3JOWnh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Oct 2013 18:43:37 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1VWDKx-0000OI-KD
+	for git@vger.kernel.org; Wed, 16 Oct 2013 00:43:35 +0200
+Received: from nat-128-62-43-188.public.utexas.edu ([128.62.43.188])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 16 Oct 2013 00:43:35 +0200
+Received: from keshav.kini by nat-128-62-43-188.public.utexas.edu with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 16 Oct 2013 00:43:35 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: nat-128-62-43-188.public.utexas.edu
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+Cancel-Lock: sha1:tn56ATKhXZIwd6yKdI8Hfp04kOk=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236209>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236210>
 
-This seems to post-date what Jonathan has kept in his 'pu'; is this
-the latest (I have a huge backlog to wade through, so I'd rather
-skip it if another reroll is coming and move on to other topics).
+Junio C Hamano <gitster@pobox.com> writes:
 
-Thanks.
+> Roberto Tyley <roberto.tyley@gmail.com> writes:
+>
+>> On 21/09/2013 23:16, Keshav Kini wrote:
+>>> [SNIP]
+>>> This situation came about because the BFG Repo-Cleaner doesn't write new
+>>> reflog entries after creating its new objects and moving refs around.
+>>
+>> True enough - I don't think the BFG does write new entires to the
+>> reflog when it does the final ref-update, and it would be nicer if it
+>> did. I'll get that fixed.
+>
+> (sorry for replying late)
+>
+> So this can be closed as "BFG not writing reflog in a consistent
+> way, and 'git reflog show' is acting GIGO way"?  Or was there
+> something the core side needs to do?
+
+Hi Junio,
+
+Thanks for your reply. In my original mail, immediately after the
+snippet Roberto quoted above, I said, "But that aside, I think how git
+handles the situation might be a bug." To wit:
+
+> It seems to me that one of two things should be the case. Either 1) it
+> should be considered impossible to have a reflog for a ref X which
+> doesn't contain a chain of commits leading up to the current location of
+> X; or 2) if reflogs are allowed not to form an unbroken chain of commits
+> leading to X, then `git reflog show` should at least make sure to
+> actually display a commit ID corresponding to the second field of each
+> reflog entry it reads, and not some other commit ID.
+> 
+> In the first case, the bug is that `git fsck` doesn't catch the
+> supposedly impossible situation that exists in the repository I've
+> described in this email. In the second case, the bug is that `git reflog
+> show` has bad output.
+
+Before this is closed, I would appreciate it if I could get some
+feedback from git developers on the above two paragraphs.
+
+Thanks,
+    Keshav
