@@ -1,111 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] remote: fix trivial memory leak
-Date: Tue, 15 Oct 2013 14:50:45 -0700
-Message-ID: <xmqqob6qcife.fsf@gitster.dls.corp.google.com>
-References: <1379772563-11000-1-git-send-email-felipe.contreras@gmail.com>
-	<1379772563-11000-3-git-send-email-felipe.contreras@gmail.com>
-	<20130924051908.GG2766@sigill.intra.peff.net>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: [PATCH] http.c: Spell the null pointer as NULL
+Date: Tue, 15 Oct 2013 22:55:02 +0100
+Message-ID: <525DB9B6.8040701@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Oct 15 23:50:54 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 15 23:55:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VWCVw-0003fj-1D
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Oct 2013 23:50:52 +0200
+	id 1VWCa9-0006Fe-Rn
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Oct 2013 23:55:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933768Ab3JOVus (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Oct 2013 17:50:48 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47558 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933524Ab3JOVur (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Oct 2013 17:50:47 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 565BE4AC83;
-	Tue, 15 Oct 2013 21:50:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ISjLO3A4hUJ04TdmA55rew8Jmto=; b=TBt2LL
-	rFDCND5jUX8jE2c4lGyRTSCZEMPzcv0Zj6u6u/KHABRBPobeWK2BTmzB7PfFJlEf
-	EAQKYcib+/q24322ajOurR3i8HZ2zUcB9vODddcOj2BMODzfU26YOCCFmHNaGg8R
-	INTCwTvjDMtVo4wnnS/nfuTpM/uRxz9smpDa0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=rcSmVEoLUjdDjdgBSrlbomtIAz4Lm0ss
-	co2kAgkcLkNhRkfNn6nm7DFSxnqZCXQ1uz+QkZydCW8qLhihY7h91NtRxAoTlG8X
-	8xppJKSzX4Qy/I21HwPlofwLvv1kd8W4cyAjxUcPxK8dHNgXsAYqTwH4RD1AJIyj
-	RwwHZjmBNGo=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 479604AC82;
-	Tue, 15 Oct 2013 21:50:47 +0000 (UTC)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	id S1759846Ab3JOVzI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Oct 2013 17:55:08 -0400
+Received: from mdfmta004.mxout.tbr.inty.net ([91.221.168.45]:56444 "EHLO
+	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1759828Ab3JOVzH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Oct 2013 17:55:07 -0400
+Received: from mdfmta004.tbr.inty.net (unknown [127.0.0.1])
+	by mdfmta004.tbr.inty.net (Postfix) with ESMTP id A43C7A0C08B;
+	Tue, 15 Oct 2013 22:55:05 +0100 (BST)
+Received: from mdfmta004.tbr.inty.net (unknown [127.0.0.1])
+	by mdfmta004.tbr.inty.net (Postfix) with ESMTP id 6D8B8A0C085;
+	Tue, 15 Oct 2013 22:55:05 +0100 (BST)
+Received: from [192.168.254.9] (unknown [80.176.147.220])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A38814AC7F;
-	Tue, 15 Oct 2013 21:50:46 +0000 (UTC)
-In-Reply-To: <20130924051908.GG2766@sigill.intra.peff.net> (Jeff King's
-	message of "Tue, 24 Sep 2013 01:19:08 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: D9102E9E-35E3-11E3-8E80-8F264F2CC097-77302942!b-pb-sasl-quonix.pobox.com
+	by mdfmta004.tbr.inty.net (Postfix) with ESMTP;
+	Tue, 15 Oct 2013 22:55:04 +0100 (BST)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.0
+X-MDF-HostID: 9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236200>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236201>
 
-Jeff King <peff@peff.net> writes:
 
-> I wondered if we might also leak when seeing duplicate config options
-> (i.e., leaking the old one when replacing it with the new). But we don't
-> actually strdup() the configured remote names, but instead just point
-> into the "struct branch", which owns the data.
+Commit 1bbcc224 ("http: refactor options to http_get_*", 28-09-2013)
+changed the type of final 'options' argument of the http_get_file()
+function from an int to an 'struct http_get_options' pointer.
+However, it neglected to update the (single) call site. Since this
+call was passing '0' to that argument, it was (correctly) being
+interpreted as a null pointer. Change to argument to NULL.
 
-In addition, we do not copy this string to remote->name in make_remote(),
-so even if we start allowing destruction of existing remote[], the
-resulting code will stay safe.
+Noticed by sparse. ("Using plain integer as NULL pointer")
 
-> So I think an even better fix would be:
->
-> -- >8 --
-> Subject: remote: do not copy "origin" string literal
->
-> Our default_remote_name starts at "origin", but may be
-> overridden by the config file. In the former case, we
-> allocate a new string, but in the latter case, we point to
-> the remote name in an existing "struct branch".
->
-> This gives the variable inconsistent free() semantics (we
-> are sometimes responsible for freeing the string and
-> sometimes pointing to somebody else's storage), and causes a
-> small leak when the allocated string is overridden by
-> config.
->
-> We can fix both by simply dropping the extra copy and
-> pointing to the string literal.
->
-> Noticed-by: Felipe Contreras <felipe.contreras@gmail.com>
-> Signed-off-by: Jeff King <peff@peff.net>
+Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+---
 
-Sounds sensible. Thanks.
+Hi Jonathan, Junio,
 
-> ---
->  remote.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/remote.c b/remote.c
-> index e9fedfa..9f1a8aa 100644
-> --- a/remote.c
-> +++ b/remote.c
-> @@ -483,7 +483,7 @@ static void read_config(void)
->  	int flag;
->  	if (default_remote_name) /* did this already */
->  		return;
-> -	default_remote_name = xstrdup("origin");
-> +	default_remote_name = "origin";
->  	current_branch = NULL;
->  	head_ref = resolve_ref_unsafe("HEAD", sha1, 0, &flag);
->  	if (head_ref && (flag & REF_ISSYMREF) &&
+I'm a little puzzled by not having noticed this until this evening! ;-)
+Also, I note that maint@kernel.org != maint@repo.or.cz/jrn
+
+ATB,
+Ramsay Jones
+
+ http.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/http.c b/http.c
+index 96d7578..b133ffd 100644
+--- a/http.c
++++ b/http.c
+@@ -1045,7 +1045,7 @@ static char *fetch_pack_index(unsigned char *sha1, const char *base_url)
+ 	strbuf_addf(&buf, "%s.temp", sha1_pack_index_name(sha1));
+ 	tmp = strbuf_detach(&buf, NULL);
+ 
+-	if (http_get_file(url, tmp, 0) != HTTP_OK) {
++	if (http_get_file(url, tmp, NULL) != HTTP_OK) {
+ 		error("Unable to get pack index %s", url);
+ 		free(tmp);
+ 		tmp = NULL;
+-- 
+1.8.4
