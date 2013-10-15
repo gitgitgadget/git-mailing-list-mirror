@@ -1,91 +1,117 @@
-From: Nicolas Vigier <boklm@mars-attacks.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
 Subject: Re: [PATCH] rev-parse --parseopt: fix handling of optional arguments
-Date: Wed, 16 Oct 2013 01:53:14 +0200
-Message-ID: <20131015235314.GZ4589@mars-attacks.org>
+Date: Tue, 15 Oct 2013 16:57:39 -0700
+Message-ID: <20131015235739.GI9464@google.com>
 References: <1381838425-18244-1-git-send-email-boklm@mars-attacks.org>
  <20131015231427.GF9464@google.com>
+ <xmqqfvs29kjc.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Cc: git@vger.kernel.org, Pierre Habouzit <madcoder@debian.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 16 01:53:23 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Nicolas Vigier <boklm@mars-attacks.org>, git@vger.kernel.org,
+	Pierre Habouzit <madcoder@debian.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Oct 16 01:57:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VWEQU-0000wl-Ht
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Oct 2013 01:53:22 +0200
+	id 1VWEUk-0003QR-NI
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Oct 2013 01:57:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933769Ab3JOXxR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Oct 2013 19:53:17 -0400
-Received: from mx0.mars-attacks.org ([92.243.25.60]:42935 "EHLO
-	mx0.mars-attacks.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933656Ab3JOXxQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Oct 2013 19:53:16 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mx0.mars-attacks.org (Postfix) with ESMTP id 3B26848CF;
-	Wed, 16 Oct 2013 01:53:29 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mars-attacks.org
-Received: from mx0.mars-attacks.org ([127.0.0.1])
-	by localhost (mx0.mars-attacks.org [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 7d6N5OzOSO54; Wed, 16 Oct 2013 01:53:28 +0200 (CEST)
-Received: from wxy.mars-attacks.org (moow.mars-attacks.org [82.242.116.57])
-	by mx0.mars-attacks.org (Postfix) with ESMTPS id B0181422A;
-	Wed, 16 Oct 2013 01:53:28 +0200 (CEST)
-Received: by wxy.mars-attacks.org (Postfix, from userid 500)
-	id 4175C43928; Wed, 16 Oct 2013 01:53:14 +0200 (CEST)
+	id S933856Ab3JOX5n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Oct 2013 19:57:43 -0400
+Received: from mail-pa0-f41.google.com ([209.85.220.41]:39342 "EHLO
+	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933729Ab3JOX5m (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Oct 2013 19:57:42 -0400
+Received: by mail-pa0-f41.google.com with SMTP id bj1so172662pad.0
+        for <git@vger.kernel.org>; Tue, 15 Oct 2013 16:57:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=5sp+qk0JdDmXwtKeFq/MZHGAu4Knd0X4fGi/cnSHpcI=;
+        b=XdKPsmmDwCKRMaIeng0jn57FxTnP2qlazdYhvrzhakbUdHuqrb7VQbmeweizgp6LZr
+         DYFEZdghDZphXBIfHO7xT/NE/rTH4ZiNQ719KCPNs0g9kix6PrI+JH0h+88xqHMmT9I4
+         0ccJC/L7QViCC/YGREn1PYxyWXdSRiPBoWjR9CP0/o78tPzbXeCNj8rEEM6QVZP9O1mS
+         SpvBgphKInb5nmBMz64FXsBTccSABD6gYDaAXM3Jum+uxdzOmJrCRR3o8A81wU6UtkEF
+         xNYT/+huZjYcHIcwHSzNGtMhsCftaKypSROqWwM+I9eygApgpqRpydm00m5/My0L/0Iw
+         LrrQ==
+X-Received: by 10.67.1.228 with SMTP id bj4mr382296pad.157.1381881461852;
+        Tue, 15 Oct 2013 16:57:41 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id ok2sm19322002pbb.24.1969.12.31.16.00.00
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 15 Oct 2013 16:57:41 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <20131015231427.GF9464@google.com>
+In-Reply-To: <xmqqfvs29kjc.fsf@gitster.dls.corp.google.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236222>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236223>
 
-On Tue, 15 Oct 2013, Jonathan Nieder wrote:
+Junio C Hamano wrote:
 
-> Nicolas Vigier wrote:
-> 
-> >   $ cat /tmp/opt.sh
-> >   #!/bin/sh
-> >   OPTIONS_SPEC="\
-> >   git [options]
-> >   --
-> >   q,quiet         be quiet
-> >   S,gpg-sign?     GPG-sign commit"
-> >   echo "$OPTIONS_SPEC" | git rev-parse --parseopt $parseopt_extra -- "$@"
-> >
-> > Then the following two commands give us the same result :
-> >
-> >   $ /tmp/opt.sh -S -q
-> >   set -- -S -q --
-> >   $ /tmp/opt.sh -S-q
-> >   set -- -S '-q' --
-> >
-> > We cannot know if '-q' is an argument to '-S' or a new option.
-> 
-> Hmph.
-> 
-> As Junio mentioned, inserting '' would be a backward-incompatible
-> change.  I don't think it's worth breaking existing scripts.  Probably
-> what is needed is a new parseopt special character with the new
-> semantics (e.g.,
-> 
-> 	Use ?? to mean the option has an optional argument.  If the
-> 	option is supplied without its argument, the argument is taken
-> 	to be ''.
-> 
-> or something like
-> 
-> 	Use ?<default> to mean the option has an optional argument.  If
-> 	the option is supplied without its argument and <default> is
-> 	nonempty, the argument is taken to be <default>.
-> 
-> ).
-> 
-> Sensible?
+> You just made these two that the user clearly meant to express two
+> different things indistinguishable.
+>
+> 	opt.sh -S
+>       opt.sh -S ''
+[...]
+> And that is exactly why gitcli.txt tells users to use the 'sticked'
+> form, and ends the bullet point with:
+>
+>    An option that takes optional option-argument must be written in
+>    the 'sticked' form.
 
-Yes, I think it's sensible. I will look at this and propose an other
-patch. Thanks.
+Yes, another possibility in that vein would be to teach rev-parse
+--parseopt an OPTIONS_LONG_STICKED output format, and then parse with
+
+	while :
+	do
+		case $1 in
+		--gpg-sign)
+			... no keyid ...
+			;;
+		--gpg-sign=*)
+			keyid=${1#--gpg-sign=}
+			...
+			;;
+		esac
+		shift
+	done
+
+This still leaves
+
+	opt.sh -S
+	
+and
+
+	opt.sh -S''
+
+indistinguishable.  Given what the shell passes to execve, I think
+that's ok.
+
+The analagous method without preferring long options could work almost
+as well:
+
+	while :
+	do
+		case $1 in
+		-S)
+			... no keyid ...
+			;;
+		-S?*)
+			keyid=${1#-S}
+			...
+			;;
+		esac
+		shift
+	done
+
+but it mishandles "--gpg-sign=" with empty argument.
+
+Jonathan
