@@ -1,108 +1,132 @@
 From: Nicolas Vigier <boklm@mars-attacks.org>
-Subject: Re: [PATCH] rev-parse doc: clarify use of optional / required
- arguments
-Date: Tue, 15 Oct 2013 12:49:45 +0200
-Message-ID: <20131015104945.GW4589@mars-attacks.org>
-References: <1381760611-9573-1-git-send-email-boklm@mars-attacks.org>
- <20131014143632.GD21200@google.com>
- <20131014152529.GU4589@mars-attacks.org>
- <20131014235742.GF865149@vauxhall.crustytoothpaste.net>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="4YatIo8qwOC8yTX3"
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	Pierre Habouzit <madcoder@debian.org>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-X-From: git-owner@vger.kernel.org Tue Oct 15 12:49:57 2013
+Subject: [PATCH] rev-parse --parseopt: fix handling of optional arguments
+Date: Tue, 15 Oct 2013 14:00:25 +0200
+Message-ID: <1381838425-18244-1-git-send-email-boklm@mars-attacks.org>
+Cc: Pierre Habouzit <madcoder@debian.org>,
+	Nicolas Vigier <boklm@mars-attacks.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 15 14:01:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VW2CH-0002CH-5i
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Oct 2013 12:49:53 +0200
+	id 1VW3JI-000673-SY
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Oct 2013 14:01:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757851Ab3JOKtt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Oct 2013 06:49:49 -0400
-Received: from mx0.mars-attacks.org ([92.243.25.60]:35595 "EHLO
+	id S1759201Ab3JOMBH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Oct 2013 08:01:07 -0400
+Received: from mx0.mars-attacks.org ([92.243.25.60]:36032 "EHLO
 	mx0.mars-attacks.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753362Ab3JOKts (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Oct 2013 06:49:48 -0400
+	with ESMTP id S1758584Ab3JOMBE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Oct 2013 08:01:04 -0400
 Received: from localhost (localhost [127.0.0.1])
-	by mx0.mars-attacks.org (Postfix) with ESMTP id CC5A047B6;
-	Tue, 15 Oct 2013 12:50:00 +0200 (CEST)
+	by mx0.mars-attacks.org (Postfix) with ESMTP id 1F14A4E65;
+	Tue, 15 Oct 2013 14:01:17 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at mars-attacks.org
 Received: from mx0.mars-attacks.org ([127.0.0.1])
 	by localhost (mx0.mars-attacks.org [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id QcL8ZUd0mdhg; Tue, 15 Oct 2013 12:50:00 +0200 (CEST)
+	with LMTP id Wx32KqgwuUlt; Tue, 15 Oct 2013 14:01:16 +0200 (CEST)
 Received: from wxy.mars-attacks.org (moow.mars-attacks.org [82.242.116.57])
-	by mx0.mars-attacks.org (Postfix) with ESMTPS id 2B9DD3ECC;
-	Tue, 15 Oct 2013 12:50:00 +0200 (CEST)
+	by mx0.mars-attacks.org (Postfix) with ESMTPS id 7EC0E3ECC;
+	Tue, 15 Oct 2013 14:01:16 +0200 (CEST)
 Received: by wxy.mars-attacks.org (Postfix, from userid 500)
-	id 4C86643920; Tue, 15 Oct 2013 12:49:45 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20131014235742.GF865149@vauxhall.crustytoothpaste.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id 2805243920; Tue, 15 Oct 2013 14:01:02 +0200 (CEST)
+X-Mailer: git-send-email 1.8.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236176>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236178>
 
+git rev-parse --parseopt does not allow us to see the difference
+between an option with an optional argument starting with a dash, and an
+option with an unset optional argument followed by an other option.
 
---4YatIo8qwOC8yTX3
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+If I use this script :
 
-On Mon, 14 Oct 2013, brian m. carlson wrote:
+  $ cat /tmp/opt.sh
+  #!/bin/sh
+  OPTIONS_SPEC="\
+  git [options]
+  --
+  q,quiet         be quiet
+  S,gpg-sign?     GPG-sign commit"
+  echo "$OPTIONS_SPEC" | git rev-parse --parseopt $parseopt_extra -- "$@"
 
-> On Mon, Oct 14, 2013 at 05:25:29PM +0200, Nicolas Vigier wrote:
-> > The reason that I looked at this documentation in the first place was
-> > that I was looking at adding an option '-S[<keyid>], --gpg-sign[=3D<key=
-id>]'
-> > to git-rebase, similar to the option in git-commit, so that rebased
-> > commits can be signed. In git-commit this option takes an optional argu=
-ment,
-> > so I think it would make sense to make it optional in git-rebase too.
->=20
-> It's funny you say that, because I literally started on that yesterday.
-> I have cherry-pick and revert working, but I haven't gotten to anything
-> else yet.  Feel free to work on it if you're interested, as I probably
-> won't get around to finishing it for some time.
+Then the following two commands give us the same result :
 
-I have a patch for git-am working, but with a small problem : it has to
-assume that the optional argument to -S does not start with a dash.
-This is because git-rev-parse --parseopt does not allow us to see the
-difference between -S-q and -S -q, we don't know if -q is the next
-option or the argument to -S.
+  $ /tmp/opt.sh -S -q
+  set -- -S -q --
+  $ /tmp/opt.sh -S-q
+  set -- -S '-q' --
 
-Maybe that's the reason why the use of optional argument options with
-git rev-parse --parseopt is discouraged ?
+We cannot know if '-q' is an argument to '-S' or a new option.
 
-I'm going to send a patch proposal so that rev-parse --parseopt gives an
-empty argument for an unset optional argument.
+With this patch, rev-parse --parseopt will always give an argument to
+optional options, as an empty string if the argument is unset.
 
+The same two commands now give us :
 
---4YatIo8qwOC8yTX3
-Content-Type: application/pgp-signature
+  $ /tmp/opt.sh -S -q
+  set -- -S '' -q --
+  $ /tmp/opt.sh -S-q
+  set -- -S '-q' --
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (GNU/Linux)
+We can now see if '-q' is an argument to '-S' or an other option.
 
-iQIcBAEBAgAGBQJSXR3JAAoJECBnABsbZ4pj6fcP/iY+0ai7g5l22nw1wlMnNpsT
-rvtxAxY10cIrMHiD28iTjspFXpSrmZq2j3umyfBA15CPXZGz/SPREmdeqVeZQEVk
-f2IEEslSIT0/DTGFH0MzaN1MDU5qyYJOhv7CCFh3dFGf0WkIlgDtG2MuLXCUbbgL
-bh1/tHrqsgR3aVuU7Yn0l3jEj0BbmU4aRkcTycShNbt/obDi+BVR7Y3SV7uhMB1J
-m9sPBiGvwF89YXiKV0GbgWHOEJD8kP5MkAjE7cSe2bl1Ad5ockl0zNnsLO+paD4+
-DnQ4+fK94CpvjWA/We/pn8W9+YAt4G6XQLFqfq8tIeTHNqxH0Apj7Eas3uoqnMF9
-0anaXUH9qLkoWhevqUCX6WwlfaOXth5f4e64B9LU4bOjPnso6vJyz35LrX2TKxar
-FvuV6odDawLBHbgcU6WrurbbIeAxAVcClFfqVqpGZXyRwqMESZCEx+QwVX9IOrFO
-Y7OoCpDs3lP1jKcb3MVLqGGfzOXW7LUjvZ607RSgbhGOu+KgRFg6ANiUNrkXPSsq
-2zIYGJmeerRKBH13RwaCtDc0vA/STh6mDo6rf2G5p0z6zZ1WmdwShSeo9m6eynMH
-xq+5+t2uTKgEf0fj6FTKo4bNluL1mornyKvrrRQKpr7xDiy4g1vS+mOAxham9PHN
-vMD9e3Q0XCW9FJzhVl7d
-=BDsE
------END PGP SIGNATURE-----
+Also adding two tests in t1502.
 
---4YatIo8qwOC8yTX3--
+There does not seem to be any shell script git command included in git
+sources tree that is currently using optional arguments and could be
+affected by this change.
+
+Signed-off-by: Nicolas Vigier <boklm@mars-attacks.org>
+---
+ builtin/rev-parse.c           |  3 +++
+ t/t1502-rev-parse-parseopt.sh | 18 ++++++++++++++++++
+ 2 files changed, 21 insertions(+)
+
+diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
+index de894c7..25e8c74 100644
+--- a/builtin/rev-parse.c
++++ b/builtin/rev-parse.c
+@@ -327,6 +327,9 @@ static int parseopt_dump(const struct option *o, const char *arg, int unset)
+ 	if (arg) {
+ 		strbuf_addch(parsed, ' ');
+ 		sq_quote_buf(parsed, arg);
++	} else if (o->flags & PARSE_OPT_OPTARG) {
++		const char empty_arg[] = " ''";
++		strbuf_add(parsed, empty_arg, strlen(empty_arg));
+ 	}
+ 	return 0;
+ }
+diff --git a/t/t1502-rev-parse-parseopt.sh b/t/t1502-rev-parse-parseopt.sh
+index 13c88c9..abe7c2f 100755
+--- a/t/t1502-rev-parse-parseopt.sh
++++ b/t/t1502-rev-parse-parseopt.sh
+@@ -99,4 +99,22 @@ test_expect_success 'test --parseopt --keep-dashdash --stop-at-non-option withou
+ 	test_cmp expect output
+ '
+ 
++cat > expect <<EOF
++set -- -C '' --foo --
++EOF
++
++test_expect_success 'test --parseopt -C --foo' '
++	git rev-parse --parseopt -- -C --foo <optionspec >output &&
++	test_cmp expect output
++'
++
++cat > expect <<EOF
++set -- -C '--foo' --
++EOF
++
++test_expect_success 'test --parseopt -C--foo' '
++	git rev-parse --parseopt -- -C--foo <optionspec >output &&
++	test_cmp expect output
++'
++
+ test_done
+-- 
+1.8.4
