@@ -1,92 +1,90 @@
-From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-Subject: Re: [PATCH] git-prompt.sh: show the upstream abbrev name
-Date: Tue, 15 Oct 2013 14:21:11 +0200
-Message-ID: <20131015122111.GT19704@goldbirke>
-References: <1381411933-20600-1-git-send-email-jcarsique@nuxeo.com>
- <20131010135813.GF19704@goldbirke> <5256BD0A.30706@gmail.com>
+From: Krzysztof Mazur <krzysiek@podlesie.net>
+Subject: Re: [PATCH v3] Add core.mode configuration
+Date: Tue, 15 Oct 2013 14:35:05 +0200
+Message-ID: <20131015123505.GA3097@shrek.podlesie.net>
+References: <1381561485-20252-1-git-send-email-felipe.contreras@gmail.com>
+ <20131014205908.GA17089@shrek.podlesie.net>
+ <525c63b6711fa_197a905e845b@nysa.notmuch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
-	Simon Oosthoek <s.oosthoek@xs4all.nl>,
-	"Eduardo R . D'Avila" <erdavila@gmail.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: Julien Carsique <julien.carsique@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Oct 15 14:21:21 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 15 14:35:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VW3cl-0002dl-Sg
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Oct 2013 14:21:20 +0200
+	id 1VW3qH-0003ZB-6A
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Oct 2013 14:35:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758799Ab3JOMVQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Oct 2013 08:21:16 -0400
-Received: from moutng.kundenserver.de ([212.227.17.8]:61817 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752506Ab3JOMVP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Oct 2013 08:21:15 -0400
-Received: from localhost6.localdomain6 (g226140223.adsl.alicedsl.de [92.226.140.223])
-	by mrelayeu.kundenserver.de (node=mrbap4) with ESMTP (Nemesis)
-	id 0MTxaL-1VN1572OP3-00Qo6x; Tue, 15 Oct 2013 14:21:12 +0200
+	id S1759038Ab3JOMfK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Oct 2013 08:35:10 -0400
+Received: from shrek-wifi.podlesie.net ([93.179.225.50]:51342 "EHLO
+	shrek.podlesie.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759018Ab3JOMfJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Oct 2013 08:35:09 -0400
+Received: by shrek.podlesie.net (Postfix, from userid 603)
+	id 8DDDC63; Tue, 15 Oct 2013 14:35:05 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <5256BD0A.30706@gmail.com>
+In-Reply-To: <525c63b6711fa_197a905e845b@nysa.notmuch>
 User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Provags-ID: V02:K0:eSfCO52lliaz71n8duES63jOvm85KmYaNYaPx979/m7
- JjXI8en/Xbo21qu4JDVNAXCTe7I7xSS5D/+nF3xxz0ASpVjlht
- uuwfUwDPHVZrbxf8ZbwBb02t3NIU5nj9fQVcdsrh5dInFAUD4H
- IaRNgzZjvPiJa8rKgTJJMshwUTnlKPn5NVWyi7x4R+8EMiH18y
- 6EbfHtyfbqnBMsfpaIj6yhYrBooXYXysR63p83hbWjBxm2LYIx
- f1pxlo1nbeY8pTLUoR6kI5La/LX0R8t2+KSRmQL9C9yXFhON1E
- /4Bae6r9k/ILyfZdKUC2JZVNkXFleCz+soQKODX10kfRgazO47
- vu5Z9lCOBy+OP4S30Rx5oiaH9N2F0yCf6DVn59C5y
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236179>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236180>
 
-On Thu, Oct 10, 2013 at 04:43:22PM +0200, Julien Carsique wrote:
-> It's fixed.
+On Mon, Oct 14, 2013 at 04:35:50PM -0500, Felipe Contreras wrote:
+> Krzysztof Mazur wrote:
+> > On Sat, Oct 12, 2013 at 02:04:45AM -0500, Felipe Contreras wrote:
+> > > So that we can specify general modes of operation, specifically, add the
+> > > 'next' mode, which makes Git pre v2.0 behave as Git v2.0.
+> > > 
+> > > Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+> > > ---
+> > 
+> > I don't think that single option it's a good idea. From the user's
+> > point of view I think that the way push.default was introduced and
+> > will be changed is much better. So maybe it's better to just add
+> > "core.addremove" option instead?
+> 
+> Maybe, but what happens when we start doing changes for v3.0? As a user, I
+> don't and to figure out which are the new configurations that will turn v3.0
+> behavior on, I just want to be testing that mode, even if I'm not following Git
+> development closely. If I find something annoying with core.mode = next, I
+> report the problem to the mailing list, which is good, we want to know problems
+> with the backward-incompatible changes that will be introduced before it's too
+> late, don't we?
 
-Thanks, the updated patch looks good to me.
+But with core.mode = next after upgrade you may experience incompatible
+change without any warning. I think it's better to keep the old behavior
+by default and warn the user if with new behavior the result might be
+different. So the user:
 
-> Note '+=3D' was already used line 114:
->=20
->             svn_url_pattern+=3D"\\|$value"
+	a) knows about the change
 
-I guess noone has tried to use the upstream status indicator with an
-SVN upstream and an ancient Bash version yet, thanks for pointing it
-out.
+	b) may set appropriate option to enable the new default or keep
+	   the old behavior and disable the warning
 
--- >8 --
-Subject: [PATCH] bash prompt: don't use '+=3D' operator in show upstrea=
-m code path
+	c) may report that he does not like that change
 
-The '+=3D' operator is not supported by old Bash versions (3.0) we stil=
-l
-care about.
+> 
+> I'd be fine with having *both* a fine-tuned option to trigger each specific
+> behavior, and another one that turns all those fine-tuned options on that are
+> meant for v2.0.
+> 
+> Unfortunately, I don't see much interest from Git developers in either.
+> 
 
-Signed-off-by: SZEDER G=E1bor <szeder@ira.uka.de>
----
- contrib/completion/git-prompt.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+I think that most users have already set the push.default, so "git add"
+is the only problem. If Junio really wants to change "git add" he should
+be interested in allowing user to use it now.
 
-diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-=
-prompt.sh
-index 202e2e520f..7b732d2aeb 100644
---- a/contrib/completion/git-prompt.sh
-+++ b/contrib/completion/git-prompt.sh
-@@ -111,7 +111,7 @@ __git_ps1_show_upstream ()
- 			;;
- 		svn-remote.*.url)
- 			svn_remote[$((${#svn_remote[@]} + 1))]=3D"$value"
--			svn_url_pattern+=3D"\\|$value"
-+			svn_url_pattern=3D"$svn_url_pattern\\|$value"
- 			upstream=3Dsvn+git # default upstream is SVN if available, else git
- 			;;
- 		esac
---=20
-1.8.4.1.495.gd8d272e
+I don't see the change in "git add" as an improvement, because
+removing files with "git add" IMHO is more confusing than ignoring
+such files. Maybe introducing new command - "git update" for instance -
+which is equivalent to new "git add" and teaching new users to use it
+instead of "git add" is better.
+
+Krzysiek
