@@ -1,132 +1,92 @@
-From: Nicolas Vigier <boklm@mars-attacks.org>
-Subject: [PATCH] rev-parse --parseopt: fix handling of optional arguments
-Date: Tue, 15 Oct 2013 14:00:25 +0200
-Message-ID: <1381838425-18244-1-git-send-email-boklm@mars-attacks.org>
-Cc: Pierre Habouzit <madcoder@debian.org>,
-	Nicolas Vigier <boklm@mars-attacks.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 15 14:01:16 2013
+From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+Subject: Re: [PATCH] git-prompt.sh: show the upstream abbrev name
+Date: Tue, 15 Oct 2013 14:21:11 +0200
+Message-ID: <20131015122111.GT19704@goldbirke>
+References: <1381411933-20600-1-git-send-email-jcarsique@nuxeo.com>
+ <20131010135813.GF19704@goldbirke> <5256BD0A.30706@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
+	Simon Oosthoek <s.oosthoek@xs4all.nl>,
+	"Eduardo R . D'Avila" <erdavila@gmail.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: Julien Carsique <julien.carsique@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Oct 15 14:21:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VW3JI-000673-SY
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Oct 2013 14:01:13 +0200
+	id 1VW3cl-0002dl-Sg
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Oct 2013 14:21:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759201Ab3JOMBH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Oct 2013 08:01:07 -0400
-Received: from mx0.mars-attacks.org ([92.243.25.60]:36032 "EHLO
-	mx0.mars-attacks.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758584Ab3JOMBE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Oct 2013 08:01:04 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mx0.mars-attacks.org (Postfix) with ESMTP id 1F14A4E65;
-	Tue, 15 Oct 2013 14:01:17 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mars-attacks.org
-Received: from mx0.mars-attacks.org ([127.0.0.1])
-	by localhost (mx0.mars-attacks.org [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id Wx32KqgwuUlt; Tue, 15 Oct 2013 14:01:16 +0200 (CEST)
-Received: from wxy.mars-attacks.org (moow.mars-attacks.org [82.242.116.57])
-	by mx0.mars-attacks.org (Postfix) with ESMTPS id 7EC0E3ECC;
-	Tue, 15 Oct 2013 14:01:16 +0200 (CEST)
-Received: by wxy.mars-attacks.org (Postfix, from userid 500)
-	id 2805243920; Tue, 15 Oct 2013 14:01:02 +0200 (CEST)
-X-Mailer: git-send-email 1.8.4
+	id S1758799Ab3JOMVQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Oct 2013 08:21:16 -0400
+Received: from moutng.kundenserver.de ([212.227.17.8]:61817 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752506Ab3JOMVP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Oct 2013 08:21:15 -0400
+Received: from localhost6.localdomain6 (g226140223.adsl.alicedsl.de [92.226.140.223])
+	by mrelayeu.kundenserver.de (node=mrbap4) with ESMTP (Nemesis)
+	id 0MTxaL-1VN1572OP3-00Qo6x; Tue, 15 Oct 2013 14:21:12 +0200
+Content-Disposition: inline
+In-Reply-To: <5256BD0A.30706@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Provags-ID: V02:K0:eSfCO52lliaz71n8duES63jOvm85KmYaNYaPx979/m7
+ JjXI8en/Xbo21qu4JDVNAXCTe7I7xSS5D/+nF3xxz0ASpVjlht
+ uuwfUwDPHVZrbxf8ZbwBb02t3NIU5nj9fQVcdsrh5dInFAUD4H
+ IaRNgzZjvPiJa8rKgTJJMshwUTnlKPn5NVWyi7x4R+8EMiH18y
+ 6EbfHtyfbqnBMsfpaIj6yhYrBooXYXysR63p83hbWjBxm2LYIx
+ f1pxlo1nbeY8pTLUoR6kI5La/LX0R8t2+KSRmQL9C9yXFhON1E
+ /4Bae6r9k/ILyfZdKUC2JZVNkXFleCz+soQKODX10kfRgazO47
+ vu5Z9lCOBy+OP4S30Rx5oiaH9N2F0yCf6DVn59C5y
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236178>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236179>
 
-git rev-parse --parseopt does not allow us to see the difference
-between an option with an optional argument starting with a dash, and an
-option with an unset optional argument followed by an other option.
+On Thu, Oct 10, 2013 at 04:43:22PM +0200, Julien Carsique wrote:
+> It's fixed.
 
-If I use this script :
+Thanks, the updated patch looks good to me.
 
-  $ cat /tmp/opt.sh
-  #!/bin/sh
-  OPTIONS_SPEC="\
-  git [options]
-  --
-  q,quiet         be quiet
-  S,gpg-sign?     GPG-sign commit"
-  echo "$OPTIONS_SPEC" | git rev-parse --parseopt $parseopt_extra -- "$@"
+> Note '+=3D' was already used line 114:
+>=20
+>             svn_url_pattern+=3D"\\|$value"
 
-Then the following two commands give us the same result :
+I guess noone has tried to use the upstream status indicator with an
+SVN upstream and an ancient Bash version yet, thanks for pointing it
+out.
 
-  $ /tmp/opt.sh -S -q
-  set -- -S -q --
-  $ /tmp/opt.sh -S-q
-  set -- -S '-q' --
+-- >8 --
+Subject: [PATCH] bash prompt: don't use '+=3D' operator in show upstrea=
+m code path
 
-We cannot know if '-q' is an argument to '-S' or a new option.
+The '+=3D' operator is not supported by old Bash versions (3.0) we stil=
+l
+care about.
 
-With this patch, rev-parse --parseopt will always give an argument to
-optional options, as an empty string if the argument is unset.
-
-The same two commands now give us :
-
-  $ /tmp/opt.sh -S -q
-  set -- -S '' -q --
-  $ /tmp/opt.sh -S-q
-  set -- -S '-q' --
-
-We can now see if '-q' is an argument to '-S' or an other option.
-
-Also adding two tests in t1502.
-
-There does not seem to be any shell script git command included in git
-sources tree that is currently using optional arguments and could be
-affected by this change.
-
-Signed-off-by: Nicolas Vigier <boklm@mars-attacks.org>
+Signed-off-by: SZEDER G=E1bor <szeder@ira.uka.de>
 ---
- builtin/rev-parse.c           |  3 +++
- t/t1502-rev-parse-parseopt.sh | 18 ++++++++++++++++++
- 2 files changed, 21 insertions(+)
+ contrib/completion/git-prompt.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
-index de894c7..25e8c74 100644
---- a/builtin/rev-parse.c
-+++ b/builtin/rev-parse.c
-@@ -327,6 +327,9 @@ static int parseopt_dump(const struct option *o, const char *arg, int unset)
- 	if (arg) {
- 		strbuf_addch(parsed, ' ');
- 		sq_quote_buf(parsed, arg);
-+	} else if (o->flags & PARSE_OPT_OPTARG) {
-+		const char empty_arg[] = " ''";
-+		strbuf_add(parsed, empty_arg, strlen(empty_arg));
- 	}
- 	return 0;
- }
-diff --git a/t/t1502-rev-parse-parseopt.sh b/t/t1502-rev-parse-parseopt.sh
-index 13c88c9..abe7c2f 100755
---- a/t/t1502-rev-parse-parseopt.sh
-+++ b/t/t1502-rev-parse-parseopt.sh
-@@ -99,4 +99,22 @@ test_expect_success 'test --parseopt --keep-dashdash --stop-at-non-option withou
- 	test_cmp expect output
- '
- 
-+cat > expect <<EOF
-+set -- -C '' --foo --
-+EOF
-+
-+test_expect_success 'test --parseopt -C --foo' '
-+	git rev-parse --parseopt -- -C --foo <optionspec >output &&
-+	test_cmp expect output
-+'
-+
-+cat > expect <<EOF
-+set -- -C '--foo' --
-+EOF
-+
-+test_expect_success 'test --parseopt -C--foo' '
-+	git rev-parse --parseopt -- -C--foo <optionspec >output &&
-+	test_cmp expect output
-+'
-+
- test_done
--- 
-1.8.4
+diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-=
+prompt.sh
+index 202e2e520f..7b732d2aeb 100644
+--- a/contrib/completion/git-prompt.sh
++++ b/contrib/completion/git-prompt.sh
+@@ -111,7 +111,7 @@ __git_ps1_show_upstream ()
+ 			;;
+ 		svn-remote.*.url)
+ 			svn_remote[$((${#svn_remote[@]} + 1))]=3D"$value"
+-			svn_url_pattern+=3D"\\|$value"
++			svn_url_pattern=3D"$svn_url_pattern\\|$value"
+ 			upstream=3Dsvn+git # default upstream is SVN if available, else git
+ 			;;
+ 		esac
+--=20
+1.8.4.1.495.gd8d272e
