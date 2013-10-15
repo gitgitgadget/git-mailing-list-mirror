@@ -1,105 +1,95 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] rev-parse --parseopt: fix handling of optional arguments
-Date: Tue, 15 Oct 2013 15:55:36 -0700
-Message-ID: <xmqq4n8ib0uv.fsf@gitster.dls.corp.google.com>
-References: <1381838425-18244-1-git-send-email-boklm@mars-attacks.org>
+From: Keshav Kini <keshav.kini@gmail.com>
+Subject: Re: [PATCH v5] diff.c: keep arrow(=>) on show_stats()'s shortened filename part to make rename visible.
+Date: Tue, 15 Oct 2013 17:58:18 -0500
+Message-ID: <87wqlexhth.fsf@gmail.com>
+References: <38848735-7CFA-404E-AE51-4F445F813266@gmail.com>
+	<A15CCF08-83FD-4F3C-9773-C26DEE38FD33@gmail.com>
+	<660A536D-9993-4B81-B6FF-A113F9111570@gmail.com>
+	<AFC93704-D6C5-49AF-9A66-C5EA81348FFA@gmail.com>
+	<79A13931-694C-4DDC-BEDF-71A0DBA0ECA1@gmail.com>
+	<xmqqbo2qb0wk.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Pierre Habouzit <madcoder@debian.org>
-To: Nicolas Vigier <boklm@mars-attacks.org>
-X-From: git-owner@vger.kernel.org Wed Oct 16 00:55:46 2013
+Content-Type: text/plain
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 16 00:58:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VWDWj-0007Bx-Fi
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Oct 2013 00:55:45 +0200
+	id 1VWDZU-0000KS-0f
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Oct 2013 00:58:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933914Ab3JOWzk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Oct 2013 18:55:40 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43086 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933597Ab3JOWzj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Oct 2013 18:55:39 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D42934B40C;
-	Tue, 15 Oct 2013 22:55:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=oZsn2ch5SRC5f0FQ7jAyWpc28sA=; b=mQ9Mt/HYZ/HWJiuQoWP0
-	vVoxPHrKGXdwV0704G/REvdIfcVz/T+Rg+OIbZG8ZU9yhKpIrUXbH8qM0eM5J4ic
-	z2VhISuOQ3+7cPcIi6nVw6ywBeNZTgdf/f/eGIBngeVRc4oUXQRE13CP37Xp7hbc
-	vrV8qHlVV/JbzFO3TyavGCw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=RzLbQ9BbNHrtp2RoEoJtqm/nfP+ByJZjylyVwMc/TK6i/R
-	n18wtNmZwAxBgJivgdnafBmt/Qrti/TVkeVeZ+MQ8hsbpghPt8xEUjGySAiWCkMK
-	n9WsYzs7foCfP71Q9AGPuI2cXwPieZJgK3XoLksE9VTUCKkWjdBXSpKFRhjTA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C6DFF4B40B;
-	Tue, 15 Oct 2013 22:55:38 +0000 (UTC)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 309874B409;
-	Tue, 15 Oct 2013 22:55:38 +0000 (UTC)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: E8980A68-35EC-11E3-A3D7-8F264F2CC097-77302942!b-pb-sasl-quonix.pobox.com
+	id S933654Ab3JOW6c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Oct 2013 18:58:32 -0400
+Received: from plane.gmane.org ([80.91.229.3]:46383 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933584Ab3JOW6c (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Oct 2013 18:58:32 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1VWDZN-0000HL-BE
+	for git@vger.kernel.org; Wed, 16 Oct 2013 00:58:29 +0200
+Received: from nat-128-62-43-188.public.utexas.edu ([128.62.43.188])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 16 Oct 2013 00:58:29 +0200
+Received: from keshav.kini by nat-128-62-43-188.public.utexas.edu with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 16 Oct 2013 00:58:29 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: nat-128-62-43-188.public.utexas.edu
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+Cancel-Lock: sha1:MMQK5lHyOLqTHrSyoPcvwOb5r1k=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236214>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236215>
 
-Nicolas Vigier <boklm@mars-attacks.org> writes:
+Junio C Hamano <gitster@pobox.com> writes:
+> Yoshioka Tsuneo <yoshiokatsuneo@gmail.com> writes:
+>
+>> "git diff -M --stat" can detect rename and show renamed file name like
+>> "foofoofoo => barbarbar". But if destination filename is long, the line
+>> is shortened like "...barbarbar" so there is no way to know whether the
+>> file is renamed or existed in the source commit.
+>
+> Is "destination" filename more special than the source filename?
+> Perhaps "s/if destination filename is/if filenames are/"?
+>
+> 	Note: I do not want you to reroll using the suggested
+> 	wording without explanation; it may be possible that I am
+> 	missing something obvious and do not understand why you
+> 	singled out destination, in which case I'd rather see it
+> 	explained better in the log message than the potentially
+> 	suboptimal suggestion I made in the review without
+> 	understanding the issue. Of course, it is possible that you
+> 	want to do the same when source is overlong, in which case
+> 	you can just say "Yeah, you're right; will reroll".
+>
+>         The above applies to all the other comments in this message.
+>
+> Also "s/source commit/original/".  You may not be comparing two
+> commits after all.
+>
+>> Make sure there is always an arrow, like "...foo => ...bar".
+>> The output can contains curly braces('{','}') for grouping.
+>
+> s/contains/contain/;
+>
+>> So, in general, the outpu format is "<pfx>{<mid_a> => <mid_b>}<sfx>"
+>
+> s/outpu/&t/;
+>
+>> To keep arrow("=>"), try to omit <pfx> as long as possible at first
+>> because later part or changing part will be the more important part.
+>> If it is not enough, shorten <mid_a>, <mid_b>, and <sfx> trying to
+>> have the maximum length the same because those will be equaly important.
+>
+> A sound reasoning.
 
-> git rev-parse --parseopt does not allow us to see the difference
-> between an option with an optional argument starting with a dash, and an
-> option with an unset optional argument followed by an other option.
->
-> If I use this script :
->
->   $ cat /tmp/opt.sh
->   #!/bin/sh
->   OPTIONS_SPEC="\
->   git [options]
->   --
->   q,quiet         be quiet
->   S,gpg-sign?     GPG-sign commit"
->   echo "$OPTIONS_SPEC" | git rev-parse --parseopt $parseopt_extra -- "$@"
->
-> Then the following two commands give us the same result :
->
->   $ /tmp/opt.sh -S -q
->   set -- -S -q --
->   $ /tmp/opt.sh -S-q
->   set -- -S '-q' --
->
-> We cannot know if '-q' is an argument to '-S' or a new option.
->
-> With this patch, rev-parse --parseopt will always give an argument to
-> optional options, as an empty string if the argument is unset.
->
-> The same two commands now give us :
->
->   $ /tmp/opt.sh -S -q
->   set -- -S '' -q --
->   $ /tmp/opt.sh -S-q
->   set -- -S '-q' --
+Also s/equaly/equally/;
 
-Two are different, but the former "set -- -S '' -q --" is not what
-you want, either, no?  -S with an explicit empty argument and -S
-alone without argument may mean two totally different things, which
-is the whole point of "option with an optional parameter".  If some
-code that have been using "rev-parse --parseopt" was happy with
-
-	$ /tmp/opt.sh -S
-        set -- -S --
-
-and then your updated version gave it this instead:
-
-	$ /tmp/opt.sh -S
-        set -- -S '' --
-
-wouldn't it be a regression to them?
+-Keshav
