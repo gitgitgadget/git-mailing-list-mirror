@@ -1,95 +1,105 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [git-users] Problem using detached worktrees with commands implemented in scripts
-Date: Wed, 16 Oct 2013 23:39:25 +0100
-Organization: OPDS
-Message-ID: <29AA597BEBC146B09E8B370949EC2CE9@PhilipOakley>
-References: <201310162003.r9GK3UYj014414@freeze.ariadne.com> <xmqqeh7k51vg.fsf@gitster.dls.corp.google.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v3] Add core.mode configuration
+Date: Wed, 16 Oct 2013 16:06:34 -0700
+Message-ID: <20131016230634.GO9464@google.com>
+References: <20131015123505.GA3097@shrek.podlesie.net>
+ <525d35e766ad4_55661275e7426@nysa.notmuch>
+ <20131015133327.GA22723@shrek.podlesie.net>
+ <525d4354a5436_5844e73e843d@nysa.notmuch>
+ <20131015145139.GA3977@shrek.podlesie.net>
+ <CAEBDL5V8wfbQTZ5do-UMRpSsxRN8bFaHVnG7kRNfP0t+oYbfNg@mail.gmail.com>
+ <525e0e1b28c87_81a151de743f@nysa.notmuch>
+ <CAEBDL5We2wshgMZcTXoDziXskKvb9s2=2DEZtXRBgbTiitCOZQ@mail.gmail.com>
+ <525ee9d93c3af_3983c19e7caa@nysa.notmuch>
+ <8629441933A94862982C5CDD6BF47690@PhilipOakley>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>, "Junio C Hamano" <gitster@pobox.com>
-To: "Dale R. Worley" <worley@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Thu Oct 17 00:39:25 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: John Szakmeister <john@szakmeister.net>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	Krzysztof Mazur <krzysiek@podlesie.net>, git@vger.kernel.org
+To: Philip Oakley <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Thu Oct 17 01:06:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VWZkT-0003Cg-7m
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Oct 2013 00:39:25 +0200
+	id 1VWaAt-0007N7-EE
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Oct 2013 01:06:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761392Ab3JPWjS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Oct 2013 18:39:18 -0400
-Received: from out1.ip06ir2.opaltelecom.net ([62.24.128.242]:35887 "EHLO
-	out1.ip06ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1760936Ab3JPWjQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 16 Oct 2013 18:39:16 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AvIVAGQUX1JOl3+a/2dsb2JhbABaDoJ5iXG1BwQCAgEBgRwXdGkBAYEfAQEUAQQBAQQBCAEBLh4BASELAgMFAgEDFQwlFAEEGgYHFwYTCAIBAgMBCYUvBwGCFhkKv1aOCCZKWYMmgQYDiQSGEppwgWZ/QDuBNA
-X-IPAS-Result: AvIVAGQUX1JOl3+a/2dsb2JhbABaDoJ5iXG1BwQCAgEBgRwXdGkBAYEfAQEUAQQBAQQBCAEBLh4BASELAgMFAgEDFQwlFAEEGgYHFwYTCAIBAgMBCYUvBwGCFhkKv1aOCCZKWYMmgQYDiQSGEppwgWZ/QDuBNA
-X-IronPort-AV: E=Sophos;i="4.93,509,1378854000"; 
-   d="scan'208";a="591316769"
-Received: from host-78-151-127-154.as13285.net (HELO PhilipOakley) ([78.151.127.154])
-  by out1.ip06ir2.opaltelecom.net with SMTP; 16 Oct 2013 23:39:14 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1760423Ab3JPXGj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Oct 2013 19:06:39 -0400
+Received: from mail-pd0-f180.google.com ([209.85.192.180]:43012 "EHLO
+	mail-pd0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754040Ab3JPXGi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Oct 2013 19:06:38 -0400
+Received: by mail-pd0-f180.google.com with SMTP id y10so1685723pdj.11
+        for <git@vger.kernel.org>; Wed, 16 Oct 2013 16:06:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=mu5hhh0E0kNQraHJcMOa0AU/GscgFAcSjU/t9oYvMCk=;
+        b=QjWYvDEhdJHps4DzvVNRCguzLjxRcHRYtPgjpYKqDqchu0fstx/31Pj/N51Ue9chrE
+         hDA4BFQHabV/kz5+pVy5PfPW3EFYoSL20VTDq24uAzTKMe6zI5tU+y1/KlNxSOdb+OPf
+         D8X5nlq5/T9P395FLJQzRm0A5UmOuwOQG4gsGTu4NeZBVZspWrBuYDkFCq9w8WaF7xH3
+         wMgKm+iY08ij1R5f4XWYnApOiK6jb/OOqmz0Sn/eoCC8YkWjjoAywOYM2ZZ+YHR2yZLN
+         b7+DPUhs2csbpBuBSbnhVx0lcV3Q22KdPxz9K5X1p0z8XNCSf/X6NnoPClg3aLH0iM9q
+         D0aA==
+X-Received: by 10.68.254.132 with SMTP id ai4mr5267223pbd.51.1381964798336;
+        Wed, 16 Oct 2013 16:06:38 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id nj9sm93535842pbc.13.1969.12.31.16.00.00
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 16 Oct 2013 16:06:37 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <8629441933A94862982C5CDD6BF47690@PhilipOakley>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236280>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236281>
 
-From: "Junio C Hamano" <gitster@pobox.com>
-> worley@alum.mit.edu (Dale R. Worley) writes:
->
->> In general, Git commands on a repository with a detached worktree can
->> be executed by cd'ing into the directory containing the .git
->> directory, ...
->
-> Eh?  News to me; it might happened to have appeared to work by
-> accident, but that is not by design.
+Philip Oakley wrote:
 
-I think it is this part in Dale's original email
+> Would this be a good time to suggest a specific wording should be
+> proposed (or a reminder of what was proposed repeated) for the
+> documentation of this option. It will be the documentation that
+> users will refer to when they need to know, rather than the list
+> discussions.
 
-"However, this approach does not work with "git filter-branch", which
-objects with "You need to run this command from the toplevel of the
-working tree."
+It's not clear to me that this config item is a good idea.
 
-that is the problem Dale has seen. IIRC there are a few commands that do 
-require to be run from the toplevel ('git bisect' I think is another), 
-and the detection process for 'toplevel' may not work properly when in a 
-separated work-tree environment.
+What is the intended use?  If someone wants to test that their scripts
+will continue to work with git 2.0, wouldn't testing a 2.0 release
+candidate (or the current state of the 'jch' branch until one exists)
+be the simplest way to do that?  If someone just likes the proposed
+behavior changes and wants to start using them right away, maybe we
+can help them by releasing 2.0 sooner ;-), or by advertising the
+fairly simple changes in commandline usage to get the new behaviors:
 
-Perhaps something to consider.
+	Instead of "git add", use "git add -A".
 
-Philip
+	When using "git add -u" or "git add -A" from a subdirectory
+	of the toplevel, specify "git add -u ." explicitly unless you
+	want it to apply to the whole tree (in which case use
+	"git add -u :/").
 
->
-> IIRC, the intended use pattern (i.e. the change that introduced
-> GIT_DIR and GIT_WORK_TREE environment variables was designed to
-> support) for such a working tree is to:
->
-> - export GIT_DIR that points at the correct .git directory;
->
-> - export GIT_WORK_TREE that points at the correct top-level of such
->   a working tree; and then
->
-> - run the commands anywhere in the working tree, as if you did not
->   export these two environment variables and instead had the .git
->   directory at the usual place in the working tree.
->
-> It _is_ possible that we may have broken this canonical use pattern
-> over time with more recent updates; I do not think we have extensive
-> test coverage for "detached worktree" use case in the first place.
->
->> Does anyone have any feedback on this?
->
-> Not exporting GIT_DIR variable in sh-setup was done not by accident
-> but as a very deliberate design choice, IIRC.
-> --
+	Instead of letting "git push" guess, name the branch you
+	want to push: "git push origin master".  Or set
+	'[push] default = simple' in your configuration.
+
+	Pass --prefix to "git svn clone".
+
+The downside of configuration like the proposed core.next is that it
+is hard to explain ("What do you mean that I can't roll back to the
+pre-2.0 behavior in Git 2.0 by setting this configuration setting to
+an appropriate value?"), users or scripts can rely on it, and
+configuration variables tend to accumulate and never be removed.  If
+we really want a run-time switch for this, I suspect an appropriately
+named environment variable would work better, since we have a history
+of being able to remove those without alarming people.
+
+My two cents,
+Jonathan
