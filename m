@@ -1,111 +1,111 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v3] Add core.mode configuration
-Date: Wed, 16 Oct 2013 14:57:18 -0500
-Message-ID: <525eef9ea46bd_3983c19e7c61@nysa.notmuch>
-References: <1381561485-20252-1-git-send-email-felipe.contreras@gmail.com>
- <20131014205908.GA17089@shrek.podlesie.net>
- <525c63b6711fa_197a905e845b@nysa.notmuch>
- <20131015123505.GA3097@shrek.podlesie.net>
- <525d35e766ad4_55661275e7426@nysa.notmuch>
- <20131015133327.GA22723@shrek.podlesie.net>
- <525d4354a5436_5844e73e843d@nysa.notmuch>
- <20131015145139.GA3977@shrek.podlesie.net>
- <CAEBDL5V8wfbQTZ5do-UMRpSsxRN8bFaHVnG7kRNfP0t+oYbfNg@mail.gmail.com>
- <525e0e1b28c87_81a151de743f@nysa.notmuch>
- <CAEBDL5We2wshgMZcTXoDziXskKvb9s2=2DEZtXRBgbTiitCOZQ@mail.gmail.com>
- <CAEBDL5UaowCZggHijoqPF2UP5B6Y6Bkr9eP+A-Z3-x71W1Oi6Q@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Krzysztof Mazur <krzysiek@podlesie.net>, git@vger.kernel.org
-To: John Szakmeister <john@szakmeister.net>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 16 22:09:03 2013
+From: worley@alum.mit.edu (Dale R. Worley)
+Subject: [git-users] Problem using detached worktrees with commands implemented in scripts
+Date: Wed, 16 Oct 2013 16:03:30 -0400
+Message-ID: <201310162003.r9GK3UYj014414@freeze.ariadne.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 16 22:10:51 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VWXOr-00067O-3w
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Oct 2013 22:08:57 +0200
+	id 1VWXQe-00070r-Bj
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Oct 2013 22:10:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760584Ab3JPUIw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Oct 2013 16:08:52 -0400
-Received: from mail-oa0-f43.google.com ([209.85.219.43]:39454 "EHLO
-	mail-oa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753790Ab3JPUIv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Oct 2013 16:08:51 -0400
-Received: by mail-oa0-f43.google.com with SMTP id i3so1141263oag.16
-        for <git@vger.kernel.org>; Wed, 16 Oct 2013 13:08:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:content-transfer-encoding;
-        bh=BR16IKIOHVmH1VPokfKifOPxKQwlSHF/GVVqubsxdh0=;
-        b=G6WZ+Hp0ogPTZki217ul6Ii5Jd9u7NiUlFMhz/m/imE8oJKeICVCD/PQCZtCTfRECP
-         WmPE9tN2euFS+jV31EbvOdE5KhHjGLLN+f4L+TNz0Knu4q/9erb0p4xFYMB/NCjfwtD9
-         oyTWHbY6uoB/G3oqZQHkeihlzJ9s6+wgOIQFhCOzEz7Kez0lo/EeUKFRlsPTLUrOs4uH
-         Ozqjp7UYRTQrFSx6CV4FArGgRbXL2FiXLjtxePgDg4e5w/Hf9OH00Cd0yNQojY/zLnvZ
-         GTqpe+S5gTIIdKZWC1Du37oQJYLmKNo+wHbJVaV0fXBRZ8CH+XQ+mT6Fyb6tKIHFE1No
-         Cacg==
-X-Received: by 10.182.60.194 with SMTP id j2mr7617522obr.2.1381954131111;
-        Wed, 16 Oct 2013 13:08:51 -0700 (PDT)
-Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
-        by mx.google.com with ESMTPSA id nw5sm65638582obc.9.1969.12.31.16.00.00
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 16 Oct 2013 13:08:50 -0700 (PDT)
-In-Reply-To: <CAEBDL5UaowCZggHijoqPF2UP5B6Y6Bkr9eP+A-Z3-x71W1Oi6Q@mail.gmail.com>
+	id S1761611Ab3JPUKk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Oct 2013 16:10:40 -0400
+Received: from qmta06.westchester.pa.mail.comcast.net ([76.96.62.56]:35201
+	"EHLO qmta06.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1761255Ab3JPUKi (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 16 Oct 2013 16:10:38 -0400
+X-Greylist: delayed 426 seconds by postgrey-1.27 at vger.kernel.org; Wed, 16 Oct 2013 16:10:38 EDT
+Received: from omta06.westchester.pa.mail.comcast.net ([76.96.62.51])
+	by qmta06.westchester.pa.mail.comcast.net with comcast
+	id dnfa1m00216LCl056w3XDg; Wed, 16 Oct 2013 20:03:31 +0000
+Received: from freeze.ariadne.com ([24.34.72.61])
+	by omta06.westchester.pa.mail.comcast.net with comcast
+	id dw3X1m00H1KKtkw3Sw3XYM; Wed, 16 Oct 2013 20:03:31 +0000
+Received: from freeze.ariadne.com (freeze.ariadne.com [127.0.0.1])
+	by freeze.ariadne.com (8.14.5/8.14.5) with ESMTP id r9GK3UR0014415;
+	Wed, 16 Oct 2013 16:03:30 -0400
+Received: (from worley@localhost)
+	by freeze.ariadne.com (8.14.5/8.14.5/Submit) id r9GK3UYj014414;
+	Wed, 16 Oct 2013 16:03:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
+	s=q20121106; t=1381953811;
+	bh=NbFQeoALF2M3B4cPfvm3ONX40jFtGqWdlfjCYh436UU=;
+	h=Received:Received:Received:Received:Date:Message-Id:From:To:
+	 Subject;
+	b=HaJPgHA6NV8OXVuHzrkCBphmi8V7YdYoePCpYQKHs9tixKqJ5JNyPY/xjRD2Z2D1M
+	 8dx4IkgiK2Oij9cQsenIlPiXbPbR0tPqHhYUrXXnSnuGVVrmn6X3zkc5f5slIbf3S/
+	 lcWv2nhZOTAwFpFtdHX2vkeoDutPrQczTMWSOA9oUgul2SOzRZNiAVJe5aiowtvj+q
+	 3/OB4IJjH832x07aMgeUwVYHlLWbGV12q8I/OzphUrfGHMUI0bmgqdeWwkheCXzHXd
+	 Ra39Meoryn2Jgi6whsaJgwIrbNhJTV/E3EFtuOHv9dbvdsD+NpFCUwRqSpDgJNHfU2
+	 kNqyLAlwcqKPQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236259>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236260>
 
-John Szakmeister wrote:
-> On Wed, Oct 16, 2013 at 6:54 AM, John Szakmeister <john@szakmeister.net> wrote:
-> [snip]
-> > "probably a minority" -- I guess that's the part I disagree with.  I'm
-> > not sure what a minority means here, but I don't think it'll be a
-> > handful of people.  How big does that number get before we get
-> > concerned about backlash from users if we decide to change course?
-> > Or, is that simply not an issue?  Why or why not?  I have to be
-> > honest, if the option was available, I'd have my developers turn it
-> > on.  I'm sure a great deal of others would do so too.
-> >
-> > Is there some other way we can solve this?  Having an experimental
-> > branch with all the 2.0 features merged and those concerned can just
-> > build that version?  I see the downside of that too: it's not as easy
-> > for people to try, and there is nothing preventing folks from posting
-> > binaries with the new behaviors enabled.  It leads me to feeling that
-> > we're stuck in some regard.  But maybe I'm being overly pessimistic
-> > here, and it's really all a non-issue.  As I said earlier, it'd be
-> > nice if others chimed in here.
-> 
-> Thinking about this a little more, we do have a proving ground.
-> That's what the whole pu/next/master construct is for.
+In Git, one can set up a repository with a "detached worktree", where
+the .git directory is not a subdirectory of the top directory of the
+work tree.
 
-No, that's not true.
+In general, Git commands on a repository with a detached worktree can
+be executed by cd'ing into the directory containing the .git
+directory, and executing the Git command there.  E.g., "git add" and
+"git commit" execute as one would expect.  (I think they can also be
+executed by cd'ing to the worktree and setting GIT_DIR.)
 
-'next' doesn't contain experimental patches, it contains potentially dangerous
-one that might benefit from some testing before going to master, but they are
-certainly not experimental.
+However, this approach does not work with "git filter-branch", which
+objects with "You need to run this command from the toplevel of the
+working tree."
 
-'pu' doesn't contain experimental code either, the code in 'pu' has to be
-feature complete. It might require a few more tunning patches, but it's not
-experimental, and those branches are not long lived. For example the pack-v4
-patches could be merged today, and the people involved could keep working on
-top of that merge point, but that doesn't happen, because 'pu' is not for
-experimental stuff.
+I suspect that it does not work with other Git commands that are
+implemented with shell scripts.  The problem appears to be in the
+git-sh-setup script, which is called by the Git shell scripts to set
+up the environment and do preliminary tests.
 
-There is no place in the Git repository for pack-v4, because there's no place
-for experimental patches.
+It seems to me that this inconsistency between the script commands and
+the binary commands can be fixed by updating git-sh-setup in this way:
 
-> So maybe this is a non-issue.  By the time it lands on master, we should have
-> decided whether the feature is worth keeping or not.
+--- git-sh-setup.Custom.orig	2013-06-20 12:59:45.000000000 -0400
++++ git-sh-setup	2013-10-07 22:34:06.719946134 -0400
+@@ -297,14 +297,18 @@
+ # if we require to be in a git repository.
+ if test -z "$NONGIT_OK"
+ then
+-	GIT_DIR=$(git rev-parse --git-dir) || exit
++	export GIT_DIR=$(git rev-parse --git-dir) || exit
+ 	if [ -z "$SUBDIRECTORY_OK" ]
+ 	then
+-		test -z "$(git rev-parse --show-cdup)" || {
+-			exit=$?
+-			echo >&2 "You need to run this command from the toplevel of the working tree."
+-			exit $exit
+-		}
++		cdup="$(git rev-parse --show-cdup)"
++		if [ -n "$cdup" ]
++		then
++			# Current directory is not the toplevel.
++			# Set GIT_DIR to the absolute path of the repository.
++			GIT_DIR=$(cd "$GIT_DIR" && pwd)
++			# cd to the toplevel.
++			cd $cdup
++		fi
+ 	fi
+ 	test -n "$GIT_DIR" && GIT_DIR=$(cd "$GIT_DIR" && pwd) || {
+ 		echo >&2 "Unable to determine absolute path of git directory"
 
-I believe without an experimental branch, many branches would never mature to
-go into master, or next, or even pu.
+What this change does is, when a command is invoked from a directory
+containing a repository with a detached worktree, is to set GIT_DIR to
+the directory of the repository, then cd to the top of the worktree.
+After that, the script command should work as expected.
 
--- 
-Felipe Contreras
+I am far from being an expert in Git internals, so I don't know
+whether this is the correct approach to take to this problem or not.
+
+Does anyone have any feedback on this?
+
+Dale
