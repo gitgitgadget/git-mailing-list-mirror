@@ -1,124 +1,122 @@
-From: Nicolas Vigier <boklm@mars-attacks.org>
-Subject: Re: [PATCH] rev-parse --parseopt: fix handling of optional arguments
-Date: Wed, 16 Oct 2013 12:58:11 +0200
-Message-ID: <20131016105811.GA4589@mars-attacks.org>
-References: <1381838425-18244-1-git-send-email-boklm@mars-attacks.org>
- <20131015231427.GF9464@google.com>
- <xmqqfvs29kjc.fsf@gitster.dls.corp.google.com>
- <20131015235739.GI9464@google.com>
- <525E3A80.5000500@viscovery.net>
+From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
+Subject: [PATCH] t4254: modernize tests
+Date: Wed, 16 Oct 2013 14:27:16 +0200
+Message-ID: <1381926436-12493-1-git-send-email-szeder@ira.uka.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Pierre Habouzit <madcoder@debian.org>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed Oct 16 12:58:22 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 16 14:27:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VWOo1-0005sg-8c
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Oct 2013 12:58:21 +0200
+	id 1VWQCG-0004WQ-8x
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Oct 2013 14:27:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760636Ab3JPK6R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Oct 2013 06:58:17 -0400
-Received: from mx0.mars-attacks.org ([92.243.25.60]:45773 "EHLO
-	mx0.mars-attacks.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760524Ab3JPK6N (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Oct 2013 06:58:13 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mx0.mars-attacks.org (Postfix) with ESMTP id 438084E6B;
-	Wed, 16 Oct 2013 12:58:26 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mars-attacks.org
-Received: from mx0.mars-attacks.org ([127.0.0.1])
-	by localhost (mx0.mars-attacks.org [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id ib9n4fzy1TpT; Wed, 16 Oct 2013 12:58:25 +0200 (CEST)
-Received: from wxy.mars-attacks.org (moow.mars-attacks.org [82.242.116.57])
-	by mx0.mars-attacks.org (Postfix) with ESMTPS id 9E9C93EE6;
-	Wed, 16 Oct 2013 12:58:25 +0200 (CEST)
-Received: by wxy.mars-attacks.org (Postfix, from userid 500)
-	id 2880043928; Wed, 16 Oct 2013 12:58:11 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <525E3A80.5000500@viscovery.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S934159Ab3JPM1Y convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Oct 2013 08:27:24 -0400
+Received: from moutng.kundenserver.de ([212.227.126.171]:61477 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932406Ab3JPM1X (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Oct 2013 08:27:23 -0400
+Received: from localhost6.localdomain6 (f051145140.adsl.alicedsl.de [78.51.145.140])
+	by mrelayeu.kundenserver.de (node=mrbap1) with ESMTP (Nemesis)
+	id 0MQ7pz-1VRlMn1bIh-004kzV; Wed, 16 Oct 2013 14:27:22 +0200
+X-Mailer: git-send-email 1.8.4.1.495.gd8d272e
+X-Provags-ID: V02:K0:g4nAO+kk+V8FCjZSX1DiMML+QjveQ7Twn2iiHXHSzVn
+ 05z9Y2L44AzC3fUH9hYqdE7UoRMA0sNJPZzqUki8gKOXUI+qB+
+ a8WEArDk0GgOjk3c/rdUAq/Nl+66fWm0L6FxI4kCqxYB7f1bsr
+ 1lXm5FmGiU7RfX4SIdjDxuYqt29OLy9OeI36ZGYnliToA4e0fL
+ J5O37pGrQmKR43Kp0MiseTanQWnCWF4LoylTs/bz4kYI6xQPK1
+ ufSOM1JnHkELrYQ00Mz8HFwFQhah1fUujz9Fby8Q5VmFifUjVP
+ LIevegjqZbVJ5Yj6UxDrBfavf0/ShHtu55O3ZEMr+DJhXTxoQW
+ 3S8Nan8JUxfRheqJLQ3EVSFvt2z2hDiTMrlvdylFbexJau5u4H
+ jiicMwQW8JsCg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236244>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236245>
 
-On Wed, 16 Oct 2013, Johannes Sixt wrote:
+- Don't start tests with 'test $? =3D 0' ;)
+- Move writing the bogus patch and the expected output into the
+  appropriate test_expect_success blocks.
+- Use the test_must_fail helper instead of manually checking for
+  non-zero exit code.
+- Use the debug-friendly test_path_is_file helper instead of 'test -f'.
+- No space after '>'.
 
-> Am 10/16/2013 1:57, schrieb Jonathan Nieder:
-> > Junio C Hamano wrote:
-> > 
-> >> You just made these two that the user clearly meant to express two
-> >> different things indistinguishable.
-> >>
-> >> 	opt.sh -S
-> >>       opt.sh -S ''
-> > [...]
-> >> And that is exactly why gitcli.txt tells users to use the 'sticked'
-> >> form, and ends the bullet point with:
-> >>
-> >>    An option that takes optional option-argument must be written in
-> >>    the 'sticked' form.
-> > 
-> > Yes, another possibility in that vein would be to teach rev-parse
-> > --parseopt an OPTIONS_LONG_STICKED output format, and then parse with
-> 
-> Aren't you people trying to solve something that can't besolved? What does
-> 
->   git commit -S LICENSE
-> 
-> mean? Commit the index and sign with the key-id "LICENSE" or commit just
-> the file "LICENSE" with the default key-id?
+Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
+---
+Is the exact match of 'git am's exit code important?  I think it doesn'=
+t
+matter as long as it fails, hence test_must_fail instead of
+test_expect_code 1.
 
-The later, as optional arguments needs to be sticked, but I think this
-is not related to the problems with --parseopt.
+ t/t4254-am-corrupt.sh | 36 +++++++++++++++---------------------
+ 1 file changed, 15 insertions(+), 21 deletions(-)
 
-Here is a summary the problems I think we have with --parseopt and
-proposed solutions. This command makes it possible to parse arguments
-with a loop like this :
-
-  while test $# != 0
-  do
-        case "$1" in
-        -q)
-                GIT_QUIET=t ;;
-        -S)
-                # do something with $2
-                # shift if you think $2 is an optional arg
-                ;;
-        --)
-                shift; break ;;
-        esac
-        shift
-  done
-  # do something with the other arguments
-
-And I think the problems with the '?' flag when using this kind of loop
-are :
-
- - You don't know if $2 is the optional argument for -S, or the next option
- 
- - You can't use '--' as an optional argument to -S, because you don't
-   know if '--' is the optional argument to -S, or the separator between
-   options and non options.
-
-To fix this, solution 1) is to always include the optional argument in
-$2, and set it to '' if it is not set. However this brings the problem
-that you can't distinguish between unset argument and empty argument.
-The following two become the same :
-  ./opt.sh --gpg-id
-  ./opt.sh --gpg-id=
-
-Solution 2) is to use a flag like ?<default> as suggested by Jonathan.
-Now you can distinguish between unset and empty args, but you can't
-between <default> and unset, but this is probably not a big problem as
-you can select <default> so that it is a value nobody would want to use.
-
-Solution 3) is the OPTIONS_LONG_STICKED output format suggested by
-Jonathan. I can't see any problem with this one.
+diff --git a/t/t4254-am-corrupt.sh b/t/t4254-am-corrupt.sh
+index b7da95fac5..85716dd6ec 100755
+--- a/t/t4254-am-corrupt.sh
++++ b/t/t4254-am-corrupt.sh
+@@ -3,20 +3,19 @@
+ test_description=3D'git am with corrupt input'
+ . ./test-lib.sh
+=20
+-# Note the missing "+++" line:
+-cat > bad-patch.diff <<'EOF'
+-From: A U Thor <au.thor@example.com>
+-diff --git a/f b/f
+-index 7898192..6178079 100644
+---- a/f
+-@@ -1 +1 @@
+--a
+-+b
+-EOF
+-
+ test_expect_success setup '
+-	test $? =3D 0 &&
+-	echo a > f &&
++	# Note the missing "+++" line:
++	cat >bad-patch.diff <<-\EOF &&
++	From: A U Thor <au.thor@example.com>
++	diff --git a/f b/f
++	index 7898192..6178079 100644
++	--- a/f
++	@@ -1 +1 @@
++	-a
++	+b
++	EOF
++
++	echo a >f &&
+ 	git add f &&
+ 	test_tick &&
+ 	git commit -m initial
+@@ -26,17 +25,12 @@ test_expect_success setup '
+ #   fatal: unable to write file '(null)' mode 100644: Bad address
+ # Also, it had the unwanted side-effect of deleting f.
+ test_expect_success 'try to apply corrupted patch' '
+-	git am bad-patch.diff 2> actual
+-	test $? =3D 1
++	test_must_fail git am bad-patch.diff 2>actual
+ '
+=20
+-cat > expected <<EOF
+-fatal: git diff header lacks filename information (line 4)
+-EOF
+-
+ test_expect_success 'compare diagnostic; ensure file is still here' '
+-	test $? =3D 0 &&
+-	test -f f &&
++	echo "fatal: git diff header lacks filename information (line 4)" >ex=
+pected &&
++	test_path_is_file f &&
+ 	test_cmp expected actual
+ '
+=20
+--=20
+1.8.4.1.495.gd8d272e
