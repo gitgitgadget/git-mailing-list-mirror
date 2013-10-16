@@ -1,91 +1,96 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] rev-parse --parseopt: fix handling of optional arguments
-Date: Wed, 16 Oct 2013 14:40:07 -0700
-Message-ID: <xmqqsiw051zc.fsf@gitster.dls.corp.google.com>
-References: <1381838425-18244-1-git-send-email-boklm@mars-attacks.org>
-	<20131015231427.GF9464@google.com>
-	<xmqqfvs29kjc.fsf@gitster.dls.corp.google.com>
-	<20131015235739.GI9464@google.com> <525E3A80.5000500@viscovery.net>
-	<20131016085316.GA31314@sigill.intra.peff.net>
+Subject: Re: [PATCH] status: allow branch info color customization
+Date: Wed, 16 Oct 2013 14:39:59 -0700
+Message-ID: <xmqqzjq851zk.fsf@gitster.dls.corp.google.com>
+References: <1381911773-9564-1-git-send-email-1zeeky@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Nicolas Vigier <boklm@mars-attacks.org>, git@vger.kernel.org,
-	Pierre Habouzit <madcoder@debian.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Oct 16 23:40:18 2013
+Cc: git@vger.kernel.org, Steffen Prohaska <prohaska@zib.de>
+To: Alexander 'z33ky' Hirsch <1zeeky@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 16 23:40:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VWYpF-0000G1-OZ
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Oct 2013 23:40:18 +0200
+	id 1VWYpX-0000QY-VT
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Oct 2013 23:40:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760181Ab3JPVkN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Oct 2013 17:40:13 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36686 "EHLO
+	id S1760266Ab3JPVkW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Oct 2013 17:40:22 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62727 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755565Ab3JPVkK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Oct 2013 17:40:10 -0400
+	id S1758644Ab3JPVkC (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Oct 2013 17:40:02 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 92E404BFD6;
-	Wed, 16 Oct 2013 21:40:10 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1F7174BF88;
+	Wed, 16 Oct 2013 21:40:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=WBMbVONlTVDKLidy9NMJpt3nA+Q=; b=n892uzQXb8rLCWZFj70M
-	vdqpEZnCFh/uXkduX5vJYRSOX5AermjhYidTSbVVQQh4OLJd7Q6Prz/zotLVynK0
-	v2fDKyYOdBCoqmh/NwE4lLlSJN+es0qq5nSmugzI8LRILg4ZS0FMnuhs1G8dVss4
-	upGUNBpN5/X/Ki0rFprmxn8=
+	 s=sasl; bh=eSybOBFk0rkKTbHICCMrO1J+Xg8=; b=G0gbnxR6SJVj0ixyP+Ab
+	eU8/nYsANZMb7GL9/Ak/uBNRLQgsGA3RaBpwfNPKyuvQ7ySXpfS698T0ujAyskJm
+	WhmyfwNM4Itaupl+meljSuZjPHJ1lkR/JR4d0dCScIgEoblzsEVHyFwhg1+/lEPb
+	76pLiA3DahUtJ+7JopkoIhc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=nDdoyytOxQcxYeH7D6rWxs7+fJrU8W0OHi7yuaaGUpY799
-	HjWMiRJqPvPmPJJ4tOm/4qBlpOic214gl/uw7knq6UL2fOc83j95wdwmRe5S792L
-	6EAweA7AOesFQOE3fwwQ79Ro/1S3XQgqbnbrcwJS4KMCMrBKI+uc5IVMekQSk=
+	 q=dns; s=sasl; b=WTNZVHbjRC0JNN7E1p5wTVFprdt4pzcYnjXOsbj4w6vSnH
+	PKwXXkwuwpnHSQ1X/bcgEzfSSVVWkUybSoku+rCRG2zAlT7CNrzG/FQsSnpPwlJ0
+	oLNqTHptkKgRTcGtoqqgFYvPEB6UjoPUL7ZWIVC9cf8hqgZLXfP3I3fzdHc+U=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7C6A44BFD5;
-	Wed, 16 Oct 2013 21:40:10 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0CC6E4BF87;
+	Wed, 16 Oct 2013 21:40:02 +0000 (UTC)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D8BFB4BFC8;
-	Wed, 16 Oct 2013 21:40:08 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3FE8C4BF79;
+	Wed, 16 Oct 2013 21:40:01 +0000 (UTC)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 8771E6E0-36AB-11E3-997A-8F264F2CC097-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 82C83C2A-36AB-11E3-9389-8F264F2CC097-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236269>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236270>
 
-Jeff King <peff@peff.net> writes:
+Alexander 'z33ky' Hirsch <1zeeky@gmail.com> writes:
 
-> ... But what is the normalized form for an
-> optional argument? It either needs to be consistently "sticked" or
-> "unsticked", either:
+> From: Alexander Hirsch <1zeeky@gmail.com>
 >
->   set -- -S '' --     ;# default
->   set -- -S 'foo' --  ;# not default
->
-> or
->
->   set -- -S --    ;# default
->   set -- -Sfoo -- ;# not default
->
-> so that reading the normalized form is unambiguous.
+> git status -bs (--branch --short) does not seem to allow customization of the
+> colors for the local and remote branch.
 
-The analysis makes sense.  Either form do not let you distinguish
-between the case where the end user wanted to explicitly pass "" as
-the optional parameter to -S and the case where she gave -S without
-any optional parameter, though.
+wt-status can use the following colors:
 
-Which pretty much agrees with j6t's (and my earlier) comment that
-there is no way to solve this issue completely, I think.
+    WT_STATUS_CHANGED
+    WT_STATUS_HEADER
+  - WT_STATUS_LOCAL_BRANCH
+    WT_STATUS_NOBRANCH
+    WT_STATUS_ONBRANCH
+  - WT_STATUS_REMOTE_BRANCH
+    WT_STATUS_UNMERGED
+    WT_STATUS_UNTRACKED
+    WT_STATUS_UPDATED
 
-It is an acceptable compromise to use your suggestion as a solution
-that works for cases other than passing an explicit empty string as
-an optional parameter, I would say, if the limitation is clearly
-documented.
+but parse_status_slot() lets you set only these
 
-Thanks.
+    WT_STATUS_CHANGED
+    WT_STATUS_HEADER
+    WT_STATUS_NOBRANCH
+    WT_STATUS_ONBRANCH
+    WT_STATUS_UNMERGED
+    WT_STATUS_UNTRACKED
+    WT_STATUS_UPDATED
+
+and this patch makes the configuration mechanism cover all of the
+slots by adding parsing code for the missing two.
+
+While I think the intent of the patch makes sense, I have to wonder
+if "local" and "remote" without having the "branch" anywhere is
+painting us into an unpleasant corner we cannot later get out
+of. For example, we might want to show the remote-tracking branch
+information (that is where REMOTE_BRANCH color matters in the
+current code) in a more detailed way later, which may include where
+the source repository resides, either locally on the same host or
+remotely over the network, and WT_STATUS_{LOCAL,REMOTE}_REPOSITORY
+may be the natural names for the colors to paint the repository
+paths/URL in.
