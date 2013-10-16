@@ -1,111 +1,112 @@
-From: worley@alum.mit.edu (Dale R. Worley)
-Subject: [git-users] Problem using detached worktrees with commands implemented in scripts
-Date: Wed, 16 Oct 2013 16:03:30 -0400
-Message-ID: <201310162003.r9GK3UYj014414@freeze.ariadne.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 16 22:10:51 2013
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: Pull and fetch don't honor `--progress` flag
+Date: Wed, 16 Oct 2013 21:12:10 +0100
+Message-ID: <20131016201210.GR27238@serenity.lan>
+References: <48AC4CE6F0887542B2A5E28E4E7A929740FA5349A9@Viper-RSG.pc.cognex.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: "Jacobs, Todd" <todd.jacobs@cognex.com>
+X-From: git-owner@vger.kernel.org Wed Oct 16 22:12:23 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VWXQe-00070r-Bj
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Oct 2013 22:10:48 +0200
+	id 1VWXS9-0007mA-B6
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Oct 2013 22:12:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761611Ab3JPUKk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Oct 2013 16:10:40 -0400
-Received: from qmta06.westchester.pa.mail.comcast.net ([76.96.62.56]:35201
-	"EHLO qmta06.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1761255Ab3JPUKi (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 16 Oct 2013 16:10:38 -0400
-X-Greylist: delayed 426 seconds by postgrey-1.27 at vger.kernel.org; Wed, 16 Oct 2013 16:10:38 EDT
-Received: from omta06.westchester.pa.mail.comcast.net ([76.96.62.51])
-	by qmta06.westchester.pa.mail.comcast.net with comcast
-	id dnfa1m00216LCl056w3XDg; Wed, 16 Oct 2013 20:03:31 +0000
-Received: from freeze.ariadne.com ([24.34.72.61])
-	by omta06.westchester.pa.mail.comcast.net with comcast
-	id dw3X1m00H1KKtkw3Sw3XYM; Wed, 16 Oct 2013 20:03:31 +0000
-Received: from freeze.ariadne.com (freeze.ariadne.com [127.0.0.1])
-	by freeze.ariadne.com (8.14.5/8.14.5) with ESMTP id r9GK3UR0014415;
-	Wed, 16 Oct 2013 16:03:30 -0400
-Received: (from worley@localhost)
-	by freeze.ariadne.com (8.14.5/8.14.5/Submit) id r9GK3UYj014414;
-	Wed, 16 Oct 2013 16:03:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-	s=q20121106; t=1381953811;
-	bh=NbFQeoALF2M3B4cPfvm3ONX40jFtGqWdlfjCYh436UU=;
-	h=Received:Received:Received:Received:Date:Message-Id:From:To:
-	 Subject;
-	b=HaJPgHA6NV8OXVuHzrkCBphmi8V7YdYoePCpYQKHs9tixKqJ5JNyPY/xjRD2Z2D1M
-	 8dx4IkgiK2Oij9cQsenIlPiXbPbR0tPqHhYUrXXnSnuGVVrmn6X3zkc5f5slIbf3S/
-	 lcWv2nhZOTAwFpFtdHX2vkeoDutPrQczTMWSOA9oUgul2SOzRZNiAVJe5aiowtvj+q
-	 3/OB4IJjH832x07aMgeUwVYHlLWbGV12q8I/OzphUrfGHMUI0bmgqdeWwkheCXzHXd
-	 Ra39Meoryn2Jgi6whsaJgwIrbNhJTV/E3EFtuOHv9dbvdsD+NpFCUwRqSpDgJNHfU2
-	 kNqyLAlwcqKPQ==
+	id S1761522Ab3JPUMR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Oct 2013 16:12:17 -0400
+Received: from coyote.aluminati.org ([72.9.247.114]:33361 "EHLO
+	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760150Ab3JPUMR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Oct 2013 16:12:17 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by coyote.aluminati.org (Postfix) with ESMTP id 9F832606528;
+	Wed, 16 Oct 2013 21:12:16 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -2.9
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9] autolearn=ham
+Received: from coyote.aluminati.org ([127.0.0.1])
+	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 1GQ0ED5DNPdo; Wed, 16 Oct 2013 21:12:16 +0100 (BST)
+Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
+	by coyote.aluminati.org (Postfix) with ESMTP id 44C3E60651D;
+	Wed, 16 Oct 2013 21:12:16 +0100 (BST)
+Received: from localhost (localhost [127.0.0.1])
+	by pichi.aluminati.org (Postfix) with ESMTP id 33E3E161E170;
+	Wed, 16 Oct 2013 21:12:16 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at aluminati.org
+Received: from pichi.aluminati.org ([127.0.0.1])
+	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id Mref5dMTLXpB; Wed, 16 Oct 2013 21:12:15 +0100 (BST)
+Received: from serenity.lan (chimera.aluminati.org [10.0.16.60])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by pichi.aluminati.org (Postfix) with ESMTPSA id 16F4D161E4F9;
+	Wed, 16 Oct 2013 21:12:12 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <48AC4CE6F0887542B2A5E28E4E7A929740FA5349A9@Viper-RSG.pc.cognex.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236260>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236261>
 
-In Git, one can set up a repository with a "detached worktree", where
-the .git directory is not a subdirectory of the top directory of the
-work tree.
+On Wed, Oct 16, 2013 at 03:50:51PM -0400, Jacobs, Todd wrote:
+> When I use the `--progress` flag with the push command, I get transfer-speed statistics like this:
+> 
+>     $ git push -progress origin master 2>&1 | tee /tmp/push
+>     Counting objects: 30, done.
+>     Compressing objects: 100% (20/20), done.
+>     Writing objects: 100% (30/30), 9.02 MiB | 206.00 KiB/s, done.
+>     Total 30 (delta 0), reused 0 (delta 0)
+> 
+> This also works similarly with clone:
+> 
+>     $ git clone --progress "$url" foo.git 2>&1 | tee /tmp/clone
+>     Cloning into 'foo.git'...
+>     remote: Counting objects: 61, done.
+>     remote: Compressing objects: 100% (43/43), done.
+>     remote: Total 61 (delta 3), reused 0 (delta 0)
+>     Receiving objects: 100% (61/61), 15.22 MiB | 473.00 KiB/s, done.
+>     Resolving deltas: 100% (3/3), done.
+>     Checking connectivity... done
+> 
+> However, even though pull and fetch also have the same flag documented, git never reports any network statistics at all. For example:
+> 
+>     $ git pull --progress origin master 2>&1 | tee /tmp/pull
+>     remote: Counting objects: 5, done.
+>     remote: Compressing objects: 100% (3/3), done.
+>     remote: Total 3 (delta 1), reused 0 (delta 0)
+> 
+> This is repeatable with both Git 1.7.9 and Git 1.8.4.1 running under Cygwin. Is this a bug? If not, how can I make fetch and pull cough up throughput statistics?
 
-In general, Git commands on a repository with a detached worktree can
-be executed by cd'ing into the directory containing the .git
-directory, and executing the Git command there.  E.g., "git add" and
-"git commit" execute as one would expect.  (I think they can also be
-executed by cd'ing to the worktree and setting GIT_DIR.)
+Does it make a difference how you invoke "git fetch"?  From a quick look
+at the code, "git fetch" with no remote or refspec should display
+progress data, but if you specify "--all" or a remote and refspec then
+it won't.
 
-However, this approach does not work with "git filter-branch", which
-objects with "You need to run this command from the toplevel of the
-working tree."
+The following patch (untested) will fix it if that is the case:
 
-I suspect that it does not work with other Git commands that are
-implemented with shell scripts.  The problem appears to be in the
-git-sh-setup script, which is called by the Git shell scripts to set
-up the environment and do preliminary tests.
-
-It seems to me that this inconsistency between the script commands and
-the binary commands can be fixed by updating git-sh-setup in this way:
-
---- git-sh-setup.Custom.orig	2013-06-20 12:59:45.000000000 -0400
-+++ git-sh-setup	2013-10-07 22:34:06.719946134 -0400
-@@ -297,14 +297,18 @@
- # if we require to be in a git repository.
- if test -z "$NONGIT_OK"
- then
--	GIT_DIR=$(git rev-parse --git-dir) || exit
-+	export GIT_DIR=$(git rev-parse --git-dir) || exit
- 	if [ -z "$SUBDIRECTORY_OK" ]
- 	then
--		test -z "$(git rev-parse --show-cdup)" || {
--			exit=$?
--			echo >&2 "You need to run this command from the toplevel of the working tree."
--			exit $exit
--		}
-+		cdup="$(git rev-parse --show-cdup)"
-+		if [ -n "$cdup" ]
-+		then
-+			# Current directory is not the toplevel.
-+			# Set GIT_DIR to the absolute path of the repository.
-+			GIT_DIR=$(cd "$GIT_DIR" && pwd)
-+			# cd to the toplevel.
-+			cd $cdup
-+		fi
- 	fi
- 	test -n "$GIT_DIR" && GIT_DIR=$(cd "$GIT_DIR" && pwd) || {
- 		echo >&2 "Unable to determine absolute path of git directory"
-
-What this change does is, when a command is invoked from a directory
-containing a repository with a detached worktree, is to set GIT_DIR to
-the directory of the repository, then cd to the top of the worktree.
-After that, the script command should work as expected.
-
-I am far from being an expert in Git internals, so I don't know
-whether this is the correct approach to take to this problem or not.
-
-Does anyone have any feedback on this?
-
-Dale
+-- >8 --
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index bd7a101..487381e 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -952,6 +952,10 @@ static void add_options_to_argv(struct argv_array *argv)
+ 		argv_array_push(argv, "-v");
+ 	else if (verbosity < 0)
+ 		argv_array_push(argv, "-q");
++	if (progress > 0)
++		argv_array_push(argv, "--progress");
++	else if (progress == 0)
++		argv_array_push(argv, "--no-progress");
+ 
+ }
+ 
