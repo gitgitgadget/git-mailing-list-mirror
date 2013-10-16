@@ -1,109 +1,106 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: [PATCH] rebase: use reflog to find common base with upstream
-Date: Wed, 16 Oct 2013 19:53:53 +0100
-Message-ID: <d8e9f102609ee4502f579cb4ce872e0a40756204.1381949622.git.john@keeping.me.uk>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	John Keeping <john@keeping.me.uk>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 16 20:54:31 2013
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] rebase: use reflog to find common base with upstream
+Date: Wed, 16 Oct 2013 12:24:13 -0700
+Message-ID: <20131016192412.GK9464@google.com>
+References: <d8e9f102609ee4502f579cb4ce872e0a40756204.1381949622.git.john@keeping.me.uk>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Wed Oct 16 21:24:30 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VWWEo-00035C-3M
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Oct 2013 20:54:30 +0200
+	id 1VWWhq-0000pm-42
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Oct 2013 21:24:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761795Ab3JPSyJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Oct 2013 14:54:09 -0400
-Received: from coyote.aluminati.org ([72.9.247.114]:57100 "EHLO
-	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761561Ab3JPSyG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Oct 2013 14:54:06 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by coyote.aluminati.org (Postfix) with ESMTP id F34B6606529;
-	Wed, 16 Oct 2013 19:54:05 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -1
-X-Spam-Level: 
-X-Spam-Status: No, score=-1 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1] autolearn=ham
-Received: from coyote.aluminati.org ([127.0.0.1])
-	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 3+QgYbiv6mNo; Wed, 16 Oct 2013 19:54:05 +0100 (BST)
-Received: from river.lan (banza.aluminati.org [10.0.7.182])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by coyote.aluminati.org (Postfix) with ESMTPSA id 800B66064FC;
-	Wed, 16 Oct 2013 19:53:59 +0100 (BST)
-X-Mailer: git-send-email 1.8.4.566.g73d370b
+	id S1761480Ab3JPTYS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Oct 2013 15:24:18 -0400
+Received: from mail-pa0-f52.google.com ([209.85.220.52]:42035 "EHLO
+	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761288Ab3JPTYQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Oct 2013 15:24:16 -0400
+Received: by mail-pa0-f52.google.com with SMTP id kl14so1518405pab.25
+        for <git@vger.kernel.org>; Wed, 16 Oct 2013 12:24:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=DUgGaQUUzJlGbQX0A+kDJrcY6VZ2c5w4nEiRgffM7a8=;
+        b=gD+AzQiQ4FLxMlhh2NokqzW7zkEvNPEMZtKTDmHg+YUq0E7cxfVNUNRrkklBgAsHN7
+         kIk7zp4Wnc8JE1c+yUR7ZX7EVCV+gLVJODFAtC/4GZNxxYQGBzpa0XeV4Hk3XaVU4VB5
+         A9HoPG0Pqcr/DqG8bPTvWtD2SPUmMWCdpI8YEmcR+yUBXwlhmZxc2zwe0TxQK6cygz6v
+         oOZrJ4NBpPkSQ5dwg0ltSRMGB01nk5ho81CW2BC7O9Xy+shPUnb3wiRxOmctrpzNuCn9
+         z5acNpJb7aIV8MNxuJ/sqJc0SEesCnDmIbsqzFBoQPCuokpmhVcdQ6GX3+aX7UJ9c4JZ
+         chww==
+X-Received: by 10.68.197.73 with SMTP id is9mr4427028pbc.75.1381951455788;
+        Wed, 16 Oct 2013 12:24:15 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id xv2sm92824356pbb.39.1969.12.31.16.00.00
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 16 Oct 2013 12:24:15 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <d8e9f102609ee4502f579cb4ce872e0a40756204.1381949622.git.john@keeping.me.uk>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236252>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236253>
 
-Commit 15a147e (rebase: use @{upstream} if no upstream specified,
-2011-02-09) says:
+Hi,
 
-	Make it default to 'git rebase @{upstream}'. That is also what
-	'git pull [--rebase]' defaults to, so it only makes sense that
-	'git rebase' defaults to the same thing.
+John Keeping wrote:
 
-but that isn't actually the case.  Since commit d44e712 (pull: support
-rebased upstream + fetch + pull --rebase, 2009-07-19), pull has actually
-chosen the most recent reflog entry which is an ancestor of the current
-branch if it can find one.
+>                                    Since commit d44e712 (pull: support
+> rebased upstream + fetch + pull --rebase, 2009-07-19), pull has actually
+> chosen the most recent reflog entry which is an ancestor of the current
+> branch if it can find one.
+>
+> Change rebase so that it uses the same logic.
 
-Change rebase so that it uses the same logic.
+Nice idea.
 
-Signed-off-by: John Keeping <john@keeping.me.uk>
----
- git-rebase.sh     | 8 ++++++++
- t/t3400-rebase.sh | 6 ++++--
- 2 files changed, 12 insertions(+), 2 deletions(-)
+Could pull be made to rely on rebase for this as a follow-up?
 
-diff --git a/git-rebase.sh b/git-rebase.sh
-index 226752f..fd36cf7 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -437,6 +437,14 @@ then
- 			error_on_missing_default_upstream "rebase" "rebase" \
- 				"against" "git rebase <branch>"
+[...]
+> --- a/git-rebase.sh
+> +++ b/git-rebase.sh
+> @@ -437,6 +437,14 @@ then
+>  			error_on_missing_default_upstream "rebase" "rebase" \
+>  				"against" "git rebase <branch>"
+>  		fi
+> +		for reflog in $(git rev-list -g "$upstream_name" 2>/dev/null)
+> +		do
+> +			if test "$reflog" = "$(git merge-base "$reflog" HEAD)"
+
+"git merge-base --is-ancestor" is faster.
+
+What should happen if HEAD is not a valid commit?  (Tested with:
+
+	$ git checkout --orphan foo
+	$ cat >>.git/config <<EOF
+	[branch "foo"]
+		remote = origin
+		merge = refs/heads/master
+	EOF
+	$ bin-wrappers/git rebase 2>&1 | wc -l
+	83
+
+).
+
+diff --git i/git-rebase.sh w/git-rebase.sh
+index fd36cf7..d2e2c2e 100755
+--- i/git-rebase.sh
++++ w/git-rebase.sh
+@@ -439,7 +439,7 @@ then
  		fi
-+		for reflog in $(git rev-list -g "$upstream_name" 2>/dev/null)
-+		do
-+			if test "$reflog" = "$(git merge-base "$reflog" HEAD)"
-+			then
-+				upstream_name=$reflog
-+				break
-+			fi
-+		done
- 		;;
- 	*)	upstream_name="$1"
- 		shift
-diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
-index ebf93b0..4f45f7e 100755
---- a/t/t3400-rebase.sh
-+++ b/t/t3400-rebase.sh
-@@ -134,12 +134,14 @@ test_expect_success 'fail when upstream arg is missing and not configured' '
- 	test_must_fail git rebase
- '
- 
--test_expect_success 'default to @{upstream} when upstream arg is missing' '
-+test_expect_success 'default to common base in @{upstream}s reflog if no upstream arg' '
- 	git checkout -b default topic &&
- 	git config branch.default.remote . &&
- 	git config branch.default.merge refs/heads/master &&
- 	git rebase &&
--	test "$(git rev-parse default~1)" = "$(git rev-parse master)"
-+	git merge-base topic master >expect &&
-+	git rev-parse default~1 >actual &&
-+	test_cmp expect actual
- '
- 
- test_expect_success 'rebase -q is quiet' '
--- 
-1.8.4.566.g73d370b
+ 		for reflog in $(git rev-list -g "$upstream_name" 2>/dev/null)
+ 		do
+-			if test "$reflog" = "$(git merge-base "$reflog" HEAD)"
++			if git merge-base --is-ancestor "$reflog" HEAD
+ 			then
+ 				upstream_name=$reflog
+ 				break
