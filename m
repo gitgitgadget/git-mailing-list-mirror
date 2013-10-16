@@ -1,84 +1,102 @@
-From: Brandon Casey <bcasey@nvidia.com>
-Subject: [PATCH] Documentation/config.txt: denyDeleteCurrent applies to bare repos too
-Date: Tue, 15 Oct 2013 18:26:58 -0700
-Message-ID: <1381886818-14337-1-git-send-email-bcasey@nvidia.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH] symbolic-ref: trivial style fix
+Date: Tue, 15 Oct 2013 22:33:43 -0500
+Message-ID: <525e091764958_81a151de74aa@nysa.notmuch>
+References: <1379780993-4190-1-git-send-email-felipe.contreras@gmail.com>
+ <xmqq4n8ich89.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Brandon Casey <drafnel@gmail.com>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Oct 16 03:27:07 2013
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 16 05:46:52 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VWFtD-0000jO-9z
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Oct 2013 03:27:07 +0200
+	id 1VWI4R-0005vq-AR
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Oct 2013 05:46:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752768Ab3JPB1C (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Oct 2013 21:27:02 -0400
-Received: from hqemgate16.nvidia.com ([216.228.121.65]:16214 "EHLO
-	hqemgate16.nvidia.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750987Ab3JPB1A (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Oct 2013 21:27:00 -0400
-Received: from hqnvupgp08.nvidia.com (Not Verified[216.228.121.13]) by hqemgate16.nvidia.com
-	id <B525deb670002>; Tue, 15 Oct 2013 18:27:03 -0700
-Received: from hqemhub03.nvidia.com ([172.20.12.94])
-  by hqnvupgp08.nvidia.com (PGP Universal service);
-  Tue, 15 Oct 2013 18:22:35 -0700
-X-PGP-Universal: processed;
-	by hqnvupgp08.nvidia.com on Tue, 15 Oct 2013 18:22:35 -0700
-Received: from sc-xterm-13.nvidia.com (172.20.144.16) by hqemhub03.nvidia.com
- (172.20.150.15) with Microsoft SMTP Server id 8.3.327.1; Tue, 15 Oct 2013
- 18:27:00 -0700
-X-Mailer: git-send-email 1.8.4.rc4.6.g5555d19
+	id S1753435Ab3JPDqe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Oct 2013 23:46:34 -0400
+Received: from mail-ob0-f170.google.com ([209.85.214.170]:42988 "EHLO
+	mail-ob0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751874Ab3JPDqd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Oct 2013 23:46:33 -0400
+Received: by mail-ob0-f170.google.com with SMTP id gq1so139130obb.1
+        for <git@vger.kernel.org>; Tue, 15 Oct 2013 20:46:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=q2erfPFIeOZ8Mdg60brba9JDkyZXFvFl7HNUZOQqcn8=;
+        b=mydj958LNvus3SRf/pVd4ppV4p6fZ5VD1foDPcylIvMqXvTcScoY6VnoZOxb86M6wl
+         Q7uXAbjQRlCGqMIess3A/ali6PszwJQh7lUVn8MCG0oq6sc062hs2y9+VUFQQh2JvKUX
+         Vhozm5YY2Ex9fWj84TMQaiPgBMCKHFrU8Rsksk4tEbQlfq9ZS2B4hj0M8j5xSy05if+v
+         Ek/e7jOSbiomj5Q8mSFRd3UOgojvmZHn5zptViWyuwisc8jgPzycwj8ZpCVZqturYnIT
+         8+uJDmXDbeRkszcynGsKKk0gFbQzn2xsOiKywD5QPVyRgprOQz5+E0gZ0p64wnnllGdR
+         vdog==
+X-Received: by 10.182.237.75 with SMTP id va11mr920476obc.5.1381895192790;
+        Tue, 15 Oct 2013 20:46:32 -0700 (PDT)
+Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
+        by mx.google.com with ESMTPSA id r6sm57462853obi.14.1969.12.31.16.00.00
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 15 Oct 2013 20:46:31 -0700 (PDT)
+In-Reply-To: <xmqq4n8ich89.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236228>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236229>
 
-From: Brandon Casey <drafnel@gmail.com>
+Junio C Hamano wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+> 
+> > Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+> > ---
+> 
+> Let's do something like this instead.
+> 
+>  - We usually refrain from making such a tree-wide change in order
+>    to avoid unnecessary conflicts with other "real work" patches,
+>    but the end result does not have a potentially cumbersome
+>    tree-wide impact.
 
-The setting of denyDeleteCurrent applies to both bare and non-bare
-repositories.  Correct the description on this point, and expand it to
-provide some background justification for the current behavior and
-describe the full suite of settings.
+You might want to change that phrasing to "we usually give low priority". Sure,
+this is low priority, but this is something has to be done sooner or later, if
+we don't the code-style will be forever inconsistent.
 
-Signed-off-by: Brandon Casey <drafnel@gmail.com>
----
- Documentation/config.txt | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+If there is a conflict it would be sensible to delay the change for another
+release perhaps, it's perfectly sensible to ask the submitter to set another
+version, and hopefully there would be no conflict.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index c3f7002..3d416ec 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1993,8 +1993,15 @@ receive.denyDeletes::
- 	the ref. Use this to prevent such a ref deletion via a push.
- 
- receive.denyDeleteCurrent::
--	If set to true, git-receive-pack will deny a ref update that
--	deletes the currently checked out branch of a non-bare repository.
-+	If set to true or "refuse", git-receive-pack will deny a ref update
-+	that deletes the currently checked out branch of a non-bare repository,
-+	or the "default" branch in a bare repository.  i.e. the branch
-+	that HEAD refers to.  Deleting the current branch from a remote will
-+	cause the HEAD symbolic ref to become dangling and will result in the
-+	next clone from it to not check out anything.  If set to "warn",
-+	then a warning will be printed to stderr and the deletion will be
-+	performed.  If set to false or "ignore", then the deletion will be
-+	performed with no warning message.  Defaults to "refuse".
- 
- receive.denyCurrentBranch::
- 	If set to true or "refuse", git-receive-pack will deny a ref update
+Usually resolving the conflict is trivial, but there's a lot of options.
+
+Refraining from making a code-style fix is not ideal. We want those. It's only
+a matter of how to implement them.
+
+>  - We also tend to frown upon an "I fixed it here only because I
+>    happened to notice this one, there may be others but it is up to
+>    the readers to see if there are other instances" half-assed code
+>    churn.
+
+If you have more general patch, sure, but would you really reject a patch that
+fixes one thing, because it doesn't fix all similar things at the same time?
+
+> The point of the proposed log message is to tell readers that this
+> is a tree-wide clean-up that is worth applying.
+> 
+> -- >8 --
+> From: Felipe Contreras <felipe.contreras@gmail.com>
+> Subject: C: have space around && and || operators
+
+Saying this patch is from me is not really accurate, it's based on a patch by
+me, or it was reported by me, but it's not really from me. I don't have a
+problem taking the credit though, as probably half the change is finding out
+there's a problem, just saying.
+
 -- 
-1.8.4.rc4.6.g5555d19
-
-
------------------------------------------------------------------------------------
-This email message is for the sole use of the intended recipient(s) and may contain
-confidential information.  Any unauthorized review, use, disclosure or distribution
-is prohibited.  If you are not the intended recipient, please contact the sender by
-reply email and destroy all copies of the original message.
------------------------------------------------------------------------------------
+Felipe Contreras
