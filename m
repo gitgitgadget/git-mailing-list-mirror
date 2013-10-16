@@ -1,75 +1,112 @@
-From: Andrew Ardill <andrew.ardill@gmail.com>
-Subject: Re: Has Git 2.0 started to be integrated?
-Date: Wed, 16 Oct 2013 15:16:52 -0700
-Message-ID: <CAH5451n8NcnZVJu3-u6aAbBpXZf2Ezj-2ckQksF7wbnaWOwggw@mail.gmail.com>
-References: <CAH5451=8BYN-Jsxsbw-3R36Kix__1kfW7r3_dtSbNhg+ukyNfg@mail.gmail.com>
- <20131016221139.GM9464@google.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] rev-parse --parseopt: fix handling of optional arguments
+Date: Wed, 16 Oct 2013 15:33:06 -0700
+Message-ID: <20131016223306.GN9464@google.com>
+References: <1381838425-18244-1-git-send-email-boklm@mars-attacks.org>
+ <20131015231427.GF9464@google.com>
+ <xmqqfvs29kjc.fsf@gitster.dls.corp.google.com>
+ <20131015235739.GI9464@google.com>
+ <20131016141411.GB4589@mars-attacks.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 17 00:17:39 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Pierre Habouzit <madcoder@debian.org>
+To: Nicolas Vigier <boklm@mars-attacks.org>
+X-From: git-owner@vger.kernel.org Thu Oct 17 00:33:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VWZPN-0001Sx-Rq
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Oct 2013 00:17:38 +0200
+	id 1VWZeV-0000Fd-5V
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Oct 2013 00:33:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761479Ab3JPWRd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Oct 2013 18:17:33 -0400
-Received: from mail-vc0-f171.google.com ([209.85.220.171]:58995 "EHLO
-	mail-vc0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760658Ab3JPWRd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Oct 2013 18:17:33 -0400
-Received: by mail-vc0-f171.google.com with SMTP id lf12so756763vcb.30
-        for <git@vger.kernel.org>; Wed, 16 Oct 2013 15:17:32 -0700 (PDT)
+	id S1759891Ab3JPWdK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Oct 2013 18:33:10 -0400
+Received: from mail-pb0-f42.google.com ([209.85.160.42]:62496 "EHLO
+	mail-pb0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755729Ab3JPWdJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Oct 2013 18:33:09 -0400
+Received: by mail-pb0-f42.google.com with SMTP id un15so1440978pbc.29
+        for <git@vger.kernel.org>; Wed, 16 Oct 2013 15:33:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=/NjjiVdioWRZG4qNeQdCtXajDS00iADTtwHenBsEBik=;
-        b=rO2XuO1008vBzy6U6U2VAEb7nb7CwRnAa7XkPj2SU+f4fhManJYk3082yxp69/nhs8
-         mGdd/JTc3h2GR7ZSVnVDXoSKmKEce1qgsX/I4v5+05nYgUnGCRsv0rmnQEugvb0gnXoC
-         tFvhIcqWrapQ8eRwlxqhJ5D3o6hfiDxGAqaM1pZsMkISmRV12qT+0u9QIp6mqhcfgVpE
-         9y0BZVJeScIww1iDiQK8XjF2T/VR9ehkB9KlWthw+QYzPUVO3HY5UEON3CdTvVjiHRAS
-         iDz1wWcMz9yHUrrVF8zvNlDwZUQyUzZcqGfGq/1Mh61cobygsZ10CbUqnKQY/Q+irNrm
-         34GQ==
-X-Received: by 10.58.155.10 with SMTP id vs10mr4239211veb.4.1381961852328;
- Wed, 16 Oct 2013 15:17:32 -0700 (PDT)
-Received: by 10.220.58.197 with HTTP; Wed, 16 Oct 2013 15:16:52 -0700 (PDT)
-In-Reply-To: <20131016221139.GM9464@google.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=jfEAccYSWcwJGbocXv6TXOoicdeRLo9eeS3M1liyK1k=;
+        b=EooZnaIkrXKNELRTb6ErwXPMx8eRzplGry1FMGlSedK4rk5ObiXa6Zc94VbsfCA9gV
+         2GBOzpOmPqnhXup1uLXoCMKASM602YDnzX55Eb5kvudh4JdMFXlHGAUb0LPgwd2+k79z
+         5PuMgy0OzJuD4CBbJ54XtIKtUUBvU/o8m6cLqhGbH5autuKwxeHN4DN9A5TnopmsgHEE
+         UZz+cewwYkvaUrLPt26Fq80E/HHgRX6pA6dR6gql1D/Zu4ZSlrmQSMWkdwuMbFhTQxXv
+         bjRtLn6UD14QnQ0OQzQlgg8I97j/UDdI7h01Id1OOeupr7X9MP/FGddxw8BTjMn9W14f
+         4Xcw==
+X-Received: by 10.68.44.33 with SMTP id b1mr5077726pbm.53.1381962788963;
+        Wed, 16 Oct 2013 15:33:08 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id b3sm93389787pbu.38.1969.12.31.16.00.00
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 16 Oct 2013 15:33:08 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20131016141411.GB4589@mars-attacks.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236278>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236279>
 
-On 16 October 2013 15:11, Jonathan Nieder <jrnieder@gmail.com> wrote:
->> There has been plenty of comments lately about how certain features
->> will be released in 2.0
->>
->> Have these features been tied together anywhere yet?
+Nicolas Vigier wrote:
+
+> I'm thinking about a patch to add the following two options to rev-parse :
 >
-> They're in Junio's "jch" branch:
-> https://github.com/gitster/git/commits/jch
-
-Thanks! I'll build it and have a play tonight.
-
->> If not, when might such an integration branch be created? Would be
->> very interested in seeing how Git 2.0 plays, even in these early days.
+> --sticked-opt-args::
+> 	Only meaningful in --parseopt mode. Tells the options parser to
+> 	output options with optional arguments in sticked form. The
+> 	default is to output them in non-sticked mode, which can be
+> 	difficult to parse unambiguously.
 >
-> I wonder if it would make sense to keep these topics in "next" even
-> though they will probably not be part of the next release, to
-> encourage people who test that branch to try them out.  (Just thinking
-> out loud.)
+> --long-options::
+> 	Only meaningful in --parseopt mode. Tells the options parser to
+> 	output long option names, when available. The default is to use
+> 	short option names when available.
+>
+> When you want to handle optional args unambiguously, you use the
+> --sticked-opt-args option. And if you think an empty value can be
+> a meaningful value, you add the --long-options option to be able to
+> distinguish them.
+>
+> Would it make sense ?
 
-I guess that's my real question; we haven't had a major version
-release for a long time and I don't know what the cycle will look
-like. Will be interesting to see how it progresses.
+That would make four distinct output formats:
 
-Regards,
+ --sticked --long:
+	Doesn't lose any information that normal use of C parse_options
+	would have kept, as long as every short option with optional
+	argument has a corresponding long option.
 
-Andrew Ardill
+
+ --sticked --no-long:
+	Loses the distinction between --gpg-sign and --gpg-sign=
+
+ --no-sticked --long:
+	Semantically equivalent to the existing output, just noisier.
+
+ --no-sticked --no-long:
+ 	The existing output.
+
+Are all of them needed?  Is it worth tempting people to use --sticked
+--no-long when we know its pitfalls?
+
+I would think that only the current normalized form and --sticked
+--long would need to be supported.
+
+The fix you originally proposed seems tolerable to me, too --- it is
+not very invasive, and while it doesn't distinguish the empty-argument
+form "--gpg-sign=", that's a bit of an edge case.
+
+The main reason I slightly prefer the solution that makes the output
+use long, sticked options on request is that the "normalized"
+commandline would start being an actual equivalent command line the
+command expects, instead of a weird, subtly different syntax.  (That
+problem already exists with or without your patch --- the patch just
+draws attention to it.)
