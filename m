@@ -1,99 +1,243 @@
-From: Alexander 'z33ky' Hirsch <1zeeky@gmail.com>
-Subject: [PATCH] status: allow branch info color customization
-Date: Wed, 16 Oct 2013 10:22:53 +0200
-Message-ID: <1381911773-9564-1-git-send-email-1zeeky@gmail.com>
-Cc: Steffen Prohaska <prohaska@zib.de>,
-	Alexander Hirsch <1zeeky@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: pack corruption post-mortem
+Date: Wed, 16 Oct 2013 04:34:01 -0400
+Message-ID: <20131016083400.GA31266@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 16 10:22:50 2013
+X-From: git-owner@vger.kernel.org Wed Oct 16 10:34:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VWMNU-0003Td-Fl
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Oct 2013 10:22:48 +0200
+	id 1VWMYY-00010Z-R5
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Oct 2013 10:34:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757547Ab3JPIWk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Oct 2013 04:22:40 -0400
-Received: from mail-ea0-f170.google.com ([209.85.215.170]:44954 "EHLO
-	mail-ea0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753585Ab3JPIWi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Oct 2013 04:22:38 -0400
-Received: by mail-ea0-f170.google.com with SMTP id q10so140019eaj.29
-        for <git@vger.kernel.org>; Wed, 16 Oct 2013 01:22:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=GJRFZo5GdjBtwBZb7bIzIwDN2V56wiavuSCxm09DrhU=;
-        b=yqy+5uu/oVu6rBqoagcUqXdjU/G8meApveww46AYmiGXuMR836K0fqQOxJsDcZKjFj
-         VM1DjIMcD4iTQ6gB0NQSs8Tm1BqgE9gp3o7Pu3AEbYD65utQOBnawpSGeqKP3RLZ6ChD
-         s9me1aeNHJh3JTsBVBYq6NelhUkbVPNXf2MbKNzfW8b9dCw51W7GB7sB9oVKXy46iTGo
-         BF7p2MrEjiLjcHT5A3G8YxZ1TOBc+thsQZHh5Em4c5wfjURxIIQnlSFkeZKfje1N9d2+
-         Zjb8MVm1e1L1lxVT2nM9KocIWHW4OyYTqXQYza22+llgjGz0RHH2uXuckZSBidDQR62/
-         3WYQ==
-X-Received: by 10.15.53.70 with SMTP id q46mr2698105eew.48.1381911756839;
-        Wed, 16 Oct 2013 01:22:36 -0700 (PDT)
-Received: from mobileblarch.fritz.box (dslb-084-059-154-117.pools.arcor-ip.net. [84.59.154.117])
-        by mx.google.com with ESMTPSA id f49sm176690749eec.7.1969.12.31.16.00.00
-        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 16 Oct 2013 01:22:36 -0700 (PDT)
-X-Mailer: git-send-email 1.8.4.1
+	id S1755193Ab3JPIeI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Oct 2013 04:34:08 -0400
+Received: from cloud.peff.net ([50.56.180.127]:50249 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754149Ab3JPIeF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Oct 2013 04:34:05 -0400
+Received: (qmail 21130 invoked by uid 102); 16 Oct 2013 08:34:05 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 16 Oct 2013 03:34:05 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 16 Oct 2013 04:34:01 -0400
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236237>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236238>
 
-From: Alexander Hirsch <1zeeky@gmail.com>
+I was recently presented with a repository with a corrupted packfile,
+and was asked if the data was recoverable. This post-mortem describes
+the steps I took to investigate and fix the problem. I thought others
+might find the process interesting, and it might help somebody in the
+same situation.
 
-git status -bs (--branch --short) does not seem to allow customization of the
-colors for the local and remote branch.
-This patch adds these via the color.status.local and color.status.remote
-config variables.
+I started with an fsck, which found a problem with exactly one object
+(I've used $pack and $obj below to keep the output readable, and also
+because I'll refer to them later):
 
-Given the trivial nature of this patch I did not write a test for it. I did a
-small check that it's working so, to be on the safe side.
+    $ git fsck
+    error: $pack SHA1 checksum mismatch
+    error: index CRC mismatch for object $obj from $pack at offset 51653873
+    error: inflate: data stream error (incorrect data check)
+    error: cannot unpack $obj from $pack at offset 51653873
 
-Signed-off-by: Alexander Hirsch <1zeeky@gmail.com>
----
- Documentation/config.txt | 7 +++++--
- builtin/commit.c         | 4 ++++
- 2 files changed, 9 insertions(+), 2 deletions(-)
+The pack checksum failing means a byte is munged somewhere, and it is
+presumably in the object mentioned (since both the index checksum and
+zlib were failing).
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index d4d93c9..261fc99 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -904,9 +904,12 @@ color.status.<slot>::
- 	`added` or `updated` (files which are added but not committed),
- 	`changed` (files which are changed but not added in the index),
- 	`untracked` (files which are not tracked by Git),
--	`branch` (the current branch), or
-+	`branch` (the current branch),
- 	`nobranch` (the color the 'no branch' warning is shown in, defaulting
--	to red). The values of these variables may be specified as in
-+	to red),
-+	`local` (the local branch when showing branch info), or
-+	`remote` (the remote-tracked branch when showing branch info).
-+	The values of these variables may be specified as in
- 	color.branch.<slot>.
- 
- color.ui::
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 6ab4605..43365b4 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -1165,6 +1165,10 @@ static int parse_status_slot(const char *var, int offset)
- 		return WT_STATUS_HEADER;
- 	if (!strcasecmp(var+offset, "branch"))
- 		return WT_STATUS_ONBRANCH;
-+	if (!strcasecmp(var+offset, "local"))
-+		return WT_STATUS_LOCAL_BRANCH;
-+	if (!strcasecmp(var+offset, "remote"))
-+		return WT_STATUS_REMOTE_BRANCH;
- 	if (!strcasecmp(var+offset, "updated")
- 		|| !strcasecmp(var+offset, "added"))
- 		return WT_STATUS_UPDATED;
--- 
-1.8.4.1
+Reading the zlib source code, I found that "incorrect data check" means
+that the adler-32 checksum at the end of the zlib data did not match the
+inflated data. So stepping the data through zlib would not help, as it
+did not fail until the very end, when we realize the crc does not match.
+The problematic bytes could be anywhere in the object data.
+
+The first thing I did was pull the broken data out of the packfile. I
+needed to know how big the object was, which I found out with:
+
+  $ git show-index <$idx | cut -d' ' -f1 | sort -n | grep -A1 51653873
+  51653873
+  51664736
+
+Show-index gives us the list of objects and their offsets. We throw away
+everything but the offsets, and then sort them so that our interesting
+offset (which we got from the fsck output above) is followed immediately
+by the offset of the next object. Now we know that the object data is
+10863 bytes long, and we can grab it with:
+
+  dd if=$pack of=object bs=1 skip=51653873 count=10863
+
+I inspected a hexdump of the data, looking for any obvious bogosity
+(e.g., a 4K run of zeroes would be a good sign of filesystem
+corruption). But everything looked pretty reasonable.
+
+Note that the "object" file isn't fit for feeding straight to zlib; it
+has the git packed object header, which is variable-length. We want to
+strip that off so we can start playing with the zlib data directly. You
+can either work your way through it manually (the format is described in
+Documentation/technical/pack-format.txt), or you can walk through it in
+a debugger. I did the latter, creating a valid pack like:
+
+  # pack magic and version
+  printf 'PACK\0\0\0\2' >tmp.pack
+  # pack has one object
+  printf '\0\0\0\1' >>tmp.pack
+  # now add our object data
+  cat object >>tmp.pack
+  # and then append the pack trailer
+  /path/to/git.git/test-sha1 -b <tmp.pack >trailer
+  cat trailer >>tmp.pack
+
+and then running "git index-pack tmp.pack" in the debugger (stop at
+unpack_raw_entry). Doing this, I found that there were 3 bytes of header
+(and the header itself had a sane type and size). So I stripped those
+off with:
+
+  dd if=object of=zlib bs=1 skip=3
+
+I ran the result through zlib's inflate using a custom C program. And
+while it did report the error, I did get the right number of output
+bytes (i.e., it matched git's size header that we decoded above). But
+feeding the result back to "git hash-object" didn't produce the same
+sha1. So there were some wrong bytes, but I didn't know which. The file
+happened to be C source code, so I hoped I could notice something
+obviously wrong with it, but I didn't. I even got it to compile!
+
+I also tried comparing it to other versions of the same path in the
+repository, hoping that there would be some part of the diff that didn't
+make sense. Unfortunately, this happened to be the only revision of this
+particular file in the repository, so I had nothing to compare against.
+
+So I took a different approach. Working under the guess that the
+corruption was limited to a single byte, I wrote a program to munge each
+byte individually, and try inflating the result. Since the object was
+only 10K compressed, that worked out to about 2.5M attempts, which took
+a few minutes.
+
+The program I used is here:
+
+-- >8 --
+#include <stdio.h>
+#include <unistd.h>
+#include <string.h>
+#include <signal.h>
+#include <zlib.h>
+
+static int try_zlib(unsigned char *buf, int len)
+{
+  /* make this absurdly large so we don't have to loop */
+  static unsigned char out[1024*1024];
+  z_stream z;
+  int ret;
+
+  memset(&z, 0, sizeof(z));
+  inflateInit(&z);
+
+  z.next_in = buf;
+  z.avail_in = len;
+  z.next_out = out;
+  z.avail_out = sizeof(out);
+
+  ret = inflate(&z, 0);
+  inflateEnd(&z);
+  return ret >= 0;
+}
+
+/* eye candy */
+static int counter = 0;
+static void progress(int sig)
+{
+  fprintf(stderr, "\r%d", counter);
+  alarm(1);
+}
+
+int main(void)
+{
+  /* oversized so we can read the whole buffer in */
+  unsigned char buf[1024*1024];
+  int len;
+  unsigned i, j;
+
+  signal(SIGALRM, progress);
+  alarm(1);
+
+  len = read(0, buf, sizeof(buf));
+  for (i = 0; i < len; i++) {
+    unsigned char c = buf[i];
+    for (j = 0; j <= 0xff; j++) {
+      buf[i] = j;
+
+      counter++;
+      if (try_zlib(buf, len))
+        printf("i=%d, j=%x\n", i, j);
+    }
+    buf[i] = c;
+  }
+
+  alarm(0);
+  fprintf(stderr, "\n");
+  return 0;
+}
+-- >8 --
+
+I compiled and ran with:
+
+  gcc -Wall -Werror -O3 munge.c -o munge -lz
+  ./munge <zlib
+
+There were a few false positives early on (if you write "no data" in the
+zlib header, zlib thinks it's just fine :) ). But I got a hit about
+halfway through:
+
+  i=5642, j=c7
+
+I let it run to completion, and got a few more hits at the end (where it
+was munging the crc to match our broken data). So there was a good
+chance this middle hit was the source of the problem.
+
+I confirmed by tweaking the byte in a hex editor, zlib inflating the
+result (no errors!), and then piping the output into "git hash-object",
+which reported the sha1 of the broken object. Success!
+
+I fixed the packfile itself with:
+
+  chmod +w $pack
+  printf '\xc7' | dd of=$pack bs=1 seek=51659518 conv=notrunc
+  chmod -w $pack
+
+The '\xc7' comes from the replacement byte our "munge" program found.
+The offset 51659518 is derived by taking the original object offset
+(51653873), adding the replacement offset found by "munge" (5642), and
+then adding back in the 3 bytes of git header we stripped.
+
+After that, "git fsck" ran clean.
+
+As for the corruption itself, I was lucky that it was indeed a single
+byte. In fact, it turned out to be a single bit. The byte 0xc7 was
+corrupted to 0xc5. So presumably it was caused by faulty hardware, or a
+cosmic ray.
+
+And the aborted attempt to look at the inflated output to see what was
+wrong? I could have looked forever and never found it. Here's the diff
+between what the corrupted data inflates to, versus the real data:
+
+  -       cp = strtok (arg, "+");
+  +       cp = strtok (arg, ".");
+
+It tweaked one byte and still ended up as valid, readable C that just
+happened to do something totally different! One takeaway is that on a
+less unlucky day, looking at the zlib output might have actually been
+helpful, as most random changes would actually break the C code.
+
+But more importantly, git's hashing and checksumming noticed a problem
+that easily could have gone undetected in another system. The result
+still compiled, but would have caused an interesting bug (that would
+have been blamed on some random commit).
+
+-Peff
