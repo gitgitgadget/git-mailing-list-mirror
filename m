@@ -1,67 +1,172 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [git-users] Problem using detached worktrees with commands implemented in scripts
-Date: Wed, 16 Oct 2013 16:08:19 -0700
-Message-ID: <xmqqk3hc3jbw.fsf@gitster.dls.corp.google.com>
-References: <201310162003.r9GK3UYj014414@freeze.ariadne.com>
-	<xmqqeh7k51vg.fsf@gitster.dls.corp.google.com>
-	<29AA597BEBC146B09E8B370949EC2CE9@PhilipOakley>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH v2] gc: remove gc.pid file at end of execution
+Date: Wed, 16 Oct 2013 16:11:46 -0700
+Message-ID: <20131016231146.GP9464@google.com>
+References: <1380187098-8519-1-git-send-email-Matthieu.Moy@imag.fr>
+ <20130928003319.GR9464@google.com>
+ <xmqqeh7k6glt.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Dale R. Worley" <worley@alum.mit.edu>, <git@vger.kernel.org>
-To: "Philip Oakley" <philipoakley@iee.org>
-X-From: git-owner@vger.kernel.org Thu Oct 17 01:08:28 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org,
+	pclouds@gmail.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Oct 17 01:11:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VWaCZ-000897-Ie
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Oct 2013 01:08:27 +0200
+	id 1VWaFu-0001GQ-59
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Oct 2013 01:11:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760894Ab3JPXIY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Oct 2013 19:08:24 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42103 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757467Ab3JPXIX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Oct 2013 19:08:23 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 84FB74B99B;
-	Wed, 16 Oct 2013 23:08:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=EIwF9JAWoHVb7MAIM0JHfH6+BRI=; b=WQ52Kq
-	T7MovRyvUnWoxNw/5hB5i1o19evflJyZk98eqOMa5mU81P31nidXrj/Ye4qggLdF
-	giCjLHIvf8B7ByoppPem71CRdrVgem0VqDo/47z6N0Vl1IUuWrf2cu++5pT4ozBf
-	OOv6t4D01nqakmqTOreEngvfSAwr2zgXbw0g0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=VeYQfglzNvs+y4XJBgkOVIzGgnuTN8Wr
-	9ZoJ3gDwd6lNCcylaJ+8TffQZV/7WOHx3PpiNy6JIeVUfh7r1fVqNILDWp9Hrw0p
-	n9Kvjj4Kr9T/6p/dy1cA2SUBaLyCcPbID1iHul+9Gmpylmei/fZkRW8f8KbW0aMp
-	go9iv9DrHNI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 791F14B99A;
-	Wed, 16 Oct 2013 23:08:22 +0000 (UTC)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A21F34B996;
-	Wed, 16 Oct 2013 23:08:21 +0000 (UTC)
-In-Reply-To: <29AA597BEBC146B09E8B370949EC2CE9@PhilipOakley> (Philip Oakley's
-	message of "Wed, 16 Oct 2013 23:39:25 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: DA117D28-36B7-11E3-BE0A-8F264F2CC097-77302942!b-pb-sasl-quonix.pobox.com
+	id S1760499Ab3JPXLu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Oct 2013 19:11:50 -0400
+Received: from mail-pd0-f172.google.com ([209.85.192.172]:62703 "EHLO
+	mail-pd0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752234Ab3JPXLt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Oct 2013 19:11:49 -0400
+Received: by mail-pd0-f172.google.com with SMTP id z10so1695147pdj.3
+        for <git@vger.kernel.org>; Wed, 16 Oct 2013 16:11:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=Njg/Nf5hNt8ZSRph+p+JMTXfeAmfha1Z5o27ILQYAUw=;
+        b=jWVC9TCgevxuEDS0wy6+w3foIZ3tKCBaJvTQEYHnbjbO5hV6v7ollTDvUBHyFfivCh
+         W8+zRgjUeSMEVdZx0vAD1y7DqYQ0UYpeNolJlMvvJSJ3fbAG8C4TwTegX1/Kin4m35cU
+         EqSLd05mb9GXJIvzvOEj9Ju4tNbwF4k/rvlRGmW+2HSBcCyq2xvgwez9lqFM41stNxfG
+         SPsG/XRwGy0fF+1ksMbCPTbijFp7lkTXrKrqHjTucytjBrQyZ1SQYCruXTjI1Yd5nHcc
+         /KmmWo63myE+XFKGQBY4NT+YGB9NA5i2jKoQPxl7Eodd/+IRezBB+t4l1S/mxHb10MlH
+         KKSQ==
+X-Received: by 10.66.66.202 with SMTP id h10mr6048409pat.70.1381965109032;
+        Wed, 16 Oct 2013 16:11:49 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id xs1sm109542591pac.7.1969.12.31.16.00.00
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 16 Oct 2013 16:11:48 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <xmqqeh7k6glt.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236282>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236283>
 
-"Philip Oakley" <philipoakley@iee.org> writes:
+This file isn't really harmful, but isn't useful either, and can create
+minor annoyance for the user:
 
-> ... and the detection process for 'toplevel' may not work
-> properly when in a separated work-tree environment.
+* It's confusing, as the presence of a *.pid file often implies that a
+  process is currently running. A user running "ls .git/" and finding
+  this file may incorrectly guess that a "git gc" is currently running.
 
-Without GIT_WORK_TREE exported to point at the top-level, there is
-nothing that lets us "detect" it, as the working tree does not have
-".git" directory to tell us to stop, no?
+* Leaving this file means that a "git gc" in an already gc-ed repo is
+  no-longer a no-op. A user running "git gc" in a set of repositories,
+  and then synchronizing this set (e.g. rsync -av, unison, ...) will se=
+e
+  all the gc.pid files as changed, which creates useless noise.
+
+This patch unlinks the file after the garbage collection is done, so th=
+at
+gc.pid is actually present only during execution.
+
+=46uture versions of Git may want to use the information left in the gc=
+=2Epid
+file (e.g. for policies like "don't attempt to run a gc if one has
+already been ran less than X hours ago"). If so, this patch can safely =
+be
+reverted. For now, let's not bother the users.
+
+Explained-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+Improved-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.c=
+om>
+---
+Junio C Hamano wrote:
+
+> Has anything further happened to this discussion?
+
+Here's a patch implementing Duy's suggestion.
+
+ builtin/gc.c  | 24 ++++++++++++++++++++++++
+ t/t6500-gc.sh |  5 +++++
+ 2 files changed, 29 insertions(+)
+
+diff --git a/builtin/gc.c b/builtin/gc.c
+index 891a2c2..c14190f 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -14,6 +14,7 @@
+ #include "cache.h"
+ #include "parse-options.h"
+ #include "run-command.h"
++#include "sigchain.h"
+ #include "argv-array.h"
+=20
+ #define FAILED_RUN "failed to run %s"
+@@ -35,6 +36,21 @@ static struct argv_array repack =3D ARGV_ARRAY_INIT;
+ static struct argv_array prune =3D ARGV_ARRAY_INIT;
+ static struct argv_array rerere =3D ARGV_ARRAY_INIT;
+=20
++static char *pidfile;
++
++static void remove_pidfile(void)
++{
++	if (pidfile)
++		unlink(pidfile);
++}
++
++static void remove_pidfile_on_signal(int signo)
++{
++	remove_pidfile();
++	sigchain_pop(signo);
++	raise(signo);
++}
++
+ static int gc_config(const char *var, const char *value, void *cb)
+ {
+ 	if (!strcmp(var, "gc.packrefs")) {
+@@ -179,6 +195,10 @@ static const char *lock_repo_for_gc(int force, pid=
+_t* ret_pid)
+ 	FILE *fp;
+ 	int fd, should_exit;
+=20
++	if (pidfile)
++		/* already locked */
++		return NULL;
++
+ 	if (gethostname(my_host, sizeof(my_host)))
+ 		strcpy(my_host, "unknown");
+=20
+@@ -219,6 +239,10 @@ static const char *lock_repo_for_gc(int force, pid=
+_t* ret_pid)
+ 	strbuf_release(&sb);
+ 	commit_lock_file(&lock);
+=20
++	pidfile =3D git_pathdup("gc.pid");
++	sigchain_push_common(remove_pidfile_on_signal);
++	atexit(remove_pidfile);
++
+ 	return NULL;
+ }
+=20
+diff --git a/t/t6500-gc.sh b/t/t6500-gc.sh
+index b1a6365..63194d8 100755
+--- a/t/t6500-gc.sh
++++ b/t/t6500-gc.sh
+@@ -9,6 +9,11 @@ test_expect_success 'gc empty repository' '
+ 	git gc
+ '
+=20
++test_expect_success 'gc does not leave behind pid file' '
++	git gc &&
++	test_path_is_missing .git/gc.pid
++'
++
+ test_expect_success 'gc --gobbledegook' '
+ 	test_expect_code 129 git gc --nonsense 2>err &&
+ 	test_i18ngrep "[Uu]sage: git gc" err
+--=20
+1.8.4-50-g437ce60
