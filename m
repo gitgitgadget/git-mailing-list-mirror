@@ -1,89 +1,109 @@
-From: Krzysztof Mazur <krzysiek@podlesie.net>
-Subject: Re: [PATCH v3] Add core.mode configuration
-Date: Wed, 16 Oct 2013 08:34:36 +0200
-Message-ID: <20131016063436.GB24964@shrek.podlesie.net>
-References: <20131014205908.GA17089@shrek.podlesie.net>
- <525c63b6711fa_197a905e845b@nysa.notmuch>
- <20131015123505.GA3097@shrek.podlesie.net>
- <525d35e766ad4_55661275e7426@nysa.notmuch>
- <20131015133327.GA22723@shrek.podlesie.net>
- <525d4354a5436_5844e73e843d@nysa.notmuch>
- <20131015145139.GA3977@shrek.podlesie.net>
- <525d8ebd19c67_5feab61e8037@nysa.notmuch>
- <20131015220125.GA14021@shrek.podlesie.net>
- <525e100e45ee8_81a151de74ed@nysa.notmuch>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [PATCH V3 1/2] doc: command line interface (cli) dot-repository dwimmery
+Date: Wed, 16 Oct 2013 07:53:05 +0100
+Organization: OPDS
+Message-ID: <48EF6E550D1745E0BEC830BE5CB2E88F@PhilipOakley>
+References: <1379776269-4496-1-git-send-email-philipoakley@iee.org><1379776269-4496-2-git-send-email-philipoakley@iee.org> <xmqqhacici3t.fsf@gitster.dls.corp.google.com>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 16 08:34:46 2013
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: "GitList" <git@vger.kernel.org>,
+	"Jonathan Nieder" <jrnieder@gmail.com>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Oct 16 08:53:24 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VWKgv-0003V3-2y
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Oct 2013 08:34:45 +0200
+	id 1VWKyu-0004V7-Qn
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Oct 2013 08:53:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753633Ab3JPGel (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Oct 2013 02:34:41 -0400
-Received: from shrek-wifi.podlesie.net ([93.179.225.50]:56035 "EHLO
-	shrek.podlesie.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751250Ab3JPGek (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Oct 2013 02:34:40 -0400
-Received: by shrek.podlesie.net (Postfix, from userid 603)
-	id CA68878; Wed, 16 Oct 2013 08:34:36 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <525e100e45ee8_81a151de74ed@nysa.notmuch>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753674Ab3JPGxR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Oct 2013 02:53:17 -0400
+Received: from out1.ip03ir2.opaltelecom.net ([62.24.128.239]:24622 "EHLO
+	out1.ip03ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753584Ab3JPGxG (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 16 Oct 2013 02:53:06 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AmkGAOo2XlJOl3+a/2dsb2JhbABagweJcblECoEeF3RpgSEWAQQBAQUIAQEuHgEBIQsCAwUCAQMVAgolFAEEGgYHDwgGEwgCAQIDAYU4B4IXI74xj1GDJoEGA4kEhhKacIMlOw
+X-IPAS-Result: AmkGAOo2XlJOl3+a/2dsb2JhbABagweJcblECoEeF3RpgSEWAQQBAQUIAQEuHgEBIQsCAwUCAQMVAgolFAEEGgYHDwgGEwgCAQIDAYU4B4IXI74xj1GDJoEGA4kEhhKacIMlOw
+X-IronPort-AV: E=Sophos;i="4.93,505,1378854000"; 
+   d="scan'208";a="439818301"
+Received: from host-78-151-127-154.as13285.net (HELO PhilipOakley) ([78.151.127.154])
+  by out1.ip03ir2.opaltelecom.net with SMTP; 16 Oct 2013 07:53:03 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236233>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236234>
 
-On Tue, Oct 15, 2013 at 11:03:26PM -0500, Felipe Contreras wrote:
-> > not some "next" behavior that may change in future.
-> 
-> But I'm suggesting to add a core.addremove option as well, like you suggested,
-> am I not?
+From: "Junio C Hamano" <gitster@pobox.com>
+> Philip Oakley <philipoakley@iee.org> writes:
+>
+>> The Git cli will accept dot '.' (period) as the relative path,
+>> and thus the current repository. Explain this action.
+>>
+>> Signed-off-by: Philip Oakley <philipoakley@iee.org>
+>> ---
+>>
+>> This updates 431260cc8dd
+>
+> It appears that the original has already been merged to 'next', so
+> we need to make this incremental on top.  I'll queue this on top.
 
-Yes, I think we both agreed on adding core.addremove. I'm just not
-convinced if we should also add core.mode.
+Thank you, that looks good.
 
-> 
-> So you would be happy if we had core.addremove = true *and* core.mode = next,
-> right? You would use one, different people with different needs would use the
-> other.
 
-Yes, if there are people that will use core.mode it will be worth
-adding. I'm just not one of them.
-
-> 
-> > > > That's safer than next (at least for interactive use) and maybe more users
-> > > > would use that, but I don't think that's worth adding.
-> > > 
-> > > Maybe, but I don't think many users would use either mode, and that's good.
-> > > 
-> > > > For me, old behavior by default and warnings with information how to
-> > > > enable new incompatible features, is sufficient. So I don't need
-> > > > core.mode option, but as long it will be useful for other users I have
-> > > > nothing against it.
-> > > 
-> > > OK, but that seems to mean you don't need core.mode = next-warn either. I'm not
-> > > against adding such a mode, but I would like to hear about _somebody_ that
-> > > would like to actually use it. I don't like to program for ghosts.
-> > >
-> > 
-> > As I said earlier, I don't think that next-warn it's worth adding, but
-> > such option might increase the number of people interested in the
-> > core.mode.
-> 
-> Well that's a hypothesis, and I would be interested in finding out if that's
-> true, but until I see somebody that says "I want core.mode = next-war", I'm
-> going to assume they are hypothetical.
-> 
-
-Yes, that's just a hypothesis.
-
-Krzysiek
+>
+> -- >8 --
+> From: Philip Oakley <philipoakley@iee.org>
+> Subject: doc/cli: make "dot repository" an independent bullet point
+>
+> The way to spell the current repository with a '.' dot is
+> independent from how the pathspec allows globs expanded by Git.
+>
+> Make them two separate bullet items in the enumeration.
+>
+> Signed-off-by: Philip Oakley <philipoakley@iee.org>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+> Documentation/gitcli.txt | 8 ++++----
+> 1 file changed, 4 insertions(+), 4 deletions(-)
+>
+> diff --git a/Documentation/gitcli.txt b/Documentation/gitcli.txt
+> index 1672842..24e1784 100644
+> --- a/Documentation/gitcli.txt
+> +++ b/Documentation/gitcli.txt
+> @@ -58,10 +58,10 @@ the paths in the index that match the pattern to 
+> be checked out to your
+> working tree.  After running `git add hello.c; rm hello.c`, you will 
+> _not_
+> see `hello.c` in your working tree with the former, but with the 
+> latter
+> you will.
+> -+
+> -Just as the filesystem '.' (period) refers to the current directory,
+> -using a '.' as a repository name in Git (a dot-repository) is a 
+> relative
+> -path for your current repository.
+> +
+> + * Just as the filesystem '.' (period) refers to the current 
+> directory,
+> +   using a '.' as a repository name in Git (a dot-repository) is a 
+> relative
+> +   path and means your current repository.
+>
+> Here are the rules regarding the "flags" that you should follow when 
+> you are
+> scripting Git:
+>
+> --
