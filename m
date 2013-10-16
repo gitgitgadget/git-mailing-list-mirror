@@ -1,106 +1,89 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] rebase: use reflog to find common base with upstream
-Date: Wed, 16 Oct 2013 12:24:13 -0700
-Message-ID: <20131016192412.GK9464@google.com>
-References: <d8e9f102609ee4502f579cb4ce872e0a40756204.1381949622.git.john@keeping.me.uk>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v3] Add core.mode configuration
+Date: Wed, 16 Oct 2013 14:28:21 -0500
+Message-ID: <525ee8d5ba989_3983c19e7c8b@nysa.notmuch>
+References: <20131014205908.GA17089@shrek.podlesie.net>
+ <525c63b6711fa_197a905e845b@nysa.notmuch>
+ <20131015123505.GA3097@shrek.podlesie.net>
+ <525d35e766ad4_55661275e7426@nysa.notmuch>
+ <20131015133327.GA22723@shrek.podlesie.net>
+ <525d4354a5436_5844e73e843d@nysa.notmuch>
+ <20131015145139.GA3977@shrek.podlesie.net>
+ <525d8ebd19c67_5feab61e8037@nysa.notmuch>
+ <20131015220125.GA14021@shrek.podlesie.net>
+ <525e100e45ee8_81a151de74ed@nysa.notmuch>
+ <20131016063436.GB24964@shrek.podlesie.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Wed Oct 16 21:24:30 2013
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Krzysztof Mazur <krzysiek@podlesie.net>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 16 21:37:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VWWhq-0000pm-42
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Oct 2013 21:24:30 +0200
+	id 1VWWts-00076q-53
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Oct 2013 21:36:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761480Ab3JPTYS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Oct 2013 15:24:18 -0400
-Received: from mail-pa0-f52.google.com ([209.85.220.52]:42035 "EHLO
-	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761288Ab3JPTYQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Oct 2013 15:24:16 -0400
-Received: by mail-pa0-f52.google.com with SMTP id kl14so1518405pab.25
-        for <git@vger.kernel.org>; Wed, 16 Oct 2013 12:24:15 -0700 (PDT)
+	id S1760842Ab3JPTgw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Oct 2013 15:36:52 -0400
+Received: from mail-ob0-f178.google.com ([209.85.214.178]:62814 "EHLO
+	mail-ob0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753183Ab3JPTgu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Oct 2013 15:36:50 -0400
+Received: by mail-ob0-f178.google.com with SMTP id uz6so1010571obc.23
+        for <git@vger.kernel.org>; Wed, 16 Oct 2013 12:36:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=DUgGaQUUzJlGbQX0A+kDJrcY6VZ2c5w4nEiRgffM7a8=;
-        b=gD+AzQiQ4FLxMlhh2NokqzW7zkEvNPEMZtKTDmHg+YUq0E7cxfVNUNRrkklBgAsHN7
-         kIk7zp4Wnc8JE1c+yUR7ZX7EVCV+gLVJODFAtC/4GZNxxYQGBzpa0XeV4Hk3XaVU4VB5
-         A9HoPG0Pqcr/DqG8bPTvWtD2SPUmMWCdpI8YEmcR+yUBXwlhmZxc2zwe0TxQK6cygz6v
-         oOZrJ4NBpPkSQ5dwg0ltSRMGB01nk5ho81CW2BC7O9Xy+shPUnb3wiRxOmctrpzNuCn9
-         z5acNpJb7aIV8MNxuJ/sqJc0SEesCnDmIbsqzFBoQPCuokpmhVcdQ6GX3+aX7UJ9c4JZ
-         chww==
-X-Received: by 10.68.197.73 with SMTP id is9mr4427028pbc.75.1381951455788;
-        Wed, 16 Oct 2013 12:24:15 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id xv2sm92824356pbb.39.1969.12.31.16.00.00
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 16 Oct 2013 12:24:15 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <d8e9f102609ee4502f579cb4ce872e0a40756204.1381949622.git.john@keeping.me.uk>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=R3v2mLEC2OLPpkCJdfrM8Bw9iFC9319hATwwLT6jZh0=;
+        b=Snb8JySd6azZbiXt0HJNQFiYJOYS0y18bPWNe81gr2eJxxtKtj8Cprn+hxM7NoV8mm
+         BJ0CU45FLPdl0uL3/cRHEO47V6ZdwBb4kwDzv8eFOCRvwjy3to0fsXL8cD+c8jIAwDxx
+         zbt2ArmNE2HB3aDUMOnEyrn42TUswcoSJ/SAhbzmRrlH7U4ftuqowoXidr2BjfJWazyr
+         U9e+7C68azXXS71lcF1XtN5U31oI4P2MwKs3ZqDe4dChXLBqPSI5hqwZa+J/tZPrkMtc
+         n1Wl0g/ADw4tjf0s7+W5IqzB3KENDNd80BioAZNIqk7Y2Kqpa+wB1lPg4I+4iq9KLvrT
+         EHHQ==
+X-Received: by 10.182.22.5 with SMTP id z5mr6219778obe.42.1381952209391;
+        Wed, 16 Oct 2013 12:36:49 -0700 (PDT)
+Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
+        by mx.google.com with ESMTPSA id it7sm65332668obb.11.1969.12.31.16.00.00
+        (version=TLSv1.2 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 16 Oct 2013 12:36:48 -0700 (PDT)
+In-Reply-To: <20131016063436.GB24964@shrek.podlesie.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236253>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236254>
 
-Hi,
+Krzysztof Mazur wrote:
+> On Tue, Oct 15, 2013 at 11:03:26PM -0500, Felipe Contreras wrote:
+> > > not some "next" behavior that may change in future.
+> > 
+> > But I'm suggesting to add a core.addremove option as well, like you suggested,
+> > am I not?
+> 
+> Yes, I think we both agreed on adding core.addremove. I'm just not
+> convinced if we should also add core.mode.
 
-John Keeping wrote:
+If we add core.addremove, all the issues you mentioned are solved. If we do
+that, now the question is, how exactly does core.mode = next affect anybody
+genatively? If you don't like it, you don't set it, that's why it's a
+configuration. I don't see the problem.
 
->                                    Since commit d44e712 (pull: support
-> rebased upstream + fetch + pull --rebase, 2009-07-19), pull has actually
-> chosen the most recent reflog entry which is an ancestor of the current
-> branch if it can find one.
->
-> Change rebase so that it uses the same logic.
+> > So you would be happy if we had core.addremove = true *and* core.mode = next,
+> > right? You would use one, different people with different needs would use the
+> > other.
+> 
+> Yes, if there are people that will use core.mode it will be worth
+> adding. I'm just not one of them.
 
-Nice idea.
+I am already using it.
 
-Could pull be made to rely on rebase for this as a follow-up?
-
-[...]
-> --- a/git-rebase.sh
-> +++ b/git-rebase.sh
-> @@ -437,6 +437,14 @@ then
->  			error_on_missing_default_upstream "rebase" "rebase" \
->  				"against" "git rebase <branch>"
->  		fi
-> +		for reflog in $(git rev-list -g "$upstream_name" 2>/dev/null)
-> +		do
-> +			if test "$reflog" = "$(git merge-base "$reflog" HEAD)"
-
-"git merge-base --is-ancestor" is faster.
-
-What should happen if HEAD is not a valid commit?  (Tested with:
-
-	$ git checkout --orphan foo
-	$ cat >>.git/config <<EOF
-	[branch "foo"]
-		remote = origin
-		merge = refs/heads/master
-	EOF
-	$ bin-wrappers/git rebase 2>&1 | wc -l
-	83
-
-).
-
-diff --git i/git-rebase.sh w/git-rebase.sh
-index fd36cf7..d2e2c2e 100755
---- i/git-rebase.sh
-+++ w/git-rebase.sh
-@@ -439,7 +439,7 @@ then
- 		fi
- 		for reflog in $(git rev-list -g "$upstream_name" 2>/dev/null)
- 		do
--			if test "$reflog" = "$(git merge-base "$reflog" HEAD)"
-+			if git merge-base --is-ancestor "$reflog" HEAD
- 			then
- 				upstream_name=$reflog
- 				break
+-- 
+Felipe Contreras
