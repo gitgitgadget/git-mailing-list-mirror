@@ -1,117 +1,107 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] rev-parse --parseopt: fix handling of optional arguments
-Date: Tue, 15 Oct 2013 16:57:39 -0700
-Message-ID: <20131015235739.GI9464@google.com>
-References: <1381838425-18244-1-git-send-email-boklm@mars-attacks.org>
- <20131015231427.GF9464@google.com>
- <xmqqfvs29kjc.fsf@gitster.dls.corp.google.com>
+From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
+Subject: [PATCH] t3600: fix broken "choking git rm" test
+Date: Wed, 16 Oct 2013 02:01:27 +0200
+Message-ID: <1381881687-11179-1-git-send-email-szeder@ira.uka.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nicolas Vigier <boklm@mars-attacks.org>, git@vger.kernel.org,
-	Pierre Habouzit <madcoder@debian.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 16 01:57:47 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 16 02:02:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VWEUk-0003QR-NI
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Oct 2013 01:57:47 +0200
+	id 1VWEZ3-0005ki-5W
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Oct 2013 02:02:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933856Ab3JOX5n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Oct 2013 19:57:43 -0400
-Received: from mail-pa0-f41.google.com ([209.85.220.41]:39342 "EHLO
-	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933729Ab3JOX5m (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Oct 2013 19:57:42 -0400
-Received: by mail-pa0-f41.google.com with SMTP id bj1so172662pad.0
-        for <git@vger.kernel.org>; Tue, 15 Oct 2013 16:57:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=5sp+qk0JdDmXwtKeFq/MZHGAu4Knd0X4fGi/cnSHpcI=;
-        b=XdKPsmmDwCKRMaIeng0jn57FxTnP2qlazdYhvrzhakbUdHuqrb7VQbmeweizgp6LZr
-         DYFEZdghDZphXBIfHO7xT/NE/rTH4ZiNQ719KCPNs0g9kix6PrI+JH0h+88xqHMmT9I4
-         0ccJC/L7QViCC/YGREn1PYxyWXdSRiPBoWjR9CP0/o78tPzbXeCNj8rEEM6QVZP9O1mS
-         SpvBgphKInb5nmBMz64FXsBTccSABD6gYDaAXM3Jum+uxdzOmJrCRR3o8A81wU6UtkEF
-         xNYT/+huZjYcHIcwHSzNGtMhsCftaKypSROqWwM+I9eygApgpqRpydm00m5/My0L/0Iw
-         LrrQ==
-X-Received: by 10.67.1.228 with SMTP id bj4mr382296pad.157.1381881461852;
-        Tue, 15 Oct 2013 16:57:41 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id ok2sm19322002pbb.24.1969.12.31.16.00.00
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 15 Oct 2013 16:57:41 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <xmqqfvs29kjc.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1759878Ab3JPACI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Oct 2013 20:02:08 -0400
+Received: from moutng.kundenserver.de ([212.227.17.8]:63407 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759708Ab3JPACG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Oct 2013 20:02:06 -0400
+Received: from localhost6.localdomain6 (g226140223.adsl.alicedsl.de [92.226.140.223])
+	by mrelayeu.kundenserver.de (node=mrbap3) with ESMTP (Nemesis)
+	id 0MCIHB-1Ven8P39TF-0098Tj; Wed, 16 Oct 2013 02:02:04 +0200
+X-Mailer: git-send-email 1.8.4.1.495.gd8d272e
+X-Provags-ID: V02:K0:cHsSrMqXDOgL3Yv6gBkDPqGlcwPUQwiQuia2gFIj0F8
+ xwnFZjgQkdSV4eF941o0NTC1WYDr4NKvdU7TutzPhoWrUk6D+4
+ toTuh5plCuBS/rWiZKdl5cHK9nI+44YAwwJeHsiEJ2ydHzFVQs
+ +0FprVxzRbdqHbCvZT3dhlSo/xzTvbF4wZTpZrFW0kVId5g1CY
+ d5DZ5eVJd/WP/d7oErG67t+yJs5SOEYjddkePXpYaKU28HhTsQ
+ AFLrmZHiC7rrOK++byldjEclOa+fXZZ1dqb7xWLej9tw176IXp
+ yA/2UoTEjnM2Gpjlkzqc1T97xIvL0xIbAFRIcw0w+pYmWt3MIU
+ Ubf8Tq8yS1uXf5nZRvqn05eWB2/Ms+iKejd75zG1rz/WhQ5ONa
+ Pj0BmUwBkiHzw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236223>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236224>
 
-Junio C Hamano wrote:
+The test 'choking "git rm" should not let it die with cruft' is
+supposed to check 'git rm's behavior when interrupted by provoking a
+SIGPIPE while 'git rm' is busily deleting files from a specially
+crafted index.
 
-> You just made these two that the user clearly meant to express two
-> different things indistinguishable.
->
-> 	opt.sh -S
->       opt.sh -S ''
-[...]
-> And that is exactly why gitcli.txt tells users to use the 'sticked'
-> form, and ends the bullet point with:
->
->    An option that takes optional option-argument must be written in
->    the 'sticked' form.
+This test is silently broken for the following reasons:
 
-Yes, another possibility in that vein would be to teach rev-parse
---parseopt an OPTIONS_LONG_STICKED output format, and then parse with
+- The test crafts a special index by feeding a large number of index
+  entries with null shas to 'git update-index --index-info'.  It was
+  OK back then when this test was introduced in commit 0693f9ddad
+  (Make sure lockfiles are unlocked when dying on SIGPIPE,
+  2008-12-18), but since commit 4337b5856f (do not write null sha1s to
+  on-disk index, 2012-07-28) null shas are not allowed in the on-disk
+  index causing 'git update-index' to error out.
 
-	while :
-	do
-		case $1 in
-		--gpg-sign)
-			... no keyid ...
-			;;
-		--gpg-sign=*)
-			keyid=${1#--gpg-sign=}
-			...
-			;;
-		esac
-		shift
-	done
+- The barfing 'git update-index --index-info' should fail the test,
+  but it remains unnoticed because of the severely broken && chain:
+  the test's result depends solely on whether there is a stale lock
+  file left behind, but after 'git update-index' errors out 'git rm'
+  won't be executed at all.
 
-This still leaves
+To fix this test feed only non-null shas to 'git update-index' and
+restore the && chain (partly by adding a missing && and by using the
+test_when_finished helper instead of manual cleanup).
 
-	opt.sh -S
-	
-and
+Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
+---
+A particularly funny one from the fallout of gmane/236183
 
-	opt.sh -S''
+ t/t3600-rm.sh | 11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
-indistinguishable.  Given what the shell passes to execve, I think
-that's ok.
-
-The analagous method without preferring long options could work almost
-as well:
-
-	while :
-	do
-		case $1 in
-		-S)
-			... no keyid ...
-			;;
-		-S?*)
-			keyid=${1#-S}
-			...
-			;;
-		esac
-		shift
-	done
-
-but it mishandles "--gpg-sign=" with empty argument.
-
-Jonathan
+diff --git a/t/t3600-rm.sh b/t/t3600-rm.sh
+index 85854f338f..4dd0130dd9 100755
+--- a/t/t3600-rm.sh
++++ b/t/t3600-rm.sh
+@@ -240,18 +240,15 @@ test_expect_success 'refresh index before checkin=
+g if it is up-to-date' '
+=20
+ test_expect_success 'choking "git rm" should not let it die with cruft=
+' '
+ 	git reset -q --hard &&
++	test_when_finished "rm -f .git/index.lock ; git reset -q --hard" &&
+ 	i=3D0 &&
+ 	while test $i -lt 12000
+ 	do
+-	    echo "100644 $_z40 0	some-file-$i"
++	    echo "100644 1234567890123456789012345678901234567890 0	some-file=
+-$i"
+ 	    i=3D$(( $i + 1 ))
+ 	done | git update-index --index-info &&
+-	git rm -n "some-file-*" | :;
+-	test -f .git/index.lock
+-	status=3D$?
+-	rm -f .git/index.lock
+-	git reset -q --hard
+-	test "$status" !=3D 0
++	git rm -n "some-file-*" | : &&
++	test ! -f .git/index.lock
+ '
+=20
+ test_expect_success 'rm removes subdirectories recursively' '
+--=20
+1.8.4.1.495.gd8d272e
