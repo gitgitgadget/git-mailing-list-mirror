@@ -1,83 +1,156 @@
-From: John Szakmeister <john@szakmeister.net>
-Subject: Re: [PATCH v3] Add core.mode configuration
-Date: Wed, 16 Oct 2013 11:11:44 -0400
-Message-ID: <CAEBDL5UaowCZggHijoqPF2UP5B6Y6Bkr9eP+A-Z3-x71W1Oi6Q@mail.gmail.com>
-References: <1381561485-20252-1-git-send-email-felipe.contreras@gmail.com>
-	<20131014205908.GA17089@shrek.podlesie.net>
-	<525c63b6711fa_197a905e845b@nysa.notmuch>
-	<20131015123505.GA3097@shrek.podlesie.net>
-	<525d35e766ad4_55661275e7426@nysa.notmuch>
-	<20131015133327.GA22723@shrek.podlesie.net>
-	<525d4354a5436_5844e73e843d@nysa.notmuch>
-	<20131015145139.GA3977@shrek.podlesie.net>
-	<CAEBDL5V8wfbQTZ5do-UMRpSsxRN8bFaHVnG7kRNfP0t+oYbfNg@mail.gmail.com>
-	<525e0e1b28c87_81a151de743f@nysa.notmuch>
-	<CAEBDL5We2wshgMZcTXoDziXskKvb9s2=2DEZtXRBgbTiitCOZQ@mail.gmail.com>
+From: Martin Fick <mfick@codeaurora.org>
+Subject: Re: pack corruption post-mortem
+Date: Wed, 16 Oct 2013 09:41:16 -0600
+Organization: CAF
+Message-ID: <201310160941.16904.mfick@codeaurora.org>
+References: <20131016083400.GA31266@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Krzysztof Mazur <krzysiek@podlesie.net>, git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 16 17:12:18 2013
+Content-Type: Text/Plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Oct 16 17:41:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VWSll-0004XM-RN
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Oct 2013 17:12:18 +0200
+	id 1VWTDz-0003Iz-Gz
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Oct 2013 17:41:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760718Ab3JPPLr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Oct 2013 11:11:47 -0400
-Received: from mail-wi0-f181.google.com ([209.85.212.181]:34128 "EHLO
-	mail-wi0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760716Ab3JPPLp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Oct 2013 11:11:45 -0400
-Received: by mail-wi0-f181.google.com with SMTP id l12so942537wiv.8
-        for <git@vger.kernel.org>; Wed, 16 Oct 2013 08:11:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=eH0CRdfaJbqZ5UutIzAZLnpKpDtH8NjCJCvnAk0fxvw=;
-        b=f0MnKKzUj8R3QmVpH4dG2EEEEVV6jxq5GmD2XCOuhIesir4R+MW75OcX8aVHzxUg66
-         BRiKJJ7E1zPbF4sINhTjbQDNfijespn0OO4cwd/vOQ2XBFVjU+EPGaMflgK18F6C4p1T
-         Dzd0YEa9gL7aIERKsZiyaYOE+Bzp5yimbN2IWFEdKakaNc/9Tyyxz+KFjOzOXQIP4AGd
-         L2WN4ah6FB6N5/ISGj4LZeX5lbRLm6adXrZ+FFRGsv+Bz7UgjrUaC3fYL5ncyQ6bKbFE
-         wwfX6iORLpD1o94xnXoigdEnixVzqPvSSpeYriyR4bjeZGqGVTsollv+kp+4N6fQW/em
-         8OWA==
-X-Received: by 10.194.2.108 with SMTP id 12mr1818117wjt.64.1381936304421; Wed,
- 16 Oct 2013 08:11:44 -0700 (PDT)
-Received: by 10.180.99.169 with HTTP; Wed, 16 Oct 2013 08:11:44 -0700 (PDT)
-In-Reply-To: <CAEBDL5We2wshgMZcTXoDziXskKvb9s2=2DEZtXRBgbTiitCOZQ@mail.gmail.com>
-X-Google-Sender-Auth: BXHZFZE2nuuMVi9g1QVYlru8xVg
+	id S1753043Ab3JPPlW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Oct 2013 11:41:22 -0400
+Received: from smtp.codeaurora.org ([198.145.11.231]:46602 "EHLO
+	smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755813Ab3JPPlT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Oct 2013 11:41:19 -0400
+Received: from smtp.codeaurora.org (localhost [127.0.0.1])
+	by smtp.codeaurora.org (Postfix) with ESMTP id 3DA7013EF8C;
+	Wed, 16 Oct 2013 15:41:18 +0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 486)
+	id 2F77513F283; Wed, 16 Oct 2013 15:41:18 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on
+	pdx-caf-smtp.dmz.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=5.0 tests=ALL_TRUSTED,BAYES_00
+	autolearn=ham version=3.3.1
+Received: from mfick-lnx.localnet (mfick-lnx.qualcomm.com [129.46.10.58])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	(Authenticated sender: mfick@smtp.codeaurora.org)
+	by smtp.codeaurora.org (Postfix) with ESMTPSA id C7F0313EF8C;
+	Wed, 16 Oct 2013 15:41:17 +0000 (UTC)
+User-Agent: KMail/1.13.5 (Linux/2.6.32.49+drm33.21-mfick7; KDE/4.4.5; x86_64; ; )
+In-Reply-To: <20131016083400.GA31266@sigill.intra.peff.net>
+X-Virus-Scanned: ClamAV using ClamSMTP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236247>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236248>
 
-On Wed, Oct 16, 2013 at 6:54 AM, John Szakmeister <john@szakmeister.net> wrote:
-[snip]
-> "probably a minority" -- I guess that's the part I disagree with.  I'm
-> not sure what a minority means here, but I don't think it'll be a
-> handful of people.  How big does that number get before we get
-> concerned about backlash from users if we decide to change course?
-> Or, is that simply not an issue?  Why or why not?  I have to be
-> honest, if the option was available, I'd have my developers turn it
-> on.  I'm sure a great deal of others would do so too.
->
-> Is there some other way we can solve this?  Having an experimental
-> branch with all the 2.0 features merged and those concerned can just
-> build that version?  I see the downside of that too: it's not as easy
-> for people to try, and there is nothing preventing folks from posting
-> binaries with the new behaviors enabled.  It leads me to feeling that
-> we're stuck in some regard.  But maybe I'm being overly pessimistic
-> here, and it's really all a non-issue.  As I said earlier, it'd be
-> nice if others chimed in here.
+On Wednesday, October 16, 2013 02:34:01 am Jeff King wrote:
+> I was recently presented with a repository with a
+> corrupted packfile, and was asked if the data was
+> recoverable. This post-mortem describes the steps I took
+> to investigate and fix the problem. I thought others
+> might find the process interesting, and it might help
+> somebody in the same situation.
 
-Thinking about this a little more, we do have a proving ground.
-That's what the whole pu/next/master construct is for.  So maybe this
-is a non-issue.  By the time it lands on master, we should have
-decided whether the feature is worth keeping or not.
+This is awesome Peff, thanks for the great writeup!
 
--John
+I have nightmares about this sort of thing every now and 
+then, and we even experience some corruption here and there 
+that needs to be fixed (mainly missing objects when we toy 
+with different git repack arguments).  I cannot help but 
+wonder, how we can improve git further to either help 
+diagnose or even fix some of these problems?  More inline 
+below...
+
+
+> The first thing I did was pull the broken data out of the
+> packfile. I needed to know how big the object was, which
+> I found out with:
+> 
+>   $ git show-index <$idx | cut -d' ' -f1 | sort -n | grep
+> -A1 51653873 51653873
+>   51664736
+> 
+> Show-index gives us the list of objects and their
+> offsets. We throw away everything but the offsets, and
+> then sort them so that our interesting offset (which we
+> got from the fsck output above) is followed immediately
+> by the offset of the next object. Now we know that the
+> object data is 10863 bytes long, and we can grab it
+> with:
+> 
+>   dd if=$pack of=object bs=1 skip=51653873 count=10863
+
+Is there a current plumbing command that should be enhanced 
+to be able to do the 2 steps above directly for people 
+debugging (maybe with some new switch)?  If not, should we 
+create one, git show --zlib, or git cat-file --zlib?
+
+
+> Note that the "object" file isn't fit for feeding
+> straight to zlib; it has the git packed object header,
+> which is variable-length. We want to strip that off so
+> we can start playing with the zlib data directly. You
+> can either work your way through it manually (the format
+> is described in
+> Documentation/technical/pack-format.txt), or you can
+> walk through it in a debugger. I did the latter,
+> creating a valid pack like:
+> 
+>   # pack magic and version
+>   printf 'PACK\0\0\0\2' >tmp.pack
+>   # pack has one object
+>   printf '\0\0\0\1' >>tmp.pack
+>   # now add our object data
+>   cat object >>tmp.pack
+>   # and then append the pack trailer
+>   /path/to/git.git/test-sha1 -b <tmp.pack >trailer
+>   cat trailer >>tmp.pack
+> 
+> and then running "git index-pack tmp.pack" in the
+> debugger (stop at unpack_raw_entry). Doing this, I found
+> that there were 3 bytes of header (and the header itself
+> had a sane type and size). So I stripped those off with:
+> 
+>   dd if=object of=zlib bs=1 skip=3
+
+This too feels like something we should be able to do with a 
+plumbing command eventually?
+
+git zlib-extract
+
+> So I took a different approach. Working under the guess
+> that the corruption was limited to a single byte, I
+> wrote a program to munge each byte individually, and try
+> inflating the result. Since the object was only 10K
+> compressed, that worked out to about 2.5M attempts,
+> which took a few minutes.
+
+Awesome!  Would this make a good new plumbing command, git 
+zlib-fix?
+
+
+> I fixed the packfile itself with:
+> 
+>   chmod +w $pack
+>   printf '\xc7' | dd of=$pack bs=1 seek=51659518
+> conv=notrunc chmod -w $pack
+> 
+> The '\xc7' comes from the replacement byte our "munge"
+> program found. The offset 51659518 is derived by taking
+> the original object offset (51653873), adding the
+> replacement offset found by "munge" (5642), and then
+> adding back in the 3 bytes of git header we stripped.
+
+Another plumbing command needed?  git pack-put --zlib?
+
+I am not saying my command suggestions are good, but maybe 
+they will inspire the right answer?
+
+-Martin
