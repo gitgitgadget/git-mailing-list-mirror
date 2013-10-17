@@ -1,131 +1,79 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [git-users] Problem using detached worktrees with commands implemented in scripts
-Date: Thu, 17 Oct 2013 23:38:09 +0100
-Organization: OPDS
-Message-ID: <1390B0AFBE7F4C4A875987C7469B0791@PhilipOakley>
-References: <201310162003.r9GK3UYj014414@freeze.ariadne.com><xmqqeh7k51vg.fsf@gitster.dls.corp.google.com><29AA597BEBC146B09E8B370949EC2CE9@PhilipOakley><xmqqk3hc3jbw.fsf@gitster.dls.corp.google.com><3401D1F36F134CDDB0881B196F79CB3A@PhilipOakley> <xmqqr4bjy63y.fsf@gitster.dls.corp.google.com> <5A09FF55D37146E7A02DF2F640A46406@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v6] diff.c: keep arrow(=>) on show_stats()'s shortened filename part to make rename visible.
+Date: Thu, 17 Oct 2013 15:38:36 -0700
+Message-ID: <xmqqzjq7wmj7.fsf@gitster.dls.corp.google.com>
+References: <38848735-7CFA-404E-AE51-4F445F813266@gmail.com>
+	<A15CCF08-83FD-4F3C-9773-C26DEE38FD33@gmail.com>
+	<660A536D-9993-4B81-B6FF-A113F9111570@gmail.com>
+	<AFC93704-D6C5-49AF-9A66-C5EA81348FFA@gmail.com>
+	<79A13931-694C-4DDC-BEDF-71A0DBA0ECA1@gmail.com>
+	<89A4E8C6-C233-49E2-8141-837ABDBBC976@gmail.com>
+	<xmqqmwm71ysp.fsf@gitster.dls.corp.google.com>
+	<B690713F-6FF1-46A7-85A7-C92303BBAF0E@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: "Dale R. Worley" <worley@alum.mit.edu>,
-	"Git List" <git@vger.kernel.org>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Oct 18 00:38:00 2013
+Content-Type: text/plain; charset=iso-2022-jp
+Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
+To: Yoshioka Tsuneo <yoshiokatsuneo@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 18 00:38:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VWwCd-0001Ek-Lg
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Oct 2013 00:38:00 +0200
+	id 1VWwDL-0001aa-Ng
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Oct 2013 00:38:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752786Ab3JQWhz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Oct 2013 18:37:55 -0400
-Received: from out1.ip06ir2.opaltelecom.net ([62.24.128.242]:40806 "EHLO
-	out1.ip06ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750811Ab3JQWhz (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 17 Oct 2013 18:37:55 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AgIMAPFlYFJOl3+a/2dsb2JhbABbgwc4iTm1GwQEAoEpF3RpAQGBHwEBFAEEAQEFCAEBLh4BASELAgMFAgEDFQwlFAEEGgYHFwYTCAIBAgMBhTgHAYIWI8Bqji6BI4MmgQcDiQSGEpp0gTosgT87
-X-IPAS-Result: AgIMAPFlYFJOl3+a/2dsb2JhbABbgwc4iTm1GwQEAoEpF3RpAQGBHwEBFAEEAQEFCAEBLh4BASELAgMFAgEDFQwlFAEEGgYHFwYTCAIBAgMBhTgHAYIWI8Bqji6BI4MmgQcDiQSGEpp0gTosgT87
-X-IronPort-AV: E=Sophos;i="4.93,517,1378854000"; 
-   d="scan'208";a="591420111"
-Received: from host-78-151-127-154.as13285.net (HELO PhilipOakley) ([78.151.127.154])
-  by out1.ip06ir2.opaltelecom.net with SMTP; 17 Oct 2013 23:37:52 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1754525Ab3JQWij (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Oct 2013 18:38:39 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47720 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753143Ab3JQWij (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Oct 2013 18:38:39 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8B9614BC02;
+	Thu, 17 Oct 2013 22:38:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=W+knmtKR2bsud0J+8DCZu519tFU=; b=r7IlTj
+	/9gZysMwk6+Xu34oAzvsjJl4kWeQoAakwrfxF2fctkqr2PNChfujwSu3bujAlaBm
+	T5vzY8jb0Bhi8122eQ4VPngtCjA5dHrqpMXyma69ReVQfaNGDjipHR7dbjwUbKaY
+	WrOtzi+iOYaXrnppfSb96UWyAQICu7hGU8/FY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Egsi9IrZs9gRmZFcUzdOkjfr1htUJdtX
+	DNRtAw/vtjIK9HvqGmMaLPw17VGCJibuSJmN5AjNigQ9vhziJwKnifuNeRvoOGwV
+	Bk9Qibe3RZ5Ge0UlNpaFrM6xWUZ+rYq2uQ+alyDBCr/Kg38Xp13LAJKplYoIBsGt
+	HeuTBKVpJp0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7B9104BC00;
+	Thu, 17 Oct 2013 22:38:38 +0000 (UTC)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D62244BBF6;
+	Thu, 17 Oct 2013 22:38:37 +0000 (UTC)
+In-Reply-To: <B690713F-6FF1-46A7-85A7-C92303BBAF0E@gmail.com> (Yoshioka
+	Tsuneo's message of "Fri, 18 Oct 2013 01:08:33 +0300")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: DD42A060-377C-11E3-BBE9-8F264F2CC097-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236330>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236331>
 
-From: "Philip Oakley" <philipoakley@iee.org>
-> From: "Junio C Hamano" <gitster@pobox.com>
->> "Philip Oakley" <philipoakley@iee.org> writes:
->>
->>> From: "Junio C Hamano" <gitster@pobox.com>
->>>> "Philip Oakley" <philipoakley@iee.org> writes:
->>>>
->>>>> ... and the detection process for 'toplevel' may not work
->>>>> properly when in a separated work-tree environment.
->>>>
->>>> Without GIT_WORK_TREE exported to point at the top-level, there is
->>>> nothing that lets us "detect" it, as the working tree does not have
->>>> ".git" directory to tell us to stop, no?
->>>>
->>>
->>> "No", but not in that way.
->>>
->>> My point (to Dale) was, as you state, that the "cd to top level" was
->>> (IIUC) the probable causes of the fault, and that a documentation
->>> update would probably be appropriate for the discussion on exporting
->>> GIT_WORK_TREE, and that it would specifically mention those git
->>> commands that needed to "cd to top level", and hence would not work
->>> in
->>> such an environment. (I wasn't sure where the appropriate "cd to top
->>> level" function was)
->>>
->>> An explanation here on the list wouldn't solve the problems for
->>> others
->>> who are yet to make the same mistake, hence the implied suggestion.
->>
->> I understand what you mean by these last two lines. It was unclear
->> to me which part of our documentation needs updating and how, and
->> that was (and still is) what I was primarily interested in finding
->> out.
->>
-> I was expecting that the places would be in git(1) [git.txt] and
-> config(1) [config.txt], in the enironment variables GIT_WORK_TREE
-> section and core.worktree sections repectively. However what the right
-> text would be hasn't been fully determined yet, as it should be clear
-> about which commands don't follow the stated 'rules'. Dale's use case
-> does appear to be stretching...
->
-> Philip
+Yoshioka Tsuneo <yoshiokatsuneo@gmail.com> writes:
 
-A bit more looking gave that the cd_to_toplevel () in git-sh-setup.sh
-directly uses `git rev-parse --show-toplevel`, which simply returns
-work_tree (static char *work_tree; in environment.c, with comment /*
-This is set by setup_git_dir_gently() and/or git_default_config() */), 
-apparently without a check for the GIT_WORK_TREE.
+> In the "[PATCH v7]", I changed to keep filename part of suffix to handle
+> above case, but not always keep directory part because I feel totally
+> keeping all part of long suffix including directory name may cause output like:
+>     …{… => …}…ongPath1/LongPath2/nameOfTheFileThatWasMoved 
+> And, above may be worse than:
+>    ...{...ceDirectory => …ionDirectory}.../nameOfTheFileThatWasMoved
+> I think.
 
-One option may be to either protect the cd_to_toplevel  code with a
-check of `git rev-parse --local-env-vars` to see if GIT_WORK_TREE is
-present. Or create `git rev-parse --work-dir` to match `--git-dir`. This 
-would be a code level fix. This makes the assumption that if a deteched 
-GIT_WORK_TREE is set then it is the top level.
+I am not sure if I agree.
 
-In terms of command scripts that use git-sh-setup.sh we have a longish 
-list, so a full list in the documentation is probably unreasonable 
-(which suggests that a code fix would be more apprpriate)
-
-commands:
-
-git-am
-git-bisect
-git-filter-branch
-git-instaweb
-git-lost-found
-git-merge-one-file
-git-mergetool
-git-pull
-git-quiltimport
-git-rebase
-git-repack
-git-request-pull
-git-stash
-git-submodule
-git-web--browse
-
-git\contrib\*various*
-
-
-
-Philip
+Losing LongPath2 part may be more significant data loss than losing
+a single bit that says the change is a rename, as the latter may not
+quite tell us what these two directories were anyway.
