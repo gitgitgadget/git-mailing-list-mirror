@@ -1,121 +1,164 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 07/10] receive-pack: request for packv4 if it's the preferred version
-Date: Thu, 17 Oct 2013 10:26:21 -0700
-Message-ID: <xmqqzjq724hu.fsf@gitster.dls.corp.google.com>
-References: <1380162409-18224-1-git-send-email-pclouds@gmail.com>
-	<1380162409-18224-8-git-send-email-pclouds@gmail.com>
+Subject: Re: [PATCH v3 1/2] checkout: allow dwim for branch creation for "git checkout $branch --"
+Date: Thu, 17 Oct 2013 11:09:37 -0700
+Message-ID: <xmqqr4bj22hq.fsf@gitster.dls.corp.google.com>
+References: <1380186486-8220-1-git-send-email-Matthieu.Moy@imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Nicolas Pitre <nico@fluxnic.net>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 17 19:26:32 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, pclouds@gmail.com, jc@sahnwaldt.de,
+	jrnieder@gmail.com
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Thu Oct 17 20:09:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VWrLB-0003Sf-KM
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Oct 2013 19:26:29 +0200
+	id 1VWs13-0004HA-Dr
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Oct 2013 20:09:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758074Ab3JQR00 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 Oct 2013 13:26:26 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43035 "EHLO
+	id S1758223Ab3JQSJl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Oct 2013 14:09:41 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46637 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757365Ab3JQR0Z convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 17 Oct 2013 13:26:25 -0400
+	id S1758160Ab3JQSJl (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Oct 2013 14:09:41 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 471394B300;
-	Thu, 17 Oct 2013 17:26:24 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 545284B7BF;
+	Thu, 17 Oct 2013 18:09:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=rzp8prwWvP0b
-	dhAV+3d19VLBkY0=; b=DxGX0czO6Wsjq39EadqUtwF488BEkpEKzImTlKYE/Q+A
-	bT3pdA2088yA/FgPiDwkrL6W/dhfBEHdRY1XYJFGZYZiHBm1Lynl/ekqvk/n2m+Y
-	xT0Eab9RWRJABolfyD3ZyFS0a0+dYQ8a4woHOLnF71voY/2bbiFwS8rl6SXjzhc=
+	:content-type; s=sasl; bh=7lddhV31JPHZT9ODgv68Zmz0KZs=; b=CRAE9r
+	U5aD7orc50zt0NEATzNOHdM32Q4ahYcpTqqJQWypK9J1vHZyNSGjl437iuqfRxzk
+	PAHQEXOdxTMDMIyLDQVbzal9V2bCvMNFXK9r+N1Z2e4i8gF5iq01h0QdfuWxGyhR
+	fmGjsOMfovBPJ0vpzfPHw3ZYrSbdHjWfxZYEU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=JjCfWO
-	sTgWGLKwO9UrHaAk7/ZRzu43BLWW4ziMGtohYJjbZmbckMavdNVrr9cvFFDiFyn0
-	3olIFar5FJIdvpoKWdo2CyHNbVJAUK2s8KqeeSrxLDbpohE0B3Mca/OjEUExiQpd
-	6lzZ0XS++I1xydbGp4GiEgu8MlrDn2dwMhU/w=
+	:content-type; q=dns; s=sasl; b=l/cUBtL/Pruakhnq84FEdkL7tbYsWh6f
+	cezIHubG5+n4IPl90UGcqaqyWTZfUSZZq26YVLs8lTJ+lzR4bQ7iLSrbg+Cv4W3e
+	Z6fY3++n/po8uLE/k0J96WBbAxLaRzj7HVUIJ2hiEuupo9C6AdIE1ApArEfPsq98
+	Wrk5k61SNMU=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 39F864B2FE;
-	Thu, 17 Oct 2013 17:26:24 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 47AAD4B7BD;
+	Thu, 17 Oct 2013 18:09:40 +0000 (UTC)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9FF5B4B2F8;
-	Thu, 17 Oct 2013 17:26:23 +0000 (UTC)
-In-Reply-To: <1380162409-18224-8-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Thu, 26
- Sep 2013 09:26:46 +0700")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 94AEF4B7B8;
+	Thu, 17 Oct 2013 18:09:39 +0000 (UTC)
+In-Reply-To: <1380186486-8220-1-git-send-email-Matthieu.Moy@imag.fr> (Matthieu
+	Moy's message of "Thu, 26 Sep 2013 11:08:05 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 3ECB50BA-3751-11E3-9DE2-8F264F2CC097-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 4A1A9880-3757-11E3-861D-8F264F2CC097-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236301>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236304>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+Matthieu Moy <Matthieu.Moy@imag.fr> writes:
 
-> This is the only plumbing command that is controlled by
-> core.preferredPackVersion so far.
->
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
-> ---
->  Documentation/technical/protocol-capabilities.txt | 4 ++++
->  builtin/receive-pack.c                            | 3 ++-
->  2 files changed, 6 insertions(+), 1 deletion(-)
->
-> diff --git a/Documentation/technical/protocol-capabilities.txt b/Docu=
-mentation/technical/protocol-capabilities.txt
-> index be09792..32153cd 100644
-> --- a/Documentation/technical/protocol-capabilities.txt
-> +++ b/Documentation/technical/protocol-capabilities.txt
-> @@ -226,4 +226,8 @@ this capability, the server may send a pack versi=
-on 4. The server can
->  choose to send pack version 2 even if the client accepts this
->  capability.
-> =20
-> +The receive-pack server advertises this capability if it wants to
-> +receive the pack in format version 4 and the client should send in
-> +this format.
-
-Technically, "if it can and if it wants to receive" is more correct,
-as a v4 capable receiving end can choose to pretend it does not
-understand v4 by not sending this capability. Also a v4 incapable
-receiver would not advertise it even if it _wants_ to receive.  So
-in practice, we see this header only from a receiver that wants to
-receive v4, which makes the above statement accurate in a twisted
-way.
-
-There needs a bit more explanation on the "should" part, especially
-because this is very unusual and unlike all the other capabilities,
-which are offered as more freedom of choices without preference on
-the advertising side.  Rationale (i.e. reduce load on the receiving
-end) and ramifications of non-compliance (e.g. the receiver may
-choose to fail the push when its load is too high) are good things
-to guide third-party implementors to do the right thing.
-
->  This capability does not include multi-base tree support.
-> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-> index e3eb5fc..288b0bc 100644
-> --- a/builtin/receive-pack.c
-> +++ b/builtin/receive-pack.c
-> @@ -130,10 +130,11 @@ static void show_ref(const char *path, const un=
-signed char *sha1)
->  	if (sent_capabilities)
->  		packet_write(1, "%s %s\n", sha1_to_hex(sha1), path);
->  	else
-> -		packet_write(1, "%s %s%c%s%s agent=3D%s\n",
-> +		packet_write(1, "%s %s%c%s%s%s agent=3D%s\n",
->  			     sha1_to_hex(sha1), path, 0,
->  			     " report-status delete-refs side-band-64k quiet",
->  			     prefer_ofs_delta ? " ofs-delta" : "",
-> +			     core_default_pack_version =3D=3D 4 ? " packv4" : "",
->  			     git_user_agent_sanitized());
->  	sent_capabilities =3D 1;
+> diff --git a/builtin/checkout.c b/builtin/checkout.c
+> index 0f57397..9edd9c3 100644
+> --- a/builtin/checkout.c
+> +++ b/builtin/checkout.c
+> @@ -863,6 +863,13 @@ static const char *unique_tracking_name(const char *name, unsigned char *sha1)
+>  	return NULL;
 >  }
+>  
+> +static int error_invalid_ref(const char *arg, int has_dash_dash, int argcount)
+> +{
+> +	if (has_dash_dash)
+> +		die(_("invalid reference: %s"), arg);
+> +	return argcount;
+> +}
+
+This is somewhat unfortunate; it pretends to be a reusable helper by
+being a separate function, but it is not very reusable (see below).
+
+> @@ -917,19 +934,32 @@ static int parse_branchname_arg(int argc, const char **argv,
+>  		arg = "@{-1}";
+>  
+>  	if (get_sha1_mb(arg, rev)) {
+> +		/*
+> +		 * Either case (3) or (4), with <something> not being
+> +		 * a commit, or an attempt to use case (1) with an
+> +		 * invalid ref.
+> +		 */
+> +		int try_dwim = dwim_new_local_branch_ok;
+> +
+> +		if (check_filename(NULL, arg) && !has_dash_dash)
+> +			try_dwim = 0;
+> +		/*
+> +		 * Accept "git checkout foo" and "git checkout foo --"
+> +		 * as candidates for dwim.
+> +		 */
+> +		if (!(argc == 1 && !has_dash_dash) &&
+> +		    !(argc == 2 && has_dash_dash))
+> +			try_dwim = 0;
+> +
+> +		if (try_dwim) {
+>  			const char *remote = unique_tracking_name(arg, rev);
+
+Up to this point, the updated code makes very good sense.
+
+>  			if (!remote)
+> -				return argcount;
+> +				return error_invalid_ref(arg, has_dash_dash, argcount);
+
+The original that returned "argcount" from here were unnecessarily
+misleading in the first place. It saw "git checkout foo" where "foo"
+does not refer to an object nor a filesystem entity and there was no
+unique "refs/remotes/*/foo"; it wanted to return 0 to tell the
+caller that it consumed zero arguments as branch names.
+
+And the updated code is even more obscure.  This calling site makes
+it look as if it is an error to have no unique "refs/remotes/*/foo"
+at this point of the code by naming the helper function "error_*()",
+but it is an error in some case and not in others.
+
+                if (!remote) {
+                        if (has_dash_dash)
+                                die(_("..."));
+                        return 0;
+                }
+
+would be a lot more understandable.
+		
+The only reason you have conditional die() here (and on the "else"
+side of this "if" statement) is because you delayed the die that was
+at a much earlier point in the original.  And the only reason you
+created the unfortunate helper function is because you need to deal
+with that delayed decision to die now in two places.
+
+So it may be even cleaner to read if you did it this way:
+
+	if (get_sha1_mb(...)) {
+		/*
+		 * The first token is not a valid rev; we should
+		 * ordinarily error out if "git checkout foo --"
+		 * if foo is not a valid rev, but first see if
+		 * we can auto-create foo to continue...
+		 */
+		int recover_with_dwim = dwim_new_local_branch_ok;
+
+		... decide if we want to recover_with_dwim ...
+
+		if (recover_with_dwim) {
+			const char *remote = unique_tracking_name(arg, rev);
+			if (remote) {
+				*new_branch = arg;
+				arg = remote;
+			} else {
+				/* no; arg cannot be salvaged */
+				recover_with_dwim = 0;
+			}
+		}
+
+		if (!recover_with_dwim) {
+			if (has_dash_dash)
+				die(_("invalid ref %s", arg);
+			return 0; /* we saw no branch/commit */
+		}
+		/* otherwise we made a successful recovery */
+	}
