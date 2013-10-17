@@ -1,128 +1,121 @@
-From: Hemmo Nieminen <hemmo.nieminen@iki.fi>
-Subject: Re: [PATCH] graph: Fix log's graph's colors when merging branches.
-Date: Thu, 17 Oct 2013 20:16:01 +0300
-Message-ID: <20131017171601.GB3747@duunidell>
-References: <20131017064853.GA7419@duunidell>
- <20131017081336.GS27238@serenity.lan>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 07/10] receive-pack: request for packv4 if it's the preferred version
+Date: Thu, 17 Oct 2013 10:26:21 -0700
+Message-ID: <xmqqzjq724hu.fsf@gitster.dls.corp.google.com>
+References: <1380162409-18224-1-git-send-email-pclouds@gmail.com>
+	<1380162409-18224-8-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="qlTNgmc+xy1dBmNv"
-Cc: git@vger.kernel.org
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Thu Oct 17 19:17:15 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Nicolas Pitre <nico@fluxnic.net>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 17 19:26:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VWrCD-0006Da-FP
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Oct 2013 19:17:13 +0200
+	id 1VWrLB-0003Sf-KM
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Oct 2013 19:26:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756427Ab3JQRRI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Oct 2013 13:17:08 -0400
-Received: from mail-lb0-f176.google.com ([209.85.217.176]:36630 "EHLO
-	mail-lb0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754994Ab3JQRRH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Oct 2013 13:17:07 -0400
-Received: by mail-lb0-f176.google.com with SMTP id y6so2133185lbh.7
-        for <git@vger.kernel.org>; Thu, 17 Oct 2013 10:17:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:date:from:to:cc:subject:message-id:mail-followup-to
-         :references:mime-version:content-type:content-disposition
-         :in-reply-to;
-        bh=OHKdxdamgBEGQxj6zp5itN9O8jW4Elsy04lq1Lj+6F4=;
-        b=YjQWnG/sAB0uoC1wJNFXkZ88pNHqXS9dg91wr+Xfahz6k3UCgChALs5H/I1E4qWru1
-         VDylYzv4LPMrraB0Lol9B5NwERVjJix0fU6+Y+k5iTQPlLQeR0KWQUsOm24+vLLqE9ib
-         xQykRMD+/lu44Pfr8XjVfqSBfaAg/g4F/l2KnYDzBFhRKIGa7aKrD8ZJCYWkbatZUCMw
-         UH4V511PKvpK4+SpcV7mJOTlhvumehNnNxAygNddUB45QBAht2dLj5i+ZReSFtu4ZoJr
-         60tRU2LvJ4amAl/gUlVWJ22Rtv+E6+Ud+rvyZhAHqUkoKsLBM/jzxVLq2W/mh6U+jNV0
-         3zKg==
-X-Received: by 10.112.159.166 with SMTP id xd6mr8166897lbb.22.1382030225655;
-        Thu, 17 Oct 2013 10:17:05 -0700 (PDT)
-Received: from duunidell (cs27053018.pp.htv.fi. [89.27.53.18])
-        by mx.google.com with ESMTPSA id mz3sm50119561lbb.14.1969.12.31.16.00.00
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 17 Oct 2013 10:17:05 -0700 (PDT)
-Mail-Followup-To: John Keeping <john@keeping.me.uk>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20131017081336.GS27238@serenity.lan>
+	id S1758074Ab3JQR00 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 Oct 2013 13:26:26 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43035 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757365Ab3JQR0Z convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 17 Oct 2013 13:26:25 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 471394B300;
+	Thu, 17 Oct 2013 17:26:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=rzp8prwWvP0b
+	dhAV+3d19VLBkY0=; b=DxGX0czO6Wsjq39EadqUtwF488BEkpEKzImTlKYE/Q+A
+	bT3pdA2088yA/FgPiDwkrL6W/dhfBEHdRY1XYJFGZYZiHBm1Lynl/ekqvk/n2m+Y
+	xT0Eab9RWRJABolfyD3ZyFS0a0+dYQ8a4woHOLnF71voY/2bbiFwS8rl6SXjzhc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=JjCfWO
+	sTgWGLKwO9UrHaAk7/ZRzu43BLWW4ziMGtohYJjbZmbckMavdNVrr9cvFFDiFyn0
+	3olIFar5FJIdvpoKWdo2CyHNbVJAUK2s8KqeeSrxLDbpohE0B3Mca/OjEUExiQpd
+	6lzZ0XS++I1xydbGp4GiEgu8MlrDn2dwMhU/w=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 39F864B2FE;
+	Thu, 17 Oct 2013 17:26:24 +0000 (UTC)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9FF5B4B2F8;
+	Thu, 17 Oct 2013 17:26:23 +0000 (UTC)
+In-Reply-To: <1380162409-18224-8-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Thu, 26
+ Sep 2013 09:26:46 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 3ECB50BA-3751-11E3-9DE2-8F264F2CC097-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236300>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236301>
 
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
---qlTNgmc+xy1dBmNv
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+> This is the only plumbing command that is controlled by
+> core.preferredPackVersion so far.
+>
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
+> ---
+>  Documentation/technical/protocol-capabilities.txt | 4 ++++
+>  builtin/receive-pack.c                            | 3 ++-
+>  2 files changed, 6 insertions(+), 1 deletion(-)
+>
+> diff --git a/Documentation/technical/protocol-capabilities.txt b/Docu=
+mentation/technical/protocol-capabilities.txt
+> index be09792..32153cd 100644
+> --- a/Documentation/technical/protocol-capabilities.txt
+> +++ b/Documentation/technical/protocol-capabilities.txt
+> @@ -226,4 +226,8 @@ this capability, the server may send a pack versi=
+on 4. The server can
+>  choose to send pack version 2 even if the client accepts this
+>  capability.
+> =20
+> +The receive-pack server advertises this capability if it wants to
+> +receive the pack in format version 4 and the client should send in
+> +this format.
 
-Hi,
+Technically, "if it can and if it wants to receive" is more correct,
+as a v4 capable receiving end can choose to pretend it does not
+understand v4 by not sending this capability. Also a v4 incapable
+receiver would not advertise it even if it _wants_ to receive.  So
+in practice, we see this header only from a receiver that wants to
+receive v4, which makes the above statement accurate in a twisted
+way.
 
-On 09:13 Thu 17 Oct, John Keeping wrote:
-> It took me a minute to spot the problem when I tested this, but you're
-> right that there is a bug and I agree that the patch below is the right
-> fix.
-> 
-> Perhaps a better commit message will help others looking at this, maybe
-> something like this?
+There needs a bit more explanation on the "should" part, especially
+because this is very unusual and unlike all the other capabilities,
+which are offered as more freedom of choices without preference on
+the advertising side.  Rationale (i.e. reduce load on the receiving
+end) and ramifications of non-compliance (e.g. the receiver may
+choose to fail the push when its load is too high) are good things
+to guide third-party implementors to do the right thing.
 
-Updated the patch. Attaching it here.
-
-
--- 
-Best Regards
-Hemmo Nieminen
-
-
---qlTNgmc+xy1dBmNv
-Content-Type: text/x-diff; charset=utf-8
-Content-Disposition: inline; filename="0001-graph-fix-coloring-around-octopus-merges.patch"
-
->From 46b7ae56e08bc8ca9c29697da2c1210bd2a242b0 Mon Sep 17 00:00:00 2001
-From: Hemmo Nieminen <hemmo.nieminen@iki.fi>
-Date: Wed, 16 Oct 2013 11:28:50 +0300
-Subject: [PATCH v2] graph: fix coloring around octopus merges
-
-When drawing the graph of an octopus merge, we draw a horizontal line
-from parents 3 and above into the asterisk representing the commit. The
-sections of this line should be colored to match the graph lines coming
-in from above.
-
-However, if the commit is not in the left-most column we do not take
-into account the columns to the left of the commit when calculating
-these colors. Fix this by adding the appropriate offset to the column
-index used for calculating the color.
-
-Signed-off-by: Hemmo Nieminen <hemmo.nieminen@iki.fi>
----
-
-Notes:
-    Commit 211232b (Octopus merge of the following five patches.,
-    2005-05-05) in git.git's history exhibits this problem.
-
- graph.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/graph.c b/graph.c
-index b24d04c..6404331 100644
---- a/graph.c
-+++ b/graph.c
-@@ -801,10 +801,10 @@ static int graph_draw_octopus_merge(struct git_graph *graph,
- 	int num_dashes =
- 		((graph->num_parents - dashless_commits) * 2) - 1;
- 	for (i = 0; i < num_dashes; i++) {
--		col_num = (i / 2) + dashless_commits;
-+		col_num = (i / 2) + dashless_commits + graph->commit_index;
- 		strbuf_write_column(sb, &graph->new_columns[col_num], '-');
- 	}
--	col_num = (i / 2) + dashless_commits;
-+	col_num = (i / 2) + dashless_commits + graph->commit_index;
- 	strbuf_write_column(sb, &graph->new_columns[col_num], '.');
- 	return num_dashes + 1;
- }
--- 
-1.8.4.1
-
-
---qlTNgmc+xy1dBmNv--
+>  This capability does not include multi-base tree support.
+> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+> index e3eb5fc..288b0bc 100644
+> --- a/builtin/receive-pack.c
+> +++ b/builtin/receive-pack.c
+> @@ -130,10 +130,11 @@ static void show_ref(const char *path, const un=
+signed char *sha1)
+>  	if (sent_capabilities)
+>  		packet_write(1, "%s %s\n", sha1_to_hex(sha1), path);
+>  	else
+> -		packet_write(1, "%s %s%c%s%s agent=3D%s\n",
+> +		packet_write(1, "%s %s%c%s%s%s agent=3D%s\n",
+>  			     sha1_to_hex(sha1), path, 0,
+>  			     " report-status delete-refs side-band-64k quiet",
+>  			     prefer_ofs_delta ? " ofs-delta" : "",
+> +			     core_default_pack_version =3D=3D 4 ? " packv4" : "",
+>  			     git_user_agent_sanitized());
+>  	sent_capabilities =3D 1;
+>  }
