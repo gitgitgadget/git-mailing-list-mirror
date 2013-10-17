@@ -1,171 +1,115 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 00/14] Officially start moving to the term 'staging area'
-Date: Thu, 17 Oct 2013 12:50:50 -0700
-Message-ID: <xmqqwqlbznfp.fsf@gitster.dls.corp.google.com>
-References: <1381789769-9893-1-git-send-email-felipe.contreras@gmail.com>
-	<1381789769-9893-4-git-send-email-felipe.contreras@gmail.com>
-	<CAMP44s3u_SMyZOe5jxkvoGn5MBJ_g70iHRT5v_3u1rZwFoqiVA@mail.gmail.com>
+Subject: Re: [PATCH v3] build: add default aliases
+Date: Thu, 17 Oct 2013 12:51:13 -0700
+Message-ID: <xmqqppr3znf1.fsf@gitster.dls.corp.google.com>
+References: <1379791221-29925-1-git-send-email-felipe.contreras@gmail.com>
+	<20130924045325.GD2766@sigill.intra.peff.net>
+	<xmqqy55ub1ud.fsf@gitster.dls.corp.google.com>
+	<525e0b6e25aeb_81a151de7495@nysa.notmuch>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>,
-	Jay Soffian <jaysoffian@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Philip Oakley <philipoakley@iee.org>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	William Swanson <swansontec@gmail.com>,
-	Ping Yin <pkufranky@gmail.com>,
-	Hilco Wijbenga <hilco.wijbenga@gmail.com>
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
+	David Aguilar <davvid@gmail.com>
 To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 17 21:51:01 2013
+X-From: git-owner@vger.kernel.org Thu Oct 17 21:51:27 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VWtb0-0001LP-D2
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Oct 2013 21:50:58 +0200
+	id 1VWtbN-0001Zn-U0
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Oct 2013 21:51:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759041Ab3JQTuy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Oct 2013 15:50:54 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35580 "EHLO
+	id S1762493Ab3JQTvR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Oct 2013 15:51:17 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50592 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758100Ab3JQTux (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Oct 2013 15:50:53 -0400
+	id S1759409Ab3JQTvQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Oct 2013 15:51:16 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2E1924ADF5;
-	Thu, 17 Oct 2013 19:50:53 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4858A4AE8D;
+	Thu, 17 Oct 2013 19:51:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=DuVoIJQ6lHF5eLwPuClElC0GGuw=; b=q/SRGzJibf0eV3qf4Vvp
-	TukVRx5qcIerWDNROj1uxDzpz8LBp6uERmr1mPua6tjmNhKBIk1SvlcWxCvL2YSQ
-	0nSSpCEfvJV1nBeyjOsBRpzSXiyvaNRrUwlzjL+8F6E9AM3RYAY4BLCwwKwUPPBl
-	xzTRPnZXjaeOSPwfcL/rSlk=
+	 s=sasl; bh=qUwHYc/FUv1EMADP/qPxgs8F5J8=; b=MR8IIAny0Is82ZVjpxoG
+	4Xu/pGUKCr9vUPhsZXB0+H4Z+wuK8PcBXpMNWaZ09EMm7pvyofFBzRc9S1QTkdcY
+	hKBKp/GYjiF/yQsA2ru9vzJYtW+pPjF+DxKlSwo+RkJGNRpZ0/yvuhQ+TVNKReb+
+	o1ffBVMPP0h5NdoWgfU75DE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=eE2mVglpecoHYRfTIg8c+Pt8eSf+F81TmsZDN0r/aDezZX
-	QS3fzLx+RxIvOgYszFvPmPMIdqVtDSM8cLIyAdDHKZVrWQyOrHqpou+ncg4baZq3
-	HrhSHvkbpgPiW3nMC18s1KxR5kpf0h6V3z89F0Mb0R4S2+HgxSk073RZD/QnI=
+	 q=dns; s=sasl; b=Vek4tFa2nFCtBCyO0ezQR79jzyhXoS4SfeMQMG802609rC
+	UeMlZI3/6B+I9w9xy8HJeOjxe9yL3Zj5aTTHpk1UakhnnuML9u2LW6yz0h/1sHkC
+	zxzbapxtLQGNk7BcP7wRS5rQGAusXMW1hIpGpEKVLF0MJoiKmT6ePdOcQZSuw=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1CDA24ADF4;
-	Thu, 17 Oct 2013 19:50:53 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3AC974AE8C;
+	Thu, 17 Oct 2013 19:51:16 +0000 (UTC)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 685B14ADEE;
-	Thu, 17 Oct 2013 19:50:52 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 937A44AE89;
+	Thu, 17 Oct 2013 19:51:15 +0000 (UTC)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 6DD4B4BE-3765-11E3-A53F-8F264F2CC097-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 7B99BD2E-3765-11E3-B4EB-8F264F2CC097-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236310>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236311>
 
 Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-> Junio, can you make an exception and reply to this thread? The change
-> to move away from the term "the index" has been suggested many times
-> since many years ago, it is an extremely important change to users,
-> and all the Git developers agree it must be done.
+> Junio C Hamano wrote:
+>> Jeff King <peff@peff.net> writes:
+>> 
+>> > It seems[1] that some
+>> > people define "ci" as "commit -a", and some people define "st" as
+>> > "status -s" or even "status -sb".
+>> 
+>> These option variants aside.
+>> 
+>> Just like thinking that committing must be the same as publishing,
+>> it is a cvs/svn induced braindamage to think that "checking in" must
+>> be the same as "committing".  The former is a sign of not
+>> understanding the "distributed", the latter "the index".
+>> 
+>> In a world with both check-in and commit as two words usable to
+>> denote possibly different concepts, it may make sense to say "you
+>> check-in the current status of the working tree files into the
+>> index, in order to make commits out of it later".
+>
+> Yet a wide amount of users do use 'ci' to mean 'commit', so basically they are
+> just wrong. So you are saying they are just ignorant.
 
-"It must be done" is different from "any change is good, as long as
-it introduces more instances of word 'stage'". As we established, we
-do not seem to be able to do a sensible design discussion with you
-without wasting time for nothing, I won't directly comment on that
-patch series, at least for now.
+I am sick of seeing my word twisted, especially when they were not
+even addressed to you (see the message's primary recipients list).
+Those who want to type "git ci" due to their familiarity with "svn
+ci" are not wrong; they can do so if they choose.
 
-However, since you asked, I would share a couple of comments
-regarding the index, cache and staging area.
+Let's try again (see below).
 
-(1) "Staging area".
+> Now, if you are commenting on the aliases, that would mean you are not against
+> the idea of aliaes per se, but more about values of those aliases. So if we
+> agreed on the right values, you would welcome this patch.
+>
+> Is that correct?
 
-The phrase "staging area" is not an everyday phrase or common CS
-lingo, and that unfortunately makes it a suboptimal choice of words
-especially to those of us, to whom a large portion of their exposure
-to the English language is through the command words we use when we
-talk to our computers.
+No.
 
-I personally do not mind explaining the index is "like a staging
-area, where an army piles up ammunition to a temporary dump before
-starting a major campaign." to native speakers, though ;-).
+I agree with the issue the message I was replying to raised. The
+alias mechanism is a way to help users to define their own
+convenient short-cut. If you want to say "git ci" to mean "git
+commit" (and not "git commit -a" or something else), define it for
+your own use, and stop there, without getting in the way of other
+people. That is why I see an attempt to add hard-coded set of
+aliases as a move in the wrong direction.
 
-The index can also be thought of "like the buffer cache, where new
-contents of files are kept before they are committed to disk
-platter."  At least, non-native speaker with CS background would
-understand that, much better than "the index" (no, I am not saying
-that we should call it "the cache"; I am just saying "the index" is
-not a good word, but we may need to find a better word than "the
-staging area").
-
-The noun phrase "staging area" and the verb "to stage" are good
-(especially when we do not worry too much about us foreigners), but
-we need to make sure "stage" is not mistaken as a noun when used in
-a context that talks about the index as a whole, to avoid confusion
-with the use of the word "stage" long established since
-
-    http://thread.gmane.org/gmane.comp.version-control.git/231/focus=286
-
-to call "ours" stage#2, etc.
-
-
-(2) "cached" vs "index".
-
-I think this is the more major issue between the two issues (the
-other one being "why do we force people to say 'index'?").  Some
-commands take "--cached", some others take "--index", some take
-both.  What these two mean are documented in gitcli manual page, but
-that is far from sufficient.  The users can get confused by this UI
-mistake in different ways.
-
- * We do need to have "git apply" that mimics "patch" (i.e. works
-   only to a working tree files, or even outside Git repository)
-   without any option, "git apply --mode1" that only applies the
-   change to the index, and "git apply --mode2" that applies the
-   change to both the index and the working tree. No renaming of
-   "the index" does not change this need to have three different
-   mode of operation.
-
-   It was a major UI mistake to call one of the modes "--cached" and
-   another "--index", because there is no way, other than rote
-   learning, for people to choose the one between the two depending
-   that is right for the situation they face.
-
-   If "--cached" were called "--index-only", it might have been a
-   lot more learnable (and then "--index" could be renamed to
-   "--index-and-working-tree" at the same time to reduce the
-   confusion further).  Alternatively, with the synonym "--staged"
-   for "--cached" already in place for "git diff", we could
-   introduce "--staged-and-working-tree" as a synonym for "--index"
-   to achieve the same effect (of course we need to find a way to
-   shorten "-and-working-tree" part in a sensible way).
-
- * "git grep" barfs when given "--index", even though it does accept
-   "--cached" and searches the patterns in contents that are in the
-   index. This is technically correct, as the command does not
-   search both in the index and in the working tree, but again,
-   there is no way other than rote learning for users to tell that
-   "--cached" is the correct one to use, even after they know that
-   they want to search in the index (I already called it a major UI
-   mistake, didn't I?).
-
-   A new synonym "--staged" for "--cached" may be able to alleviate
-   the confusion somewhat, given especially that "git diff" already
-   knows "--staged" as a synonym for "--cached".  I think a better
-   end result will come if we taught "git grep --index" to actually
-   search the patterns both in the index and in the working tree at
-   the same time.  There is no logical reason from the end user's
-   point of view that "git grep --index" (aka "git grep
-   --staged-and-working-tree") needs to fail; if we make the
-   "--mode2" to mean to work on both the index and the working tree
-   for any Git command when it makes sense, things will be more
-   consistent, and it certainly makes sense to ask "git grep" to
-   work on both the index and the working tree.  We do allow "git
-   grep -e pattern tree-ish-1 tree-ish-2" to search in multiple data
-   sources already, so it can be seen as a logical extension.
-
- * "git diff --index [TREE-ISH]" has exactly the same issue as "git
-   grep", and the same conclusion, i.e. it may be worthwhile to
-   teach "git diff --index [TREE-ISH]" to give combined diff between
-   the given tree-ish (defaulting to HEAD as usual), the index and
-   the working tree.
+A set of hard-coded alias that _officially_ declares that "checkin"
+is an equivalent to "commit" has another issue.  It will close the
+door for us to later add "git checkin" that may mean something
+different from "git commit", and that is another reason why I do not
+agree with the patch under discussion in this thread. A "checkin"
+that is an operation that checks-in the current contents to the
+index is one example of an action other than committing that the
+word may make sense for, because "git checkout README.txt" is about
+checking out of the index, its logical opposite "checkin" could be
+about checking into the index.
