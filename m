@@ -1,80 +1,151 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: pack corruption post-mortem
-Date: Thu, 17 Oct 2013 08:47:05 -0700
-Message-ID: <xmqqfvrz3nnq.fsf@gitster.dls.corp.google.com>
-References: <20131016083400.GA31266@sigill.intra.peff.net>
-	<201310160941.16904.mfick@codeaurora.org>
-	<20131017003546.GA12439@sigill.intra.peff.net>
+From: Karsten Blees <karsten.blees@gmail.com>
+Subject: Re: Windows performance / threading file access
+Date: Thu, 17 Oct 2013 18:50:42 +0200
+Message-ID: <52601562.2090301@gmail.com>
+References: <CAHOQ7J_ZZ=7j-5ULd7Tdvbiqg4inhwi+fue_w6WAtNRkvZSwsg@mail.gmail.com> <52570BC1.2040208@gmail.com> <52574B90.3070309@gmail.com> <CAHOQ7J_sNnajm9M+QUd-QwkQGP2vOidzAW5_5EzsdwBGTDCnSA@mail.gmail.com> <3bb056f6-5f8b-486e-8e5e-9bf541bd0d0b@googlegroups.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Martin Fick <mfick@codeaurora.org>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Oct 17 17:47:15 2013
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
+Cc: Sebastian Schuberth <sschuberth@gmail.com>, git@vger.kernel.org, 
+ szager@google.com
+To: pro-logic <pro-logic@optusnet.com.au>, msysgit@googlegroups.com
+X-From: msysgit+bncBCH3XYXLXQDBBYVKQCJQKGQESQNAR5A@googlegroups.com Thu Oct 17 18:50:44 2013
+Return-path: <msysgit+bncBCH3XYXLXQDBBYVKQCJQKGQESQNAR5A@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-we0-f186.google.com ([74.125.82.186])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VWpn9-0001JO-0D
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Oct 2013 17:47:15 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757359Ab3JQPrK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Oct 2013 11:47:10 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58209 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756986Ab3JQPrI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Oct 2013 11:47:08 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DCC144A707;
-	Thu, 17 Oct 2013 15:47:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=RRSZN3L+ZdDSw24jh1cvy4EJ6uE=; b=lu++Dk
-	3B40ILN3foSTQfEpwmIMMyDGlJ9+cDcjOAJk/sEJJ6xjmgokeRowYQ3BngU/dB8T
-	Mom5fryOcSTT4rAzg+dv5+caZGCpBn1SZk+dbCaK9VYfqUGf4d732JQrd4sWGokA
-	UihlRxMSlp7DqTROegAeXC8O6hf3q9Nleeoxw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=CeqCXH+3dmL1Gd0GKkh4m2PK9l9GJDCf
-	nAKuANflyePrdD6yMqIGTPP3Rd+vOVDAu7CVXdGJX0z5oEzAK2CxFiSsIDDmje/p
-	Dq+7EcxYFarCXO+fbsfibVj41V277c4XxJ406d68Cd3drWkUfjZIkhItVxFBKR0f
-	yTBK8dwWRvE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CF4774A706;
-	Thu, 17 Oct 2013 15:47:07 +0000 (UTC)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2BFE84A704;
-	Thu, 17 Oct 2013 15:47:07 +0000 (UTC)
-In-Reply-To: <20131017003546.GA12439@sigill.intra.peff.net> (Jeff King's
-	message of "Wed, 16 Oct 2013 20:35:47 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 60759742-3743-11E3-A30C-8F264F2CC097-77302942!b-pb-sasl-quonix.pobox.com
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236298>
+	(envelope-from <msysgit+bncBCH3XYXLXQDBBYVKQCJQKGQESQNAR5A@googlegroups.com>)
+	id 1VWqmZ-0006h5-0a
+	for gcvm-msysgit@m.gmane.org; Thu, 17 Oct 2013 18:50:43 +0200
+Received: by mail-we0-f186.google.com with SMTP id q59sf206750wes.23
+        for <gcvm-msysgit@m.gmane.org>; Thu, 17 Oct 2013 09:50:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type:content-transfer-encoding;
+        bh=Ur7NF3Lqfi/fpz9Q2ru4g3dFYZrszzBycaqj1cqiKgE=;
+        b=NOS1x6O38NN+9XRa46sfzpbgXgua7AtUX7YyTFDXul+J9EP7H8K3azyMErOh2wVCIM
+         Itk8IJGxjmUZ7VAa4xwh+5hbpU5ptwYqynihbh35bWon8a0il5GDLB9aFFsa1S1eN5kA
+         OJbf9NHAk/iXNrQv5y71sXfv3Lg52yGbIeg65bE5pmVzQlzXyWJvWNgmARA3whhzYwxi
+         GCU4W1dMtuHw5kntBtrZy4DzeHp98WPAyhqJ2HTTNUg+42Jclo2RIkF0Fueb2ILbJnhw
+         +/MGsT2OKKdA6KNVjXyV7LVWP+r+8Gwvx3bsLncRZfVARAXQc+V0fcRx/r28PL7R78Hr
+         CMow==
+X-Received: by 10.152.10.74 with SMTP id g10mr47789lab.19.1382028642722;
+        Thu, 17 Oct 2013 09:50:42 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.152.116.112 with SMTP id jv16ls189722lab.76.gmail; Thu, 17 Oct
+ 2013 09:50:41 -0700 (PDT)
+X-Received: by 10.112.126.162 with SMTP id mz2mr3660634lbb.9.1382028641780;
+        Thu, 17 Oct 2013 09:50:41 -0700 (PDT)
+Received: from mail-ee0-x230.google.com (mail-ee0-x230.google.com [2a00:1450:4013:c00::230])
+        by gmr-mx.google.com with ESMTPS id a1si8221560ees.1.1969.12.31.16.00.00
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 17 Oct 2013 09:50:41 -0700 (PDT)
+Received-SPF: pass (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:4013:c00::230 as permitted sender) client-ip=2a00:1450:4013:c00::230;
+Received: by mail-ee0-f48.google.com with SMTP id e50so283840eek.21
+        for <msysgit@googlegroups.com>; Thu, 17 Oct 2013 09:50:41 -0700 (PDT)
+X-Received: by 10.14.210.8 with SMTP id t8mr13751595eeo.39.1382028641681;
+        Thu, 17 Oct 2013 09:50:41 -0700 (PDT)
+Received: from [10.1.100.52] (ns.dcon.de. [77.244.111.149])
+        by mx.google.com with ESMTPSA id j7sm195198581eeo.15.1969.12.31.16.00.00
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 17 Oct 2013 09:50:40 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.0.1
+In-Reply-To: <3bb056f6-5f8b-486e-8e5e-9bf541bd0d0b@googlegroups.com>
+X-Original-Sender: karsten.blees@gmail.com
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:4013:c00::230
+ as permitted sender) smtp.mail=karsten.blees@gmail.com;       dkim=pass
+ header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236299>
 
-Jeff King <peff@peff.net> writes:
+Am 16.10.2013 00:22, schrieb pro-logic:
+> I also get fairly slow performance out of the checkout / reset=20
+> operations on windows.
+>=20
+> This discussion got me trying to work out what's taking so long on=20
+> windows. To help I used killcache [1] to flush the HDD cache and
+> Very Sleepy [2] to profile the code. I couldn't use the=20
+> GIT_TRACE_PERFORMANCE [3] patch as that seems to only work on script=20
+> commands, and in my case I just get a result of "335 seconds git=20
+> reset --hard head" from the log.
 
-> On Wed, Oct 16, 2013 at 09:41:16AM -0600, Martin Fick wrote:
->
->> I have nightmares about this sort of thing every now and 
->> then, and we even experience some corruption here and there 
->> that needs to be fixed (mainly missing objects when we toy 
->> with different git repack arguments).  I cannot help but 
->> wonder, how we can improve git further to either help 
->> diagnose or even fix some of these problems?  More inline 
->> below...
->
-> In general, I don't think we know enough about patterns of recovery
-> corruption to say which commands would definitely be worth implementing.
-> Part of the reason I wrote this up is to document this one case. But
-> this is the first time in 7 years of git usage that I've had to do this.
-> So I'd feel a little bit better about sinking time into it after seeing
-> a few more cases and realizing where the patterns are.
+The trace_performance functions require manual instrumentation of the code =
+sections you want to measure, e.g. like this [1]. Output looks like this fo=
+r a full WebKit checkout (Win7 x64, Core i7 860, WD VelociRaptor 300, NTFS,=
+ no virus scanner, no luafv, no defragger):
 
-There was one area in our Documentation/ set we used to use to keep
-this kind of message almost as-is; perhaps this message fits there?
+trace: at entry.c:128, time: 135.786 s: write_entry::create
+trace: at entry.c:129, time: 101.6 s: write_entry::stream
+trace: at entry.c:130, time: 0 s: write_entry::read
+trace: at entry.c:131, time: 0 s: write_entry::convert
+trace: at entry.c:132, time: 0 s: write_entry::write
+trace: at entry.c:133, time: 4.71825 s: write_entry::close
+trace: at compat/mingw.c:2150, time: 5.68786 s: mingw_lstat (called 661660 =
+times)
+trace: at compat/mingw.c:2151, time: 259.219 s: command: c:\git\msysgit\git=
+\git-checkout.exe -f HEAD
+
+> After running killcache I ran very sleepy connected to git, and=20
+> according to the profile: 95.5% of the time is spent in do_lstat=20
+> (mingw.c) / NtQueryFullAttributeFile (ntdll)
+
+Very Sleepy confirmed my numbers from above: lstat was always much smaller =
+than create/stream/read/write. Could you post details about your test setup=
+? Are you still using WebKit for your tests?
+
+> For fun, not knowing if I would break anything or not (it probably=20
+> does), I wrapped the entire unpack_trees method in the fscache [4]=20
+> and the total git reset --hard head time fell from 335 seconds to 28=20
+> seconds, a 11x improvement.
+
+Hmmm...this doesn't work for me at all. Fscache isn't updated during checko=
+ut, so lstat-checks whether creating a file or directory succeeded will fai=
+l.
+
+$ git config core.fscache true
+$ time git checkout -f HEAD
+Unlink of file 'Examples' failed. Should I try again? (y/n) n
+warning: unable to unlink Examples: Permission denied
+fatal: cannot create directory at 'Examples': Permission denied
+
+
+Karsten
+
+[1] https://github.com/kblees/git/commit/b8eca278
+
+--=20
+--=20
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github =
+accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=3Den_US?hl=3Den
+
+---=20
+You received this message because you are subscribed to the Google Groups "=
+msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an e=
+mail to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/groups/opt_out.
