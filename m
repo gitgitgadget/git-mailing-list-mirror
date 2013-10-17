@@ -1,71 +1,98 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: pack corruption post-mortem
-Date: Thu, 17 Oct 2013 08:06:50 +0700
-Message-ID: <CACsJy8ArdCrqn58wnx9c6wx148CfnQrWPfuxH5D7s1bvwr=cjQ@mail.gmail.com>
-References: <20131016083400.GA31266@sigill.intra.peff.net> <201310160941.16904.mfick@codeaurora.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [RFC/PATCH] doc: git-foo was obsoleted several years ago
+Date: Wed, 16 Oct 2013 21:18:07 -0400
+Message-ID: <20131017011807.GA14759@sigill.intra.peff.net>
+References: <1379763429-3443-1-git-send-email-felipe.contreras@gmail.com>
+ <xmqq7gdc7v70.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>
-To: Martin Fick <mfick@codeaurora.org>
-X-From: git-owner@vger.kernel.org Thu Oct 17 03:07:27 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Oct 17 03:18:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VWc3i-0006om-S2
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Oct 2013 03:07:27 +0200
+	id 1VWcEC-0001hm-7s
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Oct 2013 03:18:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761668Ab3JQBHW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Oct 2013 21:07:22 -0400
-Received: from mail-oa0-f54.google.com ([209.85.219.54]:59207 "EHLO
-	mail-oa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762043Ab3JQBHV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Oct 2013 21:07:21 -0400
-Received: by mail-oa0-f54.google.com with SMTP id n5so1430428oag.27
-        for <git@vger.kernel.org>; Wed, 16 Oct 2013 18:07:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=7FYZV+8PiOTOmT/lXhBPwvakpLG9QR6HG/6ikYc5OsY=;
-        b=FvOn4Rg5uJkt9msoXGBV0TNdM8L1mUFq5pAvIO6ptL3THwZwKWSmYoX7Eds5DKHEic
-         FEmoLtQ9J92mdjvHbnaus7sFZ7U82n8/sZgIqdrNRLjX8IxBVsEipmtf4QquNyuSprIO
-         K2y0BmhmZr/RD/Vutpp/3EcnPlKMbNCLApKCwHlqtWJBPYGMXFbHubWWaGgD9gP4g3Kx
-         IMrIaWsH2919TFDYhIQRZlmL5tbR9rAof2TTIKeRq1dmHWyvgEc2rv6wauxhUCj9o6SD
-         JYsG7N2ILDeiKt8Fdkkh6gJLqgLaQ7gN7+8KEq9maKRpEYc6RZzR+JYydcV0ERuSGBSK
-         Rr1w==
-X-Received: by 10.182.129.42 with SMTP id nt10mr9373760obb.19.1381972040507;
- Wed, 16 Oct 2013 18:07:20 -0700 (PDT)
-Received: by 10.76.0.41 with HTTP; Wed, 16 Oct 2013 18:06:50 -0700 (PDT)
-In-Reply-To: <201310160941.16904.mfick@codeaurora.org>
+	id S1761347Ab3JQBSL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Oct 2013 21:18:11 -0400
+Received: from cloud.peff.net ([50.56.180.127]:50719 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1760887Ab3JQBSK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Oct 2013 21:18:10 -0400
+Received: (qmail 3893 invoked by uid 102); 17 Oct 2013 01:18:10 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 16 Oct 2013 20:18:10 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 16 Oct 2013 21:18:07 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqq7gdc7v70.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236286>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236287>
 
-On Wed, Oct 16, 2013 at 10:41 PM, Martin Fick <mfick@codeaurora.org> wrote:
->> and then running "git index-pack tmp.pack" in the
->> debugger (stop at unpack_raw_entry). Doing this, I found
->> that there were 3 bytes of header (and the header itself
->> had a sane type and size). So I stripped those off with:
->>
->>   dd if=object of=zlib bs=1 skip=3
->
-> This too feels like something we should be able to do with a
-> plumbing command eventually?
->
-> git zlib-extract
+On Wed, Oct 16, 2013 at 02:38:27PM -0700, Junio C Hamano wrote:
 
-Not an official plumbing, but I faced similar problems with pack v4. I
-needed to verify that the output is correct and low level decoding
-like this is generally a good thing to start with. So I wrote
-test-dump [1] that can take an offset, a format and try to decode it.
-It does not support zlib inflation yet, but adding one should be easy.
-And because this is just a test program we don't really need to think
-hard before adding something.
+> >  Documentation/git-checkout.txt | 4 ++--
+> [...]
+> I recall that I wanted to see this change happen myself long time
+> ago, and suspect that there may have been some reason that prevented
+> us from doing so.  I might have found that AsciiDoc back then did
+> not like the input if the headline name "git-checkout(1)" did not
+> match the filename "git-checkout.txt" and the command in the NAME
+> section "git-checkout", or links "linkgit:git-checkout[1]" from
+> other pages couldn't have SP there, or something silly like that.
 
-[1] http://article.gmane.org/gmane.comp.version-control.git/235388
--- 
-Duy
+Yes, I think it is still broken. After applying Felipe's patch:
+
+  $ cd Documentation
+  $ make git-checkout.1
+      GEN cmd-list.made
+      SUBDIR ../
+  make[1]: `GIT-VERSION-FILE' is up to date.
+      ASCIIDOC git-checkout.xml
+      XMLTO git-checkout.1
+
+So far, so good...
+
+  $ man -l git-checkout.1
+  man: git-checkout.1: No such file or directory
+
+Huh?
+
+  $ ls git?checkout.1
+  git_checkout.1
+
+Oh.
+
+There is similar asciidoc (actually, I think it is docbook) cleverness
+with:
+
+  $ make gitignore.1
+      GEN cmd-list.made
+      SUBDIR ../
+      make[1]: `GIT-VERSION-FILE' is up to date.
+      XMLTO gitignore.1
+
+  $ ls gitignore.[0-9]
+  gitignore.5
+
+Now obviously what I asked for is wrong (we do not actually know how to
+make gitignore.1), but I have certainly been confused by this in the
+past when working on pages outside of section 1.
+
+In both cases, it would be nice if we could tell xmlto "no, really, put
+the output in this file". I'm not sure that is an option, though,
+because in theory docbook output may be multiple files (the "-o" option
+actually specifies an output directory).
+
+Since we know our manpages are a much simpler case, we could probably
+work around it by teaching the Makefile that building "git-foo.txt"
+generates git_foo.1, and then moving that to git-foo.1.
+
+-Peff
