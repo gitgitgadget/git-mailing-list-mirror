@@ -1,73 +1,70 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Oct 2013, #03; Wed, 16)
-Date: Thu, 17 Oct 2013 13:40:40 -0700
-Message-ID: <xmqqzjq7y6k7.fsf@gitster.dls.corp.google.com>
-References: <xmqqa9i851t8.fsf@gitster.dls.corp.google.com>
-	<525FB287.7020204@gmail.com>
+Subject: Re: [RFC/PATCH] checkout: allow dwim for branch creation for "git checkout $branch --"
+Date: Thu, 17 Oct 2013 13:47:53 -0700
+Message-ID: <xmqqvc0vy686.fsf@gitster.dls.corp.google.com>
+References: <1380113349-19838-1-git-send-email-Matthieu.Moy@imag.fr>
+	<CACsJy8AbBrVSz=p+ARxvR_QXtku1BxbtQPv7pz_QCveeUEtwCQ@mail.gmail.com>
+	<vpqob7huhyw.fsf@anie.imag.fr>
+	<xmqq7gdc6gl8.fsf@gitster.dls.corp.google.com>
+	<vpqr4bkqhfg.fsf@anie.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Karsten Blees <karsten.blees@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 17 22:40:52 2013
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>, jc@sahnwaldt.de
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Thu Oct 17 22:48:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VWuNF-0002LB-1n
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Oct 2013 22:40:49 +0200
+	id 1VWuUD-0006B1-SO
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Oct 2013 22:48:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762505Ab3JQUkp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Oct 2013 16:40:45 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37235 "EHLO
+	id S1762502Ab3JQUr5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Oct 2013 16:47:57 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43336 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757861Ab3JQUko (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Oct 2013 16:40:44 -0400
+	id S1759409Ab3JQUr4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Oct 2013 16:47:56 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B0C294B0E0;
-	Thu, 17 Oct 2013 20:40:43 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 31EFE4BEA4;
+	Thu, 17 Oct 2013 20:47:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=n7Q7hjKEz0OrHVy8aKf9E9MnbCg=; b=P4RS1k
-	35lCYShODHn+C9QnqZiygtAnYwqgZS2oEKRUmHqs0miD7YyKxN5gXciV54sAw/Ch
-	r8NfNfQqF9Nmf9gcdcPyL7JfLHZ9K2jqc9hS48ZwHO1rhuO7D9G+9Ousi+zMTnKp
-	jynL/E3VCmfD7OYabLnuiIFKL0ZNyJJ0HjN/c=
+	:content-type; s=sasl; bh=xSzps3okhDTKaFYD0LNVLPCKu2A=; b=p2HC9b
+	21wHJwZ5vcahUwVQ3pX69s41XcO/8eMHbQC73Dr1MJK7Lmlv/wllI1S3qIgmaSiU
+	SDy9CcCvMXLKhY+8VzZtZYtfTJCOXjJgz6xZEs/QvqQDKcj24OF/masDByUoPVoe
+	+xCUK/nK5nJrKO3bGEkndy++lgW01vFsZrKGA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=wQMihf7dfw+P4xncKibhcj0C2RegfVkr
-	MX3eAWYieGZ4aK2BJgD5xg/j93hT3YcJAQnElP4lwd0TBTaZsScA2+FHiZO42dWL
-	kfcneeXs5hMQBCQTbKm6UX0vG0lyUI6WwwmQCY6q8bLTERLBROTQ5qwPhannKBwx
-	GfvtLeho3qw=
+	:content-type; q=dns; s=sasl; b=Z5J62cQiuUqhMEbmHSYrz1GSJq1QFwMi
+	KacoHFt6H+lbF9LhREp5U6E4FNzirtx1o/JSsjaJuf28qmSS4dXe6MDnUAjPzqB7
+	shNAIeOd2HLb0H2YyI8dPxBR2vV/Zt4yDxDPPpkIHZ3uKyRJ8chbqiK9nqpM3V+B
+	ZrsOSuE99mM=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A54A34B0DF;
-	Thu, 17 Oct 2013 20:40:43 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 261474BEA2;
+	Thu, 17 Oct 2013 20:47:56 +0000 (UTC)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 163DB4B0DA;
-	Thu, 17 Oct 2013 20:40:43 +0000 (UTC)
-In-Reply-To: <525FB287.7020204@gmail.com> (Karsten Blees's message of "Thu, 17
-	Oct 2013 11:48:55 +0200")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 84A754BE9F;
+	Thu, 17 Oct 2013 20:47:55 +0000 (UTC)
+In-Reply-To: <vpqr4bkqhfg.fsf@anie.imag.fr> (Matthieu Moy's message of "Thu,
+	17 Oct 2013 13:13:07 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 645BF008-376C-11E3-B44D-8F264F2CC097-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 661F1C5C-376D-11E3-9CC2-8F264F2CC097-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236317>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236318>
 
-Karsten Blees <karsten.blees@gmail.com> writes:
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-> Am 16.10.2013 23:43, schrieb Junio C Hamano:
->> * kb/fast-hashmap (2013-09-25) 6 commits
->>  - fixup! diffcore-rename.c: simplify finding exact renames
->>  - diffcore-rename.c: use new hash map implementation
->>  - diffcore-rename.c: simplify finding exact renames
->>  - diffcore-rename.c: move code around to prepare for the next patch
->>  - buitin/describe.c: use new hash map implementation
->>  - add a hashtable implementation that supports O(1) removal
->> 
->
-> I posted a much more complete v3 [1], but somehow missed Jonathan's fixup! commit.
+> v3
+> ( http://thread.gmane.org/gmane.comp.version-control.git/235409/focus=235408 )
+> is the last version I sent, and I got no feedback on it, so I guess it's
+> ready for you to pick.
 
-Thanks; I'll replace the above with v3 and squash the fix-up in.
+Thanks; done with s/pick/nitpick/ ;-).
