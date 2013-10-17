@@ -1,164 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 1/2] checkout: allow dwim for branch creation for "git checkout $branch --"
-Date: Thu, 17 Oct 2013 11:09:37 -0700
-Message-ID: <xmqqr4bj22hq.fsf@gitster.dls.corp.google.com>
-References: <1380186486-8220-1-git-send-email-Matthieu.Moy@imag.fr>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] mv: Fix spurious warning when moving a file in presence
+ of submodules
+Date: Thu, 17 Oct 2013 11:24:05 -0700
+Message-ID: <20131017182405.GR9464@google.com>
+References: <vpq38o7nao9.fsf@anie.imag.fr>
+ <52583B00.8040700@web.de>
+ <525A8965.3040407@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, pclouds@gmail.com, jc@sahnwaldt.de,
-	jrnieder@gmail.com
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Thu Oct 17 20:09:47 2013
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Thu Oct 17 20:24:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VWs13-0004HA-Dr
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Oct 2013 20:09:45 +0200
+	id 1VWsF5-0004R5-ER
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Oct 2013 20:24:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758223Ab3JQSJl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Oct 2013 14:09:41 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46637 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758160Ab3JQSJl (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Oct 2013 14:09:41 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 545284B7BF;
-	Thu, 17 Oct 2013 18:09:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=7lddhV31JPHZT9ODgv68Zmz0KZs=; b=CRAE9r
-	U5aD7orc50zt0NEATzNOHdM32Q4ahYcpTqqJQWypK9J1vHZyNSGjl437iuqfRxzk
-	PAHQEXOdxTMDMIyLDQVbzal9V2bCvMNFXK9r+N1Z2e4i8gF5iq01h0QdfuWxGyhR
-	fmGjsOMfovBPJ0vpzfPHw3ZYrSbdHjWfxZYEU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=l/cUBtL/Pruakhnq84FEdkL7tbYsWh6f
-	cezIHubG5+n4IPl90UGcqaqyWTZfUSZZq26YVLs8lTJ+lzR4bQ7iLSrbg+Cv4W3e
-	Z6fY3++n/po8uLE/k0J96WBbAxLaRzj7HVUIJ2hiEuupo9C6AdIE1ApArEfPsq98
-	Wrk5k61SNMU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 47AAD4B7BD;
-	Thu, 17 Oct 2013 18:09:40 +0000 (UTC)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 94AEF4B7B8;
-	Thu, 17 Oct 2013 18:09:39 +0000 (UTC)
-In-Reply-To: <1380186486-8220-1-git-send-email-Matthieu.Moy@imag.fr> (Matthieu
-	Moy's message of "Thu, 26 Sep 2013 11:08:05 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 4A1A9880-3757-11E3-861D-8F264F2CC097-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758653Ab3JQSYL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Oct 2013 14:24:11 -0400
+Received: from mail-pd0-f178.google.com ([209.85.192.178]:45094 "EHLO
+	mail-pd0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758204Ab3JQSYK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Oct 2013 14:24:10 -0400
+Received: by mail-pd0-f178.google.com with SMTP id w10so3198515pde.37
+        for <git@vger.kernel.org>; Thu, 17 Oct 2013 11:24:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=lH43AmBXZYPfGscEpxMjWhZr4nHZnYRDkPijFYZGL2g=;
+        b=ofq87thjigQh0+aUKGjm3k4MS1URVVPPmcbMa/teHovi+27UkvhIym3+A65szwuso3
+         QMvCA8A8mDKgZzeLHe5gAmaxgB/oQUWJvXKzkt21wrutV3gDdBhEnm4JAahC9T1IeyPr
+         buOF+FkrzDyJJRh/N3jXePlKqVuVcSLsAHsP0nhWVTG5v8ni+w2xAwGtKhuMzM0AbdKM
+         KdPdcrX5fyWeCXeeNjd3OsNRh66Es3Rs9kboq96cY/ffcw1nuba4RbYkPLSMmWXrTyOr
+         0yg5eCbkuLDnnMMry1ytueHFhk9kDthl0Ac+0tGba6qw5k2HM+dqV/8l26GNMZA88W95
+         fxTg==
+X-Received: by 10.68.196.138 with SMTP id im10mr9588996pbc.127.1382034249905;
+        Thu, 17 Oct 2013 11:24:09 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id ry4sm116246472pab.4.1969.12.31.16.00.00
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 17 Oct 2013 11:24:08 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <525A8965.3040407@web.de>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236304>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236305>
 
-Matthieu Moy <Matthieu.Moy@imag.fr> writes:
+Jens Lehmann wrote:
 
-> diff --git a/builtin/checkout.c b/builtin/checkout.c
-> index 0f57397..9edd9c3 100644
-> --- a/builtin/checkout.c
-> +++ b/builtin/checkout.c
-> @@ -863,6 +863,13 @@ static const char *unique_tracking_name(const char *name, unsigned char *sha1)
->  	return NULL;
->  }
->  
-> +static int error_invalid_ref(const char *arg, int has_dash_dash, int argcount)
-> +{
-> +	if (has_dash_dash)
-> +		die(_("invalid reference: %s"), arg);
-> +	return argcount;
-> +}
+> In commit 0656781fa "git mv" learned to update the submodule path in the
+> .gitmodules file when moving a submodule in the work tree. But since that
+> commit update_path_in_gitmodules() gets called no matter if we moved a
+> submodule or a regular file, which is wrong and leads to a bogus warning
+> when moving a regular file in a repo containing a .gitmodules file:
+>
+>     warning: Could not find section in .gitmodules where path=<filename>
+[...]
+> Reported-by: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+> Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
+> ---
+[...]
+> And this is the fix for it, which I believe is stuff for maint.
 
-This is somewhat unfortunate; it pretends to be a reusable helper by
-being a separate function, but it is not very reusable (see below).
+Thanks again, and sorry to leave this hanging.  I had some vague ideas
+for improvement:
 
-> @@ -917,19 +934,32 @@ static int parse_branchname_arg(int argc, const char **argv,
->  		arg = "@{-1}";
->  
->  	if (get_sha1_mb(arg, rev)) {
-> +		/*
-> +		 * Either case (3) or (4), with <something> not being
-> +		 * a commit, or an attempt to use case (1) with an
-> +		 * invalid ref.
-> +		 */
-> +		int try_dwim = dwim_new_local_branch_ok;
-> +
-> +		if (check_filename(NULL, arg) && !has_dash_dash)
-> +			try_dwim = 0;
-> +		/*
-> +		 * Accept "git checkout foo" and "git checkout foo --"
-> +		 * as candidates for dwim.
-> +		 */
-> +		if (!(argc == 1 && !has_dash_dash) &&
-> +		    !(argc == 2 && has_dash_dash))
-> +			try_dwim = 0;
-> +
-> +		if (try_dwim) {
->  			const char *remote = unique_tracking_name(arg, rev);
+ * style nits: test is a little long, making it hard to take in at a
+   glance; tests tend to try to avoid pipelines to avoid losing the
+   exit code from git commands; usual style is to use "test" instead
+   of "[" consistently
 
-Up to this point, the updated code makes very good sense.
+ * would be nice to have another test that makes sure the "move a
+   file, not submodule" case keeps working
 
->  			if (!remote)
-> -				return argcount;
-> +				return error_invalid_ref(arg, has_dash_dash, argcount);
+But those can easily happen as changes on top, and as you mentioned,
+it's probably worth someone interested (e.g., me :)) making a pass to
+clean up the style of the rest of the script anyway.
 
-The original that returned "argcount" from here were unnecessarily
-misleading in the first place. It saw "git checkout foo" where "foo"
-does not refer to an object nor a filesystem entity and there was no
-unique "refs/remotes/*/foo"; it wanted to return 0 to tell the
-caller that it consumed zero arguments as branch names.
+The patch as-is is obviously good.  Thanks again for the quick
+diagnosis and fix.
 
-And the updated code is even more obscure.  This calling site makes
-it look as if it is an error to have no unique "refs/remotes/*/foo"
-at this point of the code by naming the helper function "error_*()",
-but it is an error in some case and not in others.
-
-                if (!remote) {
-                        if (has_dash_dash)
-                                die(_("..."));
-                        return 0;
-                }
-
-would be a lot more understandable.
-		
-The only reason you have conditional die() here (and on the "else"
-side of this "if" statement) is because you delayed the die that was
-at a much earlier point in the original.  And the only reason you
-created the unfortunate helper function is because you need to deal
-with that delayed decision to die now in two places.
-
-So it may be even cleaner to read if you did it this way:
-
-	if (get_sha1_mb(...)) {
-		/*
-		 * The first token is not a valid rev; we should
-		 * ordinarily error out if "git checkout foo --"
-		 * if foo is not a valid rev, but first see if
-		 * we can auto-create foo to continue...
-		 */
-		int recover_with_dwim = dwim_new_local_branch_ok;
-
-		... decide if we want to recover_with_dwim ...
-
-		if (recover_with_dwim) {
-			const char *remote = unique_tracking_name(arg, rev);
-			if (remote) {
-				*new_branch = arg;
-				arg = remote;
-			} else {
-				/* no; arg cannot be salvaged */
-				recover_with_dwim = 0;
-			}
-		}
-
-		if (!recover_with_dwim) {
-			if (has_dash_dash)
-				die(_("invalid ref %s", arg);
-			return 0; /* we saw no branch/commit */
-		}
-		/* otherwise we made a successful recovery */
-	}
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
