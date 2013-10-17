@@ -1,172 +1,146 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH v2] gc: remove gc.pid file at end of execution
-Date: Wed, 16 Oct 2013 16:11:46 -0700
-Message-ID: <20131016231146.GP9464@google.com>
-References: <1380187098-8519-1-git-send-email-Matthieu.Moy@imag.fr>
- <20130928003319.GR9464@google.com>
- <xmqqeh7k6glt.fsf@gitster.dls.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: pack corruption post-mortem
+Date: Wed, 16 Oct 2013 20:35:47 -0400
+Message-ID: <20131017003546.GA12439@sigill.intra.peff.net>
+References: <20131016083400.GA31266@sigill.intra.peff.net>
+ <201310160941.16904.mfick@codeaurora.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org,
-	pclouds@gmail.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 17 01:11:54 2013
+Cc: git@vger.kernel.org
+To: Martin Fick <mfick@codeaurora.org>
+X-From: git-owner@vger.kernel.org Thu Oct 17 02:35:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VWaFu-0001GQ-59
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Oct 2013 01:11:54 +0200
+	id 1VWbZC-0004y6-8m
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Oct 2013 02:35:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760499Ab3JPXLu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Oct 2013 19:11:50 -0400
-Received: from mail-pd0-f172.google.com ([209.85.192.172]:62703 "EHLO
-	mail-pd0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752234Ab3JPXLt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Oct 2013 19:11:49 -0400
-Received: by mail-pd0-f172.google.com with SMTP id z10so1695147pdj.3
-        for <git@vger.kernel.org>; Wed, 16 Oct 2013 16:11:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=Njg/Nf5hNt8ZSRph+p+JMTXfeAmfha1Z5o27ILQYAUw=;
-        b=jWVC9TCgevxuEDS0wy6+w3foIZ3tKCBaJvTQEYHnbjbO5hV6v7ollTDvUBHyFfivCh
-         W8+zRgjUeSMEVdZx0vAD1y7DqYQ0UYpeNolJlMvvJSJ3fbAG8C4TwTegX1/Kin4m35cU
-         EqSLd05mb9GXJIvzvOEj9Ju4tNbwF4k/rvlRGmW+2HSBcCyq2xvgwez9lqFM41stNxfG
-         SPsG/XRwGy0fF+1ksMbCPTbijFp7lkTXrKrqHjTucytjBrQyZ1SQYCruXTjI1Yd5nHcc
-         /KmmWo63myE+XFKGQBY4NT+YGB9NA5i2jKoQPxl7Eodd/+IRezBB+t4l1S/mxHb10MlH
-         KKSQ==
-X-Received: by 10.66.66.202 with SMTP id h10mr6048409pat.70.1381965109032;
-        Wed, 16 Oct 2013 16:11:49 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id xs1sm109542591pac.7.1969.12.31.16.00.00
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 16 Oct 2013 16:11:48 -0700 (PDT)
+	id S1761405Ab3JQAfu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Oct 2013 20:35:50 -0400
+Received: from cloud.peff.net ([50.56.180.127]:50689 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1760722Ab3JQAft (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Oct 2013 20:35:49 -0400
+Received: (qmail 1712 invoked by uid 102); 17 Oct 2013 00:35:49 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 16 Oct 2013 19:35:49 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 16 Oct 2013 20:35:47 -0400
 Content-Disposition: inline
-In-Reply-To: <xmqqeh7k6glt.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <201310160941.16904.mfick@codeaurora.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236283>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236284>
 
-This file isn't really harmful, but isn't useful either, and can create
-minor annoyance for the user:
+On Wed, Oct 16, 2013 at 09:41:16AM -0600, Martin Fick wrote:
 
-* It's confusing, as the presence of a *.pid file often implies that a
-  process is currently running. A user running "ls .git/" and finding
-  this file may incorrectly guess that a "git gc" is currently running.
+> I have nightmares about this sort of thing every now and 
+> then, and we even experience some corruption here and there 
+> that needs to be fixed (mainly missing objects when we toy 
+> with different git repack arguments).  I cannot help but 
+> wonder, how we can improve git further to either help 
+> diagnose or even fix some of these problems?  More inline 
+> below...
 
-* Leaving this file means that a "git gc" in an already gc-ed repo is
-  no-longer a no-op. A user running "git gc" in a set of repositories,
-  and then synchronizing this set (e.g. rsync -av, unison, ...) will se=
-e
-  all the gc.pid files as changed, which creates useless noise.
+In general, I don't think we know enough about patterns of recovery
+corruption to say which commands would definitely be worth implementing.
+Part of the reason I wrote this up is to document this one case. But
+this is the first time in 7 years of git usage that I've had to do this.
+So I'd feel a little bit better about sinking time into it after seeing
+a few more cases and realizing where the patterns are.
 
-This patch unlinks the file after the garbage collection is done, so th=
-at
-gc.pid is actually present only during execution.
+One of the major hassles is that the assumptions you can and can't make
+depend on what data you have that _isn't_ corrupted. Do you have a pack
+index, or a bare pack? Do you have zlib data that fails the crc, or zlib
+data that cannot be parsed?
 
-=46uture versions of Git may want to use the information left in the gc=
-=2Epid
-file (e.g. for policies like "don't attempt to run a gc if one has
-already been ran less than X hours ago"). If so, this patch can safely =
-be
-reverted. For now, let's not bother the users.
+In this case there was no other copy of the repository. But if you know
+the broken object (which we did here), and you can copy it from
+elsewhere, then git already will try to find other sources of the
+object (loose, or in another pack).
 
-Explained-by: Matthieu Moy <Matthieu.Moy@imag.fr>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
-Improved-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.c=
-om>
----
-Junio C Hamano wrote:
+> >   dd if=$pack of=object bs=1 skip=51653873 count=10863
+> 
+> Is there a current plumbing command that should be enhanced 
+> to be able to do the 2 steps above directly for people 
+> debugging (maybe with some new switch)?  If not, should we 
+> create one, git show --zlib, or git cat-file --zlib?
 
-> Has anything further happened to this discussion?
+Most of the git plumbing commands deal with data at the object layer.
+This is really about going a step below and saying "Give me the on-disk
+representation of the object". We recently introduced an
+"%(objectsize:disk)" formatter for cat-file. The logical extension would
+be to ask for "%(contents:disk)" or something. Though what you get would
+depend on how the object is stored, so you would need to figure that out
+to do anything useful with it.
 
-Here's a patch implementing Duy's suggestion.
+Note that this implies you actually have a packfile index that says
+"object XXX is at offset YYY". In some corruption cases, you might have
+only a packfile. That is generally enough to generate the index, but if
+there is corruption, you cannot actually parse the pack to find out the
+sha1 of the objects.
 
- builtin/gc.c  | 24 ++++++++++++++++++++++++
- t/t6500-gc.sh |  5 +++++
- 2 files changed, 29 insertions(+)
+So in the worst case, what you really want is something like "dump the
+object in packfile X at offset Y". But even then, you don't know the
+length of the object. The packfile is a stream, and the length we
+calculated is from the index, which depends on the zlib data parsing in
+some sane way.
 
-diff --git a/builtin/gc.c b/builtin/gc.c
-index 891a2c2..c14190f 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -14,6 +14,7 @@
- #include "cache.h"
- #include "parse-options.h"
- #include "run-command.h"
-+#include "sigchain.h"
- #include "argv-array.h"
-=20
- #define FAILED_RUN "failed to run %s"
-@@ -35,6 +36,21 @@ static struct argv_array repack =3D ARGV_ARRAY_INIT;
- static struct argv_array prune =3D ARGV_ARRAY_INIT;
- static struct argv_array rerere =3D ARGV_ARRAY_INIT;
-=20
-+static char *pidfile;
-+
-+static void remove_pidfile(void)
-+{
-+	if (pidfile)
-+		unlink(pidfile);
-+}
-+
-+static void remove_pidfile_on_signal(int signo)
-+{
-+	remove_pidfile();
-+	sigchain_pop(signo);
-+	raise(signo);
-+}
-+
- static int gc_config(const char *var, const char *value, void *cb)
- {
- 	if (!strcmp(var, "gc.packrefs")) {
-@@ -179,6 +195,10 @@ static const char *lock_repo_for_gc(int force, pid=
-_t* ret_pid)
- 	FILE *fp;
- 	int fd, should_exit;
-=20
-+	if (pidfile)
-+		/* already locked */
-+		return NULL;
-+
- 	if (gethostname(my_host, sizeof(my_host)))
- 		strcpy(my_host, "unknown");
-=20
-@@ -219,6 +239,10 @@ static const char *lock_repo_for_gc(int force, pid=
-_t* ret_pid)
- 	strbuf_release(&sb);
- 	commit_lock_file(&lock);
-=20
-+	pidfile =3D git_pathdup("gc.pid");
-+	sigchain_push_common(remove_pidfile_on_signal);
-+	atexit(remove_pidfile);
-+
- 	return NULL;
- }
-=20
-diff --git a/t/t6500-gc.sh b/t/t6500-gc.sh
-index b1a6365..63194d8 100755
---- a/t/t6500-gc.sh
-+++ b/t/t6500-gc.sh
-@@ -9,6 +9,11 @@ test_expect_success 'gc empty repository' '
- 	git gc
- '
-=20
-+test_expect_success 'gc does not leave behind pid file' '
-+	git gc &&
-+	test_path_is_missing .git/gc.pid
-+'
-+
- test_expect_success 'gc --gobbledegook' '
- 	test_expect_code 129 git gc --nonsense 2>err &&
- 	test_i18ngrep "[Uu]sage: git gc" err
---=20
-1.8.4-50-g437ce60
+> > and then running "git index-pack tmp.pack" in the
+> > debugger (stop at unpack_raw_entry). Doing this, I found
+> > that there were 3 bytes of header (and the header itself
+> > had a sane type and size). So I stripped those off with:
+> > 
+> >   dd if=object of=zlib bs=1 skip=3
+> 
+> This too feels like something we should be able to do with a 
+> plumbing command eventually?
+> 
+> git zlib-extract
+
+Perhaps. I think if you had some "extract object at offset X from the
+packfile" command, it would be optional to give you the whole thing, or
+just the zlib data.
+
+> > So I took a different approach. Working under the guess
+> > that the corruption was limited to a single byte, I
+> > wrote a program to munge each byte individually, and try
+> > inflating the result. Since the object was only 10K
+> > compressed, that worked out to about 2.5M attempts,
+> > which took a few minutes.
+> 
+> Awesome!  Would this make a good new plumbing command, git 
+> zlib-fix?
+
+I'd like to see it actually work more than once first. This relies on
+there being single-byte corruption. Even double-byte corruption starts
+to get expensive to brute-force like this. SHA1, by its nature, requires
+brute-forcing. But it's possible that the crc, not being
+cryptographically secure, could be reverse-engineered to find likely
+spots of corruption. I don't know enough about it to say.
+
+> > I fixed the packfile itself with:
+> > 
+> >   chmod +w $pack
+> >   printf '\xc7' | dd of=$pack bs=1 seek=51659518
+> > conv=notrunc chmod -w $pack
+> > 
+> > The '\xc7' comes from the replacement byte our "munge"
+> > program found. The offset 51659518 is derived by taking
+> > the original object offset (51653873), adding the
+> > replacement offset found by "munge" (5642), and then
+> > adding back in the 3 bytes of git header we stripped.
+> 
+> Another plumbing command needed?  git pack-put --zlib?
+
+I think in this case that dd does a nice job of solving the problem.
+Some of the stuff I did was very git-specific and required knowledge of
+the formats. But this one is really just "replace byte X at offset Y",
+and I don't see any need to avoid a general-purpose tool (except that
+dd is itself reasonably arcane :) ).
+
+-Peff
