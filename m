@@ -1,206 +1,80 @@
-From: Yoshioka Tsuneo <yoshiokatsuneo@gmail.com>
-Subject: [PATCH v2] diffcore-rename.c: Estimate filename similarity for rename detection
-Date: Thu, 17 Oct 2013 15:52:54 +0300
-Message-ID: <51F48C86-8C52-4F89-9F0B-204A4C84AB13@gmail.com>
-References: <7658EED3-641E-4AE7-A691-0399ED14D298@gmail.com>
-Mime-Version: 1.0 (Mac OS X Mail 6.6 \(1510\))
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: pack corruption post-mortem
+Date: Thu, 17 Oct 2013 08:47:05 -0700
+Message-ID: <xmqqfvrz3nnq.fsf@gitster.dls.corp.google.com>
+References: <20131016083400.GA31266@sigill.intra.peff.net>
+	<201310160941.16904.mfick@codeaurora.org>
+	<20131017003546.GA12439@sigill.intra.peff.net>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Oct 17 14:53:06 2013
+Cc: Martin Fick <mfick@codeaurora.org>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Oct 17 17:47:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VWn4Z-0006as-KW
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Oct 2013 14:53:04 +0200
+	id 1VWpn9-0001JO-0D
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Oct 2013 17:47:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755379Ab3JQMw7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Oct 2013 08:52:59 -0400
-Received: from mail-lb0-f179.google.com ([209.85.217.179]:49443 "EHLO
-	mail-lb0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755302Ab3JQMw6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 17 Oct 2013 08:52:58 -0400
-Received: by mail-lb0-f179.google.com with SMTP id p9so1816002lbv.24
-        for <git@vger.kernel.org>; Thu, 17 Oct 2013 05:52:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=content-type:mime-version:subject:from:in-reply-to:date
-         :content-transfer-encoding:message-id:references:to;
-        bh=PWhJUnpP5gvP8Fq/h7uRxyPsmdVuu22UqpA/YYWtmwY=;
-        b=FUmG/z5SuK8yr+uODwdHoMFzUw4rlWdf1KMqSn5P6uE3gCP0Ntp3EJzJ/HjtiYxAoU
-         x6jHWudk8WwKQTmRFyAgjArlUG2/FAzl7Vouf3vBnQMTD/tugJc3/gofe+d3m8Q6qkKS
-         D28lrBAsYuI4mXA5aNzmwxN1iEZ7FHaAqP96FCUgrRvxC0iiGZ7BzHJ4cKXLXUbjtL30
-         ojxP2CgX+khyTpPieaDQsAlhC5QwYtBU4Ruh5Xmfm+Zeiena/pOvpjWF6sf9AZpsfyjV
-         U4Yn057RNcgZLYih7muwBMNjjWMJm6Z3w1Hggct8zAkFUibq8d0Gc7uyFjGctletwp9g
-         BEWw==
-X-Received: by 10.152.28.7 with SMTP id x7mr7172552lag.26.1382014377374;
-        Thu, 17 Oct 2013 05:52:57 -0700 (PDT)
-Received: from [10.128.134.109] (fsgw.f-secure.com. [193.110.108.33])
-        by mx.google.com with ESMTPSA id vs11sm74564696lac.3.1969.12.31.16.00.00
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 17 Oct 2013 05:52:56 -0700 (PDT)
-In-Reply-To: <7658EED3-641E-4AE7-A691-0399ED14D298@gmail.com>
-X-Mailer: Apple Mail (2.1510)
+	id S1757359Ab3JQPrK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Oct 2013 11:47:10 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58209 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756986Ab3JQPrI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Oct 2013 11:47:08 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DCC144A707;
+	Thu, 17 Oct 2013 15:47:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=RRSZN3L+ZdDSw24jh1cvy4EJ6uE=; b=lu++Dk
+	3B40ILN3foSTQfEpwmIMMyDGlJ9+cDcjOAJk/sEJJ6xjmgokeRowYQ3BngU/dB8T
+	Mom5fryOcSTT4rAzg+dv5+caZGCpBn1SZk+dbCaK9VYfqUGf4d732JQrd4sWGokA
+	UihlRxMSlp7DqTROegAeXC8O6hf3q9Nleeoxw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=CeqCXH+3dmL1Gd0GKkh4m2PK9l9GJDCf
+	nAKuANflyePrdD6yMqIGTPP3Rd+vOVDAu7CVXdGJX0z5oEzAK2CxFiSsIDDmje/p
+	Dq+7EcxYFarCXO+fbsfibVj41V277c4XxJ406d68Cd3drWkUfjZIkhItVxFBKR0f
+	yTBK8dwWRvE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CF4774A706;
+	Thu, 17 Oct 2013 15:47:07 +0000 (UTC)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2BFE84A704;
+	Thu, 17 Oct 2013 15:47:07 +0000 (UTC)
+In-Reply-To: <20131017003546.GA12439@sigill.intra.peff.net> (Jeff King's
+	message of "Wed, 16 Oct 2013 20:35:47 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 60759742-3743-11E3-A30C-8F264F2CC097-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236297>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236298>
 
+Jeff King <peff@peff.net> writes:
 
-On rename detection like command "git diff -M ...", rename is detected
-based on file similarities. This file similarities are calculated based
-on the contents of file. And, if the similarities of contents are the
-same, filename is taken into account.
-But, the similarity of filename is calculated just whether the basename
-is the same or not, and always returns just one or zero.
-So, for example, if there are multiple same files in the diff-ing commits,
-the result of rename detection is almost random, without taking into account
-the similarity of filename.
+> On Wed, Oct 16, 2013 at 09:41:16AM -0600, Martin Fick wrote:
+>
+>> I have nightmares about this sort of thing every now and 
+>> then, and we even experience some corruption here and there 
+>> that needs to be fixed (mainly missing objects when we toy 
+>> with different git repack arguments).  I cannot help but 
+>> wonder, how we can improve git further to either help 
+>> diagnose or even fix some of these problems?  More inline 
+>> below...
+>
+> In general, I don't think we know enough about patterns of recovery
+> corruption to say which commands would definitely be worth implementing.
+> Part of the reason I wrote this up is to document this one case. But
+> this is the first time in 7 years of git usage that I've had to do this.
+> So I'd feel a little bit better about sinking time into it after seeing
+> a few more cases and realizing where the patterns are.
 
-Calculate filename similarities, and use the result to compare file similarity
-in case contents similarities are the same.
-Use Sorensen-Dice coefficient of bigrams in strings to calculate filename
-similarities because it take into account all part of the filenames, and time
-complexity is O(N), assuming N is the length of filenames.
-
-Signed-off-by: Tsuneo Yoshioka <yoshiokatsuneo@gmail.com>
----
- diffcore-rename.c | 81 +++++++++++++++++++++++++++++++++++++++++++------------
- 1 file changed, 64 insertions(+), 17 deletions(-)
-
-diff --git a/diffcore-rename.c b/diffcore-rename.c
-index 6c7a72f..355ea6d 100644
---- a/diffcore-rename.c
-+++ b/diffcore-rename.c
-@@ -96,26 +96,51 @@ static struct diff_rename_src *register_rename_src(struct diff_filepair *p)
- 	return &(rename_src[first]);
- }
- 
--static int basename_same(struct diff_filespec *src, struct diff_filespec *dst)
-+static int estimate_filename_similarity(struct diff_filespec *src, struct diff_filespec *dst)
- {
--	int src_len = strlen(src->path), dst_len = strlen(dst->path);
--	while (src_len && dst_len) {
--		char c1 = src->path[--src_len];
--		char c2 = dst->path[--dst_len];
--		if (c1 != c2)
--			return 0;
--		if (c1 == '/')
--			return 1;
-+	/*
-+	 * Calculate similarity between src path and dst path using
-+	 * Sorensen-Dice coefficient of bigrams in strings
-+	 */
-+	const char *src_path = src->path;
-+	const char *dst_path = dst->path;
-+	size_t src_len = strlen(src_path);
-+	size_t dst_len = strlen(dst_path);
-+	static uint16_t src_bigram[256][256];
-+	int i;
-+	int bigrams_number = 0;
-+	int similarity;
-+
-+	for (i=0; i<src_len; i++) {
-+		int c1 = ((unsigned char*)src_path)[i];
-+		int c2 = ((unsigned char*)src_path)[i + 1];
-+		src_bigram[c1][c2] ++;
-+	}
-+	for (i=0; i<dst_len; i++) {
-+		int c1 = ((unsigned char*)dst_path)[i];
-+		int c2 = ((unsigned char*)dst_path)[i + 1];
-+		if (src_bigram[c1][c2] > 0) {
-+			src_bigram[c1][c2] --;
-+			bigrams_number ++;
-+		}
-+	}
-+	similarity = MAX_SCORE * 2 * bigrams_number / (src_len + dst_len);
-+
-+    /* Clean up src_bigram */
-+	for (i=0; i<src_len; i++) {
-+		int c1 = ((unsigned char*)src_path)[i];
-+		int c2 = ((unsigned char*)src_path)[i + 1];
-+		src_bigram[c1][c2] = 0;
- 	}
--	return (!src_len || src->path[src_len - 1] == '/') &&
--		(!dst_len || dst->path[dst_len - 1] == '/');
-+
-+	return similarity;
- }
- 
- struct diff_score {
- 	int src; /* index in rename_src */
- 	int dst; /* index in rename_dst */
- 	unsigned short score;
--	short name_score;
-+	unsigned short name_score;
- };
- 
- static int estimate_similarity(struct diff_filespec *src,
-@@ -228,7 +253,7 @@ static void record_rename_pair(int dst_index, int src_index, int score)
-  */
- static int score_compare(const void *a_, const void *b_)
- {
--	const struct diff_score *a = a_, *b = b_;
-+	struct diff_score *a = (struct diff_score *)a_, *b = (struct diff_score *)b_;
- 
- 	/* sink the unused ones to the bottom */
- 	if (a->dst < 0)
-@@ -236,8 +261,23 @@ static int score_compare(const void *a_, const void *b_)
- 	else if (b->dst < 0)
- 		return -1;
- 
--	if (a->score == b->score)
-+	if (a->score == b->score){
-+		if(a->score == 0)
-+			return 0;
-+		/* Calculate name_score only when both score is the same */
-+		if(a->name_score == USHRT_MAX){
-+			struct diff_filespec *two = rename_dst[a->dst].two;
-+			struct diff_filespec *one = rename_src[a->src].p->one;
-+			a->name_score =  estimate_filename_similarity(one, two);
-+		}
-+		if(b->name_score == USHRT_MAX){
-+			struct diff_filespec *two = rename_dst[b->dst].two;
-+			struct diff_filespec *one = rename_src[b->src].p->one;
-+			b->name_score = estimate_filename_similarity(one, two);
-+		}
-+
- 		return b->name_score - a->name_score;
-+	}
- 
- 	return b->score - a->score;
- }
-@@ -282,7 +322,7 @@ static int find_identical_files(struct file_similarity *src,
- 			score = !source->rename_used;
- 			if (source->rename_used && options->detect_rename != DIFF_DETECT_COPY)
- 				continue;
--			score += basename_same(source, target);
-+			score += estimate_filename_similarity(source, target);
- 			if (score > best_score) {
- 				best = p;
- 				best_score = score;
-@@ -605,10 +645,17 @@ void diffcore_rename(struct diff_options *options)
- 
- 			this_src.score = estimate_similarity(one, two,
- 							     minimum_score);
--			this_src.name_score = basename_same(one, two);
-+			/*
-+			 * name_score is needed only when "score"s are the same.
-+			 * So, name_score will be calculated on score_compare
-+			 * only when needed.
-+			 */
-+			this_src.name_score = USHRT_MAX;
- 			this_src.dst = i;
- 			this_src.src = j;
--			record_if_better(m, &this_src);
-+			if(this_src.score >= minimum_score){
-+				record_if_better(m, &this_src);
-+			}
- 			/*
- 			 * Once we run estimate_similarity,
- 			 * We do not need the text anymore.
--- 
-1.8.4.475.g867697c
+There was one area in our Documentation/ set we used to use to keep
+this kind of message almost as-is; perhaps this message fits there?
