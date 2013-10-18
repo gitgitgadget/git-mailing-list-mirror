@@ -1,99 +1,93 @@
-From: Yoshioka Tsuneo <yoshiokatsuneo@gmail.com>
-Subject: Re: [PATCH v6] diff.c: keep arrow(=>) on show_stats()'s shortened filename part to make rename visible.
-Date: Fri, 18 Oct 2013 12:35:08 +0300
-Message-ID: <21F30E1F-3497-41F2-81C4-F4193C58FE11@gmail.com>
-References: <38848735-7CFA-404E-AE51-4F445F813266@gmail.com> <A15CCF08-83FD-4F3C-9773-C26DEE38FD33@gmail.com> <660A536D-9993-4B81-B6FF-A113F9111570@gmail.com> <AFC93704-D6C5-49AF-9A66-C5EA81348FFA@gmail.com> <79A13931-694C-4DDC-BEDF-71A0DBA0ECA1@gmail.com> <89A4E8C6-C233-49E2-8141-837ABDBBC976@gmail.com> <xmqqmwm71ysp.fsf@gitster.dls.corp.google.com> <B690713F-6FF1-46A7-85A7-C92303BBAF0E@gmail.com> <xmqqzjq7wmj7.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0 (Mac OS X Mail 6.6 \(1510\))
-Content-Type: text/plain; charset=iso-2022-jp
-Content-Transfer-Encoding: 8BIT
-To: Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Oct 18 11:35:26 2013
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v2 00/14] Officially start moving to the term 'staging area'
+Date: Fri, 18 Oct 2013 11:46:12 +0200
+Message-ID: <vpqbo2m7vyz.fsf@anie.imag.fr>
+References: <1381789769-9893-1-git-send-email-felipe.contreras@gmail.com>
+	<1381789769-9893-4-git-send-email-felipe.contreras@gmail.com>
+	<CAMP44s3u_SMyZOe5jxkvoGn5MBJ_g70iHRT5v_3u1rZwFoqiVA@mail.gmail.com>
+	<xmqqwqlbznfp.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
+	Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>,
+	Jay Soffian <jaysoffian@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Philip Oakley <philipoakley@iee.org>,
+	William Swanson <swansontec@gmail.com>,
+	Ping Yin <pkufranky@gmail.com>,
+	Hilco Wijbenga <hilco.wijbenga@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Oct 18 11:46:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VX6Sn-0004IN-Ct
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Oct 2013 11:35:21 +0200
+	id 1VX6dU-00035s-OX
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Oct 2013 11:46:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752662Ab3JRJfO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Oct 2013 05:35:14 -0400
-Received: from mail-lb0-f174.google.com ([209.85.217.174]:62816 "EHLO
-	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751961Ab3JRJfM convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 18 Oct 2013 05:35:12 -0400
-Received: by mail-lb0-f174.google.com with SMTP id w6so2890088lbh.33
-        for <git@vger.kernel.org>; Fri, 18 Oct 2013 02:35:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=content-type:mime-version:subject:from:in-reply-to:date
-         :content-transfer-encoding:message-id:references:to;
-        bh=+/nQxXE9b/h3AMll8F3dpI+VX8XQ4Ze5/NFPChYQjEc=;
-        b=S1tmv63RAIoyBJbG32bFxbHaLxY4k+qmw7gWZv2FvMRfnPKCV69zWe3YXz3oK6b9+Y
-         MJnuOOMMIfZnFISaALTIdZCG3BLyLHkiNNOaCCEcRjwa6Ca9N0v7ytyGkOZlxk0Q17uL
-         g7/g4+98X1xZjUMrP+FwkwPTWWUfbMUq9DgD6i0ZSW5M3OzaNFyuCssA25Eyp6GgHZfo
-         0JLwCUXuuUPdqqvBSV75SPeooIayrvjPwUNgHAJyl1DsuE1PJeJMuL+9FpSQvrU26i7Y
-         3UsCuRQTgdsMNJC8irxCTKCHOT+V32ALJLaQNkZWjz3pbve1y8B/BubhYLfZI70HkBZ8
-         WaTw==
-X-Received: by 10.152.29.201 with SMTP id m9mr1762077lah.6.1382088910659;
-        Fri, 18 Oct 2013 02:35:10 -0700 (PDT)
-Received: from [10.128.134.109] (fsgw.f-secure.com. [193.110.108.33])
-        by mx.google.com with ESMTPSA id vk8sm1292131lbb.0.2013.10.18.02.35.09
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 18 Oct 2013 02:35:09 -0700 (PDT)
-In-Reply-To: <xmqqzjq7wmj7.fsf@gitster.dls.corp.google.com>
-X-Mailer: Apple Mail (2.1510)
+	id S1752525Ab3JRJqV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Oct 2013 05:46:21 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:60791 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751961Ab3JRJqT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Oct 2013 05:46:19 -0400
+Received: from globule.imag.fr (globule.imag.fr [129.88.34.238])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r9I9kCqq030182
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 18 Oct 2013 11:46:12 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	(authenticated bits=0)
+	by globule.imag.fr (8.13.8/8.13.8) with ESMTP id r9I9kDVE012612
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Fri, 18 Oct 2013 11:46:13 +0200
+In-Reply-To: <xmqqwqlbznfp.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Thu, 17 Oct 2013 12:50:50 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 18 Oct 2013 11:46:13 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r9I9kCqq030182
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1382694373.22138@+znwlzR8/UHWKnmjLlgpqA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236340>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236341>
 
-Hello Junio
+I'm lacking time to read and answer in detail, sorry.
 
->> In the "[PATCH v7]", I changed to keep filename part of suffix to handle
->> above case, but not always keep directory part because I feel totally
->> keeping all part of long suffix including directory name may cause output like:
->>    …{… => …}…ongPath1/LongPath2/nameOfTheFileThatWasMoved 
->> And, above may be worse than:
->>   ...{...ceDirectory => …ionDirectory}.../nameOfTheFileThatWasMoved
->> I think.
-> 
-> I am not sure if I agree.
-> 
-> Losing LongPath2 part may be more significant data loss than losing
-> a single bit that says the change is a rename, as the latter may not
-> quite tell us what these two directories were anyway.
-I'm not sure which is the better in general.
-But anyway, I don't have strong opinion about this.
-So, I just changed to keep the all of the <sfx> part(lator than '}').
-I just sent the updated patch as "[PATCH v8]".
+Junio C Hamano <gitster@pobox.com> writes:
 
-Thanks !
+> "It must be done" is different from "any change is good, as long as
+> it introduces more instances of word 'stage'".
 
----
-Tsuneo Yoshioka (吉岡 恒夫)
-yoshiokatsuneo@gmail.com
+I agree. Something must be done, at least to remove the cache Vs index
+confusion. I'm not sure exactly what's best, and we should agree where
+to go before going there. The previous attempts to introduce more
+"stage" in Git's command-line (e.g. the "git stage" alias) introduced
+more confusion than anything else.
 
+> The phrase "staging area" is not an everyday phrase or common CS
+> lingo, and that unfortunately makes it a suboptimal choice of words
+> especially to those of us, to whom a large portion of their exposure
+> to the English language is through the command words we use when we
+> talk to our computers.
 
+I do not think being understandable immediately by non-native is so
+important actually. To me as a french, "commit" makes no sense as an
+english word to describe what "git commit" does, but it's OK as I never
+really translate it. Even fr.po translates "a commit" by "un commit".
 
+That said, having something that immediately makes sense to a non-native
+is obviously a good point.
 
-On Oct 18, 2013, at 1:38 AM, Junio C Hamano <gitster@pobox.com> wrote:
+Another proposal which I liked BTW was to use the word "precommit".
+Short, and easily understood as the place where the next commit is
+prepared.
 
-> Yoshioka Tsuneo <yoshiokatsuneo@gmail.com> writes:
-> 
->> In the "[PATCH v7]", I changed to keep filename part of suffix to handle
->> above case, but not always keep directory part because I feel totally
->> keeping all part of long suffix including directory name may cause output like:
->>    …{… => …}…ongPath1/LongPath2/nameOfTheFileThatWasMoved 
->> And, above may be worse than:
->>   ...{...ceDirectory => …ionDirectory}.../nameOfTheFileThatWasMoved
->> I think.
-> 
-> I am not sure if I agree.
-> 
-> Losing LongPath2 part may be more significant data loss than losing
-> a single bit that says the change is a rename, as the latter may not
-> quite tell us what these two directories were anyway.
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
