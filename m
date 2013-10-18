@@ -1,190 +1,93 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: My patches
-Date: Fri, 18 Oct 2013 10:49:48 -0500
-Message-ID: <5261589c855ea_30ce11dbe78d3@nysa.notmuch>
+Date: Fri, 18 Oct 2013 09:59:41 -0700
+Message-ID: <xmqqtxgewm4i.fsf@gitster.dls.corp.google.com>
 References: <20131012072450.GA21165@nysa>
- <xmqqtxgjg35a.fsf@gitster.dls.corp.google.com>
- <525c64ebe2390_197a905e84c@nysa.notmuch>
- <xmqq8uxrzn9h.fsf@gitster.dls.corp.google.com>
- <52605a36eef0f_448145fe7466@nysa.notmuch>
- <9A62D872-0FCF-41B9-B185-7061B25F1CBC@quendi.de>
- <52611e75bdc8d_2b6dcb7e7459@nysa.notmuch>
- <20131018153009.GA23704@thunk.org>
+	<xmqqtxgjg35a.fsf@gitster.dls.corp.google.com>
+	<525c64ebe2390_197a905e84c@nysa.notmuch>
+	<xmqq8uxrzn9h.fsf@gitster.dls.corp.google.com>
+	<52605a36eef0f_448145fe7466@nysa.notmuch>
+	<9A62D872-0FCF-41B9-B185-7061B25F1CBC@quendi.de>
+	<52611e75bdc8d_2b6dcb7e7459@nysa.notmuch>
+	<20131018153009.GA23704@thunk.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Max Horn <max@quendi.de>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org
-To: Theodore Ts'o <tytso@mit.edu>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 18 18:25:09 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	Max Horn <max@quendi.de>, git@vger.kernel.org
+To: Theodore Ts'o <tytso@mit.edu>
+X-From: git-owner@vger.kernel.org Fri Oct 18 18:59:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VXCrM-00028W-FH
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Oct 2013 18:25:08 +0200
+	id 1VXDOv-0007KS-E6
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Oct 2013 18:59:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756502Ab3JRQZB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Oct 2013 12:25:01 -0400
-Received: from mail-oa0-f50.google.com ([209.85.219.50]:48759 "EHLO
-	mail-oa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753163Ab3JRQZA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Oct 2013 12:25:00 -0400
-Received: by mail-oa0-f50.google.com with SMTP id j1so3546138oag.37
-        for <git@vger.kernel.org>; Fri, 18 Oct 2013 09:24:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:content-transfer-encoding;
-        bh=DBPtlF4yJO/6G1IeYKtOTH26LGNOs9bP8MMJOwCMLXI=;
-        b=rmjfnt0Lt9vspKCCS/On31W4PeGaRKxX1sc/Piba9Zdv6juLZs6W13+oovHkzm2qow
-         GCiGNNeh4x9j5Z+YoUiD2Oon4j7dfVQEJL14+AnbukK+iC55/FyNMu7o8cHuiLp0sfE4
-         nfo+xFKx7lkrKRlZHbLR14Eg96+bZFexzYageFLWrb82DetNBgDLHPA34kFBmihOKAAG
-         YWk84CMNb0bSKH+YwvQwJlCI3VVyDDY4V/UOa54uUhZrhvZjnCRKtti6zFeMNyGzTLn0
-         2DE6nhf8AmdjQgZFcylCvo9ELRc43YUnwesDS8x9b0hBJG4tFUw6IbvCsKCSRW1PZd5o
-         6d8w==
-X-Received: by 10.182.39.161 with SMTP id q1mr2376870obk.54.1382113499738;
-        Fri, 18 Oct 2013 09:24:59 -0700 (PDT)
-Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
-        by mx.google.com with ESMTPSA id hl3sm4929524obb.0.2013.10.18.09.24.57
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 18 Oct 2013 09:24:58 -0700 (PDT)
-In-Reply-To: <20131018153009.GA23704@thunk.org>
+	id S1756747Ab3JRQ7p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Oct 2013 12:59:45 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33575 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756409Ab3JRQ7o (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Oct 2013 12:59:44 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C709149A08;
+	Fri, 18 Oct 2013 16:59:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=hFsqvuQN3egx2l/3TMSPTPZd04E=; b=FX5ePH
+	SGtUFMXEpqlaxdG7p3kirvcbWX0m5MHmI7vx7HxFpFupBo9mciYQCXHdKp9pQm0v
+	PleNs8bOn4CBHu04MVFMXHfG4DtzfBwYbFDtiw5EMz7eLVZD301tbAW0Uc9QNxgy
+	crr5YDsEA5Zh7dcQXjNSS2z/D6t3UgL0UGLQk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=NeRPy+Uo2cV0Qmq94hh7M74jQ72UukO7
+	WepNt37IM20yaf8D5l3OqhXEhzy4ZBvKL6L7b0tQnxnwqrIiN6XRcLPrtMx3P7Fm
+	nn7+Bj4M6G/QPhkkYJtwvEWZuIXs3jew43DcOkKyHzQfhS5lv34EuSY/i9r8B1/g
+	52O+6oQ2I2Q=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B9F5D49A06;
+	Fri, 18 Oct 2013 16:59:43 +0000 (UTC)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 27B5649A04;
+	Fri, 18 Oct 2013 16:59:43 +0000 (UTC)
+In-Reply-To: <20131018153009.GA23704@thunk.org> (Theodore Ts'o's message of
+	"Fri, 18 Oct 2013 11:30:09 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: AF3D8BCC-3816-11E3-B8E2-8F264F2CC097-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236358>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236359>
 
-Theodore Ts'o wrote:
-> On Fri, Oct 18, 2013 at 06:41:41AM -0500, Felipe Contreras wrote:
-> > > And I hazard to guess that the vast majority agree with Junio on this (based,
-> > > again, on email evidence). Not with you.
-> > 
-> > That is irrelevant, and a fallacy. The vast majority of people thought the
-> > Earth was the center of the universe, and they were all wrong.
-> > 
-> > It's called ad populum fallacy, look it up. Wether the majority of Git
-> > developers agree that there's something more than a disagreement is irrelevant,
-> > their opinion doesn't change the truth.
-> 
-> Look, the problem is that you insist on being "right", even on matters which
-> may be more about taste and preference than anything that can be proven
-> mathematically.
+Theodore Ts'o <tytso@mit.edu> writes:
 
-I don't insist on being right, I have an opinion and I voice it, there is
-nothing wrong with that. If the other side agrees there's a difference of
-opinion, that's the end of the discussion.
+> Over the past 5+ years, I've observed that I
+> think the way commit selection in "git format-patch" is inconsistent
+> with how we handle commit selection for other commands, e.g., "git log
+> <commit>" vs and "git format-patch <commit>".  Even if you think that
+> this is a matter of self-inherent "truth", versus just a matter of
+> taste, there is also the consideration of backwards compatibility, and
+> the question of how important consistency and easy of learning gets
+> traded off against backwards compatibility and invalidating
+> potentially huge numbers of shell scripts and documentation.  So it's
+> not something where I've made a nuisance of myself, because it's a
+> settled issue.
 
-I would say it's actually the other side that insists on being right, and
-that's the problem; they don't agree it's a difference in opinion, from their
-point of one side is right, and the other side is wrong, and that's what causes
-their frustration.
+The original syntax to select of commits by format-patch is very
+inconsistent from the log family because it was done way before the
+log family's way has been established as the best practice. It has
+annoyed enough people that we spent effort to teach recent Git
+to accept
 
-Ask Junio if he thinks it's simply a matter of a difference in opinion. He
-pretty much already said it's not.
+	$ git format-patch master..next
 
-> Worse, you insist on trying to convince people even when it might be better
-> to just give up and decide that maybe something not's worth the effort to get
-> the last word in.  This is how we get to centithreads.  If every time someone
-> disagrees, you insist on replying,
+as well.
 
-This is how it goes:
-
- 1) Side A
- 2) Side B
-
- 3) Side A
- 4) Side B
-
- 5) Side A
- 6) Side B
-
-At any point in time side B could stop replying, sure, but so could side A.
-
-Why do you blame ME for replying, and not the other side, for replying to my
-reply?
-
-Presumably because right before reply 4), side A thought the discussion was
-wortwhile, and something happened in 5) that changed their opinion, and now
-side B becomes a problematic person. And since you are friends with side A, you
-take their side.
-
-> and then if people give up in disgust, you then try to use that as "proof"
-> that you must be right,
-
-Show me *one* instance when I have done so. I have never used silence as
-evidence of anything.
-
-> Sometimes a question is important enough that it's worth doing this.
-> But I'd suggest to you that you should ask yourself whether you're
-> doing it too often.
-> 
-> After all, this is open source.  If you are convinced that you are
-> right, and everyone else in the community is wrong, it is within your
-> power to fork the code base, and to prove us wrong by creating a
-> better product.
-
-Don't worry, that is *exactly* what I plan to do.
-
-> The fallocate NO_HIDE_STALE flag is a good example of that; it's used
-> in production on thousands and thousands of servers by Google and Tao
-> Bao, but since there was strong opposition on the ext4 list, we've
-> kept it as an out-of-tree patch.  Note what I did not do.  I did not
-> force the patch in, even though it might be within my power as the
-> maintainer; nor did I try to convince people over and OVER and OVER
-> again about the rightness of my position, and turn it into a
-> centithread.
-
-My patches are not good just for me or my company, they are good for everyone.
-
-Have you actually looked at any of them?
-
-> > My claim is that all I did was disagree with Junio. You can invalidate that
-> > claim easily by providing *a single* example where I did more than
-> > disagree.
-> 
-> The problem is when you disagree with a number of people (not just
-> Junio), and you are, in my opinion, overly persistent.
-
-But that's not what Junio said. This is the second time you defend Junio by
-assuming his position is exactly the opposite.
-
-Junio doesn't think it's just a disagreement, Junio doesn't think I'm just
-being persistent, Junio is saying I can't be worked with.
-
-The interesting thing is that when Junio agrees with the change, he can work
-with me, when I agree my change is not good, the same, but suddenly when I
-don't agree, then I'm not good to work with. See the pattern?
-
-> We can argue whether you've stepped over the line in terms of impugning
-> people's motives or sanity, but that's not necessarily the most important
-> issue.  People sometimes step over the line, and while that's unfortunate,
-> it's when it becomes a persistent pattern, and it happens frequently enough,
-> that it becomes a real problem.
-
-Have I ever impugned people's motives or sanity? Please, show me where I did that.
-
-> Alternatively, if you are right that Junio is mad,
-
-I didn't say Junio is mad, I said he got mad.
-
-:  carried away by intense anger :  furious <mad about the delay>
-
-http://www.merriam-webster.com/dictionary/mad
-
-> and he's being capriciously insulting, then I'm sure that when you establish
-> your own fork, lots of developers will come flocking to your flag.  If they
-> do not, then perhaps you might want to take that as some objective evidence
-> that the community is perhaps, more willing to work with him, then they are
-> to work with you.
-
-If you know anything about rationality you know that correlation doesn't prove
-causation. So no, it would not be objective evidence.
-
--- 
-Felipe Contreras
+So it indeed is a settled issue, but you are correct to point out
+that we had to find a way to do so while still keeping the original
+syntax working for people who have scripts and people who work from
+random and stale documents we have not much control over updating.
