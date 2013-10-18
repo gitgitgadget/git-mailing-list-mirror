@@ -1,76 +1,70 @@
-From: worley@alum.mit.edu (Dale R. Worley)
-Subject: Re: [git-users] Problem using detached worktrees with commands implemented in scripts
-Date: Fri, 18 Oct 2013 18:54:47 -0400
-Message-ID: <201310182254.r9IMslOr003223@freeze.ariadne.com>
-References: <201310162003.r9GK3UYj014414@freeze.ariadne.com>
-	<xmqqeh7k51vg.fsf@gitster.dls.corp.google.com>
-	<29AA597BEBC146B09E8B370949EC2CE9@PhilipOakley>
-	<xmqqk3hc3jbw.fsf@gitster.dls.corp.google.com>
-	<3401D1F36F134CDDB0881B196F79CB3A@PhilipOakley> <xmqqr4bjy63y.fsf@gitster.dls.corp.google.com>
-Cc: philipoakley@iee.org, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Oct 19 00:54:57 2013
+From: Stefan Beller <stefanbeller@googlemail.com>
+Subject: [PATCH] Reword repack documentation to no longer state it's a script
+Date: Sat, 19 Oct 2013 01:25:22 +0200
+Message-ID: <1382138722-5278-1-git-send-email-stefanbeller@googlemail.com>
+Cc: Stefan Beller <stefanbeller@googlemail.com>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Sat Oct 19 01:25:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VXIwY-0004kq-TI
-	for gcvg-git-2@plane.gmane.org; Sat, 19 Oct 2013 00:54:55 +0200
+	id 1VXJQC-0006CR-QE
+	for gcvg-git-2@plane.gmane.org; Sat, 19 Oct 2013 01:25:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757472Ab3JRWyv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Oct 2013 18:54:51 -0400
-Received: from qmta09.westchester.pa.mail.comcast.net ([76.96.62.96]:60023
-	"EHLO qmta09.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757376Ab3JRWyu (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 18 Oct 2013 18:54:50 -0400
-Received: from omta19.westchester.pa.mail.comcast.net ([76.96.62.98])
-	by qmta09.westchester.pa.mail.comcast.net with comcast
-	id emKW1m00227AodY59mupAN; Fri, 18 Oct 2013 22:54:49 +0000
-Received: from freeze.ariadne.com ([24.34.72.61])
-	by omta19.westchester.pa.mail.comcast.net with comcast
-	id emup1m00D1KKtkw3fmupBv; Fri, 18 Oct 2013 22:54:49 +0000
-Received: from freeze.ariadne.com (freeze.ariadne.com [127.0.0.1])
-	by freeze.ariadne.com (8.14.5/8.14.5) with ESMTP id r9IMsm9x003224;
-	Fri, 18 Oct 2013 18:54:48 -0400
-Received: (from worley@localhost)
-	by freeze.ariadne.com (8.14.5/8.14.5/Submit) id r9IMslOr003223;
-	Fri, 18 Oct 2013 18:54:47 -0400
-In-reply-to: <xmqqr4bjy63y.fsf@gitster.dls.corp.google.com>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-	s=q20121106; t=1382136889;
-	bh=lziYOQBobz8qEJBpUDOg7c9AodT2tHnxNGNDW2Qd0Hc=;
-	h=Received:Received:Received:Received:Date:Message-Id:From:To:
-	 Subject;
-	b=MVmcMWF3/SDYvf70LQAsLzjPJGev1UFCVNoWt5sU82Pf3pT8qmOlzVkjHfD+ML8q5
-	 KpBh8LlJub+zPi6m+oNuyLdyH+b2MdPL/grjdmtXrVRqZlGJLCWYE78BbtOv5fqLv3
-	 2Bv3Jvqbuk+RkMV2KfsQ7C6qrmnPFaDr6dqBW3H8Okog4K6ACaRK7w1hPE2XFBLC2S
-	 J78ZIFuOtWAun52dMYzZnvI3ZOvJrPyjTzlx/sriubiO36EZ3gj3qXIluWA5D4TIbX
-	 tpZgow8P99XtLJiuBKrXlbyVsA/A0qacvIBVP3inCDL/ezjeqKmyUDpb+3rR83O9iH
-	 SkY5O7Y1BkjxQ==
+	id S1756240Ab3JRXZ1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Oct 2013 19:25:27 -0400
+Received: from mail-ea0-f171.google.com ([209.85.215.171]:38870 "EHLO
+	mail-ea0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752646Ab3JRXZ0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Oct 2013 19:25:26 -0400
+Received: by mail-ea0-f171.google.com with SMTP id n15so2392663ead.30
+        for <git@vger.kernel.org>; Fri, 18 Oct 2013 16:25:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=qa+WM4tu/ncPyQ3aN2hRy5tVvzYWS9xQLifByjV7T7I=;
+        b=vwyrwUbl/6koaSgKuL1St6Mn65YcuCwKL8oetICQ7mmJuqzZlwo+PJqvNSILw0J295
+         MZN3eE3jVjK9T5P62HrP6gzVZxRLIg5K+5iCL/dAIAxT7KK60fDWBNJzR5lrRvZdCGoI
+         6MIF8sRonnuI1eAXU48GCm6uF1IMyhVoWNX8zucxDBmNnrQPYLrNDDlG+tLwcreMDMtZ
+         aruN/drLpttXQ12Mf8ZVRx8zE6GtvbVlYIQOPemFmNwwf3ZsU7ZztHZ93dCyf/R+jilY
+         5j4oWsaAyuFWcxlbFCzBpCGpbfwhSHncpFdXYyaYyG1cUzZFrnZ+Fg1qqOCeWidEzlQc
+         yCGQ==
+X-Received: by 10.14.218.5 with SMTP id j5mr5971eep.134.1382138725303;
+        Fri, 18 Oct 2013 16:25:25 -0700 (PDT)
+Received: from localhost (ip-109-91-109-128.unitymediagroup.de. [109.91.109.128])
+        by mx.google.com with ESMTPSA id f49sm10411845eec.7.2013.10.18.16.25.24
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 18 Oct 2013 16:25:24 -0700 (PDT)
+X-Mailer: git-send-email 1.8.4.1.511.g52c26ce
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236377>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236378>
 
-> From: Junio C Hamano <gitster@pobox.com>
+This updates the documentation regarding the changes introduced
+by a1bbc6c01 (2013-09-15, repack: rewrite the shell script in C).
 
-> It was unclear to me which part of our documentation needs updating
-> and how, and that was (and still is) what I was primarily interested
-> in finding out.
+Signed-off-by: Stefan Beller <stefanbeller@googlemail.com>
+---
+ Documentation/git-repack.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-It seems to me that what is missing is a description of the
-circumstances under which Git can be run.  With Subversion (the only
-other source control system I know in detail), the working tree that
-is operated on is at and below the cwd, and the working tree always
-points to the repository.  (A subdirectory of a working tree is also a
-valid working tree.)
-
-With Git, it seems that the basic usage is that Git searches upward
-from the cwd to find the top of the work tree, which is distinguished
-by having a .git subdirectory.  The rules when the worktree is
-detached are more complicated, and don't seem to be written in any
-single place.
-
-Dale
+diff --git a/Documentation/git-repack.txt b/Documentation/git-repack.txt
+index 4c1aff6..509cf73 100644
+--- a/Documentation/git-repack.txt
++++ b/Documentation/git-repack.txt
+@@ -14,7 +14,7 @@ SYNOPSIS
+ DESCRIPTION
+ -----------
+ 
+-This script is used to combine all objects that do not currently
++This command is used to combine all objects that do not currently
+ reside in a "pack", into a pack.  It can also be used to re-organize
+ existing packs into a single, more efficient pack.
+ 
+-- 
+1.8.4.1.511.g52c26ce
