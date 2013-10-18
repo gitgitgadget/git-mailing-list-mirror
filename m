@@ -1,144 +1,123 @@
-From: Brandon Casey <drafnel@gmail.com>
-Subject: Re: [PATCH] Documentation/config.txt: denyDeleteCurrent applies to
- bare repos too
-Date: Thu, 17 Oct 2013 16:29:35 -0700
-Message-ID: <CA+sFfMfxaM7z5kWyi_5pOjSLYy3BEstUZiG759QyZfjqobCdNg@mail.gmail.com>
-References: <1381886818-14337-1-git-send-email-bcasey@nvidia.com>
-	<xmqq4n8fy1t3.fsf@gitster.dls.corp.google.com>
+From: Karsten Blees <karsten.blees@gmail.com>
+Subject: Re: What's cooking in git.git (Oct 2013, #03; Wed, 16)
+Date: Fri, 18 Oct 2013 02:42:15 +0200
+Message-ID: <526083E7.6080701@gmail.com>
+References: <xmqqa9i851t8.fsf@gitster.dls.corp.google.com>	<525FB287.7020204@gmail.com>	<xmqqzjq7y6k7.fsf@gitster.dls.corp.google.com> <xmqqmwm7y5bf.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Brandon Casey <bcasey@nvidia.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Oct 18 01:29:44 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Fri Oct 18 02:42:22 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VWx0f-0004ue-2p
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Oct 2013 01:29:41 +0200
+	id 1VWy8x-0005FH-PF
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Oct 2013 02:42:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753369Ab3JQX3h convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 Oct 2013 19:29:37 -0400
-Received: from mail-qe0-f53.google.com ([209.85.128.53]:62519 "EHLO
-	mail-qe0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753305Ab3JQX3g convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 17 Oct 2013 19:29:36 -0400
-Received: by mail-qe0-f53.google.com with SMTP id cy11so1195924qeb.40
-        for <git@vger.kernel.org>; Thu, 17 Oct 2013 16:29:35 -0700 (PDT)
+	id S1751277Ab3JRAmP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Oct 2013 20:42:15 -0400
+Received: from mail-ea0-f176.google.com ([209.85.215.176]:56910 "EHLO
+	mail-ea0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751085Ab3JRAmO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Oct 2013 20:42:14 -0400
+Received: by mail-ea0-f176.google.com with SMTP id q16so1518815ead.35
+        for <git@vger.kernel.org>; Thu, 17 Oct 2013 17:42:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=UMMYrf9gng38Qxfs1+e8lD0/mQ6/S3dreLRgHYvCVic=;
-        b=AzRoIrrV5H7AS/9csvW3eb+m3Qktmk1ga2Co7E6NKg3m7QkAM4n+W/V0iMz4wzKep8
-         uj2YY3OUobkzFQ2h9A0W/ZJgEbNtGxWzi03MEK7dIWw6n32zfG2bVvxJgpTHa3meQj0B
-         gaykBOq2PpG5xHDPHBl5Wl41+F4cmbZmr0HwCs39QKXJgPpnqWRmr4/fRW+7OEY94X6E
-         mBrxJDxybyu17BA4UD1EDQm/Y5GUoOUQVRy9TQcm1J1htGsoquamOK62IUZyziPpO1MJ
-         XtOXTEfGZD36/4zG3XSTUHU1yClc4bccUI12yrYAX5Z1iOAgSouTtVOUehE/25ZN5V64
-         3I8w==
-X-Received: by 10.224.137.195 with SMTP id x3mr486186qat.107.1382052575575;
- Thu, 17 Oct 2013 16:29:35 -0700 (PDT)
-Received: by 10.96.211.2 with HTTP; Thu, 17 Oct 2013 16:29:35 -0700 (PDT)
-In-Reply-To: <xmqq4n8fy1t3.fsf@gitster.dls.corp.google.com>
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=tKodYAh2QYCohmXdYACmTfaHnFtYrVKTrsmNOjWsTn8=;
+        b=HTAsSM7A3ysR4JrGgXcAQsg24PaW+SGBPdYDFg5wORtIJ9D+Ck8pKBzzqY+jaDh+dK
+         uxiGw5i6r3xs4WRCzjqqxp813sBoteR78ooRru6zeTt/bSSPLs7lj2mqSn/VN1Wan59D
+         0TNAxtl81ZjecJx4oRWBaOni7XDmQdemSpr8tNSDqpe1Wa1ytp1a0Bu47B88wpWOdq2s
+         W3vOeVZsrNwztk+8RI1Ibh6S7yjc+UVd1hw2rUtyeYjC9MaDnGiDeO03kb+uL6oyftOa
+         Ih2BystlNnBq8EJp3yaUCdyUxHjBV30OWdMJUc2uX4UGnE/NIbC9T6dmO5NZht7ddO7E
+         1ARQ==
+X-Received: by 10.15.67.131 with SMTP id u3mr240142eex.34.1382056933909;
+        Thu, 17 Oct 2013 17:42:13 -0700 (PDT)
+Received: from [10.1.100.52] (ns.dcon.de. [77.244.111.149])
+        by mx.google.com with ESMTPSA id i1sm199585327eeg.0.1969.12.31.16.00.00
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 17 Oct 2013 17:42:13 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.0.1
+In-Reply-To: <xmqqmwm7y5bf.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236333>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236334>
 
-On Thu, Oct 17, 2013 at 3:23 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Brandon Casey <bcasey@nvidia.com> writes:
->
->> From: Brandon Casey <drafnel@gmail.com>
+Am 17.10.2013 23:07, schrieb Junio C Hamano:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+>> Karsten Blees <karsten.blees@gmail.com> writes:
 >>
->> The setting of denyDeleteCurrent applies to both bare and non-bare
->> repositories.  Correct the description on this point, and expand it =
-to
->> provide some background justification for the current behavior and
->> describe the full suite of settings.
+>>> Am 16.10.2013 23:43, schrieb Junio C Hamano:
+>>>> * kb/fast-hashmap (2013-09-25) 6 commits
+>>>>  - fixup! diffcore-rename.c: simplify finding exact renames
+>>>>  - diffcore-rename.c: use new hash map implementation
+>>>>  - diffcore-rename.c: simplify finding exact renames
+>>>>  - diffcore-rename.c: move code around to prepare for the next patch
+>>>>  - buitin/describe.c: use new hash map implementation
+>>>>  - add a hashtable implementation that supports O(1) removal
+>>>>
+>>>
+>>> I posted a much more complete v3 [1], but somehow missed Jonathan's fixup! commit.
 >>
->> Signed-off-by: Brandon Casey <drafnel@gmail.com>
->> ---
->>  Documentation/config.txt | 11 +++++++++--
->>  1 file changed, 9 insertions(+), 2 deletions(-)
->>
->> diff --git a/Documentation/config.txt b/Documentation/config.txt
->> index c3f7002..3d416ec 100644
->> --- a/Documentation/config.txt
->> +++ b/Documentation/config.txt
->> @@ -1993,8 +1993,15 @@ receive.denyDeletes::
->>       the ref. Use this to prevent such a ref deletion via a push.
->>
->>  receive.denyDeleteCurrent::
->> -     If set to true, git-receive-pack will deny a ref update that
->> -     deletes the currently checked out branch of a non-bare reposit=
-ory.
->> +     If set to true or "refuse", git-receive-pack will deny a ref u=
-pdate
->> +     that deletes the currently checked out branch of a non-bare re=
-pository,
->> +     or the "default" branch in a bare repository.  i.e. the branch
->> +     that HEAD refers to.
->
-> It reads just fine without the part that you found the need for
-> clarification with "i.e.", i.e.
->
->         or the branch that HEAD points at in a bare repository.
->
-> without introducing a new word "default branch" that is not defined
-> in the glossary.
+>> Thanks; I'll replace the above with v3 and squash the fix-up in.
+> 
+> Interestingly, v3 applied on 'maint' and then merged to 'master'
+> seems to break t3600 and t7001 with a coredump.
+> 
+> It would conflict with es/name-hash-no-trailing-slash-in-dirs that
+> has been cooking in 'next', too; the resolution might be trivial but
+> I didn't look too deeply into it.
+> 
 
-Either way is fine with me.  The phrase "the branch that HEAD points
-at" applies to either a bare or non-bare repo though, so the "i.e."
-was directed at both parts of the preceding sentence.  Guess we
-haven't defined an alternative way to say "the branch that HEAD points
-at" for a bare repository =C3=A0 la "currently checked out branch" for =
-a
-non-bare repository.
+I've pushed a rebased version to https://github.com/kblees/git/commits/kb/hashmap-v3-next
+(no changes yet except for Jonathan's fixup in #04 and merge resolution).
 
->> +     Deleting the current branch from a remote will
->> +     cause the HEAD symbolic ref to become dangling and will result=
- in the
->> +     next clone from it to not check out anything.
->
-> This sentence tells truth but does not fit in the logic flow in the
-> paragraph. I am reading it as primarily meant to be an explanation
-> why it would be a good idea to apply this seemingly non-bare only
-> option (implied by "current" in its name---it is so rare for a bare
-> repository to repoint its HEAD that the concept of "current" does
-> not mesh well with a bare one) to a bare one.
+The coredumps are caused by my patch #10, which free()s cache_entries when they are removed, in combination with submodule.c::stage_updated_gitmodules (5fee9952 "submodule.c: add .gitmodules staging helper functions"), which removes a cache_entry, then modifies and re-adds the (now) free()d memory.
 
-Yep, that's the correct reading: as an explanation for why this should
-apply to bare repos as well as non-bare.
+Can't we just use add_file_to_cache here (which replaces cache_entries by creating a copy)?
 
-> It may be a good thing
-> to have, but the thought-process may flow better if it is made as a
-> FYI after the main text, i.e.
->
->                 If set to true or "refuse", `git-receive-pack` will d=
-eny a
->                 ref update that deletes the branch that HAED points a=
-t.  If
->                 set to "warn", ... If set to false or "ignore", ... D=
-efaults
->                 to "refuse".
->         +
->         Deleting the branch that HEAD points at will cause the HEAD s=
-ymbolic
->         ref to become dangling.  This causes the next commit to becom=
-e a
->         "root" commit, disconnected from the old history, in a non-ba=
-re
->         repository.  It also causes the next clone from such a reposi=
-tory
->         (either bare or non-bare) not to check out anything.
->
-> perhaps?
 
-Yes, much better as a note following the main text.  Thanks.
-
--Brandon
+diff --git a/submodule.c b/submodule.c
+index 1905d75..e388487 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -116,30 +116,7 @@ int remove_path_from_gitmodules(const char *path)
+ 
+ void stage_updated_gitmodules(void)
+ {
+-       struct strbuf buf = STRBUF_INIT;
+-       struct stat st;
+-       int pos;
+-       struct cache_entry *ce;
+-       int namelen = strlen(".gitmodules");
+-
+-       pos = cache_name_pos(".gitmodules", namelen);
+-       if (pos < 0) {
+-               warning(_("could not find .gitmodules in index"));
+-               return;
+-       }
+-       ce = active_cache[pos];
+-       ce->ce_flags = namelen;
+-       if (strbuf_read_file(&buf, ".gitmodules", 0) < 0)
+-               die(_("reading updated .gitmodules failed"));
+-       if (lstat(".gitmodules", &st) < 0)
+-               die_errno(_("unable to stat updated .gitmodules"));
+-       fill_stat_cache_info(ce, &st);
+-       ce->ce_mode = ce_mode_from_stat(ce, st.st_mode);
+-       if (remove_cache_entry_at(pos) < 0)
+-               die(_("unable to remove .gitmodules from index"));
+-       if (write_sha1_file(buf.buf, buf.len, blob_type, ce->sha1))
+-               die(_("adding updated .gitmodules failed"));
+-       if (add_cache_entry(ce, ADD_CACHE_OK_TO_ADD|ADD_CACHE_OK_TO_REPLACE))
++       if (add_file_to_cache(".gitmodules", 0))
+                die(_("staging updated .gitmodules failed"));
+ }
