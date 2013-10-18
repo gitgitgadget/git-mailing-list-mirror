@@ -1,86 +1,114 @@
-From: Phillip Susi <psusi@ubuntu.com>
-Subject: Re: cherry-pick generates bogus conflicts on removed files
-Date: Fri, 18 Oct 2013 09:25:33 -0400
-Message-ID: <526136CD.6080903@ubuntu.com>
-References: <52604166.8000501@ubuntu.com> <xmqqiowvy4zb.fsf@gitster.dls.corp.google.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH] sha1_file.c:create_tmpfile(): Fix race when creating
+ loose object dirs
+Date: Fri, 18 Oct 2013 09:53:41 -0400
+Message-ID: <CAPig+cRg0ovyutXmTggr5P++dWuVP3izf5JfcJEeEVZhHuVJiA@mail.gmail.com>
+References: <1382102267-18151-1-git-send-email-johan@herland.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Oct 18 15:25:43 2013
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Fri Oct 18 15:53:57 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VXA3i-0001TP-46
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Oct 2013 15:25:42 +0200
+	id 1VXAV0-0003Am-Bf
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Oct 2013 15:53:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754726Ab3JRNZh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Oct 2013 09:25:37 -0400
-Received: from cdptpa-omtalb.mail.rr.com ([75.180.132.120]:36761 "EHLO
-	cdptpa-omtalb.mail.rr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753836Ab3JRNZf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Oct 2013 09:25:35 -0400
-X-Authority-Analysis: v=2.0 cv=bevpoZzB c=1 sm=0 a=/DbS/tiKggfTkRRHPZEB4g==:17 a=Qsx_du5GiBkA:10 a=sCfsyOEanakA:10 a=renhaF8A0_UA:10 a=S1A5HrydsesA:10 a=8nJEP1OIZ-IA:10 a=fxJcL_dCAAAA:8 a=KGjhK52YXX0A:10 a=TgfdxlmYmHsA:10 a=QfKxxUxMAAAA:8 a=PddOF7XZCu5vcgwqAx8A:9 a=wPNLvfGTeEIA:10 a=/DbS/tiKggfTkRRHPZEB4g==:117
-X-Cloudmark-Score: 0
-X-Authenticated-User: 
-X-Originating-IP: 67.78.168.186
-Received: from [67.78.168.186] ([67.78.168.186:56977] helo=[10.1.1.236])
-	by cdptpa-oedge04.mail.rr.com (envelope-from <psusi@ubuntu.com>)
-	(ecelerity 2.2.3.46 r()) with ESMTP
-	id BC/58-13545-DC631625; Fri, 18 Oct 2013 13:25:33 +0000
-User-Agent: Mozilla/5.0 (Windows NT 6.1; rv:17.0) Gecko/20130801 Thunderbird/17.0.8
-In-Reply-To: <xmqqiowvy4zb.fsf@gitster.dls.corp.google.com>
-X-Enigmail-Version: 1.5.2
+	id S1754483Ab3JRNxn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Oct 2013 09:53:43 -0400
+Received: from mail-la0-f45.google.com ([209.85.215.45]:43883 "EHLO
+	mail-la0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754327Ab3JRNxn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Oct 2013 09:53:43 -0400
+Received: by mail-la0-f45.google.com with SMTP id eh20so758800lab.32
+        for <git@vger.kernel.org>; Fri, 18 Oct 2013 06:53:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=i3pkLs+RIctRLnLB0rC1gZC55s9cMCqIJcQ373QCVn8=;
+        b=p+wKHF8BgT4e9V9XmY95sfJNKx6Z3IzGTnT+ix5B6d7Qe5jbotf0dvZAO4bQ/xXDmF
+         6RyOyE0qBkK2Laeu8J7WXvoY3bYm0L5kdOBdhwJjkNXLdYqil43uxBBM8EJbh6sCQMnr
+         x7oyZQzlsR1hyRvrqROTdzjPrVLTMGWCQqR121/L4qOr5rV1xeQntlfJexumlmE3Ow1r
+         d8L7L1AR/Y0iqVecXpBr1MUDxYL1aP5AH/Aast+PVBdsudJvJerJwyd1/jDitwuqzFsj
+         V3nRnyo7zSGtz6FBdNjGL7XjG0CJyNAc2tBtq1iNeW1Nb0zDtqlDyasyctz4gegdJCS1
+         n4Qg==
+X-Received: by 10.152.26.201 with SMTP id n9mr393598lag.52.1382104421659; Fri,
+ 18 Oct 2013 06:53:41 -0700 (PDT)
+Received: by 10.114.200.180 with HTTP; Fri, 18 Oct 2013 06:53:41 -0700 (PDT)
+In-Reply-To: <1382102267-18151-1-git-send-email-johan@herland.net>
+X-Google-Sender-Auth: oA8AC4ewPG4bnixT5TTc9sT3j4Y
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236349>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236350>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Fri, Oct 18, 2013 at 9:17 AM, Johan Herland <johan@herland.net> wrote:
+> There are cases (e.g. when running concurrent fetches in a repo) where
+> multiple Git processes concurrently attempt to create loose objects
+> within the same objects/XX/ dir. The creation of the loose object files
+> is (AFAICS) safe from races, but the creation of the objects/XX/ dir in
+> which the loose objects reside is unsafe, for example:
+>
+> Two concurrent fetches - A and B. As part of its fetch, A needs to store
+> 12aaaaa as a loose object. B, on the other hand, needs to store 12bbbbb
+> as a loose object. The objects/12 directory does not already exist.
+> Concurrently, both A and B determine that they need to create the
+> objects/12 directory (because their first call to git_mkstemp_mode()
+> within create_tmpfile() fails witn ENOENT). One of them - let's say A -
+> executes the following mkdir() call before the other. This first call
+> returns success, and A moves on. When B gets around to calling mkdir(),
+> it fails with EEXIST, because A won the race. The mkdir() error causes B
+> to return -1 from create_tmpfile(), which propagates all the way,
+> resulting in the fetch failing with:
+>
+>   error: unable to create temporary file: File exists
+>   fatal: failed to write object
+>   fatal: unpack-objects failed
+>
+> Although it's hard to add a testcase reproducing this issue, it's easy
+> to reproduce if we insert a sleep after the
+>
+>   if (mkdir(buffer, 0777) || adjust_shared_perm(buffer))
+>       return -1;
+>
+> block, and then run two concurrent "git fetch"es against the same repo.
+>
+> The fix is to simply handle mkdir() setting errno = EEXIST as success.
 
-On 10/17/2013 5:14 PM, Junio C Hamano wrote:
-> Correct.
-> 
-> Without inspecting them, you would not know what you would be
-> losing by blindly resolving to removal, hence we do not
-> auto-resolve "one side removed, the other side changed" to a
-> removal.
+Would it make sense for the commit message to explain what happens if
+EEXIST is returned but the pathname is not a directory? (For instance,
+in the same race window, another process had created a plain file or
+pipe there.)
 
-Even when I specify the "theirs" strategy?  It seems like saying to
-unconditionally accept their changes should not generate conflicts.
-
-> That does not need to mean that we should not make it easier for
-> the user to say "resolve these 'one side removed, the other side 
-> changed' paths to removal".
-> 
-> "add -u" will be a way to say "Record the changes I made to my 
-> working tree files to the index".  So presumably
-> 
-> rm -f those files that the other branch removed git add -u
-> 
-> would be one way to do so.  Of course, you can also use "git rm" 
-> directly, i.e.
-> 
-> git rm -f those files that the other branch removed
-
-I have about two dozen such files.  Are you saying I have to
-individually remove each one?
-
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.17 (MingW32)
-Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
-
-iQEcBAEBAgAGBQJSYTbNAAoJEJrBOlT6nu752lAH/33YymYr773UZY8ryioA7dkQ
-he3qjYzxWdIY2FtNFfYER1o1Q7PpeDLvq61b67IZ2htFjiK4+xgM/q+wjp3RMkXI
-sA2vQ9iNn8dvR+PlzR9DgOFcDD17p3Q/xbu3H/M4Nt+H3px+Yz6sjUUSOzDAzXl8
-ADQe0g4KkQnY4fjx+iWbrygY5xXCaQ52693pwYvR67GijfYxIuNb4d9DpkZhyqIZ
-L6qjJH4FR1AZl6n5hPj0a9ZitrO8J/MjJ24oLVBfBU2h1GF5h7LoavkU02S874BZ
-/8fULrCYfTCMSkyOCnk2xCkhw3sbqU9vEu90npI5X1nRbZZ0ro/DPAjXCgHB40c=
-=EB2w
------END PGP SIGNATURE-----
+> Signed-off-by: Johan Herland <johan@herland.net>
+> ---
+>  sha1_file.c | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
+>
+> diff --git a/sha1_file.c b/sha1_file.c
+> index f80bbe4..00ffffe 100644
+> --- a/sha1_file.c
+> +++ b/sha1_file.c
+> @@ -2857,7 +2857,9 @@ static int create_tmpfile(char *buffer, size_t bufsiz, const char *filename)
+>                 /* Make sure the directory exists */
+>                 memcpy(buffer, filename, dirlen);
+>                 buffer[dirlen-1] = 0;
+> -               if (mkdir(buffer, 0777) || adjust_shared_perm(buffer))
+> +               if (mkdir(buffer, 0777) && errno != EEXIST)
+> +                       return -1;
+> +               if (adjust_shared_perm(buffer))
+>                         return -1;
+>
+>                 /* Try again */
+> --
+> 1.8.4.653.g2df02b3
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
