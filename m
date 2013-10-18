@@ -1,91 +1,68 @@
-From: Antoine Pelisse <apelisse@gmail.com>
-Subject: [PATCH] remote-hg: unquote C-style paths when exporting
-Date: Fri, 18 Oct 2013 19:03:41 +0200
-Message-ID: <1382115821-12586-1-git-send-email-apelisse@gmail.com>
-Cc: Felipe Contreras <felipe.contreras@gmail.com>,
-	Antoine Pelisse <apelisse@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 18 19:04:26 2013
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 6/9] http: update base URLs when we see redirects
+Date: Fri, 18 Oct 2013 11:25:13 -0700
+Message-ID: <xmqqk3hawi5y.fsf@gitster.dls.corp.google.com>
+References: <20130928082956.GA22610@sigill.intra.peff.net>
+	<20130928083405.GA2782@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, "Kyle J. McKay" <mackyle@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Oct 18 20:25:37 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VXDTI-0001og-Ul
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Oct 2013 19:04:21 +0200
+	id 1VXEjv-000213-RL
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Oct 2013 20:25:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756674Ab3JRREQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Oct 2013 13:04:16 -0400
-Received: from mail-wg0-f49.google.com ([74.125.82.49]:54649 "EHLO
-	mail-wg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756626Ab3JRREO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Oct 2013 13:04:14 -0400
-Received: by mail-wg0-f49.google.com with SMTP id x12so3974672wgg.28
-        for <git@vger.kernel.org>; Fri, 18 Oct 2013 10:04:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=FAjtPmiNZa1wcozotSe9KkBRRU3UEmVmwuQR0Q4JMuA=;
-        b=Tyo++Y423LqZ7P/SLk7dF/dqo7cLtjLKSSc1bK07AyfFsUPBf9u66oG/mYwwXQ1erE
-         Q6lhrAO06+mTiIlHtMA2zVL/Mto1lpnT22d6QLi4H2fsJbuBSje7gmwSnmKqjXZhi7tK
-         4Py7qW+BE96ysdUIsjxLPAh5A7FRYodGeej4m8KxR3hCNUaRo5DElFy1zWCJQxZx1Y0w
-         g2dRWlVU+OfDHkkDWIjjyhTI6Jdx9kaGeGDZS8xuItxmoZ57uf7Gp94djSYCKqmSW+eD
-         UjywEtEdEEDuBmmb7eE1LzhzUoYXT5O0/bgWj/Y88QCi2kXl6nhKkxbWnJjw8HXzqjLR
-         LKyQ==
-X-Received: by 10.194.48.74 with SMTP id j10mr3081616wjn.41.1382115853417;
-        Fri, 18 Oct 2013 10:04:13 -0700 (PDT)
-Received: from localhost.localdomain ([82.247.80.218])
-        by mx.google.com with ESMTPSA id bs15sm28768868wib.10.2013.10.18.10.04.11
-        for <multiple recipients>
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 18 Oct 2013 10:04:12 -0700 (PDT)
-X-Mailer: git-send-email 1.8.4.1.507.g9768648.dirty
+	id S1756868Ab3JRSZW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Oct 2013 14:25:22 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33790 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756580Ab3JRSZR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Oct 2013 14:25:17 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 515EA4B0D3;
+	Fri, 18 Oct 2013 18:25:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=NiTI0uOMXYseMbZFBvaIQyIai/E=; b=k5+VwS
+	+DYLZPrW1rYeg3qML7LmU/BYJy4gud2rZ1QkCg+gbcdOORTiIVY311W+3rJEl9+R
+	JLaCcZb5AdFeQZPfcr055cxp4AsiKWT4xzuHckqwFnUVZm5LD9OI1T0D3zzsGcgR
+	nkUrcf680fEmlkK4ggDz8vYYFPDGMvYbavU4E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=hqLkdP5tmWrCrg8J3/UeBpHNVP0deOvG
+	wUYS/FrupMyOKfwccIQJhBGk6oASj1+Jt2QIVQdUVvFgDglMSqhj8MUFOat3FuAO
+	FezEnx/Vt+zdXZu+WkO1MqVoLtdeHDIEaCkMcJ8EdsfgB/hy1r5O0c2J9OhqJLkD
+	5sk/kkE//Ak=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3EAAA4B0D2;
+	Fri, 18 Oct 2013 18:25:16 +0000 (UTC)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 91A864B0CF;
+	Fri, 18 Oct 2013 18:25:15 +0000 (UTC)
+In-Reply-To: <20130928083405.GA2782@sigill.intra.peff.net> (Jeff King's
+	message of "Sat, 28 Sep 2013 04:34:05 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: A2686E9C-3822-11E3-AAC3-8F264F2CC097-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236360>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236361>
 
-git-fast-import documentation says that paths can be C-style quoted.
-Unfortunately, the current remote-hg helper doesn't unquote quoted
-path and pass them as-is to Mercurial when the commit is created.
+Jeff King <peff@peff.net> writes:
 
-This result in the following situation:
+> + * Our basic strategy is to compare "base" and "asked" to find the bits
+> + * specific to our request. We then strip those bits off of "got" to yield the
+> + * new base. So for example, if our base is "http://example.com/foo.git",
+> + * and we ask for "http://example.com/foo.git/info/refs", we might end up
+> + * with "https://other.example.com/foo.git/info/refs". We would want the
+> + * new URL to become "https://other.example.com/foo.git".
 
-- clone a mercurial repository with git
-- Add a file with space: `mkdir dir/foo\ bar`
-- Commit that new file, and push the change to mercurial
-- The mercurial repository as now a new directory named '"dir', which
-contains a file named 'foo bar"'
-
-Use python ast.literal_eval to unquote the string if it starts with ".
-It has been tested with quotes, spaces, and utf-8 encoded file-names.
-
-Signed-off-by: Antoine Pelisse <apelisse@gmail.com>
----
- contrib/remote-helpers/git-remote-hg | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/contrib/remote-helpers/git-remote-hg b/contrib/remote-helpers/git-remote-hg
-index 92d994e..0141949 100755
---- a/contrib/remote-helpers/git-remote-hg
-+++ b/contrib/remote-helpers/git-remote-hg
-@@ -14,6 +14,7 @@
- 
- from mercurial import hg, ui, bookmarks, context, encoding, node, error, extensions, discovery, util
- 
-+import ast
- import re
- import sys
- import os
-@@ -742,6 +743,8 @@ def parse_commit(parser):
-             f = { 'deleted' : True }
-         else:
-             die('Unknown file command: %s' % line)
-+        if path.startswith('"'):
-+            path = ast.literal_eval(path)
-         files[path] = f
- 
-     # only export the commits if we are on an internal proxy repo
--- 
-1.8.4.1.507.g9768648.dirty
+Not "https://other.example.com/foo.git/info/refs"?
