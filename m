@@ -1,196 +1,96 @@
 From: Thomas Rast <tr@thomasrast.ch>
-Subject: GSoC 2014: Summary so far, discussion starter: how to improve?
-Date: Sat, 19 Oct 2013 08:09:33 +0200
-Message-ID: <8761stx04i.fsf@linux-k42r.v.cablecom.net>
+Subject: Re: [PATCH v8] diff.c: keep arrow(=>) on show_stats()'s shortened filename part to make rename visible
+Date: Sat, 19 Oct 2013 08:24:57 +0200
+Message-ID: <87mwm5vkue.fsf@linux-k42r.v.cablecom.net>
+References: <38848735-7CFA-404E-AE51-4F445F813266@gmail.com>
+	<A15CCF08-83FD-4F3C-9773-C26DEE38FD33@gmail.com>
+	<660A536D-9993-4B81-B6FF-A113F9111570@gmail.com>
+	<AFC93704-D6C5-49AF-9A66-C5EA81348FFA@gmail.com>
+	<79A13931-694C-4DDC-BEDF-71A0DBA0ECA1@gmail.com>
+	<89A4E8C6-C233-49E2-8141-837ABDBBC976@gmail.com>
+	<FB9897CC-EDC7-4EBB-8DAB-140CEB5F93B3@gmail.com>
+	<C876399C-9A78-4917-B0CF-D6519C7162F6@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Ben Straub <bs@github.com>,
-	Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
-	Christian Couder <christian.couder@gmail.com>,
-	David Michael Barr <davidbarr@google.com>,
-	Edward Thomson <ethomson@microsoft.com>,
-	Florian Achleitner <florian.achleitner2.6.31@gmail.com>,
-	Jakub Narebski <jnareb@gmail.com>, Jeff King <peff@peff.net>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Martin Woodward <martin.woodward@microsoft.com>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Michael Schubert <schu@schu.io>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Pat Thoyts <patthoyts@gmail.com>,
-	Paul Mackerras <paulus@samba.org>,
-	Philip Kelley <phkelley@hotmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	Russell Belfer <rb@github.com>,
-	Scott Chacon <schacon@gmail.com>,
-	Shawn Pearce <spearce@spearce.org>,
-	Thomas Gumm
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 19 08:09:57 2013
+Content-Type: text/plain
+Cc: "git\@vger.kernel.org" <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Duy Nguyen <pclouds@gmail.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: Yoshioka Tsuneo <yoshiokatsuneo@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Oct 19 08:25:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VXPjV-0004bB-7v
-	for gcvg-git-2@plane.gmane.org; Sat, 19 Oct 2013 08:09:53 +0200
+	id 1VXPyP-0003kx-CC
+	for gcvg-git-2@plane.gmane.org; Sat, 19 Oct 2013 08:25:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751211Ab3JSGJt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Oct 2013 02:09:49 -0400
-Received: from psi.thgersdorf.net ([176.9.98.78]:35702 "EHLO mail.psioc.net"
+	id S1751423Ab3JSGZL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Oct 2013 02:25:11 -0400
+Received: from psi.thgersdorf.net ([176.9.98.78]:35759 "EHLO mail.psioc.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750966Ab3JSGJs convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 19 Oct 2013 02:09:48 -0400
+	id S1750966Ab3JSGZK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Oct 2013 02:25:10 -0400
 Received: from localhost (localhost [127.0.0.1])
-	by localhost.psioc.net (Postfix) with ESMTP id 791DC4D650A;
-	Sat, 19 Oct 2013 08:09:46 +0200 (CEST)
+	by localhost.psioc.net (Postfix) with ESMTP id C57724D659D;
+	Sat, 19 Oct 2013 08:25:07 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at psioc.net
 Received: from mail.psioc.net ([127.0.0.1])
 	by localhost (mail.psioc.net [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id FejVHrspDWTj; Sat, 19 Oct 2013 08:09:35 +0200 (CEST)
+	with LMTP id 0XQk1ftHAiP0; Sat, 19 Oct 2013 08:24:57 +0200 (CEST)
 Received: from linux-k42r.v.cablecom.net.thomasrast.ch (unknown [213.55.184.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(Client did not present a certificate)
-	by mail.psioc.net (Postfix) with ESMTPSA id B866D4D64C1;
-	Sat, 19 Oct 2013 08:09:32 +0200 (CEST)
+	by mail.psioc.net (Postfix) with ESMTPSA id EDA6A4D658A;
+	Sat, 19 Oct 2013 08:24:56 +0200 (CEST)
+In-Reply-To: <C876399C-9A78-4917-B0CF-D6519C7162F6@gmail.com> (Yoshioka
+	Tsuneo's message of "Fri, 18 Oct 2013 12:35:02 +0300")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236385>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236387>
 
-[Unfortunately libgit2 no longer has a mailing list.  I put an arbitrar=
-y
-group of libgit2 contributors in the Cc list.]
+Yoshioka Tsuneo <yoshiokatsuneo@gmail.com> writes:
 
+> "git diff -M --stat" can detect rename and show renamed file name like
+> "foofoofoo => barbarbar".
+>
+> Before this commit, this output is shortened always by omitting left most
+> part like "...foo => barbarbar". So, if the destination filename is too long,
+> source filename putting left or arrow can be totally omitted like
+> "...barbarbar", without including any of "foofoofoo =>".
+> In such a case where arrow symbol is omitted, there is no way to know
+> whether the file is renamed or existed in the original.
+>
+> Make sure there is always an arrow, like "...foo => ...bar".
+>
+> The output can contain curly braces('{','}') for grouping.
+> So, in general, the output format is "<pfx>{<mid_a> => <mid_b>}<sfx>"
+>
+> To keep arrow("=>"), try to omit <pfx> as long as possible at first
+> because later part or changing part will be the more important part.
+> If it is not enough, shorten <mid_a>, <mid_b> trying to have the same
+> maximum length.
+> If it is not enough yet, omit <sfx>.
+>
+> Signed-off-by: Tsuneo Yoshioka <yoshiokatsuneo@gmail.com>
+> Test-added-by: Thomas Rast <trast@inf.ethz.ch>
+> ---
 
-Previous Episodes
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Can you briefly describe what you changed in v7 and v8, both compared to
+earlier versions and between v7 and v8?
 
-Git participated in Google Summer of Code (GSoC) 2007-2012, but did not
-participate in 2013 based on discussion in February [1].  At Git-Merge
-in Berlin there was a discussion round [2] that this post attempts to
-summarize as a basis for further discussion and (hopefully)
-participation in GSoC'14.
+It would be very nice if you could always include such a "patch
+changelog" after the "---" above.  git-am will ignore the text between
+"---" and the diff, so you can write comments for the reviewers there
+without creating noise in the commit message.
 
-Much sooner than in previous years, Google has already confirmed that
-GSoC'14 will in fact happen [3].
+Also, please keep reviewers in the Cc list for future discussion/patches
+so that they will see them.
 
-Note that while mistakes herein are mine, many ideas and opinions
-aren't.  This really tries to be a summary.  Please flame >/dev/null,
-not me.
-
-
-GSoC 2007-2012
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-Data presented in [2] shows that roughly half of the projects resulted
-in merged code, and roughly half of the students remained with the Git
-community significantly after the end of GSoC.  (The sets aren't
-exactly the same.)
-
-A feeling expressed in [1], [2] and elsewhere is that this is not
-enough value for money and effort.  We should therefore discuss how to
-improve.
-
-Note that everyone seems to agree that libgit2 had a much better run
-in GSoC than core git.  There seems to be less agreement on what
-exactly they do differently, though.
-
-
-Theories
-=3D=3D=3D=3D=3D=3D=3D=3D
-
-These are the hypotheses that I have heard (mostly in [1] and [2]) as
-to what is bad about Git's prior GSoC participations.
-
-* Aiming far too high, focusing on cool/shiny projects with a large
-  impact.  This also affects the students, who tend to cluster around
-  the largest, shiniest project suggestions.
-
-* Diminishing returns: Git is too mature, with little low-hanging
-  fruit left, making such projects harder
-
-* Projects are too political, progress depending on non-technical
-  arguments
-
-* Our mentors suck on various axes, notably not supporting students
-  enough in things that matter:
-  - smooth interaction with community
-  - ensure fast iteration/short cycles
-  - navigating the code base
-
-* Scope creep: projects tend to get blocked on some bigger
-  refactoring/restructuring task that was not in the original proposal
-
-
-Ideas and Suggestions
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-These are mostly from [2].  There were some suggestions that we learn
-from Matthieu Moy's very successful student projects (eg. [4]).
-
-* View GSoC much more as a lot of work than free labor
-
-* Break projects into smaller, easier tasks
-  - They should individually be simple, quick things if the mentor did
-    them.
-  - Should be parallelizable so students don't have to block on reviews=
-=2E
-
-* Mentoring improvements:
-  - Always have a co-mentor
-  - Focus on social aspects (who to Cc, etc.)
-  - Nominate separate "review mentors" to ensure fast review cycles
-
-* Define explicit criteria
-  - what we want to do
-  - how we judge code and social interactions
-  - when to fail the students
-
-* Have students review some patches
-
-
-=46urther steps
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-* Discuss :-)
-
-  And then apply this hard-won knowledge systematically.  In
-  particular I think it wouldn't hurt to keep the project proposals
-  out of this thread until we have agreed on goals/standards to
-  measure them against.
-
-* Does libgit2 want to remain under the Git umbrella, or participate
-  on its own?
-
-* Figure out the wiki situation.  In previous years the project
-  proposals and other important information were hosted at k.org [5] an=
-d
-  github wikis [6].  Other options were floated, such as an official
-  wiki hosted by github.  (This is somewhat of a contentious issue that
-  spans beyond GSoC.)
-
-* Find an org admin and backup.  In previous years Shawn and Peff did
-  this.  Would you do it again?
-
-* Gather a list of potential mentors.
-
-
-
-[1]  http://thread.gmane.org/gmane.comp.version-control.git/216485
-[2]  http://www.youtube.com/watch?v=3DXP4CxUkBPSQ=E2=80=8E
-[3]  http://googleblog.blogspot.ch/2013/10/50-million-lines-of-code-and=
--counting.html
-[4]  http://thread.gmane.org/gmane.comp.version-control.git/221159
-[5]  https://git.wiki.kernel.org/index.php/SoC2011Projects
-     similarly for previous years
-[6]  https://github.com/peff/git/wiki/SoC-2012-Ideas
-     https://github.com/trast/git/wiki/SoC-2013-Ideas
-
---=20
+-- 
 Thomas Rast
 tr@thomasrast.ch
