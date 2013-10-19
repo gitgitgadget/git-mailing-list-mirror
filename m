@@ -1,89 +1,92 @@
-From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-Subject: Re: separate-git-dir doesn't work with mapped drive
-Date: Sat, 19 Oct 2013 17:47:30 +0200
-Message-ID: <5262A992.8000905@web.de>
-References: <CADgy815BJAJrbW0JJ2a9vZ4NwzGersceg6b96TPAey_pR+mOiw@mail.gmail.com>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: pack corruption post-mortem
+Date: Sat, 19 Oct 2013 12:17:52 -0700
+Message-ID: <CAJo=hJugNGkpDxh6o6azVGc7pP3fTGsK113vRgb4A7ipNeV2ZA@mail.gmail.com>
+References: <20131016083400.GA31266@sigill.intra.peff.net> <CACsJy8ABdE8mZMVFZkqYMC4ZeN_baWw=XcYOZYBCZytWP97rRw@mail.gmail.com>
+ <alpine.LFD.2.03.1310191024000.1951@syhkavp.arg>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: Ain Valtin <ain.valtin@gmail.com>, git@vger.kernel.org,
-	msysGit <msysgit@googlegroups.com>
-X-From: git-owner@vger.kernel.org Sat Oct 19 17:47:51 2013
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Sat Oct 19 21:18:23 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VXYkp-0000yj-1f
-	for gcvg-git-2@plane.gmane.org; Sat, 19 Oct 2013 17:47:51 +0200
+	id 1VXc2V-0004eE-FY
+	for gcvg-git-2@plane.gmane.org; Sat, 19 Oct 2013 21:18:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752009Ab3JSPrd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Oct 2013 11:47:33 -0400
-Received: from mout.web.de ([212.227.17.12]:57948 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751258Ab3JSPrd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Oct 2013 11:47:33 -0400
-Received: from [192.168.209.26] ([78.72.74.102]) by smtp.web.de (mrweb101)
- with ESMTPA (Nemesis) id 0MMn1H-1Vezvw1bIt-008aYE for <git@vger.kernel.org>;
- Sat, 19 Oct 2013 17:47:31 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:24.0) Gecko/20100101 Thunderbird/24.0.1
-In-Reply-To: <CADgy815BJAJrbW0JJ2a9vZ4NwzGersceg6b96TPAey_pR+mOiw@mail.gmail.com>
-X-Provags-ID: V03:K0:tVW/0G7idM+goUdAqmrgM2YFcvKFHazhhcvTITA3ub7pKHxcucz
- CgL55Y0o78Gy8JldqMmIYYbB5W3kR67DjucpZHNXAAbTVpc0/rmSgRpv+qBzaTZStTELeeC
- 6MzqOuxOfm4JBX19wXVgD/Uo9oJ+NXmt0ZjWF2P9wAiAZXHKGlKdWyCEvfiMaz3ZwJjfe63
- 1vvvT16sK/C4Ej4ZH8Zjw==
+	id S1751788Ab3JSTSP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Oct 2013 15:18:15 -0400
+Received: from mail-wi0-f179.google.com ([209.85.212.179]:44092 "EHLO
+	mail-wi0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751318Ab3JSTSO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Oct 2013 15:18:14 -0400
+Received: by mail-wi0-f179.google.com with SMTP id hm4so2385330wib.12
+        for <git@vger.kernel.org>; Sat, 19 Oct 2013 12:18:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=spearce.org; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=0Gc/2mL/KVe5TTZAv8IT2FS1g1b1B1bmNG3TcC06eU0=;
+        b=elF8j3iCJbpth/lUAc5pwVKFW3sNNV8R6r06uI1SyXtP67JhPnOUXnYf3I2Nvfs8xS
+         oX2OHPBbP8L+tGf9N6WkScK0y7BNtNMXfgPEfwZtAJdLws8j3R5a40dlBd3uyqOLKV0w
+         IAJa3iNc7Yef1WuLx0bk4lWdwU6uhcL5Y1ONg=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=0Gc/2mL/KVe5TTZAv8IT2FS1g1b1B1bmNG3TcC06eU0=;
+        b=l776+39YhhlfXGMCsd2jzKHfHb8UD87765hQyfEAx2DXigzjTaEuapMefOwyJcABAj
+         IRHLtO1UfKptvpkw5Tw5OvIwQ42uYHYHvp3oPgziKHQhUlDKkb/oAcD5c5Bu5uGIGpcJ
+         XW0tiIyzLxbXjQ2ZBVpLf7Lm0VhWP29yh0lH9zgVY0TjJUuVx07W7bFcimMiSbRr2b/g
+         iKL93zfqWxubostjPqHJ+bEyfkVrUuL9N9X4Gq0tew4gOXsdWFUE06gYYpPzdQORI0R/
+         DVB434Z2hpTSJ0xvlbSn96SclcL0HhF2YYIEFn8hYiI1W/D4UYcRzNnzr5VNDs5HRHMa
+         eyrQ==
+X-Gm-Message-State: ALoCoQnXGTgVqv3ozJyrSNFkyqGNEhaPxhytfceBwVWlaQM+zh9iI0bB/CTxMPHUub7ytfi3CnI0
+X-Received: by 10.180.198.115 with SMTP id jb19mr3900444wic.28.1382210293118;
+ Sat, 19 Oct 2013 12:18:13 -0700 (PDT)
+Received: by 10.227.62.140 with HTTP; Sat, 19 Oct 2013 12:17:52 -0700 (PDT)
+In-Reply-To: <alpine.LFD.2.03.1310191024000.1951@syhkavp.arg>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236403>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236404>
 
-On 2013-10-19 10.49, Ain Valtin wrote:
-> Hi
-> 
-> I want to use git in a VirtualBox guest so that the repository is on
-> the host drive. So in the VB settings for the guest I set up a shared
-> folder "gitRepos" to /home/ain with full access rights. Then in the
-> guest OS (Windows XP) I map this shared folder as G drive. Now in the
-> project dir I execute
-> 
-> C:\...\TPP>git init --separate-git-dir g:/TPP
-> Initialized empty Git repository in g:/TPP/
-> 
-> Checked, the repo structure is in the "g:/TPP/" (thus the guest OS can
-> write to the mapped dir) and in the .git file created to the project
-> dir there is line
-> 
-> gitdir: g:/TPP
-> 
-> However when tring to use the repo it fails to recognise the g:/TPP path, ie
-> 
-> C:\...\TPP>git add .
-> fatal: unable to access '../../../../../../g:/TPP/config': Invalid argument
-> 
-> Also tryed "gitdir: //VBOXSVR/gitRepos/TPP" but this fails too:
-> 
-> C:\...\TPP>git add .
-> fatal: Unable to create 'C:/Documents and
-> Settings/Ain/prog/AVT/TPP/../../../../../..///VBOXSVR/gitRepos/TPP/index.lock':
-> No such file or directory
-> 
-> Am I doing something wrong or is it a bug? Any idea how to get it to work?
-> 
-> BTW the VB is 3.0.14 ie rather old version but it seems that this
-> isn't the problem as the git init recognises the mapped drive but
-> other commands fail.
-> git version is 1.8.4.msysgit.0
-> 
-> 
-> TIA
-> ain
+On Sat, Oct 19, 2013 at 7:41 AM, Nicolas Pitre <nico@fluxnic.net> wrote:
+> On Sat, 19 Oct 2013, Duy Nguyen wrote:
+>
+>> On Wed, Oct 16, 2013 at 3:34 PM, Jeff King <peff@peff.net> wrote:
+>> > I was recently presented with a repository with a corrupted packfile,
+>> > and was asked if the data was recoverable. This post-mortem describes
+>> > the steps I took to investigate and fix the problem. I thought others
+>> > might find the process interesting, and it might help somebody in the
+>> > same situation.
+>> >
+>> > I started with an fsck, which found a problem with exactly one object
+>> > (I've used $pack and $obj below to keep the output readable, and also
+>> > because I'll refer to them later):
+>> >
+>> >     $ git fsck
+>> >     error: $pack SHA1 checksum mismatch
+>> >     error: index CRC mismatch for object $obj from $pack at offset 51653873
+>> >     error: inflate: data stream error (incorrect data check)
+>> >     error: cannot unpack $obj from $pack at offset 51653873
+>>
+>> I wonder if we should protect the sha-1 and pathname tables in packv4
+>> with CRC too. A bit flipped in there could cause stream of corrupt
+>> objects and make it hard to pinpoint the corrupt location..
+>
+> It turns out that we already have this covered.
+>
+> The SHA1 used in the name of the pack file is actually the SHA1 checksum
+> of the SHA1 table.
 
-(This could go to msysgit mailing list, so I add a CC)
-(and I think, it is a known issue)
-
-As a work around, could you try this:
-> Downgrading to msysgit 1.8.3 fixes my problem.
-and tell us if this helps you?
-
-/Torsten
+I continue to believe this naming is wrong. The pack file name should
+be the SHA1 checksum of the pack data stream, but the SHA1 table. This
+would allow cleaner update of a repository that was repacked with
+different compression settings, but identical objects.
