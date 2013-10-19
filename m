@@ -1,93 +1,69 @@
 From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: separate-git-dir doesn't work with mapped drive
-Date: Sat, 19 Oct 2013 16:17:13 +0700
-Message-ID: <CACsJy8BReiuw346FT7-jve=UX-i55mAsWm_e=QAMy0XVTBEYZQ@mail.gmail.com>
-References: <CADgy815BJAJrbW0JJ2a9vZ4NwzGersceg6b96TPAey_pR+mOiw@mail.gmail.com>
+Subject: Re: pack corruption post-mortem
+Date: Sat, 19 Oct 2013 17:32:43 +0700
+Message-ID: <CACsJy8ABdE8mZMVFZkqYMC4ZeN_baWw=XcYOZYBCZytWP97rRw@mail.gmail.com>
+References: <20131016083400.GA31266@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Jiang Xin <worldhello.net@gmail.com>
-To: Ain Valtin <ain.valtin@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Oct 19 11:17:54 2013
+Cc: Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Sat Oct 19 12:33:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VXSfS-0004U0-0w
-	for gcvg-git-2@plane.gmane.org; Sat, 19 Oct 2013 11:17:54 +0200
+	id 1VXTqR-0008NZ-CW
+	for gcvg-git-2@plane.gmane.org; Sat, 19 Oct 2013 12:33:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751262Ab3JSJRq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Oct 2013 05:17:46 -0400
-Received: from mail-ob0-f176.google.com ([209.85.214.176]:53902 "EHLO
-	mail-ob0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750978Ab3JSJRp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Oct 2013 05:17:45 -0400
-Received: by mail-ob0-f176.google.com with SMTP id uy5so1983946obc.21
-        for <git@vger.kernel.org>; Sat, 19 Oct 2013 02:17:45 -0700 (PDT)
+	id S1751128Ab3JSKdP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Oct 2013 06:33:15 -0400
+Received: from mail-oa0-f52.google.com ([209.85.219.52]:51055 "EHLO
+	mail-oa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750843Ab3JSKdO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Oct 2013 06:33:14 -0400
+Received: by mail-oa0-f52.google.com with SMTP id n10so1369273oag.25
+        for <git@vger.kernel.org>; Sat, 19 Oct 2013 03:33:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=wqFh9UGzDkoUABsDyxOkQ/6sizxlaIEjhfB7V9de+W0=;
-        b=qjdCzvcQtm0hQOUSCIyYg3NTjcDQB7SuFsJlldzoJDwdX+W64KLQycTUUyCKKczCth
-         CV0cSlnVQjdaUk8K65oHhHl7UZfPn2+Y3G09mYPQzTtbANHIDZWsDcwhnDrKL9lV1KBq
-         vVg8khdQL3LjI+ukR0Q9NzBmSbAGLyZburs6//dXKPZq/6N1+Rd4bJqiANKGwYHDEYXI
-         kTawe77Z9gFE9KsZqFDP1j0Lwf1BeUnTLE4ZUFeCDorXtqLp0Ls2n671tpkPywZbrhIX
-         675S9RzHCuWcPckMyWfZZoc83BxH8fySDPNeMxw8lu0GsRNwPaHP6j+mTeAaQkjP2gSP
-         CUUw==
-X-Received: by 10.182.114.231 with SMTP id jj7mr10393908obb.33.1382174265008;
- Sat, 19 Oct 2013 02:17:45 -0700 (PDT)
-Received: by 10.76.0.41 with HTTP; Sat, 19 Oct 2013 02:17:13 -0700 (PDT)
-In-Reply-To: <CADgy815BJAJrbW0JJ2a9vZ4NwzGersceg6b96TPAey_pR+mOiw@mail.gmail.com>
+        bh=GoKM45xdMKNNtGwgMw0I3Nph8dxYKiRt0+49DPMnjrA=;
+        b=YTxwdaGiuVPRGPod7ZWPH418Prca5bdgRXBpGXwnaAnZg60mfyeo00Q7HkedPboPSx
+         Bvru0YloCla4aVzboehrPXRlYW68adZCE9DSdnFee9wze+iXdR1byeEVTscTtjl1AR/e
+         YRVOYn126enWaYdAmxW79zg6zp2B0ucEx34lin1IubCI5GaO4ZmYg5/TCbk+tyxYrSRI
+         Rg6gfzw2nl3QmE9TkM5mVWFluTkktHfMTSF2dYdwGmqlaWFBbvHoGtSndDxq7b2/TVPG
+         K58nfZ4Rf68/LZjMVmJtrRUcnm1JlU62rfd5qy8C1Vvew9JssTCwEIK6/vN1PbRpj58e
+         7snw==
+X-Received: by 10.182.129.201 with SMTP id ny9mr10848604obb.0.1382178793979;
+ Sat, 19 Oct 2013 03:33:13 -0700 (PDT)
+Received: by 10.76.0.41 with HTTP; Sat, 19 Oct 2013 03:32:43 -0700 (PDT)
+In-Reply-To: <20131016083400.GA31266@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236392>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236393>
 
-There seems to be some regression fixes regarding dos drives. The one
-that caught my eyes is 7fbd422 (relative_path should honor
-dos-drive-prefix - 2013-10-14) but it's not released yet. And I'm not
-sure if msys branch picks it up yet even if you want to rebuild and
-test it yourself. Copying Jiang Xin, maybe he can tell if that commit
-should fix what you describe here, or it's a new bug.
+On Wed, Oct 16, 2013 at 3:34 PM, Jeff King <peff@peff.net> wrote:
+> I was recently presented with a repository with a corrupted packfile,
+> and was asked if the data was recoverable. This post-mortem describes
+> the steps I took to investigate and fix the problem. I thought others
+> might find the process interesting, and it might help somebody in the
+> same situation.
+>
+> I started with an fsck, which found a problem with exactly one object
+> (I've used $pack and $obj below to keep the output readable, and also
+> because I'll refer to them later):
+>
+>     $ git fsck
+>     error: $pack SHA1 checksum mismatch
+>     error: index CRC mismatch for object $obj from $pack at offset 51653873
+>     error: inflate: data stream error (incorrect data check)
+>     error: cannot unpack $obj from $pack at offset 51653873
+
+I wonder if we should protect the sha-1 and pathname tables in packv4
+with CRC too. A bit flipped in there could cause stream of corrupt
+objects and make it hard to pinpoint the corrupt location..
 -- 
 Duy
-
-On Sat, Oct 19, 2013 at 3:49 PM, Ain Valtin <ain.valtin@gmail.com> wrote:
-> Hi
->
-> I want to use git in a VirtualBox guest so that the repository is on
-> the host drive. So in the VB settings for the guest I set up a shared
-> folder "gitRepos" to /home/ain with full access rights. Then in the
-> guest OS (Windows XP) I map this shared folder as G drive. Now in the
-> project dir I execute
->
-> C:\...\TPP>git init --separate-git-dir g:/TPP
-> Initialized empty Git repository in g:/TPP/
->
-> Checked, the repo structure is in the "g:/TPP/" (thus the guest OS can
-> write to the mapped dir) and in the .git file created to the project
-> dir there is line
->
-> gitdir: g:/TPP
->
-> However when tring to use the repo it fails to recognise the g:/TPP path, ie
->
-> C:\...\TPP>git add .
-> fatal: unable to access '../../../../../../g:/TPP/config': Invalid argument
->
-> Also tryed "gitdir: //VBOXSVR/gitRepos/TPP" but this fails too:
->
-> C:\...\TPP>git add .
-> fatal: Unable to create 'C:/Documents and
-> Settings/Ain/prog/AVT/TPP/../../../../../..///VBOXSVR/gitRepos/TPP/index.lock':
-> No such file or directory
->
-> Am I doing something wrong or is it a bug? Any idea how to get it to work?
->
-> BTW the VB is 3.0.14 ie rather old version but it seems that this
-> isn't the problem as the git init recognises the mapped drive but
-> other commands fail.
-> git version is 1.8.4.msysgit.0
