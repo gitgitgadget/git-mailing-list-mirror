@@ -1,192 +1,193 @@
-From: Fredrik Gustafsson <iveqy@iveqy.com>
-Subject: Re: GSoC 2014: Summary so far, discussion starter: how to improve?
-Date: Sat, 19 Oct 2013 23:51:39 +0200
-Message-ID: <20131019215139.GX13967@paksenarrion.iveqy.com>
-References: <8761stx04i.fsf@linux-k42r.v.cablecom.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+From: Yoshioka Tsuneo <yoshiokatsuneo@gmail.com>
+Subject: Re: [PATCH v8] diff.c: keep arrow(=>) on show_stats()'s shortened filename part to make rename visible
+Date: Sun, 20 Oct 2013 04:49:14 +0300
+Message-ID: <BB9AEFCE-0E64-4EAA-8DEA-9A8125B8C553@gmail.com>
+References: <38848735-7CFA-404E-AE51-4F445F813266@gmail.com> <A15CCF08-83FD-4F3C-9773-C26DEE38FD33@gmail.com> <660A536D-9993-4B81-B6FF-A113F9111570@gmail.com> <AFC93704-D6C5-49AF-9A66-C5EA81348FFA@gmail.com> <79A13931-694C-4DDC-BEDF-71A0DBA0ECA1@gmail.com> <89A4E8C6-C233-49E2-8141-837ABDBBC976@gmail.com> <FB9897CC-EDC7-4EBB-8DAB-140CEB5F93B3@gmail.com> <C876399C-9A78-4917-B0CF-D6519C7162F6@gmail.com> <87mwm5vkue.fsf@linux-k42r.v.cablecom.net>
+Mime-Version: 1.0 (Mac OS X Mail 6.6 \(1510\))
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Ben Straub <bs@github.com>,
-	Carlos =?iso-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>,
-	Christian Couder <christian.couder@gmail.com>,
-	David Michael Barr <davidbarr@google.com>,
-	Edward Thomson <ethomson@microsoft.com>,
-	Florian Achleitner <florian.achleitner2.6.31@gmail.com>,
-	Jakub Narebski <jnareb@gmail.com>, Jeff King <peff@peff.net>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Martin Woodward <martin.woodward@microsoft.com>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Michael Schubert <schu@schu.io>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Pat Thoyts <patthoyts@gmail.com>,
-	Paul Mackerras <paulus@samba.org>,
-	Philip Kelley <phkelley@hotmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	Russell Belfer <rb@github.com>,
-	Scott Chacon <schacon@gmail.com>,
-	Shawn Pearce <spearce@spe
-To: Thomas Rast <tr@thomasrast.ch>
-X-From: git-owner@vger.kernel.org Sat Oct 19 23:52:47 2013
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: Thomas Rast <tr@thomasrast.ch>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Oct 20 03:49:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VXeRv-0005ak-Oh
-	for gcvg-git-2@plane.gmane.org; Sat, 19 Oct 2013 23:52:44 +0200
+	id 1VXi8s-0005Ig-Iv
+	for gcvg-git-2@plane.gmane.org; Sun, 20 Oct 2013 03:49:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752873Ab3JSVw0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Oct 2013 17:52:26 -0400
-Received: from mail-lb0-f178.google.com ([209.85.217.178]:57805 "EHLO
-	mail-lb0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752728Ab3JSVwZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Oct 2013 17:52:25 -0400
-Received: by mail-lb0-f178.google.com with SMTP id o14so264179lbi.23
-        for <git@vger.kernel.org>; Sat, 19 Oct 2013 14:52:24 -0700 (PDT)
+	id S1750897Ab3JTBtN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Oct 2013 21:49:13 -0400
+Received: from mail-la0-f54.google.com ([209.85.215.54]:40631 "EHLO
+	mail-la0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750820Ab3JTBtM convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 19 Oct 2013 21:49:12 -0400
+Received: by mail-la0-f54.google.com with SMTP id gx14so559234lab.41
+        for <git@vger.kernel.org>; Sat, 19 Oct 2013 18:49:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=MtZcnToLLsrL3cCYmZhl21WS/doLpWQpHZdkdF89gyE=;
-        b=t9b55w4Ut29BMVLs3B2cBIDmrHuVhFdNUD6blBStehTAo16PILRrSu+iKfwcepfYQk
-         zLtABsfgbCPx8/06IPx7xnpTMinbCcwBZV5062+u7uzhOo5ElipXEIwIS/lIiuq9vp7v
-         WNkWOIePxzCcKbTaj7Rr//dRzD0SPorNZQbop/MDcPxXs8GF6Cot4vVTzm7GLov+XX0i
-         MUSmGTPAl0kk7akDeIwFidPUEHGdshaodLSkIx5RLAXT77aVi7wN/V+jk/UtuRDeqvUh
-         T80xi3u0s1IGeZk5Bcfa7M4PdoH34jp4rrEUIUk342m5GPxRnL/PBocBCYWA4iTXEjXz
-         7qYg==
-X-Received: by 10.152.23.5 with SMTP id i5mr7339952laf.8.1382219543769;
-        Sat, 19 Oct 2013 14:52:23 -0700 (PDT)
-Received: from paksenarrion.iveqy.com (c83-250-237-167.bredband.comhem.se. [83.250.237.167])
-        by mx.google.com with ESMTPSA id ac2sm6563292lbc.10.2013.10.19.14.52.22
+        h=content-type:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=w2heINDVZYkqjvu+yDEnwcaoC01AetFxLdMXY7aga+M=;
+        b=e++7SmlEUfAALDKtdF1cWoe1ZJUeDjSDFr9tefwcg66gNs3h87HLF6Rs950JanQ5A6
+         oubIa5niLkixiVztkxU3OWuFIXABBq8iMejZPLjV9S2gUSMBGuOaLqzZuHqbmXPl75Vu
+         ASs0Jj/wJ5Ai4QKbShwWKkwxCetbkEew0+SSr0SZ063hr1zYTJ0n1egZxJ3dlkTje1rt
+         K/wUMFk5fec8atYue7tJMZexuqyfDes9667izuIVCPFgmmiXXXS9fmxZKbaIi5hzl5Kd
+         h9he7RuajpQy/lxqZur/bVJM9jrz0J5SVgHnPSFG1/k5d0gcsdbMrE1HM79DdMNopj5p
+         TaPw==
+X-Received: by 10.112.146.200 with SMTP id te8mr6518794lbb.32.1382233750843;
+        Sat, 19 Oct 2013 18:49:10 -0700 (PDT)
+Received: from [192.168.0.14] (cs27064221.pp.htv.fi. [89.27.64.221])
+        by mx.google.com with ESMTPSA id vo1sm7091573lbb.1.2013.10.19.18.49.09
         for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Sat, 19 Oct 2013 14:52:23 -0700 (PDT)
-Received: from iveqy by paksenarrion.iveqy.com with local (Exim 4.72)
-	(envelope-from <iveqy@paksenarrion.iveqy.com>)
-	id 1VXeQt-0006O1-Mp; Sat, 19 Oct 2013 23:51:39 +0200
-Content-Disposition: inline
-In-Reply-To: <8761stx04i.fsf@linux-k42r.v.cablecom.net>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sat, 19 Oct 2013 18:49:10 -0700 (PDT)
+In-Reply-To: <87mwm5vkue.fsf@linux-k42r.v.cablecom.net>
+X-Mailer: Apple Mail (2.1510)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236410>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236411>
 
-Hi,
-so I was a GSoC:er, I got some (most) of my code merged but didn't full=
+Hello Thomas
+
+> Can you briefly describe what you changed in v7 and v8, both compared=
+ to
+> earlier versions and between v7 and v8?
+On v7, <sfx>'s basename part is tried to kept. On v7, whole <sfx> part =
+is tried to kept.
+=46or example, in case below:
+   parent_path{sourceDirectory =3D> DestinationDirectory}path1/path2//l=
+onglongFilename.txt
+ On v7, this can be like:
+   =E2=80=A6{...ceDirectory =3D> =E2=80=A6onDirectory}.../longlongFilen=
+ame.txt
+On v8, it will be like:
+   =E2=80=A6{...irectory =3D> =E2=80=A6irectory}path1/path2/longlongFil=
+ename.txt
+
+
+This change is based on the review from Junio below.
+(I myself is not sure what is the better way.)
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D
+On Oct 17, 2013, at 10:29 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> I am not sure if distributing the burden of truncation equally to
+> three parts so that the resulting pieces are of similar lengths is
+> really a good idea.  Between these two
+>=20
+> 	{...SourceDirectory =3D> ...nationDirectory}...ileThatWasMoved=20
+> 	{...ceDirectory =3D> ...ionDirectory}nameOfTheFileThatWasMoved
+>=20
+> that attempt to show that the file nameOfTheFileThatWasMoved was
+> moved from the longSourceDirectory to the DestinationDirectory, the
+> latter is much more informative, I would think.
+
+
+On Oct 18, 2013, at 1:38 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Yoshioka Tsuneo <yoshiokatsuneo@gmail.com> writes:
+>=20
+>> In the "[PATCH v7]", I changed to keep filename part of suffix to ha=
+ndle
+>> above case, but not always keep directory part because I feel totall=
 y
-met my (personal) goals for the project. However I do passed in the eye=
-s
-of Google.
-
-GSoC is _hard_. You end up feeling completely stupid over and over
-again. Git has hard standards. Beeing just a single programmer and/or
-just learnt programming in school, there's a lot of difference.
-
-I started with learning git (better), read documentation and looking
-at the codebase and still felt lost.
-
-After that I'd to learn communication skills, who to mail, when to mail=
-,
-how to write a commit message, been real strict with codestyle,
-setting up a github account, configuring git in a "git contributor
-friendly way", etc.
-
-On Sat, Oct 19, 2013 at 08:09:33AM +0200, Thomas Rast wrote:
-> Theories
-> =3D=3D=3D=3D=3D=3D=3D=3D
+>> keeping all part of long suffix including directory name may cause o=
+utput like:
+>>    =E2=80=A6{=E2=80=A6 =3D> =E2=80=A6}=E2=80=A6ongPath1/LongPath2/na=
+meOfTheFileThatWasMoved=20
+>> And, above may be worse than:
+>>   ...{...ceDirectory =3D> =E2=80=A6ionDirectory}.../nameOfTheFileTha=
+tWasMoved
+>> I think.
 >=20
-> These are the hypotheses that I have heard (mostly in [1] and [2]) as
-> to what is bad about Git's prior GSoC participations.
+> I am not sure if I agree.
 >=20
-> * Aiming far too high, focusing on cool/shiny projects with a large
->   impact.  This also affects the students, who tend to cluster around
->   the largest, shiniest project suggestions.
+> Losing LongPath2 part may be more significant data loss than losing
+> a single bit that says the change is a rename, as the latter may not
+> quite tell us what these two directories were anyway.
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D
+
+Also, I guess Junio might be suspicious to the idea to keep arrow("=3D>=
+") itself, maybe ?
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D
+(From What's cooking in git.git (Oct 2013, #04; Fri, 18))
+- diff.c: keep arrow(=3D>) on show_stats()'s shortened filename part to=
+ make rename visible
+
+Attempts to give more weight on the fact that a filepair represents
+a rename than showing substring of the actual path when diffstat
+lines are not wide enough.
+
+I am not sure if that is solving a right problem, though.
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Thanks!
+
+---
+Tsuneo Yoshioka (=E5=90=89=E5=B2=A1 =E6=81=92=E5=A4=AB)
+yoshiokatsuneo@gmail.com
+
+
+
+
+On Oct 19, 2013, at 9:24 AM, Thomas Rast <tr@thomasrast.ch> wrote:
+
+> Yoshioka Tsuneo <yoshiokatsuneo@gmail.com> writes:
 >=20
-> * Diminishing returns: Git is too mature, with little low-hanging
->   fruit left, making such projects harder
+>> "git diff -M --stat" can detect rename and show renamed file name li=
+ke
+>> "foofoofoo =3D> barbarbar".
+>>=20
+>> Before this commit, this output is shortened always by omitting left=
+ most
+>> part like "...foo =3D> barbarbar". So, if the destination filename i=
+s too long,
+>> source filename putting left or arrow can be totally omitted like
+>> "...barbarbar", without including any of "foofoofoo =3D>".
+>> In such a case where arrow symbol is omitted, there is no way to kno=
+w
+>> whether the file is renamed or existed in the original.
+>>=20
+>> Make sure there is always an arrow, like "...foo =3D> ...bar".
+>>=20
+>> The output can contain curly braces('{','}') for grouping.
+>> So, in general, the output format is "<pfx>{<mid_a> =3D> <mid_b>}<sf=
+x>"
+>>=20
+>> To keep arrow("=3D>"), try to omit <pfx> as long as possible at firs=
+t
+>> because later part or changing part will be the more important part.
+>> If it is not enough, shorten <mid_a>, <mid_b> trying to have the sam=
+e
+>> maximum length.
+>> If it is not enough yet, omit <sfx>.
+>>=20
+>> Signed-off-by: Tsuneo Yoshioka <yoshiokatsuneo@gmail.com>
+>> Test-added-by: Thomas Rast <trast@inf.ethz.ch>
+>> ---
 >=20
-> * Projects are too political, progress depending on non-technical
->   arguments
+> Can you briefly describe what you changed in v7 and v8, both compared=
+ to
+> earlier versions and between v7 and v8?
 >=20
-> * Our mentors suck on various axes, notably not supporting students
->   enough in things that matter:
->   - smooth interaction with community
->   - ensure fast iteration/short cycles
->   - navigating the code base
+> It would be very nice if you could always include such a "patch
+> changelog" after the "---" above.  git-am will ignore the text betwee=
+n
+> "---" and the diff, so you can write comments for the reviewers there
+> without creating noise in the commit message.
 >=20
-> * Scope creep: projects tend to get blocked on some bigger
->   refactoring/restructuring task that was not in the original proposa=
-l
+> Also, please keep reviewers in the Cc list for future discussion/patc=
+hes
+> so that they will see them.
 >=20
->=20
->=20
-> * View GSoC much more as a lot of work than free labor
-
-Totally agree, GSoC is an investment for future labor, not labor.
-
->=20
-> * Break projects into smaller, easier tasks
->   - They should individually be simple, quick things if the mentor di=
-d
->     them.
->   - Should be parallelizable so students don't have to block on revie=
-ws.
-
-I'd 5-6 smaller projects setup for the summer, I think I managed to do
-2-3 of them. (I did however do everything I applied for). I really thin=
-k
-it's an excellent idea. This also meant that while one patch waited for
-review, I'd other things to work on.
-
->=20
-> * Mentoring improvements:
->   - Always have a co-mentor
->   - Focus on social aspects (who to Cc, etc.)
->   - Nominate separate "review mentors" to ensure fast review cycles
-
-I like the idea of review mentors. However bear in mind that you'll
-already have three people reviewing the patches (two mentors and Junio)=
-=2E
-We will not make it look like it's impossible to get things into
-git.git.
-
-> * Have students review some patches
-
-This would be excellent. That's a part that I thinks is very usefull an=
-d
-would easy students remaining with git. It's easier to review patches
-than to make them.
-
-
-As a last part I would say that GSoC learned me a lot. I'm good at git,
-I know test driven development, I learned shell, I got to play with a
-huge C-codebase for the first time and I learned open source projects,
-QA, etc.
-
-I would like to thank Jens and Heiko for good mentoring and a lot of
-patience!
-
-(as a sidenote, I did get extremly busy when the school started. I
-didn't even had time to fix a serious bug in my code (Jens had to clean
-up after me). However two years later I'd some time again and got a few
-patches in and I hope to get a few patches into git in the future too).
-
-A successful GSoC for git isn't a merged project but continued
-contribution to git (not necessairly in patches, but also in support an=
-d
-review).
-
-A successful GSoC for Google/student is a merged project.
-
-A successful GSoC for student is a great learning experience.
---=20
-Med v=E4nliga h=E4lsningar
-=46redrik Gustafsson
-
-tel: 0733-608274
-e-post: iveqy@iveqy.com
+> --=20
+> Thomas Rast
+> tr@thomasrast.ch
