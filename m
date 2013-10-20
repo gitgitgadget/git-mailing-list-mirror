@@ -1,109 +1,244 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH] Prevent buffer overflows when path is too big
-Date: Sun, 20 Oct 2013 17:33:47 +0700
-Message-ID: <CACsJy8AXV=KJtTWxp6dpfa_Pr81h3YwW5EK=c_dV=F7tr7ChWQ@mail.gmail.com>
-References: <CABPQNSaqjKPGAQ4EKBSk+bQP2WMksc6M0YQxSkB91UrnFF28xQ@mail.gmail.com>
- <1382179954-5169-1-git-send-email-apelisse@gmail.com> <52636E5A.1080909@web.de>
+From: Thomas Rast <trast@inf.ethz.ch>
+Subject: [PATCH] Documentation: revamp gitk(1)
+Date: Sun, 20 Oct 2013 18:57:41 +0200
+Message-ID: <21f40508f83a9407986d29f002adf5ad366c8b88.1382287779.git.trast@inf.ethz.ch>
+References: <cover.1370806329.git.trast@inf.ethz.ch> <874nblpamj.fsf@linux-k42r.v.cablecom.net> <874nbdnomj.fsf@hexa.v.cablecom.net> <51F6CB7D.1070806@web.de> <87siyu98cq.fsf@linux-k42r.v.cablecom.net> <20130818115456.GA6772@iris.ozlabs.ibm.com> <874namay5p.fsf@linux-k42r.v.cablecom.net> <xmqq61v18u5s.fsf@gitster.dls.corp.google.com> <87k3hhadhj.fsf@linux-k42r.v.cablecom.net> <20131014052547.GB25344@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
-Cc: Antoine Pelisse <apelisse@gmail.com>, Git Mailing List <git@vger.kernel.org>, 
-	Wataru Noguchi <wnoguchi.0727@gmail.com>, Erik Faye-Lund <kusmabite@gmail.com>, 
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>, =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>, 
-	msysGit <msysgit@googlegroups.com>
-To: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-X-From: msysgit+bncBC2ZN5PHQUMBBK7DR2JQKGQEJSY7VXY@googlegroups.com Sun Oct 20 12:34:22 2013
-Return-path: <msysgit+bncBC2ZN5PHQUMBBK7DR2JQKGQEJSY7VXY@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-pb0-f60.google.com ([209.85.160.60])
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Paul Mackerras <paulus@samba.org>,
+	Jens Lehmann <Jens.Lehmann@web.de>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Oct 20 18:57:52 2013
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBC2ZN5PHQUMBBK7DR2JQKGQEJSY7VXY@googlegroups.com>)
-	id 1VXqKz-0002dT-8P
-	for gcvm-msysgit@m.gmane.org; Sun, 20 Oct 2013 12:34:21 +0200
-Received: by mail-pb0-f60.google.com with SMTP id rr4sf1080028pbb.25
-        for <gcvm-msysgit@m.gmane.org>; Sun, 20 Oct 2013 03:34:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:x-original-sender:x-original-authentication-results:precedence
-         :mailing-list:list-id:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe:content-type
-         :content-transfer-encoding;
-        bh=7HqHXspEVpxxr669Ne8OJPqswBsK7mboC7g5imlU88Y=;
-        b=oNwHuV8narDWuj563imvoZegbWGXifgVLD6DGFD4Ucha0YpSUzS+N0hGKBP4eGxOjH
-         EJHM4J/RiB73B37E8CUQr+9DB0o54aSr3eBKf+qRCKpxKw+0OuHtS+mNbaCi6HsqV99w
-         2NH0F2LnjUmUdLMBf+kdn3M07MxvN6ZN5WjALABjv50kj/BbSOKN2mVuwNjMJWPStQ2g
-         s7+Ug8LsjUYQJOKH6Zmc3x0u7zZ7CB9hysd5sgxseabVKbyd9qf1pikU5mO6aBIiNqZN
-         gREaCsvhZ7ZCBoPk30HtFsjLG2TESgt7BqlVqT9MsgS+rHJpEWWJUQ/A31YAm5PTxmIw
-         Kfgg==
-X-Received: by 10.50.73.132 with SMTP id l4mr136482igv.0.1382265259852;
-        Sun, 20 Oct 2013 03:34:19 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.50.117.5 with SMTP id ka5ls1323147igb.26.gmail; Sun, 20 Oct
- 2013 03:34:19 -0700 (PDT)
-X-Received: by 10.50.126.69 with SMTP id mw5mr3135068igb.7.1382265259014;
-        Sun, 20 Oct 2013 03:34:19 -0700 (PDT)
-Received: from mail-qc0-x229.google.com (mail-qc0-x229.google.com [2607:f8b0:400d:c01::229])
-        by gmr-mx.google.com with ESMTPS id bc1si2003921qcb.1.2013.10.20.03.34.18
-        for <msysgit@googlegroups.com>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 20 Oct 2013 03:34:18 -0700 (PDT)
-Received-SPF: pass (google.com: domain of pclouds@gmail.com designates 2607:f8b0:400d:c01::229 as permitted sender) client-ip=2607:f8b0:400d:c01::229;
-Received: by mail-qc0-f169.google.com with SMTP id x12so3869851qcv.28
-        for <msysgit@googlegroups.com>; Sun, 20 Oct 2013 03:34:18 -0700 (PDT)
-X-Received: by 10.224.151.202 with SMTP id d10mr559022qaw.115.1382265258881;
- Sun, 20 Oct 2013 03:34:18 -0700 (PDT)
-Received: by 10.96.27.202 with HTTP; Sun, 20 Oct 2013 03:33:47 -0700 (PDT)
-In-Reply-To: <52636E5A.1080909@web.de>
-X-Original-Sender: pclouds@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of pclouds@gmail.com designates 2607:f8b0:400d:c01::229
- as permitted sender) smtp.mail=pclouds@gmail.com;       dkim=pass
- header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236418>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1VXwK8-0000Qz-3O
+	for gcvg-git-2@plane.gmane.org; Sun, 20 Oct 2013 18:57:52 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751254Ab3JTQ5s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Oct 2013 12:57:48 -0400
+Received: from edge10.ethz.ch ([82.130.75.186]:4181 "EHLO edge10.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751171Ab3JTQ5r (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Oct 2013 12:57:47 -0400
+Received: from CAS20.d.ethz.ch (172.31.51.110) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.2.298.4; Sun, 20 Oct
+ 2013 18:57:36 +0200
+Received: from linux-a99i.v.cablecom.net (46.126.8.85) by CAS20.d.ethz.ch
+ (172.31.51.110) with Microsoft SMTP Server (TLS) id 14.2.298.4; Sun, 20 Oct
+ 2013 18:57:42 +0200
+X-Mailer: git-send-email 1.8.4.1.810.g312044e
+In-Reply-To: <20131014052547.GB25344@google.com>
+X-Originating-IP: [46.126.8.85]
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236419>
 
-On Sun, Oct 20, 2013 at 12:47 PM, Torsten B=F6gershausen <tboegi@web.de> wr=
-ote:
-> I'm not sure how to handle overlong path in general, there are several wa=
-ys:
-> a) Silently overwrite memory (with help of memcpy() and/or strcpy()
-> b) Silently shorten the path using strlcpy() instead of strcpy()
-> c) Avoid the overwriting and call die().
-> d) Prepare a longer buffer using xmalloc()
+The gitk manpage suffers from a bit of neglect: there have been only
+minor changes, and no changes to the set of options documented, since
+a2df1fb (Documentation: New GUI configuration and command-line
+options., 2008-11-13).  In the meantime, the set of rev-list options
+has been expanded several times by options that are useful in gitk,
+e.g., --ancestry-path and the optional globbing for --branches, --tags
+and --remotes.
 
-d+) Use strbuf
---=20
-Duy
+Restructure and expand the manpage.  List more options that the author
+perceives as useful, while remaining somewhat terse.  Ideally the user
+should not have to look up any of the references, but we dispense with
+precise explanations in some places and refer to git-log(1) instead.
 
---=20
---=20
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github =
-accounts are free.
+Note that the options that have an easy GUI equivalent (e.g.,
+--word-diff, -S, --grep) are deliberately not listed even in the cases
+where they simply fill in the GUI fields.
 
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=3Den_US?hl=3Den
+Signed-off-by: Thomas Rast <trast@inf.ethz.ch>
+---
 
----=20
-You received this message because you are subscribed to the Google Groups "=
-msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an e=
-mail to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/groups/opt_out.
+Jonathan Nieder wrote:
+> Support for just the sticked form is better than nothing, especially
+> if the gitk(1) manpage gains a note about it.  In the long run I guess
+> the ideal would be to add a parse-options-like library to the tcl
+> support.
+
+Ok.  I'm generally not happy with the state of that manpage, so I took
+the chance to improve it (and include a note about sticked forms).
+The approach is really my own opinion; I ran a half-hearted attempt at
+an IRC survey but none of the willing victims had any 'gitk'
+invocations in their history.
+
+I'll hold the gitk patches until we get this one sorted out, but then
+just do the sticked form as before.
+
+
+ Documentation/gitk.txt | 107 ++++++++++++++++++++++++++++++++++++++-----------
+ 1 file changed, 83 insertions(+), 24 deletions(-)
+
+diff --git a/Documentation/gitk.txt b/Documentation/gitk.txt
+index c17e760..d44e14c 100644
+--- a/Documentation/gitk.txt
++++ b/Documentation/gitk.txt
+@@ -8,7 +8,7 @@ gitk - The Git repository browser
+ SYNOPSIS
+ --------
+ [verse]
+-'gitk' [<option>...] [<revs>] [--] [<path>...]
++'gitk' [<options>] [<revision range>] [\--] [<path>...]
+ 
+ DESCRIPTION
+ -----------
+@@ -16,21 +16,38 @@ Displays changes in a repository or a selected set of commits. This includes
+ visualizing the commit graph, showing information related to each commit, and
+ the files in the trees of each revision.
+ 
+-Historically, gitk was the first repository browser. It's written in tcl/tk
+-and started off in a separate repository but was later merged into the main
+-Git repository.
+-
+ OPTIONS
+ -------
+-To control which revisions to show, the command takes options applicable to
+-the 'git rev-list' command (see linkgit:git-rev-list[1]).
+-This manual page describes only the most
+-frequently used options.
+ 
+--n <number>::
+---max-count=<number>::
++To control which revisions to show, gitk supports most options
++applicable to the 'git rev-list' command.  It also supports a few
++options applicable to the 'git diff-*' commands to control how the
++changes each commit introduces are shown.  Finally, it supports some
++gitk-specific options.
++
++gitk generally only understands options with arguments in the
++'sticked' form (see linkgit:gitcli[7]) due to limitations in the
++command line parser.
++
++rev-list options and arguments
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++
++This manual page describes only the most frequently used options.  See
++linkgit:git-rev-list[1] for a complete list.
++
++--all::
++
++	Show all refs (branches, tags, etc.).
+ 
+-	Limits the number of commits to show.
++--branches[=<pattern>]::
++--tags[=<pattern>]::
++--remotes[=<pattern>]::
++
++	Pretend as if all the branches (tags, remote branches, resp.)
++	are listed on the command line as '<commit>'. If '<pattern>'
++	is given, limit refs to ones matching given shell glob. If
++	pattern lacks '?', '{asterisk}', or '[', '/{asterisk}' at the
++	end is implied.
+ 
+ --since=<date>::
+ 
+@@ -40,9 +57,9 @@ frequently used options.
+ 
+ 	Show commits older than a specific date.
+ 
+---all::
++--date-order::
+ 
+-	Show all branches.
++	Sort commits by date when possible.
+ 
+ --merge::
+ 
+@@ -51,19 +68,37 @@ frequently used options.
+ 	that modify the conflicted files and do not exist on all the heads
+ 	being merged.
+ 
+---argscmd=<command>::
+-	Command to be run each time gitk has to determine the list of
+-	<revs> to show.  The command is expected to print on its standard
+-	output a list of additional revs to be shown, one per line.
+-	Use this instead of explicitly specifying <revs> if the set of
+-	commits to show may vary between refreshes.
++--left-right::
+ 
+---select-commit=<ref>::
++	Mark which side of a symmetric diff a commit is reachable
++	from.  Commits from the left side are prefixed with a `<`
++	symbol and those from the right with a `>` symbol.
+ 
+-	Automatically select the specified commit after loading the graph.
+-	Default behavior is equivalent to specifying '--select-commit=HEAD'.
++--full-history::
++
++	When filtering history with '<path>...', does not prune some
++	history.  (See "History simplification" in linkgit:git-log[1]
++	for a more detailed explanation.)
++
++--simplify-merges::
+ 
+-<revs>::
++	Additional option to '--full-history' to remove some needless
++	merges from the resulting history, as there are no selected
++	commits contributing to this merge.  (See "History
++	simplification" in linkgit:git-log[1] for a more detailed
++	explanation.)
++
++--ancestry-path::
++
++	When given a range of commits to display
++	(e.g. 'commit1..commit2' or 'commit2 {caret}commit1'), only
++	display commits that exist directly on the ancestry chain
++	between the 'commit1' and 'commit2', i.e. commits that are
++	both descendants of 'commit1', and ancestors of 'commit2'.
++	(See "History simplification" in linkgit:git-log[1] for a more
++	detailed explanation.)
++
++<revision range>::
+ 
+ 	Limit the revisions to show. This can be either a single revision
+ 	meaning show from the given revision and back, or it can be a range in
+@@ -78,6 +113,23 @@ frequently used options.
+ 	avoid ambiguity with respect to revision names use "--" to separate the paths
+ 	from any preceding options.
+ 
++gitk-specific options
++~~~~~~~~~~~~~~~~~~~~~
++
++--argscmd=<command>::
++
++	Command to be run each time gitk has to determine the revision
++	range to show.  The command is expected to print on its
++	standard output a list of additional revisions to be shown,
++	one per line.  Use this instead of explicitly specifying a
++	'<revision range>' if the set of commits to show may vary
++	between refreshes.
++
++--select-commit=<ref>::
++
++	Select the specified commit after loading the graph.
++	Default behavior is equivalent to specifying '--select-commit=HEAD'.
++
+ Examples
+ --------
+ gitk v2.6.12.. include/scsi drivers/scsi::
+@@ -101,6 +153,13 @@ Files
+ Gitk creates the .gitk file in your $HOME directory to store preferences
+ such as display options, font, and colors.
+ 
++History
++-------
++Gitk was the first graphical repository browser. It's written in
++tcl/tk and started off in a separate repository but was later merged
++into the main Git repository.
++
++
+ SEE ALSO
+ --------
+ 'qgit(1)'::
+-- 
+1.8.4.1.810.g312044e
