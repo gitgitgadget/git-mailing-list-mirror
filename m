@@ -1,95 +1,92 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: [PATCH] rebase: use reflog to find common base with upstream
-Date: Mon, 21 Oct 2013 12:24:08 +0100
-Message-ID: <20131021112408.GA24317@serenity.lan>
-References: <d8e9f102609ee4502f579cb4ce872e0a40756204.1381949622.git.john@keeping.me.uk>
- <CANiSa6gqGKAyLwwPVoZ_gzN85_06aTCfkdRRscNNZYs7g1rL0A@mail.gmail.com>
+From: james.moger@gitblit.com
+Subject: RFE: support change-id generation natively
+Date: Mon, 21 Oct 2013 10:48:00 -0400
+Message-ID: <1382366880.8925.36578285.27469B22@webmail.messagingengine.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Martin von Zweigbergk <martinvonz@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 21 13:24:28 2013
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 21 16:48:10 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VYDaz-000453-BP
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Oct 2013 13:24:25 +0200
+	id 1VYGm9-0004KH-JH
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Oct 2013 16:48:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753263Ab3JULYV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Oct 2013 07:24:21 -0400
-Received: from coyote.aluminati.org ([72.9.247.114]:36143 "EHLO
-	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753207Ab3JULYU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Oct 2013 07:24:20 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by coyote.aluminati.org (Postfix) with ESMTP id 3D3766064D7;
-	Mon, 21 Oct 2013 12:24:20 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -2.9
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9] autolearn=ham
-Received: from coyote.aluminati.org ([127.0.0.1])
-	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id I+rrSRzKmQp4; Mon, 21 Oct 2013 12:24:19 +0100 (BST)
-Received: from serenity.lan (banza.aluminati.org [10.0.7.182])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by coyote.aluminati.org (Postfix) with ESMTPSA id DACC16064DD;
-	Mon, 21 Oct 2013 12:24:13 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <CANiSa6gqGKAyLwwPVoZ_gzN85_06aTCfkdRRscNNZYs7g1rL0A@mail.gmail.com>
-User-Agent: Mutt/1.5.22 (2013-10-16)
+	id S1753293Ab3JUOsF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Oct 2013 10:48:05 -0400
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:38054 "EHLO
+	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752872Ab3JUOsE (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 21 Oct 2013 10:48:04 -0400
+Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 52FCE21DF8
+	for <git@vger.kernel.org>; Mon, 21 Oct 2013 10:48:00 -0400 (EDT)
+Received: from web5 ([10.202.2.215])
+  by compute1.internal (MEProxy); Mon, 21 Oct 2013 10:48:02 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=gitblit.com; h=
+	message-id:from:to:mime-version:content-transfer-encoding
+	:content-type:subject:date; s=mesmtp; bh=Vi2qBY3PfOg0DVQXl4zKscO
+	keZU=; b=fNCpheAa864Y8tVLu+1jJybqSL4Oe5DA+OGP3Q9MtPSDsYG/qq7e7fX
+	ocYELbeA8eRqZIib3YVi4A3ctyr8j/sX+VkDDTPddJ4mPBg6bWEwHyfdf5G96Yrj
+	DyWR+QPrgia4OQLm9LOTwRMLxUF8hC+ng3JcdUVTjJP4zvki7KDo=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:from:to:mime-version
+	:content-transfer-encoding:content-type:subject:date; s=smtpout;
+	 bh=Vi2qBY3PfOg0DVQXl4zKscOkeZU=; b=JDz6GsWehOszjifP50huGApn1CYg
+	KXb9XZsPShJ6EPuHoIW/p5g9Rkq+hAXkzDWzWg5qKz4Ywk9pwLh2iEQIO5Qdidmz
+	pl+pZKg4IW/GT4YNyyYeq0WisCn/mhEiUA/LBTLk0tfP2ze5tEQ3tkmu8EyMuV3A
+	OLTCSU9/e+ESEko=
+Received: by web5.nyi.mail.srv.osa (Postfix, from userid 99)
+	id 8B169A75A16; Mon, 21 Oct 2013 10:48:00 -0400 (EDT)
+X-Sasl-Enc: 03Z+ipVxo+mitXIL1GjHWZdZBCAGKX7RY1bNykROrDre 1382366880
+X-Mailer: MessagingEngine.com Webmail Interface - ajax-0cc2f9cc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236428>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236429>
 
-On Sun, Oct 20, 2013 at 10:03:29PM -0700, Martin von Zweigbergk wrote:
-> On Wed, Oct 16, 2013 at 11:53 AM, John Keeping <john@keeping.me.uk> wrote:
-> > Commit 15a147e (rebase: use @{upstream} if no upstream specified,
-> > 2011-02-09) says:
-> >
-> >         Make it default to 'git rebase @{upstream}'. That is also what
-> >         'git pull [--rebase]' defaults to, so it only makes sense that
-> >         'git rebase' defaults to the same thing.
-> >
-> > but that isn't actually the case.  Since commit d44e712 (pull: support
-> > rebased upstream + fetch + pull --rebase, 2009-07-19), pull has actually
-> > chosen the most recent reflog entry which is an ancestor of the current
-> > branch if it can find one.
-> 
-> It is exactly this inconsistency between "git rebase" and "git pull
-> --rebase" that confused me enough to make me send my first email to
-> this list almost 4 years ago [1], so thanks for working on this! I
-> finished that thread with:
-> 
->   Would it make sense to teach "git rebase" the same tricks as "git
-> pull --rebase"?
-> 
-> Then it took me a year before I sent a patch not unlike this one [2].
-> To summarize, the patch did not get accepted then because it makes
-> rebase a little slower (or a lot slower in some cases). "git pull
-> --rebase" is of course at least as slow in the same cases, but because
-> it often involves connecting to a remote host, people would probably
-> blame the connection rather than git itself even in those rare (?)
-> cases.
-> 
-> I think
-> 
->   git merge-base HEAD $(git rev-list -g "$upstream_name")
-> 
-> is roughly correct and hopefully fast enough. That can lead to too
-> long a command line, so I was planning on teaching merge-base a
-> --stdin option, but never got around to it.
+Hello Git Community,
 
-I'm not sure we should worry about the additional overhead here.  In the
-common case, we should hit a common ancestor within the first couple of
-reflog entries; and in the case that will be slow, it's likely that
-there are a lot of differences between the branches so the cherry
-comparison phase will take a while anyway.
+TL;DR:
+It would be a really nice enhancement if the commit command natively
+supported _optionally_ injecting a "Change-Id: I000..." footer in the
+last paragraph of the commit message template and then substituting the
+"I000..." value, on commit, with a generated value _without_ having to
+rely on a per-repository, native hook or a global hook that affects
+every local repository.
+
+Full Request:
+Gerrit has established the change-id footer as a prominent and
+wide-spread collaboration identifier.  For those contributing new
+patches to a Gerrit server, it is required to either use EGit/JGit
+(Eclipse) to generate commits [1] OR to use a commit hook script with
+native git to insert a change-id footer during the commit process [2]. 
+This per-repository hook script requirement is an obstacle.  These
+communities would be better served and it would lower the contribution
+barrier for many open source projects if native git supported change-id
+generation & injection.
+
+I acknowledge that not everyone uses nor wants to use Gerrit and the
+change-id footer.  That is fine, but it would be a _tremendous_
+usability improvement for those contributing to open source projects
+(myself included) if something like a "--change-id" flag  was
+implemented and maybe even a config setting to always generate a
+change-id on commit (EGit currently supports this as
+"gerrit.createchangeid=true").
+
+Sadly, my C skills are lacking as I live mostly in the world of managed
+code, but I'd be very happy to cheer for a change-id champion; I suspect
+there are some out there who might rally to this cause.
+
+Thanks for your consideration.
+James Moger
+gitblit.com
+
+[1]
+https://git.eclipse.org/c/jgit/jgit.git/tree/org.eclipse.jgit/src/org/eclipse/jgit/api/CommitCommand.java?h=stable-3.1#n288
+[2]
+http://gerrit-documentation.googlecode.com/svn/Documentation/2.0/cmd-hook-commit-msg.html
