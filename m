@@ -1,114 +1,85 @@
 From: Shawn Pearce <spearce@spearce.org>
 Subject: Re: RFE: support change-id generation natively
-Date: Mon, 21 Oct 2013 16:07:30 -0700
-Message-ID: <CAJo=hJudnWqCTG=j_hQjZMzYarDTH5THZOEbftLjpwKUNusrEQ@mail.gmail.com>
+Date: Mon, 21 Oct 2013 16:10:18 -0700
+Message-ID: <CAJo=hJsEHO7ZL6UBbBBijRNHqk=ttA07cFJ7KBW381jTEpvOQw@mail.gmail.com>
 References: <2127507934.9293293.1382367063640.JavaMail.root@openwide.fr>
  <1382370119.28365.36627953.50C0496E@webmail.messagingengine.com>
- <CAJo=hJtbciJ3Qg8jo4U5fZ9onf2R2XOospYKGS-jCYz4p-nwRw@mail.gmail.com> <20131021163812.GA27125@domone.podge>
+ <201310212029.01589.thomas@koch.ro> <1382380858.25852.36711509.53CF173C@webmail.messagingengine.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: james.moger@gitblit.com, Jeremy Rosen <jeremy.rosen@openwide.fr>,
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Thomas Koch <thomas@koch.ro>,
+	Jeremy Rosen <jeremy.rosen@openwide.fr>,
 	git <git@vger.kernel.org>
-To: =?ISO-8859-2?B?T25k+GVqIELtbGth?= <neleai@seznam.cz>
-X-From: git-owner@vger.kernel.org Tue Oct 22 01:08:02 2013
+To: james.moger@gitblit.com
+X-From: git-owner@vger.kernel.org Tue Oct 22 01:10:49 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VYOZt-0005SN-0o
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Oct 2013 01:08:01 +0200
+	id 1VYOcY-0006x7-L0
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Oct 2013 01:10:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751559Ab3JUXHx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 21 Oct 2013 19:07:53 -0400
-Received: from mail-wg0-f46.google.com ([74.125.82.46]:50027 "EHLO
-	mail-wg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751463Ab3JUXHw convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 21 Oct 2013 19:07:52 -0400
-Received: by mail-wg0-f46.google.com with SMTP id m15so7153489wgh.13
-        for <git@vger.kernel.org>; Mon, 21 Oct 2013 16:07:50 -0700 (PDT)
+	id S1752420Ab3JUXKk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Oct 2013 19:10:40 -0400
+Received: from mail-we0-f174.google.com ([74.125.82.174]:50381 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752359Ab3JUXKj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Oct 2013 19:10:39 -0400
+Received: by mail-we0-f174.google.com with SMTP id u56so7251385wes.19
+        for <git@vger.kernel.org>; Mon, 21 Oct 2013 16:10:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=spearce.org; s=google;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=abd2dWPC0Y9nOZSlCpsknddjlUdpDyveYhfodhBKdQs=;
-        b=KTNzCvwmAyNTVfrupYQpYVVaaEhRAswebL6LpYK7L3uX7W9Ow2xx/vXjRPEeHOhF2d
-         g1xq0RtB+lUSIAmEpoiGKKjslvhFG57iDItzt/OI1BvuW4ADxkNXMdLX1kQ4AjJw+m3r
-         GxpM1PoYC1vrdcbXt9YGRxk+mBYQvyThe47gg=
+         :cc:content-type;
+        bh=A+3HJFZyPmSJXPMlBwrljbg83i92UTa3mRdUiHqki5A=;
+        b=RVNxXTTVzzmpztXwxPOprb8a0SOr87oXkoinBI5K3XgLFR2YIoTf9Xk9qHcn4mm8cI
+         L+J9VyjQTGNiDCFArGJNl0RKYcHP85/jsyClFyK5nmC5TERYwa5gB85VAUJPpiQ8cwSC
+         ixKaxRWoAj8AoWshjFVfql1pwHJQGHVr0iqUk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=abd2dWPC0Y9nOZSlCpsknddjlUdpDyveYhfodhBKdQs=;
-        b=TnNTf86Ueiccfg4hX0VNXWiOL31pNoHZq18xon+98w9yGzHF+cdpwSNusFApRgXeN+
-         JatGwwihdEclcY/KgqJ1L6KBHvn0FLT43JoJEN+XikgFALG5zcL3+Msv6IqcR+hLeQiL
-         0D509/G5btAVjRc5zmYlzuMBaZ9EoJPg6SDQ8iNY0/aJ4KvPxLm1f3TTTnuGAYO3Z6Mc
-         vH5qWEP4r1aalZ6vs8Q6pPbMJrnGzkl/RcyIneQtsFzwYTV0VqzQyCE6QkCKawB+5uX1
-         bJHM4xOtoSHYn84YiDjsa7MqYQK1pwMoCBrnc+ttIbbGx96RdJVmnD8QX1cuvciLAfC/
-         ySBg==
-X-Gm-Message-State: ALoCoQk7HJ39OvxLHhQ4Dsmc45XH232bWapFUduaWyiA4A2q7QaWEck2sKtdr4pkpYyGLNlSg7fG
-X-Received: by 10.180.36.242 with SMTP id t18mr11678785wij.28.1382396870704;
- Mon, 21 Oct 2013 16:07:50 -0700 (PDT)
-Received: by 10.227.62.140 with HTTP; Mon, 21 Oct 2013 16:07:30 -0700 (PDT)
-In-Reply-To: <20131021163812.GA27125@domone.podge>
+         :message-id:subject:to:cc:content-type;
+        bh=A+3HJFZyPmSJXPMlBwrljbg83i92UTa3mRdUiHqki5A=;
+        b=DkjYHAFkg2MzDcFfca3xdpUBp4nyT5s+Baf4Zztn2PITJBsAh33g52SKzrq/QTVV3A
+         h3+OxrLDVQBTt7c3jspYNVFYijrlO06WeE7VtwxhjX7FjXHEQhAJMEmMO25itqGqGVjC
+         XPC2YxAl7U20ApSF4+h9/9mbVD14ai8bGuybdEg67mRugfGN35jw637QFDbgHfV46o9k
+         9D3l89b19oAy8XvbqhFD98c/DymIUKDi13898/zPU0UBwBhsWusR3rYAVYAKK8vdJtpF
+         TU1bCjxmB33A7YcFVHR5sgmLvTtKWkK3y2mex2yx2kcEbUQOggn4zlnHtFEco4TsdWMA
+         FFiQ==
+X-Gm-Message-State: ALoCoQm967QRB5vtLlT0ZIil8eSj39MCfNY7UaqIbRe7LR7ClNTm5Gh4PzVITLkNPVnIS8aMMsYe
+X-Received: by 10.194.24.168 with SMTP id v8mr16000880wjf.28.1382397038281;
+ Mon, 21 Oct 2013 16:10:38 -0700 (PDT)
+Received: by 10.227.62.140 with HTTP; Mon, 21 Oct 2013 16:10:18 -0700 (PDT)
+In-Reply-To: <1382380858.25852.36711509.53CF173C@webmail.messagingengine.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236450>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236451>
 
-On Mon, Oct 21, 2013 at 9:38 AM, Ond=C5=99ej B=C3=ADlka <neleai@seznam.=
-cz> wrote:
-> On Mon, Oct 21, 2013 at 09:35:07AM -0700, Shawn Pearce wrote:
->> On Mon, Oct 21, 2013 at 8:41 AM,  <james.moger@gitblit.com> wrote:
->> > The change-id is exactly like a commit-id, it is an SHA-1 value, b=
-ut it
->> > is a constant embedded in the commit message.
->>
->> https://gerrit-review.googlesource.com/Documentation/user-changeid.h=
-tml
->> goes into more detail about these.
->>
->> > Commit-ids change all the time because of amend; change-ids are co=
-nstant
->> > and they are the key that links commit revisions to a discussion.
->>
->> In a mailing list based workflow, when an author revises a patch
->> series and resends the new patches aren't linked to the old patches =
-in
->> a MUA, because the Message-Ids of the original versions were not
->> preserved. Imagine if Git saved that original Message-Id somewhere a=
-nd
->> could properly write In-Reply-To headers so that attempt #2 for each
->> patch replies to the end of the thread discussing attempt #1 of the
->> same patch. In a 30 patch series. Gerrit does this with Change-Id.
->>
->>
->> We briefly considered putting the Change-Id into the commit headers
->> (e.g. below the optional encoding) but could not because `git commit=
-`
->> doesn't support this. So it went into the footer along with
->> Signed-off-by provenance data, which is also not expressible in
->> headers.
+On Mon, Oct 21, 2013 at 11:40 AM,  <james.moger@gitblit.com> wrote:
 >
-> What about adding that as Note?
+> On Mon, Oct 21, 2013, at 02:29 PM, Thomas Koch wrote:
+>> As I understand, a UUID could also be used for the same purbose as the
+>> change-
+>> id. How is the change-id generated by the way? Would it be a good english
+>> name
+>> to call it enduring commit identifier?
+>
+> Here is the algorithm:
+> https://git.eclipse.org/c/jgit/jgit.git/tree/org.eclipse.jgit/src/org/eclipse/jgit/util/ChangeIdUtil.java#n78
 
-If it was a note, the note would need to be updated every time the
-user updated their commit locally. So `git commit --amend` and `git
-rebase` (all forms) would be required to update the note with the new
-commit SHA-1 so the value isn't lost.
+For the hyperlink and Java challenged, the Change-Id is essentially
+the commit SHA-1 had the Change-Id not been included. The shell script
+hook Gerrit recommends for use with `git commit` uses `git
+commit-tree` to compute the hash. Which of course later differs after
+the Change-Id is inserted.
 
-If it was a note, the author would also have to push their notes
-branch to the Gerrit server when they push their commits. This is
-likely to be forgotten, since its a different branch than the branch
-the user is working on. The server only needs notes for the new
-incoming commits, but the notes branch will probably bring all
-activity the author has been doing. So maybe the author should have
-one notes branch per topic branch. And clean up the notes branches
-after they delete their local topic branches. Etc.
+> I think "enduring commit id" is a fair interpretation of it's purpose.
+> I don't speak for the Gerrit developers so I can not say if they are
+> interested in alternative id generation.  I come to the list as a
+> change-id user/consumer.
 
-notes are great, but they get messy. And back when Gerrit introduced
-support for Change-Id (more than 4 years ago) I don't think note
-support even existed. Or if it did, it was no where near as complete
-as it is today.
+As Martin Fick said, we would be open to an alternative if a better
+one is presented, especially if it is supported by git commit.
