@@ -1,90 +1,114 @@
-From: worley@alum.mit.edu (Dale R. Worley)
-Subject: Re: [git-users] Problem using detached worktrees with commands implemented in scripts
-Date: Mon, 21 Oct 2013 14:51:24 -0400
-Message-ID: <201310211851.r9LIpOaH000372@freeze.ariadne.com>
-References: <201310162003.r9GK3UYj014414@freeze.ariadne.com>
-	<xmqqeh7k51vg.fsf@gitster.dls.corp.google.com>
-	<201310171909.r9HJ9mxd007908@freeze.ariadne.com>
-	<xmqq4n8fzmmj.fsf@gitster.dls.corp.google.com>
-	<201310182225.r9IMP4i3002659@freeze.ariadne.com> <xmqqy55qurmf.fsf@gitster.dls.corp.google.com>
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Oct 21 20:51:34 2013
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH] Prevent buffer overflows when path is too big
+Date: Mon, 21 Oct 2013 21:02:21 +0200
+Message-ID: <52657A3D.8090609@kdbg.org>
+References: <CABPQNSaqjKPGAQ4EKBSk+bQP2WMksc6M0YQxSkB91UrnFF28xQ@mail.gmail.com> <1382179954-5169-1-git-send-email-apelisse@gmail.com> <52636E5A.1080909@web.de> <CACsJy8AXV=KJtTWxp6dpfa_Pr81h3YwW5EK=c_dV=F7tr7ChWQ@mail.gmail.com> <CALWbr2z1RmLLNa3Cj+n6g=zu5FB4VZSmRTU1qYb86pXLfYGJGg@mail.gmail.com> <CACsJy8BQ=qzXbMT9OSeQ+aDjLe5ogkUMZzdUhK0ObJP+VHkYvQ@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>, 
+ Git Mailing List <git@vger.kernel.org>,
+ Wataru Noguchi <wnoguchi.0727@gmail.com>, 
+ Erik Faye-Lund <kusmabite@gmail.com>,
+ Johannes Schindelin <Johannes.Schindelin@gmx.de>, =?ISO-8859-1?Q?Ren=E9_?=
+ =?ISO-8859-1?Q?Scharfe?= <l.s.r@web.de>, 
+ msysGit <msysgit@googlegroups.com>
+To: Duy Nguyen <pclouds@gmail.com>, Antoine Pelisse <apelisse@gmail.com>
+X-From: msysgit+bncBCJYV6HBKQIL55EVSMCRUBAXZDXVK@googlegroups.com Mon Oct 21 21:02:24 2013
+Return-path: <msysgit+bncBCJYV6HBKQIL55EVSMCRUBAXZDXVK@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-wg0-f59.google.com ([74.125.82.59])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VYKZe-000769-Ur
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Oct 2013 20:51:31 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751784Ab3JUSv1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Oct 2013 14:51:27 -0400
-Received: from qmta10.westchester.pa.mail.comcast.net ([76.96.62.17]:41088
-	"EHLO qmta10.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751624Ab3JUSv0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 21 Oct 2013 14:51:26 -0400
-Received: from omta02.westchester.pa.mail.comcast.net ([76.96.62.19])
-	by qmta10.westchester.pa.mail.comcast.net with comcast
-	id fo9X1m0050QuhwU5AurRkk; Mon, 21 Oct 2013 18:51:25 +0000
-Received: from freeze.ariadne.com ([24.34.72.61])
-	by omta02.westchester.pa.mail.comcast.net with comcast
-	id furR1m0011KKtkw3NurRt0; Mon, 21 Oct 2013 18:51:25 +0000
-Received: from freeze.ariadne.com (freeze.ariadne.com [127.0.0.1])
-	by freeze.ariadne.com (8.14.5/8.14.5) with ESMTP id r9LIpOr9000373;
-	Mon, 21 Oct 2013 14:51:24 -0400
-Received: (from worley@localhost)
-	by freeze.ariadne.com (8.14.5/8.14.5/Submit) id r9LIpOaH000372;
-	Mon, 21 Oct 2013 14:51:24 -0400
-In-reply-to: <xmqqy55qurmf.fsf@gitster.dls.corp.google.com>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-	s=q20121106; t=1382381485;
-	bh=5MHcgii/zJWuYDKitmDY9d6JRHztea2wbKYpPEwJ7rU=;
-	h=Received:Received:Received:Received:Date:Message-Id:From:To:
-	 Subject;
-	b=RuhwJTy/GQHzKXqQ5DyupNrdU2xHxXX+1Mp5rBGpx7g1tQb/MddvFRGg8XaT31b+W
-	 hcmfDVbi4+AH6CkKo0z64MVEOszJSokR5oGaf7e3ZcpYpFjSuQ66n/5wOaJ7QDzazy
-	 fiMKq1ysJZU1BbbLWibDdbmMA/SXqQHRo51OWgeiW6eF6JO0fEgG5aVjxsBSiZJSHH
-	 c9POTKIvWYE3N5p/5VGpDxxmf5vHGpP3pagN0Jm6htvCV7Wpy/AfzO52+y4B6wHG8L
-	 sNKFMHicwdl6z0DF+TSV70JA6VP3q3YnKVK9WGEMbfe6qC0BeTzBIVZejYhCrp++Ik
-	 gSr50vh65uvkg==
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236443>
+	(envelope-from <msysgit+bncBCJYV6HBKQIL55EVSMCRUBAXZDXVK@googlegroups.com>)
+	id 1VYKkB-0004yL-NF
+	for gcvm-msysgit@m.gmane.org; Mon, 21 Oct 2013 21:02:23 +0200
+Received: by mail-wg0-f59.google.com with SMTP id z12sf746589wgg.4
+        for <gcvm-msysgit@m.gmane.org>; Mon, 21 Oct 2013 12:02:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type;
+        bh=6sJX2eKEyc32EhMyZS8Cik5nY8KONt+m9jbXnnlWkPE=;
+        b=RPLIuVRMaZ4sLMNjhz6TKRLYoXGOgGEBv0qf6XNt4gXpeiTAS5wGkdH2uP59v7Nb5C
+         99HxnY2EyiXC4xEeQK6p8eU6VjcxaqR+VjDf0vgNRwn6QiprHfszjvCGb1b6JQvHZxS8
+         39YPpJYnPKuQXqa7/fTypiL+NK41Xut3XWPSCAAGdn9SeSCXj69gj22STlu05cUUXMQD
+         qHkjovgUSydf/c7q4eHwkWNOH3mgzzpW7e2NpoV6oGT7zlZgAr56s7pHvLI6GhQc639c
+         5ov2Q9j7+ecdStubEoUBbz87eYcSe0DvqbGM2PYQIS8Fwbwg7/I2RiJixYjhH2Rg3hLx
+         /ndA==
+X-Received: by 10.180.108.100 with SMTP id hj4mr150436wib.9.1382382143415;
+        Mon, 21 Oct 2013 12:02:23 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.180.92.197 with SMTP id co5ls566862wib.16.gmail; Mon, 21 Oct
+ 2013 12:02:22 -0700 (PDT)
+X-Received: by 10.180.212.76 with SMTP id ni12mr5638566wic.1.1382382142624;
+        Mon, 21 Oct 2013 12:02:22 -0700 (PDT)
+Received: from bsmtp.bon.at (bsmtp5.bon.at. [195.3.86.187])
+        by gmr-mx.google.com with ESMTP id cd45si3234641eeb.0.2013.10.21.12.02.22
+        for <msysgit@googlegroups.com>;
+        Mon, 21 Oct 2013 12:02:22 -0700 (PDT)
+Received-SPF: neutral (google.com: 195.3.86.187 is neither permitted nor denied by best guess record for domain of j6t@kdbg.org) client-ip=195.3.86.187;
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id F1BDE130047;
+	Mon, 21 Oct 2013 21:02:21 +0200 (CEST)
+Received: from dx.sixt.local (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id 6A67F19F5CF;
+	Mon, 21 Oct 2013 21:02:21 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.0
+In-Reply-To: <CACsJy8BQ=qzXbMT9OSeQ+aDjLe5ogkUMZzdUhK0ObJP+VHkYvQ@mail.gmail.com>
+X-Original-Sender: j6t@kdbg.org
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
+ (google.com: 195.3.86.187 is neither permitted nor denied by best guess
+ record for domain of j6t@kdbg.org) smtp.mail=j6t@kdbg.org
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236444>
 
-> From: Junio C Hamano <gitster@pobox.com>
-
-> > ... it's not clear why GIT_WORK_TREE exists, ...
+Am 21.10.2013 03:31, schrieb Duy Nguyen:
+> On Mon, Oct 21, 2013 at 12:57 AM, Antoine Pelisse <apelisse@gmail.com> wrote:
+>> My main motive was to not *stop* the process when a long path is met.
+>> Because somebody created a repository on Linux with a long file-name
+>> doesn't mean you should not be able to clone it *at all* on Windows.
 > 
-> The configuration item came _way_ later than the environment, and we
-> need to keep users and scripts from old world working, that is why.
+> That should be handled at the Windows compatibility layer if Windows
+> cannot handle long paths as Linux
 
-OK, that explains a great deal.  IIRC, I first became aware that
-detached worktrees are possible through the documentation of
-core.worktree.  As Git's architecture has a tight binding between the
-repository and the worktree, it made a great deal of sense to me that
-the repository points to the detached worktree.  And the absence of
-core.worktree, a non-detached worktree, is essentially equivalent to
-having core.worktree specify the directory containing the .git
-directory.
+Naah... PATH_MAX is a silly, arbitrary limit. The Git data model does
+not forbid paths longer than PATH_MAX, be it 4096 or 260. A generic
+solution is needed.
 
-So the obvious way (to me) to invoke Git with a detached worktree is
-to set GIT_DIR to point to the repository, and the repository points
-to the root of the worktree.  If the command operates on the worktree,
-Git can compare the cwd with the worktree root to determine the
-relative path of files.
+> (or maybe at higher level to skip
+> checking out those paths).
 
-(And you can see that in this situation, Git doesn't have to search
-upward to try to determine where the worktree root is.)
+More like this, yeah.
 
-What you're saying is that there's an older mode of operation where
-the repository does not point to the worktree.  Instead, the caller
-has to set GIT_DIR to locate the repository and GIT_WORK_TREE to
-locate the worktree.  This would be prone to error, because the user
-is responsible for always pairing the repository with the correct
-worktree; it doesn't enforce the architectural assumption that the
-repository is paired with a work tree.
+-- Hannes
 
-Dale
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/groups/opt_out.
