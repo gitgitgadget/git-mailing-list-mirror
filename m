@@ -1,74 +1,119 @@
-From: =?utf-8?B?T25kxZllaiBCw61sa2E=?= <neleai@seznam.cz>
-Subject: Re: RFE: support change-id generation natively
-Date: Mon, 21 Oct 2013 18:38:12 +0200
-Message-ID: <20131021163812.GA27125@domone.podge>
-References: <2127507934.9293293.1382367063640.JavaMail.root@openwide.fr>
- <1382370119.28365.36627953.50C0496E@webmail.messagingengine.com>
- <CAJo=hJtbciJ3Qg8jo4U5fZ9onf2R2XOospYKGS-jCYz4p-nwRw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: james.moger@gitblit.com, Jeremy Rosen <jeremy.rosen@openwide.fr>,
-	git <git@vger.kernel.org>
-To: Shawn Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Oct 21 18:38:24 2013
+From: arnaud brejeon <arnaud.brejeon@gmail.com>
+Subject: Re: [PATCH 1/2] Add password parameter to git svn commands and use it when provided instead of defaulting to end-user prompt
+Date: Mon, 21 Oct 2013 19:06:29 +0200
+Message-ID: <005DF7EA-CF5A-408F-A145-07F53D836974@gmail.com>
+References: <1381569810-2167-1-git-send-email-arnaud.brejeon@gmail.com> <20131014141127.GA21200@google.com> <20131014184005.GA3352@dcvr.yhbt.net> <20131014223602.GB12116@sigill.intra.peff.net> <20131014233556.GA31230@dcvr.yhbt.net>
+Mime-Version: 1.0 (Mac OS X Mail 6.6 \(1510\))
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>,
+	matthijs@stdin.nl, Eric Wong <normalperson@yhbt.net>
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Oct 21 19:06:41 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VYIUo-00008P-VY
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Oct 2013 18:38:23 +0200
+	id 1VYIwA-0001Ls-7r
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Oct 2013 19:06:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751714Ab3JUQiT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Oct 2013 12:38:19 -0400
-Received: from popelka.ms.mff.cuni.cz ([195.113.20.131]:47610 "EHLO
-	popelka.ms.mff.cuni.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751649Ab3JUQiS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Oct 2013 12:38:18 -0400
-Received: from domone.kolej.mff.cuni.cz (popelka.ms.mff.cuni.cz [195.113.20.131])
-	by popelka.ms.mff.cuni.cz (Postfix) with ESMTPS id 223CB68118;
-	Mon, 21 Oct 2013 18:38:13 +0200 (CEST)
-Received: by domone.kolej.mff.cuni.cz (Postfix, from userid 1000)
-	id D6D585F96A; Mon, 21 Oct 2013 18:38:12 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <CAJo=hJtbciJ3Qg8jo4U5fZ9onf2R2XOospYKGS-jCYz4p-nwRw@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Virus-Scanned: clamav-milter 0.97.6 at popelka.ms.mff.cuni.cz
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-1.8 required=5.0 tests=AWL,BAYES_00,FREEMAIL_FROM,
-	UNPARSEABLE_RELAY autolearn=ham version=3.3.1
-X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on
-	popelka.ms.mff.cuni.cz
+	id S1751341Ab3JURGd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 21 Oct 2013 13:06:33 -0400
+Received: from mail-wi0-f175.google.com ([209.85.212.175]:60176 "EHLO
+	mail-wi0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751078Ab3JURGc convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 21 Oct 2013 13:06:32 -0400
+Received: by mail-wi0-f175.google.com with SMTP id hm4so4300561wib.14
+        for <git@vger.kernel.org>; Mon, 21 Oct 2013 10:06:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=content-type:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=qNuBabQtyrJxdtFdFTjR+lOWxj2x+HMlJHUMdEilf3Y=;
+        b=c/Z6OAwPwy9LrKgEX7fkf0IBQG7johSzFJ2HTkdvyTczb4Nhk2sskXqzdMJZV2xQiE
+         omEs1lAXtTPU4r9z/CGLdHhYApMSr8/uqJ8L3aB5TQ0+q6pwlEkAVll4Lg/1R5m3piYk
+         BQOnJmkqtYitFqd4uxRxOuba7ainiBBgUeL4y0whQ9gl7P5LTqd3ZzXA5TFoZsY5KeVJ
+         uRc2Kg/b40onkCoQomB5g1e6yX2myTjT31BEIm1JpI1HDL9OYdxVN4RxngMZ3r63YRtf
+         +Bc51RUKEmp7yfuBaeDAPsnKYjpVZRN+eDruMBmZqe+OF0ExVBWro9uHicRjjAST4TuJ
+         TEbQ==
+X-Received: by 10.194.94.33 with SMTP id cz1mr7942wjb.73.1382375191719;
+        Mon, 21 Oct 2013 10:06:31 -0700 (PDT)
+Received: from new-host-2.home (APuteaux-552-1-79-43.w90-61.abo.wanadoo.fr. [90.61.246.43])
+        by mx.google.com with ESMTPSA id y20sm34135828wib.0.2013.10.21.10.06.30
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 21 Oct 2013 10:06:31 -0700 (PDT)
+In-Reply-To: <20131014233556.GA31230@dcvr.yhbt.net>
+X-Mailer: Apple Mail (2.1510)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236433>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236434>
 
-On Mon, Oct 21, 2013 at 09:35:07AM -0700, Shawn Pearce wrote:
-> On Mon, Oct 21, 2013 at 8:41 AM,  <james.moger@gitblit.com> wrote:
-> > The change-id is exactly like a commit-id, it is an SHA-1 value, but it
-> > is a constant embedded in the commit message.
-> 
-> https://gerrit-review.googlesource.com/Documentation/user-changeid.html
-> goes into more detail about these.
-> 
-> > Commit-ids change all the time because of amend; change-ids are constant
-> > and they are the key that links commit revisions to a discussion.
-> 
-> In a mailing list based workflow, when an author revises a patch
-> series and resends the new patches aren't linked to the old patches in
-> a MUA, because the Message-Ids of the original versions were not
-> preserved. Imagine if Git saved that original Message-Id somewhere and
-> could properly write In-Reply-To headers so that attempt #2 for each
-> patch replies to the end of the thread discussing attempt #1 of the
-> same patch. In a 30 patch series. Gerrit does this with Change-Id.
-> 
-> 
-> We briefly considered putting the Change-Id into the commit headers
-> (e.g. below the optional encoding) but could not because `git commit`
-> doesn't support this. So it went into the footer along with
-> Signed-off-by provenance data, which is also not expressible in
-> headers.
+I played with GIT_ASKPASS and managed to get a fully automated behavior=
+ without any user prompt.
+I guess that the patches are not necessary as we can provide the same ,=
+ it is just less straightforward than direct parameters but I understan=
+d the security concerns.
 
-What about adding that as Note?
+I dont know if you plan to keep GIT_ASKPASS as is, but this environment=
+ variable is not mentioned on git svn documentation and I guess just a =
+few people know about it. Moreover, the name is misleading as it handle=
+s all the prompts, not only the password one.
+
+Arnaud
+
+Le 15 oct. 2013 =E0 01:35, Eric Wong <normalperson@yhbt.net> a =E9crit =
+:
+
+> Jeff King <peff@peff.net> wrote:
+>> On Mon, Oct 14, 2013 at 06:40:05PM +0000, Eric Wong wrote:
+>>=20
+>>>> arnaud.brejeon@gmail.com wrote:
+>>>>=20
+>>>>> Signed-off-by: Arnaud Brejeon <arnaud.brejeon <at> gmail.com>
+>>>>=20
+>>>> Thanks.
+>>>>=20
+>>>> Can you say a little more about the context?  Do you run a script =
+that
+>>>> wants to pass a password to 'git svn', do you type it each time on=
+ the
+>>>> command line, or something else?  Is it ok that the password would
+>>>> show up in "ps" output?  Would the platform's keyring or netrc be
+>>>> usable here, or is there something in the context that avoids that=
+?
+>>>=20
+>>> I think using keyring or netrc is more appropriate.  Having a passw=
+ord
+>>> on the command-line and visible to all via ps doesn't seem like
+>>> something git should support.
+>>=20
+>> Agreed. We have ready-made git-credential helpers to handle this exa=
+ct
+>> problem. We would need to convert SVN::Prompt to use git-credential
+>> rather than prompting itself, though. One of the things that held me
+>> back from writing such a patch is that I thought libsvn already hand=
+led
+>> things like keychain integration, and it was better for git-svn to b=
+e
+>> more svn-like than git-like in its access of SVN repos.
+>>=20
+>> Are those already supported out of the box by libsvn? If git's
+>> credential helpers are significantly more featureful, it might be wo=
+rth
+>> converting, but if not, I think it makes sense to stay with svn's
+>> existing code.
+>=20
+> I looks like this patch was forgotten once again:
+>=20
+> http://mid.gmane.org/1371573490-21973-1-git-send-email-matthijs@stdin=
+=2Enl
+>=20
+> Matthijs: can you add a Signed-off-by for your patch?  I'm inclined t=
+o
+> push it to Junio as-is since it looks reasonable.
+> I admit I don't know SVN callbacks anymore well enough and don't have
+> time to test with GNOME.
