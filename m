@@ -1,89 +1,90 @@
-From: Martin Fick <mfick@codeaurora.org>
-Subject: Re: RFE: support change-id generation natively
-Date: Mon, 21 Oct 2013 12:49:49 -0600
-Organization: CAF
-Message-ID: <201310211249.49568.mfick@codeaurora.org>
-References: <2127507934.9293293.1382367063640.JavaMail.root@openwide.fr> <201310212029.01589.thomas@koch.ro> <1382380858.25852.36711509.53CF173C@webmail.messagingengine.com>
-Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="iso-8859-15"
-Content-Transfer-Encoding: 7bit
-Cc: Thomas Koch <thomas@koch.ro>,
-	Jeremy Rosen <jeremy.rosen@openwide.fr>, git@vger.kernel.org,
-	Shawn Pearce <spearce@spearce.org>
-To: james.moger@gitblit.com
-X-From: git-owner@vger.kernel.org Mon Oct 21 20:49:57 2013
+From: worley@alum.mit.edu (Dale R. Worley)
+Subject: Re: [git-users] Problem using detached worktrees with commands implemented in scripts
+Date: Mon, 21 Oct 2013 14:51:24 -0400
+Message-ID: <201310211851.r9LIpOaH000372@freeze.ariadne.com>
+References: <201310162003.r9GK3UYj014414@freeze.ariadne.com>
+	<xmqqeh7k51vg.fsf@gitster.dls.corp.google.com>
+	<201310171909.r9HJ9mxd007908@freeze.ariadne.com>
+	<xmqq4n8fzmmj.fsf@gitster.dls.corp.google.com>
+	<201310182225.r9IMP4i3002659@freeze.ariadne.com> <xmqqy55qurmf.fsf@gitster.dls.corp.google.com>
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Oct 21 20:51:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VYKY8-00069x-Mn
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Oct 2013 20:49:57 +0200
+	id 1VYKZe-000769-Ur
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Oct 2013 20:51:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751809Ab3JUStx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Oct 2013 14:49:53 -0400
-Received: from smtp.codeaurora.org ([198.145.11.231]:44525 "EHLO
-	smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751803Ab3JUStw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Oct 2013 14:49:52 -0400
-Received: from smtp.codeaurora.org (localhost [127.0.0.1])
-	by smtp.codeaurora.org (Postfix) with ESMTP id 1B95113EE01;
-	Mon, 21 Oct 2013 18:49:52 +0000 (UTC)
-Received: by smtp.codeaurora.org (Postfix, from userid 486)
-	id 0DCF713EFFA; Mon, 21 Oct 2013 18:49:52 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on
-	pdx-caf-smtp.dmz.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=5.0 tests=ALL_TRUSTED,BAYES_00
-	autolearn=ham version=3.3.1
-Received: from mfick-lnx.localnet (mfick-lnx.qualcomm.com [129.46.10.58])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	(Authenticated sender: mfick@smtp.codeaurora.org)
-	by smtp.codeaurora.org (Postfix) with ESMTPSA id 8915213EE01;
-	Mon, 21 Oct 2013 18:49:51 +0000 (UTC)
-User-Agent: KMail/1.13.5 (Linux/2.6.32.49+drm33.21-mfick7; KDE/4.4.5; x86_64; ; )
-In-Reply-To: <1382380858.25852.36711509.53CF173C@webmail.messagingengine.com>
-X-Virus-Scanned: ClamAV using ClamSMTP
+	id S1751784Ab3JUSv1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Oct 2013 14:51:27 -0400
+Received: from qmta10.westchester.pa.mail.comcast.net ([76.96.62.17]:41088
+	"EHLO qmta10.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751624Ab3JUSv0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 21 Oct 2013 14:51:26 -0400
+Received: from omta02.westchester.pa.mail.comcast.net ([76.96.62.19])
+	by qmta10.westchester.pa.mail.comcast.net with comcast
+	id fo9X1m0050QuhwU5AurRkk; Mon, 21 Oct 2013 18:51:25 +0000
+Received: from freeze.ariadne.com ([24.34.72.61])
+	by omta02.westchester.pa.mail.comcast.net with comcast
+	id furR1m0011KKtkw3NurRt0; Mon, 21 Oct 2013 18:51:25 +0000
+Received: from freeze.ariadne.com (freeze.ariadne.com [127.0.0.1])
+	by freeze.ariadne.com (8.14.5/8.14.5) with ESMTP id r9LIpOr9000373;
+	Mon, 21 Oct 2013 14:51:24 -0400
+Received: (from worley@localhost)
+	by freeze.ariadne.com (8.14.5/8.14.5/Submit) id r9LIpOaH000372;
+	Mon, 21 Oct 2013 14:51:24 -0400
+In-reply-to: <xmqqy55qurmf.fsf@gitster.dls.corp.google.com>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
+	s=q20121106; t=1382381485;
+	bh=5MHcgii/zJWuYDKitmDY9d6JRHztea2wbKYpPEwJ7rU=;
+	h=Received:Received:Received:Received:Date:Message-Id:From:To:
+	 Subject;
+	b=RuhwJTy/GQHzKXqQ5DyupNrdU2xHxXX+1Mp5rBGpx7g1tQb/MddvFRGg8XaT31b+W
+	 hcmfDVbi4+AH6CkKo0z64MVEOszJSokR5oGaf7e3ZcpYpFjSuQ66n/5wOaJ7QDzazy
+	 fiMKq1ysJZU1BbbLWibDdbmMA/SXqQHRo51OWgeiW6eF6JO0fEgG5aVjxsBSiZJSHH
+	 c9POTKIvWYE3N5p/5VGpDxxmf5vHGpP3pagN0Jm6htvCV7Wpy/AfzO52+y4B6wHG8L
+	 sNKFMHicwdl6z0DF+TSV70JA6VP3q3YnKVK9WGEMbfe6qC0BeTzBIVZejYhCrp++Ik
+	 gSr50vh65uvkg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236442>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236443>
 
-On Monday, October 21, 2013 12:40:58 pm 
-james.moger@gitblit.com wrote:
-> On Mon, Oct 21, 2013, at 02:29 PM, Thomas Koch wrote:
-> > As I understand, a UUID could also be used for the same
-> > purbose as the change-
-> > id. How is the change-id generated by the way? Would it
-> > be a good english name
-> > to call it enduring commit identifier?
+> From: Junio C Hamano <gitster@pobox.com>
+
+> > ... it's not clear why GIT_WORK_TREE exists, ...
 > 
-> Here is the algorithm:
-> https://git.eclipse.org/c/jgit/jgit.git/tree/org.eclipse.
-> jgit/src/org/eclipse/jgit/util/ChangeIdUtil.java#n78
-> 
-> I think "enduring commit id" is a fair interpretation of
-> it's purpose. I don't speak for the Gerrit developers so
-> I can not say if they are interested in alternative id
-> generation.  I come to the list as a change-id
-> user/consumer.
+> The configuration item came _way_ later than the environment, and we
+> need to keep users and scripts from old world working, that is why.
 
-As a Gerrit maintainer, I would suspect that we would 
-welcome a way to track "changes" natively in git.  Despite 
-any compatibility issues with the current Gerrit 
-implementation, I suspect we would be open to new forms if 
-the git community has a better proposal than the current 
-Change-Id.  Especially if it does reduce the significant 
-user pain point of installing a hook!
+OK, that explains a great deal.  IIRC, I first became aware that
+detached worktrees are possible through the documentation of
+core.worktree.  As Git's architecture has a tight binding between the
+repository and the worktree, it made a great deal of sense to me that
+the repository points to the detached worktree.  And the absence of
+core.worktree, a non-detached worktree, is essentially equivalent to
+having core.worktree specify the directory containing the .git
+directory.
 
+So the obvious way (to me) to invoke Git with a detached worktree is
+to set GIT_DIR to point to the repository, and the repository points
+to the root of the worktree.  If the command operates on the worktree,
+Git can compare the cwd with the worktree root to determine the
+relative path of files.
 
--Martin
+(And you can see that in this situation, Git doesn't have to search
+upward to try to determine where the worktree root is.)
 
+What you're saying is that there's an older mode of operation where
+the repository does not point to the worktree.  Instead, the caller
+has to set GIT_DIR to locate the repository and GIT_WORK_TREE to
+locate the worktree.  This would be prone to error, because the user
+is responsible for always pairing the repository with the correct
+worktree; it doesn't enforce the architectural assumption that the
+repository is paired with a work tree.
 
--- 
-The Qualcomm Innovation Center, Inc. is a member of Code 
-Aurora Forum, hosted by The Linux Foundation
- 
+Dale
