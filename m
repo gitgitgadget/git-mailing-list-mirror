@@ -1,184 +1,95 @@
-From: Anders Waldenborg <anders.waldenborg@gmail.com>
-Subject: [PATCH] diff: Add diff.orderfile configuration variable
-Date: Mon, 21 Oct 2013 12:31:59 +0200
-Message-ID: <CADsOX3DBmNituJsiYEBRENQeosASXtV_hd0zUW13cBoDZWHRhg@mail.gmail.com>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [PATCH] rebase: use reflog to find common base with upstream
+Date: Mon, 21 Oct 2013 12:24:08 +0100
+Message-ID: <20131021112408.GA24317@serenity.lan>
+References: <d8e9f102609ee4502f579cb4ce872e0a40756204.1381949622.git.john@keeping.me.uk>
+ <CANiSa6gqGKAyLwwPVoZ_gzN85_06aTCfkdRRscNNZYs7g1rL0A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 21 12:32:15 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Martin von Zweigbergk <martinvonz@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 21 13:24:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VYCmT-0004ob-SW
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Oct 2013 12:32:14 +0200
+	id 1VYDaz-000453-BP
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Oct 2013 13:24:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753006Ab3JUKcA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Oct 2013 06:32:00 -0400
-Received: from mail-ie0-f178.google.com ([209.85.223.178]:47458 "EHLO
-	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752858Ab3JUKb7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Oct 2013 06:31:59 -0400
-Received: by mail-ie0-f178.google.com with SMTP id to1so15275619ieb.9
-        for <git@vger.kernel.org>; Mon, 21 Oct 2013 03:31:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=7UQ7XtDoo7eQLDbdcGOff3PfNtMwWko5M1KyNXSdkjE=;
-        b=dBMwF4XbgOUUp2gEIMXHfY5f00llqP1ORCq/Bpso0JzgsY7I0KedUMQzF88qduf/u7
-         /4ltKfi4RzycP6w9TVGIp0eVbDsdvAvkZGIyXHKiZ2lezuEQzhBzmoWKvNleTlS2A/Yh
-         /tGJ23pYnogBWEVyIqLOVigl9N0G4g3pUman5eDg+iVBdscPvU5lpy3ZOQOboeJz/Ng3
-         kbWo25WsJGMeeYMncyigbN8OJpf8T7ZCbo0MiS4/5SAw+BmS4PsVEmJ735U/fhndlKCH
-         SkfzfCzPr7nKB9bomDKnMwHrdInb9XcaZXxTzTzi6M7ARN2haDKt+bzsevVHxbaaRTxE
-         qgDg==
-X-Received: by 10.50.61.179 with SMTP id q19mr8718351igr.33.1382351519250;
- Mon, 21 Oct 2013 03:31:59 -0700 (PDT)
-Received: by 10.64.59.33 with HTTP; Mon, 21 Oct 2013 03:31:59 -0700 (PDT)
+	id S1753263Ab3JULYV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Oct 2013 07:24:21 -0400
+Received: from coyote.aluminati.org ([72.9.247.114]:36143 "EHLO
+	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753207Ab3JULYU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Oct 2013 07:24:20 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by coyote.aluminati.org (Postfix) with ESMTP id 3D3766064D7;
+	Mon, 21 Oct 2013 12:24:20 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -2.9
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9] autolearn=ham
+Received: from coyote.aluminati.org ([127.0.0.1])
+	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id I+rrSRzKmQp4; Mon, 21 Oct 2013 12:24:19 +0100 (BST)
+Received: from serenity.lan (banza.aluminati.org [10.0.7.182])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by coyote.aluminati.org (Postfix) with ESMTPSA id DACC16064DD;
+	Mon, 21 Oct 2013 12:24:13 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <CANiSa6gqGKAyLwwPVoZ_gzN85_06aTCfkdRRscNNZYs7g1rL0A@mail.gmail.com>
+User-Agent: Mutt/1.5.22 (2013-10-16)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236427>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236428>
 
-diff.orderfile acts as a default for the -O command line option.
+On Sun, Oct 20, 2013 at 10:03:29PM -0700, Martin von Zweigbergk wrote:
+> On Wed, Oct 16, 2013 at 11:53 AM, John Keeping <john@keeping.me.uk> wrote:
+> > Commit 15a147e (rebase: use @{upstream} if no upstream specified,
+> > 2011-02-09) says:
+> >
+> >         Make it default to 'git rebase @{upstream}'. That is also what
+> >         'git pull [--rebase]' defaults to, so it only makes sense that
+> >         'git rebase' defaults to the same thing.
+> >
+> > but that isn't actually the case.  Since commit d44e712 (pull: support
+> > rebased upstream + fetch + pull --rebase, 2009-07-19), pull has actually
+> > chosen the most recent reflog entry which is an ancestor of the current
+> > branch if it can find one.
+> 
+> It is exactly this inconsistency between "git rebase" and "git pull
+> --rebase" that confused me enough to make me send my first email to
+> this list almost 4 years ago [1], so thanks for working on this! I
+> finished that thread with:
+> 
+>   Would it make sense to teach "git rebase" the same tricks as "git
+> pull --rebase"?
+> 
+> Then it took me a year before I sent a patch not unlike this one [2].
+> To summarize, the patch did not get accepted then because it makes
+> rebase a little slower (or a lot slower in some cases). "git pull
+> --rebase" is of course at least as slow in the same cases, but because
+> it often involves connecting to a remote host, people would probably
+> blame the connection rather than git itself even in those rare (?)
+> cases.
+> 
+> I think
+> 
+>   git merge-base HEAD $(git rev-list -g "$upstream_name")
+> 
+> is roughly correct and hopefully fast enough. That can lead to too
+> long a command line, so I was planning on teaching merge-base a
+> --stdin option, but never got around to it.
 
-Signed-off-by: Anders Waldenborg <anders@0x63.nu>
----
-
- Documentation/diff-config.txt |  4 +++
- diff.c                        |  5 +++
- t/t4056-diff-order.sh         | 74 +++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 83 insertions(+)
- create mode 100755 t/t4056-diff-order.sh
-
-diff --git a/Documentation/diff-config.txt b/Documentation/diff-config.txt
-index 223b931..51f9190 100644
---- a/Documentation/diff-config.txt
-+++ b/Documentation/diff-config.txt
-@@ -98,6 +98,10 @@ diff.mnemonicprefix::
- diff.noprefix::
-  If set, 'git diff' does not show any source or destination prefix.
-
-+diff.orderfile::
-+ Path to file to use for ordering the files in the diff, each line
-+ is a shell glob pattern; equivalent to the 'git diff' option '-O'.
-+
- diff.renameLimit::
-  The number of files to consider when performing the copy/rename
-  detection; equivalent to the 'git diff' option '-l'.
-diff --git a/diff.c b/diff.c
-index a04a34d..e66f031 100644
---- a/diff.c
-+++ b/diff.c
-@@ -30,6 +30,7 @@ static int diff_use_color_default = -1;
- static int diff_context_default = 3;
- static const char *diff_word_regex_cfg;
- static const char *external_diff_cmd_cfg;
-+static const char *diff_order_file_cfg;
- int diff_auto_refresh_index = 1;
- static int diff_mnemonic_prefix;
- static int diff_no_prefix;
-@@ -201,6 +202,8 @@ int git_diff_ui_config(const char *var, const char
-*value, void *cb)
-  return git_config_string(&external_diff_cmd_cfg, var, value);
-  if (!strcmp(var, "diff.wordregex"))
-  return git_config_string(&diff_word_regex_cfg, var, value);
-+ if (!strcmp(var, "diff.orderfile"))
-+ return git_config_string(&diff_order_file_cfg, var, value);
-
-  if (!strcmp(var, "diff.ignoresubmodules"))
-  handle_ignore_submodules_arg(&default_diff_options, value);
-@@ -3207,6 +3210,8 @@ void diff_setup(struct diff_options *options)
-  options->detect_rename = diff_detect_rename_default;
-  options->xdl_opts |= diff_algorithm;
-
-+ options->orderfile = diff_order_file_cfg;
-+
-  if (diff_no_prefix) {
-  options->a_prefix = options->b_prefix = "";
-  } else if (!diff_mnemonic_prefix) {
-diff --git a/t/t4056-diff-order.sh b/t/t4056-diff-order.sh
-new file mode 100755
-index 0000000..fd005d6
---- /dev/null
-+++ b/t/t4056-diff-order.sh
-@@ -0,0 +1,74 @@
-+#!/bin/sh
-+
-+test_description='diff order'
-+
-+. ./test-lib.sh
-+
-+_test_create_files () {
-+ mkdir c
-+ echo "$1" >a.h
-+ echo "$1" >b.c
-+ echo "$1" >c/Makefile
-+ echo "$1" >d.txt
-+ git add a.h b.c c/Makefile d.txt && \
-+ git commit -m"$1"
-+}
-+
-+cat >order_file_1 <<EOF
-+*Makefile
-+*.txt
-+*.h
-+*
-+EOF
-+cat >order_file_2 <<EOF
-+*.h
-+*.c
-+*Makefile
-+*
-+EOF
-+
-+cat >expect_diff_headers_none <<EOF
-+diff --git a/a.h b/a.h
-+diff --git a/b.c b/b.c
-+diff --git a/c/Makefile b/c/Makefile
-+diff --git a/d.txt b/d.txt
-+EOF
-+
-+cat >expect_diff_headers_1 <<EOF
-+diff --git a/c/Makefile b/c/Makefile
-+diff --git a/d.txt b/d.txt
-+diff --git a/a.h b/a.h
-+diff --git a/b.c b/b.c
-+EOF
-+
-+cat >expect_diff_headers_2 <<EOF
-+diff --git a/a.h b/a.h
-+diff --git a/b.c b/b.c
-+diff --git a/c/Makefile b/c/Makefile
-+diff --git a/d.txt b/d.txt
-+EOF
-+
-+test_expect_success "setup" '_test_create_files 1 && _test_create_files 2'
-+
-+test_expect_success "no order (=tree object order)" '
-+ git diff HEAD^..HEAD | grep ^diff >actual_diff_headers &&
-+ test_debug actual_diff_headers
-+ test_cmp expect_diff_headers_none actual_diff_headers'
-+
-+test_expect_success "orderfile using option" '
-+ git diff -Oorder_file_1 HEAD^..HEAD | grep ^diff >actual_diff_headers &&
-+ test_debug actual_diff_headers
-+ test_cmp expect_diff_headers_1 actual_diff_headers &&
-+ git diff -Oorder_file_2 HEAD^..HEAD | grep ^diff >actual_diff_headers &&
-+ test_debug actual_diff_headers
-+ test_cmp expect_diff_headers_2 actual_diff_headers'
-+
-+test_expect_success "orderfile using config" '
-+ git -c diff.orderfile=order_file_1 diff HEAD^..HEAD | grep ^diff
->actual_diff_headers &&
-+ test_debug actual_diff_headers
-+ test_cmp expect_diff_headers_1 actual_diff_headers &&
-+ git -c diff.orderfile=order_file_2 diff HEAD^..HEAD | grep ^diff
->actual_diff_headers &&
-+ test_debug actual_diff_headers
-+ test_cmp expect_diff_headers_2 actual_diff_headers'
-+
-+test_done
--- 
-1.8.4.1.559.gdb9bdfb.dirty
+I'm not sure we should worry about the additional overhead here.  In the
+common case, we should hit a common ancestor within the first couple of
+reflog entries; and in the case that will be slow, it's likely that
+there are a lot of differences between the branches so the cherry
+comparison phase will take a while anyway.
