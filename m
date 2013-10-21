@@ -1,181 +1,80 @@
-From: james.moger@gitblit.com
+From: Shawn Pearce <spearce@spearce.org>
 Subject: Re: RFE: support change-id generation natively
-Date: Mon, 21 Oct 2013 11:41:59 -0400
-Message-ID: <1382370119.28365.36627953.50C0496E@webmail.messagingengine.com>
-References: <2127507934.9293293.1382367063640.JavaMail.root@openwide.fr>
+Date: Mon, 21 Oct 2013 09:35:07 -0700
+Message-ID: <CAJo=hJtbciJ3Qg8jo4U5fZ9onf2R2XOospYKGS-jCYz4p-nwRw@mail.gmail.com>
+References: <2127507934.9293293.1382367063640.JavaMail.root@openwide.fr> <1382370119.28365.36627953.50C0496E@webmail.messagingengine.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jeremy Rosen <jeremy.rosen@openwide.fr>
-X-From: git-owner@vger.kernel.org Mon Oct 21 17:42:08 2013
+Cc: Jeremy Rosen <jeremy.rosen@openwide.fr>, git <git@vger.kernel.org>
+To: james.moger@gitblit.com
+X-From: git-owner@vger.kernel.org Mon Oct 21 18:35:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VYHcM-0006Cq-ON
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Oct 2013 17:42:07 +0200
+	id 1VYIS5-0006kB-F6
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Oct 2013 18:35:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753426Ab3JUPmB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 21 Oct 2013 11:42:01 -0400
-Received: from out3-smtp.messagingengine.com ([66.111.4.27]:60168 "EHLO
-	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753329Ab3JUPmA convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Oct 2013 11:42:00 -0400
-Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 8305221583;
-	Mon, 21 Oct 2013 11:41:59 -0400 (EDT)
-Received: from web5 ([10.202.2.215])
-  by compute3.internal (MEProxy); Mon, 21 Oct 2013 11:41:59 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=gitblit.com; h=
-	message-id:from:to:cc:mime-version:content-transfer-encoding
-	:content-type:in-reply-to:references:subject:date; s=mesmtp; bh=
-	jjGUvaZuLlsgjbHob68RdA5YTng=; b=DcK69XAtlm/kKYr6jAmj10zfd0r79g3Y
-	CgK1yfqa+eQcogJO8kKhPlRy7zAFf8Fu2yzOcs5sfoiFTf0JvTXY7RJ3srr32n2P
-	EPRFok1KVIgeEETa0OUrE785furir4k6DTf6G09nHhQ+xEtB/eEn7vZEZYY4HWvp
-	xy/lclaOrk4=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:from:to:cc:mime-version
-	:content-transfer-encoding:content-type:in-reply-to:references
-	:subject:date; s=smtpout; bh=jjGUvaZuLlsgjbHob68RdA5YTng=; b=Eyw
-	xCFQoEh7HdsJf8tJpoE7FS0JiUrclEW7rZovPyTJp0Gk0IanKcdcgsHs2HaSDzLi
-	ykL6FGzXp4SdB+ySnjK5EJrRfuW7NGphK5FDdtXJUmqf6fciPBR9GfDhAT16SB67
-	XFr8pXlb7ZqRrO7yumlqrWWAxdPXDTMGjP0rC7QI=
-Received: by web5.nyi.mail.srv.osa (Postfix, from userid 99)
-	id 527F3A75D10; Mon, 21 Oct 2013 11:41:59 -0400 (EDT)
-X-Sasl-Enc: IlQdSWuNIVF0LSaJGvaEXkWpKoweUMZV27kVFdeMOYc+ 1382370119
-X-Mailer: MessagingEngine.com Webmail Interface - ajax-0cc2f9cc
-In-Reply-To: <2127507934.9293293.1382367063640.JavaMail.root@openwide.fr>
+	id S1751051Ab3JUQf3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Oct 2013 12:35:29 -0400
+Received: from mail-wg0-f51.google.com ([74.125.82.51]:56202 "EHLO
+	mail-wg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750937Ab3JUQf2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Oct 2013 12:35:28 -0400
+Received: by mail-wg0-f51.google.com with SMTP id l18so6721564wgh.6
+        for <git@vger.kernel.org>; Mon, 21 Oct 2013 09:35:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=spearce.org; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=nQ1uY2gkrN+rUDTy7WEy57ewLfKj/75GknCtuxm9RA4=;
+        b=YFA7Uc+Xmip3h9+f+UJWw46ybRbXMhtlaHp/7mmtfan9C9ibFgalJHh+vsJSburlkK
+         51jcVhviRz3bA3ZX1zX7bm03LE785UI7DlYPYw9A4RBWYakvic3n+qVHYBG15AoULSDi
+         q2H4899ECtAyTxXe74Vf8J2Rz9n+JjZ0rq0JM=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=nQ1uY2gkrN+rUDTy7WEy57ewLfKj/75GknCtuxm9RA4=;
+        b=j2eGJXHAVQJ2DxYu8FaymnhVEwg7nDdryiVwam0A1/e8UPuMBTa7Zhq6qBusLvHF8U
+         tABSIYIqUH+4LwCJFI34StwoOeFaxZF+5H/be0OktSPy+72WT819ZbXgbFQ/QNDkhbem
+         3oyCYvJUVqnV+LcjF5oVUINPDo6EGnlv8uDMrUB0Y/X5RUyDRQu9wNLAGowVE5ei1SBI
+         dPrJNfgFTmyc+OTw/3uhB/kpM73vjWf8iWOKuyfZhOHgfLfu11fF7JmcaubXuTRxlegi
+         rq/zCqy81RaQ4/BNBVX6nYyH7Zrl9LwEWRN2+uHlSgrm/A2FtxguqOCNS4cXOIcAmuTv
+         XE3A==
+X-Gm-Message-State: ALoCoQmEyChbZ0EQAcT1EGyPxGSVZFMOjN8VyijzH81OI9c70CC2226X94Zg0W6yzKY7EZPUt+aU
+X-Received: by 10.194.20.202 with SMTP id p10mr3080752wje.39.1382373327163;
+ Mon, 21 Oct 2013 09:35:27 -0700 (PDT)
+Received: by 10.227.62.140 with HTTP; Mon, 21 Oct 2013 09:35:07 -0700 (PDT)
+In-Reply-To: <1382370119.28365.36627953.50C0496E@webmail.messagingengine.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236431>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236432>
 
-The change-id is exactly like a commit-id, it is an SHA-1 value, but it
-is a constant embedded in the commit message.
+On Mon, Oct 21, 2013 at 8:41 AM,  <james.moger@gitblit.com> wrote:
+> The change-id is exactly like a commit-id, it is an SHA-1 value, but it
+> is a constant embedded in the commit message.
 
-Why does Gerrit need this value?
-Gerrit is based on the concept of revising/polishing a commit or a
-series of commits.
+https://gerrit-review.googlesource.com/Documentation/user-changeid.html
+goes into more detail about these.
 
-=46or clarity, consider the case of revising a proposed bug fix.
+> Commit-ids change all the time because of amend; change-ids are constant
+> and they are the key that links commit revisions to a discussion.
 
-You checkout the current revision of a proposed bug fix commit that has
-a change-id value in it's message.  You revise and _amend_ this commit,
-preserving the change-id in the commit message.  Now your commit-id has
-changed, but your change-id is still the same.  You then upload your
-amended commit to Gerrit which links the amended commit with the
-discussion/review.
-
-Commit-ids change all the time because of amend; change-ids are constan=
-t
-and they are the key that links commit revisions to a discussion.
-
-What I am requesting is a feature that generates and injects the
-Change-Id value for the very first commit revision.  This commit is
-special because it will create the discussion in Gerrit for the commit.=
-=20
-Gerrit relies on client-side change-id generation for this initial
-commit.  This allows contributors to propose new ideas by implementing
-that idea and pushing the proposed implementation to Gerrit.  Gerrit
-intercepts this and automatically creates a discussion/review keyed by
-the specified Change-Id value.  And now through the --amend process,
-this commit can be revised and polished until it is blessed by a
-reviewer for merging to some integration branch.
-
--J
+In a mailing list based workflow, when an author revises a patch
+series and resends the new patches aren't linked to the old patches in
+a MUA, because the Message-Ids of the original versions were not
+preserved. Imagine if Git saved that original Message-Id somewhere and
+could properly write In-Reply-To headers so that attempt #2 for each
+patch replies to the end of the thread discussing attempt #1 of the
+same patch. In a 30 patch series. Gerrit does this with Change-Id.
 
 
-
-On Mon, Oct 21, 2013, at 10:51 AM, Jeremy Rosen wrote:
-> for those of us that are not using gerrit...
->=20
-> what is a change-id (semantically, I got from your mail that it is so=
-me
-> sort
-> of unit id set at commit time) and in what way is it different from t=
-he=20
-> commit-id ?
->=20
-> Cordialement=20
->=20
-> J=E9r=E9my Rosen=20
-> +33 (0)1 42 68 28 04
->=20
-> fight key loggers : write some perl using vim=20
->=20
->=20
-> Open Wide Ingenierie
->=20
-> 23, rue Daviel
-> 75012 Paris - France
-> www.openwide.fr
->=20
->=20
->=20
->=20
->=20
-> ----- Mail original -----
-> > Hello Git Community,
-> >=20
-> > TL;DR:
-> > It would be a really nice enhancement if the commit command nativel=
-y
-> > supported _optionally_ injecting a "Change-Id: I000..." footer in t=
-he
-> > last paragraph of the commit message template and then substituting
-> > the
-> > "I000..." value, on commit, with a generated value _without_ having
-> > to
-> > rely on a per-repository, native hook or a global hook that affects
-> > every local repository.
-> >=20
-> > Full Request:
-> > Gerrit has established the change-id footer as a prominent and
-> > wide-spread collaboration identifier.  For those contributing new
-> > patches to a Gerrit server, it is required to either use EGit/JGit
-> > (Eclipse) to generate commits [1] OR to use a commit hook script wi=
-th
-> > native git to insert a change-id footer during the commit process
-> > [2].
-> > This per-repository hook script requirement is an obstacle.  These
-> > communities would be better served and it would lower the
-> > contribution
-> > barrier for many open source projects if native git supported
-> > change-id
-> > generation & injection.
-> >=20
-> > I acknowledge that not everyone uses nor wants to use Gerrit and th=
-e
-> > change-id footer.  That is fine, but it would be a _tremendous_
-> > usability improvement for those contributing to open source project=
-s
-> > (myself included) if something like a "--change-id" flag  was
-> > implemented and maybe even a config setting to always generate a
-> > change-id on commit (EGit currently supports this as
-> > "gerrit.createchangeid=3Dtrue").
-> >=20
-> > Sadly, my C skills are lacking as I live mostly in the world of
-> > managed
-> > code, but I'd be very happy to cheer for a change-id champion; I
-> > suspect
-> > there are some out there who might rally to this cause.
-> >=20
-> > Thanks for your consideration.
-> > James Moger
-> > gitblit.com
-> >=20
-> > [1]
-> > https://git.eclipse.org/c/jgit/jgit.git/tree/org.eclipse.jgit/src/o=
-rg/eclipse/jgit/api/CommitCommand.java?h=3Dstable-3.1#n288
-> > [2]
-> > http://gerrit-documentation.googlecode.com/svn/Documentation/2.0/cm=
-d-hook-commit-msg.html
-> > --
-> > To unsubscribe from this list: send the line "unsubscribe git" in
-> > the body of a message to majordomo@vger.kernel.org
-> > More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> >=20
+We briefly considered putting the Change-Id into the commit headers
+(e.g. below the optional encoding) but could not because `git commit`
+doesn't support this. So it went into the footer along with
+Signed-off-by provenance data, which is also not expressible in
+headers.
