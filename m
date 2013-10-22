@@ -1,85 +1,61 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: RFE: support change-id generation natively
-Date: Mon, 21 Oct 2013 16:10:18 -0700
-Message-ID: <CAJo=hJsEHO7ZL6UBbBBijRNHqk=ttA07cFJ7KBW381jTEpvOQw@mail.gmail.com>
-References: <2127507934.9293293.1382367063640.JavaMail.root@openwide.fr>
- <1382370119.28365.36627953.50C0496E@webmail.messagingengine.com>
- <201310212029.01589.thomas@koch.ro> <1382380858.25852.36711509.53CF173C@webmail.messagingengine.com>
+From: "julia-simina" <thanos@stargate-vortex.com>
+Subject: =?koi8-r?B?7sHJ3snT1MXK28HRINDMz8TP1NfP0s7P09TY?=
+Date: Tue, 22 Oct 2013 03:07:52 +0200
+Message-ID: <20131022015735.AC42F26FF7@svrmail01.thanos.ch>
+Reply-To: "julia-simina" <ogitsova80@saepower.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Thomas Koch <thomas@koch.ro>,
-	Jeremy Rosen <jeremy.rosen@openwide.fr>,
-	git <git@vger.kernel.org>
-To: james.moger@gitblit.com
-X-From: git-owner@vger.kernel.org Tue Oct 22 01:10:49 2013
+Content-Type: text/plain;
+	charset="koi8-r";
+Content-Transfer-Encoding: base64
+To: <elets@agronova.ru>, <kalle_tre@yahoo.fr>, <git@vger.kernel.org>,
+	<den_own@nm.ru>, <sagi@yoga108.ru>
+X-From: git-owner@vger.kernel.org Tue Oct 22 04:07:51 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VYOcY-0006x7-L0
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Oct 2013 01:10:46 +0200
+	id 1VYRNu-0005DW-DF
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Oct 2013 04:07:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752420Ab3JUXKk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Oct 2013 19:10:40 -0400
-Received: from mail-we0-f174.google.com ([74.125.82.174]:50381 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752359Ab3JUXKj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Oct 2013 19:10:39 -0400
-Received: by mail-we0-f174.google.com with SMTP id u56so7251385wes.19
-        for <git@vger.kernel.org>; Mon, 21 Oct 2013 16:10:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spearce.org; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=A+3HJFZyPmSJXPMlBwrljbg83i92UTa3mRdUiHqki5A=;
-        b=RVNxXTTVzzmpztXwxPOprb8a0SOr87oXkoinBI5K3XgLFR2YIoTf9Xk9qHcn4mm8cI
-         L+J9VyjQTGNiDCFArGJNl0RKYcHP85/jsyClFyK5nmC5TERYwa5gB85VAUJPpiQ8cwSC
-         ixKaxRWoAj8AoWshjFVfql1pwHJQGHVr0iqUk=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=A+3HJFZyPmSJXPMlBwrljbg83i92UTa3mRdUiHqki5A=;
-        b=DkjYHAFkg2MzDcFfca3xdpUBp4nyT5s+Baf4Zztn2PITJBsAh33g52SKzrq/QTVV3A
-         h3+OxrLDVQBTt7c3jspYNVFYijrlO06WeE7VtwxhjX7FjXHEQhAJMEmMO25itqGqGVjC
-         XPC2YxAl7U20ApSF4+h9/9mbVD14ai8bGuybdEg67mRugfGN35jw637QFDbgHfV46o9k
-         9D3l89b19oAy8XvbqhFD98c/DymIUKDi13898/zPU0UBwBhsWusR3rYAVYAKK8vdJtpF
-         TU1bCjxmB33A7YcFVHR5sgmLvTtKWkK3y2mex2yx2kcEbUQOggn4zlnHtFEco4TsdWMA
-         FFiQ==
-X-Gm-Message-State: ALoCoQm967QRB5vtLlT0ZIil8eSj39MCfNY7UaqIbRe7LR7ClNTm5Gh4PzVITLkNPVnIS8aMMsYe
-X-Received: by 10.194.24.168 with SMTP id v8mr16000880wjf.28.1382397038281;
- Mon, 21 Oct 2013 16:10:38 -0700 (PDT)
-Received: by 10.227.62.140 with HTTP; Mon, 21 Oct 2013 16:10:18 -0700 (PDT)
-In-Reply-To: <1382380858.25852.36711509.53CF173C@webmail.messagingengine.com>
+	id S1752560Ab3JVCHc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Oct 2013 22:07:32 -0400
+Received: from svrmail01.thanos.ch ([178.33.90.139]:60669 "EHLO
+	svrmail01.thanos.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752152Ab3JVCHb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Oct 2013 22:07:31 -0400
+X-Greylist: delayed 574 seconds by postgrey-1.27 at vger.kernel.org; Mon, 21 Oct 2013 22:07:31 EDT
+Received: from localhost (localhost [127.0.0.1])
+	by svrmail01.thanos.ch (Postfix) with ESMTP id AC42F26FF7;
+	Tue, 22 Oct 2013 03:57:35 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at svrmail01.thanos.ch
+Received: from svrmail01.thanos.ch ([127.0.0.1])
+	by localhost (svrmail01.thanos.ch [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id YBZjb6jasqfd; Tue, 22 Oct 2013 03:57:35 +0200 (CEST)
+Received: from Unknown (unknown [86.111.144.194])
+	by svrmail01.thanos.ch (Postfix) with ESMTPSA id 4F7AE26EB9;
+	Tue, 22 Oct 2013 03:57:34 +0200 (CEST)
+X-Mailer: The Bat! (v6.82.49)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236451>
+X-Spam-Report: 5.5 points;
+ *  2.9 TVD_SPACE_RATIO BODY: TVD_SPACE_RATIO
+ *  2.8 MIME_BASE64_TEXT RAW: Message text disguised using base64 encoding
+ * -8.0 RCVD_IN_DNSWL_HI RBL: Sender listed at http://www.dnswl.org/, high
+ *      trust
+ *      [209.132.180.67 listed in list.dnswl.org]
+ *  2.2 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
+ *      [Blocked - see <http://www.spamcop.net/bl.shtml?86.111.144.194>]
+ *  0.0 RCVD_IN_SORBS_HTTP RBL: SORBS: sender is open HTTP proxy server
+ *      [86.111.144.194 listed in dnsbl.sorbs.net]
+ *  0.2 RCVD_IN_SORBS_SOCKS RBL: SORBS: sender is open SOCKS proxy server
+ *  0.0 RCVD_IN_SORBS_MISC RBL: SORBS: sender is open proxy server
+ *  1.1 RCVD_IN_SORBS_WEB RBL: SORBS: sender is a abuseable web server
+ *  0.9 FORGED_MUA_THEBAT_CS Mail pretending to be from The Bat! (charset)
+ *  3.5 REPTO_OVERQUOTE_THEBAT The Bat! doesn't do quoting like this
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236452>
 
-On Mon, Oct 21, 2013 at 11:40 AM,  <james.moger@gitblit.com> wrote:
->
-> On Mon, Oct 21, 2013, at 02:29 PM, Thomas Koch wrote:
->> As I understand, a UUID could also be used for the same purbose as the
->> change-
->> id. How is the change-id generated by the way? Would it be a good english
->> name
->> to call it enduring commit identifier?
->
-> Here is the algorithm:
-> https://git.eclipse.org/c/jgit/jgit.git/tree/org.eclipse.jgit/src/org/eclipse/jgit/util/ChangeIdUtil.java#n78
-
-For the hyperlink and Java challenged, the Change-Id is essentially
-the commit SHA-1 had the Change-Id not been included. The shell script
-hook Gerrit recommends for use with `git commit` uses `git
-commit-tree` to compute the hash. Which of course later differs after
-the Change-Id is inserted.
-
-> I think "enduring commit id" is a fair interpretation of it's purpose.
-> I don't speak for the Gerrit developers so I can not say if they are
-> interested in alternative id generation.  I come to the list as a
-> change-id user/consumer.
-
-As Martin Fick said, we would be open to an alternative if a better
-one is presented, especially if it is supported by git commit.
+wc7HzMnK08vJyiDawSDNxdPRw8/excsgaHR0cDovL2JzdXJmYWNlLmNvbS90ZW1wbGF0ZXMvYXRv
+bWljL2VpdWdoLmh0bQ0K
