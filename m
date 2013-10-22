@@ -1,93 +1,87 @@
-From: Mandeep Sandhu <mandeepsandhu.chd@gmail.com>
-Subject: Re: Moving commits from one branch to another (improving my git fu!)
-Date: Tue, 22 Oct 2013 18:21:59 +0530
-Message-ID: <CAC+QLdS-DFdQpkhFZ4ZTV_zLk0gst3FgNd+EFcX=8Qgpf2ZdOg@mail.gmail.com>
-References: <CAC+QLdSjTjftgUBy-1cHbATZnX-UO3PavUaLwErhCaxBa-hPmQ@mail.gmail.com>
-	<87d2mx1nq1.fsf@sanitarium.localdomain>
+From: Karsten Blees <karsten.blees@gmail.com>
+Subject: Re: What's cooking in git.git (Oct 2013, #03; Wed, 16)
+Date: Tue, 22 Oct 2013 15:13:22 +0200
+Message-ID: <526679F2.4060701@gmail.com>
+References: <xmqqa9i851t8.fsf@gitster.dls.corp.google.com>	<525FB287.7020204@gmail.com>	<xmqqzjq7y6k7.fsf@gitster.dls.corp.google.com>	<xmqqmwm7y5bf.fsf@gitster.dls.corp.google.com>	<526083E7.6080701@gmail.com> <xmqqfvrywg4y.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git Users <git@vger.kernel.org>
-To: Noufal Ibrahim <noufal@nibrahim.net.in>
-X-From: git-owner@vger.kernel.org Tue Oct 22 14:52:08 2013
+Content-Transfer-Encoding: 7bit
+Cc: Jens Lehmann <Jens.Lehmann@web.de>, git@vger.kernel.org,
+	Thomas Rast <tr@thomasrast.ch>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Oct 22 15:13:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VYbRP-0007Nw-Bb
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Oct 2013 14:52:07 +0200
+	id 1VYbm9-0003Gy-Vw
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Oct 2013 15:13:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753253Ab3JVMwB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Oct 2013 08:52:01 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:58487 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753188Ab3JVMwA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Oct 2013 08:52:00 -0400
-Received: by mail-pb0-f46.google.com with SMTP id un1so2000224pbc.19
-        for <git@vger.kernel.org>; Tue, 22 Oct 2013 05:51:59 -0700 (PDT)
+	id S1753077Ab3JVNNa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Oct 2013 09:13:30 -0400
+Received: from mail-ea0-f171.google.com ([209.85.215.171]:64360 "EHLO
+	mail-ea0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753161Ab3JVNNW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Oct 2013 09:13:22 -0400
+Received: by mail-ea0-f171.google.com with SMTP id n15so4207661ead.16
+        for <git@vger.kernel.org>; Tue, 22 Oct 2013 06:13:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=uep1hSdbNSOUb6XqlUWmiGU3yka6oWUSClX7tMh/O0E=;
-        b=sPt0m2SktNNFOGIgb6tLdEW0a3rrlWf277iMWi3qo2PEA5L/okzgBXyl/0AcQ9t3f2
-         r8enxEqYU/zzuOnDWYr5y+ylHONcKNZopKbCnTfp6Y/ipJ0oZpFsJ0jG3dG85LZ1hXB9
-         Nj7erKC/ULyR2KZ0aNawtBeEEfVDUp7sFv5TLsWZ7uqad0IPM7ZEf0aAU1WcBPj4GtiY
-         0+q3dkPzf4vjoEdkFjGMsgbXvVZf7I9vSiSgvUQQ+OM1ybv+xVicuFExEoc78jpHuj23
-         D7WIlc9uOfwHZZsXRgGpvXSKSoE5rxKWaNXglt47KoXfNfB39SkJSD2vm4ZtQHrHPPpn
-         KKSA==
-X-Received: by 10.68.254.132 with SMTP id ai4mr22744864pbd.51.1382446319677;
- Tue, 22 Oct 2013 05:51:59 -0700 (PDT)
-Received: by 10.66.165.233 with HTTP; Tue, 22 Oct 2013 05:51:59 -0700 (PDT)
-In-Reply-To: <87d2mx1nq1.fsf@sanitarium.localdomain>
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=PPCbFuiquTGfVceX8NXHYTnoNdtneP7Rhq5jSfD9vnc=;
+        b=FcJq5LjdcCje1PcgcpMp1+HF3T0Lymej8ARTHwyOYXj32jFPTL07na3bGpMKoENsT4
+         +yC5CHgcSbY+UlA22mI1h8n52eCSABtocCkFkZq/n4YQgi3VTME9lRNtegCVOCrSApJA
+         j83xyPnSlPjQlDhG4mAHYyXznDvCAzN3k//3ueEOCx+YN8MqHcEaW18IE7NUlC0/219a
+         G7yp58eNn+3qpI7c+bC22JsW/Dql31CJW5tjPw/zqjjXUjn3SLf+0Xclf4LtAV5O06F7
+         8L1STkM2n4/hsGhzT3ruobsXWcfaFwrienIrZ6E3Y+0f4EQUyUIAK1VBUGbsJ+rRBYR7
+         Hirg==
+X-Received: by 10.15.61.137 with SMTP id i9mr8640573eex.50.1382447601776;
+        Tue, 22 Oct 2013 06:13:21 -0700 (PDT)
+Received: from [10.1.100.51] (ns.dcon.de. [77.244.111.149])
+        by mx.google.com with ESMTPSA id w6sm46170204eeo.12.2013.10.22.06.13.20
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 22 Oct 2013 06:13:21 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.0.1
+In-Reply-To: <xmqqfvrywg4y.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236466>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236467>
 
-Thanks for the link.
+Am 18.10.2013 21:09, schrieb Junio C Hamano:
+> Karsten Blees <karsten.blees@gmail.com> writes:
+> 
+>> The coredumps are caused by my patch #10, which free()s
+>> cache_entries when they are removed, in combination with ...
+> 
+> Looking at that patch, it makes me wonder if remove_index_entry_at()
+> and replace_index_entry() should be the ones that frees the old
+> entry in the first place.  A caller may already have a ce pointing
+> at an old entry and use the information from old_ce to update a new
+> one after it installed it, e.g.
+> 
+> 	old_ce = ...
+>         new_ce = make_cache_entry(... old_ce->name, ...);
+>         replace_index_entry(... new_ce);
+> 	new_ce->ce_mode = old_ce->cd_mode;
+> 	free(old_ce);
+> 
+> The same goes for the functions that remove the entry.
+> 
 
-I too tried doing a rebase with --onto, though as I said, I was
-getting a lot of conflicts while doing it.
+Moving free() to the callers or caller's callers would make it much more complicated (more places to change). Besides, most callers don't even have a reference to old_ce and simply remove by position. Of course, this doesn't prevent caller's caller's callers to keep a reference to a removed / replaced entry, as found by Thomas.
 
-So cherry-picking my 2 commits was the solution that worked. I had
-also screwed up my topic branch by doing different combo's of this cmd
-and using --set-upstream-to option to point to 'dev' on a branch that
-was branched off from 'stable'! :)
+> 
+> Going forward, I do agree with your patch #10 that removal or
+> replacing that may make an existing entry unreferenced should free
+> entries that are no longer used, and "use after free" should be
+> forbidden.
+> 
 
-Lesson learned. I'll be careful when doing branching next time :)
+OK, I'll spend some more time analyzing the call hierarchies to see if there are more uses of removed cache_entries. I'll try to post an updated v4 by the end of the week.
 
--mandeep
-
-
-
-On Tue, Oct 22, 2013 at 6:12 PM, Noufal Ibrahim <noufal@nibrahim.net.in> wrote:
-> Mandeep Sandhu <mandeepsandhu.chd@gmail.com> writes:
->
->> Hi All,
->>
->> I'm in a bit of a pickle! :) So I've come to ask for help from the guru's here.
->>
->> My story is not unique but somehow the various suggested solutions
->> don't seem to work in my case.
->>
->> * I was working on a feature which was supposed to be done off our
->> 'dev' branch. But instead I forgot and branched out my topic branch
->> from master (or as we call it 'stable').
->> * I did 2 commits and finished off my work. Only later realizing that
->> it had to be done off 'dev'.
->> * Now I want to move my 2 commits (which are the top 2 commits on my
->> topic branch) to a new branch which is branched off 'dev'.
->
-> I had a situtation similar to this a while ago and used the --onto
-> option to rebase. The details are at
-> http://nibrahim.net.in/2012/01/09/moving_topic_branches_in_git.html
->
-> [...]
->
->
-> --
-> Cordially,
-> Noufal
-> http://nibrahim.net.in
+Karsten
