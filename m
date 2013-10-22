@@ -1,156 +1,110 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: RFE: support change-id generation natively
-Date: Tue, 22 Oct 2013 13:43:17 -0700
-Message-ID: <xmqqppqxrq8q.fsf@gitster.dls.corp.google.com>
-References: <2127507934.9293293.1382367063640.JavaMail.root@openwide.fr>
-	<201310212029.01589.thomas@koch.ro>
-	<1382380858.25852.36711509.53CF173C@webmail.messagingengine.com>
-	<201310211249.49568.mfick@codeaurora.org>
-	<xmqqy55lrsoo.fsf@gitster.dls.corp.google.com>
-	<871B6C10EBEFE342A772D1159D1320855772CBAD@umechphj.easf.csd.disa.mil>
+From: Antoine Pelisse <apelisse@gmail.com>
+Subject: Re: [PATCH] remote-hg: unquote C-style paths when exporting
+Date: Tue, 22 Oct 2013 22:49:23 +0200
+Message-ID: <CALWbr2zsOYNN45d+qHDQ88eLj82iV4QxJ_9ro+RGk7upBJVATA@mail.gmail.com>
+References: <1382115821-12586-1-git-send-email-apelisse@gmail.com>
+	<xmqq4n89t8yw.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "james.moger\@gitblit.com" <james.moger@gitblit.com>,
-	Thomas Koch <thomas@koch.ro>,
-	Jeremy Rosen <jeremy.rosen@openwide.fr>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>,
-	Shawn Pearce <spearce@spearce.org>,
-	Martin Fick <mfick@codeaurora.org>
-To: "Pyeron\, Jason J CTR \(US\)" <jason.j.pyeron.ctr@mail.mil>
-X-From: git-owner@vger.kernel.org Tue Oct 22 22:43:25 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Oct 22 22:49:30 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VYinU-00052F-Ji
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Oct 2013 22:43:24 +0200
+	id 1VYitN-0000Y7-Hf
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Oct 2013 22:49:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755015Ab3JVUnV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Oct 2013 16:43:21 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40874 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754828Ab3JVUnU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Oct 2013 16:43:20 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 78BB34C8F1;
-	Tue, 22 Oct 2013 20:43:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=y07rh1wVgqmlkCYQO5ajMUgErvs=; b=fTEh6c
-	mHl3pXwy5ZtazM9VErwxpA/3VXQoueDUNuPw/IkQR8kSi0qZYJBbyqoVb6aIiSXy
-	6U7Qhx7v+kMF+Jl/+vuJIfxL03+krJnT6kWIk8+hLNY1Z5LYfRcpis6CGRKESuLD
-	tk7pS7siOiXIoa5YidSj1PmGyw/Aa0Fe45obo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ZRnyljnY7cNfzpka9QiEJroVFhbQ7HUR
-	73AxZi9m5gwbHJy20tGgpVkXiGlc+nQ4LzuqJHEIAD5Ynm0tNOFXfjkiQ8NI6slG
-	le6R8s6HlD2il68EyKPK1DqbeQQ44pbImKO57y1EtE1XnmkTXVD/ZNUKUXms4h6W
-	XEpzU/ToChA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 670B94C8F0;
-	Tue, 22 Oct 2013 20:43:19 +0000 (UTC)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9B5AB4C8E9;
-	Tue, 22 Oct 2013 20:43:18 +0000 (UTC)
-In-Reply-To: <871B6C10EBEFE342A772D1159D1320855772CBAD@umechphj.easf.csd.disa.mil>
-	(Jason J. Pyeron's message of "Tue, 22 Oct 2013 20:06:05 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 952EDBB8-3B5A-11E3-829B-8F264F2CC097-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755140Ab3JVUt0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Oct 2013 16:49:26 -0400
+Received: from mail-lb0-f177.google.com ([209.85.217.177]:45495 "EHLO
+	mail-lb0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755093Ab3JVUtZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Oct 2013 16:49:25 -0400
+Received: by mail-lb0-f177.google.com with SMTP id u14so15348lbd.22
+        for <git@vger.kernel.org>; Tue, 22 Oct 2013 13:49:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=7ETrpVeiSV/CvLjChIQKNXOIIgEiKgUsZbZoQCFNxZU=;
+        b=mO0Mep7gV97K5yHUOe4OWXx7FsCFbEQYHR3wVDIHIQramiarR6vq5q/l2SL3JbaxBI
+         Y5PFgCQlROPS4RdWAmZH5r+q19oaIp+rrfJ/QKv2sc+++1CIKKKni255UVGwjijxEAGl
+         cItrRmIGELJ9tL02maJ4BSjFlGa/unGOHsuUripnCZdqssLGjT4so7KswkfBA1O1zIfN
+         NPffNwVzm75fB730exFbt2tFgCkvxf+MWgFz50pm7Bw6HmYjsnnPm9OEcocpctsOZWoy
+         OYfLqqRfoofsb91d4V8lFrb6bn3JqFHQRXHnwbA97hd2v4IWaipAQ4t7V8+29G8x7+GI
+         LrwA==
+X-Received: by 10.152.29.38 with SMTP id g6mr13638258lah.25.1382474963266;
+ Tue, 22 Oct 2013 13:49:23 -0700 (PDT)
+Received: by 10.112.50.240 with HTTP; Tue, 22 Oct 2013 13:49:23 -0700 (PDT)
+In-Reply-To: <xmqq4n89t8yw.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236489>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236490>
 
-"Pyeron, Jason J CTR (US)" <jason.j.pyeron.ctr@mail.mil> writes:
-
->> -----Original Message-----
->> From: Junio C Hamano
->> Sent: Tuesday, October 22, 2013 3:51 PM
->> 
+On Tue, Oct 22, 2013 at 9:13 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Antoine Pelisse <apelisse@gmail.com> writes:
 >
+>> git-fast-import documentation says that paths can be C-style quoted.
+>> Unfortunately, the current remote-hg helper doesn't unquote quoted
+>> path and pass them as-is to Mercurial when the commit is created.
+>>
+>> This result in the following situation:
+>>
+>> - clone a mercurial repository with git
+>> - Add a file with space: `mkdir dir/foo\ bar`
+
+Note to myself, mkdir doesn't create a "file"
+
+>> - Commit that new file, and push the change to mercurial
+>> - The mercurial repository as now a new directory named '"dir', which
+>> contains a file named 'foo bar"'
+>>
+>> Use python ast.literal_eval to unquote the string if it starts with ".
+>> It has been tested with quotes, spaces, and utf-8 encoded file-names.
+>>
+>> Signed-off-by: Antoine Pelisse <apelisse@gmail.com>
+>> ---
 >
-> <snip/>
+> A path you read in fast-import input indeed needs to be unquoted
+> when it begins with a dq, and I _think_ by using ast.literal_eval(),
+> you probably can correctly unquote any valid C-quoted string.
 >
->> I would think.  You might have a funny chicken-and-egg problem with
->> the signed commit, though.  I didn't think that part through.
+> But it bothers me somewhat that what the patch does seems to be
+> overly broad.  Doesn't ast.literal_eval() take a lot more than just
+> strings?
+
+Good point
+
+>     ast.literal_eval(node_or_string)
 >
-> Respectfully, I do not think there is a chicken and egg situation
-> here. Either the user has included a generated id field and value
-> in the portion covered by the signature, or the mutation of the
-> portion covered by the signature has been modified, hence has an
-> invalid signature.
+>         Safely evaluate an expression node or a Unicode or Latin-1
+>         encoded string containing a Python expression. The string or
+>         node provided may only consist of the following Python literal
+>         structures: strings, numbers, tuples, lists, dicts, booleans,
+>         and None.
+
+Fortunately, I don't believe any of the other type can start with a
+dq. So currently, I don't believe we can end-up with anything else but
+a string. We could certainly check that this is always true though.
+
+> Also doesn't Python's double-quoted string have a lot more magic
+> than C-quoted string, e.g.
 >
-> Any user signing their commit, should ensure it is the last
-> operation, or be prepared to resign it later.
+>         $ python -i
+>         >>> import ast
+>         >>> not_cq_path = '"abc" "def"'
+>         >>> ast.literal_eval(not_cq_path)
+>         'abcdef'
 
-Thanks, I think I got what you are saying.
+It is true that I have expected "valid output" from git-fast-export.
+And I don't have in mind any easy solution to detect that the output
+is broken, yet still accepted as a valid string by python. We could
+obviously write a unquote_c_style() equivalent in python if needed.
 
-I was coming from the existing code, assuming that you have a single
-commit without Change Id but has already called do_sign_commit().
-That is what the users today will get out of "commit -S".  But using
-the object name of such a commit as the Change Id, and then creating
-a new commit by appending a new Change Id trailer will not work, as
-that will break the existing signature.
-
-But you can begin from a single commit without Change Id and without
-signature---its object name would be the Change Id.  You can add a
-new Change Id trailer to record that and sign it while creating a
-commit.  It conceptually may be a three-step process, but still can be
-done inside a single invocation of "git commit --change-id -S".
-
-So a rough outline of the patch to implement it may look like below.
-The parsing and passing down of the "--change-id" option is left as
-an exercise to interested readers.  A real patch may have to add an
-extra blank line before the strbuf_addf() if buffer.buf does not end
-with a trailer to separate the "Change Id" line from the end of the
-existing message body.
-
- commit.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
-
-diff --git a/commit.c b/commit.c
-index de16a3c..664ef5d 100644
---- a/commit.c
-+++ b/commit.c
-@@ -1481,17 +1481,22 @@ static const char commit_utf8_warn[] =
- int commit_tree_extended(const struct strbuf *msg, unsigned char *tree,
- 			 struct commit_list *parents, unsigned char *ret,
- 			 const char *author, const char *sign_commit,
--			 struct commit_extra_header *extra)
-+			 struct commit_extra_header *extra,
-+			 unsigned int flags)
- {
- 	int result;
- 	int encoding_is_utf8;
- 	struct strbuf buffer;
-+	int add_change_id = !!(flags & COMMIT_ADD_CHANGE_ID);
- 
- 	assert_sha1_type(tree, OBJ_TREE);
- 
- 	if (memchr(msg->buf, '\0', msg->len))
- 		return error("a NUL byte in commit log message not allowed.");
- 
-+	if (add_change_id && strstr(msg->buf, "\nChange-Id: "))
-+		add_change_id = 0; /* already has one */
-+
- 	/* Not having i18n.commitencoding is the same as having utf-8 */
- 	encoding_is_utf8 = is_encoding_utf8(git_commit_encoding);
- 
-@@ -1534,6 +1539,13 @@ int commit_tree_extended(const struct strbuf *msg, unsigned char *tree,
- 	if (encoding_is_utf8 && !verify_utf8(&buffer))
- 		fprintf(stderr, commit_utf8_warn);
- 
-+	if (add_change_id) {
-+		unsigned char change_id[20];
-+		if (hash_sha1_file(buffer.buf, buffer.len, commit_type, change_id))
-+			return -1;
-+		strbuf_addf(&buffer, "Change-Id: %s\n", sha1_to_hex(change_id));
-+	}
-+
- 	if (sign_commit && do_sign_commit(&buffer, sign_commit))
- 		return -1;
- 
+Thanks,
