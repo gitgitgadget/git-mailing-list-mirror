@@ -1,97 +1,184 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: RFE: support change-id generation natively
-Date: Tue, 22 Oct 2013 12:50:31 -0700
-Message-ID: <xmqqy55lrsoo.fsf@gitster.dls.corp.google.com>
+From: "Pyeron, Jason J CTR (US)" <jason.j.pyeron.ctr@mail.mil>
+Subject: RE: RFE: support change-id generation natively
+Date: Tue, 22 Oct 2013 20:06:05 +0000
+Message-ID: <871B6C10EBEFE342A772D1159D1320855772CBAD@umechphj.easf.csd.disa.mil>
 References: <2127507934.9293293.1382367063640.JavaMail.root@openwide.fr>
 	<201310212029.01589.thomas@koch.ro>
 	<1382380858.25852.36711509.53CF173C@webmail.messagingengine.com>
 	<201310211249.49568.mfick@codeaurora.org>
+ <xmqqy55lrsoo.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: james.moger@gitblit.com, Thomas Koch <thomas@koch.ro>,
-	Jeremy Rosen <jeremy.rosen@openwide.fr>, git@vger.kernel.org,
-	Shawn Pearce <spearce@spearce.org>
-To: Martin Fick <mfick@codeaurora.org>
-X-From: git-owner@vger.kernel.org Tue Oct 22 21:50:41 2013
+Content-Type: multipart/signed; protocol="application/x-pkcs7-signature";
+	micalg=SHA1; boundary="----=_NextPart_000_0061_01CECF40.9BA34C30"
+Cc: "james.moger@gitblit.com" <james.moger@gitblit.com>,
+	Thomas Koch <thomas@koch.ro>,
+	Jeremy Rosen <jeremy.rosen@openwide.fr>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Shawn Pearce <spearce@spearce.org>,
+	Martin Fick <mfick@codeaurora.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Oct 22 22:11:52 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VYhyR-00049c-5P
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Oct 2013 21:50:39 +0200
+	id 1VYiIt-0001b4-1q
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Oct 2013 22:11:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754387Ab3JVTuf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Oct 2013 15:50:35 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54644 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754046Ab3JVTue (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Oct 2013 15:50:34 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 11DB64C902;
-	Tue, 22 Oct 2013 19:50:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=KZMlMg4WD0M28lmEvad8WHjS72A=; b=nL1/TL
-	kpeYT0fh/mFJMxk+APguvGTKk+5a2bu4g8cU643QQYjSABCn3F5ZeKXnAs3m8yZV
-	axYLrZo4QeDwcUStkCQdnp9G/Q5X2tLjfCYyMQfiQ7Jcr3t5GjrIsZpA3VwOczvI
-	u2BiMdnNixnYkmhMnOEj3rpNKBeTpj9mHyHfI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=wtYz221+VsebC+0N3e/Uj3clWCJPIO5V
-	sllPUeX1tWog4oc4HINusDnVUAWvS20qR6CLD/HeieJUk58DtPvPZC4dmbSkzaSG
-	j0RzDDT07hjl22B8mha3W7oR0SOv/cxbqtd0sPIGhuTZ74Yz5upRZKWK09iK7jga
-	AWV9GB3b1jw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EC4D84C900;
-	Tue, 22 Oct 2013 19:50:33 +0000 (UTC)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4D3994C8FF;
-	Tue, 22 Oct 2013 19:50:33 +0000 (UTC)
-In-Reply-To: <201310211249.49568.mfick@codeaurora.org> (Martin Fick's message
-	of "Mon, 21 Oct 2013 12:49:49 -0600")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 3675CEB2-3B53-11E3-84D8-8F264F2CC097-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754410Ab3JVULe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Oct 2013 16:11:34 -0400
+Received: from edge-mech.mail.mil ([214.21.82.10]:32264 "EHLO
+	edge-mech.mail.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751149Ab3JVULd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Oct 2013 16:11:33 -0400
+X-Greylist: delayed 317 seconds by postgrey-1.27 at vger.kernel.org; Tue, 22 Oct 2013 16:11:33 EDT
+Received: from umechpji.easf.csd.disa.mil (214.21.83.159) by
+ edge-mech.mail.mil (214.21.82.10) with Microsoft SMTP Server (TLS) id
+ 14.3.158.1; Tue, 22 Oct 2013 20:06:07 +0000
+Received: from UMECHPHJ.easf.csd.disa.mil ([169.254.9.111]) by
+ UMECHPJI.easf.csd.disa.mil ([214.21.83.159]) with mapi id 14.03.0158.002;
+ Tue, 22 Oct 2013 20:06:06 +0000
+Thread-Topic: RFE: support change-id generation natively
+Thread-Index: AQHOz1/2WPnutwhupEOD7CGaJs2FPpoBJE/Q
+In-Reply-To: <xmqqy55lrsoo.fsf@gitster.dls.corp.google.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: yes
+X-MS-TNEF-Correlator: 
+x-originating-ip: [214.21.83.188]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236485>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236486>
 
-Martin Fick <mfick@codeaurora.org> writes:
+------=_NextPart_000_0061_01CECF40.9BA34C30
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 
-> As a Gerrit maintainer, I would suspect that we would 
-> welcome a way to track "changes" natively in git.
+> -----Original Message-----
+> From: Junio C Hamano
+> Sent: Tuesday, October 22, 2013 3:51 PM
+> 
 
-I would suspect that we would not mind "git commit --change-id" (and
-probably "git commit-tree --change-id") option that can be used to
-tell the command to add a new Change-Id: trailer at the end, if and
-only if there is none in the log message to be recorded (this needs
-to happen after the user possibly edits).  We may even want to
-introduce commit.changeId boolean configuration variable if we did
-so.
 
-"git commit --amend", "git rebase", etc. can be left oblivious to
-the "Change-Id:" trailer, as the default mode of operation you guys
-want is to leave the existing one as-is, unless the end user really
-wants to change it, I think.
+<snip/>
 
-It would be just the matter of updating commit_tree_extended() in
-commit.c to:
+> I would think.  You might have a funny chicken-and-egg problem with
+> the signed commit, though.  I didn't think that part through.
 
- - detect the need to add a new Change-Id: trailer;
+Respectfully, I do not think there is a chicken and egg situation here. Either the user has included a generated id field and value in the portion covered by the signature, or the mutation of the portion covered by the signature has been modified, hence has an invalid signature.
 
- - call hash_sha1_file() on the commit object buffer (assuming that
-   a commit object that you can actually "git cat-file commit" using
-   the change Id does not have to exist anywhere for Gerrit to
-   work---otherwise you would need to call write_sha1_file()
-   instead) before adding Change-Id: trailer;
+Any user signing their commit, should ensure it is the last operation, or be prepared to resign it later.
 
- - add Change-Id: trailer to the buffer; and then finally
+Jason Pyeron 
 
- - let the existing write_sha1_file() to write it out.
 
-I would think.  You might have a funny chicken-and-egg problem with
-the signed commit, though.  I didn't think that part through.
+------=_NextPart_000_0061_01CECF40.9BA34C30
+Content-Type: application/x-pkcs7-signature; name="smime.p7s"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="smime.p7s"
+
+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
+GDAWBgNVBAMTD0RPRCBFTUFJTCBDQS0zMDCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEB
+AOYpItQUJtGYGlJexYSDc37BYLOz0JS+/RyUVb/2hCybycB0c+/MwpnymcltyhTTdP++EPL3Lb/L
+uwaj7phQQWUB4VcstsvkyhysflI0DrGOByY+MjWvo2EKxeUIthJ5jFTBeunxUB9dgzpnMLMp2x06
+TDkhUNgYLI0Gde5jcnhorWKcdaSUBtMyaxKvBgcpvhOgwKfwJU+3/h+3V+AYEo0hahW5WlT7d2XY
+TD/1ujzAN+EGfsK+niOMKNGa18ZnONdzyb0HHYVv1ZUKmtzaOk4o8KXrCd/l2wvNR6+KzbtvlEDj
+WZxQn8kOqXECudzpaYA6iTtFBSIYBYS1EvA8wIECAwEAAaOCAhwwggIYMA4GA1UdDwEB/wQEAwIB
+hjAfBgNVHSMEGDAWgBRJdLsMXrp6/gJU73ugxpXGCYBwljAdBgNVHQ4EFgQUNWFmKAm8ViVbi8y/
+gV5hLDA50yEwEgYDVR0TAQH/BAgwBgEB/wIBADAMBgNVHSQEBTADgAEAMGYGA1UdIARfMF0wCwYJ
+YIZIAWUCAQsFMAsGCWCGSAFlAgELCTALBglghkgBZQIBCxEwCwYJYIZIAWUCAQsSMAsGCWCGSAFl
+AgELEzAMBgpghkgBZQMCAQMaMAwGCmCGSAFlAwIBAxswNwYDVR0fBDAwLjAsoCqgKIYmaHR0cDov
+L2NybC5kaXNhLm1pbC9jcmwvRE9EUk9PVENBMi5jcmwwggEBBggrBgEFBQcBAQSB9DCB8TA6Bggr
+BgEFBQcwAoYuaHR0cDovL2NybC5kaXNhLm1pbC9pc3N1ZWR0by9ET0RST09UQ0EyX0lULnA3YzAg
+BggrBgEFBQcwAYYUaHR0cDovL29jc3AuZGlzYS5taWwwgZAGCCsGAQUFBzAChoGDbGRhcDovL2Ny
+bC5nZHMuZGlzYS5taWwvY24lM2REb0QlMjBSb290JTIwQ0ElMjAyJTJjb3UlM2RQS0klMmNvdSUz
+ZERvRCUyY28lM2RVLlMuJTIwR292ZXJubWVudCUyY2MlM2RVUz9jcm9zc0NlcnRpZmljYXRlUGFp
+cjtiaW5hcnkwDQYJKoZIhvcNAQEFBQADggEBAAqIVhylVyZaYst10N2GxVLiL/O8EWQ/jC8+EfyY
+YEDygA0ogppo/uBISyfTOgp7lfYDDIEUkUI6YGziK1Mt7N8RrvVUF/AB+ZcHp5urC9usl4kJxu/5
+BzQWAKh+EVOefC+hOKKZeTk0QW59uFgwVoie5KpkRdmgRGI6t+Ux05GA8RsQsmdw1VurWbRaSBZC
+xAJM2mxoylAdMb43mcfPU8xCKVbDnRfKA+cQWvE5PBzM+xuXCibzMd/gq1wknZ7eOH0CUWdG+ZNw
+he0KVcL0wWhanwjJHXubdtxU7zmMGOUMRO73BrIf9cvmDr3Uof/U+ZEHIlJ5t8D97LL4hfRE+1wx
+ggMyMIIDLgIBATBkMF0xCzAJBgNVBAYTAlVTMRgwFgYDVQQKEw9VLlMuIEdvdmVybm1lbnQxDDAK
+BgNVBAsTA0RvRDEMMAoGA1UECxMDUEtJMRgwFgYDVQQDEw9ET0QgRU1BSUwgQ0EtMzACA0j/OjAJ
+BgUrDgMCGgUAoIIBozAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0x
+MzEwMjIyMDA2MDNaMCMGCSqGSIb3DQEJBDEWBBSnWHhHvGWTe7GtI6VC6ByI7gri+TBYBgkqhkiG
+9w0BCQ8xSzBJMAoGCCqGSIb3DQMHMA4GCCqGSIb3DQMCAgIAgDAHBgUrDgMCBzANBggqhkiG9w0D
+AgIBKDAHBgUrDgMCGjAKBggqhkiG9w0CBTBzBgkrBgEEAYI3EAQxZjBkMF0xCzAJBgNVBAYTAlVT
+MRgwFgYDVQQKEw9VLlMuIEdvdmVybm1lbnQxDDAKBgNVBAsTA0RvRDEMMAoGA1UECxMDUEtJMRgw
+FgYDVQQDEw9ET0QgRU1BSUwgQ0EtMzACA0j/PjB1BgsqhkiG9w0BCRACCzFmoGQwXTELMAkGA1UE
+BhMCVVMxGDAWBgNVBAoTD1UuUy4gR292ZXJubWVudDEMMAoGA1UECxMDRG9EMQwwCgYDVQQLEwNQ
+S0kxGDAWBgNVBAMTD0RPRCBFTUFJTCBDQS0zMAIDSP8+MA0GCSqGSIb3DQEBAQUABIIBAExwdE96
+7zG01PCtJeTD+mFnAtM0GgLw2ErOwTdQeXq9GlqdCKIVrjWeEh8ITDR9zYwiYM3ishZe+I2mroG2
+U9PFViurWLz5PHmCbVf61kWqWNDLQPoSeU097Q1OJKvH/zQOHVQGzHppAJLFoRZeip3o3vbHBdgk
+26wESTdkXXFNXIgnZOzjYcjU5oZGH9TanHDJ2kBkK+TNSiBQLv4hK/T6dOwAUQHJcX0WtCWjtSDp
+nXDbV2xnDoXjjYDYM7e0bEpWTj1zJiuY4yeVo2kl3Srl7pVqSzXoafddPmqwIl19LV9GV12TsrD7
+dLH+lYB2t9VQtJzba4SUxVQEdLCNku4AAAAAAAA=
+
+------=_NextPart_000_0061_01CECF40.9BA34C30--
