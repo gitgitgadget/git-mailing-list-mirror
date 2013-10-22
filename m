@@ -1,54 +1,70 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: Bug: git-push crash due to double-close of file descriptor
-Date: Tue, 22 Oct 2013 18:08:10 +0700
-Message-ID: <CACsJy8CTo8WJTewToBM_y65fg5bOPS-Mm1nunQEU5Mw_mNZU2w@mail.gmail.com>
-References: <CAEef6Wx59OBQPG38Ww59vse7n1Xb=tpJANcM8iT66zpL9-dS1w@mail.gmail.com>
- <CACsJy8AxfFzL+2LGmqqyAm9dt7BZDpOYyrj4rgkXxgtozF7qiw@mail.gmail.com>
+From: =?UTF-8?q?Jens=20Lindstr=C3=B6m?= <jl@opera.com>
+Subject: [PATCH] Clear fd after closing to avoid double-close error
+Date: Tue, 22 Oct 2013 14:10:23 +0200
+Message-ID: <1382443823-31317-1-git-send-email-jl@opera.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: =?UTF-8?Q?Jens_Lindstr=C3=B6m?= <jl@opera.com>
-X-From: git-owner@vger.kernel.org Tue Oct 22 13:08:48 2013
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Duy Nguyen <pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 22 14:19:59 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VYZpP-00008M-P8
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Oct 2013 13:08:48 +0200
+	id 1VYawI-0005cN-09
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Oct 2013 14:19:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752174Ab3JVLIn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Oct 2013 07:08:43 -0400
-Received: from mail-qc0-f181.google.com ([209.85.216.181]:50816 "EHLO
-	mail-qc0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751826Ab3JVLIm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Oct 2013 07:08:42 -0400
-Received: by mail-qc0-f181.google.com with SMTP id w4so4568889qcr.12
-        for <git@vger.kernel.org>; Tue, 22 Oct 2013 04:08:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=IVCvOP2tz7KMAZz5l/AN9m1yiJuCtA9eSaHdMWUXoI4=;
-        b=J5Ku3r4HAXhJjTtxOcixndIM5XWPQcvYi0bEIiD+6hxxoicwqUXstkVATh8aowvVqF
-         Tb01GkX+84g02511ziu1/NmvC3dffN+mSIaE0hsNYLvyOLlwXu2F2rck8gXtdxF+mJgB
-         e3owtu94N468GDAMQH9z+E0vl0/rNgaGn2P8/nnZIw2/kmmiJrmmasw7p0Y3xrJ+l6xU
-         36AlaRRigD52MnYiahTtIEj3YVw93pK3/3n2HIgp47U+jh3P2NiKs4T/zg/N2VkQp/7D
-         mVyqRIQmNYdzhcK3MWCyidF4NPZkc5deZf2Tfp2mAlik5rwbkM80uSStwV5aavhh8UD5
-         D5Pw==
-X-Received: by 10.49.39.39 with SMTP id m7mr28744783qek.60.1382440120759; Tue,
- 22 Oct 2013 04:08:40 -0700 (PDT)
-Received: by 10.96.27.202 with HTTP; Tue, 22 Oct 2013 04:08:10 -0700 (PDT)
-In-Reply-To: <CACsJy8AxfFzL+2LGmqqyAm9dt7BZDpOYyrj4rgkXxgtozF7qiw@mail.gmail.com>
+	id S1752166Ab3JVMTy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Oct 2013 08:19:54 -0400
+Received: from smtp.opera.com ([213.236.208.81]:42322 "EHLO smtp.opera.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751257Ab3JVMTx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Oct 2013 08:19:53 -0400
+X-Greylist: delayed 561 seconds by postgrey-1.27 at vger.kernel.org; Tue, 22 Oct 2013 08:19:53 EDT
+Received: from insane.linkoping.osa (oslo.jvpn.opera.com [213.236.208.46])
+	by smtp.opera.com (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id r9MCAT4W011276
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Tue, 22 Oct 2013 12:10:30 GMT
+Received: from jl by insane.linkoping.osa with local (Exim 4.80)
+	(envelope-from <jl@insane.linkoping.osa>)
+	id 1VYan6-00089d-1e; Tue, 22 Oct 2013 14:10:28 +0200
+X-Mailer: git-send-email 1.7.10.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236463>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236464>
 
-On Tue, Oct 22, 2013 at 5:49 PM, Duy Nguyen <pclouds@gmail.com> wrote:
-> set fd[1] = 0
+=46rom: Jens Lindstrom <jl@opera.com>
 
-I thought fd[1] = -1, I wrote fd[1] = 0 :(
--- 
-Duy
+In send_pack(), clear the fd passed to pack_objects() by setting
+it to -1, since pack_objects() closes the fd (via a call to
+run_command()).
+
+Not doing so risks having git_transport_push(), caller of
+send_pack(), closing the fd again, possibly incorrectly closing
+some other open file.
+
+Signed-off-by: Jens Lindstr=C3=B6m <jl@opera.com>
+---
+ send-pack.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/send-pack.c b/send-pack.c
+index 7d172ef..7def2af 100644
+--- a/send-pack.c
++++ b/send-pack.c
+@@ -302,6 +302,9 @@ int send_pack(struct send_pack_args *args,
+ 				finish_async(&demux);
+ 			return -1;
+ 		}
++		if (!args->stateless_rpc)
++			/* Closed by pack_objects() via start_command() */
++			fd[1] =3D -1;
+ 	}
+ 	if (args->stateless_rpc && cmds_sent)
+ 		packet_flush(out);
+--=20
+1.8.1.2
