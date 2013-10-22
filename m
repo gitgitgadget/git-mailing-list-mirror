@@ -1,94 +1,156 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v8] diff.c: keep arrow(=>) on show_stats()'s shortened filename part to make rename visible
-Date: Tue, 22 Oct 2013 13:26:01 -0700
-Message-ID: <xmqqtxg9rr1h.fsf@gitster.dls.corp.google.com>
-References: <38848735-7CFA-404E-AE51-4F445F813266@gmail.com>
-	<A15CCF08-83FD-4F3C-9773-C26DEE38FD33@gmail.com>
-	<660A536D-9993-4B81-B6FF-A113F9111570@gmail.com>
-	<AFC93704-D6C5-49AF-9A66-C5EA81348FFA@gmail.com>
-	<79A13931-694C-4DDC-BEDF-71A0DBA0ECA1@gmail.com>
-	<89A4E8C6-C233-49E2-8141-837ABDBBC976@gmail.com>
-	<FB9897CC-EDC7-4EBB-8DAB-140CEB5F93B3@gmail.com>
-	<C876399C-9A78-4917-B0CF-D6519C7162F6@gmail.com>
-	<87mwm5vkue.fsf@linux-k42r.v.cablecom.net>
-	<BB9AEFCE-0E64-4EAA-8DEA-9A8125B8C553@gmail.com>
-	<xmqqob6htbx9.fsf@gitster.dls.corp.google.com>
-	<2CB6100D-747E-4F65-8F73-7BA381AC4BD4@gmail.com>
+Subject: Re: RFE: support change-id generation natively
+Date: Tue, 22 Oct 2013 13:43:17 -0700
+Message-ID: <xmqqppqxrq8q.fsf@gitster.dls.corp.google.com>
+References: <2127507934.9293293.1382367063640.JavaMail.root@openwide.fr>
+	<201310212029.01589.thomas@koch.ro>
+	<1382380858.25852.36711509.53CF173C@webmail.messagingengine.com>
+	<201310211249.49568.mfick@codeaurora.org>
+	<xmqqy55lrsoo.fsf@gitster.dls.corp.google.com>
+	<871B6C10EBEFE342A772D1159D1320855772CBAD@umechphj.easf.csd.disa.mil>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Rast <tr@thomasrast.ch>, git@vger.kernel.org,
-	Duy Nguyen <pclouds@gmail.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: Yoshioka Tsuneo <yoshiokatsuneo@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 22 22:26:16 2013
+Cc: "james.moger\@gitblit.com" <james.moger@gitblit.com>,
+	Thomas Koch <thomas@koch.ro>,
+	Jeremy Rosen <jeremy.rosen@openwide.fr>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>,
+	Shawn Pearce <spearce@spearce.org>,
+	Martin Fick <mfick@codeaurora.org>
+To: "Pyeron\, Jason J CTR \(US\)" <jason.j.pyeron.ctr@mail.mil>
+X-From: git-owner@vger.kernel.org Tue Oct 22 22:43:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VYiWt-0002Rh-U7
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Oct 2013 22:26:16 +0200
+	id 1VYinU-00052F-Ji
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Oct 2013 22:43:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754602Ab3JVU0L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Oct 2013 16:26:11 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37320 "EHLO
+	id S1755015Ab3JVUnV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Oct 2013 16:43:21 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40874 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754038Ab3JVU0K (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Oct 2013 16:26:10 -0400
+	id S1754828Ab3JVUnU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Oct 2013 16:43:20 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A1AFB4C6F7;
-	Tue, 22 Oct 2013 20:26:09 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 78BB34C8F1;
+	Tue, 22 Oct 2013 20:43:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=hwVrevn3wuk1DHl86CnAgHRGB7E=; b=D1i2lW
-	wfGWfETqadaVKRH0LyZfS51vfhRk6xVMLk5A3YNCfbrXoxMsYYW2vRJk6i9NeTA9
-	762SC53Uq9VoaTsh20J6Q5aq7OmxlI5yPA7m5ShU3cvUf15mez56q12BzenU3ZcG
-	YGNxrQwZT0SPLCdBKJ/HkUx+qz8Fq4D8KyaRc=
+	:content-type; s=sasl; bh=y07rh1wVgqmlkCYQO5ajMUgErvs=; b=fTEh6c
+	mHl3pXwy5ZtazM9VErwxpA/3VXQoueDUNuPw/IkQR8kSi0qZYJBbyqoVb6aIiSXy
+	6U7Qhx7v+kMF+Jl/+vuJIfxL03+krJnT6kWIk8+hLNY1Z5LYfRcpis6CGRKESuLD
+	tk7pS7siOiXIoa5YidSj1PmGyw/Aa0Fe45obo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=EovOSZPdM7CA23fT44+FStKjBTiksM8f
-	6ZlEhxw6qtI9HkOi38wO2YVlPrWN6+W6DBCQA9zIbg+kH34YZ2xZpJWoXx8pGDdO
-	uxfydRlemUIVIFory2RZDpSTh4FgsFoC+Tlr6awdDqCgZwI5UJmLym5OxsoKOep4
-	CZr3rJgJVXM=
+	:content-type; q=dns; s=sasl; b=ZRnyljnY7cNfzpka9QiEJroVFhbQ7HUR
+	73AxZi9m5gwbHJy20tGgpVkXiGlc+nQ4LzuqJHEIAD5Ynm0tNOFXfjkiQ8NI6slG
+	le6R8s6HlD2il68EyKPK1DqbeQQ44pbImKO57y1EtE1XnmkTXVD/ZNUKUXms4h6W
+	XEpzU/ToChA=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 95E804C6F6;
-	Tue, 22 Oct 2013 20:26:09 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 670B94C8F0;
+	Tue, 22 Oct 2013 20:43:19 +0000 (UTC)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E7BA84C6F4;
-	Tue, 22 Oct 2013 20:26:08 +0000 (UTC)
-In-Reply-To: <2CB6100D-747E-4F65-8F73-7BA381AC4BD4@gmail.com> (Yoshioka
-	Tsuneo's message of "Tue, 22 Oct 2013 23:14:46 +0300")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9B5AB4C8E9;
+	Tue, 22 Oct 2013 20:43:18 +0000 (UTC)
+In-Reply-To: <871B6C10EBEFE342A772D1159D1320855772CBAD@umechphj.easf.csd.disa.mil>
+	(Jason J. Pyeron's message of "Tue, 22 Oct 2013 20:06:05 +0000")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 2F65F160-3B58-11E3-AFE4-8F264F2CC097-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 952EDBB8-3B5A-11E3-829B-8F264F2CC097-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236488>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236489>
 
-Yoshioka Tsuneo <yoshiokatsuneo@gmail.com> writes:
+"Pyeron, Jason J CTR (US)" <jason.j.pyeron.ctr@mail.mil> writes:
 
-> And, it might be a bit nicer for me if the patch can be
-> rejected(or ignored as other patches) from the beginning if the
-> concept does not fit anyway.
-
-Yes, but...
-
-> # Though I know we can know more after seeing the implementation, anyway :-)
-
-... you are very correct about this.
-
-Note that I am not rejecting the topic yet.  I am just saying that I
-am not yet convinced the patch improves the situation where an
-optimal solution (i.e. no information loss at all) cannot exist
-because we do not have enough output columns to work with.
-
-Thanks.
-
->> ...
->> So you are correct to say that I am still skeptical.
+>> -----Original Message-----
+>> From: Junio C Hamano
+>> Sent: Tuesday, October 22, 2013 3:51 PM
 >> 
->> In any case, the output from "diff --stat -M" should match the
->> output from "apply --stat -M", I think.
+>
+>
+> <snip/>
+>
+>> I would think.  You might have a funny chicken-and-egg problem with
+>> the signed commit, though.  I didn't think that part through.
+>
+> Respectfully, I do not think there is a chicken and egg situation
+> here. Either the user has included a generated id field and value
+> in the portion covered by the signature, or the mutation of the
+> portion covered by the signature has been modified, hence has an
+> invalid signature.
+>
+> Any user signing their commit, should ensure it is the last
+> operation, or be prepared to resign it later.
+
+Thanks, I think I got what you are saying.
+
+I was coming from the existing code, assuming that you have a single
+commit without Change Id but has already called do_sign_commit().
+That is what the users today will get out of "commit -S".  But using
+the object name of such a commit as the Change Id, and then creating
+a new commit by appending a new Change Id trailer will not work, as
+that will break the existing signature.
+
+But you can begin from a single commit without Change Id and without
+signature---its object name would be the Change Id.  You can add a
+new Change Id trailer to record that and sign it while creating a
+commit.  It conceptually may be a three-step process, but still can be
+done inside a single invocation of "git commit --change-id -S".
+
+So a rough outline of the patch to implement it may look like below.
+The parsing and passing down of the "--change-id" option is left as
+an exercise to interested readers.  A real patch may have to add an
+extra blank line before the strbuf_addf() if buffer.buf does not end
+with a trailer to separate the "Change Id" line from the end of the
+existing message body.
+
+ commit.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
+
+diff --git a/commit.c b/commit.c
+index de16a3c..664ef5d 100644
+--- a/commit.c
++++ b/commit.c
+@@ -1481,17 +1481,22 @@ static const char commit_utf8_warn[] =
+ int commit_tree_extended(const struct strbuf *msg, unsigned char *tree,
+ 			 struct commit_list *parents, unsigned char *ret,
+ 			 const char *author, const char *sign_commit,
+-			 struct commit_extra_header *extra)
++			 struct commit_extra_header *extra,
++			 unsigned int flags)
+ {
+ 	int result;
+ 	int encoding_is_utf8;
+ 	struct strbuf buffer;
++	int add_change_id = !!(flags & COMMIT_ADD_CHANGE_ID);
+ 
+ 	assert_sha1_type(tree, OBJ_TREE);
+ 
+ 	if (memchr(msg->buf, '\0', msg->len))
+ 		return error("a NUL byte in commit log message not allowed.");
+ 
++	if (add_change_id && strstr(msg->buf, "\nChange-Id: "))
++		add_change_id = 0; /* already has one */
++
+ 	/* Not having i18n.commitencoding is the same as having utf-8 */
+ 	encoding_is_utf8 = is_encoding_utf8(git_commit_encoding);
+ 
+@@ -1534,6 +1539,13 @@ int commit_tree_extended(const struct strbuf *msg, unsigned char *tree,
+ 	if (encoding_is_utf8 && !verify_utf8(&buffer))
+ 		fprintf(stderr, commit_utf8_warn);
+ 
++	if (add_change_id) {
++		unsigned char change_id[20];
++		if (hash_sha1_file(buffer.buf, buffer.len, commit_type, change_id))
++			return -1;
++		strbuf_addf(&buffer, "Change-Id: %s\n", sha1_to_hex(change_id));
++	}
++
+ 	if (sign_commit && do_sign_commit(&buffer, sign_commit))
+ 		return -1;
+ 
