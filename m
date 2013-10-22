@@ -1,121 +1,75 @@
-From: Sebastian Schuberth <sschuberth@gmail.com>
-Subject: Re: Re: Windows performance / threading file access
-Date: Tue, 22 Oct 2013 16:49:30 +0200
-Message-ID: <CAHGBnuOVpMU6wBmjesYK7qWWpKPyCFhmDcWny7MN5nM4zYFjDA@mail.gmail.com>
-References: <CAHOQ7J_ZZ=7j-5ULd7Tdvbiqg4inhwi+fue_w6WAtNRkvZSwsg@mail.gmail.com>
-	<52570BC1.2040208@gmail.com>
-	<52574B90.3070309@gmail.com>
-	<CAHOQ7J_sNnajm9M+QUd-QwkQGP2vOidzAW5_5EzsdwBGTDCnSA@mail.gmail.com>
-	<3bb056f6-5f8b-486e-8e5e-9bf541bd0d0b@googlegroups.com>
-	<52601562.2090301@gmail.com>
-	<49cde110-f3e5-43d9-b399-6b5a6ce59014@googlegroups.com>
-	<52668C0F.9050702@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Oct 2013, #04; Fri, 18)
+Date: Tue, 22 Oct 2013 08:20:15 -0700
+Message-ID: <xmqqli1luyc0.fsf@gitster.dls.corp.google.com>
+References: <xmqq38nyw7ja.fsf@gitster.dls.corp.google.com>
+	<20131019063447.GA18977@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: pro-logic <pro-logic@optusnet.com.au>, 
-	msysGit Mailinglist <msysgit@googlegroups.com>, Git Mailing List <git@vger.kernel.org>, szager@google.com
-To: Karsten Blees <karsten.blees@gmail.com>
-X-From: msysgit+bncBDZMLEGXWQLBB7FATKJQKGQEKTMFNIY@googlegroups.com Tue Oct 22 16:49:35 2013
-Return-path: <msysgit+bncBDZMLEGXWQLBB7FATKJQKGQEKTMFNIY@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-lb0-f184.google.com ([209.85.217.184])
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Oct 22 17:20:27 2013
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDZMLEGXWQLBB7FATKJQKGQEKTMFNIY@googlegroups.com>)
-	id 1VYdH3-0003Lh-5f
-	for gcvm-msysgit@m.gmane.org; Tue, 22 Oct 2013 16:49:33 +0200
-Received: by mail-lb0-f184.google.com with SMTP id u14sf555624lbd.1
-        for <gcvm-msysgit@m.gmane.org>; Tue, 22 Oct 2013 07:49:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:x-original-sender:x-original-authentication-results:precedence
-         :mailing-list:list-id:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe:content-type;
-        bh=8q0/JekXGTXxz9xH6AXARPiMhVjGXO/EbJePZYfRglA=;
-        b=WIMhzGgRAi7PyR3hRcBDq7qokazDfYXrj3d9qCMqdifRa4hXTby0IhsUpngRV+XqKG
-         5ehmUpYbWEvY4pGXZghu/zpc6KksLwE9mgr2bPgLV0VvGFcckHyBeUPu4zU8zIAqoGQ/
-         rEkO9Dz6d6L99eumncNjKr4itzXLnoYkTBCjJeE+rXyYj768zlz64iUARCpT0jQfoNF6
-         rW8UkhvL6SMtmiwKOVC7jdPaFXDNtCcr0UgpcTUK5bTTi9UUIkCMSD9Uvp7ol62zOUnT
-         KfkAfonwiqDafKZS/OGYpVrNOMrMGvwN1yw7J6WUxGO52IrN48XCgLy99ZAyDLlCV3Mo
-         b5lA==
-X-Received: by 10.180.20.239 with SMTP id q15mr208505wie.5.1382453372913;
-        Tue, 22 Oct 2013 07:49:32 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.180.24.71 with SMTP id s7ls698999wif.17.canary; Tue, 22 Oct
- 2013 07:49:32 -0700 (PDT)
-X-Received: by 10.204.238.194 with SMTP id kt2mr4128373bkb.6.1382453371966;
-        Tue, 22 Oct 2013 07:49:31 -0700 (PDT)
-Received: from mail-la0-x22f.google.com (mail-la0-x22f.google.com [2a00:1450:4010:c03::22f])
-        by gmr-mx.google.com with ESMTPS id ja10si1675308bkb.2.2013.10.22.07.49.30
-        for <msysgit@googlegroups.com>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 22 Oct 2013 07:49:30 -0700 (PDT)
-Received-SPF: pass (google.com: domain of sschuberth@gmail.com designates 2a00:1450:4010:c03::22f as permitted sender) client-ip=2a00:1450:4010:c03::22f;
-Received: by mail-la0-x22f.google.com with SMTP id ep20so3988356lab.20
-        for <msysgit@googlegroups.com>; Tue, 22 Oct 2013 07:49:30 -0700 (PDT)
-X-Received: by 10.112.130.138 with SMTP id oe10mr17259546lbb.1.1382453370161;
- Tue, 22 Oct 2013 07:49:30 -0700 (PDT)
-Received: by 10.114.201.134 with HTTP; Tue, 22 Oct 2013 07:49:30 -0700 (PDT)
-In-Reply-To: <52668C0F.9050702@gmail.com>
-X-Original-Sender: sschuberth@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of sschuberth@gmail.com designates 2a00:1450:4010:c03::22f
- as permitted sender) smtp.mail=sschuberth@gmail.com;       dkim=pass
- header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236474>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1VYdku-0005T7-1E
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Oct 2013 17:20:24 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752860Ab3JVPUT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Oct 2013 11:20:19 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46330 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752541Ab3JVPUT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Oct 2013 11:20:19 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 530084A36E;
+	Tue, 22 Oct 2013 15:20:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=J//nparcCWpbnaOnUCPCVG8ZYAo=; b=VVwnyR
+	bKfAvIC90VsOUfljYC0SCI/9bufqXoDA0mQb44Cws1vN/ZL2ZVPX1Vg7KpBVshRb
+	fe4kAToRUQDcaaOb99UXbFbRpDh3JLy8t3rnPj/o9gKPSM+6vOzcicnZxlatISct
+	yZ+DFUX5iYSyuZyRa7RxSxwSaYcWrFEahiX3o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Jef7rWczMocjNxOOon0Ei1PCSP3qFLL0
+	0+xD84MPyEN6jAr1KLbPkEsOCofK0IHv1vu/vmQ/K1i5zh3RJi3lo++88tMqs8wF
+	Po9U/Hr5TZyWufwQ8w8OMkNK7B9ttrTMDPZ/WY3MPcA5ZILwpMXJXh6MEMAlb2Mb
+	e94F29pbA6c=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 42FC34A36D;
+	Tue, 22 Oct 2013 15:20:18 +0000 (UTC)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 96BC14A369;
+	Tue, 22 Oct 2013 15:20:17 +0000 (UTC)
+In-Reply-To: <20131019063447.GA18977@sigill.intra.peff.net> (Jeff King's
+	message of "Sat, 19 Oct 2013 02:34:48 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 7526B5E8-3B2D-11E3-914C-8F264F2CC097-77302942!b-pb-sasl-quonix.pobox.com
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236475>
 
-On Tue, Oct 22, 2013 at 4:30 PM, Karsten Blees <karsten.blees@gmail.com> wrote:
+Jeff King <peff@peff.net> writes:
 
->>> Could you post details about your test setup? Are you still using
->>> WebKit for your tests?
->> I'm on Win7 x64, Core i5 M560, WD 7200 Laptop HDD, NTSF, no virus
->> scanner, truecrypt, no defragger.
->>
+> On Fri, Oct 18, 2013 at 03:14:49PM -0700, Junio C Hamano wrote:
 >
-> OK, so truecrypt and luafv may screw things up for you (according to my measurements, luafv roughly doubles lstat times on C:).
+>> * jn/add-2.0-u-A-sans-pathspec (2013-04-26) 1 commit
+>> * jc/push-2.0-default-to-simple (2013-06-18) 1 commit
+>> * jc/add-2.0-ignore-removal (2013-04-22) 1 commit
+>>  ...
+>>  Will cook in 'next' until Git 2.0.
+>
+> I notice that these are not actually in 'next', despite the
+> descriptions.  Should they be, to give them wider exposure?
 
-Aren't we disabling UAC / LUAFV on a per-executable basis using
-manifests? At least the blog article at [1] suggests that we are in
-fact doing it the right way using our script to genera the manifests
-[2].
-
-Oh but wait, we're not generating a manifest for git.exe itself, only
-for executables that contain "setup", "install", "update", "patch"
-etc. So maybe having a manifest for git.exe, too, would improve
-performance?
-
-[1] http://blogs.msdn.com/b/alexcarp/archive/2009/06/25/the-deal-with-luafv-sys.aspx
-[2] https://github.com/msysgit/msysgit/blob/master/share/msysGit/make-manifests.sh
-
--- 
-Sebastian Schuberth
-
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/groups/opt_out.
+We have been running with their respective preparatory migration
+steps in the released versions, so we are ready to do so.  These
+last steps of the multi-step transition should probably cook in
+'next' for a cycle or two before the final 2.0 development cycle.
