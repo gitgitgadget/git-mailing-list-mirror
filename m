@@ -1,184 +1,170 @@
-From: "Pyeron, Jason J CTR (US)" <jason.j.pyeron.ctr@mail.mil>
-Subject: RE: RFE: support change-id generation natively
-Date: Tue, 22 Oct 2013 20:06:05 +0000
-Message-ID: <871B6C10EBEFE342A772D1159D1320855772CBAD@umechphj.easf.csd.disa.mil>
-References: <2127507934.9293293.1382367063640.JavaMail.root@openwide.fr>
-	<201310212029.01589.thomas@koch.ro>
-	<1382380858.25852.36711509.53CF173C@webmail.messagingengine.com>
-	<201310211249.49568.mfick@codeaurora.org>
- <xmqqy55lrsoo.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: multipart/signed; protocol="application/x-pkcs7-signature";
-	micalg=SHA1; boundary="----=_NextPart_000_0061_01CECF40.9BA34C30"
-Cc: "james.moger@gitblit.com" <james.moger@gitblit.com>,
-	Thomas Koch <thomas@koch.ro>,
-	Jeremy Rosen <jeremy.rosen@openwide.fr>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Shawn Pearce <spearce@spearce.org>,
-	Martin Fick <mfick@codeaurora.org>
+From: Yoshioka Tsuneo <yoshiokatsuneo@gmail.com>
+Subject: Re: [PATCH v8] diff.c: keep arrow(=>) on show_stats()'s shortened filename part to make rename visible
+Date: Tue, 22 Oct 2013 23:14:46 +0300
+Message-ID: <2CB6100D-747E-4F65-8F73-7BA381AC4BD4@gmail.com>
+References: <38848735-7CFA-404E-AE51-4F445F813266@gmail.com> <A15CCF08-83FD-4F3C-9773-C26DEE38FD33@gmail.com> <660A536D-9993-4B81-B6FF-A113F9111570@gmail.com> <AFC93704-D6C5-49AF-9A66-C5EA81348FFA@gmail.com> <79A13931-694C-4DDC-BEDF-71A0DBA0ECA1@gmail.com> <89A4E8C6-C233-49E2-8141-837ABDBBC976@gmail.com> <FB9897CC-EDC7-4EBB-8DAB-140CEB5F93B3@gmail.com> <C876399C-9A78-4917-B0CF-D6519C7162F6@gmail.com> <87mwm5vkue.fsf@linux-k42r.v.cablecom.net> <BB9AEFCE-0E64-4EAA-8DEA-9A8125B8C553@gmail.com> <xmqqob6htbx9.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0 (Mac OS X Mail 6.6 \(1510\))
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Thomas Rast <tr@thomasrast.ch>, git@vger.kernel.org,
+	Duy Nguyen <pclouds@gmail.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Oct 22 22:11:52 2013
+X-From: git-owner@vger.kernel.org Tue Oct 22 22:14:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VYiIt-0001b4-1q
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Oct 2013 22:11:47 +0200
+	id 1VYiLu-0003h7-AY
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Oct 2013 22:14:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754410Ab3JVULe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Oct 2013 16:11:34 -0400
-Received: from edge-mech.mail.mil ([214.21.82.10]:32264 "EHLO
-	edge-mech.mail.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751149Ab3JVULd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Oct 2013 16:11:33 -0400
-X-Greylist: delayed 317 seconds by postgrey-1.27 at vger.kernel.org; Tue, 22 Oct 2013 16:11:33 EDT
-Received: from umechpji.easf.csd.disa.mil (214.21.83.159) by
- edge-mech.mail.mil (214.21.82.10) with Microsoft SMTP Server (TLS) id
- 14.3.158.1; Tue, 22 Oct 2013 20:06:07 +0000
-Received: from UMECHPHJ.easf.csd.disa.mil ([169.254.9.111]) by
- UMECHPJI.easf.csd.disa.mil ([214.21.83.159]) with mapi id 14.03.0158.002;
- Tue, 22 Oct 2013 20:06:06 +0000
-Thread-Topic: RFE: support change-id generation natively
-Thread-Index: AQHOz1/2WPnutwhupEOD7CGaJs2FPpoBJE/Q
-In-Reply-To: <xmqqy55lrsoo.fsf@gitster.dls.corp.google.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: yes
-X-MS-TNEF-Correlator: 
-x-originating-ip: [214.21.83.188]
+	id S1754381Ab3JVUOu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Oct 2013 16:14:50 -0400
+Received: from mail-lb0-f169.google.com ([209.85.217.169]:53857 "EHLO
+	mail-lb0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754139Ab3JVUOt convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 22 Oct 2013 16:14:49 -0400
+Received: by mail-lb0-f169.google.com with SMTP id o14so2920100lbi.14
+        for <git@vger.kernel.org>; Tue, 22 Oct 2013 13:14:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=content-type:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=DCWajxSVv+oZ7+jI4d8mo+mGQ1J2Yfi8l7ZjLQrXnpI=;
+        b=YSsNkCFPcAjr+Co0/CrAtfJfqrtgYaXveRmwB7hUCJslBq55hIFaO+XY1/F5Ro0RbZ
+         os39l4UEAQTzhHRfNPGXrdVqkayoXnji95zxUOloQRqSObmDxNDJOSG6Fi+X3GbOorll
+         CSHRzr7gngi8i+tmKmwhXpaYBrBomHiAMgVWBejrr3CBqfEcGcrdWVUx7NgojYukGHhv
+         PxgyPeCfWJSZaQ5NVkJTHzPAOotyXM+hjLqK5ExJ88SL/RhY53E1IcWoLFZjoUSiPRcD
+         rrAr152Xoi88GLKal2tj11rC1zNfyl1HS7BO/KsZoKfeEQysPBHz9UcrnQkz34gSzXFq
+         a15w==
+X-Received: by 10.152.9.36 with SMTP id w4mr3039750laa.34.1382472887614;
+        Tue, 22 Oct 2013 13:14:47 -0700 (PDT)
+Received: from [192.168.0.14] (cs27064221.pp.htv.fi. [89.27.64.221])
+        by mx.google.com with ESMTPSA id ao4sm22463060lac.1.2013.10.22.13.14.46
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 22 Oct 2013 13:14:46 -0700 (PDT)
+In-Reply-To: <xmqqob6htbx9.fsf@gitster.dls.corp.google.com>
+X-Mailer: Apple Mail (2.1510)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236486>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236487>
 
-------=_NextPart_000_0061_01CECF40.9BA34C30
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Hello Junio
 
-> -----Original Message-----
-> From: Junio C Hamano
-> Sent: Tuesday, October 22, 2013 3:51 PM
-> 
+Thank you for your comment.
+
+> but this patch will show the
+> source and the destination paths, both of which are truncated even
+> more severely, because it always has to spend display columns for an
+> extra "..." (to show truncation of the source side), " =3D> " (to sho=
+w
+> that it is a rename), and <"{","}"> pair (again to show that it is a
+> rename).=20
+To be more accurate, renaming output dose not always contains "{" or "}=
+"
+if there is no common part in source and destination paths,  although
+probably there are enough large possibility to include "{" or "}".
+And, in the original patch, "{" or "}" is not kept, but changed to be k=
+ept
+based Thomas Rast's feedback below.
+(So, there was no  possibility to have "{=E2=80=A6 =3D> =E2=80=A6}" in =
+the original patch.)
+
+On Oct 13, 2013, at 11:29 PM, Thomas Rast <tr@thomasrast.ch> wrote:
+> Note that in the test, the generated line looks like this:
+>=20
+> {..._does_not_fit_in_a_single_line =3D> .../path1                    =
+      | 0
+>=20
+> I don't want to go all bikesheddey, but I think it's somewhat
+> unfortunate that the elided parts do not correspond to each other.  I=
+n
+> particular, I think the closing brace should not be omitted.  Perhaps
+> something like this would be ideal (making it up on the spot, don't
+> count characters):
+>=20
+> {...a_single_line =3D> ..._as_the_first}/path1                       =
+   | 0
 
 
-<snip/>
 
-> I would think.  You might have a funny chicken-and-egg problem with
-> the signed commit, though.  I didn't think that part through.
+And, it might be a bit nicer for me if the patch can be rejected(or ign=
+ored as other patches)
+from the beginning if the concept does not fit anyway.
+# Though I know we can know more after seeing the implementation, anywa=
+y :-)
+# And, my original explanation about the patch might be not enough.
 
-Respectfully, I do not think there is a chicken and egg situation here. Either the user has included a generated id field and value in the portion covered by the signature, or the mutation of the portion covered by the signature has been modified, hence has an invalid signature.
+Thanks !
 
-Any user signing their commit, should ensure it is the last operation, or be prepared to resign it later.
+---
+Tsuneo Yoshioka (=E5=90=89=E5=B2=A1 =E6=81=92=E5=A4=AB)
+yoshiokatsuneo@gmail.com
 
-Jason Pyeron 
 
 
-------=_NextPart_000_0061_01CECF40.9BA34C30
-Content-Type: application/x-pkcs7-signature; name="smime.p7s"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="smime.p7s"
 
-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
-GDAWBgNVBAMTD0RPRCBFTUFJTCBDQS0zMDCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEB
-AOYpItQUJtGYGlJexYSDc37BYLOz0JS+/RyUVb/2hCybycB0c+/MwpnymcltyhTTdP++EPL3Lb/L
-uwaj7phQQWUB4VcstsvkyhysflI0DrGOByY+MjWvo2EKxeUIthJ5jFTBeunxUB9dgzpnMLMp2x06
-TDkhUNgYLI0Gde5jcnhorWKcdaSUBtMyaxKvBgcpvhOgwKfwJU+3/h+3V+AYEo0hahW5WlT7d2XY
-TD/1ujzAN+EGfsK+niOMKNGa18ZnONdzyb0HHYVv1ZUKmtzaOk4o8KXrCd/l2wvNR6+KzbtvlEDj
-WZxQn8kOqXECudzpaYA6iTtFBSIYBYS1EvA8wIECAwEAAaOCAhwwggIYMA4GA1UdDwEB/wQEAwIB
-hjAfBgNVHSMEGDAWgBRJdLsMXrp6/gJU73ugxpXGCYBwljAdBgNVHQ4EFgQUNWFmKAm8ViVbi8y/
-gV5hLDA50yEwEgYDVR0TAQH/BAgwBgEB/wIBADAMBgNVHSQEBTADgAEAMGYGA1UdIARfMF0wCwYJ
-YIZIAWUCAQsFMAsGCWCGSAFlAgELCTALBglghkgBZQIBCxEwCwYJYIZIAWUCAQsSMAsGCWCGSAFl
-AgELEzAMBgpghkgBZQMCAQMaMAwGCmCGSAFlAwIBAxswNwYDVR0fBDAwLjAsoCqgKIYmaHR0cDov
-L2NybC5kaXNhLm1pbC9jcmwvRE9EUk9PVENBMi5jcmwwggEBBggrBgEFBQcBAQSB9DCB8TA6Bggr
-BgEFBQcwAoYuaHR0cDovL2NybC5kaXNhLm1pbC9pc3N1ZWR0by9ET0RST09UQ0EyX0lULnA3YzAg
-BggrBgEFBQcwAYYUaHR0cDovL29jc3AuZGlzYS5taWwwgZAGCCsGAQUFBzAChoGDbGRhcDovL2Ny
-bC5nZHMuZGlzYS5taWwvY24lM2REb0QlMjBSb290JTIwQ0ElMjAyJTJjb3UlM2RQS0klMmNvdSUz
-ZERvRCUyY28lM2RVLlMuJTIwR292ZXJubWVudCUyY2MlM2RVUz9jcm9zc0NlcnRpZmljYXRlUGFp
-cjtiaW5hcnkwDQYJKoZIhvcNAQEFBQADggEBAAqIVhylVyZaYst10N2GxVLiL/O8EWQ/jC8+EfyY
-YEDygA0ogppo/uBISyfTOgp7lfYDDIEUkUI6YGziK1Mt7N8RrvVUF/AB+ZcHp5urC9usl4kJxu/5
-BzQWAKh+EVOefC+hOKKZeTk0QW59uFgwVoie5KpkRdmgRGI6t+Ux05GA8RsQsmdw1VurWbRaSBZC
-xAJM2mxoylAdMb43mcfPU8xCKVbDnRfKA+cQWvE5PBzM+xuXCibzMd/gq1wknZ7eOH0CUWdG+ZNw
-he0KVcL0wWhanwjJHXubdtxU7zmMGOUMRO73BrIf9cvmDr3Uof/U+ZEHIlJ5t8D97LL4hfRE+1wx
-ggMyMIIDLgIBATBkMF0xCzAJBgNVBAYTAlVTMRgwFgYDVQQKEw9VLlMuIEdvdmVybm1lbnQxDDAK
-BgNVBAsTA0RvRDEMMAoGA1UECxMDUEtJMRgwFgYDVQQDEw9ET0QgRU1BSUwgQ0EtMzACA0j/OjAJ
-BgUrDgMCGgUAoIIBozAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0x
-MzEwMjIyMDA2MDNaMCMGCSqGSIb3DQEJBDEWBBSnWHhHvGWTe7GtI6VC6ByI7gri+TBYBgkqhkiG
-9w0BCQ8xSzBJMAoGCCqGSIb3DQMHMA4GCCqGSIb3DQMCAgIAgDAHBgUrDgMCBzANBggqhkiG9w0D
-AgIBKDAHBgUrDgMCGjAKBggqhkiG9w0CBTBzBgkrBgEEAYI3EAQxZjBkMF0xCzAJBgNVBAYTAlVT
-MRgwFgYDVQQKEw9VLlMuIEdvdmVybm1lbnQxDDAKBgNVBAsTA0RvRDEMMAoGA1UECxMDUEtJMRgw
-FgYDVQQDEw9ET0QgRU1BSUwgQ0EtMzACA0j/PjB1BgsqhkiG9w0BCRACCzFmoGQwXTELMAkGA1UE
-BhMCVVMxGDAWBgNVBAoTD1UuUy4gR292ZXJubWVudDEMMAoGA1UECxMDRG9EMQwwCgYDVQQLEwNQ
-S0kxGDAWBgNVBAMTD0RPRCBFTUFJTCBDQS0zMAIDSP8+MA0GCSqGSIb3DQEBAQUABIIBAExwdE96
-7zG01PCtJeTD+mFnAtM0GgLw2ErOwTdQeXq9GlqdCKIVrjWeEh8ITDR9zYwiYM3ishZe+I2mroG2
-U9PFViurWLz5PHmCbVf61kWqWNDLQPoSeU097Q1OJKvH/zQOHVQGzHppAJLFoRZeip3o3vbHBdgk
-26wESTdkXXFNXIgnZOzjYcjU5oZGH9TanHDJ2kBkK+TNSiBQLv4hK/T6dOwAUQHJcX0WtCWjtSDp
-nXDbV2xnDoXjjYDYM7e0bEpWTj1zJiuY4yeVo2kl3Srl7pVqSzXoafddPmqwIl19LV9GV12TsrD7
-dLH+lYB2t9VQtJzba4SUxVQEdLCNku4AAAAAAAA=
+On Oct 22, 2013, at 9:09 PM, Junio C Hamano <gitster@pobox.com> wrote:
 
-------=_NextPart_000_0061_01CECF40.9BA34C30--
+> Yoshioka Tsuneo <yoshiokatsuneo@gmail.com> writes:
+>=20
+>> Also, I guess Junio might be suspicious to the idea to keep arrow("=3D=
+>") itself, maybe ?
+>=20
+> I think there is no single "right" solution to this issue, and it
+> has to boils down to the taste.
+>=20
+> When you are viewing "diff --stat -M" output in wide-enough medium,
+> you are seeing three pieces of information: what the source path
+> was, what the destination path will be, and what amount of change is
+> made with the change. When the output width is too narrow to show
+> these paths, with the current code, you see truncated destination
+> path, possibly without the source path, but this patch will show the
+> source and the destination paths, both of which are truncated even
+> more severely, because it always has to spend display columns for an
+> extra "..." (to show truncation of the source side), " =3D> " (to sho=
+w
+> that it is a rename), and <"{","}"> pair (again to show that it is a
+> rename).  If the destination does not fit, the output before this
+> patch would have thrown these away as part of left-truncation, to
+> show the destination path as maximally as possible.  We do not have
+> even half the width of the current "truncated to be destination
+> only" output for each path.
+>=20
+> I am afraid that in the cases where the patch makes a difference,
+> what happens would be that you can no longer tell what source or
+> destination paths really are, because the leading directory part
+> gets truncated too much, and if we didn't have this patch, at least
+> you can tell what destination path is affected.  We would trade the
+> guessability of at least one path (the destination) with just a
+> single bit of information (an unidentifiable path got renamed to
+> another unidentifiable path).
+>=20
+> I am not yet convinced that it is a good trade-off.  Especially
+> given the diffstat output is not about files but more about
+> contents, between an output in the extreme case the version after
+> the patch needs to produce
+>=20
+> 	{... =3D> ...}/controller/Makefile | 7 +++++++
+>=20
+> that tells us "7 lines were updated in the procedure to build some
+> unknown controller by copying or renaming from the build procedure
+> of some other unknown controller", and the output the current code
+> would give to the same rename
+>=20
+> 	.}/fooGadget/controller/Makefile | 7 +++++++
+>=20
+> that tells us "7 lines were updated in the build procedure for the
+> foo Gadget", I think the latter contains more useful information,
+> even though it does lose one bit of information ("there was a rename
+> involved in producing this final path") compared to the version with
+> the patch.
+>=20
+> So you are correct to say that I am still skeptical.
+>=20
+> In any case, the output from "diff --stat -M" should match the
+> output from "apply --stat -M", I think.
