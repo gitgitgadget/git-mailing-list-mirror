@@ -1,75 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Oct 2013, #04; Fri, 18)
-Date: Tue, 22 Oct 2013 08:20:15 -0700
-Message-ID: <xmqqli1luyc0.fsf@gitster.dls.corp.google.com>
-References: <xmqq38nyw7ja.fsf@gitster.dls.corp.google.com>
-	<20131019063447.GA18977@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2] Clear fd after closing to avoid double-close error
+Date: Tue, 22 Oct 2013 11:29:48 -0400
+Message-ID: <20131022152948.GA21940@sigill.intra.peff.net>
+References: <1382448962-31782-1-git-send-email-jl@opera.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Oct 22 17:20:27 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Duy Nguyen <pclouds@gmail.com>
+To: Jens =?utf-8?Q?Lindstr=C3=B6m?= <jl@opera.com>
+X-From: git-owner@vger.kernel.org Tue Oct 22 17:30:01 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VYdku-0005T7-1E
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Oct 2013 17:20:24 +0200
+	id 1VYduA-0002sJ-H3
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Oct 2013 17:29:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752860Ab3JVPUT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Oct 2013 11:20:19 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46330 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752541Ab3JVPUT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Oct 2013 11:20:19 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 530084A36E;
-	Tue, 22 Oct 2013 15:20:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=J//nparcCWpbnaOnUCPCVG8ZYAo=; b=VVwnyR
-	bKfAvIC90VsOUfljYC0SCI/9bufqXoDA0mQb44Cws1vN/ZL2ZVPX1Vg7KpBVshRb
-	fe4kAToRUQDcaaOb99UXbFbRpDh3JLy8t3rnPj/o9gKPSM+6vOzcicnZxlatISct
-	yZ+DFUX5iYSyuZyRa7RxSxwSaYcWrFEahiX3o=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Jef7rWczMocjNxOOon0Ei1PCSP3qFLL0
-	0+xD84MPyEN6jAr1KLbPkEsOCofK0IHv1vu/vmQ/K1i5zh3RJi3lo++88tMqs8wF
-	Po9U/Hr5TZyWufwQ8w8OMkNK7B9ttrTMDPZ/WY3MPcA5ZILwpMXJXh6MEMAlb2Mb
-	e94F29pbA6c=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 42FC34A36D;
-	Tue, 22 Oct 2013 15:20:18 +0000 (UTC)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 96BC14A369;
-	Tue, 22 Oct 2013 15:20:17 +0000 (UTC)
-In-Reply-To: <20131019063447.GA18977@sigill.intra.peff.net> (Jeff King's
-	message of "Sat, 19 Oct 2013 02:34:48 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 7526B5E8-3B2D-11E3-914C-8F264F2CC097-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753768Ab3JVP3y convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Oct 2013 11:29:54 -0400
+Received: from cloud.peff.net ([50.56.180.127]:53608 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753018Ab3JVP3y (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Oct 2013 11:29:54 -0400
+Received: (qmail 17586 invoked by uid 102); 22 Oct 2013 15:29:54 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 22 Oct 2013 10:29:54 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 22 Oct 2013 11:29:48 -0400
+Content-Disposition: inline
+In-Reply-To: <1382448962-31782-1-git-send-email-jl@opera.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236475>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236476>
 
-Jeff King <peff@peff.net> writes:
+On Tue, Oct 22, 2013 at 03:36:02PM +0200, Jens Lindstr=C3=B6m wrote:
 
-> On Fri, Oct 18, 2013 at 03:14:49PM -0700, Junio C Hamano wrote:
->
->> * jn/add-2.0-u-A-sans-pathspec (2013-04-26) 1 commit
->> * jc/push-2.0-default-to-simple (2013-06-18) 1 commit
->> * jc/add-2.0-ignore-removal (2013-04-22) 1 commit
->>  ...
->>  Will cook in 'next' until Git 2.0.
->
-> I notice that these are not actually in 'next', despite the
-> descriptions.  Should they be, to give them wider exposure?
+> In send_pack(), clear the fd passed to pack_objects() by setting
+> it to -1, since pack_objects() closes the fd (via a call to
+> run_command()).  Likewise, in get_pack(), clear the fd passed to
+> run_command().
+>=20
+> Not doing so risks having git_transport_push(), caller of
+> send_pack(), closing the fd again, possibly incorrectly closing
+> some other open file; or similarly with fetch_refs_from_pack(),
+> indirect caller of get_pack().
 
-We have been running with their respective preparatory migration
-steps in the released versions, so we are ready to do so.  These
-last steps of the multi-step transition should probably cook in
-'next' for a cycle or two before the final 2.0 development cycle.
+Thanks, this looks like the right thing to do.
+
+You had mentioned earlier in the thread the possibility of just droppin=
+g
+the close() in git_transport_push. I agree that it is not worth going
+that route, as it serves as a safety check to avoid leaking in early
+returns (and indeed, in both the fetch and push cases, we can return
+early without spawning a subprocess when the receiver already has all o=
+f
+the necessary objects).
+
+> Signed-off-by: Jens Lindstr=C3=B6m <jl@opera.com>
+
+Acked-by: Jeff King <peff@peff.net>
+
+-Peff
