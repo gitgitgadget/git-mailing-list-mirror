@@ -1,114 +1,69 @@
-From: perryh@pluto.rain.com (Perry Hutchison)
-Subject: Finding the repository
-Date: Wed, 23 Oct 2013 00:52:43 -0700
-Message-ID: <5267804b.JaxQnlQ5Cx+By4RS%perryh@pluto.rain.com>
+From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
+Subject: git grep: search whole tree by default?
+Date: Wed, 23 Oct 2013 10:25:55 +0200
+Message-ID: <CAA01CsqgNKdDAc9OL9zdk=3tnK9GAG=6w+wP_XSoiefBOgfzRQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 23 10:25:51 2013
+Content-Type: text/plain; charset=ISO-8859-1
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Oct 23 10:26:05 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VYtlG-0006ve-QN
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Oct 2013 10:25:51 +0200
+	id 1VYtlS-00074H-2b
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Oct 2013 10:26:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751577Ab3JWIZp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Oct 2013 04:25:45 -0400
-Received: from agora.rdrop.com ([199.26.172.34]:3300 "EHLO agora.rdrop.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751410Ab3JWIZm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Oct 2013 04:25:42 -0400
-X-Greylist: delayed 875 seconds by postgrey-1.27 at vger.kernel.org; Wed, 23 Oct 2013 04:25:42 EDT
-Received: from agora.rdrop.com (66@localhost [127.0.0.1])
-	by agora.rdrop.com (8.13.1/8.12.7) with ESMTP id r9N8B6FB028266
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT)
-	for <git@vger.kernel.org>; Wed, 23 Oct 2013 01:11:06 -0700 (PDT)
-	(envelope-from perryh@pluto.rain.com)
-Received: (from uucp@localhost)
-	by agora.rdrop.com (8.13.1/8.14.2/Submit) with UUCP id r9N8B69P028265
-	for git@vger.kernel.org; Wed, 23 Oct 2013 01:11:06 -0700 (PDT)
-	(envelope-from perryh@pluto.rain.com)
-Received: from fbsd81 by pluto.rain.com (4.1/SMI-4.1-pluto-M2060407)
-	id AA16627; Wed, 23 Oct 13 00:51:03 PDT
-User-Agent: nail 11.25 7/29/05
+	id S1751723Ab3JWIZ6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Oct 2013 04:25:58 -0400
+Received: from mail-ee0-f42.google.com ([74.125.83.42]:38770 "EHLO
+	mail-ee0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751623Ab3JWIZ4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Oct 2013 04:25:56 -0400
+Received: by mail-ee0-f42.google.com with SMTP id b45so260450eek.15
+        for <git@vger.kernel.org>; Wed, 23 Oct 2013 01:25:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=QzA9KLUNCmCqzofGfEBsM2hnHXua7tQexKUjvoG1P8o=;
+        b=nw3Z0edgKlCiHjt1ecpGPkkS48GYkWVqTUeADb7p2P12+gQbJKN6uvCOUNeW+sJ0ty
+         LaiYsotsmDpQdjjvhYuCMSGfLrCfg0N+caoNQc6yefsKBdLQw2BrqcInD4vzxpD1Xshm
+         R1PQ770W8jbmKqUtCa5DjnQCBp5lniR4lRtR1nXaGKVcKBL8ppcsZAetq6IrvmyYmm0g
+         kEnj4TMMZrmi65YWZpKIW2dpCWlL6h11vsVfL8KN8qC90yRpgYmsFBqqNSgnUqalKYp3
+         3sv05+T1LnCOoNX7XJEG+muQdQykl3tp94u0OU7e4pe7iINWWjoZVOgjNo80lzU3wypU
+         QsLw==
+X-Received: by 10.14.88.132 with SMTP id a4mr463771eef.60.1382516755349; Wed,
+ 23 Oct 2013 01:25:55 -0700 (PDT)
+Received: by 10.223.168.9 with HTTP; Wed, 23 Oct 2013 01:25:55 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236501>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236502>
 
-At least in version 1.7.0.4, it seems git does not like being run
-from outside the repository, even if the file(s) being operated
-on are inside the repository, unless it is given a pointer to the
-repository via the --git-dir= option or the GIT_DIR enironment
-variable.
+Hi,
 
-For example, suppose /foo/bar is a local repository and baz.c is a
-file in the outermost directory that I want to remove.  This works:
+it would be nice if grep searched not only in current directory and
+subdirectories, but in whole tree.
 
-  $ cd /foo/bar
-  $ git rm baz.c
+I know I can use ":/" as a pathspec, but since most git commands work
+tree, I got used to this and forgot that grep is different.
 
-but this, which intuitively should mean exactly the same thing,
-fails:
+It's easy to make a mistake and believe that your code does not
+contain searched string XXX - because you have searched from a
+subdirectory, not from the top level of your working tree. OTOH, if
+grep searches whole tree, you'll notice you get results from outside
+of CWD and if you don't want that, you will be able to limit the
+search to '.'
 
-  $ cd /foo
-  $ git rm bar/baz.c
-  fatal: Not a git repository (or any of the parent directories): .git
+I think there were discussion about how there are several git commands
+which do not search in whole tree by default and that it's going to be
+changed. I think "add" is one of such commands. Is 'grep' left
+unchanged?
 
-I've written a wrapper script that solves this problem, but it is
-more an illustration or proof of concept than a real "solution"
--- the command line parsing may well be imperfect, and it would
-be semantically incorrect in such cases as committing multiple
-(individually specified) files:  it would do a separate commit
-of each pathname rather than a single commit of all pathnames.
+Last discussion I found is from 2011 March
+(http://thread.gmane.org/gmane.comp.version-control.git/168063/focus=168188)
+and it says it's not going to be changed :(
 
-Has anyone considered enhancing the automatic repository search in
-git itself to look in the directory where the specified file(s) is/are
-located, as a last resort before failing?  (Yes, this does present
-the potential for operating on multiple repositories with a single
-invocation of git; would that be a bad thing?)
-
---------
-
-#!/usr/local/bin/bash
-
-# smarter git:  if the current directory has no .git subdirectory
-# (i.e. is not in a repository), try running git in the directory
-# where each file is located instead of in the current directory.
-
-[ "$1" == "--version" -o "$1" == "--help" -o "$1" == "--exec-path" \
-  -o "x$GIT_DIR" != "x" -o -d .git ] && exec git "$@"
-
-# Set defaults
-flags=""
-dirSet=0
-
-# Collect flag params
-while [[ "$1" == -?* ]] ; do
-   case "$1" in
-      --git-dir=* )
-	dirSet=1
-	;;
-      * )
-   esac
-   flags="$flags $1"
-   shift
-done
-
-[ "$dirSet" == "1" ] && exec git $flags "$@"
-
-# next word must be the command
-
-gitCmd="$1"
-shift
-
-# remaining words must be pathnames
-
-for f in "$@"
-do
-   ( cd $(dirname "$f") && git $flags $gitCmd $(basename "$f") )
-done
+-- 
+Piotr Krukowiecki
