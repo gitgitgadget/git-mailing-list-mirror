@@ -1,95 +1,68 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: git grep: search whole tree by default?
-Date: Wed, 23 Oct 2013 22:43:36 +0200
-Message-ID: <vpqy55jogzr.fsf@anie.imag.fr>
-References: <CAA01CsqgNKdDAc9OL9zdk=3tnK9GAG=6w+wP_XSoiefBOgfzRQ@mail.gmail.com>
-	<vpqbo2guff7.fsf@anie.imag.fr>
-	<xmqqmwlzrjdh.fsf@gitster.dls.corp.google.com>
-	<87hac7hmrb.fsf@mcs.anl.gov>
-	<xmqqob6fq0q1.fsf@gitster.dls.corp.google.com>
-	<87zjpzg592.fsf@mcs.anl.gov>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Working patterns
+Date: Wed, 23 Oct 2013 14:44:19 -0700
+Message-ID: <xmqqa9hzpsr0.fsf@gitster.dls.corp.google.com>
+References: <201310232023.r9NKNr5v012288@freeze.ariadne.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Piotr Krukowiecki <piotr.krukowiecki@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jed Brown <jed@59A2.org>
-X-From: git-owner@vger.kernel.org Wed Oct 23 22:50:21 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: worley@alum.mit.edu (Dale R. Worley)
+X-From: git-owner@vger.kernel.org Wed Oct 23 23:44:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VZ5Nj-0002rc-HT
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Oct 2013 22:50:19 +0200
+	id 1VZ6E8-0004AP-2b
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Oct 2013 23:44:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753414Ab3JWUuN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Oct 2013 16:50:13 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:43885 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752058Ab3JWUuM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Oct 2013 16:50:12 -0400
-Received: from globule.imag.fr (globule.imag.fr [129.88.34.238])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id r9NKhZFI007279
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 23 Oct 2013 22:43:35 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	(authenticated bits=0)
-	by globule.imag.fr (8.13.8/8.13.8) with ESMTP id r9NKha1V013077
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Wed, 23 Oct 2013 22:43:36 +0200
-In-Reply-To: <87zjpzg592.fsf@mcs.anl.gov> (Jed Brown's message of "Wed, 23 Oct
-	2013 14:24:25 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 23 Oct 2013 22:43:35 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r9NKhZFI007279
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1383165816.51332@P/XbO4fPrBDxBeN0ki1g5A
+	id S1752826Ab3JWVoY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Oct 2013 17:44:24 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58927 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752660Ab3JWVoX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Oct 2013 17:44:23 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B8F4C4D7D5;
+	Wed, 23 Oct 2013 21:44:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=D8/t3m8Shll9YhQld4o+W38jeEk=; b=G7Lrdn
+	JU54/m/ewKaAWsJYXprA9fJyYCHtcbvvv9NtDxjzxYxuW1osFrtuZXvP4PF07zz3
+	zzqO7wGShqIm3S+iMOUmbWLWrJQXX0aoieBxzA1pNBWwjf0jdQRM0Oa/YFVTyDY5
+	tBF/Ep4qP568OMCBDLDu+wr0RUukmRH/o5ow4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=TcT1CLBMdtDSbKQfCDgoQlka83hDIX9a
+	OpfiyplMAjFNDb8er6nNNKf98Crb4sxgzzRIkQDq2+BJGXH6yra1eRkb8pSh/Owr
+	hid7dy2WpG43+nXhRVXa9FyRoE30Wtx2pJ6Uohh//6YCCP/KDBsC+/BLGfTNvLWn
+	7BNXJMkv6UI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ADA084D7D4;
+	Wed, 23 Oct 2013 21:44:22 +0000 (UTC)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EEE244D7D1;
+	Wed, 23 Oct 2013 21:44:21 +0000 (UTC)
+In-Reply-To: <201310232023.r9NKNr5v012288@freeze.ariadne.com> (Dale
+	R. Worley's message of "Wed, 23 Oct 2013 16:23:53 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 4712C20A-3C2C-11E3-A736-8F264F2CC097-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236553>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236554>
 
-Jed Brown <jed@59A2.org> writes:
+worley@alum.mit.edu (Dale R. Worley) writes:
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> Jed Brown <jed@59A2.org> writes:
->>
->>> Junio C Hamano <gitster@pobox.com> writes:
->>>> I suspect that it would be too late for 2.0 we want to do sometime
->>>> early next year, though.
->>>
->>> How would you manage transition from the current behavior?  Warning
->>> people to explicitly use "." or ":/" during some interim period sounds
->>> worse than just switching the default behavior.
->>
->> "How would I"?
->>
->> You're asking that question only because you omitted too much from
->> the quote ;-)
->
-> I meant that if the proposed migration plan were to be "just change it
-> and people will learn" (because anything more gradual would actually be
-> worse for users) then is it really too late for Git-2.0?
+> It seems to me that the two sets of Git commands should be invokable
+> under the same circumstances, that there is a design specification as
+> to how Git can be invoked, and both implementations should match that.
 
-That may be an option. In the case of "git add -u", it was a bit more
-complicated, since a badly used "git add" somehow looses data (not very
-serious, you may only loos the index). So, saying after the fact "oh, by
-the way, I messed up the index" was not a very good transition plan.
-
-In the case of "grep", I'm starting to get convinced that it's OK to do
-so, because the user can basically re-run grep with the right argument
-if needed.
-
-The warning could be de-activable with an advice.* option.
-
-Again, no strong opinion here, but that seems workable to me.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+As far as I know, the design for any (be it script or command) is
+that they should be able to run from the top-level and from any
+subdirectory within, but running from outside the top-level of the
+working tree has never been part of the design goal.  If some
+commands tolerated it, that was by mere accident and not by design.
