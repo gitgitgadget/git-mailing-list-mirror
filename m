@@ -1,71 +1,77 @@
-From: Antoine Pelisse <apelisse@gmail.com>
-Subject: Re: [PATCH] remote-hg: unquote C-style paths when exporting
-Date: Wed, 23 Oct 2013 10:38:50 +0200
-Message-ID: <CALWbr2zzT47e_B0moy0a5gpWfhberp9B3TEwkGFBBm19iGfQBw@mail.gmail.com>
-References: <1382115821-12586-1-git-send-email-apelisse@gmail.com>
-	<xmqq4n89t8yw.fsf@gitster.dls.corp.google.com>
-	<CALWbr2zsOYNN45d+qHDQ88eLj82iV4QxJ_9ro+RGk7upBJVATA@mail.gmail.com>
-	<CAMP44s37-R0u4oLnuRfdghx-Tk3X9eer0MVTcAGmPZ3Bu32dug@mail.gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: Finding the repository
+Date: Wed, 23 Oct 2013 15:49:06 +0700
+Message-ID: <CACsJy8DgxpjasroZv4iqTn9JhQ_3r2DD9uEf-xL-uyyPOtWh+A@mail.gmail.com>
+References: <5267804b.JaxQnlQ5Cx+By4RS%perryh@pluto.rain.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 23 10:38:59 2013
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Perry Hutchison <perryh@pluto.rain.com>
+X-From: git-owner@vger.kernel.org Wed Oct 23 10:49:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VYtxy-0007KX-B2
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Oct 2013 10:38:58 +0200
+	id 1VYu8N-0005xF-Ib
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Oct 2013 10:49:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751790Ab3JWIiy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Oct 2013 04:38:54 -0400
-Received: from mail-lb0-f172.google.com ([209.85.217.172]:54461 "EHLO
-	mail-lb0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750847Ab3JWIiw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Oct 2013 04:38:52 -0400
-Received: by mail-lb0-f172.google.com with SMTP id c11so454460lbj.31
-        for <git@vger.kernel.org>; Wed, 23 Oct 2013 01:38:51 -0700 (PDT)
+	id S1751997Ab3JWIti (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Oct 2013 04:49:38 -0400
+Received: from mail-qe0-f54.google.com ([209.85.128.54]:63722 "EHLO
+	mail-qe0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751710Ab3JWIth (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Oct 2013 04:49:37 -0400
+Received: by mail-qe0-f54.google.com with SMTP id 1so277992qec.27
+        for <git@vger.kernel.org>; Wed, 23 Oct 2013 01:49:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=D3p6UU+mkBpJ6iYn+kc/2nmND51c/SKbBoKg/SpsKvA=;
-        b=AIzMPW4fbnfR47BqcYVRS84Su75SPRB8S6pwC+TQj8iXZ48GcClc15ZsFWHisnwlwv
-         oUEyS6w4ihDtxyZOl2f1yl3JE75T31rzhqC/HCR2M3ErE9VMMyjZr2ssK8zne2u+LSuT
-         SDEpivRYhWW1Iik1boMGA9RQBTMhMgIBTvtA+8fUcBlV4qp6zuNiobxsaBijtU/dHo9C
-         l1QX3ZmTIQjrb0lXMkE6Md7g/OAtKeaZHort2DTm4X8crp+Rv38LOgQvM2mPgDSqoEeE
-         DyoWLfPJcZPdhqR4/SIiMetqlRiPIewnOxXuwzOsDZFpiD/ePrbGpAhEGr23dkaEi8I5
-         9Msg==
-X-Received: by 10.112.136.163 with SMTP id qb3mr1298532lbb.14.1382517530933;
- Wed, 23 Oct 2013 01:38:50 -0700 (PDT)
-Received: by 10.112.50.240 with HTTP; Wed, 23 Oct 2013 01:38:50 -0700 (PDT)
-In-Reply-To: <CAMP44s37-R0u4oLnuRfdghx-Tk3X9eer0MVTcAGmPZ3Bu32dug@mail.gmail.com>
+        bh=X4CIsiraw5Q2j5Ef16i5bAT4Xl5edXsZPa0yUHhCWsY=;
+        b=HiNqNhvBIJQTSdgaD9HwO6Axv6QA89lF7B74J11NH2en3qhhSZBx8rouhqyHqW97bj
+         Qqbth0tKt4N26Q6I1kDBR90+TQXAEMWRgCYnVOwiYEMGz11YQwqg2XF/HI8p2JQPGNkX
+         RMxIc4kKae4Op4z8cPP7PVRd6xpEVIQK2yKHZiIDxW7Yu0Xom2OyHQtrfgShF+TdhlQy
+         zr+EnFfa52I0/tPyUTnCM+XKU18g+l71c7EBomWP/IP0PDxAkq8MdTCpmeApVSmXFyv4
+         5iP+bgHKDSsMSu9t/FJi8BDhBmi83K3J2zpqCimcvw7PHvn9KYcPEX+4S326igSUjeIX
+         ERyQ==
+X-Received: by 10.224.79.12 with SMTP id n12mr450679qak.109.1382518176864;
+ Wed, 23 Oct 2013 01:49:36 -0700 (PDT)
+Received: by 10.96.27.202 with HTTP; Wed, 23 Oct 2013 01:49:06 -0700 (PDT)
+In-Reply-To: <5267804b.JaxQnlQ5Cx+By4RS%perryh@pluto.rain.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236503>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236504>
 
-On Wed, Oct 23, 2013 at 2:45 AM, Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
-> On Tue, Oct 22, 2013 at 3:49 PM, Antoine Pelisse <apelisse@gmail.com> wrote:
+On Wed, Oct 23, 2013 at 2:52 PM, Perry Hutchison <perryh@pluto.rain.com> wrote:
+> At least in version 1.7.0.4, it seems git does not like being run
+> from outside the repository, even if the file(s) being operated
+> on are inside the repository, unless it is given a pointer to the
+> repository via the --git-dir= option or the GIT_DIR enironment
+> variable.
 >
->> It is true that I have expected "valid output" from git-fast-export.
->> And I don't have in mind any easy solution to detect that the output
->> is broken, yet still accepted as a valid string by python. We could
->> obviously write a unquote_c_style() equivalent in python if needed.
+> For example, suppose /foo/bar is a local repository and baz.c is a
+> file in the outermost directory that I want to remove.  This works:
 >
-> Something like this?
+>   $ cd /foo/bar
+>   $ git rm baz.c
 >
-> def c_style_unescape(string):
->     if string[0] == string[-1] == '"':
->         return string.decode('string-escape')[1:-1]
->     return string
+> but this, which intuitively should mean exactly the same thing,
+> fails:
 >
-> It's in git-remote-bzr.py.
+>   $ cd /foo
+>   $ git rm bar/baz.c
+>   fatal: Not a git repository (or any of the parent directories): .git
 
-Yeah, that's certainly better,
-
-Thanks,
+I share your pain. In my case I hate to go inside a directory just to
+grep something. In my opinion git should be flexible and work at least
+in unambiguous cases. But it's not easy to determine ambiguity here,
+especially when the repo finding code does not know anything about
+"bar/barz.c" (is it a pathname or an argument to an option?). There
+are more cases to consider, like what if you do "git rm bar/baz.c and
+rab/zab.c" where bar and rab are two different repositories.. And the
+setup code is not exactly easy to add these stuff in..
+-- 
+Duy
