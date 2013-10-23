@@ -1,73 +1,114 @@
-From: =?UTF-8?Q?Jens_Lindstr=C3=B6m?= <jl@opera.com>
-Subject: Re: [PATCH] Clear fd after closing to avoid double-close error
-Date: Wed, 23 Oct 2013 09:52:21 +0200
-Message-ID: <CAEef6Wyui5EkNoEGKfb+NHZyb3BTkHME234M1zMyjuux5yMUeg@mail.gmail.com>
-References: <1382443823-31317-1-git-send-email-jl@opera.com>
-	<CACsJy8DtvaojrrQr4=uYCRse7N+SXb+WdjY+C_0FRSjYsNC6zg@mail.gmail.com>
-	<xmqq8uxltaeh.fsf@gitster.dls.corp.google.com>
+From: perryh@pluto.rain.com (Perry Hutchison)
+Subject: Finding the repository
+Date: Wed, 23 Oct 2013 00:52:43 -0700
+Message-ID: <5267804b.JaxQnlQ5Cx+By4RS%perryh@pluto.rain.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 23 09:52:28 2013
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 23 10:25:51 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VYtEx-0001SV-EL
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Oct 2013 09:52:27 +0200
+	id 1VYtlG-0006ve-QN
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Oct 2013 10:25:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751275Ab3JWHwX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Oct 2013 03:52:23 -0400
-Received: from mail-lb0-f175.google.com ([209.85.217.175]:45014 "EHLO
-	mail-lb0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751238Ab3JWHwW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Oct 2013 03:52:22 -0400
-Received: by mail-lb0-f175.google.com with SMTP id z5so419962lbh.34
-        for <git@vger.kernel.org>; Wed, 23 Oct 2013 00:52:21 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=VwGt6VeKyBpC51C36af0yLSotmtlpMOZxkMSDIPfTPA=;
-        b=kgESv+4B6ZSY1tOMtfSbabV3NZxACDAOSdLDiVWpowa07RFK+ac/1+4whJV19PpqDO
-         XCsiYjUoEBwWaD1b3uuFZ8FVIZrQ9PBpwIIsMxbiLMS7bG1c5WcC74fvg6NH6RYYzLDs
-         2KCHiXat5HrOgMBSfGe9Qjgq54rXK/Rg49GpdpkHuAKcHOE7V1TCQhSmIL5dw06OU3w/
-         zgAXZVjvw4ys4bCXcZWvCUD+M7mFqvYio2iG3YqSS3y/X5GkxsbBSea6cM5KWNW8PtMK
-         URELaMxaZvjQ8VuittwW+QTSyUIaGavCjI9Tjpj8ISXRqynYt2H/XXn99EFm7NJIUqBJ
-         0WMA==
-X-Gm-Message-State: ALoCoQlxmOIddMaJq5v6iPXSx2PWFe4pbI5N/wKUL2sOmKU/ucY6tAC4+edFJqb3uLjZZeMerG61
-X-Received: by 10.152.116.7 with SMTP id js7mr160300lab.11.1382514741341; Wed,
- 23 Oct 2013 00:52:21 -0700 (PDT)
-Received: by 10.112.56.171 with HTTP; Wed, 23 Oct 2013 00:52:21 -0700 (PDT)
-In-Reply-To: <xmqq8uxltaeh.fsf@gitster.dls.corp.google.com>
+	id S1751577Ab3JWIZp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Oct 2013 04:25:45 -0400
+Received: from agora.rdrop.com ([199.26.172.34]:3300 "EHLO agora.rdrop.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751410Ab3JWIZm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Oct 2013 04:25:42 -0400
+X-Greylist: delayed 875 seconds by postgrey-1.27 at vger.kernel.org; Wed, 23 Oct 2013 04:25:42 EDT
+Received: from agora.rdrop.com (66@localhost [127.0.0.1])
+	by agora.rdrop.com (8.13.1/8.12.7) with ESMTP id r9N8B6FB028266
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT)
+	for <git@vger.kernel.org>; Wed, 23 Oct 2013 01:11:06 -0700 (PDT)
+	(envelope-from perryh@pluto.rain.com)
+Received: (from uucp@localhost)
+	by agora.rdrop.com (8.13.1/8.14.2/Submit) with UUCP id r9N8B69P028265
+	for git@vger.kernel.org; Wed, 23 Oct 2013 01:11:06 -0700 (PDT)
+	(envelope-from perryh@pluto.rain.com)
+Received: from fbsd81 by pluto.rain.com (4.1/SMI-4.1-pluto-M2060407)
+	id AA16627; Wed, 23 Oct 13 00:51:03 PDT
+User-Agent: nail 11.25 7/29/05
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236500>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236501>
 
-On Tue, Oct 22, 2013 at 8:42 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Duy Nguyen <pclouds@gmail.com> writes:
+At least in version 1.7.0.4, it seems git does not like being run
+from outside the repository, even if the file(s) being operated
+on are inside the repository, unless it is given a pointer to the
+repository via the --git-dir= option or the GIT_DIR enironment
+variable.
 
->> Life would have been simpler if fd[1] was _always_ closed by
->> send_pack(), like in c20181e (start_command(), if .in/.out > 0, closes
->> file descriptors, not the callers - 2008-02-21).
->
-> Yeah, that was also my first reaction when I saw the above three
-> lines after reading the discussion that led to the diagnosis.
+For example, suppose /foo/bar is a local repository and baz.c is a
+file in the outermost directory that I want to remove.  This works:
 
-If send_pack() always closes fd[1], then I believe "git send-pack
---stateless-rpc --helper-status" would die in print_helper_status(),
-called after send_pack(), since fd[1] would be 1, to which
-print_helper_status() will try to write. (I don't know what either
---stateless-rpc or --helper-status mean, other than what's obvious
-from the code, or if the combination of them makes any sense.)
+  $ cd /foo/bar
+  $ git rm baz.c
 
-I don't really have any more time to spend on this issue, so if a more
-thorough fix is required, I'm afraid someone else will have to work on
-it.
+but this, which intuitively should mean exactly the same thing,
+fails:
 
-/ Jens
+  $ cd /foo
+  $ git rm bar/baz.c
+  fatal: Not a git repository (or any of the parent directories): .git
+
+I've written a wrapper script that solves this problem, but it is
+more an illustration or proof of concept than a real "solution"
+-- the command line parsing may well be imperfect, and it would
+be semantically incorrect in such cases as committing multiple
+(individually specified) files:  it would do a separate commit
+of each pathname rather than a single commit of all pathnames.
+
+Has anyone considered enhancing the automatic repository search in
+git itself to look in the directory where the specified file(s) is/are
+located, as a last resort before failing?  (Yes, this does present
+the potential for operating on multiple repositories with a single
+invocation of git; would that be a bad thing?)
+
+--------
+
+#!/usr/local/bin/bash
+
+# smarter git:  if the current directory has no .git subdirectory
+# (i.e. is not in a repository), try running git in the directory
+# where each file is located instead of in the current directory.
+
+[ "$1" == "--version" -o "$1" == "--help" -o "$1" == "--exec-path" \
+  -o "x$GIT_DIR" != "x" -o -d .git ] && exec git "$@"
+
+# Set defaults
+flags=""
+dirSet=0
+
+# Collect flag params
+while [[ "$1" == -?* ]] ; do
+   case "$1" in
+      --git-dir=* )
+	dirSet=1
+	;;
+      * )
+   esac
+   flags="$flags $1"
+   shift
+done
+
+[ "$dirSet" == "1" ] && exec git $flags "$@"
+
+# next word must be the command
+
+gitCmd="$1"
+shift
+
+# remaining words must be pathnames
+
+for f in "$@"
+do
+   ( cd $(dirname "$f") && git $flags $gitCmd $(basename "$f") )
+done
