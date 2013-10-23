@@ -1,132 +1,135 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 14/15] builtin/remote.c:update(): use struct argv_array
-Date: Wed, 23 Oct 2013 17:50:47 +0200
-Message-ID: <1382543448-2586-15-git-send-email-mhagger@alum.mit.edu>
-References: <1382543448-2586-1-git-send-email-mhagger@alum.mit.edu>
-Cc: git@vger.kernel.org,
-	=?UTF-8?q?Carlos=20Mart=C3=ADn=20Nieto?= <cmn@elego.de>,
-	Michael Schubert <mschub@elegosoft.com>,
-	Johan Herland <johan@herland.net>, Jeff King <peff@peff.net>,
-	Marc Branchaud <marcnarc@xiplink.com>,
-	Nicolas Pitre <nico@fluxnic.net>,
-	John Szakmeister <john@szakmeister.net>,
-	Michael Haggerty <mhagger@alum.mit.edu>
+From: Antoine Pelisse <apelisse@gmail.com>
+Subject: Re: Re* [PATCH] remote-hg: unquote C-style paths when exporting
+Date: Wed, 23 Oct 2013 17:53:15 +0200
+Message-ID: <CALWbr2z-+S_rNFEKNH2fYJQmn1z9SyO2Z4sNDoz=Kh8P8Y_ccQ@mail.gmail.com>
+References: <1382115821-12586-1-git-send-email-apelisse@gmail.com>
+	<xmqq4n89t8yw.fsf@gitster.dls.corp.google.com>
+	<CALWbr2zsOYNN45d+qHDQ88eLj82iV4QxJ_9ro+RGk7upBJVATA@mail.gmail.com>
+	<CAMP44s37-R0u4oLnuRfdghx-Tk3X9eer0MVTcAGmPZ3Bu32dug@mail.gmail.com>
+	<CALWbr2zzT47e_B0moy0a5gpWfhberp9B3TEwkGFBBm19iGfQBw@mail.gmail.com>
+	<xmqqa9i0rnzo.fsf_-_@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	git <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 23 17:52:31 2013
+X-From: git-owner@vger.kernel.org Wed Oct 23 17:53:22 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VZ0jW-0002Ig-OE
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Oct 2013 17:52:31 +0200
+	id 1VZ0kL-0002s9-OB
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Oct 2013 17:53:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751985Ab3JWPw1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Oct 2013 11:52:27 -0400
-Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:42202 "EHLO
-	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751709Ab3JWPwX (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 23 Oct 2013 11:52:23 -0400
-X-AuditID: 12074414-b7fb46d000002a4d-ce-5267f0b647ea
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 20.E2.10829.6B0F7625; Wed, 23 Oct 2013 11:52:22 -0400 (EDT)
-Received: from localhost.localdomain (p57A247B5.dip0.t-ipconnect.de [87.162.71.181])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r9NFpLt7009100
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 23 Oct 2013 11:52:19 -0400
-X-Mailer: git-send-email 1.8.4
-In-Reply-To: <1382543448-2586-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrOIsWRmVeSWpSXmKPExsUixO6iqLvtQ3qQwdkpghbTu1azWHRd6Way
-	aOi9wmwx7+4uJotVt5YxW6yccYPR4vaK+cwWTzsrLea9eMFm8aOlh9mBy+Pv+w9MHpfWvWTy
-	OPRnCrvHsxPtbB6XXn5n83jWu4fR4+IlZY8ZLa9ZPD5vkvM4cPkxWwBXFLdNUmJJWXBmep6+
-	XQJ3xqLFzUwFnwQr2q4+Zm5gfM7XxcjBISFgIrFhH3MXIyeQKSZx4d56ti5GLg4hgcuMEg09
-	WxkhnCtMEtP+b2EBqWIT0JVY1NPMBGKLCKhJTGw7xAJSxCwwkVni+PRFYEXCAu4SW9e9Ayti
-	EVCVuNgygR3E5hVwkVh25yMrxGY5iYffYkHCnEDhC8ens4LYQgLOEhMWTmWfwMi7gJFhFaNc
-	Yk5prm5uYmZOcWqybnFyYl5eapGuhV5uZoleakrpJkZI0IrsYDxyUu4QowAHoxIP74OWtCAh
-	1sSy4srcQ4ySHExKorzswJAX4kvKT6nMSCzOiC8qzUktPsQowcGsJMK74y5QjjclsbIqtSgf
-	JiXNwaIkzvttsbqfkEB6YklqdmpqQWoRTFaGg0NJgrfpPVCjYFFqempFWmZOCUKaiYMTRHCB
-	bOAB2hADUshbXJCYW5yZDlF0ilFRSpx3P0hCACSRUZoHNwCWXl4xigP9I8w7G6SKB5ia4Lpf
-	AQ1mAho8ZUkayOCSRISUVANjevaDe+X72wq4dpab1tsf817LKeo/P+CZ577wx+G35ni9fPRk
-	glDYZ6Yv/9Z73lY7wzDBvuXp7Yd7Ge9+3ha7xurSgw7nto1LD646M+F94JronzwB 
+	id S1752013Ab3JWPxS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Oct 2013 11:53:18 -0400
+Received: from mail-la0-f42.google.com ([209.85.215.42]:41166 "EHLO
+	mail-la0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751509Ab3JWPxR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Oct 2013 11:53:17 -0400
+Received: by mail-la0-f42.google.com with SMTP id ea20so851136lab.29
+        for <git@vger.kernel.org>; Wed, 23 Oct 2013 08:53:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=OK4o+/WYjD7F2UkOmU6eZnJBmZS2e9bOsipxMl/dncY=;
+        b=M+bB/jsWFgZeQVx66mDvx2lTxuT8rlYSo7Kw+xPyfXWbqggaPWA5vlmHyJPs3dJhbB
+         elBd2r0wSx3rFg3LTJ4VkKuHK1hTXLmrD0mQ07ZMjCl2MtDv9uiTpEmSeDle5i9to6HJ
+         lu8VJHFklhCsFQl4tC9/pgcJY3fBMgb0votgy7/hryJImLCLb3sOxZvPA5XIwgL7fcLS
+         n2uA4OaRjjF0PFV2uT6ND/WMeG2cFhhLodRjXa/ZlzD14ve07IyNJlneprT6ervWmTpb
+         K+n8wdHI+Cv2L/6kdW3VnxMNucxHOFTR+6cFdRQ3toKGPp1NJVrWzBIh2jRRQd/Q2Fvz
+         tO5A==
+X-Received: by 10.112.9.195 with SMTP id c3mr2565107lbb.33.1382543595871; Wed,
+ 23 Oct 2013 08:53:15 -0700 (PDT)
+Received: by 10.112.50.240 with HTTP; Wed, 23 Oct 2013 08:53:15 -0700 (PDT)
+In-Reply-To: <xmqqa9i0rnzo.fsf_-_@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236519>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236520>
 
-Use struct argv_array for calling the "git fetch" subprocesses.
+On Wed, Oct 23, 2013 at 5:44 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Antoine Pelisse <apelisse@gmail.com> writes:
+>
+>>> def c_style_unescape(string):
+>>>     if string[0] == string[-1] == '"':
+>>>         return string.decode('string-escape')[1:-1]
+>>>     return string
+>>>
+>>> It's in git-remote-bzr.py.
+>>
+>> Yeah, that's certainly better,
+>>
+>> Thanks,
+>
+> OK, so an amended one will look like this?
 
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
----
- builtin/remote.c | 33 +++++++++++++++++----------------
- 1 file changed, 17 insertions(+), 16 deletions(-)
+The commit message needs to be updated as well.
 
-diff --git a/builtin/remote.c b/builtin/remote.c
-index ecedd96..bffe2f9 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -6,6 +6,7 @@
- #include "strbuf.h"
- #include "run-command.h"
- #include "refs.h"
-+#include "argv-array.h"
- 
- static const char * const builtin_remote_usage[] = {
- 	N_("git remote [-v | --verbose]"),
-@@ -1376,36 +1377,36 @@ static int update(int argc, const char **argv)
- 			 N_("prune remotes after fetching")),
- 		OPT_END()
- 	};
--	const char **fetch_argv;
--	int fetch_argc = 0;
-+	struct argv_array fetch_argv = ARGV_ARRAY_INIT;
- 	int default_defined = 0;
--
--	fetch_argv = xmalloc(sizeof(char *) * (argc+5));
-+	int retval;
- 
- 	argc = parse_options(argc, argv, NULL, options, builtin_remote_update_usage,
- 			     PARSE_OPT_KEEP_ARGV0);
- 
--	fetch_argv[fetch_argc++] = "fetch";
-+	argv_array_push(&fetch_argv, "fetch");
- 
- 	if (prune)
--		fetch_argv[fetch_argc++] = "--prune";
-+		argv_array_push(&fetch_argv, "--prune");
- 	if (verbose)
--		fetch_argv[fetch_argc++] = "-v";
--	fetch_argv[fetch_argc++] = "--multiple";
-+		argv_array_push(&fetch_argv, "-v");
-+	argv_array_push(&fetch_argv, "--multiple");
- 	if (argc < 2)
--		fetch_argv[fetch_argc++] = "default";
-+		argv_array_push(&fetch_argv, "default");
- 	for (i = 1; i < argc; i++)
--		fetch_argv[fetch_argc++] = argv[i];
-+		argv_array_push(&fetch_argv, argv[i]);
- 
--	if (strcmp(fetch_argv[fetch_argc-1], "default") == 0) {
-+	if (strcmp(fetch_argv.argv[fetch_argv.argc-1], "default") == 0) {
- 		git_config(get_remote_default, &default_defined);
--		if (!default_defined)
--			fetch_argv[fetch_argc-1] = "--all";
-+		if (!default_defined) {
-+			argv_array_pop(&fetch_argv);
-+			argv_array_push(&fetch_argv, "--all");
-+		}
- 	}
- 
--	fetch_argv[fetch_argc] = NULL;
--
--	return run_command_v_opt(fetch_argv, RUN_GIT_CMD);
-+	retval = run_command_v_opt(fetch_argv.argv, RUN_GIT_CMD);
-+	argv_array_clear(&fetch_argv);
-+	return retval;
- }
- 
- static int remove_all_fetch_refspecs(const char *remote, const char *key)
--- 
-1.8.4
+> -- >8 --
+> From: Antoine Pelisse <apelisse@gmail.com>
+> Subject: remote-hg: unquote C-style paths when exporting
+>
+> git-fast-import documentation says that paths can be C-style quoted.
+> Unfortunately, the current remote-hg helper doesn't unquote quoted
+> path and pass them as-is to Mercurial when the commit is created.
+>
+> This result in the following situation:
+
+s/result/&s/
+
+> - clone a mercurial repository with git
+> - Add a file with space: `mkdir dir/foo\ bar`
+
+- Add a file with space in a directory: `>dir/foo\ bar`
+
+> - Commit that new file, and push the change to mercurial
+> - The mercurial repository as now a new directory named '"dir', which
+> contains a file named 'foo bar"'
+
+I'm so ashamed I'd rather not report this one: s/as/has/
+
+> Use python ast.literal_eval to unquote the string if it starts with ".
+
+Use python str.decode('string-escape') to unquote the string if it
+starts and ends with ".
+
+> It has been tested with quotes, spaces, and utf-8 encoded file-names.
+>
+> Signed-off-by: Antoine Pelisse <apelisse@gmail.com>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  contrib/remote-helpers/git-remote-hg | 6 ++++++
+>  1 file changed, 6 insertions(+)
+>
+> diff --git a/contrib/remote-helpers/git-remote-hg b/contrib/remote-helpers/git-remote-hg
+> index 0194c67..85abbed 100755
+> --- a/contrib/remote-helpers/git-remote-hg
+> +++ b/contrib/remote-helpers/git-remote-hg
+> @@ -678,6 +678,11 @@ def get_merge_files(repo, p1, p2, files):
+>              f = { 'ctx' : repo[p1][e] }
+>              files[e] = f
+>
+> +def c_style_unescape(string):
+> +    if string[0] == string[-1] == '"':
+> +        return string.decode('string-escape')[1:-1]
+> +    return string
+> +
+>  def parse_commit(parser):
+>      global marks, blob_marks, parsed_refs
+>      global mode
+> @@ -720,6 +725,7 @@ def parse_commit(parser):
+>              f = { 'deleted' : True }
+>          else:
+>              die('Unknown file command: %s' % line)
+> +        path = c_style_unescape(path).decode('utf-8')
+>          files[path] = f
+>
+>      # only export the commits if we are on an internal proxy repo
+
+That is consistent with git-remote-bzr,
+
+Thanks
