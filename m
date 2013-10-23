@@ -1,135 +1,175 @@
-From: Antoine Pelisse <apelisse@gmail.com>
-Subject: Re: Re* [PATCH] remote-hg: unquote C-style paths when exporting
-Date: Wed, 23 Oct 2013 17:53:15 +0200
-Message-ID: <CALWbr2z-+S_rNFEKNH2fYJQmn1z9SyO2Z4sNDoz=Kh8P8Y_ccQ@mail.gmail.com>
-References: <1382115821-12586-1-git-send-email-apelisse@gmail.com>
-	<xmqq4n89t8yw.fsf@gitster.dls.corp.google.com>
-	<CALWbr2zsOYNN45d+qHDQ88eLj82iV4QxJ_9ro+RGk7upBJVATA@mail.gmail.com>
-	<CAMP44s37-R0u4oLnuRfdghx-Tk3X9eer0MVTcAGmPZ3Bu32dug@mail.gmail.com>
-	<CALWbr2zzT47e_B0moy0a5gpWfhberp9B3TEwkGFBBm19iGfQBw@mail.gmail.com>
-	<xmqqa9i0rnzo.fsf_-_@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Felipe Contreras <felipe.contreras@gmail.com>,
-	git <git@vger.kernel.org>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [PATCH 00/15] Change semantics of "fetch --tags"
+Date: Wed, 23 Oct 2013 17:50:33 +0200
+Message-ID: <1382543448-2586-1-git-send-email-mhagger@alum.mit.edu>
+References: <52327E62.2040301@alum.mit.edu>
+Cc: git@vger.kernel.org,
+	=?UTF-8?q?Carlos=20Mart=C3=ADn=20Nieto?= <cmn@elego.de>,
+	Michael Schubert <mschub@elegosoft.com>,
+	Johan Herland <johan@herland.net>, Jeff King <peff@peff.net>,
+	Marc Branchaud <marcnarc@xiplink.com>,
+	Nicolas Pitre <nico@fluxnic.net>,
+	John Szakmeister <john@szakmeister.net>,
+	Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 23 17:53:22 2013
+X-From: git-owner@vger.kernel.org Wed Oct 23 17:59:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VZ0kL-0002s9-OB
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Oct 2013 17:53:22 +0200
+	id 1VZ0pn-0006jA-Cc
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Oct 2013 17:58:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752013Ab3JWPxS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Oct 2013 11:53:18 -0400
-Received: from mail-la0-f42.google.com ([209.85.215.42]:41166 "EHLO
-	mail-la0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751509Ab3JWPxR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Oct 2013 11:53:17 -0400
-Received: by mail-la0-f42.google.com with SMTP id ea20so851136lab.29
-        for <git@vger.kernel.org>; Wed, 23 Oct 2013 08:53:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=OK4o+/WYjD7F2UkOmU6eZnJBmZS2e9bOsipxMl/dncY=;
-        b=M+bB/jsWFgZeQVx66mDvx2lTxuT8rlYSo7Kw+xPyfXWbqggaPWA5vlmHyJPs3dJhbB
-         elBd2r0wSx3rFg3LTJ4VkKuHK1hTXLmrD0mQ07ZMjCl2MtDv9uiTpEmSeDle5i9to6HJ
-         lu8VJHFklhCsFQl4tC9/pgcJY3fBMgb0votgy7/hryJImLCLb3sOxZvPA5XIwgL7fcLS
-         n2uA4OaRjjF0PFV2uT6ND/WMeG2cFhhLodRjXa/ZlzD14ve07IyNJlneprT6ervWmTpb
-         K+n8wdHI+Cv2L/6kdW3VnxMNucxHOFTR+6cFdRQ3toKGPp1NJVrWzBIh2jRRQd/Q2Fvz
-         tO5A==
-X-Received: by 10.112.9.195 with SMTP id c3mr2565107lbb.33.1382543595871; Wed,
- 23 Oct 2013 08:53:15 -0700 (PDT)
-Received: by 10.112.50.240 with HTTP; Wed, 23 Oct 2013 08:53:15 -0700 (PDT)
-In-Reply-To: <xmqqa9i0rnzo.fsf_-_@gitster.dls.corp.google.com>
+	id S1752673Ab3JWP6z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Oct 2013 11:58:55 -0400
+Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:63595 "EHLO
+	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752635Ab3JWP6y (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 Oct 2013 11:58:54 -0400
+X-Greylist: delayed 425 seconds by postgrey-1.27 at vger.kernel.org; Wed, 23 Oct 2013 11:58:54 EDT
+X-AuditID: 12074413-b7fc76d000002aba-85-5267f086bc55
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 29.38.10938.680F7625; Wed, 23 Oct 2013 11:51:34 -0400 (EDT)
+Received: from localhost.localdomain (p57A247B5.dip0.t-ipconnect.de [87.162.71.181])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r9NFpLsr009100
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Wed, 23 Oct 2013 11:51:26 -0400
+X-Mailer: git-send-email 1.8.4
+In-Reply-To: <52327E62.2040301@alum.mit.edu>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrOIsWRmVeSWpSXmKPExsUixO6iqNv2IT3IoOm5jsX0rtUsFl1Xupks
+	GnqvMFvMu7uLyWLVrWXMFitn3GC0uL1iPrPF085Ki3kvXrBZ/GjpYXbg8vj7/gOTx6V1L5k8
+	Dv2Zwu7x7EQ7m8ell9/ZPJ717mH0uHhJ2WNGy2sWj8+b5DwOXH7MFsAVxW2TlFhSFpyZnqdv
+	l8CdsfreGZaCa5oVq46tY2tgnK3QxcjJISFgInHo+BU2CFtM4sK99UA2F4eQwGVGic0Hm6Cc
+	K0wSMx7dZAKpYhPQlVjU0wxmiwioSUxsO8QCUsQsMJFZ4vj0RSwgCWEBS4kXTzeAFbEIqEos
+	+nMbaBIHB6+As8T3UwkgpoSAnMTDb7EgFZwCOhJX574FqxYS0JY427qfaQIj7wJGhlWMcok5
+	pbm6uYmZOcWpybrFyYl5ealFuuZ6uZkleqkppZsYIUErvINx10m5Q4wCHIxKPLwPWtKChFgT
+	y4orcw8xSnIwKYnyznmXHiTEl5SfUpmRWJwRX1Sak1p8iFGCg1lJhHfHXaAcb0piZVVqUT5M
+	SpqDRUmcV22Jup+QQHpiSWp2ampBahFMVoaDQ0mCt+k9UKNgUWp6akVaZk4JQpqJgxNEcIFs
+	4AHaMAukkLe4IDG3ODMdougUo6KUOG8DSEIAJJFRmgc3AJZeXjGKA/0jzDsbpIoHmJrgul8B
+	DWYCGjxlSRrI4JJEhJRUA+OU9MPeRnftwvtZLZLsn4rkL74Z92CpzXun85tsQxY5TPVafjqp
+	4c8LzQzvYsfvyVnPUu4n7VU8MDW9akte0nWrqxdbeBc3LK/tXRk806F2zfKW1Msn 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236520>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236522>
 
-On Wed, Oct 23, 2013 at 5:44 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Antoine Pelisse <apelisse@gmail.com> writes:
->
->>> def c_style_unescape(string):
->>>     if string[0] == string[-1] == '"':
->>>         return string.decode('string-escape')[1:-1]
->>>     return string
->>>
->>> It's in git-remote-bzr.py.
->>
->> Yeah, that's certainly better,
->>
->> Thanks,
->
-> OK, so an amended one will look like this?
+This is my proposed fix for the "local tag killer" problem that I
+reported recently [1].
 
-The commit message needs to be updated as well.
+There are three main things changed by this patch series:
 
-> -- >8 --
-> From: Antoine Pelisse <apelisse@gmail.com>
-> Subject: remote-hg: unquote C-style paths when exporting
->
-> git-fast-import documentation says that paths can be C-style quoted.
-> Unfortunately, the current remote-hg helper doesn't unquote quoted
-> path and pass them as-is to Mercurial when the commit is created.
->
-> This result in the following situation:
+1. "git fetch --tags" causes tags to be fetched *in addition to* any
+   other refspecs that are configured for the remote, rather than
+   *instead of*.  I believe this is more useful behavior.  It is also
+   consistent with the documentation as it was written before it was
+   disambiguated in 1.8.0.3.
 
-s/result/&s/
+2. "git fetch --prune" only prunes references that match an explicit
+   refspec (either from the command line or from the
+   remote.<name>.fetch configuration.  In particular, using "--prune"
+   and "--tag" together do *not* make tags subject to pruning.  (Tags
+   can still be pruned if the user specifies an explicit refspec
+   "refs/tags/*:refs/tags/*".)
 
-> - clone a mercurial repository with git
-> - Add a file with space: `mkdir dir/foo\ bar`
+3. Previously, if the user invoked one of the following commands with
+   --no-prune, the --no-prune option was not passed to the "git fetch"
+   subprocesses that they invoked to do their work:
 
-- Add a file with space in a directory: `>dir/foo\ bar`
+       git fetch --all
+       git fetch --multiple
+       git fetch --recurse-submodules
+       git remote update
 
-> - Commit that new file, and push the change to mercurial
-> - The mercurial repository as now a new directory named '"dir', which
-> contains a file named 'foo bar"'
+   If fetch.prune or remote.<name>.prune were set to true, this could
+   result in unwanted reference pruning.  The last commit in the
+   series fixes this bug and should not be controversial.
 
-I'm so ashamed I'd rather not report this one: s/as/has/
+I had originally planned to solve the "local tag killer" problem by
+adding a new configuration option to define which reference namespaces
+were subject to pruning (e.g.,
+remote.<name>.pruneRef="refs/remotes/*").  I may yet submit that patch
+series as a separate feature.  But while working on it I hit on the
+present solution, which I think is simpler and more elegant (albeit a
+bit less flexible).
 
-> Use python ast.literal_eval to unquote the string if it starts with ".
+Changes (1) and (2) introduce behavior changes, but I think that they
+are improvements and that the resulting backwards-incompatibility is
+acceptable:
 
-Use python str.decode('string-escape') to unquote the string if it
-starts and ends with ".
+Change (1) means that "git fetch --tags <remote>" without any
+additional refspec arguments will fetch more references than it did
+before.  But I don't think it is very useful to want to fetch tags
+without fetching other configured references, so I think it is OK [2].
 
-> It has been tested with quotes, spaces, and utf-8 encoded file-names.
->
-> Signed-off-by: Antoine Pelisse <apelisse@gmail.com>
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  contrib/remote-helpers/git-remote-hg | 6 ++++++
->  1 file changed, 6 insertions(+)
->
-> diff --git a/contrib/remote-helpers/git-remote-hg b/contrib/remote-helpers/git-remote-hg
-> index 0194c67..85abbed 100755
-> --- a/contrib/remote-helpers/git-remote-hg
-> +++ b/contrib/remote-helpers/git-remote-hg
-> @@ -678,6 +678,11 @@ def get_merge_files(repo, p1, p2, files):
->              f = { 'ctx' : repo[p1][e] }
->              files[e] = f
->
-> +def c_style_unescape(string):
-> +    if string[0] == string[-1] == '"':
-> +        return string.decode('string-escape')[1:-1]
-> +    return string
-> +
->  def parse_commit(parser):
->      global marks, blob_marks, parsed_refs
->      global mode
-> @@ -720,6 +725,7 @@ def parse_commit(parser):
->              f = { 'deleted' : True }
->          else:
->              die('Unknown file command: %s' % line)
-> +        path = c_style_unescape(path).decode('utf-8')
->          files[path] = f
->
->      # only export the commits if we are on an internal proxy repo
+Change (2) means that using "git fetch --tags --prune" will *not*
+prune tags.  (This is the whole point of the change!)  As discussed in
+the mailing list, it is usually bad policy to prune tags, because tags
+for the local repository and for all remote repositories currently
+share a single namespace, "refs/tags/*".  Therefore, pruning tags
+based on information from a single remote risks pruning local tags or
+tags that have been obtained from another remote.  The main exception,
+when one probably *does* want to prune tags, is when fetching into a
+mirror clone.  But mirror clones have
+"remote.<name>.fetch=+refs/*:refs/*", and so even after this change
+tags will be subject to pruning when fetching into a mirror clone.
 
-That is consistent with git-remote-bzr,
+The only other place I can find that does reference pruning is "git
+remote prune", but that codepath didn't respect remote.<name>.tagopt
+anyway and therefore it *didn't* prune tags unless they were part of
+an explicit refspec; i.e., this codepath already behaved the "new" way
+that other pruning codepaths now behave.
 
-Thanks
+Patches 1-9 are just preliminary cleanup and documentation
+improvements.
+
+Patch 10 implements change (1) described above.
+
+Patch 11 implements change (2).
+
+Patches 12-14 are some more minor cleanups.
+
+Patch 15 implements change (3).
+
+[1] http://article.gmane.org/gmane.comp.version-control.git/234723
+
+[2] Indeed, I bet that most scripts that invoke "git fetch --tags
+    <remote>" also invoke a plain "git fetch" immediately before or
+    after to get the rest of the references.
+
+Michael Haggerty (15):
+  t5510: use the correct tag name in test
+  t5510: prepare test refs more straightforwardly
+  t5510: check that "git fetch --prune --tags" does not prune branches
+  api-remote.txt: correct section "struct refspect"
+  get_ref_map(): rename local variables
+  ref_remove_duplicates(): avoid redundant bisection
+  ref_remove_duplicates(): simplify function
+  ref_remove_duplicates(): improve documentation comment
+  builtin/fetch.c: reorder function definitions
+  fetch --tags: fetch tags *in addition to* other stuff
+  fetch --prune: prune only based on explicit refspecs
+  query_refspecs(): move some constants out of the loop
+  builtin/remote.c: reorder function definitions
+  builtin/remote.c:update(): use struct argv_array
+  fetch, remote: properly convey --no-prune options to subprocesses
+
+ Documentation/config.txt                 |   2 +-
+ Documentation/fetch-options.txt          |  21 ++-
+ Documentation/technical/api-remote.txt   |  20 +--
+ builtin/fetch.c                          | 253 +++++++++++++++----------------
+ builtin/remote.c                         | 196 ++++++++++++------------
+ git-pull.sh                              |   2 +-
+ remote.c                                 |  44 +++---
+ remote.h                                 |   9 +-
+ t/t5510-fetch.sh                         |  36 ++++-
+ t/t5515/fetch.br-unconfig_--tags_.._.git |   1 +
+ t/t5515/fetch.master_--tags_.._.git      |   1 +
+ t/t5525-fetch-tagopt.sh                  |  23 ++-
+ 12 files changed, 322 insertions(+), 286 deletions(-)
+
+-- 
+1.8.4
