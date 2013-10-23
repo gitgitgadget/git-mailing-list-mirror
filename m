@@ -1,83 +1,126 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git grep: search whole tree by default?
-Date: Wed, 23 Oct 2013 10:23:54 -0700
-Message-ID: <xmqqmwlzrjdh.fsf@gitster.dls.corp.google.com>
-References: <CAA01CsqgNKdDAc9OL9zdk=3tnK9GAG=6w+wP_XSoiefBOgfzRQ@mail.gmail.com>
-	<vpqbo2guff7.fsf@anie.imag.fr>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/2] entry.c: convert checkout_entry to use strbuf
+Date: Wed, 23 Oct 2013 13:29:14 -0400
+Message-ID: <20131023172914.GA6824@sigill.intra.peff.net>
+References: <20131021193223.GC29681@sigill.intra.peff.net>
+ <1382532907-30561-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Oct 23 19:24:03 2013
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org, Erik Faye-Lund <kusmabite@gmail.com>,
+	Johannes Sixt <j6t@kdbg.org>, Antoine Pelisse <apelisse@gmail.com>,
+	Torsten =?utf-8?B?QsODwrZnZXJzaGF1c2Vu?= <tboegi@web.de>,
+	Wataru Noguchi <wnoguchi.0727@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	=?utf-8?B?UmVuw4PCqQ==?= Scharfe <l.s.r@web.de>,
+	msysGit <msysgit@googlegroups.com>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: msysgit+bncBDO2DJFKTEFBB3MOUCJQKGQE6OHHTMI@googlegroups.com Wed Oct 23 19:29:21 2013
+Return-path: <msysgit+bncBDO2DJFKTEFBB3MOUCJQKGQE6OHHTMI@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-pa0-f64.google.com ([209.85.220.64])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VZ2A6-00056U-Vb
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Oct 2013 19:24:03 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751839Ab3JWRX6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Oct 2013 13:23:58 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48623 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751416Ab3JWRX5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Oct 2013 13:23:57 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5B62D4DFAE;
-	Wed, 23 Oct 2013 17:23:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ozEAJG05cBzlOFakJLZxVyYeo4A=; b=sEp2JP
-	J4NDbr2WVEtBi1XKlLxMj/3uJ6Uf9mafIs7ANIFwuHQxhyG0IcXEvh6UDGEUmvk7
-	3mxXFysFypK6K1Mb0p40WeTrtHyqZia/r1w7AcoDkQhns2thoCIQtnt1NQUDQXdZ
-	fLg7c3RQ9XU3CoEpNuwsHH4I/8J4b1lghi3BI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=yZAIRC7kofPZA2zw5GAJHB2CU0MjV38V
-	ioGCy3xWlWhZB5XPDhKfGu0khm/Wvz0YH4mfSsgjbatGtY1/AIEEKZeAi0dBb0Gv
-	nPfFG8vyXXVzVh9q+Wbm5JB6Tpc3JpT5eFk5OhAnVcMsNMTIX8DR8TYpMnpc3CU1
-	c1tnEQlyqK0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4DF854DFAD;
-	Wed, 23 Oct 2013 17:23:57 +0000 (UTC)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7A8024DFA7;
-	Wed, 23 Oct 2013 17:23:56 +0000 (UTC)
-In-Reply-To: <vpqbo2guff7.fsf@anie.imag.fr> (Matthieu Moy's message of "Wed,
-	23 Oct 2013 18:21:00 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: E590151A-3C07-11E3-8C12-8F264F2CC097-77302942!b-pb-sasl-quonix.pobox.com
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236536>
+	(envelope-from <msysgit+bncBDO2DJFKTEFBB3MOUCJQKGQE6OHHTMI@googlegroups.com>)
+	id 1VZ2FD-0000FQ-EG
+	for gcvm-msysgit@m.gmane.org; Wed, 23 Oct 2013 19:29:19 +0200
+Received: by mail-pa0-f64.google.com with SMTP id kx10sf273141pab.9
+        for <gcvm-msysgit@m.gmane.org>; Wed, 23 Oct 2013 10:29:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :in-reply-to:x-original-sender:x-original-authentication-results
+         :precedence:mailing-list:list-id:list-post:list-help:list-archive
+         :sender:list-subscribe:list-unsubscribe:content-type
+         :content-disposition;
+        bh=IiM5sy5wI2njlpT30Jy6LwY6hCq3OuN1HGnyOPxqu0Q=;
+        b=B2nM0TGc+tqoXH3CJPt+3XeOjWQeqQc6iIB65ZhSGm3K+rMAWWJz/yXcH71gAdfyYk
+         NcuIPrGRXXdMGcLT1yl4SRod8tALOMxfQruCk5cf6eQmKNZ5iqiT3ESs3943J6iCVOse
+         8Z9FdlWHpa4+t427Z0pp/FinFMv+Q8V80uS9Q8OdAAfh6J+mbnCLvzkMCd+3Kde+MCxY
+         OhpxecAVAPWmkfy2YFqC77MLKhYUkuzjPFXbb8E9AB5evTUs6HSyYzUw94YUVcJ68QrM
+         6uESD28pjYJCNeMqiaEoKjQ5cBBGEWt+hHfWJLlKNY/EnjcegSvSqOxDclHM41ddQB/t
+         lduw==
+X-Received: by 10.182.158.2 with SMTP id wq2mr41834obb.10.1382549358216;
+        Wed, 23 Oct 2013 10:29:18 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.182.129.166 with SMTP id nx6ls351705obb.53.gmail; Wed, 23 Oct
+ 2013 10:29:17 -0700 (PDT)
+X-Received: by 10.182.186.105 with SMTP id fj9mr1100300obc.5.1382549357796;
+        Wed, 23 Oct 2013 10:29:17 -0700 (PDT)
+Received: from peff.net (cloud.peff.net. [50.56.180.127])
+        by gmr-mx.google.com with SMTP id e8si1207828igg.0.2013.10.23.10.29.17
+        for <msysgit@googlegroups.com>;
+        Wed, 23 Oct 2013 10:29:17 -0700 (PDT)
+Received-SPF: pass (google.com: domain of peff@peff.net designates 50.56.180.127 as permitted sender) client-ip=50.56.180.127;
+Received: (qmail 26781 invoked by uid 102); 23 Oct 2013 17:29:17 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 23 Oct 2013 12:29:17 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 23 Oct 2013 13:29:14 -0400
+In-Reply-To: <1382532907-30561-1-git-send-email-pclouds@gmail.com>
+X-Original-Sender: peff@peff.net
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of peff@peff.net designates 50.56.180.127 as permitted
+ sender) smtp.mail=peff@peff.net
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Content-Disposition: inline
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236537>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+On Wed, Oct 23, 2013 at 07:55:06PM +0700, Nguyen Thai Ngoc Duy wrote:
 
-> In summary: changing is painful. The case of "git add" was really bad,
-> since the same command had different behavior depending on the options
-> given, so it was clearly worth the pain. In the case of "git grep", the
-> current behavior is not _that_ bad, so nobody bothered to do the change.
->
-> (by "do the change", I mean propose a migration plan, convince people
-> that it is good, ...)
->
-> I'd personally be slightly in favor of changing to tree-wide, but
-> without strong opinion.
+> The old code does not do boundary check so any paths longer than
+> PATH_MAX can cause buffer overflow. Replace it with strbuf to handle
+> paths of arbitrary length.
 
-After reading that old thread again, I tend to think that the only
-reason to favor "git grep" to start at the $(cwd) is the backward
-compatibility.  While I do expect that many people will be annoyed
-when "git grep" (no pathspecs) that is run in a subdirectory starts
-spitting out a large number of hits from places irrelevant for the
-current task at hand, hits from outside the $(cwd) is something they
-can _notice_ easily and their fingers will quickly learn to add "."
-without even thinking.
+I think this is a reasonable solution. If we have such a long path, we
+are probably about to feed it to open() or another syscall, and we will
+just get ENAMETOOLONG there anyway. But certainly we need to fix the
+buffer overflow, and we are probably better off letting the syscall
+report failure than calling die(), because we generally handle the
+syscall failure more gracefully (e.g., by reporting the failed path but
+continuing).
 
-I suspect that it would be too late for 2.0 we want to do sometime
-early next year, though.
+> -	memcpy(path, state->base_dir, len);
+> -	strcpy(path + len, ce->name);
+> -	len += ce_namelen(ce);
+> +	strbuf_reset(&path_buf);
+> +	strbuf_addf(&path_buf, "%.*s%s", state->base_dir_len, state->base_dir, ce->name);
+> +	path = path_buf.buf;
+> +	len = path_buf.len;
+
+This is not something you introduced, but while we are here, you may
+want to use ce->namelen, which would be a little faster than treating it
+as a string (especially for strbuf, as it can then know up front how big
+the size is).
+
+I doubt it's measurable, though (especially as the growth cost is
+amortized due to the static buffer).
+
+-Peff
+
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/groups/opt_out.
