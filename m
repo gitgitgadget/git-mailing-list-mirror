@@ -1,9 +1,11 @@
-From: Duy Nguyen <pclouds@gmail.com>
+From: Antoine Pelisse <apelisse@gmail.com>
 Subject: Re: [PATCH 1/2] entry.c: convert checkout_entry to use strbuf
-Date: Wed, 23 Oct 2013 20:04:03 +0700
-Message-ID: <CACsJy8Cnf6o=hLcMOT3iXP+q=b8E4pE=68whxDi364N4MNgUYQ@mail.gmail.com>
-References: <20131021193223.GC29681@sigill.intra.peff.net> <1382532907-30561-1-git-send-email-pclouds@gmail.com>
- <CALWbr2z90_LysnZiPaGr-X98EceX_d0yJ6_y_te16bC818xAEQ@mail.gmail.com>
+Date: Wed, 23 Oct 2013 15:06:16 +0200
+Message-ID: <CALWbr2wypVuPQWEiM8ci_5RK_+R9c7O48=hXs4XrUiRUp+yf0A@mail.gmail.com>
+References: <20131021193223.GC29681@sigill.intra.peff.net>
+	<1382532907-30561-1-git-send-email-pclouds@gmail.com>
+	<CALWbr2z90_LysnZiPaGr-X98EceX_d0yJ6_y_te16bC818xAEQ@mail.gmail.com>
+	<CACsJy8Cnf6o=hLcMOT3iXP+q=b8E4pE=68whxDi364N4MNgUYQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Cc: git <git@vger.kernel.org>, Erik Faye-Lund <kusmabite@gmail.com>, 
@@ -11,53 +13,53 @@ Cc: git <git@vger.kernel.org>, Erik Faye-Lund <kusmabite@gmail.com>,
 	Wataru Noguchi <wnoguchi.0727@gmail.com>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
 	=?UTF-8?B?UmVuw4PCqSBTY2hhcmZl?= <l.s.r@web.de>, 
 	msysGit <msysgit@googlegroups.com>
-To: Antoine Pelisse <apelisse@gmail.com>
-X-From: msysgit+bncBC2ZN5PHQUMBBYUST6JQKGQEKXPWEDQ@googlegroups.com Wed Oct 23 15:04:36 2013
-Return-path: <msysgit+bncBC2ZN5PHQUMBBYUST6JQKGQEKXPWEDQ@googlegroups.com>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: msysgit+bncBD3NZH6HQMJBBSMTT6JQKGQEUWFEYTA@googlegroups.com Wed Oct 23 15:06:21 2013
+Return-path: <msysgit+bncBD3NZH6HQMJBBSMTT6JQKGQEUWFEYTA@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-qc0-f186.google.com ([209.85.216.186])
+Received: from mail-ea0-f191.google.com ([209.85.215.191])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBC2ZN5PHQUMBBYUST6JQKGQEKXPWEDQ@googlegroups.com>)
-	id 1VYy71-0001gS-KH
-	for gcvm-msysgit@m.gmane.org; Wed, 23 Oct 2013 15:04:35 +0200
-Received: by mail-qc0-f186.google.com with SMTP id u20sf175588qcx.23
-        for <gcvm-msysgit@m.gmane.org>; Wed, 23 Oct 2013 06:04:34 -0700 (PDT)
+	(envelope-from <msysgit+bncBD3NZH6HQMJBBSMTT6JQKGQEUWFEYTA@googlegroups.com>)
+	id 1VYy8g-0002pp-2f
+	for gcvm-msysgit@m.gmane.org; Wed, 23 Oct 2013 15:06:18 +0200
+Received: by mail-ea0-f191.google.com with SMTP id o10sf90553eaj.28
+        for <gcvm-msysgit@m.gmane.org>; Wed, 23 Oct 2013 06:06:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:x-original-sender:x-original-authentication-results:precedence
          :mailing-list:list-id:list-post:list-help:list-archive:sender
          :list-subscribe:list-unsubscribe:content-type;
-        bh=kbdjSgkmjNt88qWB4CYT8j5DRQ+r2BhB/Fpszz0hhfo=;
-        b=fNGW3Kkpc7mHSasjxoP2+ReTX8OkgWoiL/4he3mKLED4yiy1jCP2VexttfUP4fb9+z
-         9IU8bojitH7mvxxaG88ONx1Ig4VQ7y0xMk6DVvS/nLvMKB4YxupsFiOJKF41QT5GquOt
-         IQbleWBNws5+/FCpbXxIbAYDawcYvRPaMNxpD6O6f4mkUkOpXBhZ/jFTAtB8uSI5jIXI
-         67rU01TBgx1vSthVQTBRS2IOw6r4g/PtAJa98O8xUTuqONChBfltEX5T0gpkNRE0HDyw
-         M1U53n+VK1b3ZltkuYptP925/gM5hF4elpQ7vidP6stprwCLptOBE6idUrXv9KYdLc2u
-         Pxgw==
-X-Received: by 10.182.45.170 with SMTP id o10mr55obm.41.1382533474760;
-        Wed, 23 Oct 2013 06:04:34 -0700 (PDT)
+        bh=qYbX8J8RHPnv7EAqrj7c0cX1dC4ClbrxwHKaS8vwkNA=;
+        b=XfF7ER0afrLnnobtnlji/WyfygaYmLl5LGZ7bDrUyyoqlVP2C6rplA/Orl+CEo1x5D
+         2gOikBFGXEx4jxQ1LOZM64hHQhsM+HZ04VEQzRegTFhzhY4qoSfz1JQ0nbemuIm4iI+o
+         UwA+/BkJWamVUwjPUXAGDIZOCV1vt8LlisQm6VKDILRM0/6n/fnaZKhcvN0KB1Dq90bS
+         YqdHicqYcMZr6MQubmF+FZ8aj7z0XSMzNqaBA3quZEFVtwsIYPX+NT/bZAQcCF3imRAm
+         6A2hj02uiAb5TDdFEuoA0y1ddUNLfeNy8NjhyFMNyKHess2a1YOYICWvYvOkS40qPbd7
+         koMw==
+X-Received: by 10.152.28.3 with SMTP id x3mr6519lag.33.1382533577783;
+        Wed, 23 Oct 2013 06:06:17 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.182.143.70 with SMTP id sc6ls85obb.93.gmail; Wed, 23 Oct 2013
- 06:04:34 -0700 (PDT)
-X-Received: by 10.182.61.109 with SMTP id o13mr610594obr.6.1382533474091;
-        Wed, 23 Oct 2013 06:04:34 -0700 (PDT)
-Received: from mail-qe0-x232.google.com (mail-qe0-x232.google.com [2607:f8b0:400d:c02::232])
-        by gmr-mx.google.com with ESMTPS id bc1si968563qcb.1.2013.10.23.06.04.34
+Received: by 10.152.27.3 with SMTP id p3ls116245lag.64.gmail; Wed, 23 Oct 2013
+ 06:06:17 -0700 (PDT)
+X-Received: by 10.152.21.165 with SMTP id w5mr626291lae.3.1382533577103;
+        Wed, 23 Oct 2013 06:06:17 -0700 (PDT)
+Received: from mail-la0-x22c.google.com (mail-la0-x22c.google.com [2a00:1450:4010:c03::22c])
+        by gmr-mx.google.com with ESMTPS id re4si2068203bkb.1.2013.10.23.06.06.17
         for <msysgit@googlegroups.com>
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 23 Oct 2013 06:04:34 -0700 (PDT)
-Received-SPF: pass (google.com: domain of pclouds@gmail.com designates 2607:f8b0:400d:c02::232 as permitted sender) client-ip=2607:f8b0:400d:c02::232;
-Received: by mail-qe0-f50.google.com with SMTP id 1so430195qee.37
-        for <msysgit@googlegroups.com>; Wed, 23 Oct 2013 06:04:34 -0700 (PDT)
-X-Received: by 10.224.7.194 with SMTP id e2mr3875719qae.46.1382533473938; Wed,
- 23 Oct 2013 06:04:33 -0700 (PDT)
-Received: by 10.96.27.202 with HTTP; Wed, 23 Oct 2013 06:04:03 -0700 (PDT)
-In-Reply-To: <CALWbr2z90_LysnZiPaGr-X98EceX_d0yJ6_y_te16bC818xAEQ@mail.gmail.com>
-X-Original-Sender: pclouds@gmail.com
+        Wed, 23 Oct 2013 06:06:17 -0700 (PDT)
+Received-SPF: pass (google.com: domain of apelisse@gmail.com designates 2a00:1450:4010:c03::22c as permitted sender) client-ip=2a00:1450:4010:c03::22c;
+Received: by mail-la0-f44.google.com with SMTP id ep20so635574lab.31
+        for <msysgit@googlegroups.com>; Wed, 23 Oct 2013 06:06:16 -0700 (PDT)
+X-Received: by 10.152.29.103 with SMTP id j7mr1158937lah.7.1382533576747; Wed,
+ 23 Oct 2013 06:06:16 -0700 (PDT)
+Received: by 10.112.50.240 with HTTP; Wed, 23 Oct 2013 06:06:16 -0700 (PDT)
+In-Reply-To: <CACsJy8Cnf6o=hLcMOT3iXP+q=b8E4pE=68whxDi364N4MNgUYQ@mail.gmail.com>
+X-Original-Sender: apelisse@gmail.com
 X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of pclouds@gmail.com designates 2607:f8b0:400d:c02::232
- as permitted sender) smtp.mail=pclouds@gmail.com;       dkim=pass
+ (google.com: domain of apelisse@gmail.com designates 2a00:1450:4010:c03::22c
+ as permitted sender) smtp.mail=apelisse@gmail.com;       dkim=pass
  header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
 Precedence: list
 Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
@@ -69,40 +71,42 @@ List-Archive: <http://groups.google.com/group/msysgit>
 Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236510>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236511>
 
-On Wed, Oct 23, 2013 at 7:58 PM, Antoine Pelisse <apelisse@gmail.com> wrote:
->> diff --git a/entry.c b/entry.c
->> index acc892f..d955af5 100644
->> --- a/entry.c
->> +++ b/entry.c
->> @@ -237,16 +237,18 @@ static int check_path(const char *path, int len, struct stat *st, int skiplen)
->>  int checkout_entry(struct cache_entry *ce,
->>                    const struct checkout *state, char *topath)
->>  {
->> -       static char path[PATH_MAX + 1];
->> +       static struct strbuf path_buf = STRBUF_INIT;
->> +       char *path;
->>         struct stat st;
->> -       int len = state->base_dir_len;
->> +       int len;
+On Wed, Oct 23, 2013 at 3:04 PM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Wed, Oct 23, 2013 at 7:58 PM, Antoine Pelisse <apelisse@gmail.com> wrote:
+>>> diff --git a/entry.c b/entry.c
+>>> index acc892f..d955af5 100644
+>>> --- a/entry.c
+>>> +++ b/entry.c
+>>> @@ -237,16 +237,18 @@ static int check_path(const char *path, int len, struct stat *st, int skiplen)
+>>>  int checkout_entry(struct cache_entry *ce,
+>>>                    const struct checkout *state, char *topath)
+>>>  {
+>>> -       static char path[PATH_MAX + 1];
+>>> +       static struct strbuf path_buf = STRBUF_INIT;
+>>> +       char *path;
+>>>         struct stat st;
+>>> -       int len = state->base_dir_len;
+>>> +       int len;
+>>>
+>>>         if (topath)
+>>>                 return write_entry(ce, topath, state, 1);
+>>>
+>>> -       memcpy(path, state->base_dir, len);
+>>> -       strcpy(path + len, ce->name);
+>>> -       len += ce_namelen(ce);
+>>> +       strbuf_reset(&path_buf);
 >>
->>         if (topath)
->>                 return write_entry(ce, topath, state, 1);
->>
->> -       memcpy(path, state->base_dir, len);
->> -       strcpy(path + len, ce->name);
->> -       len += ce_namelen(ce);
->> +       strbuf_reset(&path_buf);
+>> I think this is not required
 >
-> I think this is not required
+> If you mean strbuf_reset, I think it is. path_buf is still static (I
+> don't want to remove that because it'll add a lot more strbuf_release)
+> so we can't be sure what it contains from the second checkout_entry()
+> call.
 
-If you mean strbuf_reset, I think it is. path_buf is still static (I
-don't want to remove that because it'll add a lot more strbuf_release)
-so we can't be sure what it contains from the second checkout_entry()
-call.
--- 
-Duy
+Of course, I forgot about the static,
+Thanks :-)
 
 -- 
 -- 
