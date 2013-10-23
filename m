@@ -1,70 +1,83 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: git grep: search whole tree by default?
-Date: Wed, 23 Oct 2013 18:21:00 +0200
-Message-ID: <vpqbo2guff7.fsf@anie.imag.fr>
-References: <CAA01CsqgNKdDAc9OL9zdk=3tnK9GAG=6w+wP_XSoiefBOgfzRQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 00/15] Change semantics of "fetch --tags"
+Date: Wed, 23 Oct 2013 09:59:12 -0700
+Message-ID: <xmqqr4bbrkin.fsf@gitster.dls.corp.google.com>
+References: <52327E62.2040301@alum.mit.edu>
+	<1382543448-2586-1-git-send-email-mhagger@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 23 18:21:14 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
+	Michael Schubert <mschub@elegosoft.com>,
+	Johan Herland <johan@herland.net>, Jeff King <peff@peff.net>,
+	Marc Branchaud <marcnarc@xiplink.com>,
+	Nicolas Pitre <nico@fluxnic.net>,
+	John Szakmeister <john@szakmeister.net>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Wed Oct 23 18:59:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VZ1BK-0004za-1C
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Oct 2013 18:21:14 +0200
+	id 1VZ1mC-0005OY-MY
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Oct 2013 18:59:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751855Ab3JWQVJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Oct 2013 12:21:09 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:40616 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751054Ab3JWQVH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Oct 2013 12:21:07 -0400
-Received: from globule.imag.fr (globule.imag.fr [129.88.34.238])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r9NGKwAH004478
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 23 Oct 2013 18:20:58 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	(authenticated bits=0)
-	by globule.imag.fr (8.13.8/8.13.8) with ESMTP id r9NGL0JS010710
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Wed, 23 Oct 2013 18:21:00 +0200
-In-Reply-To: <CAA01CsqgNKdDAc9OL9zdk=3tnK9GAG=6w+wP_XSoiefBOgfzRQ@mail.gmail.com>
-	(Piotr Krukowiecki's message of "Wed, 23 Oct 2013 10:25:55 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 23 Oct 2013 18:20:58 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r9NGKwAH004478
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1383150060.86436@37tWV82Yru3Ar8BfNq/k3Q
+	id S1752519Ab3JWQ7Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Oct 2013 12:59:16 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42289 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751531Ab3JWQ7Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Oct 2013 12:59:16 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 498544C2B4;
+	Wed, 23 Oct 2013 16:59:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=xU1h/KfcGNPpIaX+8GLKGOFolaI=; b=ZDfYjh
+	haYScZLJlI4d/UB/XmJFNONbrcKpaEIx/SKSLCpEQ/P+5Cnvxf16rgusO3YmzHd7
+	N6SkK+DNEKi4UpZ8t+64Y6D8rWQJc5ryPu1V6vvy2LMoxp+xz4FoktAwWqNRfuB+
+	JM8zaq+2boGoNl8KTuWQM6QeGtXpId8VdNINk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=JZndjE5Qbs8IVIWWwBlNgig8lu2A6UJ/
+	xa7nbigpuVs+p0mklTosKrkYZ9SQ+hLGRAGtk/oLuz9LF3hc5iTbaqzmnxGyZcDz
+	t7z6eEuRAaco2YdsRfPG2A6/2mgf455VGpAwZPctM6otO+wxXP/n3cdM2y5T3W1o
+	bQlnUJpwkm8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 34E5C4C2B3;
+	Wed, 23 Oct 2013 16:59:15 +0000 (UTC)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7D6E44C2A8;
+	Wed, 23 Oct 2013 16:59:14 +0000 (UTC)
+In-Reply-To: <1382543448-2586-1-git-send-email-mhagger@alum.mit.edu> (Michael
+	Haggerty's message of "Wed, 23 Oct 2013 17:50:33 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 72460B58-3C04-11E3-86F2-8F264F2CC097-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236534>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236535>
 
-Piotr Krukowiecki <piotr.krukowiecki@gmail.com> writes:
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-> I think there were discussion about how there are several git commands
-> which do not search in whole tree by default and that it's going to be
-> changed. I think "add" is one of such commands. Is 'grep' left
-> unchanged?
+> This is my proposed fix for the "local tag killer" problem that I
+> reported recently [1].
+>
+> There are three main things changed by this patch series:
+> ...
 
-In summary: changing is painful. The case of "git add" was really bad,
-since the same command had different behavior depending on the options
-given, so it was clearly worth the pain. In the case of "git grep", the
-current behavior is not _that_ bad, so nobody bothered to do the change.
+Haven't looked at any of the 1-15 messages, but the basic design to
+demote "--tags" from being an explicit "refs/tags/*:refs/tags/*"
+given from the command line to a more special case option sounds
+very sane and solid.
 
-(by "do the change", I mean propose a migration plan, convince people
-that it is good, ...)
+With the auto-following of tags, I think it is a _mistake_ to have
+"--tags" anywhere on the command line (and "tagopt" config) these
+days, and I do not expect a huge fallout from incompatibility that
+arises from the change in behaviour.
 
-I'd personally be slightly in favor of changing to tree-wide, but
-without strong opinion.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Thanks---looking forward to reading it through.
