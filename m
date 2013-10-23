@@ -1,137 +1,118 @@
-From: Antoine Pelisse <apelisse@gmail.com>
-Subject: Re: [PATCH 1/2] entry.c: convert checkout_entry to use strbuf
-Date: Wed, 23 Oct 2013 14:58:08 +0200
-Message-ID: <CALWbr2z90_LysnZiPaGr-X98EceX_d0yJ6_y_te16bC818xAEQ@mail.gmail.com>
-References: <20131021193223.GC29681@sigill.intra.peff.net>
-	<1382532907-30561-1-git-send-email-pclouds@gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v2] Clear fd after closing to avoid double-close error
+Date: Wed, 23 Oct 2013 20:00:01 +0700
+Message-ID: <CACsJy8Dqjfnu856OCdBpnwNyeOeE5p8dKTFe_KNKy8O0t2vSYQ@mail.gmail.com>
+References: <1382448962-31782-1-git-send-email-jl@opera.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Cc: git <git@vger.kernel.org>, Erik Faye-Lund <kusmabite@gmail.com>, 
-	Johannes Sixt <j6t@kdbg.org>, =?UTF-8?Q?Torsten_B=C3=83=C2=B6gershausen?= <tboegi@web.de>, 
-	Wataru Noguchi <wnoguchi.0727@gmail.com>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
-	=?UTF-8?B?UmVuw4PCqSBTY2hhcmZl?= <l.s.r@web.de>, 
-	msysGit <msysgit@googlegroups.com>
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= <pclouds@gmail.com>
-X-From: msysgit+bncBD3NZH6HQMJBBYEPT6JQKGQEXTQN2LY@googlegroups.com Wed Oct 23 14:58:10 2013
-Return-path: <msysgit+bncBD3NZH6HQMJBBYEPT6JQKGQEXTQN2LY@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-ee0-f61.google.com ([74.125.83.61])
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: =?UTF-8?Q?Jens_Lindstr=C3=B6m?= <jl@opera.com>
+X-From: git-owner@vger.kernel.org Wed Oct 23 15:00:39 2013
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBD3NZH6HQMJBBYEPT6JQKGQEXTQN2LY@googlegroups.com>)
-	id 1VYy0n-0005pW-Mr
-	for gcvm-msysgit@m.gmane.org; Wed, 23 Oct 2013 14:58:10 +0200
-Received: by mail-ee0-f61.google.com with SMTP id d51sf90717eek.16
-        for <gcvm-msysgit@m.gmane.org>; Wed, 23 Oct 2013 05:58:09 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1VYy3A-0007Qn-QX
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Oct 2013 15:00:37 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1754006Ab3JWNAd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Oct 2013 09:00:33 -0400
+Received: from mail-qa0-f42.google.com ([209.85.216.42]:33639 "EHLO
+	mail-qa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753688Ab3JWNAc convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 Oct 2013 09:00:32 -0400
+Received: by mail-qa0-f42.google.com with SMTP id w8so4133427qac.8
+        for <git@vger.kernel.org>; Wed, 23 Oct 2013 06:00:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:x-original-sender:x-original-authentication-results:precedence
-         :mailing-list:list-id:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe:content-type
-         :content-transfer-encoding;
-        bh=JfqbR2n7kTpXMVmP+OAJxkIsPYVuzVVHdn+CSNRrtxk=;
-        b=T2CLZtSoRxbM9n1pQOGE1P/l6LlOU0kPmYIokGu49GOk2nOIWdM/Qf+kWQyMy/HNeX
-         mkZfs3mlCiEjpAiXQQADXWkptadjShXPri4Ps0HM8Bd66N/DgxD5u7gpvjeoDGgGp0/o
-         FSD+o578M68UAPpSXnGqCR1Vq8iox6P4QhofcYabSKrYIXVTkelqByn2oxJBVoc6GqP5
-         wPvUKzj/G7aR2oGjNSvBEamhbnzRz8+SH2y6d+tqu6Hh+P7f2M38nBI5G8zsysv6qK+F
-         ++2Cgenq5bZZrwGnM6vOWHq3OkXOE9QCH+LfmZ5zC1L5qVTaZsQIYel9SoFlFQNzGzEe
-         L6OQ==
-X-Received: by 10.152.21.9 with SMTP id r9mr19966lae.22.1382533089335;
-        Wed, 23 Oct 2013 05:58:09 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.6.98 with SMTP id z2ls133633laz.108.gmail; Wed, 23 Oct
- 2013 05:58:08 -0700 (PDT)
-X-Received: by 10.112.11.20 with SMTP id m20mr1171466lbb.4.1382533088579;
-        Wed, 23 Oct 2013 05:58:08 -0700 (PDT)
-Received: from mail-la0-x236.google.com (mail-la0-x236.google.com [2a00:1450:4010:c03::236])
-        by gmr-mx.google.com with ESMTPS id re4si2065577bkb.1.2013.10.23.05.58.08
-        for <msysgit@googlegroups.com>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 23 Oct 2013 05:58:08 -0700 (PDT)
-Received-SPF: pass (google.com: domain of apelisse@gmail.com designates 2a00:1450:4010:c03::236 as permitted sender) client-ip=2a00:1450:4010:c03::236;
-Received: by mail-la0-f54.google.com with SMTP id gx14so611056lab.41
-        for <msysgit@googlegroups.com>; Wed, 23 Oct 2013 05:58:08 -0700 (PDT)
-X-Received: by 10.112.141.165 with SMTP id rp5mr2093494lbb.3.1382533088232;
- Wed, 23 Oct 2013 05:58:08 -0700 (PDT)
-Received: by 10.112.50.240 with HTTP; Wed, 23 Oct 2013 05:58:08 -0700 (PDT)
-In-Reply-To: <1382532907-30561-1-git-send-email-pclouds@gmail.com>
-X-Original-Sender: apelisse@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of apelisse@gmail.com designates 2a00:1450:4010:c03::236
- as permitted sender) smtp.mail=apelisse@gmail.com;       dkim=pass
- header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236508>
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=QLReNkGsD23fo/G2FPWqyvVcT1YhWnVNfoaB8NQB7B4=;
+        b=XLmt082vR6q7h5BzOakKfAeXggKuCPJJXSgWgVjvOBdxz4PAohKSGkwoIQYTJIiZRQ
+         il33OkTtn4RNwQk9DHxAZb8NeZNPQg5/KOjsrm2m+0GryEWkxmGSsxZAqZCcF6CMPmCU
+         va7UmSTjnmlWi54wJTIA35cmycFzJQ50jbYhfTnzVra/+7lRSOephzW4yIKww+MLEUOo
+         YSyMatOv1/gXLcglNPWjEvdBgfPfXAYvqtQB/JJ1Go5MZOQjWEuOBqHmtN9PDwXbiyqX
+         zRIRTuEeCHqx8d0sZIyp3V+GJJXTMK+ku2AGReJCoNX6Ha3p0OOLxwB1mEJNewJIbqgo
+         0/vQ==
+X-Received: by 10.224.7.194 with SMTP id e2mr3844052qae.46.1382533231598; Wed,
+ 23 Oct 2013 06:00:31 -0700 (PDT)
+Received: by 10.96.27.202 with HTTP; Wed, 23 Oct 2013 06:00:01 -0700 (PDT)
+In-Reply-To: <1382448962-31782-1-git-send-email-jl@opera.com>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236509>
 
-On Wed, Oct 23, 2013 at 2:55 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =
-<pclouds@gmail.com> wrote:
-> The old code does not do boundary check so any paths longer than
-> PATH_MAX can cause buffer overflow. Replace it with strbuf to handle
-> paths of arbitrary length.
+On Tue, Oct 22, 2013 at 8:36 PM, Jens Lindstr=C3=B6m <jl@opera.com> wro=
+te:
+> From: Jens Lindstrom <jl@opera.com>
 >
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.c=
-om>
+> In send_pack(), clear the fd passed to pack_objects() by setting
+> it to -1, since pack_objects() closes the fd (via a call to
+> run_command()).  Likewise, in get_pack(), clear the fd passed to
+> run_command().
+>
+> Not doing so risks having git_transport_push(), caller of
+> send_pack(), closing the fd again, possibly incorrectly closing
+> some other open file; or similarly with fetch_refs_from_pack(),
+> indirect caller of get_pack().
+>
+> Signed-off-by: Jens Lindstr=C3=B6m <jl@opera.com>
 > ---
->  To get this topic going again. These two patches kill PATH_MAX in
->  entry.c and builtin/checkout-index.c
-
-Thanks !
-
-> diff --git a/entry.c b/entry.c
-> index acc892f..d955af5 100644
-> --- a/entry.c
-> +++ b/entry.c
-> @@ -237,16 +237,18 @@ static int check_path(const char *path, int len, st=
-ruct stat *st, int skiplen)
->  int checkout_entry(struct cache_entry *ce,
->                    const struct checkout *state, char *topath)
->  {
-> -       static char path[PATH_MAX + 1];
-> +       static struct strbuf path_buf =3D STRBUF_INIT;
-> +       char *path;
->         struct stat st;
-> -       int len =3D state->base_dir_len;
-> +       int len;
+>  fetch-pack.c | 4 ++++
+>  send-pack.c  | 4 ++++
+>  2 files changed, 8 insertions(+)
 >
->         if (topath)
->                 return write_entry(ce, topath, state, 1);
+> diff --git a/fetch-pack.c b/fetch-pack.c
+> index f5d99c1..29b711a 100644
+> --- a/fetch-pack.c
+> +++ b/fetch-pack.c
+> @@ -776,6 +776,10 @@ static int get_pack(struct fetch_pack_args *args=
+,
+>                 close(cmd.out);
+>         }
 >
-> -       memcpy(path, state->base_dir, len);
-> -       strcpy(path + len, ce->name);
-> -       len +=3D ce_namelen(ce);
-> +       strbuf_reset(&path_buf);
+> +       if (!use_sideband)
+> +               /* Closed by start_command() */
+> +               xd[0] =3D -1;
+> +
 
-I think this is not required
+=46urther up demux.out still holds this handle. But we don't actually
+start_async when use_sideband is false so demux.out can't be used
+anywhere else. So it's good.
+
+Acked-by: me
+
+>         ret =3D finish_command(&cmd);
+>         if (!ret || (args->check_self_contained_and_connected && ret =
+=3D=3D 1))
+>                 args->self_contained_and_connected =3D
+> diff --git a/send-pack.c b/send-pack.c
+> index 7d172ef..edbfd07 100644
+> --- a/send-pack.c
+> +++ b/send-pack.c
+> @@ -300,8 +300,12 @@ int send_pack(struct send_pack_args *args,
+>                                 shutdown(fd[0], SHUT_WR);
+>                         if (use_sideband)
+>                                 finish_async(&demux);
+> +                       fd[1] =3D -1;
+>                         return -1;
+>                 }
+> +               if (!args->stateless_rpc)
+> +                       /* Closed by pack_objects() via start_command=
+() */
+> +                       fd[1] =3D -1;
+>         }
+>         if (args->stateless_rpc && cmds_sent)
+>                 packet_flush(out);
+> --
+> 1.8.1.2
+>
+
+
 
 --=20
---=20
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github =
-accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=3Den_US?hl=3Den
-
----=20
-You received this message because you are subscribed to the Google Groups "=
-msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an e=
-mail to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/groups/opt_out.
+Duy
