@@ -1,100 +1,73 @@
-From: Jed Brown <jed@59A2.org>
-Subject: Re: git grep: search whole tree by default?
-Date: Wed, 23 Oct 2013 14:24:25 -0500
-Message-ID: <87zjpzg592.fsf@mcs.anl.gov>
-References: <CAA01CsqgNKdDAc9OL9zdk=3tnK9GAG=6w+wP_XSoiefBOgfzRQ@mail.gmail.com> <vpqbo2guff7.fsf@anie.imag.fr> <xmqqmwlzrjdh.fsf@gitster.dls.corp.google.com> <87hac7hmrb.fsf@mcs.anl.gov> <xmqqob6fq0q1.fsf@gitster.dls.corp.google.com>
+From: John Feminella <jxf@jxf.me>
+Subject: Rebasing merge commit fails during --preserve-merges when ancestor
+ merge is deleted
+Date: Wed, 23 Oct 2013 15:25:57 -0400
+Message-ID: <CAAcFwk5Vd2+SJWQaos9o9UX1Za1yV=oEUWCj1VmD87BQP0u6Fw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-	micalg=pgp-sha1; protocol="application/pgp-signature"
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Piotr Krukowiecki <piotr.krukowiecki@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 23 21:24:33 2013
+Content-Type: text/plain; charset=ISO-8859-1
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Oct 23 21:26:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VZ42i-0006HM-6O
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Oct 2013 21:24:32 +0200
+	id 1VZ44o-0007c3-JY
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Oct 2013 21:26:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752119Ab3JWTY2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Oct 2013 15:24:28 -0400
-Received: from mail-ie0-f174.google.com ([209.85.223.174]:34254 "EHLO
-	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751789Ab3JWTY1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Oct 2013 15:24:27 -0400
-Received: by mail-ie0-f174.google.com with SMTP id qd12so2079077ieb.19
-        for <git@vger.kernel.org>; Wed, 23 Oct 2013 12:24:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:from:to:cc:subject:in-reply-to:references:user-agent:date
-         :message-id:mime-version:content-type;
-        bh=c277FScPKBG0FXiU+WnKfaE0iX9dVhuSVbNkM3whDsg=;
-        b=SP0zo9BwRk2tHytyy0AC6KlxqjY+jJXV87lpjkUzZ3QEtnwiWgaWJJMJuAPMl25gyV
-         NI7WIgAYd6EdOkS+U8fvFfw8ijk8rT5IOR0zxjrcZAsXMAp3Ol/6jG/rhrwLgeyYQMWb
-         k0TPVoQL9A1gYoMVHfAzfvJBAC8RBz5GGIC1E0dMi7v/G279ureja9w2qWzYuEyJuHKE
-         rt7Eekt40DXVNhjlEwIjOoDJITV2U6/FRVtf8BOxcICnIG4Cys8g6fUBS3eNkCzpcifG
-         yCBTEwHe61XO22T0yP4vAiOmafOYoWI/H+dEyvOWKQRgSM1gEFjIpn7EnpEmfbMU53ar
-         w+vw==
-X-Received: by 10.50.67.105 with SMTP id m9mr1671378igt.34.1382556267143;
-        Wed, 23 Oct 2013 12:24:27 -0700 (PDT)
-Received: from localhost (vis-v410v070.mcs.anl-external.org. [130.202.17.70])
-        by mx.google.com with ESMTPSA id o11sm8387935igi.1.2013.10.23.12.24.26
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 23 Oct 2013 12:24:26 -0700 (PDT)
-In-Reply-To: <xmqqob6fq0q1.fsf@gitster.dls.corp.google.com>
-User-Agent: Notmuch/0.16+100~g18ee1e2 (http://notmuchmail.org) Emacs/24.3.1 (x86_64-unknown-linux-gnu)
+	id S1752058Ab3JWT0j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Oct 2013 15:26:39 -0400
+Received: from mail-ve0-f170.google.com ([209.85.128.170]:36916 "EHLO
+	mail-ve0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751789Ab3JWT0i (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Oct 2013 15:26:38 -0400
+Received: by mail-ve0-f170.google.com with SMTP id db12so863041veb.15
+        for <git@vger.kernel.org>; Wed, 23 Oct 2013 12:26:38 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+         :content-type;
+        bh=Z9cQ/cxf1wF4fybrAzBs2L516hjJi2lthXNC4K8hqk8=;
+        b=BQpgzkG7eXic+wwrEacOZLK1Zzl5Hj3ndd+n4IK4oYOPzY154x8r4jjEH7jbxvZcoj
+         Az/vq+YZAO1XomPSscdC78+gCJcsTOAYFsy6pH2oZux1cGxpcC1UEan6O8nPLs8scSpc
+         jTEvLHTTefTBi9EclyHlbMp2fqm4jl/UM5r/j/dpoxAOqD+2sOiCy93483cu7J+1g1Xm
+         DRlcdoI7+W3bAcjHiS2cWfEJjfhwaTRWV3K2VU2sgA/PaBBvjj1eIBJc4CgvFlxIc2MA
+         RuxbLov7ANt2a4GHnesm0FJb5AHDa2UGQTVvUbpp3CcjFEvuV/0PTkzLcmw8v4N1PU/3
+         EC4g==
+X-Gm-Message-State: ALoCoQlYQFMIZdStNhDiJmaFnuDGMHwhBgoJ52Ovxx1W6x0Livd3pW1R9B2pUlSouUOrrEwIeA0H
+X-Received: by 10.58.136.231 with SMTP id qd7mr2306290veb.1.1382556397960;
+ Wed, 23 Oct 2013 12:26:37 -0700 (PDT)
+Received: by 10.58.144.103 with HTTP; Wed, 23 Oct 2013 12:25:57 -0700 (PDT)
+X-Originating-IP: [24.125.129.33]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236549>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236550>
 
---=-=-=
-Content-Type: text/plain
+I have this situation and an accompanying sample repository
+reproducing the issue:
 
-Junio C Hamano <gitster@pobox.com> writes:
+https://gist.github.com/fj/7124501/raw/8d37058c1452379d0ae58bd87b0b9e0380bd80b2/gistfile1.txt
 
-> Jed Brown <jed@59A2.org> writes:
->
->> Junio C Hamano <gitster@pobox.com> writes:
->>> I suspect that it would be too late for 2.0 we want to do sometime
->>> early next year, though.
->>
->> How would you manage transition from the current behavior?  Warning
->> people to explicitly use "." or ":/" during some interim period sounds
->> worse than just switching the default behavior.
->
-> "How would I"?
->
-> You're asking that question only because you omitted too much from
-> the quote ;-)
+* I would like to rebase and delete a spurious ancestor merge commit
+(bbd8966 in the example).
 
-I meant that if the proposed migration plan were to be "just change it
-and people will learn" (because anything more gradual would actually be
-worse for users) then is it really too late for Git-2.0?
+* When I do that, however, a successor merge commit (97ba1d7) that has
+the ancestor merge commit (bbd8966) fails with the noted error:
 
---=-=-=
-Content-Type: application/pgp-signature
+=====
+error: Commit 97ba1d761f60b901f56766886da4ed678e56abea is a merge but
+no -m option was given. fatal: cherry-pick failed Could not pick
+97ba1d761f60b901f56766886da4ed678e56abea
+=====
+The expected result for me is that a new merge commit that merges
+6b8c765 (which now occupies the topological spot of the previous
+spurious commit, bbd8966) and 11d8b92.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (GNU/Linux)
+What am I doing wrong here? Is there a way to fix multiple instances
+of this in a history without doing tedious cherry-picking?
 
-iQIcBAEBAgAGBQJSaCJpAAoJEM+2iNHeMalNfKYP/RB7z/GKrxbHOqP5kSyQsrmU
-9XOiAAliVffg5BAQ6gm4/ZgmfxkQH6kULsM52dBIhMST1gAESZQFo72rddYeEej9
-8qS7saIluEwL+SJDhUUUXEgorwnQW3S5OPasWdRXKhMSN0wv0iyEJptEla6mrhTy
-FPf0z5FStELxolW+hed86ilFfaFdcZwI0HfnmaaigmlLkpsVHrUsnYkPSXPpd0Is
-vh/Wlnk/aXf/0Yrex6S/gPo+hXNATFYHxpAiiG60jHv6RNRUBejgd9cFiwLWY68N
-0PI834XU54n59wsFjmvQDgGPoOT52ubNy4jntEk7pvISKMKkLEG6xygF3wrQRNaL
-zPyIw/AxjxkjAZeevpzJFbF0alNJqB51CCXeltxzEo6xR6bWENSgdpabHV7Eg/K4
-dFCScX6sZXLchLAQk30RL2KZF0JA0iq4YPOjDVDZwVQZCq+BD0PVk4TH171ZjX69
-ZToc5P064mn6Ys122qkehcxEgW7vI4vRJQqwJLuZqCyj/Yl4IZboYmRXxbG+MvI2
-W3mRAkTpg31DZZu6VyPvK/u/VJVTIDwwgvNzZ40PnA3quNUikqe4pQBEaT848egr
-DsSf0mbEpIkD0bODW75LGiB7A93+QUuDAf1OSiy7188FgCsAzrinHP6D1sFseNCq
-9qgudjU/Fy9/hHvr2+fJ
-=/9oQ
------END PGP SIGNATURE-----
---=-=-=--
+Thanks!
+
+~ jf
