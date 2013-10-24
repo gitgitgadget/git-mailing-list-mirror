@@ -1,221 +1,77 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 19/19] pack-bitmap: implement optional name_hash cache
-Date: Thu, 24 Oct 2013 14:08:50 -0400
-Message-ID: <20131024180850.GS24180@sigill.intra.peff.net>
-References: <20131024175915.GA23398@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] rebase: use reflog to find common base with upstream
+Date: Thu, 24 Oct 2013 12:04:24 -0700
+Message-ID: <xmqqhac6o5hj.fsf@gitster.dls.corp.google.com>
+References: <d8e9f102609ee4502f579cb4ce872e0a40756204.1381949622.git.john@keeping.me.uk>
+	<CANiSa6gqGKAyLwwPVoZ_gzN85_06aTCfkdRRscNNZYs7g1rL0A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Vicent Marti <vicent@github.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 24 20:09:00 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: John Keeping <john@keeping.me.uk>, git <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Martin von Zweigbergk <martinvonz@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 24 21:04:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VZPL6-0001jL-Lk
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Oct 2013 20:08:57 +0200
+	id 1VZQCu-0005si-JB
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Oct 2013 21:04:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755784Ab3JXSIx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Oct 2013 14:08:53 -0400
-Received: from cloud.peff.net ([50.56.180.127]:54918 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752724Ab3JXSIw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Oct 2013 14:08:52 -0400
-Received: (qmail 1171 invoked by uid 102); 24 Oct 2013 18:08:52 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 24 Oct 2013 13:08:52 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 24 Oct 2013 14:08:50 -0400
-Content-Disposition: inline
-In-Reply-To: <20131024175915.GA23398@sigill.intra.peff.net>
+	id S1756093Ab3JXTE2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Oct 2013 15:04:28 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39989 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756069Ab3JXTE1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Oct 2013 15:04:27 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EE7254B907;
+	Thu, 24 Oct 2013 19:04:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 s=sasl; bh=GsSB/HIRnlkvIfUQKFf5IM1wy+Q=; b=e0ykIzZBIFnac7C1AEAr
+	d2v1TeCeKDm9nL5137WlAfRLDKdml3cdsnImSoIOee21DlgmsUmPlngUfbIQQJMD
+	w14Re/fK6OQUGVrHw9GH9wHBxlATEaQ/3DmWFK1yVRhlP8Z33JkPHKP58I+MrWfz
+	U84iLg9ok6yueA2wilAEQMU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=uFrV3zuW+g+bFjr83sveRK4wJIuplmYZasZJ3Zg8RZGUAk
+	JW9QzzokTsxFFoll2f5E83Q/qMZXbWkcVt+VIiao8Tn/0L4EECy8HNuCY4kvxbSJ
+	jovTMLLN9Zn9BPl3I13xXp4Flgd1sqWolBScNbZguHakFK0yOgmLt6GUajqZM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DF1094B906;
+	Thu, 24 Oct 2013 19:04:26 +0000 (UTC)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3A00A4B900;
+	Thu, 24 Oct 2013 19:04:26 +0000 (UTC)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 19FBFFB2-3CDF-11E3-AECC-8F264F2CC097-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236607>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236608>
 
-From: Vicent Marti <tanoku@gmail.com>
+Martin von Zweigbergk <martinvonz@gmail.com> writes:
 
-When we use pack bitmaps rather than walking the object
-graph, we end up with the list of objects to include in the
-packfile, but we do not know the path at which any tree or
-blob objects would be found.
+> I think
+>
+>   git merge-base HEAD $(git rev-list -g "$upstream_name")
+>
+> is roughly correct and hopefully fast enough. That can lead to too
+> long a command line, so I was planning on teaching merge-base a
+> --stdin option, but never got around to it.
 
-In a recently packed repository, this is fine. A fetch would
-use the paths only as a heuristic in the delta compression
-phase, and a fully packed repository should not need to do
-much delta compression.
+Sorry for coming in late.
 
-As time passes, though, we may acquire more objects on top
-of our large bitmapped pack. If clients fetch frequently,
-then they never even look at the bitmapped history, and all
-works as usual. However, a client who has not fetched since
-the last bitmap repack will have "have" tips in the
-bitmapped history, but "want" newer objects.
+I think the above with s/HEAD/$curr_branch/ is a good way to compute
+what the whole "for reflog in $(git rev-list -g $remoteref" loop
+computes when one of the historic tips recorded in the reflog was
+where $curr_branch forked from, i.e. the loop actually finds at
+least one ancestor in the reflog and breaks out after setting
+oldremoteref.  But it would give a completely different commit if
+none of the reflog entries is a fork point.
 
-The bitmaps themselves degrade gracefully in this
-circumstance. We manually walk the more recent bits of
-history, and then use bitmaps when we hit them.
-
-But we would also like to perform delta compression between
-the newer objects and the bitmapped objects (both to delta
-against what we know the user already has, but also between
-"new" and "old" objects that the user is fetching). The lack
-of pathnames makes our delta heuristics much less effective.
-
-This patch adds an optional cache of the 32-bit name_hash
-values to the end of the bitmap file. If present, a reader
-can use it to match bitmapped and non-bitmapped names during
-delta compression.
-
-Signed-off-by: Vicent Marti <tanoku@gmail.com>
-Signed-off-by: Jeff King <peff@peff.net>
----
- Documentation/technical/bitmap-format.txt | 33 +++++++++++++++++++++++++++++++
- pack-bitmap-write.c                       | 18 ++++++++++++++++-
- pack-bitmap.c                             | 11 +++++++++++
- pack-bitmap.h                             |  1 +
- 4 files changed, 62 insertions(+), 1 deletion(-)
-
-diff --git a/Documentation/technical/bitmap-format.txt b/Documentation/technical/bitmap-format.txt
-index c686dd1..36a511c 100644
---- a/Documentation/technical/bitmap-format.txt
-+++ b/Documentation/technical/bitmap-format.txt
-@@ -21,6 +21,12 @@ GIT bitmap v1 format
- 			requirement for the bitmap index format, also present in JGit,
- 			that greatly reduces the complexity of the implementation.
- 
-+			- BITMAP_OPT_HASH_CACHE (0x4)
-+			If present, the end of the bitmap file contains
-+			`N` 32-bit name-hash values, one per object in the
-+			pack. The format and meaning of the name-hash is
-+			described below.
-+
- 		4-byte entry count (network byte order)
- 
- 			The total count of entries (bitmapped commits) in this bitmap index.
-@@ -129,3 +135,30 @@ The bitstream represented by the above chunk is then:
- The next word after `L_M` (if any) must again be a RLW, for the next
- chunk.  For efficient appending to the bitstream, the EWAH stores a
- pointer to the last RLW in the stream.
-+
-+
-+== Appendix B: Optional Bitmap Sections
-+
-+These sections may or may not be present in the `.bitmap` file; their
-+presence is indicated by the header flags section described above.
-+
-+Name-hash cache
-+---------------
-+
-+If the BITMAP_OPT_HASH_CACHE flag is set, the end of the bitmap contains
-+a cache of 32-bit values, one per object in the pack. The value at
-+position `i` is the hash of the pathname at which the `i`th object
-+(counting in index order) in the pack can be found.  This can be fed
-+into the delta heuristics to compare objects with similar pathnames.
-+
-+The hash algorithm used is:
-+
-+    hash = 0;
-+    while ((c = *name++))
-+	    if (!isspace(c))
-+		    hash = (hash >> 2) + (c << 24);
-+
-+Note that this hashing scheme is tied to the BITMAP_OPT_HASH_CACHE flag.
-+If implementations want to choose a different hashing scheme, they are
-+free to do so, but MUST allocate a new header flag (because comparing
-+hashes made under two different schemes would be pointless).
-diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
-index 6a589c3..c44874a 100644
---- a/pack-bitmap-write.c
-+++ b/pack-bitmap-write.c
-@@ -492,6 +492,19 @@ static void write_selected_commits_v1(struct sha1file *f,
- 	}
- }
- 
-+static void write_hash_cache(struct sha1file *f,
-+			     struct pack_idx_entry **index,
-+			     uint32_t index_nr)
-+{
-+	uint32_t i;
-+
-+	for (i = 0; i < index_nr; ++i) {
-+		struct object_entry *entry = (struct object_entry *)index[i];
-+		uint32_t hash_value = htonl(entry->hash);
-+		sha1write(f, &hash_value, sizeof(hash_value));
-+	}
-+}
-+
- void bitmap_writer_set_checksum(unsigned char *sha1)
- {
- 	hashcpy(writer.pack_checksum, sha1);
-@@ -503,7 +516,7 @@ void bitmap_writer_finish(struct pack_idx_entry **index,
- {
- 	static char tmp_file[PATH_MAX];
- 	static uint16_t default_version = 1;
--	static uint16_t flags = BITMAP_OPT_FULL_DAG;
-+	static uint16_t flags = BITMAP_OPT_FULL_DAG | BITMAP_OPT_HASH_CACHE;
- 	struct sha1file *f;
- 
- 	struct bitmap_disk_header header;
-@@ -527,6 +540,9 @@ void bitmap_writer_finish(struct pack_idx_entry **index,
- 	dump_bitmap(f, writer.tags);
- 	write_selected_commits_v1(f, index, index_nr);
- 
-+	if (flags & BITMAP_OPT_HASH_CACHE)
-+		write_hash_cache(f, index, index_nr);
-+
- 	sha1close(f, NULL, CSUM_FSYNC);
- 
- 	if (adjust_shared_perm(tmp_file))
-diff --git a/pack-bitmap.c b/pack-bitmap.c
-index 86ce677..a7c553d 100644
---- a/pack-bitmap.c
-+++ b/pack-bitmap.c
-@@ -68,6 +68,9 @@ static struct bitmap_index {
- 	/* Number of bitmapped commits */
- 	uint32_t entry_count;
- 
-+	/* Name-hash cache (or NULL if not present). */
-+	uint32_t *hashes;
-+
- 	/*
- 	 * Extended index.
- 	 *
-@@ -154,6 +157,11 @@ static int load_bitmap_header(struct bitmap_index *index)
- 		if ((flags & BITMAP_OPT_FULL_DAG) == 0)
- 			return error("Unsupported options for bitmap index file "
- 				"(Git requires BITMAP_OPT_FULL_DAG)");
-+
-+		if (flags & BITMAP_OPT_HASH_CACHE) {
-+			index->hashes = index->map + index->map_size - 20 -
-+				(sizeof(uint32_t) * index->pack->num_objects);
-+		}
- 	}
- 
- 	index->entry_count = ntohl(header->entry_count);
-@@ -621,6 +629,9 @@ static void show_objects_for_type(
- 			entry = &bitmap_git.reverse_index->revindex[pos + offset];
- 			sha1 = nth_packed_object_sha1(bitmap_git.pack, entry->nr);
- 
-+			if (bitmap_git.hashes)
-+				hash = ntohl(bitmap_git.hashes[entry->nr]);
-+
- 			show_reach(sha1, object_type, 0, hash, bitmap_git.pack, entry->offset);
- 		}
- 
-diff --git a/pack-bitmap.h b/pack-bitmap.h
-index 18f4d4c..6053453 100644
---- a/pack-bitmap.h
-+++ b/pack-bitmap.h
-@@ -28,6 +28,7 @@ static const char BITMAP_IDX_SIGNATURE[] = {'B', 'I', 'T', 'M'};;
- 
- enum pack_bitmap_opts {
- 	BITMAP_OPT_FULL_DAG = 1,
-+	BITMAP_OPT_HASH_CACHE = 4,
- };
- 
- enum pack_bitmap_flags {
--- 
-1.8.4.1.898.g8bf8a41.dirty
+A two patch series forthcoming.
