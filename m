@@ -1,99 +1,131 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: Finding the repository
-Date: Thu, 24 Oct 2013 20:46:33 +0700
-Message-ID: <CACsJy8AVdV8nPXFVdj37O1dgvcWh=tQ5C7iUE134Wk2yTD42Ug@mail.gmail.com>
-References: <5267804b.JaxQnlQ5Cx+By4RS%perryh@pluto.rain.com>
- <CACsJy8DgxpjasroZv4iqTn9JhQ_3r2DD9uEf-xL-uyyPOtWh+A@mail.gmail.com> <5268d0ff.HMSQf8rpwyXtEYEA%perryh@pluto.rain.com>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 0/19] pack bitmaps
+Date: Thu, 24 Oct 2013 13:59:15 -0400
+Message-ID: <20131024175915.GA23398@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Perry Hutchison <perryh@pluto.rain.com>
-X-From: git-owner@vger.kernel.org Thu Oct 24 15:47:13 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Vicent Marti <vicent@github.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 24 19:59:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VZLFp-0001lB-3L
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Oct 2013 15:47:13 +0200
+	id 1VZPBq-0002Ih-7I
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Oct 2013 19:59:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754890Ab3JXNrJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Oct 2013 09:47:09 -0400
-Received: from mail-qe0-f50.google.com ([209.85.128.50]:36660 "EHLO
-	mail-qe0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754526Ab3JXNrH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Oct 2013 09:47:07 -0400
-Received: by mail-qe0-f50.google.com with SMTP id 1so1401264qee.23
-        for <git@vger.kernel.org>; Thu, 24 Oct 2013 06:47:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=0aLOZALBMil/z6qfkhEScnG8BcdRwXpwfSMu9cXZ3VE=;
-        b=ZUAIFDpEaT8K2/kUC3H3zgEKBG0IXInypup2DSqMMSWtiZ60B4R0waXanBw07cwYV/
-         V62U1jg0ejpZ5JoWE+TxNn5Z7tTjrz9yX2WCsSE3nJMeHOL1s0HySmol/qjbsKDtepBx
-         xbxxpN1m7GLYlI19k5Uqp0rLcNaLPgKqkSOCH0GAe03hyk5clsMhM4wWqYaoVaCsT4sv
-         BZZnrM9Q21CqEOwLxx6Hl72EUXdTm/xghql89J/Z+vt3BkDUDGxT1wYN8jtlkZtH+Hh2
-         QNy9eAMztBOQGcMtjQ7JmPDOKMJfkTNVcugcMj6ONSK1Rg86sooHHlqSyGj72Udm9RP0
-         TRnQ==
-X-Received: by 10.224.160.83 with SMTP id m19mr2546948qax.108.1382622424646;
- Thu, 24 Oct 2013 06:47:04 -0700 (PDT)
-Received: by 10.96.27.202 with HTTP; Thu, 24 Oct 2013 06:46:33 -0700 (PDT)
-In-Reply-To: <5268d0ff.HMSQf8rpwyXtEYEA%perryh@pluto.rain.com>
+	id S1755815Ab3JXR7S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Oct 2013 13:59:18 -0400
+Received: from cloud.peff.net ([50.56.180.127]:54855 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752724Ab3JXR7R (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Oct 2013 13:59:17 -0400
+Received: (qmail 331 invoked by uid 102); 24 Oct 2013 17:59:17 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 24 Oct 2013 12:59:17 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 24 Oct 2013 13:59:15 -0400
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236586>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236587>
 
-On Thu, Oct 24, 2013 at 2:49 PM, Perry Hutchison <perryh@pluto.rain.com> wrote:
-> Duy Nguyen <pclouds@gmail.com> wrote:
->
->> ... it's not easy to determine ambiguity here, especially when the
->> repo finding code does not know anything about "bar/barz.c" (is it
->> a pathname or an argument to an option?).
->
-> IOW, the code that finds the repository is called "too early"?
+This series implements JGit-style pack bitmaps to speed up fetching and
+cloning. For example, here is a simulation of the server side of a clone
+of a fully-packed kernel repo (measuring actual clones is harder,
+because the client does a lot of work on resolving deltas):
 
-Yes. First it tries to find and setup the repository. Read per-config
-repo file and add aliases to the database if any. Resolve alias. Run
-the actual command. Then the command parses the command line.
+   [before]
+   $ time git pack-objects --all --stdout </dev/null >/dev/null
+   Counting objects: 3237103, done.
+   Compressing objects: 100% (508752/508752), done.
+   Total 3237103 (delta 2699584), reused 3237103 (delta 2699584)
 
-> One way to solve that to that would be to proceed, even if the
-> repository has to be left as "unknown" until it actually needs to
-> be consulted -- by which time the subcommand would presumably have
-> parsed all of the options and pathnames and so would know which is
-> which.  Then, use the pathname(s) to identify the repository(ies).
-> Yes, if there's more than one repository involved, the subcommand
-> has to do a "for each repository" loop.  The code to do all this
-> could go in a module shared among the subcommands.
+   real    0m44.111s
+   user    0m42.396s
+   sys     0m3.544s
 
-That breaks the normal process I described above (i.e. lots of code
-changes). People would scream at the code changes for a minor
-convenience. We could refactor the parsing code so that the startup
-code could do a "dry-run" command line parsing pass first. May work
-for the majority of commands that do not need special parsing
-callbacks.
 
-Even then we still need more changes because git does not work well if
-cwd is outside the worktree. Paths like 'bar/baz.c" need to cut "bar/"
-out. Then if "baz.c" is to printed out again, "bar/" needs to be
-prepended back..
+   [after]
+   $ time git pack-objects --all --stdout </dev/null >/dev/null
+   Reusing existing pack: 3237103, done.
+   Total 3237103 (delta 0), reused 0 (delta 0)
 
->> There are more cases to consider, like what if you do
->> "git rm bar/baz.c and rab/zab.c" where bar and rab are
->> two different repositories..
->
-> So we remove baz.c from bar and zab.c from rab.  It's not clear
-> to me that there's anything wrong with that -- it's exactly what
-> I would expect to have happen (and also what the hackish script
-> I posted will do).
+   real    0m1.636s
+   user    0m1.460s
+   sys     0m0.172s
 
-For "git rm", maybe. Many other commands need repo information and it
-would not make sense to have paths from two different repositories.
-For example, commit, rev-list or log. And it may break more things as
-most of current commands are designed to work on one repo from a to z.
-Some may support multi-repo operations if they're part of submodule
-support.
--- 
-Duy
+
+This helps eliminate load on the server side, but it also means that we
+actually start transferring objects way faster, which means the clones
+finish faster. If you look at current clones of torvalds/linux from
+kernel.org, it's almost two minutes before they actually start sending
+you any data, during which time the client is twiddling its thumbs.
+
+The bitmaps implemented here are compatible with those produced by JGit.
+We can read JGit-produced bitmaps, and JGit can read ours. The one
+exception is the final patch, which adds an optional name-hash cache.
+It's added in such a way that existing implementations can ignore it,
+and is marked with a flag in the header. However, JGit is very picky
+about the "flags" field; it will reject any bitmap index with a flag it
+does not know about.
+
+The patches are:
+
+  [01/19]: sha1write: make buffer const-correct
+  [02/19]: revindex: Export new APIs
+  [03/19]: pack-objects: Refactor the packing list
+  [04/19]: pack-objects: factor out name_hash
+  [05/19]: revision: allow setting custom limiter function
+  [06/19]: sha1_file: export `git_open_noatime`
+  [07/19]: compat: add endianness helpers
+  [08/19]: ewah: compressed bitmap implementation
+
+    Refactoring and support for the rest of the series.
+
+  [09/19]: documentation: add documentation for the bitmap format
+  [10/19]: pack-bitmap: add support for bitmap indexes
+  [11/19]: pack-objects: use bitmaps when packing objects
+  [12/19]: rev-list: add bitmap mode to speed up object lists
+
+    Bitmap reading (you can test it against JGit at this point by
+    running "jgit debug-gc", and then cloning or running rev-list).
+
+  [13/19]: pack-objects: implement bitmap writing
+  [14/19]: repack: stop using magic number for ARRAY_SIZE(exts)
+  [15/19]: repack: turn exts array into array-of-struct
+  [16/19]: repack: handle optional files created by pack-objects
+  [17/19]: repack: consider bitmaps when performing repacks
+
+    Bitmap writing (you can test against JGit by running
+    "git repack -adb", and then running "jgit daemon" to
+    serve the result).
+
+  [18/19]: t: add basic bitmap functionality tests
+
+    With reading and writing, we can do our own tests.
+
+  [19/19]: pack-bitmap: implement optional name_hash cache
+
+    And this is our extension.
+
+A similar series has been running on github.com for the past couple of
+months, though not every repository has had bitmaps turned on (but some
+very busy ones have).  We've hopefully squeezed out all of the bugs and
+corner cases over that time. However, I did rebase this on a more modern
+version of "master"; among other conflicts, this required porting the
+git-repack changes from shell to C. So it's entirely possible I've
+introduced new bugs. :)
+
+The idea and original implementation for bitmaps comes from Shawn and
+Colby, of course. The hard work in this series was done by Vicent Marti,
+and he is credited as the author in most of the patches. I've added some
+window dressing and helped a little with debugging and review. But along
+with Vicent, I should be able to help with answering questions for
+review, and as time goes on, I'm familiar enough with the code to deal
+with bugs and reviewing future changes.
+
+-Peff
