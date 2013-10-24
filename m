@@ -1,67 +1,100 @@
-From: Renich Bon Ciric <renich@woralelandia.com>
-Subject: Feature: support for file permissions
-Date: Thu, 24 Oct 2013 16:32:36 -0500
-Message-ID: <CAGxGTk5eOGoUjrweZ9gLwBE6ev7oCZcu-aWWK2ydtpLkWgx8ew@mail.gmail.com>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [PATCH 0/2] finding the fork point from reflog entries
+Date: Thu, 24 Oct 2013 22:40:07 +0100
+Message-ID: <20131024214007.GE10779@serenity.lan>
+References: <xmqqhac6o5hj.fsf@gitster.dls.corp.google.com>
+ <1382641884-14756-1-git-send-email-gitster@pobox.com>
+ <20131024205434.GC10779@serenity.lan>
+ <xmqqa9hymkma.fsf@gitster.dls.corp.google.com>
+ <20131024213134.GD10779@serenity.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 24 23:33:05 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Martin von Zweigbergk <martinvonz@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Oct 24 23:40:24 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VZSWb-00054p-RD
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Oct 2013 23:33:02 +0200
+	id 1VZSdj-0002Ph-K1
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Oct 2013 23:40:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754349Ab3JXVc6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Oct 2013 17:32:58 -0400
-Received: from mail-ie0-f173.google.com ([209.85.223.173]:42193 "EHLO
-	mail-ie0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754103Ab3JXVc5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Oct 2013 17:32:57 -0400
-Received: by mail-ie0-f173.google.com with SMTP id u16so4978049iet.18
-        for <git@vger.kernel.org>; Thu, 24 Oct 2013 14:32:57 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
-         :content-type;
-        bh=poK+OnFsesb2K5LBenMbuXKrNyFHhS27kGPbZdG7Bb4=;
-        b=bKsP9asap+EO81TVX37CU3LRHNeKU7vLRh6R8BkmFPuoGbmrD0k9GRDIRKt3e4m4xz
-         IarWO3LpxLFbHu0KFflGwdShJWbAdml7HVSJ0Pp9Rwgg3Dt8M+9ynhozkj1c5CikR9qw
-         0JOne5HVgm+/gm8eRm7h2C3I7N6FCsRDE0D1UC1qBTffPDg/GPwN3PtoOQ5SBPww93tW
-         +pM4ekFVod/I3hVZoykM4rHWxWYp9F5qLxyoJagRhWRx4YLpTMOedNCdNEdKMP/WDCb0
-         32RHQr7ACYmQYiomzKb4+lxuwPlO9/mL0v1zeRBiCdTFFreIeKdVnRfoKXtJyDcZKYug
-         +RmQ==
-X-Gm-Message-State: ALoCoQloY13FdMvNJRKrLCbG5Iu5kLdTdnuQ/9Ta6vthSFOnXNeaXZiU5/yBpHENyE0rlCtrMkdt
-X-Received: by 10.50.136.135 with SMTP id qa7mr3373742igb.49.1382650376893;
- Thu, 24 Oct 2013 14:32:56 -0700 (PDT)
-Received: by 10.64.20.134 with HTTP; Thu, 24 Oct 2013 14:32:36 -0700 (PDT)
+	id S1755233Ab3JXVkT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Oct 2013 17:40:19 -0400
+Received: from coyote.aluminati.org ([72.9.247.114]:41566 "EHLO
+	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753090Ab3JXVkT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Oct 2013 17:40:19 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by coyote.aluminati.org (Postfix) with ESMTP id 6CA2E606514;
+	Thu, 24 Oct 2013 22:40:18 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -2.9
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9] autolearn=ham
+Received: from coyote.aluminati.org ([127.0.0.1])
+	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id noZ1spGifl9R; Thu, 24 Oct 2013 22:40:16 +0100 (BST)
+Received: from serenity.lan (banza.aluminati.org [10.0.7.182])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by coyote.aluminati.org (Postfix) with ESMTPSA id B1F656064FD;
+	Thu, 24 Oct 2013 22:40:09 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <20131024213134.GD10779@serenity.lan>
+User-Agent: Mutt/1.5.22 (2013-10-16)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236628>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236629>
 
-Hello,
+On Thu, Oct 24, 2013 at 10:31:35PM +0100, John Keeping wrote:
+> On Thu, Oct 24, 2013 at 02:20:29PM -0700, Junio C Hamano wrote:
+> > John Keeping <john@keeping.me.uk> writes:
+> > 
+> > > On Thu, Oct 24, 2013 at 12:11:22PM -0700, Junio C Hamano wrote:
+> > >> The first one is a clean-up of the code to parse command line
+> > >> options to "git merge-base".  Options such as "--independent",
+> > >> "--is-ancestor" and "--octopus" are mutually exclusive and it is
+> > >> better expressed in terms of the recently introduced OPT_CMDMODE.
+> > >> 
+> > >> The second one implements the entire logic of the for loop we see in
+> > >> "git pull --rebase" directly using get_merge_bases_many() and
+> > >> postprocessing the result.
+> > >
+> > > Nice!  I tried this in the case where the target commit happens to be
+> > > the 63rd reflog entry:
+> > >
+> > > $ time sh -c 'for rev in $(git rev-list -g origin/master 2>/dev/null)
+> > > do
+> > >     git merge-base --is-ancestor $rev b2edae0 && break
+> > > done
+> > > '
+> > >
+> > > real    0m3.772s
+> > > user    0m3.338s
+> > > sys     0m0.440s
+> > >
+> > > $ time git merge-base --reflog origin/master b2edae0
+> > >
+> > > real    0m0.156s
+> > > user    0m0.138s
+> > > sys     0m0.018s
+> > 
+> > The real question is if the C code computes the same as the shell
+> > loop.
+> 
+> And in fact it doesn't - if you replace the "break" with "echo $rev" the
+> shell version prints b2edae0... but the C version prints nothing (and
+> exists with status 1).
 
-I think file permissions are really important for source code as well.
+To clarify: the particular commit in the calls above happens to be the
+oldest entry in the reflog, if I pick a newer entry then it works.
 
-For example, in web development, you want configuration files to be
-read only; specially if you're deploying with git.
-
-Also, you would want some executable file to not be writable ; but
-executable by world.
-
-Permission support would become really handy when using GIT_WORK_TREE
-on a bare repo.
-
-Please, consider supporting them.
-
--- 
-It's hard to be free... but I love to struggle. Love isn't asked for;
-it's just given. Respect isn't asked for; it's earned!
-Renich Bon Ciric
-
-http://www.woralelandia.com/
-http://www.introbella.com/
+It seems that for_each_reflog_ent isn't returning the oldest entry;
+revs.nr is 62 whereas "git rev-list -g origin/master | wc -l" gives 63.
