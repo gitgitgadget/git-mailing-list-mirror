@@ -1,107 +1,102 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git grep: search whole tree by default?
-Date: Fri, 25 Oct 2013 00:37:17 -0400
-Message-ID: <20131025043717.GC11810@sigill.intra.peff.net>
-References: <CAA01CsqgNKdDAc9OL9zdk=3tnK9GAG=6w+wP_XSoiefBOgfzRQ@mail.gmail.com>
- <vpqbo2guff7.fsf@anie.imag.fr>
- <xmqqmwlzrjdh.fsf@gitster.dls.corp.google.com>
- <87hac7hmrb.fsf@mcs.anl.gov>
- <xmqqob6fq0q1.fsf@gitster.dls.corp.google.com>
- <87zjpzg592.fsf@mcs.anl.gov>
- <vpqy55jogzr.fsf@anie.imag.fr>
- <20131024022736.GA24992@sigill.intra.peff.net>
- <xmqqd2muo3sz.fsf@gitster.dls.corp.google.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v2 00/14] Officially start moving to the term 'staging
+ area'
+Date: Thu, 24 Oct 2013 18:19:48 -0500
+Message-ID: <5269ab14157b8_6704135de7c73@nysa.notmuch>
+References: <1381789769-9893-1-git-send-email-felipe.contreras@gmail.com>
+ <1381789769-9893-4-git-send-email-felipe.contreras@gmail.com>
+ <5261C42E.4050208@gmail.com>
+ <8FC260D94D1A4711AAA8A0DE7477791B@PhilipOakley>
+ <5268706B.4040303@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Jed Brown <jed@59A2.org>,
-	Piotr Krukowiecki <piotr.krukowiecki@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Oct 25 06:37:29 2013
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>,
+	Jay Soffian <jaysoffian@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	William Swanson <swansontec@gmail.com>,
+	Ping Yin <pkufranky@gmail.com>,
+	Hilco Wijbenga <hilco.wijbenga@gmail.com>,
+	Miles Bader <miles@gnu.org>
+To: Karsten Blees <karsten.blees@gmail.com>,
+	Philip Oakley <philipoakley@iee.org>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Oct 25 06:38:08 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VZZ9L-0004iF-Rn
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Oct 2013 06:37:28 +0200
+	id 1VZZ9y-0005Cq-2M
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Oct 2013 06:38:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751369Ab3JYEhV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Oct 2013 00:37:21 -0400
-Received: from cloud.peff.net ([50.56.180.127]:55242 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751237Ab3JYEhU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Oct 2013 00:37:20 -0400
-Received: (qmail 31637 invoked by uid 102); 25 Oct 2013 04:37:20 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 24 Oct 2013 23:37:20 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 25 Oct 2013 00:37:17 -0400
-Content-Disposition: inline
-In-Reply-To: <xmqqd2muo3sz.fsf@gitster.dls.corp.google.com>
+	id S1751414Ab3JYEiB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Oct 2013 00:38:01 -0400
+Received: from mail-ob0-f177.google.com ([209.85.214.177]:40004 "EHLO
+	mail-ob0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751237Ab3JYEiA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Oct 2013 00:38:00 -0400
+Received: by mail-ob0-f177.google.com with SMTP id vb8so450774obc.22
+        for <git@vger.kernel.org>; Thu, 24 Oct 2013 21:37:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=I8nMmL3HI3R1pwuKPrtJPxiNx/1YKn/HYQXdjP0Hn3U=;
+        b=azNr1RMwLdyGszxukzCg2YkBmMuvuVJbB6EDEmv7KADdqHg1ig+52na9/GnLtrzIFj
+         lVPexWuZ9hApcMjenDkmDN5ZQ3G9OVOYQ09K7UGf2bIlUDQGrVxFdC6HAcj5bLP6qtbU
+         Sp2z3igx6N65jLqXUKsoKxFENhueOI/nR4Wpc2vLAose+CjIk1ZhOZGe5zh/gBc6TVZc
+         d0X8OGhFjpCOrtnCMBT1qS1No2RnfHDW1glQKs1vywmz6o9EawTbVjPtnBbE8eddDWj0
+         zxAaYnEbLHSC8dbC3HbsEEgo4mGb+eIPzF9UbR0FjurHNuDHTxzElFXsRLHYKyIaNIld
+         KMoA==
+X-Received: by 10.60.63.36 with SMTP id d4mr1438819oes.29.1382675879547;
+        Thu, 24 Oct 2013 21:37:59 -0700 (PDT)
+Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
+        by mx.google.com with ESMTPSA id rl1sm3775036oeb.7.2013.10.24.21.37.57
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 24 Oct 2013 21:37:58 -0700 (PDT)
+In-Reply-To: <5268706B.4040303@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236657>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236658>
 
-On Thu, Oct 24, 2013 at 12:40:44PM -0700, Junio C Hamano wrote:
-
-> Jeff King <peff@peff.net> writes:
+Karsten Blees wrote:
+> (2) Index
 > 
-> > That would also provide people who do not like the change of default an
-> > escape hatch to keep the current behavior. And I do not think scripted
-> > use will be inconvenienced; they will already have to use "." or ":/" to
-> > be explicit (if they care) since the behavior is changing.
+> An index, as in a library, maps almost perfectly to what the git index is
+> _and_ what we do with it.
+
+Not really. An index in the context of a library, and in any other context, is
+a tool that indicates where something is, in order to find it quickly.
+
+That is not how the Git index is used, nor what it is.
+
+> (3b) Staging area (other meanings)
 > 
-> There is a big difference between "scripted use will have an escape
-> hatch" and "scripted use will not be inconvenienced".
-
-I think my communication may have been muddled in transit. What I meant
-regarding inconvenienced was "not any more so than by simply changing
-the behavior in the first place, since scripts already will need to
-start becoming explicit due to the behavior change".
-
-And for the "escape hatch", I did not mean for scripts. I actually meant
-for users who do not like the extra typing and complain "stupid git, I
-always want '.'; you used to do what I want and now you do not".
-
-> Even if we ignore the "helping your colleague at her terminal", cf.
+> I don't see how a stage (as in a theater) is in any way related to the git
+> index.
 > 
->     http://thread.gmane.org/gmane.comp.version-control.git/133570/focus=133683
+> Data staging (as in loading a datawarehouse or web-server) fits to some
+> extent, as its also about copying information, not moving physical things.
 
-FWIW, I have never agreed with that line of reasoning. I was going to
-explain why, but I see that I already did in response to the article you
-linked. :)
+A stage in theater, and in any other context, is a special place, a standing
+place, I don't see what is so different from the git staging area.
 
-> issue for now, adding a new configuration variable from day one
-> makes the transition of scripts somewhat worse, I am afraid.  Doing
-> so robs us a way to add such an annoying warning to help people
-> foresee problems in their existing scripts before the default
-> changes (the configuration presumably will disable the "this command
-> line will behave differently after the default changes" warning).
+> > Even 'native' speakers don't have a single consistent term for the
+> > concept. Terms are stolen from many varied industries and activities
+> > that have to prepare and package items (Ships, Trains, Theaters)
+> > (see http://en.wikipedia.org/wiki/Shipping_list, for a shortish list, which doesn't mention an Index)
+> 
+> All true, but we don't need to steal terms from unrelated fields if
+> information science provides us with the terms we need.
 
-If you want to have an annoying warning, why not consider the config a
-tristate? Do X or do Y, or if unset, do X with an annoying warning
-(which will switch to Y in the future). That does not help a user who
-sets the variable after seeing the warning the first time, then later
-runs a script that silently chooses the wrong behavior.
+But it doesn't.
 
-But neither does a warning that is squelched by advice.*, which the user
-will also set soon after seeing it.
-
-The only way to hit those scripts is to yell at the user anytime the
-appropriate command-line override is not selected, with no way to turn
-it off. That's what we're doing now with "git add". I think people find
-it a little annoying. But perhaps it is the least of all evils.
-
-
-Anyway, I have said my piece, and I think we are on the same page with
-the tradeoffs (what they are, though we may value them differently).  I
-do not care that strongly about the config option these days; as I said,
-it was something I would have used in certain workflows, but I do not
-foresee myself even setting it these days. So I am willing to forego it
-if there are concerns it will make things worse.
-
--Peff
+-- 
+Felipe Contreras
