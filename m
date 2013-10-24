@@ -1,77 +1,74 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] rebase: use reflog to find common base with upstream
-Date: Thu, 24 Oct 2013 12:04:24 -0700
-Message-ID: <xmqqhac6o5hj.fsf@gitster.dls.corp.google.com>
-References: <d8e9f102609ee4502f579cb4ce872e0a40756204.1381949622.git.john@keeping.me.uk>
-	<CANiSa6gqGKAyLwwPVoZ_gzN85_06aTCfkdRRscNNZYs7g1rL0A@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: John Keeping <john@keeping.me.uk>, git <git@vger.kernel.org>,
+Subject: [PATCH 0/2] finding the fork point from reflog entries
+Date: Thu, 24 Oct 2013 12:11:22 -0700
+Message-ID: <1382641884-14756-1-git-send-email-gitster@pobox.com>
+References: <xmqqhac6o5hj.fsf@gitster.dls.corp.google.com>
+Cc: Martin von Zweigbergk <martinvonz@gmail.com>,
+	John Keeping <john@keeping.me.uk>,
 	Jonathan Nieder <jrnieder@gmail.com>
-To: Martin von Zweigbergk <martinvonz@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 24 21:04:35 2013
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 24 21:11:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VZQCu-0005si-JB
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Oct 2013 21:04:32 +0200
+	id 1VZQJg-0003Cj-0p
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Oct 2013 21:11:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756093Ab3JXTE2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Oct 2013 15:04:28 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39989 "EHLO
+	id S1756069Ab3JXTL2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Oct 2013 15:11:28 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60021 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756069Ab3JXTE1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Oct 2013 15:04:27 -0400
+	id S1756021Ab3JXTL1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Oct 2013 15:11:27 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EE7254B907;
-	Thu, 24 Oct 2013 19:04:26 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3D1704D049;
+	Thu, 24 Oct 2013 19:11:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=GsSB/HIRnlkvIfUQKFf5IM1wy+Q=; b=e0ykIzZBIFnac7C1AEAr
-	d2v1TeCeKDm9nL5137WlAfRLDKdml3cdsnImSoIOee21DlgmsUmPlngUfbIQQJMD
-	w14Re/fK6OQUGVrHw9GH9wHBxlATEaQ/3DmWFK1yVRhlP8Z33JkPHKP58I+MrWfz
-	U84iLg9ok6yueA2wilAEQMU=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=IT9f
+	mrKPBMeoO45Z71pg0jN0OZ8=; b=ChDe0nO5Y34zv3VCHFYyhuMS+MUeKBwtkK2r
+	Qk5jO1z/yVHlG/JRUWG+q2lXurbt8/q2jDdL1T8m/n89Qi6ruuSe9d6t5a60Wzwa
+	3lRfkqqXxKQRn+MgA6r0gG269m2Qs6km5/1pzAmS251pj9OrIEzLlEcGjRtk5Tyz
+	bwJS2PA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=uFrV3zuW+g+bFjr83sveRK4wJIuplmYZasZJ3Zg8RZGUAk
-	JW9QzzokTsxFFoll2f5E83Q/qMZXbWkcVt+VIiao8Tn/0L4EECy8HNuCY4kvxbSJ
-	jovTMLLN9Zn9BPl3I13xXp4Flgd1sqWolBScNbZguHakFK0yOgmLt6GUajqZM=
+	:subject:date:message-id:in-reply-to:references; q=dns; s=sasl; b=
+	nJMK1ok5xAqOfZJbEUmGrY2BxcPVafMGl6o5VMjmSzEWq3IEVbkeO25bWItZ+oFP
+	B/FTwaE4TctB4B8/TbZwbQji+tIYKfim+Dlf4/sSGbSVTwrnM/RK5+QSwK61CNHx
+	uF7lwgtjTWeTx04U6EBClGTn5HSnIKHUfW5sf6jrW40=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DF1094B906;
-	Thu, 24 Oct 2013 19:04:26 +0000 (UTC)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2ACFE4D048;
+	Thu, 24 Oct 2013 19:11:27 +0000 (UTC)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3A00A4B900;
-	Thu, 24 Oct 2013 19:04:26 +0000 (UTC)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 19FBFFB2-3CDF-11E3-AECC-8F264F2CC097-77302942!b-pb-sasl-quonix.pobox.com
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 82D424D044;
+	Thu, 24 Oct 2013 19:11:26 +0000 (UTC)
+X-Mailer: git-send-email 1.8.4.1-799-g1c32b8d
+In-Reply-To: <xmqqhac6o5hj.fsf@gitster.dls.corp.google.com>
+X-Pobox-Relay-ID: 147F34CC-3CE0-11E3-AD3B-8F264F2CC097-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236608>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236609>
 
-Martin von Zweigbergk <martinvonz@gmail.com> writes:
+The first one is a clean-up of the code to parse command line
+options to "git merge-base".  Options such as "--independent",
+"--is-ancestor" and "--octopus" are mutually exclusive and it is
+better expressed in terms of the recently introduced OPT_CMDMODE.
 
-> I think
->
->   git merge-base HEAD $(git rev-list -g "$upstream_name")
->
-> is roughly correct and hopefully fast enough. That can lead to too
-> long a command line, so I was planning on teaching merge-base a
-> --stdin option, but never got around to it.
+The second one implements the entire logic of the for loop we see in
+"git pull --rebase" directly using get_merge_bases_many() and
+postprocessing the result.
 
-Sorry for coming in late.
+Junio C Hamano (2):
+  merge-base: use OPT_CMDMODE and clarify the command line parsing
+  merge-base: "--reflog" mode finds fork point from reflog entries
 
-I think the above with s/HEAD/$curr_branch/ is a good way to compute
-what the whole "for reflog in $(git rev-list -g $remoteref" loop
-computes when one of the historic tips recorded in the reflog was
-where $curr_branch forked from, i.e. the loop actually finds at
-least one ancestor in the reflog and breaks out after setting
-oldremoteref.  But it would give a completely different commit if
-none of the reflog entries is a fork point.
+ builtin/merge-base.c  | 115 +++++++++++++++++++++++++++++++++++++++++++-------
+ t/t6010-merge-base.sh |  27 ++++++++++++
+ 2 files changed, 126 insertions(+), 16 deletions(-)
 
-A two patch series forthcoming.
+-- 
+1.8.4.1-799-g1c32b8d
