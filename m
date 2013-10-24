@@ -1,94 +1,80 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 4/6] use parse_commit_or_die instead of segfaulting
-Date: Thu, 24 Oct 2013 04:53:46 -0400
-Message-ID: <20131024085346.GD1346@sigill.intra.peff.net>
+Subject: [PATCH 5/6] use parse_commit_or_die instead of custom message
+Date: Thu, 24 Oct 2013 04:54:01 -0400
+Message-ID: <20131024085401.GE1346@sigill.intra.peff.net>
 References: <20131024085213.GA1267@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 24 10:53:53 2013
+X-From: git-owner@vger.kernel.org Thu Oct 24 10:54:10 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VZGfw-0005fO-FM
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Oct 2013 10:53:52 +0200
+	id 1VZGgD-0005rJ-Jt
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Oct 2013 10:54:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754054Ab3JXIxt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Oct 2013 04:53:49 -0400
-Received: from cloud.peff.net ([50.56.180.127]:54656 "HELO peff.net"
+	id S1754064Ab3JXIyF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Oct 2013 04:54:05 -0400
+Received: from cloud.peff.net ([50.56.180.127]:54658 "HELO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753801Ab3JXIxs (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Oct 2013 04:53:48 -0400
-Received: (qmail 7531 invoked by uid 102); 24 Oct 2013 08:53:48 -0000
+	id S1753801Ab3JXIyE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Oct 2013 04:54:04 -0400
+Received: (qmail 7547 invoked by uid 102); 24 Oct 2013 08:54:03 -0000
 Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 24 Oct 2013 03:53:48 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 24 Oct 2013 04:53:46 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 24 Oct 2013 03:54:03 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 24 Oct 2013 04:54:01 -0400
 Content-Disposition: inline
 In-Reply-To: <20131024085213.GA1267@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236579>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236580>
 
-Some unchecked calls to parse_commit should obviously die on
-error, because their next step is to start looking at the
-parsed fields, which will cause a segfault. These are
-obvious candidates for parse_commit_or_die, which will be a
-strict improvement in behavior.
+Many calls to parse_commit detect errors and die. In some
+cases, the custom error messages are more useful than what
+parse_commit_or_die could produce, because they give some
+context, like which ref the commit came from. Some, however,
+just say "invalid commit". Let's convert the latter to use
+parse_commit_or_die; its message is slightly more informative,
+and it makes the error more consistent throughout git.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- builtin/checkout.c    | 4 ++--
- builtin/fast-export.c | 4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ shallow.c     | 3 +--
+ upload-pack.c | 3 +--
+ 2 files changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 0f57397..34a2e43 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -789,7 +789,7 @@ static int switch_branches(const struct checkout_opts *opts,
- 		new->commit = old.commit;
- 		if (!new->commit)
- 			die(_("You are on a branch yet to be born"));
--		parse_commit(new->commit);
-+		parse_commit_or_die(new->commit);
- 	}
- 
- 	ret = merge_working_tree(opts, &old, new, &writeout_error);
-@@ -952,7 +952,7 @@ static int parse_branchname_arg(int argc, const char **argv,
- 		/* not a commit */
- 		*source_tree = parse_tree_indirect(rev);
- 	} else {
--		parse_commit(new->commit);
-+		parse_commit_or_die(new->commit);
- 		*source_tree = new->commit->tree;
- 	}
- 
-diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-index 78250ea..ea63052 100644
---- a/builtin/fast-export.c
-+++ b/builtin/fast-export.c
-@@ -287,7 +287,7 @@ static void handle_commit(struct commit *commit, struct rev_info *rev)
- 
- 	rev->diffopt.output_format = DIFF_FORMAT_CALLBACK;
- 
--	parse_commit(commit);
-+	parse_commit_or_die(commit);
- 	author = strstr(commit->buffer, "\nauthor ");
- 	if (!author)
- 		die ("Could not find author in commit %s",
-@@ -308,7 +308,7 @@ static void handle_commit(struct commit *commit, struct rev_info *rev)
- 	if (commit->parents &&
- 	    get_object_mark(&commit->parents->item->object) != 0 &&
- 	    !full_tree) {
--		parse_commit(commit->parents->item);
-+		parse_commit_or_die(commit->parents->item);
- 		diff_tree_sha1(commit->parents->item->tree->object.sha1,
- 			       commit->tree->object.sha1, "", &rev->diffopt);
- 	}
+diff --git a/shallow.c b/shallow.c
+index cdf37d6..961cf6f 100644
+--- a/shallow.c
++++ b/shallow.c
+@@ -90,8 +90,7 @@ struct commit_list *get_shallow_commits(struct object_array *heads, int depth,
+ 				cur_depth = *(int *)commit->util;
+ 			}
+ 		}
+-		if (parse_commit(commit))
+-			die("invalid commit");
++		parse_commit_or_die(commit);
+ 		cur_depth++;
+ 		if (cur_depth >= depth) {
+ 			commit_list_insert(commit, &result);
+diff --git a/upload-pack.c b/upload-pack.c
+index a6c54e0..abe6636 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -649,8 +649,7 @@ static void receive_needs(void)
+ 				/* make sure the real parents are parsed */
+ 				unregister_shallow(object->sha1);
+ 				object->parsed = 0;
+-				if (parse_commit((struct commit *)object))
+-					die("invalid commit");
++				parse_commit_or_die((struct commit *)object);
+ 				parents = ((struct commit *)object)->parents;
+ 				while (parents) {
+ 					add_object_array(&parents->item->object,
 -- 
 1.8.4.1.898.g8bf8a41.dirty
