@@ -1,70 +1,99 @@
-From: perryh@pluto.rain.com (Perry Hutchison)
-Subject: Re: Finding the repository
-Date: Thu, 24 Oct 2013 00:49:19 -0700
-Message-ID: <5268d0ff.HMSQf8rpwyXtEYEA%perryh@pluto.rain.com>
-References: <5267804b.JaxQnlQ5Cx+By4RS%perryh@pluto.rain.com>
- <CACsJy8DgxpjasroZv4iqTn9JhQ_3r2DD9uEf-xL-uyyPOtWh+A@mail.gmail.com>
+From: Andreas Krey <a.krey@gmx.de>
+Subject: Re: [PATCH v2 00/14] Officially start moving to the term 'staging area'
+Date: Thu, 24 Oct 2013 10:32:47 +0200
+Message-ID: <20131024083247.GA1705@inner.h.apk.li>
+References: <1381789769-9893-1-git-send-email-felipe.contreras@gmail.com> <1381789769-9893-4-git-send-email-felipe.contreras@gmail.com> <5261C42E.4050208@gmail.com> <8FC260D94D1A4711AAA8A0DE7477791B@PhilipOakley> <5268706B.4040303@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: pclouds@gmail.com
-X-From: git-owner@vger.kernel.org Thu Oct 24 10:12:17 2013
+Cc: Git List <git@vger.kernel.org>
+To: Karsten Blees <karsten.blees@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 24 10:39:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VZG1e-0001f5-7R
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Oct 2013 10:12:14 +0200
+	id 1VZGS6-0003rl-Fg
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Oct 2013 10:39:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753980Ab3JXIMJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Oct 2013 04:12:09 -0400
-Received: from agora.rdrop.com ([199.26.172.34]:3839 "EHLO agora.rdrop.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751610Ab3JXIMH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Oct 2013 04:12:07 -0400
-Received: from agora.rdrop.com (66@localhost [127.0.0.1])
-	by agora.rdrop.com (8.13.1/8.12.7) with ESMTP id r9O8C4EL041712
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 24 Oct 2013 01:12:04 -0700 (PDT)
-	(envelope-from perryh@pluto.rain.com)
-Received: (from uucp@localhost)
-	by agora.rdrop.com (8.13.1/8.14.2/Submit) with UUCP id r9O8C4DI041711;
-	Thu, 24 Oct 2013 01:12:04 -0700 (PDT)
-	(envelope-from perryh@pluto.rain.com)
-Received: from fbsd81 by pluto.rain.com (4.1/SMI-4.1-pluto-M2060407)
-	id AA23234; Thu, 24 Oct 13 00:47:39 PDT
-In-Reply-To: <CACsJy8DgxpjasroZv4iqTn9JhQ_3r2DD9uEf-xL-uyyPOtWh+A@mail.gmail.com>
-User-Agent: nail 11.25 7/29/05
+	id S1754184Ab3JXIja (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Oct 2013 04:39:30 -0400
+Received: from continuum.iocl.org ([217.140.74.2]:59948 "EHLO
+	continuum.iocl.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753090Ab3JXIj3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Oct 2013 04:39:29 -0400
+X-Greylist: delayed 395 seconds by postgrey-1.27 at vger.kernel.org; Thu, 24 Oct 2013 04:39:28 EDT
+Received: (from krey@localhost)
+	by continuum.iocl.org (8.11.3/8.9.3) id r9O8Wl203674;
+	Thu, 24 Oct 2013 10:32:47 +0200
+Content-Disposition: inline
+In-Reply-To: <5268706B.4040303@gmail.com>
+User-Agent: Mutt/1.4.2.1i
+X-message-flag: What did you expect to see here?
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236570>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236571>
 
-Duy Nguyen <pclouds@gmail.com> wrote:
+On Thu, 24 Oct 2013 02:57:15 +0000, Karsten Blees wrote:
+...
+> The latter. I don't know about 'broader', but I'll try to summarize _my_ world view:
+> 
+> (1) Audience matters
+> 
+> For actual users, we need an accurate model that supports a variety of use cases without falling apart. IMO, a working model is more important than simplicity. Finally, its more important to agree on the actual model than on a vague term that can mean many things (theater stage vs. loading dock...).
 
-> ... it's not easy to determine ambiguity here, especially when the
-> repo finding code does not know anything about "bar/barz.c" (is it
-> a pathname or an argument to an option?).
+Terms almost invariable mean multiple things in different contexts,
+and assume new meaning in new fields.
 
-IOW, the code that finds the repository is called "too early"?
+> For potential users / decision makers, we need to describe git's features in unmistakable terms that don't need extra explanation. In this sense, the index / cache / staging area is not a feature in itself but facilitates a variaty of broader features:
+> - fine grained commit control (via index (add -i), but also commit -p, commit --amend, cherry-pick, rebase etc.)
 
-One way to solve that to that would be to proceed, even if the
-repository has to be left as "unknown" until it actually needs to
-be consulted -- by which time the subcommand would presumably have
-parsed all of the options and pathnames and so would know which is
-which.  Then, use the pathname(s) to identify the repository(ies).
-Yes, if there's more than one repository involved, the subcommand
-has to do a "for each repository" loop.  The code to do all this
-could go in a module shared among the subcommands.
+The audience will have a hard time understanding what these features
+actually do (and how they interact) if we hide the underlying model from
+them - they then need to build that model themselves.
 
-> There are more cases to consider, like what if you do
-> "git rm bar/baz.c and rab/zab.c" where bar and rab are
-> two different repositories..
+And no decision-maker will make the effort to understand either the
+operations you mention or the concept of the staging area, unless they
+are also users.
 
-So we remove baz.c from bar and zab.c from rab.  It's not clear
-to me that there's anything wrong with that -- it's exactly what
-I would expect to have happen (and also what the hackish script
-I posted will do).
+...
+> An index, as in a library, maps almost perfectly to what the git index is _and_ what we do with it.
+
+No, it doesn't. The git index actually contains the content of the added
+files, not just an identity reference. (Unless, maybe, you consider file
+sha1s as a reference and not actual content.) The point is that the
+index doesn't just contain a mapping from file names to some objects,
+but de facto a tree - that will form the next commit.
+
+...
+> (3a) Staging area (logistics)
+> 
+> A staging area, as in (military) logistics / transportation, is about moving physical goods around. You move an item from your stock to the staging area, then onto the truck and finally deliver it to the customer.
+> 
+> The defining characteristic of a physical good is its physical existence. Each item is uniquely identifiable by a serial number.
+
+Please show me the serial numbers on bullets.
+
+> Problem #1: If an item in the staging area is broken, you fix it directly in the staging area, because that's where it _is_.
+
+That may be true in a physical world, and may not be - you can as well
+replace them instead of repairing them in place.
+
+The real problem: You can find some reason why any possible existing
+name for this concept isn't correct.
+
+...
+> I don't see how a stage (as in a theater) is in any way related to the git index.
+
+It's because the name 'stage (noun)' goes with the verb 'stage'. You
+stage a play, or you stage content to be committed. From that, you
+may almost call the index just 'stage'.
+
+Andreas
+
+-- 
+"Totally trivial. Famous last words."
+From: Linus Torvalds <torvalds@*.org>
+Date: Fri, 22 Jan 2010 07:29:21 -0800
