@@ -1,78 +1,130 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git grep: search whole tree by default?
-Date: Wed, 23 Oct 2013 22:27:36 -0400
-Message-ID: <20131024022736.GA24992@sigill.intra.peff.net>
-References: <CAA01CsqgNKdDAc9OL9zdk=3tnK9GAG=6w+wP_XSoiefBOgfzRQ@mail.gmail.com>
- <vpqbo2guff7.fsf@anie.imag.fr>
- <xmqqmwlzrjdh.fsf@gitster.dls.corp.google.com>
- <87hac7hmrb.fsf@mcs.anl.gov>
- <xmqqob6fq0q1.fsf@gitster.dls.corp.google.com>
- <87zjpzg592.fsf@mcs.anl.gov>
- <vpqy55jogzr.fsf@anie.imag.fr>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jed Brown <jed@59A2.org>, Junio C Hamano <gitster@pobox.com>,
-	Piotr Krukowiecki <piotr.krukowiecki@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Thu Oct 24 04:27:58 2013
+From: Nasser Grainawi <nasser@codeaurora.org>
+Subject: Re: RFE: support change-id generation natively
+Date: Wed, 23 Oct 2013 22:11:53 -0600
+Message-ID: <8D1AF6D7-F7AA-4E64-B6B3-3C8C931312C3@codeaurora.org>
+References: <2127507934.9293293.1382367063640.JavaMail.root@openwide.fr> <201310212029.01589.thomas@koch.ro> <1382380858.25852.36711509.53CF173C@webmail.messagingengine.com> <201310211249.49568.mfick@codeaurora.org> <xmqqy55lrsoo.fsf@gitster.dls.corp.google.com> <CACsJy8A7r-gsbru0eLxtJbFk2vgqvBH9akHn6e53k=UJbZ1K7Q@mail.gmail.com> <xmqqzjq0q8nl.fsf@gitster.dls.corp.google.com> <CACsJy8CuEvdTu+P-P-kYC0dKQKnjh5sRoevd_hsbqF0796i0xw@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v1283)
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Martin Fick <mfick@codeaurora.org>, james.moger@gitblit.com,
+	Thomas Koch <thomas@koch.ro>,
+	Jeremy Rosen <jeremy.rosen@openwide.fr>,
+	Git Mailing List <git@vger.kernel.org>,
+	Shawn Pearce <spearce@spearce.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 24 06:12:04 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VZAeT-0004Nu-JD
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Oct 2013 04:27:57 +0200
+	id 1VZCHD-00016S-50
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Oct 2013 06:12:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753359Ab3JXC1j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Oct 2013 22:27:39 -0400
-Received: from cloud.peff.net ([50.56.180.127]:54504 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753121Ab3JXC1j (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Oct 2013 22:27:39 -0400
-Received: (qmail 21071 invoked by uid 102); 24 Oct 2013 02:27:39 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 23 Oct 2013 21:27:39 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 23 Oct 2013 22:27:36 -0400
-Content-Disposition: inline
-In-Reply-To: <vpqy55jogzr.fsf@anie.imag.fr>
+	id S1751267Ab3JXEL5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Oct 2013 00:11:57 -0400
+Received: from smtp.codeaurora.org ([198.145.11.231]:41882 "EHLO
+	smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751020Ab3JXEL5 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 24 Oct 2013 00:11:57 -0400
+Received: from smtp.codeaurora.org (localhost [127.0.0.1])
+	by smtp.codeaurora.org (Postfix) with ESMTP id 2B67413EF1D;
+	Thu, 24 Oct 2013 04:11:56 +0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 486)
+	id 1B9D513F281; Thu, 24 Oct 2013 04:11:56 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on
+	pdx-caf-smtp.dmz.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=5.0 tests=ALL_TRUSTED,BAYES_00
+	autolearn=ham version=3.3.1
+Received: from [192.168.2.108] (c-75-70-3-152.hsd1.co.comcast.net [75.70.3.152])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	(Authenticated sender: nasser@smtp.codeaurora.org)
+	by smtp.codeaurora.org (Postfix) with ESMTPSA id D707A13EF1D;
+	Thu, 24 Oct 2013 04:11:54 +0000 (UTC)
+In-Reply-To: <CACsJy8CuEvdTu+P-P-kYC0dKQKnjh5sRoevd_hsbqF0796i0xw@mail.gmail.com>
+X-Mailer: Apple Mail (2.1283)
+X-Virus-Scanned: ClamAV using ClamSMTP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236563>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236564>
 
-On Wed, Oct 23, 2013 at 10:43:36PM +0200, Matthieu Moy wrote:
 
-> That may be an option. In the case of "git add -u", it was a bit more
-> complicated, since a badly used "git add" somehow looses data (not very
-> serious, you may only loos the index). So, saying after the fact "oh, by
-> the way, I messed up the index" was not a very good transition plan.
-> 
-> In the case of "grep", I'm starting to get convinced that it's OK to do
-> so, because the user can basically re-run grep with the right argument
-> if needed.
+On Oct 23, 2013, at 8:07 PM, Duy Nguyen wrote:
 
-For the same reason, is it insane to want a config option to switch the
-default when no command-line option is given? These days I am mostly
-working on reasonably-sized projects, and would generally prefer
-full-tree grep. But in a past life, I worked on some large projects
-where I would never touch anything outside of a particular subtree, and
-I generally wanted a more limited grep (i.e., I would park my cwd in
-/repo/subsystem1 rather than /repo and work from there, and hits in
-/repo/subsystem2 were just useless noise).
+> On Wed, Oct 23, 2013 at 11:00 PM, Junio C Hamano <gitster@pobox.com> =
+wrote:
+>> Duy Nguyen <pclouds@gmail.com> writes:
+>>=20
+>>> On Wed, Oct 23, 2013 at 2:50 AM, Junio C Hamano <gitster@pobox.com>=
+ wrote:
+>>>> It would be just the matter of updating commit_tree_extended() in
+>>>> commit.c to:
+>>>>=20
+>>>> - detect the need to add a new Change-Id: trailer;
+>>>>=20
+>>>> - call hash_sha1_file() on the commit object buffer (assuming that
+>>>>   a commit object that you can actually "git cat-file commit" usin=
+g
+>>>>   the change Id does not have to exist anywhere for Gerrit to
+>>>>   work---otherwise you would need to call write_sha1_file()
+>>>>   instead) before adding Change-Id: trailer;
+>>>>=20
+>>>> - add Change-Id: trailer to the buffer; and then finally
+>>>>=20
+>>>> - let the existing write_sha1_file() to write it out.
+>>>=20
+>>> I'm not objecting special support for Gerrit, but if the change is
+>>> just commit_tree_extended() why don't we just ship the commit hook =
+in
+>>> a new "Gerrit" template?
+>>=20
+>> It is not clear to me how you envision to make it work.
+>=20
+> I don't have the source code.
 
-That would also provide people who do not like the change of default an
-escape hatch to keep the current behavior. And I do not think scripted
-use will be inconvenienced; they will already have to use "." or ":/" to
-be explicit (if they care) since the behavior is changing.
+Now you do: https://gerrit.googlesource.com/gerrit/+/master/gerrit-serv=
+er/src/main/resources/com/google/gerrit/server/tools/root/hooks/commit-=
+msg
 
-> The warning could be de-activable with an advice.* option.
+> But the commit-msg hook document [1]
+> describes roughly what you wrote below, except the tree part. And I
+> suppose the hook has been working fine so far. Reading back the
+> original post, James ruled out always-active hooks in general and
+> wanted the control per command line. Perhaps we should add
+> --no-hooks[=3D<name>,<name>] to "git commit"? Or maybe it's still
+> inconvenient and --change-id is best.
+>=20
+> [1] http://gerrit-documentation.googlecode.com/svn/Documentation/2.0/=
+cmd-hook-commit-msg.html
+>=20
+>> Na=EFvely thinking, an obvious place to do this kind of thing may be
+>> the "commit-msg" hook, where the hook reads what the user prepared,
+>> finds that there is no existing "Change-Id:" trailer, and decides to
+>> add one.
+>>=20
+>> But what value would it add on that line as the Id?
+>>=20
+>> It wants to use the name of the commit object that would result if
+>> it were to return without further editing the given message, but we
+>> do not give such a commit object name to the hook, so the hook needs
+>> to duplicate the logic to come up with one.  It may be doable (after
+>> all, builtin/commit.c is open source), but we do not give the hook
+>> the commit object header (i.e. it does not know what the tree,
+>> parent(s), author, committer lines would say, nor it does not know
+>> if we are going to add an encoding line), so the hook needs to guess
+>> what we will put there, too.
+> --=20
+> Duy
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
 
-Such a config option could also be used to shut up the warning. Though
-if the behavior change is deemed non-intrusive enough to not merit a
-deprecation period, I am not really sure it is worth having a noisy
-warning.
-
--Peff
+--
+The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+hosted by The Linux Foundation
