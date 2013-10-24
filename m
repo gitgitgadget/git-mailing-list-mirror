@@ -1,100 +1,58 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: [PATCH 0/2] finding the fork point from reflog entries
-Date: Thu, 24 Oct 2013 22:40:07 +0100
-Message-ID: <20131024214007.GE10779@serenity.lan>
-References: <xmqqhac6o5hj.fsf@gitster.dls.corp.google.com>
- <1382641884-14756-1-git-send-email-gitster@pobox.com>
- <20131024205434.GC10779@serenity.lan>
- <xmqqa9hymkma.fsf@gitster.dls.corp.google.com>
- <20131024213134.GD10779@serenity.lan>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] http.c: Spell the null pointer as NULL
+Date: Thu, 24 Oct 2013 14:42:55 -0700
+Message-ID: <xmqq1u3amjkw.fsf@gitster.dls.corp.google.com>
+References: <5269804F.2080800@ramsay1.demon.co.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Martin von Zweigbergk <martinvonz@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 24 23:40:24 2013
+Cc: Jeff King <peff@peff.net>, GIT Mailing-list <git@vger.kernel.org>
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Thu Oct 24 23:43:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VZSdj-0002Ph-K1
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Oct 2013 23:40:24 +0200
+	id 1VZSgJ-0004TK-1A
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Oct 2013 23:43:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755233Ab3JXVkT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Oct 2013 17:40:19 -0400
-Received: from coyote.aluminati.org ([72.9.247.114]:41566 "EHLO
-	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753090Ab3JXVkT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Oct 2013 17:40:19 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by coyote.aluminati.org (Postfix) with ESMTP id 6CA2E606514;
-	Thu, 24 Oct 2013 22:40:18 +0100 (BST)
-X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -2.9
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9] autolearn=ham
-Received: from coyote.aluminati.org ([127.0.0.1])
-	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id noZ1spGifl9R; Thu, 24 Oct 2013 22:40:16 +0100 (BST)
-Received: from serenity.lan (banza.aluminati.org [10.0.7.182])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	id S1754979Ab3JXVm7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Oct 2013 17:42:59 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53188 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753840Ab3JXVm6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Oct 2013 17:42:58 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C18F84D300;
+	Thu, 24 Oct 2013 21:42:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=58TUtX7PRKuYWjlTJ473tDInOi0=; b=u5FW13
+	Xp5/tIMiLkFm2FWtoA/2JZbL+lV9QjTisgJDXYuC27YJwTRLge8SFvWWm+uuopFx
+	99kk0NgGIIkkTqUJYcehyzEDFeLORkiQCrVQqe7ft8xM5f2IR22EizrOwBfAO6dA
+	MEfgOVkAeR8j/s3CR8NHT5PNY+g/wh5RVhzxk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=KYNhmc8XG/tXTXrpouiSplysr34CKniE
+	Dr258SxYIy1C+sVzvaLIbfMBo4U/L/3fFhBovFGpHz71dVz2Dtdxn6EiEkO48Pmc
+	t/vD300PMf9NCZDhQPDZpJnpakTwuwQpjYZhDTqSBfAEK4+s11OTb6kS/CS5q0Ap
+	y5VS8/Kb06s=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B23994D2FF;
+	Thu, 24 Oct 2013 21:42:57 +0000 (UTC)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by coyote.aluminati.org (Postfix) with ESMTPSA id B1F656064FD;
-	Thu, 24 Oct 2013 22:40:09 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <20131024213134.GD10779@serenity.lan>
-User-Agent: Mutt/1.5.22 (2013-10-16)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1BB554D2F7;
+	Thu, 24 Oct 2013 21:42:57 +0000 (UTC)
+In-Reply-To: <5269804F.2080800@ramsay1.demon.co.uk> (Ramsay Jones's message of
+	"Thu, 24 Oct 2013 21:17:19 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 3EE6B70C-3CF5-11E3-9BAD-8F264F2CC097-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236629>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236630>
 
-On Thu, Oct 24, 2013 at 10:31:35PM +0100, John Keeping wrote:
-> On Thu, Oct 24, 2013 at 02:20:29PM -0700, Junio C Hamano wrote:
-> > John Keeping <john@keeping.me.uk> writes:
-> > 
-> > > On Thu, Oct 24, 2013 at 12:11:22PM -0700, Junio C Hamano wrote:
-> > >> The first one is a clean-up of the code to parse command line
-> > >> options to "git merge-base".  Options such as "--independent",
-> > >> "--is-ancestor" and "--octopus" are mutually exclusive and it is
-> > >> better expressed in terms of the recently introduced OPT_CMDMODE.
-> > >> 
-> > >> The second one implements the entire logic of the for loop we see in
-> > >> "git pull --rebase" directly using get_merge_bases_many() and
-> > >> postprocessing the result.
-> > >
-> > > Nice!  I tried this in the case where the target commit happens to be
-> > > the 63rd reflog entry:
-> > >
-> > > $ time sh -c 'for rev in $(git rev-list -g origin/master 2>/dev/null)
-> > > do
-> > >     git merge-base --is-ancestor $rev b2edae0 && break
-> > > done
-> > > '
-> > >
-> > > real    0m3.772s
-> > > user    0m3.338s
-> > > sys     0m0.440s
-> > >
-> > > $ time git merge-base --reflog origin/master b2edae0
-> > >
-> > > real    0m0.156s
-> > > user    0m0.138s
-> > > sys     0m0.018s
-> > 
-> > The real question is if the C code computes the same as the shell
-> > loop.
-> 
-> And in fact it doesn't - if you replace the "break" with "echo $rev" the
-> shell version prints b2edae0... but the C version prints nothing (and
-> exists with status 1).
-
-To clarify: the particular commit in the calls above happens to be the
-oldest entry in the reflog, if I pick a newer entry then it works.
-
-It seems that for_each_reflog_ent isn't returning the oldest entry;
-revs.nr is 62 whereas "git rev-list -g origin/master | wc -l" gives 63.
+Thanks.
