@@ -1,117 +1,119 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 1/6] log_tree_diff: die when we fail to parse a commit
-Date: Thu, 24 Oct 2013 04:52:36 -0400
-Message-ID: <20131024085236.GA1346@sigill.intra.peff.net>
+Subject: [PATCH 2/6] assume parse_commit checks commit->object.parsed
+Date: Thu, 24 Oct 2013 04:53:01 -0400
+Message-ID: <20131024085301.GB1346@sigill.intra.peff.net>
 References: <20131024085213.GA1267@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 24 10:52:45 2013
+X-From: git-owner@vger.kernel.org Thu Oct 24 10:53:10 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VZGeo-0004rX-TI
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Oct 2013 10:52:43 +0200
+	id 1VZGfF-0005A7-Uz
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Oct 2013 10:53:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753931Ab3JXIwj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Oct 2013 04:52:39 -0400
-Received: from cloud.peff.net ([50.56.180.127]:54650 "HELO peff.net"
+	id S1754053Ab3JXIxF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Oct 2013 04:53:05 -0400
+Received: from cloud.peff.net ([50.56.180.127]:54652 "HELO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753888Ab3JXIwi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Oct 2013 04:52:38 -0400
-Received: (qmail 7402 invoked by uid 102); 24 Oct 2013 08:52:39 -0000
+	id S1753888Ab3JXIxE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Oct 2013 04:53:04 -0400
+Received: (qmail 7465 invoked by uid 102); 24 Oct 2013 08:53:04 -0000
 Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 24 Oct 2013 03:52:39 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 24 Oct 2013 04:52:36 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 24 Oct 2013 03:53:04 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 24 Oct 2013 04:53:01 -0400
 Content-Disposition: inline
 In-Reply-To: <20131024085213.GA1267@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236576>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236577>
 
-We currently call parse_commit and then assume we can
-dereference the resulting "tree" struct field. If parsing
-failed, however, that field is NULL and we end up
-segfaulting.
-
-Instead of a segfault, let's print an error message and die
-a little more gracefully.
-
-Note that this should never happen in practice, but may
-happen in a corrupt repository.
+The parse_commit function will check the "parsed" flag of
+the object and do nothing if it is set. There is no need
+for callers to check the flag themselves, and doing so only
+clutters the code.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- commit.c   | 7 +++++++
- commit.h   | 1 +
- log-tree.c | 6 +++---
- 3 files changed, 11 insertions(+), 3 deletions(-)
+ builtin/blame.c       | 3 +--
+ builtin/name-rev.c    | 3 +--
+ builtin/show-branch.c | 3 +--
+ fetch-pack.c          | 8 +++-----
+ 4 files changed, 6 insertions(+), 11 deletions(-)
 
-diff --git a/commit.c b/commit.c
-index de16a3c..51a9bbc 100644
---- a/commit.c
-+++ b/commit.c
-@@ -341,6 +341,13 @@ int parse_commit(struct commit *item)
- 	return ret;
- }
+diff --git a/builtin/blame.c b/builtin/blame.c
+index 6da7233..5f1cb09 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -1549,8 +1549,7 @@ static void assign_blame(struct scoreboard *sb, int opt)
+ 		 */
+ 		origin_incref(suspect);
+ 		commit = suspect->commit;
+-		if (!commit->object.parsed)
+-			parse_commit(commit);
++		parse_commit(commit);
+ 		if (reverse ||
+ 		    (!(commit->object.flags & UNINTERESTING) &&
+ 		     !(revs->max_age != -1 && commit->date < revs->max_age)))
+diff --git a/builtin/name-rev.c b/builtin/name-rev.c
+index 20fcf8c..23daaa7 100644
+--- a/builtin/name-rev.c
++++ b/builtin/name-rev.c
+@@ -27,8 +27,7 @@ static void name_rev(struct commit *commit,
+ 	struct commit_list *parents;
+ 	int parent_number = 1;
  
-+void parse_commit_or_die(struct commit *item)
-+{
-+	if (parse_commit(item))
-+		die("unable to parse commit %s",
-+		    item ? sha1_to_hex(item->object.sha1) : "(null)");
-+}
-+
- int find_commit_subject(const char *commit_buffer, const char **subject)
- {
- 	const char *eol;
-diff --git a/commit.h b/commit.h
-index bd841f4..934af88 100644
---- a/commit.h
-+++ b/commit.h
-@@ -49,6 +49,7 @@ struct commit *lookup_commit_or_die(const unsigned char *sha1, const char *ref_n
+-	if (!commit->object.parsed)
+-		parse_commit(commit);
++	parse_commit(commit);
  
- int parse_commit_buffer(struct commit *item, const void *buffer, unsigned long size);
- int parse_commit(struct commit *item);
-+void parse_commit_or_die(struct commit *item);
+ 	if (commit->date < cutoff)
+ 		return;
+diff --git a/builtin/show-branch.c b/builtin/show-branch.c
+index 001f29c..46902c3 100644
+--- a/builtin/show-branch.c
++++ b/builtin/show-branch.c
+@@ -227,8 +227,7 @@ static void join_revs(struct commit_list **list_p,
+ 			parents = parents->next;
+ 			if ((this_flag & flags) == flags)
+ 				continue;
+-			if (!p->object.parsed)
+-				parse_commit(p);
++			parse_commit(p);
+ 			if (mark_seen(p, seen_p) && !still_interesting)
+ 				extra--;
+ 			p->object.flags |= flags;
+diff --git a/fetch-pack.c b/fetch-pack.c
+index a0e0350..a141eb4 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -47,9 +47,8 @@ static void rev_list_push(struct commit *commit, int mark)
+ 	if (!(commit->object.flags & mark)) {
+ 		commit->object.flags |= mark;
  
- /* Find beginning and length of commit subject. */
- int find_commit_subject(const char *commit_buffer, const char **subject);
-diff --git a/log-tree.c b/log-tree.c
-index 8534d91..e958d07 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -734,7 +734,7 @@ static int log_tree_diff(struct rev_info *opt, struct commit *commit, struct log
- 	if (!opt->diff && !DIFF_OPT_TST(&opt->diffopt, EXIT_WITH_STATUS))
- 		return 0;
+-		if (!(commit->object.parsed))
+-			if (parse_commit(commit))
+-				return;
++		if (parse_commit(commit))
++			return;
  
--	parse_commit(commit);
-+	parse_commit_or_die(commit);
- 	sha1 = commit->tree->object.sha1;
+ 		prio_queue_put(&rev_list, commit);
  
- 	/* Root commit? */
-@@ -759,7 +759,7 @@ static int log_tree_diff(struct rev_info *opt, struct commit *commit, struct log
- 			 * parent, showing summary diff of the others
- 			 * we merged _in_.
- 			 */
--			parse_commit(parents->item);
-+			parse_commit_or_die(parents->item);
- 			diff_tree_sha1(parents->item->tree->object.sha1,
- 				       sha1, "", &opt->diffopt);
- 			log_tree_diff_flush(opt);
-@@ -774,7 +774,7 @@ static int log_tree_diff(struct rev_info *opt, struct commit *commit, struct log
- 	for (;;) {
- 		struct commit *parent = parents->item;
+@@ -128,8 +127,7 @@ static const unsigned char *get_rev(void)
+ 			return NULL;
  
--		parse_commit(parent);
-+		parse_commit_or_die(parent);
- 		diff_tree_sha1(parent->tree->object.sha1,
- 			       sha1, "", &opt->diffopt);
- 		log_tree_diff_flush(opt);
+ 		commit = prio_queue_get(&rev_list);
+-		if (!commit->object.parsed)
+-			parse_commit(commit);
++		parse_commit(commit);
+ 		parents = commit->parents;
+ 
+ 		commit->object.flags |= POPPED;
 -- 
 1.8.4.1.898.g8bf8a41.dirty
