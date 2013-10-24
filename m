@@ -1,120 +1,130 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 2/2] merge-base: "--reflog" mode finds fork point from
- reflog entries
-Date: Thu, 24 Oct 2013 17:43:16 -0400
-Message-ID: <CAPig+cQ2tWFXX-RYnUrHEZCaqaPV6ZwgoPfiNPv9P1jFNTGEYg@mail.gmail.com>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [PATCH 0/2] finding the fork point from reflog entries
+Date: Thu, 24 Oct 2013 22:50:53 +0100
+Message-ID: <20131024215053.GF10779@serenity.lan>
 References: <xmqqhac6o5hj.fsf@gitster.dls.corp.google.com>
-	<1382641884-14756-1-git-send-email-gitster@pobox.com>
-	<1382641884-14756-3-git-send-email-gitster@pobox.com>
-	<CAPig+cQrBMMqSmOk0GSZJ9PTHNt-t+vuOG2Aq=7VTR1EZSeLsw@mail.gmail.com>
-	<xmqq61smmkc0.fsf@gitster.dls.corp.google.com>
+ <1382641884-14756-1-git-send-email-gitster@pobox.com>
+ <20131024205434.GC10779@serenity.lan>
+ <xmqqa9hymkma.fsf@gitster.dls.corp.google.com>
+ <20131024213134.GD10779@serenity.lan>
+ <20131024214007.GE10779@serenity.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>,
-	Martin von Zweigbergk <martinvonz@gmail.com>,
-	John Keeping <john@keeping.me.uk>,
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Martin von Zweigbergk <martinvonz@gmail.com>,
 	Jonathan Nieder <jrnieder@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 24 23:43:23 2013
+X-From: git-owner@vger.kernel.org Thu Oct 24 23:51:09 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VZSgb-0004iE-UR
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Oct 2013 23:43:22 +0200
+	id 1VZSo8-0002OX-Fm
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Oct 2013 23:51:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755086Ab3JXVnS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Oct 2013 17:43:18 -0400
-Received: from mail-lb0-f172.google.com ([209.85.217.172]:46693 "EHLO
-	mail-lb0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752037Ab3JXVnR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Oct 2013 17:43:17 -0400
-Received: by mail-lb0-f172.google.com with SMTP id c11so95952lbj.31
-        for <git@vger.kernel.org>; Thu, 24 Oct 2013 14:43:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=chbLNy0ZaArkixshsTb7ZrUiK3SnQw+f9FmNxckkYjs=;
-        b=uK01FZYGCnBHtQIGAy/zaKcpEhp84A00jns5rGaBWapP/3rUePigGUPwbYmk4y2Q79
-         tJ7BHJNfwESXKX3tkUYUHSIQ8b2OA8kNslhn6YpmkV2Z2cCxmjRm8pinoNLgpukAt4Ak
-         Yw6RDZhCdrMq+NUjfYdu3lXTClOWpzcZXJF+wSAONSvqt8VGMPQgddO6x6ztahwBA5DH
-         d3tBKDlEqCeNkzVDCL+M/HaYmJW85FIZPYNdxoPo2V3VD/e7frkqVMgKCkwhmvV7WZpF
-         NnV6NzD9fHVbmHWHv2TiGfDwfINlidqCSYAbPXJ/8FvR8meXCNdLDaCp0bH9gVwC4oYq
-         1tyg==
-X-Received: by 10.112.56.177 with SMTP id b17mr161721lbq.74.1382650996064;
- Thu, 24 Oct 2013 14:43:16 -0700 (PDT)
-Received: by 10.114.200.180 with HTTP; Thu, 24 Oct 2013 14:43:16 -0700 (PDT)
-In-Reply-To: <xmqq61smmkc0.fsf@gitster.dls.corp.google.com>
-X-Google-Sender-Auth: KTpFTiy9kKxwvk2-t7cn6Iyzfrw
+	id S1754354Ab3JXVvD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Oct 2013 17:51:03 -0400
+Received: from coyote.aluminati.org ([72.9.247.114]:59594 "EHLO
+	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752791Ab3JXVvC (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Oct 2013 17:51:02 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by coyote.aluminati.org (Postfix) with ESMTP id 9E3746064EA;
+	Thu, 24 Oct 2013 22:51:01 +0100 (BST)
+X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -1
+X-Spam-Level: 
+X-Spam-Status: No, score=-1 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1] autolearn=ham
+Received: from coyote.aluminati.org ([127.0.0.1])
+	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 5+hsJmiBJexW; Thu, 24 Oct 2013 22:51:01 +0100 (BST)
+Received: from serenity.lan (chimera.aluminati.org [10.0.16.60])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by coyote.aluminati.org (Postfix) with ESMTPSA id 936A3198005;
+	Thu, 24 Oct 2013 22:50:55 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <20131024214007.GE10779@serenity.lan>
+User-Agent: Mutt/1.5.22 (2013-10-16)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236631>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236632>
 
-On Thu, Oct 24, 2013 at 5:26 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
->
->> On Thu, Oct 24, 2013 at 3:11 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>> diff --git a/t/t6010-merge-base.sh b/t/t6010-merge-base.sh
->>> index f80bba8..3a1abee 100755
->>> --- a/t/t6010-merge-base.sh
->>> +++ b/t/t6010-merge-base.sh
->>> @@ -230,4 +230,31 @@ test_expect_success 'criss-cross merge-base for octopus-step' '
->>>         test_cmp expected.sorted actual.sorted
->>>  '
->>>
->>> +test_expect_success 'using reflog to find the fork point' '
->>> +       git reset --hard &&
->>> +       git checkout -b base $E &&
->>> +       (
->>> +               for count in 1 2 3 4 5
->>> +               do
->>> +                       git commit --allow-empty -m "Base commit #$count" &&
->>> +                       git rev-parse HEAD >expect$count &&
->>> +                       git checkout -B derived &&
->>> +                       git commit --allow-empty -m "Derived #$count" &&
->>> +                       git rev-parse HEAD >derived$count &&
->>> +                       git checkout base &&
->>> +                       count=$(( $count + 1 )) || exit 1
->>> +               done
->>
->> Did you want && here?
->
-> No, I did not.  Can't you tell from the fact that I didn't put one
-> there ;-)?
->
-> It does not hurt to have one there, but it is not necessary.
->
-> Because the loop itself does not &&-cascade from anything else, the
-> only case anything after "done &&" would be skipped and making the
-> whole thing fail would be when anything inside the loop fails, but
-> we already "exit 1" to terminate the whole subprocess in that case,
-> so we will not continue past the loop.
+On Thu, Oct 24, 2013 at 10:40:07PM +0100, John Keeping wrote:
+> On Thu, Oct 24, 2013 at 10:31:35PM +0100, John Keeping wrote:
+> > On Thu, Oct 24, 2013 at 02:20:29PM -0700, Junio C Hamano wrote:
+> > > John Keeping <john@keeping.me.uk> writes:
+> > > 
+> > > > On Thu, Oct 24, 2013 at 12:11:22PM -0700, Junio C Hamano wrote:
+> > > >> The first one is a clean-up of the code to parse command line
+> > > >> options to "git merge-base".  Options such as "--independent",
+> > > >> "--is-ancestor" and "--octopus" are mutually exclusive and it is
+> > > >> better expressed in terms of the recently introduced OPT_CMDMODE.
+> > > >> 
+> > > >> The second one implements the entire logic of the for loop we see in
+> > > >> "git pull --rebase" directly using get_merge_bases_many() and
+> > > >> postprocessing the result.
+> > > >
+> > > > Nice!  I tried this in the case where the target commit happens to be
+> > > > the 63rd reflog entry:
+> > > >
+> > > > $ time sh -c 'for rev in $(git rev-list -g origin/master 2>/dev/null)
+> > > > do
+> > > >     git merge-base --is-ancestor $rev b2edae0 && break
+> > > > done
+> > > > '
+> > > >
+> > > > real    0m3.772s
+> > > > user    0m3.338s
+> > > > sys     0m0.440s
+> > > >
+> > > > $ time git merge-base --reflog origin/master b2edae0
+> > > >
+> > > > real    0m0.156s
+> > > > user    0m0.138s
+> > > > sys     0m0.018s
+> > > 
+> > > The real question is if the C code computes the same as the shell
+> > > loop.
+> > 
+> > And in fact it doesn't - if you replace the "break" with "echo $rev" the
+> > shell version prints b2edae0... but the C version prints nothing (and
+> > exists with status 1).
+> 
+> To clarify: the particular commit in the calls above happens to be the
+> oldest entry in the reflog, if I pick a newer entry then it works.
+> 
+> It seems that for_each_reflog_ent isn't returning the oldest entry;
+> revs.nr is 62 whereas "git rev-list -g origin/master | wc -l" gives 63.
 
-I didn't read inside the loop closely enough to see that. Sorry for the noise.
+The following patch on top fixes it, but I'm sure it can be done in a
+neater way.
 
->
->>> +
->>> +               for count in 1 2 3 4 5
->>> +               do
->>> +                       git merge-base --reflog base $(cat derived$count) >actual &&
->>> +                       test_cmp expect$count actual || exit 1
->>> +               done
->>
->> And here?
->
-> Likewise.
->
-> Thanks.
->
->>> +
->>> +               # check defaulting to HEAD
->>> +               git merge-base --reflog base >actual &&
->>> +               test_cmp expect5 actual
->>> +       )
->>> +'
->>> +
->>>  test_done
+-- >8 --
+diff --git a/builtin/merge-base.c b/builtin/merge-base.c
+index 7b9bc15..f6f1f14 100644
+--- a/builtin/merge-base.c
++++ b/builtin/merge-base.c
+@@ -98,7 +98,17 @@ static int collect_one_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
+ 				  int tz, const char *message, void *cbdata_)
+ {
+ 	struct rev_collect *revs = cbdata_;
+-	struct commit *commit = lookup_commit(nsha1);
++	struct commit *commit;
++
++	if (!revs->nr) {
++		commit = lookup_commit(osha1);
++		if (commit) {
++			ALLOC_GROW(revs->commit, revs->nr + 1, revs->alloc);
++			revs->commit[revs->nr++] = commit;
++		}
++	}
++
++	commit = lookup_commit(nsha1);
+ 	if (commit) {
+ 		ALLOC_GROW(revs->commit, revs->nr + 1, revs->alloc);
+ 		revs->commit[revs->nr++] = commit;
