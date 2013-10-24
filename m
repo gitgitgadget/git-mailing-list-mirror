@@ -1,8 +1,8 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH 02/15] t5510: prepare test refs more straightforwardly
-Date: Thu, 24 Oct 2013 08:49:50 +0200
-Message-ID: <5268C30E.4050906@alum.mit.edu>
-References: <1382543448-2586-1-git-send-email-mhagger@alum.mit.edu>	<1382543448-2586-3-git-send-email-mhagger@alum.mit.edu> <xmqq61snrg0q.fsf@gitster.dls.corp.google.com>
+Subject: Re: [PATCH 04/15] api-remote.txt: correct section "struct refspect"
+Date: Thu, 24 Oct 2013 09:06:44 +0200
+Message-ID: <5268C704.4020505@alum.mit.edu>
+References: <1382543448-2586-1-git-send-email-mhagger@alum.mit.edu>	<1382543448-2586-5-git-send-email-mhagger@alum.mit.edu> <xmqq1u3brfp5.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
@@ -14,99 +14,89 @@ Cc: git@vger.kernel.org,
 	Nicolas Pitre <nico@fluxnic.net>,
 	John Szakmeister <john@szakmeister.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 24 08:57:03 2013
+X-From: git-owner@vger.kernel.org Thu Oct 24 09:06:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VZEqt-0001dR-4b
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Oct 2013 08:57:03 +0200
+	id 1VZF0P-0008Bj-8T
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Oct 2013 09:06:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753770Ab3JXG46 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Oct 2013 02:56:58 -0400
-Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:51376 "EHLO
-	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751533Ab3JXG45 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 24 Oct 2013 02:56:57 -0400
-X-Greylist: delayed 421 seconds by postgrey-1.27 at vger.kernel.org; Thu, 24 Oct 2013 02:56:57 EDT
-X-AuditID: 1207440e-b7fbc6d000004ad9-27-5268c3138c3f
+	id S1751554Ab3JXHGt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Oct 2013 03:06:49 -0400
+Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:44108 "EHLO
+	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751359Ab3JXHGs (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 24 Oct 2013 03:06:48 -0400
+X-AuditID: 1207440f-b7f306d000006d99-07-5268c7083924
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id 98.77.19161.313C8625; Thu, 24 Oct 2013 02:49:55 -0400 (EDT)
+	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id C6.A9.28057.807C8625; Thu, 24 Oct 2013 03:06:48 -0400 (EDT)
 Received: from [192.168.69.9] (p57A24971.dip0.t-ipconnect.de [87.162.73.113])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r9O6nogQ015415
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r9O76hjX016051
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 24 Oct 2013 02:49:51 -0400
+	Thu, 24 Oct 2013 03:06:45 -0400
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.0
-In-Reply-To: <xmqq61snrg0q.fsf@gitster.dls.corp.google.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrJKsWRmVeSWpSXmKPExsUixO6iqCt8OCPIYMYdJYvpXatZLLqudDNZ
+In-Reply-To: <xmqq1u3brfp5.fsf@gitster.dls.corp.google.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrOKsWRmVeSWpSXmKPExsUixO6iqMtxPCPI4NpaDovpXatZLLqudDNZ
 	NPReYbaYd3cXk8WqW8uYLVbOuMFo8bSz0mLeixdsFj9aepgdOD0urXvJ5HHozxR2j2cn2tk8
-	Lr38zubxrHcPo8fFS8oeM1pes3h83iTnceDyY7YAzihum6TEkrLgzPQ8fbsE7oy765vZCu4I
-	Vhz6/4a5gXEDXxcjJ4eEgIlE57zV7BC2mMSFe+vZuhi5OIQELjNKvH+xjwnCOcsk8eTXFeYu
-	Rg4OXgFtiZMr5UAaWARUJZ4s2M0GYrMJ6Eos6mlmArFFBUIkFq46DjaUV0BQ4uTMJywgtoiA
-	msTEtkMsIDOZBe4zSfzueQ1WJCzgJbHo9UpGiGWrGCWazz8G6+AUsJbY+aCdFcRmFtCReNf3
-	gBnClpfY/nYO8wRGgVlIlsxCUjYLSdkCRuZVjHKJOaW5urmJmTnFqcm6xcmJeXmpRbrGermZ
-	JXqpKaWbGCFRw7eDsX29zCFGAQ5GJR5ejQ/pQUKsiWXFlbmHGCU5mJREedkOZQQJ8SXlp1Rm
-	JBZnxBeV5qQWH2KU4GBWEuH1rADK8aYkVlalFuXDpKQ5WJTEedWWqPsJCaQnlqRmp6YWpBbB
-	ZGU4OJQkeF8cBGoULEpNT61Iy8wpQUgzcXCCDOeSEilOzUtJLUosLcmIB0VrfDEwXkFSPEB7
-	VUBu4i0uSMwFikK0nmLU5Zj35cM3RiGWvPy8VClxXkWQIgGQoozSPLgVsBT5ilEc6GNhXjWQ
-	Kh5geoWb9ApoCRPQkilL0kCWlCQipKQaGDmWZ/2u7IgqmWD/MdtuoxHXxpwJiv7M 
+	Lr38zubxrHcPo8fFS8oeM1pes3h83iTnceDyY7YAzihum6TEkrLgzPQ8fbsE7oytz9wL3vNU
+	vP/4mqWBcQNXFyMHh4SAicSZ3wZdjJxAppjEhXvr2boYuTiEBC4zSnzqWsECkhASOMsksXwz
+	mM0roC1x+GgrE4jNIqAqcW3VX3YQm01AV2JRTzNYXFQgRGLhquPsEPWCEidnPgHrFRFQk5jY
+	dogFZAGzwH0mid89r8GKhAV8JM7d/ssCsXkVo8S6x4vAJnEKWEt8nrKMDcRmFtCReNf3gBnC
+	lpfY/nYO8wRGgVlIlsxCUjYLSdkCRuZVjHKJOaW5urmJmTnFqcm6xcmJeXmpRbomermZJXqp
+	KaWbGCERw7+DsWu9zCFGAQ5GJR5ejQ/pQUKsiWXFlbmHGCU5mJREeVWPZAQJ8SXlp1RmJBZn
+	xBeV5qQWH2KU4GBWEuH1rADK8aYkVlalFuXDpKQ5WJTEedWXqPsJCaQnlqRmp6YWpBbBZGU4
+	OJQkeI2OAjUKFqWmp1akZeaUIKSZODhBhnNJiRSn5qWkFiWWlmTEgyI1vhgYqyApHqC9uiDt
+	vMUFiblAUYjWU4y6HPO+fPjGKMSSl5+XKiXOawxSJABSlFGaB7cClh5fMYoDfSzM+wPkPR5g
+	aoWb9ApoCRPQkilL0kCWlCQipKQaGP3kt4qxPlo61+mAmNgztRwLY6E/apIeof8/ 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236567>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236568>
 
-On 10/23/2013 08:36 PM, Junio C Hamano wrote:
+On 10/23/2013 08:43 PM, Junio C Hamano wrote:
 > Michael Haggerty <mhagger@alum.mit.edu> writes:
 > 
->> "git fetch" was being used with contrived refspecs to create tags and
->> remote-tracking branches in test repositories in preparation for the
->> actual tests.  This is obscure and also makes one wonder whether this
->> is indeed just preparation or whether some side-effect of "git fetch"
->> is being tested.
->>
->> So use the more straightforward commands "git tag" / "git update-ref"
->> when preparing branches in test repositories.
->>
->> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
->> ---
->>  t/t5510-fetch.sh | 8 ++++----
->>  1 file changed, 4 insertions(+), 4 deletions(-)
->>
->> diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
->> index c5e5dfc..08d8dbb 100755
->> --- a/t/t5510-fetch.sh
->> +++ b/t/t5510-fetch.sh
->> @@ -88,7 +88,7 @@ test_expect_success 'fetch --prune on its own works as expected' '
->>  	cd "$D" &&
->>  	git clone . prune &&
->>  	cd prune &&
->> -	git fetch origin refs/heads/master:refs/remotes/origin/extrabranch &&
->> +	git update-ref refs/remotes/origin/extrabranch master &&
+>>> Subject: Re: [PATCH 04/15] api-remote.txt: correct section "struct refspect"
 > 
-> As long as you have checked that our local 'master' should be at the
-> same commit as the origin's 'master' at this point, I think this
-> change is OK.
+> refspect???
 
-It doesn't matter what the reference points at; the only point of these
-tests is to check whether branches that look like stale remote-tracking
-branches are pruned or not by the later command.
+Thanks for catching the typo.
 
-> I wouldn't call the use of "very explicit, without any room for
-> mistake" refspecs "contrived", though.
+>> * Replace reference to function parse_ref_spec() with references to
+>>   functions parse_fetch_refspec() and parse_push_refspec().
+>>
+>> * Correct description of src and dst: they *do* include the '*'
+>>   characters.
+> 
+>  * Replace a single SP after a full-stop at the end of sentence with
+>    double SP as if we were back in the typewriter age.
 
-According to Wiktionary, contrived means "unnatural, forced".
+:-)
 
-When the goal is just to create a local reference whose contents are
-irrelevant, "fetch" is not the first command that comes to my mind.  It
-brings a lot of unnecessary machinery to bear on such a trivial task.
-Plus it is not very common in daily life to invoke "fetch" with a
-complicated, asymmetic refspec like this.  Because of that it cost me a
-little extra time to convince myself that the "fetch" command wasn't
-trying to do something more.  In that sense it seems "contrived" to me.
+I agree it's archaic, but it is standard practice in English.
+
+Also, emacs, with the default sentence-end-double-space setting, doesn't
+treat punctuation followed by a single space as an end of sentence and
+when reflowing text even goes to extra effort not to break a line at
+such a position (because that would make it look like it *were* the end
+of the sentence).
+
+TeX also distinguishes between interword spaces and end-of-sentence
+spaces, but it uses a different heuristic (which can be overridden by
+explicit markup).  It also typesets them differently: end-of-sentence
+spaces are a bit wider and more elastic.
+
+Nevertheless it is probably good that there is no Unicode
+END_OF_SENTENCE_SPACE character; otherwise we would never get *any* work
+done for all the arguing about how to encode empty pixels :-)
+
+> The last one made it hard to spot what actually got changed,
+> though.  The updated text otherwise looks correct.
 
 Michael
 
