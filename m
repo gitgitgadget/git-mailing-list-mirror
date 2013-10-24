@@ -1,171 +1,221 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 18/19] t: add basic bitmap functionality tests
-Date: Thu, 24 Oct 2013 14:08:31 -0400
-Message-ID: <20131024180831.GR24180@sigill.intra.peff.net>
+Subject: [PATCH 19/19] pack-bitmap: implement optional name_hash cache
+Date: Thu, 24 Oct 2013 14:08:50 -0400
+Message-ID: <20131024180850.GS24180@sigill.intra.peff.net>
 References: <20131024175915.GA23398@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Vicent Marti <vicent@github.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 24 20:08:37 2013
+X-From: git-owner@vger.kernel.org Thu Oct 24 20:09:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VZPKm-0001Pv-My
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Oct 2013 20:08:37 +0200
+	id 1VZPL6-0001jL-Lk
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Oct 2013 20:08:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755952Ab3JXSIe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Oct 2013 14:08:34 -0400
-Received: from cloud.peff.net ([50.56.180.127]:54914 "HELO peff.net"
+	id S1755784Ab3JXSIx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Oct 2013 14:08:53 -0400
+Received: from cloud.peff.net ([50.56.180.127]:54918 "HELO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754997Ab3JXSId (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Oct 2013 14:08:33 -0400
-Received: (qmail 1142 invoked by uid 102); 24 Oct 2013 18:08:33 -0000
+	id S1752724Ab3JXSIw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Oct 2013 14:08:52 -0400
+Received: (qmail 1171 invoked by uid 102); 24 Oct 2013 18:08:52 -0000
 Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 24 Oct 2013 13:08:33 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 24 Oct 2013 14:08:31 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 24 Oct 2013 13:08:52 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 24 Oct 2013 14:08:50 -0400
 Content-Disposition: inline
 In-Reply-To: <20131024175915.GA23398@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236606>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236607>
 
-Now that we can read and write bitmaps, we can exercise them
-with some basic functionality tests. These tests aren't
-particularly useful for seeing the benefit, as the test
-repo is too small for it to make a difference. However, we
-can at least check that using bitmaps does not break anything.
+From: Vicent Marti <tanoku@gmail.com>
 
+When we use pack bitmaps rather than walking the object
+graph, we end up with the list of objects to include in the
+packfile, but we do not know the path at which any tree or
+blob objects would be found.
+
+In a recently packed repository, this is fine. A fetch would
+use the paths only as a heuristic in the delta compression
+phase, and a fully packed repository should not need to do
+much delta compression.
+
+As time passes, though, we may acquire more objects on top
+of our large bitmapped pack. If clients fetch frequently,
+then they never even look at the bitmapped history, and all
+works as usual. However, a client who has not fetched since
+the last bitmap repack will have "have" tips in the
+bitmapped history, but "want" newer objects.
+
+The bitmaps themselves degrade gracefully in this
+circumstance. We manually walk the more recent bits of
+history, and then use bitmaps when we hit them.
+
+But we would also like to perform delta compression between
+the newer objects and the bitmapped objects (both to delta
+against what we know the user already has, but also between
+"new" and "old" objects that the user is fetching). The lack
+of pathnames makes our delta heuristics much less effective.
+
+This patch adds an optional cache of the 32-bit name_hash
+values to the end of the bitmap file. If present, a reader
+can use it to match bitmapped and non-bitmapped names during
+delta compression.
+
+Signed-off-by: Vicent Marti <tanoku@gmail.com>
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- t/t5310-pack-bitmaps.sh | 114 ++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 114 insertions(+)
- create mode 100755 t/t5310-pack-bitmaps.sh
+ Documentation/technical/bitmap-format.txt | 33 +++++++++++++++++++++++++++++++
+ pack-bitmap-write.c                       | 18 ++++++++++++++++-
+ pack-bitmap.c                             | 11 +++++++++++
+ pack-bitmap.h                             |  1 +
+ 4 files changed, 62 insertions(+), 1 deletion(-)
 
-diff --git a/t/t5310-pack-bitmaps.sh b/t/t5310-pack-bitmaps.sh
-new file mode 100755
-index 0000000..0868725
---- /dev/null
-+++ b/t/t5310-pack-bitmaps.sh
-@@ -0,0 +1,114 @@
-+#!/bin/sh
+diff --git a/Documentation/technical/bitmap-format.txt b/Documentation/technical/bitmap-format.txt
+index c686dd1..36a511c 100644
+--- a/Documentation/technical/bitmap-format.txt
++++ b/Documentation/technical/bitmap-format.txt
+@@ -21,6 +21,12 @@ GIT bitmap v1 format
+ 			requirement for the bitmap index format, also present in JGit,
+ 			that greatly reduces the complexity of the implementation.
+ 
++			- BITMAP_OPT_HASH_CACHE (0x4)
++			If present, the end of the bitmap file contains
++			`N` 32-bit name-hash values, one per object in the
++			pack. The format and meaning of the name-hash is
++			described below.
 +
-+test_description='exercise basic bitmap functionality'
-+. ./test-lib.sh
+ 		4-byte entry count (network byte order)
+ 
+ 			The total count of entries (bitmapped commits) in this bitmap index.
+@@ -129,3 +135,30 @@ The bitstream represented by the above chunk is then:
+ The next word after `L_M` (if any) must again be a RLW, for the next
+ chunk.  For efficient appending to the bitstream, the EWAH stores a
+ pointer to the last RLW in the stream.
 +
-+test_expect_success 'setup repo with moderate-sized history' '
-+	for i in $(test_seq 1 10); do
-+		test_commit $i
-+	done &&
-+	git checkout -b other HEAD~5 &&
-+	for i in `test_seq 1 10`; do
-+		test_commit side-$i
-+	done &&
-+	git checkout master &&
-+	blob=$(echo tagged-blob | git hash-object -w --stdin) &&
-+	git tag tagged-blob $blob &&
-+	git config pack.writebitmaps true
-+'
 +
-+test_expect_success 'full repack creates bitmaps' '
-+	git repack -ad &&
-+	ls .git/objects/pack/ | grep bitmap >output &&
-+	test_line_count = 1 output
-+'
++== Appendix B: Optional Bitmap Sections
 +
-+test_expect_success 'rev-list --test-bitmap verifies bitmaps' '
-+	git rev-list --test-bitmap HEAD
-+'
++These sections may or may not be present in the `.bitmap` file; their
++presence is indicated by the header flags section described above.
 +
-+rev_list_tests() {
-+	state=$1
++Name-hash cache
++---------------
 +
-+	test_expect_success "counting commits via bitmap ($state)" '
-+		git rev-list --count HEAD >expect &&
-+		git rev-list --use-bitmap-index --count HEAD >actual &&
-+		test_cmp expect actual
-+	'
++If the BITMAP_OPT_HASH_CACHE flag is set, the end of the bitmap contains
++a cache of 32-bit values, one per object in the pack. The value at
++position `i` is the hash of the pathname at which the `i`th object
++(counting in index order) in the pack can be found.  This can be fed
++into the delta heuristics to compare objects with similar pathnames.
 +
-+	test_expect_success "counting partial commits via bitmap ($state)" '
-+		git rev-list --count HEAD~5..HEAD >expect &&
-+		git rev-list --use-bitmap-index --count HEAD~5..HEAD >actual &&
-+		test_cmp expect actual
-+	'
++The hash algorithm used is:
 +
-+	test_expect_success "counting non-linear history ($state)" '
-+		git rev-list --count other...master >expect &&
-+		git rev-list --use-bitmap-index --count other...master >actual &&
-+		test_cmp expect actual
-+	'
++    hash = 0;
++    while ((c = *name++))
++	    if (!isspace(c))
++		    hash = (hash >> 2) + (c << 24);
 +
-+	test_expect_success "enumerate --objects ($state)" '
-+		git rev-list --objects --use-bitmap-index HEAD >tmp &&
-+		cut -d" " -f1 <tmp >tmp2 &&
-+		sort <tmp2 >actual &&
-+		git rev-list --objects HEAD >tmp &&
-+		cut -d" " -f1 <tmp >tmp2 &&
-+		sort <tmp2 >expect &&
-+		test_cmp expect actual
-+	'
++Note that this hashing scheme is tied to the BITMAP_OPT_HASH_CACHE flag.
++If implementations want to choose a different hashing scheme, they are
++free to do so, but MUST allocate a new header flag (because comparing
++hashes made under two different schemes would be pointless).
+diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
+index 6a589c3..c44874a 100644
+--- a/pack-bitmap-write.c
++++ b/pack-bitmap-write.c
+@@ -492,6 +492,19 @@ static void write_selected_commits_v1(struct sha1file *f,
+ 	}
+ }
+ 
++static void write_hash_cache(struct sha1file *f,
++			     struct pack_idx_entry **index,
++			     uint32_t index_nr)
++{
++	uint32_t i;
 +
-+	test_expect_success "bitmap --objects handles non-commit objects ($state)" '
-+		git rev-list --objects --use-bitmap-index HEAD tagged-blob >actual &&
-+		grep $blob actual
-+	'
++	for (i = 0; i < index_nr; ++i) {
++		struct object_entry *entry = (struct object_entry *)index[i];
++		uint32_t hash_value = htonl(entry->hash);
++		sha1write(f, &hash_value, sizeof(hash_value));
++	}
 +}
 +
-+rev_list_tests 'full bitmap'
+ void bitmap_writer_set_checksum(unsigned char *sha1)
+ {
+ 	hashcpy(writer.pack_checksum, sha1);
+@@ -503,7 +516,7 @@ void bitmap_writer_finish(struct pack_idx_entry **index,
+ {
+ 	static char tmp_file[PATH_MAX];
+ 	static uint16_t default_version = 1;
+-	static uint16_t flags = BITMAP_OPT_FULL_DAG;
++	static uint16_t flags = BITMAP_OPT_FULL_DAG | BITMAP_OPT_HASH_CACHE;
+ 	struct sha1file *f;
+ 
+ 	struct bitmap_disk_header header;
+@@ -527,6 +540,9 @@ void bitmap_writer_finish(struct pack_idx_entry **index,
+ 	dump_bitmap(f, writer.tags);
+ 	write_selected_commits_v1(f, index, index_nr);
+ 
++	if (flags & BITMAP_OPT_HASH_CACHE)
++		write_hash_cache(f, index, index_nr);
 +
-+test_expect_success 'clone from bitmapped repository' '
-+	git clone --no-local --bare . clone.git &&
-+	git rev-parse HEAD >expect &&
-+	git --git-dir=clone.git rev-parse HEAD >actual &&
-+	test_cmp expect actual
-+'
+ 	sha1close(f, NULL, CSUM_FSYNC);
+ 
+ 	if (adjust_shared_perm(tmp_file))
+diff --git a/pack-bitmap.c b/pack-bitmap.c
+index 86ce677..a7c553d 100644
+--- a/pack-bitmap.c
++++ b/pack-bitmap.c
+@@ -68,6 +68,9 @@ static struct bitmap_index {
+ 	/* Number of bitmapped commits */
+ 	uint32_t entry_count;
+ 
++	/* Name-hash cache (or NULL if not present). */
++	uint32_t *hashes;
 +
-+test_expect_success 'setup further non-bitmapped commits' '
-+	for i in `test_seq 1 10`; do
-+		test_commit further-$i
-+	done
-+'
+ 	/*
+ 	 * Extended index.
+ 	 *
+@@ -154,6 +157,11 @@ static int load_bitmap_header(struct bitmap_index *index)
+ 		if ((flags & BITMAP_OPT_FULL_DAG) == 0)
+ 			return error("Unsupported options for bitmap index file "
+ 				"(Git requires BITMAP_OPT_FULL_DAG)");
 +
-+rev_list_tests 'partial bitmap'
++		if (flags & BITMAP_OPT_HASH_CACHE) {
++			index->hashes = index->map + index->map_size - 20 -
++				(sizeof(uint32_t) * index->pack->num_objects);
++		}
+ 	}
+ 
+ 	index->entry_count = ntohl(header->entry_count);
+@@ -621,6 +629,9 @@ static void show_objects_for_type(
+ 			entry = &bitmap_git.reverse_index->revindex[pos + offset];
+ 			sha1 = nth_packed_object_sha1(bitmap_git.pack, entry->nr);
+ 
++			if (bitmap_git.hashes)
++				hash = ntohl(bitmap_git.hashes[entry->nr]);
 +
-+test_expect_success 'fetch (partial bitmap)' '
-+	git --git-dir=clone.git fetch origin master:master &&
-+	git rev-parse HEAD >expect &&
-+	git --git-dir=clone.git rev-parse HEAD >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'incremental repack cannot create bitmaps' '
-+	test_commit more-1 &&
-+	test_must_fail git repack -d
-+'
-+
-+test_expect_success 'incremental repack can disable bitmaps' '
-+	test_commit more-2 &&
-+	git repack -d --no-write-bitmap-index
-+'
-+
-+test_expect_success 'full repack, reusing previous bitmaps' '
-+	git repack -ad &&
-+	ls .git/objects/pack/ | grep bitmap >output &&
-+	test_line_count = 1 output
-+'
-+
-+test_expect_success 'fetch (full bitmap)' '
-+	git --git-dir=clone.git fetch origin master:master &&
-+	git rev-parse HEAD >expect &&
-+	git --git-dir=clone.git rev-parse HEAD >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_done
+ 			show_reach(sha1, object_type, 0, hash, bitmap_git.pack, entry->offset);
+ 		}
+ 
+diff --git a/pack-bitmap.h b/pack-bitmap.h
+index 18f4d4c..6053453 100644
+--- a/pack-bitmap.h
++++ b/pack-bitmap.h
+@@ -28,6 +28,7 @@ static const char BITMAP_IDX_SIGNATURE[] = {'B', 'I', 'T', 'M'};;
+ 
+ enum pack_bitmap_opts {
+ 	BITMAP_OPT_FULL_DAG = 1,
++	BITMAP_OPT_HASH_CACHE = 4,
+ };
+ 
+ enum pack_bitmap_flags {
 -- 
 1.8.4.1.898.g8bf8a41.dirty
