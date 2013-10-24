@@ -1,65 +1,75 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 2/2] entry.c: convert write_entry to use strbuf
-Date: Thu, 24 Oct 2013 08:23:41 +0700
-Message-ID: <CACsJy8Ap005pUBZH0k=7F9nON9Vb5SoO-1McPAwRkLCC0YoPMQ@mail.gmail.com>
-References: <20131021193223.GC29681@sigill.intra.peff.net> <1382532907-30561-1-git-send-email-pclouds@gmail.com>
- <1382532907-30561-2-git-send-email-pclouds@gmail.com> <xmqqeh7bri1h.fsf@gitster.dls.corp.google.com>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= <pclouds@gmail.com>
+Subject: [PATCH v2] entry.c: convert checkout_entry to use strbuf
+Date: Thu, 24 Oct 2013 08:55:35 +0700
+Message-ID: <1382579735-21893-1-git-send-email-pclouds@gmail.com>
+References: <1382532907-30561-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-Cc: Git Mailing List <git@vger.kernel.org>, Erik Faye-Lund <kusmabite@gmail.com>, 
-	Johannes Sixt <j6t@kdbg.org>, Antoine Pelisse <apelisse@gmail.com>, 
-	=?UTF-8?Q?Torsten_B=C3=83=C2=B6gershausen?= <tboegi@web.de>, 
-	Wataru Noguchi <wnoguchi.0727@gmail.com>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
-	=?UTF-8?B?UmVuw4PCqSBTY2hhcmZl?= <l.s.r@web.de>, 
-	msysGit <msysgit@googlegroups.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: msysgit+bncBC2ZN5PHQUMBBO7NUGJQKGQEXGJ3VRA@googlegroups.com Thu Oct 24 03:24:13 2013
-Return-path: <msysgit+bncBC2ZN5PHQUMBBO7NUGJQKGQEXGJ3VRA@googlegroups.com>
+Cc: kusmabite@gmail.com,
+	j6t@kdbg.org,
+	apelisse@gmail.com,
+	tboegi@web.de,
+	wnoguchi.0727@gmail.com,
+	Johannes.Schindelin@gmx.de,
+	l.s.r@web.de,
+	msysgit@googlegroups.com,
+	Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= <pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: msysgit+bncBC2ZN5PHQUMBBJH4UGJQKGQE3KHAXPA@googlegroups.com Thu Oct 24 03:55:51 2013
+Return-path: <msysgit+bncBC2ZN5PHQUMBBJH4UGJQKGQE3KHAXPA@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-ob0-f186.google.com ([209.85.214.186])
+Received: from mail-pb0-f56.google.com ([209.85.160.56])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBC2ZN5PHQUMBBO7NUGJQKGQEXGJ3VRA@googlegroups.com>)
-	id 1VZ9em-0006Ai-VW
-	for gcvm-msysgit@m.gmane.org; Thu, 24 Oct 2013 03:24:13 +0200
-Received: by mail-ob0-f186.google.com with SMTP id gq1sf324533obb.13
-        for <gcvm-msysgit@m.gmane.org>; Wed, 23 Oct 2013 18:24:11 -0700 (PDT)
+	(envelope-from <msysgit+bncBC2ZN5PHQUMBBJH4UGJQKGQE3KHAXPA@googlegroups.com>)
+	id 1VZA9N-0000GR-Tf
+	for gcvm-msysgit@m.gmane.org; Thu, 24 Oct 2013 03:55:50 +0200
+Received: by mail-pb0-f56.google.com with SMTP id rp16sf330188pbb.11
+        for <gcvm-msysgit@m.gmane.org>; Wed, 23 Oct 2013 18:55:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:x-original-sender:x-original-authentication-results:precedence
-         :mailing-list:list-id:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe:content-type
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:x-original-sender:x-original-authentication-results
+         :precedence:mailing-list:list-id:list-post:list-help:list-archive
+         :sender:list-subscribe:list-unsubscribe:content-type
          :content-transfer-encoding;
-        bh=OpGKA5eai0fSZzo6Rg9aShFJf2zRKYnjukwg+1ESY5I=;
-        b=SSnFDjpFyUbqLTv2FefRW6eLYcPLbx0CwSA0SMBAK3Ke63sPO5T7R04/1BLf4oB6Ma
-         p5QtFBonfDIUZDyPXQUlXrK0nXKph5D+U4vR85lDo4rzcSNrcLTf0imlg6f84+y/Mq72
-         FILvDefYlVYFC1WY3if3VQepru2os0zsf2/neaTMaPZNAxchlR+vsQLkT0vTMQwB+W5d
-         3oYctR97LByALcXzXLCXSk+iNDymV6R68jOu+Xr4MZGl2sfjRIX5OVR2h0NP6HbwEEXf
-         9BaxW3JrYbQxBo2DBs92FqsUCLWj01WquEsoFDj7nE8uOVN5Xnm0jhaRZ0FXMeBxqmIm
-         HZmw==
-X-Received: by 10.49.75.168 with SMTP id d8mr2717qew.3.1382577851773;
-        Wed, 23 Oct 2013 18:24:11 -0700 (PDT)
+        bh=y55GCbxxU7rU8nJR80rXd1iXqIbUoQOW3IDqyPVHAHk=;
+        b=H2bMMmKTgdsBOJm3ihkBKlCtjnS6lVMTXtVxN9OZm9U12ycekRU/RPffWOCdU/QnX1
+         oQCiQ1PsvJnOwEa4aqs3+ZL55Ee+DX3/baDNtaSu1q6FW25wT1r2vbv6/La3HP138+00
+         oShi3yg3OD6bZqJXD8kNux7PXv4n82SgC31mGvW6/MXHQ3nfL3rJj1KSVrb5Aiv6UbNO
+         Qrgiit2iNqgu9cL//0CB36/N14ZurCCf7/Vnm7h4aOjkGI7nhZJ6MPxyF0kOiZIvAQoc
+         bI7ld+Vn3UfnrlTt1aX9mTZdL8rSEllkVMDNaYqnmV4WCbCu7iSeFyPw+M6h6q/fZ7bl
+         atjg==
+X-Received: by 10.49.51.197 with SMTP id m5mr4098qeo.5.1382579748777;
+        Wed, 23 Oct 2013 18:55:48 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.49.70.228 with SMTP id p4ls651735qeu.43.gmail; Wed, 23 Oct
- 2013 18:24:11 -0700 (PDT)
-X-Received: by 10.236.26.202 with SMTP id c50mr251953yha.14.1382577851166;
-        Wed, 23 Oct 2013 18:24:11 -0700 (PDT)
-Received: from mail-qe0-x234.google.com (mail-qe0-x234.google.com [2607:f8b0:400d:c02::234])
-        by gmr-mx.google.com with ESMTPS id bc1si1629804qcb.1.2013.10.23.18.24.11
+Received: by 10.49.118.103 with SMTP id kl7ls678178qeb.32.gmail; Wed, 23 Oct
+ 2013 18:55:48 -0700 (PDT)
+X-Received: by 10.236.82.115 with SMTP id n79mr256769yhe.35.1382579748263;
+        Wed, 23 Oct 2013 18:55:48 -0700 (PDT)
+Received: from mail-pa0-x22b.google.com (mail-pa0-x22b.google.com [2607:f8b0:400e:c03::22b])
+        by gmr-mx.google.com with ESMTPS id dk16si203035pac.0.2013.10.23.18.55.48
         for <msysgit@googlegroups.com>
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 23 Oct 2013 18:24:11 -0700 (PDT)
-Received-SPF: pass (google.com: domain of pclouds@gmail.com designates 2607:f8b0:400d:c02::234 as permitted sender) client-ip=2607:f8b0:400d:c02::234;
-Received: by mail-qe0-f52.google.com with SMTP id w7so1040420qeb.11
-        for <msysgit@googlegroups.com>; Wed, 23 Oct 2013 18:24:11 -0700 (PDT)
-X-Received: by 10.49.15.129 with SMTP id x1mr158890qec.49.1382577851091; Wed,
- 23 Oct 2013 18:24:11 -0700 (PDT)
-Received: by 10.96.27.202 with HTTP; Wed, 23 Oct 2013 18:23:41 -0700 (PDT)
-In-Reply-To: <xmqqeh7bri1h.fsf@gitster.dls.corp.google.com>
+        Wed, 23 Oct 2013 18:55:48 -0700 (PDT)
+Received-SPF: pass (google.com: domain of pclouds@gmail.com designates 2607:f8b0:400e:c03::22b as permitted sender) client-ip=2607:f8b0:400e:c03::22b;
+Received: by mail-pa0-f43.google.com with SMTP id hz1so1761850pad.16
+        for <msysgit@googlegroups.com>; Wed, 23 Oct 2013 18:55:48 -0700 (PDT)
+X-Received: by 10.68.182.3 with SMTP id ea3mr337085pbc.124.1382579748119;
+        Wed, 23 Oct 2013 18:55:48 -0700 (PDT)
+Received: from pclouds@gmail.com ([14.161.32.83])
+        by mx.google.com with ESMTPSA id hz10sm7521004pbc.36.2013.10.23.18.55.42
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Wed, 23 Oct 2013 18:55:47 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Thu, 24 Oct 2013 08:55:40 +0700
+X-Mailer: git-send-email 1.8.2.82.gc24b958
+In-Reply-To: <1382532907-30561-1-git-send-email-pclouds@gmail.com>
 X-Original-Sender: pclouds@gmail.com
 X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of pclouds@gmail.com designates 2607:f8b0:400d:c02::234
+ (google.com: domain of pclouds@gmail.com designates 2607:f8b0:400e:c03::22b
  as permitted sender) smtp.mail=pclouds@gmail.com;       dkim=pass
  header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
 Precedence: list
@@ -72,21 +82,57 @@ List-Archive: <http://groups.google.com/group/msysgit>
 Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236559>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236560>
 
-On Thu, Oct 24, 2013 at 12:52 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> writes:
->
->> The strcpy call in open_output_fd() implies that the output buffer
->> must be at least 25 chars long.
->
-> Hmph, where does that 25 come from?
->
-> [snipped]
+The old code does not do boundary check so any paths longer than
+PATH_MAX can cause buffer overflow. Replace it with strbuf to handle
+paths of arbitrary length.
 
-Much better. Thanks.
+The OS may reject if the path is too long though. But in that case we
+report the cause (e.g. name too long) and usually move on to checking
+out the next entry.
+
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com=
+>
+---
+ v2 does two strbuf_add() instead of one hard-to-read strbuf_addf()
+
+ entry.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
+
+diff --git a/entry.c b/entry.c
+index acc892f..fbb4863 100644
+--- a/entry.c
++++ b/entry.c
+@@ -237,16 +237,19 @@ static int check_path(const char *path, int len, stru=
+ct stat *st, int skiplen)
+ int checkout_entry(struct cache_entry *ce,
+ 		   const struct checkout *state, char *topath)
+ {
+-	static char path[PATH_MAX + 1];
++	static struct strbuf path_buf =3D STRBUF_INIT;
++	char *path;
+ 	struct stat st;
+-	int len =3D state->base_dir_len;
++	int len;
+=20
+ 	if (topath)
+ 		return write_entry(ce, topath, state, 1);
+=20
+-	memcpy(path, state->base_dir, len);
+-	strcpy(path + len, ce->name);
+-	len +=3D ce_namelen(ce);
++	strbuf_reset(&path_buf);
++	strbuf_add(&path_buf, state->base_dir, state->base_dir_len);
++	strbuf_add(&path_buf, ce->name, ce_namelen(ce));
++	path =3D path_buf.buf;
++	len =3D path_buf.len;
+=20
+ 	if (!check_path(path, len, &st, state->base_dir_len)) {
+ 		unsigned changed =3D ce_match_stat(ce, &st, CE_MATCH_IGNORE_VALID|CE_MAT=
+CH_IGNORE_SKIP_WORKTREE);
 --=20
-Duy
+1.8.2.82.gc24b958
 
 --=20
 --=20
