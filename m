@@ -1,7 +1,7 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH v2 18/19] t: add basic bitmap functionality tests
-Date: Fri, 25 Oct 2013 02:04:38 -0400
-Message-ID: <20131025060438.GP23098@sigill.intra.peff.net>
+Subject: [PATCH v2 17/19] repack: consider bitmaps when performing repacks
+Date: Fri, 25 Oct 2013 02:04:34 -0400
+Message-ID: <20131025060434.GO23098@sigill.intra.peff.net>
 References: <20131025055521.GD11810@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -13,159 +13,129 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VZaVn-00073P-Ul
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Oct 2013 08:04:44 +0200
+	id 1VZaVn-00073P-Ck
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Oct 2013 08:04:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751514Ab3JYGEl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Oct 2013 02:04:41 -0400
-Received: from cloud.peff.net ([50.56.180.127]:55330 "HELO peff.net"
+	id S1751502Ab3JYGEh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Oct 2013 02:04:37 -0400
+Received: from cloud.peff.net ([50.56.180.127]:55327 "HELO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751182Ab3JYGEl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Oct 2013 02:04:41 -0400
-Received: (qmail 3606 invoked by uid 102); 25 Oct 2013 06:04:41 -0000
+	id S1751182Ab3JYGEh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Oct 2013 02:04:37 -0400
+Received: (qmail 3590 invoked by uid 102); 25 Oct 2013 06:04:37 -0000
 Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 25 Oct 2013 01:04:41 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 25 Oct 2013 02:04:38 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 25 Oct 2013 01:04:37 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 25 Oct 2013 02:04:34 -0400
 Content-Disposition: inline
 In-Reply-To: <20131025055521.GD11810@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236677>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236678>
 
-Now that we can read and write bitmaps, we can exercise them
-with some basic functionality tests. These tests aren't
-particularly useful for seeing the benefit, as the test
-repo is too small for it to make a difference. However, we
-can at least check that using bitmaps does not break anything.
+From: Vicent Marti <tanoku@gmail.com>
 
+Since `pack-objects` will write a `.bitmap` file next to the `.pack` and
+`.idx` files, this commit teaches `git-repack` to consider the new
+bitmap indexes (if they exist) when performing repack operations.
+
+This implies moving old bitmap indexes out of the way if we are
+repacking a repository that already has them, and moving the newly
+generated bitmap indexes into the `objects/pack` directory, next to
+their corresponding packfiles.
+
+Since `git repack` is now capable of handling these `.bitmap` files,
+a normal `git gc` run on a repository that has `pack.writebitmaps` set
+to true in its config file will generate bitmap indexes as part of the
+garbage collection process.
+
+Alternatively, `git repack` can be called with the `-b` switch to
+explicitly generate bitmap indexes if you are experimenting
+and don't want them on all the time.
+
+Signed-off-by: Vicent Marti <tanoku@gmail.com>
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- t/t5310-pack-bitmaps.sh | 114 ++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 114 insertions(+)
- create mode 100755 t/t5310-pack-bitmaps.sh
+ Documentation/git-repack.txt | 9 ++++++++-
+ builtin/repack.c             | 9 ++++++++-
+ 2 files changed, 16 insertions(+), 2 deletions(-)
 
-diff --git a/t/t5310-pack-bitmaps.sh b/t/t5310-pack-bitmaps.sh
-new file mode 100755
-index 0000000..0868725
---- /dev/null
-+++ b/t/t5310-pack-bitmaps.sh
-@@ -0,0 +1,114 @@
-+#!/bin/sh
+diff --git a/Documentation/git-repack.txt b/Documentation/git-repack.txt
+index 4c1aff6..dad186c 100644
+--- a/Documentation/git-repack.txt
++++ b/Documentation/git-repack.txt
+@@ -9,7 +9,7 @@ git-repack - Pack unpacked objects in a repository
+ SYNOPSIS
+ --------
+ [verse]
+-'git repack' [-a] [-A] [-d] [-f] [-F] [-l] [-n] [-q] [--window=<n>] [--depth=<n>]
++'git repack' [-a] [-A] [-d] [-f] [-F] [-l] [-n] [-q] [-b] [--window=<n>] [--depth=<n>]
+ 
+ DESCRIPTION
+ -----------
+@@ -110,6 +110,13 @@ other objects in that pack they already have locally.
+ 	The default is unlimited, unless the config variable
+ 	`pack.packSizeLimit` is set.
+ 
++-b::
++--write-bitmap-index::
++	Write a reachability bitmap index as part of the repack. This
++	only makes sense when used with `-a` or `-A`, as the bitmaps
++	must be able to refer to all reachable objects. This option
++	overrides the setting of `pack.writebitmaps`.
 +
-+test_description='exercise basic bitmap functionality'
-+. ./test-lib.sh
-+
-+test_expect_success 'setup repo with moderate-sized history' '
-+	for i in $(test_seq 1 10); do
-+		test_commit $i
-+	done &&
-+	git checkout -b other HEAD~5 &&
-+	for i in `test_seq 1 10`; do
-+		test_commit side-$i
-+	done &&
-+	git checkout master &&
-+	blob=$(echo tagged-blob | git hash-object -w --stdin) &&
-+	git tag tagged-blob $blob &&
-+	git config pack.writebitmaps true
-+'
-+
-+test_expect_success 'full repack creates bitmaps' '
-+	git repack -ad &&
-+	ls .git/objects/pack/ | grep bitmap >output &&
-+	test_line_count = 1 output
-+'
-+
-+test_expect_success 'rev-list --test-bitmap verifies bitmaps' '
-+	git rev-list --test-bitmap HEAD
-+'
-+
-+rev_list_tests() {
-+	state=$1
-+
-+	test_expect_success "counting commits via bitmap ($state)" '
-+		git rev-list --count HEAD >expect &&
-+		git rev-list --use-bitmap-index --count HEAD >actual &&
-+		test_cmp expect actual
-+	'
-+
-+	test_expect_success "counting partial commits via bitmap ($state)" '
-+		git rev-list --count HEAD~5..HEAD >expect &&
-+		git rev-list --use-bitmap-index --count HEAD~5..HEAD >actual &&
-+		test_cmp expect actual
-+	'
-+
-+	test_expect_success "counting non-linear history ($state)" '
-+		git rev-list --count other...master >expect &&
-+		git rev-list --use-bitmap-index --count other...master >actual &&
-+		test_cmp expect actual
-+	'
-+
-+	test_expect_success "enumerate --objects ($state)" '
-+		git rev-list --objects --use-bitmap-index HEAD >tmp &&
-+		cut -d" " -f1 <tmp >tmp2 &&
-+		sort <tmp2 >actual &&
-+		git rev-list --objects HEAD >tmp &&
-+		cut -d" " -f1 <tmp >tmp2 &&
-+		sort <tmp2 >expect &&
-+		test_cmp expect actual
-+	'
-+
-+	test_expect_success "bitmap --objects handles non-commit objects ($state)" '
-+		git rev-list --objects --use-bitmap-index HEAD tagged-blob >actual &&
-+		grep $blob actual
-+	'
-+}
-+
-+rev_list_tests 'full bitmap'
-+
-+test_expect_success 'clone from bitmapped repository' '
-+	git clone --no-local --bare . clone.git &&
-+	git rev-parse HEAD >expect &&
-+	git --git-dir=clone.git rev-parse HEAD >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'setup further non-bitmapped commits' '
-+	for i in `test_seq 1 10`; do
-+		test_commit further-$i
-+	done
-+'
-+
-+rev_list_tests 'partial bitmap'
-+
-+test_expect_success 'fetch (partial bitmap)' '
-+	git --git-dir=clone.git fetch origin master:master &&
-+	git rev-parse HEAD >expect &&
-+	git --git-dir=clone.git rev-parse HEAD >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'incremental repack cannot create bitmaps' '
-+	test_commit more-1 &&
-+	test_must_fail git repack -d
-+'
-+
-+test_expect_success 'incremental repack can disable bitmaps' '
-+	test_commit more-2 &&
-+	git repack -d --no-write-bitmap-index
-+'
-+
-+test_expect_success 'full repack, reusing previous bitmaps' '
-+	git repack -ad &&
-+	ls .git/objects/pack/ | grep bitmap >output &&
-+	test_line_count = 1 output
-+'
-+
-+test_expect_success 'fetch (full bitmap)' '
-+	git --git-dir=clone.git fetch origin master:master &&
-+	git rev-parse HEAD >expect &&
-+	git --git-dir=clone.git rev-parse HEAD >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_done
+ 
+ Configuration
+ -------------
+diff --git a/builtin/repack.c b/builtin/repack.c
+index 8b7dfd0..239f278 100644
+--- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -94,7 +94,7 @@ static void get_non_kept_pack_filenames(struct string_list *fname_list)
+ 
+ static void remove_redundant_pack(const char *dir_name, const char *base_name)
+ {
+-	const char *exts[] = {".pack", ".idx", ".keep"};
++	const char *exts[] = {".pack", ".idx", ".keep", ".bitmap"};
+ 	int i;
+ 	struct strbuf buf = STRBUF_INIT;
+ 	size_t plen;
+@@ -121,6 +121,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 	} exts[] = {
+ 		{".pack"},
+ 		{".idx"},
++		{".bitmap", 1},
+ 	};
+ 	struct child_process cmd;
+ 	struct string_list_item *item;
+@@ -143,6 +144,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 	int no_update_server_info = 0;
+ 	int quiet = 0;
+ 	int local = 0;
++	int write_bitmap = -1;
+ 
+ 	struct option builtin_repack_options[] = {
+ 		OPT_BIT('a', NULL, &pack_everything,
+@@ -161,6 +163,8 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 		OPT__QUIET(&quiet, N_("be quiet")),
+ 		OPT_BOOL('l', "local", &local,
+ 				N_("pass --local to git-pack-objects")),
++		OPT_BOOL('b', "write-bitmap-index", &write_bitmap,
++				N_("write bitmap index")),
+ 		OPT_STRING(0, "unpack-unreachable", &unpack_unreachable, N_("approxidate"),
+ 				N_("with -A, do not loosen objects older than this")),
+ 		OPT_INTEGER(0, "window", &window,
+@@ -202,6 +206,9 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 		argv_array_pushf(&cmd_args, "--no-reuse-delta");
+ 	if (no_reuse_object)
+ 		argv_array_pushf(&cmd_args, "--no-reuse-object");
++	if (write_bitmap >= 0)
++		argv_array_pushf(&cmd_args, "--%swrite-bitmap-index",
++				 write_bitmap ? "" : "no-");
+ 
+ 	if (pack_everything & ALL_INTO_ONE) {
+ 		get_non_kept_pack_filenames(&existing_packs);
 -- 
 1.8.4.1.898.g8bf8a41.dirty
