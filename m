@@ -1,95 +1,87 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Fwd: Errors when diff'ing arbitrary upstream remotes are not
- intuitive if git pull --all hasn't been done
-Date: Fri, 25 Oct 2013 03:10:48 -0400
-Message-ID: <20131025071048.GA16856@sigill.intra.peff.net>
-References: <CAGH67wSf_RQigCmqRZKOpHdV9ELqE=078mkpwA4dfnUr=AvGVQ@mail.gmail.com>
- <CAGH67wRwb1A9CzAfod_XLRVFBRyoEron8tmM+NbMGOeKDVf2Hg@mail.gmail.com>
- <20131025061407.GE11810@sigill.intra.peff.net>
- <20131025061459.GA23524@sigill.intra.peff.net>
- <CALKQrgc0u8TA4mXc+2Hv+Fyo8EYNuiickF_janeCxkzFn+xAvA@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH v2 2/2] merge-base: "--reflog" mode finds fork point from
+ reflog entries
+Date: Fri, 25 Oct 2013 09:12:10 +0200
+Message-ID: <526A19CA.9020609@viscovery.net>
+References: <xmqqhac6o5hj.fsf@gitster.dls.corp.google.com>	<1382641884-14756-1-git-send-email-gitster@pobox.com>	<1382641884-14756-3-git-send-email-gitster@pobox.com>	<CAPig+cQrBMMqSmOk0GSZJ9PTHNt-t+vuOG2Aq=7VTR1EZSeLsw@mail.gmail.com>	<xmqq61smmkc0.fsf@gitster.dls.corp.google.com>	<CAPig+cQ2tWFXX-RYnUrHEZCaqaPV6ZwgoPfiNPv9P1jFNTGEYg@mail.gmail.com>	<xmqqwql2l3ln.fsf@gitster.dls.corp.google.com> <xmqqsivql37i.fsf_-_@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: "yaneurabeya ." <yanegomi@gmail.com>,
-	Git mailing list <git@vger.kernel.org>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Fri Oct 25 09:10:59 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Martin von Zweigbergk <martinvonz@gmail.com>,
+	John Keeping <john@keeping.me.uk>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Oct 25 09:12:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VZbXu-0001le-1y
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Oct 2013 09:10:58 +0200
+	id 1VZbZI-0002un-Ld
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Oct 2013 09:12:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751464Ab3JYHKw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Oct 2013 03:10:52 -0400
-Received: from cloud.peff.net ([50.56.180.127]:55381 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751182Ab3JYHKv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Oct 2013 03:10:51 -0400
-Received: (qmail 6764 invoked by uid 102); 25 Oct 2013 07:10:51 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 25 Oct 2013 02:10:51 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 25 Oct 2013 03:10:48 -0400
-Content-Disposition: inline
-In-Reply-To: <CALKQrgc0u8TA4mXc+2Hv+Fyo8EYNuiickF_janeCxkzFn+xAvA@mail.gmail.com>
+	id S1751476Ab3JYHMS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Oct 2013 03:12:18 -0400
+Received: from so.liwest.at ([212.33.55.16]:7330 "EHLO so.liwest.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751182Ab3JYHMR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Oct 2013 03:12:17 -0400
+Received: from [81.10.228.254] (helo=theia.linz.viscovery)
+	by so.liwest.at with esmtpa (Exim 4.80.1)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1VZbZ5-0004bB-Ro; Fri, 25 Oct 2013 09:12:11 +0200
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 6539B16613;
+	Fri, 25 Oct 2013 09:12:11 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:24.0) Gecko/20100101 Thunderbird/24.0.1
+Newsgroups: gmane.comp.version-control.git
+In-Reply-To: <xmqqsivql37i.fsf_-_@gitster.dls.corp.google.com>
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236688>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236689>
 
-On Fri, Oct 25, 2013 at 09:03:41AM +0200, Johan Herland wrote:
+Am 10/25/2013 0:21, schrieb Junio C Hamano:
+> +test_expect_success 'using reflog to find the fork point' '
+> +	git reset --hard &&
+> +	git checkout -b base $E &&
+> +
+> +	for count in 1 2 3 4 5
+> +	do
+> +		git commit --allow-empty -m "Base commit #$count" &&
+> +		git rev-parse HEAD >expect$count &&
+> +		git checkout -B derived &&
+> +		git commit --allow-empty -m "Derived #$count" &&
+> +		git rev-parse HEAD >derived$count &&
+> +		git checkout base || break
+> +	done &&
+> +
+> +	for count in 1 2 3 4 5
+> +	do
+> +		git merge-base --reflog base $(cat derived$count) >actual &&
+> +		test_cmp expect$count actual || break
+> +	done &&
 
-> Actually, I don't think there's much refspec stuff to be done here.
-> When running "git diff $remote/$branch", there are 3 possible
-> outcomes:
-> 
->  - $remote is not a valid remote name, the user probably meant
-> something different (like "nested/branch"). The current error message
-> is fine.
-> 
->  - $remote is a valid remote name, but $branch has not (yet) been
-> fetched from there. Suggest the user run "git fetch $remote"
-> 
->  - $remote/$branch is a valid remote-tracking branch. The diff works! No errors.
+This does not work as intended because the exit code of 'break' is always
+zero. Unlike 'exit' and 'return', it does *not* pick up the exit code of
+the last command that was executed.
 
-Right, I think it is the second case we are talking about.
+That's annoying, but makes some sense because 'break 2' does not mean to
+apply exit code 2 to the command, either, but to break out of 2 levels of
+loops.
 
-> So, AFAICS, the patch should simply:
-> 
->  1. Split the input on the first '/' into $remote/$branch, and use the
-> preceding part ($remote) as a potential remote name, and the following
-> part ($branch) as a potential branch name. (Although it is
-> theoretically possible to have remote names containing slashes, I
-> don't think anybody uses them, and we have considered disallowing
-> them, mainly because of this very issue: it makes "$remote/$branch"
-> parsing (even more) ambiguous)
+You could put the loops into a function from which you 'return', but that
+is obscure in this case. The first iteration was better, IMO.
 
-What I specifically meant is that this breaks with a remote like:
+> +
+> +	# check defaulting to HEAD
+> +	git merge-base --reflog base >actual &&
+> +	test_cmp expect5 actual
+> +'
+> +
+>  test_done
 
-  [remote "foo"]
-    fetch = +refs/heads/*:refs/remotes/bar/*
-
-The correct advice for "bar/branch" is to recommend "git fetch foo", and
-the correct advice for "foo/branch" is nothing at all.
-
-I know such config is unusual, but I thought there was a recent push for
-us to be accurate about finding the local side of remote tracking
-branches, rather than just assuming they start with "$remote". Maybe I
-am misremembering, though; I thought it was related to potentially
-shifting the default refspecs.
-
-The procedure along those lines would be:
-
-  for each remote
-    for each fetch-refspec in remote
-      if refspec.rhs contains "refs/remotes/$failed_branch"
-        recommend "git fetch $remote"
-
-I was just wondering if we had something to make that "does this refspec
-contain this ref" part easier.
-
--Peff
+-- Hannes
