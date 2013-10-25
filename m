@@ -1,65 +1,103 @@
 From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [PATCH 12/19] rev-list: add bitmap mode to speed up object lists
-Date: Fri, 25 Oct 2013 14:00:48 +0000
-Message-ID: <CAJo=hJvKG2sjWasO4YfExbbSN+U-q_it6gb43v_YJoL60XKwUg@mail.gmail.com>
-References: <20131024175915.GA23398@sigill.intra.peff.net> <20131024180627.GL24180@sigill.intra.peff.net>
+Subject: Re: [PATCH 11/19] pack-objects: use bitmaps when packing objects
+Date: Fri, 25 Oct 2013 14:14:11 +0000
+Message-ID: <CAJo=hJuDx=3AOoz2oEORVOzeBYBwvOWO_ye8D5d8PcDc3Zm+Ew@mail.gmail.com>
+References: <20131024175915.GA23398@sigill.intra.peff.net> <20131024180419.GK24180@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Cc: git <git@vger.kernel.org>, Vicent Marti <vicent@github.com>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Oct 25 16:01:18 2013
+X-From: git-owner@vger.kernel.org Fri Oct 25 16:14:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VZhwz-0006KS-4v
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Oct 2013 16:01:17 +0200
+	id 1VZi9u-0000jA-CR
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Oct 2013 16:14:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754521Ab3JYOBM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Oct 2013 10:01:12 -0400
-Received: from mail-wg0-f46.google.com ([74.125.82.46]:61714 "EHLO
-	mail-wg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754513Ab3JYOBL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Oct 2013 10:01:11 -0400
-Received: by mail-wg0-f46.google.com with SMTP id m15so3796944wgh.1
-        for <git@vger.kernel.org>; Fri, 25 Oct 2013 07:01:09 -0700 (PDT)
+	id S1753539Ab3JYOOe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Oct 2013 10:14:34 -0400
+Received: from mail-wg0-f41.google.com ([74.125.82.41]:49815 "EHLO
+	mail-wg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750848Ab3JYOOd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Oct 2013 10:14:33 -0400
+Received: by mail-wg0-f41.google.com with SMTP id b13so974742wgh.0
+        for <git@vger.kernel.org>; Fri, 25 Oct 2013 07:14:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=spearce.org; s=google;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=Yz0PPbZBBWiM5y0SXm/WlqssYsh1uCpBrCVOPfr+834=;
-        b=DXYrcnJm0OxeK/vA5Mbps3/u+gaCJeJPw55T4Y+e8BGawN/U1l6tWx1q/+6ydtNIFs
-         JrC7X4ZuaRG/TkEmnZUcp3K9qsGmj24M+ReJOSSA0AyeyDjczPIQNbH4LC+EDvRzpvV8
-         SKE2ML2sUDStKkQehGK+7N+ENAEwsBnUqrl4g=
+        bh=YqqKT3eigPbpbLIfXow9bVRBaR62Ck/KyMWJV3cVkEo=;
+        b=URKW4B75U1nuqN3e8ynZJvknPTkEzE/hMPdV6c+fB8IRzMi1uBUl+UvrYihSAmQWPL
+         o1uE27AgTGLjAbjhQEiGp+z09XBL323DMu4n1Bb7ClkxFdIYhJ61ySc9nPxMwqz/zrJH
+         rya0TKmSkcfJlup7TtEjNdFyVbjrmQ2WruH5U=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc:content-type;
-        bh=Yz0PPbZBBWiM5y0SXm/WlqssYsh1uCpBrCVOPfr+834=;
-        b=hVGJ7fTGSeodq0WbA/K6bHelZxHVUWvkNqT1P10U2sxi1CZpbGxDXNCeSMDovCh0/m
-         mYkl5/WKb+WoQe9XH4DhmWVeCYYG8GLi214YRqCEk0ve0DC2g2ImdDNTgxZwGUtGrMGs
-         OJomgngV4vzPe/VQ4nRLqritnWblfq3bv1EGVgVOM10nHglhOI/4f/T7NOWmTb/y1QpC
-         dBuAMy8PBPnPkTJI0AEl+R3yMFPb2hP/o2PoOIwpK2Lg+sBtm4+Kyf9WP8Xist7sx7AS
-         +t7D2PjeatxmLg8e8NGp4teIeGtnUSQpQRXsiFo5nFUbydRwcN1Pk1IKElZ1la8ErwKE
-         Tq3g==
-X-Gm-Message-State: ALoCoQmQAi3Be9vZ35T8erDnJohdsk/vBVLYaVz+Lrd+y8S/KHC8iz9tW4L53vHbc8BIVxVDYRQC
-X-Received: by 10.194.187.132 with SMTP id fs4mr54078wjc.82.1382709669657;
- Fri, 25 Oct 2013 07:01:09 -0700 (PDT)
-Received: by 10.227.62.140 with HTTP; Fri, 25 Oct 2013 07:00:48 -0700 (PDT)
-In-Reply-To: <20131024180627.GL24180@sigill.intra.peff.net>
+        bh=YqqKT3eigPbpbLIfXow9bVRBaR62Ck/KyMWJV3cVkEo=;
+        b=d7xDKfLryd9eBafouEPQg9ZzTKtXG4Qzv6G2T1LxaDemDC+lpQ17HVdtRYR5tOOQ7J
+         uwDA5KCXBzDsuP6AfnqHrmTYoFnAswpmEw4qMaz1IBPU6aZbS+iH5eMSeRZYBb9ti61G
+         u2nKqxa8vB3YviB2vUIFFGs8CTLlcOycZnMPr2XynsBjFZj4m+a5/eX2d+X4YIiqndJ8
+         pqDwdGXnvWf3EpLmlf6K5++1t8KWgafL+aIynqAsBE7RnMkQWMTTWWPOQforLC5aC3Mo
+         e87Rg2NgvIL8/KtKwskgcCXBAiPEBfu6cEfTQrtxlDe9MWDOCrQkln3WNt51FYoHpGy7
+         QXeA==
+X-Gm-Message-State: ALoCoQlPOnz1PEX1Si3u1izxRxZ9gaRFQBcJXDcmhk0sV0hVKjDc9rekth77Y87ATH4J9x8rQp+0
+X-Received: by 10.194.206.5 with SMTP id lk5mr7603457wjc.46.1382710472602;
+ Fri, 25 Oct 2013 07:14:32 -0700 (PDT)
+Received: by 10.227.62.140 with HTTP; Fri, 25 Oct 2013 07:14:11 -0700 (PDT)
+In-Reply-To: <20131024180419.GK24180@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236704>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236705>
 
-On Thu, Oct 24, 2013 at 6:06 PM, Jeff King <peff@peff.net> wrote:
-> Note that most of the time we spend for --count invocations is on
-> generating the pack revindex. It may be worth storing a revidx (either
-> in a separate file, as part of the .idx, or as an optional section in
-> the .bitmap file).
+On Thu, Oct 24, 2013 at 6:04 PM, Jeff King <peff@peff.net> wrote:
+> For bitmaps to be used, the following must be true:
+>
+>   1. We must be packing to stdout (as a normal `pack-objects` from
+>      `upload-pack` would do).
+>
+>   2. There must be a .bitmap index containing at least one of the
+>      "have" objects that the client is asking for.
 
-This was discussed before, and it may make sense to cache the revidx.
-I'm glad to see the timings are already better with bitmaps, even
-though the revidx has to be computed on the fly for each invocation.
+The client must explicitly "have" a commit that has a bitmap? In JGit
+we allow the client to have anything, and walk backwards using
+traditional graph traversal until a bitmap is found.
+
+> @@ -704,6 +759,18 @@ static void write_pack_file(void)
+>                 offset = write_pack_header(f, nr_remaining);
+>                 if (!offset)
+>                         die_errno("unable to write pack header");
+> +
+> +               if (reuse_packfile) {
+> +                       off_t packfile_size;
+> +                       assert(pack_to_stdout);
+> +
+> +                       packfile_size = write_reused_pack(f);
+> +                       if (!packfile_size)
+> +                               die_errno("failed to re-use existing pack");
+> +
+> +                       offset += packfile_size;
+> +               }
+> +
+>                 nr_written = 0;
+>                 for (; i < to_pack.nr_objects; i++) {
+>                         struct object_entry *e = write_order[i];
+
+Can reuse_packfile be true at the same time as to_pack.nr_objects > 0?
+
+In JGit we write the to_pack list first, then the reuse pack. Our
+rationale was the to_pack list is recent objects that are newer and
+would appear first in a traditional traversal, so they should go at
+the front of the stream. This does mean if they delta compress against
+an object in that reuse_packfile slice they have to use REF_DELTA
+instead of OFS_DELTA.
+
+
+Is this series running on github.com/torvalds/linux? Last Saturday I
+ran a live demo clone comparing github.com/torvalds/linux to a JGit
+bitmap clone and some guy heckled me because GitHub was only a few
+seconds slower. :-)
