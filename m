@@ -1,92 +1,71 @@
-From: Anders Waldenborg <anders.waldenborg@gmail.com>
-Subject: Re: [PATCH] diff: Add diff.orderfile configuration variable
-Date: Fri, 25 Oct 2013 12:24:42 +0200
-Message-ID: <CADsOX3DvqrR66uKtGZr2MJta9F0R7QmU2MO6mr0XA_kut8mZ-Q@mail.gmail.com>
-References: <CADsOX3DBmNituJsiYEBRENQeosASXtV_hd0zUW13cBoDZWHRhg@mail.gmail.com>
-	<20131021184040.GX9464@google.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Setting per-repository configuration for git
+Date: Fri, 25 Oct 2013 12:37:16 +0000 (UTC)
+Message-ID: <loom.20131025T143218-801@post.gmane.org>
+References: <884520645.9668515.1382684531443.JavaMail.root@openwide.fr> <834511791.9670586.1382685155770.JavaMail.root@openwide.fr> <20131025082513.GE17029@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, Anders Waldenborg <anders@0x63.nu>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 25 12:24:50 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 25 14:37:44 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VZeZT-00016t-W4
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Oct 2013 12:24:48 +0200
+	id 1VZge5-0002RK-Ir
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Oct 2013 14:37:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752736Ab3JYKYo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Oct 2013 06:24:44 -0400
-Received: from mail-ie0-f169.google.com ([209.85.223.169]:38560 "EHLO
-	mail-ie0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752377Ab3JYKYn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Oct 2013 06:24:43 -0400
-Received: by mail-ie0-f169.google.com with SMTP id ar20so6189717iec.0
-        for <git@vger.kernel.org>; Fri, 25 Oct 2013 03:24:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=Qp/8JXdPS0QB1PXDa+SgkFfeHGNmUGchu7Xj15ZUmDw=;
-        b=Vw6lBLqCgS5fOaKuVuUIUebKkB3kh60xitwJ5SKWXtAg+6OfszEFXgyBDqN+STYibc
-         Lin7m4OWI2YGH4RlZ/He8sAAVRg4UxHG1Yw6I+xFq+Hfhugza71D48yvVfcgpeAFVM/a
-         S5GYoLeS9ksfNaLdPArMxby9QCp2KwXQg3ONraqXtA2oJxNELkbAaiwSMt7QmL3bRs6e
-         UDwowgQ2adaIvvB1Z3gUoS/IKCemXGF6AgWYbjDlSKmjMd3PLXZNBacCdWZqa+uwvNoe
-         uBAjdaQu2rBh2B9TyM/m0z4eTkt5cCmL+XbiDv6ytCt2wRuaEPVT38jys7eMij5L405m
-         nvmg==
-X-Received: by 10.43.138.134 with SMTP id is6mr55192icc.88.1382696682504; Fri,
- 25 Oct 2013 03:24:42 -0700 (PDT)
-Received: by 10.64.59.33 with HTTP; Fri, 25 Oct 2013 03:24:42 -0700 (PDT)
-In-Reply-To: <20131021184040.GX9464@google.com>
+	id S1752595Ab3JYMhh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Oct 2013 08:37:37 -0400
+Received: from plane.gmane.org ([80.91.229.3]:38048 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752117Ab3JYMhg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Oct 2013 08:37:36 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1VZgdy-0002JH-H0
+	for git@vger.kernel.org; Fri, 25 Oct 2013 14:37:34 +0200
+Received: from eva93.neoplus.adsl.tpnet.pl ([83.20.198.93])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 25 Oct 2013 14:37:34 +0200
+Received: from jnareb by eva93.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 25 Oct 2013 14:37:34 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 83.20.198.93 (Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/28.0.1500.71 Chrome/28.0.1500.71 Safari/537.36)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236699>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236701>
 
-(Jonathan, sorry if you got this multiple times, it seems I forgot to Cc list)
+Jeff King <peff <at> peff.net> writes:
+> On Fri, Oct 25, 2013 at 09:12:35AM +0200, Jeremy Rosen wrote:
+>=20
+> > however I can't find a way to have the repository's configuration=20
+> > saved and transmited with the repository in a way similar to how
+> > .gitignore is transmitted...
+> > [...]
 
-On Mon, Oct 21, 2013 at 8:40 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Should the git-diff(1) manpage get a note about this setting as
-> well (perhaps in a new CONFIGURATION section)?
+> Two, the config is not really tied to a specific revision in the same
+> way that a .gitignore is. If I move to another branch, or checkout an
+> old revision, I would want to use the .gitignore from the currently
+> checked-out commit. But git config does not typically work that way. =
+If
+> I am sight-seeing back to last year's history, I do not want to use a
+> different remote URL, or different diff settings, etc. So managing a
+> .gitconfig directly in the repository has some ugly edge cases.
 
-I'll add a reference to the documentation for the -O option at least.
-That is how --check, --color, --dirstat and others do it, I guess that
-could be moved to a CONFIGURATION section later?
+Nb. *Mercurial* uses in repository .hgtags file for shared tags (instea=
+d
+of using separate transport mechanism, like Git does with refs, of
+which tags are special case).  Said file has to be treated in a special
+way, with some sharp corner-cases (e.g. committing a tag (sic!)).
 
-> Should Documentation/technical/api-diff.txt be tweaked to mention that
-> the options set by diff_setup() depend on configuration now?
-
-It already did, didn't it? At least diff.context, diff.renames and
-diff.color seems to affect diff_setup(), no?
-
-> If a caller wants to parse diff config and also wants to make a diff
-> without using the config (the example I'm imagining is an alternative
-> implemention fo "git log -p --cherry-pick"), can they do that?  It's
-> tempting to move handling of configuration into a separate function.
-> (Perhaps it's not worth worrying about that until someone needs the
-> flexibility, though.)
-
-Right, patch-ids are not stable wrt ordering. That might be a problem
-if some tool stores patch-ids. But maybe that even is a separate bug?
-Should patch-id always reorder the files internally? Is it expected
-that "git diff -Oorder1  | git patch-id" and "git diff -Oorder2 | git
-patch-id" gives same patch id?
-
-It gets very interesting in an imaginative "git log -p --cherry-pick"
-which caches patch-ids on disk, one would want one stable ordering for
-calculating the patchid, while the displayed patch should respect the
-user requested order.
-
-I guess that in most cases one would want to respect user configured
-ordering. Should diff_setup grow an argument "ignore_config"? Or
-should we maybe add an --no-order-file option that easily be set as a
-flag in diff_options in those cases?
-
-> Hope that helps,
-
-It does. Thanks! I have updated patch as per your other comments.
-
- anders
+--=20
+Jakub Nar=C4=99bski
