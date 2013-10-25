@@ -1,151 +1,132 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 02/19] revindex: Export new APIs
-Date: Fri, 25 Oct 2013 02:02:58 -0400
-Message-ID: <20131025060258.GA23067@sigill.intra.peff.net>
+Subject: [PATCH v2 04/19] pack-objects: factor out name_hash
+Date: Fri, 25 Oct 2013 02:03:15 -0400
+Message-ID: <20131025060315.GB23098@sigill.intra.peff.net>
 References: <20131025055521.GD11810@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Vicent Marti <vicent@github.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 25 08:03:24 2013
+X-From: git-owner@vger.kernel.org Fri Oct 25 08:03:30 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VZaUW-00060Z-1O
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Oct 2013 08:03:24 +0200
+	id 1VZaUb-00064G-3B
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Oct 2013 08:03:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751130Ab3JYGDD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Oct 2013 02:03:03 -0400
-Received: from cloud.peff.net ([50.56.180.127]:55284 "HELO peff.net"
+	id S1751300Ab3JYGDY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Oct 2013 02:03:24 -0400
+Received: from cloud.peff.net ([50.56.180.127]:55288 "HELO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750861Ab3JYGDB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Oct 2013 02:03:01 -0400
-Received: (qmail 3282 invoked by uid 102); 25 Oct 2013 06:03:01 -0000
+	id S1751183Ab3JYGDS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Oct 2013 02:03:18 -0400
+Received: (qmail 3310 invoked by uid 102); 25 Oct 2013 06:03:18 -0000
 Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 25 Oct 2013 01:03:01 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 25 Oct 2013 02:02:58 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 25 Oct 2013 01:03:18 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 25 Oct 2013 02:03:15 -0400
 Content-Disposition: inline
 In-Reply-To: <20131025055521.GD11810@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236663>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236664>
 
 From: Vicent Marti <tanoku@gmail.com>
 
-Allow users to efficiently lookup consecutive entries that are expected
-to be found on the same revindex by exporting `find_revindex_position`:
-this function takes a pointer to revindex itself, instead of looking up
-the proper revindex for a given packfile on each call.
+As the pack-objects system grows beyond the single
+pack-objects.c file, more parts (like the soon-to-exist
+bitmap code) will need to compute hashes for matching
+deltas. Factor out name_hash to make it available to other
+files.
 
 Signed-off-by: Vicent Marti <tanoku@gmail.com>
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- pack-revindex.c | 38 +++++++++++++++++++++++++-------------
- pack-revindex.h |  8 ++++++++
- 2 files changed, 33 insertions(+), 13 deletions(-)
+ builtin/pack-objects.c | 24 ++----------------------
+ pack-objects.h         | 20 ++++++++++++++++++++
+ 2 files changed, 22 insertions(+), 22 deletions(-)
 
-diff --git a/pack-revindex.c b/pack-revindex.c
-index b4d2b35..0bb13b1 100644
---- a/pack-revindex.c
-+++ b/pack-revindex.c
-@@ -16,11 +16,6 @@
-  * get the object sha1 from the main index.
-  */
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index f3f0cf9..faf746b 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -778,26 +778,6 @@ static void write_pack_file(void)
+ 			written, nr_result);
+ }
  
--struct pack_revindex {
--	struct packed_git *p;
--	struct revindex_entry *revindex;
--};
+-static uint32_t name_hash(const char *name)
+-{
+-	uint32_t c, hash = 0;
 -
- static struct pack_revindex *pack_revindex;
- static int pack_revindex_hashsz;
- 
-@@ -201,15 +196,14 @@ static void create_pack_revindex(struct pack_revindex *rix)
- 	sort_revindex(rix->revindex, num_ent, p->pack_size);
- }
- 
--struct revindex_entry *find_pack_revindex(struct packed_git *p, off_t ofs)
-+struct pack_revindex *revindex_for_pack(struct packed_git *p)
+-	if (!name)
+-		return 0;
+-
+-	/*
+-	 * This effectively just creates a sortable number from the
+-	 * last sixteen non-whitespace characters. Last characters
+-	 * count "most", so things that end in ".c" sort together.
+-	 */
+-	while ((c = *name++) != 0) {
+-		if (isspace(c))
+-			continue;
+-		hash = (hash >> 2) + (c << 24);
+-	}
+-	return hash;
+-}
+-
+ static void setup_delta_attr_check(struct git_attr_check *check)
  {
- 	int num;
--	unsigned lo, hi;
- 	struct pack_revindex *rix;
--	struct revindex_entry *revindex;
+ 	static struct git_attr *attr_delta;
+@@ -826,7 +806,7 @@ static int add_object_entry(const unsigned char *sha1, enum object_type type,
+ 	struct object_entry *entry;
+ 	struct packed_git *p, *found_pack = NULL;
+ 	off_t found_offset = 0;
+-	uint32_t hash = name_hash(name);
++	uint32_t hash = pack_name_hash(name);
+ 	uint32_t index_pos;
  
- 	if (!pack_revindex_hashsz)
- 		init_pack_revindex();
+ 	entry = packlist_find(&to_pack, sha1, &index_pos);
+@@ -1082,7 +1062,7 @@ static void add_preferred_base_object(const char *name)
+ {
+ 	struct pbase_tree *it;
+ 	int cmplen;
+-	unsigned hash = name_hash(name);
++	unsigned hash = pack_name_hash(name);
+ 
+ 	if (!num_preferred_base || check_pbase_path(hash))
+ 		return;
+diff --git a/pack-objects.h b/pack-objects.h
+index f528215..90ad0a8 100644
+--- a/pack-objects.h
++++ b/pack-objects.h
+@@ -44,4 +44,24 @@ struct object_entry *packlist_find(struct packing_data *pdata,
+ 				   const unsigned char *sha1,
+ 				   uint32_t *index_pos);
+ 
++static inline uint32_t pack_name_hash(const char *name)
++{
++	uint32_t c, hash = 0;
 +
- 	num = pack_revindex_ix(p);
- 	if (num < 0)
- 		die("internal error: pack revindex fubar");
-@@ -217,21 +211,39 @@ struct revindex_entry *find_pack_revindex(struct packed_git *p, off_t ofs)
- 	rix = &pack_revindex[num];
- 	if (!rix->revindex)
- 		create_pack_revindex(rix);
--	revindex = rix->revindex;
- 
--	lo = 0;
--	hi = p->num_objects + 1;
-+	return rix;
++	if (!name)
++		return 0;
++
++	/*
++	 * This effectively just creates a sortable number from the
++	 * last sixteen non-whitespace characters. Last characters
++	 * count "most", so things that end in ".c" sort together.
++	 */
++	while ((c = *name++) != 0) {
++		if (isspace(c))
++			continue;
++		hash = (hash >> 2) + (c << 24);
++	}
++	return hash;
 +}
 +
-+int find_revindex_position(struct pack_revindex *pridx, off_t ofs)
-+{
-+	int lo = 0;
-+	int hi = pridx->p->num_objects + 1;
-+	struct revindex_entry *revindex = pridx->revindex;
-+
- 	do {
- 		unsigned mi = lo + (hi - lo) / 2;
- 		if (revindex[mi].offset == ofs) {
--			return revindex + mi;
-+			return mi;
- 		} else if (ofs < revindex[mi].offset)
- 			hi = mi;
- 		else
- 			lo = mi + 1;
- 	} while (lo < hi);
-+
- 	error("bad offset for revindex");
--	return NULL;
-+	return -1;
-+}
-+
-+struct revindex_entry *find_pack_revindex(struct packed_git *p, off_t ofs)
-+{
-+	struct pack_revindex *pridx = revindex_for_pack(p);
-+	int pos = find_revindex_position(pridx, ofs);
-+
-+	if (pos < 0)
-+		return NULL;
-+
-+	return pridx->revindex + pos;
- }
- 
- void discard_revindex(void)
-diff --git a/pack-revindex.h b/pack-revindex.h
-index 8d5027a..866ca9c 100644
---- a/pack-revindex.h
-+++ b/pack-revindex.h
-@@ -6,6 +6,14 @@ struct revindex_entry {
- 	unsigned int nr;
- };
- 
-+struct pack_revindex {
-+	struct packed_git *p;
-+	struct revindex_entry *revindex;
-+};
-+
-+struct pack_revindex *revindex_for_pack(struct packed_git *p);
-+int find_revindex_position(struct pack_revindex *pridx, off_t ofs);
-+
- struct revindex_entry *find_pack_revindex(struct packed_git *p, off_t ofs);
- void discard_revindex(void);
- 
+ #endif
 -- 
 1.8.4.1.898.g8bf8a41.dirty
