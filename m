@@ -1,104 +1,97 @@
-From: Milton Soares Filho <milton.soares.filho@gmail.com>
-Subject: [PATCH] graph.c: visual difference on subsequent series
-Date: Fri, 25 Oct 2013 14:07:48 -0200
-Message-ID: <1382717268-21884-1-git-send-email-milton.soares.filho@gmail.com>
-Cc: Milton Soares Filho <milton.soares.filho@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 25 18:08:14 2013
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 2/2] merge-base: "--reflog" mode finds fork point from reflog entries
+Date: Fri, 25 Oct 2013 09:53:53 -0700
+Message-ID: <xmqqmwlxjnq6.fsf@gitster.dls.corp.google.com>
+References: <xmqqhac6o5hj.fsf@gitster.dls.corp.google.com>
+	<1382641884-14756-1-git-send-email-gitster@pobox.com>
+	<1382641884-14756-3-git-send-email-gitster@pobox.com>
+	<CAPig+cQrBMMqSmOk0GSZJ9PTHNt-t+vuOG2Aq=7VTR1EZSeLsw@mail.gmail.com>
+	<xmqq61smmkc0.fsf@gitster.dls.corp.google.com>
+	<CAPig+cQ2tWFXX-RYnUrHEZCaqaPV6ZwgoPfiNPv9P1jFNTGEYg@mail.gmail.com>
+	<xmqqwql2l3ln.fsf@gitster.dls.corp.google.com>
+	<xmqqsivql37i.fsf_-_@gitster.dls.corp.google.com>
+	<526A19CA.9020609@viscovery.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>,
+	Martin von Zweigbergk <martinvonz@gmail.com>,
+	John Keeping <john@keeping.me.uk>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Fri Oct 25 18:54:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VZjvq-0000LF-Dp
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Oct 2013 18:08:14 +0200
+	id 1VZkeA-0000dA-LZ
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Oct 2013 18:54:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754720Ab3JYQIG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Oct 2013 12:08:06 -0400
-Received: from mail-qa0-f44.google.com ([209.85.216.44]:45678 "EHLO
-	mail-qa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754662Ab3JYQIE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Oct 2013 12:08:04 -0400
-Received: by mail-qa0-f44.google.com with SMTP id cm18so679371qab.10
-        for <git@vger.kernel.org>; Fri, 25 Oct 2013 09:08:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=ZYPy5UUAQiLX7aAXiro4HNtz5c/IJE8UP2BXoDlyxVE=;
-        b=oOC/66e+7ofZBSxmJxide2Aqr6rLsMr4JFOKr8YHz7RRmNMy2ofzc12vv2gGixXrbj
-         3YJuj45F+yNZ1h1K6FMAsm0Fga4Dzq3S4X14V8AsX75Gc/lrd7VSdbALRII7S5qX4DrN
-         4pauBEeWeeJ9cQuZdn5huZpcfOJLUpsCHBApmqDr/DZwupElFmpm+pK8KYKHqUyBnuES
-         P5WXrpWnLEXnoqE1Vr1YHLL8hb2jd2Y+Vr8vHv5LVQF7RWfu/CjRGTkD7q6MLusbAEHA
-         HHX7O9ZnZ6OEfOjRk2HzZ1K3C2H0udj9r7tbvC2zlpVKrefDlGr9fjIDy51ji9l7l81m
-         TMGw==
-X-Received: by 10.224.114.196 with SMTP id f4mr2404752qaq.96.1382717284098;
-        Fri, 25 Oct 2013 09:08:04 -0700 (PDT)
-Received: from localhost.localdomain ([186.212.83.148])
-        by mx.google.com with ESMTPSA id a9sm14616683qed.6.2013.10.25.09.08.02
-        for <multiple recipients>
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 25 Oct 2013 09:08:03 -0700 (PDT)
-X-Mailer: git-send-email 1.8.1.2
+	id S1752610Ab3JYQx6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Oct 2013 12:53:58 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60233 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751788Ab3JYQx5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Oct 2013 12:53:57 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 03EFD4BC53;
+	Fri, 25 Oct 2013 16:53:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=6RaXACZ4nhOhqpILQ+cZo9WdEzw=; b=haIjMC
+	A/XggeTvWFtDUbj7Hh/8+vVmPmKOUTDLLWzM6ly8xKTTFH+FDc0ewUgEnjp4k4NN
+	E+99oRMTaBv/Nr8Mzp4vrk4+ZaLzs6PFYfd3HZ0SFYhEg2fxXlxCCT/TErqaGGXL
+	iXWdEtj/RTfbrc+blO5LE/hq/AlAcKL2SHJ2M=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=KPTDkfEqhhRpZIP6uEKTd4yWSHcX01c/
+	p2g5X3fMV4u3btEJJQSw2Y7LLozl+iQj817M3lvaW4n7vLMrqxrUDbnoj63YmOJ9
+	H2RMDwOVwcr0MF7G0phiWtWcPfVDw8SSgE/azRn7zGMRpNxrnKYktQop5ykq0D4H
+	wQUiIwCu2gk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EA84B4BC51;
+	Fri, 25 Oct 2013 16:53:56 +0000 (UTC)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3FFED4BC4C;
+	Fri, 25 Oct 2013 16:53:56 +0000 (UTC)
+In-Reply-To: <526A19CA.9020609@viscovery.net> (Johannes Sixt's message of
+	"Fri, 25 Oct 2013 09:12:10 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 0968B5B6-3D96-11E3-BBD5-8F264F2CC097-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236708>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236709>
 
-For projects with separate history lines and, thus, multiple root-commits, the
-linear arrangement of `git log --graph --oneline` does not allow the user to
-spot where the sequence ends, giving the impression that it's a contiguous
-history. E.g.
+Johannes Sixt <j.sixt@viscovery.net> writes:
 
-History sequence A: a1 -- a2 -- a3 (root-commit)
-History sequence B: b1 -- b2 -- b3 (root-commit)
+>> +	for count in 1 2 3 4 5
+>> +	do
+>> +		git merge-base --reflog base $(cat derived$count) >actual &&
+>> +		test_cmp expect$count actual || break
+>> +	done &&
+>
+> This does not work as intended because the exit code of 'break' is always
+> zero. Unlike 'exit' and 'return', it does *not* pick up the exit code of
+> the last command that was executed.
 
-    git log --graph --oneline
-    * a1
-    * a2
-    * a3
-    * b1
-    * b2
-    * b3
+You are right. I obviously was not thinking straight.
 
-In a GUI tool, the root-commit of each series would stand out on the graph.
+> You could put the loops into a function from which you 'return',
+> but that is obscure in this case. The first iteration was better,
+> IMO.
 
-This modification changes the commit char to a different symbol ('x'), so users
-of the command-line graph tool can easily identify root-commits and make sense
-of where each series is limited to.
+I do not think using "return 1" is a good thing to do, either.
 
-    git log --graph --oneline
-    * a1
-    * a2
-    x a3
-    * b1
-    * b2
-    x b3
+We saw breakages with different shells around the use of "return"
+and we know the original "exit 1 inside subshell" works reliably
+everywher.
 
-Signed-off-by: Milton Soares Filho <milton.soares.filho@gmail.com>
----
- graph.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+I'll send out a revamped version later today, updating not just the
+test but the implementation.
 
-diff --git a/graph.c b/graph.c
-index b24d04c..ec8e960 100644
---- a/graph.c
-+++ b/graph.c
-@@ -780,6 +780,15 @@ static void graph_output_commit_char(struct git_graph *graph, struct strbuf *sb)
- 	}
- 
- 	/*
-+	 * Out-stand parentless commits to enforce non-continuity on subsequent
-+	 * but separate series
-+	 */
-+	if (graph->commit->parents == NULL) {
-+		strbuf_addch(sb, 'x');
-+		return;
-+	}
-+
-+	/*
- 	 * get_revision_mark() handles all other cases without assert()
- 	 */
- 	strbuf_addstr(sb, get_revision_mark(graph->revs, graph->commit));
--- 
-1.8.1.2
+Thank for a dose of sanity.
