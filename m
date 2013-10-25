@@ -1,96 +1,189 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH v2 07/19] compat: add endianness helpers
-Date: Fri, 25 Oct 2013 02:03:26 -0400
-Message-ID: <20131025060326.GE23098@sigill.intra.peff.net>
+Subject: [PATCH v2 09/19] documentation: add documentation for the bitmap
+ format
+Date: Fri, 25 Oct 2013 02:03:41 -0400
+Message-ID: <20131025060340.GG23098@sigill.intra.peff.net>
 References: <20131025055521.GD11810@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Vicent Marti <vicent@github.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 25 08:03:42 2013
+X-From: git-owner@vger.kernel.org Fri Oct 25 08:03:52 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VZaUn-0006Ed-17
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Oct 2013 08:03:41 +0200
+	id 1VZaUv-0006Ls-9P
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Oct 2013 08:03:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751378Ab3JYGDa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Oct 2013 02:03:30 -0400
-Received: from cloud.peff.net ([50.56.180.127]:55295 "HELO peff.net"
+	id S1751407Ab3JYGDo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Oct 2013 02:03:44 -0400
+Received: from cloud.peff.net ([50.56.180.127]:55302 "HELO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751218Ab3JYGD3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Oct 2013 02:03:29 -0400
-Received: (qmail 3357 invoked by uid 102); 25 Oct 2013 06:03:29 -0000
+	id S1751379Ab3JYGDn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Oct 2013 02:03:43 -0400
+Received: (qmail 3401 invoked by uid 102); 25 Oct 2013 06:03:43 -0000
 Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 25 Oct 2013 01:03:29 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 25 Oct 2013 02:03:26 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 25 Oct 2013 01:03:43 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 25 Oct 2013 02:03:41 -0400
 Content-Disposition: inline
 In-Reply-To: <20131025055521.GD11810@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236669>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236670>
 
 From: Vicent Marti <tanoku@gmail.com>
 
-The POSIX standard doesn't currently define a `nothll`/`htonll`
-function pair to perform network-to-host and host-to-network
-swaps of 64-bit data. These 64-bit swaps are necessary for the on-disk
-storage of EWAH bitmaps if they are not in native byte order.
+This is the technical documentation for the JGit-compatible Bitmap v1
+on-disk format.
 
 Signed-off-by: Vicent Marti <tanoku@gmail.com>
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- compat/bswap.h | 35 +++++++++++++++++++++++++++++++++++
- 1 file changed, 35 insertions(+)
+ Documentation/technical/bitmap-format.txt | 131 ++++++++++++++++++++++++++++++
+ 1 file changed, 131 insertions(+)
+ create mode 100644 Documentation/technical/bitmap-format.txt
 
-diff --git a/compat/bswap.h b/compat/bswap.h
-index 5061214..ea1a9ed 100644
---- a/compat/bswap.h
-+++ b/compat/bswap.h
-@@ -47,4 +47,39 @@ static inline uint32_t git_bswap32(uint32_t x)
- #define ntohl(x) bswap32(x)
- #define htonl(x) bswap32(x)
- 
-+#ifndef __BYTE_ORDER
-+#	if defined(BYTE_ORDER) && defined(LITTLE_ENDIAN) && defined(BIG_ENDIAN)
-+#		define __BYTE_ORDER BYTE_ORDER
-+#		define __LITTLE_ENDIAN LITTLE_ENDIAN
-+#		define __BIG_ENDIAN BIG_ENDIAN
-+#	else
-+#		error "Cannot determine endianness"
-+#	endif
-+#endif
+diff --git a/Documentation/technical/bitmap-format.txt b/Documentation/technical/bitmap-format.txt
+new file mode 100644
+index 0000000..7a86bd7
+--- /dev/null
++++ b/Documentation/technical/bitmap-format.txt
+@@ -0,0 +1,131 @@
++GIT bitmap v1 format
++====================
 +
-+#if __BYTE_ORDER == __BIG_ENDIAN
-+# define ntohll(n) (n)
-+# define htonll(n) (n)
-+#elif __BYTE_ORDER == __LITTLE_ENDIAN
-+#	if defined(__GNUC__) && defined(__GLIBC__)
-+#		include <byteswap.h>
-+#	else /* GNUC & GLIBC */
-+static inline uint64_t bswap_64(uint64_t val)
-+{
-+	return ((val & (uint64_t)0x00000000000000ffULL) << 56)
-+		| ((val & (uint64_t)0x000000000000ff00ULL) << 40)
-+		| ((val & (uint64_t)0x0000000000ff0000ULL) << 24)
-+		| ((val & (uint64_t)0x00000000ff000000ULL) <<  8)
-+		| ((val & (uint64_t)0x000000ff00000000ULL) >>  8)
-+		| ((val & (uint64_t)0x0000ff0000000000ULL) >> 24)
-+		| ((val & (uint64_t)0x00ff000000000000ULL) >> 40)
-+		| ((val & (uint64_t)0xff00000000000000ULL) >> 56);
-+}
-+#	endif /* GNUC & GLIBC */
-+#	define ntohll(n) bswap_64(n)
-+#	define htonll(n) bswap_64(n)
-+#else /* __BYTE_ORDER */
-+#	error "Can't define htonll or ntohll!"
-+#endif
++	- A header appears at the beginning:
 +
- #endif
++		4-byte signature: {'B', 'I', 'T', 'M'}
++
++		2-byte version number (network byte order)
++			The current implementation only supports version 1
++			of the bitmap index (the same one as JGit).
++
++		2-byte flags (network byte order)
++
++			The following flags are supported:
++
++			- BITMAP_OPT_FULL_DAG (0x1) REQUIRED
++			This flag must always be present. It implies that the bitmap
++			index has been generated for a packfile with full closure
++			(i.e. where every single object in the packfile can find
++			 its parent links inside the same packfile). This is a
++			requirement for the bitmap index format, also present in JGit,
++			that greatly reduces the complexity of the implementation.
++
++		4-byte entry count (network byte order)
++
++			The total count of entries (bitmapped commits) in this bitmap index.
++
++		20-byte checksum
++
++			The SHA1 checksum of the pack this bitmap index belongs to.
++
++	- 4 EWAH bitmaps that act as type indexes
++
++		Type indexes are serialized after the hash cache in the shape
++		of four EWAH bitmaps stored consecutively (see Appendix A for
++		the serialization format of an EWAH bitmap).
++
++		There is a bitmap for each Git object type, stored in the following
++		order:
++
++			- Commits
++			- Trees
++			- Blobs
++			- Tags
++
++		In each bitmap, the `n`th bit is set to true if the `n`th object
++		in the packfile is of that type.
++
++		The obvious consequence is that the OR of all 4 bitmaps will result
++		in a full set (all bits set), and the AND of all 4 bitmaps will
++		result in an empty bitmap (no bits set).
++
++	- N entries with compressed bitmaps, one for each indexed commit
++
++		Where `N` is the total amount of entries in this bitmap index.
++		Each entry contains the following:
++
++		- 4-byte object position (network byte order)
++			The position **in the index for the packfile** where the
++			bitmap for this commit is found.
++
++		- 1-byte XOR-offset
++			The xor offset used to compress this bitmap. For an entry
++			in position `x`, a XOR offset of `y` means that the actual
++			bitmap representing this commit is composed by XORing the
++			bitmap for this entry with the bitmap in entry `x-y` (i.e.
++			the bitmap `y` entries before this one).
++
++			Note that this compression can be recursive. In order to
++			XOR this entry with a previous one, the previous entry needs
++			to be decompressed first, and so on.
++
++			The hard-limit for this offset is 160 (an entry can only be
++			xor'ed against one of the 160 entries preceding it). This
++			number is always positive, and hence entries are always xor'ed
++			with **previous** bitmaps, not bitmaps that will come afterwards
++			in the index.
++
++		- 1-byte flags for this bitmap
++			At the moment the only available flag is `0x1`, which hints
++			that this bitmap can be re-used when rebuilding bitmap indexes
++			for the repository.
++
++		- The compressed bitmap itself, see Appendix A.
++
++== Appendix A: Serialization format for an EWAH bitmap
++
++Ewah bitmaps are serialized in the same protocol as the JAVAEWAH
++library, making them backwards compatible with the JGit
++implementation:
++
++	- 4-byte number of bits of the resulting UNCOMPRESSED bitmap
++
++	- 4-byte number of words of the COMPRESSED bitmap, when stored
++
++	- N x 8-byte words, as specified by the previous field
++
++		This is the actual content of the compressed bitmap.
++
++	- 4-byte position of the current RLW for the compressed
++		bitmap
++
++All words are stored in network byte order for their corresponding
++sizes.
++
++The compressed bitmap is stored in a form of run-length encoding, as
++follows.  It consists of a concatenation of an arbitrary number of
++chunks.  Each chunk consists of one or more 64-bit words
++
++     H  L_1  L_2  L_3 .... L_M
++
++H is called RLW (run length word).  It consists of (from lower to higher
++order bits):
++
++     - 1 bit: the repeated bit B
++
++     - 32 bits: repetition count K (unsigned)
++
++     - 31 bits: literal word count M (unsigned)
++
++The bitstream represented by the above chunk is then:
++
++     - K repetitions of B
++
++     - The bits stored in `L_1` through `L_M`.  Within a word, bits at
++       lower order come earlier in the stream than those at higher
++       order.
++
++The next word after `L_M` (if any) must again be a RLW, for the next
++chunk.  For efficient appending to the bitstream, the EWAH stores a
++pointer to the last RLW in the stream.
 -- 
 1.8.4.1.898.g8bf8a41.dirty
