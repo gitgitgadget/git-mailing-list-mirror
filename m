@@ -1,94 +1,76 @@
-From: Jeremy Rosen <jeremy.rosen@openwide.fr>
-Subject: Setting per-repository configuration for git
-Date: Fri, 25 Oct 2013 09:12:35 +0200 (CEST)
-Message-ID: <834511791.9670586.1382685155770.JavaMail.root@openwide.fr>
-References: <884520645.9668515.1382684531443.JavaMail.root@openwide.fr>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 2/2] Update documentation for http.continue option
+Date: Fri, 25 Oct 2013 03:17:06 -0400
+Message-ID: <20131025071706.GA17029@sigill.intra.peff.net>
+References: <1381530945-90590-3-git-send-email-sandals@crustytoothpaste.net>
+ <20131011235052.GV9464@google.com>
+ <20131012002639.GE79408@vauxhall.crustytoothpaste.net>
+ <20131018221535.GM865149@vauxhall.crustytoothpaste.net>
+ <xmqqeh7csygy.fsf@gitster.dls.corp.google.com>
+ <20131022233257.GA9464@google.com>
+ <20131023013400.GB9464@google.com>
+ <20131023030048.GX865149@vauxhall.crustytoothpaste.net>
+ <CAJo=hJssxNtJSeLgwG5nON=Y-7HzZPULiwzH+0SXeU8tp3FC-A@mail.gmail.com>
+ <20131023225632.GZ865149@vauxhall.crustytoothpaste.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Oct 25 09:12:42 2013
+Cc: Shawn Pearce <spearce@spearce.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	git <git@vger.kernel.org>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+X-From: git-owner@vger.kernel.org Fri Oct 25 09:17:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VZbZZ-0003A1-59
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Oct 2013 09:12:41 +0200
+	id 1VZbe4-0006we-VB
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Oct 2013 09:17:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751492Ab3JYHMh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Oct 2013 03:12:37 -0400
-Received: from zimbra3.corp.accelance.fr ([213.162.49.233]:35075 "EHLO
-	zimbra3.corp.accelance.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751182Ab3JYHMh convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 25 Oct 2013 03:12:37 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by zimbra3.corp.accelance.fr (Postfix) with ESMTP id 5A87A6B555
-	for <git@vger.kernel.org>; Fri, 25 Oct 2013 09:12:36 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at zimbra3.corp.accelance.fr
-Received: from zimbra3.corp.accelance.fr ([127.0.0.1])
-	by localhost (zimbra3.corp.accelance.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id s4eHmzxodsHy for <git@vger.kernel.org>;
-	Fri, 25 Oct 2013 09:12:35 +0200 (CEST)
-Received: from zimbra2.corp.accelance.fr (zimbra2.corp.accelance.fr [213.162.49.232])
-	by zimbra3.corp.accelance.fr (Postfix) with ESMTP id D71406B42F
-	for <git@vger.kernel.org>; Fri, 25 Oct 2013 09:12:35 +0200 (CEST)
-In-Reply-To: <884520645.9668515.1382684531443.JavaMail.root@openwide.fr>
-X-Originating-IP: [213.162.49.238]
-X-Mailer: Zimbra 7.2.2_GA_2852 (ZimbraWebClient - GC30 (Linux)/7.2.2_GA_2852)
+	id S1751378Ab3JYHRL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Oct 2013 03:17:11 -0400
+Received: from cloud.peff.net ([50.56.180.127]:55389 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751182Ab3JYHRJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Oct 2013 03:17:09 -0400
+Received: (qmail 7103 invoked by uid 102); 25 Oct 2013 07:17:10 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 25 Oct 2013 02:17:10 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 25 Oct 2013 03:17:06 -0400
+Content-Disposition: inline
+In-Reply-To: <20131023225632.GZ865149@vauxhall.crustytoothpaste.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236690>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236691>
 
-Hello everybody
+On Wed, Oct 23, 2013 at 10:56:32PM +0000, brian m. carlson wrote:
 
-I am looking into the git configuration mechanism and there seem to=20
-be a "hole" in use cases I'm trying to figure out...
+> On Tue, Oct 22, 2013 at 08:21:48PM -0700, Shawn Pearce wrote:
+> > From my perspective, it is OK to defaulting to use 100-continue if the
+> > server supports Negotiate. If the user is stuck behind a broken proxy
+> > and can't authenticate, they can't authenticate. They can either set
+> > the variable to false, or fix their proxy, or use a different server,
+> > etc.
+> 
+> I think Jonathan's suggestion was to get rid of the variable altogether
+> and simply make the code conditional on whether the server is offering
+> GSS-Negotiate.  I plan to make the use of 100-continue conditional on
+> large_request as well, so that it only covers the case where it would
+> otherwise fail.
 
+I think that makes sense. Would you also want to suppress the probe
+request in that case? It serves the same purpose, but would cause you to
+do an extra auth for no reason (which potentially means user input,
+which is annoying).
 
-git configurations can be saved at various places
+Also, if I recall your original complaint correctly, the "Expect"
+handling was only half of the problem. Wasn't there also an issue where
+git prompts for a password, even though GSS-Negotiate doesn't use it? Do
+you have a plan for that?
 
-* /etc/gitconfig : system-wide configuration
-* ~/.gitconfig : user-wide configuration
-* .git/config : repository-wide configuration
-
-however I can't find a way to have the repository's configuration=20
-saved and transmited with the repository in a way similar to how
-=2Egitignore is transmitted...
-
-Saving some configuration information within a repository is not=20
-unknown in git. .gitignore does it, and submodule configuration=20
-does it to.
-
-I think it's important to have a way to have configuration options
-be saved in a repository (and overridable with .git/config which=20
-is local-repository only) because a lot of configurationoptions
- are meant to express repository policies (triangular workflows,
-merge vs rebase, mail vs push) and it would make sense to have
-them transmitted that way.
-
-Knowing how mature git is I can only assume that this has already
-been discussed and that there is a good reason not to do it. Is it
-because of hooks ? would it break something I don't see in git ?
-
-git (the project) shouldn't enforce policies on repositories, but
-I think it makes sense for repositories to have a way to set default
-policies on their clone...
-
-Thx
-
-Cordialement=20
-
-J=C3=A9r=C3=A9my Rosen=20
-+33 (0)1 42 68 28 04
-
-fight key loggers : write some perl using vim=20
-
-
-Open Wide Ingenierie
-
-23, rue Daviel
-75012 Paris - France
-www.openwide.fr
+-Peff
