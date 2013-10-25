@@ -1,85 +1,141 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: git grep: search whole tree by default?
-Date: Fri, 25 Oct 2013 11:52:18 +0700
-Message-ID: <CACsJy8Cm7eShj22hve7=u2K5DKhv-t_KNUreRC+FZoehgfyEkg@mail.gmail.com>
-References: <CAA01CsqgNKdDAc9OL9zdk=3tnK9GAG=6w+wP_XSoiefBOgfzRQ@mail.gmail.com>
- <vpqbo2guff7.fsf@anie.imag.fr> <xmqqmwlzrjdh.fsf@gitster.dls.corp.google.com>
- <87hac7hmrb.fsf@mcs.anl.gov> <xmqqob6fq0q1.fsf@gitster.dls.corp.google.com>
- <87zjpzg592.fsf@mcs.anl.gov> <vpqy55jogzr.fsf@anie.imag.fr>
- <20131024022736.GA24992@sigill.intra.peff.net> <xmqqd2muo3sz.fsf@gitster.dls.corp.google.com>
- <20131025043717.GC11810@sigill.intra.peff.net>
+From: Martin von Zweigbergk <martinvonz@gmail.com>
+Subject: Re: Re* Bug report: reset -p HEAD
+Date: Thu, 24 Oct 2013 22:42:52 -0700
+Message-ID: <CANiSa6iYLp-iNdcv_qbFTitrfFxaDBVUy9YyUAF4QKM+-35P4A@mail.gmail.com>
+References: <CAPWpf+wi0zH2sOnuqiZuKkf+kC0RMug_ASb-J-TGGLd2RFT1wg@mail.gmail.com>
+	<CAPWpf+xqutvhq1jyVkxr6LyKsANTCS6M=vj5XY=EgUfiS3Z8xg@mail.gmail.com>
+	<CAPWpf+x5KUjD2K81pJAsV_XuPkd=BT06qPjvr8s7tEe5YqBt=w@mail.gmail.com>
+	<CAPWpf+zkA68pzR3qx5xma8BNiONwt5o8iNba0x8fmmiDAWpHuw@mail.gmail.com>
+	<xmqqvc0mj9wi.fsf_-_@gitster.dls.corp.google.com>
+	<20131025042421.GB11810@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Jed Brown <jed@59a2.org>,
-	Piotr Krukowiecki <piotr.krukowiecki@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
+	Maarten de Vries <maarten@de-vri.es>,
+	git mailing list <git@vger.kernel.org>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Oct 25 06:52:56 2013
+X-From: git-owner@vger.kernel.org Fri Oct 25 07:43:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VZZOJ-0008RU-T2
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Oct 2013 06:52:56 +0200
+	id 1VZaB0-0006gR-IJ
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Oct 2013 07:43:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751300Ab3JYEwt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Oct 2013 00:52:49 -0400
-Received: from mail-qa0-f42.google.com ([209.85.216.42]:55559 "EHLO
-	mail-qa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751237Ab3JYEwt (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Oct 2013 00:52:49 -0400
-Received: by mail-qa0-f42.google.com with SMTP id w8so315905qac.15
-        for <git@vger.kernel.org>; Thu, 24 Oct 2013 21:52:48 -0700 (PDT)
+	id S1751100Ab3JYFmy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Oct 2013 01:42:54 -0400
+Received: from mail-wg0-f46.google.com ([74.125.82.46]:56671 "EHLO
+	mail-wg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750861Ab3JYFmx (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Oct 2013 01:42:53 -0400
+Received: by mail-wg0-f46.google.com with SMTP id m15so3247220wgh.13
+        for <git@vger.kernel.org>; Thu, 24 Oct 2013 22:42:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=yWDZU0gJKleTdnCcooxvHHKPPerMjpTyaW27gIay23Y=;
-        b=h9gzjtZeS8yT2afuC/8SyEn5bcQPEt2oshcKtS056KOgz/Ad3Nt79cQMduI3/im1VP
-         iutlYOB7ZbAOLrotBnSf70RJh/+36zt4jC7aD/9eKnE3wvaJC0mfbQneulY0WcdC0Lhz
-         L4mnjBpP17XKY7VzB23Du8757ZoD0JK81yOcFhDL9Is7ZgiyAR2I9mok2hyPKvgz3bkN
-         FD5b8Y0uRUEvFHHRpgpVpLMMxC2deyKPRlgJaJiwPhCHJrVjtCZecZ1vSs585+pEimQu
-         A+D6sbCzk5Arh12dUK+eqJjlKNcauGI4222N27xB2KTOmOV4xu4m92ddOjl/wDGzIRQM
-         Bj2g==
-X-Received: by 10.224.79.12 with SMTP id n12mr7217394qak.109.1382676768702;
- Thu, 24 Oct 2013 21:52:48 -0700 (PDT)
-Received: by 10.96.27.202 with HTTP; Thu, 24 Oct 2013 21:52:18 -0700 (PDT)
-In-Reply-To: <20131025043717.GC11810@sigill.intra.peff.net>
+        bh=NmtzTAoRX0Ov8GLL6DbcssI2g+R2pXg+dbKgfxIL4M4=;
+        b=pUmoGzfwnJXxpvrsXouqcaOw3lEzgTPphYaRQUHhX+MIzJJtUSp0Ub+TM9WZoevdzN
+         JyyZLFbKig24dbCcYadPhgClKheYJumucpt/bZ3o51J/aXCxtgpp2h2pLU/nTQAfWIVB
+         dGyoZ/SHi89hmi+q7qMHCS9NUxLNcjKA+CQafBEc7rmA5AboFivhh2lhWRUFIavI4Cgz
+         GAnKs3tWmqeY5TFbQo9Ued6Na5bAmAHLQjbWrujKWsnK9irZNGTco/eEw5PPBPyWhxKp
+         4z8miEY1hd0eLvFNFzwPW4zfe9Sf7ZypcUP9S3dq0qO6/B7zzmsBzoWyqEDqrvd/3WBG
+         0z6Q==
+X-Received: by 10.180.36.242 with SMTP id t18mr898999wij.28.1382679772116;
+ Thu, 24 Oct 2013 22:42:52 -0700 (PDT)
+Received: by 10.180.80.67 with HTTP; Thu, 24 Oct 2013 22:42:52 -0700 (PDT)
+In-Reply-To: <20131025042421.GB11810@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236659>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236660>
 
-On Fri, Oct 25, 2013 at 11:37 AM, Jeff King <peff@peff.net> wrote:
-> On Thu, Oct 24, 2013 at 12:40:44PM -0700, Junio C Hamano wrote:
->
->> Jeff King <peff@peff.net> writes:
->>
->> > That would also provide people who do not like the change of default an
->> > escape hatch to keep the current behavior. And I do not think scripted
->> > use will be inconvenienced; they will already have to use "." or ":/" to
->> > be explicit (if they care) since the behavior is changing.
->>
->> There is a big difference between "scripted use will have an escape
->> hatch" and "scripted use will not be inconvenienced".
->
-> I think my communication may have been muddled in transit. What I meant
-> regarding inconvenienced was "not any more so than by simply changing
-> the behavior in the first place, since scripts already will need to
-> start becoming explicit due to the behavior change".
->
-> And for the "escape hatch", I did not mean for scripts. I actually meant
-> for users who do not like the extra typing and complain "stupid git, I
-> always want '.'; you used to do what I want and now you do not".
+Sorry about the regression and thanks for report and fixes.
 
-Such an escape hatch may be better done as an alias than a config key
-(an alias is a config key anyway). I know it won't be easy to "add '.'
-if no pathspecs are given", using shell script. But that's something
-we could improve, hopefully. An option is we could just export
-PATHSPEC_PREFER_* flags via a command line (like --literal-pathspecs).
--- 
-Duy
+On Thu, Oct 24, 2013 at 9:24 PM, Jeff King <peff@peff.net> wrote:
+> On Thu, Oct 24, 2013 at 08:40:13PM -0700, Junio C Hamano wrote:
+>
+>> Maarten de Vries <maarten@de-vri.es> writes:
+>>
+>> > Some more info: It used to work as intended. Using a bisect shows it
+>> > has been broken by commit 166ec2e9.
+>>
+>> Thanks.
+>>
+>> A knee-jerk change without thinking what side-effect it has for you
+>> to try out.
+>>
+>>  builtin/reset.c | 5 ++++-
+>>  1 file changed, 4 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/builtin/reset.c b/builtin/reset.c
+>> index f2f9d55..a3088d9 100644
+>> --- a/builtin/reset.c
+>> +++ b/builtin/reset.c
+>> @@ -304,7 +304,10 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+>>       if (patch_mode) {
+>>               if (reset_type != NONE)
+>>                       die(_("--patch is incompatible with --{hard,mixed,soft}"));
+>> -             return run_add_interactive(sha1_to_hex(sha1), "--patch=reset", &pathspec);
+>> +             return run_add_interactive(
+>> +                     (unborn || strcmp(rev, "HEAD"))
+>> +                     ? sha1_to_hex(sha1)
+>> +                     : "HEAD", "--patch=reset", &pathspec);
+>>       }
+>
+> I think that's the correct fix for the regression.  You are restoring
+> the original, pre-166ec2e9 behavior for just the HEAD case. I do not
+> think add--interactive does any other magic between a symbolic rev and
+> its sha1, except for recognizing HEAD specially. However, if you wanted
+> to minimize the potential impact of 166ec2e9, you could pass the sha1
+> _only_ in the unborn case, like this:
+
+Plus, the end result is more readable, IMHO.
+
+> diff --git a/builtin/reset.c b/builtin/reset.c
+> index f2f9d55..bfdd8d3 100644
+> --- a/builtin/reset.c
+> +++ b/builtin/reset.c
+> @@ -283,6 +283,7 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+>         if (unborn) {
+>                 /* reset on unborn branch: treat as reset to empty tree */
+>                 hashcpy(sha1, EMPTY_TREE_SHA1_BIN);
+> +               rev = EMPTY_TREE_SHA1_HEX;
+>         } else if (!pathspec.nr) {
+>                 struct commit *commit;
+>                 if (get_sha1_committish(rev, sha1))
+> @@ -304,7 +305,7 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+>         if (patch_mode) {
+>                 if (reset_type != NONE)
+>                         die(_("--patch is incompatible with --{hard,mixed,soft}"));
+> -               return run_add_interactive(sha1_to_hex(sha1), "--patch=reset", &pathspec);
+> +               return run_add_interactive(rev, "--patch=reset", &pathspec);
+>         }
+>
+>         /* git reset tree [--] paths... can be used to
+>
+> That fixes any possible regression from add--interactive treating the
+> two cases differently. On an unborn branch, we will still say "apply
+> this hunk" rather than "unstage this hunk". That's not a regression,
+> because it simply didn't work before, but it's not ideal. To fix that,
+> we need to somehow tell add--interactive "this is HEAD, but use the
+> empty tree because it's unborn". I can think of a few simple-ish ways:
+>
+>   1. Pass the head/not-head flag as a separate option.
+>
+>   2. Pass HEAD even in the unborn case; teach add--interactive to
+>      convert an unborn HEAD to the empty tree.
+>
+>   3. Teach add--interactive to recognize the empty tree sha1 as an
+>      "unstage" path.
+>
+> I kind of like (3). At first glance, it is wrong; we will also treat
+> "git reset -p $(git hash-object -t tree /dev/null)" as if "HEAD" had
+> been passed. But if you are explicitly passing the empty tree like that,
+> I think saying "unstage" makes a lot of sense.
+
+Makes sense to me. I'm sure others can implement that much faster than
+I can, but I feel a little guilty, so I'm happy to do it if no one
+else wants to, as long as we agree this is the way we want to go.
