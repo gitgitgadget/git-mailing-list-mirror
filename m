@@ -1,68 +1,61 @@
-From: Olivier Revollat <revollat@gmail.com>
-Subject: Re: GIT Hooks and security
-Date: Sat, 26 Oct 2013 00:25:04 +0200
-Message-ID: <CA+nXgrUcpfya+rTPzfRafzJbK1khNqtz-HsaKeGfdA86AepKEg@mail.gmail.com>
-References: <CA+nXgrUZk=_wtQ2yQnxwCZ3Mazdz=ZH2FJV+V92PVa0a4+A1hQ@mail.gmail.com>
-	<xmqqwql1hub6.fsf@gitster.dls.corp.google.com>
+From: Nicolas Vigier <boklm@mars-attacks.org>
+Subject: Re: [PATCH] rev-parse --parseopt: add the --sticked-long mode
+Date: Sat, 26 Oct 2013 00:52:23 +0200
+Message-ID: <20131025225222.GL4589@mars-attacks.org>
+References: <20131016223306.GN9464@google.com>
+ <1382732291-5701-1-git-send-email-boklm@mars-attacks.org>
+ <xmqq1u39j9hw.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=iso-8859-1
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Oct 26 00:25:20 2013
+X-From: git-owner@vger.kernel.org Sat Oct 26 00:52:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VZpol-0001PK-S7
-	for gcvg-git-2@plane.gmane.org; Sat, 26 Oct 2013 00:25:20 +0200
+	id 1VZqFA-00036Z-4y
+	for gcvg-git-2@plane.gmane.org; Sat, 26 Oct 2013 00:52:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751868Ab3JYWZI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Oct 2013 18:25:08 -0400
-Received: from mail-wg0-f53.google.com ([74.125.82.53]:36578 "EHLO
-	mail-wg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751321Ab3JYWZG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Oct 2013 18:25:06 -0400
-Received: by mail-wg0-f53.google.com with SMTP id y10so4443026wgg.8
-        for <git@vger.kernel.org>; Fri, 25 Oct 2013 15:25:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=7IllI3KI9z0T/Ve03X0hUQ9PWEFFZed9X+7MnKfBP0k=;
-        b=md+jVFgmxh0SCWy6fLOhGa1SAV73T/WIqB3beDt9OY4+KKz3TgnkIngiBPT8SHSRMc
-         zqyty+/ynwzpngxap8AY5NGXZ28QtQsEZG4q8Y6wCGqPRdO0MW7xqpKf04flHwohSDpL
-         a0TJo4PpzSjxN66Gx/AX/coZL0e6FkJ4R0FRn2y4gHjSmcnTECzf/Io5inAzNts2g2p+
-         S6FV1ES6zhdPAb3bsih0oErThQXKDtEhKSU8YoIHbHMnNWQh0pg2IjLQ8guxUY21BLE5
-         t+nG79mGJt7nkeRlCkGAliDCIA2ajnUmnYsLHnbn7yPnNZboUlvm/jgE7iQq3HqHptUp
-         2mDw==
-X-Received: by 10.195.13.45 with SMTP id ev13mr9170565wjd.20.1382739904672;
- Fri, 25 Oct 2013 15:25:04 -0700 (PDT)
-Received: by 10.216.33.3 with HTTP; Fri, 25 Oct 2013 15:25:04 -0700 (PDT)
-In-Reply-To: <xmqqwql1hub6.fsf@gitster.dls.corp.google.com>
+	id S1753784Ab3JYWw1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Oct 2013 18:52:27 -0400
+Received: from mx0.mars-attacks.org ([92.243.25.60]:42060 "EHLO
+	mx0.mars-attacks.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753732Ab3JYWwZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Oct 2013 18:52:25 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mx0.mars-attacks.org (Postfix) with ESMTP id 077C648C3;
+	Sat, 26 Oct 2013 00:52:39 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at mars-attacks.org
+Received: from mx0.mars-attacks.org ([127.0.0.1])
+	by localhost (mx0.mars-attacks.org [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id ttkU9ifOr-62; Sat, 26 Oct 2013 00:52:38 +0200 (CEST)
+Received: from wxy.mars-attacks.org (moow.mars-attacks.org [82.242.116.57])
+	by mx0.mars-attacks.org (Postfix) with ESMTPS id 87C754238;
+	Sat, 26 Oct 2013 00:52:38 +0200 (CEST)
+Received: by wxy.mars-attacks.org (Postfix, from userid 500)
+	id 0BF3143934; Sat, 26 Oct 2013 00:52:23 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <xmqq1u39j9hw.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236721>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236722>
 
-But when someone do a "clone" he don't have .git/hooks directory
-downloaded to his local computer ? I thought so ...
+On Fri, 25 Oct 2013, Junio C Hamano wrote:
 
-2013/10/26 Junio C Hamano <gitster@pobox.com>:
-> Olivier Revollat <revollat@gmail.com> writes:
->
->> I was wondering : What if I had a "malicious" GIT repository who can
->> "inject" code  via git hooks mechanism : someone clone my repo and
->> some malicious code is executed when a certain GIT hook is triggered
->> (for example on commit ("prepare-commit-msg' hook))
->
-> In that somebody else's clone, you will not have _your_ malicious
-> hook installed, unless that cloner explicitly does something stupid,
-> like copying that malicious hook.
+> Nicolas Vigier <boklm@mars-attacks.org> writes:
+> 
+> > Add the --sticked-long option to output the options in their long form
+> > if available, and with their arguments sticked.
+> 
+> Hmph, doesn't verb "stick" conjugate to "(present) stick (past) stuck
+> (pp) stuck"?
 
+Ah, yes it seems. I don't know if 'sticked' is also correct or not.
 
-
--- 
-Mathematics is made of 50 percent formulas, 50 percent proofs, and 50
-percent imagination.
+However, 'sticked' is the word that is used in Documentation/gitcli.txt
+and Documentation/technical/api-parse-options.txt.
