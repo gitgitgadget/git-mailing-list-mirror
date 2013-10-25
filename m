@@ -1,123 +1,107 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: Re* Bug report: reset -p HEAD
-Date: Fri, 25 Oct 2013 00:24:21 -0400
-Message-ID: <20131025042421.GB11810@sigill.intra.peff.net>
-References: <CAPWpf+wi0zH2sOnuqiZuKkf+kC0RMug_ASb-J-TGGLd2RFT1wg@mail.gmail.com>
- <CAPWpf+xqutvhq1jyVkxr6LyKsANTCS6M=vj5XY=EgUfiS3Z8xg@mail.gmail.com>
- <CAPWpf+x5KUjD2K81pJAsV_XuPkd=BT06qPjvr8s7tEe5YqBt=w@mail.gmail.com>
- <CAPWpf+zkA68pzR3qx5xma8BNiONwt5o8iNba0x8fmmiDAWpHuw@mail.gmail.com>
- <xmqqvc0mj9wi.fsf_-_@gitster.dls.corp.google.com>
+Subject: Re: git grep: search whole tree by default?
+Date: Fri, 25 Oct 2013 00:37:17 -0400
+Message-ID: <20131025043717.GC11810@sigill.intra.peff.net>
+References: <CAA01CsqgNKdDAc9OL9zdk=3tnK9GAG=6w+wP_XSoiefBOgfzRQ@mail.gmail.com>
+ <vpqbo2guff7.fsf@anie.imag.fr>
+ <xmqqmwlzrjdh.fsf@gitster.dls.corp.google.com>
+ <87hac7hmrb.fsf@mcs.anl.gov>
+ <xmqqob6fq0q1.fsf@gitster.dls.corp.google.com>
+ <87zjpzg592.fsf@mcs.anl.gov>
+ <vpqy55jogzr.fsf@anie.imag.fr>
+ <20131024022736.GA24992@sigill.intra.peff.net>
+ <xmqqd2muo3sz.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Maarten de Vries <maarten@de-vri.es>,
-	git mailing list <git@vger.kernel.org>,
-	Martin von Zweigbergk <martinvonz@gmail.com>
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Jed Brown <jed@59A2.org>,
+	Piotr Krukowiecki <piotr.krukowiecki@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Oct 25 06:24:28 2013
+X-From: git-owner@vger.kernel.org Fri Oct 25 06:37:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VZYwm-00031m-8U
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Oct 2013 06:24:28 +0200
+	id 1VZZ9L-0004iF-Rn
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Oct 2013 06:37:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751300Ab3JYEYY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Oct 2013 00:24:24 -0400
-Received: from cloud.peff.net ([50.56.180.127]:55232 "HELO peff.net"
+	id S1751369Ab3JYEhV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Oct 2013 00:37:21 -0400
+Received: from cloud.peff.net ([50.56.180.127]:55242 "HELO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750954Ab3JYEYY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Oct 2013 00:24:24 -0400
-Received: (qmail 31069 invoked by uid 102); 25 Oct 2013 04:24:24 -0000
+	id S1751237Ab3JYEhU (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Oct 2013 00:37:20 -0400
+Received: (qmail 31637 invoked by uid 102); 25 Oct 2013 04:37:20 -0000
 Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 24 Oct 2013 23:24:24 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 25 Oct 2013 00:24:21 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 24 Oct 2013 23:37:20 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 25 Oct 2013 00:37:17 -0400
 Content-Disposition: inline
-In-Reply-To: <xmqqvc0mj9wi.fsf_-_@gitster.dls.corp.google.com>
+In-Reply-To: <xmqqd2muo3sz.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236656>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236657>
 
-On Thu, Oct 24, 2013 at 08:40:13PM -0700, Junio C Hamano wrote:
+On Thu, Oct 24, 2013 at 12:40:44PM -0700, Junio C Hamano wrote:
 
-> Maarten de Vries <maarten@de-vri.es> writes:
+> Jeff King <peff@peff.net> writes:
 > 
-> > Some more info: It used to work as intended. Using a bisect shows it
-> > has been broken by commit 166ec2e9.
+> > That would also provide people who do not like the change of default an
+> > escape hatch to keep the current behavior. And I do not think scripted
+> > use will be inconvenienced; they will already have to use "." or ":/" to
+> > be explicit (if they care) since the behavior is changing.
 > 
-> Thanks.
+> There is a big difference between "scripted use will have an escape
+> hatch" and "scripted use will not be inconvenienced".
+
+I think my communication may have been muddled in transit. What I meant
+regarding inconvenienced was "not any more so than by simply changing
+the behavior in the first place, since scripts already will need to
+start becoming explicit due to the behavior change".
+
+And for the "escape hatch", I did not mean for scripts. I actually meant
+for users who do not like the extra typing and complain "stupid git, I
+always want '.'; you used to do what I want and now you do not".
+
+> Even if we ignore the "helping your colleague at her terminal", cf.
 > 
-> A knee-jerk change without thinking what side-effect it has for you
-> to try out.
-> 
->  builtin/reset.c | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
-> 
-> diff --git a/builtin/reset.c b/builtin/reset.c
-> index f2f9d55..a3088d9 100644
-> --- a/builtin/reset.c
-> +++ b/builtin/reset.c
-> @@ -304,7 +304,10 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
->  	if (patch_mode) {
->  		if (reset_type != NONE)
->  			die(_("--patch is incompatible with --{hard,mixed,soft}"));
-> -		return run_add_interactive(sha1_to_hex(sha1), "--patch=reset", &pathspec);
-> +		return run_add_interactive(
-> +			(unborn || strcmp(rev, "HEAD"))
-> +			? sha1_to_hex(sha1)
-> +			: "HEAD", "--patch=reset", &pathspec);
->  	}
+>     http://thread.gmane.org/gmane.comp.version-control.git/133570/focus=133683
 
-I think that's the correct fix for the regression.  You are restoring
-the original, pre-166ec2e9 behavior for just the HEAD case. I do not
-think add--interactive does any other magic between a symbolic rev and
-its sha1, except for recognizing HEAD specially. However, if you wanted
-to minimize the potential impact of 166ec2e9, you could pass the sha1
-_only_ in the unborn case, like this:
+FWIW, I have never agreed with that line of reasoning. I was going to
+explain why, but I see that I already did in response to the article you
+linked. :)
 
-diff --git a/builtin/reset.c b/builtin/reset.c
-index f2f9d55..bfdd8d3 100644
---- a/builtin/reset.c
-+++ b/builtin/reset.c
-@@ -283,6 +283,7 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
- 	if (unborn) {
- 		/* reset on unborn branch: treat as reset to empty tree */
- 		hashcpy(sha1, EMPTY_TREE_SHA1_BIN);
-+		rev = EMPTY_TREE_SHA1_HEX;
- 	} else if (!pathspec.nr) {
- 		struct commit *commit;
- 		if (get_sha1_committish(rev, sha1))
-@@ -304,7 +305,7 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
- 	if (patch_mode) {
- 		if (reset_type != NONE)
- 			die(_("--patch is incompatible with --{hard,mixed,soft}"));
--		return run_add_interactive(sha1_to_hex(sha1), "--patch=reset", &pathspec);
-+		return run_add_interactive(rev, "--patch=reset", &pathspec);
- 	}
- 
- 	/* git reset tree [--] paths... can be used to
+> issue for now, adding a new configuration variable from day one
+> makes the transition of scripts somewhat worse, I am afraid.  Doing
+> so robs us a way to add such an annoying warning to help people
+> foresee problems in their existing scripts before the default
+> changes (the configuration presumably will disable the "this command
+> line will behave differently after the default changes" warning).
 
-That fixes any possible regression from add--interactive treating the
-two cases differently. On an unborn branch, we will still say "apply
-this hunk" rather than "unstage this hunk". That's not a regression,
-because it simply didn't work before, but it's not ideal. To fix that,
-we need to somehow tell add--interactive "this is HEAD, but use the
-empty tree because it's unborn". I can think of a few simple-ish ways:
+If you want to have an annoying warning, why not consider the config a
+tristate? Do X or do Y, or if unset, do X with an annoying warning
+(which will switch to Y in the future). That does not help a user who
+sets the variable after seeing the warning the first time, then later
+runs a script that silently chooses the wrong behavior.
 
-  1. Pass the head/not-head flag as a separate option.
+But neither does a warning that is squelched by advice.*, which the user
+will also set soon after seeing it.
 
-  2. Pass HEAD even in the unborn case; teach add--interactive to
-     convert an unborn HEAD to the empty tree.
+The only way to hit those scripts is to yell at the user anytime the
+appropriate command-line override is not selected, with no way to turn
+it off. That's what we're doing now with "git add". I think people find
+it a little annoying. But perhaps it is the least of all evils.
 
-  3. Teach add--interactive to recognize the empty tree sha1 as an
-     "unstage" path.
 
-I kind of like (3). At first glance, it is wrong; we will also treat
-"git reset -p $(git hash-object -t tree /dev/null)" as if "HEAD" had
-been passed. But if you are explicitly passing the empty tree like that,
-I think saying "unstage" makes a lot of sense.
+Anyway, I have said my piece, and I think we are on the same page with
+the tradeoffs (what they are, though we may value them differently).  I
+do not care that strongly about the config option these days; as I said,
+it was something I would have used in certain workflows, but I do not
+foresee myself even setting it these days. So I am willing to forego it
+if there are concerns it will make things worse.
 
 -Peff
