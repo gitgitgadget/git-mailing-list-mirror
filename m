@@ -1,72 +1,81 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: RFE: support change-id generation natively
-Date: Fri, 25 Oct 2013 08:37:28 +0200
-Message-ID: <526A11A8.90200@viscovery.net>
-References: <2127507934.9293293.1382367063640.JavaMail.root@openwide.fr>	<201310212029.01589.thomas@koch.ro>	<1382380858.25852.36711509.53CF173C@webmail.messagingengine.com>	<201310211249.49568.mfick@codeaurora.org>	<xmqqy55lrsoo.fsf@gitster.dls.corp.google.com>	<CACsJy8A7r-gsbru0eLxtJbFk2vgqvBH9akHn6e53k=UJbZ1K7Q@mail.gmail.com>	<xmqqzjq0q8nl.fsf@gitster.dls.corp.google.com>	<CACsJy8CuEvdTu+P-P-kYC0dKQKnjh5sRoevd_hsbqF0796i0xw@mail.gmail.com>	<8D1AF6D7-F7AA-4E64-B6B3-3C8C931312C3@codeaurora.org>	<CACsJy8BoqWMqGPM8JDny6mxkxZzhWrQ6RYZiNK=vzdwXL4a=vQ@mail.gmail.com>	<5268B7D6.5050106@viscovery.net> <xmqqzjpymo4y.fsf@gitster.dls.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 0/2] reset -p and unborn branches
+Date: Fri, 25 Oct 2013 02:51:17 -0400
+Message-ID: <20131025065117.GA15192@sigill.intra.peff.net>
+References: <CAPWpf+wi0zH2sOnuqiZuKkf+kC0RMug_ASb-J-TGGLd2RFT1wg@mail.gmail.com>
+ <CAPWpf+xqutvhq1jyVkxr6LyKsANTCS6M=vj5XY=EgUfiS3Z8xg@mail.gmail.com>
+ <CAPWpf+x5KUjD2K81pJAsV_XuPkd=BT06qPjvr8s7tEe5YqBt=w@mail.gmail.com>
+ <CAPWpf+zkA68pzR3qx5xma8BNiONwt5o8iNba0x8fmmiDAWpHuw@mail.gmail.com>
+ <xmqqvc0mj9wi.fsf_-_@gitster.dls.corp.google.com>
+ <20131025042421.GB11810@sigill.intra.peff.net>
+ <CANiSa6iYLp-iNdcv_qbFTitrfFxaDBVUy9YyUAF4QKM+-35P4A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Nasser Grainawi <nasser@codeaurora.org>,
-	Martin Fick <mfick@codeaurora.org>, james.moger@gitblit.com,
-	Thomas Koch <thomas@koch.ro>,
-	Jeremy Rosen <jeremy.rosen@openwide.fr>,
-	Git Mailing List <git@vger.kernel.org>,
-	Shawn Pearce <spearce@spearce.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Oct 25 08:37:43 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Maarten de Vries <maarten@de-vri.es>,
+	git mailing list <git@vger.kernel.org>
+To: Martin von Zweigbergk <martinvonz@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 25 08:51:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VZb1i-0008Ut-O5
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Oct 2013 08:37:43 +0200
+	id 1VZbEz-0002bg-6e
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Oct 2013 08:51:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751913Ab3JYGhi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Oct 2013 02:37:38 -0400
-Received: from so.liwest.at ([212.33.55.16]:48121 "EHLO so.liwest.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751261Ab3JYGhh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Oct 2013 02:37:37 -0400
-Received: from [81.10.228.254] (helo=theia.linz.viscovery)
-	by so.liwest.at with esmtpa (Exim 4.80.1)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1VZb1U-0002Tn-VM; Fri, 25 Oct 2013 08:37:29 +0200
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 9A11A16613;
-	Fri, 25 Oct 2013 08:37:28 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:24.0) Gecko/20100101 Thunderbird/24.0.1
-In-Reply-To: <xmqqzjpymo4y.fsf@gitster.dls.corp.google.com>
-X-Enigmail-Version: 1.5.2
-X-Spam-Score: -1.0 (-)
+	id S1751426Ab3JYGvV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Oct 2013 02:51:21 -0400
+Received: from cloud.peff.net ([50.56.180.127]:55358 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751168Ab3JYGvU (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Oct 2013 02:51:20 -0400
+Received: (qmail 5705 invoked by uid 102); 25 Oct 2013 06:51:20 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 25 Oct 2013 01:51:20 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 25 Oct 2013 02:51:17 -0400
+Content-Disposition: inline
+In-Reply-To: <CANiSa6iYLp-iNdcv_qbFTitrfFxaDBVUy9YyUAF4QKM+-35P4A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236683>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236684>
 
-Am 10/24/2013 22:04, schrieb Junio C Hamano:
-> Johannes Sixt <j.sixt@viscovery.net> writes:
->> That said, I don't think that --change-id option that the user must not
->> forget to use is any better than a hook that the user must not forget to
->> install.
+On Thu, Oct 24, 2013 at 10:42:52PM -0700, Martin von Zweigbergk wrote:
+
+> > I think that's the correct fix for the regression.  You are restoring
+> > the original, pre-166ec2e9 behavior for just the HEAD case. I do not
+> > think add--interactive does any other magic between a symbolic rev and
+> > its sha1, except for recognizing HEAD specially. However, if you wanted
+> > to minimize the potential impact of 166ec2e9, you could pass the sha1
+> > _only_ in the unborn case, like this:
 > 
-> That is why I said this in my first response to this thread:
-> 
->>> ...  We may even want to
->>> introduce commit.changeId boolean configuration variable if we did
->>> so.
+> Plus, the end result is more readable, IMHO.
 
-That's only slightly different and still "must not forget to set".
+Agreed. Unfortunately it is slightly wrong, because for the non-patch
+cases, we may look at "rev" later, and we would want it to still say
+"HEAD" rather than a sha1. This is fixed in my patches below.
 
-But I am more concerned that a non-volatile change-id is totally outside
-the Git data model. After we have git commit --change-id, what will be the
-next requests for enhancement? 'git merge' and 'git cherry-pick' take a
-change-id? Where will it end?
+> >   1. Pass the head/not-head flag as a separate option.
+> >
+> >   2. Pass HEAD even in the unborn case; teach add--interactive to
+> >      convert an unborn HEAD to the empty tree.
+> >
+> >   3. Teach add--interactive to recognize the empty tree sha1 as an
+> >      "unstage" path.
+> [...]
+> Makes sense to me. I'm sure others can implement that much faster than
+> I can, but I feel a little guilty, so I'm happy to do it if no one
+> else wants to, as long as we agree this is the way we want to go.
 
-We could ship a git-gerrit-commit wrapper script in contrib that adds the
-change-id and that people can alias their 'git ci' to globally or on a
-per-repo basis.
+As it turns out, add--interactive already _does_ know how to handle an
+unborn HEAD. It just didn't use it for this particular code path. So I
+think doing (2) makes the most sense, and the result is that the patch
+in reset.c ends up nice and simple.
 
--- Hannes
+  [1/2]: add-interactive: handle unborn branch in patch mode
+  [2/2]: reset: pass real rev name to add--interactive
+
+-Peff
