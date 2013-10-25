@@ -1,90 +1,151 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH v2 01/19] sha1write: make buffer const-correct
-Date: Fri, 25 Oct 2013 01:57:33 -0400
-Message-ID: <20131025055733.GA21179@sigill.intra.peff.net>
+Subject: [PATCH 02/19] revindex: Export new APIs
+Date: Fri, 25 Oct 2013 02:02:58 -0400
+Message-ID: <20131025060258.GA23067@sigill.intra.peff.net>
 References: <20131025055521.GD11810@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Vicent Marti <vicent@github.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 25 07:57:45 2013
+X-From: git-owner@vger.kernel.org Fri Oct 25 08:03:24 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VZaOy-0001OK-RG
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Oct 2013 07:57:41 +0200
+	id 1VZaUW-00060Z-1O
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Oct 2013 08:03:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751201Ab3JYF5g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Oct 2013 01:57:36 -0400
-Received: from cloud.peff.net ([50.56.180.127]:55280 "HELO peff.net"
+	id S1751130Ab3JYGDD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Oct 2013 02:03:03 -0400
+Received: from cloud.peff.net ([50.56.180.127]:55284 "HELO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750861Ab3JYF5g (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Oct 2013 01:57:36 -0400
-Received: (qmail 3029 invoked by uid 102); 25 Oct 2013 05:57:36 -0000
+	id S1750861Ab3JYGDB (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Oct 2013 02:03:01 -0400
+Received: (qmail 3282 invoked by uid 102); 25 Oct 2013 06:03:01 -0000
 Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 25 Oct 2013 00:57:36 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 25 Oct 2013 01:57:33 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 25 Oct 2013 01:03:01 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 25 Oct 2013 02:02:58 -0400
 Content-Disposition: inline
 In-Reply-To: <20131025055521.GD11810@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236662>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236663>
 
-We are passed a "void *" and write it out without ever
-touching it; let's indicate that by using "const".
+From: Vicent Marti <tanoku@gmail.com>
 
+Allow users to efficiently lookup consecutive entries that are expected
+to be found on the same revindex by exporting `find_revindex_position`:
+this function takes a pointer to revindex itself, instead of looking up
+the proper revindex for a given packfile on each call.
+
+Signed-off-by: Vicent Marti <tanoku@gmail.com>
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- csum-file.c | 6 +++---
- csum-file.h | 2 +-
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ pack-revindex.c | 38 +++++++++++++++++++++++++-------------
+ pack-revindex.h |  8 ++++++++
+ 2 files changed, 33 insertions(+), 13 deletions(-)
 
-diff --git a/csum-file.c b/csum-file.c
-index 53f5375..465971c 100644
---- a/csum-file.c
-+++ b/csum-file.c
-@@ -11,7 +11,7 @@
- #include "progress.h"
- #include "csum-file.h"
+diff --git a/pack-revindex.c b/pack-revindex.c
+index b4d2b35..0bb13b1 100644
+--- a/pack-revindex.c
++++ b/pack-revindex.c
+@@ -16,11 +16,6 @@
+  * get the object sha1 from the main index.
+  */
  
--static void flush(struct sha1file *f, void *buf, unsigned int count)
-+static void flush(struct sha1file *f, const void *buf, unsigned int count)
- {
- 	if (0 <= f->check_fd && count)  {
- 		unsigned char check_buffer[8192];
-@@ -86,13 +86,13 @@ int sha1close(struct sha1file *f, unsigned char *result, unsigned int flags)
- 	return fd;
+-struct pack_revindex {
+-	struct packed_git *p;
+-	struct revindex_entry *revindex;
+-};
+-
+ static struct pack_revindex *pack_revindex;
+ static int pack_revindex_hashsz;
+ 
+@@ -201,15 +196,14 @@ static void create_pack_revindex(struct pack_revindex *rix)
+ 	sort_revindex(rix->revindex, num_ent, p->pack_size);
  }
  
--int sha1write(struct sha1file *f, void *buf, unsigned int count)
-+int sha1write(struct sha1file *f, const void *buf, unsigned int count)
+-struct revindex_entry *find_pack_revindex(struct packed_git *p, off_t ofs)
++struct pack_revindex *revindex_for_pack(struct packed_git *p)
  {
- 	while (count) {
- 		unsigned offset = f->offset;
- 		unsigned left = sizeof(f->buffer) - offset;
- 		unsigned nr = count > left ? left : count;
--		void *data;
-+		const void *data;
+ 	int num;
+-	unsigned lo, hi;
+ 	struct pack_revindex *rix;
+-	struct revindex_entry *revindex;
  
- 		if (f->do_crc)
- 			f->crc32 = crc32(f->crc32, buf, nr);
-diff --git a/csum-file.h b/csum-file.h
-index 3b540bd..9dedb03 100644
---- a/csum-file.h
-+++ b/csum-file.h
-@@ -34,7 +34,7 @@ extern struct sha1file *sha1fd(int fd, const char *name);
- extern struct sha1file *sha1fd_check(const char *name);
- extern struct sha1file *sha1fd_throughput(int fd, const char *name, struct progress *tp);
- extern int sha1close(struct sha1file *, unsigned char *, unsigned int);
--extern int sha1write(struct sha1file *, void *, unsigned int);
-+extern int sha1write(struct sha1file *, const void *, unsigned int);
- extern void sha1flush(struct sha1file *f);
- extern void crc32_begin(struct sha1file *);
- extern uint32_t crc32_end(struct sha1file *);
+ 	if (!pack_revindex_hashsz)
+ 		init_pack_revindex();
++
+ 	num = pack_revindex_ix(p);
+ 	if (num < 0)
+ 		die("internal error: pack revindex fubar");
+@@ -217,21 +211,39 @@ struct revindex_entry *find_pack_revindex(struct packed_git *p, off_t ofs)
+ 	rix = &pack_revindex[num];
+ 	if (!rix->revindex)
+ 		create_pack_revindex(rix);
+-	revindex = rix->revindex;
+ 
+-	lo = 0;
+-	hi = p->num_objects + 1;
++	return rix;
++}
++
++int find_revindex_position(struct pack_revindex *pridx, off_t ofs)
++{
++	int lo = 0;
++	int hi = pridx->p->num_objects + 1;
++	struct revindex_entry *revindex = pridx->revindex;
++
+ 	do {
+ 		unsigned mi = lo + (hi - lo) / 2;
+ 		if (revindex[mi].offset == ofs) {
+-			return revindex + mi;
++			return mi;
+ 		} else if (ofs < revindex[mi].offset)
+ 			hi = mi;
+ 		else
+ 			lo = mi + 1;
+ 	} while (lo < hi);
++
+ 	error("bad offset for revindex");
+-	return NULL;
++	return -1;
++}
++
++struct revindex_entry *find_pack_revindex(struct packed_git *p, off_t ofs)
++{
++	struct pack_revindex *pridx = revindex_for_pack(p);
++	int pos = find_revindex_position(pridx, ofs);
++
++	if (pos < 0)
++		return NULL;
++
++	return pridx->revindex + pos;
+ }
+ 
+ void discard_revindex(void)
+diff --git a/pack-revindex.h b/pack-revindex.h
+index 8d5027a..866ca9c 100644
+--- a/pack-revindex.h
++++ b/pack-revindex.h
+@@ -6,6 +6,14 @@ struct revindex_entry {
+ 	unsigned int nr;
+ };
+ 
++struct pack_revindex {
++	struct packed_git *p;
++	struct revindex_entry *revindex;
++};
++
++struct pack_revindex *revindex_for_pack(struct packed_git *p);
++int find_revindex_position(struct pack_revindex *pridx, off_t ofs);
++
+ struct revindex_entry *find_pack_revindex(struct packed_git *p, off_t ofs);
+ void discard_revindex(void);
+ 
 -- 
 1.8.4.1.898.g8bf8a41.dirty
