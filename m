@@ -1,59 +1,59 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 Subject: [PATCH] pathspec: stop --*-pathspecs impact on internal parse_pathspec() uses
-Date: Sat, 26 Oct 2013 09:09:20 +0700
-Message-ID: <1382753360-32037-1-git-send-email-pclouds@gmail.com>
+Date: Sat, 26 Oct 2013 09:09:39 +0700
+Message-ID: <1382753379-32076-1-git-send-email-pclouds@gmail.com>
 References: <20131025034947.GA4959@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Oct 26 04:05:33 2013
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Oct 26 04:05:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VZtFp-0007Ve-EN
-	for gcvg-git-2@plane.gmane.org; Sat, 26 Oct 2013 04:05:29 +0200
+	id 1VZtG5-0007fv-JH
+	for gcvg-git-2@plane.gmane.org; Sat, 26 Oct 2013 04:05:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753314Ab3JZCFZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Oct 2013 22:05:25 -0400
-Received: from mail-pd0-f178.google.com ([209.85.192.178]:64968 "EHLO
-	mail-pd0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753081Ab3JZCFY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Oct 2013 22:05:24 -0400
-Received: by mail-pd0-f178.google.com with SMTP id x10so4518816pdj.9
-        for <git@vger.kernel.org>; Fri, 25 Oct 2013 19:05:24 -0700 (PDT)
+	id S1753865Ab3JZCFk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Oct 2013 22:05:40 -0400
+Received: from mail-pa0-f53.google.com ([209.85.220.53]:55050 "EHLO
+	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753081Ab3JZCFi (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Oct 2013 22:05:38 -0400
+Received: by mail-pa0-f53.google.com with SMTP id kx10so2094829pab.26
+        for <git@vger.kernel.org>; Fri, 25 Oct 2013 19:05:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
         bh=n2iyc/7XbntPc6g+GF+rSEZVEoa+jiYDqAhwz8Ib0Bs=;
-        b=HpABfh969yR1FVbcTrVDenESHSmXyuBEJqru1QBvo0z3rZlG4+QD8kStfOBT9M/x+8
-         NMnQPYmqIlxbeo3wju7+dbkh3HwM2fpZVEVWd+zlUJw24Ba1ofTwAHWKfh/FpWQ5njrm
-         XfvhC9KOtG4Sb8Sa5yS7TRCj8dWV/BZywapdNVyKlDlvO5Nh2wC9OCSfjt4ql4xGTaSL
-         L0+D69Uau+822Pa0N7dc6Mu58eLEFAeXK7i/2uDfC3qaj9dZVICD5iGm7ywf8FcQFUUa
-         tQk5FxpimQfvuJ7ooZZwXP6Tw/SZbePTDFSqX6YA2NG7dpz7UaNeMaOPER3kTa0cKWI5
-         oWZQ==
-X-Received: by 10.66.197.135 with SMTP id iu7mr13679194pac.149.1382753124010;
-        Fri, 25 Oct 2013 19:05:24 -0700 (PDT)
+        b=TJ+5MsXrM/cXf5Dt9Q0iQiuqP1rers+7cwJsCq+r4PVGrz4AyVTApdJjHIyIQZ4IiQ
+         z/QvlsimiNwv4/nwzEaU2wRlNTKNcxrykWU/4pabcsl+/Qoja6Llpl/vV7J65VBrYuJy
+         Yz1TPbyChgQw26P75gdqGZT+HBvI2BqhdiWLAnR37yvZPITBzZMWN/Y3peWRkd6J6dS3
+         0OkO/sEAYvZuvq937wlwFnl+TzjQhUHlueiYVFeDbkkPp+GnxV7iopJ0FeIdqB++t8d8
+         0keqn/+iqcKHZlNXAgh1m+6H/KDkeNdKkN4n3s7JRbZpMguz/0vhQ5LKc8QzFLseXfGv
+         jMCg==
+X-Received: by 10.66.228.38 with SMTP id sf6mr13671303pac.21.1382753137951;
+        Fri, 25 Oct 2013 19:05:37 -0700 (PDT)
 Received: from lanh ([115.73.231.247])
-        by mx.google.com with ESMTPSA id lm2sm16832383pab.2.2013.10.25.19.05.20
+        by mx.google.com with ESMTPSA id ik1sm12578688pbc.9.2013.10.25.19.05.34
         for <multiple recipients>
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 25 Oct 2013 19:05:23 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Sat, 26 Oct 2013 09:09:26 +0700
+        Fri, 25 Oct 2013 19:05:37 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Sat, 26 Oct 2013 09:09:40 +0700
 X-Mailer: git-send-email 1.8.2.83.gc99314b
 In-Reply-To: <20131025034947.GA4959@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236729>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236730>
 
 Normally parse_pathspec() is used on command line arguments where it
 can do fancy thing like parsing magic on each argument or adding magic
