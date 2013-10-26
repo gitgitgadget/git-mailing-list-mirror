@@ -1,82 +1,84 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH 20/19] count-objects: consider .bitmap without .pack/.idx pair garbage
-Date: Sat, 26 Oct 2013 17:19:56 +0700
-Message-ID: <1382782796-5495-1-git-send-email-pclouds@gmail.com>
-References: <20131025060442.GQ23098@sigill.intra.peff.net>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v2 11/19] pack-objects: use bitmaps when packing objects
+Date: Sat, 26 Oct 2013 17:25:14 +0700
+Message-ID: <CACsJy8DMOfZu+2DS=-J9jfiP796XYi=e7B28cdV=ck9J-VOTtA@mail.gmail.com>
+References: <20131025055521.GD11810@sigill.intra.peff.net> <20131025060352.GI23098@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, vicent@github.com,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 26 12:16:06 2013
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Vicent Marti <vicent@github.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Oct 26 12:26:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Va0ub-00065l-Ap
-	for gcvg-git-2@plane.gmane.org; Sat, 26 Oct 2013 12:16:05 +0200
+	id 1Va14E-0004X7-Su
+	for gcvg-git-2@plane.gmane.org; Sat, 26 Oct 2013 12:26:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751552Ab3JZKQA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 26 Oct 2013 06:16:00 -0400
-Received: from mail-pb0-f51.google.com ([209.85.160.51]:57292 "EHLO
-	mail-pb0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751389Ab3JZKP7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Oct 2013 06:15:59 -0400
-Received: by mail-pb0-f51.google.com with SMTP id wz7so4474590pbc.38
-        for <git@vger.kernel.org>; Sat, 26 Oct 2013 03:15:59 -0700 (PDT)
+	id S1751467Ab3JZKZp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Oct 2013 06:25:45 -0400
+Received: from mail-qe0-f43.google.com ([209.85.128.43]:47973 "EHLO
+	mail-qe0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751414Ab3JZKZp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Oct 2013 06:25:45 -0400
+Received: by mail-qe0-f43.google.com with SMTP id nc12so3002218qeb.30
+        for <git@vger.kernel.org>; Sat, 26 Oct 2013 03:25:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=FX1LiYVdhoibSgdmHR7UxajIhHAFNWoYwp4l09EcsOA=;
-        b=ebn/SwRHSJy9s6vXkfeZfTD0xr6hiSCNzCpULQX4MPjwHFW8aTsW8yGjWvIZ0rswdL
-         0fFKdfLydgcTn1FesQaWhgLfwaV1BgFZ/Ib+vP+IcOtPV2XdBsI74Jeqmc4DwcjW9fiu
-         GVsCugLoDSDe+2OivWmf1Sbmu1TSH7Avl8KLZKlfEyt5Q79M1tXJnRLf+lLORLj9JFX2
-         80KTGUvXIQPGRWq2QQcZa2QO7o4Is75FwKVhqW0CsFXJfJXG1HLx70d7zciCq5nzxG2I
-         ixogfptlCAs5Mnr0RmTqaiFJ6sbaSGJ5e2TmOZKmVU7zc+HXGhMxoTXa6+sT0g2mN1Iu
-         zuyQ==
-X-Received: by 10.68.209.133 with SMTP id mm5mr606636pbc.157.1382782559099;
-        Sat, 26 Oct 2013 03:15:59 -0700 (PDT)
-Received: from lanh ([115.73.224.222])
-        by mx.google.com with ESMTPSA id ry4sm19774468pab.4.2013.10.26.03.15.55
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 26 Oct 2013 03:15:58 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Sat, 26 Oct 2013 17:20:01 +0700
-X-Mailer: git-send-email 1.8.2.83.gc99314b
-In-Reply-To: <20131025060442.GQ23098@sigill.intra.peff.net>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=p+bm/yXA73byKDdc9SnyHAow7xn5wqMh5teQ1rcMkZU=;
+        b=FgM5m3KIo6hCXTn87YO6kuyhJgQpIuNJH7x8OZpAV26He1PBvlIRfb3RSqEqG4y5zE
+         Qn9kqfXj1Mxq8Ebu6eDPlqoYdKTFO0G3TTg6mEbNrZ9JQ+AC/F2mebBFT9sM+k58QUBX
+         Fa6frxKInz67bIba1sQbnZfr8SSj1itpzaqVfFJFMXdFMn5mE5GQ5cezi5wOtcMMXvz3
+         L4vRPaVE+1bU9mm4sVxalBkW5WHoJqaxN/9htjmt6xc78NV6dq93yFwWNLlrI8ZB6MUN
+         ojIytGLIJACpXpCMxeppdS+/1dvddNOWnHUoxcaqjnNjh2SOqxI3lqVj3WCUOPoDR5qc
+         VRXQ==
+X-Received: by 10.224.79.12 with SMTP id n12mr963323qak.109.1382783144221;
+ Sat, 26 Oct 2013 03:25:44 -0700 (PDT)
+Received: by 10.96.27.202 with HTTP; Sat, 26 Oct 2013 03:25:14 -0700 (PDT)
+In-Reply-To: <20131025060352.GI23098@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236749>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236750>
 
+On Fri, Oct 25, 2013 at 1:03 PM, Jeff King <peff@peff.net> wrote:
+> From: Vicent Marti <tanoku@gmail.com>
+>
+> In this patch, we use the bitmap API to perform the `Counting Objects`
+> phase in pack-objects, rather than a traditional walk through the object
+> graph. For a reasonably-packed large repo, the time to fetch and clone
+> is often dominated by the full-object revision walk during the Counting
+> Objects phase. Using bitmaps can reduce the CPU time required on the
+> server (and therefore start sending the actual pack data with less
+> delay).
+>
+> For bitmaps to be used, the following must be true:
+>
+>   1. We must be packing to stdout (as a normal `pack-objects` from
+>      `upload-pack` would do).
+>
+>   2. There must be a .bitmap index containing at least one of the
+>      "have" objects that the client is asking for.
+>
+>   3. Bitmaps must be enabled (they are enabled by default, but can be
+>      disabled by setting `pack.usebitmaps` to false, or by using
+>      `--no-use-bitmap-index` on the command-line).
+>
+> If any of these is not true, we fall back to doing a normal walk of the
+> object graph.
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- Maybe squash this in some place, or leave it separate. I'm fine either=
- way.
+I haven't read the bitmap creation code yet. But it probably does not
+matter. If the client requests a shallow fetch, you probably want to
+fall back to normal walk too.
 
- sha1_file.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/sha1_file.c b/sha1_file.c
-index 4714bd8..1294962 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -1194,6 +1194,7 @@ static void prepare_packed_git_one(char *objdir, =
-int local)
-=20
- 		if (has_extension(de->d_name, ".idx") ||
- 		    has_extension(de->d_name, ".pack") ||
-+		    has_extension(de->d_name, ".bitmap") ||
- 		    has_extension(de->d_name, ".keep"))
- 			string_list_append(&garbage, path);
- 		else
---=20
-1.8.2.83.gc99314b
+Bitmaps may be made work with shallow fetches too, I'm not sure. We
+could substract the shallow'd commits out. The problem is if some
+other commits share parts of the shallow'd commits, I'm not sure how
+to detect that.
+-- 
+Duy
