@@ -1,89 +1,112 @@
-From: =?utf-8?B?T25kxZllaiBCw61sa2E=?= <neleai@seznam.cz>
-Subject: Re: GIT Hooks and security
-Date: Sat, 26 Oct 2013 11:39:48 +0200
-Message-ID: <20131026093948.GA17645@domone.podge>
-References: <CA+nXgrUZk=_wtQ2yQnxwCZ3Mazdz=ZH2FJV+V92PVa0a4+A1hQ@mail.gmail.com>
- <xmqqwql1hub6.fsf@gitster.dls.corp.google.com>
- <CA+nXgrUcpfya+rTPzfRafzJbK1khNqtz-HsaKeGfdA86AepKEg@mail.gmail.com>
- <CAGyf7-HCEQy2hUnc6UvABDrwYatoUEiPnpXo-e9_8wtbhvN0mw@mail.gmail.com>
- <CA+nXgrWBue1A9KBXaRwRPi7qFNsrz8CnoyLrdhbALeo=7xborQ@mail.gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v2 10/19] pack-bitmap: add support for bitmap indexes
+Date: Sat, 26 Oct 2013 17:14:16 +0700
+Message-ID: <CACsJy8Cv5WMB=L+fQCj-ZURZC3ZdEqXaqqW_O2ZD-HNcC_V3yg@mail.gmail.com>
+References: <20131025055521.GD11810@sigill.intra.peff.net> <20131025060345.GH23098@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Bryan Turner <bturner@atlassian.com>,
-	Git Users <git@vger.kernel.org>
-To: Olivier Revollat <revollat@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Oct 26 11:40:00 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Vicent Marti <vicent@github.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Oct 26 12:14:52 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Va0Lf-0005EX-CZ
-	for gcvg-git-2@plane.gmane.org; Sat, 26 Oct 2013 11:39:59 +0200
+	id 1Va0tP-0005GB-PY
+	for gcvg-git-2@plane.gmane.org; Sat, 26 Oct 2013 12:14:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751229Ab3JZJjy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Oct 2013 05:39:54 -0400
-Received: from popelka.ms.mff.cuni.cz ([195.113.20.131]:37917 "EHLO
-	popelka.ms.mff.cuni.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751157Ab3JZJjy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Oct 2013 05:39:54 -0400
-Received: from domone.kolej.mff.cuni.cz (popelka.ms.mff.cuni.cz [195.113.20.131])
-	by popelka.ms.mff.cuni.cz (Postfix) with ESMTPS id 4BF6A68E93;
-	Sat, 26 Oct 2013 11:39:49 +0200 (CEST)
-Received: by domone.kolej.mff.cuni.cz (Postfix, from userid 1000)
-	id 18BFC5F96A; Sat, 26 Oct 2013 11:39:49 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <CA+nXgrWBue1A9KBXaRwRPi7qFNsrz8CnoyLrdhbALeo=7xborQ@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Virus-Scanned: clamav-milter 0.97.6 at popelka.ms.mff.cuni.cz
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-1.8 required=5.0 tests=AWL,BAYES_00,FREEMAIL_FROM,
-	UNPARSEABLE_RELAY autolearn=ham version=3.3.1
-X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on
-	popelka.ms.mff.cuni.cz
+	id S1751740Ab3JZKOr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Oct 2013 06:14:47 -0400
+Received: from mail-qe0-f44.google.com ([209.85.128.44]:60288 "EHLO
+	mail-qe0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751460Ab3JZKOq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Oct 2013 06:14:46 -0400
+Received: by mail-qe0-f44.google.com with SMTP id 6so3003220qeb.17
+        for <git@vger.kernel.org>; Sat, 26 Oct 2013 03:14:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=WUdvcVbfHShAHF/hI6VbzvJLyNHL0hUsD7zHI9WdDJY=;
+        b=aGFCKrlsNl2fHspiFie7Kyqu6LpTi9RxQkUc3FaZKZaFuZPDk01Vl197oH+/v4WZox
+         oatIIDEQUur/afrpq/R5dnodw3KRO8A04/q25DiAs5KeQWsg6WLhoXQqcDLSzLI7cXlP
+         MTnzik2QOa6eeRJw8+XJARXybXk4s/S42JNx3Yn3tNVULBmrgow317ZC1Kno8Z2740JI
+         c5xz2JVgE4kD2wOzi0GpVRINsA3s6FqWFpRx0x/g033XIM01sbB21uODhM4VctqtBrJs
+         i1QKFjHLeHayPxklIk3UG4ilsG/lf77693q3ceCWj/oZS5k/dC+/d7n1VHwAimYJtxov
+         vnjQ==
+X-Received: by 10.49.86.35 with SMTP id m3mr16231565qez.7.1382782486126; Sat,
+ 26 Oct 2013 03:14:46 -0700 (PDT)
+Received: by 10.96.27.202 with HTTP; Sat, 26 Oct 2013 03:14:16 -0700 (PDT)
+In-Reply-To: <20131025060345.GH23098@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236747>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236748>
 
-> 2013/10/26 Bryan Turner <bturner@atlassian.com>:
-> > No, the .git/hooks directory in your clone is created from your local
-> > templates, installed with your Git distribution, not the remote hooks.
-> > On Linux distributions, these templates are often in someplace like
-> > /usr/share/git-core/templates (for normal packages), and on Windows
-> > with msysgit they are in share\git-core\templates under your
-> > installation directory. If you look in this directory you will see a
-> > hooks directory containing the sample hooks.
-> >
-> > Hooks from a remote repository are never cloned. As far as I'm aware,
-> > nothing from the .git directory (aside from refs and packs, of course)
-> > is cloned, including configuration. Your .git directory after a clone
-> > is completely new, assembled from scratch. There's nothing in the Git
-> > wire protocol (currently) for moving other data like configuration or
-> > hooks, and this sort of malicious code injection is one of the reasons
-> > I've seen discussed on the list for why that's the case.
-> >
-> > Hope this helps,
-> > Bryan Turner
-> >
-> >
-> > On 26 October 2013 09:25, Olivier Revollat <revollat@gmail.com> wrote:
-> >>
-> >> But when someone do a "clone" he don't have .git/hooks directory
-> >> downloaded to his local computer ? I thought so ...
-> >>
-> >> 2013/10/26 Junio C Hamano <gitster@pobox.com>:
-> >> > Olivier Revollat <revollat@gmail.com> writes:
-> >> >
-> >> >> I was wondering : What if I had a "malicious" GIT repository who can
-> >> >> "inject" code  via git hooks mechanism : someone clone my repo and
-> >> >> some malicious code is executed when a certain GIT hook is triggered
-> >> >> (for example on commit ("prepare-commit-msg' hook))
-> >> >
-> >> > In that somebody else's clone, you will not have _your_ malicious
-> >> > hook installed, unless that cloner explicitly does something stupid,
-> >> > like copying that malicious hook.
-> >>
-Also copying hooks is relatively low risk, real hackers hide exploits in
-1MB configure scripts.
+If it's not mentioned yet, maybe you should note that this code
+currently supports only one pack with .bitmap file.
+
+On Fri, Oct 25, 2013 at 1:03 PM, Jeff King <peff@peff.net> wrote:
+> diff --git a/khash.h b/khash.h
+> new file mode 100644
+> index 0000000..0fdf39d
+> --- /dev/null
+> +++ b/khash.h
+> @@ -0,0 +1,342 @@
+
+I notice the line continuations '\' in this file look more aligned if
+tab length is set to 4. No idea how many emacs users out there but it
+probably does not harm to put
+
+/* -*- mode: c; tab-width: 4; -*- */
+
+at the beginning of this file? Another option is realign the file,
+which I doubt is good because this file is imported.
+
+> +static int load_pack_bitmap(void)
+> +{
+> +       assert(bitmap_git.map && !bitmap_git.loaded);
+> +
+> +       bitmap_git.bitmaps = kh_init_sha1();
+> +       bitmap_git.ext_index.positions = kh_init_sha1_pos();
+> +       bitmap_git.reverse_index = revindex_for_pack(bitmap_git.pack);
+> +
+> +       if (!(bitmap_git.commits = read_bitmap_1(&bitmap_git)) ||
+> +               !(bitmap_git.trees = read_bitmap_1(&bitmap_git)) ||
+> +               !(bitmap_git.blobs = read_bitmap_1(&bitmap_git)) ||
+> +               !(bitmap_git.tags = read_bitmap_1(&bitmap_git)))
+> +               goto failed;
+> +
+> +       if (load_bitmap_entries_v1(&bitmap_git) < 0)
+> +               goto failed;
+
+I don't see any mechanism to protect us from corrupt .bitmap files. If
+.bitmap is not very large, maybe just check the trailing checksum in
+the file when we open it? Else maybe add a crc32 or something after
+each commit bitmap in .bitmap v2 and only verify the ones we actually
+use?
+
+> +static int open_pack_bitmap(void)
+> +{
+> +       struct packed_git *p;
+> +
+> +       assert(!bitmap_git.map && !bitmap_git.loaded);
+> +
+> +       prepare_packed_git();
+> +       for (p = packed_git; p; p = p->next) {
+> +               if (open_pack_bitmap_1(p) == 0)
+> +                       return 0;
+
+It maybe a good idea to go on anyway, checking for another .bitmap.
+Just warn the user about that if found.
+
+> +       }
+> +
+> +       return -1;
+> +}
+> +
+-- 
+Duy
