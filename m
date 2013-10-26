@@ -1,87 +1,86 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [RFC PATCH] During a shallow fetch, prevent sending over unneeded objects
-Date: Sat, 26 Oct 2013 17:49:18 +0700
-Message-ID: <CACsJy8DXH2verOjq670wzT+wkhQPZaqf68-rM91JJnVt2G=pBg@mail.gmail.com>
-References: <20130711220127.GK10217@login.drsnuggles.stderr.nl>
- <CACsJy8CP6pGRwEn6H=cbKxTMuOjzAF3=Qh8qsLbJaw6feK3NMw@mail.gmail.com>
- <7vfvukbrqh.fsf@alter.siamese.dyndns.org> <CACsJy8BahoGcDcLjSaHA-62_KQE2wD-p5oeJOOA4nk8ZRfXrEA@mail.gmail.com>
- <20130812080203.GK10217@login.drsnuggles.stderr.nl> <CACsJy8CDGgKftp0iBB8MYjMawKhxZ1JQ+xAYb0itpaCOjFHWxg@mail.gmail.com>
- <20131021075139.GA15425@login.drsnuggles.stderr.nl>
+From: Thomas Rast <tr@thomasrast.ch>
+Subject: Re: [PATCH 0/3] merge -Xindex-only
+Date: Sat, 26 Oct 2013 16:40:22 +0200
+Message-ID: <87ob6cm6y1.fsf@linux-k42r.v.cablecom.net>
+References: <cover.1373219466.git.trast@inf.ethz.ch>
+	<51DAD8F2.5070008@alum.mit.edu>
+	<87k3l1gip1.fsf@linux-k42r.v.cablecom.net>
+	<51DBDB6F.7090105@alum.mit.edu>
+	<878v1gey16.fsf@linux-k42r.v.cablecom.net>
+	<51DC66A5.80500@alum.mit.edu> <87wqozbj0d.fsf@hexa.v.cablecom.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Matthijs Kooijman <matthijs@stdin.nl>,
-	Duy Nguyen <pclouds@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Kai Hendry - Webconverger <hendry@webconverger.com>
-X-From: git-owner@vger.kernel.org Sat Oct 26 12:49:55 2013
+Content-Type: text/plain
+Cc: git discussion list <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Sat Oct 26 16:40:44 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Va1RK-00042m-Ov
-	for gcvg-git-2@plane.gmane.org; Sat, 26 Oct 2013 12:49:55 +0200
+	id 1Va52h-0002vS-AG
+	for gcvg-git-2@plane.gmane.org; Sat, 26 Oct 2013 16:40:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751467Ab3JZKtu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Oct 2013 06:49:50 -0400
-Received: from mail-qc0-f182.google.com ([209.85.216.182]:39197 "EHLO
-	mail-qc0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751357Ab3JZKtt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Oct 2013 06:49:49 -0400
-Received: by mail-qc0-f182.google.com with SMTP id n7so2857477qcx.27
-        for <git@vger.kernel.org>; Sat, 26 Oct 2013 03:49:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-type;
-        bh=nQVzQFuVsaRt/be2209leCD461KnEaUH1fwaUHRdzAM=;
-        b=zaG/pwr7PgmVgOt6/Vj7RKClKCw7qXQQjpTlsp3hO5fYwwpRrcgDIY05nbd+ujRVlZ
-         H2u7NyTqgZmPaFhd7RCzvLCBkDvJhqnMR9Tx/boWlsyZetoP3qwMMjOGRVbjnlfTi6Sy
-         3ouIoiAzMedEJjfQQG/mWSjksoJRP6eMJKL9JNCUIH3XMK1EQZSQLoyCBXcReQlqHt6T
-         0dIdC2UhjlczF8hptcgJlHJzqXWl1udZ2YJC5IqqYJ+6iYXkBStoHUElHPxmZHITFFvx
-         XaaBMsphbAKYS8vNeeRZojoA3thOz/qO3bqfdEhMi2ENkB0AB7P7chHO3t88JfJx/Hbc
-         jyOA==
-X-Received: by 10.229.47.71 with SMTP id m7mr16460759qcf.25.1382784588679;
- Sat, 26 Oct 2013 03:49:48 -0700 (PDT)
-Received: by 10.96.27.202 with HTTP; Sat, 26 Oct 2013 03:49:18 -0700 (PDT)
-In-Reply-To: <20131021075139.GA15425@login.drsnuggles.stderr.nl>
+	id S1752662Ab3JZOkj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Oct 2013 10:40:39 -0400
+Received: from psi.thgersdorf.net ([176.9.98.78]:50856 "EHLO mail.psioc.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751884Ab3JZOki (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Oct 2013 10:40:38 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by localhost.psioc.net (Postfix) with ESMTP id A448F4D6514;
+	Sat, 26 Oct 2013 16:40:36 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at psioc.net
+Received: from mail.psioc.net ([127.0.0.1])
+	by localhost (mail.psioc.net [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id J17NDtJM_BEF; Sat, 26 Oct 2013 16:40:26 +0200 (CEST)
+Received: from linux-k42r.v.cablecom.net.thomasrast.ch (unknown [213.55.184.251])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(Client did not present a certificate)
+	by mail.psioc.net (Postfix) with ESMTPSA id F358F4D6414;
+	Sat, 26 Oct 2013 16:40:24 +0200 (CEST)
+In-Reply-To: <87wqozbj0d.fsf@hexa.v.cablecom.net> (Thomas Rast's message of
+	"Tue, 9 Jul 2013 22:01:06 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236752>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236753>
 
-On Mon, Oct 21, 2013 at 2:51 PM, Matthijs Kooijman <matthijs@stdin.nl> wrote:
-> Hi Duy,
->
-> I saw your patch series got accepted in git master a while back, great!
-> Since I hope to be using the fixed behaviour soon, what was the plan for
-> including it? Am I correct in thinking that git master will become 1.8.5
-> in a while? Would this series perhaps be considered for backporting to
-> 1.8.4.x?
+Thomas Rast <trast@inf.ethz.ch> writes:
 
-I was waiting for Junio to answer this as I rarely run released
-versions and do not care much about releases. I think normally master
-will be cut for the next release (1.8.5?), maint branches have
-backported bug fixes. I consider this an improvement rather than bug
-fix. So my guess is it will not be back ported to 1.8.4.x.
+> Michael Haggerty <mhagger@alum.mit.edu> writes:
+>
+> On IRC you said you would like a version that always acts as
+> --no-commit, and simply returns the conflict/no conflict bit as usual.
+> The caller would then proceed using commit-tree itself.  I think that is
+> probably a saner solution than this "output ref" idea.
 
->
-> Gr.
->
-> Matthijs
->
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.9 (GNU/Linux)
->
-> iEYEARECAAYFAlJk3QsACgkQz0nQ5oovr7wVOwCgvQCmB4IJ6X86727/5Kslg83G
-> A4UAoI8fBIXGnE1PwtwqFk/Od697dgNM
-> =rjMT
-> -----END PGP SIGNATURE-----
->
+I just had a huge facepalm moment.  We already have this option.  It is
+called git-merge-recursive.
 
+That is,
 
+  git merge-recursive $(git merge-base --all HEAD other) -- HEAD other
+
+will internally do all the work that 'git merge other' would do, but not
+update any refs.  With this series, you can therefore say
+
+  git merge-recursive --index-only $(git merge-base --all HEAD other) -- HEAD other
+
+and get an *index-only* merge of HEAD and other.
+
+Can you see if this is enough to build git-imerge on top of it?
+Otherwise I'm glad to help with building the git-merge infrastucture to
+support it.
+
+I'll send v2 of the series in a minute; the only change is that I
+changed the internal flag semantics as per Junio's comment in
+
+  http://thread.gmane.org/gmane.comp.version-control.git/229787/focus=229797
 
 -- 
-Duy
+Thomas Rast
+tr@thomasrast.ch
