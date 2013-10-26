@@ -1,96 +1,105 @@
 From: Thomas Rast <tr@thomasrast.ch>
 Subject: Re: GSoC 2014: Summary so far, discussion starter: how to improve?
-Date: Sat, 26 Oct 2013 10:14:21 +0200
-Message-ID: <87txg4qwiq.fsf@linux-k42r.v.cablecom.net>
+Date: Sat, 26 Oct 2013 10:21:36 +0200
+Message-ID: <87fvrophm7.fsf@linux-k42r.v.cablecom.net>
 References: <8761stx04i.fsf@linux-k42r.v.cablecom.net>
-	<xmqqli1lro08.fsf@gitster.dls.corp.google.com>
+	<20131019215139.GX13967@paksenarrion.iveqy.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Oct 26 10:14:43 2013
+Cc: git@vger.kernel.org, Ben Straub <bs@github.com>,
+	Carlos =?utf-8?Q?Ma?= =?utf-8?Q?rt=C3=ADn?= Nieto 
+	<cmn@elego.de>, Christian Couder <christian.couder@gmail.com>,
+	David Michael Barr <davidbarr@google.com>,
+	Edward Thomson <ethomson@microsoft.com>,
+	Florian Achleitner <florian.achleitner2.6.31@gmail.com>,
+	Jakub Narebski <jnareb@gmail.com>, Jeff King <peff@peff.net>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Martin Woodward <martin.woodward@microsoft.com>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Michael Schubert <schu@schu.io>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Pat Thoyts <patthoyts@gmail.com>,
+	Paul Mackerras <paulus@samba.org>,
+	Philip Kelley <phkelley@hotmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	Russell Belfer <rb@github.com>,
+	Scott Chacon <schacon@gmail.com>,
+	Shawn Pearce
+To: Fredrik Gustafsson <iveqy@iveqy.com>
+X-From: git-owner@vger.kernel.org Sat Oct 26 10:22:33 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VZz17-0008LF-5O
-	for gcvg-git-2@plane.gmane.org; Sat, 26 Oct 2013 10:14:41 +0200
+	id 1VZz8d-00066Z-Ns
+	for gcvg-git-2@plane.gmane.org; Sat, 26 Oct 2013 10:22:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752153Ab3JZIOg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Oct 2013 04:14:36 -0400
-Received: from psi.thgersdorf.net ([176.9.98.78]:50263 "EHLO mail.psioc.net"
+	id S1751750Ab3JZIV6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Oct 2013 04:21:58 -0400
+Received: from psi.thgersdorf.net ([176.9.98.78]:50311 "EHLO mail.psioc.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751817Ab3JZIOe (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Oct 2013 04:14:34 -0400
+	id S1751553Ab3JZIVz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Oct 2013 04:21:55 -0400
 Received: from localhost (localhost [127.0.0.1])
-	by localhost.psioc.net (Postfix) with ESMTP id F24CF4D6514;
-	Sat, 26 Oct 2013 10:14:32 +0200 (CEST)
+	by localhost.psioc.net (Postfix) with ESMTP id E07B64D6514;
+	Sat, 26 Oct 2013 10:21:51 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at psioc.net
 Received: from mail.psioc.net ([127.0.0.1])
 	by localhost (mail.psioc.net [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id S1-T9lnKclId; Sat, 26 Oct 2013 10:14:22 +0200 (CEST)
+	with LMTP id lBCQsiilgZXz; Sat, 26 Oct 2013 10:21:41 +0200 (CEST)
 Received: from linux-k42r.v.cablecom.net.thomasrast.ch (unknown [213.55.184.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(Client did not present a certificate)
-	by mail.psioc.net (Postfix) with ESMTPSA id 4095E4D6414;
-	Sat, 26 Oct 2013 10:14:22 +0200 (CEST)
-In-Reply-To: <xmqqli1lro08.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Tue, 22 Oct 2013 14:31:35 -0700")
+	by mail.psioc.net (Postfix) with ESMTPSA id A88594D6414;
+	Sat, 26 Oct 2013 10:21:38 +0200 (CEST)
+In-Reply-To: <20131019215139.GX13967@paksenarrion.iveqy.com> (Fredrik
+	Gustafsson's message of "Sat, 19 Oct 2013 23:51:39 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236741>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236742>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Thomas Rast <tr@thomasrast.ch> writes:
+Fredrik Gustafsson <iveqy@iveqy.com> writes:
+>> 
+>> * Break projects into smaller, easier tasks
+>>   - They should individually be simple, quick things if the mentor did
+>>     them.
+>>   - Should be parallelizable so students don't have to block on reviews.
 >
->> Theories
->> ========
->>
->> * Scope creep: projects tend to get blocked on some bigger
->>   refactoring/restructuring task that was not in the original
->>   proposal.
+> I'd 5-6 smaller projects setup for the summer, I think I managed to do
+> 2-3 of them. (I did however do everything I applied for). I really think
+> it's an excellent idea. This also meant that while one patch waited for
+> review, I'd other things to work on.
 
-(Full disclosure: I actually proposed this theory.)
+Lots of kudo points for Jens and Heiko :-)
 
-> I think that is a sign that the original proposal did not look
-> enough at the existing code, dreaming of a pie-in-the-sky shiny
-> features in a green-field setting. What needs to be done within the
-> constraint of the existing code (including a total rewrite, if
-> necessary, while keeping the project's codebase maintainable is part
-> of the healthy develpment.
-
-Hmm, yes, but it's also the only objection that I believe I have never
-heard, as opposed to ignored.
-
-I'm okay if we just file this under "things to consider during project
-proposal review".
-
->> * Have students review some patches
+>> * Mentoring improvements:
+>>   - Always have a co-mentor
+>>   - Focus on social aspects (who to Cc, etc.)
+>>   - Nominate separate "review mentors" to ensure fast review cycles
 >
-> I am not sure if this would help.
->
-> Reviewing the patches to find style violations and off-by-one errors
-> is relatively easy as it can be done with knowledge on a narrow
-> isolated part of the system. Reviewing the design to make sure that
-> the change fits the way how existing subsystems work, ranging from
-> the internal API implementation level to consistency a changed
-> behaviour is presented at the UI level, however, needs understanding
-> of the far wider entire project than only the parts of the system
-> the proposed change updates. It will be even more true if the chosen
-> topic is a cool/shiny one.
+> I like the idea of review mentors. However bear in mind that you'll
+> already have three people reviewing the patches (two mentors and Junio).
+> We will not make it look like it's impossible to get things into
+> git.git.
 
-I'd choose the middle path: review for code readability.  What do the
-functions do?  Are the functions and variables named after their roles?
-Is there anything that I cannot understand, and therefore warrants a
-comment?
+I think the idea was not that you'd get *more* reviews, but that there
+would be a group of volunteers doing reviews to ensure that they arrive
+fast.  Students should have feedback within 1-2 days of the series being
+posted.
 
-That is much more difficult than just reviewing for style, while it can
-(usually) be done without too much knowledge of the outside.
+The other advantages are that it provides a set of fresh eyes, and takes
+load off Junio.
+
+I'm not even sure how official we have to make this.  In Thomas
+Gummerer's case, Michael stepped up with reviews when I couldn't.  So
+maybe it'll again "just work out".  But I would like to take this role,
+and leave the "social" mentoring to others.
 
 -- 
 Thomas Rast
