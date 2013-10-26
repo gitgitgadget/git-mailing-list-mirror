@@ -1,104 +1,122 @@
-From: =?ISO-8859-1?Q?R=FCdiger?= Sonderfeld <ruediger@c-plusplus.de>
-Subject: [PATCH] web--browse: Add support for xdg-open.
-Date: Sat, 26 Oct 2013 19:43:54 +0200
-Message-ID: <4642757.rY5h83ya4f@descartes>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: PATCH] t3200: do not open a HTML manual page when
+ DEFAULT_MAN_FORMAT is html
+Date: Sat, 26 Oct 2013 20:48:46 +0200
+Message-ID: <526C0E8E.30605@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 26 19:54:12 2013
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: msysGit <msysgit@googlegroups.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: msysgit+bncBCJYV6HBKQIJDHNQSMCRUBGWI4BTW@googlegroups.com Sat Oct 26 20:48:51 2013
+Return-path: <msysgit+bncBCJYV6HBKQIJDHNQSMCRUBGWI4BTW@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-wi0-f191.google.com ([209.85.212.191])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Va83w-0003El-0z
-	for gcvg-git-2@plane.gmane.org; Sat, 26 Oct 2013 19:54:12 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753344Ab3JZRyF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 26 Oct 2013 13:54:05 -0400
-Received: from ptmx.org ([178.63.28.110]:44836 "EHLO ptmx.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753284Ab3JZRyD convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 26 Oct 2013 13:54:03 -0400
-X-Greylist: delayed 597 seconds by postgrey-1.27 at vger.kernel.org; Sat, 26 Oct 2013 13:54:03 EDT
-Received: from localhost (localhost [127.0.0.1])
-	by ptmx.org (Postfix) with ESMTP id 5C7B52B1B6;
-	Sat, 26 Oct 2013 19:44:05 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at ptmx.org
-Received: from ptmx.org ([127.0.0.1])
-	by localhost (ptmx.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 3UXpLcgJvvgw; Sat, 26 Oct 2013 19:44:03 +0200 (CEST)
-Received: from descartes.localnet (chello080108246092.7.14.vie.surfer.at [80.108.246.92])
-	by ptmx.org (Postfix) with ESMTPSA id 427E126A52;
-	Sat, 26 Oct 2013 19:44:03 +0200 (CEST)
-User-Agent: KMail/4.11.2 (Linux/3.11.0-12-generic; KDE/4.11.2; x86_64; ; )
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236760>
+	(envelope-from <msysgit+bncBCJYV6HBKQIJDHNQSMCRUBGWI4BTW@googlegroups.com>)
+	id 1Va8uo-0006nR-2w
+	for gcvm-msysgit@m.gmane.org; Sat, 26 Oct 2013 20:48:50 +0200
+Received: by mail-wi0-f191.google.com with SMTP id hn9sf289743wib.28
+        for <gcvm-msysgit@m.gmane.org>; Sat, 26 Oct 2013 11:48:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :x-original-sender:x-original-authentication-results:precedence
+         :mailing-list:list-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe:content-type;
+        bh=tQIRzdkijQWgjSEtiiQNTL+tUZTklNPK2hfMhp2QQYg=;
+        b=C5kBRSBZfDadwfhron1iWtNRV4kT3B9Zo3rMwt4q2hqP0D0erf6ob5oT7FwWIABmEs
+         AMrw5z3OErHjvxYwApJhPU/6LuNZhFgGz1d+jZ5bT24p89qIgcjwODjRvwUa9nN/GjnK
+         Re5K3SiY+9vgnYCm3eNEcX6nRBfqGETDLmYC6oj3qGfqM8yxzic86JY6o0q/2TtYKRLS
+         Y+LLNlR3w01m+gxqcLfi7JL++iHC/WqXYOJSEvxIm0IIsWTP+otY78R1nqM6bZm5dpnN
+         qHMdGzZATtGSgkL/0G16t/HXzySs+ONi0V0ZJpSojiP6aPsLcFjCBJmlllomBMhWmINq
+         pSng==
+X-Received: by 10.152.44.162 with SMTP id f2mr266594lam.3.1382813329634;
+        Sat, 26 Oct 2013 11:48:49 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.152.19.166 with SMTP id g6ls349117lae.66.gmail; Sat, 26 Oct
+ 2013 11:48:48 -0700 (PDT)
+X-Received: by 10.152.228.167 with SMTP id sj7mr5251496lac.4.1382813328872;
+        Sat, 26 Oct 2013 11:48:48 -0700 (PDT)
+Received: from bsmtp.bon.at (bsmtp5.bon.at. [195.3.86.187])
+        by gmr-mx.google.com with ESMTP id a1si2114678ees.1.2013.10.26.11.48.48
+        for <msysgit@googlegroups.com>;
+        Sat, 26 Oct 2013 11:48:48 -0700 (PDT)
+Received-SPF: neutral (google.com: 195.3.86.187 is neither permitted nor denied by best guess record for domain of j6t@kdbg.org) client-ip=195.3.86.187;
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 36409130047;
+	Sat, 26 Oct 2013 20:48:48 +0200 (CEST)
+Received: from dx.sixt.local (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id BFE4D19F60F;
+	Sat, 26 Oct 2013 20:48:46 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.0
+X-Original-Sender: j6t@kdbg.org
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
+ (google.com: 195.3.86.187 is neither permitted nor denied by best guess
+ record for domain of j6t@kdbg.org) smtp.mail=j6t@kdbg.org
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236761>
 
-xdg-open is a tool similar to git-web--browse.  It opens a file or URL =
-in the
-user's preferred application.  It could probably be made default at lea=
-st on
-Linux with a graphical environment.
+We have the build configuration option DEFAULT_MAN_FORMAT to choose a
+format different from man pages to be used by 'git help' when no format
+is requested explicitly. Since 65db0443 (Set the default help format to
+html for msys builds, 2013-06-04) we use html on Windows by default.
 
-Signed-off-by: R=C3=BCdiger Sonderfeld <ruediger@c-plusplus.de>
+There is one test in t3200-branch.sh that invokes a help page. The
+intent of the redirections applied to the command invocation is to avoid
+that the man page viewer interferes with the automated test. But when
+the default format is not "man", this does not have the intended effect,
+and the HTML manual page is opened during the test run. Request "man"
+format explicitly to keep the test silent.
+
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
 ---
- Documentation/git-web--browse.txt | 1 +
- git-web--browse.sh                | 6 +++---
- 2 files changed, 4 insertions(+), 3 deletions(-)
+ I've posted this patch to the msysgit list in July, and Dscho has picked
+ it up for Git on Windows.
 
-diff --git a/Documentation/git-web--browse.txt b/Documentation/git-web-=
--browse.txt
-index 5aec4ec..2de575f 100644
---- a/Documentation/git-web--browse.txt
-+++ b/Documentation/git-web--browse.txt
-@@ -35,6 +35,7 @@ The following browsers (or commands) are currently su=
-pported:
- * open (this is the default under Mac OS X GUI)
- * start (this is the default under MinGW)
- * cygstart (this is the default under Cygwin)
-+* xdg-open
-=20
- Custom commands may also be specified.
-=20
-diff --git a/git-web--browse.sh b/git-web--browse.sh
-index 1d72ec7..ebdfba6 100755
---- a/git-web--browse.sh
-+++ b/git-web--browse.sh
-@@ -34,7 +34,7 @@ valid_tool() {
- 	firefox | iceweasel | seamonkey | iceape | \
- 	chrome | google-chrome | chromium | chromium-browser | \
- 	konqueror | opera | w3m | elinks | links | lynx | dillo | open | \
--	start | cygstart)
-+	start | cygstart | xdg-open)
- 		;; # happy
- 	*)
- 		valid_custom_tool "$1" || return 1
-@@ -112,7 +112,7 @@ fi
-=20
- if test -z "$browser" ; then
- 	if test -n "$DISPLAY"; then
--		browser_candidates=3D"firefox iceweasel google-chrome chrome chromiu=
-m chromium-browser konqueror opera seamonkey iceape w3m elinks links ly=
-nx dillo"
-+		browser_candidates=3D"firefox iceweasel google-chrome chrome chromiu=
-m chromium-browser konqueror opera seamonkey iceape w3m elinks links ly=
-nx dillo xdg-open"
- 		if test "$KDE_FULL_SESSION" =3D "true"; then
- 			browser_candidates=3D"konqueror $browser_candidates"
- 		fi
-@@ -179,7 +179,7 @@ konqueror)
- 		;;
- 	esac
- 	;;
--w3m|elinks|links|lynx|open|cygstart)
-+w3m|elinks|links|lynx|open|cygstart|xdg-open)
- 	"$browser_path" "$@"
- 	;;
- start)
---=20
-1.8.4.1
+ t/t3200-branch.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+index 44ec6a4..e9823a0 100755
+--- a/t/t3200-branch.sh
++++ b/t/t3200-branch.sh
+@@ -17,7 +17,7 @@ test_expect_success 'prepare a trivial repository' '
+ 	HEAD=$(git rev-parse --verify HEAD)'
+ 
+ test_expect_success 'git branch --help should not have created a bogus branch' '
+-	test_might_fail git branch --help </dev/null >/dev/null 2>/dev/null &&
++	test_might_fail git branch --man --help </dev/null >/dev/null 2>&1 &&
+ 	test_path_is_missing .git/refs/heads/--help
+ '
+ 
+-- 
+1.8.4.33.gd68f7e8
+
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/groups/opt_out.
