@@ -1,219 +1,130 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] pathspec: stop --*-pathspecs impact on internal parse_pathspec() uses
-Date: Sat, 26 Oct 2013 09:09:39 +0700
-Message-ID: <1382753379-32076-1-git-send-email-pclouds@gmail.com>
-References: <20131025034947.GA4959@sigill.intra.peff.net>
+From: Keshav Kini <keshav.kini@gmail.com>
+Subject: Re: [PATCH] graph.c: visual difference on subsequent series
+Date: Fri, 25 Oct 2013 21:37:59 -0500
+Message-ID: <87mwlwn4e0.fsf@gmail.com>
+References: <1382717268-21884-1-git-send-email-milton.soares.filho@gmail.com>
+	<xmqqeh79jmtr.fsf@gitster.dls.corp.google.com>
+	<CAPNngRMP29s9gZg9R987yRd2qJ=UuaMWnFphtQdGDRgG_SCxsQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Oct 26 04:05:46 2013
+Content-Type: text/plain
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Oct 26 04:38:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VZtG5-0007fv-JH
-	for gcvg-git-2@plane.gmane.org; Sat, 26 Oct 2013 04:05:45 +0200
+	id 1VZtlY-0007yV-ME
+	for gcvg-git-2@plane.gmane.org; Sat, 26 Oct 2013 04:38:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753865Ab3JZCFk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Oct 2013 22:05:40 -0400
-Received: from mail-pa0-f53.google.com ([209.85.220.53]:55050 "EHLO
-	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753081Ab3JZCFi (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Oct 2013 22:05:38 -0400
-Received: by mail-pa0-f53.google.com with SMTP id kx10so2094829pab.26
-        for <git@vger.kernel.org>; Fri, 25 Oct 2013 19:05:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=n2iyc/7XbntPc6g+GF+rSEZVEoa+jiYDqAhwz8Ib0Bs=;
-        b=TJ+5MsXrM/cXf5Dt9Q0iQiuqP1rers+7cwJsCq+r4PVGrz4AyVTApdJjHIyIQZ4IiQ
-         z/QvlsimiNwv4/nwzEaU2wRlNTKNcxrykWU/4pabcsl+/Qoja6Llpl/vV7J65VBrYuJy
-         Yz1TPbyChgQw26P75gdqGZT+HBvI2BqhdiWLAnR37yvZPITBzZMWN/Y3peWRkd6J6dS3
-         0OkO/sEAYvZuvq937wlwFnl+TzjQhUHlueiYVFeDbkkPp+GnxV7iopJ0FeIdqB++t8d8
-         0keqn/+iqcKHZlNXAgh1m+6H/KDkeNdKkN4n3s7JRbZpMguz/0vhQ5LKc8QzFLseXfGv
-         jMCg==
-X-Received: by 10.66.228.38 with SMTP id sf6mr13671303pac.21.1382753137951;
-        Fri, 25 Oct 2013 19:05:37 -0700 (PDT)
-Received: from lanh ([115.73.231.247])
-        by mx.google.com with ESMTPSA id ik1sm12578688pbc.9.2013.10.25.19.05.34
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 25 Oct 2013 19:05:37 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Sat, 26 Oct 2013 09:09:40 +0700
-X-Mailer: git-send-email 1.8.2.83.gc99314b
-In-Reply-To: <20131025034947.GA4959@sigill.intra.peff.net>
+	id S1753325Ab3JZCiN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Oct 2013 22:38:13 -0400
+Received: from plane.gmane.org ([80.91.229.3]:46665 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753270Ab3JZCiM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Oct 2013 22:38:12 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1VZtlT-0007tS-6S
+	for git@vger.kernel.org; Sat, 26 Oct 2013 04:38:11 +0200
+Received: from cpe-72-179-6-119.austin.res.rr.com ([72.179.6.119])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 26 Oct 2013 04:38:11 +0200
+Received: from keshav.kini by cpe-72-179-6-119.austin.res.rr.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 26 Oct 2013 04:38:11 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: cpe-72-179-6-119.austin.res.rr.com
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+Cancel-Lock: sha1:P69wL3hDL/Sh9SM3Mv46E3ikbUk=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236730>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236731>
 
-Normally parse_pathspec() is used on command line arguments where it
-can do fancy thing like parsing magic on each argument or adding magic
-for all pathspecs based on --*-pathspecs options.
+Milton Soares Filho <milton.soares.filho@gmail.com> writes:
+> On 25 October 2013 15:13, Junio C Hamano <gitster@pobox.com> wrote:
+>> Milton Soares Filho <milton.soares.filho@gmail.com> writes:
+>>
+>>>     git log --graph --oneline
+>>>     * a1
+>>>     * a2
+>>>     x a3
+>>>     * b1
+>>>     * b2
+>>>     x b3
+>>
+>> I agree that the problem you are trying to solve is a good thing to
+>> tackle, and I also agree that marking a root commit differently from
+>> other commits is one way to solve it, but I am not sure if that is
+>> the best way.  If the stretches of a's and b's in your history are
+>> very long, wouldn't it be easier to spot if they are painted in
+>> different colours, in addition to or instead of marking the roots
+>> differently [*1*], for example?
+>
+> Thanks for taking your time reviewing this patch, Junio. I didn't really thought
+> it would get any attention since multiple root-commits is not a very common
+> use-case[1]. However, if most people got excited with git-subtree new
+> features as I did, there is a good chance that multiple root-commits are
+> going to become a common-place in the near future ;-)
 
-There's another use of parse_pathspec(), where pathspec is needed, but
-the input is known to be pure paths. In this case we usually don't
-want --*-pathspecs to interfere. And we definitely do not want to
-parse magic in these paths, regardless of --literal-pathspecs.
+I don't think this is that obscure. I've often thought there should be
+some way to distinguish root commits as well.  In fact when dealing with
+multiple root commits I usually just don't use --oneline and instead use
+the full --graph view so I can find root commits by grepping for '^  ' :)
 
-Add new flag PATHSPEC_LITERAL_PATH for this purpose. When it's set,
---*-pathspecs are ignored, no magic is parsed. And if the caller
-allows PATHSPEC_LITERAL (i.e. the next calls can take literal magic),
-then PATHSPEC_LITERAL will be set.
+I should also mention that there are lots of situations where you might
+see multiple "root commits" not because there are truly multiple commits
+with no parent in the repository, but because you're looking at some
+subgraph of the history graph -- that is, you have multiple commits in
+your display whose parents are purposely excluded. For example, you
+might be looking at a revision list like 'C ^A ^B':
 
-This fixes cases where git chokes when GIT_*_PATHSPECS are set because
-parse_pathspec() indicates it won't take any magic. But
-GIT_*_PATHSPECS add them anyway. These are
+    master
+    |  .---------------B
+    | /       `-------------.
+    O<                   .---`--C
+    | \                 /
+    |  `---------------A
 
-   export GIT_LITERAL_PATHSPECS=3D1
-   git blame -- something
-   git log --follow something
-   git log --merge
+The commits you were looking at would be these ones:
 
-"git ls-files --with-tree=3Dpath" (aka parse_pathspec() in
-overlay_tree_on_cache()) is safe because the input is empty, and
-producing one pathspec due to PATHSPEC_PREFER_CWD does not take any
-magic into account.
+              `-------------.
+                         .---`--C
+                        /
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- Jeff, how about this?
-=20
- It's similar to your last suggestion (i.e.  relaxing the magic mask
- about literal magic). In addition, it forces literal magic
- unconditionally in this case, which I think is the right thing to do.
- And it will fix other --*-pathspecs as well.
+So multiple "roots" can appear easily in such cases.
 
- builtin/blame.c            | 4 +++-
- pathspec.c                 | 9 ++++++++-
- pathspec.h                 | 7 +++++++
- revision.c                 | 3 ++-
- t/t6130-pathspec-noglob.sh | 7 +++++++
- tree-diff.c                | 4 +++-
- 6 files changed, 30 insertions(+), 4 deletions(-)
+> That said, I completely agree that painting with different colors would be
+> a much better fix, however I believe that it can be done in a separate
+> changeset by someone that understands better the impact on the rest
+> of the system. Personally, changing only the mark is sufficient because:
+>
+> a) it'll work on terminal types without coloring support and configurations
+>     whose explicitly disable it
+> b) it'll spare myself of running a separate GUI program just
+>     to spot where each series begin
+> c) it won't require any visual design skills from a developer (me)
+>     without a minimal sense for it :-)
 
-diff --git a/builtin/blame.c b/builtin/blame.c
-index 6da7233..1407ae7 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -409,7 +409,9 @@ static struct origin *find_origin(struct scoreboard=
- *sb,
- 	paths[0] =3D origin->path;
- 	paths[1] =3D NULL;
-=20
--	parse_pathspec(&diff_opts.pathspec, PATHSPEC_ALL_MAGIC, 0, "", paths)=
-;
-+	parse_pathspec(&diff_opts.pathspec,
-+		       PATHSPEC_ALL_MAGIC & ~PATHSPEC_LITERAL,
-+		       PATHSPEC_LITERAL_PATH, "", paths);
- 	diff_setup_done(&diff_opts);
-=20
- 	if (is_null_sha1(origin->commit->object.sha1))
-diff --git a/pathspec.c b/pathspec.c
-index ad1a9f5..4cf2bd3 100644
---- a/pathspec.c
-+++ b/pathspec.c
-@@ -128,7 +128,11 @@ static unsigned prefix_pathspec(struct pathspec_it=
-em *item,
- 		die(_("global 'literal' pathspec setting is incompatible "
- 		      "with all other global pathspec settings"));
-=20
--	if (elt[0] !=3D ':' || literal_global) {
-+	if (flags & PATHSPEC_LITERAL_PATH)
-+		global_magic =3D 0;
-+
-+	if (elt[0] !=3D ':' || literal_global ||
-+	    (flags & PATHSPEC_LITERAL_PATH)) {
- 		; /* nothing to do */
- 	} else if (elt[1] =3D=3D '(') {
- 		/* longhand */
-@@ -405,6 +409,9 @@ void parse_pathspec(struct pathspec *pathspec,
- 		item[i].magic =3D prefix_pathspec(item + i, &short_magic,
- 						argv + i, flags,
- 						prefix, prefixlen, entry);
-+		if ((flags & PATHSPEC_LITERAL_PATH) &&
-+		    !(magic_mask & PATHSPEC_LITERAL))
-+			item[i].magic |=3D PATHSPEC_LITERAL;
- 		if (item[i].magic & magic_mask)
- 			unsupported_magic(entry,
- 					  item[i].magic & magic_mask,
-diff --git a/pathspec.h b/pathspec.h
-index 944baeb..a75e924 100644
---- a/pathspec.h
-+++ b/pathspec.h
-@@ -58,6 +58,13 @@ struct pathspec {
- #define PATHSPEC_STRIP_SUBMODULE_SLASH_EXPENSIVE (1<<5)
- #define PATHSPEC_PREFIX_ORIGIN (1<<6)
- #define PATHSPEC_KEEP_ORDER (1<<7)
-+/*
-+ * For the callers that just need pure paths from somewhere else, not
-+ * from command line. Global --*-pathspecs options are ignored. No
-+ * magic is parsed in each pathspec either. If PATHSPEC_LITERAL is
-+ * allowed, then it will automatically set for every pathspec.
-+ */
-+#define PATHSPEC_LITERAL_PATH (1<<8)
-=20
- extern void parse_pathspec(struct pathspec *pathspec,
- 			   unsigned magic_mask,
-diff --git a/revision.c b/revision.c
-index 0173e01..9b9e22e 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1372,7 +1372,8 @@ static void prepare_show_merge(struct rev_info *r=
-evs)
- 			i++;
- 	}
- 	free_pathspec(&revs->prune_data);
--	parse_pathspec(&revs->prune_data, PATHSPEC_ALL_MAGIC, 0, "", prune);
-+	parse_pathspec(&revs->prune_data, PATHSPEC_ALL_MAGIC & ~PATHSPEC_LITE=
-RAL,
-+		       PATHSPEC_LITERAL_PATH, "", prune);
- 	revs->limited =3D 1;
- }
-=20
-diff --git a/t/t6130-pathspec-noglob.sh b/t/t6130-pathspec-noglob.sh
-index ea00d71..6583532 100755
---- a/t/t6130-pathspec-noglob.sh
-+++ b/t/t6130-pathspec-noglob.sh
-@@ -108,6 +108,13 @@ test_expect_success 'no-glob environment variable =
-works' '
- 	test_cmp expect actual
- '
-=20
-+test_expect_success 'blame takes global pathspec flags' '
-+	git --literal-pathspecs blame -- foo &&
-+	git --icase-pathspecs   blame -- foo &&
-+	git --glob-pathspecs    blame -- foo &&
-+	git --noglob-pathspecs  blame -- foo
-+'
-+
- test_expect_success 'setup xxx/bar' '
- 	mkdir xxx &&
- 	test_commit xxx xxx/bar
-diff --git a/tree-diff.c b/tree-diff.c
-index ccf9d7c..456660c 100644
---- a/tree-diff.c
-+++ b/tree-diff.c
-@@ -254,7 +254,9 @@ static void try_to_follow_renames(struct tree_desc =
-*t1, struct tree_desc *t2, co
- 			path[0] =3D p->one->path;
- 			path[1] =3D NULL;
- 			free_pathspec(&opt->pathspec);
--			parse_pathspec(&opt->pathspec, PATHSPEC_ALL_MAGIC, 0, "", path);
-+			parse_pathspec(&opt->pathspec,
-+				       PATHSPEC_ALL_MAGIC & ~PATHSPEC_LITERAL,
-+				       PATHSPEC_LITERAL_PATH, "", path);
-=20
- 			/*
- 			 * The caller expects us to return a set of vanilla
---=20
-1.8.2.83.gc99314b
+I'm a bit worried that if someone is parsing `git log --graph` output
+looking for `*` lines they might suddenly start missing the root commits
+that they were previously able to find.  I mean, not that anyone should
+be doing that, but if we can avoid breaking that, why not do so?
+
+What about just putting an extra blank line after every root commit line
+(possibly except the last one)?  That should make it plenty easy to see
+where the root commits are in --oneline mode.  I think it would actually
+be easier to spot at a glance than replacing `*` with `x` because it
+creates a gap in all columns of the output, rather than only in column
+1.  Also, this is very subjective but I think it looks kind of ugly to
+use "x" :P
+
+By the by, you might want to use the `-v` argument to `git send-email`
+so that people reading the list can tell at a glance which patch
+versions are newer than which other patch versions.
+
+-Keshav
