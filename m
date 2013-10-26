@@ -1,80 +1,97 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [PATCH] rev-parse --parseopt: add the --sticked-long mode
-Date: Sat, 26 Oct 2013 22:55:10 +0100
-Organization: OPDS
-Message-ID: <7B64920A599843F9A122740DFA7A402A@PhilipOakley>
-References: <20131016223306.GN9464@google.com><1382732291-5701-1-git-send-email-boklm@mars-attacks.org><xmqq1u39j9hw.fsf@gitster.dls.corp.google.com><20131025225222.GL4589@mars-attacks.org> <xmqqsivphsel.fsf@gitster.dls.corp.google.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: "Junio C Hamano" <gitster@pobox.com>,
-	"Nicolas Vigier" <boklm@mars-attacks.org>
-X-From: git-owner@vger.kernel.org Sat Oct 26 23:55:15 2013
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: [PATCH v3] remote-curl: fix large pushes with GSSAPI
+Date: Sat, 26 Oct 2013 22:34:42 +0000
+Message-ID: <1382826882-48704-1-git-send-email-sandals@crustytoothpaste.net>
+Cc: Shawn Pearce <spearce@spearce.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Oct 27 00:35:04 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VaBpC-00047C-1I
-	for gcvg-git-2@plane.gmane.org; Sat, 26 Oct 2013 23:55:14 +0200
+	id 1VaCRj-0001sG-P4
+	for gcvg-git-2@plane.gmane.org; Sun, 27 Oct 2013 00:35:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753870Ab3JZVzI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Oct 2013 17:55:08 -0400
-Received: from out1.ip05ir2.opaltelecom.net ([62.24.128.241]:61627 "EHLO
-	out1.ip05ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753842Ab3JZVzH (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 26 Oct 2013 17:55:07 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: ApAGABc5bFJOl3ep/2dsb2JhbABZgweJXbV0CoEfF3RpgSEWAQQBAQUIAQEuHgEBIQsCAwUCAQMVAwklFAEEGgYHFwYBEggCAQIDAYU4B4IYI7cuj1WDJoENA4kHhhKaeIE6gW07
-X-IPAS-Result: ApAGABc5bFJOl3ep/2dsb2JhbABZgweJXbV0CoEfF3RpgSEWAQQBAQUIAQEuHgEBIQsCAwUCAQMVAwklFAEEGgYHFwYBEggCAQIDAYU4B4IYI7cuj1WDJoENA4kHhhKaeIE6gW07
-X-IronPort-AV: E=Sophos;i="4.93,578,1378854000"; 
-   d="scan'208";a="435908114"
-Received: from host-78-151-119-169.as13285.net (HELO PhilipOakley) ([78.151.119.169])
-  by out1.ip05ir2.opaltelecom.net with SMTP; 26 Oct 2013 22:55:05 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1753793Ab3JZWfA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Oct 2013 18:35:00 -0400
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:33322 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753757Ab3JZWe7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 26 Oct 2013 18:34:59 -0400
+Received: from vauxhall.crustytoothpaste.net (vauxhall.local [172.16.2.247])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 710282807A;
+	Sat, 26 Oct 2013 22:34:56 +0000 (UTC)
+X-Mailer: git-send-email 1.8.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236767>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236768>
 
-From: "Junio C Hamano" <gitster@pobox.com>
-> Nicolas Vigier <boklm@mars-attacks.org> writes:
->
->> On Fri, 25 Oct 2013, Junio C Hamano wrote:
->>
->>> Nicolas Vigier <boklm@mars-attacks.org> writes:
->>>
->>> > Add the --sticked-long option to output the options in their long 
->>> > form
->>> > if available, and with their arguments sticked.
->>>
->>> Hmph, doesn't verb "stick" conjugate to "(present) stick (past) 
->>> stuck
->>> (pp) stuck"?
->>
->> Ah, yes it seems. I don't know if 'sticked' is also correct or not.
->>
->> However, 'sticked' is the word that is used in 
->> Documentation/gitcli.txt
->> and Documentation/technical/api-parse-options.txt.
->
-> Yes, I know. That is why I brought it up before we inflict more
-> damage to us.
-> --
+Due to an interaction between the way libcurl handles GSSAPI authentication over
+HTTP and the way git uses libcurl, large pushes (those over http.postBuffer
+bytes) would fail due to an authentication failure requiring a rewind of the
+curl buffer.  Such a rewind was not possible because the data did not fit into
+the entire buffer.
 
-Isn't the origin of the description that it looks like a stick (cane), 
-and 'sticked' is a modern verbing of that form? That's what I'd assumed 
-anyway.
+Enable the use of the Expect: 100-continue header for large requests where the
+server offers GSSAPI authentication to avoid this issue, since the request would
+otherwise fail.  This allows git to get the authentication data right before
+sending the pack contents.  Existing cases where pushes would succeed, including
+small requests using GSSAPI, still disable the use of 100 Continue, as it causes
+problems for some remote HTTP implementations (servers and proxies).
 
-Googleing "Sticked option" only linked back to Git.
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+---
+ remote-curl.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-Philip 
+diff --git a/remote-curl.c b/remote-curl.c
+index c9b891a..35698e7 100644
+--- a/remote-curl.c
++++ b/remote-curl.c
+@@ -449,6 +449,7 @@ static int post_rpc(struct rpc_state *rpc)
+ 	char *gzip_body = NULL;
+ 	size_t gzip_size = 0;
+ 	int err, large_request = 0;
++	int needs_100_continue = 0;
+ 
+ 	/* Try to load the entire request, if we can fit it into the
+ 	 * allocated buffer space we can use HTTP/1.0 and avoid the
+@@ -472,6 +473,8 @@ static int post_rpc(struct rpc_state *rpc)
+ 	}
+ 
+ 	if (large_request) {
++		long authtype = 0;
++
+ 		do {
+ 			err = probe_rpc(rpc);
+ 			if (err == HTTP_REAUTH)
+@@ -479,11 +482,17 @@ static int post_rpc(struct rpc_state *rpc)
+ 		} while (err == HTTP_REAUTH);
+ 		if (err != HTTP_OK)
+ 			return -1;
++
++		slot = get_active_slot();
++		curl_easy_getinfo(slot->curl, CURLINFO_HTTPAUTH_AVAIL, &authtype);
++		if (authtype & CURLAUTH_GSSNEGOTIATE)
++			needs_100_continue = 1;
+ 	}
+ 
+ 	headers = curl_slist_append(headers, rpc->hdr_content_type);
+ 	headers = curl_slist_append(headers, rpc->hdr_accept);
+-	headers = curl_slist_append(headers, "Expect:");
++	headers = curl_slist_append(headers, needs_100_continue ?
++		"Expect: 100-continue" : "Expect:");
+ 
+ retry:
+ 	slot = get_active_slot();
+-- 
+1.8.4.1.635.g55556a5
