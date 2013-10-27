@@ -1,255 +1,124 @@
-From: Stefan Beller <stefanbeller@googlemail.com>
-Subject: Re: [PATCH] commit: Add -f, --fixes <commit> option to add Fixes:
- line
-Date: Sun, 27 Oct 2013 18:03:12 +0100
-Message-ID: <526D4750.7040804@googlemail.com>
-References: <20131024122255.GI9378@mwanda> <20131024122512.GB9534@mwanda>	<20131026181709.GB10488@kroah.com> <20131027013402.GA7146@leaf>	<526CA7D4.1070904@alum.mit.edu> <20131027071407.GA11683@leaf>	<874n83m8xv.fsf@linux-k42r.v.cablecom.net>	<526CDC5C.40208@googlemail.com> <87zjpuznf1.fsf@thomasrast.ch>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH/RFC] git clone: is an URL local or ssh
+Date: Sun, 27 Oct 2013 14:31:24 -0400
+Message-ID: <CAPig+cTCesnmj1z2H1ZkXAcRqZKQu-NLeLxfCYPYUZe45aadtQ@mail.gmail.com>
+References: <201310262103.35770.tboegi@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Josh Triplett <josh@joshtriplett.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
-	Dan Carpenter <dan.carpenter@oracle.com>,
-	Greg KH <greg@kroah.com>,
-	ksummit-2013-discuss@lists.linuxfoundation.org,
-	ksummit-attendees@lists.linuxfoundation.org,
-	linux-kernel@vger.kernel.org
-To: Thomas Rast <tr@thomasrast.ch>
-X-From: linux-kernel-owner@vger.kernel.org Sun Oct 27 18:03:27 2013
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@plane.gmane.org
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	"peff@peff.net" <peff@peff.net>,
+	"pclouds@gmail.com" <pclouds@gmail.com>
+To: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Sun Oct 27 19:31:34 2013
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1VaTkM-00028G-P4
-	for glk-linux-kernel-3@plane.gmane.org; Sun, 27 Oct 2013 18:03:27 +0100
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1VaV7a-0001FV-A6
+	for gcvg-git-2@plane.gmane.org; Sun, 27 Oct 2013 19:31:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754667Ab3J0RDR (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Sun, 27 Oct 2013 13:03:17 -0400
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:63952 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753983Ab3J0RDP (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Sun, 27 Oct 2013 13:03:15 -0400
-Received: by mail-ee0-f46.google.com with SMTP id c1so2950752eek.5
-        for <multiple recipients>; Sun, 27 Oct 2013 10:03:14 -0700 (PDT)
+	id S1753427Ab3J0Sb0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 27 Oct 2013 14:31:26 -0400
+Received: from mail-la0-f54.google.com ([209.85.215.54]:44654 "EHLO
+	mail-la0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751955Ab3J0SbZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 27 Oct 2013 14:31:25 -0400
+Received: by mail-la0-f54.google.com with SMTP id gx14so4557742lab.13
+        for <git@vger.kernel.org>; Sun, 27 Oct 2013 11:31:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=VwedqfeYE0GpPjQlz9WVhclgBPl6B7jtIFNuR7mycK0=;
-        b=m4+7pawRe8Z7yPb0xEOIBeLRlnE6kvEnGtbbILLQ67xs4QB0WCZye0t7Ez34KfUsbz
-         1aFrB2t7y8e2JOwqxitHQV2iXV6Fe+J9bjMiqnFn+PQDXhiowWvlfrK/P3WZ4ymu7XWV
-         S5xxXfOl6IPEIpurfy+mP9JRjRo/m2AMPI6jtF4b6VpJezmKnbNLxEsdK0+mHKOD0yij
-         2VFirrJCaQuHGRQdRYsOb9gdxo2U3EWqfKI8zG9d3zgPJiasGKwFmaiUz5DC6oVUz9c5
-         Ej7wIy8z4YGULD8ckZ1VM0A7/rrfQf9bNxrHATs3o/30I/2nQErl8PwqSj23XNE/Pm9l
-         aL4g==
-X-Received: by 10.15.98.194 with SMTP id bj42mr17656005eeb.12.1382893393879;
-        Sun, 27 Oct 2013 10:03:13 -0700 (PDT)
-Received: from [192.168.1.3] (ip-109-91-109-128.unitymediagroup.de. [109.91.109.128])
-        by mx.google.com with ESMTPSA id r48sm46212626eev.14.2013.10.27.10.03.12
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 27 Oct 2013 10:03:13 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.0
-In-Reply-To: <87zjpuznf1.fsf@thomasrast.ch>
-X-Enigmail-Version: 1.5.2
-Sender: linux-kernel-owner@vger.kernel.org
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type:content-transfer-encoding;
+        bh=8pWy+sjcttiTH7iD7x0nRUheN7wtEfNkmSImQnG4v9A=;
+        b=wArm7SuFeEh5O55XSfVK28k1R8al7Fuax1lIkY3tZwkpZI5jFdI3jcFVQ08JXIP0OB
+         IrfUBAzFlZ/QwcUnkz/kfVya9Trz2y3zRkrDloMRFs3RH2fpyeefNiCfF+lvLg+DOsCH
+         PKPLiX47drPfnNI6cTCH+TWJ90BdN/bR2Htgw2Ak1OlfOGVuB0cyDf4XWB45u2UCWprB
+         91YNLs7vXP3/tKkj1VN6pzXrTvio9J/oAZwVMTIXzXyA5RvtFawAgzAxql95eaUvo4z4
+         on6NRWGOm5fXYy2MWJCBjRuS5ANP/ghvVfk6ZYD5xFx4U2XDnWxidHdbnwmSQTaTtrh5
+         xsOQ==
+X-Received: by 10.152.42.139 with SMTP id o11mr4905212lal.16.1382898684158;
+ Sun, 27 Oct 2013 11:31:24 -0700 (PDT)
+Received: by 10.114.200.180 with HTTP; Sun, 27 Oct 2013 11:31:24 -0700 (PDT)
+In-Reply-To: <201310262103.35770.tboegi@web.de>
+X-Google-Sender-Auth: Ge5FfZUihEcF7iKtN-By2QS0_7k
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236805>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236806>
 
-On 10/27/2013 05:30 PM, Thomas Rast wrote:
-> Stefan Beller <stefanbeller@googlemail.com> writes:
-> 
->> I assembled an overview table, which plots the long options of 
->> git commands by the short letters.
-> [...]
->> (In case thunderbird messes it up, here it is again http://pastebin.com/raw.php?i=JBci2Krx)
->>
->> As you can see, f is always --force except for git-config, where it is --file
-> 
-> Woah!  Impressive work.  Did you autogenerate this?  If so, can we have
-> it as a small make target somewhere?  If not, can you send a patch to
-> put your table in Documentation somewhere?
-> 
+On Saturday, October 26, 2013, Torsten B=F6gershausen wrote:
+> diff --git a/connect.c b/connect.c
+> index 06e88b0..903063e 100644
+> --- a/connect.c
+> +++ b/connect.c
+> @@ -564,9 +574,9 @@ struct child_process *git_connect(int fd[2], cons=
+t char *url_orig,
+>         char *url;
+>         char *host, *path;
+>         char *end;
+> -       int c;
+> +       int seperator;
 
-I thought about generating it by parsing the man pages, 
-but I felt it would not be reliable enough and quite time consuming 
-to come up with a parser. Parsing the C sources however also seemed time consuming,
-so I decided to come up with this patch:
---8<--
-Subject: [PATCH] parse-options: print all options having short and long form and exit
+s/seperator/separator/g
 
-This patch basically only prints all options which have a long and a short form
-and then aborts the program. A typical output looks like this:
-./git-add
-add,  n, dry-run
-add,  v, verbose
-add,  i, interactive
-add,  p, patch
-add,  e, edit
-add,  f, force
-add,  u, update
-add,  N, intent-to-add
-add,  A, all
----
- parse-options.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+>         struct child_process *conn =3D &no_fork;
+> -       enum protocol protocol =3D PROTO_LOCAL;
+> +       enum protocol protocol =3D PROTO_LOCAL_OR_SSH;
+>         int free_path =3D 0;
+>         char *port =3D NULL;
+>         const char **arg;
+> diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
+> index 1d1c875..69af007 100755
+> --- a/t/t5601-clone.sh
+> +++ b/t/t5601-clone.sh
+> @@ -294,39 +294,93 @@ test_expect_success 'setup ssh wrapper' '
+>         export TRASH_DIRECTORY
+>  '
+>
+> -clear_ssh () {
+> -       >"$TRASH_DIRECTORY/ssh-output"
+> -}
+> -
+> -expect_ssh () {
+> +i6501=3D0
 
-diff --git a/parse-options.c b/parse-options.c
-index 62e9b1c..b356ca9 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -500,6 +500,12 @@ int parse_options(int argc, const char **argv, const char *prefix,
- {
- 	struct parse_opt_ctx_t ctx;
- 
-+	for (; options->type != OPTION_END; options++) {
-+		if (options->long_name && options->short_name)
-+			printf("%s,  %c, %s\n", argv[0], options->short_name, options->long_name);
-+	}
-+	exit(1);
-+
- 	parse_options_start(&ctx, argc, argv, prefix, options, flags);
- 	switch (parse_options_step(&ctx, options, usagestr)) {
- 	case PARSE_OPT_HELP:
--- 
-1.8.4.1.605.g23c6912
+Is this variable meant to be named after the test script t5601? If so:
+s/i6501/i5601/g
 
+> +# $1 url
+> +# $2 none|host
+> +# $3 path
+> +test_clone_url () {
+> +       i6501=3D$(($i6501 + 1))
+> +       >"$TRASH_DIRECTORY/ssh-output" &&
+> +       test_might_fail git clone "$1" tmp$i6501 &&
+>         {
+> -               case "$1" in
+> +               case "$2" in
+>                 none)
+>                         ;;
+>                 *)
+> -                       echo "ssh: $1 git-upload-pack '$2'"
+> +                       echo "ssh: $2 git-upload-pack '$3'"
+>                 esac
+>         } >"$TRASH_DIRECTORY/ssh-expect" &&
+> -       (cd "$TRASH_DIRECTORY" && test_cmp ssh-expect ssh-output)
+> +       (cd "$TRASH_DIRECTORY" && test_cmp ssh-expect ssh-output) && =
+{
+> +               rm -rf ssh-expect ssh-output
+> +       }
 
-Unfortunately we can only check git commands, which are written in C. 
-You'll notice all the perl/shell written commands are missing (rebase, etc).
-Also a few commands written in C cannot easily be picked up, as they do stuff
-before calling parse_options. [typically something like "if (argc != 4) print_usage();"]
-These commands are also not contained.
+Should the 'rm' be inside the (cd...) subshell? If not, are the braces
+wrapping 'rm' needed, and wouldn't you want to prefix the paths with
+$TRASH_DIRECTORY/?
 
-The generation of the table however was just a little python:
-
---8<--
-#!/usr/bin/python
-
-cmds="""git-add
-git-apply
-git-archive
-git-branch
-git-check-attr
-git-check-ignore
-git-check-mailmap
-git-checkout
-git-checkout-index
-git-cherry
-git-cherry-pick
-git-clean
-git-clone
-git-column
-git-commit
-git-config
-git-count-objects
-git-credential-cache
-git-credential-store
-git-describe
-git-fetch
-git-fmt-merge-msg
-git-for-each-ref
-git-format-patch
-git-fsck
-git-fsck-objects
-git-gc
-git-grep
-git-hash-object
-git-help
-git-init
-git-init-db
-git-log
-git-ls-files
-git-ls-tree
-git-merge
-git-merge-base
-git-merge-file
-git-merge-ours
-git-mktree
-git-mv
-git-name-rev
-git-notes
-git-pack-objects
-git-pack-refs
-git-prune
-git-prune-packed
-git-push
-git-read-tree
-git-reflog
-git-remote
-git-repack
-git-replace
-git-rerere
-git-reset
-git-revert
-git-rev-parse
-git-rm
-git-show
-git-show-branch
-git-show-ref
-git-stage
-git-status
-git-symbolic-ref
-git-tag
-git-update-index
-git-update-ref
-git-update-server-info
-git-verify-pack
-git-verify-tag
-git-whatchanged
-git-write-tree"""
-
-import subprocess
-
-shorts={}
-cmdoptions={}
-
-for cmd in cmds.split("\n"):
-	p = subprocess.Popen("./"+cmd, stdout=subprocess.PIPE)
-	p.wait()
-	lines = p.stdout.read()
-	for line in lines.split("\n"):
-		if not len(line):
-			continue
-
-		name, short, long = line.split(",")
-		if not short in shorts:
-			shorts[short] = len(long)
-		else:
-			shorts[short] = max(shorts[short], len(long))
-
-		if not name in cmdoptions:
-			cmdoptions[name] = {}
-		cmdoptions[name][short] = long
-
-longest_cmd = 0
-for cmd in cmdoptions:
-	longest_cmd = max(longest_cmd, len(cmd))
-
-print " "*(longest_cmd-len("Name\\short")), "Name\\short",
-
-for short in shorts:
-	print "|" + " "*(1+shorts[short]-len(short)) + short,
-print
-
-for cmd in cmdoptions:
-	print " "*(longest_cmd-len(cmd)), cmd,
-	for short in shorts:
-		s = ""
-		if short in cmdoptions[cmd]:
-			s = cmdoptions[cmd][short]
-		print "|" + " "*(1+shorts[short]-len(s)) + s,
-	print "  ", cmd
-
---8<--
-
-I am not sure if we should add such code to the git code base, as it would need some cleanup. 
-The existing table however would become outdated fast?
-So I do not have a good idea, how such a table could be easily incorporated and kept up to date.
-
-Thanks,
-Stefan
+>  }
+>
+> -test_expect_success 'cloning myhost:src uses ssh' '
+> -       clear_ssh &&
+> -       git clone myhost:src ssh-clone &&
+> -       expect_ssh myhost src
+> -'
