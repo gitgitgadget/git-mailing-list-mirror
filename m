@@ -1,69 +1,78 @@
-From: Richard Hansen <rhansen@bbn.com>
-Subject: [PATCH v4 13/10] test: remote-helper: add test for force pushes
-Date: Sun, 27 Oct 2013 17:16:29 -0400
-Message-ID: <1382908589-7000-2-git-send-email-rhansen@bbn.com>
-References: <1382857521-7005-1-git-send-email-felipe.contreras@gmail.com>
- <1382908589-7000-1-git-send-email-rhansen@bbn.com>
-Cc: srabbelier@gmail.com, felipe.contreras@gmail.com,
-	Richard Hansen <rhansen@bbn.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 27 22:17:01 2013
+From: Ben Walton <bdwalton@gmail.com>
+Subject: [PATCH] Change sed i\ usage to something Solaris' sed can handle
+Date: Sun, 27 Oct 2013 21:26:48 +0000
+Message-ID: <1382909208-7716-1-git-send-email-bdwalton@gmail.com>
+Cc: git@vger.kernel.org, Ben Walton <bdwalton@gmail.com>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Sun Oct 27 23:23:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VaXhk-0007Il-Ol
-	for gcvg-git-2@plane.gmane.org; Sun, 27 Oct 2013 22:17:01 +0100
+	id 1VaYkQ-0006dW-1B
+	for gcvg-git-2@plane.gmane.org; Sun, 27 Oct 2013 23:23:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754649Ab3J0VQ5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Oct 2013 17:16:57 -0400
-Received: from smtp.bbn.com ([128.33.1.81]:18235 "EHLO smtp.bbn.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754350Ab3J0VQ4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Oct 2013 17:16:56 -0400
-Received: from socket.bbn.com ([192.1.120.102]:44178)
-	by smtp.bbn.com with esmtps (TLSv1:AES256-SHA:256)
-	(Exim 4.77 (FreeBSD))
-	(envelope-from <rhansen@bbn.com>)
-	id 1VaXhe-000ABR-Cs; Sun, 27 Oct 2013 17:16:54 -0400
-X-Submitted: to socket.bbn.com (Postfix) with ESMTPSA id 9EB3A4007B
-X-Mailer: git-send-email 1.8.4.1.614.ga09cf56
-In-Reply-To: <1382908589-7000-1-git-send-email-rhansen@bbn.com>
+	id S1754546Ab3J0WXm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Oct 2013 18:23:42 -0400
+Received: from jimi.chass.utoronto.ca ([128.100.160.32]:48715 "EHLO
+	jimi.chass.utoronto.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754322Ab3J0WXm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Oct 2013 18:23:42 -0400
+X-Greylist: delayed 3391 seconds by postgrey-1.27 at vger.kernel.org; Sun, 27 Oct 2013 18:23:41 EDT
+Received: from hendrix.chass.utoronto.ca ([128.100.160.33]:56605 ident=93)
+	  by jimi.chass.utoronto.ca with esmtp  (Exim 4.76)
+	 (envelope-from <bwalton@benandwen.net>)
+	 id 1VaXrZ-0008EJ-7g ; Sun, 27 Oct 2013 17:27:09 -0400
+Received: from 86-42-140-29-dynamic.b-ras1.bbh.dublin.eircom.net ([86.42.140.29]:34167 helo=neilyoung)
+	 (auth info: dovecot_plain:bwalton@chass.utoronto.ca) by hendrix.chass.utoronto.ca with esmtpsa (TLSv1:AES128-SHA:128)
+	 (Exim 4.76)
+	 (envelope-from <bwalton@benandwen.net>)
+	 id 1VaXrW-0007wz-Cv ; Sun, 27 Oct 2013 17:27:06 -0400
+Received: from bwalton by neilyoung with local (Exim 4.80)
+	(envelope-from <bwalton@benandwen.net>)
+	id 1VaXrS-000210-9g; Sun, 27 Oct 2013 21:27:02 +0000
+X-Mailer: git-send-email 1.8.1.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236812>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236813>
 
-Signed-off-by: Richard Hansen <rhansen@bbn.com>
+Solaris' sed was choking on the i\ commands used in
+t4015-diff-whitespace as it couldn't parse the program properly.
+Modify two uses of sed that worked in GNU sed but not Solaris'
+(/usr/bin or /usr/xpg4/bin) to an equivalent form that is handled
+properly by both.
+
+Signed-off-by: Ben Walton <bdwalton@gmail.com>
 ---
- t/t5801-remote-helpers.sh | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ t/t4015-diff-whitespace.sh | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/t/t5801-remote-helpers.sh b/t/t5801-remote-helpers.sh
-index be543c0..93a7d34 100755
---- a/t/t5801-remote-helpers.sh
-+++ b/t/t5801-remote-helpers.sh
-@@ -102,6 +102,19 @@ test_expect_success 'push delete branch' '
- 	 rev-parse --verify refs/heads/new-name
- '
- 
-+test_expect_success 'force push' '
-+	(cd local &&
-+	 git checkout -b force-test &&
-+	 echo content >>file &&
-+	 git commit -a -m eight &&
-+	 git push origin force-test &&
-+	 echo content >>file &&
-+	 git commit -a --amend -m eight-modified &&
-+	 git push --force origin force-test
-+	) &&
-+	compare_refs local refs/heads/force-test server refs/heads/force-test
-+'
-+
- test_expect_success 'cloning without refspec' '
- 	GIT_REMOTE_TESTGIT_REFSPEC="" \
- 	git clone "testgit::${PWD}/server" local2 2>error &&
+diff --git a/t/t4015-diff-whitespace.sh b/t/t4015-diff-whitespace.sh
+index 3fb4b97..0126154 100755
+--- a/t/t4015-diff-whitespace.sh
++++ b/t/t4015-diff-whitespace.sh
+@@ -145,7 +145,8 @@ test_expect_success 'another test, with --ignore-space-at-eol' 'test_cmp expect
+ test_expect_success 'ignore-blank-lines: only new lines' '
+ 	test_seq 5 >x &&
+ 	git update-index x &&
+-	test_seq 5 | sed "/3/i \\
++	test_seq 5 | sed "/3/i\\
++\
+ " >x &&
+ 	git diff --ignore-blank-lines >out &&
+ 	>expect &&
+@@ -155,7 +156,8 @@ test_expect_success 'ignore-blank-lines: only new lines' '
+ test_expect_success 'ignore-blank-lines: only new lines with space' '
+ 	test_seq 5 >x &&
+ 	git update-index x &&
+-	test_seq 5 | sed "/3/i \ " >x &&
++	test_seq 5 | sed "/3/i\\
++ " >x &&
+ 	git diff -w --ignore-blank-lines >out &&
+ 	>expect &&
+ 	test_cmp out expect
 -- 
-1.8.4.1.614.ga09cf56
+1.8.1.2
