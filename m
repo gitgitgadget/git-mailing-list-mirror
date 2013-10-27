@@ -1,55 +1,71 @@
-From: Torstein Hegge <hegge@resisty.net>
-Subject: [PATCH] test-lib: fix typo in comment
-Date: Sun, 27 Oct 2013 10:56:33 +0100
-Message-ID: <1382867793-23483-1-git-send-email-hegge@resisty.net>
-Cc: Torstein Hegge <hegge@resisty.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 27 15:17:39 2013
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
+From: Thomas Rast <tr@thomasrast.ch>
+Subject: Re: [PATCH] commit: Add -f, --fixes <commit> option to add Fixes: line
+Date: Sun, 27 Oct 2013 17:30:42 +0100
+Message-ID: <87zjpuznf1.fsf@thomasrast.ch>
+References: <20131024122255.GI9378@mwanda> <20131024122512.GB9534@mwanda>
+	<20131026181709.GB10488@kroah.com> <20131027013402.GA7146@leaf>
+	<526CA7D4.1070904@alum.mit.edu> <20131027071407.GA11683@leaf>
+	<874n83m8xv.fsf@linux-k42r.v.cablecom.net>
+	<526CDC5C.40208@googlemail.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Josh Triplett <josh@joshtriplett.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
+	Dan Carpenter <dan.carpenter@oracle.com>,
+	Greg KH <greg@kroah.com>,
+	ksummit-2013-discuss@lists.linuxfoundation.org,
+	ksummit-attendees@lists.linuxfoundation.org,
+	linux-kernel@vger.kernel.org
+To: Stefan Beller <stefanbeller@googlemail.com>
+X-From: linux-kernel-owner@vger.kernel.org Sun Oct 27 17:31:45 2013
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VaR9s-0006jR-S6
-	for gcvg-git-2@plane.gmane.org; Sun, 27 Oct 2013 15:17:37 +0100
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1VaTFd-0001FR-Q0
+	for glk-linux-kernel-3@plane.gmane.org; Sun, 27 Oct 2013 17:31:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754192Ab3J0ORS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Oct 2013 10:17:18 -0400
-Received: from microbel.pvv.ntnu.no ([129.241.210.179]:34820 "EHLO
-	microbel.pvv.ntnu.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754049Ab3J0ORS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Oct 2013 10:17:18 -0400
-Received: from 120.179.202.84.customer.cdi.no ([84.202.179.120] helo=stacker.resisty.net)
-	by microbel.pvv.ntnu.no with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.72)
-	(envelope-from <torstehe@pvv.ntnu.no>)
-	id 1VaN68-0004a4-UT; Sun, 27 Oct 2013 10:57:34 +0100
-X-Mailer: git-send-email 1.8.4.1.808.g053d237
-Sender: git-owner@vger.kernel.org
+	id S1754835Ab3J0Qbd (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Sun, 27 Oct 2013 12:31:33 -0400
+Received: from psi.thgersdorf.net ([176.9.98.78]:52817 "EHLO mail.psioc.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754277Ab3J0Qbb (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
+	Sun, 27 Oct 2013 12:31:31 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by localhost.psioc.net (Postfix) with ESMTP id 45DCD4D6534;
+	Sun, 27 Oct 2013 17:31:30 +0100 (CET)
+X-Virus-Scanned: amavisd-new at psioc.net
+Received: from mail.psioc.net ([127.0.0.1])
+	by localhost (mail.psioc.net [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id xBexHN109EDJ; Sun, 27 Oct 2013 17:31:19 +0100 (CET)
+Received: from hexa.thomasrast.ch (46-126-8-85.dynamic.hispeed.ch [46.126.8.85])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(Client did not present a certificate)
+	by mail.psioc.net (Postfix) with ESMTPSA id 0B8F04D6414;
+	Sun, 27 Oct 2013 17:31:18 +0100 (CET)
+In-Reply-To: <526CDC5C.40208@googlemail.com> (Stefan Beller's message of "Sun,
+	27 Oct 2013 10:26:52 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236803>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236804>
 
-Point test writers to the test_expect_* functions properly.
+Stefan Beller <stefanbeller@googlemail.com> writes:
 
-Signed-off-by: Torstein Hegge <hegge@resisty.net>
----
- t/test-lib.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> I assembled an overview table, which plots the long options of 
+> git commands by the short letters.
+[...]
+> (In case thunderbird messes it up, here it is again http://pastebin.com/raw.php?i=JBci2Krx)
+>
+> As you can see, f is always --force except for git-config, where it is --file
 
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 0fa7dfd..3dc1792 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -325,7 +325,7 @@ trap 'die' EXIT
- . "$TEST_DIRECTORY/test-lib-functions.sh"
- 
- # You are not expected to call test_ok_ and test_failure_ directly, use
--# the text_expect_* functions instead.
-+# the test_expect_* functions instead.
- 
- test_ok_ () {
- 	test_success=$(($test_success + 1))
+Woah!  Impressive work.  Did you autogenerate this?  If so, can we have
+it as a small make target somewhere?  If not, can you send a patch to
+put your table in Documentation somewhere?
+
 -- 
-1.8.4.1.808.g053d237
+Thomas Rast
+tr@thomasrast.ch
