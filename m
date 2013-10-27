@@ -1,87 +1,167 @@
-From: Josh Triplett <josh@joshtriplett.org>
-Subject: Re: [Ksummit-2013-discuss] [PATCH] commit: Add -f, --fixes <commit>
- option to add Fixes: line
-Date: Sun, 27 Oct 2013 09:23:13 +0000
-Message-ID: <20131027092313.GC13149@leaf>
-References: <20131024122255.GI9378@mwanda>
- <20131024122512.GB9534@mwanda>
- <20131026181709.GB10488@kroah.com>
- <20131027013402.GA7146@leaf>
- <526CA7D4.1070904@alum.mit.edu>
- <20131027071407.GA11683@leaf>
- <CANN689HctBYZfU+OQ7movFFWNm6rwUdU7G-ExxhPcBPg1KF8Jw@mail.gmail.com>
+From: Stefan Beller <stefanbeller@googlemail.com>
+Subject: Re: [PATCH] commit: Add -f, --fixes <commit> option to add Fixes:
+ line
+Date: Sun, 27 Oct 2013 10:26:52 +0100
+Message-ID: <526CDC5C.40208@googlemail.com>
+References: <20131024122255.GI9378@mwanda> <20131024122512.GB9534@mwanda>	<20131026181709.GB10488@kroah.com> <20131027013402.GA7146@leaf>	<526CA7D4.1070904@alum.mit.edu> <20131027071407.GA11683@leaf> <874n83m8xv.fsf@linux-k42r.v.cablecom.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
+	Dan Carpenter <dan.carpenter@oracle.com>,
+	Greg KH <greg@kroah.com>,
 	ksummit-2013-discuss@lists.linuxfoundation.org,
-	LKML <linux-kernel@vger.kernel.org>,
 	ksummit-attendees@lists.linuxfoundation.org,
-	Git Mailing List <git@vger.kernel.org>,
-	Dan Carpenter <dan.carpenter@oracle.com>
-To: Michel Lespinasse <walken@google.com>
-X-From: linux-kernel-owner@vger.kernel.org Sun Oct 27 10:23:28 2013
+	linux-kernel@vger.kernel.org
+To: Thomas Rast <tr@thomasrast.ch>,
+	Josh Triplett <josh@joshtriplett.org>
+X-From: linux-kernel-owner@vger.kernel.org Sun Oct 27 10:26:58 2013
 Return-path: <linux-kernel-owner@vger.kernel.org>
 Envelope-to: glk-linux-kernel-3@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1VaMZD-0002Dw-P8
-	for glk-linux-kernel-3@plane.gmane.org; Sun, 27 Oct 2013 10:23:28 +0100
+	id 1VaMcb-00047L-KT
+	for glk-linux-kernel-3@plane.gmane.org; Sun, 27 Oct 2013 10:26:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753447Ab3J0JXV (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Sun, 27 Oct 2013 05:23:21 -0400
-Received: from relay3-d.mail.gandi.net ([217.70.183.195]:40358 "EHLO
-	relay3-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751331Ab3J0JXT (ORCPT
+	id S1753453Ab3J0J0t (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Sun, 27 Oct 2013 05:26:49 -0400
+Received: from mail-ea0-f182.google.com ([209.85.215.182]:64331 "EHLO
+	mail-ea0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751461Ab3J0J0r (ORCPT
 	<rfc822;linux-kernel@vger.kernel.org>);
-	Sun, 27 Oct 2013 05:23:19 -0400
-Received: from mfilter23-d.gandi.net (mfilter23-d.gandi.net [217.70.178.151])
-	by relay3-d.mail.gandi.net (Postfix) with ESMTP id CB6C9A80B5;
-	Sun, 27 Oct 2013 10:23:16 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at mfilter23-d.gandi.net
-Received: from relay3-d.mail.gandi.net ([217.70.183.195])
-	by mfilter23-d.gandi.net (mfilter23-d.gandi.net [10.0.15.180]) (amavisd-new, port 10024)
-	with ESMTP id 1Y2Nc4iUro8m; Sun, 27 Oct 2013 10:23:15 +0100 (CET)
-X-Originating-IP: 77.221.165.98
-Received: from leaf (ip-77-221-165-98.dsl.twang.net [77.221.165.98])
-	(Authenticated sender: josh@joshtriplett.org)
-	by relay3-d.mail.gandi.net (Postfix) with ESMTPSA id 6ACF7A80B1;
-	Sun, 27 Oct 2013 10:23:14 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <CANN689HctBYZfU+OQ7movFFWNm6rwUdU7G-ExxhPcBPg1KF8Jw@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	Sun, 27 Oct 2013 05:26:47 -0400
+Received: by mail-ea0-f182.google.com with SMTP id o10so1546076eaj.41
+        for <multiple recipients>; Sun, 27 Oct 2013 02:26:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=BlGpVb67dqTz8Y2j1fDpIef+6XPffBM7uND1tJA8BT8=;
+        b=xXmiozsIWjHTwiamYClpg1jHnzW4+AdtQi0q67nkZsqsy5E8Jkf4rWi2gtzFS/74RL
+         MX3sbKDLPRm+qdyMtikqwFcT/WowRKT6HT54VBsDfbHKdzcmO9nE/pNWh1+/hyUnDecW
+         nb1fERUhIL1jP65ZCNGamTpMAip9j5sBecieqY1mMQY8HrGaC67RPYCc4Fv/lB3/FeUM
+         YeBzxNMY1zmlauPXv1NMKOfeQxF6ogdpp28ulZAtgNGeFuAEgSrp37R9QRcGF5Y+ShLV
+         /1bQhxGuMhpLRbvSGjpquuWQYG+EhgN1XXtPrBrUY+X9tN/W3EtWZzC1MCGHot2phOTp
+         Qlfw==
+X-Received: by 10.14.218.197 with SMTP id k45mr16090889eep.32.1382866006051;
+        Sun, 27 Oct 2013 02:26:46 -0700 (PDT)
+Received: from [192.168.1.3] (ip-109-91-109-128.unitymediagroup.de. [109.91.109.128])
+        by mx.google.com with ESMTPSA id a1sm41868864eem.1.2013.10.27.02.26.44
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sun, 27 Oct 2013 02:26:45 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.0
+In-Reply-To: <874n83m8xv.fsf@linux-k42r.v.cablecom.net>
+X-Enigmail-Version: 1.5.2
 Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-kernel.vger.kernel.org>
 X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236796>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236797>
 
-On Sun, Oct 27, 2013 at 01:03:47AM -0700, Michel Lespinasse wrote:
-> On Sun, Oct 27, 2013 at 12:14 AM, Josh Triplett <josh@joshtriplett.org> wrote:
-> >> > +-f <commit>::
-> >> > +--fixes=<commit>::
-> >> > +   Add Fixes line for the specified commit at the end of the commit
-> >> > +   log message.  This line includes an abbreviated commit hash for
-> >> > +   the specified commit; the `core.abbrev` option determines the
-> >> > +   length of the abbreviated commit hash used, with a minimum length
-> >> > +   of 12 hex digits.
-> >>
-> >> You might also mention that the "Fixes:" line includes the old commit's
-> >> subject line.
-> >
-> > I only mentioned the abbreviated commit hash because it was necessary to
-> > explain the factors affecting hash length.  -s, above, doesn't mention
-> > that the Signed-off-by line includes the name and email address of the
-> > committer.
+On 10/27/2013 09:09 AM, Thomas Rast wrote:
+> Josh Triplett <josh@joshtriplett.org> writes:
 > 
-> I do wonder, if we're going to bake into git the idea that too-short
-> abbreviated sha1s don't make sense, why don't we just change the
-> core.abbrev default to 12 everywhere rather than just in this one
-> command ?
+>> On Sun, Oct 27, 2013 at 06:42:44AM +0100, Michael Haggerty wrote:
+>>> But I don't think that this feature should be given the "-f" short
+>>> option, as (a) -f often means "force"; (b) it will increase the
+>>> confusion with --fixup; (c) it just doesn't strike me as being likely to
+>>> be such a frequently-used option (though if this changes over time the
+>>> "-f" option could always be granted to it later).
+>>
+>> (a) -n often means --dry-run, but for commit it means --no-verify.
+>> Different commands have different options, and commit doesn't have a
+>> --force to abbreviate as -f.
+>>
+>> (b) If anything, I think the existence of a short option will make the
+>> distinction more obvious, since -f and --fixup are much less similar
+>> than --fixes and --fixup.  Most users will never type --fixes, making
+>> confusion unlikely.
+>>
+>> (c) Short option letters tend to be first-come first-serve unless
+>> there's a strong reason to do otherwise.  Why reserve 'f' for some
+>> hypothetical future option that doesn't exist yet?
+> 
+> No, lately the direction in Git has been to avoid giving options a
+> one-letter shorthand until they have proven so useful that people using
+> it in the wild start to suggest that it should have one.
+> 
+> See e.g.
+> 
+>   http://article.gmane.org/gmane.comp.version-control.git/233998
+>   http://article.gmane.org/gmane.comp.version-control.git/168748
+> 
+> A much better argument would be if it was already clear from the specs
+> laid out for Fixes that n% of the kernel commits will end up having this
+> footer, and thus kernel hackers will spend x amount of time spelling out
+> --fixes and/or confusing it with --fixup to much headache.
+> 
 
-You won't get any argument from me on that one.  I personally would have
-argued for making the hashes 40 characters always, but in any case
-bumping up the default (and minimum) for core.abbrev seems entirely
-sensible.
+I assembled an overview table, which plots the long options of 
+git commands by the short letters.
+Here it is:
+(Best viewed with a *large* screen and monospace font)
 
-- Josh Triplett
+         Name\short |              C |               B |              A |             G |              F |                E |               H |                    O |              N |                    L |         S |        R |            P |                 W |                X |               c |       b |         a |       g |      f |        e |            d |             k |            i |                 o |             n |         m |                   l |          s |        r |      q |              p |            w |             v |                u |         t |     z |        x |       3 |     2
+             status |                |                 |                |               |                |                  |                 |                      |                |                      |           |          |              |                   |                  |                 |  branch |           |         |        |          |              |               |              |                   |               |           |                     |      short |          |        |                |              |       verbose |  untracked-files |           |  null |          |         |          status
+               help |                |                 |                |               |                |                  |                 |                      |                |                      |           |          |              |                   |                  |                 |         |       all |  guides |        |          |              |               |         info |                   |               |       man |                     |            |          |        |                |          web |               |                  |           |       |          |         |          help
+               show |                |                 |                |               |                |                  |                 |                      |                |                      |           |          |              |                   |                  |                 |         |           |         |        |          |              |               |              |                   |               |           |                     |            |          |  quiet |                |              |               |                  |           |       |          |         |          show
+             revert |                |                 |                |               |                |                  |                 |                      |                |                      |           |          |              |                   |  strategy-option |                 |         |           |         |        |     edit |              |               |              |                   |     no-commit |  mainline |                     |    signoff |          |        |                |              |               |                  |           |       |          |         |          revert
+       pack-objects |                |                 |                |               |                |                  |                 |                      |                |                      |           |          |              |                   |                  |                 |         |           |         |        |          |              |               |              |                   |               |           |                     |            |          |  quiet |                |              |               |                  |           |       |          |         |          pack-objects
+       prune-packed |                |                 |                |               |                |                  |                 |                      |                |                      |           |          |              |                   |                  |                 |         |           |         |        |          |              |               |              |                   |       dry-run |           |                     |            |          |  quiet |                |              |               |                  |           |       |          |         |          prune-packed
+            replace |                |                 |                |               |                |                  |                 |                      |                |                      |           |          |              |                   |                  |                 |         |           |         |  force |          |       delete |               |              |                   |               |           |                list |            |          |        |                |              |               |                  |           |       |          |         |          replace
+           show-ref |                |                 |                |               |                |                  |                 |                      |                |                      |           |          |              |                   |                  |                 |         |           |         |        |          |  dereference |               |              |                   |               |           |                     |       hash |          |  quiet |                |              |               |                  |           |       |          |         |          show-ref
+                tag |                |                 |                |               |           file |                  |                 |                      |                |                      |           |          |              |                   |                  |                 |         |  annotate |         |  force |          |       delete |               |              |                   |               |   message |                list |       sign |          |        |                |              |        verify |       local-user |           |       |          |         |          tag
+                 gc |                |                 |                |               |                |                  |                 |                      |                |                      |           |          |              |                   |                  |                 |         |           |         |        |          |              |               |              |                   |               |           |                     |            |          |  quiet |                |              |               |                  |           |       |          |         |          gc
+              apply |                |                 |                |               |                |                  |                 |                      |                |                      |           |  reverse |              |                   |                  |                 |         |           |         |        |          |              |               |              |                   |               |           |                     |            |          |        |                |              |       verbose |                  |           |       |          |    3way |          apply
+       fsck-objects |                |                 |                |               |                |                  |                 |                      |                |                      |           |          |              |                   |                  |                 |         |           |         |        |          |              |               |              |                   |               |           |                     |            |          |        |                |              |       verbose |                  |           |       |          |         |          fsck-objects
+            archive |                |                 |                |               |                |                  |                 |                      |                |                      |           |          |              |                   |                  |                 |         |           |         |        |          |              |               |              |            output |               |           |                     |            |          |        |                |              |               |                  |           |       |          |         |          archive
+         merge-file |                |                 |                |               |                |                  |                 |                      |                |                      |           |          |              |                   |                  |                 |         |           |         |        |          |              |               |              |                   |               |           |                     |            |          |  quiet |         stdout |              |               |                  |           |       |          |         |          merge-file
+                log |                |                 |                |               |                |                  |                 |                      |                |                      |           |          |              |                   |                  |                 |         |           |         |        |          |              |               |              |                   |               |           |                     |            |          |  quiet |                |              |               |                  |           |       |          |         |          log
+             cherry |                |                 |                |               |                |                  |                 |                      |                |                      |           |          |              |                   |                  |                 |         |           |         |        |          |              |               |              |                   |               |           |                     |            |          |        |                |              |       verbose |                  |           |       |          |         |          cherry
+     checkout-index |                |                 |                |               |                |                  |                 |                      |                |                      |           |          |              |                   |                  |                 |         |       all |         |  force |          |              |               |              |                   |     no-create |           |                     |            |          |  quiet |                |              |               |            index |           |       |          |         |          checkout-index
+         check-attr |                |                 |                |               |                |                  |                 |                      |                |                      |           |          |              |                   |                  |                 |         |       all |         |        |          |              |               |              |                   |               |           |                     |            |          |        |                |              |               |                  |           |       |          |         |          check-attr
+             reflog |                |                 |                |               |                |                  |                 |                      |                |                      |           |          |              |                   |                  |                 |         |           |         |        |          |              |               |              |                   |               |           |                     |            |          |  quiet |                |              |               |                  |           |       |          |         |          reflog
+             branch |                |                 |                |               |                |                  |                 |                      |                |                      |           |          |              |                   |                  |                 |         |       all |         |  force |          |       delete |               |              |                   |               |      move |       create-reflog |            |  remotes |  quiet |                |              |       verbose |  set-upstream-to |     track |       |          |         |          branch
+            ls-tree |                |                 |                |               |                |                  |                 |                      |                |                      |           |          |              |                   |                  |                 |         |           |         |        |          |              |               |              |                   |               |           |                long |            |          |        |                |              |               |                  |           |       |          |         |          ls-tree
+                 rm |                |                 |                |               |                |                  |                 |                      |                |                      |           |          |              |                   |                  |                 |         |           |         |  force |          |              |               |              |                   |       dry-run |           |                     |            |          |  quiet |                |              |               |                  |           |       |          |         |          rm
+             config |                |                 |                |               |                |                  |                 |                      |                |                      |           |          |              |                   |                  |                 |         |           |         |   file |     edit |              |               |              |                   |               |           |                list |            |          |        |                |              |               |                  |           |  null |          |         |          config
+             remote |                |                 |                |               |                |                  |                 |                      |                |                      |           |          |              |                   |                  |                 |         |           |         |        |          |              |               |              |                   |               |           |                     |            |          |        |                |              |       verbose |                  |           |       |          |         |          remote
+            init-db |                |                 |                |               |                |                  |                 |                      |                |                      |           |          |              |                   |                  |                 |         |           |         |        |          |              |               |              |                   |               |           |                     |            |          |  quiet |                |              |               |                  |           |       |          |         |          init-db
+         merge-base |                |                 |                |               |                |                  |                 |                      |                |                      |           |          |              |                   |                  |                 |         |       all |         |        |          |              |               |              |                   |               |           |                     |            |          |        |                |              |               |                  |           |       |          |         |          merge-base
+       for-each-ref |                |                 |                |               |                |                  |                 |                      |                |                      |           |          |              |                   |                  |                 |         |           |         |        |          |              |               |              |                   |               |           |                     |      shell |          |        |           perl |              |               |                  |           |       |          |         |          for-each-ref
+              clone |                |                 |                |               |                |                  |                 |                      |                |                      |           |          |              |                   |                  |          config |  branch |           |         |        |          |              |               |              |            origin |   no-checkout |           |               local |     shared |          |  quiet |                |              |       verbose |      upload-pack |           |       |          |         |          clone
+      count-objects |                |                 |                |               |                |                  |  human-readable |                      |                |                      |           |          |              |                   |                  |                 |         |           |         |        |          |              |               |              |                   |               |           |                     |            |          |        |                |              |       verbose |                  |           |       |          |         |          count-objects
+               fsck |                |                 |                |               |                |                  |                 |                      |                |                      |           |          |              |                   |                  |                 |         |           |         |        |          |              |               |              |                   |               |           |                     |            |          |        |                |              |       verbose |                  |           |       |          |         |          fsck
+        verify-pack |                |                 |                |               |                |                  |                 |                      |                |                      |           |          |              |                   |                  |                 |         |           |         |        |          |              |               |              |                   |               |           |                     |  stat-only |          |        |                |              |       verbose |                  |           |       |          |         |          verify-pack
+ update-server-info |                |                 |                |               |                |                  |                 |                      |                |                      |           |          |              |                   |                  |                 |         |           |         |  force |          |              |               |              |                   |               |           |                     |            |          |        |                |              |               |                  |           |       |          |         |          update-server-info
+                add |                |                 |            all |               |                |                  |                 |                      |  intent-to-add |                      |           |          |              |                   |                  |                 |         |           |         |  force |     edit |              |               |  interactive |                   |       dry-run |           |                     |            |          |        |          patch |              |       verbose |           update |           |       |          |         |          add
+        whatchanged |                |                 |                |               |                |                  |                 |                      |                |                      |           |          |              |                   |                  |                 |         |           |         |        |          |              |               |              |                   |               |           |                     |            |          |  quiet |                |              |               |                  |           |       |          |         |          whatchanged
+        cherry-pick |                |                 |                |               |                |                  |                 |                      |                |                      |           |          |              |                   |  strategy-option |                 |         |           |         |        |     edit |              |               |              |                   |     no-commit |  mainline |                     |    signoff |          |        |                |              |               |                  |           |       |          |         |          cherry-pick
+          read-tree |                |                 |                |               |                |                  |                 |                      |                |                      |           |          |              |                   |                  |                 |         |           |         |        |          |              |               |              |                   |       dry-run |           |                     |            |          |        |                |              |       verbose |                  |           |       |          |         |          read-tree
+       format-patch |                |                 |                |               |                |                  |                 |                      |    no-numbered |                      |           |          |              |                   |                  |                 |         |           |         |        |          |              |  keep-subject |              |  output-directory |      numbered |           |                     |    signoff |          |  quiet |        no-stat |              |  reroll-count |                  |           |       |          |         |          format-patch
+              stage |                |                 |            all |               |                |                  |                 |                      |  intent-to-add |                      |           |          |              |                   |                  |                 |         |           |         |  force |     edit |              |               |  interactive |                   |       dry-run |           |                     |            |          |        |          patch |              |       verbose |           update |           |       |          |         |          stage
+              reset |                |                 |                |               |                |                  |                 |                      |                |                      |           |          |              |                   |                  |                 |         |           |         |        |          |              |               |              |                   |               |           |                     |            |          |  quiet |          patch |              |               |                  |           |       |          |         |          reset
+       check-ignore |                |                 |                |               |                |                  |                 |                      |                |                      |           |          |              |                   |                  |                 |         |           |         |        |          |              |               |              |                   |  non-matching |           |                     |            |          |  quiet |                |              |       verbose |                  |           |       |          |         |          check-ignore
+               grep |        context |  before-context |  after-context |  basic-regexp |  fixed-strings |  extended-regexp |                 |  open-files-in-pager |                |  files-without-match |           |          |  perl-regexp |  function-context |                  |           count |         |      text |         |        |          |              |               |  ignore-case |                   |   line-number |           |  files-with-matches |            |          |  quiet |  show-function |  word-regexp |  invert-match |                  |           |  null |          |         |          grep
+              prune |                |                 |                |               |                |                  |                 |                      |                |                      |           |          |              |                   |                  |                 |         |           |         |        |          |              |               |              |                   |       dry-run |           |                     |            |          |        |                |              |       verbose |                  |           |       |          |         |          prune
+       symbolic-ref |                |                 |                |               |                |                  |                 |                      |                |                      |           |          |              |                   |                  |                 |         |           |         |        |          |       delete |               |              |                   |               |           |                     |            |          |  quiet |                |              |               |                  |           |       |          |         |          symbolic-ref
+           checkout |                |                 |                |               |                |                  |                 |                      |                |                      |           |          |              |                   |                  |                 |         |           |         |  force |          |              |               |              |                   |               |     merge |                     |            |          |  quiet |          patch |              |               |                  |     track |       |          |  theirs |  ours    checkout
+             repack |                |                 |                |               |                |                  |                 |                      |                |                      |           |          |              |                   |                  |                 |         |           |         |        |          |              |               |              |                   |               |           |               local |            |          |  quiet |                |              |               |                  |           |       |          |         |          repack
+               init |                |                 |                |               |                |                  |                 |                      |                |                      |           |          |              |                   |                  |                 |         |           |         |        |          |              |               |              |                   |               |           |                     |            |          |  quiet |                |              |               |                  |           |       |          |         |          init
+              merge |                |                 |                |               |                |                  |                 |                      |                |                      |  gpg-sign |          |              |                   |  strategy-option |                 |         |           |         |        |     edit |              |               |              |                   |               |   message |                     |   strategy |          |  quiet |                |              |       verbose |                  |           |       |          |         |          merge
+                 mv |                |                 |                |               |                |                  |                 |                      |                |                      |           |          |              |                   |                  |                 |         |           |         |  force |          |              |               |              |                   |       dry-run |           |                     |            |          |        |                |              |       verbose |                  |           |       |          |         |          mv
+           ls-files |                |                 |                |               |                |                  |                 |                      |                |                      |           |          |              |                   |     exclude-from |          cached |         |           |         |        |          |      deleted |        killed |      ignored |            others |               |  modified |                     |      stage |          |        |                |              |               |         unmerged |           |       |  exclude |         |          ls-files
+              clean |                |                 |                |               |                |                  |                 |                      |                |                      |           |          |              |                   |                  |                 |         |           |         |  force |  exclude |              |               |  interactive |                   |       dry-run |           |                     |            |          |  quiet |                |              |               |                  |           |       |          |         |          clean
+        show-branch |                |                 |                |               |                |                  |                 |                      |                |                      |           |          |              |                   |                  |                 |         |       all |  reflog |        |          |              |               |              |                   |               |           |                     |            |  remotes |        |                |              |               |                  |           |       |          |         |          show-branch
+               push |                |                 |                |               |                |                  |                 |                      |                |                      |           |          |              |                   |                  |                 |         |           |         |  force |          |              |               |              |                   |       dry-run |           |                     |            |          |  quiet |                |              |       verbose |     set-upstream |           |       |          |         |          push
+             commit |  reuse-message |                 |                |               |           file |                  |                 |                      |                |                      |  gpg-sign |          |              |                   |                  |  reedit-message |         |       all |         |        |     edit |              |               |      include |              only |     no-verify |   message |                     |    signoff |          |  quiet |          patch |              |       verbose |  untracked-files |  template |  null |          |         |          commit
+         verify-tag |                |                 |                |               |                |                  |                 |                      |                |                      |           |          |              |                   |                  |                 |         |           |         |        |          |              |               |              |                   |               |           |                     |            |          |        |                |              |       verbose |                  |           |       |          |         |          verify-tag
+      fmt-merge-msg |                |                 |                |               |           file |                  |                 |                      |                |                      |           |          |              |                   |                  |                 |         |           |         |        |          |              |               |              |                   |               |   message |                     |            |          |        |                |              |               |                  |           |       |          |         |          fmt-merge-msg
+              fetch |                |                 |                |               |                |                  |                 |                      |                |                      |           |          |              |                   |                  |                 |         |    append |         |  force |          |              |          keep |              |                   |               |  multiple |                     |            |          |  quiet |          prune |              |       verbose |   update-head-ok |      tags |       |          |         |          fetch
+
+
+(In case thunderbird messes it up, here it is again http://pastebin.com/raw.php?i=JBci2Krx)
+
+As you can see, f is always --force except for git-config, where it is --file
