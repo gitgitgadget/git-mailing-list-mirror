@@ -1,114 +1,93 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v4 00/10] transport-helper: updates
-Date: Sun, 27 Oct 2013 01:05:11 -0600
-Message-ID: <1382857521-7005-1-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH v4 03/10] transport-helper: check for 'forced update' message
+Date: Sun, 27 Oct 2013 01:05:12 -0600
+Message-ID: <1382857521-7005-2-git-send-email-felipe.contreras@gmail.com>
+References: <1382857521-7005-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Sverre Rabbelier <srabbelier@gmail.com>,
 	Richard Hansen <rhansen@bbn.com>,
 	Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 27 08:12:10 2013
+X-From: git-owner@vger.kernel.org Sun Oct 27 08:12:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VaKW9-0006fP-GK
-	for gcvg-git-2@plane.gmane.org; Sun, 27 Oct 2013 08:12:09 +0100
+	id 1VaKWF-0006in-Jg
+	for gcvg-git-2@plane.gmane.org; Sun, 27 Oct 2013 08:12:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751849Ab3J0HMD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Oct 2013 03:12:03 -0400
-Received: from mail-oa0-f54.google.com ([209.85.219.54]:36348 "EHLO
-	mail-oa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751207Ab3J0HMC (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Oct 2013 03:12:02 -0400
-Received: by mail-oa0-f54.google.com with SMTP id o20so2436685oag.41
-        for <git@vger.kernel.org>; Sun, 27 Oct 2013 00:12:01 -0700 (PDT)
+	id S1751942Ab3J0HMG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Oct 2013 03:12:06 -0400
+Received: from mail-oa0-f52.google.com ([209.85.219.52]:63441 "EHLO
+	mail-oa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751207Ab3J0HME (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Oct 2013 03:12:04 -0400
+Received: by mail-oa0-f52.google.com with SMTP id n10so2421175oag.25
+        for <git@vger.kernel.org>; Sun, 27 Oct 2013 00:12:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=iIyzvslWtGfHENCuZENdMLVoMlp2fdwaFyCkPl01nqs=;
-        b=T3wflGt7JnB/Qyz2ZXnKMwtag3q1TUQ6SuNe5YV9Uleh8enDV6eI+FAFY0L23hlSQj
-         zNShTzRNFky8Kme4tUPMQdQ4ecPGpz3YhPydk5O6cuVty4X8dQypC6E42Rh8LKOhMMIP
-         mY7R+NOfD3niCLQcu3O17rvcQnDxEGlcb/cEXpDR3M625u1oXSWJCCz1sw4VebqZ6Z5T
-         9Nh8UmAJA7vqxCYiuTfWTHj7m1D6VZq6Nf8xI8dJno5xM9CFlafFuD//R9SN+w0g5uIW
-         nlPKOw/iAk+4eX7dZhUYZU3Y0S/QBKfA8GsWMo/vaNEPLFl4UkS4+LACw/6Ogv5swaJh
-         q0lA==
-X-Received: by 10.182.129.42 with SMTP id nt10mr9586885obb.19.1382857921252;
-        Sun, 27 Oct 2013 00:12:01 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=1ylzNT92k4h3RbFqD1pCj5c4FOGmLWEke19HLZ818zQ=;
+        b=WRkfeK2ER/C/9tFXt1fdfQTSM/nxipdkNaVuJikvGq43THkt4AS1B7mib4x18sYnfx
+         /QjXH2IxNQwLLFde+WPCaVBeigXOSnYmxE1q55s90hS29NHkl7R+WivatCacnI/hKv4r
+         SwXoDUn1w3tJMkxrtX0wQhZjs4l5mTs+GPOIDGFWWLmMBptAJs0r1gY5BcCFQ498gEoH
+         wfwA5QK9VdQ8rhguBzV4rB9hjK4mgOB1hGkMH9OZoHqfG/RrJdyugpBnXfeTv8LsKASO
+         jIIeDFEN0sbQd/ywLKUOE0VIZnqjFGtdsxwmoZoIUEnh253kWhSeXhRD+DUsfGt1gk84
+         PHtw==
+X-Received: by 10.182.215.202 with SMTP id ok10mr25080obc.62.1382857923639;
+        Sun, 27 Oct 2013 00:12:03 -0700 (PDT)
 Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
-        by mx.google.com with ESMTPSA id jz7sm22401021oeb.4.2013.10.27.00.11.59
+        by mx.google.com with ESMTPSA id ee7sm22403920oeb.5.2013.10.27.00.12.02
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 27 Oct 2013 00:12:00 -0700 (PDT)
+        Sun, 27 Oct 2013 00:12:02 -0700 (PDT)
 X-Mailer: git-send-email 1.8.4-fc
+In-Reply-To: <1382857521-7005-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236779>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236780>
 
-Hi,
+So the remote-helpers can tell us when a forced push was needed.
 
-Here are the patches that allow transport helpers to be completely transparent;
-renaming branches, deleting them, custom refspecs, --force, --dry-run,
-reporting forced update, everything works.
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
+ transport-helper.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-Some of these were were sent before and rejected without a reason, but here
-they are again in case anybody is interested.
-
-This time rebased on top of the latest master, plus a few fixes.
-
-Diff from v3:
-
-diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-index 9b728ca..60d4c80 100644
---- a/builtin/fast-export.c
-+++ b/builtin/fast-export.c
-@@ -686,7 +686,7 @@ int cmd_fast_export(int argc, const char **argv, const char *prefix)
-        struct commit *commit;
-        char *export_filename = NULL, *import_filename = NULL;
-        uint32_t lastimportid;
--       struct string_list refspecs_list;
-+       struct string_list refspecs_list = STRING_LIST_INIT_NODUP;
-        struct option options[] = {
-                OPT_INTEGER(0, "progress", &progress,
-                            N_("show progress after <n> objects")),
 diff --git a/transport-helper.c b/transport-helper.c
-index d94eaf4..91636d5 100644
+index 707351d..f8eb143 100644
 --- a/transport-helper.c
 +++ b/transport-helper.c
-@@ -836,9 +836,6 @@ static int push_refs_with_export(struct transport *transport,
-                char *private;
-                unsigned char sha1[20];
+@@ -643,7 +643,7 @@ static int push_update_ref_status(struct strbuf *buf,
+ 				   struct ref *remote_refs)
+ {
+ 	char *refname, *msg;
+-	int status;
++	int status, forced = 0;
  
--               if (ref->deletion)
--                       die("remote-helpers do not support ref deletion");
--
-                private = apply_refspecs(data->refspecs, data->refspec_nr, ref->name);
-                if (private && !get_sha1(private, sha1)) {
-                        strbuf_addf(&buf, "^%s", private);
-
-Felipe Contreras (10):
-  transport-helper: add 'force' to 'export' helpers
-  transport-helper: fix extra lines
-  transport-helper: check for 'forced update' message
-  fast-export: improve argument parsing
-  fast-export: add new --refspec option
-  transport-helper: add support for old:new refspec
-  fast-import: add support to delete refs
-  fast-export: add support to delete refs
-  transport-helper: add support to delete branches
-  transport-helper: don't update refs in dry-run
-
- Documentation/git-fast-export.txt |  4 ++++
- Documentation/git-fast-import.txt |  3 +++
- builtin/fast-export.c             | 47 ++++++++++++++++++++++++++++++++++++++-
- fast-import.c                     | 13 ++++++++---
- t/t5801-remote-helpers.sh         | 10 ++++++++-
- t/t9300-fast-import.sh            | 18 +++++++++++++++
- t/t9350-fast-export.sh            | 18 +++++++++++++++
- transport-helper.c                | 47 ++++++++++++++++++++++++++-------------
- 8 files changed, 140 insertions(+), 20 deletions(-)
-
+ 	if (!prefixcmp(buf->buf, "ok ")) {
+ 		status = REF_STATUS_OK;
+@@ -701,6 +701,11 @@ static int push_update_ref_status(struct strbuf *buf,
+ 			free(msg);
+ 			msg = NULL;
+ 		}
++		else if (!strcmp(msg, "forced update")) {
++			forced = 1;
++			free(msg);
++			msg = NULL;
++		}
+ 	}
+ 
+ 	if (*ref)
+@@ -722,6 +727,7 @@ static int push_update_ref_status(struct strbuf *buf,
+ 	}
+ 
+ 	(*ref)->status = status;
++	(*ref)->forced_update = forced;
+ 	(*ref)->remote_status = msg;
+ 	return !(status == REF_STATUS_OK);
+ }
 -- 
 1.8.4-fc
