@@ -1,96 +1,91 @@
-From: Michel Lespinasse <walken@google.com>
-Subject: Re: [Ksummit-2013-discuss] [PATCH] commit: Add -f, --fixes <commit>
- option to add Fixes: line
-Date: Sun, 27 Oct 2013 01:03:47 -0700
-Message-ID: <CANN689HctBYZfU+OQ7movFFWNm6rwUdU7G-ExxhPcBPg1KF8Jw@mail.gmail.com>
-References: <20131024122255.GI9378@mwanda>
-	<20131024122512.GB9534@mwanda>
-	<20131026181709.GB10488@kroah.com>
-	<20131027013402.GA7146@leaf>
-	<526CA7D4.1070904@alum.mit.edu>
-	<20131027071407.GA11683@leaf>
+From: Thomas Rast <tr@thomasrast.ch>
+Subject: Re: [PATCH] commit: Add -f, --fixes <commit> option to add Fixes: line
+Date: Sun, 27 Oct 2013 09:09:32 +0100
+Message-ID: <874n83m8xv.fsf@linux-k42r.v.cablecom.net>
+References: <20131024122255.GI9378@mwanda> <20131024122512.GB9534@mwanda>
+	<20131026181709.GB10488@kroah.com> <20131027013402.GA7146@leaf>
+	<526CA7D4.1070904@alum.mit.edu> <20131027071407.GA11683@leaf>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+Content-Type: text/plain
+Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
+	Dan Carpenter <dan.carpenter@oracle.com>,
+	Greg KH <greg@kroah.com>,
 	ksummit-2013-discuss@lists.linuxfoundation.org,
-	LKML <linux-kernel@vger.kernel.org>,
 	ksummit-attendees@lists.linuxfoundation.org,
-	Git Mailing List <git@vger.kernel.org>,
-	Dan Carpenter <dan.carpenter@oracle.com>
+	linux-kernel@vger.kernel.org
 To: Josh Triplett <josh@joshtriplett.org>
-X-From: linux-kernel-owner@vger.kernel.org Sun Oct 27 09:04:01 2013
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@plane.gmane.org
+X-From: git-owner@vger.kernel.org Sun Oct 27 09:10:30 2013
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1VaLKK-0001ZT-LU
-	for glk-linux-kernel-3@plane.gmane.org; Sun, 27 Oct 2013 09:04:01 +0100
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1VaLQZ-00055K-MJ
+	for gcvg-git-2@plane.gmane.org; Sun, 27 Oct 2013 09:10:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752587Ab3J0IDw (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Sun, 27 Oct 2013 04:03:52 -0400
-Received: from mail-qe0-f48.google.com ([209.85.128.48]:35602 "EHLO
-	mail-qe0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751245Ab3J0IDs (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Sun, 27 Oct 2013 04:03:48 -0400
-Received: by mail-qe0-f48.google.com with SMTP id d4so3278265qej.7
-        for <linux-kernel@vger.kernel.org>; Sun, 27 Oct 2013 01:03:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=XQUPdU8wofHuIq92BgvStyTFqX39Ia5uWKzpNYEK1R0=;
-        b=lJKl2BT/KGAcXoZVpbNfuxKC0SOrXTXr4sLtnzAXuyu1Y5jUX3ukl4rMBNy9Ass/id
-         AXxvBKLw6WCfwjCjl1sF5CfwZGtrkX6sWjx9IoXjY7T2a+fbodUcNlLioK1pdedfqurs
-         vlEyxqLYjN6irFvmsRLpYerJqE3zrgAay9NxAAOxzPWHJIdyaIu2NQGXfhi6WiF67Bcp
-         3cPGCtrbLe/l46+4m4PpTuMS5ynddwSSxZ15LK7WUNhqRDuaZI28r1DolgYm00vxImkK
-         iJaPD+YDCyjbglcV3YZZUSWVWoPLNKQcOytDp+OZ4JFN6fOems2QiXuLgCi4Li8zijxs
-         tUCA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=XQUPdU8wofHuIq92BgvStyTFqX39Ia5uWKzpNYEK1R0=;
-        b=Ov6DOINTO/v54ilJ2uN8BjfrJcg4fy893BRklb2Hy25iN4Uh7WEAqlJZe1ywRrC+aL
-         hj0KooNkVfj9qHtIy2v2jB2vG8hchGKA52AuncHiWqYp3iN5YO2FyxuBnDI97UqLjV17
-         KO6O5fCuNFAeGw8n2B6/EX1zBAbN2AvlEHLEcihbKovcknd362OOOYCW8eWzrn3SzBe/
-         MKzQJewmT5+ydBDPGWCPfzRO/5f64DtXoWvdXtdFrZt197P42j+nUV5oixfonRKBiT2s
-         yQXGZx/KcANFP/j9EMlGIYl9HVVwneSI8KbyIauy2pd7yQa4QDQxzyENn7IMAaIZTh4a
-         Tv3w==
-X-Gm-Message-State: ALoCoQnLuXGllkeTOIOQKDYE0uRyDZ1+HmvyL7K8LF3rWkWOCGGCTrZytVYoZLXvn3eOXV6epCoEXciYi8nP9YlA1vp3COzIK1Aic1I5B1X/U8FPxMiT2exHhTkYqq5nLH5hnU8Djaw6vNar8xqPQ6dXJe+RgolcR7JXeoa+Yy+4lSB5d6tBIh6PEonZLV9EHG3dSbfK8OMkiLdRr+OTdABVSdicTy4Mmg==
-X-Received: by 10.224.51.131 with SMTP id d3mr22624345qag.0.1382861027697;
- Sun, 27 Oct 2013 01:03:47 -0700 (PDT)
-Received: by 10.229.203.5 with HTTP; Sun, 27 Oct 2013 01:03:47 -0700 (PDT)
-In-Reply-To: <20131027071407.GA11683@leaf>
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1751696Ab3J0IJt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Oct 2013 04:09:49 -0400
+Received: from psi.thgersdorf.net ([176.9.98.78]:52176 "EHLO mail.psioc.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751039Ab3J0IJq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Oct 2013 04:09:46 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by localhost.psioc.net (Postfix) with ESMTP id 3D7E54D6534;
+	Sun, 27 Oct 2013 09:09:45 +0100 (CET)
+X-Virus-Scanned: amavisd-new at psioc.net
+Received: from mail.psioc.net ([127.0.0.1])
+	by localhost (mail.psioc.net [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id N4iwEEUMqDzf; Sun, 27 Oct 2013 09:09:34 +0100 (CET)
+Received: from linux-k42r.v.cablecom.net.thomasrast.ch (46-126-8-85.dynamic.hispeed.ch [46.126.8.85])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(Client did not present a certificate)
+	by mail.psioc.net (Postfix) with ESMTPSA id 293604D6414;
+	Sun, 27 Oct 2013 09:09:34 +0100 (CET)
+In-Reply-To: <20131027071407.GA11683@leaf> (Josh Triplett's message of "Sun,
+	27 Oct 2013 07:14:07 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236791>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236792>
 
-On Sun, Oct 27, 2013 at 12:14 AM, Josh Triplett <josh@joshtriplett.org> wrote:
->> > +-f <commit>::
->> > +--fixes=<commit>::
->> > +   Add Fixes line for the specified commit at the end of the commit
->> > +   log message.  This line includes an abbreviated commit hash for
->> > +   the specified commit; the `core.abbrev` option determines the
->> > +   length of the abbreviated commit hash used, with a minimum length
->> > +   of 12 hex digits.
->>
->> You might also mention that the "Fixes:" line includes the old commit's
->> subject line.
+Josh Triplett <josh@joshtriplett.org> writes:
+
+> On Sun, Oct 27, 2013 at 06:42:44AM +0100, Michael Haggerty wrote:
+>> But I don't think that this feature should be given the "-f" short
+>> option, as (a) -f often means "force"; (b) it will increase the
+>> confusion with --fixup; (c) it just doesn't strike me as being likely to
+>> be such a frequently-used option (though if this changes over time the
+>> "-f" option could always be granted to it later).
 >
-> I only mentioned the abbreviated commit hash because it was necessary to
-> explain the factors affecting hash length.  -s, above, doesn't mention
-> that the Signed-off-by line includes the name and email address of the
-> committer.
+> (a) -n often means --dry-run, but for commit it means --no-verify.
+> Different commands have different options, and commit doesn't have a
+> --force to abbreviate as -f.
+>
+> (b) If anything, I think the existence of a short option will make the
+> distinction more obvious, since -f and --fixup are much less similar
+> than --fixes and --fixup.  Most users will never type --fixes, making
+> confusion unlikely.
+>
+> (c) Short option letters tend to be first-come first-serve unless
+> there's a strong reason to do otherwise.  Why reserve 'f' for some
+> hypothetical future option that doesn't exist yet?
 
-I do wonder, if we're going to bake into git the idea that too-short
-abbreviated sha1s don't make sense, why don't we just change the
-core.abbrev default to 12 everywhere rather than just in this one
-command ?
+No, lately the direction in Git has been to avoid giving options a
+one-letter shorthand until they have proven so useful that people using
+it in the wild start to suggest that it should have one.
+
+See e.g.
+
+  http://article.gmane.org/gmane.comp.version-control.git/233998
+  http://article.gmane.org/gmane.comp.version-control.git/168748
+
+A much better argument would be if it was already clear from the specs
+laid out for Fixes that n% of the kernel commits will end up having this
+footer, and thus kernel hackers will spend x amount of time spelling out
+--fixes and/or confusing it with --fixup to much headache.
 
 -- 
-Michel "Walken" Lespinasse
-A program is never fully debugged until the last user dies.
+Thomas Rast
+tr@thomasrast.ch
