@@ -1,101 +1,142 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v4 10/10] transport-helper: don't update refs in dry-run
-Date: Sun, 27 Oct 2013 01:05:19 -0600
-Message-ID: <1382857521-7005-9-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH v4 07/10] fast-import: add support to delete refs
+Date: Sun, 27 Oct 2013 01:05:20 -0600
+Message-ID: <1382857521-7005-10-git-send-email-felipe.contreras@gmail.com>
 References: <1382857521-7005-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Sverre Rabbelier <srabbelier@gmail.com>,
 	Richard Hansen <rhansen@bbn.com>,
 	Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 27 08:12:33 2013
+X-From: git-owner@vger.kernel.org Sun Oct 27 08:12:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VaKWV-0006tM-KZ
-	for gcvg-git-2@plane.gmane.org; Sun, 27 Oct 2013 08:12:31 +0100
+	id 1VaKWc-0006wv-JF
+	for gcvg-git-2@plane.gmane.org; Sun, 27 Oct 2013 08:12:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752590Ab3J0HM3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1752586Ab3J0HM3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Sun, 27 Oct 2013 03:12:29 -0400
-Received: from mail-oa0-f42.google.com ([209.85.219.42]:45539 "EHLO
-	mail-oa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752174Ab3J0HMU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Oct 2013 03:12:20 -0400
-Received: by mail-oa0-f42.google.com with SMTP id k14so2485138oag.1
-        for <git@vger.kernel.org>; Sun, 27 Oct 2013 00:12:19 -0700 (PDT)
+Received: from mail-ob0-f182.google.com ([209.85.214.182]:35053 "EHLO
+	mail-ob0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752417Ab3J0HMX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Oct 2013 03:12:23 -0400
+Received: by mail-ob0-f182.google.com with SMTP id wn1so2446554obc.41
+        for <git@vger.kernel.org>; Sun, 27 Oct 2013 00:12:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=P7KITjtZ6ms7b0fuYA1YH83OwG+g/QWCEicqMNFJ4qY=;
-        b=JAJyGJO73lhPygVvY1FHheaCXwmJ4pDWAKGeLJdFPG3s29FZORQ3OV+sVlwoP447Kt
-         jqB1YmHslyj7YGwPyTaAsUm96Iqt44I9Xz6WboX2hVFTDj7Trbo9yOjOPxdgKwk6Yuzd
-         SK0he6gC7XcqvHjYgxeYQzWTd61tnUYQ0HlnyeXbFh8iO7L56qa8EElWBdqhcp8TEDCu
-         X39O/CRRsReEjYIRxCU+UM7nBPEtYLjIfSg6A6Q/wmmN8fG21vm7Z4FnDuscDilUrAp6
-         wUQv3ZviyEyYJsq3OuyxsGvlXIahiTDC91sUvCrGYI2nT1ue+uXKJukYwPakmunySLvR
-         I7jQ==
-X-Received: by 10.182.181.34 with SMTP id dt2mr9668960obc.30.1382857939831;
-        Sun, 27 Oct 2013 00:12:19 -0700 (PDT)
+        bh=oV3O714r5e1sPfZ2AIqxWbrWnRxT3I9/VyYCbEcyJ04=;
+        b=xhuQRl0MvsbN/gToLNQ9/IjbAhEHqHH+4Z4mgkruaWqryn8F8hOsKncs0+zNns75GD
+         Bcl6Pk2rkS7huoRc2ByU9XaOBYnI7PfA5JLm+Kr1a7LCE6imaV9n5rCRIWOWLpGfBzbK
+         BvyNSJkOZzORCWtLKGa8/3teBNov3Cg0ThA69/9T/v7AbjX76liveyGEizdcJlLKN+vI
+         70+s0j6UzWwO3zYTKOm6CVJaBSWxQ5F5Y0ZJH+KdubjDQsu5W9XHCkPVmutnKinddTlo
+         XN98BTFRCWjiVZ45hmFJ7P02B7wT4OJ4X3tCR9BeKPzSGD/T2V9hIT6j3fTrK/EBmTLF
+         liHg==
+X-Received: by 10.182.219.138 with SMTP id po10mr285209obc.58.1382857942128;
+        Sun, 27 Oct 2013 00:12:22 -0700 (PDT)
 Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
-        by mx.google.com with ESMTPSA id s9sm18079935obu.4.2013.10.27.00.12.18
+        by mx.google.com with ESMTPSA id r6sm18014978obi.14.2013.10.27.00.12.20
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 27 Oct 2013 00:12:19 -0700 (PDT)
+        Sun, 27 Oct 2013 00:12:21 -0700 (PDT)
 X-Mailer: git-send-email 1.8.4-fc
 In-Reply-To: <1382857521-7005-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236786>
-
-The remote helper namespace should not be updated.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236787>
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- transport-helper.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ Documentation/git-fast-import.txt |  3 +++
+ fast-import.c                     | 13 ++++++++++---
+ t/t9300-fast-import.sh            | 18 ++++++++++++++++++
+ 3 files changed, 31 insertions(+), 3 deletions(-)
 
-diff --git a/transport-helper.c b/transport-helper.c
-index 4f47bdd..ef91882 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -733,7 +733,8 @@ static int push_update_ref_status(struct strbuf *buf,
- }
+diff --git a/Documentation/git-fast-import.txt b/Documentation/git-fast-import.txt
+index 73f9806..c49ede4 100644
+--- a/Documentation/git-fast-import.txt
++++ b/Documentation/git-fast-import.txt
+@@ -483,6 +483,9 @@ Marks must be declared (via `mark`) before they can be used.
+ * Any valid Git SHA-1 expression that resolves to a commit.  See
+   ``SPECIFYING REVISIONS'' in linkgit:gitrevisions[7] for details.
  
- static void push_update_refs_status(struct helper_data *data,
--				    struct ref *remote_refs)
-+				    struct ref *remote_refs,
-+				    int flags)
- {
- 	struct strbuf buf = STRBUF_INIT;
- 	struct ref *ref = remote_refs;
-@@ -747,7 +748,7 @@ static void push_update_refs_status(struct helper_data *data,
- 		if (push_update_ref_status(&buf, &ref, remote_refs))
- 			continue;
++* The special null SHA-1 (40 zeros) specifices that the branch is to be
++  removed.
++
+ The special case of restarting an incremental import from the
+ current branch value should be written as:
+ ----
+diff --git a/fast-import.c b/fast-import.c
+index f4d9969..fdce0b7 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -248,6 +248,7 @@ struct branch {
+ 	uintmax_t last_commit;
+ 	uintmax_t num_notes;
+ 	unsigned active : 1;
++	unsigned delete : 1;
+ 	unsigned pack_id : PACK_ID_BITS;
+ 	unsigned char sha1[20];
+ };
+@@ -1690,10 +1691,13 @@ static int update_branch(struct branch *b)
+ 	struct ref_lock *lock;
+ 	unsigned char old_sha1[20];
  
--		if (!data->refspecs || data->no_private_update)
-+		if (flags & TRANSPORT_PUSH_DRY_RUN || !data->refspecs || data->no_private_update)
- 			continue;
+-	if (is_null_sha1(b->sha1))
+-		return 0;
+ 	if (read_ref(b->name, old_sha1))
+ 		hashclr(old_sha1);
++	if (is_null_sha1(b->sha1)) {
++		if (b->delete)
++			delete_ref(b->name, old_sha1, 0);
++		return 0;
++	}
+ 	lock = lock_any_ref_for_update(b->name, old_sha1, 0, NULL);
+ 	if (!lock)
+ 		return error("Unable to lock %s", b->name);
+@@ -2620,8 +2624,11 @@ static int parse_from(struct branch *b)
+ 			free(buf);
+ 		} else
+ 			parse_from_existing(b);
+-	} else if (!get_sha1(from, b->sha1))
++	} else if (!get_sha1(from, b->sha1)) {
+ 		parse_from_existing(b);
++		if (is_null_sha1(b->sha1))
++			b->delete = 1;
++	}
+ 	else
+ 		die("Invalid ref name or SHA1 expression: %s", from);
  
- 		/* propagate back the update to the remote namespace */
-@@ -838,7 +839,7 @@ static int push_refs_with_push(struct transport *transport,
- 	sendline(data, &buf);
- 	strbuf_release(&buf);
+diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
+index 88fc407..f453388 100755
+--- a/t/t9300-fast-import.sh
++++ b/t/t9300-fast-import.sh
+@@ -2999,4 +2999,22 @@ test_expect_success 'T: ls root tree' '
+ 	test_cmp expect actual
+ '
  
--	push_update_refs_status(data, remote_refs);
-+	push_update_refs_status(data, remote_refs, flags);
- 	return 0;
- }
- 
-@@ -905,7 +906,7 @@ static int push_refs_with_export(struct transport *transport,
- 
- 	if (finish_command(&exporter))
- 		die("Error while running fast-export");
--	push_update_refs_status(data, remote_refs);
-+	push_update_refs_status(data, remote_refs, flags);
- 	return 0;
- }
- 
++test_expect_success 'T: delete branch' '
++	git branch to-delete &&
++	git fast-import <<-EOF &&
++	reset refs/heads/to-delete
++	from 0000000000000000000000000000000000000000
++	EOF
++	test_must_fail git rev-parse --verify refs/heads/to-delete
++'
++
++test_expect_success 'T: empty reset doesnt delete branch' '
++	git branch not-to-delete &&
++	git fast-import <<-EOF &&
++	reset refs/heads/not-to-delete
++	EOF
++	git show-ref &&
++	git rev-parse --verify refs/heads/not-to-delete
++'
++
+ test_done
 -- 
 1.8.4-fc
