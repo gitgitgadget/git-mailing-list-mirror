@@ -1,93 +1,154 @@
-From: Jean LAULIAC <jean@lauliac.com>
-Subject: Well-past commit dates unsupported
-Date: Mon, 28 Oct 2013 11:04:22 +0100
-Message-ID: <CALM1TLiVTq6kPB7Ke_VDEc+Fs8u5NknCOHH_CuOzphQY3b_HeA@mail.gmail.com>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCH] commit: Add -f, --fixes <commit> option to add Fixes: line
+Date: Mon, 28 Oct 2013 12:29:32 +0100
+Message-ID: <CALKQrgfsk3fjyF77XL9+CPyJ_s-AfzkNAj4Eaj1LT-G0Ph=bfg@mail.gmail.com>
+References: <20131024122255.GI9378@mwanda>
+	<20131024122512.GB9534@mwanda>
+	<20131026181709.GB10488@kroah.com>
+	<20131027013402.GA7146@leaf>
+	<526CA7D4.1070904@alum.mit.edu>
+	<20131027071407.GA11683@leaf>
+	<526E283A.1070801@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 28 11:04:59 2013
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
+Content-Type: text/plain; charset=UTF-8
+Cc: Josh Triplett <josh@joshtriplett.org>,
+	Git mailing list <git@vger.kernel.org>,
+	Dan Carpenter <dan.carpenter@oracle.com>,
+	Greg KH <greg@kroah.com>,
+	ksummit-2013-discuss@lists.linuxfoundation.org,
+	ksummit-attendees@lists.linuxfoundation.org,
+	Linux Kernel mailing list <linux-kernel@vger.kernel.org>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: linux-kernel-owner@vger.kernel.org Mon Oct 28 12:29:49 2013
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vajgw-00042p-3X
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Oct 2013 11:04:58 +0100
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1Val12-0005T6-E4
+	for glk-linux-kernel-3@plane.gmane.org; Mon, 28 Oct 2013 12:29:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755977Ab3J1KEy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Oct 2013 06:04:54 -0400
-Received: from mail-ea0-f174.google.com ([209.85.215.174]:64109 "EHLO
-	mail-ea0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754680Ab3J1KEx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Oct 2013 06:04:53 -0400
-Received: by mail-ea0-f174.google.com with SMTP id z15so2061475ead.19
-        for <git@vger.kernel.org>; Mon, 28 Oct 2013 03:04:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:from:date:message-id:subject:to:content-type;
-        bh=CgNWdtbjkZpTOdzlaw1xLB/6fXA32G4dH/zKFxUvJIo=;
-        b=iIG9RPHtFZj6Ei7a1jVvwmbcJtwzs2Fpi4QiAuk8CW/Cdh4TfyyDE7RFs0GJWadyW5
-         TPQNCg59tV3DJk5WLjGAeUcI76iugbgp9EVHxVZJzS8Rgqree/9Cdk/E0WumTJrq33vv
-         QB4oHU8intJPi4Qy8Ey2GvFbbI1VUWo2Tcb4Coz3x7VXqFRGCTJBzr6D0xEzbpDQ66uz
-         HWDI9sQGyLineWPWjXuZ7aNhWzqxNmrrE9rwNol8YRgHe0JDidNPRr5ouoZDKZ4UwmUM
-         tTEVU5Et6abAlOcqrannwI0hYwNzuIMmegJ5PDVAq4EBtp5WRzoq4MGE50cNXttMGxHK
-         +HnQ==
-X-Received: by 10.14.122.8 with SMTP id s8mr937474eeh.106.1382954692194; Mon,
- 28 Oct 2013 03:04:52 -0700 (PDT)
-Received: by 10.223.38.144 with HTTP; Mon, 28 Oct 2013 03:04:22 -0700 (PDT)
-X-Google-Sender-Auth: 1geU-VlorIVZ_SC5Sx2Te4uOE40
-Sender: git-owner@vger.kernel.org
+	id S1756195Ab3J1L3l (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Mon, 28 Oct 2013 07:29:41 -0400
+Received: from mail12.copyleft.no ([188.94.218.224]:59690 "EHLO
+	mail12.copyleft.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754908Ab3J1L3j (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Mon, 28 Oct 2013 07:29:39 -0400
+Received: from locusts.copyleft.no ([188.94.218.116] helo=mail.mailgateway.no)
+	by mail12.copyleft.no with esmtp (Exim 4.76)
+	(envelope-from <johan@herland.net>)
+	id 1Val0r-0001Wg-LO; Mon, 28 Oct 2013 12:29:37 +0100
+Received: from mail-pb0-f50.google.com ([209.85.160.50])
+	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
+	(Exim 4.72 (FreeBSD))
+	(envelope-from <johan@herland.net>)
+	id 1Val0r-0007mA-3T; Mon, 28 Oct 2013 12:29:37 +0100
+Received: by mail-pb0-f50.google.com with SMTP id uo5so4209956pbc.23
+        for <multiple recipients>; Mon, 28 Oct 2013 04:29:32 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=Iu9XJpCU0xF65AX0Ot8xab9DHcVIv0x1pMZ9fek1YCc=;
+        b=XW/2Q9x1iLJ0OK+MYXatPbSKjiuoiJGMkhzf8BdMii8BQUf+yg/+ssW8rKUlfHSOZZ
+         seIeTM+YnOxCvQpYOWxRr3T4j4PW2LRMnlWuYNp0bKHzTRdWGKiDSxtqhkwVVc97svHq
+         72pL+OAdlmUJ55bNZRYpt8kzUJfGHIvt7479d6OsJnW0WJoRErFjEPliVkWQHJi4xXQt
+         kNXnp6/OqAvM1kEPCO42IPFM78SA7ROYGum2mtmzd5o7RnJ9ck0vhxXZE4r3zkVYlSle
+         bMS+IJZVWHlTVpkpQqPBNia0gMBKqRe2DWkZojONxXjQcmkWByEp+MPu/zI4Z0Br/pXu
+         RPxw==
+X-Received: by 10.67.14.231 with SMTP id fj7mr25168664pad.115.1382959772586;
+ Mon, 28 Oct 2013 04:29:32 -0700 (PDT)
+Received: by 10.70.24.226 with HTTP; Mon, 28 Oct 2013 04:29:32 -0700 (PDT)
+In-Reply-To: <526E283A.1070801@alum.mit.edu>
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236827>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236828>
 
-Hi there,
+On Mon, Oct 28, 2013 at 10:02 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+> On 10/27/2013 08:14 AM, Josh Triplett wrote:
+>> On Sun, Oct 27, 2013 at 06:42:44AM +0100, Michael Haggerty wrote:
+>>> On 10/27/2013 02:34 AM, Josh Triplett wrote:
+>>> I wonder if the two features could
+>>> be combined in some way?
+>>>
+>>> The main difference between the two features is how they are intended to
+>>> be used: --fixup is to fix a commit that hasn't been pushed yet (where
+>>> the user intends to squash the commits together), whereas --fixes is to
+>>> mark a commit as a fix to a commit that has already been pushed (where
+>>> the commits will remain separate).  But there seems to be a common
+>>> concept here.
+>>>
+>>> For example, what happens if a --fixes commit is "rebase -i"ed at the
+>>> same time as the commit that it fixes?  It might make sense to do the
+>>> autosquash thing just like with a --fixup/--squash commit.  (Otherwise
+>>> the SHA-1 in the "Fixes:" line will become invalid anyway.)
+>>
+>> Most definitely not, no, at least not without an explicit option to
+>> enable that.  Consider the case of backporting a series of patches and
+>> preserving the relative history of those patches, to make it easier to
+>> match up a set of patches.  At most, it might be a good idea for
+>> cherry-pick or similar to provide an updated Fixes tag for the new hash
+>> of the older commit.  Personally, I'd argue against doing this even with
+>> --autosquash.  I could see the argument for an --autosquash-fixes, but I
+>> can't think of a real-world scenario where what would come up.
+>>
+>> Generally, if history is still editable, you should just squash in the
+>> fix to the original commit, and if history is no longer editable (which
+>> is the use case for "Fixes:" lines), the squash case simply won't come
+>> up, offering little point to adding special support for that case.
+>
+> In your last paragraph you explain exactly why these two features are
+> similar and why it is thinkable to make the way that they are handled
+> depend on the context.  Exactly because one would never rebase a
+> "Fixes:" commit and the commit it is fixing at the same time, they would
+> never be squashed together.  And ISTM that in most cases whenever they
+> *are* being rebased at the same time, then one would want to squash them
+> together.  So it might be possible to mark both types of commits the
+> same way and then squash/not squash them depending on the context and
+> the --autosquash option.
 
-I'm trying to use a well-past date for a git commit, before the UNIX Epoch, but
-this does not work for the reasons below. I'm on Mac OS X 10.8, git version
-1.8.3.4, and `sizeof(time_t) == 8`. The date I'm trying to set is October 4,
-1958, that is around timestamp -354808800.
+In general, we should be careful with introducing features that
+exhibit different consequences based on the context in which they are
+used, but in this case, I believe I agree with you. The existence of
+"Fixes:" in a commit should be a just as valid hint to --autosquash as
+a commit message starting with "fixup!" or "squash!" (obviously, the
+"Fixes:" commit should be handled like a "squash!" and not like a
+"fixup!", so that we don't haphazardly discard the commit message
+accompanying "Fixes:").
 
-First technique, using the commit `--date` flags with ISO 8601: it says
-"invalid date".
+>>> I see that there a consistency check that the --fixes argument is a
+>>> valid commit.  But is there/should there be a check that it is an
+>>> ancestor of the commit being created?  Is there/should there be a check
+>>> that both of these facts remain true if the the commit containing it is
+>>> rebased, cherry-picked, etc?
+>>
+>> That sounds like a nice future enhancement, sure.  I don't have any plans to
+>> add such a check myself, though.  Also note that --fixup and --squash
+>> don't have such a check either; if you want to add one, you should add
+>> it for all three options at once.
+>
+> A hook-based solution could do this.  But a built-in "all-purpose"
+> handler like "footer.Fixes.arg=commit", which was intended to be
+> reusable, wouldn't be able to do such footer-specific extra work without
+> having to create new special cases in git each time.
 
-Second technique, described in the git ml archive, not using the porcelain:
-http://article.gmane.org/gmane.comp.version-control.git/152497/
+Which begs the question (posed to all, not specifically to you): Why
+would we want solve this issue in config instead of in hooks? The
+hooks will always be more flexible and less dependent on making
+changes in git.git. (...a suitably flexible hook could even use the
+config options discussed above as input...) In both cases, we need the
+user to actively enable the functionality (either installing hooks, or
+setting up config), and in both cases we could bundle Git with
+defaults that solve the common cases, so that is not a useful
+differentiator between the two approaches. I would even venture to
+ask: If we end up solving this problem in config and not in hooks,
+then why do we bother having hooks in the first place?
 
-    git commit
-    git cat-file -p HEAD > tmp.txt
-    # at this point, edit the file to replace the timestamp
-
-    git hash-object -t commit -w tmp.txt
-    #=> 2ee8fcc02658e23219143f5bcfe6f9a4615745f9
-    git update-ref -m 'commit: foo' refs/heads/master \
-        2ee8fcc02658e23219143f5bcfe6f9a4615745f9
-
-Commit date is effectively updated, but `git show` clamps the date to zero
-(`Jan 1 1970`). `tig(1)` displays `55 years ago` so the actual commit date is
-properly stored.
-
-Last issue: when trying to push this commit to a remote repository:
-
-    #=> remote: error: object 2ee8fcc02658e23219143f5bcfe6f9a4615745f9:invalid
-    #       author/committer line - bad date
-    #=> remote: fatal: Error in object
-    #=> error: unpack failed: index-pack abnormal exit
-
-Finally, when running `test-date` from git sources:
-
-    ./test-date show -354808800
-    #=> -354808800 -> in the future
-
-Is it a deliberate git behavior? Is fully supporting past or far future dates
-in the roadmap, since the referenced message above from 2010? Should I try
-to make a patch?
-
-Thanks!
-
-PS: use case for past dates is to match the historical law changes. As others
-did before, I'm trying to map the history of France Constitution to git.
+...Johan
 
 -- 
-Jean Lauliac <jean@lauliac.com>
+Johan Herland, <johan@herland.net>
+www.herland.net
