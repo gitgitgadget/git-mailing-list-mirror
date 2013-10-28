@@ -1,89 +1,102 @@
-From: =?UTF-8?Q?Vicent_Mart=C3=AD?= <tanoku@gmail.com>
-Subject: Re: What's cooking in git.git (Oct 2013, #06; Fri, 25)
-Date: Mon, 28 Oct 2013 17:16:02 +0100
-Message-ID: <CAFFjANSnuS6_+uAd43AayojJyK-wj2wMxQ6DBD6JyN=A7xh2_A@mail.gmail.com>
-References: <xmqqeh79hr3o.fsf@gitster.dls.corp.google.com> <CACsJy8A3s4TUmUOC+i-k97GxxvBQ7mQmdoPJizfy1yS3rqLEkA@mail.gmail.com>
- <xmqq61shgzvn.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: fetch: tag following too ambitious?
+Date: Mon, 28 Oct 2013 09:34:19 -0700
+Message-ID: <xmqq1u35gxro.fsf@gitster.dls.corp.google.com>
+References: <526E5BBB.6080306@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Duy Nguyen <pclouds@gmail.com>, Karsten Blees <blees@dcon.de>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Oct 28 17:16:34 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git discussion list <git@vger.kernel.org>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Mon Oct 28 17:34:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VapUW-0003NR-9M
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Oct 2013 17:16:32 +0100
+	id 1Vapm7-0003Og-6h
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Oct 2013 17:34:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756805Ab3J1QQZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Oct 2013 12:16:25 -0400
-Received: from mail-ve0-f182.google.com ([209.85.128.182]:36643 "EHLO
-	mail-ve0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756347Ab3J1QQX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Oct 2013 12:16:23 -0400
-Received: by mail-ve0-f182.google.com with SMTP id c14so3700299vea.13
-        for <git@vger.kernel.org>; Mon, 28 Oct 2013 09:16:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=yT58ZU2S/M66IU4E2qorClFKyCrhLF20fRhsBO8L84I=;
-        b=lt+IqVPR5mRCBz/Ze9x2AIOBIiJg101WuIRDoKiQNlCrvzLwQDyf5jzDlmcNd+NS3J
-         i6NFDo75HW650Rw8zEqIVxq1Y1PeESW0nJb5P9XT++MGC9LCi4PY6cAB3AKAvojzcDHu
-         dUU/BF3qTwjZo/o+pWGjtrI3ZU35GaTcL2vOVp+VvnsPgmyIXRHkjRbsnAqsgfB0+XWY
-         K+EhHctp0UmLvYFhQbSELfBXD0EEq8HjKjG6B4cDlh4eDi/66x1StIxhkLqVCq8cA6+H
-         p2qAsarmfQ8iJT79hd/Ny0goGdpw+oHvoLGa62oC1eA/2HaZf7+v7inA1AQ/HJ6qHM9V
-         jYkA==
-X-Received: by 10.52.157.232 with SMTP id wp8mr11812523vdb.4.1382976982925;
- Mon, 28 Oct 2013 09:16:22 -0700 (PDT)
-Received: by 10.221.65.202 with HTTP; Mon, 28 Oct 2013 09:16:02 -0700 (PDT)
-In-Reply-To: <xmqq61shgzvn.fsf@gitster.dls.corp.google.com>
+	id S1757273Ab3J1Qei (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Oct 2013 12:34:38 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39404 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756591Ab3J1QeX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Oct 2013 12:34:23 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C96594E2CA;
+	Mon, 28 Oct 2013 16:34:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=mrClUjWvXBdkGIoGnyX360DN4J4=; b=NSwOJy
+	46yejYGQ2FNiTGlK+deI2Gj4FeX3qdIFBrTKMAocOpVjPanaCA08yYu3PObJbuUW
+	YJgEBq0daySffuq0TGe/Jm8ARZDiO0kXTiCGnLlyJZsS6VTXzyxGKk//Zz9DwOgM
+	MJhjtLPqctARqkgAYNw0UBQbe3yFUQCfvmpoU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=lCkc1CPS6VJKSPk/NyQEs7R7jnSb3rtH
+	IjCAYr77FvJP3zlqtdI2ERXXZ120Y08dxXWvgGFYX5L19fHr1BIHZfOEkWlZOSq+
+	a+G17a3Lyi5lLVa4eY+jp0XYEd7OTVY/AczGOJwlZVMRiQITPegcyFW3nZeN+5Lo
+	KC3eAFw9ux4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B79964E2C9;
+	Mon, 28 Oct 2013 16:34:22 +0000 (UTC)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 129F44E2C7;
+	Mon, 28 Oct 2013 16:34:21 +0000 (UTC)
+In-Reply-To: <526E5BBB.6080306@alum.mit.edu> (Michael Haggerty's message of
+	"Mon, 28 Oct 2013 13:42:35 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: CCBB42B8-3FEE-11E3-8A93-8F264F2CC097-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236837>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236838>
 
-On Mon, Oct 28, 2013 at 4:48 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> jk/pack-bitmap adds khash.h, which from a first glance looks like yet
->> another hash table implementation. I was just wondering if kb's new
->> hash tables can cover the need of pack-bitmap.c too so we can remove
->> khash.h later..
+Michael Haggerty <mhagger@alum.mit.edu> writes:
+
+> When investigating the exact semantics of tag-following, I discovered
+> that the tag auto-following behavior of "git fetch" is more ambitious
+> than I would have expected: it fetches any tag that references an object
+> that is known to the local repository, *even if that object is not
+> currently reachable* (i.e., neither reachable before the fetch or after
+> the fetch of non-auto-followed references).  This makes it hard to
+> renounce interest in a branch.
 >
-> Good thinking ;-).
+> Suppose there is a remote repo with
+>
+>     o---o---o        <- master
+>      \
+>       o---A---B      <- pu
+>
+> When I clone this repo, of course I get all of the commits and both
+> branches.
+>
+> Now suppose I decide I'm not interested in "branch" anymore, so I delete
+> its remote-tracking branch from my repository and change the config to
+> only fetch "master":
+>
+>     git config remote.origin.fetch \
+>             '+refs/heads/master:refs/remotes/origin/master'
+>     git update-ref -d refs/remotes/origin/pu
+>
+> It looks like I'm free of the "pu" branch, right?
+>
+> But if a week later somebody pushes a tag "t" to origin that points at
+> commit A, and then I do
+>
+>     git fetch origin
+>
+> then Git (un)helpfully fetches tag "t" into my repo, because even though
+> commit "A" isn't reachable in my repo, it hasn't been pruned yet from
+> the object database.
+>
+> I admit this is not likely to be a serious problem in practice, but I
+> found it surprising and strangely disturbing.  I would call it a bug.
 
-We use the khash tables to map:
-
-    - sha1 (const char *) to (void *)
-    - sha1 (const char *) to int
-
-The new `hashmap.c` covers the first case quite well (albeit slightly
-more verbosely than I'd like), but in the second case it doesn't quite
-work. Since the new hash needs to embed the "struct hashmap_entry" on
-all its values (to allow for separate chaining), having it map to
-`int` keys requires a struct like this:
-
-    struct sha1_position {
-        struct hashmap_entry {
-            struct hashmap_entry *next;
-            unsigned int hash;
-        };
-        int position;
-    }
-
-khash on the other hand is capable of storing the position values as
-part of the hash table itself (i.e. `int **buckets`), and saves us
-from thousands of bytes of allocations + indirection.
-
-I am not sure whether the consistency of having a single hash map
-warrants the performance and memory hits when operating on the
-extended index.
-
-Please advice.
-
-luv,
-vmg
+Sounds like a bug to me.  Does upload-pack to pack-object codepath
+actually pack the tag object and give it to you, or is it done all
+by reconnecting an existing and dangling tag back to your ref
+namespace?
