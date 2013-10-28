@@ -1,74 +1,127 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Avoid difference in tr semantics between System V and BSD
-Date: Mon, 28 Oct 2013 14:30:27 -0700
-Message-ID: <xmqqiowhdqx8.fsf@gitster.dls.corp.google.com>
-References: <CAP30j17OCrYjsVK+W_TR-g99YmzY3d9TnYfwHXK7+6vPrVjDaQ@mail.gmail.com>
-	<1382951633-6456-1-git-send-email-bdwalton@gmail.com>
-	<526EA7C8.2020607@kdbg.org> <20131028182718.GA4242@google.com>
-	<xmqqk3gxfc20.fsf@gitster.dls.corp.google.com>
-	<CAP30j179XPZqTGiZuvyZEL94Q14ocas+r8mP_R4gLetWwikkwA@mail.gmail.com>
-	<CAP30j17Qv7DrrbgZTsCQB8gxsfQTfVy35s9sDkW0=pHz9F+W3Q@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>, Johannes Sixt <j6t@kdbg.org>,
-	git <git@vger.kernel.org>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>
-To: Ben Walton <bdwalton@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 28 22:30:37 2013
+From: Ben Walton <bdwalton@gmail.com>
+Subject: [PATCH] Avoid difference in tr semantics between System V and BSD
+Date: Mon, 28 Oct 2013 21:40:41 +0000
+Message-ID: <1382996441-18926-1-git-send-email-bdwalton@gmail.com>
+References: <xmqqiowhdqx8.fsf@gitster.dls.corp.google.com>
+Cc: git@vger.kernel.org, avarab@gmail.com,
+	Ben Walton <bdwalton@gmail.com>
+To: gitster@pobox.com, jrnieder@gmail.com, j6t@kdbg.org
+X-From: git-owner@vger.kernel.org Mon Oct 28 22:41:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VauOS-0004na-AM
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Oct 2013 22:30:36 +0100
+	id 1VauYq-0000un-98
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Oct 2013 22:41:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757493Ab3J1Vac (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Oct 2013 17:30:32 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48418 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757233Ab3J1Vab (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Oct 2013 17:30:31 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0D86B4E8DA;
-	Mon, 28 Oct 2013 21:30:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=DQCcDrgMKSDwFDup7d6G2N7Qo0U=; b=w0UxC9
-	keSaNmFsaxkhjRT+uXs3810JcLUY0Dcavgz9ly52KEItOqzylqJvNtqzfVle3hBT
-	jTqyXpmO8N0i2wU+L5NWsPN7HYJGR5eQgivIsAe70mk1tHQuzKxlfFfBt7tcVoav
-	E/rna9ImuUt6Dzp5GTgs0XNuqg45Zy5by0VxY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=wfjKSTR+8Ldf+V0GvENQfXoPaQjIVfWU
-	2GKf/2XSTDIjX9oE8iQXl4eK3t70ZRL22pt3ELGfOoZEzgWzNGtmlQ2sHHTJV/y8
-	IyT5y+EZ3Oh4Jrdzs4SkIjPpx/HKFQZXsctw+EPCdfzvPtZvOiOOFTas21seFbIb
-	5KD8432Tnsk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F230B4E8D9;
-	Mon, 28 Oct 2013 21:30:30 +0000 (UTC)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 638804E8D7;
-	Mon, 28 Oct 2013 21:30:30 +0000 (UTC)
-In-Reply-To: <CAP30j17Qv7DrrbgZTsCQB8gxsfQTfVy35s9sDkW0=pHz9F+W3Q@mail.gmail.com>
-	(Ben Walton's message of "Mon, 28 Oct 2013 21:12:10 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 2B7BF300-4018-11E3-8332-8F264F2CC097-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755027Ab3J1VlQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Oct 2013 17:41:16 -0400
+Received: from jimi.chass.utoronto.ca ([128.100.160.32]:55607 "EHLO
+	jimi.chass.utoronto.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751749Ab3J1VlP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Oct 2013 17:41:15 -0400
+Received: from hendrix.chass.utoronto.ca ([128.100.160.33]:36703 ident=93)
+	  by jimi.chass.utoronto.ca with esmtp  (Exim 4.76)
+	 (envelope-from <bwalton@benandwen.net>)
+	 id 1VauYj-0008VA-C9 ; Mon, 28 Oct 2013 17:41:13 -0400
+Received: from 86-42-140-29-dynamic.b-ras1.bbh.dublin.eircom.net ([86.42.140.29]:33338 helo=neilyoung)
+	 (auth info: dovecot_plain:bwalton@chass.utoronto.ca) by hendrix.chass.utoronto.ca with esmtpsa (TLSv1:AES128-SHA:128)
+	 (Exim 4.76)
+	 (envelope-from <bwalton@benandwen.net>)
+	 id 1VauYd-0005iC-RB ; Mon, 28 Oct 2013 17:41:08 -0400
+Received: from bwalton by neilyoung with local (Exim 4.80)
+	(envelope-from <bwalton@benandwen.net>)
+	id 1VauYP-0004vn-RO; Mon, 28 Oct 2013 21:40:53 +0000
+X-Mailer: git-send-email 1.8.1.2
+In-Reply-To: <xmqqiowhdqx8.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236864>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236865>
 
-Ben Walton <bdwalton@gmail.com> writes:
+Solaris' tr (both /usr/bin/ and /usr/xpg4/bin) uses the System V
+semantics for tr whereby string1's length is truncated to the length
+of string2 if string2 is shorter. The BSD semantics, as used by GNU tr
+see string2 padded to the length of string1 using the final character
+in string2. POSIX explicitly doesn't specify the correct behavior
+here, making both equally valid.
 
-> Per the other discussion about replacing all PERL_PATH with a shell
-> function named perl, should I update this patch to use $PERL_PATH in
-> the meantime so that it can be batch updated when the function is
-> added in a separate patch?
+This difference means that Solaris' native tr implementations produce
+different results for tr ":\t\n" "\0" than GNU tr. This breaks a few
+tests in t0008-ignores.sh.
 
-Yeah, sounds like a good plan, and very much appreciated.
+Possible fixes for this are to make string2 be "\0\0\0" or "[\0*]".
 
-Thanks.
+Instead, use perl to perform these transliterations which means we
+don't need to worry about the difference at all. Since we're replacing
+tr with perl, we also use perl to replace the sed invocations used to
+transform the files.
+
+Replace four identical transforms with a function named
+broken_c_unquote. Replace the other two identical transforms with a
+fuction named broken_c_unquote_verbose.
+
+Signed-off-by: Ben Walton <bdwalton@gmail.com>
+---
+ t/t0008-ignores.sh | 30 ++++++++++++++++++------------
+ 1 file changed, 18 insertions(+), 12 deletions(-)
+
+diff --git a/t/t0008-ignores.sh b/t/t0008-ignores.sh
+index 181513a..45f9396 100755
+--- a/t/t0008-ignores.sh
++++ b/t/t0008-ignores.sh
+@@ -37,6 +37,14 @@ test_stderr () {
+ 	test_cmp "$HOME/expected-stderr" "$HOME/stderr"
+ }
+ 
++broken_c_unquote () {
++	$PERL_PATH -pe 's/^"//; s/\\//; s/"$//; tr/\n/\0/' "$@"
++}
++
++broken_c_unquote_verbose () {
++	$PERL_PATH -pe 's/	"/	/; s/\\//; s/"$//; tr/:\t\n/\0/' "$@"
++}
++
+ stderr_contains () {
+ 	regexp="$1"
+ 	if grep "$regexp" "$HOME/stderr"
+@@ -606,12 +614,11 @@ cat <<-EOF >expected-verbose
+ 	$global_excludes:2:!globaltwo	b/globaltwo
+ EOF
+ 
+-sed -e 's/^"//' -e 's/\\//' -e 's/"$//' stdin | \
+-	tr "\n" "\0" >stdin0
+-sed -e 's/^"//' -e 's/\\//' -e 's/"$//' expected-default | \
+-	tr "\n" "\0" >expected-default0
+-sed -e 's/	"/	/' -e 's/\\//' -e 's/"$//' expected-verbose | \
+-	tr ":\t\n" "\0" >expected-verbose0
++broken_c_unquote stdin >stdin0
++
++broken_c_unquote expected-default >expected-default0
++
++broken_c_unquote_verbose expected-verbose >expected-verbose0
+ 
+ test_expect_success '--stdin' '
+ 	expect_from_stdin <expected-default &&
+@@ -692,12 +699,11 @@ EOF
+ grep -v '^::	' expected-all >expected-verbose
+ sed -e 's/.*	//' expected-verbose >expected-default
+ 
+-sed -e 's/^"//' -e 's/\\//' -e 's/"$//' stdin | \
+-	tr "\n" "\0" >stdin0
+-sed -e 's/^"//' -e 's/\\//' -e 's/"$//' expected-default | \
+-	tr "\n" "\0" >expected-default0
+-sed -e 's/	"/	/' -e 's/\\//' -e 's/"$//' expected-verbose | \
+-	tr ":\t\n" "\0" >expected-verbose0
++broken_c_unquote stdin >stdin0
++
++broken_c_unquote expected-default >expected-default0
++
++broken_c_unquote_verbose expected-verbose >expected-verbose0
+ 
+ test_expect_success '--stdin from subdirectory' '
+ 	expect_from_stdin <expected-default &&
+-- 
+1.8.1.2
