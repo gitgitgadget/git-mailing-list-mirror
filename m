@@ -1,113 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] graph.c: visual difference on subsequent series
-Date: Mon, 28 Oct 2013 10:39:16 -0700
-Message-ID: <xmqqsivlfg6z.fsf@gitster.dls.corp.google.com>
-References: <1382717268-21884-1-git-send-email-milton.soares.filho@gmail.com>
-	<xmqqeh79jmtr.fsf@gitster.dls.corp.google.com>
-	<CAPNngRMP29s9gZg9R987yRd2qJ=UuaMWnFphtQdGDRgG_SCxsQ@mail.gmail.com>
-	<87mwlwn4e0.fsf@gmail.com>
-	<xmqqeh75h087.fsf@gitster.dls.corp.google.com>
-	<CAPNngRMprE3QwDn3y74QqitAs+-DCBm1oO33uKRHsn9jLrNSnA@mail.gmail.com>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: [PATCH] Change sed i\ usage to something Solaris' sed can handle
+Date: Mon, 28 Oct 2013 18:39:47 +0100
+Message-ID: <877gcx1eho.fsf@igel.home>
+References: <1382909208-7716-1-git-send-email-bdwalton@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Keshav Kini <keshav.kini@gmail.com>, git@vger.kernel.org
-To: Milton Soares Filho <milton.soares.filho@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 28 18:39:25 2013
+Content-Type: text/plain
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: Ben Walton <bdwalton@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 28 18:40:01 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vaqmi-0000YI-Te
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Oct 2013 18:39:25 +0100
+	id 1VaqnI-0000oE-Kp
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Oct 2013 18:40:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932184Ab3J1RjV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Oct 2013 13:39:21 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44947 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756643Ab3J1RjU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Oct 2013 13:39:20 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 463584E346;
-	Mon, 28 Oct 2013 17:39:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=UWfCvJWkpUSdGU0iQCFJGCUb238=; b=VA3Rpo
-	wCfz1uUL67IvjokzewlZfMAgf+daznWP/72fgWxKbeWUNz1m1Fm5NmhXEwXYqliJ
-	kbWgKl9e8baNbNsDF2UyD40Y724k17IGZ8qC84R0PIs36a4So/sxnAKh2qERfLbh
-	aZ1M28+NoKoAFsEESNpfY+GWkK98/CPNUzrEs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=v0u8Dgce7vu1ycD9IW0qbO6IqNz0/GmP
-	wx57NT3FniSN2WxQB59VJaIPWaX/J6nMlm9VvS7tlQBdKclNDKRFaZp03Xpx65Hp
-	D1XC+4pw+bDBtvkujXWwxsaZgpaXGvS2B3hILSYi3BBjrxx4YGSr5QFRpETT2fLa
-	Id5PPSPq+lA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3980E4E345;
-	Mon, 28 Oct 2013 17:39:19 +0000 (UTC)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 799864E344;
-	Mon, 28 Oct 2013 17:39:18 +0000 (UTC)
-In-Reply-To: <CAPNngRMprE3QwDn3y74QqitAs+-DCBm1oO33uKRHsn9jLrNSnA@mail.gmail.com>
-	(Milton Soares Filho's message of "Mon, 28 Oct 2013 15:18:31 -0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: DF2E6340-3FF7-11E3-A766-8F264F2CC097-77302942!b-pb-sasl-quonix.pobox.com
+	id S932253Ab3J1Rjz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Oct 2013 13:39:55 -0400
+Received: from mail-out.m-online.net ([212.18.0.9]:53138 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932250Ab3J1Rjy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Oct 2013 13:39:54 -0400
+Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id 3d7jqT6yT8z4KK4B;
+	Mon, 28 Oct 2013 18:39:49 +0100 (CET)
+Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
+	by mail.m-online.net (Postfix) with ESMTP id 3d7jqT6mKRzbbhg;
+	Mon, 28 Oct 2013 18:39:49 +0100 (CET)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.180])
+	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
+	with ESMTP id vW76K9a4pB4k; Mon, 28 Oct 2013 18:39:47 +0100 (CET)
+X-Auth-Info: TI0Ha8xwvq+4cA3JEuHU+K2EagjVhSYVw9OOxba4KkA=
+Received: from igel.home (ppp-88-217-114-129.dynamic.mnet-online.de [88.217.114.129])
+	by mail.mnet-online.de (Postfix) with ESMTPA;
+	Mon, 28 Oct 2013 18:39:47 +0100 (CET)
+Received: by igel.home (Postfix, from userid 1000)
+	id 5597B2C13B1; Mon, 28 Oct 2013 18:39:47 +0100 (CET)
+X-Yow: In order to make PLANS for the WEEKEND...so that we can read RESTAURANT
+ REVIEWS and decide to GO to that restaurant & then NEVER GO...so we can
+ meet a FRIEND after work in a BAR and COMPLAIN about Interior Sect'y
+ JAMES WATT until the SUBJECT is changed to NUCLEAR BLACKMAIL...and so
+ our RELATIVES can FORCE us to listen to HOCKEY STATISTICS while we
+ wait for them to LEAVE on the 7:48....
+In-Reply-To: <1382909208-7716-1-git-send-email-bdwalton@gmail.com> (Ben
+	Walton's message of "Sun, 27 Oct 2013 21:26:48 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236843>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236844>
 
-Milton Soares Filho <milton.soares.filho@gmail.com> writes:
+Ben Walton <bdwalton@gmail.com> writes:
 
-> On 28 October 2013 13:41, Junio C Hamano <gitster@pobox.com> wrote:
->> I agree to all of the above, including the ugliness of 'x' ;-)
->>
->> A "blank" may however be hard to spot, if the range is limited,
->> though.  For example,
->
-> A 'x' looks like termination points in some specification languages
-> such as SDL and MSC and thus translates directly to the idea of a
-> root-commit, at least IMO. For sure it does not stand out as blatantly
-> as it should, but it gives a general idea without further
-> distractions, which seems to be the idea of a simple 'git log --graph
-> --oneline'.
->
-> An idea that have just come to mind is to have a decorator to enforce
-> this property, like this.
->
->       * HEAD
->      /* a1
->     | * a2
->     | * a3
->     | x a4 (root-commit)
->     * b1
->     * b2
->     x b3  (root-commit)
->
-> This way the user only gets 'distracted' if he explicitly asks for it
-> (--decorate), with all its colors and whatnot. What do you think?
-> Should I aim for it?
->
-> Besides anything else, this discussion is becoming very subjective.
+> diff --git a/t/t4015-diff-whitespace.sh b/t/t4015-diff-whitespace.sh
+> index 3fb4b97..0126154 100755
+> --- a/t/t4015-diff-whitespace.sh
+> +++ b/t/t4015-diff-whitespace.sh
+> @@ -145,7 +145,8 @@ test_expect_success 'another test, with --ignore-space-at-eol' 'test_cmp expect
+>  test_expect_success 'ignore-blank-lines: only new lines' '
+>  	test_seq 5 >x &&
+>  	git update-index x &&
+> -	test_seq 5 | sed "/3/i \\
+> +	test_seq 5 | sed "/3/i\\
+> +\
+>  " >x &&
 
-If I have to choose, I'd rather avoid using 'x' or anything that
-have to override '*', not just 'x' being ugly, but the approach to
-_replace_ the "revision-mark" (usually '*' but sometimes '<', '^',
-etc) forces us to give priority between "root-ness" and other kinds
-of information (e.g. "left-ness").  That was the primary reason I
-liked Keshav's suggestion to use one extra line _below_ the root,
-which will allow us to still keep the existing information unlike
-what we discussed in our back-and-forth during the initial review.
+Why do you need the \<nl>?  Since it is inside double quotes the shell
+will remove it during expansion.
 
-I also think a blank (or divider) below the root commits does make
-it visually obvious that nothing comes _before_ the root commit in
-the history, which probably even removes the need to paint the
-tracks of histories leading to different roots in different colours.
+Andreas.
 
-I hope the above shows that my reaction was much less subjective
-than my response sounded ;-)
-
-Thanks.
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
