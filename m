@@ -1,96 +1,98 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: git-completion.bash error
-Date: Mon, 28 Oct 2013 01:31:41 -0400
-Message-ID: <CAPig+cRfrr8FjGtk7uFzfP6xBGzFabSPb4oi=EcNV1-OfQZ5eA@mail.gmail.com>
-References: <CAGvuA0iGrF5jrUSCjT7-SR85i2OhBwQHfjj4+krAFfz5wnxx8w@mail.gmail.com>
-	<CAPig+cQuh0QEbmDxNMHgvhmJ7AFgvP70qvJhfVw3fz6YxaME7w@mail.gmail.com>
-	<CAGvuA0gkKWpLXwQm6ipGfWhzpiT-SFCCKxxvvN+FbO8i4_hmPg@mail.gmail.com>
+From: Josh Triplett <josh@joshtriplett.org>
+Subject: Re: [PATCH] commit: Add -f, --fixes <commit> option to add Fixes:
+ line
+Date: Mon, 28 Oct 2013 07:16:06 +0000
+Message-ID: <20131028071606.GA16878@leaf>
+References: <20131024122255.GI9378@mwanda>
+ <20131024122512.GB9534@mwanda>
+ <20131026181709.GB10488@kroah.com>
+ <20131027013402.GA7146@leaf>
+ <xmqqa9hui2lp.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: Gabriel <gabriel.so@gmail.com>, Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Oct 28 06:31:49 2013
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Dan Carpenter <dan.carpenter@oracle.com>,
+	Greg KH <greg@kroah.com>,
+	ksummit-2013-discuss@lists.linuxfoundation.org,
+	ksummit-attendees@lists.linuxfoundation.org,
+	linux-kernel@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: linux-kernel-owner@vger.kernel.org Mon Oct 28 08:16:43 2013
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VafQZ-0006jg-H5
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Oct 2013 06:31:47 +0100
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1Vah47-0004tQ-3V
+	for glk-linux-kernel-3@plane.gmane.org; Mon, 28 Oct 2013 08:16:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751848Ab3J1Fbn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Oct 2013 01:31:43 -0400
-Received: from mail-lb0-f182.google.com ([209.85.217.182]:51542 "EHLO
-	mail-lb0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751458Ab3J1Fbm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Oct 2013 01:31:42 -0400
-Received: by mail-lb0-f182.google.com with SMTP id w6so2398410lbh.41
-        for <git@vger.kernel.org>; Sun, 27 Oct 2013 22:31:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:content-type;
-        bh=IVS4k27wpFFcpOBhB2OdsGniMRLw99LLEpUvE6opgaw=;
-        b=eogX5utGBGEL8jmReZYhO3DeVAjRH5L4W2IZcJT+XMgV6RFKFQZlAxV+PDiV0Ix3C5
-         IxSFA15GSvIEFpqhhCepR0Ofy2yk9aHwUmbXWxWs4mIsxhQ68AeiqmHV74sDADdWK27R
-         wCR0tfCPqlRjH3oEUWsS/f7nEdM3ZHomGBBxQVxEFiFmiFJWZWo6blPZgDtVogSiTriR
-         hAt9LJwe5rxBfDxfmsuDHnSkVwuBSHJYbG7A420beL/8WYWBDS1vVhIMw9AKuw/EzANU
-         3rK884TV9QWajEbzHSHyZdlsrGvK0dYoidb+LPDMc5PUrkyYpU0GDpYtFrDS2pjOYeds
-         3/uw==
-X-Received: by 10.112.149.197 with SMTP id uc5mr9868026lbb.19.1382938301259;
- Sun, 27 Oct 2013 22:31:41 -0700 (PDT)
-Received: by 10.114.200.180 with HTTP; Sun, 27 Oct 2013 22:31:41 -0700 (PDT)
-In-Reply-To: <CAGvuA0gkKWpLXwQm6ipGfWhzpiT-SFCCKxxvvN+FbO8i4_hmPg@mail.gmail.com>
-X-Google-Sender-Auth: DNSmVCi_qY8agsjut42zOH5wABs
-Sender: git-owner@vger.kernel.org
+	id S1755648Ab3J1HQO (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Mon, 28 Oct 2013 03:16:14 -0400
+Received: from relay4-d.mail.gandi.net ([217.70.183.196]:43764 "EHLO
+	relay4-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752802Ab3J1HQN (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Mon, 28 Oct 2013 03:16:13 -0400
+Received: from mfilter2-d.gandi.net (mfilter2-d.gandi.net [217.70.178.140])
+	by relay4-d.mail.gandi.net (Postfix) with ESMTP id 95F82172091;
+	Mon, 28 Oct 2013 08:16:10 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at mfilter2-d.gandi.net
+Received: from relay4-d.mail.gandi.net ([217.70.183.196])
+	by mfilter2-d.gandi.net (mfilter2-d.gandi.net [10.0.15.180]) (amavisd-new, port 10024)
+	with ESMTP id LCpxF4CraIW6; Mon, 28 Oct 2013 08:16:08 +0100 (CET)
+X-Originating-IP: 77.221.165.98
+Received: from leaf (ip-77-221-165-98.dsl.twang.net [77.221.165.98])
+	(Authenticated sender: josh@joshtriplett.org)
+	by relay4-d.mail.gandi.net (Postfix) with ESMTPSA id 43E0E172080;
+	Mon, 28 Oct 2013 08:16:07 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <xmqqa9hui2lp.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236818>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236819>
 
-[re-adding git mailing list]
+On Sun, Oct 27, 2013 at 06:52:18PM -0700, Junio C Hamano wrote:
+> There are unbound number of kinds of trailers people would want to
+> add, depending on their projects' needs.  We should not have to add
+> a specific support for a tailer like this one, before thinking
+> through to see if we can add generic support for adding arbitrary
+> trailers to avoid code and interface bloat.
+> 
+> Think of the existing --signoff as a historical mistake.  Such a
+> generic "adding arbitrary trailers" support, when done properly,
+> should be able to express what "--signoff" does, and we should be
+> able to redo "--signoff" as a special case of that generic "adding
+> arbitrary trailers" support, and at that point, "Fixes:" trailer the
+> kernel project wants to use should fall out as a natural consequence.
 
-Please do use Reply All and respond inline (as below) rather than top-posting.
+Well, the add_signoff_extra function I added makes it easy to add any
+kind of trailing data you want to a commit; the question just becomes
+what the UI looks like to drive that.
 
-On Sun, Oct 27, 2013 at 8:47 PM, Gabriel <gabriel.so@gmail.com> wrote:
-> I have a possible broken "shell pipe".
->
-> grep/egrep works fine when I pass a pattern and a file or folder, but
-> it breaks after pipe.
->
-> The content of the line that breaks on my machine is:
-> git help -a|egrep '^  [a-zA-Z0-9]'
+Would you be OK with a solution that pushes the specific supported
+footer lines into git's configuration, and then supplies default
+configuration for common cases such as Fixes?  The option could become
+-f/--footer, and the configuration would specify how to parse various
+arguments of -f and turn them into something.  For example:
 
-Are you using a broken egrep? On Mavericks, mine shows:
+[footer "Fixes"]
+    abbrev = f
+    arg = commit
+    format = %h ('%s')
 
-% type egrep
-egrep is /usr/bin/egrep
-% egrep --version
-egrep (BSD grep) 2.5.1-FreeBSD
+git commit -f Cc:stable@vger.kernel.org -f f:bad-commit ...
 
+The Cc line there would go unparsed since there's no specific support
+for it, while the 'f:bad-commit' would get expanded by the configuration
+above to parse bad-commit as a committish and format it using the
+specified pretty format.
 
-> This commands breaks outputting the regexp not being a valid file or directory.
->
-> I'll keep investigating but I've never seen a broken shell pipe function =(
->
-> Thanks
->
-> On Sun, Oct 27, 2013 at 8:34 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->> On Sun, Oct 27, 2013 at 4:59 PM, Gabriel <gabriel.so@gmail.com> wrote:
->>> I've just made a clean install of OS X Mavericks and installed Git via
->>> Homebrew, which obviously includes the contrib files.
->>>
->>> I sourced the git-completion.bash into my profile and I get stuck on a
->>> error every time I try to use the autocomplete. The error outputted
->>> is:
->>>
->>> egrep: ^ [a-zA-Z0-9]: No such file or directory
->>>
->>> I believe this is related to this line (this commands outputs the same
->>> error when entered directly):
->>> https://github.com/git/git/blob/master/contrib/completion/git-completion.bash#L614
->>
->> Unable to reproduce on Mavericks either via the completion script or
->> manual entry.
->>
->>> I don't know if this issue is directly related to OS X Mavericks or
->>> anything else.
+Look reasonable?  I could start out by adding support for footer lines
+that take commits as arguments and format them using arbitrary pretty
+strings, and leave room for future expansion to support footers that
+reference idents (given some way to expand idents from some shorter
+form, otherwise there's no point).
+
+- Josh Triplett
