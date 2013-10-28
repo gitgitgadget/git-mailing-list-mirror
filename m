@@ -1,130 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH V2] git clone: is an URL local or ssh
-Date: Mon, 28 Oct 2013 13:57:13 -0700
-Message-ID: <xmqqmwltdsgm.fsf@gitster.dls.corp.google.com>
-References: <201310282116.21551.tboegi@web.de>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] t/README: tests can use perl even with NO_PERL
+Date: Mon, 28 Oct 2013 14:04:20 -0700
+Message-ID: <20131028210420.GC4242@google.com>
+References: <CAP30j17OCrYjsVK+W_TR-g99YmzY3d9TnYfwHXK7+6vPrVjDaQ@mail.gmail.com>
+ <1382951633-6456-1-git-send-email-bdwalton@gmail.com>
+ <526EA7C8.2020607@kdbg.org>
+ <20131028182718.GA4242@google.com>
+ <xmqqk3gxfc20.fsf@gitster.dls.corp.google.com>
+ <20131028192216.GB4242@google.com>
+ <20131028195429.GA8299@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, sunshine@sunshineco.com, peff@peff.net,
-	pclouds@gmail.com
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Mon Oct 28 21:57:32 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
+	Ben Walton <bdwalton@gmail.com>, git@vger.kernel.org,
+	=?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Oct 28 22:04:30 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VatsQ-0007iS-Mr
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Oct 2013 21:57:31 +0100
+	id 1VatzA-00027x-Rj
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Oct 2013 22:04:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755412Ab3J1U5V convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Oct 2013 16:57:21 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56808 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751331Ab3J1U5S convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 28 Oct 2013 16:57:18 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A8DF74E672;
-	Mon, 28 Oct 2013 20:57:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=dEb5QQpqhb15
-	WRRDR4ai8+C0uAs=; b=FifUQhu88XItgzPYJpj7JB4G9r6d09U5dqnWslyXyFIZ
-	j1VDLXTtS5UIZkrxqRCKBEsGOpncUWn1lAM691H1nuM6x12eGF7JaA9lhZHJrs2d
-	o+WCi+qIMRwgjR20gIaYhGynNYdGG/RdzyL9QUMn3UmrHvUZIIm+PV0mm+pvc2c=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=q5BX6m
-	mC4orBVTDyuP1QcY512YXIW8Xo2rbvPyJckteaMabLR6yOgTUc781wOd9VZ+WLZi
-	LmhIDPIjYwSPVVkuADS4ZPV5iXegrYzGs9Q5wkj4vOnPjpBeFcPL5cvE5wlLo8lF
-	qAXBVnmC2JLQVJHnhcCudqPRzADr+oz9TlUYA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 992404E671;
-	Mon, 28 Oct 2013 20:57:15 +0000 (UTC)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EAD424E66E;
-	Mon, 28 Oct 2013 20:57:14 +0000 (UTC)
-In-Reply-To: <201310282116.21551.tboegi@web.de> ("Torsten =?utf-8?Q?B?=
- =?utf-8?Q?=C3=B6gershausen=22's?=
-	message of "Mon, 28 Oct 2013 21:16:19 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 861ABE04-4013-11E3-84FE-8F264F2CC097-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752001Ab3J1VEY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Oct 2013 17:04:24 -0400
+Received: from mail-pb0-f41.google.com ([209.85.160.41]:63229 "EHLO
+	mail-pb0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751042Ab3J1VEX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Oct 2013 17:04:23 -0400
+Received: by mail-pb0-f41.google.com with SMTP id um1so2784783pbc.14
+        for <git@vger.kernel.org>; Mon, 28 Oct 2013 14:04:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=Bl9QDoY8F76OGDq2FFgCZaLfyGURVb6Br9kO/y5jBPQ=;
+        b=cngJfxZG5Kf+f9xWAbJKsXYtJxky51bHjPwM11RIKBRxkIMyjKzlt34N0+skUP1QgV
+         I12LxK0pmSB9f0NxzOdY5hU0k8GZIMSum0ZCLFUUmlGZeKTtxDNu7YP9E6WaFK3PdddK
+         n+a2TaN9Xt/0LWx9kKHF/CVbXA/p6v4ctziyRZZX5OEtJKX9J5JuBLSrA3W9zRBf3BIJ
+         7/hPtq0guWQTP9R2rnnXrFVkVNMUzk2ro+s6XFDABf0QpmsG2EEnk3eWbhM/Z04T9lyG
+         uB59b2/Mg55/9RUa6ZemRR7PwGi2tzKy1we6zh3n73X3lfvYf5OYFmYx6l/k3CJ7mZ47
+         ulOw==
+X-Received: by 10.66.66.202 with SMTP id h10mr27702161pat.70.1382994263400;
+        Mon, 28 Oct 2013 14:04:23 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id go4sm30616570pbb.15.2013.10.28.14.04.22
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 28 Oct 2013 14:04:22 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20131028195429.GA8299@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236858>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236859>
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+Jeff King wrote:
 
-> (This does apply on pu, not on master.
+> Speaking of which, is there any reason to use the ugly "$PERL_PATH"
+> everywhere, and not simply do:
+>
+>   perl () {
+>     "$PERL_PATH" "$@"
+>   }
+>
+> in test-lib.sh?
 
-Hmph.  At least for me, it applies down to cabb411f (Merge branch
-'nd/clone-local-with-colon', 2013-10-14) just fine.  Puzzled.
+Sounds like a nice potential improvement to me. :)
 
-> diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
-> index 1d1c875..a126f08 100755
-> --- a/t/t5601-clone.sh
-> +++ b/t/t5601-clone.sh
-> @@ -294,39 +294,95 @@ test_expect_success 'setup ssh wrapper' '
->  	export TRASH_DIRECTORY
->  '
-> =20
-> -clear_ssh () {
-> -	>"$TRASH_DIRECTORY/ssh-output"
-> -}
-> -
-> -expect_ssh () {
-> +i5601=3D0
-> +# $1 url
-> +# $2 none|host
-> +# $3 path
-> +test_clone_url () {
-> +	i5601=3D$(($i5601 + 1))
-> +	>"$TRASH_DIRECTORY/ssh-output" &&
-> +	test_might_fail git clone "$1" tmp$i5601 &&
->  	{
-> -		case "$1" in
-> +		case "$2" in
->  		none)
->  			;;
->  		*)
-> -			echo "ssh: $1 git-upload-pack '$2'"
-> +			echo "ssh: $2 git-upload-pack '$3'"
->  		esac
->  	} >"$TRASH_DIRECTORY/ssh-expect" &&
-
-This looks like a strange use of {} (not an issue this patch
-introduced, though).  Shouldn't this suffice?
-
-	case ... in
-        ...
-        esac >"$TRASH_DIRECTORY/ssh-expect"
-
-> +	(
-> +		cd "$TRASH_DIRECTORY" &&
-> +		test_cmp ssh-expect ssh-output &&
-> +		rm -rf ssh-expect ssh-output
-
-Drop "r", please, when you know these are supposed to be files.
-
-> +	)
->  }
-> =20
-> +# url looks ssh like, and is on disc: should be local
->  test_expect_success NOT_MINGW,NOT_CYGWIN 'clone local path foo:bar' =
-'
->  	cp -R src "foo:bar" &&
-> +	test_clone_url "foo:bar" none &&
-> +	( cd tmp$i5601 && git log)
-
-Hmph.  What is this "git log" about?  Leftover from an earlier
-debugging session?
-
-The code change to connect.c part seemed to be OK from a cursory
-look.
-
-Thanks.
+Thanks,
+Jonathan
