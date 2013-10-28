@@ -1,81 +1,57 @@
-From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-Subject: Re: [PATCH v2 18/19] t: add basic bitmap functionality tests
-Date: Mon, 28 Oct 2013 23:13:47 +0100
-Message-ID: <20131028221347.GA32479@goldbirke>
-References: <20131025055521.GD11810@sigill.intra.peff.net>
- <20131025060438.GP23098@sigill.intra.peff.net>
+From: Benjamin Herrenschmidt <benh@kernel.crashing.org>
+Subject: Re: [ksummit-attendees] [PATCH] commit: Add -f, --fixes <commit>
+ option to add Fixes: line
+Date: Tue, 29 Oct 2013 10:09:53 +1100
+Message-ID: <1383001793.5117.14.camel@pasglop>
+References: <20131024122255.GI9378@mwanda> <20131024122512.GB9534@mwanda>
+	 <20131026181709.GB10488@kroah.com> <20131027013402.GA7146@leaf>
+	 <xmqqa9hui2lp.fsf@gitster.dls.corp.google.com>
+	 <20131028071606.GA16878@leaf> <20131028085911.GA9411@lst.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Vicent Marti <vicent@github.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Oct 28 23:14:02 2013
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: Josh Triplett <josh@joshtriplett.org>, git@vger.kernel.org,
+	ksummit-2013-discuss@lists.linuxfoundation.org,
+	ksummit-attendees@lists.linuxfoundation.org,
+	linux-kernel@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Christoph Hellwig <hch@lst.de>
+X-From: linux-kernel-owner@vger.kernel.org Tue Oct 29 00:17:53 2013
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vav4U-0005tQ-FO
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Oct 2013 23:14:02 +0100
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1Vaw4G-0005dj-D4
+	for glk-linux-kernel-3@plane.gmane.org; Tue, 29 Oct 2013 00:17:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757559Ab3J1WN6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Oct 2013 18:13:58 -0400
-Received: from moutng.kundenserver.de ([212.227.126.186]:63272 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757527Ab3J1WN6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Oct 2013 18:13:58 -0400
-Received: from localhost6.localdomain6 (f052035231.adsl.alicedsl.de [78.52.35.231])
-	by mrelayeu.kundenserver.de (node=mrbap3) with ESMTP (Nemesis)
-	id 0MZDuG-1VFxu32Jrw-00Kzmm; Mon, 28 Oct 2013 23:13:47 +0100
-Content-Disposition: inline
-In-Reply-To: <20131025060438.GP23098@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Provags-ID: V02:K0:TU4RrsffPz2qs328gRA+OE6hFde7re9Q9V02wPaGPBB
- nR4C3wZQo1USeowMCK+asRqa8f1WNsXWnaKVezTmc5bwY7KfU8
- DmyQmjG3YKDs9fMSJht27kjAcEym/eWIXRkvAk4WqC7DDUBRqd
- Q5h2Ei/R/07hT0KZG2mGntM0fk5/429HNZHvRr8XcSHDCHKdCW
- AluPJNt0xfVKavMFTm9KX5FJDnwYR/vqs89RoTSvPXzHh3fIM+
- hzwynBsHZkigOcRshNtvf7ZYU+fG/KuFrTa+Dhoe22/W1YxzRr
- g5YQz4H1l4KLsF11Z4Tm+MsoMbQ2uW/lGc3+EkFYRMc/24zsYi
- DXeYyIQcBHz31ge7TYYoKxzgneEdNfUFNgejGbZxF
-Sender: git-owner@vger.kernel.org
+	id S1757824Ab3J1XRh (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Mon, 28 Oct 2013 19:17:37 -0400
+Received: from gate.crashing.org ([63.228.1.57]:51939 "EHLO gate.crashing.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757793Ab3J1XRd (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
+	Mon, 28 Oct 2013 19:17:33 -0400
+Received: from [127.0.0.1] (localhost.localdomain [127.0.0.1])
+	by gate.crashing.org (8.14.1/8.13.8) with ESMTP id r9SN9wPC025689;
+	Mon, 28 Oct 2013 18:10:00 -0500
+In-Reply-To: <20131028085911.GA9411@lst.de>
+X-Mailer: Evolution 3.6.4-0ubuntu1 
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236872>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236874>
 
-On Fri, Oct 25, 2013 at 02:04:38AM -0400, Jeff King wrote:
-> diff --git a/t/t5310-pack-bitmaps.sh b/t/t5310-pack-bitmaps.sh
-> new file mode 100755
-> index 0000000..0868725
-> --- /dev/null
-> +++ b/t/t5310-pack-bitmaps.sh
-> @@ -0,0 +1,114 @@
-> +#!/bin/sh
-> +
-> +test_description=3D'exercise basic bitmap functionality'
-> +. ./test-lib.sh
-> +
-> +test_expect_success 'setup repo with moderate-sized history' '
-> +	for i in $(test_seq 1 10); do
-> +		test_commit $i
-> +	done &&
-> +	git checkout -b other HEAD~5 &&
-> +	for i in `test_seq 1 10`; do
-> +		test_commit side-$i
-> +	done &&
+On Mon, 2013-10-28 at 09:59 +0100, Christoph Hellwig wrote:
+> Btw, can we please take away this discussion from ksummit-attendees?  It's got
+> absolutely nothing to do with kernel summit and is getting fairly annoying.
 
-Sorry, style nitpick: could you rewrite this command substitution
-using $() like a few lines above?
+Ack. Additionally, iirc, we had decided that
 
-> +test_expect_success 'setup further non-bitmapped commits' '
-> +	for i in `test_seq 1 10`; do
-> +		test_commit further-$i
-> +	done
-> +'
+ - We don't cross post multiple lists
 
-Likewise.
+ - We drop the annoying subject tags
 
+As is, all I see is some attempt at doing an lkml dup, which is
+pointless
 
-Best,
-G=E1bor
+Ben.
