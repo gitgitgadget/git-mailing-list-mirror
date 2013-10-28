@@ -1,96 +1,132 @@
-From: Paolo Giarrusso <p.giarrusso@gmail.com>
-Subject: Re: Fwd: [PATCH] git-subtree: Avoid using echo -n even indirectly
-Date: Mon, 28 Oct 2013 15:04:13 +0100
-Message-ID: <CAAcnjCRcU8L+F3BuGtm2c+XJxyVsROyY1pwVynK9qdvS8zfFZw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 2/2] merge-base: teach "--fork-point" mode
+Date: Mon, 28 Oct 2013 07:47:14 -0700
+Message-ID: <xmqqwqkxh2q5.fsf@gitster.dls.corp.google.com>
+References: <xmqqhac6o5hj.fsf@gitster.dls.corp.google.com>
+	<1382641884-14756-1-git-send-email-gitster@pobox.com>
+	<1382641884-14756-3-git-send-email-gitster@pobox.com>
+	<CAPig+cQrBMMqSmOk0GSZJ9PTHNt-t+vuOG2Aq=7VTR1EZSeLsw@mail.gmail.com>
+	<xmqq61smmkc0.fsf@gitster.dls.corp.google.com>
+	<CAPig+cQ2tWFXX-RYnUrHEZCaqaPV6ZwgoPfiNPv9P1jFNTGEYg@mail.gmail.com>
+	<xmqqwql2l3ln.fsf@gitster.dls.corp.google.com>
+	<xmqqsivql37i.fsf_-_@gitster.dls.corp.google.com>
+	<526A19CA.9020609@viscovery.net>
+	<xmqqmwlxjnq6.fsf@gitster.dls.corp.google.com>
+	<xmqq61sljakf.fsf_-_@gitster.dls.corp.google.com>
+	<CANiSa6h7x=CcwwAqvoaOm4-y+6MCugV5BE0OXnfGHvf+iJ66MA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Tay Ray Chuan <rctay89@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	"David A. Greene" <greened@obbligato.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 28 15:04:40 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	John Keeping <john@keeping.me.uk>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Martin von Zweigbergk <martinvonz@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 28 15:47:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VanQt-0002E2-RR
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Oct 2013 15:04:40 +0100
+	id 1Vao6H-0004UG-58
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Oct 2013 15:47:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756380Ab3J1OEf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Oct 2013 10:04:35 -0400
-Received: from mail-lb0-f176.google.com ([209.85.217.176]:51854 "EHLO
-	mail-lb0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756032Ab3J1OEf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 28 Oct 2013 10:04:35 -0400
-Received: by mail-lb0-f176.google.com with SMTP id z5so2817632lbh.7
-        for <git@vger.kernel.org>; Mon, 28 Oct 2013 07:04:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=0UjAjnVkrMOZTXRvME+ffuld2sb5Jq0wEbgQehg1veA=;
-        b=OJkElgIHbD0UYlemBwhAeIY7iUTDQXNrnE8KMKeIFinYe7CQEV5u4/Tr+acr+M/mav
-         Ix+sc2iMyfpLr09VX6EB9RT+D3caPUlEmczQJL0UA0Ulq3iS/cRIG9VLTiDMnP3sdy94
-         OEvL3r+6czonzO4wEAOs5iaJQ3B9Cq8HdfvEF/kexAV8pkTDCWMvH5sdNSSq1ZexMHaN
-         0mI3qh1j4830Sqt8g6J2XIYuRJ8vbuqUXyncsntUXyCFtuYQQcdpEYNpm5oCtf5SShuN
-         2/3OXhEo5eHLfcrthcUZdZDkWMm+qWmpSMNYJN0hPDnETThcZd0u0fGZp9SQ+xkTtSuw
-         XhFg==
-X-Received: by 10.152.202.167 with SMTP id kj7mr1316668lac.43.1382969073495;
- Mon, 28 Oct 2013 07:04:33 -0700 (PDT)
-Received: by 10.112.190.102 with HTTP; Mon, 28 Oct 2013 07:04:13 -0700 (PDT)
+	id S1756866Ab3J1OrU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Oct 2013 10:47:20 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59949 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756280Ab3J1OrS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Oct 2013 10:47:18 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 731904C384;
+	Mon, 28 Oct 2013 14:47:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=G6mnlW4ruBnH3L89r7QthMV+D9Y=; b=jdcJCM
+	Xd0NiXHyf3DCWb/9n0cOOD6vVBvYOW1qRJ5SFWla/5gKRcjiS4rD1jY8aN9/rPoo
+	Qz8Gh9uJWBBmHDRTfKQW+knWgltNVh0/7lxTuuUXZD+5Soy2F9jbhjQ8gdi0E+jR
+	lu0xWtnKFsX9zXatekgzbpD87rGQCfocrAODo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=E4vx7KZBj4bteb6+ns3sngc71gNyPInY
+	BEpA4ws5KDUIhte16v74I/1EqDg7I2rGcrVyNcZfUmBr/1cUfzNjhJqAoh0k137j
+	W6Uwuj5QQOpbWsDmnEprQH5V+Rhp2u4GHvuZvjFsOuxjtL6IOsOk7ebqFWiptEip
+	DNcuylDz5Ig=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6361E4C382;
+	Mon, 28 Oct 2013 14:47:17 +0000 (UTC)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BB3934C37F;
+	Mon, 28 Oct 2013 14:47:16 +0000 (UTC)
+In-Reply-To: <CANiSa6h7x=CcwwAqvoaOm4-y+6MCugV5BE0OXnfGHvf+iJ66MA@mail.gmail.com>
+	(Martin von Zweigbergk's message of "Fri, 25 Oct 2013 22:15:41 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: D6F33AC4-3FDF-11E3-8F22-8F264F2CC097-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236830>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236831>
 
-(Resending without HTML, so that it reaches the ML).
+Martin von Zweigbergk <martinvonz@gmail.com> writes:
 
-On Fri, Oct 11, 2013 at 11:32 AM, Paolo Giarrusso <p.giarrusso@gmail.co=
-m> wrote:
+>> +       bases = get_merge_bases_many(derived, revs.nr, revs.commit, 0);
+>> + ...
+>> +       if (revs.nr <= i)
+>> +               return 1; /* not found */
+>> +
+>> +       printf("%s\n", sha1_to_hex(bases->item->object.sha1));
+>> +       free_commit_list(bases);
+>> +       return 0;
 >
-> On Wed, Oct 9, 2013 at 11:11 PM, Jonathan Nieder <jrnieder@gmail.com>=
- wrote:
-> > Paolo Giarrusso wrote:
-> >
-> >> Seeing the email, I wonder whether there's hope something like tha=
-t
-> >> can be preserved in an email, and whether the code should use some
-> >> escape sequence instead.
-> >
-> > Yes, please.  Mind if I amend it to
-> >
-> >         printf "%s\r" "$revcount/$revmax ($createcount)" >&2
-> >
-> > ?
+> Should free_commit_list also be called in the two "return 1" cases
+> above? I suppose the process will exit soon after this, but that seems
+> to be true for all three cases.
+
+You are right that the above is inconsistent. Because the code
+intends to be called only once in the lifetime of the program,
+it calls get_merge_bases_many() with cleanup set to 0, so in that
+sense, not freeing them anywhere may make it even more clear that
+this function expects to be shortly followed by a process exit.
+
+>> diff --git a/t/t6010-merge-base.sh b/t/t6010-merge-base.sh
+>> index f80bba8..4f09db0 100755
+>> --- a/t/t6010-merge-base.sh
+>> +++ b/t/t6010-merge-base.sh
+>> @@ -230,4 +230,31 @@ test_expect_success 'criss-cross merge-base for octopus-step' '
+>>         test_cmp expected.sorted actual.sorted
+>>  '
+>>
+>> +test_expect_success 'using reflog to find the fork point' '
+>> +       git reset --hard &&
+>> +       git checkout -b base $E &&
+>> +
+>> +       (
+>> +               for count in 1 2 3 4 5
+>> +               do
+>> +                       git commit --allow-empty -m "Base commit #$count" &&
+>> +                       git rev-parse HEAD >expect$count &&
+>> +                       git checkout -B derived &&
+>> +                       git commit --allow-empty -m "Derived #$count" &&
+>> +                       git rev-parse HEAD >derived$count &&
+>> +                       git checkout base || exit 1
 >
-> Please do go ahead, by all means (arguably as a different commit, but
-> those are minor details).
+> I think this creates a history like
+>
+> ---E---B1--B2--B3--B4--B5 (base)
+>         \   \   \   \   \
+>          D1  D2  D3  D4  D5 (derived)
+>
+> So I think the following test would pass even if you drop the
+> --fork-point. Did you mean to create a fan-shaped history by resetting
+> base to $E on every iteration above?
 
-What happened? Did you go ahead, as you wrote? Is the patch somewhere?
-Arguably it should go into the maint branch, but I think it didn't =E2=80=
-=94
-otherwise https://github.com/git/git/pull/61 should have stopped being
-mergeable.
+Just showing that I didn't think things deeply ;-)  I do agree that a
+fan-shaped history would show what we want to do a lot better.
 
-This also makes me wonder whether you use any tracker at all =E2=80=94 =
-but
-unless there is one that I missed, that's a separate discussion.
+Thanks.
 
-> > [...]
-> >>>         say()
-> >>>         {
-> >>>                 if [ -z "$quiet" ]; then
-> >>>                         echo "$@" >&2
-> >>>                fi
-> >>>         }
-> >
-> > I agree with the other reviewers that this should be fixed to use
-> > printf, too, but that's another topic.
-> Seconded.
-
---=20
-Paolo G. Giarrusso - Ph.D. Student, Philipps-University Marburg
-http://www.informatik.uni-marburg.de/~pgiarrusso/
+>> +                       git merge-base --fork-point base $(cat derived$count) >actual &&
+>> +                       test_cmp expect$count actual || exit 1
