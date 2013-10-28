@@ -1,45 +1,49 @@
-From: Johannes Sixt <j6t@kdbg.org>
+From: Jeff King <peff@peff.net>
 Subject: Re: [PATCH] t/README: tests can use perl even with NO_PERL
-Date: Mon, 28 Oct 2013 20:46:17 +0100
-Message-ID: <526EBF09.8070200@kdbg.org>
-References: <CAP30j17OCrYjsVK+W_TR-g99YmzY3d9TnYfwHXK7+6vPrVjDaQ@mail.gmail.com> <1382951633-6456-1-git-send-email-bdwalton@gmail.com> <526EA7C8.2020607@kdbg.org> <20131028182718.GA4242@google.com> <xmqqk3gxfc20.fsf@gitster.dls.corp.google.com> <20131028192216.GB4242@google.com>
+Date: Mon, 28 Oct 2013 15:54:29 -0400
+Message-ID: <20131028195429.GA8299@sigill.intra.peff.net>
+References: <CAP30j17OCrYjsVK+W_TR-g99YmzY3d9TnYfwHXK7+6vPrVjDaQ@mail.gmail.com>
+ <1382951633-6456-1-git-send-email-bdwalton@gmail.com>
+ <526EA7C8.2020607@kdbg.org>
+ <20131028182718.GA4242@google.com>
+ <xmqqk3gxfc20.fsf@gitster.dls.corp.google.com>
+ <20131028192216.GB4242@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Ben Walton <bdwalton@gmail.com>, git@vger.kernel.org,
-	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Oct 28 20:46:26 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
+	Ben Walton <bdwalton@gmail.com>, git@vger.kernel.org,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 28 20:54:37 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vasld-0004DX-3y
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Oct 2013 20:46:25 +0100
+	id 1VastY-0007Md-Sn
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Oct 2013 20:54:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756252Ab3J1TqV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Oct 2013 15:46:21 -0400
-Received: from bsmtp5.bon.at ([195.3.86.187]:36920 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1755323Ab3J1TqU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Oct 2013 15:46:20 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 535D2130050;
-	Mon, 28 Oct 2013 20:46:18 +0100 (CET)
-Received: from dx.sixt.local (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id C121E19F626;
-	Mon, 28 Oct 2013 20:46:17 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.0
+	id S1757470Ab3J1Tyd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Oct 2013 15:54:33 -0400
+Received: from cloud.peff.net ([50.56.180.127]:57210 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756040Ab3J1Tyc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Oct 2013 15:54:32 -0400
+Received: (qmail 12606 invoked by uid 102); 28 Oct 2013 19:54:32 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 28 Oct 2013 14:54:32 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 28 Oct 2013 15:54:29 -0400
+Content-Disposition: inline
 In-Reply-To: <20131028192216.GB4242@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236854>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236855>
 
-Am 28.10.2013 20:22, schrieb Jonathan Nieder:
+On Mon, Oct 28, 2013 at 12:22:16PM -0700, Jonathan Nieder wrote:
+
 > The git build system supports a NO_PERL switch to avoid installing
 > perl bindings or other features (like "git add --patch") that rely on
 > perl on runtime, but even with NO_PERL it has not been possible for a
@@ -56,7 +60,27 @@ Am 28.10.2013 20:22, schrieb Jonathan Nieder:
 > this kind of thing in tests (and more readable than the alternative of
 > trying to find POSIXy equivalents).  Update the test documentation to
 > clarify this.
+> 
+> Reported-by: Johannes Sixt <j6t@kdbg.org>
+> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+> ---
 
-Thank you for the clarification!
+Yeah, I think this accurately the conclusions we've come to informally
+during review on the list (for a long time we did not even use
+$PERL_PATH for such "vanilla" cases, but some people have a broken perl
+in their PATH).
 
--- Hannes
+Your patch looks good, and I think Ben's patch does not need a PERL
+prerequisite. However, it is supposed to use $PERL_PATH, which it does
+not.
+
+Speaking of which, is there any reason to use the ugly "$PERL_PATH"
+everywhere, and not simply do:
+
+  perl () {
+    "$PERL_PATH" "$@"
+  }
+
+in test-lib.sh?
+
+-Peff
