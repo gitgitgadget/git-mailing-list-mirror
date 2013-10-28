@@ -1,150 +1,109 @@
-From: Ben Walton <bdwalton@gmail.com>
-Subject: Re: [PATCH] Avoid difference in tr semantics between System V and BSD
-Date: Mon, 28 Oct 2013 21:43:57 +0000
-Message-ID: <CAP30j164JyuZ7TZ=LhaGWMX4VLyX_T7nS6Mn9ztrjKfJRM2mnw@mail.gmail.com>
-References: <xmqqiowhdqx8.fsf@gitster.dls.corp.google.com>
-	<1382996441-18926-1-git-send-email-bdwalton@gmail.com>
+From: Thomas Rast <tr@thomasrast.ch>
+Subject: Re: What's cooking in git.git (Oct 2013, #07; Mon, 28)
+Date: Mon, 28 Oct 2013 22:58:39 +0100
+Message-ID: <87k3gxkqgg.fsf@linux-k42r.v.cablecom.net>
+References: <xmqqr4b5dwke.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git <git@vger.kernel.org>,
-	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
-	Ben Walton <bdwalton@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Mon Oct 28 22:44:09 2013
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Karsten Blees <blees@dcon.de>
+X-From: git-owner@vger.kernel.org Mon Oct 28 22:58:59 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VaubU-000200-IR
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Oct 2013 22:44:04 +0100
+	id 1Vaupt-0007qV-Nn
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Oct 2013 22:58:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757519Ab3J1Vn7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Oct 2013 17:43:59 -0400
-Received: from mail-qa0-f43.google.com ([209.85.216.43]:49596 "EHLO
-	mail-qa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752001Ab3J1Vn6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Oct 2013 17:43:58 -0400
-Received: by mail-qa0-f43.google.com with SMTP id i13so2463359qae.9
-        for <git@vger.kernel.org>; Mon, 28 Oct 2013 14:43:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=oLChXGXMpcfOAn+a+YK+wbGKjaP9eiaAXy0oBbKYzPQ=;
-        b=X9gmuEAcW7YW6i8+hOeROAnZZ3vC/IXO3DUzRiG8kTO7aVWJNmz+PstVeARn2vIC0A
-         rMNxWPHP/+EIXfyeH/q58khkU/E6ngHJcyxTW5RL3d2zFARidYXl4xgJ56hxMr/NrHX6
-         Oc9VsC9qReOT2yeJh3WxzsHPy2DqBWeliYajjjUKK9gTyzxN/Dg29lTr+M1IB+ytO/2m
-         BNEaWerqf4pb2HtlZR+wORiqJEExL9M4Jom7R+glZlyw3B5FL0wT72lSl3jNIiNYau18
-         S5preeWiY5vrqknjnfdCkUrB6h9hj1m9mtJZLkn0qsbccPtbvxjKt+O/kkhZEhyhJ61U
-         sn7g==
-X-Received: by 10.49.3.3 with SMTP id 3mr31926095qey.56.1382996637315; Mon, 28
- Oct 2013 14:43:57 -0700 (PDT)
-Received: by 10.224.189.12 with HTTP; Mon, 28 Oct 2013 14:43:57 -0700 (PDT)
-In-Reply-To: <1382996441-18926-1-git-send-email-bdwalton@gmail.com>
+	id S1757700Ab3J1V6y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Oct 2013 17:58:54 -0400
+Received: from psi.thgersdorf.net ([176.9.98.78]:55387 "EHLO mail.psioc.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751992Ab3J1V6x (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Oct 2013 17:58:53 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by localhost.psioc.net (Postfix) with ESMTP id A52184D6414;
+	Mon, 28 Oct 2013 22:58:51 +0100 (CET)
+X-Virus-Scanned: amavisd-new at psioc.net
+Received: from mail.psioc.net ([127.0.0.1])
+	by localhost (mail.psioc.net [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id U6MT0P3aCQQ7; Mon, 28 Oct 2013 22:58:41 +0100 (CET)
+Received: from linux-k42r.v.cablecom.net.thomasrast.ch (46-126-8-85.dynamic.hispeed.ch [46.126.8.85])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(Client did not present a certificate)
+	by mail.psioc.net (Postfix) with ESMTPSA id D20DE4D656F;
+	Mon, 28 Oct 2013 22:58:40 +0100 (CET)
+In-Reply-To: <xmqqr4b5dwke.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Mon, 28 Oct 2013 12:28:33 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236868>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236869>
 
-Ignore this version. The immediate followup quotes PERL_PATH.
+Hi Karsten
 
-On Mon, Oct 28, 2013 at 9:40 PM, Ben Walton <bdwalton@gmail.com> wrote:
-> Solaris' tr (both /usr/bin/ and /usr/xpg4/bin) uses the System V
-> semantics for tr whereby string1's length is truncated to the length
-> of string2 if string2 is shorter. The BSD semantics, as used by GNU tr
-> see string2 padded to the length of string1 using the final character
-> in string2. POSIX explicitly doesn't specify the correct behavior
-> here, making both equally valid.
->
-> This difference means that Solaris' native tr implementations produce
-> different results for tr ":\t\n" "\0" than GNU tr. This breaks a few
-> tests in t0008-ignores.sh.
->
-> Possible fixes for this are to make string2 be "\0\0\0" or "[\0*]".
->
-> Instead, use perl to perform these transliterations which means we
-> don't need to worry about the difference at all. Since we're replacing
-> tr with perl, we also use perl to replace the sed invocations used to
-> transform the files.
->
-> Replace four identical transforms with a function named
-> broken_c_unquote. Replace the other two identical transforms with a
-> fuction named broken_c_unquote_verbose.
->
-> Signed-off-by: Ben Walton <bdwalton@gmail.com>
-> ---
->  t/t0008-ignores.sh | 30 ++++++++++++++++++------------
->  1 file changed, 18 insertions(+), 12 deletions(-)
->
-> diff --git a/t/t0008-ignores.sh b/t/t0008-ignores.sh
-> index 181513a..45f9396 100755
-> --- a/t/t0008-ignores.sh
-> +++ b/t/t0008-ignores.sh
-> @@ -37,6 +37,14 @@ test_stderr () {
->         test_cmp "$HOME/expected-stderr" "$HOME/stderr"
->  }
->
-> +broken_c_unquote () {
-> +       $PERL_PATH -pe 's/^"//; s/\\//; s/"$//; tr/\n/\0/' "$@"
-> +}
-> +
-> +broken_c_unquote_verbose () {
-> +       $PERL_PATH -pe 's/      "/      /; s/\\//; s/"$//; tr/:\t\n/\0/' "$@"
-> +}
-> +
->  stderr_contains () {
->         regexp="$1"
->         if grep "$regexp" "$HOME/stderr"
-> @@ -606,12 +614,11 @@ cat <<-EOF >expected-verbose
->         $global_excludes:2:!globaltwo   b/globaltwo
->  EOF
->
-> -sed -e 's/^"//' -e 's/\\//' -e 's/"$//' stdin | \
-> -       tr "\n" "\0" >stdin0
-> -sed -e 's/^"//' -e 's/\\//' -e 's/"$//' expected-default | \
-> -       tr "\n" "\0" >expected-default0
-> -sed -e 's/     "/      /' -e 's/\\//' -e 's/"$//' expected-verbose | \
-> -       tr ":\t\n" "\0" >expected-verbose0
-> +broken_c_unquote stdin >stdin0
-> +
-> +broken_c_unquote expected-default >expected-default0
-> +
-> +broken_c_unquote_verbose expected-verbose >expected-verbose0
->
->  test_expect_success '--stdin' '
->         expect_from_stdin <expected-default &&
-> @@ -692,12 +699,11 @@ EOF
->  grep -v '^::   ' expected-all >expected-verbose
->  sed -e 's/.*   //' expected-verbose >expected-default
->
-> -sed -e 's/^"//' -e 's/\\//' -e 's/"$//' stdin | \
-> -       tr "\n" "\0" >stdin0
-> -sed -e 's/^"//' -e 's/\\//' -e 's/"$//' expected-default | \
-> -       tr "\n" "\0" >expected-default0
-> -sed -e 's/     "/      /' -e 's/\\//' -e 's/"$//' expected-verbose | \
-> -       tr ":\t\n" "\0" >expected-verbose0
-> +broken_c_unquote stdin >stdin0
-> +
-> +broken_c_unquote expected-default >expected-default0
-> +
-> +broken_c_unquote_verbose expected-verbose >expected-verbose0
->
->  test_expect_success '--stdin from subdirectory' '
->         expect_from_stdin <expected-default &&
-> --
-> 1.8.1.2
->
+Junio C Hamano <gitster@pobox.com> writes:
 
+> * kb/fast-hashmap (2013-10-22) 12 commits
+>  - remove old hash.[ch] implementation
+>  - read-cache.c: fix memory leaks caused by removed cache entries
 
+I found more valgrind breakage related to this commit, in t2101.[3567]
+(sorry for only reporting them so late, I probably missed them in the
+last run).  E.g. I get this:
+
+  $ ./t2101-update-index-reupdate.sh --valgrind-only=3
+  ok 1 - update-index --add
+  ok 2 - update-index --again
+
+  expecting success: git update-index --remove --again &&
+           git ls-files -s >current &&
+           cmp current expected
+  ==21665== Invalid read of size 1
+  ==21665==    at 0x4C2C762: __GI_strlen (mc_replace_strmem.c:405)
+  ==21665==    by 0x484B0E: update_one (update-index.c:305)
+  ==21665==    by 0x485466: do_reupdate (update-index.c:582)
+  ==21665==    by 0x4858FB: reupdate_callback (update-index.c:696)
+  ==21665==    by 0x4EB5E7: get_value (parse-options.c:96)
+  ==21665==    by 0x4EBEC5: parse_long_opt (parse-options.c:302)
+  ==21665==    by 0x4EC5CD: parse_options_step (parse-options.c:474)
+  ==21665==    by 0x486115: cmd_update_index (update-index.c:824)
+  ==21665==    by 0x405999: run_builtin (git.c:314)
+  ==21665==    by 0x405B2C: handle_internal_command (git.c:477)
+  ==21665==    by 0x405C46: run_argv (git.c:523)
+  ==21665==    by 0x405DE2: main (git.c:606)
+  ==21665==  Address 0x5bee774 is 84 bytes inside a block of size 90 free'd
+  ==21665==    at 0x4C2ACDA: free (vg_replace_malloc.c:468)
+  ==21665==    by 0x4F9360: remove_index_entry_at (read-cache.c:482)
+  ==21665==    by 0x4F9536: remove_file_from_index (read-cache.c:522)
+  ==21665==    by 0x4841DF: remove_one_path (update-index.c:68)
+  ==21665==    by 0x48422E: process_lstat_error (update-index.c:83)
+  ==21665==    by 0x4846BB: process_path (update-index.c:211)
+  ==21665==    by 0x484AC2: update_one (update-index.c:301)
+  ==21665==    by 0x485466: do_reupdate (update-index.c:582)
+  ==21665==    by 0x4858FB: reupdate_callback (update-index.c:696)
+  ==21665==    by 0x4EB5E7: get_value (parse-options.c:96)
+  ==21665==    by 0x4EBEC5: parse_long_opt (parse-options.c:302)
+  ==21665==    by 0x4EC5CD: parse_options_step (parse-options.c:474)
+  [...]
+  not ok 3 - update-index --remove --again
+  #       git update-index --remove --again &&
+  #                git ls-files -s >current &&
+  #                cmp current expected
+
+  ok 4 - first commit
+  ok 5 - update-index again
+  ok 6 - update-index --update from subdir
+  ok 7 - update-index --update with pathspec
+  # failed 1 among 7 test(s)
+  1..7
+
+The errors for tests 5-7 look like they're the same piece of code
+breaking.
 
 -- 
----------------------------------------------------------------------------------------------------------------------------
-Take the risk of thinking for yourself.  Much more happiness,
-truth, beauty and wisdom will come to you that way.
-
--Christopher Hitchens
----------------------------------------------------------------------------------------------------------------------------
+Thomas Rast
+tr@thomasrast.ch
