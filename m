@@ -1,99 +1,96 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: fetch: tag following too ambitious?
-Date: Mon, 28 Oct 2013 13:42:35 +0100
-Message-ID: <526E5BBB.6080306@alum.mit.edu>
+From: Paolo Giarrusso <p.giarrusso@gmail.com>
+Subject: Re: Fwd: [PATCH] git-subtree: Avoid using echo -n even indirectly
+Date: Mon, 28 Oct 2013 15:04:13 +0100
+Message-ID: <CAAcnjCRcU8L+F3BuGtm2c+XJxyVsROyY1pwVynK9qdvS8zfFZw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git discussion list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Oct 28 13:49:55 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Tay Ray Chuan <rctay89@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	"David A. Greene" <greened@obbligato.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 28 15:04:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VamGY-0003vH-Ug
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Oct 2013 13:49:55 +0100
+	id 1VanQt-0002E2-RR
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Oct 2013 15:04:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756518Ab3J1Mtv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Oct 2013 08:49:51 -0400
-Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:52800 "EHLO
-	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755989Ab3J1Mtj (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 28 Oct 2013 08:49:39 -0400
-X-Greylist: delayed 422 seconds by postgrey-1.27 at vger.kernel.org; Mon, 28 Oct 2013 08:49:39 EDT
-X-AuditID: 1207440d-b7f4c6d000004a16-e8-526e5bbc7a69
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 30.6C.18966.CBB5E625; Mon, 28 Oct 2013 08:42:36 -0400 (EDT)
-Received: from [192.168.69.9] (p4FDD4EA3.dip0.t-ipconnect.de [79.221.78.163])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r9SCgYNe001236
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT)
-	for <git@vger.kernel.org>; Mon, 28 Oct 2013 08:42:36 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.0
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrKIsWRmVeSWpSXmKPExsUixO6iqLsnOi/I4EqntkXXlW4mB0aPz5vk
-	AhijuG2SEkvKgjPT8/TtErgzOi9+ZiuYyVPx6sZjlgbGfZxdjJwcEgImEn9+PGGDsMUkLtxb
-	D2YLCVxmlJhw2KGLkQvIfs4ksffJLiaQBK+AtsTbQ72sIDaLgKrE4hUzwBrYBHQlFvU0g9WI
-	CoRILFx1nB2iXlDi5MwnLCC2CFDNrmdXweqFBXQkJn3YD1bPDGS/63vADGHLS2x/O4d5AiPv
-	LCTts5CUzUJStoCReRWjXGJOaa5ubmJmTnFqsm5xcmJeXmqRrpFebmaJXmpK6SZGSDDx7mD8
-	v07mEKMAB6MSD++GtblBQqyJZcWVuYcYJTmYlER5+yLzgoT4kvJTKjMSizPii0pzUosPMUpw
-	MCuJ8HrYA+V4UxIrq1KL8mFS0hwsSuK8akvU/YQE0hNLUrNTUwtSi2CyMhwcShK83VFAjYJF
-	qempFWmZOSUIaSYOTpDhXFIixal5KalFiaUlGfGgCIsvBsYYSIoHaO8BkHbe4oLEXKAoROsp
-	Rl2OeV8+fGMUYsnLz0uVEuddDVIkAFKUUZoHtwKWOl4xigN9LMw7B6SKB5h24Ca9AlrCBLRk
-	DwvYkpJEhJRUA2Psw59MFXbvbn7eout44vjVG3eWfLN0ZV70MdhryynXS3uEtFU3rjm7Vu20
-	vUu3zNLtK3v9mZ9zhgloaRy6vcH589mH5xJ1rrZpL/7Ck/dySwDbUv9XL/8yvarknf9HJF8j
-	8WWDYYneP5Ge+xsehEY2btm5UHXr54MJ/fI7QyZOMWA71OIv2XZPiaU4I9FQi7mo 
+	id S1756380Ab3J1OEf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Oct 2013 10:04:35 -0400
+Received: from mail-lb0-f176.google.com ([209.85.217.176]:51854 "EHLO
+	mail-lb0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756032Ab3J1OEf convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 28 Oct 2013 10:04:35 -0400
+Received: by mail-lb0-f176.google.com with SMTP id z5so2817632lbh.7
+        for <git@vger.kernel.org>; Mon, 28 Oct 2013 07:04:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=0UjAjnVkrMOZTXRvME+ffuld2sb5Jq0wEbgQehg1veA=;
+        b=OJkElgIHbD0UYlemBwhAeIY7iUTDQXNrnE8KMKeIFinYe7CQEV5u4/Tr+acr+M/mav
+         Ix+sc2iMyfpLr09VX6EB9RT+D3caPUlEmczQJL0UA0Ulq3iS/cRIG9VLTiDMnP3sdy94
+         OEvL3r+6czonzO4wEAOs5iaJQ3B9Cq8HdfvEF/kexAV8pkTDCWMvH5sdNSSq1ZexMHaN
+         0mI3qh1j4830Sqt8g6J2XIYuRJ8vbuqUXyncsntUXyCFtuYQQcdpEYNpm5oCtf5SShuN
+         2/3OXhEo5eHLfcrthcUZdZDkWMm+qWmpSMNYJN0hPDnETThcZd0u0fGZp9SQ+xkTtSuw
+         XhFg==
+X-Received: by 10.152.202.167 with SMTP id kj7mr1316668lac.43.1382969073495;
+ Mon, 28 Oct 2013 07:04:33 -0700 (PDT)
+Received: by 10.112.190.102 with HTTP; Mon, 28 Oct 2013 07:04:13 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236829>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236830>
 
-When investigating the exact semantics of tag-following, I discovered
-that the tag auto-following behavior of "git fetch" is more ambitious
-than I would have expected: it fetches any tag that references an object
-that is known to the local repository, *even if that object is not
-currently reachable* (i.e., neither reachable before the fetch or after
-the fetch of non-auto-followed references).  This makes it hard to
-renounce interest in a branch.
+(Resending without HTML, so that it reaches the ML).
 
-Suppose there is a remote repo with
+On Fri, Oct 11, 2013 at 11:32 AM, Paolo Giarrusso <p.giarrusso@gmail.co=
+m> wrote:
+>
+> On Wed, Oct 9, 2013 at 11:11 PM, Jonathan Nieder <jrnieder@gmail.com>=
+ wrote:
+> > Paolo Giarrusso wrote:
+> >
+> >> Seeing the email, I wonder whether there's hope something like tha=
+t
+> >> can be preserved in an email, and whether the code should use some
+> >> escape sequence instead.
+> >
+> > Yes, please.  Mind if I amend it to
+> >
+> >         printf "%s\r" "$revcount/$revmax ($createcount)" >&2
+> >
+> > ?
+>
+> Please do go ahead, by all means (arguably as a different commit, but
+> those are minor details).
 
-    o---o---o        <- master
-     \
-      o---A---B      <- pu
+What happened? Did you go ahead, as you wrote? Is the patch somewhere?
+Arguably it should go into the maint branch, but I think it didn't =E2=80=
+=94
+otherwise https://github.com/git/git/pull/61 should have stopped being
+mergeable.
 
-When I clone this repo, of course I get all of the commits and both
-branches.
+This also makes me wonder whether you use any tracker at all =E2=80=94 =
+but
+unless there is one that I missed, that's a separate discussion.
 
-Now suppose I decide I'm not interested in "branch" anymore, so I delete
-its remote-tracking branch from my repository and change the config to
-only fetch "master":
+> > [...]
+> >>>         say()
+> >>>         {
+> >>>                 if [ -z "$quiet" ]; then
+> >>>                         echo "$@" >&2
+> >>>                fi
+> >>>         }
+> >
+> > I agree with the other reviewers that this should be fixed to use
+> > printf, too, but that's another topic.
+> Seconded.
 
-    git config remote.origin.fetch \
-            '+refs/heads/master:refs/remotes/origin/master'
-    git update-ref -d refs/remotes/origin/pu
-
-It looks like I'm free of the "pu" branch, right?
-
-But if a week later somebody pushes a tag "t" to origin that points at
-commit A, and then I do
-
-    git fetch origin
-
-then Git (un)helpfully fetches tag "t" into my repo, because even though
-commit "A" isn't reachable in my repo, it hasn't been pruned yet from
-the object database.
-
-I admit this is not likely to be a serious problem in practice, but I
-found it surprising and strangely disturbing.  I would call it a bug.
-
-Thoughts?
-
-Michael
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+--=20
+Paolo G. Giarrusso - Ph.D. Student, Philipps-University Marburg
+http://www.informatik.uni-marburg.de/~pgiarrusso/
