@@ -1,80 +1,74 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] commit: Add -f, --fixes <commit> option to add Fixes: line
-Date: Tue, 29 Oct 2013 09:26:14 +0100
-Message-ID: <vpqfvrkeb4p.fsf@anie.imag.fr>
-References: <20131024122255.GI9378@mwanda> <20131024122512.GB9534@mwanda>
-	<20131026181709.GB10488@kroah.com> <20131027013402.GA7146@leaf>
-	<526CA7D4.1070904@alum.mit.edu> <20131027071407.GA11683@leaf>
-	<526E283A.1070801@alum.mit.edu>
-	<CALKQrgfsk3fjyF77XL9+CPyJ_s-AfzkNAj4Eaj1LT-G0Ph=bfg@mail.gmail.com>
-	<20131029020824.GE11861@sigill.intra.peff.net>
+From: Sebastian Schuberth <sschuberth@gmail.com>
+Subject: git-contacts questions
+Date: Tue, 29 Oct 2013 09:34:19 +0100
+Message-ID: <CAHGBnuPW3dtiL-=6BgvaOB4VvOAPyZhrVS3WGreVH_Pt81=wyg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Johan Herland <johan@herland.net>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Josh Triplett <josh@joshtriplett.org>,
-	Git mailing list <git@vger.kernel.org>,
-	Dan Carpenter <dan.carpenter@oracle.com>,
-	Greg KH <greg@kroah.com>,
-	ksummit-2013-discuss@lists.linuxfoundation.org,
-	ksummit-attendees@lists.linuxfoundation.org,
-	Linux Kernel mailing list <linux-kernel@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: linux-kernel-owner@vger.kernel.org Tue Oct 29 09:26:52 2013
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@plane.gmane.org
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: sunshine@sunshineco.com
+X-From: git-owner@vger.kernel.org Tue Oct 29 09:34:33 2013
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1Vb4dY-00014o-70
-	for glk-linux-kernel-3@plane.gmane.org; Tue, 29 Oct 2013 09:26:52 +0100
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Vb4kx-0003WO-P5
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Oct 2013 09:34:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753706Ab3J2I0p (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Tue, 29 Oct 2013 04:26:45 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:57436 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753648Ab3J2I0m (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
-	Tue, 29 Oct 2013 04:26:42 -0400
-Received: from globule.imag.fr (globule.imag.fr [129.88.34.238])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r9T8QENj004279
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 29 Oct 2013 09:26:14 +0100
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	(authenticated bits=0)
-	by globule.imag.fr (8.13.8/8.13.8) with ESMTP id r9T8QFFo001326
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Tue, 29 Oct 2013 09:26:15 +0100
-In-Reply-To: <20131029020824.GE11861@sigill.intra.peff.net> (Jeff King's
-	message of "Mon, 28 Oct 2013 22:08:24 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 29 Oct 2013 09:26:15 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: r9T8QENj004279
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1383639977.58656@6SqBwupxyjeGbuYGDVtwJQ
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1753431Ab3J2IeZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Oct 2013 04:34:25 -0400
+Received: from mail-la0-f43.google.com ([209.85.215.43]:61016 "EHLO
+	mail-la0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753339Ab3J2IeU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Oct 2013 04:34:20 -0400
+Received: by mail-la0-f43.google.com with SMTP id el20so6167166lab.16
+        for <git@vger.kernel.org>; Tue, 29 Oct 2013 01:34:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:cc:content-type;
+        bh=k5Ujcoe+IQI9L+GumgKZ5dbhrvh4jxZX6r+Ql7pzXNo=;
+        b=gXqPiRxgFmihr3qQmjyGv0N+2EriMWIJITy1dwZkLqWx53M4H+sIN5Uu/SBcS30CcU
+         3hcqcT6+dAPfNlcpLOT1SKlmycmd0lKWeHQeUtf43w0Pgf390Ykv9zxQy8bGjr02WjCZ
+         O9fBBZUMPa1D3bmoCujDnQjH7Mno/4gerzkfB0fopS9xVOh4DAyCdh13n5C50DC1JIY0
+         7J9XcaeojobW/6+dLRNWrv2wRK4IRExQxS46NC3k0/T1ke4Id3nA1MvtQ9x4extcosft
+         ufJ3co+YPcc8BNh0el+BGzDXprU2R1sKC78boz69YHy7GQOKzUav3KixnjjxOfDu1+5y
+         GQ5A==
+X-Received: by 10.112.145.105 with SMTP id st9mr946002lbb.46.1383035659107;
+ Tue, 29 Oct 2013 01:34:19 -0700 (PDT)
+Received: by 10.114.201.134 with HTTP; Tue, 29 Oct 2013 01:34:19 -0700 (PDT)
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236912>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236914>
 
-Jeff King <peff@peff.net> writes:
+Hi,
 
->  We could probably make this friendlier by reading from ~/.githooks
-> and defining some semantics for multiple hooks.
+I'm currently trying to get git-contacts to work under Windows / MSYS.
+I have a few issues that may be due to me using the script in a wrong
+way, or the script having some bugs, so I'd like to ask you for help.
 
-I'd be all for it, except I'd call this ~/.config/git/hooks/* (or
-$XDG_CONFIG_HOME if set).
+1) Passing just "HEAD" as a committish like in "git contacts HEAD"
+does not output anything for me, but using the SHA1 for HEAD does
+neither. My HEAD commit does not add any files, but only modifies
+previously existing files, so I would have expected some output. In
+case it turns out to be correct to have no output in my case, could we
+probably say that in some message to the user?
 
-> E.g., fall back to ~/.githooks if the repo hook is not
-> executable, or possibly run them both
+2) For some commits I get error messages from "git blame" in function
+get_blame because multiple -L options are specified:
 
-I think running them both would be the best option. Otherwise, adding a
-(possibly trivial) hook to a repo would disable the user-wide one,
-that'd feel weird.
+$ git contacts b0783baacd20be7007df40cf274985c4863d63fb
+fatal: More than one '-L n,m' option given
+fatal: More than one '-L n,m' option given
+fatal: More than one '-L n,m' option given
+fatal: More than one '-L n,m' option given
+
+>From reading git-blame's man page it indeed seems to me as if only one
+-L option is allowed, so is this something that needs to be fixed in
+git-contacts?
+
+Thanks.
 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Sebastian Schuberth
