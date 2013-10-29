@@ -1,59 +1,74 @@
-From: DimanNe <dimanne@ya.ru>
-Subject: =?utf-8?B?Z2l0IHN2biBhbHJlYWR5IHNldCDigKYgd2FudGVkIHRvIHNldCB0bzo=?=
-Date: Tue, 29 Oct 2013 10:57:55 +0400
-Message-ID: <1771383029875@web26g.yandex.ru>
-Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+From: Thomas Rast <tr@thomasrast.ch>
+Subject: [PATCH v2 1/7] gitk: support -G option from the command line
+Date: Tue, 29 Oct 2013 08:20:34 +0100
+Message-ID: <72ba9e0cd862a2fb014d0633802f9afbb0bea27d.1383031141.git.tr@thomasrast.ch>
+References: <21f40508f83a9407986d29f002adf5ad366c8b88.1382287779.git.trast@inf.ethz.ch>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Paul Mackerras <paulus@samba.org>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Thomas Rast <trast@inf.ethz.ch>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 29 08:04:34 2013
+X-From: git-owner@vger.kernel.org Tue Oct 29 08:21:13 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vb3Ls-0000Ue-Jz
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Oct 2013 08:04:32 +0100
+	id 1Vb3c0-0006K0-TJ
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Oct 2013 08:21:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752054Ab3J2HE3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Oct 2013 03:04:29 -0400
-Received: from forward17.mail.yandex.net ([95.108.253.142]:34246 "EHLO
-	forward17.mail.yandex.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751324Ab3J2HEY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Oct 2013 03:04:24 -0400
-X-Greylist: delayed 384 seconds by postgrey-1.27 at vger.kernel.org; Tue, 29 Oct 2013 03:04:23 EDT
-Received: from web26g.yandex.ru (web26g.yandex.ru [95.108.253.235])
-	by forward17.mail.yandex.net (Yandex) with ESMTP id 2AAB910613B3
-	for <git@vger.kernel.org>; Tue, 29 Oct 2013 10:57:56 +0400 (MSK)
-Received: from 127.0.0.1 (localhost [127.0.0.1])
-	by web26g.yandex.ru (Yandex) with ESMTP id B925DD817A1;
-	Tue, 29 Oct 2013 10:57:55 +0400 (MSK)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ya.ru; s=mail;
-	t=1383029875; bh=RgqsqRWl7df4NnbYx+tlxr08oMi2CNenTNKU4151bl8=;
-	h=From:To:Subject:Date;
-	b=u32lS3rfdS9Fxol/MbRvxz8g/NeoBrXSqBu1vyWEoIF6ULr3YGJhMhhMsvn0PX1SH
-	 Tm9jKDwgNHWirSgSGwEklUIvMowCDs8tcJJDxel/4ieHPm/Q2lovA2Fp2Ni8cPG/Vg
-	 907LXHdKWQw2Y78xR8v61bQNFqp7gnwOjdI+u1eY=
-Received: from dhcp172-103-red.yandex.net (dhcp172-103-red.yandex.net [95.108.172.103]) by web26g.yandex.ru with HTTP;
-	Tue, 29 Oct 2013 10:57:55 +0400
-Envelope-From: Dimanne@yandex.ru
-X-Mailer: Yamail [ http://yandex.ru ] 5.0
+	id S1752046Ab3J2HVH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Oct 2013 03:21:07 -0400
+Received: from psi.thgersdorf.net ([176.9.98.78]:56258 "EHLO mail.psioc.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751957Ab3J2HVF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Oct 2013 03:21:05 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by localhost.psioc.net (Postfix) with ESMTP id D9C4A4D65A9;
+	Tue, 29 Oct 2013 08:21:03 +0100 (CET)
+X-Virus-Scanned: amavisd-new at psioc.net
+X-Amavis-Alert: BAD HEADER SECTION, Duplicate header field: "References"
+Received: from mail.psioc.net ([127.0.0.1])
+	by localhost (mail.psioc.net [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 2sAuvdUAELBU; Tue, 29 Oct 2013 08:20:53 +0100 (CET)
+Received: from linux-k42r.v.cablecom.net (unknown [213.55.184.231])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(Client did not present a certificate)
+	by mail.psioc.net (Postfix) with ESMTPSA id A772F4D6580;
+	Tue, 29 Oct 2013 08:20:51 +0100 (CET)
+X-Mailer: git-send-email 1.8.4.2.838.ga9a3e20
+In-Reply-To: <21f40508f83a9407986d29f002adf5ad366c8b88.1382287779.git.trast@inf.ethz.ch>
+In-Reply-To: <cover.1383031141.git.tr@thomasrast.ch>
+References: <cover.1383031141.git.tr@thomasrast.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236896>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236897>
 
-I am trying to clone/fetch svn branch with git-svn:
+From: Thomas Rast <trast@inf.ethz.ch>
 
-git config --add svn-remote.stable-2012-03-29.url https://some_host/branch
-git config --add svn-remote.stable-2012-03-29.fetch :refs/remotes/stable-2012-03-29
-git svn fetch stable-2012-03-29
+The -G option's usage is exactly analogous to that of -S, so
+supporting it is easy.
 
-which gives me this error message:
+Signed-off-by: Thomas Rast <trast@inf.ethz.ch>
+---
+ gitk-git/gitk | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-svn-remote.stable-2012-03-29.url already set: https://some_host/branch/ wanted to set to: https://some_host/
-
-I know that I probably can fix this by re-fetching all svn-repo from scratch, but it will take months or even years (due to size of repo).
-
-So, is there any solutions?
+diff --git a/gitk-git/gitk b/gitk-git/gitk
+index 5cd00d8..0e95814 100755
+--- a/gitk-git/gitk
++++ b/gitk-git/gitk
+@@ -227,7 +227,7 @@ proc parseviewargs {n arglist} {
+ 	    "--until=*" - "--before=*" - "--max-age=*" - "--min-age=*" -
+ 	    "--author=*" - "--committer=*" - "--grep=*" - "-[iE]" -
+ 	    "--remove-empty" - "--first-parent" - "--cherry-pick" -
+-	    "-S*" - "--pickaxe-all" - "--pickaxe-regex" -
++	    "-S*" - "-G*" - "--pickaxe-all" - "--pickaxe-regex" -
+ 	    "--simplify-by-decoration" {
+ 		# These mean that we get a subset of the commits
+ 		set filtered 1
+-- 
+1.8.4.2.838.ga9a3e20
