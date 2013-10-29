@@ -1,74 +1,92 @@
-From: Sebastian Schuberth <sschuberth@gmail.com>
-Subject: git-contacts questions
-Date: Tue, 29 Oct 2013 09:34:19 +0100
-Message-ID: <CAHGBnuPW3dtiL-=6BgvaOB4VvOAPyZhrVS3WGreVH_Pt81=wyg@mail.gmail.com>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [PATCH v3 2/2] merge-base: teach "--fork-point" mode
+Date: Tue, 29 Oct 2013 08:51:11 +0000
+Message-ID: <20131029085111.GA24023@serenity.lan>
+References: <CAPig+cQrBMMqSmOk0GSZJ9PTHNt-t+vuOG2Aq=7VTR1EZSeLsw@mail.gmail.com>
+ <xmqq61smmkc0.fsf@gitster.dls.corp.google.com>
+ <CAPig+cQ2tWFXX-RYnUrHEZCaqaPV6ZwgoPfiNPv9P1jFNTGEYg@mail.gmail.com>
+ <xmqqwql2l3ln.fsf@gitster.dls.corp.google.com>
+ <xmqqsivql37i.fsf_-_@gitster.dls.corp.google.com>
+ <526A19CA.9020609@viscovery.net>
+ <xmqqmwlxjnq6.fsf@gitster.dls.corp.google.com>
+ <xmqq61sljakf.fsf_-_@gitster.dls.corp.google.com>
+ <20131026090034.GH10779@serenity.lan>
+ <xmqq38nlfbu5.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: sunshine@sunshineco.com
-X-From: git-owner@vger.kernel.org Tue Oct 29 09:34:33 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Martin von Zweigbergk <martinvonz@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Oct 29 09:51:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vb4kx-0003WO-P5
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Oct 2013 09:34:32 +0100
+	id 1Vb51R-0000Mw-Ft
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Oct 2013 09:51:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753431Ab3J2IeZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Oct 2013 04:34:25 -0400
-Received: from mail-la0-f43.google.com ([209.85.215.43]:61016 "EHLO
-	mail-la0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753339Ab3J2IeU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Oct 2013 04:34:20 -0400
-Received: by mail-la0-f43.google.com with SMTP id el20so6167166lab.16
-        for <git@vger.kernel.org>; Tue, 29 Oct 2013 01:34:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        bh=k5Ujcoe+IQI9L+GumgKZ5dbhrvh4jxZX6r+Ql7pzXNo=;
-        b=gXqPiRxgFmihr3qQmjyGv0N+2EriMWIJITy1dwZkLqWx53M4H+sIN5Uu/SBcS30CcU
-         3hcqcT6+dAPfNlcpLOT1SKlmycmd0lKWeHQeUtf43w0Pgf390Ykv9zxQy8bGjr02WjCZ
-         O9fBBZUMPa1D3bmoCujDnQjH7Mno/4gerzkfB0fopS9xVOh4DAyCdh13n5C50DC1JIY0
-         7J9XcaeojobW/6+dLRNWrv2wRK4IRExQxS46NC3k0/T1ke4Id3nA1MvtQ9x4extcosft
-         ufJ3co+YPcc8BNh0el+BGzDXprU2R1sKC78boz69YHy7GQOKzUav3KixnjjxOfDu1+5y
-         GQ5A==
-X-Received: by 10.112.145.105 with SMTP id st9mr946002lbb.46.1383035659107;
- Tue, 29 Oct 2013 01:34:19 -0700 (PDT)
-Received: by 10.114.201.134 with HTTP; Tue, 29 Oct 2013 01:34:19 -0700 (PDT)
+	id S1753202Ab3J2Iv3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Oct 2013 04:51:29 -0400
+Received: from coyote.aluminati.org ([72.9.247.114]:44738 "EHLO
+	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751968Ab3J2Iv0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Oct 2013 04:51:26 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by coyote.aluminati.org (Postfix) with ESMTP id E3A1C19800B;
+	Tue, 29 Oct 2013 08:51:25 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -2.9
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9] autolearn=ham
+Received: from coyote.aluminati.org ([127.0.0.1])
+	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id jxCeKPue48MK; Tue, 29 Oct 2013 08:51:25 +0000 (GMT)
+Received: from serenity.lan (chimera.aluminati.org [10.0.16.60])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by coyote.aluminati.org (Postfix) with ESMTPSA id 8E8D260651E;
+	Tue, 29 Oct 2013 08:51:16 +0000 (GMT)
+Content-Disposition: inline
+In-Reply-To: <xmqq38nlfbu5.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.22 (2013-10-16)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236914>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236915>
 
-Hi,
+On Mon, Oct 28, 2013 at 12:13:22PM -0700, Junio C Hamano wrote:
+> John Keeping <john@keeping.me.uk> writes:
+> 
+> > The --reflog name has the advantage that it makes clear that this is
+> > looking at something more than the commit graph and I don't think
+> > --fork-point does imply that.
+> 
+> I think I understand what you are saying, but that "more than the
+> commit graph" part in your reasoning is exactly one of the two
+> reasons why I do not think that it is a good idea to call it with
+> "reflog" in its name.  The next round of update to the feature may
+> find a better way to find the fork point than looking at the reflog.
+> What the feature is meant to do, i.e. "find the fork point" can stay
+> the same (i.e. people can use it in their script), while the way how
+> the implementation achieves it (i.e. by looking at reflog) can
+> evolve over time, and by not hardcoding "how" in the name, the users
+> will benefit from the updated behaviour, without having to ask for a
+> better heuristics by using a different option by updating all of
+> their scripts.
 
-I'm currently trying to get git-contacts to work under Windows / MSYS.
-I have a few issues that may be due to me using the script in a wrong
-way, or the script having some bugs, so I'd like to ask you for help.
+OK - given this reasoning I agree that --fork-point makes sense.
 
-1) Passing just "HEAD" as a committish like in "git contacts HEAD"
-does not output anything for me, but using the SHA1 for HEAD does
-neither. My HEAD commit does not add any files, but only modifies
-previously existing files, so I would have expected some output. In
-case it turns out to be correct to have no output in my case, could we
-probably say that in some message to the user?
+I think this would have been clearer if the short description said
+something like:
 
-2) For some commits I get error messages from "git blame" in function
-get_blame because multiple -L options are specified:
-
-$ git contacts b0783baacd20be7007df40cf274985c4863d63fb
-fatal: More than one '-L n,m' option given
-fatal: More than one '-L n,m' option given
-fatal: More than one '-L n,m' option given
-fatal: More than one '-L n,m' option given
-
->From reading git-blame's man page it indeed seems to me as if only one
--L option is allowed, so is this something that needs to be fixed in
-git-contacts?
-
-Thanks.
-
--- 
-Sebastian Schuberth
+    Find the point at which a branch forked from another branch; this
+    does not just look for the common ancestor of the two commits but
+    also takes into account the reflog of <ref> to see if the branch
+    forked from an earlier incarnation.
