@@ -1,70 +1,64 @@
-From: Thomas Rast <tr@thomasrast.ch>
-Subject: Re: git svn already set =?utf-8?Q?=E2=80=A6?= wanted to set to:
-Date: Tue, 29 Oct 2013 08:24:44 +0100
-Message-ID: <87iowgiloj.fsf@linux-k42r.v.cablecom.net>
-References: <1771383029875@web26g.yandex.ru>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: Limiting disk usage
+Date: Tue, 29 Oct 2013 09:21:21 +0100
+Message-ID: <vpqob68ebcu.fsf@anie.imag.fr>
+References: <0a4899b7-f75f-4016-9c99-5e6e3fb9603c@email.android.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: DimanNe <dimanne@ya.ru>
-X-From: git-owner@vger.kernel.org Tue Oct 29 08:25:39 2013
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 29 09:21:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vb3gG-0007dv-Vr
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Oct 2013 08:25:37 +0100
+	id 1Vb4YU-0007s4-Ds
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Oct 2013 09:21:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752059Ab3J2HZa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Oct 2013 03:25:30 -0400
-Received: from psi.thgersdorf.net ([176.9.98.78]:56350 "EHLO mail.psioc.net"
+	id S1753109Ab3J2IVd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Oct 2013 04:21:33 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:57246 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751558Ab3J2HZ2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Oct 2013 03:25:28 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by localhost.psioc.net (Postfix) with ESMTP id B3EA14D6580;
-	Tue, 29 Oct 2013 08:25:23 +0100 (CET)
-X-Virus-Scanned: amavisd-new at psioc.net
-Received: from mail.psioc.net ([127.0.0.1])
-	by localhost (mail.psioc.net [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id xwUM1e0mgqbQ; Tue, 29 Oct 2013 08:25:22 +0100 (CET)
-Received: from linux-k42r.v.cablecom.net.thomasrast.ch (unknown [213.55.184.231])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(Client did not present a certificate)
-	by mail.psioc.net (Postfix) with ESMTPSA id 4ED834D6414;
-	Tue, 29 Oct 2013 08:25:21 +0100 (CET)
-In-Reply-To: <1771383029875@web26g.yandex.ru> (dimanne@ya.ru's message of
-	"Tue, 29 Oct 2013 10:57:55 +0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+	id S1752834Ab3J2IVa (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Oct 2013 04:21:30 -0400
+Received: from globule.imag.fr (globule.imag.fr [129.88.34.238])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id r9T8LORs003355
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 29 Oct 2013 09:21:24 +0100
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	(authenticated bits=0)
+	by globule.imag.fr (8.13.8/8.13.8) with ESMTP id r9T8LLkO001286
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Tue, 29 Oct 2013 09:21:25 +0100
+In-Reply-To: <0a4899b7-f75f-4016-9c99-5e6e3fb9603c@email.android.com> (Piotr
+	Krukowiecki's message of "Tue, 29 Oct 2013 07:22:51 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 29 Oct 2013 09:21:24 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: r9T8LORs003355
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1383639686.33485@2xKOXqJDnQuHIPcF7Ozyew
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236905>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236911>
 
-DimanNe <dimanne@ya.ru> writes:
+Piotr Krukowiecki <piotr.krukowiecki@gmail.com> writes:
 
-> I am trying to clone/fetch svn branch with git-svn:
+> Hi, 
 >
-> git config --add svn-remote.stable-2012-03-29.url https://some_host/branch
-> git config --add svn-remote.stable-2012-03-29.fetch :refs/remotes/stable-2012-03-29
-> git svn fetch stable-2012-03-29
->
-> which gives me this error message:
->
-> svn-remote.stable-2012-03-29.url already set:
-> https://some_host/branch/ wanted to set to: https://some_host/
->
-> I know that I probably can fix this by re-fetching all svn-repo from
-> scratch, but it will take months or even years (due to size of repo).
+> What can be done to limit amount of space occupied on clone and
+> checkout? I know about shallow clone and sparse checkout, anything
+> else?
 
-What does your config look like now?
-
-You should have only one svn-remote with one url, but it can have
-multiple .fetch entries.  To fetch all branches, you can also just
-configure its .branches.
+Sorry if I'm stating the obvious, but "git gc" is a good start. If you
+did something wrong with your repo before, maybe "git gc --aggressive"
+can help.
 
 -- 
-Thomas Rast
-tr@thomasrast.ch
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
