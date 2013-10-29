@@ -1,67 +1,93 @@
-From: Russell King - ARM Linux <rmk+kernel@arm.linux.org.uk>
-Subject: Re: [ksummit-attendees] [PATCH] commit: Add -f, --fixes <commit>
-	option to add Fixes: line
-Date: Mon, 28 Oct 2013 23:41:17 +0000
-Message-ID: <20131028234117.GM16735@n2100.arm.linux.org.uk>
-References: <20131024122255.GI9378@mwanda> <20131024122512.GB9534@mwanda> <20131026181709.GB10488@kroah.com> <20131027013402.GA7146@leaf> <xmqqa9hui2lp.fsf@gitster.dls.corp.google.com> <20131028071606.GA16878@leaf> <20131028085911.GA9411@lst.de> <1383001793.5117.14.camel@pasglop>
+From: Simon Ruderich <simon@ruderich.org>
+Subject: Git v1.8.4.2 test failure in ./t5570-git-daemon.sh
+Date: Tue, 29 Oct 2013 01:54:31 +0100
+Message-ID: <20131029005430.GA23920@ruderich.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Christoph Hellwig <hch@lst.de>,
-	ksummit-2013-discuss@lists.linuxfoundation.org,
-	linux-kernel@vger.kernel.org,
-	ksummit-attendees@lists.linuxfoundation.org,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Benjamin Herrenschmidt <benh@kernel.crashing.org>
-X-From: linux-kernel-owner@vger.kernel.org Tue Oct 29 00:41:38 2013
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@plane.gmane.org
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 29 01:59:44 2013
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1VawRF-0005P1-S9
-	for glk-linux-kernel-3@plane.gmane.org; Tue, 29 Oct 2013 00:41:38 +0100
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Vaxep-00071O-IT
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Oct 2013 01:59:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757915Ab3J1Xlb (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Mon, 28 Oct 2013 19:41:31 -0400
-Received: from caramon.arm.linux.org.uk ([78.32.30.218]:41813 "EHLO
-	caramon.arm.linux.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757812Ab3J1Xl3 (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Mon, 28 Oct 2013 19:41:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=arm.linux.org.uk; s=caramon;
-	h=Sender:In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date; bh=+iNpkc3AJqw7wbF+gpFG/f7Xn2hrSPENS8D7Ik/wcv8=;
-	b=iArl/Jo6ZCCbFeW81l8r4YF62rAeoWZVVC2hqZRS6Uo7XoZcb7n8lgGIckWvOQzyXnJQ7LWr5CoaFqKn4+WIfQIzZTwtytA6xtZZ7+glH1tJ3gf+00ty0qj5vB21DSEqFUfNI1PtGm5Ox4CrR2XIgOKr6QleQGhn6c6TdcGkFm8=;
-Received: from n2100.arm.linux.org.uk ([2002:4e20:1eda:1:214:fdff:fe10:4f86]:52063)
-	by caramon.arm.linux.org.uk with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.76)
-	(envelope-from <linux@arm.linux.org.uk>)
-	id 1VawQx-0004AC-Dl; Mon, 28 Oct 2013 23:41:19 +0000
-Received: from linux by n2100.arm.linux.org.uk with local (Exim 4.76)
-	(envelope-from <linux@n2100.arm.linux.org.uk>)
-	id 1VawQw-0004NU-2A; Mon, 28 Oct 2013 23:41:18 +0000
+	id S1756830Ab3J2A7j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Oct 2013 20:59:39 -0400
+Received: from zucker2.schokokeks.org ([178.63.68.90]:42068 "EHLO
+	zucker2.schokokeks.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756651Ab3J2A7j (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Oct 2013 20:59:39 -0400
+X-Greylist: delayed 305 seconds by postgrey-1.27 at vger.kernel.org; Mon, 28 Oct 2013 20:59:38 EDT
+Received: from localhost (pD9E96CE6.dip0.t-ipconnect.de [::ffff:217.233.108.230])
+  (AUTH: PLAIN simon@ruderich.org, TLS: TLSv1/SSLv3,128bits,AES128-SHA)
+  by zucker.schokokeks.org with ESMTPSA; Tue, 29 Oct 2013 01:54:31 +0100
+  id 000000000002001A.00000000526F0747.000065DF
 Content-Disposition: inline
-In-Reply-To: <1383001793.5117.14.camel@pasglop>
-User-Agent: Mutt/1.5.19 (2009-01-05)
-Sender: linux-kernel-owner@vger.kernel.org
+User-Agent: Mutt/1.5.21 (2013-03-19)
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236877>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236878>
 
-On Tue, Oct 29, 2013 at 10:09:53AM +1100, Benjamin Herrenschmidt wrote:
-> On Mon, 2013-10-28 at 09:59 +0100, Christoph Hellwig wrote:
-> > Btw, can we please take away this discussion from ksummit-attendees?  It's got
-> > absolutely nothing to do with kernel summit and is getting fairly annoying.
-> 
-> Ack. Additionally, iirc, we had decided that
-> 
->  - We don't cross post multiple lists
-> 
->  - We drop the annoying subject tags
-> 
-> As is, all I see is some attempt at doing an lkml dup, which is
-> pointless
+Hello,
 
-I agree too.  This whole thread seems to be about noise, and I too
-thought there was something about not cross-posting between this list
-and any other list.
+I just compiled Git v1.8.4.2 on Debian Wheezy amd64 and test
+t5570 fails (with GIT_TEST_GIT_DAEMON=1):
+
+    --- expect      2013-10-28 23:27:26.792409631 +0000
+    +++ output      2013-10-28 23:27:26.788409614 +0000
+    @@ -1 +1,2 @@
+    +Cloning into 'nowhere'...
+     fatal: remote error: access denied or repository not exported: /nowhere.git
+    [18908] [19625] Disconnected (with error)
+    not ok 9 - clone non-existent
+
+    --- expect      2013-10-28 23:27:26.944410377 +0000
+    +++ output      2013-10-28 23:27:26.944410377 +0000
+    @@ -1 +1,2 @@
+    +Cloning into 'nowhere'...
+    fatal: remote error: no such repository: /nowhere.git
+    [19727] [19747] Disconnected (with error)
+    not ok 13 - clone non-existent
+
+Bisecting leads to this commit:
+
+    commit 68b939b2f097b6675c4aaa178655559aa81b25cb
+    Author: Jeff King <peff@peff.net>
+    Date:   Wed Sep 18 16:05:13 2013 -0400
+
+        clone: send diagnostic messages to stderr
+
+        Putting messages like "Cloning into.." and "done" on stdout
+        is un-Unix and uselessly clutters the stdout channel. Send
+        them to stderr.
+
+        We have to tweak two tests to accommodate this:
+
+        1. t5601 checks for doubled output due to forking, and
+            doesn't actually care where the output goes; adjust it
+            to check stderr.
+
+        2. t5702 is trying to test whether progress output was
+            sent to stderr, but naively does so by checking
+            whether stderr produced any output. Instead, have it
+            look for "%", a token found in progress output but not
+            elsewhere (and which lets us avoid hard-coding the
+            progress text in the test).
+
+        This should not regress any scripts that try to parse the
+        current output, as the output is already internationalized
+        and therefore unstable.
+
+Regards
+Simon
+-- 
++ privacy is necessary
++ using gnupg http://gnupg.org
++ public key id: 0x92FEFDB7E44C32F9
