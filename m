@@ -1,105 +1,71 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] subtree: add makefile target for html docs
-Date: Tue, 29 Oct 2013 12:30:37 -0400
-Message-ID: <20131029163037.GB3628@sigill.intra.peff.net>
-References: <CAHGBnuO1xPrAFG1tvS5zaVD9yefa2VUNYM93YLt1pQ1yJwHkrw@mail.gmail.com>
- <20131029155037.GA3628@sigill.intra.peff.net>
- <CAHGBnuNDBH-V+Ebi27BOE8ebNQdhn+MCvabh97_zL3nTctz4yA@mail.gmail.com>
+From: "Finnerty, James M Mr CTR USA USASOC-SOAR" 
+	<jim.finnerty.ctr@soar.army.mil>
+Subject: rcs
+Date: Tue, 29 Oct 2013 11:35:21 -0500
+Message-ID: <B49EE6A27F1B0642B4D12AD9C064E8C7B072E3@SOARCPRVSBEU000.regnet2.soar.ns>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, greened@obbligato.org,
-	Git Mailing List <git@vger.kernel.org>
-To: Sebastian Schuberth <sschuberth@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 29 17:30:54 2013
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 8BIT
+Cc: "Hawkins, Lisa M Mrs CTR USA USASOC-SOAR" 
+	<lisa.hawkins1.ctr@soar.army.mil>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Oct 29 17:41:04 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VbCBs-0000G0-5c
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Oct 2013 17:30:48 +0100
+	id 1VbCLk-0004D7-Al
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Oct 2013 17:41:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758305Ab3J2Qam (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Oct 2013 12:30:42 -0400
-Received: from cloud.peff.net ([50.56.180.127]:57837 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1758260Ab3J2Qak (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Oct 2013 12:30:40 -0400
-Received: (qmail 5198 invoked by uid 102); 29 Oct 2013 16:30:40 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 29 Oct 2013 11:30:40 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 29 Oct 2013 12:30:37 -0400
-Content-Disposition: inline
-In-Reply-To: <CAHGBnuNDBH-V+Ebi27BOE8ebNQdhn+MCvabh97_zL3nTctz4yA@mail.gmail.com>
+	id S1758245Ab3J2Qk4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Oct 2013 12:40:56 -0400
+Received: from mail.soar.army.mil ([143.79.143.49]:11156 "EHLO
+	mail.soar.army.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758221Ab3J2Qkz convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 29 Oct 2013 12:40:55 -0400
+X-Greylist: delayed 324 seconds by postgrey-1.27 at vger.kernel.org; Tue, 29 Oct 2013 12:40:55 EDT
+Received: from SOARCPRVCB1C001.regnet2.soar.ns (10.10.160.78) by
+ mail.soar.army.mil (10.66.6.11) with Microsoft SMTP Server (TLS) id
+ 8.3.327.1; Tue, 29 Oct 2013 11:35:10 -0500
+Received: from SOARCPRVSBEU000.regnet2.soar.ns (10.10.160.1) by
+ SOARCPRVCB1C001.regnet2.soar.ns (10.10.160.78) with Microsoft SMTP Server id
+ 8.3.327.1; Tue, 29 Oct 2013 11:35:22 -0500
+Content-Class: urn:content-classes:message
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: rcs
+Thread-Index: Ac7UxFlC2FsxPDr6TReM3znjN3OUGw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236934>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236935>
 
-On Tue, Oct 29, 2013 at 05:03:53PM +0100, Sebastian Schuberth wrote:
+Hi. I'm going to attempt to import a git database into Razor which is
+linux rcs based. Does the linux version of git use rcs ?
 
-> I just gave it a try and it works nicely:
-> 
-> Tested-by: Sebastian Schuberth <sschuberth@gmail.com>
-> 
-> Also, the clean target already contains "*.html", so nothing else to
-> do there. Any chance to get this queued in pu?
+ Thanks Jim
 
-Here it is with a commit message, and the additional wiring into "make
-doc".
+Jim Finnerty
 
--- >8 --
-Subject: subtree: add makefile target for html docs
 
-The Makefile currently builds the roff manpage, but not the
-html form. As some people may prefer the latter, let's make
-it an option to build that, too. We also wire it into "make
-doc" so that it is built by default.
+ECS, Inc.
+Comm: (270) 798-1386, Fax: (270)798-7724
+Cell: (570) 498-8499
 
-This patch does not build or install it as part of
-"install-doc"; that would require extra infrastructure to
-handle installing the html as we do in git's regular
-Documentation/ tree. That can come later if somebody is
-interested.
+CAUTION: This message may contain competitive, sensitive or other
+non-public information not intended for disclosure outside official
+government channels.  Do not disseminate this message outside of
+official channels.  If you received this message in error, please notify
+the sender by reply e-mail and delete all copies of this message." 
 
-Tested-by: Sebastian Schuberth <sschuberth@gmail.com>
-Signed-off-by: Jeff King <peff@peff.net>
----
- contrib/subtree/Makefile | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
-
-diff --git a/contrib/subtree/Makefile b/contrib/subtree/Makefile
-index 435b2de..4030a16 100644
---- a/contrib/subtree/Makefile
-+++ b/contrib/subtree/Makefile
-@@ -21,13 +21,14 @@ GIT_SUBTREE    := git-subtree
- GIT_SUBTREE_DOC := git-subtree.1
- GIT_SUBTREE_XML := git-subtree.xml
- GIT_SUBTREE_TXT := git-subtree.txt
-+GIT_SUBTREE_HTML := git-subtree.html
- 
- all: $(GIT_SUBTREE)
- 
- $(GIT_SUBTREE): $(GIT_SUBTREE_SH)
- 	cp $< $@ && chmod +x $@
- 
--doc: $(GIT_SUBTREE_DOC)
-+doc: $(GIT_SUBTREE_DOC) $(GIT_SUBTREE_HTML)
- 
- install: $(GIT_SUBTREE)
- 	$(INSTALL) -d -m 755 $(DESTDIR)$(libexecdir)
-@@ -46,6 +47,10 @@ $(GIT_SUBTREE_XML): $(GIT_SUBTREE_TXT)
- 	asciidoc -b docbook -d manpage -f $(ASCIIDOC_CONF) \
- 		-agit_version=$(gitver) $^
- 
-+$(GIT_SUBTREE_HTML): $(GIT_SUBTREE_TXT)
-+	asciidoc -b xhtml11 -d manpage -f $(ASCIIDOC_CONF) \
-+		-agit_version=$(gitver) $^
-+
- test:
- 	$(MAKE) -C t/ test
- 
--- 
-1.8.4.1.898.g8bf8a41.dirty
+"STATEMENT OF LIMITATION OF AUTHORITY: You are hereby notified that I do
+not have the authority to direct you in any way to alter your
+contractual obligations. Further, if your U.S. Army customer, as the
+result of the information obtained from discussions or emails, does
+desire to alter your contract requirements, changes will be issued in
+writing and signed by the contracting officer. You should take no action
+on any change unless and until you receive such a contract modification
+or written direction by the Contracting Officer."
