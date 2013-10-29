@@ -1,104 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] commit: Add -f, --fixes <commit> option to add Fixes: line
-Date: Tue, 29 Oct 2013 12:54:16 -0700
-Message-ID: <xmqqa9hretuf.fsf@gitster.dls.corp.google.com>
-References: <20131024122255.GI9378@mwanda> <20131024122512.GB9534@mwanda>
-	<20131026181709.GB10488@kroah.com> <20131027013402.GA7146@leaf>
-	<xmqqa9hui2lp.fsf@gitster.dls.corp.google.com>
-	<xmqq1u35iwyl.fsf@gitster.dls.corp.google.com>
-	<CAP8UFD0R7JAkQSiX=1nqg_fmo-o7B-ekkxvsjHFgwspk5V0PHA@mail.gmail.com>
+From: Jim Garrison <jim.garrison@nwea.org>
+Subject: Migrate svn non-standard layout to git
+Date: Tue, 29 Oct 2013 20:04:56 +0000
+Message-ID: <0C723FEB5B4E5642B25B451BA57E273041FD42F6@S1P5DAG3C.EXCHPROD.USA.NET>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Josh Triplett <josh@joshtriplett.org>, git <git@vger.kernel.org>,
-	Dan Carpenter <dan.carpenter@oracle.com>,
-	Greg KH <greg@kroah.com>
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 29 20:54:32 2013
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Oct 29 21:05:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VbFN0-0007XM-Sa
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Oct 2013 20:54:31 +0100
+	id 1VbFXQ-0002mr-NI
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Oct 2013 21:05:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752988Ab3J2TyV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Oct 2013 15:54:21 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41599 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752967Ab3J2TyT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Oct 2013 15:54:19 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3CE1D4DFF8;
-	Tue, 29 Oct 2013 19:54:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=gZRVo1j4Vv1KSSwMrcMatHUsoEs=; b=DUHsml
-	MuADc6OsbEBR1ItPHxwLhbG2Gzhao9sQoVI+eL/aYH1hUidPxEZEMiUqsA1Y8eW9
-	XLqjtTSRyVRmtxV7wuGKmJ2ZoouCmfWbtsoto2Wi6FTDioxrBdW6xRiHqnaCS4ki
-	viMDiSq/ifFOCeneF1/npSIOOf73AqSz7chZU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=hxg3sPHy2PNkD3+axiLJGOhYqYF8z2kF
-	aS33ltLkFuPtLvLgmg6RvM3A+/091li5K71pQfKFJVPZvqoON9DeHUxABoJ4xXll
-	L95blPdDozgKoL2Pp6eNPGm3qfnBZmGRjR1u2YA+6HEWvpodecQBUcZ8uspto4sN
-	Q9U6awj4U+Y=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2D7F54DFF7;
-	Tue, 29 Oct 2013 19:54:19 +0000 (UTC)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5FA274DFF2;
-	Tue, 29 Oct 2013 19:54:18 +0000 (UTC)
-In-Reply-To: <CAP8UFD0R7JAkQSiX=1nqg_fmo-o7B-ekkxvsjHFgwspk5V0PHA@mail.gmail.com>
-	(Christian Couder's message of "Tue, 29 Oct 2013 05:45:00 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: E58C56DE-40D3-11E3-B3E5-8F264F2CC097-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752329Ab3J2UFK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Oct 2013 16:05:10 -0400
+Received: from gwo3.mbox.net ([165.212.64.25]:34814 "EHLO gwo3.mbox.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751345Ab3J2UFJ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 29 Oct 2013 16:05:09 -0400
+Received: from gwo3.mbox.net (localhost [127.0.0.1])
+	by gwo3.mbox.net (Postfix) with ESMTP id 3d8P0h2sykzfj3PB
+	for <git@vger.kernel.org>; Tue, 29 Oct 2013 20:05:08 +0000 (UTC)
+X-USANET-Received: from gwo3.mbox.net [127.0.0.1] by gwo3.mbox.net via mtad (C8.MAIN.3.82G) 
+	with ESMTP id 914RJCuFB4848Mo3; Tue, 29 Oct 2013 20:05:02 -0000
+X-USANET-Routed: 5 gwsout-gwsd Q:gwsd
+X-USANET-Routed: 3 gwsout-vs Q:bmvirus
+X-USANET-GWS2-Tenant: nwea.org
+X-USANET-GWS2-Tagid: NWEA
+Received: from S1P5HUB3.EXCHPROD.USA.NET [165.212.120.254] by gwo3.mbox.net via smtad (C8.MAIN.3.93K) 
+	with ESMTPS id XID891RJCuFc3836Xo3; Tue, 29 Oct 2013 20:05:02 -0000
+X-USANET-Source: 165.212.120.254 OUT  jim.garrison@nwea.org S1P5HUB3.EXCHPROD.USA.NET
+X-USANET-MsgId: XID891RJCuFc3836Xo3
+Received: from S1P5DAG3C.EXCHPROD.USA.NET ([169.254.3.33]) by
+ S1P5HUB3.EXCHPROD.USA.NET ([10.120.223.33]) with mapi id 14.03.0158.001; Tue,
+ 29 Oct 2013 20:04:56 +0000
+Thread-Topic: Migrate svn non-standard layout to git
+Thread-Index: Ac7U3KLqy70Jb10wQXawXpJJuY5iXA==
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [70.98.171.2]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236946>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236947>
 
-Christian Couder <christian.couder@gmail.com> writes:
+I have the following SVN setup:
 
-> On Mon, Oct 28, 2013 at 10:08 AM, Junio C Hamano <gitster@pobox.com> wrote:
->>
->> Thinking aloud further, what I had in mind was along the lines of
->> the following.
->>
->>  * The most generic external interface would be spelled as
->>
->>     --trailer <token>[=<param>]
->>
->>    where <token> can be things like "signoff", "closes", "acked-by",
->>    "change-id", "fixes", etc.; they can be taken from an unbounded
->>    set.  The historical "--signoff" can become a short-hand for
->>    "--trailer signoff".  More than one "--trailer" option can be
->>    given on a single command line.
->
-> Ok, and maybe the <token> could also be the full trailer like "Signed-off-by".
+    Repository: http://svn-server:81/svn/DevJava
+    Trunk: trunk/etl_app
+    Branches: branches/etl_app
+    Tags: tags/etl_app
 
-Yeah, between these two:
+After reading the manual and git-svn man page I tried the following command in ~/src
 
-    [commitTrailer "Signed-off-by"]
-        style = append-norepeat
-        shorthand = signoff
-        command = echo "$GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>"'
+    git svn clone -T trunk/etl_app -b branches/etl_app -t tags/etl_app --authors-file=users.txt --no-metadata http://svn-server:81/svn/DevJava etl_app
 
-   [commitTrailer "signoff"]
-        style = append-norepeat
-        trailer = Signed-off-by
-        command = echo "$GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>"'
+This results in outputting this
 
-I do not have strong preference either way.  One of these two sets
-of configuration will have to become a built-in default (i.e. still
-allowing people from other development community conventions to
-redefine how S-o-b: works), so there will be no user-visible
-difference either way at the highest-level Porcelain anyway.
+    Initialized empty Git repository in /home/jim.garrison/git/etl_app/.git/
 
-Oh, also, it seems people prefer to call them "footers", judging by
-the messages in this thread. I do not have a problem with that word,
-either; I suspect we may have to update existing documentation that
-calls them "trailers", if we go that way, though.
+And then.... nothing. It appears to hang, but is consuming about 10% CPU and no I/O as far as I can determine.  I let it run for 30 minutes and checked the contents of the etl_app subdirectory from another terminal session but it never produced any more terminal output or wrote anything to the local disk.
+
+Then I tried using full URLs for -T -t and -b and got:
+
+    Initialized empty Git repository in /home/jim.garrison/git/etl_app/.git/
+    Using higher level of URL: http:// svn-server:81/svn/DevJava/trunk/etl_app => http:// svn-server:81/svn/DevJava
+    perl: subversion/libsvn_subr/path.c:115: svn_path_join: Assertion `svn_path_is_canonical(component, pool)' failed.
+    error: git-svn died of signal 6
+
+By accident, I discovered that the following command gets farther:
+
+    git svn clone -T trunk/etl_app -b branches/etl_app -t tags/etl_app --authors-file=users.txt --no-metadata http:// svn-server:81/svn/DevJava/trunk/etl_app etl_app
+    Initialized empty Git repository in /home/jim.garrison/git/etl_app/.git/
+    Using higher level of URL: http:// svn-server:81/svn/DevJava/trunk/etl_app => http:// svn-server:81/svn/DevJava
+    W: Ignoring error from SVN, path probably does not exist: (160013): Filesystem has no item: File not found: revision 100, path '/trunk/etl_app'
+    W: Do not be alarmed at the above message git-svn is just searching aggressively for old history.
+    This may take a while on large repositories
+    Checked through r40200
+
+This takes a few minutes but finally completes "successfully". 
+
+In the Git online book's migration chapter it then says to execute a couple of commands to move the svn tags and branches to proper Git tags and branches.
+
+    git for-each-ref refs/remotes/tags | cut -d / -f 4- | grep -v @ | while read tagname; do git tag "$tagname" "tags/$tagname"; git branch -r -d "tags/$tagname"; done
+    git for-each-ref refs/remotes | cut -d / -f 3- | grep -v @ | while read branchname; do git branch "$branchname" "refs/remotes/$branchname"; git branch -r -d "$branchname"; done
+
+However, neither of the "for-each-ref" commands produces any output, so these are effectively no-ops.
+
+Can someone explain what's going on? How do I get the svn tags and branches fetched so I can migrate the svn repository to git without losing them?
+
+Thanks
