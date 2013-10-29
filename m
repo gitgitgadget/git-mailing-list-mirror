@@ -1,78 +1,87 @@
-From: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
-Subject: Re: Limiting disk usage
-Date: Tue, 29 Oct 2013 14:50:32 +0100
-Message-ID: <CAA01Cso+yTzatiAaQahx5h2N0nnOON7FsnWNSYrN-pV=8qzn7g@mail.gmail.com>
-References: <0a4899b7-f75f-4016-9c99-5e6e3fb9603c@email.android.com>
-	<vpqob68ebcu.fsf@anie.imag.fr>
+From: Nicolas Cornu <ncornu@aldebaran-robotics.com>
+Subject: [PATCH] Add a scrollbar for commit history in gitk
+Date: Tue, 29 Oct 2013 14:53:23 +0100
+Message-ID: <CAMXp-VN=CMRdXwJ3+LRZegm-bwiDmJd66-YnZb65BNpqyHQCLA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Tue Oct 29 14:50:39 2013
+Cc: gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 29 14:53:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vb9gs-0008OX-E7
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Oct 2013 14:50:38 +0100
+	id 1Vb9jd-0000tn-QB
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Oct 2013 14:53:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753871Ab3J2Nue (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Oct 2013 09:50:34 -0400
-Received: from mail-ee0-f43.google.com ([74.125.83.43]:57955 "EHLO
-	mail-ee0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752807Ab3J2Nud (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Oct 2013 09:50:33 -0400
-Received: by mail-ee0-f43.google.com with SMTP id b47so2632875eek.2
-        for <git@vger.kernel.org>; Tue, 29 Oct 2013 06:50:32 -0700 (PDT)
+	id S1755573Ab3J2NxY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Oct 2013 09:53:24 -0400
+Received: from mail-ie0-f169.google.com ([209.85.223.169]:52999 "EHLO
+	mail-ie0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753431Ab3J2NxY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Oct 2013 09:53:24 -0400
+Received: by mail-ie0-f169.google.com with SMTP id ar20so14390074iec.28
+        for <git@vger.kernel.org>; Tue, 29 Oct 2013 06:53:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=E5STbBlC1RGzpGmBdfzB/CM6taetiIwM0aYmVysraZE=;
-        b=HlCvLvEIOGtk+qDioXaZ4VObXfkZqg5gkjT23oVDM7UnUKlx15iaDBvott6rHlMLrJ
-         DuOoQ6ge39/8bMQZpLrbOg5D1zNksnWYI+lUHu6xH1eEc1Grv6LRyN2JxIgXvyrvt74a
-         289wVPIZgwjOK9Fpexaqws6ZfA+KU0EfcIxFGVJrKwxDq75oV7fBL2Zt08nibq33yCED
-         UQAtW47adeNZZELwQHt/9zzuTxyS/ddgMhMrqrGer9RGSgjMN+SE88bwWwMcVJh9s4wC
-         jxincEbfZ4DL1+0xsSU5FH/vHsqFupgyNLlmpT96oIb+KyXqKNScwCsfKDa7lVgYUd7C
-         5NbA==
-X-Received: by 10.14.214.73 with SMTP id b49mr2792510eep.89.1383054632648;
- Tue, 29 Oct 2013 06:50:32 -0700 (PDT)
-Received: by 10.223.168.9 with HTTP; Tue, 29 Oct 2013 06:50:32 -0700 (PDT)
-In-Reply-To: <vpqob68ebcu.fsf@anie.imag.fr>
+        d=aldebaran-robotics.com; s=google;
+        h=mime-version:date:message-id:subject:from:to:cc:content-type;
+        bh=i86PUshYUNfeNr2rBbR17rw8Hv2xiwhvObTHajCPKh8=;
+        b=fGABw17MPZxHV0npHwQ7Dw817DwflFUd3uu3wuo89Gi/gCI03kzqWPhy/CpMNVgu3A
+         1xIarMEj4Dt83FvWkIFF+TLnKqyQojMS/j8+9y2pwDyGko7+pz3H0jv1SNWVvYCl/MOh
+         g3uc8MGEAOWo4kkFRqV0nvkwQZjckzUuGbjec=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to:cc
+         :content-type;
+        bh=i86PUshYUNfeNr2rBbR17rw8Hv2xiwhvObTHajCPKh8=;
+        b=Vh5yfWZnYmEaOIS+EmcjBpDo6A4UY6icQncpz+NufSaMYBkVEyso3fpYgp9sQJt6S6
+         U9kq9SCL9GRSj0CLu8Rx9k8snknpZ6iV++wPONLp3YEiolqzB++bV36VUkJhQAW1OtuI
+         pEjdsZeJAK8sOvPr7K78Nvsj9aGtULLRE4sWc2FNDf4A44sNYeHJVuHQpZwMziZ1gFJB
+         86IDMfRn/QruVQ6IwYLgIBNVlqKKoHLvdD/6/ZnEEr/GH4m11ja5NbbDbXZeJpews6Ld
+         crRtZmQRbuiarn+MK/ij3eQZ09XiaCzCIFyGjsu3cAGARxm9tymZVnSDq+GehiL/RN4l
+         CXcg==
+X-Gm-Message-State: ALoCoQn42gAWsjqaMJmvyxKpKyLtyajxSL92Jlz7ru4mWvkWJ4Sd/AyUPNnkoqyH4aH/yuD6Rbwb
+X-Received: by 10.43.93.5 with SMTP id bs5mr16406437icc.32.1383054803402; Tue,
+ 29 Oct 2013 06:53:23 -0700 (PDT)
+Received: by 10.64.25.165 with HTTP; Tue, 29 Oct 2013 06:53:23 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236923>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236924>
 
-[resending as sent previous version as HTML, sorry about that]
+>From b3570290bd761a1bf952ea491fa62b123231fe61 Mon Sep 17 00:00:00 2001
+From: Nicolas Cornu <ncornu@aldebaran-robotics.com>
+Date: Tue, 29 Oct 2013 14:51:29 +0100
+Subject: [PATCH] Add a scrollbar for commit history in gitk
 
-On Tue, Oct 29, 2013 at 9:21 AM, Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
->
-> Piotr Krukowiecki <piotr.krukowiecki@gmail.com> writes:
->
-> > Hi,
-> >
-> > What can be done to limit amount of space occupied on clone and
-> > checkout? I know about shallow clone and sparse checkout, anything
-> > else?
->
-> Sorry if I'm stating the obvious, but "git gc" is a good start. If you
-> did something wrong with your repo before, maybe "git gc --aggressive"
-> can help.
+---
+ gitk-git/gitk | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-Yes, I put a lot of code into the repository. I know it is wrong from git POV ;)
-That's why I wrote about splitting repository into multiple smaller
-repositories, but AFAIK git is not very good at managing that too...
-
-(Background: we're thinking about migrating svn repository into git.
-Currently there is one svn repository containing many related
-directories. They are branched/merged/tagged together. Often work is
-done on all/many of them, but there are some use cases where we need
-only some of them)
-
-
+diff --git a/gitk-git/gitk b/gitk-git/gitk
+index d6f5e07..e517253 100755
+--- a/gitk-git/gitk
++++ b/gitk-git/gitk
+@@ -2124,11 +2124,17 @@ proc makewindow {} {
+     # create three canvases
+     set cscroll .tf.histframe.csb
+     set canv .tf.histframe.pwclist.canv
++    set cscrollhl .tf.histframe.pwclist.canv.csb
+     canvas $canv \
+     -selectbackground $selectbgcolor \
+     -background $bgcolor -bd 0 \
+-    -yscrollincr $linespc -yscrollcommand "scrollcanv $cscroll"
++    -yscrollincr $linespc -yscrollcommand "scrollcanv $cscroll" \
++    -xscrollcommand "scrollcanv $cscrollhl"
+     .tf.histframe.pwclist add $canv
++    ${NS}::scrollbar $cscrollhl -command {$canv xview} -orient horizontal
++    if {!$use_ttk} {$cscrollhl configure -highlightthickness 0}
++    pack $cscrollhl -fill x -side bottom
++
+     set canv2 .tf.histframe.pwclist.canv2
+     canvas $canv2 \
+     -selectbackground $selectbgcolor \
 -- 
-Piotr Krukowiecki
+1.8.4.2
