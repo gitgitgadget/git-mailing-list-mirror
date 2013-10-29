@@ -1,96 +1,72 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: rcs
-Date: Tue, 29 Oct 2013 14:16:14 -0400
-Message-ID: <20131029181614.GA13601@sigill.intra.peff.net>
-References: <B49EE6A27F1B0642B4D12AD9C064E8C7B072E3@SOARCPRVSBEU000.regnet2.soar.ns>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: git-contacts questions
+Date: Tue, 29 Oct 2013 15:02:48 -0400
+Message-ID: <CAPig+cRpEvAjiQWZ08kW2oqwR6XZ=u7dE=3OfVyB9SZzf8+saw@mail.gmail.com>
+References: <CAHGBnuPW3dtiL-=6BgvaOB4VvOAPyZhrVS3WGreVH_Pt81=wyg@mail.gmail.com>
+	<CAMP44s1+npNnR8-exARL8kamQ81JwyLhhQnnkv6DvK8e3qOfHA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org,
-	"Hawkins, Lisa M Mrs CTR USA USASOC-SOAR" 
-	<lisa.hawkins1.ctr@soar.army.mil>
-To: "Finnerty, James M Mr CTR USA USASOC-SOAR" 
-	<jim.finnerty.ctr@soar.army.mil>
-X-From: git-owner@vger.kernel.org Tue Oct 29 19:16:25 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Sebastian Schuberth <sschuberth@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 29 20:02:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VbDq4-0005av-HZ
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Oct 2013 19:16:24 +0100
+	id 1VbEZ4-00061I-GR
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Oct 2013 20:02:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756393Ab3J2SQT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Oct 2013 14:16:19 -0400
-Received: from cloud.peff.net ([50.56.180.127]:57883 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756384Ab3J2SQR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Oct 2013 14:16:17 -0400
-Received: (qmail 10048 invoked by uid 102); 29 Oct 2013 18:16:17 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 29 Oct 2013 13:16:17 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 29 Oct 2013 14:16:14 -0400
-Content-Disposition: inline
-In-Reply-To: <B49EE6A27F1B0642B4D12AD9C064E8C7B072E3@SOARCPRVSBEU000.regnet2.soar.ns>
+	id S1751528Ab3J2TCu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Oct 2013 15:02:50 -0400
+Received: from mail-la0-f54.google.com ([209.85.215.54]:39883 "EHLO
+	mail-la0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750983Ab3J2TCt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Oct 2013 15:02:49 -0400
+Received: by mail-la0-f54.google.com with SMTP id gx14so258798lab.27
+        for <git@vger.kernel.org>; Tue, 29 Oct 2013 12:02:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=1eU57uvxb939k07sNHizzBWvoobYwXu/mraGksmoFsQ=;
+        b=MfeP0iJz6UGQaJp+dGXzfxAXEzvGbxyoCSyUAshnivu7187nfQIsS3ZaLpG0SIJ9fQ
+         zCM7Tq/E+T1NPGLIsvqN6BlXEga4QXHcO4VPD0k1On/OdOeGbtlkrQY15Y3sKSLgAzVf
+         G4OPeHukIrassw4+MId32XleATNk1F40ZfL/SPQiMIsEogHAAv/A8a6zFI3RSek87364
+         YX/ybemeM4ptoCQmd1PN0HFx3z6i3COG2OhVbjpI9MIfut7JRb+w34k08WvehJ27G3E7
+         XNvDugzwlzfVtWRZPxBUXDaJv77oZcruX+g6w9v+jjLwTvLHYBsxe3crtaeuNFwrNF8l
+         Vrcg==
+X-Received: by 10.112.200.100 with SMTP id jr4mr981611lbc.36.1383073368444;
+ Tue, 29 Oct 2013 12:02:48 -0700 (PDT)
+Received: by 10.114.200.180 with HTTP; Tue, 29 Oct 2013 12:02:48 -0700 (PDT)
+In-Reply-To: <CAMP44s1+npNnR8-exARL8kamQ81JwyLhhQnnkv6DvK8e3qOfHA@mail.gmail.com>
+X-Google-Sender-Auth: wlUbBnuQrwBFyamC4t0RWl7tBRU
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236939>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236940>
 
-On Tue, Oct 29, 2013 at 11:35:21AM -0500, Finnerty, James M Mr CTR USA USASOC-SOAR wrote:
+On Tue, Oct 29, 2013 at 4:57 AM, Felipe Contreras
+<felipe.contreras@gmail.com> wrote:
+> On Tue, Oct 29, 2013 at 2:34 AM, Sebastian Schuberth
+> <sschuberth@gmail.com> wrote:
+>> 2) For some commits I get error messages from "git blame" in function
+>> get_blame because multiple -L options are specified:
+>>
+>> $ git contacts b0783baacd20be7007df40cf274985c4863d63fb
+>> fatal: More than one '-L n,m' option given
+>> fatal: More than one '-L n,m' option given
+>> fatal: More than one '-L n,m' option given
+>> fatal: More than one '-L n,m' option given
+>>
+>> From reading git-blame's man page it indeed seems to me as if only one
+>> -L option is allowed, so is this something that needs to be fixed in
+>> git-contacts?
+>
+> You are probably using a newer version of the script on an older version of Git.
 
-> Hi. I'm going to attempt to import a git database into Razor which is
-> linux rcs based. Does the linux version of git use rcs ?
-
-No, the formats are completely different, and you will have to
-translate.  We don't usually get requests to go from git to rcs; it
-usually goes the other way. :)
-
-I don't know offhand of a tool that does it out of the box.  It should
-be possible to generate the RCS files directly from the "git log" data
-(though RCS does not use unified diff for storage, but rather "ed"
-commands, so you'd have to translate there). A slower simpler way would
-be to just "replay" the git history, committing to rcs at each step.
-That might look something like the hacky, largely untested script below:
-
--- >8 --
-#!/bin/sh
-
-# note that this does not handle filenames which need quoting.
-changed_files() {
-  git diff-tree -r --name-only "$1" | tail -n +2
-}
-
-# Look at each commit in chronological order; note
-# that this will linearize your history, as this
-# script does not know about branches at all.
-git rev-list --reverse HEAD |
-while read rev; do
-
-  # take a lock on each file we are about to update
-  rcs -l $(changed_files $rev)
-
-  # update the working tree to this revision
-  git checkout -fq $rev
-
-  # get commit date in iso8601
-  date=$(git log -1 --format=%ai)
-
-  # get author "login". This just pulls the username from
-  # the email address; you may also want to map email
-  # addresses to logins via a file.
-  login=$(git log -1 --format=%ae | cut -d@ -f1)
-
-  # original commit message
-  msg=$(git log -1 --format=%B)
-
-  # now we're ready to checkin
-  ci -w"$login" -d"$date" -m"$msg" $(changed_files $rev) </dev/null
-done
--- 8< --
-
-There are lots of ways it can go wrong (and I tried to note them above),
-but it may be enough for a simple history.
-
--Peff
+Right. git-blame learned to accept multiple -L's in 58dbfa2e59a1, and
+git-contacts started taking advantage of that feature in 4c70cfbfbc2d.
+A git-contacts prior to 4c70cfbfbc2d might work for you.
