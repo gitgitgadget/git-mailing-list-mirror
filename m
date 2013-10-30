@@ -1,102 +1,93 @@
 From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [PATCH 09/19] documentation: add documentation for the bitmap format
-Date: Wed, 30 Oct 2013 10:23:10 +0000
-Message-ID: <CAJo=hJvOb=oooJ3O0wjxt77caGOMeKwT0VRaV=znMAzm0yNCYw@mail.gmail.com>
-References: <20131024175915.GA23398@sigill.intra.peff.net> <20131024180347.GI24180@sigill.intra.peff.net>
- <CACsJy8DFisnZZiPOWjktuMC2J289AYGtgefZob=4YFAJAxBc6w@mail.gmail.com>
- <20131025032144.GB26283@sigill.intra.peff.net> <CAJo=hJvmL0=MN7W-NW4bACK0m+Y39+LBVZ+ufXTEh8KzyjFbKg@mail.gmail.com>
- <20131030075040.GJ11317@sigill.intra.peff.net>
+Subject: Re: [PATCH 10/19] pack-bitmap: add support for bitmap indexes
+Date: Wed, 30 Oct 2013 10:27:26 +0000
+Message-ID: <CAJo=hJudyxLP-pSu-=Py6tSHsnbODDFCZ6JxAoRPtfe3opf=5A@mail.gmail.com>
+References: <20131024175915.GA23398@sigill.intra.peff.net> <20131024180357.GJ24180@sigill.intra.peff.net>
+ <CAJo=hJvw-UNWVDADcGzA1P3GGOKJGh8h4LrETPYnjBNYmfkxjQ@mail.gmail.com> <20131030081023.GK11317@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: Colby Ranger <cranger@google.com>, Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Vicent Marti <vicent@github.com>
+Cc: git <git@vger.kernel.org>, Vicent Marti <vicent@github.com>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Oct 30 11:23:38 2013
+X-From: git-owner@vger.kernel.org Wed Oct 30 11:28:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VbSw5-0006IL-9J
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Oct 2013 11:23:37 +0100
+	id 1VbT0P-0007eV-DP
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Oct 2013 11:28:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751811Ab3J3KXd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Oct 2013 06:23:33 -0400
-Received: from mail-wi0-f175.google.com ([209.85.212.175]:44434 "EHLO
-	mail-wi0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751506Ab3J3KXc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Oct 2013 06:23:32 -0400
-Received: by mail-wi0-f175.google.com with SMTP id hm4so6520157wib.14
-        for <git@vger.kernel.org>; Wed, 30 Oct 2013 03:23:30 -0700 (PDT)
+	id S1753660Ab3J3K1u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Oct 2013 06:27:50 -0400
+Received: from mail-wi0-f181.google.com ([209.85.212.181]:43971 "EHLO
+	mail-wi0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753593Ab3J3K1s (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Oct 2013 06:27:48 -0400
+Received: by mail-wi0-f181.google.com with SMTP id ex4so1191291wid.2
+        for <git@vger.kernel.org>; Wed, 30 Oct 2013 03:27:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=spearce.org; s=google;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=V3r3fg6+fy4r26XnRe2B42Lb2bBJKSaqwgui8ws+DZE=;
-        b=B41ka95yPIw8ZCH8wMb7f3y3pmqVU/iMLjhqfFdOtgAl5CpGdpH5hA1KGhsKcO/5wm
-         dOTrM8jAZK5MuabxRM271BcrqygB/x0nIXqjZPci/gWkIAYZwlufaACPEuGAO6oSglbp
-         ILJJwf5CeFfLnMguwmeuMwo9T6/9a5lci/Wqg=
+        bh=85bQbtMu5F6fjfs3kyW9dWXIM8ChTsbS53sZB3K7Plw=;
+        b=JPjNXta4sfPw9/2FdnMtnOGpZPhQ24eeTkq7SkXpLAxMyxLTWAMdE8BPS23/QIqu1n
+         +hPMBqhLif3BU0gudexBrqnMEPJChAQEJbaZIn7P5KbPey+0ORAHg21xZI1lzGuAetnf
+         DBhpAzHeec8f0F9hrIWcBJ8pJe/lA52mKZe9s=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc:content-type;
-        bh=V3r3fg6+fy4r26XnRe2B42Lb2bBJKSaqwgui8ws+DZE=;
-        b=YTA6wh0D3VC3mmqDgHAaJMMqKVTppxiGKsFo6/H16kXhRMtp9HbLPIR+q5BSEd8JlQ
-         94lCLW7mio43/BsLHXc9BAajkVIdyPJkP3rlH074gPB+7n2R1m+5Idm/wrF834BVpC7w
-         oBs2+aOobQ0diLMgrlBkCh0BYUpDSyU5PJMz5a9l5qGkqSbfTW6QyIKXpicOlXo/K+4W
-         EiwHDqsIi3WVc2eGfkG59hhW9/Q+JBdVqmyESp4NNCADc1YprJ/uE2kP7S7mFqzyCeDy
-         ZKf87Tj8c3zMq5TvOQHtzCrJUC21VwpXtBIAk9tzwzldd58a4YRo1QujTzoZs3GmQuoD
-         BzKQ==
-X-Gm-Message-State: ALoCoQksR7b2ITp31Eq+kyNRt3LnIIttUnL1egEHAJVOIBf0TDK67KTU7uE/lFxFZlJih4+D5rdG
-X-Received: by 10.194.6.161 with SMTP id c1mr82611wja.89.1383128610723; Wed,
- 30 Oct 2013 03:23:30 -0700 (PDT)
-Received: by 10.227.62.140 with HTTP; Wed, 30 Oct 2013 03:23:10 -0700 (PDT)
-In-Reply-To: <20131030075040.GJ11317@sigill.intra.peff.net>
+        bh=85bQbtMu5F6fjfs3kyW9dWXIM8ChTsbS53sZB3K7Plw=;
+        b=Q0dTNLLF+DzNNGbcNk0i6rjf2TUNvjtPuN1Pfv/fJ0IOQzm4y8lZLaT8GuIOQ4E9U+
+         XWqcMLkPr53k+ddpiNcRS7m3FRoRrRp3+Tlrsg03ud2d0dKwhIeskYDO6SDZiCjNGGvY
+         z1f9l+/Odjx3SiQ/qjIlmwJ8ZKcxQxoKnngvze4aPxpsLChZlSdezqHPZYHPJSr/5/PO
+         Bdi/L3Y8ZMsA3pQwsH41Fo60NuZ8XjNJgMYYW5syQPm13hEiEnX5I4yTseQlOyl1hsrn
+         Bs9epya56HEaZRkuykrwL8Hss7C9NinADdhZ0TycYTwE65nY5z+erM8CkWVCl6+FfUsV
+         +ofg==
+X-Gm-Message-State: ALoCoQkxgpnlLk4e4DQ8koddHIoOnTq9GK4zgnifalv8Ka+pYayvqQijFTvKhy31fNaDoZbpj/QM
+X-Received: by 10.180.36.242 with SMTP id t18mr2054529wij.28.1383128866988;
+ Wed, 30 Oct 2013 03:27:46 -0700 (PDT)
+Received: by 10.227.62.140 with HTTP; Wed, 30 Oct 2013 03:27:26 -0700 (PDT)
+In-Reply-To: <20131030081023.GK11317@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237007>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237008>
 
-On Wed, Oct 30, 2013 at 7:50 AM, Jeff King <peff@peff.net> wrote:
-> On Fri, Oct 25, 2013 at 01:47:06PM +0000, Shawn O. Pearce wrote:
->
->> I think Colby and I talked about having additional optional sections
->> in this file, but Colby didn't want to overcomplicate the format early
->> on. So v1 is probably not very extensible and we may have to go to v2
->> to safely create an extension with the name hash cache used in this
->> series.
+On Wed, Oct 30, 2013 at 8:10 AM, Jeff King <peff@peff.net> wrote:
+> On Fri, Oct 25, 2013 at 01:55:13PM +0000, Shawn O. Pearce wrote:
 >>
->> Given that the JGit v1 bitmap format has been shipping since JGit 3.0
->> and in Gerrit Code Review 2.6, its in use in the wild. So we aren't
->> going to go back and redefine v1.
+>> Yay! This is similar to the optimization we use in JGit to send the
+>> entire pack, but the part about sending a leading prefix is new. Do
+>> you have any data showing how well this works in practice for cases
+>> where offset is before than length-20?
 >
-> I don't think either course of action affects how JGit in the wild will
-> react. If we add a new flag to v1, existing JGit barfs. If we move to
-> v2, existing JGit barfs.  In either case, the simplest fix for JGit is
-> to ignore the new section.
+> Actually, I don't think it kicks in very much due to packfile ordering.
+> You have all of the commits at the front of the pack, then all of the
+> trees, then all of the blobs. So if you want the whole thing, it is easy
+> to reuse a big chunk. But if you want only the most recent slice, we can
+> reuse the early bit with the new commits, but we stop partway through
+> the commit list. You still have to handle all of the trees and blobs
+> separately.
+>
+> So in practice, I think this really only kicks in for clones anyway.
+>
+> In theory, you could find "islands" of ones in the bitmap and send whole
+> slices of packfile at once. But you need to be careful not to send a
+> delta without its base. Which I think means you end up having to
+> generate the whole sha1 list anyway, and check that the other side has
+> each base before reusing a delta (i.e., the normal code path).
+>
+> In fact, I'm not quite sure that even a partial reuse up to an offset is
+> 100% safe. In a newly packed git repo it is, because we always put bases
+> before deltas (and OFS_DELTA objects need this). But if you had a bitmap
+> generated from a fixed thin pack, we would have REF_DELTA objects early
+> on that depend on bases appended to the end of the pack. So I really
+> wonder if we should scrap this partial reuse and either just have full
+> reuse, or go through the regular object_entry construction.
 
-Fair point. Then we can use v1 with the flag for now, JGit will barf and...
-
-> If we want to define a v2 format and make it clear how to add optional
-> sections, that's fine. But what I really want to avoid is a big v2
-> bikeshedding discussion where other features get added because it's a
-> version bump.
-
-We can defer the v2 bikeshedding until after v1 lands and we get more
-experience with the format.
-
-> If that means dropping the name-hash cache from the series, so be it
-> (that's part of why I pulled it out into its own patch at the end). We
-> could also make it optional with a documentation warning that existing
-> JGit will not like the resulting bitmap files. In practice, I do not
-> expect it to be a big deal, as most sites will not mix-and-match serving
-> from the two implementations (though you might repack with C git and
-> serve with JGit, which means "off" would be the sane default for the
-> feature).
-
-The name-hash cache is probably important, but it would be nice to
-have a variable or flag we can use to disable the name-cache
-generation and thus permit Git to create JGit style v1 indexes, and
-also use JGit v1 indexes if the name-cache is not available.
+Yes. This is why JGit only does whole pack file reuse (minus the 12
+byte header and 20 byte SHA-1 trailer). Any other case has so many
+corner cases that we just punt into the object entry construction path
+and rely on individual object reuse.
