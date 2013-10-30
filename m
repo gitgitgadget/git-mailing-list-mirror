@@ -1,75 +1,64 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: Re: What's cooking in git.git (Oct 2013, #07; Mon, 28)
-Date: Wed, 30 Oct 2013 18:14:15 +0100
-Message-ID: <52713E67.3000202@web.de>
-References: <xmqqr4b5dwke.fsf@gitster.dls.corp.google.com> <5271392E.8020003@web.de> <CAFFjANT=-mQoKUU2KsPHo3Hcq7RAuyM1t4kvJu4OfiNeHrA+Ng@mail.gmail.com>
+From: Tony Luck <tony.luck@gmail.com>
+Subject: Re: [PATCH] commit: Add -f, --fixes <commit> option to add Fixes: line
+Date: Wed, 30 Oct 2013 10:28:06 -0700
+Message-ID: <CA+8MBbK3dicmwOJb0mhTwr59O1tqzZgEGmMfSQV61Z=aK_64oA@mail.gmail.com>
+References: <20131024122255.GI9378@mwanda>
+	<20131024122512.GB9534@mwanda>
+	<20131026181709.GB10488@kroah.com>
+	<20131027013402.GA7146@leaf>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-To: =?UTF-8?B?VmljZW50IE1hcnTDrQ==?= <tanoku@gmail.com>,
-	=?UTF-8?B?VG9yc3Q=?= =?UTF-8?B?ZW4gQsO2Z2Vyc2hhdXNlbg==?= 
-	<tboegi@web.de>
-X-From: git-owner@vger.kernel.org Wed Oct 30 18:14:25 2013
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Dan Carpenter <dan.carpenter@oracle.com>,
+	Greg KH <greg@kroah.com>,
+	ksummit-2013-discuss@lists.linuxfoundation.org,
+	ksummit-attendees@lists.linuxfoundation.org,
+	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+To: Josh Triplett <josh@joshtriplett.org>
+X-From: linux-kernel-owner@vger.kernel.org Wed Oct 30 18:28:17 2013
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VbZLb-0005fO-LV
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Oct 2013 18:14:24 +0100
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1VbZZ2-0002lI-D9
+	for glk-linux-kernel-3@plane.gmane.org; Wed, 30 Oct 2013 18:28:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751555Ab3J3ROU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 30 Oct 2013 13:14:20 -0400
-Received: from mout.web.de ([212.227.15.14]:51722 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750882Ab3J3ROT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Oct 2013 13:14:19 -0400
-Received: from [192.168.209.26] ([78.72.74.102]) by smtp.web.de (mrweb101)
- with ESMTPA (Nemesis) id 0MOAjQ-1VYFQq3hZ6-005bGV for <git@vger.kernel.org>;
- Wed, 30 Oct 2013 18:14:18 +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:24.0) Gecko/20100101 Thunderbird/24.1.0
-In-Reply-To: <CAFFjANT=-mQoKUU2KsPHo3Hcq7RAuyM1t4kvJu4OfiNeHrA+Ng@mail.gmail.com>
-X-Provags-ID: V03:K0:/82yNovXwScm2Yk+JmHDNP0QGCN6RgvEn7jpDkW6BFlD/mMo7nk
- nBbgH9gmJyrfMClrRTgaq9wtkn1C2vD60eyp//vKQXQp4CHmAbbodWn104IxXWGC7CfgPNN
- yX/21LNL0l1KwD1nNd0GAeMRQj6v2XFGoUtsWLnD7cPZKMY4uksDhXGR5LzPVXxkL2qJxVc
- RHKM4QJ4jyzXHlB3OlMHw==
-Sender: git-owner@vger.kernel.org
+	id S1753270Ab3J3R2J (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Wed, 30 Oct 2013 13:28:09 -0400
+Received: from mail-vc0-f172.google.com ([209.85.220.172]:44987 "EHLO
+	mail-vc0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750865Ab3J3R2H (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Wed, 30 Oct 2013 13:28:07 -0400
+Received: by mail-vc0-f172.google.com with SMTP id ks9so1153374vcb.31
+        for <multiple recipients>; Wed, 30 Oct 2013 10:28:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=pABuGA2nz3dbOXCEJYEx6O7gLqosGTFFW6EVCvJuzZo=;
+        b=i+m8+S+Kkk0n5dcCTTHAwfKzXagdW+7ZXFk2gu2BZ5KVpAQTZjS2MCd1tSSAf5kjy3
+         d17EsxFd+HsAlxVsEI0IVRlbn2w+NzS1luGAs5mIA7/1mH+kIKTooyvN2cy8gjdITbJh
+         bjEYvqkuIHxT7oogXO6hpr4jyiiEwih5qza69Dpll4Tg6XoYrnWO60MXrpbzdto1F9qj
+         swOvCaT6UMSkCS9xJIZucnBJ8iGtrDlWxIXYVJ0IciZ1QNY63KXgIP5JS66cdKQNvltb
+         7FBcYzRJhqJaLtsVtWWFXtO5e7NlLyPStGjtpc3QlhiQOlsLdYReDXVqz9lM6Ppxl3R+
+         BjLQ==
+X-Received: by 10.220.11.7 with SMTP id r7mr3803485vcr.12.1383154086679; Wed,
+ 30 Oct 2013 10:28:06 -0700 (PDT)
+Received: by 10.58.253.66 with HTTP; Wed, 30 Oct 2013 10:28:06 -0700 (PDT)
+In-Reply-To: <20131027013402.GA7146@leaf>
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237039>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237040>
 
-On 2013-10-30 18.01, Vicent Mart=C3=AD wrote:
-> On Wed, Oct 30, 2013 at 5:51 PM, Torsten B=C3=B6gershausen <tboegi@we=
-b.de> wrote:
->> There is a name clash under cygwin 1.7 (1.5 is OK)
->> The following "first aid hot fix" works for me:
->> /Torsten
->=20
-> If Cygwin declares its own bswap_64, wouldn't it be better to use it
-> instead of overwriting it with our own?
-Yes,
-this will be part of a longer patch.
-I found that some systems have something like this:
+On Sat, Oct 26, 2013 at 6:34 PM, Josh Triplett <josh@joshtriplett.org> wrote:
 
-#define htobe64(x) bswap_64(x)
-And bswap_64 is a function, so we can not detect it by "asking"
-#ifdef bswap_64
-=2E.
-#endif
+> +               format_commit_message(commit, "Fixes: %h ('%s')\n", sb, &ctx);
 
+What is the value of double wrapping the commit message inside '...'
+and then ('...')?
 
-But we can use
-#ifdef htobe64
-=2E..
-#endif
-and this will be part of a bigger patch.
-
-And, in general, we should avoid to introduce functions which may have =
-a
-name clash.
-Using the git_ prefix for function names is a good practice.
-So in order to unbrake the compilation error under cygwin 17,
-the "hotfix" can be used.
-/Torsten
+-Tony
