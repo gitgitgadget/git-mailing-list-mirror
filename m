@@ -1,129 +1,500 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] warn about http server document being too old
-Date: Wed, 30 Oct 2013 14:27:15 -0700
-Message-ID: <xmqqzjpqa1qk.fsf@gitster.dls.corp.google.com>
-References: <523D030A.6080309@gmail.com>
-	<xmqqli1s51z1.fsf@gitster.dls.corp.google.com>
+Subject: [ANNOUNCE] Git v1.8.5-rc0
+Date: Wed, 30 Oct 2013 15:17:45 -0700
+Message-ID: <xmqqtxfy9zee.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
-To: Sitaram Chamarty <sitaramc@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 30 22:27:29 2013
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
+Cc: Linux Kernel <linux-kernel@vger.kernel.org>
+To: git@vger.kernel.org
+X-From: linux-kernel-owner@vger.kernel.org Wed Oct 30 23:18:03 2013
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VbdIW-00087E-Ib
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Oct 2013 22:27:28 +0100
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1Vbe5S-00066k-J8
+	for glk-linux-kernel-3@plane.gmane.org; Wed, 30 Oct 2013 23:18:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752807Ab3J3V1Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Oct 2013 17:27:24 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51349 "EHLO
+	id S1753095Ab3J3WRy (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Wed, 30 Oct 2013 18:17:54 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54094 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752614Ab3J3V1W (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Oct 2013 17:27:22 -0400
+	id S1751306Ab3J3WRv (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
+	Wed, 30 Oct 2013 18:17:51 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BD9224C671;
-	Wed, 30 Oct 2013 17:27:20 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 182BC4EA93;
+	Wed, 30 Oct 2013 18:17:50 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=diRn5mynKTC1qKiX3em0RPfOzhs=; b=RhJrKc
-	FFeDSd4iFb2iUtQqNG1A2vmjHO0H+gw//Mu9jECCRun47AxI+FimBfETD2KuxNOC
-	umOdD25NlbbomDX2cO0CdJPwacRRWD5hnDJQXnJjglJmcgRXAMrBousDMwFtufEp
-	ZISncmlBLom68hsWetWoeoyJ7cZryHcKeyJEA=
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=W
+	4/LOPvqP/QMhi+rw1zPZGT2rRk=; b=lyZwP5G2YpcU6zHAXDEObZjHWcvt245+9
+	0d1CaUWODBYLSBKXmzXLs4LFEdc0+miA5i/7ahVYr8+LRuWH5TdLn7v6A240H4Ou
+	ZaQjrOUOglCQT0GFXf+++zMNVXx43+eReZZz95SCXhRgs9b83x3suoSdG8AAvA59
+	x4olnT1WJY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=UPIITkaHl9IMlKj5OJtglZVm7T97rxwh
-	aWJNU2UPd70riQaerOhrLAAcihVZIZsKZGkuikQya7pDGiCS+BDodeEsjaBicaeX
-	votQ+S72O7xJhtl+y2OdQthpDJ/jo6p4PoQVu2e87IKJvPZZMl/ZOyEQkGKmuwQZ
-	2BUHcGaTeaY=
+	:subject:date:message-id:mime-version:content-type; q=dns; s=
+	sasl; b=RhNpH9FVaqDmGqRPp0Ug3BH64dRr12VQD/4F63QTpUakT2aEz/Nwdrpc
+	3zjFqe7MZRfBRsJ+vKJzGSgDp2aqJvRh1bU6fsxjSUQ9bkTjHWMPQOUUTLrHrx89
+	FTU+8RZiy8X9kqkn2kKBgsoSWSvyP/6ysNGpCC9x3vT5r3Nbcis=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A9DF04C670;
-	Wed, 30 Oct 2013 17:27:20 -0400 (EDT)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0409B4EA92;
+	Wed, 30 Oct 2013 18:17:50 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 055974C66B;
-	Wed, 30 Oct 2013 17:27:19 -0400 (EDT)
-In-Reply-To: <xmqqli1s51z1.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Wed, 16 Oct 2013 14:40:18 -0700")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E62294EA91;
+	Wed, 30 Oct 2013 18:17:48 -0400 (EDT)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 0ED49444-41AA-11E3-835D-1FFB7F2839F8-77302942!b-pb-sasl-quonix.pobox.com
-Sender: git-owner@vger.kernel.org
+X-Pobox-Relay-ID: 1C35E460-41B1-11E3-89FC-1FFB7F2839F8-77302942!b-pb-sasl-quonix.pobox.com
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237072>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237073>
 
-Junio C Hamano <gitster@pobox.com> writes:
+An early preview Git v1.8.5-rc0 is now available for testing at the
+usual places.
 
-> Sitaram Chamarty <sitaramc@gmail.com> writes:
->
->>   - describe when it is still applicable
->>   - tell people where to go for most normal cases
->>
->> Signed-off-by: Sitaram Chamarty <sitaram@atc.tcs.com>
->> ---
->>
->> ref: http://thread.gmane.org/gmane.comp.version-control.git/159633.  Yes
->> it's very old but better late than never.
->>
->>  Documentation/howto/setup-git-server-over-http.txt | 5 +++++
->>  1 file changed, 5 insertions(+)
->>
->> diff --git a/Documentation/howto/setup-git-server-over-http.txt b/Documentation/howto/setup-git-server-over-http.txt
->> index 7f4943e..90b19a0 100644
->> --- a/Documentation/howto/setup-git-server-over-http.txt
->> +++ b/Documentation/howto/setup-git-server-over-http.txt
->> @@ -3,6 +3,11 @@ Subject: Setting up a Git repository which can be pushed into and pulled from ov
->>  Date: Thu, 10 Aug 2006 22:00:26 +0200
->>  Content-type: text/asciidoc
->>
->> +NOTE: This document is from 2006.  A lot has happened since then, and this
->> +document is now relevant mainly if your web host is not CGI capable.
->> +
->> +Almost everyone else should instead look at linkgit:git-http-backend[1].
->> +
->>  How to setup Git server over http
->>  =================================
->
-> I tend to agree that it is a good idea to have this kind of phrase
-> somewhere in the document, but you cannot place the material above
-> the top-level title.  AsciiDoc does not seem to like it.
+The release tarballs are found at:
 
-I've amended this trivially, as follows.  Will advance it to 'next'.
+    http://code.google.com/p/git-core/downloads/list
 
-Thanks.
+and their SHA-1 checksums are:
 
--- >8 --
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Date: Sat, 21 Sep 2013 07:53:06 +0530
-Subject: [PATCH] doc/howto: warn about (dumb)http server document being too old
+591a2397df1bd14ea010df6980026d64df7f9653  git-1.8.5.rc0.tar.gz
+be710eb67af014248ab09972e1e409a1fd847911  git-htmldocs-1.8.5.rc0.tar.gz
+d42fdb41a9f480feda3ee7fa43b39dae105ea5b6  git-manpages-1.8.5.rc0.tar.gz
 
-Describe when it is still applicable, and tell people where to go
-for most normal cases.
+The following public repositories all have a copy of the v1.8.5-rc0
+tag and the master branch that the tag points at:
 
-Signed-off-by: Sitaram Chamarty <sitaram@atc.tcs.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/howto/setup-git-server-over-http.txt | 4 ++++
- 1 file changed, 4 insertions(+)
+  url = https://kernel.googlesource.com/pub/scm/git/git
+  url = git://repo.or.cz/alt-git.git
+  url = https://code.google.com/p/git-core/
+  url = git://git.sourceforge.jp/gitroot/git-core/git.git
+  url = git://git-core.git.sourceforge.net/gitroot/git-core/git-core
+  url = https://github.com/gitster/git
 
-diff --git a/Documentation/howto/setup-git-server-over-http.txt b/Documentation/howto/setup-git-server-over-http.txt
-index 7f4943e..c803649 100644
---- a/Documentation/howto/setup-git-server-over-http.txt
-+++ b/Documentation/howto/setup-git-server-over-http.txt
-@@ -6,6 +6,10 @@ Content-type: text/asciidoc
- How to setup Git server over http
- =================================
- 
-+NOTE: This document is from 2006.  A lot has happened since then, and this
-+document is now relevant mainly if your web host is not CGI capable.
-+Almost everyone else should instead look at linkgit:git-http-backend[1].
-+
- Since Apache is one of those packages people like to compile
- themselves while others prefer the bureaucrat's dream Debian, it is
- impossible to give guidelines which will work for everyone. Just send
--- 
-1.8.5-rc0-175-g776cf91
+Git v1.8.5 Release Notes (draft)
+========================
+
+Backward compatibility notes (for Git 2.0)
+------------------------------------------
+
+When "git push [$there]" does not say what to push, we have used the
+traditional "matching" semantics so far (all your branches were sent
+to the remote as long as there already are branches of the same name
+over there).  In Git 2.0, the default will change to the "simple"
+semantics that pushes:
+
+ - only the current branch to the branch with the same name, and only
+   when the current branch is set to integrate with that remote
+   branch, if you are pushing to the same remote as you fetch from; or
+
+ - only the current branch to the branch with the same name, if you
+   are pushing to a remote that is not where you usually fetch from.
+
+Use the user preference configuration variable "push.default" to
+change this.  If you are an old-timer who is used to the "matching"
+semantics, you can set the variable to "matching" to keep the
+traditional behaviour.  If you want to live in the future early, you
+can set it to "simple" today without waiting for Git 2.0.
+
+When "git add -u" (and "git add -A") is run inside a subdirectory and
+does not specify which paths to add on the command line, it
+will operate on the entire tree in Git 2.0 for consistency
+with "git commit -a" and other commands.  There will be no
+mechanism to make plain "git add -u" behave like "git add -u .".
+Current users of "git add -u" (without a pathspec) should start
+training their fingers to explicitly say "git add -u ."
+before Git 2.0 comes.  A warning is issued when these commands are
+run without a pathspec and when you have local changes outside the
+current directory, because the behaviour in Git 2.0 will be different
+from today's version in such a situation.
+
+In Git 2.0, "git add <path>" will behave as "git add -A <path>", so
+that "git add dir/" will notice paths you removed from the directory
+and record the removal.  Versions before Git 2.0, including this
+release, will keep ignoring removals, but the users who rely on this
+behaviour are encouraged to start using "git add --ignore-removal <path>"
+now before 2.0 is released.
+
+The default prefix for "git svn" will change in Git 2.0.  For a long
+time, "git svn" created its remote-tracking branches directly under
+refs/remotes, but it will place them under refs/remotes/origin/ unless
+it is told otherwise with its --prefix option.
+
+
+Updates since v1.8.4
+--------------------
+
+Foreign interfaces, subsystems and ports.
+
+ * "git-svn" used with SVN 1.8.0 when talking over https:// connection
+   dumped core due to a bug in the serf library that SVN uses.  Work
+   it around on our side, even though the SVN side is being fixed.
+
+ * On MacOS X, we detected if the filesystem needs the "pre-composed
+   unicode strings" workaround, but did not automatically enable it.
+   Now we do.
+
+ * remote-hg remote helper misbehaved when interacting with a local Hg
+   repository relative to the home directory, e.g. "clone hg::~/there".
+
+ * imap-send ported to OS X uses Apple's security framework instead of
+   OpenSSL one.
+
+ * Subversion 1.8.0 that was recently released breaks older subversion
+   clients coming over http/https in various ways.
+
+ * "git fast-import" treats an empty path given to "ls" as the root of
+   the tree.
+
+
+UI, Workflows & Features
+
+ * "git grep" and "git show" pays attention to "--textconv" option
+   when these commands are told to operate on blob objects (e.g. "git
+   grep -e pattern HEAD:Makefile").
+
+ * "git replace" helper no longer allows an object to be replaced with
+   another object of a different type to avoid confusion (you can
+   still manually craft such replacement using "git update-ref", as an
+   escape hatch).
+
+ * "git status" no longer prints dirty status information for
+   submodules for which submodule.$name.ignore is set to "all".
+
+ * "git rebase -i" honours core.abbrev when preparing the insn sheet
+   for editing.
+
+ * "git status" during a cherry-pick shows what original commit is
+   being picked.
+
+ * Instead of typing four capital letters "HEAD", you can say "@" now,
+   e.g. "git log @".
+
+ * "git check-ignore" follows the same rule as "git add" and "git
+   status" in that the ignore/exclude mechanism does not take effect
+   on paths that are already tracked.  With "--no-index" option, it
+   can be used to diagnose which paths that should have been ignored
+   have been mistakenly added to the index.
+
+ * Some irrelevant "advice" messages that are shared with "git status"
+   output have been removed from the commit log template.
+
+ * "update-refs" learnt a "--stdin" option to read multiple update
+   requests and perform them in an all-or-none fashion.
+
+ * Just like "make -C <directory>", "git -C <directory> ..." tells Git
+   to go there before doing anything else.
+
+ * Just like "git checkout -" knows to check out and "git merge -"
+   knows to merge the branch you were previously on, "git cherry-pick"
+   now understands "git cherry-pick -" to pick from the previous
+   branch.
+
+ * "git status" now omits the prefix to make its output a comment in a
+   commit log editor, which is not necessary for human consumption.
+   Scripts that parse the output of "git status" are advised to use
+   "git status --porcelain" instead, as its format is stable and easier
+   to parse.
+
+ * Make "foo^{tag}" to peel a tag to itself, i.e. no-op., and fail if
+   "foo" is not a tag.  "git rev-parse --verify v1.0^{tag}" would be
+   a more convenient way to say "test $(git cat-file -t v1.0) = tag".
+
+ * "git branch -v -v" (and "git status") did not distinguish among a
+   branch that does not build on any other branch, a branch that is in
+   sync with the branch it builds on, and a branch that is configured
+   to build on some other branch that no longer exists.
+
+ * A packfile that stores the same object more than once is broken and
+   will be rejected by "git index-pack" that is run when receiving
+   data over the wire.
+
+ * Earlier we started rejecting an attempt to add 0{40} object name to
+   the index and to tree objects, but it sometimes is necessary to
+   allow so to be able to use tools like filter-branch to correct such
+   broken tree objects.  "filter-branch" can again be used to to do
+   so.
+
+ * "git config" did not provide a way to set or access numbers larger
+   than a native "int" on the platform; it now provides 64-bit signed
+   integers on all platforms.
+
+ * "git pull --rebase" always chose to do the bog-standard flattening
+   rebase.  You can tell it to run "rebase --preserve-merges" by
+   setting "pull.rebase" configuration to "preserve".
+
+ * "git push --no-thin" actually disables the "thin pack transfer"
+   optimization.
+
+ * Magic pathspecs like ":(icase)makefile" that matches both
+   Makefile and makefile can be used in more places.
+
+ * The "http.*" variables can now be specified per URL that the
+   configuration applies.  For example,
+
+   [http]
+       sslVerify = true
+   [http "https://weak.example.com/"]
+       sslVerify = false
+
+   would flip http.sslVerify off only when talking to that specified
+   site.
+
+ * "git mv A B" when moving a submodule A has been taught to
+   relocate its working tree and to adjust the paths in the
+   .gitmodules file.
+
+ * "git blame" can now take more than one -L option to discover the
+   origin of multiple blocks of the lines.
+
+ * The http transport clients can optionally ask to save cookies
+   with http.savecookies configuration variable.
+
+ * "git push" learned a more fine grained control over a blunt
+   "--force" when requesting a non-fast-forward update with the
+   "--force-with-lease=<refname>:<expected object name>" option.
+
+ * "git diff --diff-filter=<classes of changes>" can now take
+   lowercase letters (e.g. "--diff-filter=d") to mean "show
+   everything but these classes".  "git diff-files -q" is now a
+   deprecated synonym for "git diff-files --diff-filter=d".
+
+ * "git fetch" (hence "git pull" as well) learned to check
+   "fetch.prune" and "remote.*.prune" configuration variables and
+   to behave as if the "--prune" command line option was given.
+
+ * "git check-ignore -z" applied the NUL termination to both its input
+   (with --stdin) and its output, but "git check-attr -z" ignored the
+   option on the output side. Make both honor -z on the input and
+   output side the same way.
+
+ * "git whatchanged" may still be used by old timers, but mention of
+   it in documents meant for new users will only waste readers' time
+   wonderig what the difference is between it and "git log".  Make it
+   less prominent in the general part of the documentation and explain
+   that it is merely a "git log" with different default behaviour in
+   its own document.
+
+
+Performance, Internal Implementation, etc.
+
+ * The HTTP transport will try to use TCP keepalive when able.
+
+ * "git repack" is now written in C.
+
+ * Build procedure for MSVC has been updated.
+
+ * If a build-time fallback is set to "cat" instead of "less", we
+   should apply the same "no subprocess or pipe" optimization as we
+   apply to user-supplied GIT_PAGER=cat.
+
+ * Many commands use --dashed-option as a operation mode selector
+   (e.g. "git tag --delete") that the user can use at most one
+   (e.g. "git tag --delete --verify" is a nonsense) and you cannot
+   negate (e.g. "git tag --no-delete" is a nonsense).  parse-options
+   API learned a new OPT_CMDMODE macro to make it easier to implement
+   such a set of options.
+
+ * OPT_BOOLEAN() in parse-options API was misdesigned to be "counting
+   up" but many subcommands expect it to behave as "on/off". Update
+   them to use OPT_BOOL() which is a proper boolean.
+
+ * "git gc" exits early without doing a double-work when it detects
+   that another instance of itself is already running.
+
+ * Under memory pressure and/or file descriptor pressure, we used to
+   close pack windows that are not used and also closed filehandle to
+   an open but unused packfiles. These are now controlled separately
+   to better cope with the load.
+
+Also contains various documentation updates and code clean-ups.
+
+
+Fixes since v1.8.4
+------------------
+
+Unless otherwise noted, all the fixes since v1.8.4 in the maintenance
+track are contained in this release (see release notes to them for
+details).
+
+ * Coloring around octopus merges in "log --graph" output was screwy.
+   (merge 339c17b hn/log-graph-color-octopus later to maint).
+
+ * "git checkout topic", when there is not yet a local "topic" branch
+   but there is a unique remote-tracking branch for a remote "topic"
+   branch, pretended as if "git checkout -t -b topic remote/$r/topic"
+   (for that unique remote $r) was run. This hack however was not
+   implemented for "git checkout topic --".
+   (merge bca3969 mm/checkout-auto-track-fix later to maint).
+
+ * One long-standing flaw in the pack transfer protocol used by "git
+   clone" was that there was no way to tell the other end which branch
+   "HEAD" points at, and the receiving end needed to guess.  A new
+   capability has been defined in the pack protocol to convey this
+   information so that cloning from a repository with more than one
+   branches pointing at the same commit where the HEAD is at now
+   reliably sets the initial branch in the resulting repository.
+   (merge 360a326 jc/upload-pack-send-symref later to maint).
+
+ * We did not handle cases where http transport gets redirected during
+   the authorization request (e.g. from http:// to https://).
+   (merge 70900ed jk/http-auth-redirects later to maint).
+
+ * Bash prompting code to deal with an SVN remote as an upstream
+   were coded in a way not supported by older Bash versions (3.x).
+   (merge 52ec889 sg/prompt-svn-remote-fix later to maint).
+
+ * The fall-back parsing of commit objects with broken author or
+   committer lines were less robust than ideal in picking up the
+   timestamps.
+   (merge 03818a4 jk/split-broken-ident later to maint).
+
+ * "git rev-list --objects ^v1.0^ v1.0" gave v1.0 tag itself in the
+   output, but "git rev-list --objects v1.0^..v1.0" did not.
+   (merge 895c5ba jc/revision-range-unpeel later to maint).
+
+ * "git clone" gave some progress messages to the standard output, not
+   to the standard error, and did not allow suppressing them with the
+   --no-progress option.
+   (merge 643f918 jk/clone-progress-to-stderr later to maint).
+
+ * "format-patch --from=<whom>" forgot to omit unnecessary in-body
+   from line, i.e. when <whom> is the same as the real author.
+   (merge 662cc30 jk/format-patch-from later to maint).
+
+ * "git shortlog" used to choke and die when there is a malformed
+   commit (e.g. missing authors); it now simply ignore such a commit
+   and keeps going.
+   (merge cd4f09e jk/shortlog-tolerate-broken-commit later to maint).
+
+ * "git merge-recursive" did not parse its "--diff-algorithm=" command
+   line option correctly.
+   (merge 6562928 jk/diff-algo later to maint).
+
+ * When running "fetch -q", a long silence while the sender side
+   computes the set of objects to send can be mistaken by proxies as
+   dropped connection.  The server side has been taught to send a
+   small empty messages to keep the connection alive.
+   (merge 115dedd jk/upload-pack-keepalive later to maint).
+
+ * "git rebase" had a portability regression in v1.8.4 to trigger a
+   bug in some BSD shell implementations.
+   (merge 99855dd mm/rebase-continue-freebsd-WB later to maint).
+
+ * "git branch --track" had a minor regression in v1.8.3.2 and later
+   that made it impossible to base your local work on anything but a
+   local branch of the upstream repository you are tracking from.
+   (merge b0f49ff jh/checkout-auto-tracking later to maint).
+
+ * When the webserver responds with "405 Method Not Allowed", "git
+   http-backend" should tell the client what methods are allowed with
+   the "Allow" header.
+   (merge 9247be0 bc/http-backend-allow-405 later to maint).
+
+ * When there is no sufficient overlap between old and new history
+   during a "git fetch" into a shallow repository, objects that the
+   sending side knows the receiving end has were unnecessarily sent.
+   (merge f21d2a7 nd/fetch-into-shallow later to maint).
+
+ * "git cvsserver" computed the permission mode bits incorrectly for
+   executable files.
+   (merge 1b48d56 jc/cvsserver-perm-bit-fix later to maint).
+
+ * When send-email comes up with an error message to die with upon
+   failure to start an SSL session, it tried to read the error string
+   from a wrong place.
+   (merge 6cb0c88 bc/send-email-ssl-die-message-fix later to maint).
+
+ * The implementation of "add -i" has a crippling code to work around
+   ActiveState Perl limitation but it by mistake also triggered on Git
+   for Windows where MSYS perl is used.
+   (merge df17e77 js/add-i-mingw later to maint).
+
+ * We made sure that we notice the user-supplied GIT_DIR is actually a
+   gitfile, but did not do the same when the default ".git" is a
+   gitfile.
+   (merge 487a2b7 nd/git-dir-pointing-at-gitfile later to maint).
+
+ * When an object is not found after checking the packfiles and then
+   loose object directory, read_sha1_file() re-checks the packfiles to
+   prevent racing with a concurrent repacker; teach the same logic to
+   has_sha1_file().
+   (merge 45e8a74 jk/has-sha1-file-retry-packed later to maint).
+
+ * "git commit --author=$name", when $name is not in the canonical
+   "A. U. Thor <au.thor@example.xz>" format, looks for a matching name
+   from existing history, but did not consult mailmap to grab the
+   preferred author name.
+   (merge ea16794 ap/commit-author-mailmap later to maint).
+
+ * "git ls-files -k" needs to crawl only the part of the working tree
+   that may overlap the paths in the index to find killed files, but
+   shared code with the logic to find all the untracked files, which
+   made it unnecessarily inefficient.
+   (merge 680be04 jc/ls-files-killed-optim later to maint).
+
+ * The commit object names in the insn sheet that was prepared at the
+   beginning of "rebase -i" session can become ambiguous as the
+   rebasing progresses and the repository gains more commits. Make
+   sure the internal record is kept with full 40-hex object names.
+   (merge 75c6976 es/rebase-i-no-abbrev later to maint).
+
+ * "git rebase --preserve-merges" internally used the merge machinery
+   and as a side effect, left merge summary message in the log, but
+   when rebasing, there should not be a need for merge summary.
+   (merge a9f739c rt/rebase-p-no-merge-summary later to maint).
+
+ * A call to xread() was used without a loop around to cope with short
+   read in the codepath to stream new contents to a pack.
+   (merge e92527c js/xread-in-full later to maint).
+
+ * "git rebase -i" forgot that the comment character can be
+   configurable while reading its insn sheet.
+   (merge 7bca7af es/rebase-i-respect-core-commentchar later to maint).
+
+ * The mailmap support code read past the allocated buffer when the
+   mailmap file ended with an incomplete line.
+   (merge f972a16 jk/mailmap-incomplete-line later to maint).
+
+ * We used to send a large request to read(2)/write(2) as a single
+   system call, which was bad from the latency point of view when
+   the operation needs to be killed, and also triggered an error on
+   broken 64-bit systems that refuse to take more than 2GB read or
+   write in one go.
+   (merge a487916 sp/clip-read-write-to-8mb later to maint).
+
+ * "git fetch" that auto-followed tags incorrectly reused the
+   connection with Git-aware transport helper (like the sample "ext::"
+   helper shipped with Git).
+   (merge 0f73f8b jc/transport-do-not-use-connect-twice-in-fetch later to maint).
+
+ * "git log --full-diff -- <pathspec>" showed a huge diff for paths
+   outside the given <pathspec> for each commit, instead of showing
+   the change relative to the parent of the commit.  "git reflog -p"
+   had a similar problem.
+   (merge 838f9a1 tr/log-full-diff-keep-true-parents later to maint).
+
+ * Setting submodule.*.path configuration variable to true (without
+   giving "= value") caused Git to segfault.
+   (merge 4b05440 jl/some-submodule-config-are-not-boolean later to maint).
+
+ * "git rebase -i" (there could be others, as the root cause is pretty
+   generic) fed a random, data dependeant string to 'echo' and
+   expects it to come out literally, corrupting its error message.
+   (merge 89b0230 mm/no-shell-escape-in-die-message later to maint).
+
+ * Some people still use rather old versions of bash, which cannot
+   grok some constructs like 'printf -v varname' the prompt and
+   completion code started to use recently.
+   (merge a44aa69 bc/completion-for-bash-3.0 later to maint).
+
+ * Code to read configuration from a blob object did not compile on
+   platforms with fgetc() etc. implemented as macros.
+   (merge 49d6cfa hv/config-from-blob later to maint-1.8.3).
+
+ * The recent "short-cut clone connectivity check" topic broke a
+   shallow repository when a fetch operation tries to auto-follow tags.
+   (merge 6da8bdc nd/fetch-pack-shallow-fix later to maint-1.8.3).
