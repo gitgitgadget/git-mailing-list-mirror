@@ -1,80 +1,106 @@
-From: Thomas Rast <tr@thomasrast.ch>
-Subject: Re: [PATCH] Add option --no-tags
-Date: Wed, 30 Oct 2013 16:06:56 +0100
-Message-ID: <87ob66g5m7.fsf@linux-k42r.v.cablecom.net>
-References: <CAMXp-VP9DDJ-L=e=7=-bO+ZFVRMVz-PAs0gGv8Q7RrZ-OWof9Q@mail.gmail.com>
+From: =?UTF-8?B?SmFrdWIgTmFyxJlic2tp?= <jnareb@gmail.com>
+Subject: Re: Limiting disk usage
+Date: Wed, 30 Oct 2013 16:39:02 +0100
+Message-ID: <52712816.9010600@gmail.com>
+References: <0a4899b7-f75f-4016-9c99-5e6e3fb9603c@email.android.com> <vpqob68ebcu.fsf@anie.imag.fr> <CAA01Cso+yTzatiAaQahx5h2N0nnOON7FsnWNSYrN-pV=8qzn7g@mail.gmail.com> <526FCA13.4090902@gmail.com> <CAA01Cso8J+BBgskoRtxkPRrtM4KJ1O2FhcB4uh+QB2Dr=DZGyQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Nicolas Cornu <ncornu@aldebaran-robotics.com>
-X-From: git-owner@vger.kernel.org Wed Oct 30 16:07:21 2013
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Git Mailing List <git@vger.kernel.org>
+To: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 30 16:39:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VbXMe-0001Aw-EY
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Oct 2013 16:07:20 +0100
+	id 1VbXrY-0004Ep-4b
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Oct 2013 16:39:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754211Ab3J3PHN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Oct 2013 11:07:13 -0400
-Received: from psi.thgersdorf.net ([176.9.98.78]:59477 "EHLO mail.psioc.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753060Ab3J3PHM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Oct 2013 11:07:12 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by localhost.psioc.net (Postfix) with ESMTP id AD95C4D6516;
-	Wed, 30 Oct 2013 16:07:11 +0100 (CET)
-X-Virus-Scanned: amavisd-new at psioc.net
-Received: from mail.psioc.net ([127.0.0.1])
-	by localhost (mail.psioc.net [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 5y-ThSkibzSv; Wed, 30 Oct 2013 16:07:00 +0100 (CET)
-Received: from linux-k42r.v.cablecom.net.thomasrast.ch (unknown [213.55.176.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(Client did not present a certificate)
-	by mail.psioc.net (Postfix) with ESMTPSA id 732794D6414;
-	Wed, 30 Oct 2013 16:06:59 +0100 (CET)
-In-Reply-To: <CAMXp-VP9DDJ-L=e=7=-bO+ZFVRMVz-PAs0gGv8Q7RrZ-OWof9Q@mail.gmail.com>
-	(Nicolas Cornu's message of "Tue, 29 Oct 2013 11:44:06 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+	id S1752120Ab3J3PjK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 30 Oct 2013 11:39:10 -0400
+Received: from dovecot.mat.uni.torun.pl ([158.75.2.81]:26079 "EHLO
+	dovecot.mat.uni.torun.pl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752018Ab3J3PjJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Oct 2013 11:39:09 -0400
+Received: from dovecot.mat.uni.torun.pl (localhost.localdomain [127.0.0.1])
+	by dovecot.mat.uni.torun.pl (Postfix) with ESMTP id 42450B71799;
+	Wed, 30 Oct 2013 16:39:07 +0100 (CET)
+X-Virus-Scanned: amavisd-new at mat.uni.torun.pl
+Received: from dovecot.mat.uni.torun.pl ([127.0.0.1])
+	by dovecot.mat.uni.torun.pl (dovecot2.mat.uni.torun.pl [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id zxQmbOn7td2T; Wed, 30 Oct 2013 16:39:05 +0100 (CET)
+Received: from [158.75.2.83] (unknown [158.75.2.83])
+	(using TLSv1 with cipher DHE-RSA-CAMELLIA256-SHA (256/256 bits))
+	(No client certificate requested)
+	(Authenticated sender: jnareb)
+	by dovecot.mat.uni.torun.pl (Postfix) with ESMTPSA id C41EEB71793;
+	Wed, 30 Oct 2013 16:39:04 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
+Newsgroups: gmane.comp.version-control.git
+In-Reply-To: <CAA01Cso8J+BBgskoRtxkPRrtM4KJ1O2FhcB4uh+QB2Dr=DZGyQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237023>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237024>
 
-Nicolas Cornu <ncornu@aldebaran-robotics.com> writes:
+On 2013-10-30 08:44, Piotr Krukowiecki wrote:
+> On Tue, Oct 29, 2013 at 3:45 PM, Jakub Nar=C4=99bski<jnareb@gmail.com=
+>  wrote:
+>> On 2013-10-29 14:50, Piotr Krukowiecki wrote:
 
-> From 1cbc2c49454581a67cce09ada1386dac4ffa2828 Mon Sep 17 00:00:00 2001
-> From: Nicolas Cornu <ncornu@aldebaran-robotics.com>
-> Date: Tue, 29 Oct 2013 11:31:10 +0100
-> Subject: [PATCH] Add option --no-tags
+>> If they are independent projects, they should get independent reposi=
+tories;
+>> you can stitch them back together using git-submodule (or git-subtre=
+e).
+>> reposurgeon can hel you with that.
 >
-> ---
->  gitk-git/gitk | 13 ++++++++++---
->  1 file changed, 10 insertions(+), 3 deletions(-)
+> They are not totally independent projects (nor totally dependent).
+> Normally you want them all, you want to create a branch/tag on all of
+> them, if new directory is created you want to automatically have it
+> too etc. But there are use cases when you need only some of them and
+> then they can be seen as independent .
+>
+> git-submodule have several disadvantages for my use:
+> - does not track branches (you have to specify hardcoded SHA1 instead
+> of a branch name)
+> - additional complexity / command layer (you have to do things like
+> "submodule init", "submodule update")
+> - you can't simply work on all submodules (you can't simply branch,
+> merge, commit, log, diff, etc in all submodules using one command in
+> top-level project)
 
-This patch suffers from the same problems as the one for the horizontal
-scroll bar.  In particular the commit message should (from
-Documentation/SubmittingPatches):
+git-submodule was created (I think) to manage loosely coupled fairly
+independent projects, where you need nevertheless to ensure that
+both work together (so you use specific version of subproject for
+a given version of superproject).  It looks like this is not what
+you have.
 
-  . [explain] the problem the change tries to solve, iow, what is wrong
-    with the current code without the change.
+ From time to time you can find there ideas about adding "floating"
+mode to git-submodule, but as far as I know up till now without
+effect...
 
-  . [justify] the way the change solves the problem, iow, why the
-    result with the change is better.
+> git-subtree looks much better in that regard, but for example it need=
+s
+> an explicit prefix (name of "subproject") on which it operates. So yo=
+u
+> can't say "update everything" or "commit everything" etc. With
+> hundreds of subprojects you need another layer to automate this...
 
-  . [describe] alternate solutions considered but discarded, if any.
+git-subtree is about helping merging / embedding (or re-embedding)
+of subproject history in superproject history, and extracting subprojec=
+t=20
+history from superproject history.  But embedded subproject is just=20
+subdirectory to git.  It looks like it isn't what you want.
 
+There are many projects[1] that try to solve problem of managing=20
+interdependent repositories, e.g.: gitslave, repo, fgit.  Maybe one
+of them would be good fit for your problem.
 
-On the change itself: from a brief glance it seems you are trying to
-hide the tags shown alongside commits (presumably because there are too
-many).
+[1]: https://git.wiki.kernel.org/index.php/InterfacesFrontendsAndTools
 
-However we already have one feature in a similar vein: the tickbox "Hide
-remote refs" in Edit->Preferences.  Shouldn't your feature go alongside
-it, and be configured in the same way?
-
--- 
-Thomas Rast
-tr@thomasrast.ch
+--=20
+Jakub Nar=C4=99bski
