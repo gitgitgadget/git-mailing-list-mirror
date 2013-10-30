@@ -1,69 +1,56 @@
-From: lists@haller-berlin.de (Stefan Haller)
-Subject: Re: Show patch in gitk --first-parent ?
-Date: Wed, 30 Oct 2013 15:30:27 +0100
-Message-ID: <1lbk7r8.1khd6h5pbrifuM%lists@haller-berlin.de>
-References: <CAFAOj7p49pQo=hXZT3TmMFF+KThKY-PZ2cgsZasH=e8rgjri1A@mail.gmail.com>
-Cc: paulus@samba.org (Paul Mackerras),
-	jrnieder@gmail.com (Jonathan Nieder)
-To: kha@treskal.com (Karl Wiberg),
-	git@vger.kernel.org (Git Mailing List)
-X-From: git-owner@vger.kernel.org Wed Oct 30 15:37:14 2013
+From: Marc Branchaud <marcnarc@xiplink.com>
+Subject: Re: [PATCH v2] gitk: Add a horizontal scrollbar for commit history
+Date: Wed, 30 Oct 2013 10:46:11 -0400
+Message-ID: <52711BB3.9040004@xiplink.com>
+References: <1383130702-4966-1-git-send-email-ncornu@aldebaran-robotics.com>	<5270F4FC.60900@viscovery.net> <CAMXp-VMku0eSQmmbdy-NQDedH4VSgZN5XmpTeBHvN8qX1=ersg@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, paulus@samba.org
+To: Nicolas Cornu <ncornu@aldebaran-robotics.com>,
+	Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Wed Oct 30 15:45:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VbWtT-0007BM-QM
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Oct 2013 15:37:12 +0100
+	id 1VbX1u-0001tP-NN
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Oct 2013 15:45:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754517Ab3J3OhG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Oct 2013 10:37:06 -0400
-Received: from server90.greatnet.de ([83.133.96.186]:59781 "EHLO
-	server90.greatnet.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754291Ab3J3OhF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Oct 2013 10:37:05 -0400
-X-Greylist: delayed 397 seconds by postgrey-1.27 at vger.kernel.org; Wed, 30 Oct 2013 10:37:05 EDT
-Received: from [10.1.12.84] (nat1.ableton.net [217.110.199.117])
-	by server90.greatnet.de (Postfix) with ESMTPA id 5C0F1DD20D;
-	Wed, 30 Oct 2013 15:30:25 +0100 (CET)
-In-Reply-To: <CAFAOj7p49pQo=hXZT3TmMFF+KThKY-PZ2cgsZasH=e8rgjri1A@mail.gmail.com>
-User-Agent: MacSOUP/2.8.4 (Mac OS X version 10.9 (x86))
+	id S1754491Ab3J3Opr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Oct 2013 10:45:47 -0400
+Received: from smtp130.ord.emailsrvr.com ([173.203.6.130]:51188 "EHLO
+	smtp130.ord.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752640Ab3J3Opr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Oct 2013 10:45:47 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by smtp29.relay.ord1a.emailsrvr.com (SMTP Server) with ESMTP id 84B35108477;
+	Wed, 30 Oct 2013 10:45:46 -0400 (EDT)
+X-Virus-Scanned: OK
+Received: by smtp29.relay.ord1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 401741083E0;
+	Wed, 30 Oct 2013 10:45:46 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.0
+In-Reply-To: <CAMXp-VMku0eSQmmbdy-NQDedH4VSgZN5XmpTeBHvN8qX1=ersg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237018>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237019>
 
-Karl Wiberg <kha@treskal.com> wrote:
+On 13-10-30 08:47 AM, Nicolas Cornu wrote:
+> This is useful on all our repos, every times, as we put a tag per day.
+> If the HEAD didn't move during 150 days, we got 150 tags.
+> So, it depends, maybe can I put it as an option in Edit > Preferences?
 
-> With "gitk --first-parent", I get a graph that only follows the first
-> parent of every merge---perfect if you always merge topic branches
-> into the main branch. However, the diff shown is still the normal
-> merge diff, and not the diff between the new tree and the first
-> parent's tree---is it possible to make it do that instead?
+Eek, even with a scrollbar, 150 tags seems like a lot to pan over.
 
-I once posted a patch that adds a "First parent" checkbox to gitk's
-window: <http://comments.gmane.org/gmane.comp.version-control.git/160920>
+I've often thought it would be good for gitk to combine multiple ref names
+into some kind of dropdown or view-on-hover list.  (I don't know anything
+about Tcl/Tk, so I don't know what's feasible.)  So if a commit has more than
+a couple of branches (and/or tags), only show the first branch name along
+with a glyph indicating that there are more, and let the user click on (or
+hover over) that glyph to see all the branches (or tags -- that is, still
+keep the tags and branches displayed separately).
 
-The patch no longer applies today, but I can send an updated version that
-does, if there's interest.
-
-The topic didn't go anywhere for two reasons:
-
-1) There's the confusion about history traversal option (the existing
---first-parent command-line option) versus diff option (the new check
-box); they have similar names, but control different things (and it
-should be possible to control these independently).
-
-2) Space is short in the diff pane; you need to make the window rather
-wide to see them all.
-
-I didn't have the energy to drive these to a resolution back then; if you
-could do that, it would be great. Personally I'm using my own gitk with
-my patch applied, and I do use the "First parent" checkbox rather often.
-
-
--- 
-Stefan Haller
-Berlin, Germany
-http://www.haller-berlin.de/
+		M.
