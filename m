@@ -1,98 +1,75 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v2 12/23] query_refspecs(): move some constants out of
- the loop
-Date: Wed, 30 Oct 2013 18:31:20 +0100
-Message-ID: <52714268.5010608@alum.mit.edu>
-References: <1383111192-23780-1-git-send-email-mhagger@alum.mit.edu> <1383111192-23780-13-git-send-email-mhagger@alum.mit.edu> <CALkWK0m-qNcCe_Zmn6PeN91JEM-7Ki0F0b0Fp+1bhQTWdmR7EA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] for-each-ref: avoid loading objects to print %(objectname)
+Date: Wed, 30 Oct 2013 10:34:40 -0700
+Message-ID: <xmqqa9hqd5n3.fsf@gitster.dls.corp.google.com>
+References: <20131024084638.GA761@sigill.intra.peff.net>
+	<877gd0pgze.fsf@linux-k42r.v.cablecom.net>
+	<20131030065016.GB11317@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-	=?UTF-8?B?Q2FybG9zIE1hcnTDrW4gTmlldG8=?= <cmn@elego.de>,
-	Michael Schubert <mschub@elegosoft.com>,
-	Johan Herland <johan@herland.net>, Jeff King <peff@peff.net>,
-	Marc Branchaud <marcnarc@xiplink.com>,
-	Nicolas Pitre <nico@fluxnic.net>,
-	John Szakmeister <john@szakmeister.net>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 30 18:31:32 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Thomas Rast <tr@thomasrast.ch>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Oct 30 18:34:49 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VbZcB-0003xL-RT
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Oct 2013 18:31:32 +0100
+	id 1VbZfN-00056k-AL
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Oct 2013 18:34:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752693Ab3J3Rb2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Oct 2013 13:31:28 -0400
-Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:53806 "EHLO
-	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751630Ab3J3Rb1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 30 Oct 2013 13:31:27 -0400
-X-AuditID: 12074412-b7fc96d0000023d5-d7-5271426e6463
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id 30.1A.09173.E6241725; Wed, 30 Oct 2013 13:31:26 -0400 (EDT)
-Received: from [192.168.69.9] (p57A242F8.dip0.t-ipconnect.de [87.162.66.248])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r9UHVKBk011688
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 30 Oct 2013 13:31:22 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.0
-In-Reply-To: <CALkWK0m-qNcCe_Zmn6PeN91JEM-7Ki0F0b0Fp+1bhQTWdmR7EA@mail.gmail.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA02Se0hTYRjG+3aOZ5/TE6ej5ucSzVnYhdmFiAPFutAfR4ToYv8IYWfu5Ebb
-	UXe2aBEhU7vMzSIMdcWwIqEJGXazGDpmdJEk08oSlEBdagWBZoUJnU/z8t/D+zzP++Pj/SDB
-	DsZooUVyiHZJsOooDcmq92Xopb2lhzZfmlrPBeuH1Fytp4nkPO+qVFyZ7x3BBQaeqrhgfyPB
-	3an7CLiRiy4uMDpKcb8rvMRuDd9zd0zFR/7WqPnoy/MU/8Q/oOZ7xn5RfNQXAvzbnky+ruIr
-	yU+0pPHh3iHqgCY/bqdRcJw8bCmSNhmOxZl7/l6gSsJxp6LnakEZaIQeACFitqHOznQPiFXk
-	StQ92Ex5gAayTC9AgZEZChss06VCLTfzsKaZjWhi8hGJNcmsRT6fT401xejRTW+5CuskJg/d
-	CL5Qz+VXoFf1wyRmJSqZaDAXjwmmmkDRmWysE5gjyN/f+p/bAdDtP5Wze2KZg2jQXR6DuwST
-	hZoD7Fw3HT3+fp24DBj/EoJ/MeVfkmoARBCkCVanTW8TLFZZLNTLhYIkiXb99mybxZEtmpwt
-	YO4+bCtofpUWAQwEunh6mb70EBsjnJRdtghIgSpdEn12lzJabiw2ucyCbC6wO62iHAEIErpE
-	OneP4tEmwXVatBfPW6sgqUum/9zK2s8yRYJDPCGKJaJ93k2FUIfob7i4wi4WiaeOW6yORVsF
-	Y/FyjTZRFiWTaBecDnMBvmiBrJwUW/EKt2uWK5cINmU6V+0EehiY/DEFWFIqlkRtMn0Phxgc
-	MjulBcT8txwHycqLE+hunIpXPu3CpnEFolIgIVLCEIewaGnLwIkHwSpv9YMLz/Py 
+	id S1751854Ab3J3Rep (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Oct 2013 13:34:45 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61912 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751055Ab3J3Rep (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Oct 2013 13:34:45 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8FDA24DDA5;
+	Wed, 30 Oct 2013 13:34:44 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=TsdzPwQaj4sFL8wUAtJb9TK5bfs=; b=MTSFj2
+	cfQRdKKCr5vl2So6v5q17Q9ej035IwfSgCQlBOXzGWvgEsMEp7CZ+27pMMiIbeHv
+	6xx7LXda+XO9q45TRhRyshX0FdRQksWiXdy8/7fi+SGbrqmbnaLBHNV7H+6qqKTD
+	ec2KBGit7u5jRPP3boryq7/hcuenk8144d7so=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=vWSocwSSiAkBUJh2TwiU5mnY5O9RH8RC
+	vo1QgJ4SOp9IAMtAKjST5LgE1SKDsVKacoXUAmuQl8KNAMrg9oOvqBPAWPuT/7bl
+	ITE3W2MgTn4Eb56WMTT9svdqZqBIvexGr42fe/swRzSjKC1RqtE/HzgJTGTJ5lhD
+	4+jSrck4ln8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 82A604DDA4;
+	Wed, 30 Oct 2013 13:34:44 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CCD244DDA3;
+	Wed, 30 Oct 2013 13:34:43 -0400 (EDT)
+In-Reply-To: <20131030065016.GB11317@sigill.intra.peff.net> (Jeff King's
+	message of "Wed, 30 Oct 2013 02:50:16 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 904C69B4-4189-11E3-A5D5-1FFB7F2839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237042>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237043>
 
-On 10/30/2013 12:05 PM, Ramkumar Ramachandra wrote:
-> Michael Haggerty wrote:
->> diff --git a/remote.c b/remote.c
->> index e42daa8..a5e6c7f 100644
->> --- a/remote.c
->> +++ b/remote.c
->> @@ -825,6 +825,8 @@ static int query_refspecs(struct refspec *refs, int ref_count, struct refspec *q
->>  {
->>         int i;
->>         int find_src = !query->src;
->> +       const char *needle = find_src ? query->dst : query->src;
->> +       char **result = find_src ? &query->src : &query->dst;
->>
->>         if (find_src && !query->dst)
->>                 return error("query_refspecs: need either src or dst");
->> @@ -833,8 +835,6 @@ static int query_refspecs(struct refspec *refs, int ref_count, struct refspec *q
->>                 struct refspec *refspec = &refs[i];
->>                 const char *key = find_src ? refspec->dst : refspec->src;
->>                 const char *value = find_src ? refspec->src : refspec->dst;
->> -               const char *needle = find_src ? query->dst : query->src;
->> -               char **result = find_src ? &query->src : &query->dst;
->>
->>                 if (!refspec->dst)
->>                         continue;
-> 
-> Why? Is it used in some later patch?
+Jeff King <peff@peff.net> writes:
 
-It's just improving the code hygiene in a function that I was reading to
-understand the other code affected by the patches.  It's unrelated to
-the other patches.
+> On Sat, Oct 26, 2013 at 10:35:17AM +0200, Thomas Rast wrote:
+> ...
+>> Can you quote the *?  I may have become somewhat paranoid, but still.
+>> This is the first use of the *<field> syntax, and test_atom seems
+>> written to correctly quote its arguments, so why risk it? :-)
+>
+> Yeah, that is a very reasonable suggestion. And the patch is still in
+> pu, so it's not too late to squash.
+>
+> Junio, here is a resend with the asterisks quoted, to replace what's in
+> jk/for-each-ref-skip-parsing.  I also double-checked that test_atom
+> keeps them properly quoted (it does).
 
-Michael
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+Thanks, both, for being careful.
