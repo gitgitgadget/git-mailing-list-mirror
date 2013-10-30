@@ -1,105 +1,128 @@
-From: Thomas Rast <tr@thomasrast.ch>
-Subject: Re: [PATCH] Add a scrollbar for commit history in gitk
-Date: Wed, 30 Oct 2013 07:35:01 +0100
-Message-ID: <87fvrjgtbe.fsf@linux-k42r.v.cablecom.net>
-References: <CAMXp-VN=CMRdXwJ3+LRZegm-bwiDmJd66-YnZb65BNpqyHQCLA@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH V3] git clone: is an URL local or ssh
+Date: Wed, 30 Oct 2013 02:42:31 -0400
+Message-ID: <20131030064231.GA11317@sigill.intra.peff.net>
+References: <201310292207.50869.tboegi@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Nicolas Cornu <ncornu@aldebaran-robotics.com>
-X-From: git-owner@vger.kernel.org Wed Oct 30 07:35:13 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, sunshine@sunshineco.com, pclouds@gmail.com
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Wed Oct 30 07:42:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VbPN2-0001Vd-TX
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Oct 2013 07:35:13 +0100
+	id 1VbPUF-0003Eo-AW
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Oct 2013 07:42:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751741Ab3J3GfG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Oct 2013 02:35:06 -0400
-Received: from psi.thgersdorf.net ([176.9.98.78]:58547 "EHLO mail.psioc.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751552Ab3J3GfF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Oct 2013 02:35:05 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by localhost.psioc.net (Postfix) with ESMTP id 6840F4D6516;
-	Wed, 30 Oct 2013 07:35:03 +0100 (CET)
-X-Virus-Scanned: amavisd-new at psioc.net
-Received: from mail.psioc.net ([127.0.0.1])
-	by localhost (mail.psioc.net [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id B2ymaVCGxIyU; Wed, 30 Oct 2013 07:35:01 +0100 (CET)
-Received: from linux-k42r.v.cablecom.net.thomasrast.ch (vpn-global-dhcp2-62.ethz.ch [129.132.209.62])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(Client did not present a certificate)
-	by mail.psioc.net (Postfix) with ESMTPSA id ACA7A4D6414;
-	Wed, 30 Oct 2013 07:35:01 +0100 (CET)
-In-Reply-To: <CAMXp-VN=CMRdXwJ3+LRZegm-bwiDmJd66-YnZb65BNpqyHQCLA@mail.gmail.com>
-	(Nicolas Cornu's message of "Tue, 29 Oct 2013 14:53:23 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+	id S1752619Ab3J3Gmf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 30 Oct 2013 02:42:35 -0400
+Received: from cloud.peff.net ([50.56.180.127]:58215 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752111Ab3J3Gme (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Oct 2013 02:42:34 -0400
+Received: (qmail 13603 invoked by uid 102); 30 Oct 2013 06:42:34 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 30 Oct 2013 01:42:34 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 30 Oct 2013 02:42:31 -0400
+Content-Disposition: inline
+In-Reply-To: <201310292207.50869.tboegi@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236985>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236986>
 
-Hi Nicolas,
+On Tue, Oct 29, 2013 at 10:07:50PM +0100, Torsten B=C3=B6gershausen wro=
+te:
 
-Thanks for your patch.
+>  Changes since V2:
+>  clear_ssh and expect_ssh did come back
+>  And I couldn't get it working without the
+>  >"$TRASH_DIRECTORY/ssh-output"
 
-You should Cc Paul Mackerras <paulus@samba.org> on gitk patches.
+Thanks.
 
-Nicolas Cornu <ncornu@aldebaran-robotics.com> writes:
+>  test_when_finished:
+>  I could not get that to work. Probably because of the
+>  battle between the quotings: '"' "'" '"'
 
-> From b3570290bd761a1bf952ea491fa62b123231fe61 Mon Sep 17 00:00:00 2001
-> From: Nicolas Cornu <ncornu@aldebaran-robotics.com>
-> Date: Tue, 29 Oct 2013 14:51:29 +0100
-> Subject: [PATCH] Add a scrollbar for commit history in gitk
+The quoting should be straight-forward, since you can do it in
+expect_ssh, outside of the regular test eval. But what is tricky is tha=
+t
+you do not actually want "ssh-output" to disappear, but rather you want
+it to be an empty file, so that tests which do not trigger ssh can
+compare against it using test_cmp.
 
-You don't need these headers, they'll be taken from the email.  You only
-need to put them if they don't agree (e.g., you are sending someone
-else's patch).
+The patch below makes it work, but I'm thinking that it does not
+actually improve readability. While the "clear_ssh" call is something
+each test needs to remember, at least it is obvious there that the test
+is clearing the state before running the clone.
 
-Can you describe your patch in more detail, and spin a commit message
-from it?  My first reaction to "Add a scrollbar for commit history in
-gitk" is "there *is* a scrollbar".
+>  Other note about test_might_fail:
+>  The first version did not need it, git clone did
+>  always succeed.
+>  After a while it always failed.
+>  According to my understanding, git clone ssh://xxx.yy
+>  should fail (as we can not clone) ??
 
-The code hints that the scrollbar may be horizontal?  Is this worth the
-vertical space it spends?  Should it be optional?  The commit message
-should address these questions.
+Cloning over ssh via our fake wrapper should work, as the wrapper finds
+the shell command and execs it.  So ssh://host/path should end up
+running:
 
-> ---
->  gitk-git/gitk | 8 +++++++-
+  ssh host 'git-upload-pack path'
 
-You should eventually base your patch against the gitk.git repository,
-which does not have the toplevel gitk-git/ prefix.
+and the ssh wrapper converts that to:
 
->  1 file changed, 7 insertions(+), 1 deletion(-)
->
-> diff --git a/gitk-git/gitk b/gitk-git/gitk
-> index d6f5e07..e517253 100755
-> --- a/gitk-git/gitk
-> +++ b/gitk-git/gitk
-> @@ -2124,11 +2124,17 @@ proc makewindow {} {
->      # create three canvases
->      set cscroll .tf.histframe.csb
->      set canv .tf.histframe.pwclist.canv
-> +    set cscrollhl .tf.histframe.pwclist.canv.csb
->      canvas $canv \
->      -selectbackground $selectbgcolor \
->      -background $bgcolor -bd 0 \
-> -    -yscrollincr $linespc -yscrollcommand "scrollcanv $cscroll"
-> +    -yscrollincr $linespc -yscrollcommand "scrollcanv $cscroll" \
-> +    -xscrollcommand "scrollcanv $cscrollhl"
->      .tf.histframe.pwclist add $canv
-> +    ${NS}::scrollbar $cscrollhl -command {$canv xview} -orient horizontal
-> +    if {!$use_ttk} {$cscrollhl configure -highlightthickness 0}
-> +    pack $cscrollhl -fill x -side bottom
-> +
->      set canv2 .tf.histframe.pwclist.canv2
->      canvas $canv2 \
->      -selectbackground $selectbgcolor \
+  git-upload-pack path
 
--- 
-Thomas Rast
-tr@thomasrast.ch
+If we want to make it more robust, we could cd into a "hosts/$host"
+directory that simulates the remote host, but I don't know if that is
+necessary.
+
+---
+This is the test_when_finished patch.
+
+diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
+index 7db7f48..05afe5a 100755
+--- a/t/t5601-clone.sh
++++ b/t/t5601-clone.sh
+@@ -291,14 +291,14 @@ test_expect_success 'setup ssh wrapper' '
+=20
+ 	GIT_SSH=3D"$TRASH_DIRECTORY/ssh-wrapper" &&
+ 	export GIT_SSH &&
+-	export TRASH_DIRECTORY
++	export TRASH_DIRECTORY &&
++	>"$TRASH_DIRECTORY"/ssh-output
+ '
+=20
+-clear_ssh () {
+-	>"$TRASH_DIRECTORY/ssh-output"
+-}
+-
+ expect_ssh () {
++	test_when_finished '
++	  (cd "$TRASH_DIRECTORY" && rm -f ssh-expect && >ssh-output)
++	' &&
+ 	{
+ 		case "$1" in
+ 		none)
+@@ -311,7 +311,6 @@ expect_ssh () {
+ }
+=20
+ test_expect_success NOT_MINGW,NOT_CYGWIN 'clone local path foo:bar' '
+-	clear_ssh &&
+ 	cp -R src "foo:bar" &&
+ 	git clone "foo:bar" foobar &&
+ 	expect_ssh none
+@@ -323,7 +322,6 @@ counter=3D0
+ # $3 path
+ test_clone_url () {
+ 	counter=3D$(($counter + 1))
+-	clear_ssh &&
+ 	test_might_fail git clone "$1" tmp$counter &&
+ 	expect_ssh "$2" "$3"
+ }
