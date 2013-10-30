@@ -1,84 +1,185 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 10/19] pack-bitmap: add support for bitmap indexes
-Date: Wed, 30 Oct 2013 16:25:43 -0400
-Message-ID: <20131030202542.GD23011@sigill.intra.peff.net>
-References: <20131024175915.GA23398@sigill.intra.peff.net>
- <20131024180357.GJ24180@sigill.intra.peff.net>
- <CAJo=hJvw-UNWVDADcGzA1P3GGOKJGh8h4LrETPYnjBNYmfkxjQ@mail.gmail.com>
- <20131030081023.GK11317@sigill.intra.peff.net>
- <CAFFjANQyMfV4M_wynPORfN2S1=eAdBxScgNYzD_dsRmKekp83Q@mail.gmail.com>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: What's cooking in git.git (Oct 2013, #07; Mon, 28)
+Date: Wed, 30 Oct 2013 21:30:16 +0100
+Message-ID: <52716C58.3090507@web.de>
+References: <xmqqr4b5dwke.fsf@gitster.dls.corp.google.com> <5271392E.8020003@web.de> <CAFFjANT=-mQoKUU2KsPHo3Hcq7RAuyM1t4kvJu4OfiNeHrA+Ng@mail.gmail.com> <52713E67.3000202@web.de> <527158AF.3070204@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Shawn Pearce <spearce@spearce.org>, git <git@vger.kernel.org>
-To: Vicent Marti <vicent@github.com>
-X-From: git-owner@vger.kernel.org Wed Oct 30 21:27:06 2013
+Cc: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	=?UTF-8?B?VG9yc3RlbiBCw7Zn?= =?UTF-8?B?ZXJzaGF1c2Vu?= 
+	<tboegi@web.de>,
+	=?UTF-8?B?VmljZW50IE1hcnTDrQ==?= <tanoku@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 30 21:30:24 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VbcM6-0006tb-4y
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Oct 2013 21:27:06 +0100
+	id 1VbcPI-0008OU-HP
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Oct 2013 21:30:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755228Ab3J3U07 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 30 Oct 2013 16:26:59 -0400
-Received: from cloud.peff.net ([50.56.180.127]:58753 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755106Ab3J3UZp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Oct 2013 16:25:45 -0400
-Received: (qmail 21810 invoked by uid 102); 30 Oct 2013 20:25:45 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 30 Oct 2013 15:25:45 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 30 Oct 2013 16:25:43 -0400
-Content-Disposition: inline
-In-Reply-To: <CAFFjANQyMfV4M_wynPORfN2S1=eAdBxScgNYzD_dsRmKekp83Q@mail.gmail.com>
+	id S1752983Ab3J3UaT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 30 Oct 2013 16:30:19 -0400
+Received: from mout.web.de ([212.227.15.4]:53997 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752554Ab3J3UaR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Oct 2013 16:30:17 -0400
+Received: from [192.168.209.26] ([78.72.74.102]) by smtp.web.de (mrweb103)
+ with ESMTPA (Nemesis) id 0M2571-1Vvkv5037D-00u20x for <git@vger.kernel.org>;
+ Wed, 30 Oct 2013 21:30:16 +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:24.0) Gecko/20100101 Thunderbird/24.1.0
+In-Reply-To: <527158AF.3070204@ramsay1.demon.co.uk>
+X-Provags-ID: V03:K0:1y2k4N2uf7I+ahPTc5GBtSHgCYeMYcDbUoikDcGKebLJ618rtWA
+ U2QH6pcm9VswsTj/WyafZLG02svl8GzDybKOf1sVFFrT9l7PUVhmqr7tq2JypM+qfqFWQqF
+ riJ7T1tgb+uI8DP1CQ8dN7qYQJqvvnu7NAHNs8q/6a+IEyQYX2+s3Wh6uFJkiA9kI2Eb40X
+ 8eKG5KZ3nRxcwQiWM6/8g==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237067>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237068>
 
-On Wed, Oct 30, 2013 at 04:47:57PM +0100, Vicent Mart=C3=AD wrote:
+On 2013-10-30 20.06, Ramsay Jones wrote:
+> On 30/10/13 17:14, Torsten B=C3=B6gershausen wrote:
+>> On 2013-10-30 18.01, Vicent Mart=C3=AD wrote:
+>>> On Wed, Oct 30, 2013 at 5:51 PM, Torsten B=C3=B6gershausen <tboegi@=
+web.de> wrote:
+>>>> There is a name clash under cygwin 1.7 (1.5 is OK)
+>>>> The following "first aid hot fix" works for me:
+>>>> /Torsten
+>>>
+>>> If Cygwin declares its own bswap_64, wouldn't it be better to use i=
+t
+>>> instead of overwriting it with our own?
+>> Yes,
+>> this will be part of a longer patch.
+>> I found that some systems have something like this:
+>>
+>> #define htobe64(x) bswap_64(x)
+>> And bswap_64 is a function, so we can not detect it by "asking"
+>> #ifdef bswap_64
+>> ..
+>> #endif
+>>
+>>
+>> But we can use
+>> #ifdef htobe64
+>> ...
+>> #endif
+>> and this will be part of a bigger patch.
+>>
+>> And, in general, we should avoid to introduce functions which may ha=
+ve a
+>> name clash.
+>> Using the git_ prefix for function names is a good practice.
+>> So in order to unbrake the compilation error under cygwin 17,
+>> the "hotfix" can be used.
+>=20
+> heh, my patch (given below) took a different approach, but ....
+>=20
+> ATB,
+> Ramsay Jones
+>=20
+> -- >8 --
+> Subject: [PATCH] compat/bswap.h: Fix redefinition of bswap_64 error o=
+n cygwin
+> MIME-Version: 1.0
+> Content-Type: text/plain; charset=3DUTF-8
+> Content-Transfer-Encoding: 8bit
+>=20
+> Since commit 452e0f20 ("compat: add endianness helpers", 24-10-2013)
+> the cygwin build has failed like so:
+>=20
+>     GIT_VERSION =3D 1.8.4.1.804.g1f3748b
+>         * new build flags
+>         CC credential-store.o
+>     In file included from git-compat-util.h:305:0,
+>                      from cache.h:4,
+>                      from credential-store.c:1:
+>     compat/bswap.h:67:24: error: redefinition of 'bswap_64'
+>     In file included from /usr/include/endian.h:32:0,
+>                      from /usr/include/cygwin/types.h:21,
+>                      from /usr/include/sys/types.h:473,
+>                      from /usr/include/sys/unistd.h:9,
+>                      from /usr/include/unistd.h:4,
+>                      from git-compat-util.h:98,
+>                      from cache.h:4,
+>                      from credential-store.c:1:
+>     /usr/include/byteswap.h:31:1: note: previous definition of \
+> 	=E2=80=98bswap_64=E2=80=99 was here
+>     Makefile:1985: recipe for target 'credential-store.o' failed
+>     make: *** [credential-store.o] Error 1
+>=20
+> Note that cygwin has a defintion of 'bswap_64' in the <byteswap.h>
+> header file (which had already been included by git-compat-util.h).
+> In order to suppress the error, ensure that the <byteswap.h> header
+> is included, just like the __GNUC__/__GLIBC__ case, rather than
+> attempting to define a fallback implementation.
+>=20
+> Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+> ---
+>  compat/bswap.h | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>=20
+> diff --git a/compat/bswap.h b/compat/bswap.h
+> index ea1a9ed..b864abd 100644
+> --- a/compat/bswap.h
+> +++ b/compat/bswap.h
+> @@ -61,7 +61,7 @@ static inline uint32_t git_bswap32(uint32_t x)
+>  # define ntohll(n) (n)
+>  # define htonll(n) (n)
+>  #elif __BYTE_ORDER =3D=3D __LITTLE_ENDIAN
+> -#	if defined(__GNUC__) && defined(__GLIBC__)
+> +#	if defined(__GNUC__) && (defined(__GLIBC__) || defined(__CYGWIN__)=
+)
+>  #		include <byteswap.h>
+>  #	else /* GNUC & GLIBC */
+>  static inline uint64_t bswap_64(uint64_t val)
+>=20
 
-> Yes, our pack writing and bitmap code takes enough precautions to
-> arrange the objects in the packfile in a way that can be partially
-> reused, so for any given bitmap file written from Git, I'd say we're
-> safe to always reuse the leader of the pack if this is possible.
+Nice, much better.
 
-Perhaps it is worth adding a flag to the bitmap index to say "my bases
-always come before deltas".
+And here comes a patch for a big endian machine.
+I tryied to copy-paste a patch in my mail program,
+not sure if this applies.
 
-> Obviously I intend to keep the pack reuse on production because the
-> CPU savings are noticeable, but we can drop it from the public
-> patchset. Ideally, we'd have full pack reuse like JGit, but we cannot
-> reasonably do that in GitHub because splitting a pack for the network
-> root would double our disk usage for all the forks.
+-- >8 --
+Subject: [PATCH] compat/bswap.h: htonll and ntohll for big endian
 
-Ah, right, I was forgetting about the fork-network repositories in my
-analysis.  This doesn't work out of the box with this series, because w=
-e
-will have all of the commits for all of the forks, followed by all of
-the trees, and so forth.
+Since commit 452e0f20 ("compat: add endianness helpers", 24-10-2013)
+the build on a Linux/ppc gave a warning like this:
+    CC ewah/ewah_io.o
+ewah/ewah_io.c: In function =E2=80=98ewah_serialize_to=E2=80=99:
+ewah/ewah_io.c:81: warning: implicit declaration of function =E2=80=98h=
+tonll=E2=80=99
+ewah/ewah_io.c: In function =E2=80=98ewah_read_mmap=E2=80=99:
+ewah/ewah_io.c:132: warning: implicit declaration of function =E2=80=98=
+ntohll=E2=80=99
 
-What the list hasn't seen yet is that we have another patch series that
-organizes the objects based on refs, so you can put all of
-"refs/remotes/X/*" in one "island", "refs/remotes/Y/*" in another
-"island", and so forth (in our scheme, each remote represents a single
-fork, but it's configurable).
+=46ix it by placing the #endif for "#ifdef bswap32" at the right place.
 
-This lets us avoid deltas to objects that are not in the same island,
-because such deltas would need to be thrown out when cloning a single
-fork. And it lets us tweak the write order so that we can put all of on=
-e
-fork's objects at the beginning, making it available for pack-reuse (so
-obviously you would want to pick the "root" fork to put at the
-beginning).
+Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+---
+ compat/bswap.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-I'm planning to send those patches once the bitmap code is merged. One
-is not strictly dependent on the other, but they touch some of the same
-areas, and rely on some of the same infrastructure, so I think it makes
-sense to do them in series.
-
--Peff
+diff --git a/compat/bswap.h b/compat/bswap.h
+index ea1a9ed..b4ddab0
+--- a/compat/bswap.h
++++ b/compat/bswap.h
+@@ -46,6 +46,7 @@ static inline uint32_t git_bswap32(uint32_t x)
+ #undef htonl
+ #define ntohl(x) bswap32(x)
+ #define htonl(x) bswap32(x)
++#endif
+=20
+ #ifndef __BYTE_ORDER
+ #      if defined(BYTE_ORDER) && defined(LITTLE_ENDIAN) && defined(BIG=
+_ENDIAN)
+@@ -82,4 +83,3 @@ static inline uint64_t bswap_64(uint64_t val)
+ #      error "Can't define htonll or ntohll!"
+ #endif
+=20
+-#endif
