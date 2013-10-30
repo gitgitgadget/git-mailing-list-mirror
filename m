@@ -1,98 +1,103 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 6/7] Documentation: put blame/log -L in sticked form
-Date: Wed, 30 Oct 2013 10:09:28 -0700
-Message-ID: <xmqqiowed6t3.fsf@gitster.dls.corp.google.com>
-References: <21f40508f83a9407986d29f002adf5ad366c8b88.1382287779.git.trast@inf.ethz.ch>
-	<c41aef218951f8b0ec6a20e1dbc39712ad13afce.1383031141.git.tr@thomasrast.ch>
-	<xmqqvc0fd0la.fsf@gitster.dls.corp.google.com>
-	<87bo27i85i.fsf@linux-k42r.v.cablecom.net>
+From: Karl Wiberg <kha@treskal.com>
+Subject: Re: Show patch in gitk --first-parent ?
+Date: Wed, 30 Oct 2013 18:10:43 +0100
+Message-ID: <CAFAOj7orccjudOu4czDpaN-TZBCFb=T-Qo8f9eo_1dnKBGXJ4g@mail.gmail.com>
+References: <CAFAOj7p49pQo=hXZT3TmMFF+KThKY-PZ2cgsZasH=e8rgjri1A@mail.gmail.com>
+	<1lbk7r8.1khd6h5pbrifuM%lists@haller-berlin.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>,
 	Paul Mackerras <paulus@samba.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: Thomas Rast <tr@thomasrast.ch>
-X-From: git-owner@vger.kernel.org Wed Oct 30 18:09:37 2013
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Stefan Haller <lists@haller-berlin.de>
+X-From: git-owner@vger.kernel.org Wed Oct 30 18:10:57 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VbZGx-000418-Dm
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Oct 2013 18:09:35 +0100
+	id 1VbZIA-0004PU-C2
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Oct 2013 18:10:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752242Ab3J3RJb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Oct 2013 13:09:31 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59854 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751627Ab3J3RJb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Oct 2013 13:09:31 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9AAD14D4C9;
-	Wed, 30 Oct 2013 13:09:30 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ngiGRx0BpzEId9UQU8kdRo0byvQ=; b=iWix1N
-	5tlaSo5ZL3uKDd0jUxBkHCFfApzS7AJVgM0RKsOsQhKARnzrO8X7K2n56pGN6hfp
-	Whk1ZPN1WIH7bplr/hiCs69SNaUfQb5beoXJGKxvd80wpVSn9UVnC80ueMWq4K1X
-	WexDYQFXvAt92xsL6TSNHRg2sRik3hZzyBIJA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Xt78cvX1WnB1BzFSvWZuKIU4cW1tZnHU
-	G9mviEe+UP1U9qhntdPXqElQQ1OaSAKr0SqcABWWR+Zh5sgoHdWaKzmgDiqrxih9
-	KbS+7mLVge0tukwobruzTp681CtEDPBd9/DTK1sB7tlSySLiV766eIDKDhWEwaxB
-	apLdtv/fUqY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8A3A74D4C8;
-	Wed, 30 Oct 2013 13:09:30 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E23C34D4C3;
-	Wed, 30 Oct 2013 13:09:29 -0400 (EDT)
-In-Reply-To: <87bo27i85i.fsf@linux-k42r.v.cablecom.net> (Thomas Rast's message
-	of "Wed, 30 Oct 2013 07:29:13 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 09EF64A0-4186-11E3-833E-1FFB7F2839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752136Ab3J3RKq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Oct 2013 13:10:46 -0400
+Received: from mail1b.space2u.com ([194.218.23.146]:57802 "EHLO
+	mail1.space2u.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750865Ab3J3RKp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Oct 2013 13:10:45 -0400
+Received: from mail-we0-f170.google.com (mail-we0-f170.google.com [74.125.82.170])
+	(authenticated bits=0)
+	by mail1.space2u.com (8.14.5/8.14.4) with ESMTP id r9UHAhhr006646
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT)
+	for <git@vger.kernel.org>; Wed, 30 Oct 2013 18:10:43 +0100
+Received: by mail-we0-f170.google.com with SMTP id u57so1603854wes.29
+        for <git@vger.kernel.org>; Wed, 30 Oct 2013 10:10:43 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=hBsm/gGFwzkdHtyE+VspmyhhlWvvtTcpUvFnvMZaOrA=;
+        b=QpqFuveuAdZxhne/7s4WbSFYhw99DVuU3oJQI3yBV0xBbU5g8cUu1Qk9EIBzAhlJaR
+         j5H1onXIuArzjBnf5LzDNxjNdfgF07tHMQPeEw1LNbho+oquSBn+Fpc/NrGKIbeQHuSt
+         UFjGw2udZCw1ggJYi5TVc0KpQBoH7E9VYSWFeKxJi2FMzbE9Xs/NRxMnTcwoGJTX4vst
+         7bTw4rzzeO7qdw2Fj7pradWDBDCgNaUz7n9aL9RHH3gC/yC/GBmdOtt+aCFwXAXJvJm2
+         vZJyAVnstXGMxZve863dZtZyN1lUQvUFxl4/nLjrILopXeuquLWp+y+6pUN5NYxFP9LZ
+         WNCw==
+X-Received: by 10.194.239.40 with SMTP id vp8mr3464241wjc.45.1383153043349;
+ Wed, 30 Oct 2013 10:10:43 -0700 (PDT)
+Received: by 10.216.207.141 with HTTP; Wed, 30 Oct 2013 10:10:43 -0700 (PDT)
+In-Reply-To: <1lbk7r8.1khd6h5pbrifuM%lists@haller-berlin.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237037>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237038>
 
-Thomas Rast <tr@thomasrast.ch> writes:
+On Wed, Oct 30, 2013 at 3:30 PM, Stefan Haller <lists@haller-berlin.de> wrote:
 
-> Junio C Hamano <gitster@pobox.com> writes:
+> I once posted a patch that adds a "First parent" checkbox to gitk's
+> window:
+> <http://comments.gmane.org/gmane.comp.version-control.git/160920>
 >
->> Thomas Rast <tr@thomasrast.ch> writes:
->>
->>> The next patch will document gitk -L, but gitk does not understand the
->>> separated form ('gitk -L :foo:bar' results in an error).  Spell
->>> git-blame and git-log -L, which are supposed to be "the same" option,
->>> without the spaces to prevent confusion.
->>
->> I agree that this patch may reduce confusion locally, but if we were
->> to go in this direction, we should be consistent and enforce "stuck"
->> form everywhere, not just the options you happened to have passed
->> thru to gitk, but other options such as "-S <revs-file>", and also
->> other commands that do not have anything to do with gitk (e.g. "git
->> commit -C<commit>", not "git commit -C <commit>".  Otherwise you
->> will give a wrong impression to readers as if they have to remember
->> which ones need to use the stuck form and which ones do not.
+> The patch no longer applies today, but I can send an updated version
+> that does, if there's interest.
+
+Please do. I don't have the time to attempt to drive inclusion of the
+patch (I'd have to start by reading up on tcl and gitk), but if you
+have a patch ready, I'd like to try it.
+
+> The topic didn't go anywhere for two reasons:
 >
-> Hmm.  Do you want to go there?
+> 1) There's the confusion about history traversal option (the
+> existing --first-parent command-line option) versus diff option (the
+> new check box); they have similar names, but control different
+> things (and it should be possible to control these independently).
+>
+> 2) Space is short in the diff pane; you need to make the window
+> rather wide to see them all.
+>
+> I didn't have the energy to drive these to a resolution back then;
+> if you could do that, it would be great. Personally I'm using my own
+> gitk with my patch applied, and I do use the "First parent" checkbox
+> rather often.
 
-Absolutely not ;-)
+Hmmm, I wonder... a related feature I'd like to have is to see the
+combined diff of two or more commits. I guess the fully general form
+of this is to allow the user to select one "after" commit and zero or
+more "before" commits, and then present the resulting diff.
 
-But that unpleasant place would be the logical conclusion where this
-patch leads us to, I would have to say. I was hoping that there is
-an alternative solution to avoid that.
+For example, when the user clicks on the shortlog of a commit, gitk
+could automatically select its parents (by painting their dots in the
+DAG differently, say). The user could then click on any commit dot in
+the dag to toggle it between being included in and excluded from the
+"before" set. (A simpler variant would be to limit the "before" set to
+exactly one commit as soon as the user changes it at all.)
 
-For example, gitk's parseviewargs is very well aware of the options
-it supports, and it goes through the argument list one by one,
-acting on what option it is looking at. Couldn't it be extended to
-handle options with stuck and unstuck form?  After all, it has to
-know that "-L" and "-S" are supported options; it wouldn't be too
-much to ask for the parser to also know that "-L" eats the next
-token (i.e. pass the pair <"-L", next token> intact as two separate
-args to the underlying "log") while it can pass "-L?*" as is, no?
+As I said, I don't have time to do this myself; I just thought I'd
+toss the idea out there, since good ideas are so scarce and competent
+programmers with free time on their hands are so plentiful.
+
+-- 
+Karl Wiberg, kha@treskal.com
+   subrabbit.wordpress.com
+   www.treskal.com/kalle
