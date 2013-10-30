@@ -1,72 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] commit: Add -f, --fixes <commit> option to add Fixes: line
-Date: Wed, 30 Oct 2013 11:33:56 -0700
-Message-ID: <xmqqsivibobv.fsf@gitster.dls.corp.google.com>
-References: <20131024122255.GI9378@mwanda> <20131024122512.GB9534@mwanda>
-	<20131026181709.GB10488@kroah.com> <20131027013402.GA7146@leaf>
-	<CA+8MBbK3dicmwOJb0mhTwr59O1tqzZgEGmMfSQV61Z=aK_64oA@mail.gmail.com>
+From: Jim Garrison <jim.garrison@nwea.org>
+Subject: git svn clone reprocessing old commits many times?
+Date: Wed, 30 Oct 2013 18:47:10 +0000
+Message-ID: <0C723FEB5B4E5642B25B451BA57E273041FD4F8F@S1P5DAG3C.EXCHPROD.USA.NET>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Josh Triplett <josh@joshtriplett.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Dan Carpenter <dan.carpenter@oracle.com>,
-	Greg KH <greg@kroah.com>
-To: Tony Luck <tony.luck@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 30 19:34:15 2013
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Oct 30 19:47:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vbaar-00078V-DV
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Oct 2013 19:34:13 +0100
+	id 1Vbane-0002kr-Hk
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Oct 2013 19:47:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754195Ab3J3SeH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Oct 2013 14:34:07 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63523 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754144Ab3J3SeG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Oct 2013 14:34:06 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 88DDD4224C;
-	Wed, 30 Oct 2013 14:34:03 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=NZB0Ju8Y2b1f5CBzLvmCqQJT6eE=; b=YQMdW5
-	gCfVETfMvIyAJW5Mh3LdCybllVAH65D6Xo4le2I6D3d9TH/GkmBe4MuAokhZePJ+
-	gnYba/neJweiubJugbZkCkAlvqRY8LAtK8f+NN22b0px2Lc5xGxn/PtXo10I16Zg
-	zrJjsZsPVuIRSQZiPV+n1iPLBk2LG/bpavRVo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=gWueHMFXFzJLZvS9iv9V9Fz2m77GlKLy
-	O0thw0at+YAoOIKkLUnOGGYpdfJ4KtmajxFPc9wbjI5UF//j9ey8AbgBFEnK/SNq
-	84EJpMzQx+kfjNdiUr0szfBQa+q1A3Qwt1cvBt0M4Qv7Z0a06MScglfVsXZwQMSU
-	i1mDYTE6R+U=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 74ED34224B;
-	Wed, 30 Oct 2013 14:34:03 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 32FD642249;
-	Wed, 30 Oct 2013 14:34:00 -0400 (EDT)
-In-Reply-To: <CA+8MBbK3dicmwOJb0mhTwr59O1tqzZgEGmMfSQV61Z=aK_64oA@mail.gmail.com>
-	(Tony Luck's message of "Wed, 30 Oct 2013 10:28:06 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: D80F5D94-4191-11E3-8E58-1FFB7F2839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752448Ab3J3SrW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Oct 2013 14:47:22 -0400
+Received: from gwo2.mbox.net ([165.212.64.22]:34434 "EHLO gwo2.mbox.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752440Ab3J3SrW convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 30 Oct 2013 14:47:22 -0400
+Received: from gwo2.mbox.net (localhost [127.0.0.1])
+	by gwo2.mbox.net (Postfix) with ESMTP id 3d8zDT1QcjzfsTSC
+	for <git@vger.kernel.org>; Wed, 30 Oct 2013 18:47:21 +0000 (UTC)
+X-USANET-Received: from gwo2.mbox.net [127.0.0.1] by gwo2.mbox.net via mtad (C8.MAIN.3.82G) 
+	with ESMTP id 566RJdsvq6496Mo2; Wed, 30 Oct 2013 18:47:16 -0000
+X-USANET-Routed: 5 gwsout-gwsd Q:gwsd
+X-USANET-Routed: 3 gwsout-vs Q:bmvirus
+X-USANET-GWS2-Tenant: nwea.org
+X-USANET-GWS2-Tagid: NWEA
+Received: from S1P5HUB6.EXCHPROD.USA.NET [165.212.120.254] by gwo2.mbox.net via smtad (C8.MAIN.3.93K) 
+	with ESMTPS id XID181RJdsvR9047Xo2; Wed, 30 Oct 2013 18:47:16 -0000
+X-USANET-Source: 165.212.120.254 OUT  jim.garrison@nwea.org S1P5HUB6.EXCHPROD.USA.NET
+X-USANET-MsgId: XID181RJdsvR9047Xo2
+Received: from S1P5DAG3C.EXCHPROD.USA.NET ([169.254.3.33]) by
+ S1P5HUB6.EXCHPROD.USA.NET ([10.120.223.36]) with mapi id 14.03.0158.001; Wed,
+ 30 Oct 2013 18:47:11 +0000
+Thread-Topic: git svn clone reprocessing old commits many times?
+Thread-Index: Ac7Vn50kzSLr5fDsSSq/+E4Ssw+tqA==
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [70.98.171.2]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237052>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237053>
 
-Tony Luck <tony.luck@gmail.com> writes:
+I'm trying to clone an svn repository to git in preparation for a migration to git, including all branches and tags.
 
-> On Sat, Oct 26, 2013 at 6:34 PM, Josh Triplett <josh@joshtriplett.org> wrote:
->
->> +               format_commit_message(commit, "Fixes: %h ('%s')\n", sb, &ctx);
->
-> What is the value of double wrapping the commit message inside '...'
-> and then ('...')?
+The clone is taking a long time, and it looks like every time it detects a possible branch point it backs up and reprocesses a bunch of old commits.  For example:
 
-Good point ;-)
+r43224 = f308bd7765f9923143f3883a903aebf9ac70aa42 (refs/remotes/tags/etl_app_project-2.1.3@43224)
+Found branch parent: (refs/remotes/tags/etl_app_project-2.1.3) f308bd7765f9923143f3883a903aebf9ac70aa42
+Following parent with do_switch
+Successfully followed parent
+r43225 = 0beb90a63bd0abb552ac3d36c304649dc03c402f (refs/remotes/tags/etl_app_project-2.1.3)
+Found possible branch point: http://svn-server:81/svn/DevJava/trunk/ETL/etl_app => http://svn-server:81/svn/DevJava/trunk/etl_app, 44876
+Initializing parent: refs/remotes/trunk@44876
+r1296 = 39f1370bef9b75a5848c184befa47b999d0db73a (refs/remotes/trunk@44876)
+W: +empty_dir: trunk/ETL/etl_app/src
+r1697 = a68b473c64a80882c7b665fb128a12dfa8e9c355 (refs/remotes/trunk@44876)
+W: +empty_dir: trunk/ETL/etl_app/src/main
+r1698 = e18bd0b80ed9dd398d49bff04ca9650292f2f36d (refs/remotes/trunk@44876)
+
+I don't understand why, for each possible branch/tag, it has to go all the way back to such an old commit and start over again.
+
+Is this normal or is something amiss?
