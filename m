@@ -1,7 +1,7 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 18/23] ref_remove_duplicates(): avoid redundant bisection
-Date: Wed, 30 Oct 2013 06:33:07 +0100
-Message-ID: <1383111192-23780-19-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH v2 14/23] builtin/remote.c:update(): use struct argv_array
+Date: Wed, 30 Oct 2013 06:33:03 +0100
+Message-ID: <1383111192-23780-15-git-send-email-mhagger@alum.mit.edu>
 References: <1383111192-23780-1-git-send-email-mhagger@alum.mit.edu>
 Cc: git@vger.kernel.org,
 	=?UTF-8?q?Carlos=20Mart=C3=ADn=20Nieto?= <cmn@elego.de>,
@@ -12,103 +12,122 @@ Cc: git@vger.kernel.org,
 	John Szakmeister <john@szakmeister.net>,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 30 06:42:00 2013
+X-From: git-owner@vger.kernel.org Wed Oct 30 06:42:08 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VbOXX-0007VK-1b
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Oct 2013 06:41:59 +0100
+	id 1VbOXd-0007Wr-V7
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Oct 2013 06:42:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753226Ab3J3Fly (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Oct 2013 01:41:54 -0400
-Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:49294 "EHLO
-	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753196Ab3J3Flx (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 30 Oct 2013 01:41:53 -0400
-X-Greylist: delayed 439 seconds by postgrey-1.27 at vger.kernel.org; Wed, 30 Oct 2013 01:41:53 EDT
-X-AuditID: 12074411-b7f426d000005455-67-52709a6adbe2
+	id S1753239Ab3J3Fl7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Oct 2013 01:41:59 -0400
+Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:61769 "EHLO
+	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752692Ab3J3Fl5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 30 Oct 2013 01:41:57 -0400
+X-Greylist: delayed 452 seconds by postgrey-1.27 at vger.kernel.org; Wed, 30 Oct 2013 01:41:57 EDT
+X-AuditID: 12074412-b7fc96d0000023d5-62-52709a6051af
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id 9F.CA.21589.A6A90725; Wed, 30 Oct 2013 01:34:34 -0400 (EDT)
+	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id 5E.D2.09173.06A90725; Wed, 30 Oct 2013 01:34:24 -0400 (EDT)
 Received: from localhost.localdomain (p57A242F8.dip0.t-ipconnect.de [87.162.66.248])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r9U5XbIT014009
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r9U5XbIP014009
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 30 Oct 2013 01:34:32 -0400
+	Wed, 30 Oct 2013 01:34:22 -0400
 X-Mailer: git-send-email 1.8.4.1
 In-Reply-To: <1383111192-23780-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrBIsWRmVeSWpSXmKPExsUixO6iqJs1qyDI4M5COYvpXatZLLqudDNZ
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrGIsWRmVeSWpSXmKPExsUixO6iqJswqyDI4PsCc4vpXatZLLqudDNZ
 	NPReYbaYd3cXk8WqW8uYLVbOuMFocXvFfGaLp52VFvNevGCz+NHSw+zA5fH3/Qcmj0vrXjJ5
 	HPozhd3j2Yl2No9LL7+zeTzr3cPocfGSsseMltcsHp83yXkcuPyYLYAritsmKbGkLDgzPU/f
-	LoE7Y9ONgIImvoo1/U9ZGhincXcxcnJICJhInPnzlQ3CFpO4cG89kM3FISRwmVHi++W3jBDO
-	FSaJfy2dzCBVbAK6Eot6mplAbBEBNYmJbYdYQIqYBSYySxyfvogFJCEs4CPxYdcZsAYWAVWJ
-	2193soLYvAKuEgfu9UGtU5C40TwVLM4JFP+06yY7iC0k4CLR1P6ZfQIj7wJGhlWMcok5pbm6
-	uYmZOcWpybrFyYl5ealFuqZ6uZkleqkppZsYIWEruINxxkm5Q4wCHIxKPLwGD/KDhFgTy4or
-	cw8xSnIwKYnypk0pCBLiS8pPqcxILM6ILyrNSS0+xCjBwawkwjv9OFA5b0piZVVqUT5MSpqD
-	RUmcl2+Jup+QQHpiSWp2ampBahFMVoaDQ0mCV3km0FDBotT01Iq0zJwShDQTByeI4ALZwAO0
-	gQekkLe4IDG3ODMdougUo6KUOK8CSEIAJJFRmgc3AJZgXjGKA/0jDNHOA0xOcN2vgAYzAQ3e
-	w5IHMrgkESEl1cAoa5Hkun36TqGGq9/2f9xx2qknaTf7b+n3v89uszoRvyGl8WAwB1tVmAKz
-	zqSpX4tjQnc9nJja4eX8/ML/Pwfm5fNds9/Ifm1x5mYjnpeMH1haT5p7aFx88mr5 
+	LoE742y7UcEXwYot/7tYGhhf8nUxcnBICJhI3NrA1cXICWSKSVy4t56ti5GLQ0jgMqPEvtkL
+	2SGcK0wS15/cYAOpYhPQlVjU08wEYosIqElMbDvEAlLELDCRWeL49EUsIAlhAS+J86eXMYPY
+	LAKqEuvanzCBbOMVcJWY+bIIYpuCxI3mqawgNidQ+NOum+wgtpCAi0RT+2f2CYy8CxgZVjHK
+	JeaU5urmJmbmFKcm6xYnJ+blpRbpmunlZpbopaaUbmKEhKzQDsb1J+UOMQpwMCrx8Bo8yA8S
+	Yk0sK67MPcQoycGkJMqbNqUgSIgvKT+lMiOxOCO+qDQntfgQowQHs5II7/TjQOW8KYmVValF
+	+TApaQ4WJXHen4vV/YQE0hNLUrNTUwtSi2CyMhwcShK8yjOBhgoWpaanVqRl5pQgpJk4OEEE
+	F8gGHqANPCCFvMUFibnFmekQRacYFaXEeRVAEgIgiYzSPLgBsOTyilEc6B9hiHYeYGKC634F
+	NJgJaPAeljyQwSWJCCmpBkZBmxX5DS91Jv2L3duwd1e4vYDs3p0Hd7X+5p7/0zA3e3plz9vy
+	Fa7XC5pbE3UWni96cuq8+HqH238aHuqsjlx70v/34z1xak/jD7HMW35U3LeGN2ZL 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236976>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236977>
 
-The old code called string_list_lookup(), and if that failed called
-string_list_insert(), thus doing the bisection search through the
-string list twice in the latter code path.
-
-Instead, just call string_list_insert() right away.  If an entry for
-that peer reference name already existed, then its util pointer is
-always non-NULL.
-
-Of course this doesn't change the fact that the repeated
-string_list_insert() calls make the function scale like O(N^2) if the
-input reference list is not already approximately sorted.
+Use struct argv_array for calling the "git fetch" subprocesses.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- remote.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ builtin/remote.c | 33 +++++++++++++++++----------------
+ 1 file changed, 17 insertions(+), 16 deletions(-)
 
-diff --git a/remote.c b/remote.c
-index a5e6c7f..15f3dc5 100644
---- a/remote.c
-+++ b/remote.c
-@@ -750,13 +750,15 @@ void ref_remove_duplicates(struct ref *ref_map)
- 	struct string_list refs = STRING_LIST_INIT_NODUP;
- 	struct string_list_item *item = NULL;
- 	struct ref *prev = NULL, *next = NULL;
-+
- 	for (; ref_map; prev = ref_map, ref_map = next) {
- 		next = ref_map->next;
- 		if (!ref_map->peer_ref)
- 			continue;
+diff --git a/builtin/remote.c b/builtin/remote.c
+index ecedd96..bffe2f9 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -6,6 +6,7 @@
+ #include "strbuf.h"
+ #include "run-command.h"
+ #include "refs.h"
++#include "argv-array.h"
  
--		item = string_list_lookup(&refs, ref_map->peer_ref->name);
--		if (item) {
-+		item = string_list_insert(&refs, ref_map->peer_ref->name);
-+		if (item->util) {
-+			/* Entry already existed */
- 			if (strcmp(((struct ref *)item->util)->name,
- 				   ref_map->name))
- 				die("%s tracks both %s and %s",
-@@ -767,11 +769,9 @@ void ref_remove_duplicates(struct ref *ref_map)
- 			free(ref_map->peer_ref);
- 			free(ref_map);
- 			ref_map = prev; /* skip this; we freed it */
--			continue;
-+		} else {
-+			item->util = ref_map;
- 		}
+ static const char * const builtin_remote_usage[] = {
+ 	N_("git remote [-v | --verbose]"),
+@@ -1376,36 +1377,36 @@ static int update(int argc, const char **argv)
+ 			 N_("prune remotes after fetching")),
+ 		OPT_END()
+ 	};
+-	const char **fetch_argv;
+-	int fetch_argc = 0;
++	struct argv_array fetch_argv = ARGV_ARRAY_INIT;
+ 	int default_defined = 0;
 -
--		item = string_list_insert(&refs, ref_map->peer_ref->name);
--		item->util = ref_map;
+-	fetch_argv = xmalloc(sizeof(char *) * (argc+5));
++	int retval;
+ 
+ 	argc = parse_options(argc, argv, NULL, options, builtin_remote_update_usage,
+ 			     PARSE_OPT_KEEP_ARGV0);
+ 
+-	fetch_argv[fetch_argc++] = "fetch";
++	argv_array_push(&fetch_argv, "fetch");
+ 
+ 	if (prune)
+-		fetch_argv[fetch_argc++] = "--prune";
++		argv_array_push(&fetch_argv, "--prune");
+ 	if (verbose)
+-		fetch_argv[fetch_argc++] = "-v";
+-	fetch_argv[fetch_argc++] = "--multiple";
++		argv_array_push(&fetch_argv, "-v");
++	argv_array_push(&fetch_argv, "--multiple");
+ 	if (argc < 2)
+-		fetch_argv[fetch_argc++] = "default";
++		argv_array_push(&fetch_argv, "default");
+ 	for (i = 1; i < argc; i++)
+-		fetch_argv[fetch_argc++] = argv[i];
++		argv_array_push(&fetch_argv, argv[i]);
+ 
+-	if (strcmp(fetch_argv[fetch_argc-1], "default") == 0) {
++	if (strcmp(fetch_argv.argv[fetch_argv.argc-1], "default") == 0) {
+ 		git_config(get_remote_default, &default_defined);
+-		if (!default_defined)
+-			fetch_argv[fetch_argc-1] = "--all";
++		if (!default_defined) {
++			argv_array_pop(&fetch_argv);
++			argv_array_push(&fetch_argv, "--all");
++		}
  	}
- 	string_list_clear(&refs, 0);
+ 
+-	fetch_argv[fetch_argc] = NULL;
+-
+-	return run_command_v_opt(fetch_argv, RUN_GIT_CMD);
++	retval = run_command_v_opt(fetch_argv.argv, RUN_GIT_CMD);
++	argv_array_clear(&fetch_argv);
++	return retval;
  }
+ 
+ static int remove_all_fetch_refspecs(const char *remote, const char *key)
 -- 
 1.8.4.1
