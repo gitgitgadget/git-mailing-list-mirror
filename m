@@ -1,63 +1,88 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH v2 02/23] t5510: prepare test refs more straightforwardly
-Date: Wed, 30 Oct 2013 16:27:28 +0530
-Message-ID: <CALkWK0=tcEbdvFaaV1YFBTXWAHaHYcJ1YNLpj0Sj5sGK_inapQ@mail.gmail.com>
-References: <1383111192-23780-1-git-send-email-mhagger@alum.mit.edu> <1383111192-23780-3-git-send-email-mhagger@alum.mit.edu>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-	=?UTF-8?Q?Carlos_Mart=C3=ADn_Nieto?= <cmn@elego.de>,
-	Michael Schubert <mschub@elegosoft.com>,
-	Johan Herland <johan@herland.net>, Jeff King <peff@peff.net>,
-	Marc Branchaud <marcnarc@xiplink.com>,
-	Nicolas Pitre <nico@fluxnic.net>,
-	John Szakmeister <john@szakmeister.net>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Wed Oct 30 11:58:15 2013
+From: Nicolas Cornu <ncornu@aldebaran-robotics.com>
+Subject: [PATCH v2] gitk: Add a horizontal scrollbar for commit history
+Date: Wed, 30 Oct 2013 11:58:22 +0100
+Message-ID: <1383130702-4966-1-git-send-email-ncornu@aldebaran-robotics.com>
+Cc: paulus@samba.org
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 30 11:58:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VbTTb-0000vY-5j
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Oct 2013 11:58:15 +0100
+	id 1VbTTv-00013p-IJ
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Oct 2013 11:58:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751858Ab3J3K6K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Oct 2013 06:58:10 -0400
-Received: from mail-ie0-f180.google.com ([209.85.223.180]:54774 "EHLO
-	mail-ie0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751528Ab3J3K6J (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Oct 2013 06:58:09 -0400
-Received: by mail-ie0-f180.google.com with SMTP id e14so1867218iej.25
-        for <git@vger.kernel.org>; Wed, 30 Oct 2013 03:58:08 -0700 (PDT)
+	id S1752084Ab3J3K6b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Oct 2013 06:58:31 -0400
+Received: from mail-wg0-f52.google.com ([74.125.82.52]:60597 "EHLO
+	mail-wg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751977Ab3J3K6b (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Oct 2013 06:58:31 -0400
+Received: by mail-wg0-f52.google.com with SMTP id k14so1120519wgh.19
+        for <git@vger.kernel.org>; Wed, 30 Oct 2013 03:58:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=EWjvJ64GOdrVnD9Mawo+T2xlWb8hooJessRvfB+bibc=;
-        b=rixEC99HXUxZjhwXJLr1V++Nqf7rvMDQRGzupcAGigen91snZPe558SwYWx6MRi6BC
-         y68frrVKNoUgI5U66at/cihNbHZlzmk8xWY2xN7iI1KuYWzxZmqGvQGMJM2D0yPpgEVn
-         RV4hSDQfBcmzW9bHc3tTU0rvsvDvC55RdC/uIKNfIsk63OZ8pEPQk9ZjUlplpZLW+kdU
-         itnDBa6d7HYN7zreKzBSf0C/wUCTbJ/bVJ6VLJkPJsZ0zTjZIdQazieC3ETzqMAWGxID
-         Z/IYsFoq8gj2Msc5aBmPjjOrZ9iMA6UzAWJGuresox2ZhVpBouKjpDShGTONQQLGEZVJ
-         XhaA==
-X-Received: by 10.50.16.45 with SMTP id c13mr1747186igd.55.1383130688662; Wed,
- 30 Oct 2013 03:58:08 -0700 (PDT)
-Received: by 10.64.73.36 with HTTP; Wed, 30 Oct 2013 03:57:28 -0700 (PDT)
-In-Reply-To: <1383111192-23780-3-git-send-email-mhagger@alum.mit.edu>
+        d=aldebaran-robotics.com; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=FI5OXp04haTuBH0K9dsLjhf0iGpbrDjOJnTe445Fef8=;
+        b=P5Jt8GC1BvUjy059e01FtF5KLt59CBO95xAZcOZ+K8XR4vWozWGu4pUDYC4BB3JcrD
+         yIRgehRj008HDpNVWJi77uqw/uRVcGZlaDeS9jCkssrD20FvJ5a9nEZdOxlANNQJicZP
+         clY2kk3N0lhn3CJhOdXIE9fT+fpND8vqJiids=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=FI5OXp04haTuBH0K9dsLjhf0iGpbrDjOJnTe445Fef8=;
+        b=SuLgKUgtA85cLGC2ASdUgo2TP4yBJ7E6Cfxwxy1LXlUY3p2hyB6qJ+KLGLuwe9ilaH
+         rPtK3rp86Y1SC2QeyIliL/wA2FBQXKBHOiCtFE53yWMpbhq/YrbxzuU9+I/HCbMmPcpl
+         +pz45yPe6uTy/b4YJ7asKWSsXQasEppRLytRcMUZDeIPjrk28u1frmwmv3O9D0RQQAVT
+         xVprK6jHIHTBYW3hIUz4W9vjF6wSUl0BmkqMLJk8uU8dq6lRJee0mvjRDQeu7sDaDWfM
+         zNjlgdh0b+G6tDQpXI+cvFoQpzGeWiNO9iTf1Lm1LUwzix8vBFXZTSWt9mXWwoFTqqN0
+         xazg==
+X-Gm-Message-State: ALoCoQncjO3XT4LlQAcJ9CBigFuW0L43egz+vJJCKvhXnX9djiGQEPEyQLZOHp0QIIuHCR+udYeP
+X-Received: by 10.194.187.232 with SMTP id fv8mr1326751wjc.56.1383130709377;
+        Wed, 30 Oct 2013 03:58:29 -0700 (PDT)
+Received: from Zeus.aldebaran.lan ([46.218.232.202])
+        by mx.google.com with ESMTPSA id y20sm14359793wib.0.2013.10.30.03.58.27
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 30 Oct 2013 03:58:28 -0700 (PDT)
+X-Mailer: git-send-email 1.8.4.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237011>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237012>
 
-Michael Haggerty wrote:
-> "git fetch" was being used with contrived refspecs to create tags and
-> remote-tracking branches in test repositories in preparation for the
-> actual tests.  This is obscure and also makes one wonder whether this
-> is indeed just preparation or whether some side-effect of "git fetch"
-> is being tested.
+This scrollbar is not optional and is useful if there is a lot of tags or
+branches.
 
-As the test titles indicate, we are exercising the 'fetch --prune'
-functionality. However, I don't see the 'git fetch <remote>
-<src>:<dst>' form exercised anywhere else in the file.
+Signed-off-by: Nicolas Cornu <ncornu@aldebaran-robotics.com>
+---
+ gitk | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/gitk b/gitk
+index 5cd00d8..62563b1 100755
+--- a/gitk
++++ b/gitk
+@@ -2120,11 +2120,17 @@ proc makewindow {} {
+     # create three canvases
+     set cscroll .tf.histframe.csb
+     set canv .tf.histframe.pwclist.canv
++    set cscrollhl .tf.histframe.pwclist.canv.csb
+     canvas $canv \
+ 	-selectbackground $selectbgcolor \
+ 	-background $bgcolor -bd 0 \
+-	-yscrollincr $linespc -yscrollcommand "scrollcanv $cscroll"
++	-yscrollincr $linespc -yscrollcommand "scrollcanv $cscroll" \
++	-xscrollcommand "scrollcanv $cscrollhl"
+     .tf.histframe.pwclist add $canv
++    ${NS}::scrollbar $cscrollhl -command {$canv xview} -orient horizontal
++    if {!$use_ttk} {$cscrollhl configure -highlightthickness 0}
++    pack $cscrollhl -fill x -side bottom
++
+     set canv2 .tf.histframe.pwclist.canv2
+     canvas $canv2 \
+ 	-selectbackground $selectbgcolor \
+--
+1.8.4.2
