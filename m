@@ -1,188 +1,46 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] for-each-ref: avoid loading objects to print
- %(objectname)
-Date: Wed, 30 Oct 2013 02:50:16 -0400
-Message-ID: <20131030065016.GB11317@sigill.intra.peff.net>
-References: <20131024084638.GA761@sigill.intra.peff.net>
- <877gd0pgze.fsf@linux-k42r.v.cablecom.net>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH V3] git clone: is an URL local or ssh
+Date: Wed, 30 Oct 2013 07:52:39 +0100
+Message-ID: <5270ACB7.6090608@viscovery.net>
+References: <201310292207.50869.tboegi@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Thomas Rast <tr@thomasrast.ch>
-X-From: git-owner@vger.kernel.org Wed Oct 30 07:50:25 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: sunshine@sunshineco.com, peff@peff.net, pclouds@gmail.com
+To: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 30 07:52:52 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VbPbj-0004rv-Tp
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Oct 2013 07:50:24 +0100
+	id 1VbPe6-0005W8-TO
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Oct 2013 07:52:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751851Ab3J3GuU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Oct 2013 02:50:20 -0400
-Received: from cloud.peff.net ([50.56.180.127]:58223 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751379Ab3J3GuT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Oct 2013 02:50:19 -0400
-Received: (qmail 13972 invoked by uid 102); 30 Oct 2013 06:50:19 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 30 Oct 2013 01:50:19 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 30 Oct 2013 02:50:16 -0400
-Content-Disposition: inline
-In-Reply-To: <877gd0pgze.fsf@linux-k42r.v.cablecom.net>
+	id S1752175Ab3J3Gwq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Oct 2013 02:52:46 -0400
+Received: from so.liwest.at ([212.33.55.16]:6566 "EHLO so.liwest.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751347Ab3J3Gwq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Oct 2013 02:52:46 -0400
+Received: from [81.10.228.254] (helo=theia.linz.viscovery)
+	by so.liwest.at with esmtpa (Exim 4.80.1)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1VbPdw-0007kZ-QS; Wed, 30 Oct 2013 07:52:40 +0100
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 5160116613;
+	Wed, 30 Oct 2013 07:52:40 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:24.0) Gecko/20100101 Thunderbird/24.0.1
+In-Reply-To: <201310292207.50869.tboegi@web.de>
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236987>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236988>
 
-On Sat, Oct 26, 2013 at 10:35:17AM +0200, Thomas Rast wrote:
+Just a heads-up: This patch breaks t5601 totally on Windows. Test #4, a
+local clone via file: protocol, fails already. I'm investigating now.
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-> > index 752f5cb..2b4b9a9 100755
-> [...]
-> > +test_atom head *objectname ''
-> > +test_atom head *objecttype ''
-> [...]
-> > +test_atom tag *objectname '67a36f10722846e891fbada1ba48ed035de75581'
-> > +test_atom tag *objecttype 'commit'
-> 
-> Can you quote the *?  I may have become somewhat paranoid, but still.
-> This is the first use of the *<field> syntax, and test_atom seems
-> written to correctly quote its arguments, so why risk it? :-)
-
-Yeah, that is a very reasonable suggestion. And the patch is still in
-pu, so it's not too late to squash.
-
-Junio, here is a resend with the asterisks quoted, to replace what's in
-jk/for-each-ref-skip-parsing.  I also double-checked that test_atom
-keeps them properly quoted (it does).
-
--- >8 --
-Subject: for-each-ref: avoid loading objects to print %(objectname)
-
-If you ask for-each-ref to print each ref and its object,
-like:
-
-  git for-each-ref --format='%(objectname) %(refname)'
-
-this should involve little more work than looking at the ref
-files (and packed-refs) themselves. However, for-each-ref
-will actually load each object from disk just to print its
-sha1. For most repositories, this isn't a big deal, but it
-can be noticeable if you have a large number of refs to
-print. Here are best-of-five timings for the command above
-on a repo with ~10K refs:
-
-  [before]
-  real    0m0.112s
-  user    0m0.092s
-  sys     0m0.016s
-
-  [after]
-  real    0m0.014s
-  user    0m0.012s
-  sys     0m0.000s
-
-This patch checks for %(objectname) and %(objectname:short)
-before we actually parse the object (and the rest of the
-code is smart enough to avoid parsing if we have filled all
-of our placeholders).
-
-Note that we can't simply move the objectname parsing code
-into the early loop. If the "deref" form %(*objectname) is
-used, then we do need to parse the object in order to peel
-the tag. So instead of moving the code, we factor it out
-into a separate function that can be called for both cases.
-
-While we're at it, we add some basic tests for the
-dereferenced placeholders, which were not tested at all
-before. This helps ensure we didn't regress that case.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- builtin/for-each-ref.c  | 29 ++++++++++++++++++++---------
- t/t6300-for-each-ref.sh |  4 ++++
- 2 files changed, 24 insertions(+), 9 deletions(-)
-
-diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
-index 1d4083c..d096051 100644
---- a/builtin/for-each-ref.c
-+++ b/builtin/for-each-ref.c
-@@ -205,6 +205,22 @@ static void *get_obj(const unsigned char *sha1, struct object **obj, unsigned lo
- 	return buf;
- }
- 
-+static int grab_objectname(const char *name, const unsigned char *sha1,
-+			    struct atom_value *v)
-+{
-+	if (!strcmp(name, "objectname")) {
-+		char *s = xmalloc(41);
-+		strcpy(s, sha1_to_hex(sha1));
-+		v->s = s;
-+		return 1;
-+	}
-+	if (!strcmp(name, "objectname:short")) {
-+		v->s = xstrdup(find_unique_abbrev(sha1, DEFAULT_ABBREV));
-+		return 1;
-+	}
-+	return 0;
-+}
-+
- /* See grab_values */
- static void grab_common_values(struct atom_value *val, int deref, struct object *obj, void *buf, unsigned long sz)
- {
-@@ -225,15 +241,8 @@ static void grab_common_values(struct atom_value *val, int deref, struct object
- 			v->ul = sz;
- 			v->s = s;
- 		}
--		else if (!strcmp(name, "objectname")) {
--			char *s = xmalloc(41);
--			strcpy(s, sha1_to_hex(obj->sha1));
--			v->s = s;
--		}
--		else if (!strcmp(name, "objectname:short")) {
--			v->s = xstrdup(find_unique_abbrev(obj->sha1,
--							  DEFAULT_ABBREV));
--		}
-+		else if (deref)
-+			grab_objectname(name, obj->sha1, v);
- 	}
- }
- 
-@@ -676,6 +685,8 @@ static void populate_value(struct refinfo *ref)
- 			}
- 			continue;
- 		}
-+		else if (!deref && grab_objectname(name, ref->objectname, v))
-+			continue;
- 		else
- 			continue;
- 
-diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-index 752f5cb..da5fb6c 100755
---- a/t/t6300-for-each-ref.sh
-+++ b/t/t6300-for-each-ref.sh
-@@ -58,6 +58,8 @@ test_atom head parent ''
- test_atom head numparent 0
- test_atom head object ''
- test_atom head type ''
-+test_atom head '*objectname' ''
-+test_atom head '*objecttype' ''
- test_atom head author 'A U Thor <author@example.com> 1151939924 +0200'
- test_atom head authorname 'A U Thor'
- test_atom head authoremail '<author@example.com>'
-@@ -91,6 +93,8 @@ test_atom tag parent ''
- test_atom tag numparent ''
- test_atom tag object '67a36f10722846e891fbada1ba48ed035de75581'
- test_atom tag type 'commit'
-+test_atom tag '*objectname' '67a36f10722846e891fbada1ba48ed035de75581'
-+test_atom tag '*objecttype' 'commit'
- test_atom tag author ''
- test_atom tag authorname ''
- test_atom tag authoremail ''
--- 
-1.8.4.1.898.g8bf8a41.dirty
+-- Hannes
