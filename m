@@ -1,78 +1,89 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: Re: What's cooking in git.git (Oct 2013, #07; Mon, 28)
-Date: Wed, 30 Oct 2013 18:39:09 +0100
-Message-ID: <5271443D.3070402@web.de>
-References: <xmqqr4b5dwke.fsf@gitster.dls.corp.google.com> <5271392E.8020003@web.de> <CAFFjANT=-mQoKUU2KsPHo3Hcq7RAuyM1t4kvJu4OfiNeHrA+Ng@mail.gmail.com> <52713E67.3000202@web.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Avoid difference in tr semantics between System V and BSD
+Date: Wed, 30 Oct 2013 10:39:22 -0700
+Message-ID: <xmqq1u32d5f9.fsf@gitster.dls.corp.google.com>
+References: <xmqqiowhdqx8.fsf@gitster.dls.corp.google.com>
+	<1382996580-19031-1-git-send-email-bdwalton@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-To: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
-	=?UTF-8?B?VmljZW50IE1hcnTDrQ==?= <tanoku@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 30 18:39:30 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: jrnieder@gmail.com, j6t@kdbg.org, git@vger.kernel.org,
+	avarab@gmail.com
+To: Ben Walton <bdwalton@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 30 18:39:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VbZjo-0006jq-D7
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Oct 2013 18:39:24 +0100
+	id 1VbZjx-0006mc-B8
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Oct 2013 18:39:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754244Ab3J3RjM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 30 Oct 2013 13:39:12 -0400
-Received: from mout.web.de ([212.227.17.11]:64737 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751806Ab3J3RjK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Oct 2013 13:39:10 -0400
-Received: from [192.168.209.26] ([78.72.74.102]) by smtp.web.de (mrweb103)
- with ESMTPA (Nemesis) id 0M0yeJ-1VwpH92r8R-00v7xj for <git@vger.kernel.org>;
- Wed, 30 Oct 2013 18:39:08 +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:24.0) Gecko/20100101 Thunderbird/24.1.0
-In-Reply-To: <52713E67.3000202@web.de>
-X-Provags-ID: V03:K0:S3LTvel74A9yW7eBEmhqanUuV0jpRLhGOPhou6yaJv/qhZTdQhB
- uRafv6PIhbZ/tC/V/0OdM6YKfr+NYMf9DRiwTSazNtqTy5TA29wacVttiRuNwEr+OJVIYrr
- cJpk6Tt1lqvld/PE0LAz3HpVf27jLSBsBvu6UKwY3p8Nbe66SljhJvMUqplKbhZNMkn3WqG
- BG/Kmi5oHFxqEueNV9PTg==
+	id S1754255Ab3J3Rj2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Oct 2013 13:39:28 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38338 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754253Ab3J3RjZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Oct 2013 13:39:25 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A780C4DF1E;
+	Wed, 30 Oct 2013 13:39:24 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=bHFvtr8zIJUYEs4l47FtGVFg0wU=; b=O3u5Qg
+	qlnk9omjIclKb4sZFy68g6H+yTTOFg9WClUn8UQvyH/Dl7vdlEszlwOkrffKnJYF
+	MmQWLVgMtpfrgTnXOOD1uDclM5fFltoZHN88h+fde9qk4M2aL9THekOwZeTAGyr2
+	WWufj4uBAunrJP3upiu9ysHC0Uyrf5zKgOcCg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=psH7L8lyGWmUM2Ks1oR7rdr2aCKwqTuz
+	rgu08RpvzjzbcGTDO3dDZizs+oG7YOBv/J9H5WF/gc2/fK2+3LmSQUloD8bFXBoc
+	T8KPBd/F4IV+jyLpp56QwWQkBS//6fh83eK2orrzeG/7gZBQ051YkPfuXOfS1Ofg
+	CcoPEOEBHSM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 96D6C4DF1D;
+	Wed, 30 Oct 2013 13:39:24 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F0E204DF1B;
+	Wed, 30 Oct 2013 13:39:23 -0400 (EDT)
+In-Reply-To: <1382996580-19031-1-git-send-email-bdwalton@gmail.com> (Ben
+	Walton's message of "Mon, 28 Oct 2013 21:43:00 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 374785E6-418A-11E3-ACC4-1FFB7F2839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237045>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237046>
 
-On 2013-10-30 18.14, Torsten B=C3=B6gershausen wrote:
-> On 2013-10-30 18.01, Vicent Mart=C3=AD wrote:
->> On Wed, Oct 30, 2013 at 5:51 PM, Torsten B=C3=B6gershausen <tboegi@w=
-eb.de> wrote:
->>> There is a name clash under cygwin 1.7 (1.5 is OK)
->>> The following "first aid hot fix" works for me:
->>> /Torsten
->>
->> If Cygwin declares its own bswap_64, wouldn't it be better to use it
->> instead of overwriting it with our own?
-> Yes,
-> this will be part of a longer patch.
-> I found that some systems have something like this:
->=20
-> #define htobe64(x) bswap_64(x)
-> And bswap_64 is a function, so we can not detect it by "asking"
-> #ifdef bswap_64
-> ..
-> #endif
->=20
->=20
-> But we can use
-> #ifdef htobe64
-> ...
-> #endif
-> and this will be part of a bigger patch.
->=20
-> And, in general, we should avoid to introduce functions which may hav=
-e a
-> name clash.
-> Using the git_ prefix for function names is a good practice.
-> So in order to unbrake the compilation error under cygwin 17,
-> the "hotfix" can be used.
-> /Torsten
-I just realized that there seem to problems to compile pu under msysgit=
-=2E
-More investigation needed here.
+Ben Walton <bdwalton@gmail.com> writes:
+
+> Solaris' tr (both /usr/bin/ and /usr/xpg4/bin) uses the System V
+> semantics for tr whereby string1's length is truncated to the length
+> of string2 if string2 is shorter. The BSD semantics, as used by GNU tr
+> see string2 padded to the length of string1 using the final character
+> in string2. POSIX explicitly doesn't specify the correct behavior
+> here, making both equally valid.
+>
+> This difference means that Solaris' native tr implementations produce
+> different results for tr ":\t\n" "\0" than GNU tr. This breaks a few
+> tests in t0008-ignores.sh.
+>
+> Possible fixes for this are to make string2 be "\0\0\0" or "[\0*]".
+>
+> Instead, use perl to perform these transliterations which means we
+> don't need to worry about the difference at all. Since we're replacing
+> tr with perl, we also use perl to replace the sed invocations used to
+> transform the files.
+>
+> Replace four identical transforms with a function named
+> broken_c_unquote. Replace the other two identical transforms with a
+> fuction named broken_c_unquote_verbose.
+>
+> Signed-off-by: Ben Walton <bdwalton@gmail.com>
+> ---
+>
+> ...Forgot to quote PERL_PATH in the previous iteration.
+
+Thanks; will requeue.
