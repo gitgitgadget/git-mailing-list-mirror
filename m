@@ -1,136 +1,103 @@
-From: Vicent Marti <vicent@github.com>
-Subject: Re: [PATCH 11/19] pack-objects: use bitmaps when packing objects
-Date: Wed, 30 Oct 2013 17:01:17 +0100
-Message-ID: <CAFFjANQYsULx+Cr68_xrA-jB2WvJqw-KRa2hbHsA7WaLKFowEg@mail.gmail.com>
-References: <20131024175915.GA23398@sigill.intra.peff.net> <20131024180419.GK24180@sigill.intra.peff.net>
- <CAJo=hJuDx=3AOoz2oEORVOzeBYBwvOWO_ye8D5d8PcDc3Zm+Ew@mail.gmail.com>
- <20131030082143.GM11317@sigill.intra.peff.net> <CAJo=hJs0uUdDfdo9g-FeUmed5Z4+S+spPb+4OL8NipN-GXxuxQ@mail.gmail.com>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [PATCH 10/19] pack-bitmap: add support for bitmap indexes
+Date: Wed, 30 Oct 2013 16:04:06 +0000
+Message-ID: <CAJo=hJvm_sZqobzO0Er-OVp-Xkf4fT_tySQeNWf0mveHH-G-Xg@mail.gmail.com>
+References: <20131024175915.GA23398@sigill.intra.peff.net> <20131024180357.GJ24180@sigill.intra.peff.net>
+ <CAJo=hJvw-UNWVDADcGzA1P3GGOKJGh8h4LrETPYnjBNYmfkxjQ@mail.gmail.com>
+ <20131030081023.GK11317@sigill.intra.peff.net> <CAFFjANQyMfV4M_wynPORfN2S1=eAdBxScgNYzD_dsRmKekp83Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Cc: Jeff King <peff@peff.net>, git <git@vger.kernel.org>
-To: Shawn Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Oct 30 17:01:50 2013
+To: Vicent Marti <vicent@github.com>
+X-From: git-owner@vger.kernel.org Wed Oct 30 17:04:33 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VbYDI-0004Jy-HT
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Oct 2013 17:01:44 +0100
+	id 1VbYG0-0005dy-JE
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Oct 2013 17:04:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752204Ab3J3QBk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Oct 2013 12:01:40 -0400
-Received: from mail-vb0-f52.google.com ([209.85.212.52]:54002 "EHLO
-	mail-vb0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750766Ab3J3QBj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Oct 2013 12:01:39 -0400
-Received: by mail-vb0-f52.google.com with SMTP id f13so1188502vbg.11
-        for <git@vger.kernel.org>; Wed, 30 Oct 2013 09:01:39 -0700 (PDT)
+	id S1751838Ab3J3QE3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Oct 2013 12:04:29 -0400
+Received: from mail-we0-f175.google.com ([74.125.82.175]:44573 "EHLO
+	mail-we0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751583Ab3J3QE2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Oct 2013 12:04:28 -0400
+Received: by mail-we0-f175.google.com with SMTP id t61so1489972wes.20
+        for <git@vger.kernel.org>; Wed, 30 Oct 2013 09:04:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=IW66f5YMW5Tigvdxf0+PFz5cZgH9w0Y1POBj0o4zEhM=;
-        b=0KIcQNvR0zzPqcBWzgoxb82A/GpHeFeQwFssS/3eObilsgYkm0jSUJ2Z1yUReK2pcS
-         oGwezNHtvQAUzvi5iUE3uV1YLObYbmX2oh8Vl819i9VuCftbQSt/TT8p6qMGFNz8vPU/
-         ZkXDv3wAT5nLIcTFmnpzzIWQw+jCCcorkQcncGaFVnPvCdTThbUmTtcxqIxOTe0dRzV0
-         laQM0McT5rRaAh2triS2sujLE89G13ZdAOz6pJOpGrRM0lLGg3fd52uMdsoRYzNtbJlM
-         jVjfLwBXDp6CgNhi3434G+6+gI2GkHsr2DRyLHCLiVIOBa2r2xzknusJBuTYKGjhEV58
-         LaKg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=IW66f5YMW5Tigvdxf0+PFz5cZgH9w0Y1POBj0o4zEhM=;
-        b=hGS8h7f2WnwsoBcpKAeGBgrSwRwzl7rzgkh3CzmZf1cbDi0HL9pBiWWoVcGvofXYrF
-         T0jvxoNcwzjgW83r7nUTz86tVlXmL6qKww+gVgmu4VytnSR2VGbRAI+VjNGScRdP1elD
-         drGiq1LlWi4ZB1g+ez3fZBsU+8BPXnzotWOQY=
-X-Received: by 10.52.122.71 with SMTP id lq7mr15468vdb.65.1383148899026; Wed,
- 30 Oct 2013 09:01:39 -0700 (PDT)
-Received: by 10.221.65.202 with HTTP; Wed, 30 Oct 2013 09:01:17 -0700 (PDT)
-In-Reply-To: <CAJo=hJs0uUdDfdo9g-FeUmed5Z4+S+spPb+4OL8NipN-GXxuxQ@mail.gmail.com>
-X-Google-Sender-Auth: uMreuky_SYgH3M_AVeIX-VAS7lc
+        d=spearce.org; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=z0OwWiBFWRYj2mm098OAhx8tujyiRk+/ZHFeLseY/pQ=;
+        b=Ve9BQlHh7A9/xyGLocY2wvpnkP6174OIIYm24TYLza5zuOr+o2nOeJ7o6QYN190AAs
+         34aNih262G4LKWebgkb8Ax3xN20xYVsd9oZNFD9DMfHO/wz03jR9JxaYr/WZosROrEQm
+         jk1RKOWh8+JKQkXXiKupC+s9zjd3y8by/swoA=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=z0OwWiBFWRYj2mm098OAhx8tujyiRk+/ZHFeLseY/pQ=;
+        b=ODZmWWmpM5iuCl+0FwUiIMlV2F9sR+pPrHcHUhqEicplSvqSWd22KKO2blQ9bgM5jf
+         gYq4chRNkPf8Wu3uWM9GDoTwgRyb5jhOegHWa5vRqJyS974loPb4FaRr8tCNZ0Lq8D1F
+         knrBLqO/m4GXyFyFgOgCalM6qgUdtgjH+grlEwyVxUJH1OoM04OoBKgwVI0YO1XAC7Pe
+         QtB3Gh6v6qnLxFUyR0/g6c65HL4aXenYZ/s2UekbZ04Y5jFUKVNrRAnMKZVq/LSM6Vl7
+         /V2xAYAx3PRMwEYWE6UL9NsODZcGHy3wN7n1m4fyGkGRQ2hTH04sW0xgT7Ezyv1oHMbM
+         d0Bg==
+X-Gm-Message-State: ALoCoQniDWV2gm/hO+geGjs57YjxOA44DnZV14ay2p6Wcz+0hASCFUYYFhdbHDTOLMo6spnKypWr
+X-Received: by 10.194.9.100 with SMTP id y4mr5345299wja.22.1383149066904; Wed,
+ 30 Oct 2013 09:04:26 -0700 (PDT)
+Received: by 10.227.62.140 with HTTP; Wed, 30 Oct 2013 09:04:06 -0700 (PDT)
+In-Reply-To: <CAFFjANQyMfV4M_wynPORfN2S1=eAdBxScgNYzD_dsRmKekp83Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237028>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237029>
 
-On Wed, Oct 30, 2013 at 11:38 AM, Shawn Pearce <spearce@spearce.org> wrote:
->> Since (1) is relatively rare, I think we are using this as a proxy for
->> (2), so that we can do a regular walk rather than looking around for
->> bitmaps that don't exist. But I may be misremembering the reasoning.
->> Vicent?
->
-> Ah. I am not sure if we do this in JGit. I think JGit's approach is to
-> look if the have appears in a pack with bitmaps, this is a simple
-> lookup in the .idx file and does not require expanding any data from
-> the .bitmap file.
-
-No, you don't do this in JGit right now. This is a small optimization
-we implemented to prevent *loading* the bitmap file (and hence
-building the reverse index, which can be expensive) unless we're sure
-we can at least *attempt* a bitmap walk.
-
-> But it wasn't my question. :-)
->
-> Client sends "want B ; have E". What if E appears in the bitmapped
-> pack, but does not itself have a bitmap? Do you walk backwards from B
-> and switch to the bitmap algorithm when you find a commit that has a
-> bitmap and that bitmap contains E?
-
-This is correct, we use the same heuristics as JGit. Once we have
-loaded a bitmap file we know we can attempt a bitmap walk; if E is on
-the bitmapped pack, we'll build a temporary bitmap using an extended
-index (with bits for commits that are not in the packfile) as we walk
-backwards until E. Once we find a commit with a bitmap, we'll OR that
-with the temporary bitmap to skip the full walk.
-
->>> In JGit we write the to_pack list first, then the reuse pack. Our
->>> rationale was the to_pack list is recent objects that are newer and
->>> would appear first in a traditional traversal, so they should go at
->>> the front of the stream. This does mean if they delta compress against
->>> an object in that reuse_packfile slice they have to use REF_DELTA
->>> instead of OFS_DELTA.
+On Wed, Oct 30, 2013 at 3:47 PM, Vicent Marti <vicent@github.com> wrote:
+> On Wed, Oct 30, 2013 at 9:10 AM, Jeff King <peff@peff.net> wrote:
 >>
->> That's a good point. In our case I think we do not delta against the
->> reused packfile objects at all, as we simply send out the whole slice of
->> packfile without making an entry for each object.
->
-> JGit also doesn't use the reused packfile as delta bases, because
-> there are no object entries to shove through the delta window. So
-> there is never any risk of a reference to a base later in the file. It
-> also means that "thin pack" at the front of the stream is less
-> optimally compressed. At Google we side step that by doing GC at the
-> server very often, to try and keep the number of objects in that pack
-> low.
->
-> It might make sense to use a commit that covers the majority of the
-> reused pack as the edge base candidate case during delta compression
-> here, as though the client had sent us a "have" for that commit. I
-> don't think we have tried this in JGit. It would make deltas use
-> REF_DELTA, but the delta size has to be smaller than the REF_DELTA
-> header to be used in the stream so its still a smaller overall
-> transfer.
->
->>> Is this series running on github.com/torvalds/linux? Last Saturday I
->>> ran a live demo clone comparing github.com/torvalds/linux to a JGit
->>> bitmap clone and some guy heckled me because GitHub was only a few
->>> seconds slower. :-)
+>> In fact, I'm not quite sure that even a partial reuse up to an offset is
+>> 100% safe. In a newly packed git repo it is, because we always put bases
+>> before deltas (and OFS_DELTA objects need this). But if you had a bitmap
+>> generated from a fixed thin pack, we would have REF_DELTA objects early
+>> on that depend on bases appended to the end of the pack. So I really
+>> wonder if we should scrap this partial reuse and either just have full
+>> reuse, or go through the regular object_entry construction.
 >>
->> It is. Use kernel.org if you want to make fun of someone. :)
+>> Vicent, you've thought about the reuse code a lot more than I have. Any
+>> thoughts?
 >
-> Hah. OK, so GitHub was only a few seconds slower only because my
-> desktop is better connected to our data centers than to yours. Nicely
-> done, this patch series really works. :)
+> Yes, our pack writing and bitmap code takes enough precautions to
+> arrange the objects in the packfile in a way that can be partially
+> reused, so for any given bitmap file written from Git, I'd say we're
+> safe to always reuse the leader of the pack if this is possible.
+>
+> For bitmaps generated from JGit, however, we cannot make this
+> assumption. I mean, we can right now (from my understanding of the
+> current implementation for pack-objects on JGit), but they are free to
+> change this in the future.
 
-Thanks Shawn, your feedback was very helpful.
+JGit certainly doesn't promise the ordering behavior, so the fact that
+its happening is just luck. The code could change in the future to
+invalidate this.
 
-Re. cloning speeds: we are actually bottlenecked by our routing layer.
-The CPUs in our new fileservers can clone `torvalds/linux` to
-/dev/null in 20s, but we're slowing down when routing the actual
-traffic back to the client. We're in the process of rewriting our Git
-reverse proxys so let's see what the future looks like.
+> Obviously I intend to keep the pack reuse on production because the
+> CPU savings are noticeable, but we can drop it from the public
+> patchset.
 
-Love,
-vmg
+I think you should keep it in, its a significant improvement.
+
+> Ideally, we'd have full pack reuse like JGit, but we cannot
+> reasonably do that in GitHub because splitting a pack for the network
+> root would double our disk usage for all the forks.
+
+I gave a talk the week before about Git bitmaps and why we sometimes
+have to slice pack files by object.
+
+Some guy in the audience kept yelling that since its Git its all open
+source and `git clone` is "just" a file transfer problem. So maybe for
+his GitHub repositories and forks its OK to include the entire fork
+network when someone clones?  :-)
