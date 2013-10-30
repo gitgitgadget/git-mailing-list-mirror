@@ -1,78 +1,88 @@
-From: Fredrik Gustafsson <iveqy@iveqy.com>
-Subject: Re: Limiting disk usage
-Date: Wed, 30 Oct 2013 16:40:11 +0100
-Message-ID: <20131030154011.GB9691@paksenarrion.iveqy.com>
-References: <0a4899b7-f75f-4016-9c99-5e6e3fb9603c@email.android.com>
- <vpqob68ebcu.fsf@anie.imag.fr>
- <CAA01Cso+yTzatiAaQahx5h2N0nnOON7FsnWNSYrN-pV=8qzn7g@mail.gmail.com>
- <526FCA13.4090902@gmail.com>
- <CAA01Cso8J+BBgskoRtxkPRrtM4KJ1O2FhcB4uh+QB2Dr=DZGyQ@mail.gmail.com>
- <52712816.9010600@gmail.com>
+From: Vicent Marti <vicent@github.com>
+Subject: Re: [PATCH 10/19] pack-bitmap: add support for bitmap indexes
+Date: Wed, 30 Oct 2013 16:47:57 +0100
+Message-ID: <CAFFjANQyMfV4M_wynPORfN2S1=eAdBxScgNYzD_dsRmKekp83Q@mail.gmail.com>
+References: <20131024175915.GA23398@sigill.intra.peff.net> <20131024180357.GJ24180@sigill.intra.peff.net>
+ <CAJo=hJvw-UNWVDADcGzA1P3GGOKJGh8h4LrETPYnjBNYmfkxjQ@mail.gmail.com> <20131030081023.GK11317@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Piotr Krukowiecki <piotr.krukowiecki@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 30 16:42:51 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Shawn Pearce <spearce@spearce.org>, git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Oct 30 16:48:23 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VbXv0-0005kV-Ap
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Oct 2013 16:42:50 +0100
+	id 1VbY0M-0007d4-Sc
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Oct 2013 16:48:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751615Ab3J3Pmq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 30 Oct 2013 11:42:46 -0400
-Received: from mail-la0-f50.google.com ([209.85.215.50]:34791 "EHLO
-	mail-la0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750766Ab3J3Pmp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Oct 2013 11:42:45 -0400
-Received: by mail-la0-f50.google.com with SMTP id ec20so1270655lab.9
-        for <git@vger.kernel.org>; Wed, 30 Oct 2013 08:42:44 -0700 (PDT)
+	id S1751596Ab3J3PsT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Oct 2013 11:48:19 -0400
+Received: from mail-vc0-f180.google.com ([209.85.220.180]:38479 "EHLO
+	mail-vc0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751305Ab3J3PsS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Oct 2013 11:48:18 -0400
+Received: by mail-vc0-f180.google.com with SMTP id lc6so1039279vcb.39
+        for <git@vger.kernel.org>; Wed, 30 Oct 2013 08:48:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=B2rLaWnAX8dvii0sfNm2WE1ppRwfWbTZjPt7hrye6n0=;
-        b=U8HX5wFb2P+a0uqx+PM3bAyUgAFoPPQ6fIAfYjdz7wMM0vF66whxFqlrZ7UBQ9ZcaU
-         66dAw1Dew73oAt4M1R7sCcAeg0ZxrwYdBFxXAjGsf69WIQY3GVRRdCWVgL/pqb8c25p5
-         TiFX9UJTaSWL5ysgU2sFHlpcgiaEUZVjbHKoXIIJpJGYnMx0UQTE0U896IjLs3J6Tt7p
-         GDryUL410TPcJw08atz3RCnglsfGICEXpVZFnd+4EXmByFp79TKnnLXouQR07j08zn9R
-         0x/PedqskQmIpTttz+knNiQ1eWPzBV8gS0194LCfXdm0+ZSZ4is1KucZfsF/0jszPyGF
-         tFsg==
-X-Received: by 10.152.22.35 with SMTP id a3mr1710768laf.45.1383147764114;
-        Wed, 30 Oct 2013 08:42:44 -0700 (PDT)
-Received: from paksenarrion.iveqy.com (c83-250-237-167.bredband.comhem.se. [83.250.237.167])
-        by mx.google.com with ESMTPSA id pw4sm20401111lbb.9.2013.10.30.08.42.40
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Wed, 30 Oct 2013 08:42:41 -0700 (PDT)
-Received: from iveqy by paksenarrion.iveqy.com with local (Exim 4.72)
-	(envelope-from <iveqy@paksenarrion.iveqy.com>)
-	id 1VbXsR-0006Sh-Ev; Wed, 30 Oct 2013 16:40:11 +0100
-Content-Disposition: inline
-In-Reply-To: <52712816.9010600@gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=a1qpFB3qEt8essZvX98u5FYlxMOPBGSpBr6hNCHRdHA=;
+        b=b/a//6aU0hiT86H+/IItRTjKMI+/KxYZzZdGM85A2uZxFsNYVonyq943jfjnlxV2Do
+         0J33fAZzUYyGs7OT4TE5E8xsUAUIGa4PYie7SsghdRsHie78SLicW2hdwL8qDFjt/nYu
+         xcnQ2ocWa7hchPrkWLLdd8NySRbT291aumCMVXMZV2szY/8YZwQ3z22+Thze33w8Dj70
+         +9i7tlugD+l/9A79HQFrI/cvgq8msiERD2JL0H+w4OzuOSuQ5pn2q7Sw598Idw1SZSY3
+         aFqQIAQFX3Jg5GVhoCl172NtlWd/hZAwjfr0hDO76yHGdxmjXsbwAgSMiN1JXiKBo/mq
+         uLjg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=a1qpFB3qEt8essZvX98u5FYlxMOPBGSpBr6hNCHRdHA=;
+        b=hLwcVBaz3agZyMyfbfhgtZBMM0x4qKv75K4btbQL7DgJEBJU7KZA7p9/bc1QFM7p1T
+         bu1vRKZ8mRwGEwBXXd4qbjOgNnFBBxSFot1TUAjWNaISaGl8FigBcm+NtuTNI02iBEcw
+         pqFreckgJeF+Ouu0mtX9GRwusgdJR1XItKTXU=
+X-Received: by 10.58.233.98 with SMTP id tv2mr3496166vec.11.1383148097922;
+ Wed, 30 Oct 2013 08:48:17 -0700 (PDT)
+Received: by 10.221.65.202 with HTTP; Wed, 30 Oct 2013 08:47:57 -0700 (PDT)
+In-Reply-To: <20131030081023.GK11317@sigill.intra.peff.net>
+X-Google-Sender-Auth: 09vbWdA0s7kPHYMp_moY0hIq_Ug
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237025>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237026>
 
-On Wed, Oct 30, 2013 at 04:39:02PM +0100, Jakub Nar=C4=99bski wrote:
-> From time to time you can find there ideas about adding "floating"
-> mode to git-submodule, but as far as I know up till now without
-> effect...
+On Wed, Oct 30, 2013 at 9:10 AM, Jeff King <peff@peff.net> wrote:
+>
+> In fact, I'm not quite sure that even a partial reuse up to an offset is
+> 100% safe. In a newly packed git repo it is, because we always put bases
+> before deltas (and OFS_DELTA objects need this). But if you had a bitmap
+> generated from a fixed thin pack, we would have REF_DELTA objects early
+> on that depend on bases appended to the end of the pack. So I really
+> wonder if we should scrap this partial reuse and either just have full
+> reuse, or go through the regular object_entry construction.
+>
+> Vicent, you've thought about the reuse code a lot more than I have. Any
+> thoughts?
 
-How about git submodule update --remote ?
+Yes, our pack writing and bitmap code takes enough precautions to
+arrange the objects in the packfile in a way that can be partially
+reused, so for any given bitmap file written from Git, I'd say we're
+safe to always reuse the leader of the pack if this is possible.
 
---=20
-Med v=C3=A4nliga h=C3=A4lsningar
-=46redrik Gustafsson
+For bitmaps generated from JGit, however, we cannot make this
+assumption. I mean, we can right now (from my understanding of the
+current implementation for pack-objects on JGit), but they are free to
+change this in the future.
 
-tel: 0733-608274
-e-post: iveqy@iveqy.com
+Obviously I intend to keep the pack reuse on production because the
+CPU savings are noticeable, but we can drop it from the public
+patchset. Ideally, we'd have full pack reuse like JGit, but we cannot
+reasonably do that in GitHub because splitting a pack for the network
+root would double our disk usage for all the forks.
+
+luv,
+vmg
