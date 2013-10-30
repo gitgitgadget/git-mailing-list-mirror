@@ -1,88 +1,80 @@
-From: Vicent Marti <vicent@github.com>
-Subject: Re: [PATCH 10/19] pack-bitmap: add support for bitmap indexes
-Date: Wed, 30 Oct 2013 16:47:57 +0100
-Message-ID: <CAFFjANQyMfV4M_wynPORfN2S1=eAdBxScgNYzD_dsRmKekp83Q@mail.gmail.com>
-References: <20131024175915.GA23398@sigill.intra.peff.net> <20131024180357.GJ24180@sigill.intra.peff.net>
- <CAJo=hJvw-UNWVDADcGzA1P3GGOKJGh8h4LrETPYnjBNYmfkxjQ@mail.gmail.com> <20131030081023.GK11317@sigill.intra.peff.net>
+From: =?UTF-8?B?SmFrdWIgTmFyxJlic2tp?= <jnareb@gmail.com>
+Subject: Re: collapsing old git history to reduce repo size, while preserving
+ commit #s and tags
+Date: Wed, 30 Oct 2013 16:55:30 +0100
+Message-ID: <52712BF2.2080409@gmail.com>
+References: <CAJSXqrr4nA6azBgaD7rBbYSLWonQkn7PvSsPTXjAPaxW6E+LiA@mail.gmail.com> <CAJSXqrqz3KeiPKWz6rFKb4o0F88o9=63Sv37MJSp5qmYtod-6A@mail.gmail.com> <CAH5451=DGp0aRaA6c-ThO0Aj0VCAUFX17p8gOKPpURwEnjcpdA@mail.gmail.com> <CAJSXqrr7rHxyXX=_+xgJ4FW2UHSts2jRt7zwrkkw1L3uKHnCtw@mail.gmail.com> <CAJSXqrrMCWmRBoRNCLuD6DvU=CSk+MVGrSOCeOROROEaKouVKQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Shawn Pearce <spearce@spearce.org>, git <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Oct 30 16:48:23 2013
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Andrew Ardill <andrew.ardill@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Stas Cherkassky <scherkas@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 30 16:55:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VbY0M-0007d4-Sc
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Oct 2013 16:48:23 +0100
+	id 1VbY7O-00021r-N5
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Oct 2013 16:55:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751596Ab3J3PsT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Oct 2013 11:48:19 -0400
-Received: from mail-vc0-f180.google.com ([209.85.220.180]:38479 "EHLO
-	mail-vc0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751305Ab3J3PsS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Oct 2013 11:48:18 -0400
-Received: by mail-vc0-f180.google.com with SMTP id lc6so1039279vcb.39
-        for <git@vger.kernel.org>; Wed, 30 Oct 2013 08:48:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=a1qpFB3qEt8essZvX98u5FYlxMOPBGSpBr6hNCHRdHA=;
-        b=b/a//6aU0hiT86H+/IItRTjKMI+/KxYZzZdGM85A2uZxFsNYVonyq943jfjnlxV2Do
-         0J33fAZzUYyGs7OT4TE5E8xsUAUIGa4PYie7SsghdRsHie78SLicW2hdwL8qDFjt/nYu
-         xcnQ2ocWa7hchPrkWLLdd8NySRbT291aumCMVXMZV2szY/8YZwQ3z22+Thze33w8Dj70
-         +9i7tlugD+l/9A79HQFrI/cvgq8msiERD2JL0H+w4OzuOSuQ5pn2q7Sw598Idw1SZSY3
-         aFqQIAQFX3Jg5GVhoCl172NtlWd/hZAwjfr0hDO76yHGdxmjXsbwAgSMiN1JXiKBo/mq
-         uLjg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=a1qpFB3qEt8essZvX98u5FYlxMOPBGSpBr6hNCHRdHA=;
-        b=hLwcVBaz3agZyMyfbfhgtZBMM0x4qKv75K4btbQL7DgJEBJU7KZA7p9/bc1QFM7p1T
-         bu1vRKZ8mRwGEwBXXd4qbjOgNnFBBxSFot1TUAjWNaISaGl8FigBcm+NtuTNI02iBEcw
-         pqFreckgJeF+Ouu0mtX9GRwusgdJR1XItKTXU=
-X-Received: by 10.58.233.98 with SMTP id tv2mr3496166vec.11.1383148097922;
- Wed, 30 Oct 2013 08:48:17 -0700 (PDT)
-Received: by 10.221.65.202 with HTTP; Wed, 30 Oct 2013 08:47:57 -0700 (PDT)
-In-Reply-To: <20131030081023.GK11317@sigill.intra.peff.net>
-X-Google-Sender-Auth: 09vbWdA0s7kPHYMp_moY0hIq_Ug
+	id S1751554Ab3J3Pzf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 30 Oct 2013 11:55:35 -0400
+Received: from dovecot.mat.uni.torun.pl ([158.75.2.81]:35557 "EHLO
+	dovecot.mat.uni.torun.pl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750735Ab3J3Pze (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Oct 2013 11:55:34 -0400
+Received: from dovecot.mat.uni.torun.pl (localhost.localdomain [127.0.0.1])
+	by dovecot.mat.uni.torun.pl (Postfix) with ESMTP id AC58BB7179E;
+	Wed, 30 Oct 2013 16:55:33 +0100 (CET)
+X-Virus-Scanned: amavisd-new at mat.uni.torun.pl
+Received: from dovecot.mat.uni.torun.pl ([127.0.0.1])
+	by dovecot.mat.uni.torun.pl (dovecot2.mat.uni.torun.pl [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id UxnunCA4nD-5; Wed, 30 Oct 2013 16:55:31 +0100 (CET)
+Received: from [158.75.2.83] (unknown [158.75.2.83])
+	(using TLSv1 with cipher DHE-RSA-CAMELLIA256-SHA (256/256 bits))
+	(No client certificate requested)
+	(Authenticated sender: jnareb)
+	by dovecot.mat.uni.torun.pl (Postfix) with ESMTPSA id AE775B71789;
+	Wed, 30 Oct 2013 16:55:31 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
+Newsgroups: gmane.comp.version-control.git
+In-Reply-To: <CAJSXqrrMCWmRBoRNCLuD6DvU=CSk+MVGrSOCeOROROEaKouVKQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237026>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237027>
 
-On Wed, Oct 30, 2013 at 9:10 AM, Jeff King <peff@peff.net> wrote:
+On 2013-10-30 08:52, Stas Cherkassky wrote:
 >
-> In fact, I'm not quite sure that even a partial reuse up to an offset is
-> 100% safe. In a newly packed git repo it is, because we always put bases
-> before deltas (and OFS_DELTA objects need this). But if you had a bitmap
-> generated from a fixed thin pack, we would have REF_DELTA objects early
-> on that depend on bases appended to the end of the pack. So I really
-> wonder if we should scrap this partial reuse and either just have full
-> reuse, or go through the regular object_entry construction.
->
-> Vicent, you've thought about the reuse code a lot more than I have. Any
-> thoughts?
+> Shallow clone (if that's what you meant) is not suitable because it
+> doesn't allow to push/pull to/from this shallow repository.
 
-Yes, our pack writing and bitmap code takes enough precautions to
-arrange the objects in the packfile in a way that can be partially
-reused, so for any given bitmap file written from Git, I'd say we're
-safe to always reuse the leader of the pack if this is possible.
+Still?  I think there were some work on making shallow clone to
+allowing push/pull to/from it.
 
-For bitmaps generated from JGit, however, we cannot make this
-assumption. I mean, we can right now (from my understanding of the
-current implementation for pack-objects on JGit), but they are free to
-change this in the future.
+> I understand that generally git is designed to preserve the history.
+> But the problem is real,  and probably is not unique to our project.
+> The fact that there ARE some ways to modify history (collapse commits=
+,
+> rebase, filter-branch) made me hopeful that what I need is also
+> possible..
 
-Obviously I intend to keep the pack reuse on production because the
-CPU savings are noticeable, but we can drop it from the public
-patchset. Ideally, we'd have full pack reuse like JGit, but we cannot
-reasonably do that in GitHub because splitting a pack for the network
-root would double our disk usage for all the forks.
+By the very nature of git, namely that the 'parent' link to previous
+(as in: this is based on it) commit or commits, is SHA-1 of said commit=
+,
+and SHA-1 identifier of commit is based on contents including 'parent'
+field.
 
-luv,
-vmg
+Both rebase and filter-branch _rewrite_ history (i.e. make modified
+copy of history, and let you replace old history by new).
+
+You could try to use father or shallow clone, namely *grafts*, to
+'cauterize' history, but there remains same problems as with shallow
+clone, perhaps with exception that git won't check things for you.
+
+--=20
+Jakub Nar=C4=99bski
