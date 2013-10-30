@@ -1,71 +1,56 @@
-From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+From: =?UTF-8?Q?Vicent_Mart=C3=AD?= <tanoku@gmail.com>
 Subject: Re: What's cooking in git.git (Oct 2013, #07; Mon, 28)
-Date: Wed, 30 Oct 2013 17:51:58 +0100
-Message-ID: <5271392E.8020003@web.de>
-References: <xmqqr4b5dwke.fsf@gitster.dls.corp.google.com>
+Date: Wed, 30 Oct 2013 18:01:16 +0100
+Message-ID: <CAFFjANT=-mQoKUU2KsPHo3Hcq7RAuyM1t4kvJu4OfiNeHrA+Ng@mail.gmail.com>
+References: <xmqqr4b5dwke.fsf@gitster.dls.corp.google.com> <5271392E.8020003@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	=?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Wed Oct 30 17:52:19 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
+To: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Wed Oct 30 18:01:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VbZ0E-00068W-Ag
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Oct 2013 17:52:18 +0100
+	id 1VbZ9K-0001Io-8C
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Oct 2013 18:01:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752674Ab3J3QwO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Oct 2013 12:52:14 -0400
-Received: from mout.web.de ([212.227.17.11]:49730 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753534Ab3J3QwL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Oct 2013 12:52:11 -0400
-Received: from [192.168.209.26] ([78.72.74.102]) by smtp.web.de (mrweb103)
- with ESMTPA (Nemesis) id 0LbJ4A-1W4oCZ3SQ6-00kvLF for <git@vger.kernel.org>;
- Wed, 30 Oct 2013 17:52:10 +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:24.0) Gecko/20100101 Thunderbird/24.1.0
-In-Reply-To: <xmqqr4b5dwke.fsf@gitster.dls.corp.google.com>
-X-Provags-ID: V03:K0:vCqDJeCFS63SMUUPX9sCRvztdSLLnfTUk29BP2jvUffeScJg9nx
- I2xDSUXLqMLSXsOZKlizi2C3I63gMm1Y70cROCoSbLdHrJRqsWs3OyEsvPElrSttGZaueR2
- xJtPChtcPk3L71V+BjJneh5YroaED4emJl018Pjw08aDXc1uvgPRyOG314QSqvStFFWaAGt
- kqwVqVKjqaBp7cOzWiDXA==
+	id S1752006Ab3J3RBi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 30 Oct 2013 13:01:38 -0400
+Received: from mail-vc0-f174.google.com ([209.85.220.174]:52748 "EHLO
+	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751613Ab3J3RBh convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 30 Oct 2013 13:01:37 -0400
+Received: by mail-vc0-f174.google.com with SMTP id ld13so1132933vcb.33
+        for <git@vger.kernel.org>; Wed, 30 Oct 2013 10:01:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=9+06BuLGa1NDWAYPk9eciRGHayBM7xnT7jaCZDIVoK4=;
+        b=HUH6D86NwygUtjl9xF+zee0x+9Oul0OpJmfjH0BQf7N69O5O4xvU6pCWQuPehWQNwT
+         j5pIWhbse3fBVEX6/8pHLlOtPsn5AX3lXkLLsgfjZe4R+dGsqFlUexAa9Jm7y3YI59fy
+         L9JKsaQGhXF8wASAH75yRSe5+S57lzxt7IHFNSr0X2o51ZB4xkR+7QJVPOB3JYa3OcBv
+         YJKezU8rcpZxKAOmPYg0GEjVn8MdSOx82uPbrkNb1L/9LGERpsuum3NObUQUaRWTUTKp
+         NnT1vZhmD6ETnBks33UVN27BNsTKmqnoPyTqUB/I4oL2sQJCZzqJGCH34Fb/Rozfyx3U
+         +XPw==
+X-Received: by 10.52.34.76 with SMTP id x12mr964213vdi.35.1383152496558; Wed,
+ 30 Oct 2013 10:01:36 -0700 (PDT)
+Received: by 10.221.65.202 with HTTP; Wed, 30 Oct 2013 10:01:16 -0700 (PDT)
+In-Reply-To: <5271392E.8020003@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237034>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237035>
 
-On 2013-10-28 20.28, Junio C Hamano wrote:
-> * jk/pack-bitmap (2013-10-28) 20 commits
-There is a name clash under cygwin 1.7 (1.5 is OK)
-The following "first aid hot fix" works for me:
-/Torsten
+On Wed, Oct 30, 2013 at 5:51 PM, Torsten B=C3=B6gershausen <tboegi@web.=
+de> wrote:
+> There is a name clash under cygwin 1.7 (1.5 is OK)
+> The following "first aid hot fix" works for me:
+> /Torsten
 
-$ git diff
-diff --git a/compat/bswap.h b/compat/bswap.h
-index ea1a9ed..8dc39be 100644
---- a/compat/bswap.h
-+++ b/compat/bswap.h
-@@ -64,7 +64,7 @@ static inline uint32_t git_bswap32(uint32_t x)
- #      if defined(__GNUC__) && defined(__GLIBC__)
- #              include <byteswap.h>
- #      else /* GNUC & GLIBC */
--static inline uint64_t bswap_64(uint64_t val)
-+static inline uint64_t git_bswap_64(uint64_t val)
- {
-        return ((val & (uint64_t)0x00000000000000ffULL) << 56)
-                | ((val & (uint64_t)0x000000000000ff00ULL) << 40)
-@@ -76,8 +76,8 @@ static inline uint64_t bswap_64(uint64_t val)
-                | ((val & (uint64_t)0xff00000000000000ULL) >> 56);
- }
- #      endif /* GNUC & GLIBC */
--#      define ntohll(n) bswap_64(n)
--#      define htonll(n) bswap_64(n)
-+#      define ntohll(n) git_bswap_64(n)
-+#      define htonll(n) git_bswap_64(n)
- #else /* __BYTE_ORDER */
- #      error "Can't define htonll or ntohll!"
- #endif
+If Cygwin declares its own bswap_64, wouldn't it be better to use it
+instead of overwriting it with our own?
