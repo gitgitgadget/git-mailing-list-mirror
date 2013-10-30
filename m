@@ -1,202 +1,129 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: What's cooking in git.git (Oct 2013, #07; Mon, 28)
-Date: Wed, 30 Oct 2013 21:07:25 +0000
-Message-ID: <5271750D.5010801@ramsay1.demon.co.uk>
-References: <xmqqr4b5dwke.fsf@gitster.dls.corp.google.com> <5271392E.8020003@web.de> <CAFFjANT=-mQoKUU2KsPHo3Hcq7RAuyM1t4kvJu4OfiNeHrA+Ng@mail.gmail.com> <52713E67.3000202@web.de> <527158AF.3070204@ramsay1.demon.co.uk> <52716C58.3090507@web.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] warn about http server document being too old
+Date: Wed, 30 Oct 2013 14:27:15 -0700
+Message-ID: <xmqqzjpqa1qk.fsf@gitster.dls.corp.google.com>
+References: <523D030A.6080309@gmail.com>
+	<xmqqli1s51z1.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-To: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
-	=?UTF-8?B?VmljZW50IE1hcnTDrQ==?= <tanoku@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 30 22:07:35 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
+To: Sitaram Chamarty <sitaramc@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 30 22:27:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VbczG-0007eS-G4
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Oct 2013 22:07:35 +0100
+	id 1VbdIW-00087E-Ib
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Oct 2013 22:27:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752399Ab3J3VHa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 30 Oct 2013 17:07:30 -0400
-Received: from mdfmta010.mxout.tbr.inty.net ([91.221.168.51]:33563 "EHLO
-	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752381Ab3J3VHa (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Oct 2013 17:07:30 -0400
-Received: from mdfmta010.tbr.inty.net (unknown [127.0.0.1])
-	by mdfmta010.tbr.inty.net (Postfix) with ESMTP id 002416F99B5;
-	Wed, 30 Oct 2013 21:07:28 +0000 (GMT)
-Received: from mdfmta010.tbr.inty.net (unknown [127.0.0.1])
-	by mdfmta010.tbr.inty.net (Postfix) with ESMTP id ABC996F97E6;
-	Wed, 30 Oct 2013 21:07:27 +0000 (GMT)
-Received: from [192.168.254.1] (unknown [80.176.147.220])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	id S1752807Ab3J3V1Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Oct 2013 17:27:24 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51349 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752614Ab3J3V1W (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Oct 2013 17:27:22 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BD9224C671;
+	Wed, 30 Oct 2013 17:27:20 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=diRn5mynKTC1qKiX3em0RPfOzhs=; b=RhJrKc
+	FFeDSd4iFb2iUtQqNG1A2vmjHO0H+gw//Mu9jECCRun47AxI+FimBfETD2KuxNOC
+	umOdD25NlbbomDX2cO0CdJPwacRRWD5hnDJQXnJjglJmcgRXAMrBousDMwFtufEp
+	ZISncmlBLom68hsWetWoeoyJ7cZryHcKeyJEA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=UPIITkaHl9IMlKj5OJtglZVm7T97rxwh
+	aWJNU2UPd70riQaerOhrLAAcihVZIZsKZGkuikQya7pDGiCS+BDodeEsjaBicaeX
+	votQ+S72O7xJhtl+y2OdQthpDJ/jo6p4PoQVu2e87IKJvPZZMl/ZOyEQkGKmuwQZ
+	2BUHcGaTeaY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A9DF04C670;
+	Wed, 30 Oct 2013 17:27:20 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by mdfmta010.tbr.inty.net (Postfix) with ESMTP;
-	Wed, 30 Oct 2013 21:07:27 +0000 (GMT)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.0
-In-Reply-To: <52716C58.3090507@web.de>
-X-MDF-HostID: 3
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 055974C66B;
+	Wed, 30 Oct 2013 17:27:19 -0400 (EDT)
+In-Reply-To: <xmqqli1s51z1.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Wed, 16 Oct 2013 14:40:18 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 0ED49444-41AA-11E3-835D-1FFB7F2839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237070>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237072>
 
-On 30/10/13 20:30, Torsten B=C3=B6gershausen wrote:
-> On 2013-10-30 20.06, Ramsay Jones wrote:
->> On 30/10/13 17:14, Torsten B=C3=B6gershausen wrote:
->>> On 2013-10-30 18.01, Vicent Mart=C3=AD wrote:
->>>> On Wed, Oct 30, 2013 at 5:51 PM, Torsten B=C3=B6gershausen <tboegi=
-@web.de> wrote:
->>>>> There is a name clash under cygwin 1.7 (1.5 is OK)
->>>>> The following "first aid hot fix" works for me:
->>>>> /Torsten
->>>>
->>>> If Cygwin declares its own bswap_64, wouldn't it be better to use =
-it
->>>> instead of overwriting it with our own?
->>> Yes,
->>> this will be part of a longer patch.
->>> I found that some systems have something like this:
->>>
->>> #define htobe64(x) bswap_64(x)
->>> And bswap_64 is a function, so we can not detect it by "asking"
->>> #ifdef bswap_64
->>> ..
->>> #endif
->>>
->>>
->>> But we can use
->>> #ifdef htobe64
->>> ...
->>> #endif
->>> and this will be part of a bigger patch.
->>>
->>> And, in general, we should avoid to introduce functions which may h=
-ave a
->>> name clash.
->>> Using the git_ prefix for function names is a good practice.
->>> So in order to unbrake the compilation error under cygwin 17,
->>> the "hotfix" can be used.
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Sitaram Chamarty <sitaramc@gmail.com> writes:
+>
+>>   - describe when it is still applicable
+>>   - tell people where to go for most normal cases
 >>
->> heh, my patch (given below) took a different approach, but ....
->>
->> ATB,
->> Ramsay Jones
->>
->> -- >8 --
->> Subject: [PATCH] compat/bswap.h: Fix redefinition of bswap_64 error =
-on cygwin
->> MIME-Version: 1.0
->> Content-Type: text/plain; charset=3DUTF-8
->> Content-Transfer-Encoding: 8bit
->>
->> Since commit 452e0f20 ("compat: add endianness helpers", 24-10-2013)
->> the cygwin build has failed like so:
->>
->>     GIT_VERSION =3D 1.8.4.1.804.g1f3748b
->>         * new build flags
->>         CC credential-store.o
->>     In file included from git-compat-util.h:305:0,
->>                      from cache.h:4,
->>                      from credential-store.c:1:
->>     compat/bswap.h:67:24: error: redefinition of 'bswap_64'
->>     In file included from /usr/include/endian.h:32:0,
->>                      from /usr/include/cygwin/types.h:21,
->>                      from /usr/include/sys/types.h:473,
->>                      from /usr/include/sys/unistd.h:9,
->>                      from /usr/include/unistd.h:4,
->>                      from git-compat-util.h:98,
->>                      from cache.h:4,
->>                      from credential-store.c:1:
->>     /usr/include/byteswap.h:31:1: note: previous definition of \
->> 	=E2=80=98bswap_64=E2=80=99 was here
->>     Makefile:1985: recipe for target 'credential-store.o' failed
->>     make: *** [credential-store.o] Error 1
->>
->> Note that cygwin has a defintion of 'bswap_64' in the <byteswap.h>
->> header file (which had already been included by git-compat-util.h).
->> In order to suppress the error, ensure that the <byteswap.h> header
->> is included, just like the __GNUC__/__GLIBC__ case, rather than
->> attempting to define a fallback implementation.
->>
->> Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+>> Signed-off-by: Sitaram Chamarty <sitaram@atc.tcs.com>
 >> ---
->>  compat/bswap.h | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
 >>
->> diff --git a/compat/bswap.h b/compat/bswap.h
->> index ea1a9ed..b864abd 100644
->> --- a/compat/bswap.h
->> +++ b/compat/bswap.h
->> @@ -61,7 +61,7 @@ static inline uint32_t git_bswap32(uint32_t x)
->>  # define ntohll(n) (n)
->>  # define htonll(n) (n)
->>  #elif __BYTE_ORDER =3D=3D __LITTLE_ENDIAN
->> -#	if defined(__GNUC__) && defined(__GLIBC__)
->> +#	if defined(__GNUC__) && (defined(__GLIBC__) || defined(__CYGWIN__=
-))
->>  #		include <byteswap.h>
->>  #	else /* GNUC & GLIBC */
->>  static inline uint64_t bswap_64(uint64_t val)
+>> ref: http://thread.gmane.org/gmane.comp.version-control.git/159633.  Yes
+>> it's very old but better late than never.
 >>
->=20
-> Nice, much better.
->=20
-> And here comes a patch for a big endian machine.
-> I tryied to copy-paste a patch in my mail program,
-> not sure if this applies.
->=20
-> -- >8 --
-> Subject: [PATCH] compat/bswap.h: htonll and ntohll for big endian
->=20
-> Since commit 452e0f20 ("compat: add endianness helpers", 24-10-2013)
-> the build on a Linux/ppc gave a warning like this:
->     CC ewah/ewah_io.o
-> ewah/ewah_io.c: In function =E2=80=98ewah_serialize_to=E2=80=99:
-> ewah/ewah_io.c:81: warning: implicit declaration of function =E2=80=98=
-htonll=E2=80=99
-> ewah/ewah_io.c: In function =E2=80=98ewah_read_mmap=E2=80=99:
-> ewah/ewah_io.c:132: warning: implicit declaration of function =E2=80=98=
-ntohll=E2=80=99
->=20
-> Fix it by placing the #endif for "#ifdef bswap32" at the right place.
->=20
-> Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
-> ---
->  compat/bswap.h | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->=20
-> diff --git a/compat/bswap.h b/compat/bswap.h
-> index ea1a9ed..b4ddab0
-> --- a/compat/bswap.h
-> +++ b/compat/bswap.h
-> @@ -46,6 +46,7 @@ static inline uint32_t git_bswap32(uint32_t x)
->  #undef htonl
->  #define ntohl(x) bswap32(x)
->  #define htonl(x) bswap32(x)
-> +#endif
-> =20
->  #ifndef __BYTE_ORDER
->  #      if defined(BYTE_ORDER) && defined(LITTLE_ENDIAN) && defined(B=
-IG_ENDIAN)
-> @@ -82,4 +83,3 @@ static inline uint64_t bswap_64(uint64_t val)
->  #      error "Can't define htonll or ntohll!"
->  #endif
-> =20
-> -#endif
->=20
-> .
->=20
+>>  Documentation/howto/setup-git-server-over-http.txt | 5 +++++
+>>  1 file changed, 5 insertions(+)
+>>
+>> diff --git a/Documentation/howto/setup-git-server-over-http.txt b/Documentation/howto/setup-git-server-over-http.txt
+>> index 7f4943e..90b19a0 100644
+>> --- a/Documentation/howto/setup-git-server-over-http.txt
+>> +++ b/Documentation/howto/setup-git-server-over-http.txt
+>> @@ -3,6 +3,11 @@ Subject: Setting up a Git repository which can be pushed into and pulled from ov
+>>  Date: Thu, 10 Aug 2006 22:00:26 +0200
+>>  Content-type: text/asciidoc
+>>
+>> +NOTE: This document is from 2006.  A lot has happened since then, and this
+>> +document is now relevant mainly if your web host is not CGI capable.
+>> +
+>> +Almost everyone else should instead look at linkgit:git-http-backend[1].
+>> +
+>>  How to setup Git server over http
+>>  =================================
+>
+> I tend to agree that it is a good idea to have this kind of phrase
+> somewhere in the document, but you cannot place the material above
+> the top-level title.  AsciiDoc does not seem to like it.
 
-Yep, this was the first thing I did as well! ;-) (*late* last night)
+I've amended this trivially, as follows.  Will advance it to 'next'.
 
-I haven't had time today to look into fixing up the msvc build
-(or a complete re-write), so I look forward to seeing your solution.
-(do you have msvc available? - or do you want me to look at fixing
-it? maybe in a day or two?)
+Thanks.
 
-ATB,
-Ramsay Jones
+-- >8 --
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Date: Sat, 21 Sep 2013 07:53:06 +0530
+Subject: [PATCH] doc/howto: warn about (dumb)http server document being too old
+
+Describe when it is still applicable, and tell people where to go
+for most normal cases.
+
+Signed-off-by: Sitaram Chamarty <sitaram@atc.tcs.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ Documentation/howto/setup-git-server-over-http.txt | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/Documentation/howto/setup-git-server-over-http.txt b/Documentation/howto/setup-git-server-over-http.txt
+index 7f4943e..c803649 100644
+--- a/Documentation/howto/setup-git-server-over-http.txt
++++ b/Documentation/howto/setup-git-server-over-http.txt
+@@ -6,6 +6,10 @@ Content-type: text/asciidoc
+ How to setup Git server over http
+ =================================
+ 
++NOTE: This document is from 2006.  A lot has happened since then, and this
++document is now relevant mainly if your web host is not CGI capable.
++Almost everyone else should instead look at linkgit:git-http-backend[1].
++
+ Since Apache is one of those packages people like to compile
+ themselves while others prefer the bureaucrat's dream Debian, it is
+ impossible to give guidelines which will work for everyone. Just send
+-- 
+1.8.5-rc0-175-g776cf91
