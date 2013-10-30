@@ -1,199 +1,147 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH 10/15] fetch --tags: fetch tags *in addition to* other
- stuff
-Date: Wed, 30 Oct 2013 05:26:41 +0100
-Message-ID: <52708A81.7060300@alum.mit.edu>
-References: <1382543448-2586-1-git-send-email-mhagger@alum.mit.edu>	<1382543448-2586-11-git-send-email-mhagger@alum.mit.edu>	<xmqqob6emlxu.fsf@gitster.dls.corp.google.com>	<526A896D.7050801@alum.mit.edu> <xmqqa9htfbzn.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Subject: [PATCH v2 00/23] Change semantics of "fetch --tags"
+Date: Wed, 30 Oct 2013 06:32:49 +0100
+Message-ID: <1383111192-23780-1-git-send-email-mhagger@alum.mit.edu>
 Cc: git@vger.kernel.org,
-	=?ISO-8859-1?Q?Carlos_Mart=EDn_Nieto?= <cmn@elego.de>,
+	=?UTF-8?q?Carlos=20Mart=C3=ADn=20Nieto?= <cmn@elego.de>,
 	Michael Schubert <mschub@elegosoft.com>,
 	Johan Herland <johan@herland.net>, Jeff King <peff@peff.net>,
 	Marc Branchaud <marcnarc@xiplink.com>,
 	Nicolas Pitre <nico@fluxnic.net>,
 	John Szakmeister <john@szakmeister.net>,
-	Jeff King <peff@peff.net>
+	Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 30 05:34:01 2013
+X-From: git-owner@vger.kernel.org Wed Oct 30 06:33:53 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VbNTj-00018u-Q8
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Oct 2013 05:34:00 +0100
+	id 1VbOPg-0005jn-5X
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Oct 2013 06:33:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750733Ab3J3Edz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Oct 2013 00:33:55 -0400
-Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:45094 "EHLO
-	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750702Ab3J3Edy (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 30 Oct 2013 00:33:54 -0400
-X-Greylist: delayed 423 seconds by postgrey-1.27 at vger.kernel.org; Wed, 30 Oct 2013 00:33:54 EDT
-X-AuditID: 12074412-b7fc96d0000023d5-a4-52708a89b002
+	id S1752145Ab3J3Fdr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Oct 2013 01:33:47 -0400
+Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:60289 "EHLO
+	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750768Ab3J3Fdq (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 30 Oct 2013 01:33:46 -0400
+X-AuditID: 1207440f-b7f306d000006d99-95-52709a3a5165
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id B6.12.09173.98A80725; Wed, 30 Oct 2013 00:26:49 -0400 (EDT)
-Received: from [192.168.69.9] (p57A242F8.dip0.t-ipconnect.de [87.162.66.248])
+	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id 97.FF.28057.A3A90725; Wed, 30 Oct 2013 01:33:46 -0400 (EDT)
+Received: from localhost.localdomain (p57A242F8.dip0.t-ipconnect.de [87.162.66.248])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r9U4QfSL011348
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r9U5XbIB014009
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 30 Oct 2013 00:26:43 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.0
-In-Reply-To: <xmqqa9htfbzn.fsf@gitster.dls.corp.google.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrBKsWRmVeSWpSXmKPExsUixO6iqNvZVRBkMG+zlcX0rtUsFl1Xupks
-	GnqvMFvMu7uLyWLVrWXMFitn3GC0eNpZaTHvxQs2ix8tPcwOnB6X1r1k8jj0Zwq7x7MT7Wwe
-	l15+Z/N41ruH0ePiJWWPGS2vWTw+b5LzOHD5MVsAZxS3TVJiSVlwZnqevl0Cd8aUu+EF1/Ur
-	Oja9YW1gnK3WxcjJISFgIrFvwhFWCFtM4sK99WxdjFwcQgKXGSUe3TrBDuGcZZI4c/8yO0gV
-	r4C2xPr1vWA2i4CqxLtDM8FsNgFdiUU9zUwgtqhAiMTCVceh6gUlTs58wgJiiwioSUxsO8QC
-	MpRZ4BeTRPumpWwgCWGBIIn37fPBzhAS+MUosW09D4jNKWAtMW3qTrA4s4COxLu+B8wQtrzE
-	9rdzmCcwCsxCsmMWkrJZSMoWMDKvYpRLzCnN1c1NzMwpTk3WLU5OzMtLLdI108vNLNFLTSnd
-	xAiJGaEdjOtPyh1iFOBgVOLhNXiQHyTEmlhWXJl7iFGSg0lJlPdneUGQEF9SfkplRmJxRnxR
-	aU5q8SFGCQ5mJRHe6ceBynlTEiurUovyYVLSHCxK4rw/F6v7CQmkJ5akZqemFqQWwWRlODiU
-	JHhjO4GGChalpqdWpGXmlCCkmTg4QYZzSYkUp+alpBYllpZkxINiNb4YGK0gKR6gvT4g7bzF
-	BYm5QFGI1lOMuhzzvnz4xijEkpeflyolzhsOUiQAUpRRmge3ApYgXzGKA30szNsCUsUDTK5w
-	k14BLWECWrKHJQ9kSUkiQkqqgZFNKcxlilmk12yd8He/vmzj2v+mjPmxu4mLaN6r 
+	Wed, 30 Oct 2013 01:33:42 -0400
+X-Mailer: git-send-email 1.8.4.1
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrIIsWRmVeSWpSXmKPExsUixO6iqGs1qyDI4OJrJovpXatZLLqudDNZ
+	NPReYbaYd3cXk8WqW8uYLVbOuMFocXvFfGaLp52VFvNevGCz+NHSw+zA5fH3/Qcmj0vrXjJ5
+	HPozhd3j2Yl2No9LL7+zeTzr3cPocfGSsseMltcsHp83yXkcuPyYLYAritsmKbGkLDgzPU/f
+	LoE74+ueP4wFJ2QrTj6+x9TAuFSsi5GTQ0LARGLNmg5mCFtM4sK99WxdjFwcQgKXGSWurzjN
+	CuFcYZKYsesjC0gVm4CuxKKeZiYQW0RATWJi2yEWkCJmgYnMEsenLwIrEhawkej5c5cdxGYR
+	UJXYNLUTbAWvgIvE6vk7mCDWKUjcaJ7KOoGRewEjwypGucSc0lzd3MTMnOLUZN3i5MS8vNQi
+	XRO93MwSvdSU0k2MkEDk38HYtV7mEKMAB6MSD6/Bg/wgIdbEsuLK3EOMkhxMSqK8aVMKgoT4
+	kvJTKjMSizPii0pzUosPMUpwMCuJ8E4/DlTOm5JYWZValA+TkuZgURLnVV+i7ickkJ5Ykpqd
+	mlqQWgSTleHgUJLgVZ4JNFSwKDU9tSItM6cEIc3EwQkiuEA28ABt4AEp5C0uSMwtzkyHKDrF
+	qCglzqsAkhAASWSU5sENgKWMV4ziQP8IQ7TzANMNXPcroMFMQIP3sOSBDC5JREhJNTCGz8kV
+	O76erVE0uczBOol95hWlepky06mLP/4Sj279+mrHmttpO7bECe6cvEF7RqR7oJ7obAPdgkO/
+	G3bsUZasEnHZOdtd59Lp1oInop4ZteYaYmHhTELnHF6tqrive/rfzlJdPfa0i6xz 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236957>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236958>
 
-On 10/28/2013 08:10 PM, Junio C Hamano wrote:
-> Michael Haggerty <mhagger@alum.mit.edu> writes:
-> 
->>> True but when fetching other references, tags relevant to the
->>> history being fetched by default should automatically follow, so the
->>> above explains why "fetch --tags" is not a useful thing to do daily.
->>
->> Maybe not necessary in many scenarios, but is it harmful for the common
->> case of cloning from and then periodically fetching from an upstream?
-> 
-> There is no mention of "harmful"; I only said "not useful". And it
-> comes primarily from knowing why "--tags" was introduced in the
-> first place; I should have said "less useful than before, ever since
-> we started to reliably auto-follow".
-> 
-> The only "harmful" part is its interaction with "--prune", which
-> your series nicely addresses.
+This is v2 of my proposed fix for the "local tag killer" problem that
+I reported recently [1].  Thanks a lot to Junio for his feedback on
+v1.
 
-OK, then we are in agreement.
+Changes since v1:
 
->> ISTM that the result of the declarative --tags option
->>
->>     we have all upstream tags
->>
->> is easier to reason about than the history-dependent tag-following behavior
-> 
-> I'd say "we have all the relevant tags" and "we have all the tags
-> the other side has" are equally valid things to wish for, depending
-> who you are and how your project is organized, and one is not
-> necessarily easy/useful than the other.  In case it was unclear, I
-> was not seriously advocating to deprecate/remove "--tags".
+* Rebase to current upstream master (0d6cf2471f); no conflicts were
+  encountered.
 
-Yes, I agree that both are valid things to wish for.  I guess I was
-mostly thinking about which would be a better default.
+* Incorporate feedback from Junio:
 
-"clone" and "remote add", by default, configure the repo to fetch all
-branches on the remote.  For this default setup, what are the pros and
-cons of the two tag-fetching options (assuming that this patch series
-has fixed the problem with tag pruning)?
+  * Improve the documentation as suggested
 
-Pros of auto-following:
+  * Fix a few typos
 
-* Doesn't require a change to the status quo
+* Document get_expanded_map() and fix a minor memory leak that I found
+  there.
 
-* The the user can change the refspec to be more restrictive without
-having to change the tag-following option and it continues to do the
-right thing.
+* get_ref_map(): Do not look for references that can be updated
+  opportunistically among the entries added by "--tags".  Preserve the
+  order of output list when changing the function to handle the new
+  "--tags" semantics.  (I know more about how the output is used and
+  am less worried now that the changes will have bad interactions with
+  the rest of the system.)
 
-* If the project has branches outside of refs/heads (which would not, by
-default, be fetched--think continuous integration artifacts) and also
-has tags pointing at those branches, the user might get unwanted
-contents with "--tags", but not with auto-following.
+* Improve the description of tag-following in the "git fetch" manpage.
 
+* Moved the changes to ref_remove_duplicates() later in the series, as
+  they were not really integral to the rest of the patch series.
+  Make the following changes to that function:
 
-Pros of --tags:
+  * Add tests of how it handles duplicates.
 
-* Easier to understand (?) because result is not history-dependent.
+  * Simplify the loop in a different way than v1, to make it more
+    modular.
 
-* Avoids missing tags that are not directly on a branch:
+  * Extract a function to handle duplicates.
 
-      o---o---o---o    <- branch
-           \
-            o      <- tag
+  * Improve the error messages emitted if ref_remove_duplicates()
+    finds conflicting duplicates, and mark the messages for
+    translation.
 
-So it's not obvious that one is better than the other.  I think if I
-were choosing the behavior for the first time, I would favor --tags.
-But I don't think the advantage is strong enough to make it worth
-changing the existing default.
+  * Do not die() if a user-specified refspec conflicts with
+    an opportunistic update.
 
->> Regarding your first point: if it matters which of the duplicates is
->> chosen, then it can only matter because they differ in some other way
->> than their reference names, for example in their flags.  So a robust way
->> of de-duping them (if it is possible) would be to compare the two
->> records and decide which one should take precedence based on this other
->> information rather than based on which one happened to come earlier in
->> the list.  Then the list order would be immaterial and (for example) it
->> wouldn't be a problem to reorder the items.
-> 
-> But that changes the behaviour to those who has cared to rely on the
-> ordering.  With the change to first collect and then sort unstably
-> before deduping, the series already tells them not to rely on the
-> order, and two of us tentatively agreed in this discussion that it
-> is not likely to matter.  If later this agreement turns out to be a
-> mistake and there are people who *do* rely on the ordering, the only
-> acceptable fix for them is by making sure we restore the "first one
-> trumps" semantics, not by defining an alternative, arguably better,
-> behaviour---that is not a regression fix.
+[1] http://article.gmane.org/gmane.comp.version-control.git/234723
 
-Please note that the current patch series does *not* change the
-algorithm to use an unstable sort; that was only a suggestion for the
-future should somebody discover that the O(N^2) algorithm in this
-function is a performance bottleneck.
+Michael Haggerty (23):
+  t5510: use the correct tag name in test
+  t5510: prepare test refs more straightforwardly
+  t5510: check that "git fetch --prune --tags" does not prune branches
+  api-remote.txt: correct section "struct refspec"
+  get_ref_map(): rename local variables
+  builtin/fetch.c: reorder function definitions
+  get_expanded_map(): add docstring
+  get_expanded_map(): avoid memory leak
+  fetch: only opportunistically update references based on command line
+  fetch --tags: fetch tags *in addition to* other stuff
+  fetch --prune: prune only based on explicit refspecs
+  query_refspecs(): move some constants out of the loop
+  builtin/remote.c: reorder function definitions
+  builtin/remote.c:update(): use struct argv_array
+  fetch, remote: properly convey --no-prune options to subprocesses
+  fetch-options.txt: simplify ifdef/ifndef/endif usage
+  git-fetch.txt: improve description of tag auto-following
+  ref_remove_duplicates(): avoid redundant bisection
+  t5536: new test of refspec conflicts when fetching
+  ref_remove_duplicates(): simplify loop logic
+  ref_remote_duplicates(): extract a function handle_duplicate()
+  handle_duplicate(): mark error message for translation
+  fetch: improve the error messages emitted for conflicting refspecs
 
-What the old patch series *did* do was change the ordering that
-get_ref_map() adds references to the list in the case of (refspec_count
-&& tags == TAGS_SET) by moving the (tags == TAGS_SET) handling outside
-of the "true" branch of the (refspec_count) conditional.  This had the
-result that the references added by
-
-       get_fetch_map(remote_refs, tag_refspec, &tail, 0);
-
-came after, rather than before, the references opportunistically being
-fetched with FETCH_HEAD_IGNORE status.
-
-But I dug even deeper and found that there was a (rather obscure)
-situation where the ordering change could lead to incorrect behavior,
-namely if all of the following are true:
-
-* there is a configured refspec for tags, like refs/tags/*:refs/tags/*
-
-* the user runs fetch with the --tags option and also with an explicit
-refspec on the command line to fetch a remote tag (e.g.,
-refs/tags/foo:refs/heads/foo).
-
-In that case (after this version of this patch), an entry for
-refs/tags/foo:refs/heads/foo would be added to the list, then the
-opportunistic "refs/tags/foo:refs/tags/foo" would be added with
-FETCH_HEAD_IGNORE.  Then the --tags option would be processed, adding a
-second record "refs/tags/foo:refs/tags/foo" to the list, but this time
-with FETCH_HEAD_NOT_FOR_MERGE.  The call to ref_remove_duplicates()
-would remove the last entry, leaving the entry with FETCH_HEAD_IGNORE
-instead of the (correct) entry with FETCH_HEAD_NOT_FOR_MERGE.  The
-result would be that refs/tags/foo would not be written to FETCH_HEAD.
-
-So I will re-roll this series with a few extra patches that first, avoid
-subjecting the --tags entries to the opportunistic-update machinery (it
-is redundant), and also preserve the old order where the --tags entries
-precede the opportunistic entries in the list.
-
-Thanks again for your comments!
-Michael
+ Documentation/config.txt                 |   4 +-
+ Documentation/fetch-options.txt          |  26 +--
+ Documentation/git-fetch.txt              |  14 +-
+ Documentation/technical/api-remote.txt   |  20 +--
+ builtin/fetch.c                          | 298 ++++++++++++++++---------------
+ builtin/remote.c                         | 196 ++++++++++----------
+ git-pull.sh                              |   2 +-
+ remote.c                                 |  94 +++++++---
+ remote.h                                 |   8 +-
+ t/t5510-fetch.sh                         |  36 +++-
+ t/t5515/fetch.br-unconfig_--tags_.._.git |   1 +
+ t/t5515/fetch.master_--tags_.._.git      |   1 +
+ t/t5525-fetch-tagopt.sh                  |  23 ++-
+ t/t5536-fetch-conflicts.sh               | 100 +++++++++++
+ 14 files changed, 503 insertions(+), 320 deletions(-)
+ create mode 100755 t/t5536-fetch-conflicts.sh
 
 -- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+1.8.4.1
