@@ -1,97 +1,76 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v2 02/23] t5510: prepare test refs more straightforwardly
-Date: Wed, 30 Oct 2013 18:41:38 +0100
-Message-ID: <527144D2.1090702@alum.mit.edu>
-References: <1383111192-23780-1-git-send-email-mhagger@alum.mit.edu> <1383111192-23780-3-git-send-email-mhagger@alum.mit.edu> <CALkWK0=tcEbdvFaaV1YFBTXWAHaHYcJ1YNLpj0Sj5sGK_inapQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] subtree: add makefile target for html docs
+Date: Wed, 30 Oct 2013 10:48:36 -0700
+Message-ID: <xmqqwqkubqff.fsf@gitster.dls.corp.google.com>
+References: <CAHGBnuO1xPrAFG1tvS5zaVD9yefa2VUNYM93YLt1pQ1yJwHkrw@mail.gmail.com>
+	<20131029155037.GA3628@sigill.intra.peff.net>
+	<CAHGBnuNDBH-V+Ebi27BOE8ebNQdhn+MCvabh97_zL3nTctz4yA@mail.gmail.com>
+	<20131029163037.GB3628@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-	=?UTF-8?B?Q2FybG9zIE1hcnTDrW4gTmlldG8=?= <cmn@elego.de>,
-	Michael Schubert <mschub@elegosoft.com>,
-	Johan Herland <johan@herland.net>, Jeff King <peff@peff.net>,
-	Marc Branchaud <marcnarc@xiplink.com>,
-	Nicolas Pitre <nico@fluxnic.net>,
-	John Szakmeister <john@szakmeister.net>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 30 18:41:47 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Sebastian Schuberth <sschuberth@gmail.com>, greened@obbligato.org,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Oct 30 18:48:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VbZm7-0007V7-Gx
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Oct 2013 18:41:47 +0100
+	id 1VbZss-0001PG-0K
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Oct 2013 18:48:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752731Ab3J3Rln (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Oct 2013 13:41:43 -0400
-Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:62412 "EHLO
-	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750865Ab3J3Rln (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 30 Oct 2013 13:41:43 -0400
-X-AuditID: 12074412-b7fc96d0000023d5-e9-527144d64f33
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id BB.6A.09173.6D441725; Wed, 30 Oct 2013 13:41:42 -0400 (EDT)
-Received: from [192.168.69.9] (p57A242F8.dip0.t-ipconnect.de [87.162.66.248])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id r9UHfcPE012131
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 30 Oct 2013 13:41:39 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.0
-In-Reply-To: <CALkWK0=tcEbdvFaaV1YFBTXWAHaHYcJ1YNLpj0Sj5sGK_inapQ@mail.gmail.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrAKsWRmVeSWpSXmKPExsUixO6iqHvNpTDIYMlsaYtVMx+zW0zvWs1i
-	0XWlm8miofcKs8W8u7uYLFbdWsZssXLGDUaLp52VFvNevGCz+NHSw+zA5XFp3Usmj0N/prB7
-	PDvRzuaxc9Zddo9LL7+zeTzr3cPocfGSsseMltcsHp83yXkcuPyYLYAritsmKbGkLDgzPU/f
-	LoE748StFcwFfdwVO3b+YG9g7OfsYuTkkBAwkfjy6DE7hC0mceHeerYuRi4OIYHLjBJ7j05n
-	hXDOMkl83LGDDaSKV0BbYnnrXbAOFgFVicXdD1hBbDYBXYlFPc1MILaoQIjEwlXH2SHqBSVO
-	znzC0sXIwSECVPNslTdImFmgj1ni2V89EFtYwFdi2/GZzBC7DjFK/Nw5BWwmp0CgxKoTZ9lA
-	epkF1CXWzxOC6JWX2P52DvMERoFZSDbMQqiahaRqASPzKka5xJzSXN3cxMyc4tRk3eLkxLy8
-	1CJdM73czBK91JTSTYyQGBLawbj+pNwhRgEORiUeXgbdwiAh1sSy4srcQ4ySHExKorzszkAh
-	vqT8lMqMxOKM+KLSnNRioIM5mJVEeL0dgXK8KYmVValF+TApaQ4WJXHen4vV/YQE0hNLUrNT
-	UwtSi2CyMhwcShK8/SBDBYtS01Mr0jJzShDSTBycIMO5pESKU/NSUosSS0sy4kFxGl8MjFSQ
-	FA/Q3mKQdt7igsRcoChE6ylGXY55Xz58YxRiycvPS5US550MUiQAUpRRmge3ApYwXzGKA30s
-	zLsOpIoHmGzhJr0CWsIEtGQPSx7IkpJEhJRUA2OKX++5TerRtmKnru/culg4mu/0 
+	id S1753251Ab3J3Rsm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Oct 2013 13:48:42 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34176 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752579Ab3J3Rsl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Oct 2013 13:48:41 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B43044E215;
+	Wed, 30 Oct 2013 13:48:40 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=11P+/OA8cDcZnfajKpyDx9eYhe0=; b=XqvuzW
+	T1JhCnwum/O2dxCixbdJj2+OB+3T668V1TMvTiWlVWzzQvlchSadeetTs9TCpO58
+	ivLBe26bYTzLQlcp+2JpCnPuLvM133fuoO3OrVndWVVE7T2x9bq0bNusMw1SdNyV
+	n2Od9lxpE8wKFu8eJYuUcYj/iYJUGGlk3Ipmg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=tHhioJuS5JpfhE2TO7b4uiNyf6mxARaw
+	lMIiwcITHnmBJYRFdQrAxkltG+2gvAxyqUj+mWEJje4ZbRgiAqlvWOeuGqEhOrBr
+	RL1hoFXq0HIxEGFlF4mD4pk8/xLzzZbwQMHygULWXPAkYZ6FMcnNC+VU4C6ZQqBR
+	7EpwSM/CX9E=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A51004E214;
+	Wed, 30 Oct 2013 13:48:40 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id ED7DF4E20D;
+	Wed, 30 Oct 2013 13:48:37 -0400 (EDT)
+In-Reply-To: <20131029163037.GB3628@sigill.intra.peff.net> (Jeff King's
+	message of "Tue, 29 Oct 2013 12:30:37 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 817B03B2-418B-11E3-A569-1FFB7F2839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237047>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237048>
 
-On 10/30/2013 11:57 AM, Ramkumar Ramachandra wrote:
-> Michael Haggerty wrote:
->> "git fetch" was being used with contrived refspecs to create tags and
->> remote-tracking branches in test repositories in preparation for the
->> actual tests.  This is obscure and also makes one wonder whether this
->> is indeed just preparation or whether some side-effect of "git fetch"
->> is being tested.
-> 
-> As the test titles indicate, we are exercising the 'fetch --prune'
-> functionality. However, I don't see the 'git fetch <remote>
-> <src>:<dst>' form exercised anywhere else in the file.
+Jeff King <peff@peff.net> writes:
 
-I see a couple of examples:
+> On Tue, Oct 29, 2013 at 05:03:53PM +0100, Sebastian Schuberth wrote:
+>
+>> I just gave it a try and it works nicely:
+>> 
+>> Tested-by: Sebastian Schuberth <sschuberth@gmail.com>
+>> 
+>> Also, the clean target already contains "*.html", so nothing else to
+>> do there. Any chance to get this queued in pu?
+>
+> Here it is with a commit message, and the additional wiring into "make
+> doc".
 
-$ grep 'git fetch.*:' t/t5510*.sh
-	git fetch --prune origin refs/heads/a/*:refs/remotes/origin/a/* &&
-	git fetch --prune --tags origin
-refs/heads/foo/*:refs/remotes/origin/foo/* &&
-	git fetch .. :track &&
-	test_must_fail git fetch .. anno:five
-	git fetch .. six:six
-	test_must_fail git fetch "$D/bundle1" master:master
-	git fetch ../bundle2 master:master &&
-	 git fetch "rsync:$(pwd)/../.git" master:refs/heads/master &&
-	test_must_fail git fetch . side:master
-	git fetch --update-head-ok . side:master
-
-The tests in question didn't really check the results of the fetch
-anyway.  I don't think they were intended to test fetch but only to set
-up the initial conditions for the real test.
-
-Michael
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+Thanks, both.
