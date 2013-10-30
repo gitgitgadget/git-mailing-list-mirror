@@ -1,54 +1,82 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 10/19] pack-bitmap: add support for bitmap indexes
-Date: Wed, 30 Oct 2013 03:00:55 -0400
-Message-ID: <20131030070055.GE11317@sigill.intra.peff.net>
-References: <20131025055521.GD11810@sigill.intra.peff.net>
- <20131025060345.GH23098@sigill.intra.peff.net>
- <xmqqk3h1hrx0.fsf@gitster.dls.corp.google.com>
- <20131026002629.GA18324@sigill.intra.peff.net>
- <20131026062507.GA23963@sigill.intra.peff.net>
- <xmqqiowhh140.fsf@gitster.dls.corp.google.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH V3] git clone: is an URL local or ssh
+Date: Wed, 30 Oct 2013 08:11:49 +0100
+Message-ID: <5270B135.8030501@viscovery.net>
+References: <201310292207.50869.tboegi@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Vicent Marti <vicent@github.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 30 08:01:06 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: sunshine@sunshineco.com, peff@peff.net, pclouds@gmail.com
+To: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 30 08:11:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VbPm4-0007Wr-3I
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Oct 2013 08:01:04 +0100
+	id 1VbPwa-0001xu-FM
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Oct 2013 08:11:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753402Ab3J3HA7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Oct 2013 03:00:59 -0400
-Received: from cloud.peff.net ([50.56.180.127]:58239 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753103Ab3J3HA6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Oct 2013 03:00:58 -0400
-Received: (qmail 14497 invoked by uid 102); 30 Oct 2013 07:00:58 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 30 Oct 2013 02:00:58 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 30 Oct 2013 03:00:55 -0400
-Content-Disposition: inline
-In-Reply-To: <xmqqiowhh140.fsf@gitster.dls.corp.google.com>
+	id S1753339Ab3J3HLw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 30 Oct 2013 03:11:52 -0400
+Received: from so.liwest.at ([212.33.55.16]:20630 "EHLO so.liwest.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753301Ab3J3HLw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Oct 2013 03:11:52 -0400
+Received: from [81.10.228.254] (helo=theia.linz.viscovery)
+	by so.liwest.at with esmtpa (Exim 4.80.1)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1VbPwU-0000Xb-08; Wed, 30 Oct 2013 08:11:50 +0100
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id AE2CF16613;
+	Wed, 30 Oct 2013 08:11:49 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:24.0) Gecko/20100101 Thunderbird/24.0.1
+In-Reply-To: <201310292207.50869.tboegi@web.de>
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236991>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/236992>
 
-On Mon, Oct 28, 2013 at 08:22:07AM -0700, Junio C Hamano wrote:
+Am 10/29/2013 22:07, schrieb Torsten B=C3=B6gershausen:
+> @@ -610,17 +623,17 @@ struct child_process *git_connect(int fd[2], co=
+nst char *url_orig,
+>  	} else
+>  		end =3D host;
+> =20
+> -	path =3D strchr(end, c);
+> -	if (path && !has_dos_drive_prefix(end)) {
+> -		if (c =3D=3D ':') {
+> -			if (host !=3D url || path < strchrnul(host, '/')) {
+> -				protocol =3D PROTO_SSH;
+> -				*path++ =3D '\0';
+> -			} else /* '/' in the host part, assume local path */
+> -				path =3D end;
+> +	path =3D strchr(end, separator);
+> +	if (separator =3D=3D ':') {
+> +		if (path && protocol =3D=3D PROTO_LOCAL_OR_SSH) {
+> +			/* We have a ':' */
+> +			protocol =3D PROTO_SSH;
+> +			*path++ =3D '\0';
+> +		} else {/* assume local path */
+> +			protocol =3D PROTO_LOCAL;
+> +			path =3D end;
+>  		}
+> -	} else
+> -		path =3D end;
+> +	}
+> =20
+>  	if (!path || !*path)
+>  		die("No path specified. See 'man git-pull' for valid url syntax");
 
-> >     However, the code in the ewah/ directory has been hacked up a bit
-> >     from its original, and ewah_io.c _does_ include "git-compat-util.h".
-> >     So it may make sense to consider our copy a fork and git-ify it
-> >     more.
-> 
-> Yeah, sounds very sensible.
+This hunk breaks on Windows. You removed the has_dos_drive_prefix check=
+=2E
 
-I'll make them more git-ish for the next re-roll, then.
+The check for has_dos_drive_prefix check must happen *before* you furth=
+er
+investigate the path/url/host for ssh protocol, and if it returns true,
+then the path is local, no matter what follows.
 
--Peff
+-- Hannes
