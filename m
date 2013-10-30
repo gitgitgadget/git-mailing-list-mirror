@@ -1,104 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Change sed i\ usage to something Solaris' sed can handle
-Date: Wed, 30 Oct 2013 12:30:22 -0700
-Message-ID: <xmqqeh72blpt.fsf@gitster.dls.corp.google.com>
-References: <1382909208-7716-1-git-send-email-bdwalton@gmail.com>
-	<877gcx1eho.fsf@igel.home>
-	<CAP30j15+E4cz_kwJwaSH7-3agwC5J3jGNfaixSUg2=8xAzZoQg@mail.gmail.com>
+From: Eugene Sajine <euguess@gmail.com>
+Subject: Help creating git alias
+Date: Wed, 30 Oct 2013 15:34:13 -0400
+Message-ID: <CAPZPVFbiSx8n0W1kcczCdC6ioVuWpwuUQ_pc9T=7i4X_FuZNhg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Andreas Schwab <schwab@linux-m68k.org>, git <git@vger.kernel.org>
-To: Ben Walton <bdwalton@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 30 20:30:35 2013
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 30 20:34:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VbbTP-0007rH-6t
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Oct 2013 20:30:35 +0100
+	id 1VbbX1-0000ii-D9
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Oct 2013 20:34:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754612Ab3J3Ta3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Oct 2013 15:30:29 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41341 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754268Ab3J3Ta0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Oct 2013 15:30:26 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 382474CA67;
-	Wed, 30 Oct 2013 15:30:25 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=OIevcqTBJqWvaLqSAhyXvCbxtDI=; b=ioC2X4
-	vYkdaC5TuWgdJDyOXFvUzAG1cIzr2cQh4Z90xQBctqmqi6szZfqoPTNLnSwhECFT
-	x8HE8lpTjs62XmbJ9+abrwDcGEBDXxwtpA42lLTv715mmh+LoygGreeei/+0HZoX
-	6VPel0r8QSPa57mEg/BS5x10eUO5mxXu2+yMM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=UlTfRqjZ6dvg7hQikoBy0DyHhqhfwaSH
-	+YzdlQZtXWEgdWF6i4U3qeCl7xGDXP7+noRW766wBDt+mwnz/EdckVK00sleR3Gp
-	aQY9lrKpHX4TxbclCqKb6IZUs5FFSHCrW85W1MQBJdB7zEUcTO3arOKsTmCkcPca
-	bYgiB4xVyZ0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2B08E4CA66;
-	Wed, 30 Oct 2013 15:30:25 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8546C4CA65;
-	Wed, 30 Oct 2013 15:30:24 -0400 (EDT)
-In-Reply-To: <CAP30j15+E4cz_kwJwaSH7-3agwC5J3jGNfaixSUg2=8xAzZoQg@mail.gmail.com>
-	(Ben Walton's message of "Mon, 28 Oct 2013 21:10:46 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: B947F404-4199-11E3-B341-1FFB7F2839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754006Ab3J3TeP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Oct 2013 15:34:15 -0400
+Received: from mail-wi0-f181.google.com ([209.85.212.181]:58139 "EHLO
+	mail-wi0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752343Ab3J3TeO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Oct 2013 15:34:14 -0400
+Received: by mail-wi0-f181.google.com with SMTP id ex4so1984563wid.14
+        for <git@vger.kernel.org>; Wed, 30 Oct 2013 12:34:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=gX9Xd8zMXakrPfCWEehNTU3xAeMvktAiunANW3dPnTY=;
+        b=rqd0+QytJ+kDuPByoLz6Xks9P4v7TWSfZiKgyIO2UskBNMu4Zp3HXevVUQiVKMyhpV
+         /N/PXTUipGcncSR6Zx6eZ/qxSA/eLnhjG2VBsUlviPeQ8qyWleXmUU3xQgsb+RWSOliT
+         hUSJEBiXVnL8pFoam4QpA0303cbIWkesoieVf/FLGep6tRm9ynWK+A3fgrzpsq+HK2vC
+         25zRX9+x+1aVEd8LSgskZcVrVG8sBNoyGalCYkia2z/rItlQUmbo1BDn5jCePNcwlCL1
+         srnqtkVR1PSor4+x7AUQFzojTp1F2TQfe7bbbt+/Ie2G5Qe9FBXh9FNY5ISBSt8UGhp3
+         5Qpw==
+X-Received: by 10.181.12.104 with SMTP id ep8mr3604502wid.54.1383161653380;
+ Wed, 30 Oct 2013 12:34:13 -0700 (PDT)
+Received: by 10.216.123.145 with HTTP; Wed, 30 Oct 2013 12:34:13 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237059>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237060>
 
-Ben Walton <bdwalton@gmail.com> writes:
+Hi,
 
-> On Mon, Oct 28, 2013 at 5:39 PM, Andreas Schwab <schwab@linux-m68k.org> wrote:
->> Ben Walton <bdwalton@gmail.com> writes:
->>
->>> diff --git a/t/t4015-diff-whitespace.sh b/t/t4015-diff-whitespace.sh
->>> index 3fb4b97..0126154 100755
->>> --- a/t/t4015-diff-whitespace.sh
->>> +++ b/t/t4015-diff-whitespace.sh
->>> @@ -145,7 +145,8 @@ test_expect_success 'another test, with --ignore-space-at-eol' 'test_cmp expect
->>>  test_expect_success 'ignore-blank-lines: only new lines' '
->>>       test_seq 5 >x &&
->>>       git update-index x &&
->>> -     test_seq 5 | sed "/3/i \\
->>> +     test_seq 5 | sed "/3/i\\
->>> +\
->>>  " >x &&
->>
->> Why do you need the \<nl>?  Since it is inside double quotes the shell
->> will remove it during expansion.
->
-> It's an escape. Without it, sed throws:
->
-> sed: -e expression #1, char 5: expected \ after `a', `c' or `i'
+I need some advice about creating the git command alias:
 
-I think Andreas means the "feed blank line" part, i.e.
+I have this as the command:
 
->> +     test_seq 5 | sed "/3/i\\
->> +\
->>  " >x &&
+git log --pretty=format:"%h %ad %ae %s" --date=short | sed 's/@\S*//g'
 
-should be the same as
 
->> +     test_seq 5 | sed "/3/i\\
->>  " >x &&
+The purpose is to cut off the email domain and keep only username.
 
-because the lone \<nl> will be eaten and will not be seen by sed.
+I'm trying to create this as the alias:
 
-Do you see different results on Solaris between the following two?
 
-	$ echo "/3/i\\
-	\
-	" | od
-	$ echo "/3/i\\
-        " | od
+lg = !sh -c 'git log --pretty=format:"%h %ad %ae %s" --date=short |
+sed 's/@\S*//g'' -
+
+but it complains about the \S and i'm failing to come up with the
+escape sequence to make it work right.
+
+I know i can work around that by creating shell alias, but it is not
+what i would like to have.
+
+Any ideas?
+
+Thanks!
