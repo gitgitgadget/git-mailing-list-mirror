@@ -1,93 +1,87 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [PATCH 10/19] pack-bitmap: add support for bitmap indexes
-Date: Wed, 30 Oct 2013 10:27:26 +0000
-Message-ID: <CAJo=hJudyxLP-pSu-=Py6tSHsnbODDFCZ6JxAoRPtfe3opf=5A@mail.gmail.com>
-References: <20131024175915.GA23398@sigill.intra.peff.net> <20131024180357.GJ24180@sigill.intra.peff.net>
- <CAJo=hJvw-UNWVDADcGzA1P3GGOKJGh8h4LrETPYnjBNYmfkxjQ@mail.gmail.com> <20131030081023.GK11317@sigill.intra.peff.net>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v2 11/19] pack-objects: use bitmaps when packing objects
+Date: Wed, 30 Oct 2013 17:28:08 +0700
+Message-ID: <CACsJy8B3VS=WSNeF35_JTiF6byZiefvEYnadkC8BAmKG5Z7gQQ@mail.gmail.com>
+References: <20131025055521.GD11810@sigill.intra.peff.net> <20131025060352.GI23098@sigill.intra.peff.net>
+ <CACsJy8DMOfZu+2DS=-J9jfiP796XYi=e7B28cdV=ck9J-VOTtA@mail.gmail.com> <20131030073627.GG11317@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git <git@vger.kernel.org>, Vicent Marti <vicent@github.com>
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Vicent Marti <vicent@github.com>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Oct 30 11:28:07 2013
+X-From: git-owner@vger.kernel.org Wed Oct 30 11:28:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VbT0P-0007eV-DP
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Oct 2013 11:28:05 +0100
+	id 1VbT16-0007wE-NG
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Oct 2013 11:28:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753660Ab3J3K1u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Oct 2013 06:27:50 -0400
-Received: from mail-wi0-f181.google.com ([209.85.212.181]:43971 "EHLO
-	mail-wi0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753593Ab3J3K1s (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Oct 2013 06:27:48 -0400
-Received: by mail-wi0-f181.google.com with SMTP id ex4so1191291wid.2
-        for <git@vger.kernel.org>; Wed, 30 Oct 2013 03:27:47 -0700 (PDT)
+	id S1753726Ab3J3K2n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Oct 2013 06:28:43 -0400
+Received: from mail-qc0-f173.google.com ([209.85.216.173]:45970 "EHLO
+	mail-qc0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753460Ab3J3K2j (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Oct 2013 06:28:39 -0400
+Received: by mail-qc0-f173.google.com with SMTP id l13so657093qcy.32
+        for <git@vger.kernel.org>; Wed, 30 Oct 2013 03:28:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spearce.org; s=google;
+        d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=85bQbtMu5F6fjfs3kyW9dWXIM8ChTsbS53sZB3K7Plw=;
-        b=JPjNXta4sfPw9/2FdnMtnOGpZPhQ24eeTkq7SkXpLAxMyxLTWAMdE8BPS23/QIqu1n
-         +hPMBqhLif3BU0gudexBrqnMEPJChAQEJbaZIn7P5KbPey+0ORAHg21xZI1lzGuAetnf
-         DBhpAzHeec8f0F9hrIWcBJ8pJe/lA52mKZe9s=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=85bQbtMu5F6fjfs3kyW9dWXIM8ChTsbS53sZB3K7Plw=;
-        b=Q0dTNLLF+DzNNGbcNk0i6rjf2TUNvjtPuN1Pfv/fJ0IOQzm4y8lZLaT8GuIOQ4E9U+
-         XWqcMLkPr53k+ddpiNcRS7m3FRoRrRp3+Tlrsg03ud2d0dKwhIeskYDO6SDZiCjNGGvY
-         z1f9l+/Odjx3SiQ/qjIlmwJ8ZKcxQxoKnngvze4aPxpsLChZlSdezqHPZYHPJSr/5/PO
-         Bdi/L3Y8ZMsA3pQwsH41Fo60NuZ8XjNJgMYYW5syQPm13hEiEnX5I4yTseQlOyl1hsrn
-         Bs9epya56HEaZRkuykrwL8Hss7C9NinADdhZ0TycYTwE65nY5z+erM8CkWVCl6+FfUsV
-         +ofg==
-X-Gm-Message-State: ALoCoQkxgpnlLk4e4DQ8koddHIoOnTq9GK4zgnifalv8Ka+pYayvqQijFTvKhy31fNaDoZbpj/QM
-X-Received: by 10.180.36.242 with SMTP id t18mr2054529wij.28.1383128866988;
- Wed, 30 Oct 2013 03:27:46 -0700 (PDT)
-Received: by 10.227.62.140 with HTTP; Wed, 30 Oct 2013 03:27:26 -0700 (PDT)
-In-Reply-To: <20131030081023.GK11317@sigill.intra.peff.net>
+        bh=nwPFBkkR70vGmOlrtZUBJgbKCkGAcO3Fct8CciyTJTQ=;
+        b=ykdPOeBWP7h8olbHwokro4ZM2Anrx/9JIm0BFlv4c7CMvVpc/rABf9pRaminHvH7uc
+         SiA3TqoJ+vUf54oDuKSUZPvkTIF/+YyT4UQEuQwaQoazsEHBPpV/aU2dt/P1NVK0dMIN
+         Y/p2M6LSIZmjLXM65UvQ+t6MeS6Kbp4FE08CSgwhfz80rTZho0x1gSE9ga8X0P629QO8
+         /2WFVYCeBiGoDxkTtQlXDq8Ru4oa+Xw1sMrnpSdUjbqfkXHtNHpiDiTt89minU4WZXxc
+         j+jvhDZKo7Y50gY7LvcW1zKt+UIACSbXLe1+uPsJhWGbPvFoXPxFNhpXDOFB4b48V8Vp
+         5rQQ==
+X-Received: by 10.224.88.193 with SMTP id b1mr6826472qam.81.1383128918440;
+ Wed, 30 Oct 2013 03:28:38 -0700 (PDT)
+Received: by 10.96.27.202 with HTTP; Wed, 30 Oct 2013 03:28:08 -0700 (PDT)
+In-Reply-To: <20131030073627.GG11317@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237008>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237009>
 
-On Wed, Oct 30, 2013 at 8:10 AM, Jeff King <peff@peff.net> wrote:
-> On Fri, Oct 25, 2013 at 01:55:13PM +0000, Shawn O. Pearce wrote:
+On Wed, Oct 30, 2013 at 2:36 PM, Jeff King <peff@peff.net> wrote:
+> On Sat, Oct 26, 2013 at 05:25:14PM +0700, Nguyen Thai Ngoc Duy wrote:
+>
+>> > For bitmaps to be used, the following must be true:
+>> >
+>> >   1. We must be packing to stdout (as a normal `pack-objects` from
+>> >      `upload-pack` would do).
+>> >
+>> >   2. There must be a .bitmap index containing at least one of the
+>> >      "have" objects that the client is asking for.
+>> >
+>> >   3. Bitmaps must be enabled (they are enabled by default, but can be
+>> >      disabled by setting `pack.usebitmaps` to false, or by using
+>> >      `--no-use-bitmap-index` on the command-line).
+>> >
+>> > If any of these is not true, we fall back to doing a normal walk of the
+>> > object graph.
 >>
->> Yay! This is similar to the optimization we use in JGit to send the
->> entire pack, but the part about sending a leading prefix is new. Do
->> you have any data showing how well this works in practice for cases
->> where offset is before than length-20?
+>> I haven't read the bitmap creation code yet. But it probably does not
+>> matter. If the client requests a shallow fetch, you probably want to
+>> fall back to normal walk too.
 >
-> Actually, I don't think it kicks in very much due to packfile ordering.
-> You have all of the commits at the front of the pack, then all of the
-> trees, then all of the blobs. So if you want the whole thing, it is easy
-> to reuse a big chunk. But if you want only the most recent slice, we can
-> reuse the early bit with the new commits, but we stop partway through
-> the commit list. You still have to handle all of the trees and blobs
-> separately.
->
-> So in practice, I think this really only kicks in for clones anyway.
->
-> In theory, you could find "islands" of ones in the bitmap and send whole
-> slices of packfile at once. But you need to be careful not to send a
-> delta without its base. Which I think means you end up having to
-> generate the whole sha1 list anyway, and check that the other side has
-> each base before reusing a delta (i.e., the normal code path).
->
-> In fact, I'm not quite sure that even a partial reuse up to an offset is
-> 100% safe. In a newly packed git repo it is, because we always put bases
-> before deltas (and OFS_DELTA objects need this). But if you had a bitmap
-> generated from a fixed thin pack, we would have REF_DELTA objects early
-> on that depend on bases appended to the end of the pack. So I really
-> wonder if we should scrap this partial reuse and either just have full
-> reuse, or go through the regular object_entry construction.
+> One other criterion I should have mentioned: we must be using the
+> internal rev-list. That prevented us in v1.8.4.1 and earlier from using
+> bitmaps for shallow fetches. But as of v1.8.4.2, we always use
+> pack-objects' rev-walker. We may need to pass --no-use-bitmap-index for
+> shallow fetches.
 
-Yes. This is why JGit only does whole pack file reuse (minus the 12
-byte header and 20 byte SHA-1 trailer). Any other case has so many
-corner cases that we just punt into the object entry construction path
-and rely on individual object reuse.
+I don't think a new option is needed. The code just needs to check if
+there are any commit grafts. If there are, fall back to the old way.
+That covers both shallow fetches and some rare grafted repos. I think
+refs/replace/* does not impact rev walking, so we should be fine if
+it's used.
+
+> As for repos that are themselves shallow, I do not know how doing a
+> "repack -b" would fare. Probably not well.
+-- 
+Duy
