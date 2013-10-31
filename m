@@ -1,109 +1,78 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v5 09/10] fast-export: add support to delete refs
-Date: Thu, 31 Oct 2013 13:41:15 -0600
-Message-ID: <CAMP44s3vxfN5Wc+S+VjimisUgZGQMzR7Z2YkO8J4UEk7+cPy_Q@mail.gmail.com>
-References: <1383212197-14259-1-git-send-email-felipe.contreras@gmail.com>
-	<1383212197-14259-8-git-send-email-felipe.contreras@gmail.com>
-	<6F276334-DFDB-40B8-8B24-38FFB6DBED9B@quendi.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Help creating git alias
+Date: Thu, 31 Oct 2013 12:41:26 -0700
+Message-ID: <xmqq7gct5iu1.fsf@gitster.dls.corp.google.com>
+References: <CAPZPVFbiSx8n0W1kcczCdC6ioVuWpwuUQ_pc9T=7i4X_FuZNhg@mail.gmail.com>
+	<CAN0XMOKMF235S-23QcMj5cBup+Lh4vQs7QcOqXQ-MgafsAMKNg@mail.gmail.com>
+	<CAPZPVFZ9WujUCQ1O9VfV83XUu_6g7Vp_MmYRCCO+GptOoSyvcg@mail.gmail.com>
+	<xmqq61sebhh3.fsf@gitster.dls.corp.google.com>
+	<CAPZPVFarK_jKpM2f62mErAmL+mck6EN1QPfHDHqqfJbJ2AfzXg@mail.gmail.com>
+	<xmqqk3gu9jst.fsf@gitster.dls.corp.google.com>
+	<CAPZPVFYFSBRHThO08LmuN_0fc55gYX-A+Y3=yA_MESko1t6fXQ@mail.gmail.com>
+	<20131031174008.GA39079@gmail.com>
+	<xmqqd2ml8gbs.fsf@gitster.dls.corp.google.com>
+	<20131031181509.GB39079@gmail.com>
+	<CAPZPVFYWf3_xtxKkdw4_gzqKagVsbNvj73cb=RvX1Zm0C1h8pQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
-Cc: git@vger.kernel.org, Sverre Rabbelier <srabbelier@gmail.com>,
-	Richard Hansen <rhansen@bbn.com>
-To: Max Horn <max@quendi.de>
-X-From: git-owner@vger.kernel.org Thu Oct 31 20:41:22 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: David Aguilar <davvid@gmail.com>,
+	Ralf Thielow <ralf.thielow@gmail.com>,
+	git <git@vger.kernel.org>,
+	Andrew Ardill <andrew.ardill@gmail.com>
+To: Eugene Sajine <euguess@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 31 20:41:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vby7N-0001p7-RH
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Oct 2013 20:41:22 +0100
+	id 1Vby7a-0001ux-2g
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Oct 2013 20:41:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753355Ab3JaTlS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Oct 2013 15:41:18 -0400
-Received: from mail-lb0-f171.google.com ([209.85.217.171]:52566 "EHLO
-	mail-lb0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751657Ab3JaTlR convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 31 Oct 2013 15:41:17 -0400
-Received: by mail-lb0-f171.google.com with SMTP id x18so2821375lbi.30
-        for <git@vger.kernel.org>; Thu, 31 Oct 2013 12:41:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=11TnYVI23LwhTpJpbhl5TNXNvmEvke+xnZC39MQvLhw=;
-        b=j7N7MuRX42tReX50LodvJyrLckj0y8zJQVUgR2x5Vtw81QVN7in2Bh0kzLTy7cFZlO
-         ZscMIVFOszwPOfVU2CykMHio5jwVnbrGJ2MTGORcJeaJ8o309GOjVgUnlgm3KHv8ZPJY
-         x6OhAZdSfVF7DDziuwv8TbxBO9xKHfQzWXN411wU/5+4Xi+CyjUj8aYPprfVB7m29vHq
-         UJ/eyXvLWf47TgKkOviuBDDQFXbnOWVVC1D0rfy2dRCApp4GL9C/fMGFu4BqmtBcNIUT
-         2VOOEQvC92QiXy8o/VqH0DJ1Es2Zh36nkTVg+4Fh41Y5i+hvZpd+PN+jwH9evd0D6hmX
-         NPvQ==
-X-Received: by 10.152.45.42 with SMTP id j10mr3101436lam.15.1383248476059;
- Thu, 31 Oct 2013 12:41:16 -0700 (PDT)
-Received: by 10.114.201.69 with HTTP; Thu, 31 Oct 2013 12:41:15 -0700 (PDT)
-In-Reply-To: <6F276334-DFDB-40B8-8B24-38FFB6DBED9B@quendi.de>
+	id S1754620Ab3JaTla (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Oct 2013 15:41:30 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47676 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752122Ab3JaTl3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Oct 2013 15:41:29 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1391E4DBA6;
+	Thu, 31 Oct 2013 15:41:29 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=0iB5q/P3zrZ9G8+sCrblqnAIt7Y=; b=RO2hZQ
+	BobEjm+1jYLeveF2JjUVJhSaSWtUHX3lhYsR4bGNyaMqlxux0dsHsRJT1w1VMMWL
+	b97/nB4jI8RW0cdYHfHCkp4Agyranz8zvpHko/eA5Jwyub0uf4zTALMxkuRcTVDC
+	wh8fAciKQ9iWuAmlFnqshULU4/RIiFRmvLRJg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=KKkbGNczyAoV6rdR6UG6u8N5542RpYKt
+	ttITGSOe06TNydQfloccs4duK3q1fYsjQrGoYACvYkd4tE6d7Q2vXdht5Osxyc5s
+	+SeTC+pSSlNjHb5sZjBUd87rGW3eNW542NhDV0vfT18LiQ1cc/wLstj+wIAhbSoH
+	c4zPwrvO4mo=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 02DFD4DBA5;
+	Thu, 31 Oct 2013 15:41:29 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3D4D94DBA0;
+	Thu, 31 Oct 2013 15:41:28 -0400 (EDT)
+In-Reply-To: <CAPZPVFYWf3_xtxKkdw4_gzqKagVsbNvj73cb=RvX1Zm0C1h8pQ@mail.gmail.com>
+	(Eugene Sajine's message of "Thu, 31 Oct 2013 15:31:08 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 6F4BAA46-4264-11E3-8181-1FFB7F2839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237167>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237168>
 
-On Thu, Oct 31, 2013 at 1:29 PM, Max Horn <max@quendi.de> wrote:
-> Actually, I just noticed one thing that I *do* have a question about:
->
-> On 31.10.2013, at 10:36, Felipe Contreras <felipe.contreras@gmail.com> wrote:
->
->> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
->> ---
->> builtin/fast-export.c  | 14 ++++++++++++++
->> t/t9350-fast-export.sh | 11 +++++++++++
->> 2 files changed, 25 insertions(+)
->>
->> diff --git a/builtin/fast-export.c b/builtin/fast-export.c
->> index b6f623e..8ed41b4 100644
->> --- a/builtin/fast-export.c
->> +++ b/builtin/fast-export.c
->> @@ -673,6 +673,19 @@ static void import_marks(char *input_file)
->>       fclose(f);
->> }
->>
->> +static void handle_deletes(void)
->> +{
->> +     int i;
->> +     for (i = 0; i < refspecs_nr; i++) {
->> +             struct refspec *refspec = &refspecs[i];
->> +             if (*refspec->src)
->> +                     continue;
->> +
->> +             printf("reset %s\nfrom %s\n\n",
->> +                             refspec->dst, sha1_to_hex(null_sha1));
->
-> If I understand it right, this issues a "reset" command in the fast-import stream, resetting a ref to an all-zero SHA1. I had a look at the git-fast-import documentation, but I found that it does not explicitly cover this case. In particular, the "reset" command does not specify that an all-zero SHA1 should be treated as "delete this ref".
+Eugene Sajine <euguess@gmail.com> writes:
 
-That's what the previous patch does.
+> One note: i tried the ${GIT_PREFIX:-.}  and ${GIT_PREFIX} and it seems
+> to give the same results. What is the expected difference here?
 
-> On the other hand, the docs for "reset" seem to indicate that one can omit the "from" part, although I couldn't tell for sure what that would mean, either.
-
-It means something different.
-
-> I have not yet tried to dive into the code to figure out what actually happens, but I assume Felipe did that resp. tested it, and so supposedly doing this works, at least for git resp. existing transport helpers. But I wonder if other implementers of the fast-import format would handle it properly?
-
-Try this:
-
---- a/t/t9350-fast-export.sh
-+++ b/t/t9350-fast-export.sh
-@@ -519,7 +519,9 @@ test_expect_success 'delete refspec' '
-        from 0000000000000000000000000000000000000000
-
-        EOF
--       test_cmp expected actual
-+       test_cmp expected actual &&
-+       git fast-import < actual &&
-+       test_must_fail git rev-parse -q --verify refs/heads/to-delete
- '
-
- test_done
-
--- 
-Felipe Contreras
+GIT_PREFIX may be an empty string when you run from the top-level,
+in which case you would end up with "cd && ..." and end up working
+in your $HOME.
