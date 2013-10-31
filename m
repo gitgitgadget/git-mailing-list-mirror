@@ -1,218 +1,76 @@
-From: Nicolas Vigier <boklm@mars-attacks.org>
-Subject: [PATCH 2/2] rev-parse --parseopt: add the --stuck-long mode
-Date: Thu, 31 Oct 2013 12:08:29 +0100
-Message-ID: <1383217709-5518-3-git-send-email-boklm@mars-attacks.org>
-References: <xmqq1u39j9hw.fsf@gitster.dls.corp.google.com>
- <1383217709-5518-1-git-send-email-boklm@mars-attacks.org>
-Cc: Nicolas Vigier <boklm@mars-attacks.org>
-To: gitster@pobox.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 31 12:09:04 2013
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v2 11/19] pack-objects: use bitmaps when packing objects
+Date: Thu, 31 Oct 2013 19:03:03 +0700
+Message-ID: <CACsJy8DMskq8R5rfz8MFsnB5CRuX=b0Opf31uby7mB22Hg+c2g@mail.gmail.com>
+References: <20131025055521.GD11810@sigill.intra.peff.net> <20131025060352.GI23098@sigill.intra.peff.net>
+ <CACsJy8DMOfZu+2DS=-J9jfiP796XYi=e7B28cdV=ck9J-VOTtA@mail.gmail.com>
+ <20131030073627.GG11317@sigill.intra.peff.net> <CACsJy8B3VS=WSNeF35_JTiF6byZiefvEYnadkC8BAmKG5Z7gQQ@mail.gmail.com>
+ <20131030200754.GB23011@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Vicent Marti <vicent@github.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Oct 31 13:03:52 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vbq7a-00044c-Tk
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Oct 2013 12:09:03 +0100
+	id 1Vbqyc-0007lo-FA
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Oct 2013 13:03:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754546Ab3JaLIz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Oct 2013 07:08:55 -0400
-Received: from mx0.mars-attacks.org ([92.243.25.60]:44769 "EHLO
-	mx0.mars-attacks.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754536Ab3JaLIy (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Oct 2013 07:08:54 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mx0.mars-attacks.org (Postfix) with ESMTP id 1EC224E6F;
-	Thu, 31 Oct 2013 12:09:09 +0100 (CET)
-X-Virus-Scanned: amavisd-new at mars-attacks.org
-Received: from mx0.mars-attacks.org ([127.0.0.1])
-	by localhost (mx0.mars-attacks.org [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id TYRcL6Oj-yxs; Thu, 31 Oct 2013 12:09:08 +0100 (CET)
-Received: from wxy.mars-attacks.org (moow.mars-attacks.org [82.242.116.57])
-	by mx0.mars-attacks.org (Postfix) with ESMTPS id 41F2C3EC9;
-	Thu, 31 Oct 2013 12:09:08 +0100 (CET)
-Received: by wxy.mars-attacks.org (Postfix, from userid 500)
-	id 3BF5D43934; Thu, 31 Oct 2013 12:08:52 +0100 (CET)
-X-Mailer: git-send-email 1.8.4
-In-Reply-To: <1383217709-5518-1-git-send-email-boklm@mars-attacks.org>
+	id S1753425Ab3JaMDq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Oct 2013 08:03:46 -0400
+Received: from mail-qc0-f169.google.com ([209.85.216.169]:49379 "EHLO
+	mail-qc0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752031Ab3JaMDe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Oct 2013 08:03:34 -0400
+Received: by mail-qc0-f169.google.com with SMTP id x12so1585396qcv.14
+        for <git@vger.kernel.org>; Thu, 31 Oct 2013 05:03:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=qFcWgck4crZ1digpcKk0VgmGh5NXbeL0aZVqpw9f0KQ=;
+        b=P4A65GjSI9cM/lQGLJGagrQRq58LTzB81TxDZAU/uckm2xJ+Ml1VrR+uJGnXFAxPlv
+         SyCoQHBUj8k2OxN3Iw1MzBROhewzm8HeI7QaFhd5rElq4AAyK24HhlxMVhdxjfxB5DSa
+         8m0rz8BdQhVphhzvF1iuWgQEQ5vG0dw7Sdgu/wiVwyzJZNAcw7f8iVkqzvvICi3QvD5Z
+         vcNPruAbMJ+0mykOyS2Flbmq0DRaDpRv3JaT3XCdq51SzMWAanuRQF75jy28uvPHpuq1
+         Tdg417+tARfp0iW+gRSk4HkQuKkKWvTi+L58jc4Q41e57fXUcEGwmBEXJt6mg8koim/b
+         IVGg==
+X-Received: by 10.49.71.207 with SMTP id x15mr3419001qeu.49.1383221013940;
+ Thu, 31 Oct 2013 05:03:33 -0700 (PDT)
+Received: by 10.96.27.202 with HTTP; Thu, 31 Oct 2013 05:03:03 -0700 (PDT)
+In-Reply-To: <20131030200754.GB23011@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237120>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237121>
 
-Add the --stuck-long option to output the options in their long form
-if available, and with their arguments stuck.
+On Thu, Oct 31, 2013 at 3:07 AM, Jeff King <peff@peff.net> wrote:
+> I think there are two cases that we need to consider:
+>
+>   1. We have a full repo and somebody requests a shallow clone for us.
+>      We probably do not want to use bitmaps here.  In the series we have
+>      been testing, shallow clones turned off bitmaps because we do not
+>      use the internal rev_list. But as of cdab485 (upload-pack: delegate
+>      rev walking in shallow fetch to pack-objects), that distinction
+>      doesn't hold. I think we can check the use of --shallow-file
+>      instead of explicitly turning off bitmaps there.
 
-Contrary to the default form (non stuck arguments and short options),
-this can be parsed unambiguously when using options with optional
-arguments :
+There's an (non-existing yet) case 1': somebody requests a clone and
+the source clone is already shallow. is_repository_shallow() could
+catch both cases.
 
- - in the non stuck form, when an option is taking an optional argument
-   you cannot know if the next argument is its optional argument, or the
-   next option.
+>   2. We have a shallow clone that wants to repack. We probably want to
+>      turn off bitmap writing here. I don't think that grafts actually
+>      matter here, because pack-objects should always be looking at the
+>      true graph. It would mean that using "git rev-list
+>      --use-bitmap-index" does not respect the grafts, and we should
+>      probably disable it in that case (and ditto for replacements).
 
- - the long options form allows to differentiate between an empty argument
-   '--option=' and an unset argument '--option', which is not possible
-   with short options.
-
-Signed-off-by: Nicolas Vigier <boklm@mars-attacks.org>
----
- Documentation/git-rev-parse.txt |  8 +++++++-
- builtin/rev-parse.c             | 11 +++++++++--
- t/t1502-rev-parse-parseopt.sh   | 42 ++++++++++++++++++++++++++++++++++++++---
- 3 files changed, 55 insertions(+), 6 deletions(-)
-
-diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.txt
-index d068a653778d..a436b24cc406 100644
---- a/Documentation/git-rev-parse.txt
-+++ b/Documentation/git-rev-parse.txt
-@@ -50,6 +50,10 @@ Options for --parseopt
- 	the first non-option argument.  This can be used to parse sub-commands
- 	that take options themselves.
- 
-+--stuck-long::
-+	Only meaningful in `--parseopt` mode. Output the options in their
-+	long form if available, and with their arguments stuck.
-+
- Options for Filtering
- ~~~~~~~~~~~~~~~~~~~~~
- 
-@@ -285,7 +289,9 @@ Each line of options has this format:
- 	`<flags>` are of `*`, `=`, `?` or `!`.
- 	* Use `=` if the option takes an argument.
- 
--	* Use `?` to mean that the option is optional (though its use is discouraged).
-+	* Use `?` to mean that the option takes an optional argument. You
-+	  probably want to use the `--stuck-long` mode to be able to
-+	  unambiguously parse the optional argument.
- 
- 	* Use `*` to mean that this option should not be listed in the usage
- 	  generated for the `-h` argument. It's shown for `--help-all` as
-diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
-index c76b89dc5bcc..3e8c4cce060e 100644
---- a/builtin/rev-parse.c
-+++ b/builtin/rev-parse.c
-@@ -30,6 +30,8 @@ static int abbrev_ref;
- static int abbrev_ref_strict;
- static int output_sq;
- 
-+static int stuck_long;
-+
- /*
-  * Some arguments are relevant "revision" arguments,
-  * others are about output format or other details.
-@@ -320,12 +322,15 @@ static int parseopt_dump(const struct option *o, const char *arg, int unset)
- 	struct strbuf *parsed = o->value;
- 	if (unset)
- 		strbuf_addf(parsed, " --no-%s", o->long_name);
--	else if (o->short_name)
-+	else if (o->short_name && (o->long_name == NULL || !stuck_long))
- 		strbuf_addf(parsed, " -%c", o->short_name);
- 	else
- 		strbuf_addf(parsed, " --%s", o->long_name);
- 	if (arg) {
--		strbuf_addch(parsed, ' ');
-+		if (!stuck_long)
-+			strbuf_addch(parsed, ' ');
-+		else if (o->long_name)
-+			strbuf_addch(parsed, '=');
- 		sq_quote_buf(parsed, arg);
- 	}
- 	return 0;
-@@ -351,6 +356,8 @@ static int cmd_parseopt(int argc, const char **argv, const char *prefix)
- 		OPT_BOOL(0, "stop-at-non-option", &stop_at_non_option,
- 					N_("stop parsing after the "
- 					   "first non-option argument")),
-+		OPT_BOOL(0, "stuck-long", &stuck_long,
-+					N_("output in stuck long form")),
- 		OPT_END(),
- 	};
- 
-diff --git a/t/t1502-rev-parse-parseopt.sh b/t/t1502-rev-parse-parseopt.sh
-index 13c88c9aae7f..83b1300cef91 100755
---- a/t/t1502-rev-parse-parseopt.sh
-+++ b/t/t1502-rev-parse-parseopt.sh
-@@ -12,9 +12,11 @@ usage: some-command [options] <args>...
-     -h, --help            show the help
-     --foo                 some nifty option --foo
-     --bar ...             some cool option --bar with an argument
-+    -b, --baz             a short and long option
- 
- An option group Header
-     -C[...]               option C with an optional argument
-+    -d, --data[=...]      short and long option with an optional argument
- 
- Extras
-     --extra1              line above used to cause a segfault but no longer does
-@@ -31,9 +33,11 @@ h,help    show the help
- 
- foo       some nifty option --foo
- bar=      some cool option --bar with an argument
-+b,baz     a short and long option
- 
-  An option group Header
- C?        option C with an optional argument
-+d,data?   short and long option with an optional argument
- 
- Extras
- extra1    line above used to cause a segfault but no longer does
-@@ -45,16 +49,16 @@ test_expect_success 'test --parseopt help output' '
- '
- 
- cat > expect <<EOF
--set -- --foo --bar 'ham' -- 'arg'
-+set -- --foo --bar 'ham' -b -- 'arg'
- EOF
- 
- test_expect_success 'test --parseopt' '
--	git rev-parse --parseopt -- --foo --bar=ham arg < optionspec > output &&
-+	git rev-parse --parseopt -- --foo --bar=ham --baz arg < optionspec > output &&
- 	test_cmp expect output
- '
- 
- test_expect_success 'test --parseopt with mixed options and arguments' '
--	git rev-parse --parseopt -- --foo arg --bar=ham < optionspec > output &&
-+	git rev-parse --parseopt -- --foo arg --bar=ham --baz < optionspec > output &&
- 	test_cmp expect output
- '
- 
-@@ -99,4 +103,36 @@ test_expect_success 'test --parseopt --keep-dashdash --stop-at-non-option withou
- 	test_cmp expect output
- '
- 
-+cat > expect <<EOF
-+set -- --foo --bar='z' --baz -C'Z' --data='A' -- 'arg'
-+EOF
-+
-+test_expect_success 'test --parseopt --stuck-long' '
-+	git rev-parse --parseopt --stuck-long -- --foo --bar=z -b arg -CZ -dA <optionspec >output &&
-+	test_cmp expect output
-+'
-+
-+cat > expect <<EOF
-+set -- --data='' -C --baz -- 'arg'
-+EOF
-+
-+test_expect_success 'test --parseopt --stuck-long and empty optional argument' '
-+	git rev-parse --parseopt --stuck-long -- --data= arg -C -b <optionspec >output &&
-+	test_cmp expect output
-+'
-+
-+cat > expect <<EOF
-+set -- --data --baz -- 'arg'
-+EOF
-+
-+test_expect_success 'test --parseopt --stuck-long and long option with unset optional argument' '
-+	git rev-parse --parseopt --stuck-long -- --data arg -b <optionspec >output &&
-+	test_cmp expect output
-+'
-+
-+test_expect_success 'test --parseopt --stuck-long and short option with unset optional argument' '
-+	git rev-parse --parseopt --stuck-long -- -d arg -b <optionspec >output &&
-+	test_cmp expect output
-+'
-+
- test_done
+Right. I forgot that the repo must be complete before it's grafted.
 -- 
-1.8.4
+Duy
