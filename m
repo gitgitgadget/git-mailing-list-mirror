@@ -1,100 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 03/10] transport-helper: add 'force' to 'export' helpers
-Date: Thu, 31 Oct 2013 12:07:20 -0700
-Message-ID: <xmqqfvrh5kev.fsf@gitster.dls.corp.google.com>
-References: <1383212197-14259-1-git-send-email-felipe.contreras@gmail.com>
-	<1383212197-14259-7-git-send-email-felipe.contreras@gmail.com>
-	<xmqqa9hp714d.fsf@gitster.dls.corp.google.com>
-	<CAMP44s39H8tASO_OvK+C+XSG-2pm09RJY6Xeg4AqDZBAU7GPaw@mail.gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH 04/16] fetch: add missing documentation
+Date: Thu, 31 Oct 2013 13:08:31 -0600
+Message-ID: <CAMP44s13kADwM0MudcEx=4Pk_rG0_tom2jfsEh2bz9_QXWAK5Q@mail.gmail.com>
+References: <1383211547-9145-1-git-send-email-felipe.contreras@gmail.com>
+	<1383211547-9145-5-git-send-email-felipe.contreras@gmail.com>
+	<xmqqwqkt71l8.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Sverre Rabbelier <srabbelier@gmail.com>,
-	Richard Hansen <rhansen@bbn.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 31 20:07:31 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Oct 31 20:08:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VbxaZ-0003mv-Em
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Oct 2013 20:07:27 +0100
+	id 1Vbxbh-0004H6-TZ
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Oct 2013 20:08:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755267Ab3JaTHX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Oct 2013 15:07:23 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50286 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755207Ab3JaTHX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Oct 2013 15:07:23 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AF9314CC6D;
-	Thu, 31 Oct 2013 15:07:22 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ylAzdkisENix/Q6qaobVFuWVJgE=; b=lFb46B
-	tXxg+slejzL95o9DuGrO0PIV+6B4DXrt+9T3GVrInRe9l0v44/y+V8W45JMtNjot
-	2inn40WJ7CM+ASWKpJeEPj3FvSXH5LJM5lkiDSHz7dXdDayAbasBUT2EWkZzfnM5
-	OverUbWpEQ1LqsOjj6yXXf5PVo8KXVyvG4Sx4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=FuqH5bJdylPlkk5sVuJD07R8vutozZS7
-	NzXoYXXOUScThv4LoF/ZHKfX8GFy3uhw+oJyjBdler6rEgtPPEENfVNfz689Jk4X
-	eXKTN6NXWdJsXpVKErPARZ7rkFwiifANxJu3RbrFoR5dBFJsrUtDLMu9SZzIGfA8
-	l0ZX8p0OXvc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9F2AF4CC6C;
-	Thu, 31 Oct 2013 15:07:22 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EC9144CC69;
-	Thu, 31 Oct 2013 15:07:21 -0400 (EDT)
-In-Reply-To: <CAMP44s39H8tASO_OvK+C+XSG-2pm09RJY6Xeg4AqDZBAU7GPaw@mail.gmail.com>
-	(Felipe Contreras's message of "Thu, 31 Oct 2013 12:55:06 -0600")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: AB9D3532-425F-11E3-BBF5-1FFB7F2839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755207Ab3JaTIe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Oct 2013 15:08:34 -0400
+Received: from mail-la0-f49.google.com ([209.85.215.49]:49021 "EHLO
+	mail-la0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753484Ab3JaTId (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Oct 2013 15:08:33 -0400
+Received: by mail-la0-f49.google.com with SMTP id ev20so921456lab.8
+        for <git@vger.kernel.org>; Thu, 31 Oct 2013 12:08:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=laCDrdbOUc9GfZAQVTpZZsT1vtUnGQCeVlhQgzQcfUc=;
+        b=NeW5Ir2EQ7F+q8qbm6hBi1KDeHrApWY6O22xsGMk45qlw9Hla6YQDNt4j2xzqIUr/u
+         GVJ1T0cDM8SPe/hORIfqeHPiGuXjq8gdCkg99gMy1oMC+HzqzPLsslK5DvQv4cjttykJ
+         pSG4rXEJzkcgQkMUKbDglw2+fQRmFjbcg9BYmNP0hfnjhMRDTDfoLRoz/+pVO5oDJcBp
+         ie+UIlNlKGOHRRLo0fZdtLEdS50UR07tnjymgtUciPWLkhjO9WVYgLkL+/hfx3U3iQqN
+         41p7xPo4cAmpYgOInia3rZVyGNteNRDAhdf/YrmrE24vQk7mIQkvwzwfe3PoDai5/Ru9
+         hnEw==
+X-Received: by 10.152.22.97 with SMTP id c1mr2992605laf.31.1383246511750; Thu,
+ 31 Oct 2013 12:08:31 -0700 (PDT)
+Received: by 10.114.201.69 with HTTP; Thu, 31 Oct 2013 12:08:31 -0700 (PDT)
+In-Reply-To: <xmqqwqkt71l8.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237160>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237161>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+On Thu, Oct 31, 2013 at 12:10 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-> On Thu, Oct 31, 2013 at 12:21 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>> diff --git a/Documentation/git-fetch.txt b/Documentation/git-fetch.txt
+>> index e08a028..7e75dc4 100644
+>> --- a/Documentation/git-fetch.txt
+>> +++ b/Documentation/git-fetch.txt
+>> @@ -37,6 +37,9 @@ or from several repositories at once if <group> is given and
+>>  there is a remotes.<group> entry in the configuration file.
+>>  (See linkgit:git-config[1]).
 >>
->>> Otherwise they cannot know when to force the push or not (other than
->>> hacks).
->>> ...
->>> diff --git a/transport-helper.c b/transport-helper.c
->>> index d05fc7c..ed238e5 100644
->>> --- a/transport-helper.c
->>> +++ b/transport-helper.c
->>> @@ -854,6 +854,11 @@ static int push_refs_with_export(struct transport *transport,
->>>                       die("helper %s does not support dry-run", data->name);
->>>       }
->>>
->>> +     if (flags & TRANSPORT_PUSH_FORCE) {
->>> +             if (set_helper_option(transport, "force", "true") != 0)
->>> +                     die("helper %s does not support 'force'", data->name);
->>> +     }
->>> +
->>
->> Does this cause a "git push --force $there A:B" to fail when $there
->> is a destination that goes via an existing helper does not suport
->> "force" option?
+>> +When no remote is specified, by the default the `origin` remote will be used,
 >
-> Yes.
->
->> Should it fail even when the current value of B is an ancestor of A
->> (i.e. when an unforced push would succeed)?
->
-> It might make sense to fail only when the push is non-fast-forward,
-> but it's not so straight-forward to implement.
+> I recall there were typofix comments on this line.
 
-OK; let's see if anybody screams by cooking the series in 'next'
-(that is, when other issues people may discover in the series are
-addressed).
+--- a/Documentation/git-fetch.txt
++++ b/Documentation/git-fetch.txt
+@@ -37,7 +37,7 @@ or from several repositories at once if <group> is given and
+ there is a remotes.<group> entry in the configuration file.
+ (See linkgit:git-config[1]).
 
-Thanks.
+-When no remote is specified, by the default the `origin` remote will be used,
++When no remote is specified, by default the `origin` remote will be used,
+ unless there's an upstream branch configured for the current branch.
+
+ OPTIONS
+
+>> +unless there's an upstream branch configured for the current branch.
+>
+> Also there was a phrasing comment on this one, I think.
+
+There was no constructive comment, no alternative was proposed.
+
+The conclusion of the discussion (at least mine) is that the phrasing is fine.
+
+> Resending without rerolling is not very much appreciated.
+
+I missed a valid comment in one of my 160 pending patches. Sue me.
+
+-- 
+Felipe Contreras
