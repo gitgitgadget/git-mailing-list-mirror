@@ -1,65 +1,90 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v5 06/10] fast-export: add new --refspec option
-Date: Thu, 31 Oct 2013 12:41:31 -0600
-Message-ID: <CAMP44s246M5DaeX80tqzfjRWnbE4vKh-vp_tLW-qAQUFFPsP0Q@mail.gmail.com>
-References: <1383212197-14259-1-git-send-email-felipe.contreras@gmail.com>
-	<1383212197-14259-6-git-send-email-felipe.contreras@gmail.com>
-	<xmqq61sd70vw.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+From: Max Horn <max@quendi.de>
+Subject: Re: [PATCH v5 08/10] fast-import: add support to delete refs
+Date: Thu, 31 Oct 2013 19:41:52 +0100
+Message-ID: <08E1EB05-D3E1-4393-A950-60AB46930BB1@quendi.de>
+References: <1383212197-14259-1-git-send-email-felipe.contreras@gmail.com> <1383212197-14259-4-git-send-email-felipe.contreras@gmail.com>
+Mime-Version: 1.0 (Mac OS X Mail 6.6 \(1510\))
+Content-Type: multipart/signed; boundary="Apple-Mail=_DBAC7A5D-6ED0-4E29-9CA5-1B6EDB536569"; protocol="application/pgp-signature"; micalg=pgp-sha256
 Cc: git@vger.kernel.org, Sverre Rabbelier <srabbelier@gmail.com>,
 	Richard Hansen <rhansen@bbn.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 31 19:41:37 2013
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 31 19:42:01 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VbxBZ-000173-AQ
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Oct 2013 19:41:37 +0100
+	id 1VbxBw-0001Fk-5b
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Oct 2013 19:42:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755380Ab3JaSld (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Oct 2013 14:41:33 -0400
-Received: from mail-lb0-f170.google.com ([209.85.217.170]:53420 "EHLO
-	mail-lb0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753621Ab3JaSlc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Oct 2013 14:41:32 -0400
-Received: by mail-lb0-f170.google.com with SMTP id u14so2759134lbd.29
-        for <git@vger.kernel.org>; Thu, 31 Oct 2013 11:41:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=4fDHtYK5iOsl3sQqruduYN+1otwR//k/d/67Emo1U+0=;
-        b=nuHFNdtyYTi73fE2wdhTJzsMZymiDTFWvUzvxlpBmJMN3hyECyjPMlY1O+F2DqPfaU
-         hhSD0u2bGYI32srXxBx+5wlI1DwdnSd27bglHJC/qRdYC2KoGfifBWeOSTcG8LA6c0C9
-         y8Wol0/r+80Da6LOHZAwbfawUjU47ARWvNPWieqAhQnYn3EMHvZ4j/VjVVc2gRaTbQ/7
-         Q6UA3N9hUxmHJtmlnvSKpp2rF3kFBygPvi5edMZZtjL9DSaeHF+YompQeZGBplSPlI8i
-         VWZWrbg7FMhG5qCX92OEd85qsEDG5LR2pG/JCOKZaxvcT7OO7CSk9mbqUbZdkoK+8ZW9
-         5H9w==
-X-Received: by 10.152.3.226 with SMTP id f2mr147485laf.62.1383244891258; Thu,
- 31 Oct 2013 11:41:31 -0700 (PDT)
-Received: by 10.114.201.69 with HTTP; Thu, 31 Oct 2013 11:41:31 -0700 (PDT)
-In-Reply-To: <xmqq61sd70vw.fsf@gitster.dls.corp.google.com>
+	id S1755454Ab3JaSl4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Oct 2013 14:41:56 -0400
+Received: from wp256.webpack.hosteurope.de ([80.237.133.25]:59960 "EHLO
+	wp256.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753621Ab3JaSl4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 31 Oct 2013 14:41:56 -0400
+Received: from fb07-alg-gast1.math.uni-giessen.de ([134.176.24.161]); authenticated
+	by wp256.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:RSA_AES_128_CBC_SHA1:16)
+	id 1VbxBo-0008ML-G9; Thu, 31 Oct 2013 19:41:52 +0100
+In-Reply-To: <1383212197-14259-4-git-send-email-felipe.contreras@gmail.com>
+X-Mailer: Apple Mail (2.1510)
+X-bounce-key: webpack.hosteurope.de;max@quendi.de;1383244915;8505ad6d;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237153>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237154>
 
-On Thu, Oct 31, 2013 at 12:26 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
->
->> +test_expect_success 'use refspec' '
->> +     git fast-export --refspec refs/heads/master:refs/heads/foobar master | \
->> +             grep "^commit " | sort | uniq > actual &&
->
-> It feels somewhat redundant that you have to twice say that you are
-> pushing your "master", once with --refspec and then the branch
-> name.  Is this the best we can do?
 
-As this has been discussed before and no other solution came forward, yes.
+--Apple-Mail=_DBAC7A5D-6ED0-4E29-9CA5-1B6EDB536569
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=us-ascii
 
--- 
-Felipe Contreras
+
+On 31.10.2013, at 10:36, Felipe Contreras <felipe.contreras@gmail.com> =
+wrote:
+
+> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+> ---
+> Documentation/git-fast-import.txt |  3 +++
+> fast-import.c                     | 13 ++++++++++---
+> t/t9300-fast-import.sh            | 18 ++++++++++++++++++
+> 3 files changed, 31 insertions(+), 3 deletions(-)
+>=20
+> diff --git a/Documentation/git-fast-import.txt =
+b/Documentation/git-fast-import.txt
+> index 73f9806..c49ede4 100644
+> --- a/Documentation/git-fast-import.txt
+> +++ b/Documentation/git-fast-import.txt
+> @@ -483,6 +483,9 @@ Marks must be declared (via `mark`) before they =
+can be used.
+> * Any valid Git SHA-1 expression that resolves to a commit.  See
+>   ``SPECIFYING REVISIONS'' in linkgit:gitrevisions[7] for details.
+>=20
+> +* The special null SHA-1 (40 zeros) specifices that the branch is to =
+be
+
+s/specifices/specifies/
+
+(this was previously pointed out by Eric Sunshine for patch 7 of v4 of =
+this series).
+
+
+--Apple-Mail=_DBAC7A5D-6ED0-4E29-9CA5-1B6EDB536569
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+	filename=signature.asc
+Content-Type: application/pgp-signature;
+	name=signature.asc
+Content-Description: Message signed with OpenPGP using GPGMail
+
+-----BEGIN PGP SIGNATURE-----
+Comment: GPGTools - http://gpgtools.org
+
+iF4EAREIAAYFAlJypHAACgkQIpJVslrhe1mFwwEAr4CXiT+7RuaPZ7A5bjv8W2s+
+e01vAvJvncfbAWMsSIwA/1IRU2GOMmK2GCjRUiiEhqbDnhbyEMsdaP09SUFZPcaq
+=nuHU
+-----END PGP SIGNATURE-----
+
+--Apple-Mail=_DBAC7A5D-6ED0-4E29-9CA5-1B6EDB536569--
