@@ -1,141 +1,122 @@
-From: Stefan Haller <stefan@haller-berlin.de>
-Subject: [PATCH] gitk: Add "First parent" checkbox
-Date: Thu, 31 Oct 2013 15:59:12 +0100
-Message-ID: <1383231552-63504-1-git-send-email-stefan@haller-berlin.de>
-References: <CAFAOj7orccjudOu4czDpaN-TZBCFb=T-Qo8f9eo_1dnKBGXJ4g@mail.gmail.com>
-Cc: git@vger.kernel.org, Paul Mackerras <paulus@samba.org>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Karl Wiberg <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Thu Oct 31 15:59:45 2013
+From: Eugene Sajine <euguess@gmail.com>
+Subject: Re: Help creating git alias
+Date: Thu, 31 Oct 2013 11:36:59 -0400
+Message-ID: <CAPZPVFYFSBRHThO08LmuN_0fc55gYX-A+Y3=yA_MESko1t6fXQ@mail.gmail.com>
+References: <CAPZPVFbiSx8n0W1kcczCdC6ioVuWpwuUQ_pc9T=7i4X_FuZNhg@mail.gmail.com>
+	<CAN0XMOKMF235S-23QcMj5cBup+Lh4vQs7QcOqXQ-MgafsAMKNg@mail.gmail.com>
+	<CAPZPVFZ9WujUCQ1O9VfV83XUu_6g7Vp_MmYRCCO+GptOoSyvcg@mail.gmail.com>
+	<xmqq61sebhh3.fsf@gitster.dls.corp.google.com>
+	<CAPZPVFarK_jKpM2f62mErAmL+mck6EN1QPfHDHqqfJbJ2AfzXg@mail.gmail.com>
+	<xmqqk3gu9jst.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Ralf Thielow <ralf.thielow@gmail.com>, git <git@vger.kernel.org>,
+	Andrew Ardill <andrew.ardill@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Oct 31 16:37:09 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vbtio-0005ZA-Jn
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Oct 2013 15:59:42 +0100
+	id 1VbuJ1-0004Ty-Sj
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Oct 2013 16:37:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754660Ab3JaO7i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Oct 2013 10:59:38 -0400
-Received: from server90.greatnet.de ([83.133.96.186]:55033 "EHLO
-	server90.greatnet.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753883Ab3JaO7h (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Oct 2013 10:59:37 -0400
-Received: from macbook-stk.office.ableton.com (nat1.ableton.net [217.110.199.117])
-	by server90.greatnet.de (Postfix) with ESMTPA id 99B2FDD0DB;
-	Thu, 31 Oct 2013 15:59:35 +0100 (CET)
-X-Mailer: git-send-email 1.8.3.2.747.g15edaa9
-In-Reply-To: <CAFAOj7orccjudOu4czDpaN-TZBCFb=T-Qo8f9eo_1dnKBGXJ4g@mail.gmail.com>
+	id S1752619Ab3JaPhB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Oct 2013 11:37:01 -0400
+Received: from mail-wi0-f171.google.com ([209.85.212.171]:63246 "EHLO
+	mail-wi0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751609Ab3JaPhA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Oct 2013 11:37:00 -0400
+Received: by mail-wi0-f171.google.com with SMTP id f4so4598066wiw.4
+        for <git@vger.kernel.org>; Thu, 31 Oct 2013 08:36:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=+M1mdfZhf3hnjJf6txsDiwo6QOROwnfLDtPTF64UAP0=;
+        b=M502hye7ndFqW+eZchApr9G0TmXwLgPhHwlFQ6jKplosgG95XIxncTBNfHTIBIXRsX
+         gpgz4vJfIZoMNLPOcZ1kfvIsvVQQGPD95s5/vB5GZ6TWbrmrFryEZl6aNczEEnzSck4u
+         v0F3pD2wuuqPFc1BGij0rYdW207vZa/78ZFndGpxipTlFmy6MM6y2S2EU6o6INe+OLyx
+         cwxXVoyt4QUfWqNPwWbo+NG0O7+RTVtDKEk2E26iS9yBN0lTYOGwpFGbF2c+lwKOqNJk
+         TW0nrBfy2KtUD7aF97dBBeKOxmOn20N5WZw+EAJFz3whvYfUXGM8Og74DdHREtS/v8tm
+         rdMw==
+X-Received: by 10.194.238.230 with SMTP id vn6mr3036615wjc.57.1383233819620;
+ Thu, 31 Oct 2013 08:36:59 -0700 (PDT)
+Received: by 10.216.123.145 with HTTP; Thu, 31 Oct 2013 08:36:59 -0700 (PDT)
+In-Reply-To: <xmqqk3gu9jst.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237126>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237127>
 
-Sometimes it's desirable to see what changes were introduced by a
-merge commit, rather than how conflicts were resolved. This adds
-a checkbox which, when turned on, makes gitk show the equivalent
-of "git show --first-parent <commit>" for merge commits.
+On Wed, Oct 30, 2013 at 11:54 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Eugene Sajine <euguess@gmail.com> writes:
+>
+>> That was my initial intention, because I would like to be able to pass
+>> parameters like to git log or git blame correctly without the explicit
+>> use of $1. Could you please advise about how to make it work with the
+>> !sh -c ?
+>>
+>> Because the same exact (sed 's/@\\S*//') syntax didn't work with "sh -c".
+>
+> You can make it work if you think step-by-step.  First, this is what
+> you want to run:
+>
+>         sh -c 'git log --format="..." "$@" | sed "s/@\S*//"' -
+>
+> so that "git euguess master..next" would turn into
+>
+>         sh -c 'git log --format="..." "$@" | sed "s/@\S*//"' - master..next
+>
+> Now, you want to wrap it into an alias, i.e.
+>
+>         [alias]
+>                 euguess = "!sh -c ..."
+>
+> That ... part is read by our configuration reader, so you need to
+> quote the double quotes and backslashes with backslash, which would
+> give you something like:
+>
+>         [alias]
+>                 euguess = "!sh -c 'git log --format=\"%h %ae %s\" --date=short \"$@\" | sed \"s/@\\S*//\"' -"
+>
+>
 
-Signed-off-by: Stefan Haller <stefan@haller-berlin.de>
----
-This is the same patch as the one I sent in
-<http://comments.gmane.org/gmane.comp.version-control.git/160920>, with
-the same issues discussed in that thread. I just brought it up to date
-with current master.
+Junio,
 
- gitk | 25 ++++++++++++++++++++++---
- 1 file changed, 22 insertions(+), 3 deletions(-)
+Thanks for taking the time - I appreciate that a lot.
+It does work properly now except there is some difference between the
+required pathnames:
 
-diff --git a/gitk b/gitk
-index 5cd00d8..3466054 100755
---- a/gitk
-+++ b/gitk
-@@ -2336,6 +2336,10 @@ proc makewindow {} {
- 	pack .bleft.mid.worddiff -side left -padx 5
-     }
+when i'm in a subfolder in git repo i can say
 
-+    ${NS}::checkbutton .bleft.mid.firstparent -text [mc "First parent"] \
-+	-command changefirstparent -variable firstparent
-+    pack .bleft.mid.firstparent -side left -padx 5
-+
-     set ctext .bleft.bottom.ctext
-     text $ctext -background $bgcolor -foreground $fgcolor \
- 	-state disabled -font textfont \
-@@ -7080,6 +7084,7 @@ proc selectline {l isnew {desired_loc {}}} {
-     global cmitmode showneartags allcommits
-     global targetrow targetid lastscrollrows
-     global autoselect autosellen jump_to_here
-+    global firstparent
+git log filename
 
-     catch {unset pending_select}
-     $canv delete hover
-@@ -7221,7 +7226,7 @@ proc selectline {l isnew {desired_loc {}}} {
-     init_flist [mc "Comments"]
-     if {$cmitmode eq "tree"} {
- 	gettree $id
--    } elseif {[llength $olds] <= 1} {
-+    } elseif {[llength $olds] <= 1 || $firstparent} {
- 	startdiff $id
-     } else {
- 	mergediff $id
-@@ -7624,7 +7629,7 @@ proc diffcmd {ids flags} {
- proc gettreediffs {ids} {
-     global treediff treepending limitdiffs vfilelimit curview
+But it seems that if the alias is used i need to specify full path
+from the root of the repo no matter where i am.
 
--    set cmd [diffcmd $ids {--no-commit-id}]
-+    set cmd [diffcmd $ids {--no-commit-id -m --first-parent}]
-     if {$limitdiffs && $vfilelimit($curview) ne {}} {
- 	    set cmd [concat $cmd -- $vfilelimit($curview)]
-     }
-@@ -7710,12 +7715,20 @@ proc changeworddiff {name ix op} {
-     reselectline
- }
+git log a/b/c/filename
 
-+proc changefirstparent {} {
-+    global treediffs
-+    catch {unset treediffs}
-+
-+    reselectline
-+}
-+
- proc getblobdiffs {ids} {
-     global blobdifffd diffids env
-     global diffinhdr treediffs
-     global diffcontext
-     global ignorespace
-     global worddiff
-+    global firstparent
-     global limitdiffs vfilelimit curview
-     global diffencoding targetline diffnparents
-     global git_version currdiffsubmod
-@@ -7728,13 +7741,18 @@ proc getblobdiffs {ids} {
-     if {[package vcompare $git_version "1.6.6"] >= 0} {
- 	set submodule "--submodule"
-     }
--    set cmd [diffcmd $ids "-p $textconv $submodule  -C --cc --no-commit-id -U$diffcontext"]
-+    set cmd [diffcmd $ids "-p $textconv $submodule  -C --no-commit-id -U$diffcontext"]
-     if {$ignorespace} {
- 	append cmd " -w"
-     }
-     if {$worddiff ne [mc "Line diff"]} {
- 	append cmd " --word-diff=porcelain"
-     }
-+    if {$firstparent} {
-+	append cmd " -m --first-parent"
-+    } else {
-+	append cmd " --cc"
-+    }
-     if {$limitdiffs && $vfilelimit($curview) ne {}} {
- 	set cmd [concat $cmd -- $vfilelimit($curview)]
-     }
-@@ -11865,6 +11883,7 @@ set diffcontext 3
- set mergecolors {red blue green purple brown "#009090" magenta "#808000" "#009000" "#ff0080" cyan "#b07070" "#70b0f0" "#70f0b0" "#f0b070" "#ff70b0"}
- set ignorespace 0
- set worddiff ""
-+set firstparent 0
- set markbgcolor "#e0e0ff"
+the difference is obviously in the working directory
 
- set headbgcolor green
---
-1.8.3.2.747.g15edaa9
+when i add an alias:
+
+pd = "!sh -c 'pwd'"
+
+i get this:
+
+$ git pd
+/home/users/euguess/repo
+
+$ pwd
+/home/users/euguess/repo/a/b/c
+
+Is there any way to help that situation?
+
+Thanks,
+Eugene
+
+Thanks,
+Eugene
