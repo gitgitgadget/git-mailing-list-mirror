@@ -1,112 +1,65 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH 2/3] for-each-ref: introduce %(HEAD) asterisk marker
-Date: Thu, 31 Oct 2013 15:16:13 +0530
-Message-ID: <1383212774-5232-3-git-send-email-artagnon@gmail.com>
-References: <1383212774-5232-1-git-send-email-artagnon@gmail.com>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Oct 31 10:54:43 2013
+From: Karl Wiberg <kha@treskal.com>
+Subject: Re: Show patch in gitk --first-parent ?
+Date: Thu, 31 Oct 2013 11:10:54 +0100
+Message-ID: <CAFAOj7oskj3TKZU4O5-=CejJVV7v0OiS9t-S9vO4nBtC+jA6jQ@mail.gmail.com>
+References: <CAFAOj7p49pQo=hXZT3TmMFF+KThKY-PZ2cgsZasH=e8rgjri1A@mail.gmail.com>
+	<874n7yiqxo.fsf@igel.home>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Andreas Schwab <schwab@linux-m68k.org>
+X-From: git-owner@vger.kernel.org Thu Oct 31 11:11:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vboxd-0007tT-EF
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Oct 2013 10:54:41 +0100
+	id 1VbpDh-0006J7-RG
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Oct 2013 11:11:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753050Ab3JaJya (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Oct 2013 05:54:30 -0400
-Received: from mail-pd0-f178.google.com ([209.85.192.178]:41115 "EHLO
-	mail-pd0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750807Ab3JaJy3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Oct 2013 05:54:29 -0400
-Received: by mail-pd0-f178.google.com with SMTP id x10so2133141pdj.23
-        for <git@vger.kernel.org>; Thu, 31 Oct 2013 02:54:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:subject:date:message-id:in-reply-to:references;
-        bh=lHnugcrcn8dyw+k70i5Fm5T6E3gDk+bO4nI22scamdc=;
-        b=e/jEt6VYPvbdbpHHhj1BSmUv2AdWhZQd4rYQR+NlBXhlu2gCnVkJzXu98pP6DImkNM
-         AdGRWbtGx3bigJ1yU3mXA0z3xZUy5M8bOIkDVOcgRCVhr1EX467fp617zspMwIEUrXah
-         1hOk0qqDCIdWdL85+OO9FNuylQIJv6jCwp7m92S0ah5JuO/OENgHJAb7r5PqjCzkLjSE
-         O0jFseARS8V70b/ZtYVZF+th6PmPohqw39kMYYJ4QYNbObwKxQUZ9Q2iM6erDMaue9wd
-         Jff810Qv9aHe5E9YG6Vyp1WRJ1bxmGFplGBMGUE3GbiPHPvdJHusBNJsZ6SJNGxp2f6i
-         ybWw==
-X-Received: by 10.66.136.71 with SMTP id py7mr2924270pab.2.1383213268549;
-        Thu, 31 Oct 2013 02:54:28 -0700 (PDT)
-Received: from localhost.localdomain ([122.164.233.197])
-        by mx.google.com with ESMTPSA id i10sm4106533pat.11.2013.10.31.02.54.26
-        for <git@vger.kernel.org>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 31 Oct 2013 02:54:27 -0700 (PDT)
-X-Mailer: git-send-email 1.8.5.rc0.3.gb488857
-In-Reply-To: <1383212774-5232-1-git-send-email-artagnon@gmail.com>
+	id S1751590Ab3JaKK5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Oct 2013 06:10:57 -0400
+Received: from mail1b.space2u.com ([194.218.23.146]:47710 "EHLO
+	mail1.space2u.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750712Ab3JaKK5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Oct 2013 06:10:57 -0400
+Received: from mail-wg0-f51.google.com (mail-wg0-f51.google.com [74.125.82.51])
+	(authenticated bits=0)
+	by mail1.space2u.com (8.14.5/8.14.4) with ESMTP id r9VAAsoA029009
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT)
+	for <git@vger.kernel.org>; Thu, 31 Oct 2013 11:10:55 +0100
+Received: by mail-wg0-f51.google.com with SMTP id l18so2449145wgh.18
+        for <git@vger.kernel.org>; Thu, 31 Oct 2013 03:10:54 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=Sdl04tZTPV79qEEZ1o5EW+0WTpmCxELUQRABo3Us8Is=;
+        b=bHsGTe+pFfT+4x5ofDD0zl+4NUL6MStp0OWcq1OpMruep5RvKANVmiCniLs3LghaFv
+         6BSOUChBTIZeOIEx6moZMLS4PxIQt1kvZr9/yEYMZTYv8uhuo1cklu4v0hW+WxgW1GDZ
+         nZvmVBA0iW+3j6kvpRcVp6SG8Z0vN4AfF7PUr0isQsjgCUJxuGgzVM0xUU7tlobPRwJg
+         mYzTIF7tWGHJ1Nc55cIVJuBbirAdHL7kA9Z4b9u1XHquOvUX8wtmWrM4f1gJbpQzBTpX
+         95+VsOZslPuBhPU9cD0PukZgKkz8Kj1wtbjH9ofTLksDRUANtCeOwI4VpMTk25kPpiXV
+         uxiw==
+X-Received: by 10.194.200.100 with SMTP id jr4mr1893271wjc.37.1383214254742;
+ Thu, 31 Oct 2013 03:10:54 -0700 (PDT)
+Received: by 10.216.207.141 with HTTP; Thu, 31 Oct 2013 03:10:54 -0700 (PDT)
+In-Reply-To: <874n7yiqxo.fsf@igel.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237116>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237117>
 
-'git branch' shows which branch you are currently on with an '*', but
-'git for-each-ref' misses this feature.  So, extend its format with
-%(HEAD) for the same effect.
+On Wed, Oct 30, 2013 at 6:55 PM, Andreas Schwab <schwab@linux-m68k.org> wrote:
+> While not automatic, you can right click on the parent and select
+> Diff this->selected.
 
-Now you can use the following format in for-each-ref:
+And there's also the option to "mark" a commit, and diff this with
+marked. Thanks, that's just what I needed (although as you say, it
+isn't automatic).
 
-  %C(red)%(HEAD)%C(reset) %(refname:short)
-
-to display a red asterisk next to the current ref.
-
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
----
- Documentation/git-for-each-ref.txt |  4 ++++
- builtin/for-each-ref.c             | 13 +++++++++++--
- 2 files changed, 15 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-index 6fa4464..bb9c4c1 100644
---- a/Documentation/git-for-each-ref.txt
-+++ b/Documentation/git-for-each-ref.txt
-@@ -95,6 +95,10 @@ upstream::
- 	from the displayed ref. Respects `:short` in the same way as
- 	`refname` above.
- 
-+HEAD::
-+	Used to indicate the currently checked out branch.  Is '*' if
-+	HEAD points to the current ref, and ' ' otherwise.
-+
- In addition to the above, for commit and tag objects, the header
- field names (`tree`, `parent`, `object`, `type`, and `tag`) can
- be used to specify the value in the header field.
-diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
-index 6da2903..b841545 100644
---- a/builtin/for-each-ref.c
-+++ b/builtin/for-each-ref.c
-@@ -76,6 +76,7 @@ static struct {
- 	{ "upstream" },
- 	{ "symref" },
- 	{ "flag" },
-+	{ "HEAD" },
- };
- 
- /*
-@@ -682,8 +683,16 @@ static void populate_value(struct refinfo *ref)
- 				v->s = xstrdup(buf + 1);
- 			}
- 			continue;
--		}
--		else
-+		} else if (!strcmp(name, "HEAD")) {
-+			const char *head;
-+			unsigned char sha1[20];
-+			head = resolve_ref_unsafe("HEAD", sha1, 1, NULL);
-+			if (!strcmp(ref->refname, head))
-+				v->s = "*";
-+			else
-+				v->s = " ";
-+			continue;
-+		} else
- 			continue;
- 
- 		formatp = strchr(name, ':');
 -- 
-1.8.5.rc0.3.gb488857
+Karl Wiberg, kha@treskal.com
+   subrabbit.wordpress.com
+   www.treskal.com/kalle
