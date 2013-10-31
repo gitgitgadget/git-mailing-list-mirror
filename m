@@ -1,63 +1,76 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 16/16] add: avoid yoda conditions
-Date: Thu, 31 Oct 2013 13:56:35 -0600
-Message-ID: <CAMP44s3adv0MKeuYU1D1B-kdtWvyN4Dr9-ee_xrtdnAOYaHhGw@mail.gmail.com>
-References: <1383211547-9145-1-git-send-email-felipe.contreras@gmail.com>
-	<1383211547-9145-17-git-send-email-felipe.contreras@gmail.com>
-	<CANiSa6i5z8Z9HPzsUWTh8U2HXc9p6MPgQjJ7K6KSDw8FXtFyww@mail.gmail.com>
+From: Eugene Sajine <euguess@gmail.com>
+Subject: Re: Help creating git alias
+Date: Thu, 31 Oct 2013 16:06:43 -0400
+Message-ID: <CAPZPVFaFQrEdr7EN3a=ds2T_C87sct6ksH2SbjEg=43-ZNt6Jg@mail.gmail.com>
+References: <CAPZPVFbiSx8n0W1kcczCdC6ioVuWpwuUQ_pc9T=7i4X_FuZNhg@mail.gmail.com>
+	<CAN0XMOKMF235S-23QcMj5cBup+Lh4vQs7QcOqXQ-MgafsAMKNg@mail.gmail.com>
+	<CAPZPVFZ9WujUCQ1O9VfV83XUu_6g7Vp_MmYRCCO+GptOoSyvcg@mail.gmail.com>
+	<xmqq61sebhh3.fsf@gitster.dls.corp.google.com>
+	<CAPZPVFarK_jKpM2f62mErAmL+mck6EN1QPfHDHqqfJbJ2AfzXg@mail.gmail.com>
+	<xmqqk3gu9jst.fsf@gitster.dls.corp.google.com>
+	<CAPZPVFYFSBRHThO08LmuN_0fc55gYX-A+Y3=yA_MESko1t6fXQ@mail.gmail.com>
+	<20131031174008.GA39079@gmail.com>
+	<xmqqd2ml8gbs.fsf@gitster.dls.corp.google.com>
+	<20131031181509.GB39079@gmail.com>
+	<CAPZPVFYWf3_xtxKkdw4_gzqKagVsbNvj73cb=RvX1Zm0C1h8pQ@mail.gmail.com>
+	<xmqq7gct5iu1.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>
-To: Martin von Zweigbergk <martinvonz@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 31 20:56:42 2013
+Cc: David Aguilar <davvid@gmail.com>,
+	Ralf Thielow <ralf.thielow@gmail.com>,
+	git <git@vger.kernel.org>,
+	Andrew Ardill <andrew.ardill@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Oct 31 21:06:53 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VbyMD-0008Qo-Pp
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Oct 2013 20:56:42 +0100
+	id 1VbyW3-0004JW-Ua
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Oct 2013 21:06:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755202Ab3JaT4h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Oct 2013 15:56:37 -0400
-Received: from mail-lb0-f181.google.com ([209.85.217.181]:62698 "EHLO
-	mail-lb0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753605Ab3JaT4h (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Oct 2013 15:56:37 -0400
-Received: by mail-lb0-f181.google.com with SMTP id x18so2828056lbi.12
-        for <git@vger.kernel.org>; Thu, 31 Oct 2013 12:56:35 -0700 (PDT)
+	id S1755290Ab3JaUGq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Oct 2013 16:06:46 -0400
+Received: from mail-we0-f178.google.com ([74.125.82.178]:39192 "EHLO
+	mail-we0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755174Ab3JaUGo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Oct 2013 16:06:44 -0400
+Received: by mail-we0-f178.google.com with SMTP id q59so3170771wes.37
+        for <git@vger.kernel.org>; Thu, 31 Oct 2013 13:06:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=LzVgim2TkAvTseJpQC62z8Ig4KUcuZdTzIWjfORrDME=;
-        b=Ofh9IJpcIPdFGQirb2+/fUuTNQvejAikcVeA8Q6XzIn6unNbRoMTaFZoiB0PlMWwLd
-         rJIXXfs5MTcUHUL0aeoADOEZXsCoYtaIDhtQM+ZErJiUD1TynSaO3kYMwYI0Giu+q6/i
-         GgZKl/s51dYY6n2IJ5n5Hd58twD63IpVG2dGGbXMeT8C4I5WKvYHWYPlx44q7Ici601t
-         CX8vY+o0qapc729E1+WYBsLuQEulyP14aePDbpP6uqnxajLWaoXGCZtZ0V3aI4UqyWd0
-         FFK64Dw8riZTQjqkWPlbjtdR3b1NsJX0XpYFDe61zIJnWSsjM355ahdYUgmSELV3AVDu
-         P74Q==
-X-Received: by 10.152.180.139 with SMTP id do11mr3078554lac.23.1383249395799;
- Thu, 31 Oct 2013 12:56:35 -0700 (PDT)
-Received: by 10.114.201.69 with HTTP; Thu, 31 Oct 2013 12:56:35 -0700 (PDT)
-In-Reply-To: <CANiSa6i5z8Z9HPzsUWTh8U2HXc9p6MPgQjJ7K6KSDw8FXtFyww@mail.gmail.com>
+        bh=InUH/K6GucfXp71ScaH0zWmaQ9zqM62dDsfU/cCfT+I=;
+        b=XlQzhpXARWIwyMTRCBH8b7876gxFj8FiPJBbCPkSKGOiK51bbM52EMd9tWfzgEZq/I
+         TT78hrtsEqB3BDZ4hsSHYjdGPdwBrYKFAaKFp0tGh5865tbZwfQy39YCZJ/AJtW15KYN
+         QhYF1Z0KP+8wcou1LBjhhCqQpvzyWiDpzejqYcckZy97qIHPeT/vAQ1C2+IuQTIk6Gk9
+         UpkVXOb7MK8Gq4sLmUd//Zx6kGkrv3T9NsleyzEC7U/sZQW4fX93tuypsGj2hrPlqotK
+         U8zy+Sqvg5B5q/4Xe/PoMLFnYi/KnyBZMtc0fPMhTzcwQJR80/4GiASCVK2qgSAWQZFS
+         xiKw==
+X-Received: by 10.181.12.104 with SMTP id ep8mr961353wid.54.1383250003277;
+ Thu, 31 Oct 2013 13:06:43 -0700 (PDT)
+Received: by 10.216.123.145 with HTTP; Thu, 31 Oct 2013 13:06:43 -0700 (PDT)
+In-Reply-To: <xmqq7gct5iu1.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237174>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237175>
 
-On Thu, Oct 31, 2013 at 1:48 PM, Martin von Zweigbergk
-<martinvonz@gmail.com> wrote:
+On Thu, Oct 31, 2013 at 3:41 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Eugene Sajine <euguess@gmail.com> writes:
+>
+>> One note: i tried the ${GIT_PREFIX:-.}  and ${GIT_PREFIX} and it seems
+>> to give the same results. What is the expected difference here?
+>
+> GIT_PREFIX may be an empty string when you run from the top-level,
+> in which case you would end up with "cd && ..." and end up working
+> in your $HOME.
+>
 
-> I guess what I'm trying to say is that either we accept them and get
-> used to reading them without being surprised, or we can change a bit
-> more than one at a time perhaps? I understand that this was an
-> occurrence you just happened to run into, and I'm not saying that a
-> patch has to deal with _all_ occurrences. I'm more just wondering if
-> we want mention our position, whatever it is, in CodingGuidelines.
 
-Yes, I'm all in favor of updating CodingGuidelines with that.
+got it! thank you!
 
--- 
-Felipe Contreras
+Eugene
