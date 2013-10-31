@@ -1,175 +1,139 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v5 06/10] fast-export: add new --refspec option
-Date: Thu, 31 Oct 2013 03:36:32 -0600
-Message-ID: <1383212197-14259-6-git-send-email-felipe.contreras@gmail.com>
-References: <1383212197-14259-1-git-send-email-felipe.contreras@gmail.com>
-Cc: Sverre Rabbelier <srabbelier@gmail.com>,
-	Richard Hansen <rhansen@bbn.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 31 10:44:18 2013
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: [PATCH 1/3] for-each-ref: introduce %C(...) for color
+Date: Thu, 31 Oct 2013 15:16:12 +0530
+Message-ID: <1383212774-5232-2-git-send-email-artagnon@gmail.com>
+References: <1383212774-5232-1-git-send-email-artagnon@gmail.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Oct 31 10:54:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VbonV-000418-PZ
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Oct 2013 10:44:14 +0100
+	id 1VboxT-0007oq-42
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Oct 2013 10:54:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753509Ab3JaJnd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Oct 2013 05:43:33 -0400
-Received: from mail-oa0-f41.google.com ([209.85.219.41]:33638 "EHLO
-	mail-oa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753325Ab3JaJnb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Oct 2013 05:43:31 -0400
-Received: by mail-oa0-f41.google.com with SMTP id o9so2829936oag.0
-        for <git@vger.kernel.org>; Thu, 31 Oct 2013 02:43:30 -0700 (PDT)
+	id S1752883Ab3JaJy2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Oct 2013 05:54:28 -0400
+Received: from mail-pa0-f47.google.com ([209.85.220.47]:56213 "EHLO
+	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750807Ab3JaJy1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Oct 2013 05:54:27 -0400
+Received: by mail-pa0-f47.google.com with SMTP id lf10so2247741pab.20
+        for <git@vger.kernel.org>; Thu, 31 Oct 2013 02:54:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=v4Jh6dwSU6SG6OBTgCxHTyOIj90LsZFW1cfZ0TErhM0=;
-        b=mzlYvwPNm+2f7vp3XAeoJc8YYEohqDRlv+0GjQ32naE3yyyFsWT5BpbFinFbavBxUQ
-         0xGV7v3EL08Y2qxX1/3eOQg5GmJKEGPeEKDl3qLPoSADQGdmy77CKLKARc9bUkfusWnf
-         IFoVWQHkN9uPlOg8pD02JnwPA8xeu5Hham9crEeTbOGmNIDYrxkDzyPDyifYiaoTF8px
-         gBanBgPrYpWacsZNKnD28rsnGKE2/+CCGUd6WxN4JayU7IlngG21zvR8w0bCiiKwwdvb
-         hGNDeyGBRhIEEJYI6Hv1n5rcWXzM0ky2U4GqcamVELnYaZHnvAh2YOT9+WoaObLRafh4
-         kH6g==
-X-Received: by 10.182.48.130 with SMTP id l2mr1923136obn.44.1383212610427;
-        Thu, 31 Oct 2013 02:43:30 -0700 (PDT)
-Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
-        by mx.google.com with ESMTPSA id it7sm4505031obb.11.2013.10.31.02.43.28
-        for <multiple recipients>
+        h=from:to:subject:date:message-id:in-reply-to:references;
+        bh=hxbWny9f1nqinoRu3HyobJ5P4xiRUzh7IzGhBvTiFEk=;
+        b=mDR2No4AHwhFvz1YcYHaHY/wKSmbPu9Fo1l7V2SPqInt2Of4C4mJlo6cdbDvB8Q8Jw
+         HoJCFE3DouKEU6idoYAUv4kltiLT1fJXFjpwXodWXp7cJ/rwreoHhLizf1CBdyt51vfE
+         //qad6tzsgHLQDTeAJZfsnXHRAPx+FJcjNspqh05aB3C9CtDNtNJCXtIKN0xbzDbwbae
+         6BzcM63+sexY1qySkirnXEa3sORtHcX0KRsq9p4BIXbvlZaiR1iEGD6Wx9Wb51urQoJ8
+         yGgBqN9FZvmtwLyPRADRU+gWBb9utHcwWWhG8buVTPtfQgB7C1VLG1cjZH2mfDM904Dh
+         mN6g==
+X-Received: by 10.66.67.6 with SMTP id j6mr944230pat.165.1383213266725;
+        Thu, 31 Oct 2013 02:54:26 -0700 (PDT)
+Received: from localhost.localdomain ([122.164.233.197])
+        by mx.google.com with ESMTPSA id i10sm4106533pat.11.2013.10.31.02.54.25
+        for <git@vger.kernel.org>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 31 Oct 2013 02:43:29 -0700 (PDT)
-X-Mailer: git-send-email 1.8.4.2+fc1
-In-Reply-To: <1383212197-14259-1-git-send-email-felipe.contreras@gmail.com>
+        Thu, 31 Oct 2013 02:54:26 -0700 (PDT)
+X-Mailer: git-send-email 1.8.5.rc0.3.gb488857
+In-Reply-To: <1383212774-5232-1-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237112>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237113>
 
-So that we can convert the exported ref names.
+Enhance 'git for-each-ref' with color formatting options.  You can now
+use the following format in for-each-ref:
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+  %C(green)%(refname:short)%C(reset)
+
+Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
 ---
- Documentation/git-fast-export.txt |  4 ++++
- builtin/fast-export.c             | 30 ++++++++++++++++++++++++++++++
- t/t9350-fast-export.sh            |  7 +++++++
- 3 files changed, 41 insertions(+)
+ Documentation/git-for-each-ref.txt |  4 +++-
+ builtin/for-each-ref.c             | 23 +++++++++++++++++++----
+ 2 files changed, 22 insertions(+), 5 deletions(-)
 
-diff --git a/Documentation/git-fast-export.txt b/Documentation/git-fast-export.txt
-index 85f1f30..221506b 100644
---- a/Documentation/git-fast-export.txt
-+++ b/Documentation/git-fast-export.txt
-@@ -105,6 +105,10 @@ marks the same across runs.
- 	in the commit (as opposed to just listing the files which are
- 	different from the commit's first parent).
+diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
+index f2e08d1..6fa4464 100644
+--- a/Documentation/git-for-each-ref.txt
++++ b/Documentation/git-for-each-ref.txt
+@@ -45,7 +45,9 @@ OPTIONS
+ 	It also interpolates `%%` to `%`, and `%xx` where `xx`
+ 	are hex digits interpolates to character with hex code
+ 	`xx`; for example `%00` interpolates to `\0` (NUL),
+-	`%09` to `\t` (TAB) and `%0a` to `\n` (LF).
++	`%09` to `\t` (TAB) and `%0a` to `\n` (LF). Additionally,
++	colors can be specified using `%C(...)`, with names
++	described in color.branch.*.
  
-+--refspec::
-+	Apply the specified refspec to each ref exported. Multiple of them can
-+	be specified.
-+
- [<git-rev-list-args>...]::
- 	A list of arguments, acceptable to 'git rev-parse' and
- 	'git rev-list', that specifies the specific objects and references
-diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-index eea5b8c..b6f623e 100644
---- a/builtin/fast-export.c
-+++ b/builtin/fast-export.c
-@@ -17,6 +17,7 @@
- #include "utf8.h"
- #include "parse-options.h"
+ <pattern>...::
+ 	If one or more patterns are given, only refs are shown that
+diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
+index 1d4083c..6da2903 100644
+--- a/builtin/for-each-ref.c
++++ b/builtin/for-each-ref.c
+@@ -9,6 +9,7 @@
  #include "quote.h"
-+#include "remote.h"
+ #include "parse-options.h"
+ #include "remote.h"
++#include "color.h"
  
- static const char *fast_export_usage[] = {
- 	N_("git fast-export [rev-list-opts]"),
-@@ -31,6 +32,8 @@ static int use_done_feature;
- static int no_data;
- static int full_tree;
- static struct string_list extra_refs = STRING_LIST_INIT_NODUP;
-+static struct refspec *refspecs;
-+static int refspecs_nr;
- 
- static int parse_opt_signed_tag_mode(const struct option *opt,
- 				     const char *arg, int unset)
-@@ -525,6 +528,15 @@ static void get_tags_and_duplicates(struct rev_cmdline_info *info)
- 		if (dwim_ref(e->name, strlen(e->name), sha1, &full_name) != 1)
- 			continue;
- 
-+		if (refspecs) {
-+			char *private;
-+			private = apply_refspecs(refspecs, refspecs_nr, full_name);
-+			if (private) {
-+				free(full_name);
-+				full_name = private;
-+			}
-+		}
-+
- 		commit = get_commit(e, full_name);
- 		if (!commit) {
- 			warning("%s: Unexpected object of type %s, skipping.",
-@@ -668,6 +680,7 @@ int cmd_fast_export(int argc, const char **argv, const char *prefix)
- 	struct commit *commit;
- 	char *export_filename = NULL, *import_filename = NULL;
- 	uint32_t lastimportid;
-+	struct string_list refspecs_list = STRING_LIST_INIT_NODUP;
- 	struct option options[] = {
- 		OPT_INTEGER(0, "progress", &progress,
- 			    N_("show progress after <n> objects")),
-@@ -688,6 +701,8 @@ int cmd_fast_export(int argc, const char **argv, const char *prefix)
- 		OPT_BOOL(0, "use-done-feature", &use_done_feature,
- 			     N_("Use the done feature to terminate the stream")),
- 		OPT_BOOL(0, "no-data", &no_data, N_("Skip output of blob data")),
-+		OPT_STRING_LIST(0, "refspec", &refspecs_list, N_("refspec"),
-+			     N_("Apply refspec to exported refs")),
- 		OPT_END()
- 	};
- 
-@@ -707,6 +722,19 @@ int cmd_fast_export(int argc, const char **argv, const char *prefix)
- 	if (argc > 1)
- 		usage_with_options (fast_export_usage, options);
- 
-+	if (refspecs_list.nr) {
-+		const char *refspecs_str[refspecs_list.nr];
-+		int i;
-+
-+		for (i = 0; i < refspecs_list.nr; i++)
-+			refspecs_str[i] = refspecs_list.items[i].string;
-+
-+		refspecs_nr = refspecs_list.nr;
-+		refspecs = parse_fetch_refspec(refspecs_nr, refspecs_str);
-+
-+		string_list_clear(&refspecs_list, 1);
-+	}
-+
- 	if (use_done_feature)
- 		printf("feature done\n");
- 
-@@ -741,5 +769,7 @@ int cmd_fast_export(int argc, const char **argv, const char *prefix)
- 	if (use_done_feature)
- 		printf("done\n");
- 
-+	free_refspec(refspecs_nr, refspecs);
-+
+ /* Quoting styles */
+ #define QUOTE_NONE 0
+@@ -155,10 +156,13 @@ static const char *find_next(const char *cp)
+ 	while (*cp) {
+ 		if (*cp == '%') {
+ 			/*
++			 * %C( is the start of a color;
+ 			 * %( is the start of an atom;
+ 			 * %% is a quoted per-cent.
+ 			 */
+-			if (cp[1] == '(')
++			if (cp[1] == 'C' && cp[2] == '(')
++				return cp;
++			else if (cp[1] == '(')
+ 				return cp;
+ 			else if (cp[1] == '%')
+ 				cp++; /* skip over two % */
+@@ -180,8 +184,11 @@ static int verify_format(const char *format)
+ 		const char *ep = strchr(sp, ')');
+ 		if (!ep)
+ 			return error("malformed format string %s", sp);
+-		/* sp points at "%(" and ep points at the closing ")" */
+-		parse_atom(sp + 2, ep);
++		/* Ignore color specifications: %C(
++		 * sp points at "%(" and ep points at the closing ")"
++		 */
++		if (prefixcmp(sp, "%C("))
++			parse_atom(sp + 2, ep);
+ 		cp = ep + 1;
+ 	}
  	return 0;
- }
-diff --git a/t/t9350-fast-export.sh b/t/t9350-fast-export.sh
-index 34c2d8f..dc6666f 100755
---- a/t/t9350-fast-export.sh
-+++ b/t/t9350-fast-export.sh
-@@ -504,4 +504,11 @@ test_expect_success 'refs are updated even if no commits need to be exported' '
- 	test_cmp expected actual
- '
+@@ -933,12 +940,20 @@ static void emit(const char *cp, const char *ep)
+ static void show_ref(struct refinfo *info, const char *format, int quote_style)
+ {
+ 	const char *cp, *sp, *ep;
++	char color[COLOR_MAXLEN] = "";
  
-+test_expect_success 'use refspec' '
-+	git fast-export --refspec refs/heads/master:refs/heads/foobar master | \
-+		grep "^commit " | sort | uniq > actual &&
-+	echo "commit refs/heads/foobar" > expected &&
-+	test_cmp expected actual
-+'
+ 	for (cp = format; *cp && (sp = find_next(cp)); cp = ep + 1) {
+ 		ep = strchr(sp, ')');
+ 		if (cp < sp)
+ 			emit(cp, sp);
+-		print_value(info, parse_atom(sp + 2, ep), quote_style);
 +
- test_done
++		/* Do we have a color specification? */
++		if (!prefixcmp(sp, "%C("))
++			color_parse_mem(sp + 3, ep - sp - 3, "--format", color);
++		else {
++			printf("%s", color);
++			print_value(info, parse_atom(sp + 2, ep), quote_style);
++		}
+ 	}
+ 	if (*cp) {
+ 		sp = cp + strlen(cp);
 -- 
-1.8.4.2+fc1
+1.8.5.rc0.3.gb488857
