@@ -1,166 +1,141 @@
-From: Torsten =?utf-8?q?B=C3=B6gershausen?= <tboegi@web.de>
-Subject: [PATCH] Test code for htonll, ntohll
-Date: Thu, 31 Oct 2013 14:26:12 +0100
-Message-ID: <201310311426.13657.tboegi@web.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: ramsay@ramsay1.demon.co.uk, tanoku@gmail.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 31 14:26:29 2013
+From: Stefan Haller <stefan@haller-berlin.de>
+Subject: [PATCH] gitk: Add "First parent" checkbox
+Date: Thu, 31 Oct 2013 15:59:12 +0100
+Message-ID: <1383231552-63504-1-git-send-email-stefan@haller-berlin.de>
+References: <CAFAOj7orccjudOu4czDpaN-TZBCFb=T-Qo8f9eo_1dnKBGXJ4g@mail.gmail.com>
+Cc: git@vger.kernel.org, Paul Mackerras <paulus@samba.org>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Karl Wiberg <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Thu Oct 31 15:59:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VbsGY-00070p-UB
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Oct 2013 14:26:27 +0100
+	id 1Vbtio-0005ZA-Jn
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Oct 2013 15:59:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754191Ab3JaN0X convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 31 Oct 2013 09:26:23 -0400
-Received: from mout.web.de ([212.227.17.11]:63384 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753203Ab3JaN0W convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 31 Oct 2013 09:26:22 -0400
-Received: from appes.localnet ([78.72.74.102]) by smtp.web.de (mrweb102) with
- ESMTPA (Nemesis) id 0Lu4q2-1VlKSh1Td8-011R8i for <git@vger.kernel.org>; Thu,
- 31 Oct 2013 14:26:21 +0100
-X-Provags-ID: V03:K0:XkXsR6V3SmMD5tRMpb2l5YjuKw0iDpN3q1425NpfoqvfGKRQkoa
- cEotXxSEQP2G3uR60Gi9eaDcaYFElTWkOkXorbJD2dt7A0BnGO2TNZ0WPpKX50I4GwpudqB
- tVvw6D6MkM7gFA2gdUNDCT330nwltXAUayJa5D+73BhHf5e+SCzRPP/q2I6z2AmVFq0j00o
- XAiRtG76lWwR9TsEs9R5w==
+	id S1754660Ab3JaO7i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Oct 2013 10:59:38 -0400
+Received: from server90.greatnet.de ([83.133.96.186]:55033 "EHLO
+	server90.greatnet.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753883Ab3JaO7h (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Oct 2013 10:59:37 -0400
+Received: from macbook-stk.office.ableton.com (nat1.ableton.net [217.110.199.117])
+	by server90.greatnet.de (Postfix) with ESMTPA id 99B2FDD0DB;
+	Thu, 31 Oct 2013 15:59:35 +0100 (CET)
+X-Mailer: git-send-email 1.8.3.2.747.g15edaa9
+In-Reply-To: <CAFAOj7orccjudOu4czDpaN-TZBCFb=T-Qo8f9eo_1dnKBGXJ4g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237125>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237126>
 
+Sometimes it's desirable to see what changes were introduced by a
+merge commit, rather than how conflicts were resolved. This adds
+a checkbox which, when turned on, makes gitk show the equivalent
+of "git show --first-parent <commit>" for merge commits.
 
-test-endianess.c adds test code for htonl(), ntohll()
-and the recently introduced ntohll() and htonll()
-
-The test is called in t0070
-
-Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+Signed-off-by: Stefan Haller <stefan@haller-berlin.de>
 ---
- .gitignore             |    1 +
- Makefile               |    3 +++
- t/t0070-fundamental.sh |    3 +++
- test-endianess.c       |   58 ++++++++++++++++++++++++++++++++++++++++=
-++++++++
- 4 files changed, 65 insertions(+)
- create mode 100644 test-endianess.c
+This is the same patch as the one I sent in
+<http://comments.gmane.org/gmane.comp.version-control.git/160920>, with
+the same issues discussed in that thread. I just brought it up to date
+with current master.
 
-diff --git a/.gitignore b/.gitignore
-index 66199ed..750e7d8 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -183,6 +183,7 @@
- /test-date
- /test-delta
- /test-dump-cache-tree
-+/test-endianess
- /test-scrap-cache-tree
- /test-genrandom
- /test-index-version
-diff --git a/Makefile b/Makefile
-index 07b0626..50957c7 100644
---- a/Makefile
-+++ b/Makefile
-@@ -555,6 +555,7 @@ TEST_PROGRAMS_NEED_X +=3D test-ctype
- TEST_PROGRAMS_NEED_X +=3D test-date
- TEST_PROGRAMS_NEED_X +=3D test-delta
- TEST_PROGRAMS_NEED_X +=3D test-dump-cache-tree
-+TEST_PROGRAMS_NEED_X +=3D test-endianess
- TEST_PROGRAMS_NEED_X +=3D test-genrandom
- TEST_PROGRAMS_NEED_X +=3D test-hashmap
- TEST_PROGRAMS_NEED_X +=3D test-index-version
-@@ -2275,6 +2276,8 @@ test-date$X: date.o ctype.o
-=20
- test-delta$X: diff-delta.o patch-delta.o
-=20
-+test-endianess$X: test-endianess.c
+ gitk | 25 ++++++++++++++++++++++---
+ 1 file changed, 22 insertions(+), 3 deletions(-)
+
+diff --git a/gitk b/gitk
+index 5cd00d8..3466054 100755
+--- a/gitk
++++ b/gitk
+@@ -2336,6 +2336,10 @@ proc makewindow {} {
+ 	pack .bleft.mid.worddiff -side left -padx 5
+     }
+
++    ${NS}::checkbutton .bleft.mid.firstparent -text [mc "First parent"] \
++	-command changefirstparent -variable firstparent
++    pack .bleft.mid.firstparent -side left -padx 5
 +
- test-line-buffer$X: vcs-svn/lib.a
-=20
- test-parse-options$X: parse-options.o parse-options-cb.o
-diff --git a/t/t0070-fundamental.sh b/t/t0070-fundamental.sh
-index 5ed69a6..dc687da 100755
---- a/t/t0070-fundamental.sh
-+++ b/t/t0070-fundamental.sh
-@@ -33,5 +33,8 @@ test_expect_success 'check for a bug in the regex rou=
-tines' '
- 	# if this test fails, re-build git with NO_REGEX=3D1
- 	test-regex
- '
-+test_expect_success 'test endianess, htonll(), ntohll()' '
-+	test-endianess
-+'
-=20
- test_done
-diff --git a/test-endianess.c b/test-endianess.c
-new file mode 100644
-index 0000000..5b49175
---- /dev/null
-+++ b/test-endianess.c
-@@ -0,0 +1,58 @@
-+#include "cache.h"
+     set ctext .bleft.bottom.ctext
+     text $ctext -background $bgcolor -foreground $fgcolor \
+ 	-state disabled -font textfont \
+@@ -7080,6 +7084,7 @@ proc selectline {l isnew {desired_loc {}}} {
+     global cmitmode showneartags allcommits
+     global targetrow targetid lastscrollrows
+     global autoselect autosellen jump_to_here
++    global firstparent
+
+     catch {unset pending_select}
+     $canv delete hover
+@@ -7221,7 +7226,7 @@ proc selectline {l isnew {desired_loc {}}} {
+     init_flist [mc "Comments"]
+     if {$cmitmode eq "tree"} {
+ 	gettree $id
+-    } elseif {[llength $olds] <= 1} {
++    } elseif {[llength $olds] <= 1 || $firstparent} {
+ 	startdiff $id
+     } else {
+ 	mergediff $id
+@@ -7624,7 +7629,7 @@ proc diffcmd {ids flags} {
+ proc gettreediffs {ids} {
+     global treediff treepending limitdiffs vfilelimit curview
+
+-    set cmd [diffcmd $ids {--no-commit-id}]
++    set cmd [diffcmd $ids {--no-commit-id -m --first-parent}]
+     if {$limitdiffs && $vfilelimit($curview) ne {}} {
+ 	    set cmd [concat $cmd -- $vfilelimit($curview)]
+     }
+@@ -7710,12 +7715,20 @@ proc changeworddiff {name ix op} {
+     reselectline
+ }
+
++proc changefirstparent {} {
++    global treediffs
++    catch {unset treediffs}
 +
-+int main(int argc, char **argv)
-+{
-+	union {
-+		uint8_t  bytes[8];
-+		uint32_t word32;
-+		uint64_t word64;
-+	} wordll;
-+	volatile uint64_t word64;
-+	volatile uint32_t word32;
-+
-+	wordll.bytes[0] =3D 0x80;
-+	wordll.bytes[1] =3D 0x81;
-+	wordll.bytes[2] =3D 0x82;
-+	wordll.bytes[3] =3D 0x83;
-+	wordll.bytes[4] =3D 0x00;
-+	wordll.bytes[5] =3D 0x01;
-+	wordll.bytes[6] =3D 0x02;
-+	wordll.bytes[7] =3D 0x03;
-+
-+	word32 =3D htonl(wordll.word32);
-+	if (word32 !=3D 0x80818283)
-+		die("htonl word32 !=3D 0x80818283");
-+
-+	word64 =3D htonll(wordll.word64);
-+	if (word64 !=3D 0x8081828300010203ULL)
-+		die("htonll word64 !=3D 0x8081828300010203");
-+
-+	word32 =3D ntohl(wordll.word32);
-+	if (word32 !=3D 0x80818283)
-+		die("ntohl word32 !=3D 0x80818283");
-+
-+	word64 =3D ntohll(wordll.word64);
-+	if (word64 !=3D 0x8081828300010203ULL)
-+		die("ntohll word64 !=3D 0x8081828300010203");
-+
-+	wordll.bytes[0] =3D 0x04;
-+	wordll.bytes[4] =3D 0x84;
-+
-+	word32 =3D htonl(wordll.word32);
-+	if (word32 !=3D 0x04818283)
-+		die("htonl word32 !=3D 0x04818283");
-+
-+	word64 =3D htonll(wordll.word64);
-+	if (word64 !=3D 0x0481828384010203ULL)
-+		die("htonll word64 !=3D 0x0481828384010203");
-+
-+	word32 =3D ntohl(wordll.word32);
-+	if (word32 !=3D 0x04818283)
-+		die("ntohl word32 !=3D 0x04818283");
-+
-+	word64 =3D ntohll(wordll.word64);
-+	if (word64 !=3D 0x0481828384010203ULL)
-+		die("ntohll word64 !=3D 0x0481828384010203");
-+
-+	return 0;
++    reselectline
 +}
---=20
-1.7.10.4
++
+ proc getblobdiffs {ids} {
+     global blobdifffd diffids env
+     global diffinhdr treediffs
+     global diffcontext
+     global ignorespace
+     global worddiff
++    global firstparent
+     global limitdiffs vfilelimit curview
+     global diffencoding targetline diffnparents
+     global git_version currdiffsubmod
+@@ -7728,13 +7741,18 @@ proc getblobdiffs {ids} {
+     if {[package vcompare $git_version "1.6.6"] >= 0} {
+ 	set submodule "--submodule"
+     }
+-    set cmd [diffcmd $ids "-p $textconv $submodule  -C --cc --no-commit-id -U$diffcontext"]
++    set cmd [diffcmd $ids "-p $textconv $submodule  -C --no-commit-id -U$diffcontext"]
+     if {$ignorespace} {
+ 	append cmd " -w"
+     }
+     if {$worddiff ne [mc "Line diff"]} {
+ 	append cmd " --word-diff=porcelain"
+     }
++    if {$firstparent} {
++	append cmd " -m --first-parent"
++    } else {
++	append cmd " --cc"
++    }
+     if {$limitdiffs && $vfilelimit($curview) ne {}} {
+ 	set cmd [concat $cmd -- $vfilelimit($curview)]
+     }
+@@ -11865,6 +11883,7 @@ set diffcontext 3
+ set mergecolors {red blue green purple brown "#009090" magenta "#808000" "#009000" "#ff0080" cyan "#b07070" "#70b0f0" "#70f0b0" "#f0b070" "#ff70b0"}
+ set ignorespace 0
+ set worddiff ""
++set firstparent 0
+ set markbgcolor "#e0e0ff"
+
+ set headbgcolor green
+--
+1.8.3.2.747.g15edaa9
