@@ -1,92 +1,210 @@
-From: Kacper Kornet <draenog@pld-linux.org>
-Subject: [PATCH] Fix '\%o' for printf from coreutils
-Date: Thu, 31 Oct 2013 12:51:32 +0100
-Message-ID: <20131031115131.GA28379@camk.edu.pl>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: htonll, ntohll
+Date: Thu, 31 Oct 2013 14:24:21 +0100
+Message-ID: <52725A05.1050805@web.de>
+References: <xmqqr4b5dwke.fsf@gitster.dls.corp.google.com> <5271392E.8020003@web.de> <CAFFjANT=-mQoKUU2KsPHo3Hcq7RAuyM1t4kvJu4OfiNeHrA+Ng@mail.gmail.com> <52713E67.3000202@web.de> <527158AF.3070204@ramsay1.demon.co.uk> <52716C58.3090507@web.de> <5271750D.5010801@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 31 13:10:28 2013
+Cc: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	=?UTF-8?B?VG9yc3RlbiBCw7Zn?= =?UTF-8?B?ZXJzaGF1c2Vu?= 
+	<tboegi@web.de>,
+	=?UTF-8?B?VmljZW50IE1hcnTDrQ==?= <tanoku@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 31 14:24:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vbr4z-0001nR-4z
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Oct 2013 13:10:25 +0100
+	id 1VbsEi-0006Gr-B6
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Oct 2013 14:24:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753478Ab3JaMKN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 31 Oct 2013 08:10:13 -0400
-Received: from moat.camk.edu.pl ([148.81.175.50]:60712 "EHLO moat.camk.edu.pl"
+	id S1754384Ab3JaNYZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 31 Oct 2013 09:24:25 -0400
+Received: from mout.web.de ([212.227.15.4]:55967 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752145Ab3JaMKK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Oct 2013 08:10:10 -0400
-X-Greylist: delayed 1106 seconds by postgrey-1.27 at vger.kernel.org; Thu, 31 Oct 2013 08:10:10 EDT
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by moat.camk.edu.pl (Postfix) with ESMTP id 3DDE85F0043;
-	Thu, 31 Oct 2013 12:52:00 +0100 (CET)
-X-Virus-Scanned: amavisd-new at camk.edu.pl
-Received: from moat.camk.edu.pl ([127.0.0.1])
-	by localhost (liam.camk.edu.pl [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id jCE6LeJb7nma; Thu, 31 Oct 2013 12:51:50 +0100 (CET)
-Received: from gatekeeper.camk.edu.pl (gatekeeper.camk.edu.pl [192.168.1.23])
-	by moat.camk.edu.pl (Postfix) with ESMTP id 2D9A25F0027;
-	Thu, 31 Oct 2013 12:51:50 +0100 (CET)
-Received: by gatekeeper.camk.edu.pl (Postfix, from userid 1293)
-	id 8426634CFD; Thu, 31 Oct 2013 12:51:32 +0100 (CET)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754339Ab3JaNYY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Oct 2013 09:24:24 -0400
+Received: from [192.168.209.26] ([78.72.74.102]) by smtp.web.de (mrweb102)
+ with ESMTPA (Nemesis) id 0MgfFr-1VGcML0f71-00NvVE for <git@vger.kernel.org>;
+ Thu, 31 Oct 2013 14:24:22 +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:24.0) Gecko/20100101 Thunderbird/24.1.0
+In-Reply-To: <5271750D.5010801@ramsay1.demon.co.uk>
+X-Provags-ID: V03:K0:761zJcvTuProxaiiSa69Oanj0jtmxxTN8fQGx5b39w0U/dbwA/p
+ lwnihY0H1bVSdCCL7i6V0y9NLkIbtnqLwekObIOkO2bSKyt18WcNr2WobVH1ZxoTBNLqqcu
+ Te5jWGX5QncC8+5NeMsnNeuoFTGnCy+ycPvdQow5RGU2jDkY2TKYFsW/9b853hJAYLL4X69
+ MZFfsHRI0kFpoBY4KrFrw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237122>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237124>
 
-The printf utility provided by coreutils when interpreting '\%o' format
-does not recognize %o as formatting directive. For example
-printf '\%o 0 returns \%o and warning: ignoring excess arguments,
-starting with =E2=80=980=E2=80=99, which results in failed tests in
-t5309-pack-delta-cycles.sh. In most shells the test ends with success a=
-s
-the printf is a builtin utility.
+On 2013-10-30 22.07, Ramsay Jones wrote:
+> On 30/10/13 20:30, Torsten B=C3=B6gershausen wrote:
+>> On 2013-10-30 20.06, Ramsay Jones wrote:
+>>> On 30/10/13 17:14, Torsten B=C3=B6gershausen wrote:
+>>>> On 2013-10-30 18.01, Vicent Mart=C3=AD wrote:
+>>>>> On Wed, Oct 30, 2013 at 5:51 PM, Torsten B=C3=B6gershausen <tboeg=
+i@web.de> wrote:
+>>>>>> There is a name clash under cygwin 1.7 (1.5 is OK)
+>>>>>> The following "first aid hot fix" works for me:
+>>>>>> /Torsten
+>>>>>
+>>>>> If Cygwin declares its own bswap_64, wouldn't it be better to use=
+ it
+>>>>> instead of overwriting it with our own?
+>>>> Yes,
+>>>> this will be part of a longer patch.
+>>>> I found that some systems have something like this:
+>>>>
+>>>> #define htobe64(x) bswap_64(x)
+>>>> And bswap_64 is a function, so we can not detect it by "asking"
+>>>> #ifdef bswap_64
+>>>> ..
+>>>> #endif
+>>>>
+>>>>
+>>>> But we can use
+>>>> #ifdef htobe64
+>>>> ...
+>>>> #endif
+>>>> and this will be part of a bigger patch.
+>>>>
+>>>> And, in general, we should avoid to introduce functions which may =
+have a
+>>>> name clash.
+>>>> Using the git_ prefix for function names is a good practice.
+>>>> So in order to unbrake the compilation error under cygwin 17,
+>>>> the "hotfix" can be used.
+>>>
+>>> heh, my patch (given below) took a different approach, but ....
+>>>
+>>> ATB,
+>>> Ramsay Jones
+>>>
+>>> -- >8 --
+>>> Subject: [PATCH] compat/bswap.h: Fix redefinition of bswap_64 error=
+ on cygwin
+>>> MIME-Version: 1.0
+>>> Content-Type: text/plain; charset=3DUTF-8
+>>> Content-Transfer-Encoding: 8bit
+>>>
+>>> Since commit 452e0f20 ("compat: add endianness helpers", 24-10-2013=
+)
+>>> the cygwin build has failed like so:
+>>>
+>>>     GIT_VERSION =3D 1.8.4.1.804.g1f3748b
+>>>         * new build flags
+>>>         CC credential-store.o
+>>>     In file included from git-compat-util.h:305:0,
+>>>                      from cache.h:4,
+>>>                      from credential-store.c:1:
+>>>     compat/bswap.h:67:24: error: redefinition of 'bswap_64'
+>>>     In file included from /usr/include/endian.h:32:0,
+>>>                      from /usr/include/cygwin/types.h:21,
+>>>                      from /usr/include/sys/types.h:473,
+>>>                      from /usr/include/sys/unistd.h:9,
+>>>                      from /usr/include/unistd.h:4,
+>>>                      from git-compat-util.h:98,
+>>>                      from cache.h:4,
+>>>                      from credential-store.c:1:
+>>>     /usr/include/byteswap.h:31:1: note: previous definition of \
+>>> 	=E2=80=98bswap_64=E2=80=99 was here
+>>>     Makefile:1985: recipe for target 'credential-store.o' failed
+>>>     make: *** [credential-store.o] Error 1
+>>>
+>>> Note that cygwin has a defintion of 'bswap_64' in the <byteswap.h>
+>>> header file (which had already been included by git-compat-util.h).
+>>> In order to suppress the error, ensure that the <byteswap.h> header
+>>> is included, just like the __GNUC__/__GLIBC__ case, rather than
+>>> attempting to define a fallback implementation.
+>>>
+>>> Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+>>> ---
+>>>  compat/bswap.h | 2 +-
+>>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>>>
+>>> diff --git a/compat/bswap.h b/compat/bswap.h
+>>> index ea1a9ed..b864abd 100644
+>>> --- a/compat/bswap.h
+>>> +++ b/compat/bswap.h
+>>> @@ -61,7 +61,7 @@ static inline uint32_t git_bswap32(uint32_t x)
+>>>  # define ntohll(n) (n)
+>>>  # define htonll(n) (n)
+>>>  #elif __BYTE_ORDER =3D=3D __LITTLE_ENDIAN
+>>> -#	if defined(__GNUC__) && defined(__GLIBC__)
+>>> +#	if defined(__GNUC__) && (defined(__GLIBC__) || defined(__CYGWIN_=
+_))
+>>>  #		include <byteswap.h>
+>>>  #	else /* GNUC & GLIBC */
+>>>  static inline uint64_t bswap_64(uint64_t val)
+>>>
+>>
+>> Nice, much better.
+>>
+>> And here comes a patch for a big endian machine.
+>> I tryied to copy-paste a patch in my mail program,
+>> not sure if this applies.
+>>
+>> -- >8 --
+>> Subject: [PATCH] compat/bswap.h: htonll and ntohll for big endian
+>>
+>> Since commit 452e0f20 ("compat: add endianness helpers", 24-10-2013)
+>> the build on a Linux/ppc gave a warning like this:
+>>     CC ewah/ewah_io.o
+>> ewah/ewah_io.c: In function =E2=80=98ewah_serialize_to=E2=80=99:
+>> ewah/ewah_io.c:81: warning: implicit declaration of function =E2=80=98=
+htonll=E2=80=99
+>> ewah/ewah_io.c: In function =E2=80=98ewah_read_mmap=E2=80=99:
+>> ewah/ewah_io.c:132: warning: implicit declaration of function =E2=80=
+=98ntohll=E2=80=99
+>>
+>> Fix it by placing the #endif for "#ifdef bswap32" at the right place=
+=2E
+>>
+>> Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+>> ---
+>>  compat/bswap.h | 2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/compat/bswap.h b/compat/bswap.h
+>> index ea1a9ed..b4ddab0
+>> --- a/compat/bswap.h
+>> +++ b/compat/bswap.h
+>> @@ -46,6 +46,7 @@ static inline uint32_t git_bswap32(uint32_t x)
+>>  #undef htonl
+>>  #define ntohl(x) bswap32(x)
+>>  #define htonl(x) bswap32(x)
+>> +#endif
+>> =20
+>>  #ifndef __BYTE_ORDER
+>>  #      if defined(BYTE_ORDER) && defined(LITTLE_ENDIAN) && defined(=
+BIG_ENDIAN)
+>> @@ -82,4 +83,3 @@ static inline uint64_t bswap_64(uint64_t val)
+>>  #      error "Can't define htonll or ntohll!"
+>>  #endif
+>> =20
+>> -#endif
+>>
+>> .
+>>
+>=20
+> Yep, this was the first thing I did as well! ;-) (*late* last night)
+>=20
+> I haven't had time today to look into fixing up the msvc build
+> (or a complete re-write), so I look forward to seeing your solution.
+> (do you have msvc available? - or do you want me to look at fixing
+> it? maybe in a day or two?)
+>=20
+> ATB,
+> Ramsay Jones
+Ramsay,
+I don't have msvc, so feel free to go ahead, as much as you can.
 
-=46ix it by using '\\%o' which is interpreted consistently in all versi=
-ons
-of printf.
+I'll send a patch for the test code I have made, and put bswap.h on hol=
+d for a week
+(to be able to continue with t5601/connect.c)
 
-Signed-off-by: Kacper Kornet <draenog@pld-linux.org>
----
-
-I've found it while testing v1.8.5-rc0 with mksh which does not
-provide a builtin printf.
-
-Kacper
-
- t/lib-pack.sh | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
-
-diff --git a/t/lib-pack.sh b/t/lib-pack.sh
-index 7e8685b..b96e125 100644
---- a/t/lib-pack.sh
-+++ b/t/lib-pack.sh
-@@ -12,10 +12,10 @@
- # Print the big-endian 4-byte octal representation of $1
- uint32_octal () {
- 	n=3D$1
--	printf '\%o' $(($n / 16777216)); n=3D$((n % 16777216))
--	printf '\%o' $(($n /    65536)); n=3D$((n %    65536))
--	printf '\%o' $(($n /      256)); n=3D$((n %      256))
--	printf '\%o' $(($n           ));
-+	printf '\\%o' $(($n / 16777216)); n=3D$((n % 16777216))
-+	printf '\\%o' $(($n /    65536)); n=3D$((n %    65536))
-+	printf '\\%o' $(($n /      256)); n=3D$((n %      256))
-+	printf '\\%o' $(($n           ));
- }
-=20
- # Print the big-endian 4-byte binary representation of $1
---=20
-1.8.4.2
-
---=20
-  Kacper Kornet
+/Torsten
