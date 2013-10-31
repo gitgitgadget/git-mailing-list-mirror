@@ -1,83 +1,107 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH] t: branch: improve test rollback
-Date: Thu, 31 Oct 2013 12:56:49 -0600
-Message-ID: <CAMP44s07=XDh+Ny=NdDumXzG5Pe2UCg3KNYX7Hp8UbkLcL0Kpg@mail.gmail.com>
-References: <1383211631-9244-1-git-send-email-felipe.contreras@gmail.com>
-	<xmqq1u3170l1.fsf@gitster.dls.corp.google.com>
-	<CAMP44s01ABhU1tsqR+VKH6q6L+MNTDxHEgwfsCboxhP-euSmdA@mail.gmail.com>
-	<xmqqsivh5l6a.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 03/16] pull: cleanup documentation
+Date: Thu, 31 Oct 2013 12:00:21 -0700
+Message-ID: <xmqqob655kqi.fsf@gitster.dls.corp.google.com>
+References: <1383211547-9145-1-git-send-email-felipe.contreras@gmail.com>
+	<1383211547-9145-4-git-send-email-felipe.contreras@gmail.com>
+	<xmqqiowd71kv.fsf@gitster.dls.corp.google.com>
+	<CAMP44s3AKnZUJy0O0Hg+G=ER2bRn1nHMBeoJQ=ugCzO4d2WZ-g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 31 19:56:56 2013
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 31 20:00:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VbxQN-0007jD-4q
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Oct 2013 19:56:55 +0100
+	id 1VbxTp-0000pC-3P
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Oct 2013 20:00:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755351Ab3JaS4v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Oct 2013 14:56:51 -0400
-Received: from mail-lb0-f174.google.com ([209.85.217.174]:42960 "EHLO
-	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753621Ab3JaS4u (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Oct 2013 14:56:50 -0400
-Received: by mail-lb0-f174.google.com with SMTP id q8so2740805lbi.33
-        for <git@vger.kernel.org>; Thu, 31 Oct 2013 11:56:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=KoCLixUXWkj9bpbhO7trqcFtGpz4Z5tdTYbfqEOKI0I=;
-        b=H8E5tlLQUbgeZ9HGc2FDFKMnLHb0UZMUFnvrrwMKZsJPRl5I2HpxONx5f0KJnoLRiJ
-         VWBqXdOEt71PF6HkHdymJ5r1Dl5lMgz2x7sz9YI4D3szMX65WQPsQul9GrT5v7C6fSUi
-         boHBMWCcRADiVopa9tFWXDvyDFI+pBTBZAp8TGBFXvpstVxHZmK0yY4nhF44IwNlk993
-         ghJULLisA3rlbpv8mrsa6ixDYov/K6Smx5CP4nlH2G5YAiGIPeutY5tqVIvNXcze/L34
-         880KUvHAYNGdSFGO+L+odTAsFjgdsWIFZhS1itPMfzMb5MTG0hgfRcxYjYdjhiLh9d3s
-         oTBA==
-X-Received: by 10.112.52.225 with SMTP id w1mr3174877lbo.31.1383245809489;
- Thu, 31 Oct 2013 11:56:49 -0700 (PDT)
-Received: by 10.114.201.69 with HTTP; Thu, 31 Oct 2013 11:56:49 -0700 (PDT)
-In-Reply-To: <xmqqsivh5l6a.fsf@gitster.dls.corp.google.com>
+	id S1755282Ab3JaTAZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Oct 2013 15:00:25 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50353 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753484Ab3JaTAY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Oct 2013 15:00:24 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 12B054C929;
+	Thu, 31 Oct 2013 15:00:24 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=EQ8VXDfAaltojILNm6AOMBcWNaQ=; b=wcFtXK
+	JaztfKXtykOlUhWAfqEmZMOm+rQutApfH1N/ca2LP9K3VQWPX9V4Ip1JLs9Y678/
+	VZVBaxT1OkJFoEt0C0Xge1EH1MHzbO68+G4rwUyxTgyBvPbqhkkVSvn64S71GlPm
+	/E5bY/9vvTxlK/L1BKQx9kOijLDIlYnuW38dU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=cbXC9qBHA3dM3oNOlD4Erj4ZrQv555Lv
+	KXwuNMvQhE9b10HW0NB9e6Kb0UP18CALidyXZYgKHOKmfXIEabEiOMWqgH453Yvm
+	M6t096mxliWojYApUN14IWBm68CwKO4TKFp3WO7xhJn6vBDKcJPb2hcUf+X7Cv2X
+	SWJjYMUtPpA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F2EF74C928;
+	Thu, 31 Oct 2013 15:00:23 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 543734C923;
+	Thu, 31 Oct 2013 15:00:23 -0400 (EDT)
+In-Reply-To: <CAMP44s3AKnZUJy0O0Hg+G=ER2bRn1nHMBeoJQ=ugCzO4d2WZ-g@mail.gmail.com>
+	(Felipe Contreras's message of "Thu, 31 Oct 2013 12:37:24 -0600")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: B2182652-425E-11E3-BF24-1FFB7F2839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237157>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237158>
 
-On Thu, Oct 31, 2013 at 12:50 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
+Felipe Contreras <felipe.contreras@gmail.com> writes:
+
+> On Thu, Oct 31, 2013 at 12:11 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Felipe Contreras <felipe.contreras@gmail.com> writes:
 >
->> On Thu, Oct 31, 2013 at 12:32 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>> Felipe Contreras <felipe.contreras@gmail.com> writes:
->>
->>>> diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
->>>> index 0fe7647..33673e0 100755
->>>> --- a/t/t3200-branch.sh
->>>> +++ b/t/t3200-branch.sh
->>>> @@ -329,7 +329,7 @@ test_expect_success 'tracking setup fails on non-matching refspec' '
->>>>  '
->>>>
->>>>  test_expect_success 'test tracking setup via config' '
->>>> -     git config branch.autosetupmerge true &&
->>>> +     test_config branch.autosetupmerge true &&
->>>>       git config remote.local.url . &&
->>>>       git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
+>>> --- a/Documentation/git-pull.txt
+>>> +++ b/Documentation/git-pull.txt
+>>> @@ -39,7 +39,7 @@ Assume the following history exists and the current branch is
+>>>  "`master`":
 >>>
->>> And "remote.local.*" setting does not follow that "pristine"
->>> principle, making the result of applying this patch inconsistent.
->>> Is that desirable?
+>>>  ------------
+>>> -       A---B---C master on origin
+>>> +       A---B---C origin/master
+>>>        /
+>>>      D---E---F---G master
+>>>  ------------
 >>
->> This patch is *improving* test rollback, it's not making it perfect.
->>
->> Let not the perfect be the enemy of the good.
+>> This change is wrong; the illustration depicts the distributed world
+>> (i.e. a fetch has not happened yet).
 >
-> The patch is making it worse by stopping in the middle.
+> That is an irrelevant implementation detail, specially at this high
+> level. In the user's mind origin/master means master on origin.
 
-Whatever.
+You are wrong.  In the user's mind, origin/master means the commit
+that used to be at master on origin, and the point of this
+illustration is to make them understand that they live in a
+distributed world, where their last observation will go stale over
+time.
 
--- 
-Felipe Contreras
+>
+> If you want to be pedantic, this is the "reality":
+>
+>   ------------
+>       D---E---F---G master
+>   ------------
+
+You are wrong again.  The "reality" is more like this:
+
+      origin/master in your repository
+      |
+      v
+      A---B---C master at origin
+     /
+    D---E---F---G master in your repository
+
+if you really want to write origin/master somewhere in this
+illustration.
