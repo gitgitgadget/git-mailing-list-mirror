@@ -1,86 +1,87 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Documentation: restore a space in unpack-objects usage
-Date: Thu, 31 Oct 2013 15:09:54 -0700
-Message-ID: <xmqqy5592itp.fsf@gitster.dls.corp.google.com>
-References: <1383255671-12784-1-git-send-email-vivien.didelot@savoirfairelinux.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Vivien Didelot <vivien.didelot@savoirfairelinux.com>
-X-From: git-owner@vger.kernel.org Thu Oct 31 23:10:09 2013
+From: Max Horn <max@quendi.de>
+Subject: Re: [PATCH v5 09/10] fast-export: add support to delete refs
+Date: Thu, 31 Oct 2013 23:38:03 +0100
+Message-ID: <DB0125AA-9F4D-497A-B0F6-9933231BCEA6@quendi.de>
+References: <1383212197-14259-1-git-send-email-felipe.contreras@gmail.com> <1383212197-14259-8-git-send-email-felipe.contreras@gmail.com> <6F276334-DFDB-40B8-8B24-38FFB6DBED9B@quendi.de> <CAMP44s3vxfN5Wc+S+VjimisUgZGQMzR7Z2YkO8J4UEk7+cPy_Q@mail.gmail.com> <78D9AAB6-09EC-4E81-A7BE-D36B9A9869D1@quendi.de> <CAMP44s2n-dDEcY8Ds+0z0sys1q_Y60s7KOCs5VvO0tAWG3iLpQ@mail.gmail.com>
+Mime-Version: 1.0 (Mac OS X Mail 6.6 \(1510\))
+Content-Type: multipart/signed; boundary="Apple-Mail=_9DF8DD23-66A7-4F55-ACFE-677863335DD2"; protocol="application/pgp-signature"; micalg=pgp-sha256
+Cc: git@vger.kernel.org, Sverre Rabbelier <srabbelier@gmail.com>,
+	Richard Hansen <rhansen@bbn.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 31 23:38:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vc0RN-0005Iu-FJ
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Oct 2013 23:10:09 +0100
+	id 1Vc0si-0007kt-UJ
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Oct 2013 23:38:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753251Ab3JaWKB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Oct 2013 18:10:01 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60832 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751766Ab3JaWKA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Oct 2013 18:10:00 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1B73F4F204;
-	Thu, 31 Oct 2013 18:09:58 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=sIEwVTdZBcCfQjvJOB1mx9OdqSQ=; b=fGaM12
-	2VV5dZ6bh0OcoYwTR3GgYZ1rvEo1M0LKBkS6VwIMZAMli3p/tm9ql8MbPIBuVgAv
-	1Ce3kNgXchslnsBMnvp49CNXXBqSRno2rj/CgQf3vDbMQexz7hRkLILdZXw3mb42
-	wT9SoBql3y9DWfPn53NkH2Cnn/gwP3EdzUP9w=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=WBUu+2ewmnkpW+0/2deILNHWmSUivaUz
-	DzVfawSz45PGasvOYLv+/KKUKDFOcs2i54dklXEBh3LkD8JCFps/1sVk0Q5gBU3Q
-	EXUMWY15NHsfiy7U7SMP6U9h/CVniHjI+NFulZN4HfceF2b///XyHo1N6iKC2oSH
-	f3fhcdvc+QI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0C2E74F203;
-	Thu, 31 Oct 2013 18:09:58 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 55BFE4F202;
-	Thu, 31 Oct 2013 18:09:57 -0400 (EDT)
-In-Reply-To: <1383255671-12784-1-git-send-email-vivien.didelot@savoirfairelinux.com>
-	(Vivien Didelot's message of "Thu, 31 Oct 2013 17:41:11 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 2D884A46-4279-11E3-BC2D-1FFB7F2839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752282Ab3JaWiM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Oct 2013 18:38:12 -0400
+Received: from wp256.webpack.hosteurope.de ([80.237.133.25]:34594 "EHLO
+	wp256.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751766Ab3JaWiL (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 31 Oct 2013 18:38:11 -0400
+Received: from ip-178-202-253-6.unitymediagroup.de ([178.202.253.6] helo=zanovar.fritz.box); authenticated
+	by wp256.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:RSA_AES_128_CBC_SHA1:16)
+	id 1Vc0sQ-0000TY-Pd; Thu, 31 Oct 2013 23:38:06 +0100
+In-Reply-To: <CAMP44s2n-dDEcY8Ds+0z0sys1q_Y60s7KOCs5VvO0tAWG3iLpQ@mail.gmail.com>
+X-Mailer: Apple Mail (2.1510)
+X-bounce-key: webpack.hosteurope.de;max@quendi.de;1383259091;fa5eff6d;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237188>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237189>
 
-Vivien Didelot <vivien.didelot@savoirfairelinux.com> writes:
 
-> The commit 87b7b84 removed a space in the unpack-objects usage, which
-> makes the synopsis a bit confusing. This patch simply restores it.
->
-> Signed-off-by: Vivien Didelot <vivien.didelot@savoirfairelinux.com>
-> ---
->  Documentation/git-unpack-objects.txt | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/Documentation/git-unpack-objects.txt b/Documentation/git-unpack-objects.txt
-> index ff23494..817788e 100644
-> --- a/Documentation/git-unpack-objects.txt
-> +++ b/Documentation/git-unpack-objects.txt
-> @@ -9,7 +9,7 @@ git-unpack-objects - Unpack objects from a packed archive
->  SYNOPSIS
->  --------
->  [verse]
-> -'git unpack-objects' [-n] [-q] [-r] [--strict] <pack-file
-> +'git unpack-objects' [-n] [-q] [-r] [--strict] < pack-file
+--Apple-Mail=_9DF8DD23-66A7-4F55-ACFE-677863335DD2
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=us-ascii
 
-Thanks; that change was indeed not intended.
 
-Looking at synopsis sections for other commands that take their
-input from the standard input (e.g. "git check-attr"), I think
-we should make it clear that "pack-file" is not to be spelled as-is
-at the same time, i.e.
+On 31.10.2013, at 20:53, Felipe Contreras <felipe.contreras@gmail.com> =
+wrote:
 
-	'git unpack-objects' [-n] [-q] [-r] [--strict] < <pack-file>
+> On Thu, Oct 31, 2013 at 1:47 PM, Max Horn <max@quendi.de> wrote:
+>>=20
+>> On 31.10.2013, at 20:41, Felipe Contreras =
+<felipe.contreras@gmail.com> wrote:
+>>=20
+>>> On Thu, Oct 31, 2013 at 1:29 PM, Max Horn <max@quendi.de> wrote:
+[...]
+>>>=20
+>>> That's what the previous patch does.
+>>=20
+>> Right *facepalm*.
+>>=20
+>> But then this should be documented in git-fast-import.txt, shouldn't =
+it?
+>=20
+> It is... in the previous patch.
+
+Indeed, there it is. So that answer to my initial question is: Yes, I am =
+being dense :-).
+
+So, I am (still) happy with the patch series :-)
+
+
+--Apple-Mail=_9DF8DD23-66A7-4F55-ACFE-677863335DD2
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+	filename=signature.asc
+Content-Type: application/pgp-signature;
+	name=signature.asc
+Content-Description: Message signed with OpenPGP using GPGMail
+
+-----BEGIN PGP SIGNATURE-----
+Comment: GPGTools - http://gpgtools.org
+
+iF4EAREIAAYFAlJy284ACgkQIpJVslrhe1kwVQD/dvRbhR9C8/WZ/CWpvqbAPpe3
+pUG5cS7dfxIjOIw4OUgA/i3U4C9J69qcQc9Ari1Ao3nXeDqZxdF1d4fXzvuO6rXR
+=OqiQ
+-----END PGP SIGNATURE-----
+
+--Apple-Mail=_9DF8DD23-66A7-4F55-ACFE-677863335DD2--
