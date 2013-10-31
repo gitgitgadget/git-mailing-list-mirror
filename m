@@ -1,125 +1,99 @@
-From: Max Horn <max@quendi.de>
-Subject: Re: [PATCH 00/16] Trivial patches
-Date: Thu, 31 Oct 2013 19:03:27 +0100
-Message-ID: <87E9F831-E3BB-43AE-BC9F-C32C46908CBB@quendi.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 01/16] merge: simplify ff-only option
+Date: Thu, 31 Oct 2013 11:04:19 -0700
+Message-ID: <xmqqhabx8ggs.fsf@gitster.dls.corp.google.com>
 References: <1383211547-9145-1-git-send-email-felipe.contreras@gmail.com>
-Mime-Version: 1.0 (Mac OS X Mail 6.6 \(1510\))
-Content-Type: multipart/signed; boundary="Apple-Mail=_B3F12AE2-5AF9-44EF-9159-EA877858AEFC"; protocol="application/pgp-signature"; micalg=pgp-sha256
+	<1383211547-9145-2-git-send-email-felipe.contreras@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 31 19:03:43 2013
+X-From: git-owner@vger.kernel.org Thu Oct 31 19:04:31 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vbwan-0001Tk-7r
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Oct 2013 19:03:37 +0100
+	id 1Vbwbe-0001qt-OT
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Oct 2013 19:04:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754378Ab3JaSDd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Oct 2013 14:03:33 -0400
-Received: from wp256.webpack.hosteurope.de ([80.237.133.25]:52535 "EHLO
-	wp256.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754209Ab3JaSDd (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 31 Oct 2013 14:03:33 -0400
-Received: from fb07-alg-gast1.math.uni-giessen.de ([134.176.24.161]); authenticated
-	by wp256.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:RSA_AES_128_CBC_SHA1:16)
-	id 1Vbwah-00042L-5C; Thu, 31 Oct 2013 19:03:31 +0100
-In-Reply-To: <1383211547-9145-1-git-send-email-felipe.contreras@gmail.com>
-X-Mailer: Apple Mail (2.1510)
-X-bounce-key: webpack.hosteurope.de;max@quendi.de;1383242612;1209c060;
+	id S1754554Ab3JaSE1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Oct 2013 14:04:27 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35835 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752300Ab3JaSE0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Oct 2013 14:04:26 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CE44F4E187;
+	Thu, 31 Oct 2013 14:04:23 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=VTgaCYwQ+yQmH+X9iBhMte2JevI=; b=b4EXWT
+	bH77omUwGmgUIO4Mc2S8Y15Vhtc9Mwp5JPWBh5pOZfbCFk67T6DCgGWMYEgM7id3
+	1qqf6pNApH9aP3KXGuhmTk1RsAmf8a7zerTcXjEUdqarTEQxDgqX40wTT/EXlRPX
+	YeFhM13M301y/Twqq8P713jt639OJdI15rDIs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ykFYrQIPzdyKRIiHe32OXPqAjIRgSN8i
+	wTi7dsfqRgnJciaUzLwoEXcprrkwQIBwXs3mesyNATyZn2zL052cJ2n8c1YwI6ue
+	dFBObTXfpaww654rDJ0nGn4QpAwJnQLnbwuPckF6cAhshUS4q0JuU+G5ybDny0ZP
+	s/xk5elXc9U=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C01854E185;
+	Thu, 31 Oct 2013 14:04:23 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1E9F84E180;
+	Thu, 31 Oct 2013 14:04:23 -0400 (EDT)
+In-Reply-To: <1383211547-9145-2-git-send-email-felipe.contreras@gmail.com>
+	(Felipe Contreras's message of "Thu, 31 Oct 2013 03:25:32 -0600")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: DF40805A-4256-11E3-8E4C-1FFB7F2839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237135>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237136>
 
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
---Apple-Mail=_B3F12AE2-5AF9-44EF-9159-EA877858AEFC
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=us-ascii
+> No functional changes.
+>
+> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+> ---
+>  builtin/merge.c | 11 ++---------
+>  1 file changed, 2 insertions(+), 9 deletions(-)
+>
+> diff --git a/builtin/merge.c b/builtin/merge.c
+> index 02a69c1..41fb66d 100644
+> --- a/builtin/merge.c
+> +++ b/builtin/merge.c
+> @@ -186,13 +186,6 @@ static int option_parse_n(const struct option *opt,
+>  	return 0;
+>  }
+>  
+> -static int option_parse_ff_only(const struct option *opt,
+> -			  const char *arg, int unset)
+> -{
+> -	fast_forward = FF_ONLY;
+> -	return 0;
+> -}
+> -
+>  static struct option builtin_merge_options[] = {
+>  	{ OPTION_CALLBACK, 'n', NULL, NULL, NULL,
+>  		N_("do not show a diffstat at the end of the merge"),
+> @@ -210,9 +203,9 @@ static struct option builtin_merge_options[] = {
+>  	OPT_BOOL('e', "edit", &option_edit,
+>  		N_("edit message before committing")),
+>  	OPT_SET_INT(0, "ff", &fast_forward, N_("allow fast-forward (default)"), FF_ALLOW),
+> -	{ OPTION_CALLBACK, 0, "ff-only", NULL, NULL,
+> +	{ OPTION_SET_INT, 0, "ff-only", &fast_forward, NULL,
+>  		N_("abort if fast-forward is not possible"),
+> -		PARSE_OPT_NOARG | PARSE_OPT_NONEG, option_parse_ff_only },
+> +		PARSE_OPT_NOARG | PARSE_OPT_NONEG, NULL, FF_ONLY },
+>  	OPT_RERERE_AUTOUPDATE(&allow_rerere_auto),
+>  	OPT_BOOL(0, "verify-signatures", &verify_signatures,
+>  		N_("Verify that the named commit has a valid GPG signature")),
 
-
-On 31.10.2013, at 10:25, Felipe Contreras <felipe.contreras@gmail.com> =
-wrote:
-
-> Most of these have been sent before, but were not applied for one =
-reason or
-> another.
-
-All of these look fine and sensible to me. Some of the latter patches in =
-the series might be a bit subjective (e.g. I personally don't mind =
-"yoda" conditions at all), but none do harm, and most are a clear =
-improvement. So I am all for applying this.
-
-Cheers,
-Max
-
->=20
-> Felipe Contreras (16):
->  merge: simplify ff-only option
->  t: replace pulls with merges
->  pull: cleanup documentation
->  fetch: add missing documentation
->  revision: add missing include
->  shortlog: add missing declaration
->  branch: trivial style fix
->  sha1-name: trivial style cleanup
->  transport-helper: trivial style fix
->  describe: trivial style fixes
->  pretty: trivial style fix
->  revision: trivial style fixes
->  diff: trivial style fix
->  run-command: trivial style fixes
->  setup: trivial style fixes
->  add: avoid yoda conditions
->=20
-> Documentation/git-fetch.txt            |  3 +++
-> Documentation/git-pull.txt             |  4 ++--
-> builtin/add.c                          |  2 +-
-> builtin/branch.c                       |  3 +--
-> builtin/describe.c                     |  7 +++----
-> builtin/diff.c                         |  2 +-
-> builtin/merge.c                        | 11 ++---------
-> pretty.c                               |  2 +-
-> revision.c                             | 14 ++++++--------
-> revision.h                             |  1 +
-> run-command.c                          | 13 +++++--------
-> setup.c                                |  4 ++--
-> sha1_name.c                            |  1 -
-> shortlog.h                             |  2 ++
-> t/annotate-tests.sh                    |  2 +-
-> t/t4200-rerere.sh                      |  2 +-
-> t/t9114-git-svn-dcommit-merge.sh       |  2 +-
-> t/t9500-gitweb-standalone-no-errors.sh |  2 +-
-> transport-helper.c                     |  1 +
-> 19 files changed, 35 insertions(+), 43 deletions(-)
->=20
-> --=20
-> 1.8.4.2+fc1
->=20
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->=20
-
-
---Apple-Mail=_B3F12AE2-5AF9-44EF-9159-EA877858AEFC
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
-	filename=signature.asc
-Content-Type: application/pgp-signature;
-	name=signature.asc
-Content-Description: Message signed with OpenPGP using GPGMail
-
------BEGIN PGP SIGNATURE-----
-Comment: GPGTools - http://gpgtools.org
-
-iF4EAREIAAYFAlJym3IACgkQIpJVslrhe1laqwEAtQ/hZOGjri9XZ9kIJnZ5ntJ4
-SMGJoYL3FiwMTdYoBaYA+gIqLFaLVrecXWpyi98JoqCs9wmk6wo/VCLMKGCRQBFF
-=s+Sb
------END PGP SIGNATURE-----
-
---Apple-Mail=_B3F12AE2-5AF9-44EF-9159-EA877858AEFC--
+Looks good; thanks.
