@@ -1,77 +1,76 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v5 01/10] transport-helper: fix extra lines
-Date: Thu, 31 Oct 2013 03:36:29 -0600
-Message-ID: <1383212197-14259-3-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH v5 05/10] fast-export: improve argument parsing
+Date: Thu, 31 Oct 2013 03:36:31 -0600
+Message-ID: <1383212197-14259-5-git-send-email-felipe.contreras@gmail.com>
 References: <1383212197-14259-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Sverre Rabbelier <srabbelier@gmail.com>,
 	Richard Hansen <rhansen@bbn.com>,
 	Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 31 10:43:29 2013
+X-From: git-owner@vger.kernel.org Thu Oct 31 10:43:37 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vbomn-0003lV-Be
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Oct 2013 10:43:29 +0100
+	id 1Vboms-0003nt-VJ
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Oct 2013 10:43:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753148Ab3JaJnZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Oct 2013 05:43:25 -0400
-Received: from mail-ob0-f169.google.com ([209.85.214.169]:46216 "EHLO
+	id S1753451Ab3JaJna (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Oct 2013 05:43:30 -0400
+Received: from mail-ob0-f169.google.com ([209.85.214.169]:43914 "EHLO
 	mail-ob0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752836Ab3JaJnX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Oct 2013 05:43:23 -0400
-Received: by mail-ob0-f169.google.com with SMTP id uz6so2787385obc.14
-        for <git@vger.kernel.org>; Thu, 31 Oct 2013 02:43:23 -0700 (PDT)
+	with ESMTP id S1753325Ab3JaJn2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Oct 2013 05:43:28 -0400
+Received: by mail-ob0-f169.google.com with SMTP id uz6so2787452obc.14
+        for <git@vger.kernel.org>; Thu, 31 Oct 2013 02:43:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=UdX3V/uFiynjOcPxWosHIPnlavfFu6lxEopkWQzyYz4=;
-        b=wP2Ba3vMYAhloC51R4wPidmawYrUO7faojo5+Dob9KZ+/OgMddKn/f9EItzcYJs30F
-         KRDdH3t4J/nmCvAt2Y0PZCtalxq0kcA5lXOZWO2JW1pcuAkkGAoyp00UrYhSADNPb8rm
-         5UQaSDW3wLPsztXnuoNezCoFFf+NYhM5HWtryeEB2y/lv7KS2qgbuxMq/5Hxjo5LYmUH
-         kboXbv1BYCBbWvtdY+Ewaiz6bxONhouevIg8+yn3dE/JsFGlaDOV0np9UET4G7KJgXK0
-         VJYvJRHz7dfN+953F7hGwgNxCSHpOdo0HXBmc7fuHdD3ISB/jj17Pwp5hidczG6DpMYq
-         3Ksw==
-X-Received: by 10.60.141.225 with SMTP id rr1mr1821124oeb.55.1383212603245;
-        Thu, 31 Oct 2013 02:43:23 -0700 (PDT)
+        bh=GNMeKRkxMWz89BRrhJ/ban7/UTxmEXiUPRoKUKUKxZA=;
+        b=F4yCHGoXVj72k9ILVOSsJ5DWBvosd0S5EskILfQiaMvQXaraHice3gjATdoDgghHui
+         VNkBYiC9ohHEmA52GkeOCJiQP1/5r/VexO0MAUmDhm97fSZPn9+S2gEqKfwjykT7yoXF
+         aS2fYyp8wH+vWdrFrdAZgwfESSzam9p4qM03k9AyAlNgF4e7ZzHSPm0pJ8wBsaTkk870
+         orAtvsW6FoBp/KVsRaRq9gtznxPN/yr55AZj6xe9x2N2fuH9wS0G1ev8EE3vfC48J/sJ
+         rTdQ7qqCdM38Obkod1llAS5MKHClH5J23MQ/t6tQVpkFAl7Kt8Ds8IBjPOjbLdpEjT21
+         yfwg==
+X-Received: by 10.60.58.71 with SMTP id o7mr1874335oeq.51.1383212608105;
+        Thu, 31 Oct 2013 02:43:28 -0700 (PDT)
 Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
-        by mx.google.com with ESMTPSA id tz10sm4507170obc.10.2013.10.31.02.43.21
+        by mx.google.com with ESMTPSA id r6sm4495900obi.14.2013.10.31.02.43.26
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 31 Oct 2013 02:43:22 -0700 (PDT)
+        Thu, 31 Oct 2013 02:43:27 -0700 (PDT)
 X-Mailer: git-send-email 1.8.4.2+fc1
 In-Reply-To: <1383212197-14259-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237103>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237104>
 
-Commit 9c51558 (transport-helper: trivial code shuffle) moved these
-lines above, but 99d9ec0 (Merge branch 'fc/transport-helper-no-refspec')
-had a wrong merge conflict and readded them.
+We don't want to pass arguments specific to fast-export to
+setup_revisions.
 
-Reported-by: Richard Hansen <rhansen@bbn.com>
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- transport-helper.c | 3 ---
- 1 file changed, 3 deletions(-)
+ builtin/fast-export.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/transport-helper.c b/transport-helper.c
-index b32e2d6..985eeea 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -874,9 +874,6 @@ static int push_refs_with_export(struct transport *transport,
- 		}
- 		free(private);
+diff --git a/builtin/fast-export.c b/builtin/fast-export.c
+index 78250ea..eea5b8c 100644
+--- a/builtin/fast-export.c
++++ b/builtin/fast-export.c
+@@ -701,8 +701,9 @@ int cmd_fast_export(int argc, const char **argv, const char *prefix)
+ 	revs.topo_order = 1;
+ 	revs.show_source = 1;
+ 	revs.rewrite_parents = 1;
++	argc = parse_options(argc, argv, prefix, options, fast_export_usage,
++			PARSE_OPT_KEEP_ARGV0 | PARSE_OPT_KEEP_UNKNOWN);
+ 	argc = setup_revisions(argc, argv, &revs, NULL);
+-	argc = parse_options(argc, argv, prefix, options, fast_export_usage, 0);
+ 	if (argc > 1)
+ 		usage_with_options (fast_export_usage, options);
  
--		if (ref->deletion)
--			die("remote-helpers do not support ref deletion");
--
- 		if (ref->peer_ref) {
- 			if (strcmp(ref->peer_ref->name, ref->name))
- 				die("remote-helpers do not support old:new syntax");
 -- 
 1.8.4.2+fc1
