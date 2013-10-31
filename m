@@ -1,76 +1,92 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v2 11/19] pack-objects: use bitmaps when packing objects
-Date: Thu, 31 Oct 2013 19:03:03 +0700
-Message-ID: <CACsJy8DMskq8R5rfz8MFsnB5CRuX=b0Opf31uby7mB22Hg+c2g@mail.gmail.com>
-References: <20131025055521.GD11810@sigill.intra.peff.net> <20131025060352.GI23098@sigill.intra.peff.net>
- <CACsJy8DMOfZu+2DS=-J9jfiP796XYi=e7B28cdV=ck9J-VOTtA@mail.gmail.com>
- <20131030073627.GG11317@sigill.intra.peff.net> <CACsJy8B3VS=WSNeF35_JTiF6byZiefvEYnadkC8BAmKG5Z7gQQ@mail.gmail.com>
- <20131030200754.GB23011@sigill.intra.peff.net>
+From: Kacper Kornet <draenog@pld-linux.org>
+Subject: [PATCH] Fix '\%o' for printf from coreutils
+Date: Thu, 31 Oct 2013 12:51:32 +0100
+Message-ID: <20131031115131.GA28379@camk.edu.pl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Vicent Marti <vicent@github.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Oct 31 13:03:52 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 31 13:10:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vbqyc-0007lo-FA
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Oct 2013 13:03:50 +0100
+	id 1Vbr4z-0001nR-4z
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Oct 2013 13:10:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753425Ab3JaMDq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Oct 2013 08:03:46 -0400
-Received: from mail-qc0-f169.google.com ([209.85.216.169]:49379 "EHLO
-	mail-qc0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752031Ab3JaMDe (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Oct 2013 08:03:34 -0400
-Received: by mail-qc0-f169.google.com with SMTP id x12so1585396qcv.14
-        for <git@vger.kernel.org>; Thu, 31 Oct 2013 05:03:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=qFcWgck4crZ1digpcKk0VgmGh5NXbeL0aZVqpw9f0KQ=;
-        b=P4A65GjSI9cM/lQGLJGagrQRq58LTzB81TxDZAU/uckm2xJ+Ml1VrR+uJGnXFAxPlv
-         SyCoQHBUj8k2OxN3Iw1MzBROhewzm8HeI7QaFhd5rElq4AAyK24HhlxMVhdxjfxB5DSa
-         8m0rz8BdQhVphhzvF1iuWgQEQ5vG0dw7Sdgu/wiVwyzJZNAcw7f8iVkqzvvICi3QvD5Z
-         vcNPruAbMJ+0mykOyS2Flbmq0DRaDpRv3JaT3XCdq51SzMWAanuRQF75jy28uvPHpuq1
-         Tdg417+tARfp0iW+gRSk4HkQuKkKWvTi+L58jc4Q41e57fXUcEGwmBEXJt6mg8koim/b
-         IVGg==
-X-Received: by 10.49.71.207 with SMTP id x15mr3419001qeu.49.1383221013940;
- Thu, 31 Oct 2013 05:03:33 -0700 (PDT)
-Received: by 10.96.27.202 with HTTP; Thu, 31 Oct 2013 05:03:03 -0700 (PDT)
-In-Reply-To: <20131030200754.GB23011@sigill.intra.peff.net>
+	id S1753478Ab3JaMKN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 31 Oct 2013 08:10:13 -0400
+Received: from moat.camk.edu.pl ([148.81.175.50]:60712 "EHLO moat.camk.edu.pl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752145Ab3JaMKK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Oct 2013 08:10:10 -0400
+X-Greylist: delayed 1106 seconds by postgrey-1.27 at vger.kernel.org; Thu, 31 Oct 2013 08:10:10 EDT
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by moat.camk.edu.pl (Postfix) with ESMTP id 3DDE85F0043;
+	Thu, 31 Oct 2013 12:52:00 +0100 (CET)
+X-Virus-Scanned: amavisd-new at camk.edu.pl
+Received: from moat.camk.edu.pl ([127.0.0.1])
+	by localhost (liam.camk.edu.pl [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id jCE6LeJb7nma; Thu, 31 Oct 2013 12:51:50 +0100 (CET)
+Received: from gatekeeper.camk.edu.pl (gatekeeper.camk.edu.pl [192.168.1.23])
+	by moat.camk.edu.pl (Postfix) with ESMTP id 2D9A25F0027;
+	Thu, 31 Oct 2013 12:51:50 +0100 (CET)
+Received: by gatekeeper.camk.edu.pl (Postfix, from userid 1293)
+	id 8426634CFD; Thu, 31 Oct 2013 12:51:32 +0100 (CET)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237121>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237122>
 
-On Thu, Oct 31, 2013 at 3:07 AM, Jeff King <peff@peff.net> wrote:
-> I think there are two cases that we need to consider:
->
->   1. We have a full repo and somebody requests a shallow clone for us.
->      We probably do not want to use bitmaps here.  In the series we have
->      been testing, shallow clones turned off bitmaps because we do not
->      use the internal rev_list. But as of cdab485 (upload-pack: delegate
->      rev walking in shallow fetch to pack-objects), that distinction
->      doesn't hold. I think we can check the use of --shallow-file
->      instead of explicitly turning off bitmaps there.
+The printf utility provided by coreutils when interpreting '\%o' format
+does not recognize %o as formatting directive. For example
+printf '\%o 0 returns \%o and warning: ignoring excess arguments,
+starting with =E2=80=980=E2=80=99, which results in failed tests in
+t5309-pack-delta-cycles.sh. In most shells the test ends with success a=
+s
+the printf is a builtin utility.
 
-There's an (non-existing yet) case 1': somebody requests a clone and
-the source clone is already shallow. is_repository_shallow() could
-catch both cases.
+=46ix it by using '\\%o' which is interpreted consistently in all versi=
+ons
+of printf.
 
->   2. We have a shallow clone that wants to repack. We probably want to
->      turn off bitmap writing here. I don't think that grafts actually
->      matter here, because pack-objects should always be looking at the
->      true graph. It would mean that using "git rev-list
->      --use-bitmap-index" does not respect the grafts, and we should
->      probably disable it in that case (and ditto for replacements).
+Signed-off-by: Kacper Kornet <draenog@pld-linux.org>
+---
 
-Right. I forgot that the repo must be complete before it's grafted.
--- 
-Duy
+I've found it while testing v1.8.5-rc0 with mksh which does not
+provide a builtin printf.
+
+Kacper
+
+ t/lib-pack.sh | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/t/lib-pack.sh b/t/lib-pack.sh
+index 7e8685b..b96e125 100644
+--- a/t/lib-pack.sh
++++ b/t/lib-pack.sh
+@@ -12,10 +12,10 @@
+ # Print the big-endian 4-byte octal representation of $1
+ uint32_octal () {
+ 	n=3D$1
+-	printf '\%o' $(($n / 16777216)); n=3D$((n % 16777216))
+-	printf '\%o' $(($n /    65536)); n=3D$((n %    65536))
+-	printf '\%o' $(($n /      256)); n=3D$((n %      256))
+-	printf '\%o' $(($n           ));
++	printf '\\%o' $(($n / 16777216)); n=3D$((n % 16777216))
++	printf '\\%o' $(($n /    65536)); n=3D$((n %    65536))
++	printf '\\%o' $(($n /      256)); n=3D$((n %      256))
++	printf '\\%o' $(($n           ));
+ }
+=20
+ # Print the big-endian 4-byte binary representation of $1
+--=20
+1.8.4.2
+
+--=20
+  Kacper Kornet
