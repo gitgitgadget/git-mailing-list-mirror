@@ -1,7 +1,7 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 2/3] remote-curl: pass curl slot_results back through run_slot
-Date: Thu, 31 Oct 2013 02:36:26 -0400
-Message-ID: <20131031063626.GB5812@sigill.intra.peff.net>
+Subject: [PATCH 3/3] remote-curl: fix large pushes with GSSAPI
+Date: Thu, 31 Oct 2013 02:36:51 -0400
+Message-ID: <20131031063651.GC5812@sigill.intra.peff.net>
 References: <20131031063451.GA5513@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -10,114 +10,94 @@ Cc: git@vger.kernel.org, Shawn Pearce <spearce@spearce.org>,
 	Junio C Hamano <gitster@pobox.com>,
 	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>
 To: "brian m. carlson" <sandals@crustytoothpaste.net>
-X-From: git-owner@vger.kernel.org Thu Oct 31 07:36:34 2013
+X-From: git-owner@vger.kernel.org Thu Oct 31 07:36:59 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vblrt-0001Au-Cc
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Oct 2013 07:36:33 +0100
+	id 1VblsI-0001MQ-I1
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Oct 2013 07:36:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753320Ab3JaGg3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Oct 2013 02:36:29 -0400
-Received: from cloud.peff.net ([50.56.180.127]:59004 "HELO peff.net"
+	id S1752359Ab3JaGgz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Oct 2013 02:36:55 -0400
+Received: from cloud.peff.net ([50.56.180.127]:59011 "HELO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752732Ab3JaGg3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Oct 2013 02:36:29 -0400
-Received: (qmail 18259 invoked by uid 102); 31 Oct 2013 06:36:29 -0000
+	id S1752003Ab3JaGgy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Oct 2013 02:36:54 -0400
+Received: (qmail 18314 invoked by uid 102); 31 Oct 2013 06:36:54 -0000
 Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 31 Oct 2013 01:36:29 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 31 Oct 2013 02:36:26 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 31 Oct 2013 01:36:54 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 31 Oct 2013 02:36:51 -0400
 Content-Disposition: inline
 In-Reply-To: <20131031063451.GA5513@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237081>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237082>
 
-Some callers may want to know more than just the integer
-error code we return. Let them optionally pass a
-slot_results struct to fill in (or NULL if they do not
-care). In either case we continue to return the integer
-code.
+From: brian m. carlson <sandals@crustytoothpaste.net>
 
-We can also give probe_rpc the same treatment (since it
-builds directly on run_slot).
+Due to an interaction between the way libcurl handles GSSAPI
+authentication over HTTP and the way git uses libcurl, large
+pushes (those over http.postBuffer bytes) would fail due to
+an authentication failure requiring a rewind of the curl
+buffer.  Such a rewind was not possible because the data did
+not fit into the entire buffer.
 
+Enable the use of the Expect: 100-continue header for large
+requests where the server offers GSSAPI authentication to
+avoid this issue, since the request would otherwise fail.
+This allows git to get the authentication data right before
+sending the pack contents.  Existing cases where pushes
+would succeed, including small requests using GSSAPI, still
+disable the use of 100 Continue, as it causes problems for
+some remote HTTP implementations (servers and proxies).
+
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- remote-curl.c | 22 +++++++++++++---------
- 1 file changed, 13 insertions(+), 9 deletions(-)
+ remote-curl.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
 diff --git a/remote-curl.c b/remote-curl.c
-index b5ebe01..79db21e 100644
+index 79db21e..f646b5f 100644
 --- a/remote-curl.c
 +++ b/remote-curl.c
-@@ -383,25 +383,29 @@ static size_t rpc_in(char *ptr, size_t eltsize,
- 	return size;
- }
+@@ -442,6 +442,7 @@ static int post_rpc(struct rpc_state *rpc)
+ 	char *gzip_body = NULL;
+ 	size_t gzip_size = 0;
+ 	int err, large_request = 0;
++	int needs_100_continue = 0;
  
--static int run_slot(struct active_request_slot *slot)
-+static int run_slot(struct active_request_slot *slot,
-+		    struct slot_results *results)
- {
- 	int err;
--	struct slot_results results;
-+	struct slot_results results_buf;
- 
--	slot->results = &results;
-+	if (!results)
-+		results = &results_buf;
-+
-+	slot->results = results;
- 	slot->curl_result = curl_easy_perform(slot->curl);
- 	finish_active_slot(slot);
- 
--	err = handle_curl_result(&results);
-+	err = handle_curl_result(results);
- 	if (err != HTTP_OK && err != HTTP_REAUTH) {
- 		error("RPC failed; result=%d, HTTP code = %ld",
--		      results.curl_result, results.http_code);
-+		      results->curl_result, results->http_code);
+ 	/* Try to load the entire request, if we can fit it into the
+ 	 * allocated buffer space we can use HTTP/1.0 and avoid the
+@@ -465,16 +466,22 @@ static int post_rpc(struct rpc_state *rpc)
  	}
  
- 	return err;
- }
- 
--static int probe_rpc(struct rpc_state *rpc)
-+static int probe_rpc(struct rpc_state *rpc, struct slot_results *results)
- {
- 	struct active_request_slot *slot;
- 	struct curl_slist *headers = NULL;
-@@ -423,7 +427,7 @@ static int probe_rpc(struct rpc_state *rpc)
- 	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite_buffer);
- 	curl_easy_setopt(slot->curl, CURLOPT_FILE, &buf);
- 
--	err = run_slot(slot);
-+	err = run_slot(slot, results);
- 
- 	curl_slist_free_all(headers);
- 	strbuf_release(&buf);
-@@ -462,7 +466,7 @@ static int post_rpc(struct rpc_state *rpc)
- 
  	if (large_request) {
++		struct slot_results results;
++
  		do {
--			err = probe_rpc(rpc);
-+			err = probe_rpc(rpc, NULL);
+-			err = probe_rpc(rpc, NULL);
++			err = probe_rpc(rpc, &results);
  		} while (err == HTTP_REAUTH);
  		if (err != HTTP_OK)
  			return -1;
-@@ -561,7 +565,7 @@ retry:
- 	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, rpc_in);
- 	curl_easy_setopt(slot->curl, CURLOPT_FILE, rpc);
++
++		if (results.auth_avail & CURLAUTH_GSSNEGOTIATE)
++			needs_100_continue = 1;
+ 	}
  
--	err = run_slot(slot);
-+	err = run_slot(slot, NULL);
- 	if (err == HTTP_REAUTH && !large_request)
- 		goto retry;
- 	if (err != HTTP_OK)
+ 	headers = curl_slist_append(headers, rpc->hdr_content_type);
+ 	headers = curl_slist_append(headers, rpc->hdr_accept);
+-	headers = curl_slist_append(headers, "Expect:");
++	headers = curl_slist_append(headers, needs_100_continue ?
++		"Expect: 100-continue" : "Expect:");
+ 
+ retry:
+ 	slot = get_active_slot();
 -- 
 1.8.4.1.898.g8bf8a41.dirty
