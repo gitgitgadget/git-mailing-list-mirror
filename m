@@ -1,232 +1,91 @@
-From: Paul Mackerras <paulus@samba.org>
-Subject: Re: [PATCH v2] gitk: Add a horizontal scrollbar for commit history
-Date: Thu, 31 Oct 2013 20:05:26 +1100
-Message-ID: <20131031090526.GA9164@iris.ozlabs.ibm.com>
-References: <1383130702-4966-1-git-send-email-ncornu@aldebaran-robotics.com>
- <5270F4FC.60900@viscovery.net>
- <CAMXp-VMku0eSQmmbdy-NQDedH4VSgZN5XmpTeBHvN8qX1=ersg@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Nicolas Cornu <ncornu@aldebaran-robotics.com>
-X-From: git-owner@vger.kernel.org Thu Oct 31 10:05:46 2013
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH 00/16] Trivial patches
+Date: Thu, 31 Oct 2013 03:25:31 -0600
+Message-ID: <1383211547-9145-1-git-send-email-felipe.contreras@gmail.com>
+Cc: Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 31 10:32:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VboCH-0005We-E0
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Oct 2013 10:05:45 +0100
+	id 1VbocE-00083I-Az
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Oct 2013 10:32:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752662Ab3JaJFl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Oct 2013 05:05:41 -0400
-Received: from ozlabs.org ([203.10.76.45]:33097 "EHLO ozlabs.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752596Ab3JaJFk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Oct 2013 05:05:40 -0400
-Received: by ozlabs.org (Postfix, from userid 1003)
-	id 419F82C04AC; Thu, 31 Oct 2013 20:05:39 +1100 (EST)
-Content-Disposition: inline
-In-Reply-To: <CAMXp-VMku0eSQmmbdy-NQDedH4VSgZN5XmpTeBHvN8qX1=ersg@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753427Ab3JaJca (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Oct 2013 05:32:30 -0400
+Received: from mail-oa0-f54.google.com ([209.85.219.54]:40632 "EHLO
+	mail-oa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753325Ab3JaJc3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Oct 2013 05:32:29 -0400
+Received: by mail-oa0-f54.google.com with SMTP id o20so2804296oag.13
+        for <git@vger.kernel.org>; Thu, 31 Oct 2013 02:32:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=5/ou5gl4K66eCubJ8x4cMhY4M3omWpqUP7/Qrn7grV0=;
+        b=os3SUSWPOKPNB57CLg1sDhyGr5PutODmRcVxRj9WFtUktZtVATbrrH2pSygU7z3TY6
+         0ekStpdoXuSPbjrl4nUNvB585Ehy1S4+dK1X3VURi4TUhHKnUXEjX+XoBZuMyNqpeGFL
+         SSM8YrCtI6blK716MqZ6vWMURUI/RNn47KWznXGp8DX/a/wCYfZggKcPeXYUJ+6QvFXk
+         AGuoEKCxz3KVfmMu64P53wFOZJOWPcjC6AWSqKfu9lRbnbOemTNF8OQXSxVk+/Q1xWig
+         j8ia69x9y/QbJsmrqOKxl626Pa2LajGLGGIjYoQxynClErmSCdXOc0SLq7pMryoiOH/8
+         AtAw==
+X-Received: by 10.60.94.164 with SMTP id dd4mr1047100oeb.68.1383211949042;
+        Thu, 31 Oct 2013 02:32:29 -0700 (PDT)
+Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
+        by mx.google.com with ESMTPSA id eg8sm4486571obd.6.2013.10.31.02.32.27
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 31 Oct 2013 02:32:27 -0700 (PDT)
+X-Mailer: git-send-email 1.8.4.2+fc1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237083>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237084>
 
-On Wed, Oct 30, 2013 at 01:47:08PM +0100, Nicolas Cornu wrote:
-> This is useful on all our repos, every times, as we put a tag per day.
-> If the HEAD didn't move during 150 days, we got 150 tags.
+Most of these have been sent before, but were not applied for one reason or
+another.
 
-Here is a patch that I did some time ago but have never pushed out.
-Do you think it is an improvement when using gitk on a repo with lots
-of tags?
+Felipe Contreras (16):
+  merge: simplify ff-only option
+  t: replace pulls with merges
+  pull: cleanup documentation
+  fetch: add missing documentation
+  revision: add missing include
+  shortlog: add missing declaration
+  branch: trivial style fix
+  sha1-name: trivial style cleanup
+  transport-helper: trivial style fix
+  describe: trivial style fixes
+  pretty: trivial style fix
+  revision: trivial style fixes
+  diff: trivial style fix
+  run-command: trivial style fixes
+  setup: trivial style fixes
+  add: avoid yoda conditions
 
-Paul.
+ Documentation/git-fetch.txt            |  3 +++
+ Documentation/git-pull.txt             |  4 ++--
+ builtin/add.c                          |  2 +-
+ builtin/branch.c                       |  3 +--
+ builtin/describe.c                     |  7 +++----
+ builtin/diff.c                         |  2 +-
+ builtin/merge.c                        | 11 ++---------
+ pretty.c                               |  2 +-
+ revision.c                             | 14 ++++++--------
+ revision.h                             |  1 +
+ run-command.c                          | 13 +++++--------
+ setup.c                                |  4 ++--
+ sha1_name.c                            |  1 -
+ shortlog.h                             |  2 ++
+ t/annotate-tests.sh                    |  2 +-
+ t/t4200-rerere.sh                      |  2 +-
+ t/t9114-git-svn-dcommit-merge.sh       |  2 +-
+ t/t9500-gitweb-standalone-no-errors.sh |  2 +-
+ transport-helper.c                     |  1 +
+ 19 files changed, 35 insertions(+), 43 deletions(-)
 
-[PATCH] gitk: Tag display improvements
-
-When a commit has many tags, the tag icons in the graph display can
-easily become so wide as to push the commit message off the right-hand
-edge of the graph display pane.  This changes the display so that if
-there are more than 3 tags or they would take up more than a quarter
-of the width of the pane, we instead display a single tag icon with
-a legend inside it like "4 tags...".  If the user clicks on the tag
-icon, gitk then displays all the tags in the diff display pane.
-
-Signed-off-by: Paul Mackerras <paulus@samba.org>
----
- gitk | 96 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++----------
- 1 file changed, 83 insertions(+), 13 deletions(-)
-
-diff --git a/gitk b/gitk
-index 5cd00d8..0bdb146 100755
---- a/gitk
-+++ b/gitk
-@@ -2385,6 +2385,7 @@ proc makewindow {} {
-     $ctext tag conf found -back $foundbgcolor
-     $ctext tag conf currentsearchhit -back $currentsearchhitbgcolor
-     $ctext tag conf wwrap -wrap word
-+    $ctext tag conf bold -font textfontbold
- 
-     .pwbottom add .bleft
-     if {!$use_ttk} {
-@@ -6387,6 +6388,25 @@ proc bindline {t id} {
-     $canv bind $t <Button-1> "lineclick %x %y $id 1"
- }
- 
-+proc graph_pane_width {} {
-+    global use_ttk
-+
-+    if {$use_ttk} {
-+	set g [.tf.histframe.pwclist sashpos 0]
-+    } else {
-+	set g [.tf.histframe.pwclist sash coord 0]
-+    }
-+    return [lindex $g 0]
-+}
-+
-+proc totalwidth {l font extra} {
-+    set tot 0
-+    foreach str $l {
-+	set tot [expr {$tot + [font measure $font $str] + $extra}]
-+    }
-+    return $tot
-+}
-+
- proc drawtags {id x xt y1} {
-     global idtags idheads idotherrefs mainhead
-     global linespc lthickness
-@@ -6398,9 +6418,27 @@ proc drawtags {id x xt y1} {
-     set marks {}
-     set ntags 0
-     set nheads 0
-+    set singletag 0
-+    set maxtags 3
-+    set maxtagpct 25
-+    set maxwidth [expr {[graph_pane_width] * $maxtagpct / 100}]
-+    set delta [expr {int(0.5 * ($linespc - $lthickness))}]
-+    set extra [expr {$delta + $lthickness + $linespc}]
-+
-     if {[info exists idtags($id)]} {
- 	set marks $idtags($id)
- 	set ntags [llength $marks]
-+	if {$ntags > $maxtags ||
-+	    [totalwidth $marks mainfont $extra] > $maxwidth} {
-+	    # show just a single "n tags..." tag
-+	    set singletag 1
-+	    if {$ntags == 1} {
-+		set marks [list "tag..."]
-+	    } else {
-+		set marks [list [format "%d tags..." $ntags]]
-+	    }
-+	    set ntags 1
-+	}
-     }
-     if {[info exists idheads($id)]} {
- 	set marks [concat $marks $idheads($id)]
-@@ -6413,7 +6451,6 @@ proc drawtags {id x xt y1} {
- 	return $xt
-     }
- 
--    set delta [expr {int(0.5 * ($linespc - $lthickness))}]
-     set yt [expr {$y1 - 0.5 * $linespc}]
-     set yb [expr {$yt + $linespc - 1}]
-     set xvals {}
-@@ -6428,7 +6465,7 @@ proc drawtags {id x xt y1} {
- 	}
- 	lappend xvals $xt
- 	lappend wvals $wid
--	set xt [expr {$xt + $delta + $wid + $lthickness + $linespc}]
-+	set xt [expr {$xt + $wid + $extra}]
-     }
-     set t [$canv create line $x $y1 [lindex $xvals end] $y1 \
- 	       -width $lthickness -fill $reflinecolor -tags tag.$id]
-@@ -6444,7 +6481,12 @@ proc drawtags {id x xt y1} {
- 		       $xr $yt $xr $yb $xl $yb $x [expr {$yb - $delta}] \
- 		       -width 1 -outline $tagoutlinecolor -fill $tagbgcolor \
- 		       -tags tag.$id]
--	    $canv bind $t <1> [list showtag $tag_quoted 1]
-+	    if {$singletag} {
-+		set tagclick [list showtags $id 1]
-+	    } else {
-+		set tagclick [list showtag $tag_quoted 1]
-+	    }
-+	    $canv bind $t <1> $tagclick
- 	    set rowtextx([rowofcommit $id]) [expr {$xr + $linespc}]
- 	} else {
- 	    # draw a head or other ref
-@@ -6471,7 +6513,7 @@ proc drawtags {id x xt y1} {
- 	set t [$canv create text $xl $y1 -anchor w -text $tag -fill $headfgcolor \
- 		   -font $font -tags [list tag.$id text]]
- 	if {$ntags >= 0} {
--	    $canv bind $t <1> [list showtag $tag_quoted 1]
-+	    $canv bind $t <1> $tagclick
- 	} elseif {$nheads >= 0} {
- 	    $canv bind $t $ctxbut [list headmenu %X %Y $id $tag_quoted]
- 	}
-@@ -10878,6 +10920,23 @@ proc listrefs {id} {
-     return [list $x $y $z]
- }
- 
-+proc add_tag_ctext {tag} {
-+    global ctext cached_tagcontent tagids
-+
-+    if {![info exists cached_tagcontent($tag)]} {
-+	catch {
-+	    set cached_tagcontent($tag) [exec git cat-file -p $tag]
-+	}
-+    }
-+    $ctext insert end "[mc "Tag"]: $tag\n" bold
-+    if {[info exists cached_tagcontent($tag)]} {
-+	set text $cached_tagcontent($tag)
-+    } else {
-+	set text "[mc "Id"]:  $tagids($tag)"
-+    }
-+    appendwithlinks $text {}
-+}
-+
- proc showtag {tag isnew} {
-     global ctext cached_tagcontent tagids linknum tagobjid
- 
-@@ -10888,17 +10947,28 @@ proc showtag {tag isnew} {
-     clear_ctext
-     settabs 0
-     set linknum 0
--    if {![info exists cached_tagcontent($tag)]} {
--	catch {
--           set cached_tagcontent($tag) [exec git cat-file -p $tag]
--	}
-+    add_tag_ctext $tag
-+    maybe_scroll_ctext 1
-+    $ctext conf -state disabled
-+    init_flist {}
-+}
-+
-+proc showtags {id isnew} {
-+    global idtags ctext linknum
-+
-+    if {$isnew} {
-+	addtohistory [list showtags $id 0] savectextpos
-     }
--    if {[info exists cached_tagcontent($tag)]} {
--	set text $cached_tagcontent($tag)
--    } else {
--	set text "[mc "Tag"]: $tag\n[mc "Id"]:  $tagids($tag)"
-+    $ctext conf -state normal
-+    clear_ctext
-+    settabs 0
-+    set linknum 0
-+    set sep {}
-+    foreach tag $idtags($id) {
-+	$ctext insert end $sep
-+	add_tag_ctext $tag
-+	set sep "\n\n"
-     }
--    appendwithlinks $text {}
-     maybe_scroll_ctext 1
-     $ctext conf -state disabled
-     init_flist {}
 -- 
-1.8.4.rc3
+1.8.4.2+fc1
