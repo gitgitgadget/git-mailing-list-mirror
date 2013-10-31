@@ -1,84 +1,70 @@
-From: Eugene Sajine <euguess@gmail.com>
-Subject: Re: Help creating git alias
-Date: Thu, 31 Oct 2013 15:31:08 -0400
-Message-ID: <CAPZPVFYWf3_xtxKkdw4_gzqKagVsbNvj73cb=RvX1Zm0C1h8pQ@mail.gmail.com>
-References: <CAPZPVFbiSx8n0W1kcczCdC6ioVuWpwuUQ_pc9T=7i4X_FuZNhg@mail.gmail.com>
-	<CAN0XMOKMF235S-23QcMj5cBup+Lh4vQs7QcOqXQ-MgafsAMKNg@mail.gmail.com>
-	<CAPZPVFZ9WujUCQ1O9VfV83XUu_6g7Vp_MmYRCCO+GptOoSyvcg@mail.gmail.com>
-	<xmqq61sebhh3.fsf@gitster.dls.corp.google.com>
-	<CAPZPVFarK_jKpM2f62mErAmL+mck6EN1QPfHDHqqfJbJ2AfzXg@mail.gmail.com>
-	<xmqqk3gu9jst.fsf@gitster.dls.corp.google.com>
-	<CAPZPVFYFSBRHThO08LmuN_0fc55gYX-A+Y3=yA_MESko1t6fXQ@mail.gmail.com>
-	<20131031174008.GA39079@gmail.com>
-	<xmqqd2ml8gbs.fsf@gitster.dls.corp.google.com>
-	<20131031181509.GB39079@gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH 06/16] shortlog: add missing declaration
+Date: Thu, 31 Oct 2013 13:33:34 -0600
+Message-ID: <CAMP44s2zTFKeHxp0G1imLXdHfzao_DSY+mkm7awYedwYafFZ+w@mail.gmail.com>
+References: <1383211547-9145-1-git-send-email-felipe.contreras@gmail.com>
+	<1383211547-9145-7-git-send-email-felipe.contreras@gmail.com>
+	<xmqqk3gt5kht.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Ralf Thielow <ralf.thielow@gmail.com>,
-	git <git@vger.kernel.org>,
-	Andrew Ardill <andrew.ardill@gmail.com>
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 31 20:31:16 2013
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Oct 31 20:33:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vbxxb-0005bT-Dt
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Oct 2013 20:31:15 +0100
+	id 1Vbxzv-0006sV-Op
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Oct 2013 20:33:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752249Ab3JaTbL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Oct 2013 15:31:11 -0400
-Received: from mail-wg0-f44.google.com ([74.125.82.44]:58521 "EHLO
-	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751583Ab3JaTbK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Oct 2013 15:31:10 -0400
-Received: by mail-wg0-f44.google.com with SMTP id n12so3207146wgh.35
-        for <git@vger.kernel.org>; Thu, 31 Oct 2013 12:31:08 -0700 (PDT)
+	id S1752984Ab3JaTdg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Oct 2013 15:33:36 -0400
+Received: from mail-lb0-f177.google.com ([209.85.217.177]:61792 "EHLO
+	mail-lb0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752303Ab3JaTdf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Oct 2013 15:33:35 -0400
+Received: by mail-lb0-f177.google.com with SMTP id u14so2742944lbd.22
+        for <git@vger.kernel.org>; Thu, 31 Oct 2013 12:33:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=q3yTKpY8FpjHj+Rf/cX4u+t/3VGuaRfhpuntUvSy/lE=;
-        b=n6yyidDdq8X+hzc56aiZ0v2alI1ALA5L+Lf4vQmRFKpZXGZ45zcgRS59R63VoGczHw
-         V491HxmBAyN6UugUbijtMIDeJc3nPep9w5Bzrd9TASfxMCwq5f5x7URnhwDp8X6H6Woj
-         yQImu9nQXvw7awzNA55C0JxV0pJrTdBJsvp8A3bir02YxlVgzZAEW99lZubDnZC//GYJ
-         ssjXguz90jnhsgOubcqo4WDGvwdcUE8v+XfETGthvhaq1kayxQ6lWyuUHe1Nii7liq5V
-         LfRRQ2fliTIg+Lp6mYgvOBmRPNKtPLx6BS/rOfNK77HIW69HIEAiucmDJvOSqAOEMDTV
-         wkdA==
-X-Received: by 10.194.8.137 with SMTP id r9mr3338394wja.78.1383247868783; Thu,
- 31 Oct 2013 12:31:08 -0700 (PDT)
-Received: by 10.216.123.145 with HTTP; Thu, 31 Oct 2013 12:31:08 -0700 (PDT)
-In-Reply-To: <20131031181509.GB39079@gmail.com>
+        bh=tJU0K7CCZ7FuwTsPRNBfRA9jGBwuR6Ns3gM5QRcB6jc=;
+        b=sYuQ3YnKGJanCjJ1vQeEZlfc6FfED/QmGE6beKsg2RPyu0LSLlZ+ushTAUFfWOosDb
+         tpw6fBktH65dJWjKMXuV4Fo/Fz1im+X7nDbstEY4YjwNByZZuMsCS85NAVPfZKmN5kUu
+         D9fp4uKW9b/MxwhCyEu5sjLg4e5P5mEf5opKMNvhhCPrrMpHJ/RdwXC+nvyomsiUeNFm
+         tt7BLQy4QiahwYJ+vObeG/UpdhUpMLBgGukNpJV8awxd+6nWMAtlneKX8gkBBg0zAPUU
+         FC703zU33vJCnVP378BCH/pjVPBD+36Kknw97vt3HJitFHRVu9T0q6pkd120aF/taTlm
+         YsQA==
+X-Received: by 10.112.12.234 with SMTP id b10mr582687lbc.56.1383248014191;
+ Thu, 31 Oct 2013 12:33:34 -0700 (PDT)
+Received: by 10.114.201.69 with HTTP; Thu, 31 Oct 2013 12:33:34 -0700 (PDT)
+In-Reply-To: <xmqqk3gt5kht.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237164>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237165>
 
-On Thu, Oct 31, 2013 at 2:15 PM, David Aguilar <davvid@gmail.com> wrote:
-> On Thu, Oct 31, 2013 at 11:07:19AM -0700, Junio C Hamano wrote:
->> David Aguilar <davvid@gmail.com> writes:
->>
->> > A-ha.. I think adding the chdir to alias is possible using a function.
->>
->> You do not have to use a function to do so, no?
+On Thu, Oct 31, 2013 at 1:05 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
 >
-> Right, of course.
+>> Otherwise we would have to include commit.h.
 >
-> So something like:
->
-> [alias]
->         example = "!cd ${GIT_PREFIX:-.} && git log \"$@\""
->
-> should do the trick.
-> --
-> David
+> Was there a reason why commit.h is not included here, just like
+> revision.h would include diff.h, so that users of shortlog.h do not
+> have to worry about including commit.h themselves?
 
+Because you can't do:
 
-Awesome! It does work!
-One note: i tried the ${GIT_PREFIX:-.}  and ${GIT_PREFIX} and it seems
-to give the same results. What is the expected difference here?
+struct diff_options;
+struct diff_options diffopt;
 
-Thank you!
+The storage size is not known, but you can do:
+
+struct diff_options;
+struct diff_options *diffopt;
+
+-- 
+Felipe Contreras
