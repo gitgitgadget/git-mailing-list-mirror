@@ -1,91 +1,111 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Help creating git alias
-Date: Wed, 30 Oct 2013 20:54:42 -0700
-Message-ID: <xmqqk3gu9jst.fsf@gitster.dls.corp.google.com>
-References: <CAPZPVFbiSx8n0W1kcczCdC6ioVuWpwuUQ_pc9T=7i4X_FuZNhg@mail.gmail.com>
-	<CAN0XMOKMF235S-23QcMj5cBup+Lh4vQs7QcOqXQ-MgafsAMKNg@mail.gmail.com>
-	<CAPZPVFZ9WujUCQ1O9VfV83XUu_6g7Vp_MmYRCCO+GptOoSyvcg@mail.gmail.com>
-	<xmqq61sebhh3.fsf@gitster.dls.corp.google.com>
-	<CAPZPVFarK_jKpM2f62mErAmL+mck6EN1QPfHDHqqfJbJ2AfzXg@mail.gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH] commit: Add -f, --fixes <commit> option to add Fixes: line
+Date: Thu, 31 Oct 2013 13:28:44 +0700
+Message-ID: <CACsJy8DVSpmmDw-jGJoJK171u5UeJR7GKPuX7QAK4=7yYn6n8Q@mail.gmail.com>
+References: <20131024122255.GI9378@mwanda> <20131024122512.GB9534@mwanda>
+ <20131026181709.GB10488@kroah.com> <20131027013402.GA7146@leaf>
+ <526CA7D4.1070904@alum.mit.edu> <20131027071407.GA11683@leaf>
+ <526E283A.1070801@alum.mit.edu> <CALKQrgfsk3fjyF77XL9+CPyJ_s-AfzkNAj4Eaj1LT-G0Ph=bfg@mail.gmail.com>
+ <20131029020824.GE11861@sigill.intra.peff.net> <CALKQrge8T8R7roUUYyLcu_QnL1afeqTATOp+0n_OOsZZoJXF4Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ralf Thielow <ralf.thielow@gmail.com>, git <git@vger.kernel.org>,
-	Andrew Ardill <andrew.ardill@gmail.com>
-To: Eugene Sajine <euguess@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 31 04:56:00 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>,
+	Josh Triplett <josh@joshtriplett.org>,
+	Git mailing list <git@vger.kernel.org>,
+	Dan Carpenter <dan.carpenter@oracle.com>,
+	Greg KH <greg@kroah.com>,
+	Linux Kernel mailing list <linux-kernel@vger.kernel.org>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Thu Oct 31 07:29:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VbjMW-0003TR-31
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Oct 2013 04:56:00 +0100
+	id 1VbllK-000732-Ax
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Oct 2013 07:29:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751792Ab3JaDz4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Oct 2013 23:55:56 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33488 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751086Ab3JaDzz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Oct 2013 23:55:55 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E08324F5C2;
-	Wed, 30 Oct 2013 23:55:54 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=cQgIm4EiUgWJEV1/DVIzBuluLuM=; b=wqD2or
-	qVSU6a4n+kk3OM2vjFIlPm7Y1U5kLWTmGooI48IYBYQ6+EN93xRk20Sn5Vvz5qsB
-	sB/gIHnitHnCS4B9dyBh/yG1z2nEp4ht/Hu8AFCiIRPvRscu2YMhicSLNhVra9n1
-	4g2d8OSq7whETVJQLJFCifJ5nspFN12nv5jbs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=DyG/T4ontleqJnkD1M4MFkQHhYh84py/
-	3FjvgmHrpzbBtXDRNKlPzH2ipqUvdduN1/DViRFDZIoWaEMDWwUZhEux7i0csUHt
-	USINlazJvuaNg2Fr6+nPkznfwltTEhQFoh5iWAzvirpZ+pFoMoQRTNc7AwcgbD67
-	S903YypkF2E=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CC81C4F5C1;
-	Wed, 30 Oct 2013 23:55:54 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 93B794F5AE;
-	Wed, 30 Oct 2013 23:55:36 -0400 (EDT)
-In-Reply-To: <CAPZPVFarK_jKpM2f62mErAmL+mck6EN1QPfHDHqqfJbJ2AfzXg@mail.gmail.com>
-	(Eugene Sajine's message of "Wed, 30 Oct 2013 21:26:52 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 4F0F6134-41E0-11E3-9393-1FFB7F2839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752284Ab3JaG3Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Oct 2013 02:29:16 -0400
+Received: from mail-qe0-f52.google.com ([209.85.128.52]:47967 "EHLO
+	mail-qe0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750855Ab3JaG3Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Oct 2013 02:29:16 -0400
+Received: by mail-qe0-f52.google.com with SMTP id w7so1493627qeb.11
+        for <multiple recipients>; Wed, 30 Oct 2013 23:29:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=MarZf6fal/vh1d3qaxFyBrUyaNltDhKDyk98o5XoXbo=;
+        b=fLYGVcxDewEDpZjZVMdgmCOCM4nvSfBuW2etxZhKChMRg2VGVmCF9/b/lNceLUOnOq
+         SexVbtvjFFk4Td0ay2O5a+Y8HKj77Cto4TkME7ODEUn2bA1j3CCGcVUmfw76HhTz9u+8
+         +Bxh8sN8+kDXa86Kkla9xwVO0FUwqVm+/8hdeyhx0GtTUKQTRUxSo+BLzaFYAzWZ8T4z
+         9WWdUJKwo9EOswE7xhKu9NLfWvy/Z2ExYKbssTvMEFtGGChzHQXbcoZEB7eLY/qerBdP
+         EPivUq8B7gYvdl7WSk2cYLeDRgFe8k+LJ++HjxIogxst+PJyjK6+tSSpx8x4vSAFBs+t
+         bU4w==
+X-Received: by 10.49.71.207 with SMTP id x15mr1794738qeu.49.1383200955037;
+ Wed, 30 Oct 2013 23:29:15 -0700 (PDT)
+Received: by 10.96.27.202 with HTTP; Wed, 30 Oct 2013 23:28:44 -0700 (PDT)
+In-Reply-To: <CALKQrge8T8R7roUUYyLcu_QnL1afeqTATOp+0n_OOsZZoJXF4Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237077>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237078>
 
-Eugene Sajine <euguess@gmail.com> writes:
-
-> That was my initial intention, because I would like to be able to pass
-> parameters like to git log or git blame correctly without the explicit
-> use of $1. Could you please advise about how to make it work with the
-> !sh -c ?
+On Thu, Oct 31, 2013 at 1:12 AM, Johan Herland <johan@herland.net> wrote:
+> Yes, we do lack a good infrastructure for managing Git hooks from
+> multiple sources. It makes people afraid to use them, because they
+> might conflict with hooks from another source. There are (off the top
+> of my head):
 >
-> Because the same exact (sed 's/@\\S*//') syntax didn't work with "sh -c".
+>  - "personal" hooks ("I want this behaviour in my repo(s)")
+>  - "project" hooks ("In this project we follow these conventions")
+>  - "system" hooks ("This host runs gitolite (or whatever) which needs
+> these hooks...")
+>  - "default" hooks (Some of the core Git code could have be
+> implemented as hooks (e.g. "--signoff"), but is instead put into core
+> Git)
+>
+> Maybe if we solved that problem, we could actually make use of hooks
+> instead of adding "code" to our git configs (by which I mean config
+> directives that are flexible enough to encode all kinds of semantics
+> and behaviors that are probably better expressed in real code...).
 
-You can make it work if you think step-by-step.  First, this is what
-you want to run:
+OK how about, if $GIT_DIR/hooks/something is a directory, then the
+directory must contain a file named "index", listing all the hooks of
+type "something". All the hooks in "index" will be executed in the
+listing order. There could be directories inside .git/hooks/something
+to help categorize the scripts, so project hooks stay in "project"
+subdirectory and so on.
 
-	sh -c 'git log --format="..." "$@" | sed "s/@\S*//"' -
+With this we could provide "git hook" command to manipulate hooks and
+test out the new combination of hooks. We could even select what
+scripts not to run for a particular run, say you don't want the s-o-b
+hook active when you commit this thing, you could run
 
-so that "git euguess master..next" would turn into
+  git commit --exclude-hooks=pre-commit-msg/s-o-b
 
-	sh -c 'git log --format="..." "$@" | sed "s/@\S*//"' - master..next
+You could exclude hooks by pattern as well
 
-Now, you want to wrap it into an alias, i.e.
+  git commit --exclude-hooks="pre-commit-msg/projects/*"
 
-	[alias]
-        	euguess = "!sh -c ..."
+Or run an unsinstalled hook just one time
 
-That ... part is read by our configuration reader, so you need to
-quote the double quotes and backslashes with backslash, which would
-give you something like:
+  git commit --include-hooks=/path/to/my/hook
 
-	[alias]
-		euguess = "!sh -c 'git log --format=\"%h %ae %s\" --date=short \"$@\" | sed \"s/@\\S*//\"' -"
+Hooks like "Fixes" may need input from the user. The hook could bail
+out if the required input is not given. But it maybe a good idea for
+git to check and reject before running hooks, if the input is not
+specified (e.g. from command line). I guess those extra info has to be
+in .git/config and be added to .git/config by "git hook" command,
+unless we have some convention to express those without running the hook.
+
+For old Git versions that does not support this scheme, as directories
+usually have u+x, the hook directory should be mistaken as an
+executable and rejected when executed (permission denied in my test),
+which gives user a good warning that this repo should not be used with
+this git version.
+-- 
+Duy
