@@ -1,535 +1,322 @@
 From: Stefan Beller <stefanbeller@googlemail.com>
-Subject: [PATCH] Documentation: add a script to generate a (long/short) options overview
-Date: Fri,  1 Nov 2013 00:04:42 +0100
-Message-ID: <1383260682-12364-1-git-send-email-stefanbeller@googlemail.com>
-References: <5272E1B9.6000705@googlemail.com>
-Cc: Stefan Beller <stefanbeller@googlemail.com>
-To: tr@thomasrast.ch, mhagger@alum.mit.edu, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 01 00:04:37 2013
+Subject: Re: [PATCH] Documentation: add a script to generate a (long/short)
+ options overview
+Date: Fri, 01 Nov 2013 00:09:10 +0100
+Message-ID: <5272E316.5090108@googlemail.com>
+References: <5272E1B9.6000705@googlemail.com> <1383260682-12364-1-git-send-email-stefanbeller@googlemail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: Stefan Beller <stefanbeller@googlemail.com>, tr@thomasrast.ch,
+	mhagger@alum.mit.edu, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 01 00:09:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vc1I4-0000xA-KM
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Nov 2013 00:04:37 +0100
+	id 1Vc1Ma-0002dh-P1
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Nov 2013 00:09:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753171Ab3JaXEd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Oct 2013 19:04:33 -0400
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:49153 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751694Ab3JaXEc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Oct 2013 19:04:32 -0400
-Received: by mail-ee0-f46.google.com with SMTP id c1so1686227eek.5
-        for <git@vger.kernel.org>; Thu, 31 Oct 2013 16:04:31 -0700 (PDT)
+	id S1752065Ab3JaXJA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Oct 2013 19:09:00 -0400
+Received: from mail-ea0-f177.google.com ([209.85.215.177]:52265 "EHLO
+	mail-ea0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750865Ab3JaXI7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Oct 2013 19:08:59 -0400
+Received: by mail-ea0-f177.google.com with SMTP id f15so1720463eak.22
+        for <git@vger.kernel.org>; Thu, 31 Oct 2013 16:08:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlemail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=/XbMGCOBk4EshJKYdCdYwsk054ocAER/i4ZePZtV15Q=;
-        b=ZrRh4vNJPAct32UvGLlDDNRA9UD9kFsq3KwEMsws7qvZ7zaxIh/+fNN3FVNPJJ8Iri
-         IPmqKKSN2oqi0zD7LwkEq/w2W31zulvD3/ocDxysVyvdRckDo+z30yZGkWSdrVW9a3V6
-         Kc2JDzeBCztqlmCHOhJ+omar2MPgljTVp2NBzVxcUbL03G0wsauObJEEEGsF4+xqBgYD
-         jKrZf6pL6tYCvAhbvpMliCYEUiPu0bEqAem5XpRESV1bt5dPxEF/hhcyu+5tC8SB/xyT
-         9JKe+r/1kv2VrzhwT5ktaWMIs0WY4htYc+LtsWbHX8Ozhk9lhjf9OtnPZfgFm/dTWuZX
-         bdrw==
-X-Received: by 10.14.104.5 with SMTP id h5mr99767eeg.58.1383260671021;
-        Thu, 31 Oct 2013 16:04:31 -0700 (PDT)
-Received: from localhost (ip-109-91-109-128.unitymediagroup.de. [109.91.109.128])
-        by mx.google.com with ESMTPSA id d7sm141500eem.8.2013.10.31.16.04.29
+        h=message-id:date:from:user-agent:mime-version:to:subject:references
+         :in-reply-to:content-type:content-transfer-encoding;
+        bh=mrSDQrCsZfXR/ZII4D4fHRRPV2iJE+XgEdVr/cUtW80=;
+        b=PkuauELbQTCEbe2vyTyffTRN9KLXrmAfW/8WzSFPqZjS8VERvRLkeH5T4kP+w4lWaD
+         HbHz1/bB/Uexb/kNC7conUsExoNLyxShlKG/RfNSZ9A07eb9QX1FmdBbf2c7gUKrigU5
+         +o4LzkVrv41EAJw9Th49fOiCi+cY0QLsnlyZvrQqZzULvTXJD3VFJYovLHi38MGcqJdD
+         Jy93p2evujj53L8licK6EMUiIAhHmfGFl0wX2yvYkulW6gRrZTVFy5OuPaSFFI2Q+7IL
+         d6Yp2+2fCFFSO3CCrJbWdDbmcHpMv40nUbKuL51lSLOPvCJQWJbBJ721RAkvLykbPVvW
+         YqjQ==
+X-Received: by 10.15.52.5 with SMTP id o5mr101574eew.127.1383260938165;
+        Thu, 31 Oct 2013 16:08:58 -0700 (PDT)
+Received: from [192.168.1.3] (ip-109-91-109-128.unitymediagroup.de. [109.91.109.128])
+        by mx.google.com with ESMTPSA id u46sm108444eep.17.2013.10.31.16.08.55
         for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 31 Oct 2013 16:04:30 -0700 (PDT)
-X-Mailer: git-send-email 1.8.4.1.605.g23c6912
-In-Reply-To: <5272E1B9.6000705@googlemail.com>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 31 Oct 2013 16:08:57 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.0
+In-Reply-To: <1383260682-12364-1-git-send-email-stefanbeller@googlemail.com>
+X-Enigmail-Version: 1.5.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237192>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237193>
 
-Recently a discussion started on the mailing list, which short option
-shall be best for a long option. (-f being always --force and therefore
-should not be reassigned another meaning in one particular command)
-See http://www.mail-archive.com/git@vger.kernel.org/msg38456.html
+On 11/01/2013 12:04 AM, Stefan Beller wrote:
+> Recently a discussion started on the mailing list, which short option
+> shall be best for a long option. (-f being always --force and therefore
+> should not be reassigned another meaning in one particular command)
+> See http://www.mail-archive.com/git@vger.kernel.org/msg38456.html
+> 
+> For discussions as these we need a script to easily generate an
+> overview of all available one letter options, and their long option
+> equivalents.
+> 
+> As the list of options was not retrieved fully automated,
+> there might be minor errors or missing items.
+> 
+> Signed-off-by: Stefan Beller <stefanbeller@googlemail.com>
+> ---
+>  Documentation/generateShortOptions.py | 460 ++++++++++++++++++++++++++++++++++
+>  1 file changed, 460 insertions(+)
+>  create mode 100644 Documentation/generateShortOptions.py
+> 
 
-For discussions as these we need a script to easily generate an
-overview of all available one letter options, and their long option
-equivalents.
+When trying to send a follow-up patch with the table itself, I got:
+fatal: /tmp/wHpJlnf1r5/0002-Documentation-add-table-viewing-short-long-options-f.patch: 19: patch contains a line longer than 998 characters
+warning: no patches were sent
 
-As the list of options was not retrieved fully automated,
-there might be minor errors or missing items.
+Is this an artifical limitation or something that actually makes sense?
+
+Anyway here is the table, updated to carry more commands and sorted:
+
+>From 7d2ba0af3500f1629783dfc80aafe218dee8618c Mon Sep 17 00:00:00 2001
+From: Stefan Beller <stefanbeller@googlemail.com>
+Date: Fri, 1 Nov 2013 00:01:21 +0100
+Subject: [PATCH 2/2] Documentation: add table viewing (short/long) options for
+ all commands
 
 Signed-off-by: Stefan Beller <stefanbeller@googlemail.com>
 ---
- Documentation/generateShortOptions.py | 460 ++++++++++++++++++++++++++++++++++
- 1 file changed, 460 insertions(+)
- create mode 100644 Documentation/generateShortOptions.py
+ Documentation/ShortOptions.txt | 73 ++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 73 insertions(+)
+ create mode 100644 Documentation/ShortOptions.txt
 
-diff --git a/Documentation/generateShortOptions.py b/Documentation/generateShortOptions.py
+diff --git a/Documentation/ShortOptions.txt b/Documentation/ShortOptions.txt
 new file mode 100644
-index 0000000..1d326f9
+index 0000000..dd76512
 --- /dev/null
-+++ b/Documentation/generateShortOptions.py
-@@ -0,0 +1,460 @@
-+#!/usr/bin/python
-+# This script generates a table, which should help you getting a
-+# better overview of the existing long and short options of the
-+# various git commands. This script actually is only suited for
-+# generating the table itself, as the collection of the options of
-+# the git commands needs to be done manually.
-+# For the majority of commands, which are written in C, a small patch
-+# such as the following helps to extract the relevant cases for this
-+# script. However you still need to go through the shell commands
-+# manually.
-+# diff --git a/parse-options.c b/parse-options.c
-+# index 62e9b1c..b356ca9 100644
-+# --- a/parse-options.c
-+# +++ b/parse-options.c
-+# @@ -500,6 +500,12 @@ int parse_options(int argc, const char **argv, const char *prefix,
-+#  {
-+#  	struct parse_opt_ctx_t ctx;
-+#
-+# +	for (; options->type != OPTION_END; options++) {
-+# +		if (options->long_name && options->short_name)
-+# +			printf("%s,  %c, %s\n", argv[0], options->short_name, options->long_name);
-+# +	}
-+# +	exit(1);
-+# +
-+#  	parse_options_start(&ctx, argc, argv, prefix, options, flags);
-+#  	switch (parse_options_step(&ctx, options, usagestr)) {
-+#  	case PARSE_OPT_HELP:
-+# --
-+
-+
-+# Command, short option, long option
-+cmd_results="""add,  n, dry-run
-+add,  v, verbose
-+add,  i, interactive
-+add,  p, patch
-+add,  e, edit
-+add,  f, force
-+add,  u, update
-+add,  N, intent-to-add
-+add,  A, all
-+
-+am, i, interactive
-+am, 3, 3way
-+am, q, quiet
-+am, s, signoff
-+am, u, utf8
-+am, k, keep
-+
-+annotate, p, porcelain
-+
-+apply,  3, 3way
-+apply,  R, reverse
-+apply,  v, verbose
-+
-+archive,  o, output
-+
-+blame, p, porcelain
-+blame, f, show-name
-+blame, n, show-number
-+blame, e, show-email
-+
-+branch,  v, verbose
-+branch,  q, quiet
-+branch,  t, track
-+branch,  u, set-upstream-to
-+branch,  r, remotes
-+branch,  a, all
-+branch,  d, delete
-+branch,  m, move
-+branch,  l, create-reflog
-+branch,  f, force
-+
-+check-attr,  a, all
-+
-+check-ignore,  q, quiet
-+check-ignore,  v, verbose
-+check-ignore,  n, non-matching
-+
-+checkout,  q, quiet
-+checkout,  t, track
-+checkout,  2, ours
-+checkout,  3, theirs
-+checkout,  f, force
-+checkout,  m, merge
-+checkout,  p, patch
-+
-+checkout-index,  a, all
-+checkout-index,  f, force
-+checkout-index,  q, quiet
-+checkout-index,  n, no-create
-+checkout-index,  u, index
-+
-+cherry,  v, verbose
-+
-+cherry-pick,  n, no-commit
-+cherry-pick,  e, edit
-+cherry-pick,  s, signoff
-+cherry-pick,  m, mainline
-+cherry-pick,  X, strategy-option
-+
-+clean,  q, quiet
-+clean,  n, dry-run
-+clean,  f, force
-+clean,  i, interactive
-+clean,  e, exclude
-+
-+clone,  v, verbose
-+clone,  q, quiet
-+clone,  n, no-checkout
-+clone,  l, local
-+clone,  s, shared
-+clone,  o, origin
-+clone,  b, branch
-+clone,  u, upload-pack
-+clone,  c, config
-+
-+commit,  q, quiet
-+commit,  v, verbose
-+commit,  F, file
-+commit,  m, message
-+commit,  c, reedit-message
-+commit,  C, reuse-message
-+commit,  s, signoff
-+commit,  t, template
-+commit,  e, edit
-+commit,  S, gpg-sign
-+commit,  a, all
-+commit,  i, include
-+commit,  p, patch
-+commit,  o, only
-+commit,  n, no-verify
-+commit,  z, null
-+commit,  u, untracked-files
-+
-+config,  f, file
-+config,  l, list
-+config,  e, edit
-+config,  z, null
-+
-+count-objects,  v, verbose
-+count-objects,  H, human-readable
-+
-+diff, u, patch
-+diff, p, patch
-+diff, U, unified
-+diff, B, break-rewrites
-+diff, M, find-renames
-+diff, C, find-copies
-+diff, D, irreversible-delete
-+diff, a, text
-+diff, b, ignore-space-change
-+diff, w, ignore-all-space
-+diff, W, function-context
-+
-+diff-files, u, patch
-+diff-files, p, patch
-+diff-files, U, unified
-+diff-files, B, break-rewrites
-+diff-files, M, find-renames
-+diff-files, C, find-copies
-+diff-files, D, irreversible-delete
-+diff-files, a, text
-+diff-files, b, ignore-space-change
-+diff-files, w, ignore-all-space
-+diff-files, W, function-context
-+diff-files, c, cc
-+# diff-index and diff-tree similar, to be done
-+
-+fetch,  v, verbose
-+fetch,  q, quiet
-+fetch,  a, append
-+fetch,  f, force
-+fetch,  m, multiple
-+fetch,  t, tags
-+fetch,  p, prune
-+fetch,  k, keep
-+fetch,  u, update-head-ok
-+
-+filter-branch, f, force
-+
-+fmt-merge-msg,  m, message
-+fmt-merge-msg,  F, file
-+
-+for-each-ref,  s, shell
-+for-each-ref,  p, perl
-+
-+format-patch,  n, numbered
-+format-patch,  N, no-numbered
-+format-patch,  s, signoff
-+format-patch,  v, reroll-count
-+format-patch,  o, output-directory
-+format-patch,  k, keep-subject
-+format-patch,  p, no-stat
-+format-patch,  q, quiet
-+
-+fsck,  v, verbose
-+
-+fsck-objects,  v, verbose
-+
-+gc,  q, quiet
-+
-+grep,  v, invert-match
-+grep,  i, ignore-case
-+grep,  w, word-regexp
-+grep,  a, text
-+grep,  E, extended-regexp
-+grep,  G, basic-regexp
-+grep,  F, fixed-strings
-+grep,  P, perl-regexp
-+grep,  n, line-number
-+grep,  l, files-with-matches
-+grep,  L, files-without-match
-+grep,  z, null
-+grep,  c, count
-+grep,  C, context
-+grep,  B, before-context
-+grep,  A, after-context
-+grep,  p, show-function
-+grep,  W, function-context
-+grep,  q, quiet
-+grep,  O, open-files-in-pager
-+
-+help,  a, all
-+help,  g, guides
-+help,  m, man
-+help,  w, web
-+help,  i, info
-+
-+init,  q, quiet
-+
-+init-db,  q, quiet
-+
-+insta-web, l, local
-+insta-web, d, httpd
-+insta-web, m, module-path
-+insta-web, p, port
-+insta-web, b, browser
-+
-+log,  q, quiet
-+
-+ls-files,  c, cached
-+ls-files,  d, deleted
-+ls-files,  m, modified
-+ls-files,  o, others
-+ls-files,  i, ignored
-+ls-files,  s, stage
-+ls-files,  k, killed
-+ls-files,  u, unmerged
-+ls-files,  x, exclude
-+ls-files,  X, exclude-from
-+
-+ls-tree,  l, long
-+
-+ls-remotes, h, heads
-+ls-remotes, t, tags
-+ls-remotes, u, upload-pack
-+
-+merge,  e, edit
-+merge,  s, strategy
-+merge,  X, strategy-option
-+merge,  m, message
-+merge,  n, no-stat
-+merge,  v, verbose
-+merge,  q, quiet
-+merge,  S, gpg-sign
-+merge,  s, strategy
-+merge,  X, strategy-option
-+
-+merge-base,  a, all
-+
-+merge-file,  p, stdout
-+merge-file,  q, quiet
-+
-+mv,  v, verbose
-+mv,  n, dry-run
-+mv,  f, force
-+
-+pack-objects,  q, quiet
-+
-+prune,  n, dry-run
-+prune,  v, verbose
-+
-+prune-packed,  n, dry-run
-+prune-packed,  q, quiet
-+
-+pull, a, append
-+pull, f, force
-+pull, k, keep
-+pull, u, update-head-ok
-+pull, n, no-stat
-+pull, q, quiet
-+pull, v, verbose
-+pull, r, rebase
-+pull,  s, strategy
-+pull,  X, strategy-option
-+
-+push,  v, verbose
-+push,  q, quiet
-+push,  n, dry-run
-+push,  f, force
-+push,  u, set-upstream
-+
-+quilt-import, n, dry-run
-+
-+rebase, f, force-rebase
-+rebase, i, interactive
-+rebase, p, preserve-merges
-+rebase, m, merge
-+rebase, n, no-stat
-+rebase, v, verbose
-+rebase, r, rebase
-+rebase,  s, strategy
-+rebase,  X, strategy-option
-+rebase, x, exec
-+
-+read-tree,  v, verbose
-+read-tree,  n, dry-run
-+
-+reflog,  q, quiet
-+
-+rev-list, n, max-count
-+rev-list, i, regexp-ignore-case
-+rev-list, E, extended-regexp
-+rev-list, F, fixed-strings
-+rev-list, g, walk-reflogs
-+
-+remote,  v, verbose
-+
-+repack,  q, quiet
-+repack,  l, local
-+
-+replace,  l, list
-+replace,  d, delete
-+replace,  f, force
-+
-+reset,  q, quiet
-+reset,  p, patch
-+
-+revert,  n, no-commit
-+revert,  e, edit
-+revert,  s, signoff
-+revert,  m, mainline
-+revert,  X, strategy-option
-+
-+rm,  n, dry-run
-+rm,  q, quiet
-+rm,  f, force
-+
-+show,  q, quiet
-+
-+show-branch,  a, all
-+show-branch,  r, remotes
-+show-branch,  g, reflog
-+
-+show-ref,  d, dereference
-+show-ref,  s, hash
-+show-ref,  q, quiet
-+
-+shortlog, n, numbered
-+shortlog, s, summary
-+shortlog, e, email
-+
-+stash, p, patch
-+stash, u, include-untracked
-+stash, a, all
-+stash, q, quiet
-+
-+stage,  n, dry-run
-+stage,  v, verbose
-+stage,  i, interactive
-+stage,  p, patch
-+stage,  e, edit
-+stage,  f, force
-+stage,  u, update
-+stage,  N, intent-to-add
-+stage,  A, all
-+
-+status,  v, verbose
-+status,  s, short
-+status,  b, branch
-+status,  z, null
-+status,  u, untracked-files
-+
-+stripspace, s, strip-comments
-+stripspace, c, comment-lines
-+
-+submodule, q, quiet
-+submodule, b, branch
-+submodule, f, force
-+submodule, n, summary-limit
-+submodule, N, no-fetch
-+
-+symbolic-ref,  q, quiet
-+symbolic-ref,  d, delete
-+
-+tag,  l, list
-+tag,  d, delete
-+tag,  v, verify
-+tag,  a, annotate
-+tag,  m, message
-+tag,  F, file
-+tag,  s, sign
-+tag,  u, local-user
-+tag,  f, force
-+
-+update-server-info,  f, force
-+
-+verify-pack,  v, verbose
-+verify-pack,  s, stat-only
-+
-+verify-tag,  v, verbose
-+
-+whatchanged,  q, quiet"""
-+
-+import subprocess
-+
-+column_len = {}
-+column_count = {}
-+cmdoptions={}
-+
-+for line in cmd_results.split("\n"):
-+	if not len(line) or line.startswith('#'):
-+		continue
-+	name, short, long = line.split(",")
-+
-+	if not short in column_len:
-+		column_len[short] = len(long)
-+		column_count[short] = 0
-+	column_len[short] = max(column_len[short], len(long))
-+	column_count[short] += 1
-+
-+	if not name in cmdoptions:
-+		cmdoptions[name] = {}
-+	cmdoptions[name][short] = long
-+
-+longest_cmd = 0
-+for cmd in cmdoptions:
-+	longest_cmd = max(longest_cmd, len(cmd))
-+
-+print " "*(longest_cmd-len("Name\\short")), "Name\\short",
-+
-+# let's sort the columns in a way, we can see most of the options on the left hand side
-+columns = []
-+for key, value in sorted(column_count.iteritems(), key=lambda (k,v): (-v,k)):
-+	columns += [key]
-+
-+# print head line
-+for short in columns:
-+	print "|" + " "*(1+column_len[short]-len(short)) + short,
-+print
-+
-+# print line for each command
-+for cmd in sorted(cmdoptions):
-+	print " "*(longest_cmd-len(cmd)), cmd,
-+	for short in columns:
-+		s = ""
-+		if short in cmdoptions[cmd]:
-+			s = cmdoptions[cmd][short]
-+		print "|" + " "*(1+column_len[short]-len(s)) + s,
-+	print "  ", cmd
++++ b/Documentation/ShortOptions.txt
+@@ -0,0 +1,73 @@
++         Name\short |      q |             v |             n |          s |      f |         m |                u |         a |              p |        e |                   l |                X |            i |              n |                p |            d |                  u |                 o |             f |              F |               c |         t |     z |       a |                    b |      q |              A |              N |             k |                   i |               s |       3 |              C |         S |       b |       g |        r |            w |               B |            C |                    D |             M |        U |                 W |              c |           e |     k |            m |       r |        v |                 w |     2 |  
+              B |                E |             G |               H |                    L |                    O |            P |        R |                 W |        x |     3 |                E |
+              F |         N |      d |             g |      h |      l |     t |     x
++                add |        |       verbose |       dry-run |            |  force |           |           update |           |          patch |     edit |                     |                  |  interactive |                |                  |              |                    |                   |               |                |                 |           |       |         |                      |        |            all |  intent-to-add |               |                     |                 |         |                |           |         |         |          |              |                 |              |                      |               |          |                   |                |             |       |              |         |          |                   |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |                  |
+                |           |        |               |        |        |       |          add
++                 am |        |               |               |            |        |           |                  |           |                |          |                     |                  |              |                |                  |              |               utf8 |                   |               |                |                 |           |       |         |                      |  quiet |                |                |               |         interactive |         signoff |         |                |           |         |         |          |              |                 |              |                      |               |          |                   |                |             |  keep |              |         |          |                   |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |  3way |                  |
+                |           |        |               |        |        |       |          am
++           annotate |        |               |               |            |        |           |                  |           |                |          |                     |                  |              |                |        porcelain |              |                    |                   |               |                |                 |           |       |         |                      |        |                |                |               |                     |                 |         |                |           |         |         |          |              |                 |              |                      |               |          |                   |                |             |       |              |         |          |                   |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |                  |
+                |           |        |               |        |        |       |          annotate
++              apply |        |       verbose |               |            |        |           |                  |           |                |          |                     |                  |              |                |                  |              |                    |                   |               |                |                 |           |       |         |                      |        |                |                |               |                     |                 |    3way |                |           |         |         |          |              |                 |              |                      |               |          |                   |                |             |       |              |         |          |                   |       |  
+                |                  |               |                 |                      |                      |              |  reverse |                   |          |       |                  |
+                |           |        |               |        |        |       |          apply
++            archive |        |               |               |            |        |           |                  |           |                |          |                     |                  |              |                |                  |              |                    |            output |               |                |                 |           |       |         |                      |        |                |                |               |                     |                 |         |                |           |         |         |          |              |                 |              |                      |               |          |                   |                |             |       |              |         |          |                   |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |                  |
+                |           |        |               |        |        |       |          archive
++              blame |        |               |               |            |        |           |                  |           |                |          |                     |                  |              |    show-number |        porcelain |              |                    |                   |     show-name |                |                 |           |       |         |                      |        |                |                |               |                     |                 |         |                |           |         |         |          |              |                 |              |                      |               |          |                   |                |  show-email |       |              |         |          |                   |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |                  |
+                |           |        |               |        |        |       |          blame
++             branch |  quiet |       verbose |               |            |  force |      move |  set-upstream-to |       all |                |          |       create-reflog |                  |              |                |                  |       delete |                    |                   |               |                |                 |     track |       |         |                      |        |                |                |               |                     |                 |         |                |           |         |         |  remotes |              |                 |              |                      |               |          |                   |                |             |       |              |         |          |                   |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |                  |
+                |           |        |               |        |        |       |          branch
++         check-attr |        |               |               |            |        |           |                  |       all |                |          |                     |                  |              |                |                  |              |                    |                   |               |                |                 |           |       |         |                      |        |                |                |               |                     |                 |         |                |           |         |         |          |              |                 |              |                      |               |          |                   |                |             |       |              |         |          |                   |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |                  |
+                |           |        |               |        |        |       |          check-attr
++       check-ignore |  quiet |       verbose |  non-matching |            |        |           |                  |           |                |          |                     |                  |              |                |                  |              |                    |                   |               |                |                 |           |       |         |                      |        |                |                |               |                     |                 |         |                |           |         |         |          |              |                 |              |                      |               |          |                   |                |             |       |              |         |          |                   |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |                  |
+                |           |        |               |        |        |       |          check-ignore
++           checkout |  quiet |               |               |            |  force |     merge |                  |           |          patch |          |                     |                  |              |                |                  |              |                    |                   |               |                |                 |     track |       |         |                      |        |                |                |               |                     |                 |  theirs |                |           |         |         |          |              |                 |              |                      |               |          |                   |                |             |       |              |         |          |                   |  ours |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |                  |
+                |           |        |               |        |        |       |          checkout
++     checkout-index |  quiet |               |     no-create |            |  force |           |            index |       all |                |          |                     |                  |              |                |                  |              |                    |                   |               |                |                 |           |       |         |                      |        |                |                |               |                     |                 |         |                |           |         |         |          |              |                 |              |                      |               |          |                   |                |             |       |              |         |          |                   |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |                  |
+                |           |        |               |        |        |       |          checkout-index
++             cherry |        |       verbose |               |            |        |           |                  |           |                |          |                     |                  |              |                |                  |              |                    |                   |               |                |                 |           |       |         |                      |        |                |                |               |                     |                 |         |                |           |         |         |          |              |                 |              |                      |               |          |                   |                |             |       |              |         |          |                   |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |                  |
+                |           |        |               |        |        |       |          cherry
++        cherry-pick |        |               |     no-commit |    signoff |        |  mainline |                  |           |                |     edit |                     |  strategy-option |              |                |                  |              |                    |                   |               |                |                 |           |       |         |                      |        |                |                |               |                     |                 |         |                |           |         |         |          |              |                 |              |                      |               |          |                   |                |             |       |              |         |          |                   |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |                  |
+                |           |        |               |        |        |       |          cherry-pick
++              clean |  quiet |               |       dry-run |            |  force |           |                  |           |                |  exclude |                     |                  |  interactive |                |                  |              |                    |                   |               |                |                 |           |       |         |                      |        |                |                |               |                     |                 |         |                |           |         |         |          |              |                 |              |                      |               |          |                   |                |             |       |              |         |          |                   |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |                  |
+                |           |        |               |        |        |       |          clean
++              clone |  quiet |       verbose |   no-checkout |     shared |        |           |      upload-pack |           |                |          |               local |                  |              |                |                  |              |                    |            origin |               |                |          config |           |       |         |                      |        |                |                |               |                     |                 |         |                |           |  branch |         |          |              |                 |              |                      |               |          |                   |                |             |       |              |         |          |                   |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |                  |
+                |           |        |               |        |        |       |          clone
++             commit |  quiet |       verbose |     no-verify |    signoff |        |   message |  untracked-files |       all |          patch |     edit |                     |                  |      include |                |                  |              |                    |              only |               |           file |  reedit-message |  template |  null |         |                      |        |                |                |               |                     |                 |         |  reuse-message |  gpg-sign |         |         |          |              |                 |              |                      |               |          |                   |                |             |       |              |         |          |                   |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |                  |
+                |           |        |               |        |        |       |          commit
++             config |        |               |               |            |   file |           |                  |           |                |     edit |                list |                  |              |                |                  |              |                    |                   |               |                |                 |           |  null |         |                      |        |                |                |               |                     |                 |         |                |           |         |         |          |              |                 |              |                      |               |          |                   |                |             |       |              |         |          |                   |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |                  |
+                |           |        |               |        |        |       |          config
++      count-objects |        |       verbose |               |            |        |           |                  |           |                |          |                     |                  |              |                |                  |              |                    |                   |               |                |                 |           |       |         |                      |        |                |                |               |                     |                 |         |                |           |         |         |          |              |                 |              |                      |               |          |                   |                |             |       |              |         |          |                   |       |  
+                |                  |               |  human-readable |                      |                      |              |          |                   |          |       |                  |
+                |           |        |               |        |        |       |          count-objects
++               diff |        |               |               |            |        |           |                  |           |                |          |                     |                  |              |                |            patch |              |              patch |                   |               |                |                 |           |       |    text |  ignore-space-change |        |                |                |               |                     |                 |         |                |           |         |         |          |              |  break-rewrites |  find-copies |  irreversible-delete |  find-renames |  unified |  function-context |                |             |       |              |         |          |  ignore-all-space |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |                  |
+                |           |        |               |        |        |       |          diff
++         diff-files |        |               |               |            |        |           |                  |           |                |          |                     |                  |              |                |            patch |              |              patch |                   |               |                |                 |           |       |    text |  ignore-space-change |        |                |                |               |                     |                 |         |                |           |         |         |          |              |  break-rewrites |  find-copies |  irreversible-delete |  find-renames |  unified |  function-context |             cc |             |       |              |         |          |  ignore-all-space |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |                  |
+                |           |        |               |        |        |       |          diff-files
++              fetch |  quiet |       verbose |               |            |  force |  multiple |   update-head-ok |    append |          prune |          |                     |                  |              |                |                  |              |                    |                   |               |                |                 |      tags |       |         |                      |        |                |                |          keep |                     |                 |         |                |           |         |         |          |              |                 |              |                      |               |          |                   |                |             |       |              |         |          |                   |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |                  |
+                |           |        |               |        |        |       |          fetch
++      filter-branch |        |               |               |            |        |           |                  |           |                |          |                     |                  |              |                |                  |              |                    |                   |         force |                |                 |           |       |         |                      |        |                |                |               |                     |                 |         |                |           |         |         |          |              |                 |              |                      |               |          |                   |                |             |       |              |         |          |                   |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |                  |
+                |           |        |               |        |        |       |          filter-branch
++      fmt-merge-msg |        |               |               |            |        |   message |                  |           |                |          |                     |                  |              |                |                  |              |                    |                   |               |           file |                 |           |       |         |                      |        |                |                |               |                     |                 |         |                |           |         |         |          |              |                 |              |                      |               |          |                   |                |             |       |              |         |          |                   |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |                  |
+                |           |        |               |        |        |       |          fmt-merge-msg
++       for-each-ref |        |               |               |      shell |        |           |                  |           |           perl |          |                     |                  |              |                |                  |              |                    |                   |               |                |                 |           |       |         |                      |        |                |                |               |                     |                 |         |                |           |         |         |          |              |                 |              |                      |               |          |                   |                |             |       |              |         |          |                   |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |                  |
+                |           |        |               |        |        |       |          for-each-ref
++       format-patch |  quiet |  reroll-count |      numbered |    signoff |        |           |                  |           |        no-stat |          |                     |                  |              |                |                  |              |                    |  output-directory |               |                |                 |           |       |         |                      |        |                |    no-numbered |  keep-subject |                     |                 |         |                |           |         |         |          |              |                 |              |                      |               |          |                   |                |             |       |              |         |          |                   |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |                  |
+                |           |        |               |        |        |       |          format-patch
++               fsck |        |       verbose |               |            |        |           |                  |           |                |          |                     |                  |              |                |                  |              |                    |                   |               |                |                 |           |       |         |                      |        |                |                |               |                     |                 |         |                |           |         |         |          |              |                 |              |                      |               |          |                   |                |             |       |              |         |          |                   |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |                  |
+                |           |        |               |        |        |       |          fsck
++       fsck-objects |        |       verbose |               |            |        |           |                  |           |                |          |                     |                  |              |                |                  |              |                    |                   |               |                |                 |           |       |         |                      |        |                |                |               |                     |                 |         |                |           |         |         |          |              |                 |              |                      |               |          |                   |                |             |       |              |         |          |                   |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |                  |
+                |           |        |               |        |        |       |          fsck-objects
++                 gc |  quiet |               |               |            |        |           |                  |           |                |          |                     |                  |              |                |                  |              |                    |                   |               |                |                 |           |       |         |                      |        |                |                |               |                     |                 |         |                |           |         |         |          |              |                 |              |                      |               |          |                   |                |             |       |              |         |          |                   |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |                  |
+                |           |        |               |        |        |       |          gc
++               grep |  quiet |  invert-match |   line-number |            |        |           |                  |      text |  show-function |          |  files-with-matches |                  |  ignore-case |                |                  |              |                    |                   |               |  fixed-strings |           count |           |  null |         |                      |        |  after-context |                |               |                     |                 |         |        context |           |         |         |          |  word-regexp |                 |              |                      |               |          |                   |                |             |       |              |         |          |                   |       |  
+ before-context |  extended-regexp |  basic-regexp |                 |  files-without-match |  open-files-in-pager |  perl-regexp |          |  function-context |          |       |                  |
+                |           |        |               |        |        |       |          grep
++               help |        |               |               |            |        |       man |                  |       all |                |          |                     |                  |         info |                |                  |              |                    |                   |               |                |                 |           |       |         |                      |        |                |                |               |                     |                 |         |                |           |         |  guides |          |          web |                 |              |                      |               |          |                   |                |             |       |              |         |          |                   |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |                  |
+                |           |        |               |        |        |       |          help
++               init |  quiet |               |               |            |        |           |                  |           |                |          |                     |                  |              |                |                  |              |                    |                   |               |                |                 |           |       |         |                      |        |                |                |               |                     |                 |         |                |           |         |         |          |              |                 |              |                      |               |          |                   |                |             |       |              |         |          |                   |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |                  |
+                |           |        |               |        |        |       |          init
++            init-db |  quiet |               |               |            |        |           |                  |           |                |          |                     |                  |              |                |                  |              |                    |                   |               |                |                 |           |       |         |                      |        |                |                |               |                     |                 |         |                |           |         |         |          |              |                 |              |                      |               |          |                   |                |             |       |              |         |          |                   |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |                  |
+                |           |        |               |        |        |       |          init-db
++          insta-web |        |               |               |            |        |           |                  |           |                |          |                     |                  |              |                |             port |              |                    |                   |               |                |                 |           |       |         |              browser |        |                |                |               |                     |                 |         |                |           |         |         |          |              |                 |              |                      |               |          |                   |                |             |       |  module-path |         |          |                   |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |                  |
+                |           |  httpd |               |        |  local |       |          insta-web
++                log |  quiet |               |               |            |        |           |                  |           |                |          |                     |                  |              |                |                  |              |                    |                   |               |                |                 |           |       |         |                      |        |                |                |               |                     |                 |         |                |           |         |         |          |              |                 |              |                      |               |          |                   |                |             |       |              |         |          |                   |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |                  |
+                |           |        |               |        |        |       |          log
++           ls-files |        |               |               |      stage |        |  modified |         unmerged |           |                |          |                     |     exclude-from |      ignored |                |                  |      deleted |                    |            others |               |                |          cached |           |       |         |                      |        |                |                |        killed |                     |                 |         |                |           |         |         |          |              |                 |              |                      |               |          |                   |                |             |       |              |         |          |                   |       |  
+                |                  |               |                 |                      |                      |              |          |                   |  exclude |       |                  |
+                |           |        |               |        |        |       |          ls-files
++         ls-remotes |        |               |               |            |        |           |                  |           |                |          |                     |                  |              |                |                  |              |        upload-pack |                   |               |                |                 |           |       |         |                      |        |                |                |               |                     |                 |         |                |           |         |         |          |              |                 |              |                      |               |          |                   |                |             |       |              |         |          |                   |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |                  |
+                |           |        |               |  heads |        |  tags |          ls-remotes
++            ls-tree |        |               |               |            |        |           |                  |           |                |          |                long |                  |              |                |                  |              |                    |                   |               |                |                 |           |       |         |                      |        |                |                |               |                     |                 |         |                |           |         |         |          |              |                 |              |                      |               |          |                   |                |             |       |              |         |          |                   |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |                  |
+                |           |        |               |        |        |       |          ls-tree
++              merge |  quiet |       verbose |       no-stat |   strategy |        |   message |                  |           |                |     edit |                     |  strategy-option |              |                |                  |              |                    |                   |               |                |                 |           |       |         |                      |        |                |                |               |                     |                 |         |                |  gpg-sign |         |         |          |              |                 |              |                      |               |          |                   |                |             |       |              |         |          |                   |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |                  |
+                |           |        |               |        |        |       |          merge
++         merge-base |        |               |               |            |        |           |                  |       all |                |          |                     |                  |              |                |                  |              |                    |                   |               |                |                 |           |       |         |                      |        |                |                |               |                     |                 |         |                |           |         |         |          |              |                 |              |                      |               |          |                   |                |             |       |              |         |          |                   |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |                  |
+                |           |        |               |        |        |       |          merge-base
++         merge-file |  quiet |               |               |            |        |           |                  |           |         stdout |          |                     |                  |              |                |                  |              |                    |                   |               |                |                 |           |       |         |                      |        |                |                |               |                     |                 |         |                |           |         |         |          |              |                 |              |                      |               |          |                   |                |             |       |              |         |          |                   |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |                  |
+                |           |        |               |        |        |       |          merge-file
++                 mv |        |       verbose |       dry-run |            |  force |           |                  |           |                |          |                     |                  |              |                |                  |              |                    |                   |               |                |                 |           |       |         |                      |        |                |                |               |                     |                 |         |                |           |         |         |          |              |                 |              |                      |               |          |                   |                |             |       |              |         |          |                   |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |                  |
+                |           |        |               |        |        |       |          mv
++       pack-objects |  quiet |               |               |            |        |           |                  |           |                |          |                     |                  |              |                |                  |              |                    |                   |               |                |                 |           |       |         |                      |        |                |                |               |                     |                 |         |                |           |         |         |          |              |                 |              |                      |               |          |                   |                |             |       |              |         |          |                   |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |                  |
+                |           |        |               |        |        |       |          pack-objects
++              prune |        |       verbose |       dry-run |            |        |           |                  |           |                |          |                     |                  |              |                |                  |              |                    |                   |               |                |                 |           |       |         |                      |        |                |                |               |                     |                 |         |                |           |         |         |          |              |                 |              |                      |               |          |                   |                |             |       |              |         |          |                   |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |                  |
+                |           |        |               |        |        |       |          prune
++       prune-packed |  quiet |               |       dry-run |            |        |           |                  |           |                |          |                     |                  |              |                |                  |              |                    |                   |               |                |                 |           |       |         |                      |        |                |                |               |                     |                 |         |                |           |         |         |          |              |                 |              |                      |               |          |                   |                |             |       |              |         |          |                   |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |                  |
+                |           |        |               |        |        |       |          prune-packed
++               pull |        |               |               |   strategy |        |           |                  |           |                |          |                     |  strategy-option |              |        no-stat |                  |              |     update-head-ok |                   |         force |                |                 |           |       |  append |                      |  quiet |                |                |               |                     |                 |         |                |           |         |         |          |              |                 |              |                      |               |          |                   |                |             |  keep |              |  rebase |  verbose |                   |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |                  |
+                |           |        |               |        |        |       |          pull
++               push |  quiet |       verbose |       dry-run |            |  force |           |     set-upstream |           |                |          |                     |                  |              |                |                  |              |                    |                   |               |                |                 |           |       |         |                      |        |                |                |               |                     |                 |         |                |           |         |         |          |              |                 |              |                      |               |          |                   |                |             |       |              |         |          |                   |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |                  |
+                |           |        |               |        |        |       |          push
++       quilt-import |        |               |               |            |        |           |                  |           |                |          |                     |                  |              |        dry-run |                  |              |                    |                   |               |                |                 |           |       |         |                      |        |                |                |               |                     |                 |         |                |           |         |         |          |              |                 |              |                      |               |          |                   |                |             |       |              |         |          |                   |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |                  |
+                |           |        |               |        |        |       |          quilt-import
++          read-tree |        |       verbose |       dry-run |            |        |           |                  |           |                |          |                     |                  |              |                |                  |              |                    |                   |               |                |                 |           |       |         |                      |        |                |                |               |                     |                 |         |                |           |         |         |          |              |                 |              |                      |               |          |                   |                |             |       |              |         |          |                   |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |                  |
+                |           |        |               |        |        |       |          read-tree
++             rebase |        |               |               |   strategy |        |           |                  |           |                |          |                     |  strategy-option |              |        no-stat |  preserve-merges |              |                    |                   |  force-rebase |                |                 |           |       |         |                      |        |                |                |               |         interactive |                 |         |                |           |         |         |          |              |                 |              |                      |               |          |                   |                |             |       |        merge |  rebase |  verbose |                   |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |                  |
+                |           |        |               |        |        |       |  exec    rebase
++             reflog |  quiet |               |               |            |        |           |                  |           |                |          |                     |                  |              |                |                  |              |                    |                   |               |                |                 |           |       |         |                      |        |                |                |               |                     |                 |         |                |           |         |         |          |              |                 |              |                      |               |          |                   |                |             |       |              |         |          |                   |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |                  |
+                |           |        |               |        |        |       |          reflog
++             remote |        |       verbose |               |            |        |           |                  |           |                |          |                     |                  |              |                |                  |              |                    |                   |               |                |                 |           |       |         |                      |        |                |                |               |                     |                 |         |                |           |         |         |          |              |                 |              |                      |               |          |                   |                |             |       |              |         |          |                   |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |                  |
+                |           |        |               |        |        |       |          remote
++             repack |  quiet |               |               |            |        |           |                  |           |                |          |               local |                  |              |                |                  |              |                    |                   |               |                |                 |           |       |         |                      |        |                |                |               |                     |                 |         |                |           |         |         |          |              |                 |              |                      |               |          |                   |                |             |       |              |         |          |                   |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |                  |
+                |           |        |               |        |        |       |          repack
++            replace |        |               |               |            |  force |           |                  |           |                |          |                list |                  |              |                |                  |       delete |                    |                   |               |                |                 |           |       |         |                      |        |                |                |               |                     |                 |         |                |           |         |         |          |              |                 |              |                      |               |          |                   |                |             |       |              |         |          |                   |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |                  |
+                |           |        |               |        |        |       |          replace
++              reset |  quiet |               |               |            |        |           |                  |           |          patch |          |                     |                  |              |                |                  |              |                    |                   |               |                |                 |           |       |         |                      |        |                |                |               |                     |                 |         |                |           |         |         |          |              |                 |              |                      |               |          |                   |                |             |       |              |         |          |                   |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |                  |
+                |           |        |               |        |        |       |          reset
++           rev-list |        |               |               |            |        |           |                  |           |                |          |                     |                  |              |      max-count |                  |              |                    |                   |               |                |                 |           |       |         |                      |        |                |                |               |  regexp-ignore-case |                 |         |                |           |         |         |          |              |                 |              |                      |               |          |                   |                |             |       |              |         |          |                   |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |  extended-regexp |
+  fixed-strings |           |        |  walk-reflogs |        |        |       |          rev-list
++             revert |        |               |     no-commit |    signoff |        |  mainline |                  |           |                |     edit |                     |  strategy-option |              |                |                  |              |                    |                   |               |                |                 |           |       |         |                      |        |                |                |               |                     |                 |         |                |           |         |         |          |              |                 |              |                      |               |          |                   |                |             |       |              |         |          |                   |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |                  |
+                |           |        |               |        |        |       |          revert
++                 rm |  quiet |               |       dry-run |            |  force |           |                  |           |                |          |                     |                  |              |                |                  |              |                    |                   |               |                |                 |           |       |         |                      |        |                |                |               |                     |                 |         |                |           |         |         |          |              |                 |              |                      |               |          |                   |                |             |       |              |         |          |                   |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |                  |
+                |           |        |               |        |        |       |          rm
++           shortlog |        |               |               |            |        |           |                  |           |                |          |                     |                  |              |       numbered |                  |              |                    |                   |               |                |                 |           |       |         |                      |        |                |                |               |                     |         summary |         |                |           |         |         |          |              |                 |              |                      |               |          |                   |                |       email |       |              |         |          |                   |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |                  |
+                |           |        |               |        |        |       |          shortlog
++               show |  quiet |               |               |            |        |           |                  |           |                |          |                     |                  |              |                |                  |              |                    |                   |               |                |                 |           |       |         |                      |        |                |                |               |                     |                 |         |                |           |         |         |          |              |                 |              |                      |               |          |                   |                |             |       |              |         |          |                   |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |                  |
+                |           |        |               |        |        |       |          show
++        show-branch |        |               |               |            |        |           |                  |       all |                |          |                     |                  |              |                |                  |              |                    |                   |               |                |                 |           |       |         |                      |        |                |                |               |                     |                 |         |                |           |         |  reflog |  remotes |              |                 |              |                      |               |          |                   |                |             |       |              |         |          |                   |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |                  |
+                |           |        |               |        |        |       |          show-branch
++           show-ref |  quiet |               |               |       hash |        |           |                  |           |                |          |                     |                  |              |                |                  |  dereference |                    |                   |               |                |                 |           |       |         |                      |        |                |                |               |                     |                 |         |                |           |         |         |          |              |                 |              |                      |               |          |                   |                |             |       |              |         |          |                   |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |                  |
+                |           |        |               |        |        |       |          show-ref
++              stage |        |       verbose |       dry-run |            |  force |           |           update |           |          patch |     edit |                     |                  |  interactive |                |                  |              |                    |                   |               |                |                 |           |       |         |                      |        |            all |  intent-to-add |               |                     |                 |         |                |           |         |         |          |              |                 |              |                      |               |          |                   |                |             |       |              |         |          |                   |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |                  |
+                |           |        |               |        |        |       |          stage
++              stash |        |               |               |            |        |           |                  |           |                |          |                     |                  |              |                |            patch |              |  include-untracked |                   |               |                |                 |           |       |     all |                      |  quiet |                |                |               |                     |                 |         |                |           |         |         |          |              |                 |              |                      |               |          |                   |                |             |       |              |         |          |                   |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |                  |
+                |           |        |               |        |        |       |          stash
++             status |        |       verbose |               |      short |        |           |  untracked-files |           |                |          |                     |                  |              |                |                  |              |                    |                   |               |                |                 |           |  null |         |                      |        |                |                |               |                     |                 |         |                |           |  branch |         |          |              |                 |              |                      |               |          |                   |                |             |       |              |         |          |                   |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |                  |
+                |           |        |               |        |        |       |          status
++         stripspace |        |               |               |            |        |           |                  |           |                |          |                     |                  |              |                |                  |              |                    |                   |               |                |                 |           |       |         |                      |        |                |                |               |                     |  strip-comments |         |                |           |         |         |          |              |                 |              |                      |               |          |                   |  comment-lines |             |       |              |         |          |                   |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |                  |
+                |           |        |               |        |        |       |          stripspace
++          submodule |        |               |               |            |        |           |                  |           |                |          |                     |                  |              |  summary-limit |                  |              |                    |                   |         force |                |                 |           |       |         |               branch |  quiet |                |                |               |                     |                 |         |                |           |         |         |          |              |                 |              |                      |               |          |                   |                |             |       |              |         |          |                   |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |                  |
+                |  no-fetch |        |               |        |        |       |          submodule
++       symbolic-ref |  quiet |               |               |            |        |           |                  |           |                |          |                     |                  |              |                |                  |       delete |                    |                   |               |                |                 |           |       |         |                      |        |                |                |               |                     |                 |         |                |           |         |         |          |              |                 |              |                      |               |          |                   |                |             |       |              |         |          |                   |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |                  |
+                |           |        |               |        |        |       |          symbolic-ref
++                tag |        |        verify |               |       sign |  force |   message |       local-user |  annotate |                |          |                list |                  |              |                |                  |       delete |                    |                   |               |           file |                 |           |       |         |                      |        |                |                |               |                     |                 |         |                |           |         |         |          |              |                 |              |                      |               |          |                   |                |             |       |              |         |          |                   |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |                  |
+                |           |        |               |        |        |       |          tag
++ update-server-info |        |               |               |            |  force |           |                  |           |                |          |                     |                  |              |                |                  |              |                    |                   |               |                |                 |           |       |         |                      |        |                |                |               |                     |                 |         |                |           |         |         |          |              |                 |              |                      |               |          |                   |                |             |       |              |         |          |                   |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |                  |
+                |           |        |               |        |        |       |          update-server-info
++        verify-pack |        |       verbose |               |  stat-only |        |           |                  |           |                |          |                     |                  |              |                |                  |              |                    |                   |               |                |                 |           |       |         |                      |        |                |                |               |                     |                 |         |                |           |         |         |          |              |                 |              |                      |               |          |                   |                |             |       |              |         |          |                   |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |                  |
+                |           |        |               |        |        |       |          verify-pack
++         verify-tag |        |       verbose |               |            |        |           |                  |           |                |          |                     |                  |              |                |                  |              |                    |                   |               |                |                 |           |       |         |                      |        |                |                |               |                     |                 |         |                |           |         |         |          |              |                 |              |                      |               |          |                   |                |             |       |              |         |          |                   |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |                  |
+                |           |        |               |        |        |       |          verify-tag
++        whatchanged |  quiet |               |               |            |        |           |                  |           |                |          |                     |                  |              |                |                  |              |                    |                   |               |                |                 |           |       |         |                      |        |                |                |               |                     |                 |         |                |           |         |         |          |              |                 |              |                      |               |          |                   |                |             |       |              |         |          |                   |       |  
+                |                  |               |                 |                      |                      |              |          |                   |          |       |                  |
+                |           |        |               |        |        |       |          whatchanged
 -- 
 1.8.4.1.605.g23c6912
