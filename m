@@ -1,84 +1,119 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 03/16] pull: cleanup documentation
-Date: Thu, 31 Oct 2013 12:42:26 -0700
-Message-ID: <xmqqzjpp447x.fsf@gitster.dls.corp.google.com>
-References: <1383211547-9145-1-git-send-email-felipe.contreras@gmail.com>
-	<1383211547-9145-4-git-send-email-felipe.contreras@gmail.com>
-	<xmqqiowd71kv.fsf@gitster.dls.corp.google.com>
-	<CAMP44s3AKnZUJy0O0Hg+G=ER2bRn1nHMBeoJQ=ugCzO4d2WZ-g@mail.gmail.com>
-	<xmqqob655kqi.fsf@gitster.dls.corp.google.com>
-	<ADB546B4-992E-4B54-953E-B721BECD19B2@quendi.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
-To: Max Horn <max@quendi.de>
-X-From: git-owner@vger.kernel.org Thu Oct 31 20:42:37 2013
+From: Max Horn <max@quendi.de>
+Subject: Re: [PATCH v5 09/10] fast-export: add support to delete refs
+Date: Thu, 31 Oct 2013 20:47:25 +0100
+Message-ID: <78D9AAB6-09EC-4E81-A7BE-D36B9A9869D1@quendi.de>
+References: <1383212197-14259-1-git-send-email-felipe.contreras@gmail.com> <1383212197-14259-8-git-send-email-felipe.contreras@gmail.com> <6F276334-DFDB-40B8-8B24-38FFB6DBED9B@quendi.de> <CAMP44s3vxfN5Wc+S+VjimisUgZGQMzR7Z2YkO8J4UEk7+cPy_Q@mail.gmail.com>
+Mime-Version: 1.0 (Mac OS X Mail 6.6 \(1510\))
+Content-Type: multipart/signed; boundary="Apple-Mail=_DF32B98C-4086-4977-A468-B10ECCAE6C06"; protocol="application/pgp-signature"; micalg=pgp-sha256
+Cc: git@vger.kernel.org, Sverre Rabbelier <srabbelier@gmail.com>,
+	Richard Hansen <rhansen@bbn.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 31 20:47:37 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vby8X-0002NR-Gp
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Oct 2013 20:42:33 +0100
+	id 1VbyDQ-0004Yk-1G
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Oct 2013 20:47:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753125Ab3JaTma (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Oct 2013 15:42:30 -0400
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42057 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752036Ab3JaTm3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Oct 2013 15:42:29 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D28264DBE3;
-	Thu, 31 Oct 2013 15:42:28 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=57C83Co7b4jHOLH1+iLnTqvCIEE=; b=FU1rIg
-	WBo/7tAyI+jeTlgv2yWlSn7jAegY3voKxbB1Y9VXOGT681VSHkmgeqPOzUlszmWi
-	Gy/5eEpQKCCUsqPlo5a2ZYAlRkitFPUZTyEgJ8HAtYvgcWCc/lnPpUAEehfsU97q
-	CRoUL+1OaXXu2E9LZIuy3wdKRmJsmiRVccHVo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=gcboE7UwwEBWTx6MuB3PuSJ2UUkVhPIO
-	TsxaqIGlrxZIxOkewT/ToQOOlv0NA2qRyI+dwjP6ocJ0+1VNsjmd2jLt4Jyk7pDF
-	+fJhbc+SCboN2FLAPvhafXMl5bEndbq6TxNLnORrqG4AglJ+oJFR/W5ihy8l4ldf
-	uZr647uFHdU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C25334DBE2;
-	Thu, 31 Oct 2013 15:42:28 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 290444DBE1;
-	Thu, 31 Oct 2013 15:42:28 -0400 (EDT)
-In-Reply-To: <ADB546B4-992E-4B54-953E-B721BECD19B2@quendi.de> (Max Horn's
-	message of "Thu, 31 Oct 2013 20:27:19 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 93019CFC-4264-11E3-B974-1FFB7F2839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755472Ab3JaTrc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Oct 2013 15:47:32 -0400
+Received: from wp256.webpack.hosteurope.de ([80.237.133.25]:41511 "EHLO
+	wp256.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753887Ab3JaTrb (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 31 Oct 2013 15:47:31 -0400
+Received: from fb07-alg-gast1.math.uni-giessen.de ([134.176.24.161]); authenticated
+	by wp256.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:RSA_AES_128_CBC_SHA1:16)
+	id 1VbyDK-0005QY-1v; Thu, 31 Oct 2013 20:47:30 +0100
+In-Reply-To: <CAMP44s3vxfN5Wc+S+VjimisUgZGQMzR7Z2YkO8J4UEk7+cPy_Q@mail.gmail.com>
+X-Mailer: Apple Mail (2.1510)
+X-bounce-key: webpack.hosteurope.de;max@quendi.de;1383248851;f481971a;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237169>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237170>
 
-Max Horn <max@quendi.de> writes:
 
->> ... The "reality" is more like this:
->> 
->>      origin/master in your repository
->>      |
->>      v
->>      A---B---C master at origin
->>     /
->>    D---E---F---G master in your repository
->> 
->> if you really want to write origin/master somewhere in this
->> illustration.
->
-> Actually, I kind of like that. After just reading the existing
-> phrasing in git-pull.txt, I doubt that a newbie would catch the
-> difference between "origin/master" and "master at origin". With this
-> illustration, it's very clearly conveyed that there is a difference.
+--Apple-Mail=_DF32B98C-4086-4977-A468-B10ECCAE6C06
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=us-ascii
 
-Yeah, after re-reading the part of the documentation with the
-illustration replaced with the above, I was coming to the same
-conclusion.
+
+On 31.10.2013, at 20:41, Felipe Contreras <felipe.contreras@gmail.com> =
+wrote:
+
+> On Thu, Oct 31, 2013 at 1:29 PM, Max Horn <max@quendi.de> wrote:
+>> Actually, I just noticed one thing that I *do* have a question about:
+>>=20
+>> On 31.10.2013, at 10:36, Felipe Contreras =
+<felipe.contreras@gmail.com> wrote:
+>>=20
+>>> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+>>> ---
+>>> builtin/fast-export.c  | 14 ++++++++++++++
+>>> t/t9350-fast-export.sh | 11 +++++++++++
+>>> 2 files changed, 25 insertions(+)
+>>>=20
+>>> diff --git a/builtin/fast-export.c b/builtin/fast-export.c
+>>> index b6f623e..8ed41b4 100644
+>>> --- a/builtin/fast-export.c
+>>> +++ b/builtin/fast-export.c
+>>> @@ -673,6 +673,19 @@ static void import_marks(char *input_file)
+>>>      fclose(f);
+>>> }
+>>>=20
+>>> +static void handle_deletes(void)
+>>> +{
+>>> +     int i;
+>>> +     for (i =3D 0; i < refspecs_nr; i++) {
+>>> +             struct refspec *refspec =3D &refspecs[i];
+>>> +             if (*refspec->src)
+>>> +                     continue;
+>>> +
+>>> +             printf("reset %s\nfrom %s\n\n",
+>>> +                             refspec->dst, sha1_to_hex(null_sha1));
+>>=20
+>> If I understand it right, this issues a "reset" command in the =
+fast-import stream, resetting a ref to an all-zero SHA1. I had a look at =
+the git-fast-import documentation, but I found that it does not =
+explicitly cover this case. In particular, the "reset" command does not =
+specify that an all-zero SHA1 should be treated as "delete this ref".
+>=20
+> That's what the previous patch does.
+
+Right *facepalm*.
+
+But then this should be documented in git-fast-import.txt, shouldn't it?
+
+>=20
+>> On the other hand, the docs for "reset" seem to indicate that one can =
+omit the "from" part, although I couldn't tell for sure what that would =
+mean, either.
+>=20
+> It means something different.
+
+Yeah, I figured that -- just wanted to point out that this, too, is not =
+very clear in the documentation and should be improved (not saying that =
+I expect you to do that, just pointing it out).
+
+
+--Apple-Mail=_DF32B98C-4086-4977-A468-B10ECCAE6C06
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+	filename=signature.asc
+Content-Type: application/pgp-signature;
+	name=signature.asc
+Content-Description: Message signed with OpenPGP using GPGMail
+
+-----BEGIN PGP SIGNATURE-----
+Comment: GPGTools - http://gpgtools.org
+
+iF4EAREIAAYFAlJys9EACgkQIpJVslrhe1kZAQEAyUH8wyD5UOVfmeOzkkq91JTJ
+HbBCm0BtxM6StLB5SoQA+wftpElDzC7kM9DsydMhlHjKxtohN12Ap1lKJUcDHAtw
+=Ua05
+-----END PGP SIGNATURE-----
+
+--Apple-Mail=_DF32B98C-4086-4977-A468-B10ECCAE6C06--
