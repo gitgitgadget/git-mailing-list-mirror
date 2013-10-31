@@ -1,119 +1,101 @@
-From: Max Horn <max@quendi.de>
-Subject: Re: [PATCH v5 09/10] fast-export: add support to delete refs
-Date: Thu, 31 Oct 2013 20:47:25 +0100
-Message-ID: <78D9AAB6-09EC-4E81-A7BE-D36B9A9869D1@quendi.de>
-References: <1383212197-14259-1-git-send-email-felipe.contreras@gmail.com> <1383212197-14259-8-git-send-email-felipe.contreras@gmail.com> <6F276334-DFDB-40B8-8B24-38FFB6DBED9B@quendi.de> <CAMP44s3vxfN5Wc+S+VjimisUgZGQMzR7Z2YkO8J4UEk7+cPy_Q@mail.gmail.com>
-Mime-Version: 1.0 (Mac OS X Mail 6.6 \(1510\))
-Content-Type: multipart/signed; boundary="Apple-Mail=_DF32B98C-4086-4977-A468-B10ECCAE6C06"; protocol="application/pgp-signature"; micalg=pgp-sha256
-Cc: git@vger.kernel.org, Sverre Rabbelier <srabbelier@gmail.com>,
-	Richard Hansen <rhansen@bbn.com>
+From: Martin von Zweigbergk <martinvonz@gmail.com>
+Subject: Re: [PATCH 16/16] add: avoid yoda conditions
+Date: Thu, 31 Oct 2013 12:48:57 -0700
+Message-ID: <CANiSa6i5z8Z9HPzsUWTh8U2HXc9p6MPgQjJ7K6KSDw8FXtFyww@mail.gmail.com>
+References: <1383211547-9145-1-git-send-email-felipe.contreras@gmail.com>
+	<1383211547-9145-17-git-send-email-felipe.contreras@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>
 To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 31 20:47:37 2013
+X-From: git-owner@vger.kernel.org Thu Oct 31 20:49:04 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VbyDQ-0004Yk-1G
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Oct 2013 20:47:36 +0100
+	id 1VbyEq-0005CQ-6q
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Oct 2013 20:49:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755472Ab3JaTrc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Oct 2013 15:47:32 -0400
-Received: from wp256.webpack.hosteurope.de ([80.237.133.25]:41511 "EHLO
-	wp256.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753887Ab3JaTrb (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 31 Oct 2013 15:47:31 -0400
-Received: from fb07-alg-gast1.math.uni-giessen.de ([134.176.24.161]); authenticated
-	by wp256.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:RSA_AES_128_CBC_SHA1:16)
-	id 1VbyDK-0005QY-1v; Thu, 31 Oct 2013 20:47:30 +0100
-In-Reply-To: <CAMP44s3vxfN5Wc+S+VjimisUgZGQMzR7Z2YkO8J4UEk7+cPy_Q@mail.gmail.com>
-X-Mailer: Apple Mail (2.1510)
-X-bounce-key: webpack.hosteurope.de;max@quendi.de;1383248851;f481971a;
+	id S1755484Ab3JaTtA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Oct 2013 15:49:00 -0400
+Received: from mail-wg0-f49.google.com ([74.125.82.49]:47940 "EHLO
+	mail-wg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755481Ab3JaTs7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Oct 2013 15:48:59 -0400
+Received: by mail-wg0-f49.google.com with SMTP id x12so3168861wgg.28
+        for <git@vger.kernel.org>; Thu, 31 Oct 2013 12:48:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=EKTqArNgPxF2nJQGtZBj39ZSRfzGTuWV9qyJR0hppCE=;
+        b=LyQ9MLo6MlryTgUxFx2RICg35BjUq0XMayZr7Gtc/WhBwgt8IamQQEo7jxbtQt5xPe
+         0/nyvxddxLeOc1xvE1HHCUugr7tjaWZp7xRC3+BUf7OyGS+asfRJc5vaJcrszUz+G7uC
+         jtAQJxhiuwVTSR81rlWVMOjxb/zPOmjO0liZuNd3x3C+0bG0fi7kjD009yiZBHKZuan5
+         nlcWqdP9CF4n0y8VmcEYRaq1TgoYqSm6xwamyUERiAFg6HY9jXuSM9xrKl/n7r+/XzEi
+         5pK00DvTMYf9SJrJS03S77oJPNY+ehVE9pbJdxwk9xzG63MIJIZLZ3WsdPrcVSd1wEM9
+         dFBg==
+X-Received: by 10.180.36.242 with SMTP id t18mr957869wij.28.1383248937833;
+ Thu, 31 Oct 2013 12:48:57 -0700 (PDT)
+Received: by 10.180.106.201 with HTTP; Thu, 31 Oct 2013 12:48:57 -0700 (PDT)
+In-Reply-To: <1383211547-9145-17-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237170>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237171>
 
+I was recently confused by the yoda condition in this block of code from [1]
 
---Apple-Mail=_DF32B98C-4086-4977-A468-B10ECCAE6C06
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=us-ascii
++ for (i = 0; i < revs.nr; i++)
++ if (&bases->item->object == &revs.commit[i]->object)
++ break; /* found */
++ if (revs.nr <= i)
 
+I think I was particularly surprised because it came so soon after the
+"i < revs.nr". I didn't bother commenting because it seemed too
+subjective and the code base has tons of these. Something as simple as
 
-On 31.10.2013, at 20:41, Felipe Contreras <felipe.contreras@gmail.com> =
-wrote:
+  git grep '[0-9] [<>]' *.c
 
-> On Thu, Oct 31, 2013 at 1:29 PM, Max Horn <max@quendi.de> wrote:
->> Actually, I just noticed one thing that I *do* have a question about:
->>=20
->> On 31.10.2013, at 10:36, Felipe Contreras =
+finds a bunch (probably with lots of false positives and negatives).
+
+I guess what I'm trying to say is that either we accept them and get
+used to reading them without being surprised, or we can change a bit
+more than one at a time perhaps? I understand that this was an
+occurrence you just happened to run into, and I'm not saying that a
+patch has to deal with _all_ occurrences. I'm more just wondering if
+we want mention our position, whatever it is, in CodingGuidelines.
+
+Martin
+
+[1] http://thread.gmane.org/gmane.comp.version-control.git/236252/focus=236716
+
+On Thu, Oct 31, 2013 at 2:25 AM, Felipe Contreras
 <felipe.contreras@gmail.com> wrote:
->>=20
->>> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
->>> ---
->>> builtin/fast-export.c  | 14 ++++++++++++++
->>> t/t9350-fast-export.sh | 11 +++++++++++
->>> 2 files changed, 25 insertions(+)
->>>=20
->>> diff --git a/builtin/fast-export.c b/builtin/fast-export.c
->>> index b6f623e..8ed41b4 100644
->>> --- a/builtin/fast-export.c
->>> +++ b/builtin/fast-export.c
->>> @@ -673,6 +673,19 @@ static void import_marks(char *input_file)
->>>      fclose(f);
->>> }
->>>=20
->>> +static void handle_deletes(void)
->>> +{
->>> +     int i;
->>> +     for (i =3D 0; i < refspecs_nr; i++) {
->>> +             struct refspec *refspec =3D &refspecs[i];
->>> +             if (*refspec->src)
->>> +                     continue;
->>> +
->>> +             printf("reset %s\nfrom %s\n\n",
->>> +                             refspec->dst, sha1_to_hex(null_sha1));
->>=20
->> If I understand it right, this issues a "reset" command in the =
-fast-import stream, resetting a ref to an all-zero SHA1. I had a look at =
-the git-fast-import documentation, but I found that it does not =
-explicitly cover this case. In particular, the "reset" command does not =
-specify that an all-zero SHA1 should be treated as "delete this ref".
->=20
-> That's what the previous patch does.
-
-Right *facepalm*.
-
-But then this should be documented in git-fast-import.txt, shouldn't it?
-
->=20
->> On the other hand, the docs for "reset" seem to indicate that one can =
-omit the "from" part, although I couldn't tell for sure what that would =
-mean, either.
->=20
-> It means something different.
-
-Yeah, I figured that -- just wanted to point out that this, too, is not =
-very clear in the documentation and should be improved (not saying that =
-I expect you to do that, just pointing it out).
-
-
---Apple-Mail=_DF32B98C-4086-4977-A468-B10ECCAE6C06
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
-	filename=signature.asc
-Content-Type: application/pgp-signature;
-	name=signature.asc
-Content-Description: Message signed with OpenPGP using GPGMail
-
------BEGIN PGP SIGNATURE-----
-Comment: GPGTools - http://gpgtools.org
-
-iF4EAREIAAYFAlJys9EACgkQIpJVslrhe1kZAQEAyUH8wyD5UOVfmeOzkkq91JTJ
-HbBCm0BtxM6StLB5SoQA+wftpElDzC7kM9DsydMhlHjKxtohN12Ap1lKJUcDHAtw
-=Ua05
------END PGP SIGNATURE-----
-
---Apple-Mail=_DF32B98C-4086-4977-A468-B10ECCAE6C06--
+> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+> ---
+>  builtin/add.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/builtin/add.c b/builtin/add.c
+> index 226f758..9b30356 100644
+> --- a/builtin/add.c
+> +++ b/builtin/add.c
+> @@ -429,7 +429,7 @@ int cmd_add(int argc, const char **argv, const char *prefix)
+>         argc--;
+>         argv++;
+>
+> -       if (0 <= addremove_explicit)
+> +       if (addremove_explicit >= 0)
+>                 addremove = addremove_explicit;
+>         else if (take_worktree_changes && ADDREMOVE_DEFAULT)
+>                 addremove = 0; /* "-u" was given but not "-A" */
+> --
+> 1.8.4.2+fc1
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
