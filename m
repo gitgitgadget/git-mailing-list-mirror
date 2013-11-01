@@ -1,104 +1,62 @@
-From: DimanNe <dimanne@ya.ru>
-Subject: =?utf-8?B?UmU6IGdpdCBzdm4gYWxyZWFkeSBzZXQg4oCmIHdhbnRlZCB0byBzZXQgdG86?=
-Date: Fri, 01 Nov 2013 10:12:40 +0400
-Message-ID: <299211383286360@web20h.yandex.ru>
-References: <1771383029875@web26g.yandex.ru>
-	<87iowgiloj.fsf@linux-k42r.v.cablecom.net>
-	<87941383056091@web26h.yandex.ru> <87ppqmg5me.fsf@linux-k42r.v.cablecom.net>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 1/3] for-each-ref: introduce %C(...) for color
+Date: Fri, 1 Nov 2013 14:07:56 +0530
+Message-ID: <CALkWK0nEMpVUkzafjDkVV-uaLTYzHYUTsZkmwRPkLFa=8NEkPA@mail.gmail.com>
+References: <1383212774-5232-1-git-send-email-artagnon@gmail.com>
+ <1383212774-5232-2-git-send-email-artagnon@gmail.com> <xmqq38nh411p.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=koi8-r
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Thomas Rast <tr@thomasrast.ch>
-X-From: git-owner@vger.kernel.org Fri Nov 01 07:12:49 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Nov 01 09:38:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vc7yS-00031E-KT
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Nov 2013 07:12:48 +0100
+	id 1VcAFg-0005WK-Tv
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Nov 2013 09:38:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753566Ab3KAGMo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 Nov 2013 02:12:44 -0400
-Received: from forward3h.mail.yandex.net ([84.201.187.148]:49711 "EHLO
-	forward3h.mail.yandex.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752607Ab3KAGMo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Nov 2013 02:12:44 -0400
-Received: from web20h.yandex.ru (web20h.yandex.ru [84.201.186.49])
-	by forward3h.mail.yandex.net (Yandex) with ESMTP id E79A013627E8;
-	Fri,  1 Nov 2013 10:12:41 +0400 (MSK)
-Received: from 127.0.0.1 (localhost [127.0.0.1])
-	by web20h.yandex.ru (Yandex) with ESMTP id 56B98E407D7;
-	Fri,  1 Nov 2013 10:12:41 +0400 (MSK)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ya.ru; s=mail;
-	t=1383286361; bh=GDIkcFUScPzTnmW+Azc9jnANnTdmERVo2drEDt/XdTs=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date;
-	b=we6EJ/KrRwVqAWYfpr8iCGWjeVcT6IpemO28ZrkWuUfio8U1TzwgrYL2dZKui9Gwr
-	 4fFMKQ9cPi1FpYZM/s6nR+XZOpPsFJm/CIA4LsGLieMY9rKlrPx+x5fCt41EHl/+VV
-	 fB5dDmjzQZcRRNphOK7CmXNEPmD+B1Qv3Jf5GTAo=
-Received: from 95.108.172.103.red-dhcp.yndx.net (95.108.172.103.red-dhcp.yndx.net [95.108.172.103]) by web20h.yandex.ru with HTTP;
-	Fri, 01 Nov 2013 10:12:40 +0400
-Envelope-From: Dimanne@yandex.ru
-In-Reply-To: <87ppqmg5me.fsf@linux-k42r.v.cablecom.net>
-X-Mailer: Yamail [ http://yandex.ru ] 5.0
+	id S1753965Ab3KAIii (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Nov 2013 04:38:38 -0400
+Received: from mail-ie0-f178.google.com ([209.85.223.178]:49753 "EHLO
+	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753525Ab3KAIig (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Nov 2013 04:38:36 -0400
+Received: by mail-ie0-f178.google.com with SMTP id x13so7095784ief.9
+        for <git@vger.kernel.org>; Fri, 01 Nov 2013 01:38:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=D1Jxpg9vkYW4d2dY1oV8EDOUpuOvBq/M2HS5MI56ahY=;
+        b=cpkUlADv1yY5kJ/PRcd7aO82BxIS7MKECfVEr+1BOM78hxB1KjDiOubHOx5ZfJ75FQ
+         0Y+pu9ztO0Ig0x7WWghBC0v8iA8qSevHN2K0s1tutVg8GtNRy4XQOB1s/HpOc6xGVGDJ
+         1HnLsHkJUYwQUGagJUd7t8Vs1f+6pJLhLo+zoGL80ftYhWthw2CFjfbEmMqcRTBvdOJa
+         sFh8xKtSPrlEVZT1amBIFTZRgTX7hcWxYL3kmaXSMRxuYZYkMDRT7LWRA265k6gvG4wd
+         wr/cWC8l2HJVAgow4m5WsLaU0Bwg/AlnW8GuC53uz5JPHd1cQYl+CNiBXi1lr6mc1Gdf
+         8OCw==
+X-Received: by 10.43.180.200 with SMTP id pf8mr255010icc.50.1383295116334;
+ Fri, 01 Nov 2013 01:38:36 -0700 (PDT)
+Received: by 10.64.73.36 with HTTP; Fri, 1 Nov 2013 01:37:56 -0700 (PDT)
+In-Reply-To: <xmqq38nh411p.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237202>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237203>
 
-Thank you, it seems, that you are right, and following works
-
-1) I cloned trunk from scratch
-git svn clone -T trunk/ https://some_host --revision 1104830:HEAD
-
-2) Then add branches I want to fetch in .git/config:
-fetch =3D branches/proj/proj-stable-2013-08-14:refs/remotes/proj-stable=
--2013-08-14
-
-3) Then run
-git svn fetch
-wait for about 10 hours without any output from command (this was most =
-difficult step due to absence of output), and after that git started to=
- fetch revisions!
-
-
-30.10.2013, 19:06, "Thomas Rast" <tr@thomasrast.ch>:
-> DimanNe <dimanne@ya.ru> writes:
+Junio C Hamano wrote:
+> Ramkumar Ramachandra <artagnon@gmail.com> writes:
 >
->>> =9AWhat does your config look like now?
->> =9A[core]
->> =9A=9A=9A=9A=9A=9A=9A=9A=9Arepositoryformatversion =3D 0
->> =9A=9A=9A=9A=9A=9A=9A=9A=9Afilemode =3D true
->> =9A=9A=9A=9A=9A=9A=9A=9A=9Abare =3D false
->> =9A=9A=9A=9A=9A=9A=9A=9A=9Alogallrefupdates =3D true
+>> Enhance 'git for-each-ref' with color formatting options.  You can now
+>> use the following format in for-each-ref:
 >>
->> =9A[svn-remote "svn"]
->> =9A=9A=9A=9A=9A=9A=9A=9A=9Aurl =3D https://some_host/trunk/
->> =9A=9A=9A=9A=9A=9A=9A=9A=9Afetch =3D :refs/remotes/git-svn
->>
->> =9A[merge]
->> =9A=9A=9A=9A=9A=9A=9A=9A=9ArenameLimit =3D 50000
->>
->> =9A[svn-remote "stable-2012-09-13"]
->> =9A=9A=9A=9A=9A=9A=9A=9A=9Aurl =3D https://some_host/branches/stable=
--2012-09-13/
->> =9A=9A=9A=9A=9A=9A=9A=9A=9Afetch =3D :refs/remotes/stable-2012-09-13
+>>   %C(green)%(refname:short)%C(reset)
 >
-> Sounds like you should instead have only a single remote, along the
-> lines of:
->
-> [svn-remote "svn"]
-> =9A=9A=9A=9A=9A=9A=9A=9Aurl =3D https://some_host/
-> =9A=9A=9A=9A=9A=9A=9A=9Afetch =3D trunk:refs/remotes/git-svn
-> =9A=9A=9A=9A=9A=9A=9A=9Afetch =3D branches/stable-2012-09-13:refs/rem=
-otes/stable-2012-09-13
->
-> or possibly, instead of manually listing the branches you want,
->
-> =9A=9A=9A=9A=9A=9A=9A=9Abranches =3D branches/*:refs/remotes/svn/*
->
-> --
-> Thomas Rast
-> tr@thomasrast.ch
+> So far, every magic for-each-ref takes were of form %(...); was
+> there a reason why this had to be %C(...), not %(color=blah), or
+> something more in-line with the existing other magic?
+
+It is in-line with the color specification in pretty-formats. Would
+you strongly prefer something else?
