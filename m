@@ -1,56 +1,68 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [ANNOUNCE] Git v1.8.5-rc0
-Date: Fri, 1 Nov 2013 17:39:02 +0700
-Message-ID: <CACsJy8AynEEkGR5Yj6SdzRw4Gc7=z9zekTi2jCBkK41R_eOY2w@mail.gmail.com>
-References: <xmqqtxfy9zee.fsf@gitster.dls.corp.google.com>
+From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+Subject: Re: [PATCH 03/16] pull: cleanup documentation
+Date: Fri, 1 Nov 2013 12:05:39 +0100
+Message-ID: <20131101110539.GA32076@goldbirke>
+References: <CAMP44s1_KW-HJ0aGbv3AAXFXXrvGscQTXXgsoK6WPNjTHmOiMQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Linux Kernel <linux-kernel@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: linux-kernel-owner@vger.kernel.org Fri Nov 01 11:39:49 2013
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@plane.gmane.org
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: David Aguilar <davvid@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, Max Horn <max@quendi.de>,
+	git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 01 12:07:23 2013
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1VcC8m-0005Fo-Tb
-	for glk-linux-kernel-3@plane.gmane.org; Fri, 01 Nov 2013 11:39:45 +0100
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1VcCZX-0001oM-0A
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Nov 2013 12:07:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755652Ab3KAKje (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Fri, 1 Nov 2013 06:39:34 -0400
-Received: from mail-qc0-f176.google.com ([209.85.216.176]:37909 "EHLO
-	mail-qc0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751532Ab3KAKjd (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Fri, 1 Nov 2013 06:39:33 -0400
-Received: by mail-qc0-f176.google.com with SMTP id s19so2374288qcw.35
-        for <multiple recipients>; Fri, 01 Nov 2013 03:39:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=NeA0LkTQyRXRE5nvuD9GmA3WWz21otHPM5W4ClGelS0=;
-        b=AIoX58CJIwGjD804xmaOfqqKSdilzQ9FjwLeNG3JHQBYqcH6Eovru6zjXJFoOs1NOL
-         2SNZZ/BM109k7IAvMwrq1p0gKxIb4hYYFeXZegQ/uO/w5jeiE6ODS4IRwQCsfdj+lpqN
-         HErO3NK9Ao39Qw9J34RJ+0PEApPLfmLZvzAL5GznEdlZjdaiCS7QI/vvqEDLH0zGztev
-         n8h0E0YdaMEdcn6Jg3tAbqOJaOsBaYJ1o9olg4yIg75ZDt1Zdn76U4uzb5YdTq1TLB00
-         npYOecil50mEPB7rcYxpRPjKwI+3/kOrB7o6ghe9ECczrGdGUAbi/Dp8lLhQZ5Z8i9d/
-         T61A==
-X-Received: by 10.224.88.193 with SMTP id b1mr2937720qam.81.1383302372314;
- Fri, 01 Nov 2013 03:39:32 -0700 (PDT)
-Received: by 10.96.27.202 with HTTP; Fri, 1 Nov 2013 03:39:02 -0700 (PDT)
-In-Reply-To: <xmqqtxfy9zee.fsf@gitster.dls.corp.google.com>
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1751879Ab3KALHQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 Nov 2013 07:07:16 -0400
+Received: from moutng.kundenserver.de ([212.227.126.171]:49952 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751334Ab3KALHP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Nov 2013 07:07:15 -0400
+Received: from localhost6.localdomain6 (g230129190.adsl.alicedsl.de [92.230.129.190])
+	by mrelayeu.kundenserver.de (node=mreu2) with ESMTP (Nemesis)
+	id 0MQb5V-1VEvTa44th-00TtLm; Fri, 01 Nov 2013 12:05:40 +0100
+Content-Disposition: inline
+In-Reply-To: <CAMP44s1_KW-HJ0aGbv3AAXFXXrvGscQTXXgsoK6WPNjTHmOiMQ@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Provags-ID: V02:K0:iwEqMU4YgpsMX0jL1EKomHZU+OiOnMGBGuioMLLmZBa
+ AT9ftQR7UMSVGD5IbSpe79kZ9J1I/erSoAjp4iJvF3W6gJNEex
+ 2lKLNmAw0mofUtMA5TbQd+tJp5EinP5jPtLHJciFxfkppm2Kg/
+ Q31AcOhNCpxbrZxKRYCJjAL2L/FZ9HPgnUrXBHleiV2gZbuU0Y
+ Wh5I0M2F8StQ4SE68mifRLrTY3gGfZOKDzsLnIB/U0/qYs3vn2
+ vqL6K+CoY7r1BrcrjNjJAyWtC+aUraVQNWZFTp5/I/dcBf1Sma
+ m85Ye6mSnnCrzuOFBy4uL91y2v324+4n8Gw3RFJkBqG/vPZVkk
+ A8u/EHNV/bA11aAUlLpUaQMk9xe2GhbJe4ASqbABm
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237206>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237207>
 
-On Thu, Oct 31, 2013 at 5:17 AM, Junio C Hamano <gitster@pobox.com> wrote:
->  * Magic pathspecs like ":(icase)makefile" that matches both
->    Makefile and makefile can be used in more places.
+On Thu, Oct 31, 2013 at 09:50:51PM -0600, Felipe Contreras wrote:
+> On Thu, Oct 31, 2013 at 8:48 PM, David Aguilar <davvid@gmail.com> wro=
+te:
+> > On Thu, Oct 31, 2013 at 07:56:03PM -0600, Felipe Contreras wrote:
+>=20
+> >> Nobody is forcing you to read them.
+> >
+> > You're missing the *key* point.
+> > No one wants to interact with a rude arrogant loudmouth.
+>=20
+> Then don't. Problem solved.
 
-":(glob)foo/**/bar" is another nice thing that could be announced.
--- 
-Duy
+Nope, it just recreates another old problem.  We've been there before,
+not long ago:
+
+On Sat, Oct 12, 2013 at 02:24:50AM -0500, Felipe Contreras wrote:
+> Clearly, a lot of my patches have not been reviewed properly [...]
+
+
+Best,
+G=E1bor
