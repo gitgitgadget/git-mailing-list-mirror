@@ -1,70 +1,104 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 03/16] pull: cleanup documentation
-Date: Thu, 31 Oct 2013 21:50:51 -0600
-Message-ID: <CAMP44s1_KW-HJ0aGbv3AAXFXXrvGscQTXXgsoK6WPNjTHmOiMQ@mail.gmail.com>
-References: <1383211547-9145-4-git-send-email-felipe.contreras@gmail.com>
-	<xmqqiowd71kv.fsf@gitster.dls.corp.google.com>
-	<CAMP44s3AKnZUJy0O0Hg+G=ER2bRn1nHMBeoJQ=ugCzO4d2WZ-g@mail.gmail.com>
-	<xmqqob655kqi.fsf@gitster.dls.corp.google.com>
-	<ADB546B4-992E-4B54-953E-B721BECD19B2@quendi.de>
-	<xmqqzjpp447x.fsf@gitster.dls.corp.google.com>
-	<xmqqfvrh41e0.fsf@gitster.dls.corp.google.com>
-	<CAMP44s14_GbN0nEm4Eu2Jdb5cO+jVaTVOnDqzwv0GK4_jfD93w@mail.gmail.com>
-	<20131031234048.GA41400@gmail.com>
-	<CAMP44s0rtJyJTW36iYX-RRu6NcQ1yF0NUUTXQoCUpMkWVg2Zmg@mail.gmail.com>
-	<20131101024821.GB41400@gmail.com>
+From: DimanNe <dimanne@ya.ru>
+Subject: =?utf-8?B?UmU6IGdpdCBzdm4gYWxyZWFkeSBzZXQg4oCmIHdhbnRlZCB0byBzZXQgdG86?=
+Date: Fri, 01 Nov 2013 10:12:40 +0400
+Message-ID: <299211383286360@web20h.yandex.ru>
+References: <1771383029875@web26g.yandex.ru>
+	<87iowgiloj.fsf@linux-k42r.v.cablecom.net>
+	<87941383056091@web26h.yandex.ru> <87ppqmg5me.fsf@linux-k42r.v.cablecom.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Max Horn <max@quendi.de>,
-	git@vger.kernel.org
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 01 04:51:14 2013
+Content-Type: text/plain; charset=koi8-r
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Thomas Rast <tr@thomasrast.ch>
+X-From: git-owner@vger.kernel.org Fri Nov 01 07:12:49 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vc5lS-0003XD-3e
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Nov 2013 04:51:14 +0100
+	id 1Vc7yS-00031E-KT
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Nov 2013 07:12:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751744Ab3KADux (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Oct 2013 23:50:53 -0400
-Received: from mail-lb0-f176.google.com ([209.85.217.176]:48009 "EHLO
-	mail-lb0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751492Ab3KADux (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Oct 2013 23:50:53 -0400
-Received: by mail-lb0-f176.google.com with SMTP id z5so3091603lbh.35
-        for <git@vger.kernel.org>; Thu, 31 Oct 2013 20:50:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=tlYCfJPKLilnNtZ2ocpQVDEK5iIEGtwlnAPuwIrzGQg=;
-        b=aIJXsn8HBEGKFUveY/xop/bewdvVK1ukzOHbV//0xiSj+3/d1LmVvBQFvvgK8qrHmT
-         574BFpzvzwtN9eW0bInrnZ4Bto1DgV/EWucU6NjUArEIZRhNIjCG8Vrqe8I2edyGuB1q
-         tqOl0GzedP7ZqjF4uVIUPDkF3Jd8bHZBDP1Ok5pNaXSihZqP5RuMP12i1q/ZAahaoHTx
-         +I3WbrgofDiQYeKZ1eG6HvXVSYIsiR1sz3y5/Mnq0ukCLwGnC3pJDhgUrZ878AQtSuL3
-         DHWf6TXdZTNf3ghsar3e21JkVeER4xIPPtkpYqjVlWA3kQvyDzwzCbKGdPj/1/mzB+sJ
-         ljZg==
-X-Received: by 10.112.89.100 with SMTP id bn4mr545363lbb.16.1383277851619;
- Thu, 31 Oct 2013 20:50:51 -0700 (PDT)
-Received: by 10.114.201.69 with HTTP; Thu, 31 Oct 2013 20:50:51 -0700 (PDT)
-In-Reply-To: <20131101024821.GB41400@gmail.com>
+	id S1753566Ab3KAGMo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 Nov 2013 02:12:44 -0400
+Received: from forward3h.mail.yandex.net ([84.201.187.148]:49711 "EHLO
+	forward3h.mail.yandex.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752607Ab3KAGMo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Nov 2013 02:12:44 -0400
+Received: from web20h.yandex.ru (web20h.yandex.ru [84.201.186.49])
+	by forward3h.mail.yandex.net (Yandex) with ESMTP id E79A013627E8;
+	Fri,  1 Nov 2013 10:12:41 +0400 (MSK)
+Received: from 127.0.0.1 (localhost [127.0.0.1])
+	by web20h.yandex.ru (Yandex) with ESMTP id 56B98E407D7;
+	Fri,  1 Nov 2013 10:12:41 +0400 (MSK)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ya.ru; s=mail;
+	t=1383286361; bh=GDIkcFUScPzTnmW+Azc9jnANnTdmERVo2drEDt/XdTs=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date;
+	b=we6EJ/KrRwVqAWYfpr8iCGWjeVcT6IpemO28ZrkWuUfio8U1TzwgrYL2dZKui9Gwr
+	 4fFMKQ9cPi1FpYZM/s6nR+XZOpPsFJm/CIA4LsGLieMY9rKlrPx+x5fCt41EHl/+VV
+	 fB5dDmjzQZcRRNphOK7CmXNEPmD+B1Qv3Jf5GTAo=
+Received: from 95.108.172.103.red-dhcp.yndx.net (95.108.172.103.red-dhcp.yndx.net [95.108.172.103]) by web20h.yandex.ru with HTTP;
+	Fri, 01 Nov 2013 10:12:40 +0400
+Envelope-From: Dimanne@yandex.ru
+In-Reply-To: <87ppqmg5me.fsf@linux-k42r.v.cablecom.net>
+X-Mailer: Yamail [ http://yandex.ru ] 5.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237201>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237202>
 
-On Thu, Oct 31, 2013 at 8:48 PM, David Aguilar <davvid@gmail.com> wrote:
-> On Thu, Oct 31, 2013 at 07:56:03PM -0600, Felipe Contreras wrote:
+Thank you, it seems, that you are right, and following works
 
->> Nobody is forcing you to read them.
+1) I cloned trunk from scratch
+git svn clone -T trunk/ https://some_host --revision 1104830:HEAD
+
+2) Then add branches I want to fetch in .git/config:
+fetch =3D branches/proj/proj-stable-2013-08-14:refs/remotes/proj-stable=
+-2013-08-14
+
+3) Then run
+git svn fetch
+wait for about 10 hours without any output from command (this was most =
+difficult step due to absence of output), and after that git started to=
+ fetch revisions!
+
+
+30.10.2013, 19:06, "Thomas Rast" <tr@thomasrast.ch>:
+> DimanNe <dimanne@ya.ru> writes:
 >
-> You're missing the *key* point.
-> No one wants to interact with a rude arrogant loudmouth.
-
-Then don't. Problem solved.
-
--- 
-Felipe Contreras
+>>> =9AWhat does your config look like now?
+>> =9A[core]
+>> =9A=9A=9A=9A=9A=9A=9A=9A=9Arepositoryformatversion =3D 0
+>> =9A=9A=9A=9A=9A=9A=9A=9A=9Afilemode =3D true
+>> =9A=9A=9A=9A=9A=9A=9A=9A=9Abare =3D false
+>> =9A=9A=9A=9A=9A=9A=9A=9A=9Alogallrefupdates =3D true
+>>
+>> =9A[svn-remote "svn"]
+>> =9A=9A=9A=9A=9A=9A=9A=9A=9Aurl =3D https://some_host/trunk/
+>> =9A=9A=9A=9A=9A=9A=9A=9A=9Afetch =3D :refs/remotes/git-svn
+>>
+>> =9A[merge]
+>> =9A=9A=9A=9A=9A=9A=9A=9A=9ArenameLimit =3D 50000
+>>
+>> =9A[svn-remote "stable-2012-09-13"]
+>> =9A=9A=9A=9A=9A=9A=9A=9A=9Aurl =3D https://some_host/branches/stable=
+-2012-09-13/
+>> =9A=9A=9A=9A=9A=9A=9A=9A=9Afetch =3D :refs/remotes/stable-2012-09-13
+>
+> Sounds like you should instead have only a single remote, along the
+> lines of:
+>
+> [svn-remote "svn"]
+> =9A=9A=9A=9A=9A=9A=9A=9Aurl =3D https://some_host/
+> =9A=9A=9A=9A=9A=9A=9A=9Afetch =3D trunk:refs/remotes/git-svn
+> =9A=9A=9A=9A=9A=9A=9A=9Afetch =3D branches/stable-2012-09-13:refs/rem=
+otes/stable-2012-09-13
+>
+> or possibly, instead of manually listing the branches you want,
+>
+> =9A=9A=9A=9A=9A=9A=9A=9Abranches =3D branches/*:refs/remotes/svn/*
+>
+> --
+> Thomas Rast
+> tr@thomasrast.ch
