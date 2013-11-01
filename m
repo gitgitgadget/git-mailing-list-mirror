@@ -1,88 +1,77 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH] commit: Add -f, --fixes <commit> option to add Fixes: line
-Date: Fri, 1 Nov 2013 06:52:35 +0700
-Message-ID: <CACsJy8CEnKxmhRYQqWoMVyLpfDUp7tqdnLxiV47XqaOFFCcUMw@mail.gmail.com>
-References: <20131024122255.GI9378@mwanda> <20131024122512.GB9534@mwanda>
- <20131026181709.GB10488@kroah.com> <20131027013402.GA7146@leaf>
- <526CA7D4.1070904@alum.mit.edu> <20131027071407.GA11683@leaf>
- <526E283A.1070801@alum.mit.edu> <CALKQrgfsk3fjyF77XL9+CPyJ_s-AfzkNAj4Eaj1LT-G0Ph=bfg@mail.gmail.com>
- <20131029020824.GE11861@sigill.intra.peff.net> <CALKQrge8T8R7roUUYyLcu_QnL1afeqTATOp+0n_OOsZZoJXF4Q@mail.gmail.com>
- <CACsJy8DVSpmmDw-jGJoJK171u5UeJR7GKPuX7QAK4=7yYn6n8Q@mail.gmail.com> <xmqqa9hp9x2e.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Documentation: add a script to generate a (long/short) options overview
+Date: Thu, 31 Oct 2013 17:09:41 -0700
+Message-ID: <xmqqtxfx2da2.fsf@gitster.dls.corp.google.com>
+References: <5272E1B9.6000705@googlemail.com>
+	<1383260682-12364-1-git-send-email-stefanbeller@googlemail.com>
+	<5272E316.5090108@googlemail.com>
+	<20131031234514.GC41460@vauxhall.crustytoothpaste.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Johan Herland <johan@herland.net>, Jeff King <peff@peff.net>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Josh Triplett <josh@joshtriplett.org>,
-	Git mailing list <git@vger.kernel.org>,
-	Dan Carpenter <dan.carpenter@oracle.com>,
-	Greg KH <greg@kroah.com>,
-	Linux Kernel mailing list <linux-kernel@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: linux-kernel-owner@vger.kernel.org Fri Nov 01 00:53:20 2013
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@plane.gmane.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Stefan Beller <stefanbeller@googlemail.com>, tr@thomasrast.ch,
+	mhagger@alum.mit.edu, git@vger.kernel.org
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+X-From: git-owner@vger.kernel.org Fri Nov 01 01:09:50 2013
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1Vc239-0001sp-RN
-	for glk-linux-kernel-3@plane.gmane.org; Fri, 01 Nov 2013 00:53:16 +0100
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Vc2JB-0007zK-H7
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Nov 2013 01:09:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755576Ab3JaXxJ (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Thu, 31 Oct 2013 19:53:09 -0400
-Received: from mail-qa0-f44.google.com ([209.85.216.44]:54111 "EHLO
-	mail-qa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752124Ab3JaXxG (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Thu, 31 Oct 2013 19:53:06 -0400
-Received: by mail-qa0-f44.google.com with SMTP id cm18so272741qab.3
-        for <multiple recipients>; Thu, 31 Oct 2013 16:53:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=7mI0ZlJAQEeRSokdAUCNgdgsCHn+z0V5Gcv9lapnNo4=;
-        b=BkCdnsKlA/bLs3UoWdGM1Xurp74TZsfOxP+DJnEaEtEpMlK3PBYA3b1wb9aavumDBZ
-         DM99FAxIZkJbbBYg/rlWwxdB/fCuFmbvlXYfASBQweyU/euVkIV/5b2VYOQTL8TRaIGh
-         eXQK9A4bEKwv2ClPfFfh/nRfXHbXPCfvkGVY6gc343jkAXGXrG9qH6xjc2YxKUiT2X6V
-         7ameTl1TLIz1BhdSApuX++xsfyOJ7H6U+eAo5NSz//GO/OESlHF1ErJHowpxFEwP2cET
-         jyHHfeGhThNn1mfn4C9MrGVTaABf5QeKZ1sRciK9ns2wI7X0Y++U43Y/+Vk2q5DYgncE
-         dHXQ==
-X-Received: by 10.49.86.35 with SMTP id m3mr369773qez.7.1383263585065; Thu, 31
- Oct 2013 16:53:05 -0700 (PDT)
-Received: by 10.96.27.202 with HTTP; Thu, 31 Oct 2013 16:52:35 -0700 (PDT)
-In-Reply-To: <xmqqa9hp9x2e.fsf@gitster.dls.corp.google.com>
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1754345Ab3KAAJp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Oct 2013 20:09:45 -0400
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62631 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754272Ab3KAAJo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Oct 2013 20:09:44 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2B7724F248;
+	Thu, 31 Oct 2013 20:09:44 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=qtrKogImFYKOp70nB8I7NZrr2OE=; b=IMzIfS
+	iTV2IGIYTgRsgC9Yyw8aZqBrgo+n3hQa5H+6lV3N+rWFafTxe/tF1A4pE+1l8Q5D
+	xn1PWMy34dNfE8uDc0B/m6glyFFO8m8yGDasqvR3bYTWBmBnvUGIRmHj1el1857m
+	76iyG1UlUVENDRCrCqK+UTf9btz41DfvH51zc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=nvMUfNTccrwQ5ZLqDEEFRRhXOCbXAdt1
+	1CFId7oGuGMcWayDevXhp3TMhejZKsMGwrJBuBDyInQ0UawH3rt+HrRpX8ceL4JY
+	UZiricwa1Fn70eyl8z6TIVEzJsq8r+CEHb3kRMftUMgaksTldPnsGUryzCjHjFru
+	F0qOp9DvYwE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1E9F64F247;
+	Thu, 31 Oct 2013 20:09:44 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 734A14F245;
+	Thu, 31 Oct 2013 20:09:43 -0400 (EDT)
+In-Reply-To: <20131031234514.GC41460@vauxhall.crustytoothpaste.net> (brian
+	m. carlson's message of "Thu, 31 Oct 2013 23:45:14 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: E8CAD8F4-4289-11E3-A1A0-1FFB7F2839F8-77302942!b-pb-sasl-quonix.pobox.com
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237196>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237197>
 
-On Fri, Nov 1, 2013 at 12:20 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Duy Nguyen <pclouds@gmail.com> writes:
->
->> OK how about, if $GIT_DIR/hooks/something is a directory, then the
->> directory must contain a file named "index", listing all the hooks of
->> type "something". All the hooks in "index" will be executed in the
->> listing order.
->
-> Hooks that take arbitrary amount of information from the body read
-> their standard input. How are your multiple hooks supposed to
-> interact?
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-If each only needs to read a few lines from stdin, they can do so in
-order. If two hooks need to read till the end of stdin, they are
-incompatible. If we support some sort of hook signature, we could warn
-the user when they combine the two. If not, the second's failing
-(because stdin is already closed) may show the incompatibility. "git
-hook" should support dry-run mode to test out new combinations.
+> RFC 5321 forbids lines exceeding 1000 octets (including CRLF).  RFC 5322
+> forbids lines exceeding 998 characters (excluding CRLF).  If you want to
+> get around that, you need to base64-encode the content, which is
+> generally discouraged when sending patches, I believe.
 
-> Hooks that prevent you from doing something stupid signal allow/deny
-> with their exit code. Do you fail a commit if any of your pre-commit
-> hook fails, or is it OK to commit as long as one of them says so?
-> If the former, do all the hooks described in the index still run, or
-> does the first failure short-cut the remainder?
+All true.
 
-One failed hook fails the commit and stops the remaining from
-executing. You can skip the hook if you want with --exclude-hooks.
--- 
-Duy
+A message like the one posted before and got a positive "wow, good
+work", is a good thinkg to motivate somebody to work on bringing the
+codebase and build procedure to aspire for producing that table from
+within the build procedure; I do not think this information fixed in
+time belongs to the source tree (iow, making it into a patch form is
+of no use).  It will go stale over time without a way to automate
+the synchronization somehow.
