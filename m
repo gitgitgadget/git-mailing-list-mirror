@@ -1,215 +1,123 @@
-From: Thomas Rast <tr@thomasrast.ch>
-Subject: [PATCH] remote: unify main and subcommand usage strings
-Date: Sat,  2 Nov 2013 17:11:31 +0100
-Message-ID: <c2d51c4014545f037bb9399dba7b378d6d79d18b.1383407880.git.tr@thomasrast.ch>
-References: <52746664.1050806@gmail.com>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: Git 1.8.4.2: 'git-rev-parse --is-inside-git-dir' wrong output!
+Date: Sat, 2 Nov 2013 17:03:34 -0000
+Organization: OPDS
+Message-ID: <CE13C82CA4C24CA8B56380DA00A700A5@PhilipOakley>
+References: <CACbqpSvU4qxc0WtquP6Eq8bZGjLxTrVhtT2Nqw90wb23ESkfcw@mail.gmail.com> <20131102105816.GC24023@serenity.lan> <11593D3DCFCD4D24BB881B9E5FAB79C0@PhilipOakley> <20131102140656.GE24023@serenity.lan>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jiang Xin <worldhello.net@gmail.com>
-To: =?UTF-8?q?Tr=E1=BA=A7n=20Ng=E1=BB=8Dc=20Qu=C3=A2n?= 
-	<vnwildman@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Nov 02 17:12:04 2013
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: "Ville Walveranta" <walveranta@gmail.com>,
+	"Git List" <git@vger.kernel.org>
+To: "John Keeping" <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Sat Nov 02 18:03:09 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vcdnu-0001RQ-PL
-	for gcvg-git-2@plane.gmane.org; Sat, 02 Nov 2013 17:12:03 +0100
+	id 1VcebM-0001ur-KQ
+	for gcvg-git-2@plane.gmane.org; Sat, 02 Nov 2013 18:03:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753223Ab3KBQL6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 2 Nov 2013 12:11:58 -0400
-Received: from psi.thgersdorf.net ([176.9.98.78]:38148 "EHLO mail.psioc.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750969Ab3KBQL6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Nov 2013 12:11:58 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by localhost.psioc.net (Postfix) with ESMTP id 6E5164D6528;
-	Sat,  2 Nov 2013 17:11:55 +0100 (CET)
-X-Virus-Scanned: amavisd-new at psioc.net
-Received: from mail.psioc.net ([127.0.0.1])
-	by localhost (mail.psioc.net [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id JAA2wyzJpTMK; Sat,  2 Nov 2013 17:11:45 +0100 (CET)
-Received: from linux-k42r.v.cablecom.net (unknown [213.55.184.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(Client did not present a certificate)
-	by mail.psioc.net (Postfix) with ESMTPSA id A6D404D6414;
-	Sat,  2 Nov 2013 17:11:43 +0100 (CET)
-X-Mailer: git-send-email 1.8.4.2.838.g4c8c068
-In-Reply-To: <52746664.1050806@gmail.com>
+	id S1753979Ab3KBRDF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 2 Nov 2013 13:03:05 -0400
+Received: from out1.ip02ir2.opaltelecom.net ([62.24.128.238]:41084 "EHLO
+	out1.ip02ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752614Ab3KBRDD (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 2 Nov 2013 13:03:03 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Al4GAFcvdVJZ8Y1P/2dsb2JhbABZgwc4iRm3N4EbF3RpgSEWAQQBAQUIAQEuHgEBIQsCAwUCAQMVAQIJDBkUAQQaBgcXBhMIAgECAwGFOAeCEiMJvSgEjQKCVhGDFoEOA4kIhhKaeYMmPA
+X-IPAS-Result: Al4GAFcvdVJZ8Y1P/2dsb2JhbABZgwc4iRm3N4EbF3RpgSEWAQQBAQUIAQEuHgEBIQsCAwUCAQMVAQIJDBkUAQQaBgcXBhMIAgECAwGFOAeCEiMJvSgEjQKCVhGDFoEOA4kIhhKaeYMmPA
+X-IronPort-AV: E=Sophos;i="4.93,622,1378854000"; 
+   d="scan'208";a="445946561"
+Received: from host-89-241-141-79.as13285.net (HELO PhilipOakley) ([89.241.141.79])
+  by out1.ip02ir2.opaltelecom.net with SMTP; 02 Nov 2013 17:03:01 +0000
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237245>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237246>
 
-We had separate usages for each subcommand, and for the main command,
-even though the latter is essentially a concatenation of all of the
-former.  This leads to a lot of duplication and unnecessary
-differences, e.g., in the 'set-head' case the two strings differ only
-in a space.
+From: "John Keeping" <john@keeping.me.uk>
+Sent: Saturday, November 02, 2013 2:06 PM
+> On Sat, Nov 02, 2013 at 01:47:02PM -0000, Philip Oakley wrote:
+>> From: "John Keeping" <john@keeping.me.uk>
+>> Sent: Saturday, November 02, 2013 10:58 AM
+>> > On Fri, Nov 01, 2013 at 06:19:51PM -0500, Ville Walveranta wrote:
+>> >> "git-rev-parse --is-inside-git-dir" outputs "fatal: Not a git
+>> >> repository (or any of the parent directories): .git", instead of
+>> >> "false" when outside of a git directory.  "--is-inside-work-tree"
+>> >> behaves the same way. Both commands work correctly (i.e. output
+>> >> "true") when inside a git directory, or inside a work tree,
+>> >> respectively.
+>> >
+>> > I think that's intentional - and it looks like the behaviour has
+>> > not
+>> > changed since these options were added.  With the current behaviour
+>> > you
+>> > get three possible outcomes from "git
+>> > rev-parse --is-inside-work-tree":
+>> >
+>> >    if worktree=$(git rev-parse --is-inside-work-tree 2>/dev/null)
+>> >    then
+>> >        if test "$worktree" = true
+>> >        then
+>> >            echo 'inside work tree'
+>> >        else
+>> >            echo 'in repository, but not in work tree'
+>> >        fi
+>> >    else
+>> >        echo 'not in repository'
+>> >    fi
+>> > --
+>>
+>>
+>> Shouldn't this case which produces "fatal:..." need to be documented
+>> in
+>> the man page?
+>> https://www.kernel.org/pub/software/scm/git/docs/git-rev-parse.html
+>> doesn't mention it.
+>
+> I'm not sure where it should go in there.  The documentation for
+> --git-dir says:
+>
+>   If $GIT_DIR is not defined and the current directory is not detected
+>   to lie in a Git repository or work tree print a message to stderr
+> and
+>   exit with nonzero status.
+>
+> but there reality is that if you do not specify --parseopt
+> or --sq-quote
+> then the command expects to be run in a Git repository [1], so perhaps
+> it would be better to say something under "Operation Modes" or in the
+> description.
+>
+>
+> [1] After taking account of $GIT_DIR, $GIT_WORK_TREE, and arguments to
+>    the base "git" driver that affect these variables.
+>
 
-Unify the strings in the usages by putting each of them in a variable,
-and assembling the usage arrays from them.
+Yes, but given Ville's surprise and the need for special prior knowledge
+of the points you raised, I still think that some short note is needed.
 
-Note that this patch changes the usage strings for the following
-subcommands:
+It can/could be read that you need to invoke --git-dir as an option
+before the mentioned die() exit is taken, rather than it applying to
+all(?) the path relevant options.
 
-- prune and show: the individual usage only said [<options>].  Kept
-  the snippet from the main usage, which is more specific.
+Either the --git-dir condition needs to say it also applies
+to --is-inside-git-dir and --is-inside-work-tree
+(and --is-bare-repository?), or add a "see --git-dir preconditions." to
+each of those options. It's easy to be wise after the event hence my 
+preference for a suitable note.
 
-- set-branches: kept the main usage, which is more concise in saying
-  that --add is optional
+regards
 
-Reported-by: Tr=E1=BA=A7n Ng=E1=BB=8Dc Qu=C3=A2n <vnwildman@gmail.com>
-Signed-off-by: Thomas Rast <tr@thomasrast.ch>
----
-
-Tr=E1=BA=A7n Ng=E1=BB=8Dc Qu=C3=A2n <vnwildman@gmail.com> wrote:
-> On 02/11/2013 09:23, Jiang Xin wrote:
-> > Confirmed, there is a typo in builtin/remote.c line 15. Have you se=
-nd
-> > patch to this list for this, Tr=E1=BA=A7n?
-> >
-> This is minor error, so let Junio C Hamano do it!
-
-Dunno, this generally isn't the nicest way to get things done, nor the
-most productive use of maintainer bandwidth.
-
-How about patching it like this instead?  That should prevent similar
-issues from cropping up again.
-
-
- builtin/remote.c | 70 +++++++++++++++++++++++++++++++++++++-----------=
---------
- 1 file changed, 47 insertions(+), 23 deletions(-)
-
-diff --git a/builtin/remote.c b/builtin/remote.c
-index 4e14891..2f6366a 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -7,67 +7,91 @@
- #include "run-command.h"
- #include "refs.h"
-=20
-+static const char builtin_remote_add_usage_str[] =3D
-+	N_("git remote add [-t <branch>] [-m <master>] [-f] [--tags|--no-tags=
-] "
-+	   "[--mirror=3D<fetch|push>] <name> <url>");
-+static const char builtin_remote_rename_usage_str[] =3D
-+	N_("git remote rename <old> <new>");
-+static const char builtin_remote_rm_usage_str[] =3D
-+	N_("git remote remove <name>");
-+static const char builtin_remote_sethead_usage_str[] =3D
-+	N_("git remote set-head <name> (-a | --auto | -d | --delete | <branch=
->)");
-+static const char builtin_remote_setbranches_usage_str[] =3D
-+	N_("git remote set-branches [--add] <name> <branch>...");
-+static const char builtin_remote_show_usage_str[] =3D
-+	N_("git remote [-v | --verbose] show [-n] <name>");
-+static const char builtin_remote_prune_usage_str[] =3D
-+	N_("git remote prune [-n | --dry-run] <name>");
-+static const char builtin_remote_update_usage_str[] =3D
-+	N_("git remote [-v | --verbose] update [-p | --prune] "
-+	   "[(<group> | <remote>)...]");
-+static const char builtin_remote_seturl_usage_str[] =3D
-+	N_("git remote set-url [--push] <name> <newurl> [<oldurl>]");
-+static const char builtin_remote_seturl_add_usage_str[] =3D
-+	N_("git remote set-url --add <name> <newurl>");
-+static const char builtin_remote_seturl_delete_usage_str[] =3D
-+	N_("git remote set-url --delete <name> <url>");
-+
- static const char * const builtin_remote_usage[] =3D {
- 	N_("git remote [-v | --verbose]"),
--	N_("git remote add [-t <branch>] [-m <master>] [-f] [--tags|--no-tags=
-] [--mirror=3D<fetch|push>] <name> <url>"),
--	N_("git remote rename <old> <new>"),
--	N_("git remote remove <name>"),
--	N_("git remote set-head <name> (-a | --auto | -d | --delete |<branch>=
-)"),
--	N_("git remote [-v | --verbose] show [-n] <name>"),
--	N_("git remote prune [-n | --dry-run] <name>"),
--	N_("git remote [-v | --verbose] update [-p | --prune] [(<group> | <re=
-mote>)...]"),
--	N_("git remote set-branches [--add] <name> <branch>..."),
--	N_("git remote set-url [--push] <name> <newurl> [<oldurl>]"),
--	N_("git remote set-url --add <name> <newurl>"),
--	N_("git remote set-url --delete <name> <url>"),
-+	builtin_remote_add_usage_str,
-+	builtin_remote_rename_usage_str,
-+	builtin_remote_rm_usage_str,
-+	builtin_remote_sethead_usage_str,
-+	builtin_remote_show_usage_str,
-+	builtin_remote_prune_usage_str,
-+	builtin_remote_update_usage_str,
-+	builtin_remote_setbranches_usage_str,
-+	builtin_remote_seturl_usage_str,
-+	builtin_remote_seturl_add_usage_str,
-+	builtin_remote_seturl_delete_usage_str,
- 	NULL
- };
-=20
- static const char * const builtin_remote_add_usage[] =3D {
--	N_("git remote add [<options>] <name> <url>"),
-+	builtin_remote_add_usage_str,
- 	NULL
- };
-=20
- static const char * const builtin_remote_rename_usage[] =3D {
--	N_("git remote rename <old> <new>"),
-+	builtin_remote_rename_usage_str,
- 	NULL
- };
-=20
- static const char * const builtin_remote_rm_usage[] =3D {
--	N_("git remote remove <name>"),
-+	builtin_remote_rm_usage_str,
- 	NULL
- };
-=20
- static const char * const builtin_remote_sethead_usage[] =3D {
--	N_("git remote set-head <name> (-a | --auto | -d | --delete | <branch=
->)"),
-+	builtin_remote_sethead_usage_str,
- 	NULL
- };
-=20
- static const char * const builtin_remote_setbranches_usage[] =3D {
--	N_("git remote set-branches <name> <branch>..."),
--	N_("git remote set-branches --add <name> <branch>..."),
-+	builtin_remote_setbranches_usage_str,
- 	NULL
- };
-=20
- static const char * const builtin_remote_show_usage[] =3D {
--	N_("git remote show [<options>] <name>"),
-+	builtin_remote_show_usage_str,
- 	NULL
- };
-=20
- static const char * const builtin_remote_prune_usage[] =3D {
--	N_("git remote prune [<options>] <name>"),
-+	builtin_remote_prune_usage_str,
- 	NULL
- };
-=20
- static const char * const builtin_remote_update_usage[] =3D {
--	N_("git remote update [<options>] [<group> | <remote>]..."),
-+	builtin_remote_update_usage_str,
- 	NULL
- };
-=20
- static const char * const builtin_remote_seturl_usage[] =3D {
--	N_("git remote set-url [--push] <name> <newurl> [<oldurl>]"),
--	N_("git remote set-url --add <name> <newurl>"),
--	N_("git remote set-url --delete <name> <url>"),
-+	builtin_remote_seturl_usage_str,
-+	builtin_remote_seturl_add_usage_str,
-+	builtin_remote_seturl_delete_usage_str,
- 	NULL
- };
-=20
---=20
-1.8.4.2.838.g4c8c068
+Philip
