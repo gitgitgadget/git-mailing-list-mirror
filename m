@@ -1,57 +1,70 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 1/3] for-each-ref: introduce %C(...) for color
-Date: Sat, 2 Nov 2013 11:32:29 +0530
-Message-ID: <CALkWK0k-8noAJbgzPx3NEx-ucUdZoS4VmqNCKjm3R_5eqFnR7w@mail.gmail.com>
-References: <1383212774-5232-1-git-send-email-artagnon@gmail.com>
- <1383212774-5232-2-git-send-email-artagnon@gmail.com> <xmqq38nh411p.fsf@gitster.dls.corp.google.com>
- <CALkWK0nEMpVUkzafjDkVV-uaLTYzHYUTsZkmwRPkLFa=8NEkPA@mail.gmail.com> <xmqqli182mde.fsf@gitster.dls.corp.google.com>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: [PATCH v2] gitk: Add a horizontal scrollbar for commit history
+Date: Sat, 02 Nov 2013 10:40:45 +0100
+Message-ID: <5274C89D.10103@hvoigt.net>
+References: <1383130702-4966-1-git-send-email-ncornu@aldebaran-robotics.com> <5270F4FC.60900@viscovery.net> <CAMXp-VMku0eSQmmbdy-NQDedH4VSgZN5XmpTeBHvN8qX1=ersg@mail.gmail.com> <20131031090526.GA9164@iris.ozlabs.ibm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Nov 02 07:03:32 2013
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Paul Mackerras <paulus@samba.org>,
+	Nicolas Cornu <ncornu@aldebaran-robotics.com>
+X-From: git-owner@vger.kernel.org Sat Nov 02 10:49:05 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VcUJ1-0006dV-JQ
-	for gcvg-git-2@plane.gmane.org; Sat, 02 Nov 2013 07:03:31 +0100
+	id 1VcXpI-0008Bb-OX
+	for gcvg-git-2@plane.gmane.org; Sat, 02 Nov 2013 10:49:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751453Ab3KBGDZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 2 Nov 2013 02:03:25 -0400
-Received: from mail-ie0-f171.google.com ([209.85.223.171]:55797 "EHLO
-	mail-ie0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751263Ab3KBGDJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Nov 2013 02:03:09 -0400
-Received: by mail-ie0-f171.google.com with SMTP id tp5so9041929ieb.16
-        for <git@vger.kernel.org>; Fri, 01 Nov 2013 23:03:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=t8rYtGH/844LlKre+9Mz1yvmTSJpxFetwmAS3DMuW4c=;
-        b=KGuTKLvWIuJxfGVqeOwy9gCzWpqhy69RsJHkMNlogBBNL1kZu2hPfr/3oefeF3KJ0l
-         jX2COLZRHOYtBhM6tfvedeFRGmHBDP/XgBGEteAeyLU9TFyXHkdnhajHxFqmSvR08iAx
-         pRtWJZUtkB3tKSaXIZZdJ/kTTLNSqnJiCDukMST3zXXnhLYTn83SDYa7oZtv03iNoPkR
-         4ikcoq/76NPobhET1TSA3yAUeqJHJ0uLOXsxZpu9VZseoySxLmyxHkgHfQFHg4qcUhp6
-         jsHDMboqgWm0pPeBa6FQU0HLejzD0UCHJV6yzLEFfk6LBUbglwiibkTxPmQM7CGrwt2y
-         2EFg==
-X-Received: by 10.50.23.16 with SMTP id i16mr4822037igf.50.1383372189440; Fri,
- 01 Nov 2013 23:03:09 -0700 (PDT)
-Received: by 10.64.73.36 with HTTP; Fri, 1 Nov 2013 23:02:29 -0700 (PDT)
-In-Reply-To: <xmqqli182mde.fsf@gitster.dls.corp.google.com>
+	id S1751805Ab3KBJsq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 2 Nov 2013 05:48:46 -0400
+Received: from smtprelay01.ispgateway.de ([80.67.31.39]:43888 "EHLO
+	smtprelay01.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751330Ab3KBJsp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Nov 2013 05:48:45 -0400
+X-Greylist: delayed 477 seconds by postgrey-1.27 at vger.kernel.org; Sat, 02 Nov 2013 05:48:45 EDT
+Received: from [77.20.34.36] (helo=[192.168.178.45])
+	by smtprelay01.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.68)
+	(envelope-from <hvoigt@hvoigt.net>)
+	id 1VcXhG-0006kU-2E; Sat, 02 Nov 2013 10:40:46 +0100
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.1.0
+In-Reply-To: <20131031090526.GA9164@iris.ozlabs.ibm.com>
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237236>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237237>
 
-Junio C Hamano wrote:
-> This patch is about for-each-ref and your series does not seem to
-> aim to unify it in any way with pretty-formats, so I would have
-> expected an enhancement in line with the former, not the latter.
+Hi,
 
-While I might never attempt a unification again, there's no harm in
-getting the formats to resemble each other in part; it's likely that
-users of f-e-r format will be familiar with pretty-formats.
+Am 31.10.2013 10:05, schrieb Paul Mackerras:
+> On Wed, Oct 30, 2013 at 01:47:08PM +0100, Nicolas Cornu wrote:
+>> This is useful on all our repos, every times, as we put a tag per day.
+>> If the HEAD didn't move during 150 days, we got 150 tags.
+>
+> Here is a patch that I did some time ago but have never pushed out.
+> Do you think it is an improvement when using gitk on a repo with lots
+> of tags?
+>
+> Paul.
+>
+> [PATCH] gitk: Tag display improvements
+>
+> When a commit has many tags, the tag icons in the graph display can
+> easily become so wide as to push the commit message off the right-hand
+> edge of the graph display pane.  This changes the display so that if
+> there are more than 3 tags or they would take up more than a quarter
+> of the width of the pane, we instead display a single tag icon with
+> a legend inside it like "4 tags...".  If the user clicks on the tag
+> icon, gitk then displays all the tags in the diff display pane.
+>
+> Signed-off-by: Paul Mackerras <paulus@samba.org>
+
+Yes please. I have not tried it but the description sounds great. Will 
+try to give it a testdrive next week.
+
+Cheers Heiko
