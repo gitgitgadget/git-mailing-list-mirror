@@ -1,123 +1,110 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: Git 1.8.4.2: 'git-rev-parse --is-inside-git-dir' wrong output!
-Date: Sat, 2 Nov 2013 20:20:41 +0000
-Message-ID: <20131102202041.GF24023@serenity.lan>
-References: <CACbqpSvU4qxc0WtquP6Eq8bZGjLxTrVhtT2Nqw90wb23ESkfcw@mail.gmail.com>
- <20131102105816.GC24023@serenity.lan>
- <11593D3DCFCD4D24BB881B9E5FAB79C0@PhilipOakley>
- <20131102140656.GE24023@serenity.lan>
- <CE13C82CA4C24CA8B56380DA00A700A5@PhilipOakley>
- <CACbqpSspsUvw3QXnSmOXA2boenh3y4DjHO-813OTna7cpSXkZQ@mail.gmail.com>
+From: Sebastian Schuberth <sschuberth@gmail.com>
+Subject: Re: [PATCH 2/3] Windows: a test_cmp that is agnostic to
+ random LF <> CRLF conversions
+Date: Sat, 02 Nov 2013 21:33:28 +0100
+Message-ID: <52756198.2070900@gmail.com>
+References: <cover.1382814437.git.j6t@kdbg.org> <e64878fec3f026802e8d3958a1e6213428cab778.1382814437.git.j6t@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>,
-	Philip Oakley <philipoakley@iee.org>
-To: Ville Walveranta <walveranta@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Nov 02 21:20:55 2013
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Cc: msysgit@googlegroups.com
+To: Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
+X-From: msysgit+bncBDZMLEGXWQLBBIOD2WJQKGQER3JPB5I@googlegroups.com Sat Nov 02 21:33:38 2013
+Return-path: <msysgit+bncBDZMLEGXWQLBBIOD2WJQKGQER3JPB5I@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-la0-f60.google.com ([209.85.215.60])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vchgk-0007Kf-Hv
-	for gcvg-git-2@plane.gmane.org; Sat, 02 Nov 2013 21:20:54 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754463Ab3KBUUu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 2 Nov 2013 16:20:50 -0400
-Received: from coyote.aluminati.org ([72.9.247.114]:57380 "EHLO
-	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754416Ab3KBUUu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Nov 2013 16:20:50 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by coyote.aluminati.org (Postfix) with ESMTP id 61DEE6064EB;
-	Sat,  2 Nov 2013 20:20:49 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -1
-X-Spam-Level: 
-X-Spam-Status: No, score=-1 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1] autolearn=ham
-Received: from coyote.aluminati.org ([127.0.0.1])
-	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id cPFOwKLs2id6; Sat,  2 Nov 2013 20:20:49 +0000 (GMT)
-Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
-	by coyote.aluminati.org (Postfix) with ESMTP id D61426064D6;
-	Sat,  2 Nov 2013 20:20:48 +0000 (GMT)
-Received: from localhost (localhost [127.0.0.1])
-	by pichi.aluminati.org (Postfix) with ESMTP id CD007161E4C8;
-	Sat,  2 Nov 2013 20:20:48 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at aluminati.org
-Received: from pichi.aluminati.org ([127.0.0.1])
-	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id E99I7ve2Rbng; Sat,  2 Nov 2013 20:20:48 +0000 (GMT)
-Received: from serenity.lan (chimera.aluminati.org [10.0.16.60])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by pichi.aluminati.org (Postfix) with ESMTPSA id 019D0161E484;
-	Sat,  2 Nov 2013 20:20:43 +0000 (GMT)
-Content-Disposition: inline
-In-Reply-To: <CACbqpSspsUvw3QXnSmOXA2boenh3y4DjHO-813OTna7cpSXkZQ@mail.gmail.com>
-User-Agent: Mutt/1.5.22 (2013-10-16)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237249>
+	(envelope-from <msysgit+bncBDZMLEGXWQLBBIOD2WJQKGQER3JPB5I@googlegroups.com>)
+	id 1Vcht4-0005xK-MW
+	for gcvm-msysgit@m.gmane.org; Sat, 02 Nov 2013 21:33:38 +0100
+Received: by mail-la0-f60.google.com with SMTP id hp15sf568356lab.15
+        for <gcvm-msysgit@m.gmane.org>; Sat, 02 Nov 2013 13:33:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
+         :subject:references:in-reply-to:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type;
+        bh=7/IAQchDq/wzO3FB52ynO8pOvD4VJNMre9kWUe5Ogxw=;
+        b=RtIWa3Dt0ujnZrsC5ycgeOdbEdUIDiiE8UO1e1Vsyxa/vH8tDMvtqOe19PsZYn0ucE
+         ULNXbzvSFAAFmZKFeeoKM4RiPua/m+EGt3ZGUAVz04wXUq66Yc4xTTREZuw2HOJ5FvWN
+         75AYq070SGAmP5M3HTKTXJCjFudWR5U4NwA0lmLM2+QLA871WU2lEyoT0AXfyhG8EfGK
+         x1wkxApJR8pCe79FU2RwYH6A8UeW0SHGP+FB756h+lsdKzgtHvEamRE2/peKDnr+4UXA
+         gfSw/CuH/hgziYQZOGfYl7jsmMF9np+T3dP5a9dotNgPrcrLWCtX4AsG+DTAmqaD16ii
+         b1jw==
+X-Received: by 10.152.121.3 with SMTP id lg3mr124888lab.2.1383424418402;
+        Sat, 02 Nov 2013 13:33:38 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.152.120.199 with SMTP id le7ls345419lab.77.gmail; Sat, 02 Nov
+ 2013 13:33:37 -0700 (PDT)
+X-Received: by 10.112.205.38 with SMTP id ld6mr3389354lbc.10.1383424417014;
+        Sat, 02 Nov 2013 13:33:37 -0700 (PDT)
+Received: from mail-ea0-x231.google.com (mail-ea0-x231.google.com [2a00:1450:4013:c01::231])
+        by gmr-mx.google.com with ESMTPS id z4si1449587eel.0.2013.11.02.13.33.36
+        for <msysgit@googlegroups.com>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sat, 02 Nov 2013 13:33:36 -0700 (PDT)
+Received-SPF: pass (google.com: domain of sschuberth@gmail.com designates 2a00:1450:4013:c01::231 as permitted sender) client-ip=2a00:1450:4013:c01::231;
+Received: by mail-ea0-f177.google.com with SMTP id f15so2652245eak.22
+        for <msysgit@googlegroups.com>; Sat, 02 Nov 2013 13:33:36 -0700 (PDT)
+X-Received: by 10.14.179.66 with SMTP id g42mr984646eem.104.1383424416857;
+        Sat, 02 Nov 2013 13:33:36 -0700 (PDT)
+Received: from [192.168.188.20] (p4FC96A61.dip0.t-ipconnect.de. [79.201.106.97])
+        by mx.google.com with ESMTPSA id e13sm24725046eeu.4.2013.11.02.13.33.35
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sat, 02 Nov 2013 13:33:36 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.12) Gecko/20080213 Thunderbird/2.0.0.12 Mnenhy/0.7.5.0
+Newsgroups: gmane.comp.version-control.msysgit,gmane.comp.version-control.git
+In-Reply-To: <e64878fec3f026802e8d3958a1e6213428cab778.1382814437.git.j6t@kdbg.org>
+X-Original-Sender: sschuberth@gmail.com
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of sschuberth@gmail.com designates 2a00:1450:4013:c01::231
+ as permitted sender) smtp.mail=sschuberth@gmail.com;       dkim=pass
+ header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237250>
 
-On Sat, Nov 02, 2013 at 02:42:04PM -0500, Ville Walveranta wrote:
-> Without the functionality such as that 1.7.9.5 still offered, it is
-> now not possible to use "git-rev-parse --is-inside-work-tree" to
-> detect whether the current location is controlled by a git repository
-> without emitting the "fatal: Not a git
-> repository (or any of the parent directories): .git" error message,
-> when it is not. There is no functional "--quiet" switch, and the usual
-> error/std redirection to /dev/null doesn't seem to work to squelch the
-> output.
+On 26.10.2013 21:17, Johannes Sixt wrote:
 
-How doesn't redirection work?  The message is printed to stderr; the
-snippet I posted below does indeed squelch the output.
+> In a number of tests, output that was produced by a shell script is
+> compared to expected output using test_cmp. Unfortunately, the MSYS bash--
+> when invoked via git, such as in hooks--converts LF to CRLF on output
+> (as produced by echo and printf), which leads to many false positives.
 
-> If "--is-inside-git-dir" and "--is-inside-work-tree" are indeed not
-> supposed to emit "false" when outside of a git repository, perhaps
-> there is another way I can use (in a bash script) to cleanly detect
-> whether a specific path is part of a git repo or not?
+As you correctly point out the LF vs. CRLF issues are caused by MSYS 
+bash. Then why are the functions called mingw_* instead of msys_*? I'd 
+prefer to make very clear that not MinGW but MSYS is the culprit 
+concerning the LF vs. CRLF issues (and also the path mangling issues).
 
-Something like this, maybe?
+-- 
+Sebastian Schuberth
 
-    (cd "$dir" && git rev-parse --git-dir >/dev/null 2>&1)
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
 
-> On Sat, Nov 2, 2013 at 12:03 PM, Philip Oakley <philipoakley@iee.org> wrote:
-> > From: "John Keeping" <john@keeping.me.uk>
-> > Sent: Saturday, November 02, 2013 2:06 PM
-> >
-> >> On Sat, Nov 02, 2013 at 01:47:02PM -0000, Philip Oakley wrote:
-> >>>
-> >>> From: "John Keeping" <john@keeping.me.uk>
-> >>> Sent: Saturday, November 02, 2013 10:58 AM
-> >>> > On Fri, Nov 01, 2013 at 06:19:51PM -0500, Ville Walveranta wrote:
-> >>> >> "git-rev-parse --is-inside-git-dir" outputs "fatal: Not a git
-> >>> >> repository (or any of the parent directories): .git", instead of
-> >>> >> "false" when outside of a git directory.  "--is-inside-work-tree"
-> >>> >> behaves the same way. Both commands work correctly (i.e. output
-> >>> >> "true") when inside a git directory, or inside a work tree,
-> >>> >> respectively.
-> >>> >
-> >>> > I think that's intentional - and it looks like the behaviour has
-> >>> > not
-> >>> > changed since these options were added.  With the current behaviour
-> >>> > you
-> >>> > get three possible outcomes from "git
-> >>> > rev-parse --is-inside-work-tree":
-> >>> >
-> >>> >    if worktree=$(git rev-parse --is-inside-work-tree 2>/dev/null)
-> >>> >    then
-> >>> >        if test "$worktree" = true
-> >>> >        then
-> >>> >            echo 'inside work tree'
-> >>> >        else
-> >>> >            echo 'in repository, but not in work tree'
-> >>> >        fi
-> >>> >    else
-> >>> >        echo 'not in repository'
-> >>> >    fi
-> >>> > --
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/groups/opt_out.
