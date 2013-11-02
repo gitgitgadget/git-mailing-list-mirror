@@ -1,58 +1,86 @@
-From: Ville Walveranta <walveranta@gmail.com>
-Subject: Git 1.8.4.2: 'git-rev-parse --is-inside-git-dir' wrong output!
-Date: Fri, 1 Nov 2013 18:19:51 -0500
-Message-ID: <CACbqpSvU4qxc0WtquP6Eq8bZGjLxTrVhtT2Nqw90wb23ESkfcw@mail.gmail.com>
+From: Gerasimos Dimitriadis <gedimitr@gmail.com>
+Subject: Question on merge order
+Date: Sat, 2 Nov 2013 03:11:55 +0200
+Message-ID: <CAM3f4mDXwXTJ5Kq3sgyK7yDLsBTdxSJXkZdE-SBe2LqfM3fccw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 02 00:19:56 2013
+X-From: git-owner@vger.kernel.org Sat Nov 02 02:12:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VcO0R-0006or-KY
-	for gcvg-git-2@plane.gmane.org; Sat, 02 Nov 2013 00:19:55 +0100
+	id 1VcPlC-0002Dk-V2
+	for gcvg-git-2@plane.gmane.org; Sat, 02 Nov 2013 02:12:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752825Ab3KAXTw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Nov 2013 19:19:52 -0400
-Received: from mail-vb0-f47.google.com ([209.85.212.47]:34751 "EHLO
-	mail-vb0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751870Ab3KAXTv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Nov 2013 19:19:51 -0400
-Received: by mail-vb0-f47.google.com with SMTP id m10so104743vbh.20
-        for <git@vger.kernel.org>; Fri, 01 Nov 2013 16:19:51 -0700 (PDT)
+	id S1752680Ab3KBBL5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Nov 2013 21:11:57 -0400
+Received: from mail-lb0-f176.google.com ([209.85.217.176]:54694 "EHLO
+	mail-lb0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751894Ab3KBBL5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Nov 2013 21:11:57 -0400
+Received: by mail-lb0-f176.google.com with SMTP id z5so4006095lbh.35
+        for <git@vger.kernel.org>; Fri, 01 Nov 2013 18:11:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=MUqeRBNLry3ijvIF/giZ862YUzKzCIREmXwBpcl0tu0=;
-        b=hZpOTEGHB8Dv94ta9rpb/iw+xuzUEZGkoQ3AiaaFYcFR1sJZT343BcQVq3JiO7vbty
-         o0tbcrDF6+0O4JzL44mmM5G/7yw5ZAxlGrP8VeobnzjJcqQYQSmKyLcF7VrFomriBPGG
-         P6yLlHnhBMXugubw3qjwQnEr/I5xnBYv8cvPEW4ftSTExjb+E1YkTllhx3bPzeRO69Y/
-         3LGKfxxYRjTT8VJOAYPSNJWucIywuajbZAm+sAIIAhEsiCZHwvYmV2Bm2flcTVzVDJCb
-         2jgBLDbTPhkPGkPXzkDugT3ISwWvzVMqRSqg5RUccJgQRkwuHo2nnBkLctqDwFVG9JxL
-         Mmjw==
-X-Received: by 10.220.174.200 with SMTP id u8mr3487423vcz.6.1383347991094;
- Fri, 01 Nov 2013 16:19:51 -0700 (PDT)
-Received: by 10.58.2.133 with HTTP; Fri, 1 Nov 2013 16:19:51 -0700 (PDT)
+        bh=gJkxJs9E8v2AHcTPa/QmsHKhwTER9EbRkMMLBbA+4ag=;
+        b=FjLk62Nip0w/jz1ACZUSqzqTq0YCdGt7NnNRkNcy6igtjnFwvZbf5YCo8VpwA/yW0M
+         ms2nf+d/X4YGRpcEpdYptw848RuBWe5cKKjUbKP+IHpvtYsT3wukarmqvLN7TiN3rZwz
+         gtF7YMJs+4cz3r7rur31a0ke0vgo8BZ2Tv4n4SDWeWrrrucjETR7Vf8CRBYKNkqE8M8S
+         ZD1w4u5MTibxnup4MfLAe4maZwYUbtTsYLKN98BF1yoVlu2ewGK08MO3FQ348xbryNGW
+         C8sNMlaejsyIAUKOqTXJE5QKNtw5VVUIBf5+bXwrGDHQIyQonoKNqEaEiSLdWD9Udy57
+         tihw==
+X-Received: by 10.112.171.228 with SMTP id ax4mr3281215lbc.6.1383354715388;
+ Fri, 01 Nov 2013 18:11:55 -0700 (PDT)
+Received: by 10.112.24.34 with HTTP; Fri, 1 Nov 2013 18:11:55 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237232>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237233>
 
-"git-rev-parse --is-inside-git-dir" outputs "fatal: Not a git
-repository (or any of the parent directories): .git", instead of
-"false" when outside of a git directory.  "--is-inside-work-tree"
-behaves the same way. Both commands work correctly (i.e. output
-"true") when inside a git directory, or inside a work tree,
-respectively.
+Hi,
 
-To test, I installed git 1.8.4.2 initially from
-https://launchpad.net/~git-core/+archive/ppa for Ubuntu 12.04.3, and
-then also compiled it from source, but both seem to behave the same
-way. The problem is not yet present in version 1.7.9.5.
+I have a question on the order with which commits are applied on a merge.
 
-Thanks,
+I am merging two branches that have changes on the same text file and
+I'd like to ask you about the merge result.
 
-Ville Walveranta
+The following output is provided on the two branches to be merged, by
+the command:
+git show-branch --date-order branchA branchB
+
+! [branchA] file.txt got form A
+ * [branchB] file.txt got form B
+--
++  [branchA] file.txt got form A
+ * [branchB] file.txt got form B
++  [branchA^] file.txt got form B
++* [branchA~2] First version of file.txt (form A)
+
+Now, this text file alternates between the following contents:
+
+According to form A, file.txt contains only one line of text:
+Gerasimos
+
+According to form B, file.txt contains three lines of text:
+PL-3
+PL-4
+PL-5
+
+The merge is done with the following commands:
+git checkout branchA
+git merge branchB
+
+Now, the result of the merge gets file.txt to form B, i.e. it contains
+the above 3 lines of text.
+My question is, why does the merge have the file resolve to form B and
+not to form A ?
+Theoretically, the merge could resolve to either A or B form. If the
+date is taken into account, maybe the A
+could even appear to be a better result.
+
+Thank you in advance and BRs,
+Gerasimos
