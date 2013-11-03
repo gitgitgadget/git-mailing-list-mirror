@@ -1,160 +1,101 @@
-From: Jiang Xin <worldhello.net@gmail.com>
-Subject: Re: [PATCH] remote: unify main and subcommand usage strings
-Date: Sun, 3 Nov 2013 16:03:34 +0800
-Message-ID: <CANYiYbGh-HR+hJcLg9AGbdXU=ypW8YwFqVcyVactJMYg4OOF7w@mail.gmail.com>
-References: <52746664.1050806@gmail.com>
-	<c2d51c4014545f037bb9399dba7b378d6d79d18b.1383407880.git.tr@thomasrast.ch>
-	<CANYiYbGD=VJ64pESwxkMYy8HxESyW_2N0Q5M92rCJF2E1FD-bw@mail.gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH 2/3] Windows: a test_cmp that is agnostic to
+ random LF <> CRLF conversions
+Date: Sun, 03 Nov 2013 09:32:00 +0100
+Message-ID: <52760A00.4080208@kdbg.org>
+References: <cover.1382814437.git.j6t@kdbg.org>	<e64878fec3f026802e8d3958a1e6213428cab778.1382814437.git.j6t@kdbg.org>	<52756198.2070900@gmail.com>	<52756332.50404@kdbg.org> <CAHGBnuOHHAZUD_1WWu+WrAYKB1f0BonztbAFzVqhxP0bjAkyfw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: =?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Thomas Rast <tr@thomasrast.ch>
-X-From: git-owner@vger.kernel.org Sun Nov 03 09:03:43 2013
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Cc: Git Mailing List <git@vger.kernel.org>, 
+ msysGit Mailinglist <msysgit@googlegroups.com>
+To: Sebastian Schuberth <sschuberth@gmail.com>
+X-From: msysgit+bncBCJYV6HBKQIIHFGYSMCRUBA53QEJQ@googlegroups.com Sun Nov 03 09:32:05 2013
+Return-path: <msysgit+bncBCJYV6HBKQIIHFGYSMCRUBA53QEJQ@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-wi0-f184.google.com ([209.85.212.184])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vcset-0003aZ-6e
-	for gcvg-git-2@plane.gmane.org; Sun, 03 Nov 2013 09:03:43 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752698Ab3KCIDj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Nov 2013 03:03:39 -0500
-Received: from mail-wi0-f172.google.com ([209.85.212.172]:58136 "EHLO
-	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752631Ab3KCIDg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Nov 2013 03:03:36 -0500
-Received: by mail-wi0-f172.google.com with SMTP id ez12so2597367wid.17
-        for <git@vger.kernel.org>; Sun, 03 Nov 2013 01:03:34 -0700 (PDT)
+	(envelope-from <msysgit+bncBCJYV6HBKQIIHFGYSMCRUBA53QEJQ@googlegroups.com>)
+	id 1Vct6K-0001qW-Ee
+	for gcvm-msysgit@m.gmane.org; Sun, 03 Nov 2013 09:32:04 +0100
+Received: by mail-wi0-f184.google.com with SMTP id ez12sf308533wid.21
+        for <gcvm-msysgit@m.gmane.org>; Sun, 03 Nov 2013 01:32:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=C07KpxPssjHPw/edUGYQxVX7jtzjZJ4hj16CpDrGHu8=;
-        b=vxUNJSZk9GKpFWH2AAGtRrn2by/CWOBlyNBVucRVCF4x5xCRpVhPfOqR7BFEWLIWXz
-         CPgO8aaMrWPSN2FlAlLJODMMLXI6CPprzsqMhhQOmwK3UrW6ann8tN4hh2MeWUFhEuSd
-         rRKR/PnTcMmq5pX6aHpG5s3o5Ka5Ud2Dpu+wybjFZR6FKdfMiV8p1z0k2k6ISTO7AQQd
-         ziA8YWp7R1L/wBKnku6YhgB9rMkmZaPfTjASZMQH44LYWXzqVafizF7lJ6MkZEwOdeNS
-         mSI/6ECg3oy3c+dqUhkKE3bO8bGvGnE/hu4xSqLGgh6vWfadOQlNg81B0sb97511BhM2
-         TSLA==
-X-Received: by 10.180.85.42 with SMTP id e10mr8158743wiz.1.1383465814349; Sun,
- 03 Nov 2013 01:03:34 -0700 (PDT)
-Received: by 10.216.122.202 with HTTP; Sun, 3 Nov 2013 01:03:34 -0700 (PDT)
-In-Reply-To: <CANYiYbGD=VJ64pESwxkMYy8HxESyW_2N0Q5M92rCJF2E1FD-bw@mail.gmail.com>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237256>
+        d=googlegroups.com; s=20120806;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type;
+        bh=ldEPOfQuBlJWrbZAJ65PxapMbUkNvXqkn2L+GPR+mUA=;
+        b=My6yQfue4DNqRk7lzGQtSnm9m724yOxIEliiMqEr3Eyks5cJ6vnFlDiU8wpmmeIJ89
+         c7dbPXLnoa0lxBR16Uml4nu6YdliV43iDbHoOBNpwbAVJpKsF95F8GaHaNXz3VB6FQAs
+         Bmad73IQql0zJbv3dchI7XCbGjagePZyKY7IFEXmD4iRWxzI8QNwLLJ+SbB5RaFUVHN+
+         dC8wCLsIIMgrcTNwFlzzaFDF1XgD9IYIz6vyHpPJODDTVgrsCkxplX61BBH60Kggd5LY
+         OPJPSf7t5hLJkm/Y8T3Ry2BhVgndlLhmEahLRnJJllDm82TIFhoZ9HeZGrF960qarbyb
+         75Vg==
+X-Received: by 10.152.120.129 with SMTP id lc1mr610lab.7.1383467524039;
+        Sun, 03 Nov 2013 01:32:04 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.152.9.68 with SMTP id x4ls313707laa.106.gmail; Sun, 03 Nov
+ 2013 01:32:03 -0700 (PDT)
+X-Received: by 10.152.3.97 with SMTP id b1mr324030lab.6.1383467523241;
+        Sun, 03 Nov 2013 01:32:03 -0700 (PDT)
+Received: from bsmtp.bon.at (bsmtp5.bon.at. [195.3.86.187])
+        by gmr-mx.google.com with ESMTPS id a1si1735200ees.1.2013.11.03.01.32.03
+        for <msysgit@googlegroups.com>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Sun, 03 Nov 2013 01:32:03 -0700 (PDT)
+Received-SPF: neutral (google.com: 195.3.86.187 is neither permitted nor denied by best guess record for domain of j6t@kdbg.org) client-ip=195.3.86.187;
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 865C11000B;
+	Sun,  3 Nov 2013 09:32:02 +0100 (CET)
+Received: from dx.sixt.local (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id 428CC19F60F;
+	Sun,  3 Nov 2013 09:32:01 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.0
+In-Reply-To: <CAHGBnuOHHAZUD_1WWu+WrAYKB1f0BonztbAFzVqhxP0bjAkyfw@mail.gmail.com>
+X-Original-Sender: j6t@kdbg.org
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
+ (google.com: 195.3.86.187 is neither permitted nor denied by best guess
+ record for domain of j6t@kdbg.org) smtp.mail=j6t@kdbg.org
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237257>
 
-2013/11/3 Jiang Xin <worldhello.net@gmail.com>:
-> 2013/11/3 Thomas Rast <tr@thomasrast.ch>:
->> Note that this patch changes the usage strings for the following
->> subcommands:
->
-> Differences of git-remote usages after applied your patch.
->
-> diff -u before/git-remote-add-usage after/git-remote-add-usage
-> --- before/git-remote-add-usage 2013-11-03 15:10:06.000000000 +0800
-> +++ after/git-remote-add-usage 2013-11-03 15:11:32.000000000 +0800
-> @@ -1,4 +1,4 @@
-> -usage: git remote add [<options>] <name> <url>
-> +usage: git remote add [-t <branch>] [-m <master>] [-f]
-> [--tags|--no-tags] [--mirror=<fetch|push>] <name> <url>
->
->      -f, --fetch           fetch the remote branches
->      --tags                import all tags and associated objects when fetching
->
-> diff -u before/git-remote-prune-usage after/git-remote-prune-usage
-> --- before/git-remote-prune-usage 2013-11-03 15:10:06.000000000 +0800
-> +++ after/git-remote-prune-usage 2013-11-03 15:11:32.000000000 +0800
-> @@ -1,4 +1,4 @@
-> -usage: git remote prune [<options>] <name>
-> +usage: git remote prune [-n | --dry-run] <name>
->
->      -n, --dry-run         dry run
->
-> diff -u before/git-remote-set-branches-usage after/git-remote-set-branches-usage
-> --- before/git-remote-set-branches-usage 2013-11-03 15:10:06.000000000 +0800
-> +++ after/git-remote-set-branches-usage 2013-11-03 15:11:32.000000000 +0800
-> @@ -1,5 +1,4 @@
-> -usage: git remote set-branches <name> <branch>...
-> -   or: git remote set-branches --add <name> <branch>...
-> +usage: git remote set-branches [--add] <name> <branch>...
->
->      --add                 add branch
->
-> diff -u before/git-remote-show-usage after/git-remote-show-usage
-> --- before/git-remote-show-usage 2013-11-03 15:10:06.000000000 +0800
-> +++ after/git-remote-show-usage 2013-11-03 15:11:32.000000000 +0800
-> @@ -1,4 +1,4 @@
-> -usage: git remote show [<options>] <name>
-> +usage: git remote [-v | --verbose] show [-n] <name>
->
->      -n                    do not query remotes
->
-> diff -u before/git-remote-update-usage after/git-remote-update-usage
-> --- before/git-remote-update-usage 2013-11-03 15:10:06.000000000 +0800
-> +++ after/git-remote-update-usage 2013-11-03 15:11:32.000000000 +0800
-> @@ -1,4 +1,4 @@
-> -usage: git remote update [<options>] [<group> | <remote>]...
-> +usage: git remote [-v | --verbose] update [-p | --prune] [(<group> |
-> <remote>)...]
->
->      -p, --prune           prune remotes after fetching
->
+Am 02.11.2013 21:47, schrieb Sebastian Schuberth:
+> So maybe it's a good point now to also change the MINGW prerequisite
+> name to MSYS as part of your patch, and then name the functions more
+> appropriately?
 
-In order to get the differences of git-remote usages, I write a script.
+It's too late. The series is already in master, and I see no point in a
+follow-up patch of this kind as long as there is no additional benefit.
 
-    # SCRIPT to save git remote usage in files.
-    for cmd in add set-head show prune update set-branches set-url; do
-            git remote $cmd -h > $DIR/git-remote-$cmd-usage
-    done
-    git remote -h > $DIR/git-remote-usage
-    git remote remove  > $DIR/git-remote-remove-usage 2>&1
-    git remote rename  > $DIR/git-remote-rename-usage  2>&1
-
-Then I find two subcommands (remove and rename) are strange.
-
- * All other subcommands output usages to STDIN, but subcommands
-    "remove" and "rename" send their usages to STDERR.
-
- * I can get the help message of all other subcommands using:
-   "git remote <subcmd> -h", but not "git remote rm -h"
-
-        $ git remote rm -h
-        error: Could not remove config section 'remote.-h'
-
-Later I know it's a side-effect that all other subcommands could
-print usages if provide a unkown "-h/--help" option.
-
-What if add a parse_options call for both "rm" and "mv" functions
-in builtin/remote.c?
-
-diff --git a/builtin/remote.c b/builtin/remote.c
-index 2f6366a..171d1a8 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -651,6 +651,8 @@ static int mv(int argc, const char **argv)
-        struct rename_info rename;
-        int i, refspec_updated = 0;
-
-+       argc = parse_options(argc, argv, NULL, options,
-+                            builtin_remote_rename_usage, 0);
-        if (argc != 3)
-                usage_with_options(builtin_remote_rename_usage, options);
-
-@@ -808,6 +810,8 @@ static int rm(int argc, const char **argv)
-        cb_data.skipped = &skipped;
-        cb_data.keep = &known_remotes;
-
-+       argc = parse_options(argc, argv, NULL, options,
-+                            builtin_remote_rm_usage,0);
-        if (argc != 2)
-                usage_with_options(builtin_remote_rm_usage, options);
-
+-- Hannes
 
 -- 
-Jiang Xin
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/groups/opt_out.
