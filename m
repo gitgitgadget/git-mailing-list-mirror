@@ -1,69 +1,82 @@
-From: Stephan Classen <stephan.classen@inventage.com>
-Subject: git svn fetch stops at revision 1485500
-Date: Sun, 03 Nov 2013 11:19:23 +0100
-Message-ID: <5276232B.8020205@inventage.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 03 11:27:16 2013
+From: Ben Walton <bdwalton@gmail.com>
+Subject: [PATCH] Change sed i\ usage to something Solaris' sed can handle
+Date: Sun,  3 Nov 2013 13:08:29 +0000
+Message-ID: <1383484109-30838-1-git-send-email-bdwalton@gmail.com>
+References: <xmqqeh72blpt.fsf@gitster.dls.corp.google.com>
+Cc: git@vger.kernel.org, schwab@linux-m68k.org,
+	Ben Walton <bdwalton@gmail.com>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Sun Nov 03 14:09:12 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vcutl-0008Ak-Di
-	for gcvg-git-2@plane.gmane.org; Sun, 03 Nov 2013 11:27:13 +0100
+	id 1VcxQV-00031r-I9
+	for gcvg-git-2@plane.gmane.org; Sun, 03 Nov 2013 14:09:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752732Ab3KCK1H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Nov 2013 05:27:07 -0500
-Received: from www.inventage.com ([62.12.129.170]:33322 "EHLO
-	scapa.inventage.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752529Ab3KCK1G (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Nov 2013 05:27:06 -0500
-X-Greylist: delayed 460 seconds by postgrey-1.27 at vger.kernel.org; Sun, 03 Nov 2013 05:27:06 EST
-Received: from localhost (localhost [127.0.0.1])
-	by scapa.inventage.com (Postfix) with ESMTP id 23E60E94626
-	for <git@vger.kernel.org>; Sun,  3 Nov 2013 11:19:24 +0100 (CET)
-Received: from scapa.inventage.com ([127.0.0.1])
-	by localhost (scapa.inventage.com [127.0.0.1]) (amavisd-new, port 10032)
-	with ESMTP id 2f_JZ_NcqUDa for <git@vger.kernel.org>;
-	Sun,  3 Nov 2013 11:19:23 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by scapa.inventage.com (Postfix) with ESMTP id C3A32E94640
-	for <git@vger.kernel.org>; Sun,  3 Nov 2013 11:19:23 +0100 (CET)
-X-Virus-Scanned: amavisd-new at inventage.com
-Received: from scapa.inventage.com ([127.0.0.1])
-	by localhost (scapa.inventage.com [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id JvUj7e37L6wI for <git@vger.kernel.org>;
-	Sun,  3 Nov 2013 11:19:23 +0100 (CET)
-Received: from [192.168.1.103] (195-202-219-190.dynamic.hispeed.ch [195.202.219.190])
-	by scapa.inventage.com (Postfix) with ESMTPSA id 9904CE94626
-	for <git@vger.kernel.org>; Sun,  3 Nov 2013 11:19:23 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.0
+	id S1753422Ab3KCNIv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Nov 2013 08:08:51 -0500
+Received: from jimi.chass.utoronto.ca ([128.100.160.32]:45723 "EHLO
+	jimi.chass.utoronto.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752544Ab3KCNIv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Nov 2013 08:08:51 -0500
+Received: from hendrix.chass.utoronto.ca ([128.100.160.33]:51991 ident=93)
+	  by jimi.chass.utoronto.ca with esmtp  (Exim 4.76)
+	 (envelope-from <bwalton@benandwen.net>)
+	 id 1VcxQA-0004K7-9H ; Sun, 03 Nov 2013 08:08:50 -0500
+Received: from 86-42-140-29-dynamic.b-ras1.bbh.dublin.eircom.net ([86.42.140.29]:38074 helo=neilyoung)
+	 (auth info: dovecot_plain:bwalton@chass.utoronto.ca) by hendrix.chass.utoronto.ca with esmtpsa (TLSv1:AES128-SHA:128)
+	 (Exim 4.76)
+	 (envelope-from <bwalton@benandwen.net>)
+	 id 1VcxQ5-0004uI-2V ; Sun, 03 Nov 2013 08:08:45 -0500
+Received: from bwalton by neilyoung with local (Exim 4.80)
+	(envelope-from <bwalton@benandwen.net>)
+	id 1VcxPy-00081w-S7; Sun, 03 Nov 2013 13:08:38 +0000
+X-Mailer: git-send-email 1.8.3.2
+In-Reply-To: <xmqqeh72blpt.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237258>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237259>
 
-I hope this is the right place to post this.
+Solaris' sed was choking on the i\ commands used in
+t4015-diff-whitespace as it couldn't parse the program properly.
+Modify two uses of sed that worked in GNU sed but not Solaris'
+(/usr/bin or /usr/xpg4/bin) to an equivalent form that is handled
+properly by both.
 
-When trying to fetch a very large svn using git svn it always terminates 
-at commit 1485500.
-this is easily reproducible:
+Signed-off-by: Ben Walton <bdwalton@gmail.com>
+---
+This addresses Andreas' comment about the extraneous \<nl>.
+Sorry, I misunderstood the original comment.
 
-git svn init -s https://svn.apache.org/repos/asf/onami/trunk
-git svn fetch -r 1480000:HEAD
+ t/t4015-diff-whitespace.sh | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-The commit 1485500 is not in the subtree of the svn I'm trying to fetch 
-but in some unrelated place. So I think it is not the commit which 
-causes the problem but an overflow of some kind.
-
-The command terminates without an error but after the command has 
-terminated nothing shows up in my local git repo.
-There are no commits and no branches. I expected at least trunk to be 
-available.
-
-Thank you for your help
-Stephan
+diff --git a/t/t4015-diff-whitespace.sh b/t/t4015-diff-whitespace.sh
+index 3fb4b97..604a838 100755
+--- a/t/t4015-diff-whitespace.sh
++++ b/t/t4015-diff-whitespace.sh
+@@ -145,7 +145,7 @@ test_expect_success 'another test, with --ignore-space-at-eol' 'test_cmp expect
+ test_expect_success 'ignore-blank-lines: only new lines' '
+ 	test_seq 5 >x &&
+ 	git update-index x &&
+-	test_seq 5 | sed "/3/i \\
++	test_seq 5 | sed "/3/i\\
+ " >x &&
+ 	git diff --ignore-blank-lines >out &&
+ 	>expect &&
+@@ -155,7 +155,8 @@ test_expect_success 'ignore-blank-lines: only new lines' '
+ test_expect_success 'ignore-blank-lines: only new lines with space' '
+ 	test_seq 5 >x &&
+ 	git update-index x &&
+-	test_seq 5 | sed "/3/i \ " >x &&
++	test_seq 5 | sed "/3/i\\
++ " >x &&
+ 	git diff -w --ignore-blank-lines >out &&
+ 	>expect &&
+ 	test_cmp out expect
+-- 
+1.8.3.2
