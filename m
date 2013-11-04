@@ -1,98 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Nov 2013, #01; Fri, 1)
-Date: Mon, 04 Nov 2013 09:37:33 -0800
-Message-ID: <xmqqeh6w131e.fsf@gitster.dls.corp.google.com>
-References: <xmqqob6320rt.fsf@gitster.dls.corp.google.com>
-	<52743547.7020001@ramsay1.demon.co.uk>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] builtin/remote: remove postfixcmp() and use suffixcmp()
+ instead
+Date: Mon, 4 Nov 2013 09:56:02 -0800
+Message-ID: <20131104175602.GB31881@google.com>
+References: <20131103201303.14446.7508.chriscool@tuxfamily.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Felipe Contreras <felipe.contreras@gmail.com>
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Mon Nov 04 18:37:44 2013
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Avery Pennarun <apenwarr@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Mon Nov 04 18:56:14 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VdO5v-00083O-4R
-	for gcvg-git-2@plane.gmane.org; Mon, 04 Nov 2013 18:37:43 +0100
+	id 1VdONp-0001bi-Hk
+	for gcvg-git-2@plane.gmane.org; Mon, 04 Nov 2013 18:56:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753436Ab3KDRhi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Nov 2013 12:37:38 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65473 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753395Ab3KDRhi (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Nov 2013 12:37:38 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0D5464BFA6;
-	Mon,  4 Nov 2013 12:37:37 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=rMS9tB7WX1ODjHusseySUgMYy24=; b=V/nSH8
-	bems5ZUna1u/9xkweH6CC10TVj0VZpbqjMPju4FuwBTEIMWGuVZulIB6pCexrt9b
-	a0snxuntLFZpF1D55xd2Of7wlDQySZvj0YM2/sk7h31CFr7sFPwEt0xjNsvXL/4y
-	mrMbXUulKD/TGIKwl5NMSY106C37sBZrGeg5s=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ky0bz/8mJBLRGMkYL+HZXO0MPYzQgSZr
-	05FE09pzbi9JDhUb1WSYixVaByzsgq+0tm7lebomzEHB1zlNRRSgXr4NRNkb56OO
-	iPq51iuqtoZJkvtuBYzzD5rcGwf5BmbzMcC+z47gb2OLccQ1CjVUzrWFxnWMyJ/B
-	lNjIZsO8H3A=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ECA204BFA5;
-	Mon,  4 Nov 2013 12:37:36 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4B9474BFA4;
-	Mon,  4 Nov 2013 12:37:36 -0500 (EST)
-In-Reply-To: <52743547.7020001@ramsay1.demon.co.uk> (Ramsay Jones's message of
-	"Fri, 01 Nov 2013 23:12:07 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: CB29B0B8-4577-11E3-ADF9-1FFB7F2839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751527Ab3KDR4I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Nov 2013 12:56:08 -0500
+Received: from mail-pd0-f179.google.com ([209.85.192.179]:43334 "EHLO
+	mail-pd0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750760Ab3KDR4H (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Nov 2013 12:56:07 -0500
+Received: by mail-pd0-f179.google.com with SMTP id y10so7045283pdj.10
+        for <git@vger.kernel.org>; Mon, 04 Nov 2013 09:56:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=ykm4OWdseE8IiUMb2VLrwNvqEiJJ8H0jtDvIZRLkQlE=;
+        b=JchjG71fPHg8qa+JeueR9oxRMFkZTbzYToC4kXKbbrycn8hWn0+410x4caDnPJq+6d
+         YflEPDzV7yyFawntFrTVW+pCHqJxV15HWkvNfzCDnqSSLZ/HN2VNzKNpfx+GEUoDHVVO
+         WDShW03AwYslJPjbTifgVlSLwA7/FUuG8oP+XWQ7i/ct28uJrZc88mBTaOzoRmUxFZiJ
+         2I4Qk4EmXBoMZkLGQQ1vh2E+CC4r14OXWkZu0sni2oWSrMiagMdZqK7Sox2bwMXppwMF
+         7zdBgLc71k/72Wh0CAdrNKSMVF/T1JFPW+LErMCS7vnRt6ZKZCSwoDS6g2gF/mHGThcW
+         jV0w==
+X-Received: by 10.66.145.40 with SMTP id sr8mr12725687pab.60.1383587767015;
+        Mon, 04 Nov 2013 09:56:07 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id zq10sm34558706pab.6.2013.11.04.09.56.05
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 04 Nov 2013 09:56:06 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <20131103201303.14446.7508.chriscool@tuxfamily.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237290>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237291>
 
-Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
+Christian Couder wrote:
 
-> On 01/11/13 22:52, Junio C Hamano wrote:
->> Here are the topics that have been cooking.  Commits prefixed with
->> '-' are only in 'pu' (proposed updates) while commits prefixed with
->> '+' are in 'next'.
->>
-> [ ... ]
->> 
->> 
->> * fc/transport-helper-fixes (2013-11-01) 11 commits
->>  - transport-helper: demote lack of "force" option to a warning
->>  - transport-helper: add support to delete branches
->>  - fast-export: add support to delete refs
->>  - fast-import: add support to delete refs
->>  - transport-helper: add support for old:new refspec
->>  - fast-export: add new --refspec option
->>  - fast-export: improve argument parsing
->>  - transport-helper: check for 'forced update' message
->>  - transport-helper: add 'force' to 'export' helpers
->>  - transport-helper: don't update refs in dry-run
->>  - transport-helper: mismerge fix
->> 
->>  Updates transport-helper, fast-import and fast-export to allow the
->>  ref mapping and ref deletion in a way similar to the natively
->>  supported transports.
->> 
->>  Will merge to 'next'.
->
-> Commit ad24a30ef ("fast-export: add new --refspec option", 31-10-2013)
-> causes sparse to complain:
->
->       SP builtin/fast-export.c
->   builtin/fast-export.c:739:55: warning: Variable length array is used.
->
-> Do we want to use this C99 feature?
+> Commit 8cc5b290 (git merge -X<option>, 25 Nov 2009) introduced
+> suffixcmp() with nearly the same implementation as postfixcmp()
+> that already existed since commit 211c8968 (Make git-remote a
+> builtin, 29 Feb 2008).
+[...]
+> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+> ---
+>  builtin/remote.c | 14 +++-----------
+>  1 file changed, 3 insertions(+), 11 deletions(-)
 
-Good eyes, and no---this needs to be fixed before going forward.
+Makes sense.  Thanks for noticing.
 
-Thanks for spotting.
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
