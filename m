@@ -1,38 +1,38 @@
 From: Torsten =?utf-8?q?B=C3=B6gershausen?= <tboegi@web.de>
 Subject: [PATCH V4] git clone: is an URL local or ssh
-Date: Mon, 4 Nov 2013 22:04:40 +0100
-Message-ID: <201311042204.41465.tboegi@web.de>
+Date: Mon, 4 Nov 2013 22:18:08 +0100
+Message-ID: <201311042218.08444.tboegi@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 04 22:18:30 2013
+X-From: git-owner@vger.kernel.org Mon Nov 04 22:18:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VdRXU-0004pP-P5
-	for gcvg-git-2@plane.gmane.org; Mon, 04 Nov 2013 22:18:25 +0100
+	id 1VdRXb-0004zf-Ly
+	for gcvg-git-2@plane.gmane.org; Mon, 04 Nov 2013 22:18:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752948Ab3KDVSU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 4 Nov 2013 16:18:20 -0500
-Received: from mout.web.de ([212.227.17.12]:59331 "EHLO mout.web.de"
+	id S1753323Ab3KDVS1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 4 Nov 2013 16:18:27 -0500
+Received: from mout.web.de ([212.227.15.3]:50742 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751904Ab3KDVST convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 4 Nov 2013 16:18:19 -0500
+	id S1753009Ab3KDVS0 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 4 Nov 2013 16:18:26 -0500
 Received: from appes.localnet ([78.72.74.102]) by smtp.web.de (mrweb001) with
- ESMTPA (Nemesis) id 0LmLK6-1WDKJv41VS-00ZyXf for <git@vger.kernel.org>; Mon,
- 04 Nov 2013 22:18:18 +0100
-X-Provags-ID: V03:K0:zlvFa6cQvswjP9skRmaMPqfn6EMgeYcs1JJw6hYxd3QoBRo/fwA
- fQPTaVZGKX8duA9ddT9bx1DjyirWAs8YKRf5+s6sUC5+RppFjRQjmHHQuMqu9KOOJ/umJnj
- QcUtlUV3PjmHzVmCtOgc/aKa9MF4WBY3qkXMhEsSK3vAldCSXUy32Gu2eayL5OydgCCNFEq
- 7bxfuR0b0WhKpQNs6bolQ==
+ ESMTPA (Nemesis) id 0Lj2TO-1WCDKZ14Qw-00dHON for <git@vger.kernel.org>; Mon,
+ 04 Nov 2013 22:18:25 +0100
+X-Provags-ID: V03:K0:ey/YQkjA585vyTTms5p2XaxUe7d+67tU7L2DKyAWu8xx3egH+g6
+ f4gTE8by3rVm14ZeUxyoB6GhZIQiI4d+OwBHWHiHo2V+4udgMbal4uhMGmIdSCIxd2egddp
+ ZcNn+LRpzEWQbpYloN2fRwuYdisgcAYg72ijyd+eIZd0GsVuH543NvNm2U89ztrZIeFsV3m
+ QC7s6y2zzOcnvOFNYzkbw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237303>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237304>
 
 Commit 8d3d28f5 added test cases for URLs which should be ssh.
 
