@@ -1,63 +1,97 @@
-From: Oded Arbel <oded@geek.co.il>
-Subject: Importing from subversion with full history
-Date: Mon, 4 Nov 2013 09:50:16 +0200
-Message-ID: <CAOqhUvzXUmF3bSX6ShQ3DpBGLgQfGyeUBabY=YkORSpSa0bvcQ@mail.gmail.com>
+From: Ralf Thielow <ralf.thielow@gmail.com>
+Subject: Re: git status: minor output format error
+Date: Mon, 4 Nov 2013 08:53:00 +0100
+Message-ID: <CAN0XMOK3NqcAyk5c246+CCDZETxGfsZ_AxbBEmUC0RX9aXW8mw@mail.gmail.com>
+References: <31465687.35grSWXxkx@i5>
+	<CACsJy8DyX-cxJNYe3HXeb8e96O36h4aEJrBo+P5035b-vuz0hw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 04 08:50:31 2013
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Wolfgang Rohdewald <wolfgang@rohdewald.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 04 08:53:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VdEvd-0002yM-W5
-	for gcvg-git-2@plane.gmane.org; Mon, 04 Nov 2013 08:50:30 +0100
+	id 1VdEyB-0004eY-Fb
+	for gcvg-git-2@plane.gmane.org; Mon, 04 Nov 2013 08:53:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751642Ab3KDHuS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Nov 2013 02:50:18 -0500
-Received: from mail-ea0-f182.google.com ([209.85.215.182]:58222 "EHLO
-	mail-ea0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751242Ab3KDHuR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Nov 2013 02:50:17 -0500
-Received: by mail-ea0-f182.google.com with SMTP id o10so3256663eaj.27
-        for <git@vger.kernel.org>; Sun, 03 Nov 2013 23:50:16 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=tlITqK7gXU1NieTcN3AUNfM39XAhLbqGPz4IKzN7k34=;
-        b=Tuwjajhqmxbd+3tnR+/3s6ReHoRRXb/uz+/6lkDKY/xwAWWO6H6HehiEghUdi7+Sx5
-         L4k1DzvgkI17/0wOls3Fm2yOYfLpG0VUN1YVd8wGCUDiJBj0wOAalM0ar5lP4ihHzY+r
-         9zigffC9ZM6+zhMkWLe5QUIjyM+P7krGP4YG2A5iRCRjlwlwSYY2umFTP80MDTS3KVQj
-         UgfipbqKNFs5PhMio4n3fDXYYUCcX115ZUxZjrG+9hQFwz9RBYNoe+uOS/SkMZemgQUt
-         THiud4dTFMlRlkBsqeWAe7XbvofVaYzm6cw5jTbFzj/XpWDZL1UvNWI8/vTyNIeGsQ++
-         7VsA==
-X-Gm-Message-State: ALoCoQmTcjT8fsj4v4iW/JSPuzBo0Xf3U5RpOZxrSw4vaeNf89VayXgmylZK6/SD/RBmmp0+tf5y
-X-Received: by 10.15.75.73 with SMTP id k49mr16720151eey.36.1383551416380;
- Sun, 03 Nov 2013 23:50:16 -0800 (PST)
-Received: by 10.15.32.9 with HTTP; Sun, 3 Nov 2013 23:50:16 -0800 (PST)
-X-Originating-IP: [134.191.232.71]
+	id S1752125Ab3KDHxD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 4 Nov 2013 02:53:03 -0500
+Received: from mail-wg0-f45.google.com ([74.125.82.45]:39890 "EHLO
+	mail-wg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752006Ab3KDHxB convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 4 Nov 2013 02:53:01 -0500
+Received: by mail-wg0-f45.google.com with SMTP id z12so1720948wgg.0
+        for <git@vger.kernel.org>; Sun, 03 Nov 2013 23:53:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=bwQRT5QdtiMqYItgs6Ypf+0oTipam/3EySo+EDVPMLk=;
+        b=la9TXHlwetrCuN0pJ7kH1y8N3PxML3gc3RivXrS1uuNv52gCs7KQAqacuWiC0mQtQW
+         QsJSTq7EVKxGRL2OYeVyosUuEU6fEvrR1hwS6DYfskBjw8w7r45uFDqEG7sL0tNEKWYK
+         AbViiHgJOHbYiFpABye0YG334udoY+SxcUKxar3bF0fITINgJaOCtSq1m7zyrWRVwN+r
+         Tt+aTmL6ih7yBgtcEMGsaZkl7znkm2YRlUnhEqojnZDxjh9dRRpOb8N8GajfA985FX8G
+         HN7Y8x8VulctlEWAkTlFxI2mPJiqocOwHvoBI/4amtxSc9KaYKTWxB10osNL74eek9ry
+         YFWw==
+X-Received: by 10.180.76.114 with SMTP id j18mr11090488wiw.35.1383551580056;
+ Sun, 03 Nov 2013 23:53:00 -0800 (PST)
+Received: by 10.194.165.163 with HTTP; Sun, 3 Nov 2013 23:53:00 -0800 (PST)
+In-Reply-To: <CACsJy8DyX-cxJNYe3HXeb8e96O36h4aEJrBo+P5035b-vuz0hw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237285>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237287>
 
-I'm trying to import our team's old subversion repository to git, but
-I'd like to retain the commit history. I tried 'git svn clone' but
-that only retrieves commits from the last copy onwards.
+On Mon, Nov 4, 2013 at 2:46 AM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Mon, Nov 4, 2013 at 12:17 AM, Wolfgang Rohdewald
+> <wolfgang@rohdewald.de> wrote:
+>> git version 1.8.3.2
+>>
+>> git status in German says (extract)
+>>
+>> #       ge=C3=A4ndert:   kajongg.py
+>> #       gel=C3=B6scht:    playfield.py
+>>
+>> as you can see, there is one space too much before playfield.py
+>>
+>> LANG=3DC git status is correct:
+>> #       modified:   kajongg.py
+>> #       deleted:    playfield.py
+>>
+>> so it seems the spacing between the columns expects "deleted" to hav=
+e the same number
+>> of letters in all languages.
+>
+> No, the translations control the number of columns in this case
+> (although it's not very intuitive for translators). Something like
+> this may fix it. I haven't tested because I don't have "de" locale
+> installed.
+>
+> diff --git a/po/de.po b/po/de.po
+> index 35a44b9..d1846d2 100644
+> --- a/po/de.po
+> +++ b/po/de.po
+> @@ -1404,7 +1404,7 @@ msgstr "kopiert:     %s -> %s"
+>  #: wt-status.c:313
+>  #, c-format
+>  msgid "deleted:    %s"
+> -msgstr "gel=C3=B6scht:    %s"
+> +msgstr "gel=C3=B6scht:   %s"
+>
 
-Because the svn setup is really bad, there is no way I can reproduce
-the "stdlayout" structure that 'git svn' likes, or any other structure
-where the trunk isn't a just few versions down from a copy.
+The columns don't match in other related messages, either.
+Let's see what happens with [1].
 
-Is there a way to have 'git svn' not do "--stop-on-copy" when fetching
-history? I'm perfectly fine with getting a simple linear history
-(because trying to do anything else with our svn setup will put our
-sanity in danger), but I couldn't find any documentation on how to do
-so.
+[1]
+http://article.gmane.org/gmane.comp.version-control.git/237283
 
-Thanks in advance,
--- 
-Oded
+>  #: wt-status.c:316
+>  #, c-format
+> --
+> Duy
