@@ -1,139 +1,123 @@
-From: Max Horn <max@quendi.de>
-Subject: Re: [PATCH v2] Rename suffixcmp() to has_suffix() and inverse its result
-Date: Tue, 5 Nov 2013 19:39:36 +0100
-Message-ID: <C9A6A1E9-E08C-4C9B-B18D-CED751ACB975@quendi.de>
-References: <20131105045722.20276.20853.chriscool@tuxfamily.org>
-Mime-Version: 1.0 (Mac OS X Mail 6.6 \(1510\))
-Content-Type: multipart/signed; boundary="Apple-Mail=_AD126043-61B7-474F-8D8E-94F7DFD35B6D"; protocol="application/pgp-signature"; micalg=pgp-sha256
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Avery Pennarun <apenwarr@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Tue Nov 05 19:39:58 2013
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH] Add interpret-trailers builtin
+Date: Tue, 05 Nov 2013 11:09:02 -0800
+Message-ID: <xmqqli12acoh.fsf@gitster.dls.corp.google.com>
+References: <20131103211731.15716.95056.chriscool@tuxfamily.org>
+	<CALKQrgdJ6d2SVWNQGa6d-eLYPAL-C21=tCyJczCDExLQRfq=jA@mail.gmail.com>
+	<xmqqfvrcyoaj.fsf@gitster.dls.corp.google.com>
+	<CALKQrgcweo+B8JKH85-4-SOHsAi6SAxstnXhRWCst_qEyXYmhA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Christian Couder <chriscool@tuxfamily.org>,
+	Git mailing list <git@vger.kernel.org>,
+	Josh Triplett <josh@joshtriplett.org>,
+	Thomas Rast <tr@thomasrast.ch>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Dan Carpenter <dan.carpenter@oracle.com>,
+	Greg Kroah-Hartman <greg@kroah.com>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Tue Nov 05 20:09:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VdlXh-0004Fu-JD
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Nov 2013 19:39:57 +0100
+	id 1Vdm02-0005yc-0u
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Nov 2013 20:09:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751874Ab3KESjw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Nov 2013 13:39:52 -0500
-Received: from wp256.webpack.hosteurope.de ([80.237.133.25]:41414 "EHLO
-	wp256.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750807Ab3KESjw (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 5 Nov 2013 13:39:52 -0500
-Received: from fb07-alg-gast1.math.uni-giessen.de ([134.176.24.161]); authenticated
-	by wp256.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:RSA_AES_128_CBC_SHA1:16)
-	id 1VdlXQ-0007kK-Sp; Tue, 05 Nov 2013 19:39:40 +0100
-In-Reply-To: <20131105045722.20276.20853.chriscool@tuxfamily.org>
-X-Mailer: Apple Mail (2.1510)
-X-bounce-key: webpack.hosteurope.de;max@quendi.de;1383676791;f3894051;
+	id S1755087Ab3KETJJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Nov 2013 14:09:09 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45410 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752906Ab3KETJH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Nov 2013 14:09:07 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D39514DED6;
+	Tue,  5 Nov 2013 14:09:04 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=6Y1uIhtU8E5igIVr0IKPeQat4sU=; b=vwaYUA
+	vhhzeLASxxzkIQZ6B0P8+DJSmAdCaoD7zAe8E7RxsBhyDqO0fM3XFpyIoy7aNPHK
+	I1v4RxZBepTzC0nDEuqZI4Sc3p5Dkhr92OKJkDQE2UabiMYE/cVe2iZfXwruq/bg
+	eH3jf5N8BKIrHRZc6mhhA85MhGBtDesToQvPA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=h/m2QyPlUsODXzCDyKUhF+sXR4ifxPUc
+	vFWjUGcYRrbPuC/mY73SHlljFS8RGv0V/PYyScsucqSrghPDD6a7QqNk5Evdc0Gh
+	sMqPi0SSmIKeeV+EXg77rPt2eN4YfhAWSDF21/bqkJWyR1j++sl8lheMc1qaSeU9
+	XWG61bjEooM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C33A14DED2;
+	Tue,  5 Nov 2013 14:09:04 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 166FB4DECA;
+	Tue,  5 Nov 2013 14:09:04 -0500 (EST)
+In-Reply-To: <CALKQrgcweo+B8JKH85-4-SOHsAi6SAxstnXhRWCst_qEyXYmhA@mail.gmail.com>
+	(Johan Herland's message of "Tue, 5 Nov 2013 03:45:53 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: BC8CF962-464D-11E3-BE47-1FFB7F2839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237333>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237334>
 
+Johan Herland <johan@herland.net> writes:
 
---Apple-Mail=_AD126043-61B7-474F-8D8E-94F7DFD35B6D
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=us-ascii
+> On Mon, Nov 4, 2013 at 8:12 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Johan Herland <johan@herland.net> writes:
+>>>> +{
+>>>> +       char *end = strchr(arg, '=');
+>>>> +       if (!end)
+>>>> +               end = strchr(arg, ':');
+>>>
+>>> So both '=' (preferred) and ':' are accepted as field/value
+>>> separators. That's ok for the command-line, I believe.
+>>
+>> Why?
+>>
+>> Sometimes you have to be loose from the beginning _if_ some existing
+>> uses and established conventions make it easier for the users, but
+>> if you do not have to start from being loose, it is almost always a
+>> mistake to do so.  The above code just closed the door to use ":"
+>> for some other useful purposes we may later discover, and will make
+>> us regret for doing so.
+>
+> Although I agree with the principle, I think there are (at least) two
+> established conventions that will be commonly used from the start, and
+> that we should support:
+>
+>  - Using short forms with '=', e.g. "ack=Peff". There is already a
+> convention on how we specify <name> + <value> pairs on the command
+> line, e.g. "git -c foo=bar ..."
 
-+1 for the change. I find the resulting code easier to understand, too.
+I do not have much problem with this.
 
+>  - Copy-pasting footers from existing commit messages. These will have
+> the same format as the expected output of this command, and not
+> accepting the same format in its input seems silly, IMHO.
 
-On 05.11.2013, at 05:57, Christian Couder <chriscool@tuxfamily.org> =
-wrote:
+I am not sure about this, but syntactically, it is very similar to
 
-> As suffixcmp() should not be used as an ordering comparison function,
-> and anything-cmp() ought to be usable as an ordering comparison =
-function,
-> suffixcmp() should be renamed to something that doesn't end with =
-"cmp".
->=20
-> has_suffix() is a straightforward name for such a function, except
-> that with such a name callers will expect that it will return 1
-> when the suffix is present and 0 otherwise.
->=20
-> So we need to also inverse the value returned by this function ti
+    --message "CC: Johan Herland <j@h.net>"
 
-> match what the callers will expect, because suffixcmp() like all
-> anything-cmp() returns 0 when the suffix is present and 1 or -1
-> otherwise.
->=20
-> As we inverse the value returned by the function, we also have
-> to inverse the ways its callers are using its returned value.
+so probably it is OK, but then we do not even have to limit it to
+colon, no?  E.g. appending an arbitrary footer, with its literal
+value, may be done with something like:
 
-s/inverse/invert/  (multiple times)
+    --footer "CC: Johan Herland <j@h.net>"
+    --footer "Closes #12345"
 
-Taking one step back, shouldn't the commit message rather explain the =
-new status, instead of referring so much to the past? If I imagine =
-somebody reading this in a year, they might not even know suffixcmp =
-(e.g. if they joined the project after this patch was merged).
+>> Also, there is a distinction between fields with the same field name
+>> appearing twice and fields with the same field name and the same
+>> field value appearing twice. Some headers do want to have them, some
+>> do not.
+>
+> True. This complexity is partly why I initially wanted to leave this
+> whole thing up to hooks, but I guess now we have to deal with it...
 
-How about something like this:
-
---- 8< ----
-
-Rename suffixcmp() to has_suffix() and invert its result
-
-Now has_suffix() returns 1 when the suffix is present and 0 otherwise.
-
-The old name followed the pattern anything-cmp(), which suggests
-a general comparison function suitable for e.g. sorting objects.
-But this was not the case for suffixcmp().
-
---- 8< ----
-
-
-By the way, a much stronger reason why suffixcmp is not suitable than =
-that it is not clear what it would mean, is that it is not transitive. =
-I.e. for an ordering you would want that if a<b and b<c then a<c. This =
-is /was not the case for suffixcmp:
-
-  suffixcmp("3", "31") =3D -1  (because "31" is longer than "3"), so "3" =
-< "31"
-  suffixcmp("31", "2") =3D -1  (because "1" < "2"), so "31" < "2"
-but
-  suffixcmp("3", "2") =3D 1    so "3" > "2"
-
-
-
->=20
-> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-> ---
-> Hi Junio and Peff,
->=20
-> So here is a new version of the patch to rename
-> suffixcmp() into has_suffix(). We now inverse the
-> result of the function as we rename it.
->=20
-> This patch should be added to or squashed into the
-> patch series that removes postfixcmp().
->=20
-
-[...]
-
-
-
---Apple-Mail=_AD126043-61B7-474F-8D8E-94F7DFD35B6D
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
-	filename=signature.asc
-Content-Type: application/pgp-signature;
-	name=signature.asc
-Content-Description: Message signed with OpenPGP using GPGMail
-
------BEGIN PGP SIGNATURE-----
-Comment: GPGTools - http://gpgtools.org
-
-iF4EAREIAAYFAlJ5O2wACgkQIpJVslrhe1mVTQEAhQXzONSg/E3lszxCLrWNS2gr
-eQc7F43PQqqeIqESnEcBALaP4yrI26wW9xYFFoKuAQ0W9zBhr+l7wxAx8vwMgHdi
-=k0In
------END PGP SIGNATURE-----
-
---Apple-Mail=_AD126043-61B7-474F-8D8E-94F7DFD35B6D--
+If we are adding anything, it has to be able to express what we
+already do for Signed-off-by: line, so we cannot start from
+somewhere any simpler than this, I am afraid.
