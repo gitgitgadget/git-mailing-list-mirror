@@ -1,64 +1,88 @@
-From: Javier Domingo <javierdo1@gmail.com>
-Subject: Splitting files merge with branches
-Date: Tue, 5 Nov 2013 10:38:45 +0100
-Message-ID: <CALZVapmJDEWyUcgdJ0C0V0bKpSyukHZ=ei9GgVh-Z0yfb8x8tQ@mail.gmail.com>
+From: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+Subject: Re: [PATCH v3] push: Enhance unspecified push default warning
+Date: Tue, 5 Nov 2013 11:16:08 +0100 (CET)
+Message-ID: <1096759644.4893066.1383646568978.JavaMail.root@imag.fr>
+References: <CAKYC+eKCsRbF=6HtcY8ZtaafTDpbMFJ1tyWbaZDKrmbzdnOoUw@mail.gmail.com> <CAKYC+eLvx1vB1ZDqYK=7Dg68QuCojBdSAVQZMF6HBtfxu_b_aw@mail.gmail.com> <xmqqvc08yq4v.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Nov 05 10:39:13 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Greg Jacobson <coder5000@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Nov 05 11:25:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vdd6O-00086R-Fj
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Nov 2013 10:39:12 +0100
+	id 1VddpZ-0005l8-Sr
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Nov 2013 11:25:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752922Ab3KEJjI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Nov 2013 04:39:08 -0500
-Received: from mail-vc0-f169.google.com ([209.85.220.169]:49906 "EHLO
-	mail-vc0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752512Ab3KEJjG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Nov 2013 04:39:06 -0500
-Received: by mail-vc0-f169.google.com with SMTP id hu8so5568176vcb.28
-        for <git@vger.kernel.org>; Tue, 05 Nov 2013 01:39:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=9umwOMmRMPy5tbN+oS27zgiL0Kh/p2rVkuGGIlw8Ty8=;
-        b=ac/zFD9yZpb4I7IWCtEFA7e5MixZ9nDLiAuONqvaL/MT3oudGiUJVVQWqQw/U9kPCV
-         kds6ArppxDQ+IMiKl/BIQJMPN+brVeRS/cLGJ1ddcnJffS6uUXS+K5VbdViehN8pPMhu
-         Uq/DHGfYA8ue5iF17XTX6Cv7QDZ4jTiqvkx27UzPmfLO0vl5lL74TZQn/djVJE+k5g2w
-         Uxn2ANAsG45wIDiGDx4jAL7EZncUyj9vvGQsWotltISpGcDf0SagAEV1EDY7fgUljVgw
-         2tiJbzFNK14TPeTYoYN/enb/Eedllw1CPArMQ+xnVMsSwOEHsO8ji/jik7pu0pavUvlP
-         4dbQ==
-X-Received: by 10.52.187.138 with SMTP id fs10mr12086392vdc.10.1383644345223;
- Tue, 05 Nov 2013 01:39:05 -0800 (PST)
-Received: by 10.58.233.203 with HTTP; Tue, 5 Nov 2013 01:38:45 -0800 (PST)
+	id S1753361Ab3KEKZt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Nov 2013 05:25:49 -0500
+Received: from mx2.imag.fr ([129.88.30.17]:46009 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751139Ab3KEKZs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Nov 2013 05:25:48 -0500
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id rA5APHvn032292
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 5 Nov 2013 11:25:17 +0100
+Received: from z8-mb-verimag.imag.fr (z8-mb-verimag.imag.fr [129.88.4.38])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id rA5AOdmq025047;
+	Tue, 5 Nov 2013 11:25:18 +0100
+In-Reply-To: <xmqqvc08yq4v.fsf@gitster.dls.corp.google.com>
+X-Originating-IP: [129.88.6.115]
+X-Mailer: Zimbra 8.0.3_GA_5664 (ZimbraWebClient - FF25 (Linux)/8.0.3_GA_5664)
+Thread-Topic: push: Enhance unspecified push default warning
+Thread-Index: HiGp9HWNqHwgDBMz/RcnKa8Fysefhw==
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 05 Nov 2013 11:25:17 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: rA5APHvn032292
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@imag.fr
+MailScanner-NULL-Check: 1384251920.59815@WdjtSqvpUS4sR8S7mGXJXw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237325>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237326>
 
-Hi,
+----- Original Message -----
+> Greg Jacobson <coder5000@gmail.com> writes:
+> 
+> > Is there anything I could do to improve this patch?  Thank you.
+> 
+> My vague recollection is that we started from an excerpt from the
+> documentation page, not unlike this patch attempts to, but because
+> such an excerpt has to be less complete than the documentation for
+> brevity's sake, it is bound to be an incorrect and/or misleading
+> one, and decided that we are better off referring the users, who do
+> want to choose something other than the default we chose, to the
+> documentation.
+> 
+> Somebody cares to dig up the old discussion threads and post a few
+> pointers?
 
-I have been using git for now 4 years, and one feature I miss a lot,
-that would increase the usability of git in many cases, would be
-having it detect "inter-file" movements, so that if I, in a single
-commit just part one file into many, git can track that change.
+The previous versions of this patch received only minor comments,
+which were taken into account:
 
-I suppose this is quite difficult, as would mean having extra features
-in diffs, and I don't know how could it be implemented, but that would
-ease even more having integration branches, and merging one with
-eachother.
+http://thread.gmane.org/gmane.comp.version-control.git/235675
+http://thread.gmane.org/gmane.comp.version-control.git/235694
 
-I wouldn't either know how to split it, in the means that if 5 lines
-are in the middle of a split, where would those lines go? But as you
-have resolved quite variety of problems, you might now a way.
+I don't remember all the discussions on the patch which introduced
+the warning, but I don't think it's relevant to digg them before applying the patch:
 
-Just wanted to collaborate with my idea =)
+* The assumption was that users would read the docs, but as I already mentioned:
+  "Judging by the question asked on stackoverflow
+  ( http://stackoverflow.com/questions/13148066/warning-push-default-is-unset-its-implicit-value-is-changing-in-git-2-0 )
+  and its popularity, telling the users to read the docs did not work very
+  well."
 
-Cheers,
+* The warning has been there for a while now. Advanced users have already set push.default.
+  We shouldn't be worried about eating a bit of screen real estate for users who didn't yet.
 
-Javier Domingo Cansino
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
