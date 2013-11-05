@@ -1,88 +1,82 @@
-From: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
-Subject: Re: [PATCH v3] push: Enhance unspecified push default warning
-Date: Tue, 5 Nov 2013 11:16:59 +0100 (CET)
-Message-ID: <1839883487.4893076.1383646619137.JavaMail.root@imag.fr>
-References: <CAKYC+eKCsRbF=6HtcY8ZtaafTDpbMFJ1tyWbaZDKrmbzdnOoUw@mail.gmail.com> <CAKYC+eLvx1vB1ZDqYK=7Dg68QuCojBdSAVQZMF6HBtfxu_b_aw@mail.gmail.com> <xmqqvc08yq4v.fsf@gitster.dls.corp.google.com>
+From: Nicolas Vigier <boklm@mars-attacks.org>
+Subject: Re: [PATCH] Add the commit.gpgsign option to sign all commits
+Date: Tue, 5 Nov 2013 12:28:40 +0100
+Message-ID: <20131105112840.GZ4589@mars-attacks.org>
+References: <1383606881-2979-1-git-send-email-boklm@mars-attacks.org>
+ <xmqqppqfag2e.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Greg Jacobson <coder5000@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=iso-8859-1
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Nov 05 11:26:23 2013
+X-From: git-owner@vger.kernel.org Tue Nov 05 12:28:49 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vddq2-00073d-8M
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Nov 2013 11:26:22 +0100
+	id 1VdeoS-0000BI-4h
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Nov 2013 12:28:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753813Ab3KEK0R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Nov 2013 05:26:17 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:46024 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752072Ab3KEK0R (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Nov 2013 05:26:17 -0500
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id rA5APSQl032336
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 5 Nov 2013 11:25:28 +0100
-Received: from z8-mb-verimag.imag.fr (z8-mb-verimag.imag.fr [129.88.4.38])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id rA5APT37025061;
-	Tue, 5 Nov 2013 11:25:29 +0100
-In-Reply-To: <xmqqvc08yq4v.fsf@gitster.dls.corp.google.com>
-X-Originating-IP: [129.88.6.115]
-X-Mailer: Zimbra 8.0.3_GA_5664 (ZimbraWebClient - FF25 (Linux)/8.0.3_GA_5664)
-Thread-Topic: push: Enhance unspecified push default warning
-Thread-Index: f8XbmOt5a5Jm/c0OyvqWq+8P2TZNlg==
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 05 Nov 2013 11:25:28 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: rA5APSQl032336
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@imag.fr
-MailScanner-NULL-Check: 1384251930.66332@Fa1jZbtpsJaa6EZQ1tFW+g
+	id S1753932Ab3KEL2o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Nov 2013 06:28:44 -0500
+Received: from mx0.mars-attacks.org ([92.243.25.60]:45964 "EHLO
+	mx0.mars-attacks.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753412Ab3KEL2n (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Nov 2013 06:28:43 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by mx0.mars-attacks.org (Postfix) with ESMTP id 2B69F4E73;
+	Tue,  5 Nov 2013 12:28:58 +0100 (CET)
+X-Virus-Scanned: amavisd-new at mars-attacks.org
+Received: from mx0.mars-attacks.org ([127.0.0.1])
+	by localhost (mx0.mars-attacks.org [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id mDeE6Z-aWyOS; Tue,  5 Nov 2013 12:28:57 +0100 (CET)
+Received: from wxy.mars-attacks.org (moow.mars-attacks.org [82.242.116.57])
+	by mx0.mars-attacks.org (Postfix) with ESMTPS id 8FBD54E5A;
+	Tue,  5 Nov 2013 12:28:57 +0100 (CET)
+Received: by wxy.mars-attacks.org (Postfix, from userid 500)
+	id CB7CD43934; Tue,  5 Nov 2013 12:28:40 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <xmqqppqfag2e.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237327>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237328>
 
------ Original Message -----
-> Greg Jacobson <coder5000@gmail.com> writes:
+On Mon, 04 Nov 2013, Junio C Hamano wrote:
+
+> Nicolas Vigier <boklm@mars-attacks.org> writes:
 > 
-> > Is there anything I could do to improve this patch?  Thank you.
+> > If you want to GPG sign all your commits, you have to add the -S option
+> > all the time. The commit.gpgsign config option allows to sign all
+> > commits automatically.
 > 
-> My vague recollection is that we started from an excerpt from the
-> documentation page, not unlike this patch attempts to, but because
-> such an excerpt has to be less complete than the documentation for
-> brevity's sake, it is bound to be an incorrect and/or misleading
-> one, and decided that we are better off referring the users, who do
-> want to choose something other than the default we chose, to the
-> documentation.
-> 
-> Somebody cares to dig up the old discussion threads and post a few
-> pointers?
+> I'm somewhat horrified to imagine the end-user experience this
+> "feature" adds to the system; if one sets htis configuration and
+> then runs "git rebase" or anything that internally creates or
+> recreates commits, does one have to sign each and every commit, even
+> if such a rebase was done merely as a trial run to see if a topic
+> can be rebased to an older codebase, or something?
 
-The previous versions of this patch received only minor comments,
-which were taken into account:
+If the problem is users having to type their passphrase to sign each
+commit, we can suggest using an agent in the option description :
 
-http://thread.gmane.org/gmane.comp.version-control.git/235675
-http://thread.gmane.org/gmane.comp.version-control.git/235694
+  commit.gpgsign::
+	A boolean to specify whether all commits should be GPG signed.
+	Use of this option when doing operations such as rebase can
+	result in a large number of commits being signed. It is therefore
+	convenient to use an agent to avoid typing your gpg passphrase
+	several times.
 
-I don't remember all the discussions on the patch which introduced
-the warning, but I don't think it's relevant to digg them before applying the patch:
 
-* The assumption was that users would read the docs, but as I already mentioned:
-  "Judging by the question asked on stackoverflow
-  ( http://stackoverflow.com/questions/13148066/warning-push-default-is-unset-its-implicit-value-is-changing-in-git-2-0 )
-  and its popularity, telling the users to read the docs did not work very
-  well."
+An example of why someone might want to use this option is :
 
-* The warning has been there for a while now. Advanced users have already set push.default.
-  We shouldn't be worried about eating a bit of screen real estate for users who didn't yet.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+You use git to store deployement scripts for some servers. Those
+servers have a cron job that pull from the git repository and run the
+scripts as root. Anyone with root access on the server hosting the git
+repository can then gain root access to all your servers quite easily.
+You want to avoid this, so you decide that all commits should be gpg
+signed, and your servers will now do "git pull --verify-signatures".
+People who work on this repository will want to set "commit.gpgsign"
+so they don't have to add the -S option all the time.
