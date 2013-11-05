@@ -1,154 +1,237 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Add the commit.gpgsign option to sign all commits
-Date: Mon, 04 Nov 2013 15:43:37 -0800
-Message-ID: <xmqqppqfag2e.fsf@gitster.dls.corp.google.com>
-References: <1383606881-2979-1-git-send-email-boklm@mars-attacks.org>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: Re: htonll, ntohll
+Date: Tue, 05 Nov 2013 00:00:24 +0000
+Message-ID: <52783518.1030908@ramsay1.demon.co.uk>
+References: <xmqqr4b5dwke.fsf@gitster.dls.corp.google.com> <5271392E.8020003@web.de> <CAFFjANT=-mQoKUU2KsPHo3Hcq7RAuyM1t4kvJu4OfiNeHrA+Ng@mail.gmail.com> <52713E67.3000202@web.de> <527158AF.3070204@ramsay1.demon.co.uk> <52716C58.3090507@web.de> <5271750D.5010801@ramsay1.demon.co.uk> <52725A05.1050805@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Nicolas Vigier <boklm@mars-attacks.org>
-X-From: git-owner@vger.kernel.org Tue Nov 05 00:43:46 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?B?VmljZW50IE1hcnTDrQ==?= <tanoku@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	git <git@vger.kernel.org>, Jeff King <peff@peff.net>
+To: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Tue Nov 05 01:00:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VdTo9-0007si-4M
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Nov 2013 00:43:45 +0100
+	id 1VdU4c-0005ox-MW
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Nov 2013 01:00:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752343Ab3KDXnl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Nov 2013 18:43:41 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55378 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752010Ab3KDXnk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Nov 2013 18:43:40 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9790E4DC13;
-	Mon,  4 Nov 2013 18:43:39 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=KZCjhzCTH9UCoZO9G0QOsSfPON4=; b=TbEVqd
-	odWHRYizmCvz2RDKse0YheDBLHFG1PntiCnDkienTxeFg57jkYNzrcXy75FXhPNY
-	b30yECI3RvES45bPaVywCbtLNU2Om+AdHwKeBAWTGxAxidCBA5urSBc4FeS2ygQ2
-	p9iKMKQuIgGyUKZya4P5t+8rWMfKIXA+hYSEQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=l6kfMCFIIDJeg0/2K2TJrv+iHaeD2/5/
-	PWEeDBc5HPdU3CRHK88IW6Lh2TPMp1fSG1gjMIjnbX2Aekp5L25Xu6yntK3gxwLP
-	jv6a9XE6x3UI1qSmxBXlDHoxk5ScZStCJeVUurwglph4L8BJ5UvZ60RpTJTiFzxq
-	n2o5PXLIPSk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 877034DC12;
-	Mon,  4 Nov 2013 18:43:39 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	id S1752311Ab3KEAAd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 4 Nov 2013 19:00:33 -0500
+Received: from mdfmta004.mxout.tch.inty.net ([91.221.169.45]:40435 "EHLO
+	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751451Ab3KEAAd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Nov 2013 19:00:33 -0500
+Received: from mdfmta004.tch.inty.net (unknown [127.0.0.1])
+	by mdfmta004.tch.inty.net (Postfix) with ESMTP id AF0B6AC4071;
+	Tue,  5 Nov 2013 00:00:30 +0000 (GMT)
+Received: from mdfmta004.tch.inty.net (unknown [127.0.0.1])
+	by mdfmta004.tch.inty.net (Postfix) with ESMTP id B16D9AC4079;
+	Tue,  5 Nov 2013 00:00:28 +0000 (GMT)
+Received: from [192.168.254.3] (unknown [80.176.147.220])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C8DDE4DC11;
-	Mon,  4 Nov 2013 18:43:38 -0500 (EST)
-In-Reply-To: <1383606881-2979-1-git-send-email-boklm@mars-attacks.org>
-	(Nicolas Vigier's message of "Tue, 5 Nov 2013 00:14:41 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: EDD7259A-45AA-11E3-A832-1FFB7F2839F8-77302942!b-pb-sasl-quonix.pobox.com
+	by mdfmta004.tch.inty.net (Postfix) with ESMTP;
+	Tue,  5 Nov 2013 00:00:26 +0000 (GMT)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.1.0
+In-Reply-To: <52725A05.1050805@web.de>
+X-MDF-HostID: 17
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237313>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237314>
 
-Nicolas Vigier <boklm@mars-attacks.org> writes:
+On 31/10/13 13:24, Torsten B=C3=B6gershausen wrote:
+> On 2013-10-30 22.07, Ramsay Jones wrote:
+[ ... ]
+>> Yep, this was the first thing I did as well! ;-) (*late* last night)
+>>
+>> I haven't had time today to look into fixing up the msvc build
+>> (or a complete re-write), so I look forward to seeing your solution.
+>> (do you have msvc available? - or do you want me to look at fixing
+>> it? maybe in a day or two?)
+>>
+> Ramsay,
+> I don't have msvc, so feel free to go ahead, as much as you can.
+>=20
+> I'll send a patch for the test code I have made, and put bswap.h on h=
+old for a week
+> (to be able to continue with t5601/connect.c)
 
-> If you want to GPG sign all your commits, you have to add the -S option
-> all the time. The commit.gpgsign config option allows to sign all
-> commits automatically.
+Unfortunately, I haven't had much time to look into this.
 
-I'm somewhat horrified to imagine the end-user experience this
-"feature" adds to the system; if one sets htis configuration and
-then runs "git rebase" or anything that internally creates or
-recreates commits, does one have to sign each and every commit, even
-if such a rebase was done merely as a trial run to see if a topic
-can be rebased to an older codebase, or something?
+I do have a patch (given below) that works on Linux, cygwin,
+MinGW and msvc. However, the msvc build is still broken (as a
+result of _other_ commits in this 'jk/pack-bitmap' branch; as
+well as the use of a VLA in another commit).
 
->
-> Signed-off-by: Nicolas Vigier <boklm@mars-attacks.org>
-> ---
->  Documentation/config.txt | 3 +++
->  builtin/commit-tree.c    | 7 ++++++-
->  builtin/commit.c         | 4 ++++
->  builtin/merge.c          | 3 +++
->  4 files changed, 16 insertions(+), 1 deletion(-)
->
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index ab26963d6187..4cfa557375a2 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -988,6 +988,9 @@ commit.cleanup::
->  	have to remove the help lines that begin with `#` in the commit log
->  	template yourself, if you do this).
->  
-> +commit.gpgsign::
-> +	A boolean to specify whether all commits should be GPG signed.
-> +
->  commit.status::
->  	A boolean to enable/disable inclusion of status information in the
->  	commit message template when using an editor to prepare the commit
-> diff --git a/builtin/commit-tree.c b/builtin/commit-tree.c
-> index f641ff2a898c..1646d5b25e4f 100644
-> --- a/builtin/commit-tree.c
-> +++ b/builtin/commit-tree.c
-> @@ -12,6 +12,8 @@
->  
->  static const char commit_tree_usage[] = "git commit-tree [(-p <sha1>)...] [-S[<keyid>]] [-m <message>] [-F <file>] <sha1> <changelog";
->  
-> +static const char *sign_commit;
-> +
->  static void new_parent(struct commit *parent, struct commit_list **parents_p)
->  {
->  	unsigned char *sha1 = parent->object.sha1;
-> @@ -31,6 +33,10 @@ static int commit_tree_config(const char *var, const char *value, void *cb)
->  	int status = git_gpg_config(var, value, NULL);
->  	if (status)
->  		return status;
-> +	if (!strcmp(var, "commit.gpgsign")) {
-> +		sign_commit = git_config_bool(var, value) ? "" : NULL;
-> +		return 0;
-> +	}
->  	return git_default_config(var, value, cb);
->  }
->  
-> @@ -41,7 +47,6 @@ int cmd_commit_tree(int argc, const char **argv, const char *prefix)
->  	unsigned char tree_sha1[20];
->  	unsigned char commit_sha1[20];
->  	struct strbuf buffer = STRBUF_INIT;
-> -	const char *sign_commit = NULL;
->  
->  	git_config(commit_tree_config, NULL);
->  
-> diff --git a/builtin/commit.c b/builtin/commit.c
-> index 6ab4605cf5c2..cffddf210807 100644
-> --- a/builtin/commit.c
-> +++ b/builtin/commit.c
-> @@ -1406,6 +1406,10 @@ static int git_commit_config(const char *k, const char *v, void *cb)
->  	}
->  	if (!strcmp(k, "commit.cleanup"))
->  		return git_config_string(&cleanup_arg, k, v);
-> +	if (!strcmp(k, "commit.gpgsign")) {
-> +		sign_commit = git_config_bool(k, v) ? "" : NULL;
-> +		return 0;
-> +	}
->  
->  	status = git_gpg_config(k, v, NULL);
->  	if (status)
-> diff --git a/builtin/merge.c b/builtin/merge.c
-> index 02a69c14e6ab..fea27244557d 100644
-> --- a/builtin/merge.c
-> +++ b/builtin/merge.c
-> @@ -604,6 +604,9 @@ static int git_merge_config(const char *k, const char *v, void *cb)
->  	} else if (!strcmp(k, "merge.defaulttoupstream")) {
->  		default_to_upstream = git_config_bool(k, v);
->  		return 0;
-> +	} else if (!strcmp(k, "commit.gpgsign")) {
-> +		sign_commit = git_config_bool(k, v) ? "" : NULL;
-> +		return 0;
->  	}
->  
->  	status = fmt_merge_msg_config(k, v, cb);
+So, I still have work to do! :(
+
+Anyway, I thought I would send what I have, so you can take a look.
+Note, that I don't have an big-endian machine to test this on, so
+YMMV. Indeed, the *only* testing I have done is to run the test added
+by this branch (t5310-pack-bitmaps.sh), which works on Linux, cygwin
+and MinGW.
+
+[Note: I have never particularly liked htons, htonl et.al., so adding
+these htonll/ntohll functions doesn't thrill me! :-D For example see
+this post[1], which echo's my sentiments exactly.]
+
+HTH
+
+ATB,
+Ramsay Jones
+
+[1] http://commandcenter.blogspot.co.uk/2012/04/byte-order-fallacy.html
+
+-- >8 --
+Subject: [PATCH] compat/bswap.h: Fix build on cygwin, MinGW and msvc
+
+---
+ compat/bswap.h | 97 ++++++++++++++++++++++++++++++++++++++++----------=
+--------
+ 1 file changed, 68 insertions(+), 29 deletions(-)
+
+diff --git a/compat/bswap.h b/compat/bswap.h
+index ea1a9ed..c18a78e 100644
+--- a/compat/bswap.h
++++ b/compat/bswap.h
+@@ -17,7 +17,20 @@ static inline uint32_t default_swab32(uint32_t val)
+ 		((val & 0x000000ff) << 24));
+ }
+=20
++static inline uint64_t default_bswap64(uint64_t val)
++{
++	return (((val & (uint64_t)0x00000000000000ffULL) << 56) |
++		((val & (uint64_t)0x000000000000ff00ULL) << 40) |
++		((val & (uint64_t)0x0000000000ff0000ULL) << 24) |
++		((val & (uint64_t)0x00000000ff000000ULL) <<  8) |
++		((val & (uint64_t)0x000000ff00000000ULL) >>  8) |
++		((val & (uint64_t)0x0000ff0000000000ULL) >> 24) |
++		((val & (uint64_t)0x00ff000000000000ULL) >> 40) |
++		((val & (uint64_t)0xff00000000000000ULL) >> 56));
++}
++
+ #undef bswap32
++#undef bswap64
+=20
+ #if defined(__GNUC__) && (defined(__i386__) || defined(__x86_64__))
+=20
+@@ -32,54 +45,80 @@ static inline uint32_t git_bswap32(uint32_t x)
+ 	return result;
+ }
+=20
++#define bswap64 git_bswap64
++#if defined(__x86_64__)
++static inline uint64_t git_bswap64(uint64_t x)
++{
++	uint64_t result;
++	if (__builtin_constant_p(x))
++		result =3D default_bswap64(x);
++	else
++		__asm__("bswap %q0" : "=3Dr" (result) : "0" (x));
++	return result;
++}
++#else
++static inline uint64_t git_bswap64(uint64_t x)
++{
++	union { uint64_t i64; uint32_t i32[2]; } tmp, result;
++	if (__builtin_constant_p(x))
++		result.i64 =3D default_bswap64(x);
++	else {
++		tmp.i64 =3D x;
++		result.i32[0] =3D git_bswap32(tmp.i32[1]);
++		result.i32[1] =3D git_bswap32(tmp.i32[0]);
++	}
++	return result.i64;
++}
++#endif
++
+ #elif defined(_MSC_VER) && (defined(_M_IX86) || defined(_M_X64))
+=20
+ #include <stdlib.h>
+=20
+ #define bswap32(x) _byteswap_ulong(x)
++#define bswap64(x) _byteswap_uint64(x)
+=20
+ #endif
+=20
+-#ifdef bswap32
++#if defined(bswap32)
+=20
+ #undef ntohl
+ #undef htonl
+ #define ntohl(x) bswap32(x)
+ #define htonl(x) bswap32(x)
+=20
+-#ifndef __BYTE_ORDER
+-#	if defined(BYTE_ORDER) && defined(LITTLE_ENDIAN) && defined(BIG_ENDI=
+AN)
+-#		define __BYTE_ORDER BYTE_ORDER
+-#		define __LITTLE_ENDIAN LITTLE_ENDIAN
+-#		define __BIG_ENDIAN BIG_ENDIAN
+-#	else
+-#		error "Cannot determine endianness"
+-#	endif
++#endif
++
++#if defined(bswap64)
++
++#undef ntohll
++#undef htonll
++#define ntohll(x) bswap64(x)
++#define htonll(x) bswap64(x)
++
++#else
++
++#undef ntohll
++#undef htonll
++
++#if !defined(__BYTE_ORDER)
++# if defined(BYTE_ORDER) && defined(LITTLE_ENDIAN) && defined(BIG_ENDI=
+AN)
++#  define __BYTE_ORDER BYTE_ORDER
++#  define __LITTLE_ENDIAN LITTLE_ENDIAN
++#  define __BIG_ENDIAN BIG_ENDIAN
++# endif
++#endif
++
++#if !defined(__BYTE_ORDER)
++# error "Cannot determine endianness"
+ #endif
+=20
+ #if __BYTE_ORDER =3D=3D __BIG_ENDIAN
+ # define ntohll(n) (n)
+ # define htonll(n) (n)
+-#elif __BYTE_ORDER =3D=3D __LITTLE_ENDIAN
+-#	if defined(__GNUC__) && defined(__GLIBC__)
+-#		include <byteswap.h>
+-#	else /* GNUC & GLIBC */
+-static inline uint64_t bswap_64(uint64_t val)
+-{
+-	return ((val & (uint64_t)0x00000000000000ffULL) << 56)
+-		| ((val & (uint64_t)0x000000000000ff00ULL) << 40)
+-		| ((val & (uint64_t)0x0000000000ff0000ULL) << 24)
+-		| ((val & (uint64_t)0x00000000ff000000ULL) <<  8)
+-		| ((val & (uint64_t)0x000000ff00000000ULL) >>  8)
+-		| ((val & (uint64_t)0x0000ff0000000000ULL) >> 24)
+-		| ((val & (uint64_t)0x00ff000000000000ULL) >> 40)
+-		| ((val & (uint64_t)0xff00000000000000ULL) >> 56);
+-}
+-#	endif /* GNUC & GLIBC */
+-#	define ntohll(n) bswap_64(n)
+-#	define htonll(n) bswap_64(n)
+-#else /* __BYTE_ORDER */
+-#	error "Can't define htonll or ntohll!"
++#else
++# define ntohll(n) default_bswap64(n)
++# define htonll(n) default_bswap64(n)
+ #endif
+=20
+ #endif
+--=20
+1.8.4
