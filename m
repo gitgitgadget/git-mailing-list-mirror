@@ -1,82 +1,86 @@
-From: Nicolas Vigier <boklm@mars-attacks.org>
-Subject: Re: [PATCH] Add the commit.gpgsign option to sign all commits
-Date: Tue, 5 Nov 2013 12:28:40 +0100
-Message-ID: <20131105112840.GZ4589@mars-attacks.org>
-References: <1383606881-2979-1-git-send-email-boklm@mars-attacks.org>
- <xmqqppqfag2e.fsf@gitster.dls.corp.google.com>
+From: =?UTF-8?B?SmFrdWIgTmFyxJlic2tp?= <jnareb@gmail.com>
+Subject: Re: rcs
+Date: Tue, 05 Nov 2013 15:56:27 +0100
+Message-ID: <5279071B.2070309@gmail.com>
+References: <B49EE6A27F1B0642B4D12AD9C064E8C7B072E3@SOARCPRVSBEU000.regnet2.soar.ns> <20131029181614.GA13601@sigill.intra.peff.net> <B49EE6A27F1B0642B4D12AD9C064E8C7B072E5@SOARCPRVSBEU000.regnet2.soar.ns>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Nov 05 12:28:49 2013
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
+	"Hawkins, Lisa M Mrs CTR USA USASOC-SOAR" 
+	<lisa.hawkins1.ctr@soar.army.mil>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 05 15:56:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VdeoS-0000BI-4h
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Nov 2013 12:28:48 +0100
+	id 1Vdi3g-000817-UM
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Nov 2013 15:56:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753932Ab3KEL2o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Nov 2013 06:28:44 -0500
-Received: from mx0.mars-attacks.org ([92.243.25.60]:45964 "EHLO
-	mx0.mars-attacks.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753412Ab3KEL2n (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Nov 2013 06:28:43 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by mx0.mars-attacks.org (Postfix) with ESMTP id 2B69F4E73;
-	Tue,  5 Nov 2013 12:28:58 +0100 (CET)
-X-Virus-Scanned: amavisd-new at mars-attacks.org
-Received: from mx0.mars-attacks.org ([127.0.0.1])
-	by localhost (mx0.mars-attacks.org [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id mDeE6Z-aWyOS; Tue,  5 Nov 2013 12:28:57 +0100 (CET)
-Received: from wxy.mars-attacks.org (moow.mars-attacks.org [82.242.116.57])
-	by mx0.mars-attacks.org (Postfix) with ESMTPS id 8FBD54E5A;
-	Tue,  5 Nov 2013 12:28:57 +0100 (CET)
-Received: by wxy.mars-attacks.org (Postfix, from userid 500)
-	id CB7CD43934; Tue,  5 Nov 2013 12:28:40 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <xmqqppqfag2e.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755126Ab3KEO4l convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 5 Nov 2013 09:56:41 -0500
+Received: from plane.gmane.org ([80.91.229.3]:32836 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754807Ab3KEO4k (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Nov 2013 09:56:40 -0500
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1Vdi3a-0007hs-4F
+	for git@vger.kernel.org; Tue, 05 Nov 2013 15:56:38 +0100
+Received: from 158.75.2.83 ([158.75.2.83])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 05 Nov 2013 15:56:38 +0100
+Received: from jnareb by 158.75.2.83 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 05 Nov 2013 15:56:38 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 158.75.2.83
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
+In-Reply-To: <B49EE6A27F1B0642B4D12AD9C064E8C7B072E5@SOARCPRVSBEU000.regnet2.soar.ns>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237328>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237330>
 
-On Mon, 04 Nov 2013, Junio C Hamano wrote:
+=46innerty, James M Mr CTR USA USASOC-SOAR wrote
+> Jeff King [mailto:peff@peff.net]wrote:
+>> On Tue, Oct 29, 2013 at 11:35:21AM -0500, Finnerty, James M Mr CTR U=
+SA USASOC-SOAR wrote:
+>>
+>>> Hi. I'm going to attempt to import a git database into Razor which =
+is
+>>> linux rcs based. Does the linux version of git use rcs ?
+>>
+>> No, the formats are completely different, and you will have to trans=
+late.
+ >> We don't usually get requests to go from git to rcs; it usually goe=
+s
+ >> the other way. :)
 
-> Nicolas Vigier <boklm@mars-attacks.org> writes:
-> 
-> > If you want to GPG sign all your commits, you have to add the -S option
-> > all the time. The commit.gpgsign config option allows to sign all
-> > commits automatically.
-> 
-> I'm somewhat horrified to imagine the end-user experience this
-> "feature" adds to the system; if one sets htis configuration and
-> then runs "git rebase" or anything that internally creates or
-> recreates commits, does one have to sign each and every commit, even
-> if such a rebase was done merely as a trial run to see if a topic
-> can be rebased to an older codebase, or something?
+ >
+ >    Thanks.  We have several systems using Razor right now. So we are
+ > trying to get all the systems into one CM system. Razor is just a gu=
+i
+ > that uses rcs commands. Once we get everything synced we will explor=
+e
+ > our options for a complete development CM system.
 
-If the problem is users having to type their passphrase to sign each
-commit, we can suggest using an agent in the option description :
+The problem with using RCS as sync (as base) is that it is least
+powerfull of VCS, and as far as I know do not offer place to store
+extra information, so conversion from Git to RSS will lose some
+information (committership, signed commits and signed merges, signed
+tags, etc.).
 
-  commit.gpgsign::
-	A boolean to specify whether all commits should be GPG signed.
-	Use of this option when doing operations such as rebase can
-	result in a large number of commits being signed. It is therefore
-	convenient to use an agent to avoid typing your gpg passphrase
-	several times.
+There is a tool to create fast-import stream from RCS repository,
+but I am not sure if there is reverse (fast-import is a common
+intermediate fairly VCS_agnostic representation used for fast
+conversion between different version control systems).
 
-
-An example of why someone might want to use this option is :
-
-You use git to store deployement scripts for some servers. Those
-servers have a cron job that pull from the git repository and run the
-scripts as root. Anyone with root access on the server hosting the git
-repository can then gain root access to all your servers quite easily.
-You want to avoid this, so you decide that all commits should be gpg
-signed, and your servers will now do "git pull --verify-signatures".
-People who work on this repository will want to set "commit.gpgsign"
-so they don't have to add the -S option all the time.
+--=20
+Jakub Nar=C4=99bski
