@@ -1,79 +1,99 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Splitting files merge with branches
-Date: Tue, 05 Nov 2013 11:19:53 -0800
-Message-ID: <xmqq8ux2ac6e.fsf@gitster.dls.corp.google.com>
-References: <CALZVapmJDEWyUcgdJ0C0V0bKpSyukHZ=ei9GgVh-Z0yfb8x8tQ@mail.gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: [PATCH 1/2] git_connect: remove artificial limit of a remote command
+Date: Tue, 05 Nov 2013 20:35:30 +0100
+Message-ID: <52794882.2020108@kdbg.org>
+References: <201311042220.50178.tboegi@web.de> <52789AE5.2010702@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
-To: Javier Domingo <javierdo1@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 05 20:20:05 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Tue Nov 05 20:35:42 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VdmAW-0000T1-8F
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Nov 2013 20:20:04 +0100
+	id 1VdmPb-0007En-Ji
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Nov 2013 20:35:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754866Ab3KETT7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Nov 2013 14:19:59 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61255 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754638Ab3KETT6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Nov 2013 14:19:58 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2C8AC4E2CF;
-	Tue,  5 Nov 2013 14:19:58 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=204YLxoOVkif7orkCFRgF/T45sU=; b=XTNKXh
-	FDWE2DS/l3ZAccYqzRn8lZvQa/yNecAJaRImd+Mq8rQAo6Ru2UDN08Ov4gSWINkk
-	uidv9HlPx+LXAN1Ye00XGkoERbZ870GyuQTYi6biGihs3BU9al2lGuNaUG8AC15H
-	1Avef0EuybrIZVQ3caTBXmOV8zWvq1EYc1SOo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=VQmI9xWX16gApiomPnCEwFRrJ2fdx23j
-	kB5amhCR7WIMYS+Yz+c4oJqBP204+kMM6QFB7aHWtioeAQgimxcniu4yZIJj1/7g
-	Biqx6Plgy15AjenKhDX4BXXRpGL7+klB+g/8oBG54y7YWIqrXZI8jWs1KNDF+HDZ
-	JIe12/l597M=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1D4234E2CD;
-	Tue,  5 Nov 2013 14:19:58 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6A67A4E2C6;
-	Tue,  5 Nov 2013 14:19:55 -0500 (EST)
-In-Reply-To: <CALZVapmJDEWyUcgdJ0C0V0bKpSyukHZ=ei9GgVh-Z0yfb8x8tQ@mail.gmail.com>
-	(Javier Domingo's message of "Tue, 5 Nov 2013 10:38:45 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 40C7E70E-464F-11E3-A2E9-1FFB7F2839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754886Ab3KETff (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Nov 2013 14:35:35 -0500
+Received: from bsmtp5.bon.at ([195.3.86.187]:25132 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1752906Ab3KETff (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Nov 2013 14:35:35 -0500
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id ED76B130052;
+	Tue,  5 Nov 2013 20:35:31 +0100 (CET)
+Received: from dx.sixt.local (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id 0199619F3EE;
+	Tue,  5 Nov 2013 20:35:30 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.0
+In-Reply-To: <52789AE5.2010702@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237337>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237338>
 
-Javier Domingo <javierdo1@gmail.com> writes:
+Since day one, function git_connect() had a limit on the command line of
+the command that is invoked to make a connection. 7a33bcbe converted the
+code that constructs the command to strbuf. This would have been the
+right time to remove the limit, but it did not happen. Remove it now.
 
-> I have been using git for now 4 years, and one feature I miss a lot,
-> that would increase the usability of git in many cases, would be
-> having it detect "inter-file" movements, so that if I, in a single
-> commit just part one file into many, git can track that change.
->
-> I suppose this is quite difficult, as would mean having extra features
-> in diffs, and I don't know how could it be implemented,...
+git_connect() uses start_command() to invoke the command; consequently,
+the limits of the system still apply, but are diagnosed only at execve()
+time. But these limits are more lenient than the 1K that git_connect()
+imposed.
 
-Sounds like $gmane/217 to me.
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+---
+Am 05.11.2013 08:14, schrieb Johannes Sixt:
+> Can you please make this into a series of small patches so that we can
+> more easily see the good and the bad parts? One of the patches could be a
+> clean-up of the current protocol determination and URL dissection, which
+> is indigestible spaghetti right now.
 
-http://thread.gmane.org/gmane.comp.version-control.git/27/focus=217
+Maybe start with these two.
 
-Some of the pieces that are needed to immplement the "drilling down"
-Linus envisioned in the message are already there, e.g. you can ask
-"log -S<block of text> -1" to find the last commit that touched the
-block of text in question.  Once you find that commit, you can
-inspect "git show -m -p <that-commit>" and find "Ahh, that block of
-text that appeared in the new tree came from five copies of similar
-blocks of text in the old tree".  Nobody wrote that last piece of
-the logic yet, though.
+ connect.c | 7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
+
+diff --git a/connect.c b/connect.c
+index 06e88b0..6cc1f8d 100644
+--- a/connect.c
++++ b/connect.c
+@@ -527,8 +527,6 @@ static struct child_process *git_proxy_connect(int fd[2], char *host)
+ 	return proxy;
+ }
+ 
+-#define MAX_CMD_LEN 1024
+-
+ static char *get_port(char *host)
+ {
+ 	char *end;
+@@ -570,7 +568,7 @@ struct child_process *git_connect(int fd[2], const char *url_orig,
+ 	int free_path = 0;
+ 	char *port = NULL;
+ 	const char **arg;
+-	struct strbuf cmd;
++	struct strbuf cmd = STRBUF_INIT;
+ 
+ 	/* Without this we cannot rely on waitpid() to tell
+ 	 * what happened to our children.
+@@ -676,12 +674,9 @@ struct child_process *git_connect(int fd[2], const char *url_orig,
+ 
+ 	conn = xcalloc(1, sizeof(*conn));
+ 
+-	strbuf_init(&cmd, MAX_CMD_LEN);
+ 	strbuf_addstr(&cmd, prog);
+ 	strbuf_addch(&cmd, ' ');
+ 	sq_quote_buf(&cmd, path);
+-	if (cmd.len >= MAX_CMD_LEN)
+-		die("command line too long");
+ 
+ 	conn->in = conn->out = -1;
+ 	conn->argv = arg = xcalloc(7, sizeof(*arg));
+-- 
+1.8.4.33.gd68f7e8
