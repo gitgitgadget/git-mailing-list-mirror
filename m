@@ -1,237 +1,89 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: htonll, ntohll
-Date: Tue, 05 Nov 2013 00:00:24 +0000
-Message-ID: <52783518.1030908@ramsay1.demon.co.uk>
-References: <xmqqr4b5dwke.fsf@gitster.dls.corp.google.com> <5271392E.8020003@web.de> <CAFFjANT=-mQoKUU2KsPHo3Hcq7RAuyM1t4kvJu4OfiNeHrA+Ng@mail.gmail.com> <52713E67.3000202@web.de> <527158AF.3070204@ramsay1.demon.co.uk> <52716C58.3090507@web.de> <5271750D.5010801@ramsay1.demon.co.uk> <52725A05.1050805@web.de>
+From: chunguang qu <quchunguang@gmail.com>
+Subject: error when git-diff get pipe args
+Date: Tue, 5 Nov 2013 08:03:28 +0800
+Message-ID: <CABk77Dj6RUaY9bBShiUJkZp0SdURCNR0SbpS3HFXdmeEAOMYow@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?VmljZW50IE1hcnTDrQ==?= <tanoku@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	git <git@vger.kernel.org>, Jeff King <peff@peff.net>
-To: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Tue Nov 05 01:00:47 2013
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 05 01:05:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VdU4c-0005ox-MW
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Nov 2013 01:00:47 +0100
+	id 1VdU7K-0000H2-3F
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Nov 2013 01:03:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752311Ab3KEAAd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 4 Nov 2013 19:00:33 -0500
-Received: from mdfmta004.mxout.tch.inty.net ([91.221.169.45]:40435 "EHLO
-	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751451Ab3KEAAd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Nov 2013 19:00:33 -0500
-Received: from mdfmta004.tch.inty.net (unknown [127.0.0.1])
-	by mdfmta004.tch.inty.net (Postfix) with ESMTP id AF0B6AC4071;
-	Tue,  5 Nov 2013 00:00:30 +0000 (GMT)
-Received: from mdfmta004.tch.inty.net (unknown [127.0.0.1])
-	by mdfmta004.tch.inty.net (Postfix) with ESMTP id B16D9AC4079;
-	Tue,  5 Nov 2013 00:00:28 +0000 (GMT)
-Received: from [192.168.254.3] (unknown [80.176.147.220])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mdfmta004.tch.inty.net (Postfix) with ESMTP;
-	Tue,  5 Nov 2013 00:00:26 +0000 (GMT)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.1.0
-In-Reply-To: <52725A05.1050805@web.de>
-X-MDF-HostID: 17
+	id S1751631Ab3KEADa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Nov 2013 19:03:30 -0500
+Received: from mail-wg0-f46.google.com ([74.125.82.46]:48748 "EHLO
+	mail-wg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750819Ab3KEADa (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Nov 2013 19:03:30 -0500
+Received: by mail-wg0-f46.google.com with SMTP id m15so2756724wgh.13
+        for <git@vger.kernel.org>; Mon, 04 Nov 2013 16:03:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=FStE+iWHzmAHNv+fteDd4JczkKH2qee1Y+VOC50dT9E=;
+        b=l1xEKhSuCLO0ntJWmvR4g09gSEiLgS95ap3efZav8P++l7xJcL5mq0hCrBo7LJoQoh
+         4M6hULHhhqfw0GtJbNZPKEb2iYg9nVuNini+Y7gN7e0AEat2ki5zdPqGDwQl6HAstif7
+         7UP+i0XbUvI3tVzISkN0QnV34vEcr7d3Fn/kxTMRbG0SuBmTMj6deN9d14fCuHaKHWwu
+         k3BEufClZ0RGXhTZo42BCWJdKVBU+FJuQEe1w8isA2nn1is2chAuJiV4EIOhvH8zq0Uz
+         oa2iPGUmY+bT404mXyqElB7sG7wrtAIxBFiimJ2iFLkfRCiPr7lD9lxNpMb1+/Fy+LZz
+         8P9w==
+X-Received: by 10.180.38.99 with SMTP id f3mr14306561wik.40.1383609808587;
+ Mon, 04 Nov 2013 16:03:28 -0800 (PST)
+Received: by 10.227.165.5 with HTTP; Mon, 4 Nov 2013 16:03:28 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237314>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237315>
 
-On 31/10/13 13:24, Torsten B=C3=B6gershausen wrote:
-> On 2013-10-30 22.07, Ramsay Jones wrote:
-[ ... ]
->> Yep, this was the first thing I did as well! ;-) (*late* last night)
->>
->> I haven't had time today to look into fixing up the msvc build
->> (or a complete re-write), so I look forward to seeing your solution.
->> (do you have msvc available? - or do you want me to look at fixing
->> it? maybe in a day or two?)
->>
-> Ramsay,
-> I don't have msvc, so feel free to go ahead, as much as you can.
->=20
-> I'll send a patch for the test code I have made, and put bswap.h on h=
-old for a week
-> (to be able to continue with t5601/connect.c)
+$ cat a
+111
+fdsf
+333
+$ cat b
+111
+222
+333
+$ git diff a b                             # OK
+diff --git a/a b/b
+index 768560b..641d574 100644
+--- a/a
++++ b/b
+@@ -1,3 +1,3 @@
+ 111
+-fdsf
++222
+ 333
+$ git diff <(cat a) <(cat b)          # ERROR: no result print out
+diff --git a/dev/fd/63 b/dev/fd/62
+index 311e262..554e9f4 120000
+--- a/dev/fd/63
++++ b/dev/fd/62
+@@ -1 +1 @@
+-pipe:[729963]
+\ No newline at end of file
++pipe:[729965]
+\ No newline at end of file
 
-Unfortunately, I haven't had much time to look into this.
-
-I do have a patch (given below) that works on Linux, cygwin,
-MinGW and msvc. However, the msvc build is still broken (as a
-result of _other_ commits in this 'jk/pack-bitmap' branch; as
-well as the use of a VLA in another commit).
-
-So, I still have work to do! :(
-
-Anyway, I thought I would send what I have, so you can take a look.
-Note, that I don't have an big-endian machine to test this on, so
-YMMV. Indeed, the *only* testing I have done is to run the test added
-by this branch (t5310-pack-bitmaps.sh), which works on Linux, cygwin
-and MinGW.
-
-[Note: I have never particularly liked htons, htonl et.al., so adding
-these htonll/ntohll functions doesn't thrill me! :-D For example see
-this post[1], which echo's my sentiments exactly.]
-
-HTH
-
-ATB,
-Ramsay Jones
-
-[1] http://commandcenter.blogspot.co.uk/2012/04/byte-order-fallacy.html
-
--- >8 --
-Subject: [PATCH] compat/bswap.h: Fix build on cygwin, MinGW and msvc
-
----
- compat/bswap.h | 97 ++++++++++++++++++++++++++++++++++++++++----------=
---------
- 1 file changed, 68 insertions(+), 29 deletions(-)
-
-diff --git a/compat/bswap.h b/compat/bswap.h
-index ea1a9ed..c18a78e 100644
---- a/compat/bswap.h
-+++ b/compat/bswap.h
-@@ -17,7 +17,20 @@ static inline uint32_t default_swab32(uint32_t val)
- 		((val & 0x000000ff) << 24));
- }
-=20
-+static inline uint64_t default_bswap64(uint64_t val)
-+{
-+	return (((val & (uint64_t)0x00000000000000ffULL) << 56) |
-+		((val & (uint64_t)0x000000000000ff00ULL) << 40) |
-+		((val & (uint64_t)0x0000000000ff0000ULL) << 24) |
-+		((val & (uint64_t)0x00000000ff000000ULL) <<  8) |
-+		((val & (uint64_t)0x000000ff00000000ULL) >>  8) |
-+		((val & (uint64_t)0x0000ff0000000000ULL) >> 24) |
-+		((val & (uint64_t)0x00ff000000000000ULL) >> 40) |
-+		((val & (uint64_t)0xff00000000000000ULL) >> 56));
-+}
-+
- #undef bswap32
-+#undef bswap64
-=20
- #if defined(__GNUC__) && (defined(__i386__) || defined(__x86_64__))
-=20
-@@ -32,54 +45,80 @@ static inline uint32_t git_bswap32(uint32_t x)
- 	return result;
- }
-=20
-+#define bswap64 git_bswap64
-+#if defined(__x86_64__)
-+static inline uint64_t git_bswap64(uint64_t x)
-+{
-+	uint64_t result;
-+	if (__builtin_constant_p(x))
-+		result =3D default_bswap64(x);
-+	else
-+		__asm__("bswap %q0" : "=3Dr" (result) : "0" (x));
-+	return result;
-+}
-+#else
-+static inline uint64_t git_bswap64(uint64_t x)
-+{
-+	union { uint64_t i64; uint32_t i32[2]; } tmp, result;
-+	if (__builtin_constant_p(x))
-+		result.i64 =3D default_bswap64(x);
-+	else {
-+		tmp.i64 =3D x;
-+		result.i32[0] =3D git_bswap32(tmp.i32[1]);
-+		result.i32[1] =3D git_bswap32(tmp.i32[0]);
-+	}
-+	return result.i64;
-+}
-+#endif
-+
- #elif defined(_MSC_VER) && (defined(_M_IX86) || defined(_M_X64))
-=20
- #include <stdlib.h>
-=20
- #define bswap32(x) _byteswap_ulong(x)
-+#define bswap64(x) _byteswap_uint64(x)
-=20
- #endif
-=20
--#ifdef bswap32
-+#if defined(bswap32)
-=20
- #undef ntohl
- #undef htonl
- #define ntohl(x) bswap32(x)
- #define htonl(x) bswap32(x)
-=20
--#ifndef __BYTE_ORDER
--#	if defined(BYTE_ORDER) && defined(LITTLE_ENDIAN) && defined(BIG_ENDI=
-AN)
--#		define __BYTE_ORDER BYTE_ORDER
--#		define __LITTLE_ENDIAN LITTLE_ENDIAN
--#		define __BIG_ENDIAN BIG_ENDIAN
--#	else
--#		error "Cannot determine endianness"
--#	endif
-+#endif
-+
-+#if defined(bswap64)
-+
-+#undef ntohll
-+#undef htonll
-+#define ntohll(x) bswap64(x)
-+#define htonll(x) bswap64(x)
-+
-+#else
-+
-+#undef ntohll
-+#undef htonll
-+
-+#if !defined(__BYTE_ORDER)
-+# if defined(BYTE_ORDER) && defined(LITTLE_ENDIAN) && defined(BIG_ENDI=
-AN)
-+#  define __BYTE_ORDER BYTE_ORDER
-+#  define __LITTLE_ENDIAN LITTLE_ENDIAN
-+#  define __BIG_ENDIAN BIG_ENDIAN
-+# endif
-+#endif
-+
-+#if !defined(__BYTE_ORDER)
-+# error "Cannot determine endianness"
- #endif
-=20
- #if __BYTE_ORDER =3D=3D __BIG_ENDIAN
- # define ntohll(n) (n)
- # define htonll(n) (n)
--#elif __BYTE_ORDER =3D=3D __LITTLE_ENDIAN
--#	if defined(__GNUC__) && defined(__GLIBC__)
--#		include <byteswap.h>
--#	else /* GNUC & GLIBC */
--static inline uint64_t bswap_64(uint64_t val)
--{
--	return ((val & (uint64_t)0x00000000000000ffULL) << 56)
--		| ((val & (uint64_t)0x000000000000ff00ULL) << 40)
--		| ((val & (uint64_t)0x0000000000ff0000ULL) << 24)
--		| ((val & (uint64_t)0x00000000ff000000ULL) <<  8)
--		| ((val & (uint64_t)0x000000ff00000000ULL) >>  8)
--		| ((val & (uint64_t)0x0000ff0000000000ULL) >> 24)
--		| ((val & (uint64_t)0x00ff000000000000ULL) >> 40)
--		| ((val & (uint64_t)0xff00000000000000ULL) >> 56);
--}
--#	endif /* GNUC & GLIBC */
--#	define ntohll(n) bswap_64(n)
--#	define htonll(n) bswap_64(n)
--#else /* __BYTE_ORDER */
--#	error "Can't define htonll or ntohll!"
-+#else
-+# define ntohll(n) default_bswap64(n)
-+# define htonll(n) default_bswap64(n)
- #endif
-=20
- #endif
---=20
-1.8.4
+# compare with diff
+$ diff -u a b                            # OK
+--- a 2013-11-05 00:18:17.394805923 +0800
++++ b 2013-11-05 00:18:25.546805865 +0800
+@@ -1,3 +1,3 @@
+ 111
+-fdsf
++222
+ 333
+$ diff -u <(cat a) <(cat b)         # OK: get result in same case
+--- /dev/fd/63 2013-11-05 01:02:59.706787117 +0800
++++ /dev/fd/62 2013-11-05 01:02:59.706787117 +0800
+@@ -1,3 +1,3 @@
+ 111
+-fdsf
++222
+ 333
