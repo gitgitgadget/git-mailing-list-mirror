@@ -1,99 +1,178 @@
 From: Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH 1/2] git_connect: remove artificial limit of a remote command
-Date: Tue, 05 Nov 2013 20:35:30 +0100
-Message-ID: <52794882.2020108@kdbg.org>
-References: <201311042220.50178.tboegi@web.de> <52789AE5.2010702@viscovery.net>
+Subject: [PATCH 2/2] git_connect: factor out discovery of the protocol and
+ its parts
+Date: Tue, 05 Nov 2013 20:39:22 +0100
+Message-ID: <5279496A.2090202@kdbg.org>
+References: <201311042220.50178.tboegi@web.de> <52789AE5.2010702@viscovery.net> <52794882.2020108@kdbg.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
 To: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Tue Nov 05 20:35:42 2013
+X-From: git-owner@vger.kernel.org Tue Nov 05 20:39:30 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VdmPb-0007En-Ji
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Nov 2013 20:35:39 +0100
+	id 1VdmTJ-00082J-UW
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Nov 2013 20:39:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754886Ab3KETff (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Nov 2013 14:35:35 -0500
-Received: from bsmtp5.bon.at ([195.3.86.187]:25132 "EHLO bsmtp.bon.at"
+	id S1755125Ab3KETjZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Nov 2013 14:39:25 -0500
+Received: from bsmtp5.bon.at ([195.3.86.187]:31280 "EHLO bsmtp.bon.at"
 	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752906Ab3KETff (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Nov 2013 14:35:35 -0500
+	id S1752140Ab3KETjZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Nov 2013 14:39:25 -0500
 Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id ED76B130052;
-	Tue,  5 Nov 2013 20:35:31 +0100 (CET)
+	by bsmtp.bon.at (Postfix) with ESMTP id E53181300B8;
+	Tue,  5 Nov 2013 20:39:23 +0100 (CET)
 Received: from dx.sixt.local (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id 0199619F3EE;
-	Tue,  5 Nov 2013 20:35:30 +0100 (CET)
+	by dx.sixt.local (Postfix) with ESMTP id C1FA319F3EE;
+	Tue,  5 Nov 2013 20:39:22 +0100 (CET)
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.0
-In-Reply-To: <52789AE5.2010702@viscovery.net>
+In-Reply-To: <52794882.2020108@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237338>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237339>
 
-Since day one, function git_connect() had a limit on the command line of
-the command that is invoked to make a connection. 7a33bcbe converted the
-code that constructs the command to strbuf. This would have been the
-right time to remove the limit, but it did not happen. Remove it now.
-
-git_connect() uses start_command() to invoke the command; consequently,
-the limits of the system still apply, but are diagnosed only at execve()
-time. But these limits are more lenient than the 1K that git_connect()
-imposed.
+git_connect has grown large due to the many different protocols syntaxes
+that are supported. Move the part of the function that parses the URL to
+connect to into a separate function for readability.
 
 Signed-off-by: Johannes Sixt <j6t@kdbg.org>
 ---
-Am 05.11.2013 08:14, schrieb Johannes Sixt:
-> Can you please make this into a series of small patches so that we can
-> more easily see the good and the bad parts? One of the patches could be a
-> clean-up of the current protocol determination and URL dissection, which
-> is indigestible spaghetti right now.
+Apart from this "simplification", the protocol parsing code is a complete
+mystery to me. There is more potential for simplification because
+git_proxy_connect() and git_tcp_connect() do their own host+port parsing.
 
-Maybe start with these two.
 
- connect.c | 7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
+ connect.c | 80 ++++++++++++++++++++++++++++++++++++++++++---------------------
+ 1 file changed, 53 insertions(+), 27 deletions(-)
 
 diff --git a/connect.c b/connect.c
-index 06e88b0..6cc1f8d 100644
+index 6cc1f8d..a6cf345 100644
 --- a/connect.c
 +++ b/connect.c
-@@ -527,8 +527,6 @@ static struct child_process *git_proxy_connect(int fd[2], char *host)
- 	return proxy;
+@@ -543,37 +543,20 @@ static char *get_port(char *host)
+ 	return NULL;
  }
  
--#define MAX_CMD_LEN 1024
+-static struct child_process no_fork;
 -
- static char *get_port(char *host)
+ /*
+- * This returns a dummy child_process if the transport protocol does not
+- * need fork(2), or a struct child_process object if it does.  Once done,
+- * finish the connection with finish_connect() with the value returned from
+- * this function (it is safe to call finish_connect() with NULL to support
+- * the former case).
+- *
+- * If it returns, the connect is successful; it just dies on errors (this
+- * will hopefully be changed in a libification effort, to return NULL when
+- * the connection failed).
++ * Extract protocol and relevant parts from the specified connection URL.
++ * The caller must free() the returned strings.
+  */
+-struct child_process *git_connect(int fd[2], const char *url_orig,
+-				  const char *prog, int flags)
++static enum protocol parse_connect_url(const char *url_orig, char **ret_host,
++				       char **ret_port, char **ret_path)
  {
+ 	char *url;
+ 	char *host, *path;
  	char *end;
-@@ -570,7 +568,7 @@ struct child_process *git_connect(int fd[2], const char *url_orig,
+ 	int c;
+-	struct child_process *conn = &no_fork;
+ 	enum protocol protocol = PROTO_LOCAL;
  	int free_path = 0;
  	char *port = NULL;
- 	const char **arg;
--	struct strbuf cmd;
+-	const char **arg;
+-	struct strbuf cmd = STRBUF_INIT;
+-
+-	/* Without this we cannot rely on waitpid() to tell
+-	 * what happened to our children.
+-	 */
+-	signal(SIGCHLD, SIG_DFL);
+ 
+ 	if (is_url(url_orig))
+ 		url = url_decode(url_orig);
+@@ -645,6 +628,49 @@ struct child_process *git_connect(int fd[2], const char *url_orig,
+ 	if (protocol == PROTO_SSH && host != url)
+ 		port = get_port(end);
+ 
++	*ret_host = xstrdup(host);
++	if (port)
++		*ret_port = xstrdup(port);
++	else
++		*ret_port = NULL;
++	if (free_path)
++		*ret_path = path;
++	else
++		*ret_path = xstrdup(path);
++	free(url);
++	return protocol;
++}
++
++static struct child_process no_fork;
++
++/*
++ * This returns a dummy child_process if the transport protocol does not
++ * need fork(2), or a struct child_process object if it does.  Once done,
++ * finish the connection with finish_connect() with the value returned from
++ * this function (it is safe to call finish_connect() with NULL to support
++ * the former case).
++ *
++ * If it returns, the connect is successful; it just dies on errors (this
++ * will hopefully be changed in a libification effort, to return NULL when
++ * the connection failed).
++ */
++struct child_process *git_connect(int fd[2], const char *url,
++				  const char *prog, int flags)
++{
++	char *host, *path;
++	struct child_process *conn = &no_fork;
++	enum protocol protocol;
++	char *port;
++	const char **arg;
 +	struct strbuf cmd = STRBUF_INIT;
++
++	/* Without this we cannot rely on waitpid() to tell
++	 * what happened to our children.
++	 */
++	signal(SIGCHLD, SIG_DFL);
++
++	protocol = parse_connect_url(url, &host, &port, &path);
++
+ 	if (protocol == PROTO_GIT) {
+ 		/* These underlying connection commands die() if they
+ 		 * cannot connect.
+@@ -666,9 +692,9 @@ struct child_process *git_connect(int fd[2], const char *url_orig,
+ 			     prog, path, 0,
+ 			     target_host, 0);
+ 		free(target_host);
+-		free(url);
+-		if (free_path)
+-			free(path);
++		free(host);
++		free(port);
++		free(path);
+ 		return conn;
+ 	}
  
- 	/* Without this we cannot rely on waitpid() to tell
- 	 * what happened to our children.
-@@ -676,12 +674,9 @@ struct child_process *git_connect(int fd[2], const char *url_orig,
+@@ -709,9 +735,9 @@ struct child_process *git_connect(int fd[2], const char *url_orig,
+ 	fd[0] = conn->out; /* read from child's stdout */
+ 	fd[1] = conn->in;  /* write to child's stdin */
+ 	strbuf_release(&cmd);
+-	free(url);
+-	if (free_path)
+-		free(path);
++	free(host);
++	free(port);
++	free(path);
+ 	return conn;
+ }
  
- 	conn = xcalloc(1, sizeof(*conn));
- 
--	strbuf_init(&cmd, MAX_CMD_LEN);
- 	strbuf_addstr(&cmd, prog);
- 	strbuf_addch(&cmd, ' ');
- 	sq_quote_buf(&cmd, path);
--	if (cmd.len >= MAX_CMD_LEN)
--		die("command line too long");
- 
- 	conn->in = conn->out = -1;
- 	conn->argv = arg = xcalloc(7, sizeof(*arg));
 -- 
 1.8.4.33.gd68f7e8
