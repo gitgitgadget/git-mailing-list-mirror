@@ -1,177 +1,243 @@
 From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: Re: [PATCH 2/2] git_connect: factor out discovery of the protocol
- and its parts
-Date: Wed, 06 Nov 2013 16:31:14 +0100
-Message-ID: <527A60C2.8090607@web.de>
-References: <201311042220.50178.tboegi@web.de> <52789AE5.2010702@viscovery.net> <52794882.2020108@kdbg.org> <5279496A.2090202@kdbg.org> <527958E1.2080805@web.de> <527961AB.2010606@kdbg.org>
+Subject: Re: htonll, ntohll
+Date: Wed, 06 Nov 2013 16:58:57 +0100
+Message-ID: <527A6741.4000507@web.de>
+References: <xmqqr4b5dwke.fsf@gitster.dls.corp.google.com> <5271392E.8020003@web.de> <CAFFjANT=-mQoKUU2KsPHo3Hcq7RAuyM1t4kvJu4OfiNeHrA+Ng@mail.gmail.com> <52713E67.3000202@web.de> <527158AF.3070204@ramsay1.demon.co.uk> <52716C58.3090507@web.de> <5271750D.5010801@ramsay1.demon.co.uk> <52725A05.1050805@web.de> <52783518.1030908@ramsay1.demon.co.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Johannes Sixt <j6t@kdbg.org>,
-	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Wed Nov 06 16:31:24 2013
+Cc: =?UTF-8?B?VmljZW50IE1hcnTDrQ==?= <tanoku@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	git <git@vger.kernel.org>, Jeff King <peff@peff.net>
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	=?UTF-8?B?VG9yc3RlbiBCw7Zn?= =?UTF-8?B?ZXJzaGF1c2Vu?= 
+	<tboegi@web.de>
+X-From: git-owner@vger.kernel.org Wed Nov 06 16:59:06 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ve54j-0002ex-Gx
-	for gcvg-git-2@plane.gmane.org; Wed, 06 Nov 2013 16:31:21 +0100
+	id 1Ve5Va-0007I9-6P
+	for gcvg-git-2@plane.gmane.org; Wed, 06 Nov 2013 16:59:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751522Ab3KFPbR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Nov 2013 10:31:17 -0500
-Received: from mout.web.de ([212.227.15.3]:64855 "EHLO mout.web.de"
+	id S1754796Ab3KFP7B convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Nov 2013 10:59:01 -0500
+Received: from mout.web.de ([212.227.17.12]:53409 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754406Ab3KFPbQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Nov 2013 10:31:16 -0500
+	id S1754580Ab3KFP7A (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Nov 2013 10:59:00 -0500
 Received: from [192.168.209.26] ([78.72.74.102]) by smtp.web.de (mrweb101)
- with ESMTPA (Nemesis) id 0M5Oct-1Vq0Sb2Cul-00zTto for <git@vger.kernel.org>;
- Wed, 06 Nov 2013 16:31:14 +0100
+ with ESMTPA (Nemesis) id 0MKa6N-1VeuBh07OR-0020aR for <git@vger.kernel.org>;
+ Wed, 06 Nov 2013 16:58:58 +0100
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:24.0) Gecko/20100101 Thunderbird/24.1.0
-In-Reply-To: <527961AB.2010606@kdbg.org>
-X-Provags-ID: V03:K0:yCbuum4nRgffTud/wzPO6UFGKP6sDvvrh5gqPhSg3y3ETe7kEzK
- q/+KK8ySt3zE+IPhS8hR5nSXy+CAgGRwNRuhvsZext4YcNioYu2+xW4MnLSr0q9nYRxxWO3
- C8uR4VnPRxtIpzUMuKUbKwSS+UjRzdbvI4zu9IuRWbn1okU7VLW481daLW7zQbTW0wXNWTz
- Ww9Ff9juCGWvV36O4UO2w==
+In-Reply-To: <52783518.1030908@ramsay1.demon.co.uk>
+X-Provags-ID: V03:K0:ZPImyrsC2turUlcYx11/aQbFGOK5RkxWJoPcnqCzUrmx3973QUN
+ rd4kZkyvhRt5/FbGD95zYPpl5sEgMcnPzPUBHYDYP5RCTr6UtK90/LVqEwxEvBd6/ZjNw9b
+ Pt7YddstrdoZifcsAX6nB3crnowdptyBwEJsMW1SgDQ8jjO0YyruLNxQOAo+NBmgk4Rlvlv
+ uI6y6vtBDOQQXRzNh7XdQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237355>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237356>
 
-On 2013-11-05 22.22, Johannes Sixt wrote:
-> Am 05.11.2013 21:45, schrieb Torsten B=C3=B6gershausen:
->> On 2013-11-05 20.39, Johannes Sixt wrote:
->> Thanks for picking this up, please see some minor nits inline,
->> and git_connect() is at the end
+On 2013-11-05 01.00, Ramsay Jones wrote:
+> On 31/10/13 13:24, Torsten B=C3=B6gershausen wrote:
+>> On 2013-10-30 22.07, Ramsay Jones wrote:
+> [ ... ]
+>>> Yep, this was the first thing I did as well! ;-) (*late* last night=
+)
+>>>
+>>> I haven't had time today to look into fixing up the msvc build
+>>> (or a complete re-write), so I look forward to seeing your solution=
+=2E
+>>> (do you have msvc available? - or do you want me to look at fixing
+>>> it? maybe in a day or two?)
+>>>
+>> Ramsay,
+>> I don't have msvc, so feel free to go ahead, as much as you can.
 >>
->>> -struct child_process *git_connect(int fd[2], const char *url_orig,
->>> -				  const char *prog, int flags)
->>> +static enum protocol parse_connect_url(const char *url_orig, char =
-**ret_host,
->>> +				       char **ret_port, char **ret_path)
->>>  {
->>>  	char *url;
->>>  	char *host, *path;
->>>  	char *end;
->> Can we put all the char * into one single line?
+>> I'll send a patch for the test code I have made, and put bswap.h on =
+hold for a week
+>> (to be able to continue with t5601/connect.c)
 >=20
-> The idea here was to keep the diff minimal, and that further slight
-> cleanups should be combined with subsequent rewrites that should happ=
-en
-> to this function.
+> Unfortunately, I haven't had much time to look into this.
 >=20
->>>  	int c;
->>> @@ -645,6 +628,49 @@ struct child_process *git_connect(int fd[2], c=
-onst char *url_orig,
->>>  	if (protocol =3D=3D PROTO_SSH && host !=3D url)
->>>  		port =3D get_port(end);
->>> =20
->>> +	*ret_host =3D xstrdup(host);
->>> +	if (port)
->>> +		*ret_port =3D xstrdup(port);
->>> +	else
->>> +		*ret_port =3D NULL;
->>> +	if (free_path)
->>> +		*ret_path =3D path;
->>> +	else
->>> +		*ret_path =3D xstrdup(path);
->>> +	free(url);
->>> +	return protocol;
->>> +}
->>> +
->>> +static struct child_process no_fork;
->>> +
->>> +/*
->>> + * This returns a dummy child_process if the transport protocol do=
-es not
->>> + * need fork(2), or a struct child_process object if it does.  Onc=
-e done,
->>> + * finish the connection with finish_connect() with the value retu=
-rned from
->>> + * this function (it is safe to call finish_connect() with NULL to=
- support
->>> + * the former case).
->>> + *
->>> + * If it returns, the connect is successful; it just dies on error=
-s (this
->>> + * will hopefully be changed in a libification effort, to return N=
-ULL when
->>> + * the connection failed).
->>> + */
->>> +struct child_process *git_connect(int fd[2], const char *url,
->>> +				  const char *prog, int flags)
->>> +{
->>> +	char *host, *path;
->>> +	struct child_process *conn =3D &no_fork;
->>> +	enum protocol protocol;
->>> +	char *port;
->>> +	const char **arg;
->>> +	struct strbuf cmd =3D STRBUF_INIT;
->>> +
->>> +	/* Without this we cannot rely on waitpid() to tell
->>> +	 * what happened to our children.
->>> +	 */
->>> +	signal(SIGCHLD, SIG_DFL);
->>> +
->>> +	protocol =3D parse_connect_url(url, &host, &port, &path);
->>> +
->>>  	if (protocol =3D=3D PROTO_GIT) {
->>>  		/* These underlying connection commands die() if they
->>>  		 * cannot connect.
->>> @@ -666,9 +692,9 @@ struct child_process *git_connect(int fd[2], co=
-nst char *url_orig,
->>>  			     prog, path, 0,
->>>  			     target_host, 0);
->>>  		free(target_host);
->> This is hard to see in the diff, I think we don't need target_host a=
-ny more.
+> I do have a patch (given below) that works on Linux, cygwin,
+> MinGW and msvc. However, the msvc build is still broken (as a
+> result of _other_ commits in this 'jk/pack-bitmap' branch; as
+> well as the use of a VLA in another commit).
 >=20
-> I though that as well first, but no, we still need it. Further rewrit=
-es
-> are needed that move the port discovery from git_proxy_connect() and
-> git_tcp_connect() to the new parse_connect_url() before target_host c=
-an
-> go away. And even then it is questionable because target_host is used=
- in
-> an error message and is intended to reflect the original combined
-> host+port portion of the URL, if I read the code correctly.
+> So, I still have work to do! :(
 >=20
->>> -		free(url);
->>> -		if (free_path)
->>> -			free(path);
->>> +		free(host);
->>> +		free(port);
->>> +		free(path);
->>>  		return conn;
->>>  	}
->>> =20
->>> @@ -709,9 +735,9 @@ struct child_process *git_connect(int fd[2], co=
-nst char *url_orig,
->>>  	fd[0] =3D conn->out; /* read from child's stdout */
->>>  	fd[1] =3D conn->in;  /* write to child's stdin */
->>>  	strbuf_release(&cmd);
->>> -	free(url);
->>> -	if (free_path)
->>> -		free(path);
->>
->> This "end of function, free everything and return conn",
->> could we re-arange so that it is in the code only once ?
+> Anyway, I thought I would send what I have, so you can take a look.
+> Note, that I don't have an big-endian machine to test this on, so
+> YMMV. Indeed, the *only* testing I have done is to run the test added
+> by this branch (t5310-pack-bitmaps.sh), which works on Linux, cygwin
+> and MinGW.
 >=20
-> That would be quite simple now; just place the part after the first
-> return into the else branch. That opens opportunities to move variabl=
-e
-> declarations from the top of the function into the else branch.
+> [Note: I have never particularly liked htons, htonl et.al., so adding
+> these htonll/ntohll functions doesn't thrill me! :-D For example see
+> this post[1], which echo's my sentiments exactly.]
 >=20
-> But all of these changes should go into a separate commit, IMO, so th=
-at
-> the function splitting that happens here can be verified more easily.
+> HTH
 >=20
-> -- Hannes
-Agreed on all points, (some re-reading was needed)
+> ATB,
+> Ramsay Jones
+>=20
+> [1] http://commandcenter.blogspot.co.uk/2012/04/byte-order-fallacy.ht=
+ml
+>=20
+> -- >8 --
+> Subject: [PATCH] compat/bswap.h: Fix build on cygwin, MinGW and msvc
+>=20
+> ---
+>  compat/bswap.h | 97 ++++++++++++++++++++++++++++++++++++++++--------=
+----------
+>  1 file changed, 68 insertions(+), 29 deletions(-)
+>=20
+> diff --git a/compat/bswap.h b/compat/bswap.h
+> index ea1a9ed..c18a78e 100644
+> --- a/compat/bswap.h
+> +++ b/compat/bswap.h
+> @@ -17,7 +17,20 @@ static inline uint32_t default_swab32(uint32_t val=
+)
+>  		((val & 0x000000ff) << 24));
+>  }
+> =20
+> +static inline uint64_t default_bswap64(uint64_t val)
+> +{
+> +	return (((val & (uint64_t)0x00000000000000ffULL) << 56) |
+> +		((val & (uint64_t)0x000000000000ff00ULL) << 40) |
+> +		((val & (uint64_t)0x0000000000ff0000ULL) << 24) |
+> +		((val & (uint64_t)0x00000000ff000000ULL) <<  8) |
+> +		((val & (uint64_t)0x000000ff00000000ULL) >>  8) |
+> +		((val & (uint64_t)0x0000ff0000000000ULL) >> 24) |
+> +		((val & (uint64_t)0x00ff000000000000ULL) >> 40) |
+> +		((val & (uint64_t)0xff00000000000000ULL) >> 56));
+> +}
+> +
+>  #undef bswap32
+> +#undef bswap64
+> =20
+>  #if defined(__GNUC__) && (defined(__i386__) || defined(__x86_64__))
+> =20
+> @@ -32,54 +45,80 @@ static inline uint32_t git_bswap32(uint32_t x)
+>  	return result;
+>  }
+> =20
+> +#define bswap64 git_bswap64
+> +#if defined(__x86_64__)
+> +static inline uint64_t git_bswap64(uint64_t x)
+> +{
+> +	uint64_t result;
+> +	if (__builtin_constant_p(x))
+> +		result =3D default_bswap64(x);
+> +	else
+> +		__asm__("bswap %q0" : "=3Dr" (result) : "0" (x));
+> +	return result;
+> +}
+> +#else
+> +static inline uint64_t git_bswap64(uint64_t x)
+> +{
+> +	union { uint64_t i64; uint32_t i32[2]; } tmp, result;
+> +	if (__builtin_constant_p(x))
+> +		result.i64 =3D default_bswap64(x);
+> +	else {
+> +		tmp.i64 =3D x;
+> +		result.i32[0] =3D git_bswap32(tmp.i32[1]);
+> +		result.i32[1] =3D git_bswap32(tmp.i32[0]);
+> +	}
+> +	return result.i64;
+> +}
+> +#endif
+> +
+>  #elif defined(_MSC_VER) && (defined(_M_IX86) || defined(_M_X64))
+> =20
+>  #include <stdlib.h>
+> =20
+>  #define bswap32(x) _byteswap_ulong(x)
+> +#define bswap64(x) _byteswap_uint64(x)
+> =20
+>  #endif
+> =20
+> -#ifdef bswap32
+> +#if defined(bswap32)
+> =20
+>  #undef ntohl
+>  #undef htonl
+>  #define ntohl(x) bswap32(x)
+>  #define htonl(x) bswap32(x)
+> =20
+> -#ifndef __BYTE_ORDER
+> -#	if defined(BYTE_ORDER) && defined(LITTLE_ENDIAN) && defined(BIG_EN=
+DIAN)
+> -#		define __BYTE_ORDER BYTE_ORDER
+> -#		define __LITTLE_ENDIAN LITTLE_ENDIAN
+> -#		define __BIG_ENDIAN BIG_ENDIAN
+> -#	else
+> -#		error "Cannot determine endianness"
+> -#	endif
+> +#endif
+> +
+> +#if defined(bswap64)
+> +
+> +#undef ntohll
+> +#undef htonll
+> +#define ntohll(x) bswap64(x)
+> +#define htonll(x) bswap64(x)
+> +
+> +#else
+> +
+> +#undef ntohll
+> +#undef htonll
+> +
+> +#if !defined(__BYTE_ORDER)
+> +# if defined(BYTE_ORDER) && defined(LITTLE_ENDIAN) && defined(BIG_EN=
+DIAN)
+> +#  define __BYTE_ORDER BYTE_ORDER
+> +#  define __LITTLE_ENDIAN LITTLE_ENDIAN
+> +#  define __BIG_ENDIAN BIG_ENDIAN
+> +# endif
+> +#endif
+> +
+> +#if !defined(__BYTE_ORDER)
+> +# error "Cannot determine endianness"
+>  #endif
+> =20
+>  #if __BYTE_ORDER =3D=3D __BIG_ENDIAN
+>  # define ntohll(n) (n)
+>  # define htonll(n) (n)
+> -#elif __BYTE_ORDER =3D=3D __LITTLE_ENDIAN
+> -#	if defined(__GNUC__) && defined(__GLIBC__)
+> -#		include <byteswap.h>
+> -#	else /* GNUC & GLIBC */
+> -static inline uint64_t bswap_64(uint64_t val)
+> -{
+> -	return ((val & (uint64_t)0x00000000000000ffULL) << 56)
+> -		| ((val & (uint64_t)0x000000000000ff00ULL) << 40)
+> -		| ((val & (uint64_t)0x0000000000ff0000ULL) << 24)
+> -		| ((val & (uint64_t)0x00000000ff000000ULL) <<  8)
+> -		| ((val & (uint64_t)0x000000ff00000000ULL) >>  8)
+> -		| ((val & (uint64_t)0x0000ff0000000000ULL) >> 24)
+> -		| ((val & (uint64_t)0x00ff000000000000ULL) >> 40)
+> -		| ((val & (uint64_t)0xff00000000000000ULL) >> 56);
+> -}
+> -#	endif /* GNUC & GLIBC */
+> -#	define ntohll(n) bswap_64(n)
+> -#	define htonll(n) bswap_64(n)
+> -#else /* __BYTE_ORDER */
+> -#	error "Can't define htonll or ntohll!"
+> +#else
+> +# define ntohll(n) default_bswap64(n)
+> +# define htonll(n) default_bswap64(n)
+>  #endif
+> =20
+>  #endif
+>=20
+I have had time to test it, works on Linux/PPC (big endian)
+and Mac OS.
 
-I will first focus on the test cases,
-since having god test cases eases us the re-factoring later on.
-Thanks
+What do we think about going ahead with this patch?
 /Torsten
