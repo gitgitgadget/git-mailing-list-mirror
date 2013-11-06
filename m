@@ -1,114 +1,88 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v3] push: Enhance unspecified push default warning
-Date: Wed, 6 Nov 2013 15:45:44 -0800
-Message-ID: <20131106234544.GF10302@google.com>
-References: <CAKYC+eKCsRbF=6HtcY8ZtaafTDpbMFJ1tyWbaZDKrmbzdnOoUw@mail.gmail.com>
- <CAKYC+eLvx1vB1ZDqYK=7Dg68QuCojBdSAVQZMF6HBtfxu_b_aw@mail.gmail.com>
- <xmqqvc08yq4v.fsf@gitster.dls.corp.google.com>
- <1839883487.4893076.1383646619137.JavaMail.root@imag.fr>
- <xmqqk3gl8id0.fsf@gitster.dls.corp.google.com>
- <vpq1u2tb3px.fsf@anie.imag.fr>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [PATCH 0/2] thin-pack capability for send-pack/receive-pack
+Date: Wed, 6 Nov 2013 15:47:13 -0800
+Message-ID: <CAJo=hJvX5wDcr0OxaQEjRtm1-mVNbAMLcLQxgEJWT=J8NPwEKg@mail.gmail.com>
+References: <1383750263-32495-1-git-send-email-cmn@elego.de>
+ <xmqqbo1x8e60.fsf@gitster.dls.corp.google.com> <1383774082.2850.10.camel@centaur.cmartin.tk>
+ <xmqqvc056uc1.fsf@gitster.dls.corp.google.com> <20131106225414.GA15920@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Greg Jacobson <coder5000@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Thu Nov 07 00:46:13 2013
+	=?ISO-8859-1?Q?Carlos_Mart=EDn_Nieto?= <cmn@elego.de>,
+	git <git@vger.kernel.org>, Jonathan Nieder <jrnieder@gmail.com>,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Nov 07 00:47:41 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VeCnJ-0003qk-UY
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Nov 2013 00:45:54 +0100
+	id 1VeCp1-0008J8-Fc
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Nov 2013 00:47:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751740Ab3KFXpu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Nov 2013 18:45:50 -0500
-Received: from mail-pb0-f50.google.com ([209.85.160.50]:45283 "EHLO
-	mail-pb0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752120Ab3KFXpt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Nov 2013 18:45:49 -0500
-Received: by mail-pb0-f50.google.com with SMTP id uo15so221829pbc.37
-        for <git@vger.kernel.org>; Wed, 06 Nov 2013 15:45:47 -0800 (PST)
+	id S1752316Ab3KFXrf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Nov 2013 18:47:35 -0500
+Received: from mail-wg0-f42.google.com ([74.125.82.42]:59479 "EHLO
+	mail-wg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750825Ab3KFXre (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Nov 2013 18:47:34 -0500
+Received: by mail-wg0-f42.google.com with SMTP id n12so4931581wgh.3
+        for <git@vger.kernel.org>; Wed, 06 Nov 2013 15:47:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=H9nGyigGn/oRcgfhPnrtWX7x+Uogg0oRGBCgsRHpvKA=;
-        b=aS4L3W4Y2PcQaBN8c2DhFm752uYHIb8+LnnYxYXTXyfyWEgOJ2JCcJFPvYkmQpPN2x
-         BqNXINlGGwv0GL7tim34coibN44XpwKFSkGt+eTXaRI4tLW04cNfOCG8Qv0n7HnttMpe
-         /lY+z4NGrxN4HLzdd2JZvxuKIIdzrkJ+QEPks00gaIliiylkndOMgW7CsxlWnIliBLNl
-         dvJ/mbP9FWJpe8vmeD0ZLe8A4JHKVbJDw49qW1Jvbm9I/MSZpLWaJLeof8HAcl5npm3t
-         tVbPzkCKEy7RZZLlMNzhlCbs1zE58CzZfDxbVNZvuQ2l5F3cVOhKciWlzYnEYdqUYWjX
-         P5Mg==
-X-Received: by 10.66.178.143 with SMTP id cy15mr6528839pac.105.1383781547642;
-        Wed, 06 Nov 2013 15:45:47 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id qw8sm606231pbb.27.2013.11.06.15.45.46
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 06 Nov 2013 15:45:47 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <vpq1u2tb3px.fsf@anie.imag.fr>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        d=spearce.org; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=L34waA82TzzkwVTMU0UqaLJn9zPZ+/nBY8UWyJKSQaE=;
+        b=IInWVTNrxoeGoA3ozSp3Zk+CnyglFZjOQG2uH+SVciV6I4bJTBC+yvanH4Sluz/Y+z
+         9AiozI51B43fNBRkahoEk5om38jXCVLHE2WQX99/02z5CbDNWbiLTXw9OrEieWZ52ayi
+         7xivQ/VdTt/PJod+uIRzR+XGnVEHCnhiwnGpM=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=L34waA82TzzkwVTMU0UqaLJn9zPZ+/nBY8UWyJKSQaE=;
+        b=ZMoxqToVPdyma2NM5t57HItmN7KNg41YBgrnNNN4y1EzlB4/GHMODq3NJTKWOGLLyt
+         LzZDBcwpYSQnPTOBeZrF2tBvzUw8fB3FwanCrU380SCFURV1qIFm/LF0jm6kmz8/K+rb
+         vix5MySA89KvKph87NoeAEwk1o29YlsxRNnjYZc8UWIucTH0pYRLb9V6Hsui9P7PtxW/
+         7MMIysUnmJ0u0/3HumjwKI5I0dHPIIGn/VZjKdy+vCRRm1C7sEbdPfnscpXedjy/brjm
+         7G57CVSeZdfjfQA/ixZcPLd0M8sefssfGqJAq82LvveGJGbYcE74xVLPT43OJ6q+R2s/
+         JTrQ==
+X-Gm-Message-State: ALoCoQka/owZhSM9wYfttGIxE7flLTEHF3UnrkC2ONj46+d+++oQcwnX854eyMFm8skKsVmrJO00
+X-Received: by 10.194.6.161 with SMTP id c1mr86086wja.89.1383781653644; Wed,
+ 06 Nov 2013 15:47:33 -0800 (PST)
+Received: by 10.227.62.140 with HTTP; Wed, 6 Nov 2013 15:47:13 -0800 (PST)
+In-Reply-To: <20131106225414.GA15920@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237384>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237385>
 
-Matthieu Moy wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
-
->> Specifically:
->>
->>>> +   "When push.default is set to 'matching', git will push all local branches\n"
->>>> +   "to the remote branches with the same (matching) name.
->>
->> invites those who do not read documentation to mistake it with using
->> an explicit "refs/heads/*:refs/heads/*" refspec.
+On Wed, Nov 6, 2013 at 2:54 PM, Jeff King <peff@peff.net> wrote:
+> If we instead introduced "no-thin", it is more like:
 >
-> Yes, but those who want to know the exact behavior should read the doc.
-> That's life.
-
-Surely we can do better?
-
-For example:
-
-	When push.default is set to 'matching', git will push local branches
-	to remote branches that already exist with the same (matching) name.
-
->>>> +   "In Git 2.0 the new push.default of 'simple' will push only the current\n"
->>>> +   "branch to the same remote branch used by git pull.   A push will\n"
->>>> +   "only succeed if the remote and local branches have the same name.\n"
->>
->> while you can see that it is not telling a lie if you read it twice,
->> "will only succeed if" feels somewhat roundabout.
->>
->> 	... push only the current branch back to the branch of the
->> 	same name, but only if 'git pull' is set to pull from that
->> 	branch. Otherwise the push will fail.
->>
->> might be an improvement, but I dunno.
+>   1. Receive-pack starts advertising "no-thin" (as dictated by
+>      circumstances, as Carlos describes).
 >
-> I do not see much difference actually. I tend to prefer the original
-> version: to me the expected behavior is to make push and pull
-> essentially symetrical, and the fact that it fails if the branch is
-> named differently is a safety feature comming on top of that.
+>   2. Send-pack which does not understand no-thin will ignore it and send
+>      a thin pack. This is the same as now, and the same as step 2 above.
+>
+>   3. An upgraded send-pack will understand no-thin and do as the server
+>      asks.
+>
+> So an upgraded client and server can start cooperating immediately, and
+> we do not have to wait for the long assumption time to pass before
+> applying the second half.
+>
+> It is tempting to think about a "thin" flag because that would be the
+> natural way to have implemented it from the very beginning. But it is
+> not the beginning, and the negative flag is the only way at this point
+> to say "if you understand this, please behave differently than we used
+> to" (because the status quo is "send a thin pack, whether I said it was
+> OK or not").
 
-Perhaps:
-
-	In Git 2.0 (or now, if push.default is set to 'simple'), git will behave
-	more conservatively by pushing only the current branch to the corresponding
-	remote branch used by "git pull", and only if the remote and local branches
-	have the same name.
-
-Except that forgets the exception having to do with triangular
-workflows.  So maybe:
-
-	In Git 2.0, git will default to a more conservative 'simple' behavior
-	that only pushes the current branch.
-
-Hope that helps,
-Jonathan
+I think the only sane option at this point is a "no-thin" flag, or
+just require servers that want to be wire compatible to accept thin
+packs.
