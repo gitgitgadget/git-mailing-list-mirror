@@ -1,79 +1,69 @@
-From: =?UTF-8?B?VG9yYWxmIEbDtnJzdGVy?= <toralf.foerster@gmx.de>
-Subject: (broken ?) output of "git diff --color-word"
-Date: Wed, 06 Nov 2013 22:02:36 +0100
-Message-ID: <527AAE6C.9000808@gmx.de>
+From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
+Subject: Re: [PATCH 0/2] thin-pack capability for send-pack/receive-pack
+Date: Wed, 06 Nov 2013 22:41:22 +0100
+Message-ID: <1383774082.2850.10.camel@centaur.cmartin.tk>
+References: <1383750263-32495-1-git-send-email-cmn@elego.de>
+	 <xmqqbo1x8e60.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Nov 06 22:02:44 2013
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, jrnieder@gmail.com, pclouds@gmail.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 06 22:41:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VeAFP-0002m7-UG
-	for gcvg-git-2@plane.gmane.org; Wed, 06 Nov 2013 22:02:44 +0100
+	id 1VeAr1-00074C-Ns
+	for gcvg-git-2@plane.gmane.org; Wed, 06 Nov 2013 22:41:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756488Ab3KFVCk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Nov 2013 16:02:40 -0500
-Received: from mout.gmx.net ([212.227.17.22]:62248 "EHLO mout.gmx.net"
+	id S1756114Ab3KFVlb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Nov 2013 16:41:31 -0500
+Received: from mx0.elegosoft.com ([78.47.87.163]:40051 "EHLO mx0.elegosoft.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756212Ab3KFVCj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Nov 2013 16:02:39 -0500
-Received: from [192.168.178.21] ([78.54.129.126]) by mail.gmx.com (mrgmx003)
- with ESMTPSA (Nemesis) id 0LvEZe-1VmJCB3HJS-010McL for <git@vger.kernel.org>;
- Wed, 06 Nov 2013 22:02:37 +0100
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.1.0
-X-Enigmail-Version: 1.6
-X-Provags-ID: V03:K0:Rd41bIkZclm9IX+DJEWo4orkdh9AZU4o7oqlwDf0L9dNsrTd6H0
- UcwaTsIQld06bVnbu9/yDxRn6MEWTUyLVUdIPVLz3iINoKDcjZX/eg472kPavQUB6Ja9wi8
- UOOFqv48NzdYuFlIo04Vab1+WNYTuuHwb1ulvzZSH2pc4EfrOW+A+02UZ5AshhbV7Q8ckRL
- g2+920hFtEUj6rAQgok0g==
+	id S1754524Ab3KFVla (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Nov 2013 16:41:30 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by mx0.elegosoft.com (Postfix) with ESMTP id DB0A9DE077;
+	Wed,  6 Nov 2013 22:41:28 +0100 (CET)
+Received: from mx0.elegosoft.com ([127.0.0.1])
+	by localhost (mx0.elegosoft.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 9lVgmfEZ5O6j; Wed,  6 Nov 2013 22:41:28 +0100 (CET)
+Received: from [192.168.1.4] (p57A1FC45.dip0.t-ipconnect.de [87.161.252.69])
+	by mx0.elegosoft.com (Postfix) with ESMTPSA id 9C180DE075;
+	Wed,  6 Nov 2013 22:41:28 +0100 (CET)
+In-Reply-To: <xmqqbo1x8e60.fsf@gitster.dls.corp.google.com>
+X-Mailer: Evolution 3.8.5-2+b1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237370>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237371>
 
-I just commented out few lines, "git diff" is fine :
+On Wed, 2013-11-06 at 12:32 -0800, Junio C Hamano wrote:
+> I'll queue these for now, but I doubt the wisdom of this series,
+> given that the ship has already sailed long time ago.
+> 
+> Currently, no third-party implementation of a receiving end can
+> accept thin push, because "thin push" is not a capability that needs
+> to be checked by the current clients.  People will have to wait
+> until the clients with 2/2 patch are widely deployed before starting
+> to use such a receiving end that is incapable of "thin push".
+> 
+> Wouldn't the world be a better place if instead they used that time
+> waiting to help such a third-party receiving end to implement "thin
+> push" support?
+> 
 
+Support in the code isn't always enough. The particular case that
+brought this on is one where the index-pack implementation can deal with
+thin packs just fine.
 
-@@ -144,10 +145,10 @@ StartUML || exit 2
- SHARES=3D""
- if [[ $VICTIMS -eq 1 ]]; then
+This particular service takes the pack which the client sent and does
+post-processing on it to store it elsewhere. During the receive-pack
+equivalent, there is no git object db that it can query for the missing
+base objects. I realise this is pretty a unusual situation.
 
--#      SHARES=3D"/tmp"
--#      SHARES=3D"$SHARES /mnt/hostfs"
--#      SHARES=3D"$SHARES /mnt/nfsv2"
--#      SHARES=3D"$SHARES /mnt/nfsv3"
-+       SHARES=3D"/tmp"
-+       SHARES=3D"$SHARES /mnt/hostfs"
-+       SHARES=3D"$SHARES /mnt/nfsv2"
-+       SHARES=3D"$SHARES /mnt/nfsv3"
- #      SHARES=3D"$SHARES /mnt/nfsv4"
-
-        echo $SHARES | grep -q hostfs
-
-
-
-but "git diff --color-words" places the "#" somehow obscure :
-
-
-@@ -144,10 +145,10 @@ StartUML || exit 2
-SHARES=3D""
-if [[ $VICTIMS -eq 1 ]]; then
-
-#       SHARES=3D"/tmp"#
-        SHARES=3D"$SHARES /mnt/hostfs"#
-        SHARES=3D"$SHARES /mnt/nfsv2"#
-        SHARES=3D"$SHARES /mnt/nfsv3"
-#       SHARES=3D"$SHARES /mnt/nfsv4"
-
-        echo $SHARES | grep -q hostfs
-
-
---=20
-MfG/Sincerely
-Toralf F=C3=B6rster
-pgp finger print: 7B1A 07F4 EC82 0F90 D4C2 8936 872A E508 7DB6 9DA3
+Cheers,
+   cmn
