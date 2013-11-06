@@ -1,81 +1,218 @@
-From: Max Baroi <max@baroi.com>
-Subject: Re: Inquiry
-Date: Tue, 5 Nov 2013 22:23:42 -0800
-Message-ID: <CACmcxS28WkjBrEwk1YeB54uwPwhkUD3AFK8gEXQrm7hPxA1WgA@mail.gmail.com>
-References: <51d9585130335ca8568208dbba21b5a4@nimetler.com>
-	<5279CCDF.5060808@guidewire.com>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [RFC/PATCH] Add interpret-trailers builtin
+Date: Wed, 06 Nov 2013 07:43:55 +0100 (CET)
+Message-ID: <20131106.074355.225932577498673677.chriscool@tuxfamily.org>
+References: <20131103211731.15716.95056.chriscool@tuxfamily.org>
+	<xmqqli14yoqi.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Altaf Hussain Sayyed <altafh.sayyed@nimetler.com>,
-	git@vger.kernel.org
-To: Ilya Silvestrov <isilvestrov@guidewire.com>
-X-From: git-owner@vger.kernel.org Wed Nov 06 07:23:51 2013
+Content-Type: Text/Plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, johan@herland.net, josh@joshtriplett.org,
+	tr@thomasrast.ch, mhagger@alum.mit.edu, dan.carpenter@oracle.com,
+	greg@kroah.com
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Wed Nov 06 07:44:24 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VdwWq-0001GU-69
-	for gcvg-git-2@plane.gmane.org; Wed, 06 Nov 2013 07:23:48 +0100
+	id 1Vdwql-0000aI-S2
+	for gcvg-git-2@plane.gmane.org; Wed, 06 Nov 2013 07:44:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750966Ab3KFGXo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Nov 2013 01:23:44 -0500
-Received: from mail-bk0-f48.google.com ([209.85.214.48]:37372 "EHLO
-	mail-bk0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750810Ab3KFGXn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Nov 2013 01:23:43 -0500
-Received: by mail-bk0-f48.google.com with SMTP id u10so641131bkz.7
-        for <git@vger.kernel.org>; Tue, 05 Nov 2013 22:23:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=tZzH00e3iYBTEiYuSgEk55QrTIUtxrOI7GRxzhaEUeg=;
-        b=L8WjAuz5rhVqXANqWfGEoP1k3GeARqBvfs0inBMEpHvGgtI16RAtNg7l3hPXmxp+UV
-         y+3nRsh2E39vDNM9COO4dq/kcKriCMlF4sSNk5ULodOo6FOq1PZncl3CRf2LhrGssWDk
-         D0y7GNWhjCex7GnJ9DbV3YXSCKQkgjhl85I+aDhrWvUWeQRvRV7YEpnwAOEy+XT5xYV+
-         jAQmbYD0jSpia2c3ba3zP/JNQybpTGnv2UP7mTYSB+arAbDSxZ36sYrKPEvYIC18I/TD
-         u9vSbQO/AlnFurHi3fDHchmGL4j+l+0+qniSvMXPD28Ezt7cTOzGmj15+M0PpXOJdugr
-         6JEQ==
-X-Received: by 10.205.10.132 with SMTP id pa4mr698662bkb.15.1383719022345;
- Tue, 05 Nov 2013 22:23:42 -0800 (PST)
-Received: by 10.204.236.9 with HTTP; Tue, 5 Nov 2013 22:23:42 -0800 (PST)
-In-Reply-To: <5279CCDF.5060808@guidewire.com>
-X-Google-Sender-Auth: GGCL9rilgQl4XEW2XzlnBA9j7-U
+	id S1752645Ab3KFGoU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Nov 2013 01:44:20 -0500
+Received: from [194.158.98.15] ([194.158.98.15]:63997 "EHLO mail-2y.bbox.fr"
+	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1750811Ab3KFGoT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Nov 2013 01:44:19 -0500
+Received: from localhost (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
+	by mail-2y.bbox.fr (Postfix) with ESMTP id 26C594F;
+	Wed,  6 Nov 2013 07:43:56 +0100 (CET)
+In-Reply-To: <xmqqli14yoqi.fsf@gitster.dls.corp.google.com>
+X-Mailer: Mew version 6.3 on Emacs 23.3 / Mule 6.0 (HANACHIRUSATO)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237347>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237348>
 
-You probably don't want to store your favorite movies or other large
-media files with out-of-the-box git.
+From: Junio C Hamano <gitster@pobox.com>
+> Christian Couder <chriscool@tuxfamily.org> writes:
+>>
+>> * "trailer" seems better than "commitTrailer" as the config key because
+>> it looks like all the config keys are lower case and "committrailer" is not
+>> very readable.
+> 
+> And closes the door for other things from later acquiring trailers?
 
+I don't think it really closes the door, as they can have a name like
+"stufftrailer" then. Or better they could call it something else than
+"trailer" everywhere from the beginning to avoid mistakes in the first
+place.
 
-On Tue, Nov 5, 2013 at 9:00 PM, Ilya Silvestrov
-<isilvestrov@guidewire.com> wrote:
->
-> No, git only works for C, because they use git to store Linux kernel sources :)
->
-> Seriously, it's about storing any files including your favorite movies.
->
->
-> On 11/05/2013 07:58 PM, Altaf Hussain Sayyed wrote:
+Or if they are really trailers, for example maybe tag trailers, then
+in many cases they might want to share the same configuration as
+commit trailers. In this case, it would be a mistake to use
+"commitTrailer" when most people would like them to also apply to
+tags.
+
+If/when tag trailers appear, then we can decide that "trailer"  is
+common for all trailers, "commitTrailer" is for commits only and
+"tagTrailer" for tags only.
+
+And anyway commit trailers have existed since the beginning or nearly
+the beginning of Git, and we haven't seen yet any other kind of
+trailer, so it's reasonnable to think that we can safely take the name
+and not worry, be happy.
+
+>> * "trailer.<token>.value" looks better than "trailer.<token>.trailer", so
+>> I chose the former.
+> 
+> If that is a literal value, then I think ".value" is indeed good.
+
+That was what I thought first too.
+
+But, after thinking about what Johan said, I think that it might be
+confusing for some people, so now I wonder if I should call it "key".
+
+>> * Rather than only one "trailer.<token>.style" config option, it seems
+>> better to me to have both "trailer.<token>.if_exist" and
+>> "trailer.<token>.if_missing".
+> 
+> As there is no ".if_exist", ".if_missing", etc. here, I cannot guess
+> what these "seemingly independent and orthogonal, but some
+> combinations are impossible" configuration variables are meant to be
+> used, let alone agreeing to the above claim that they are better
+> than a single ".style".
+
+Yeah, I should have explained more. So I will do it now.
+
+In the code I used the following enums:
+
+enum style_if_exist { DONT_REPEAT, OVERWRITE, REPEAT };
+enum style_if_missing { DONT_APPEND, APPEND };
+
+The style_if_exist enum is meant to decide what is done when we have
+to deal with 2 or more trailers, from the infile or the command line,
+that have the same key but different not empty values.
+
+For example, me might have the 3 following trailers:
+
+"Acked-by: joe <joe@example>"
+"Acked-by: bob <bob@example>"
+"Acked-by: joe <joe@example>"
+
+- The DONT_REPEAT style, which should be the default in my opinion,
+would mean that we don't repeat the same values. So we would get:
+
+"Acked-by: joe <joe@example>"
+"Acked-by: bob <bob@example>"
+
+- The OVERWRITE style would mean that we keep only one, (for example
+the last one). So we would get:
+
+"Acked-by: joe <joe@example>"
+
+- The REPEAT style would mean that we keep everything. So we would
+get:
+
+"Acked-by: joe <joe@example>"
+"Acked-by: bob <bob@example>"
+"Acked-by: joe <joe@example>"
+
+The style_if_missing enum is meant to decide what is done when we have
+no trailer with the specified key. Then DONT_APPEND means that we do
+nothing, which should be the default, and APPEND means that we append
+a trailer with the specified key.
+
+Of course in the latter case, a command should probably be specified
+to tell which value should be used with the key.
+
+For example:
+
+[trailer "signoff"]
+	 key = "Signed-off-by:"
+	 if_missing = append
+	 command = echo "$GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>"'
+
+would append a s-o-b line only if there is no s-o-b already. 
+
+Note that to always append a specific trailer one could use:
+
+[trailer "signoff"]
+	 key = "Signed-off-by:"
+	 if_missing = append
+	 if_exist = repeat
+	 command = echo "$GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>"'
+
+> I think you took the ".style" from my
+> thinking-aloud message the other day, but that aloud-thinking lead
+> to ".style" by taking various use cases people wanted to have
+> footers into account, including:
+
+Ok, I will try to guess below, how the use cases could be configured.
+
+>  - just appending, allowing duplication of the field name (e.g. more
+>    than one "cc:" can name different recipients);
+
+That would be the default (if_exist = dont_repeat, if_missing = dont_append).
+
+>  - appending, allowing duplication of the field <name,val> pair
+>    (e.g. a patch that flowed from person A to B and possibly
+>    somewhere else then finally back to A may have "Signed-off-by:
+>    A", chain of other's Sob, and another "Signed-off-by: A");
+
+That would be: if_exist = repeat, if_missing = dont_append
+
+>  - appending, but without consecutive repeats (e.g. the same
+>    "Signed-off-by:" example; person A does not pass a patch to
+>    himself, adding two same <name,val> pair next to each other);
+
+I could add a DONT_REPEAT_PREVIOUS into the style_if_exist enum, for
+this case.
+
+Then that would be: if_exist = dont_repeat_previous, if_missing = dont_append
+
+>  - adding only if there is no same <name> (e.g. "Change-Id:");
+
+I could add a DONT_APPEND into the style_if_exist enum, for this case.
+
+Then that would be: if_exist = dont_append, if_missing = append
+
+>  - adding only if there is no <name,val> pair (e.g. "Closes: #bugId");
+
+That would be: if_exist = dont_repeat, if_missing = append
+
+>  - adding one if there is none, replacing one if there already is.
+
+That would be: if_exist = overwrite, if_missing = append
+
+> I do not think it is easier for users to express these (and other)
+> semantics as combinations of "seemingly independent and orthogonal,
+> but some combinations are impossible" configuration variables.
+
+With what I suggest, I don't think there would be some impossible
+combinations.
+
+>> * I might send a patch series instead of just one big patch when there will
+>> be fewer big changes in the code.
 >>
->> Hi,
->>
->> I have following query.
->> Can git repository can be used for revision control of all kind of programming language coding including but not limited to followings:
->> ASP.NET
->> Java
->> iOS
->> PHP
->>
->>
->> Regards!
->
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+>> ---
+>>  .gitignore                    |   1 +
+>>  Makefile                      |   1 +
+>>  builtin.h                     |   1 +
+>>  builtin/interpret-trailers.c  | 284 ++++++++++++++++++++++++++++++++++++++++++
+>>  git.c                         |   1 +
+>>  strbuf.c                      |   7 ++
+>>  strbuf.h                      |   1 +
+> 
+> I think you're better off having trailers.c at the top level that is
+> called from builtin/interpret-trailers.c (aside from names), so that
+> we can later hook the former up with builtin/commit.c codepath.
+
+Ok, I will do that.
+
+Thanks,
+Christian.
