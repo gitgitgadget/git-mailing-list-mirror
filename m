@@ -1,95 +1,84 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v5 06/10] fast-export: add new --refspec option
-Date: Wed, 6 Nov 2013 14:14:27 -0800
-Message-ID: <20131106221427.GB13258@sigill.intra.peff.net>
-References: <1383212197-14259-1-git-send-email-felipe.contreras@gmail.com>
- <1383212197-14259-6-git-send-email-felipe.contreras@gmail.com>
- <xmqq61sd70vw.fsf@gitster.dls.corp.google.com>
- <CAMP44s246M5DaeX80tqzfjRWnbE4vKh-vp_tLW-qAQUFFPsP0Q@mail.gmail.com>
- <xmqq38n98cud.fsf@gitster.dls.corp.google.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v3 2/2] Rename suffixcmp() to has_suffix() and invert its
+ result
+Date: Wed, 6 Nov 2013 14:17:35 -0800
+Message-ID: <20131106221735.GB10302@google.com>
+References: <20131105210237.21525.61810.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Richard Hansen <rhansen@bbn.com>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 06 23:14:44 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Avery Pennarun <apenwarr@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jeff King <peff@peff.net>, Max Horn <max@quendi.de>
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Wed Nov 06 23:17:49 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VeBN5-0002vX-IF
-	for gcvg-git-2@plane.gmane.org; Wed, 06 Nov 2013 23:14:43 +0100
+	id 1VeBQ2-0002tb-JK
+	for gcvg-git-2@plane.gmane.org; Wed, 06 Nov 2013 23:17:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754579Ab3KFWOa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Nov 2013 17:14:30 -0500
-Received: from cloud.peff.net ([50.56.180.127]:34566 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754112Ab3KFWO3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Nov 2013 17:14:29 -0500
-Received: (qmail 11098 invoked by uid 102); 6 Nov 2013 22:14:29 -0000
-Received: from GITHUB-INC.bar1.SanFrancisco1.Level3.net (HELO sigill.intra.peff.net) (4.53.133.38)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 06 Nov 2013 16:14:29 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 06 Nov 2013 14:14:27 -0800
+	id S1754728Ab3KFWRm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Nov 2013 17:17:42 -0500
+Received: from mail-pd0-f174.google.com ([209.85.192.174]:60918 "EHLO
+	mail-pd0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754685Ab3KFWRl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Nov 2013 17:17:41 -0500
+Received: by mail-pd0-f174.google.com with SMTP id z10so141136pdj.5
+        for <git@vger.kernel.org>; Wed, 06 Nov 2013 14:17:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=Ks+phNItU9f8/Wf9OYDbjB+mJSyX+5ZWZgrLqWinJjc=;
+        b=dBYnlAvzT+eyB2a5HWcFfiLUHOn3VvkxnDLkBIM1RnaZoG2bjHyjS0MtHlkUjmuCMg
+         FEb2N5dHMd670fM/tyV0FZqCLq/6PMVKxVMJ0jI/QjKQAeB9DCN1kFpddAfKTugOgp+e
+         DL/sqM5rOud86vrdSCS+OXhUf0tUPxLIG+gJ14E2o9qbdeDqX42+ixxps13sQwDtBf76
+         M6TwzgwlGuKE9xhW9Kk/OBgRnqPUR6jBzuSPyF4cRh4cPak9ZFA940LuhFLmKC9L8Y2e
+         wPKpU2EQ4P2VQFCRgb/yuMGHmVezEyPc0XqYqtJhP8cjgRoW0/HI06vUcnMnJi3AmLET
+         W/jQ==
+X-Received: by 10.68.166.67 with SMTP id ze3mr5453373pbb.173.1383776258456;
+        Wed, 06 Nov 2013 14:17:38 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id gg10sm303020pbc.46.2013.11.06.14.17.37
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 06 Nov 2013 14:17:37 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <xmqq38n98cud.fsf@gitster.dls.corp.google.com>
+In-Reply-To: <20131105210237.21525.61810.chriscool@tuxfamily.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237373>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237374>
 
-On Wed, Nov 06, 2013 at 01:00:42PM -0800, Junio C Hamano wrote:
+Hi,
 
-> I didn't think things through, but at the external UI level, I see a
-> possibility of a nicer way to express the above.
-> 
-> In our "push" refspec (and export is about pushing what we have), a
-> colonless refspec A is a short-hand for A:A, so the traditional
-> 
-> 	git fast-export master
-> 
-> can be thought of, in a new world order with a patch that lets you
-> do a ref mapping, a short-hand for an identical mapping:
-> 
-> 	git fast-export master:master
-> 
-> It follows that the syntax naturally support
-> 
-> 	git fast-export refs/heads/master:refs/heads/foobar
-> 
-> I would think.
-> 
-> That approach lets you express ref mapping without a new option
-> --refspec, which goes contrary to existing UI for any commands in
-> Git (I think nobody takes refspec as a value to a dashed-option in
-> the transport; both in fetch and push, they are proper operands,
-> i.e. command line arguments to the command), no?
+Christian Couder wrote:
 
-I think that is much nicer for the simple cases, but how do we handle
-more complex rev expressions? One can say:
+> Now has_suffix() returns 1 when the suffix is present and 0 otherwise.
 
-  git fast-export master ^origin
+Ok.  My only worry is that the function is less discoverable since
+its name is so different from prefixcmp(), which might cause someone
+to invent yet another postfixcmp.
 
-or even:
+> The old name followed the pattern anything-cmp(), which suggests
+> a general comparison function suitable for e.g. sorting objects.
+> But this was not the case for suffixcmp().
 
-  git fast-export origin..master
+It's not clear to me that prefixcmp() is usable for sorting objects,
+either.  Shouldn't it get the same treatment?
 
-The "^origin" is not a refspec, and finding the refspec in the
-dot-expression would involve parsing it into two components. I think you
-can come up with a workable system by parsing the arguments as revision
-specifiers and then applying some rules. E.g., a positive ref "foo" is a
-refspec "foo:foo", but negative "^bar" does not impact refspecs at all,
-and the same rules are applied for "bar..foo". There is a syntactic
-conflict where "foo:bar" would be interpreted as a tree:path by the
-revision code, though, whereas in this context it means a refspec.
+Except for that concern, the patch looks good.
 
-So I think it is possible to go that route (and perhaps preferable,
-even, because it keeps the simple and common cases easy for the user),
-but the implementation is not as simple as just treating the arguments
-as refspecs.
+If some day we invent a type for 4-byte-aligned object names, it might
+make sense to do something similar to hashcmp, distinguishing between
+hashcmp for use where ordering is important and something like hash_eq
+when checking for equality (since I suspect the latter can be made
+faster).
 
--Peff
+Thanks,
+Jonathan
