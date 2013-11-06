@@ -1,98 +1,114 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [PATCH 0/2] thin-pack capability for send-pack/receive-pack
-Date: Wed, 6 Nov 2013 15:42:30 -0800
-Message-ID: <CAJo=hJtUMZit8Mtt7NQ=SiAXmnHf3xQqCKMo3F3XksHoq0tCkw@mail.gmail.com>
-References: <1383750263-32495-1-git-send-email-cmn@elego.de>
- <xmqqbo1x8e60.fsf@gitster.dls.corp.google.com> <1383774082.2850.10.camel@centaur.cmartin.tk>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v3] push: Enhance unspecified push default warning
+Date: Wed, 6 Nov 2013 15:45:44 -0800
+Message-ID: <20131106234544.GF10302@google.com>
+References: <CAKYC+eKCsRbF=6HtcY8ZtaafTDpbMFJ1tyWbaZDKrmbzdnOoUw@mail.gmail.com>
+ <CAKYC+eLvx1vB1ZDqYK=7Dg68QuCojBdSAVQZMF6HBtfxu_b_aw@mail.gmail.com>
+ <xmqqvc08yq4v.fsf@gitster.dls.corp.google.com>
+ <1839883487.4893076.1383646619137.JavaMail.root@imag.fr>
+ <xmqqk3gl8id0.fsf@gitster.dls.corp.google.com>
+ <vpq1u2tb3px.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-To: =?ISO-8859-1?Q?Carlos_Mart=EDn_Nieto?= <cmn@elego.de>
-X-From: git-owner@vger.kernel.org Thu Nov 07 00:46:01 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Greg Jacobson <coder5000@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Thu Nov 07 00:46:13 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VeCkW-0002wr-Fv
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Nov 2013 00:43:00 +0100
+	id 1VeCnJ-0003qk-UY
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Nov 2013 00:45:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752109Ab3KFXmx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Nov 2013 18:42:53 -0500
-Received: from mail-wg0-f45.google.com ([74.125.82.45]:47077 "EHLO
-	mail-wg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751779Ab3KFXmw convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 6 Nov 2013 18:42:52 -0500
-Received: by mail-wg0-f45.google.com with SMTP id z12so216917wgg.24
-        for <git@vger.kernel.org>; Wed, 06 Nov 2013 15:42:51 -0800 (PST)
+	id S1751740Ab3KFXpu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Nov 2013 18:45:50 -0500
+Received: from mail-pb0-f50.google.com ([209.85.160.50]:45283 "EHLO
+	mail-pb0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752120Ab3KFXpt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Nov 2013 18:45:49 -0500
+Received: by mail-pb0-f50.google.com with SMTP id uo15so221829pbc.37
+        for <git@vger.kernel.org>; Wed, 06 Nov 2013 15:45:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spearce.org; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=An7H0JZXvZ1V0c1eVI+766Jin/ndQoVcQ7B4ag3Q+ro=;
-        b=fFH2OT+7YrsDVdy8q+Ik9IBPw2Zjau0r3/CwtpKfL2cHpzsmJtKn2R0GtbFMdnWoby
-         3/f0PZ52p4vXJuLwgzIW90kgbqOlKPMi/Nmg8vpP8HlioqiN7ynis1RQozSZjeC82Qy0
-         ZNSLKIhltx3VQ3bcLEveuSxxQyM8mogn4Pxt8=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=An7H0JZXvZ1V0c1eVI+766Jin/ndQoVcQ7B4ag3Q+ro=;
-        b=Vg8o87JZkPYtY9OD8qqevJ6iREqldTQW2IZclQ7IkTrbbk2bQ2hyZot2cYeIW5OQfG
-         1wynIY3hjz04QejL1M+Lqzorw/xzqny1EsSckH9wyiYQrQuheS1sZGq/KhOIPG14oBjn
-         PwMpyjqtHhVNegqeQtZsGMw5h+rCwvrURPJMWo8a7S2xPgspSf+zazMoTwWPxnBO7AJD
-         nwkQpZWSolbUGLhspYdVZokalYITQWpnR3tfCOivYai6PAXol36JJpB4/7PRe4K66e/B
-         U85frtv33tFJ3HLDNeINhVD68RQhvvGqzaL4wYkEdOUWJsAYPXbKVC3+H4FyiMLyXgDG
-         +lyQ==
-X-Gm-Message-State: ALoCoQlZ/7FPgx001X1dkKosmgsnazZxpSy/xhDwuUkZye6+ZyeITH2uI4o6p8pXq7Ij1W25kenN
-X-Received: by 10.194.82.8 with SMTP id e8mr27647wjy.95.1383781370988; Wed, 06
- Nov 2013 15:42:50 -0800 (PST)
-Received: by 10.227.62.140 with HTTP; Wed, 6 Nov 2013 15:42:30 -0800 (PST)
-In-Reply-To: <1383774082.2850.10.camel@centaur.cmartin.tk>
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=H9nGyigGn/oRcgfhPnrtWX7x+Uogg0oRGBCgsRHpvKA=;
+        b=aS4L3W4Y2PcQaBN8c2DhFm752uYHIb8+LnnYxYXTXyfyWEgOJ2JCcJFPvYkmQpPN2x
+         BqNXINlGGwv0GL7tim34coibN44XpwKFSkGt+eTXaRI4tLW04cNfOCG8Qv0n7HnttMpe
+         /lY+z4NGrxN4HLzdd2JZvxuKIIdzrkJ+QEPks00gaIliiylkndOMgW7CsxlWnIliBLNl
+         dvJ/mbP9FWJpe8vmeD0ZLe8A4JHKVbJDw49qW1Jvbm9I/MSZpLWaJLeof8HAcl5npm3t
+         tVbPzkCKEy7RZZLlMNzhlCbs1zE58CzZfDxbVNZvuQ2l5F3cVOhKciWlzYnEYdqUYWjX
+         P5Mg==
+X-Received: by 10.66.178.143 with SMTP id cy15mr6528839pac.105.1383781547642;
+        Wed, 06 Nov 2013 15:45:47 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id qw8sm606231pbb.27.2013.11.06.15.45.46
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 06 Nov 2013 15:45:47 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <vpq1u2tb3px.fsf@anie.imag.fr>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237383>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237384>
 
-On Wed, Nov 6, 2013 at 1:41 PM, Carlos Mart=EDn Nieto <cmn@elego.de> wr=
-ote:
-> On Wed, 2013-11-06 at 12:32 -0800, Junio C Hamano wrote:
->> I'll queue these for now, but I doubt the wisdom of this series,
->> given that the ship has already sailed long time ago.
+Matthieu Moy wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+
+>> Specifically:
 >>
->> Currently, no third-party implementation of a receiving end can
->> accept thin push, because "thin push" is not a capability that needs
->> to be checked by the current clients.  People will have to wait
->> until the clients with 2/2 patch are widely deployed before starting
->> to use such a receiving end that is incapable of "thin push".
+>>>> +   "When push.default is set to 'matching', git will push all local branches\n"
+>>>> +   "to the remote branches with the same (matching) name.
 >>
->> Wouldn't the world be a better place if instead they used that time
->> waiting to help such a third-party receiving end to implement "thin
->> push" support?
->>
+>> invites those who do not read documentation to mistake it with using
+>> an explicit "refs/heads/*:refs/heads/*" refspec.
 >
-> Support in the code isn't always enough. The particular case that
-> brought this on is one where the index-pack implementation can deal w=
-ith
-> thin packs just fine.
+> Yes, but those who want to know the exact behavior should read the doc.
+> That's life.
+
+Surely we can do better?
+
+For example:
+
+	When push.default is set to 'matching', git will push local branches
+	to remote branches that already exist with the same (matching) name.
+
+>>>> +   "In Git 2.0 the new push.default of 'simple' will push only the current\n"
+>>>> +   "branch to the same remote branch used by git pull.   A push will\n"
+>>>> +   "only succeed if the remote and local branches have the same name.\n"
+>>
+>> while you can see that it is not telling a lie if you read it twice,
+>> "will only succeed if" feels somewhat roundabout.
+>>
+>> 	... push only the current branch back to the branch of the
+>> 	same name, but only if 'git pull' is set to pull from that
+>> 	branch. Otherwise the push will fail.
+>>
+>> might be an improvement, but I dunno.
 >
-> This particular service takes the pack which the client sent and does
-> post-processing on it to store it elsewhere. During the receive-pack
-> equivalent, there is no git object db that it can query for the missi=
-ng
-> base objects. I realise this is pretty a unusual situation.
+> I do not see much difference actually. I tend to prefer the original
+> version: to me the expected behavior is to make push and pull
+> essentially symetrical, and the fact that it fails if the branch is
+> named differently is a safety feature comming on top of that.
 
-How... odd?
+Perhaps:
 
-At Google we have made effort to ensure servers can accept thin packs,
-even though its clearly easier to accept non-thin, because clients in
-the wild already send thin packs and changing the deployed clients is
-harder than implementing the existing protocol.
+	In Git 2.0 (or now, if push.default is set to 'simple'), git will behave
+	more conservatively by pushing only the current branch to the corresponding
+	remote branch used by "git pull", and only if the remote and local branches
+	have the same name.
 
-If the server can't complete the pack, I guess this also means the
-client cannot immediately fetch from the server it just pushed to?
+Except that forgets the exception having to do with triangular
+workflows.  So maybe:
+
+	In Git 2.0, git will default to a more conservative 'simple' behavior
+	that only pushes the current branch.
+
+Hope that helps,
+Jonathan
