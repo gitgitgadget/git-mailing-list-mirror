@@ -1,100 +1,79 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v3] push: Enhance unspecified push default warning
-Date: Thu, 07 Nov 2013 11:52:43 +0100
-Message-ID: <vpqtxfo8ow4.fsf@anie.imag.fr>
-References: <CAKYC+eKCsRbF=6HtcY8ZtaafTDpbMFJ1tyWbaZDKrmbzdnOoUw@mail.gmail.com>
-	<CAKYC+eLvx1vB1ZDqYK=7Dg68QuCojBdSAVQZMF6HBtfxu_b_aw@mail.gmail.com>
-	<xmqqvc08yq4v.fsf@gitster.dls.corp.google.com>
-	<1839883487.4893076.1383646619137.JavaMail.root@imag.fr>
-	<xmqqk3gl8id0.fsf@gitster.dls.corp.google.com>
-	<vpq1u2tb3px.fsf@anie.imag.fr> <20131106234544.GF10302@google.com>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH v3 2/2] Rename suffixcmp() to has_suffix() and invert its result
+Date: Thu, 7 Nov 2013 12:04:42 +0100
+Message-ID: <CAP8UFD1AZQM8HX-DgW0NzN2RidTi9fAcN0XHC8=sz3J4nrwQ1Q@mail.gmail.com>
+References: <20131105210237.21525.61810.chriscool@tuxfamily.org>
+	<20131106221735.GB10302@google.com>
+	<xmqq38n96pdo.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Greg Jacobson <coder5000@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 07 11:52:58 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	git <git@vger.kernel.org>, Avery Pennarun <apenwarr@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jeff King <peff@peff.net>, Max Horn <max@quendi.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Nov 07 12:04:52 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VeNCr-0007vn-C3
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Nov 2013 11:52:57 +0100
+	id 1VeNOO-0005pl-4s
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Nov 2013 12:04:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754139Ab3KGKwy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Nov 2013 05:52:54 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:49588 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751783Ab3KGKwv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Nov 2013 05:52:51 -0500
-Received: from globule.imag.fr (globule.imag.fr [129.88.34.238])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id rA7AqhHq017694
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 7 Nov 2013 11:52:43 +0100
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	(authenticated bits=0)
-	by globule.imag.fr (8.13.8/8.13.8) with ESMTP id rA7AqiFQ005138
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Thu, 7 Nov 2013 11:52:44 +0100
-In-Reply-To: <20131106234544.GF10302@google.com> (Jonathan Nieder's message of
-	"Wed, 6 Nov 2013 15:45:44 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 07 Nov 2013 11:52:43 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: rA7AqhHq017694
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1384426365.51243@H99fbhK8/GmIa4KkuBbQbQ
+	id S1754333Ab3KGLEp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Nov 2013 06:04:45 -0500
+Received: from mail-vc0-f174.google.com ([209.85.220.174]:37787 "EHLO
+	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752474Ab3KGLEn (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Nov 2013 06:04:43 -0500
+Received: by mail-vc0-f174.google.com with SMTP id ld13so244129vcb.19
+        for <git@vger.kernel.org>; Thu, 07 Nov 2013 03:04:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=x7SfcVdUEssVElroeB/ML5dG2xhQMOwS6NZ16baJl2Q=;
+        b=GKzXSJokMCAXupU7sKiFeDSyeN4munDTiqq8EP0QNU2kM83jNZqLBNG8VD6rYDZXKg
+         lFcLbLTXugbXAdi9IUGbE/qGYJFCEo04V8zcP2UW+h4PQlG+B9VKQj9kmgormvqdbp3b
+         uFJy8MwRMBS0VN3mlULwWVOgr/RnAod2lfg8lleQjEKO1z9oByRolQAyABaX/lrSNHDA
+         FLDuebr1hjji/OKcM2IO6thAUeG0XWKqSgicwb+o0Dv8inqqj6EfshVGP6Au4G+hg2Ab
+         427EqX0k/cz/SEqID2A4H1P01iVg8/fJHYM2/CKuir/oOsBky8vPZmuEP7YEE4pkNw1j
+         SZKA==
+X-Received: by 10.58.216.74 with SMTP id oo10mr6286791vec.0.1383822282942;
+ Thu, 07 Nov 2013 03:04:42 -0800 (PST)
+Received: by 10.58.253.136 with HTTP; Thu, 7 Nov 2013 03:04:42 -0800 (PST)
+In-Reply-To: <xmqq38n96pdo.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237393>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237394>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
-
-> 	When push.default is set to 'matching', git will push local branches
-> 	to remote branches that already exist with the same (matching) name.
-
-Yes, that's better than the original patch (and remains two lines).
-
->>>>> +   "In Git 2.0 the new push.default of 'simple' will push only the current\n"
->>>>> +   "branch to the same remote branch used by git pull.   A push will\n"
->>>>> +   "only succeed if the remote and local branches have the same name.\n"
->>>
->>> while you can see that it is not telling a lie if you read it twice,
->>> "will only succeed if" feels somewhat roundabout.
->>>
->>> 	... push only the current branch back to the branch of the
->>> 	same name, but only if 'git pull' is set to pull from that
->>> 	branch. Otherwise the push will fail.
->>>
->>> might be an improvement, but I dunno.
+On Thu, Nov 7, 2013 at 1:12 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
+>
+>>> The old name followed the pattern anything-cmp(), which suggests
+>>> a general comparison function suitable for e.g. sorting objects.
+>>> But this was not the case for suffixcmp().
 >>
->> I do not see much difference actually. I tend to prefer the original
->> version: to me the expected behavior is to make push and pull
->> essentially symetrical, and the fact that it fails if the branch is
->> named differently is a safety feature comming on top of that.
+>> It's not clear to me that prefixcmp() is usable for sorting objects,
+>> either.  Shouldn't it get the same treatment?
 >
-> Perhaps:
+> Sounds like a plan for a good follow-up series.
+
+Ok, I will have a look.
+
+>> If some day we invent a type for 4-byte-aligned object names, it might
+>> make sense to do something similar to hashcmp, distinguishing between
+>> hashcmp for use where ordering is important and something like hash_eq
+>> when checking for equality (since I suspect the latter can be made
+>> faster).
 >
-> 	In Git 2.0 (or now, if push.default is set to 'simple'), git will behave
-> 	more conservatively by pushing only the current branch to the corresponding
-> 	remote branch used by "git pull", and only if the remote and local branches
-> 	have the same name.
+> Interesting.
 
-I prefered the original, as it had two sentences. Reading only the first
-one gave the important information.
+Yeah, but I will pass on this one.
 
-> 	In Git 2.0, git will default to a more conservative 'simple' behavior
-> 	that only pushes the current branch.
-
-That's an option too, but I think mentionning "git pull" was a good
-idea.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Thanks,
+Christian.
