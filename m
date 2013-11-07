@@ -1,76 +1,112 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v3] push: Enhance unspecified push default warning
-Date: Thu, 07 Nov 2013 19:51:14 +0100
-Message-ID: <vpqtxfo2ggt.fsf@anie.imag.fr>
-References: <CAKYC+eKCsRbF=6HtcY8ZtaafTDpbMFJ1tyWbaZDKrmbzdnOoUw@mail.gmail.com>
-	<CAKYC+eLvx1vB1ZDqYK=7Dg68QuCojBdSAVQZMF6HBtfxu_b_aw@mail.gmail.com>
-	<xmqqvc08yq4v.fsf@gitster.dls.corp.google.com>
-	<1839883487.4893076.1383646619137.JavaMail.root@imag.fr>
-	<xmqqk3gl8id0.fsf@gitster.dls.corp.google.com>
-	<vpq1u2tb3px.fsf@anie.imag.fr> <20131106234544.GF10302@google.com>
-	<vpqtxfo8ow4.fsf@anie.imag.fr>
-	<xmqqr4as5bbh.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] gitignore.txt: clarify recursive nature of excluded directories
+Date: Thu, 07 Nov 2013 10:57:44 -0800
+Message-ID: <xmqqa9hg59av.fsf@gitster.dls.corp.google.com>
+References: <527BC00D.8000501@gmail.com> <527BC068.3040303@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Greg Jacobson <coder5000@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 07 19:51:49 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Duy Nguyen <pclouds@gmail.com>
+To: Karsten Blees <karsten.blees@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 07 19:57:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VeUgC-0005j2-Sq
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Nov 2013 19:51:45 +0100
+	id 1VeUmA-0004xa-5f
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Nov 2013 19:57:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752234Ab3KGSvm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Nov 2013 13:51:42 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:33742 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751929Ab3KGSvk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Nov 2013 13:51:40 -0500
-Received: from globule.imag.fr (globule.imag.fr [129.88.34.238])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id rA7IpC26031634
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 7 Nov 2013 19:51:12 +0100
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	(authenticated bits=0)
-	by globule.imag.fr (8.13.8/8.13.8) with ESMTP id rA7IpEpO011755
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Thu, 7 Nov 2013 19:51:15 +0100
-In-Reply-To: <xmqqr4as5bbh.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Thu, 07 Nov 2013 10:14:10 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 07 Nov 2013 19:51:12 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: rA7IpC26031634
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1384455076.89741@OQj1Cf918sCj0zMBCbRLcA
+	id S1752674Ab3KGS5t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Nov 2013 13:57:49 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48706 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752648Ab3KGS5t (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Nov 2013 13:57:49 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7ADDC4E64C;
+	Thu,  7 Nov 2013 13:57:48 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=PJZz+arYMke/yaPmZZ33pjHnFmE=; b=GuGHZn
+	DEobpCefwsRfs1vHVn+9q8+hpmuiQcetaFgNf9hSLcbLG44jibL4NNaLI5BzgGUu
+	xWd8gzD/jVrgSTvH5XMPUrBN4UOPOYhKvTJTWVGLQA7xS/UL5WEVcTVRx53bX2f/
+	U2Xmkbi9kbg+BdEF2MD8l/IdZbvq/T9olnGW4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=a59ZStQAhb3oWJPseOTHbj0jf5uu6uEt
+	st7lNRnNYk3YLfLG0Io59kauSIjFVh43vdwx8ukqT5N+O2/25GIWjZhAqlnwTImB
+	lUzAjPjueSbZxZeQS+rmmQs8j+BcC3ESZCmaALP6jSqt4y457jDME9xik+FVckkc
+	o+H8fWHIpsA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 690ED4E64B;
+	Thu,  7 Nov 2013 13:57:48 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BEDFE4E649;
+	Thu,  7 Nov 2013 13:57:46 -0500 (EST)
+In-Reply-To: <527BC068.3040303@gmail.com> (Karsten Blees's message of "Thu, 07
+	Nov 2013 17:31:36 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 7DAAE9D8-47DE-11E3-9019-1FFB7F2839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237423>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237424>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Karsten Blees <karsten.blees@gmail.com> writes:
 
-> Actually, to me, I found the "two sentences" the worst part in the
-> original.  It made it sound as if the default will be switching to
-> 'upstream', and all readers need to read the second sentence that
-> clarifies that it is not the case, in a somewhat round-about
-> way---"will only succeed if" invites "and otherwise...?"
+> Additionally, precedence of negated patterns is exactly as outlined in
+> the DESCRIPTION section, we don't need to repeat this.
 
-To me, this is not an issue given the audience (people too lazy to read
-the docs): for them, current == simple == upstream modulo details
-they're not interested about. The safety measure of "simple" is actually
-here to make sure nothing wrong happens if they make the confusion.
+Very good, thanks.
 
-But that's just a preference, I'm OK with your other proposal too.
+Even though I have a suspicion that somebody else may be able to
+come up with a better phrase that does not sound unnecessarily
+strongly than "recursively and irrevocably", that somebody else is
+not me, so I'll queue this as-is for now.
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+>
+> Signed-off-by: Karsten Blees <blees@dcon.de>
+> ---
+>  Documentation/gitignore.txt | 18 ++++++++++++++++--
+>  1 file changed, 16 insertions(+), 2 deletions(-)
+>
+> diff --git a/Documentation/gitignore.txt b/Documentation/gitignore.txt
+> index f971960..5ecc48e 100644
+> --- a/Documentation/gitignore.txt
+> +++ b/Documentation/gitignore.txt
+> @@ -79,8 +79,9 @@ PATTERN FORMAT
+>  
+>   - An optional prefix "`!`" which negates the pattern; any
+>     matching file excluded by a previous pattern will become
+> -   included again.  If a negated pattern matches, this will
+> -   override lower precedence patterns sources.
+> +   included again. It is not possible to re-include a file if a parent
+> +   directory of that file is excluded (i.e. excluding a directory
+> +   will recursively and irrevocably exclude the entire content).
+>     Put a backslash ("`\`") in front of the first "`!`" for patterns
+>     that begin with a literal "`!`", for example, "`\!important!.txt`".
+>  
+> @@ -182,6 +183,19 @@ Another example:
+>  The second .gitignore prevents Git from ignoring
+>  `arch/foo/kernel/vmlinux.lds.S`.
+>  
+> +Example to exclude everything except a specific directory `foo/bar`
+> +(note the `/*` - without the slash, the wildcard would also exclude
+> +everything within `foo/bar`):
+> +
+> +--------------------------------------------------------------
+> +    $ cat .gitignore
+> +    # exclude everything except directory foo/bar
+> +    /*
+> +    !/foo
+> +    /foo/*
+> +    !/foo/bar
+> +--------------------------------------------------------------
+> +
+>  SEE ALSO
+>  --------
+>  linkgit:git-rm[1],
