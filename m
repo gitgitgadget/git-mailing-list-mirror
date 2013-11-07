@@ -1,89 +1,87 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 12/14] fix 'git update-index --verbose --again' output
-Date: Thu, 07 Nov 2013 14:12:46 -0800
-Message-ID: <xmqqiow3q2sh.fsf@gitster.dls.corp.google.com>
-References: <527BA483.6040803@gmail.com> <527BA706.6010307@gmail.com>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: [PATCH 0/5] fix up 'jk/pack-bitmap' branch
+Date: Thu, 07 Nov 2013 21:58:02 +0000
+Message-ID: <527C0CEA.4020705@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>, Thomas Rast <tr@thomasrast.ch>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: Karsten Blees <karsten.blees@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 07 23:12:56 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Vicent Marti <tanoku@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	=?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Nov 07 23:15:14 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VeXos-0001Qy-VT
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Nov 2013 23:12:55 +0100
+	id 1VeXr7-0008EC-J1
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Nov 2013 23:15:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753997Ab3KGWMv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Nov 2013 17:12:51 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63990 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752690Ab3KGWMu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Nov 2013 17:12:50 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 899F350E39;
-	Thu,  7 Nov 2013 17:12:49 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Tr9Hku4Nkn5VdSJiVSKsg3Je/6M=; b=W3qRyw
-	6ERKc0AkVD2Qno2tMjKtkNuxDxV793ph92Vn6UeEXcP91G/IFrHmSfUHe0blYOr/
-	1IbCI9i0TbkduLa1CIKoV9StlFmMDxxv8XlURg5cJ3WNcPFXQShuk18cZK3EUTx1
-	t+ZVXkRaos8CnWw14mp/95KymWIH4aUwQnYZw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=VcQYyI7X37FvVySzmE3oNs3esHwka7WO
-	LFeA5IIQUMjrzlf9pPw8sc1i8I+xHIkm0S/3Ax/dS1l8STFKvR93TW3dmYl80PA8
-	X7y+kG3UwP83Dg+gwhjCcNo5SjQBGOGnUGw3k4LyaUgOphRak+7SVcO8B6Z2Bjzf
-	McrDKl33yBg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 75E1250E38;
-	Thu,  7 Nov 2013 17:12:49 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	id S1755531Ab3KGWPF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Nov 2013 17:15:05 -0500
+Received: from mdfmta010.mxout.tch.inty.net ([91.221.169.51]:47225 "EHLO
+	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1755367Ab3KGWPB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Nov 2013 17:15:01 -0500
+Received: from mdfmta010.tch.inty.net (unknown [127.0.0.1])
+	by mdfmta010.tch.inty.net (Postfix) with ESMTP id D0E2E40147F;
+	Thu,  7 Nov 2013 22:14:59 +0000 (GMT)
+Received: from mdfmta010.tch.inty.net (unknown [127.0.0.1])
+	by mdfmta010.tch.inty.net (Postfix) with ESMTP id 97B9C401471;
+	Thu,  7 Nov 2013 22:14:59 +0000 (GMT)
+Received: from [192.168.254.4] (unknown [80.176.147.220])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AF9F350E37;
-	Thu,  7 Nov 2013 17:12:48 -0500 (EST)
-In-Reply-To: <527BA706.6010307@gmail.com> (Karsten Blees's message of "Thu, 07
-	Nov 2013 15:43:18 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: BC91A5AE-47F9-11E3-B1FA-1FFB7F2839F8-77302942!b-pb-sasl-quonix.pobox.com
+	by mdfmta010.tch.inty.net (Postfix) with ESMTP;
+	Thu,  7 Nov 2013 22:14:56 +0000 (GMT)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.1.0
+X-MDF-HostID: 19
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237434>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237435>
 
-Karsten Blees <karsten.blees@gmail.com> writes:
+Hi Jeff,
 
-> 'git update-index --verbose' consistently reports paths relative to the
-> work-tree root. The only exception is the '--again' option, which reports
-> paths relative to the current working directory.
->
-> Change do_reupdate to use non-prefixed paths.
+These patches fix various errors/warnings on the cygwin, MinGW and
+msvc builds, provoked by the jk/pack-bitmap branch.
 
-Interesting.
+Note that this does not fix all problems on the msvc build; I have
+a solution, but I don't like it. :-D  So, I'm going to try a different
+fix. I had hoped to have done this by now, but ... (hopefully, sometime
+this weekend).
 
-This looks like a genuine fix unrelated to the use of the new hashmap.
+Note that I have only tested the cygwin and MinGW builds by running
+the t5310-pack-bitmaps.sh test, and only on a little-endian machine.
+(Torsten has tested the first patch on a big-endian)
 
->
-> Signed-off-by: Karsten Blees <blees@dcon.de>
-> ---
->  builtin/update-index.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/builtin/update-index.c b/builtin/update-index.c
-> index e3a10d7..d180d80 100644
-> --- a/builtin/update-index.c
-> +++ b/builtin/update-index.c
-> @@ -579,7 +579,7 @@ static int do_reupdate(int ac, const char **av,
->  		 * or worse yet 'allow_replace', active_nr may decrease.
->  		 */
->  		save_nr = active_nr;
-> -		update_one(ce->name + prefix_length, prefix, prefix_length);
-> +		update_one(ce->name, NULL, 0);
->  		if (save_nr != active_nr)
->  			goto redo;
->  	}
+Note also, that these patches are build on top of the 'pu' branch
+as of yesterday (pu @ 2b65d9ebc).
+
+So, could you please squash these patches into the relevant commits
+on your branch.
+
+Thanks!
+
+ATB,
+Ramsay Jones
+
+Ramsay Jones (5):
+  compat/bswap.h: Fix build on cygwin, MinGW and msvc
+  Makefile: Add object files in ewah/ to clean target
+  khash.h: Spell the null pointer as NULL
+  pack-objects: Limit visibility of 'indexed_commits' symbols
+  ewah_bitmap.c: Fix printf format warnings on MinGW
+
+ Makefile               |  5 +--
+ builtin/pack-objects.c |  6 ++--
+ compat/bswap.h         | 97 +++++++++++++++++++++++++++++++++++---------------
+ ewah/ewah_bitmap.c     |  6 ++--
+ khash.h                |  2 +-
+ 5 files changed, 79 insertions(+), 37 deletions(-)
+
+-- 
+1.8.4
