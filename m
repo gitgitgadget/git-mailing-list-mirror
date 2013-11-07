@@ -1,196 +1,175 @@
-From: Karsten Blees <karsten.blees@gmail.com>
-Subject: [PATCH v4 14/14] read-cache.c: fix memory leaks caused by removed
- cache entries
-Date: Thu, 07 Nov 2013 15:45:01 +0100
-Message-ID: <527BA76D.20101@gmail.com>
-References: <527BA483.6040803@gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [RFC/PATCH] Add interpret-trailers builtin
+Date: Thu, 7 Nov 2013 15:57:38 +0100
+Message-ID: <CAP8UFD09PbOL=EPCQifsakZo5s_vhzQRfcp9LhOjq2gAbUcKpw@mail.gmail.com>
+References: <20131106.074355.225932577498673677.chriscool@tuxfamily.org>
+	<CAP8UFD0STna++2StV1RcT2bB83Lh_hFQU94A0y4ziovs61Z==A@mail.gmail.com>
+	<xmqq4n7pa1pn.fsf@gitster.dls.corp.google.com>
+	<20131106.211659.1008913569403460043.chriscool@tuxfamily.org>
+	<xmqq7gcl8dor.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Thomas Rast <tr@thomasrast.ch>, Jens Lehmann <Jens.Lehmann@web.de>,
-	Karsten Blees <karsten.blees@gmail.com>
-To: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 07 15:45:05 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Christian Couder <chriscool@tuxfamily.org>,
+	git <git@vger.kernel.org>, Johan Herland <johan@herland.net>,
+	Josh Triplett <josh@joshtriplett.org>,
+	Thomas Rast <tr@thomasrast.ch>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Dan Carpenter <dan.carpenter@oracle.com>,
+	Greg Kroah-Hartman <greg@kroah.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Nov 07 15:57:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VeQpU-0007R0-ML
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Nov 2013 15:45:05 +0100
+	id 1VeR1i-00070v-Vu
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Nov 2013 15:57:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754650Ab3KGOpA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Nov 2013 09:45:00 -0500
-Received: from mail-ea0-f173.google.com ([209.85.215.173]:45824 "EHLO
-	mail-ea0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754626Ab3KGOo7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Nov 2013 09:44:59 -0500
-Received: by mail-ea0-f173.google.com with SMTP id g10so381991eak.32
-        for <git@vger.kernel.org>; Thu, 07 Nov 2013 06:44:57 -0800 (PST)
+	id S1751045Ab3KGO5l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Nov 2013 09:57:41 -0500
+Received: from mail-ve0-f171.google.com ([209.85.128.171]:41923 "EHLO
+	mail-ve0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750824Ab3KGO5i (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Nov 2013 09:57:38 -0500
+Received: by mail-ve0-f171.google.com with SMTP id pa12so458273veb.16
+        for <git@vger.kernel.org>; Thu, 07 Nov 2013 06:57:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=1MgkwSvMB7W4GXdixQAe3b3nmv1qNEEw2weRIOJncEs=;
-        b=szUWEEKEQDPXUl+uBiWOLpC2lO2Q9Y64v2ajHuIiGh+6Ox9/1BRWrnNcmTEJA5gg+n
-         zD3dG0p7Lmivlcib8oYrWkKejPFSFnPTm97CbgIJCLZmX9euqoX938C4Tq4RDowEF1Sf
-         /uBHz5aWSopmnzS2SSwglq6tN5SkFSje59FMAI82eM+sr2D169lOt1T8EQ/pu/VwoOK8
-         ATdQbDSW/SOTzJdk9yBiMlol/ZgbSu7L3G8wTQIW40O9cF0pcvVGpKlvh9auYBqsreiy
-         ls9nsdjjqtJIKbNiHedMB57Ab8+V4do+6hXgM4io0SZZdYLoaRf+IXerClq8oNYDXiJ7
-         ItfQ==
-X-Received: by 10.15.64.1 with SMTP id n1mr9935433eex.15.1383835497874;
-        Thu, 07 Nov 2013 06:44:57 -0800 (PST)
-Received: from [10.1.100.55] (ns.dcon.de. [77.244.111.149])
-        by mx.google.com with ESMTPSA id d7sm10043488eem.8.2013.11.07.06.44.56
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 07 Nov 2013 06:44:57 -0800 (PST)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.1.0
-In-Reply-To: <527BA483.6040803@gmail.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=z0ZteeBDLAP2jhxgO1I+ycVSrfzKw8Nhgubv9HawteM=;
+        b=jce4FmGFILMBBYErrVcx+oX79/K4CSF3eNgl33zziMWffVPvQrlTRHrgUpCpEw/i2G
+         Qwpltn9fsrlufK1+ekYChwaFXKMhkBsXcA3r3djp+QXkom5XNyFMBuiOnTJQvV4vw1wH
+         44k8zr5ie6WUzvmiONdZZhAxuUTk+H6/60LamLx93FE+eqjJ1pEne+VLEDmVASv3ni+9
+         Z78U+jPfHI0eSqwuFoW4MVUr4cY3FckPDCg9qusMx4uAXSvMIbfhOBUbcsyY7qWYOm3B
+         g/0l55Cy9TdRzxJ6CF1q72MfzeQU73wnNbvPGksoGaQjlWQQdIRwrFotlzCYg33Wu8Dl
+         xX/Q==
+X-Received: by 10.52.33.69 with SMTP id p5mr5897790vdi.28.1383836258095; Thu,
+ 07 Nov 2013 06:57:38 -0800 (PST)
+Received: by 10.58.253.136 with HTTP; Thu, 7 Nov 2013 06:57:38 -0800 (PST)
+In-Reply-To: <xmqq7gcl8dor.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237409>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237411>
 
-When cache_entry structs are removed from index_state.cache, they are not
-properly freed. Freeing those entries wasn't possible before because we
-couldn't remove them from index_state.name_hash.
+On Wed, Nov 6, 2013 at 9:42 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Christian Couder <chriscool@tuxfamily.org> writes:
+>> From: Junio C Hamano <gitster@pobox.com>
+>>
+>>> But that is insufficient to emulate what we do, no?  I.e. append
+>>> unless the last one is from the same person we are about to add.
+>>
+>> Yeah, but, with DONT_REPEAT_PREVIOUS, it would be possible using:
+>>
+>> [trailer "signoff"]
+>>          key = "Signed-off-by:"
+>>          if_exist = dont_repeat_previous
+>>          if_missing = append
+>>          command = echo "$GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>"'
+>
+> Anything is possible, but "possible" does not justify "it is better
+> way than other possible ways".
+>
+> What are the plausible values for if_missing?  If if_missing needs
+> "prepend", for example, in addition to "append", does it mean
+> if_exist also needs corresponding "prepend" variant for the value
+> "dont_repeat_previous" you would give to if_exist?
 
-Now that we _do_ remove the entries from name_hash, we can also free them.
-Add 'free(cache_entry)' to all call sites of name-hash.c::remove_name_hash
-in read-cache.c (we could free() directly in remove_name_hash(), but
-name-hash.c isn't concerned with cache_entry allocation at all).
+Yeah, we could add "prepend" to the possible values for if_missing and
+also other values that prepend instead of append to if_exist.
+But I am not sure they would be as useful.
 
-Accessing a cache_entry after removing it from the index is now no longer
-allowed, as the memory has been freed. The following functions need minor
-fixes (typically by copying ce->name before use):
- - builtin/rm.c::cmd_rm
- - builtin/update-index.c::do_reupdate
- - read-cache.c::read_index_unmerged
- - resolve-undo.c::unmerge_index_entry_at
+If we think they are useful, then maybe we could instead add another
+configuration to say if we want to append or prepend or put in the
+middle, and change the others to make them clearer.
+For example we could have:
 
-Signed-off-by: Karsten Blees <blees@dcon.de>
----
- builtin/rm.c           | 2 +-
- builtin/update-index.c | 5 ++++-
- read-cache.c           | 8 ++++++--
- resolve-undo.c         | 7 +++++--
- 4 files changed, 16 insertions(+), 6 deletions(-)
+where = (after | middle | before)
+if_exist = (add_if_different | add_if_neighbor_different | add |
+overwrite | do_nothing)
+if_missing = (do_nothing | add)
 
-diff --git a/builtin/rm.c b/builtin/rm.c
-index 3a0e0ea..171f37c 100644
---- a/builtin/rm.c
-+++ b/builtin/rm.c
-@@ -311,7 +311,7 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
- 		if (!match_pathspec_depth(&pathspec, ce->name, ce_namelen(ce), 0, seen))
- 			continue;
- 		ALLOC_GROW(list.entry, list.nr + 1, list.alloc);
--		list.entry[list.nr].name = ce->name;
-+		list.entry[list.nr].name = xstrdup(ce->name);
- 		list.entry[list.nr].is_submodule = S_ISGITLINK(ce->ce_mode);
- 		if (list.entry[list.nr++].is_submodule &&
- 		    !is_staging_gitmodules_ok())
-diff --git a/builtin/update-index.c b/builtin/update-index.c
-index b654d27..acd992d 100644
---- a/builtin/update-index.c
-+++ b/builtin/update-index.c
-@@ -559,6 +559,7 @@ static int do_reupdate(int ac, const char **av,
- 		const struct cache_entry *ce = active_cache[pos];
- 		struct cache_entry *old = NULL;
- 		int save_nr;
-+		const char *path;
- 
- 		if (ce_stage(ce) || !ce_path_match(ce, &pathspec))
- 			continue;
-@@ -575,7 +576,9 @@ static int do_reupdate(int ac, const char **av,
- 		 * or worse yet 'allow_replace', active_nr may decrease.
- 		 */
- 		save_nr = active_nr;
--		update_one(ce->name);
-+		path = xstrdup(ce->name);
-+		update_one(path);
-+		free(path);
- 		if (save_nr != active_nr)
- 			goto redo;
- 	}
-diff --git a/read-cache.c b/read-cache.c
-index 00af9ad..3f735f3 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -47,6 +47,7 @@ static void replace_index_entry(struct index_state *istate, int nr, struct cache
- 	struct cache_entry *old = istate->cache[nr];
- 
- 	remove_name_hash(istate, old);
-+	free(old);
- 	set_index_entry(istate, nr, ce);
- 	istate->cache_changed = 1;
- }
-@@ -478,6 +479,7 @@ int remove_index_entry_at(struct index_state *istate, int pos)
- 
- 	record_resolve_undo(istate, ce);
- 	remove_name_hash(istate, ce);
-+	free(ce);
- 	istate->cache_changed = 1;
- 	istate->cache_nr--;
- 	if (pos >= istate->cache_nr)
-@@ -499,8 +501,10 @@ void remove_marked_cache_entries(struct index_state *istate)
- 	unsigned int i, j;
- 
- 	for (i = j = 0; i < istate->cache_nr; i++) {
--		if (ce_array[i]->ce_flags & CE_REMOVE)
-+		if (ce_array[i]->ce_flags & CE_REMOVE) {
- 			remove_name_hash(istate, ce_array[i]);
-+			free(ce_array[i]);
-+		}
- 		else
- 			ce_array[j++] = ce_array[i];
- 	}
-@@ -1894,7 +1898,7 @@ int read_index_unmerged(struct index_state *istate)
- 		new_ce->ce_mode = ce->ce_mode;
- 		if (add_index_entry(istate, new_ce, 0))
- 			return error("%s: cannot drop to stage #0",
--				     ce->name);
-+				     new_ce->name);
- 		i = index_name_pos(istate, new_ce->name, len);
- 	}
- 	return unmerged;
-diff --git a/resolve-undo.c b/resolve-undo.c
-index c09b006..49ebaaf 100644
---- a/resolve-undo.c
-+++ b/resolve-undo.c
-@@ -119,6 +119,7 @@ int unmerge_index_entry_at(struct index_state *istate, int pos)
- 	struct string_list_item *item;
- 	struct resolve_undo_info *ru;
- 	int i, err = 0, matched;
-+	char *name;
- 
- 	if (!istate->resolve_undo)
- 		return pos;
-@@ -138,20 +139,22 @@ int unmerge_index_entry_at(struct index_state *istate, int pos)
- 	if (!ru)
- 		return pos;
- 	matched = ce->ce_flags & CE_MATCHED;
-+	name = xstrdup(ce->name);
- 	remove_index_entry_at(istate, pos);
- 	for (i = 0; i < 3; i++) {
- 		struct cache_entry *nce;
- 		if (!ru->mode[i])
- 			continue;
- 		nce = make_cache_entry(ru->mode[i], ru->sha1[i],
--				       ce->name, i + 1, 0);
-+				       name, i + 1, 0);
- 		if (matched)
- 			nce->ce_flags |= CE_MATCHED;
- 		if (add_index_entry(istate, nce, ADD_CACHE_OK_TO_ADD)) {
- 			err = 1;
--			error("cannot unmerge '%s'", ce->name);
-+			error("cannot unmerge '%s'", name);
- 		}
- 	}
-+	free(name);
- 	if (err)
- 		return pos;
- 	free(ru);
--- 
-1.8.4.msysgit.0.12.g88f5ed0
+(The default being the first choice.)
+
+> Having two that are seemingly independent configuration does not
+> seem to be helping in reducing complexity (by keeping settings that
+> can be independently set orthogonal, by saying "if the other rule
+> decides to add, do we append, prepend, insert at the middle?", for
+> example).
+
+I am not sure I understand what you mean.
+In my opinion, if we want to use just one configuration, instead of 2
+or 3, it will not reduce complexity.
+
+Maybe we could parse something like:
+
+style = if_exist:add_if_different:after, if_missing:add:before
+
+or like:
+
+style = (append | prepend | insert | append_unless <regexp> |
+prepend_unless <regexp> | insert_unless <regexp>)
+
+with <regexp> being a regexp where $KEY is the key and $VALUE is the
+value, so you can say: append_unless ^$KEY[:=]$VALUE.*
+
+or like:
+
+style = (append_if <cmd> | prepend_if <cmd> | insert_if <cmd>)
+
+with <cmd> being a shell command that should exit with code 0.
+
+(The command would be passed the existing trailers in stdin.
+So you could say things like: "append_if true" or "append_if tail -1 |
+grep -v '$KEY: $VALUE'")
+
+But if we want to keep things simple, I think what I suggest first
+above is probably best.
+
+And by the way, later we might add "add_if_match <regexp>" or
+"add_if_true <cmd>" to "if_exist" and "if_missing", so we could still
+be as powerful as the other styles.
+
+> How would one differentiate between "there is a field with that key"
+> and "there is a field with that <key, value> combination" with a
+> single if_exist?  Add another variable if_exist_exact?
+
+"if_exist = do_nothing" would mean: "do nothing if there is a field
+with that key"
+"if_exist = overwrite" would mean: "overwrite the existing value of a
+field with that key"
+"if_exist = add" would mean: "add if there is one or more fields with
+that key (whatever the value(s), so the value(s) could be the same)"
+"if_exist = add_if_different" would mean: "add only if there is no
+field with the same <key, value> pair"
+"if_exist = add_if_different_neighbor" would mean: "add only if there
+is no field with the same <key, value> pair where we are going to add"
+
+"if_missing = do_nothing" would mean: "do nothing if there is no field
+with that key"
+"if_missing= add" would mean: "add if there is no field with that key"
+
+"where = after" would mean: "if we decide to add, we will put the
+trailer after the other trailers"
+"where = middle" would mean: "if we decide to add, we will put the
+trailer in the middle of the other trailers"
+"where = before" would mean: "if we decide to add, we will put the
+trailer before the other trailers"
+
+In my opinion, that should be enough for most use cases.
+
+It is true that some people might want something more complex (like
+adding only if there is no value for the same key that match a given
+regexp) or something stranger like adding only if there is already a
+field with the same <key, value> pair.
+
+But we can take care of these special cases later if they actually happen.
+Then we will hopefully have more experience.
+And we could add things like "add_if_no_value_match <regexp>" or
+"add_if <cmd>" to if_exist and if_missing .
+
+Thanks,
+Christian.
