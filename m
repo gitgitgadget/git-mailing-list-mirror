@@ -1,60 +1,60 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 1/3] for-each-ref: introduce %C(...) for color
-Date: Thu, 7 Nov 2013 14:36:13 +0800
-Message-ID: <CALkWK0k0wxoK-MZk-KXiUiUgxVBKQGROFJBZbRs2LjNLA9iopA@mail.gmail.com>
-References: <1383212774-5232-1-git-send-email-artagnon@gmail.com>
- <1383212774-5232-2-git-send-email-artagnon@gmail.com> <xmqq38nh411p.fsf@gitster.dls.corp.google.com>
- <CALkWK0nEMpVUkzafjDkVV-uaLTYzHYUTsZkmwRPkLFa=8NEkPA@mail.gmail.com>
- <xmqqli182mde.fsf@gitster.dls.corp.google.com> <CALkWK0k-8noAJbgzPx3NEx-ucUdZoS4VmqNCKjm3R_5eqFnR7w@mail.gmail.com>
- <xmqqzjpkyqtf.fsf@gitster.dls.corp.google.com>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [ANNOUNCE] Git v1.8.5-rc1
+Date: Thu, 7 Nov 2013 10:31:40 +0100
+Message-ID: <CAP8UFD0faEZNU0A+r8eQTSKH84QqrT2wdeLWkGWx+NvoucKG5w@mail.gmail.com>
+References: <xmqqbo1x6q32.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git <git@vger.kernel.org>,
+	Linux Kernel <linux-kernel@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 07 07:37:48 2013
+X-From: git-owner@vger.kernel.org Thu Nov 07 10:31:49 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VeJDV-0004jw-6h
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Nov 2013 07:37:21 +0100
+	id 1VeLwK-0005QQ-80
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Nov 2013 10:31:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756145Ab3KGGg6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Nov 2013 01:36:58 -0500
-Received: from mail-ie0-f175.google.com ([209.85.223.175]:54067 "EHLO
-	mail-ie0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756129Ab3KGGg4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Nov 2013 01:36:56 -0500
-Received: by mail-ie0-f175.google.com with SMTP id aq17so163338iec.34
-        for <git@vger.kernel.org>; Wed, 06 Nov 2013 22:36:55 -0800 (PST)
+	id S1753651Ab3KGJbo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Nov 2013 04:31:44 -0500
+Received: from mail-ve0-f173.google.com ([209.85.128.173]:64037 "EHLO
+	mail-ve0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753239Ab3KGJbm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Nov 2013 04:31:42 -0500
+Received: by mail-ve0-f173.google.com with SMTP id c14so63539vea.4
+        for <multiple recipients>; Thu, 07 Nov 2013 01:31:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=VfAZ2UiwGvJym8l7MfCZVNBLC7KDcNUgOgEtbgfD2Dg=;
-        b=duy2YNshp/xZUOJvoKsFtXKwy27+olTLYlCTMAGgSsYTyaCp0GSjDTdVGNS0Epv8qy
-         igL9aTmy9+ydzg0XIfdTGRqAH3LHgFLNId2kn3g9ybi8MSNKTajmVv7Y3U81bBDmgIlf
-         kie0MwLto9qrgud3VbLBIHUg4Mt8D5Rr0gOSbEo0xsd+NYpJoEwI81W0HKWOJZU490qG
-         OqNQ6NvMf2x4G7wN/wJKfdAcaBYEAXdmmRhkTvxhT+RblDk6uTFHdu432jyI5BXDUvfs
-         78HqpjeJjYPEi5nfWbZYktVB15UNXJw8evJsAu7Rr9EUnhI4q/3DTYxk1VtTLqkP6R/B
-         fjfw==
-X-Received: by 10.42.250.148 with SMTP id mo20mr4398714icb.34.1383806214846;
- Wed, 06 Nov 2013 22:36:54 -0800 (PST)
-Received: by 10.64.73.36 with HTTP; Wed, 6 Nov 2013 22:36:13 -0800 (PST)
-In-Reply-To: <xmqqzjpkyqtf.fsf@gitster.dls.corp.google.com>
+        bh=gWHxzDDz0mej0svOJNdRTcLJUKSUvsA8kidcr+p6bH4=;
+        b=nN94uVl/epTTJjhtkWW06wJeWJMxrTbGK8NppAj+8WnjWf/sK0KVVIQo9pNHcqinAg
+         XFZbipp1khaxicv6sdASLzInIUEguzidtaiD9nnCsblLZOJyVZ3fE4YBjoNYY6v7ZniQ
+         aZk3yKmIiCBsENFbvqlotzKHjmPwzqJYvicOLAQ/gvXfyPx1vMxWxYzSwGYG18SDGFtY
+         Oe0j0XKE5cxwWRhTzNwUCk/72oC7OyjzJf+sSYXU54epgc5AznwH3iH/aMuzSfioGjmA
+         0lFWhTTWo8rYsNMDheRI8nIwRxcjfNSke1TFTZ779NR9BdEnwF+C5MfZInU8usjawPML
+         CjjQ==
+X-Received: by 10.220.199.5 with SMTP id eq5mr6031631vcb.16.1383816701054;
+ Thu, 07 Nov 2013 01:31:41 -0800 (PST)
+Received: by 10.58.253.136 with HTTP; Thu, 7 Nov 2013 01:31:40 -0800 (PST)
+In-Reply-To: <xmqqbo1x6q32.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237391>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237392>
 
-Junio C Hamano wrote:
-> ... users of for-each-ref format will be _more_ familiar with
-> formats used by for-each-ref, and it would make a lot more sense to
-> keep the syntactic resemblance between existing features to show
-> magic things in for-each-ref and the new feature to show color
-> (which is merely one new "magic" to the vocabulary in the context of
-> for-each-ref), no?
+On Thu, Nov 7, 2013 at 12:57 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>
+>  * "git replace" helper no longer allows an object to be replaced with
+>    another object of a different type to avoid confusion (you can
+>    still manually craft such replacement using "git update-ref", as an
+>    escape hatch).
 
-Okay, so what do you suggest in place of %C(...)?
+Maybe it would be more helpful to say "you can still do that using the
+--force option" instead of pointing people to "git update-ref".
+
+Thanks,
+Christian.
