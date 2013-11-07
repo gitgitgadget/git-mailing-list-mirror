@@ -1,116 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3] push: Enhance unspecified push default warning
-Date: Thu, 07 Nov 2013 10:14:10 -0800
-Message-ID: <xmqqr4as5bbh.fsf@gitster.dls.corp.google.com>
-References: <CAKYC+eKCsRbF=6HtcY8ZtaafTDpbMFJ1tyWbaZDKrmbzdnOoUw@mail.gmail.com>
-	<CAKYC+eLvx1vB1ZDqYK=7Dg68QuCojBdSAVQZMF6HBtfxu_b_aw@mail.gmail.com>
-	<xmqqvc08yq4v.fsf@gitster.dls.corp.google.com>
-	<1839883487.4893076.1383646619137.JavaMail.root@imag.fr>
-	<xmqqk3gl8id0.fsf@gitster.dls.corp.google.com>
-	<vpq1u2tb3px.fsf@anie.imag.fr> <20131106234544.GF10302@google.com>
-	<vpqtxfo8ow4.fsf@anie.imag.fr>
+From: Nicolas <sanpi@homecomputing.fr>
+Subject: Colorize output
+Date: Thu, 07 Nov 2013 19:10:11 +0100
+Message-ID: <527BD783.7080606@homecomputing.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Greg Jacobson <coder5000@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Thu Nov 07 19:14:19 2013
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="70TK9wGLr8Kgp9VFSEMfUJPE8tv4D4Gbp"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 07 19:18:06 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VeU5y-0002qA-Ux
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Nov 2013 19:14:19 +0100
+	id 1VeU9d-0004tK-AP
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Nov 2013 19:18:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753280Ab3KGSOP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Nov 2013 13:14:15 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38626 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751535Ab3KGSOO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Nov 2013 13:14:14 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CE6644FB1B;
-	Thu,  7 Nov 2013 13:14:13 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=WF+BdtPCG2P864+NNoaowI3qBY0=; b=BtdHSA
-	zaUIHi+s3c9VBizBNL40cAt8LZpOoBcwu4R6wZq+WKPyUYOUWJ5XgtsTbvztKnfS
-	5hjlKguiKQghRy3rmD1YJdKpKvJiVcQDVRsVlwNgzxuFBK3VNk/5tmrz7YbcbOZW
-	qocwlGlb37lUAmsFya2+AP+DxKuGxY6+jUW4w=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=cwI5kfmg334H2fBQB2KnKizrx+CkHmXx
-	J9Yhc+TC1h83Jzy3mBsCDF//SD9UE++oUwlIGOlcKijG2Ggd9vWoBbFffCbmLNbx
-	GCjBSuA6LqTbjZdmcNH5oLNJ0d+OFzts7CTytZJmvXpUp4skKq+AYweVbGYamTPa
-	s0fnwX8OGm0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BC58D4FB19;
-	Thu,  7 Nov 2013 13:14:13 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	id S1754844Ab3KGSRS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Nov 2013 13:17:18 -0500
+Received: from homecomputing.fr ([80.67.177.91]:34471 "EHLO homecomputing.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754539Ab3KGSRP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Nov 2013 13:17:15 -0500
+X-Greylist: delayed 419 seconds by postgrey-1.27 at vger.kernel.org; Thu, 07 Nov 2013 13:17:15 EST
+Received: from [192.168.1.2] (unknown [192.168.1.254])
+	(using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 275234FB18;
-	Thu,  7 Nov 2013 13:14:13 -0500 (EST)
-In-Reply-To: <vpqtxfo8ow4.fsf@anie.imag.fr> (Matthieu Moy's message of "Thu,
-	07 Nov 2013 11:52:43 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 67D40FA0-47D8-11E3-9483-1FFB7F2839F8-77302942!b-pb-sasl-quonix.pobox.com
+	(Authenticated sender: sanpi)
+	by homecomputing.fr (Postfix) with ESMTPSA id 67C41FAB1
+	for <git@vger.kernel.org>; Thu,  7 Nov 2013 19:10:14 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20131103 Icedove/17.0.10
+X-Enigmail-Version: 1.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237419>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237420>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--70TK9wGLr8Kgp9VFSEMfUJPE8tv4D4Gbp
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: quoted-printable
 
-> Jonathan Nieder <jrnieder@gmail.com> writes:
->
->> 	When push.default is set to 'matching', git will push local branches
->> 	to remote branches that already exist with the same (matching) name.
->
-> Yes, that's better than the original patch (and remains two lines).
->
->>>>>> +   "In Git 2.0 the new push.default of 'simple' will push only the current\n"
->>>>>> +   "branch to the same remote branch used by git pull.   A push will\n"
->>>>>> +   "only succeed if the remote and local branches have the same name.\n"
->>>>
->>>> while you can see that it is not telling a lie if you read it twice,
->>>> "will only succeed if" feels somewhat roundabout.
->>>>
->>>> 	... push only the current branch back to the branch of the
->>>> 	same name, but only if 'git pull' is set to pull from that
->>>> 	branch. Otherwise the push will fail.
->>>>
->>>> might be an improvement, but I dunno.
->>>
->>> I do not see much difference actually. I tend to prefer the original
->>> version: to me the expected behavior is to make push and pull
->>> essentially symetrical, and the fact that it fails if the branch is
->>> named differently is a safety feature comming on top of that.
->>
->> Perhaps:
->>
->> 	In Git 2.0 (or now, if push.default is set to 'simple'), git will behave
->> 	more conservatively by pushing only the current branch to the corresponding
->> 	remote branch used by "git pull", and only if the remote and local branches
->> 	have the same name.
->
-> I prefered the original, as it had two sentences. Reading only the first
-> one gave the important information.
+Hello,
 
-Actually, to me, I found the "two sentences" the worst part in the
-original.  It made it sound as if the default will be switching to
-'upstream', and all readers need to read the second sentence that
-clarifies that it is not the case, in a somewhat round-about
-way---"will only succeed if" invites "and otherwise...?"
+I=92m developping a git command in shell and I would like colorize the ou=
+tput.
 
->> 	In Git 2.0, git will default to a more conservative 'simple' behavior
->> 	that only pushes the current branch.
->
-> That's an option too, but I think mentionning "git pull" was a good
-> idea.
+I don=92t find anything in git-sh-setup.
 
-Yes, mentioning "git pull" is a good idea throughout these
-proposals.
+What is the best way for don=92t reinvent the wheel?
+
+Thanks in advance.
+
+Best regards.
+Nicolas.
+
+
+--70TK9wGLr8Kgp9VFSEMfUJPE8tv4D4Gbp
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
+Comment: Using GnuPG with Icedove - http://www.enigmail.net/
+
+iQEcBAEBAgAGBQJSe9eGAAoJEAbXGiR4Uy6SzYQIAIxmf+d5LSOpm+LJD7VxNRTb
+XrhgsPR9DrmQPOqKqbKj9eFeEL9KML8jsiFQkNgtjDlWNPQxsJjAcUMtvwQAPYu1
+XEBZXMMbbrGCitdB7ESUU65AWZDB3QakJCHL7AViS/6zEDWnDl8kdasjOkXd3nuz
+aTqLKd5o522MsZAyZ6Jk3Ua5NaPWnkS5PM1r0tRHACzGeRR1b61qYwcVX9TCl8XN
+Ep56NsGR4zbgqf4WU4NN+H1wFtABbwJsxP4yziZIhDDndU5abiTkZEGZsPMq70kV
+dz2Iykx30q0LjnQfmwYN96b0BiFXRaqmPpPmNkRQxfyFDIVOTfOJm3+idT0uRxI=
+=dpwj
+-----END PGP SIGNATURE-----
+
+--70TK9wGLr8Kgp9VFSEMfUJPE8tv4D4Gbp--
