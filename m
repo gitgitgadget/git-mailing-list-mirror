@@ -1,91 +1,64 @@
-From: Thomas Manson <dev.mansonthomas@gmail.com>
-Subject: Selectively commit/publish files to GIT
-Date: Fri, 8 Nov 2013 11:52:38 +0100
-Message-ID: <CA+PenvEDY6mc+DyjXy4ebZKdK4R=ucM28MDXGC42XKxvJ=a-pQ@mail.gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 1/3] for-each-ref: introduce %C(...) for color
+Date: Fri, 8 Nov 2013 20:14:47 +0800
+Message-ID: <CALkWK0=w1G2O_W1LnfstqzaMjOQ0GWqJXeeRN4ymfsvohQBfyA@mail.gmail.com>
+References: <1383212774-5232-1-git-send-email-artagnon@gmail.com>
+ <1383212774-5232-2-git-send-email-artagnon@gmail.com> <xmqq38nh411p.fsf@gitster.dls.corp.google.com>
+ <CALkWK0nEMpVUkzafjDkVV-uaLTYzHYUTsZkmwRPkLFa=8NEkPA@mail.gmail.com>
+ <xmqqli182mde.fsf@gitster.dls.corp.google.com> <CALkWK0k-8noAJbgzPx3NEx-ucUdZoS4VmqNCKjm3R_5eqFnR7w@mail.gmail.com>
+ <xmqqzjpkyqtf.fsf@gitster.dls.corp.google.com> <CALkWK0k0wxoK-MZk-KXiUiUgxVBKQGROFJBZbRs2LjNLA9iopA@mail.gmail.com>
+ <xmqqvc045bvq.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 08 11:53:07 2013
+Cc: Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Nov 08 13:15:41 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VejgY-0004ng-9j
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Nov 2013 11:53:06 +0100
+	id 1VekyQ-0005v6-D3
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Nov 2013 13:15:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756826Ab3KHKxB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Nov 2013 05:53:01 -0500
-Received: from mail-wg0-f48.google.com ([74.125.82.48]:63705 "EHLO
-	mail-wg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752666Ab3KHKxA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Nov 2013 05:53:00 -0500
-Received: by mail-wg0-f48.google.com with SMTP id b13so1775736wgh.27
-        for <git@vger.kernel.org>; Fri, 08 Nov 2013 02:52:59 -0800 (PST)
+	id S1754418Ab3KHMPb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Nov 2013 07:15:31 -0500
+Received: from mail-ie0-f179.google.com ([209.85.223.179]:62496 "EHLO
+	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753012Ab3KHMPa (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Nov 2013 07:15:30 -0500
+Received: by mail-ie0-f179.google.com with SMTP id aq17so3047646iec.38
+        for <git@vger.kernel.org>; Fri, 08 Nov 2013 04:15:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=BVJchrcnvUcb3HCJVzCVHR5He8bDwHhRuNerecdNlSQ=;
-        b=bCg+98st2ihvHQjfWjxEKcOsZZOviiEqCAlovO8234OIKpU5vPXGHOq8futgwlhX7w
-         C/4gPFqAarZs7yv9aqELZX254n4JhaWbQ4NJX+16aFpg9C4TcQ29JJVgBmY/qQBWKNX7
-         BmfNvf14U+l4GBxRYeFhssoDc0oE+44TLgbM5sAoFhe/T0eUIAAiY0tya1vINy7/g/II
-         /6Iqk0hBPY8WCRR8crYU3q8FwL6Vo7f2x4ghd41Wo9BCpKbrv6jflczU8qe/YKpVb1fP
-         DRcOnJ5gK65NL8+WPUadkcrG6bTGhenTX3Hw5tNFkieoHesdZ5sSRien6XxkXveMNNnI
-         crsQ==
-X-Received: by 10.180.37.162 with SMTP id z2mr1827005wij.58.1383907978918;
- Fri, 08 Nov 2013 02:52:58 -0800 (PST)
-Received: by 10.180.21.162 with HTTP; Fri, 8 Nov 2013 02:52:38 -0800 (PST)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=LQElyN8a03Aqj2gU0QBcCXx354WQoUMs2VdXB/Db13s=;
+        b=xv0xPE2uYkjJgj+9gQXYE6tZPWAzER1ywACcBY1yqI5pibCrUnT4S4gBNwzWjMfGfe
+         522encSoUzkRJsgJBkYmWW4naElsq2i4Sx/pHxy6uyCkOz1kcXNixS9Bczpka9wNpMSU
+         vfCsscE7zz3VkttO/nkvFTkmwxo5m7vNNUD0byiRGFwrpnroUn7qzYyF7m3Tx3jY0GPf
+         ZcSVx62eIzqM1TQg9jzNBDoBYyhQATMVpwvMoNzwdSjOf6sbxTU54CTyDptK/0YCEIma
+         55fNfxkypDERa9i7VsIFR6fGdu52OhDDqmpROTlHc/3KidLKpNwdUJQEMEDfFRx59emR
+         auqA==
+X-Received: by 10.50.23.16 with SMTP id i16mr2057306igf.50.1383912927556; Fri,
+ 08 Nov 2013 04:15:27 -0800 (PST)
+Received: by 10.64.73.36 with HTTP; Fri, 8 Nov 2013 04:14:47 -0800 (PST)
+In-Reply-To: <xmqqvc045bvq.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237452>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237453>
 
-Hi,
+Junio C Hamano wrote:
+> If %(authordate) is "I want to see the author date here", and
+> %(authordate:short) is "I want to see the author date here in the
+> short form", you would expect "I want colored output in green" to be
+> spelled as %(color:green), or something, perhaps?
 
-  I've converting my Bazaar repository to GIT.
-
- I've successfully done this conversion and I now want to publish my
-source code to github.
-
-  The problem is that in Bazaar, I've commited some big files (63MB &
-173MB), but this files are no longer in my project, only in the
-revisions files of Bazaar and now Git.
-
-  I don't need this files to be pushed on Github.
-
-  How can I search git history for big files and remove them, or mark
-them to be not published ?
-
-I've tryed this solution found on the link in the error:
-
-git filter-branch --force --index-filter   'git rm --cached
---ignore-unmatch giant_file'   --prune-empty --tag-name-filter cat --
---all
-git commit --amend -CHEAD
-
-Then I've tryed to Commit & Push from Github mac  application and I
-had several network error, and finally get the same error on giant
-files (maybe my multiple commit & push did override something, but I
-understood that the git rm command would remove things once for
-good...
-
-can anybody help me ?
-I'm blocked in my dev because of this, I can't share my project with a friend.
-I'm publishing here : https://github.com/dev-mansonthomas/crf-rdp.git
-(paying for storage is an option as I'm quite fed up loosing time for
-filesize...)
-
-Regards,
-Thomas.
-
-here is the error I have using the GitHub application on Mac :
-(after that I intend to use Eclipse)
-
-File Ressources/dwr/dwr-3.0.0.110.dev-src.zip is 67.69 MB; this is
-larger than GitHub's recommended maximum file size of 50 MB
-GH001: Large files detected.
-Trace: 8f0259b29260f0c4d7ae4d4ae70e0306
-See http://git.io/iEPt8g for more information.
-File .bzr/repository/packs/a7bcd6ba235114ab88c80fe8a97adcfa.pack is
-178.76 MB; this exceeds GitHub's file size limit of 100 MB
+Last time, we almost managed a unification: tokens like %authordate in
+f-e-r correspond to tokens like %ae in pretty-formats; %C(...) is
+different in that it doesn't actually output anything, but changes the
+color of tokens following it. While I'm not opposed to %(color:...), I
+would prefer a color syntax that is different from other-token syntax,
+like in pretty-formats.
