@@ -1,91 +1,91 @@
-From: Karsten Blees <karsten.blees@gmail.com>
-Subject: Re: [PATCH v4 12/14] fix 'git update-index --verbose --again' output
-Date: Fri, 08 Nov 2013 11:27:30 +0100
-Message-ID: <527CBC92.5000306@gmail.com>
-References: <527BA483.6040803@gmail.com> <527BA706.6010307@gmail.com> <xmqqiow3q2sh.fsf@gitster.dls.corp.google.com>
+From: Thomas Manson <dev.mansonthomas@gmail.com>
+Subject: Selectively commit/publish files to GIT
+Date: Fri, 8 Nov 2013 11:52:38 +0100
+Message-ID: <CA+PenvEDY6mc+DyjXy4ebZKdK4R=ucM28MDXGC42XKxvJ=a-pQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>, Thomas Rast <tr@thomasrast.ch>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Nov 08 11:27:48 2013
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 08 11:53:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VejI1-0004P2-FX
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Nov 2013 11:27:45 +0100
+	id 1VejgY-0004ng-9j
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Nov 2013 11:53:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757143Ab3KHK1f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Nov 2013 05:27:35 -0500
-Received: from mail-wg0-f43.google.com ([74.125.82.43]:61547 "EHLO
-	mail-wg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756753Ab3KHK1b (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Nov 2013 05:27:31 -0500
-Received: by mail-wg0-f43.google.com with SMTP id b13so1755742wgh.10
-        for <git@vger.kernel.org>; Fri, 08 Nov 2013 02:27:30 -0800 (PST)
+	id S1756826Ab3KHKxB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Nov 2013 05:53:01 -0500
+Received: from mail-wg0-f48.google.com ([74.125.82.48]:63705 "EHLO
+	mail-wg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752666Ab3KHKxA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Nov 2013 05:53:00 -0500
+Received: by mail-wg0-f48.google.com with SMTP id b13so1775736wgh.27
+        for <git@vger.kernel.org>; Fri, 08 Nov 2013 02:52:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=A/jOn+2VmmbZ1IudUQY4JWfHtX/1IZLzjpKq6ClX9Uc=;
-        b=HXrzacus0cYgyBVAB9BmwBo+W5d+ZyERYmy2i3lJWhKZnG8ls0C80sIVXqVyixC0Q5
-         SyhvDhmtXksQTz0q0/IATn+KQsfEb4bwRK7s6OnD/oMpdB3Z+T/ZqtpGlcbvkOf/suyV
-         I9oBYW++LJJTLgiyaVD9/9sk1BBi++tivUbJq/3UHrs/xjyyUQ49qnK9UWus7Ksltm+R
-         pbNfoyo+1UsRzvurzaUzpqFlaeHVbPCc6ydMUh60uJhBf+M+5qqvspolTxwfT0mNMjyk
-         QL/mir507OftN7ZJ/M2oHXhToFUaNBC1rSmNLI9dcs97a5FvHWq65y2mZpn2WAJHKSOW
-         /j+w==
-X-Received: by 10.180.11.37 with SMTP id n5mr1714706wib.25.1383906450118;
-        Fri, 08 Nov 2013 02:27:30 -0800 (PST)
-Received: from [10.1.100.55] (ns.dcon.de. [77.244.111.149])
-        by mx.google.com with ESMTPSA id gg20sm5185787wic.1.2013.11.08.02.27.28
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 08 Nov 2013 02:27:28 -0800 (PST)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.1.0
-In-Reply-To: <xmqqiow3q2sh.fsf@gitster.dls.corp.google.com>
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=BVJchrcnvUcb3HCJVzCVHR5He8bDwHhRuNerecdNlSQ=;
+        b=bCg+98st2ihvHQjfWjxEKcOsZZOviiEqCAlovO8234OIKpU5vPXGHOq8futgwlhX7w
+         C/4gPFqAarZs7yv9aqELZX254n4JhaWbQ4NJX+16aFpg9C4TcQ29JJVgBmY/qQBWKNX7
+         BmfNvf14U+l4GBxRYeFhssoDc0oE+44TLgbM5sAoFhe/T0eUIAAiY0tya1vINy7/g/II
+         /6Iqk0hBPY8WCRR8crYU3q8FwL6Vo7f2x4ghd41Wo9BCpKbrv6jflczU8qe/YKpVb1fP
+         DRcOnJ5gK65NL8+WPUadkcrG6bTGhenTX3Hw5tNFkieoHesdZ5sSRien6XxkXveMNNnI
+         crsQ==
+X-Received: by 10.180.37.162 with SMTP id z2mr1827005wij.58.1383907978918;
+ Fri, 08 Nov 2013 02:52:58 -0800 (PST)
+Received: by 10.180.21.162 with HTTP; Fri, 8 Nov 2013 02:52:38 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237451>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237452>
 
-Am 07.11.2013 23:12, schrieb Junio C Hamano:
-> Karsten Blees <karsten.blees@gmail.com> writes:
-> 
->> 'git update-index --verbose' consistently reports paths relative to the
->> work-tree root. The only exception is the '--again' option, which reports
->> paths relative to the current working directory.
->>
->> Change do_reupdate to use non-prefixed paths.
-> 
-> Interesting.
-> 
-> This looks like a genuine fix unrelated to the use of the new hashmap.
-> 
+Hi,
 
-Indeed, #13 as well (and #4, #5, for that matter). I stumbled across this when analysing Thomas' last valgrind report.
+  I've converting my Bazaar repository to GIT.
 
-Note that #12, #13 are prequels to #14, which adds a "char *path = xstrdup(ce->name); ... free(path)" around the update_one call.
+ I've successfully done this conversion and I now want to publish my
+source code to github.
 
->>
->> Signed-off-by: Karsten Blees <blees@dcon.de>
->> ---
->>  builtin/update-index.c | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/builtin/update-index.c b/builtin/update-index.c
->> index e3a10d7..d180d80 100644
->> --- a/builtin/update-index.c
->> +++ b/builtin/update-index.c
->> @@ -579,7 +579,7 @@ static int do_reupdate(int ac, const char **av,
->>  		 * or worse yet 'allow_replace', active_nr may decrease.
->>  		 */
->>  		save_nr = active_nr;
->> -		update_one(ce->name + prefix_length, prefix, prefix_length);
->> +		update_one(ce->name, NULL, 0);
->>  		if (save_nr != active_nr)
->>  			goto redo;
->>  	}
+  The problem is that in Bazaar, I've commited some big files (63MB &
+173MB), but this files are no longer in my project, only in the
+revisions files of Bazaar and now Git.
+
+  I don't need this files to be pushed on Github.
+
+  How can I search git history for big files and remove them, or mark
+them to be not published ?
+
+I've tryed this solution found on the link in the error:
+
+git filter-branch --force --index-filter   'git rm --cached
+--ignore-unmatch giant_file'   --prune-empty --tag-name-filter cat --
+--all
+git commit --amend -CHEAD
+
+Then I've tryed to Commit & Push from Github mac  application and I
+had several network error, and finally get the same error on giant
+files (maybe my multiple commit & push did override something, but I
+understood that the git rm command would remove things once for
+good...
+
+can anybody help me ?
+I'm blocked in my dev because of this, I can't share my project with a friend.
+I'm publishing here : https://github.com/dev-mansonthomas/crf-rdp.git
+(paying for storage is an option as I'm quite fed up loosing time for
+filesize...)
+
+Regards,
+Thomas.
+
+here is the error I have using the GitHub application on Mac :
+(after that I intend to use Eclipse)
+
+File Ressources/dwr/dwr-3.0.0.110.dev-src.zip is 67.69 MB; this is
+larger than GitHub's recommended maximum file size of 50 MB
+GH001: Large files detected.
+Trace: 8f0259b29260f0c4d7ae4d4ae70e0306
+See http://git.io/iEPt8g for more information.
+File .bzr/repository/packs/a7bcd6ba235114ab88c80fe8a97adcfa.pack is
+178.76 MB; this exceeds GitHub's file size limit of 100 MB
