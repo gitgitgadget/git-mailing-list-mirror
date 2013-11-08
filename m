@@ -1,98 +1,62 @@
-From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-Subject: Re: [PATCH 1/5] compat/bswap.h: Fix build on cygwin, MinGW and msvc
-Date: Fri, 8 Nov 2013 01:45:50 +0100
-Message-ID: <20131108004550.GA16843@goldbirke>
-References: <527C0D4A.7070101@ramsay1.demon.co.uk>
+From: =?UTF-8?Q?Vicent_Mart=C3=AD?= <tanoku@gmail.com>
+Subject: Re: [PATCH 0/5] fix up 'jk/pack-bitmap' branch
+Date: Fri, 8 Nov 2013 02:39:12 +0100
+Message-ID: <CAFFjANR-4x4qDoRQtDLyd8VnpeQBDsg3mNh+tV87E-ZHDqnxSA@mail.gmail.com>
+References: <527C0CEA.4020705@ramsay1.demon.co.uk> <20131107221944.GA19238@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, Vicent Marti <tanoku@gmail.com>,
+Content-Type: text/plain; charset=UTF-8
+Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
 	Junio C Hamano <gitster@pobox.com>,
-	Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>,
+	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
 	GIT Mailing-list <git@vger.kernel.org>
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Fri Nov 08 01:46:06 2013
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Nov 08 02:39:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VeaD7-0004WC-3P
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Nov 2013 01:46:05 +0100
+	id 1Veb2w-0001Zk-AF
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Nov 2013 02:39:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755627Ab3KHAqA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 7 Nov 2013 19:46:00 -0500
-Received: from moutng.kundenserver.de ([212.227.17.8]:50734 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755555Ab3KHAp7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Nov 2013 19:45:59 -0500
-Received: from localhost6.localdomain6 (f050238080.adsl.alicedsl.de [78.50.238.80])
-	by mrelayeu.kundenserver.de (node=mreu4) with ESMTP (Nemesis)
-	id 0LgBIO-1VzZ0M3Jtk-00ngTw; Fri, 08 Nov 2013 01:45:51 +0100
-Content-Disposition: inline
-In-Reply-To: <527C0D4A.7070101@ramsay1.demon.co.uk>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Provags-ID: V02:K0:C9m+y8QBe1Lc1uPQwytEfCnJcn63DhAEIeYTJn5f+Si
- 9OAAPACNmxhZYH6k6SU1ojx1VwDLXbDRkkFOyLuqeRZV5tIbtt
- BIf7/UeNEU2mjO+aE3LdKJnEslaeFFL/c+F/3jh12r0IbYB4+I
- u8/hX3p3SLxTTtXYgGn2kCkNOp0Xc2d0zHUty9acRQiFNJnP70
- zU87K2txL0Wmll0gydTJ7HMJIEMM6JVeTKYSAHnGhrApAE+fH5
- 01odgIfvCEyGz0t63ajFvSGXEjS6ETDwXyRGE0cAMGNT+DWS+x
- ubMt8rAlvmzovqVGuKyzlTzo8WZnMjwHqRfeQ5LPLoziuH1D58
- NrvsTcJJn2JBAA7+84ao=
+	id S1753150Ab3KHBje (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Nov 2013 20:39:34 -0500
+Received: from mail-ve0-f179.google.com ([209.85.128.179]:45550 "EHLO
+	mail-ve0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751692Ab3KHBjd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Nov 2013 20:39:33 -0500
+Received: by mail-ve0-f179.google.com with SMTP id cz12so1012016veb.24
+        for <git@vger.kernel.org>; Thu, 07 Nov 2013 17:39:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=fwUf1jeB83knz7x+nasHLZ9bcLxEusNRzCXZ76o5Alo=;
+        b=gKgoCM2zmm2XvP33C9g4TiWBahsmhgqXK/PAaQfHB5SfZ+/T+bjJPOrZ6x12+4Lk5W
+         zXsp5L4ESJu8kMPGKEW1oIPl3uuTuHGjuBQWSF2+YV2do7z1aRyq0C2seOkCl0yC8prr
+         2fwgNxVUmKNK2+8o+yqkaBtt6rJ7fdJCXkYo4yWEZI9XfTveNGab9cp3OplVBCjothqs
+         H07GILU20PgE2DdTv8oRx8A+gXGFbueIm8H7yDQWGJGBAX2QPf3WfZPMWnY+ahRHHkjx
+         fCbCa0oe0zOkIPbzpaOdu8j+4PpxSrFOuzws+wNgSxQ68CJK9js0J4SVvYdV5c8Q1dAg
+         KZ0g==
+X-Received: by 10.58.178.239 with SMTP id db15mr9487230vec.9.1383874772452;
+ Thu, 07 Nov 2013 17:39:32 -0800 (PST)
+Received: by 10.221.65.202 with HTTP; Thu, 7 Nov 2013 17:39:12 -0800 (PST)
+In-Reply-To: <20131107221944.GA19238@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237446>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237447>
 
-Hi,
+Thank you Ramsay, all the patches look OK to me.
 
-On Thu, Nov 07, 2013 at 09:59:38PM +0000, Ramsay Jones wrote:
-> +static inline uint64_t default_bswap64(uint64_t val)
-> +{
-> +	return (((val & (uint64_t)0x00000000000000ffULL) << 56) |
-> +		((val & (uint64_t)0x000000000000ff00ULL) << 40) |
-> +		((val & (uint64_t)0x0000000000ff0000ULL) << 24) |
-> +		((val & (uint64_t)0x00000000ff000000ULL) <<  8) |
-> +		((val & (uint64_t)0x000000ff00000000ULL) >>  8) |
-> +		((val & (uint64_t)0x0000ff0000000000ULL) >> 24) |
-> +		((val & (uint64_t)0x00ff000000000000ULL) >> 40) |
-> +		((val & (uint64_t)0xff00000000000000ULL) >> 56));
-> +}
-
-This got me thinking.
-To swap 8 bytes this function performs 8 bitwise shifts, 8 bitwise
-ANDs and 7 bitwise ORs plus uses 8 64bit constants.  We could do
-better than that:
-
-static inline uint64_t hacked_bswap64(uint64_t val)
-{
-	uint64_t tmp =3D val << 32 | val >> 32;
-	return (((tmp & (uint64_t)0xff000000ff000000ULL) >> 24) |
-		((tmp & (uint64_t)0x00ff000000ff0000ULL) >>  8) |
-		((tmp & (uint64_t)0x0000ff000000ff00ULL) <<  8) |
-		((tmp & (uint64_t)0x000000ff000000ffULL) << 24));
-}
-
-This performs only 6 shifts, 4 ANDs, 4 ORs and uses 4 64bit constants.
-
-bswap64ing 1000000000 64bit ints with default_bswap64() compiled
-with -O2 takes:
-
-  real    0m1.808s
-  user    0m1.796s
-  sys     0m0.000s
-
-The same with hacked_bswap64():
-
-  real    0m0.823s
-  user    0m0.816s
-  sys     0m0.000s
-
-I doubt that in normal usage git would spend enough time bswap64ing to
-make this noticeable, but it was a fun micro-optimization on a wet
-Thursday evening nevertheless :)
-
-Best,
-G=E1bor
+On Thu, Nov 7, 2013 at 11:19 PM, Jeff King <peff@peff.net> wrote:
+> On Thu, Nov 07, 2013 at 09:58:02PM +0000, Ramsay Jones wrote:
+>
+>> These patches fix various errors/warnings on the cygwin, MinGW and
+>> msvc builds, provoked by the jk/pack-bitmap branch.
+>
+> Thanks. Your timing is impeccable, as I was just sitting down to
+> finalize the next re-roll. I'll add these in.
+>
+> -Peff
