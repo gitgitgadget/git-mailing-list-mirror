@@ -1,103 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] checkout: most of the time we have good leading directories
-Date: Thu, 07 Nov 2013 16:30:14 -0800
-Message-ID: <xmqqy54zohux.fsf@gitster.dls.corp.google.com>
+From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+Subject: Re: [PATCH 1/5] compat/bswap.h: Fix build on cygwin, MinGW and msvc
+Date: Fri, 8 Nov 2013 01:45:50 +0100
+Message-ID: <20131108004550.GA16843@goldbirke>
+References: <527C0D4A.7070101@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 08 01:30:26 2013
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, Vicent Marti <tanoku@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Fri Nov 08 01:46:06 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VeZxx-0004YF-Lg
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Nov 2013 01:30:26 +0100
+	id 1VeaD7-0004WC-3P
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Nov 2013 01:46:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754691Ab3KHAaV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Nov 2013 19:30:21 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34669 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753584Ab3KHAaV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Nov 2013 19:30:21 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3788550A0D;
-	Thu,  7 Nov 2013 19:30:20 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=G
-	DryWRRgsPmvlH2JhT3EAC4cnX8=; b=UYk5SiVIfXQid8ByjhNV94JBBp00cb0BK
-	w2tLdy19bkrwizx+6/X//WUKi3jjxHiqy+/R5BE9z7S5LlLHPp2ndc9iFjM66mRq
-	gf36XiXbuk4QQmZ9vxlYy8gTcT14tc0jfnLvcXdvxkIDpauiI8K+Ovs5FlfxLXWC
-	HyuhgKY3Ho=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=VoW
-	dgtHW2dySIrznJDaubzfz0y6H5JKHRVUOD/9Z9dTl9yctyAOY5B06j5JfJ8EbiMh
-	mgeotVtkiSYwo5tTI1QB8yjIPGc+HuZ4X0H8XOZMhaMTq0oCM5y8itgqA+0996jd
-	qF07vNQND/jBIX9FW3Ri5lEjQztwsu0zhYTbOLhU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2BAA650A0C;
-	Thu,  7 Nov 2013 19:30:20 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7B71050A0A;
-	Thu,  7 Nov 2013 19:30:17 -0500 (EST)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: F13A014E-480C-11E3-8E9C-1FFB7F2839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755627Ab3KHAqA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 7 Nov 2013 19:46:00 -0500
+Received: from moutng.kundenserver.de ([212.227.17.8]:50734 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755555Ab3KHAp7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Nov 2013 19:45:59 -0500
+Received: from localhost6.localdomain6 (f050238080.adsl.alicedsl.de [78.50.238.80])
+	by mrelayeu.kundenserver.de (node=mreu4) with ESMTP (Nemesis)
+	id 0LgBIO-1VzZ0M3Jtk-00ngTw; Fri, 08 Nov 2013 01:45:51 +0100
+Content-Disposition: inline
+In-Reply-To: <527C0D4A.7070101@ramsay1.demon.co.uk>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Provags-ID: V02:K0:C9m+y8QBe1Lc1uPQwytEfCnJcn63DhAEIeYTJn5f+Si
+ 9OAAPACNmxhZYH6k6SU1ojx1VwDLXbDRkkFOyLuqeRZV5tIbtt
+ BIf7/UeNEU2mjO+aE3LdKJnEslaeFFL/c+F/3jh12r0IbYB4+I
+ u8/hX3p3SLxTTtXYgGn2kCkNOp0Xc2d0zHUty9acRQiFNJnP70
+ zU87K2txL0Wmll0gydTJ7HMJIEMM6JVeTKYSAHnGhrApAE+fH5
+ 01odgIfvCEyGz0t63ajFvSGXEjS6ETDwXyRGE0cAMGNT+DWS+x
+ ubMt8rAlvmzovqVGuKyzlTzo8WZnMjwHqRfeQ5LPLoziuH1D58
+ NrvsTcJJn2JBAA7+84ao=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237445>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237446>
 
-When "git checkout" wants to create a path, e.g. a/b/c/d/e, after
-seeing if the entire thing already exists (in which case we check if
-that is up-to-date and do not bother to check it out, or we unlink
-and recreate it), we validate that the leading directory path is
-without funny symlinks by seeing a/, a/b/, a/b/c/ and then a/b/c/d/
-are all without funny symlinks, by calling has_dirs_only_path() in
-this order.
+Hi,
 
-When we are checking out many files (imagine: initial checkout),
-however, it is likely that an earlier checkout would have already
-made sure that the leading directory a/b/c/d/ is in good order; by
-first checking the whole path a/b/c/d/ first, we can often bypass
-calls to has_dirs_only_path() for leading part.
+On Thu, Nov 07, 2013 at 09:59:38PM +0000, Ramsay Jones wrote:
+> +static inline uint64_t default_bswap64(uint64_t val)
+> +{
+> +	return (((val & (uint64_t)0x00000000000000ffULL) << 56) |
+> +		((val & (uint64_t)0x000000000000ff00ULL) << 40) |
+> +		((val & (uint64_t)0x0000000000ff0000ULL) << 24) |
+> +		((val & (uint64_t)0x00000000ff000000ULL) <<  8) |
+> +		((val & (uint64_t)0x000000ff00000000ULL) >>  8) |
+> +		((val & (uint64_t)0x0000ff0000000000ULL) >> 24) |
+> +		((val & (uint64_t)0x00ff000000000000ULL) >> 40) |
+> +		((val & (uint64_t)0xff00000000000000ULL) >> 56));
+> +}
 
-This cuts down the number of calls to has_dirs_only_path() for
-checking out Linux kernel sources afresh from 190k down to 98k.
+This got me thinking.
+To swap 8 bytes this function performs 8 bitwise shifts, 8 bitwise
+ANDs and 7 bitwise ORs plus uses 8 64bit constants.  We could do
+better than that:
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
+static inline uint64_t hacked_bswap64(uint64_t val)
+{
+	uint64_t tmp =3D val << 32 | val >> 32;
+	return (((tmp & (uint64_t)0xff000000ff000000ULL) >> 24) |
+		((tmp & (uint64_t)0x00ff000000ff0000ULL) >>  8) |
+		((tmp & (uint64_t)0x0000ff000000ff00ULL) <<  8) |
+		((tmp & (uint64_t)0x000000ff000000ffULL) << 24));
+}
 
- * Just a random experimental change I was playing with today,
-   looking for low hanging fruits before having to thread the entire
-   checkout codepath.
+This performs only 6 shifts, 4 ANDs, 4 ORs and uses 4 64bit constants.
 
- entry.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+bswap64ing 1000000000 64bit ints with default_bswap64() compiled
+with -O2 takes:
 
-diff --git a/entry.c b/entry.c
-index 7b7aa81..e2c0ac6 100644
---- a/entry.c
-+++ b/entry.c
-@@ -6,9 +6,17 @@
- static void create_directories(const char *path, int path_len,
- 			       const struct checkout *state)
- {
--	char *buf = xmalloc(path_len + 1);
--	int len = 0;
-+	char *buf;
-+	int len;
-+
-+	for (len = path_len - 1; 0 <= len; len--)
-+		if (path[len] == '/')
-+			break;
-+	if (has_dirs_only_path(path, len, state->base_dir_len))
-+		return; /* ok, we have the whole leading directory */
- 
-+	buf = xmalloc(path_len + 1);
-+	len = 0;
- 	while (len < path_len) {
- 		do {
- 			buf[len] = path[len];
+  real    0m1.808s
+  user    0m1.796s
+  sys     0m0.000s
+
+The same with hacked_bswap64():
+
+  real    0m0.823s
+  user    0m0.816s
+  sys     0m0.000s
+
+I doubt that in normal usage git would spend enough time bswap64ing to
+make this noticeable, but it was a fun micro-optimization on a wet
+Thursday evening nevertheless :)
+
+Best,
+G=E1bor
