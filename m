@@ -1,200 +1,163 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [ANNOUNCE] Git v1.8.4.3
-Date: Fri, 08 Nov 2013 13:35:16 -0800
-Message-ID: <xmqq61s2o9uz.fsf@gitster.dls.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/5] compat/bswap.h: Fix build on cygwin, MinGW and msvc
+Date: Fri, 8 Nov 2013 14:27:49 -0800
+Message-ID: <20131108222749.GA19912@sigill.intra.peff.net>
+References: <527C0D4A.7070101@ramsay1.demon.co.uk>
+ <20131108004550.GA16843@goldbirke>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Linux Kernel <linux-kernel@vger.kernel.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 08 22:36:09 2013
+Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	Vicent Marti <tanoku@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Fri Nov 08 23:27:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vetiq-0002FM-PM
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Nov 2013 22:36:09 +0100
+	id 1VeuWz-0000Lp-F5
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Nov 2013 23:27:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758158Ab3KHVfo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Nov 2013 16:35:44 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65115 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758140Ab3KHVfW convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 8 Nov 2013 16:35:22 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4666EDA01;
-	Fri,  8 Nov 2013 16:35:19 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:mime-version:content-type
-	:content-transfer-encoding; s=sasl; bh=taGeZAKN79LU39O6zKo2w1INu
-	WA=; b=mEkxQruv7wBJ6T5Av/cHkAeP7krWBJCaoM2Ka/4t2zhOsSa6fXT3O/jnQ
-	ZZMDJN94BtM7LK2QcVd7NbWcu2XPiY84CWaTAqosD+//hNk6y7R2+9M9DsioEace
-	yh+9bUOdr9fEv9EPCd3c/Tmjr4I1myg/3AkRH9oVbuV/9S7bWA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:mime-version:content-type
-	:content-transfer-encoding; q=dns; s=sasl; b=TC6GVHdivknOzdZ/MFx
-	j3gFY+xfEXU8TQ+LDqZceHuKAgu46cIy5at/WpdqDOgCDDJqY5PEUr5TZfjRoOE6
-	OzdkcojYKUo/OoBctL1JC+qYFVHuRi54FfeTYr/3c4zQsmUyU1loBBFBkLoQL5kk
-	/D0xv14UlXjoKsHc7e+Cx/Rw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 37226DA00;
-	Fri,  8 Nov 2013 16:35:19 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6C881D9FF;
-	Fri,  8 Nov 2013 16:35:18 -0500 (EST)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: A9B5EDB8-48BD-11E3-AC7A-D331802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1758065Ab3KHW1w convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Nov 2013 17:27:52 -0500
+Received: from cloud.peff.net ([50.56.180.127]:35765 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1757473Ab3KHW1v (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Nov 2013 17:27:51 -0500
+Received: (qmail 21765 invoked by uid 102); 8 Nov 2013 22:27:51 -0000
+Received: from GITHUB-INC.bar1.SanFrancisco1.Level3.net (HELO sigill.intra.peff.net) (4.53.133.38)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 08 Nov 2013 16:27:51 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 08 Nov 2013 14:27:49 -0800
+Content-Disposition: inline
+In-Reply-To: <20131108004550.GA16843@goldbirke>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237467>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237468>
 
-The latest maintenance release Git v1.8.4.3 is now available at
-the usual places.
+On Fri, Nov 08, 2013 at 01:45:50AM +0100, SZEDER G=C3=A1bor wrote:
 
-The release tarballs are found at:
+> Hi,
+>=20
+> On Thu, Nov 07, 2013 at 09:59:38PM +0000, Ramsay Jones wrote:
+> > +static inline uint64_t default_bswap64(uint64_t val)
+> > +{
+> > +	return (((val & (uint64_t)0x00000000000000ffULL) << 56) |
+> > +		((val & (uint64_t)0x000000000000ff00ULL) << 40) |
+> > +		((val & (uint64_t)0x0000000000ff0000ULL) << 24) |
+> > +		((val & (uint64_t)0x00000000ff000000ULL) <<  8) |
+> > +		((val & (uint64_t)0x000000ff00000000ULL) >>  8) |
+> > +		((val & (uint64_t)0x0000ff0000000000ULL) >> 24) |
+> > +		((val & (uint64_t)0x00ff000000000000ULL) >> 40) |
+> > +		((val & (uint64_t)0xff00000000000000ULL) >> 56));
+> > +}
+>=20
+> This got me thinking.
+> To swap 8 bytes this function performs 8 bitwise shifts, 8 bitwise
+> ANDs and 7 bitwise ORs plus uses 8 64bit constants.  We could do
+> better than that:
+>=20
+> static inline uint64_t hacked_bswap64(uint64_t val)
+> {
+> 	uint64_t tmp =3D val << 32 | val >> 32;
+> 	return (((tmp & (uint64_t)0xff000000ff000000ULL) >> 24) |
+> 		((tmp & (uint64_t)0x00ff000000ff0000ULL) >>  8) |
+> 		((tmp & (uint64_t)0x0000ff000000ff00ULL) <<  8) |
+> 		((tmp & (uint64_t)0x000000ff000000ffULL) << 24));
+> }
+>=20
+> This performs only 6 shifts, 4 ANDs, 4 ORs and uses 4 64bit constants=
+=2E
 
-    http://code.google.com/p/git-core/downloads/list
+You can do better still by using the bswap instruction. :)
 
-and their SHA-1 checksums are:
+I tried timing the program below.
 
-43b1edc95b3ab77f9739d789b906ded0585fe7a2  git-1.8.4.3.tar.gz
-eb4eb4991464f44deda19d1435d9721146587661  git-htmldocs-1.8.4.3.tar.gz
-3a7e9322a95e0743b902152083366fe97f322ab1  git-manpages-1.8.4.3.tar.gz
+With -O0, your version is actually _slower_ than the naive version (14s
+versus 13s), and the bswap version is better than either (8s). Oddly, i=
+n
+an earlier iteration of my test, your version was faster than naive,
+with bswap faster still (10s, 8s, 5s, respectively). In that version, I
+was not assigning the result of the bswap anywhere.
 
-The following public repositories all have a copy of the v1.8.4.3
-tag and the maint branch that the tag points at:
+So I think the timing is highly dependent on the code surrounding the
+call, but of course the asm instruction seems to always perform better.
 
-  url =3D https://kernel.googlesource.com/pub/scm/git/git
-  url =3D git://repo.or.cz/alt-git.git
-  url =3D https://code.google.com/p/git-core/
-  url =3D git://git.sourceforge.jp/gitroot/git-core/git.git
-  url =3D git://git-core.git.sourceforge.net/gitroot/git-core/git-core
-  url =3D https://github.com/gitster/git
+If I turn on -O2, all three take about 1.2s.  Inspecting the generated
+assembly, it's because gcc converts the raw-code cases into a bswap
+instruction.  We end up with something like:
 
-Also, http://www.kernel.org/pub/software/scm/git/ has copies of the
-release tarballs.
+  .L3:
+          subq $1, %rdx
+          bswap %rax
+          jne .L3
 
-Git v1.8.4.3 Release Notes
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+And according to perf, we spend all of our time on the jump. The bswap
+hardly registers.
 
-=46ixes since v1.8.4.2
---------------------
+> I doubt that in normal usage git would spend enough time bswap64ing t=
+o
+> make this noticeable, but it was a fun micro-optimization on a wet
+> Thursday evening nevertheless :)
 
- * The interaction between use of Perl in our test suite and NO_PERL
-   has been clarified a bit.
+We do a fair number, but it's dwarfed by the real work. And from the
+numbers above, I think our best bet is to use the system bswap if it's
+there, and then not worry too hard about micro-optimizing the rest.
 
- * A fast-import stream expresses a pathname with funny characters by
-   quoting them in C style; remote-hg remote helper (in contrib/)
-   forgot to unquote such a path.
+-Peff
 
- * One long-standing flaw in the pack transfer protocol used by "git
-   clone" was that there was no way to tell the other end which branch
-   "HEAD" points at, and the receiving end needed to guess.  A new
-   capability has been defined in the pack protocol to convey this
-   information so that cloning from a repository with more than one
-   branches pointing at the same commit where the HEAD is at now
-   reliably sets the initial branch in the resulting repository.
+-- >8 --
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
 
- * We did not handle cases where http transport gets redirected during
-   the authorization request (e.g. from http:// to https://).
+#ifdef NAIVE
+static inline uint64_t test(uint64_t val)
+{
+        return ((val & (uint64_t)0x00000000000000ffULL) << 56)
+                | ((val & (uint64_t)0x000000000000ff00ULL) << 40)
+                | ((val & (uint64_t)0x0000000000ff0000ULL) << 24)
+                | ((val & (uint64_t)0x00000000ff000000ULL) <<  8)
+                | ((val & (uint64_t)0x000000ff00000000ULL) >>  8)
+                | ((val & (uint64_t)0x0000ff0000000000ULL) >> 24)
+                | ((val & (uint64_t)0x00ff000000000000ULL) >> 40)
+                | ((val & (uint64_t)0xff00000000000000ULL) >> 56);
+}
 
- * "git rev-list --objects ^v1.0^ v1.0" gave v1.0 tag itself in the
-   output, but "git rev-list --objects v1.0^..v1.0" did not.
+#elif defined(OPTIM)
+static inline uint64_t test(uint64_t val)
+{
+        uint64_t tmp =3D val << 32 | val >> 32;
+	return (((tmp & (uint64_t)0xff000000ff000000ULL) >> 24) |
+                ((tmp & (uint64_t)0x00ff000000ff0000ULL) >>  8) |
+                ((tmp & (uint64_t)0x0000ff000000ff00ULL) <<  8) |
+                ((tmp & (uint64_t)0x000000ff000000ffULL) << 24));
+}
 
- * The fall-back parsing of commit objects with broken author or
-   committer lines were less robust than ideal in picking up the
-   timestamps.
+#elif defined(ASM)
+static inline uint64_t test(uint64_t val)
+{
+	register uint64_t v, x =3D val;
+	__asm__("bswap %q0" : "=3Dr" (v) : "0" (x));
+	return v;
+}
+#endif
 
- * Bash prompting code to deal with an SVN remote as an upstream
-   were coded in a way not supported by older Bash versions (3.x).
+int main(int argc, char **argv)
+{
+	unsigned long i;
+        uint64_t n =3D strtoull(argv[1], NULL, 10);
 
- * "git checkout topic", when there is not yet a local "topic" branch
-   but there is a unique remote-tracking branch for a remote "topic"
-   branch, pretended as if "git checkout -t -b topic remote/$r/topic"
-   (for that unique remote $r) was run. This hack however was not
-   implemented for "git checkout topic --".
-
- * Coloring around octopus merges in "log --graph" output was screwy.
-
- * We did not generate HTML version of documentation to "git subtree"
-   in contrib/.
-
- * The synopsis section of "git unpack-objects" documentation has been
-   clarified a bit.
-
- * An ancient How-To on serving Git repositories on an HTTP server
-   lacked a warning that it has been mostly superseded with more
-   modern way.
-
-Also contains a handful of trivial code clean-ups, documentation
-updates, updates to the test suite, etc.
-
-----------------------------------------------------------------
-
-Changes since v1.8.4.2 are as follows:
-
-Antoine Pelisse (1):
-      remote-hg: unquote C-style paths when exporting
-
-Brian Gernhardt (3):
-      t5570: Update for symref capability
-      t5570: Update for clone-progress-to-stderr branch
-      t5570: Update for clone-progress-to-stderr branch
-
-Hemmo Nieminen (1):
-      graph: fix coloring around octopus merges
-
-Jeff King (11):
-      http_get_file: style fixes
-      http_request: factor out curlinfo_strbuf
-      http: refactor options to http_get_*
-      http: hoist credential request out of handle_curl_result
-      http: provide effective url to callers
-      http: update base URLs when we see redirects
-      remote-curl: make refs_url a strbuf
-      remote-curl: store url as a strbuf
-      remote-curl: rewrite base url from info/refs redirects
-      split_ident: parse timestamp from end of line
-      subtree: add makefile target for html docs
-
-Jonathan Nieder (1):
-      t/README: tests can use perl even with NO_PERL
-
-Junio C Hamano (10):
-      t5505: fix "set-head --auto with ambiguous HEAD" test
-      upload-pack.c: do not pass confusing cb_data to mark_our_ref()
-      upload-pack: send symbolic ref information as capability
-      upload-pack: send non-HEAD symbolic refs
-      connect.c: make parse_feature_value() static
-      connect: annotate refs with their symref information in get_remot=
-e_head()
-      clone: test the new HEAD detection logic
-      revision: do not peel tags used in range notation
-      Start preparing for 1.8.4.3
-      Git 1.8.4.3
-
-Karsten Blees (1):
-      gitignore.txt: fix documentation of "**" patterns
-
-Matthieu Moy (2):
-      checkout: allow dwim for branch creation for "git checkout $branc=
-h --"
-      checkout: proper error message on 'git checkout foo bar --'
-
-Ramsay Allan Jones (1):
-      http.c: Spell the null pointer as NULL
-
-SZEDER G=C3=A1bor (1):
-      bash prompt: don't use '+=3D' operator in show upstream code path
-
-Sitaram Chamarty (1):
-      doc/howto: warn about (dumb)http server document being too old
-
-Vivien Didelot (2):
-      Documentation: restore a space in unpack-objects usage
-      Documentation: "pack-file" is not literal in unpack-objects
+	for (i =3D 0; i < 1000000000; i++)
+		n =3D test(n);
+	/* convince gcc that we really want the output value, so
+	 * it won't optimize out the whole program */
+        printf("%d\n", (int)n);
+	return 0;
+}
