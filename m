@@ -1,84 +1,55 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 60/86] builtin/help: replace prefixcmd() with has_prefix()
-Date: Sat, 09 Nov 2013 08:06:53 +0100
-Message-ID: <20131109070720.18178.6476.chriscool@tuxfamily.org>
-References: <20131109070358.18178.40248.chriscool@tuxfamily.org>
-Cc: git@vger.kernel.org, Avery Pennarun <apenwarr@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Jeff King <peff@peff.net>, Max Horn <max@quendi.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Nov 09 08:16:22 2013
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH 2/4] Emphasize options and force ASCIIDOC escaping of
+ "--"
+Date: Sat, 09 Nov 2013 09:13:14 +0100
+Message-ID: <527DEE9A.2090503@kdbg.org>
+References: <1383958133-4207-1-git-send-email-jstjohn@purdue.edu>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+To: "Jason St. John" <jstjohn@purdue.edu>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Nov 09 09:13:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vf2mI-0002Wp-MH
-	for gcvg-git-2@plane.gmane.org; Sat, 09 Nov 2013 08:16:19 +0100
+	id 1Vf3fm-0001El-Dp
+	for gcvg-git-2@plane.gmane.org; Sat, 09 Nov 2013 09:13:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758658Ab3KIHQN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Nov 2013 02:16:13 -0500
-Received: from mail-2y.bbox.fr ([194.158.98.15]:37675 "EHLO mail-2y.bbox.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758638Ab3KIHOP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Nov 2013 02:14:15 -0500
-Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-2y.bbox.fr (Postfix) with ESMTP id E2E0953;
-	Sat,  9 Nov 2013 08:14:13 +0100 (CET)
-X-git-sha1: fe08de42ddaabc9b44b7db1aa6338770fbe5d68d 
-X-Mailer: git-mail-commits v0.5.2
-In-Reply-To: <20131109070358.18178.40248.chriscool@tuxfamily.org>
+	id S1754017Ab3KIINS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Nov 2013 03:13:18 -0500
+Received: from bsmtp5.bon.at ([195.3.86.187]:65052 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1753432Ab3KIINS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Nov 2013 03:13:18 -0500
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id D3FBCCDF84;
+	Sat,  9 Nov 2013 09:13:14 +0100 (CET)
+Received: from dx.sixt.local (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id 4E91519F5EC;
+	Sat,  9 Nov 2013 09:13:14 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.1.0
+In-Reply-To: <1383958133-4207-1-git-send-email-jstjohn@purdue.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237569>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237570>
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- builtin/help.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+Am 09.11.2013 01:48, schrieb Jason St. John:
+> -`--since=<date1>` limits to commits newer than `<date1>`, and using it
+> -with `--grep=<pattern>` further limits to commits whose log message
+> +'\--since=<date1>' limits to commits newer than `<date1>`, and using it
+> +with '\--grep=<pattern>' further limits to commits whose log message
 
-diff --git a/builtin/help.c b/builtin/help.c
-index f1e236b..2478e9a 100644
---- a/builtin/help.c
-+++ b/builtin/help.c
-@@ -100,7 +100,7 @@ static int check_emacsclient_version(void)
- 	 */
- 	finish_command(&ec_process);
- 
--	if (prefixcmp(buffer.buf, "emacsclient")) {
-+	if (!has_prefix(buffer.buf, "emacsclient")) {
- 		strbuf_release(&buffer);
- 		return error(_("Failed to parse emacsclient version."));
- 	}
-@@ -258,7 +258,7 @@ static int add_man_viewer_info(const char *var, const char *value)
- 
- static int git_help_config(const char *var, const char *value, void *cb)
- {
--	if (!prefixcmp(var, "column."))
-+	if (has_prefix(var, "column."))
- 		return git_column_config(var, value, "help", &colopts);
- 	if (!strcmp(var, "help.format")) {
- 		if (!value)
-@@ -278,7 +278,7 @@ static int git_help_config(const char *var, const char *value, void *cb)
- 		add_man_viewer(value);
- 		return 0;
- 	}
--	if (!prefixcmp(var, "man."))
-+	if (has_prefix(var, "man."))
- 		return add_man_viewer_info(var, value);
- 
- 	return git_default_config(var, value, cb);
-@@ -306,7 +306,7 @@ static const char *cmd_to_page(const char *git_cmd)
- {
- 	if (!git_cmd)
- 		return "git";
--	else if (!prefixcmp(git_cmd, "git"))
-+	else if (has_prefix(git_cmd, "git"))
- 		return git_cmd;
- 	else if (is_git_command(git_cmd))
- 		return prepend("git-", git_cmd);
--- 
-1.8.4.1.566.geca833c
+I don't think this kind of change goes in the right direction.
+Currently, the general style seems to be that options are typeset in
+monospaced font. I looked at git-merge and git-rebase (and git-log, of
+course). But after your change, they are typeset in italics, in the HTML
+version of the manual pages.
+
+I did not find an advice on the preferred formatting, though, except for
+the last sentence in Documentation/CodingGuidelines.
+
+-- Hannes
