@@ -1,7 +1,7 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 18/86] sequencer: replace prefixcmd() with has_prefix()
-Date: Sat, 09 Nov 2013 08:06:11 +0100
-Message-ID: <20131109070720.18178.17858.chriscool@tuxfamily.org>
+Subject: [PATCH 15/86] fetch-pack: replace prefixcmd() with has_prefix()
+Date: Sat, 09 Nov 2013 08:06:08 +0100
+Message-ID: <20131109070720.18178.86102.chriscool@tuxfamily.org>
 References: <20131109070358.18178.40248.chriscool@tuxfamily.org>
 Cc: git@vger.kernel.org, Avery Pennarun <apenwarr@gmail.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
@@ -14,66 +14,81 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vf2fA-0002lM-HM
+	id 1Vf2f9-0002lM-UB
 	for gcvg-git-2@plane.gmane.org; Sat, 09 Nov 2013 08:08:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758616Ab3KIHIq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Nov 2013 02:08:46 -0500
-Received: from mail-3y.bbox.fr ([194.158.98.45]:54125 "EHLO mail-3y.bbox.fr"
+	id S933299Ab3KIHIo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Nov 2013 02:08:44 -0500
+Received: from mail-1y.bbox.fr ([194.158.98.14]:65375 "EHLO mail-1y.bbox.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932785Ab3KIHI2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Nov 2013 02:08:28 -0500
+	id S933249Ab3KIHI1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Nov 2013 02:08:27 -0500
 Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-3y.bbox.fr (Postfix) with ESMTP id 29EEF7B;
-	Sat,  9 Nov 2013 08:08:27 +0100 (CET)
-X-git-sha1: 724434dded6e4ee6c04ad7010f82fd447231b076 
+	by mail-1y.bbox.fr (Postfix) with ESMTP id D570696;
+	Sat,  9 Nov 2013 08:08:25 +0100 (CET)
+X-git-sha1: 8b736dc790d557bdad6ea8c6dbed5c21335a266c 
 X-Mailer: git-mail-commits v0.5.2
 In-Reply-To: <20131109070358.18178.40248.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237486>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237487>
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- sequencer.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fetch-pack.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/sequencer.c b/sequencer.c
-index 06e52b4..64cc6f0 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -41,7 +41,7 @@ static int is_cherry_picked_from_line(const char *buf, int len)
- 	 * We only care that it looks roughly like (cherry picked from ...)
- 	 */
- 	return len > strlen(cherry_picked_prefix) + 1 &&
--		!prefixcmp(buf, cherry_picked_prefix) && buf[len - 1] == ')';
-+		has_prefix(buf, cherry_picked_prefix) && buf[len - 1] == ')';
- }
+diff --git a/fetch-pack.c b/fetch-pack.c
+index a0e0350..1526ed1 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -176,9 +176,9 @@ static void consume_shallow_list(struct fetch_pack_args *args, int fd)
+ 		 */
+ 		char *line;
+ 		while ((line = packet_read_line(fd, NULL))) {
+-			if (!prefixcmp(line, "shallow "))
++			if (has_prefix(line, "shallow "))
+ 				continue;
+-			if (!prefixcmp(line, "unshallow "))
++			if (has_prefix(line, "unshallow "))
+ 				continue;
+ 			die("git fetch-pack: expected shallow list");
+ 		}
+@@ -194,7 +194,7 @@ static enum ack_type get_ack(int fd, unsigned char *result_sha1)
+ 		die("git fetch-pack: expected ACK/NAK, got EOF");
+ 	if (!strcmp(line, "NAK"))
+ 		return NAK;
+-	if (!prefixcmp(line, "ACK ")) {
++	if (has_prefix(line, "ACK ")) {
+ 		if (!get_sha1_hex(line+4, result_sha1)) {
+ 			if (len < 45)
+ 				return ACK;
+@@ -323,13 +323,13 @@ static int find_common(struct fetch_pack_args *args,
  
- /*
-@@ -180,7 +180,7 @@ static char *get_encoding(const char *message)
- 	while (*p && *p != '\n') {
- 		for (eol = p + 1; *eol && *eol != '\n'; eol++)
- 			; /* do nothing */
--		if (!prefixcmp(p, "encoding ")) {
-+		if (has_prefix(p, "encoding ")) {
- 			char *result = xmalloc(eol - 8 - p);
- 			strlcpy(result, p + 9, eol - 8 - p);
- 			return result;
-@@ -705,10 +705,10 @@ static struct commit *parse_insn_line(char *bol, char *eol, struct replay_opts *
- 	char *end_of_object_name;
- 	int saved, status, padding;
+ 		send_request(args, fd[1], &req_buf);
+ 		while ((line = packet_read_line(fd[0], NULL))) {
+-			if (!prefixcmp(line, "shallow ")) {
++			if (has_prefix(line, "shallow ")) {
+ 				if (get_sha1_hex(line + 8, sha1))
+ 					die("invalid shallow line: %s", line);
+ 				register_shallow(sha1);
+ 				continue;
+ 			}
+-			if (!prefixcmp(line, "unshallow ")) {
++			if (has_prefix(line, "unshallow ")) {
+ 				if (get_sha1_hex(line + 10, sha1))
+ 					die("invalid unshallow line: %s", line);
+ 				if (!lookup_object(sha1))
+@@ -523,7 +523,7 @@ static void filter_refs(struct fetch_pack_args *args,
+ 		}
  
--	if (!prefixcmp(bol, "pick")) {
-+	if (has_prefix(bol, "pick")) {
- 		action = REPLAY_PICK;
- 		bol += strlen("pick");
--	} else if (!prefixcmp(bol, "revert")) {
-+	} else if (has_prefix(bol, "revert")) {
- 		action = REPLAY_REVERT;
- 		bol += strlen("revert");
- 	} else
+ 		if (!keep && args->fetch_all &&
+-		    (!args->depth || prefixcmp(ref->name, "refs/tags/")))
++		    (!args->depth || !has_prefix(ref->name, "refs/tags/")))
+ 			keep = 1;
+ 
+ 		if (keep) {
 -- 
 1.8.4.1.566.geca833c
