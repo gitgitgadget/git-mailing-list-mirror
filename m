@@ -1,78 +1,93 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH] git-remote-mediawiki: do not remove installed files in
- "clean" target
-Date: Fri, 8 Nov 2013 18:22:39 -0800
-Message-ID: <20131109022239.GI10302@google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Thorsten Glaser <t.glaser@tarent.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 09 03:22:49 2013
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH 01/86] strbuf: add has_prefix() to be used instead of
+ prefixcmp()
+Date: Sat, 09 Nov 2013 08:05:54 +0100
+Message-ID: <20131109070720.18178.71603.chriscool@tuxfamily.org>
+References: <20131109070358.18178.40248.chriscool@tuxfamily.org>
+Cc: git@vger.kernel.org, Avery Pennarun <apenwarr@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Jeff King <peff@peff.net>, Max Horn <max@quendi.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Nov 09 08:08:33 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VeyCG-0002YN-Fa
-	for gcvg-git-2@plane.gmane.org; Sat, 09 Nov 2013 03:22:48 +0100
+	id 1Vf2el-0002P0-Fo
+	for gcvg-git-2@plane.gmane.org; Sat, 09 Nov 2013 08:08:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758001Ab3KICWn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Nov 2013 21:22:43 -0500
-Received: from mail-pd0-f173.google.com ([209.85.192.173]:44795 "EHLO
-	mail-pd0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757939Ab3KICWm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Nov 2013 21:22:42 -0500
-Received: by mail-pd0-f173.google.com with SMTP id r10so2888531pdi.18
-        for <git@vger.kernel.org>; Fri, 08 Nov 2013 18:22:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:mime-version:content-type
-         :content-disposition:user-agent;
-        bh=bm12BgFc4p1nn+IsJTPphmmyHyeG2wFKuV89aAePEbI=;
-        b=MSF/r2twVhRTL74j3DhhPIfABR2o/a9XLbw6mSgYhJ8lnlCI8pCdcO2zVN3QVYZMwk
-         JqEQ9DBZ3zpwpuKzHcbsfVUUxkpk7GLM4ScStfSzAiMVLVl9Aw4pNuYsSnXsAtBZln9o
-         vUGVQFrSm73gx7ZozlUVxT93xx4uMRs0s6jcU9sxRPKxN+F9SLe8k7FnMiaPx6qA5iUL
-         O6X0uRrHnt59wAp2e4rgYqryBji2BRAw7Aa3lJPpVdC3sjGEzCgLRYg5iLTDcE59LG9X
-         WoLQJyikItc7mvWcI6EXusd35C6/vd46dmC1BscPdQxzcZJqQFX2D+GQdExuM0QMtyFm
-         Nhuw==
-X-Received: by 10.68.133.198 with SMTP id pe6mr18262024pbb.10.1383963762403;
-        Fri, 08 Nov 2013 18:22:42 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id ja5sm15161436pbc.14.2013.11.08.18.22.41
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 08 Nov 2013 18:22:41 -0800 (PST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S933254Ab3KIHI1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Nov 2013 02:08:27 -0500
+Received: from mail-2y.bbox.fr ([194.158.98.15]:36248 "EHLO mail-2y.bbox.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932785Ab3KIHIW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Nov 2013 02:08:22 -0500
+Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
+	by mail-2y.bbox.fr (Postfix) with ESMTP id 4830E46;
+	Sat,  9 Nov 2013 08:08:19 +0100 (CET)
+X-git-sha1: e56ab92a43696b1f3e2d9c1035d5a62397d88754 
+X-Mailer: git-mail-commits v0.5.2
+In-Reply-To: <20131109070358.18178.40248.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237482>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237483>
 
-Running "make clean" after a successful "make install" should not
-result in a broken mediawiki remote helper.
+prefixcmp() cannot be really used as a comparison function as
+it is not antisymmetric:
 
-Reported-by: Thorsten Glaser <t.glaser@tarent.de>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+	prefixcmp("foo", "foobar") < 0
+	prefixcmp("foobar", "foo") == 0
+
+So it is not suitable as a function for passing to qsort.
+And in fact it is used nowhere as a comparison function.
+
+So we should replace it with a function that just checks for
+equality.
+
+As a first step toward this goal, this patch introduces
+has_prefix().
+
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
-Thanks for the very pleasant mediawiki remote helper.
+ git-compat-util.h | 1 +
+ strbuf.c          | 9 +++++++++
+ 2 files changed, 10 insertions(+)
 
- contrib/mw-to-git/Makefile | 1 -
- 1 file changed, 1 deletion(-)
-
-diff --git a/contrib/mw-to-git/Makefile b/contrib/mw-to-git/Makefile
-index f206f96..c5547f9 100644
---- a/contrib/mw-to-git/Makefile
-+++ b/contrib/mw-to-git/Makefile
-@@ -43,7 +43,6 @@ install: install_pm
- clean:
- 	$(MAKE) -C $(GIT_ROOT_DIR) SCRIPT_PERL="$(SCRIPT_PERL_FULL)" \
-                 clean-perl-script
--	rm $(INSTLIBDIR)/$(GIT_MEDIAWIKI_PM)
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 0f6a31e..7930f49 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -351,6 +351,7 @@ extern void set_error_routine(void (*routine)(const char *err, va_list params));
+ extern void set_die_is_recursing_routine(int (*routine)(void));
  
- perlcritic:
- 	perlcritic -5 $(SCRIPT_PERL)
+ extern int prefixcmp(const char *str, const char *prefix);
++extern int has_prefix(const char *str, const char *prefix);
+ extern int has_suffix(const char *str, const char *suffix);
+ 
+ static inline const char *skip_prefix(const char *str, const char *prefix)
+diff --git a/strbuf.c b/strbuf.c
+index 0d784b5..748be6d 100644
+--- a/strbuf.c
++++ b/strbuf.c
+@@ -10,6 +10,15 @@ int prefixcmp(const char *str, const char *prefix)
+ 			return (unsigned char)*prefix - (unsigned char)*str;
+ }
+ 
++int has_prefix(const char *str, const char *prefix)
++{
++	for (; ; str++, prefix++)
++		if (!*prefix)
++			return 1;
++		else if (*str != *prefix)
++			return 0;
++}
++
+ int has_suffix(const char *str, const char *suffix)
+ {
+ 	int len = strlen(str), suflen = strlen(suffix);
 -- 
-1.8.4.1
+1.8.4.1.566.geca833c
