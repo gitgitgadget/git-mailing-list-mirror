@@ -1,193 +1,174 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 08/86] transport*: replace prefixcmd() with has_prefix()
-Date: Sat, 09 Nov 2013 08:06:01 +0100
-Message-ID: <20131109070720.18178.55096.chriscool@tuxfamily.org>
+Subject: [PATCH 06/86] pretty: replace prefixcmd() with has_prefix()
+Date: Sat, 09 Nov 2013 08:05:59 +0100
+Message-ID: <20131109070720.18178.27578.chriscool@tuxfamily.org>
 References: <20131109070358.18178.40248.chriscool@tuxfamily.org>
 Cc: git@vger.kernel.org, Avery Pennarun <apenwarr@gmail.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	Jeff King <peff@peff.net>, Max Horn <max@quendi.de>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Nov 09 08:11:40 2013
+X-From: git-owner@vger.kernel.org Sat Nov 09 08:11:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vf2hn-0005cp-Me
+	id 1Vf2ho-0005cp-8A
 	for gcvg-git-2@plane.gmane.org; Sat, 09 Nov 2013 08:11:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933374Ab3KIHL3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Nov 2013 02:11:29 -0500
-Received: from mail-3y.bbox.fr ([194.158.98.45]:54084 "EHLO mail-3y.bbox.fr"
+	id S933382Ab3KIHLg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Nov 2013 02:11:36 -0500
+Received: from mail-1y.bbox.fr ([194.158.98.14]:65344 "EHLO mail-1y.bbox.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933225Ab3KIHIY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Nov 2013 02:08:24 -0500
+	id S933223Ab3KIHIX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Nov 2013 02:08:23 -0500
 Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-3y.bbox.fr (Postfix) with ESMTP id B4F8345;
-	Sat,  9 Nov 2013 08:08:22 +0100 (CET)
-X-git-sha1: 779961ac7df15aa82986fa7cacb15857ca65b1b1 
+	by mail-1y.bbox.fr (Postfix) with ESMTP id BFD5B81;
+	Sat,  9 Nov 2013 08:08:21 +0100 (CET)
+X-git-sha1: d2d95a681b9b3eacfccae3ac1098b3eaeaa5aae9 
 X-Mailer: git-mail-commits v0.5.2
 In-Reply-To: <20131109070358.18178.40248.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237536>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237537>
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- transport-helper.c | 16 ++++++++--------
- transport.c        | 28 ++++++++++++++--------------
- 2 files changed, 22 insertions(+), 22 deletions(-)
+ pretty.c | 36 ++++++++++++++++++------------------
+ 1 file changed, 18 insertions(+), 18 deletions(-)
 
-diff --git a/transport-helper.c b/transport-helper.c
-index b32e2d6..bf8d7a0 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -190,7 +190,7 @@ static struct child_process *get_helper(struct transport *transport)
- 			data->export = 1;
- 		else if (!strcmp(capname, "check-connectivity"))
- 			data->check_connectivity = 1;
--		else if (!data->refspecs && !prefixcmp(capname, "refspec ")) {
-+		else if (!data->refspecs && has_prefix(capname, "refspec ")) {
- 			ALLOC_GROW(refspecs,
- 				   refspec_nr + 1,
- 				   refspec_alloc);
-@@ -199,17 +199,17 @@ static struct child_process *get_helper(struct transport *transport)
- 			data->connect = 1;
- 		} else if (!strcmp(capname, "signed-tags")) {
- 			data->signed_tags = 1;
--		} else if (!prefixcmp(capname, "export-marks ")) {
-+		} else if (has_prefix(capname, "export-marks ")) {
- 			struct strbuf arg = STRBUF_INIT;
- 			strbuf_addstr(&arg, "--export-marks=");
- 			strbuf_addstr(&arg, capname + strlen("export-marks "));
- 			data->export_marks = strbuf_detach(&arg, NULL);
--		} else if (!prefixcmp(capname, "import-marks")) {
-+		} else if (has_prefix(capname, "import-marks")) {
- 			struct strbuf arg = STRBUF_INIT;
- 			strbuf_addstr(&arg, "--import-marks=");
- 			strbuf_addstr(&arg, capname + strlen("import-marks "));
- 			data->import_marks = strbuf_detach(&arg, NULL);
--		} else if (!prefixcmp(capname, "no-private-update")) {
-+		} else if (has_prefix(capname, "no-private-update")) {
- 			data->no_private_update = 1;
- 		} else if (mandatory) {
- 			die("Unknown mandatory capability %s. This remote "
-@@ -310,7 +310,7 @@ static int set_helper_option(struct transport *transport,
+diff --git a/pretty.c b/pretty.c
+index b4e32b7..961241a 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -40,7 +40,7 @@ static int git_pretty_formats_config(const char *var, const char *value, void *c
+ 	const char *fmt;
+ 	int i;
  
- 	if (!strcmp(buf.buf, "ok"))
- 		ret = 0;
--	else if (!prefixcmp(buf.buf, "error")) {
-+	else if (has_prefix(buf.buf, "error")) {
- 		ret = -1;
- 	} else if (!strcmp(buf.buf, "unsupported"))
- 		ret = 1;
-@@ -374,7 +374,7 @@ static int fetch_with_fetch(struct transport *transport,
- 	while (1) {
- 		recvline(data, &buf);
- 
--		if (!prefixcmp(buf.buf, "lock ")) {
-+		if (has_prefix(buf.buf, "lock ")) {
- 			const char *name = buf.buf + 5;
- 			if (transport->pack_lockfile)
- 				warning("%s also locked %s", data->name, name);
-@@ -645,10 +645,10 @@ static int push_update_ref_status(struct strbuf *buf,
- 	char *refname, *msg;
- 	int status;
- 
--	if (!prefixcmp(buf->buf, "ok ")) {
-+	if (has_prefix(buf->buf, "ok ")) {
- 		status = REF_STATUS_OK;
- 		refname = buf->buf + 3;
--	} else if (!prefixcmp(buf->buf, "error ")) {
-+	} else if (has_prefix(buf->buf, "error ")) {
- 		status = REF_STATUS_REMOTE_REJECT;
- 		refname = buf->buf + 6;
- 	} else
-diff --git a/transport.c b/transport.c
-index 7202b77..24b781c 100644
---- a/transport.c
-+++ b/transport.c
-@@ -169,13 +169,13 @@ static void set_upstreams(struct transport *transport, struct ref *refs,
- 		remotename = ref->name;
- 		tmp = resolve_ref_unsafe(localname, sha, 1, &flag);
- 		if (tmp && flag & REF_ISSYMREF &&
--			!prefixcmp(tmp, "refs/heads/"))
-+			has_prefix(tmp, "refs/heads/"))
- 			localname = tmp;
- 
- 		/* Both source and destination must be local branches. */
--		if (!localname || prefixcmp(localname, "refs/heads/"))
-+		if (!localname || !has_prefix(localname, "refs/heads/"))
- 			continue;
--		if (!remotename || prefixcmp(remotename, "refs/heads/"))
-+		if (!remotename || !has_prefix(remotename, "refs/heads/"))
- 			continue;
- 
- 		if (!pretend)
-@@ -191,7 +191,7 @@ static void set_upstreams(struct transport *transport, struct ref *refs,
- 
- static const char *rsync_url(const char *url)
- {
--	return prefixcmp(url, "rsync://") ? skip_prefix(url, "rsync:") : url;
-+	return !has_prefix(url, "rsync://") ? skip_prefix(url, "rsync:") : url;
- }
- 
- static struct ref *get_refs_via_rsync(struct transport *transport, int for_push)
-@@ -296,8 +296,8 @@ static int write_one_ref(const char *name, const unsigned char *sha1,
- 	FILE *f;
- 
- 	/* when called via for_each_ref(), flags is non-zero */
--	if (flags && prefixcmp(name, "refs/heads/") &&
--			prefixcmp(name, "refs/tags/"))
-+	if (flags && !has_prefix(name, "refs/heads/") &&
-+			!has_prefix(name, "refs/tags/"))
+-	if (prefixcmp(var, "pretty."))
++	if (!has_prefix(var, "pretty."))
  		return 0;
  
- 	strbuf_addstr(buf, name);
-@@ -652,7 +652,7 @@ static void print_ok_ref_status(struct ref *ref, int porcelain)
- 		print_ref_status('-', "[deleted]", ref, NULL, NULL, porcelain);
- 	else if (is_null_sha1(ref->old_sha1))
- 		print_ref_status('*',
--			(!prefixcmp(ref->name, "refs/tags/") ? "[new tag]" :
-+			(has_prefix(ref->name, "refs/tags/") ? "[new tag]" :
- 			"[new branch]"),
- 			ref, ref->peer_ref, NULL, porcelain);
- 	else {
-@@ -930,13 +930,13 @@ struct transport *transport_get(struct remote *remote, const char *url)
+ 	name = var + strlen("pretty.");
+@@ -67,7 +67,7 @@ static int git_pretty_formats_config(const char *var, const char *value, void *c
+ 	commit_format->name = xstrdup(name);
+ 	commit_format->format = CMIT_FMT_USERFORMAT;
+ 	git_config_string(&fmt, var, value);
+-	if (!prefixcmp(fmt, "format:") || !prefixcmp(fmt, "tformat:")) {
++	if (has_prefix(fmt, "format:") || has_prefix(fmt, "tformat:")) {
+ 		commit_format->is_tformat = fmt[0] == 't';
+ 		fmt = strchr(fmt, ':') + 1;
+ 	} else if (strchr(fmt, '%'))
+@@ -115,7 +115,7 @@ static struct cmt_fmt_map *find_commit_format_recursive(const char *sought,
+ 	for (i = 0; i < commit_formats_len; i++) {
+ 		size_t match_len;
  
- 		while (is_urlschemechar(p == url, *p))
- 			p++;
--		if (!prefixcmp(p, "::"))
-+		if (has_prefix(p, "::"))
- 			helper = xstrndup(url, p - url);
+-		if (prefixcmp(commit_formats[i].name, sought))
++		if (!has_prefix(commit_formats[i].name, sought))
+ 			continue;
+ 
+ 		match_len = strlen(commit_formats[i].name);
+@@ -151,7 +151,7 @@ void get_commit_format(const char *arg, struct rev_info *rev)
+ 		rev->commit_format = CMIT_FMT_DEFAULT;
+ 		return;
  	}
+-	if (!prefixcmp(arg, "format:") || !prefixcmp(arg, "tformat:")) {
++	if (has_prefix(arg, "format:") || has_prefix(arg, "tformat:")) {
+ 		save_user_format(rev, strchr(arg, ':') + 1, arg[0] == 't');
+ 		return;
+ 	}
+@@ -840,10 +840,10 @@ static void parse_commit_header(struct format_commit_context *context)
  
- 	if (helper) {
- 		transport_helper_init(ret, helper);
--	} else if (!prefixcmp(url, "rsync:")) {
-+	} else if (has_prefix(url, "rsync:")) {
- 		ret->get_refs_list = get_refs_via_rsync;
- 		ret->fetch = fetch_objs_via_rsync;
- 		ret->push = rsync_transport_push;
-@@ -949,11 +949,11 @@ struct transport *transport_get(struct remote *remote, const char *url)
- 		ret->disconnect = close_bundle;
- 		ret->smart_options = NULL;
- 	} else if (!is_url(url)
--		|| !prefixcmp(url, "file://")
--		|| !prefixcmp(url, "git://")
--		|| !prefixcmp(url, "ssh://")
--		|| !prefixcmp(url, "git+ssh://")
--		|| !prefixcmp(url, "ssh+git://")) {
-+		|| has_prefix(url, "file://")
-+		|| has_prefix(url, "git://")
-+		|| has_prefix(url, "ssh://")
-+		|| has_prefix(url, "git+ssh://")
-+		|| has_prefix(url, "ssh+git://")) {
- 		/* These are builtin smart transports. */
- 		struct git_transport_data *data = xcalloc(1, sizeof(*data));
- 		ret->data = data;
+ 		if (i == eol) {
+ 			break;
+-		} else if (!prefixcmp(msg + i, "author ")) {
++		} else if (has_prefix(msg + i, "author ")) {
+ 			context->author.off = i + 7;
+ 			context->author.len = eol - i - 7;
+-		} else if (!prefixcmp(msg + i, "committer ")) {
++		} else if (has_prefix(msg + i, "committer ")) {
+ 			context->committer.off = i + 10;
+ 			context->committer.len = eol - i - 10;
+ 		}
+@@ -983,7 +983,7 @@ static size_t parse_color(struct strbuf *sb, /* in UTF-8 */
+ 
+ 		if (!end)
+ 			return 0;
+-		if (!prefixcmp(begin, "auto,")) {
++		if (has_prefix(begin, "auto,")) {
+ 			if (!want_color(c->pretty_ctx->color))
+ 				return end - placeholder + 1;
+ 			begin += 5;
+@@ -994,16 +994,16 @@ static size_t parse_color(struct strbuf *sb, /* in UTF-8 */
+ 		strbuf_addstr(sb, color);
+ 		return end - placeholder + 1;
+ 	}
+-	if (!prefixcmp(placeholder + 1, "red")) {
++	if (has_prefix(placeholder + 1, "red")) {
+ 		strbuf_addstr(sb, GIT_COLOR_RED);
+ 		return 4;
+-	} else if (!prefixcmp(placeholder + 1, "green")) {
++	} else if (has_prefix(placeholder + 1, "green")) {
+ 		strbuf_addstr(sb, GIT_COLOR_GREEN);
+ 		return 6;
+-	} else if (!prefixcmp(placeholder + 1, "blue")) {
++	} else if (has_prefix(placeholder + 1, "blue")) {
+ 		strbuf_addstr(sb, GIT_COLOR_BLUE);
+ 		return 5;
+-	} else if (!prefixcmp(placeholder + 1, "reset")) {
++	} else if (has_prefix(placeholder + 1, "reset")) {
+ 		strbuf_addstr(sb, GIT_COLOR_RESET);
+ 		return 6;
+ 	} else
+@@ -1060,11 +1060,11 @@ static size_t parse_padding_placeholder(struct strbuf *sb,
+ 			end = strchr(start, ')');
+ 			if (!end || end == start)
+ 				return 0;
+-			if (!prefixcmp(start, "trunc)"))
++			if (has_prefix(start, "trunc)"))
+ 				c->truncate = trunc_right;
+-			else if (!prefixcmp(start, "ltrunc)"))
++			else if (has_prefix(start, "ltrunc)"))
+ 				c->truncate = trunc_left;
+-			else if (!prefixcmp(start, "mtrunc)"))
++			else if (has_prefix(start, "mtrunc)"))
+ 				c->truncate = trunc_middle;
+ 			else
+ 				return 0;
+@@ -1089,7 +1089,7 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
+ 	/* these are independent of the commit */
+ 	switch (placeholder[0]) {
+ 	case 'C':
+-		if (!prefixcmp(placeholder + 1, "(auto)")) {
++		if (has_prefix(placeholder + 1, "(auto)")) {
+ 			c->auto_color = 1;
+ 			return 7; /* consumed 7 bytes, "C(auto)" */
+ 		} else {
+@@ -1556,7 +1556,7 @@ static void pp_header(struct pretty_print_context *pp,
+ 			continue;
+ 		}
+ 
+-		if (!prefixcmp(line, "parent ")) {
++		if (has_prefix(line, "parent ")) {
+ 			if (linelen != 48)
+ 				die("bad parent line in commit");
+ 			continue;
+@@ -1580,11 +1580,11 @@ static void pp_header(struct pretty_print_context *pp,
+ 		 * FULL shows both authors but not dates.
+ 		 * FULLER shows both authors and dates.
+ 		 */
+-		if (!prefixcmp(line, "author ")) {
++		if (has_prefix(line, "author ")) {
+ 			strbuf_grow(sb, linelen + 80);
+ 			pp_user_info(pp, "Author", sb, line + 7, encoding);
+ 		}
+-		if (!prefixcmp(line, "committer ") &&
++		if (has_prefix(line, "committer ") &&
+ 		    (pp->fmt == CMIT_FMT_FULL || pp->fmt == CMIT_FMT_FULLER)) {
+ 			strbuf_grow(sb, linelen + 80);
+ 			pp_user_info(pp, "Commit", sb, line + 10, encoding);
 -- 
 1.8.4.1.566.geca833c
