@@ -1,108 +1,96 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 11/86] wt-status: replace prefixcmd() with has_prefix()
-Date: Sat, 09 Nov 2013 08:06:04 +0100
-Message-ID: <20131109070720.18178.3070.chriscool@tuxfamily.org>
+Subject: [PATCH 10/86] sha1_name: replace prefixcmd() with has_prefix()
+Date: Sat, 09 Nov 2013 08:06:03 +0100
+Message-ID: <20131109070720.18178.85797.chriscool@tuxfamily.org>
 References: <20131109070358.18178.40248.chriscool@tuxfamily.org>
 Cc: git@vger.kernel.org, Avery Pennarun <apenwarr@gmail.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	Jeff King <peff@peff.net>, Max Horn <max@quendi.de>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Nov 09 08:11:28 2013
+X-From: git-owner@vger.kernel.org Sat Nov 09 08:11:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vf2ha-0005PQ-Ni
-	for gcvg-git-2@plane.gmane.org; Sat, 09 Nov 2013 08:11:27 +0100
+	id 1Vf2hm-0005cp-Hk
+	for gcvg-git-2@plane.gmane.org; Sat, 09 Nov 2013 08:11:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933368Ab3KIHLQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Nov 2013 02:11:16 -0500
-Received: from mail-3y.bbox.fr ([194.158.98.45]:54103 "EHLO mail-3y.bbox.fr"
+	id S933370Ab3KIHLZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Nov 2013 02:11:25 -0500
+Received: from mail-3y.bbox.fr ([194.158.98.45]:54095 "EHLO mail-3y.bbox.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933230Ab3KIHIZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Nov 2013 02:08:25 -0500
+	id S933227Ab3KIHIY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Nov 2013 02:08:24 -0500
 Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-3y.bbox.fr (Postfix) with ESMTP id 217DE5C;
-	Sat,  9 Nov 2013 08:08:24 +0100 (CET)
-X-git-sha1: 57f7327ecc20e3705122c2663da90744008daad1 
+	by mail-3y.bbox.fr (Postfix) with ESMTP id A0C936C;
+	Sat,  9 Nov 2013 08:08:23 +0100 (CET)
+X-git-sha1: 8dfe7d17e84b80e4b643ff6a5310504f51d570c5 
 X-Mailer: git-mail-commits v0.5.2
 In-Reply-To: <20131109070358.18178.40248.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237533>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237534>
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- wt-status.c | 16 ++++++++--------
+ sha1_name.c | 16 ++++++++--------
  1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/wt-status.c b/wt-status.c
-index b4e44ba..47806d1 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -803,7 +803,7 @@ static void wt_status_print_tracking(struct wt_status *s)
- 	int i;
+diff --git a/sha1_name.c b/sha1_name.c
+index 0e5fe7f..3224a39 100644
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -547,7 +547,7 @@ static int get_sha1_basic(const char *str, int len, unsigned char *sha1)
+ 		if (read_ref_at(real_ref, at_time, nth, sha1, NULL,
+ 				&co_time, &co_tz, &co_cnt)) {
+ 			if (!len) {
+-				if (!prefixcmp(real_ref, "refs/heads/")) {
++				if (has_prefix(real_ref, "refs/heads/")) {
+ 					str = real_ref + 11;
+ 					len = strlen(real_ref + 11);
+ 				} else {
+@@ -677,15 +677,15 @@ static int peel_onion(const char *name, int len, unsigned char *sha1)
+ 		return -1;
  
- 	assert(s->branch && !s->is_initial);
--	if (prefixcmp(s->branch, "refs/heads/"))
-+	if (!has_prefix(s->branch, "refs/heads/"))
- 		return;
- 	branch = branch_get(s->branch + 11);
- 	if (!format_tracking_info(branch, &sb))
-@@ -1062,9 +1062,9 @@ static char *read_and_strip_branch(const char *path)
- 		strbuf_setlen(&sb, sb.len - 1);
- 	if (!sb.len)
- 		goto got_nothing;
--	if (!prefixcmp(sb.buf, "refs/heads/"))
-+	if (has_prefix(sb.buf, "refs/heads/"))
- 		strbuf_remove(&sb,0, strlen("refs/heads/"));
--	else if (!prefixcmp(sb.buf, "refs/"))
-+	else if (has_prefix(sb.buf, "refs/"))
- 		;
- 	else if (!get_sha1_hex(sb.buf, sha1)) {
- 		const char *abbrev;
-@@ -1094,7 +1094,7 @@ static int grab_1st_switch(unsigned char *osha1, unsigned char *nsha1,
- 	struct grab_1st_switch_cbdata *cb = cb_data;
- 	const char *target = NULL, *end;
+ 	sp++; /* beginning of type name, or closing brace for empty */
+-	if (!prefixcmp(sp, "commit}"))
++	if (has_prefix(sp, "commit}"))
+ 		expected_type = OBJ_COMMIT;
+-	else if (!prefixcmp(sp, "tag}"))
++	else if (has_prefix(sp, "tag}"))
+ 		expected_type = OBJ_TAG;
+-	else if (!prefixcmp(sp, "tree}"))
++	else if (has_prefix(sp, "tree}"))
+ 		expected_type = OBJ_TREE;
+-	else if (!prefixcmp(sp, "blob}"))
++	else if (has_prefix(sp, "blob}"))
+ 		expected_type = OBJ_BLOB;
+-	else if (!prefixcmp(sp, "object}"))
++	else if (has_prefix(sp, "object}"))
+ 		expected_type = OBJ_ANY;
+ 	else if (sp[0] == '}')
+ 		expected_type = OBJ_NONE;
+@@ -912,7 +912,7 @@ static int grab_nth_branch_switch(unsigned char *osha1, unsigned char *nsha1,
+ 	const char *match = NULL, *target = NULL;
+ 	size_t len;
  
--	if (prefixcmp(message, "checkout: moving from "))
-+	if (!has_prefix(message, "checkout: moving from "))
- 		return 0;
- 	message += strlen("checkout: moving from ");
- 	target = strstr(message, " to ");
-@@ -1129,9 +1129,9 @@ static void wt_status_get_detached_from(struct wt_status_state *state)
- 	     ((commit = lookup_commit_reference_gently(sha1, 1)) != NULL &&
- 	      !hashcmp(cb.nsha1, commit->object.sha1)))) {
- 		int ofs;
--		if (!prefixcmp(ref, "refs/tags/"))
-+		if (has_prefix(ref, "refs/tags/"))
- 			ofs = strlen("refs/tags/");
--		else if (!prefixcmp(ref, "refs/remotes/"))
-+		else if (has_prefix(ref, "refs/remotes/"))
- 			ofs = strlen("refs/remotes/");
- 		else
- 			ofs = 0;
-@@ -1220,7 +1220,7 @@ void wt_status_print(struct wt_status *s)
- 	if (s->branch) {
- 		const char *on_what = _("On branch ");
- 		const char *branch_name = s->branch;
--		if (!prefixcmp(branch_name, "refs/heads/"))
-+		if (has_prefix(branch_name, "refs/heads/"))
- 			branch_name += 11;
- 		else if (!strcmp(branch_name, "HEAD")) {
- 			branch_status_color = color(WT_STATUS_NOBRANCH, s);
-@@ -1421,7 +1421,7 @@ static void wt_shortstatus_print_tracking(struct wt_status *s)
- 		return;
- 	branch_name = s->branch;
+-	if (!prefixcmp(message, "checkout: moving from ")) {
++	if (has_prefix(message, "checkout: moving from ")) {
+ 		match = message + strlen("checkout: moving from ");
+ 		target = strstr(match, " to ");
+ 	}
+@@ -1305,7 +1305,7 @@ static void diagnose_invalid_index_path(int stage,
  
--	if (!prefixcmp(branch_name, "refs/heads/"))
-+	if (has_prefix(branch_name, "refs/heads/"))
- 		branch_name += 11;
- 	else if (!strcmp(branch_name, "HEAD")) {
- 		branch_name = _("HEAD (no branch)");
+ static char *resolve_relative_path(const char *rel)
+ {
+-	if (prefixcmp(rel, "./") && prefixcmp(rel, "../"))
++	if (!has_prefix(rel, "./") && !has_prefix(rel, "../"))
+ 		return NULL;
+ 
+ 	if (!startup_info)
 -- 
 1.8.4.1.566.geca833c
