@@ -1,7 +1,7 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 30/86] http-push: replace prefixcmd() with has_prefix()
-Date: Sat, 09 Nov 2013 08:06:23 +0100
-Message-ID: <20131109070720.18178.17480.chriscool@tuxfamily.org>
+Subject: [PATCH 22/86] help: replace prefixcmd() with has_prefix()
+Date: Sat, 09 Nov 2013 08:06:15 +0100
+Message-ID: <20131109070720.18178.26715.chriscool@tuxfamily.org>
 References: <20131109070358.18178.40248.chriscool@tuxfamily.org>
 Cc: git@vger.kernel.org, Avery Pennarun <apenwarr@gmail.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
@@ -14,53 +14,71 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vf2h9-0004uI-W3
-	for gcvg-git-2@plane.gmane.org; Sat, 09 Nov 2013 08:11:00 +0100
+	id 1Vf2hB-0004uI-2w
+	for gcvg-git-2@plane.gmane.org; Sat, 09 Nov 2013 08:11:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933353Ab3KIHKs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Nov 2013 02:10:48 -0500
-Received: from mail-3y.bbox.fr ([194.158.98.45]:54171 "EHLO mail-3y.bbox.fr"
+	id S933357Ab3KIHKx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Nov 2013 02:10:53 -0500
+Received: from mail-3y.bbox.fr ([194.158.98.45]:54162 "EHLO mail-3y.bbox.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933269Ab3KIHIf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Nov 2013 02:08:35 -0500
+	id S933266Ab3KIHIe (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Nov 2013 02:08:34 -0500
 Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-3y.bbox.fr (Postfix) with ESMTP id 4FBDA96;
-	Sat,  9 Nov 2013 08:08:32 +0100 (CET)
-X-git-sha1: a3d73b5cd6f86948be326c6b7de57c883a284c6a 
+	by mail-3y.bbox.fr (Postfix) with ESMTP id D6E2580;
+	Sat,  9 Nov 2013 08:08:28 +0100 (CET)
+X-git-sha1: 508d78bcf7400d3ca6c89834f6e72863d4bd26a7 
 X-Mailer: git-mail-commits v0.5.2
 In-Reply-To: <20131109070358.18178.40248.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237521>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237522>
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- http-push.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ help.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/http-push.c b/http-push.c
-index 69200ba..0994344 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -771,7 +771,7 @@ static void handle_new_lock_ctx(struct xml_ctx *ctx, int tag_closed)
- 			lock->owner = xmalloc(strlen(ctx->cdata) + 1);
- 			strcpy(lock->owner, ctx->cdata);
- 		} else if (!strcmp(ctx->name, DAV_ACTIVELOCK_TIMEOUT)) {
--			if (!prefixcmp(ctx->cdata, "Second-"))
-+			if (has_prefix(ctx->cdata, "Second-"))
- 				lock->timeout =
- 					strtol(ctx->cdata + 7, NULL, 10);
- 		} else if (!strcmp(ctx->name, DAV_ACTIVELOCK_TOKEN)) {
-@@ -1579,7 +1579,7 @@ static void fetch_symref(const char *path, char **symref, unsigned char *sha1)
- 		return;
+diff --git a/help.c b/help.c
+index f068925..b41d2d5 100644
+--- a/help.c
++++ b/help.c
+@@ -148,7 +148,7 @@ static void list_commands_in_dir(struct cmdnames *cmds,
+ 	while ((de = readdir(dir)) != NULL) {
+ 		int entlen;
  
- 	/* If it's a symref, set the refname; otherwise try for a sha1 */
--	if (!prefixcmp((char *)buffer.buf, "ref: ")) {
-+	if (has_prefix((char *)buffer.buf, "ref: ")) {
- 		*symref = xmemdupz((char *)buffer.buf + 5, buffer.len - 6);
- 	} else {
- 		get_sha1_hex(buffer.buf, sha1);
+-		if (prefixcmp(de->d_name, prefix))
++		if (!has_prefix(de->d_name, prefix))
+ 			continue;
+ 
+ 		strbuf_setlen(&buf, len);
+@@ -255,7 +255,7 @@ static int git_unknown_cmd_config(const char *var, const char *value, void *cb)
+ 	if (!strcmp(var, "help.autocorrect"))
+ 		autocorrect = git_config_int(var,value);
+ 	/* Also use aliases for command lookup */
+-	if (!prefixcmp(var, "alias."))
++	if (has_prefix(var, "alias."))
+ 		add_cmdname(&aliases, var + 6, strlen(var + 6));
+ 
+ 	return git_default_config(var, value, cb);
+@@ -329,7 +329,7 @@ const char *help_unknown_cmd(const char *cmd)
+ 		if ((n < ARRAY_SIZE(common_cmds)) && !cmp) {
+ 			/* Yes, this is one of the common commands */
+ 			n++; /* use the entry from common_cmds[] */
+-			if (!prefixcmp(candidate, cmd)) {
++			if (has_prefix(candidate, cmd)) {
+ 				/* Give prefix match a very good score */
+ 				main_cmds.names[i]->len = 0;
+ 				continue;
+@@ -414,7 +414,7 @@ static int append_similar_ref(const char *refname, const unsigned char *sha1,
+ 	struct similar_ref_cb *cb = (struct similar_ref_cb *)(cb_data);
+ 	char *branch = strrchr(refname, '/') + 1;
+ 	/* A remote branch of the same name is deemed similar */
+-	if (!prefixcmp(refname, "refs/remotes/") &&
++	if (has_prefix(refname, "refs/remotes/") &&
+ 	    !strcmp(branch, cb->base_ref))
+ 		string_list_append(cb->similar_refs,
+ 				   refname + strlen("refs/remotes/"));
 -- 
 1.8.4.1.566.geca833c
