@@ -1,30 +1,30 @@
 From: "Jason St. John" <jstjohn@purdue.edu>
-Subject: [PATCH 4/4] Correct word usage of "timezone" in "Documentation/RelNotes" directory
-Date: Fri,  8 Nov 2013 19:48:53 -0500
-Message-ID: <1383958133-4207-3-git-send-email-jstjohn@purdue.edu>
+Subject: [PATCH 3/4] Correct word usage of "timezone" in "Documentation" directory
+Date: Fri,  8 Nov 2013 19:48:52 -0500
+Message-ID: <1383958133-4207-2-git-send-email-jstjohn@purdue.edu>
 References: <1383958133-4207-1-git-send-email-jstjohn@purdue.edu>
 Cc: "Jason St. John" <jstjohn@purdue.edu>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 09 01:49:10 2013
+X-From: git-owner@vger.kernel.org Sat Nov 09 01:49:14 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vewjc-0003Qp-Vl
-	for gcvg-git-2@plane.gmane.org; Sat, 09 Nov 2013 01:49:09 +0100
+	id 1Vewjc-0003Qp-4S
+	for gcvg-git-2@plane.gmane.org; Sat, 09 Nov 2013 01:49:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757276Ab3KIAtF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Nov 2013 19:49:05 -0500
-Received: from mailhub128.itcs.purdue.edu ([128.210.5.128]:50104 "EHLO
+	id S1757231Ab3KIAtD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Nov 2013 19:49:03 -0500
+Received: from mailhub128.itcs.purdue.edu ([128.210.5.128]:50088 "EHLO
 	mailhub128.itcs.purdue.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757177Ab3KIAtD (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 8 Nov 2013 19:49:03 -0500
+	by vger.kernel.org with ESMTP id S1756955Ab3KIAtA (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 8 Nov 2013 19:49:00 -0500
 Received: from megahurtz.itap.purdue.edu (pal-nat184-053-008.itap.purdue.edu [10.184.53.8])
 	(authenticated bits=0)
-	by mailhub128.itcs.purdue.edu (8.14.4/8.14.4/mta-auth.smtp.purdue.edu) with ESMTP id rA90ms58022232
+	by mailhub128.itcs.purdue.edu (8.14.4/8.14.4/mta-auth.smtp.purdue.edu) with ESMTP id rA90ms57022232
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Fri, 8 Nov 2013 19:49:01 -0500
+	Fri, 8 Nov 2013 19:48:58 -0500
 X-Mailer: git-send-email 1.8.4.2
 In-Reply-To: <1383958133-4207-1-git-send-email-jstjohn@purdue.edu>
 X-PMX-Version: 6.0.2.2308539
@@ -33,157 +33,212 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237478>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237479>
 
 "timezone" is two words, not one (i.e. "time zone" is correct).
 
+Correct this in these files:
+-- date-formats.txt
+-- git-blame.txt
+-- git-cvsimport.txt
+-- git-fast-import.txt
+-- git-svn.txt
+-- gitweb.conf.txt
+-- rev-list-options.txt
+
 Signed-off-by: Jason St. John <jstjohn@purdue.edu>
 ---
-I broke this off into a separate patch in case the release notes are
-essentially "fixed" in history and typos, misspellings, etc. don't get
-corrected.
-Sources are provided below the commit message in [PATCH 3/4].
+Sources:
+(1) https://en.wikipedia.org/wiki/Time_zone
+(2) https://www.google.com/trends/explore?q=%22timezone%22+%22time+zone%22#q=timezone%2C%20time%20zone&cmpt=q
+(3) A search of Google Scholar (non-patent articles) for each term:
+		"timezone": 8,300 results
+		"time zone": 40,100 results
 
 
- Documentation/RelNotes/1.5.2.txt    | 2 +-
- Documentation/RelNotes/1.7.1.1.txt  | 2 +-
- Documentation/RelNotes/1.7.12.4.txt | 2 +-
- Documentation/RelNotes/1.7.3.4.txt  | 2 +-
- Documentation/RelNotes/1.7.4.2.txt  | 2 +-
- Documentation/RelNotes/1.7.6.5.txt  | 2 +-
- Documentation/RelNotes/1.7.6.txt    | 2 +-
- Documentation/RelNotes/1.7.8.txt    | 2 +-
- Documentation/RelNotes/1.8.0.txt    | 2 +-
- Documentation/RelNotes/1.8.1.txt    | 2 +-
- 10 files changed, 10 insertions(+), 10 deletions(-)
+ Documentation/date-formats.txt     |  4 ++--
+ Documentation/git-blame.txt        |  2 +-
+ Documentation/git-cvsimport.txt    |  4 ++--
+ Documentation/git-fast-import.txt  | 10 +++++-----
+ Documentation/git-svn.txt          |  6 +++---
+ Documentation/gitweb.conf.txt      | 14 +++++++-------
+ Documentation/rev-list-options.txt |  4 ++--
+ 7 files changed, 22 insertions(+), 22 deletions(-)
 
-diff --git a/Documentation/RelNotes/1.5.2.txt b/Documentation/RelNotes/1.5.2.txt
-index e8328d0..774eaf4 100644
---- a/Documentation/RelNotes/1.5.2.txt
-+++ b/Documentation/RelNotes/1.5.2.txt
-@@ -76,7 +76,7 @@ Updates since v1.5.1
+diff --git a/Documentation/date-formats.txt b/Documentation/date-formats.txt
+index c000f08..ccd1fc8 100644
+--- a/Documentation/date-formats.txt
++++ b/Documentation/date-formats.txt
+@@ -8,9 +8,9 @@ endif::git-commit[]
+ support the following date formats:
  
-   - "git log" family of commands learned --date={local,relative,default}
-     option.  --date=relative is synonym to the --relative-date.
--    --date=local gives the timestamp in local timezone.
-+    --date=local gives the timestamp in local time zone.
+ Git internal format::
+-	It is `<unix timestamp> <timezone offset>`, where `<unix
++	It is `<unix timestamp> <time zone offset>`, where `<unix
+ 	timestamp>` is the number of seconds since the UNIX epoch.
+-	`<timezone offset>` is a positive or negative offset from UTC.
++	`<time zone offset>` is a positive or negative offset from UTC.
+ 	For example CET (which is 2 hours ahead UTC) is `+0200`.
  
- * Updated behavior of existing commands.
+ RFC 2822::
+diff --git a/Documentation/git-blame.txt b/Documentation/git-blame.txt
+index f2c85cc..8e70a61 100644
+--- a/Documentation/git-blame.txt
++++ b/Documentation/git-blame.txt
+@@ -103,7 +103,7 @@ This header line is followed by the following information
+ at least once for each commit:
  
-diff --git a/Documentation/RelNotes/1.7.1.1.txt b/Documentation/RelNotes/1.7.1.1.txt
-index 3f6b314..1e57365 100644
---- a/Documentation/RelNotes/1.7.1.1.txt
-+++ b/Documentation/RelNotes/1.7.1.1.txt
-@@ -15,7 +15,7 @@ Fixes since v1.7.1
-    macro that set/unset one attribute, immediately followed by an
-    overriding setting; this makes attribute macros much easier to use.
+ - the author name ("author"), email ("author-mail"), time
+-  ("author-time"), and timezone ("author-tz"); similarly
++  ("author-time"), and time zone ("author-tz"); similarly
+   for committer.
+ - the filename in the commit that the line is attributed to.
+ - the first line of the commit log message ("summary").
+diff --git a/Documentation/git-cvsimport.txt b/Documentation/git-cvsimport.txt
+index d1bcda2..2df9953 100644
+--- a/Documentation/git-cvsimport.txt
++++ b/Documentation/git-cvsimport.txt
+@@ -144,7 +144,7 @@ This option can be used several times to provide several detection regexes.
+ 	CVS by default uses the Unix username when writing its
+ 	commit logs. Using this option and an author-conv-file
+ 	maps the name recorded in CVS to author name, e-mail and
+-	optional timezone:
++	optional time zone:
+ +
+ ---------
+ 	exon=Andreas Ericsson <ae@op5.se>
+@@ -154,7 +154,7 @@ This option can be used several times to provide several detection regexes.
+ +
+ 'git cvsimport' will make it appear as those authors had
+ their GIT_AUTHOR_NAME and GIT_AUTHOR_EMAIL set properly
+-all along.  If a timezone is specified, GIT_AUTHOR_DATE will
++all along.  If a time zone is specified, GIT_AUTHOR_DATE will
+ have the corresponding offset applied.
+ +
+ For convenience, this data is saved to `$GIT_DIR/cvs-authors`
+diff --git a/Documentation/git-fast-import.txt b/Documentation/git-fast-import.txt
+index 73f9806..fd22a9a 100644
+--- a/Documentation/git-fast-import.txt
++++ b/Documentation/git-fast-import.txt
+@@ -251,7 +251,7 @@ advisement to help formatting routines display the timestamp.
+ If the local offset is not available in the source material, use
+ ``+0000'', or the most common local offset.  For example many
+ organizations have a CVS repository which has only ever been accessed
+-by users who are located in the same location and timezone.  In this
++by users who are located in the same location and time zone.  In this
+ case a reasonable offset from UTC could be assumed.
+ +
+ Unlike the `rfc2822` format, this format is very strict.  Any
+@@ -271,7 +271,7 @@ the malformed string.  There are also some types of malformed
+ strings which Git will parse wrong, and yet consider valid.
+ Seriously malformed strings will be rejected.
+ +
+-Unlike the `raw` format above, the timezone/UTC offset information
++Unlike the `raw` format above, the time zone/UTC offset information
+ contained in an RFC 2822 date string is used to adjust the date
+ value to UTC prior to storage.  Therefore it is important that
+ this information be as accurate as possible.
+@@ -287,13 +287,13 @@ format, or its format is easily convertible to it, as there is no
+ ambiguity in parsing.
  
-- * We didn't recognize timezone "Z" as a synonym for "UTC" (75b37e70).
-+ * We didn't recognize time zone "Z" as a synonym for "UTC" (75b37e70).
+ `now`::
+-	Always use the current time and timezone.  The literal
++	Always use the current time and time zone.  The literal
+ 	`now` must always be supplied for `<when>`.
+ +
+-This is a toy format.  The current time and timezone of this system
++This is a toy format.  The current time and time zone of this system
+ is always copied into the identity string at the time it is being
+ created by fast-import.  There is no way to specify a different time or
+-timezone.
++time zone.
+ +
+ This particular format is supplied as it's short to implement and
+ may be useful to a process that wants to create a new commit
+diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
+index dcad890..30c5ee2 100644
+--- a/Documentation/git-svn.txt
++++ b/Documentation/git-svn.txt
+@@ -124,15 +124,15 @@ This automatically updates the rev_map if needed (see
+ '$GIT_DIR/svn/\*\*/.rev_map.*' in the FILES section below for details).
  
-  * In 1.7.0, read-tree and user commands that use the mechanism such as
-    checkout and merge were fixed to handle switching between branches one
-diff --git a/Documentation/RelNotes/1.7.12.4.txt b/Documentation/RelNotes/1.7.12.4.txt
-index c6da3cc..9d90d11 100644
---- a/Documentation/RelNotes/1.7.12.4.txt
-+++ b/Documentation/RelNotes/1.7.12.4.txt
-@@ -10,7 +10,7 @@ Fixes since v1.7.12.3
-  * It was possible to give specific paths for "asciidoc" and other
-    tools in the documentation toolchain, but not for "xmlto".
+ --localtime;;
+-	Store Git commit times in the local timezone instead of UTC.  This
++	Store Git commit times in the local time zone instead of UTC.  This
+ 	makes 'git log' (even without --date=local) show the same times
+-	that `svn log` would in the local timezone.
++	that `svn log` would in the local time zone.
+ +
+ This doesn't interfere with interoperating with the Subversion
+ repository you cloned from, but if you wish for your local Git
+ repository to be able to interoperate with someone else's local Git
+ repository, either don't use this option or you should both use it in
+-the same local timezone.
++the same local time zone.
  
-- * "gitweb" did not give the correct committer timezone in its feed
-+ * "gitweb" did not give the correct committer time zone in its feed
-    output due to a typo.
+ --parent;;
+ 	Fetch only from the SVN parent of the current HEAD.
+diff --git a/Documentation/gitweb.conf.txt b/Documentation/gitweb.conf.txt
+index 305db63..e2113d9 100644
+--- a/Documentation/gitweb.conf.txt
++++ b/Documentation/gitweb.conf.txt
+@@ -822,18 +822,18 @@ timed::
+ Project specific override is not supported.
  
-  * The "-Xours" (and similarly -Xtheirs) backend option to "git
-diff --git a/Documentation/RelNotes/1.7.3.4.txt b/Documentation/RelNotes/1.7.3.4.txt
-index e57f7c1..6223e07 100644
---- a/Documentation/RelNotes/1.7.3.4.txt
-+++ b/Documentation/RelNotes/1.7.3.4.txt
-@@ -10,7 +10,7 @@ Fixes since v1.7.3.3
-  * "git apply" did not correctly handle patches that only change modes
-    if told to apply while stripping leading paths with -p option.
+ javascript-timezone::
+-	Enable and configure the ability to change a common timezone for dates
++	Enable and configure the ability to change a common time zone for dates
+ 	in gitweb output via JavaScript.  Dates in gitweb output include
+ 	authordate and committerdate in "commit", "commitdiff" and "log"
+ 	views, and taggerdate in "tag" view.  Enabled by default.
+ +
+-The value is a list of three values: a default timezone (for if the client
+-hasn't selected some other timezone and saved it in a cookie), a name of cookie
+-where to store selected timezone, and a CSS class used to mark up
++The value is a list of three values: a default time zone (for if the client
++hasn't selected some other time zone and saved it in a cookie), a name of cookie
++where to store selected time zone, and a CSS class used to mark up
+ dates for manipulation.  If you want to turn this feature off, set "default"
+ to empty list: `[]`.
+ +
+-Typical gitweb config files will only change starting (default) timezone,
++Typical gitweb config files will only change starting (default) time zone,
+ and leave other elements at their default values:
+ +
+ ---------------------------------------------------------------------------
+@@ -843,9 +843,9 @@ $feature{'javascript-timezone'}{'default'}[0] = "utc";
+ The example configuration presented here is guaranteed to be backwards
+ and forward compatible.
+ +
+-Timezone values can be "local" (for local timezone that browser uses), "utc"
++Time zone values can be "local" (for local time zone that browser uses), "utc"
+ (what gitweb uses when JavaScript or this feature is disabled), or numerical
+-timezones in the form of "+/-HHMM", such as "+0200".
++time zones in the form of "+/-HHMM", such as "+0200".
+ +
+ Project specific override is not supported.
  
-- * "git apply" can deal with patches with timezone formatted with a
-+ * "git apply" can deal with patches with time zone formatted with a
-    colon between the hours and minutes part (e.g. "-08:00" instead of
-    "-0800").
+diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+index 32c40ae..0721bf2 100644
+--- a/Documentation/rev-list-options.txt
++++ b/Documentation/rev-list-options.txt
+@@ -720,7 +720,7 @@ include::pretty-options.txt[]
+ '\--date=relative' shows dates relative to the current time,
+ e.g. "2 hours ago".
+ +
+-'\--date=local' shows timestamps in user's local timezone.
++'\--date=local' shows timestamps in user's local time zone.
+ +
+ '\--date=iso' (or '\--date=iso8601') shows timestamps in ISO 8601 format.
+ +
+@@ -731,7 +731,7 @@ format, often found in E-mail messages.
+ +
+ '\--date=raw' shows the date in the internal raw Git format `%s %z` format.
+ +
+-'\--date=default' shows timestamps in the original timezone
++'\--date=default' shows timestamps in the original time zone
+ (either committer's or author's).
  
-diff --git a/Documentation/RelNotes/1.7.4.2.txt b/Documentation/RelNotes/1.7.4.2.txt
-index ef4ce1f..5476344 100644
---- a/Documentation/RelNotes/1.7.4.2.txt
-+++ b/Documentation/RelNotes/1.7.4.2.txt
-@@ -49,7 +49,7 @@ Fixes since v1.7.4.1
- 
-  * gitweb's "highlight" interface mishandled tabs.
- 
-- * gitweb didn't understand timezones with GMT offset that is not
-+ * gitweb didn't understand time zones with GMT offset that is not
-    multiple of a whole hour.
- 
-  * gitweb had a few forward-incompatible syntactic constructs and
-diff --git a/Documentation/RelNotes/1.7.6.5.txt b/Documentation/RelNotes/1.7.6.5.txt
-index 6713132..4b237e7 100644
---- a/Documentation/RelNotes/1.7.6.5.txt
-+++ b/Documentation/RelNotes/1.7.6.5.txt
-@@ -4,7 +4,7 @@ Git v1.7.6.5 Release Notes
- Fixes since v1.7.6.4
- --------------------
- 
-- * The date parser did not accept timezone designators that lack minutes
-+ * The date parser did not accept time zone designators that lack minutes
-    part and also has a colon between "hh:mm".
- 
-  * After fetching from a remote that has very long refname, the reporting
-diff --git a/Documentation/RelNotes/1.7.6.txt b/Documentation/RelNotes/1.7.6.txt
-index 9ec498e..98bc112 100644
---- a/Documentation/RelNotes/1.7.6.txt
-+++ b/Documentation/RelNotes/1.7.6.txt
-@@ -7,7 +7,7 @@ Updates since v1.7.5
-  * Various git-svn updates.
- 
-  * Updates the way content tags are handled in gitweb.  Also adds
--   a UI to choose common timezone for displaying the dates.
-+   a UI to choose common time zone for displaying the dates.
- 
-  * Similar to branch names, tagnames that begin with "-" are now
-    disallowed.
-diff --git a/Documentation/RelNotes/1.7.8.txt b/Documentation/RelNotes/1.7.8.txt
-index 2493113..938118e 100644
---- a/Documentation/RelNotes/1.7.8.txt
-+++ b/Documentation/RelNotes/1.7.8.txt
-@@ -11,7 +11,7 @@ Updates since v1.7.7
-  * The build procedure has been taught to take advantage of computed
-    dependency automatically when the compiler supports it.
- 
-- * The date parser now accepts timezone designators that lack minutes
-+ * The date parser now accepts time zone designators that lack minutes
-    part and also has a colon between "hh:mm".
- 
-  * The contents of the /etc/mailname file, if exists, is used as the
-diff --git a/Documentation/RelNotes/1.8.0.txt b/Documentation/RelNotes/1.8.0.txt
-index 43883c1..d0c416d 100644
---- a/Documentation/RelNotes/1.8.0.txt
-+++ b/Documentation/RelNotes/1.8.0.txt
-@@ -263,5 +263,5 @@ to them for details).
-  * "git status" honored the ignore=dirty settings in .gitmodules but
-    "git commit" didn't.
- 
-- * "gitweb" did not give the correct committer timezone in its feed
-+ * "gitweb" did not give the correct committer time zone in its feed
-    output due to a typo.
-diff --git a/Documentation/RelNotes/1.8.1.txt b/Documentation/RelNotes/1.8.1.txt
-index d6f9555..209ec9b 100644
---- a/Documentation/RelNotes/1.8.1.txt
-+++ b/Documentation/RelNotes/1.8.1.txt
-@@ -107,7 +107,7 @@ UI, Workflows & Features
- 
- Foreign Interface
- 
-- * "git cvsimport" can be told to record timezones (other than GMT)
-+ * "git cvsimport" can be told to record time zones (other than GMT)
-    per-author via its author info file.
- 
-  * The remote helper interface to interact with subversion
+ ifdef::git-rev-list[]
 -- 
 1.8.4.2
