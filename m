@@ -1,72 +1,64 @@
 From: Thomas Rast <tr@thomasrast.ch>
-Subject: Re: [PATCH] checkout: most of the time we have good leading directories
-Date: Sat, 09 Nov 2013 15:24:30 +0100
-Message-ID: <87iow1ps9t.fsf@linux-k42r.v.cablecom.net>
-References: <xmqqy54zohux.fsf@gitster.dls.corp.google.com>
+Subject: Re: [PATCH 00/86] replace prefixcmp() with has_prefix()
+Date: Sat, 09 Nov 2013 15:24:37 +0100
+Message-ID: <87fvr5ps9m.fsf@linux-k42r.v.cablecom.net>
+References: <20131109070358.18178.40248.chriscool@tuxfamily.org>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Nov 09 15:24:49 2013
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Avery Pennarun <apenwarr@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Jeff King <peff@peff.net>, Max Horn <max@quendi.de>
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Sat Nov 09 15:24:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vf9Sx-0005zd-Q0
-	for gcvg-git-2@plane.gmane.org; Sat, 09 Nov 2013 15:24:48 +0100
+	id 1Vf9T7-0006Dg-Dk
+	for gcvg-git-2@plane.gmane.org; Sat, 09 Nov 2013 15:24:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753998Ab3KIOYn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Nov 2013 09:24:43 -0500
-Received: from psi.thgersdorf.net ([176.9.98.78]:52400 "EHLO mail.psioc.net"
+	id S1754059Ab3KIOYu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Nov 2013 09:24:50 -0500
+Received: from psi.thgersdorf.net ([176.9.98.78]:52417 "EHLO mail.psioc.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753966Ab3KIOYn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Nov 2013 09:24:43 -0500
+	id S1753966Ab3KIOYt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Nov 2013 09:24:49 -0500
 Received: from localhost (localhost [127.0.0.1])
-	by localhost.psioc.net (Postfix) with ESMTP id 95AB84D659C;
-	Sat,  9 Nov 2013 15:24:41 +0100 (CET)
+	by localhost.psioc.net (Postfix) with ESMTP id 469064D659C;
+	Sat,  9 Nov 2013 15:24:48 +0100 (CET)
 X-Virus-Scanned: amavisd-new at psioc.net
 Received: from mail.psioc.net ([127.0.0.1])
 	by localhost (mail.psioc.net [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id yHDaJQYcmG0D; Sat,  9 Nov 2013 15:24:31 +0100 (CET)
+	with LMTP id xeDbpwnB96lP; Sat,  9 Nov 2013 15:24:38 +0100 (CET)
 Received: from linux-k42r.v.cablecom.net.thomasrast.ch (84-73-190-173.dclient.hispeed.ch [84.73.190.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(Client did not present a certificate)
-	by mail.psioc.net (Postfix) with ESMTPSA id DE03C4D6414;
-	Sat,  9 Nov 2013 15:24:30 +0100 (CET)
-In-Reply-To: <xmqqy54zohux.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Thu, 07 Nov 2013 16:30:14 -0800")
+	by mail.psioc.net (Postfix) with ESMTPSA id 8D7D44D6585;
+	Sat,  9 Nov 2013 15:24:37 +0100 (CET)
+In-Reply-To: <20131109070358.18178.40248.chriscool@tuxfamily.org> (Christian
+	Couder's message of "Sat, 09 Nov 2013 08:05:53 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237576>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237577>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Christian Couder <chriscool@tuxfamily.org> writes:
 
-> When "git checkout" wants to create a path, e.g. a/b/c/d/e, after
-> seeing if the entire thing already exists (in which case we check if
-> that is up-to-date and do not bother to check it out, or we unlink
-> and recreate it), we validate that the leading directory path is
-> without funny symlinks by seeing a/, a/b/, a/b/c/ and then a/b/c/d/
-> are all without funny symlinks, by calling has_dirs_only_path() in
-> this order.
->
-> When we are checking out many files (imagine: initial checkout),
-> however, it is likely that an earlier checkout would have already
-> made sure that the leading directory a/b/c/d/ is in good order; by
-> first checking the whole path a/b/c/d/ first, we can often bypass
-> calls to has_dirs_only_path() for leading part.
+> Christian Couder (86):
+>   strbuf: add has_prefix() to be used instead of prefixcmp()
+>   diff: replace prefixcmd() with has_prefix()
+>   fast-import: replace prefixcmd() with has_prefix()
+[...]
+>   builtin/update-ref: replace prefixcmd() with has_prefix()
+>   builtin/upload-archive: replace prefixcmd() with has_prefix()
+>   strbuf: remove prefixcmp() as it has been replaced with has_prefix()
 
-Naively one would think that this is just as much work -- to correctly
-verify that the path consist only of actual directories (not symlinks)
-we have to lstat() every component regardless.  It seems the reason this
-is an optimization is that has_dirs_only_path() caches its results, so
-that we can get 'a/b/c/d/ is okay in every component' from the cache.
-
-Is this analysis correct?  If so, can you spell that out in the commit
-message?
+All of your subjects except for the first and last say "prefixcm*d*". :-)
 
 -- 
 Thomas Rast
