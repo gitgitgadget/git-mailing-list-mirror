@@ -1,7 +1,7 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 04/86] remote*: replace prefixcmd() with has_prefix()
-Date: Sat, 09 Nov 2013 08:05:57 +0100
-Message-ID: <20131109070720.18178.98413.chriscool@tuxfamily.org>
+Subject: [PATCH 02/86] diff: replace prefixcmd() with has_prefix()
+Date: Sat, 09 Nov 2013 08:05:55 +0100
+Message-ID: <20131109070720.18178.51034.chriscool@tuxfamily.org>
 References: <20131109070358.18178.40248.chriscool@tuxfamily.org>
 Cc: git@vger.kernel.org, Avery Pennarun <apenwarr@gmail.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
@@ -14,306 +14,256 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vf2i0-0005uf-Fz
-	for gcvg-git-2@plane.gmane.org; Sat, 09 Nov 2013 08:11:53 +0100
+	id 1Vf2i1-0005uf-Q3
+	for gcvg-git-2@plane.gmane.org; Sat, 09 Nov 2013 08:11:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933399Ab3KIHLk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Nov 2013 02:11:40 -0500
-Received: from mail-1y.bbox.fr ([194.158.98.14]:65329 "EHLO mail-1y.bbox.fr"
+	id S933404Ab3KIHLn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Nov 2013 02:11:43 -0500
+Received: from mail-3y.bbox.fr ([194.158.98.45]:54068 "EHLO mail-3y.bbox.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932938Ab3KIHIW (ORCPT <rfc822;git@vger.kernel.org>);
+	id S932374Ab3KIHIW (ORCPT <rfc822;git@vger.kernel.org>);
 	Sat, 9 Nov 2013 02:08:22 -0500
 Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-1y.bbox.fr (Postfix) with ESMTP id BF04040;
-	Sat,  9 Nov 2013 08:08:20 +0100 (CET)
-X-git-sha1: 74db95bffce2647660b84aff93dd22e84fcdd7c8 
+	by mail-3y.bbox.fr (Postfix) with ESMTP id B258564;
+	Sat,  9 Nov 2013 08:08:19 +0100 (CET)
+X-git-sha1: 3611b2586188ee3447e3a3b648f7b5cf885b34ea 
 X-Mailer: git-mail-commits v0.5.2
 In-Reply-To: <20131109070358.18178.40248.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237539>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237540>
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- remote-curl.c    | 14 +++++++-------
- remote-testsvn.c | 10 +++++-----
- remote.c         | 46 +++++++++++++++++++++++-----------------------
- 3 files changed, 35 insertions(+), 35 deletions(-)
+ diff.c | 56 ++++++++++++++++++++++++++++----------------------------
+ 1 file changed, 28 insertions(+), 28 deletions(-)
 
-diff --git a/remote-curl.c b/remote-curl.c
-index b5ebe01..437b863 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -212,7 +212,7 @@ static struct discovery* discover_refs(const char *service, int for_push)
- 	free_discovery(last);
+diff --git a/diff.c b/diff.c
+index a04a34d..b42523a 100644
+--- a/diff.c
++++ b/diff.c
+@@ -235,7 +235,7 @@ int git_diff_basic_config(const char *var, const char *value, void *cb)
+ 	if (userdiff_config(var, value) < 0)
+ 		return -1;
  
- 	strbuf_addf(&buffer, "%sinfo/refs", url);
--	if ((!prefixcmp(url, "http://") || !prefixcmp(url, "https://")) &&
-+	if ((has_prefix(url, "http://") || has_prefix(url, "https://")) &&
- 	     git_env_bool("GIT_SMART_HTTP", 1)) {
- 		maybe_smart = 1;
- 		if (!strchr(url, '?'))
-@@ -740,7 +740,7 @@ static void parse_fetch(struct strbuf *buf)
- 	int alloc_heads = 0, nr_heads = 0;
+-	if (!prefixcmp(var, "diff.color.") || !prefixcmp(var, "color.diff.")) {
++	if (has_prefix(var, "diff.color.") || has_prefix(var, "color.diff.")) {
+ 		int slot = parse_diff_color_slot(var, 11);
+ 		if (slot < 0)
+ 			return 0;
+@@ -264,7 +264,7 @@ int git_diff_basic_config(const char *var, const char *value, void *cb)
+ 		return 0;
+ 	}
  
- 	do {
--		if (!prefixcmp(buf->buf, "fetch ")) {
-+		if (has_prefix(buf->buf, "fetch ")) {
- 			char *p = buf->buf + strlen("fetch ");
- 			char *name;
- 			struct ref *ref;
-@@ -863,7 +863,7 @@ static void parse_push(struct strbuf *buf)
- 	int alloc_spec = 0, nr_spec = 0, i, ret;
+-	if (!prefixcmp(var, "submodule."))
++	if (has_prefix(var, "submodule."))
+ 		return parse_submodule_config_option(var, value);
  
- 	do {
--		if (!prefixcmp(buf->buf, "push ")) {
-+		if (has_prefix(buf->buf, "push ")) {
- 			ALLOC_GROW(specs, nr_spec + 1, alloc_spec);
- 			specs[nr_spec++] = xstrdup(buf->buf + 5);
- 		}
-@@ -928,19 +928,19 @@ int main(int argc, const char **argv)
- 		}
- 		if (buf.len == 0)
- 			break;
--		if (!prefixcmp(buf.buf, "fetch ")) {
-+		if (has_prefix(buf.buf, "fetch ")) {
- 			if (nongit)
- 				die("Fetch attempted without a local repo");
- 			parse_fetch(&buf);
+ 	return git_default_config(var, value, cb);
+@@ -1215,7 +1215,7 @@ static void fn_out_consume(void *priv, char *line, unsigned long len)
+ 			diff_words_append(line, len,
+ 					  &ecbdata->diff_words->plus);
+ 			return;
+-		} else if (!prefixcmp(line, "\\ ")) {
++		} else if (has_prefix(line, "\\ ")) {
+ 			/*
+ 			 * Eat the "no newline at eof" marker as if we
+ 			 * saw a "+" or "-" line with nothing on it,
+@@ -2387,9 +2387,9 @@ static void builtin_diff(const char *name_a,
+ 			xdiff_set_find_func(&xecfg, pe->pattern, pe->cflags);
+ 		if (!diffopts)
+ 			;
+-		else if (!prefixcmp(diffopts, "--unified="))
++		else if (has_prefix(diffopts, "--unified="))
+ 			xecfg.ctxlen = strtoul(diffopts + 10, NULL, 10);
+-		else if (!prefixcmp(diffopts, "-u"))
++		else if (has_prefix(diffopts, "-u"))
+ 			xecfg.ctxlen = strtoul(diffopts + 2, NULL, 10);
+ 		if (o->word_diff)
+ 			init_diff_words_data(&ecbdata, o, one, two);
+@@ -3388,7 +3388,7 @@ int parse_long_opt(const char *opt, const char **argv,
+ 	if (arg[0] != '-' || arg[1] != '-')
+ 		return 0;
+ 	arg += strlen("--");
+-	if (prefixcmp(arg, opt))
++	if (!has_prefix(arg, opt))
+ 		return 0;
+ 	arg += strlen(opt);
+ 	if (*arg == '=') { /* sticked form: --option=value */
+@@ -3419,7 +3419,7 @@ static int stat_opt(struct diff_options *options, const char **av)
  
--		} else if (!strcmp(buf.buf, "list") || !prefixcmp(buf.buf, "list ")) {
-+		} else if (!strcmp(buf.buf, "list") || has_prefix(buf.buf, "list ")) {
- 			int for_push = !!strstr(buf.buf + 4, "for-push");
- 			output_refs(get_refs(for_push));
- 
--		} else if (!prefixcmp(buf.buf, "push ")) {
-+		} else if (has_prefix(buf.buf, "push ")) {
- 			parse_push(&buf);
- 
--		} else if (!prefixcmp(buf.buf, "option ")) {
-+		} else if (has_prefix(buf.buf, "option ")) {
- 			char *name = buf.buf + strlen("option ");
- 			char *value = strchr(name, ' ');
- 			int result;
-diff --git a/remote-testsvn.c b/remote-testsvn.c
-index d7cd5d2..7a5d4c8 100644
---- a/remote-testsvn.c
-+++ b/remote-testsvn.c
-@@ -82,7 +82,7 @@ static int parse_rev_note(const char *msg, struct rev_note *res)
- 		len = end ? end - msg : strlen(msg);
- 
- 		key = "Revision-number: ";
--		if (!prefixcmp(msg, key)) {
-+		if (has_prefix(msg, key)) {
- 			long i;
- 			char *end;
- 			value = msg + strlen(key);
-@@ -154,7 +154,7 @@ static void check_or_regenerate_marks(int latestrev)
- 	} else {
- 		strbuf_addf(&sb, ":%d ", latestrev);
- 		while (strbuf_getline(&line, marksfile, '\n') != EOF) {
--			if (!prefixcmp(line.buf, sb.buf)) {
-+			if (has_prefix(line.buf, sb.buf)) {
- 				found++;
- 				break;
+ 	switch (*arg) {
+ 	case '-':
+-		if (!prefixcmp(arg, "-width")) {
++		if (has_prefix(arg, "-width")) {
+ 			arg += strlen("-width");
+ 			if (*arg == '=')
+ 				width = strtoul(arg + 1, &end, 10);
+@@ -3429,7 +3429,7 @@ static int stat_opt(struct diff_options *options, const char **av)
+ 				width = strtoul(av[1], &end, 10);
+ 				argcount = 2;
  			}
-@@ -264,7 +264,7 @@ static int do_command(struct strbuf *line)
- 		return 1;	/* end of command stream, quit */
+-		} else if (!prefixcmp(arg, "-name-width")) {
++		} else if (has_prefix(arg, "-name-width")) {
+ 			arg += strlen("-name-width");
+ 			if (*arg == '=')
+ 				name_width = strtoul(arg + 1, &end, 10);
+@@ -3439,7 +3439,7 @@ static int stat_opt(struct diff_options *options, const char **av)
+ 				name_width = strtoul(av[1], &end, 10);
+ 				argcount = 2;
+ 			}
+-		} else if (!prefixcmp(arg, "-graph-width")) {
++		} else if (has_prefix(arg, "-graph-width")) {
+ 			arg += strlen("-graph-width");
+ 			if (*arg == '=')
+ 				graph_width = strtoul(arg + 1, &end, 10);
+@@ -3449,7 +3449,7 @@ static int stat_opt(struct diff_options *options, const char **av)
+ 				graph_width = strtoul(av[1], &end, 10);
+ 				argcount = 2;
+ 			}
+-		} else if (!prefixcmp(arg, "-count")) {
++		} else if (has_prefix(arg, "-count")) {
+ 			arg += strlen("-count");
+ 			if (*arg == '=')
+ 				count = strtoul(arg + 1, &end, 10);
+@@ -3611,15 +3611,15 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
+ 		options->output_format |= DIFF_FORMAT_SHORTSTAT;
+ 	else if (!strcmp(arg, "-X") || !strcmp(arg, "--dirstat"))
+ 		return parse_dirstat_opt(options, "");
+-	else if (!prefixcmp(arg, "-X"))
++	else if (has_prefix(arg, "-X"))
+ 		return parse_dirstat_opt(options, arg + 2);
+-	else if (!prefixcmp(arg, "--dirstat="))
++	else if (has_prefix(arg, "--dirstat="))
+ 		return parse_dirstat_opt(options, arg + 10);
+ 	else if (!strcmp(arg, "--cumulative"))
+ 		return parse_dirstat_opt(options, "cumulative");
+ 	else if (!strcmp(arg, "--dirstat-by-file"))
+ 		return parse_dirstat_opt(options, "files");
+-	else if (!prefixcmp(arg, "--dirstat-by-file=")) {
++	else if (has_prefix(arg, "--dirstat-by-file=")) {
+ 		parse_dirstat_opt(options, "files");
+ 		return parse_dirstat_opt(options, arg + 18);
  	}
- 	if (batch_cmd) {
--		if (prefixcmp(batch_cmd->name, line->buf))
-+		if (!has_prefix(batch_cmd->name, line->buf))
- 			die("Active %s batch interrupted by %s", batch_cmd->name, line->buf);
- 		/* buffer batch lines */
- 		string_list_append(&batchlines, line->buf);
-@@ -272,7 +272,7 @@ static int do_command(struct strbuf *line)
+@@ -3636,17 +3636,17 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
+ 		options->output_format |= DIFF_FORMAT_NAME_STATUS;
+ 	else if (!strcmp(arg, "-s") || !strcmp(arg, "--no-patch"))
+ 		options->output_format |= DIFF_FORMAT_NO_OUTPUT;
+-	else if (!prefixcmp(arg, "--stat"))
++	else if (has_prefix(arg, "--stat"))
+ 		/* --stat, --stat-width, --stat-name-width, or --stat-count */
+ 		return stat_opt(options, av);
+ 
+ 	/* renames options */
+-	else if (!prefixcmp(arg, "-B") || !prefixcmp(arg, "--break-rewrites=") ||
++	else if (has_prefix(arg, "-B") || has_prefix(arg, "--break-rewrites=") ||
+ 		 !strcmp(arg, "--break-rewrites")) {
+ 		if ((options->break_opt = diff_scoreopt_parse(arg)) == -1)
+ 			return error("invalid argument to -B: %s", arg+2);
  	}
- 
- 	for (p = input_command_list; p->name; p++) {
--		if (!prefixcmp(line->buf, p->name) && (strlen(p->name) == line->len ||
-+		if (has_prefix(line->buf, p->name) && (strlen(p->name) == line->len ||
- 				line->buf[strlen(p->name)] == ' ')) {
- 			if (p->batchable) {
- 				batch_cmd = p;
-@@ -304,7 +304,7 @@ int main(int argc, char **argv)
- 	remote = remote_get(argv[1]);
- 	url_in = (argc == 3) ? argv[2] : remote->url[0];
- 
--	if (!prefixcmp(url_in, "file://")) {
-+	if (has_prefix(url_in, "file://")) {
- 		dump_from_file = 1;
- 		url = url_decode(url_in + sizeof("file://")-1);
- 	} else {
-diff --git a/remote.c b/remote.c
-index e9fedfa..84c0d9f 100644
---- a/remote.c
-+++ b/remote.c
-@@ -76,7 +76,7 @@ static const char *alias_url(const char *url, struct rewrites *r)
- 		if (!r->rewrite[i])
- 			continue;
- 		for (j = 0; j < r->rewrite[i]->instead_of_nr; j++) {
--			if (!prefixcmp(url, r->rewrite[i]->instead_of[j].s) &&
-+			if (has_prefix(url, r->rewrite[i]->instead_of[j].s) &&
- 			    (!longest ||
- 			     longest->len < r->rewrite[i]->instead_of[j].len)) {
- 				longest = &(r->rewrite[i]->instead_of[j]);
-@@ -239,13 +239,13 @@ static void read_remotes_file(struct remote *remote)
- 		int value_list;
- 		char *s, *p;
- 
--		if (!prefixcmp(buffer, "URL:")) {
-+		if (has_prefix(buffer, "URL:")) {
- 			value_list = 0;
- 			s = buffer + 4;
--		} else if (!prefixcmp(buffer, "Push:")) {
-+		} else if (has_prefix(buffer, "Push:")) {
- 			value_list = 1;
- 			s = buffer + 5;
--		} else if (!prefixcmp(buffer, "Pull:")) {
-+		} else if (has_prefix(buffer, "Pull:")) {
- 			value_list = 2;
- 			s = buffer + 5;
- 		} else
-@@ -337,7 +337,7 @@ static int handle_config(const char *key, const char *value, void *cb)
- 	const char *subkey;
- 	struct remote *remote;
- 	struct branch *branch;
--	if (!prefixcmp(key, "branch.")) {
-+	if (has_prefix(key, "branch.")) {
- 		name = key + 7;
- 		subkey = strrchr(name, '.');
- 		if (!subkey)
-@@ -361,7 +361,7 @@ static int handle_config(const char *key, const char *value, void *cb)
- 		}
- 		return 0;
+-	else if (!prefixcmp(arg, "-M") || !prefixcmp(arg, "--find-renames=") ||
++	else if (has_prefix(arg, "-M") || has_prefix(arg, "--find-renames=") ||
+ 		 !strcmp(arg, "--find-renames")) {
+ 		if ((options->rename_score = diff_scoreopt_parse(arg)) == -1)
+ 			return error("invalid argument to -M: %s", arg+2);
+@@ -3655,7 +3655,7 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
+ 	else if (!strcmp(arg, "-D") || !strcmp(arg, "--irreversible-delete")) {
+ 		options->irreversible_delete = 1;
  	}
--	if (!prefixcmp(key, "url.")) {
-+	if (has_prefix(key, "url.")) {
- 		struct rewrite *rewrite;
- 		name = key + 4;
- 		subkey = strrchr(name, '.');
-@@ -380,7 +380,7 @@ static int handle_config(const char *key, const char *value, void *cb)
- 		}
+-	else if (!prefixcmp(arg, "-C") || !prefixcmp(arg, "--find-copies=") ||
++	else if (has_prefix(arg, "-C") || has_prefix(arg, "--find-copies=") ||
+ 		 !strcmp(arg, "--find-copies")) {
+ 		if (options->detect_rename == DIFF_DETECT_COPY)
+ 			DIFF_OPT_SET(options, FIND_COPIES_HARDER);
+@@ -3671,7 +3671,7 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
+ 		DIFF_OPT_CLR(options, RENAME_EMPTY);
+ 	else if (!strcmp(arg, "--relative"))
+ 		DIFF_OPT_SET(options, RELATIVE_NAME);
+-	else if (!prefixcmp(arg, "--relative=")) {
++	else if (has_prefix(arg, "--relative=")) {
+ 		DIFF_OPT_SET(options, RELATIVE_NAME);
+ 		options->prefix = arg + 11;
  	}
- 
--	if (prefixcmp(key,  "remote."))
-+	if (!has_prefix(key,  "remote."))
- 		return 0;
- 	name = key + 7;
- 
-@@ -487,7 +487,7 @@ static void read_config(void)
- 	current_branch = NULL;
- 	head_ref = resolve_ref_unsafe("HEAD", sha1, 0, &flag);
- 	if (head_ref && (flag & REF_ISSYMREF) &&
--	    !prefixcmp(head_ref, "refs/heads/")) {
-+	    has_prefix(head_ref, "refs/heads/")) {
- 		current_branch =
- 			make_branch(head_ref + strlen("refs/heads/"), 0);
+@@ -3724,7 +3724,7 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
+ 		DIFF_OPT_CLR(options, FOLLOW_RENAMES);
+ 	else if (!strcmp(arg, "--color"))
+ 		options->use_color = 1;
+-	else if (!prefixcmp(arg, "--color=")) {
++	else if (has_prefix(arg, "--color=")) {
+ 		int value = git_config_colorbool(NULL, arg+8);
+ 		if (value < 0)
+ 			return error("option `color' expects \"always\", \"auto\", or \"never\"");
+@@ -3736,7 +3736,7 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
+ 		options->use_color = 1;
+ 		options->word_diff = DIFF_WORDS_COLOR;
  	}
-@@ -982,8 +982,8 @@ static int count_refspec_match(const char *pattern,
- 		 */
- 		if (namelen != patlen &&
- 		    patlen != namelen - 5 &&
--		    prefixcmp(name, "refs/heads/") &&
--		    prefixcmp(name, "refs/tags/")) {
-+		    !has_prefix(name, "refs/heads/") &&
-+		    !has_prefix(name, "refs/tags/")) {
- 			/* We want to catch the case where only weak
- 			 * matches are found and there are multiple
- 			 * matches, and where more than one strong
-@@ -1054,9 +1054,9 @@ static char *guess_ref(const char *name, struct ref *peer)
- 	if (!r)
- 		return NULL;
- 
--	if (!prefixcmp(r, "refs/heads/"))
-+	if (has_prefix(r, "refs/heads/"))
- 		strbuf_addstr(&buf, "refs/heads/");
--	else if (!prefixcmp(r, "refs/tags/"))
-+	else if (has_prefix(r, "refs/tags/"))
- 		strbuf_addstr(&buf, "refs/tags/");
- 	else
- 		return NULL;
-@@ -1104,7 +1104,7 @@ static int match_explicit(struct ref *src, struct ref *dst,
- 		dst_value = resolve_ref_unsafe(matched_src->name, sha1, 1, &flag);
- 		if (!dst_value ||
- 		    ((flag & REF_ISSYMREF) &&
--		     prefixcmp(dst_value, "refs/heads/")))
-+		     !has_prefix(dst_value, "refs/heads/")))
- 			die("%s cannot be resolved to branch.",
- 			    matched_src->name);
+-	else if (!prefixcmp(arg, "--color-words=")) {
++	else if (has_prefix(arg, "--color-words=")) {
+ 		options->use_color = 1;
+ 		options->word_diff = DIFF_WORDS_COLOR;
+ 		options->word_regex = arg + 14;
+@@ -3745,7 +3745,7 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
+ 		if (options->word_diff == DIFF_WORDS_NONE)
+ 			options->word_diff = DIFF_WORDS_PLAIN;
  	}
-@@ -1193,7 +1193,7 @@ static char *get_ref_match(const struct refspec *rs, int rs_nr, const struct ref
- 		 * including refs outside refs/heads/ hierarchy, but
- 		 * that does not make much sense these days.
- 		 */
--		if (!send_mirror && prefixcmp(ref->name, "refs/heads/"))
-+		if (!send_mirror && !has_prefix(ref->name, "refs/heads/"))
- 			return NULL;
- 		name = xstrdup(ref->name);
+-	else if (!prefixcmp(arg, "--word-diff=")) {
++	else if (has_prefix(arg, "--word-diff=")) {
+ 		const char *type = arg + 12;
+ 		if (!strcmp(type, "plain"))
+ 			options->word_diff = DIFF_WORDS_PLAIN;
+@@ -3781,12 +3781,12 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
+ 	else if (!strcmp(arg, "--ignore-submodules")) {
+ 		DIFF_OPT_SET(options, OVERRIDE_SUBMODULE_CONFIG);
+ 		handle_ignore_submodules_arg(options, "all");
+-	} else if (!prefixcmp(arg, "--ignore-submodules=")) {
++	} else if (has_prefix(arg, "--ignore-submodules=")) {
+ 		DIFF_OPT_SET(options, OVERRIDE_SUBMODULE_CONFIG);
+ 		handle_ignore_submodules_arg(options, arg + 20);
+ 	} else if (!strcmp(arg, "--submodule"))
+ 		DIFF_OPT_SET(options, SUBMODULE_LOG);
+-	else if (!prefixcmp(arg, "--submodule="))
++	else if (has_prefix(arg, "--submodule="))
+ 		return parse_submodule_opt(options, arg + 12);
+ 
+ 	/* misc options */
+@@ -3822,7 +3822,7 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
  	}
-@@ -1248,7 +1248,7 @@ static void add_missing_tags(struct ref *src, struct ref **dst, struct ref ***ds
- 			add_to_tips(&sent_tips, ref->peer_ref->new_sha1);
- 		else
- 			add_to_tips(&sent_tips, ref->old_sha1);
--		if (!prefixcmp(ref->name, "refs/tags/"))
-+		if (has_prefix(ref->name, "refs/tags/"))
- 			string_list_append(&dst_tag, ref->name);
- 	}
- 	clear_commit_marks_many(sent_tips.nr, sent_tips.tip, TMP_MARK);
-@@ -1257,7 +1257,7 @@ static void add_missing_tags(struct ref *src, struct ref **dst, struct ref ***ds
+ 	else if (!strcmp(arg, "--abbrev"))
+ 		options->abbrev = DEFAULT_ABBREV;
+-	else if (!prefixcmp(arg, "--abbrev=")) {
++	else if (has_prefix(arg, "--abbrev=")) {
+ 		options->abbrev = strtoul(arg + 9, NULL, 10);
+ 		if (options->abbrev < MINIMUM_ABBREV)
+ 			options->abbrev = MINIMUM_ABBREV;
+@@ -3904,15 +3904,15 @@ static int diff_scoreopt_parse(const char *opt)
+ 	cmd = *opt++;
+ 	if (cmd == '-') {
+ 		/* convert the long-form arguments into short-form versions */
+-		if (!prefixcmp(opt, "break-rewrites")) {
++		if (has_prefix(opt, "break-rewrites")) {
+ 			opt += strlen("break-rewrites");
+ 			if (*opt == 0 || *opt++ == '=')
+ 				cmd = 'B';
+-		} else if (!prefixcmp(opt, "find-copies")) {
++		} else if (has_prefix(opt, "find-copies")) {
+ 			opt += strlen("find-copies");
+ 			if (*opt == 0 || *opt++ == '=')
+ 				cmd = 'C';
+-		} else if (!prefixcmp(opt, "find-renames")) {
++		} else if (has_prefix(opt, "find-renames")) {
+ 			opt += strlen("find-renames");
+ 			if (*opt == 0 || *opt++ == '=')
+ 				cmd = 'M';
+@@ -4322,7 +4322,7 @@ static void patch_id_consume(void *priv, char *line, unsigned long len)
+ 	int new_len;
  
- 	/* Collect tags they do not have. */
- 	for (ref = src; ref; ref = ref->next) {
--		if (prefixcmp(ref->name, "refs/tags/"))
-+		if (!has_prefix(ref->name, "refs/tags/"))
- 			continue; /* not a tag */
- 		if (string_list_has_string(&dst_tag, ref->name))
- 			continue; /* they already have it */
-@@ -1481,7 +1481,7 @@ void set_ref_status_for_push(struct ref *remote_refs, int send_mirror,
- 		 */
+ 	/* Ignore line numbers when computing the SHA1 of the patch */
+-	if (!prefixcmp(line, "@@ -"))
++	if (has_prefix(line, "@@ -"))
+ 		return;
  
- 		else if (!ref->deletion && !is_null_sha1(ref->old_sha1)) {
--			if (!prefixcmp(ref->name, "refs/tags/"))
-+			if (has_prefix(ref->name, "refs/tags/"))
- 				reject_reason = REF_STATUS_REJECT_ALREADY_EXISTS;
- 			else if (!has_sha1_file(ref->old_sha1))
- 				reject_reason = REF_STATUS_REJECT_FETCH_FIRST;
-@@ -1607,12 +1607,12 @@ static struct ref *get_local_ref(const char *name)
- 	if (!name || name[0] == '\0')
- 		return NULL;
- 
--	if (!prefixcmp(name, "refs/"))
-+	if (has_prefix(name, "refs/"))
- 		return alloc_ref(name);
- 
--	if (!prefixcmp(name, "heads/") ||
--	    !prefixcmp(name, "tags/") ||
--	    !prefixcmp(name, "remotes/"))
-+	if (has_prefix(name, "heads/") ||
-+	    has_prefix(name, "tags/") ||
-+	    has_prefix(name, "remotes/"))
- 		return alloc_ref_with_prefix("refs/", 5, name);
- 
- 	return alloc_ref_with_prefix("refs/heads/", 11, name);
-@@ -1647,7 +1647,7 @@ int get_fetch_map(const struct ref *remote_refs,
- 
- 	for (rmp = &ref_map; *rmp; ) {
- 		if ((*rmp)->peer_ref) {
--			if (prefixcmp((*rmp)->peer_ref->name, "refs/") ||
-+			if (!has_prefix((*rmp)->peer_ref->name, "refs/") ||
- 			    check_refname_format((*rmp)->peer_ref->name, 0)) {
- 				struct ref *ignore = *rmp;
- 				error("* Ignoring funny ref '%s' locally",
-@@ -1931,7 +1931,7 @@ struct ref *guess_remote_head(const struct ref *head,
- 	/* Look for another ref that points there */
- 	for (r = refs; r; r = r->next) {
- 		if (r != head &&
--		    !prefixcmp(r->name, "refs/heads/") &&
-+		    has_prefix(r->name, "refs/heads/") &&
- 		    !hashcmp(r->old_sha1, head->old_sha1)) {
- 			*tail = copy_ref(r);
- 			tail = &((*tail)->next);
+ 	new_len = remove_space(line, len);
 -- 
 1.8.4.1.566.geca833c
