@@ -1,180 +1,168 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 05/86] daemon: replace prefixcmd() with has_prefix()
-Date: Sat, 09 Nov 2013 08:05:58 +0100
-Message-ID: <20131109070720.18178.19274.chriscool@tuxfamily.org>
+Subject: [PATCH 07/86] revision: replace prefixcmd() with has_prefix()
+Date: Sat, 09 Nov 2013 08:06:00 +0100
+Message-ID: <20131109070720.18178.44053.chriscool@tuxfamily.org>
 References: <20131109070358.18178.40248.chriscool@tuxfamily.org>
 Cc: git@vger.kernel.org, Avery Pennarun <apenwarr@gmail.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	Jeff King <peff@peff.net>, Max Horn <max@quendi.de>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Nov 09 08:11:54 2013
+X-From: git-owner@vger.kernel.org Sat Nov 09 08:12:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vf2i2-0005uf-Bg
-	for gcvg-git-2@plane.gmane.org; Sat, 09 Nov 2013 08:11:54 +0100
+	id 1Vf2iS-0006NE-Ds
+	for gcvg-git-2@plane.gmane.org; Sat, 09 Nov 2013 08:12:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933397Ab3KIHLi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Nov 2013 02:11:38 -0500
-Received: from mail-2y.bbox.fr ([194.158.98.15]:36269 "EHLO mail-2y.bbox.fr"
+	id S933376Ab3KIHLf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Nov 2013 02:11:35 -0500
+Received: from mail-2y.bbox.fr ([194.158.98.15]:36278 "EHLO mail-2y.bbox.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932942Ab3KIHIW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Nov 2013 02:08:22 -0500
+	id S933224Ab3KIHIX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Nov 2013 02:08:23 -0500
 Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-2y.bbox.fr (Postfix) with ESMTP id 510B596;
-	Sat,  9 Nov 2013 08:08:21 +0100 (CET)
-X-git-sha1: eca833cf9896fc405f682924fe3df1b5aac9e58c 
+	by mail-2y.bbox.fr (Postfix) with ESMTP id 3E4E03A;
+	Sat,  9 Nov 2013 08:08:22 +0100 (CET)
+X-git-sha1: 36e625a9a0aa0e3c75756dbe5489250adeb9ac5f 
 X-Mailer: git-mail-commits v0.5.2
 In-Reply-To: <20131109070358.18178.40248.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237541>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237542>
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- daemon.c | 40 ++++++++++++++++++++--------------------
- 1 file changed, 20 insertions(+), 20 deletions(-)
+ revision.c | 38 +++++++++++++++++++-------------------
+ 1 file changed, 19 insertions(+), 19 deletions(-)
 
-diff --git a/daemon.c b/daemon.c
-index 34916c5..4b23800 100644
---- a/daemon.c
-+++ b/daemon.c
-@@ -235,7 +235,7 @@ static int service_enabled;
- 
- static int git_daemon_config(const char *var, const char *value, void *cb)
- {
--	if (!prefixcmp(var, "daemon.") &&
-+	if (has_prefix(var, "daemon.") &&
- 	    !strcmp(var + 7, service_looking_at->config_name)) {
- 		service_enabled = git_config_bool(var, value);
- 		return 0;
-@@ -633,7 +633,7 @@ static int execute(void)
- 	for (i = 0; i < ARRAY_SIZE(daemon_service); i++) {
- 		struct daemon_service *s = &(daemon_service[i]);
- 		int namelen = strlen(s->name);
--		if (!prefixcmp(line, "git-") &&
-+		if (has_prefix(line, "git-") &&
- 		    !strncmp(s->name, line + 4, namelen) &&
- 		    line[namelen + 4] == ' ') {
- 			/*
-@@ -1165,11 +1165,11 @@ int main(int argc, char **argv)
- 	for (i = 1; i < argc; i++) {
- 		char *arg = argv[i];
- 
--		if (!prefixcmp(arg, "--listen=")) {
-+		if (has_prefix(arg, "--listen=")) {
- 			string_list_append(&listen_addr, xstrdup_tolower(arg + 9));
- 			continue;
- 		}
--		if (!prefixcmp(arg, "--port=")) {
-+		if (has_prefix(arg, "--port=")) {
- 			char *end;
- 			unsigned long n;
- 			n = strtoul(arg+7, &end, 0);
-@@ -1199,19 +1199,19 @@ int main(int argc, char **argv)
- 			export_all_trees = 1;
- 			continue;
- 		}
--		if (!prefixcmp(arg, "--access-hook=")) {
-+		if (has_prefix(arg, "--access-hook=")) {
- 			access_hook = arg + 14;
- 			continue;
- 		}
--		if (!prefixcmp(arg, "--timeout=")) {
-+		if (has_prefix(arg, "--timeout=")) {
- 			timeout = atoi(arg+10);
- 			continue;
- 		}
--		if (!prefixcmp(arg, "--init-timeout=")) {
-+		if (has_prefix(arg, "--init-timeout=")) {
- 			init_timeout = atoi(arg+15);
- 			continue;
- 		}
--		if (!prefixcmp(arg, "--max-connections=")) {
-+		if (has_prefix(arg, "--max-connections=")) {
- 			max_connections = atoi(arg+18);
- 			if (max_connections < 0)
- 				max_connections = 0;	        /* unlimited */
-@@ -1221,7 +1221,7 @@ int main(int argc, char **argv)
- 			strict_paths = 1;
- 			continue;
- 		}
--		if (!prefixcmp(arg, "--base-path=")) {
-+		if (has_prefix(arg, "--base-path=")) {
- 			base_path = arg+12;
- 			continue;
- 		}
-@@ -1229,7 +1229,7 @@ int main(int argc, char **argv)
- 			base_path_relaxed = 1;
- 			continue;
- 		}
--		if (!prefixcmp(arg, "--interpolated-path=")) {
-+		if (has_prefix(arg, "--interpolated-path=")) {
- 			interpolated_path = arg+20;
- 			continue;
- 		}
-@@ -1241,11 +1241,11 @@ int main(int argc, char **argv)
- 			user_path = "";
- 			continue;
- 		}
--		if (!prefixcmp(arg, "--user-path=")) {
-+		if (has_prefix(arg, "--user-path=")) {
- 			user_path = arg + 12;
- 			continue;
- 		}
--		if (!prefixcmp(arg, "--pid-file=")) {
-+		if (has_prefix(arg, "--pid-file=")) {
- 			pid_file = arg + 11;
- 			continue;
- 		}
-@@ -1254,35 +1254,35 @@ int main(int argc, char **argv)
- 			log_syslog = 1;
- 			continue;
- 		}
--		if (!prefixcmp(arg, "--user=")) {
-+		if (has_prefix(arg, "--user=")) {
- 			user_name = arg + 7;
- 			continue;
- 		}
--		if (!prefixcmp(arg, "--group=")) {
-+		if (has_prefix(arg, "--group=")) {
- 			group_name = arg + 8;
- 			continue;
- 		}
--		if (!prefixcmp(arg, "--enable=")) {
-+		if (has_prefix(arg, "--enable=")) {
- 			enable_service(arg + 9, 1);
- 			continue;
- 		}
--		if (!prefixcmp(arg, "--disable=")) {
-+		if (has_prefix(arg, "--disable=")) {
- 			enable_service(arg + 10, 0);
- 			continue;
- 		}
--		if (!prefixcmp(arg, "--allow-override=")) {
-+		if (has_prefix(arg, "--allow-override=")) {
- 			make_service_overridable(arg + 17, 1);
- 			continue;
- 		}
--		if (!prefixcmp(arg, "--forbid-override=")) {
-+		if (has_prefix(arg, "--forbid-override=")) {
- 			make_service_overridable(arg + 18, 0);
- 			continue;
- 		}
--		if (!prefixcmp(arg, "--informative-errors")) {
-+		if (has_prefix(arg, "--informative-errors")) {
- 			informative_errors = 1;
- 			continue;
- 		}
--		if (!prefixcmp(arg, "--no-informative-errors")) {
-+		if (has_prefix(arg, "--no-informative-errors")) {
- 			informative_errors = 0;
- 			continue;
- 		}
+diff --git a/revision.c b/revision.c
+index 0173e01..968320a 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1576,9 +1576,9 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+ 	    !strcmp(arg, "--tags") || !strcmp(arg, "--remotes") ||
+ 	    !strcmp(arg, "--reflog") || !strcmp(arg, "--not") ||
+ 	    !strcmp(arg, "--no-walk") || !strcmp(arg, "--do-walk") ||
+-	    !strcmp(arg, "--bisect") || !prefixcmp(arg, "--glob=") ||
+-	    !prefixcmp(arg, "--branches=") || !prefixcmp(arg, "--tags=") ||
+-	    !prefixcmp(arg, "--remotes=") || !prefixcmp(arg, "--no-walk="))
++	    !strcmp(arg, "--bisect") || has_prefix(arg, "--glob=") ||
++	    has_prefix(arg, "--branches=") || has_prefix(arg, "--tags=") ||
++	    has_prefix(arg, "--remotes=") || has_prefix(arg, "--no-walk="))
+ 	{
+ 		unkv[(*unkc)++] = arg;
+ 		return 1;
+@@ -1601,7 +1601,7 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+ 		revs->max_count = atoi(argv[1]);
+ 		revs->no_walk = 0;
+ 		return 2;
+-	} else if (!prefixcmp(arg, "-n")) {
++	} else if (has_prefix(arg, "-n")) {
+ 		revs->max_count = atoi(arg + 2);
+ 		revs->no_walk = 0;
+ 	} else if ((argcount = parse_long_opt("max-age", argv, &optarg))) {
+@@ -1661,7 +1661,7 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+ 	} else if (!strcmp(arg, "--author-date-order")) {
+ 		revs->sort_order = REV_SORT_BY_AUTHOR_DATE;
+ 		revs->topo_order = 1;
+-	} else if (!prefixcmp(arg, "--early-output")) {
++	} else if (has_prefix(arg, "--early-output")) {
+ 		int count = 100;
+ 		switch (arg[14]) {
+ 		case '=':
+@@ -1686,13 +1686,13 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+ 		revs->min_parents = 2;
+ 	} else if (!strcmp(arg, "--no-merges")) {
+ 		revs->max_parents = 1;
+-	} else if (!prefixcmp(arg, "--min-parents=")) {
++	} else if (has_prefix(arg, "--min-parents=")) {
+ 		revs->min_parents = atoi(arg+14);
+-	} else if (!prefixcmp(arg, "--no-min-parents")) {
++	} else if (has_prefix(arg, "--no-min-parents")) {
+ 		revs->min_parents = 0;
+-	} else if (!prefixcmp(arg, "--max-parents=")) {
++	} else if (has_prefix(arg, "--max-parents=")) {
+ 		revs->max_parents = atoi(arg+14);
+-	} else if (!prefixcmp(arg, "--no-max-parents")) {
++	} else if (has_prefix(arg, "--no-max-parents")) {
+ 		revs->max_parents = -1;
+ 	} else if (!strcmp(arg, "--boundary")) {
+ 		revs->boundary = 1;
+@@ -1742,7 +1742,7 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+ 		revs->verify_objects = 1;
+ 	} else if (!strcmp(arg, "--unpacked")) {
+ 		revs->unpacked = 1;
+-	} else if (!prefixcmp(arg, "--unpacked=")) {
++	} else if (has_prefix(arg, "--unpacked=")) {
+ 		die("--unpacked=<packfile> no longer supported.");
+ 	} else if (!strcmp(arg, "-r")) {
+ 		revs->diff = 1;
+@@ -1767,7 +1767,7 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+ 		revs->verbose_header = 1;
+ 		revs->pretty_given = 1;
+ 		get_commit_format(arg+8, revs);
+-	} else if (!prefixcmp(arg, "--pretty=") || !prefixcmp(arg, "--format=")) {
++	} else if (has_prefix(arg, "--pretty=") || has_prefix(arg, "--format=")) {
+ 		/*
+ 		 * Detached form ("--pretty X" as opposed to "--pretty=X")
+ 		 * not allowed, since the argument is optional.
+@@ -1781,12 +1781,12 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+ 		revs->notes_opt.use_default_notes = 1;
+ 	} else if (!strcmp(arg, "--show-signature")) {
+ 		revs->show_signature = 1;
+-	} else if (!prefixcmp(arg, "--show-notes=") ||
+-		   !prefixcmp(arg, "--notes=")) {
++	} else if (has_prefix(arg, "--show-notes=") ||
++		   has_prefix(arg, "--notes=")) {
+ 		struct strbuf buf = STRBUF_INIT;
+ 		revs->show_notes = 1;
+ 		revs->show_notes_given = 1;
+-		if (!prefixcmp(arg, "--show-notes")) {
++		if (has_prefix(arg, "--show-notes")) {
+ 			if (revs->notes_opt.use_default_notes < 0)
+ 				revs->notes_opt.use_default_notes = 1;
+ 			strbuf_addstr(&buf, arg+13);
+@@ -1829,7 +1829,7 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+ 		revs->abbrev = 0;
+ 	} else if (!strcmp(arg, "--abbrev")) {
+ 		revs->abbrev = DEFAULT_ABBREV;
+-	} else if (!prefixcmp(arg, "--abbrev=")) {
++	} else if (has_prefix(arg, "--abbrev=")) {
+ 		revs->abbrev = strtoul(arg + 9, NULL, 10);
+ 		if (revs->abbrev < MINIMUM_ABBREV)
+ 			revs->abbrev = MINIMUM_ABBREV;
+@@ -1968,15 +1968,15 @@ static int handle_revision_pseudo_opt(const char *submodule,
+ 		init_all_refs_cb(&cb, revs, *flags);
+ 		for_each_glob_ref(handle_one_ref, optarg, &cb);
+ 		return argcount;
+-	} else if (!prefixcmp(arg, "--branches=")) {
++	} else if (has_prefix(arg, "--branches=")) {
+ 		struct all_refs_cb cb;
+ 		init_all_refs_cb(&cb, revs, *flags);
+ 		for_each_glob_ref_in(handle_one_ref, arg + 11, "refs/heads/", &cb);
+-	} else if (!prefixcmp(arg, "--tags=")) {
++	} else if (has_prefix(arg, "--tags=")) {
+ 		struct all_refs_cb cb;
+ 		init_all_refs_cb(&cb, revs, *flags);
+ 		for_each_glob_ref_in(handle_one_ref, arg + 7, "refs/tags/", &cb);
+-	} else if (!prefixcmp(arg, "--remotes=")) {
++	} else if (has_prefix(arg, "--remotes=")) {
+ 		struct all_refs_cb cb;
+ 		init_all_refs_cb(&cb, revs, *flags);
+ 		for_each_glob_ref_in(handle_one_ref, arg + 10, "refs/remotes/", &cb);
+@@ -1986,7 +1986,7 @@ static int handle_revision_pseudo_opt(const char *submodule,
+ 		*flags ^= UNINTERESTING | BOTTOM;
+ 	} else if (!strcmp(arg, "--no-walk")) {
+ 		revs->no_walk = REVISION_WALK_NO_WALK_SORTED;
+-	} else if (!prefixcmp(arg, "--no-walk=")) {
++	} else if (has_prefix(arg, "--no-walk=")) {
+ 		/*
+ 		 * Detached form ("--no-walk X" as opposed to "--no-walk=X")
+ 		 * not allowed, since the argument is optional.
 -- 
 1.8.4.1.566.geca833c
