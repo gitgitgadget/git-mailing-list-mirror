@@ -1,57 +1,66 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 53/86] builtin/describe: replace prefixcmd() with has_prefix()
-Date: Sat, 09 Nov 2013 08:06:46 +0100
-Message-ID: <20131109070720.18178.41233.chriscool@tuxfamily.org>
+Subject: [PATCH 49/86] builtin/clean: replace prefixcmd() with has_prefix()
+Date: Sat, 09 Nov 2013 08:06:42 +0100
+Message-ID: <20131109070720.18178.14270.chriscool@tuxfamily.org>
 References: <20131109070358.18178.40248.chriscool@tuxfamily.org>
 Cc: git@vger.kernel.org, Avery Pennarun <apenwarr@gmail.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	Jeff King <peff@peff.net>, Max Horn <max@quendi.de>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Nov 09 08:09:53 2013
+X-From: git-owner@vger.kernel.org Sat Nov 09 08:10:01 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vf2g4-0003eY-Ky
-	for gcvg-git-2@plane.gmane.org; Sat, 09 Nov 2013 08:09:53 +0100
+	id 1Vf2gA-0003oQ-SO
+	for gcvg-git-2@plane.gmane.org; Sat, 09 Nov 2013 08:09:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933322Ab3KIHJj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Nov 2013 02:09:39 -0500
-Received: from mail-2y.bbox.fr ([194.158.98.15]:36412 "EHLO mail-2y.bbox.fr"
+	id S933321Ab3KIHJi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Nov 2013 02:09:38 -0500
+Received: from mail-3y.bbox.fr ([194.158.98.45]:54224 "EHLO mail-3y.bbox.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933259Ab3KIHIn (ORCPT <rfc822;git@vger.kernel.org>);
+	id S933290Ab3KIHIn (ORCPT <rfc822;git@vger.kernel.org>);
 	Sat, 9 Nov 2013 02:08:43 -0500
 Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-2y.bbox.fr (Postfix) with ESMTP id F32413A;
-	Sat,  9 Nov 2013 08:08:41 +0100 (CET)
-X-git-sha1: 320d8f5ace6cc63980d7541c80f9413287c220e1 
+	by mail-3y.bbox.fr (Postfix) with ESMTP id 484B19F;
+	Sat,  9 Nov 2013 08:08:40 +0100 (CET)
+X-git-sha1: 92e50497ae997911eaf9edf2b9f8116bd01d24e4 
 X-Mailer: git-mail-commits v0.5.2
 In-Reply-To: <20131109070358.18178.40248.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237505>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237506>
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/describe.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ builtin/clean.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/describe.c b/builtin/describe.c
-index b9d3603..102d958 100644
---- a/builtin/describe.c
-+++ b/builtin/describe.c
-@@ -141,7 +141,7 @@ static void add_to_known_names(const char *path,
+diff --git a/builtin/clean.c b/builtin/clean.c
+index 615cd57..98887cd 100644
+--- a/builtin/clean.c
++++ b/builtin/clean.c
+@@ -100,7 +100,7 @@ static int parse_clean_color_slot(const char *var)
  
- static int get_name(const char *path, const unsigned char *sha1, int flag, void *cb_data)
+ static int git_clean_config(const char *var, const char *value, void *cb)
  {
--	int is_tag = !prefixcmp(path, "refs/tags/");
-+	int is_tag = has_prefix(path, "refs/tags/");
- 	unsigned char peeled[20];
- 	int is_annotated, prio;
+-	if (!prefixcmp(var, "column."))
++	if (has_prefix(var, "column."))
+ 		return git_column_config(var, value, "clean", &colopts);
  
+ 	/* honors the color.interactive* config variables which also
+@@ -109,7 +109,7 @@ static int git_clean_config(const char *var, const char *value, void *cb)
+ 		clean_use_color = git_config_colorbool(var, value);
+ 		return 0;
+ 	}
+-	if (!prefixcmp(var, "color.interactive.")) {
++	if (has_prefix(var, "color.interactive.")) {
+ 		int slot = parse_clean_color_slot(var +
+ 						  strlen("color.interactive."));
+ 		if (slot < 0)
 -- 
 1.8.4.1.566.geca833c
