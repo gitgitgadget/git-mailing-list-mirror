@@ -1,142 +1,83 @@
-From: silvio@port1024.net
-Subject: [[PATCH v2]] git-send-email: Added the ability to query the number of smtp password questions
-Date: Sun, 10 Nov 2013 12:56:53 +0100
-Message-ID: <1384084613-12260-2-git-send-email-silvio@port1024.net>
-References: <1383992508-2097-1-git-send-email-silvio@port1024.net>
- <1384084613-12260-1-git-send-email-silvio@port1024.net>
-Cc: Silvio F <silvio.fricke@gmail.com>
+From: John Keeping <john@keeping.me.uk>
+Subject: [RFC/PATCH 0/4] Remove deprecated commands
+Date: Sun, 10 Nov 2013 15:47:27 +0000
+Message-ID: <cover.1384098226.git.john@keeping.me.uk>
+Cc: John Keeping <john@keeping.me.uk>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 10 12:57:21 2013
+X-From: git-owner@vger.kernel.org Sun Nov 10 16:47:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VfTdn-00020K-L3
-	for gcvg-git-2@plane.gmane.org; Sun, 10 Nov 2013 12:57:20 +0100
+	id 1VfXEp-0008Cx-4m
+	for gcvg-git-2@plane.gmane.org; Sun, 10 Nov 2013 16:47:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751248Ab3KJL5O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Nov 2013 06:57:14 -0500
-Received: from mail-out.m-online.net ([212.18.0.9]:52132 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751239Ab3KJL5H (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Nov 2013 06:57:07 -0500
-Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3dHYbz6fBJz4KKTr;
-	Sun, 10 Nov 2013 12:57:03 +0100 (CET)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
-	by mail.m-online.net (Postfix) with ESMTP id 3dHYbz6VRhzbbgx;
-	Sun, 10 Nov 2013 12:57:03 +0100 (CET)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.180])
-	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
-	with ESMTP id xN1WIXqNY2wM; Sun, 10 Nov 2013 12:57:01 +0100 (CET)
-Received: from port1024.net (ppp-188-174-127-23.dynamic.mnet-online.de [188.174.127.23])
+	id S1751598Ab3KJPrn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Nov 2013 10:47:43 -0500
+Received: from coyote.aluminati.org ([72.9.247.114]:50292 "EHLO
+	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751493Ab3KJPrm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Nov 2013 10:47:42 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by coyote.aluminati.org (Postfix) with ESMTP id F1F4E606547;
+	Sun, 10 Nov 2013 15:47:41 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -1
+X-Spam-Level: 
+X-Spam-Status: No, score=-1 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1] autolearn=ham
+Received: from coyote.aluminati.org ([127.0.0.1])
+	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id kU8Tr5vyXfht; Sun, 10 Nov 2013 15:47:41 +0000 (GMT)
+Received: from river.lan (chimera.aluminati.org [10.0.16.60])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by mail.mnet-online.de (Postfix) with ESMTPS;
-	Sun, 10 Nov 2013 12:57:01 +0100 (CET)
-Received: from [10.1.0.181] (helo=zwielicht.lan)
-	by port1024.net with esmtp (Exim 4.82)
-	(envelope-from <silvio@port1024.net>)
-	id 1VfTdV-00039C-BB; Sun, 10 Nov 2013 12:57:01 +0100
-X-Mailer: git-send-email 1.8.4.2
-In-Reply-To: <1384084613-12260-1-git-send-email-silvio@port1024.net>
+	by coyote.aluminati.org (Postfix) with ESMTPSA id 612CF6064DE;
+	Sun, 10 Nov 2013 15:47:37 +0000 (GMT)
+X-Mailer: git-send-email 1.8.5.rc0.170.g772b8ec
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237585>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237586>
 
-From: Silvio F <silvio.fricke@gmail.com>
+"git repo-config", "git tar-tree", "git lost-found" and "git
+peek-remote" have all been deprecated since at least Git 1.5.4.
 
-With this patch "git-send-mail" ask a configurable number of questions to
-input the smtp password. Without this patch we have only one trial.
+With Git 2.0 approaching, I think that would be a good point to remove
+then completely, which is what this series does.
 
-Signed-off-by: Silvio F <silvio.fricke@gmail.com>
----
- Documentation/git-send-email.txt |  4 ++++
- git-send-email.perl              | 32 +++++++++++++++++++++-----------
- 2 files changed, 25 insertions(+), 11 deletions(-)
+John Keeping (4):
+  repo-config: remove deprecated alias for "git config"
+  tar-tree: remove deprecated command
+  lost-found: remove deprecated command
+  peek-remote: remove deprecated alias of ls-remote
 
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index f0e57a5..ac993d6 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -364,6 +364,10 @@ sendemail.confirm::
- 	one of 'always', 'never', 'cc', 'compose', or 'auto'. See '--confirm'
- 	in the previous section for the meaning of these values.
- 
-+sendmail.askpasswordcount::
-+	Number of times the smtp password can be entered before sending mail is
-+	aborted. Default is 1.
-+
- EXAMPLE
- -------
- Use gmail as the smtp server
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 3782c3b..aeb2e6d 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -203,6 +203,7 @@ my ($validate, $confirm);
- my (@suppress_cc);
- my ($auto_8bit_encoding);
- my ($compose_encoding);
-+my ($askpasswordcount) = 1;
- 
- my ($debug_net_smtp) = 0;		# Net::SMTP, see send_message()
- 
-@@ -237,6 +238,7 @@ my %config_settings = (
-     "from" => \$sender,
-     "assume8bitencoding" => \$auto_8bit_encoding,
-     "composeencoding" => \$compose_encoding,
-+    "askpasswordcount" => \$askpasswordcount
- );
- 
- my %config_path_settings = (
-@@ -360,6 +362,10 @@ sub read_config {
- 		}
- 	}
- 
-+	if ($askpasswordcount < 1) {
-+		$askpasswordcount = 1;
-+	}
-+
- 	if (!defined $smtp_encryption) {
- 		my $enc = Git::config(@repo, "$prefix.smtpencryption");
- 		if (defined $enc) {
-@@ -1069,17 +1075,21 @@ sub smtp_auth_maybe {
- 	# TODO: Authentication may fail not because credentials were
- 	# invalid but due to other reasons, in which we should not
- 	# reject credentials.
--	$auth = Git::credential({
--		'protocol' => 'smtp',
--		'host' => smtp_host_string(),
--		'username' => $smtp_authuser,
--		# if there's no password, "git credential fill" will
--		# give us one, otherwise it'll just pass this one.
--		'password' => $smtp_authpass
--	}, sub {
--		my $cred = shift;
--		return !!$smtp->auth($cred->{'username'}, $cred->{'password'});
--	});
-+	for my $i (1 .. $askpasswordcount) {
-+		$auth = Git::credential({
-+			'protocol' => 'smtp',
-+			'host' => smtp_host_string(),
-+			'username' => $smtp_authuser,
-+			# if there's no password, "git credential fill" will
-+			# give us one, otherwise it'll just pass this one.
-+			'password' => $smtp_authpass
-+		}, sub {
-+			my $cred = shift;
-+			return !!$smtp->auth($cred->{'username'}, $cred->{'password'});
-+		});
-+
-+		last if ($auth);
-+	}
- 
- 	return $auth;
- }
+ .gitignore                             |  4 --
+ Documentation/git-lost-found.txt       | 74 ------------------------------
+ Documentation/git-peek-remote.txt      | 43 ------------------
+ Documentation/git-repo-config.txt      | 23 ----------
+ Documentation/git-tar-tree.txt         | 82 ----------------------------------
+ Makefile                               |  3 --
+ builtin.h                              |  1 -
+ builtin/config.c                       |  6 ---
+ builtin/tar-tree.c                     | 62 -------------------------
+ command-list.txt                       |  4 --
+ contrib/completion/git-completion.bash |  4 --
+ contrib/examples/git-whatchanged.sh    |  4 +-
+ git-lost-found.sh                      | 33 --------------
+ git.c                                  |  3 --
+ t/t4116-apply-reverse.sh               |  4 +-
+ t/t5000-tar-tree.sh                    | 16 ++-----
+ t/t5001-archive-attr.sh                | 10 -----
+ 17 files changed, 7 insertions(+), 369 deletions(-)
+ delete mode 100644 Documentation/git-lost-found.txt
+ delete mode 100644 Documentation/git-peek-remote.txt
+ delete mode 100644 Documentation/git-repo-config.txt
+ delete mode 100644 Documentation/git-tar-tree.txt
+ delete mode 100755 git-lost-found.sh
+
 -- 
-1.8.4.2
+1.8.5.rc0.170.g772b8ec
