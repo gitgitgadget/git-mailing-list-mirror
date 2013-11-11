@@ -1,103 +1,86 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 2/7] test-bzr.sh, test-hg.sh: allow running from any dir
-Date: Mon, 11 Nov 2013 12:58:11 -0600
-Message-ID: <CAMP44s1wc_1v2f9u0hV5VhjybZtF8tAs8-mxwEa+KuTiroLvsw@mail.gmail.com>
-References: <1384142712-2936-1-git-send-email-rhansen@bbn.com>
-	<1384142712-2936-3-git-send-email-rhansen@bbn.com>
-	<5280c108749d8_6841541e787e@nysa.notmuch>
-	<xmqqsiv2lrig.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git rm / format-patch / am fails on my file: patch does not apply
+Date: Mon, 11 Nov 2013 11:04:02 -0800
+Message-ID: <xmqqhabilpzx.fsf@gitster.dls.corp.google.com>
+References: <CAD3a31XPKsnuNE+szw7xgvaDrcxhKZ2jTDHKzTwdwtnCwFb_0w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Richard Hansen <rhansen@bbn.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 11 19:58:18 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Philip Oakley <philipoakley@iee.org>
+To: Ken Tanzer <ken.tanzer@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 11 20:04:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vfwgj-0000Cu-Uy
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Nov 2013 19:58:18 +0100
+	id 1VfwmW-00009B-C4
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Nov 2013 20:04:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754218Ab3KKS6N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Nov 2013 13:58:13 -0500
-Received: from mail-la0-f43.google.com ([209.85.215.43]:54472 "EHLO
-	mail-la0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754161Ab3KKS6M (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Nov 2013 13:58:12 -0500
-Received: by mail-la0-f43.google.com with SMTP id n7so3286077lam.16
-        for <git@vger.kernel.org>; Mon, 11 Nov 2013 10:58:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=OrWQVuJ9OTHrBcCYb5PQ6WnSr/Rd2h2o1tlvbG8BQuM=;
-        b=A/vP3SKXQSwX+h5HCqurP/5fTwE2XOjounv+3EsERbj0MUdaUervcfRJMKyrq05+S+
-         mvsL0Xim2CWFqo9EfxzFKpX1aILJQ2bbyrBjpW+p1XHEbd/uHHVvWhaSxpZj4dAd/qF7
-         Ip9yVl2O6W82XpwqbSGkoC/snPKFLGZQBZBP6C5RlfvmiW2DXh3cyQ6pq9WL25CILOKU
-         HGtKhCxfWslv6ytclDrdkvRefwekrG4LedDQzD5E7qZ6SY20QfDYNCSyxjNOYZ0788aA
-         GjUC/vtj+UANviZ3O/eK7KRIZHIv5D1232BLffrA0XsIFkei3Oz0lonedtgcqzuaX0px
-         d8hA==
-X-Received: by 10.112.136.163 with SMTP id qb3mr22910258lbb.14.1384196291120;
- Mon, 11 Nov 2013 10:58:11 -0800 (PST)
-Received: by 10.114.201.69 with HTTP; Mon, 11 Nov 2013 10:58:11 -0800 (PST)
-In-Reply-To: <xmqqsiv2lrig.fsf@gitster.dls.corp.google.com>
+	id S1755035Ab3KKTEM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Nov 2013 14:04:12 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56718 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753840Ab3KKTEK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Nov 2013 14:04:10 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A553D50C50;
+	Mon, 11 Nov 2013 14:04:09 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=tGzQn7PtRA850K2YQ4udv/gembQ=; b=cHWHkQ
+	MfcRnI3j+MC/bm0IS+mwCQat52lsuC5a6KSa3w2kdvOQAvi8CChWfxEY4Pw9LxUy
+	N50MDzTCB+zIKPnb0NIld73Jk9XEd2c15CPHeA8NrkibX3y+JW9dCxK6nlL87EUW
+	F+lDCSlCxDXDi+YNq6AW//aJwOoesJwWMQTJg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=No/o72HCYKWLH3prGdOXMkRbooWu2CXi
+	odhAs6w9cnT03WrFwipxAodjv7iDBxaqILRImeQ6ClxrktVzkaaH3+xb2kAMgc3d
+	ug2E3adIu7Th2YWy6h0V1LyaerHrWk4RXk8FocA+h2zpqqKmW8qSUrI1QfVCG2i1
+	oy+Rb4bkEPE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 98A6650C4F;
+	Mon, 11 Nov 2013 14:04:09 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 021C250C4A;
+	Mon, 11 Nov 2013 14:04:06 -0500 (EST)
+In-Reply-To: <CAD3a31XPKsnuNE+szw7xgvaDrcxhKZ2jTDHKzTwdwtnCwFb_0w@mail.gmail.com>
+	(Ken Tanzer's message of "Sun, 10 Nov 2013 18:39:10 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 09F42058-4B04-11E3-AC41-D331802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237631>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237632>
 
-On Mon, Nov 11, 2013 at 12:31 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
+Ken Tanzer <ken.tanzer@gmail.com> writes:
+
+> ASCII text, with very long lines, with CRLF, CR, LF line terminators
+
+I am not very much surprised if such a file misbehaves, because the
+"format-patch | am" pipeline is designed to be used on patches that
+can be transferred in plain-text e-mail safely.  Long lines should
+probably be OK, but mixed CRLF, CR and LF may be problematic.
+
+Having said that...
+
+> I've confirmed with the following test case on three machines, so it
+> seems reproducible:
 >
->> Richard Hansen wrote:
->>> cd to the t/ subdirectory so that the user doesn't already have to be
->>> in the test directory to run these test scripts.
->>>
->>> Signed-off-by: Richard Hansen <rhansen@bbn.com>
->>> ---
->>>  contrib/remote-helpers/test-bzr.sh | 1 +
->>>  contrib/remote-helpers/test-hg.sh  | 1 +
->>>  2 files changed, 2 insertions(+)
->>>
->>> diff --git a/contrib/remote-helpers/test-bzr.sh b/contrib/remote-helpers/test-bzr.sh
->>> index 5c50251..094062c 100755
->>> --- a/contrib/remote-helpers/test-bzr.sh
->>> +++ b/contrib/remote-helpers/test-bzr.sh
->>> @@ -5,6 +5,7 @@
->>>
->>>  test_description='Test remote-bzr'
->>>
->>> +cd "${0%/*}"/../../t || exit 1
->>
->> I think this should do the trick:
->>
->>   test -z "$TEST_DIRECTORY" && TEST_DIRECTORY="$(realpath ${0%/*}/../../t)"
->>   . "$TEST_DIRECTORY"/test-lib.sh
->
-> Can we do that without using realpath(1)? I do not think we use it
-> anywhere in the main part of the project.
+> mkdir temp_test_case
+> cd temp_test_case
+> git init
+> # my file.  Sorry--couldn't find a saner link!
+> wget -O jquery-ui-1.8.custom.min.js
+> http://sourceforge.net/p/agency/code/ci/9358ea4dbe8e1540ec0b8bebfc7770f1bf8be0ec/tree/jquery-ui-1.8.custom.min.js?format=raw
+> git add jquery-ui-1.8.custom.min.js
+> git commit -m 'Adding jquery-ui'
+> git rm jquery-ui-1.8.custom.min.js
+> git commit -m 'Removing jquery-ui'
+> git format-patch HEAD~1
+> git reset --hard HEAD~1
+> git am 0001*
 
-Something like this, probably:
-
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -26,6 +26,8 @@ then
-        # outside of t/, e.g. for running tests on the test library
-        # itself.
-        TEST_DIRECTORY=$(pwd)
-+else
-+       TEST_DIRECTORY=$(cd $TEST_DIRECTORY && pwd)
- fi
- if test -z "$TEST_OUTPUT_DIRECTORY"
- then
-
-
-Then we can do:
-
- test -z "$TEST_DIRECTORY" && TEST_DIRECTORY="${0%/*}/../../t"
- . "$TEST_DIRECTORY"/test-lib.sh
-
--- 
-Felipe Contreras
+... this does not break at all for me.
