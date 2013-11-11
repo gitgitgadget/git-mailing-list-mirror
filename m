@@ -1,7 +1,7 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v6 00/10] transport-helper: updates
-Date: Mon, 11 Nov 2013 16:54:58 -0600
-Message-ID: <1384210507-26561-2-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH v6 01/10] transport-helper: fix extra lines
+Date: Mon, 11 Nov 2013 16:54:59 -0600
+Message-ID: <1384210507-26561-3-git-send-email-felipe.contreras@gmail.com>
 References: <1384210507-26561-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Sverre Rabbelier <srabbelier@gmail.com>,
 	Richard Hansen <rhansen@bbn.com>,
@@ -13,111 +13,65 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vg0Uj-00064Q-J4
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Nov 2013 00:02:09 +0100
+	id 1Vg0Uk-00064Q-4Y
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Nov 2013 00:02:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753395Ab3KKXCF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Nov 2013 18:02:05 -0500
-Received: from mail-ob0-f170.google.com ([209.85.214.170]:40464 "EHLO
-	mail-ob0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753035Ab3KKXCB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Nov 2013 18:02:01 -0500
-Received: by mail-ob0-f170.google.com with SMTP id gq1so5151795obb.29
-        for <git@vger.kernel.org>; Mon, 11 Nov 2013 15:02:00 -0800 (PST)
+	id S1752081Ab3KKXCI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Nov 2013 18:02:08 -0500
+Received: from mail-oa0-f51.google.com ([209.85.219.51]:50054 "EHLO
+	mail-oa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753384Ab3KKXCE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Nov 2013 18:02:04 -0500
+Received: by mail-oa0-f51.google.com with SMTP id i4so2625700oah.10
+        for <git@vger.kernel.org>; Mon, 11 Nov 2013 15:02:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=SdleKP5rqDU8O5doIW7g7M6uCM0D7rk1QzEwbq50Hsw=;
-        b=B4lAFPdCNi2GQjcFl+7qK1JX7kaKX745804aR6hxgDoUajfXlVEmtLGWaUIO85SYNa
-         kNeFEyql3keEeJeTeiTDZnXi3oq/4QLt+jakl7Pseija0M6pHVZgpcwihqV7gCdUHYw2
-         tIb4MYZC8uoGlv5m95QOY/tlBEAqvbsepggzqd8963vtYIjgqP5WFNVi4T77l6RGasja
-         Q+xPlUbsUWS+oxD+GoNTG3ekhF8wLFGgkviXrbIoruDkEmPwWZnkRiBWjMrTzMzw3A20
-         QCDzJoFPqGwT66bCIgcHH3Cwak4UxZ2dbrRVBZmRBOMKpqm0EaOnmenbHh4SMVRFk588
-         yj/w==
-X-Received: by 10.182.221.134 with SMTP id qe6mr3582163obc.66.1384210920856;
-        Mon, 11 Nov 2013 15:02:00 -0800 (PST)
+        bh=Pb461rKuy/YoiOVvF0VIzbqdDdtrl4GRew9MJWMfJLc=;
+        b=NhQv052X8PkQ/M/dk74w5v2TkCtOnYTZPx80yeBekLqf3PQsP9fIwoCjCal3WkHJ9b
+         BmyghOmwlWnkohorsdIwdmpeVdBcydQ505iPte7RmKc7H3w8bNMZqj9fs3ShJBGw8yoU
+         6zNutfY36xASn0s4oB7W8cx1TiIqypRJebFipGEWFQzjru/A59pbiHEmwnYwweOq463M
+         +S/ai3SWXmOoB4/uNey0NDcpBFF3F52KQxXN4+pr7ZC5ZmJk8P6lAw3D+EOTe5Vi6gMv
+         T4N2LrfuM2UI8YVd+cw8JuFdv6kAhbWd8LvkbRQdveBqk/HzzZ6my7m0whGU5FzE5iUT
+         BOXQ==
+X-Received: by 10.182.72.234 with SMTP id g10mr27635317obv.21.1384210923477;
+        Mon, 11 Nov 2013 15:02:03 -0800 (PST)
 Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
-        by mx.google.com with ESMTPSA id z5sm29248437obg.13.2013.11.11.15.01.59
+        by mx.google.com with ESMTPSA id s9sm29294460obu.4.2013.11.11.15.02.01
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 11 Nov 2013 15:01:59 -0800 (PST)
+        Mon, 11 Nov 2013 15:02:02 -0800 (PST)
 X-Mailer: git-send-email 1.8.4.2+fc1
 In-Reply-To: <1384210507-26561-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237664>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237665>
 
-Hi,
+Commit 9c51558 (transport-helper: trivial code shuffle) moved these
+lines above, but 99d9ec0 (Merge branch 'fc/transport-helper-no-refspec')
+had a wrong merge conflict and readded them.
 
-Here are the patches that allow transport helpers to be completely transparent;
-renaming branches, deleting them, custom refspecs, --force, --dry-run,
-reporting forced update, everything works.
+Reported-by: Richard Hansen <rhansen@bbn.com>
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
+ transport-helper.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-Small changes since v5:
-
-diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-index 8ed41b4..4b76222 100644
---- a/builtin/fast-export.c
-+++ b/builtin/fast-export.c
-@@ -736,9 +736,10 @@ int cmd_fast_export(int argc, const char **argv, const char *prefix)
- 		usage_with_options (fast_export_usage, options);
+diff --git a/transport-helper.c b/transport-helper.c
+index 673b7c2..b66c7fd 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -875,9 +875,6 @@ static int push_refs_with_export(struct transport *transport,
+ 		}
+ 		free(private);
  
- 	if (refspecs_list.nr) {
--		const char *refspecs_str[refspecs_list.nr];
-+		const char **refspecs_str;
- 		int i;
- 
-+		refspecs_str = xmalloc(sizeof(*refspecs_str) * refspecs_list.nr);
- 		for (i = 0; i < refspecs_list.nr; i++)
- 			refspecs_str[i] = refspecs_list.items[i].string;
- 
-@@ -746,6 +747,7 @@ int cmd_fast_export(int argc, const char **argv, const char *prefix)
- 		refspecs = parse_fetch_refspec(refspecs_nr, refspecs_str);
- 
- 		string_list_clear(&refspecs_list, 1);
-+		free(refspecs_str);
- 	}
- 
- 	if (use_done_feature)
-diff --git a/git-remote-testgit.sh b/git-remote-testgit.sh
-index 716aa4c..1c006a0 100755
---- a/git-remote-testgit.sh
-+++ b/git-remote-testgit.sh
-@@ -15,6 +15,8 @@ test -z "$refspec" && prefix="refs"
- 
- export GIT_DIR="$url/.git"
- 
-+force=
-+
- mkdir -p "$dir"
- 
- if test -z "$GIT_REMOTE_TESTGIT_NO_MARKS"
-
-Felipe Contreras (10):
-  transport-helper: fix extra lines
-  transport-helper: don't update refs in dry-run
-  transport-helper: add 'force' to 'export' helpers
-  transport-helper: check for 'forced update' message
-  fast-export: improve argument parsing
-  fast-export: add new --refspec option
-  transport-helper: add support for old:new refspec
-  fast-import: add support to delete refs
-  fast-export: add support to delete refs
-  transport-helper: add support to delete branches
-
- Documentation/git-fast-export.txt   |  4 +++
- Documentation/git-fast-import.txt   |  3 +++
- Documentation/gitremote-helpers.txt |  4 +++
- builtin/fast-export.c               | 49 ++++++++++++++++++++++++++++++++++++-
- fast-import.c                       | 13 +++++++---
- git-remote-testgit.sh               | 18 ++++++++++++++
- t/t5801-remote-helpers.sh           | 23 ++++++++++++++++-
- t/t9300-fast-import.sh              | 18 ++++++++++++++
- t/t9350-fast-export.sh              | 18 ++++++++++++++
- transport-helper.c                  | 47 +++++++++++++++++++++++------------
- 10 files changed, 177 insertions(+), 20 deletions(-)
-
+-		if (ref->deletion)
+-			die("remote-helpers do not support ref deletion");
+-
+ 		if (ref->peer_ref) {
+ 			if (strcmp(ref->peer_ref->name, ref->name))
+ 				die("remote-helpers do not support old:new syntax");
 -- 
 1.8.4.2+fc1
