@@ -1,143 +1,67 @@
-From: Richard Hansen <rhansen@bbn.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
 Subject: Re: [PATCH v5 12/10] remote-bzr: support the new 'force' option
-Date: Mon, 11 Nov 2013 13:12:47 -0500
-Message-ID: <52811E1F.4090500@bbn.com>
-References: <1383212197-14259-2-git-send-email-felipe.contreras@gmail.com> <1384146656-11811-1-git-send-email-rhansen@bbn.com> <5280c4bc4354a_36a51059e74ea@nysa.notmuch>
+Date: Mon, 11 Nov 2013 12:15:53 -0600
+Message-ID: <CAMP44s1SC0SQLKWG13-FRwvX6AB6pZmn+z0f1ovnuawC6wcb+w@mail.gmail.com>
+References: <1383212197-14259-2-git-send-email-felipe.contreras@gmail.com>
+	<1384146656-11811-1-git-send-email-rhansen@bbn.com>
+	<5280c4bc4354a_36a51059e74ea@nysa.notmuch>
+	<52811E1F.4090500@bbn.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: srabbelier@gmail.com
-To: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 11 19:13:09 2013
+Cc: git@vger.kernel.org, Sverre Rabbelier <srabbelier@gmail.com>
+To: Richard Hansen <rhansen@bbn.com>
+X-From: git-owner@vger.kernel.org Mon Nov 11 19:16:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vfvz2-0004ow-87
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Nov 2013 19:13:08 +0100
+	id 1Vfw1o-0000WB-Bl
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Nov 2013 19:16:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754106Ab3KKSMu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Nov 2013 13:12:50 -0500
-Received: from smtp.bbn.com ([128.33.0.80]:43611 "EHLO smtp.bbn.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753572Ab3KKSMt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Nov 2013 13:12:49 -0500
-Received: from socket.bbn.com ([192.1.120.102]:57675)
-	by smtp.bbn.com with esmtps (TLSv1:AES256-SHA:256)
-	(Exim 4.77 (FreeBSD))
-	(envelope-from <rhansen@bbn.com>)
-	id 1Vfvyi-000Dpa-9S; Mon, 11 Nov 2013 13:12:48 -0500
-X-Submitted: to socket.bbn.com (Postfix) with ESMTPSA id ECAEF3FEF1
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.1.0
-In-Reply-To: <5280c4bc4354a_36a51059e74ea@nysa.notmuch>
-X-Enigmail-Version: 1.6
+	id S1754824Ab3KKSP5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Nov 2013 13:15:57 -0500
+Received: from mail-la0-f46.google.com ([209.85.215.46]:60804 "EHLO
+	mail-la0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754738Ab3KKSPz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Nov 2013 13:15:55 -0500
+Received: by mail-la0-f46.google.com with SMTP id el20so4219665lab.19
+        for <git@vger.kernel.org>; Mon, 11 Nov 2013 10:15:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=91OkUpLC6Nr/HMpv9D11BTngj3+tOGybsV/0Hr8ob1k=;
+        b=oKjhDRF77x9A8mC+FenXrP230hoRz6l7krwfG8Kk6tp5ZeY+BCcBGDocZ5Jn1+3Jbv
+         K0dwBi3wdPDox0atpYLtMOX6zXRJjoBazuZhywbzo5hzBffz9dp95hyssyQ3xYgZ5gR+
+         hLhy3cHInr41CY8Ajjv8Z1e1Fd4RVJipgnNZn6wfdmE8emOxLSfpJ1mzedm/CnbXOIKm
+         zAeGfcbITuBVNA00ZAjVnbDZb0EgDT3Zf4tHFveQycY++39lViLneIXYn4afhTcX7epr
+         KuVBxoPIweCKOgw4HN6MndhMptOeuhCXGqGzQQ+dfkeeCumnpq0kJsnFeh3Z04CtwYyb
+         BoCg==
+X-Received: by 10.112.140.137 with SMTP id rg9mr22582771lbb.19.1384193753294;
+ Mon, 11 Nov 2013 10:15:53 -0800 (PST)
+Received: by 10.114.201.69 with HTTP; Mon, 11 Nov 2013 10:15:53 -0800 (PST)
+In-Reply-To: <52811E1F.4090500@bbn.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237623>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237624>
 
-On 2013-11-11 06:51, Felipe Contreras wrote:
-> Richard Hansen wrote:
->> Signed-off-by: Richard Hansen <rhansen@bbn.com>
->> ---
->>  contrib/remote-helpers/git-remote-bzr | 34 +++++++++++++++++++++++++++++++++-
->>  contrib/remote-helpers/test-bzr.sh    | 22 +++++++++++++++++++++-
->>  2 files changed, 54 insertions(+), 2 deletions(-)
->>
->> diff --git a/contrib/remote-helpers/git-remote-bzr b/contrib/remote-helpers/git-remote-bzr
->> index 7e34532..ba693d1 100755
->> --- a/contrib/remote-helpers/git-remote-bzr
->> +++ b/contrib/remote-helpers/git-remote-bzr
->> @@ -42,6 +42,7 @@ import json
->>  import re
->>  import StringIO
->>  import atexit, shutil, hashlib, urlparse, subprocess
->> +import types
->>  
->>  NAME_RE = re.compile('^([^<>]+)')
->>  AUTHOR_RE = re.compile('^([^<>]+?)? ?[<>]([^<>]*)(?:$|>)')
->> @@ -684,7 +685,8 @@ def do_export(parser):
->>                  peer = bzrlib.branch.Branch.open(peers[name],
->>                                                   possible_transports=transports)
->>                  try:
->> -                    peer.bzrdir.push_branch(branch, revision_id=revid)
->> +                    peer.bzrdir.push_branch(branch, revision_id=revid,
->> +                                            overwrite=force)
->>                  except bzrlib.errors.DivergedBranches:
->>                      print "error %s non-fast forward" % ref
->>                      continue
->> @@ -718,8 +720,34 @@ def do_capabilities(parser):
->>          print "*import-marks %s" % path
->>      print "*export-marks %s" % path
->>  
->> +    print "option"
->>      print
->>  
->> +class InvalidOptionValue(Exception):
->> +    pass
->> +
->> +def do_option(parser):
->> +    (opt, val) = parser[1:3]
->> +    handler = globals().get('do_option_' + opt)
->> +    if handler and type(handler) == types.FunctionType:
->> +        try:
->> +            handler(val)
->> +        except InvalidOptionValue:
->> +            print "error '%s' is not a valid value for option '%s'" % (val, opt)
->> +    else:
->> +        print "unsupported"
->> +
->> +def do_bool_option(val):
->> +    if val == 'true': ret = True
->> +    elif val == 'false': ret = False
->> +    else: raise InvalidOptionValue()
->> +    print "ok"
->> +    return ret
->> +
->> +def do_option_force(val):
->> +    global force
->> +    force = do_bool_option(val)
->> +
-> 
-> While this organization has merit, I think it's overkill for a single option,
-> or just a couple of them. If in the future we add more, we might revisit this,
-> for the moment something like this would suffice:
+On Mon, Nov 11, 2013 at 12:12 PM, Richard Hansen <rhansen@bbn.com> wrote:
+> On 2013-11-11 06:51, Felipe Contreras wrote:
 
-OK, I'll reroll.
+>>     def do_option(parser):
+>>       global force
+>>       _, key, value = parser.line.split(' ')
+>
+> I'm surprised you prefer this over 'key, val = parser[1:3]' or even
+> '_, key, val = parser[:]'.  Are you intending to eventually remove
+> Parser.__getitem__()?
 
-> 
->     class InvalidOptionValue(Exception):
-> 	pass
-> 
->     def get_bool_option(val):
-> 	if val == 'true':
-> 	    return True
-> 	elif val == 'false':
-> 	    return False
-> 	else:
-> 	    raise InvalidOptionValue()
-> 
->     def do_option(parser):
-> 	global force
-> 	_, key, value = parser.line.split(' ')
+I don't, actually. I'm fine with either way.
 
-I'm surprised you prefer this over 'key, val = parser[1:3]' or even
-'_, key, val = parser[:]'.  Are you intending to eventually remove
-Parser.__getitem__()?
+Cheers.
 
-Thanks,
-Richard
-
-
-> 	try:
-> 	    if key == 'force':
-> 		force = get_bool_option(value)
-> 		print 'ok'
-> 	    else:
-> 		print 'unsupported'
-> 	except InvalidOptionValue:
-> 	    print "error '%s' is not a valid value for option '%s'" % (value, key)
-> 
-> Cheers.
+-- 
+Felipe Contreras
