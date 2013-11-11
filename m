@@ -1,79 +1,88 @@
-From: Richard Hansen <rhansen@bbn.com>
-Subject: Re: [PATCH 1/7] remote-hg: don't decode UTF-8 paths into Unicode
- objects
-Date: Mon, 11 Nov 2013 13:30:48 -0500
-Message-ID: <52812258.1060109@bbn.com>
-References: <1384142712-2936-1-git-send-email-rhansen@bbn.com> <1384142712-2936-2-git-send-email-rhansen@bbn.com> <5280b9d87f92c_6841541e786f@nysa.notmuch>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/7] test-bzr.sh, test-hg.sh: allow running from any dir
+Date: Mon, 11 Nov 2013 10:31:19 -0800
+Message-ID: <xmqqsiv2lrig.fsf@gitster.dls.corp.google.com>
+References: <1384142712-2936-1-git-send-email-rhansen@bbn.com>
+	<1384142712-2936-3-git-send-email-rhansen@bbn.com>
+	<5280c108749d8_6841541e787e@nysa.notmuch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 11 19:30:55 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Richard Hansen <rhansen@bbn.com>, git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 11 19:31:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VfwGF-0004Xj-3o
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Nov 2013 19:30:55 +0100
+	id 1VfwGw-0005ad-SK
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Nov 2013 19:31:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755134Ab3KKSaw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Nov 2013 13:30:52 -0500
-Received: from smtp.bbn.com ([128.33.1.81]:33428 "EHLO smtp.bbn.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754301Ab3KKSau (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Nov 2013 13:30:50 -0500
-Received: from socket.bbn.com ([192.1.120.102]:44789)
-	by smtp.bbn.com with esmtps (TLSv1:AES256-SHA:256)
-	(Exim 4.77 (FreeBSD))
-	(envelope-from <rhansen@bbn.com>)
-	id 1VfwG8-000OLk-TK; Mon, 11 Nov 2013 13:30:48 -0500
-X-Submitted: to socket.bbn.com (Postfix) with ESMTPSA id 96DF93FEF1
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.1.0
-In-Reply-To: <5280b9d87f92c_6841541e786f@nysa.notmuch>
-X-Enigmail-Version: 1.6
+	id S1755185Ab3KKSbc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Nov 2013 13:31:32 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45737 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755181Ab3KKSbW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Nov 2013 13:31:22 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 16146501A3;
+	Mon, 11 Nov 2013 13:31:22 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ma6u+c2pBS+Wt+/spXSGkyrRSRE=; b=aZdxQn
+	Ss1t2I0qZJVyhGNQPh+wYijHkpgcQ7rxrAdUC9PXX+Z8nDEkmiHQLyBMdosgQjET
+	KgsbFpWVlCUZXr7MQ0vQlZAN2GCCSZkIVTUjEgSW+7ngHQqs5rSMivJqKro1t1Hq
+	oV8j9M4ScXV7i3sXG8cPQn63iMY3UD49IW5r4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ntffjA8olOVKm2E1+BxDTsypgR0Uic1b
+	ERCtlR+lT5htGClPF7zUQJReNe6tDibFVxFsgwId6eeDllnbnFEC4OqQYMi2RwpF
+	95ByEQ4gz//nETCJv93W3+M9HNJUXLgRQJqRsHw79r3+VkNG4UJt3ACNxmEYy/da
+	UgEDJE+zOio=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0681D501A2;
+	Mon, 11 Nov 2013 13:31:22 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4BB61501A0;
+	Mon, 11 Nov 2013 13:31:21 -0500 (EST)
+In-Reply-To: <5280c108749d8_6841541e787e@nysa.notmuch> (Felipe Contreras's
+	message of "Mon, 11 Nov 2013 05:35:36 -0600")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 764E4990-4AFF-11E3-82AA-D331802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237627>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237628>
 
-On 2013-11-11 06:04, Felipe Contreras wrote:
+Felipe Contreras <felipe.contreras@gmail.com> writes:
+
 > Richard Hansen wrote:
->> The internal mercurial API expects ordinary 8-bit string objects, not
->> Unicode string objects.  With this change, the test-hg.sh unit tests
->> pass again.
-> 
-> This makes sense to me, but the tests are already passing for me. How are they
-> failing for you?
+>> cd to the t/ subdirectory so that the user doesn't already have to be
+>> in the test directory to run these test scripts.
+>> 
+>> Signed-off-by: Richard Hansen <rhansen@bbn.com>
+>> ---
+>>  contrib/remote-helpers/test-bzr.sh | 1 +
+>>  contrib/remote-helpers/test-hg.sh  | 1 +
+>>  2 files changed, 2 insertions(+)
+>> 
+>> diff --git a/contrib/remote-helpers/test-bzr.sh b/contrib/remote-helpers/test-bzr.sh
+>> index 5c50251..094062c 100755
+>> --- a/contrib/remote-helpers/test-bzr.sh
+>> +++ b/contrib/remote-helpers/test-bzr.sh
+>> @@ -5,6 +5,7 @@
+>>  
+>>  test_description='Test remote-bzr'
+>>  
+>> +cd "${0%/*}"/../../t || exit 1
+>
+> I think this should do the trick:
+>
+>   test -z "$TEST_DIRECTORY" && TEST_DIRECTORY="$(realpath ${0%/*}/../../t)"
+>   . "$TEST_DIRECTORY"/test-lib.sh
 
-$ hg --version | head -n 1
-Mercurial Distributed SCM (version 2.2.2)
-$ cd ~/git/t
-$ ../contrib/remote-helpers/test-hg.sh --verbose --immediate
-...
-Traceback (most recent call last):
-  File "~/git/contrib/remote-helpers/git-remote-hg", line 1246, in <module>
-    sys.exit(main(sys.argv))
-  File "~/git/contrib/remote-helpers/git-remote-hg", line 1230, in main
-    do_export(parser)
-  File "~/git/contrib/remote-helpers/git-remote-hg", line 1031, in do_export
-    parse_commit(parser)
-  File "~/git/contrib/remote-helpers/git-remote-hg", line 822, in
-parse_commit
-    node = hghex(repo.commitctx(ctx))
-  File "/usr/lib/python2.7/dist-packages/mercurial/localrepo.py", line
-1270, in commitctx
-    p2.manifestnode(), (new, drop))
-  File "/usr/lib/python2.7/dist-packages/mercurial/manifest.py", line
-197, in add
-    cachedelta = (self.rev(p1), addlistdelta(addlist, delta))
-  File "/usr/lib/python2.7/dist-packages/mercurial/manifest.py", line
-124, in addlistdelta
-    addlist[start:end] = array.array('c', content)
-TypeError: array item must be char
-not ok 4 - update bookmark
-
-I can put the above in the commit message if people would like it there.
-
--Richard
+Can we do that without using realpath(1)? I do not think we use it
+anywhere in the main part of the project.
