@@ -1,69 +1,73 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: Bug? diff.submodule=log adds text to commit -v message
-Date: Mon, 11 Nov 2013 21:41:25 +0100
-Message-ID: <528140F5.6090700@web.de>
-References: <loom.20131110T222043-57@post.gmane.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] git-remote-mediawiki: do not remove installed files in
+ "clean" target
+Date: Mon, 11 Nov 2013 12:45:04 -0800
+Message-ID: <20131111204504.GM10302@google.com>
+References: <20131109022239.GI10302@google.com>
+ <vpqli0xstcw.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: Ari Pollak <ari@debian.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 11 21:41:37 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Thorsten Glaser <t.glaser@tarent.de>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon Nov 11 21:45:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VfyIi-0000pT-UU
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Nov 2013 21:41:37 +0100
+	id 1VfyME-00065p-3K
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Nov 2013 21:45:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752784Ab3KKUld (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Nov 2013 15:41:33 -0500
-Received: from mout.web.de ([212.227.15.3]:55020 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752783Ab3KKUlb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Nov 2013 15:41:31 -0500
-Received: from [192.168.178.41] ([91.3.132.224]) by smtp.web.de (mrweb102)
- with ESMTPA (Nemesis) id 0M3T1Y-1VORNh0VDU-00qxGP for <git@vger.kernel.org>;
- Mon, 11 Nov 2013 21:41:29 +0100
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.1.0
-In-Reply-To: <loom.20131110T222043-57@post.gmane.org>
-X-Enigmail-Version: 1.6
-X-Provags-ID: V03:K0:uvveGetv9pEie9+FKiANJvADI6IPCR3xRwRbAMJNQskDnf47oU5
- GBwHez1/imi7cfil0jo9O2CFmiBXguWWBY9WP6xqIQyvrhr019zKdzYTKRjvmti2J/BsJyt
- 0HkQlWkaJOJwsZ87ZcLPp1KVw48ZUVhUJni4O/XLCzSY03/S5i3OW0n30Pw99YOp/MKpwVy
- oZGYCYn1ykKAewPwltioQ==
+	id S1751642Ab3KKUpK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Nov 2013 15:45:10 -0500
+Received: from mail-pd0-f178.google.com ([209.85.192.178]:65057 "EHLO
+	mail-pd0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751156Ab3KKUpI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Nov 2013 15:45:08 -0500
+Received: by mail-pd0-f178.google.com with SMTP id p10so1126391pdj.23
+        for <git@vger.kernel.org>; Mon, 11 Nov 2013 12:45:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=TPseVs7Jz0Gpx4erpsmWZUbIcobCqAh2E7sylsUHwro=;
+        b=Y+XY746FTeTdsoxS+e30E8EO04cPYFrOhv8UCJnf+gSHAaRfGAP2OQa6tPOmzIfMDB
+         O75pznBQd9DqENQM8FbZyGIVM/JeIt6+Hx+EQO6SiCCz0QaS8hxon8u9eMQxgrlPRpCp
+         fLA8nBwzKfGHKTRyzFaLZiRR9z71u4CtxtHL39JOBt43zHToPQFQPdutIUjXa3PRQ3W0
+         5+JyPZd8rktzARwwBRbKdWJiatk4cZksii9404cQLLb2Vs2rDWQA/jrxewfvuiZg7PSF
+         M+jGJf73loVTkmFY4Co/FT34PiQey5+IK+SCkQ8anYtpqnMulymK2F/FcqAKPiw2+gNg
+         p3MA==
+X-Received: by 10.68.166.67 with SMTP id ze3mr3916250pbb.173.1384202707974;
+        Mon, 11 Nov 2013 12:45:07 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id cw2sm15167564pbb.25.2013.11.11.12.45.05
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 11 Nov 2013 12:45:06 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <vpqli0xstcw.fsf@anie.imag.fr>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237645>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237646>
 
-Hi Ari,
+Matthieu Moy wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
 
-Am 10.11.2013 22:49, schrieb Ari Pollak:
-> I'm using git 1.8.4.2, and I've set the "diff.submodule = log" option 
-> globally. If I change the revision that a submodule is set to, then run
-> "git commit -av", The submodule shortlog is appended to the log message without 
-> any #s before it, so the log messages get included in my own log message. 
-> This seems like a bug and not a feature, as diffs aren't normally included in 
-> the commit message with -v.
+>> Running "make clean" after a successful "make install" should not
+>> result in a broken mediawiki remote helper.
+>
+> Acked-by: Matthieu Moy <Matthieu.Moy@imag.fr>
 
-Thanks for your report, I can reproduce that here. But first I think
-this is unrelated to the "diff.submodule = log" setting, as without it
-you'll just see the submodule commit hash diff instead of the shortlog
-(which is perfectly consistent with what I'd expect from this setting).
-And secondly what you describe looks like documented behavior, the man
-page of "git commit" states:
+Thanks for looking it over.  Here are a few more makefile tweaks on
+top of that one.
 
- -v, --verbose
-     Show unified diff between the HEAD commit and what would be
-     committed at the bottom of the commit message template. Note that
-     this diff output doesn't have its lines prefixed with #.
+Jonathan Nieder (3):
+  git-remote-mediawiki: honor DESTDIR in "make install"
+  git-remote-mediawiki build: make 'install' command configurable
+  git-remote-mediawiki build: handle DESTDIR/INSTLIBDIR with whitespace
 
-And after adding a modified file the log message also shows the diff of
-that file (and without leading "# "s too), so I doubt that diffs aren't
-normally included in the commit message with -v. What am I missing?
-
-
-Thanks
-Jens
+ contrib/mw-to-git/Makefile | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
