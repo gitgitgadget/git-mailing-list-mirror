@@ -1,8 +1,8 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 2/3] git-remote-mediawiki build: make 'install' command
- configurable
-Date: Mon, 11 Nov 2013 12:45:50 -0800
-Message-ID: <20131111204550.GO10302@google.com>
+Subject: [PATCH 3/3] git-remote-mediawiki build: handle DESTDIR/INSTLIBDIR
+ with whitespace
+Date: Mon, 11 Nov 2013 12:46:12 -0800
+Message-ID: <20131111204612.GP10302@google.com>
 References: <20131109022239.GI10302@google.com>
  <vpqli0xstcw.fsf@anie.imag.fr>
  <20131111204504.GM10302@google.com>
@@ -10,41 +10,41 @@ Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, Thorsten Glaser <t.glaser@tarent.de>
 To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Nov 11 21:45:59 2013
+X-From: git-owner@vger.kernel.org Mon Nov 11 21:46:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VfyMw-00075w-9X
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Nov 2013 21:45:58 +0100
+	id 1VfyNI-0007a7-Cm
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Nov 2013 21:46:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752458Ab3KKUpz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Nov 2013 15:45:55 -0500
-Received: from mail-pd0-f179.google.com ([209.85.192.179]:36472 "EHLO
-	mail-pd0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752466Ab3KKUpy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Nov 2013 15:45:54 -0500
-Received: by mail-pd0-f179.google.com with SMTP id y10so5657213pdj.24
-        for <git@vger.kernel.org>; Mon, 11 Nov 2013 12:45:53 -0800 (PST)
+	id S1751821Ab3KKUqR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Nov 2013 15:46:17 -0500
+Received: from mail-pa0-f54.google.com ([209.85.220.54]:49808 "EHLO
+	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751477Ab3KKUqP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Nov 2013 15:46:15 -0500
+Received: by mail-pa0-f54.google.com with SMTP id lj1so2862440pab.41
+        for <git@vger.kernel.org>; Mon, 11 Nov 2013 12:46:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        bh=KNNrEBr65jxAUR3Hg2Qy1HosR5Gv7podfv8KepxGMdY=;
-        b=dBVw/Gp32v6Xo9cPhOO6pO7wxbE9LNfgCl9JRoP8UHEQr8Y/YSUv8o53GgM6+7U7x1
-         Wk7h13ntPNLrObLTFe2GptVLtKO9ZWbl4Nn/FTpcXha8FiUvVskLa2aOocPosYAD4UWK
-         Aq5aTOTq0mYm3m829TVKsEoXRWLRVHMTJYtT58CEQAA5lHzKZOcD/TyyOPz5xhc2RqRA
-         IsN7iWwfHWcgpjhfw/J1YDv/R0khMYs+Vsbb/RhM/jHdBq2OYnld6okhIf0kf2508s1o
-         Lt165uKwiwRCxbbEUQiA3Uel1wF24nr/hV4LwzRJbGskc+rzAWnCDQI2v+LVLQ6zXeiV
-         LT3A==
-X-Received: by 10.68.230.228 with SMTP id tb4mr9008934pbc.108.1384202753394;
-        Mon, 11 Nov 2013 12:45:53 -0800 (PST)
+        bh=8vO1FYiK6p1313O4jsQAN2KHfN/NFb7o5u12nNruVqQ=;
+        b=jsl2LYDfyn1fBCWHUMf9zWa0S83YTdLlER5WIrslwnw/yxTrtLt9+BLrGODWu+NNmy
+         MwhvSXtwt6x6wGwLc4nuG0i/uhWzty5u5PbajBKZa6YS+YK7EUnlheRu3YWuGw1dRpsa
+         O9dLldSp2Fpu/TTWYpwquiNFM1I7FbeuCQQ+xyE2JMCBSJbXbeal8veXBmr5cjSXld0Y
+         zKCo41N0qUeUbNLDPuYid5X8cBRjP/fPL5oJo12gQt3pdURAZ0/9rdmn0Aa1HoEOfWfD
+         AcsXE06PP1hYgKeNBDXBOfs3K9Zqfm4F5WciIn81A7L1Ol0+BXsDFhES3JPOiso2YJ+H
+         NpQA==
+X-Received: by 10.68.244.168 with SMTP id xh8mr31589622pbc.3.1384202775227;
+        Mon, 11 Nov 2013 12:46:15 -0800 (PST)
 Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id dq3sm32756292pbc.35.2013.11.11.12.45.52
+        by mx.google.com with ESMTPSA id qn1sm18359613pbc.34.2013.11.11.12.46.14
         for <multiple recipients>
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 11 Nov 2013 12:45:52 -0800 (PST)
+        Mon, 11 Nov 2013 12:46:14 -0800 (PST)
 Content-Disposition: inline
 In-Reply-To: <20131111204504.GM10302@google.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
@@ -52,10 +52,11 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237648>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237649>
 
-On some machines, the most usable 'install' tool is named
-'ginstall'.
+Quote DESTDIR and INSTLIBDIR for the shell in the same way as is done in
+the toplevel Makefile to avoid confusion in case they contain shell
+metacharacters.
 
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
@@ -63,28 +64,29 @@ Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
  1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/contrib/mw-to-git/Makefile b/contrib/mw-to-git/Makefile
-index ee78fda..e685dad 100644
+index e685dad..a4b6f7a 100644
 --- a/contrib/mw-to-git/Makefile
 +++ b/contrib/mw-to-git/Makefile
-@@ -18,6 +18,8 @@ SCRIPT_PERL+=git-mw.perl
- GIT_ROOT_DIR=../..
- HERE=contrib/mw-to-git/
- 
-+INSTALL = install
-+
+@@ -23,6 +23,8 @@ INSTALL = install
  SCRIPT_PERL_FULL=$(patsubst %,$(HERE)/%,$(SCRIPT_PERL))
  INSTLIBDIR=$(shell $(MAKE) -C $(GIT_ROOT_DIR)/perl \
                  -s --no-print-directory instlibdir)
-@@ -30,8 +32,8 @@ test: all
++DESTDIR_SQ = $(subst ','\'',$(DESTDIR))
++INSTLIBDIR_SQ = $(subst ','\'',$(INSTLIBDIR))
+ 
+ all: build
+ 
+@@ -32,9 +34,9 @@ test: all
  check: perlcritic test
  
  install_pm:
--	install -d -m 755 $(DESTDIR)$(INSTLIBDIR)/Git
--	install -m 644 $(GIT_MEDIAWIKI_PM) \
-+	$(INSTALL) -d -m 755 $(DESTDIR)$(INSTLIBDIR)/Git
-+	$(INSTALL) -m 644 $(GIT_MEDIAWIKI_PM) \
- 		$(DESTDIR)$(INSTLIBDIR)/$(GIT_MEDIAWIKI_PM)
+-	$(INSTALL) -d -m 755 $(DESTDIR)$(INSTLIBDIR)/Git
++	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(INSTLIBDIR_SQ)/Git'
+ 	$(INSTALL) -m 644 $(GIT_MEDIAWIKI_PM) \
+-		$(DESTDIR)$(INSTLIBDIR)/$(GIT_MEDIAWIKI_PM)
++		'$(DESTDIR_SQ)$(INSTLIBDIR_SQ)/$(GIT_MEDIAWIKI_PM)'
  
  build:
+ 	$(MAKE) -C $(GIT_ROOT_DIR) SCRIPT_PERL="$(SCRIPT_PERL_FULL)" \
 -- 
 1.8.4.1
