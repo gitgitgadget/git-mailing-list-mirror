@@ -1,177 +1,171 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v6 06/10] fast-export: add new --refspec option
-Date: Mon, 11 Nov 2013 16:55:02 -0600
-Message-ID: <1384210507-26561-6-git-send-email-felipe.contreras@gmail.com>
+Subject: [PATCH v6 03/10] transport-helper: add 'force' to 'export' helpers
+Date: Mon, 11 Nov 2013 16:55:03 -0600
+Message-ID: <1384210507-26561-7-git-send-email-felipe.contreras@gmail.com>
 References: <1384210507-26561-1-git-send-email-felipe.contreras@gmail.com>
 Cc: Sverre Rabbelier <srabbelier@gmail.com>,
 	Richard Hansen <rhansen@bbn.com>,
 	Felipe Contreras <felipe.contreras@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 12 00:02:26 2013
+X-From: git-owner@vger.kernel.org Tue Nov 12 00:02:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vg0Ux-0006Pi-Le
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Nov 2013 00:02:24 +0100
+	id 1Vg0V1-0006T2-J5
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Nov 2013 00:02:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753488Ab3KKXCT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Nov 2013 18:02:19 -0500
-Received: from mail-ob0-f179.google.com ([209.85.214.179]:41122 "EHLO
-	mail-ob0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753427Ab3KKXCM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Nov 2013 18:02:12 -0500
-Received: by mail-ob0-f179.google.com with SMTP id wn1so3798201obc.38
-        for <git@vger.kernel.org>; Mon, 11 Nov 2013 15:02:11 -0800 (PST)
+	id S1753511Ab3KKXCW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Nov 2013 18:02:22 -0500
+Received: from mail-ob0-f180.google.com ([209.85.214.180]:36159 "EHLO
+	mail-ob0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753353Ab3KKXCO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Nov 2013 18:02:14 -0500
+Received: by mail-ob0-f180.google.com with SMTP id vb8so2140685obc.25
+        for <git@vger.kernel.org>; Mon, 11 Nov 2013 15:02:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=rkS4SoLzZ9JA9YrrQg565Z5QVGwAoAqU6aaWDVc0uMw=;
-        b=PlfGhdD/BhpJd8qc+oaK4lcxoa056JfBW+BnqM+p02bJD4+DhFVLwaVX8h5c6kafNW
-         fj8uXXY7uFxG3n6nfgDWCz5oOVErMQNVNAeVoVM5GksQ+Ms2MXwQnsjWLF53KTCmszrq
-         ff01kYy97N71uQUC3dBMglNlmi89llDRQuZap1vzpTEO6mnUBbPgOp0qlQ8NTgWj3e6p
-         jmgyk1MlyZKppT0zNnVfwNWxIAeldZ+lRd9mEysyYavC0s5O3aclNm3pyq40PQgpR6aq
-         LN7wv86nH02pizyNwYxvJwXgsuJcf8lc+2NO05ELsZr8Gc4WrgH7lnaGdY7vWaaoncWM
-         RKiQ==
-X-Received: by 10.182.131.196 with SMTP id oo4mr6681120obb.50.1384210931475;
-        Mon, 11 Nov 2013 15:02:11 -0800 (PST)
+        bh=HMZDn+UKumiOay0PM5EM84GYcNnKLkmR5I1MHyxlTS0=;
+        b=LqFFQGtUau1Am9nShtJjNrzN1NUX69ZkWWaOFmKGvvkHhldICkBNQb7wIHi2Vmy/oz
+         1JPfCH3nZQHYOOZ3jIXfkfwZgKmyJt12SigycdNjVMppcRF3tLGztfMsY/uFImahfq2b
+         19CWswUbDe9RYuvZkYkCL/rAOAbxu3oV7XvA1mhw4MziQgmwoMocgUDlm8JXIn26eorH
+         luBtarLNbLuV4cBqhh2dahcPWS4GGKaFr5qwA2Fqf/m8LuuHBpCK2++FXKl/bQ4YctwL
+         HVbX0WC38XrxQMYEkvGSibr7zfkNONfVihqjlt2GdwcW05Iq1G7p+L3kLtX2gk5yP5TO
+         +8xw==
+X-Received: by 10.60.157.2 with SMTP id wi2mr20712954oeb.35.1384210934218;
+        Mon, 11 Nov 2013 15:02:14 -0800 (PST)
 Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
-        by mx.google.com with ESMTPSA id ru3sm29306879obc.2.2013.11.11.15.02.09
+        by mx.google.com with ESMTPSA id hs4sm29291679obb.5.2013.11.11.15.02.12
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 11 Nov 2013 15:02:10 -0800 (PST)
+        Mon, 11 Nov 2013 15:02:13 -0800 (PST)
 X-Mailer: git-send-email 1.8.4.2+fc1
 In-Reply-To: <1384210507-26561-1-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237668>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237669>
 
-So that we can convert the exported ref names.
+Otherwise they cannot know when to force the push or not (other than
+hacks).
 
+Tests-by: Richard Hansen <rhansen@bbn.com>
+Documentation-by: Richard Hansen <rhansen@bbn.com>
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- Documentation/git-fast-export.txt |  4 ++++
- builtin/fast-export.c             | 32 ++++++++++++++++++++++++++++++++
- t/t9350-fast-export.sh            |  7 +++++++
- 3 files changed, 43 insertions(+)
+ Documentation/gitremote-helpers.txt |  4 ++++
+ git-remote-testgit.sh               | 18 ++++++++++++++++++
+ t/t5801-remote-helpers.sh           | 13 +++++++++++++
+ transport-helper.c                  |  5 +++++
+ 4 files changed, 40 insertions(+)
 
-diff --git a/Documentation/git-fast-export.txt b/Documentation/git-fast-export.txt
-index 85f1f30..221506b 100644
---- a/Documentation/git-fast-export.txt
-+++ b/Documentation/git-fast-export.txt
-@@ -105,6 +105,10 @@ marks the same across runs.
- 	in the commit (as opposed to just listing the files which are
- 	different from the commit's first parent).
+diff --git a/Documentation/gitremote-helpers.txt b/Documentation/gitremote-helpers.txt
+index f1f4ca9..e75699c 100644
+--- a/Documentation/gitremote-helpers.txt
++++ b/Documentation/gitremote-helpers.txt
+@@ -437,6 +437,10 @@ set by Git if the remote helper has the 'option' capability.
+ 'option check-connectivity' \{'true'|'false'\}::
+ 	Request the helper to check connectivity of a clone.
  
-+--refspec::
-+	Apply the specified refspec to each ref exported. Multiple of them can
-+	be specified.
++'option force' \{'true'|'false'\}::
++	Request the helper to perform a force update.  Defaults to
++	'false'.
 +
- [<git-rev-list-args>...]::
- 	A list of arguments, acceptable to 'git rev-parse' and
- 	'git rev-list', that specifies the specific objects and references
-diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-index eea5b8c..cf745ec 100644
---- a/builtin/fast-export.c
-+++ b/builtin/fast-export.c
-@@ -17,6 +17,7 @@
- #include "utf8.h"
- #include "parse-options.h"
- #include "quote.h"
-+#include "remote.h"
+ SEE ALSO
+ --------
+ linkgit:git-remote[1]
+diff --git a/git-remote-testgit.sh b/git-remote-testgit.sh
+index 6d2f282..1c006a0 100755
+--- a/git-remote-testgit.sh
++++ b/git-remote-testgit.sh
+@@ -15,6 +15,8 @@ test -z "$refspec" && prefix="refs"
  
- static const char *fast_export_usage[] = {
- 	N_("git fast-export [rev-list-opts]"),
-@@ -31,6 +32,8 @@ static int use_done_feature;
- static int no_data;
- static int full_tree;
- static struct string_list extra_refs = STRING_LIST_INIT_NODUP;
-+static struct refspec *refspecs;
-+static int refspecs_nr;
+ export GIT_DIR="$url/.git"
  
- static int parse_opt_signed_tag_mode(const struct option *opt,
- 				     const char *arg, int unset)
-@@ -525,6 +528,15 @@ static void get_tags_and_duplicates(struct rev_cmdline_info *info)
- 		if (dwim_ref(e->name, strlen(e->name), sha1, &full_name) != 1)
- 			continue;
- 
-+		if (refspecs) {
-+			char *private;
-+			private = apply_refspecs(refspecs, refspecs_nr, full_name);
-+			if (private) {
-+				free(full_name);
-+				full_name = private;
-+			}
-+		}
++force=
 +
- 		commit = get_commit(e, full_name);
- 		if (!commit) {
- 			warning("%s: Unexpected object of type %s, skipping.",
-@@ -668,6 +680,7 @@ int cmd_fast_export(int argc, const char **argv, const char *prefix)
- 	struct commit *commit;
- 	char *export_filename = NULL, *import_filename = NULL;
- 	uint32_t lastimportid;
-+	struct string_list refspecs_list = STRING_LIST_INIT_NODUP;
- 	struct option options[] = {
- 		OPT_INTEGER(0, "progress", &progress,
- 			    N_("show progress after <n> objects")),
-@@ -688,6 +701,8 @@ int cmd_fast_export(int argc, const char **argv, const char *prefix)
- 		OPT_BOOL(0, "use-done-feature", &use_done_feature,
- 			     N_("Use the done feature to terminate the stream")),
- 		OPT_BOOL(0, "no-data", &no_data, N_("Skip output of blob data")),
-+		OPT_STRING_LIST(0, "refspec", &refspecs_list, N_("refspec"),
-+			     N_("Apply refspec to exported refs")),
- 		OPT_END()
- 	};
+ mkdir -p "$dir"
  
-@@ -707,6 +722,21 @@ int cmd_fast_export(int argc, const char **argv, const char *prefix)
- 	if (argc > 1)
- 		usage_with_options (fast_export_usage, options);
+ if test -z "$GIT_REMOTE_TESTGIT_NO_MARKS"
+@@ -39,6 +41,7 @@ do
+ 		fi
+ 		test -n "$GIT_REMOTE_TESTGIT_SIGNED_TAGS" && echo "signed-tags"
+ 		test -n "$GIT_REMOTE_TESTGIT_NO_PRIVATE_UPDATE" && echo "no-private-update"
++		echo 'option'
+ 		echo
+ 		;;
+ 	list)
+@@ -93,6 +96,7 @@ do
+ 		before=$(git for-each-ref --format=' %(refname) %(objectname) ')
  
-+	if (refspecs_list.nr) {
-+		const char **refspecs_str;
-+		int i;
-+
-+		refspecs_str = xmalloc(sizeof(*refspecs_str) * refspecs_list.nr);
-+		for (i = 0; i < refspecs_list.nr; i++)
-+			refspecs_str[i] = refspecs_list.items[i].string;
-+
-+		refspecs_nr = refspecs_list.nr;
-+		refspecs = parse_fetch_refspec(refspecs_nr, refspecs_str);
-+
-+		string_list_clear(&refspecs_list, 1);
-+		free(refspecs_str);
-+	}
-+
- 	if (use_done_feature)
- 		printf("feature done\n");
+ 		git fast-import \
++			${force:+--force} \
+ 			${testgitmarks:+"--import-marks=$testgitmarks"} \
+ 			${testgitmarks:+"--export-marks=$testgitmarks"} \
+ 			--quiet
+@@ -115,6 +119,20 @@ do
  
-@@ -741,5 +771,7 @@ int cmd_fast_export(int argc, const char **argv, const char *prefix)
- 	if (use_done_feature)
- 		printf("done\n");
- 
-+	free_refspec(refspecs_nr, refspecs);
-+
- 	return 0;
- }
-diff --git a/t/t9350-fast-export.sh b/t/t9350-fast-export.sh
-index 2312dec..3d475af 100755
---- a/t/t9350-fast-export.sh
-+++ b/t/t9350-fast-export.sh
-@@ -504,4 +504,11 @@ test_expect_success 'refs are updated even if no commits need to be exported' '
- 	test_cmp expected actual
+ 		echo
+ 		;;
++	option\ *)
++		read cmd opt val <<-EOF
++		$line
++		EOF
++		case $opt in
++		force)
++			test $val = "true" && force="true" || force=
++			echo "ok"
++			;;
++		*)
++			echo "unsupported"
++			;;
++		esac
++		;;
+ 	'')
+ 		exit
+ 		;;
+diff --git a/t/t5801-remote-helpers.sh b/t/t5801-remote-helpers.sh
+index 613f69a..c33cc25 100755
+--- a/t/t5801-remote-helpers.sh
++++ b/t/t5801-remote-helpers.sh
+@@ -94,6 +94,19 @@ test_expect_failure 'push new branch with old:new refspec' '
+ 	compare_refs local HEAD server refs/heads/new-refspec
  '
  
-+test_expect_success 'use refspec' '
-+	git fast-export --refspec refs/heads/master:refs/heads/foobar master | \
-+		grep "^commit " | sort | uniq > actual &&
-+	echo "commit refs/heads/foobar" > expected &&
-+	test_cmp expected actual
++test_expect_success 'forced push' '
++	(cd local &&
++	git checkout -b force-test &&
++	echo content >> file &&
++	git commit -a -m eight &&
++	git push origin force-test &&
++	echo content >> file &&
++	git commit -a --amend -m eight-modified &&
++	git push --force origin force-test
++	) &&
++	compare_refs local refs/heads/force-test server refs/heads/force-test
 +'
 +
- test_done
+ test_expect_success 'cloning without refspec' '
+ 	GIT_REMOTE_TESTGIT_REFSPEC="" \
+ 	git clone "testgit::${PWD}/server" local2 2>error &&
+diff --git a/transport-helper.c b/transport-helper.c
+index 9558a0d..bead9b9 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -855,6 +855,11 @@ static int push_refs_with_export(struct transport *transport,
+ 			die("helper %s does not support dry-run", data->name);
+ 	}
+ 
++	if (flags & TRANSPORT_PUSH_FORCE) {
++		if (set_helper_option(transport, "force", "true") != 0)
++			die("helper %s does not support 'force'", data->name);
++	}
++
+ 	helper = get_helper(transport);
+ 
+ 	write_constant(helper->in, "export\n");
 -- 
 1.8.4.2+fc1
