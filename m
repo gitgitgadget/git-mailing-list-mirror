@@ -1,132 +1,95 @@
-From: Stefan Beller <stefanbeller@googlemail.com>
-Subject: Re: git rm / format-patch / am fails on my file: patch does not apply
-Date: Mon, 11 Nov 2013 20:15:12 +0100
-Message-ID: <52812CC0.5050805@googlemail.com>
-References: <CAD3a31XPKsnuNE+szw7xgvaDrcxhKZ2jTDHKzTwdwtnCwFb_0w@mail.gmail.com> <xmqqhabilpzx.fsf@gitster.dls.corp.google.com>
+From: Richard Hansen <rhansen@bbn.com>
+Subject: Re: [PATCH 6/7] test-hg.sh: help user correlate verbose output with
+ email test
+Date: Mon, 11 Nov 2013 14:19:46 -0500
+Message-ID: <52812DD2.9030506@bbn.com>
+References: <1384142712-2936-1-git-send-email-rhansen@bbn.com> <1384142712-2936-7-git-send-email-rhansen@bbn.com> <5280c2c3e066c_6841541e7824@nysa.notmuch>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="53IoKBOaldfFTB225gmmdlh2FVo4aixWt"
-Cc: git@vger.kernel.org, Philip Oakley <philipoakley@iee.org>
-To: Junio C Hamano <gitster@pobox.com>,
-	Ken Tanzer <ken.tanzer@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 11 20:15:35 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 11 20:19:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VfwxS-0007ow-Gl
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Nov 2013 20:15:34 +0100
+	id 1Vfx1e-0005aK-NT
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Nov 2013 20:19:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755235Ab3KKTP2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Nov 2013 14:15:28 -0500
-Received: from mail-ee0-f46.google.com ([74.125.83.46]:63947 "EHLO
-	mail-ee0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753520Ab3KKTPW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Nov 2013 14:15:22 -0500
-Received: by mail-ee0-f46.google.com with SMTP id b57so2667804eek.5
-        for <git@vger.kernel.org>; Mon, 11 Nov 2013 11:15:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type;
-        bh=WGvBc3bc3pf/u30x1P1RqzkRTFiQDABqWXtOiKGlpdo=;
-        b=FA2hzJHxr6tiCjAiQwr84ukc0Vv1meDIZfuAgk04vwB+4kT9p35UdDQglQIkrIKqKS
-         mTMsHaTzP51W2L2iMwBpLn0BPkf6VBq1o+lJtJxT4p1j9ntuCD9PuXB3rN/7e0il2sfh
-         UmUBv3Uzc8Cp4MlDGJur7WuoTAIAeBqJlBI3CnEz0DnigkJ1hpvHQvSDJOlxLW7YSln9
-         D3k708Gk+puO0ZeKXdDyk8EoOsvqvUqT/AJ7lHF5ccBxWbe2kV7fHqFdbCOO0WrQJHz2
-         lV7aB7sarmwEjz3rx3wus7WY7tvR1wqv2Cg4YVaTO7FAp8MT3/Gretm0a+6FykIqmrVn
-         1tQg==
-X-Received: by 10.14.22.73 with SMTP id s49mr92662ees.99.1384197320821;
-        Mon, 11 Nov 2013 11:15:20 -0800 (PST)
-Received: from [192.168.1.9] (ip-109-91-109-128.unitymediagroup.de. [109.91.109.128])
-        by mx.google.com with ESMTPSA id a51sm27836035eeh.8.2013.11.11.11.15.19
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 11 Nov 2013 11:15:19 -0800 (PST)
+	id S1754294Ab3KKTTv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Nov 2013 14:19:51 -0500
+Received: from smtp.bbn.com ([128.33.1.81]:20927 "EHLO smtp.bbn.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753520Ab3KKTTu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Nov 2013 14:19:50 -0500
+Received: from socket.bbn.com ([192.1.120.102]:44796)
+	by smtp.bbn.com with esmtps (TLSv1:AES256-SHA:256)
+	(Exim 4.77 (FreeBSD))
+	(envelope-from <rhansen@bbn.com>)
+	id 1Vfx1X-000OqM-GS; Mon, 11 Nov 2013 14:19:47 -0500
+X-Submitted: to socket.bbn.com (Postfix) with ESMTPSA id 35B373FF72
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.1.0
-In-Reply-To: <xmqqhabilpzx.fsf@gitster.dls.corp.google.com>
-X-Enigmail-Version: 1.5.2
+In-Reply-To: <5280c2c3e066c_6841541e7824@nysa.notmuch>
+X-Enigmail-Version: 1.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237635>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237636>
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---53IoKBOaldfFTB225gmmdlh2FVo4aixWt
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
-
-On 11.11.2013 20:04, Junio C Hamano wrote:
-> Ken Tanzer <ken.tanzer@gmail.com> writes:
->=20
->> ASCII text, with very long lines, with CRLF, CR, LF line terminators
->=20
-> I am not very much surprised if such a file misbehaves, because the
-> "format-patch | am" pipeline is designed to be used on patches that
-> can be transferred in plain-text e-mail safely.  Long lines should
-> probably be OK, but mixed CRLF, CR and LF may be problematic.
->=20
-> Having said that...
->=20
->> I've confirmed with the following test case on three machines, so it
->> seems reproducible:
+On 2013-11-11 06:42, Felipe Contreras wrote:
+> Richard Hansen wrote:
+>> It's hard to tell which author conversion test failed when the email
+>> addresses look similar.
 >>
->> mkdir temp_test_case
->> cd temp_test_case
->> git init
->> # my file.  Sorry--couldn't find a saner link!
->> wget -O jquery-ui-1.8.custom.min.js
->> http://sourceforge.net/p/agency/code/ci/9358ea4dbe8e1540ec0b8bebfc7770=
-f1bf8be0ec/tree/jquery-ui-1.8.custom.min.js?format=3Draw
->> git add jquery-ui-1.8.custom.min.js
->> git commit -m 'Adding jquery-ui'
->> git rm jquery-ui-1.8.custom.min.js
->> git commit -m 'Removing jquery-ui'
->> git format-patch HEAD~1
->> git reset --hard HEAD~1
->> git am 0001*
->=20
-> ... this does not break at all for me.
-> --
+>> Signed-off-by: Richard Hansen <rhansen@bbn.com>
+>> ---
+>>  contrib/remote-helpers/test-hg.sh | 20 ++++++++++----------
+>>  1 file changed, 10 insertions(+), 10 deletions(-)
+>>
+>> diff --git a/contrib/remote-helpers/test-hg.sh b/contrib/remote-helpers/test-hg.sh
+>> index 84c67ff..5eda265 100755
+>> --- a/contrib/remote-helpers/test-hg.sh
+>> +++ b/contrib/remote-helpers/test-hg.sh
+>> @@ -209,16 +209,16 @@ test_expect_success 'authors' '
+>>  
+>>  	>../expected &&
+>>  	author_test alpha "" "H G Wells <wells@example.com>" &&
+>> -	author_test beta "test" "test <unknown>" &&
+>> -	author_test beta "test <test@example.com> (comment)" "test <test@example.com>" &&
 
-Here it breaks, though it doesn't break when using
-	 git am --ignore-whitespace 0001*
+Notice the two betas here in the original code.
 
-I do have this global config
-	core.safecrlf=3Dwarn
-regarding line endings.
+>> -	author_test gamma "<test@example.com>" "Unknown <test@example.com>" &&
+>> -	author_test delta "name<test@example.com>" "name <test@example.com>" &&
+>> -	author_test epsilon "name <test@example.com" "name <test@example.com>" &&
+>> -	author_test zeta " test " "test <unknown>" &&
+>> -	author_test eta "test < test@example.com >" "test <test@example.com>" &&
+>> -	author_test theta "test >test@example.com>" "test <test@example.com>" &&
+>> -	author_test iota "test < test <at> example <dot> com>" "test <unknown>" &&
+>> -	author_test kappa "test@example.com" "Unknown <test@example.com>"
+>> +	author_test beta "beta" "beta <unknown>" &&
+>> +	author_test beta "beta <test@example.com> (comment)" "beta <test@example.com>" &&
+> 
+> Two betas?
 
-I was using 1.8.5.rc1.17.g0ecd94d
+See above.  I can change them to beta1 and beta2, or if you'd prefer I
+can change them to beta and gamma and increment the subsequent entries.
 
-Trying to understand the problem,
-Stefan
+Thanks,
+Richard
 
-
---53IoKBOaldfFTB225gmmdlh2FVo4aixWt
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
-Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
-
-iQIcBAEBAgAGBQJSgSzGAAoJEJQCPTzLflhqshQQANMfm+ud1VddfgYqduWTPnN/
-4khlMeK2fewKnIgt3fZvZKhViKKvLevZQ9i+FG24BIAUGaju7twrxp7tsrCVlgfR
-+CakVkD+0aaVi3LtQmYhj2oY+bRURG0Vt81Edn7j/eYXaZ8EKtiQbxYNAAY+bQWC
-Na2M6Rr4DIsOEXb3Lw+Q29ftCay5ZphgfTJtwy6Pe0ru/TeWwnBsIPP3dC1KbPyF
-ii2LN2bLzleuZF/5Lv5o+9txP9h3ZhqbKWIDmNsR+6SPMPkSYyK2wc9y/nV6Yv4e
-Jroi42h8SJyMGnn1jH42L+8Kx3oUSlJ/SYNG8CEjUHIhvzlWfn9Vf12imbkwyJHB
-7E3D6+xQ26Y8fhQJcT87/aTpkjFdyNYltzrbpGGDwNOkyJ9LyLGGBdXjyp8UsjO/
-ZbAEcO/W+6DnOEmI33RIFxNeo6CFJmSuC2BYCcTtWasFV/R3Ni/iwbtpa8svfJ+s
-hJloHIDrWKNNaPQzEQu6WQDVGb32WW31hz5ACsAir/FhtBoYzTIis8G+DjyyJzB9
-Ne2i2qu3OKyee+3z/vfBchmOln+DM8fpZ8yMFUbY/Y5jTHYH74t9NPNWJDPzvSGG
-6sClqoSzP/KhSnAhR/YOdgK88kK1IJmH59aMKJlP7F44caFQN3P5BpTvi5JQfyRs
-V1SFCUJdozWzWv23XAhh
-=OqG9
------END PGP SIGNATURE-----
-
---53IoKBOaldfFTB225gmmdlh2FVo4aixWt--
+> 
+>> +	author_test gamma "<gamma@example.com>" "Unknown <gamma@example.com>" &&
+>> +	author_test delta "delta<test@example.com>" "delta <test@example.com>" &&
+>> +	author_test epsilon "epsilon <test@example.com" "epsilon <test@example.com>" &&
+>> +	author_test zeta " zeta " "zeta <unknown>" &&
+>> +	author_test eta "eta < test@example.com >" "eta <test@example.com>" &&
+>> +	author_test theta "theta >test@example.com>" "theta <test@example.com>" &&
+>> +	author_test iota "iota < test <at> example <dot> com>" "iota <unknown>" &&
+>> +	author_test kappa "kappa@example.com" "Unknown <kappa@example.com>"
+>>  	) &&
+>>  
+>>  	git clone "hg::hgrepo" gitrepo &&
+> 
