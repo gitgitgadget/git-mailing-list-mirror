@@ -1,113 +1,59 @@
 From: Richard Hansen <rhansen@bbn.com>
-Subject: [PATCH 7/7] remote-bzr, remote-hg: fix email address regular expression
-Date: Sun, 10 Nov 2013 23:05:12 -0500
-Message-ID: <1384142712-2936-8-git-send-email-rhansen@bbn.com>
-References: <1384142712-2936-1-git-send-email-rhansen@bbn.com>
-Cc: felipe.contreras@gmail.com, Richard Hansen <rhansen@bbn.com>
+Subject: [PATCH] fixup! transport-helper: add 'force' to 'export' helpers
+Date: Mon, 11 Nov 2013 00:01:07 -0500
+Message-ID: <1384146067-9575-1-git-send-email-rhansen@bbn.com>
+References: <1383212197-14259-7-git-send-email-felipe.contreras@gmail.com>
+Cc: felipe.contreras@gmail.com, srabbelier@gmail.com,
+	Richard Hansen <rhansen@bbn.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 11 05:08:24 2013
+X-From: git-owner@vger.kernel.org Mon Nov 11 06:01:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VfinX-0004dp-Lk
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Nov 2013 05:08:24 +0100
+	id 1VfjdD-0002N1-V5
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Nov 2013 06:01:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752571Ab3KKEIU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Nov 2013 23:08:20 -0500
-Received: from smtp.bbn.com ([128.33.1.81]:52786 "EHLO smtp.bbn.com"
+	id S1751075Ab3KKFB3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Nov 2013 00:01:29 -0500
+Received: from smtp.bbn.com ([128.33.0.80]:53463 "EHLO smtp.bbn.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752541Ab3KKEIS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Nov 2013 23:08:18 -0500
-Received: from socket.bbn.com ([192.1.120.102]:44760)
+	id S1750878Ab3KKFB2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Nov 2013 00:01:28 -0500
+Received: from socket.bbn.com ([192.1.120.102]:57652)
 	by smtp.bbn.com with esmtps (TLSv1:AES256-SHA:256)
 	(Exim 4.77 (FreeBSD))
 	(envelope-from <rhansen@bbn.com>)
-	id 1VfinQ-000JVP-Q1; Sun, 10 Nov 2013 23:08:16 -0500
-X-Submitted: to socket.bbn.com (Postfix) with ESMTPSA id 142143FF72
+	id 1Vfjcs-0004zZ-Oi; Mon, 11 Nov 2013 00:01:26 -0500
+X-Submitted: to socket.bbn.com (Postfix) with ESMTPSA id EBBF63FFDE
 X-Mailer: git-send-email 1.8.5.rc1.207.gc17dd22
-In-Reply-To: <1384142712-2936-1-git-send-email-rhansen@bbn.com>
+In-Reply-To: <1383212197-14259-7-git-send-email-felipe.contreras@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237604>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237605>
 
-Before, strings like "foo.bar@example.com" would be converted to
-"foo. <bar@example.com>" when they should be "unknown
-<foo.bar@example.com>".
+defend against force=foo in the user's environment
 
 Signed-off-by: Richard Hansen <rhansen@bbn.com>
 ---
- contrib/remote-helpers/git-remote-bzr | 7 +++----
- contrib/remote-helpers/git-remote-hg  | 7 +++----
- contrib/remote-helpers/test-hg.sh     | 3 ++-
- 3 files changed, 8 insertions(+), 9 deletions(-)
+ git-remote-testgit.sh | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/contrib/remote-helpers/git-remote-bzr b/contrib/remote-helpers/git-remote-bzr
-index 054161a..7e34532 100755
---- a/contrib/remote-helpers/git-remote-bzr
-+++ b/contrib/remote-helpers/git-remote-bzr
-@@ -44,8 +44,8 @@ import StringIO
- import atexit, shutil, hashlib, urlparse, subprocess
+diff --git a/git-remote-testgit.sh b/git-remote-testgit.sh
+index 6d2f282..1cfdea2 100755
+--- a/git-remote-testgit.sh
++++ b/git-remote-testgit.sh
+@@ -15,6 +15,8 @@ test -z "$refspec" && prefix="refs"
  
- NAME_RE = re.compile('^([^<>]+)')
--AUTHOR_RE = re.compile('^([^<>]+?)? ?<([^<>]*)>$')
--EMAIL_RE = re.compile('^([^<>]+[^ \\\t<>])?\\b(?:[ \\t<>]*?)\\b([^ \\t<>]+@[^ \\t<>]+)')
-+AUTHOR_RE = re.compile('^([^<>]+?)? ?[<>]([^<>]*)(?:$|>)')
-+EMAIL_RE = re.compile(r'([^ \t<>]+@[^ \t<>]+)')
- RAW_AUTHOR_RE = re.compile('^(\w+) (.+)? <(.*)> (\d+) ([+-]\d+)')
+ export GIT_DIR="$url/.git"
  
- def die(msg, *args):
-@@ -193,8 +193,7 @@ def fixup_user(user):
-     else:
-         m = EMAIL_RE.match(user)
-         if m:
--            name = m.group(1)
--            mail = m.group(2)
-+            mail = m.group(1)
-         else:
-             m = NAME_RE.match(user)
-             if m:
-diff --git a/contrib/remote-helpers/git-remote-hg b/contrib/remote-helpers/git-remote-hg
-index c6026b9..30402d5 100755
---- a/contrib/remote-helpers/git-remote-hg
-+++ b/contrib/remote-helpers/git-remote-hg
-@@ -51,8 +51,8 @@ import time as ptime
- #
++force=
++
+ mkdir -p "$dir"
  
- NAME_RE = re.compile('^([^<>]+)')
--AUTHOR_RE = re.compile('^([^<>]+?)? ?<([^<>]*)>$')
--EMAIL_RE = re.compile('^([^<>]+[^ \\\t<>])?\\b(?:[ \\t<>]*?)\\b([^ \\t<>]+@[^ \\t<>]+)')
-+AUTHOR_RE = re.compile('^([^<>]+?)? ?[<>]([^<>]*)(?:$|>)')
-+EMAIL_RE = re.compile(r'([^ \t<>]+@[^ \t<>]+)')
- AUTHOR_HG_RE = re.compile('^(.*?) ?<(.*?)(?:>(.+)?)?$')
- RAW_AUTHOR_RE = re.compile('^(\w+) (?:(.+)? )?<(.*)> (\d+) ([+-]\d+)')
- 
-@@ -316,8 +316,7 @@ def fixup_user_git(user):
-     else:
-         m = EMAIL_RE.match(user)
-         if m:
--            name = m.group(1)
--            mail = m.group(2)
-+            mail = m.group(1)
-         else:
-             m = NAME_RE.match(user)
-             if m:
-diff --git a/contrib/remote-helpers/test-hg.sh b/contrib/remote-helpers/test-hg.sh
-index 5eda265..9f5066b 100755
---- a/contrib/remote-helpers/test-hg.sh
-+++ b/contrib/remote-helpers/test-hg.sh
-@@ -218,7 +218,8 @@ test_expect_success 'authors' '
- 	author_test eta "eta < test@example.com >" "eta <test@example.com>" &&
- 	author_test theta "theta >test@example.com>" "theta <test@example.com>" &&
- 	author_test iota "iota < test <at> example <dot> com>" "iota <unknown>" &&
--	author_test kappa "kappa@example.com" "Unknown <kappa@example.com>"
-+	author_test kappa "kappa@example.com" "Unknown <kappa@example.com>" &&
-+	author_test lambda "lambda.lambda@example.com" "Unknown <lambda.lambda@example.com>"
- 	) &&
- 
- 	git clone "hg::hgrepo" gitrepo &&
+ if test -z "$GIT_REMOTE_TESTGIT_NO_MARKS"
 -- 
 1.8.5.rc1.207.gc17dd22
