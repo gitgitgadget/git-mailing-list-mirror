@@ -1,65 +1,81 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: RE: [PATCH 1/7] remote-hg: don't decode UTF-8 paths into Unicode
- objects
-Date: Mon, 11 Nov 2013 05:04:56 -0600
-Message-ID: <5280b9d87f92c_6841541e786f@nysa.notmuch>
+Subject: RE: [PATCH 2/7] test-bzr.sh, test-hg.sh: allow running from any dir
+Date: Mon, 11 Nov 2013 05:35:36 -0600
+Message-ID: <5280c108749d8_6841541e787e@nysa.notmuch>
 References: <1384142712-2936-1-git-send-email-rhansen@bbn.com>
- <1384142712-2936-2-git-send-email-rhansen@bbn.com>
+ <1384142712-2936-3-git-send-email-rhansen@bbn.com>
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
 Content-Transfer-Encoding: 7bit
 Cc: felipe.contreras@gmail.com, Richard Hansen <rhansen@bbn.com>
 To: Richard Hansen <rhansen@bbn.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 11 12:12:47 2013
+X-From: git-owner@vger.kernel.org Mon Nov 11 12:43:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VfpPx-0004CR-W5
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Nov 2013 12:12:30 +0100
+	id 1VfpuA-0003DD-Op
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Nov 2013 12:43:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753232Ab3KKLMZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Nov 2013 06:12:25 -0500
-Received: from mail-ob0-f178.google.com ([209.85.214.178]:36786 "EHLO
-	mail-ob0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753206Ab3KKLMR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Nov 2013 06:12:17 -0500
-Received: by mail-ob0-f178.google.com with SMTP id va2so4222809obc.9
-        for <git@vger.kernel.org>; Mon, 11 Nov 2013 03:12:16 -0800 (PST)
+	id S1752910Ab3KKLnj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Nov 2013 06:43:39 -0500
+Received: from mail-ob0-f176.google.com ([209.85.214.176]:44396 "EHLO
+	mail-ob0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752616Ab3KKLni (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Nov 2013 06:43:38 -0500
+Received: by mail-ob0-f176.google.com with SMTP id wp4so2879874obc.21
+        for <git@vger.kernel.org>; Mon, 11 Nov 2013 03:43:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-type:content-transfer-encoding;
-        bh=AGiq4uQoa2epDjWegfMYEYKS46U4GJH+Ocaya8ZU47Y=;
-        b=LSRGEzGCXpw1d8osnwFC4Dqu3rccu9smPvhZwjuxRPd8RiHjk4FLMfASQFqC1RrdPv
-         mmSCJNMhuOpsVzjWCJy6cHjVI+PXdNqPnnPRmr9OSHb/SLyyZwOmTQn1NHri0JnM3MP9
-         c93ryggXsKEwkt999i1McZ9I6TQLaIq54SYY9ZuCs/GQy9nXbeSI2/LaJYMU7bmq/Xwy
-         1MrilHUzrreUNN0fc8Qbd27ermanzvA5zcWxlfZkcIz3zz5YjK/tuLuXj8LN2GK/PAEX
-         CelrbplntWgTaGd+NG4Wfj4gjsOZLWE9OfDfBOXzcL4hA4Xc9S9N8BdRreicvf//qAAc
-         r42w==
-X-Received: by 10.60.144.133 with SMTP id sm5mr17040oeb.103.1384168336798;
-        Mon, 11 Nov 2013 03:12:16 -0800 (PST)
+        bh=SasN4fIMhxCxOB6CRoWqY/C4FGoL1LpHW2makJ9Ctzs=;
+        b=FQHwKMKkH0mjugu5TmbFhQ24KT00RQ9N62iQAY1y8ive5j2R639bLSgTzFXFA3esph
+         6AFQuqlvCupsG8YPmBCqB9bon4Z6ZvRuNtn7/oLTrm/9AyX4DQiUA9Vjl3Ztb/7y1FX+
+         ba6433B0W0HsYghycgTA4g5BryKfjBywKzMnIW6geXCT9tSM3UjLDXek2A9VYmSf4vGp
+         82V3gxegMEmAcqs+f4P/SVM7akxAOk5yzrqnEmNVEtRmebX4e7d4mOFnWjql3zXQhtct
+         1c188NjHmubpTURqkgphC7CXqUXS9vnHWTSoX5m3sMqjdQUgTJmkchASB7bVb3zqwnKQ
+         yRoA==
+X-Received: by 10.60.137.193 with SMTP id qk1mr559653oeb.89.1384170217952;
+        Mon, 11 Nov 2013 03:43:37 -0800 (PST)
 Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
-        by mx.google.com with ESMTPSA id qe2sm25648412obc.1.2013.11.11.03.12.15
+        by mx.google.com with ESMTPSA id it7sm25730580obb.11.2013.11.11.03.43.36
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 11 Nov 2013 03:12:16 -0800 (PST)
-In-Reply-To: <1384142712-2936-2-git-send-email-rhansen@bbn.com>
+        Mon, 11 Nov 2013 03:43:37 -0800 (PST)
+In-Reply-To: <1384142712-2936-3-git-send-email-rhansen@bbn.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237608>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237609>
 
 Richard Hansen wrote:
-> The internal mercurial API expects ordinary 8-bit string objects, not
-> Unicode string objects.  With this change, the test-hg.sh unit tests
-> pass again.
+> cd to the t/ subdirectory so that the user doesn't already have to be
+> in the test directory to run these test scripts.
+> 
+> Signed-off-by: Richard Hansen <rhansen@bbn.com>
+> ---
+>  contrib/remote-helpers/test-bzr.sh | 1 +
+>  contrib/remote-helpers/test-hg.sh  | 1 +
+>  2 files changed, 2 insertions(+)
+> 
+> diff --git a/contrib/remote-helpers/test-bzr.sh b/contrib/remote-helpers/test-bzr.sh
+> index 5c50251..094062c 100755
+> --- a/contrib/remote-helpers/test-bzr.sh
+> +++ b/contrib/remote-helpers/test-bzr.sh
+> @@ -5,6 +5,7 @@
+>  
+>  test_description='Test remote-bzr'
+>  
+> +cd "${0%/*}"/../../t || exit 1
 
-This makes sense to me, but the tests are already passing for me. How are they
-failing for you?
+I think this should do the trick:
+
+  test -z "$TEST_DIRECTORY" && TEST_DIRECTORY="$(realpath ${0%/*}/../../t)"
+  . "$TEST_DIRECTORY"/test-lib.sh
 
 -- 
 Felipe Contreras
