@@ -1,115 +1,132 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-fetch-pack uses URLs like git-fetch
-Date: Mon, 11 Nov 2013 09:44:55 -0800
-Message-ID: <xmqqk3gen888.fsf@gitster.dls.corp.google.com>
-References: <201311081854.06201.tboegi@web.de>
+Subject: Re: [PATCH 1/4] Minor grammatical fixes in "git log" man page
+Date: Mon, 11 Nov 2013 09:59:28 -0800
+Message-ID: <xmqqd2m6n7jz.fsf@gitster.dls.corp.google.com>
+References: <1383957130-2979-1-git-send-email-jstjohn@purdue.edu>
+	<20131109010048.GG10302@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Mon Nov 11 18:45:09 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: "Jason St. John" <jstjohn@purdue.edu>, git@vger.kernel.org,
+	Marco Costalba <mcostalba@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 11 18:59:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VfvXt-0007Je-HJ
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Nov 2013 18:45:05 +0100
+	id 1Vfvlw-0002S8-Jm
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Nov 2013 18:59:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754650Ab3KKRpA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 11 Nov 2013 12:45:00 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46896 "EHLO
+	id S1754860Ab3KKR7d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Nov 2013 12:59:33 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58700 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753975Ab3KKRpA convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 11 Nov 2013 12:45:00 -0500
+	id S1753572Ab3KKR7b (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Nov 2013 12:59:31 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3113D4F4AC;
-	Mon, 11 Nov 2013 12:44:59 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 168554F879;
+	Mon, 11 Nov 2013 12:59:31 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=AXj2HgDVIlLP
-	uyu7QssuqxKLMwA=; b=K2zybAuSYVjPZBaW50kEPUtT6FNXgITsYkKBzDdDmTFa
-	LeqEz6XWqJ8choQPRjpkUEau6gk2eOAmXdmPxTYQL5VroTu7BZbz6KCd62QKWoNN
-	8AJjuqMhytaoUbj8A+wr9iUW1RhEnmX/71FpLzqUpHC3GFCphMNXHE3MiSJ4T9Y=
+	:content-type; s=sasl; bh=DXa31b9Sqgp9kmQVCEUVtlwDgo8=; b=HZB4jC
+	dJ/wvOJM4gamXFSa/yPyybebvitrppZc36LoMGfSyPvWHhyrqSP6Hyz7t8oazhCV
+	1NUdiu5/E9wlf0VLAInrIFPM6xuHVMs3SXdOEoM8ui5osNpT2FJ87NKGAECV2Tgl
+	NFWaWmzgx7ou4WWWBe3OsMbIjHLhq7NGFMmpo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=LiMrLm
-	vyNe7qj6T3IBq5HKMLoz94MkZx45VDCKCjCrNygjJ6wAkEmUPktBgC8f9pCzmOJ4
-	a3aJeu6krlDyyuX59Tcg2uMaM+pZ518CqH7MEuLJ/iX8R+T38fbI6KwmklNMhfBo
-	y9GyVwhNxgTNH1UulgNfPlMmsBo6x0B6Sycy4=
+	:content-type; q=dns; s=sasl; b=qq8s8b3OCmXQSTghdOSB0YaUqoEAEuKw
+	/Y0xkbleblV09H23UYr+0hnu7X7xkdFosPDBdvU5BB9uZ26rIRDD+SvmNYfTylQC
+	BjGFURT0XP6b/ryzIBsesL+Gy97YBLnhxJlaBanefQMz8+eWzepRfAfgThvC60Ds
+	ffdOrwRS1LI=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1F4F54F4A9;
-	Mon, 11 Nov 2013 12:44:59 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 027F94F878;
+	Mon, 11 Nov 2013 12:59:31 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 60AF24F4A5;
-	Mon, 11 Nov 2013 12:44:58 -0500 (EST)
-In-Reply-To: <201311081854.06201.tboegi@web.de> ("Torsten =?utf-8?Q?B?=
- =?utf-8?Q?=C3=B6gershausen=22's?=
-	message of "Fri, 8 Nov 2013 18:54:05 +0100")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5FD174F876;
+	Mon, 11 Nov 2013 12:59:30 -0500 (EST)
+In-Reply-To: <20131109010048.GG10302@google.com> (Jonathan Nieder's message of
+	"Fri, 8 Nov 2013 17:00:48 -0800")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: FB8F263A-4AF8-11E3-A5CC-D331802839F8-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 034F47D6-4AFB-11E3-AE22-D331802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237620>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237621>
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> "git fetch-pack" allows [<host>:]<directory> to point out the source
-> repository.
-> Use the term <repository>, which is already used in "git fetch" or "g=
-it pull"
-> to describe URLs supported by Git.
-
-Sign-off?
-
-> ---
->  Documentation/git-fetch-pack.txt | 15 +++++++--------
->  1 file changed, 7 insertions(+), 8 deletions(-)
+> Jason St. John wrote:
 >
-> diff --git a/Documentation/git-fetch-pack.txt b/Documentation/git-fet=
-ch-pack.txt
-> index 444b805..93b5067 100644
-> --- a/Documentation/git-fetch-pack.txt
-> +++ b/Documentation/git-fetch-pack.txt
-> @@ -12,7 +12,7 @@ SYNOPSIS
->  'git fetch-pack' [--all] [--quiet|-q] [--keep|-k] [--thin] [--includ=
-e-tag]
->  	[--upload-pack=3D<git-upload-pack>]
->  	[--depth=3D<n>] [--no-progress]
-> -	[-v] [<host>:]<directory> [<refs>...]
-> +	[-v] <repository> [<refs>...]
-> =20
->  DESCRIPTION
->  -----------
-> @@ -97,19 +97,18 @@ be in a separate packet, and the list must end wi=
-th a flush packet.
->  -v::
->  	Run verbosely.
-> =20
-> -<host>::
-> -	A remote host that houses the repository.  When this
-> -	part is specified, 'git-upload-pack' is invoked via
-> -	ssh.
-> -
-> -<directory>::
-> -	The repository to sync from.
-> +<repository>::
-> +	The URL to the remote repository.
-> =20
->  <refs>...::
->  	The remote heads to update from. This is relative to
->  	$GIT_DIR (e.g. "HEAD", "refs/heads/master").  When
->  	unspecified, update from all heads the remote side has.
-> =20
-> +SEE ALSO
-> +--------
-> +linkgit:git-fetch[1]
-> +
->  GIT
->  ---
->  Part of the linkgit:git[1] suite
+>> git-log.txt: grammatical fixes under --log-size option
+>
+> Thanks.
+>
+> [...]
+>> --- a/Documentation/git-log.txt
+>> +++ b/Documentation/git-log.txt
+>> @@ -56,10 +56,10 @@ Note that this affects all diff-based output types, e.g. those
+>>  produced by --stat etc.
+>> 
+>>  --log-size::
+>> -	Before the log message print out its size in bytes. Intended
+>> +	Before the log message, print out its size in bytes. Intended
+
+Either reads well at least for me.
+
+>>  	mainly for porcelain tools consumption. If Git is unable to
+>> -	produce a valid value size is set to zero.
+>> -	Note that only message is considered, if also a diff is shown
+>> +	produce a valid value size, this is set to zero.
+>> +	Note that only message is considered. Also, if a diff is shown,
+>>  	its size is not included.
+>
+> I have no idea what this option does, before or after the change.
+
+The original is probably more accurate, if harder to read.  The
+byte-size of the message part of log output is reported, so that
+tools like QGit can slurp that many bytes and then treat the
+remainder as a patch (if -p, --stat, etc. were given).
+
+> Perhaps some of the above could make it into a clearer description?
+> E.g.,
+>
+> 	--log-size::
+> 		Include a line "log size <number>" in the output for each
+> 		commit, where <number> is the length of that commit's
+> 		message in bytes.  Intended to speed up tools that
+> 		read log messages from 'git log' output by allowing them
+> 		to allocate space in advance.
+
+Yeah, that reads better. We do not have to single out "if also a
+diff is shown", as there are other kinds of output that can follow
+the message proper, and they are not counted.
+
+> The commit introducing --log-size also says:
+>
+> 	    In case it is not possible to know the size upfront
+> 	    size value is set to zero.
+>
+> Is this still true?  When is it not possible to know the size up
+> front?
+
+I have no idea ;-)  Perhaps Marco can enlighten us?
+
+> The implementation of --log-size is
+>
+> 	if (opt->show_log_size) {
+> 		printf("log size %i\n", (int)msgbuf.len);
+> 		graph_show_oneline(opt->graph);
+> 	}
+>
+> What happens if the commit message is long enough to overflow a 32-bit
+> integer?  Is that impossible for other reasons?  If it is possible,
+> (not about this patch) should this be using a 64-bit integer to print
+> instead?
+
+A nice low-hanging fruit ;-)
+
+Thanks
