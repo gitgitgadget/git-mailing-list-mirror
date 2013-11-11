@@ -1,131 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
 Subject: Re: [PATCH v3] push: Enhance unspecified push default warning
-Date: Mon, 11 Nov 2013 09:02:16 -0800
-Message-ID: <xmqqob5qna7b.fsf@gitster.dls.corp.google.com>
-References: <CAKYC+eKCsRbF=6HtcY8ZtaafTDpbMFJ1tyWbaZDKrmbzdnOoUw@mail.gmail.com>
-	<CAKYC+eLvx1vB1ZDqYK=7Dg68QuCojBdSAVQZMF6HBtfxu_b_aw@mail.gmail.com>
-	<xmqqvc08yq4v.fsf@gitster.dls.corp.google.com>
-	<1839883487.4893076.1383646619137.JavaMail.root@imag.fr>
-	<xmqqk3gl8id0.fsf@gitster.dls.corp.google.com>
-	<vpq1u2tb3px.fsf@anie.imag.fr> <20131106234544.GF10302@google.com>
-	<vpqtxfo8ow4.fsf@anie.imag.fr>
-	<xmqqli0yojp8.fsf@gitster.dls.corp.google.com>
-	<527D6805.3050303@xiplink.com>
+Date: Mon, 11 Nov 2013 09:03:43 -0800
+Message-ID: <20131111170343.GK10302@google.com>
+References: <CAKYC+eLvx1vB1ZDqYK=7Dg68QuCojBdSAVQZMF6HBtfxu_b_aw@mail.gmail.com>
+ <xmqqvc08yq4v.fsf@gitster.dls.corp.google.com>
+ <1839883487.4893076.1383646619137.JavaMail.root@imag.fr>
+ <xmqqk3gl8id0.fsf@gitster.dls.corp.google.com>
+ <vpq1u2tb3px.fsf@anie.imag.fr>
+ <20131106234544.GF10302@google.com>
+ <vpqtxfo8ow4.fsf@anie.imag.fr>
+ <xmqqli0yojp8.fsf@gitster.dls.corp.google.com>
+ <527D6805.3050303@xiplink.com>
+ <xmqqob5qna7b.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Jonathan Nieder <jrnieder@gmail.com>,
+Cc: Marc Branchaud <marcnarc@xiplink.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
 	Greg Jacobson <coder5000@gmail.com>,
 	Git Mailing List <git@vger.kernel.org>
-To: Marc Branchaud <marcnarc@xiplink.com>
-X-From: git-owner@vger.kernel.org Mon Nov 11 18:02:29 2013
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Nov 11 18:03:51 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vfuse-0007dn-Lh
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Nov 2013 18:02:29 +0100
+	id 1Vfuty-0001AF-Oq
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Nov 2013 18:03:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754345Ab3KKRCZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Nov 2013 12:02:25 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38495 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754040Ab3KKRCW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Nov 2013 12:02:22 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8850B4FA38;
-	Mon, 11 Nov 2013 12:02:21 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Jz0GORndSs4G/nsZhWMRnGHdX6g=; b=mKHiWA
-	hmMEM2+F5zoKkbu3rsw473Gu91uvMQhGOo8RmvlJPw1xvR+GhZjNHkluDioRY8PX
-	bZYI3T7F7XoiJowsfGoRo/y1Gxm2C1dl7K9x92Rv6+ZfrFtVWDKUiYAlTziioVFG
-	WxZzR8euNN+R8po9+39sSO6mr/DGjufS2OooY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=moCLhL25ymXvdp9hd22vmRuu+9ut6SoE
-	fEnDBRHTxrQa/EKh6T1gc8sGFqhVUCyb7E6ZT0xtwX+9/OE/ztOKmrU9P+GcHj6o
-	x930VY38RSRnveEJ1GUgPlGSGwrTFO31p5Ya7iKQLQ6eEptDdUl+cYE9yQ61CNm0
-	iX36GnICijA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 74FD14FA37;
-	Mon, 11 Nov 2013 12:02:21 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9D92C4FA36;
-	Mon, 11 Nov 2013 12:02:20 -0500 (EST)
-In-Reply-To: <527D6805.3050303@xiplink.com> (Marc Branchaud's message of "Fri,
-	08 Nov 2013 17:39:01 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 07109F76-4AF3-11E3-808E-D331802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754497Ab3KKRDr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Nov 2013 12:03:47 -0500
+Received: from mail-pd0-f171.google.com ([209.85.192.171]:44810 "EHLO
+	mail-pd0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753984Ab3KKRDq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Nov 2013 12:03:46 -0500
+Received: by mail-pd0-f171.google.com with SMTP id w10so5421453pde.30
+        for <git@vger.kernel.org>; Mon, 11 Nov 2013 09:03:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=hwqGUbMCO3GyckOsHN72CF6s5HvYEuEwJO7XvylCXxc=;
+        b=aAV+1EnJVSv1P2uPgN1IKD5gsXhGcWiehs346IveqoCiReAZVDcNIyK/swgHuGP6m+
+         AJEq3oNK9IpvPubI4v0JlswSnHx1/XzhOcBd3RsYpCO2ikqIB0DEKYAUAsOxRUHwNeYG
+         6axKqgBgnPXHIbjqzlsH8ez2SSkN5Gt4G7owBCJw33l0d3d6EnbVVQv1CZLumWLV+EHr
+         BoFWCfpom5ZpCDSjfu+aR99ngQuwZJ5MS4SiU8nq+TgDsDzn8F8H8gMf+VOxFEmewqWv
+         6t7J9hfwYo8AcWF7FPK6lkOVI3Cf6xburHqDauHWwG5+TcHwkmOdpq9h2mZ4hQs3Hc8e
+         11HQ==
+X-Received: by 10.67.1.203 with SMTP id bi11mr7538129pad.137.1384189425563;
+        Mon, 11 Nov 2013 09:03:45 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id ry3sm4807792pbc.8.2013.11.11.09.03.44
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 11 Nov 2013 09:03:45 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <xmqqob5qna7b.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237617>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237618>
 
-Marc Branchaud <marcnarc@xiplink.com> writes:
+Junio C Hamano wrote:
 
->> -   "In Git 2.0 the new push.default of 'simple' will push only the current\n"
->> -   "branch to the same remote branch used by git pull.   A push will\n"
->> -   "only succeed if the remote and local branches have the same name.\n"
->> +   "In Git 2.0, Git will default to the more conservative 'simple'\n"
->> +   "behavior that only pushes the current branch to the corresponding\n"
->> +   "remote branch used by 'git pull' to update the current branch from.\n"
->
-> That reads a bit awkwardly.  How about:
->
-> 	In Git 2.0, Git will default to the more conservative 'simple'
-> 	behavior, which only pushes the current branch to the corresponding
-> 	remote branch that 'git pull' uses to update the current branch.
+> Is everybody happy with this version?
 
-OK, here is the version of Greg's patch (i.e. for versions before
-2.0) with the above.  The endgame patch for 2.0 would change the
-line that begins with "In Git 2.0," to:
+Looks good to me.
 
-	Since Git 2.0, Git defaults to the more conservative ...
-
-Is everybody happy with this version?
-
--- >8 --
-From: Greg Jacobson <coder5000@gmail.com>
-Date: Fri, 4 Oct 2013 10:20:07 -0400
-Subject: [PATCH] push: Enhance unspecified push default warning
-
-When the unset push.default warning message is displayed this may be
-the first time many users encounter push.default.
-
-Explain in the warning message in a compact manner what push.default
-is and what the change means to the end-user to help the users decide.
-
-Signed-off-by: Greg Jacobson <coder5000@gmail.com>
-Helped-by: Jonathan Nieder <jrnieder@gmail.com>
-Helped-by: Matthieu Moy <Matthieu.Moy@imag.fr>
-Helped-by: Marc Branchaud <marcnarc@xiplink.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin/push.c | 7 +++++++
- 1 file changed, 7 insertions(+)
-
-diff --git a/builtin/push.c b/builtin/push.c
-index 7b1b66c..a73982a 100644
---- a/builtin/push.c
-+++ b/builtin/push.c
-@@ -174,6 +174,13 @@ N_("push.default is unset; its implicit value is changing in\n"
-    "\n"
-    "  git config --global push.default simple\n"
-    "\n"
-+   "When push.default is set to 'matching', git will push local branches\n"
-+   "to the remote branches that already exist with the same name.\n"
-+   "\n"
-+   "In Git 2.0, Git will default to the more conservative 'simple'\n"
-+   "behavior, which only pushes the current branch to the corresponding\n"
-+   "remote branch that 'git pull' uses to update the current branch.\n"
-+   "\n"
-    "See 'git help config' and search for 'push.default' for further information.\n"
-    "(the 'simple' mode was introduced in Git 1.7.11. Use the similar mode\n"
-    "'current' instead of 'simple' if you sometimes use older versions of Git)");
--- 
-1.8.5-rc1-310-g1febc12
+Thanks,
+Jonathan
