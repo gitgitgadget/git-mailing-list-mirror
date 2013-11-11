@@ -1,599 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: What's cooking in git.git (Nov 2013, #03; Mon, 11)
-Date: Mon, 11 Nov 2013 15:14:48 -0800
-Message-ID: <xmqqvbzyjztj.fsf@gitster.dls.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Bug? diff.submodule=log adds text to commit -v message
+Date: Mon, 11 Nov 2013 18:24:12 -0500
+Message-ID: <20131111232412.GA14924@sigill.intra.peff.net>
+References: <loom.20131110T222043-57@post.gmane.org>
+ <528140F5.6090700@web.de>
+ <loom.20131111T214646-550@post.gmane.org>
+ <52814C35.6040205@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 12 00:14:59 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Ari Pollak <ari@debian.org>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Tue Nov 12 00:24:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vg0h8-0007UM-4O
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Nov 2013 00:14:58 +0100
+	id 1Vg0qB-00047m-S4
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Nov 2013 00:24:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753614Ab3KKXOy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Nov 2013 18:14:54 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60547 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751527Ab3KKXOv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Nov 2013 18:14:51 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C9E6D52F83;
-	Mon, 11 Nov 2013 18:14:50 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=4
-	Dzqr/JOtkvr2wEPTUGGF4fFw+4=; b=XZ9cTmcaU74IVsyCBtP0s1ZAaZRtjZnF6
-	5JC8tOL/V8aT4OTTN2FO+lk+vOY8r+h2iUX6m+uTNc5V9gUmGACAYx9C2vGYtRBU
-	3ybhnZDZVX9ufWUWDbtNzJzQO9iCQkNDP8sGw+XBMFDZZSUrWUSL66q53WAHJfiv
-	DoSZ5z1ero=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=u3V
-	oPXcxYqGX7ZipGCbrGmbqLHKPAdpHNHJvCOczrHBNQNTOdmcSifCf8Eg93r3eQSI
-	/fs44GN4j5Tds3D+XB42GD1dtWabhxciOj2xL2cFTALPQXeUlQgeZ+g4LXyvX5hz
-	hS4VazS1G9xqGCXUJu2Lgt9wTQ2Hq487ZkerEpks=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B97AC52F82;
-	Mon, 11 Nov 2013 18:14:50 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CA08952F7F;
-	Mon, 11 Nov 2013 18:14:49 -0500 (EST)
-X-master-at: 0ecd94d7d728606e0047a44e60a277ff4e7b3990
-X-next-at: 1febc128a577ae89808d686735192c098d1093d9
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 102BD132-4B27-11E3-B2D0-D331802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753458Ab3KKXYQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Nov 2013 18:24:16 -0500
+Received: from cloud.peff.net ([50.56.180.127]:37471 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752913Ab3KKXYO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Nov 2013 18:24:14 -0500
+Received: (qmail 25900 invoked by uid 102); 11 Nov 2013 23:24:14 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 11 Nov 2013 17:24:14 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 11 Nov 2013 18:24:12 -0500
+Content-Disposition: inline
+In-Reply-To: <52814C35.6040205@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237674>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237675>
 
-Here are the topics that have been cooking.  Commits prefixed with
-'-' are only in 'pu' (proposed updates) while commits prefixed with
-'+' are in 'next'.
+On Mon, Nov 11, 2013 at 10:29:25PM +0100, Jens Lehmann wrote:
 
-You can find the changes described here in the integration branches
-of the repositories listed at
+> The diff below fixes the problem you describe for me. (But I do not
+> consider it a worthwhile fix in its current form because a line
+> starting with "Submodule " might appear in a perfectly normal commit
+> message, while "diff --git " most probably won't).
 
-    http://git-blame.blogspot.com/p/git-public-repositories.html
+Yeah, this fix makes me nervous for that reason. "commit -v" has always
+been a little bit flaky in that respect, as it is simply guessing at
+the beginning of the diff text it added earlier. In addition to false
+negatives, it also has false positives, stripping out people's diffs
+that they meant to include in the commit message.
 
---------------------------------------------------
-[New Topics]
+The "right" way to fix this is to change the format to use some more
+robust marker, like:
 
-* kb/doc-exclude-directory-semantics (2013-11-07) 1 commit
- - gitignore.txt: clarify recursive nature of excluded directories
+  # Everything below this line is a diff that will be removed.
 
- Will merge to 'next'.
+I do not know offhand if anybody's commit-template generating or parsing
+scripts would be broken, but I doubt the fallout would be that big. When
+last we discussed this (AFAICT), we did not yet have 0b38227 (commit:
+Fix stripping of patch in verbose mode., 2008-11-12), which meant that
+it would affect _everybody_. Nowadays it would only affect users of
+"-v", which is presumably a much smaller population.
 
-
-* jc/create-directories-microopt (2013-11-11) 1 commit
- - checkout: most of the time we have good leading directories
-
- Of unknown value until tested on non-Linux platforms (especially
- Windows).
-
- Will hold.
-
-
-* jl/submodule-update-retire-orig-flags (2013-11-11) 1 commit
- - submodule update: remove unnecessary orig_flags variable
-
- Code clean-up.
-
- Will merge to 'next'.
-
-
-* jn/mediawiki-makefile-updates (2013-11-11) 4 commits
- - git-remote-mediawiki build: handle DESTDIR/INSTLIBDIR with whitespace
- - git-remote-mediawiki build: make 'install' command configurable
- - git-remote-mediawiki: honor DESTDIR in "make install"
- - git-remote-mediawiki: do not remove installed files in "clean" target
-
- Build and Installation procedure clean-up.
-
- Will merge to 'next'.
-
-
-* tb/doc-fetch-pack-url (2013-11-11) 1 commit
- - git-fetch-pack uses URLs like git-fetch
-
- Will merge to 'next'.
-
---------------------------------------------------
-[Stalled]
-
-* cn/thin-push-capability (2013-11-06) 2 commits
- - send-pack: only send a thin pack if the server supports it
- - receive-pack: advertise thin-pack
-
- Peff had a good suggestion to control this by expressing what the
- receiving end wants in a more direct way, namely to advertise a
- 'no-thin' trait in the capability list, which seems to be favored
- by Shawn, too.
-
-
-* jt/commit-fixes-footer (2013-10-30) 1 commit
- - commit: Add -f, --fixes <commit> option to add Fixes: line
-
- There is an ongoing discussion around this topic; in general I am
- fairly negative on a new feature that is too narrow and prefer a
- more generic solution that can be tailored for specific needs, as
- many people stated in the thread.
-
- It appears that the discussion stalled.
-
-
-* np/pack-v4 (2013-09-18) 90 commits
- . packv4-parse.c: add tree offset caching
- . t1050: replace one instance of show-index with verify-pack
- . index-pack, pack-objects: allow creating .idx v2 with .pack v4
- . unpack-objects: decode v4 trees
- . unpack-objects: allow to save processed bytes to a buffer
- - ...
-
- Nico and Duy advancing the eternal vaporware pack-v4.  This is here
- primarily for wider distribution of the preview edition.
-
- Temporarily ejected from 'pu', to try out jk/pack-bitmap, which
- this topic conflicts with.
-
-
-* jk/pack-bitmap (2013-10-30) 20 commits
- - count-objects: recognize .bitmap in garbage-checking
- - pack-bitmap: implement optional name_hash cache
- - t: add basic bitmap functionality tests
- - repack: consider bitmaps when performing repacks
- - repack: handle optional files created by pack-objects
- - repack: turn exts array into array-of-struct
- - repack: stop using magic number for ARRAY_SIZE(exts)
- - pack-objects: implement bitmap writing
- - rev-list: add bitmap mode to speed up object lists
- - pack-objects: use bitmaps when packing objects
- - pack-bitmap: add support for bitmap indexes
- - documentation: add documentation for the bitmap format
- - ewah: compressed bitmap implementation
- - compat: add endianness helpers
- - sha1_file: export `git_open_noatime`
- - revision: allow setting custom limiter function
- - pack-objects: factor out name_hash
- - pack-objects: refactor the packing list
- - revindex: export new APIs
- - sha1write: make buffer const-correct
-
- Borrows the bitmap index into packfiles from JGit to speed up
- enumeration of objects involved in a commit range without having to
- fully traverse the history.
-
- Waiting for a reroll.
-
-
-* mf/graph-show-root (2013-10-25) 1 commit
- . graph.c: mark root commit differently
-
- In a repository with multiple-roots, "log --graph", especially with
- "--oneline", does not give the reader enough visual cue to see
- where one line of history ended and a separate history began.
-
- This is the version that marks the roots 'x' when they would have
- been marked as '*'; Keshav Kini suggested an alternative of giving
- an extra blank line after every root, which I tend to think is a
- better approach to the problem.
-
-
-* tg/perf-lib-test-perf-cleanup (2013-09-19) 2 commits
- - perf-lib: add test_perf_cleanup target
- - perf-lib: split starting the test from the execution
-
- Add test_perf_cleanup shell function to the perf suite, that allows
- the script writers to define a test with a clean-up action.
-
- Holding until needed.
-
-
-* yt/shortened-rename (2013-10-18) 2 commits
- - SQUASH??? style fixes and s/omit/shorten/ where appropriate
- - diff.c: keep arrow(=>) on show_stats()'s shortened filename part to make rename visible
-
- Attempts to give more weight on the fact that a filepair represents
- a rename than showing substring of the actual path when diffstat
- lines are not wide enough.
-
- I am not sure if that is solving a right problem, though.
-
-
-* rv/send-email-cache-generated-mid (2013-08-21) 2 commits
- - git-send-email: Cache generated message-ids, use them when prompting
- - git-send-email: add optional 'choices' parameter to the ask sub
-
-
-* rj/read-default-config-in-show-ref-pack-refs (2013-06-17) 3 commits
- - ### DONTMERGE: needs better explanation on what config they need
- - pack-refs.c: Add missing call to git_config()
- - show-ref.c: Add missing call to git_config()
-
- The changes themselves are probably good, but it is unclear what
- basic setting needs to be read for which exact operation.
-
- Waiting for clarification.
- $gmane/228294
-
-
-* jc/format-patch (2013-04-22) 2 commits
- - format-patch: --inline-single
- - format-patch: rename "no_inline" field
-
- A new option to send a single patch to the standard output to be
- appended at the bottom of a message.  I personally have no need for
- this, but it was easy enough to cobble together.  Tests, docs and
- stripping out more MIMEy stuff are left as exercises to interested
- parties.
-
-
-* jk/gitweb-utf8 (2013-04-08) 4 commits
- - gitweb: Fix broken blob action parameters on blob/commitdiff pages
- - gitweb: Don't append ';js=(0|1)' to external links
- - gitweb: Make feed title valid utf8
- - gitweb: Fix utf8 encoding for blob_plain, blobdiff_plain, commitdiff_plain, and patch
-
- Various fixes to gitweb.
-
- Drew Northup volunteered to take a look into this.
- $gmane/226216
-
-
-* jc/show-branch (2013-06-07) 5 commits
- - show-branch: use commit slab to represent bitflags of arbitrary width
- - show-branch.c: remove "all_mask"
- - show-branch.c: abstract out "flags" operation
- - show-branch.c: lift all_mask/all_revs to a global static
- - show-branch.c: update comment style
-
- Waiting for the final step to lift the hard-limit before sending it out.
-
---------------------------------------------------
-[Cooking]
-
-* cc/remote-remove-redundant-postfixcmp (2013-11-06) 2 commits
-  (merged to 'next' on 2013-11-06 at 7b45219)
- + Rename suffixcmp() to has_suffix() and invert its result
-  (merged to 'next' on 2013-11-04 at 6408502)
- + builtin/remote: remove postfixcmp() and use suffixcmp() instead
-
- Minor code clean-up.
-
- Can wait in 'next'.
-
-
-* tb/clone-ssh-with-colon-for-port (2013-11-04) 1 commit
- . git clone: is an URL local or ssh
-
- Still being reworked.
-
-
-* nd/wt-status-align-i18n (2013-11-06) 1 commit
- - wt-status: take the alignment burden off translators
-
- An attempt to automatically align the names in the "git status"
- output, taking the display width of (translated) section labels
- into account.
-
- Will merge to 'next'.
-
-
-* nv/commit-gpgsign-config (2013-11-06) 1 commit
- - Add the commit.gpgsign option to sign all commits
-
- Introduce commit.gpgsign configuration variable to force every
- commit to be GPG signed.
-
- Needs tests, perhaps?
-
-
-* sb/sha1-loose-object-info-check-existence (2013-11-06) 1 commit
-  (merged to 'next' on 2013-11-06 at 1ea5b18)
- + sha1_loose_object_info(): do not return success on missing object
-
- "git cat-file --batch-check=ok" did not check the existence of the
- named object.
-
- Will cook in 'next'.
-
-
-* gj/push-more-verbose-advice (2013-11-11) 2 commits
- - push: switch default from "matching" to "simple"
- - push: Enhance unspecified push default warning
-
- Explain 'simple' and 'matching' in "git push" advice message; the
- topmost patch is a rebase of jc/push-2.0-default-to-simple on top
- of it.
-
- Will cook in 'next'.
-
- The first one should be merged to 'master' soon after the next
- cycle opens; the other to replace jc/push-2.0-default-to-simple.
-
-
-* rr/for-each-ref-decoration (2013-10-31) 4 commits
- - fixup! for-each-ref: introduce %(upstream:track[short])
- - for-each-ref: introduce %(upstream:track[short])
- - for-each-ref: introduce %(HEAD) asterisk marker
- - for-each-ref: introduce %C(...) for color
-
-
-* jk/two-way-merge-corner-case-fix (2013-11-04) 3 commits
-  (merged to 'next' on 2013-11-04 at 79f4fb0)
- + t1005: add test for "read-tree --reset -u A B"
- + t1005: reindent
- + unpack-trees: fix "read-tree -u --reset A B" with conflicted index
-
- Fix a rather longstanding corner-case bug in twoway "reset to
- there" merge, which is most often seen in "git am --abort".
-
- Will cook in 'next'.
-
-
-* jc/ref-excludes (2013-11-01) 5 commits
-  (merged to 'next' on 2013-11-04 at fac1ed0)
- + rev-parse: introduce --exclude=<glob> to tame wildcards
- + rev-list --exclude: export add/clear-ref-exclusion and ref-excluded API
- + rev-list --exclude: tests
- + document --exclude option
- + revision: introduce --exclude=<glob> to tame wildcards
-
- People often wished a way to tell "git log --branches" (and "git
- log --remotes --not --branches") to exclude some local branches
- from the expansion of "--branches" (similarly for "--tags", "--all"
- and "--glob=<pattern>").  Now they have one.
-
- Can wait in 'next'.
-
-
-* jk/replace-perl-in-built-scripts (2013-10-29) 1 commit
-  (merged to 'next' on 2013-11-01 at 2384e29)
- + use @@PERL@@ in built scripts
-
- Can wait in 'next'.
-
-
-* fc/transport-helper-fixes (2013-11-06) 12 commits
- - transport-helper: demote lack of "force" option to a warning
- - transport-helper: add support to delete branches
- - fast-export: add support to delete refs
- - fast-import: add support to delete refs
- - transport-helper: add support for old:new refspec
- - fixup! fast-export: add new --refspec option
- - fast-export: add new --refspec option
- - fast-export: improve argument parsing
- - transport-helper: check for 'forced update' message
- - transport-helper: add 'force' to 'export' helpers
- - transport-helper: don't update refs in dry-run
- - transport-helper: mismerge fix
-
- Updates transport-helper, fast-import and fast-export to allow the
- ref mapping and ref deletion in a way similar to the natively
- supported transports.
-
- Expecting a reroll to fix use of vla and a few typos pointed out
- during the last round of review.
-
-
-* jh/loose-object-dirs-creation-race (2013-10-28) 1 commit
-  (merged to 'next' on 2013-11-01 at 3169b0f)
- + sha1_file.c:create_tmpfile(): Fix race when creating loose object dirs
-
- Will cook in 'next'.
-
-
-* nd/liteal-pathspecs (2013-10-28) 1 commit
-  (merged to 'next' on 2013-11-01 at 1a91775)
- + pathspec: stop --*-pathspecs impact on internal parse_pathspec() uses
-
- Will cook in 'next'.
-
-
-* th/reflog-annotated-tag (2013-10-28) 1 commit
-  (merged to 'next' on 2013-11-01 at 8b154cc)
- + reflog: handle lightweight and annotated tags equally
-
- "git log -g $annotated_tag", when there is no reflog history, should
- have produced a single output entry (i.e. the ref creation event),
- but instead showed the history leading to the tag.
-
- Broken at the design level.  Any reflog entry that points at a non
- commit needs to be handled with new code that does not exist yet,
- and lifting the "this code handles only commits" without adding
- such code does not solve anything.
-
-
-* tr/merge-recursive-index-only (2013-10-28) 3 commits
- - merge-recursive: -Xindex-only to leave worktree unchanged
- - merge-recursive: internal flag to avoid touching the worktree
- - merge-recursive: remove dead conditional in update_stages()
-
- Will hold until using script appears.
-
-
-* bc/http-100-continue (2013-10-31) 3 commits
-  (merged to 'next' on 2013-11-01 at e12ae23)
- + remote-curl: fix large pushes with GSSAPI
- + remote-curl: pass curl slot_results back through run_slot
- + http: return curl's AUTHAVAIL via slot_results
-
- Issue "100 Continue" responses to help use of GSS-Negotiate
- authentication scheme over HTTP transport when needed.
-
- Will cook in 'next'.
-
-
-* jc/merge-base-reflog (2013-10-29) 2 commits
-  (merged to 'next' on 2013-11-01 at 6114764)
- + merge-base: teach "--fork-point" mode
- + merge-base: use OPT_CMDMODE and clarify the command line parsing
-
- Code the logic in "pull --rebase" that figures out a fork point
- from reflog entries in C.
-
- Will cook in 'next'.
-
-
-* jk/robustify-parse-commit (2013-10-24) 6 commits
-  (merged to 'next' on 2013-11-01 at 2bfbaab)
- + checkout: do not die when leaving broken detached HEAD
- + use parse_commit_or_die instead of custom message
- + use parse_commit_or_die instead of segfaulting
- + assume parse_commit checks for NULL commit
- + assume parse_commit checks commit->object.parsed
- + log_tree_diff: die when we fail to parse a commit
-
- Will cook in 'next'.
-
-
-* mh/fetch-tags-in-addition-to-normal-refs (2013-10-30) 23 commits
-  (merged to 'next' on 2013-11-06 at 6932893)
- + fetch: improve the error messages emitted for conflicting refspecs
- + handle_duplicate(): mark error message for translation
- + ref_remote_duplicates(): extract a function handle_duplicate()
- + ref_remove_duplicates(): simplify loop logic
- + t5536: new test of refspec conflicts when fetching
- + ref_remove_duplicates(): avoid redundant bisection
- + git-fetch.txt: improve description of tag auto-following
- + fetch-options.txt: simplify ifdef/ifndef/endif usage
- + fetch, remote: properly convey --no-prune options to subprocesses
- + builtin/remote.c:update(): use struct argv_array
- + builtin/remote.c: reorder function definitions
- + query_refspecs(): move some constants out of the loop
- + fetch --prune: prune only based on explicit refspecs
- + fetch --tags: fetch tags *in addition to* other stuff
- + fetch: only opportunistically update references based on command line
- + get_expanded_map(): avoid memory leak
- + get_expanded_map(): add docstring
- + builtin/fetch.c: reorder function definitions
- + get_ref_map(): rename local variables
- + api-remote.txt: correct section "struct refspec"
- + t5510: check that "git fetch --prune --tags" does not prune branches
- + t5510: prepare test refs more straightforwardly
- + t5510: use the correct tag name in test
-
- The "-tags" option to "git fetch" used to be literally a synonym to
- a "refs/tags/*:refs/tags/*" refspec, which meant that (1) as an
- explicit refspec given from the command line, it silenced the lazy
- "git fetch" default that is configured, and (2) also as an explicit
- refspec given from the command line, it interacted with "--prune"
- to remove any tag that the remote we are fetching from does not
- have.
-
- This demotes it to an option; with it, we fetch all tags in
- addition to what would be fetched without the option, and it does
- not interact with the decision "--prune" makes to see what
- remote-tracking refs the local has are missing the remote
- counterpart.
-
- Will cook in 'next'.
-
-
-* nv/parseopt-opt-arg (2013-10-31) 2 commits
-  (merged to 'next' on 2013-11-01 at cd2afd9)
- + rev-parse --parseopt: add the --stuck-long mode
- + Use the word 'stuck' instead of 'sticked'
-
- Enhance "rev-parse --parseopt" mode to help parsing options with
- an optional parameter.
-
- Will cook in 'next'.
-
-
-* ak/submodule-foreach-quoting (2013-09-27) 1 commit
-  (merged to 'next' on 2013-10-14 at d77c5f1)
- + submodule foreach: skip eval for more than one argument
-
- A behavior change, but a worthwhile one: "git submodule foreach"
- was treating its arguments as part of a single command to be
- concatenated and passed to a shell, making writing buggy
- scripts too easy.
-
- This patch preserves the old "just pass it to the shell" behavior
- when a single argument is passed to 'git submodule foreach' and
- moves to a new "skip the shell and use the arguments passed
- unmolested" behavior when more than one argument is passed.
-
- The old behavior (always concatenating and passing to the shell)
- was similar to the 'ssh' command, while the new behavior (switching
- on the number of arguments) is what 'xterm -e' does.
-
- May need more thought to make sure this change is advertised well
- so that scripts that used multiple arguments but added their own
- extra layer of quoting are not broken.
-
- Will cook in 'next'.
-
-
-* kb/fast-hashmap (2013-11-07) 16 commits
- - fixup! builtin/update-index.c: cleanup update_one
- - fixup! read-cache.c: fix memory leaks caused by removed cache entries
- - read-cache.c: fix memory leaks caused by removed cache entries
- - builtin/update-index.c: cleanup update_one
- - fix 'git update-index --verbose --again' output
- - remove old hash.[ch] implementation
- - name-hash.c: remove cache entries instead of marking them CE_UNHASHED
- - name-hash.c: use new hash map implementation for cache entries
- - name-hash.c: remove unreferenced directory entries
- - name-hash.c: use new hash map implementation for directories
- - diffcore-rename.c: use new hash map implementation
- - diffcore-rename.c: simplify finding exact renames
- - diffcore-rename.c: move code around to prepare for the next patch
- - buitin/describe.c: use new hash map implementation
- - add a hashtable implementation that supports O(1) removal
- - submodule: don't access the .gitmodules cache entry after removing it
-
- Improvements to our hash table to get it to meet the needs of the
- msysgit fscache project, with some nice performance improvements.
-
- The preparatory clean-up to submodule from Jens is at the bottom. I
- also squashed in a fix-up by Karsten found at $gmane/236468 (please
- double-check the result).
-
- This is a reroll one after the valgrind breakage report ($gmane/236869).
-
- Waiting for a reroll.
-
-
-* jn/add-2.0-u-A-sans-pathspec (2013-04-26) 1 commit
-  (merged to 'next' on 2013-10-28 at d8cdf30)
- + git add: -u/-A now affects the entire working tree
-
- Will cook in 'next' until Git 2.0.
-
-
-* jc/core-checkstat-2.0 (2013-05-06) 1 commit
-  (merged to 'next' on 2013-10-28 at f1bec96)
- + core.statinfo: remove as promised in Git 2.0
-
- Will cook in 'next' until Git 2.0.
-
-
-* jc/push-2.0-default-to-simple (2013-06-18) 1 commit
-  (merged to 'next' on 2013-10-28 at 3153a9e)
- + push: switch default from "matching" to "simple"
-
- Will cook in 'next' until Git 2.0.
-
-
-* jc/add-2.0-ignore-removal (2013-04-22) 1 commit
-  (merged to 'next' on 2013-10-28 at 5fd76ec)
- + git add <pathspec>... defaults to "-A"
-
- Updated endgame for "git add <pathspec>" that defaults to "--all"
- aka "--no-ignore-removal".
-
- Will cook in 'next' until Git 2.0.
-
-
-* jc/hold-diff-remove-q-synonym-for-no-deletion (2013-07-19) 1 commit
-  (merged to 'next' on 2013-11-01 at 5fc26e4)
- + diff: remove "diff-files -q" in a version of Git in a distant future
-
- Will cook in 'next' until a distant future.
+-Peff
