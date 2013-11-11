@@ -1,96 +1,178 @@
-From: Ken Tanzer <ken.tanzer@gmail.com>
-Subject: git rm / format-patch / am fails on my file: patch does not apply
-Date: Sun, 10 Nov 2013 18:39:10 -0800
-Message-ID: <CAD3a31XPKsnuNE+szw7xgvaDrcxhKZ2jTDHKzTwdwtnCwFb_0w@mail.gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v4 12/10] git-remote-testgit: support the new 'force' option
+Date: Sun, 10 Nov 2013 21:57:16 -0600
+Message-ID: <CAMP44s3P7mmBP7=g4ZZpQcqyzeyAcAeH6gNfusbNX8xeQ+0JVQ@mail.gmail.com>
+References: <1382857521-7005-1-git-send-email-felipe.contreras@gmail.com>
+	<1382908589-7000-1-git-send-email-rhansen@bbn.com>
+	<526f74cf8307f_37cdfb1e7c31@nysa.notmuch>
+	<52800CB7.7080905@bbn.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Philip Oakley <philipoakley@iee.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 11 03:40:01 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Sverre Rabbelier <srabbelier@gmail.com>
+To: Richard Hansen <rhansen@bbn.com>
+X-From: git-owner@vger.kernel.org Mon Nov 11 04:57:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VfhQ0-0002AL-Pv
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Nov 2013 03:40:01 +0100
+	id 1Vfid8-0006lM-PG
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Nov 2013 04:57:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751123Ab3KKCjw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Nov 2013 21:39:52 -0500
-Received: from mail-pa0-f53.google.com ([209.85.220.53]:51831 "EHLO
-	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751003Ab3KKCju (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Nov 2013 21:39:50 -0500
-Received: by mail-pa0-f53.google.com with SMTP id kx10so4677938pab.40
-        for <git@vger.kernel.org>; Sun, 10 Nov 2013 18:39:50 -0800 (PST)
+	id S1751224Ab3KKD5U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Nov 2013 22:57:20 -0500
+Received: from mail-la0-f45.google.com ([209.85.215.45]:58712 "EHLO
+	mail-la0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751003Ab3KKD5S (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Nov 2013 22:57:18 -0500
+Received: by mail-la0-f45.google.com with SMTP id el20so3515516lab.4
+        for <git@vger.kernel.org>; Sun, 10 Nov 2013 19:57:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:cc:content-type;
-        bh=jUhJ6RYSjPh2GgTtH5T3vNTjke2MlWwIzOz8knk5fVg=;
-        b=HNP7Hr7BLO+sDAUmNAQJ4dw6/8SVWthSv2NB1iRsHNE7wzDI8+ONj+T9PUCDhNNcWt
-         h6xofhDISKN9HuGgzdHjgAwOmy9qEsZrEfoOJ3SvDrt5hbXZX8Vfo0kDu+ZnpconeYSR
-         vWfQ1T0L5VxOqxdlcm8xh6hjDv8l9BKEvV0OC2T898k/BXRgr4YGzQxQe3anscPqYXAm
-         mDrE9oH2C0HN7jsLh2xL+RwSal7MiHQJybsp6cpqMJ3A8opQ9vvVMpmBTuAw7eGJmpJN
-         gQnZps2jQ+GZJrEqp5VKtOLnYHxnxjSGwSQH+N195sVLa5UZ+7EiV8q8pYwgDXnBpOXR
-         o7Ow==
-X-Received: by 10.68.180.131 with SMTP id do3mr27946386pbc.34.1384137590259;
- Sun, 10 Nov 2013 18:39:50 -0800 (PST)
-Received: by 10.66.227.170 with HTTP; Sun, 10 Nov 2013 18:39:10 -0800 (PST)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=2T4LJ0HNgVzt5Sw5U1EgfpXUa2MgbZbj1jtyTGWpIr4=;
+        b=fBqxaM6ihYsTa5X79OY29/3Kb6WRaWqfKDNcdXyTF+PMg+NhY5PJCXi6G8bDc3Zgcu
+         r/RNfLaGYgA5RVAfUhu0IYQIf9h0sf3X+UbRDe7ZyAkjwx1hAyqTDifYXrpn9ImwxCTv
+         HFZJk3mcINS7TnLt5EpLd/Jn//wV/jB13oZqL/7ps8jXJUFM17mZ1eJMxVkGw/IfcBt0
+         DvZDNb7dwbTbye7ZtyD/6OIuax/uGRLBPbKgLYPGbVC24sMR6DXFMCXYvm5MiY6n9gAO
+         TAHYTunQLizMCfjeRKW8PLGb9dHMchPTREbnvk9x35ZDmuL5c1oXbELVhfUs6bQmpwDT
+         XRWQ==
+X-Received: by 10.152.170.133 with SMTP id am5mr21259433lac.9.1384142236705;
+ Sun, 10 Nov 2013 19:57:16 -0800 (PST)
+Received: by 10.114.201.69 with HTTP; Sun, 10 Nov 2013 19:57:16 -0800 (PST)
+In-Reply-To: <52800CB7.7080905@bbn.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237595>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237596>
 
-I originally posted about this to the git-users list
-(https://groups.google.com/forum/#!topic/git-users/G5D0bldEbTo).  If
-this would normally be expected to work:
+On Sun, Nov 10, 2013 at 4:46 PM, Richard Hansen <rhansen@bbn.com> wrote:
+> On 2013-10-29 04:41, Felipe Contreras wrote:
+>> Richard Hansen wrote:
+>>> Signed-off-by: Richard Hansen <rhansen@bbn.com>
+>>> ---
+>>>  git-remote-testgit.sh | 18 ++++++++++++++++++
+>>>  1 file changed, 18 insertions(+)
+>>>
+>>> diff --git a/git-remote-testgit.sh b/git-remote-testgit.sh
+>>> index 6d2f282..80546c1 100755
+>>> --- a/git-remote-testgit.sh
+>>> +++ b/git-remote-testgit.sh
+>>> @@ -6,6 +6,7 @@ url=$2
+>>>
+>>>  dir="$GIT_DIR/testgit/$alias"
+>>>  prefix="refs/testgit/$alias"
+>>> +forcearg=
+>>>
+>>>  default_refspec="refs/heads/*:${prefix}/heads/*"
+>>>
+>>> @@ -39,6 +40,7 @@ do
+>>>              fi
+>>>              test -n "$GIT_REMOTE_TESTGIT_SIGNED_TAGS" && echo "signed-tags"
+>>>              test -n "$GIT_REMOTE_TESTGIT_NO_PRIVATE_UPDATE" && echo "no-private-update"
+>>> +            echo 'option'
+>>>              echo
+>>>              ;;
+>>>      list)
+>>> @@ -93,6 +95,7 @@ do
+>>>              before=$(git for-each-ref --format=' %(refname) %(objectname) ')
+>>>
+>>>              git fast-import \
+>>> +                    ${forcearg} \
+>>>                      ${testgitmarks:+"--import-marks=$testgitmarks"} \
+>>>                      ${testgitmarks:+"--export-marks=$testgitmarks"} \
+>>>                      --quiet
+>>> @@ -115,6 +118,21 @@ do
+>>>
+>>>              echo
+>>>              ;;
+>>> +    option\ *)
+>>> +            read cmd opt val <<EOF
+>>> +${line}
+>>> +EOF
+>>
+>> We can do <<-EOF to align this properly.
+>
+> Good point.  I personally avoid tabs whenever possible, and <<- only
+> works with tabs, so I'm in the habit of doing <<EOF.
 
-git add <file>
-git commit
-git rm <file>
-git commit
-git format-patch HEAD~1
-git reset --hard HEAD~1
-git am 0001*patch
+That looks very weird to me, plus <<-EOF is often used already in git tests.
 
-then I'm having a problem with at least one (maybe more) file I have
-in a repository that seems like a bug.  Even if I copy it to a new
-repository, it will still fail, so it seems something about how git
-handles the file, which "file" reports as:
+>> Also, I don't see why all the variables are ${foo} instead of $foo.
+>
+> I'm in the habit of doing ${foo} because I like the consistency --
 
-ASCII text, with very long lines, with CRLF, CR, LF line terminators
+Sure, but with the price of less readibility. If consistency was the
+priority, we would be doing the follwoing in C:
 
-I've confirmed with the following test case on three machines, so it
-seems reproducible:
+if (foo) {
+  # single line
+}
 
-mkdir temp_test_case
-cd temp_test_case
-git init
-# my file.  Sorry--couldn't find a saner link!
-wget -O jquery-ui-1.8.custom.min.js
-http://sourceforge.net/p/agency/code/ci/9358ea4dbe8e1540ec0b8bebfc7770f1bf8be0ec/tree/jquery-ui-1.8.custom.min.js?format=raw
-git add jquery-ui-1.8.custom.min.js
-git commit -m 'Adding jquery-ui'
-git rm jquery-ui-1.8.custom.min.js
-git commit -m 'Removing jquery-ui'
-git format-patch HEAD~1
-git reset --hard HEAD~1
-git am 0001*
+Since the if might contain multiple lines, but we don't do that,
+because readibility is more important than consistency. So sometimes
+it's with braces, sometimes without.
 
-The last command reports the following:
+>>> +            case ${opt} in
+>>> +                force)
+>>
+>> I think the convention is to align these:
+>>
+>> case $opt in
+>> force)
+>
+> The existing case statement in this file indents the patterns the same
+> amount as the case statement, so this should be aligned to match.
+>
+> In general I rarely see the case patterns indented at the same level as
+> the case statement, possibly because Emacs shell-mode indents the
+> patterns more than the case statement (by default).  The POSIX spec
+> contains a mix of styles:
+>   * the normative text documenting the format of a 'case' construct
+>     indents the patterns more than the 'case' statement
+>   * two of the four non-normative examples indent the patterns
+>     more than the 'case' statements; the other two do not
 
-Applying: Removing jquery-ui
-error: patch failed: jquery-ui-1.8.custom.min.js:1
-error: jquery-ui-1.8.custom.min.js: patch does not apply
-Patch failed at 0001 Removing jquery-ui
-The copy of the patch that failed is found in:
-   /home/user/newtest2/temp_test_case/.git/rebase-apply/patch
-When you have resolved this problem, run "git am --resolved".
-If you prefer to skip this patch, run "git am --skip" instead.
-To restore the original branch and stop patching, run "git am --abort".
+The style in C has the cases at the same level, so I think it makes
+sense to do the same in shell, but I'm not sure if that's followed
+already.
 
-Let me know if I can provide more information, or am missing something
-obvious!  Thanks.
+>>> +                    case ${val} in
+>>> +                        true) forcearg=--force; echo 'ok';;
+>>> +                        false) forcearg=; echo 'ok';;
+>>> +                        *) printf %s\\n "error '${val}'\
+>>> + is not a valid value for option ${opt}";;
+>>
+>> I think this is packing a lot of stuff and it's not that readable.
+>>
+>> Moreover, this is not for production purposes, it's for testing purposes and a
+>> guideline, I think this suffices.
+>>
+>>
+>>       option\ *)
+>>               read cmd opt val <<-EOF
+>>               $line
+>>               EOF
+>>               case $opt in
+>>               force)
+>>                       test $val = "true" && force="true" || force=
+>>                       echo "ok"
+>>                       ;;
+>>
+>>                       echo "unsupported"
+>>                       ;;
+>>               esac
+>>               ;;
+>
+> Works for me.
 
-Ken
+Good, the final code style can be decided later on, and perhaps update
+Documentation/CodingGuidelines, but it's good the rest is more or less
+settled.
+
+Cheers.
+
+-- 
+Felipe Contreras
