@@ -1,59 +1,82 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: Bug? diff.submodule=log adds text to commit -v message
-Date: Tue, 12 Nov 2013 23:17:46 +0100
-Message-ID: <5282A90A.4030900@web.de>
-References: <loom.20131110T222043-57@post.gmane.org> <528140F5.6090700@web.de> <loom.20131111T214646-550@post.gmane.org> <52814C35.6040205@web.de> <5281DCC5.2000209@kdbg.org>
+Date: Tue, 12 Nov 2013 14:20:21 -0800
+Message-ID: <xmqqy54tfeje.fsf@gitster.dls.corp.google.com>
+References: <loom.20131110T222043-57@post.gmane.org> <528140F5.6090700@web.de>
+	<loom.20131111T214646-550@post.gmane.org> <52814C35.6040205@web.de>
+	<5281DCC5.2000209@kdbg.org> <5282A90A.4030900@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>
-To: Johannes Sixt <j6t@kdbg.org>, Ari Pollak <ari@debian.org>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Sixt <j6t@kdbg.org>, Ari Pollak <ari@debian.org>,
 	git@vger.kernel.org, Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Nov 12 23:17:59 2013
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Tue Nov 12 23:20:31 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VgMHW-0001fd-0C
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Nov 2013 23:17:58 +0100
+	id 1VgMJy-0004rS-Al
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Nov 2013 23:20:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756883Ab3KLWRz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Nov 2013 17:17:55 -0500
-Received: from mout.web.de ([212.227.15.3]:58650 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757236Ab3KLWRx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Nov 2013 17:17:53 -0500
-Received: from [192.168.178.41] ([91.3.130.121]) by smtp.web.de (mrweb103)
- with ESMTPA (Nemesis) id 0M5wzV-1VVZcy2xvl-00xrpm for <git@vger.kernel.org>;
- Tue, 12 Nov 2013 23:17:51 +0100
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.1.0
-In-Reply-To: <5281DCC5.2000209@kdbg.org>
-X-Enigmail-Version: 1.6
-X-Provags-ID: V03:K0:4fDLkiUFDCXvcUYUOgmHatJS5C56uZlKCKbSalwoc5zG138z5Eb
- kUssl+7jgtvat3b/MeQpO5Lva8I6WIIzwGgNnBQ/uRI0IZhbeYoQx9/e63zyZBCuwsuBoI3
- DXTIE7KUvlgTIJfU9DP3wIF8a1V6vGUOb63VcYADhRvbuVdznnZ74Vfb2rOF0TxFxEcPMF8
- affr1NRYGHXO5yDddFkCg==
+	id S1756863Ab3KLWU1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Nov 2013 17:20:27 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52045 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756613Ab3KLWUZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Nov 2013 17:20:25 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B62F752098;
+	Tue, 12 Nov 2013 17:20:24 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=fEGlfnW6YNaIX38NPSNeL+sNMO8=; b=cghAns
+	caBkCciNEVHolEFQoXzoajqMcxpa+kBo1mFTCVCWfJwWEx0ttRRjjzl7NBe4Tozi
+	mD+LRWUQEBfW8cbjiaxWHMWlkKGf9bjzNw5rzPXszFrjbZ16Z6bR6jTXUKykGj9y
+	IHzznO738QbB33Kye3ZoE5Zoy4InD7vlE88AY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=PPg904Xwf4LWe/UOgaiPWsJ2nRBWLzxb
+	N2C+zcXMYJopPyc3Skyk2eiEQYgMkrL09BZjQpfh37XXTheDhyK6SGzGyoRd7sF1
+	4QuMHp5iReljH5KbsVTUCie6wUawkQP9euLCxgZvWvpld75nIFhzH/jwyVDwW/f9
+	jZAUErYozrY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A66D752097;
+	Tue, 12 Nov 2013 17:20:24 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1040052096;
+	Tue, 12 Nov 2013 17:20:23 -0500 (EST)
+In-Reply-To: <5282A90A.4030900@web.de> (Jens Lehmann's message of "Tue, 12 Nov
+	2013 23:17:46 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: A00A2C38-4BE8-11E3-9259-D331802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237761>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237762>
 
-Am 12.11.2013 08:46, schrieb Johannes Sixt:
-> Am 11.11.2013 22:29, schrieb Jens Lehmann:
->> The diff below fixes the problem you describe for me. (But I do not
->> consider it a worthwhile fix in its current form because a line
->> starting with "Submodule " might appear in a perfectly normal commit
->> message, while "diff --git " most probably won't).
-> 
-> And on top of that, "Submodule " originates from a translatable string,
-> doesn't it?
+Jens Lehmann <Jens.Lehmann@web.de> writes:
 
-This would also be true for the marker line that Peff proposed:
+> Am 12.11.2013 08:46, schrieb Johannes Sixt:
+>> Am 11.11.2013 22:29, schrieb Jens Lehmann:
+>>> The diff below fixes the problem you describe for me. (But I do not
+>>> consider it a worthwhile fix in its current form because a line
+>>> starting with "Submodule " might appear in a perfectly normal commit
+>>> message, while "diff --git " most probably won't).
+>> 
+>> And on top of that, "Submodule " originates from a translatable string,
+>> doesn't it?
+>
+> This would also be true for the marker line that Peff proposed:
+>
+>   # Everything below this line is a diff that will be removed.
+>
+> But I suspect that would be ok if the marker would be both added
+> and searched for in its translated form. Or is it possible that
+> the locale changes between those two steps?
 
-  # Everything below this line is a diff that will be removed.
-
-But I suspect that would be ok if the marker would be both added
-and searched for in its translated form. Or is it possible that
-the locale changes between those two steps?
+If we were introducing a divider line for machine consumption, I do
+not think it is wise to let that line even translated...
