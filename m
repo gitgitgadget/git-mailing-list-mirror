@@ -1,129 +1,108 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: RE: [PATCH v2] remote-bzr: support the new 'force' option
-Date: Tue, 12 Nov 2013 15:01:18 -0600
-Message-ID: <5282971e8103_3b98795e78fd@nysa.notmuch>
-References: <1384210507-26561-2-git-send-email-felipe.contreras@gmail.com>
- <1384239808-19065-1-git-send-email-rhansen@bbn.com>
+Subject: Re: [PATCH v6 06/10] fast-export: add new --refspec option
+Date: Tue, 12 Nov 2013 15:02:51 -0600
+Message-ID: <5282977b2ecd_3b98795e785e@nysa.notmuch>
+References: <1384210507-26561-1-git-send-email-felipe.contreras@gmail.com>
+ <1384210507-26561-6-git-send-email-felipe.contreras@gmail.com>
+ <xmqqd2m6jyue.fsf@gitster.dls.corp.google.com>
+ <CAMP44s2ubU_R0GkEUpEh24TxER3uONQJprh9Ot7+PL0QiDRmDg@mail.gmail.com>
+ <5281DB46.2010004@bbn.com>
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
 Content-Transfer-Encoding: 7bit
-Cc: felipe.contreras@gmail.com, srabbelier@gmail.com,
-	Richard Hansen <rhansen@bbn.com>
-To: Richard Hansen <rhansen@bbn.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 12 22:09:38 2013
+Cc: git@vger.kernel.org, Sverre Rabbelier <srabbelier@gmail.com>
+To: Richard Hansen <rhansen@bbn.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Nov 12 22:21:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VgLDO-0005ri-2b
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Nov 2013 22:09:38 +0100
+	id 1VgLP0-0004fm-Bg
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Nov 2013 22:21:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755907Ab3KLVJd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Nov 2013 16:09:33 -0500
-Received: from mail-oa0-f53.google.com ([209.85.219.53]:63042 "EHLO
-	mail-oa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753470Ab3KLVJc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Nov 2013 16:09:32 -0500
-Received: by mail-oa0-f53.google.com with SMTP id k1so2259802oag.26
-        for <git@vger.kernel.org>; Tue, 12 Nov 2013 13:09:31 -0800 (PST)
+	id S1755881Ab3KLVVf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Nov 2013 16:21:35 -0500
+Received: from mail-oa0-f49.google.com ([209.85.219.49]:46964 "EHLO
+	mail-oa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752280Ab3KLVVd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Nov 2013 16:21:33 -0500
+Received: by mail-oa0-f49.google.com with SMTP id h16so3719771oag.36
+        for <git@vger.kernel.org>; Tue, 12 Nov 2013 13:21:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-type:content-transfer-encoding;
-        bh=con81/JiYXHAYCXCLs2VqWY/QLHqOWgL0Uk2qm023Pk=;
-        b=Y99egpRV8/cJxoFLhwd22PO0+c24urGn3jsnP3clOace9293a/2NIQVSHtVshK5UdH
-         3yemuPSmPdf/220X35L1grl14jUKSdGJd59Fc6KXsJt43wUfwaz00AhI4KS4889E118x
-         zLMUKn+oO4uaIo/Ptty9AMUgdEQSDz+pKyjr/ZIfkUHwck+UAsjhDX0w4vaZZrnbkoAu
-         8KOFJJQWYJS9v5Td9iROjWDTNswx5LnNomRVGFBUNx6slFupc6ND2pBSe4zYnVCexUiN
-         Pspf+qZlPPwf81ymWS2o596F6uGAtHJBkSWQ57G215BxeEeR1EpgGuJIzqpqDy5ksG4X
-         Teug==
-X-Received: by 10.182.92.231 with SMTP id cp7mr3805561obb.82.1384290571545;
-        Tue, 12 Nov 2013 13:09:31 -0800 (PST)
+        bh=cMLPiomp7KR/i6K1mD1gMVKIhd6J3dkzJ3CS4eyhP2c=;
+        b=uOavpc8AtfKbSHmQruKj/7naIdEOvSlF//ZVyUhVPtQZ3k6K8jQXhMvEka0xfD6de0
+         d2qrrmpacKvVLdDUgWkjsS0nJ9s5oQqAYQ/LtE6vDdZSUQDEaiOaJ0Yrtm5tfkLUcKBN
+         uqlGwztIOgtCBO9p9A1WaEg9a9qZ/LO95MxM3o8bLsV28RgiJ/rKTGDzG5cwHGM0fcY4
+         aIeBzqSbNxqOJGarmy54KJy6CP6Pedf/BfAJRvQw4WAQXd6Fwk2WdO5pEXe+xPwxc2r5
+         RmSY9iqchQvQgQHRLEDp1LJFzwI055H7wOfqAYEHXPgwOH7m/E8HNRgWW1JZQMIPK1qu
+         q/pQ==
+X-Received: by 10.60.103.37 with SMTP id ft5mr13771682oeb.45.1384291291791;
+        Tue, 12 Nov 2013 13:21:31 -0800 (PST)
 Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
-        by mx.google.com with ESMTPSA id it7sm35424301obb.11.2013.11.12.13.09.29
+        by mx.google.com with ESMTPSA id nw5sm8183950obc.9.2013.11.12.13.21.29
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 12 Nov 2013 13:09:30 -0800 (PST)
-In-Reply-To: <1384239808-19065-1-git-send-email-rhansen@bbn.com>
+        Tue, 12 Nov 2013 13:21:30 -0800 (PST)
+In-Reply-To: <5281DB46.2010004@bbn.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237756>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237757>
 
 Richard Hansen wrote:
-> Signed-off-by: Richard Hansen <rhansen@bbn.com>
-> ---
+> On 2013-11-11 18:50, Felipe Contreras wrote:
+> > On Mon, Nov 11, 2013 at 5:25 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> >> Felipe Contreras <felipe.contreras@gmail.com> writes:
+> >>
+> >>> So that we can convert the exported ref names.
+> >>>
+> >>> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+> >>> ---
+> >>
+> >> I thought that the discussion agreed this option should not be
+> >> called --refspec but something like --refmap?
+> > 
+> > I don't know what you agreed to,
 > 
-> This is a reroll of:
->   http://article.gmane.org/gmane.comp.version-control.git/237607
-> based on feedback from Felipe:
->   http://article.gmane.org/gmane.comp.version-control.git/237615
+> http://article.gmane.org/gmane.comp.version-control.git/237473
 > 
-> This patch is an optional extension to Felipe's "transport-helper:
-> updates" patch series:
->   http://thread.gmane.org/gmane.comp.version-control.git/237663
-> and it requires those changes to work.
+> > but I didn't agree to anything.
 > 
->  contrib/remote-helpers/git-remote-bzr | 32 +++++++++++++++++++++++++++++++-
->  contrib/remote-helpers/test-bzr.sh    | 22 +++++++++++++++++++++-
->  2 files changed, 52 insertions(+), 2 deletions(-)
+> Based on your silence I too thought that you had agreed.
+
+Given that my opinion is regarded as inferior by those in the discussion, I
+don't see why I should share it, specially since when I do, it's considered
+toxic if I disagree.
+
+> > What you pass to this option is a refspec, so it makes sense to name
+> > the option --refspec.
 > 
-> diff --git a/contrib/remote-helpers/git-remote-bzr b/contrib/remote-helpers/git-remote-bzr
-> index 7e34532..2f481e9 100755
-> --- a/contrib/remote-helpers/git-remote-bzr
-> +++ b/contrib/remote-helpers/git-remote-bzr
-> @@ -42,6 +42,7 @@ import json
->  import re
->  import StringIO
->  import atexit, shutil, hashlib, urlparse, subprocess
-> +import types
+> As discussed in that thread, it's not really the same thing as a refspec
+> used in push or fetch.  In those commands, the refspec specifies two
+> separable things:  what to transfer, and how to translate refs names
+> between the remote and local repositories.  IIUC, the fast-export
+> --refspec argument only specifies how to translate ref names, not what
+> gets transferred.
 
-No need for this any more.
+Does it?
 
->  NAME_RE = re.compile('^([^<>]+)')
->  AUTHOR_RE = re.compile('^([^<>]+?)? ?[<>]([^<>]*)(?:$|>)')
-> @@ -684,7 +685,8 @@ def do_export(parser):
->                  peer = bzrlib.branch.Branch.open(peers[name],
->                                                   possible_transports=transports)
->                  try:
-> -                    peer.bzrdir.push_branch(branch, revision_id=revid)
-> +                    peer.bzrdir.push_branch(branch, revision_id=revid,
-> +                                            overwrite=force)
->                  except bzrlib.errors.DivergedBranches:
->                      print "error %s non-fast forward" % ref
->                      continue
-> @@ -718,8 +720,32 @@ def do_capabilities(parser):
->          print "*import-marks %s" % path
->      print "*export-marks %s" % path
->  
-> +    print "option"
->      print
->  
-> +class InvalidOptionValue(Exception):
-> +    pass
-> +
-> +def get_bool_option(val):
-> +    if val == 'true':
-> +        return True
-> +    elif val == 'false':
-> +        return False
-> +    else:
-> +        raise InvalidOptionValue()
-> +
-> +def do_option(parser):
-> +    global force
-> +    (opt, val) = parser[1:3]
+ % git config remote.origin.fetch '+refs/heads/*:refs/remotes-test/origin/*'
+ % git fetch origin master
+ From /home/felipec/dev/git
+  * branch            master     -> FETCH_HEAD
+  * [new branch]      master     -> refs/remotes-test/origin/master
 
-I prefer:
-
-  opt, val = parser[1:3]
-
-But not a big deal.
-
-Otherwise the patch looks OK to me.
+In this case remote.origin.fetch is determining how to translate ref names, not
+what gets transferred, *exactly* the same as we are doing with --refspec. And
+as far as I know, remote.origin.fetch is a refspec.
 
 -- 
 Felipe Contreras
