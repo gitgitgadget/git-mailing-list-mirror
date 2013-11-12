@@ -1,112 +1,95 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [[PATCH v2]] git-send-email: Added the ability to query the number of smtp password questions
-Date: Tue, 12 Nov 2013 13:23:17 -0800
-Message-ID: <xmqqbo1pgvqy.fsf@gitster.dls.corp.google.com>
-References: <1383992508-2097-1-git-send-email-silvio@port1024.net>
-	<1384084613-12260-1-git-send-email-silvio@port1024.net>
-	<1384084613-12260-2-git-send-email-silvio@port1024.net>
-	<xmqqwqkdh59o.fsf@gitster.dls.corp.google.com>
-	<20131112203831.GB23418@sigill.intra.peff.net>
+Subject: Re: [PATCH 00/86] replace prefixcmp() with has_prefix()
+Date: Tue, 12 Nov 2013 13:26:00 -0800
+Message-ID: <xmqq7gcdgvmf.fsf@gitster.dls.corp.google.com>
+References: <5281012D.4060708@op5.se>
+	<20131112083240.GA1684@sigill.intra.peff.net>
+	<xmqqy54timsm.fsf@gitster.dls.corp.google.com>
+	<20131112.214357.1022923291448967795.chriscool@tuxfamily.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: silvio@port1024.net, git@vger.kernel.org,
-	Silvio F <silvio.fricke@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Nov 12 22:23:27 2013
+Cc: peff@peff.net, ae@op5.se, git@vger.kernel.org, apenwarr@gmail.com,
+	Johannes.Schindelin@gmx.de, jrnieder@gmail.com, max@quendi.de
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Tue Nov 12 22:26:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VgLQk-00071U-Dy
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Nov 2013 22:23:26 +0100
+	id 1VgLTT-00026A-CU
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Nov 2013 22:26:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755627Ab3KLVXX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Nov 2013 16:23:23 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50100 "EHLO
+	id S1756130Ab3KLV0L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Nov 2013 16:26:11 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48186 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752280Ab3KLVXV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Nov 2013 16:23:21 -0500
+	id S1753735Ab3KLV0J (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Nov 2013 16:26:09 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E739252FAF;
-	Tue, 12 Nov 2013 16:23:20 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EBBCF50054;
+	Tue, 12 Nov 2013 16:26:08 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=HFKk3z7Oz8AKSDBo01+Bz0g0qjE=; b=QfRIUM
-	P226XT1Zk+FVE34NlnApGS05/o3NY162a2jqQGbA4IQk03PnhWpXvv9f9He5Sx5u
-	xwBYenfcws4eXtZ33e7TNi7AV6txr1Urqu2OUZsUJkUELaFBiM8Xgjv+W7QAiCE6
-	iOrHe6m/SRhRklV66PqxBMW0boCRSwPIIx8kQ=
+	:content-type; s=sasl; bh=BzMiWfXtRfmKiAPKldjwsuVUINw=; b=hSxzm4
+	brgN9vzMAgLOjBAg+k0WcW9XR/9adUG5hUeMhQ3BcbGXLDyD/3R0JqH/B7R+mT+P
+	Zx0iroSxUBdXRdBlQIxqA7+HoJMUQxy9c8vayC7vrHXgzZ4xakbeyoTrmNYfergr
+	w7QTrfOvPtE7SPGQMF/51pqdrEpudbUEq9c3E=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=xNnuNDMZ9Y28b8PZOIXHixxqAFLTfsp2
-	4DPUyebU334MRu6N5b+mrebyanVFdh6YAJjoDM66JA7DDeDMWG8z3u57MiXlCY0u
-	MrvZM9pAFXEZxk9e/y9vPMq/i8e6DOVR1EdJTXKME1vX8LEM8ndXPu8nDzAQTVBq
-	jC8etWTOj70=
+	:content-type; q=dns; s=sasl; b=HyRpDPMiSWnZjogKBl6n3n2oT1CUL7vX
+	zaLfi2N/U3XxZPRj3N4d4BfxPWeoGgv1FHriAXjV1eGztkVveuGkvrfc1m8+EfHR
+	KFyM2Bjr6m+h1yWUsq8AWL+ulyl5klLpMADIZdDq1FgeFMcIUYPPUNufErwF1fzp
+	LQk10Yp5+oU=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D5F7452FAE;
-	Tue, 12 Nov 2013 16:23:20 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DE54450053;
+	Tue, 12 Nov 2013 16:26:08 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 13A3852FAC;
-	Tue, 12 Nov 2013 16:23:19 -0500 (EST)
-In-Reply-To: <20131112203831.GB23418@sigill.intra.peff.net> (Jeff King's
-	message of "Tue, 12 Nov 2013 15:38:31 -0500")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3C22750050;
+	Tue, 12 Nov 2013 16:26:08 -0500 (EST)
+In-Reply-To: <20131112.214357.1022923291448967795.chriscool@tuxfamily.org>
+	(Christian Couder's message of "Tue, 12 Nov 2013 21:43:57 +0100
+	(CET)")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: A72F72BE-4BE0-11E3-A923-D331802839F8-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 0B7633D4-4BE1-11E3-893D-D331802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237758>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237759>
 
-Jeff King <peff@peff.net> writes:
+Christian Couder <chriscool@tuxfamily.org> writes:
 
-> On Tue, Nov 12, 2013 at 09:57:39AM -0800, Junio C Hamano wrote:
->
->> > With this patch "git-send-mail" ask a configurable number of questions to
->> > input the smtp password. Without this patch we have only one trial.
+> From: Junio C Hamano <gitster@pobox.com>
 >> 
->> I wonder if Git::credential (or even the underlying lower level
->> credential_fill() in the helper API) should give hints to the caller
->> if calling it again may yield a different result.  An interactive
->> prompt may allow the user to mistype the password and then a later
->> call may return a correct one, but the .netrc helper will read from
->> the file and will return a fixed result, so there is no use calling
->> credential_fill() again.  And in the latter case, you do not want to
->> loop $askpasswordcount times.
+>> Even though we already added has_suffix() for tail matches, it is
+>> not too late to rethink, as it is not in 'master' yet.
+>> 
+>> One thing I noticed is that it is probably misnamed, or at least in
+>> a way that invites confusion.  Can people tell which one of these is
+>> correct without looking at existing callsites?
+>> 
+>>         has_suffix(filename, "txt");
+>>         has_suffix(filename, ".txt");
+>> 
+>> The semantics of the function we have is the latter and is better
+>> called endswith(), I suspect.  And the corresponding function to
+>> check for head matches should probably be called beginswith().
 >
-> It would be pretty easy to add an "interactive=true" flag to the
-> credential response (patch below). Credential readers are supposed to
-> ignore elements that they don't understand. So storage helpers which are
-> told "we got a password interactively" can choose to use that
-> information if they want, but current implementations will fall back to
-> ignoring it. Similarly, users of "git credential fill" can use it, but
-> it won't hurt existing readers.
-
-Yeah, it may be a sensible way forward.
-
->> I also have to wonder if this logic belongs to git-send-email.
->> Specifically, I wonder if we can place the looping logic in
->> Git::credential, so that other users of the library can take
->> advantage of it?
+> I don't know if has_suffix() is confusing for a native speaker.
 >
-> A very early draft of the credential code added looping, but I cut it
-> out (I think before it even made it to the list). I don't recall the
-> exact reason, but it was probably a combination of:
+> After a look at some languages, Python has "startwith()" and
+> "endswith()", and Java has "startWith()" and "endsWith()".
 >
->   1. It's awkward to do at the credential layer in C, because you need
->      input from the calling code on whether the credential worked or
->      not. The perl Git::credential can take a callback, though, which
->      means the credential code owns the outer loop, and it would be
->      pretty easy to just loop on trying.
+> But while we are at it, why not
+> "ends_with()" and "begins_with()"? To me using an underscore seems
+> more consistent with what we are doing in Git.
 
-I was wondering if it should go to Git::credential; I did not say it
-might go to credential_fill() API, exactly for that "fill does not
-know if that was accepted" reason.  We are in full agreement, I
-think.
+Sure.
 
-> I guess "send-email" does not (always) fall under the same category
-> because the user may have put work into a cover letter, or filling
-> interactive fields. So I have no objection to adding it there, but I do
-> agree we might as well put it in Git::credential.
+I do not think Peff and I were discussing at that level yet to
+debate between camelCase and words_with_underscore.  We were mainly
+talking about what words to be used, which needs to come before the
+final appearance.
