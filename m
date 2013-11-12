@@ -1,92 +1,129 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v7 04/11] transport-helper: check for 'forced update' message
-Date: Tue, 12 Nov 2013 14:56:57 -0600
-Message-ID: <1384289830-5471-5-git-send-email-felipe.contreras@gmail.com>
-References: <1384289830-5471-1-git-send-email-felipe.contreras@gmail.com>
-Cc: Richard Hansen <rhansen@bbn.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 12 22:06:07 2013
+Subject: RE: [PATCH v2] remote-bzr: support the new 'force' option
+Date: Tue, 12 Nov 2013 15:01:18 -0600
+Message-ID: <5282971e8103_3b98795e78fd@nysa.notmuch>
+References: <1384210507-26561-2-git-send-email-felipe.contreras@gmail.com>
+ <1384239808-19065-1-git-send-email-rhansen@bbn.com>
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: felipe.contreras@gmail.com, srabbelier@gmail.com,
+	Richard Hansen <rhansen@bbn.com>
+To: Richard Hansen <rhansen@bbn.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 12 22:09:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VgL9r-00015Q-Q6
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Nov 2013 22:06:00 +0100
+	id 1VgLDO-0005ri-2b
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Nov 2013 22:09:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756582Ab3KLVFo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Nov 2013 16:05:44 -0500
-Received: from mail-oa0-f54.google.com ([209.85.219.54]:41590 "EHLO
-	mail-oa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932208Ab3KLVEP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Nov 2013 16:04:15 -0500
-Received: by mail-oa0-f54.google.com with SMTP id o6so4090790oag.41
-        for <git@vger.kernel.org>; Tue, 12 Nov 2013 13:04:14 -0800 (PST)
+	id S1755907Ab3KLVJd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Nov 2013 16:09:33 -0500
+Received: from mail-oa0-f53.google.com ([209.85.219.53]:63042 "EHLO
+	mail-oa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753470Ab3KLVJc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Nov 2013 16:09:32 -0500
+Received: by mail-oa0-f53.google.com with SMTP id k1so2259802oag.26
+        for <git@vger.kernel.org>; Tue, 12 Nov 2013 13:09:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=1cNi5DfrhlaLqcABnMPMoQcD8DSJ29ibAjRyHBQLDgg=;
-        b=aeBpEVisolvQSHhCTiGNJGuumena4cRsWJ8rrfLyz46FWyoL5ogbPRngDw1pn1h9+I
-         gUiGBWdNf9tITD/3qwRmpY8kzyrxlz4Yhvwg+bhQ2gVw3VabcdYC1lXJVVrINSADtYuc
-         NKco3QUYKm4J+DINApqjxNYjTB7tPn20qsrYaH1Lo7/GJSaCXEN4/U23XAMf8XT9QJFO
-         Q2VRKzahbw4+XcuNHrR3IPECi1glJPNznxw0NKu3xyUvX49X05gRu2rcdfQ44M11OuGl
-         4tz1Ff0A/QST0M3/gVuLAnA8FYkHZTOWq5rF2Ii4eICfcku2pfjXhrJmMr50x/3o2/cM
-         t/nA==
-X-Received: by 10.60.55.104 with SMTP id r8mr3397974oep.87.1384290254563;
-        Tue, 12 Nov 2013 13:04:14 -0800 (PST)
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=con81/JiYXHAYCXCLs2VqWY/QLHqOWgL0Uk2qm023Pk=;
+        b=Y99egpRV8/cJxoFLhwd22PO0+c24urGn3jsnP3clOace9293a/2NIQVSHtVshK5UdH
+         3yemuPSmPdf/220X35L1grl14jUKSdGJd59Fc6KXsJt43wUfwaz00AhI4KS4889E118x
+         zLMUKn+oO4uaIo/Ptty9AMUgdEQSDz+pKyjr/ZIfkUHwck+UAsjhDX0w4vaZZrnbkoAu
+         8KOFJJQWYJS9v5Td9iROjWDTNswx5LnNomRVGFBUNx6slFupc6ND2pBSe4zYnVCexUiN
+         Pspf+qZlPPwf81ymWS2o596F6uGAtHJBkSWQ57G215BxeEeR1EpgGuJIzqpqDy5ksG4X
+         Teug==
+X-Received: by 10.182.92.231 with SMTP id cp7mr3805561obb.82.1384290571545;
+        Tue, 12 Nov 2013 13:09:31 -0800 (PST)
 Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
-        by mx.google.com with ESMTPSA id xr8sm35388842obc.12.2013.11.12.13.04.12
+        by mx.google.com with ESMTPSA id it7sm35424301obb.11.2013.11.12.13.09.29
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 12 Nov 2013 13:04:13 -0800 (PST)
-X-Mailer: git-send-email 1.8.4.2+fc1
-In-Reply-To: <1384289830-5471-1-git-send-email-felipe.contreras@gmail.com>
+        Tue, 12 Nov 2013 13:09:30 -0800 (PST)
+In-Reply-To: <1384239808-19065-1-git-send-email-rhansen@bbn.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237755>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237756>
 
-So the remote-helpers can tell us when a forced push was needed.
+Richard Hansen wrote:
+> Signed-off-by: Richard Hansen <rhansen@bbn.com>
+> ---
+> 
+> This is a reroll of:
+>   http://article.gmane.org/gmane.comp.version-control.git/237607
+> based on feedback from Felipe:
+>   http://article.gmane.org/gmane.comp.version-control.git/237615
+> 
+> This patch is an optional extension to Felipe's "transport-helper:
+> updates" patch series:
+>   http://thread.gmane.org/gmane.comp.version-control.git/237663
+> and it requires those changes to work.
+> 
+>  contrib/remote-helpers/git-remote-bzr | 32 +++++++++++++++++++++++++++++++-
+>  contrib/remote-helpers/test-bzr.sh    | 22 +++++++++++++++++++++-
+>  2 files changed, 52 insertions(+), 2 deletions(-)
+> 
+> diff --git a/contrib/remote-helpers/git-remote-bzr b/contrib/remote-helpers/git-remote-bzr
+> index 7e34532..2f481e9 100755
+> --- a/contrib/remote-helpers/git-remote-bzr
+> +++ b/contrib/remote-helpers/git-remote-bzr
+> @@ -42,6 +42,7 @@ import json
+>  import re
+>  import StringIO
+>  import atexit, shutil, hashlib, urlparse, subprocess
+> +import types
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- transport-helper.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+No need for this any more.
 
-diff --git a/transport-helper.c b/transport-helper.c
-index 60fba99..23af747 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -644,7 +644,7 @@ static int push_update_ref_status(struct strbuf *buf,
- 				   struct ref *remote_refs)
- {
- 	char *refname, *msg;
--	int status;
-+	int status, forced = 0;
- 
- 	if (!prefixcmp(buf->buf, "ok ")) {
- 		status = REF_STATUS_OK;
-@@ -702,6 +702,11 @@ static int push_update_ref_status(struct strbuf *buf,
- 			free(msg);
- 			msg = NULL;
- 		}
-+		else if (!strcmp(msg, "forced update")) {
-+			forced = 1;
-+			free(msg);
-+			msg = NULL;
-+		}
- 	}
- 
- 	if (*ref)
-@@ -723,6 +728,7 @@ static int push_update_ref_status(struct strbuf *buf,
- 	}
- 
- 	(*ref)->status = status;
-+	(*ref)->forced_update = forced;
- 	(*ref)->remote_status = msg;
- 	return !(status == REF_STATUS_OK);
- }
+>  NAME_RE = re.compile('^([^<>]+)')
+>  AUTHOR_RE = re.compile('^([^<>]+?)? ?[<>]([^<>]*)(?:$|>)')
+> @@ -684,7 +685,8 @@ def do_export(parser):
+>                  peer = bzrlib.branch.Branch.open(peers[name],
+>                                                   possible_transports=transports)
+>                  try:
+> -                    peer.bzrdir.push_branch(branch, revision_id=revid)
+> +                    peer.bzrdir.push_branch(branch, revision_id=revid,
+> +                                            overwrite=force)
+>                  except bzrlib.errors.DivergedBranches:
+>                      print "error %s non-fast forward" % ref
+>                      continue
+> @@ -718,8 +720,32 @@ def do_capabilities(parser):
+>          print "*import-marks %s" % path
+>      print "*export-marks %s" % path
+>  
+> +    print "option"
+>      print
+>  
+> +class InvalidOptionValue(Exception):
+> +    pass
+> +
+> +def get_bool_option(val):
+> +    if val == 'true':
+> +        return True
+> +    elif val == 'false':
+> +        return False
+> +    else:
+> +        raise InvalidOptionValue()
+> +
+> +def do_option(parser):
+> +    global force
+> +    (opt, val) = parser[1:3]
+
+I prefer:
+
+  opt, val = parser[1:3]
+
+But not a big deal.
+
+Otherwise the patch looks OK to me.
+
 -- 
-1.8.4.2+fc1
+Felipe Contreras
