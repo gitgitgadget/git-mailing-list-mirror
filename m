@@ -1,68 +1,87 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v7 00/11] transport-helper: updates
-Date: Tue, 12 Nov 2013 14:24:51 -0800
-Message-ID: <xmqqtxfhfebw.fsf@gitster.dls.corp.google.com>
-References: <1384289830-5471-1-git-send-email-felipe.contreras@gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v6 06/10] fast-export: add new --refspec option
+Date: Tue, 12 Nov 2013 17:20:46 -0600
+Message-ID: <5282b7cdf3b12_1d45133de74b8@nysa.notmuch>
+References: <1384210507-26561-1-git-send-email-felipe.contreras@gmail.com>
+ <1384210507-26561-6-git-send-email-felipe.contreras@gmail.com>
+ <xmqqd2m6jyue.fsf@gitster.dls.corp.google.com>
+ <CAMP44s2ubU_R0GkEUpEh24TxER3uONQJprh9Ot7+PL0QiDRmDg@mail.gmail.com>
+ <5281DB46.2010004@bbn.com>
+ <5282977b2ecd_3b98795e785e@nysa.notmuch>
+ <xmqq38n1guo8.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Richard Hansen <rhansen@bbn.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 12 23:24:59 2013
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Richard Hansen <rhansen@bbn.com>, git@vger.kernel.org,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 13 00:28:37 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VgMOJ-0002Iq-C4
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Nov 2013 23:24:59 +0100
+	id 1VgNNs-0001O1-ET
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Nov 2013 00:28:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757215Ab3KLWY4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Nov 2013 17:24:56 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47160 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756870Ab3KLWYy (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Nov 2013 17:24:54 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 335B0521AD;
-	Tue, 12 Nov 2013 17:24:54 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=c9z5Ek/kZK0cEfseTkx8Wc8hrhk=; b=YGv8JP
-	CZwUef7kVQtRqXKRggsoH48Lw2Qwr9naCXTQvCA6zq7nXUE1Qwi6W0swyFN7MqWz
-	yuP+dh/gh6nmhfirwxapyDVkcWUhn0Pc2AWqyi6ON31O1JOZ4PCVVWfvH8PXYT+V
-	9iufk4GKqxGn0LL5IZ+4UGF6OGupLbM/f7hVg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=uTNUJGaVJddzOgh9q4Ukwst77gbtmCgE
-	1WIFRiAgUT3PV7AQcIRQwNSXKEtA/CfszIZWZayTeFrIXACfMyHSoXDK2WnTqcco
-	1NVWtpKACyFQv3mGSbKniM+FI4gjugMlKMy//qyBLRdnmfK+jq3/ky5FHIgUEykh
-	B/12gYuU4rs=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 21420521AC;
-	Tue, 12 Nov 2013 17:24:54 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 77EA3521AB;
-	Tue, 12 Nov 2013 17:24:53 -0500 (EST)
-In-Reply-To: <1384289830-5471-1-git-send-email-felipe.contreras@gmail.com>
-	(Felipe Contreras's message of "Tue, 12 Nov 2013 14:56:53 -0600")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 40A0BF0E-4BE9-11E3-AD8D-D331802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757193Ab3KLX2d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Nov 2013 18:28:33 -0500
+Received: from mail-oa0-f45.google.com ([209.85.219.45]:43116 "EHLO
+	mail-oa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754386Ab3KLX2b (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Nov 2013 18:28:31 -0500
+Received: by mail-oa0-f45.google.com with SMTP id m1so4725956oag.18
+        for <git@vger.kernel.org>; Tue, 12 Nov 2013 15:28:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=rIVlPuxP9PMAKYJrNFsZ6H2keLw8dlvp6R0HX5qaEzQ=;
+        b=XheRXdQGwCIZt8+O9Dbylr078zSb79uPObCCAJ9LghQE1p3l9JkVvi/T4ByES9/ieF
+         9k7l93LrUgpO2tCwBUK28sclcA2piA2sbcPd9gYvNXqXmpkBo9PdcyPFMbDoz0h6wktw
+         z86cHXIxkkqFip472Kq9kIv3pj1Fi0ZwKEgZ9bTPy3/NXt0kxqxUCxZE7bLysigJGiMp
+         eYNOSY7QkbQdFHjKjZ6wFc8vHHm8lhlmIBOtUBdehw5ozdbOUPjF1IK/ugI++jV6zuWU
+         UfFwF0KQEXng31MASJnbe8RsftFr1GO42py26tB1xFc5SmNbgc4eYStOrDcSkh9QcpUl
+         jMLg==
+X-Received: by 10.60.45.102 with SMTP id l6mr26391786oem.36.1384298911413;
+        Tue, 12 Nov 2013 15:28:31 -0800 (PST)
+Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
+        by mx.google.com with ESMTPSA id eg8sm36329831obd.6.2013.11.12.15.28.28
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 12 Nov 2013 15:28:30 -0800 (PST)
+In-Reply-To: <xmqq38n1guo8.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237763>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237764>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+Junio C Hamano wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+> 
+> > Does it?
+> >
+> >  % git config remote.origin.fetch '+refs/heads/*:refs/remotes-test/origin/*'
+> >  % git fetch origin master
+> >  From /home/felipec/dev/git
+> >   * branch            master     -> FETCH_HEAD
+> >   * [new branch]      master     -> refs/remotes-test/origin/master
+> >
+> > In this case remote.origin.fetch is determining how to translate ref names, not
+> > what gets transferred, *exactly* the same as we are doing with --refspec. And
+> > as far as I know, remote.origin.fetch is a refspec.
+> 
+> If you had 'next' and 'pu' branches at the remote, do they get
+> fetched with that command line?
 
-> Here are the patches that allow transport helpers to be completely transparent;
+No, why would they? You specified a single branch to fetch. Try it yourself.
 
-Thanks, will replace what is on 'pu'.
+ % git clone git://git.kernel.org/pub/scm/git/git.git
+ % git config remote.origin.fetch '+refs/heads/*:refs/remotes-test/origin/*'
+ % git fetch origin master
 
-> Felipe Contreras (10):
->   transport-helper: fix extra lines
-
-I'll retitle this one to "mismerge fix" to make it clear where the
-blame lies ;-)
+-- 
+Felipe Contreras
