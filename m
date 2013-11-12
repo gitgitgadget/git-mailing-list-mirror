@@ -1,7 +1,7 @@
 From: Richard Hansen <rhansen@bbn.com>
-Subject: [PATCH v2 8/9] test-hg.sh: help user correlate verbose output with email test
-Date: Tue, 12 Nov 2013 00:54:47 -0500
-Message-ID: <1384235688-9655-9-git-send-email-rhansen@bbn.com>
+Subject: [PATCH v2 5/9] test-hg.sh: eliminate 'local' bashism
+Date: Tue, 12 Nov 2013 00:54:44 -0500
+Message-ID: <1384235688-9655-6-git-send-email-rhansen@bbn.com>
 References: <1384142712-2936-1-git-send-email-rhansen@bbn.com>
  <1384235688-9655-1-git-send-email-rhansen@bbn.com>
 Cc: felipe.contreras@gmail.com, Richard Hansen <rhansen@bbn.com>
@@ -12,67 +12,60 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vg6x0-0000SH-Gq
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Nov 2013 06:55:46 +0100
+	id 1Vg6wy-0000SH-AX
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Nov 2013 06:55:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752179Ab3KLFzh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Nov 2013 00:55:37 -0500
-Received: from smtp.bbn.com ([128.33.1.81]:28298 "EHLO smtp.bbn.com"
+	id S1752013Ab3KLFzY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Nov 2013 00:55:24 -0500
+Received: from smtp.bbn.com ([128.33.0.80]:35976 "EHLO smtp.bbn.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751534Ab3KLFzS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Nov 2013 00:55:18 -0500
-Received: from socket.bbn.com ([192.1.120.102]:44827)
+	id S1751564Ab3KLFzP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Nov 2013 00:55:15 -0500
+Received: from socket.bbn.com ([192.1.120.102]:57711)
 	by smtp.bbn.com with esmtps (TLSv1:AES256-SHA:256)
 	(Exim 4.77 (FreeBSD))
 	(envelope-from <rhansen@bbn.com>)
-	id 1Vg6wW-0002PS-SQ; Tue, 12 Nov 2013 00:55:16 -0500
-X-Submitted: to socket.bbn.com (Postfix) with ESMTPSA id 2133E4007A
+	id 1Vg6wU-000LqA-Gm; Tue, 12 Nov 2013 00:55:14 -0500
+X-Submitted: to socket.bbn.com (Postfix) with ESMTPSA id C7A124004D
 X-Mailer: git-send-email 1.8.5.rc1.208.g8ff7964
 In-Reply-To: <1384235688-9655-1-git-send-email-rhansen@bbn.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237689>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237690>
 
-It's hard to tell which author conversion test failed when the email
-addresses look similar.
+Unlike bash, POSIX shell does not specify a 'local' command for
+declaring function-local variable scope.  Except for IFS, the variable
+names are not used anywhere else in the script so simply remove the
+'local'.  For IFS, move the assignment to the 'read' command to
+prevent it from affecting code outside the function.
 
 Signed-off-by: Richard Hansen <rhansen@bbn.com>
 ---
- contrib/remote-helpers/test-hg.sh | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ contrib/remote-helpers/test-hg.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/contrib/remote-helpers/test-hg.sh b/contrib/remote-helpers/test-hg.sh
-index eb72db8..642ad93 100755
+index fa7d17b..ceef6b1 100755
 --- a/contrib/remote-helpers/test-hg.sh
 +++ b/contrib/remote-helpers/test-hg.sh
-@@ -206,16 +206,16 @@ test_expect_success 'authors' '
+@@ -54,14 +54,14 @@ check_bookmark () {
+ }
  
- 	>../expected &&
- 	author_test alpha "" "H G Wells <wells@example.com>" &&
--	author_test beta "test" "test <unknown>" &&
--	author_test gamma "test <test@example.com> (comment)" "test <test@example.com>" &&
--	author_test delta "<test@example.com>" "Unknown <test@example.com>" &&
--	author_test epsilon "name<test@example.com>" "name <test@example.com>" &&
--	author_test zeta "name <test@example.com" "name <test@example.com>" &&
--	author_test eta " test " "test <unknown>" &&
--	author_test theta "test < test@example.com >" "test <test@example.com>" &&
--	author_test iota "test >test@example.com>" "test <test@example.com>" &&
--	author_test kappa "test < test <at> example <dot> com>" "test <unknown>" &&
--	author_test lambda "test@example.com" "Unknown <test@example.com>"
-+	author_test beta "beta" "beta <unknown>" &&
-+	author_test gamma "gamma <test@example.com> (comment)" "gamma <test@example.com>" &&
-+	author_test delta "<delta@example.com>" "Unknown <delta@example.com>" &&
-+	author_test epsilon "epsilon<test@example.com>" "epsilon <test@example.com>" &&
-+	author_test zeta "zeta <test@example.com" "zeta <test@example.com>" &&
-+	author_test eta " eta " "eta <unknown>" &&
-+	author_test theta "theta < test@example.com >" "theta <test@example.com>" &&
-+	author_test iota "iota >test@example.com>" "iota <test@example.com>" &&
-+	author_test kappa "kappa < test <at> example <dot> com>" "kappa <unknown>" &&
-+	author_test lambda "lambda@example.com" "Unknown <lambda@example.com>"
- 	) &&
+ check_push () {
+-	local expected_ret=$1 ret=0 ref_ret=0 IFS=':'
++	expected_ret=$1 ret=0 ref_ret=0
  
- 	git clone "hg::hgrepo" gitrepo &&
+ 	shift
+ 	git push origin "$@" 2>error
+ 	ret=$?
+ 	cat error
+ 
+-	while read branch kind
++	while IFS=':' read branch kind
+ 	do
+ 		case "$kind" in
+ 		'new')
 -- 
 1.8.5.rc1.208.g8ff7964
