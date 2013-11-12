@@ -1,124 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 2/9] test-lib.sh: convert $TEST_DIRECTORY to an absolute path
-Date: Tue, 12 Nov 2013 12:06:14 -0800
-Message-ID: <xmqqfvr1gzbc.fsf@gitster.dls.corp.google.com>
-References: <1384142712-2936-1-git-send-email-rhansen@bbn.com>
-	<1384235688-9655-1-git-send-email-rhansen@bbn.com>
-	<1384235688-9655-3-git-send-email-rhansen@bbn.com>
-	<5281C522.7050403@bbn.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 00/86] replace prefixcmp() with has_prefix()
+Date: Tue, 12 Nov 2013 15:14:05 -0500
+Message-ID: <20131112201405.GA23418@sigill.intra.peff.net>
+References: <20131109070358.18178.40248.chriscool@tuxfamily.org>
+ <5281012D.4060708@op5.se>
+ <20131112083240.GA1684@sigill.intra.peff.net>
+ <xmqqy54timsm.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, felipe.contreras@gmail.com
-To: Richard Hansen <rhansen@bbn.com>
-X-From: git-owner@vger.kernel.org Tue Nov 12 21:06:26 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Andreas Ericsson <ae@op5.se>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	git@vger.kernel.org, Avery Pennarun <apenwarr@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jonathan Nieder <jrnieder@gmail.com>, Max Horn <max@quendi.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Nov 12 21:14:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VgKEC-0006nF-NQ
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Nov 2013 21:06:25 +0100
+	id 1VgKLm-00009E-8k
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Nov 2013 21:14:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756554Ab3KLUGV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Nov 2013 15:06:21 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62347 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753301Ab3KLUGT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Nov 2013 15:06:19 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 892A150B32;
-	Tue, 12 Nov 2013 15:06:18 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=suI0rgfN5y3okRLYf+QfVtW2pVU=; b=MflniH
-	Uo7ZgjfGe6AGPtLEHBpU1Gq2qdrfi6AxNJ47/7zan49Iu8m3Gd1QnqYosiezgtwL
-	zxgGJ1g6+Mh3KnxXo71Erv2sOZ3k5hxRZb/t62uI8ygNxtfGuYEtNjWsfYhDs/aj
-	8hugmtjmu8mC6uMYqd0TapjP9f5t2OnzCLpDo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=NkJTIHZhgtwVnNtc76M8ucu2t5WerPqg
-	XVuaSwab7wzu9I3CxFoikRXcCOWccIh24ukmgrRFEPKxnyE4ycvJYs56v//LdreE
-	oSu0ES7Orw1WYJc99q8kbhoWlOjYwD/fGcf3fmzbnVTkV8mA4lABChVdS7BQdgH2
-	qOX2MouCg1g=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7989250B31;
-	Tue, 12 Nov 2013 15:06:18 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C26EF50B2F;
-	Tue, 12 Nov 2013 15:06:17 -0500 (EST)
-In-Reply-To: <5281C522.7050403@bbn.com> (Richard Hansen's message of "Tue, 12
-	Nov 2013 01:05:22 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: E416AFF4-4BD5-11E3-966B-D331802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756602Ab3KLUOK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Nov 2013 15:14:10 -0500
+Received: from cloud.peff.net ([50.56.180.127]:37966 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753484Ab3KLUOH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Nov 2013 15:14:07 -0500
+Received: (qmail 17480 invoked by uid 102); 12 Nov 2013 20:14:07 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 12 Nov 2013 14:14:07 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 12 Nov 2013 15:14:05 -0500
+Content-Disposition: inline
+In-Reply-To: <xmqqy54timsm.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237730>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237731>
 
-Richard Hansen <rhansen@bbn.com> writes:
+On Tue, Nov 12, 2013 at 08:53:45AM -0800, Junio C Hamano wrote:
 
-> On 2013-11-12 00:54, Richard Hansen wrote:
->> If $TEST_DIRECTORY is specified in the environment, convert the value
->> to an absolute path to ensure that it remains valid even when 'cd' is
->> used.
->> 
->> Signed-off-by: Richard Hansen <rhansen@bbn.com>
->
-> Actually, credit for this and the next patch should go to Felipe.  How
-> should I note that?
+> Even though we already added has_suffix() for tail matches, it is
+> not too late to rethink, as it is not in 'master' yet.
+> 
+> One thing I noticed is that it is probably misnamed, or at least in
+> a way that invites confusion.  Can people tell which one of these is
+> correct without looking at existing callsites?
+> 
+> 	has_suffix(filename, "txt");
+> 	has_suffix(filename, ".txt");
 
-If the patch text was copied from his response message, you would start
-the _body_ of your e-mail as:
+To me, it is obviously the latter. My name for "thing at the end of a
+file after the dot" is "extension", not "suffix".
 
-	From: F.. C.. <felipe.contreras@gmail.com>
-        
-	If $TEST_DIRECTORY is specified ...
+I thought that was universal, but if there are people who find it
+confusing, it is worth changing. After all, the point is to make the
+code more readable.
 
-	Signed-off-by: F.. C.. <felipe.contreras@gmail.com>
-	Signed-off-by: R Hansen <rhansen@...>
-        
-_after_ getting him say it is OK to add his Sign-off.  The first
-line in the body of your e-mail, "From: Real Author", followed by a
-blank line, will signal to "git am" that you are forwarding a patch
-by somebody else, and we record that real author on the "author"
-line of the resulting commit object.
+> The semantics of the function we have is the latter and is better
+> called endswith(), I suspect.  And the corresponding function to
+> check for head matches should probably be called beginswith().
 
-On the other hand, if the patch is based on the _idea_ you gained by
-discussing with him, you would just mention it near your sign-off,
-like this:
+Those are OK to me. "has_suffix" would be my first choice, but if it is
+confusing to others, your suggestions are fine.
 
-	If $TEST_DIRECTORY is specified ...
-
-	Helped-by: F... C... <felipe.contreras@gmail.com>
-	Signed-off-by: R... Hansen <rhansen@...>
-
-
-	
-
->
-> Thanks,
-> Richard
->
->
->> ---
->>  t/test-lib.sh | 4 ++++
->>  1 file changed, 4 insertions(+)
->> 
->> diff --git a/t/test-lib.sh b/t/test-lib.sh
->> index b25249e..af172d9 100644
->> --- a/t/test-lib.sh
->> +++ b/t/test-lib.sh
->> @@ -26,6 +26,10 @@ then
->>  	# outside of t/, e.g. for running tests on the test library
->>  	# itself.
->>  	TEST_DIRECTORY=$(pwd)
->> +else
->> +	# ensure that TEST_DIRECTORY is an absolute path so that it
->> +	# works even if the current working directory is changed
->> +	TEST_DIRECTORY=$(cd "$TEST_DIRECTORY" && pwd) || exit 1
->>  fi
->>  if test -z "$TEST_OUTPUT_DIRECTORY"
->>  then
+-Peff
