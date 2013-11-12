@@ -1,63 +1,124 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [GIT PULL] l10n updates for 1.8.5 round 1
-Date: Tue, 12 Nov 2013 11:26:35 -0800
-Message-ID: <xmqqk3gdh15g.fsf@gitster.dls.corp.google.com>
-References: <CANYiYbHjAtgeFAHwq3rOz8CN1CQ_PLFkoMYNA-TGKqjDytc-Qg@mail.gmail.com>
+Subject: Re: [PATCH v2 2/9] test-lib.sh: convert $TEST_DIRECTORY to an absolute path
+Date: Tue, 12 Nov 2013 12:06:14 -0800
+Message-ID: <xmqqfvr1gzbc.fsf@gitster.dls.corp.google.com>
+References: <1384142712-2936-1-git-send-email-rhansen@bbn.com>
+	<1384235688-9655-1-git-send-email-rhansen@bbn.com>
+	<1384235688-9655-3-git-send-email-rhansen@bbn.com>
+	<5281C522.7050403@bbn.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>, Jean-Noel Avila <jn.avila@free.fr>,
-	Peter Krefting <peter@softwolves.pp.se>,
-	Ralf Thielow <ralf.thielow@gmail.com>,
-	Sebastien Helleu <flashcode@flashtux.org>,
-	Thomas Rast <tr@thomasrast.ch>,
-	Tran Ngoc Quan <vnwildman@gmail.com>
-To: Jiang Xin <worldhello.net@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 12 20:26:45 2013
+Cc: git@vger.kernel.org, felipe.contreras@gmail.com
+To: Richard Hansen <rhansen@bbn.com>
+X-From: git-owner@vger.kernel.org Tue Nov 12 21:06:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VgJbo-0006Vq-Ar
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Nov 2013 20:26:44 +0100
+	id 1VgKEC-0006nF-NQ
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Nov 2013 21:06:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755196Ab3KLT0l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Nov 2013 14:26:41 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52481 "EHLO
+	id S1756554Ab3KLUGV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Nov 2013 15:06:21 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62347 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754814Ab3KLT0j (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Nov 2013 14:26:39 -0500
+	id S1753301Ab3KLUGT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Nov 2013 15:06:19 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 76E2F52CCA;
-	Tue, 12 Nov 2013 14:26:38 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 892A150B32;
+	Tue, 12 Nov 2013 15:06:18 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=LTg6M9tyEzkrhuE1ryzdOKxRs2E=; b=djtAUc
-	HgpeJXhbKfRC1HOYNzXCKJ8WMUT6SBf6HWapx17WVa/ElLQui6JVmh5YYddxehng
-	DLZJaYGvEnKGk50pNm8P6O8EfUgge9v5icH/+edf9plaDQ5xvFQpgLfxcWpd9bSE
-	i7mcH2gBFCg44LtU+O/dV0L+VJOcX6SN93mSE=
+	:content-type; s=sasl; bh=suI0rgfN5y3okRLYf+QfVtW2pVU=; b=MflniH
+	Uo7ZgjfGe6AGPtLEHBpU1Gq2qdrfi6AxNJ47/7zan49Iu8m3Gd1QnqYosiezgtwL
+	zxgGJ1g6+Mh3KnxXo71Erv2sOZ3k5hxRZb/t62uI8ygNxtfGuYEtNjWsfYhDs/aj
+	8hugmtjmu8mC6uMYqd0TapjP9f5t2OnzCLpDo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=sDjvwZlJqulOdlD8wzOouYeJftkxJ7Oh
-	kYsjs1wOKxxYsXCksK6Po5/a6szMvtY7hFHMiKL6mq+zN6KP4O9bi0uJmUvqG+h2
-	Zl1Hzi64r03GrrOrgibvpiLy4wF1VdfWDTxamUj064aOhHAgzS7mUynofvRSvZ3d
-	LpyTpmcdZsM=
+	:content-type; q=dns; s=sasl; b=NkJTIHZhgtwVnNtc76M8ucu2t5WerPqg
+	XVuaSwab7wzu9I3CxFoikRXcCOWccIh24ukmgrRFEPKxnyE4ycvJYs56v//LdreE
+	oSu0ES7Orw1WYJc99q8kbhoWlOjYwD/fGcf3fmzbnVTkV8mA4lABChVdS7BQdgH2
+	qOX2MouCg1g=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 685E852CC9;
-	Tue, 12 Nov 2013 14:26:38 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7989250B31;
+	Tue, 12 Nov 2013 15:06:18 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A94B352CC8;
-	Tue, 12 Nov 2013 14:26:37 -0500 (EST)
-In-Reply-To: <CANYiYbHjAtgeFAHwq3rOz8CN1CQ_PLFkoMYNA-TGKqjDytc-Qg@mail.gmail.com>
-	(Jiang Xin's message of "Tue, 12 Nov 2013 15:23:28 +0800")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C26EF50B2F;
+	Tue, 12 Nov 2013 15:06:17 -0500 (EST)
+In-Reply-To: <5281C522.7050403@bbn.com> (Richard Hansen's message of "Tue, 12
+	Nov 2013 01:05:22 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 597B3ACC-4BD0-11E3-82B2-D331802839F8-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: E416AFF4-4BD5-11E3-966B-D331802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237729>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237730>
 
-Thanks, all.
+Richard Hansen <rhansen@bbn.com> writes:
+
+> On 2013-11-12 00:54, Richard Hansen wrote:
+>> If $TEST_DIRECTORY is specified in the environment, convert the value
+>> to an absolute path to ensure that it remains valid even when 'cd' is
+>> used.
+>> 
+>> Signed-off-by: Richard Hansen <rhansen@bbn.com>
+>
+> Actually, credit for this and the next patch should go to Felipe.  How
+> should I note that?
+
+If the patch text was copied from his response message, you would start
+the _body_ of your e-mail as:
+
+	From: F.. C.. <felipe.contreras@gmail.com>
+        
+	If $TEST_DIRECTORY is specified ...
+
+	Signed-off-by: F.. C.. <felipe.contreras@gmail.com>
+	Signed-off-by: R Hansen <rhansen@...>
+        
+_after_ getting him say it is OK to add his Sign-off.  The first
+line in the body of your e-mail, "From: Real Author", followed by a
+blank line, will signal to "git am" that you are forwarding a patch
+by somebody else, and we record that real author on the "author"
+line of the resulting commit object.
+
+On the other hand, if the patch is based on the _idea_ you gained by
+discussing with him, you would just mention it near your sign-off,
+like this:
+
+	If $TEST_DIRECTORY is specified ...
+
+	Helped-by: F... C... <felipe.contreras@gmail.com>
+	Signed-off-by: R... Hansen <rhansen@...>
+
+
+	
+
+>
+> Thanks,
+> Richard
+>
+>
+>> ---
+>>  t/test-lib.sh | 4 ++++
+>>  1 file changed, 4 insertions(+)
+>> 
+>> diff --git a/t/test-lib.sh b/t/test-lib.sh
+>> index b25249e..af172d9 100644
+>> --- a/t/test-lib.sh
+>> +++ b/t/test-lib.sh
+>> @@ -26,6 +26,10 @@ then
+>>  	# outside of t/, e.g. for running tests on the test library
+>>  	# itself.
+>>  	TEST_DIRECTORY=$(pwd)
+>> +else
+>> +	# ensure that TEST_DIRECTORY is an absolute path so that it
+>> +	# works even if the current working directory is changed
+>> +	TEST_DIRECTORY=$(cd "$TEST_DIRECTORY" && pwd) || exit 1
+>>  fi
+>>  if test -z "$TEST_OUTPUT_DIRECTORY"
+>>  then
