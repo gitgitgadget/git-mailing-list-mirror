@@ -1,66 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 0/9] remote-hg, remote-bzr fixes
-Date: Tue, 12 Nov 2013 09:59:02 -0800
-Message-ID: <xmqqsiv1h57d.fsf@gitster.dls.corp.google.com>
-References: <1384142712-2936-1-git-send-email-rhansen@bbn.com>
-	<1384235688-9655-1-git-send-email-rhansen@bbn.com>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: Request: timeout option for remote operations, esp. "git fetch"
+Date: Tue, 12 Nov 2013 10:33:49 -0800
+Message-ID: <5282748D.9000907@zytor.com>
+References: <527BC8DC.7010108@zytor.com>	<20131110201751.GA18513@dcvr.yhbt.net> <52825EBF.3050603@zytor.com> <xmqq1u2likea.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, felipe.contreras@gmail.com
-To: Richard Hansen <rhansen@bbn.com>
-X-From: git-owner@vger.kernel.org Tue Nov 12 18:59:13 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Nov 12 19:34:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VgIF5-0000sy-8h
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Nov 2013 18:59:11 +0100
+	id 1VgInK-0005L3-OC
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Nov 2013 19:34:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754075Ab3KLR7H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Nov 2013 12:59:07 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52943 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753616Ab3KLR7F (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Nov 2013 12:59:05 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7FDC851351;
-	Tue, 12 Nov 2013 12:59:04 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=eZfTCtomtYXSXIdmfMrQ5wbE2fQ=; b=FwAxJo
-	zeM230hrVA7gAKnA4+wrP7LbPVZ6BVCnpg1FGbtEa5WGOCYulI5AldWkwKEQF4ci
-	pzvSMU/aNPiVda8a2aEpQzM8GGsEkNp0zljL5bYF2da26/PmS5J4hOyyJryEPXhA
-	bV8jqmM7SlpIYEFAh4VbqOE+GWvWRlE+olgEo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=KiCc9MHeoSAjgUmKBTkfPKvQwcu1r6HM
-	Tr03PK4MJTK2ECsE4D1bwCsBySljDI4/Dt1/YkH7d2+AuCMq6wXfsPZ0442GoTF0
-	U0NuCSI8py4XpdRp8W2fJAJvSW2DgBf3roN5nlvGTDES5TiNLCNXHGOdALum7wO1
-	qBX/vt+EJIc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6F59B51350;
-	Tue, 12 Nov 2013 12:59:04 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B16D651347;
-	Tue, 12 Nov 2013 12:59:03 -0500 (EST)
-In-Reply-To: <1384235688-9655-1-git-send-email-rhansen@bbn.com> (Richard
-	Hansen's message of "Tue, 12 Nov 2013 00:54:39 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 1DD40AD2-4BC4-11E3-8516-D331802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755599Ab3KLSeZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Nov 2013 13:34:25 -0500
+Received: from terminus.zytor.com ([198.137.202.10]:36999 "EHLO mail.zytor.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755605Ab3KLSeY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Nov 2013 13:34:24 -0500
+Received: from anacreon.sc.intel.com (fmdmzpr04-ext.fm.intel.com [192.55.55.39])
+	(authenticated bits=0)
+	by mail.zytor.com (8.14.7/8.14.5) with ESMTP id rACIXtln015936
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-CAMELLIA256-SHA bits=256 verify=NO);
+	Tue, 12 Nov 2013 10:33:55 -0800
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.1.0
+In-Reply-To: <xmqq1u2likea.fsf@gitster.dls.corp.google.com>
+X-Enigmail-Version: 1.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237726>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237727>
 
-Richard Hansen <rhansen@bbn.com> writes:
+On 11/12/2013 09:45 AM, Junio C Hamano wrote:
+> "H. Peter Anvin" <hpa@zytor.com> writes:
+> 
+>> On 11/10/2013 12:17 PM, Eric Wong wrote:
+>>> "H. Peter Anvin" <hpa@zytor.com> wrote:
+>>>> When a remote server is unavailable or very slow, some git commands can
+>>>> stall out indefinitely.  It would be a very good thing if remote
+>>>> commands -- but especially git fetch -- could be given a timeout.
+>>>
+>>> We've had SO_KEEPALIVE on git and ssh transports since e47a8583 (2011-12-06)
+>>> SO_KEEPALIVE for http was added recently (a15d069a) and will be in git 1.8.5
+>>>
+>>> Do you want a shorter timeout for slow (but still alive) servers?
+>>>
+>>
+>> Yes; note that SO_KEEPALIVE only guarantees that the server is alive at
+>> the TCP socket level.  If the server is overloaded but technically alive
+>> it may still make no meaningful forward progress.
+> 
+> Which means that your original wish may not be granted with
+> SO_KEEPALIVE at all, no?  I was wondering if you wanted a forced
+> timeout based on alarm(2), something similar to what you added to
+> git-daemon in 960deccb (git-daemon: timeout, eliminate double DWIM,
+> 2005-10-19).
+> 
 
-> A handful of fixes for the git-remote-hg and git-remote-bzr remote
-> helpers and their unit tests.
+Yes, something more like that on the client end.  SO_KEEPALIVE is better
+than nothing, but not really good enough.
 
-Thanks; could you arrange with Felipe so that we can have
-Acked-by: or Reviewed-by: after your Signed-off-by: lines
-of these patches?
+	-hpa
