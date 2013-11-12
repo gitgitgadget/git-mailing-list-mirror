@@ -1,78 +1,59 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v6 06/10] fast-export: add new --refspec option
-Date: Tue, 12 Nov 2013 13:46:31 -0800
-Message-ID: <xmqq38n1guo8.fsf@gitster.dls.corp.google.com>
-References: <1384210507-26561-1-git-send-email-felipe.contreras@gmail.com>
-	<1384210507-26561-6-git-send-email-felipe.contreras@gmail.com>
-	<xmqqd2m6jyue.fsf@gitster.dls.corp.google.com>
-	<CAMP44s2ubU_R0GkEUpEh24TxER3uONQJprh9Ot7+PL0QiDRmDg@mail.gmail.com>
-	<5281DB46.2010004@bbn.com> <5282977b2ecd_3b98795e785e@nysa.notmuch>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: Bug? diff.submodule=log adds text to commit -v message
+Date: Tue, 12 Nov 2013 23:17:46 +0100
+Message-ID: <5282A90A.4030900@web.de>
+References: <loom.20131110T222043-57@post.gmane.org> <528140F5.6090700@web.de> <loom.20131111T214646-550@post.gmane.org> <52814C35.6040205@web.de> <5281DCC5.2000209@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Richard Hansen <rhansen@bbn.com>, git@vger.kernel.org,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 12 22:46:56 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Johannes Sixt <j6t@kdbg.org>, Ari Pollak <ari@debian.org>,
+	git@vger.kernel.org, Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Nov 12 23:17:59 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VgLnU-0003nJ-47
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Nov 2013 22:46:56 +0100
+	id 1VgMHW-0001fd-0C
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Nov 2013 23:17:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756862Ab3KLVqs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Nov 2013 16:46:48 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61057 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756734Ab3KLVqm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Nov 2013 16:46:42 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4C861506C4;
-	Tue, 12 Nov 2013 16:46:42 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=IZeiU5KB0UrOScFs3kKKea86FX4=; b=sgkGV4
-	2iw5PkLDx5VgJ2e6Y0oLtl7QNhpgMWP50RC49OXgIe3Syg74BLNuKSf480+NUMz0
-	IVtMjoFNRBhctKoJy94jqkHV99kzJuR6i8cxnL0wRJMVp0UW2dMeOiXfb/jKNQfA
-	VJ1VGhd5kFv5UKKIRxxUZ5wWiqOsTuzyuUtDM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=m0fdJdM3pWztks5+UJJ6/37TV62/HMLy
-	hhyMlsrsoABZiX7EqN4PETtD2FWRKAJhJmZOpPjpWkMbc2tlOQ33+Odp6QIBCcJr
-	klx24Y+otZpmyOz0l3Jdk269vV6CsoGUVC5stDaYxe7e4d7wUP24NzGEYLdGiY82
-	JzalDPMeIe0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 32276506C1;
-	Tue, 12 Nov 2013 16:46:42 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8163B506BB;
-	Tue, 12 Nov 2013 16:46:40 -0500 (EST)
-In-Reply-To: <5282977b2ecd_3b98795e785e@nysa.notmuch> (Felipe Contreras's
-	message of "Tue, 12 Nov 2013 15:02:51 -0600")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: E9EAC9E8-4BE3-11E3-A56C-D331802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756883Ab3KLWRz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Nov 2013 17:17:55 -0500
+Received: from mout.web.de ([212.227.15.3]:58650 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757236Ab3KLWRx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Nov 2013 17:17:53 -0500
+Received: from [192.168.178.41] ([91.3.130.121]) by smtp.web.de (mrweb103)
+ with ESMTPA (Nemesis) id 0M5wzV-1VVZcy2xvl-00xrpm for <git@vger.kernel.org>;
+ Tue, 12 Nov 2013 23:17:51 +0100
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.1.0
+In-Reply-To: <5281DCC5.2000209@kdbg.org>
+X-Enigmail-Version: 1.6
+X-Provags-ID: V03:K0:4fDLkiUFDCXvcUYUOgmHatJS5C56uZlKCKbSalwoc5zG138z5Eb
+ kUssl+7jgtvat3b/MeQpO5Lva8I6WIIzwGgNnBQ/uRI0IZhbeYoQx9/e63zyZBCuwsuBoI3
+ DXTIE7KUvlgTIJfU9DP3wIF8a1V6vGUOb63VcYADhRvbuVdznnZ74Vfb2rOF0TxFxEcPMF8
+ affr1NRYGHXO5yDddFkCg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237760>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237761>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+Am 12.11.2013 08:46, schrieb Johannes Sixt:
+> Am 11.11.2013 22:29, schrieb Jens Lehmann:
+>> The diff below fixes the problem you describe for me. (But I do not
+>> consider it a worthwhile fix in its current form because a line
+>> starting with "Submodule " might appear in a perfectly normal commit
+>> message, while "diff --git " most probably won't).
+> 
+> And on top of that, "Submodule " originates from a translatable string,
+> doesn't it?
 
-> Does it?
->
->  % git config remote.origin.fetch '+refs/heads/*:refs/remotes-test/origin/*'
->  % git fetch origin master
->  From /home/felipec/dev/git
->   * branch            master     -> FETCH_HEAD
->   * [new branch]      master     -> refs/remotes-test/origin/master
->
-> In this case remote.origin.fetch is determining how to translate ref names, not
-> what gets transferred, *exactly* the same as we are doing with --refspec. And
-> as far as I know, remote.origin.fetch is a refspec.
+This would also be true for the marker line that Peff proposed:
 
-If you had 'next' and 'pu' branches at the remote, do they get
-fetched with that command line?
+  # Everything below this line is a diff that will be removed.
+
+But I suspect that would be ok if the marker would be both added
+and searched for in its translated form. Or is it possible that
+the locale changes between those two steps?
