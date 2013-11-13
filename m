@@ -1,66 +1,66 @@
-From: Yann COLLETTE <ycollette.nospam@free.fr>
-Subject: Re: Problem while cloning a git repo
-Date: Wed, 13 Nov 2013 08:58:33 +0100
-Message-ID: <52833129.6060707@free.fr>
-References: <597769726.308442105.1384260624974.JavaMail.root@zimbra35-e6.priv.proxad.net> <20131113002035.GK183446@vauxhall.crustytoothpaste.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Wed Nov 13 08:58:50 2013
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: [PATCH v2 0/3] Minor f-e-r enhacements
+Date: Wed, 13 Nov 2013 15:06:43 +0530
+Message-ID: <1384335406-16332-1-git-send-email-artagnon@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Nov 13 10:45:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VgVLd-0000An-94
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Nov 2013 08:58:49 +0100
+	id 1VgX1F-0000RZ-0s
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Nov 2013 10:45:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758722Ab3KMH6p convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 Nov 2013 02:58:45 -0500
-Received: from smtp5-g21.free.fr ([212.27.42.5]:32898 "EHLO smtp5-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758394Ab3KMH6o (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Nov 2013 02:58:44 -0500
-X-Greylist: delayed 68891 seconds by postgrey-1.27 at vger.kernel.org; Wed, 13 Nov 2013 02:58:43 EST
-Received: from localhost.localdomain (unknown [IPv6:2a01:e35:2f10:c960:21e:e5ff:fe1f:2dcf])
-	by smtp5-g21.free.fr (Postfix) with ESMTP id 14243D48171
-	for <git@vger.kernel.org>; Wed, 13 Nov 2013 08:58:34 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.1.0
-In-Reply-To: <20131113002035.GK183446@vauxhall.crustytoothpaste.net>
+	id S1759114Ab3KMJps (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Nov 2013 04:45:48 -0500
+Received: from mail-pd0-f172.google.com ([209.85.192.172]:34706 "EHLO
+	mail-pd0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758791Ab3KMJpp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Nov 2013 04:45:45 -0500
+Received: by mail-pd0-f172.google.com with SMTP id q10so174986pdj.3
+        for <git@vger.kernel.org>; Wed, 13 Nov 2013 01:45:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=pADNgv0E18IgJfn7ZTzNUQ5nGZ1zwR+cUTmwYbPC5kQ=;
+        b=Ils66PaiPXp2Qg8FCCHk1MO6Wkcvf+LjpuTR6r8p6CU3iB9Q9uP/n8kiFTClW3zm4Z
+         UdOtqYN+ggNM9mOxchRLXm0MZWhq+hlPxZS3TrZTucwNQwVtr/xTVlKwJOnNiCATFA6s
+         bGYcraXtZ2hXYH0urEmb9bJ+56hILVeglcswE/9/YxGZbbXnSbh3t9mhL6mMsPEdBCS7
+         pKz2HU1Fie3fzIqaGe5oSbeNB+14Vy8tmgFXBlBGDU83neHmr7EarKj33RE8Ym/NNZGJ
+         GKzMrphQLtN7T747jeDvn+7UwwgWtbawctIYKWjHPEkCW3v3fdY3oZ9PaC3Scr5kXatD
+         Peiw==
+X-Received: by 10.68.7.73 with SMTP id h9mr5055560pba.30.1384335944760;
+        Wed, 13 Nov 2013 01:45:44 -0800 (PST)
+Received: from localhost.localdomain ([122.164.233.197])
+        by mx.google.com with ESMTPSA id ed3sm43211477pbc.6.2013.11.13.01.45.42
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 13 Nov 2013 01:45:44 -0800 (PST)
+X-Mailer: git-send-email 1.8.5.rc0.3.g914176d.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237781>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237782>
 
-Hello,
+Hi,
 
-When I perform the git clone via git, it works. The problem is only=20
-happening via http.
-I tried to play with http.postBuffer and I set this parameter to it's=20
-maximum (a little bit before a git clone triggered a memory alloc=20
-problem) and I see that something big is trying to be downloaded. But I=
-=20
-don't see such a big file in my history of commits. The maximum one=20
-seems to be around 50 Mo ...
+v2 uses the more sane %(color:...) as opposed to %C(...) for changing
+the color of the output, as suggested by Junio. Everything else is the
+same.
 
-Le 13/11/2013 01:20, brian m. carlson a =E9crit :
-> On Tue, Nov 12, 2013 at 01:50:24PM +0100, ycollette.nospam@free.fr wr=
-ote:
->> Hello,
->>
->> When I clone a repository, I get an error from git:
->>
->> git clone http://192.168.0.18:8080/test test_Gerrit
->> Clonage dans 'test_Gerrit'...
->> remote: Counting objects: 25106, done
->> remote: Finding sources: 100% (25106/25106)
->> error: RPC failed; result=3D56, HTTP code =3D 200iB | 8.12 MiB/s
-> curl code 56 is a receive error (CURLE_RECV_ERROR).  It sounds like
-> you're encountering some sort of network error or broken proxy.  Does
-> cloning this repository over the git protocol or SSH work, or can you
-> try it over https (to avoid the proxy)?
->
+Thanks.
+
+Ramkumar Ramachandra (3):
+  for-each-ref: introduce %(HEAD) asterisk marker
+  for-each-ref: introduce %(upstream:track[short])
+  for-each-ref: introduce %(color:...) for color
+
+ Documentation/git-for-each-ref.txt | 14 +++++++-
+ builtin/for-each-ref.c             | 66 ++++++++++++++++++++++++++++++++++----
+ 2 files changed, 72 insertions(+), 8 deletions(-)
+
+-- 
+1.8.5.rc0.3.g914176d.dirty
