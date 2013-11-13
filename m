@@ -1,91 +1,104 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: Problem while cloning a git repo
-Date: Wed, 13 Nov 2013 00:20:35 +0000
-Message-ID: <20131113002035.GK183446@vauxhall.crustytoothpaste.net>
-References: <597769726.308442105.1384260624974.JavaMail.root@zimbra35-e6.priv.proxad.net>
+From: Ken Tanzer <ken.tanzer@gmail.com>
+Subject: Re: git rm / format-patch / am fails on my file: patch does not apply
+Date: Tue, 12 Nov 2013 16:26:49 -0800
+Message-ID: <CAD3a31UVkNaPTCWCAbv0NwCOTE5_2A+P7-e28VRnk9Aopa6hcQ@mail.gmail.com>
+References: <CAD3a31XPKsnuNE+szw7xgvaDrcxhKZ2jTDHKzTwdwtnCwFb_0w@mail.gmail.com>
+ <xmqqhabilpzx.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="tKtFalx5NIx0HZ72"
-Cc: git@vger.kernel.org
-To: ycollette.nospam@free.fr
-X-From: git-owner@vger.kernel.org Wed Nov 13 01:21:00 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org, Philip Oakley <philipoakley@iee.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 13 01:27:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VgOCZ-00048n-Bc
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Nov 2013 01:20:59 +0100
+	id 1VgOIx-0004Uw-91
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Nov 2013 01:27:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755290Ab3KMAUr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Nov 2013 19:20:47 -0500
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:33784 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755239Ab3KMAUp (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 12 Nov 2013 19:20:45 -0500
-Received: from vauxhall.crustytoothpaste.net (vauxhall.local [172.16.2.247])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 7B78D2807A;
-	Wed, 13 Nov 2013 00:20:42 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <597769726.308442105.1384260624974.JavaMail.root@zimbra35-e6.priv.proxad.net>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 3.11-1-amd64)
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754395Ab3KMA1c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Nov 2013 19:27:32 -0500
+Received: from mail-pd0-f182.google.com ([209.85.192.182]:58437 "EHLO
+	mail-pd0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753603Ab3KMA1a (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Nov 2013 19:27:30 -0500
+Received: by mail-pd0-f182.google.com with SMTP id y13so4842422pdi.41
+        for <git@vger.kernel.org>; Tue, 12 Nov 2013 16:27:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=pBgmezOqs/AlpOolKm1QQ1s2TcjNWjoy+hT2kMqZaf0=;
+        b=uc29CMsZhyqjWjKMJJ1yd+rOgyKEgfzyQ8r5Nj52rO0/ucooCSstvI+2XJRXrurRaI
+         yZfHcqvX/T9Yr4Wc1/qJalwqb+d225j9S93rEtKl9PcKaftxUEb7Vti/rbeXAiG2xfJX
+         Ax/RpnMOv+u6/Jb7YX5v9SwaZMAMEyvNr27rmaHa4FyIgbhJv96gKIGv56DxhgAWbeXg
+         pMMnA/SgFfM8+6hEfDyMa1LGTAvj+F8VuQcZnYxPCCyJZLPGNfa09X3WmH1GAOgioI9c
+         LkbPXi65J0D+D7iE8LBKv1byoUnzSiBT3a7LGGPNNZOJzMsBKeBjRz+k68uophu4oJe6
+         zR5A==
+X-Received: by 10.68.130.39 with SMTP id ob7mr15253508pbb.63.1384302449898;
+ Tue, 12 Nov 2013 16:27:29 -0800 (PST)
+Received: by 10.66.227.170 with HTTP; Tue, 12 Nov 2013 16:26:49 -0800 (PST)
+In-Reply-To: <xmqqhabilpzx.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237767>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237768>
+
+> I am not very much surprised if such a file misbehaves, because the
+> "format-patch | am" pipeline is designed to be used on patches that
+> can be transferred in plain-text e-mail safely.  Long lines should
+> probably be OK, but mixed CRLF, CR and LF may be problematic.
+
+I'm not sure I understand this comment.  format-patch seems to work
+fine on binary files.  So if it can handle any random collection of
+bytes, why not text files with (admittedly funky) CRs and LFs?
+
+Cheers,
+Ken
+
+On Mon, Nov 11, 2013 at 11:04 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Ken Tanzer <ken.tanzer@gmail.com> writes:
+>
+>> ASCII text, with very long lines, with CRLF, CR, LF line terminators
+>
+> I am not very much surprised if such a file misbehaves, because the
+> "format-patch | am" pipeline is designed to be used on patches that
+> can be transferred in plain-text e-mail safely.  Long lines should
+> probably be OK, but mixed CRLF, CR and LF may be problematic.
+>
+> Having said that...
+>
+>> I've confirmed with the following test case on three machines, so it
+>> seems reproducible:
+>>
+>> mkdir temp_test_case
+>> cd temp_test_case
+>> git init
+>> # my file.  Sorry--couldn't find a saner link!
+>> wget -O jquery-ui-1.8.custom.min.js
+>> http://sourceforge.net/p/agency/code/ci/9358ea4dbe8e1540ec0b8bebfc7770f1bf8be0ec/tree/jquery-ui-1.8.custom.min.js?format=raw
+>> git add jquery-ui-1.8.custom.min.js
+>> git commit -m 'Adding jquery-ui'
+>> git rm jquery-ui-1.8.custom.min.js
+>> git commit -m 'Removing jquery-ui'
+>> git format-patch HEAD~1
+>> git reset --hard HEAD~1
+>> git am 0001*
+>
+> ... this does not break at all for me.
 
 
---tKtFalx5NIx0HZ72
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Tue, Nov 12, 2013 at 01:50:24PM +0100, ycollette.nospam@free.fr wrote:
-> Hello,
->=20
-> When I clone a repository, I get an error from git:
->=20
-> git clone http://192.168.0.18:8080/test test_Gerrit
-> Clonage dans 'test_Gerrit'...
-> remote: Counting objects: 25106, done
-> remote: Finding sources: 100% (25106/25106)
-> error: RPC failed; result=3D56, HTTP code =3D 200iB | 8.12 MiB/s  =20
+-- 
+AGENCY Software
+A data system that puts you in control
+100% Free Software
+http://agency-software.org/
+ken.tanzer@agency-software.org
+(253) 245-3801
 
-curl code 56 is a receive error (CURLE_RECV_ERROR).  It sounds like
-you're encountering some sort of network error or broken proxy.  Does
-cloning this repository over the git protocol or SSH work, or can you
-try it over https (to avoid the proxy)?
-
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
-
---tKtFalx5NIx0HZ72
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
-
-iQIcBAEBCgAGBQJSgsXSAAoJEL9TXYEfUvaLH08QALk1uozCXbZoBNIjYCsUEpoc
-eQOcttKYkloE1Y8eMc/WCyMMiUpgkD853FNO5u0XQxG/l/WQaBFCk8v80io3PAMw
-GQGA2g1+fkJo29skVJx49DKISKfvZgTOcl0frCdER6OSHoCbrjmjxCNKz458tPSg
-FCnbOGyvml1xS3PJTtUptrqLHDmWwqw1E+QBn6a1Kre+mYgeW8rJQRtyQhpXyk2+
-g3LtFPp8g9hhBAJbP3FDfC00IZm9BqzxiunwbgPYe05E7+47z5Q0vkjUTjwd0DBK
-1Txm1tFPDY44w/5DNnhEpOTdW9FLjESLXMpg+T6ja4mCfZo3q7rYLwsVQ7C6GBwF
-HyYNUE6RnPH7MYyldyZsr4mLm/tL6fI3ZkKPe2qYhFJS9beNbndLIDoRjwTWykzM
-YgYNX3mFVkOE5toqQZQaFkGAKwbWOsx2l3IJKHjFFqojghAvPW/Na1NsD9lnbs13
-zu+QpDTm4Z8o93b8smuh+njzbFVDUbMwyBGKWKLev2/u2rEc7wuGy/PDxNaALIe0
-POUHub+75K0LLQ0lczA3QAHXUGWjGMj8GB0+i/08J295KkFeFVw4e6+q2H62ypvZ
-xEH1uxW9PoObBadSqcqitgMVQmf5ZDvF8yaSst26gyGXUe5sn4qeDa+n5HMWNPJq
-h4DdPNMJ756iCWSGATpU
-=DGhj
------END PGP SIGNATURE-----
-
---tKtFalx5NIx0HZ72--
+Subscribe to the mailing list to
+learn more about AGENCY or
+follow the discussion.
