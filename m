@@ -1,193 +1,141 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH v3 19/21] t: add basic bitmap functionality tests
-Date: Thu, 14 Nov 2013 07:46:35 -0500
-Message-ID: <20131114124635.GS10757@sigill.intra.peff.net>
+Subject: [PATCH v3 20/21] t/perf: add tests for pack bitmaps
+Date: Thu, 14 Nov 2013 07:48:34 -0500
+Message-ID: <20131114124834.GA11612@sigill.intra.peff.net>
 References: <20131114124157.GA23784@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Vicent =?utf-8?B?TWFydMOt?= <vicent@github.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 14 13:46:41 2013
+X-From: git-owner@vger.kernel.org Thu Nov 14 13:48:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VgwJk-0001xh-PY
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Nov 2013 13:46:41 +0100
+	id 1VgwLg-0003wl-JH
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Nov 2013 13:48:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753707Ab3KNMqi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Nov 2013 07:46:38 -0500
-Received: from cloud.peff.net ([50.56.180.127]:39156 "HELO peff.net"
+	id S1752932Ab3KNMsh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Nov 2013 07:48:37 -0500
+Received: from cloud.peff.net ([50.56.180.127]:39159 "HELO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753151Ab3KNMqg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Nov 2013 07:46:36 -0500
-Received: (qmail 11713 invoked by uid 102); 14 Nov 2013 12:46:36 -0000
+	id S1751181Ab3KNMsg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Nov 2013 07:48:36 -0500
+Received: (qmail 11871 invoked by uid 102); 14 Nov 2013 12:48:35 -0000
 Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 14 Nov 2013 06:46:36 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Nov 2013 07:46:35 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 14 Nov 2013 06:48:35 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Nov 2013 07:48:34 -0500
 Content-Disposition: inline
 In-Reply-To: <20131114124157.GA23784@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237843>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237844>
 
-Now that we can read and write bitmaps, we can exercise them
-with some basic functionality tests. These tests aren't
-particularly useful for seeing the benefit, as the test
-repo is too small for it to make a difference. However, we
-can at least check that using bitmaps does not break anything.
+This adds a few basic perf tests for the pack bitmap code to
+show off its improvements. The tests are:
+
+  1. How long does it take to do a repack (it gets slower
+     with bitmaps, since we have to do extra work)?
+
+  2. How long does it take to do a clone (it gets faster
+     with bitmaps)?
+
+  3. How does a small fetch perform when we've just
+     repacked?
+
+  4. How does a clone perform when we haven't repacked since
+     a week of pushes?
+
+Here are results against linux.git:
+
+Test                      origin/master       this tree
+-----------------------------------------------------------------------
+5310.2: repack to disk    33.64(32.64+2.04)   67.67(66.75+1.84) +101.2%
+5310.3: simulated clone   30.49(29.47+2.05)   1.20(1.10+0.10) -96.1%
+5310.4: simulated fetch   3.49(6.79+0.06)     5.57(22.35+0.07) +59.6%
+5310.6: partial bitmap    36.70(43.87+1.81)   8.18(21.92+0.73) -77.7%
+
+You can see that we do take longer to repack, but we do way
+better for further clones. A small fetch performs a bit
+worse, as we spend way more time on delta compression (note
+the heavy user CPU time, as we have 8 threads) due to the
+lack of name hashes for the bitmapped objects.
+
+The final test shows how the bitmaps degrade over time
+between packs. There's still a significant speedup over the
+non-bitmap case, but we don't do quite as well (we have to
+spend time accessing the "new" objects the old fashioned
+way, including delta compression).
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- t/t5310-pack-bitmaps.sh | 138 ++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 138 insertions(+)
- create mode 100755 t/t5310-pack-bitmaps.sh
+ t/perf/p5310-pack-bitmaps.sh | 56 ++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 56 insertions(+)
+ create mode 100755 t/perf/p5310-pack-bitmaps.sh
 
-diff --git a/t/t5310-pack-bitmaps.sh b/t/t5310-pack-bitmaps.sh
+diff --git a/t/perf/p5310-pack-bitmaps.sh b/t/perf/p5310-pack-bitmaps.sh
 new file mode 100755
-index 0000000..bd743f4
+index 0000000..ac036d0
 --- /dev/null
-+++ b/t/t5310-pack-bitmaps.sh
-@@ -0,0 +1,138 @@
++++ b/t/perf/p5310-pack-bitmaps.sh
+@@ -0,0 +1,56 @@
 +#!/bin/sh
 +
-+test_description='exercise basic bitmap functionality'
-+. ./test-lib.sh
++test_description='Tests pack performance using bitmaps'
++. ./perf-lib.sh
 +
-+test_expect_success 'setup repo with moderate-sized history' '
-+	for i in $(test_seq 1 10); do
-+		test_commit $i
-+	done &&
-+	git checkout -b other HEAD~5 &&
-+	for i in $(test_seq 1 10); do
-+		test_commit side-$i
-+	done &&
-+	git checkout master &&
-+	blob=$(echo tagged-blob | git hash-object -w --stdin) &&
-+	git tag tagged-blob $blob &&
++test_perf_large_repo
++
++# note that we do everything through config,
++# since we want to be able to compare bitmap-aware
++# git versus non-bitmap git
++test_expect_success 'setup bitmap config' '
 +	git config pack.writebitmaps true
 +'
 +
-+test_expect_success 'full repack creates bitmaps' '
-+	git repack -ad &&
-+	ls .git/objects/pack/ | grep bitmap >output &&
-+	test_line_count = 1 output
++test_perf 'repack to disk' '
++	git repack -ad
 +'
 +
-+test_expect_success 'rev-list --test-bitmap verifies bitmaps' '
-+	git rev-list --test-bitmap HEAD
++test_perf 'simulated clone' '
++	git pack-objects --stdout --all </dev/null >/dev/null
 +'
 +
-+rev_list_tests() {
-+	state=$1
-+
-+	test_expect_success "counting commits via bitmap ($state)" '
-+		git rev-list --count HEAD >expect &&
-+		git rev-list --use-bitmap-index --count HEAD >actual &&
-+		test_cmp expect actual
-+	'
-+
-+	test_expect_success "counting partial commits via bitmap ($state)" '
-+		git rev-list --count HEAD~5..HEAD >expect &&
-+		git rev-list --use-bitmap-index --count HEAD~5..HEAD >actual &&
-+		test_cmp expect actual
-+	'
-+
-+	test_expect_success "counting non-linear history ($state)" '
-+		git rev-list --count other...master >expect &&
-+		git rev-list --use-bitmap-index --count other...master >actual &&
-+		test_cmp expect actual
-+	'
-+
-+	test_expect_success "enumerate --objects ($state)" '
-+		git rev-list --objects --use-bitmap-index HEAD >tmp &&
-+		cut -d" " -f1 <tmp >tmp2 &&
-+		sort <tmp2 >actual &&
-+		git rev-list --objects HEAD >tmp &&
-+		cut -d" " -f1 <tmp >tmp2 &&
-+		sort <tmp2 >expect &&
-+		test_cmp expect actual
-+	'
-+
-+	test_expect_success "bitmap --objects handles non-commit objects ($state)" '
-+		git rev-list --objects --use-bitmap-index HEAD tagged-blob >actual &&
-+		grep $blob actual
-+	'
-+}
-+
-+rev_list_tests 'full bitmap'
-+
-+test_expect_success 'clone from bitmapped repository' '
-+	git clone --no-local --bare . clone.git &&
-+	git rev-parse HEAD >expect &&
-+	git --git-dir=clone.git rev-parse HEAD >actual &&
-+	test_cmp expect actual
++test_perf 'simulated fetch' '
++	have=$(git rev-list HEAD --until=1.week.ago -1) &&
++	{
++		echo HEAD &&
++		echo ^$have
++	} | git pack-objects --revs --stdout >/dev/null
 +'
 +
-+test_expect_success 'setup further non-bitmapped commits' '
-+	for i in $(test_seq 1 10); do
-+		test_commit further-$i
-+	done
++test_expect_success 'create partial bitmap state' '
++	# pick a commit to represent the repo tip in the past
++	cutoff=$(git rev-list HEAD --until=1.week.ago -1) &&
++	orig_tip=$(git rev-parse HEAD) &&
++
++	# now kill off all of the refs and pretend we had
++	# just the one tip
++	rm -rf .git/logs .git/refs/* .git/packed-refs
++	git update-ref HEAD $cutoff
++
++	# and then repack, which will leave us with a nice
++	# big bitmap pack of the "old" history, and all of
++	# the new history will be loose, as if it had been pushed
++	# up incrementally and exploded via unpack-objects
++	git repack -Ad
++
++	# and now restore our original tip, as if the pushes
++	# had happened
++	git update-ref HEAD $orig_tip
 +'
 +
-+rev_list_tests 'partial bitmap'
-+
-+test_expect_success 'fetch (partial bitmap)' '
-+	git --git-dir=clone.git fetch origin master:master &&
-+	git rev-parse HEAD >expect &&
-+	git --git-dir=clone.git rev-parse HEAD >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'incremental repack cannot create bitmaps' '
-+	test_commit more-1 &&
-+	test_must_fail git repack -d
-+'
-+
-+test_expect_success 'incremental repack can disable bitmaps' '
-+	test_commit more-2 &&
-+	git repack -d --no-write-bitmap-index
-+'
-+
-+test_expect_success 'full repack, reusing previous bitmaps' '
-+	git repack -ad &&
-+	ls .git/objects/pack/ | grep bitmap >output &&
-+	test_line_count = 1 output
-+'
-+
-+test_expect_success 'fetch (full bitmap)' '
-+	git --git-dir=clone.git fetch origin master:master &&
-+	git rev-parse HEAD >expect &&
-+	git --git-dir=clone.git rev-parse HEAD >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_lazy_prereq JGIT '
-+	type jgit
-+'
-+
-+test_expect_success JGIT 'we can read jgit bitmaps' '
-+	git clone . compat-jgit &&
-+	(
-+		cd compat-jgit &&
-+		rm -f .git/objects/pack/*.bitmap &&
-+		jgit gc &&
-+		git rev-list --test-bitmap HEAD
-+	)
-+'
-+
-+test_expect_success JGIT 'jgit can read our bitmaps' '
-+	git clone . compat-us.git &&
-+	(
-+		cd compat-us.git &&
-+		git repack -adb &&
-+		# jgit gc will barf if it does not like our bitmaps
-+		jgit gc
-+	)
++test_perf 'partial bitmap' '
++	git pack-objects --stdout --all </dev/null >/dev/null
 +'
 +
 +test_done
