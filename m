@@ -1,405 +1,244 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH v3 11/21] pack-objects: use bitmaps when packing objects
-Date: Thu, 14 Nov 2013 07:45:10 -0500
-Message-ID: <20131114124510.GK10757@sigill.intra.peff.net>
+Subject: [PATCH v3 12/21] rev-list: add bitmap mode to speed up object lists
+Date: Thu, 14 Nov 2013 07:45:23 -0500
+Message-ID: <20131114124523.GL10757@sigill.intra.peff.net>
 References: <20131114124157.GA23784@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Vicent =?utf-8?B?TWFydMOt?= <vicent@github.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 14 13:45:18 2013
+X-From: git-owner@vger.kernel.org Thu Nov 14 13:45:30 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VgwIP-0000cy-7p
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Nov 2013 13:45:17 +0100
+	id 1VgwIb-0000oJ-Kd
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Nov 2013 13:45:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753515Ab3KNMpN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Nov 2013 07:45:13 -0500
-Received: from cloud.peff.net ([50.56.180.127]:39132 "HELO peff.net"
+	id S1753748Ab3KNMp0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Nov 2013 07:45:26 -0500
+Received: from cloud.peff.net ([50.56.180.127]:39135 "HELO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753331Ab3KNMpM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Nov 2013 07:45:12 -0500
-Received: (qmail 11544 invoked by uid 102); 14 Nov 2013 12:45:11 -0000
+	id S1753331Ab3KNMpZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Nov 2013 07:45:25 -0500
+Received: (qmail 11563 invoked by uid 102); 14 Nov 2013 12:45:24 -0000
 Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 14 Nov 2013 06:45:11 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Nov 2013 07:45:10 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 14 Nov 2013 06:45:24 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Nov 2013 07:45:23 -0500
 Content-Disposition: inline
 In-Reply-To: <20131114124157.GA23784@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237835>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237836>
 
 From: Vicent Marti <tanoku@gmail.com>
 
-In this patch, we use the bitmap API to perform the `Counting Objects`
-phase in pack-objects, rather than a traditional walk through the object
-graph. For a reasonably-packed large repo, the time to fetch and clone
-is often dominated by the full-object revision walk during the Counting
-Objects phase. Using bitmaps can reduce the CPU time required on the
-server (and therefore start sending the actual pack data with less
-delay).
+The bitmap reachability index used to speed up the counting objects
+phase during `pack-objects` can also be used to optimize a normal
+rev-list if the only thing required are the SHA1s of the objects during
+the list (i.e., not the path names at which trees and blobs were found).
 
-For bitmaps to be used, the following must be true:
+Calling `git rev-list --objects --use-bitmap-index [committish]` will
+perform an object iteration based on a bitmap result instead of actually
+walking the object graph.
 
-  1. We must be packing to stdout (as a normal `pack-objects` from
-     `upload-pack` would do).
+These are some example timings for `torvalds/linux` (warm cache,
+best-of-five):
 
-  2. There must be a .bitmap index containing at least one of the
-     "have" objects that the client is asking for.
+    $ time git rev-list --objects master > /dev/null
 
-  3. Bitmaps must be enabled (they are enabled by default, but can be
-     disabled by setting `pack.usebitmaps` to false, or by using
-     `--no-use-bitmap-index` on the command-line).
+    real    0m34.191s
+    user    0m33.904s
+    sys     0m0.268s
 
-If any of these is not true, we fall back to doing a normal walk of the
-object graph.
+    $ time git rev-list --objects --use-bitmap-index master > /dev/null
 
-Here are some sample timings from a full pack of `torvalds/linux` (i.e.
-something very similar to what would be generated for a clone of the
-repository) that show the speedup produced by various
-methods:
+    real    0m1.041s
+    user    0m0.976s
+    sys     0m0.064s
 
-    [existing graph traversal]
-    $ time git pack-objects --all --stdout --no-use-bitmap-index \
-			    </dev/null >/dev/null
-    Counting objects: 3237103, done.
-    Compressing objects: 100% (508752/508752), done.
-    Total 3237103 (delta 2699584), reused 3237103 (delta 2699584)
+Likewise, using `git rev-list --count --use-bitmap-index` will speed up
+the counting operation by building the resulting bitmap and performing a
+fast popcount (number of bits set on the bitmap) on the result.
 
-    real    0m44.111s
-    user    0m42.396s
-    sys     0m3.544s
+Here are some sample timings of different ways to count commits in
+`torvalds/linux`:
 
-    [bitmaps only, without partial pack reuse; note that
-     pack reuse is automatic, so timing this required a
-     patch to disable it]
-    $ time git pack-objects --all --stdout </dev/null >/dev/null
-    Counting objects: 3237103, done.
-    Compressing objects: 100% (508752/508752), done.
-    Total 3237103 (delta 2699584), reused 3237103 (delta 2699584)
+    $ time git rev-list master | wc -l
+        399882
 
-    real    0m5.413s
-    user    0m5.604s
-    sys     0m1.804s
+        real    0m6.524s
+        user    0m6.060s
+        sys     0m3.284s
 
-    [bitmaps with pack reuse (what you get with this patch)]
-    $ time git pack-objects --all --stdout </dev/null >/dev/null
-    Reusing existing pack: 3237103, done.
-    Total 3237103 (delta 0), reused 0 (delta 0)
+    $ time git rev-list --count master
+        399882
 
-    real    0m1.636s
-    user    0m1.460s
-    sys     0m0.172s
+        real    0m4.318s
+        user    0m4.236s
+        sys     0m0.076s
+
+    $ time git rev-list --use-bitmap-index --count master
+        399882
+
+        real    0m0.217s
+        user    0m0.176s
+        sys     0m0.040s
+
+This also respects negative refs, so you can use it to count
+a slice of history:
+
+        $ time git rev-list --count v3.0..master
+        144843
+
+        real    0m1.971s
+        user    0m1.932s
+        sys     0m0.036s
+
+        $ time git rev-list --use-bitmap-index --count v3.0..master
+        real    0m0.280s
+        user    0m0.220s
+        sys     0m0.056s
+
+Though note that the closer the endpoints, the less it helps. In the
+traversal case, we have fewer commits to cross, so we take less time.
+But the bitmap time is dominated by generating the pack revindex, which
+is constant with respect to the refs given.
+
+Note that you cannot yet get a fast --left-right count of a symmetric
+difference (e.g., "--count --left-right master...topic"). The slow part
+of that walk actually happens during the merge-base determination when
+we parse "master...topic". Even though a count does not actually need to
+know the real merge base (it only needs to take the symmetric difference
+of the bitmaps), the revision code would require some refactoring to
+handle this case.
+
+Additionally, a `--test-bitmap` flag has been added that will perform
+the same rev-list manually (i.e. using a normal revwalk) and using
+bitmaps, and verify that the results are the same. This can be used to
+exercise the bitmap code, and also to verify that the contents of the
+.bitmap file are sane.
 
 Signed-off-by: Vicent Marti <tanoku@gmail.com>
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- Documentation/config.txt |   6 ++
- builtin/pack-objects.c   | 169 ++++++++++++++++++++++++++++++++++++++++-------
- 2 files changed, 150 insertions(+), 25 deletions(-)
+ Documentation/git-rev-list.txt     |  1 +
+ Documentation/rev-list-options.txt |  8 ++++++++
+ builtin/rev-list.c                 | 39 ++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 48 insertions(+)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index ab26963..a981369 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1858,6 +1858,12 @@ pack.packSizeLimit::
- 	Common unit suffixes of 'k', 'm', or 'g' are
- 	supported.
+diff --git a/Documentation/git-rev-list.txt b/Documentation/git-rev-list.txt
+index 045b37b..7a1585d 100644
+--- a/Documentation/git-rev-list.txt
++++ b/Documentation/git-rev-list.txt
+@@ -55,6 +55,7 @@ SYNOPSIS
+ 	     [ \--reverse ]
+ 	     [ \--walk-reflogs ]
+ 	     [ \--no-walk ] [ \--do-walk ]
++	     [ \--use-bitmap-index ]
+ 	     <commit>... [ \-- <paths>... ]
  
-+pack.useBitmaps::
-+	When true, git will use pack bitmaps (if available) when packing
-+	to stdout (e.g., during the server side of a fetch). Defaults to
-+	true. You should not generally need to turn this off unless
-+	you are debugging pack bitmaps.
+ DESCRIPTION
+diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+index ec86d09..f7c8a4d 100644
+--- a/Documentation/rev-list-options.txt
++++ b/Documentation/rev-list-options.txt
+@@ -274,6 +274,14 @@ See also linkgit:git-reflog[1].
+ 	Output excluded boundary commits. Boundary commits are
+ 	prefixed with `-`.
+ 
++ifdef::git-rev-list[]
++--use-bitmap-index::
 +
- pager.<cmd>::
- 	If the value is boolean, turns on or off pagination of the
- 	output of a particular Git subcommand when writing to a tty.
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index faf746b..f04cce5 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -19,6 +19,7 @@
- #include "refs.h"
- #include "streaming.h"
- #include "thread-utils.h"
++	Try to speed up the traversal using the pack bitmap index (if
++	one is available). Note that when traversing with `--objects`,
++	trees and blobs will not have their associated path printed.
++endif::git-rev-list[]
++
+ --
+ 
+ History Simplification
+diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+index 0745e2d..9f92905 100644
+--- a/builtin/rev-list.c
++++ b/builtin/rev-list.c
+@@ -3,6 +3,8 @@
+ #include "diff.h"
+ #include "revision.h"
+ #include "list-objects.h"
++#include "pack.h"
 +#include "pack-bitmap.h"
- 
- static const char *pack_usage[] = {
- 	N_("git pack-objects --stdout [options...] [< ref-list | < object-list]"),
-@@ -57,12 +58,23 @@ static struct progress *progress_state;
- static int pack_compression_level = Z_DEFAULT_COMPRESSION;
- static int pack_compression_seen;
- 
-+static struct packed_git *reuse_packfile;
-+static uint32_t reuse_packfile_objects;
-+static off_t reuse_packfile_offset;
-+
-+static int use_bitmap_index = 1;
-+
- static unsigned long delta_cache_size = 0;
- static unsigned long max_delta_cache_size = 256 * 1024 * 1024;
- static unsigned long cache_max_small_delta_size = 1000;
- 
- static unsigned long window_memory_limit = 0;
- 
-+enum {
-+	OBJECT_ENTRY_EXCLUDE = (1 << 0),
-+	OBJECT_ENTRY_NO_TRY_DELTA = (1 << 1)
-+};
-+
- /*
-  * stats
-  */
-@@ -678,6 +690,49 @@ static struct object_entry **compute_write_order(void)
- 	return wo;
- }
- 
-+static off_t write_reused_pack(struct sha1file *f)
-+{
-+	uint8_t buffer[8192];
-+	off_t to_write;
-+	int fd;
-+
-+	if (!is_pack_valid(reuse_packfile))
-+		return 0;
-+
-+	fd = git_open_noatime(reuse_packfile->pack_name);
-+	if (fd < 0)
-+		return 0;
-+
-+	if (lseek(fd, sizeof(struct pack_header), SEEK_SET) == -1) {
-+		close(fd);
-+		return 0;
-+	}
-+
-+	if (reuse_packfile_offset < 0)
-+		reuse_packfile_offset = reuse_packfile->pack_size - 20;
-+
-+	to_write = reuse_packfile_offset - sizeof(struct pack_header);
-+
-+	while (to_write) {
-+		int read_pack = xread(fd, buffer, sizeof(buffer));
-+
-+		if (read_pack <= 0) {
-+			close(fd);
-+			return 0;
-+		}
-+
-+		if (read_pack > to_write)
-+			read_pack = to_write;
-+
-+		sha1write(f, buffer, read_pack);
-+		to_write -= read_pack;
-+	}
-+
-+	close(fd);
-+	written += reuse_packfile_objects;
-+	return reuse_packfile_offset - sizeof(struct pack_header);
-+}
-+
- static void write_pack_file(void)
- {
- 	uint32_t i = 0, j;
-@@ -704,6 +759,18 @@ static void write_pack_file(void)
- 		offset = write_pack_header(f, nr_remaining);
- 		if (!offset)
- 			die_errno("unable to write pack header");
-+
-+		if (reuse_packfile) {
-+			off_t packfile_size;
-+			assert(pack_to_stdout);
-+
-+			packfile_size = write_reused_pack(f);
-+			if (!packfile_size)
-+				die_errno("failed to re-use existing pack");
-+
-+			offset += packfile_size;
-+		}
-+
- 		nr_written = 0;
- 		for (; i < to_pack.nr_objects; i++) {
- 			struct object_entry *e = write_order[i];
-@@ -800,14 +867,14 @@ static int no_try_delta(const char *path)
+ #include "builtin.h"
+ #include "log-tree.h"
+ #include "graph.h"
+@@ -257,6 +259,18 @@ static int show_bisect_vars(struct rev_list_info *info, int reaches, int all)
  	return 0;
  }
  
--static int add_object_entry(const unsigned char *sha1, enum object_type type,
--			    const char *name, int exclude)
-+static int add_object_entry_1(const unsigned char *sha1, enum object_type type,
-+			      int flags, uint32_t name_hash,
-+			      struct packed_git *found_pack, off_t found_offset)
- {
- 	struct object_entry *entry;
--	struct packed_git *p, *found_pack = NULL;
--	off_t found_offset = 0;
--	uint32_t hash = pack_name_hash(name);
-+	struct packed_git *p;
- 	uint32_t index_pos;
-+	int exclude = (flags & OBJECT_ENTRY_EXCLUDE);
- 
- 	entry = packlist_find(&to_pack, sha1, &index_pos);
- 	if (entry) {
-@@ -822,36 +889,42 @@ static int add_object_entry(const unsigned char *sha1, enum object_type type,
- 	if (!exclude && local && has_loose_object_nonlocal(sha1))
- 		return 0;
- 
--	for (p = packed_git; p; p = p->next) {
--		off_t offset = find_pack_entry_one(sha1, p);
--		if (offset) {
--			if (!found_pack) {
--				if (!is_pack_valid(p)) {
--					warning("packfile %s cannot be accessed", p->pack_name);
--					continue;
-+	if (!found_pack) {
-+		for (p = packed_git; p; p = p->next) {
-+			off_t offset = find_pack_entry_one(sha1, p);
-+			if (offset) {
-+				if (!found_pack) {
-+					if (!is_pack_valid(p)) {
-+						warning("packfile %s cannot be accessed", p->pack_name);
-+						continue;
-+					}
-+					found_offset = offset;
-+					found_pack = p;
- 				}
--				found_offset = offset;
--				found_pack = p;
-+				if (exclude)
-+					break;
-+				if (incremental)
-+					return 0;
-+				if (local && !p->pack_local)
-+					return 0;
-+				if (ignore_packed_keep && p->pack_local && p->pack_keep)
-+					return 0;
- 			}
--			if (exclude)
--				break;
--			if (incremental)
--				return 0;
--			if (local && !p->pack_local)
--				return 0;
--			if (ignore_packed_keep && p->pack_local && p->pack_keep)
--				return 0;
- 		}
- 	}
- 
- 	entry = packlist_alloc(&to_pack, sha1, index_pos);
--	entry->hash = hash;
-+	entry->hash = name_hash;
- 	if (type)
- 		entry->type = type;
- 	if (exclude)
- 		entry->preferred_base = 1;
- 	else
- 		nr_result++;
-+
-+	if (flags & OBJECT_ENTRY_NO_TRY_DELTA)
-+		entry->no_try_delta = 1;
-+
- 	if (found_pack) {
- 		entry->in_pack = found_pack;
- 		entry->in_pack_offset = found_offset;
-@@ -859,10 +932,21 @@ static int add_object_entry(const unsigned char *sha1, enum object_type type,
- 
- 	display_progress(progress_state, to_pack.nr_objects);
- 
++static int show_object_fast(
++	const unsigned char *sha1,
++	enum object_type type,
++	int exclude,
++	uint32_t name_hash,
++	struct packed_git *found_pack,
++	off_t found_offset)
++{
++	fprintf(stdout, "%s\n", sha1_to_hex(sha1));
 +	return 1;
 +}
 +
-+static int add_object_entry(const unsigned char *sha1, enum object_type type,
-+			    const char *name, int exclude)
-+{
-+	int flags = 0;
-+
-+	if (exclude)
-+		flags |= OBJECT_ENTRY_EXCLUDE;
-+
- 	if (name && no_try_delta(name))
--		entry->no_try_delta = 1;
-+		flags |= OBJECT_ENTRY_NO_TRY_DELTA;
+ int cmd_rev_list(int argc, const char **argv, const char *prefix)
+ {
+ 	struct rev_info revs;
+@@ -265,6 +279,7 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
+ 	int bisect_list = 0;
+ 	int bisect_show_vars = 0;
+ 	int bisect_find_all = 0;
++	int use_bitmap_index = 0;
  
--	return 1;
-+	return add_object_entry_1(sha1, type, flags, pack_name_hash(name), NULL, 0);
- }
+ 	git_config(git_default_config, NULL);
+ 	init_revisions(&revs, prefix);
+@@ -306,6 +321,14 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
+ 			bisect_show_vars = 1;
+ 			continue;
+ 		}
++		if (!strcmp(arg, "--use-bitmap-index")) {
++			use_bitmap_index = 1;
++			continue;
++		}
++		if (!strcmp(arg, "--test-bitmap")) {
++			test_bitmap_walk(&revs);
++			return 0;
++		}
+ 		usage(rev_list_usage);
  
- struct pbase_tree_cache {
-@@ -2027,6 +2111,10 @@ static int git_pack_config(const char *k, const char *v, void *cb)
- 		cache_max_small_delta_size = git_config_int(k, v);
- 		return 0;
  	}
-+	if (!strcmp(k, "pack.usebitmaps")) {
-+		use_bitmap_index = git_config_bool(k, v);
-+		return 0;
-+	}
- 	if (!strcmp(k, "pack.threads")) {
- 		delta_search_threads = git_config_int(k, v);
- 		if (delta_search_threads < 0)
-@@ -2235,6 +2323,29 @@ static void loosen_unused_packed_objects(struct rev_info *revs)
- 	}
- }
+@@ -333,6 +356,22 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
+ 	if (bisect_list)
+ 		revs.limited = 1;
  
-+static int get_object_list_from_bitmap(struct rev_info *revs)
-+{
-+	if (prepare_bitmap_walk(revs) < 0)
-+		return -1;
-+
-+	if (!reuse_partial_packfile_from_bitmap(
-+			&reuse_packfile,
-+			&reuse_packfile_objects,
-+			&reuse_packfile_offset)) {
-+		assert(reuse_packfile_objects);
-+		nr_result += reuse_packfile_objects;
-+
-+		if (progress) {
-+			fprintf(stderr, "Reusing existing pack: %d, done.\n",
-+				reuse_packfile_objects);
-+			fflush(stderr);
++	if (use_bitmap_index) {
++		if (revs.count && !revs.left_right && !revs.cherry_mark) {
++			uint32_t commit_count;
++			if (!prepare_bitmap_walk(&revs)) {
++				count_bitmap_commit_list(&commit_count, NULL, NULL, NULL);
++				printf("%d\n", commit_count);
++				return 0;
++			}
++		} else if (revs.tag_objects && revs.tree_objects && revs.blob_objects) {
++			if (!prepare_bitmap_walk(&revs)) {
++				traverse_bitmap_commit_list(&show_object_fast);
++				return 0;
++			}
 +		}
 +	}
 +
-+	traverse_bitmap_commit_list(&add_object_entry_1);
-+	return 0;
-+}
-+
- static void get_object_list(int ac, const char **av)
- {
- 	struct rev_info revs;
-@@ -2262,6 +2373,9 @@ static void get_object_list(int ac, const char **av)
- 			die("bad revision '%s'", line);
- 	}
- 
-+	if (use_bitmap_index && !get_object_list_from_bitmap(&revs))
-+		return;
-+
  	if (prepare_revision_walk(&revs))
  		die("revision walk setup failed");
- 	mark_edges_uninteresting(&revs, show_edge);
-@@ -2391,6 +2505,8 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 			    N_("pack compression level")),
- 		OPT_SET_INT(0, "keep-true-parents", &grafts_replace_parents,
- 			    N_("do not hide commits by grafts"), 0),
-+		OPT_BOOL(0, "use-bitmap-index", &use_bitmap_index,
-+			 N_("use a bitmap index if available to speed up counting objects")),
- 		OPT_END(),
- 	};
- 
-@@ -2457,6 +2573,9 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 	if (keep_unreachable && unpack_unreachable)
- 		die("--keep-unreachable and --unpack-unreachable are incompatible.");
- 
-+	if (!use_internal_rev_list || !pack_to_stdout || is_repository_shallow())
-+		use_bitmap_index = 0;
-+
- 	if (progress && all_progress_implied)
- 		progress = 2;
- 
+ 	if (revs.tree_objects)
 -- 
 1.8.5.rc0.443.g2df7f3f
