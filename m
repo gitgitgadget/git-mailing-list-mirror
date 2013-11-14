@@ -1,85 +1,77 @@
-From: Thomas Rast <tr@thomasrast.ch>
-Subject: Re: [PATCH] config: arbitrary number of matches for --unset and --replace-all
-Date: Thu, 14 Nov 2013 21:24:52 +0100
-Message-ID: <87zjp6loiz.fsf@linux-k42r.v.cablecom.net>
-References: <CAPig+cQZo0R3q=J2BygTfdJ1uuiT1HPDCjTxt8mykxOXM1uf2Q@mail.gmail.com>
-	<9bc62ec0072a0513865f39ba287819dd0d9d606d.1384415180.git.tr@thomasrast.ch>
-	<20131114083747.GD16327@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v3 0/21] pack bitmaps
+Date: Thu, 14 Nov 2013 16:33:20 -0500
+Message-ID: <20131114213320.GA16466@sigill.intra.peff.net>
+References: <20131114124157.GA23784@sigill.intra.peff.net>
+ <5285224A.2070606@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Jess Hottenstein <jess.hottenstein@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Nov 14 21:25:19 2013
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org,
+	Vicent =?utf-8?B?TWFydMOt?= <vicent@github.com>
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Thu Nov 14 22:33:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vh3Ta-0006sw-D3
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Nov 2013 21:25:18 +0100
+	id 1Vh4XX-0000LR-7R
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Nov 2013 22:33:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755960Ab3KNUZI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Nov 2013 15:25:08 -0500
-Received: from psi.thgersdorf.net ([176.9.98.78]:35329 "EHLO mail.psioc.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755253Ab3KNUZG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Nov 2013 15:25:06 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by localhost.psioc.net (Postfix) with ESMTP id 146814D64C4;
-	Thu, 14 Nov 2013 21:25:05 +0100 (CET)
-X-Virus-Scanned: amavisd-new at psioc.net
-Received: from mail.psioc.net ([127.0.0.1])
-	by localhost (mail.psioc.net [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 13ESu1ySdKu2; Thu, 14 Nov 2013 21:24:54 +0100 (CET)
-Received: from linux-k42r.v.cablecom.net.thomasrast.ch (46-126-8-85.dynamic.hispeed.ch [46.126.8.85])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(Client did not present a certificate)
-	by mail.psioc.net (Postfix) with ESMTPSA id CAEC94D6414;
-	Thu, 14 Nov 2013 21:24:53 +0100 (CET)
-In-Reply-To: <20131114083747.GD16327@sigill.intra.peff.net> (Jeff King's
-	message of "Thu, 14 Nov 2013 03:37:47 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+	id S1757446Ab3KNVdY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Nov 2013 16:33:24 -0500
+Received: from cloud.peff.net ([50.56.180.127]:39419 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1757096Ab3KNVdW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Nov 2013 16:33:22 -0500
+Received: (qmail 6759 invoked by uid 102); 14 Nov 2013 21:33:22 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 14 Nov 2013 15:33:22 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Nov 2013 16:33:20 -0500
+Content-Disposition: inline
+In-Reply-To: <5285224A.2070606@ramsay1.demon.co.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237877>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237878>
 
-Jeff King <peff@peff.net> writes:
+On Thu, Nov 14, 2013 at 07:19:38PM +0000, Ramsay Jones wrote:
 
-> This code is weird to follow because of the fall-throughs. I do not
-> think you have introduced any bugs with your patch, but it seems weird
-> to me that we set the offset at the top of the hunk. If we hit the
-> conditional in the bottom half, we do actually increment storer.seen,
-> but only _after_ having overwritten the value from above (with the same
-> value, no less).
->
-> But if we do not follow that code path, we may end up here:
->
->> @@ -1272,6 +1275,9 @@ static int store_aux(const char *key, const char *value, void *cb)
->>  			if (strrchr(key, '.') - key == store.baselen &&
->>  			      !strncmp(key, store.key, store.baselen)) {
->>  					store.state = SECTION_SEEN;
->> +					ALLOC_GROW(store.offset,
->> +						   store.seen+1,
->> +						   store.offset_alloc);
->>  					store.offset[store.seen] = cf->do_ftell(cf);
->>  			}
->>  		}
->
-> where we overwrite it again, but do not update store.seen. Or we may
-> trigger neither, and leave the function with our offset stored, but
-> store.seen not incremented.
+> Unfortunately, I didn't find time this weekend to finish the msvc build
+> fixes. However, after a quick squint at these patches, I think you have
+> almost done it for me! :-D
+> 
+> I must have misunderstood the previous discussion, because my patch was
+> written on the assumption that the ewah directory wouldn't be "git-ified"
+> (e.g. #include git-compat-util.h).
 
-It's doubly strange that we write in this hunk without any protection
-against overflow.  I was too lazy to think about it long enough to come
-up with a possible example that triggers this, and instead just put in
-the defensive ALLOC_GROW().  But if you can trigger it, it will probably
-cause the algorithm to go off the rails because it overwrote store.state
-and possibly even store.seen.
+I think it was up for debate at some point, but we did decide to go
+ahead and git-ify. Please feel free to submit further fixups if you need
+them.
 
--- 
-Thomas Rast
-tr@thomasrast.ch
+> >   - the ewah code used gcc's __builtin_ctzll, but did not provide a
+> >     suitable fallback. We now provide a fallback in C.
+> 
+> ... here.
+> 
+> I was messing around with several implementations (including the use of
+> msvc compiler intrinsics) with the intention of doing some timing tests
+> etc. [I suspected my C fallback function (a different implementation to
+> yours) would be slightly faster.]
+
+Yeah, I looked around for several implementations, and ultimately wrote
+one that was the most readable to me. The one I found shortest and most
+inscrutable was:
+
+  return popcount((x & -x) - 1);
+
+the details of which I still haven't worked through in my head. ;)
+
+I do think on most platforms that intrinsics or inline assembler are the
+way to go. My main goal was to get something correct that would let it
+compile everywhere, and then people can use that as a base for
+optimizing. Patches welcome. :)
+
+-Peff
