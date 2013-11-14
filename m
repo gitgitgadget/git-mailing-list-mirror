@@ -1,122 +1,90 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH v3 0/21] pack bitmaps
-Date: Thu, 14 Nov 2013 07:41:58 -0500
-Message-ID: <20131114124157.GA23784@sigill.intra.peff.net>
+Subject: [PATCH v3 01/21] sha1write: make buffer const-correct
+Date: Thu, 14 Nov 2013 07:42:50 -0500
+Message-ID: <20131114124249.GA10757@sigill.intra.peff.net>
+References: <20131114124157.GA23784@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Vicent =?utf-8?B?TWFydMOt?= <vicent@github.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 14 13:42:08 2013
+X-From: git-owner@vger.kernel.org Thu Nov 14 13:42:57 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VgwFJ-0005q9-Md
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Nov 2013 13:42:06 +0100
+	id 1VgwG7-0006gP-GY
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Nov 2013 13:42:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753505Ab3KNMmB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Nov 2013 07:42:01 -0500
-Received: from cloud.peff.net ([50.56.180.127]:39096 "HELO peff.net"
+	id S1753547Ab3KNMmw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Nov 2013 07:42:52 -0500
+Received: from cloud.peff.net ([50.56.180.127]:39099 "HELO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753146Ab3KNMmA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Nov 2013 07:42:00 -0500
-Received: (qmail 11103 invoked by uid 102); 14 Nov 2013 12:41:59 -0000
+	id S1753146Ab3KNMmv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Nov 2013 07:42:51 -0500
+Received: (qmail 11287 invoked by uid 102); 14 Nov 2013 12:42:51 -0000
 Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 14 Nov 2013 06:41:59 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Nov 2013 07:41:58 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 14 Nov 2013 06:42:51 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Nov 2013 07:42:50 -0500
 Content-Disposition: inline
+In-Reply-To: <20131114124157.GA23784@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237824>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237825>
 
-Here's another iteration of the pack bitmaps series. Compared to v2, it
-changes:
+We are passed a "void *" and write it out without ever
+touching it; let's indicate that by using "const".
 
- - misc style/typo fixes
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ csum-file.c | 6 +++---
+ csum-file.h | 2 +-
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
- - portability fixes from Ramsay and Torsten
-
- - count-objects garbage-reporting patch from Duy
-
- - disable bitmaps when is_repository_shallow(); this also covers the
-   case where the client is shallow, since we feed pack-objects a
-   --shallow-file in that case. This used to done by checking
-   !internal_rev_list, but that doesn't apply after cdab485.
-
- - ewah sources now properly use git-compat-util.h and do not include
-   system headers
-
- - the ewah code uses ewah_malloc, ewah_realloc, and so forth to let the
-   project use a particular allocator (and we want to use xmalloc and
-   friends). And we defined those in pack-bitmap.h, but of course that
-   had no effect on the ewah/*.c files that did not include
-   pack-bitmap.h.  Since we are hacking up and git-ifying libewok
-   anyway, we can just set the hardcoded fallback to xmalloc instead of
-   malloc.
-
-  - the ewah code used gcc's __builtin_ctzll, but did not provide a
-    suitable fallback. We now provide a fallback in C.
-
-  - The bitmap reading code only handles a single bitmapped pack (since
-    they must be fully closed, there is not much point in having
-    multiple). It used to silently ignore extra bitmap indices it found,
-    but will now warn that they are being ignored.
-
-  - The name-hash cache is now optional, controlled by
-    pack.writeBitmapHashCache.
-
-  - The test script will now do basic interoperability testing with jgit
-    (if you have jgit in your $PATH).
-
-  - There are now perf tests. Spoiler alert: bitmaps make clones faster.
-    See patch 20 for details. We can also measure the speedup from the
-    hash cache (see patch 21).
-
-Not addressed:
-
-  - I did not include the NEEDS_ALIGNED_ACCESS patch. I note that we do
-    not even have a Makefile knob for this, and the code in read-cache.c
-    has probably never actually been used. Are there real systems that
-    have a problem? The read-cache code was in support of the index v4
-    experiment, which did away with the 8-byte padding. So it could be
-    that we simply don't see it, because everything is currently
-    aligned.
-
-  - On a related note, we do some cast-buffer-to-struct magic on the
-    mmap'd file. I note that the regular packfile reader also does this.
-    How careful do we want to be?
-
-  - We still assume that reusing a slice from the front of the pack will
-    never miss delta bases. This is the case currently for packs
-    generated by both git and JGit, but it would be nice to mark the
-    property in the bitmap index. Adding a new flag would break JGit
-    compatibility, though. We can either make it an option, or assume
-    it's good enough for now and worry about it in v2.
-
-  [01/21]: sha1write: make buffer const-correct
-  [02/21]: revindex: Export new APIs
-  [03/21]: pack-objects: Refactor the packing list
-  [04/21]: pack-objects: factor out name_hash
-  [05/21]: revision: allow setting custom limiter function
-  [06/21]: sha1_file: export `git_open_noatime`
-  [07/21]: compat: add endianness helpers
-  [08/21]: ewah: compressed bitmap implementation
-  [09/21]: documentation: add documentation for the bitmap format
-  [10/21]: pack-bitmap: add support for bitmap indexes
-  [11/21]: pack-objects: use bitmaps when packing objects
-  [12/21]: rev-list: add bitmap mode to speed up object lists
-  [13/21]: pack-objects: implement bitmap writing
-  [14/21]: repack: stop using magic number for ARRAY_SIZE(exts)
-  [15/21]: repack: turn exts array into array-of-struct
-  [16/21]: repack: handle optional files created by pack-objects
-  [17/21]: repack: consider bitmaps when performing repacks
-  [18/21]: count-objects: recognize .bitmap in garbage-checking
-  [19/21]: t: add basic bitmap functionality tests
-  [20/21]: t/perf: add tests for pack bitmaps
-  [21/21]: pack-bitmap: implement optional name_hash cache
-
--Peff
+diff --git a/csum-file.c b/csum-file.c
+index 53f5375..465971c 100644
+--- a/csum-file.c
++++ b/csum-file.c
+@@ -11,7 +11,7 @@
+ #include "progress.h"
+ #include "csum-file.h"
+ 
+-static void flush(struct sha1file *f, void *buf, unsigned int count)
++static void flush(struct sha1file *f, const void *buf, unsigned int count)
+ {
+ 	if (0 <= f->check_fd && count)  {
+ 		unsigned char check_buffer[8192];
+@@ -86,13 +86,13 @@ int sha1close(struct sha1file *f, unsigned char *result, unsigned int flags)
+ 	return fd;
+ }
+ 
+-int sha1write(struct sha1file *f, void *buf, unsigned int count)
++int sha1write(struct sha1file *f, const void *buf, unsigned int count)
+ {
+ 	while (count) {
+ 		unsigned offset = f->offset;
+ 		unsigned left = sizeof(f->buffer) - offset;
+ 		unsigned nr = count > left ? left : count;
+-		void *data;
++		const void *data;
+ 
+ 		if (f->do_crc)
+ 			f->crc32 = crc32(f->crc32, buf, nr);
+diff --git a/csum-file.h b/csum-file.h
+index 3b540bd..9dedb03 100644
+--- a/csum-file.h
++++ b/csum-file.h
+@@ -34,7 +34,7 @@ extern struct sha1file *sha1fd(int fd, const char *name);
+ extern struct sha1file *sha1fd_check(const char *name);
+ extern struct sha1file *sha1fd_throughput(int fd, const char *name, struct progress *tp);
+ extern int sha1close(struct sha1file *, unsigned char *, unsigned int);
+-extern int sha1write(struct sha1file *, void *, unsigned int);
++extern int sha1write(struct sha1file *, const void *, unsigned int);
+ extern void sha1flush(struct sha1file *f);
+ extern void crc32_begin(struct sha1file *);
+ extern uint32_t crc32_end(struct sha1file *);
+-- 
+1.8.5.rc0.443.g2df7f3f
