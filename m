@@ -1,128 +1,239 @@
-From: Ken Tanzer <ken.tanzer@gmail.com>
-Subject: Re: git rm / format-patch / am fails on my file: patch does not apply
-Date: Wed, 13 Nov 2013 23:26:35 -0800
-Message-ID: <CAD3a31X_o3cXr10ARiZjMFvG-yzj9hUUpmoLnjDXTjM4nHiD=w@mail.gmail.com>
-References: <CAD3a31XPKsnuNE+szw7xgvaDrcxhKZ2jTDHKzTwdwtnCwFb_0w@mail.gmail.com>
- <xmqqhabilpzx.fsf@gitster.dls.corp.google.com> <CAD3a31UVkNaPTCWCAbv0NwCOTE5_2A+P7-e28VRnk9Aopa6hcQ@mail.gmail.com>
- <xmqqbo1ofd1s.fsf@gitster.dls.corp.google.com> <5ABC4D34F41F48E39205914BC8D3DC35@PhilipOakley>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Philip Oakley <philipoakley@iee.org>
-X-From: git-owner@vger.kernel.org Thu Nov 14 08:27:24 2013
+From: Thomas Rast <tr@thomasrast.ch>
+Subject: [PATCH] config: arbitrary number of matches for --unset and --replace-all
+Date: Thu, 14 Nov 2013 08:50:43 +0100
+Message-ID: <9bc62ec0072a0513865f39ba287819dd0d9d606d.1384415180.git.tr@thomasrast.ch>
+References: <CAPig+cQZo0R3q=J2BygTfdJ1uuiT1HPDCjTxt8mykxOXM1uf2Q@mail.gmail.com>
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Jess Hottenstein <jess.hottenstein@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 14 08:51:05 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VgrKj-0001x8-Di
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Nov 2013 08:27:21 +0100
+	id 1Vgrhg-0002we-Gu
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Nov 2013 08:51:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752101Ab3KNH1S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Nov 2013 02:27:18 -0500
-Received: from mail-lb0-f179.google.com ([209.85.217.179]:33193 "EHLO
-	mail-lb0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751087Ab3KNH1Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Nov 2013 02:27:16 -0500
-Received: by mail-lb0-f179.google.com with SMTP id w6so1230237lbh.10
-        for <git@vger.kernel.org>; Wed, 13 Nov 2013 23:27:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=B5VmFUQN9NDXf2pveQS9D5w6mdTyBx/AbOKm4Jddcjk=;
-        b=SbQFgcQGmvPtrNQ60CE51PPMGL2pbCv+zzub+L2F8/El+j7xwCdJeS6AEBEGB5IgfM
-         x2Ce5IUgHmW/84W7TzSDh25yBeqlnktcmwvZGL5p0GkA8ZbCwn/ZMz+gKhnGpxEpbEGD
-         R2ofDnpOXQTMDM9nksW8E4vHyqORjWujDGvweblU3Tfb1Gbs6VaEd1KyuWI9Ij+B1Tc/
-         qLGv/nOfrkGHnuCEpgTyCkXCcQfLEGyr8G44cuXE3Hkd5D7Pcd/j45TVnQz2UpskOhM8
-         fNwpWCC1jlqLTIZ1CGu3cuPlW88YIy1I/Ec2mR5A46ASjRdEfG2cwz/TVZROe86gUsp0
-         F9/g==
-X-Received: by 10.152.27.227 with SMTP id w3mr259145lag.84.1384414035368; Wed,
- 13 Nov 2013 23:27:15 -0800 (PST)
-Received: by 10.114.180.136 with HTTP; Wed, 13 Nov 2013 23:26:35 -0800 (PST)
-In-Reply-To: <5ABC4D34F41F48E39205914BC8D3DC35@PhilipOakley>
+	id S1751474Ab3KNHvA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Nov 2013 02:51:00 -0500
+Received: from psi.thgersdorf.net ([176.9.98.78]:33794 "EHLO mail.psioc.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751232Ab3KNHu6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Nov 2013 02:50:58 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by localhost.psioc.net (Postfix) with ESMTP id 07D664D6560;
+	Thu, 14 Nov 2013 08:50:55 +0100 (CET)
+X-Virus-Scanned: amavisd-new at psioc.net
+Received: from mail.psioc.net ([127.0.0.1])
+	by localhost (mail.psioc.net [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id kVZRXbUoQPSo; Thu, 14 Nov 2013 08:50:44 +0100 (CET)
+Received: from linux-k42r.v.cablecom.net (46-126-8-85.dynamic.hispeed.ch [46.126.8.85])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(Client did not present a certificate)
+	by mail.psioc.net (Postfix) with ESMTPSA id 22EF54D6414;
+	Thu, 14 Nov 2013 08:50:44 +0100 (CET)
+X-Mailer: git-send-email 1.8.5.rc1.353.g06ba152
+In-Reply-To: <CAPig+cQZo0R3q=J2BygTfdJ1uuiT1HPDCjTxt8mykxOXM1uf2Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237813>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237814>
 
-Hi Philip.  I don't have any setting like that in either my
-~/.gitconfig, or in the .git/config files.  I really haven't tweaked
-my git config at all.
+git-config used a static match array to hold the matches we want to
+unset/replace when using --unset or --replace-all.  Use a
+variable-sized array instead.
 
-This is a typical .git/config file:
+This in particular fixes the symptoms git-svn had when storing large
+numbers of svn-remote.*.added-placeholder entries in the config file.
 
-[core]
-repositoryformatversion = 0
-filemode = true
-bare = false
-logallrefupdates = true
-[remote "origin"]
-url = ssh://ktanzer@git.code.sf.net/p/agency/code
-fetch = +refs/heads/*:refs/remotes/origin/*
-[branch "master"]
-remote = origin
-merge = refs/heads/master
+While the tests are rather more paranoid than just --unset and
+--replace-all, the other operations already worked.  Indeed git-svn's
+usage only breaks the first time *after* creating so many entries,
+when it wants to unset and re-add them all.
 
-My ~/.gitconfig just has name and email settings in it.
+Reported-by: Jess Hottenstein <jess.hottenstein@gmail.com>
+Signed-off-by: Thomas Rast <tr@thomasrast.ch>
+---
 
-Ken
+Eric Sunshine wrote:
+> On Wed, Nov 13, 2013 at 5:19 AM, Thomas Rast <tr@thomasrast.ch> wrote:
+> > +setup_many() {
+[...]
+> > +       cat >5to1 <<EOF
+> 
+> Broken &&-chain.
 
-
-On Wed, Nov 13, 2013 at 3:12 PM, Philip Oakley <philipoakley@iee.org> wrote:
-> From: "Junio C Hamano" <gitster@pobox.com>
-> To: "Ken Tanzer" <ken.tanzer@gmail.com>
-> Sent: Wednesday, November 13, 2013 5:04 PM
->
->> Ken Tanzer <ken.tanzer@gmail.com> writes:
->>
->>>> I am not very much surprised if such a file misbehaves, because the
->>>> "format-patch | am" pipeline is designed to be used on patches that
->>>> can be transferred in plain-text e-mail safely.  Long lines should
->>>> probably be OK, but mixed CRLF, CR and LF may be problematic.
->>>
->>>
->>> I'm not sure I understand this comment.  format-patch seems to work
->>> fine on binary files.
->>
->>
->> Yes.
->>
->> The problematic is when you tell it to process text files, taking
->> into account various common text breakages may be introduced to the
->> payload, and line-end conversion is among the operations that the
->> user may be telling it to munge the perfectly-fine input, in an
->> attempt to compensate.
->>
->
->>> Stefan Beller <stefanbeller@googlemail.com> writes:
->>>
->>>> I do have this global config
->>>>  core.safecrlf=warn
->>>> regarding line endings.
->
->
-> Ken,
->
-> Do you have one of these line ending conversion settings active in your
-> config file?
->
-> It sounds like the 'git am' script may be silencing the warnings too
-> aggressively if that is the case.
->
-> Philip
+Oops, thanks for catching.
 
 
+ config.c                | 19 ++++++++++-----
+ t/t1303-wacky-config.sh | 64 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 77 insertions(+), 6 deletions(-)
 
+diff --git a/config.c b/config.c
+index 3c2434a..ef63bf2 100644
+--- a/config.c
++++ b/config.c
+@@ -1197,15 +1197,14 @@ int git_config(config_fn_t fn, void *data)
+  * Find all the stuff for git_config_set() below.
+  */
+ 
+-#define MAX_MATCHES 512
+-
+ static struct {
+ 	int baselen;
+ 	char *key;
+ 	int do_not_match;
+ 	regex_t *value_regex;
+ 	int multi_replace;
+-	size_t offset[MAX_MATCHES];
++	size_t *offset;
++	unsigned int offset_alloc;
+ 	enum { START, SECTION_SEEN, SECTION_END_SEEN, KEY_SEEN } state;
+ 	int seen;
+ } store;
+@@ -1228,11 +1227,11 @@ static int store_aux(const char *key, const char *value, void *cb)
+ 		if (matches(key, value)) {
+ 			if (store.seen == 1 && store.multi_replace == 0) {
+ 				warning("%s has multiple values", key);
+-			} else if (store.seen >= MAX_MATCHES) {
+-				error("too many matches for %s", key);
+-				return 1;
+ 			}
+ 
++			ALLOC_GROW(store.offset, store.seen+1,
++				   store.offset_alloc);
++
+ 			store.offset[store.seen] = cf->do_ftell(cf);
+ 			store.seen++;
+ 		}
+@@ -1260,11 +1259,15 @@ static int store_aux(const char *key, const char *value, void *cb)
+ 		 * Do not increment matches: this is no match, but we
+ 		 * just made sure we are in the desired section.
+ 		 */
++		ALLOC_GROW(store.offset, store.seen+1,
++			   store.offset_alloc);
+ 		store.offset[store.seen] = cf->do_ftell(cf);
+ 		/* fallthru */
+ 	case SECTION_END_SEEN:
+ 	case START:
+ 		if (matches(key, value)) {
++			ALLOC_GROW(store.offset, store.seen+1,
++				   store.offset_alloc);
+ 			store.offset[store.seen] = cf->do_ftell(cf);
+ 			store.state = KEY_SEEN;
+ 			store.seen++;
+@@ -1272,6 +1275,9 @@ static int store_aux(const char *key, const char *value, void *cb)
+ 			if (strrchr(key, '.') - key == store.baselen &&
+ 			      !strncmp(key, store.key, store.baselen)) {
+ 					store.state = SECTION_SEEN;
++					ALLOC_GROW(store.offset,
++						   store.seen+1,
++						   store.offset_alloc);
+ 					store.offset[store.seen] = cf->do_ftell(cf);
+ 			}
+ 		}
+@@ -1570,6 +1576,7 @@ int git_config_set_multivar_in_file(const char *config_filename,
+ 			}
+ 		}
+ 
++		ALLOC_GROW(store.offset, 1, store.offset_alloc);
+ 		store.offset[0] = 0;
+ 		store.state = START;
+ 		store.seen = 0;
+diff --git a/t/t1303-wacky-config.sh b/t/t1303-wacky-config.sh
+index 46103a1..c2706ea 100755
+--- a/t/t1303-wacky-config.sh
++++ b/t/t1303-wacky-config.sh
+@@ -3,17 +3,28 @@
+ test_description='Test wacky input to git config'
+ . ./test-lib.sh
+ 
++# Leaving off the newline is intentional!
+ setup() {
+ 	(printf "[section]\n" &&
+ 	printf "  key = foo") >.git/config
+ }
+ 
++# 'check section.key value' verifies that the entry for section.key is
++# 'value'
+ check() {
+ 	echo "$2" >expected
+ 	git config --get "$1" >actual 2>&1
+ 	test_cmp actual expected
+ }
+ 
++# 'check section.key regex value' verifies that the entry for
++# section.key *that matches 'regex'* is 'value'
++check_regex() {
++	echo "$3" >expected
++	git config --get "$1" "$2" >actual 2>&1
++	test_cmp actual expected
++}
++
+ test_expect_success 'modify same key' '
+ 	setup &&
+ 	git config section.key bar &&
+@@ -47,4 +58,57 @@ test_expect_success 'do not crash on special long config line' '
+ 	check section.key "$LONG_VALUE"
+ '
+ 
++setup_many() {
++	setup &&
++	# This time we want the newline so that we can tack on more
++	# entries.
++	echo >>.git/config &&
++	# Semi-efficient way of concatenating 5^5 = 3125 lines. Note
++	# that because 'setup' already put one line, this means 3126
++	# entries for section.key in the config file.
++	cat >5to1 <<EOF &&
++  key = foo
++  key = foo
++  key = foo
++  key = foo
++  key = foo
++EOF
++	cat 5to1 5to1 5to1 5to1 5to1 >5to2 &&	   # 25
++	cat 5to2 5to2 5to2 5to2 5to2 >5to3 &&	   # 125
++	cat 5to3 5to3 5to3 5to3 5to3 >5to4 &&	   # 635
++	cat 5to4 5to4 5to4 5to4 5to4 >>.git/config # 3125
++}
++
++test_expect_success 'get many entries' '
++	setup_many &&
++	git config --get-all section.key >actual &&
++	test_line_count = 3126 actual
++'
++
++test_expect_success 'get many entries by regex' '
++	setup_many &&
++	git config --get-regexp "sec.*ke." >actual &&
++	test_line_count = 3126 actual
++'
++
++test_expect_success 'add and replace one of many entries' '
++	setup_many &&
++	git config --add section.key bar &&
++	check_regex section.key "b.*r" bar &&
++	git config section.key beer "b.*r" &&
++	check_regex section.key "b.*r" beer
++'
++
++test_expect_success 'replace many entries' '
++	setup_many &&
++	git config --replace-all section.key bar &&
++	check section.key bar
++'
++
++test_expect_success 'unset many entries' '
++	setup_many &&
++	git config --unset-all section.key &&
++	test_must_fail git config section.key
++'
++
+ test_done
 -- 
-AGENCY Software
-A data system that puts you in control
-100% Free Software
-http://agency-software.org/
-ken.tanzer@agency-software.org
-(253) 245-3801
-
-Subscribe to the mailing list to
-learn more about AGENCY or
-follow the discussion.
+1.8.5.rc1.353.g06ba152
