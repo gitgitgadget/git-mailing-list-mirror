@@ -1,196 +1,128 @@
 From: Karsten Blees <karsten.blees@gmail.com>
-Subject: [PATCH v5 14/14] read-cache.c: fix memory leaks caused by removed
- cache entries
-Date: Thu, 14 Nov 2013 20:24:37 +0100
-Message-ID: <52852375.8040008@gmail.com>
-References: <52851FB5.4050406@gmail.com>
+Subject: Re: What's cooking in git.git (Oct 2013, #06; Fri, 25)
+Date: Thu, 14 Nov 2013 20:38:01 +0100
+Message-ID: <52852699.3000408@gmail.com>
+References: <xmqqeh79hr3o.fsf@gitster.dls.corp.google.com>	<CACsJy8A3s4TUmUOC+i-k97GxxvBQ7mQmdoPJizfy1yS3rqLEkA@mail.gmail.com>	<xmqq61shgzvn.fsf@gitster.dls.corp.google.com>	<CAFFjANSnuS6_+uAd43AayojJyK-wj2wMxQ6DBD6JyN=A7xh2_A@mail.gmail.com>	<526EBEE8.7070807@gmail.com>	<CAFFjANRaphYdg6VM8cqJY3NmPz+gNE7S9S1jAgPPctUZio7+Tw@mail.gmail.com> <CAH7EuMHgH6Oe_SvjyutBaakRfyZGHpp_iimaAzpV09AnHTYntw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Thomas Rast <tr@thomasrast.ch>, Jens Lehmann <Jens.Lehmann@web.de>,
-	Karsten Blees <karsten.blees@gmail.com>
-To: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 14 20:24:45 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>,
+	Karsten Blees <blees@dcon.de>,
+	Git Mailing List <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>
+To: =?ISO-8859-1?Q?Vicent_Mart=ED?= <tanoku@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 14 20:38:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vh2Wy-0004ab-IC
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Nov 2013 20:24:45 +0100
+	id 1Vh2ju-0007fT-Fc
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Nov 2013 20:38:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756083Ab3KNTYl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Nov 2013 14:24:41 -0500
-Received: from mail-wi0-f181.google.com ([209.85.212.181]:35609 "EHLO
-	mail-wi0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755821Ab3KNTYk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Nov 2013 14:24:40 -0500
-Received: by mail-wi0-f181.google.com with SMTP id f4so3207207wiw.8
-        for <git@vger.kernel.org>; Thu, 14 Nov 2013 11:24:39 -0800 (PST)
+	id S1756489Ab3KNTiD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Nov 2013 14:38:03 -0500
+Received: from mail-wg0-f53.google.com ([74.125.82.53]:33334 "EHLO
+	mail-wg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755637Ab3KNTiA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Nov 2013 14:38:00 -0500
+Received: by mail-wg0-f53.google.com with SMTP id b13so2597857wgh.32
+        for <git@vger.kernel.org>; Thu, 14 Nov 2013 11:37:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=message-id:date:from:user-agent:mime-version:to:cc:subject
          :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=H2CG1yR71yO6wNsLtgrf1Ku33c56lFDEMFVsSnLH9bc=;
-        b=H1/dZCEloU/hwqARF0TFD/4FEfHa0HcE3eI8PKz9nND+0fpCMZvwkQAHEk3t7kC/12
-         mx2gFILDmhsASeaaX3e4D4OMvM6Q8w3Od654bRPXO1kzZtkYhQ4xA5fQZVhdlY85D6vZ
-         HUKCjkE2298YY3ICxWR3IoNHoeeAZDvHuNYU5gSOPjgXvAGqdmktniUqku0ptq9K3RIw
-         T7yyZ5lYwobk4Zsj9XXdM0JnTWwseWxdBrJdZMxEuGH0aHGbwmPDe01WASg+ArCQnMQ/
-         DcELRQMleWm8MszlBa8SO7FphMVeWFO695oaMhvqoOlDuP4istAT2lG+Zb4drRFch0aG
-         ScEQ==
-X-Received: by 10.194.123.8 with SMTP id lw8mr3688849wjb.40.1384457076050;
-        Thu, 14 Nov 2013 11:24:36 -0800 (PST)
+        bh=ZjIgQgnsgQwbxvPsYyDBzzLqUNHZvKRkf26a8cwgyrE=;
+        b=FYNPaJYsjcuewYyovZ1oN/sqGTK+r8qFN1lRJxk36APu9+hYp4VBPMvwceJusnipW/
+         PH1PzyhgdkQdAFEduuMrIPnAcjrmqmvDNCCsjyDq5XAZrwCDK1yfd5y2qklBbasOjuyf
+         OZoDY0upa0aO8HTaCNDhjKt8CekOXHkONhbI4mSR6qj4BXevNr+g2FLsyeaXte9h4ksp
+         mecR/hgd+d3t5mWxj8HmMBUx2wvoLJcdPX0PoWSvKMZtKSFsv9w96ExKRmsysKRLvJw1
+         MI4nO1UZ/v0JQWMC+rNWI3Aa+xaHZgxnk57wEp5Sd9jagGCbcY1XPEIG4WTZbrNKYYoy
+         wshQ==
+X-Received: by 10.180.19.201 with SMTP id h9mr4379531wie.36.1384457879339;
+        Thu, 14 Nov 2013 11:37:59 -0800 (PST)
 Received: from [10.1.100.52] (ns.dcon.de. [77.244.111.149])
-        by mx.google.com with ESMTPSA id ey4sm1549201wic.11.2013.11.14.11.24.34
+        by mx.google.com with ESMTPSA id e1sm1602186wij.6.2013.11.14.11.37.57
         for <multiple recipients>
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 14 Nov 2013 11:24:35 -0800 (PST)
+        Thu, 14 Nov 2013 11:37:58 -0800 (PST)
 User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.1.0
-In-Reply-To: <52851FB5.4050406@gmail.com>
+In-Reply-To: <CAH7EuMHgH6Oe_SvjyutBaakRfyZGHpp_iimaAzpV09AnHTYntw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237875>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237876>
 
-When cache_entry structs are removed from index_state.cache, they are not
-properly freed. Freeing those entries wasn't possible before because we
-couldn't remove them from index_state.name_hash.
+Am 29.10.2013 10:09, schrieb Karsten Blees:
+> On Mon, Oct 28, 2013 at 10:04 PM, Vicent Mart=ED <tanoku@gmail.com> w=
+rote:
+>>
+>> On Mon, Oct 28, 2013 at 8:45 PM, Karsten Blees <karsten.blees@gmail.=
+com> wrote:
+>>
+>>> Regarding performance, khash uses open addressing, which requires m=
+ore key comparisons (O(1/(1-load_factor))) than chaining (O(1+load_fact=
+or)). However, any measurable differences will most likely be dwarfed b=
+y IO costs in this particular use case.
+>>
+>> I don't think this is true. If you actually run a couple insertion a=
+nd
+>> lookup benchmarks comparing the two implementations, you'll find kha=
+sh
+>> to be around ~30% faster for most workloads (venturing a guess from
+>> past experience). I am obviously not the author of khash, but I've
+=2E..
 
-Now that we _do_ remove the entries from name_hash, we can also free them.
-Add 'free(cache_entry)' to all call sites of name-hash.c::remove_name_hash
-in read-cache.c (we could free() directly in remove_name_hash(), but
-name-hash.c isn't concerned with cache_entry allocation at all).
+Just out of curiosity, I added performance test code for khash to the t=
+est in my current hashmap patch series [1]. It turns out that khash is =
+by far the slowest of the bunch, especially with many collisions.
 
-Accessing a cache_entry after removing it from the index is now no longer
-allowed, as the memory has been freed. The following functions need minor
-fixes (typically by copying ce->name before use):
- - builtin/rm.c::cmd_rm
- - builtin/update-index.c::do_reupdate
- - read-cache.c::read_index_unmerged
- - resolve-undo.c::unmerge_index_entry_at
+Again, I don't think that performance matters all that much (or in othe=
+r words: _any_ hash table implementation will probably be fast enough c=
+ompared to the rest that's going on). Its more a question of whether we=
+ really need two different hash table implementations (and a queasy fee=
+ling about the macro kludge in khash.h...).
 
-Signed-off-by: Karsten Blees <blees@dcon.de>
----
- builtin/rm.c           | 2 +-
- builtin/update-index.c | 5 ++++-
- read-cache.c           | 8 ++++++--
- resolve-undo.c         | 7 +++++--
- 4 files changed, 16 insertions(+), 6 deletions(-)
 
-diff --git a/builtin/rm.c b/builtin/rm.c
-index 3a0e0ea..171f37c 100644
---- a/builtin/rm.c
-+++ b/builtin/rm.c
-@@ -311,7 +311,7 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
- 		if (!match_pathspec_depth(&pathspec, ce->name, ce_namelen(ce), 0, seen))
- 			continue;
- 		ALLOC_GROW(list.entry, list.nr + 1, list.alloc);
--		list.entry[list.nr].name = ce->name;
-+		list.entry[list.nr].name = xstrdup(ce->name);
- 		list.entry[list.nr].is_submodule = S_ISGITLINK(ce->ce_mode);
- 		if (list.entry[list.nr++].is_submodule &&
- 		    !is_staging_gitmodules_ok())
-diff --git a/builtin/update-index.c b/builtin/update-index.c
-index c8f0d5f..00313f3 100644
---- a/builtin/update-index.c
-+++ b/builtin/update-index.c
-@@ -559,6 +559,7 @@ static int do_reupdate(int ac, const char **av,
- 		const struct cache_entry *ce = active_cache[pos];
- 		struct cache_entry *old = NULL;
- 		int save_nr;
-+		char *path;
- 
- 		if (ce_stage(ce) || !ce_path_match(ce, &pathspec))
- 			continue;
-@@ -575,7 +576,9 @@ static int do_reupdate(int ac, const char **av,
- 		 * or worse yet 'allow_replace', active_nr may decrease.
- 		 */
- 		save_nr = active_nr;
--		update_one(ce->name);
-+		path = xstrdup(ce->name);
-+		update_one(path);
-+		free(path);
- 		if (save_nr != active_nr)
- 			goto redo;
- 	}
-diff --git a/read-cache.c b/read-cache.c
-index 00af9ad..3f735f3 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -47,6 +47,7 @@ static void replace_index_entry(struct index_state *istate, int nr, struct cache
- 	struct cache_entry *old = istate->cache[nr];
- 
- 	remove_name_hash(istate, old);
-+	free(old);
- 	set_index_entry(istate, nr, ce);
- 	istate->cache_changed = 1;
- }
-@@ -478,6 +479,7 @@ int remove_index_entry_at(struct index_state *istate, int pos)
- 
- 	record_resolve_undo(istate, ce);
- 	remove_name_hash(istate, ce);
-+	free(ce);
- 	istate->cache_changed = 1;
- 	istate->cache_nr--;
- 	if (pos >= istate->cache_nr)
-@@ -499,8 +501,10 @@ void remove_marked_cache_entries(struct index_state *istate)
- 	unsigned int i, j;
- 
- 	for (i = j = 0; i < istate->cache_nr; i++) {
--		if (ce_array[i]->ce_flags & CE_REMOVE)
-+		if (ce_array[i]->ce_flags & CE_REMOVE) {
- 			remove_name_hash(istate, ce_array[i]);
-+			free(ce_array[i]);
-+		}
- 		else
- 			ce_array[j++] = ce_array[i];
- 	}
-@@ -1894,7 +1898,7 @@ int read_index_unmerged(struct index_state *istate)
- 		new_ce->ce_mode = ce->ce_mode;
- 		if (add_index_entry(istate, new_ce, 0))
- 			return error("%s: cannot drop to stage #0",
--				     ce->name);
-+				     new_ce->name);
- 		i = index_name_pos(istate, new_ce->name, len);
- 	}
- 	return unmerged;
-diff --git a/resolve-undo.c b/resolve-undo.c
-index c09b006..49ebaaf 100644
---- a/resolve-undo.c
-+++ b/resolve-undo.c
-@@ -119,6 +119,7 @@ int unmerge_index_entry_at(struct index_state *istate, int pos)
- 	struct string_list_item *item;
- 	struct resolve_undo_info *ru;
- 	int i, err = 0, matched;
-+	char *name;
- 
- 	if (!istate->resolve_undo)
- 		return pos;
-@@ -138,20 +139,22 @@ int unmerge_index_entry_at(struct index_state *istate, int pos)
- 	if (!ru)
- 		return pos;
- 	matched = ce->ce_flags & CE_MATCHED;
-+	name = xstrdup(ce->name);
- 	remove_index_entry_at(istate, pos);
- 	for (i = 0; i < 3; i++) {
- 		struct cache_entry *nce;
- 		if (!ru->mode[i])
- 			continue;
- 		nce = make_cache_entry(ru->mode[i], ru->sha1[i],
--				       ce->name, i + 1, 0);
-+				       name, i + 1, 0);
- 		if (matched)
- 			nce->ce_flags |= CE_MATCHED;
- 		if (add_index_entry(istate, nce, ADD_CACHE_OK_TO_ADD)) {
- 			err = 1;
--			error("cannot unmerge '%s'", ce->name);
-+			error("cannot unmerge '%s'", name);
- 		}
- 	}
-+	free(name);
- 	if (err)
- 		return pos;
- 	free(ru);
--- 
-1.8.5.rc0.333.g5394214
+Khash doesn't store the hash codes along with the entries (as both hash=
+=2E[ch] and hashmap.[ch] do), so it needs to re-calculate hash codes on=
+ every resize. For a fair comparison, the "khash" test uses keys with p=
+re-calculated hash codes in the key structure. This should be similar t=
+o a hash function that just copies 4 bytes from a sha1 key. Khash maps =
+with more complex hash functions will be slower (see khstr).
+
+The "khstr" test uses khash's predefined string map and khash's X31 has=
+h function for strings (therefore no separate values for different hash=
+ functions here).
+
+The table is similar to what I posted for hashmap-v2 [2] (i.e. real tim=
+e in seconds for 1,000 rounds =E1 100,000 entries). I just turned it ar=
+ound a bit to make room for khash columns.
+
+test | hash_fn | hashmap |  hash   |  khash  | khstr  |
+-----+---------+---------+---------+---------+--------+
+     | FNV     |   2.429 |  14.366 |  11.780 | 18.677 |
+     | FNV  x2 |   2.946 |  14.558 |  10.922 |        |
+ add | i       |   1.708 |   7.419 |   4.132 |        |
+     | i    x2 |   1.791 |   8.565 |   4.502 |        |
+     | i/10    |   1.555 |   1.805 | 344.691 |        |
+     | i/10 x2 |   1.543 |   1.808 | 319.559 |        |
+-----+---------+---------+---------+---------+--------+
+     | FNV     |   1.822 |   3.452 |   4.922 |  8.309 |
+get  | FNV  x2 |   2.298 |   3.194 |   4.473 |        |
+100% | i       |   1.252 |   1.344 |   0.944 |        |
+hits | i    x2 |   1.286 |   1.434 |   1.220 |        |
+     | i/10    |   6.720 |   5.138 | 281.815 |        |
+     | i/10 x2 |   6.297 |   5.188 | 257.021 |        |
+-----+---------+---------+---------+---------+--------+
+     | FNV     |   1.023 |   3.949 |   4.115 |  4.878 |
+get  | FNV  x2 |   1.538 |   3.915 |   4.571 |        |
+10%  | i       |   0.654 | 397.457 |  38.125 |        |
+hits | i    x2 |   0.718 |   0.722 |   9.111 |        |
+     | i/10    |   1.128 |  30.235 |  60.376 |        |
+     | i/10 x2 |   1.260 |   1.082 |  43.354 |        |
+-----+---------+---------+---------+---------+--------+
+
+[1] https://github.com/kblees/git/commits/kb/hashmap-v5-khash
+[2] http://article.gmane.org/gmane.comp.version-control.git/235290
