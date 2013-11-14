@@ -1,142 +1,90 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] config: arbitrary number of matches for --unset and
- --replace-all
-Date: Thu, 14 Nov 2013 03:37:47 -0500
-Message-ID: <20131114083747.GD16327@sigill.intra.peff.net>
-References: <CAPig+cQZo0R3q=J2BygTfdJ1uuiT1HPDCjTxt8mykxOXM1uf2Q@mail.gmail.com>
- <9bc62ec0072a0513865f39ba287819dd0d9d606d.1384415180.git.tr@thomasrast.ch>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: can we prevent reflog deletion when branch is deleted?
+Date: Thu, 14 Nov 2013 16:26:46 +0530
+Message-ID: <5284AC6E.4030208@gmail.com>
+References: <CAMK1S_jY1tDCkyOamX8XNW9g8Dzf6yN9znwN6he-EVcOkBM1fQ@mail.gmail.com> <51A963B7.6060002@alum.mit.edu> <20130601050355.GA23408@sigill.intra.peff.net> <CALkWK0kcJH0t4i0BAPmMkNWwNzeJNdmg_wbt3ao-=R31kJ5noA@mail.gmail.com> <20130601090934.GA13904@sigill.intra.peff.net> <CALkWK0mwAc0bFon7B7nw1Nbvcwdf8m2_531qtrN-r28r9F+70Q@mail.gmail.com> <CAMK1S_hPups3SCwxhHRYWBJzpPreNVUfNdx1+_Hjy2_d0MMpaA@mail.gmail.com> <CALkWK0=SqCh-82F4ud+AxuzzEezyMWqMvc6HAPoxOk32vUND7A@mail.gmail.com> <528416EA.1070307@gmail.com> <87bo1nmn6w.fsf@linux-k42r.v.cablecom.net> <20131114080735.GB16327@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Jess Hottenstein <jess.hottenstein@gmail.com>
-To: Thomas Rast <tr@thomasrast.ch>
-X-From: git-owner@vger.kernel.org Thu Nov 14 09:37:55 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>, Thomas Rast <tr@thomasrast.ch>
+X-From: git-owner@vger.kernel.org Thu Nov 14 11:57:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VgsQz-0003a6-Dk
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Nov 2013 09:37:53 +0100
+	id 1VgubZ-0002uv-Rl
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Nov 2013 11:56:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751805Ab3KNIht (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Nov 2013 03:37:49 -0500
-Received: from cloud.peff.net ([50.56.180.127]:38985 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751284Ab3KNIht (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Nov 2013 03:37:49 -0500
-Received: (qmail 30906 invoked by uid 102); 14 Nov 2013 08:37:49 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 14 Nov 2013 02:37:49 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Nov 2013 03:37:47 -0500
-Content-Disposition: inline
-In-Reply-To: <9bc62ec0072a0513865f39ba287819dd0d9d606d.1384415180.git.tr@thomasrast.ch>
+	id S1752902Ab3KNK4y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Nov 2013 05:56:54 -0500
+Received: from mail-pa0-f49.google.com ([209.85.220.49]:52865 "EHLO
+	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752323Ab3KNK4w (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Nov 2013 05:56:52 -0500
+Received: by mail-pa0-f49.google.com with SMTP id lf10so1911040pab.36
+        for <git@vger.kernel.org>; Thu, 14 Nov 2013 02:56:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=15TL8TxHEwcJRPnRvbQ81nvZbay/ieryaTtQVpDDv8k=;
+        b=gOLJFB0VG5FX3H94oWNPTnN8mVE+mpnB772ech8EX23BznBeNfqYkZNj/rqBRB1XOM
+         k9eis82BErNNOLbsZyM0ZBDHwsazpMfabFIuZO6UEyw1/MOdr9H/tCH2JfD6L5srHfJ7
+         K8/tSBi/s/2HrEXMp5Ky8JIpX2S1suwv8u4VORa2EMIB7bG9We7o0x1tp0zIap2lHs1B
+         OFP4+NmwP52474X/XnQvlhzN72YeNRPVfT/X2T3tteVmaUYBBl0cN34DTjiyyck/pjh3
+         i7zCu5OZLtig0QhT3Y9NrI7WWOYxcRSSmxbMkR0Qv/jwGbjuT5zgsjpX+fM8uojd5nZA
+         0l3w==
+X-Received: by 10.68.160.69 with SMTP id xi5mr782305pbb.168.1384426612016;
+        Thu, 14 Nov 2013 02:56:52 -0800 (PST)
+Received: from sita-lt.atc.tcs.com (atcmail.atc.tcs.com. [203.200.212.145])
+        by mx.google.com with ESMTPSA id ry3sm23548283pbc.8.2013.11.14.02.56.48
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 14 Nov 2013 02:56:51 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.1.0
+In-Reply-To: <20131114080735.GB16327@sigill.intra.peff.net>
+X-Enigmail-Version: 1.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237820>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237821>
 
-On Thu, Nov 14, 2013 at 08:50:43AM +0100, Thomas Rast wrote:
-
-> git-config used a static match array to hold the matches we want to
-> unset/replace when using --unset or --replace-all.  Use a
-> variable-sized array instead.
+On 11/14/2013 01:37 PM, Jeff King wrote:
+> On Thu, Nov 14, 2013 at 08:56:07AM +0100, Thomas Rast wrote:
 > 
-> This in particular fixes the symptoms git-svn had when storing large
-> numbers of svn-remote.*.added-placeholder entries in the config file.
+>>> Whatever it was that happened to a hundred or more repos on the Jenkins
+>>> project seems to be stirring up this debate in some circles.
+>>
+>> Making us so curious ... and then you just leave us hanging there ;-)
+
+Oh my apologies; I missed the URL!!  (But Peff supplied it before I saw
+this email!)
+
+>> Any pointers to this debate?
 > 
-> While the tests are rather more paranoid than just --unset and
-> --replace-all, the other operations already worked.  Indeed git-svn's
-> usage only breaks the first time *after* creating so many entries,
-> when it wants to unset and re-add them all.
+> I do not know about any particular debate in git circles, but I assume
+> Sitaram is referring to this incident:
 > 
-> Reported-by: Jess Hottenstein <jess.hottenstein@gmail.com>
-> Signed-off-by: Thomas Rast <tr@thomasrast.ch>
+>   https://groups.google.com/d/msg/jenkinsci-dev/-myjRIPcVwU/t4nkXONp8qgJ
+> 
+> in which a Jenkins dev force-pushed and rewound history on 150 different
+> repos. In this case the reflog made rollback easy, but if he had pushed
+> a deletion, it would be harder.
 
-This looks good to me.
+I don't know if they had a reflog on the server side; they used
+client-side reflogs if I understood correctly.
 
-I agree with your earlier assessment that adding tons of config keys is
-probably a bad idea. It's not just slow when looking up those keys, but
-it also slows down every single git operation (which might read config
-many times, if it is a script).  Still, we should at least do the right
-thing in the face of such config.
+I'm talking about server side (bare repo), assuming the site has
+core.logAllRefUpdates set.
 
-> @@ -1260,11 +1259,15 @@ static int store_aux(const char *key, const char *value, void *cb)
->  		 * Do not increment matches: this is no match, but we
->  		 * just made sure we are in the desired section.
->  		 */
-> +		ALLOC_GROW(store.offset, store.seen+1,
-> +			   store.offset_alloc);
->  		store.offset[store.seen] = cf->do_ftell(cf);
->  		/* fallthru */
->  	case SECTION_END_SEEN:
->  	case START:
->  		if (matches(key, value)) {
-> +			ALLOC_GROW(store.offset, store.seen+1,
-> +				   store.offset_alloc);
->  			store.offset[store.seen] = cf->do_ftell(cf);
->  			store.state = KEY_SEEN;
->  			store.seen++;
+And I'll explain the "some circles" part as "something on LinkedIn".  To
+be honest there's been a fair bit of FUDding by CVCS types there so I
+stopped looking at the posts, but I get the subject lines by email and I
+saw one that said "Git History Protection - if we needed proof..." or
+something like that.
 
-This code is weird to follow because of the fall-throughs. I do not
-think you have introduced any bugs with your patch, but it seems weird
-to me that we set the offset at the top of the hunk. If we hit the
-conditional in the bottom half, we do actually increment storer.seen,
-but only _after_ having overwritten the value from above (with the same
-value, no less).
-
-But if we do not follow that code path, we may end up here:
-
-> @@ -1272,6 +1275,9 @@ static int store_aux(const char *key, const char *value, void *cb)
->  			if (strrchr(key, '.') - key == store.baselen &&
->  			      !strncmp(key, store.key, store.baselen)) {
->  					store.state = SECTION_SEEN;
-> +					ALLOC_GROW(store.offset,
-> +						   store.seen+1,
-> +						   store.offset_alloc);
->  					store.offset[store.seen] = cf->do_ftell(cf);
->  			}
->  		}
-
-where we overwrite it again, but do not update store.seen. Or we may
-trigger neither, and leave the function with our offset stored, but
-store.seen not incremented.
-
-So it seems odd to me that we would set the offset, but in some cases
-never actually increment our counter. AFAICT, we do not ever access
-those values. The reader limits itself to "i < store.seen", which makes
-sense. And the writers always call a fresh ftell before incrementing
-store.seen.  But maybe I am missing something.
-
-Anyway, it is neither here nor there for your patch. Just something odd
-I noticed while reading the code.
-
-> +setup_many() {
-> +	setup &&
-> +	# This time we want the newline so that we can tack on more
-> +	# entries.
-> +	echo >>.git/config &&
-> +	# Semi-efficient way of concatenating 5^5 = 3125 lines. Note
-> +	# that because 'setup' already put one line, this means 3126
-> +	# entries for section.key in the config file.
-> +	cat >5to1 <<EOF &&
-> +  key = foo
-> +  key = foo
-> +  key = foo
-> +  key = foo
-> +  key = foo
-> +EOF
-> +	cat 5to1 5to1 5to1 5to1 5to1 >5to2 &&	   # 25
-> +	cat 5to2 5to2 5to2 5to2 5to2 >5to3 &&	   # 125
-> +	cat 5to3 5to3 5to3 5to3 5to3 >5to4 &&	   # 635
-> +	cat 5to4 5to4 5to4 5to4 5to4 >>.git/config # 3125
-> +}
-
-You could make this even more semi-efficient by just storing the end
-result in 5to5, and then copying it into place rather than doing the
-whole dance for each test. I doubt it matters that much, though.
-
--Peff
+I admit I didn't check to see if a debate actually followed that post
+:-)
