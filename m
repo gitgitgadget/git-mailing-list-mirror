@@ -1,228 +1,106 @@
-From: Karsten Blees <karsten.blees@gmail.com>
-Subject: [PATCH v5 05/14] diffcore-rename.c: simplify finding exact renames
-Date: Thu, 14 Nov 2013 20:19:34 +0100
-Message-ID: <52852246.8070800@gmail.com>
-References: <52851FB5.4050406@gmail.com>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: Re: [PATCH v3 0/21] pack bitmaps
+Date: Thu, 14 Nov 2013 19:19:38 +0000
+Message-ID: <5285224A.2070606@ramsay1.demon.co.uk>
+References: <20131114124157.GA23784@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Thomas Rast <tr@thomasrast.ch>, Jens Lehmann <Jens.Lehmann@web.de>,
-	Karsten Blees <karsten.blees@gmail.com>
-To: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 14 20:19:42 2013
+Cc: =?UTF-8?B?VmljZW50IE1hcnTDrQ==?= <vicent@github.com>
+To: Jeff King <peff@peff.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 14 20:19:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vh2S1-0008Ue-Ti
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Nov 2013 20:19:38 +0100
+	id 1Vh2SA-0000BN-PO
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Nov 2013 20:19:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756633Ab3KNTTe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Nov 2013 14:19:34 -0500
-Received: from mail-wi0-f181.google.com ([209.85.212.181]:52157 "EHLO
-	mail-wi0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755568Ab3KNTTd (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Nov 2013 14:19:33 -0500
-Received: by mail-wi0-f181.google.com with SMTP id f4so3193495wiw.14
-        for <git@vger.kernel.org>; Thu, 14 Nov 2013 11:19:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=i3zKuCpXUo6ie6mmDJKY1J0nw4kNdju+k/FJH0XwD40=;
-        b=Ryw+Gmkvezh4nWEaCmnMQrhJYs7mPzoiMZDCmMCv+VlZ/pd4tF/asSa7OqjL6WJbpE
-         i2ERc7QYk6MllRw249N71tNsOWF91OiweFGm7OT1MBsyX1apC6v7O6hpRy0Rc6VEEZxT
-         xItkFPr6SVVTwZRrRfjGVPNN14n/ZKzKLd+QP0lafZos0t8znkaAsvNyLGnJ90t1VdKh
-         opa2XqW7YSu95eiaGeLMzQkPndL7czxB6lLUmaVpiz37kg+Jp542dcxJAgiWyhvtta5Y
-         PYDrdZ25OMWLjs1KV8eurmoopINATuTrzT9SxO/BKWZXIeOo0VhjvAfwQShT6Hf5eDgm
-         wSkQ==
-X-Received: by 10.181.5.40 with SMTP id cj8mr4330373wid.18.1384456772163;
-        Thu, 14 Nov 2013 11:19:32 -0800 (PST)
-Received: from [10.1.100.52] (ns.dcon.de. [77.244.111.149])
-        by mx.google.com with ESMTPSA id je17sm1470578wic.4.2013.11.14.11.19.30
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 14 Nov 2013 11:19:31 -0800 (PST)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.1.0
-In-Reply-To: <52851FB5.4050406@gmail.com>
+	id S1755568Ab3KNTTn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Nov 2013 14:19:43 -0500
+Received: from mdfmta005.mxout.tbr.inty.net ([91.221.168.46]:51418 "EHLO
+	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1755210Ab3KNTTm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Nov 2013 14:19:42 -0500
+Received: from mdfmta005.tbr.inty.net (unknown [127.0.0.1])
+	by mdfmta005.tbr.inty.net (Postfix) with ESMTP id 18DB4A6499A;
+	Thu, 14 Nov 2013 19:19:40 +0000 (GMT)
+Received: from mdfmta005.tbr.inty.net (unknown [127.0.0.1])
+	by mdfmta005.tbr.inty.net (Postfix) with ESMTP id DC7F6A648B0;
+	Thu, 14 Nov 2013 19:19:39 +0000 (GMT)
+Received: from [192.168.254.6] (unknown [80.176.147.220])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mdfmta005.tbr.inty.net (Postfix) with ESMTP;
+	Thu, 14 Nov 2013 19:19:39 +0000 (GMT)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.1.0
+In-Reply-To: <20131114124157.GA23784@sigill.intra.peff.net>
+X-MDF-HostID: 8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237865>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237866>
 
-The find_exact_renames function currently only uses the hash table for
-grouping, i.e.:
+On 14/11/13 12:41, Jeff King wrote:
+> Here's another iteration of the pack bitmaps series. Compared to v2, it
+> changes:
+> 
+>  - misc style/typo fixes
+> 
+>  - portability fixes from Ramsay and Torsten
 
-1. add sources
-2. add destinations
-3. iterate all buckets, per bucket:
-4. split sources from destinations
-5. iterate destinations, per destination:
-6. iterate sources to find best match
+Unfortunately, I didn't find time this weekend to finish the msvc build
+fixes. However, after a quick squint at these patches, I think you have
+almost done it for me! :-D
 
-This can be simplified by utilizing the lookup functionality of the hash
-table, i.e.:
+I must have misunderstood the previous discussion, because my patch was
+written on the assumption that the ewah directory wouldn't be "git-ified"
+(e.g. #include git-compat-util.h).
 
-1. add sources
-2. iterate destinations, per destination:
-3. lookup sources matching the current destination
-4. iterate sources to find best match
+So, most of my patch is no longer necessary, given the use of the git
+compat header (and removal of system headers). I suspect that you only
+need to add an '#define PRIx64 "I64x"' definition (Hmm, probably to the
+compat/mingw.h header).
 
-This saves several iterations and file_similarity allocations for the
-destinations.
+I won't know for sure until I actually try them out, of course. I will
+wait until these patches land in pu.
 
-Signed-off-by: Karsten Blees <blees@dcon.de>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- diffcore-rename.c | 75 +++++++++++++++----------------------------------------
- 1 file changed, 20 insertions(+), 55 deletions(-)
+[Note: the msvc build is still broken, but the failure is not caused by
+these patches. Unfortunately, the tests in t5310-*.sh fail. However, if
+I include some debug code, the tests pass ... :-P ]
 
-diff --git a/diffcore-rename.c b/diffcore-rename.c
-index 008a60c..cfeb408 100644
---- a/diffcore-rename.c
-+++ b/diffcore-rename.c
-@@ -243,7 +243,7 @@ static int score_compare(const void *a_, const void *b_)
- }
- 
- struct file_similarity {
--	int src_dst, index;
-+	int index;
- 	struct diff_filespec *filespec;
- 	struct file_similarity *next;
- };
-@@ -260,25 +260,21 @@ static unsigned int hash_filespec(struct diff_filespec *filespec)
- 	return hash;
- }
- 
--static int find_identical_files(struct file_similarity *src,
--				struct file_similarity *dst,
-+static int find_identical_files(struct hash_table *srcs,
-+				int dst_index,
- 				struct diff_options *options)
- {
- 	int renames = 0;
- 
--	/*
--	 * Walk over all the destinations ...
--	 */
--	do {
--	struct diff_filespec *target = dst->filespec;
-+	struct diff_filespec *target = rename_dst[dst_index].two;
- 	struct file_similarity *p, *best;
- 	int i = 100, best_score = -1;
- 
- 	/*
--	 * .. to find the best source match
-+	 * Find the best source match for specified destination.
- 	 */
- 	best = NULL;
--	for (p = src; p; p = p->next) {
-+	for (p = lookup_hash(hash_filespec(target), srcs); p; p = p->next) {
- 		int score;
- 		struct diff_filespec *source = p->filespec;
- 
-@@ -307,61 +303,28 @@ static int find_identical_files(struct file_similarity *src,
- 			break;
- 	}
- 	if (best) {
--		record_rename_pair(dst->index, best->index, MAX_SCORE);
-+		record_rename_pair(dst_index, best->index, MAX_SCORE);
- 		renames++;
- 	}
--	} while ((dst = dst->next) != NULL);
- 	return renames;
- }
- 
--static void free_similarity_list(struct file_similarity *p)
-+static int free_similarity_list(void *p, void *unused)
- {
- 	while (p) {
- 		struct file_similarity *entry = p;
--		p = p->next;
-+		p = entry->next;
- 		free(entry);
- 	}
-+	return 0;
- }
- 
--static int find_same_files(void *ptr, void *data)
--{
--	int ret;
--	struct file_similarity *p = ptr;
--	struct file_similarity *src = NULL, *dst = NULL;
--	struct diff_options *options = data;
--
--	/* Split the hash list up into sources and destinations */
--	do {
--		struct file_similarity *entry = p;
--		p = p->next;
--		if (entry->src_dst < 0) {
--			entry->next = src;
--			src = entry;
--		} else {
--			entry->next = dst;
--			dst = entry;
--		}
--	} while (p);
--
--	/*
--	 * If we have both sources *and* destinations, see if
--	 * we can match them up
--	 */
--	ret = (src && dst) ? find_identical_files(src, dst, options) : 0;
--
--	/* Free the hashes and return the number of renames found */
--	free_similarity_list(src);
--	free_similarity_list(dst);
--	return ret;
--}
--
--static void insert_file_table(struct hash_table *table, int src_dst, int index, struct diff_filespec *filespec)
-+static void insert_file_table(struct hash_table *table, int index, struct diff_filespec *filespec)
- {
- 	void **pos;
- 	unsigned int hash;
- 	struct file_similarity *entry = xmalloc(sizeof(*entry));
- 
--	entry->src_dst = src_dst;
- 	entry->index = index;
- 	entry->filespec = filespec;
- 	entry->next = NULL;
-@@ -385,24 +348,26 @@ static void insert_file_table(struct hash_table *table, int src_dst, int index,
-  */
- static int find_exact_renames(struct diff_options *options)
- {
--	int i;
-+	int i, renames = 0;
- 	struct hash_table file_table;
- 
-+	/* Add all sources to the hash table */
- 	init_hash(&file_table);
--	preallocate_hash(&file_table, rename_src_nr + rename_dst_nr);
-+	preallocate_hash(&file_table, rename_src_nr);
- 	for (i = 0; i < rename_src_nr; i++)
--		insert_file_table(&file_table, -1, i, rename_src[i].p->one);
-+		insert_file_table(&file_table, i, rename_src[i].p->one);
- 
-+	/* Walk the destinations and find best source match */
- 	for (i = 0; i < rename_dst_nr; i++)
--		insert_file_table(&file_table, 1, i, rename_dst[i].two);
-+		renames += find_identical_files(&file_table, i, options);
- 
--	/* Find the renames */
--	i = for_each_hash(&file_table, find_same_files, options);
-+	/* Free source file_similarity chains */
-+	for_each_hash(&file_table, free_similarity_list, options);
- 
- 	/* .. and free the hash data structure */
- 	free_hash(&file_table);
- 
--	return i;
-+	return renames;
- }
- 
- #define NUM_CANDIDATE_PER_DST 4
--- 
-1.8.5.rc0.333.g5394214
+The part of the patch I was still working on was ...
+
+> 
+>  - count-objects garbage-reporting patch from Duy
+> 
+>  - disable bitmaps when is_repository_shallow(); this also covers the
+>    case where the client is shallow, since we feed pack-objects a
+>    --shallow-file in that case. This used to done by checking
+>    !internal_rev_list, but that doesn't apply after cdab485.
+> 
+>  - ewah sources now properly use git-compat-util.h and do not include
+>    system headers
+> 
+>  - the ewah code uses ewah_malloc, ewah_realloc, and so forth to let the
+>    project use a particular allocator (and we want to use xmalloc and
+>    friends). And we defined those in pack-bitmap.h, but of course that
+>    had no effect on the ewah/*.c files that did not include
+>    pack-bitmap.h.  Since we are hacking up and git-ifying libewok
+>    anyway, we can just set the hardcoded fallback to xmalloc instead of
+>    malloc.
+> 
+>   - the ewah code used gcc's __builtin_ctzll, but did not provide a
+>     suitable fallback. We now provide a fallback in C.
+
+... here.
+
+I was messing around with several implementations (including the use of
+msvc compiler intrinsics) with the intention of doing some timing tests
+etc. [I suspected my C fallback function (a different implementation to
+yours) would be slightly faster.]
+
+ATB,
+Ramsay Jones
