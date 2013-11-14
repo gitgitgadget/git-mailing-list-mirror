@@ -1,77 +1,78 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: can we prevent reflog deletion when branch is deleted?
-Date: Thu, 14 Nov 2013 03:14:56 -0500
-Message-ID: <20131114081456.GC16327@sigill.intra.peff.net>
-References: <CAMK1S_jY1tDCkyOamX8XNW9g8Dzf6yN9znwN6he-EVcOkBM1fQ@mail.gmail.com>
- <51A963B7.6060002@alum.mit.edu>
- <20130601050355.GA23408@sigill.intra.peff.net>
- <CALkWK0kcJH0t4i0BAPmMkNWwNzeJNdmg_wbt3ao-=R31kJ5noA@mail.gmail.com>
- <20130601090934.GA13904@sigill.intra.peff.net>
- <CALkWK0mwAc0bFon7B7nw1Nbvcwdf8m2_531qtrN-r28r9F+70Q@mail.gmail.com>
- <CAMK1S_hPups3SCwxhHRYWBJzpPreNVUfNdx1+_Hjy2_d0MMpaA@mail.gmail.com>
- <CALkWK0=SqCh-82F4ud+AxuzzEezyMWqMvc6HAPoxOk32vUND7A@mail.gmail.com>
- <528416EA.1070307@gmail.com>
+From: Yann COLLETTE <ycollette.nospam@free.fr>
+Subject: Re: Problem while cloning a git repo
+Date: Thu, 14 Nov 2013 09:20:51 +0100
+Message-ID: <528487E3.6020503@free.fr>
+References: <597769726.308442105.1384260624974.JavaMail.root@zimbra35-e6.priv.proxad.net> <20131113002035.GK183446@vauxhall.crustytoothpaste.net> <52832DA0.7040108@free.fr> <20131113234057.GA314350@vauxhall.crustytoothpaste.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Sitaram Chamarty <sitaramc@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 14 09:15:04 2013
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 14 09:21:06 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vgs4s-0004BS-4u
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Nov 2013 09:15:02 +0100
+	id 1VgsAj-00021w-E3
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Nov 2013 09:21:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751951Ab3KNIO7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Nov 2013 03:14:59 -0500
-Received: from cloud.peff.net ([50.56.180.127]:38972 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751863Ab3KNIO5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Nov 2013 03:14:57 -0500
-Received: (qmail 29559 invoked by uid 102); 14 Nov 2013 08:14:58 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 14 Nov 2013 02:14:58 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Nov 2013 03:14:56 -0500
-Content-Disposition: inline
-In-Reply-To: <528416EA.1070307@gmail.com>
+	id S1752765Ab3KNIVB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Nov 2013 03:21:01 -0500
+Received: from smtp1-g21.free.fr ([212.27.42.1]:48982 "EHLO smtp1-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752721Ab3KNIU7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Nov 2013 03:20:59 -0500
+Received: from localhost.localdomain (unknown [IPv6:2a01:e35:2f10:c960:21e:e5ff:fe1f:2dcf])
+	by smtp1-g21.free.fr (Postfix) with ESMTP id 7E2A2940228
+	for <git@vger.kernel.org>; Thu, 14 Nov 2013 09:20:52 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.1.0
+In-Reply-To: <20131113234057.GA314350@vauxhall.crustytoothpaste.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237818>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237819>
 
-On Thu, Nov 14, 2013 at 05:48:50AM +0530, Sitaram Chamarty wrote:
+I am not able to clone via https because gerrit doesn't propose this wa=
+y=20
+of cloning.
+When I clone via http, I see that git is starting the download of objec=
+ts:
+remote: Counting objects: 256, done
+remote: Finding sources: 100% (256/256)
+Receiving objects: 46% ... (this part always fails at 46 %).
+So, I think that the proxy part is not a problem (there is no proxy set=
+=20
+here).
+If I set GIT_CURL_VERBOSE=3D1 before cloning, I've got the following er=
+ror:
+* Problem (2) in the Chunked-Encoded data
+* Closing connection 1
 
-> Is there *any* way we can preserve a reflog for a deleted branch,
-> perhaps under logs/refs/deleted/<timestamp>/full/ref/name ?
+YC
 
-I had patches to do something like this here:
-
-  http://thread.gmane.org/gmane.comp.version-control.git/201715/focus=201752
-
-but there were definitely some buggy corners, as much of the code
-assumed you needed to have a ref to have a reflog. I don't even run with
-it locally anymore.
-
-At GitHub, we log each change to an "audit log" in addition to the
-regular reflog (we also stuff extra data from the environment into the
-reflog message). So even after a branch is deleted, its audit log
-entries remain, though you have to pull out the data by hand (git
-doesn't know about it at all, except as an append-only sink for
-writing). And git doesn't use the audit log for connectivity, either, so
-eventually the objects could be pruned.
-
-> Just some basic protection -- don't delete the reflog, and instead,
-> rename it to something that preserves the name but in a different
-> namespace.
-
-That part is easy. Accessing it seamlessly and handling reflog
-expiration are a little harder. Not because they're intractable, but
-just because there are some low-level assumptions in the git code. The
-patch series I mentioned above mostly works. It probably just needs
-somebody to go through and find the corner cases.
-
--Peff
+Le 14/11/2013 00:40, brian m. carlson a =E9crit :
+> On Wed, Nov 13, 2013 at 08:43:28AM +0100, Yann COLLETTE wrote:
+>> Hello,
+>>
+>> When I perform the git clone via git, it works. The problem is only
+>> happening via http.
+>> I tried to play with http.postBuffer and I set this parameter to
+>> it's maximum (a little bit before a git clone triggered a memory
+>> alloc problem) and I see that something big is trying to be
+>> downloaded. But I don't see such a big file in my history of
+>> commits. The maximum one seems to be around 50 Mo ...
+> Please keep the list in CC.
+>
+> http.postBuffer doesn't affect clones, only pushes, so that isn't
+> relevant here.  You're experiencing something that is dropping the
+> connection over HTTP.  So you either have a bad proxy, or something e=
+lse
+> is causing the connection to be dropped.  Since it's only over HTTP, =
+I
+> suspect it's the former.
+>
+> Do you have HTTPS, and if so, does it work if you try to clone over
+> that?
+>
