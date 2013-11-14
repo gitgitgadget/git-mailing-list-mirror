@@ -1,77 +1,58 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 0/21] pack bitmaps
-Date: Thu, 14 Nov 2013 16:33:20 -0500
-Message-ID: <20131114213320.GA16466@sigill.intra.peff.net>
-References: <20131114124157.GA23784@sigill.intra.peff.net>
- <5285224A.2070606@ramsay1.demon.co.uk>
+From: Karsten Blees <karsten.blees@gmail.com>
+Subject: Re: [PATCH v5 00/14] New hash table implementation
+Date: Thu, 14 Nov 2013 23:07:55 +0100
+Message-ID: <528549BB.20507@gmail.com>
+References: <52851FB5.4050406@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org,
-	Vicent =?utf-8?B?TWFydMOt?= <vicent@github.com>
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Thu Nov 14 22:33:29 2013
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Thomas Rast <tr@thomasrast.ch>, Jens Lehmann <Jens.Lehmann@web.de>,
+	Karsten Blees <karsten.blees@gmail.com>
+To: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Nov 14 23:08:01 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vh4XX-0000LR-7R
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Nov 2013 22:33:27 +0100
+	id 1Vh54x-0005tt-4h
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Nov 2013 23:07:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757446Ab3KNVdY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Nov 2013 16:33:24 -0500
-Received: from cloud.peff.net ([50.56.180.127]:39419 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757096Ab3KNVdW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Nov 2013 16:33:22 -0500
-Received: (qmail 6759 invoked by uid 102); 14 Nov 2013 21:33:22 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 14 Nov 2013 15:33:22 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Nov 2013 16:33:20 -0500
-Content-Disposition: inline
-In-Reply-To: <5285224A.2070606@ramsay1.demon.co.uk>
+	id S1756757Ab3KNWHz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Nov 2013 17:07:55 -0500
+Received: from mail-wi0-f171.google.com ([209.85.212.171]:37618 "EHLO
+	mail-wi0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755637Ab3KNWHx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Nov 2013 17:07:53 -0500
+Received: by mail-wi0-f171.google.com with SMTP id hn6so155182wib.10
+        for <git@vger.kernel.org>; Thu, 14 Nov 2013 14:07:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=7QZSic0DhqmIvWsyON5n8lK/HFy7WzyM1qsDlQNNodU=;
+        b=YTRm0RA3iIwbkOOj1So0L2fxZ/pT56xgsCJU5r8E4BR5CRB8LWAYcOTiUJmPqrVKx7
+         2GkOtigiUog2HKXvILU1WgzRVVosu4Zj2St8gf9vcLmtNDYcP52nzeC50lZqZI2TlVuL
+         RWJf0HQ5pdYBwXyQVCIJ832oLVSg1rjsrap/SA1zcJjIaR6LzMKzKYLv7Qc0Nyz/v1uB
+         RGkpSRqwz2cEFrEX1BKt/lGpQrwerO4VEqoMpH5WaI1PSn14PeehV1mi1MiKZrlltAg/
+         zIkWxLsy5MgNkngRoHGWbmopVx6x5+NsddySE/8T35JCThFKhzBoENJjsTquVAmDblSg
+         2iyw==
+X-Received: by 10.194.238.230 with SMTP id vn6mr4109142wjc.57.1384466872600;
+        Thu, 14 Nov 2013 14:07:52 -0800 (PST)
+Received: from [10.1.100.52] (ns.dcon.de. [77.244.111.149])
+        by mx.google.com with ESMTPSA id uc12sm2664301wib.3.2013.11.14.14.07.51
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 14 Nov 2013 14:07:51 -0800 (PST)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.1.0
+In-Reply-To: <52851FB5.4050406@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237878>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237879>
 
-On Thu, Nov 14, 2013 at 07:19:38PM +0000, Ramsay Jones wrote:
+Am 14.11.2013 20:08, schrieb Karsten Blees:
+> Changes since v3:
 
-> Unfortunately, I didn't find time this weekend to finish the msvc build
-> fixes. However, after a quick squint at these patches, I think you have
-> almost done it for me! :-D
-> 
-> I must have misunderstood the previous discussion, because my patch was
-> written on the assumption that the ewah directory wouldn't be "git-ified"
-> (e.g. #include git-compat-util.h).
-
-I think it was up for debate at some point, but we did decide to go
-ahead and git-ify. Please feel free to submit further fixups if you need
-them.
-
-> >   - the ewah code used gcc's __builtin_ctzll, but did not provide a
-> >     suitable fallback. We now provide a fallback in C.
-> 
-> ... here.
-> 
-> I was messing around with several implementations (including the use of
-> msvc compiler intrinsics) with the intention of doing some timing tests
-> etc. [I suspected my C fallback function (a different implementation to
-> yours) would be slightly faster.]
-
-Yeah, I looked around for several implementations, and ultimately wrote
-one that was the most readable to me. The one I found shortest and most
-inscrutable was:
-
-  return popcount((x & -x) - 1);
-
-the details of which I still haven't worked through in my head. ;)
-
-I do think on most platforms that intrinsics or inline assembler are the
-way to go. My main goal was to get something correct that would let it
-compile everywhere, and then people can use that as a base for
-optimizing. Patches welcome. :)
-
--Peff
+s/v3/v4/
