@@ -1,94 +1,775 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: [PATCH v3 0/21] pack bitmaps
-Date: Thu, 14 Nov 2013 23:09:40 +0000
-Message-ID: <52855834.3080608@ramsay1.demon.co.uk>
-References: <20131114124157.GA23784@sigill.intra.peff.net> <5285224A.2070606@ramsay1.demon.co.uk> <20131114213320.GA16466@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	=?UTF-8?B?VmljZW50IE1hcnTDrQ==?= <vicent@github.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Nov 15 00:09:49 2013
+From: "Jason St. John" <jstjohn@purdue.edu>
+Subject: [PATCHv3 1/2] Fix single quotes, AsciiDoc escaping, and other formatting issues
+Date: Thu, 14 Nov 2013 20:34:01 -0500
+Message-ID: <1384479242-21144-1-git-send-email-jstjohn@purdue.edu>
+Cc: "Jason St. John" <jstjohn@purdue.edu>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 15 02:34:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vh62m-00022q-Is
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Nov 2013 00:09:48 +0100
+	id 1Vh8Iq-0001BG-8G
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Nov 2013 02:34:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753514Ab3KNXJp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Nov 2013 18:09:45 -0500
-Received: from mdfmta009.mxout.tbr.inty.net ([91.221.168.50]:60633 "EHLO
-	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751939Ab3KNXJo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Nov 2013 18:09:44 -0500
-Received: from mdfmta009.tbr.inty.net (unknown [127.0.0.1])
-	by mdfmta009.tbr.inty.net (Postfix) with ESMTP id 381AA384082;
-	Thu, 14 Nov 2013 23:09:42 +0000 (GMT)
-Received: from mdfmta009.tbr.inty.net (unknown [127.0.0.1])
-	by mdfmta009.tbr.inty.net (Postfix) with ESMTP id 0321E38407C;
-	Thu, 14 Nov 2013 23:09:42 +0000 (GMT)
-Received: from [192.168.254.6] (unknown [80.176.147.220])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mdfmta009.tbr.inty.net (Postfix) with ESMTP;
-	Thu, 14 Nov 2013 23:09:41 +0000 (GMT)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.1.0
-In-Reply-To: <20131114213320.GA16466@sigill.intra.peff.net>
-X-MDF-HostID: 4
+	id S1755034Ab3KOBe3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Nov 2013 20:34:29 -0500
+Received: from mailhub246.itcs.purdue.edu ([128.210.5.246]:55540 "EHLO
+	mailhub246.itcs.purdue.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754726Ab3KOBe0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 14 Nov 2013 20:34:26 -0500
+Received: from megahurtz.wl.stjohn.lcl (41.117.244.66.bay.smithvilledigital.net [66.244.117.41])
+	(authenticated bits=0)
+	by mailhub246.itcs.purdue.edu (8.14.4/8.14.4/mta-auth.smtp.purdue.edu) with ESMTP id rAF1Y83Y007783
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Thu, 14 Nov 2013 20:34:24 -0500
+X-Mailer: git-send-email 1.8.4.2
+X-PMX-Version: 6.0.2.2308539
+X-PerlMx-Virus-Scanned: Yes
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237882>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237884>
 
-On 14/11/13 21:33, Jeff King wrote:
-> On Thu, Nov 14, 2013 at 07:19:38PM +0000, Ramsay Jones wrote:
-> 
->> Unfortunately, I didn't find time this weekend to finish the msvc build
->> fixes. However, after a quick squint at these patches, I think you have
->> almost done it for me! :-D
->>
->> I must have misunderstood the previous discussion, because my patch was
->> written on the assumption that the ewah directory wouldn't be "git-ified"
->> (e.g. #include git-compat-util.h).
-> 
-> I think it was up for debate at some point, but we did decide to go
-> ahead and git-ify. Please feel free to submit further fixups if you need
-> them.
+rev-list-options.txt:
+-- Remove blank lines after some options subheadings to fix syntax
+     highlighting in Vim
+-- Typeset literal options, commands, and path names in monospace
+-- Remove AsciiDoc escapes with literal
+-- Replace some double quotes with proper AsciiDoc quotes (e.g. ``foo'')
 
-Yep, will do; at present it looks like that one-liner.
+Signed-off-by: Jason St. John <jstjohn@purdue.edu>
+---
+This is a resubmit of a previous patch:
+http://marc.info/?l=git&m=138431995913311&w=2
 
-> 
->>>   - the ewah code used gcc's __builtin_ctzll, but did not provide a
->>>     suitable fallback. We now provide a fallback in C.
->>
->> ... here.
->>
->> I was messing around with several implementations (including the use of
->> msvc compiler intrinsics) with the intention of doing some timing tests
->> etc. [I suspected my C fallback function (a different implementation to
->> yours) would be slightly faster.]
-> 
-> Yeah, I looked around for several implementations, and ultimately wrote
-> one that was the most readable to me. The one I found shortest and most
-> inscrutable was:
-> 
->   return popcount((x & -x) - 1);
-> 
-> the details of which I still haven't worked through in my head. ;)
+I decided to remove the blank lines after option subheadings because the syntax
+highlighting in Vim actually looks better with them removed. I'm not sure how this
+affects line-rewrapping of the body text in Emacs.
 
-Yeah, I stumbled over that one too!
+I split the previous patch into two. This patch deals strictly with formatting
+issues and backticks/literals. The second patch contains the grammatical and typo
+fixes.
 
-> I do think on most platforms that intrinsics or inline assembler are the
-> way to go. My main goal was to get something correct that would let it
-> compile everywhere, and then people can use that as a base for
-> optimizing. Patches welcome. :)
 
-Indeed, I can happily leave that to another day (or to someone else
-more motivated ;-)
+ Documentation/rev-list-options.txt | 226 +++++++++++++------------------------
+ 1 file changed, 78 insertions(+), 148 deletions(-)
 
-ATB,
-Ramsay Jones
+diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+index ec86d09..eb4b6bf 100644
+--- a/Documentation/rev-list-options.txt
++++ b/Documentation/rev-list-options.txt
+@@ -18,33 +18,27 @@ ordering and formatting options, such as `--reverse`.
+ -<number>::
+ -n <number>::
+ --max-count=<number>::
+-
+ 	Limit the number of commits to output.
+ 
+ --skip=<number>::
+-
+ 	Skip 'number' commits before starting to show the commit output.
+ 
+ --since=<date>::
+ --after=<date>::
+-
+ 	Show commits more recent than a specific date.
+ 
+ --until=<date>::
+ --before=<date>::
+-
+ 	Show commits older than a specific date.
+ 
+ ifdef::git-rev-list[]
+ --max-age=<timestamp>::
+ --min-age=<timestamp>::
+-
+ 	Limit the commits output to specified time range.
+ endif::git-rev-list[]
+ 
+ --author=<pattern>::
+ --committer=<pattern>::
+-
+ 	Limit the commits output to ones with author/committer
+ 	header lines that match the specified pattern (regular
+ 	expression).  With more than one `--author=<pattern>`,
+@@ -52,7 +46,6 @@ endif::git-rev-list[]
+ 	chosen (similarly for multiple `--committer=<pattern>`).
+ 
+ --grep-reflog=<pattern>::
+-
+ 	Limit the commits output to ones with reflog entries that
+ 	match the specified pattern (regular expression). With
+ 	more than one `--grep-reflog`, commits whose reflog message
+@@ -60,7 +53,6 @@ endif::git-rev-list[]
+ 	error to use this option unless `--walk-reflogs` is in use.
+ 
+ --grep=<pattern>::
+-
+ 	Limit the commits output to ones with log message that
+ 	matches the specified pattern (regular expression).  With
+ 	more than one `--grep=<pattern>`, commits whose message
+@@ -71,46 +63,38 @@ When `--show-notes` is in effect, the message from the notes as
+ if it is part of the log message.
+ 
+ --all-match::
+-	Limit the commits output to ones that match all given --grep,
++	Limit the commits output to ones that match all given `--grep`,
+ 	instead of ones that match at least one.
+ 
+ -i::
+ --regexp-ignore-case::
+-
+ 	Match the regexp limiting patterns without regard to letters case.
+ 
+ --basic-regexp::
+-
+ 	Consider the limiting patterns to be basic regular expressions;
+ 	this is the default.
+ 
+ -E::
+ --extended-regexp::
+-
+ 	Consider the limiting patterns to be extended regular expressions
+ 	instead of the default basic regular expressions.
+ 
+ -F::
+ --fixed-strings::
+-
+ 	Consider the limiting patterns to be fixed strings (don't interpret
+ 	pattern as a regular expression).
+ 
+ --perl-regexp::
+-
+ 	Consider the limiting patterns to be Perl-compatible regexp.
+ 	Requires libpcre to be compiled in.
+ 
+ --remove-empty::
+-
+ 	Stop when a given path disappears from the tree.
+ 
+ --merges::
+-
+ 	Print only merge commits. This is exactly the same as `--min-parents=2`.
+ 
+ --no-merges::
+-
+ 	Do not print commits with more than one parent. This is
+ 	exactly the same as `--max-parents=1`.
+ 
+@@ -118,7 +102,6 @@ if it is part of the log message.
+ --max-parents=<number>::
+ --no-min-parents::
+ --no-max-parents::
+-
+ 	Show only commits which have at least (or at most) that many parent
+ 	commits. In particular, `--max-parents=1` is the same as `--no-merges`,
+ 	`--min-parents=2` is the same as `--merges`.  `--max-parents=0`
+@@ -138,31 +121,26 @@ parents) and `--max-parents=-1` (negative numbers denote no upper limit).
+ 	brought in to your history by such a merge.
+ 
+ --not::
+-
+ 	Reverses the meaning of the '{caret}' prefix (or lack thereof)
+-	for all following revision specifiers, up to the next '--not'.
++	for all following revision specifiers, up to the next `--not`.
+ 
+ --all::
+-
+ 	Pretend as if all the refs in `refs/` are listed on the
+ 	command line as '<commit>'.
+ 
+ --branches[=<pattern>]::
+-
+ 	Pretend as if all the refs in `refs/heads` are listed
+ 	on the command line as '<commit>'. If '<pattern>' is given, limit
+ 	branches to ones matching given shell glob. If pattern lacks '?',
+ 	'{asterisk}', or '[', '/{asterisk}' at the end is implied.
+ 
+ --tags[=<pattern>]::
+-
+ 	Pretend as if all the refs in `refs/tags` are listed
+ 	on the command line as '<commit>'. If '<pattern>' is given, limit
+ 	tags to ones matching given shell glob. If pattern lacks '?', '{asterisk}',
+ 	or '[', '/{asterisk}' at the end is implied.
+ 
+ --remotes[=<pattern>]::
+-
+ 	Pretend as if all the refs in `refs/remotes` are listed
+ 	on the command line as '<commit>'. If '<pattern>' is given, limit
+ 	remote-tracking branches to ones matching given shell glob.
+@@ -175,13 +153,11 @@ parents) and `--max-parents=-1` (negative numbers denote no upper limit).
+ 	or '[', '/{asterisk}' at the end is implied.
+ 
+ --ignore-missing::
+-
+ 	Upon seeing an invalid object name in the input, pretend as if
+ 	the bad input was not given.
+ 
+ ifndef::git-rev-list[]
+ --bisect::
+-
+ 	Pretend as if the bad bisection ref `refs/bisect/bad`
+ 	was listed and as if it was followed by `--not` and the good
+ 	bisection refs `refs/bisect/good-*` on the command
+@@ -189,7 +165,6 @@ ifndef::git-rev-list[]
+ endif::git-rev-list[]
+ 
+ --stdin::
+-
+ 	In addition to the '<commit>' listed on the command
+ 	line, read them from the standard input. If a '--' separator is
+ 	seen, stop reading commits and start reading paths to limit the
+@@ -197,36 +172,32 @@ endif::git-rev-list[]
+ 
+ ifdef::git-rev-list[]
+ --quiet::
+-
+ 	Don't print anything to standard output.  This form
+ 	is primarily meant to allow the caller to
+ 	test the exit status to see if a range of objects is fully
+ 	connected (or not).  It is faster than redirecting stdout
+-	to /dev/null as the output does not have to be formatted.
++	to `/dev/null` as the output does not have to be formatted.
+ endif::git-rev-list[]
+ 
+ --cherry-mark::
+-
+ 	Like `--cherry-pick` (see below) but mark equivalent commits
+ 	with `=` rather than omitting them, and inequivalent ones with `+`.
+ 
+ --cherry-pick::
+-
+ 	Omit any commit that introduces the same change as
+-	another commit on the "other side" when the set of
++	another commit on the ``other side'' when the set of
+ 	commits are limited with symmetric difference.
+ +
+ For example, if you have two branches, `A` and `B`, a usual way
+ to list all commits on only one side of them is with
+ `--left-right` (see the example below in the description of
+ the `--left-right` option).  It however shows the commits that were cherry-picked
+-from the other branch (for example, "3rd on b" may be cherry-picked
++from the other branch (for example, ``3rd on b'' may be cherry-picked
+ from branch A).  With this option, such pairs of commits are
+ excluded from the output.
+ 
+ --left-only::
+ --right-only::
+-
+ 	List only commits on the respective side of a symmetric range,
+ 	i.e. only those which would be marked `<` resp. `>` by
+ 	`--left-right`.
+@@ -238,7 +209,6 @@ More precisely, `--cherry-pick --right-only --no-merges` gives the exact
+ list.
+ 
+ --cherry::
+-
+ 	A synonym for `--right-only --cherry-mark --no-merges`; useful to
+ 	limit the output to the commits on our side and mark those that
+ 	have been applied to the other side of a forked history with
+@@ -247,30 +217,27 @@ list.
+ 
+ -g::
+ --walk-reflogs::
+-
+ 	Instead of walking the commit ancestry chain, walk
+ 	reflog entries from the most recent one to older ones.
+ 	When this option is used you cannot specify commits to
+ 	exclude (that is, '{caret}commit', 'commit1..commit2',
+ 	nor 'commit1\...commit2' notations cannot be used).
+ +
+-With '\--pretty' format other than oneline (for obvious reasons),
++With `--pretty` format other than `oneline` (for obvious reasons),
+ this causes the output to have two extra lines of information
+ taken from the reflog.  By default, 'commit@\{Nth}' notation is
+ used in the output.  When the starting commit is specified as
+ 'commit@\{now}', output also uses 'commit@\{timestamp}' notation
+-instead.  Under '\--pretty=oneline', the commit message is
++instead.  Under `--pretty=oneline`, the commit message is
+ prefixed with this information on the same line.
+-This option cannot be combined with '\--reverse'.
++This option cannot be combined with `--reverse`.
+ See also linkgit:git-reflog[1].
+ 
+ --merge::
+-
+ 	After a failed merge, show refs that touch files having a
+ 	conflict and don't exist on all heads to merge.
+ 
+ --boundary::
+-
+ 	Output excluded boundary commits. Boundary commits are
+ 	prefixed with `-`.
+ 
+@@ -287,11 +254,9 @@ is how to do it, as there are various strategies to simplify the history.
+ The following options select the commits to be shown:
+ 
+ <paths>::
+-
+ 	Commits modifying the given <paths> are selected.
+ 
+ --simplify-by-decoration::
+-
+ 	Commits that are referred by some branch or tag are selected.
+ 
+ Note that extra commits can be shown to give a meaningful history.
+@@ -299,33 +264,27 @@ Note that extra commits can be shown to give a meaningful history.
+ The following options affect the way the simplification is performed:
+ 
+ Default mode::
+-
+ 	Simplifies the history to the simplest history explaining the
+ 	final state of the tree. Simplest because it prunes some side
+ 	branches if the end result is the same (i.e. merging branches
+ 	with the same content)
+ 
+ --full-history::
+-
+ 	Same as the default mode, but does not prune some history.
+ 
+ --dense::
+-
+ 	Only the selected commits are shown, plus some to have a
+ 	meaningful history.
+ 
+ --sparse::
+-
+ 	All commits in the simplified history are shown.
+ 
+ --simplify-merges::
+-
+-	Additional option to '--full-history' to remove some needless
++	Additional option to `--full-history` to remove some needless
+ 	merges from the resulting history, as there are no selected
+ 	commits contributing to this merge.
+ 
+ --ancestry-path::
+-
+ 	When given a range of commits to display (e.g. 'commit1..commit2'
+ 	or 'commit2 {caret}commit1'), only display commits that exist
+ 	directly on the ancestry chain between the 'commit1' and
+@@ -352,36 +311,35 @@ The horizontal line of history A---Q is taken to be the first parent of
+ each merge.  The commits are:
+ 
+ * `I` is the initial commit, in which `foo` exists with contents
+-  "asdf", and a file `quux` exists with contents "quux".  Initial
++  ``asdf'', and a file `quux` exists with contents ``quux''. Initial
+   commits are compared to an empty tree, so `I` is !TREESAME.
+ 
+-* In `A`, `foo` contains just "foo".
++* In `A`, `foo` contains just ``foo''.
+ 
+ * `B` contains the same change as `A`.  Its merge `M` is trivial and
+   hence TREESAME to all parents.
+ 
+-* `C` does not change `foo`, but its merge `N` changes it to "foobar",
++* `C` does not change `foo`, but its merge `N` changes it to ``foobar'',
+   so it is not TREESAME to any parent.
+ 
+-* `D` sets `foo` to "baz".  Its merge `O` combines the strings from
+-  `N` and `D` to "foobarbaz"; i.e., it is not TREESAME to any parent.
++* `D` sets `foo` to ``baz''. Its merge `O` combines the strings from
++  `N` and `D` to ``foobarbaz''; i.e., it is not TREESAME to any parent.
+ 
+-* `E` changes `quux` to "xyzzy", and its merge `P` combines the
+-  strings to "quux xyzzy".  `P` is TREESAME to `O`, but not to `E`.
++* `E` changes `quux` to ``xyzzy'', and its merge `P` combines the
++  strings to ``quux xyzzy''. `P` is TREESAME to `O`, but not to `E`.
+ 
+ * `X` is an independent root commit that added a new file `side`, and `Y`
+   modified it. `Y` is TREESAME to `X`. Its merge `Q` added `side` to `P`, and
+   `Q` is TREESAME to `P`, but not to `Y`.
+ 
+-'rev-list' walks backwards through history, including or excluding
+-commits based on whether '\--full-history' and/or parent rewriting
+-(via '\--parents' or '\--children') are used.  The following settings
++`rev-list` walks backwards through history, including or excluding
++commits based on whether `--full-history` and/or parent rewriting
++(via `--parents` or `--children`) are used. The following settings
+ are available.
+ 
+ Default mode::
+-
+ 	Commits are included if they are not TREESAME to any parent
+-	(though this can be changed, see '\--sparse' below).  If the
++	(though this can be changed, see `--sparse` below).  If the
+ 	commit was a merge, and it was TREESAME to one parent, follow
+ 	only that parent.  (Even if there are several TREESAME
+ 	parents, follow only one of them.)  Otherwise, follow all
+@@ -400,12 +358,11 @@ available, removed `B` from consideration entirely.  `C` was
+ considered via `N`, but is TREESAME.  Root commits are compared to an
+ empty tree, so `I` is !TREESAME.
+ +
+-Parent/child relations are only visible with --parents, but that does
++Parent/child relations are only visible with `--parents`, but that does
+ not affect the commits selected in default mode, so we have shown the
+ parent lines.
+ 
+ --full-history without parent rewriting::
+-
+ 	This mode differs from the default in one point: always follow
+ 	all parents of a merge, even if it is TREESAME to one of them.
+ 	Even if more than one side of the merge has commits that are
+@@ -425,9 +382,8 @@ about the parent/child relationships between the commits, so we show
+ them disconnected.
+ 
+ --full-history with parent rewriting::
+-
+ 	Ordinary commits are only included if they are !TREESAME
+-	(though this can be changed, see '\--sparse' below).
++	(though this can be changed, see `--sparse` below).
+ +
+ Merges are always included.  However, their parent list is rewritten:
+ Along each parent, prune away commits that are not included
+@@ -441,7 +397,7 @@ themselves.  This results in
+ 	  `-------------'
+ -----------------------------------------------------------------------
+ +
+-Compare to '\--full-history' without rewriting above.  Note that `E`
++Compare to `--full-history` without rewriting above.  Note that `E`
+ was pruned away because it is TREESAME, but the parent list of P was
+ rewritten to contain `E`'s parent `I`.  The same happened for `C` and
+ `N`, and `X`, `Y` and `Q`.
+@@ -450,22 +406,19 @@ In addition to the above settings, you can change whether TREESAME
+ affects inclusion:
+ 
+ --dense::
+-
+ 	Commits that are walked are included if they are not TREESAME
+ 	to any parent.
+ 
+ --sparse::
+-
+ 	All commits that are walked are included.
+ +
+-Note that without '\--full-history', this still simplifies merges: if
++Note that without `--full-history`, this still simplifies merges: if
+ one of the parents is TREESAME, we follow only that one, so the other
+ sides of the merge are never walked.
+ 
+ --simplify-merges::
+-
+ 	First, build a history graph in the same way that
+-	'\--full-history' with parent rewriting does (see above).
++	`--full-history` with parent rewriting does (see above).
+ +
+ Then simplify each commit `C` to its replacement `C'` in the final
+ history according to the following rules:
+@@ -484,7 +437,7 @@ history according to the following rules:
+ --
+ +
+ The effect of this is best shown by way of comparing to
+-'\--full-history' with parent rewriting.  The example turns into:
++`--full-history` with parent rewriting.  The example turns into:
+ +
+ -----------------------------------------------------------------------
+ 	  .-A---M---N---O
+@@ -494,7 +447,7 @@ The effect of this is best shown by way of comparing to
+ 	  `---------'
+ -----------------------------------------------------------------------
+ +
+-Note the major differences in `N`, `P` and `Q` over '--full-history':
++Note the major differences in `N`, `P` and `Q` over `--full-history`:
+ +
+ --
+ * `N`'s parent list had `I` removed, because it is an ancestor of the
+@@ -511,11 +464,10 @@ Note the major differences in `N`, `P` and `Q` over '--full-history':
+ Finally, there is a fifth simplification mode available:
+ 
+ --ancestry-path::
+-
+ 	Limit the displayed commits to those directly on the ancestry
+-	chain between the "from" and "to" commits in the given commit
+-	range. I.e. only display commits that are ancestor of the "to"
+-	commit, and descendants of the "from" commit.
++	chain between the ``from'' and ``to'' commits in the given commit
++	range. I.e. only display commits that are ancestor of the ``to''
++	commit, and descendants of the ``from'' commit.
+ +
+ As an example use case, consider the following commit history:
+ +
+@@ -530,14 +482,14 @@ As an example use case, consider the following commit history:
+ A regular 'D..M' computes the set of commits that are ancestors of `M`,
+ but excludes the ones that are ancestors of `D`. This is useful to see
+ what happened to the history leading to `M` since `D`, in the sense
+-that "what does `M` have that did not exist in `D`". The result in this
++that ``what does `M` have that did not exist in `D`''. The result in this
+ example would be all the commits, except `A` and `B` (and `D` itself,
+ of course).
+ +
+ When we want to find out what commits in `M` are contaminated with the
+ bug introduced by `D` and need fixing, however, we might want to view
+ only the subset of 'D..M' that are actually descendants of `D`, i.e.
+-excluding `C` and `K`. This is exactly what the '--ancestry-path'
++excluding `C` and `K`. This is exactly what the `--ancestry-path`
+ option does. Applied to the 'D..M' range, it results in:
+ +
+ -----------------------------------------------------------------------
+@@ -548,7 +500,7 @@ option does. Applied to the 'D..M' range, it results in:
+ 				L--M
+ -----------------------------------------------------------------------
+ 
+-The '\--simplify-by-decoration' option allows you to view only the
++The `--simplify-by-decoration` option allows you to view only the
+ big picture of the topology of the history, by omitting commits
+ that are not referenced by tags.  Commits are marked as !TREESAME
+ (in other words, kept after history simplification rules described
+@@ -561,50 +513,47 @@ Bisection Helpers
+ ~~~~~~~~~~~~~~~~~
+ 
+ --bisect::
+-
+-Limit output to the one commit object which is roughly halfway between
+-included and excluded commits. Note that the bad bisection ref
+-`refs/bisect/bad` is added to the included commits (if it
+-exists) and the good bisection refs `refs/bisect/good-*` are
+-added to the excluded commits (if they exist). Thus, supposing there
+-are no refs in `refs/bisect/`, if
+-
++	Limit output to the one commit object which is roughly halfway between
++	included and excluded commits. Note that the bad bisection ref
++	`refs/bisect/bad` is added to the included commits (if it
++	exists) and the good bisection refs `refs/bisect/good-*` are
++	added to the excluded commits (if they exist). Thus, supposing there
++	are no refs in `refs/bisect/`, if
+++
+ -----------------------------------------------------------------------
+ 	$ git rev-list --bisect foo ^bar ^baz
+ -----------------------------------------------------------------------
+-
+++
+ outputs 'midpoint', the output of the two commands
+-
+++
+ -----------------------------------------------------------------------
+ 	$ git rev-list foo ^midpoint
+ 	$ git rev-list midpoint ^bar ^baz
+ -----------------------------------------------------------------------
+-
+++
+ would be of roughly the same length.  Finding the change which
+ introduces a regression is thus reduced to a binary search: repeatedly
+ generate and test new 'midpoint's until the commit chain is of length
+ one.
+ 
+ --bisect-vars::
+-
+-This calculates the same as `--bisect`, except that refs in
+-`refs/bisect/` are not used, and except that this outputs
+-text ready to be eval'ed by the shell. These lines will assign the
+-name of the midpoint revision to the variable `bisect_rev`, and the
+-expected number of commits to be tested after `bisect_rev` is tested
+-to `bisect_nr`, the expected number of commits to be tested if
+-`bisect_rev` turns out to be good to `bisect_good`, the expected
+-number of commits to be tested if `bisect_rev` turns out to be bad to
+-`bisect_bad`, and the number of commits we are bisecting right now to
+-`bisect_all`.
++	This calculates the same as `--bisect`, except that refs in
++	`refs/bisect/` are not used, and except that this outputs
++	text ready to be eval'ed by the shell. These lines will assign the
++	name of the midpoint revision to the variable `bisect_rev`, and the
++	expected number of commits to be tested after `bisect_rev` is tested
++	to `bisect_nr`, the expected number of commits to be tested if
++	`bisect_rev` turns out to be good to `bisect_good`, the expected
++	number of commits to be tested if `bisect_rev` turns out to be bad to
++	`bisect_bad`, and the number of commits we are bisecting right now to
++	`bisect_all`.
+ 
+ --bisect-all::
+-
+-This outputs all the commit objects between the included and excluded
+-commits, ordered by their distance to the included and excluded
+-commits. Refs in `refs/bisect/` are not used. The farthest
+-from them is displayed first. (This is the only one displayed by
+-`--bisect`.)
++	This outputs all the commit objects between the included and excluded
++	commits, ordered by their distance to the included and excluded
++	commits. Refs in `refs/bisect/` are not used. The farthest
++	from them is displayed first. (This is the only one displayed by
++	`--bisect`.)
+ +
+ This is useful because it makes it easy to choose a good commit to
+ test when you want to avoid to test some of them for some reason (they
+@@ -654,9 +603,8 @@ avoid showing the commits from two parallel development track mixed
+ together.
+ 
+ --reverse::
+-
+ 	Output the commits in reverse order.
+-	Cannot be combined with '\--walk-reflogs'.
++	Cannot be combined with `--walk-reflogs`.
+ 
+ Object Traversal
+ ~~~~~~~~~~~~~~~~
+@@ -664,37 +612,32 @@ Object Traversal
+ These options are mostly targeted for packing of Git repositories.
+ 
+ --objects::
+-
+ 	Print the object IDs of any object referenced by the listed
+-	commits.  '--objects foo ^bar' thus means "send me
++	commits.  `--objects foo ^bar` thus means ``send me
+ 	all object IDs which I need to download if I have the commit
+-	object 'bar', but not 'foo'".
++	object _bar_ but not _foo_''.
+ 
+ --objects-edge::
+-
+-	Similar to '--objects', but also print the IDs of excluded
+-	commits prefixed with a "-" character.  This is used by
+-	linkgit:git-pack-objects[1] to build "thin" pack, which records
++	Similar to `--objects`, but also print the IDs of excluded
++	commits prefixed with a ``-'' character.  This is used by
++	linkgit:git-pack-objects[1] to build ``thin'' pack, which records
+ 	objects in deltified form based on objects contained in these
+ 	excluded commits to reduce network traffic.
+ 
+ --unpacked::
+-
+-	Only useful with '--objects'; print the object IDs that are not
++	Only useful with `--objects`; print the object IDs that are not
+ 	in packs.
+ 
+ --no-walk[=(sorted|unsorted)]::
+-
+ 	Only show the given commits, but do not traverse their ancestors.
+ 	This has no effect if a range is specified. If the argument
+-	"unsorted" is given, the commits are show in the order they were
+-	given on the command line. Otherwise (if "sorted" or no argument
++	`unsorted` is given, the commits are show in the order they were
++	given on the command line. Otherwise (if `sorted` or no argument
+ 	was given), the commits are show in reverse chronological order
+ 	by commit time.
+ 
+ --do-walk::
+-
+-	Overrides a previous --no-walk.
++	Overrides a previous `--no-walk`.
+ 
+ Commit Formatting
+ ~~~~~~~~~~~~~~~~~
+@@ -708,17 +651,15 @@ endif::git-rev-list[]
+ include::pretty-options.txt[]
+ 
+ --relative-date::
+-
+ 	Synonym for `--date=relative`.
+ 
+ --date=(relative|local|default|iso|rfc|short|raw)::
+-
+ 	Only takes effect for dates shown in human-readable format, such
+-	as when using "--pretty". `log.date` config variable sets a default
+-	value for log command's --date option.
++	as when using `--pretty`. `log.date` config variable sets a default
++	value for log command's `--date` option.
+ +
+ `--date=relative` shows dates relative to the current time,
+-e.g. "2 hours ago".
++e.g. ``2 hours ago''.
+ +
+ `--date=local` shows timestamps in user's local time zone.
+ +
+@@ -736,18 +677,15 @@ format, often found in E-mail messages.
+ 
+ ifdef::git-rev-list[]
+ --header::
+-
+ 	Print the contents of the commit in raw-format; each record is
+ 	separated with a NUL character.
+ endif::git-rev-list[]
+ 
+ --parents::
+-
+ 	Print also the parents of the commit (in the form "commit parent...").
+ 	Also enables parent rewriting, see 'History Simplification' below.
+ 
+ --children::
+-
+ 	Print also the children of the commit (in the form "commit child...").
+ 	Also enables parent rewriting, see 'History Simplification' below.
+ 
+@@ -757,7 +695,6 @@ ifdef::git-rev-list[]
+ endif::git-rev-list[]
+ 
+ --left-right::
+-
+ 	Mark which side of a symmetric diff a commit is reachable from.
+ 	Commits from the left side are prefixed with `<` and those from
+ 	the right with `>`.  If combined with `--boundary`, those
+@@ -787,7 +724,6 @@ you would get an output like this:
+ -----------------------------------------------------------------------
+ 
+ --graph::
+-
+ 	Draw a text-based graphical representation of the commit history
+ 	on the left hand side of the output.  This may cause extra lines
+ 	to be printed in between commits, in order for the graph history
+@@ -795,21 +731,20 @@ you would get an output like this:
+ +
+ This enables parent rewriting, see 'History Simplification' below.
+ +
+-This implies the '--topo-order' option by default, but the
+-'--date-order' option may also be specified.
++This implies the `--topo-order` option by default, but the
++`--date-order` option may also be specified.
+ 
+ ifdef::git-rev-list[]
+ --count::
+ 	Print a number stating how many commits would have been
+ 	listed, and suppress all other output.  When used together
+-	with '--left-right', instead print the counts for left and
++	with `--left-right`, instead print the counts for left and
+ 	right commits, separated by a tab. When used together with
+-	'--cherry-mark', omit patch equivalent commits from these
++	`--cherry-mark`, omit patch equivalent commits from these
+ 	counts and print the count for equivalent commits separated
+ 	by a tab.
+ endif::git-rev-list[]
+ 
+-
+ ifndef::git-rev-list[]
+ Diff Formatting
+ ~~~~~~~~~~~~~~~
+@@ -819,7 +754,6 @@ Some of them are specific to linkgit:git-rev-list[1], however other diff
+ options may be given. See linkgit:git-diff-files[1] for more options.
+ 
+ -c::
+-
+ 	With this option, diff output for a merge commit
+ 	shows the differences from each of the parents to the merge result
+ 	simultaneously instead of showing pairwise diff between a parent
+@@ -827,26 +761,22 @@ options may be given. See linkgit:git-diff-files[1] for more options.
+ 	which were modified from all parents.
+ 
+ --cc::
+-
+-	This flag implies the '-c' option and further compresses the
++	This flag implies the `-c` option and further compresses the
+ 	patch output by omitting uninteresting hunks whose contents in
+ 	the parents have only two variants and the merge result picks
+ 	one of them without modification.
+ 
+ -m::
+-
+ 	This flag makes the merge commits show the full diff like
+ 	regular commits; for each merge parent, a separate log entry
+ 	and diff is generated. An exception is that only diff against
+-	the first parent is shown when '--first-parent' option is given;
++	the first parent is shown when `--first-parent` option is given;
+ 	in that case, the output represents the changes the merge
+ 	brought _into_ the then-current branch.
+ 
+ -r::
+-
+ 	Show recursive diffs.
+ 
+ -t::
+-
+-	Show the tree objects in the diff output. This implies '-r'.
++	Show the tree objects in the diff output. This implies `-r`.
+ endif::git-rev-list[]
+-- 
+1.8.4.2
