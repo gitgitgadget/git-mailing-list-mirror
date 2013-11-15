@@ -1,152 +1,118 @@
 From: "Jason St. John" <jstjohn@purdue.edu>
-Subject: [PATCHv3 2/2] Documentation/rev-list-options.txt: fix some grammatical issues and typos
-Date: Thu, 14 Nov 2013 20:34:02 -0500
-Message-ID: <1384479242-21144-2-git-send-email-jstjohn@purdue.edu>
-References: <1384479242-21144-1-git-send-email-jstjohn@purdue.edu>
-Cc: "Jason St. John" <jstjohn@purdue.edu>
+Subject: Re: [PATCH 2/2] Fix minor grammatical and other formatting issues in
+ the "git log" man page
+Date: Thu, 14 Nov 2013 20:44:22 -0500
+Message-ID: <CAEjxke8vLtA5CgW8v4zv58kexe631koniNpdqTrr8LFYAOrMuA@mail.gmail.com>
+References: <1384323709-2690-1-git-send-email-jstjohn@purdue.edu>
+ <1384323709-2690-2-git-send-email-jstjohn@purdue.edu> <xmqqy54sc6ev.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 15 02:34:40 2013
+X-From: git-owner@vger.kernel.org Fri Nov 15 02:44:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vh8Ix-0001Hw-GX
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Nov 2013 02:34:39 +0100
+	id 1Vh8Sp-0001i5-HD
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Nov 2013 02:44:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754942Ab3KOBee (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Nov 2013 20:34:34 -0500
-Received: from mailhub246.itcs.purdue.edu ([128.210.5.246]:55619 "EHLO
-	mailhub246.itcs.purdue.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754726Ab3KOBec (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 14 Nov 2013 20:34:32 -0500
-Received: from megahurtz.wl.stjohn.lcl (41.117.244.66.bay.smithvilledigital.net [66.244.117.41])
+	id S1755148Ab3KOBop (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Nov 2013 20:44:45 -0500
+Received: from mailhub249.itcs.purdue.edu ([128.210.5.249]:52631 "EHLO
+	mailhub249.itcs.purdue.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754742Ab3KOBoo (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 14 Nov 2013 20:44:44 -0500
+Received: from mail-qc0-f176.google.com (mail-qc0-f176.google.com [209.85.216.176])
 	(authenticated bits=0)
-	by mailhub246.itcs.purdue.edu (8.14.4/8.14.4/mta-auth.smtp.purdue.edu) with ESMTP id rAF1Y83Z007783
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 14 Nov 2013 20:34:31 -0500
-X-Mailer: git-send-email 1.8.4.2
-In-Reply-To: <1384479242-21144-1-git-send-email-jstjohn@purdue.edu>
+	by mailhub249.itcs.purdue.edu (8.14.4/8.14.4/mta-auth.smtp.purdue.edu) with ESMTP id rAF1igED024057
+	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=NOT)
+	for <git@vger.kernel.org>; Thu, 14 Nov 2013 20:44:43 -0500
+Received: by mail-qc0-f176.google.com with SMTP id s19so1733554qcw.21
+        for <git@vger.kernel.org>; Thu, 14 Nov 2013 17:44:42 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-type;
+        bh=sPykj4zWL7e/Czjw9ymrJkcFsRXX6nW0oNp7r2yOTEQ=;
+        b=HQ2JTVKzua/4NF/DxYa/+/F38u8/Dxw4bziR29ub1yNIrs22UFQzGMi4VIMywRUulW
+         0w04pQcCxUd8emT3BQOO8ymb/Wxr80rcwqP/u6yMVn5Sn7mMzH1vsfabKPeD0XODPl5m
+         Upin5Y+AAptYmqH5nDd8ceIdd57P5y2XzccO90fzUVxkshtn3DvsXP3H1O10Hfg3Eiyj
+         gK/DK9y3oYcW0SPlmw2702D8ffxyzvhWBSceX+SFmm2Z1mOUbPiOcH2Jgr1hLSdFbISH
+         62od2IjMc6mtJjGwsXfX7BDuJVA64IdWn19EEDLrCmDNtrdIrmx9MMga9RqY6e0zUwY6
+         k1Zg==
+X-Received: by 10.49.1.230 with SMTP id 6mr7056194qep.48.1384479882854; Thu,
+ 14 Nov 2013 17:44:42 -0800 (PST)
+Received: by 10.224.127.131 with HTTP; Thu, 14 Nov 2013 17:44:22 -0800 (PST)
+In-Reply-To: <xmqqy54sc6ev.fsf@gitster.dls.corp.google.com>
 X-PMX-Version: 6.0.2.2308539
 X-PerlMx-Virus-Scanned: Yes
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237885>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237886>
 
-Various fixes:
--- fix typos (e.g. "show" -> "shown")
--- use "regular expression(s)" instead of "regexp" where appropriate
--- reword some sentences for easier reading
--- fix/improve some grammatical issues (e.g. comma usage)
--- add missing articles (e.g. "the")
--- change "E-mail" to "email"
+On Wed, Nov 13, 2013 at 4:56 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> "Jason St. John" <jstjohn@purdue.edu> writes:
+>
+>> Documentation/git-log.txt:
+>> -- replace single quotes around options/commands with backticks
+>> -- use single quotes around references to sections
+>> -- replaced some double quotes with proper AsciiDoc quotes (e.g.
+>>      ``foo'')
+>> -- use backticks around files and file paths
+>> -- use title case when referring to section headings
+>> -- use backticks around option arguments/defaults
+>>
+>> Signed-off-by: Jason St. John <jstjohn@purdue.edu>
+>> ---
+>> When working on this commit, I noticed a difference in how options and
+>> option descriptions are separated (e.g. with a blank line or not). At least
+>> with Vim's syntax highlighting, if there is a blank line between the option
+>> and its description, the text block is all colored the same; however, if
+>> there isn't a blank line, then the text block is not specially colored.
+>>
+>> Is there an existing convention for how this should be done?
+>
+> I do not think we have a written rule or convention (and I do not
+> know if we want one).  While reading the text in the source form
+> (and the point of choosing AsciiDoc was to be able to read the docs
+> without formatting), I personally have a slight preference to
+> immediately follow the body text to the label in the labelled list,
+> and a blank line after the item, i.e.
+>
+>         item label::
+>                 This describes the item.
+>
+>         next item label::
+>                 This describes the next item.
+>
+> as it makes it clear that the body belongs to the heading that
+> precedes it.
+>
+> But it does help to have a blank between the label and the beginning
+> of the body when reflowing the body with fill-paragraph, i.e.
+>
+>         item label::
+>
+>                 This describes the item.
+>
+> You say that it is also easier on Vim to have the blank line there,
+> so perhaps we may want to aim for updating the documentation over
+> time to consistently do so.  I dunno.
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
 
-Signed-off-by: Jason St. John <jstjohn@purdue.edu>
----
-I changed "E-mail" to "email" because that is clearly the dominant form:
-http://www.google.com/trends/explore?q=#q=%22email%22%2C%20%22E-mail%22&cmpt=q
+As I stated in my recent resubmit[1], I decided to remove the blank
+lines after option subheadings because the syntax highlighting in Vim
+actually looks better with the blank lines removed. As such, I would
+prefer that we go with the option of removing these blank lines going
+forward.
 
+If we are in agreement on this, should I send in a patch for
+CodingGuidelines to state this?
 
- Documentation/rev-list-options.txt | 27 ++++++++++++++-------------
- 1 file changed, 14 insertions(+), 13 deletions(-)
-
-diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
-index eb4b6bf..2991d70 100644
---- a/Documentation/rev-list-options.txt
-+++ b/Documentation/rev-list-options.txt
-@@ -68,7 +68,8 @@ if it is part of the log message.
- 
- -i::
- --regexp-ignore-case::
--	Match the regexp limiting patterns without regard to letters case.
-+	Match the regular expression limiting patterns without regard to letter
-+	case.
- 
- --basic-regexp::
- 	Consider the limiting patterns to be basic regular expressions;
-@@ -85,7 +86,7 @@ if it is part of the log message.
- 	pattern as a regular expression).
- 
- --perl-regexp::
--	Consider the limiting patterns to be Perl-compatible regexp.
-+	Consider the limiting patterns to be Perl-compatible regular expressions.
- 	Requires libpcre to be compiled in.
- 
- --remove-empty::
-@@ -191,9 +192,9 @@ endif::git-rev-list[]
- For example, if you have two branches, `A` and `B`, a usual way
- to list all commits on only one side of them is with
- `--left-right` (see the example below in the description of
--the `--left-right` option).  It however shows the commits that were cherry-picked
--from the other branch (for example, ``3rd on b'' may be cherry-picked
--from branch A).  With this option, such pairs of commits are
-+the `--left-right` option). However, it shows the commits that were
-+cherry-picked from the other branch (for example, ``3rd on b'' may be
-+cherry-picked from branch A). With this option, such pairs of commits are
- excluded from the output.
- 
- --left-only::
-@@ -447,7 +448,7 @@ The effect of this is best shown by way of comparing to
- 	  `---------'
- -----------------------------------------------------------------------
- +
--Note the major differences in `N`, `P` and `Q` over `--full-history`:
-+Note the major differences in `N`, `P`, and `Q` over `--full-history`:
- +
- --
- * `N`'s parent list had `I` removed, because it is an ancestor of the
-@@ -467,7 +468,7 @@ Finally, there is a fifth simplification mode available:
- 	Limit the displayed commits to those directly on the ancestry
- 	chain between the ``from'' and ``to'' commits in the given commit
- 	range. I.e. only display commits that are ancestor of the ``to''
--	commit, and descendants of the ``from'' commit.
-+	commit and descendants of the ``from'' commit.
- +
- As an example use case, consider the following commit history:
- +
-@@ -631,9 +632,9 @@ These options are mostly targeted for packing of Git repositories.
- --no-walk[=(sorted|unsorted)]::
- 	Only show the given commits, but do not traverse their ancestors.
- 	This has no effect if a range is specified. If the argument
--	`unsorted` is given, the commits are show in the order they were
-+	`unsorted` is given, the commits are shown in the order they were
- 	given on the command line. Otherwise (if `sorted` or no argument
--	was given), the commits are show in reverse chronological order
-+	was given), the commits are shown in reverse chronological order
- 	by commit time.
- 
- --do-walk::
-@@ -656,7 +657,7 @@ include::pretty-options.txt[]
- --date=(relative|local|default|iso|rfc|short|raw)::
- 	Only takes effect for dates shown in human-readable format, such
- 	as when using `--pretty`. `log.date` config variable sets a default
--	value for log command's `--date` option.
-+	value for the log command's `--date` option.
- +
- `--date=relative` shows dates relative to the current time,
- e.g. ``2 hours ago''.
-@@ -666,9 +667,9 @@ e.g. ``2 hours ago''.
- `--date=iso` (or `--date=iso8601`) shows timestamps in ISO 8601 format.
- +
- `--date=rfc` (or `--date=rfc2822`) shows timestamps in RFC 2822
--format, often found in E-mail messages.
-+format, often found in email messages.
- +
--`--date=short` shows only date but not time, in `YYYY-MM-DD` format.
-+`--date=short` shows only the date, but not the time, in `YYYY-MM-DD` format.
- +
- `--date=raw` shows the date in the internal raw Git format `%s %z` format.
- +
-@@ -749,7 +750,7 @@ ifndef::git-rev-list[]
- Diff Formatting
- ~~~~~~~~~~~~~~~
- 
--Below are listed options that control the formatting of diff output.
-+Listed below are options that control the formatting of diff output.
- Some of them are specific to linkgit:git-rev-list[1], however other diff
- options may be given. See linkgit:git-diff-files[1] for more options.
- 
--- 
-1.8.4.2
+[1] http://marc.info/?l=git&m=138447927208462&w=2
