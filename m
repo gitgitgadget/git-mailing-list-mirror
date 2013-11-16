@@ -1,180 +1,86 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: [RFC PATCH] commit -v: strip diffs and submodule shortlogs from the
- commit message
-Date: Sat, 16 Nov 2013 23:52:37 +0100
-Message-ID: <5287F735.3030306@web.de>
-References: <loom.20131110T222043-57@post.gmane.org> <528140F5.6090700@web.de>	<loom.20131111T214646-550@post.gmane.org> <52814C35.6040205@web.de>	<5281DCC5.2000209@kdbg.org> <5282A90A.4030900@web.de>	<xmqqy54tfeje.fsf@gitster.dls.corp.google.com>	<5283C701.8090400@web.de> <xmqq7gccdq67.fsf@gitster.dls.corp.google.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v3 1/6] t6300 (for-each-ref): clearly demarcate setup
+Date: Sat, 16 Nov 2013 18:11:48 -0500
+Message-ID: <CAPig+cRz3_JSLJCu5AndSnreT91OqcQf_p+9-bUE5MUO_E066g@mail.gmail.com>
+References: <1384513148-22633-1-git-send-email-artagnon@gmail.com>
+	<1384513148-22633-2-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Sixt <j6t@kdbg.org>, Ari Pollak <ari@debian.org>,
-	git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Nov 16 23:52:46 2013
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Nov 17 00:12:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VhojN-000114-BB
-	for gcvg-git-2@plane.gmane.org; Sat, 16 Nov 2013 23:52:45 +0100
+	id 1Vhp2I-00045Z-9L
+	for gcvg-git-2@plane.gmane.org; Sun, 17 Nov 2013 00:12:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753537Ab3KPWwm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 16 Nov 2013 17:52:42 -0500
-Received: from mout.web.de ([212.227.17.12]:60252 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753514Ab3KPWwk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Nov 2013 17:52:40 -0500
-Received: from [192.168.178.41] ([91.3.128.91]) by smtp.web.de (mrweb002) with
- ESMTPA (Nemesis) id 0MfYTr-1W56uD0K8R-00P7mH for <git@vger.kernel.org>; Sat,
- 16 Nov 2013 23:52:38 +0100
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.1.0
-In-Reply-To: <xmqq7gccdq67.fsf@gitster.dls.corp.google.com>
-X-Enigmail-Version: 1.6
-X-Provags-ID: V03:K0:pjh8Oa1uImoGsWCHl6E4F++djeO+iSL0Rk0fMAeXchWKCgk21Dk
- EbvzDOnGeyvl6DyDEtiqvrpSkwv+vU/T1DUnhyayjwfnCzZgRkOM30KGcC5WYlzt3iRaafX
- hCwr1r/eEBmwBz8BIDNnFq+62OCl3GlaWuLfL1ogcbNZCiRcC17/QYFt62t4GUZm9DU02uS
- QBBRPa7TCo8WK1rQVlGcg==
+	id S1753351Ab3KPXLw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 16 Nov 2013 18:11:52 -0500
+Received: from mail-la0-f44.google.com ([209.85.215.44]:45071 "EHLO
+	mail-la0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753031Ab3KPXLu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Nov 2013 18:11:50 -0500
+Received: by mail-la0-f44.google.com with SMTP id ep20so3861670lab.3
+        for <git@vger.kernel.org>; Sat, 16 Nov 2013 15:11:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=Ur/t2RnsnXcnYyVXHZhKvMTI/WYWChMfeIo7YmkORTU=;
+        b=VdYzeTbW6ljRemv54VRz5NHnBP5lmiNy10AZpfnMD7/28BRqHFOBX+opZC0sbuAg7q
+         DRp33uKi7sszZMJUe2KoGEeLhfRDTTlQXuBUwTrmwT8QPxIOJCFlehZTViTov8pG/CSf
+         CzjucwUno2o0sWbdhY22qLhPdjRNFos1wm3EiOoM3giO2NRisYPCozh53D+4RkV4dEBn
+         pW0GK/vEQkSdgiFImnUhzqvXotO2sn2hhDUvWnaybKFVYAZp7NVlZwHLoKSdFA/5/Aro
+         VJGA8YShuIHa6mxn55nDwVbGmZuOZTF6Tt4W1QI5nTfodTFMy+21+wGdOb6KRMYsq4uX
+         xeCg==
+X-Received: by 10.112.16.2 with SMTP id b2mr449402lbd.27.1384643508736; Sat,
+ 16 Nov 2013 15:11:48 -0800 (PST)
+Received: by 10.114.200.180 with HTTP; Sat, 16 Nov 2013 15:11:48 -0800 (PST)
+In-Reply-To: <1384513148-22633-2-git-send-email-artagnon@gmail.com>
+X-Google-Sender-Auth: 7CksZYcrGNNIzpHV-arPVdeQAGc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237943>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237944>
 
-When using the '-v' option of "git commit" the diff added to the commit
-message temporarily for editing is stripped off after the user exited the
-editor by searching for "\ndiff --git " and truncating the commmit message
-there if it is found. But this approach has two problems: when the commit
-message itself contains a line starting with "diff --git" it will be
-truncated there prematurely. And when the "diff.submodule" setting is set
-to "log", the diff may start with "Submodule <hash1>..<hash2>", which will
-be left in the commit message while it shouldn't.
+On Fri, Nov 15, 2013 at 5:59 AM, Ramkumar Ramachandra
+<artagnon@gmail.com> wrote:
+> Condense the two-step setup into one step, and give it an appropriate
+> name.
+>
+> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+> ---
+>  t/t6300-for-each-ref.sh | 5 +----
+>  1 file changed, 1 insertion(+), 4 deletions(-)
+>
+> diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
+> index 752f5cb..72d282f 100755
+> --- a/t/t6300-for-each-ref.sh
+> +++ b/t/t6300-for-each-ref.sh
+> @@ -18,16 +18,13 @@ setdate_and_increment () {
+>      export GIT_COMMITTER_DATE GIT_AUTHOR_DATE
+>  }
+>
+> -test_expect_success 'Create sample commit with known timestamp' '
+> +test_expect_success setup '
+>         setdate_and_increment &&
+>         echo "Using $datestamp" > one &&
+>         git add one &&
+>         git commit -m "Initial" &&
+>         setdate_and_increment &&
+>         git tag -a -m "Tagging at $datestamp" testtag
 
-Fix that by introducing a special scissor separator line starting with the
-comment character '#' followed by a line describing what it is for. The
-scissor line is used to reliably detect the start of the diff so it can be
-chopped off from the commit message, no matter what the user enters there.
-Turn a known test failure fixed by this change into a successful test and
-add another one for a diff starting with a submodule log.
+Broken &&-chain here after these functions are combined.
 
-Reported-by: Ari Pollak <ari@debian.org>
-Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
----
-
-
-Am 13.11.2013 21:04, schrieb Junio C Hamano:
-> Jens Lehmann <Jens.Lehmann@web.de> writes:
-> 
->>> If we were introducing a divider line for machine consumption, I do
->>> not think it is wise to let that line even translated...
->>
->> Ok, but then it won't mean much to readers who don't understand
->> English. I assume prefixing all diff lines with "# " is out of
->> the question because of backwards compatibility, so what about
->> using a descriptive text together with a scissor line? The former
->> can be be translated (and won't make it into the commit message
->> because it starts with a "#") while the latter serves as a robust
->> divider line:
->>
->> # Everything below the following line is a diff that will be removed.
->> # --------------------------------8<--------------------------------
-> 
-> Yeah, or swap them around if you are trying to protect the part
-> above the divider from getting contaminated by the noise.
-
-Ok, did that. I couldn't find another user of the verbose setting,
-so emitting the scissor line together with the description inside
-wt_status_print_verbose() should be ok (or did I miss something
-here?). But currently these lines use the hardcoded '#' instead of
-the status.displaycommentprefix configuration and ignores coloring,
-looks like I need to fix this in the next iteration.
-
-
- builtin/commit.c          |  6 +++---
- t/t7507-commit-verbose.sh | 15 ++++++++++++++-
- wt-status.c               |  4 ++++
- wt-status.h               |  2 ++
- 4 files changed, 23 insertions(+), 4 deletions(-)
-
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 6ab4605..091a6e7 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -1602,9 +1602,9 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
-
- 	/* Truncate the message just before the diff, if any. */
- 	if (verbose) {
--		p = strstr(sb.buf, "\ndiff --git ");
--		if (p != NULL)
--			strbuf_setlen(&sb, p - sb.buf + 1);
-+		p = strstr(sb.buf, wt_status_diff_divider);
-+		if ((p != NULL) && (p > sb.buf) && (p[-1] == '\n'))
-+			strbuf_setlen(&sb, p - sb.buf);
- 	}
-
- 	if (cleanup_mode != CLEANUP_NONE)
-diff --git a/t/t7507-commit-verbose.sh b/t/t7507-commit-verbose.sh
-index da5bd3b..09c1150 100755
---- a/t/t7507-commit-verbose.sh
-+++ b/t/t7507-commit-verbose.sh
-@@ -65,9 +65,22 @@ test_expect_success 'diff in message is retained without -v' '
- 	check_message diff
- '
-
--test_expect_failure 'diff in message is retained with -v' '
-+test_expect_success 'diff in message is retained with -v' '
- 	git commit --amend -F diff -v &&
- 	check_message diff
- '
-
-+test_expect_success 'submodule log is stripped out too with -v' '
-+	git config diff.submodule log &&
-+	git submodule add ./. sub &&
-+	git commit -m "sub added" &&
-+	(
-+		cd sub &&
-+		echo "more" >>file &&
-+		git commit -a -m "submodule commit"
-+	) &&
-+	GIT_EDITOR=cat test_must_fail git commit -a -v 2>err &&
-+	test_i18ngrep "Aborting commit due to empty commit message." err
-+'
-+
- test_done
-diff --git a/wt-status.c b/wt-status.c
-index b4e44ba..a3f7115 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -16,6 +16,8 @@
- #include "column.h"
- #include "strbuf.h"
-
-+const char wt_status_diff_divider[] = "# -----------------------------------8<-----------------------------------\n";
-+
- static char default_wt_status_colors[][COLOR_MAXLEN] = {
- 	GIT_COLOR_NORMAL, /* WT_STATUS_HEADER */
- 	GIT_COLOR_GREEN,  /* WT_STATUS_UPDATED */
-@@ -791,6 +793,8 @@ static void wt_status_print_verbose(struct wt_status *s)
- 	 */
- 	if (s->fp != stdout)
- 		rev.diffopt.use_color = 0;
-+	fprintf(s->fp, wt_status_diff_divider);
-+	fprintf(s->fp, _("# The diff below will be removed when keeping the previous line.\n"));
- 	run_diff_index(&rev, 1);
- }
-
-diff --git a/wt-status.h b/wt-status.h
-index 6c29e6f..cd2709f 100644
---- a/wt-status.h
-+++ b/wt-status.h
-@@ -91,6 +91,8 @@ struct wt_status_state {
- 	unsigned char cherry_pick_head_sha1[20];
- };
-
-+const char wt_status_diff_divider[];
-+
- void wt_status_prepare(struct wt_status *s);
- void wt_status_print(struct wt_status *s);
- void wt_status_collect(struct wt_status *s);
--- 
-1.8.5.rc2.1.g537c6ea
+> -'
+> -
+> -test_expect_success 'Create upstream config' '
+>         git update-ref refs/remotes/origin/master master &&
+>         git remote add origin nowhere &&
+>         git config branch.master.remote origin &&
+> --
+> 1.8.5.rc0.6.gfd75b41
