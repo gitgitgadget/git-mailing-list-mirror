@@ -1,90 +1,89 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: Re: Access different NAMESPACE of remote repo from client side
-Date: Sat, 16 Nov 2013 14:43:30 +0530
-Message-ID: <5287373A.8030604@gmail.com>
-References: <CANYiYbGiXkBQdXMGbcGV6WjtG82ax6z94TMatP2ZTQ54=KgMjg@mail.gmail.com>	<52862EEE.8010800@gmail.com>	<52863410.9090508@gmail.com> <CANYiYbHzHEFLshU8r-m=0CUo7JTu-iyv1W4N291hX8+r1BYY-w@mail.gmail.com>
+From: Thomas Rast <tr@thomasrast.ch>
+Subject: Re: [PATCH v3 0/21] pack bitmaps
+Date: Sat, 16 Nov 2013 11:28:28 +0100
+Message-ID: <87k3g8ljxv.fsf@linux-k42r.v.cablecom.net>
+References: <20131114124157.GA23784@sigill.intra.peff.net>
+	<5285224A.2070606@ramsay1.demon.co.uk>
+	<20131114213320.GA16466@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>,
-	Josh Triplett <josh@joshtriplett.org>,
-	Jamey Sharp <jamey@minilop.net>
-To: Jiang Xin <worldhello.net@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Nov 16 10:14:00 2013
+Content-Type: text/plain
+Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>, git@vger.kernel.org,
+	Vicent =?utf-8?Q?Mart=C3=AD?= <vicent@github.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Nov 16 11:29:09 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vhbx1-0002n8-F8
-	for gcvg-git-2@plane.gmane.org; Sat, 16 Nov 2013 10:13:59 +0100
+	id 1Vhd7i-0004y8-Tm
+	for gcvg-git-2@plane.gmane.org; Sat, 16 Nov 2013 11:29:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751585Ab3KPJNl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 16 Nov 2013 04:13:41 -0500
-Received: from mail-pb0-f43.google.com ([209.85.160.43]:61299 "EHLO
-	mail-pb0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751246Ab3KPJNh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Nov 2013 04:13:37 -0500
-Received: by mail-pb0-f43.google.com with SMTP id rq2so2531248pbb.2
-        for <git@vger.kernel.org>; Sat, 16 Nov 2013 01:13:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=74Xa5VeEdo/vY2opDBVkxwJGsHHfPA7aOMWKUln/2/g=;
-        b=ocL5NhLPA8DQER2CuknVb0d4JsEepSC51HZ2LYq7tOllXKDUlfRZWvZnSc83vre8fi
-         dSZtwYFK+2unNv2rZ7AMf/9B+jsGcbSTkvxAwoxOaowJLdQuUtLzspLtowU+EctsNVwn
-         GdLAOdhgc/rkSTFG8njzZ+AhsEb3KxVJAudgEDyPAmQYgl8V3DYuwvAb6OvMBNjkHHZl
-         3KhJrMe7/JEg11kl4Aud3oxhyIXz+oBS+i49uLn+7i/yxsFsqnWucwZl4111XaDqQnVj
-         PQSxjWpkhHOStCvucsZde5w+H3pL0fnM6REy+OugNMt6zsoJUIwJNc5zGgPaglWJs7Wr
-         seGw==
-X-Received: by 10.68.217.33 with SMTP id ov1mr10552282pbc.6.1384593216705;
-        Sat, 16 Nov 2013 01:13:36 -0800 (PST)
-Received: from sita-lt.atc.tcs.com ([14.96.31.122])
-        by mx.google.com with ESMTPSA id py4sm9734060pbb.33.2013.11.16.01.13.33
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 16 Nov 2013 01:13:35 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.1.0
-In-Reply-To: <CANYiYbHzHEFLshU8r-m=0CUo7JTu-iyv1W4N291hX8+r1BYY-w@mail.gmail.com>
-X-Enigmail-Version: 1.6
+	id S1751922Ab3KPK2s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 16 Nov 2013 05:28:48 -0500
+Received: from psi.thgersdorf.net ([176.9.98.78]:38002 "EHLO mail.psioc.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751750Ab3KPK2q (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Nov 2013 05:28:46 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by localhost.psioc.net (Postfix) with ESMTP id 9698B4D6570;
+	Sat, 16 Nov 2013 11:28:41 +0100 (CET)
+X-Virus-Scanned: amavisd-new at psioc.net
+Received: from mail.psioc.net ([127.0.0.1])
+	by localhost (mail.psioc.net [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id ba3e4VxT5Zxe; Sat, 16 Nov 2013 11:28:31 +0100 (CET)
+Received: from linux-k42r.v.cablecom.net.thomasrast.ch (unknown [213.55.184.161])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(Client did not present a certificate)
+	by mail.psioc.net (Postfix) with ESMTPSA id EB7BE4D6414;
+	Sat, 16 Nov 2013 11:28:30 +0100 (CET)
+In-Reply-To: <20131114213320.GA16466@sigill.intra.peff.net> (Jeff King's
+	message of "Thu, 14 Nov 2013 16:33:20 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237926>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237928>
 
-On 11/16/2013 01:30 PM, Jiang Xin wrote:
-> 2013/11/15 Sitaram Chamarty <sitaramc@gmail.com>:
->> On 11/15/2013 07:55 PM, Sitaram Chamarty wrote:
+Jeff King <peff@peff.net> writes:
 
-[snip]
+>> >   - the ewah code used gcc's __builtin_ctzll, but did not provide a
+>> >     suitable fallback. We now provide a fallback in C.
+>> 
+>> I was messing around with several implementations (including the use of
+>> msvc compiler intrinsics) with the intention of doing some timing tests
+>> etc. [I suspected my C fallback function (a different implementation to
+>> yours) would be slightly faster.]
+>
+> Yeah, I looked around for several implementations, and ultimately wrote
+> one that was the most readable to me. The one I found shortest and most
+> inscrutable was:
+>
+>   return popcount((x & -x) - 1);
 
->> I should add that the Gitolite model is: the user doesn't need to know
->> about namespaces, because namespaces are just things that the server
->> admin is setting up for his own reasons...
->>
-> 
-> I want to say something that git-namespace is sometimes significant
-> for normal user not only for admin.
+In two's complement, -x = ~x + 1 [1].  If you have a bunch of 0s at the
+end, as in (binary; a=~A etc)
 
-Sure.  I only meant in the model that I wrote that branch for.
+           x = abcdef1000
 
-But consider a slight change of syntax:
+then
 
-    repo dev/CREATOR/..*
-        C   =   @team
-        RW+ =   CREATOR
-        R   =   @all
-        option namespace.pattern-1 = dev/%/%/NS/* is @1/@3 in @2
+          ~x = ABCDEF0111
+ ~x + 1 = -x = ABCDEF1000
 
-Let's say linux and git are parent repos already created (maybe earlier
-in the conf).
+      (x&-x) = 0000001000
+  (x&-x) - 1 = 0000000111
 
-This conf will let you use URLs like
+popcount() of that is the number of trailing zeroes you started with.
 
-    dev/u1/git/NS/bar   (becomes namespace u1/bar in git)
-    dev/u2/git/NS/baz   (becomes namespace u2/baz in git)
+Please don't ask me to work out what happens in border cases; my head
+hurts already.
 
-Yeah it looks like a kludge, but all I wanted to do was to show you that
-it's not entirely true to say the client cannot control the namespace!
+
+[1] because x + ~x is all one bits.  +1 makes it overflow to 0, so that
+x + -x = 0 as it should.
+
+-- 
+Thomas Rast
+tr@thomasrast.ch
