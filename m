@@ -1,89 +1,83 @@
-From: Thomas Rast <tr@thomasrast.ch>
-Subject: Re: [PATCH v3 0/21] pack bitmaps
-Date: Sat, 16 Nov 2013 11:28:28 +0100
-Message-ID: <87k3g8ljxv.fsf@linux-k42r.v.cablecom.net>
-References: <20131114124157.GA23784@sigill.intra.peff.net>
-	<5285224A.2070606@ramsay1.demon.co.uk>
-	<20131114213320.GA16466@sigill.intra.peff.net>
+From: Bryan Turner <bturner@atlassian.com>
+Subject: Symbolic refs break ref advertisement on 1.8.4.3+
+Date: Sun, 17 Nov 2013 01:39:52 +1100
+Message-ID: <CAGyf7-EX2QXKyAwoxv2Ux5cjSp71m-dR+Vq4C3pevJrYaGu42g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>, git@vger.kernel.org,
-	Vicent =?utf-8?Q?Mart=C3=AD?= <vicent@github.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Nov 16 11:29:09 2013
+Content-Type: text/plain; charset=ISO-8859-1
+To: Git Users <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Nov 16 15:40:41 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vhd7i-0004y8-Tm
-	for gcvg-git-2@plane.gmane.org; Sat, 16 Nov 2013 11:29:07 +0100
+	id 1Vhh3A-0001RC-ET
+	for gcvg-git-2@plane.gmane.org; Sat, 16 Nov 2013 15:40:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751922Ab3KPK2s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 16 Nov 2013 05:28:48 -0500
-Received: from psi.thgersdorf.net ([176.9.98.78]:38002 "EHLO mail.psioc.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751750Ab3KPK2q (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Nov 2013 05:28:46 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by localhost.psioc.net (Postfix) with ESMTP id 9698B4D6570;
-	Sat, 16 Nov 2013 11:28:41 +0100 (CET)
-X-Virus-Scanned: amavisd-new at psioc.net
-Received: from mail.psioc.net ([127.0.0.1])
-	by localhost (mail.psioc.net [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id ba3e4VxT5Zxe; Sat, 16 Nov 2013 11:28:31 +0100 (CET)
-Received: from linux-k42r.v.cablecom.net.thomasrast.ch (unknown [213.55.184.161])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(Client did not present a certificate)
-	by mail.psioc.net (Postfix) with ESMTPSA id EB7BE4D6414;
-	Sat, 16 Nov 2013 11:28:30 +0100 (CET)
-In-Reply-To: <20131114213320.GA16466@sigill.intra.peff.net> (Jeff King's
-	message of "Thu, 14 Nov 2013 16:33:20 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+	id S1752057Ab3KPOjz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 16 Nov 2013 09:39:55 -0500
+Received: from na3sys009aog134.obsmtp.com ([74.125.149.83]:54728 "HELO
+	na3sys009aog134.obsmtp.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1751837Ab3KPOjx (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 16 Nov 2013 09:39:53 -0500
+Received: from mail-oa0-f48.google.com ([209.85.219.48]) (using TLSv1) by na3sys009aob134.postini.com ([74.125.148.12]) with SMTP
+	ID DSNKUoeDuMVpa5/ZZw106CuctWylBidNFjzg@postini.com; Sat, 16 Nov 2013 06:39:53 PST
+Received: by mail-oa0-f48.google.com with SMTP id n16so5183126oag.7
+        for <git@vger.kernel.org>; Sat, 16 Nov 2013 06:39:52 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=dXa60EXOeDEMLUsnx5H1Pg1gZ3slLKCMp/MbIszBzRQ=;
+        b=dw2wGgKtd73SRWdNfwIboKNGMoM7yDtjJcLpV2hSHZHvjPKMguqk62tfh5hfe1bktK
+         hCGR+E7p4FQ8QhCx+SoG67b0cXPVukGSoyWEzCSIsT5CpYWa8UO9bD1jSTLK9cP9wK9J
+         xxg2yTTlgNzboRnltN5Y8SkleRoocfeqo+s1lm9N2K+plEW90auDc4ZtQw2+lfUf3CD+
+         /jwsfze0W5XwFrOjkdSWyczpIa6isUtGg6JiSpMAJ2Pm+Nbi5W9VPsGE5jyrmvpKXm+D
+         StsvNJx3z3NjSVR/O3zxvlZZhg+1g7JxOyaYsRg44tt0jEb+/ylBE27M7/P1WSkOUsDq
+         sJOg==
+X-Gm-Message-State: ALoCoQmvtKHQgE0NnLyBXIgeoYrK8tlBQCfU0AapUoaUfaFRoqjxb+XwrN3QGR+c2UH8+CJFALVxVcXzY1HKhk7dcSVMWUpfrlufXrehNjzEiIIyd9qtoL6g6vf4fhUpSjV9FhziLelgQA+q7j+WFblfuYyBEl9ROw==
+X-Received: by 10.60.133.233 with SMTP id pf9mr12027096oeb.46.1384612792298;
+        Sat, 16 Nov 2013 06:39:52 -0800 (PST)
+X-Received: by 10.60.133.233 with SMTP id pf9mr12027088oeb.46.1384612792152;
+ Sat, 16 Nov 2013 06:39:52 -0800 (PST)
+Received: by 10.182.92.114 with HTTP; Sat, 16 Nov 2013 06:39:52 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237928>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237929>
 
-Jeff King <peff@peff.net> writes:
+According to a git bisect between the v1.8.4 and v1.8.4.3 tags, it
+appears the changes in 5e7dcad, "upload-pack: send non-HEAD symbolic
+refs", cause the ref advertisement to fail of the repository has more
+than a handful of symbolic refs. Here's a simple reproduce case
+(tested on Bash):
 
->> >   - the ewah code used gcc's __builtin_ctzll, but did not provide a
->> >     suitable fallback. We now provide a fallback in C.
->> 
->> I was messing around with several implementations (including the use of
->> msvc compiler intrinsics) with the intention of doing some timing tests
->> etc. [I suspected my C fallback function (a different implementation to
->> yours) would be slightly faster.]
->
-> Yeah, I looked around for several implementations, and ultimately wrote
-> one that was the most readable to me. The one I found shortest and most
-> inscrutable was:
->
->   return popcount((x & -x) - 1);
+Aphrael:example bturner$ git version
+git version 1.8.4.3
+Aphrael:symbolic-refs bturner$ git init example
+Initialized empty Git repository in /Users/bturner/example/.git/
+Aphrael:symbolic-refs bturner$ cd example
+Aphrael:example bturner$ echo "Testing..." > file.txt
+Aphrael:example bturner$ git add file.txt
+Aphrael:example bturner$ git commit -m "Initial commit"
+[master (root-commit) b4c4b2a] Initial commit
+ 1 file changed, 1 insertion(+)
+ create mode 100644 file.txt
+Aphrael:example bturner$ for ((i=1;i<21;i++)); do git symbolic-ref
+refs/heads/syms/$i refs/heads/master; done
+Aphrael:example bturner$ git ls-remote .
+fatal: protocol error: impossibly long line
+fatal: Could not read from remote repository.
 
-In two's complement, -x = ~x + 1 [1].  If you have a bunch of 0s at the
-end, as in (binary; a=~A etc)
+A symref= entry is written into the first packet of the ref
+advertisement, right after the capabilities, for each symbolic ref in
+the repository. Unfortunately, no splitting is done on that value and
+so once you have 15-20 symbolic refs (more or less depending on path
+lengths), you blow the 996 byte limit in format_packet (pkt-line.c)
+and all further clone/fetch operations fail.
 
-           x = abcdef1000
+I've verified this same issue exists in all 1.8.5 RCs.
 
-then
-
-          ~x = ABCDEF0111
- ~x + 1 = -x = ABCDEF1000
-
-      (x&-x) = 0000001000
-  (x&-x) - 1 = 0000000111
-
-popcount() of that is the number of trailing zeroes you started with.
-
-Please don't ask me to work out what happens in border cases; my head
-hurts already.
-
-
-[1] because x + ~x is all one bits.  +1 makes it overflow to 0, so that
-x + -x = 0 as it should.
-
--- 
-Thomas Rast
-tr@thomasrast.ch
+Best regards,
+Bryan Turner
