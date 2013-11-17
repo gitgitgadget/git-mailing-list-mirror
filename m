@@ -1,7 +1,7 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v2 02/86] diff: replace prefixcmp() with starts_with()
-Date: Sun, 17 Nov 2013 23:05:54 +0100
-Message-ID: <20131117220719.4386.53158.chriscool@tuxfamily.org>
+Subject: [PATCH v2 08/86] transport*: replace prefixcmp() with starts_with()
+Date: Sun, 17 Nov 2013 23:06:00 +0100
+Message-ID: <20131117220719.4386.15982.chriscool@tuxfamily.org>
 References: <20131117215732.4386.19345.chriscool@tuxfamily.org>
 Cc: git@vger.kernel.org, Avery Pennarun <apenwarr@gmail.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
@@ -9,262 +9,186 @@ Cc: git@vger.kernel.org, Avery Pennarun <apenwarr@gmail.com>,
 	Jeff King <peff@peff.net>, Max Horn <max@quendi.de>,
 	Andreas Ericsson <ae@op5.se>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Nov 19 22:05:45 2013
+X-From: git-owner@vger.kernel.org Tue Nov 19 22:05:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VisUS-0002aL-M3
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Nov 2013 22:05:45 +0100
+	id 1VisUU-0002aL-9l
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Nov 2013 22:05:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752989Ab3KSVFe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Nov 2013 16:05:34 -0500
-Received: from mail-2y.bbox.fr ([194.158.98.15]:36255 "EHLO mail-2y.bbox.fr"
+	id S1753039Ab3KSVFm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Nov 2013 16:05:42 -0500
+Received: from mail-1y.bbox.fr ([194.158.98.14]:63459 "EHLO mail-1y.bbox.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752202Ab3KSVFc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Nov 2013 16:05:32 -0500
+	id S1752798Ab3KSVFd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Nov 2013 16:05:33 -0500
 Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-2y.bbox.fr (Postfix) with ESMTP id 0B20766;
+	by mail-1y.bbox.fr (Postfix) with ESMTP id 978BF57;
 	Tue, 19 Nov 2013 22:05:31 +0100 (CET)
-X-git-sha1: f608173d159b1aeb0ebc45ad4012df7f1b94b3b1 
+X-git-sha1: 8020d1377aa715cc914e0b0d05305595073e98c8 
 X-Mailer: git-mail-commits v0.5.2
 In-Reply-To: <20131117215732.4386.19345.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238045>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238046>
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- diff.c | 56 ++++++++++++++++++++++++++++----------------------------
- 1 file changed, 28 insertions(+), 28 deletions(-)
+ transport-helper.c | 16 ++++++++--------
+ transport.c        | 28 ++++++++++++++--------------
+ 2 files changed, 22 insertions(+), 22 deletions(-)
 
-diff --git a/diff.c b/diff.c
-index a04a34d..4b42997 100644
---- a/diff.c
-+++ b/diff.c
-@@ -235,7 +235,7 @@ int git_diff_basic_config(const char *var, const char *value, void *cb)
- 	if (userdiff_config(var, value) < 0)
- 		return -1;
+diff --git a/transport-helper.c b/transport-helper.c
+index b32e2d6..96de26d 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -190,7 +190,7 @@ static struct child_process *get_helper(struct transport *transport)
+ 			data->export = 1;
+ 		else if (!strcmp(capname, "check-connectivity"))
+ 			data->check_connectivity = 1;
+-		else if (!data->refspecs && !prefixcmp(capname, "refspec ")) {
++		else if (!data->refspecs && starts_with(capname, "refspec ")) {
+ 			ALLOC_GROW(refspecs,
+ 				   refspec_nr + 1,
+ 				   refspec_alloc);
+@@ -199,17 +199,17 @@ static struct child_process *get_helper(struct transport *transport)
+ 			data->connect = 1;
+ 		} else if (!strcmp(capname, "signed-tags")) {
+ 			data->signed_tags = 1;
+-		} else if (!prefixcmp(capname, "export-marks ")) {
++		} else if (starts_with(capname, "export-marks ")) {
+ 			struct strbuf arg = STRBUF_INIT;
+ 			strbuf_addstr(&arg, "--export-marks=");
+ 			strbuf_addstr(&arg, capname + strlen("export-marks "));
+ 			data->export_marks = strbuf_detach(&arg, NULL);
+-		} else if (!prefixcmp(capname, "import-marks")) {
++		} else if (starts_with(capname, "import-marks")) {
+ 			struct strbuf arg = STRBUF_INIT;
+ 			strbuf_addstr(&arg, "--import-marks=");
+ 			strbuf_addstr(&arg, capname + strlen("import-marks "));
+ 			data->import_marks = strbuf_detach(&arg, NULL);
+-		} else if (!prefixcmp(capname, "no-private-update")) {
++		} else if (starts_with(capname, "no-private-update")) {
+ 			data->no_private_update = 1;
+ 		} else if (mandatory) {
+ 			die("Unknown mandatory capability %s. This remote "
+@@ -310,7 +310,7 @@ static int set_helper_option(struct transport *transport,
  
--	if (!prefixcmp(var, "diff.color.") || !prefixcmp(var, "color.diff.")) {
-+	if (starts_with(var, "diff.color.") || starts_with(var, "color.diff.")) {
- 		int slot = parse_diff_color_slot(var, 11);
- 		if (slot < 0)
- 			return 0;
-@@ -264,7 +264,7 @@ int git_diff_basic_config(const char *var, const char *value, void *cb)
+ 	if (!strcmp(buf.buf, "ok"))
+ 		ret = 0;
+-	else if (!prefixcmp(buf.buf, "error")) {
++	else if (starts_with(buf.buf, "error")) {
+ 		ret = -1;
+ 	} else if (!strcmp(buf.buf, "unsupported"))
+ 		ret = 1;
+@@ -374,7 +374,7 @@ static int fetch_with_fetch(struct transport *transport,
+ 	while (1) {
+ 		recvline(data, &buf);
+ 
+-		if (!prefixcmp(buf.buf, "lock ")) {
++		if (starts_with(buf.buf, "lock ")) {
+ 			const char *name = buf.buf + 5;
+ 			if (transport->pack_lockfile)
+ 				warning("%s also locked %s", data->name, name);
+@@ -645,10 +645,10 @@ static int push_update_ref_status(struct strbuf *buf,
+ 	char *refname, *msg;
+ 	int status;
+ 
+-	if (!prefixcmp(buf->buf, "ok ")) {
++	if (starts_with(buf->buf, "ok ")) {
+ 		status = REF_STATUS_OK;
+ 		refname = buf->buf + 3;
+-	} else if (!prefixcmp(buf->buf, "error ")) {
++	} else if (starts_with(buf->buf, "error ")) {
+ 		status = REF_STATUS_REMOTE_REJECT;
+ 		refname = buf->buf + 6;
+ 	} else
+diff --git a/transport.c b/transport.c
+index 7202b77..8023956 100644
+--- a/transport.c
++++ b/transport.c
+@@ -169,13 +169,13 @@ static void set_upstreams(struct transport *transport, struct ref *refs,
+ 		remotename = ref->name;
+ 		tmp = resolve_ref_unsafe(localname, sha, 1, &flag);
+ 		if (tmp && flag & REF_ISSYMREF &&
+-			!prefixcmp(tmp, "refs/heads/"))
++			starts_with(tmp, "refs/heads/"))
+ 			localname = tmp;
+ 
+ 		/* Both source and destination must be local branches. */
+-		if (!localname || prefixcmp(localname, "refs/heads/"))
++		if (!localname || !starts_with(localname, "refs/heads/"))
+ 			continue;
+-		if (!remotename || prefixcmp(remotename, "refs/heads/"))
++		if (!remotename || !starts_with(remotename, "refs/heads/"))
+ 			continue;
+ 
+ 		if (!pretend)
+@@ -191,7 +191,7 @@ static void set_upstreams(struct transport *transport, struct ref *refs,
+ 
+ static const char *rsync_url(const char *url)
+ {
+-	return prefixcmp(url, "rsync://") ? skip_prefix(url, "rsync:") : url;
++	return !starts_with(url, "rsync://") ? skip_prefix(url, "rsync:") : url;
+ }
+ 
+ static struct ref *get_refs_via_rsync(struct transport *transport, int for_push)
+@@ -296,8 +296,8 @@ static int write_one_ref(const char *name, const unsigned char *sha1,
+ 	FILE *f;
+ 
+ 	/* when called via for_each_ref(), flags is non-zero */
+-	if (flags && prefixcmp(name, "refs/heads/") &&
+-			prefixcmp(name, "refs/tags/"))
++	if (flags && !starts_with(name, "refs/heads/") &&
++			!starts_with(name, "refs/tags/"))
  		return 0;
+ 
+ 	strbuf_addstr(buf, name);
+@@ -652,7 +652,7 @@ static void print_ok_ref_status(struct ref *ref, int porcelain)
+ 		print_ref_status('-', "[deleted]", ref, NULL, NULL, porcelain);
+ 	else if (is_null_sha1(ref->old_sha1))
+ 		print_ref_status('*',
+-			(!prefixcmp(ref->name, "refs/tags/") ? "[new tag]" :
++			(starts_with(ref->name, "refs/tags/") ? "[new tag]" :
+ 			"[new branch]"),
+ 			ref, ref->peer_ref, NULL, porcelain);
+ 	else {
+@@ -930,13 +930,13 @@ struct transport *transport_get(struct remote *remote, const char *url)
+ 
+ 		while (is_urlschemechar(p == url, *p))
+ 			p++;
+-		if (!prefixcmp(p, "::"))
++		if (starts_with(p, "::"))
+ 			helper = xstrndup(url, p - url);
  	}
  
--	if (!prefixcmp(var, "submodule."))
-+	if (starts_with(var, "submodule."))
- 		return parse_submodule_config_option(var, value);
- 
- 	return git_default_config(var, value, cb);
-@@ -1215,7 +1215,7 @@ static void fn_out_consume(void *priv, char *line, unsigned long len)
- 			diff_words_append(line, len,
- 					  &ecbdata->diff_words->plus);
- 			return;
--		} else if (!prefixcmp(line, "\\ ")) {
-+		} else if (starts_with(line, "\\ ")) {
- 			/*
- 			 * Eat the "no newline at eof" marker as if we
- 			 * saw a "+" or "-" line with nothing on it,
-@@ -2387,9 +2387,9 @@ static void builtin_diff(const char *name_a,
- 			xdiff_set_find_func(&xecfg, pe->pattern, pe->cflags);
- 		if (!diffopts)
- 			;
--		else if (!prefixcmp(diffopts, "--unified="))
-+		else if (starts_with(diffopts, "--unified="))
- 			xecfg.ctxlen = strtoul(diffopts + 10, NULL, 10);
--		else if (!prefixcmp(diffopts, "-u"))
-+		else if (starts_with(diffopts, "-u"))
- 			xecfg.ctxlen = strtoul(diffopts + 2, NULL, 10);
- 		if (o->word_diff)
- 			init_diff_words_data(&ecbdata, o, one, two);
-@@ -3388,7 +3388,7 @@ int parse_long_opt(const char *opt, const char **argv,
- 	if (arg[0] != '-' || arg[1] != '-')
- 		return 0;
- 	arg += strlen("--");
--	if (prefixcmp(arg, opt))
-+	if (!starts_with(arg, opt))
- 		return 0;
- 	arg += strlen(opt);
- 	if (*arg == '=') { /* sticked form: --option=value */
-@@ -3419,7 +3419,7 @@ static int stat_opt(struct diff_options *options, const char **av)
- 
- 	switch (*arg) {
- 	case '-':
--		if (!prefixcmp(arg, "-width")) {
-+		if (starts_with(arg, "-width")) {
- 			arg += strlen("-width");
- 			if (*arg == '=')
- 				width = strtoul(arg + 1, &end, 10);
-@@ -3429,7 +3429,7 @@ static int stat_opt(struct diff_options *options, const char **av)
- 				width = strtoul(av[1], &end, 10);
- 				argcount = 2;
- 			}
--		} else if (!prefixcmp(arg, "-name-width")) {
-+		} else if (starts_with(arg, "-name-width")) {
- 			arg += strlen("-name-width");
- 			if (*arg == '=')
- 				name_width = strtoul(arg + 1, &end, 10);
-@@ -3439,7 +3439,7 @@ static int stat_opt(struct diff_options *options, const char **av)
- 				name_width = strtoul(av[1], &end, 10);
- 				argcount = 2;
- 			}
--		} else if (!prefixcmp(arg, "-graph-width")) {
-+		} else if (starts_with(arg, "-graph-width")) {
- 			arg += strlen("-graph-width");
- 			if (*arg == '=')
- 				graph_width = strtoul(arg + 1, &end, 10);
-@@ -3449,7 +3449,7 @@ static int stat_opt(struct diff_options *options, const char **av)
- 				graph_width = strtoul(av[1], &end, 10);
- 				argcount = 2;
- 			}
--		} else if (!prefixcmp(arg, "-count")) {
-+		} else if (starts_with(arg, "-count")) {
- 			arg += strlen("-count");
- 			if (*arg == '=')
- 				count = strtoul(arg + 1, &end, 10);
-@@ -3611,15 +3611,15 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
- 		options->output_format |= DIFF_FORMAT_SHORTSTAT;
- 	else if (!strcmp(arg, "-X") || !strcmp(arg, "--dirstat"))
- 		return parse_dirstat_opt(options, "");
--	else if (!prefixcmp(arg, "-X"))
-+	else if (starts_with(arg, "-X"))
- 		return parse_dirstat_opt(options, arg + 2);
--	else if (!prefixcmp(arg, "--dirstat="))
-+	else if (starts_with(arg, "--dirstat="))
- 		return parse_dirstat_opt(options, arg + 10);
- 	else if (!strcmp(arg, "--cumulative"))
- 		return parse_dirstat_opt(options, "cumulative");
- 	else if (!strcmp(arg, "--dirstat-by-file"))
- 		return parse_dirstat_opt(options, "files");
--	else if (!prefixcmp(arg, "--dirstat-by-file=")) {
-+	else if (starts_with(arg, "--dirstat-by-file=")) {
- 		parse_dirstat_opt(options, "files");
- 		return parse_dirstat_opt(options, arg + 18);
- 	}
-@@ -3636,17 +3636,17 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
- 		options->output_format |= DIFF_FORMAT_NAME_STATUS;
- 	else if (!strcmp(arg, "-s") || !strcmp(arg, "--no-patch"))
- 		options->output_format |= DIFF_FORMAT_NO_OUTPUT;
--	else if (!prefixcmp(arg, "--stat"))
-+	else if (starts_with(arg, "--stat"))
- 		/* --stat, --stat-width, --stat-name-width, or --stat-count */
- 		return stat_opt(options, av);
- 
- 	/* renames options */
--	else if (!prefixcmp(arg, "-B") || !prefixcmp(arg, "--break-rewrites=") ||
-+	else if (starts_with(arg, "-B") || starts_with(arg, "--break-rewrites=") ||
- 		 !strcmp(arg, "--break-rewrites")) {
- 		if ((options->break_opt = diff_scoreopt_parse(arg)) == -1)
- 			return error("invalid argument to -B: %s", arg+2);
- 	}
--	else if (!prefixcmp(arg, "-M") || !prefixcmp(arg, "--find-renames=") ||
-+	else if (starts_with(arg, "-M") || starts_with(arg, "--find-renames=") ||
- 		 !strcmp(arg, "--find-renames")) {
- 		if ((options->rename_score = diff_scoreopt_parse(arg)) == -1)
- 			return error("invalid argument to -M: %s", arg+2);
-@@ -3655,7 +3655,7 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
- 	else if (!strcmp(arg, "-D") || !strcmp(arg, "--irreversible-delete")) {
- 		options->irreversible_delete = 1;
- 	}
--	else if (!prefixcmp(arg, "-C") || !prefixcmp(arg, "--find-copies=") ||
-+	else if (starts_with(arg, "-C") || starts_with(arg, "--find-copies=") ||
- 		 !strcmp(arg, "--find-copies")) {
- 		if (options->detect_rename == DIFF_DETECT_COPY)
- 			DIFF_OPT_SET(options, FIND_COPIES_HARDER);
-@@ -3671,7 +3671,7 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
- 		DIFF_OPT_CLR(options, RENAME_EMPTY);
- 	else if (!strcmp(arg, "--relative"))
- 		DIFF_OPT_SET(options, RELATIVE_NAME);
--	else if (!prefixcmp(arg, "--relative=")) {
-+	else if (starts_with(arg, "--relative=")) {
- 		DIFF_OPT_SET(options, RELATIVE_NAME);
- 		options->prefix = arg + 11;
- 	}
-@@ -3724,7 +3724,7 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
- 		DIFF_OPT_CLR(options, FOLLOW_RENAMES);
- 	else if (!strcmp(arg, "--color"))
- 		options->use_color = 1;
--	else if (!prefixcmp(arg, "--color=")) {
-+	else if (starts_with(arg, "--color=")) {
- 		int value = git_config_colorbool(NULL, arg+8);
- 		if (value < 0)
- 			return error("option `color' expects \"always\", \"auto\", or \"never\"");
-@@ -3736,7 +3736,7 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
- 		options->use_color = 1;
- 		options->word_diff = DIFF_WORDS_COLOR;
- 	}
--	else if (!prefixcmp(arg, "--color-words=")) {
-+	else if (starts_with(arg, "--color-words=")) {
- 		options->use_color = 1;
- 		options->word_diff = DIFF_WORDS_COLOR;
- 		options->word_regex = arg + 14;
-@@ -3745,7 +3745,7 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
- 		if (options->word_diff == DIFF_WORDS_NONE)
- 			options->word_diff = DIFF_WORDS_PLAIN;
- 	}
--	else if (!prefixcmp(arg, "--word-diff=")) {
-+	else if (starts_with(arg, "--word-diff=")) {
- 		const char *type = arg + 12;
- 		if (!strcmp(type, "plain"))
- 			options->word_diff = DIFF_WORDS_PLAIN;
-@@ -3781,12 +3781,12 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
- 	else if (!strcmp(arg, "--ignore-submodules")) {
- 		DIFF_OPT_SET(options, OVERRIDE_SUBMODULE_CONFIG);
- 		handle_ignore_submodules_arg(options, "all");
--	} else if (!prefixcmp(arg, "--ignore-submodules=")) {
-+	} else if (starts_with(arg, "--ignore-submodules=")) {
- 		DIFF_OPT_SET(options, OVERRIDE_SUBMODULE_CONFIG);
- 		handle_ignore_submodules_arg(options, arg + 20);
- 	} else if (!strcmp(arg, "--submodule"))
- 		DIFF_OPT_SET(options, SUBMODULE_LOG);
--	else if (!prefixcmp(arg, "--submodule="))
-+	else if (starts_with(arg, "--submodule="))
- 		return parse_submodule_opt(options, arg + 12);
- 
- 	/* misc options */
-@@ -3822,7 +3822,7 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
- 	}
- 	else if (!strcmp(arg, "--abbrev"))
- 		options->abbrev = DEFAULT_ABBREV;
--	else if (!prefixcmp(arg, "--abbrev=")) {
-+	else if (starts_with(arg, "--abbrev=")) {
- 		options->abbrev = strtoul(arg + 9, NULL, 10);
- 		if (options->abbrev < MINIMUM_ABBREV)
- 			options->abbrev = MINIMUM_ABBREV;
-@@ -3904,15 +3904,15 @@ static int diff_scoreopt_parse(const char *opt)
- 	cmd = *opt++;
- 	if (cmd == '-') {
- 		/* convert the long-form arguments into short-form versions */
--		if (!prefixcmp(opt, "break-rewrites")) {
-+		if (starts_with(opt, "break-rewrites")) {
- 			opt += strlen("break-rewrites");
- 			if (*opt == 0 || *opt++ == '=')
- 				cmd = 'B';
--		} else if (!prefixcmp(opt, "find-copies")) {
-+		} else if (starts_with(opt, "find-copies")) {
- 			opt += strlen("find-copies");
- 			if (*opt == 0 || *opt++ == '=')
- 				cmd = 'C';
--		} else if (!prefixcmp(opt, "find-renames")) {
-+		} else if (starts_with(opt, "find-renames")) {
- 			opt += strlen("find-renames");
- 			if (*opt == 0 || *opt++ == '=')
- 				cmd = 'M';
-@@ -4322,7 +4322,7 @@ static void patch_id_consume(void *priv, char *line, unsigned long len)
- 	int new_len;
- 
- 	/* Ignore line numbers when computing the SHA1 of the patch */
--	if (!prefixcmp(line, "@@ -"))
-+	if (starts_with(line, "@@ -"))
- 		return;
- 
- 	new_len = remove_space(line, len);
+ 	if (helper) {
+ 		transport_helper_init(ret, helper);
+-	} else if (!prefixcmp(url, "rsync:")) {
++	} else if (starts_with(url, "rsync:")) {
+ 		ret->get_refs_list = get_refs_via_rsync;
+ 		ret->fetch = fetch_objs_via_rsync;
+ 		ret->push = rsync_transport_push;
+@@ -949,11 +949,11 @@ struct transport *transport_get(struct remote *remote, const char *url)
+ 		ret->disconnect = close_bundle;
+ 		ret->smart_options = NULL;
+ 	} else if (!is_url(url)
+-		|| !prefixcmp(url, "file://")
+-		|| !prefixcmp(url, "git://")
+-		|| !prefixcmp(url, "ssh://")
+-		|| !prefixcmp(url, "git+ssh://")
+-		|| !prefixcmp(url, "ssh+git://")) {
++		|| starts_with(url, "file://")
++		|| starts_with(url, "git://")
++		|| starts_with(url, "ssh://")
++		|| starts_with(url, "git+ssh://")
++		|| starts_with(url, "ssh+git://")) {
+ 		/* These are builtin smart transports. */
+ 		struct git_transport_data *data = xcalloc(1, sizeof(*data));
+ 		ret->data = data;
 -- 
 1.8.4.1.561.g12affca
