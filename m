@@ -1,69 +1,68 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 00/86] replace prefixcmp() with has_prefix()
-Date: Sun, 17 Nov 2013 09:52:00 +0100 (CET)
-Message-ID: <20131117.095200.299497690980619465.chriscool@tuxfamily.org>
-References: <xmqq7gcdgvmf.fsf@gitster.dls.corp.google.com>
-	<20131113.074703.1555957018827670255.chriscool@tuxfamily.org>
-	<20131113071747.GA31251@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [RFC PATCH] commit -v: strip diffs and submodule shortlogs from
+ the commit message
+Date: Sun, 17 Nov 2013 03:53:57 -0500
+Message-ID: <20131117085357.GB17016@sigill.intra.peff.net>
+References: <528140F5.6090700@web.de>
+ <loom.20131111T214646-550@post.gmane.org>
+ <52814C35.6040205@web.de>
+ <5281DCC5.2000209@kdbg.org>
+ <5282A90A.4030900@web.de>
+ <xmqqy54tfeje.fsf@gitster.dls.corp.google.com>
+ <5283C701.8090400@web.de>
+ <xmqq7gccdq67.fsf@gitster.dls.corp.google.com>
+ <5287F735.3030306@web.de>
+ <CAPig+cTiwA7wg2eeCcfw8d=-+_QoxGiWVq9sABNdUTCka=5fbg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: gitster@pobox.com, ae@op5.se, git@vger.kernel.org,
-	apenwarr@gmail.com, Johannes.Schindelin@gmx.de, jrnieder@gmail.com,
-	max@quendi.de
-To: peff@peff.net
-X-From: git-owner@vger.kernel.org Sun Nov 17 09:52:11 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Jens Lehmann <Jens.Lehmann@web.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Sixt <j6t@kdbg.org>, Ari Pollak <ari@debian.org>,
+	Git List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Sun Nov 17 09:54:04 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vhy5S-00041Q-R7
-	for gcvg-git-2@plane.gmane.org; Sun, 17 Nov 2013 09:52:11 +0100
+	id 1Vhy7I-0004fW-Fq
+	for gcvg-git-2@plane.gmane.org; Sun, 17 Nov 2013 09:54:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752748Ab3KQIwH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Nov 2013 03:52:07 -0500
-Received: from mail-3y.bbox.fr ([194.158.98.45]:61779 "EHLO mail-3y.bbox.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751794Ab3KQIwE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Nov 2013 03:52:04 -0500
-Received: from localhost (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-3y.bbox.fr (Postfix) with ESMTP id AAB096C;
-	Sun, 17 Nov 2013 09:52:00 +0100 (CET)
-In-Reply-To: <20131113071747.GA31251@sigill.intra.peff.net>
-X-Mailer: Mew version 6.3 on Emacs 23.3 / Mule 6.0 (HANACHIRUSATO)
+	id S1752795Ab3KQIyB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Nov 2013 03:54:01 -0500
+Received: from cloud.peff.net ([50.56.180.127]:40725 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751794Ab3KQIx7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Nov 2013 03:53:59 -0500
+Received: (qmail 12652 invoked by uid 102); 17 Nov 2013 08:53:59 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 17 Nov 2013 02:53:59 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 17 Nov 2013 03:53:57 -0500
+Content-Disposition: inline
+In-Reply-To: <CAPig+cTiwA7wg2eeCcfw8d=-+_QoxGiWVq9sABNdUTCka=5fbg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237952>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237953>
 
-From: Jeff King <peff@peff.net>
->
-> On Wed, Nov 13, 2013 at 07:47:03AM +0100, Christian Couder wrote:
+On Sat, Nov 16, 2013 at 07:22:29PM -0500, Eric Sunshine wrote:
+
+> >         /* Truncate the message just before the diff, if any. */
+> >         if (verbose) {
+> > -               p = strstr(sb.buf, "\ndiff --git ");
+> > -               if (p != NULL)
+> > -                       strbuf_setlen(&sb, p - sb.buf + 1);
+> > +               p = strstr(sb.buf, wt_status_diff_divider);
 > 
->> My preference is:
->> 
->> 1) with an "s"
->> 2) "start"
->> 3) underscore
->> 
->> so that gives: starts_with() and ends_with()
-> 
-> FWIW, that looks good to me, too. Whether there is confusion over the
-> meaning of "suffix" or not, it makes sense, all other things being
-> equal, to use the same terms as other popular languages.
-> 
-> Like you, I prefer "with an s", but we are deep in bikeshedding
-> territory now. I can live with anything. :)
+> Would it make sense to use the more flexible is_scissors_line() from
+> builtin/mailinfo.c here?
 
-When I prepared a new version of my patch series, this time to rename
-suffixcmp() to ends_with(), it appeared that we already have a static
-ends_with() function in vcs-svn/fast_export.c with another slightly
-different implementation :-)
+I don't think so. We are not trying to be friendly to a remote source
+which has given us an arbitrarily-written scissor line. Rather the
+opposite: we are trying to be very strict only to break on the line we
+have included ourselves.
 
-I will send a new version that will remove this redundant
-implementation.
-
-Cheers,
-Christian.
+-Peff
