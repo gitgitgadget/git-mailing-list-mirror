@@ -1,144 +1,121 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [RFC PATCH] commit -v: strip diffs and submodule shortlogs from
- the commit message
-Date: Sat, 16 Nov 2013 19:22:29 -0500
-Message-ID: <CAPig+cTiwA7wg2eeCcfw8d=-+_QoxGiWVq9sABNdUTCka=5fbg@mail.gmail.com>
-References: <loom.20131110T222043-57@post.gmane.org>
-	<528140F5.6090700@web.de>
-	<loom.20131111T214646-550@post.gmane.org>
-	<52814C35.6040205@web.de>
-	<5281DCC5.2000209@kdbg.org>
-	<5282A90A.4030900@web.de>
-	<xmqqy54tfeje.fsf@gitster.dls.corp.google.com>
-	<5283C701.8090400@web.de>
-	<xmqq7gccdq67.fsf@gitster.dls.corp.google.com>
-	<5287F735.3030306@web.de>
+From: Peter van der Does <peter@avirtualhome.com>
+Subject: [ANNOUNCE] git-flow AVH Edition 1.7.0
+Date: Sat, 16 Nov 2013 19:08:34 -0500
+Message-ID: <20131116190834.319d5c2f@Indy>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
-	Ari Pollak <ari@debian.org>, Git List <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Sun Nov 17 01:22:51 2013
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Nov 17 01:29:42 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vhq8Z-0002pU-4w
-	for gcvg-git-2@plane.gmane.org; Sun, 17 Nov 2013 01:22:51 +0100
+	id 1VhqFB-0006jx-Gu
+	for gcvg-git-2@plane.gmane.org; Sun, 17 Nov 2013 01:29:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753215Ab3KQAWc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 16 Nov 2013 19:22:32 -0500
-Received: from mail-lb0-f170.google.com ([209.85.217.170]:46497 "EHLO
-	mail-lb0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752743Ab3KQAWa (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Nov 2013 19:22:30 -0500
-Received: by mail-lb0-f170.google.com with SMTP id w7so53067lbi.29
-        for <git@vger.kernel.org>; Sat, 16 Nov 2013 16:22:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=gOPzpRfZPLLwXmwcCIeyq2GCpkXA6hq9Av/oIn0puXg=;
-        b=AcDW+F4Y4d4fJLeVOQuFpVRFnbX0H59b2jb/VHfRwLEDxxYU9JDSzo58n9OV7aUnxc
-         tmgCgAPsetSc2OO5HsvS7uP6WfEjodaKSWXEaa38INhYqlpKyQZa4W3wzg3lmptc4mN5
-         A5rmij59xsb8o5+jvj7QKIVb+ldJ2Zeq9ABo2YBGmjfCLYdlKuLj2uXbI1y/VRaLhgdx
-         Qy8uuPXvlUi0RuitwpQiMKjYUPq0f2JhH2Fd+0ESDO0z8DvuTZn1TfOSYkX3W8UqOBz8
-         rRhLQuTe2r+ne0dBvekpytgsuTcYJ/5xmjYPkK9UOQ1rCSg/tEAXL7Q+6MW96Ur2r0Il
-         EOuA==
-X-Received: by 10.152.23.137 with SMTP id m9mr8274322laf.17.1384647749137;
- Sat, 16 Nov 2013 16:22:29 -0800 (PST)
-Received: by 10.114.200.180 with HTTP; Sat, 16 Nov 2013 16:22:29 -0800 (PST)
-In-Reply-To: <5287F735.3030306@web.de>
-X-Google-Sender-Auth: UcCKs2PaVbfulysWjW30mAuz4No
+	id S1753152Ab3KQA3e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 16 Nov 2013 19:29:34 -0500
+Received: from zandvoort.avirtualhome.com ([96.126.105.64]:45700 "EHLO
+	mail.avirtualhome.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751951Ab3KQA3d (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Nov 2013 19:29:33 -0500
+X-Greylist: delayed 1257 seconds by postgrey-1.27 at vger.kernel.org; Sat, 16 Nov 2013 19:29:33 EST
+Received: from Indy (c-69-248-90-230.hsd1.nj.comcast.net [69.248.90.230])
+	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by mail.avirtualhome.com (Postfix) with ESMTPSA id D301B17643
+	for <git@vger.kernel.org>; Sat, 16 Nov 2013 19:08:35 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=avirtualhome.com;
+	s=mail; t=1384646915;
+	bh=rVesuJt8WR5pF4OwyITjvAjUPdnRj+KIc5yRL4h9KvQ=;
+	h=Date:From:To:Subject:From;
+	b=gj1US187ycZa9vogqHowrPIsFOI5v3aj9Vtz+CuwyTz0E6XLXGNza5RhYhHjMbgrV
+	 CTW3LA6wBe3Adbi/CGaC0IZMw7iZ9ci/IBmQ01FevWgpCIsEw4cR5vb8vNDMoiD+Ei
+	 1MEaN0etJkBuAfJMPyELzjIky821qKUQVQlBeGdM=
+X-Mailer: Claws Mail 3.9.0 (GTK+ 2.24.17; x86_64-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237948>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237949>
 
-On Sat, Nov 16, 2013 at 5:52 PM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
-> When using the '-v' option of "git commit" the diff added to the commit
-> message temporarily for editing is stripped off after the user exited the
-> editor by searching for "\ndiff --git " and truncating the commmit message
-> there if it is found. But this approach has two problems: when the commit
-> message itself contains a line starting with "diff --git" it will be
-> truncated there prematurely. And when the "diff.submodule" setting is set
-> to "log", the diff may start with "Submodule <hash1>..<hash2>", which will
-> be left in the commit message while it shouldn't.
->
-> Fix that by introducing a special scissor separator line starting with the
-> comment character '#' followed by a line describing what it is for. The
-> scissor line is used to reliably detect the start of the diff so it can be
-> chopped off from the commit message, no matter what the user enters there.
-> Turn a known test failure fixed by this change into a successful test and
-> add another one for a diff starting with a submodule log.
->
-> Reported-by: Ari Pollak <ari@debian.org>
-> Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
-> ---
->
->  builtin/commit.c          |  6 +++---
->  t/t7507-commit-verbose.sh | 15 ++++++++++++++-
->  wt-status.c               |  4 ++++
->  wt-status.h               |  2 ++
->  4 files changed, 23 insertions(+), 4 deletions(-)
->
-> diff --git a/builtin/commit.c b/builtin/commit.c
-> index 6ab4605..091a6e7 100644
-> --- a/builtin/commit.c
-> +++ b/builtin/commit.c
-> @@ -1602,9 +1602,9 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
->
->         /* Truncate the message just before the diff, if any. */
->         if (verbose) {
-> -               p = strstr(sb.buf, "\ndiff --git ");
-> -               if (p != NULL)
-> -                       strbuf_setlen(&sb, p - sb.buf + 1);
-> +               p = strstr(sb.buf, wt_status_diff_divider);
+We are pleased to announce the release of git-flow AVH Edition 1.7.0
 
-Would it make sense to use the more flexible is_scissors_line() from
-builtin/mailinfo.c here?
+git-flow AVH Edition is a collection of git extensions to provide
+high-level repository operations for Vincent Driessen's branching
+model.
+The AVH Edition adds more functionality to the original git-flow[1] and
+several of the internal commands have been rewritten to speed up the
+software.
 
-> +               if ((p != NULL) && (p > sb.buf) && (p[-1] == '\n'))
-> +                       strbuf_setlen(&sb, p - sb.buf);
->         }
->
->         if (cleanup_mode != CLEANUP_NONE)
-> diff --git a/wt-status.c b/wt-status.c
-> index b4e44ba..a3f7115 100644
-> --- a/wt-status.c
-> +++ b/wt-status.c
-> @@ -16,6 +16,8 @@
->  #include "column.h"
->  #include "strbuf.h"
->
-> +const char wt_status_diff_divider[] = "# -----------------------------------8<-----------------------------------\n";
-> +
->  static char default_wt_status_colors[][COLOR_MAXLEN] = {
->         GIT_COLOR_NORMAL, /* WT_STATUS_HEADER */
->         GIT_COLOR_GREEN,  /* WT_STATUS_UPDATED */
-> @@ -791,6 +793,8 @@ static void wt_status_print_verbose(struct wt_status *s)
->          */
->         if (s->fp != stdout)
->                 rev.diffopt.use_color = 0;
-> +       fprintf(s->fp, wt_status_diff_divider);
-> +       fprintf(s->fp, _("# The diff below will be removed when keeping the previous line.\n"));
->         run_diff_index(&rev, 1);
->  }
->
-> diff --git a/wt-status.h b/wt-status.h
-> index 6c29e6f..cd2709f 100644
-> --- a/wt-status.h
-> +++ b/wt-status.h
-> @@ -91,6 +91,8 @@ struct wt_status_state {
->         unsigned char cherry_pick_head_sha1[20];
->  };
->
-> +const char wt_status_diff_divider[];
-> +
->  void wt_status_prepare(struct wt_status *s);
->  void wt_status_print(struct wt_status *s);
->  void wt_status_collect(struct wt_status *s);
-> --
+The release tar-ball and zip file can be found at:
+
+	https://github.com/petervanderdoes/gitflow/releases
+
+
+git-flow AVH Edition is compatible with the following systems:
+	Linux
+	BSD
+	Mac OS X
+	Windows
+
+
+Installation instructions for these systems can be found at:
+
+	https://github.com/petervanderdoes/gitflow/wiki#installing-git-flow
+
+
+
+git-flow AVH Edition 1.7.0 Release Notes
+========================================
+* Refactor the gitflow override flag functions.
+
+* Shortcut for finish, delete, and publish commands.  
+  Introduce the following new commands:  
+  * git flow finish
+  * git flow delete
+  * git flow publish
+  
+  These commands will perform the action on the branch that's currently
+  active.
+
+* No branch is needed for the following function:  
+  * git flow feature publish/finish/delete
+  * git flow release publish/finish/delete
+  * git flow hotfix publish/finish/delete
+  
+* Remove base configuration when deleting a feature/hotfix/release
+  branch.
+
+* Help text for certain commands is wrong.
+
+* Bugfix: Invalid function call.
+
+* Bugfix: No make installer fails
+
+* Support branches are no longer marked as experimental.
+  
+* Fix sanity check for release track command.
+
+* Fix feature pull.  
+  The pull request fails when there's no local branch with the same
+  name as the remote branch.
+  
+* Option for global hooks and filters directory.  
+  This is only for hooks and filters related to git-flow, not the
+  standard git hooks.
+
+--------------------------------------
+Footnotes:
+[1] The original set of extensions have not been updated since 2012 and
+    the last release was done in 2010
+-- 
+Peter van der Does
+
+GPG key: CB317D6E
+
+Site: http://avirtualhome.com
+GitHub: https://github.com/petervanderdoes
+Twitter: @petervanderdoes
