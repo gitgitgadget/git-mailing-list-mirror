@@ -1,7 +1,8 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v2 00/86] replace prefixcmp() with starts_with()
-Date: Sun, 17 Nov 2013 23:05:52 +0100
-Message-ID: <20131117215732.4386.19345.chriscool@tuxfamily.org>
+Subject: [PATCH v2 02/86] diff: replace prefixcmp() with starts_with()
+Date: Sun, 17 Nov 2013 23:05:54 +0100
+Message-ID: <20131117220719.4386.53158.chriscool@tuxfamily.org>
+References: <20131117215732.4386.19345.chriscool@tuxfamily.org>
 Cc: git@vger.kernel.org, Avery Pennarun <apenwarr@gmail.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Jonathan Nieder <jrnieder@gmail.com>,
@@ -14,245 +15,256 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VisUR-0002aL-Uz
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Nov 2013 22:05:44 +0100
+	id 1VisUS-0002aL-M3
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Nov 2013 22:05:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752985Ab3KSVFd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Nov 2013 16:05:33 -0500
-Received: from mail-2y.bbox.fr ([194.158.98.15]:36247 "EHLO mail-2y.bbox.fr"
+	id S1752989Ab3KSVFe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Nov 2013 16:05:34 -0500
+Received: from mail-2y.bbox.fr ([194.158.98.15]:36255 "EHLO mail-2y.bbox.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751939Ab3KSVFb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Nov 2013 16:05:31 -0500
+	id S1752202Ab3KSVFc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Nov 2013 16:05:32 -0500
 Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-2y.bbox.fr (Postfix) with ESMTP id C8DC33A;
-	Tue, 19 Nov 2013 22:05:29 +0100 (CET)
+	by mail-2y.bbox.fr (Postfix) with ESMTP id 0B20766;
+	Tue, 19 Nov 2013 22:05:31 +0100 (CET)
+X-git-sha1: f608173d159b1aeb0ebc45ad4012df7f1b94b3b1 
 X-Mailer: git-mail-commits v0.5.2
+In-Reply-To: <20131117215732.4386.19345.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238044>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238045>
 
-Here is a resend of a big patch series to replace prefixcmp()
-with a new starts_with() function.
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ diff.c | 56 ++++++++++++++++++++++++++++----------------------------
+ 1 file changed, 28 insertions(+), 28 deletions(-)
 
-The changes since the previous version are the following
-
-	- the function to replace prefixcmp() is now
-	  starts_with()
-	- the mispelling of prefixcmp() in the titles
-	  of the patches and emails is fixed
-
-The first patch of this series introduces starts_with() and
-the last patch removes prefixcmp().
-
-Except a few patches, it's possible to generate the patches
-in between using a script like the following: 
-
-===
-#!/bin/bash
-
-perl -pi -e 's/!prefixcmp\(/starts_with\(/g' "$1"
-perl -pi -e 's/prefixcmp\(/!starts_with\(/g' "$1"
-
-git commit -m "$1: replace prefixcmp() with starts_with()" "$1"
-===
-
-The few special cases are the following ones:
-
-        - remote*: replace prefixcmp() with starts_with()
-        - transport*: replace prefixcmp() with starts_with()
-        - environment: replace prefixcmp() with starts_with()
-
-In first 2 cases above, I processed a few files at the same
-time instead of just one.
-
-In the case of "environment", I removed " != 0" after
-"!starts_with(...)" as it is not necessary and makes it
-more difficult to understand the logic.
-
-Of course it's possible to squash many of the commits
-together if it is prefered.
-
-
-Christian Couder (86):
-  strbuf: add starts_with() to be used instead of prefixcmp()
-  diff: replace prefixcmp() with starts_with()
-  fast-import: replace prefixcmp() with starts_with()
-  remote*: replace prefixcmp() with starts_with()
-  daemon: replace prefixcmp() with starts_with()
-  pretty: replace prefixcmp() with starts_with()
-  revision: replace prefixcmp() with starts_with()
-  transport*: replace prefixcmp() with starts_with()
-  config: replace prefixcmp() with starts_with()
-  sha1_name: replace prefixcmp() with starts_with()
-  wt-status: replace prefixcmp() with starts_with()
-  upload-pack: replace prefixcmp() with starts_with()
-  test-line-buffer: replace prefixcmp() with starts_with()
-  parse-options: replace prefixcmp() with starts_with()
-  fetch-pack: replace prefixcmp() with starts_with()
-  git: replace prefixcmp() with starts_with()
-  tag: replace prefixcmp() with starts_with()
-  sequencer: replace prefixcmp() with starts_with()
-  commit: replace prefixcmp() with starts_with()
-  http: replace prefixcmp() with starts_with()
-  imap-send: replace prefixcmp() with starts_with()
-  help: replace prefixcmp() with starts_with()
-  log-tree: replace prefixcmp() with starts_with()
-  merge-recursive: replace prefixcmp() with starts_with()
-  notes: replace prefixcmp() with starts_with()
-  refs: replace prefixcmp() with starts_with()
-  setup: replace prefixcmp() with starts_with()
-  bisect: replace prefixcmp() with starts_with()
-  branch: replace prefixcmp() with starts_with()
-  http-push: replace prefixcmp() with starts_with()
-  send-pack: replace prefixcmp() with starts_with()
-  http-backend: replace prefixcmp() with starts_with()
-  notes-utils: replace prefixcmp() with starts_with()
-  pkt-line: replace prefixcmp() with starts_with()
-  alias: replace prefixcmp() with starts_with()
-  attr: replace prefixcmp() with starts_with()
-  connect: replace prefixcmp() with starts_with()
-  pager: replace prefixcmp() with starts_with()
-  convert: replace prefixcmp() with starts_with()
-  environment: replace prefixcmp() with starts_with()
-  shell: replace prefixcmp() with starts_with()
-  pathspec: replace prefixcmp() with starts_with()
-  submodule: replace prefixcmp() with starts_with()
-  test-string-list: replace prefixcmp() with starts_with()
-  builtin/apply: replace prefixcmp() with starts_with()
-  builtin/archive: replace prefixcmp() with starts_with()
-  builtin/branch: replace prefixcmp() with starts_with()
-  builtin/checkout: replace prefixcmp() with starts_with()
-  builtin/clean: replace prefixcmp() with starts_with()
-  builtin/clone: replace prefixcmp() with starts_with()
-  builtin/column: replace prefixcmp() with starts_with()
-  builtin/commit: replace prefixcmp() with starts_with()
-  builtin/describe: replace prefixcmp() with starts_with()
-  builtin/fast-export: replace prefixcmp() with starts_with()
-  builtin/fetch-pack: replace prefixcmp() with starts_with()
-  builtin/fetch: replace prefixcmp() with starts_with()
-  builtin/fmt-merge-msg: replace prefixcmp() with starts_with()
-  builtin/for-each-ref: replace prefixcmp() with starts_with()
-  builtin/fsck: replace prefixcmp() with starts_with()
-  builtin/help: replace prefixcmp() with starts_with()
-  builtin/index-pack: replace prefixcmp() with starts_with()
-  builtin/init-db: replace prefixcmp() with starts_with()
-  builtin/log: replace prefixcmp() with starts_with()
-  builtin/ls-remote: replace prefixcmp() with starts_with()
-  builtin/mailinfo: replace prefixcmp() with starts_with()
-  builtin/merge-recursive: replace prefixcmp() with starts_with()
-  builtin/merge: replace prefixcmp() with starts_with()
-  builtin/name-rev: replace prefixcmp() with starts_with()
-  builtin/notes: replace prefixcmp() with starts_with()
-  builtin/pack-objects: replace prefixcmp() with starts_with()
-  builtin/prune: replace prefixcmp() with starts_with()
-  builtin/receive-pack: replace prefixcmp() with starts_with()
-  builtin/reflog: replace prefixcmp() with starts_with()
-  builtin/remote: replace prefixcmp() with starts_with()
-  builtin/rev-parse: replace prefixcmp() with starts_with()
-  builtin/send-pack: replace prefixcmp() with starts_with()
-  builtin/shortlog: replace prefixcmp() with starts_with()
-  builtin/show-branch: replace prefixcmp() with starts_with()
-  builtin/show-ref: replace prefixcmp() with starts_with()
-  builtin/symbolic-ref: replace prefixcmp() with starts_with()
-  builtin/tag: replace prefixcmp() with starts_with()
-  builtin/tar-tree: replace prefixcmp() with starts_with()
-  builtin/unpack-objects: replace prefixcmp() with starts_with()
-  builtin/update-ref: replace prefixcmp() with starts_with()
-  builtin/upload-archive: replace prefixcmp() with starts_with()
-  strbuf: remove prefixcmp() as it has been replaced with starts_with()
-
- alias.c                   |  2 +-
- attr.c                    |  2 +-
- bisect.c                  |  4 +--
- branch.c                  |  4 +--
- builtin/apply.c           | 12 +++----
- builtin/archive.c         |  4 +--
- builtin/branch.c          |  6 ++--
- builtin/checkout.c        |  8 ++---
- builtin/clean.c           |  4 +--
- builtin/clone.c           |  6 ++--
- builtin/column.c          |  2 +-
- builtin/commit.c          | 10 +++---
- builtin/describe.c        |  2 +-
- builtin/fast-export.c     |  2 +-
- builtin/fetch-pack.c      |  6 ++--
- builtin/fetch.c           | 16 +++++-----
- builtin/fmt-merge-msg.c   | 10 +++---
- builtin/for-each-ref.c    | 14 ++++-----
- builtin/fsck.c            |  6 ++--
- builtin/help.c            |  8 ++---
- builtin/index-pack.c      |  8 ++---
- builtin/init-db.c         |  2 +-
- builtin/log.c             |  8 ++---
- builtin/ls-remote.c       |  4 +--
- builtin/mailinfo.c        | 16 +++++-----
- builtin/merge-recursive.c |  2 +-
- builtin/merge.c           | 12 +++----
- builtin/name-rev.c        |  6 ++--
- builtin/notes.c           |  2 +-
- builtin/pack-objects.c    |  2 +-
- builtin/prune.c           |  4 +--
- builtin/receive-pack.c    |  6 ++--
- builtin/reflog.c          |  4 +--
- builtin/remote.c          |  8 ++---
- builtin/rev-parse.c       | 24 +++++++-------
- builtin/send-pack.c       |  8 ++---
- builtin/shortlog.c        |  6 ++--
- builtin/show-branch.c     | 20 ++++++------
- builtin/show-ref.c        |  6 ++--
- builtin/symbolic-ref.c    |  2 +-
- builtin/tag.c             |  2 +-
- builtin/tar-tree.c        |  2 +-
- builtin/unpack-objects.c  |  2 +-
- builtin/update-ref.c      | 10 +++---
- builtin/upload-archive.c  |  2 +-
- commit.c                  |  6 ++--
- config.c                  | 16 +++++-----
- connect.c                 |  2 +-
- convert.c                 |  2 +-
- daemon.c                  | 40 ++++++++++++------------
- diff.c                    | 56 ++++++++++++++++-----------------
- environment.c             |  2 +-
- fast-import.c             | 80 +++++++++++++++++++++++------------------------
- fetch-pack.c              | 12 +++----
- git-compat-util.h         |  2 +-
- git.c                     | 12 +++----
- help.c                    |  8 ++---
- http-backend.c            |  4 +--
- http-push.c               |  4 +--
- http.c                    |  8 ++---
- imap-send.c               | 10 +++---
- log-tree.c                |  8 ++---
- merge-recursive.c         |  6 ++--
- notes-utils.c             |  4 +--
- notes.c                   |  8 ++---
- pager.c                   |  2 +-
- parse-options.c           | 12 +++----
- pathspec.c                |  2 +-
- pkt-line.c                |  4 +--
- pretty.c                  | 36 ++++++++++-----------
- refs.c                    | 30 +++++++++---------
- remote-curl.c             | 14 ++++-----
- remote-testsvn.c          | 10 +++---
- remote.c                  | 46 +++++++++++++--------------
- revision.c                | 38 +++++++++++-----------
- send-pack.c               |  4 +--
- sequencer.c               |  8 ++---
- setup.c                   |  4 +--
- sha1_name.c               | 16 +++++-----
- shell.c                   |  2 +-
- strbuf.c                  |  6 ++--
- submodule.c               |  2 +-
- tag.c                     | 10 +++---
- test-line-buffer.c        |  6 ++--
- test-string-list.c        |  2 +-
- transport-helper.c        | 16 +++++-----
- transport.c               | 28 ++++++++---------
- upload-pack.c             | 10 +++---
- wt-status.c               | 16 +++++-----
- 89 files changed, 455 insertions(+), 455 deletions(-)
-
+diff --git a/diff.c b/diff.c
+index a04a34d..4b42997 100644
+--- a/diff.c
++++ b/diff.c
+@@ -235,7 +235,7 @@ int git_diff_basic_config(const char *var, const char *value, void *cb)
+ 	if (userdiff_config(var, value) < 0)
+ 		return -1;
+ 
+-	if (!prefixcmp(var, "diff.color.") || !prefixcmp(var, "color.diff.")) {
++	if (starts_with(var, "diff.color.") || starts_with(var, "color.diff.")) {
+ 		int slot = parse_diff_color_slot(var, 11);
+ 		if (slot < 0)
+ 			return 0;
+@@ -264,7 +264,7 @@ int git_diff_basic_config(const char *var, const char *value, void *cb)
+ 		return 0;
+ 	}
+ 
+-	if (!prefixcmp(var, "submodule."))
++	if (starts_with(var, "submodule."))
+ 		return parse_submodule_config_option(var, value);
+ 
+ 	return git_default_config(var, value, cb);
+@@ -1215,7 +1215,7 @@ static void fn_out_consume(void *priv, char *line, unsigned long len)
+ 			diff_words_append(line, len,
+ 					  &ecbdata->diff_words->plus);
+ 			return;
+-		} else if (!prefixcmp(line, "\\ ")) {
++		} else if (starts_with(line, "\\ ")) {
+ 			/*
+ 			 * Eat the "no newline at eof" marker as if we
+ 			 * saw a "+" or "-" line with nothing on it,
+@@ -2387,9 +2387,9 @@ static void builtin_diff(const char *name_a,
+ 			xdiff_set_find_func(&xecfg, pe->pattern, pe->cflags);
+ 		if (!diffopts)
+ 			;
+-		else if (!prefixcmp(diffopts, "--unified="))
++		else if (starts_with(diffopts, "--unified="))
+ 			xecfg.ctxlen = strtoul(diffopts + 10, NULL, 10);
+-		else if (!prefixcmp(diffopts, "-u"))
++		else if (starts_with(diffopts, "-u"))
+ 			xecfg.ctxlen = strtoul(diffopts + 2, NULL, 10);
+ 		if (o->word_diff)
+ 			init_diff_words_data(&ecbdata, o, one, two);
+@@ -3388,7 +3388,7 @@ int parse_long_opt(const char *opt, const char **argv,
+ 	if (arg[0] != '-' || arg[1] != '-')
+ 		return 0;
+ 	arg += strlen("--");
+-	if (prefixcmp(arg, opt))
++	if (!starts_with(arg, opt))
+ 		return 0;
+ 	arg += strlen(opt);
+ 	if (*arg == '=') { /* sticked form: --option=value */
+@@ -3419,7 +3419,7 @@ static int stat_opt(struct diff_options *options, const char **av)
+ 
+ 	switch (*arg) {
+ 	case '-':
+-		if (!prefixcmp(arg, "-width")) {
++		if (starts_with(arg, "-width")) {
+ 			arg += strlen("-width");
+ 			if (*arg == '=')
+ 				width = strtoul(arg + 1, &end, 10);
+@@ -3429,7 +3429,7 @@ static int stat_opt(struct diff_options *options, const char **av)
+ 				width = strtoul(av[1], &end, 10);
+ 				argcount = 2;
+ 			}
+-		} else if (!prefixcmp(arg, "-name-width")) {
++		} else if (starts_with(arg, "-name-width")) {
+ 			arg += strlen("-name-width");
+ 			if (*arg == '=')
+ 				name_width = strtoul(arg + 1, &end, 10);
+@@ -3439,7 +3439,7 @@ static int stat_opt(struct diff_options *options, const char **av)
+ 				name_width = strtoul(av[1], &end, 10);
+ 				argcount = 2;
+ 			}
+-		} else if (!prefixcmp(arg, "-graph-width")) {
++		} else if (starts_with(arg, "-graph-width")) {
+ 			arg += strlen("-graph-width");
+ 			if (*arg == '=')
+ 				graph_width = strtoul(arg + 1, &end, 10);
+@@ -3449,7 +3449,7 @@ static int stat_opt(struct diff_options *options, const char **av)
+ 				graph_width = strtoul(av[1], &end, 10);
+ 				argcount = 2;
+ 			}
+-		} else if (!prefixcmp(arg, "-count")) {
++		} else if (starts_with(arg, "-count")) {
+ 			arg += strlen("-count");
+ 			if (*arg == '=')
+ 				count = strtoul(arg + 1, &end, 10);
+@@ -3611,15 +3611,15 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
+ 		options->output_format |= DIFF_FORMAT_SHORTSTAT;
+ 	else if (!strcmp(arg, "-X") || !strcmp(arg, "--dirstat"))
+ 		return parse_dirstat_opt(options, "");
+-	else if (!prefixcmp(arg, "-X"))
++	else if (starts_with(arg, "-X"))
+ 		return parse_dirstat_opt(options, arg + 2);
+-	else if (!prefixcmp(arg, "--dirstat="))
++	else if (starts_with(arg, "--dirstat="))
+ 		return parse_dirstat_opt(options, arg + 10);
+ 	else if (!strcmp(arg, "--cumulative"))
+ 		return parse_dirstat_opt(options, "cumulative");
+ 	else if (!strcmp(arg, "--dirstat-by-file"))
+ 		return parse_dirstat_opt(options, "files");
+-	else if (!prefixcmp(arg, "--dirstat-by-file=")) {
++	else if (starts_with(arg, "--dirstat-by-file=")) {
+ 		parse_dirstat_opt(options, "files");
+ 		return parse_dirstat_opt(options, arg + 18);
+ 	}
+@@ -3636,17 +3636,17 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
+ 		options->output_format |= DIFF_FORMAT_NAME_STATUS;
+ 	else if (!strcmp(arg, "-s") || !strcmp(arg, "--no-patch"))
+ 		options->output_format |= DIFF_FORMAT_NO_OUTPUT;
+-	else if (!prefixcmp(arg, "--stat"))
++	else if (starts_with(arg, "--stat"))
+ 		/* --stat, --stat-width, --stat-name-width, or --stat-count */
+ 		return stat_opt(options, av);
+ 
+ 	/* renames options */
+-	else if (!prefixcmp(arg, "-B") || !prefixcmp(arg, "--break-rewrites=") ||
++	else if (starts_with(arg, "-B") || starts_with(arg, "--break-rewrites=") ||
+ 		 !strcmp(arg, "--break-rewrites")) {
+ 		if ((options->break_opt = diff_scoreopt_parse(arg)) == -1)
+ 			return error("invalid argument to -B: %s", arg+2);
+ 	}
+-	else if (!prefixcmp(arg, "-M") || !prefixcmp(arg, "--find-renames=") ||
++	else if (starts_with(arg, "-M") || starts_with(arg, "--find-renames=") ||
+ 		 !strcmp(arg, "--find-renames")) {
+ 		if ((options->rename_score = diff_scoreopt_parse(arg)) == -1)
+ 			return error("invalid argument to -M: %s", arg+2);
+@@ -3655,7 +3655,7 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
+ 	else if (!strcmp(arg, "-D") || !strcmp(arg, "--irreversible-delete")) {
+ 		options->irreversible_delete = 1;
+ 	}
+-	else if (!prefixcmp(arg, "-C") || !prefixcmp(arg, "--find-copies=") ||
++	else if (starts_with(arg, "-C") || starts_with(arg, "--find-copies=") ||
+ 		 !strcmp(arg, "--find-copies")) {
+ 		if (options->detect_rename == DIFF_DETECT_COPY)
+ 			DIFF_OPT_SET(options, FIND_COPIES_HARDER);
+@@ -3671,7 +3671,7 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
+ 		DIFF_OPT_CLR(options, RENAME_EMPTY);
+ 	else if (!strcmp(arg, "--relative"))
+ 		DIFF_OPT_SET(options, RELATIVE_NAME);
+-	else if (!prefixcmp(arg, "--relative=")) {
++	else if (starts_with(arg, "--relative=")) {
+ 		DIFF_OPT_SET(options, RELATIVE_NAME);
+ 		options->prefix = arg + 11;
+ 	}
+@@ -3724,7 +3724,7 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
+ 		DIFF_OPT_CLR(options, FOLLOW_RENAMES);
+ 	else if (!strcmp(arg, "--color"))
+ 		options->use_color = 1;
+-	else if (!prefixcmp(arg, "--color=")) {
++	else if (starts_with(arg, "--color=")) {
+ 		int value = git_config_colorbool(NULL, arg+8);
+ 		if (value < 0)
+ 			return error("option `color' expects \"always\", \"auto\", or \"never\"");
+@@ -3736,7 +3736,7 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
+ 		options->use_color = 1;
+ 		options->word_diff = DIFF_WORDS_COLOR;
+ 	}
+-	else if (!prefixcmp(arg, "--color-words=")) {
++	else if (starts_with(arg, "--color-words=")) {
+ 		options->use_color = 1;
+ 		options->word_diff = DIFF_WORDS_COLOR;
+ 		options->word_regex = arg + 14;
+@@ -3745,7 +3745,7 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
+ 		if (options->word_diff == DIFF_WORDS_NONE)
+ 			options->word_diff = DIFF_WORDS_PLAIN;
+ 	}
+-	else if (!prefixcmp(arg, "--word-diff=")) {
++	else if (starts_with(arg, "--word-diff=")) {
+ 		const char *type = arg + 12;
+ 		if (!strcmp(type, "plain"))
+ 			options->word_diff = DIFF_WORDS_PLAIN;
+@@ -3781,12 +3781,12 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
+ 	else if (!strcmp(arg, "--ignore-submodules")) {
+ 		DIFF_OPT_SET(options, OVERRIDE_SUBMODULE_CONFIG);
+ 		handle_ignore_submodules_arg(options, "all");
+-	} else if (!prefixcmp(arg, "--ignore-submodules=")) {
++	} else if (starts_with(arg, "--ignore-submodules=")) {
+ 		DIFF_OPT_SET(options, OVERRIDE_SUBMODULE_CONFIG);
+ 		handle_ignore_submodules_arg(options, arg + 20);
+ 	} else if (!strcmp(arg, "--submodule"))
+ 		DIFF_OPT_SET(options, SUBMODULE_LOG);
+-	else if (!prefixcmp(arg, "--submodule="))
++	else if (starts_with(arg, "--submodule="))
+ 		return parse_submodule_opt(options, arg + 12);
+ 
+ 	/* misc options */
+@@ -3822,7 +3822,7 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
+ 	}
+ 	else if (!strcmp(arg, "--abbrev"))
+ 		options->abbrev = DEFAULT_ABBREV;
+-	else if (!prefixcmp(arg, "--abbrev=")) {
++	else if (starts_with(arg, "--abbrev=")) {
+ 		options->abbrev = strtoul(arg + 9, NULL, 10);
+ 		if (options->abbrev < MINIMUM_ABBREV)
+ 			options->abbrev = MINIMUM_ABBREV;
+@@ -3904,15 +3904,15 @@ static int diff_scoreopt_parse(const char *opt)
+ 	cmd = *opt++;
+ 	if (cmd == '-') {
+ 		/* convert the long-form arguments into short-form versions */
+-		if (!prefixcmp(opt, "break-rewrites")) {
++		if (starts_with(opt, "break-rewrites")) {
+ 			opt += strlen("break-rewrites");
+ 			if (*opt == 0 || *opt++ == '=')
+ 				cmd = 'B';
+-		} else if (!prefixcmp(opt, "find-copies")) {
++		} else if (starts_with(opt, "find-copies")) {
+ 			opt += strlen("find-copies");
+ 			if (*opt == 0 || *opt++ == '=')
+ 				cmd = 'C';
+-		} else if (!prefixcmp(opt, "find-renames")) {
++		} else if (starts_with(opt, "find-renames")) {
+ 			opt += strlen("find-renames");
+ 			if (*opt == 0 || *opt++ == '=')
+ 				cmd = 'M';
+@@ -4322,7 +4322,7 @@ static void patch_id_consume(void *priv, char *line, unsigned long len)
+ 	int new_len;
+ 
+ 	/* Ignore line numbers when computing the SHA1 of the patch */
+-	if (!prefixcmp(line, "@@ -"))
++	if (starts_with(line, "@@ -"))
+ 		return;
+ 
+ 	new_len = remove_space(line, len);
 -- 
 1.8.4.1.561.g12affca
