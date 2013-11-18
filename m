@@ -1,107 +1,83 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC PATCH] commit -v: strip diffs and submodule shortlogs from the commit message
-Date: Mon, 18 Nov 2013 08:01:49 -0800
-Message-ID: <xmqqk3g5d7gy.fsf@gitster.dls.corp.google.com>
-References: <loom.20131110T222043-57@post.gmane.org> <528140F5.6090700@web.de>
-	<loom.20131111T214646-550@post.gmane.org> <52814C35.6040205@web.de>
-	<5281DCC5.2000209@kdbg.org> <5282A90A.4030900@web.de>
-	<xmqqy54tfeje.fsf@gitster.dls.corp.google.com>
-	<5283C701.8090400@web.de>
-	<xmqq7gccdq67.fsf@gitster.dls.corp.google.com>
-	<5287F735.3030306@web.de>
-	<20131117090935.GC17016@sigill.intra.peff.net>
+Subject: Re: What's cooking in git.git (Nov 2013, #04; Wed, 13)
+Date: Mon, 18 Nov 2013 08:11:55 -0800
+Message-ID: <xmqqfvqtd704.fsf@gitster.dls.corp.google.com>
+References: <xmqqob5ndho5.fsf@gitster.dls.corp.google.com>
+	<20131115064830.GA30234@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jens Lehmann <Jens.Lehmann@web.de>, Johannes Sixt <j6t@kdbg.org>,
-	Ari Pollak <ari@debian.org>, git@vger.kernel.org
+Cc: git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Nov 18 17:02:07 2013
+X-From: git-owner@vger.kernel.org Mon Nov 18 17:12:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ViRH4-0004So-JC
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Nov 2013 17:02:06 +0100
+	id 1ViRQv-0000wv-BL
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Nov 2013 17:12:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751373Ab3KRQCC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Nov 2013 11:02:02 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53371 "EHLO
+	id S1751300Ab3KRQMA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Nov 2013 11:12:00 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53263 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751203Ab3KRQCA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Nov 2013 11:02:00 -0500
+	id S1751199Ab3KRQL6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Nov 2013 11:11:58 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8D25052504;
-	Mon, 18 Nov 2013 11:01:54 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4C92F528AD;
+	Mon, 18 Nov 2013 11:11:58 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=kWOb1TbuXFEGcx5rXlikAG2+lW4=; b=T58n+h
-	jjKqZOibU1YSdIFRA2HJmdg43+W0/4GFiYvZXtu1ieHkfusqQXcouEiVKdRWqL1X
-	LIyHSDGJbBQmlvIJ0TBwZeDKE5+fJhkcdC9heqTGcWFs3iMiyv6J5m69UgTgxrhD
-	UOfb7bbzG+TbCNSQqA2tweC5/TGMiJi2mMGgk=
+	:content-type; s=sasl; bh=PoZ/kjpgg0pflbkSS9zU5R3JkTE=; b=W7S1y4
+	Mu7Fsil2BtZ6pnDzcF5h8VPiFY2IzLNK+vQkM7teZTLJhwOKoIHqGCki58EO4YT1
+	gD1I14mSUiznN4qoY5ZQ0v6OQWqnTI8mvfGSQ/9Kq9H5A8FhA7Et4gqdYh3UpWzS
+	L769NOw3w9+Ix3fWG+Kx5HBpGH/883qmVA5ic=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=cc1btWi+oVz1BR2eoqQF81gtEec0fI5C
-	IgWAypr5eee0dK0TdH/lJAlmny5UBUyf9qQtNjxPL4yQurIzZwv2azSGVMIwJjO1
-	e/weB+hkLQDZUPCR1JgG4coImmpJqpnpvKGUYNDVM/DurRMwjDPyMc2/N+nloeHz
-	J75caw5m/YI=
+	:content-type; q=dns; s=sasl; b=Zhj2SFxaZlwOtN9ZhwsE9i+Ma3KzKkSi
+	cRCpJ154ZXxnHws9aZG3j65819s2x7QlJIDsM0sTgla5QwpSwfzDImTc7e4TUgdt
+	2B6cDK3+BnLwsKU1Yxoh3INO41o61XtttyOYeuMNj0rrgC0EMzhZv/8tWW0MZJMm
+	rNNpc+6bZYs=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7B0F152503;
-	Mon, 18 Nov 2013 11:01:54 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3B846528AB;
+	Mon, 18 Nov 2013 11:11:58 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CE789524FE;
-	Mon, 18 Nov 2013 11:01:53 -0500 (EST)
-In-Reply-To: <20131117090935.GC17016@sigill.intra.peff.net> (Jeff King's
-	message of "Sun, 17 Nov 2013 04:09:36 -0500")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9C2A2528AA;
+	Mon, 18 Nov 2013 11:11:57 -0500 (EST)
+In-Reply-To: <20131115064830.GA30234@sigill.intra.peff.net> (Jeff King's
+	message of "Fri, 15 Nov 2013 01:48:30 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: BE2C692A-506A-11E3-9887-D331802839F8-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 260F5E2A-506C-11E3-B50C-D331802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237985>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237986>
 
 Jeff King <peff@peff.net> writes:
 
-> I found this hard to parse, I think because of the "keeping" (why would
-> I not keep it?), and because you are talking about lines above and
-> below. It is not as accurate to say:
+> On Wed, Nov 13, 2013 at 03:07:54PM -0800, Junio C Hamano wrote:
 >
->   # ------------------ >8 --------------------
->   # Everything below this line will be removed.
+>> * nd/liteal-pathspecs (2013-10-28) 1 commit
+>>   (merged to 'next' on 2013-11-01 at 1a91775)
+>>  + pathspec: stop --*-pathspecs impact on internal parse_pathspec() uses
+>> 
+>>  Will cook in 'next'.
 >
-> because it is technically the line above that is the cutoff. But I think
-> the meaning is clear, and it is simpler to parse.
+> I think we want this to be part of v1.8.5. It is a fix for a regression
+> that appeared in master post-1.8.4:
 >
-> I do think it would be simpler with a single line. I know handling the
-> i18n was a question there, but I think we should be fine as long as we
-> check for the exact bytes we wrote. Surely gettext can do something
-> like:
+>   $ git.v1.8.4 --literal-pathspecs blame Makefile | wc -l
+>   2596
 >
->   magic = _("# Everything below this line will be removed");
->   fprintf(fh, "%s", magic);
->   ...
->   p = strstr(magic);
+>   $ git.v1.8.5-rc2 --literal-pathspecs blame Makefile | wc -l
+>   fatal: Makefile: pathspec magic not supported by this command: 'literal'
+>   0
 >
-> I don't know what guarantees on string lifetime gettext gives us, but
-> the worst case is that we simply strdup the result.
->
-> I suppose it's possible that the translated string could have utf8 with
-> multiple representations, and the user's editor normalizes the text in a
-> different way than we wrote it when it saves the result. I don't know if
-> that is worth caring about or not; it seems kind of insane.
+> Sorry to mention it so late into the -rc cycle, but I just noticed that
+> the patch hadn't graduated.
 
-I agree with your rewording suggestion.  It might make it even more
-robust to do something like
-
-    const char cut_here[] = "# --- cut here --- >8 --- cut here ---";
-
-    fprintf(fh, "%s\n", cut_here);
-    fputs(_("# Everything below this line will be removed\n"), fh);
-    ...
-    p = strstr(cut_here);
-
-i.e. a real marker line that will never be translated, with an
-explanation immediately below that can be translated.
+Thanks for being careful. Will merge it down to 'master' before
+another round of rc, which hopefully be the last.
