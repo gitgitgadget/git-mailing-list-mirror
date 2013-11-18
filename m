@@ -1,87 +1,109 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH v2 3/3] for-each-ref: introduce %(color:...) for color
-Date: Mon, 18 Nov 2013 22:15:30 +0530
-Message-ID: <CALkWK0ngKTkFbaq7NzCW7T3KyfmWxpDEv8TLj05LoThob1fpFg@mail.gmail.com>
-References: <1384335406-16332-1-git-send-email-artagnon@gmail.com>
- <1384335406-16332-4-git-send-email-artagnon@gmail.com> <xmqqbo1odqb4.fsf@gitster.dls.corp.google.com>
- <xmqq38n0dpgy.fsf@gitster.dls.corp.google.com> <CALkWK0k4MudojZt4PkLjnq0uZe322n30WP-=N0ckLw2QcnbzMA@mail.gmail.com>
- <xmqq4n79d6f1.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] transport: Catch non positive --depth option value
+Date: Mon, 18 Nov 2013 08:51:16 -0800
+Message-ID: <xmqqzjp1bqm3.fsf@gitster.dls.corp.google.com>
+References: <5283A380.9030308@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 18 17:46:16 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?Q?Andr=C3=A9s_G=2E_Aragoneses?= <knocte@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 18 17:51:33 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ViRxn-0000zT-Np
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Nov 2013 17:46:16 +0100
+	id 1ViS2q-0003O0-Pw
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Nov 2013 17:51:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751582Ab3KRQqM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Nov 2013 11:46:12 -0500
-Received: from mail-ie0-f169.google.com ([209.85.223.169]:59501 "EHLO
-	mail-ie0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751254Ab3KRQqL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Nov 2013 11:46:11 -0500
-Received: by mail-ie0-f169.google.com with SMTP id e14so2323133iej.14
-        for <git@vger.kernel.org>; Mon, 18 Nov 2013 08:46:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=l/p8BB/xmpjGjyc3UXB5BlmtocrqTTThnM2QiMCJvPo=;
-        b=emKw+3iU+OQN/wsHI5M/Gkdamn5yBxy9b6CJKnIwJ2289ynqLEVLyRRhsQ3tqJGkW6
-         1E6zsArQ8xRWkXQTjGcghI+G8nP5bArljuNasEaGdUgi6AFLWeTN3X01KKzQGcBWYEJc
-         WQ64o/fSqg/9jG0bPdJTZDTZFtBTfR63WBQoNZ/ZQ3u0d5H5ZZ6FAzTthcNhN/L0crAD
-         Pgd3LoGkD9ZhG5G/EI8QMRXzFOIyhTyX+mqm911gcNzDp1Gz4SL+J3Dm7EbZavJS+ozZ
-         yq02miYAW+ibJ8fiAg8jeaTftpl8za/XOrVhQ8l/6VY7NB7lNMHMXM5PYREQbxWBbdv5
-         fRVQ==
-X-Received: by 10.50.40.37 with SMTP id u5mr15428486igk.29.1384793170419; Mon,
- 18 Nov 2013 08:46:10 -0800 (PST)
-Received: by 10.64.73.36 with HTTP; Mon, 18 Nov 2013 08:45:30 -0800 (PST)
-In-Reply-To: <xmqq4n79d6f1.fsf@gitster.dls.corp.google.com>
+	id S1751460Ab3KRQv0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 18 Nov 2013 11:51:26 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47533 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751199Ab3KRQvU convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 18 Nov 2013 11:51:20 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7016B51657;
+	Mon, 18 Nov 2013 11:51:19 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=YQWqO1YjgS/j
+	LVRr1bSSQVgeL30=; b=WdeFQWs4F/OLUGe8tEvOB47jX6DwyqH3oqtwR/6weyuK
+	TkDpXEC7s3s45fa9Kanr88PPXiVsE73XJ7H/r8IxFP6RCeytuAaGHdqEsOpEvX4h
+	Qy42r4Gyek6deXxzy9Kd7Jaos7YAmuDQvY2PMMs/Bw3kzNnrhGUy4lqGeWXel5s=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=btY8Oj
+	TWjpMlo59/OCyyJljKRl61NCrd4gDu1X0jtDb4k5fkq67lqY3BeMzJz/79W0UiX6
+	cc6w7mai3RcdjfbLClgCKPglCy5z0Xm+gY/OotVHIicDMusl7uQa523e+oRRZRbH
+	f3iibB+L3yEKLQoJecX2Lr+wULJutt7SCp91E=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 494D651656;
+	Mon, 18 Nov 2013 11:51:19 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 92B3D51654;
+	Mon, 18 Nov 2013 11:51:18 -0500 (EST)
+In-Reply-To: <5283A380.9030308@gmail.com> (=?utf-8?Q?=22Andr=C3=A9s?= G.
+ Aragoneses"'s message of
+	"Wed, 13 Nov 2013 17:06:24 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: A54D7CD0-5071-11E3-9C8E-D331802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237989>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237990>
 
-Junio C Hamano wrote:
-> If you are saying, by after each token, that
+"Andr=C3=A9s G. Aragoneses" <knocte@gmail.com> writes:
+
+> Instead of simply ignoring the value passed to --depth
+> option when it is zero or negative, now it is caught
+> and reported.
 >
->         --format='%(color:blue)%(A)literal string%(B)'
->
-> should result in
->
->         <color blue> <value for A> <color reset> "literal string" <value for B>
->
-> then I would disagree.
+> This will let people know that they were using the
+> option incorrectly (as depth<0 should be simply invalid,
+> and under the hood depth=3D=3D0 didn't mean 'no depth' or
+> 'no history' but 'full depth' instead).
 
-Hm, I didn't think it was a bad idea to reset after each token. The
-whole point of having color is to make sure that two consecutive
-tokens don't have the same color, no? Then again, my scheme would
-result in extra unnecessary resets like
+My initial knee-jerk reaction was: doesn't this change break
+existing use to unplug a shallow repository and bring it to a
+repository with an unshallow one to disallow depth=3D0, though?
 
-  %(color:blue)%(A)%(color:green)%(B)
+I somehow thought that the code supports unshallowing with --depth=3D0
+even though since 4dcb167f (fetch: add --unshallow for turning
+shallow repo into complete one, 2013-01-11), the officially
+supported way to tell Git to unshallow is with that option.
 
-being turned into:
+But apparently that is not the case; I do not think depth=3D=3D0 meant
+'full depth' (i.e. "git fetch --depth=3D0" did not unshallow); it was
+simply ignored in fetch_pack.c::find_common() and friends.
 
-  %(color:blue)%(A)%(color:reset)%(color:green)%(B)%(color:reset)
-
-Here, the first %(color:reset) is completely unnecessary.
-
-> I was suggesting it to instead produce
->
->         <color blue> <value for A> "literal string" <value for B> <color reset>
->
-> where the <color reset> always comes when some color is used and we
-> hit the end of the format string. A bonus point if we can make it so
-> that we emit the final reset only when the last "%(color:some)" is
-> not "%(color:reset)", but unconditional "reset if we ever used
-> color" is fine.
-
-Okay, a simple don't-leak-color. I'll submit another iteration soon.
+So I think it should be a safe change to disallow non-positive depth
+like this patch does, but the proposed commit log message may need
+polishing.
 
 Thanks.
+
+> Signed-off-by: Andres G. Aragoneses <knocte@gmail.com>
+> ---
+>  transport.c | 2 ++
+>  1 file changed, 2 insertions(+)
+>
+> diff --git a/transport.c b/transport.c
+> index 7202b77..edd63eb 100644
+> --- a/transport.c
+> +++ b/transport.c
+> @@ -483,6 +483,8 @@ static int set_git_option(struct
+> git_transport_options *opts,
+>  			opts->depth =3D strtol(value, &end, 0);
+>  			if (*end)
+>  				die("transport: invalid depth option '%s'", value);
+> +			if (opts->depth < 1)
+> +				die("transport: invalid depth option '%s' (non positive)", value=
+);
+>  		}
+>  		return 0;
+>  	}
