@@ -1,88 +1,49 @@
-From: ycollette.nospam@free.fr
-Subject: Re: Add a bugzilla website
-Date: Mon, 18 Nov 2013 08:37:19 +0100 (CET)
-Message-ID: <1186100344.320778474.1384760239079.JavaMail.root@zimbra35-e6.priv.proxad.net>
-References: <20131115225709.GC314350@vauxhall.crustytoothpaste.net>
+From: Konstantin Khomoutov <flatworm@users.sourceforge.net>
+Subject: Re: Git clone from ftp issue
+Date: Mon, 18 Nov 2013 12:43:50 +0400
+Message-ID: <20131118124350.446cc52f4cf688f41820f0c4@domain007.com>
+References: <CAFVLdUm=Jz5t=f+tZvDKGWAFoGi40oV_aLb_qoxrsreTrGTK=w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Mon Nov 18 08:37:38 2013
+To: Zachary Rodriguez <zmrodriguez91@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 18 09:44:00 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ViJOr-0003Us-Lv
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Nov 2013 08:37:38 +0100
+	id 1ViKR5-0005gJ-N7
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Nov 2013 09:44:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750845Ab3KRHhe convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 18 Nov 2013 02:37:34 -0500
-Received: from smtp1-g21.free.fr ([212.27.42.1]:59281 "EHLO smtp1-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751347Ab3KRHh3 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 18 Nov 2013 02:37:29 -0500
-Received: from zimbra35-e6.priv.proxad.net (unknown [172.20.243.185])
-	by smtp1-g21.free.fr (Postfix) with ESMTP id 34F24940184
-	for <git@vger.kernel.org>; Mon, 18 Nov 2013 08:37:20 +0100 (CET)
-In-Reply-To: <20131115225709.GC314350@vauxhall.crustytoothpaste.net>
-X-Originating-IP: [93.31.210.54]
-X-Mailer: Zimbra 7.2.0-GA2598 (ZimbraWebClient - FF3.0 (Win)/7.2.0-GA2598)
-X-Authenticated-User: ycollette.nospam@free.fr
+	id S1751157Ab3KRIn4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Nov 2013 03:43:56 -0500
+Received: from mailhub.007spb.ru ([84.204.203.130]:49304 "EHLO
+	mailhub.007spb.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750735Ab3KRInz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Nov 2013 03:43:55 -0500
+Received: from programmer.Domain007.com (programmer.domain007.com [192.168.2.100])
+	by mailhub.007spb.ru (8.14.3/8.14.3/Debian-5+lenny1) with SMTP id rAI8hoef014069;
+	Mon, 18 Nov 2013 12:43:51 +0400
+In-Reply-To: <CAFVLdUm=Jz5t=f+tZvDKGWAFoGi40oV_aLb_qoxrsreTrGTK=w@mail.gmail.com>
+X-Mailer: Sylpheed 3.3.0 (GTK+ 2.10.14; i686-pc-mingw32)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237978>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237979>
 
+On Sun, 17 Nov 2013 13:22:40 -0700
+Zachary Rodriguez <zmrodriguez91@gmail.com> wrote:
 
-On most linux distro bugzilla website, there are some people dedicated =
-to triaging bugs (finding duplicated bugs, asking for more informations=
-, closing old and / or resolved bugs).
-To have an efficient bugtracking tool needs to have some people dedicat=
-ed to this.
-But for the user, it's a better approach. For example, I do not need to=
- register to the devel list and I do not have to watch all mails to loc=
-ate the one which concerns my bug.
-It works nicely with fedora, magieia and other distro / tools, so I don=
-'t know why this shouldn't work fine with git ?
-But as far as I can read, most people here are very reluctant to use a =
-bugtracking tool ...
+> Hello. I am having trouble setting up a git repository on an ftp
+> server. The repository is bare and has had several commits made before
+> being moved to the ftp server. I am attempting to clone from my ftp
+> server, but git fails with the ftp error code 550. Inspection of the
+> ftp packets via wireshark reveals that git is successfully changing to
+> its desired working directory on the ftp server, but then it attempts
+> to execute the 'size' command on the refs directory which generates
+> the error code 550. Is this normal behavior or is it a bug?
 
-YC
-
------ Mail original -----
-De: "brian m. carlson" <sandals@crustytoothpaste.net>
-=C3=80: "ycollette nospam" <ycollette.nospam@free.fr>
-Cc: git@vger.kernel.org
-Envoy=C3=A9: Vendredi 15 Novembre 2013 23:57:09
-Objet: Re: Add a bugzilla website
-
-On Fri, Nov 15, 2013 at 10:40:47AM +0100, ycollette.nospam@free.fr wrot=
-e:
-> And the conclusion is ? No bugzilla tool installed because somebody
-> want to build a gitbased bugzilla thing ?
-
-Personally, I do not want Yet Another Bugzilla Account.  A project is
-significantly less likely to get a patch from me if I have to create an
-account to report a bug.  Most of the patches I send to various project=
-s
-are for bugs I've experienced and want to provide a fix for, so I send =
-a
-small number of patches to many projects.
-
-I feel that the mailing list workflow ends up working very well for Git
-and it provides a low barrier to entry for those that want to send just
-one or two patches for problems that they're experiencing.  It also
-allows me to see and comment on virtually every patch on the list, whil=
-e
-ignoring threads I am not interested in, a combination which is
-difficult to achieve with a web-based bug tracker.
-
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion onl=
-y
-OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B18=
-7
+http://thread.gmane.org/gmane.comp.version-control.git.user/3469/
