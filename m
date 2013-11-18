@@ -1,66 +1,86 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Command-line git Vs IDE+plugin?
-Date: Mon, 18 Nov 2013 18:11:54 +0100
-Message-ID: <vpqiovpfxd1.fsf@anie.imag.fr>
+From: Philippe Vaucher <philippe.vaucher@gmail.com>
+Subject: Re: Command-line git Vs IDE+plugin?
+Date: Mon, 18 Nov 2013 18:42:26 +0100
+Message-ID: <CAGK7Mr7EpkE3mL2p9idNr7HdnBNxqiQ8qWs+QuyhR9DvW=Pd1A@mail.gmail.com>
+References: <vpqiovpfxd1.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Nov 18 18:13:10 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git <git@vger.kernel.org>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon Nov 18 18:43:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ViSNm-0004ph-90
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Nov 2013 18:13:06 +0100
+	id 1ViSqj-0001Xy-LV
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Nov 2013 18:43:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751887Ab3KRRMr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Nov 2013 12:12:47 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:44964 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751300Ab3KRRMC (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Nov 2013 12:12:02 -0500
-Received: from globule.imag.fr (globule.imag.fr [129.88.34.238])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id rAIHBrV2002559
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 18 Nov 2013 18:11:53 +0100
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	(authenticated bits=0)
-	by globule.imag.fr (8.13.8/8.13.8) with ESMTP id rAIHBst6014484
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Mon, 18 Nov 2013 18:11:54 +0100
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 18 Nov 2013 18:11:53 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: rAIHBrV2002559
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1385399517.75689@HGHsfgtEroh9PjBAFGU2zw
+	id S1751421Ab3KRRm6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Nov 2013 12:42:58 -0500
+Received: from mail-oa0-f46.google.com ([209.85.219.46]:50151 "EHLO
+	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751266Ab3KRRm4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Nov 2013 12:42:56 -0500
+Received: by mail-oa0-f46.google.com with SMTP id o6so1079799oag.33
+        for <git@vger.kernel.org>; Mon, 18 Nov 2013 09:42:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=d0wuphzc54lUKbtgIKRJF17YdDTMvWomAYpyK/xb7kw=;
+        b=lHWgUYWiGz64iNxlHo+xQLvlk/AYcHLKMcEt2RcbsVcy0tw1pFDx7n2h6x7B1RXxUl
+         lksc9filJFcfJtIMnoA5TIIoRZqHxGNbpmEWw/jfYjuIGOtmSrBXyXrQaMmUhiBO7Ux5
+         cwwkcGeQ8zxgoTnkA/CA2aZVBiuOaLJsnPF+IubPnEvp1ZzwP9RWBmkupQCYxmFaAbpR
+         MWwHo/lZNUD5cBc/ksAIy2yLng7wBU/P/qujkzAe5wSUJBnrWB/SF8vMoaI5z5fRQsf9
+         u8M4zPKUdaJwW35qgnVTtuRqG/JqvVXIQKzJgt3lw8XoYXHyx8MSRPg3E69R1WEgdP5r
+         Vtag==
+X-Received: by 10.60.115.164 with SMTP id jp4mr20836433oeb.19.1384796576291;
+ Mon, 18 Nov 2013 09:42:56 -0800 (PST)
+Received: by 10.76.187.102 with HTTP; Mon, 18 Nov 2013 09:42:26 -0800 (PST)
+In-Reply-To: <vpqiovpfxd1.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237992>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237993>
 
-Hi,
+> I'm normally an Emacs+command-line user, but I also use Eclipse or
+> Netbeans on some projects.
 
-I'm normally an Emacs+command-line user, but I also use Eclipse or
-Netbeans on some projects. I tried using EGit and the Netbeans plugin
-for Git, but found the GUI both more comlex and less powerful than the
-command-line. I end-up using command-line git in a terminal, outside the
-IDE (and do a refresh in the IDE after commands that modify the
-worktree). Obviously, being a long-time command-line user, I'm rather
-heavily biaised ;-).
+Did you give magit a try? It's really an awesome emacs plugin, which
+gives me pretty much the same control as the command line experience
+without the pain. Ask me more about if if you're interested.
 
-I was wondering whether others had similar (or not) experience. In
-particular, as a teacher, I'm wondering whether I should push my
-students towards the GUI in the IDE, or advise them to keep using the
-command-line (we teach them git with the command-line first anyway, but
-after a year of practice, we may want to show them the GUI equivalent).
 
-Thanks,
+> I was wondering whether others had similar (or not) experience. In
+> particular, as a teacher, I'm wondering whether I should push my
+> students towards the GUI in the IDE, or advise them to keep using the
+> command-line (we teach them git with the command-line first anyway, but
+> after a year of practice, we may want to show them the GUI equivalent).
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+In my experience, most people prefer the GUI version, simply because
+to them it's more intuitive and stuffs like visual diffs tools are
+integrated, which makes them quickly realise the benefits. That said,
+because it's "easier" they tend to not dig deeper and are lost at the
+first little problem, e.g a simple conflict becomes difficult to
+solve.
+
+In my opinion to *learn* git it's useful to learn with the console
+first, just like when you learn C++ it's useful to start with simple
+exercises and not jump straight to GUI programming. When they become
+familiar with the basics, I think it's nice to show them about  `git
+log --graph --all --decorate` and the gitk/gitg equivalent, or "git
+diff" and the vimdiff/ediff/visual merge/kdiff equivalent.
+
+When they understand git reasonably (or if they are not lazy people
+and willing to learn), then show them full integrations like
+TortoiseGit (or probably the Netbeans plugin), which are nice when
+everything works but you have to know console git to fix things or
+simply to be aware of their limitations.
+
+TL;DR, I think both are necessary, the command line to understand git
+and the integrations/wrappers to add sugar to your daily workflow.
+Visual tools are great, especially visual diffs for merging.
+
+Philippe
