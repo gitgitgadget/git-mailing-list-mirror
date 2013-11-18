@@ -1,115 +1,87 @@
-From: Benjamin Pabst <benjamin.pabst85@gmail.com>
-Subject: Re: Fwd: Error with git-svn pushing a rename
-Date: Mon, 18 Nov 2013 18:59:49 +0100
-Message-ID: <CAM-uYMiSE-XxA7DSWQSwzZ2vwB_MP5gnxuTzEJ7Vw9LRj2nwWA@mail.gmail.com>
-References: <CAM-uYMgy8duxdGY8rbCJv9To3FFMAUDv22nnzbQ+e3QrTCLLpQ@mail.gmail.com>
-	<CAM-uYMigCTK=j3HkyT0F=jtDoDERdtkpZiTXRvBhSHJW3edJ-w@mail.gmail.com>
-	<CAM-uYMiK4wkQyGJLemSAbNwHJNoH-k8Zv0W2yBtnTCbsFLj8Fg@mail.gmail.com>
-	<5285CE6C.2030609@futurelab.ch>
-	<CAM-uYMgn4SGqurqRG-RDiicLxpf9NfTPUvNn9FaFUUbxFRJsZw@mail.gmail.com>
-	<5286235D.9060602@futurelab.ch>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Symbolic refs break ref advertisement on 1.8.4.3+
+Date: Mon, 18 Nov 2013 10:16:32 -0800
+Message-ID: <xmqqr4adbmnz.fsf@gitster.dls.corp.google.com>
+References: <CAGyf7-EX2QXKyAwoxv2Ux5cjSp71m-dR+Vq4C3pevJrYaGu42g@mail.gmail.com>
+	<20131117100251.GB22166@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Andreas Stricker <astricker@futurelab.ch>
-X-From: git-owner@vger.kernel.org Mon Nov 18 18:59:56 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Bryan Turner <bturner@atlassian.com>,
+	Git Users <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Nov 18 19:16:41 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ViT75-0000tY-CH
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Nov 2013 18:59:55 +0100
+	id 1ViTNI-0008Vq-6y
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Nov 2013 19:16:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751512Ab3KRR7w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Nov 2013 12:59:52 -0500
-Received: from mail-qa0-f42.google.com ([209.85.216.42]:33496 "EHLO
-	mail-qa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751301Ab3KRR7u (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Nov 2013 12:59:50 -0500
-Received: by mail-qa0-f42.google.com with SMTP id k4so153018qaq.1
-        for <git@vger.kernel.org>; Mon, 18 Nov 2013 09:59:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=0RGc3wR59yr+xKDk6Ymx2YghvfX0uDwhMDb1W2LLqco=;
-        b=qaMwYNdg7szRJR5lnXw7DQO+hzGZSqfe74vTr00nyfZQwzXWhxCcNkxXX8/NnYZJpz
-         1ypW74nrKxm9fl450I3qjmry1RXWzXk8XFKfWusXTP8HCo5+qzT60wEUu2dF+m0Qy9Vr
-         frM8W/+phJRanCJaKDbByKxAL1sypG6sdtL9GOBQt4pggeKelgOZ2bF+hgwi3oyOAkCg
-         HIfhluGenKS/rhJst+dqr5HmdITq8zhK1q+jdn9mm2Yelm5dQyQejzIhUK0SkczRPEqg
-         4sepYBAh7nHFgHIN9qfzYyg2bq6zvvc6G7eBIf7eLpgJYyRWBg9WpeBjYufZPCXLfu9+
-         2gSA==
-X-Received: by 10.229.65.201 with SMTP id k9mr35926984qci.11.1384797589905;
- Mon, 18 Nov 2013 09:59:49 -0800 (PST)
-Received: by 10.140.84.104 with HTTP; Mon, 18 Nov 2013 09:59:49 -0800 (PST)
-In-Reply-To: <5286235D.9060602@futurelab.ch>
+	id S1751511Ab3KRSQg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Nov 2013 13:16:36 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51541 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751450Ab3KRSQf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Nov 2013 13:16:35 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CCB1551273;
+	Mon, 18 Nov 2013 13:16:34 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=2j1TmAmM1FUhhLj0Hu/CqVOBKso=; b=TLLMPX
+	X1+TVZzRZBhqawRZsELKTmg/lKAQuhASFy3zKh6ZXkd0sK5iTd7bRSdiakG4fjy/
+	eBZsjZt6hYDqPRmqho+FneIxfz/kAxAukeU/CmJR/MTBeyJzb5IXmU4eUxmGMCTl
+	nESHAyFUYs7Pu2u84GwJRBIY2XXJituo22/nk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=dWiIp1BptYHbv0JF0tIOh5leCHdRQ3o3
+	2JAK0YFOCBNNPMyRyz6LZJqrFvczWb1igevwsGJjtWIWaZPVDNiVcFVmKSU0oSxT
+	ky35Y3U2IGvVLtuxcu7fWrTj2SPnT3ZpvisIpAp/z1ob+peWuGZIPcZxfxtFTuRp
+	hsKKM/FtZPE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BB6A951272;
+	Mon, 18 Nov 2013 13:16:34 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1762751271;
+	Mon, 18 Nov 2013 13:16:34 -0500 (EST)
+In-Reply-To: <20131117100251.GB22166@sigill.intra.peff.net> (Jeff King's
+	message of "Sun, 17 Nov 2013 05:02:51 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 8E605784-507D-11E3-A247-D331802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238002>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238003>
 
-Hi Andy,
+Jeff King <peff@peff.net> writes:
 
-sadly I get the same error with a downgraded svn:
-
-$ git --version
-git version 1.8.4.2
-$ svn --version
-svn, version 1.7.10 (r1485443)
-   compiled Nov 18 2013, 18:43:16
-
-Copyright (C) 2013 The Apache Software Foundation.
-This software consists of contributions made by many people; see the NOTICE
-file for more information.
-Subversion is open source software, see http://subversion.apache.org/
-
-The following repository access (RA) modules are available:
-
-* ra_svn : Module for accessing a repository using the svn network protocol.
-  - with Cyrus SASL authentication
-  - handles 'svn' scheme
-* ra_local : Module for accessing a repository on local disk.
-  - handles 'file' scheme
-* ra_serf : Module for accessing a repository via WebDAV protocol using serf.
-  - handles 'http' scheme
-  - handles 'https' scheme
-
-$ git svn dcommit
-Committing to https://xxxxx.xxx/xxxxx ...
-R /some/file => /some/new/filename
-perl: subversion/libsvn_subr/dirent_uri.c:2500: svn_fspath__is_child:
-Assertion `svn_fspath__is_canonical(child_fspath)' failed.
-error: git-svn died of signal 6
-
-Any idea what I should do next to get this working? I also tried with
-a "$ git svn rebase" first, which throws no error (just an "already
-up-to-date")...
-
-Thanks for your help!
-
-Regards
-Ben
-
-2013/11/15 Andreas Stricker <astricker@futurelab.ch>:
-> Hi Benjamin
+> On Sun, Nov 17, 2013 at 01:39:52AM +1100, Bryan Turner wrote:
 >
->> thanks for your link. Can you give me the exact version you
->> downgraded svn to?
+>> Aphrael:example bturner$ for ((i=1;i<21;i++)); do git symbolic-ref
+>> refs/heads/syms/$i refs/heads/master; done
+>> Aphrael:example bturner$ git ls-remote .
+>> fatal: protocol error: impossibly long line
+>> fatal: Could not read from remote repository.
+>> 
+>> A symref= entry is written into the first packet of the ref
+>> advertisement, right after the capabilities, for each symbolic ref in
+>> the repository. Unfortunately, no splitting is done on that value and
+>> so once you have 15-20 symbolic refs (more or less depending on path
+>> lengths), you blow the 996 byte limit in format_packet (pkt-line.c)
+>> and all further clone/fetch operations fail.
 >
-> svn, Version 1.7.10 (r1485443)
+> Ick, yeah. I don't think there is a way around that with the way the
+> information is shoe-horned into the protocol.  We should probably just
+> revert 5e7dcad (upload-pack: send non-HEAD symbolic refs, 2013-09-17),
+> and assume the HEAD branch name is short enough to fit.
 >
-> I tried to reproduce the problem with git version 1.8.4.2 and
-> Subversion version 1.8.4 (r1534716) with a fresh and pristine
-> subversion repo and a git-svn clone of it: I didn't manage to
-> reproduce the rename issue. Then I switched subversion back to
-> 1.7.10, created both the repo and the git-svn clone, switched
-> againt to 1.8.4.2 and then got an error. Unfortunately I didn't
-> check if the subversion perlbindings were regenerated, so I'm
-> not exactly sure. I'll repeat the test again, as soon I've find
-> the time.
->
-> It looks like a fresh git svn clone may fix the problem.
->
-> Regards, Andy
+> Another option would be to cap the number of non-HEAD symrefs we'd send
+> (by counting up the bytes and keeping below the limit). That at least
+> makes the "easy" cases work, but it's a bit too flaky for my taste.
+
+Thanks Bryan for an easy reproduction, and thanks Peff for a
+suggestion.  Let's revert that one for now.
