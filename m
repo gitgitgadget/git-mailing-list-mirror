@@ -1,105 +1,87 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
 Subject: Re: [PATCH v2 3/3] for-each-ref: introduce %(color:...) for color
-Date: Mon, 18 Nov 2013 08:24:34 -0800
-Message-ID: <xmqq4n79d6f1.fsf@gitster.dls.corp.google.com>
+Date: Mon, 18 Nov 2013 22:15:30 +0530
+Message-ID: <CALkWK0ngKTkFbaq7NzCW7T3KyfmWxpDEv8TLj05LoThob1fpFg@mail.gmail.com>
 References: <1384335406-16332-1-git-send-email-artagnon@gmail.com>
-	<1384335406-16332-4-git-send-email-artagnon@gmail.com>
-	<xmqqbo1odqb4.fsf@gitster.dls.corp.google.com>
-	<xmqq38n0dpgy.fsf@gitster.dls.corp.google.com>
-	<CALkWK0k4MudojZt4PkLjnq0uZe322n30WP-=N0ckLw2QcnbzMA@mail.gmail.com>
+ <1384335406-16332-4-git-send-email-artagnon@gmail.com> <xmqqbo1odqb4.fsf@gitster.dls.corp.google.com>
+ <xmqq38n0dpgy.fsf@gitster.dls.corp.google.com> <CALkWK0k4MudojZt4PkLjnq0uZe322n30WP-=N0ckLw2QcnbzMA@mail.gmail.com>
+ <xmqq4n79d6f1.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
 Cc: Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 18 17:25:01 2013
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Nov 18 17:46:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ViRdC-00070n-Qb
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Nov 2013 17:24:59 +0100
+	id 1ViRxn-0000zT-Np
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Nov 2013 17:46:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751652Ab3KRQYl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Nov 2013 11:24:41 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45584 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751512Ab3KRQYi (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Nov 2013 11:24:38 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5F12452D30;
-	Mon, 18 Nov 2013 11:24:37 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=nDBNWKbrMKcfNJdmNh9oeDjZx7U=; b=jcGFbg
-	AySJBRJGu+3eAhO9P5KQ54mM91TptkEv5vqbP+nVpiWbiI3LZ73TzlpatStXFyFx
-	ABiUGNDI8dmGHyCZl4afn41ACqkvKJI0gNhQG7RAHC6C88IwhWlN95sF7PePS13w
-	krsYb+SkGimLrYBLFBNLW+HqDzyzkEPsH/6Aw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=N0UpdRyGD6ItLuieB213juLLE7J6m16B
-	3DRZ4MHPp5083sxwJ6RaEbmbmcItpayHPGuwMijXP5fEixS5hrFqruwlwh/KCxYe
-	i7WXK/x4ROv0FitzUbwkn2fqCwxuqGYtbRFylKaiKK21oexB/tGujWxSkwChBm91
-	17x4DJGsRfw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4FF2C52D2F;
-	Mon, 18 Nov 2013 11:24:37 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5EA0152D2D;
-	Mon, 18 Nov 2013 11:24:36 -0500 (EST)
-In-Reply-To: <CALkWK0k4MudojZt4PkLjnq0uZe322n30WP-=N0ckLw2QcnbzMA@mail.gmail.com>
-	(Ramkumar Ramachandra's message of "Thu, 14 Nov 2013 12:33:05 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: EA4F4C86-506D-11E3-B55C-D331802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751582Ab3KRQqM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Nov 2013 11:46:12 -0500
+Received: from mail-ie0-f169.google.com ([209.85.223.169]:59501 "EHLO
+	mail-ie0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751254Ab3KRQqL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Nov 2013 11:46:11 -0500
+Received: by mail-ie0-f169.google.com with SMTP id e14so2323133iej.14
+        for <git@vger.kernel.org>; Mon, 18 Nov 2013 08:46:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=l/p8BB/xmpjGjyc3UXB5BlmtocrqTTThnM2QiMCJvPo=;
+        b=emKw+3iU+OQN/wsHI5M/Gkdamn5yBxy9b6CJKnIwJ2289ynqLEVLyRRhsQ3tqJGkW6
+         1E6zsArQ8xRWkXQTjGcghI+G8nP5bArljuNasEaGdUgi6AFLWeTN3X01KKzQGcBWYEJc
+         WQ64o/fSqg/9jG0bPdJTZDTZFtBTfR63WBQoNZ/ZQ3u0d5H5ZZ6FAzTthcNhN/L0crAD
+         Pgd3LoGkD9ZhG5G/EI8QMRXzFOIyhTyX+mqm911gcNzDp1Gz4SL+J3Dm7EbZavJS+ozZ
+         yq02miYAW+ibJ8fiAg8jeaTftpl8za/XOrVhQ8l/6VY7NB7lNMHMXM5PYREQbxWBbdv5
+         fRVQ==
+X-Received: by 10.50.40.37 with SMTP id u5mr15428486igk.29.1384793170419; Mon,
+ 18 Nov 2013 08:46:10 -0800 (PST)
+Received: by 10.64.73.36 with HTTP; Mon, 18 Nov 2013 08:45:30 -0800 (PST)
+In-Reply-To: <xmqq4n79d6f1.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237988>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/237989>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
-
-> Junio C Hamano wrote:
->> Perhaps like this (obviously not tested as these three patches did
->> not add any tests ;-)
+Junio C Hamano wrote:
+> If you are saying, by after each token, that
 >
-> Sorry about that. I didn't notice t6300-for-each-ref.sh. Will fix in
-> the next round.
+>         --format='%(color:blue)%(A)literal string%(B)'
 >
->> I also think that there should be a mechanism to do "color:reset"
->> after each record is issued automatically, and also have the color
->> output honor --color=auto from the command line, i.e.
->>
->>         git for-each-ref --color=auto --format='%(color:blue)%(subject)' | cat
->>
->> should turn the coloring off.
+> should result in
 >
-> We can add --color=auto later, but I'm wondering about auto-reset
-> color after each token. What happens if I do:
+>         <color blue> <value for A> <color reset> "literal string" <value for B>
 >
->   $ git for-each-ref --format='%(subject)%(color:blue)'
+> then I would disagree.
+
+Hm, I didn't think it was a bad idea to reset after each token. The
+whole point of having color is to make sure that two consecutive
+tokens don't have the same color, no? Then again, my scheme would
+result in extra unnecessary resets like
+
+  %(color:blue)%(A)%(color:green)%(B)
+
+being turned into:
+
+  %(color:blue)%(A)%(color:reset)%(color:green)%(B)%(color:reset)
+
+Here, the first %(color:reset) is completely unnecessary.
+
+> I was suggesting it to instead produce
 >
-> No color, right? So, it should be auto-reset color after each token
-> _and_ at end of format-string.
+>         <color blue> <value for A> "literal string" <value for B> <color reset>
+>
+> where the <color reset> always comes when some color is used and we
+> hit the end of the format string. A bonus point if we can make it so
+> that we emit the final reset only when the last "%(color:some)" is
+> not "%(color:reset)", but unconditional "reset if we ever used
+> color" is fine.
 
-If you are saying, by after each token, that
-
-	--format='%(color:blue)%(A)literal string%(B)'
-
-should result in
-
-	<color blue> <value for A> <color reset> "literal string" <value for B>
-
-then I would disagree.  I was suggesting it to instead produce
-
-	<color blue> <value for A> "literal string" <value for B> <color reset>
-
-where the <color reset> always comes when some color is used and we
-hit the end of the format string. A bonus point if we can make it so
-that we emit the final reset only when the last "%(color:some)" is
-not "%(color:reset)", but unconditional "reset if we ever used
-color" is fine.
+Okay, a simple don't-leak-color. I'll submit another iteration soon.
 
 Thanks.
