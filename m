@@ -1,77 +1,78 @@
-From: Antoine Pelisse <apelisse@gmail.com>
-Subject: Re: [PATCH v4 2/2] Rename suffixcmp() to ends_with() and invert its result
-Date: Tue, 19 Nov 2013 22:32:56 +0100
-Message-ID: <CALWbr2yG7XOhuZa9bf6sXRV=m49dTPNyPZ9JUU2-_2G8ZJsCTg@mail.gmail.com>
-References: <20131117083930.4177.79411.chriscool@tuxfamily.org>
-	<20131119191322.GA4212@google.com>
-	<20131119.220438.1634671089949485179.chriscool@tuxfamily.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 00/86] replace prefixcmp() with has_prefix()
+Date: Tue, 19 Nov 2013 13:42:29 -0800
+Message-ID: <xmqq8uwk83wa.fsf@gitster.dls.corp.google.com>
+References: <xmqq7gcdgvmf.fsf@gitster.dls.corp.google.com>
+	<20131113.074703.1555957018827670255.chriscool@tuxfamily.org>
+	<20131113071747.GA31251@sigill.intra.peff.net>
+	<20131117.095200.299497690980619465.chriscool@tuxfamily.org>
+	<CAP8UFD0HjJha7gF7h_S3Hb5ZSqOW0nfHW=G=P6gu0LZaN=hfRQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	git <git@vger.kernel.org>, apenwarr@gmail.com,
+Content-Type: text/plain; charset=us-ascii
+Cc: Christian Couder <chriscool@tuxfamily.org>,
+	Jeff King <peff@peff.net>, Andreas Ericsson <ae@op5.se>,
+	git <git@vger.kernel.org>, Avery Pennarun <apenwarr@gmail.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jeff King <peff@peff.net>, Max Horn <max@quendi.de>, ae@op5.se
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Tue Nov 19 22:33:04 2013
+	Jonathan Nieder <jrnieder@gmail.com>, Max Horn <max@quendi.de>
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 19 22:42:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Visut-0007Gx-94
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Nov 2013 22:33:03 +0100
+	id 1Vit4A-0003VV-5i
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Nov 2013 22:42:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752211Ab3KSVc6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Nov 2013 16:32:58 -0500
-Received: from mail-lb0-f176.google.com ([209.85.217.176]:62170 "EHLO
-	mail-lb0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751788Ab3KSVc5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Nov 2013 16:32:57 -0500
-Received: by mail-lb0-f176.google.com with SMTP id x18so1090792lbi.35
-        for <git@vger.kernel.org>; Tue, 19 Nov 2013 13:32:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=NM7Cw1kZbTtAfWFavnN//wnEuRRGWP8SPJBMXHvr8QQ=;
-        b=Z41Bu6Ejmb8a/WGGJQbnG6z7804xV1cIRe9koWyHSzfhMt29uA1LdlK7cTFhl61Uu9
-         GednnOD+oXKd/HN+9ayyR3AHaiiu9NCK3UbT29mxgMoyU/JLAp6zOhYrDgueZsV+Ns2A
-         6TFieLuWPgUPzKmtLfeUClHM66MOZp7dmMudLdW2s8RLR9E6S1YkfTMxp+XQ9drqZf6h
-         ZpOLI1g4l1PKq2V81klwDURvAOzI2V1qVXDKG271FNHNfef7jfCAscMouJmhcasSyGO3
-         2YUfJbDNhPmuLPJ7soBAx4tqFtg5ppoEH81jwwjACye8p34dVuJysri8YzRC8r0nRodN
-         6LvQ==
-X-Received: by 10.152.228.130 with SMTP id si2mr2929305lac.32.1384896776650;
- Tue, 19 Nov 2013 13:32:56 -0800 (PST)
-Received: by 10.112.202.102 with HTTP; Tue, 19 Nov 2013 13:32:56 -0800 (PST)
-In-Reply-To: <20131119.220438.1634671089949485179.chriscool@tuxfamily.org>
+	id S1752267Ab3KSVme (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Nov 2013 16:42:34 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59843 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750812Ab3KSVmd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Nov 2013 16:42:33 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B10D0533A8;
+	Tue, 19 Nov 2013 16:42:32 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=9MlAtvOB8CxeC1ZQHxdzC9aIy+c=; b=B1L1Fr
+	IGpT4Ia17K8VHhk/j3fliBG+OmYCcKDMGURitfA198rI+5xIudA64HZNFURNFbj6
+	PEIttN5sm96Jd+Nr4ImysL38kTvHBaxNUhNaqQTxApZx5+g+9dAWaLfsO7id5vEX
+	gyO8yOQnNzg8OKz+P4TsBfoRA84ZT+l50LqEs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=T0rW70tD15y8ty17SfvxP8frSju+mdDz
+	HmYNR9icEikCDYffbZSP0pwYXQ2UptBGR+zB+trto+/kyHc+nJwp0b1GbbjT6h0w
+	L/Auyod/iUptsw1qMZxmXs/WOiRUQNe6J8AWPA6SPuUX87sSOADE39nUVE6TzTyN
+	gxg+iYOzhac=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9B285533A7;
+	Tue, 19 Nov 2013 16:42:32 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CBA69533A6;
+	Tue, 19 Nov 2013 16:42:31 -0500 (EST)
+In-Reply-To: <CAP8UFD0HjJha7gF7h_S3Hb5ZSqOW0nfHW=G=P6gu0LZaN=hfRQ@mail.gmail.com>
+	(Christian Couder's message of "Mon, 18 Nov 2013 11:42:04 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 7E9E2FD8-5163-11E3-A36F-D331802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238050>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238051>
 
-On Tue, Nov 19, 2013 at 10:04 PM, Christian Couder
-<chriscool@tuxfamily.org> wrote:
-> To avoid spamming the list again, I am going to send the following
-> patches from the 86 patch long series to replace prefixcmp() with
-> starts_with():
->
-> [PATCH v2 00/86] replace prefixcmp() with starts_with()
-> [PATCH v2 01/86] strbuf: add starts_with() to be used instead of prefixcmp()
-> [PATCH v2 02/86] diff: replace prefixcmp() with starts_with()
-> [PATCH v2 08/86] transport*: replace prefixcmp() with starts_with()
-> [PATCH v2 40/86] environment: replace prefixcmp() with starts_with()
-> [PATCH v2 86/86] strbuf: remove prefixcmp() as it has been replaced with starts_with()
->
-> If there are no problems with them, then I will suppose that most of
-> the patches are ok and probably send them all unless I am asked not
-> to.
+Christian Couder <christian.couder@gmail.com> writes:
 
-I'm not exactly sure I understand the point of not squashing all those
-patches together ?
-It's not like one is going without the others, or that the commit
-message provides some new information (except for the name of the
-file, but that is not very relevant either). The downside is that it's
-_many_ messages to bypass when reading mails from small-screen devices
-:-)
+> There is also a new version of my 86 patch long series to replace
+> prefixcmp() with starts_with() that I am ready to send, but I hesitate
+> to spam the whole list :-)
+> I can put it somewhere like GitHub where people can see everything and
+> perhaps send only a few patches to the list, including the first and
+> the last.
+> @Junio, how would you like me to proceed?
+
+Let's hold this off for now. The other half of this series is
+already in 'next' and I do not want to bother with the "revert,
+rebranch and remerge" dance this close to the 1.8.5 final.
