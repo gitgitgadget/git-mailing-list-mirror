@@ -1,85 +1,72 @@
-From: =?UTF-8?B?IkFuZHLDqXMgRy4gQXJhZ29uZXNlcyI=?= <knocte@gmail.com>
-Subject: [PATCHv2] transport: Catch non positive --depth option value
-Date: Mon, 18 Nov 2013 23:45:11 +0100
-Message-ID: <528A9877.4060802@gmail.com>
-References: <5283A380.9030308@gmail.com> <xmqqzjp1bqm3.fsf@gitster.dls.corp.google.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH v4 6/6] for-each-ref: avoid color leakage
+Date: Tue, 19 Nov 2013 10:07:33 +0530
+Message-ID: <CALkWK0mnYXBVW-agV_v6=mPxA=MoJAfHQaPKarwKU=x2SE+tnQ@mail.gmail.com>
+References: <1384796353-18701-1-git-send-email-artagnon@gmail.com>
+ <1384796353-18701-7-git-send-email-artagnon@gmail.com> <xmqqwqk59xyz.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: gitster@pobox.com, pclouds@gmail.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 18 23:45:28 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Nov 19 05:38:22 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ViXZN-0001gY-AG
-	for gcvg-git-2@plane.gmane.org; Mon, 18 Nov 2013 23:45:25 +0100
+	id 1Vid4s-0005Oa-Mp
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Nov 2013 05:38:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751748Ab3KRWpV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Nov 2013 17:45:21 -0500
-Received: from mail-ee0-f53.google.com ([74.125.83.53]:64424 "EHLO
-	mail-ee0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751631Ab3KRWpU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Nov 2013 17:45:20 -0500
-Received: by mail-ee0-f53.google.com with SMTP id b57so2847719eek.12
-        for <git@vger.kernel.org>; Mon, 18 Nov 2013 14:45:19 -0800 (PST)
+	id S1751563Ab3KSEiP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Nov 2013 23:38:15 -0500
+Received: from mail-ie0-f179.google.com ([209.85.223.179]:55963 "EHLO
+	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751386Ab3KSEiO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Nov 2013 23:38:14 -0500
+Received: by mail-ie0-f179.google.com with SMTP id u16so10314342iet.38
+        for <git@vger.kernel.org>; Mon, 18 Nov 2013 20:38:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=rQpyHPi/+51PB03YjIfcYyoUOZ1C38UbvJeNF7Ex3yw=;
-        b=i0cblZMEaTWRQ0jR2L4eA32FUjOouJ5AsUCLNlN0l7WQAAgpe8qIsmz8ykkMtpKkbA
-         OB7uYgRGkaZgPWdAmkCfVvetmjwQbRdzlnc16FAaiDF0vcSI8eQgmW94zmPnb/ZlrdGE
-         Ss3NgwO9ZziO+m559jorcv5esofOQXmQTu8aTbO8yyUbkdJfPiOz8QMv0qiesblqdsBJ
-         XijvU6AAC/S26BFl426vuE+5fgqcx0hg4x9lkqsTliZO2zj3IsqLweTwTiQuIdCGmgZT
-         kRApiwYnwo2O9o2pD4L7Mc1oEsMy6eP/JuBg3meWdygdVVAoiumaeyyaWYLXtcwsykzt
-         cQMA==
-X-Received: by 10.14.102.66 with SMTP id c42mr6439579eeg.47.1384814718725;
-        Mon, 18 Nov 2013 14:45:18 -0800 (PST)
-Received: from ?IPv6:2001:a60:14a5:4a01:85ae:74c0:1f1c:fa3f? ([2001:a60:14a5:4a01:85ae:74c0:1f1c:fa3f])
-        by mx.google.com with ESMTPSA id a51sm42244012eeh.8.2013.11.18.14.45.16
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 18 Nov 2013 14:45:17 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.1.0
-In-Reply-To: <xmqqzjp1bqm3.fsf@gitster.dls.corp.google.com>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=67d4oJ+XHoYE93PfE03cKDs4BiLQAjsDwaM3UEuShw8=;
+        b=aPkj+/r6WjPylOFZrRMVSoiYIQtnDdkIsw66huiL2yCXkzmJq/8bPxBiyjO68gvImg
+         zFsU3BCz/bi0ZjTIGI6rPNK555DX+3ZG7FdGBs8HYdZhRoLUmkhb/7tY+tVAibmS7yMJ
+         AsXxg5PcYZPmW31AiwAh14pQpGEmtdBEhdiMSp3yy8964PhTn00E+0ZXbcFxQ+uJVF4c
+         ang2EZNkUguPV8CJk8H4UVv0bdu8OkySDJZo5qrYbHUHfYKa4N6R0w+tbm8+TUmZHW1P
+         7i1WO1Zn7jJzDU+u15Ez3xPcKmnHATiq798CkEKC1eCNeXC0LTaC3s8C8jwxMmeETIY9
+         a2GQ==
+X-Received: by 10.50.61.205 with SMTP id s13mr17890141igr.29.1384835893935;
+ Mon, 18 Nov 2013 20:38:13 -0800 (PST)
+Received: by 10.64.73.36 with HTTP; Mon, 18 Nov 2013 20:37:33 -0800 (PST)
+In-Reply-To: <xmqqwqk59xyz.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238020>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238022>
 
-Instead of simply ignoring the value passed to --depth
-option when it is zero or negative, now it is caught
-and reported.
+Junio C Hamano wrote:
+>> diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
+>> index 2ff4e54..04e35ba 100644
+>> --- a/builtin/for-each-ref.c
+>> +++ b/builtin/for-each-ref.c
+>> @@ -23,6 +23,7 @@ typedef enum { FIELD_STR, FIELD_ULONG, FIELD_TIME } cmp_type;
+>>  struct atom_value {
+>>       const char *s;
+>>       unsigned long ul; /* used for sorting when not FIELD_STR */
+>> +     int color : 2; /* 1 indicates color, 2 indicates color-reset */
+>>  };
+>
+> Hmph.  It looks wasteful to have this information in atom_value.
 
-This will let people know that they were using the
-option incorrectly (as depth<0 should be simply invalid,
-and under the hood depth==0 didn't have any effect).
+I wanted to avoid an ugly global. On the other end of the spectrum,
+modifying the various functions to take an extra reset_color_leakage
+parameter seems much too intrusive. Do you have any suggestions?
 
-Signed-off-by: Andres G. Aragoneses <knocte@gmail.com>
-Reviewed-by: Duy Nguyen <pclouds@gmail.com>
-Reviewed-by: Junio C Hamano <gitster@pobox.com>
----
-  transport.c | 2 ++
-  1 file changed, 2 insertions(+)
+> Isn't a new single bit in "struct refinfo" all you need to keep
+> track of, to see the last %(color:something) you ever saw is for a
+> color that is not reset?
 
-diff --git a/transport.c b/transport.c
-index 7202b77..edd63eb 100644
---- a/transport.c
-+++ b/transport.c
-@@ -483,6 +483,8 @@ static int set_git_option(struct 
-git_transport_options *opts,
-              opts->depth = strtol(value, &end, 0);
-              if (*end)
-                  die("transport: invalid depth option '%s'", value);
-+            if (opts->depth < 1)
-+                die("transport: invalid depth option '%s' (non 
-positive)", value);
-          }
-          return 0;
-      }
--- 
-1.8.1.2
+No; because I can only look at one atom and set v->color, at a time.
