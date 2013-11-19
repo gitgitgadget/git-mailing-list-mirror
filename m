@@ -1,82 +1,56 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v2 86/86] strbuf: remove prefixcmp() as it has been replaced
- with starts_with()
-Date: Sun, 17 Nov 2013 23:07:18 +0100
-Message-ID: <20131117220719.4386.4388.chriscool@tuxfamily.org>
-References: <20131117215732.4386.19345.chriscool@tuxfamily.org>
-Cc: git@vger.kernel.org, Avery Pennarun <apenwarr@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Jeff King <peff@peff.net>, Max Horn <max@quendi.de>,
-	Andreas Ericsson <ae@op5.se>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Nov 19 22:05:56 2013
+From: Jim Garrison <jim.garrison@nwea.org>
+Subject: Suggestion for git reference page
+Date: Tue, 19 Nov 2013 21:26:47 +0000
+Message-ID: <0C723FEB5B4E5642B25B451BA57E273041FDF07F@S1P5DAG3C.EXCHPROD.USA.NET>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Nov 19 22:27:10 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VisUb-0002gl-N5
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Nov 2013 22:05:54 +0100
+	id 1VispB-0004gp-1f
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Nov 2013 22:27:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753011Ab3KSVFk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Nov 2013 16:05:40 -0500
-Received: from mail-1y.bbox.fr ([194.158.98.14]:63466 "EHLO mail-1y.bbox.fr"
+	id S1751723Ab3KSV1E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Nov 2013 16:27:04 -0500
+Received: from gwo2.mbox.net ([165.212.64.22]:47931 "EHLO gwo2.mbox.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752058Ab3KSVFd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Nov 2013 16:05:33 -0500
-Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-1y.bbox.fr (Postfix) with ESMTP id 964FC58;
-	Tue, 19 Nov 2013 22:05:32 +0100 (CET)
-X-git-sha1: 420ad990adc571fff77a536cee22cb4839307ba6 
-X-Mailer: git-mail-commits v0.5.2
-In-Reply-To: <20131117215732.4386.19345.chriscool@tuxfamily.org>
+	id S1750812Ab3KSV1C convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 19 Nov 2013 16:27:02 -0500
+Received: from gwo2.mbox.net (localhost [127.0.0.1])
+	by gwo2.mbox.net (Postfix) with ESMTP id 3dPKqT3jrxzfkwL0
+	for <git@vger.kernel.org>; Tue, 19 Nov 2013 21:27:01 +0000 (UTC)
+X-USANET-Received: from gwo2.mbox.net [127.0.0.1] by gwo2.mbox.net via mtad (C8.MAIN.3.82G) 
+	with ESMTP id 838RksVA43296Mo2; Tue, 19 Nov 2013 21:26:56 -0000
+X-USANET-Routed: 5 gwsout-gwsd Q:gwsd
+X-USANET-Routed: 3 gwsout-vs Q:bmvirus
+X-USANET-GWS2-Tenant: nwea.org
+X-USANET-GWS2-Tagid: NWEA
+Received: from S1P5HUB3.EXCHPROD.USA.NET [165.212.120.254] by gwo2.mbox.net via smtad (C8.MAIN.3.93K) 
+	with ESMTPS id XID967RksVA54439Xo2; Tue, 19 Nov 2013 21:26:56 -0000
+X-USANET-Source: 165.212.120.254 OUT  jim.garrison@nwea.org S1P5HUB3.EXCHPROD.USA.NET
+X-USANET-MsgId: XID967RksVA54439Xo2
+Received: from S1P5DAG3C.EXCHPROD.USA.NET ([169.254.3.33]) by
+ S1P5HUB3.EXCHPROD.USA.NET ([10.120.223.33]) with mapi id 14.03.0158.001; Tue,
+ 19 Nov 2013 21:26:48 +0000
+Thread-Topic: Suggestion for git reference page
+Thread-Index: Ac7lbgWP/jLsLPg7ThaolTYqO3lVqA==
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [70.98.171.2]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238048>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238049>
 
-prefixcmp() is now useless as the previous commit replaced it
-everywhere with starts_with(). So let's now remove it.
+The master reference TOC page at http://git-scm.com/docs links to all the associated command reference pages, except it seems to be missing a link for gitrevisions(7) (http://git-scm.com/docs/gitrevisions.html).
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- git-compat-util.h | 1 -
- strbuf.c          | 9 ---------
- 2 files changed, 10 deletions(-)
-
-diff --git a/git-compat-util.h b/git-compat-util.h
-index e441a6b..c4c01e7 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -350,7 +350,6 @@ extern void set_die_routine(NORETURN_PTR void (*routine)(const char *err, va_lis
- extern void set_error_routine(void (*routine)(const char *err, va_list params));
- extern void set_die_is_recursing_routine(int (*routine)(void));
- 
--extern int prefixcmp(const char *str, const char *prefix);
- extern int starts_with(const char *str, const char *prefix);
- extern int ends_with(const char *str, const char *suffix);
- 
-diff --git a/strbuf.c b/strbuf.c
-index 933d998..ee96dcf 100644
---- a/strbuf.c
-+++ b/strbuf.c
-@@ -1,15 +1,6 @@
- #include "cache.h"
- #include "refs.h"
- 
--int prefixcmp(const char *str, const char *prefix)
--{
--	for (; ; str++, prefix++)
--		if (!*prefix)
--			return 0;
--		else if (*str != *prefix)
--			return (unsigned char)*prefix - (unsigned char)*str;
--}
--
- int starts_with(const char *str, const char *prefix)
- {
- 	for (; ; str++, prefix++)
--- 
-1.8.4.1.561.g12affca
+I've never submitted a patch and thought I would learn how... except the website source doesn't seem to be in the git source tree.
+	
