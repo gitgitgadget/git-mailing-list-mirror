@@ -1,98 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
 Subject: Re: [PATCH v4 6/6] for-each-ref: avoid color leakage
-Date: Tue, 19 Nov 2013 09:28:51 -0800
-Message-ID: <xmqqwqk48fn0.fsf@gitster.dls.corp.google.com>
+Date: Tue, 19 Nov 2013 23:02:58 +0530
+Message-ID: <CALkWK0nKGp4XdJX1Dds-Y+4o2eRXp8XH3qpqU8MNfTG+UdwACA@mail.gmail.com>
 References: <1384796353-18701-1-git-send-email-artagnon@gmail.com>
-	<1384796353-18701-7-git-send-email-artagnon@gmail.com>
-	<xmqqwqk59xyz.fsf@gitster.dls.corp.google.com>
-	<CALkWK0mnYXBVW-agV_v6=mPxA=MoJAfHQaPKarwKU=x2SE+tnQ@mail.gmail.com>
+ <1384796353-18701-7-git-send-email-artagnon@gmail.com> <xmqqwqk59xyz.fsf@gitster.dls.corp.google.com>
+ <CALkWK0mnYXBVW-agV_v6=mPxA=MoJAfHQaPKarwKU=x2SE+tnQ@mail.gmail.com> <xmqqiovo9x2r.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
 Cc: Git List <git@vger.kernel.org>,
 	Eric Sunshine <sunshine@sunshineco.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 19 18:28:59 2013
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Nov 19 18:33:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vip6h-0005j7-2G
-	for gcvg-git-2@plane.gmane.org; Tue, 19 Nov 2013 18:28:59 +0100
+	id 1VipBM-0008J6-6s
+	for gcvg-git-2@plane.gmane.org; Tue, 19 Nov 2013 18:33:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753393Ab3KSR2z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Nov 2013 12:28:55 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34368 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752962Ab3KSR2y (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Nov 2013 12:28:54 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 244D151DD7;
-	Tue, 19 Nov 2013 12:28:54 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=UzyMKLqUykqQbiZlPU5cFxNOki4=; b=SGrsyv
-	q8+nPwO0WhTyb7C5uu8kNTXFjJCHWJX6cfidrTIogq3tlml01SYNqFn8xQkKJH3R
-	PsdFKol7q7FS9N7ZWf0H/NPU/fvEyN8ZdKHXlXPb+Cn7vTt5uYPezWB5tZs2qzI1
-	BNdUooAUtuNF1iNCtWCORsDhtN9jQbd4aCwRc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=IycNJ6+KvWq+AMUIZHgvXp4fzi3hbwL9
-	wOP6VK7fbaYkmFw0c/BqPFxReLAz+/alTGToMxOgqaKFWzfdQj8IwzD9daS5Rgjg
-	QAqEeqiRsHav4ugdf4F4R2nfwyYti1p+rwUNIUNa9xHcJfF0GOe6S2c2SaoxTiuX
-	IPBzJZ8uEJA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 12C4351DD6;
-	Tue, 19 Nov 2013 12:28:54 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4D89351DD5;
-	Tue, 19 Nov 2013 12:28:53 -0500 (EST)
-In-Reply-To: <CALkWK0mnYXBVW-agV_v6=mPxA=MoJAfHQaPKarwKU=x2SE+tnQ@mail.gmail.com>
-	(Ramkumar Ramachandra's message of "Tue, 19 Nov 2013 10:07:33 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 0FA1A66E-5140-11E3-96CC-D331802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753398Ab3KSRdm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Nov 2013 12:33:42 -0500
+Received: from mail-ie0-f169.google.com ([209.85.223.169]:45238 "EHLO
+	mail-ie0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753278Ab3KSRdj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Nov 2013 12:33:39 -0500
+Received: by mail-ie0-f169.google.com with SMTP id e14so5004735iej.28
+        for <git@vger.kernel.org>; Tue, 19 Nov 2013 09:33:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=MjKx+7QG2SvB6EkWRtAKVUboevbz5kA8APMhnL+XSPU=;
+        b=YSCuXHf30UdsuVW7Z7leOdvfxQGeEwCcKFfL5n/zanXWm7mnwb6thlboUTG5t0wLm4
+         B+3Z15Pok22xdfMO2Lox/y/p7o0/YpSGrGNQn+cIVxeEQBDpBWMdpaAXk8ctJ2g/gF+N
+         h5W5OlKtt8+NTjOPZYr5IhzFHVEIszVsPzCSPsA8TBEhHQgSxST8Tbmr0jdrHhnr8mdQ
+         G4HUYCFnTRtuZllclZvLAEwOaaxtFp7c+dVI34vKrhe6Ob2S08SezY9KcWHbVcVf7OVi
+         7seWiPN9vGd08Ss2x2Xgo5LnVAP2OPzJ4KNe2K8Xzg45YorVRDO/nprpkHHqjw4BY4dh
+         qpmg==
+X-Received: by 10.43.129.130 with SMTP id hi2mr2018132icc.14.1384882418854;
+ Tue, 19 Nov 2013 09:33:38 -0800 (PST)
+Received: by 10.64.73.36 with HTTP; Tue, 19 Nov 2013 09:32:58 -0800 (PST)
+In-Reply-To: <xmqqiovo9x2r.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238033>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238034>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+Junio C Hamano wrote:
+> My knee-jerk "adding it to struct refinfo" is not correct, either,
+> because what we want to know, i.e. "do we need an extra reset?" is
+> not a property for each ref.  It is similar to "what is the set of
+> atoms the format string is using?" and "do we need to peel tags in
+> order to show all information asked by the format string?"
+> (i.e. used_atom[] and need_tagged, respectively).
 
-> Junio C Hamano wrote:
->>> diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
->>> index 2ff4e54..04e35ba 100644
->>> --- a/builtin/for-each-ref.c
->>> +++ b/builtin/for-each-ref.c
->>> @@ -23,6 +23,7 @@ typedef enum { FIELD_STR, FIELD_ULONG, FIELD_TIME } cmp_type;
->>>  struct atom_value {
->>>       const char *s;
->>>       unsigned long ul; /* used for sorting when not FIELD_STR */
->>> +     int color : 2; /* 1 indicates color, 2 indicates color-reset */
->>>  };
->>
->> Hmph.  It looks wasteful to have this information in atom_value.
+It's mostly cruft carried over from my reset-color-after-each-token
+implementation. My severe distaste for global variables prevented me
+from looking for the simpler solution.
+
+> Unlike need_tagged which asks "is there any *refname that asks us to
+> peel tags?", however, "is the _last_ color:anything in the format
+> string not 'reset'?" depends on the order of appearance of atoms in
+> the format string, so this needs to be done in a loop that scans the
+> format string from left to right once at the very beginning, and we
+> have a perfect place to do so in verify_format().
+
+I should be shot for my laziness and lack of ingenuity. Yeah,
+verify_format() is a much better place to put the logic than
+populate_value().
+
+> So perhaps like this one on top?
 >
-> I wanted to avoid an ugly global. On the other end of the spectrum,
-> modifying the various functions to take an extra reset_color_leakage
-> parameter seems much too intrusive. Do you have any suggestions?
+>  builtin/for-each-ref.c | 45 +++++++++++++++++++++------------------------
+>  1 file changed, 21 insertions(+), 24 deletions(-)
+>
+> diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
+> index 04e35ba..5ff51d1 100644
+> --- a/builtin/for-each-ref.c
+> +++ b/builtin/for-each-ref.c
 
-We already represent information that is for the format string as
-existing globals. It means that, if we ever want to make the program
-accept and use more than one format string, we can't.  We need one
-set of them for each such format string before we can use more than
-one.
-
-If you want to solve that problem, complaining by using a subjective
-word "ugly" does not help us much.  The right approach to the
-solution would be to first think what each global really means and
-decide which ones are per-format properties.  Then turn them into a
-proper abstraction by defining a structure to hold the currently
-considered format string and these various "per format string"
-properties.
-
-Once you do that, you can optionally make the code pass that single
-structure around, and that will remove the global, but I think that
-step can wait until we actually find a need for it.
+Thanks for taking the time to do this. And apologies for the laziness.
