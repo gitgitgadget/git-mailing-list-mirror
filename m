@@ -1,133 +1,74 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] diff: restrict pathspec limitations to diff b/f case only
-Date: Wed, 20 Nov 2013 08:26:41 +0700
-Message-ID: <1384910801-11125-1-git-send-email-pclouds@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
+From: "Jason St. John" <jstjohn@purdue.edu>
+Subject: [PATCH] Documentation/gitcli.txt: fix double quotes
+Date: Tue, 19 Nov 2013 20:34:40 -0500
+Message-ID: <1384911280-20175-1-git-send-email-jstjohn@purdue.edu>
+Cc: "Jason St. John" <jstjohn@purdue.edu>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 20 02:27:04 2013
+X-From: git-owner@vger.kernel.org Wed Nov 20 02:34:57 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ViwZI-0006mv-H2
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Nov 2013 02:27:00 +0100
+	id 1Viwgy-0001VG-Ud
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Nov 2013 02:34:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753422Ab3KTB0x convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 19 Nov 2013 20:26:53 -0500
-Received: from mail-pd0-f179.google.com ([209.85.192.179]:65461 "EHLO
-	mail-pd0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753536Ab3KTB0u (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Nov 2013 20:26:50 -0500
-Received: by mail-pd0-f179.google.com with SMTP id r10so5931231pdi.38
-        for <git@vger.kernel.org>; Tue, 19 Nov 2013 17:26:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:mime-version:content-type
-         :content-transfer-encoding;
-        bh=OJM4Tdvp75hybJj8zKCz82BfbUZIcgpMFPUTytlQtm0=;
-        b=qGcDEu211s08UXyzYdkjvKk9o1dPEdbXLADzLPjeE0qPA/Aam5aq84gl9eeBRYFrPu
-         K5qi3XhDEAR31KE33kxJz3DI/u5/obzASy8U4qEoZ5nXxTgRBPn/lZv/I1It75b9DzOn
-         VxF74+97lfrijZFUUhbQkw9YB4m3dRh9PLjPhwlUUBpF3Tq+BZoJw5M1vjxDMvLjd6XT
-         Wbf9kZ5qs+zd5POQPUzkIfql13g7b6r5RZQOVuoGJ9jkkimBWVA/ukdYj4pINSOfF0Zi
-         li3iaedVBgXipizzkl5NMhzEexhtDmCaus4gjv8fvT5l3VSauXSszyTt+gXSGOoY0HS1
-         LG9g==
-X-Received: by 10.66.145.4 with SMTP id sq4mr59980pab.178.1384910809916;
-        Tue, 19 Nov 2013 17:26:49 -0800 (PST)
-Received: from pclouds@gmail.com ([14.161.32.83])
-        by mx.google.com with ESMTPSA id wp8sm33560536pbc.26.2013.11.19.17.26.46
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Tue, 19 Nov 2013 17:26:49 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Wed, 20 Nov 2013 08:26:44 +0700
-X-Mailer: git-send-email 1.8.2.82.gc24b958
+	id S1753693Ab3KTBet (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Nov 2013 20:34:49 -0500
+Received: from mailhub129.itcs.purdue.edu ([128.210.5.129]:56615 "EHLO
+	mailhub129.itcs.purdue.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753683Ab3KTBer (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 19 Nov 2013 20:34:47 -0500
+Received: from megahurtz.itap.purdue.edu (pal-nat184-049-011.itap.purdue.edu [10.184.49.11])
+	(authenticated bits=0)
+	by mailhub129.itcs.purdue.edu (8.14.4/8.14.4/mta-auth.smtp.purdue.edu) with ESMTP id rAK1YgcT032328
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 19 Nov 2013 20:34:46 -0500
+X-Mailer: git-send-email 1.8.4.2
+X-PMX-Version: 6.0.2.2308539
+X-PerlMx-Virus-Scanned: Yes
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238060>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238061>
 
-builtin_diff_b_f() needs a path, not pathspec. Other modes in diff
-can deal with pathspec just fine. But because of the current
-GUARD_PATHSPEC() location, other modes also reject :(glob) and
-:(icase).
+Replace double quotes around literal examples with backticks
 
-Move GUARD_PATHSPEC(), and the "path" assignment statement, which is
-the reason of this GUARD_PATHSPEC(), inside builtin_diff_b_f().
-
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
+Signed-off-by: Jason St. John <jstjohn@purdue.edu>
 ---
- builtin/diff.c | 17 +++++++----------
- 1 file changed, 7 insertions(+), 10 deletions(-)
+ Documentation/gitcli.txt | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/builtin/diff.c b/builtin/diff.c
-index adb93a9..fe0cc7f 100644
---- a/builtin/diff.c
-+++ b/builtin/diff.c
-@@ -64,15 +64,18 @@ static void stuff_change(struct diff_options *opt,
-=20
- static int builtin_diff_b_f(struct rev_info *revs,
- 			    int argc, const char **argv,
--			    struct blobinfo *blob,
--			    const char *path)
-+			    struct blobinfo *blob)
- {
- 	/* Blob vs file in the working tree*/
- 	struct stat st;
-+	const char *path;
-=20
- 	if (argc > 1)
- 		usage(builtin_diff_usage);
-=20
-+	GUARD_PATHSPEC(&revs->prune_data, PATHSPEC_FROMTOP | PATHSPEC_LITERAL=
-);
-+	path =3D revs->prune_data.items[0].match;
-+
- 	if (lstat(path, &st))
- 		die_errno(_("failed to stat '%s'"), path);
- 	if (!(S_ISREG(st.st_mode) || S_ISLNK(st.st_mode)))
-@@ -255,7 +258,6 @@ int cmd_diff(int argc, const char **argv, const cha=
-r *prefix)
- 	struct rev_info rev;
- 	struct object_array ent =3D OBJECT_ARRAY_INIT;
- 	int blobs =3D 0, paths =3D 0;
--	const char *path =3D NULL;
- 	struct blobinfo blob[2];
- 	int nongit;
- 	int result =3D 0;
-@@ -366,13 +368,8 @@ int cmd_diff(int argc, const char **argv, const ch=
-ar *prefix)
- 			die(_("unhandled object '%s' given."), name);
- 		}
- 	}
--	if (rev.prune_data.nr) {
--		/* builtin_diff_b_f() */
--		GUARD_PATHSPEC(&rev.prune_data, PATHSPEC_FROMTOP | PATHSPEC_LITERAL)=
-;
--		if (!path)
--			path =3D rev.prune_data.items[0].match;
-+	if (rev.prune_data.nr)
- 		paths +=3D rev.prune_data.nr;
--	}
-=20
- 	/*
- 	 * Now, do the arguments look reasonable?
-@@ -385,7 +382,7 @@ int cmd_diff(int argc, const char **argv, const cha=
-r *prefix)
- 		case 1:
- 			if (paths !=3D 1)
- 				usage(builtin_diff_usage);
--			result =3D builtin_diff_b_f(&rev, argc, argv, blob, path);
-+			result =3D builtin_diff_b_f(&rev, argc, argv, blob);
- 			break;
- 		case 2:
- 			if (paths)
---=20
-1.8.2.82.gc24b958
+diff --git a/Documentation/gitcli.txt b/Documentation/gitcli.txt
+index 3146413..41bed29 100644
+--- a/Documentation/gitcli.txt
++++ b/Documentation/gitcli.txt
+@@ -83,12 +83,12 @@ scripting Git:
+    `git log -1 HEAD` but write `git log -1 HEAD --`; the former will not work
+    if you happen to have a file called `HEAD` in the work tree.
+ 
+- * many commands allow a long option "--option" to be abbreviated
++ * many commands allow a long option `--option` to be abbreviated
+    only to their unique prefix (e.g. if there is no other option
+-   whose name begins with "opt", you may be able to spell "--opt" to
+-   invoke the "--option" flag), but you should fully spell them out
++   whose name begins with `opt`, you may be able to spell `--opt` to
++   invoke the `--option` flag), but you should fully spell them out
+    when writing your scripts; later versions of Git may introduce a
+-   new option whose name shares the same prefix, e.g. "--optimize",
++   new option whose name shares the same prefix, e.g. `--optimize`,
+    to make a short prefix that used to be unique no longer unique.
+ 
+ 
+@@ -149,7 +149,7 @@ prefix of a long option as if it is fully spelled out, but use this
+ with a caution.  For example, `git commit --amen` behaves as if you
+ typed `git commit --amend`, but that is true only until a later version
+ of Git introduces another option that shares the same prefix,
+-e.g `git commit --amenity" option.
++e.g. `git commit --amenity` option.
+ 
+ 
+ Separating argument from the option
+-- 
+1.8.4.2
