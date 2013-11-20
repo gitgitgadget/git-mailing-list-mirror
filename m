@@ -1,73 +1,80 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: How to put tree into index
-Date: Wed, 20 Nov 2013 13:41:10 +0100
-Message-ID: <528CADE6.3020604@viscovery.net>
-References: <20131120154714.39fc5202@snail>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: Check out doesn't set x-flag on CIFS
+Date: Wed, 20 Nov 2013 13:41:40 +0100
+Message-ID: <CABPQNSaEs10U+3F8v3tBwMQ6cWa=YO=G2=p6t3VPcCz45OX02Q@mail.gmail.com>
+References: <loom.20130529T161408-317@post.gmane.org> <CABPQNSZDSRf9LSeBHBJ46pbBGsDwybTPkyJ2esqvoc0UHPifKA@mail.gmail.com>
+ <528CA18D.40004@geneity.co.uk> <CABPQNSYgkkiCxx60gwBtXoQTSj4RZMUiQHuzz7Gq7ELE5ke32Q@mail.gmail.com>
+ <528CA43E.7020804@geneity.co.uk> <CABPQNSbkV6bxkoeDdn9n=WUSF9fjVxrA_5bEH=KurcHE3xtJbQ@mail.gmail.com>
+ <528CAD36.3030407@geneity.co.uk>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: Alexander GQ Gerasiov <gq@cs.msu.su>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 20 13:41:30 2013
+To: Andre Esser <andre.esser@geneity.co.uk>,
+	GIT Mailing-list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Nov 20 13:42:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vj760-0005X4-K3
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Nov 2013 13:41:28 +0100
+	id 1Vj76v-00060z-67
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Nov 2013 13:42:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752077Ab3KTMlP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Nov 2013 07:41:15 -0500
-Received: from so.liwest.at ([212.33.55.18]:2070 "EHLO so.liwest.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751796Ab3KTMlO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Nov 2013 07:41:14 -0500
-Received: from [81.10.228.254] (helo=theia.linz.viscovery)
-	by so.liwest.at with esmtpa (Exim 4.80.1)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1Vj75j-0006p3-Cm; Wed, 20 Nov 2013 13:41:11 +0100
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 22B5B16613;
-	Wed, 20 Nov 2013 13:41:11 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:24.0) Gecko/20100101 Thunderbird/24.1.0
-In-Reply-To: <20131120154714.39fc5202@snail>
-X-Spam-Score: -1.0 (-)
+	id S1751796Ab3KTMmW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Nov 2013 07:42:22 -0500
+Received: from mail-ie0-f180.google.com ([209.85.223.180]:57079 "EHLO
+	mail-ie0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751133Ab3KTMmV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Nov 2013 07:42:21 -0500
+Received: by mail-ie0-f180.google.com with SMTP id tp5so6258384ieb.11
+        for <git@vger.kernel.org>; Wed, 20 Nov 2013 04:42:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:content-type;
+        bh=iW8K1hxOwww9WmhZ/arz0ygaNBG4yiiSQkJiMCjjP9U=;
+        b=088U4gB4DiWKBuXls3ka3X8ZNeFXtzsoO6FLwQqOAhMb7mjxkTVGnPrQuXIQa9y6dH
+         Wuw3nx9XROBw/G+zi29cwXF6s6dX4ddll2Y0EfIen5habGcxC+KJiDeh0mS0I1lebLYf
+         9VPdn+Fv3sWEQNpAMgsZ2I8kMwmIRDZf+c1ZpSIuyn3dUTkK7qiCXWX/QexxuUNPSGx6
+         vZFTgKhyDShOQbbxEPG3pN1F6hGT9AVT4IGByIRuUW87BqNdnwJDSHKjkAQMRSxz8dDo
+         XZo3EtbDhxXzaLltkFL0tMuVvdOIebfSthiMXnTnCeqx30IQfYKshoCi5Ki2iv42s74q
+         wXkg==
+X-Received: by 10.43.52.129 with SMTP id vm1mr306507icb.10.1384951340928; Wed,
+ 20 Nov 2013 04:42:20 -0800 (PST)
+Received: by 10.64.249.33 with HTTP; Wed, 20 Nov 2013 04:41:40 -0800 (PST)
+In-Reply-To: <528CAD36.3030407@geneity.co.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238077>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238078>
 
-Am 11/20/2013 12:47, schrieb Alexander GQ Gerasiov:
-> 1. I have repository with tree like this:
-> 
-> dir1/
-> 	file1
-> 	file2
-> 	file3
-> 
-> dir2/
-> 	subdir1/
-> 		some files
-> 
-> 
-> 2. Current branch is B.
-> 
-> 3. I want to get dir1 from branch A, and save it's content on current
-> branch (B) as dir2/subdir1
+Sigh, it seems replying from Gmail on my phone culled the CC-list.
+Sorry about that, and here's the rest of the discussion in case
+someone else is interested:
 
-> So my question is
-> How to put into index tree-object with known sha1 and given name?
-
-git rm -r --cached dir2/subdir1 &&
-git read-tree --prefix=dir2/subdir1/ A:dir1
-
-Note the trailing slash.
-
-> PS I was able to do what I need when copied files, not tree-itself.
-> Just add -r to git ls-tree, and put into index blobs/files, not tree.
-> But I'm interested: is it possible to put tree-object into index?
-
-No, because the index does not store trees, only blobs.
-
--- Hannes
+On Wed, Nov 20, 2013 at 1:38 PM, Andre Esser <andre.esser@geneity.co.uk> wrote:
+> On 2013-11-20 12:23, Erik Faye-Lund wrote:
+>> On Wed, Nov 20, 2013 at 12:59 PM, Andre Esser <andre.esser@geneity.co.uk> wrote:
+>>>
+>>> There is with POSIX extensions, and git recognises it correctly when an
+>>> executable file is being committed, ie the file's exec flag is set in
+>>> the repository.
+>>>
+>>> If that file is then however checked out to the same CIFS file system,
+>>> the exec flag is not set, which seems a least inconsistent.
+>>
+>> OK, in that case, core.filemode probably leads down the wrong path. In
+>> fact, shouldn't everything just work? I mean, normal POSIX calls
+>> should behave as ususal, no? Perhaps this is a Samba issue?
+>
+> We've had a look at the GIT source code (after my original post) and it
+> seems that after GIT identifies the file system as CIFS, it doesn't even
+> try to set the x-flag. Given POSIX extensions have been around for years
+> it would probably be a good idea to change GIT's behaviour. But I'm no
+> developer and we don't have the spare manpower in the company to look
+> into this any deeper.
+>
+> Thanks for your replies though!
+>
+> Andre
