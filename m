@@ -1,223 +1,72 @@
-From: Joey Hess <joey@kitenet.net>
-Subject: corrupt object memory allocation error
-Date: Wed, 20 Nov 2013 16:33:50 -0400
-Message-ID: <20131120203350.GA31139@kitenet.net>
+From: Eris Belew <erisrenee@gmail.com>
+Subject: Bug: Pathspec parsing on Windows fails when branch specified
+Date: Wed, 20 Nov 2013 13:09:26 -0800
+Message-ID: <CAM8h_A_zfX4U8hGxiw3_79zMZXmcTN3CPRUcrtsQTQdD4RaMhQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="s/l3CgOIzMHHjg/5"
+Content-Type: text/plain; charset=ISO-8859-1
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 20 21:34:00 2013
+X-From: git-owner@vger.kernel.org Wed Nov 20 22:09:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VjETH-0006b6-Ki
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Nov 2013 21:34:00 +0100
+	id 1VjF1f-0007nl-Qd
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Nov 2013 22:09:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755144Ab3KTUdz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Nov 2013 15:33:55 -0500
-Received: from wren.kitenet.net ([80.68.85.49]:52879 "EHLO kitenet.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754992Ab3KTUdz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Nov 2013 15:33:55 -0500
-Received: by darkstar.kitenet.net (Postfix, from userid 1000)
-	id 9A94F305E9B; Wed, 20 Nov 2013 15:33:50 -0500 (EST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755273Ab3KTVJ2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Nov 2013 16:09:28 -0500
+Received: from mail-ve0-f180.google.com ([209.85.128.180]:54409 "EHLO
+	mail-ve0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755275Ab3KTVJ1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Nov 2013 16:09:27 -0500
+Received: by mail-ve0-f180.google.com with SMTP id jz11so4118940veb.39
+        for <git@vger.kernel.org>; Wed, 20 Nov 2013 13:09:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=LbxRP+YXi8aCnXYFnmDUes6qIcgajD7FIShB4lLb0Cw=;
+        b=MU5wf6NZZ1DiNckKPfGqZrLCfiYAtOX28As9xAcDfHXoHN0t/tQzO36hVEgtJVxYk7
+         6wvk3TkWz1NDML4fwMMy2ANnlQBe9ueiG7lsRpiYXxsNlu7CLJ9z+mB5y/29lraIpLah
+         oVzJZnhsXOTdZpvFDBuE88R75aTJGxYtC4JoWJgwj4DgJIgsCli7YXTOn47vuh1SvtKJ
+         RfYSxgEThy6YVySTsOtgQIp9ttrF/jcmGQ3o0JpHTtsBGGruCEJ+jSYI5dvE+4z5ObMO
+         A4f9RkBNqtZ9xL1hT5HuHtitbLf7LQYLAL8G7KmofOlx1kJ8yrKa1et8nvhvNNqD3gtS
+         6u/g==
+X-Received: by 10.221.51.206 with SMTP id vj14mr2189598vcb.17.1384981766701;
+ Wed, 20 Nov 2013 13:09:26 -0800 (PST)
+Received: by 10.58.49.68 with HTTP; Wed, 20 Nov 2013 13:09:26 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238094>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238095>
+
+System: Windows Server 2008 R2
+Git: git version 1.8.4.msysgit.0
+Shell: Powershell V3 (No third-party modules loaded)
+
+Summary:
+  When specifying a pathspec including a branch/commit, path separator
+characters are not translated. Since tab-completion in windows shells (ex:
+CMD, PowerShell, not unix-style shells running on windows) uses the windows
+path separator, and other git commands work fine with the windows path
+separator, the expected behavior would be to translate for me.
+
+Reproduction:
+    git diff BRANCH:path\to\file path\to\file
+
+Result:
+    fatal: Path 'path\to\file' does not exist in 'BRANCH'
+
+Expected:
+    Normal diff operation
+
+Workaround:
+    Manually convert pathspec. Examples of working command:
+        git diff BRANCH:path/to/file path\to\otherfile
+        git diff BRANCH:path/to/file path/to/otherfile
 
 
---s/l3CgOIzMHHjg/5
-Content-Type: multipart/mixed; boundary="2fHTh5uZTiUOsy+g"
-Content-Disposition: inline
+Thanks,
 
-
---2fHTh5uZTiUOsy+g
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-I've got a git repository of < 2 mb, where git wants to
-allocate a rather insane amount of memory:
-
->git fsck
-Checking object directories: 100% (256/256), done.
-fatal: Out of memory, malloc failed (tried to allocate 124865231165 bytes)
-
-> git show 11644b5a075dc1425e01fbba51c045cea2d0c408
-fatal: Out of memory, malloc failed (tried to allocate 124865231165 bytes)
-
-The problem seems to be the attached object file, which has gotten
-corrupted, presumably in the header that git reads to see how large it
-is. Thought I'd report this in case there is some easy way to
-add a sanity check.
-
---=20
-see shy jo
-
---2fHTh5uZTiUOsy+g
-Content-Type: application/octet-stream
-Content-Disposition: attachment; filename=644b5a075dc1425e01fbba51c045cea2d0c408
-Content-Transfer-Encoding: base64
-
-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
-
---2fHTh5uZTiUOsy+g--
-
---s/l3CgOIzMHHjg/5
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
-
-iQIVAwUBUo0cq8kQ2SIlEuPHAQgMKA//dLKhxkAMiRxCIFO7xmrcQSmifDopNTr+
-5Fj3dCiw7HFcKFwI0xGdQqqtu//otxRWcTvRZcbwGiL2bzlA2+rsWJwjVYbyAZRI
-/7ZauvjxCuDrva7xR5ftkcvDWzvO9+rX8ToeRR3ZliIfSLbZrM8H49LzzQ3vr8AE
-DBczxzSJhibBLAOfXdfyvm9Ge57BnpbKAq1dHvo0a8wph/zur1cQ3B/GAGucdB0e
-RzHt0X5+BU2KDhQD3PCkvlii0Qwed+HAE8tUKxmpbZkpYAGO1GPEK+ScDyeiGVyt
-0LDb218WkdtmKFFh13pEWohEKduEZ0Q7YjlPfMwWPW1pEH+Jtvzt6RajtguNg5QL
-Z9byMoecYi+vbK1UoVi3keU6gBx1Fbtap0L3j/OhuUNnQLMgkyPSsmGvqR9l+LiS
-KFFaRp7UIVxawEnFv5gcishu07YAl2ypCMlC5UbiqXUVFAHlgMjXs3hST7oWcTGF
-Z/baGJUl8vcgnxIz921ENRxfYan2zaXCCnZHYRp/ZgZLJ1oXTD0BXbgYtmkJRpiX
-YzReJJ9zdjbRMLW4L9GaYmxbjjd26FMH03P8jtf4vWQj2UBmm5xuIaUW4bQi/E9z
-KkgRXEeuSI3DZ7rlw4Ve1y/lMu2H3jZ8ixh065nkV9KFCwIFmer2kmf7DxFYN9l/
-O18gZU3i+U0=
-=ck2N
------END PGP SIGNATURE-----
-
---s/l3CgOIzMHHjg/5--
+Eris
