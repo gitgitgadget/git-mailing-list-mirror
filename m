@@ -1,81 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Fix typesetting in Bugs section of 'git-rebase' man page (web version)
-Date: Tue, 19 Nov 2013 20:43:53 -0800
-Message-ID: <xmqqwqk37kdy.fsf@gitster.dls.corp.google.com>
-References: <1384906483-15260-1-git-send-email-jstjohn@purdue.edu>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: Bizarre git merge behaviour
+Date: Wed, 20 Nov 2013 08:20:30 +0100
+Message-ID: <528C62BE.7060803@viscovery.net>
+References: <l6hbgg$oej$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Jason St. John" <jstjohn@purdue.edu>
-X-From: git-owner@vger.kernel.org Wed Nov 20 05:44:02 2013
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+To: Matthew Cengia <mattcen@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 20 08:20:42 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vizdx-0000KC-I6
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Nov 2013 05:44:01 +0100
+	id 1Vj25Y-0008VG-KI
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Nov 2013 08:20:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752541Ab3KTEn5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Nov 2013 23:43:57 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64244 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751787Ab3KTEn4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Nov 2013 23:43:56 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1D1C654216;
-	Tue, 19 Nov 2013 23:43:56 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=g0/ovB51A65m9voG3jqM6s47Etw=; b=d/JGFp
-	89VFLrI9jCihVYE89nKHBbdJJLDI4nZPn6HYGe4ajg/tcTNNUGsE/xvdiHNGFRnW
-	ISE+w6BNtvzffjNFjp4IacWatmfriOYNqKw4HerfxRKE9Xrezlb+7l3nMT0V4o0c
-	vxHsx2V/zOdZoyGfRmbb9Rn8HKoeqSEKbkqXA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=wOLn+QKbzxos8Gvi8Xcpw98E7yMZod82
-	QllUzFGI72mj7U+hBMQWEkRQnhiYUTW9J8XqH8lSz3O2NjVf8PNlhio1wO/zRYSb
-	KqdvMNsaBz4RI8pyGKNSi/P/Zq1cFKtq/pTSStui0nGGXe5RpXfCITMKuMhBqAn6
-	3u0hdg8n7V8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0F7CF54215;
-	Tue, 19 Nov 2013 23:43:56 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5F54454214;
-	Tue, 19 Nov 2013 23:43:55 -0500 (EST)
-In-Reply-To: <1384906483-15260-1-git-send-email-jstjohn@purdue.edu> (Jason
-	St. John's message of "Tue, 19 Nov 2013 19:14:43 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 5CBF9C7C-519E-11E3-9C73-D331802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751796Ab3KTHUg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Nov 2013 02:20:36 -0500
+Received: from so.liwest.at ([212.33.55.18]:36397 "EHLO so.liwest.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751608Ab3KTHUg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Nov 2013 02:20:36 -0500
+Received: from [81.10.228.254] (helo=theia.linz.viscovery)
+	by so.liwest.at with esmtpa (Exim 4.80.1)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1Vj25P-0008U4-IR; Wed, 20 Nov 2013 08:20:31 +0100
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 477A716613;
+	Wed, 20 Nov 2013 08:20:31 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:24.0) Gecko/20100101 Thunderbird/24.1.0
+In-Reply-To: <l6hbgg$oej$1@ger.gmane.org>
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238067>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238068>
 
-"Jason St. John" <jstjohn@purdue.edu> writes:
+Am 11/20/2013 4:49, schrieb Matthew Cengia:
+> The other day I was merging a feature branch (shown below as
+> origin/22869-new-kernel) into my staging release (shown below as 'wtf'),
+> and it *reverted* a bucket-load of changes I'd made on other branches
+> which had been merged into staging before. I can't for the life of me
+> work out why this happened, and would appreciate any ideas. Output below
+> shows symptoms:
 
-> Documentation/git-rebase.txt: add a blank line after the two AsciiDoc
->     listing blocks
+Not really. It's impossible to tell what's wrong if you
 
-That looks funnily formatted, out of place and redundant.
+- show only ..topic
+- but not topic..
+- and you keep secret which of the changes is unexpected.
 
-> Without these blank lines, AsciiDoc thinks the opening "-----" is a
-> section heading and typesets the word "to" as such, which causes
-> cascading formatting/typesetting issues until the end of the document.
+Perhaps you did the following:
 
->
-> Signed-off-by: Jason St. John <jstjohn@purdue.edu>
-> ---
-> You can see the carnage here:
-> http://git-scm.com/docs/git-rebase#_bugs
->
-> This fixes GitHub issue github/gitscm-next#281
+- On one branch, you made a change A and then another change B that reverts A.
+- On the other branch, you also made the same changes as A, but there is
+no equivalent of B.
 
-Hmph. https://git-htmldocs.googlecode.com/git/git.html has HTML
-documentation pages I preformat, but as far as I can see, the bugs
-section of git-rebase(1) does not have such a "carnage".
+In this case, it is expected that the changes made by B (i.e. the reversal
+of change A) are *NOT* in the merge, i.e., the changes of A survive. It
+looks as if the merge reverted change B.
 
-Perhaps git-scm.com uses some buggy formatter?
+If that is not the case, it could be helpful that you pick one of the
+files that contains an unexpected change and post the output of
+
+git log --left-right --oneline wtf...origin/22869-new-kernel \
+    file/with/changes | cut -c1-70
+
+-- Hannes
