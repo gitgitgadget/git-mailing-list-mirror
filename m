@@ -1,91 +1,97 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: corrupt object memory allocation error
-Date: Wed, 20 Nov 2013 16:33:48 -0500
-Message-ID: <20131120213348.GA29004@sigill.intra.peff.net>
-References: <20131120203350.GA31139@kitenet.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [ANNOUNCE] Git v1.8.4.4
+Date: Wed, 20 Nov 2013 14:06:48 -0800
+Message-ID: <xmqqd2lu7mo7.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Joey Hess <joey@kitenet.net>
-X-From: git-owner@vger.kernel.org Wed Nov 20 22:33:59 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Linux Kernel <linux-kernel@vger.kernel.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 20 23:07:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VjFPJ-0002kQ-J8
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Nov 2013 22:33:57 +0100
+	id 1VjFvp-000367-Eg
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Nov 2013 23:07:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755579Ab3KTVdx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Nov 2013 16:33:53 -0500
-Received: from cloud.peff.net ([50.56.180.127]:42820 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755575Ab3KTVdu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Nov 2013 16:33:50 -0500
-Received: (qmail 4659 invoked by uid 102); 20 Nov 2013 21:33:50 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 20 Nov 2013 15:33:50 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 20 Nov 2013 16:33:48 -0500
-Content-Disposition: inline
-In-Reply-To: <20131120203350.GA31139@kitenet.net>
+	id S1755170Ab3KTWGx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Nov 2013 17:06:53 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51145 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754858Ab3KTWGw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Nov 2013 17:06:52 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 71A9F5495C;
+	Wed, 20 Nov 2013 17:06:51 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=S
+	vgfZmfOBI1ADkh/SSpTj9Jw9fI=; b=XTnrh0PQteWv+WK8osMxKbr9ZYQV8zwfb
+	PyhcleDpbkBbCBsRv36pT1JzxptRqxcDRJ6m60SuVH0spk4QICqDeX+tknmbm9he
+	6b4/1ChW+cUM1r9Olv8A/66d/bevE3gt9zGq28RlDjH7n1J6jUYeEXNziz3wb6dq
+	sBOkfjobRk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:mime-version:content-type; q=dns; s=
+	sasl; b=aBYP6GZpWGrC79YFZ42H0AqiuKfnEohV3lFCn/H7ZGitELr5fR4OYhRI
+	Op3SC1CZQmQugTuT60UdzZE4URGNS5aKjjQG3SiHoMlFPCKyqWhA3E04qRpHgydW
+	TZm65WxgTsJ1MyF4EOlmXgSwbMyVK+dtGI91av5pzsWHKwSsYJA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5F6BE5495B;
+	Wed, 20 Nov 2013 17:06:51 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A983E5495A;
+	Wed, 20 Nov 2013 17:06:50 -0500 (EST)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 0E892A36-5230-11E3-BE74-D331802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238097>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238098>
 
-On Wed, Nov 20, 2013 at 04:33:50PM -0400, Joey Hess wrote:
+The latest maintenance release Git v1.8.4.4 is now available at
+the usual places.
 
-> I've got a git repository of < 2 mb, where git wants to
-> allocate a rather insane amount of memory:
-> 
-> >git fsck
-> Checking object directories: 100% (256/256), done.
-> fatal: Out of memory, malloc failed (tried to allocate 124865231165 bytes)
-> 
-> > git show 11644b5a075dc1425e01fbba51c045cea2d0c408
-> fatal: Out of memory, malloc failed (tried to allocate 124865231165 bytes)
-> 
-> The problem seems to be the attached object file, which has gotten
-> corrupted, presumably in the header that git reads to see how large it
-> is. Thought I'd report this in case there is some easy way to
-> add a sanity check.
+The release tarballs are found at:
 
-Definitely a corrupt object. The start is not a valid zlib header, so we
-guess that it is an "experimental loose object". This is a format that
-git wrote for very short period as a performance experiment; it didn't
-pan out and we no longer write it.
+    http://code.google.com/p/git-core/downloads/list
 
-The loose object format contains the (purported) object size outside of
-the checksum'd zlib data (whereas the normal format has a human-readable
-header that gets zlib'd). Your corrupted bytes end up specifying a
-ridiculously large size.
+and their SHA-1 checksums are:
 
-I wonder if it is time to drop reading support for the experimental
-objects. It was never widely used, and was deprecated in v1.5.2 by
-726f852 (deprecate the new loose object header format, 2007-05-09). That
-would improve the case when the initial bytes of a loose object are
-corrupted, because we would complain about the bogus zlib data before
-trying to allocate the buffer.
+1aaa1a51b599f19125e06fa6e839c9ff2e5ac941  git-1.8.4.4.tar.gz
+c2ee47c2bbf8ede70eef2a1ba936a30aa0d78b2a  git-htmldocs-1.8.4.4.tar.gz
+4637e22fd2fe59cf00b4a105f5104af9bfea8c2c  git-manpages-1.8.4.4.tar.gz
 
-The problem would still remain for packfiles, which use a similar
-encoding, but I suspect it is less common there. For a single-byte
-corruption, it is unlikely to be right in the length header. But for
-absolute junk that is not git data at all, the first bytes are very
-likely to be corrupted. In the pack case, we would notice early that it
-does not look like a packfile; for the loose object, we have no such
-header and proceed with the allocation.
+The following public repositories all have a copy of the v1.8.4.4
+tag and the maint branch that the tag points at:
 
-As for your specific corruption, I can't make heads or tails of it. It
-is not a single-bit error. The first two bytes of a loose object should
-always be <0x78, 0x01>, which is the standard zlib deflate header. Your
-bytes aren't even close, and decoding the rest with a corrupted zlib
-header seems fruitless.
+  url = https://kernel.googlesource.com/pub/scm/git/git
+  url = git://repo.or.cz/alt-git.git
+  url = https://code.google.com/p/git-core/
+  url = git://git.sourceforge.jp/gitroot/git-core/git.git
+  url = git://git-core.git.sourceforge.net/gitroot/git-core/git-core
+  url = https://github.com/gitster/git
 
-You don't happen to have another copy of the object (or of the data
-contained in the object, such as the working tree file), do you? It
-might be interesting to see a comparison of the bytes of the correct
-data and your corruption.
+Also, http://www.kernel.org/pub/software/scm/git/ has copies of the
+release tarballs.
 
--Peff
+Git v1.8.4.4 Release Notes
+========================
+
+Fixes since v1.8.4.3
+--------------------
+
+ * The fix in v1.8.4.3 to the pack transfer protocol to propagate
+   the target of symbolic refs broke "git clone/git fetch" from a
+   repository with too many symbolic refs. As a hotfix/workaround,
+   we transfer only the information on HEAD.
+
+----------------------------------------------------------------
+
+Changes since v1.8.4.3 are as follows:
+
+Junio C Hamano (2):
+      Revert "upload-pack: send non-HEAD symbolic refs"
+      Git 1.8.4.4
