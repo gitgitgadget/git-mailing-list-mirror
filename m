@@ -1,97 +1,87 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: Check out doesn't set x-flag on CIFS
-Date: Wed, 20 Nov 2013 11:51:44 +0100
-Message-ID: <CABPQNSZDSRf9LSeBHBJ46pbBGsDwybTPkyJ2esqvoc0UHPifKA@mail.gmail.com>
-References: <loom.20130529T161408-317@post.gmane.org>
-Reply-To: kusmabite@gmail.com
+From: Alexander GQ Gerasiov <gq@cs.msu.su>
+Subject: How to put tree into index
+Date: Wed, 20 Nov 2013 15:47:14 +0400
+Organization: lvk.cs.msu.su
+Message-ID: <20131120154714.39fc5202@snail>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: GIT Mailing-list <git@vger.kernel.org>
-To: Andre Esser <andre.esser@geneity.co.uk>
-X-From: git-owner@vger.kernel.org Wed Nov 20 11:52:31 2013
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 8BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 20 12:56:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vj5OY-0000Bv-Qc
-	for gcvg-git-2@plane.gmane.org; Wed, 20 Nov 2013 11:52:31 +0100
+	id 1Vj6LI-0005p6-Ea
+	for gcvg-git-2@plane.gmane.org; Wed, 20 Nov 2013 12:53:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751681Ab3KTKw0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Nov 2013 05:52:26 -0500
-Received: from mail-ie0-f174.google.com ([209.85.223.174]:41881 "EHLO
-	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750834Ab3KTKwZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Nov 2013 05:52:25 -0500
-Received: by mail-ie0-f174.google.com with SMTP id at1so7278038iec.19
-        for <git@vger.kernel.org>; Wed, 20 Nov 2013 02:52:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=j3vCrBIupmXUxcu/MxSbKGoymO1VF7GQ1vGKGbca+Zk=;
-        b=04E+BZ0qfZl99WVU8UIIEUZ+IAWRGMF8ASNKw2HzDl+NiBnYMiBnL075pnrgG6vYxA
-         OAhnXow9wiOaTcpRGf28zkIEwhgbL+wnQwyFhTcX4LLCR/po9bYWHml2qs9nO1cn5Twx
-         iISbak06v7JUfGd68cQfM4gV4ft80Zlo/vy1myRWHQFq1NWQs5tlYy2j7P0tuKP1K3xf
-         mkjLwMaZWiIUnqilpSt7gcZc71RnxoJ8e3wCDXcxF96c+QRiTlpRhobHQNuByrPElsly
-         94F72MvaW3/toT0p2JssUUtHRYMomDWfoS1ky4/uAplZjjcCyzMY5XM7Zidh8Rvyy7Pl
-         gmqQ==
-X-Received: by 10.50.17.9 with SMTP id k9mr464282igd.3.1384944744919; Wed, 20
- Nov 2013 02:52:24 -0800 (PST)
-Received: by 10.64.249.33 with HTTP; Wed, 20 Nov 2013 02:51:44 -0800 (PST)
-In-Reply-To: <loom.20130529T161408-317@post.gmane.org>
+	id S1752140Ab3KTLxI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Nov 2013 06:53:08 -0500
+Received: from eol.lvk.cs.msu.su ([158.250.17.73]:34434 "EHLO
+	eol.lvk.cs.msu.su" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751390Ab3KTLxH convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 Nov 2013 06:53:07 -0500
+X-Greylist: delayed 350 seconds by postgrey-1.27 at vger.kernel.org; Wed, 20 Nov 2013 06:53:07 EST
+Received: from snail (guest-32.lvknet [192.168.131.32])
+	by eol.lvk.cs.msu.su (Postfix) with ESMTPSA id CEE3C5D9
+	for <git@vger.kernel.org>; Wed, 20 Nov 2013 15:47:15 +0400 (MSK)
+X-Mailer: Claws Mail 3.9.2 (GTK+ 2.24.21; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238070>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238071>
 
-On Wed, May 29, 2013 at 4:16 PM, Andre Esser <andre.esser@geneity.co.uk> wrote:
-> Hello,
->
-> When on a CIFS filesystem a git checkout does not replicate the executable
-> flag from the repository:
->
->   $ git clone git://git/abettersqlplus
->   Cloning into 'abettersqlplus'...
->   remote: Counting objects: 522, done.
->   remote: Compressing objects: 100% (342/342), done.
->   remote: Total 522 (delta 166), reused 522 (delta 166)
->   Receiving objects: 100% (522/522), 82.40 KiB, done.
->   Resolving deltas: 100% (166/166), done.
->   $ ls -l abettersqlplus/absp.py
->   -rw-rw-r-- 1 aesser geneity 45860 May 29 14:46 abettersqlplus/absp.py
->
->
-> Subsequently git status reports the file as changed:
->
->   $ cd abettersqlplus/
->   $ git status
->   # On branch master
->   # Changes not staged for commit:
->   #   (use "git add <file>..." to update what will be committed)
->   #   (use "git checkout -- <file>..." to discard changes in working
->   directory)
->   #
->   #    modified:   absp.py
->   #
->   no changes added to commit (use "git add" and/or "git commit -a")
->
->
-> If I set the x-flag manually, all is well:
->
->   $ chmod +x absp.py
->   $ git status
->   # On branch master
->   nothing to commit (working directory clean)
->
->
-> This problem doesn't occur on ext3 or NFS file systems. Client is Ubuntu
-> 12.04 with git version 1.7.9.5. CIFS is exported from Ubuntu 12.04 with
-> Samba version 3.6.3.
->
-> Since git recognises the x-flag on this CIFS file system, shouldn't it also
-> be able to set it on checkout?
->
+Hello there.
 
-You might want to check out the core.filemode configuration variable.
+I need to realize the following scenario with git.
+
+1. I have repository with tree like this:
+
+dir1/
+	file1
+	file2
+	file3
+
+dir2/
+	subdir1/
+		some files
+
+
+2. Current branch is B.
+
+3. I want to get dir1 from branch A, and save it's content on current
+branch (B) as dir2/subdir1
+
+
+
+>From my point I should do the following
+
+1. Get tree-object sha1 of dir1 from A with git ls-tree
+2. Put into index new tree-object with the same sha1/content, but under
+the name dir2/subdir1
+3. Commit index.
+
+
+But it doesn't work for me. It works with blob object, but not with
+tree object.
+
+I tried the following commands:
+
+git ls-tree A dir1 | 
+sed 's#dir1#dir2/subdir1#' | 
+git update-index --index-info
+
+But after this I see in the index not tree-object with mode 040000, but
+commit-object with mode 160000.
+
+
+
+So my question is
+How to put into index tree-object with known sha1 and given name?
+
+
+PS I was able to do what I need when copied files, not tree-itself.
+Just add -r to git ls-tree, and put into index blobs/files, not tree.
+But I'm interested: is it possible to put tree-object into index?
