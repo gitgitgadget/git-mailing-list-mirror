@@ -1,125 +1,77 @@
-From: Torsten =?iso-8859-1?q?B=F6gershausen?= <tboegi@web.de>
-Subject: [PATCH v6 10/10] git fetch: support host:/~repo
-Date: Thu, 21 Nov 2013 21:42:10 +0100
-Message-ID: <201311212142.11216.tboegi@web.de>
+From: Thomas Rast <tr@thomasrast.ch>
+Subject: Re: [RFC PATCH] Revamp git-cherry(1)
+Date: Thu, 21 Nov 2013 21:58:58 +0100
+Message-ID: <874n754gkt.fsf@thomasrast.ch>
+References: <3af3069696e3a59d513f1fef0ca797d103f6d882.1385033403.git.tr@thomasrast.ch>
+	<20131121115423.GC7171@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: tboegi@web.de
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 21 21:42:24 2013
+Content-Type: text/plain
+Cc: git@vger.kernel.org, a.huemer@commend.com,
+	"Michael S. Tsirkin" <mst@kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Nov 21 21:59:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vjb4w-0001KP-0c
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Nov 2013 21:42:22 +0100
+	id 1VjbLJ-0001TQ-G1
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Nov 2013 21:59:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754418Ab3KUUmS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Nov 2013 15:42:18 -0500
-Received: from mout.web.de ([212.227.15.4]:64591 "EHLO mout.web.de"
+	id S1755081Ab3KUU7N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Nov 2013 15:59:13 -0500
+Received: from psi.thgersdorf.net ([176.9.98.78]:48193 "EHLO mail.psioc.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754339Ab3KUUmS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Nov 2013 15:42:18 -0500
-Received: from appes.localnet ([78.72.74.102]) by smtp.web.de (mrweb103) with
- ESMTPA (Nemesis) id 0MKrU4-1Vjb4q02fA-00034G for <git@vger.kernel.org>; Thu,
- 21 Nov 2013 21:42:16 +0100
-X-Provags-ID: V03:K0:RZXprmfeLcFu6jiIM+ORYPQwzAIM/l9YslWCQi2vAKGnDsLo+hz
- 4sEPy0txCLZYi+uWMoiagRgbDhOEfgfFRhAb+e8rYDE1bc3IuPG+MnJUd2dn4Vq94J6jjhW
- femUjjz66iLxieuUbGgMBCnNc3RXhDWgfoofHgotKLv9iLqmK95LEHeBTmNvbDsFzTYy3/O
- BoiICTNal31IeR/6Xa5nw==
+	id S1754900Ab3KUU7M (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Nov 2013 15:59:12 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by localhost.psioc.net (Postfix) with ESMTP id 3B0324D6505;
+	Thu, 21 Nov 2013 21:59:11 +0100 (CET)
+X-Virus-Scanned: amavisd-new at psioc.net
+Received: from mail.psioc.net ([127.0.0.1])
+	by localhost (mail.psioc.net [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id cCiwSCkbSS7z; Thu, 21 Nov 2013 21:59:01 +0100 (CET)
+Received: from hexa.thomasrast.ch (46-126-8-85.dynamic.hispeed.ch [46.126.8.85])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(Client did not present a certificate)
+	by mail.psioc.net (Postfix) with ESMTPSA id 5D4AF4D6414;
+	Thu, 21 Nov 2013 21:59:00 +0100 (CET)
+In-Reply-To: <20131121115423.GC7171@sigill.intra.peff.net> (Jeff King's
+	message of "Thu, 21 Nov 2013 06:54:23 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238152>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238153>
 
-Since commit faea9ccb URLs host:~repo or ssh://host:/~repo
-reach the home directory.
-In 356bece0 support for [] was introduced, and as a side
-effect, [host]:/~repo was the same as [host]:~repo.
-The side effect was removed in c01049ae, "connect.c: Corner case for IPv6".
+Jeff King <peff@peff.net> writes:
 
-Re-reading the documentation (in urls.txt) we find that
-"ssh://host:/~repo",
-"host:/~repo" or
-"host:~repo"
-specifiy the repository "repo" in the home directory at "host".
+> On Thu, Nov 21, 2013 at 12:30:56PM +0100, Thomas Rast wrote:
+>
+>> +Later, you can whether your changes have been applied by saying (still
+>> +on `topic`):
+>
+> s/can/& see/ ?
+>
+>> +Note that this uses , and assumes that
+>> +`core.autosetupmerge` is enabled (the default).
+>
+> I couldn't quite parse this. Is there a word missing before the comma,
+> or is it "uses and assumes that..."?
 
-So make the handling of "host:/~repo" (or "[host]:/~repo") a feature,
-and revert the possible regression introduced in c01049ae.
----
- connect.c             |  3 +--
- t/t5500-fetch-pack.sh |  4 ++--
- t/t5601-clone.sh      | 12 ++++++++++--
- 3 files changed, 13 insertions(+), 6 deletions(-)
+I will just let this stand as evidence that I had a bad day.  Two
+sentences ruined by botched editing in all of five paragraphs.  Sheesh.
 
-diff --git a/connect.c b/connect.c
-index 95568ac..2cad296 100644
---- a/connect.c
-+++ b/connect.c
-@@ -625,8 +625,7 @@ static enum protocol parse_connect_url(const char *url_orig, char **ret_host,
- 	end = path; /* Need to \0 terminate host here */
- 	if (separator == ':')
- 		path++; /* path starts after ':' */
--	if ((protocol == PROTO_GIT) ||
--			(protocol == PROTO_SSH && separator == '/')) {
-+	if (protocol == PROTO_GIT || protocol == PROTO_SSH) {
- 		if (path[1] == '~')
- 			path++;
- 	}
-diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
-index 69a2110..7d9f18c 100755
---- a/t/t5500-fetch-pack.sh
-+++ b/t/t5500-fetch-pack.sh
-@@ -601,9 +601,9 @@ do
- 		test_expect_success "fetch-pack --diag-url $h:$r" '
- 			check_prot_path $h:$r $p "$r"
- 		'
--		# No "/~" -> "~" conversion
-+		# Do the "/~" -> "~" conversion
- 		test_expect_success "fetch-pack --diag-url $h:/~$r" '
--			check_prot_host_path $h:/~$r $p "$h" "/~$r"
-+			check_prot_host_path $h:/~$r $p "$h" "~$r"
- 		'
- 	done
- done
-diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
-index bd1bfd3..62fbd7e 100755
---- a/t/t5601-clone.sh
-+++ b/t/t5601-clone.sh
-@@ -348,7 +348,7 @@ test_expect_success MINGW 'clone c:temp is dos drive' '
- '
- 
- #ip v4
--for repo in rep rep/home/project /~proj 123
-+for repo in rep rep/home/project 123
- do
- 	test_expect_success "clone host:$repo" '
- 		test_clone_url host:$repo host $repo
-@@ -356,12 +356,20 @@ do
- done
- 
- #ipv6
--for repo in rep rep/home/project 123 /~proj
-+for repo in rep rep/home/project 123
- do
- 	test_expect_success "clone [::1]:$repo" '
- 		test_clone_url [::1]:$repo ::1 $repo
- 	'
- done
-+#home directory
-+test_expect_success "clone host:/~repo" '
-+	test_clone_url host:/~repo host "~repo"
-+'
-+
-+test_expect_success "clone [::1]:/~repo" '
-+	test_clone_url [::1]:/~repo ::1 "~repo"
-+'
- 
- # Corner cases
- for url in foo/bar:baz [foo]bar/baz:qux [foo/bar]:baz
+Thanks for reading carefully.
+
+> Given that it is the default, I wonder if it is worth mentioning at all.
+> Even I, who knows what autosetupmerge does, took a minute to figure out
+> why it is relevant here. I suspect it may just confuse most readers.
+
+Ok, then let's remove it.
+
 -- 
-1.8.4.457.g424cb08
+Thomas Rast
+tr@thomasrast.ch
