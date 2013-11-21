@@ -1,94 +1,82 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH 2/2] glossary-content.txt: fix documentation of "**" patterns
-Date: Thu, 21 Nov 2013 13:44:20 +0700
-Message-ID: <1385016260-9718-2-git-send-email-pclouds@gmail.com>
-References: <1384910801-11125-1-git-send-email-pclouds@gmail.com>
- <1385016260-9718-1-git-send-email-pclouds@gmail.com>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v4 2/2] Rename suffixcmp() to ends_with() and invert
+ its result
+Date: Thu, 21 Nov 2013 08:32:08 +0100 (CET)
+Message-ID: <20131121.083208.893400033155439223.chriscool@tuxfamily.org>
+References: <20131119.220438.1634671089949485179.chriscool@tuxfamily.org>
+	<CALWbr2yG7XOhuZa9bf6sXRV=m49dTPNyPZ9JUU2-_2G8ZJsCTg@mail.gmail.com>
+	<xmqq4n7881s7.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 21 07:44:41 2013
+Content-Type: Text/Plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: apelisse@gmail.com, jrnieder@gmail.com, git@vger.kernel.org,
+	apenwarr@gmail.com, Johannes.Schindelin@gmx.de, peff@peff.net,
+	max@quendi.de, ae@op5.se
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu Nov 21 08:32:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VjO0G-00037q-Mu
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Nov 2013 07:44:41 +0100
+	id 1VjOke-0002Bc-2P
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Nov 2013 08:32:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752090Ab3KUGog convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 21 Nov 2013 01:44:36 -0500
-Received: from mail-pd0-f179.google.com ([209.85.192.179]:46502 "EHLO
-	mail-pd0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750821Ab3KUGof (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Nov 2013 01:44:35 -0500
-Received: by mail-pd0-f179.google.com with SMTP id r10so7715645pdi.24
-        for <git@vger.kernel.org>; Wed, 20 Nov 2013 22:44:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=gItnYXLnD9a9amUZOhBCnFT3bjMVowunxOqlBFaWTKM=;
-        b=j/0x7DpU80p2BBh7wx30lVwaaBIrsQ9oHjQYAmzc0lITEyGhgtDhtZECUfaMvdzopH
-         7cObPPI4Hop6VmXIQhDoy9v1o5dFAuu0eQSJB7Sbya/KQYxyFrPwx6KPiUdbYC9Xzf76
-         VQW3xn2DDv89PxKQkM3oqCX/J3M5qqEJTYDVoePANxzmIzmwTGfl/M20025sMAGdKnTN
-         sM4zMtSA9HEuw40W/evvm9VAPe7p/cR5CQPkapZXb0prdogrHcTWcWPXXqPjZMLnE30O
-         porcwd8qxrqeWXAi4Q3ll+5z8jDtRuJZm0T+xT00RX+ucIaH/If5E1+78Patf7QtAqYQ
-         51cg==
-X-Received: by 10.68.229.10 with SMTP id sm10mr4724718pbc.154.1385016275310;
-        Wed, 20 Nov 2013 22:44:35 -0800 (PST)
-Received: from pclouds@gmail.com ([14.161.32.83])
-        by mx.google.com with ESMTPSA id pl1sm43099727pbb.20.2013.11.20.22.44.32
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Wed, 20 Nov 2013 22:44:34 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Thu, 21 Nov 2013 13:44:29 +0700
-X-Mailer: git-send-email 1.8.2.82.gc24b958
-In-Reply-To: <1385016260-9718-1-git-send-email-pclouds@gmail.com>
+	id S1750913Ab3KUHcc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Nov 2013 02:32:32 -0500
+Received: from [194.158.98.15] ([194.158.98.15]:57875 "EHLO mail-2y.bbox.fr"
+	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1750821Ab3KUHcb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Nov 2013 02:32:31 -0500
+Received: from localhost (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
+	by mail-2y.bbox.fr (Postfix) with ESMTP id ACE8B36;
+	Thu, 21 Nov 2013 08:32:08 +0100 (CET)
+In-Reply-To: <xmqq4n7881s7.fsf@gitster.dls.corp.google.com>
+X-Mailer: Mew version 6.3 on Emacs 23.3 / Mule 6.0 (HANACHIRUSATO)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238111>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238112>
 
-"**" means bold in ASCIIDOC, so we need to escape it. This is similar
-to 8447dc8 (gitignore.txt: fix documentation of "**" patterns -
-2013-11-07)
+From: Junio C Hamano <gitster@pobox.com>
+>
+> Antoine Pelisse <apelisse@gmail.com> writes:
+> 
+>> I'm not exactly sure I understand the point of not squashing all those
+>> patches together ?
+>> It's not like one is going without the others, or that the commit
+>> message provides some new information (except for the name of the
+>> file, but that is not very relevant either). The downside is that it's
+>> _many_ messages to bypass when reading mails from small-screen devices
+>> :-)
+> 
+> The only plausible reason I could think of is to avoid clashing with
+> topics in-flight, but then the approach to produce per-file patch is
+> not perfect for that purpose, either, when more than one topic in
+> flight touch the same file at different places.
+> 
+> I'd say probably the best organization would be something like:
+> 
+>  * A set of clean-up patches to normalize oddball usages of existing
+>    functions (e.g. normalize 'prefixcmp(a,b) != 0' in some file(s)
+>    to 'prefixcmp(a,b)');
+> 
+>  * A single patch to introduce the new function(s), to be applied on
+>    top of 1.8.5;
+> 
+>  * A large patch to convert all uses of prefixcmp to starts_with and
+>    suffixcmp to ends_with in the 1.8.5 codebase;
+> 
+>  * A patch for each topic in flight to convert newly introduced
+>    prefixcmp/suffixcmp to starts_with/ends_with, to be applied after
+>    the topic graduates to 'master' after 1.8.5; and then finally
+> 
+>  * A separate patch to remove prefixcmp and suffixcmp, to be applied
+>    after _all_ in-flight topic has graduated to 'master'.
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- There is another instance of '**' in RelNotes/1.8.5.txt. Junio you
- may want to fix it too.
+Ok, I will wait for 1.8.5 and then send a patch series like what you
+suggest.
 
- Documentation/glossary-content.txt | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/Documentation/glossary-content.txt b/Documentation/glossar=
-y-content.txt
-index e22b524..1b56ba4 100644
---- a/Documentation/glossary-content.txt
-+++ b/Documentation/glossary-content.txt
-@@ -362,12 +362,12 @@ full pathname may have special meaning:
-=20
-  - A leading "`**`" followed by a slash means match in all
-    directories. For example, "`**/foo`" matches file or directory
--   "`foo`" anywhere, the same as pattern "`foo`". "**/foo/bar"
-+   "`foo`" anywhere, the same as pattern "`foo`". "`**/foo/bar`"
-    matches file or directory "`bar`" anywhere that is directly
-    under directory "`foo`".
-=20
-- - A trailing "/**" matches everything inside. For example,
--   "abc/**" matches all files inside directory "abc", relative
-+ - A trailing "`/**`" matches everything inside. For example,
-+   "`abc/**`" matches all files inside directory "abc", relative
-    to the location of the `.gitignore` file, with infinite depth.
-=20
-  - A slash followed by two consecutive asterisks then a slash
---=20
-1.8.2.82.gc24b958
+Thanks,
+Christian.
