@@ -1,132 +1,72 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC PATCH] Revamp git-cherry(1)
-Date: Thu, 21 Nov 2013 11:26:08 -0800
-Message-ID: <xmqqli0h4kvj.fsf@gitster.dls.corp.google.com>
-References: <3af3069696e3a59d513f1fef0ca797d103f6d882.1385033403.git.tr@thomasrast.ch>
+Subject: Re: [PATCH] drop support for "experimental" loose objects
+Date: Thu, 21 Nov 2013 11:44:48 -0800
+Message-ID: <xmqqhab54k0f.fsf@gitster.dls.corp.google.com>
+References: <20131120203350.GA31139@kitenet.net>
+	<20131120213348.GA29004@sigill.intra.peff.net>
+	<20131120222805.GC26468@kitenet.net>
+	<20131121114157.GA7171@sigill.intra.peff.net>
+	<20131121114837.GB7171@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, a.huemer@commend.com,
-	"Michael S. Tsirkin" <mst@kernel.org>
-To: Thomas Rast <tr@thomasrast.ch>
-X-From: git-owner@vger.kernel.org Thu Nov 21 20:26:18 2013
+Cc: Joey Hess <joey@kitenet.net>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Nov 21 20:45:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VjZtJ-0004oG-Tf
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Nov 2013 20:26:18 +0100
+	id 1VjaBS-0005u4-Et
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Nov 2013 20:45:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754430Ab3KUT0O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Nov 2013 14:26:14 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36725 "EHLO
+	id S1754214Ab3KUTo6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Nov 2013 14:44:58 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49323 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752116Ab3KUT0N (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Nov 2013 14:26:13 -0500
+	id S1753406Ab3KUTo5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Nov 2013 14:44:57 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 99BB852F9C;
-	Thu, 21 Nov 2013 14:26:12 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9B737544EA;
+	Thu, 21 Nov 2013 14:44:56 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=SGdtQnrVIwjHNjUvIdpyom98dZ0=; b=IbwRTA
-	whZYmAE74Bm9tFYvDbkYmllSv7NNAAOJ+Ek5D4nVcPHejuuhY7ALnhmTVWdqeW90
-	pqrmrM28p1zJgzbYHRIFx46b1XafAJfXHUVqWIGrNvFR0+rBZugxtu2EOUktkZVp
-	dfIwCZ0VgAT7Ag0pU1JtvDRK3j2aeAQsxjBGc=
+	:content-type; s=sasl; bh=RMmMoHlNVvBlXKLnjD5BuMYqAVc=; b=dvqw7L
+	plRJQi76o9cL4LIOu7qsU4hd8u8igyVksCdS3bG9L0cg0YNIzMyJue1fe5aWSmqV
+	S6vQPUhnwLcj6TB8eamSuPwnMrQl2bf1IhB2AiC35cYr1gkB2aGaI0wAB2Te4NTX
+	eCXyF3NLYEaRy69Fvt0OthKyLHJUIfgMW4Z1w=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=aUjvc76aKtnSYisW09DGJboZ+tJVC09y
-	RHFglrp/tIN5c6j4MtjxXUjfYcXJ7SjRGxMrhoZoVCYzbhePzmtkhtqZMWBwX4n8
-	YhzlQPSZXu3deKpZR63nRqueMb5VoZXETv74urwzAcqYS6lCV/OQPVNlog35Pblx
-	eF8cGcTaekg=
+	:content-type; q=dns; s=sasl; b=NcMy8wuD7xinsm6fbSTqQMWutSf+ASdL
+	3DIvrLLVBwE3cROvd2CAtuuI1PuTCxirZY7ThxCEEN+iZqXHiKXcWMLzaMkU8zX/
+	CtNYVpRPB+N2WyObl2m1cVsx0tF49AGh5bQ30B+dxklBes9yIag1srYdz+p8nIXw
+	JBIwwdQxmiU=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8A06152F9B;
-	Thu, 21 Nov 2013 14:26:12 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 64CC1544E9;
+	Thu, 21 Nov 2013 14:44:55 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BAC3852F96;
-	Thu, 21 Nov 2013 14:26:11 -0500 (EST)
-In-Reply-To: <3af3069696e3a59d513f1fef0ca797d103f6d882.1385033403.git.tr@thomasrast.ch>
-	(Thomas Rast's message of "Thu, 21 Nov 2013 12:30:56 +0100")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 417CB544E0;
+	Thu, 21 Nov 2013 14:44:51 -0500 (EST)
+In-Reply-To: <20131121114837.GB7171@sigill.intra.peff.net> (Jeff King's
+	message of "Thu, 21 Nov 2013 06:48:37 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: C7B33666-52E2-11E3-A311-D331802839F8-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 62FA1F8E-52E5-11E3-AE6B-D331802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238135>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238136>
 
-Thomas Rast <tr@thomasrast.ch> writes:
+Jeff King <peff@peff.net> writes:
 
->  NAME
->  ----
-> -git-cherry - Find commits not merged upstream
-> +git-cherry - Find commits not applied in upstream
+> We could try to improve the heuristic to err on the side of
+> normal objects in the face of corruption, but there is
+> really little point. The experimental format is long-dead,
+> and was never enabled by default to begin with. We can
+> instead simply remove it. The only affected repository would
+> be one that explicitly set core.legacyheaders in 2007, and
+> then never repacked in the intervening 6 years.
 
-Good.
-
-> +Determine whether there are commits in `<head>..<upstream>` that are
-> +equivalent to those in the range `<limit>..<head>`.
->  
-> +The equivalence test is based on the diff, after removing whitespace
-> +and line numbers.  git-cherry therefore detects when commits have been
-> +"copied" by means of linkgit:git-cherry-pick[1], linkgit:git-am[1] or
-> +linkgit:git-rebase[1].
->  
-> +Outputs the SHA1 of every commit in `<limit>..<head>`, prefixed with
-> +`-` for commits that have an equivalent in <upstream>, and `+` for
-> +commits that do not.
-
-Yeah, short-sweet-and-sufficient.
-
->  OPTIONS
->  -------
->  -v::
-> -	Verbose.
-> +	Verbose.  Currently shows the commit subjects next to their
-> +	SHA1.
-
-Whenever I see "Currently", it makes me wonder "why does it need to
-say that? Is there a plan to change it soon, and if so where is the
-plan described?".
-
-> +EXAMPLES
-> +--------
-> +
-> +git-cherry is frequently used in patch-based workflows (see
-> +linkgit:gitworkflows[7]) to determine if a series of patches has been
-> +applied by the upstream maintainer.  In such a workflow you might
-> +create and send a topic branch like this (fill in appropriate
-> +arguments for `...`):
-
-I think the ASCII art commit graph that shows topology which we lost
-by this patch gave a more intiutive sense of what "a topic branch
-like this" looked like than an incomplete skeleton of a command
-sequence that would be understood by those who already know how to
-work with multiple branches.  Perhaps we want both?
-
-Thanks.
-
-> ++
-> +------------
-> +git checkout -b topic origin/master
-> +# work and create some commits
-> +git format-patch origin/master
-> +git send-email ... 00*
-> +------------
-
-> +Later, you can whether your changes have been applied by saying (still
-> +on `topic`):
-> ++
-> +------------
-> +git fetch  # update your notion of origin/master
-> +git cherry -v
-> +------------
-> ++
-> +Note that this uses , and assumes that
-> +`core.autosetupmerge` is enabled (the default).
-> +
-> +
->  SEE ALSO
->  --------
->  linkgit:git-patch-id[1]
+Sounds sensible.  Thanks.
