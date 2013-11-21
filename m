@@ -1,233 +1,221 @@
 From: Torsten =?iso-8859-1?q?B=F6gershausen?= <tboegi@web.de>
-Subject: [PATCH v6 08/10] git_connect(): Refactor the port handling
-Date: Thu, 21 Nov 2013 21:41:47 +0100
-Message-ID: <201311212141.48067.tboegi@web.de>
+Subject: [PATCH v6 09/10] connect.c: Refactor url parsing
+Date: Thu, 21 Nov 2013 21:41:56 +0100
+Message-ID: <201311212141.57411.tboegi@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain;
   charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 Cc: tboegi@web.de
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 21 21:42:01 2013
+X-From: git-owner@vger.kernel.org Thu Nov 21 21:42:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vjb4Y-00016A-H4
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Nov 2013 21:41:59 +0100
+	id 1Vjb4j-0001Cb-Fu
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Nov 2013 21:42:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754209Ab3KUUlz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Nov 2013 15:41:55 -0500
-Received: from mout.web.de ([212.227.17.12]:61066 "EHLO mout.web.de"
+	id S1754277Ab3KUUmG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Nov 2013 15:42:06 -0500
+Received: from mout.web.de ([212.227.15.3]:64849 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752020Ab3KUUly (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Nov 2013 15:41:54 -0500
-Received: from appes.localnet ([78.72.74.102]) by smtp.web.de (mrweb103) with
- ESMTPA (Nemesis) id 0Lu4uA-1VZBnd4006-011ShB for <git@vger.kernel.org>; Thu,
- 21 Nov 2013 21:41:53 +0100
-X-Provags-ID: V03:K0:Xv/0cp/LOoD+NmSRpSx3m4A1RCNQ/EL/2UIecS7lLJCx2h147M3
- G8wKsLVP3QnKJKwLarqWUw+NDLDsBDfacewK0TEdyir3r/qHC7eQYj+PH2qh2hVlJEaKPxN
- Utx21sBS/7OmV9Dn8lhx/wiD8wym0/BQSZ7EEtkImHj2HEmmm4kUjiL93lh1Ln0mcFWrXZ9
- kmuoAm9QIlJMZl1zMlakQ==
+	id S1752020Ab3KUUmE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Nov 2013 15:42:04 -0500
+Received: from appes.localnet ([78.72.74.102]) by smtp.web.de (mrweb102) with
+ ESMTPA (Nemesis) id 0MHp8z-1VgaOq1ZMr-003gag for <git@vger.kernel.org>; Thu,
+ 21 Nov 2013 21:42:02 +0100
+X-Provags-ID: V03:K0:qCF1qRTO/lyHPPZWbVXaSL03FtYAapiP7WgRVjH5klYI1RCjTu5
+ Lhp4Y+upM3Em9Fvr1LOoQeWwB6z4IE0YqS4ONengYXY5k8hjl8scXBMZAMi9WPXNWK/F0Eo
+ NNb9IUpszFFZZa+tnH9330pZx0huLT8IFYoi1KaaYomv0oTcUqvNVM9xjDgAol3SArWbj9l
+ mS60rx6RCyNwxrkKSaXrA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238150>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238151>
 
-Use get_host_and_port() even for ssh.
-Remove the variable port git_connect(), and simplify parse_connect_url()
-Use only one return point in git_connect(), doing the free() and return conn.
-
-t5601 had 2 corner test cases which now pass.
+Make the function is_local() from tramsport.c public and use it
+in both transport.c and connect.c
+Use a protocol "local" for URLs for the local file system.
 ---
- connect.c             | 47 +++++++++++++----------------------------------
- t/t5500-fetch-pack.sh |  9 +++------
- 2 files changed, 16 insertions(+), 40 deletions(-)
+ connect.c        | 58 ++++++++++++++++++++++++++++++--------------------------
+ connect.h        |  1 +
+ t/t5601-clone.sh | 10 +---------
+ transport.c      |  8 --------
+ 4 files changed, 33 insertions(+), 44 deletions(-)
 
 diff --git a/connect.c b/connect.c
-index 0cb88b8..3d174c8 100644
+index 3d174c8..95568ac 100644
 --- a/connect.c
 +++ b/connect.c
-@@ -540,16 +540,13 @@ static struct child_process *git_proxy_connect(int fd[2], char *host)
- 	return proxy;
+@@ -232,13 +232,23 @@ int server_supports(const char *feature)
+ 
+ enum protocol {
+ 	PROTO_LOCAL = 1,
++	PROTO_FILE,
+ 	PROTO_SSH,
+ 	PROTO_GIT
+ };
+ 
++int is_local(const char *url)
++{
++	const char *colon = strchr(url, ':');
++	const char *slash = strchr(url, '/');
++	return !colon || (slash && slash < colon) ||
++		has_dos_drive_prefix(url);
++}
++
+ static const char *prot_name(enum protocol protocol) {
+ 	switch (protocol) {
+ 		case PROTO_LOCAL:
++		case PROTO_FILE:
+ 			return "file";
+ 		case PROTO_SSH:
+ 			return "ssh";
+@@ -260,7 +270,7 @@ static enum protocol get_protocol(const char *name)
+ 	if (!strcmp(name, "ssh+git"))
+ 		return PROTO_SSH;
+ 	if (!strcmp(name, "file"))
+-		return PROTO_LOCAL;
++		return PROTO_FILE;
+ 	die("I don't handle protocol '%s'", name);
  }
  
--static char *get_port(char *host)
-+static const char *get_port_numeric(const char *p)
- {
- 	char *end;
--	char *p = strchr(host, ':');
--
- 	if (p) {
- 		long port = strtol(p + 1, &end, 10);
- 		if (end != p + 1 && *end == '\0' && 0 <= port && port < 65536) {
--			*p = '\0';
--			return p+1;
-+			return p;
- 		}
- 	}
- 
-@@ -561,7 +558,7 @@ static char *get_port(char *host)
-  * The caller must free() the returned strings.
-  */
- static enum protocol parse_connect_url(const char *url_orig, char **ret_host,
--				       char **ret_port, char **ret_path)
-+				       char **ret_path)
- {
+@@ -563,9 +573,8 @@ static enum protocol parse_connect_url(const char *url_orig, char **ret_host,
  	char *url;
  	char *host, *path;
-@@ -569,7 +566,6 @@ static enum protocol parse_connect_url(const char *url_orig, char **ret_host,
- 	int separator;
+ 	char *end;
+-	int separator;
++	int separator = '/';
  	enum protocol protocol = PROTO_LOCAL;
- 	int free_path = 0;
--	char *port = NULL;
+-	int free_path = 0;
  
  	if (is_url(url_orig))
  		url = url_decode(url_orig);
-@@ -588,16 +584,12 @@ static enum protocol parse_connect_url(const char *url_orig, char **ret_host,
+@@ -577,10 +586,12 @@ static enum protocol parse_connect_url(const char *url_orig, char **ret_host,
+ 		*host = '\0';
+ 		protocol = get_protocol(url);
+ 		host += 3;
+-		separator = '/';
+ 	} else {
+ 		host = url;
+-		separator = ':';
++		if (!is_local(url)) {
++			protocol = PROTO_SSH;
++			separator = ':';
++		}
  	}
  
  	/*
--	 * Don't do destructive transforms with git:// as that
--	 * protocol code does '[]' unwrapping of its own.
-+	 * Don't do destructive transforms as protocol code does
-+	 * '[]' unwrapping in get_host_and_port()
+@@ -596,17 +607,12 @@ static enum protocol parse_connect_url(const char *url_orig, char **ret_host,
+ 	} else
+ 		end = host;
+ 
+-	path = strchr(end, separator);
+-	if (path && !has_dos_drive_prefix(end)) {
+-		if (separator == ':') {
+-			if (host != url || path < strchrnul(host, '/')) {
+-				protocol = PROTO_SSH;
+-				*path++ = '\0';
+-			} else /* '/' in the host part, assume local path */
+-				path = end;
+-		}
+-	} else
++	if (protocol == PROTO_LOCAL)
++		path = end;
++	else if (protocol == PROTO_FILE && has_dos_drive_prefix(end))
+ 		path = end;
++	else
++		path = strchr(end, separator);
+ 
+ 	if (!path || !*path)
+ 		die("No path specified. See 'man git-pull' for valid url syntax");
+@@ -615,23 +621,21 @@ static enum protocol parse_connect_url(const char *url_orig, char **ret_host,
+ 	 * null-terminate hostname and point path to ~ for URL's like this:
+ 	 *    ssh://host.xz/~user/repo
  	 */
- 	if (host[0] == '[') {
- 		end = strchr(host + 1, ']');
- 		if (end) {
--			if (protocol != PROTO_GIT) {
--				*end = 0;
--				host++;
--			}
- 			end++;
- 		} else
- 			end = host;
-@@ -635,17 +627,7 @@ static enum protocol parse_connect_url(const char *url_orig, char **ret_host,
- 		*ptr = '\0';
- 	}
- 
--	/*
--	 * Add support for ssh port: ssh://host.xy:<port>/...
--	 */
--	if (protocol == PROTO_SSH && separator == '/')
--		port = get_port(end);
--
- 	*ret_host = xstrdup(host);
--	if (port)
--		*ret_port = xstrdup(port);
--	else
--		*ret_port = NULL;
- 	if (free_path)
- 		*ret_path = path;
- 	else
-@@ -673,7 +655,6 @@ struct child_process *git_connect(int fd[2], const char *url,
- 	char *host, *path;
- 	struct child_process *conn = &no_fork;
- 	enum protocol protocol;
--	char *port;
- 	const char **arg;
- 	struct strbuf cmd = STRBUF_INIT;
- 
-@@ -682,18 +663,13 @@ struct child_process *git_connect(int fd[2], const char *url,
- 	 */
- 	signal(SIGCHLD, SIG_DFL);
- 
--	protocol = parse_connect_url(url, &host, &port, &path);
-+	protocol = parse_connect_url(url, &host, &path);
- 	if (flags & CONNECT_DIAG_URL) {
- 		fprintf(stderr, "Diag: url=%s\n", url ? url : "NULL");
- 		fprintf(stderr, "Diag: protocol=%s\n", prot_name(protocol));
--		fprintf(stderr, "Diag: host=%s", host ? host : "NULL");
--		if (port)
--			fprintf(stderr, ":%s\n", port);
--		else
--			fprintf(stderr, "\n");
-+		fprintf(stderr, "Diag: host=%s\n", host ? host : "NULL");
- 		fprintf(stderr, "Diag: path=%s\n", path ? path : "NULL");
- 		free(host);
--		free(port);
- 		free(path);
- 		return NULL;
- 	}
-@@ -720,7 +696,6 @@ struct child_process *git_connect(int fd[2], const char *url,
- 			     target_host, 0);
- 		free(target_host);
- 		free(host);
--		free(port);
- 		free(path);
- 		return conn;
- 	}
-@@ -736,6 +711,11 @@ struct child_process *git_connect(int fd[2], const char *url,
- 	if (protocol == PROTO_SSH) {
- 		const char *ssh = getenv("GIT_SSH");
- 		int putty = ssh && strcasestr(ssh, "plink");
-+		char *ssh_host = host; /* keep host for the free() below */
-+		const char *port = NULL;
-+		get_host_and_port(&ssh_host, &port);
-+		port = get_port_numeric(port);
+-	if (protocol != PROTO_LOCAL && separator == '/') {
+-		char *ptr = path;
 +
- 		if (!ssh) ssh = "ssh";
- 
- 		*arg++ = ssh;
-@@ -746,7 +726,7 @@ struct child_process *git_connect(int fd[2], const char *url,
- 			*arg++ = putty ? "-P" : "-p";
- 			*arg++ = port;
- 		}
--		*arg++ = host;
-+		*arg++ = ssh_host;
++	end = path; /* Need to \0 terminate host here */
++	if (separator == ':')
++		path++; /* path starts after ':' */
++	if ((protocol == PROTO_GIT) ||
++			(protocol == PROTO_SSH && separator == '/')) {
+ 		if (path[1] == '~')
+ 			path++;
+-		else {
+-			path = xstrdup(ptr);
+-			free_path = 1;
+-		}
+-
+-		*ptr = '\0';
  	}
- 	else {
- 		/* remove repo-local variables from the environment */
-@@ -763,7 +743,6 @@ struct child_process *git_connect(int fd[2], const char *url,
- 	fd[1] = conn->in;  /* write to child's stdin */
- 	strbuf_release(&cmd);
- 	free(host);
--	free(port);
- 	free(path);
- 	return conn;
+ 
++	path = xstrdup(path);
++	*end = '\0';
++
+ 	*ret_host = xstrdup(host);
+-	if (free_path)
+-		*ret_path = path;
+-	else
+-		*ret_path = xstrdup(path);
++	*ret_path = path;
+ 	free(url);
+ 	return protocol;
  }
-diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
-index ac5b08b..69a2110 100755
---- a/t/t5500-fetch-pack.sh
-+++ b/t/t5500-fetch-pack.sh
-@@ -558,18 +558,16 @@ do
- 		for h in host host:12 [::1] [::1]:23
- 		do
- 			if $(echo $p | grep ssh >/dev/null 2>/dev/null); then
--				hh=$(echo $h | tr -d "[]")
- 				pp=ssh
- 			else
--				hh=$h
- 				pp=$p
- 			fi
- 			test_expect_success "fetch-pack --diag-url $p://$h/$r" '
--				check_prot_host_path $p://$h/$r $pp "$hh" "/$r"
-+				check_prot_host_path $p://$h/$r $pp "$h" "/$r"
- 			'
- 			# "/~" -> "~" conversion
- 			test_expect_success "fetch-pack --diag-url $p://$h/~$r" '
--				check_prot_host_path $p://$h/~$r $pp "$hh" "~$r"
-+				check_prot_host_path $p://$h/~$r $pp "$h" "~$r"
- 			'
- 		done
- 	done
-@@ -600,13 +598,12 @@ do
- 	p=ssh
- 	for h in host [::1]
- 	do
--		hh=$(echo $h | tr -d "[]")
- 		test_expect_success "fetch-pack --diag-url $h:$r" '
- 			check_prot_path $h:$r $p "$r"
- 		'
- 		# No "/~" -> "~" conversion
- 		test_expect_success "fetch-pack --diag-url $h:/~$r" '
--			check_prot_host_path $h:/~$r $p "$hh" "/~$r"
-+			check_prot_host_path $h:/~$r $p "$h" "/~$r"
- 		'
- 	done
+diff --git a/connect.h b/connect.h
+index 527d58a..ce657b3 100644
+--- a/connect.h
++++ b/connect.h
+@@ -9,5 +9,6 @@ extern int git_connection_is_socket(struct child_process *conn);
+ extern int server_supports(const char *feature);
+ extern int parse_feature_request(const char *features, const char *feature);
+ extern const char *server_feature_value(const char *feature, int *len_ret);
++int is_local(const char *url);
+ 
+ #endif
+diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
+index 57234c0..bd1bfd3 100755
+--- a/t/t5601-clone.sh
++++ b/t/t5601-clone.sh
+@@ -364,15 +364,7 @@ do
  done
+ 
+ # Corner cases
+-# failing
+-for url in [foo]bar/baz:qux [foo/bar]:baz
+-do
+-	test_expect_failure "clone $url is not ssh" '
+-		test_clone_url $url none
+-	'
+-done
+-
+-for url in foo/bar:baz
++for url in foo/bar:baz [foo]bar/baz:qux [foo/bar]:baz
+ do
+ 	test_expect_success "clone $url is not ssh" '
+ 		test_clone_url $url none
+diff --git a/transport.c b/transport.c
+index 7202b77..a09ba95 100644
+--- a/transport.c
++++ b/transport.c
+@@ -885,14 +885,6 @@ void transport_take_over(struct transport *transport,
+ 	transport->cannot_reuse = 1;
+ }
+ 
+-static int is_local(const char *url)
+-{
+-	const char *colon = strchr(url, ':');
+-	const char *slash = strchr(url, '/');
+-	return !colon || (slash && slash < colon) ||
+-		has_dos_drive_prefix(url);
+-}
+-
+ static int is_file(const char *url)
+ {
+ 	struct stat buf;
 -- 
 1.8.4.457.g424cb08
