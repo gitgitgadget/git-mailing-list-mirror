@@ -1,88 +1,91 @@
-From: =?UTF-8?B?IkFuZHLDqXMgRy4gQXJhZ29uZXNlcyI=?= <knocte@gmail.com>
-Subject: [PATCHv3] transport: Catch non positive --depth option value
-Date: Thu, 21 Nov 2013 16:27:28 +0100
-Message-ID: <528E2660.6020107@gmail.com>
-References: <5283A380.9030308@gmail.com>	<xmqqzjp1bqm3.fsf@gitster.dls.corp.google.com>	<528A9877.4060802@gmail.com> <xmqq61ro9utf.fsf@gitster.dls.corp.google.com>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: Can a git push over ssh trigger a gc/repack? Diagnosing pack explosion
+Date: Thu, 21 Nov 2013 10:35:39 -0500
+Message-ID: <CACPiFC+xbnYjZUG49Em=aDUXnS_3_Cp=ZZBCrQCHM-sL78HCdA@mail.gmail.com>
+References: <CACPiFC+TqD_DhMaG+posoK4fTOLCoi=3jhJUPjt_72HTm9xjeQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Duy Nguyen <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 21 16:27:50 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Sam Coffland <sam.coffland@remote-learner.net>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Nov 21 16:36:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VjWAY-0000gR-21
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Nov 2013 16:27:50 +0100
+	id 1VjWIg-0005G0-PA
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Nov 2013 16:36:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753974Ab3KUP1q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Nov 2013 10:27:46 -0500
-Received: from mail-wi0-f177.google.com ([209.85.212.177]:46057 "EHLO
-	mail-wi0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753041Ab3KUP1p (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Nov 2013 10:27:45 -0500
-Received: by mail-wi0-f177.google.com with SMTP id hq4so1211689wib.16
-        for <git@vger.kernel.org>; Thu, 21 Nov 2013 07:27:44 -0800 (PST)
+	id S1754530Ab3KUPgD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Nov 2013 10:36:03 -0500
+Received: from mail-vb0-f54.google.com ([209.85.212.54]:43849 "EHLO
+	mail-vb0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754517Ab3KUPgA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Nov 2013 10:36:00 -0500
+Received: by mail-vb0-f54.google.com with SMTP id p6so4840769vbe.27
+        for <git@vger.kernel.org>; Thu, 21 Nov 2013 07:35:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=hakbM+5zo1A6nltEr5j9z9elEB4f8tanNSBBm8wfuqc=;
-        b=vpjlwfxsSv8g8VEfQbbJO5F8jG6rpsdSfeGNdV3E88QbktuKoq50Q9ny3Nq3M5SMlx
-         HZ5ZV6IsCvQfhbeWE4wYvuDxvisyjbPajPCmNMiEC9+SZjdqUA00kq9pVF39CGciGb9u
-         Oth7JlD7x8X6QsrocSOXeQ0AJJDEhTTtx9NUAX/+nqPDXlIioWb75xKPuLgahV/h2BRx
-         oM5iSCdTSSkuno1fTo8zcdDwUAzhH6gTsTQRr3aH4E0okLh/3J8Yh1buQ7recTaUBdM2
-         bSf0UhBmZuGKPiV2bnErOYR+l8F53ARPk2BB2Zz7IbK6Uok1EhfcxVuoFnTWM6Ido4Zv
-         5C8w==
-X-Received: by 10.194.63.228 with SMTP id j4mr5996599wjs.34.1385047664511;
-        Thu, 21 Nov 2013 07:27:44 -0800 (PST)
-Received: from [192.168.0.151] (147.Red-88-23-71.staticIP.rima-tde.net. [88.23.71.147])
-        by mx.google.com with ESMTPSA id je17sm6195125wic.4.2013.11.21.07.27.43
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 21 Nov 2013 07:27:43 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.1.0
-In-Reply-To: <xmqq61ro9utf.fsf@gitster.dls.corp.google.com>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=uhrRMnuQb0NgbVL3lrv5q8z//AhIfyAsP79cOXTl4WE=;
+        b=g9xErnKZVQ6r8xrh6w/a0o8tO1yMvz1bTnjl29esWC6uABUeMowSPPaexYbccR2eVV
+         pDdU+6yWp4tFSFuz4fdgHa+/IybJ6K3czjx9Mm+03MNaAaAInUDJsiWvwJtED+K06HYk
+         gKwmwKF3QCw1wfsDo37kXR05UAIzRk0jnTaCRuAkK6IXJxJgs5u/V7y//B9J+TOmevKK
+         Jaf/ci72UyP4h62o8Q1f/P+lJLc7aEfZ+WdaEm5BcqmurkyJgLPc8MlJoyYzN8QzErH4
+         2IF5W6Lp2+aMB6tb07GP5ivmHWtormujHwJ/iGfuBMJxg8UAYM5kNYnqF5Owyey93KXJ
+         ZsKg==
+X-Received: by 10.52.182.39 with SMTP id eb7mr5182624vdc.6.1385048159835; Thu,
+ 21 Nov 2013 07:35:59 -0800 (PST)
+Received: by 10.221.61.210 with HTTP; Thu, 21 Nov 2013 07:35:39 -0800 (PST)
+In-Reply-To: <CACPiFC+TqD_DhMaG+posoK4fTOLCoi=3jhJUPjt_72HTm9xjeQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238126>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238127>
 
->From 99e387151594572dc136bf1fae45593ee710e817 Mon Sep 17 00:00:00 2001
-From: =?UTF-8?q?Andr=C3=A9s=20G=2E=20Aragoneses?= <knocte@gmail.com>
-Date: Wed, 13 Nov 2013 16:55:08 +0100
-Subject: [PATCH] transport: Catch non positive --depth option value
+On Thu, Nov 21, 2013 at 10:21 AM, Martin Langhoff
+<martin.langhoff@gmail.com> wrote:
+> Do client pushes over git+ssh ever trigger a repack on the server?
 
-Instead of simply ignoring the value passed to --depth
-option when it is zero or negative, now it is caught
-and reported.
+man git-config
+[snip]
 
-This will let people know that they were using the
-option incorrectly (as depth<0 should be simply invalid,
-and under the hood depth==0 didn't have any effect).
+       receive.autogc
+           By default, git-receive-pack will run "git-gc --auto" after
+           receiving data from git-push and updating refs. You can stop it by
+           setting this variable to false.
 
-Signed-off-by: Andres G. Aragoneses <knocte@gmail.com>
-Reviewed-by: Duy Nguyen <pclouds@gmail.com>
-Reviewed-by: Junio C Hamano <gitster@pobox.com> 
----
- transport.c | 2 ++
- 1 file changed, 2 insertions(+)
+Oooooops!
 
-diff --git a/transport.c b/transport.c
-index 7202b77..edd63eb 100644
---- a/transport.c
-+++ b/transport.c
-@@ -483,6 +483,8 @@ static int set_git_option(struct git_transport_options *opts,
- 			opts->depth = strtol(value, &end, 0);
- 			if (*end)
- 				die("transport: invalid depth option '%s'", value);
-+			if (opts->depth < 1)
-+				die("transport: invalid depth option '%s' (must be positive)", value);
- 		}
- 		return 0;
- 	}
+Ok, couple problems here:
+
+ - if it's receiving from many pushers, it races with itself; needs
+some lock or back-off mechanism
+
+ - alternatively, an splay mechanism. We have a "hard" threshold...
+given many "pushers" acting in parallel, they'll all hit the threshold
+at the same time. There is no need for this, we could randomize the
+threshold by 20%; that would radically reduce the racy-ness
+
+ - auto repack in this scenario has a reasonable likelihood if being
+visited by the OOM killer -- therefore it needs to fail more
+gracefully, for example with tmpfile cleanup. Perhaps by having the
+tmpfiles places in a tmpdir named with the pid of the child would make
+this easier...
+
+Naturally, I'll move quickly to disable this evil-spawn-automagic
+setting and setup a cronjob. But I think it is possible to have
+defaults that work more reliably and with lower risk of explosion.
+
+thoughts?
+
+
+
+m
 -- 
-1.8.1.2
+ martin.langhoff@gmail.com
+ -  ask interesting questions
+ - don't get distracted with shiny stuff  - working code first
+ ~ http://docs.moodle.org/en/User:Martin_Langhoff
