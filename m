@@ -1,108 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv3] transport: Catch non positive --depth option value
-Date: Thu, 21 Nov 2013 12:18:00 -0800
-Message-ID: <xmqq1u294ih3.fsf@gitster.dls.corp.google.com>
-References: <5283A380.9030308@gmail.com>
-	<xmqqzjp1bqm3.fsf@gitster.dls.corp.google.com>
-	<528A9877.4060802@gmail.com>
-	<xmqq61ro9utf.fsf@gitster.dls.corp.google.com>
-	<528E2660.6020107@gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH] drop support for "experimental" loose objects
+Date: Thu, 21 Nov 2013 21:19:25 +0100
+Message-ID: <CAP8UFD2S1HUDYLbmEGFqLcBFExuB0h7=gqwsQ0qjpMSc+YaXog@mail.gmail.com>
+References: <20131120203350.GA31139@kitenet.net>
+	<20131120213348.GA29004@sigill.intra.peff.net>
+	<20131120222805.GC26468@kitenet.net>
+	<20131121114157.GA7171@sigill.intra.peff.net>
+	<20131121160426.GA21843@kitenet.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Duy Nguyen <pclouds@gmail.com>
-To: =?utf-8?Q?Andr=C3=A9s_G=2E_Aragoneses?= <knocte@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 21 21:18:30 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Joey Hess <joey@kitenet.net>
+X-From: git-owner@vger.kernel.org Thu Nov 21 21:19:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vjahm-00060S-U8
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Nov 2013 21:18:27 +0100
+	id 1Vjaip-0006VI-8s
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Nov 2013 21:19:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752069Ab3KUUSL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 21 Nov 2013 15:18:11 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52152 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751346Ab3KUUSK convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 21 Nov 2013 15:18:10 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2173D54EE7;
-	Thu, 21 Nov 2013 15:18:10 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=H91sJwjD/2Nj
-	ctQz2po7OW2e1wE=; b=oUo1ARgeYnPDHdS69xJLlTLrXTFljHMvUiwIG5pGVVJ6
-	dQmdZAsLtmzLGb4+dwJ0jpvFnAhD4ws/RjpQx45P+utnQhVItwG536Ke2Y9fPJJn
-	bGqYIC/DtNh0+pPXl1gIXt7jJ/Ri8pZxUxYutbAUSOUj3ufY8HG3OiX8q0SP25o=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=nc4FhW
-	4R3lR13H4Incg9azLg7q8Ht6TxOaKVAolfiJ2o5ih4xHGHoU4G3+2T/QAANq2azn
-	qkzEBr6PV8AqDId7zUymNNchiPLjTgstlwTcxnZQyqX/YDA2T9+xUPu1cZa7WsHg
-	M2qzSU7fs2KV3un1hbGLevtnAls2Z0jN+eAco=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1063A54EE4;
-	Thu, 21 Nov 2013 15:18:10 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CC03754EE2;
-	Thu, 21 Nov 2013 15:18:08 -0500 (EST)
-In-Reply-To: <528E2660.6020107@gmail.com> (=?utf-8?Q?=22Andr=C3=A9s?= G.
- Aragoneses"'s message of
-	"Thu, 21 Nov 2013 16:27:28 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 099EB152-52EA-11E3-9DCE-D331802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752587Ab3KUUT2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Nov 2013 15:19:28 -0500
+Received: from mail-vb0-f47.google.com ([209.85.212.47]:57765 "EHLO
+	mail-vb0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751226Ab3KUUT1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Nov 2013 15:19:27 -0500
+Received: by mail-vb0-f47.google.com with SMTP id x11so201562vbb.6
+        for <git@vger.kernel.org>; Thu, 21 Nov 2013 12:19:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=fecYiJFOYK1piSiXmxW1FKfXmNMHzYuUlB0TemMRWbE=;
+        b=vPsfEJtPI5GEzpLs0eyjHGd0tVLlJ+cfdf4cH6FpCTRMv1Om2Lvkilqf551xwO8xia
+         kxHwWHQrVnwf3kOaA7HTv1kiwxx1+Ps1Gd9g+FlwvZuctVe+hTfXXk1ecn+lTfoanBXI
+         e5EZpydL3E6STMKReA1Hr9xmQG6Vwq0DAvGPPDSMTCwt+jD2hibM9k291lycJc1EtssJ
+         U76p+k0yc8feZvsn7L5v5KDQNIdhXSLSXtXjAC0eTcF1khB+dml2VF3RhL2kROIYzN08
+         jPgpjYEORy5rxZVWVhxn/c/Olifj6zV/USkk1fFmj8WiB3ANbXG1atwYgmfR1FpctKxv
+         q4yQ==
+X-Received: by 10.220.174.200 with SMTP id u8mr7508869vcz.6.1385065165622;
+ Thu, 21 Nov 2013 12:19:25 -0800 (PST)
+Received: by 10.58.253.136 with HTTP; Thu, 21 Nov 2013 12:19:25 -0800 (PST)
+In-Reply-To: <20131121160426.GA21843@kitenet.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238139>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238140>
 
-"Andr=C3=A9s G. Aragoneses" <knocte@gmail.com> writes:
-
-> From 99e387151594572dc136bf1fae45593ee710e817 Mon Sep 17 00:00:00 200=
-1
-> From: =3D?UTF-8?q?Andr=3DC3=3DA9s=3D20G=3D2E=3D20Aragoneses?=3D <knoc=
-te@gmail.com>
-> Date: Wed, 13 Nov 2013 16:55:08 +0100
-> Subject: [PATCH] transport: Catch non positive --depth option value
+On Thu, Nov 21, 2013 at 5:04 PM, Joey Hess <joey@kitenet.net> wrote:
 >
-> Instead of simply ignoring the value passed to --depth
-> option when it is zero or negative, now it is caught
-> and reported.
->
-> This will let people know that they were using the
-> option incorrectly (as depth<0 should be simply invalid,
-> and under the hood depth=3D=3D0 didn't have any effect).
->
-> Signed-off-by: Andres G. Aragoneses <knocte@gmail.com>
-> Reviewed-by: Duy Nguyen <pclouds@gmail.com>
-> Reviewed-by: Junio C Hamano <gitster@pobox.com>=20
+> BTW, I've also seen git cat-file --batch report wrong sizes for objects,
+> sometimes without crashing. This is particularly problimatic because if
+> the object size is wrong, it's very hard to detect the actual end of the
+> object output in the batch mode stream.
 
-I didn't exactly "review" this.
+Yeah, I think it might report wrong size in case of replaced objects
+for example.
+I looked at that following Junio's comment about the
+sha1_object_info() API, which,
+unlike read_sha1_file() API, does not interact with the "replace" mechanism:
 
-Have you run the tests with this patch?  It seems that it breaks
-quite a lot of them, including t5500, t5503, t5510, among others.
+http://thread.gmane.org/gmane.comp.version-control.git/234023/
 
-> ---
->  transport.c | 2 ++
->  1 file changed, 2 insertions(+)
->
-> diff --git a/transport.c b/transport.c
-> index 7202b77..edd63eb 100644
-> --- a/transport.c
-> +++ b/transport.c
-> @@ -483,6 +483,8 @@ static int set_git_option(struct git_transport_op=
-tions *opts,
->  			opts->depth =3D strtol(value, &end, 0);
->  			if (*end)
->  				die("transport: invalid depth option '%s'", value);
-> +			if (opts->depth < 1)
-> +				die("transport: invalid depth option '%s' (must be positive)", v=
-alue);
->  		}
->  		return 0;
->  	}
+I started to work on a patch about this but didn't take the time to
+finish and post it.
+
+Thanks,
+Christian.
