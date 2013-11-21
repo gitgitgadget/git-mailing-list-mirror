@@ -1,223 +1,237 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v6 05/10] git fetch-pack: Add --diag-url
-Date: Thu, 21 Nov 2013 14:46:37 -0800
-Message-ID: <xmqqob5d2x0y.fsf@gitster.dls.corp.google.com>
-References: <201311212140.49698.tboegi@web.de>
+Subject: Re: [PATCH v6 04/10] git_connect: factor out discovery of the protocol and its parts
+Date: Thu, 21 Nov 2013 15:22:53 -0800
+Message-ID: <xmqqk3g12vci.fsf@gitster.dls.corp.google.com>
+References: <201311212139.51214.tboegi@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
 To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Thu Nov 21 23:46:48 2013
+X-From: git-owner@vger.kernel.org Fri Nov 22 00:23:09 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vjd1J-0003PA-LP
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Nov 2013 23:46:46 +0100
+	id 1VjdaT-0004PP-D4
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Nov 2013 00:23:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755258Ab3KUWql convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 21 Nov 2013 17:46:41 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44882 "EHLO
+	id S1755516Ab3KUXXA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 21 Nov 2013 18:23:00 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61975 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754481Ab3KUWqk convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 21 Nov 2013 17:46:40 -0500
+	id S1753970Ab3KUXW6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 21 Nov 2013 18:22:58 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0A05D527B0;
-	Thu, 21 Nov 2013 17:46:40 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5D60E543D6;
+	Thu, 21 Nov 2013 18:22:57 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=seIOnA7K9BHX
-	/qZiafd+8+bjkU8=; b=AlvpD7WCmxcMIuKCOiISYBgdzRd/xNFfJ+5rO2eprE7E
-	13o4Iw1nE70OKJmdLjAAtxAn7yYUehq/nA244eF4JPcr2Gj+eJEpoCFtO3qwF5zK
-	NlbsGRzgCAio5ZuZOAaSpz9P7mGu9QEx6YPkVGtWzuwpA/4OHF+SCf4twxiRgIg=
+	:content-type:content-transfer-encoding; s=sasl; bh=r9ztd/S9gbKJ
+	tvxWi/OASwmM/YI=; b=GtlKH9vs9ZaeBTYfONSToKfzMS4D/PXJXTkDKJ/FA6M0
+	dHeYg8ttluoV8s82P/+ab/6eG3kfnapTFlIizu6QXzgJQk/+WWqAXkAylRx3HuHD
+	uzibjSxAMOOcofsWCc1UzyN0fYef3bGtQESHeAzZAmIpV1daH073f44z/PVLSR4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=mKNyuE
-	/JwL3CS3FG4dKp6wbqwjaOGi2HfC5DSrJEyJMxQAEtwqmSCVPZmMSNo90p1opddj
-	ChZ0/RCxhnRc5dKtR7vPrUrGvUMr09R7b+fmX55G5/Y1Om9OazR27MPQZSr14Eao
-	ZdtlBdAZvxG1Sk7E+N9lXoNA1p0TtE/mpgTt0=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=FL0rnf
+	/T3wdm1sc0tdS6WpFzYp4ntD51cezLigUQeZbc3jz4TLxrxpiGM42yBJ3tioCTTn
+	YHpn8TI0hJPcrnLgiTuXs1Gj/6kzHU/WG3UfNetq0JnxRME5pqcbFHYS78LRPn18
+	MmqsgDUM29MEVJzt807a/SR9PidXUSgoyqlOw=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F07E1527AC;
-	Thu, 21 Nov 2013 17:46:39 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4CCD8543D5;
+	Thu, 21 Nov 2013 18:22:57 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3DD18527AB;
-	Thu, 21 Nov 2013 17:46:39 -0500 (EST)
-In-Reply-To: <201311212140.49698.tboegi@web.de> ("Torsten =?utf-8?Q?B?=
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 85A2C543D1;
+	Thu, 21 Nov 2013 18:22:56 -0500 (EST)
+In-Reply-To: <201311212139.51214.tboegi@web.de> ("Torsten =?utf-8?Q?B?=
  =?utf-8?Q?=C3=B6gershausen=22's?=
-	message of "Thu, 21 Nov 2013 21:40:48 +0100")
+	message of "Thu, 21 Nov 2013 21:39:50 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: C8A42B90-52FE-11E3-A392-D331802839F8-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: DA68BF58-5303-11E3-AB69-D331802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238161>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238162>
 
 Torsten B=C3=B6gershausen <tboegi@web.de> writes:
 
->> Subject: Re: [PATCH v6 05/10] git fetch-pack: Add --diag-url
-
-s/Add/add/ please.
-
-> The main purpose is to trace the URL parser called by git_connect() i=
-n
-> connect.c
+> git_connect has grown large due to the many different protocols synta=
+xes
+> that are supported. Move the part of the function that parses the URL=
+ to
+> connect to into a separate function for readability.
 >
-> The main features of the parser can be listed as this:
-> - parse out host and path for URLs with a scheme (git:// file:// ssh:=
-//)
-> - parse host names embedded by [] correctly
-> - extract the port number, if present
-> - seperate URLs like "file" (which are local)
->   from URLs like "host:repo" which should use ssh
->
-> Add the new parameter "--diag-url" to "git fetch-pack",
-> which prints the value for protocol, host and path to stderr and exit=
-s.
+> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
 > ---
 
-Sign-off?
+I lost track, but was this authored by j6t?  If so please:
 
->  builtin/fetch-pack.c  | 14 ++++++++++---
->  connect.c             | 27 ++++++++++++++++++++++++
->  connect.h             |  1 +
->  fetch-pack.h          |  1 +
->  t/t5500-fetch-pack.sh | 57 +++++++++++++++++++++++++++++++++++++++++=
-++++++++++
->  5 files changed, 97 insertions(+), 3 deletions(-)
+ (1) begin the body of the message like so:
+
+	From: Johannes Sixt <j6t@kdbg.org>
+
+        git_connect has grown ...
+
+     so that the resulting commit will have him as the author; and
+
+ (2) have your own sign-off after his at the end, i.e.
+
+	....
+        connect to into a separate function for readability.
+
+	Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+        Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+
+     to record the flow of the patch.
+
+The resulting code looks fine from a cursory view.
+
+Thanks.
+
+
+>  connect.c | 80 ++++++++++++++++++++++++++++++++++++++++++-----------=
+----------
+>  1 file changed, 53 insertions(+), 27 deletions(-)
 >
-> diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
-> index c8e8582..758b5ac 100644
-> --- a/builtin/fetch-pack.c
-> +++ b/builtin/fetch-pack.c
-> @@ -7,7 +7,7 @@
->  static const char fetch_pack_usage[] =3D
->  "git fetch-pack [--all] [--stdin] [--quiet|-q] [--keep|-k] [--thin] =
-"
->  "[--include-tag] [--upload-pack=3D<git-upload-pack>] [--depth=3D<n>]=
- "
-> -"[--no-progress] [-v] [<host>:]<directory> [<refs>...]";
-> +"[--no-progress] [--diag-url] [-v] [<host>:]<directory> [<refs>...]"=
-;
-> =20
->  static void add_sought_entry_mem(struct ref ***sought, int *nr, int =
-*alloc,
->  				 const char *name, int namelen)
-> @@ -81,6 +81,10 @@ int cmd_fetch_pack(int argc, const char **argv, co=
-nst char *prefix)
->  			args.stdin_refs =3D 1;
->  			continue;
->  		}
-> +		if (!strcmp("--diag-url", arg)) {
-> +			args.diag_url =3D 1;
-> +			continue;
-> +		}
->  		if (!strcmp("-v", arg)) {
->  			args.verbose =3D 1;
->  			continue;
-> @@ -146,10 +150,14 @@ int cmd_fetch_pack(int argc, const char **argv,=
- const char *prefix)
->  		fd[0] =3D 0;
->  		fd[1] =3D 1;
->  	} else {
-> +		int flags =3D args.verbose ? CONNECT_VERBOSE : 0;
-> +		if (args.diag_url)
-> +			flags |=3D CONNECT_DIAG_URL;
->  		conn =3D git_connect(fd, dest, args.uploadpack,
-> -				   args.verbose ? CONNECT_VERBOSE : 0);
-> +				   flags);
-> +		if (!conn)
-> +			return args.diag_url ? 0 : 1;
->  	}
-> -
->  	get_remote_heads(fd[0], NULL, 0, &ref, 0, NULL);
-> =20
->  	ref =3D fetch_pack(&args, fd, conn, ref, dest,
 > diff --git a/connect.c b/connect.c
-> index a6cf345..1b93b4d 100644
+> index 6cc1f8d..a6cf345 100644
 > --- a/connect.c
 > +++ b/connect.c
-> @@ -236,6 +236,19 @@ enum protocol {
->  	PROTO_GIT
->  };
+> @@ -543,37 +543,20 @@ static char *get_port(char *host)
+>  	return NULL;
+>  }
 > =20
-> +static const char *prot_name(enum protocol protocol) {
-
-Style: please move that "{" to the beginning of the next line (see the
-beginning of existing functions e.g. get_protocol()).
-
-> diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
-> index d87ddf7..9136f2a 100755
-> --- a/t/t5500-fetch-pack.sh
-> +++ b/t/t5500-fetch-pack.sh
-> @@ -531,5 +531,62 @@ test_expect_success 'shallow fetch with tags doe=
-s not break the repository' '
->  		git fsck
->  	)
->  '
-> +check_prot_path() {
-> +	> actual &&
-
-Style: no SP between the redirection operator and its target, i.e.
-
-	>actual &&
-
-> +	(git fetch-pack --diag-url "$1" 2>&1 1>stdout) | grep -v host=3D >a=
-ctual &&
-
-Do we use "stdout" in this test?  Otherwise "1>/dev/null" would make
-it clearer what is going on.
-
-> +	echo "Diag: url=3D$1" >expected &&
-> +	echo "Diag: protocol=3D$2" >>expected &&
-> +	echo "Diag: path=3D$3" >>expected &&
-
-Perhaps this is a good place to use here-doc, i.e.
-
-	cat >expected <<-EOF &&
-	Diag: ...
-        ...
-        EOF
-
-> +	test_cmp expected actual
+> -static struct child_process no_fork;
+> -
+>  /*
+> - * This returns a dummy child_process if the transport protocol does=
+ not
+> - * need fork(2), or a struct child_process object if it does.  Once =
+done,
+> - * finish the connection with finish_connect() with the value return=
+ed from
+> - * this function (it is safe to call finish_connect() with NULL to s=
+upport
+> - * the former case).
+> - *
+> - * If it returns, the connect is successful; it just dies on errors =
+(this
+> - * will hopefully be changed in a libification effort, to return NUL=
+L when
+> - * the connection failed).
+> + * Extract protocol and relevant parts from the specified connection=
+ URL.
+> + * The caller must free() the returned strings.
+>   */
+> -struct child_process *git_connect(int fd[2], const char *url_orig,
+> -				  const char *prog, int flags)
+> +static enum protocol parse_connect_url(const char *url_orig, char **=
+ret_host,
+> +				       char **ret_port, char **ret_path)
+>  {
+>  	char *url;
+>  	char *host, *path;
+>  	char *end;
+>  	int c;
+> -	struct child_process *conn =3D &no_fork;
+>  	enum protocol protocol =3D PROTO_LOCAL;
+>  	int free_path =3D 0;
+>  	char *port =3D NULL;
+> -	const char **arg;
+> -	struct strbuf cmd =3D STRBUF_INIT;
+> -
+> -	/* Without this we cannot rely on waitpid() to tell
+> -	 * what happened to our children.
+> -	 */
+> -	signal(SIGCHLD, SIG_DFL);
+> =20
+>  	if (is_url(url_orig))
+>  		url =3D url_decode(url_orig);
+> @@ -645,6 +628,49 @@ struct child_process *git_connect(int fd[2], con=
+st char *url_orig,
+>  	if (protocol =3D=3D PROTO_SSH && host !=3D url)
+>  		port =3D get_port(end);
+> =20
+> +	*ret_host =3D xstrdup(host);
+> +	if (port)
+> +		*ret_port =3D xstrdup(port);
+> +	else
+> +		*ret_port =3D NULL;
+> +	if (free_path)
+> +		*ret_path =3D path;
+> +	else
+> +		*ret_path =3D xstrdup(path);
+> +	free(url);
+> +	return protocol;
 > +}
 > +
-> +check_prot_host_path() {
-> +	> actual &&
-> +	git fetch-pack --diag-url "$1" 2>actual &&
-> +	echo "Diag: url=3D$1" >expected &&
-> +	echo "Diag: protocol=3D$2" >>expected &&
-> +	echo "Diag: host=3D$3" >>expected &&
-> +	echo "Diag: path=3D$4" >>expected &&
-> +	test_cmp expected actual
-> +}
+> +static struct child_process no_fork;
 > +
-> +for r in repo re:po re/po
-> +do
-> +	# git or ssh with scheme
-> +	for p in "ssh+git" "git+ssh" git ssh
-> +	do
-> +		for h in host host:12 [::1] [::1]:23
-> +		do
-> +			if $(echo $p | grep ssh >/dev/null 2>/dev/null); then
-
-Style: "; then" should be spelled as "LF" followed by "then" on the
-next line by itself.
-
-But more ipmportantly, the above tries to do
-
-	if "some computed string"; then
-
-which is very iffy.  I think you meant:
-
-	case "$p" in
-        *ssh*)
-        	do ssh thing
-                ;;
-	*)
-        	do other thing
-	esac
+> +/*
+> + * This returns a dummy child_process if the transport protocol does=
+ not
+> + * need fork(2), or a struct child_process object if it does.  Once =
+done,
+> + * finish the connection with finish_connect() with the value return=
+ed from
+> + * this function (it is safe to call finish_connect() with NULL to s=
+upport
+> + * the former case).
+> + *
+> + * If it returns, the connect is successful; it just dies on errors =
+(this
+> + * will hopefully be changed in a libification effort, to return NUL=
+L when
+> + * the connection failed).
+> + */
+> +struct child_process *git_connect(int fd[2], const char *url,
+> +				  const char *prog, int flags)
+> +{
+> +	char *host, *path;
+> +	struct child_process *conn =3D &no_fork;
+> +	enum protocol protocol;
+> +	char *port;
+> +	const char **arg;
+> +	struct strbuf cmd =3D STRBUF_INIT;
+> +
+> +	/* Without this we cannot rely on waitpid() to tell
+> +	 * what happened to our children.
+> +	 */
+> +	signal(SIGCHLD, SIG_DFL);
+> +
+> +	protocol =3D parse_connect_url(url, &host, &port, &path);
+> +
+>  	if (protocol =3D=3D PROTO_GIT) {
+>  		/* These underlying connection commands die() if they
+>  		 * cannot connect.
+> @@ -666,9 +692,9 @@ struct child_process *git_connect(int fd[2], cons=
+t char *url_orig,
+>  			     prog, path, 0,
+>  			     target_host, 0);
+>  		free(target_host);
+> -		free(url);
+> -		if (free_path)
+> -			free(path);
+> +		free(host);
+> +		free(port);
+> +		free(path);
+>  		return conn;
+>  	}
+> =20
+> @@ -709,9 +735,9 @@ struct child_process *git_connect(int fd[2], cons=
+t char *url_orig,
+>  	fd[0] =3D conn->out; /* read from child's stdout */
+>  	fd[1] =3D conn->in;  /* write to child's stdin */
+>  	strbuf_release(&cmd);
+> -	free(url);
+> -	if (free_path)
+> -		free(path);
+> +	free(host);
+> +	free(port);
+> +	free(path);
+>  	return conn;
+>  }
