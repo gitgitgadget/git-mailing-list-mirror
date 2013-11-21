@@ -1,77 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3] commit -v: strip diffs and submodule shortlogs from the commit message
-Date: Thu, 21 Nov 2013 14:23:17 -0800
-Message-ID: <xmqqsiup2y3u.fsf@gitster.dls.corp.google.com>
-References: <528D385F.2070906@web.de>
-	<xmqqpppu65fs.fsf@gitster.dls.corp.google.com>
-	<528E7A6E.8080603@web.de>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] drop support for "experimental" loose objects
+Date: Thu, 21 Nov 2013 17:41:51 -0500
+Message-ID: <20131121224151.GA11258@sigill.intra.peff.net>
+References: <20131120203350.GA31139@kitenet.net>
+ <20131120213348.GA29004@sigill.intra.peff.net>
+ <20131120222805.GC26468@kitenet.net>
+ <20131121114157.GA7171@sigill.intra.peff.net>
+ <20131121114837.GB7171@sigill.intra.peff.net>
+ <CACsJy8B5xY1FZyhPdct8Nt6Gad2cveRvmOXTXJP=uCaG2_0KuA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Johannes Sixt <j6t@kdbg.org>, Ari Pollak <ari@debian.org>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Thu Nov 21 23:23:30 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Joey Hess <joey@kitenet.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 21 23:41:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vjcek-0000IN-A4
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Nov 2013 23:23:26 +0100
+	id 1Vjcwg-0000yn-9J
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Nov 2013 23:41:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755239Ab3KUWXW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Nov 2013 17:23:22 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50530 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753279Ab3KUWXV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Nov 2013 17:23:21 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 746FD520FC;
-	Thu, 21 Nov 2013 17:23:21 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=IuY5eilp0+SAGuDwgNpMkds87x0=; b=ZybkIW
-	JnmNE8XYzA58rIYLX5IrGxodFg+yBfU9zyodAze5IBMwIYnbC6Pb/MgFyZ5E6y5k
-	ezlzDZDJ3MUMOfnwZhDJM89o+azhzxTHhMyGyXAsYWwAXp5UxV9kUP103oUInB7n
-	TP2KLXKq1UXUQ5jpTXlgd5C3Dk5lZauYDfzOI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=QOhFL/m3olEIU1TMUj+MNVXI4Pn3vk0T
-	c5Gpbcif2ELEUfjB2JcQRK1LDV0qK+1ojuryMM95++vdDGG488FKK5bqJ7PXlBMo
-	d1Tbvb2iIebP7M7Uhcqy/Be4GQngnM+3+NglLeFFRkWtOA1A6Vo+DIOr5l7Xftff
-	ZnnWWbzbzhs=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 602F3520FB;
-	Thu, 21 Nov 2013 17:23:21 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 85604520F8;
-	Thu, 21 Nov 2013 17:23:20 -0500 (EST)
-In-Reply-To: <528E7A6E.8080603@web.de> (Jens Lehmann's message of "Thu, 21 Nov
-	2013 22:26:06 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 86F2A59E-52FB-11E3-85AC-D331802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755078Ab3KUWly (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Nov 2013 17:41:54 -0500
+Received: from cloud.peff.net ([50.56.180.127]:43461 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753983Ab3KUWly (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Nov 2013 17:41:54 -0500
+Received: (qmail 10244 invoked by uid 102); 21 Nov 2013 22:41:53 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 21 Nov 2013 16:41:53 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 21 Nov 2013 17:41:51 -0500
+Content-Disposition: inline
+In-Reply-To: <CACsJy8B5xY1FZyhPdct8Nt6Gad2cveRvmOXTXJP=uCaG2_0KuA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238159>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238160>
 
-Jens Lehmann <Jens.Lehmann@web.de> writes:
+On Thu, Nov 21, 2013 at 07:43:03PM +0700, Duy Nguyen wrote:
 
-> But what about this:
->
-> 	struct strbuf cut_line = STRBUF_INIT;
-> 	strbuf_addf(&cut_line, "%c %s", comment_line_char, wt_status_cut_line);
-> 	p = strstr(buf->buf, cut_line.buf);
-> 	if (p && (p == buf->buf || p[-1] == '\n'))
-> 		strbuf_setlen(buf, p - buf->buf);
-> 	strbuf_release(&cut_line);
->
-> That is shorter can easily be adapted to a comment line string later.
+> > -       if (experimental_loose_object(map)) {
+> 
+> Perhaps keep this..
+> 
+> > -               /*
+> > -                * The old experimental format we no longer produce;
+> > -                * we can still read it.
+> > -                */
+> > -               used = unpack_object_header_buffer(map, mapsize, &type, &size);
+> > -               if (!used || !valid_loose_object_type[type])
+> > -                       return -1;
+> > -               map += used;
+> > -               mapsize -= used;
+> > -
+> > -               /* Set up the stream for the rest.. */
+> > -               stream->next_in = map;
+> > -               stream->avail_in = mapsize;
+> > -               git_inflate_init(stream);
+> > -
+> > -               /* And generate the fake traditional header */
+> > -               stream->total_out = 1 + snprintf(buffer, bufsiz, "%s %lu",
+> > -                                                typename(type), size);
+> > -               return 0;
+> 
+> and replace all this with
+> 
+> die("detected an object in obsolete format, please repack the
+> repository using a version before XXX");
 
-Sure, that would work fine.
+That would eliminate the second part of my purpose, which is to not
+die() on a corrupted object because we incorrectly guess that it is
+experimental.
 
-Thanks.
+If we think these objects are in the wild, the right thing to do would
+be to warn() and continue. But I really find it hard to believe any such
+objects exist at this point.
+
+-Peff
