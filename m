@@ -1,86 +1,151 @@
-From: Thomas Rast <tr@thomasrast.ch>
-Subject: Re: [RFC PATCH] Revamp git-cherry(1)
-Date: Thu, 21 Nov 2013 22:02:02 +0100
-Message-ID: <87pppt31v9.fsf@thomasrast.ch>
-References: <3af3069696e3a59d513f1fef0ca797d103f6d882.1385033403.git.tr@thomasrast.ch>
-	<xmqqli0h4kvj.fsf@gitster.dls.corp.google.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH v3] commit -v: strip diffs and submodule shortlogs from
+ the commit message
+Date: Thu, 21 Nov 2013 22:26:06 +0100
+Message-ID: <528E7A6E.8080603@web.de>
+References: <528D385F.2070906@web.de> <xmqqpppu65fs.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, a.huemer@commend.com,
-	"Michael S. Tsirkin" <mst@kernel.org>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Johannes Sixt <j6t@kdbg.org>, Ari Pollak <ari@debian.org>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 21 22:02:16 2013
+X-From: git-owner@vger.kernel.org Thu Nov 21 22:26:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VjbOB-0002tM-4Z
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Nov 2013 22:02:15 +0100
+	id 1VjblR-0006SR-TO
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Nov 2013 22:26:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755311Ab3KUVCM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Nov 2013 16:02:12 -0500
-Received: from psi.thgersdorf.net ([176.9.98.78]:48221 "EHLO mail.psioc.net"
+	id S1753784Ab3KUV0O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Nov 2013 16:26:14 -0500
+Received: from mout.web.de ([212.227.15.14]:58606 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755288Ab3KUVCH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Nov 2013 16:02:07 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by localhost.psioc.net (Postfix) with ESMTP id D04534D656F;
-	Thu, 21 Nov 2013 22:02:05 +0100 (CET)
-X-Virus-Scanned: amavisd-new at psioc.net
-Received: from mail.psioc.net ([127.0.0.1])
-	by localhost (mail.psioc.net [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id yTXJL-aOkhyt; Thu, 21 Nov 2013 22:02:04 +0100 (CET)
-Received: from hexa.thomasrast.ch (46-126-8-85.dynamic.hispeed.ch [46.126.8.85])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(Client did not present a certificate)
-	by mail.psioc.net (Postfix) with ESMTPSA id C6C264D6414;
-	Thu, 21 Nov 2013 22:02:03 +0100 (CET)
-In-Reply-To: <xmqqli0h4kvj.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Thu, 21 Nov 2013 11:26:08 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+	id S1751226Ab3KUV0N (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Nov 2013 16:26:13 -0500
+Received: from [192.168.178.41] ([91.3.140.19]) by smtp.web.de (mrweb102) with
+ ESMTPA (Nemesis) id 0MBkLb-1Vr08y1PeR-00AnOB for <git@vger.kernel.org>; Thu,
+ 21 Nov 2013 22:26:12 +0100
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.1.1
+In-Reply-To: <xmqqpppu65fs.fsf@gitster.dls.corp.google.com>
+X-Enigmail-Version: 1.6
+X-Provags-ID: V03:K0:ppF9YVZB6Y/S6IonR/6YUgl5e/Yg6rD2ZIHSw6u299uRApZ1aBy
+ L6/G7HHOjaYkZ3vYMsoO6X+6iVbVWzKrz0WLrF3QW4X6zIpueX/qdgQAjg3RDXnw35Pjr4r
+ dntqgrspaQEdiRZimDltzFJ21IqzdUWi1rdzXeNdgYTb/aXSXYIHVhcUvBh6UNl5aoOdzcB
+ IirfvbYFI6ncZ0bc3Fukg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238155>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238156>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
->>  OPTIONS
->>  -------
->>  -v::
->> -	Verbose.
->> +	Verbose.  Currently shows the commit subjects next to their
->> +	SHA1.
->
-> Whenever I see "Currently", it makes me wonder "why does it need to
-> say that? Is there a plan to change it soon, and if so where is the
-> plan described?".
-
-I wanted to avoid documenting exactly what it does, so that in the
-future it could do more than that.  Is that overly paranoid?
-
->> +EXAMPLES
->> +--------
+Am 21.11.2013 00:04, schrieb Junio C Hamano:
+> Jens Lehmann <Jens.Lehmann@web.de> writes:
+>> diff --git a/wt-status.c b/wt-status.c
+>> index b4e44ba..734f94b 100644
+>> --- a/wt-status.c
+>> +++ b/wt-status.c
+>> @@ -16,6 +16,9 @@
+>>  #include "column.h"
+>>  #include "strbuf.h"
+>>
+>> +static char wt_status_cut_line[] = /* 'X' is replaced with comment_line_char */
+>> +"X ------------------------ >8 ------------------------\n";
 >> +
->> +git-cherry is frequently used in patch-based workflows (see
->> +linkgit:gitworkflows[7]) to determine if a series of patches has been
->> +applied by the upstream maintainer.  In such a workflow you might
->> +create and send a topic branch like this (fill in appropriate
->> +arguments for `...`):
->
-> I think the ASCII art commit graph that shows topology which we lost
-> by this patch gave a more intiutive sense of what "a topic branch
-> like this" looked like than an incomplete skeleton of a command
-> sequence that would be understood by those who already know how to
-> work with multiple branches.  Perhaps we want both?
+>>  static char default_wt_status_colors[][COLOR_MAXLEN] = {
+>>  	GIT_COLOR_NORMAL, /* WT_STATUS_HEADER */
+>>  	GIT_COLOR_GREEN,  /* WT_STATUS_UPDATED */
+>> @@ -767,6 +770,15 @@ conclude:
+>>  	status_printf_ln(s, GIT_COLOR_NORMAL, "");
+>>  }
+>>
+>> +void wt_status_truncate_message_at_cut_line(struct strbuf *buf)
+>> +{
+>> +	const char *p;
+>> +
+>> +	p = strstr(buf->buf, wt_status_cut_line);
+>> +	if (p && (p == buf->buf || p[-1] == '\n'))
+>> +		strbuf_setlen(buf, p - buf->buf);
+>> +}
+> 
+> Perhaps it may happen that all the current callers have called
+> wt_status_print_verbose() to cause wt_status_cut_line[0] to hold
+> comment_line_char, but relying on that calling sequence somehow
+> makes me feel uneasy.
 
-Hmm.  I'll ponder for a moment and try to cook something up for v2.  I
-can't say exactly what, but after initially trying to keep it, something
-felt wrong to me about the ascii art.  Perhaps it's that it is only
-vaguely related to the actual output format.
+I initialized the place to be occupied by the comment_line_char
+in wt_status_cut_line with 'X' on purpose to notice such a
+problem. But I'd be also fine with setting wt_status_cut_line[0]
+again here just to be sure. But please also see below ...
 
--- 
-Thomas Rast
-tr@thomasrast.ch
+> Perhaps cut_line[] should only have "--- >8 ---" part and both
+> printing side (below) and finding side (this one) should check these
+> separately?
+
+... ok ...
+
+> That is:
+> 
+> 	p = buf->buf;
+> 	while (p && *p) {
+> 		p = strchr(p, comment_line_char);
+>                 if (!p)
+> 			break;
+> 		if (strstr(p + 1, cut_line) == p + 1)
+> 			break;
+> 		p++;
+>                 continue;
+> 	}
+>         if (p && *p && (p == buf->buf || p[-1] == '\n'))
+> 		strbuf_setlen(buf, p - buf->buf);
+> 
+> or something (the above is deliberately less-efficient-than-ideal,
+> because I want to keep the code structure in such a way that we can
+> later turn comment_line_char to a string[] that can hold "//" to
+> allow a multi-char comment introducer more easily)?
+
+Hmm, I'm a bit reluctant to go that far to optimize this patch for
+another one that might materialize later. But what about this:
+
+	struct strbuf cut_line = STRBUF_INIT;
+	strbuf_addf(&cut_line, "%c %s", comment_line_char, wt_status_cut_line);
+	p = strstr(buf->buf, cut_line.buf);
+	if (p && (p == buf->buf || p[-1] == '\n'))
+		strbuf_setlen(buf, p - buf->buf);
+	strbuf_release(&cut_line);
+
+That is shorter can easily be adapted to a comment line string later.
+And even though it's slightly less performant should not be a problem
+here as this happens only once after invoking an editor for user input.
+
+>>  static void wt_status_print_verbose(struct wt_status *s)
+>>  {
+>>  	struct rev_info rev;
+>> @@ -787,10 +799,17 @@ static void wt_status_print_verbose(struct wt_status *s)
+>>  	 * If we're not going to stdout, then we definitely don't
+>>  	 * want color, since we are going to the commit message
+>>  	 * file (and even the "auto" setting won't work, since it
+>> -	 * will have checked isatty on stdout).
+>> +	 * will have checked isatty on stdout). But we then do want
+>> +	 * to insert the scissor line here to reliably remove the
+>> +	 * diff before committing.
+>>  	 */
+>> -	if (s->fp != stdout)
+>> +	if (s->fp != stdout) {
+>>  		rev.diffopt.use_color = 0;
+>> +		wt_status_cut_line[0] = comment_line_char;
+>> +		fprintf(s->fp, wt_status_cut_line);
+>> +		fprintf(s->fp, _("%c Do not touch the line above.\n"), comment_line_char);
+>> +		fprintf(s->fp, _("%c Everything below will be removed.\n"), comment_line_char);
+>> +	}
+> 
+> I didn't bother with my "how about this" version, but we may want to
+> use strbuf_add_commented_lines() to help i18n/l10n folks.  Depending
+> on the l10n, this message may want to become more or less than 2
+> lines.
+
+Makes sense, will change that (maybe using strbuf_commented_addf()
+instead) for v4.
