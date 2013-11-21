@@ -1,135 +1,132 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] glossary-content.txt: remove an obsolete paragrah
-Date: Thu, 21 Nov 2013 10:13:48 -0800
-Message-ID: <xmqqtxf54o83.fsf@gitster.dls.corp.google.com>
-References: <1384910801-11125-1-git-send-email-pclouds@gmail.com>
-	<1385016260-9718-1-git-send-email-pclouds@gmail.com>
+Subject: Re: [PATCH] Support pathspec magic :(exclude) and its short form :-
+Date: Thu, 21 Nov 2013 10:43:24 -0800
+Message-ID: <xmqqpppt4mur.fsf@gitster.dls.corp.google.com>
+References: <xmqqsix3z8ie.fsf@gitster.dls.corp.google.com>
+	<1384911691-11664-1-git-send-email-pclouds@gmail.com>
+	<xmqqhab663ef.fsf@gitster.dls.corp.google.com>
+	<CACsJy8AeL+EVZme3BPocXDfRqPpqKDA8nCuwx3buiS66L7G4fA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 21 19:14:26 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Toralf =?utf-8?Q?F=C3=B6rster?= <toralf.foerster@gmx.de>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 21 19:43:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VjYlg-0002QX-AD
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Nov 2013 19:14:20 +0100
+	id 1VjZE0-0000Ep-7n
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Nov 2013 19:43:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754810Ab3KUSN5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 21 Nov 2013 13:13:57 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34156 "EHLO
+	id S1755299Ab3KUSnc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Nov 2013 13:43:32 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64977 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754669Ab3KUSNx convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 21 Nov 2013 13:13:53 -0500
+	id S1755296Ab3KUSn2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Nov 2013 13:43:28 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 451865054E;
-	Thu, 21 Nov 2013 13:13:52 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 135775204E;
+	Thu, 21 Nov 2013 13:43:28 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=cuUrSYtaXWki
-	+17SlUOHkjGkN0Q=; b=v14ONEZtj6NWutTHlcNs1xht2sDVe+1KGm1U4FoeK59C
-	i+5xj4bgUBFuBsx7v0lHaWRCaVzyatyjtjD/i1GzNv1wfslz8Je20fGXFLqQ2Xom
-	VHEanrJmVGBJy5cp3gQz0JJFxN3pypyx2k2TETLGmFmzaauvPGAJ2dgXBWSmADQ=
+	:content-type; s=sasl; bh=yqfqwYWqpB3+uX4SlBWlbWcbTrA=; b=lZXgUH
+	K3TIdwE9P5kGxNo7VBe7YMqAPxJs2xy8Lb9xONFqtYZRldXVVj+/S0aNVp1X2Kec
+	6qgnabvQzcsNoqoOC+trikff5ajw+Ab89ZeSqYEhqkw4QxWQwLlh77y5JpigFAIo
+	rlJwzu9F/j/n68ccBBYHj7AMW1mAT2YUbBAxU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=lRSt8n
-	xMkdww4vPXSky5er7V70XYZu7yMQ3KGNpODgogXItrBSnIVbG8PMHJ61krp7yqE/
-	K3Euebn25nyGLHAyX7uDLCcu3bA5Y5kLMG7LJVaxr0pID3mmZtCCnVvG5A5KDijU
-	dCveWwfJEuKXd3BeCZ/DYPBc8jlFCUnu5uR0M=
+	:content-type; q=dns; s=sasl; b=EMmqPSLD0cg4oScuXtwDDTPtei26E3xb
+	LWHGk0Jsf5aFZ3IDuscWqucdzwLB7+v1ikQZoN14Ol6R+vCUvFrBN1uY2xOrNOMf
+	IkVThetbDL7L688big2LLY37/rIjIeGop89FYToxvGdA4sEcbWdJyaXA4l8BWU1o
+	DEvyUFkJgSs=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 33B955054D;
-	Thu, 21 Nov 2013 13:13:52 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0148E5204D;
+	Thu, 21 Nov 2013 13:43:28 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 857285054C;
-	Thu, 21 Nov 2013 13:13:51 -0500 (EST)
-In-Reply-To: <1385016260-9718-1-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Thu, 21
- Nov 2013 13:44:19 +0700")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4FE245204B;
+	Thu, 21 Nov 2013 13:43:27 -0500 (EST)
+In-Reply-To: <CACsJy8AeL+EVZme3BPocXDfRqPpqKDA8nCuwx3buiS66L7G4fA@mail.gmail.com>
+	(Duy Nguyen's message of "Thu, 21 Nov 2013 09:10:50 +0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: ACBA32BA-52D8-11E3-A4D2-D331802839F8-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: CF2D1E44-52DC-11E3-B86C-D331802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238132>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238133>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+Duy Nguyen <pclouds@gmail.com> writes:
 
-> With the introduction of :(literal), :(glob) and :(icase), :(top) is
-> no longer the only recognized magic signature.
-
-You need to re-read the message you took hints that led to this
-patch from (or, rather, the existing document around the area you
-are patching, which led to the wording in that message from me).
-
-The above is a list of magic words, but until you add the magic
-signature ":!not_in_this_directory" for the ":(exclude)" magic word,
-":/" still is the only magic signature.
-
-Another moderately related tangent is this phrase in the existing
-document:
-
-    In the short form, the leading colon `:` is followed by zero or
-    more "magic signature" letters (which optionally is terminated
-    by another colon `:`), and the remainder is the pattern to match
-    against the path. The optional colon that terminates the "magic
-    signature" can be omitted if the pattern begins with a character
-    that cannot be a "magic signature" and is not a colon.
-
-While it is technically correct, the phrase "a character that cannot
-be" is somewhat misleading, and I think it needs to be clarified by
-rephrasing.
-
-As we can see in a later paragaph:
-
-    The "magic signature" consists of an ASCII symbol that is not
-    alphanumeric. Currently only the slash `/` is recognized as a
-    "magic signature"...
-
-the correct way to read that "a character that cannot be a magic
-signature" is "a character that is not 'an ASCII symbol that is not
-alphanumeric'", which means you can do:
-
-	:!/foo	- with magic signatures ! and /, pattern begins at 'f'
-
-	:/#abc  - with magic signatures # and /, pattern begins at 'a',
-	          even if in a particular version of Git, '#' magic
-		  signature may be invalid and produce an error
-
-	:/:#abc - with magic signature /, pattern is "#abc".
-
-but because the definition of "magic signature" syntax comes later
-than "cannot be", it is prone to be misinterpreted as "anything that
-is not currently defined as a magic signature (namely, '/')".
-
-
-
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
-> ---
->  .. on top of nd/magic-pathspec..
+> Btw I'm thinking of extending pathspec magic syntax a bit to allow
+> path completion. Right now the user has to write
 >
->  Documentation/glossary-content.txt | 4 ----
->  1 file changed, 4 deletions(-)
+> git log -- :-Documentation
 >
-> diff --git a/Documentation/glossary-content.txt b/Documentation/gloss=
-ary-content.txt
-> index e470661..e22b524 100644
-> --- a/Documentation/glossary-content.txt
-> +++ b/Documentation/glossary-content.txt
-> @@ -379,10 +379,6 @@ full pathname may have special meaning:
->  Glob magic is incompatible with literal magic.
->  --
->  +
-> -Currently only the slash `/` is recognized as the "magic signature",
-> -but it is envisioned that we will support more types of magic in lat=
-er
-> -versions of Git.
-> -+
->  A pathspec with only a colon means "there is no pathspec". This form
->  should not be combined with other pathspec.
+> which does not play well with path completion. I'm thinking of accepting
+>
+> git log -- :- Documentation
+
+Please don't.  That does not help our users, but actively harm them.
+They have to stop and wonder why a single pathspec is spelled as two
+tokens on the command line of some other people.
+
+Doing that stupidity only to help those who polish the tool (namely,
+"bash completion") to be lazy is doubly wrong (in the meantime, the
+users can type your second variant and then edit the result).
+
+For the same reason why I do not think rewriting
+
+	echo "hello, world!"
+
+to
+
+	echo "hello, world-"
+
+only to work around a pitfall of a particular tool (namely "bash")
+makes any sense, I do not think it makes sense to make _our_ tool
+inconsistent by using "!excluded" in the files (and --exclude) and
+"-not this pattern" only here.
+
+>>> +     if (nr_exclude == n)
+>>> +             die(_("There is nothing to exclude from by :(exclude) patterns.\n"
+>>> +                   "Perhaps you forgot to add either ':/' or '.' ?"));
+>>
+>> ;-).
+>
+> Hey it was originally not there,...
+
+I am not objecting. I noticed it and was commending on it as "a nice
+touch" ;-)
+
+>>> +     /*
+>>> +      *   #  | positive | negative | result
+>>> +      * -----+----------+----------+-------
+>>> +      * 1..4 |   -1     |    *     |  -1
+>>> +      * 5..8 |    0     |    *     |   0
+>>> +      *   9  |    1     |   -1     |   1
+>>> +      *  10  |    1     |    0     |   1
+>>> +      *  11  |    1     |    1     |   0
+>>> +      *  12  |    1     |    2     |   0
+>>> +      *  13  |    2     |   -1     |   2
+>>> +      *  14  |    2     |    0     |   2
+>>> +      *  15  |    2     |    1     |   0
+>>> +      *  16  |    2     |    2     |  -1
+>>> +      */
+>>
+>> Not sure what this case-table means...
+>
+> Sorry, because tree_entry_interesting_1() returns more than "match
+> or not", we need to combine the result from positive pathspec with
+> the negative one to correctly handle all_not_interesting and
+> all_interesting. This table sums it up. I'll add more explanation
+> in the next patch.
+
+I managed to have guessed what the three columns on the right meant;
+I was wondering about the meaning of the "#" column and where it is
+defined/explained.
