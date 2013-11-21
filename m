@@ -1,133 +1,115 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH] Support pathspec magic :(exclude) and its short form :-
-Date: Thu, 21 Nov 2013 09:10:50 +0700
-Message-ID: <CACsJy8AeL+EVZme3BPocXDfRqPpqKDA8nCuwx3buiS66L7G4fA@mail.gmail.com>
-References: <xmqqsix3z8ie.fsf@gitster.dls.corp.google.com> <1384911691-11664-1-git-send-email-pclouds@gmail.com>
- <xmqqhab663ef.fsf@gitster.dls.corp.google.com>
+From: Matthew Cengia <mattcen@gmail.com>
+Subject: Re: Bizarre git merge behaviour
+Date: Thu, 21 Nov 2013 17:37:12 +1100
+Message-ID: <20131121063710.GH26413@debian.cengia.id.au>
+References: <l6hbgg$oej$1@ger.gmane.org>
+ <528C62BE.7060803@viscovery.net>
+ <20131120120326.GD26413@debian.cengia.id.au>
+ <528CAB40.8030107@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	=?UTF-8?Q?Toralf_F=C3=B6rster?= <toralf.foerster@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 21 03:11:38 2013
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="w3uUfsyyY1Pqa/ej"
+Cc: git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Thu Nov 21 07:37:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VjJk1-0004Ml-Dx
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Nov 2013 03:11:37 +0100
+	id 1VjNtT-0007sC-Jo
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Nov 2013 07:37:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754336Ab3KUCLW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Nov 2013 21:11:22 -0500
-Received: from mail-qc0-f174.google.com ([209.85.216.174]:60149 "EHLO
-	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753698Ab3KUCLV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Nov 2013 21:11:21 -0500
-Received: by mail-qc0-f174.google.com with SMTP id r5so2609703qcx.33
-        for <git@vger.kernel.org>; Wed, 20 Nov 2013 18:11:20 -0800 (PST)
+	id S1750844Ab3KUGhe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Nov 2013 01:37:34 -0500
+Received: from mail-pd0-f179.google.com ([209.85.192.179]:36740 "EHLO
+	mail-pd0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750782Ab3KUGhe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Nov 2013 01:37:34 -0500
+Received: by mail-pd0-f179.google.com with SMTP id r10so7708200pdi.24
+        for <git@vger.kernel.org>; Wed, 20 Nov 2013 22:37:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=PPlwIfoVLaheecQ/ZPjyfa75Dh84SWCp7RhixTQVDxM=;
-        b=LNd5GOUnRjqqY8SoJ8i+20jEVSpr426sH5TqVscu7ZWLu1gHRiqm7cq+Exr1+LCJj/
-         RefQ3rm4hpeloiRSeD4XuXdrAdCC5CzzB0iXrePJbGay6fXeUr9i4UaMYSwrpnHivJat
-         BW4r9TjeN0LL6tX2Yi/1Qkj0PNgd1FQDUlwb55e4VTYdRhI53aLaM98aBGptj+Fh+5my
-         TBzbWFCjZzAhxxMgIR2XXjCA+ZmRPO5HMGCGaNH3cps9d2E6SCLe0/LEyHqfne1MAQGI
-         Egbvhg6NQCpStVt155YOeTLylumA6g97vCX4mb/B0Xlv3k0ClEAfs5kIWfU9P/NDJCLq
-         ZLOA==
-X-Received: by 10.224.32.66 with SMTP id b2mr7207145qad.80.1384999880561; Wed,
- 20 Nov 2013 18:11:20 -0800 (PST)
-Received: by 10.96.134.68 with HTTP; Wed, 20 Nov 2013 18:10:50 -0800 (PST)
-In-Reply-To: <xmqqhab663ef.fsf@gitster.dls.corp.google.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=vHZCQtNLMDUv0xMKOTdWSIdOA1RYHos4LnkbUzXWxr4=;
+        b=wU4e74Io3QO/EQzRBFpV+7FbHLBZPtlD2eaEuowvMIS8FWlzqqr+8YvmQjQDQ9NMUc
+         2WZe7ogIZV/n7L1mI7+cVK85P30OOHQ7ks+mI++DUk1rK4KDOiasdnyFcd/wuoJf7Xuc
+         jOLipjaa65lek2mDo+dM6v+7jUVKnrAqlSR6mtod8Bw3PJA/IHPOab5vPFGe8S3c870L
+         iSiFRz0mNJhavQ8M3xGzBrqvhR5Hc7rG+kui7Z9FMmk0sK9r/oh/O3FDoH+CnBsSYgOA
+         aE8r4Os6MNUICNfgHXr+sACBOUWRsp8KuuU9X+MWagpk+PYHlVsJGCWi34dTH2Vkql8Y
+         KVXg==
+X-Received: by 10.68.248.33 with SMTP id yj1mr4623217pbc.45.1385015853470;
+        Wed, 20 Nov 2013 22:37:33 -0800 (PST)
+Received: from localhost (c110-22-201-130.sunsh4.vic.optusnet.com.au. [110.22.201.130])
+        by mx.google.com with ESMTPSA id fk4sm48745414pab.23.2013.11.20.22.37.31
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 20 Nov 2013 22:37:32 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <528CAB40.8030107@viscovery.net>
+X-PGP-Fingerprint: DB91 CFEF 322D C608 385F  563C 2F88 1AC6 4A16 1033
+X-PGP-Key: http://cengia.id.au:2080/~mattcen/pubkey.asc
+X-Homepage: http://cengia.id.au:2080/~mattcen
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238108>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238109>
 
-On Thu, Nov 21, 2013 at 6:48 AM, Junio C Hamano <gitster@pobox.com> wrote:
->>  We don't have many options that say "negative" in short form.
->>  Either '!', '-' or '~'. '!' is already used for bash history expansion.
->>  ~ looks more like $HOME expansion. Which left me '-'.
->
-> I agree with your decision to reject ~, but "!not-this-pattern" is
-> very much consistent with the patterns used in .gitignore (and the
-> "--exclude <pattern>" option), so avoiding "!" and introducing an
-> inconsistent "-" only to appease bash leaves somewhat a funny taste
-> in my mouth.
 
-The thing about '!'  is it's history expansion in bash and I suspect
-not many people are aware of it. So "git log -- :!something" may
-recall the last command that has "something" in it, which is confusing
-for those new people and may potentially be dangerous (multiple
-command in one line, separated by semicolon). Compared to ":git log --
-(exclude)somethign" the worst that could happen is a syntax error
-message from bash.
+--w3uUfsyyY1Pqa/ej
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Other than that I'm fine with '!' being the shortcut.
+On 2013-11-20 13:29, Johannes Sixt wrote:
+[...]
+> UU ppcadm/modules/quarantine.py
+>=20
+> That's strange. I can't tell what is going on. Perhaps you have some
+> criss-cross merges in your history that merge-recursive trips over?
+>=20
+> Sorry, I don't know how to help you further.
 
-Btw I'm thinking of extending pathspec magic syntax a bit to allow
-path completion. Right now the user has to write
+Hah! I worked it out!
 
-git log -- :-Documentation
+$coworker erroneously did a "git merge -s ours" into the branch I was
+merging in, and it undid more changes than he intended, which is what
+resulted in *everything* breaking for me.
 
-which does not play well with path completion. I'm thinking of accepting
+I've appropriately chastised him and most importantly understand why the
+problem occured, which puts my mind at ease.
 
-git log -- :- Documentation
+Thanks again for all your help.
 
-In other words, if there's no path (or pattern) component after the
-magic, then the next argument must contain the path. This enables path
-completion and I haven't seen any drawbacks yet..
+--=20
+Regards,
+Matthew Cengia
 
->> @@ -427,6 +430,10 @@ void parse_pathspec(struct pathspec *pathspec,
->>               pathspec->magic |= item[i].magic;
->>       }
->>
->> +     if (nr_exclude == n)
->> +             die(_("There is nothing to exclude from by :(exclude) patterns.\n"
->> +                   "Perhaps you forgot to add either ':/' or '.' ?"));
->
-> ;-).
+--w3uUfsyyY1Pqa/ej
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
 
-Hey it was originally not there, then I made a mistake of typing "git
-log -- :-po" and wondered why it shows nothing. Intuitively, if "git
-log" shows every path, then "git log -- :-po" should show every path
-except 'po' and the user should not be required to type "git log -- :/
-:-po". parse_pathspec() can do that, but it's more work and I'm lazy
-so I push that back to the user until they scream :)
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
->> +enum interesting tree_entry_interesting(const struct name_entry *entry,
->> +                                     struct strbuf *base, int base_offset,
->> +                                     const struct pathspec *ps)
->> +{
->> +     enum interesting positive, negative;
->> +     positive = tree_entry_interesting_1(entry, base, base_offset, ps, 0);
->> +
->> +     /*
->> +      *   #  | positive | negative | result
->> +      * -----+----------+----------+-------
->> +      * 1..4 |   -1     |    *     |  -1
->> +      * 5..8 |    0     |    *     |   0
->> +      *   9  |    1     |   -1     |   1
->> +      *  10  |    1     |    0     |   1
->> +      *  11  |    1     |    1     |   0
->> +      *  12  |    1     |    2     |   0
->> +      *  13  |    2     |   -1     |   2
->> +      *  14  |    2     |    0     |   2
->> +      *  15  |    2     |    1     |   0
->> +      *  16  |    2     |    2     |  -1
->> +      */
->
-> Not sure what this case-table means...
+iQJ8BAEBCgBmBQJSjaoWXxSAAAAAAC4AKGlzc3Vlci1mcHJAbm90YXRpb25zLm9w
+ZW5wZ3AuZmlmdGhob3JzZW1hbi5uZXQwMjI1MjY2QUFCMThBOUQwNEMxOUQ0QjY3
+QTdFMzdGMzNCMjI3MkU4AAoJEHp+N/M7InLoNZcP/iDKW34qzsFSZ6NCXSszS1jn
+pH2vcUrKW4Xjjxdzg90efzi/P/9TqY9EBiitRKSKiwupT2P5XJBhdtkjsOXbzWTO
+MImeFjsLTsgJNcIF2m0aLoQo9AGjHdy2Ctf08x4XRxUMrH2GFXFCjkM49bWgr8Wl
+nlOP3qgATRy+J2HLS4N+S1Ysow52xTA//QFUFQ1BAKoXpaxpsKTTLHW/PEMAmHP5
+rb32S1VEeWeZY/Ll8qSAt1q0r4y5HeMEL9vziIzkBSW5ATyg8n7iz+wdzDIPYZUt
+s5scXxNANyyZvcIQJJHmnCRRkGaZWiXeilYkeiYtejlKMdhPKLRAsEXK4aFq1oSh
+MT1i+voJi6lWHS7fQDLwLXg7yqCvhGm4sfLJzLc0xGBB4xcM77ACPrAyxx1iScOd
+h57t/mM+fV5PFdamKldoVWNi4/JGa6Nt/Xbi7/ia4gP8INLTxG8JblYEFL2azm16
+UFeQsyu9OVyK8GkQebyJS5IBYt+WRINrQoAGhcvFWjiu5UAmsQcnY9JtXNtQOyX9
+8+f5Tcmrp3vHeZ/j/LJg97L7P3VLDk0j547GFBNEXT/aA8Q/wAjfBuoVmqrH7GTl
+c4uhCSseYJ/QNF9Qg+Jq2WpYhJF4BeAcgTAQujaO8k1uo1Bl4P8vwBfEwaMHm+lv
+MogCZ1muUycyXFtGJ+B0
+=mQDn
+-----END PGP SIGNATURE-----
 
-Sorry, because tree_entry_interesting_1() returns more than "match or
-not", we need to combine the result from positive pathspec with the
-negative one to correctly handle all_not_interesting and
-all_interesting. This table sums it up. I'll add more explanation in
-the next patch.
--- 
-Duy
+--w3uUfsyyY1Pqa/ej--
