@@ -1,171 +1,132 @@
-From: Torsten =?iso-8859-1?q?B=F6gershausen?= <tboegi@web.de>
-Subject: [PATCH v6 04/10] git_connect: factor out discovery of the protocol and its parts
-Date: Thu, 21 Nov 2013 21:39:50 +0100
-Message-ID: <201311212139.51214.tboegi@web.de>
+From: Torsten =?utf-8?q?B=C3=B6gershausen?= <tboegi@web.de>
+Subject: [PATCH v6 01/10] t5601: remove clear_ssh, refactor setup_ssh_wrapper
+Date: Thu, 21 Nov 2013 21:40:32 +0100
+Message-ID: <201311212140.33594.tboegi@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: tboegi@web.de
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 21 21:40:05 2013
+X-From: git-owner@vger.kernel.org Thu Nov 21 21:40:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vjb2f-0008Pd-AL
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Nov 2013 21:40:01 +0100
+	id 1Vjb3M-0000NZ-OM
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Nov 2013 21:40:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753950Ab3KUUj6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Nov 2013 15:39:58 -0500
-Received: from mout.web.de ([212.227.15.4]:59223 "EHLO mout.web.de"
+	id S1753970Ab3KUUkl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 21 Nov 2013 15:40:41 -0500
+Received: from mout.web.de ([212.227.17.11]:52516 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753861Ab3KUUj5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Nov 2013 15:39:57 -0500
+	id S1752020Ab3KUUkk convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 21 Nov 2013 15:40:40 -0500
 Received: from appes.localnet ([78.72.74.102]) by smtp.web.de (mrweb102) with
- ESMTPA (Nemesis) id 0LbrUu-1VICFj46ya-00jIs8 for <git@vger.kernel.org>; Thu,
- 21 Nov 2013 21:39:56 +0100
-X-Provags-ID: V03:K0:SM2DJC/85R/uHrG8EpjAsCZY7N7Fdp8jNtYwim1LG9K+wPxruhb
- cbBF+WTqH2PhUiV89YFwGCEE0UpVskYASTI+kLbmPwscXU8tPlpTETtma36YGMhDTINEjMJ
- ek7Ikk5cAiaa7/E/WqcpbFr4NhOuW0Ua8+VNBUWdqe7T4QVe4icNKixZQcYRRA2roGJXhmi
- NHtux2iD0WqgDa5F+X9CQ==
+ ESMTPA (Nemesis) id 0MBTEQ-1Vqhnc3ycQ-00AWG9 for <git@vger.kernel.org>; Thu,
+ 21 Nov 2013 21:40:39 +0100
+X-Provags-ID: V03:K0:xwanptR+rljfGmoKGhOuAtu2FpGAhwjeQ1G0/gzvoUnxwJXTxBD
+ qDdpQhYGe7JtkAiUvJYyCVlW86OgsrjPdN7w6v3V+8kJnDfsBpIX0SVLGqMFI2eL055pw/t
+ 97/Fe1Ipd3N2gkyOmILCA0mSZsZ3YQarxQnOj5kMhGKX2/Td2coQ41aG8D/dly2M3SY5jUR
+ YXT5yPqjsuT+43qRzlpqw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238144>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238145>
 
-git_connect has grown large due to the many different protocols syntaxes
-that are supported. Move the part of the function that parses the URL to
-connect to into a separate function for readability.
+Commit 8d3d28f5 added test cases for URLs which should be ssh.
+Remove the function clear_ssh, use test_when_finished to clean up.
 
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+Introduce the function setup_ssh_wrapper, which could be factored
+out together with expect_ssh.
+
+Tighten one test and use "foo:bar" instead of "./foo:bar",
+
+Helped-by: Jeff King <peff@peff.net>
+Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
 ---
- connect.c | 80 ++++++++++++++++++++++++++++++++++++++++++---------------------
- 1 file changed, 53 insertions(+), 27 deletions(-)
+Changes since last version:
+- updated t5601, thanks Peff
+- Split up the patch into 10 commits
+- Hannes suggested 2 patches
+- Add tests for git fetch-pack, which verifies the parsing
+- Added lots of test cases in t5500 via git fetch-pack --diag-url
 
-diff --git a/connect.c b/connect.c
-index 6cc1f8d..a6cf345 100644
---- a/connect.c
-+++ b/connect.c
-@@ -543,37 +543,20 @@ static char *get_port(char *host)
- 	return NULL;
- }
- 
--static struct child_process no_fork;
+ t/t5601-clone.sh | 40 ++++++++++++++++++++--------------------
+ 1 file changed, 20 insertions(+), 20 deletions(-)
+
+diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
+index 1d1c875..83b21f5 100755
+--- a/t/t5601-clone.sh
++++ b/t/t5601-clone.sh
+@@ -280,25 +280,26 @@ test_expect_success 'clone checking out a tag' '
+ 	test_cmp fetch.expected fetch.actual
+ '
+=20
+-test_expect_success 'setup ssh wrapper' '
+-	write_script "$TRASH_DIRECTORY/ssh-wrapper" <<-\EOF &&
+-	echo >>"$TRASH_DIRECTORY/ssh-output" "ssh: $*" &&
+-	# throw away all but the last argument, which should be the
+-	# command
+-	while test $# -gt 1; do shift; done
+-	eval "$1"
+-	EOF
 -
- /*
-- * This returns a dummy child_process if the transport protocol does not
-- * need fork(2), or a struct child_process object if it does.  Once done,
-- * finish the connection with finish_connect() with the value returned from
-- * this function (it is safe to call finish_connect() with NULL to support
-- * the former case).
-- *
-- * If it returns, the connect is successful; it just dies on errors (this
-- * will hopefully be changed in a libification effort, to return NULL when
-- * the connection failed).
-+ * Extract protocol and relevant parts from the specified connection URL.
-+ * The caller must free() the returned strings.
-  */
--struct child_process *git_connect(int fd[2], const char *url_orig,
--				  const char *prog, int flags)
-+static enum protocol parse_connect_url(const char *url_orig, char **ret_host,
-+				       char **ret_port, char **ret_path)
- {
- 	char *url;
- 	char *host, *path;
- 	char *end;
- 	int c;
--	struct child_process *conn = &no_fork;
- 	enum protocol protocol = PROTO_LOCAL;
- 	int free_path = 0;
- 	char *port = NULL;
--	const char **arg;
--	struct strbuf cmd = STRBUF_INIT;
+-	GIT_SSH=3D"$TRASH_DIRECTORY/ssh-wrapper" &&
+-	export GIT_SSH &&
+-	export TRASH_DIRECTORY
+-'
 -
--	/* Without this we cannot rely on waitpid() to tell
--	 * what happened to our children.
--	 */
--	signal(SIGCHLD, SIG_DFL);
- 
- 	if (is_url(url_orig))
- 		url = url_decode(url_orig);
-@@ -645,6 +628,49 @@ struct child_process *git_connect(int fd[2], const char *url_orig,
- 	if (protocol == PROTO_SSH && host != url)
- 		port = get_port(end);
- 
-+	*ret_host = xstrdup(host);
-+	if (port)
-+		*ret_port = xstrdup(port);
-+	else
-+		*ret_port = NULL;
-+	if (free_path)
-+		*ret_path = path;
-+	else
-+		*ret_path = xstrdup(path);
-+	free(url);
-+	return protocol;
-+}
-+
-+static struct child_process no_fork;
-+
-+/*
-+ * This returns a dummy child_process if the transport protocol does not
-+ * need fork(2), or a struct child_process object if it does.  Once done,
-+ * finish the connection with finish_connect() with the value returned from
-+ * this function (it is safe to call finish_connect() with NULL to support
-+ * the former case).
-+ *
-+ * If it returns, the connect is successful; it just dies on errors (this
-+ * will hopefully be changed in a libification effort, to return NULL when
-+ * the connection failed).
-+ */
-+struct child_process *git_connect(int fd[2], const char *url,
-+				  const char *prog, int flags)
-+{
-+	char *host, *path;
-+	struct child_process *conn = &no_fork;
-+	enum protocol protocol;
-+	char *port;
-+	const char **arg;
-+	struct strbuf cmd = STRBUF_INIT;
-+
-+	/* Without this we cannot rely on waitpid() to tell
-+	 * what happened to our children.
-+	 */
-+	signal(SIGCHLD, SIG_DFL);
-+
-+	protocol = parse_connect_url(url, &host, &port, &path);
-+
- 	if (protocol == PROTO_GIT) {
- 		/* These underlying connection commands die() if they
- 		 * cannot connect.
-@@ -666,9 +692,9 @@ struct child_process *git_connect(int fd[2], const char *url_orig,
- 			     prog, path, 0,
- 			     target_host, 0);
- 		free(target_host);
--		free(url);
--		if (free_path)
--			free(path);
-+		free(host);
-+		free(port);
-+		free(path);
- 		return conn;
- 	}
- 
-@@ -709,9 +735,9 @@ struct child_process *git_connect(int fd[2], const char *url_orig,
- 	fd[0] = conn->out; /* read from child's stdout */
- 	fd[1] = conn->in;  /* write to child's stdin */
- 	strbuf_release(&cmd);
--	free(url);
--	if (free_path)
--		free(path);
-+	free(host);
-+	free(port);
-+	free(path);
- 	return conn;
+-clear_ssh () {
+-	>"$TRASH_DIRECTORY/ssh-output"
++setup_ssh_wrapper () {
++	test_expect_success 'setup ssh wrapper' '
++		write_script "$TRASH_DIRECTORY/ssh-wrapper" <<-\EOF &&
++		echo >>"$TRASH_DIRECTORY/ssh-output" "ssh: $*" &&
++		# throw away all but the last argument, which should be the
++		# command
++		while test $# -gt 1; do shift; done
++		eval "$1"
++		EOF
++		GIT_SSH=3D"$TRASH_DIRECTORY/ssh-wrapper" &&
++		export GIT_SSH &&
++		export TRASH_DIRECTORY &&
++		>"$TRASH_DIRECTORY"/ssh-output
++	'
  }
- 
--- 
+=20
+ expect_ssh () {
++	test_when_finished '
++	  (cd "$TRASH_DIRECTORY" && rm -f ssh-expect && >ssh-output)
++	' &&
+ 	{
+ 		case "$1" in
+ 		none)
+@@ -310,21 +311,20 @@ expect_ssh () {
+ 	(cd "$TRASH_DIRECTORY" && test_cmp ssh-expect ssh-output)
+ }
+=20
++setup_ssh_wrapper
++
+ test_expect_success 'cloning myhost:src uses ssh' '
+-	clear_ssh &&
+ 	git clone myhost:src ssh-clone &&
+ 	expect_ssh myhost src
+ '
+=20
+ test_expect_success NOT_MINGW,NOT_CYGWIN 'clone local path foo:bar' '
+-	clear_ssh &&
+ 	cp -R src "foo:bar" &&
+-	git clone "./foo:bar" foobar &&
++	git clone "foo:bar" foobar &&
+ 	expect_ssh none
+ '
+=20
+ test_expect_success 'bracketed hostnames are still ssh' '
+-	clear_ssh &&
+ 	git clone "[myhost:123]:src" ssh-bracket-clone &&
+ 	expect_ssh myhost:123 src
+ '
+--=20
 1.8.4.457.g424cb08
