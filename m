@@ -1,90 +1,74 @@
-From: Crestez Dan Leonard <cdleonard@gmail.com>
-Subject: [PATCH] git p4: Use git diff-tree instead of format-patch
-Date: Thu, 21 Nov 2013 17:19:03 +0200
-Message-ID: <528E2467.4030900@gmail.com>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Can a git push over ssh trigger a gc/repack? Diagnosing pack explosion
+Date: Thu, 21 Nov 2013 10:21:26 -0500
+Message-ID: <CACPiFC+TqD_DhMaG+posoK4fTOLCoi=3jhJUPjt_72HTm9xjeQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------050703040507050200030303"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 21 16:19:14 2013
+Content-Type: text/plain; charset=ISO-8859-1
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Nov 21 16:21:52 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VjW2D-0004WN-Gd
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Nov 2013 16:19:13 +0100
+	id 1VjW4l-0005vl-Ef
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Nov 2013 16:21:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751957Ab3KUPTI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Nov 2013 10:19:08 -0500
-Received: from mail-ea0-f172.google.com ([209.85.215.172]:58396 "EHLO
-	mail-ea0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751663Ab3KUPTH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Nov 2013 10:19:07 -0500
-Received: by mail-ea0-f172.google.com with SMTP id q10so2449320ead.31
-        for <git@vger.kernel.org>; Thu, 21 Nov 2013 07:19:06 -0800 (PST)
+	id S1754314Ab3KUPVr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Nov 2013 10:21:47 -0500
+Received: from mail-vc0-f171.google.com ([209.85.220.171]:44086 "EHLO
+	mail-vc0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753970Ab3KUPVr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Nov 2013 10:21:47 -0500
+Received: by mail-vc0-f171.google.com with SMTP id ik5so1524489vcb.16
+        for <git@vger.kernel.org>; Thu, 21 Nov 2013 07:21:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:subject
-         :content-type;
-        bh=1OkU6ZJ3SMuKlWMaKnm3hscWv7rXCN4UgKGez0+GOLM=;
-        b=u3xC0SuVLCiwvGLigxigP0QRAkCLtjcx9gnLtlPoYqka1DyaMZ23xvxvY5rWa9ygIL
-         1o948xlpB+rQBUbSB4m0ZsaXAoXh9zpv4hKSbl3cXlTpRpnIzEkOLQTC5Yd/abkbMigO
-         SG59rcBYZCZnZ00tcEGmQMuXhpfnsdovHKl1buUFX3/i1g4Tg5ufb9YFloQaDFjGsuH4
-         aXPr/HEuQh3yjnHRfPQWmWBlb9QeWkyvrUsoM/ifVzmcdlAxaKx+QJ+FoGGHxQk0fuKD
-         6qbJ6RSO22hLy2SUIfaRhdIR+RJHsQQk8EaokRn/OfIHcH3SPAM2MIXScEhGqBvmhYap
-         413g==
-X-Received: by 10.15.34.5 with SMTP id d5mr9695656eev.20.1385047146384;
-        Thu, 21 Nov 2013 07:19:06 -0800 (PST)
-Received: from [10.205.20.124] ([212.146.94.66])
-        by mx.google.com with ESMTPSA id u46sm71106938eep.17.2013.11.21.07.19.04
-        for <git@vger.kernel.org>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 21 Nov 2013 07:19:05 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20131005 Icedove/17.0.9
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=y8a5SncvxV4tTyiQ1B2kM6ciB7SjdGkIn1bFaY5eM4w=;
+        b=jKBwLR9RfUU3+QCW8au2isYitBV4fDsFwehz/dC4VlD1ZwNdFNexnR4NIn9mtb4muZ
+         N3GTYVnLu6K+rceJU5pLV2A50FvotJAvVZmAWiknwAqNnEWyW+/X9ERKH2ODu74yeVrY
+         7RFizqtE587StzQ8TmR1W2JrRjKbAYrf5vngCXA4QvfwQEu40yhWefSVmnrZm/EuhziU
+         dSr97Jwsc84kRdQYW4h8gHki84rDT8MFLyZ/wKx3ZzC8ssT6Z5zVVbIR6bRtO1S7bQ4E
+         R8w49WErWFHxSMdGgSPJ62L5W1JPC1fcFkAByC1zBkR2V3Mxst6DL6X9jBVPDPg4SPYO
+         bPyA==
+X-Received: by 10.58.143.17 with SMTP id sa17mr6458555veb.14.1385047306263;
+ Thu, 21 Nov 2013 07:21:46 -0800 (PST)
+Received: by 10.221.61.210 with HTTP; Thu, 21 Nov 2013 07:21:26 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238124>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238125>
 
-This is a multi-part message in MIME format.
---------------050703040507050200030303
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Hi git list,
 
+I am trying to diagnose a strange problem in a VM running as a 'git
+over ssh server', with one repo which periodically grows very quickly.
 
-The output of git format-patch can vary with user preferences. In
-particular setting diff.noprefix will break the "git apply" that
-is done as part of "git p4 submit".
+The complete dataset packs to a single pack+index of ~650MB. Growth is
+slow, these are ASCII text reports that use a template -- highly
+compressible. Reports come from a few dozen machines that log in every
+hour.
 
-Signed-off-by: Crestez Dan Leonard <cdleonard@gmail.com>
----
-  git-p4.py | 2 +-
-  1 file changed, 1 insertion(+), 1 deletion(-)
+However, something is happening that explodes the efficient pack into
+an ungodly mess.
 
+Do client pushes over git+ssh ever trigger a repack on the server? If
+so, these repacking processes are racing with each other and taking
+650MB to 7GB at which point we hit ENOSPC, sometimes pom killer joins
+the party, etc.
 
+pack dir looks like this, ordered by timestamp:
+http://fpaste.org/55730/04636313/
 
---------------050703040507050200030303
-Content-Type: text/x-patch;
- name="0001-git-p4-Use-git-diff-tree-instead-of-format-patch.patch"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
- filename*0="0001-git-p4-Use-git-diff-tree-instead-of-format-patch.patch"
-
-diff --git a/git-p4.py b/git-p4.py
-index 31e71ff..fe988ce 100755
---- a/git-p4.py
-+++ b/git-p4.py
-@@ -1308,7 +1308,7 @@ class P4Submit(Command, P4UserMap):
-             else:
-                 die("unknown modifier %s for %s" % (modifier, path))
- 
--        diffcmd = "git format-patch -k --stdout \"%s^\"..\"%s\"" % (id, id)
-+        diffcmd = "git diff-tree -p \"%s\"" % (id)
-         patchcmd = diffcmd + " | git apply "
-         tryPatchCmd = patchcmd + "--check -"
-         applyPatchCmd = patchcmd + "--check --apply -"
+cheers,
 
 
---------------050703040507050200030303--
+
+m
+-- 
+ martin.langhoff@gmail.com
+ -  ask interesting questions
+ - don't get distracted with shiny stuff  - working code first
+ ~ http://docs.moodle.org/en/User:Martin_Langhoff
