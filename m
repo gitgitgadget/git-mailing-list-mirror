@@ -1,13 +1,13 @@
-From: Thomas Rast <tr@thomasrast.ch>
+From: Christian Couder <christian.couder@gmail.com>
 Subject: Re: GSoC 2014: Summary so far, discussion starter: how to improve?
-Date: Thu, 21 Nov 2013 09:36:37 +0100
-Message-ID: <87txf6jgmi.fsf@linux-k42r.v.cablecom.net>
+Date: Thu, 21 Nov 2013 10:43:34 +0100
+Message-ID: <CAP8UFD0n3gs0ynP8f_RgbpE4rugodcWQ_CtqvtbV0bnc9fzi9Q@mail.gmail.com>
 References: <8761stx04i.fsf@linux-k42r.v.cablecom.net>
+	<87txf6jgmi.fsf@linux-k42r.v.cablecom.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Ben Straub <bs@github.com>,
-	Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>,
-	Christian Couder <christian.couder@gmail.com>,
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git <git@vger.kernel.org>, Ben Straub <bs@github.com>,
+	=?ISO-8859-1?Q?Carlos_Mart=EDn_Nieto?= <cmn@elego.de>,
 	David Michael Barr <davidbarr@google.com>,
 	Edward Thomson <ethomson@microsoft.com>,
 	Florian Achleitner <florian.achleitner2.6.31@gmail.com>,
@@ -26,76 +26,63 @@ Cc: Ben Straub <bs@github.com>,
 	Russell Belfer <rb@github.com>,
 	Scott Chacon <schacon@gmail.com>,
 	Shawn Pearce <spearce@spearce.org>,
-	Thomas Gumm
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 21 09:36:58 2013
+	Thomas Gummerer <t.gummerer@gm
+To: Thomas Rast <tr@thomasrast.ch>
+X-From: git-owner@vger.kernel.org Thu Nov 21 10:43:59 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VjPkv-0003Mi-NI
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Nov 2013 09:36:58 +0100
+	id 1VjQnm-0001EA-QJ
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Nov 2013 10:43:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752079Ab3KUIgx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Nov 2013 03:36:53 -0500
-Received: from psi.thgersdorf.net ([176.9.98.78]:46814 "EHLO mail.psioc.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751585Ab3KUIgw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Nov 2013 03:36:52 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by localhost.psioc.net (Postfix) with ESMTP id 214EC4D656F;
-	Thu, 21 Nov 2013 09:36:50 +0100 (CET)
-X-Virus-Scanned: amavisd-new at psioc.net
-Received: from mail.psioc.net ([127.0.0.1])
-	by localhost (mail.psioc.net [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id Fg6YgXLu_JCF; Thu, 21 Nov 2013 09:36:39 +0100 (CET)
-Received: from linux-k42r.v.cablecom.net.thomasrast.ch (46-126-8-85.dynamic.hispeed.ch [46.126.8.85])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(Client did not present a certificate)
-	by mail.psioc.net (Postfix) with ESMTPSA id D4E714D6414;
-	Thu, 21 Nov 2013 09:36:37 +0100 (CET)
-In-Reply-To: <8761stx04i.fsf@linux-k42r.v.cablecom.net> (Thomas Rast's message
-	of "Sat, 19 Oct 2013 08:09:33 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+	id S1752146Ab3KUJnh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Nov 2013 04:43:37 -0500
+Received: from mail-vc0-f170.google.com ([209.85.220.170]:33536 "EHLO
+	mail-vc0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751133Ab3KUJnf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Nov 2013 04:43:35 -0500
+Received: by mail-vc0-f170.google.com with SMTP id ht10so4128632vcb.29
+        for <git@vger.kernel.org>; Thu, 21 Nov 2013 01:43:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=Kkg8w0bmLArzmDk45Or0F0OajF7vdlk1EVzAJbEIzoU=;
+        b=rvNP4E8LF2OCjFvQUZEBrMLMCV3JJcElH/GATCPIIP7lnZJ5LVAm7YgHWKmHeduGGa
+         VrlKScl0jIMg+hOFQrR4h7hKNr6/gKurI9c9hi4g4oJKCauWSDjnZSsRAR+hfh4O1GOG
+         H8mEpfMVA6LuspoAgMDxDmw87+QSudeqt2Mszwq8cuCSBNKFtrVBuWM9dE0VrNhPb12F
+         cG3m3JUkOFgla19XnqP8mOsqgfWPc/8YFjPBSH/ZR8unCOd7GreWWEsTJUJsgwLPd0kA
+         FR/AYW80BVpPmlR8cPRFHDhBgDSCnEKLDcqX6/4XzTRrSNQ/riub+gD9kpbt62rNCe2h
+         +05A==
+X-Received: by 10.58.67.9 with SMTP id j9mr5027105vet.3.1385027014814; Thu, 21
+ Nov 2013 01:43:34 -0800 (PST)
+Received: by 10.58.253.136 with HTTP; Thu, 21 Nov 2013 01:43:34 -0800 (PST)
+In-Reply-To: <87txf6jgmi.fsf@linux-k42r.v.cablecom.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238113>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238114>
 
-Thomas Rast <tr@thomasrast.ch> writes:
+On Thu, Nov 21, 2013 at 9:36 AM, Thomas Rast <tr@thomasrast.ch> wrote:
+> Thomas Rast <tr@thomasrast.ch> writes:
+>>
+>> * Find an org admin and backup.  In previous years Shawn and Peff did
+>>   this.  Would you do it again?
 
-> * Does libgit2 want to remain under the Git umbrella, or participate
->   on its own?
+If Shawn and Peff don't answer, it probably means that you should volunteer :-)
+
+> Any opinions on these points?
 >
-> * Figure out the wiki situation.  In previous years the project
->   proposals and other important information were hosted at k.org [5] and
->   github wikis [6].  Other options were floated, such as an official
->   wiki hosted by github.  (This is somewhat of a contentious issue that
->   spans beyond GSoC.)
->
-> * Find an org admin and backup.  In previous years Shawn and Peff did
->   this.  Would you do it again?
+> I would actually favor a move to a wiki of the style that Peff proposed,
+> hosted by github and backed by git with either a very mild ACL or none
+> ("bots don't know git push").  k.org wiki had a grand total of three
+> edits in the last 30 days (plus some bot edits for user creation).
 
-Any opinions on these points?
+If we are provided a wiki of the style Peff proposed, then I am ok using it.
+But until we have it, let's use the k.org wiki.
 
-I would actually favor a move to a wiki of the style that Peff proposed,
-hosted by github and backed by git with either a very mild ACL or none
-("bots don't know git push").  k.org wiki had a grand total of three
-edits in the last 30 days (plus some bot edits for user creation).
-
-And of course without an org admin we don't really need to go any
-further...
-
-
-
-> [5]  https://git.wiki.kernel.org/index.php/SoC2011Projects
->      similarly for previous years
-> [6]  https://github.com/peff/git/wiki/SoC-2012-Ideas
->      https://github.com/trast/git/wiki/SoC-2013-Ideas
-
-
--- 
-Thomas Rast
-tr@thomasrast.ch
+Thanks,
+Christian.
