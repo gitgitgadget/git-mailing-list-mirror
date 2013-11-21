@@ -1,82 +1,77 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC PATCH] Revamp git-cherry(1)
-Date: Thu, 21 Nov 2013 14:04:36 -0800
-Message-ID: <xmqqwqk12yyz.fsf@gitster.dls.corp.google.com>
-References: <3af3069696e3a59d513f1fef0ca797d103f6d882.1385033403.git.tr@thomasrast.ch>
-	<xmqqli0h4kvj.fsf@gitster.dls.corp.google.com>
-	<87pppt31v9.fsf@thomasrast.ch>
+Subject: Re: [PATCH v3] commit -v: strip diffs and submodule shortlogs from the commit message
+Date: Thu, 21 Nov 2013 14:23:17 -0800
+Message-ID: <xmqqsiup2y3u.fsf@gitster.dls.corp.google.com>
+References: <528D385F.2070906@web.de>
+	<xmqqpppu65fs.fsf@gitster.dls.corp.google.com>
+	<528E7A6E.8080603@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, a.huemer@commend.com,
-	"Michael S. Tsirkin" <mst@kernel.org>, Jeff King <peff@peff.net>
-To: Thomas Rast <tr@thomasrast.ch>
-X-From: git-owner@vger.kernel.org Thu Nov 21 23:05:01 2013
+Cc: Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Johannes Sixt <j6t@kdbg.org>, Ari Pollak <ari@debian.org>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Thu Nov 21 23:23:30 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VjcMs-0008Gv-Rm
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Nov 2013 23:04:59 +0100
+	id 1Vjcek-0000IN-A4
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Nov 2013 23:23:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754713Ab3KUWEy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Nov 2013 17:04:54 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35413 "EHLO
+	id S1755239Ab3KUWXW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Nov 2013 17:23:22 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50530 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752430Ab3KUWEx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Nov 2013 17:04:53 -0500
+	id S1753279Ab3KUWXV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Nov 2013 17:23:21 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A525454A30;
-	Thu, 21 Nov 2013 17:04:50 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 746FD520FC;
+	Thu, 21 Nov 2013 17:23:21 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=dOrsCrK8bxaCcQd34EqpHPsaISs=; b=UzX1vd
-	owT/ho2ai4ActcEP2HgQtFjSRrAfg0bQCxfsZNuYyNz40are0Xq8+5F8JOY/VyYG
-	FCgE0PDJcwQAO+nAq1S5gzy/K5JV5EGKXFeOm0YADlkGi0myFNomYoV3WhnQGcRH
-	4opm91uRUzRCc3iYUjj8xamghPYt/5j5RzY7k=
+	:content-type; s=sasl; bh=IuY5eilp0+SAGuDwgNpMkds87x0=; b=ZybkIW
+	JnmNE8XYzA58rIYLX5IrGxodFg+yBfU9zyodAze5IBMwIYnbC6Pb/MgFyZ5E6y5k
+	ezlzDZDJ3MUMOfnwZhDJM89o+azhzxTHhMyGyXAsYWwAXp5UxV9kUP103oUInB7n
+	TP2KLXKq1UXUQ5jpTXlgd5C3Dk5lZauYDfzOI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=escyTMU4NBTxRUy030JWKKfQWsI70TTS
-	F2hUe452fKALwY2y8XtxCIWnYHgV8Bg1nqQrdT0taVP5f5U/ZPjCPpndz8y6hZvs
-	dB+JIu3H0WNaMpNzJhC+1biykMyv5yk3Lkqfc8QRZO41W1+23aBdlra8Nv/OP0M1
-	QV2rN1mOaGc=
+	:content-type; q=dns; s=sasl; b=QOhFL/m3olEIU1TMUj+MNVXI4Pn3vk0T
+	c5Gpbcif2ELEUfjB2JcQRK1LDV0qK+1ojuryMM95++vdDGG488FKK5bqJ7PXlBMo
+	d1Tbvb2iIebP7M7Uhcqy/Be4GQngnM+3+NglLeFFRkWtOA1A6Vo+DIOr5l7Xftff
+	ZnnWWbzbzhs=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8402754A2F;
-	Thu, 21 Nov 2013 17:04:50 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 602F3520FB;
+	Thu, 21 Nov 2013 17:23:21 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8252554A2D;
-	Thu, 21 Nov 2013 17:04:49 -0500 (EST)
-In-Reply-To: <87pppt31v9.fsf@thomasrast.ch> (Thomas Rast's message of "Thu, 21
-	Nov 2013 22:02:02 +0100")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 85604520F8;
+	Thu, 21 Nov 2013 17:23:20 -0500 (EST)
+In-Reply-To: <528E7A6E.8080603@web.de> (Jens Lehmann's message of "Thu, 21 Nov
+	2013 22:26:06 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: F0BBA7BC-52F8-11E3-93EB-D331802839F8-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 86F2A59E-52FB-11E3-85AC-D331802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238158>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238159>
 
-Thomas Rast <tr@thomasrast.ch> writes:
+Jens Lehmann <Jens.Lehmann@web.de> writes:
 
-> Junio C Hamano <gitster@pobox.com> writes:
+> But what about this:
 >
->>>  OPTIONS
->>>  -------
->>>  -v::
->>> -	Verbose.
->>> +	Verbose.  Currently shows the commit subjects next to their
->>> +	SHA1.
->>
->> Whenever I see "Currently", it makes me wonder "why does it need to
->> say that? Is there a plan to change it soon, and if so where is the
->> plan described?".
+> 	struct strbuf cut_line = STRBUF_INIT;
+> 	strbuf_addf(&cut_line, "%c %s", comment_line_char, wt_status_cut_line);
+> 	p = strstr(buf->buf, cut_line.buf);
+> 	if (p && (p == buf->buf || p[-1] == '\n'))
+> 		strbuf_setlen(buf, p - buf->buf);
+> 	strbuf_release(&cut_line);
 >
-> I wanted to avoid documenting exactly what it does, so that in the
-> future it could do more than that.  Is that overly paranoid?
+> That is shorter can easily be adapted to a comment line string later.
 
-I would have to say so. After all, the documentation is supposed to
-describe the current state of affairs, and we would update it when
-"the current state" changes. In places, we may express our plan to
-forewarn readers of planned upcoming changes, but still...
+Sure, that would work fine.
+
+Thanks.
