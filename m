@@ -1,74 +1,82 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: Can a git push over ssh trigger a gc/repack? Diagnosing pack explosion
-Date: Thu, 21 Nov 2013 16:57:38 -0500
-Message-ID: <CACPiFC+RmmhH9GuE+3ecP7Hj4C+iRfyk1px9EP+j45kOBExM5Q@mail.gmail.com>
-References: <CACPiFC+TqD_DhMaG+posoK4fTOLCoi=3jhJUPjt_72HTm9xjeQ@mail.gmail.com>
- <CACPiFC+xbnYjZUG49Em=aDUXnS_3_Cp=ZZBCrQCHM-sL78HCdA@mail.gmail.com> <xmqq61rl4jo0.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC PATCH] Revamp git-cherry(1)
+Date: Thu, 21 Nov 2013 14:04:36 -0800
+Message-ID: <xmqqwqk12yyz.fsf@gitster.dls.corp.google.com>
+References: <3af3069696e3a59d513f1fef0ca797d103f6d882.1385033403.git.tr@thomasrast.ch>
+	<xmqqli0h4kvj.fsf@gitster.dls.corp.google.com>
+	<87pppt31v9.fsf@thomasrast.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Sam Coffland <sam.coffland@remote-learner.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 21 22:58:08 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, a.huemer@commend.com,
+	"Michael S. Tsirkin" <mst@kernel.org>, Jeff King <peff@peff.net>
+To: Thomas Rast <tr@thomasrast.ch>
+X-From: git-owner@vger.kernel.org Thu Nov 21 23:05:01 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VjcGD-000513-Vd
-	for gcvg-git-2@plane.gmane.org; Thu, 21 Nov 2013 22:58:06 +0100
+	id 1VjcMs-0008Gv-Rm
+	for gcvg-git-2@plane.gmane.org; Thu, 21 Nov 2013 23:04:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753406Ab3KUV6B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Nov 2013 16:58:01 -0500
-Received: from mail-ve0-f177.google.com ([209.85.128.177]:45975 "EHLO
-	mail-ve0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752163Ab3KUV6A (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Nov 2013 16:58:00 -0500
-Received: by mail-ve0-f177.google.com with SMTP id db12so291395veb.8
-        for <git@vger.kernel.org>; Thu, 21 Nov 2013 13:58:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=nM9QmafyYC5MbAvgYOiFYpYnpzgYgdn/U70VFU3lTLQ=;
-        b=FA8J9e8QW8to7IaZgamDQRm17G/T783Wu+EvOxCYlQxyJjIBfQG44QhdK+WOgvCTfc
-         gWsB7nkiwus+g93ALhmL9UMGwvMHhNazNKX0vqi7t3/Eq/qRhjf/K06bicYGIvQ9UNxS
-         /O4Tr8ykIExyyBpTA0D41m0+dvlcAC33lAx3KqSwrJ2KgXN2LjpuhHdMi1JW3uDZQgCV
-         NbflAlIl2FfERZES5SA2t+rZ9TRIghSXPKraDt4g4FjZrLJB5+0+0dz9Uy+pHLDCl0gy
-         Z0e397jETiB+mKfyGYJJtKjrTNP1NHyhMe2dUlT1SDJNnuey+LBVFvdOE6CZ+aVuIZM8
-         ur8A==
-X-Received: by 10.58.67.168 with SMTP id o8mr7986963vet.22.1385071080116; Thu,
- 21 Nov 2013 13:58:00 -0800 (PST)
-Received: by 10.221.61.210 with HTTP; Thu, 21 Nov 2013 13:57:38 -0800 (PST)
-In-Reply-To: <xmqq61rl4jo0.fsf@gitster.dls.corp.google.com>
+	id S1754713Ab3KUWEy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Nov 2013 17:04:54 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35413 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752430Ab3KUWEx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Nov 2013 17:04:53 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A525454A30;
+	Thu, 21 Nov 2013 17:04:50 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=dOrsCrK8bxaCcQd34EqpHPsaISs=; b=UzX1vd
+	owT/ho2ai4ActcEP2HgQtFjSRrAfg0bQCxfsZNuYyNz40are0Xq8+5F8JOY/VyYG
+	FCgE0PDJcwQAO+nAq1S5gzy/K5JV5EGKXFeOm0YADlkGi0myFNomYoV3WhnQGcRH
+	4opm91uRUzRCc3iYUjj8xamghPYt/5j5RzY7k=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=escyTMU4NBTxRUy030JWKKfQWsI70TTS
+	F2hUe452fKALwY2y8XtxCIWnYHgV8Bg1nqQrdT0taVP5f5U/ZPjCPpndz8y6hZvs
+	dB+JIu3H0WNaMpNzJhC+1biykMyv5yk3Lkqfc8QRZO41W1+23aBdlra8Nv/OP0M1
+	QV2rN1mOaGc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8402754A2F;
+	Thu, 21 Nov 2013 17:04:50 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8252554A2D;
+	Thu, 21 Nov 2013 17:04:49 -0500 (EST)
+In-Reply-To: <87pppt31v9.fsf@thomasrast.ch> (Thomas Rast's message of "Thu, 21
+	Nov 2013 22:02:02 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: F0BBA7BC-52F8-11E3-93EB-D331802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238157>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238158>
 
-On Thu, Nov 21, 2013 at 2:52 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>  - if it's receiving from many pushers, it races with itself; needs
->> some lock or back-off mechanism
+Thomas Rast <tr@thomasrast.ch> writes:
+
+> Junio C Hamano <gitster@pobox.com> writes:
 >
-> Surely.
+>>>  OPTIONS
+>>>  -------
+>>>  -v::
+>>> -	Verbose.
+>>> +	Verbose.  Currently shows the commit subjects next to their
+>>> +	SHA1.
+>>
+>> Whenever I see "Currently", it makes me wonder "why does it need to
+>> say that? Is there a plan to change it soon, and if so where is the
+>> plan described?".
 >
-> I think these should help:
->
->     64a99eb4 (gc: reject if another gc is running, unless --force is given, 2013-08-08)
->     4c5baf02 (gc: remove gc.pid file at end of execution, 2013-10-16)
->
-> They should be in the upcoming v1.8.5.
+> I wanted to avoid documenting exactly what it does, so that in the
+> future it could do more than that.  Is that overly paranoid?
 
-Ah, great to hear. For the record, this hit me on git 1.7.1, current on RHEL6.
-
-thanks!
-
-
-
-m
--- 
- martin.langhoff@gmail.com
- -  ask interesting questions
- - don't get distracted with shiny stuff  - working code first
- ~ http://docs.moodle.org/en/User:Martin_Langhoff
+I would have to say so. After all, the documentation is supposed to
+describe the current state of affairs, and we would update it when
+"the current state" changes. In places, we may express our plan to
+forewarn readers of planned upcoming changes, but still...
