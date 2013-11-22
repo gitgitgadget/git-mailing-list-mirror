@@ -1,76 +1,93 @@
-From: =?UTF-8?Q?Vicent_Mart=C3=AD?= <tanoku@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: What's cooking in git.git (Nov 2013, #05; Thu, 21)
-Date: Fri, 22 Nov 2013 20:47:25 +0100
-Message-ID: <CAFFjANQy72zLuxtpA+-nMhYEt=qfOu_FSszR8X7QNPTKBEi6tA@mail.gmail.com>
-References: <xmqqtxf51e5c.fsf@gitster.dls.corp.google.com> <20131122102345.GC12042@sigill.intra.peff.net>
- <xmqq61rk1b52.fsf@gitster.dls.corp.google.com>
+Date: Fri, 22 Nov 2013 12:05:25 -0800
+Message-ID: <xmqqr4a8yzga.fsf@gitster.dls.corp.google.com>
+References: <xmqqtxf51e5c.fsf@gitster.dls.corp.google.com>
+	<20131122102345.GC12042@sigill.intra.peff.net>
+	<xmqq61rk1b52.fsf@gitster.dls.corp.google.com>
+	<CAFFjANQy72zLuxtpA+-nMhYEt=qfOu_FSszR8X7QNPTKBEi6tA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Jeff King <peff@peff.net>, git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Nov 22 20:47:51 2013
+To: Vicent =?utf-8?Q?Mart=C3=AD?= <tanoku@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 22 21:05:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vjwhj-0007SX-7E
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Nov 2013 20:47:51 +0100
+	id 1Vjwyu-0003Y7-BW
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Nov 2013 21:05:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756029Ab3KVTrr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Nov 2013 14:47:47 -0500
-Received: from mail-vc0-f175.google.com ([209.85.220.175]:48920 "EHLO
-	mail-vc0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755605Ab3KVTrq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Nov 2013 14:47:46 -0500
-Received: by mail-vc0-f175.google.com with SMTP id ld13so1179210vcb.34
-        for <git@vger.kernel.org>; Fri, 22 Nov 2013 11:47:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=39VrUWg/BNC1DhmfIEMesCOB4eK8/7e/biSUDIPJjY4=;
-        b=sAeoWTX5ymUsdeHcWJcbxdBZwL54prqK5aL1PAOF8V/1sTIIh+Ib02T+zOramsHJyy
-         7VKflULD/KEbg4qVsN3ncD5LiBm1gV7o9YLRImyKKoxzfeYmj5pwkBOABwo0h+YvKxhV
-         /8WIpVrXvX/OZ1ac5QC93i/YIiZxWwtvRmF+DFU22yS1RmUHxuw9TWehC4DZMVxYMVya
-         O2HWv9cs1sRzrFmr+iuDDti/EBsW0QKllWjLKXk6A0d9mHkz7ys+zfysA+FBS1S41W00
-         M1HwKa3oKoghrWW/CdJ3tNNpz+XbMF5cKkVzGOd+Cgq7a7PJ04e6vbzO2zZc8hdiZ5aR
-         PwWQ==
-X-Received: by 10.52.230.35 with SMTP id sv3mr10956363vdc.27.1385149665945;
- Fri, 22 Nov 2013 11:47:45 -0800 (PST)
-Received: by 10.220.87.142 with HTTP; Fri, 22 Nov 2013 11:47:25 -0800 (PST)
-In-Reply-To: <xmqq61rk1b52.fsf@gitster.dls.corp.google.com>
+	id S1755933Ab3KVUFc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 Nov 2013 15:05:32 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39572 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755723Ab3KVUFb convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 22 Nov 2013 15:05:31 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6AD8854D72;
+	Fri, 22 Nov 2013 15:05:30 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=e9UY+LDlyn3a
+	pu2pvE2VAbO3bP8=; b=a5HGdzXp67OZiqaD7whQHTh4p4nKm7kv1GfF4ESplJET
+	ih1BmxTZEiwYVe8LIKRZk+LBCUZr+AS0DpCQ9Zmr3hXonOwOuqaH8yLuYV56n17y
+	fmjWr7/4qKzqBKoFQPCRpYcgTPm0cLlohwDzGSpFb8ViVgO3ukhqvdZc3Vhv5GI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=f2JHu4
+	qqC0TIgWNzt5P7hkR/TYW6CXI1GZsgDckpsag+v2fVdgKMEjJvzHuFynYXiH8Mu6
+	CafT++piKQFK+iU1SOEpcq9E+ynGMONibe9cd5LSADEr2U+1N2IxME5kBRUKZFZc
+	5eB4shb3qXSROQbTvTuYUQ5qCPyEW08cCJ8+c=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E3C7454D70;
+	Fri, 22 Nov 2013 15:05:29 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5A98354D6F;
+	Fri, 22 Nov 2013 15:05:28 -0500 (EST)
+In-Reply-To: <CAFFjANQy72zLuxtpA+-nMhYEt=qfOu_FSszR8X7QNPTKBEi6tA@mail.gmail.com>
+	("Vicent =?utf-8?Q?Mart=C3=AD=22's?= message of "Fri, 22 Nov 2013 20:47:25
+ +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 6EC23A82-53B1-11E3-A9BB-D331802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238210>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238211>
 
-On Fri, Nov 22, 2013 at 8:36 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Do we want to try this in 'next' post-1.8.5, or should I try to prod an
->> area expert like Shawn into doing another round of review?
+Vicent Mart=C3=AD <tanoku@gmail.com> writes:
+
+> On Fri, Nov 22, 2013 at 8:36 PM, Junio C Hamano <gitster@pobox.com> w=
+rote:
 >
-> Yes ;-).
+> We are running a slightly older version of the patchset, because we'r=
+e
+> still on 1.8.4 and the current reroll doesn't apply cleanly there.
 >
-> I recall starting to read the series over and then got sidetracked
-> in the middle and never finishing.  I'll try to make time sometime
-> this weekend (we are still buried in boxes after the move, though,
-> so no promises) myself.
->
-> How close is this what you guys are running in production these
-> days, by the way?
+> If this could make it to `next` some time next week, that would work
+> out great for us, because we may start considering using `next` as a
+> partial or full deployment on our production machines
 
-We are running a slightly older version of the patchset, because we're
-still on 1.8.4 and the current reroll doesn't apply cleanly there.
+I do not think potentially incompatible stuff that are slated for
+2.0 that have been cooking in 'next' affects the server side, so
+that may be a good and safe move.
 
-If this could make it to `next` some time next week, that would work
-out great for us, because we may start considering using `next` as a
-partial or full deployment on our production machines
+> This also means that we could exercise the patchset and everything
+> else that is queued up in next release...
 
-This also means that we could exercise the patchset and everything
-else that is queued up in next release... You must remember all the
-corner cases and bugs peff brings to the list every time we deploy a
-new Git to production. Wouldn't it be nice to have a thorough checking
-of the current iteration *before* the release, and not after? :)
+There is no 'next release' though; there is no guarantee what is
+cooking in 'next' will be in any future release ;-).
 
-*hint hint*
+In any case, it is nice to see that people from a large hosting site
+finally taking a hint from my occasional light complaints that come
+after "thanks for reporting" whenever I see regression and breakage
+report soon after a topic graduates to 'master' ;-).  It is good to
+see that more people starting to adopt the 'next' branch early for
+wider testing.
+
+Thanks.
