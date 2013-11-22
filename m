@@ -1,74 +1,102 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: What's cooking in git.git (Nov 2013, #05; Thu, 21)
-Date: Fri, 22 Nov 2013 12:26:27 -0500
-Message-ID: <20131122172626.GA4881@sigill.intra.peff.net>
-References: <xmqqtxf51e5c.fsf@gitster.dls.corp.google.com>
- <20131122102345.GC12042@sigill.intra.peff.net>
- <87d2lsjs4q.fsf@linux-k42r.v.cablecom.net>
+From: Joey Hess <joey@kitenet.net>
+Subject: Re: [PATCH] drop support for "experimental" loose objects
+Date: Fri, 22 Nov 2013 13:28:59 -0400
+Message-ID: <20131122172859.GA703@kitenet.net>
+References: <20131120203350.GA31139@kitenet.net>
+ <20131120213348.GA29004@sigill.intra.peff.net>
+ <20131120222805.GC26468@kitenet.net>
+ <20131121114157.GA7171@sigill.intra.peff.net>
+ <20131121160426.GA21843@kitenet.net>
+ <20131122020911.GA12042@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Vicent =?utf-8?B?TWFydMOt?= <vicent@github.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Thomas Rast <tr@thomasrast.ch>
-X-From: git-owner@vger.kernel.org Fri Nov 22 18:26:35 2013
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="5mCyUwZo2JvN/JJP"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 22 18:29:12 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VjuV0-0005sV-Oy
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Nov 2013 18:26:35 +0100
+	id 1VjuXU-0007iu-TM
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Nov 2013 18:29:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755856Ab3KVR03 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Nov 2013 12:26:29 -0500
-Received: from cloud.peff.net ([50.56.180.127]:43883 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755816Ab3KVR02 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Nov 2013 12:26:28 -0500
-Received: (qmail 1060 invoked by uid 102); 22 Nov 2013 17:26:28 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 22 Nov 2013 11:26:28 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 22 Nov 2013 12:26:27 -0500
+	id S1755887Ab3KVR3E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Nov 2013 12:29:04 -0500
+Received: from wren.kitenet.net ([80.68.85.49]:47228 "EHLO kitenet.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755413Ab3KVR3D (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Nov 2013 12:29:03 -0500
+Received: by darkstar.kitenet.net (Postfix, from userid 1000)
+	id 78F34305EC1; Fri, 22 Nov 2013 12:28:59 -0500 (EST)
 Content-Disposition: inline
-In-Reply-To: <87d2lsjs4q.fsf@linux-k42r.v.cablecom.net>
+In-Reply-To: <20131122020911.GA12042@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238199>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238200>
 
-On Fri, Nov 22, 2013 at 05:52:37PM +0100, Thomas Rast wrote:
 
-> > Looks like you picked up my latest re-roll with Ramsay's fix on top.
-> > There wasn't a lot of review on this past round (I'm not surprised; it's
-> > a dauntingly large chunk to review).  I outlined a few possible open
-> > issues in the cover letter, but I'd be happy to build those on top,
-> > which I think will make review of them a lot easier.
-> >
-> > Do we want to try this in 'next' post-1.8.5, or should I try to prod an
-> > area expert like Shawn into doing another round of review?
-> 
-> Hmm, maybe I missed something, but AFAICS you (or Vicent) never acted on
-> or responded to my June reviews in this thread:
-> 
->   http://thread.gmane.org/gmane.comp.version-control.git/228918
-> 
-> and again mentioned here, though I didn't point out all of them:
-> 
->   http://thread.gmane.org/gmane.comp.version-control.git/236587/focus=236740
+--5mCyUwZo2JvN/JJP
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Sorry, I didn't respond directly to the email. Vicent did a pass for
-style and documentation shortly after the initial series, and then I did
-another pass in the most recent re-roll, adding a C fallback for the
-gcc builtin. I thought that covered it, but:
+Jeff King wrote:
+> > BTW, I've also seen git cat-file --batch report wrong sizes for objects,
+>=20
+> Hrm. For --batch, I'd think we would open the whole object and notice
+> the corruption, even with the current code. But for --batch-check, we
+> use sha1_object_info, and for an "experimental" object, we do not need
+> to de-zlib the object at all.  So we end up reporting whatever crap we
+> decipher from the garbage bytes.  My patch would fix that, as we would
+> not incorrectly guess an object is experimental anymore.
+>=20
+> If you have specific cases that trigger even after my patch, I'd be
+> interested to see them.
 
-> Granted, the way I verified this was checking whether you renamed
-> rlw_xor_run_bit() to something more fitting, so perhaps you just forgot
-> that one thing but did all the rest.
+I was seeing it with --batch, not --batch-check. Probably only with the
+old experimental loose object format. In one case, --batch reported a
+size of 20k, and only output 1k of data. With the object file I sent
+earlier, --batch reports a huge size, and fails trying to allocate the
+memory for it before it can output anything.
 
-I didn't touch that. Vicent, did you have a comment on the name (it
-really does look like it is a negation, and the only caller is
-ewah_not).
+I also have seen at least once a corrupt pack file that caused git to try
+and allocate a absurd quantity of memory.
 
--Peff
+Unfortunately I do not currently have exemplars for these, although I
+should be able to run a less robust version of my code and find them
+again. ;) Will try to find time to do that.
+
+BTW, the fuzzing code is here:
+http://source.git-repair.branchable.com/?p=3Dsource.git;a=3Dblob;f=3DGit/De=
+stroyer.hs
+
+--=20
+see shy jo
+
+--5mCyUwZo2JvN/JJP
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.15 (GNU/Linux)
+
+iQIVAwUBUo+UWMkQ2SIlEuPHAQi3EhAAqCOgtTRwT8xSNfswH9ci4ZX2/18fYhUE
+W9ntVN4hb+Tskh+erNevOA9JtrY7JOTQm7NIRK0OjJyd7gFis656ZFmBHFoZ80N2
+4K0U3+MdYVPsdNc3KaVSq/zGJwyafN6RTzJSx0D4fJpE5PFEhddA+BBWZjjojSdu
+82uCkccFRIzlB5tL5eeExQ8XSN0nZIR/3Ici7fO+leOEZ5dBIUQlYxmFxSWxVnmg
+gMvjNGoQlk+0uRpe/YLguAYdxSlV26WVbOiqUuRKvkynlXr3K0oohDdZuY1Hs8Lk
+mU2Y8lfAw+udO2BofoZU3zMoMytQtmzfdGhxKL+mv949YL+HrAl7FvgMc/I5tvpv
+xPbBT5ToLc3UpT7PJ/Zkmoek9e8+c/VQPOijVR7iDx7mcHGwqbEuonb1R21Pbln+
+r3dHTT/9oRdySZxC6KAOLDXG0JRPyOPnyWuTCytTmuBTM8dWmkfWgUHmpK6Wvyj9
+C8qKWmVXqpgSV32kIaqbGBAlRAzaDhpMjVUSxKRfWjV7vFPpIk3I2fT4/uZdnPzo
+Gem+bj0XydWX91Oa/Ja45cAjQF+1KUg58uNYAaju/RD2m4r8aWoKQRZDD1aMstwX
+C9qr4NG9+6HiAerSaiFefxW9ma3swE63o5Mb6Wr+czJ+/EljXwuoShfPnuvxIqCR
+Qvp6iFUx8Lg=
+=Ppft
+-----END PGP SIGNATURE-----
+
+--5mCyUwZo2JvN/JJP--
