@@ -1,78 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Nov 2013, #05; Thu, 21)
-Date: Fri, 22 Nov 2013 11:36:57 -0800
-Message-ID: <xmqq61rk1b52.fsf@gitster.dls.corp.google.com>
-References: <xmqqtxf51e5c.fsf@gitster.dls.corp.google.com>
-	<20131122102345.GC12042@sigill.intra.peff.net>
+From: Thomas Rast <tr@thomasrast.ch>
+Subject: Re: [PATCH v2] Revamp git-cherry(1)
+Date: Fri, 22 Nov 2013 20:37:14 +0100
+Message-ID: <87li0gi5xx.fsf@linux-k42r.v.cablecom.net>
+References: <xmqqli0h4kvj.fsf@gitster.dls.corp.google.com>
+	<dde93c10b7f6cb7b8cf94e9a0310c8e05aca2517.1385137650.git.tr@thomasrast.ch>
+	<xmqqa9gw1bne.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Nov 22 20:37:16 2013
+Content-Type: text/plain
+Cc: git@vger.kernel.org, a.huemer@commend.com,
+	"Michael S. Tsirkin" <mst@kernel.org>, Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Nov 22 20:37:49 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VjwXT-0007uY-D3
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Nov 2013 20:37:15 +0100
+	id 1VjwXw-0008Op-FU
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Nov 2013 20:37:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755660Ab3KVThD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Nov 2013 14:37:03 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51337 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755495Ab3KVThC (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Nov 2013 14:37:02 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 75AAF544FE;
-	Fri, 22 Nov 2013 14:37:01 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=XGIKpud7+oKbDuJ7DPx4kRyr4VA=; b=mnc/Td
-	rdBKGMRo98Vm/KwCCHsUdK44jnRpFSCbkA4KqfeIfcYcesDybsIDclVSpNjuxdVj
-	uE3wS+Xpz7jMbLjK/gPgxAsHuvZ07ypP95s7vaTyOmJnWURuxw9kWT97WIcvCRe+
-	Ia2yu4fTKKAS0FR2Ktp+qhWyX0N82Hrr20YUY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=CatInLX42xGP4bqSc5gzwDcfKl8rojrN
-	OOjYD8FOhesvJBUs9v+8TURvYXh1Y1BSrLCmWKA69viFsaHvQqJwEPteSwiwZXuc
-	S4e4rp61+1zwXCiHISyDMmxV7D2eCzngQV782T0La4Md2YAhb6xhDP6BJ8f+GDfX
-	vHpeTHqFV6Y=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5EC41544FA;
-	Fri, 22 Nov 2013 14:37:01 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8D0C3544F4;
-	Fri, 22 Nov 2013 14:37:00 -0500 (EST)
-In-Reply-To: <20131122102345.GC12042@sigill.intra.peff.net> (Jeff King's
-	message of "Fri, 22 Nov 2013 05:23:45 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 74D5BB28-53AD-11E3-BC44-D331802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756072Ab3KVThe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Nov 2013 14:37:34 -0500
+Received: from psi.thgersdorf.net ([176.9.98.78]:50334 "EHLO mail.psioc.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755771Ab3KVThd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Nov 2013 14:37:33 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by localhost.psioc.net (Postfix) with ESMTP id 1E9224D6580;
+	Fri, 22 Nov 2013 20:37:32 +0100 (CET)
+X-Virus-Scanned: amavisd-new at psioc.net
+Received: from mail.psioc.net ([127.0.0.1])
+	by localhost (mail.psioc.net [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id WYv3V_ETawNC; Fri, 22 Nov 2013 20:37:21 +0100 (CET)
+Received: from linux-k42r.v.cablecom.net.thomasrast.ch (unknown [89.204.155.192])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(Client did not present a certificate)
+	by mail.psioc.net (Postfix) with ESMTPSA id 5AFF54D6414;
+	Fri, 22 Nov 2013 20:37:20 +0100 (CET)
+In-Reply-To: <xmqqa9gw1bne.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Fri, 22 Nov 2013 11:25:57 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238206>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238207>
 
-Jeff King <peff@peff.net> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Looks like you picked up my latest re-roll with Ramsay's fix on top.
-> There wasn't a lot of review on this past round (I'm not surprised; it's
-> a dauntingly large chunk to review).  I outlined a few possible open
-> issues in the cover letter, but I'd be happy to build those on top,
-> which I think will make review of them a lot easier.
+> We are listing those that need to be added to the upstream with "+",
+> while listing those that can be dropped from yours if you rebase
+> with "-".  Hinting the rationale behind the choice of "+/-"
+> somewhere may help as a mnemonic to the readers (see below).
+[...]
+> And the earlier "why +/-" could be done after this picture,
+> perhaps like:
 >
-> Do we want to try this in 'next' post-1.8.5, or should I try to prod an
-> area expert like Shawn into doing another round of review?
+> 	Here, we see that the commits A and C (marked with `-`) can
+> 	be dropped from your `topic` branch when you rebase it on
+> 	top of `origin/master`, while the commit B (marked with `+`)
+> 	still needs to be kept so that it will be sent to be applied
+> 	to `origin/master`.
+>
+> or somesuch?
 
-Yes ;-).
+Good idea, thanks.  Will integrate this more "what still needs to be
+integrated"-minded wording into a v3.
 
-I recall starting to read the series over and then got sidetracked
-in the middle and never finishing.  I'll try to make time sometime
-this weekend (we are still buried in boxes after the move, though,
-so no promises) myself.
-
-How close is this what you guys are running in production these
-days, by the way?
+-- 
+Thomas Rast
+tr@thomasrast.ch
