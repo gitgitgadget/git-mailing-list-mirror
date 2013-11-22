@@ -1,73 +1,62 @@
-From: =?UTF-8?Q?Odin=20H=C3=B8rthe=20Omdal?= <odinho@opera.com>
-Subject: Re: git submodule update needs to be at the toplevel of working tree,
- why?
-Date: Fri, 22 Nov 2013 15:37:00 +0100
-Message-ID: <1385131020.5838.50791533.395F2F63@webmail.messagingengine.com>
-References: <1385126550.10973.50760825.6B70B959@webmail.messagingengine.com>
- <20131122134747.GC15033@serenity.lan>
+From: Jeff King <peff@peff.net>
+Subject: Re: Git issues with submodules
+Date: Fri, 22 Nov 2013 10:11:20 -0500
+Message-ID: <20131122151120.GA32361@sigill.intra.peff.net>
+References: <CAErtv26Q_YN+U+trjNac1aKLi9BvNHNNuaUkrr2RE0nB+yxWsw@mail.gmail.com>
+ <CALkWK0n7jdLKOAFoFjuRz0aTCssorAgk2y=Vce76Y5aHWbj53Q@mail.gmail.com>
+ <CAErtv27dMepNSbBVdOokn6OF858ENaKooL+FzD7JHtp9nRPufw@mail.gmail.com>
+ <CALkWK0nDME-z7G4kcag=ad3qH5FL9FawrYFyVLQB6Z_g+TV+vQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Fri Nov 22 15:37:18 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Sergey Sharybin <sergey.vfx@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Jens Lehmann <Jens.Lehmann@web.de>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 22 16:11:30 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vjrr8-0003Ez-RW
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Nov 2013 15:37:15 +0100
+	id 1VjsOE-0002fp-Gl
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Nov 2013 16:11:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755339Ab3KVOhI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 Nov 2013 09:37:08 -0500
-Received: from smtp.opera.com ([213.236.208.81]:59556 "EHLO smtp.opera.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752132Ab3KVOhH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 22 Nov 2013 09:37:07 -0500
-Received: from auth2-smtp.messagingengine.com (auth2-smtp.messagingengine.com [66.111.4.228])
-	(authenticated bits=0)
-	by smtp.opera.com (8.14.3/8.14.3/Debian-9.4) with ESMTP id rAMEb1nI002836
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Fri, 22 Nov 2013 14:37:02 GMT
-Received: from compute6.internal (compute6.nyi.mail.srv.osa [10.202.2.46])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 5E74920FDC;
-	Fri, 22 Nov 2013 09:37:00 -0500 (EST)
-Received: from web2 ([10.202.2.212])
-  by compute6.internal (MEProxy); Fri, 22 Nov 2013 09:37:00 -0500
-Received: by web2.nyi.mail.srv.osa (Postfix, from userid 99)
-	id 31D2354006F; Fri, 22 Nov 2013 09:37:00 -0500 (EST)
-X-Sasl-Enc: ckXBLhzpo7FXpk4XAj9ypXmeS1GLh/9TMIy/dlz/JOyH 1385131020
-X-Mailer: MessagingEngine.com Webmail Interface - ajax-3f1150ec
-In-Reply-To: <20131122134747.GC15033@serenity.lan>
+	id S1755816Ab3KVPLW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Nov 2013 10:11:22 -0500
+Received: from cloud.peff.net ([50.56.180.127]:43815 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755647Ab3KVPLW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Nov 2013 10:11:22 -0500
+Received: (qmail 26441 invoked by uid 102); 22 Nov 2013 15:11:21 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 22 Nov 2013 09:11:21 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 22 Nov 2013 10:11:20 -0500
+Content-Disposition: inline
+In-Reply-To: <CALkWK0nDME-z7G4kcag=ad3qH5FL9FawrYFyVLQB6Z_g+TV+vQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238189>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238190>
 
-On Fri, Nov 22, 2013, at 14:47, John Keeping wrote:
-> On Fri, Nov 22, 2013 at 02:22:30PM +0100, Odin H=C3=B8rthe Omdal wrot=
-e:
-> > I'm usually in a subfolder doing actual work. A very common problem=
- I
-> > have is wanting to do a submodule update, but git really hates that=
-=2E And
-> > I wonder why?
-> >=20
-> > It wouldn't be hard to cd to the toplevel working directory, do the
-> > update, and cd back. It's what I have to do manually every time now
-> > already:
->=20
-> This restriction was removed in Git 1.8.4.
+On Fri, Nov 22, 2013 at 06:38:47PM +0530, Ramkumar Ramachandra wrote:
 
-Oh, awesome!  My system git is 1.8.3.2.
+> >> Does Arcanist use `git ls-files -m` to check?
+> >
+> > Yes, Arcanist uses `git ls-files -m` to check whether there're local
+> > modifications. We might also contact phab developers asking to change
+> > it to `git diff --name-only HEAD --`.  Is there a preferable way to
+> > get list of modified files and are this command intended to output the
+> > same results?
+> 
+> I just checked it out: it uses `git ls-files -m` to get the list of
+> unstaged changes; `git diff --name-only HEAD --` will list staged
+> changes as well.
 
-I'll do a manual install then :)
+That diff command compares the working tree and HEAD; if you are trying
+to match `ls-files -m`, you probably wanted just `git diff --name-only`
+to compare the working tree and the index. Although in a script you'd
+probably want to use the plumbing `git diff-files` instead.
 
-Sorry for the noise. (I didn't find any earlier talk about it, but I
-only used gmame's search, so it might have missed something)
-
---=20
-  Odin H=C3=B8rthe Omdal
-  odinho@opera.com
+-Peff
