@@ -1,147 +1,76 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH] drop support for "experimental" loose objects
-Date: Fri, 22 Nov 2013 12:04:01 +0100
-Message-ID: <CAP8UFD1fMTrJGo9Z4+jdWqc-=UmPG1jQjwTij4962WDoh_a1DA@mail.gmail.com>
-References: <20131120203350.GA31139@kitenet.net>
-	<20131120213348.GA29004@sigill.intra.peff.net>
-	<20131120222805.GC26468@kitenet.net>
-	<20131121114157.GA7171@sigill.intra.peff.net>
-	<20131121160426.GA21843@kitenet.net>
-	<CAP8UFD2S1HUDYLbmEGFqLcBFExuB0h7=gqwsQ0qjpMSc+YaXog@mail.gmail.com>
-	<20131122095801.GB12042@sigill.intra.peff.net>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: Git issues with submodules
+Date: Fri, 22 Nov 2013 16:46:27 +0530
+Message-ID: <CALkWK0n7jdLKOAFoFjuRz0aTCssorAgk2y=Vce76Y5aHWbj53Q@mail.gmail.com>
+References: <CAErtv26Q_YN+U+trjNac1aKLi9BvNHNNuaUkrr2RE0nB+yxWsw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Joey Hess <joey@kitenet.net>, git <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Nov 22 12:04:13 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Jens Lehmann <Jens.Lehmann@web.de>
+To: Sergey Sharybin <sergey.vfx@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 22 12:17:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VjoWz-0005MB-98
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Nov 2013 12:04:13 +0100
+	id 1Vjojb-0003fz-51
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Nov 2013 12:17:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752567Ab3KVLED (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Nov 2013 06:04:03 -0500
-Received: from mail-vc0-f169.google.com ([209.85.220.169]:39567 "EHLO
-	mail-vc0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751956Ab3KVLEB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Nov 2013 06:04:01 -0500
-Received: by mail-vc0-f169.google.com with SMTP id hu19so720385vcb.14
-        for <git@vger.kernel.org>; Fri, 22 Nov 2013 03:04:01 -0800 (PST)
+	id S1755165Ab3KVLRK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Nov 2013 06:17:10 -0500
+Received: from mail-ie0-f170.google.com ([209.85.223.170]:63038 "EHLO
+	mail-ie0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754143Ab3KVLRJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Nov 2013 06:17:09 -0500
+Received: by mail-ie0-f170.google.com with SMTP id qd12so1855801ieb.29
+        for <git@vger.kernel.org>; Fri, 22 Nov 2013 03:17:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=63xVxDSzSher6pfeahY+M1Lk1vXnrMWHITtrJQNlA68=;
-        b=otdo6RPorm0gyBEWrJkRa80/+og6Nvy0ehniD4fX/7Ikg27UVzPRHkEU1d6PO0u1Pl
-         Rwk9XUQlvcmrYfHNxFQ9hK27lfO1zjPpQkCHWMcoZ10dMGIPB7GA6W0giMAx7hPTE32x
-         dyyuK3W6/PUqXEyMKu2FO2PfLSSuqPmA65av6iEHPZ+LjRE+vio3PKaHemBnMLSFwuWA
-         Lt/Ymu2qjN7j3jdt0o5sdJ1Z9zgjm1/1y1q1zfD9FepwnUajOX7BHs0FGcfvvQA2SAnQ
-         IlUwBbmURNcgzeliMfWM3i30gA0CiBqpsHn+LAq/OpJzqOH3IeDyNJdyTJc14Xs9FW/s
-         8iag==
-X-Received: by 10.220.17.131 with SMTP id s3mr11009285vca.20.1385118241189;
- Fri, 22 Nov 2013 03:04:01 -0800 (PST)
-Received: by 10.58.253.136 with HTTP; Fri, 22 Nov 2013 03:04:01 -0800 (PST)
-In-Reply-To: <20131122095801.GB12042@sigill.intra.peff.net>
+        bh=ogkjUPshSUfKmVUPDSGD6b7hRW6WbOHKU0Srge/7GtM=;
+        b=nkC9R9lkMwC/XfEb76VfGFgoBLtsryr4DJY24sXjnK6/i3h+9MPfNWOvKRqNVleacB
+         w45NisqDQOPQ8Ps+7OwMKPGsRgeC1hoA4gRfg0S9XFpKaEGqnMlyX0SETyUXjZFWPnDY
+         QahSOb5DCHsdQp3eA2Zm2PPj7F4QPMWu21wW1yLhVhfQvsPYWZVX7AxRvefLi6QM6Qsl
+         mdiYsVUhyf1oCSqCCoXNPIqypm7+5gb2j1djZc5LDVllg8STyQ91MPp9p+Imt5DHr9zC
+         iRt3IZH/7tgYTPxHq55FMUSXI/kcTc8d1oTfx3lJBjYUJHHi8zTL7WqOi05GFJ5qMl52
+         IyzA==
+X-Received: by 10.50.16.45 with SMTP id c13mr1856621igd.55.1385119027167; Fri,
+ 22 Nov 2013 03:17:07 -0800 (PST)
+Received: by 10.64.73.36 with HTTP; Fri, 22 Nov 2013 03:16:27 -0800 (PST)
+In-Reply-To: <CAErtv26Q_YN+U+trjNac1aKLi9BvNHNNuaUkrr2RE0nB+yxWsw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238177>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238178>
 
-On Fri, Nov 22, 2013 at 10:58 AM, Jeff King <peff@peff.net> wrote:
-> On Thu, Nov 21, 2013 at 09:19:25PM +0100, Christian Couder wrote:
->
->> Yeah, I think it might report wrong size in case of replaced objects
->> for example.
->> I looked at that following Junio's comment about the
->> sha1_object_info() API, which,
->> unlike read_sha1_file() API, does not interact with the "replace" mechanism:
->>
->> http://thread.gmane.org/gmane.comp.version-control.git/234023/
->>
->> I started to work on a patch about this but didn't take the time to
->> finish and post it.
->
-> That seems kind of crazy. Would the fix be as simple as this:
->
-> diff --git a/sha1_file.c b/sha1_file.c
-> index 10676ba..a051d6c 100644
-> --- a/sha1_file.c
-> +++ b/sha1_file.c
-> @@ -2529,6 +2529,8 @@ int sha1_object_info_extended(const unsigned char *sha1, struct object_info *oi)
->         struct pack_entry e;
->         int rtype;
->
-> +       sha1 = lookup_replace_object(sha1);
-> +
->         co = find_cached_object(sha1);
->         if (co) {
->                 if (oi->typep)
->
-> or do we need some way for callers to turn off replacement? I notice
-> that read_sha1_file has such a feature, but it is only used in one
-> place.
+[+CC: Jens, the goto-guy for submodules]
 
-Yeah, indeed, I asked myself such a question and that's why it is not
-so simple unfortunately.
+Sergey Sharybin wrote:
+> Namely, `git ls-files -m` will show addons as modified, regardless
+> ignore=all configuration. In the same time `git diff-index --name-only
+> HEAD --` will show no changes at all.
 
-In "sha1_file.c", there is:
+This happens because diff-index handles submodules explicitly (see
+diff-lib.c), while ls-files doesn't (see builtin/ls-files.c). My
+opinion is that this is a bug, and git ls-files needs to be taught to
+handle submodules properly.
 
-void *read_sha1_file_extended(const unsigned char *sha1,
-                              enum object_type *type,
-                              unsigned long *size,
-                              unsigned flag)
-{
-        void *data;
-        char *path;
-        const struct packed_git *p;
-        const unsigned char *repl = (flag & READ_SHA1_FILE_REPLACE)
-                ? lookup_replace_object(sha1) : sha1;
+> This leads to issues with Arcanist (which is a Phabricator's tool) who
+> considers addons as uncommited changes and either complains on this or
+> just adds this to commits.
 
-        errno = 0;
-        data = read_object(repl, type, size);
-...
+Does Arcanist use `git ls-files -m` to check?
 
-And in cache.h, there is:
+> There're also some more issues which happens to our
+> developers and which i can not quite reproduce.
 
-#define READ_SHA1_FILE_REPLACE 1
-static inline void *read_sha1_file(const unsigned char *sha1, enum
-object_type *type, unsigned long *size)
-{
-        return read_sha1_file_extended(sha1, type, size,
-READ_SHA1_FILE_REPLACE);
-}
+Do try to track down the other issues and let us know.
 
-So the READ_SHA1_FILE_REPLACE is a way to disable replacement at compile time.
+> Sometimes it happens so git checkout to another branch yields about
+> uncommited changes to addons and doesn't checkout to another branch.
 
-But in my opinion if we want such a knob, we should use it when we set
-the "read_replace_refs" global variable.
-For example with something like this:
+I've seldom used submodules with branches, so I'll let others chime in.
 
-diff --git a/environment.c b/environment.c
-index 0a15349..7c99af8 100644
---- a/environment.c
-+++ b/environment.c
-@@ -44,7 +44,7 @@ const char *editor_program;
- const char *askpass_program;
- const char *excludes_file;
- enum auto_crlf auto_crlf = AUTO_CRLF_FALSE;
--int read_replace_refs = 1; /* NEEDSWORK: rename to use_replace_refs */
-+int read_replace_refs = READ_SHA1_FILE_REPLACE; /* NEEDSWORK: rename
-to use_replace_refs */
- enum eol core_eol = EOL_UNSET;
- enum safe_crlf safe_crlf = SAFE_CRLF_WARN;
- unsigned whitespace_rule_cfg = WS_DEFAULT_RULE;
-
-@Junio what would you think about such a change?
-
-> I guess we would need to audit all the sha1_object_info callers.
-
-Yeah but when I looked at them, there were not many that looked dangerous.
-
-Thanks,
-Christian.
+Cheers.
