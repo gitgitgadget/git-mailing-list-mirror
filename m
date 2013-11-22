@@ -1,108 +1,147 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: What's cooking in git.git (Nov 2013, #05; Thu, 21)
-Date: Fri, 22 Nov 2013 05:23:45 -0500
-Message-ID: <20131122102345.GC12042@sigill.intra.peff.net>
-References: <xmqqtxf51e5c.fsf@gitster.dls.corp.google.com>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH] drop support for "experimental" loose objects
+Date: Fri, 22 Nov 2013 12:04:01 +0100
+Message-ID: <CAP8UFD1fMTrJGo9Z4+jdWqc-=UmPG1jQjwTij4962WDoh_a1DA@mail.gmail.com>
+References: <20131120203350.GA31139@kitenet.net>
+	<20131120213348.GA29004@sigill.intra.peff.net>
+	<20131120222805.GC26468@kitenet.net>
+	<20131121114157.GA7171@sigill.intra.peff.net>
+	<20131121160426.GA21843@kitenet.net>
+	<CAP8UFD2S1HUDYLbmEGFqLcBFExuB0h7=gqwsQ0qjpMSc+YaXog@mail.gmail.com>
+	<20131122095801.GB12042@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Nov 22 11:23:52 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Joey Hess <joey@kitenet.net>, git <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Nov 22 12:04:13 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vjntv-0001Ul-PJ
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Nov 2013 11:23:52 +0100
+	id 1VjoWz-0005MB-98
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Nov 2013 12:04:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752567Ab3KVKXs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Nov 2013 05:23:48 -0500
-Received: from cloud.peff.net ([50.56.180.127]:43695 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751879Ab3KVKXr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Nov 2013 05:23:47 -0500
-Received: (qmail 9234 invoked by uid 102); 22 Nov 2013 10:23:47 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 22 Nov 2013 04:23:47 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 22 Nov 2013 05:23:45 -0500
-Content-Disposition: inline
-In-Reply-To: <xmqqtxf51e5c.fsf@gitster.dls.corp.google.com>
+	id S1752567Ab3KVLED (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Nov 2013 06:04:03 -0500
+Received: from mail-vc0-f169.google.com ([209.85.220.169]:39567 "EHLO
+	mail-vc0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751956Ab3KVLEB (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Nov 2013 06:04:01 -0500
+Received: by mail-vc0-f169.google.com with SMTP id hu19so720385vcb.14
+        for <git@vger.kernel.org>; Fri, 22 Nov 2013 03:04:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=63xVxDSzSher6pfeahY+M1Lk1vXnrMWHITtrJQNlA68=;
+        b=otdo6RPorm0gyBEWrJkRa80/+og6Nvy0ehniD4fX/7Ikg27UVzPRHkEU1d6PO0u1Pl
+         Rwk9XUQlvcmrYfHNxFQ9hK27lfO1zjPpQkCHWMcoZ10dMGIPB7GA6W0giMAx7hPTE32x
+         dyyuK3W6/PUqXEyMKu2FO2PfLSSuqPmA65av6iEHPZ+LjRE+vio3PKaHemBnMLSFwuWA
+         Lt/Ymu2qjN7j3jdt0o5sdJ1Z9zgjm1/1y1q1zfD9FepwnUajOX7BHs0FGcfvvQA2SAnQ
+         IlUwBbmURNcgzeliMfWM3i30gA0CiBqpsHn+LAq/OpJzqOH3IeDyNJdyTJc14Xs9FW/s
+         8iag==
+X-Received: by 10.220.17.131 with SMTP id s3mr11009285vca.20.1385118241189;
+ Fri, 22 Nov 2013 03:04:01 -0800 (PST)
+Received: by 10.58.253.136 with HTTP; Fri, 22 Nov 2013 03:04:01 -0800 (PST)
+In-Reply-To: <20131122095801.GB12042@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238176>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238177>
 
-On Thu, Nov 21, 2013 at 04:19:43PM -0800, Junio C Hamano wrote:
+On Fri, Nov 22, 2013 at 10:58 AM, Jeff King <peff@peff.net> wrote:
+> On Thu, Nov 21, 2013 at 09:19:25PM +0100, Christian Couder wrote:
+>
+>> Yeah, I think it might report wrong size in case of replaced objects
+>> for example.
+>> I looked at that following Junio's comment about the
+>> sha1_object_info() API, which,
+>> unlike read_sha1_file() API, does not interact with the "replace" mechanism:
+>>
+>> http://thread.gmane.org/gmane.comp.version-control.git/234023/
+>>
+>> I started to work on a patch about this but didn't take the time to
+>> finish and post it.
+>
+> That seems kind of crazy. Would the fix be as simple as this:
+>
+> diff --git a/sha1_file.c b/sha1_file.c
+> index 10676ba..a051d6c 100644
+> --- a/sha1_file.c
+> +++ b/sha1_file.c
+> @@ -2529,6 +2529,8 @@ int sha1_object_info_extended(const unsigned char *sha1, struct object_info *oi)
+>         struct pack_entry e;
+>         int rtype;
+>
+> +       sha1 = lookup_replace_object(sha1);
+> +
+>         co = find_cached_object(sha1);
+>         if (co) {
+>                 if (oi->typep)
+>
+> or do we need some way for callers to turn off replacement? I notice
+> that read_sha1_file has such a feature, but it is only used in one
+> place.
 
-> * np/pack-v4 (2013-09-18) 90 commits
->  . packv4-parse.c: add tree offset caching
->  . t1050: replace one instance of show-index with verify-pack
->  . index-pack, pack-objects: allow creating .idx v2 with .pack v4
->  . unpack-objects: decode v4 trees
->  . unpack-objects: allow to save processed bytes to a buffer
->  - ...
-> 
->  Nico and Duy advancing the eternal vaporware pack-v4.  This is here
->  primarily for wider distribution of the preview edition.
-> 
->  Temporarily ejected from 'pu', to try out jk/pack-bitmap, which
->  this topic conflicts with.
+Yeah, indeed, I asked myself such a question and that's why it is not
+so simple unfortunately.
 
-I had a look at the conflicts. Textually, I do not think it is anything
-too serious; it is mostly a case of adding unrelated lines in the same
-spot. I am happy to help with resolving that if there is a need.
+In "sha1_file.c", there is:
 
-However, there may be semantic conflicts. The big one I can think of is
-how packfile reuse interacts with various versions. We only do pack
-reuse during a --stdout pack to a client. At this point, that means we
-must be outputting packv2. If we have packv2 on disk, we are fine. If we
-have packv4 on disk, I guess we simply need to disable reuse, which
-should not be hard.
+void *read_sha1_file_extended(const unsigned char *sha1,
+                              enum object_type *type,
+                              unsigned long *size,
+                              unsigned flag)
+{
+        void *data;
+        char *path;
+        const struct packed_git *p;
+        const unsigned char *repl = (flag & READ_SHA1_FILE_REPLACE)
+                ? lookup_replace_object(sha1) : sha1;
 
-Once we start sending packv4 to clients, we'll have to reevaluate.
-Probably we can just get away with turning off reuse when there is a
-mismatch, though if my understanding of packv4 is correct, we could
-still reuse packv2 entries. We can put that off until somebody works on
-packv4-on-the-wire, though. :)
+        errno = 0;
+        data = read_object(repl, type, size);
+...
 
-> * jk/pack-bitmap (2013-11-18) 22 commits
->  - compat/mingw.h: Fix the MinGW and msvc builds
->  - pack-bitmap: implement optional name_hash cache
->  - t/perf: add tests for pack bitmaps
->  - t: add basic bitmap functionality tests
->  - count-objects: recognize .bitmap in garbage-checking
->  - repack: consider bitmaps when performing repacks
->  - repack: handle optional files created by pack-objects
->  - repack: turn exts array into array-of-struct
->  - repack: stop using magic number for ARRAY_SIZE(exts)
->  - pack-objects: implement bitmap writing
->  - rev-list: add bitmap mode to speed up object lists
->  - pack-objects: use bitmaps when packing objects
->  - pack-bitmap: add support for bitmap indexes
->  - documentation: add documentation for the bitmap format
->  - ewah: compressed bitmap implementation
->  - compat: add endianness helpers
->  - sha1_file: export `git_open_noatime`
->  - revision: allow setting custom limiter function
->  - pack-objects: factor out name_hash
->  - pack-objects: refactor the packing list
->  - revindex: export new APIs
->  - sha1write: make buffer const-correct
-> 
->  Borrows the bitmap index into packfiles from JGit to speed up
->  enumeration of objects involved in a commit range without having to
->  fully traverse the history.
+And in cache.h, there is:
 
-Looks like you picked up my latest re-roll with Ramsay's fix on top.
-There wasn't a lot of review on this past round (I'm not surprised; it's
-a dauntingly large chunk to review).  I outlined a few possible open
-issues in the cover letter, but I'd be happy to build those on top,
-which I think will make review of them a lot easier.
+#define READ_SHA1_FILE_REPLACE 1
+static inline void *read_sha1_file(const unsigned char *sha1, enum
+object_type *type, unsigned long *size)
+{
+        return read_sha1_file_extended(sha1, type, size,
+READ_SHA1_FILE_REPLACE);
+}
 
-Do we want to try this in 'next' post-1.8.5, or should I try to prod an
-area expert like Shawn into doing another round of review?
+So the READ_SHA1_FILE_REPLACE is a way to disable replacement at compile time.
 
--Peff
+But in my opinion if we want such a knob, we should use it when we set
+the "read_replace_refs" global variable.
+For example with something like this:
+
+diff --git a/environment.c b/environment.c
+index 0a15349..7c99af8 100644
+--- a/environment.c
++++ b/environment.c
+@@ -44,7 +44,7 @@ const char *editor_program;
+ const char *askpass_program;
+ const char *excludes_file;
+ enum auto_crlf auto_crlf = AUTO_CRLF_FALSE;
+-int read_replace_refs = 1; /* NEEDSWORK: rename to use_replace_refs */
++int read_replace_refs = READ_SHA1_FILE_REPLACE; /* NEEDSWORK: rename
+to use_replace_refs */
+ enum eol core_eol = EOL_UNSET;
+ enum safe_crlf safe_crlf = SAFE_CRLF_WARN;
+ unsigned whitespace_rule_cfg = WS_DEFAULT_RULE;
+
+@Junio what would you think about such a change?
+
+> I guess we would need to audit all the sha1_object_info callers.
+
+Yeah but when I looked at them, there were not many that looked dangerous.
+
+Thanks,
+Christian.
