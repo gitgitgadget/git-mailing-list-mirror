@@ -1,66 +1,74 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] drop support for "experimental" loose objects
-Date: Thu, 21 Nov 2013 21:09:12 -0500
-Message-ID: <20131122020911.GA12042@sigill.intra.peff.net>
-References: <20131120203350.GA31139@kitenet.net>
- <20131120213348.GA29004@sigill.intra.peff.net>
- <20131120222805.GC26468@kitenet.net>
- <20131121114157.GA7171@sigill.intra.peff.net>
- <20131121160426.GA21843@kitenet.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] glossary-content.txt: remove an obsolete paragrah
+Date: Thu, 21 Nov 2013 21:40:24 -0800
+Message-ID: <xmqqpppt0zav.fsf@gitster.dls.corp.google.com>
+References: <1384910801-11125-1-git-send-email-pclouds@gmail.com>
+	<1385016260-9718-1-git-send-email-pclouds@gmail.com>
+	<xmqqtxf54o83.fsf@gitster.dls.corp.google.com>
+	<xmqqy54h1f9q.fsf@gitster.dls.corp.google.com>
+	<CACsJy8C38PUCYMSdEJ1-S5HSNdJO7S24mhkEryFrSGfwKuaU0A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Joey Hess <joey@kitenet.net>
-X-From: git-owner@vger.kernel.org Fri Nov 22 03:09:19 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 22 06:40:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VjgBK-0004l6-Si
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Nov 2013 03:09:19 +0100
+	id 1VjjU1-0004Un-MK
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Nov 2013 06:40:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754767Ab3KVCJP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Nov 2013 21:09:15 -0500
-Received: from cloud.peff.net ([50.56.180.127]:43539 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753427Ab3KVCJO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Nov 2013 21:09:14 -0500
-Received: (qmail 19817 invoked by uid 102); 22 Nov 2013 02:09:13 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 21 Nov 2013 20:09:13 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 21 Nov 2013 21:09:12 -0500
-Content-Disposition: inline
-In-Reply-To: <20131121160426.GA21843@kitenet.net>
+	id S1750764Ab3KVFk3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Nov 2013 00:40:29 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55003 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750726Ab3KVFk3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Nov 2013 00:40:29 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5EA964988C;
+	Fri, 22 Nov 2013 00:40:28 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=CcxAHOUOY+VDg4bo8upihceX8+I=; b=O+7jSs
+	Plpj5QVH8Yxid48fjCz4daat+Wpt6GkbFo+vpAWspeNtDsoxL9vSAKa2LWIdkXXe
+	qLx8nQ1CcMmxRrouO5iiP2mOaxXX4AJMaCa+LD/O9sewIZp1FhgZUORGvyIBdj3c
+	WV9aauy2S3UOq3iQvRi+i9gWeHsRCc2VneTkw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=hwwwwRrGJOqtE4u0EwJtLihkWREFlB9H
+	OR9fNtCElPD5H+dTGwJnr/yg6hxrbdj0rM6aFpKcKNHjlxW9yML3+qbtyjHLOyI7
+	IyaZRCJPRCIIfbZ/UHMghwS/CIIqkWGD18LqQ7NZ4GYMOYmEXMVXsTmBiRhrcS/P
+	egs2D5M7SSc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 52AA34988B;
+	Fri, 22 Nov 2013 00:40:28 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A6B3C49889;
+	Fri, 22 Nov 2013 00:40:27 -0500 (EST)
+In-Reply-To: <CACsJy8C38PUCYMSdEJ1-S5HSNdJO7S24mhkEryFrSGfwKuaU0A@mail.gmail.com>
+	(Duy Nguyen's message of "Fri, 22 Nov 2013 08:36:46 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 9789D43A-5338-11E3-B4A6-D331802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238171>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238172>
 
-On Thu, Nov 21, 2013 at 12:04:26PM -0400, Joey Hess wrote:
+Duy Nguyen <pclouds@gmail.com> writes:
 
-> Jeff King wrote:
-> > This latter behavior is much worse for two reasons. One,
-> > git reports an allocation error when the real error is
-> > corruption. And two, the program dies unconditionally, so
-> > you cannot even run fsck (which would otherwise ignore the
-> > broken object and keep going).
-> 
-> BTW, I've also seen git cat-file --batch report wrong sizes for objects,
-> sometimes without crashing. This is particularly problimatic because if
-> the object size is wrong, it's very hard to detect the actual end of the
-> object output in the batch mode stream.
+> Current version does force that.
+>
+> $ git log -- ':/#aa'
+> fatal: Unimplemented pathspec magic '#' in ':/#aa'
+>
+> Not sure if there are tests for it though. I'll add an advice to do ":/:#aa".
 
-Hrm. For --batch, I'd think we would open the whole object and notice
-the corruption, even with the current code. But for --batch-check, we
-use sha1_object_info, and for an "experimental" object, we do not need
-to de-zlib the object at all.  So we end up reporting whatever crap we
-decipher from the garbage bytes.  My patch would fix that, as we would
-not incorrectly guess an object is experimental anymore.
-
-If you have specific cases that trigger even after my patch, I'd be
-interested to see them.
-
--Peff
+It is good that we already do the right thing, but actually I was
+not questioning the implementation. I was talking about the fact
+that the documentation is open to misinterpretation that contradicts
+the correct behaviour, as if it were buggy.
