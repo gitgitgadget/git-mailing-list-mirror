@@ -1,69 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] drop support for "experimental" loose objects
-Date: Fri, 22 Nov 2013 09:23:32 -0800
-Message-ID: <xmqqli0g1hbf.fsf@gitster.dls.corp.google.com>
-References: <20131120203350.GA31139@kitenet.net>
-	<20131120213348.GA29004@sigill.intra.peff.net>
-	<20131120222805.GC26468@kitenet.net>
-	<20131121114157.GA7171@sigill.intra.peff.net>
-	<20131121160426.GA21843@kitenet.net>
-	<CAP8UFD2S1HUDYLbmEGFqLcBFExuB0h7=gqwsQ0qjpMSc+YaXog@mail.gmail.com>
-	<20131122095801.GB12042@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: What's cooking in git.git (Nov 2013, #05; Thu, 21)
+Date: Fri, 22 Nov 2013 12:26:27 -0500
+Message-ID: <20131122172626.GA4881@sigill.intra.peff.net>
+References: <xmqqtxf51e5c.fsf@gitster.dls.corp.google.com>
+ <20131122102345.GC12042@sigill.intra.peff.net>
+ <87d2lsjs4q.fsf@linux-k42r.v.cablecom.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Christian Couder <christian.couder@gmail.com>,
-	Joey Hess <joey@kitenet.net>, git <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Nov 22 18:23:41 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Vicent =?utf-8?B?TWFydMOt?= <vicent@github.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Thomas Rast <tr@thomasrast.ch>
+X-From: git-owner@vger.kernel.org Fri Nov 22 18:26:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VjuSD-0003ml-63
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Nov 2013 18:23:41 +0100
+	id 1VjuV0-0005sV-Oy
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Nov 2013 18:26:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755578Ab3KVRXh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Nov 2013 12:23:37 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34959 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753041Ab3KVRXg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Nov 2013 12:23:36 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 748CF53DA9;
-	Fri, 22 Nov 2013 12:23:35 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=0uOQyFWGt921EzihuwpOH+RRBSg=; b=VMJFU9
-	PvlG3JALQFt/V4DoEBfDK+WETOmdW7qFIQY/bAEyKLD7ebOEqld4Ljt+4qjullwq
-	kxezUMjwmf3v3eF4qgNBn0YsBcOa6kv602vnZ3hUeRAEnsmjIKtXC9W3StL9zXMj
-	O+6xALV7JK9mVRSqWI/huI7t7F2IxFW1f1cFA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=mb0ct03bHjUP7uqJKgdVgqlQDpEpWD3g
-	MLHjKUu8uA+oQNDSYjOD0XSHgSLPbKFECYKo9fi2dOLoYCxAw96G/ROROwn7g6cZ
-	M7rPtP8Wo88bJWx3A1H3AG773NZYyYfoY+OS3NkjjVes3z50GWnhzGfZ6JklohhH
-	PjwiGaEf4uA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 629BA53DA7;
-	Fri, 22 Nov 2013 12:23:35 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A0F2D53DA6;
-	Fri, 22 Nov 2013 12:23:34 -0500 (EST)
-In-Reply-To: <20131122095801.GB12042@sigill.intra.peff.net> (Jeff King's
-	message of "Fri, 22 Nov 2013 04:58:02 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: D0EFA6F2-539A-11E3-A56B-D331802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755856Ab3KVR03 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Nov 2013 12:26:29 -0500
+Received: from cloud.peff.net ([50.56.180.127]:43883 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755816Ab3KVR02 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Nov 2013 12:26:28 -0500
+Received: (qmail 1060 invoked by uid 102); 22 Nov 2013 17:26:28 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 22 Nov 2013 11:26:28 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 22 Nov 2013 12:26:27 -0500
+Content-Disposition: inline
+In-Reply-To: <87d2lsjs4q.fsf@linux-k42r.v.cablecom.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238198>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238199>
 
-Jeff King <peff@peff.net> writes:
+On Fri, Nov 22, 2013 at 05:52:37PM +0100, Thomas Rast wrote:
 
-> I guess we would need to audit all the sha1_object_info callers.
+> > Looks like you picked up my latest re-roll with Ramsay's fix on top.
+> > There wasn't a lot of review on this past round (I'm not surprised; it's
+> > a dauntingly large chunk to review).  I outlined a few possible open
+> > issues in the cover letter, but I'd be happy to build those on top,
+> > which I think will make review of them a lot easier.
+> >
+> > Do we want to try this in 'next' post-1.8.5, or should I try to prod an
+> > area expert like Shawn into doing another round of review?
+> 
+> Hmm, maybe I missed something, but AFAICS you (or Vicent) never acted on
+> or responded to my June reviews in this thread:
+> 
+>   http://thread.gmane.org/gmane.comp.version-control.git/228918
+> 
+> and again mentioned here, though I didn't point out all of them:
+> 
+>   http://thread.gmane.org/gmane.comp.version-control.git/236587/focus=236740
 
-Yup; I agree that was the conclusion of Christian's thread.
+Sorry, I didn't respond directly to the email. Vicent did a pass for
+style and documentation shortly after the initial series, and then I did
+another pass in the most recent re-roll, adding a C fallback for the
+gcc builtin. I thought that covered it, but:
+
+> Granted, the way I verified this was checking whether you renamed
+> rlw_xor_run_bit() to something more fitting, so perhaps you just forgot
+> that one thing but did all the rest.
+
+I didn't touch that. Vicent, did you have a comment on the name (it
+really does look like it is a negation, and the only caller is
+ewah_not).
+
+-Peff
