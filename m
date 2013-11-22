@@ -1,137 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] Revamp git-cherry(1)
-Date: Fri, 22 Nov 2013 11:39:09 -0800
-Message-ID: <xmqqy54gz0o2.fsf@gitster.dls.corp.google.com>
-References: <xmqqli0h4kvj.fsf@gitster.dls.corp.google.com>
-	<dde93c10b7f6cb7b8cf94e9a0310c8e05aca2517.1385137650.git.tr@thomasrast.ch>
-	<xmqqa9gw1bne.fsf@gitster.dls.corp.google.com>
-	<87li0gi5xx.fsf@linux-k42r.v.cablecom.net>
+From: Vicent Marti <vicent@github.com>
+Subject: Re: What's cooking in git.git (Nov 2013, #05; Thu, 21)
+Date: Fri, 22 Nov 2013 20:40:55 +0100
+Message-ID: <CAFFjANQni7mvFBuAqJnPpTJ_68+rJKU6KmdRAWbyK_jbi0S=xA@mail.gmail.com>
+References: <xmqqtxf51e5c.fsf@gitster.dls.corp.google.com> <20131122102345.GC12042@sigill.intra.peff.net>
+ <87d2lsjs4q.fsf@linux-k42r.v.cablecom.net> <20131122172626.GA4881@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, a.huemer@commend.com,
-	"Michael S. Tsirkin" <mst@kernel.org>, Jeff King <peff@peff.net>
-To: Thomas Rast <tr@thomasrast.ch>
-X-From: git-owner@vger.kernel.org Fri Nov 22 20:39:19 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Thomas Rast <tr@thomasrast.ch>, Junio C Hamano <gitster@pobox.com>,
+	git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Nov 22 20:41:23 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VjwZS-00017n-8f
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Nov 2013 20:39:18 +0100
+	id 1VjwbR-0002gD-6o
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Nov 2013 20:41:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756031Ab3KVTjO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Nov 2013 14:39:14 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38220 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755605Ab3KVTjN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Nov 2013 14:39:13 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3F7F854594;
-	Fri, 22 Nov 2013 14:39:13 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=6TT5ZgbfDteCoAiLZ8enY6neGd4=; b=IJXnF+
-	UCZGNMtatUe+qUK+N5NshcCPRzsUDTAmRDXKb3/H7idWfuMFt4Nhiow5BYQpTwkL
-	yCd5v0W2QoMK4QlloEPY2k4yb4CwAKGENjg89CM3Hp0aVggq2m2yHJxMeq451o2v
-	BeiFz4BDJcLNp0oP+xKz9RoXbVXaFICa/kozM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=osjVyePoVIt22aKSX73ZZRCC41AJZ0cf
-	afcmyv8j37nFx0ZOwwY+1uGGrs5moo989RN4hSMGFfPWbCJuc/uHkKISXiCHzCiS
-	agEnI96DPNgNbkNXa2ZcLxHG2Zpn4C4Vt55RK2uKo2gUoMk9iOYAvS+vupVOYRG1
-	G7B2SKlTe+M=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2705654592;
-	Fri, 22 Nov 2013 14:39:13 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5CC7E54590;
-	Fri, 22 Nov 2013 14:39:12 -0500 (EST)
-In-Reply-To: <87li0gi5xx.fsf@linux-k42r.v.cablecom.net> (Thomas Rast's message
-	of "Fri, 22 Nov 2013 20:37:14 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: C3653598-53AD-11E3-A587-D331802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756014Ab3KVTlS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Nov 2013 14:41:18 -0500
+Received: from mail-vb0-f41.google.com ([209.85.212.41]:45803 "EHLO
+	mail-vb0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755657Ab3KVTlQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Nov 2013 14:41:16 -0500
+Received: by mail-vb0-f41.google.com with SMTP id w5so1173094vbf.14
+        for <git@vger.kernel.org>; Fri, 22 Nov 2013 11:41:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=oIDiBoMg1sywo8wM5WMJOdYHbwoBov3wP5S2cNpnbOU=;
+        b=pvrXKfErz/27aGEWwjE+aB9fnOr8DRhEfpg8FbBKveEstA3F0ac1xsVAdWQWBlji8F
+         oVKaJ2vwXYs+k/GF3eE7O1H+qs2Xr2/AtFkE7CROm8Qn7SjKt5NFcAcTbP7XHNxql3AY
+         sDgSpxkw3bLFdKs2yzXpCOtxcPEP7qjs2bjnIxcFS8y931oLbCcXqIgPfUXJ4CR2reR3
+         0FMHVLXfx6+B1IjI3TO6ON8k/6dNd9F0aRXtqZnM6slYi5q/MS22sh24mxyuTX4etFiy
+         cDyMup2EIT8Bic9Fq+MnP8ymYQEq1KYSgekhzyC29oYdiSoW5dhob7rPxCfve3ej68u/
+         0kFA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=oIDiBoMg1sywo8wM5WMJOdYHbwoBov3wP5S2cNpnbOU=;
+        b=VKg0V/JwymM1pq27Zatwlm2msp5SXdlvG7QfxmsZ/u4hcCbl9A1wqdRxZl7SoCJwiX
+         toUdKvNxawYMu7nipG1Mpni/5sAFIEJd6fEPiHPFr3UNJO/8OE05LHYJnfGGzHHE773E
+         Mz3uUNMYZigIz+lh2K9j9C64PDcax0BkiPuIQ=
+X-Received: by 10.52.103.35 with SMTP id ft3mr10932823vdb.5.1385149275498;
+ Fri, 22 Nov 2013 11:41:15 -0800 (PST)
+Received: by 10.220.87.142 with HTTP; Fri, 22 Nov 2013 11:40:55 -0800 (PST)
+In-Reply-To: <20131122172626.GA4881@sigill.intra.peff.net>
+X-Google-Sender-Auth: ea0BCIJtaTrj2ruL5LsqnRErmQA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238208>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238209>
 
-Thomas Rast <tr@thomasrast.ch> writes:
-
-> Junio C Hamano <gitster@pobox.com> writes:
+On Fri, Nov 22, 2013 at 6:26 PM, Jeff King <peff@peff.net> wrote:
+>> Granted, the way I verified this was checking whether you renamed
+>> rlw_xor_run_bit() to something more fitting, so perhaps you just forgot
+>> that one thing but did all the rest.
 >
->> We are listing those that need to be added to the upstream with "+",
->> while listing those that can be dropped from yours if you rebase
->> with "-".  Hinting the rationale behind the choice of "+/-"
->> somewhere may help as a mnemonic to the readers (see below).
-> [...]
->> And the earlier "why +/-" could be done after this picture,
->> perhaps like:
->>
->> 	Here, we see that the commits A and C (marked with `-`) can
->> 	be dropped from your `topic` branch when you rebase it on
->> 	top of `origin/master`, while the commit B (marked with `+`)
->> 	still needs to be kept so that it will be sent to be applied
->> 	to `origin/master`.
->>
->> or somesuch?
->
-> Good idea, thanks.  Will integrate this more "what still needs to be
-> integrated"-minded wording into a v3.
+> I didn't touch that. Vicent, did you have a comment on the name (it
+> really does look like it is a negation, and the only caller is
+> ewah_not).
 
-Just to possibly save one round-trip, here is what I tentatively
-queued on top of yours.
+Yes, the name was ported straight from the original library and kept
+as-is to make the translation more straightforward. These sources are
+--again-- a translation, so I tried to remain as close to the original
+Java implementation as possible.
 
- Documentation/git-cherry.txt | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+I agree the name is not ideal, but it does make quite a bit of sense.
+It effectively inverts the word based on the run bit, which is the
+equivalent of xoring it with the bit if it's one.
 
-diff --git a/Documentation/git-cherry.txt b/Documentation/git-cherry.txt
-index 6d14b3e..0ea921a 100644
---- a/Documentation/git-cherry.txt
-+++ b/Documentation/git-cherry.txt
-@@ -3,7 +3,7 @@ git-cherry(1)
- 
- NAME
- ----
--git-cherry - Find commits not applied in upstream
-+git-cherry - Find commits yet to be applied to upstream
- 
- SYNOPSIS
- --------
-@@ -56,6 +56,7 @@ $ git checkout -b topic origin/master
- $ git format-patch origin/master
- $ git send-email ... 00*
- ------------
-+
- Later, you can see whether your changes have been applied by saying
- (still on `topic`):
- 
-@@ -84,8 +85,8 @@ $ git log --graph --oneline --decorate --boundary origin/master...topic
- o 1234567 branch point
- ------------
- 
--In such cases, git-cherry shows a concise summary of what has been
--applied:
-+In such cases, git-cherry shows a concise summary of what has yet to
-+be applied:
- 
- ------------
- $ git cherry origin/master topic
-@@ -94,6 +95,12 @@ $ git cherry origin/master topic
- - aaaa000... commit A
- ------------
- 
-+Here, we see that the commits A and C (marked with `-`) can be
-+dropped from your `topic` branch when you rebase it on top of
-+`origin/master`, while the commit B (marked with `+`) still needs to
-+be kept so that it will be sent to be applied to `origin/master`.
-+
-+
- Using a limit
- ~~~~~~~~~~~~~
- 
--- 
-1.8.5-rc3-362-gdf10213
+Love,
+vmg
