@@ -1,100 +1,101 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] drop support for "experimental" loose objects
-Date: Fri, 22 Nov 2013 06:24:29 -0500
-Message-ID: <20131122112429.GA16172@sigill.intra.peff.net>
-References: <20131120203350.GA31139@kitenet.net>
- <20131120213348.GA29004@sigill.intra.peff.net>
- <20131120222805.GC26468@kitenet.net>
- <20131121114157.GA7171@sigill.intra.peff.net>
- <20131121160426.GA21843@kitenet.net>
- <CAP8UFD2S1HUDYLbmEGFqLcBFExuB0h7=gqwsQ0qjpMSc+YaXog@mail.gmail.com>
- <20131122095801.GB12042@sigill.intra.peff.net>
- <CAP8UFD1fMTrJGo9Z4+jdWqc-=UmPG1jQjwTij4962WDoh_a1DA@mail.gmail.com>
+From: Sergey Sharybin <sergey.vfx@gmail.com>
+Subject: Re: Git issues with submodules
+Date: Fri, 22 Nov 2013 17:35:28 +0600
+Message-ID: <CAErtv27dMepNSbBVdOokn6OF858ENaKooL+FzD7JHtp9nRPufw@mail.gmail.com>
+References: <CAErtv26Q_YN+U+trjNac1aKLi9BvNHNNuaUkrr2RE0nB+yxWsw@mail.gmail.com>
+	<CALkWK0n7jdLKOAFoFjuRz0aTCssorAgk2y=Vce76Y5aHWbj53Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Joey Hess <joey@kitenet.net>, git <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 22 12:24:48 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git List <git@vger.kernel.org>, Jens Lehmann <Jens.Lehmann@web.de>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 22 12:35:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vjoqt-0007eF-Tw
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Nov 2013 12:24:48 +0100
+	id 1Vjp1L-0004rX-5V
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Nov 2013 12:35:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753034Ab3KVLYe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Nov 2013 06:24:34 -0500
-Received: from cloud.peff.net ([50.56.180.127]:43722 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751956Ab3KVLYd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Nov 2013 06:24:33 -0500
-Received: (qmail 12092 invoked by uid 102); 22 Nov 2013 11:24:34 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 22 Nov 2013 05:24:34 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 22 Nov 2013 06:24:29 -0500
-Content-Disposition: inline
-In-Reply-To: <CAP8UFD1fMTrJGo9Z4+jdWqc-=UmPG1jQjwTij4962WDoh_a1DA@mail.gmail.com>
+	id S1754424Ab3KVLfb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Nov 2013 06:35:31 -0500
+Received: from mail-ve0-f181.google.com ([209.85.128.181]:41698 "EHLO
+	mail-ve0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752069Ab3KVLfa (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Nov 2013 06:35:30 -0500
+Received: by mail-ve0-f181.google.com with SMTP id oy12so805120veb.12
+        for <git@vger.kernel.org>; Fri, 22 Nov 2013 03:35:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=oj+funCkJXhhpdVsAEDfG7suhiq2f3mQRLceLUrIYf4=;
+        b=tCs2MgqroflDCXS+ySaPLHYmG9EmiMS+vgjaYzVy74cuelPL0iGpqR6vRUpqPLYgrt
+         MjP4ScdDnag2FLNpzQ79EvpIPPFCpEOgKkeVIWR6uHRWXV1k3dLzIyFGZxTL/0iUK5F1
+         ScAiTJeM5hVrJeXFHRgLrB0QE6NAi+P0ohySoJsBM4EKkC6t6VjrJxtQUzqlp2OQJpRG
+         O3MUaMzTFZbJGyTp0q4T93klb8lZbqgLSp8VUCE0HkQVFbbPN86DXlxTNuaT+SEyXLFr
+         KIlvGLydgJWcsQ7VXNF/xxgONzmtlHzOtewGxLTQEN4/dS6iK3kYAL8rFz5jFgPOxda9
+         yaDQ==
+X-Received: by 10.58.46.18 with SMTP id r18mr11063499vem.4.1385120128756; Fri,
+ 22 Nov 2013 03:35:28 -0800 (PST)
+Received: by 10.52.169.2 with HTTP; Fri, 22 Nov 2013 03:35:28 -0800 (PST)
+In-Reply-To: <CALkWK0n7jdLKOAFoFjuRz0aTCssorAgk2y=Vce76Y5aHWbj53Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238179>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238180>
 
-On Fri, Nov 22, 2013 at 12:04:01PM +0100, Christian Couder wrote:
+Hey,
 
-> In "sha1_file.c", there is:
-> 
-> void *read_sha1_file_extended(const unsigned char *sha1,
->                               enum object_type *type,
->                               unsigned long *size,
->                               unsigned flag)
-> {
->         void *data;
->         char *path;
->         const struct packed_git *p;
->         const unsigned char *repl = (flag & READ_SHA1_FILE_REPLACE)
->                 ? lookup_replace_object(sha1) : sha1;
-> 
->         errno = 0;
->         data = read_object(repl, type, size);
-> ...
-> 
-> And in cache.h, there is:
-> 
-> #define READ_SHA1_FILE_REPLACE 1
-> static inline void *read_sha1_file(const unsigned char *sha1, enum
-> object_type *type, unsigned long *size)
-> {
->         return read_sha1_file_extended(sha1, type, size,
-> READ_SHA1_FILE_REPLACE);
-> }
-> 
-> So the READ_SHA1_FILE_REPLACE is a way to disable replacement at compile time.
+Answers are inlined.
 
-Is it? I did not have the impression anyone would ever redefine
-READ_SHA1_FILE_REPLACE at compile time, but that it was a flag that
-individual callsites would pass to read_sha1_file_extended to tell them
-whether they were interested in replacements. And the obvious reasons to
-not be are:
 
-  1. You are doing some operation which needs real objects, like fsck or
-     generating a packfile.
+On Fri, Nov 22, 2013 at 5:16 PM, Ramkumar Ramachandra
+<artagnon@gmail.com> wrote:
+>
+> [+CC: Jens, the goto-guy for submodules]
+>
+> Sergey Sharybin wrote:
+> > Namely, `git ls-files -m` will show addons as modified, regardless
+> > ignore=all configuration. In the same time `git diff-index --name-only
+> > HEAD --` will show no changes at all.
+>
+> This happens because diff-index handles submodules explicitly (see
+> diff-lib.c), while ls-files doesn't (see builtin/ls-files.c). My
+> opinion is that this is a bug, and git ls-files needs to be taught to
+> handle submodules properly.
 
-  2. You have already resolved any replacements, and want to make sure
-     you are getting the same object used elsewhere (e.g., because you
-     already printed its size :) ).
+Shall i fire report somewhere or it's being handled by the folks
+reading this ML?
 
-The only site which calls read_sha1_file_extended directly and does not
-pass the REPLACE flag is in streaming.c. And that looks to be a case of
-(2), since we resolve the replacement at the start in open_istream().
+> > This leads to issues with Arcanist (which is a Phabricator's tool) who
+> > considers addons as uncommited changes and either complains on this or
+> > just adds this to commits.
+>
+> Does Arcanist use `git ls-files -m` to check?
 
-I am kind of surprised we do not need to do so for (1) in places like
-pack-objects.c. Most of that code does not use read_sha1_file,
-preferring instead to find the individual pack entries (for reuse). But
-there are some calls to read_sha1_file, and I wonder if there is a bug
-lurking there.
+Yes, Arcanist uses `git ls-files -m` to check whether there're local
+modifications. We might also contact phab developers asking to change
+it to `git diff --name-only HEAD --`.  Is there a preferable way to
+get list of modified files and are this command intended to output the
+same results?
 
--Peff
+> > There're also some more issues which happens to our
+> > developers and which i can not quite reproduce.
+>
+> Do try to track down the other issues and let us know.
+
+I'm trying, but doesn't happen here on laptop yet. Will give it
+another try (do have some ideas). Also directed our developers here
+who experienced the issue and might give some details,
+
+> > Sometimes it happens so git checkout to another branch yields about
+> > uncommited changes to addons and doesn't checkout to another branch.
+>
+> I've seldom used submodules with branches, so I'll let others chime in.
+
+Ok, thanks anyway :)
+
+-- 
+With best regards, Sergey Sharybin
