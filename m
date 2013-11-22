@@ -1,74 +1,114 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] glossary-content.txt: remove an obsolete paragrah
-Date: Thu, 21 Nov 2013 21:40:24 -0800
-Message-ID: <xmqqpppt0zav.fsf@gitster.dls.corp.google.com>
-References: <1384910801-11125-1-git-send-email-pclouds@gmail.com>
-	<1385016260-9718-1-git-send-email-pclouds@gmail.com>
-	<xmqqtxf54o83.fsf@gitster.dls.corp.google.com>
-	<xmqqy54h1f9q.fsf@gitster.dls.corp.google.com>
-	<CACsJy8C38PUCYMSdEJ1-S5HSNdJO7S24mhkEryFrSGfwKuaU0A@mail.gmail.com>
+From: Sergey Sharybin <sergey.vfx@gmail.com>
+Subject: Git issues with submodules
+Date: Fri, 22 Nov 2013 13:53:33 +0600
+Message-ID: <CAErtv26Q_YN+U+trjNac1aKLi9BvNHNNuaUkrr2RE0nB+yxWsw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 22 06:40:50 2013
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 22 08:53:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VjjU1-0004Un-MK
-	for gcvg-git-2@plane.gmane.org; Fri, 22 Nov 2013 06:40:50 +0100
+	id 1VjlYY-0003qX-Mk
+	for gcvg-git-2@plane.gmane.org; Fri, 22 Nov 2013 08:53:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750764Ab3KVFk3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Nov 2013 00:40:29 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55003 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750726Ab3KVFk3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Nov 2013 00:40:29 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5EA964988C;
-	Fri, 22 Nov 2013 00:40:28 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=CcxAHOUOY+VDg4bo8upihceX8+I=; b=O+7jSs
-	Plpj5QVH8Yxid48fjCz4daat+Wpt6GkbFo+vpAWspeNtDsoxL9vSAKa2LWIdkXXe
-	qLx8nQ1CcMmxRrouO5iiP2mOaxXX4AJMaCa+LD/O9sewIZp1FhgZUORGvyIBdj3c
-	WV9aauy2S3UOq3iQvRi+i9gWeHsRCc2VneTkw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=hwwwwRrGJOqtE4u0EwJtLihkWREFlB9H
-	OR9fNtCElPD5H+dTGwJnr/yg6hxrbdj0rM6aFpKcKNHjlxW9yML3+qbtyjHLOyI7
-	IyaZRCJPRCIIfbZ/UHMghwS/CIIqkWGD18LqQ7NZ4GYMOYmEXMVXsTmBiRhrcS/P
-	egs2D5M7SSc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 52AA34988B;
-	Fri, 22 Nov 2013 00:40:28 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A6B3C49889;
-	Fri, 22 Nov 2013 00:40:27 -0500 (EST)
-In-Reply-To: <CACsJy8C38PUCYMSdEJ1-S5HSNdJO7S24mhkEryFrSGfwKuaU0A@mail.gmail.com>
-	(Duy Nguyen's message of "Fri, 22 Nov 2013 08:36:46 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 9789D43A-5338-11E3-B4A6-D331802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752638Ab3KVHxe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Nov 2013 02:53:34 -0500
+Received: from mail-vb0-f54.google.com ([209.85.212.54]:59528 "EHLO
+	mail-vb0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752132Ab3KVHxe (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Nov 2013 02:53:34 -0500
+Received: by mail-vb0-f54.google.com with SMTP id p6so638792vbe.27
+        for <git@vger.kernel.org>; Thu, 21 Nov 2013 23:53:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=z1L9M0D7vfqjEPdqEKv8o45Kq1REWf2Y4XleCsTaaHc=;
+        b=wSYlYAl9TonCPeYh1ccaYGkZPdAeFqrBKkzdDj7TJahAfWHyI7JxKF53UD/goBhFMd
+         E/oJL4e1khVZ+P3Xgsccx1Xb+/mXTxIvJ/gvZOyxILwEbedbGmgxxrxeV12HOtDJ2i6O
+         HRk3RKysCqS+9L+oOTLypUGcm0uplyW4/jrffK6zPG+ux7WUQmZdheEMKx40zLAVXHlN
+         P4sgcHXgdKTsf5PV9M0GJk3yQu5mZG5lUAPpNfb9jtITiPfEDCrtbzeqIlHJZDiA1KUg
+         kdBtfcRY8z8Vf1zfpsYJz68OqeaL7i4/yhQC8FQC3QxYObPtqhrzHa7g6j5DvEMJ8LOS
+         GQyw==
+X-Received: by 10.220.11.7 with SMTP id r7mr10149430vcr.12.1385106813540; Thu,
+ 21 Nov 2013 23:53:33 -0800 (PST)
+Received: by 10.52.169.2 with HTTP; Thu, 21 Nov 2013 23:53:33 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238172>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238173>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+Hey everyone from Blender developers!
 
-> Current version does force that.
->
-> $ git log -- ':/#aa'
-> fatal: Unimplemented pathspec magic '#' in ':/#aa'
->
-> Not sure if there are tests for it though. I'll add an advice to do ":/:#aa".
+As you might already know, we've recently switched from SVN to Git to
+host Blender sources. In general it works really awesome, but we've
+got some issues with submodules.
 
-It is good that we already do the right thing, but actually I was
-not questioning the implementation. I was talking about the fact
-that the documentation is open to misinterpretation that contradicts
-the correct behaviour, as if it were buggy.
+in SVN we had separate repositories for addons and translations which
+were attached to main tree as svn:external. The reason for this was:
+
+1. Separate commit access between core sources and addons so nobody
+accidentally breaks anything in the core.
+2. Separate commit history to help tracking issues down.
+
+For the most developers and all artists (yes, we've got loads of
+artists who builds blender on their own) it makes sense to always
+checkout latest versions of addons and translations when updating
+working tree.
+
+We used Git submodules as a replacement for svn:external, with some
+tweaks and specific of update procedure.
+
+Namely, we always do `git submodule update --remote` to pull all the
+latest changes from submodules. This will mark checkout as modified
+because submodule hash changes. To avoid infinite commits of submodule
+hash we've added ignore=all to their configuration.
+
+In most cases it works fine, but there're some circumstances when it
+gives weirdo issues.
+
+Namely, `git ls-files -m` will show addons as modified, regardless
+ignore=all configuration. In the same time `git diff-index --name-only
+HEAD --` will show no changes at all.
+
+This leads to issues with Arcanist (which is a Phabricator's tool) who
+considers addons as uncommited changes and either complains on this or
+just adds this to commits.
+
+This issue i might easily reproduce on my laptop with latest Git
+1.8.4.3. There're also some more issues which happens to our
+developers and which i can not quite reproduce.
+
+Sometimes it happens so git checkout to another branch yields about
+uncommited changes to addons and doesn't checkout to another branch.
+
+My guess here is that submodule hash in master and branch was
+different and having hash modified in master somehow prevented changes
+from another branch to be checked out. In this case question would be:
+what would be the proper way to checkout branches when having
+submodules configured this way?
+
+Second issue is that some developers still manages to commit changes
+to submodule hash, which i have totally no idea why Git allows to
+include such a changes. I could not do such a commits on purpose even.
+
+Here're some links to help understanding what's going on:
+
+- Blender repository browser: http://developer.blender.org/diffusion/B/
+- Task in our tracker about issues we've got with Git:
+http://developer.blender.org/T37528
+- History of changes to addons hash:
+http://developer.blender.org/diffusion/B/history/master/release/scripts/addons
+
+We're totally new to git submodules and clarification (and maybe even
+confirmed bug with ls-files -m :) would really be appreciated. We're
+also open for suggestions about re-configuring our submodules so they
+works in a way we'd expect this.
+
+Thanks in advance!
+
+-- 
+With best regards, Sergey Sharybin
