@@ -1,72 +1,102 @@
 From: Antoine Pelisse <apelisse@gmail.com>
-Subject: Re: What's cooking in git.git (Nov 2013, #05; Thu, 21)
-Date: Sat, 23 Nov 2013 12:25:47 +0100
-Message-ID: <CALWbr2xzY6o6ubuLTBd5VaUSqOS6+Vg7o7WfxbOE=6Fc1ob8bg@mail.gmail.com>
-References: <xmqqtxf51e5c.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>, Richard Hansen <rhansen@bbn.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Nov 23 12:26:10 2013
+Subject: [PATCH] remote-hg: fix hg sharedpath when git clone is moved
+Date: Sat, 23 Nov 2013 13:38:22 +0100
+Message-ID: <1385210302-25518-1-git-send-email-apelisse@gmail.com>
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	Antoine Pelisse <apelisse@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Nov 23 13:38:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VkBLm-0002Kl-8Q
-	for gcvg-git-2@plane.gmane.org; Sat, 23 Nov 2013 12:26:10 +0100
+	id 1VkCU2-0007Dp-LV
+	for gcvg-git-2@plane.gmane.org; Sat, 23 Nov 2013 13:38:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751910Ab3KWLZu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 Nov 2013 06:25:50 -0500
-Received: from mail-la0-f49.google.com ([209.85.215.49]:38768 "EHLO
-	mail-la0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750997Ab3KWLZt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Nov 2013 06:25:49 -0500
-Received: by mail-la0-f49.google.com with SMTP id er20so1605802lab.8
-        for <git@vger.kernel.org>; Sat, 23 Nov 2013 03:25:48 -0800 (PST)
+	id S1755684Ab3KWMim (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Nov 2013 07:38:42 -0500
+Received: from mail-we0-f174.google.com ([74.125.82.174]:46881 "EHLO
+	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755539Ab3KWMil (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Nov 2013 07:38:41 -0500
+Received: by mail-we0-f174.google.com with SMTP id q58so2184962wes.33
+        for <git@vger.kernel.org>; Sat, 23 Nov 2013 04:38:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=1jgqqgT9d7z9tLNQn7TQbHrm9UEPBM9RTRTb3p7bs78=;
-        b=CpPPzty+QbUnVcocY04BylrOsU5nNhxWAYsLKdiLeAXfNKiSRdbfjOC5sxs/KYogfW
-         zLtwmHTFJDwsezINGjzbMEyN49Fl4M0tK+1SdBZqWOJaxmjSkkFUpOWFd2Sl+mzsfQv5
-         vu17Kb7HiDiqOQeHpescKo269AFFpg1Yx+CD4ugUmvw8tB9kIfQxBCU857/d0ch5+l4V
-         sWtFDtfiq0u080I4OsduJXSIw/TKkmdHj/Yu68ftoeLoRjZEoT2649MoGRyeIJI+QNTv
-         GThTk5QnT9AUOlRouyb8wFvMbloO2BXdBzoxm3AF0JE/ai5nfIrXCKmbn1LJ0sQN0ItF
-         eANg==
-X-Received: by 10.112.150.103 with SMTP id uh7mr627543lbb.34.1385205947981;
- Sat, 23 Nov 2013 03:25:47 -0800 (PST)
-Received: by 10.112.202.102 with HTTP; Sat, 23 Nov 2013 03:25:47 -0800 (PST)
-In-Reply-To: <xmqqtxf51e5c.fsf@gitster.dls.corp.google.com>
+        h=from:to:cc:subject:date:message-id;
+        bh=0Civa/R4WR7ZYD00BOgaiONxlfsjOAXCDNfSYzDX+oY=;
+        b=CcIuopXYcqT0+a6jdBQNDCT2aQvNT5Y8KjqY7sykjygUkfh/oA/+hN2++1yh9Bmwyc
+         w2ZkQ9MCfsNOtacQskWb+1xxBGGNfmF0zGlOBTn/BXlvmZMTXx1//MoqbxJxIIvzHkLx
+         lQSGlfXTKULN6Idn9NaRRUngL5ByZAXrtCTwWuUlVt25sPLJK7aolADsin5yFRN14+Av
+         CaRPqeWCf0ZnacEjJcx3W/6IOCIBV0gUld+AWoVObAsz90UQVLnMppimpvgmVUMmNQh8
+         OianojaI4nZIIbsmYUDGqzU6KI7L584yBGCyrws6rCFvsRaBqZENTlWfiNh4+boP7wNA
+         mZWA==
+X-Received: by 10.180.14.134 with SMTP id p6mr5777453wic.6.1385210320479;
+        Sat, 23 Nov 2013 04:38:40 -0800 (PST)
+Received: from localhost.localdomain (freepel.fr. [82.247.80.218])
+        by mx.google.com with ESMTPSA id pi6sm26029133wic.3.2013.11.23.04.38.39
+        for <multiple recipients>
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sat, 23 Nov 2013 04:38:39 -0800 (PST)
+X-Mailer: git-send-email 1.8.5.rc1.30.g02973b8.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238230>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238231>
 
-On Fri, Nov 22, 2013 at 1:19 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> * rh/remote-hg-bzr-updates (2013-11-18) 9 commits
->   (merged to 'next' on 2013-11-20 at a36f3c4)
->  + remote-bzr, remote-hg: fix email address regular expression
->  + test-hg.sh: help user correlate verbose output with email test
->  + test-hg.sh: fix duplicate content strings in author tests
->  + test-hg.sh: avoid obsolete 'test' syntax
->  + test-hg.sh: eliminate 'local' bashism
->  + test-bzr.sh, test-hg.sh: prepare for change to push.default=simple
->  + test-bzr.sh, test-hg.sh: allow running from any dir
->  + test-lib.sh: convert $TEST_DIRECTORY to an absolute path
->  + remote-hg: don't decode UTF-8 paths into Unicode objects
->
->  Can wait in 'next'.
+remote-hg is using a mercurial shared clone to store all remotes objects
+in one place. Unfortunately, the sharedpath is stored as an absolute
+path by mercurial, creating a dependency on the location of the git
+repository. Whenever the git repository is moved, the sharedpath must
+be updated to reflect the new absolute path.
 
-Would it be possible to merge the first commit of this series in
-master (and eventually in maint) ?
-My commit (11362653: remote-hg: unquote C-style paths when exporting)
-breaks the remote-hg tests since v1.8.4.3 (sorry about that), and is
-fixed by this commit. It would be nice to deliver 1.8.5 with working
-remote-helpers tests.
+Check mercurial sharedpath file when getting the local hg repository,
+and update it manually with the new path if necessary.
 
-Cheers,
-Antoine
+Signed-off-by: Antoine Pelisse <apelisse@gmail.com>
+---
+ contrib/remote-helpers/git-remote-hg |  4 ++++
+ contrib/remote-helpers/test-hg.sh    | 11 +++++++++++
+ 2 files changed, 15 insertions(+)
+
+diff --git a/contrib/remote-helpers/git-remote-hg b/contrib/remote-helpers/git-remote-hg
+index c6026b9..576f094 100755
+--- a/contrib/remote-helpers/git-remote-hg
++++ b/contrib/remote-helpers/git-remote-hg
+@@ -416,6 +416,10 @@ def get_repo(url, alias):
+         local_path = os.path.join(dirname, 'clone')
+         if not os.path.exists(local_path):
+             hg.share(myui, shared_path, local_path, update=False)
++        else:
++            sharedpath_file = os.path.join(local_path, '.hg', 'sharedpath')
++            if hg_path != open(sharedpath_file, 'r').read():
++                open(sharedpath_file, 'w').write(hg_path)
+ 
+         repo = hg.repository(myui, local_path)
+         try:
+diff --git a/contrib/remote-helpers/test-hg.sh b/contrib/remote-helpers/test-hg.sh
+index 72f745d..2477540 100755
+--- a/contrib/remote-helpers/test-hg.sh
++++ b/contrib/remote-helpers/test-hg.sh
+@@ -335,6 +335,17 @@ test_expect_success 'remote cloning' '
+ 	check gitrepo HEAD zero
+ '
+ 
++test_expect_success 'moving remote clone' '
++	test_when_finished "rm -rf gitrepo*" &&
++
++	(
++	git clone "hg::hgrepo" gitrepo &&
++	mv gitrepo gitrepo2 &&
++	cd gitrepo2 &&
++	git fetch
++	)
++'
++
+ test_expect_success 'remote update bookmark' '
+ 	test_when_finished "rm -rf gitrepo*" &&
+ 
+-- 
+1.8.5.rc1.30.g02973b8.dirty
