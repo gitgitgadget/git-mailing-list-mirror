@@ -1,66 +1,89 @@
-From: Antoine Pelisse <apelisse@gmail.com>
-Subject: Re: [PATCH] remote-hg: fix hg sharedpath when git clone is moved
-Date: Sat, 23 Nov 2013 13:46:13 +0100
-Message-ID: <CALWbr2zkiBS3zvcu8skrtn5tK8XMyQy8Nv1r1h+zowkgpWKYKw@mail.gmail.com>
-References: <1385210302-25518-1-git-send-email-apelisse@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Felipe Contreras <felipe.contreras@gmail.com>,
-	Antoine Pelisse <apelisse@gmail.com>
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Nov 23 13:46:30 2013
+From: Heikki Hokkanen <hoxu@users.sf.net>
+Subject: [PATCH] bash prompt: add option to disable for a repository
+Date: Sat, 23 Nov 2013 15:18:23 +0200
+Message-ID: <1385212703-9611-1-git-send-email-hoxu@users.sf.net>
+Cc: hoxu@users.sf.net, szeder@ira.uka.de
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Nov 23 14:18:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VkCbW-000258-EP
-	for gcvg-git-2@plane.gmane.org; Sat, 23 Nov 2013 13:46:30 +0100
+	id 1VkD6u-0007Za-7u
+	for gcvg-git-2@plane.gmane.org; Sat, 23 Nov 2013 14:18:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752744Ab3KWMqP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 Nov 2013 07:46:15 -0500
-Received: from mail-la0-f51.google.com ([209.85.215.51]:37651 "EHLO
-	mail-la0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751304Ab3KWMqP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Nov 2013 07:46:15 -0500
-Received: by mail-la0-f51.google.com with SMTP id ec20so1674380lab.38
-        for <git@vger.kernel.org>; Sat, 23 Nov 2013 04:46:13 -0800 (PST)
+	id S1755297Ab3KWNSw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Nov 2013 08:18:52 -0500
+Received: from mail-lb0-f172.google.com ([209.85.217.172]:38816 "EHLO
+	mail-lb0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753299Ab3KWNSv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Nov 2013 08:18:51 -0500
+Received: by mail-lb0-f172.google.com with SMTP id z5so1871601lbh.17
+        for <git@vger.kernel.org>; Sat, 23 Nov 2013 05:18:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=r4hJrN0STKh1qLnXYPHmIDPtRM90WSKCzjHPZyVkrTw=;
-        b=rEm93BizDhCIxjzeakeAIzbEyF7oYGAsQQIXxSqsQjRmO7WRP3pfgwVW/X6MczttxT
-         0mJ3TZ5lkReJewhO6s0Za/xIiOayoM51grLzFZT1VhC7Y2T1tfZJ3PLTcQBZrc/iJtVt
-         C8sCyTa7e/xUVgl90uhMWt5mf5jGMGEvkJIVvcqFBQtT0GhW0xuIiRKG/bq+U6Don75O
-         WvgX5eMbQv912E+DaX+AoU0rQKGLRj6XJbnZeqFFB/r0R6x1i2+MQ0gXosUavwVOPR/I
-         wOI2jTQ3SNiHwt9+XQlD+7tFhbgxO72qwiwKEWMEHuQQiqIv4vYfp8EuodyZz/jrq36p
-         JGtQ==
-X-Received: by 10.152.140.193 with SMTP id ri1mr14118503lab.18.1385210773518;
- Sat, 23 Nov 2013 04:46:13 -0800 (PST)
-Received: by 10.112.202.102 with HTTP; Sat, 23 Nov 2013 04:46:13 -0800 (PST)
-In-Reply-To: <1385210302-25518-1-git-send-email-apelisse@gmail.com>
+        h=sender:from:to:cc:subject:date:message-id;
+        bh=jnvmV6wEh3i4gU75XYMjF1KP0Do7HDsqkcRqYYwdilI=;
+        b=pTANyRhFM1RW0BH8vt/fwZnYe/Gl5DFxykFPMOom95q8Yl1a3qcwo5tXQ4X4746zeu
+         GtuCTUs7jxOPAJ3Vjs4mgisPFjyxRBmR/21f41G9Nq+xbnUFKu/Bd/W+guQDBkUbQ4Ft
+         BzYa6bgIustnpw1/gxs2Utkxmh1sXjWa+MBMwAQN24iZoHmIhEtYa3CXBeUj5CM7NdDO
+         u9BdJ4ZwSNO5/Dqv594bRy1D2wSDSdvM4yZPBjzpgMZVuPLDD9M+hsET6iMKn72aHqSc
+         tP+UuJZZhUCkF5mZVjmRqCG//5g6zN0RK7AJQ6iMo7FKKg4uTXkd0sbJx1Hqxehtreee
+         UPLQ==
+X-Received: by 10.152.8.18 with SMTP id n18mr14336925laa.24.1385212730104;
+        Sat, 23 Nov 2013 05:18:50 -0800 (PST)
+Received: from odin.elisa-laajakaista.fi (a88-112-183-5.elisa-laajakaista.fi. [88.112.183.5])
+        by mx.google.com with ESMTPSA id m5sm34072920laj.4.2013.11.23.05.18.49
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 23 Nov 2013 05:18:49 -0800 (PST)
+X-Mailer: git-send-email 1.8.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238232>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238233>
 
-On Sat, Nov 23, 2013 at 1:38 PM, Antoine Pelisse <apelisse@gmail.com> wrote:
-> remote-hg is using a mercurial shared clone to store all remotes objects
-> in one place. Unfortunately, the sharedpath is stored as an absolute
-> path by mercurial, creating a dependency on the location of the git
-> repository. Whenever the git repository is moved, the sharedpath must
-> be updated to reflect the new absolute path.
->
-> Check mercurial sharedpath file when getting the local hg repository,
-> and update it manually with the new path if necessary.
->
-> Signed-off-by: Antoine Pelisse <apelisse@gmail.com>
-> ---
+If bash.prompt is set to false, disable the prompt. This is useful
+for huge repositories like the home directory.
 
-By the way, this is the only link [1] I found about both relative path
-and updating the file. So it looks like there is no other way to
-update the path but to write the file manually.
+Signed-off-by: Heikki Hokkanen <hoxu@users.sf.net>
+---
+git-prompt.sh performance seems to be quite bad for big repositories, so
+without a way to disable it selectively for repositories, it becomes unusable
+for people who have their homedir under git. This patch generalizes the problem
+a bit by allowing the prompt to be disabled by setting bash.prompt to false in
+any repository.
 
-[1]: http://bz.selenic.com/show_bug.cgi?id=2006
+ contrib/completion/git-prompt.sh | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
+index 7b732d2..c982fde 100644
+--- a/contrib/completion/git-prompt.sh
++++ b/contrib/completion/git-prompt.sh
+@@ -84,6 +84,8 @@
+ # GIT_PS1_SHOWCOLORHINTS to a nonempty value. The colors are based on
+ # the colored output of "git status -sb" and are available only when
+ # using __git_ps1 for PROMPT_COMMAND or precmd.
++#
++# To disable prompt for a repository, run "git config bash.prompt false"
+ 
+ # check whether printf supports -v
+ __git_printf_supports_v=
+@@ -304,6 +306,12 @@ __git_ps1 ()
+ 		return
+ 	fi
+ 
++	local prompt_setting
++	prompt_setting=$(git config --bool bash.prompt)
++	if [ -n "$prompt_setting" ] && [ "$prompt_setting" == "false" ]; then
++		return
++	fi
++
+ 	local short_sha
+ 	if [ "$rev_parse_exit_code" = "0" ]; then
+ 		short_sha="${repo_info##*$'\n'}"
+-- 
+1.8.4
