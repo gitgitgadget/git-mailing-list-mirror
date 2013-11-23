@@ -1,83 +1,191 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] drop support for "experimental" loose objects
-Date: Fri, 22 Nov 2013 16:47:54 -0800
-Message-ID: <20131123004754.GL4212@google.com>
-References: <20131120203350.GA31139@kitenet.net>
- <20131120213348.GA29004@sigill.intra.peff.net>
- <20131120222805.GC26468@kitenet.net>
- <20131121114157.GA7171@sigill.intra.peff.net>
- <20131121114837.GB7171@sigill.intra.peff.net>
- <20131123002405.GK4212@google.com>
- <20131123003014.GA11012@sigill.intra.peff.net>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: [RFC PATCH] disable complete ignorance of submodules for index <->
+ HEAD diff
+Date: Sat, 23 Nov 2013 02:11:45 +0100
+Message-ID: <20131123011145.GB4952@sandbox-ub>
+References: <CAErtv27dMepNSbBVdOokn6OF858ENaKooL+FzD7JHtp9nRPufw@mail.gmail.com>
+ <CALkWK0nDME-z7G4kcag=ad3qH5FL9FawrYFyVLQB6Z_g+TV+vQ@mail.gmail.com>
+ <20131122151120.GA32361@sigill.intra.peff.net>
+ <CAErtv25zrsde7wYg+VUZebow2pmhDnDQG53Dmz_gbjavC-D2cA@mail.gmail.com>
+ <CALkWK0m9MK=RBBor-ZeGrGU9KA6tZa89UUi0J7j9fxr1g6uJtQ@mail.gmail.com>
+ <CAErtv24Lv1JegCBQ=TXvOsgBNHp=Rphk5YVAq2qqRbNmqfNSkw@mail.gmail.com>
+ <CAErtv24P+wyZKvvuuPJJ0oxzMif7XtOwJDtKcTKQdKHZaAUbig@mail.gmail.com>
+ <CALkWK0muxsRUtO6KYk5G3=RVN0nqd=8gOZn=jsNbTc4B9KCATQ@mail.gmail.com>
+ <528FC638.5060403@web.de>
+ <20131122215454.GA4952@sandbox-ub>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Joey Hess <joey@kitenet.net>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Nov 23 01:48:05 2013
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Sergey Sharybin <sergey.vfx@gmail.com>,
+	Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Sat Nov 23 02:11:57 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vk1OG-0005tA-A8
-	for gcvg-git-2@plane.gmane.org; Sat, 23 Nov 2013 01:48:04 +0100
+	id 1Vk1lM-0004RR-Iy
+	for gcvg-git-2@plane.gmane.org; Sat, 23 Nov 2013 02:11:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755703Ab3KWAsA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Nov 2013 19:48:00 -0500
-Received: from mail-yh0-f41.google.com ([209.85.213.41]:56423 "EHLO
-	mail-yh0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755311Ab3KWAr7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Nov 2013 19:47:59 -0500
-Received: by mail-yh0-f41.google.com with SMTP id f11so1366787yha.0
-        for <git@vger.kernel.org>; Fri, 22 Nov 2013 16:47:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=HKX+vDq6O3HaJGo2+kkODHHdJ11DbSP/kWpuAsZWxIU=;
-        b=rUUJU90G9nOT7/+j+0U7rY3yo+a4sp+JqkhavoS0zmbzO+kmq1z2lVLE0FjTbD9xhL
-         NhQV+7vHrypOnNH/ZpW+300aMOOOdsrgh58R6iyNyNKJYf/5a62eMk4vxGQ/brTV7uZ7
-         67XR38SLJaT5i5Sfws8LkvtfALjujqEOgYjz8AKtWZTJDJcFhUNH2BsrjqL3qLtMhYUv
-         eMc7PMhotlBSK1hq2fAKgmGdiCnnh5gHRCOp/n9PWj46IygTezenKROtospZWGtmxAEo
-         DzzKkujyszI2pU8Nb6W79U+y9X+dkSUpXGaL+wW/24tPFVPvevKVzkqluoL+Z7PAalRI
-         qP+w==
-X-Received: by 10.236.100.144 with SMTP id z16mr14244137yhf.9.1385167677465;
-        Fri, 22 Nov 2013 16:47:57 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id n48sm59817307yho.24.2013.11.22.16.47.56
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 22 Nov 2013 16:47:56 -0800 (PST)
+	id S1755841Ab3KWBLx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Nov 2013 20:11:53 -0500
+Received: from smtprelay05.ispgateway.de ([80.67.31.99]:54263 "EHLO
+	smtprelay05.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755521Ab3KWBLv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Nov 2013 20:11:51 -0500
+Received: from [77.20.34.36] (helo=sandbox-ub)
+	by smtprelay05.ispgateway.de with esmtpsa (TLSv1:AES128-SHA:128)
+	(Exim 4.68)
+	(envelope-from <hvoigt@hvoigt.net>)
+	id 1Vk1lD-0004a9-18; Sat, 23 Nov 2013 02:11:47 +0100
 Content-Disposition: inline
-In-Reply-To: <20131123003014.GA11012@sigill.intra.peff.net>
+In-Reply-To: <20131122215454.GA4952@sandbox-ub>
 User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238225>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238226>
 
-Jeff King wrote:
-> On Fri, Nov 22, 2013 at 04:24:05PM -0800, Jonathan Nieder wrote:
+If the value of ignore for submodules is set to "all" we would not show
+whats actually committed during status or diff. This can result in the
+user committing unexpected submodule references. Lets be nicer and always
+show whats in the index.
 
->>>  t/t1013-loose-object-format.sh                     |  66 ------------------
->>
->> Hmm, not all of these tests are about the "experimental" format.  Do
->> we really want to remove them all?
->
-> I think so. They were not all testing the experimental format, but they
-> were about making sure the is-it-experimental heuristic triggered
-> properly with various zlib settings.
->
-> Now that we do not apply that heuristic, there is nothing (in git) to
-> test. We feed the contents straight to zlib.
+Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
+---
+This probably needs splitting up into two patches one for the
+refactoring and one for the actual fix. It is also missing tests, but I
+would first like to know what you think about this approach.
 
-Ok, makes sense.
+ builtin/diff.c | 43 +++++++++++++++++++++++++++----------------
+ diff.h         |  2 +-
+ submodule.c    |  6 ++++--
+ wt-status.c    |  3 +++
+ 4 files changed, 35 insertions(+), 19 deletions(-)
 
-In principle the tests are still useful as futureproofing in case git
-starts to sanity-check the objects as a way to notice corruption
-earlier or something.  But in practice, that kind of futureproofing is
-probably not worth the extra tests to maintain.
-
-For what it's worth,
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+diff --git a/builtin/diff.c b/builtin/diff.c
+index adb93a9..e9a356c 100644
+--- a/builtin/diff.c
++++ b/builtin/diff.c
+@@ -249,6 +249,21 @@ static int builtin_diff_files(struct rev_info *revs, int argc, const char **argv
+ 	return run_diff_files(revs, options);
+ }
+ 
++static int have_cached_option(int argc, const char **argv)
++{
++	int i;
++	for (i = 1; i < argc; i++) {
++		const char *arg = argv[i];
++		if (!strcmp(arg, "--"))
++			return 0;
++		else if (!strcmp(arg, "--cached") ||
++			 !strcmp(arg, "--staged")) {
++			return 1;
++		}
++	}
++	return 0;
++}
++
+ int cmd_diff(int argc, const char **argv, const char *prefix)
+ {
+ 	int i;
+@@ -259,6 +274,7 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
+ 	struct blobinfo blob[2];
+ 	int nongit;
+ 	int result = 0;
++	int have_cached;
+ 
+ 	/*
+ 	 * We could get N tree-ish in the rev.pending_objects list.
+@@ -305,6 +321,11 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
+ 
+ 	if (nongit)
+ 		die(_("Not a git repository"));
++
++	have_cached = have_cached_option(argc, argv);
++	if (have_cached)
++		DIFF_OPT_SET(&rev.diffopt, NO_IGNORE_SUBMODULE);
++
+ 	argc = setup_revisions(argc, argv, &rev, NULL);
+ 	if (!rev.diffopt.output_format) {
+ 		rev.diffopt.output_format = DIFF_FORMAT_PATCH;
+@@ -319,22 +340,12 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
+ 	 * Do we have --cached and not have a pending object, then
+ 	 * default to HEAD by hand.  Eek.
+ 	 */
+-	if (!rev.pending.nr) {
+-		int i;
+-		for (i = 1; i < argc; i++) {
+-			const char *arg = argv[i];
+-			if (!strcmp(arg, "--"))
+-				break;
+-			else if (!strcmp(arg, "--cached") ||
+-				 !strcmp(arg, "--staged")) {
+-				add_head_to_pending(&rev);
+-				if (!rev.pending.nr) {
+-					struct tree *tree;
+-					tree = lookup_tree(EMPTY_TREE_SHA1_BIN);
+-					add_pending_object(&rev, &tree->object, "HEAD");
+-				}
+-				break;
+-			}
++	if (!rev.pending.nr && have_cached) {
++		add_head_to_pending(&rev);
++		if (!rev.pending.nr) {
++			struct tree *tree;
++			tree = lookup_tree(EMPTY_TREE_SHA1_BIN);
++			add_pending_object(&rev, &tree->object, "HEAD");
+ 		}
+ 	}
+ 
+diff --git a/diff.h b/diff.h
+index e342325..81561b3 100644
+--- a/diff.h
++++ b/diff.h
+@@ -64,7 +64,7 @@ typedef struct strbuf *(*diff_prefix_fn_t)(struct diff_options *opt, void *data)
+ #define DIFF_OPT_FIND_COPIES_HARDER  (1 <<  6)
+ #define DIFF_OPT_FOLLOW_RENAMES      (1 <<  7)
+ #define DIFF_OPT_RENAME_EMPTY        (1 <<  8)
+-/* (1 <<  9) unused */
++#define DIFF_OPT_NO_IGNORE_SUBMODULE (1 <<  9)
+ #define DIFF_OPT_HAS_CHANGES         (1 << 10)
+ #define DIFF_OPT_QUICK               (1 << 11)
+ #define DIFF_OPT_NO_INDEX            (1 << 12)
+diff --git a/submodule.c b/submodule.c
+index 1905d75..9d81712 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -301,9 +301,11 @@ void handle_ignore_submodules_arg(struct diff_options *diffopt,
+ 	DIFF_OPT_CLR(diffopt, IGNORE_UNTRACKED_IN_SUBMODULES);
+ 	DIFF_OPT_CLR(diffopt, IGNORE_DIRTY_SUBMODULES);
+ 
+-	if (!strcmp(arg, "all"))
++	if (!strcmp(arg, "all")) {
++		if (DIFF_OPT_TST(diffopt, NO_IGNORE_SUBMODULE))
++			return;
+ 		DIFF_OPT_SET(diffopt, IGNORE_SUBMODULES);
+-	else if (!strcmp(arg, "untracked"))
++	} else if (!strcmp(arg, "untracked"))
+ 		DIFF_OPT_SET(diffopt, IGNORE_UNTRACKED_IN_SUBMODULES);
+ 	else if (!strcmp(arg, "dirty"))
+ 		DIFF_OPT_SET(diffopt, IGNORE_DIRTY_SUBMODULES);
+diff --git a/wt-status.c b/wt-status.c
+index b4e44ba..34be1cc 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -462,6 +462,9 @@ static void wt_status_collect_changes_index(struct wt_status *s)
+ 		handle_ignore_submodules_arg(&rev.diffopt, s->ignore_submodule_arg);
+ 	}
+ 
++	/* for the index we need to disable complete ignorance of submodules */
++	DIFF_OPT_SET(&rev.diffopt, NO_IGNORE_SUBMODULE);
++
+ 	rev.diffopt.output_format |= DIFF_FORMAT_CALLBACK;
+ 	rev.diffopt.format_callback = wt_status_collect_updated_cb;
+ 	rev.diffopt.format_callback_data = s;
+-- 
+1.8.5.rc3.1.gcd6363f
