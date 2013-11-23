@@ -1,97 +1,120 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH] bash prompt: add option to disable for a repository
-Date: Sat, 23 Nov 2013 15:42:47 +0100
-Message-ID: <5290BEE7.2070901@kdbg.org>
-References: <1385212703-9611-1-git-send-email-hoxu@users.sf.net>
+From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
+Subject: Re: [PATCH 0/2] thin-pack capability for send-pack/receive-pack
+Date: Sat, 23 Nov 2013 16:09:22 +0100
+Message-ID: <1385219362.2665.18.camel@centaur.cmartin.tk>
+References: <1383750263-32495-1-git-send-email-cmn@elego.de>
+	 <xmqqbo1x8e60.fsf@gitster.dls.corp.google.com>
+	 <1383774082.2850.10.camel@centaur.cmartin.tk>
+	 <CAJo=hJtUMZit8Mtt7NQ=SiAXmnHf3xQqCKMo3F3XksHoq0tCkw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: szeder@ira.uka.de
-To: Heikki Hokkanen <hoxu@users.sf.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 23 15:43:16 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	=?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc?= Duy 
+	<pclouds@gmail.com>
+To: Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sat Nov 23 16:09:42 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VkEQV-0000N4-1k
-	for gcvg-git-2@plane.gmane.org; Sat, 23 Nov 2013 15:43:15 +0100
+	id 1VkEq3-0003FY-21
+	for gcvg-git-2@plane.gmane.org; Sat, 23 Nov 2013 16:09:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756159Ab3KWOnL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 Nov 2013 09:43:11 -0500
-Received: from bsmtp4.bon.at ([195.3.86.186]:24803 "EHLO lbmfmo03.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1753485Ab3KWOnJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Nov 2013 09:43:09 -0500
-Received: from bsmtp.bon.at (unknown [192.168.181.108])
-	by lbmfmo03.bon.at (Postfix) with ESMTP id A68CACE1CD
-	for <git@vger.kernel.org>; Sat, 23 Nov 2013 15:43:07 +0100 (CET)
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 0213313005E;
-	Sat, 23 Nov 2013 15:42:48 +0100 (CET)
-Received: from dx.sixt.local (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id 2FFBE19F43C;
-	Sat, 23 Nov 2013 15:42:48 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.1.0
-In-Reply-To: <1385212703-9611-1-git-send-email-hoxu@users.sf.net>
+	id S1754264Ab3KWPJ3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 23 Nov 2013 10:09:29 -0500
+Received: from mx0.elegosoft.com ([78.47.87.163]:57330 "EHLO mx0.elegosoft.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751580Ab3KWPJ1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Nov 2013 10:09:27 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by mx0.elegosoft.com (Postfix) with ESMTP id 177A7DE05B;
+	Sat, 23 Nov 2013 16:09:26 +0100 (CET)
+Received: from mx0.elegosoft.com ([127.0.0.1])
+	by localhost (mx0.elegosoft.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id e-TKKKkmpS5T; Sat, 23 Nov 2013 16:09:26 +0100 (CET)
+Received: from [192.168.1.4] (p57A1F0F3.dip0.t-ipconnect.de [87.161.240.243])
+	by mx0.elegosoft.com (Postfix) with ESMTPSA id C625BDE056;
+	Sat, 23 Nov 2013 16:09:25 +0100 (CET)
+In-Reply-To: <CAJo=hJtUMZit8Mtt7NQ=SiAXmnHf3xQqCKMo3F3XksHoq0tCkw@mail.gmail.com>
+X-Mailer: Evolution 3.8.5-2+b1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238234>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238235>
 
-Am 23.11.2013 14:18, schrieb Heikki Hokkanen:
-> If bash.prompt is set to false, disable the prompt. This is useful
-> for huge repositories like the home directory.
-> 
-> Signed-off-by: Heikki Hokkanen <hoxu@users.sf.net>
-> ---
-> git-prompt.sh performance seems to be quite bad for big repositories, so
-> without a way to disable it selectively for repositories, it becomes unusable
-> for people who have their homedir under git. This patch generalizes the problem
-> a bit by allowing the prompt to be disabled by setting bash.prompt to false in
-> any repository.
-> 
->  contrib/completion/git-prompt.sh | 8 ++++++++
->  1 file changed, 8 insertions(+)
-> 
-> diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
-> index 7b732d2..c982fde 100644
-> --- a/contrib/completion/git-prompt.sh
-> +++ b/contrib/completion/git-prompt.sh
-> @@ -84,6 +84,8 @@
->  # GIT_PS1_SHOWCOLORHINTS to a nonempty value. The colors are based on
->  # the colored output of "git status -sb" and are available only when
->  # using __git_ps1 for PROMPT_COMMAND or precmd.
-> +#
-> +# To disable prompt for a repository, run "git config bash.prompt false"
->  
->  # check whether printf supports -v
->  __git_printf_supports_v=
-> @@ -304,6 +306,12 @@ __git_ps1 ()
->  		return
->  	fi
->  
-> +	local prompt_setting
-> +	prompt_setting=$(git config --bool bash.prompt)
-> +	if [ -n "$prompt_setting" ] && [ "$prompt_setting" == "false" ]; then
-> +		return
-> +	fi
-> +
+On Wed, 2013-11-06 at 15:42 -0800, Shawn Pearce wrote:
+> On Wed, Nov 6, 2013 at 1:41 PM, Carlos Mart=C3=ADn Nieto <cmn@elego.d=
+e> wrote:
+> > On Wed, 2013-11-06 at 12:32 -0800, Junio C Hamano wrote:
+> >> I'll queue these for now, but I doubt the wisdom of this series,
+> >> given that the ship has already sailed long time ago.
+> >>
+> >> Currently, no third-party implementation of a receiving end can
+> >> accept thin push, because "thin push" is not a capability that nee=
+ds
+> >> to be checked by the current clients.  People will have to wait
+> >> until the clients with 2/2 patch are widely deployed before starti=
+ng
+> >> to use such a receiving end that is incapable of "thin push".
+> >>
+> >> Wouldn't the world be a better place if instead they used that tim=
+e
+> >> waiting to help such a third-party receiving end to implement "thi=
+n
+> >> push" support?
+> >>
+> >
+> > Support in the code isn't always enough. The particular case that
+> > brought this on is one where the index-pack implementation can deal=
+ with
+> > thin packs just fine.
+> >
+> > This particular service takes the pack which the client sent and do=
+es
+> > post-processing on it to store it elsewhere. During the receive-pac=
+k
+> > equivalent, there is no git object db that it can query for the mis=
+sing
+> > base objects. I realise this is pretty a unusual situation.
+>=20
+> How... odd?
+>=20
+> At Google we have made effort to ensure servers can accept thin packs=
+,
+> even though its clearly easier to accept non-thin, because clients in
+> the wild already send thin packs and changing the deployed clients is
+> harder than implementing the existing protocol.
 
-Gah! This adds a fork+exec each time the prompt is shown. Not good,
-particularly on Windows.
+It is harder, but IMO also more correct, as thin packs are an
+optimisation that was added somewhat later. Not to say it shouldn't be
+something you should attempt to do, but it's a trade-off between the
+complexity of the communication between the pieces and the potential
+amount of extra data you're willing to put up with.
 
-Since your intent is to disable the prompt in the home directory,
-wouldn't that mean that most of the time you *don't* want the prompt?
-Wouldn't you be better served with a method that *turns on* the prompt?
-For example, a shell function that sets PS1 and another one that unsets
-it? Or a wrapper that inspects a shell variable and calls __git_ps1 only
-when you want a prompt.
+The Google (Code) servers don't just support thin packs, but for
+upload-pack, they force it upon the client, which is quite frustrating
+as it won't even tell you why it closes the connection but sends a 500
+instead, but that's a different story.
 
->  	local short_sha
->  	if [ "$rev_parse_exit_code" = "0" ]; then
->  		short_sha="${repo_info##*$'\n'}"
-> 
+>=20
+> If the server can't complete the pack, I guess this also means the
+> client cannot immediately fetch from the server it just pushed to?
 
--- Hannes
+Not all the details have been worked out yet, but the new history shoul=
+d
+be converted into the target format before reporting success and closin=
+g
+the connection. The Git frontend/protocol is one way of putting data
+into the system, but that's not its native data storage format. The
+database where this is getting stored only has very limited knowledge o=
+f
+git.
+
+I'll reroll the series with "no-thin" as mentioned elsewhere in this
+thread.
+
+   cmn
