@@ -1,96 +1,86 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] drop support for "experimental" loose objects
-Date: Sun, 24 Nov 2013 03:44:44 -0500
-Message-ID: <20131124084444.GA23238@sigill.intra.peff.net>
-References: <20131120203350.GA31139@kitenet.net>
- <20131120213348.GA29004@sigill.intra.peff.net>
- <20131120222805.GC26468@kitenet.net>
- <20131121114157.GA7171@sigill.intra.peff.net>
- <20131121160426.GA21843@kitenet.net>
- <20131122020911.GA12042@sigill.intra.peff.net>
- <20131122172859.GA703@kitenet.net>
+From: Thomas Rast <tr@thomasrast.ch>
+Subject: Re: gettext CTYPE for libc
+Date: Sun, 24 Nov 2013 10:05:53 +0100
+Message-ID: <874n72goem.fsf@linux-k42r.v.cablecom.net>
+References: <52900FD6.5020202@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Joey Hess <joey@kitenet.net>
-X-From: git-owner@vger.kernel.org Sun Nov 24 09:44:51 2013
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git-malling-list <git@vger.kernel.org>
+To: =?utf-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Nov 24 10:06:41 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VkVJC-0000Vk-Ul
-	for gcvg-git-2@plane.gmane.org; Sun, 24 Nov 2013 09:44:51 +0100
+	id 1VkVeL-0008CL-10
+	for gcvg-git-2@plane.gmane.org; Sun, 24 Nov 2013 10:06:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756195Ab3KXIor (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Nov 2013 03:44:47 -0500
-Received: from cloud.peff.net ([50.56.180.127]:44694 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756090Ab3KXIoq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Nov 2013 03:44:46 -0500
-Received: (qmail 24049 invoked by uid 102); 24 Nov 2013 08:44:46 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 24 Nov 2013 02:44:46 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 24 Nov 2013 03:44:44 -0500
-Content-Disposition: inline
-In-Reply-To: <20131122172859.GA703@kitenet.net>
+	id S1751732Ab3KXJGP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 24 Nov 2013 04:06:15 -0500
+Received: from psi.thgersdorf.net ([176.9.98.78]:53269 "EHLO mail.psioc.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751529Ab3KXJGL convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 24 Nov 2013 04:06:11 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by localhost.psioc.net (Postfix) with ESMTP id 460284D6532;
+	Sun, 24 Nov 2013 10:06:04 +0100 (CET)
+X-Virus-Scanned: amavisd-new at psioc.net
+Received: from mail.psioc.net ([127.0.0.1])
+	by localhost (mail.psioc.net [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id hIVrwbwEMtXE; Sun, 24 Nov 2013 10:05:54 +0100 (CET)
+Received: from linux-k42r.v.cablecom.net.thomasrast.ch (dslb-188-107-175-007.pools.arcor-ip.net [188.107.175.7])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(Client did not present a certificate)
+	by mail.psioc.net (Postfix) with ESMTPSA id CD27F4D6414;
+	Sun, 24 Nov 2013 10:05:53 +0100 (CET)
+In-Reply-To: <52900FD6.5020202@gmail.com> (=?utf-8?B?IlRy4bqnbiBOZ+G7jWMg?=
+ =?utf-8?B?UXXDom4iJ3M=?= message of "Sat,
+	23 Nov 2013 09:15:50 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238252>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238253>
 
-On Fri, Nov 22, 2013 at 01:28:59PM -0400, Joey Hess wrote:
+Tr=E1=BA=A7n Ng=E1=BB=8Dc Qu=C3=A2n <vnwildman@gmail.com> writes:
 
-> > Hrm. For --batch, I'd think we would open the whole object and notice
-> > the corruption, even with the current code. But for --batch-check, we
-> > use sha1_object_info, and for an "experimental" object, we do not need
-> > to de-zlib the object at all.  So we end up reporting whatever crap we
-> > decipher from the garbage bytes.  My patch would fix that, as we would
-> > not incorrectly guess an object is experimental anymore.
-> > 
-> > If you have specific cases that trigger even after my patch, I'd be
-> > interested to see them.
-> 
-> I was seeing it with --batch, not --batch-check. Probably only with the
-> old experimental loose object format. In one case, --batch reported a
-> size of 20k, and only output 1k of data. With the object file I sent
-> earlier, --batch reports a huge size, and fails trying to allocate the
-> memory for it before it can output anything.
+> $ git status
+> fatal: Unable to read current working directory: Kh?ng c? t?p tin ho?=
+c
+> th? m?c nh? v?y
+>
+> So, somthing wrong with our charset.
+[...]
+> $ gettext --domain=3Dlibc "No such file or directory"
+> Kh=C3=B4ng c=C3=B3 t=E1=BA=ADp tin ho=E1=BA=B7c th=C6=B0 m=E1=BB=A5c =
+nh=C6=B0 v=E1=BA=ADy
+>
+> in git's gettext.c, it not allow CTYPE=3D"" for all domain, so we wil=
+l set
+> this one individually. In this ex. I set it for libc:
+>
+> $ git diff
+> diff --git a/gettext.c b/gettext.c
+> index 71e9545..abd3978 100644
+> --- a/gettext.c
+> +++ b/gettext.c
+> @@ -115,6 +115,7 @@ static void init_gettext_charset(const char *doma=
+in)
+>         setlocale(LC_CTYPE, "");
+>         charset =3D locale_charset();
+>         bind_textdomain_codeset(domain, charset);
+> +       bind_textdomain_codeset("libc", charset);
+>         setlocale(LC_CTYPE, "C");
+>  }
 
-Ah, yeah, that makes sense. We report the size via sha1_object_info,
-whether we are going to output the object itself or not. So we might
-report the bogus size, not noticing the corruption, and then hit an
-error and bail when sending the object itself.
+Do you know why this "suddenly" broke?  The long comment in
+init_gettext_charset() suggests that the *existing* code is there to
+handle exactly this problem, and apparently it doesn't.  Why?  Has libc
+moved the perror() strings into a separate domain in some version?
 
-My patch makes that better in some cases, because we'll notice more
-corruption when looking at the header of the object for
-sha1_object_info. But fundamentally, we may still hit an error while
-outputting the bytes. Reading the cat-file code, it looks like we should
-always die if we hit an error, so at least a reader will get premature
-EOF (and not the beginning of another object).
-
-I can believe there is some specific corruption that yields a valid zlib
-stream that is a different size than the object advertises. Since
-v1.8.4, we double-check that the size we advertised matches what we are
-about to write. But the streaming-blob code path does not include that
-check, so it might still be affected. It would be pretty easy and cheap
-to detect that case.
-
-In any code path where we call parse_object, we double-check that the
-result matches the sha1 we asked for. But low-level commands like
-cat-file just call read_sha1_file directly, and do not have such a
-check. We could add it, but I suspect the processing cost would be
-noticeable.
-
-> I also have seen at least once a corrupt pack file that caused git to try
-> and allocate a absurd quantity of memory.
-
-I'm not surprised by that. The packfiles contain size information
-outside of the checksummed zlib data, and we pre-allocate the buffer
-before reading the zlib data. We could try to detect it, but then we are
-hard-coding the definition of "absurd". The current definition is "we
-asked the OS for memory, and it did not give it to us". :)
-
--Peff
+--=20
+Thomas Rast
+tr@thomasrast.ch
