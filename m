@@ -1,89 +1,96 @@
-From: Thomas Rast <tr@thomasrast.ch>
-Subject: Re: [PATCH] git-svn: Support svn:global-ignores property
-Date: Sun, 24 Nov 2013 09:42:20 +0100
-Message-ID: <87d2lqgphv.fsf@linux-k42r.v.cablecom.net>
-References: <528DE354.1050804@ya.ru>
-	<1385036908-10392-1-git-send-email-margtu-fivt@ya.ru>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] drop support for "experimental" loose objects
+Date: Sun, 24 Nov 2013 03:44:44 -0500
+Message-ID: <20131124084444.GA23238@sigill.intra.peff.net>
+References: <20131120203350.GA31139@kitenet.net>
+ <20131120213348.GA29004@sigill.intra.peff.net>
+ <20131120222805.GC26468@kitenet.net>
+ <20131121114157.GA7171@sigill.intra.peff.net>
+ <20131121160426.GA21843@kitenet.net>
+ <20131122020911.GA12042@sigill.intra.peff.net>
+ <20131122172859.GA703@kitenet.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Benoit Sigoure <tsuna@lrde.epita.fr>,
-	Eric Wong <normalperson@yhbt.net>
-To: Aleksey Vasenev <margtu-fivt@ya.ru>
-X-From: git-owner@vger.kernel.org Sun Nov 24 09:42:45 2013
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Joey Hess <joey@kitenet.net>
+X-From: git-owner@vger.kernel.org Sun Nov 24 09:44:51 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VkVHB-0008E6-2r
-	for gcvg-git-2@plane.gmane.org; Sun, 24 Nov 2013 09:42:45 +0100
+	id 1VkVJC-0000Vk-Ul
+	for gcvg-git-2@plane.gmane.org; Sun, 24 Nov 2013 09:44:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754695Ab3KXImh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Nov 2013 03:42:37 -0500
-Received: from psi.thgersdorf.net ([176.9.98.78]:53231 "EHLO mail.psioc.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754602Ab3KXIme (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Nov 2013 03:42:34 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by localhost.psioc.net (Postfix) with ESMTP id 623554D6532;
-	Sun, 24 Nov 2013 09:42:32 +0100 (CET)
-X-Virus-Scanned: amavisd-new at psioc.net
-Received: from mail.psioc.net ([127.0.0.1])
-	by localhost (mail.psioc.net [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id dukD7FPwfcfg; Sun, 24 Nov 2013 09:42:21 +0100 (CET)
-Received: from linux-k42r.v.cablecom.net.thomasrast.ch (dslb-188-107-175-007.pools.arcor-ip.net [188.107.175.7])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(Client did not present a certificate)
-	by mail.psioc.net (Postfix) with ESMTPSA id 1E19D4D6414;
-	Sun, 24 Nov 2013 09:42:21 +0100 (CET)
-In-Reply-To: <1385036908-10392-1-git-send-email-margtu-fivt@ya.ru> (Aleksey
-	Vasenev's message of "Thu, 21 Nov 2013 16:28:28 +0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
+	id S1756195Ab3KXIor (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Nov 2013 03:44:47 -0500
+Received: from cloud.peff.net ([50.56.180.127]:44694 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756090Ab3KXIoq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Nov 2013 03:44:46 -0500
+Received: (qmail 24049 invoked by uid 102); 24 Nov 2013 08:44:46 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 24 Nov 2013 02:44:46 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 24 Nov 2013 03:44:44 -0500
+Content-Disposition: inline
+In-Reply-To: <20131122172859.GA703@kitenet.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238251>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238252>
 
-Hi Aleksey
+On Fri, Nov 22, 2013 at 01:28:59PM -0400, Joey Hess wrote:
 
-Thanks for your patch.  I added Eric Wong to the Cc list; all git-svn
-patches should go to him.
+> > Hrm. For --batch, I'd think we would open the whole object and notice
+> > the corruption, even with the current code. But for --batch-check, we
+> > use sha1_object_info, and for an "experimental" object, we do not need
+> > to de-zlib the object at all.  So we end up reporting whatever crap we
+> > decipher from the garbage bytes.  My patch would fix that, as we would
+> > not incorrectly guess an object is experimental anymore.
+> > 
+> > If you have specific cases that trigger even after my patch, I'd be
+> > interested to see them.
+> 
+> I was seeing it with --batch, not --batch-check. Probably only with the
+> old experimental loose object format. In one case, --batch reported a
+> size of 20k, and only output 1k of data. With the object file I sent
+> earlier, --batch reports a huge size, and fails trying to allocate the
+> memory for it before it can output anything.
 
-Aleksey Vasenev <margtu-fivt@ya.ru> writes:
+Ah, yeah, that makes sense. We report the size via sha1_object_info,
+whether we are going to output the object itself or not. So we might
+report the bogus size, not noticing the corruption, and then hit an
+error and bail when sending the object itself.
 
-> ---
+My patch makes that better in some cases, because we'll notice more
+corruption when looking at the header of the object for
+sha1_object_info. But fundamentally, we may still hit an error while
+outputting the bytes. Reading the cat-file code, it looks like we should
+always die if we hit an error, so at least a reader will get premature
+EOF (and not the beginning of another object).
 
-Can you write a commit message?  If you need a guideline for what to
-write there, consider this snippet from Documentation/SubmittingPatches:
+I can believe there is some specific corruption that yields a valid zlib
+stream that is a different size than the object advertises. Since
+v1.8.4, we double-check that the size we advertised matches what we are
+about to write. But the streaming-blob code path does not include that
+check, so it might still be affected. It would be pretty easy and cheap
+to detect that case.
 
-  The body should provide a meaningful commit message, which:
+In any code path where we call parse_object, we double-check that the
+result matches the sha1 we asked for. But low-level commands like
+cat-file just call read_sha1_file directly, and do not have such a
+check. We could add it, but I suspect the processing cost would be
+noticeable.
 
-  . explains the problem the change tries to solve, iow, what is wrong
-    with the current code without the change.
+> I also have seen at least once a corrupt pack file that caused git to try
+> and allocate a absurd quantity of memory.
 
-  . justifies the way the change solves the problem, iow, why the
-    result with the change is better.
+I'm not surprised by that. The packfiles contain size information
+outside of the checksummed zlib data, and we pre-allocate the buffer
+before reading the zlib data. We could try to detect it, but then we are
+hard-coding the definition of "absurd". The current definition is "we
+asked the OS for memory, and it did not give it to us". :)
 
-  . alternate solutions considered but discarded, if any.
-
-In particular, I'm curious about how global-ignores are different from
-ordinary ignores.  After reading
-
-  http://svnbook.red-bean.com/en/1.7/svn.advanced.props.special.ignore.html
-
-I don't understand why the above document speaks of a "config area" that
-holds the global-ignores configuration, while your patch seems to treat
-them as "just another property" set in the same way as existing
-svn:ignore.  How does this work?
-
-
->  Documentation/git-svn.txt | 12 ++++++------
->  git-svn.perl              | 46 ++++++++++++++++++++++++++++++++--------------
->  2 files changed, 38 insertions(+), 20 deletions(-)
-
-Can you add a test or two?
-
--- 
-Thomas Rast
-tr@thomasrast.ch
+-Peff
