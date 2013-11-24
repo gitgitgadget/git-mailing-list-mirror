@@ -1,100 +1,89 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] drop support for "experimental" loose objects
-Date: Sun, 24 Nov 2013 04:07:43 -0500
-Message-ID: <20131124090743.GA495@sigill.intra.peff.net>
-References: <20131120203350.GA31139@kitenet.net>
- <20131120213348.GA29004@sigill.intra.peff.net>
- <20131120222805.GC26468@kitenet.net>
- <20131121114157.GA7171@sigill.intra.peff.net>
- <20131121160426.GA21843@kitenet.net>
- <20131122020911.GA12042@sigill.intra.peff.net>
- <20131122172859.GA703@kitenet.net>
- <20131124084444.GA23238@sigill.intra.peff.net>
+From: =?utf-8?B?UGF3ZcWC?= Sikora <pawel.sikora@agmk.net>
+Subject: slow git-cherry-pick.
+Date: Sun, 24 Nov 2013 11:45:32 +0100
+Message-ID: <2142926.gg3W3MsbJZ@localhost.localdomain>
+Reply-To: pawel.sikora@agmk.net
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Joey Hess <joey@kitenet.net>
-X-From: git-owner@vger.kernel.org Sun Nov 24 10:08:01 2013
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Nov 24 12:07:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VkVfb-0000Fb-PU
-	for gcvg-git-2@plane.gmane.org; Sun, 24 Nov 2013 10:08:00 +0100
+	id 1VkXX5-0002cr-IU
+	for gcvg-git-2@plane.gmane.org; Sun, 24 Nov 2013 12:07:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755823Ab3KXJHy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Nov 2013 04:07:54 -0500
-Received: from cloud.peff.net ([50.56.180.127]:44708 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755382Ab3KXJHp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Nov 2013 04:07:45 -0500
-Received: (qmail 25384 invoked by uid 102); 24 Nov 2013 09:07:45 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 24 Nov 2013 03:07:45 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 24 Nov 2013 04:07:43 -0500
-Content-Disposition: inline
-In-Reply-To: <20131124084444.GA23238@sigill.intra.peff.net>
+	id S1751964Ab3KXLHK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 24 Nov 2013 06:07:10 -0500
+Received: from adamg.eu ([91.192.224.99]:60107 "EHLO adamg.eu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751793Ab3KXLHI convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 24 Nov 2013 06:07:08 -0500
+X-Greylist: delayed 1283 seconds by postgrey-1.27 at vger.kernel.org; Sun, 24 Nov 2013 06:07:08 EST
+Received: from mail.agmk.net ([91.192.224.71]:42449)
+	by adamg.eu with esmtp (Exim 4.82)
+	(envelope-from <pluto@agmk.net>)
+	id 1VkXCA-0004fP-7c
+	for git@vger.kernel.org; Sun, 24 Nov 2013 11:45:42 +0100
+Received: from localhost.localdomain (unknown [185.28.248.14])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	(Authenticated sender: pluto@agmk.net)
+	by mail.agmk.net (Postfix) with ESMTPSA id 20F571EE0F52
+	for <git@vger.kernel.org>; Sun, 24 Nov 2013 11:45:32 +0100 (CET)
+User-Agent: KMail/4.11.3 (Linux/3.11.8-300.fc20.x86_64; KDE/4.11.3; x86_64; ; )
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238254>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238255>
 
-On Sun, Nov 24, 2013 at 03:44:44AM -0500, Jeff King wrote:
+Hi,
 
-> In any code path where we call parse_object, we double-check that the
-> result matches the sha1 we asked for. But low-level commands like
-> cat-file just call read_sha1_file directly, and do not have such a
-> check. We could add it, but I suspect the processing cost would be
-> noticeable.
+i've recently reinstalled a fresh system (fc20-beta) on my workstation
+and observing a big slowdown on git cherry-pick operation (git-1.8.4.2-=
+1).
+the previous centos installation with an old git version works faster
+(few seconds per cherry pick). now the same operation takes >1 min.
 
-Curious, I tested this. It is noticeable. Here's the best-of-five
-timings for the patch below when running a --batch cat-file on every
-object in my git.git repo, using the patch below:
+my git repo isn't very big[1] but it's checked out on the linear lvm
+where random i/o generally hurts and strace shows that current git vers=
+ion
+performs 2x{lstat}+1x{open,read,close} [2] on whole checkout before
+cherry-pick. there is also a .gitattributes searching on all levels
+which doing another tons of i/o. looks like git-status on action but
+why on whole repo while cherry-pick touches limited set of files?
 
-  [before]
-  real    0m12.941s
-  user    0m12.700s
-  sys     0m0.244s
+is it a bug or feature?
 
-  [after]
-  real    0m15.800s
-  user    0m15.472s
-  sys     0m0.344s
+BR,
+Pawe=C5=82.
 
-So it's about 20% slower. I don't know what the right tradeoff is. It's
-cool to check the data each time we look at it, but it does carry a
-performance penalty. I notice elsewhere in git we are inconsistent. If
-you call parse_object() on an object, you get the sha1 check. But if you
-just call parse_commit() on something you know to be a commit (e.g.,
-because you are traversing the history and looked it up as a parent
-pointer), you do not. I don't know if that is oversight, or an
-intentional performance decision.
+please CC me on reply.
 
--Peff
 
----
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index b2ca775..2b09773 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -199,6 +199,8 @@ static void print_object_or_die(int fd, const unsigned char *sha1,
- 	if (type == OBJ_BLOB) {
- 		if (stream_blob_to_fd(fd, sha1, NULL, 0) < 0)
- 			die("unable to stream %s to stdout", sha1_to_hex(sha1));
-+		if (check_sha1_signature(sha1, NULL, 0, NULL) < 0)
-+			die("object %s sha1 mismatch", sha1_to_hex(sha1));
- 	}
- 	else {
- 		enum object_type rtype;
-@@ -208,6 +210,8 @@ static void print_object_or_die(int fd, const unsigned char *sha1,
- 		contents = read_sha1_file(sha1, &rtype, &rsize);
- 		if (!contents)
- 			die("object %s disappeared", sha1_to_hex(sha1));
-+		if (check_sha1_signature(sha1, contents, rsize, typename(rtype)) < 0)
-+			die("object %s sha1 mismatch", sha1_to_hex(sha1));
- 		if (rtype != type)
- 			die("object %s changed type!?", sha1_to_hex(sha1));
- 		if (rsize != size)
+[1]
+$ du -sh .git/objects/
+4.2G    .git/objects/
+$ find sources -type f|wc -l
+9536
+$ find buildenv -type f|wc -l
+14637
+
+[2]
+lstat("buildenv/boost-1.51.0/include/boost/bimap.hpp", {st_mode=3DS_IFR=
+EG|0664,=20
+st_size=3D387, ...}) =3D 0
+lstat("buildenv/boost-1.51.0/include/boost/bimap.hpp", {st_mode=3DS_IFR=
+EG|0664,=20
+st_size=3D387, ...}) =3D 0
+open("buildenv/boost-1.51.0/include/boost/bimap.hpp", O_RDONLY) =3D 5
+read(5, "// Boost.Bimap\n//\n// Copyright ("..., 387) =3D 387
+close(5)
+
+--=20
+gpg key fingerprint =3D 60B4 9886 AD53 EB3E 88BB  1EB5 C52E D01B 683B 9=
+411
