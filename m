@@ -1,77 +1,127 @@
-From: =?utf-8?B?UGF3ZcWC?= Sikora <pawel.sikora@agmk.net>
-Subject: Re: slow git-cherry-pick.
-Date: Sun, 24 Nov 2013 20:17:25 +0100
-Message-ID: <32998962.pucYdvRloz@localhost.localdomain>
-References: <2142926.gg3W3MsbJZ@localhost.localdomain> <CACsJy8CAAov1nSGPx79U+md4xROsCydidHPcipOb_sdFwNdSkA@mail.gmail.com>
-Reply-To: pawel.sikora@agmk.net
+From: Thomas Rast <tr@thomasrast.ch>
+Subject: Re: [PATCH v3 10/21] pack-bitmap: add support for bitmap indexes
+Date: Sun, 24 Nov 2013 22:36:55 +0100
+Message-ID: <87fvqlfpmw.fsf@linux-k42r.v.cablecom.net>
+References: <20131114124157.GA23784@sigill.intra.peff.net>
+	<20131114124432.GJ10757@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Nov 24 20:18:01 2013
+Content-Type: text/plain
+Cc: git@vger.kernel.org,
+	Vicent =?utf-8?Q?Mart=C3=AD?= <vicent@github.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Nov 24 22:37:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VkfBv-0005I1-G3
-	for gcvg-git-2@plane.gmane.org; Sun, 24 Nov 2013 20:17:59 +0100
+	id 1VkhN9-00019x-VX
+	for gcvg-git-2@plane.gmane.org; Sun, 24 Nov 2013 22:37:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752394Ab3KXTRk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 24 Nov 2013 14:17:40 -0500
-Received: from adamg.eu ([91.192.224.99]:33364 "EHLO adamg.eu"
+	id S1753253Ab3KXVhj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Nov 2013 16:37:39 -0500
+Received: from psi.thgersdorf.net ([176.9.98.78]:54391 "EHLO mail.psioc.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752122Ab3KXTRj convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 24 Nov 2013 14:17:39 -0500
-Received: from mail.agmk.net ([91.192.224.71]:47190)
-	by adamg.eu with esmtp (Exim 4.82)
-	(envelope-from <pluto@agmk.net>)
-	id 1VkfBZ-0000FE-Ep; Sun, 24 Nov 2013 20:17:37 +0100
-Received: from localhost.localdomain (unknown [185.28.248.14])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	(Authenticated sender: pluto@agmk.net)
-	by mail.agmk.net (Postfix) with ESMTPSA id 1BC6A1EE3CBA;
-	Sun, 24 Nov 2013 20:17:27 +0100 (CET)
-User-Agent: KMail/4.11.3 (Linux/3.11.8-300.fc20.x86_64; KDE/4.11.3; x86_64; ; )
-In-Reply-To: <CACsJy8CAAov1nSGPx79U+md4xROsCydidHPcipOb_sdFwNdSkA@mail.gmail.com>
+	id S1752742Ab3KXVhi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Nov 2013 16:37:38 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by localhost.psioc.net (Postfix) with ESMTP id 3E3284D65C8;
+	Sun, 24 Nov 2013 22:37:37 +0100 (CET)
+X-Virus-Scanned: amavisd-new at psioc.net
+Received: from mail.psioc.net ([127.0.0.1])
+	by localhost (mail.psioc.net [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id vhOPvGMw_wN8; Sun, 24 Nov 2013 22:37:26 +0100 (CET)
+Received: from linux-k42r.v.cablecom.net.thomasrast.ch (unknown [89.204.135.34])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(Client did not present a certificate)
+	by mail.psioc.net (Postfix) with ESMTPSA id E877A4D658E;
+	Sun, 24 Nov 2013 22:37:21 +0100 (CET)
+In-Reply-To: <20131114124432.GJ10757@sigill.intra.peff.net> (Jeff King's
+	message of "Thu, 14 Nov 2013 07:44:32 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238266>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238268>
 
-On Sunday 24 of November 2013 19:47:10 Duy Nguyen wrote:
-> On Sun, Nov 24, 2013 at 5:45 PM, Pawe=C5=82 Sikora <pawel.sikora@agmk=
-=2Enet> wrote:
-> > i've recently reinstalled a fresh system (fc20-beta) on my workstat=
-ion
-> > and observing a big slowdown on git cherry-pick operation (git-1.8.=
-4.2-1).
-> > the previous centos installation with an old git version works fast=
-er
-> > (few seconds per cherry pick). now the same operation takes >1 min.
->=20
-> What is the git version before the reinstallation?
+Jeff King <peff@peff.net> writes:
 
-git-1.7.11.3-1.el5.rf.
+>  khash.h       | 338 ++++++++++++++++++++
+[...]
+> diff --git a/khash.h b/khash.h
+> new file mode 100644
+> index 0000000..57ff603
+> --- /dev/null
+> +++ b/khash.h
+> @@ -0,0 +1,338 @@
+> +/* The MIT License
+> +
+> +   Copyright (c) 2008, 2009, 2011 by Attractive Chaos <attractor@live.co.uk>
+> +
+> +   Permission is hereby granted, free of charge, to any person obtaining
+> +   a copy of this software and associated documentation files (the
+> +   "Software"), to deal in the Software without restriction, including
+> +   without limitation the rights to use, copy, modify, merge, publish,
+> +   distribute, sublicense, and/or sell copies of the Software, and to
+> +   permit persons to whom the Software is furnished to do so, subject to
+> +   the following conditions:
+> +
+> +   The above copyright notice and this permission notice shall be
+> +   included in all copies or substantial portions of the Software.
+> +
+> +   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+> +   EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+> +   MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+> +   NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
+> +   BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+> +   ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+> +   CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+> +   SOFTWARE.
+> +*/
+> +
+> +#ifndef __AC_KHASH_H
+> +#define __AC_KHASH_H
+[...]
+> +static inline khint_t __kh_oid_hash(const unsigned char *oid)
+> +{
+> +	khint_t hash;
+> +	memcpy(&hash, oid, sizeof(hash));
+> +	return hash;
+> +}
+> +
+> +#define __kh_oid_cmp(a, b) (hashcmp(a, b) == 0)
+> +
+> +KHASH_INIT(sha1, const unsigned char *, void *, 1, __kh_oid_hash, __kh_oid_cmp)
+> +typedef kh_sha1_t khash_sha1;
+> +
+> +KHASH_INIT(sha1_pos, const unsigned char *, int, 1, __kh_oid_hash, __kh_oid_cmp)
+> +typedef kh_sha1_pos_t khash_sha1_pos;
+> +
+> +#endif /* __AC_KHASH_H */
 
-i've checked this version on another machine with centos-5.$latest
-and it does similar amout of stat/read operation quickly (~6s).
-this "fast" centos-5 machine has /home on raid-0 (2x500GB) while
-my "slow (>1min)" workstation has /home on linear lvm (250G+1T).
+AFAICS, the part after the [...] are additions specific to git.  Is that
+right?
 
-so, i suppose that my "slow" working copy crosses disks boundary
-or spread over 1TB drive and the random git i/o impacts performance.
+Can we store them in a separate khash-sha1.h or some such, to make it
+clearer what's what?  As things stand, one has to look for an identifier
+that is built from macros at the far end of a file that looks like it
+was imported verbatim from klib(?).  I don't know about you, but that
+just took me far too long to get right.
 
-the question still remains - does the git need to scan whole checkout
-during picking well defined set of files?
+I think I'll also lend you a hand writing Documentation/technical/api-khash.txt
+(expect it tomorrow) so that we also have documentation in the git
+style, where gitters can be expected to find it on their own.
 
-> Do you cherry-pick on one commit or a commit range?
+All that could then nicely fit into a commit that actually says where
+you conjured khash.h from and such.  This information seems
+conspicuously absent from this commit's message :-)
 
-single commit.
+Furthermore, would it be a problem to name the second hash sha1_int
+instead?  I have another use for such a hash, and I can't imagine I'm
+the only one.  (That's not critical however, I can do the required
+editing in that other series.)
 
---=20
-gpg key fingerprint =3D 60B4 9886 AD53 EB3E 88BB  1EB5 C52E D01B 683B 9=
-411
+-- 
+Thomas Rast
+tr@thomasrast.ch
