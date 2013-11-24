@@ -1,86 +1,100 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: Re: Git issues with submodules
-Date: Sun, 24 Nov 2013 02:06:42 +0100
-Message-ID: <20131124010642.GB3500@sandbox-ub>
-References: <CALkWK0nDME-z7G4kcag=ad3qH5FL9FawrYFyVLQB6Z_g+TV+vQ@mail.gmail.com>
- <20131122151120.GA32361@sigill.intra.peff.net>
- <CAErtv25zrsde7wYg+VUZebow2pmhDnDQG53Dmz_gbjavC-D2cA@mail.gmail.com>
- <CALkWK0m9MK=RBBor-ZeGrGU9KA6tZa89UUi0J7j9fxr1g6uJtQ@mail.gmail.com>
- <CAErtv24Lv1JegCBQ=TXvOsgBNHp=Rphk5YVAq2qqRbNmqfNSkw@mail.gmail.com>
- <CAErtv24P+wyZKvvuuPJJ0oxzMif7XtOwJDtKcTKQdKHZaAUbig@mail.gmail.com>
- <CALkWK0muxsRUtO6KYk5G3=RVN0nqd=8gOZn=jsNbTc4B9KCATQ@mail.gmail.com>
- <528FC638.5060403@web.de>
- <20131122215454.GA4952@sandbox-ub>
- <529110ED.8000501@web.de>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] send-pack: don't send a thin pack to a server which
+ doesn't support it
+Date: Sun, 24 Nov 2013 01:07:46 -0500
+Message-ID: <20131124060745.GA5289@sigill.intra.peff.net>
+References: <1385222875-13369-1-git-send-email-cmn@elego.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Sergey Sharybin <sergey.vfx@gmail.com>,
-	Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Sun Nov 24 02:06:56 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, gitster@pobox.com, jrnieder@gmail.com,
+	pclouds@gmail.com, spearce@spearce.org
+To: Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@elego.de>
+X-From: git-owner@vger.kernel.org Sun Nov 24 07:07:53 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VkOA2-0005FN-Tm
-	for gcvg-git-2@plane.gmane.org; Sun, 24 Nov 2013 02:06:55 +0100
+	id 1VkSrI-0004UY-RQ
+	for gcvg-git-2@plane.gmane.org; Sun, 24 Nov 2013 07:07:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756394Ab3KXBGv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 Nov 2013 20:06:51 -0500
-Received: from smtprelay01.ispgateway.de ([80.67.29.23]:38866 "EHLO
-	smtprelay01.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756176Ab3KXBGu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Nov 2013 20:06:50 -0500
-X-Greylist: delayed 97906 seconds by postgrey-1.27 at vger.kernel.org; Sat, 23 Nov 2013 20:06:50 EST
-Received: from [77.20.34.36] (helo=sandbox-ub)
-	by smtprelay01.ispgateway.de with esmtpsa (TLSv1:AES128-SHA:128)
-	(Exim 4.68)
-	(envelope-from <hvoigt@hvoigt.net>)
-	id 1VkO9r-0007rQ-Ud; Sun, 24 Nov 2013 02:06:44 +0100
+	id S1750901Ab3KXGHt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 24 Nov 2013 01:07:49 -0500
+Received: from cloud.peff.net ([50.56.180.127]:44643 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750803Ab3KXGHs (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Nov 2013 01:07:48 -0500
+Received: (qmail 15975 invoked by uid 102); 24 Nov 2013 06:07:48 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 24 Nov 2013 00:07:48 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 24 Nov 2013 01:07:46 -0500
 Content-Disposition: inline
-In-Reply-To: <529110ED.8000501@web.de>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
+In-Reply-To: <1385222875-13369-1-git-send-email-cmn@elego.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238247>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238249>
 
-On Sat, Nov 23, 2013 at 09:32:45PM +0100, Jens Lehmann wrote:
-> Am 22.11.2013 22:54, schrieb Heiko Voigt:
-> > What I think needs fixing here first is that the ignore setting should not
-> > apply to any diffs between HEAD and index. IMO, it should only apply
-> > to the diff between worktree and index.
-> 
-> Not only that. It should also apply to diffs between commits/trees
-> and work tree but not between commits/trees. The reason the ignore
-> setting was added three years ago was to avoid expensive work tree
-> operations when it was clear that either the information wasn't
-> wanted or it took too much time to determine that. And I doubt you
-> want to see modifications to submodules in your work tree when
-> diffing against HEAD but not when diffing against the index.
-> 
-> And this behavior happens to be just what the floating branch model
-> needs too. I'm not sure there isn't a use case out there that also
-> needs to silence diff & friends regarding submodule changes between
-> commits/trees and/or index too (even though I cannot come up with
-> one at the moment). So I propose to add "worktree" as another value
-> for the ignore option - which ignores submodule modifications in
-> the work tree - and leave "all" as it is.
+On Sat, Nov 23, 2013 at 05:07:55PM +0100, Carlos Mart=C3=ADn Nieto wrot=
+e:
 
-I am not so sure about that. Only finding out what has changed (commit
-wise) in a submodule is expensive. Just finding out whether a submodule
-sha1 has changed is not expensive. Maybe we should completely stop
-respecting the ignore=all setting for history and diff between index and
-HEAD. AFAIK, we do not have any other setting that instruct git to
-ignore specific parts of the history unless explicitly asked for by
-specifying a pathspec.
+> Up to now git has assumed that all servers are able to fix thin
+> packs. This is however not always the case.
+>=20
+> Document the 'no-thin' capability and prevent send-pack from generati=
+ng
+> a thin pack if the server advertises it.
+> ---
+>=20
+> This is a re-roll of the series I sent earlier this month, switching
+> it around by adding the "no-thin"
 
-And I think a user should never miss by accident that something has
-changed in the repository.
+Thanks, I think this moves in the right direction.
 
-Cheers Heiko
+I wonder if we want to call it "no-thin-pack" just for consistency with
+the affirmative version in upload-pack.
+
+> +The upload-pack server advertises 'thin-pack' when it can generate a=
+nd
+> +send a thin pack. The receive-pack server advertises 'no-thin' if
+> +it does not know how to "thicken" the pack it receives.
+> +
+> +A client requests the 'thin-pack' capability when it understands how
+> +to "thicken" it.
+> =20
+>  Client MUST NOT request 'thin-pack' capability if it cannot turn a t=
+hin
+>  pack into a self-contained pack.
+> =20
+> +Client MUST NOT send a thin pack if the server advertises the
+> +'no-thin' capability.
+
+As somebody who participated in the discussion, I know why one is in th=
+e
+affirmative and one is in the negative. But I think it might help a
+reader of the spec to emphasize the difference, and to put the client
+behavior for each alongside the server behavior, like:
+
+  The upload-pack server advertises 'thin-pack' when it can generate an=
+d
+  send a thin pack. A client requests the 'thin-pack' capability when i=
+t
+  understands how to "thicken" it, notifying the server that it can
+  receive such a pack. A client MUST NOT request the 'thin-pack'
+  capability if it cannot turn a thin pack into a self-contained pack.
+
+  Receive-pack, on the other hand, is assumed by default to be able to
+  handle thin packs, but can ask the client not to use the feature by
+  advertising the 'no-thin' capability. A client MUST NOT send a thin
+  pack if the server advertises the 'no-thin' capability.
+
+  The reasons for this asymmetry are historical. The receive-pack
+  program did not exist until after the invention of thin packs, so
+  historically the reference implementation of receive-pack always
+  understood thin packs. Adding 'no-thin' later allowed receive-pack to
+  disable the feature in a backwards-compatible manner.
+
+-Peff
