@@ -1,107 +1,84 @@
-From: Thomas Gummerer <t.gummerer@gmail.com>
-Subject: Re: [PATCH v3 17/24] read-cache: read cache-tree in index-v5
-Date: Mon, 25 Nov 2013 16:41:11 +0100
-Message-ID: <87iovgo5ew.fsf@gmail.com>
-References: <1376854933-31241-1-git-send-email-t.gummerer@gmail.com> <1376854933-31241-18-git-send-email-t.gummerer@gmail.com> <CACsJy8Br8EaEtoZeaz2eLKvxDmPJqUc02bYsL_OSLJvJ2dBU-g@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Nov 2013, #05; Thu, 21)
+Date: Mon, 25 Nov 2013 08:17:31 -0800
+Message-ID: <xmqqhab0zc9w.fsf@gitster.dls.corp.google.com>
+References: <xmqqtxf51e5c.fsf@gitster.dls.corp.google.com>
+	<CALWbr2xzY6o6ubuLTBd5VaUSqOS6+Vg7o7WfxbOE=6Fc1ob8bg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Thomas Rast <trast@inf.ethz.ch>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Junio C Hamano <gitster@pobox.com>,
-	Robin Rosenberg <robin.rosenberg@dewire.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 25 16:41:22 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git <git@vger.kernel.org>, Richard Hansen <rhansen@bbn.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: Antoine Pelisse <apelisse@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 25 17:17:49 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VkyHn-0004w2-J0
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Nov 2013 16:41:19 +0100
+	id 1Vkyr5-0006O6-Bn
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Nov 2013 17:17:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754120Ab3KYPlP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Nov 2013 10:41:15 -0500
-Received: from mail-lb0-f182.google.com ([209.85.217.182]:64514 "EHLO
-	mail-lb0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753947Ab3KYPlP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Nov 2013 10:41:15 -0500
-Received: by mail-lb0-f182.google.com with SMTP id u14so3428367lbd.27
-        for <git@vger.kernel.org>; Mon, 25 Nov 2013 07:41:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:in-reply-to:references:user-agent:date
-         :message-id:mime-version:content-type;
-        bh=suCExPsqWJ/rTOxQ2R1EVPs6uKVU2jVvX3a/qk3NNsE=;
-        b=hiK3evyJ+dysx7CW1chSo2ow0PeGF9OW5zXK4KWu3eABg0T+Cw7gC1qU86n105TSXm
-         jNwJJQ89dqkN2AJ1sFQL00v6pz/Fo6JTZIIAHqBL8/olE9oLEdZ2OefNJogHiJkNnoFG
-         91Cy5to4mZAkvgo2A3CL6JXV6Cs+znjW/3RWmEtjTBKjiQqKFq0Pl8rcX4qLGD0V78sz
-         6YKJXpV/lPgeBlCwoZdTC3ycG7nL8VNAAtPRNrjdUEkOHBLhN6i6a4oxaQeFKYGec4B5
-         D0UlF2UDAKRV7rIpd8vSFpbXwVF3BBo2Hpn2adc/DY+zWos1taP7rAmhBcvjES1nqZyS
-         36Xg==
-X-Received: by 10.152.88.8 with SMTP id bc8mr1132613lab.47.1385394070768;
-        Mon, 25 Nov 2013 07:41:10 -0800 (PST)
-Received: from localhost (213-66-41-37-no99.tbcn.telia.com. [213.66.41.37])
-        by mx.google.com with ESMTPSA id o1sm54008454lah.8.2013.11.25.07.41.08
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 25 Nov 2013 07:41:09 -0800 (PST)
-In-Reply-To: <CACsJy8Br8EaEtoZeaz2eLKvxDmPJqUc02bYsL_OSLJvJ2dBU-g@mail.gmail.com>
-User-Agent: Notmuch/0.15.2+119~gf0dfda5 (http://notmuchmail.org) Emacs/24.3.1 (x86_64-unknown-linux-gnu)
+	id S1757376Ab3KYQRm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Nov 2013 11:17:42 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49992 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755063Ab3KYQRk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Nov 2013 11:17:40 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 13DF351248;
+	Mon, 25 Nov 2013 11:17:34 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=1ymTKbHdoXDSR8dtJ7Zx9oTQV8g=; b=QVV78s
+	/YvwKuRm6YM5rtM1v/IwNy4mn7CNoOIk2UYBCA+xrT1WEu1/cs7Zk+M7YeDMExOt
+	cVee3OfE/RMGU159S3AWxpEuxSPsowDOeQVa4C8mVzgiQXFxDmlRKoP/aB6UkVd1
+	k0NF1w37gSAQ8r8nUJnkZpKHWeDpDW1xtlLuk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=swpE8UQNqHhOItIV28/4gybWoltnYUj/
+	7vlw+SROfrvPV2cqAfLqLIQJ3RddcGz0EyV7OOiHi5zgnmL6DGDv2I86g7eYF1hI
+	/bIImkSb6dUA3TdzQZbRvoUhf0RCZIf84n1lyuqwN6OiQFjrrhCLZyKBRblJRCyP
+	hG+O13YdIIA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0405051247;
+	Mon, 25 Nov 2013 11:17:34 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 595D151245;
+	Mon, 25 Nov 2013 11:17:33 -0500 (EST)
+In-Reply-To: <CALWbr2xzY6o6ubuLTBd5VaUSqOS6+Vg7o7WfxbOE=6Fc1ob8bg@mail.gmail.com>
+	(Antoine Pelisse's message of "Sat, 23 Nov 2013 12:25:47 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 170FAA52-55ED-11E3-8D78-D331802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238318>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238321>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+Antoine Pelisse <apelisse@gmail.com> writes:
 
-> On Mon, Aug 19, 2013 at 2:42 AM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
->> +/*
->> + * This function modifies the directory argument that is given to it.
->> + * Don't use it if the directory entries are still needed after.
->> + */
+> On Fri, Nov 22, 2013 at 1:19 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> * rh/remote-hg-bzr-updates (2013-11-18) 9 commits
+>>   (merged to 'next' on 2013-11-20 at a36f3c4)
+>>  + remote-bzr, remote-hg: fix email address regular expression
+>>  + test-hg.sh: help user correlate verbose output with email test
+>>  + test-hg.sh: fix duplicate content strings in author tests
+>>  + test-hg.sh: avoid obsolete 'test' syntax
+>>  + test-hg.sh: eliminate 'local' bashism
+>>  + test-bzr.sh, test-hg.sh: prepare for change to push.default=simple
+>>  + test-bzr.sh, test-hg.sh: allow running from any dir
+>>  + test-lib.sh: convert $TEST_DIRECTORY to an absolute path
+>>  + remote-hg: don't decode UTF-8 paths into Unicode objects
+>>
+>>  Can wait in 'next'.
 >
-> There goes my hope of keeping directory_entry* in core so that at
-> write-time, after validation, we only need to recreate some trees
-> instead of all of them..
->
-> Or we could make cache-tree keep references to directory_entry. If a
-> cache-tree is not invalidated, then the attached directory_tree should
-> be reused..
+> Would it be possible to merge the first commit of this series in
+> master (and eventually in maint) ?
+> My commit (11362653: remote-hg: unquote C-style paths when exporting)
+> breaks the remote-hg tests since v1.8.4.3 (sorry about that), and is
+> fixed by this commit. It would be nice to deliver 1.8.5 with working
+> remote-helpers tests.
 
-I've now re-written the algorithm that converts the directory entries to
-cache entries, and it's now no longer destructive.  For now the
-directory entries are not needed in core, so I'll free them when done
-with reading the index, but it's possible to keep it.
-
->> +static struct cache_tree *cache_tree_convert_v5(struct directory_entry *de)
->> +{
->> +       if (!de->de_nentries)
->> +               return NULL;
->> +       sort_directories(de);
->> +       return convert_one(de);
->> +}
->> +
->>  static int read_entries(struct index_state *istate, struct directory_entry *de,
->>                         unsigned int first_entry_offset, void *mmap,
->>                         unsigned long mmap_size, unsigned int *nr,
->> @@ -591,6 +668,7 @@ static int read_index_v5(struct index_state *istate, void *mmap,
->>                 }
->>                 de = de->next;
->>         }
->> +       istate->cache_tree = cache_tree_convert_v5(root_directory);
->>         istate->cache_nr = nr;
->>         return 0;
->>  }
->
-> Otherwise we do need to free root_directory down to the deepest
-> subtrees, I think. People have been complaining about read-cache
-> leaking memory like mad, so this is a real issue. Even if you keep
-> references in cache-tree, you still need to free it
-> cache_tree_invalidate_path() to avoid leaking
-
-I'm freeing them for now, as they are not used anywhere, but in the
-future we might want to keep them for some optimizations.
+Surely.  Let's do that.
