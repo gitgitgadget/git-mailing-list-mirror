@@ -1,67 +1,65 @@
-From: Thomas Rast <tr@thomasrast.ch>
-Subject: [PATCH 1/2] commit-slab: document clear_$slabname()
-Date: Mon, 25 Nov 2013 20:02:00 +0100
-Message-ID: <7f773c5c5ea16b19840f67ba99961be132940d32.1385405977.git.tr@thomasrast.ch>
-References: <cover.1385405977.git.tr@thomasrast.ch>
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 25 20:02:33 2013
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: gettext CTYPE for libc
+Date: Mon, 25 Nov 2013 11:31:02 -0800
+Message-ID: <20131125193102.GM4212@google.com>
+References: <52900FD6.5020202@gmail.com>
+ <CACsJy8CMUMdzJyDABFj47oY8j8kKr5K88niXoM0o4dVQkWvkqA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: =?utf-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
+	git-malling-list <git@vger.kernel.org>, 698867@bugs.debian.org
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 25 20:31:14 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vl1QU-0004WG-G1
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Nov 2013 20:02:30 +0100
+	id 1Vl1sG-0002qS-SB
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Nov 2013 20:31:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757358Ab3KYTCU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Nov 2013 14:02:20 -0500
-Received: from psi.thgersdorf.net ([176.9.98.78]:56215 "EHLO mail.psioc.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757333Ab3KYTCS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Nov 2013 14:02:18 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by localhost.psioc.net (Postfix) with ESMTP id 309A24D64DE;
-	Mon, 25 Nov 2013 20:02:17 +0100 (CET)
-X-Virus-Scanned: amavisd-new at psioc.net
-Received: from mail.psioc.net ([127.0.0.1])
-	by localhost (mail.psioc.net [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id Hs1qfj5mhEGQ; Mon, 25 Nov 2013 20:02:07 +0100 (CET)
-Received: from linux-k42r.v.cablecom.net (unknown [213.55.184.244])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(Client did not present a certificate)
-	by mail.psioc.net (Postfix) with ESMTPSA id 7C5CE4D658F;
-	Mon, 25 Nov 2013 20:02:05 +0100 (CET)
-X-Mailer: git-send-email 1.8.5.rc3.397.g2a3acd5
-In-Reply-To: <cover.1385405977.git.tr@thomasrast.ch>
+	id S1755352Ab3KYTbI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Nov 2013 14:31:08 -0500
+Received: from mail-yh0-f53.google.com ([209.85.213.53]:33730 "EHLO
+	mail-yh0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753273Ab3KYTbG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Nov 2013 14:31:06 -0500
+Received: by mail-yh0-f53.google.com with SMTP id b20so3169864yha.40
+        for <git@vger.kernel.org>; Mon, 25 Nov 2013 11:31:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=7pjaNExPdYzdVqzv+eHRVHKW+hqH8+eSOw28PWs/dqA=;
+        b=zWiiamqtVDmxF50jl+Jzo5Tww+Pk9VdB5cHKMGkTkht6FA3VAFIxv5hzD/nB2lOJLX
+         GObRuIgCYu5RaUL/wDh/Nc75yOAMq+SlIiQbiH9L4h4oSbfbc1Zd561ZnJQpwyO+iTym
+         J8fMi8cjTxCTX0Wc69fWHnF0mSV8e47cLAWh6yxnZKnfb6Y9Gbhqs9oWqWfAgZYPf/zD
+         BeE2ksEGvPlr4dxJSNgA7ErMYYaShWxRUYekLhxcCwr7zcOIiodclQbkXfq42O4/OLsv
+         kRjCsszAg3sz7pSM9Bik2Pj5UV6PIb2hPLe8RSodEGCEN3NOE5Tw/+KwA0dO6mSN7NFz
+         FgnA==
+X-Received: by 10.236.143.10 with SMTP id k10mr69757yhj.116.1385407865401;
+        Mon, 25 Nov 2013 11:31:05 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id q44sm33241162yhg.10.2013.11.25.11.31.04
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 25 Nov 2013 11:31:05 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <CACsJy8CMUMdzJyDABFj47oY8j8kKr5K88niXoM0o4dVQkWvkqA@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238331>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238332>
 
-The clear_$slabname() function was only documented by source code so
-far.  Write something about it.
+Duy Nguyen wrote:
 
-Signed-off-by: Thomas Rast <tr@thomasrast.ch>
----
- commit-slab.h | 4 ++++
- 1 file changed, 4 insertions(+)
+>             Do you think it's ok to revert the workaround if we detect
+> the running glibc is fixed (or if it does not run glibc at all)? I
+> think we could use gnu_get_libc_version() to detect it.
 
-diff --git a/commit-slab.h b/commit-slab.h
-index d4c8286..d77aaea 100644
---- a/commit-slab.h
-+++ b/commit-slab.h
-@@ -24,6 +24,10 @@
-  *   to each commit. 'stride' specifies how big each array is.  The slab
-  *   that id initialied by the variant without "_with_stride" associates
-  *   each commit with an array of one integer.
-+ *
-+ * - void clear_indegree(struct indegree *);
-+ *
-+ *   Free the slab's data structures.
-  */
- 
- /* allocate ~512kB at once, allowing for malloc overhead */
--- 
-1.8.5.rc3.397.g2a3acd5
+That would be wonderful.
+
+Thanks,
+Jonathan
