@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v3 12/28] clone: support remote shallow repository
-Date: Mon, 25 Nov 2013 10:55:38 +0700
-Message-ID: <1385351754-9954-13-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v3 13/28] fetch: support fetching from a shallow repository
+Date: Mon, 25 Nov 2013 10:55:39 +0700
+Message-ID: <1385351754-9954-14-git-send-email-pclouds@gmail.com>
 References: <1385351754-9954-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -10,313 +10,376 @@ Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 25 04:52:46 2013
+X-From: git-owner@vger.kernel.org Mon Nov 25 04:52:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VknE1-0001td-Sw
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Nov 2013 04:52:42 +0100
+	id 1VknE8-0001vo-5Y
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Nov 2013 04:52:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753531Ab3KYDwi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 24 Nov 2013 22:52:38 -0500
-Received: from mail-pb0-f53.google.com ([209.85.160.53]:43934 "EHLO
-	mail-pb0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753071Ab3KYDwh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Nov 2013 22:52:37 -0500
-Received: by mail-pb0-f53.google.com with SMTP id ma3so4774236pbc.40
-        for <git@vger.kernel.org>; Sun, 24 Nov 2013 19:52:36 -0800 (PST)
+	id S1753537Ab3KYDwo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 24 Nov 2013 22:52:44 -0500
+Received: from mail-pb0-f50.google.com ([209.85.160.50]:52409 "EHLO
+	mail-pb0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753071Ab3KYDwn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Nov 2013 22:52:43 -0500
+Received: by mail-pb0-f50.google.com with SMTP id rr13so4754535pbb.23
+        for <git@vger.kernel.org>; Sun, 24 Nov 2013 19:52:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=3+WMyJWYCXb++Ey9WjhCWOz8y8rmzbbPiXEab+js5+U=;
-        b=RR2jhsY/ZoebHOgql3l0pZU+7KOMTQ2On1jx4KZjW9aOKTvgnVsstM1DDu07uowMV6
-         tA3C1K1D6N1xEJIOY4nyuNpwqmzsnCJVGywxHkhPcGb3q4rVtYopZH7FKAS6VgbYIuIJ
-         lhAvKCj7L/hrXzsegFGrmeeZZFczIkSuvU7uEiEdv6qtXFUDCYnLebgydsggaxOZF7Zu
-         bGcVdE5NZgwfGZz1GF9F4Y1mfgdqlu/q5UB+S1/2KvSpECt5O8dqb0ZoKSndOvKjn/0e
-         NiHFppbiaej6YFG0pBPzBdO7+n3yeTejVX8xMaqbFdSBtUrufjVj+DPALaqBZWKEhiG/
-         qsew==
-X-Received: by 10.68.99.99 with SMTP id ep3mr15963581pbb.107.1385351556756;
-        Sun, 24 Nov 2013 19:52:36 -0800 (PST)
+        bh=6HlYr+tIg/eS0gE80t0vZaJGW7SAwa9T1X9YIgcbujM=;
+        b=hKgXocKglRffy3KNlbRp5ODqF8SdHWmuZnoBuM9zSLWiMBZ2zeAu++HGLlP//z10s/
+         YZ8HCcKdMk78M2rP4mQsKLySZUDoyV5aBo7IzmYZAnpCmvuWWOYL/t8jv9aNReGJQgF0
+         S6kkExkC8Dk+QJGk6SvoSifNqZDE8hQi2eIeASSqSLxjcIZUSzsYQY/JVzfbHGYxPB0b
+         S262+Dt+dqzFU9BmcBqPyeX2JQe2X8WQoA8wk4LfYz0VBiD6JaMo3374BG9wL2mcH56n
+         aInBVKZiHLfgbn/7b2x++iHyXhXtxyjp4Uly4H4sU9yohPk4aD2Yh/WiJmYhaaVZKIpk
+         t8jQ==
+X-Received: by 10.66.139.130 with SMTP id qy2mr25626290pab.73.1385351563353;
+        Sun, 24 Nov 2013 19:52:43 -0800 (PST)
 Received: from lanh ([115.73.213.240])
-        by mx.google.com with ESMTPSA id gf5sm69713762pbc.22.2013.11.24.19.52.33
+        by mx.google.com with ESMTPSA id kd1sm79046513pab.20.2013.11.24.19.52.39
         for <multiple recipients>
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 24 Nov 2013 19:52:36 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Mon, 25 Nov 2013 10:57:09 +0700
+        Sun, 24 Nov 2013 19:52:42 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Mon, 25 Nov 2013 10:57:15 +0700
 X-Mailer: git-send-email 1.8.2.83.gc99314b
 In-Reply-To: <1385351754-9954-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238284>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238285>
 
-The gist of cloning a remote shallow repository is simple. The remote
-gives you a pack and all its shallow roots. All you need to do is set
-your .git/shallow correctly.
+This patch just put together pieces from the previous patches:
 
-The rule to create this .git/shallow is simple and more importantly,
-cheap: if a shallow root is found in the pack, it's probably used
-(i.e. reachable from some refs), so we add it. Others are dropped.
+ - Before getting the new pack, we need to remove all new reachable
+   shallow roots. The remaining roots may or may not be added to
+   .git/shallow.
 
-One may notice this method seems flawed by the word "probably". A
-shallow point may not be reachable from any refs at all if it's
-attached to an object island (a group of objects that are not
-reachable by any refs).
+ - After getting the pack, walk all new refs until they connect to
+   current refs, or hit the bottom of current repo, or hit new
+   shallow roots.
 
-If that object island is not complete, a new fetch request may send
-more objects to connect it to some ref. At that time, because we
-incorrectly installed the shallow root in this island, the user will
-not see anything after that root. This is not desired.
-
-There is a stricter method to rule out unwanted shallow roots above:
-mark_new_shallow_refs(). But it's expensive and even more so for a
-clone because it's proportional to the (potentially huge) number of
-commits.
-
-Given that object islands are rare (C Git never sends such islands), a
-tradeoff is made to surprise the user occasionally but work faster
-everyday. --strict option could be added later to enforce
-mark_new_shallow_refs().
+Those refs that hit new shallow roots are rejected because by default
+we do not allow to update .git/shallow (the only exception so far is
+cloning from a shallow repo, which is more like creating .git/shallow
+than updating it)
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- builtin/clone.c      |  1 +
- builtin/fetch-pack.c |  2 +-
- fetch-pack.c         | 50 ++++++++++++++++++++++++++++++++++++++++++++=
-+++---
- fetch-pack.h         |  4 ++++
- transport.c          | 11 ++++++++---
- transport.h          |  6 ++++++
- 6 files changed, 67 insertions(+), 7 deletions(-)
+ builtin/fetch.c                   |   9 +++
+ fetch-pack.c                      |  35 ++++++++++-
+ remote.h                          |   1 +
+ t/t5536-fetch-shallow.sh (new +x) | 128 ++++++++++++++++++++++++++++++=
+++++++++
+ transport.c                       |  11 +++-
+ 5 files changed, 179 insertions(+), 5 deletions(-)
+ create mode 100755 t/t5536-fetch-shallow.sh
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 900f564..0b182ce 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -889,6 +889,7 @@ int cmd_clone(int argc, const char **argv, const ch=
-ar *prefix)
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index bd7a101..7b41a7e 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -405,6 +405,8 @@ static int iterate_ref_map(void *cb_data, unsigned =
+char sha1[20])
+ 	struct ref **rm =3D cb_data;
+ 	struct ref *ref =3D *rm;
 =20
- 	remote =3D remote_get(option_origin);
- 	transport =3D transport_get(remote, remote->url[0]);
-+	transport->cloning =3D 1;
++	while (ref && ref->status =3D=3D REF_STATUS_REJECT_SHALLOW)
++		ref =3D ref->next;
+ 	if (!ref)
+ 		return -1; /* end of the list */
+ 	*rm =3D ref->next;
+@@ -451,6 +453,13 @@ static int store_updated_refs(const char *raw_url,=
+ const char *remote_name,
+ 			struct ref *ref =3D NULL;
+ 			const char *merge_status_marker =3D "";
 =20
- 	if (!transport->get_refs_list || (!is_local && !transport->fetch))
- 		die(_("Don't know how to clone %s"), transport->url);
-diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
-index c1d918f..927424b 100644
---- a/builtin/fetch-pack.c
-+++ b/builtin/fetch-pack.c
-@@ -153,7 +153,7 @@ int cmd_fetch_pack(int argc, const char **argv, con=
-st char *prefix)
- 	get_remote_heads(fd[0], NULL, 0, &ref, 0, NULL, NULL);
-=20
- 	ref =3D fetch_pack(&args, fd, conn, ref, dest,
--			 sought, nr_sought, pack_lockfile_ptr);
-+			 sought, nr_sought, NULL, pack_lockfile_ptr);
- 	if (pack_lockfile) {
- 		printf("lock %s\n", pack_lockfile);
- 		fflush(stdout);
++			if (rm->status =3D=3D REF_STATUS_REJECT_SHALLOW) {
++				if (want_status =3D=3D FETCH_HEAD_MERGE)
++					warning(_("reject %s because shallow roots are not allowed to be =
+updated"),
++						rm->peer_ref ? rm->peer_ref->name : rm->name);
++				continue;
++			}
++
+ 			commit =3D lookup_commit_reference_gently(rm->old_sha1, 1);
+ 			if (!commit)
+ 				rm->fetch_head_status =3D FETCH_HEAD_NOT_FOR_MERGE;
 diff --git a/fetch-pack.c b/fetch-pack.c
-index 35d097e..b76581a 100644
+index b76581a..64fa5d2 100644
 --- a/fetch-pack.c
 +++ b/fetch-pack.c
-@@ -774,6 +774,7 @@ static struct ref *do_fetch_pack(struct fetch_pack_=
-args *args,
- 				 int fd[2],
- 				 const struct ref *orig_ref,
- 				 struct ref **sought, int nr_sought,
-+				 struct extra_have_objects *shallow,
- 				 char **pack_lockfile)
- {
- 	struct ref *ref =3D copy_ref_list(orig_ref);
-@@ -852,6 +853,8 @@ static struct ref *do_fetch_pack(struct fetch_pack_=
-args *args,
- 	if (args->depth > 0)
- 		setup_alternate_shallow(&shallow_lock, &alternate_shallow_file,
+@@ -855,7 +855,17 @@ static struct ref *do_fetch_pack(struct fetch_pack=
+_args *args,
  					NULL);
-+	else if (args->cloning && shallow && shallow->nr)
-+		alternate_shallow_file =3D setup_temporary_shallow(shallow);
- 	else
+ 	else if (args->cloning && shallow && shallow->nr)
+ 		alternate_shallow_file =3D setup_temporary_shallow(shallow);
+-	else
++	else if (!args->cloning && shallow && shallow->nr) {
++		struct extra_have_objects extra;
++		memset(&extra, 0, sizeof(extra));
++		remove_reachable_shallow_points(&extra, shallow);
++		if (extra.nr) {
++			alternate_shallow_file =3D setup_temporary_shallow(&extra);
++			free(shallow->array);
++			*shallow =3D extra;
++		} else
++			alternate_shallow_file =3D NULL;
++	} else
  		alternate_shallow_file =3D NULL;
  	if (get_pack(args, fd, pack_lockfile))
-@@ -925,8 +928,11 @@ static int remove_duplicates_in_refs(struct ref **=
+ 		die("git fetch-pack: fetch failed.");
+@@ -929,8 +939,11 @@ static int remove_duplicates_in_refs(struct ref **=
 ref, int nr)
- 	return dst;
  }
 =20
--static void update_shallow(struct fetch_pack_args *args)
-+static void update_shallow(struct fetch_pack_args *args,
-+			   struct extra_have_objects *shallow)
+ static void update_shallow(struct fetch_pack_args *args,
++			   struct ref **sought, int nr_sought,
+ 			   struct extra_have_objects *shallow)
  {
-+	int i;
-+
++	struct extra_have_objects ref;
++	int *status;
+ 	int i;
+=20
  	if (args->depth > 0 && alternate_shallow_file) {
- 		if (*alternate_shallow_file =3D=3D '\0') { /* --unshallow */
- 			unlink_or_warn(git_path("shallow"));
-@@ -935,6 +941,42 @@ static void update_shallow(struct fetch_pack_args =
-*args)
- 			commit_lock_file(&shallow_lock);
+@@ -977,6 +990,24 @@ static void update_shallow(struct fetch_pack_args =
+*args,
+ 		free(extra.array);
  		return;
  	}
 +
-+	if (!shallow || !shallow->nr)
-+		return;
++	memset(&ref, 0, sizeof(ref));
++	for (i =3D 0; i < nr_sought; i++)
++		add_extra_have(&ref, sought[i]->old_sha1);
 +
-+	if (alternate_shallow_file) {
-+		/*
-+		 * The temporary shallow file is only useful for
-+		 * index-pack and unpack-objects because it may
-+		 * contain more roots than we want. Delete it.
-+		 */
-+		if (*alternate_shallow_file)
-+			unlink(alternate_shallow_file);
-+		free((char*)alternate_shallow_file);
-+	}
++	status =3D xcalloc(nr_sought, sizeof(*status));
 +
-+	if (args->cloning) {
-+		/*
-+		 * remote is shallow, but this is a clone, there are
-+		 * no objects in repo to worry about. Accept any
-+		 * shallow points that exist in the pack (iow in repo
-+		 * after get_pack() and reprepare_packed_git())
-+		 */
-+		struct extra_have_objects extra;
-+		memset(&extra, 0, sizeof(extra));
-+		for (i =3D 0; i < shallow->nr; i++)
-+			if (has_sha1_file(shallow->array[i]))
-+				add_extra_have(&extra, shallow->array[i]);
-+		if (extra.nr) {
-+			setup_alternate_shallow(&shallow_lock,
-+						&alternate_shallow_file,
-+						&extra);
-+			commit_lock_file(&shallow_lock);
-+		}
-+		free(extra.array);
-+		return;
++	/*
++	 * remote is also shallow, check what ref is safe to update
++	 * without updating .git/shallow
++	 */
++	if (mark_new_shallow_refs(&ref, status, NULL, shallow)) {
++		for (i =3D 0; i < nr_sought; i++)
++			if (status[i])
++				sought[i]->status =3D REF_STATUS_REJECT_SHALLOW;
 +	}
++	free(status);
++	free(ref.array);
  }
 =20
  struct ref *fetch_pack(struct fetch_pack_args *args,
-@@ -942,6 +984,7 @@ struct ref *fetch_pack(struct fetch_pack_args *args=
-,
- 		       const struct ref *ref,
- 		       const char *dest,
- 		       struct ref **sought, int nr_sought,
-+		       struct extra_have_objects *shallow,
- 		       char **pack_lockfile)
- {
- 	struct ref *ref_cpy;
-@@ -954,8 +997,9 @@ struct ref *fetch_pack(struct fetch_pack_args *args=
-,
- 		packet_flush(fd[1]);
- 		die("no matching remote head");
- 	}
--	ref_cpy =3D do_fetch_pack(args, fd, ref, sought, nr_sought, pack_lock=
-file);
--	update_shallow(args);
-+	ref_cpy =3D do_fetch_pack(args, fd, ref, sought, nr_sought,
-+				shallow, pack_lockfile);
+@@ -1000,6 +1031,6 @@ struct ref *fetch_pack(struct fetch_pack_args *ar=
+gs,
+ 	ref_cpy =3D do_fetch_pack(args, fd, ref, sought, nr_sought,
+ 				shallow, pack_lockfile);
  	reprepare_packed_git();
-+	update_shallow(args, shallow);
+-	update_shallow(args, shallow);
++	update_shallow(args, sought, nr_sought, shallow);
  	return ref_cpy;
  }
-diff --git a/fetch-pack.h b/fetch-pack.h
-index 9b08388..cabfb60 100644
---- a/fetch-pack.h
-+++ b/fetch-pack.h
-@@ -4,6 +4,8 @@
- #include "string-list.h"
- #include "run-command.h"
-=20
-+struct extra_have_objects;
+diff --git a/remote.h b/remote.h
+index ff604ff..e519c26 100644
+--- a/remote.h
++++ b/remote.h
+@@ -109,6 +109,7 @@ struct ref {
+ 		REF_STATUS_REJECT_FETCH_FIRST,
+ 		REF_STATUS_REJECT_NEEDS_FORCE,
+ 		REF_STATUS_REJECT_STALE,
++		REF_STATUS_REJECT_SHALLOW,
+ 		REF_STATUS_UPTODATE,
+ 		REF_STATUS_REMOTE_REJECT,
+ 		REF_STATUS_EXPECTING_REPORT
+diff --git a/t/t5536-fetch-shallow.sh b/t/t5536-fetch-shallow.sh
+new file mode 100755
+index 0000000..41de74d
+--- /dev/null
++++ b/t/t5536-fetch-shallow.sh
+@@ -0,0 +1,128 @@
++#!/bin/sh
 +
- struct fetch_pack_args {
- 	const char *uploadpack;
- 	int unpacklimit;
-@@ -20,6 +22,7 @@ struct fetch_pack_args {
- 	unsigned stateless_rpc:1;
- 	unsigned check_self_contained_and_connected:1;
- 	unsigned self_contained_and_connected:1;
-+	unsigned cloning:1;
- };
-=20
- /*
-@@ -33,6 +36,7 @@ struct ref *fetch_pack(struct fetch_pack_args *args,
- 		       const char *dest,
- 		       struct ref **sought,
- 		       int nr_sought,
-+		       struct extra_have_objects *shallow,
- 		       char **pack_lockfile);
-=20
- #endif
++test_description=3D'fetch/clone from a shallow clone'
++
++. ./test-lib.sh
++
++commit() {
++	echo "$1" >tracked &&
++	git add tracked &&
++	git commit -m "$1"
++}
++
++test_expect_success 'setup' '
++	commit 1 &&
++	commit 2 &&
++	commit 3 &&
++	commit 4 &&
++	git config --global transfer.fsckObjects true
++'
++
++test_expect_success 'setup shallow clone' '
++	git clone --no-local --depth=3D2 .git shallow &&
++	git --git-dir=3Dshallow/.git log --format=3D%s >actual &&
++	cat <<EOF >expect &&
++4
++3
++EOF
++	test_cmp expect actual
++'
++
++test_expect_success 'clone from shallow clone' '
++	git clone --no-local shallow shallow2 &&
++	(
++	cd shallow2 &&
++	git fsck &&
++	git log --format=3D%s >actual &&
++	cat <<EOF >expect &&
++4
++3
++EOF
++	test_cmp expect actual
++	)
++'
++
++test_expect_success 'fetch from shallow clone' '
++	(
++	cd shallow &&
++	commit 5
++	) &&
++	(
++	cd shallow2 &&
++	git fetch &&
++	git fsck &&
++	git log --format=3D%s origin/master >actual &&
++	cat <<EOF >expect &&
++5
++4
++3
++EOF
++	test_cmp expect actual
++	)
++'
++
++test_expect_success 'fetch --depth from shallow clone' '
++	(
++	cd shallow &&
++	commit 6
++	) &&
++	(
++	cd shallow2 &&
++	git fetch --depth=3D2 &&
++	git fsck &&
++	git log --format=3D%s origin/master >actual &&
++	cat <<EOF >expect &&
++6
++5
++EOF
++	test_cmp expect actual
++	)
++'
++
++test_expect_success 'fetch something upstream has but hidden by client=
+s shallow boundaries' '
++	# the blob "1" is available in .git but hidden by the
++	# shallow2/.git/shallow and it should be resent
++	! git --git-dir=3Dshallow2/.git cat-file blob `echo 1|git hash-object=
+ --stdin` >/dev/null &&
++	echo 1 > 1.t &&
++	git add 1.t &&
++	git commit -m add-1-back &&
++	(
++	cd shallow2 &&
++	git fetch ../.git +refs/heads/master:refs/remotes/top/master &&
++	git fsck &&
++	git log --format=3D%s top/master >actual &&
++	cat <<EOF >expect &&
++add-1-back
++4
++3
++EOF
++	test_cmp expect actual
++	) &&
++	git --git-dir=3Dshallow2/.git cat-file blob `echo 1|git hash-object -=
+-stdin` >/dev/null
++
++'
++
++test_expect_success 'fetch that requires changes in .git/shallow is fi=
+ltered' '
++	(
++	cd shallow &&
++	git checkout --orphan no-shallow &&
++	commit no-shallow
++	) &&
++	git init notshallow &&
++	(
++	cd notshallow &&
++	git fetch ../shallow/.git refs/heads/*:refs/remotes/shallow/*&&
++	git for-each-ref --format=3D"%(refname)" >actual.refs &&
++	cat <<EOF >expect.refs &&
++refs/remotes/shallow/no-shallow
++EOF
++	test_cmp expect.refs actual.refs &&
++	git log --format=3D%s shallow/no-shallow >actual &&
++	cat <<EOF >expect &&
++no-shallow
++EOF
++	test_cmp expect actual
++	)
++'
++
++test_done
 diff --git a/transport.c b/transport.c
-index 9c51767..fa3dc16 100644
+index fa3dc16..d6d14eb 100644
 --- a/transport.c
 +++ b/transport.c
-@@ -455,6 +455,7 @@ struct git_transport_data {
- 	int fd[2];
- 	unsigned got_remote_heads : 1;
- 	struct extra_have_objects extra_have;
-+	struct extra_have_objects shallow;
- };
-=20
- static int set_git_option(struct git_transport_options *opts,
-@@ -511,7 +512,9 @@ static struct ref *get_refs_via_connect(struct tran=
+@@ -514,7 +514,7 @@ static struct ref *get_refs_via_connect(struct tran=
 sport *transport, int for_pus
-=20
- 	connect_setup(transport, for_push, 0);
  	get_remote_heads(data->fd[0], NULL, 0, &refs,
--			 for_push ? REF_NORMAL : 0, &data->extra_have, NULL);
-+			 for_push ? REF_NORMAL : 0,
-+			 &data->extra_have,
-+			 transport->cloning ? &data->shallow : NULL);
+ 			 for_push ? REF_NORMAL : 0,
+ 			 &data->extra_have,
+-			 transport->cloning ? &data->shallow : NULL);
++			 &data->shallow);
  	data->got_remote_heads =3D 1;
 =20
  	return refs;
-@@ -538,17 +541,19 @@ static int fetch_refs_via_pack(struct transport *=
-transport,
- 	args.depth =3D data->options.depth;
- 	args.check_self_contained_and_connected =3D
- 		data->options.check_self_contained_and_connected;
-+	args.cloning =3D transport->cloning;
-=20
+@@ -546,8 +546,7 @@ static int fetch_refs_via_pack(struct transport *tr=
+ansport,
  	if (!data->got_remote_heads) {
  		connect_setup(transport, 0, 0);
  		get_remote_heads(data->fd[0], NULL, 0, &refs_tmp, 0,
--				 NULL, NULL);
-+				 NULL,
-+				 transport->cloning ? &data->shallow : NULL);
+-				 NULL,
+-				 transport->cloning ? &data->shallow : NULL);
++				 NULL, &data->shallow);
  		data->got_remote_heads =3D 1;
  	}
 =20
- 	refs =3D fetch_pack(&args, data->fd, data->conn,
- 			  refs_tmp ? refs_tmp : transport->remote_refs,
--			  dest, to_fetch, nr_heads,
-+			  dest, to_fetch, nr_heads, &data->shallow,
- 			  &transport->pack_lockfile);
- 	close(data->fd[0]);
- 	close(data->fd[1]);
-diff --git a/transport.h b/transport.h
-index b3679bb..59842d4 100644
---- a/transport.h
-+++ b/transport.h
-@@ -35,6 +35,12 @@ struct transport {
- 	 */
- 	unsigned cannot_reuse : 1;
+@@ -719,6 +718,10 @@ static int print_one_push_status(struct ref *ref, =
+const char *dest, int count, i
+ 		print_ref_status('!', "[rejected]", ref, ref->peer_ref,
+ 						 "stale info", porcelain);
+ 		break;
++	case REF_STATUS_REJECT_SHALLOW:
++		print_ref_status('!', "[rejected]", ref, ref->peer_ref,
++						 "new shallow roots not allowed", porcelain);
++		break;
+ 	case REF_STATUS_REMOTE_REJECT:
+ 		print_ref_status('!', "[remote rejected]", ref,
+ 						 ref->deletion ? NULL : ref->peer_ref,
+@@ -814,6 +817,8 @@ static int git_transport_push(struct transport *tra=
+nsport, struct ref *remote_re
+ 		get_remote_heads(data->fd[0], NULL, 0, &tmp_refs, REF_NORMAL, NULL, =
+NULL);
+ 		data->got_remote_heads =3D 1;
+ 	}
++	if (data->shallow.nr)
++		die("pushing to a shallow repository is not supported");
 =20
-+	/*
-+	 * A hint from caller that it will be performing a clone, not
-+	 * normal fetch. IOW the repository is guaranteed empty.
-+	 */
-+	unsigned cloning : 1;
-+
- 	/**
- 	 * Returns 0 if successful, positive if the option is not
- 	 * recognized or is inapplicable, and negative if the option
+ 	memset(&args, 0, sizeof(args));
+ 	args.send_mirror =3D !!(flags & TRANSPORT_PUSH_MIRROR);
 --=20
 1.8.2.83.gc99314b
