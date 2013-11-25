@@ -1,74 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 06/28] connect.c: teach get_remote_heads to parse "shallow" lines
-Date: Mon, 25 Nov 2013 14:42:38 -0800
-Message-ID: <xmqqd2low1b5.fsf@gitster.dls.corp.google.com>
-References: <1385351754-9954-1-git-send-email-pclouds@gmail.com>
-	<1385351754-9954-7-git-send-email-pclouds@gmail.com>
-	<xmqqtxf0w440.fsf@gitster.dls.corp.google.com>
+From: =?UTF-8?B?IkFuZHLDqXMgRy4gQXJhZ29uZXNlcyI=?= <knocte@gmail.com>
+Subject: Re: [PATCHv3] transport: Catch non positive --depth option value
+Date: Tue, 26 Nov 2013 00:34:43 +0100
+Message-ID: <5293DE93.3020008@gmail.com>
+References: <5283A380.9030308@gmail.com> <xmqqzjp1bqm3.fsf@gitster.dls.corp.google.com> <528A9877.4060802@gmail.com> <xmqq61ro9utf.fsf@gitster.dls.corp.google.com> <528E2660.6020107@gmail.com> <xmqq1u294ih3.fsf@gitster.dls.corp.google.com> <CACsJy8B0qBmBkx0n2B=ivUqZTgVz-ZLhTQ_nVJ4AV0njnZksfw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 25 23:42:53 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 26 00:34:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vl4rk-0003WJ-G0
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Nov 2013 23:42:52 +0100
+	id 1Vl5g8-0003VS-Ky
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Nov 2013 00:34:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751451Ab3KYWml (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Nov 2013 17:42:41 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58840 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750709Ab3KYWml (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Nov 2013 17:42:41 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6D9795387E;
-	Mon, 25 Nov 2013 17:42:40 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Dac6FRafZp6bwNFqaUcPdiIcV/g=; b=FcK2+f
-	3Cn2jgjhvwxvcYm6nlhaph81sswlO8dFNqVdspr3YbAD525qu8cTmx/rGUdG4aoq
-	weCzu5pTic0T0NiXreX2HDuGKEUKyRShfPxPkxIe1DRHr7I8pn1smcTZj2sgKAQG
-	/OICuogqyQ14JxTtrZszMxvo3hCzALTNqwaZA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=edd4IU9n6xSPtf8Nn3PQmdSnM3aDEtTw
-	0hZp+b+/tRQjnRX9Ionnk4GGjx8aVXXn0wnP8hMJhpxwNukyf4XAHIIP3lmUOyY6
-	Pf8DxeLtgoVFCI9BjIZ9S7XcbILpBMrvKJDZEPDQLXe4YQwc7MTpNxUYGbPsaE0J
-	K/J105MND4Y=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5E95C5387D;
-	Mon, 25 Nov 2013 17:42:40 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AA0925387C;
-	Mon, 25 Nov 2013 17:42:39 -0500 (EST)
-In-Reply-To: <xmqqtxf0w440.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Mon, 25 Nov 2013 13:42:07 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: E38193C2-5622-11E3-BD3E-D331802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751793Ab3KYXex (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Nov 2013 18:34:53 -0500
+Received: from mail-wi0-f181.google.com ([209.85.212.181]:39513 "EHLO
+	mail-wi0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750756Ab3KYXew (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Nov 2013 18:34:52 -0500
+Received: by mail-wi0-f181.google.com with SMTP id hq4so4820958wib.2
+        for <git@vger.kernel.org>; Mon, 25 Nov 2013 15:34:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=gb5Ute9meXO5ATpNJCkUm5Ro0kT+jSC8N7+gTlJRyNM=;
+        b=s6jer3LtOtE+/c89E5TlqCVRvOQCr0nhzDGq5GIetVWTV63YlYO9MhsMjpaoMr+dJ3
+         14LGA/YFeftOV7LzpY+05erZatJhfkmlxuCnnEUHOTAnV0zJlaNaXXL30tkIJ4HyeRDC
+         nHTAXIz0LO+iLyVgTy+ryBfX1pR+BJqPsSngekCWscAKYibWAITNBuDO+As+8g3sJROk
+         01o1I/H21bF84pI3ytNJYLAhubTMipxqbPJR2apX9D3dGxTQhKIUD3+/H3gXcol81Sjr
+         4dDqG1NJZyP4rgxUaigq7NVkHj0WiWUNM5CCJyIIKxxk9Oq5cx1kY3ZUYI1Bd3wCgZNf
+         Qf/Q==
+X-Received: by 10.180.198.170 with SMTP id jd10mr15631540wic.65.1385422491257;
+        Mon, 25 Nov 2013 15:34:51 -0800 (PST)
+Received: from [192.168.0.157] (7.Red-88-19-107.staticIP.rima-tde.net. [88.19.107.7])
+        by mx.google.com with ESMTPSA id qc10sm54924795wic.9.2013.11.25.15.34.49
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 25 Nov 2013 15:34:50 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.1.1
+In-Reply-To: <CACsJy8B0qBmBkx0n2B=ivUqZTgVz-ZLhTQ_nVJ4AV0njnZksfw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238363>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238364>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On 22/11/13 02:18, Duy Nguyen wrote:
+> On Fri, Nov 22, 2013 at 3:18 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Have you run the tests with this patch?  It seems that it breaks
+>> quite a lot of them, including t5500, t5503, t5510, among others.
+> 
+> I guess it's caused by builtin/fetch.c:backfill_tags(). And the call
+> could be replaced with
+> 
+> transport_set_option(transport, TRANS_OPT_DEPTH, NULL);
+> 
 
-> Perhaps a preparatory patch needs to rename the structure type to
-> object_name_list or something.  And then we can make the variable
-> names, not typenames, responsible for signalling what they mean,
-> i.e.
->
-> 	get_remote_heads(...
->         	struct list_of_objects *extra_have,
->                 struct list_of_objects *shallow_points);
->
-> when we introduce the new parameter.
+Not sure what you mean,
+https://github.com/git/git/blob/master/t/t5550-http-fetch.sh doesn't
+call backfill_tags. What do you mean?
 
-Yuck, and these are not "list-of-objects", either.  They are
-"list-of-object-names".
+Thanks
