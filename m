@@ -1,73 +1,66 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: Re: Re: Git issues with submodules
-Date: Mon, 25 Nov 2013 19:15:42 +0100
-Message-ID: <20131125181542.GA9761@sandbox-ub>
-References: <CALkWK0muxsRUtO6KYk5G3=RVN0nqd=8gOZn=jsNbTc4B9KCATQ@mail.gmail.com>
- <528FC638.5060403@web.de>
- <20131122215454.GA4952@sandbox-ub>
- <20131122220953.GI4212@google.com>
- <52910BC4.1030800@web.de>
- <20131124005256.GA3500@sandbox-ub>
- <52922962.3090407@web.de>
- <CAErtv2729o-xf=49xY06aVL1ZJzJpeH+cc_Pd1cAP52r32Ss_g@mail.gmail.com>
- <20131125174945.GA3847@sandbox-ub>
- <CAErtv259jxCtvbJYZHgQZv-VJ9U+JwNzWo0tn007SDTCCBScrA@mail.gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: branch annotations?
+Date: Mon, 25 Nov 2013 23:59:56 +0530
+Message-ID: <CALkWK0nfSMSOnEXxoRfvvorrc-goDJFbbgcQDm1gKwiZEKQTuQ@mail.gmail.com>
+References: <20131125084644.350bd4f7@bigbox.christie.dr> <20131125145644.GB23802@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jens Lehmann <Jens.Lehmann@web.de>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Sergey Sharybin <sergey.vfx@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 25 19:15:57 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Tim Chase <git@tim.thechases.com>, Git List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Nov 25 19:30:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vl0hO-0006jr-Gd
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Nov 2013 19:15:54 +0100
+	id 1Vl0vi-0005h3-Sp
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Nov 2013 19:30:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756703Ab3KYSPu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Nov 2013 13:15:50 -0500
-Received: from smtprelay06.ispgateway.de ([80.67.31.95]:36788 "EHLO
-	smtprelay06.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754364Ab3KYSPu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Nov 2013 13:15:50 -0500
-Received: from [77.20.34.36] (helo=sandbox-ub)
-	by smtprelay06.ispgateway.de with esmtpsa (TLSv1:AES128-SHA:128)
-	(Exim 4.68)
-	(envelope-from <hvoigt@hvoigt.net>)
-	id 1Vl0hH-0002D3-1e; Mon, 25 Nov 2013 19:15:47 +0100
-Content-Disposition: inline
-In-Reply-To: <CAErtv259jxCtvbJYZHgQZv-VJ9U+JwNzWo0tn007SDTCCBScrA@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
+	id S1757329Ab3KYSaj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Nov 2013 13:30:39 -0500
+Received: from mail-ie0-f175.google.com ([209.85.223.175]:43955 "EHLO
+	mail-ie0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754328Ab3KYSai (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Nov 2013 13:30:38 -0500
+Received: by mail-ie0-f175.google.com with SMTP id x13so7696288ief.34
+        for <git@vger.kernel.org>; Mon, 25 Nov 2013 10:30:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=u3hr1hL3Vv1odog8NvNr0ZZStPFdC6X8Dxcd3ldG13k=;
+        b=u1kM0Qunu95Pc++bLeXlBULMRR2tXp37sF4Drl13YzcYskEB80Ib5KhFMzkZtM1DJY
+         qOEO6jiJcFErm4zzBWJDPU7P3VSh7ysstBzIiOIQqIBr8u6J9JG2T2l9R8w9oed2vQSe
+         EnArBxE46jgsNBIaLkcu9XXHyOa1ZnBf8x9qwAC/04Hqsmu3eeiTF6wwq9SdNml014Y6
+         xvtQwk79Gin55jHBrmnhjw8YD9B3b1hU0xbaHVqKTCvsXfOX3whMxvXC/eiMB4YvuIVv
+         DyqoQaZdr+/uGxZUuYKxCr/9fhJyeYKyZBaH32eYd208TtPTZo3MJKGI/IES5tBsfmjW
+         9qDQ==
+X-Received: by 10.50.73.74 with SMTP id j10mr13797867igv.50.1385404237871;
+ Mon, 25 Nov 2013 10:30:37 -0800 (PST)
+Received: by 10.96.90.39 with HTTP; Mon, 25 Nov 2013 10:29:56 -0800 (PST)
+In-Reply-To: <20131125145644.GB23802@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238326>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238327>
 
-On Mon, Nov 25, 2013 at 11:57:45PM +0600, Sergey Sharybin wrote:
-> Heiko, yeah sure see what you mean. Changing existing behavior is pretty PITA.
-> 
-> Just one more question for now, are you referencing to the patch "[RFC
-> PATCH] disable complete ignorance of submodules for index <-> HEAD
-> diff"? Coz i tested it and seems it doesn't change behavior of
-> add/commit.
+Jeff King wrote:
+> I think it makes sense to be able to show it as part of "git branch",
+> but the verbose branch listing there is a bit of a mess. Doing it
+> cleanly would probably involve refactoring the branch-display code to
+> allow users to specify more flexible formats.
 
-Yep, that was just an RFC for status and diff. I think teaching add and
-commit to skip submodules if ignored are a separate topic and thus will
-be in a separate patch. I have to add tests and probably some more
-commands. The logic of ignoring submodules is implemented quite deep in
-the diff code. So changing it can affect quite some commands so we
-have to check quite carefully what will be affected and if we can change
-it without to much fallout.
+Certainly. I'm quite unhappy with the current 'git branch', and am
+looking to improve it. Branch descriptions will definitely be useful
+to display as well.
 
-> Also, i'm around to test the all patches which are related on submodules :)
+> Ramkumar (cc'd) was looking into that refactoring a while back, but I
+> did not follow it closely (it looks like some of the underlying
+> for-each-ref refactoring is on the 'next' branch?).
 
-Thanks, good to know. Stay tuned!
-
-Cheers Heiko
+The previous effort in collaboration with Duy fell apart,
+unfortunately. Currently, there are a few small patches enhancing
+f-e-r from the original series in 'next'. Once they graduate, the plan
+is to refactor f-e-r a bit so that 'git branch' can slowly be moved
+into using its machinery.
