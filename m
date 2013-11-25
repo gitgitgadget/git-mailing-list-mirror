@@ -1,83 +1,116 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Git issues with submodules
-Date: Mon, 25 Nov 2013 12:53:45 -0800
-Message-ID: <xmqq61rgxkx2.fsf@gitster.dls.corp.google.com>
-References: <CALkWK0n7jdLKOAFoFjuRz0aTCssorAgk2y=Vce76Y5aHWbj53Q@mail.gmail.com>
-	<CAErtv27dMepNSbBVdOokn6OF858ENaKooL+FzD7JHtp9nRPufw@mail.gmail.com>
-	<CALkWK0nDME-z7G4kcag=ad3qH5FL9FawrYFyVLQB6Z_g+TV+vQ@mail.gmail.com>
-	<20131122151120.GA32361@sigill.intra.peff.net>
-	<CAErtv25zrsde7wYg+VUZebow2pmhDnDQG53Dmz_gbjavC-D2cA@mail.gmail.com>
-	<CALkWK0m9MK=RBBor-ZeGrGU9KA6tZa89UUi0J7j9fxr1g6uJtQ@mail.gmail.com>
-	<CAErtv24Lv1JegCBQ=TXvOsgBNHp=Rphk5YVAq2qqRbNmqfNSkw@mail.gmail.com>
-	<CAErtv24P+wyZKvvuuPJJ0oxzMif7XtOwJDtKcTKQdKHZaAUbig@mail.gmail.com>
-	<CALkWK0muxsRUtO6KYk5G3=RVN0nqd=8gOZn=jsNbTc4B9KCATQ@mail.gmail.com>
-	<528FC638.5060403@web.de> <20131122215454.GA4952@sandbox-ub>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH 2/9] mark perl test scripts executable
+Date: Mon, 25 Nov 2013 12:53:54 -0800
+Message-ID: <20131125205354.GS4212@google.com>
+References: <20131125205119.GQ4212@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jens Lehmann <Jens.Lehmann@web.de>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Sergey Sharybin <sergey.vfx@gmail.com>,
-	Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>
-To: Heiko Voigt <hvoigt@hvoigt.net>
-X-From: git-owner@vger.kernel.org Mon Nov 25 21:53:56 2013
+Cc: "Michael G. Schwern" <schwern@pobox.com>,
+	Clemens Buchacher <drizzd@aon.at>,
+	Marc Branchaud <marcnarc@xiplink.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 25 21:54:04 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vl3AK-0008KF-7j
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Nov 2013 21:53:56 +0100
+	id 1Vl3AR-0008O9-D6
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Nov 2013 21:54:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751665Ab3KYUxv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Nov 2013 15:53:51 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45439 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750709Ab3KYUxt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Nov 2013 15:53:49 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 52B0C5396D;
-	Mon, 25 Nov 2013 15:53:48 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=6coV9Leji0Ko33kn+f6grGcLm0k=; b=Shb9oF
-	DoYlgxopTybl36X/CulnKPtw+DXSZZq8AlgyVwMcajukTVRplLxvojAp3tblgB4P
-	KWQsa15C8ZPPtH3OLkU8eeBkF412Hzq+X7mmMah6r0mewaDWX8yhZP2Rg9CgF1ts
-	zFqL++CAvviD5T8eSo3faNm3d/tLdXPNdqJc8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ec7NVjwlra7ycxCePARbCmPXaJ3BfB8E
-	H6/A7Jp0bAXbZK+6rga4ktxPiPS4crKtyzBn0wM86r2MIV40gxQOnX8onGUpWlpZ
-	Easal3oqUqOBF+b0kynHgIAZvdGxAQqdYFM75QDQecXNbkWFFREQadji00nbSt1v
-	TzgFrqvEPJI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 434EB5396C;
-	Mon, 25 Nov 2013 15:53:48 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 863F253969;
-	Mon, 25 Nov 2013 15:53:47 -0500 (EST)
-In-Reply-To: <20131122215454.GA4952@sandbox-ub> (Heiko Voigt's message of
-	"Fri, 22 Nov 2013 22:54:54 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: AE0B4530-5613-11E3-A1BE-D331802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752203Ab3KYUx6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Nov 2013 15:53:58 -0500
+Received: from mail-yh0-f47.google.com ([209.85.213.47]:53742 "EHLO
+	mail-yh0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752199Ab3KYUx5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Nov 2013 15:53:57 -0500
+Received: by mail-yh0-f47.google.com with SMTP id 29so3329933yhl.34
+        for <git@vger.kernel.org>; Mon, 25 Nov 2013 12:53:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=+2gvdmZ0670GYchFkCLbcZ7Wg3rQ9gKtcSj9bBkq88c=;
+        b=lcXcKeH1XYwQSJagsSUBRR5o57ZM1pQuv0TuUnaM84/1b5LClK8oAz5u4v/M9gHFku
+         ao76zhBuSZ+4/r+uLYGQvKiBpVr0WNI79udfNt0s4Pv5Oo7uI7y/7rAVSL9lRBqY2KIF
+         ARDXCPkEpWkNyRVegTbQa1GP7q9Lu4ZUWfnLUsn/JU5gjhofYDRbi6u/bm4PfHs3LgSS
+         JLsmZD7ymBkPdx7VpbNVNxkOshxAUwLkupRR9yBhraA1IFzGzbgYpxtrde9szdtN/32I
+         I+bEnEw1mhDJTARUn7N2+sQgVS1GzyK1Uuz8vQ8ijWbjF0kO1xMtU+3HPjHGhc+AIo+W
+         BF2A==
+X-Received: by 10.236.207.73 with SMTP id m49mr29441675yho.5.1385412837230;
+        Mon, 25 Nov 2013 12:53:57 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id h66sm20488422yhb.7.2013.11.25.12.53.56
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 25 Nov 2013 12:53:56 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <20131125205119.GQ4212@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238348>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238349>
 
-Heiko Voigt <hvoigt@hvoigt.net> writes:
+These scripts are not run directly as part of a normal build, so no
+one noticed that they did not have the +x bit.  Mark them executable
+to make it more obvious that they can be run directly (when debugging,
+for example).
 
-> What I think needs fixing here first is that the ignore setting should not
-> apply to any diffs between HEAD and index. IMO, it should only apply
-> to the diff between worktree and index.
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+ t/Git-SVN/00compile.t              | 0
+ t/Git-SVN/Utils/add_path_to_url.t  | 0
+ t/Git-SVN/Utils/can_compress.t     | 0
+ t/Git-SVN/Utils/canonicalize_url.t | 0
+ t/Git-SVN/Utils/collapse_dotdot.t  | 0
+ t/Git-SVN/Utils/fatal.t            | 0
+ t/Git-SVN/Utils/join_paths.t       | 0
+ t/t0202/test.pl                    | 0
+ t/t9150/make-svk-dump              | 0
+ t/t9151/make-svnmerge-dump         | 0
+ 10 files changed, 0 insertions(+), 0 deletions(-)
+ mode change 100644 => 100755 t/Git-SVN/00compile.t
+ mode change 100644 => 100755 t/Git-SVN/Utils/add_path_to_url.t
+ mode change 100644 => 100755 t/Git-SVN/Utils/can_compress.t
+ mode change 100644 => 100755 t/Git-SVN/Utils/canonicalize_url.t
+ mode change 100644 => 100755 t/Git-SVN/Utils/collapse_dotdot.t
+ mode change 100644 => 100755 t/Git-SVN/Utils/fatal.t
+ mode change 100644 => 100755 t/Git-SVN/Utils/join_paths.t
+ mode change 100644 => 100755 t/t0202/test.pl
+ mode change 100644 => 100755 t/t9150/make-svk-dump
+ mode change 100644 => 100755 t/t9151/make-svnmerge-dump
 
-Hmph.  How about "git diff $commit", the diff between the worktree and
-a named commit (which may or may not be HEAD)?
-
-> When we have that the user does not see the submodule changed when
-> normally working. But after doing git add . the change to the submodule
-> should be shown in status and diff regardless of the configuration.
-
-Yes, that sounds sensible.
+diff --git a/t/Git-SVN/00compile.t b/t/Git-SVN/00compile.t
+old mode 100644
+new mode 100755
+diff --git a/t/Git-SVN/Utils/add_path_to_url.t b/t/Git-SVN/Utils/add_path_to_url.t
+old mode 100644
+new mode 100755
+diff --git a/t/Git-SVN/Utils/can_compress.t b/t/Git-SVN/Utils/can_compress.t
+old mode 100644
+new mode 100755
+diff --git a/t/Git-SVN/Utils/canonicalize_url.t b/t/Git-SVN/Utils/canonicalize_url.t
+old mode 100644
+new mode 100755
+diff --git a/t/Git-SVN/Utils/collapse_dotdot.t b/t/Git-SVN/Utils/collapse_dotdot.t
+old mode 100644
+new mode 100755
+diff --git a/t/Git-SVN/Utils/fatal.t b/t/Git-SVN/Utils/fatal.t
+old mode 100644
+new mode 100755
+diff --git a/t/Git-SVN/Utils/join_paths.t b/t/Git-SVN/Utils/join_paths.t
+old mode 100644
+new mode 100755
+diff --git a/t/t0202/test.pl b/t/t0202/test.pl
+old mode 100644
+new mode 100755
+diff --git a/t/t9150/make-svk-dump b/t/t9150/make-svk-dump
+old mode 100644
+new mode 100755
+diff --git a/t/t9151/make-svnmerge-dump b/t/t9151/make-svnmerge-dump
+old mode 100644
+new mode 100755
+-- 
+1.8.4.1
