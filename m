@@ -1,57 +1,136 @@
-From: Phillip Susi <psusi@ubuntu.com>
-Subject: Filter log based on paths NOT touched
-Date: Mon, 25 Nov 2013 15:20:09 -0500
-Message-ID: <5293B0F9.1050200@ubuntu.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] commit-slab: declare functions "static inline"
+Date: Mon, 25 Nov 2013 12:23:58 -0800
+Message-ID: <xmqqmwksxmap.fsf@gitster.dls.corp.google.com>
+References: <878uwc2r7c.fsf@thomasrast.ch>
+	<89b534b37f5689a675f0f97d3627a0668ce2a71d.1385409724.git.tr@thomasrast.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 25 21:22:18 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Thomas Rast <tr@thomasrast.ch>
+X-From: git-owner@vger.kernel.org Mon Nov 25 21:24:09 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vl2fi-00025c-Ey
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Nov 2013 21:22:18 +0100
+	id 1Vl2hV-0002uq-0V
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Nov 2013 21:24:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754827Ab3KYUWO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Nov 2013 15:22:14 -0500
-Received: from [75.180.132.120] ([75.180.132.120]:37185 "EHLO
-	cdptpa-omtalb.mail.rr.com" rhost-flags-FAIL-FAIL-OK-OK)
-	by vger.kernel.org with ESMTP id S1753622Ab3KYUWN (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 25 Nov 2013 15:22:13 -0500
-X-Authority-Analysis: v=2.0 cv=CLiorGXD c=1 sm=0 a=/DbS/tiKggfTkRRHPZEB4g==:17 a=Qsx_du5GiBkA:10 a=h_Sp9wbh10QA:10 a=qcVVwzaSNv8A:10 a=S1A5HrydsesA:10 a=8nJEP1OIZ-IA:10 a=fxJcL_dCAAAA:8 a=KGjhK52YXX0A:10 a=z6d9NglTn88A:10 a=QfKxxUxMAAAA:8 a=JSFNWkuBpiCMQqeAaRwA:9 a=wPNLvfGTeEIA:10 a=/DbS/tiKggfTkRRHPZEB4g==:117
-X-Cloudmark-Score: 0
-X-Authenticated-User: 
-X-Originating-IP: 67.78.168.186
-Received: from [67.78.168.186] ([67.78.168.186:63975] helo=[10.1.1.236])
-	by cdptpa-oedge03.mail.rr.com (envelope-from <psusi@ubuntu.com>)
-	(ecelerity 2.2.3.46 r()) with ESMTP
-	id A0/19-07327-AF0B3925; Mon, 25 Nov 2013 20:20:10 +0000
-User-Agent: Mozilla/5.0 (Windows NT 6.1; rv:24.0) Gecko/20100101 Thunderbird/24.1.1
-X-Enigmail-Version: 1.6
+	id S1755860Ab3KYUYF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Nov 2013 15:24:05 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41860 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753622Ab3KYUYE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Nov 2013 15:24:04 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7BE2953185;
+	Mon, 25 Nov 2013 15:24:03 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=t6p/L4wjzz0D8K9A5yURSOLKNG0=; b=b4tf7M
+	tPzOLRCaZOacFgNILW9L5iR5Rl/KlXy1p/5yVd3gs0jRI94hhHTvAe28lCXirDzO
+	965gbLB7uiPeMFMqgIVIeIyhmCQ0tSSzvkUduV63lqjCk87Leyg6SHXPjW6XN5dH
+	LWjcNUpJaMQbkI29KvRKU5CjoYl88JsSdw06c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ioDW2iWOIRyzDpawCesrSWTO2/9SzqkQ
+	Ve3XgF1PJIXNWHzzIT9itvqgDi009uEUhfmSZqQte6yB6N1c8wB5u19LC8Y6JJ+L
+	9RFkC1kgzCArqor4IQktSrn97DoI+XLgWfSOxYo98ZcuYExnqKFL9limYcaAmurd
+	eMPkUteZoo0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 63D1A53184;
+	Mon, 25 Nov 2013 15:24:03 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E250F5317E;
+	Mon, 25 Nov 2013 15:23:59 -0500 (EST)
+In-Reply-To: <89b534b37f5689a675f0f97d3627a0668ce2a71d.1385409724.git.tr@thomasrast.ch>
+	(Thomas Rast's message of "Mon, 25 Nov 2013 21:04:08 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 848A69D8-560F-11E3-B891-D331802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238340>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238341>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Thomas Rast <tr@thomasrast.ch> writes:
 
-I can't seem to find a way to invert the meaning of a pathspec given
-to git log in order to find commits touching anything BUT a given
-path.  Does such a thing exist?
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.17 (MingW32)
-Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
+> Here's a version that has a fat comment instead of the removal.
+>
+> Also, since I was rerolling anyway I put a reason why we need this.
+> In the original motivation I actually created more functions
+> afterwards, which made it more convincing, but the problem already
+> exists.
 
-iQEcBAEBAgAGBQJSk7D5AAoJEJrBOlT6nu75myIIAMoAgihPAhDrCBpRKUHF/X8S
-B8vjwIg7zALajU+vrz7B/UyxKFHC54sYn0MaAA5htBXKCtd6L0tHrNa1gYbd9qT+
-xgTuF7+Unwv90yFBEsoZgEwlSyaLBAVHknMiE4ecxaJrlhBqESbePNrORCwCAuPq
-ANrYunEETN2KNgYBkNszdEp7Ga9RcP7LWisL/pNV2k+ac7YfqGp1jsN00jLMYqvH
-c+8Kl154N3xgvk+pGvkKGbO3MavkmEK47lLL929g9iXeP3NkMsrxyEjhnABD9tS3
-SxzYZt9G+lpH2Tv8l1/NqMafdNy5P7CEs00C4JZn1EzEcIBqMeYgUhce+WU75qc=
-=p2gM
------END PGP SIGNATURE-----
+Thanks.
+
+I considered the bottom one the real declaration (with the top one a
+forward declaration we need to make the result compile), by the way,
+so there may be no redundancy anywhere ;-)
+
+
+
+>  commit-slab.h | 24 ++++++++++++++++++------
+>  1 file changed, 18 insertions(+), 6 deletions(-)
+>
+> diff --git a/commit-slab.h b/commit-slab.h
+> index d77aaea..21d54f1 100644
+> --- a/commit-slab.h
+> +++ b/commit-slab.h
+> @@ -45,8 +45,8 @@ struct slabname {							\
+>  };									\
+>  static int stat_ ##slabname## realloc;					\
+>  									\
+> -static void init_ ##slabname## _with_stride(struct slabname *s,		\
+> -					    unsigned stride)		\
+> +static inline void init_ ##slabname## _with_stride(struct slabname *s,	\
+> +						   unsigned stride)	\
+>  {									\
+>  	unsigned int elem_size;						\
+>  	if (!stride)							\
+> @@ -58,12 +58,12 @@ struct slabname {							\
+>  	s->slab = NULL;							\
+>  }									\
+>  									\
+> -static void init_ ##slabname(struct slabname *s)			\
+> +static inline void init_ ##slabname(struct slabname *s)			\
+>  {									\
+>  	init_ ##slabname## _with_stride(s, 1);				\
+>  }									\
+>  									\
+> -static void clear_ ##slabname(struct slabname *s)			\
+> +static inline void clear_ ##slabname(struct slabname *s)		\
+>  {									\
+>  	int i;								\
+>  	for (i = 0; i < s->slab_count; i++)				\
+> @@ -73,8 +73,8 @@ struct slabname {							\
+>  	s->slab = NULL;							\
+>  }									\
+>  									\
+> -static elemtype *slabname## _at(struct slabname *s,			\
+> -				const struct commit *c)			\
+> +static inline elemtype *slabname## _at(struct slabname *s,		\
+> +				       const struct commit *c)		\
+>  {									\
+>  	int nth_slab, nth_slot;						\
+>  									\
+> @@ -98,4 +98,16 @@ struct slabname {							\
+>  									\
+>  static int stat_ ##slabname## realloc
+>  
+> +/*
+> + * Note that this seemingly redundant second declaration is required
+> + * to allow a terminating semicolon, which makes instantiations look
+> + * like function declarations.  I.e., the expansion of
+> + *
+> + *    define_commit_slab(indegree, int);
+> + *
+> + * ends in 'static int stat_indegreerealloc;'.  This would otherwise
+> + * be a syntax error according (at least) to ISO C.  It's hard to
+> + * catch because GCC silently parses it by default.
+> + */
+> +
+>  #endif /* COMMIT_SLAB_H */
