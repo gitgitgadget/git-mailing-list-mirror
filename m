@@ -1,216 +1,363 @@
-From: Sergey Sharybin <sergey.vfx@gmail.com>
-Subject: Re: [RFC PATCH] disable complete ignorance of submodules for index
- <-> HEAD diff
-Date: Mon, 25 Nov 2013 15:01:34 +0600
-Message-ID: <CAErtv26e1NxmsBLH_2KuzBECiwZvyvstqXoK5Vybk9xpsaaO9Q@mail.gmail.com>
-References: <CAErtv27dMepNSbBVdOokn6OF858ENaKooL+FzD7JHtp9nRPufw@mail.gmail.com>
-	<CALkWK0nDME-z7G4kcag=ad3qH5FL9FawrYFyVLQB6Z_g+TV+vQ@mail.gmail.com>
-	<20131122151120.GA32361@sigill.intra.peff.net>
-	<CAErtv25zrsde7wYg+VUZebow2pmhDnDQG53Dmz_gbjavC-D2cA@mail.gmail.com>
-	<CALkWK0m9MK=RBBor-ZeGrGU9KA6tZa89UUi0J7j9fxr1g6uJtQ@mail.gmail.com>
-	<CAErtv24Lv1JegCBQ=TXvOsgBNHp=Rphk5YVAq2qqRbNmqfNSkw@mail.gmail.com>
-	<CAErtv24P+wyZKvvuuPJJ0oxzMif7XtOwJDtKcTKQdKHZaAUbig@mail.gmail.com>
-	<CALkWK0muxsRUtO6KYk5G3=RVN0nqd=8gOZn=jsNbTc4B9KCATQ@mail.gmail.com>
-	<528FC638.5060403@web.de>
-	<20131122215454.GA4952@sandbox-ub>
-	<20131123011145.GB4952@sandbox-ub>
+From: Krzesimir Nowak <krzesimir@endocode.com>
+Subject: Re: [PATCH] gitweb: Make showing branches configurable
+Date: Mon, 25 Nov 2013 10:37:20 +0100
+Message-ID: <1385372240.2182.8.camel@localhost.localdomain>
+References: <1385125848-8243-1-git-send-email-krzesimir@endocode.com>
+	 <xmqqhab41gsu.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Jens Lehmann <Jens.Lehmann@web.de>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Heiko Voigt <hvoigt@hvoigt.net>
-X-From: git-owner@vger.kernel.org Mon Nov 25 10:05:20 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Nov 25 10:37:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vks6a-0007oj-4Z
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Nov 2013 10:05:20 +0100
+	id 1Vksbk-0005gF-NL
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Nov 2013 10:37:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754087Ab3KYJBl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Nov 2013 04:01:41 -0500
-Received: from mail-ve0-f181.google.com ([209.85.128.181]:38560 "EHLO
-	mail-ve0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753473Ab3KYJBf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Nov 2013 04:01:35 -0500
-Received: by mail-ve0-f181.google.com with SMTP id oy12so2597426veb.40
-        for <git@vger.kernel.org>; Mon, 25 Nov 2013 01:01:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=Pss9fQxipOQOFVjop73iqj4Dr/lw4P0yCiFGYUbkz3U=;
-        b=pE6iNbvJv1iyKnwVY8WyhL6wqbcmQEnHH89BOwujFpYatNDprBlkrBDFWul9rtExZB
-         6GG5zel59S8j6wAnARygaM7jNY0CtLKwOyxb0LAcwun+UbNOlQGwUHvctFJT7Zl9ub35
-         Nyad20TA5NiISvGmWXWP74SWeFaybXLSWUl4nf/e/DyGvy6nGHhn8BjISHG7Zr6EWU8P
-         lkCYTJa8Y6fNVHM4uS/IJzbkHLgA2qY48zengVhAmX7S4a+U5EK++n0h2eqU4wsnR8rl
-         gnxT/lWXDALsPLhPzk+3l++XoZG1JHVrozZ7i5xbceiLx0oMHBFKWomz4OP5xDMpInFb
-         AIsw==
-X-Received: by 10.221.19.5 with SMTP id qi5mr24560406vcb.15.1385370094323;
- Mon, 25 Nov 2013 01:01:34 -0800 (PST)
-Received: by 10.52.169.2 with HTTP; Mon, 25 Nov 2013 01:01:34 -0800 (PST)
-In-Reply-To: <20131123011145.GB4952@sandbox-ub>
+	id S1751821Ab3KYJh2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 Nov 2013 04:37:28 -0500
+Received: from mail-bk0-f44.google.com ([209.85.214.44]:62100 "EHLO
+	mail-bk0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751114Ab3KYJh1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Nov 2013 04:37:27 -0500
+Received: by mail-bk0-f44.google.com with SMTP id d7so1836701bkh.31
+        for <git@vger.kernel.org>; Mon, 25 Nov 2013 01:37:25 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:content-type:mime-version:content-transfer-encoding;
+        bh=e7dfOqWy4agA4BuweFJ5lJsU8kn7IXvNkLRci/2DBUg=;
+        b=ia7CRq0N8EHI7fyigYUs+nV3Q2rT2z5EnUojNsxhpFKp0nVilJerDQkJn5NK2ex7i5
+         wKpEATDOHvnaRXAFObqnD4o371aTESW+zr89f7PvyLz+mFCddFZA/Gs5926fBvxaKT29
+         QjaQWGB1FtHA3Dyv1uGnyow5gTMjDfSmFUDkJXF7Hvdch0LmFZCmD1P/7Ir9eHkHQAN8
+         eOmR7WE8eb5PEcVRQKwaIUzyaITuGqV5em0qw+8++2ce/v4iEZ4t3AumGN0/cnq65hsj
+         VRqfVSTdf/MEJi+86LrbS7er6Zlyu385I/NwQTkv4jwawaBvzJi4CdUq/OoGiJ+hk7rI
+         lUuA==
+X-Gm-Message-State: ALoCoQlnPJfYIcu0woBxSbaeRdHoBNszgJ/pCbZVh/U77yCuvYpVe2BguJJJohJjDRDF0/6WJwuI
+X-Received: by 10.204.114.12 with SMTP id c12mr593436bkq.61.1385372245482;
+        Mon, 25 Nov 2013 01:37:25 -0800 (PST)
+Received: from [192.168.1.100] (95-91-241-78-dynip.superkabel.de. [95.91.241.78])
+        by mx.google.com with ESMTPSA id qe6sm44998658bkb.5.2013.11.25.01.37.21
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Mon, 25 Nov 2013 01:37:24 -0800 (PST)
+In-Reply-To: <xmqqhab41gsu.fsf@gitster.dls.corp.google.com>
+X-Mailer: Evolution 3.8.5 (3.8.5-2.fc19) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238305>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238306>
 
-Hi,
+On Fri, 2013-11-22 at 09:34 -0800, Junio C Hamano wrote:
+> Krzesimir Nowak <krzesimir@endocode.com> writes:
+>=20
+> > Running 'make GITWEB_WANTED_REFS=3D"heads wip" gitweb.cgi' will cre=
+ate a
+> > gitweb CGI script showing branches that appear in refs/heads/ and i=
+n
+> > refs/wip/. Might be useful for gerrit setups where user branches ar=
+e
+> > not stored under refs/heads/.
+> >
+> > Signed-off-by: Krzesimir Nowak <krzesimir@endocode.com>
+> > ---
+> >
+> > Notes:
+> >     I'm actually not sure if all those changes are really necessary=
+ as I
+> >     was mostly targeting it for Gerrit use. Especially I mean the c=
+hanges
+> >     in git_get_remotes_list, fill_remote_heads and print_page_nav. =
+I tried
+> >     to make it as general as it gets, so there's nothing Gerrit spe=
+cific.
+>=20
+> Thanks.
+>=20
+> Two knee-jerk reactions after a quick scan.
+>=20
+>  - You include "heads" for normal builds by hardcoded
+>    "GITWEB_WANTED_REFS =3D heads" but include "tags" unconditionally
+>    by having @ref_views =3D ("tags", @wanted_refs) in the code.  Why?
+>=20
 
-Tested the patch. `git status` now shows the changes to the
-submodules, which is nice :)
+Earlier both "tags" and "heads" were hardcoded there. So now instead of
+"heads" we have @wanted_refs.
 
-However, is it possible to make it so `git commit` lists submodules in
-"changes to be committed" section, so you'll see what's gonna to be in
-the commit while typing the commit message as well?
+I suppose I should have given it a better name, like @branch_refs.
+Right?
 
-On Sat, Nov 23, 2013 at 7:11 AM, Heiko Voigt <hvoigt@hvoigt.net> wrote:
-> If the value of ignore for submodules is set to "all" we would not show
-> whats actually committed during status or diff. This can result in the
-> user committing unexpected submodule references. Lets be nicer and always
-> show whats in the index.
->
-> Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
-> ---
-> This probably needs splitting up into two patches one for the
-> refactoring and one for the actual fix. It is also missing tests, but I
-> would first like to know what you think about this approach.
->
->  builtin/diff.c | 43 +++++++++++++++++++++++++++----------------
->  diff.h         |  2 +-
->  submodule.c    |  6 ++++--
->  wt-status.c    |  3 +++
->  4 files changed, 35 insertions(+), 19 deletions(-)
->
-> diff --git a/builtin/diff.c b/builtin/diff.c
-> index adb93a9..e9a356c 100644
-> --- a/builtin/diff.c
-> +++ b/builtin/diff.c
-> @@ -249,6 +249,21 @@ static int builtin_diff_files(struct rev_info *revs, int argc, const char **argv
->         return run_diff_files(revs, options);
->  }
->
-> +static int have_cached_option(int argc, const char **argv)
-> +{
-> +       int i;
-> +       for (i = 1; i < argc; i++) {
-> +               const char *arg = argv[i];
-> +               if (!strcmp(arg, "--"))
-> +                       return 0;
-> +               else if (!strcmp(arg, "--cached") ||
-> +                        !strcmp(arg, "--staged")) {
-> +                       return 1;
-> +               }
-> +       }
-> +       return 0;
-> +}
-> +
->  int cmd_diff(int argc, const char **argv, const char *prefix)
->  {
->         int i;
-> @@ -259,6 +274,7 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
->         struct blobinfo blob[2];
->         int nongit;
->         int result = 0;
-> +       int have_cached;
->
->         /*
->          * We could get N tree-ish in the rev.pending_objects list.
-> @@ -305,6 +321,11 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
->
->         if (nongit)
->                 die(_("Not a git repository"));
-> +
-> +       have_cached = have_cached_option(argc, argv);
-> +       if (have_cached)
-> +               DIFF_OPT_SET(&rev.diffopt, NO_IGNORE_SUBMODULE);
-> +
->         argc = setup_revisions(argc, argv, &rev, NULL);
->         if (!rev.diffopt.output_format) {
->                 rev.diffopt.output_format = DIFF_FORMAT_PATCH;
-> @@ -319,22 +340,12 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
->          * Do we have --cached and not have a pending object, then
->          * default to HEAD by hand.  Eek.
->          */
-> -       if (!rev.pending.nr) {
-> -               int i;
-> -               for (i = 1; i < argc; i++) {
-> -                       const char *arg = argv[i];
-> -                       if (!strcmp(arg, "--"))
-> -                               break;
-> -                       else if (!strcmp(arg, "--cached") ||
-> -                                !strcmp(arg, "--staged")) {
-> -                               add_head_to_pending(&rev);
-> -                               if (!rev.pending.nr) {
-> -                                       struct tree *tree;
-> -                                       tree = lookup_tree(EMPTY_TREE_SHA1_BIN);
-> -                                       add_pending_object(&rev, &tree->object, "HEAD");
-> -                               }
-> -                               break;
-> -                       }
-> +       if (!rev.pending.nr && have_cached) {
-> +               add_head_to_pending(&rev);
-> +               if (!rev.pending.nr) {
-> +                       struct tree *tree;
-> +                       tree = lookup_tree(EMPTY_TREE_SHA1_BIN);
-> +                       add_pending_object(&rev, &tree->object, "HEAD");
->                 }
->         }
->
-> diff --git a/diff.h b/diff.h
-> index e342325..81561b3 100644
-> --- a/diff.h
-> +++ b/diff.h
-> @@ -64,7 +64,7 @@ typedef struct strbuf *(*diff_prefix_fn_t)(struct diff_options *opt, void *data)
->  #define DIFF_OPT_FIND_COPIES_HARDER  (1 <<  6)
->  #define DIFF_OPT_FOLLOW_RENAMES      (1 <<  7)
->  #define DIFF_OPT_RENAME_EMPTY        (1 <<  8)
-> -/* (1 <<  9) unused */
-> +#define DIFF_OPT_NO_IGNORE_SUBMODULE (1 <<  9)
->  #define DIFF_OPT_HAS_CHANGES         (1 << 10)
->  #define DIFF_OPT_QUICK               (1 << 11)
->  #define DIFF_OPT_NO_INDEX            (1 << 12)
-> diff --git a/submodule.c b/submodule.c
-> index 1905d75..9d81712 100644
-> --- a/submodule.c
-> +++ b/submodule.c
-> @@ -301,9 +301,11 @@ void handle_ignore_submodules_arg(struct diff_options *diffopt,
->         DIFF_OPT_CLR(diffopt, IGNORE_UNTRACKED_IN_SUBMODULES);
->         DIFF_OPT_CLR(diffopt, IGNORE_DIRTY_SUBMODULES);
->
-> -       if (!strcmp(arg, "all"))
-> +       if (!strcmp(arg, "all")) {
-> +               if (DIFF_OPT_TST(diffopt, NO_IGNORE_SUBMODULE))
-> +                       return;
->                 DIFF_OPT_SET(diffopt, IGNORE_SUBMODULES);
-> -       else if (!strcmp(arg, "untracked"))
-> +       } else if (!strcmp(arg, "untracked"))
->                 DIFF_OPT_SET(diffopt, IGNORE_UNTRACKED_IN_SUBMODULES);
->         else if (!strcmp(arg, "dirty"))
->                 DIFF_OPT_SET(diffopt, IGNORE_DIRTY_SUBMODULES);
-> diff --git a/wt-status.c b/wt-status.c
-> index b4e44ba..34be1cc 100644
-> --- a/wt-status.c
-> +++ b/wt-status.c
-> @@ -462,6 +462,9 @@ static void wt_status_collect_changes_index(struct wt_status *s)
->                 handle_ignore_submodules_arg(&rev.diffopt, s->ignore_submodule_arg);
->         }
->
-> +       /* for the index we need to disable complete ignorance of submodules */
-> +       DIFF_OPT_SET(&rev.diffopt, NO_IGNORE_SUBMODULE);
-> +
->         rev.diffopt.output_format |= DIFF_FORMAT_CALLBACK;
->         rev.diffopt.format_callback = wt_status_collect_updated_cb;
->         rev.diffopt.format_callback_data = s;
-> --
-> 1.8.5.rc3.1.gcd6363f
->
+>  - Does this have be a compile-time decision?  It looks like this is
+>    something that can and should be made controllable with the
+>    normal gitweb configuration mechanism.
+>=20
 
+Maybe. I was just looking at Makefile and saw a bunch of configuration
+options there, so I just added another one. Haven't noticed the gitweb
+config thing. Sorry.
 
+So, we should just hardcode the @wanted_refs (or @branch_refs after the
+rename) to simply ('heads'), let it be overriden by perl gitweb config
+file and get rid of a new substitution from Makefile?
 
--- 
-With best regards, Sergey Sharybin
+>=20
+> >  gitweb/Makefile    |  4 ++-
+> >  gitweb/gitweb.perl | 94 +++++++++++++++++++++++++++++++++++++++---=
+------------
+> >  2 files changed, 72 insertions(+), 26 deletions(-)
+> >
+> > diff --git a/gitweb/Makefile b/gitweb/Makefile
+> > index cd194d0..361dce9 100644
+> > --- a/gitweb/Makefile
+> > +++ b/gitweb/Makefile
+> > @@ -38,6 +38,7 @@ GITWEB_SITE_HTML_HEAD_STRING =3D
+> >  GITWEB_SITE_HEADER =3D
+> >  GITWEB_SITE_FOOTER =3D
+> >  HIGHLIGHT_BIN =3D highlight
+> > +GITWEB_WANTED_REFS =3D heads
+> > =20
+> >  # include user config
+> >  -include ../config.mak.autogen
+> > @@ -148,7 +149,8 @@ GITWEB_REPLACE =3D \
+> >  	-e 's|++GITWEB_SITE_HTML_HEAD_STRING++|$(GITWEB_SITE_HTML_HEAD_ST=
+RING)|g' \
+> >  	-e 's|++GITWEB_SITE_HEADER++|$(GITWEB_SITE_HEADER)|g' \
+> >  	-e 's|++GITWEB_SITE_FOOTER++|$(GITWEB_SITE_FOOTER)|g' \
+> > -	-e 's|++HIGHLIGHT_BIN++|$(HIGHLIGHT_BIN)|g'
+> > +	-e 's|++HIGHLIGHT_BIN++|$(HIGHLIGHT_BIN)|g' \
+> > +	-e 's|++GITWEB_WANTED_REFS++|$(GITWEB_WANTED_REFS)|g'
+> > =20
+> >  GITWEB-BUILD-OPTIONS: FORCE
+> >  	@rm -f $@+
+> > diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> > index 68c77f6..8bc9e9a 100755
+> > --- a/gitweb/gitweb.perl
+> > +++ b/gitweb/gitweb.perl
+> > @@ -17,6 +17,7 @@ use Encode;
+> >  use Fcntl ':mode';
+> >  use File::Find qw();
+> >  use File::Basename qw(basename);
+> > +use List::Util qw(min);
+> >  use Time::HiRes qw(gettimeofday tv_interval);
+> >  binmode STDOUT, ':utf8';
+> > =20
+> > @@ -122,6 +123,9 @@ our $logo_label =3D "git homepage";
+> >  # source of projects list
+> >  our $projects_list =3D "++GITWEB_LIST++";
+> > =20
+> > +# list of "directories" under "refs/" we want to display as branch=
+es
+> > +our @wanted_refs =3D qw{++GITWEB_WANTED_REFS++};
+> > +
+> >  # the width (in characters) of the projects list "Description" col=
+umn
+> >  our $projects_list_description_width =3D 25;
+> > =20
+> > @@ -632,8 +636,19 @@ sub feature_avatar {
+> >  sub check_head_link {
+> >  	my ($dir) =3D @_;
+> >  	my $headfile =3D "$dir/HEAD";
+> > -	return ((-e $headfile) ||
+> > -		(-l $headfile && readlink($headfile) =3D~ /^refs\/heads\//));
+> > +
+> > +	if (-e $headfile) {
+> > +		return 1;
+> > +	}
+> > +	if (-l $headfile) {
+> > +		my $rl =3D readlink($headfile);
+> > +
+> > +		for my $ref (@wanted_refs) {
+> > +			return 1 if $rl =3D~ /^refs\/$ref\//;
+> > +		}
+> > +	}
+> > +
+> > +	return 0;
+> >  }
+> > =20
+> >  sub check_export_ok {
+> > @@ -2515,6 +2530,7 @@ sub format_snapshot_links {
+> >  sub get_feed_info {
+> >  	my $format =3D shift || 'Atom';
+> >  	my %res =3D (action =3D> lc($format));
+> > +	my $matched_ref =3D 0;
+> > =20
+> >  	# feed links are possible only for project views
+> >  	return unless (defined $project);
+> > @@ -2522,12 +2538,17 @@ sub get_feed_info {
+> >  	# or don't have specific feed yet (so they should use generic)
+> >  	return if (!$action || $action =3D~ /^(?:tags|heads|forks|tag|sea=
+rch)$/x);
+> > =20
+> > -	my $branch;
+> > -	# branches refs uses 'refs/heads/' prefix (fullname) to different=
+iate
+> > -	# from tag links; this also makes possible to detect branch links
+> > -	if ((defined $hash_base && $hash_base =3D~ m!^refs/heads/(.*)$!) =
+||
+> > -	    (defined $hash      && $hash      =3D~ m!^refs/heads/(.*)$!))=
+ {
+> > -		$branch =3D $1;
+> > +	my $branch =3D undef;
+> > +	# branches refs uses 'refs/' + $wanted_refs[x] + '/' prefix
+> > +	# (fullname) to differentiate from tag links; this also makes
+> > +	# possible to detect branch links
+> > +	for my $ref (@wanted_refs) {
+> > +		if ((defined $hash_base && $hash_base =3D~ m!^refs/$ref/(.*)$!) =
+||
+> > +		    (defined $hash      && $hash      =3D~ m!^refs/$ref/(.*)$!))=
+ {
+> > +			$branch =3D $1;
+> > +			$matched_ref =3D $ref;
+> > +			last;
+> > +		}
+> >  	}
+> >  	# find log type for feed description (title)
+> >  	my $type =3D 'log';
+> > @@ -2540,7 +2561,7 @@ sub get_feed_info {
+> >  	}
+> > =20
+> >  	$res{-title} =3D $type;
+> > -	$res{'hash'} =3D (defined $branch ? "refs/heads/$branch" : undef)=
+;
+> > +	$res{'hash'} =3D (defined $branch ? "refs/$matched_ref/$branch" :=
+ undef);
+> >  	$res{'file_name'} =3D $file_name;
+> > =20
+> >  	return %res;
+> > @@ -3184,24 +3205,43 @@ sub git_get_project_owner {
+> >  	return $owner;
+> >  }
+> > =20
+> > -sub git_get_last_activity {
+> > -	my ($path) =3D @_;
+> > -	my $fd;
+> > +sub git_get_last_activity_age {
+> > +	my ($refs) =3D @_;
+> > +	my $fd =3D -1;
+> > =20
+> > -	$git_dir =3D "$projectroot/$path";
+> >  	open($fd, "-|", git_cmd(), 'for-each-ref',
+> >  	     '--format=3D%(committer)',
+> >  	     '--sort=3D-committerdate',
+> >  	     '--count=3D1',
+> > -	     'refs/heads') or return;
+> > +	     $refs) or return undef;
+> > +
+> >  	my $most_recent =3D <$fd>;
+> > -	close $fd or return;
+> > +	close $fd or return undef;
+> >  	if (defined $most_recent &&
+> >  	    $most_recent =3D~ / (\d+) [-+][01]\d\d\d$/) {
+> >  		my $timestamp =3D $1;
+> > -		my $age =3D time - $timestamp;
+> > -		return ($age, age_string($age));
+> > +		return time - $timestamp;
+> > +	}
+> > +
+> > +	return undef;
+> > +}
+> > +
+> > +sub git_get_last_activity {
+> > +	my ($path) =3D @_;
+> > +	my @ages =3D ();
+> > +
+> > +	$git_dir =3D "$projectroot/$path";
+> > +	for my $ref (@wanted_refs) {
+> > +		my $age =3D git_get_last_activity_age('refs/' . $_);
+> > +
+> > +		push @ages, $age if defined $age;
+> >  	}
+> > +	if (@ages) {
+> > +		my $min_age =3D min(@ages);
+> > +
+> > +		return ($min_age, age_string($min_age));
+> > +	}
+> > +
+> >  	return (undef, undef);
+> >  }
+> > =20
+> > @@ -3223,7 +3263,7 @@ sub git_get_remotes_list {
+> >  		next if $wanted and not $remote eq $wanted;
+> >  		my ($url, $key) =3D ($1, $2);
+> > =20
+> > -		$remotes{$remote} ||=3D { 'heads' =3D> () };
+> > +		$remotes{$remote} ||=3D { map { $_ =3D> () } @wanted_refs };
+> >  		$remotes{$remote}{$key} =3D $url;
+> >  	}
+> >  	close $fd or return;
+> > @@ -3237,9 +3277,11 @@ sub fill_remote_heads {
+> >  	my @heads =3D map { "remotes/$_" } keys %$remotes;
+> >  	my @remoteheads =3D git_get_heads_list(undef, @heads);
+> >  	foreach my $remote (keys %$remotes) {
+> > -		$remotes->{$remote}{'heads'} =3D [ grep {
+> > -			$_->{'name'} =3D~ s!^$remote/!!
+> > -			} @remoteheads ];
+> > +		foreach my $ref (@wanted_refs) {
+> > +			$remotes->{$remote}{$ref} =3D [ grep {
+> > +				$_->{'name'} =3D~ s!^$remote/!!
+> > +				} @remoteheads ];
+> > +		}
+> >  	}
+> >  }
+> > =20
+> > @@ -3644,7 +3686,7 @@ sub parse_from_to_diffinfo {
+> > =20
+> >  sub git_get_heads_list {
+> >  	my ($limit, @classes) =3D @_;
+> > -	@classes =3D ('heads') unless @classes;
+> > +	@classes =3D @wanted_refs unless @classes;
+> >  	my @patterns =3D map { "refs/$_" } @classes;
+> >  	my @headslist;
+> > =20
+> > @@ -3662,7 +3704,8 @@ sub git_get_heads_list {
+> >  		my ($committer, $epoch, $tz) =3D
+> >  			($committerinfo =3D~ /^(.*) ([0-9]+) (.*)$/);
+> >  		$ref_item{'fullname'}  =3D $name;
+> > -		$name =3D~ s!^refs/(?:head|remote)s/!!;
+> > +		my $strip_refs =3D join '|', @wanted_refs;
+> > +		$name =3D~ s!^refs/(?:$strip_refs|remotes)/!!;
+> > =20
+> >  		$ref_item{'name'}  =3D $name;
+> >  		$ref_item{'id'}    =3D $hash;
+> > @@ -4286,7 +4329,7 @@ sub git_print_page_nav {
+> >  # available if the feature is enabled
+> >  sub format_ref_views {
+> >  	my ($current) =3D @_;
+> > -	my @ref_views =3D qw{tags heads};
+> > +	my @ref_views =3D ("tags", @wanted_refs);
+> >  	push @ref_views, 'remotes' if gitweb_check_feature('remote_heads'=
+);
+> >  	return join " | ", map {
+> >  		$_ eq $current ? $_ :
+> > @@ -7179,7 +7222,8 @@ sub snapshot_name {
+> >  		$ver =3D $1;
+> >  	} else {
+> >  		# branches and other need shortened SHA-1 hash
+> > -		if ($hash =3D~ m!^refs/(?:heads|remotes)/(.*)$!) {
+> > +		my $strip_refs =3D join '|', @wanted_refs;
+> > +		if ($hash =3D~ m!^refs/(?:$strip_refs|remotes)/(.*)$!) {
+> >  			$ver =3D $1;
+> >  		}
+> >  		$ver .=3D '-' . git_get_short_hash($project, $hash);
+
+--=20
+Krzesimir Nowak
+Software Developer
+Endocode AG
+
+krzesimir@endocode.com
+
+------
+Endocode AG, Johannisstra=C3=9Fe 20, 10117 Berlin
+info@endocode.com | www.endocode.com
+
+Vorstandsvorsitzender: Mirko Boehm
+Vorst=C3=A4nde: Dr. Karl Beecher, Chris K=C3=BChl, Sebastian Sucker
+Aufsichtsratsvorsitzende: Jennifer Beecher
+
+Registergericht: Amtsgericht Charlottenburg - HRB 150748 B
