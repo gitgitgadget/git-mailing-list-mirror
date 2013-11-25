@@ -1,136 +1,96 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] commit-slab: declare functions "static inline"
-Date: Mon, 25 Nov 2013 12:23:58 -0800
-Message-ID: <xmqqmwksxmap.fsf@gitster.dls.corp.google.com>
-References: <878uwc2r7c.fsf@thomasrast.ch>
-	<89b534b37f5689a675f0f97d3627a0668ce2a71d.1385409724.git.tr@thomasrast.ch>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 1/2] commit-slab: document clear_$slabname()
+Date: Mon, 25 Nov 2013 12:24:09 -0800
+Message-ID: <20131125202409.GO4212@google.com>
+References: <cover.1385405977.git.tr@thomasrast.ch>
+ <7f773c5c5ea16b19840f67ba99961be132940d32.1385405977.git.tr@thomasrast.ch>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
 To: Thomas Rast <tr@thomasrast.ch>
-X-From: git-owner@vger.kernel.org Mon Nov 25 21:24:09 2013
+X-From: git-owner@vger.kernel.org Mon Nov 25 21:24:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vl2hV-0002uq-0V
-	for gcvg-git-2@plane.gmane.org; Mon, 25 Nov 2013 21:24:09 +0100
+	id 1Vl2hh-00031l-Cr
+	for gcvg-git-2@plane.gmane.org; Mon, 25 Nov 2013 21:24:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755860Ab3KYUYF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Nov 2013 15:24:05 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41860 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753622Ab3KYUYE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Nov 2013 15:24:04 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7BE2953185;
-	Mon, 25 Nov 2013 15:24:03 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=t6p/L4wjzz0D8K9A5yURSOLKNG0=; b=b4tf7M
-	tPzOLRCaZOacFgNILW9L5iR5Rl/KlXy1p/5yVd3gs0jRI94hhHTvAe28lCXirDzO
-	965gbLB7uiPeMFMqgIVIeIyhmCQ0tSSzvkUduV63lqjCk87Leyg6SHXPjW6XN5dH
-	LWjcNUpJaMQbkI29KvRKU5CjoYl88JsSdw06c=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ioDW2iWOIRyzDpawCesrSWTO2/9SzqkQ
-	Ve3XgF1PJIXNWHzzIT9itvqgDi009uEUhfmSZqQte6yB6N1c8wB5u19LC8Y6JJ+L
-	9RFkC1kgzCArqor4IQktSrn97DoI+XLgWfSOxYo98ZcuYExnqKFL9limYcaAmurd
-	eMPkUteZoo0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 63D1A53184;
-	Mon, 25 Nov 2013 15:24:03 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E250F5317E;
-	Mon, 25 Nov 2013 15:23:59 -0500 (EST)
-In-Reply-To: <89b534b37f5689a675f0f97d3627a0668ce2a71d.1385409724.git.tr@thomasrast.ch>
-	(Thomas Rast's message of "Mon, 25 Nov 2013 21:04:08 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 848A69D8-560F-11E3-B891-D331802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756653Ab3KYUYS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Nov 2013 15:24:18 -0500
+Received: from mail-yh0-f50.google.com ([209.85.213.50]:49170 "EHLO
+	mail-yh0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753716Ab3KYUYR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Nov 2013 15:24:17 -0500
+Received: by mail-yh0-f50.google.com with SMTP id b6so3278194yha.37
+        for <git@vger.kernel.org>; Mon, 25 Nov 2013 12:24:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=KFBcptx1Ve2d5AboI6qT1TBnww48upMP4LUOXGHu0VI=;
+        b=snexn3y8oEVqb0jp6WmAMGy0rbMIKBi8C9/KZGJT4KXLQJxL1XGhUAq6dkOhk/+/U1
+         0Er1MsaZ12cr6uVUstZaZA4x9nsu5RaZuePLEqh3KaR6qUWzGcnoxEuVv8kgkhFRFey6
+         wv6FczrWbgg4qPMedlsQX6mIlm9WL9pE/7NT54Al0nS5jJA/UI9m725rsg9fffwJijUN
+         VnXbJTf6dP2+HNWFb97dWXK8G1XQ2PYlRP6yf4p8nYPORiUmXo9Ai7mI1GNWHtqCwyug
+         0WIn1oelC3zqex31zqTTNZMXqi+ii+ubIg/gXpg7WrdwqhSXAcCnth9kuNELeQSDsICb
+         NRJg==
+X-Received: by 10.236.111.38 with SMTP id v26mr29212361yhg.40.1385411055544;
+        Mon, 25 Nov 2013 12:24:15 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id q9sm77812231yhk.16.2013.11.25.12.24.13
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 25 Nov 2013 12:24:15 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <7f773c5c5ea16b19840f67ba99961be132940d32.1385405977.git.tr@thomasrast.ch>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238341>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238342>
 
-Thomas Rast <tr@thomasrast.ch> writes:
+Thomas Rast wrote:
 
-> Here's a version that has a fat comment instead of the removal.
->
-> Also, since I was rerolling anyway I put a reason why we need this.
-> In the original motivation I actually created more functions
-> afterwards, which made it more convincing, but the problem already
-> exists.
+> The clear_$slabname() function was only documented by source code so
+> far.  Write something about it.
 
-Thanks.
+Good idea.
 
-I considered the bottom one the real declaration (with the top one a
-forward declaration we need to make the result compile), by the way,
-so there may be no redundancy anywhere ;-)
-
-
-
->  commit-slab.h | 24 ++++++++++++++++++------
->  1 file changed, 18 insertions(+), 6 deletions(-)
->
-> diff --git a/commit-slab.h b/commit-slab.h
-> index d77aaea..21d54f1 100644
+[...]
 > --- a/commit-slab.h
 > +++ b/commit-slab.h
-> @@ -45,8 +45,8 @@ struct slabname {							\
->  };									\
->  static int stat_ ##slabname## realloc;					\
->  									\
-> -static void init_ ##slabname## _with_stride(struct slabname *s,		\
-> -					    unsigned stride)		\
-> +static inline void init_ ##slabname## _with_stride(struct slabname *s,	\
-> +						   unsigned stride)	\
->  {									\
->  	unsigned int elem_size;						\
->  	if (!stride)							\
-> @@ -58,12 +58,12 @@ struct slabname {							\
->  	s->slab = NULL;							\
->  }									\
->  									\
-> -static void init_ ##slabname(struct slabname *s)			\
-> +static inline void init_ ##slabname(struct slabname *s)			\
->  {									\
->  	init_ ##slabname## _with_stride(s, 1);				\
->  }									\
->  									\
-> -static void clear_ ##slabname(struct slabname *s)			\
-> +static inline void clear_ ##slabname(struct slabname *s)		\
->  {									\
->  	int i;								\
->  	for (i = 0; i < s->slab_count; i++)				\
-> @@ -73,8 +73,8 @@ struct slabname {							\
->  	s->slab = NULL;							\
->  }									\
->  									\
-> -static elemtype *slabname## _at(struct slabname *s,			\
-> -				const struct commit *c)			\
-> +static inline elemtype *slabname## _at(struct slabname *s,		\
-> +				       const struct commit *c)		\
->  {									\
->  	int nth_slab, nth_slot;						\
->  									\
-> @@ -98,4 +98,16 @@ struct slabname {							\
->  									\
->  static int stat_ ##slabname## realloc
->  
-> +/*
-> + * Note that this seemingly redundant second declaration is required
-> + * to allow a terminating semicolon, which makes instantiations look
-> + * like function declarations.  I.e., the expansion of
+> @@ -24,6 +24,10 @@
+>   *   to each commit. 'stride' specifies how big each array is.  The slab
+>   *   that id initialied by the variant without "_with_stride" associates
+>   *   each commit with an array of one integer.
 > + *
-> + *    define_commit_slab(indegree, int);
+> + * - void clear_indegree(struct indegree *);
 > + *
-> + * ends in 'static int stat_indegreerealloc;'.  This would otherwise
-> + * be a syntax error according (at least) to ISO C.  It's hard to
-> + * catch because GCC silently parses it by default.
-> + */
-> +
->  #endif /* COMMIT_SLAB_H */
+> + *   Free the slab's data structures.
+
+Tense shift (previous descriptions were in the present tense, while
+this one is in the imperative).
+
+More importantly, this doesn't answer the questions I'd have if I were
+in a hurry, which are what exactly is being freed (has the slab taken
+ownership of any memory from the user, e.g. when elemtype is a
+pointer?) and whether the slab needs to be init_ ed again.
+
+Maybe something like the following would work?
+
+	- void clear_indegree(struct indegree *);
+
+	  Empties the slab.  The slab can be reused with the same
+	  stride without calling init_indegree again or can be
+	  reconfigured to a different stride by calling
+	  init_indegree_with_stride.
+
+	  Call this function before the slab falls out of scope to
+	  avoid leaking memory.
+
+Thanks,
+Jonathan
