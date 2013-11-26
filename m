@@ -1,96 +1,103 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Git issues with submodules
-Date: Tue, 26 Nov 2013 14:19:33 -0800
-Message-ID: <xmqqbo16vma2.fsf@gitster.dls.corp.google.com>
-References: <CALkWK0muxsRUtO6KYk5G3=RVN0nqd=8gOZn=jsNbTc4B9KCATQ@mail.gmail.com>
-	<528FC638.5060403@web.de> <20131122215454.GA4952@sandbox-ub>
-	<20131122220953.GI4212@google.com> <52910BC4.1030800@web.de>
-	<20131124005256.GA3500@sandbox-ub> <52922962.3090407@web.de>
-	<xmqq1u24xkjq.fsf@gitster.dls.corp.google.com>
-	<5294EC11.2010405@web.de>
-	<xmqq1u23vty1.fsf@gitster.dls.corp.google.com>
-	<20131126195126.GC4212@google.com>
+Subject: Re: [PATCH v3 08/28] shallow.c: add mark_new_shallow_refs()
+Date: Tue, 26 Nov 2013 14:20:21 -0800
+Message-ID: <xmqq7gbuvm8q.fsf@gitster.dls.corp.google.com>
+References: <1385351754-9954-1-git-send-email-pclouds@gmail.com>
+	<1385351754-9954-9-git-send-email-pclouds@gmail.com>
+	<xmqqli0cw2b9.fsf@gitster.dls.corp.google.com>
+	<CACsJy8DgaqtQUohRwek2+cPxTEssvtDGb812Uhjy+R7pib2O8Q@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jens Lehmann <Jens.Lehmann@web.de>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Sergey Sharybin <sergey.vfx@gmail.com>,
-	Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 26 23:19:43 2013
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 26 23:20:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VlQys-0001a1-2i
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Nov 2013 23:19:42 +0100
+	id 1VlQzc-0001x1-RM
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Nov 2013 23:20:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758568Ab3KZWTi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Nov 2013 17:19:38 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59437 "EHLO
+	id S1758051Ab3KZWUZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Nov 2013 17:20:25 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56332 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753613Ab3KZWTh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Nov 2013 17:19:37 -0500
+	id S1756572Ab3KZWUX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Nov 2013 17:20:23 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0D48D56ECC;
-	Tue, 26 Nov 2013 17:19:37 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 94CE956EFC;
+	Tue, 26 Nov 2013 17:20:23 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=8EXtA/sY7zUOHVyIjrM7LXajtzE=; b=bm0PcY
-	NHULyow7Rju1l9RzJlEA9r6FWK+otaMjNDb3EfDo/BnbOqPsqoVcF9lgYQ/eU/04
-	vtbUupjurWBo1jzsKv+R+YNnNRdT6yKcrmFdB99xfLVjdYGucLsQzLrwi9xj8hR+
-	fj25EmcFNMhTIyWTKpr16zh9shgp/L8K6RjaI=
+	:content-type; s=sasl; bh=peB9e0J4eqW0fVVg+HgsL4ZMHrI=; b=iXckYF
+	0vObtO356/lnAO0Vlt4ISHoIv/6v8+uZXFNMM+/V7QsnCELCxHJTodUaVK7OJHya
+	4GckYnhJpQMzfF4XEfgzUqjg9rjgwKvmH4a3zPqR/dtvoi5W4tabJhTk/pK29zn3
+	1Bxk+y7FYWauGLDGEKkBj+lERYBVwrCHqmQss=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=BHhaH4r9q6LSiSp5BIq0rIz41UM1UEAV
-	iMjE1CkVi5fJTB8k9oIUft5VMk/Q0jXLXVVPC1OPTPky8cJObsoQpvhqhhxA5OOR
-	q+MNrBLIjTtOimPZ3xKGufyCFPpe+PPhrlg830VSbcGZejN4VJoYuQ3SMrnX0wVy
-	VLp0Jb1hrE0=
+	:content-type; q=dns; s=sasl; b=FZmKB6pPyAiF3kiWnknFmWXo52nDy59T
+	ZT3GCmQQQoLJlLb4mVjkHumf7CnFi/8+DEfe4+vLXs5NTMLAGGC0jnEtARXLgI9F
+	wnmQT+gwjve5u/NLABvFLxfvWqIshm8zhzmqvra+7tjvZL368gVhvkv3LDqyo59V
+	+JVs5fssQso=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EB2E656ECB;
-	Tue, 26 Nov 2013 17:19:36 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8126356EFB;
+	Tue, 26 Nov 2013 17:20:23 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 21DCC56ECA;
-	Tue, 26 Nov 2013 17:19:36 -0500 (EST)
-In-Reply-To: <20131126195126.GC4212@google.com> (Jonathan Nieder's message of
-	"Tue, 26 Nov 2013 11:51:26 -0800")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D4A0456EF9;
+	Tue, 26 Nov 2013 17:20:22 -0500 (EST)
+In-Reply-To: <CACsJy8DgaqtQUohRwek2+cPxTEssvtDGb812Uhjy+R7pib2O8Q@mail.gmail.com>
+	(Duy Nguyen's message of "Tue, 26 Nov 2013 20:18:30 +0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: D54C3D4A-56E8-11E3-809C-D331802839F8-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: F11BD2F6-56E8-11E3-951A-D331802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238398>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238399>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Duy Nguyen <pclouds@gmail.com> writes:
 
-> Junio C Hamano wrote:
+> On Tue, Nov 26, 2013 at 5:20 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Hmph.  the use of ->util field in this patch feels that it was
+>> something commit-slab data structure was invented to solve.
 >
->>                                          I have a feeling that the
->> current "not copy to fix it to a stable value, but look into
->> .gitmodules as a fallback" was not a designed behaviour for the
->> other properties, but was done by accident and/or laziness.
+> Good stuff! Thanks.
 >
-> It was designed.  See for example the thread surrounding [1]:
+>>> +             if (c->util == NULL)
+>>> +                     c->util = bitmap;
+>>> +             else {
+>>> +                     /*
+>>> +                      * Deliberately leak a lot in commit->util
+>>> +                      * because there can be many pointers to the
+>>> +                      * same bitmap. Probably should allocate in a
+>>> +                      * pool and free the whole pool at the end.
+>>> +                      */
+>>
+>> ... or perhaps make the bitmap into
+>>
+>>         struct {
+>>                 int refcnt;
+>>                 uint32_t bits[FLEX_ARRAY];
+>>         }
+>>
+>> and refcnt them?
+>
+> I still prefer memory pools so I just need to do a few free() than
+> walking through all the commits again and refcnt-- or free() them.
 
-OK, thanks.
+Fair enough.
 
+> Sorry to break the patches this way and lose the overall call flow.
+> It's just too big to put all into one patch. 13/28 is the one that put
+> the pieces together but basically
 >
-> | And when you are on a superproject branch actively developing inside a
-> | submodule, you may want to increase fetch-activity to fetch all new
-> | commits in the submodule even if they aren't referenced in the
-> | superproject (yet), as that might be just what your fellow developers
-> | are about to do. And the person setting up that branch could do that
-> | once for all users so they don't have to repeat it in every clone. And
-> | when switching away from that branch all those developers cannot forget
-> | to reconfigure to fetch-on-demand, so not having that in .git/config is
-> | a plus here too.
->
-> Thanks,
-> Jonathan
->
-> [1] http://thread.gmane.org/gmane.comp.version-control.git/161193/focus=161357
+>  1. receive the remote's .git/shallow
+>  2. call remote_reachable_shallow_points() to exclude our shallow commits
+>  3. get the pack and install it (or unpack it)
+>  4. call this function to determine what new ref needs new shallow
+> commits from the result of #2
+
+Thanks for a roadmap.  Will find time to re-read the thing with it.
