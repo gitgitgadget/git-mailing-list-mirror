@@ -1,219 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Prevent buffer overflows when path is too long
-Date: Tue, 26 Nov 2013 11:50:36 -0800
-Message-ID: <xmqqwqjvuelv.fsf@gitster.dls.corp.google.com>
-References: <CACsJy8AooiUNRfnqDLBmx=KPnztjdNuF4bYY2b=Egs3gdiW6KA@mail.gmail.com>
-	<1385491163-18407-1-git-send-email-apelisse@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Git issues with submodules
+Date: Tue, 26 Nov 2013 11:51:26 -0800
+Message-ID: <20131126195126.GC4212@google.com>
+References: <CALkWK0muxsRUtO6KYk5G3=RVN0nqd=8gOZn=jsNbTc4B9KCATQ@mail.gmail.com>
+ <528FC638.5060403@web.de>
+ <20131122215454.GA4952@sandbox-ub>
+ <20131122220953.GI4212@google.com>
+ <52910BC4.1030800@web.de>
+ <20131124005256.GA3500@sandbox-ub>
+ <52922962.3090407@web.de>
+ <xmqq1u24xkjq.fsf@gitster.dls.corp.google.com>
+ <5294EC11.2010405@web.de>
+ <xmqq1u23vty1.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org,  Torsten =?utf-8?Q?B=C3=B6gershausen?=
- <tboegi@web.de>,  Wataru Noguchi <wnoguchi.0727@gmail.com>,  Erik
- Faye-Lund <kusmabite@gmail.com>,  Johannes Schindelin
- <Johannes.Schindelin@gmx.de>,  =?utf-8?Q?Ren=C3=A9?= Scharfe
- <l.s.r@web.de>,  msysGit <msysgit@googlegroups.com>
-To: Antoine Pelisse <apelisse@gmail.com>
-X-From: msysgit+bncBCG77UMM3EJRBEXX2OKAKGQERYWIO2Q@googlegroups.com Tue Nov 26 20:50:48 2013
-Return-path: <msysgit+bncBCG77UMM3EJRBEXX2OKAKGQERYWIO2Q@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-vb0-f55.google.com ([209.85.212.55])
+Content-Type: text/plain; charset=us-ascii
+Cc: Jens Lehmann <Jens.Lehmann@web.de>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Sergey Sharybin <sergey.vfx@gmail.com>,
+	Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Nov 26 20:51:36 2013
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCG77UMM3EJRBEXX2OKAKGQERYWIO2Q@googlegroups.com>)
-	id 1VlOeh-0000M2-Dj
-	for gcvm-msysgit@m.gmane.org; Tue, 26 Nov 2013 20:50:43 +0100
-Received: by mail-vb0-f55.google.com with SMTP id 11sf1637702vbe.20
-        for <gcvm-msysgit@m.gmane.org>; Tue, 26 Nov 2013 11:50:42 -0800 (PST)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1VlOfX-0000mc-1h
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Nov 2013 20:51:35 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S932382Ab3KZTvb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Nov 2013 14:51:31 -0500
+Received: from mail-yh0-f42.google.com ([209.85.213.42]:36280 "EHLO
+	mail-yh0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753617Ab3KZTva (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Nov 2013 14:51:30 -0500
+Received: by mail-yh0-f42.google.com with SMTP id z6so4344308yhz.1
+        for <git@vger.kernel.org>; Tue, 26 Nov 2013 11:51:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type;
-        bh=jCIGLquJkjY9NYZU/bmqhej1YjiYAExadrZffIA0Bbo=;
-        b=DrbM15PwcSzgxJnL2eJedDLmjZSPsE9lwJmPnQgCya8WGIOktvFXGU9dZ1RBtM1Le3
-         r6G/GcM4Cc9XWYKFceyMu1C/VD+kq/t0fJUwGTZT8dDd8Qmpz7NQMe74z8DWserla4Rq
-         720jklfitGuxy5J3xaES/RjRqXqYJy5uslixX0gET1kKmOIf7m2Dm3RgQcjAVok0AhoM
-         3BJNYW0BEzFjZ/uSg3bZ5PD1CsXvRHkxcL+SZlJVEJBlniPXX/X40ed/29GNq7Xp6A0e
-         Ah8xp77gPFOPg2m4xo9iXnw/d44OKoxcMae0/9xzMVsVwyM/THkDy3umEWNiWaopaftg
-         YFRw==
-X-Received: by 10.49.128.73 with SMTP id nm9mr61611qeb.37.1385495442603;
-        Tue, 26 Nov 2013 11:50:42 -0800 (PST)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.49.128.41 with SMTP id nl9ls2789995qeb.56.gmail; Tue, 26 Nov
- 2013 11:50:41 -0800 (PST)
-X-Received: by 10.58.198.116 with SMTP id jb20mr11163589vec.4.1385495441777;
-        Tue, 26 Nov 2013 11:50:41 -0800 (PST)
-Received: from smtp.pobox.com (b-pb-sasl-quonix.pobox.com. [208.72.237.35])
-        by gmr-mx.google.com with ESMTP id ll7si7849779vdb.0.2013.11.26.11.50.41
-        for <msysgit@googlegroups.com>;
-        Tue, 26 Nov 2013 11:50:41 -0800 (PST)
-Received-SPF: pass (google.com: best guess record for domain of jch@b-sasl-quonix.pobox.com designates 208.72.237.35 as permitted sender) client-ip=208.72.237.35;
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4BE5854E66;
-	Tue, 26 Nov 2013 14:50:41 -0500 (EST)
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2F43454E65;
-	Tue, 26 Nov 2013 14:50:41 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 31A2454E63;
-	Tue, 26 Nov 2013 14:50:40 -0500 (EST)
-In-Reply-To: <1385491163-18407-1-git-send-email-apelisse@gmail.com> (Antoine
-	Pelisse's message of "Tue, 26 Nov 2013 19:39:23 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 07110FA0-56D4-11E3-8257-D331802839F8-77302942!b-pb-sasl-quonix.pobox.com
-X-Original-Sender: gitster@pobox.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: best guess record for domain of jch@b-sasl-quonix.pobox.com
- designates 208.72.237.35 as permitted sender) smtp.mail=jch@b-sasl-quonix.pobox.com;
-       dkim=pass header.i=@pobox.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238391>
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=qX11vp+Elgz2cM2/PfT9yeAim4arfYTW2cHTM0zi4cY=;
+        b=BWpqdOXUPVLEnLVsXbYXQNdOEAnfzQE+ogMtAbtdqhgZcpr/uS2kVC605coUNO51VH
+         /8Xgdr5968zAYvf2dxSwL+ctUQpL7vf1PksjjwzTYrDRIOCzEveVu+5nk8JP1gAPZAWR
+         5qxJN3knd6k9HWftqkmtbSWAAeIYEIZzRNRnRYEcZkH+qwWJa921K0ORP+S91JDJa5hP
+         LNyJmEY3RVzAwdd3G8Rm2HK/8GeII0m14PlyQjo35BHLM/RNBEBLS7xoatNqYvU61Si8
+         z4LQLxdwQpuRG1f+CCg2RPWaCYI6fSER2Ky2ozl2fmiZBoUbv+PJoKe+WUDrY9eWFkau
+         FsgA==
+X-Received: by 10.236.58.233 with SMTP id q69mr809190yhc.176.1385495489446;
+        Tue, 26 Nov 2013 11:51:29 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id m68sm14643062yhj.22.2013.11.26.11.51.28
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 26 Nov 2013 11:51:28 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <xmqq1u23vty1.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238392>
 
-Antoine Pelisse <apelisse@gmail.com> writes:
+Junio C Hamano wrote:
 
-> Some buffers created with PATH_MAX length are not checked when being
-> written, and can overflow if PATH_MAX is not big enough to hold the
-> path.
+>                                          I have a feeling that the
+> current "not copy to fix it to a stable value, but look into
+> .gitmodules as a fallback" was not a designed behaviour for the
+> other properties, but was done by accident and/or laziness.
 
-Perhaps it is time to update all of them to use strbuf?  The callers
-of prefix_filename() aren't that many, and all of them are prepared
-to stash the returned value away when they keep it longer term, so
-they would not notice if we used "static struct strbuf path" and
-gave back "path.buf" (without strbuf_detach() on it).  The buffer
-used in clear_ce_flags() and passed to clear_ce_flags_{1,dir} are
-not seen outside the callchain, and can safely become strbuf, I
-think.
+It was designed.  See for example the thread surrounding [1]:
 
->  abspath.c        | 10 ++++++++--
->  diffcore-order.c | 14 +++++++++-----
->  unpack-trees.c   |  2 ++
->  3 files changed, 19 insertions(+), 7 deletions(-)
->
-> diff --git a/abspath.c b/abspath.c
-> index e390994..29a5f9d 100644
-> --- a/abspath.c
-> +++ b/abspath.c
-> @@ -216,11 +216,16 @@ const char *absolute_path(const char *path)
->  const char *prefix_filename(const char *pfx, int pfx_len, const char *arg)
->  {
->  	static char path[PATH_MAX];
-> +
-> +	if (pfx_len >= PATH_MAX)
-> +		die("Too long prefix path: %s", pfx);
+| And when you are on a superproject branch actively developing inside a
+| submodule, you may want to increase fetch-activity to fetch all new
+| commits in the submodule even if they aren't referenced in the
+| superproject (yet), as that might be just what your fellow developers
+| are about to do. And the person setting up that branch could do that
+| once for all users so they don't have to repeat it in every clone. And
+| when switching away from that branch all those developers cannot forget
+| to reconfigure to fetch-on-demand, so not having that in .git/config is
+| a plus here too.
 
-I do not think this is needed, and will reject a valid input that
-used to be accepted (e.g. arg is absolute so pfx does not matter).
+Thanks,
+Jonathan
 
->  #ifndef GIT_WINDOWS_NATIVE
->  	if (!pfx_len || is_absolute_path(arg))
->  		return arg;
->  	memcpy(path, pfx, pfx_len);
-> -	strcpy(path + pfx_len, arg);
-> +	if (strlcpy(path + pfx_len, arg, PATH_MAX - pfx_len) > PATH_MAX)
-> +		die("Too long path: %s", path);
-
-Rather, have that "too long a prefix?" check before that memcpy().
-
->  #else
->  	char *p;
->  	/* don't add prefix to absolute paths, but still replace '\' by '/' */
-> @@ -228,7 +233,8 @@ const char *prefix_filename(const char *pfx, int pfx_len, const char *arg)
->  		pfx_len = 0;
->  	else if (pfx_len)
->  		memcpy(path, pfx, pfx_len);
-
-... and around here.
-
-> -	strcpy(path + pfx_len, arg);
-> +	if (strlcpy(path + pfx_len, arg, PATH_MAX - pfx_len) > PATH_MAX)
-> +		die("Too long path: %s", path);
->  	for (p = path + pfx_len; *p; p++)
->  		if (*p == '\\')
->  			*p = '/';
-
-The above is curious. Unless we are doing the short-cut for "no
-prefix so we can just return arg" codepath, we know that the
-resulting length is always pfx_len + strlen(arg), no?
-
-> diff --git a/diffcore-order.c b/diffcore-order.c
-> index 23e9385..87193f8 100644
-> --- a/diffcore-order.c
-> +++ b/diffcore-order.c
-> @@ -73,20 +73,24 @@ struct pair_order {
->  static int match_order(const char *path)
->  {
->  	int i;
-> -	char p[PATH_MAX];
-> +	struct strbuf p = STRBUF_INIT;
->  
->  	for (i = 0; i < order_cnt; i++) {
-> -		strcpy(p, path);
-> -		while (p[0]) {
-> +		strbuf_reset(&p);
-> +		strbuf_addstr(&p, path);
-> +		while (p.buf[0]) {
->  			char *cp;
-> -			if (!fnmatch(order[i], p, 0))
-> +			if (!fnmatch(order[i], p.buf, 0)) {
-> +				strbuf_release(&p);
->  				return i;
-> -			cp = strrchr(p, '/');
-> +			}
-> +			cp = strrchr(p.buf, '/');
->  			if (!cp)
->  				break;
->  			*cp = 0;
->  		}
->  	}
-> +	strbuf_release(&p);
->  	return order_cnt;
->  }
->  
-> diff --git a/unpack-trees.c b/unpack-trees.c
-> index 35cb05e..f93565b 100644
-> --- a/unpack-trees.c
-> +++ b/unpack-trees.c
-> @@ -918,6 +918,8 @@ static int clear_ce_flags_1(struct cache_entry **cache, int nr,
->  			int processed;
->  
->  			len = slash - name;
-> +			if (len + prefix_len >= PATH_MAX)
-> +				die("Too long path: %s", prefix);
->  			memcpy(prefix + prefix_len, name, len);
->  
->  			/*
-> -- 
-> 1.8.5.rc3.1.ga0b6b91
->
-> -- 
-
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/groups/opt_out.
+[1] http://thread.gmane.org/gmane.comp.version-control.git/161193/focus=161357
