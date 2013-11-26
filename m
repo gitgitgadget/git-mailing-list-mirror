@@ -1,68 +1,80 @@
-From: Phillip Susi <psusi@ubuntu.com>
-Subject: Re: Filter log based on paths NOT touched
-Date: Mon, 25 Nov 2013 23:34:36 -0500
-Message-ID: <529424DC.6030107@ubuntu.com>
-References: <5293B0F9.1050200@ubuntu.com> <xmqqeh64xlqw.fsf@gitster.dls.corp.google.com> <CACsJy8DR-ckmZ8Ey9Gh1fhv17_+mRPmeLdj_7LoCnvc9fnnpTg@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 8/9] test: replace shebangs with descriptions in shell libraries
+Date: Tue, 26 Nov 2013 00:18:31 -0500
+Message-ID: <CAPig+cQizcuPjastanvyKkuo2=p9BPhBE-PhBC2J2EKwXvLekg@mail.gmail.com>
+References: <20131125205119.GQ4212@google.com>
+	<20131125210306.GY4212@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Nov 26 05:34:48 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git List <git@vger.kernel.org>, Clemens Buchacher <drizzd@aon.at>,
+	Marc Branchaud <marcnarc@xiplink.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 26 06:18:37 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VlAMH-0007NG-F1
-	for gcvg-git-2@plane.gmane.org; Tue, 26 Nov 2013 05:34:45 +0100
+	id 1VlB2j-0001TG-8y
+	for gcvg-git-2@plane.gmane.org; Tue, 26 Nov 2013 06:18:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752873Ab3KZEem (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Nov 2013 23:34:42 -0500
-Received: from cdptpa-omtalb.mail.rr.com ([75.180.132.120]:61918 "EHLO
-	cdptpa-omtalb.mail.rr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752929Ab3KZEei (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Nov 2013 23:34:38 -0500
-X-Authority-Analysis: v=2.0 cv=D/fF24tj c=1 sm=0 a=3SewDSjaRW4vdJyuxQ33ZQ==:17 a=JlIHnqCoHBcA:10 a=4nDecEzL28MA:10 a=S1A5HrydsesA:10 a=DeBnktw0k-IA:10 a=IkcTkHD0fZMA:10 a=fxJcL_dCAAAA:8 a=KGjhK52YXX0A:10 a=82lbTQEwWqYA:10 a=QfKxxUxMAAAA:8 a=9O337dEOID9EkWMQJ1EA:9 a=QEXdDO2ut3YA:10 a=3SewDSjaRW4vdJyuxQ33ZQ==:117
-X-Cloudmark-Score: 0
-X-Authenticated-User: 
-X-Originating-IP: 72.238.73.171
-Received: from [72.238.73.171] ([72.238.73.171:50863] helo=[192.168.1.6])
-	by cdptpa-oedge01.mail.rr.com (envelope-from <psusi@ubuntu.com>)
-	(ecelerity 2.2.3.46 r()) with ESMTP
-	id AB/16-20755-CD424925; Tue, 26 Nov 2013 04:34:36 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.1.1
-In-Reply-To: <CACsJy8DR-ckmZ8Ey9Gh1fhv17_+mRPmeLdj_7LoCnvc9fnnpTg@mail.gmail.com>
-X-Enigmail-Version: 1.6
+	id S1752142Ab3KZFSd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Nov 2013 00:18:33 -0500
+Received: from mail-la0-f52.google.com ([209.85.215.52]:37069 "EHLO
+	mail-la0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751428Ab3KZFSc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Nov 2013 00:18:32 -0500
+Received: by mail-la0-f52.google.com with SMTP id y1so1912994lam.25
+        for <git@vger.kernel.org>; Mon, 25 Nov 2013 21:18:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=7eZltD4zMYYkCbQOWrwcpKIIYeO3FMyKpjvDdhCf5lQ=;
+        b=qtGuAT7cb1oaNr1uNu4etdYQ65FgRAAlzyap8BrGt8+0BqxGGAEXgeHDKVmVXTRoD9
+         hmC0XExoDH1OT15KM/yP/WWk8YowPcUuITz0Wax+ZbtkX5Yx1cnNUCJ0qh46tyfndrvL
+         kvq6LMIl/Psvlhk8bJI+tywXReq2SRwqfXnTrXP8X4XlBhujjC8RBmQDi13+bPlMDTDB
+         bYnQPwkaLpvrAkPv6uqSc3JTYtqkAbEPv2spCBW2yLD/0INKVL08liuvc/BaS6TYwx8l
+         xBCrLUvXoUVXuUcy50DXXoWupfquudLamYr5dEWqn7lzJrLLWdd8xYUhayJVGsHH7vmt
+         l6dA==
+X-Received: by 10.152.120.102 with SMTP id lb6mr3455642lab.37.1385443111227;
+ Mon, 25 Nov 2013 21:18:31 -0800 (PST)
+Received: by 10.114.175.130 with HTTP; Mon, 25 Nov 2013 21:18:31 -0800 (PST)
+In-Reply-To: <20131125210306.GY4212@google.com>
+X-Google-Sender-Auth: q5sWoTI2DIwfAlEQiCj66NrxoUQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238370>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238371>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+On Mon, Nov 25, 2013 at 4:03 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> A #! line in these files is misleading, since these scriptlets are
+> meant to be sourced with '.' (using whatever shell sources them)
+> instead of run directly using the interpreter named on the #! line.
+>
+> Removing the #! line shouldn't hurt syntax highlighting since
+> these files have filenames ending with '.sh'.  For documentation,
+> add a brief description of how the files are meant to be used in
+> place of the shebang line.
+>
+> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+> ---
+> diff --git a/t/lib-bash.sh b/t/lib-bash.sh
+> index 11397f7..10b76df 100644
+> --- a/t/lib-bash.sh
+> +++ b/t/lib-bash.sh
+> @@ -1,7 +1,6 @@
+> -#!/bin/sh
+> -#
+> -# Ensures that tests are run under Bash; primarily intended for running tests
+> -# of the completion script.
+> +# Shell library sourced instead of ./test-lib.sh by tests that need
+> +# to run under Bash; primary intended for tests of the completion
 
-On 11/25/2013 10:13 PM, Duy Nguyen wrote:
-> There's a difference between "skip commits that touch anything
-> directory foo even if it also touches something outside of foo" and
-> "skip commits that _only_ touches something in foo". Not sure which
-> way Phillip wants here. Negative pathspec only supports the latter.
-> The former needs a new option in rev-list, because the logic to
-> consider a commit not a match if it matches a pathspec is out of
-> tree_entry_interesting()'s control.
+s/primary/primarily/
 
-I'm looking for the latter.  Specifically I'm trying to see what changes to the upstream code a debian package has made so I need to ignore commits that only change things in debian/.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
-Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
-
-iQEcBAEBCgAGBQJSlCTcAAoJEJrBOlT6nu75jUQIAJOybMyXE6lr4y4aX6od02Rn
-lINvPVC1Xub2E1lsofIB+N4QvZDRWlIJOIcj3GRqirzUcNBaIOUxUW4+UV7KgMQH
-wmImS8DdBgrkI8Sompe9B0gqd4lmB2mzTutQfOzdEZ/ZOU50935daYboK//X7zM/
-vSmumJpRwNfw1BKyuxVpAQ8Ablo9yUu2cswLKJPSKyQkT9d/AJn07LE5/DKZORQN
-RD3r94kToftgTfsQTJbNpPujJ5nVHwVmiC44Qghdquj54l++ai5Xs2wRU3Za3i+O
-ts7Tn5Lrw+pFAT5Lnt0v8Yedp7fVgjRhIsNEDIVlgNuHevP/oBOXIxuLJBlCBIE=
-=AYYO
------END PGP SIGNATURE-----
+> +# script.
+>
+>  if test -n "$BASH" && test -z "$POSIXLY_CORRECT"; then
+>         # we are in full-on bash mode
