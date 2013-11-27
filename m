@@ -1,58 +1,75 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] gitk: make pointer selection visible in highlighted lines
-Date: Wed, 27 Nov 2013 15:29:53 -0500
-Message-ID: <CAPig+cTKofBCdgwJkpyPsAHjhi4-GqPwU2CuOAPsf_qr8isJ9w@mail.gmail.com>
-References: <20131127180601.GA31211@wheezy.local>
+From: Anthony Baire <anthony.baire@irisa.fr>
+Subject: Re: [PATCH] subtree: fix argument validation in add/pull/push
+Date: Wed, 27 Nov 2013 21:30:51 +0100
+Message-ID: <5296567B.5080704@irisa.fr>
+References: <1385577249-29269-1-git-send-email-Anthony.Baire@irisa.fr> <87siuhfy9q.fsf@thomasrast.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Paul Mackerras <paulus@samba.org>, Git List <git@vger.kernel.org>
-To: Max Kirillov <max@max630.net>
-X-From: git-owner@vger.kernel.org Wed Nov 27 21:30:00 2013
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Thomas Rast <tr@thomasrast.ch>
+X-From: git-owner@vger.kernel.org Wed Nov 27 21:31:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VllkF-0002uj-VZ
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Nov 2013 21:30:00 +0100
+	id 1VlllB-0003Y5-Ue
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Nov 2013 21:30:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757932Ab3K0U3z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Nov 2013 15:29:55 -0500
-Received: from mail-ie0-f177.google.com ([209.85.223.177]:59174 "EHLO
-	mail-ie0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757783Ab3K0U3y (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Nov 2013 15:29:54 -0500
-Received: by mail-ie0-f177.google.com with SMTP id tp5so12475334ieb.22
-        for <git@vger.kernel.org>; Wed, 27 Nov 2013 12:29:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=JUtVoZX7QLZIyleBe14xVqQvcWTBKXzbDA/auPwUIQs=;
-        b=almYRsz1zRHC1/RF78ePBffwC3cUH1lg7VjHdEHcqarPVDmh8/mOccILeK6CjRZr1U
-         /bbkAUSn4Nu7aE0Jy0CTDGl2jHVEAkq71p4BMlBsRPUUbjzklf/Opo4067y3z1peye3c
-         FTt2MZNLpGiSgtAdNIUwPaq0hT3wmPSuVNE1re+rATCVKjQpUNftydF2rHfBhYyfKKVN
-         SCq+B/6oDJXR4zJhgf/z+8SYbs9ly/u3ci5OVk3m0Fl4wtPf7wHlhLy+TCUaY71Yk+GE
-         9H9P216CU0UHr6vQui0Aq124JWwxTbaJfA2noXlYOWuyh3E6rXzPc5vIYiWmO2ChZH3E
-         ucSA==
-X-Received: by 10.50.13.9 with SMTP id d9mr23473256igc.25.1385584193607; Wed,
- 27 Nov 2013 12:29:53 -0800 (PST)
-Received: by 10.64.250.198 with HTTP; Wed, 27 Nov 2013 12:29:53 -0800 (PST)
-In-Reply-To: <20131127180601.GA31211@wheezy.local>
-X-Google-Sender-Auth: IzvbdR5802uEo4sdta_vaE5USDA
+	id S1757900Ab3K0Uay (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Nov 2013 15:30:54 -0500
+Received: from mail2-relais-roc.national.inria.fr ([192.134.164.83]:61906 "EHLO
+	mail2-relais-roc.national.inria.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757783Ab3K0Uax (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 Nov 2013 15:30:53 -0500
+X-IronPort-AV: E=Sophos;i="4.93,784,1378850400"; 
+   d="scan'208";a="45774841"
+Received: from lav35-1-82-236-136-112.fbx.proxad.net (HELO [192.168.0.10]) ([82.236.136.112])
+  by mail2-relais-roc.national.inria.fr with ESMTP/TLS/DHE-RSA-CAMELLIA256-SHA; 27 Nov 2013 21:30:52 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20131103 Icedove/17.0.10
+In-Reply-To: <87siuhfy9q.fsf@thomasrast.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238460>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238461>
 
-On Wed, Nov 27, 2013 at 1:06 PM, Max Kirillov <max@max630.net> wrote:
-> Custom tags have higher priority than sel, and when they define
-> their own background, it makes selection invisible. Especially
-> inconvenient for filesep (to select filenames), but may also affect
-
-s/aslo/also/
-
-> other tags.
+On 27/11/2013 20:19, Thomas Rast wrote:
+> Anthony Baire <Anthony.Baire@irisa.fr> writes:
 >
-> Signed-off-by: Max Kirillov <max@max630.net>
+>> When working with a remote repository add/pull/push do not accept a
+>> <refspec> as parameter but just a <ref>. They should accept any
+>> well-formatted ref name.
+> [...]
+>>   - update the doc to use <ref> instead of <refspec>
+> [...]
+>>   OPTS_SPEC="\
+>>   git subtree add   --prefix=<prefix> <commit>
+>> -git subtree add   --prefix=<prefix> <repository> <commit>
+>> +git subtree add   --prefix=<prefix> <repository> <ref>
+>>   git subtree merge --prefix=<prefix> <commit>
+>> -git subtree pull  --prefix=<prefix> <repository> <refspec...>
+>> -git subtree push  --prefix=<prefix> <repository> <refspec...>
+>> +git subtree pull  --prefix=<prefix> <repository> <ref>
+>> +git subtree push  --prefix=<prefix> <repository> <ref>
+>>   git subtree split --prefix=<prefix> <commit...>
+> [...]
+>> @@ -68,7 +68,7 @@ COMMANDS
+>>   --------
+>>   add::
+>>   	Create the <prefix> subtree by importing its contents
+>> -	from the given <refspec> or <repository> and remote <refspec>.
+>> +	from the given <commit> or <repository> and remote <ref>.
+> AFAICS you are changing refspec->commit in the manpage, but commit->ref
+> in the usage message for 'subtree add'?  How does this line up?
+>
+'git subtree add' accepts a commit when working with the local 
+repository and a ref when working with a remote repository:
+
+	git subtree add   --prefix=<prefix> <commit>
+	git subtree add   --prefix=<prefix> <repository> <ref>
+
+but the manpage was no in sync with the code. I fixed it for the local 
+case too.
+Anthony
