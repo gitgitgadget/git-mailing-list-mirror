@@ -1,72 +1,59 @@
-From: Antoine Pelisse <apelisse@gmail.com>
-Subject: Re: How to pre-empt git pull merge error?
-Date: Wed, 27 Nov 2013 17:38:46 +0100
-Message-ID: <CALWbr2wNODeLSmQ5ztQmKVxBSguNJ1bbSbvY66sdsP09dSUUgA@mail.gmail.com>
-References: <86d2llc1rs.fsf@gmail.com>
-	<20131127194240.2abaff5575961b3d73e1970f@domain007.com>
-	<vpq8uw9q1r4.fsf@anie.imag.fr>
+From: Max Kirillov <max@max630.net>
+Subject: [PATCH] gitk: make pointer selection visible in highlighted lines
+Date: Wed, 27 Nov 2013 20:06:01 +0200
+Message-ID: <20131127180601.GA31211@wheezy.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Konstantin Khomoutov <flatworm@users.sourceforge.net>,
-	Pete Forman <petef4+usenet@gmail.com>,
-	git <git@vger.kernel.org>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Thomas Rast <tr@thomasrast.ch>
-X-From: git-owner@vger.kernel.org Wed Nov 27 17:38:53 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Wed Nov 27 19:12:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vli8b-0000rX-Fv
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Nov 2013 17:38:53 +0100
+	id 1VljbR-0007Km-LV
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Nov 2013 19:12:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757363Ab3K0Qis (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Nov 2013 11:38:48 -0500
-Received: from mail-lb0-f176.google.com ([209.85.217.176]:65347 "EHLO
-	mail-lb0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757320Ab3K0Qir (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Nov 2013 11:38:47 -0500
-Received: by mail-lb0-f176.google.com with SMTP id x18so5432447lbi.7
-        for <git@vger.kernel.org>; Wed, 27 Nov 2013 08:38:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=WhoOhHeLdcxWd6JjltGXhABAiS9C0iWB2wW0wlLCNsY=;
-        b=SzXfsaVvfwKsqMGd7XzTZP9hFaK+x54h8t/Vj0QYE96JSgDtD2Bs5usivM0x5OK7Q1
-         1+nE8/MraGwIyZoXRmYFGsOP4IXvfEXWwKFenOdULm4s/56MAlwMwhpdLxRuKA3oAz6B
-         KXNbudGnaESMatW8x/+I26qsJNGzKEZ5V03WhXVzktUynrBmukAep+EcGsU+TtfBf6Rr
-         lMq2i6hTDVXldefrD4tS34BB1qUm5hS9V6Fz3cZBXcg6KaNZye3rLVpUCemR1BgxWaFo
-         /b5bSfwfE9umi01lXtFgZcyGbquPbhOZ2TqaxWYjTVy0fLnHip1sZVXbex4m6kunPKNd
-         2Wdg==
-X-Received: by 10.112.205.164 with SMTP id lh4mr28575299lbc.15.1385570326135;
- Wed, 27 Nov 2013 08:38:46 -0800 (PST)
-Received: by 10.112.134.135 with HTTP; Wed, 27 Nov 2013 08:38:46 -0800 (PST)
-In-Reply-To: <vpq8uw9q1r4.fsf@anie.imag.fr>
+	id S1753505Ab3K0SMl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Nov 2013 13:12:41 -0500
+Received: from p3plsmtpa06-05.prod.phx3.secureserver.net ([173.201.192.106]:43763
+	"EHLO p3plsmtpa06-05.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751980Ab3K0SMl (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 Nov 2013 13:12:41 -0500
+X-Greylist: delayed 387 seconds by postgrey-1.27 at vger.kernel.org; Wed, 27 Nov 2013 13:12:41 EST
+Received: from wheezy.local ([89.27.29.195])
+	by p3plsmtpa06-05.prod.phx3.secureserver.net with 
+	id ui631m00F4CavkR01i69Vg; Wed, 27 Nov 2013 11:06:13 -0700
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238448>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238449>
 
->> On Wed, 27 Nov 2013 15:17:27 +0000
->> Pete Forman <petef4+usenet@gmail.com> wrote:
->>
->>> I am looking for a way of detecting up front whether a git pull or git
->>> merge would fail. The sort of script I want to perform is to update a
->>> server.
->>>
->>>     git fetch
->>>     git okay
->>>     stop server
->>>     backup data
->>>     git merge
->>>     start server
->>>
-> I don't know a simple way to do the pre-merge check without actually
-> doing the merge (other than patching git merge to add a --dry-run
-> option)
+Custom tags have higher priority than sel, and when they define
+their own background, it makes selection invisible. Especially
+inconvenient for filesep (to select filenames), but may aslo affect
+other tags.
 
-Wouldn't that be a nice use-case for git-recursive-merge --index-only
-($gmane/236753) ?
+Signed-off-by: Max Kirillov <max@max630.net>
+---
+ gitk-git/gitk | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/gitk-git/gitk b/gitk-git/gitk
+index 5cd00d8..9f350ab 100755
+--- a/gitk-git/gitk
++++ b/gitk-git/gitk
+@@ -2385,6 +2385,7 @@ proc makewindow {} {
+     $ctext tag conf found -back $foundbgcolor
+     $ctext tag conf currentsearchhit -back $currentsearchhitbgcolor
+     $ctext tag conf wwrap -wrap word
++    $ctext tag raise sel
+ 
+     .pwbottom add .bleft
+     if {!$use_ttk} {
+-- 
+1.8.4.2.1566.g3c1a064
