@@ -1,283 +1,178 @@
 From: Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH v4 13/24] read-cache: read resolve-undo data
-Date: Wed, 27 Nov 2013 13:00:48 +0100
-Message-ID: <1385553659-9928-14-git-send-email-t.gummerer@gmail.com>
+Subject: [PATCH v4 14/24] read-cache: read cache-tree in index-v5
+Date: Wed, 27 Nov 2013 13:00:49 +0100
+Message-ID: <1385553659-9928-15-git-send-email-t.gummerer@gmail.com>
 References: <1385553659-9928-1-git-send-email-t.gummerer@gmail.com>
 Cc: t.gummerer@gmail.com, gitster@pobox.com, tr@thomasrast.ch,
 	mhagger@alum.mit.edu, pclouds@gmail.com,
 	robin.rosenberg@dewire.com, sunshine@sunshineco.com,
 	ramsay@ramsay1.demon.co.uk
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 27 13:02:16 2013
+X-From: git-owner@vger.kernel.org Wed Nov 27 13:02:22 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vldou-00021J-9z
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Nov 2013 13:02:16 +0100
+	id 1Vldoz-00024B-UU
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Nov 2013 13:02:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755228Ab3K0MCK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Nov 2013 07:02:10 -0500
-Received: from mail-la0-f50.google.com ([209.85.215.50]:43837 "EHLO
-	mail-la0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755178Ab3K0MCH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Nov 2013 07:02:07 -0500
-Received: by mail-la0-f50.google.com with SMTP id el20so5176541lab.37
-        for <git@vger.kernel.org>; Wed, 27 Nov 2013 04:02:05 -0800 (PST)
+	id S1755260Ab3K0MCS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Nov 2013 07:02:18 -0500
+Received: from mail-lb0-f169.google.com ([209.85.217.169]:54824 "EHLO
+	mail-lb0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755178Ab3K0MCP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Nov 2013 07:02:15 -0500
+Received: by mail-lb0-f169.google.com with SMTP id y6so5341923lbh.14
+        for <git@vger.kernel.org>; Wed, 27 Nov 2013 04:02:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=5Hmq3jPzxw6uKSwrNaGNlrEwfVGJcrnKpxoxRGQ+YvI=;
-        b=nNmkeFjrXFGvQCAP9sC/Wzfg+kG85ydk6FurdRC+FVMyGAMQpPHKNelRx/lo3wucYh
-         HlUXcNHecVx4d/uiy+IDOYt4zWxx/Rm8qkPkn7dsaSia81bNoYtAbRpoAmxG4f36d5Yl
-         TSipNbKxsEGx3lC4nlXPWq1bdeHHp7DchN92FaVgk4fa7VZIfC4Foj/zRhrNuu0VmiFw
-         OFjrg2Hc18xJuGHduspY4FUCJcT7b48G0eIGDKd2JIjOdjkpZ4ORc75eJHyP6+IC3Jzo
-         6dWOiDj8M4TscDFT0Dwm/y3RaOQSP3SxjhwfONM4CNI0B8XQJbear4E9+eKLpGTHMVsV
-         j4MA==
-X-Received: by 10.112.160.170 with SMTP id xl10mr1302643lbb.40.1385553725940;
-        Wed, 27 Nov 2013 04:02:05 -0800 (PST)
+        bh=pAsQdGcY8BeGRcceBbhhi7OqaUS/wfi72OemZeQu6SA=;
+        b=eEN7zB4U9C5Y43cNbjF07ZjdJG+513ZxaBhbH658XpNACHsvxjViCeJXnBlfRsihoQ
+         FXo+OBdV25lu9dpIsL1tSvfELb03/NTOT4daionVIYizgLoKv/NBE1+auhHoOVV8MIm2
+         qLUKZzC8qZSx7LoBtjjymRRmyj5X49Q0PpJWOmbbLc+j4aCMCpszV1S0U+Ey1ylZq46p
+         MX4LAt8nk444DmOoFTDf3SQ6ljM5L9xgKxXZzXuw70nK+t1zVkg0jlZHWBTJJKcorDC7
+         ijJ4FE5RkvH92hoNdBPGCF9qoFDrw8m+UKZOnf77FQjJPz+JkaL1PTUL7hzgu9kdoUZx
+         1PJw==
+X-Received: by 10.152.28.230 with SMTP id e6mr23945601lah.3.1385553734120;
+        Wed, 27 Nov 2013 04:02:14 -0800 (PST)
 Received: from localhost (213-66-41-37-no99.tbcn.telia.com. [213.66.41.37])
-        by mx.google.com with ESMTPSA id i8sm14944029lbh.2.2013.11.27.04.02.03
+        by mx.google.com with ESMTPSA id c15sm7728515lbq.11.2013.11.27.04.02.12
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 27 Nov 2013 04:02:04 -0800 (PST)
+        Wed, 27 Nov 2013 04:02:13 -0800 (PST)
 X-Mailer: git-send-email 1.8.4.2
 In-Reply-To: <1385553659-9928-1-git-send-email-t.gummerer@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238427>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238428>
 
-Make git read the resolve-undo data from the index.
+Since the cache-tree data is saved as part of the directory data,
+we already read it at the beginning of the index. The cache-tree
+is only converted from this directory data.
 
-Since the resolve-undo data is joined with the conflicts in
-the ondisk format of the index file version 5, conflicts and
-resolved data is read at the same time, and the resolve-undo
-data are then converted to the in-memory format.
+The cache-tree data is arranged in a tree, with the children sorted by
+pathlen at each node, while the ondisk format is sorted lexically.
+So we have to rebuild this format from the on-disk directory list.
 
-Helped-by: Thomas Rast <trast@student.ethz.ch>
 Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
 ---
- read-cache-v5.c | 160 ++++++++++++++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 157 insertions(+), 3 deletions(-)
+ cache-tree.c    |  2 +-
+ cache-tree.h    |  1 +
+ read-cache-v5.c | 68 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 70 insertions(+), 1 deletion(-)
 
+diff --git a/cache-tree.c b/cache-tree.c
+index 0bbec43..1209732 100644
+--- a/cache-tree.c
++++ b/cache-tree.c
+@@ -31,7 +31,7 @@ void cache_tree_free(struct cache_tree **it_p)
+ 	*it_p = NULL;
+ }
+ 
+-static int subtree_name_cmp(const char *one, int onelen,
++int subtree_name_cmp(const char *one, int onelen,
+ 			    const char *two, int twolen)
+ {
+ 	if (onelen < twolen)
+diff --git a/cache-tree.h b/cache-tree.h
+index f1923ad..9818926 100644
+--- a/cache-tree.h
++++ b/cache-tree.h
+@@ -25,6 +25,7 @@ struct cache_tree *cache_tree(void);
+ void cache_tree_free(struct cache_tree **);
+ void cache_tree_invalidate_path(struct cache_tree *, const char *);
+ struct cache_tree_sub *cache_tree_sub(struct cache_tree *, const char *);
++int subtree_name_cmp(const char *, int, const char *, int);
+ 
+ void cache_tree_write(struct strbuf *, struct cache_tree *root);
+ struct cache_tree *cache_tree_read(const char *buffer, unsigned long size);
 diff --git a/read-cache-v5.c b/read-cache-v5.c
-index 9d8c8f0..a9c687f 100644
+index a9c687f..01f1c88 100644
 --- a/read-cache-v5.c
 +++ b/read-cache-v5.c
-@@ -1,5 +1,6 @@
- #include "cache.h"
- #include "read-cache.h"
-+#include "string-list.h"
- #include "resolve-undo.h"
- #include "cache-tree.h"
- #include "dir.h"
-@@ -13,13 +14,18 @@ struct cache_header_v5 {
- 	uint32_t hdr_nextension;
- };
- 
-+struct extension_header {
-+	char signature[4];
-+	uint32_t size;
-+	uint32_t crc;
-+};
-+
- struct directory_entry {
- 	struct directory_entry **sub;
- 	struct directory_entry *next;
- 	struct directory_entry *next_hash;
- 	struct cache_entry *ce;
- 	struct cache_entry *ce_last;
--	uint32_t conflict_size;
- 	uint32_t de_foffset;
- 	uint32_t de_nsubtrees;
- 	uint32_t de_nfiles;
-@@ -42,7 +48,6 @@ struct conflict_entry {
- 	uint32_t nfileconflicts;
- 	struct conflict_part *entries;
- 	uint32_t namelen;
--	uint32_t pathlen;
- 	char name[FLEX_ARRAY];
- };
- 
-@@ -50,6 +55,12 @@ struct conflict_entry {
-  * Index File I/O
-  *****************************************************************/
- 
-+struct ondisk_conflict_part {
-+	uint16_t flags;
-+	uint16_t entry_mode;
-+	unsigned char sha1[20];
-+};
-+
- struct ondisk_cache_entry {
- 	uint16_t flags;
- 	uint16_t mode;
-@@ -145,7 +156,7 @@ static int verify_hdr(void *mmap, unsigned long size)
- 	hdr = mmap;
- 	hdr_v5 = ptr_add(mmap, sizeof(*hdr));
- 	/* Size of the header + the size of the extensionoffsets */
--	header_size = sizeof(*hdr) + sizeof(*hdr_v5) + hdr_v5->hdr_nextension * 4;
-+	header_size = sizeof(*hdr) + sizeof(*hdr_v5) + ntohl(hdr_v5->hdr_nextension) * 4;
- 	/* Initialize crc */
- 	filecrc = ptr_add(mmap, header_size);
- 	if (!check_crc32(0, hdr, header_size, ntohl(*filecrc)))
-@@ -279,6 +290,134 @@ static int read_entry(struct cache_entry **ce, char *pathname, size_t pathlen,
+@@ -418,6 +418,73 @@ static int read_index_extension(struct index_state *istate,
  	return 0;
  }
  
-+static struct conflict_part *conflict_part_from_ondisk(struct ondisk_conflict_part *ondisk)
++static int compare_cache_tree(const void *a, const void *b)
 +{
-+	struct conflict_part *cp = xmalloc(sizeof(struct conflict_part));
++	const struct cache_tree_sub *it1, *it2;
 +
-+	cp->flags      = ntoh_s(ondisk->flags);
-+	cp->entry_mode = ntoh_s(ondisk->entry_mode);
-+	hashcpy(cp->sha1, ondisk->sha1);
-+	return cp;
-+}
-+
-+struct conflict_entry *create_new_conflict(char *name, int len)
-+{
-+	struct conflict_entry *conflict_entry;
-+
-+	conflict_entry = xmalloc(conflict_entry_size(len));
-+	memset(conflict_entry, 0, conflict_entry_size(len));
-+	conflict_entry->namelen = len;
-+	memcpy(conflict_entry->name, name, len);
-+
-+	return conflict_entry;
-+}
-+
-+static void add_part_to_conflict_entry(struct conflict_entry *entry,
-+				       struct conflict_part *conflict_part)
-+{
-+
-+	struct conflict_part *conflict_search;
-+
-+	entry->nfileconflicts++;
-+	if (!entry->entries)
-+		entry->entries = conflict_part;
-+	else {
-+		conflict_search = entry->entries;
-+		while (conflict_search->next)
-+			conflict_search = conflict_search->next;
-+		conflict_search->next = conflict_part;
-+	}
++	it1 = *(const struct cache_tree_sub **) a;
++	it2 = *(const struct cache_tree_sub **) b;
++	return subtree_name_cmp(it1->name, it1->namelen,
++				it2->name, it2->namelen);
 +}
 +
 +/*
-+ * Read the resolve undo data on disk and convert it to the internal
-+ * resolve undo format.
++ * Convert the directory entries to cache-tree entries
++ * recursively.
 + */
-+static int read_resolve_undo(struct index_state *istate,
-+			     unsigned int offset, void *mmap,
-+			     unsigned int entries)
++static struct cache_tree *convert_one(struct directory_entry *de)
 +{
-+	int i, k;
++	int i;
++	struct cache_tree *it;
 +
-+	for (i = 0; i < entries; i++) {
-+		char *name;
-+		unsigned int len, *nfileconflicts, nc;
-+		uint32_t *crc;
-+		struct ondisk_conflict_part *ondisk;
-+		struct conflict_part *cp;
-+		struct string_list_item *lost;
-+		struct resolve_undo_info *ui;
++	it = cache_tree();
++	it->entry_count = de->de_nentries;
++	if (0 <= it->entry_count)
++		hashcpy(it->sha1, de->sha1);
 +
-+		name = ptr_add(mmap, offset);
-+		len = strlen(name);
-+		offset += len + 1;
-+		nfileconflicts = ptr_add(mmap, offset);
-+		nc = ntoh_l(*nfileconflicts);
-+		offset += 4;
++	/*
++	 * Just a heuristic -- we do not add directories that often but
++	 * we do not want to have to extend it immediately when we do,
++	 * hence +2.
++	 */
++	it->subtree_alloc = de->de_nsubtrees + 2;
++	it->down = xcalloc(it->subtree_alloc, sizeof(struct cache_tree_sub *));
++	for (i = 0; i < de->de_nsubtrees; i++) {
++		struct cache_tree *sub = convert_one(de->sub[i]);
++		struct cache_tree_sub *subtree;
++		/* -1 for removing the / at the end of the pathname */
++		int namelen = de->sub[i]->de_pathlen - de->de_pathlen - 1;
 +
-+		crc = ptr_add(mmap, offset +
-+			      nc * sizeof(struct ondisk_conflict_part));
-+		if (!check_crc32(0, name, len + 1 + 4 +
-+				 nc * sizeof(struct ondisk_conflict_part),
-+				 ntoh_l(*crc)))
-+			return -1;
++		if (!sub)
++			goto free_return;
 +
-+		ondisk = ptr_add(mmap, offset);
-+		cp = conflict_part_from_ondisk(ondisk);
-+		if (cp->flags & CONFLICT_CONFLICTED) {
-+			offset += nc * sizeof(struct ondisk_conflict_part) + 4;
-+			continue;
-+		}
-+		offset += sizeof(struct ondisk_conflict_part);
-+		if (!istate->resolve_undo) {
-+			istate->resolve_undo = xcalloc(1, sizeof(struct string_list));
-+			istate->resolve_undo->strdup_strings = 1;
-+		}
-+
-+		lost = string_list_insert(istate->resolve_undo, name);
-+		if (!lost->util)
-+			lost->util = xcalloc(1, sizeof(*ui));
-+		ui = lost->util;
-+		for (k = 0; k < 3; k++)
-+			ui->mode[k] = 0;
-+
-+		ui->mode[conflict_stage(cp) - 1] = cp->entry_mode;
-+		hashcpy(ui->sha1[conflict_stage(cp) - 1], cp->sha1);
-+		for (k = 1; k < nc; k++) {
-+			struct conflict_part *cp;
-+
-+			ondisk = ptr_add(mmap, offset);
-+			cp = conflict_part_from_ondisk(ondisk);
-+			ui->mode[conflict_stage(cp) - 1] = cp->entry_mode;
-+			hashcpy(ui->sha1[conflict_stage(cp) - 1], cp->sha1);
-+			offset += sizeof(struct ondisk_conflict_part);
-+		}
-+		offset += 4; /* crc */
++		subtree = xmalloc(sizeof(*subtree) + namelen + 1);
++		subtree->cache_tree = sub;
++		subtree->namelen = namelen;
++		memcpy(subtree->name, de->sub[i]->pathname + de->de_pathlen, namelen);
++		subtree->name[namelen] = '\0';
++		it->down[i] = subtree;
++		it->subtree_nr++;
 +	}
-+	return 0;
++	qsort(it->down, it->subtree_nr, sizeof(struct cache_tree_sub *),
++	      compare_cache_tree);
++	return it;
++free_return:
++	cache_tree_free(&it);
++	return NULL;
 +}
 +
-+static int read_index_extension(struct index_state *istate,
-+				void *mmap, unsigned int extoffset)
++/*
++ * This function modifies the directory argument that is given to it.
++ * Don't use it if the directory entries are still needed after.
++ */
++static struct cache_tree *cache_tree_convert_v5(struct directory_entry *de)
 +{
-+	struct extension_header *ehdr;
-+
-+	ehdr = ptr_add(mmap, extoffset);
-+	/* -4 for the crc that's included in the struct */
-+	if (!check_crc32(0, ptr_add(mmap, extoffset),
-+			 sizeof(*ehdr) - 4, ntoh_l(ehdr->crc)))
-+		return -1;
-+
-+	switch (CACHE_EXT(ehdr->signature)) {
-+	case CACHE_EXT_RESOLVE_UNDO:
-+		if (read_resolve_undo(istate, extoffset + sizeof(*ehdr),
-+				      mmap, ntoh_l(ehdr->size)) < 0)
-+			return -1;
-+		break;
-+	}
-+	return 0;
++	if (!de->de_nentries)
++		return NULL;
++	return convert_one(de);
 +}
 +
  /*
   * Read all file entries from the index.  This function is recursive to get
   * the ordering right. In the index file the entries are sorted def, abc/def,
-@@ -404,6 +543,21 @@ static int read_index_v5(struct index_state *istate, void *mmap,
+@@ -558,6 +625,7 @@ static int read_index_v5(struct index_state *istate, void *mmap,
+ 				return -1;
  		}
- 		de = de->next;
  	}
-+
-+	if (!opts || opts->read_resolve_undo) {
-+		for (i = 0; i < ntohl(hdr_v5->hdr_nextension); i++) {
-+			/*
-+			 * After the index entry there is a number of
-+			 * extensions, which is written in the header.
-+			 * The extensions are prefixed by extension name
-+			 * (4-byte) and length of the extension (4-byte,
-+			 * usually the number of entries in that section)
-+			 * in network byte order
-+			 */
-+			if (read_index_extension(istate, mmap, extoffsets[i]) < 0)
-+				return -1;
-+		}
-+	}
++	istate->cache_tree = cache_tree_convert_v5(root_directory);
  	free_directory_tree(root_directory);
  	istate->cache_nr = nr;
  	return 0;
