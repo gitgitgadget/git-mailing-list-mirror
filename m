@@ -1,100 +1,123 @@
 From: Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH v4 20/24] introduce GIT_INDEX_VERSION environment variable
-Date: Wed, 27 Nov 2013 13:00:55 +0100
-Message-ID: <1385553659-9928-21-git-send-email-t.gummerer@gmail.com>
+Subject: [PATCH v4 21/24] test-lib: allow setting the index format version
+Date: Wed, 27 Nov 2013 13:00:56 +0100
+Message-ID: <1385553659-9928-22-git-send-email-t.gummerer@gmail.com>
 References: <1385553659-9928-1-git-send-email-t.gummerer@gmail.com>
 Cc: t.gummerer@gmail.com, gitster@pobox.com, tr@thomasrast.ch,
 	mhagger@alum.mit.edu, pclouds@gmail.com,
 	robin.rosenberg@dewire.com, sunshine@sunshineco.com,
 	ramsay@ramsay1.demon.co.uk
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 27 13:02:40 2013
+X-From: git-owner@vger.kernel.org Wed Nov 27 13:02:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VldpH-0002E4-II
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Nov 2013 13:02:39 +0100
+	id 1VldpO-0002HU-CY
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Nov 2013 13:02:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755409Ab3K0MCg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1755065Ab3K0MCj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Nov 2013 07:02:39 -0500
+Received: from mail-lb0-f172.google.com ([209.85.217.172]:32931 "EHLO
+	mail-lb0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755414Ab3K0MCg (ORCPT <rfc822;git@vger.kernel.org>);
 	Wed, 27 Nov 2013 07:02:36 -0500
-Received: from mail-lb0-f169.google.com ([209.85.217.169]:34803 "EHLO
-	mail-lb0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754947Ab3K0MCd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Nov 2013 07:02:33 -0500
-Received: by mail-lb0-f169.google.com with SMTP id y6so5342151lbh.14
-        for <git@vger.kernel.org>; Wed, 27 Nov 2013 04:02:32 -0800 (PST)
+Received: by mail-lb0-f172.google.com with SMTP id z5so5441248lbh.31
+        for <git@vger.kernel.org>; Wed, 27 Nov 2013 04:02:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=ERTKjTqzUzq4cSpu0qIKsVzyTz0yB6h7zwfX8Mlt6sE=;
-        b=P2v4ulfwYHTJiobpbA79Ai1XFGaT4uAUrx9Hl3tUaDGTgw2fZnb10htN0xzuSwXIuG
-         zED50USZgMn3ghVwTQPvOUVV0u2kVCIYv1RulNaXr0SAu/7VcSTo7LsJ8eya9wd/6Rv+
-         aw+6WCfQY7DAqaY1cvxGyJvLXTaNcDAeVl1uEdh5jGzglC75NBg1W5rFvVjcwRNzyl2R
-         nQ3wUMjZVzcBKoFgv39fQs36zZ6SB5BTaDAyn3qFGXMaZ1esmhPL3veOJ/sxJCWPUyu9
-         Alu2CJJrSh9zHLNLRRyKx3ezOGH7BN6wGrAXqnxzMlW5GjLgKYq07WQy2Qr/br/1Cl05
-         tX4w==
-X-Received: by 10.112.189.202 with SMTP id gk10mr22746807lbc.11.1385553752722;
-        Wed, 27 Nov 2013 04:02:32 -0800 (PST)
+        bh=NrWNLJHfJttFmJ9kYSNinJabc8GsT6cGEHpbA1FiEUU=;
+        b=H5aP/6XMKqkkLZFudSMWBcuBa0qse2iiIZIvqDbrbunLuRAcnEDKyPf9PH/MuE1+hQ
+         tk/05SFeKjcY9ZHjbSTDQZFxFHmKCUz01f44pqJ8Cx/JF6+9P0PHkteOKamepD+uPmmx
+         sn99tI39CqrhSQ5uO8uWKy1iCFsPQ7AhvqrbF92wyKwKHwpxc4NsmxAg/Xqo3/7s2lbJ
+         HS8HAR1pc0tMKUBgKCRp2hAb88hTBHULyslwboy1EmoqkD4O3aMHSV2xali6LSeXNgW1
+         dF9dm3+zzebA2z8xA+oy+zoEyaQGafQUfaWfRIW1tnniDH2GT8ymhAkixWeNkdnkO7Z0
+         cb5g==
+X-Received: by 10.152.22.4 with SMTP id z4mr29488729lae.14.1385553755728;
+        Wed, 27 Nov 2013 04:02:35 -0800 (PST)
 Received: from localhost (213-66-41-37-no99.tbcn.telia.com. [213.66.41.37])
-        by mx.google.com with ESMTPSA id np10sm21769659lbb.7.2013.11.27.04.02.30
+        by mx.google.com with ESMTPSA id j1sm28804491lbl.10.2013.11.27.04.02.33
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 27 Nov 2013 04:02:31 -0800 (PST)
+        Wed, 27 Nov 2013 04:02:34 -0800 (PST)
 X-Mailer: git-send-email 1.8.4.2
 In-Reply-To: <1385553659-9928-1-git-send-email-t.gummerer@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238433>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238434>
 
-Respect a GIT_INDEX_VERSION environment variable, when a new index is
-initialized.  Setting the environment variable will not cause existing
-index files to be converted to another format for additional safety.
+When running the test suite, it should be possible to set the default
+index format for the tests.  Do that by allowing the user to add a
+TEST_GIT_INDEX_VERSION variable in config.mak setting the index version.
+
+If it isn't set, the default version given in the source code is
+used (currently version 3).
 
 Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
 ---
- Documentation/git.txt | 5 +++++
- read-cache.c          | 9 +++++++--
- 2 files changed, 12 insertions(+), 2 deletions(-)
+ Makefile                | 7 +++++++
+ t/test-lib-functions.sh | 5 +++++
+ t/test-lib.sh           | 3 +++
+ 3 files changed, 15 insertions(+)
 
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index 10cddb5..2b2aad5 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -703,6 +703,11 @@ Git so take care if using Cogito etc.
- 	index file. If not specified, the default of `$GIT_DIR/index`
- 	is used.
+diff --git a/Makefile b/Makefile
+index 6a1b054..8539548 100644
+--- a/Makefile
++++ b/Makefile
+@@ -342,6 +342,10 @@ all::
+ # Define DEFAULT_HELP_FORMAT to "man", "info" or "html"
+ # (defaults to "man") if you want to have a different default when
+ # "git help" is called without a parameter specifying the format.
++#
++# Define TESTGIT_INDEX_FORMAT to 2, 3, 4 or 5 to run the test suite
++# with a different indexfile format.  If it isn't set the index file
++# format used is index-v[23].
  
-+'GIT_INDEX_VERSION'::
-+	This environment variable allows the specification of an index
-+	version for new repositories.  It won't affect existing index
-+	files.  By default index file version 3 is used.
-+
- 'GIT_OBJECT_DIRECTORY'::
- 	If the object storage directory is specified via this
- 	environment variable then the sha1 directories are created
-diff --git a/read-cache.c b/read-cache.c
-index 46551af..04430e5 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -1233,8 +1233,13 @@ static struct cache_entry *refresh_cache_entry(struct cache_entry *ce, int reall
- void initialize_index(struct index_state *istate, int version)
- {
- 	istate->initialized = 1;
--	if (!version)
--		version = INDEX_FORMAT_DEFAULT;
-+	if (!version) {
-+		char *envversion = getenv("GIT_INDEX_VERSION");
-+		if (!envversion)
-+			version = INDEX_FORMAT_DEFAULT;
-+		else
-+			version = atoi(envversion);
-+	}
- 	istate->version = version;
- 	set_istate_ops(istate);
+ GIT-VERSION-FILE: FORCE
+ 	@$(SHELL_PATH) ./GIT-VERSION-GEN
+@@ -2218,6 +2222,9 @@ endif
+ ifdef GIT_PERF_MAKE_OPTS
+ 	@echo GIT_PERF_MAKE_OPTS=\''$(subst ','\'',$(subst ','\'',$(GIT_PERF_MAKE_OPTS)))'\' >>$@
+ endif
++ifdef TEST_GIT_INDEX_VERSION
++	@echo TEST_GIT_INDEX_VERSION='$(subst ','\'',$(subst ','\'',$(TEST_GIT_INDEX_VERSION)))' >>$@
++endif
+ 
+ ### Detect Python interpreter path changes
+ ifndef NO_PYTHON
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index 2f79146..4034262 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -31,6 +31,11 @@ test_set_editor () {
+ 	export EDITOR
  }
+ 
++test_set_index_version () {
++    GIT_INDEX_VERSION="$1"
++    export GIT_INDEX_VERSION
++}
++
+ test_decode_color () {
+ 	awk '
+ 		function name(n) {
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index b25249e..d9e810c 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -104,6 +104,9 @@ export GIT_AUTHOR_EMAIL GIT_AUTHOR_NAME
+ export GIT_COMMITTER_EMAIL GIT_COMMITTER_NAME
+ export EDITOR
+ 
++GIT_INDEX_VERSION="$TEST_GIT_INDEX_VERSION"
++export GIT_INDEX_VERSION
++
+ # Add libc MALLOC and MALLOC_PERTURB test
+ # only if we are not executing the test with valgrind
+ if expr " $GIT_TEST_OPTS " : ".* --valgrind " >/dev/null ||
 -- 
 1.8.4.2
