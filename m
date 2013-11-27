@@ -1,103 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] submodule recursion in git-archive
-Date: Wed, 27 Nov 2013 11:05:29 -0800
-Message-ID: <xmqq61rdu0li.fsf@gitster.dls.corp.google.com>
-References: <2E636B58-47EB-4712-93CA-39E8D1BA3DB9@mac.com>
-	<5294BB97.7010707@web.de>
-	<xmqqmwkqvmck.fsf@gitster.dls.corp.google.com>
-	<52953CB7.8020300@web.de>
+From: Thomas Rast <tr@thomasrast.ch>
+Subject: Re: How to pre-empt git pull merge error?
+Date: Wed, 27 Nov 2013 20:06:59 +0100
+Message-ID: <878uw9hdf0.fsf@thomasrast.ch>
+References: <86d2llc1rs.fsf@gmail.com>
+	<20131127194240.2abaff5575961b3d73e1970f@domain007.com>
+	<vpq8uw9q1r4.fsf@anie.imag.fr>
+	<CALWbr2wNODeLSmQ5ztQmKVxBSguNJ1bbSbvY66sdsP09dSUUgA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jens Lehmann <Jens.Lehmann@web.de>,
-	Nick Townsend <nick.townsend@mac.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-X-From: git-owner@vger.kernel.org Wed Nov 27 20:05:38 2013
+Content-Type: text/plain
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Konstantin Khomoutov <flatworm@users.sourceforge.net>,
+	Pete Forman <petef4+usenet@gmail.com>,
+	git <git@vger.kernel.org>
+To: Antoine Pelisse <apelisse@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 27 20:07:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VlkQb-0007R0-0z
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Nov 2013 20:05:37 +0100
+	id 1VlkS9-0000CP-Rq
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Nov 2013 20:07:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754969Ab3K0TFd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 Nov 2013 14:05:33 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46593 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754622Ab3K0TFc convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Nov 2013 14:05:32 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 22311558E7;
-	Wed, 27 Nov 2013 14:05:32 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=0sMJmATqyOFQ
-	lv0TpdYDam/uOfY=; b=jKJuUjwJ/QwdJ6mlTFkTcjiBVbZ1WoGEqOz8MXQZi/Cd
-	Vz8kuulQQ+xl7uOcXJ06ixEt4mJbcCcJ2hGi/2eekDQ+HT9RPwK/1PwnySk5t6EV
-	QMLm5coo+IcvkDD6fdg+p0bgWaDfgUnSeV0pC3vSseaTMAmnAs0tgsF+JNKos24=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=Z+UsUp
-	GEkTFUEgdapwyJhUgFGNFH4DkkD/Ys5h47ZceSe+yo/BUIW9e36gjzuUvEkUcN+K
-	tx4PC42JS7wVUp+TQYRnDgHcoioH2ezZ9rgdnSpQruza6L3NoTCyjGCp1UnSQzeg
-	msIEGik4NEf4v1Y6yz3H2MxR3+KnZsEtV95P4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0EDAB558E6;
-	Wed, 27 Nov 2013 14:05:32 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 49E75558E3;
-	Wed, 27 Nov 2013 14:05:31 -0500 (EST)
-In-Reply-To: <52953CB7.8020300@web.de> (=?utf-8?Q?=22Ren=C3=A9?= Scharfe"'s
- message of "Wed, 27
-	Nov 2013 01:28:39 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: E2CE3000-5796-11E3-BD79-D331802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755117Ab3K0THJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Nov 2013 14:07:09 -0500
+Received: from psi.thgersdorf.net ([176.9.98.78]:60635 "EHLO mail.psioc.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754778Ab3K0THI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Nov 2013 14:07:08 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by localhost.psioc.net (Postfix) with ESMTP id 133A24D6572;
+	Wed, 27 Nov 2013 20:07:00 +0100 (CET)
+X-Virus-Scanned: amavisd-new at psioc.net
+Received: from mail.psioc.net ([127.0.0.1])
+	by localhost (mail.psioc.net [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 6hTkBwM6K2Em; Wed, 27 Nov 2013 20:06:58 +0100 (CET)
+Received: from linux-1gf2.thomasrast.ch (46-126-8-85.dynamic.hispeed.ch [46.126.8.85])
+	(using TLSv1.2 with cipher AES128-GCM-SHA256 (128/128 bits))
+	(Client did not present a certificate)
+	by mail.psioc.net (Postfix) with ESMTPSA id BEBC74D64DE;
+	Wed, 27 Nov 2013 20:06:57 +0100 (CET)
+In-Reply-To: <CALWbr2wNODeLSmQ5ztQmKVxBSguNJ1bbSbvY66sdsP09dSUUgA@mail.gmail.com>
+	(Antoine Pelisse's message of "Wed, 27 Nov 2013 17:38:46 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238454>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238455>
 
-Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+Antoine Pelisse <apelisse@gmail.com> writes:
 
-> OK, but the repetition of "cover letter" and "e-mail messages"
-> irritates me slightly for some reason.  What about the following?
-
-Looks good to me; will queue, thanks.
-
-> -- >8 --
-> Subject: [PATCH] SubmittingPatches: document how to handle multiple p=
-atches
+>>> On Wed, 27 Nov 2013 15:17:27 +0000
+>>> Pete Forman <petef4+usenet@gmail.com> wrote:
+>>>
+>>>> I am looking for a way of detecting up front whether a git pull or git
+>>>> merge would fail. The sort of script I want to perform is to update a
+>>>> server.
+>>>>
+>>>>     git fetch
+>>>>     git okay
+>>>>     stop server
+>>>>     backup data
+>>>>     git merge
+>>>>     start server
+>>>>
+>> I don't know a simple way to do the pre-merge check without actually
+>> doing the merge (other than patching git merge to add a --dry-run
+>> option)
 >
-> Signed-off-by: Rene Scharfe <l.s.r@web.de>
-> ---
->  Documentation/SubmittingPatches |   11 +++++++++--
->  1 files changed, 9 insertions(+), 2 deletions(-)
->
-> diff --git a/Documentation/SubmittingPatches b/Documentation/Submitti=
-ngPatches
-> index 7055576..e6d46ed 100644
-> --- a/Documentation/SubmittingPatches
-> +++ b/Documentation/SubmittingPatches
-> @@ -139,8 +139,15 @@ People on the Git mailing list need to be able t=
-o read and
->  comment on the changes you are submitting.  It is important for
->  a developer to be able to "quote" your changes, using standard
->  e-mail tools, so that they may comment on specific portions of
-> -your code.  For this reason, all patches should be submitted
-> -"inline".  If your log message (including your name on the
-> +your code.  For this reason, each patch should be submitted
-> +"inline" in a separate message.
-> +
-> +Multiple related patches should be grouped into their own e-mail
-> +thread to help readers find all parts of the series.  To that end,
-> +send them as replies to either an additional "cover letter" message
-> +(see below), the first patch, or the respective preceding patch.
-> +
-> +If your log message (including your name on the
->  Signed-off-by line) is not writable in ASCII, make sure that
->  you send off a message in the correct encoding.
+> Wouldn't that be a nice use-case for git-recursive-merge --index-only
+> ($gmane/236753) ?
+
+Possibly, but most of the use-cases for merge --dry-run are better
+answered by the XY Problem question:
+
+Can you step back and explain what the *underlying* goal is?
+
+The above sounds a lot like a deployment script, and such scripts are
+almost always better served by using an actual deployment tool, or
+failing that, by using some form of checkout -f instead, to ensure that
+they get whatever they are supposed to deploy.
+
+(Using a merge to update is really terrible in the face of
+non-fast-forward updates, especially when caused by rewriting history to
+not include some commits.)
+
+-- 
+Thomas Rast
+tr@thomasrast.ch
