@@ -1,130 +1,155 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: How to pre-empt git pull merge error?
-Date: Wed, 27 Nov 2013 16:54:07 +0100
-Message-ID: <vpq8uw9q1r4.fsf@anie.imag.fr>
-References: <86d2llc1rs.fsf@gmail.com>
-	<20131127194240.2abaff5575961b3d73e1970f@domain007.com>
+From: =?UTF-8?B?SmFrdWIgTmFyxJlic2tp?= <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: Add an option for adding more branch refs
+Date: Wed, 27 Nov 2013 16:56:08 +0100
+Message-ID: <52961618.1070603@gmail.com>
+References: <1385462243-7898-1-git-send-email-krzesimir@endocode.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Pete Forman <petef4+usenet@gmail.com>, git@vger.kernel.org
-To: Konstantin Khomoutov <flatworm@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Wed Nov 27 16:54:33 2013
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Krzesimir Nowak <krzesimir@endocode.com>
+X-From: git-owner@vger.kernel.org Wed Nov 27 16:56:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VlhRg-0000IL-4S
-	for gcvg-git-2@plane.gmane.org; Wed, 27 Nov 2013 16:54:32 +0100
+	id 1VlhTM-0001TM-W9
+	for gcvg-git-2@plane.gmane.org; Wed, 27 Nov 2013 16:56:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756870Ab3K0Py2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Nov 2013 10:54:28 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:42392 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756781Ab3K0Py0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Nov 2013 10:54:26 -0500
-Received: from globule.imag.fr (globule.imag.fr [129.88.34.238])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id rARFs9G8013269
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 27 Nov 2013 16:54:09 +0100
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	(authenticated bits=0)
-	by globule.imag.fr (8.13.8/8.13.8) with ESMTP id rARFs7YV004103
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Wed, 27 Nov 2013 16:54:11 +0100
-In-Reply-To: <20131127194240.2abaff5575961b3d73e1970f@domain007.com>
-	(Konstantin Khomoutov's message of "Wed, 27 Nov 2013 19:42:40 +0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 27 Nov 2013 16:54:10 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: rARFs9G8013269
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1386172454.07729@uCpUGN7+W9Sjj6yrhZu8bA
+	id S1756916Ab3K0P4N convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 Nov 2013 10:56:13 -0500
+Received: from mail-ea0-f173.google.com ([209.85.215.173]:61403 "EHLO
+	mail-ea0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756735Ab3K0P4M (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Nov 2013 10:56:12 -0500
+Received: by mail-ea0-f173.google.com with SMTP id g15so4875969eak.18
+        for <git@vger.kernel.org>; Wed, 27 Nov 2013 07:56:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
+         :subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=XlXFglPL3uOKOWXLLM8sR4Xp5qoLcef+qxSJuXECTAM=;
+        b=No2pe+cTKlqvA+jcsf6esPkYfdpZ/lXXDavLL2ednb1hwmFfBN/L9bpNP7HYNlfJxF
+         Tp9+6ZjlYUr9BV7iv+bW9ZjbvnnC6F+sX/ME1xbdmDEFhnBQ5/tsdP8wUFbPmRN0PcnX
+         J/SQxyDd4XrU73HxuLqO5+dCbHQNKOJ3hMiQfFfpK9KYK8c6s2yiLwTt5nrJHgrQDcDW
+         jBlCTAYBKyOlPO88QqiIvewsfBn94999C15uhDJ37fWn/81To/p2WNOSfAa//t3QRMqD
+         I7YCP0AOnRdOlibH0qLC4df5t1Bd7XpWRfauuW+rzbH58Cglkqm2f7fYRv1L98haqL6+
+         /EqQ==
+X-Received: by 10.15.45.135 with SMTP id b7mr900722eew.88.1385567770626;
+        Wed, 27 Nov 2013 07:56:10 -0800 (PST)
+Received: from [158.75.2.83] ([158.75.2.83])
+        by mx.google.com with ESMTPSA id 4sm8485577eed.14.2013.11.27.07.56.09
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 27 Nov 2013 07:56:09 -0800 (PST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
+Newsgroups: gmane.comp.version-control.git
+In-Reply-To: <1385462243-7898-1-git-send-email-krzesimir@endocode.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238445>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238446>
 
-Konstantin Khomoutov <flatworm@users.sourceforge.net> writes:
+Krzesimir Nowak wrote:
 
-> On Wed, 27 Nov 2013 15:17:27 +0000
-> Pete Forman <petef4+usenet@gmail.com> wrote:
+> Overriding an @additional_branch_refs configuration variable with
+> value ('wip') will make gitweb to show branches that appear in
+> refs/heads and refs/wip (refs/heads is hardcoded). Might be useful fo=
+r
+> gerrit setups where user branches are not stored under refs/heads/.
 >
->> I am looking for a way of detecting up front whether a git pull or git
->> merge would fail. The sort of script I want to perform is to update a
->> server.
->> 
->>     git fetch
->>     git okay
->>     stop server
->>     backup data
->>     git merge
->>     start server
->> 
->> Here git okay is a place holder for the command I am asking for.
->> 
->> If a file has been changed outside of a commit then git pull fails
->> with the following error.
->> 
->> error: Your local changes to '...' would be overwritten by merge.
->> Aborting. Please, commit your changes or stash them before you can
->> merge.
+
+The description of this change starts with technical details,
+instead of starting with intent of this change.
+
+Perhaps (this is only a proposal)
+
+   Introduce @additional_branch_refs configuration variable, holding
+   names of references to be considered branches; by default empty.
+   For example setting it to ('wip') will make gitweb ...
+
+
+BTW. I have thought at first that is something similar to 'remote_heads=
+'
+feature, which among others adds 'remotes' section to 'summary' view
+displaying refs/remotes/* refs... but no, gitweb still doesn't treat=20
+refs/remotes as branches, even with this feature set.
+
+Nb. why new configuration variable, and not new %feature?
+
+> Signed-off-by: Krzesimir Nowak <krzesimir@endocode.com>
+> ---
+>  gitweb/gitweb.perl | 99 ++++++++++++++++++++++++++++++++++++++++----=
+----------
+>  1 file changed, 74 insertions(+), 25 deletions(-)
 >
-> What's wrong with "git okay" being
+> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> index 68c77f6..9bfd38b 100755
+> --- a/gitweb/gitweb.perl
+> +++ b/gitweb/gitweb.perl
+> @@ -17,6 +17,7 @@ use Encode;
+>  use Fcntl ':mode';
+>  use File::Find qw();
+>  use File::Basename qw(basename);
+> +use List::Util qw(min);
+>  use Time::HiRes qw(gettimeofday tv_interval);
+>  binmode STDOUT, ':utf8';
 >
-> if git merge whatever 2>/dev/null; then
->   ... OK path
-> else
->   ... "merge failed" path
-> fi
+[...]
+ > @@ -3184,24 +3210,43 @@ sub git_get_project_owner {
+ >   	return $owner;
+ >   }
+ >
+ > -sub git_get_last_activity {
+ > -	my ($path) =3D @_;
+ > -	my $fd;
+ > +sub git_get_last_activity_age {
+ > +	my ($refs) =3D @_;
+ > +	my $fd =3D -1;
+ >
+ > -	$git_dir =3D "$projectroot/$path";
+ >   	open($fd, "-|", git_cmd(), 'for-each-ref',
+ >   	     '--format=3D%(committer)',
+ >   	     '--sort=3D-committerdate',
+ >   	     '--count=3D1',
+ > -	     'refs/heads') or return;
+ > +	     $refs) or return undef;
 
-The idea seems to be to stop the server before actually doing the merge
-(and avoid doing so if the merge is bound to fail).
+git-for-each-ref accepts more than one pattern. Why not simply
 
-I don't know a simple way to do the pre-merge check without actually
-doing the merge (other than patching git merge to add a --dry-run
-option), but you can do a pessimistic check by using the
-require_work_tree_exists shell function defined in git-sh-setup (copied
-below, but you can call it from a shell script after doing
-. "$(git --exec-path)/git-sh-setup"):
+    	open($fd, "-|", git_cmd(), 'for-each-ref',
+    	     '--format=3D%(committer)',
+    	     '--sort=3D-committerdate',
+    	     '--count=3D1',
+   -	     'refs/heads') or return;
+   +	     get_branch_refs()) or return;
 
-require_clean_work_tree () {
-	git rev-parse --verify HEAD >/dev/null || exit 1
-	git update-index -q --ignore-submodules --refresh
-	err=0
+Then we won't need List::Util::min.
 
-	if ! git diff-files --quiet --ignore-submodules
-	then
-		echo >&2 "Cannot $1: You have unstaged changes."
-		err=1
-	fi
-
-	if ! git diff-index --cached --quiet --ignore-submodules HEAD --
-	then
-		if [ $err = 0 ]
-		then
-		    echo >&2 "Cannot $1: Your index contains uncommitted changes."
-		else
-		    echo >&2 "Additionally, your index contains uncommitted changes."
-		fi
-		err=1
-	fi
-
-	if [ $err = 1 ]
-	then
-		test -n "$2" && echo >&2 "$2"
-		exit 1
-	fi
-}
-
-Additionally, you may want to check that the merge is a fast-forward
-(hence can't result in merge conflict), e.g. by checking that the
-current commit is the merge base between itself and the commit to merge
-(git merge-base HEAD $commit).
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+[...]
+ > +sub git_get_last_activity {
+ > +	my ($path) =3D @_;
+ > +	my @ages =3D ();
+ > +
+ > +	$git_dir =3D "$projectroot/$path";
+ > +	for my $ref (get_branch_refs()) {
+ > +		my $age =3D git_get_last_activity_age('refs/' . $_);
+ > +
+ > +		push @ages, $age if defined $age;
+ > +	}
+ > +	if (@ages) {
+ > +		my $min_age =3D min(@ages);
+ > +
+ > +		return ($min_age, age_string($min_age));
+ > +	}
+ > +
+ >   	return (undef, undef);
+ >   }
+ >
+[...]
+--=20
+Jakub Nar=C4=99bski
