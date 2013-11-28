@@ -1,71 +1,93 @@
-From: Duy Nguyen <pclouds@gmail.com>
+From: zhifeng hu <zf@ancientrocklab.com>
 Subject: Re: How to resume broke clone ?
-Date: Thu, 28 Nov 2013 15:50:02 +0700
-Message-ID: <CACsJy8AdOAPT-RfD0NfZj_cQPBSUrVKn8yS7JRe=-4k8C8TvQg@mail.gmail.com>
-References: <AAA12788-A242-41B8-B47D-1A0A52F33FC1@ancientrocklab.com>
- <5296F343.6050506@gmail.com> <560807D9-CE82-4CF6-A1CC-54E7CCA624F9@ancientrocklab.com>
- <CACsJy8DbJZmBCnfzNqfmEnRpqVcc42Q_-jz3r=sYVRPhsCkS5A@mail.gmail.com> <5297004F.4090003@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: zhifeng hu <zf@ancientrocklab.com>,
-	=?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Karsten Blees <karsten.blees@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 28 09:50:43 2013
+Date: Thu, 28 Nov 2013 16:55:17 +0800
+Message-ID: <211D44CB-64A2-4FCA-B4A7-40845B97E9A1@ancientrocklab.com>
+References: <AAA12788-A242-41B8-B47D-1A0A52F33FC1@ancientrocklab.com> <5296F343.6050506@gmail.com> <560807D9-CE82-4CF6-A1CC-54E7CCA624F9@ancientrocklab.com> <CACsJy8DbJZmBCnfzNqfmEnRpqVcc42Q_-jz3r=sYVRPhsCkS5A@mail.gmail.com> <5297004F.4090003@gmail.com> <CACsJy8AdOAPT-RfD0NfZj_cQPBSUrVKn8yS7JRe=-4k8C8TvQg@mail.gmail.com>
+Mime-Version: 1.0 (Mac OS X Mail 7.0 \(1822\))
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Karsten Blees <karsten.blees@gmail.com>,
+	=?utf-8?Q?Tr=E1=BA=A7n_Ng=E1=BB=8Dc_Qu=C3=A2n?= 
+	<vnwildman@gmail.com>, Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 28 09:55:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VlxJ4-0007KB-AU
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Nov 2013 09:50:42 +0100
+	id 1VlxNm-000219-5t
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Nov 2013 09:55:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756824Ab3K1Iuh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Nov 2013 03:50:37 -0500
-Received: from mail-qe0-f50.google.com ([209.85.128.50]:38447 "EHLO
-	mail-qe0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756591Ab3K1Iud (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Nov 2013 03:50:33 -0500
-Received: by mail-qe0-f50.google.com with SMTP id 1so6592217qec.23
-        for <git@vger.kernel.org>; Thu, 28 Nov 2013 00:50:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=f9MnS1qFxKfGAtA+K7XdgREfFcfRNtTVvjqAGpEgA1o=;
-        b=c5URU/Dyj+Ov/ndy577HOpVBfuoSPnObxYyiZmuzDJrOyxWyUj447k2DOf40GvnnBx
-         L4uKyRYyazZ9OIAwwDqjB5Ihlcg++nMAbSaBxYxd8pgGQSs+ZqNNMAWMJdVvT9lPG1Fm
-         bVXO15YOp2O7lUfch9HWvaxpjOPghGJ8ASvmqQQ45d0tJIPiZb8jKy7irdJXRoln3L4k
-         uKtsQHX3PWJPsCarJ2yFLwJBYUAjHskexsd9NUrMv2gUDRgGuO37cQol64QRuFPdlDEG
-         rhR56KlKOUYcjtTlpz4f3+ytLy+HbwQcfIxwk+qgo36D1MO7zuZnuWV8aQIl02/FfAkm
-         BbbA==
-X-Received: by 10.224.171.196 with SMTP id i4mr75223696qaz.38.1385628632266;
- Thu, 28 Nov 2013 00:50:32 -0800 (PST)
-Received: by 10.96.134.68 with HTTP; Thu, 28 Nov 2013 00:50:02 -0800 (PST)
-In-Reply-To: <5297004F.4090003@gmail.com>
+	id S1751161Ab3K1Iza convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Nov 2013 03:55:30 -0500
+Received: from imap1.ox.registrar-servers.com ([198.187.29.233]:37303 "EHLO
+	imap1.ox.registrar-servers.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750884Ab3K1Iz3 convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Nov 2013 03:55:29 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by oxmail.registrar-servers.com (Postfix) with ESMTP id 33D49200089;
+	Thu, 28 Nov 2013 03:55:29 -0500 (EST)
+X-Virus-Scanned: Debian amavisd-new at imap1.ox.registrar-servers.com
+Received: from oxmail.registrar-servers.com ([127.0.0.1])
+	by localhost (imap1.ox.registrar-servers.com [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id bYmETKyKSBJT; Thu, 28 Nov 2013 03:55:29 -0500 (EST)
+Received: from [192.168.1.101] (unknown [119.98.73.69])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by oxmail.registrar-servers.com (Postfix) with ESMTPSA id 326D3200081;
+	Thu, 28 Nov 2013 03:55:25 -0500 (EST)
+In-Reply-To: <CACsJy8AdOAPT-RfD0NfZj_cQPBSUrVKn8yS7JRe=-4k8C8TvQg@mail.gmail.com>
+X-Mailer: Apple Mail (2.1822)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238481>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238482>
 
-On Thu, Nov 28, 2013 at 3:35 PM, Karsten Blees <karsten.blees@gmail.com> wrote:
-> Or simply download the individual files (via ftp/http) and clone locally:
->
->> wget -r ftp://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/
->> git clone git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
->> cd linux
->> git remote set-url origin git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
+The repository growing fast, things get harder . Now the size reach sev=
+eral GB, it may possible be TB, YB.
+When then, How do we handle this?
+If the transfer broken, and it can not be resume transfer, waste time a=
+nd waste bandwidth.
 
-Yeah I didn't realize it is published over dumb http too. You may need
-to be careful with this though because it's not atomic and you may get
-refs that point nowhere because you're already done with "pack"
-directory when you come to fetcing "refs" and did not see new packs...
-If dumb commit walker supports resume (I don't know) then it'll be
-safer to do
+Git should be better support resume transfer.
+It now seems not doing better it=92s job.
+Share code, manage code, transfer code, what would it be a VCS we imagi=
+ne it ?
+=20
+zhifeng hu=20
 
-git clone http://git.kernel.org/....
 
-If it does not support resume, I don't think it's hard to do.
--- 
-Duy
+
+On Nov 28, 2013, at 4:50 PM, Duy Nguyen <pclouds@gmail.com> wrote:
+
+> On Thu, Nov 28, 2013 at 3:35 PM, Karsten Blees <karsten.blees@gmail.c=
+om> wrote:
+>> Or simply download the individual files (via ftp/http) and clone loc=
+ally:
+>>=20
+>>> wget -r ftp://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linu=
+x.git/
+>>> git clone git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.gi=
+t
+>>> cd linux
+>>> git remote set-url origin git://git.kernel.org/pub/scm/linux/kernel=
+/git/torvalds/linux.git
+>=20
+> Yeah I didn't realize it is published over dumb http too. You may nee=
+d
+> to be careful with this though because it's not atomic and you may ge=
+t
+> refs that point nowhere because you're already done with "pack"
+> directory when you come to fetcing "refs" and did not see new packs..=
+=2E
+> If dumb commit walker supports resume (I don't know) then it'll be
+> safer to do
+>=20
+> git clone http://git.kernel.org/....
+>=20
+> If it does not support resume, I don't think it's hard to do.
+> --=20
+> Duy
