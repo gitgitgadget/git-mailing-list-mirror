@@ -1,97 +1,175 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: How to resume broke clone ?
-Date: Thu, 28 Nov 2013 11:35:56 -0800
-Message-ID: <CAJo=hJvk0WJJM1jn_XiqpJM791pu=Wmh7CObpnAS60TFQFOfeQ@mail.gmail.com>
-References: <AAA12788-A242-41B8-B47D-1A0A52F33FC1@ancientrocklab.com>
- <5296F343.6050506@gmail.com> <560807D9-CE82-4CF6-A1CC-54E7CCA624F9@ancientrocklab.com>
- <CACsJy8DbJZmBCnfzNqfmEnRpqVcc42Q_-jz3r=sYVRPhsCkS5A@mail.gmail.com>
- <CALUzUxrEvuKuN+v-hJLQd5KoV-fzxVYvg5pj7XoLBVap7mgA=Q@mail.gmail.com> <F569EBDF-D8B5-47D5-8C2F-DA3A0F6C207E@ancientrocklab.com>
+From: Torsten =?utf-8?q?B=C3=B6gershausen?= <tboegi@web.de>
+Subject: [PATCH v7 02/10] t5601: Add tests for ssh
+Date: Thu, 28 Nov 2013 20:48:22 +0100
+Message-ID: <201311282048.23226.tboegi@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Tay Ray Chuan <rctay89@gmail.com>, Duy Nguyen <pclouds@gmail.com>,
-	=?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: zhifeng hu <zf@ancientrocklab.com>
-X-From: git-owner@vger.kernel.org Thu Nov 28 20:36:23 2013
+Cc: tboegi@web.de
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 28 20:48:44 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vm7Nu-0002M2-Lm
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Nov 2013 20:36:23 +0100
+	id 1Vm7Zs-0002GO-2R
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Nov 2013 20:48:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752857Ab3K1TgS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Nov 2013 14:36:18 -0500
-Received: from mail-we0-f182.google.com ([74.125.82.182]:37935 "EHLO
-	mail-we0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754794Ab3K1TgS convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 Nov 2013 14:36:18 -0500
-Received: by mail-we0-f182.google.com with SMTP id q59so8640718wes.13
-        for <git@vger.kernel.org>; Thu, 28 Nov 2013 11:36:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spearce.org; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=yLnHTgTtpwnad0Fe/ym1IEb54qI55lGnJQk7J9XcWCA=;
-        b=aaVu5o7xpjOug64Vwq068DDvcutnuB1iC1jGMDJp0pD3JWVyAPx4X25xivDLbxt+Q2
-         rbDq0HT4rwLDGwjS1+hl68MariS1moeYW46gJAF6IhhrASpfASQR5IqYE/ZImgYGFv6e
-         u/ybqc1XmHYFORECCcLExwEL3C+lpiPGoNf9s=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=yLnHTgTtpwnad0Fe/ym1IEb54qI55lGnJQk7J9XcWCA=;
-        b=ZFclDLHrOKYxKihrgnbOoBDZNQJHIES9cqmKTfxD2KTLl3Y8tg6R2SUe1HKKN/8+J5
-         2JEB24nDCCQWSi0s0txUYECI7OPCI9NX+4TzS0KoYg2lZ7Nme72/WTMwH0sTm+FGK9We
-         1rWenl0pVEmvUBFAI6IGiXrkXjKXJmbJ61Zjn8F7uyFfYtfdKEdtHFE703wrGgzLAg9n
-         dSa+V8URR9xlzGEJra3N45ACFtujS+C/7zSRMhyHgiixQBhVEENFB6ZSZf3QFrJCHH2K
-         NGowlniJT+IbHTNHaCTMGhFd3UeA8+XXvuv2uKwnIV5UysBcB7u7H6lpm2D95fNRKEEg
-         F5bA==
-X-Gm-Message-State: ALoCoQl74LGw2MrzmXcwO9wGO9usX9s4oj80bOLuVGylfSU4fDlWwSFYZTi23ZZqnYv+WN32VCKG
-X-Received: by 10.180.37.201 with SMTP id a9mr3836268wik.18.1385667376615;
- Thu, 28 Nov 2013 11:36:16 -0800 (PST)
-Received: by 10.227.192.198 with HTTP; Thu, 28 Nov 2013 11:35:56 -0800 (PST)
-In-Reply-To: <F569EBDF-D8B5-47D5-8C2F-DA3A0F6C207E@ancientrocklab.com>
+	id S1759391Ab3K1Tsk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Nov 2013 14:48:40 -0500
+Received: from mout.web.de ([212.227.15.4]:63445 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759364Ab3K1Tsj convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 28 Nov 2013 14:48:39 -0500
+Received: from appes.localnet ([78.72.74.102]) by smtp.web.de (mrweb101) with
+ ESMTPA (Nemesis) id 0MZlZK-1W4K9T2QnO-00La9M for <git@vger.kernel.org>; Thu,
+ 28 Nov 2013 20:48:37 +0100
+X-Provags-ID: V03:K0:WF2PnThQsLl0pIYOYoRbh6DaAA2y2sV+KFCly03vwR11FuJ8YJf
+ qbLPyp7exDKqkwHEXBdDfE+FzbqVjzSkbrXZq1ihsXsuvCWIOzMyR0glY/R1yJ+v6jvN6Jl
+ ept1CSES4Fd/+GbDF+qKFiaxcYaw12RZaY5a6QeZ7xCvSI3gfcrX1N88olF0qTmoqY/CDA5
+ Un3o34e7WDqjfNZsJGtNg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238503>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238504>
 
-On Thu, Nov 28, 2013 at 1:29 AM, zhifeng hu <zf@ancientrocklab.com> wro=
-te:
-> Once using git clone =97depth or git fetch =97depth,
-> While you want to move backward.
-> you may face problem
->
->  git fetch --depth=3D105
-> error: Could not read 483bbf41ca5beb7e38b3b01f21149c56a1154b7a
-> error: Could not read aacb82de3ff8ae7b0a9e4cfec16c1807b6c315ef
-> error: Could not read 5a1758710d06ce9ddef754a8ee79408277032d8b
-> error: Could not read a7d5629fe0580bd3e154206388371f5b8fc832db
-> error: Could not read 073291c476b4edb4d10bbada1e64b471ba153b6b
+Add more tests testing all the combinations:
+ -IPv4 or IPv6
+ -path starting with "/" or with "/~"
+ -with and without the ssh:// scheme
 
-We now have a resumable bundle available through our kernel.org
-mirror. The bundle is 658M.
+Some test fail, they need updates in connect.c
 
-  mkdir linux
-  cd linux
-  git init
+Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+---
+ t/t5601-clone.sh | 100 +++++++++++++++++++++++++++++++++++++++++++++++=
++++++++-
+ 1 file changed, 99 insertions(+), 1 deletion(-)
 
-  wget https://kernel.googlesource.com/pub/scm/linux/kernel/git/torvald=
-s/linux/clone.bundle
-
-  sha1sum clone.bundle
-  96831de0b81713333e5ebba94edb31e37e70e1df  clone.bundle
-
-  git fetch -u ./clone.bundle refs/*:refs/*
-  git reset --hard
-
-You can also use our mirror as an upstream, as we have servers in Asia
-that lag no more than 5 or 6 minutes behind kernel.org:
-
-  git remote add origin
-https://kernel.googlesource.com/pub/scm/linux/kernel/git/torvalds/linux=
-/
+diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
+index c634f77..ba99972 100755
+--- a/t/t5601-clone.sh
++++ b/t/t5601-clone.sh
+@@ -313,7 +313,7 @@ expect_ssh () {
+=20
+ setup_ssh_wrapper
+=20
+-test_expect_success 'cloning myhost:src uses ssh' '
++test_expect_success 'clone myhost:src uses ssh' '
+ 	git clone myhost:src ssh-clone &&
+ 	expect_ssh myhost src
+ '
+@@ -329,6 +329,104 @@ test_expect_success 'bracketed hostnames are stil=
+l ssh' '
+ 	expect_ssh myhost:123 src
+ '
+=20
++counter=3D0
++# $1 url
++# $2 none|host
++# $3 path
++test_clone_url () {
++	counter=3D$(($counter + 1))
++	test_might_fail git clone "$1" tmp$counter &&
++	expect_ssh "$2" "$3"
++}
++
++test_expect_success NOT_MINGW 'clone c:temp is ssl' '
++	test_clone_url c:temp c temp
++'
++
++test_expect_success MINGW 'clone c:temp is dos drive' '
++	test_clone_url c:temp none
++'
++
++#ip v4
++for repo in rep rep/home/project /~proj 123
++do
++	test_expect_success "clone host:$repo" '
++		test_clone_url host:$repo host $repo
++	'
++done
++
++#ipv6
++# failing
++for repo in /~proj
++do
++	test_expect_failure "clone [::1]:$repo" '
++		test_clone_url [::1]:$repo ::1 $repo
++	'
++done
++
++for repo in rep rep/home/project 123
++do
++	test_expect_success "clone [::1]:$repo" '
++		test_clone_url [::1]:$repo ::1 $repo
++	'
++done
++
++# Corner cases
++# failing
++for repo in [foo]bar/baz:qux [foo/bar]:baz
++do
++	test_expect_failure "clone $url is not ssh" '
++		test_clone_url $url none
++	'
++done
++
++for url in foo/bar:baz
++do
++	test_expect_success "clone $url is not ssh" '
++		test_clone_url $url none
++	'
++done
++
++#with ssh:// scheme
++test_expect_success 'clone ssh://host.xz/home/user/repo' '
++	test_clone_url "ssh://host.xz/home/user/repo" host.xz "/home/user/rep=
+o"
++'
++
++# from home directory
++test_expect_success 'clone ssh://host.xz/~repo' '
++	test_clone_url "ssh://host.xz/~repo" host.xz "~repo"
++'
++
++# with port number
++test_expect_success 'clone ssh://host.xz:22/home/user/repo' '
++	test_clone_url "ssh://host.xz:22/home/user/repo" "-p 22 host.xz" "/ho=
+me/user/repo"
++'
++
++# from home directory with port number
++test_expect_success 'clone ssh://host.xz:22/~repo' '
++	test_clone_url "ssh://host.xz:22/~repo" "-p 22 host.xz" "~repo"
++'
++
++#IPv6
++test_expect_success 'clone ssh://[::1]/home/user/repo' '
++	test_clone_url "ssh://[::1]/home/user/repo" "::1" "/home/user/repo"
++'
++
++#IPv6 from home directory
++test_expect_success 'clone ssh://[::1]/~repo' '
++	test_clone_url "ssh://[::1]/~repo" "::1" "~repo"
++'
++
++#IPv6 with port number
++test_expect_success 'clone ssh://[::1]:22/home/user/repo' '
++	test_clone_url "ssh://[::1]:22/home/user/repo" "-p 22 ::1" "/home/use=
+r/repo"
++'
++
++#IPv6 from home directory with port number
++test_expect_success 'clone ssh://[::1]:22/~repo' '
++	test_clone_url "ssh://[::1]:22/~repo" "-p 22 ::1" "~repo"
++'
++
+ test_expect_success 'clone from a repository with two identical branch=
+es' '
+=20
+ 	(
+--=20
+1.8.5.rc0.23.gaa27064
