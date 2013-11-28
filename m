@@ -1,72 +1,62 @@
-From: Karsten Blees <karsten.blees@gmail.com>
-Subject: Re: How to resume broke clone ?
-Date: Thu, 28 Nov 2013 09:35:27 +0100
-Message-ID: <5297004F.4090003@gmail.com>
-References: <AAA12788-A242-41B8-B47D-1A0A52F33FC1@ancientrocklab.com> <5296F343.6050506@gmail.com> <560807D9-CE82-4CF6-A1CC-54E7CCA624F9@ancientrocklab.com> <CACsJy8DbJZmBCnfzNqfmEnRpqVcc42Q_-jz3r=sYVRPhsCkS5A@mail.gmail.com>
+From: "Max Kirillov" <max@max630.net>
+Subject: RE: How to resume broke clone =?UTF-8?Q?=3F?=
+Date: Thu, 28 Nov 2013 01:32:36 -0700
+Message-ID: <20131128013236.96eec638b311907e2368f42b42021fd8.17478ad17f.wbe@email02.secureserver.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: =?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>, zhifeng hu <zf@ancientrocklab.com>
-X-From: git-owner@vger.kernel.org Thu Nov 28 09:35:33 2013
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8BIT
+Cc: git@vger.kernel.org
+To: "zhifeng hu" <zf@ancientrocklab.com>
+X-From: git-owner@vger.kernel.org Thu Nov 28 09:37:47 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vlx4O-0005rk-N3
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Nov 2013 09:35:33 +0100
+	id 1Vlx6U-0007Fl-Oi
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Nov 2013 09:37:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751210Ab3K1If3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Nov 2013 03:35:29 -0500
-Received: from mail-ea0-f171.google.com ([209.85.215.171]:64405 "EHLO
-	mail-ea0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750884Ab3K1If2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Nov 2013 03:35:28 -0500
-Received: by mail-ea0-f171.google.com with SMTP id h10so5543531eak.30
-        for <git@vger.kernel.org>; Thu, 28 Nov 2013 00:35:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=z10LeFkTIyoshgeodrzO/D+K9hnXkNvQH/rtp1XH6mw=;
-        b=a9AYkLfPzSq/SvkIwnKfxFmib9rsB+ZBAzVlDjqupSG4zxOicexxctwGh3YolVzLh7
-         MyiTYiOMOr02qp1pw+EB5s1IHx0VLnXkcU1u8pUcgzQQx+/OlJRaWrVc/Mv6YAnHx+NX
-         ml621mV88K/fOvYay6ivl5wBh/7hAx6KH2ScEBI6D5KaDFrZtas/hk4NM1SmTHcAcQWW
-         GypxQZXd5PdnnEVF0hgmLQZYYkxcd5m3y/vYrFiGBG9/JuN4YiWvddcqrUxfO5ThYK+B
-         LIOwZCCbR4zP2a+/4UXnqj9stBOrrXqpTXKsY9Jkcs0Ivw31SmmE1DZbi55dKsDrvyfh
-         kWsQ==
-X-Received: by 10.15.91.3 with SMTP id r3mr47110469eez.18.1385627726862;
-        Thu, 28 Nov 2013 00:35:26 -0800 (PST)
-Received: from [10.1.100.52] (ns.dcon.de. [77.244.111.149])
-        by mx.google.com with ESMTPSA id j46sm27412498eew.18.2013.11.28.00.35.25
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 28 Nov 2013 00:35:26 -0800 (PST)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.1.1
-In-Reply-To: <CACsJy8DbJZmBCnfzNqfmEnRpqVcc42Q_-jz3r=sYVRPhsCkS5A@mail.gmail.com>
+	id S1751712Ab3K1Ihj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Nov 2013 03:37:39 -0500
+Received: from p3plsmtp02-04-2.prod.phx3.secureserver.net ([72.167.218.97]:52404
+	"EHLO p3plwbeout02-04.prod.phx3.secureserver.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751161Ab3K1Ihi convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 28 Nov 2013 03:37:38 -0500
+X-Greylist: delayed 300 seconds by postgrey-1.27 at vger.kernel.org; Thu, 28 Nov 2013 03:37:38 EST
+Received: from localhost ([72.167.218.115])
+	by p3plwbeout02-04.prod.phx3.secureserver.net with bizsmtp
+	id uwYe1m0012VyfJY01wYew0; Thu, 28 Nov 2013 01:32:38 -0700
+X-SID: uwYe1m0012VyfJY01
+Received: (qmail 28380 invoked by uid 99); 28 Nov 2013 08:32:38 -0000
+X-Originating-IP: 193.64.145.29
+User-Agent: Workspace Webmail 5.6.44
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238478>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238479>
 
-Am 28.11.2013 09:14, schrieb Duy Nguyen:
-> On Thu, Nov 28, 2013 at 2:41 PM, zhifeng hu <zf@ancientrocklab.com> wrote:
->> Thanks for reply, But I am developer, I want to clone full repository, I need to view code since very early.
+> git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
 > 
-> if it works with --depth =1, you can incrementally run "fetch
-> --depth=N" with N larger and larger.
-> 
-> But it may be easier to ask kernel.org admin, or any dev with a public
-> web server, to provide you a git bundle you can download via http.
-> Then you can fetch on top.
-> 
+> I am in china. our bandwidth is very limitation. Less than 50Kb/s.
 
-Or simply download the individual files (via ftp/http) and clone locally:
+You could manually download big packed bundled from some http remote.
+For example http://repo.or.cz/r/linux.git
 
-> wget -r ftp://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/
-> git clone git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
-> cd linux
-> git remote set-url origin git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
+* create a new repository, add the remote there.
+
+* download files with wget or whatever:
+ http://repo.or.cz/r/linux.git/objects/info/packs
+also files mentioned in the file. Currently they are:
+ http://repo.or.cz/r/linux.git/objects/pack/pack-3807b40fc5fd7556990ecbfe28a54af68964a5ce.idx
+ http://repo.or.cz/r/linux.git/objects/pack/pack-3807b40fc5fd7556990ecbfe28a54af68964a5ce.pack
+
+and put them to the corresponding places.
+
+* then run fetch of pull. I believe it should run fast then. Though I
+have not test it.
+
+Br,
+-- 
+Max
