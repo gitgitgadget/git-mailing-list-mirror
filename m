@@ -1,66 +1,56 @@
-From: zhifeng hu <zf@ancientrocklab.com>
-Subject: How to resume broke clone ?
-Date: Thu, 28 Nov 2013 11:13:54 +0800
-Message-ID: <AAA12788-A242-41B8-B47D-1A0A52F33FC1@ancientrocklab.com>
-Mime-Version: 1.0 (Mac OS X Mail 7.0 \(1822\))
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: Re: [RFC PATCH] disable complete ignorance of submodules for
+	index <-> HEAD diff
+Date: Thu, 28 Nov 2013 08:10:01 +0100
+Message-ID: <20131128071001.GA1057@book.hvoigt.net>
+References: <20131122151120.GA32361@sigill.intra.peff.net> <CAErtv25zrsde7wYg+VUZebow2pmhDnDQG53Dmz_gbjavC-D2cA@mail.gmail.com> <CALkWK0m9MK=RBBor-ZeGrGU9KA6tZa89UUi0J7j9fxr1g6uJtQ@mail.gmail.com> <CAErtv24Lv1JegCBQ=TXvOsgBNHp=Rphk5YVAq2qqRbNmqfNSkw@mail.gmail.com> <CAErtv24P+wyZKvvuuPJJ0oxzMif7XtOwJDtKcTKQdKHZaAUbig@mail.gmail.com> <CALkWK0muxsRUtO6KYk5G3=RVN0nqd=8gOZn=jsNbTc4B9KCATQ@mail.gmail.com> <528FC638.5060403@web.de> <20131122215454.GA4952@sandbox-ub> <20131123011145.GB4952@sandbox-ub> <CAErtv26e1NxmsBLH_2KuzBECiwZvyvstqXoK5Vybk9xpsaaO9Q@mail.gmail.com>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 28 04:21:14 2013
+Cc: Jens Lehmann <Jens.Lehmann@web.de>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Sergey Sharybin <sergey.vfx@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 28 08:10:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VlsAD-0004FW-QF
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Nov 2013 04:21:14 +0100
+	id 1Vlvjt-0001dU-SY
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Nov 2013 08:10:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758763Ab3K1DVK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Nov 2013 22:21:10 -0500
-Received: from relay1.ox.registrar-servers.com ([199.188.203.171]:34817 "EHLO
-	relay1.ox.registrar-servers.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1758758Ab3K1DVI convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Nov 2013 22:21:08 -0500
-X-Greylist: delayed 401 seconds by postgrey-1.27 at vger.kernel.org; Wed, 27 Nov 2013 22:21:08 EST
-Received: (qmail 616 invoked by uid 89); 28 Nov 2013 03:14:26 -0000
-Received: from unknown (HELO imap1.ox.registrar-servers.com) (198.187.29.233)
-  by relay.ox.registrar-servers.com with SMTP; 28 Nov 2013 03:14:26 -0000
-Received: from localhost (localhost [127.0.0.1])
-	by oxmail.registrar-servers.com (Postfix) with ESMTP id 1A559200081
-	for <git@vger.kernel.org>; Wed, 27 Nov 2013 22:14:04 -0500 (EST)
-X-Virus-Scanned: Debian amavisd-new at imap1.ox.registrar-servers.com
-Received: from oxmail.registrar-servers.com ([127.0.0.1])
-	by localhost (imap1.ox.registrar-servers.com [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id jVNndlHb--6A for <git@vger.kernel.org>;
-	Wed, 27 Nov 2013 22:14:04 -0500 (EST)
-Received: from [192.168.1.101] (unknown [111.172.231.216])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by oxmail.registrar-servers.com (Postfix) with ESMTPSA id BF96A200089
-	for <git@vger.kernel.org>; Wed, 27 Nov 2013 22:14:02 -0500 (EST)
-X-Mailer: Apple Mail (2.1822)
+	id S1751384Ab3K1HKN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Nov 2013 02:10:13 -0500
+Received: from smtprelay01.ispgateway.de ([80.67.31.24]:40908 "EHLO
+	smtprelay01.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751184Ab3K1HKM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Nov 2013 02:10:12 -0500
+Received: from [77.20.34.36] (helo=book.hvoigt.net)
+	by smtprelay01.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.68)
+	(envelope-from <hvoigt@hvoigt.net>)
+	id 1Vlvjj-0007Nz-6a; Thu, 28 Nov 2013 08:10:07 +0100
+Content-Disposition: inline
+In-Reply-To: <CAErtv26e1NxmsBLH_2KuzBECiwZvyvstqXoK5Vybk9xpsaaO9Q@mail.gmail.com>
+User-Agent: Mutt/1.5.19 (2009-01-05)
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238472>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238473>
 
-Hello all:
-Today i want to clone the Linux Kernel git repository.
-git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
+On Mon, Nov 25, 2013 at 03:01:34PM +0600, Sergey Sharybin wrote:
+> Tested the patch. `git status` now shows the changes to the
+> submodules, which is nice :)
+> 
+> However, is it possible to make it so `git commit` lists submodules in
+> "changes to be committed" section, so you'll see what's gonna to be in
+> the commit while typing the commit message as well?
 
-I am in china. our bandwidth is very limitation. Less than 50Kb/s.
+Yes, of course that should be shown. Will add in the next iteration.
+Which will hopefully be a much simpler implementation. Possibly getting
+rid of this new flag.
 
-The clone progress is very slow, and broken times and time.
-I am very unhappy. 
-Because i could not easily to clone kernel.
-
-I had do some research about resume clone , but no good plan how to resolve this problem .
-
-
-Would it be possible add resume transfer clone repository after the transfer broken?
-
-such as bittorrent  download. or what ever.
-
-zhifeng hu 
+Cheers Heiko
