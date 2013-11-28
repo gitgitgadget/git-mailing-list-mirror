@@ -1,202 +1,150 @@
 From: Torsten =?utf-8?q?B=C3=B6gershausen?= <tboegi@web.de>
-Subject: [PATCH v7 10/10] git_connect(): Use common return point
-Date: Thu, 28 Nov 2013 20:50:15 +0100
-Message-ID: <201311282050.16371.tboegi@web.de>
+Subject: [PATCH v7 01/10] t5601: remove clear_ssh, refactor setup_ssh_wrapper
+Date: Thu, 28 Nov 2013 20:53:47 +0100
+Message-ID: <201311282053.47761.tboegi@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: tboegi@web.de
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 28 20:50:27 2013
+X-From: git-owner@vger.kernel.org Thu Nov 28 20:54:14 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vm7bW-0003Up-Iu
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Nov 2013 20:50:26 +0100
+	id 1Vm7fB-00061Z-L7
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Nov 2013 20:54:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759467Ab3K1TuW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Nov 2013 14:50:22 -0500
-Received: from mout.web.de ([212.227.15.4]:61375 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759433Ab3K1TuV convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 Nov 2013 14:50:21 -0500
-Received: from appes.localnet ([78.72.74.102]) by smtp.web.de (mrweb103) with
- ESMTPA (Nemesis) id 0MaJvw-1W5ypo1XS4-00JrQW for <git@vger.kernel.org>; Thu,
- 28 Nov 2013 20:50:20 +0100
-X-Provags-ID: V03:K0:P8Zl4cEnu/hDfarESbGHxTcqR7VohrvJxlWhRIAdY/xXVevNUXq
- WnDKxulSD32B19caQDF8Zr2/vKLI+GtCo1hJ7hfVkRkvSu3lxOog9nJ2Vkp/L2r68c4HZR1
- 2lk1pS+ktQ7VGUD+helVIom1bmVZlHLBsL9PjjkgVyrt5Hr5+G1j7NB3yDK0WrDoq+xpJ6Z
- icJdYfKtjMeJlvWRdDAsg==
+	id S1759104Ab3K1Tx4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Nov 2013 14:53:56 -0500
+Received: from mout-xforward.web.de ([82.165.159.2]:51860 "EHLO
+	mout-xforward.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754603Ab3K1Txy convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 28 Nov 2013 14:53:54 -0500
+X-Greylist: delayed 322 seconds by postgrey-1.27 at vger.kernel.org; Thu, 28 Nov 2013 14:53:54 EST
+Received: from appes.localnet ([78.72.74.102]) by smtp.web.de (mrweb102) with
+ ESMTPA (Nemesis) id 0MQ6LH-1VgsSZ38Gh-005LRf for <git@vger.kernel.org>; Thu,
+ 28 Nov 2013 20:53:52 +0100
+X-Provags-ID: V03:K0:gbJ4vDAAifMY2fNuLqMObYm9apy/GaInHELJlmW4xF8BYoWwwow
+ DST85f7Ejf2sYgkmsVnJuso9jTkJUK84tQmaWLIqTO4wxhC1JFdy/03Vqy6X2BYqt7XDRrM
+ cfvWwPtxPCRvvJp7SLhk7U5ueCaHQUQE+k9oNHYHe8Ht39AODAMvGqRSx6alJOW5W/UYDAq
+ k1WlvoVigfgc823svaCYw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238512>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238513>
 
-Use only one return point from git_connect(), doing the
-free():
-return conn;
-only at one place in the code.
+Commit 8d3d28f5 added test cases for URLs which should be ssh.
+Remove the function clear_ssh, use test_when_finished to clean up.
 
-There may be a little confusion what the variable "host" is for.
-At some places it is only the host part, at other places it may include=
- the
-port number, so change host into hostandport here.
+Introduce the function setup_ssh_wrapper, which could be factored
+out together with expect_ssh.
 
+Tighten one test and use "foo:bar" instead of "./foo:bar",
+
+Helped-by: Jeff King <peff@peff.net>
 Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
 ---
- connect.c | 108 +++++++++++++++++++++++++++++-------------------------=
---------
- 1 file changed, 50 insertions(+), 58 deletions(-)
 
-diff --git a/connect.c b/connect.c
-index 04093c4..8a013a7 100644
---- a/connect.c
-+++ b/connect.c
-@@ -656,7 +656,7 @@ static struct child_process no_fork;
- struct child_process *git_connect(int fd[2], const char *url,
- 				  const char *prog, int flags)
- {
--	char *host, *path;
-+	char *hostandport, *path;
- 	struct child_process *conn =3D &no_fork;
- 	enum protocol protocol;
- 	const char **arg;
-@@ -667,26 +667,22 @@ struct child_process *git_connect(int fd[2], cons=
-t char *url,
- 	 */
- 	signal(SIGCHLD, SIG_DFL);
+Comments to V6:
+Code from Johannes Sixt is part of the series, original found here:
+ http://permalink.gmane.org/gmane.comp.version-control.git/237339
+ http://permalink.gmane.org/gmane.comp.version-control.git/237338
+
+Changes since V6:
+- git fetch-pack --diag-url uses stdout instead of stderr
+- cleanup in the test scripts
+- Removed [PATCH v6 07/10] connect.c: Corner case for IPv6
+- Added missing sign-off
+- Try to explain better why windows supports file://C:/repo
+  (Actually we should support file:///C:/repo, but we don't
+- Other remarks from code review, did I miss any ?
+
+I'm not sure about 10/10, 2 cleanups which I didn't manage
+to find a  better place to be.
+However, I want to concentrate on 1..9, so that 10/10 can be dropped.
+
+And a question:
+Can we replace tb/clone-ssh-with-colon-for-port with this stuff ?
+If we are OK with part 1..4, I don't need to send them again.
+
+
+ t/t5601-clone.sh | 40 ++++++++++++++++++++--------------------
+ 1 file changed, 20 insertions(+), 20 deletions(-)
+
+diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
+index 1d1c875..c634f77 100755
+--- a/t/t5601-clone.sh
++++ b/t/t5601-clone.sh
+@@ -280,25 +280,26 @@ test_expect_success 'clone checking out a tag' '
+ 	test_cmp fetch.expected fetch.actual
+ '
 =20
--	protocol =3D parse_connect_url(url, &host, &path);
-+	protocol =3D parse_connect_url(url, &hostandport, &path);
- 	if (flags & CONNECT_DIAG_URL) {
- 		printf("Diag: url=3D%s\n", url ? url : "NULL");
- 		printf("Diag: protocol=3D%s\n", prot_name(protocol));
--		printf("Diag: hostandport=3D%s\n", host ? host : "NULL");
-+		printf("Diag: hostandport=3D%s\n", hostandport ? hostandport : "NULL=
-");
- 		printf("Diag: path=3D%s\n", path ? path : "NULL");
--		free(host);
--		free(path);
--		return NULL;
--	}
+-test_expect_success 'setup ssh wrapper' '
+-	write_script "$TRASH_DIRECTORY/ssh-wrapper" <<-\EOF &&
+-	echo >>"$TRASH_DIRECTORY/ssh-output" "ssh: $*" &&
+-	# throw away all but the last argument, which should be the
+-	# command
+-	while test $# -gt 1; do shift; done
+-	eval "$1"
+-	EOF
 -
--	if (protocol =3D=3D PROTO_GIT) {
-+		conn =3D NULL;
-+	} else if (protocol =3D=3D PROTO_GIT) {
- 		/* These underlying connection commands die() if they
- 		 * cannot connect.
- 		 */
--		char *target_host =3D xstrdup(host);
--		if (git_use_proxy(host))
--			conn =3D git_proxy_connect(fd, host);
-+		char *target_host =3D xstrdup(hostandport);
-+		if (git_use_proxy(hostandport))
-+			conn =3D git_proxy_connect(fd, hostandport);
- 		else
--			git_tcp_connect(fd, host, flags);
-+			git_tcp_connect(fd, hostandport, flags);
- 		/*
- 		 * Separate original protocol components prog and path
- 		 * from extended host header with a NUL byte.
-@@ -699,54 +695,50 @@ struct child_process *git_connect(int fd[2], cons=
-t char *url,
- 			     prog, path, 0,
- 			     target_host, 0);
- 		free(target_host);
--		free(host);
--		free(path);
--		return conn;
--	}
+-	GIT_SSH=3D"$TRASH_DIRECTORY/ssh-wrapper" &&
+-	export GIT_SSH &&
+-	export TRASH_DIRECTORY
+-'
 -
--	conn =3D xcalloc(1, sizeof(*conn));
--
--	strbuf_addstr(&cmd, prog);
--	strbuf_addch(&cmd, ' ');
--	sq_quote_buf(&cmd, path);
--
--	conn->in =3D conn->out =3D -1;
--	conn->argv =3D arg =3D xcalloc(7, sizeof(*arg));
--	if (protocol =3D=3D PROTO_SSH) {
--		const char *ssh =3D getenv("GIT_SSH");
--		int putty =3D ssh && strcasestr(ssh, "plink");
--		char *ssh_host =3D host; /* keep host for the free() below */
--		const char *port =3D NULL;
--		get_host_and_port(&ssh_host, &port);
--		port =3D get_port_numeric(port);
--
--		if (!ssh) ssh =3D "ssh";
--
--		*arg++ =3D ssh;
--		if (putty && !strcasestr(ssh, "tortoiseplink"))
--			*arg++ =3D "-batch";
--		if (port) {
--			/* P is for PuTTY, p is for OpenSSH */
--			*arg++ =3D putty ? "-P" : "-p";
--			*arg++ =3D port;
-+	} else {
-+		conn =3D xcalloc(1, sizeof(*conn));
-+
-+		strbuf_addstr(&cmd, prog);
-+		strbuf_addch(&cmd, ' ');
-+		sq_quote_buf(&cmd, path);
-+
-+		conn->in =3D conn->out =3D -1;
-+		conn->argv =3D arg =3D xcalloc(7, sizeof(*arg));
-+		if (protocol =3D=3D PROTO_SSH) {
-+			const char *ssh =3D getenv("GIT_SSH");
-+			int putty =3D ssh && strcasestr(ssh, "plink");
-+			char *ssh_host =3D hostandport;
-+			const char *port =3D NULL;
-+			get_host_and_port(&ssh_host, &port);
-+			port =3D get_port_numeric(port);
-+
-+			if (!ssh) ssh =3D "ssh";
-+
-+			*arg++ =3D ssh;
-+			if (putty && !strcasestr(ssh, "tortoiseplink"))
-+				*arg++ =3D "-batch";
-+			if (port) {
-+				/* P is for PuTTY, p is for OpenSSH */
-+				*arg++ =3D putty ? "-P" : "-p";
-+				*arg++ =3D port;
-+			}
-+			*arg++ =3D ssh_host;
-+		}	else {
-+			/* remove repo-local variables from the environment */
-+			conn->env =3D local_repo_env;
-+			conn->use_shell =3D 1;
- 		}
--		*arg++ =3D ssh_host;
--	}
--	else {
--		/* remove repo-local variables from the environment */
--		conn->env =3D local_repo_env;
--		conn->use_shell =3D 1;
--	}
--	*arg++ =3D cmd.buf;
--	*arg =3D NULL;
-+		*arg++ =3D cmd.buf;
-+		*arg =3D NULL;
-=20
--	if (start_command(conn))
--		die("unable to fork");
-+		if (start_command(conn))
-+			die("unable to fork");
-=20
--	fd[0] =3D conn->out; /* read from child's stdout */
--	fd[1] =3D conn->in;  /* write to child's stdin */
--	strbuf_release(&cmd);
--	free(host);
-+		fd[0] =3D conn->out; /* read from child's stdout */
-+		fd[1] =3D conn->in;  /* write to child's stdin */
-+		strbuf_release(&cmd);
-+	}
-+	free(hostandport);
- 	free(path);
- 	return conn;
+-clear_ssh () {
+-	>"$TRASH_DIRECTORY/ssh-output"
++setup_ssh_wrapper () {
++	test_expect_success 'setup ssh wrapper' '
++		write_script "$TRASH_DIRECTORY/ssh-wrapper" <<-\EOF &&
++		echo >>"$TRASH_DIRECTORY/ssh-output" "ssh: $*" &&
++		# throw away all but the last argument, which should be the
++		# command
++		while test $# -gt 1; do shift; done
++		eval "$1"
++		EOF
++		GIT_SSH=3D"$TRASH_DIRECTORY/ssh-wrapper" &&
++		export GIT_SSH &&
++		export TRASH_DIRECTORY &&
++		>"$TRASH_DIRECTORY"/ssh-output
++	'
  }
+=20
+ expect_ssh () {
++	test_when_finished '
++		(cd "$TRASH_DIRECTORY" && rm -f ssh-expect && >ssh-output)
++	' &&
+ 	{
+ 		case "$1" in
+ 		none)
+@@ -310,21 +311,20 @@ expect_ssh () {
+ 	(cd "$TRASH_DIRECTORY" && test_cmp ssh-expect ssh-output)
+ }
+=20
++setup_ssh_wrapper
++
+ test_expect_success 'cloning myhost:src uses ssh' '
+-	clear_ssh &&
+ 	git clone myhost:src ssh-clone &&
+ 	expect_ssh myhost src
+ '
+=20
+ test_expect_success NOT_MINGW,NOT_CYGWIN 'clone local path foo:bar' '
+-	clear_ssh &&
+ 	cp -R src "foo:bar" &&
+-	git clone "./foo:bar" foobar &&
++	git clone "foo:bar" foobar &&
+ 	expect_ssh none
+ '
+=20
+ test_expect_success 'bracketed hostnames are still ssh' '
+-	clear_ssh &&
+ 	git clone "[myhost:123]:src" ssh-bracket-clone &&
+ 	expect_ssh myhost:123 src
+ '
 --=20
 1.8.5.rc0.23.gaa27064
