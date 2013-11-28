@@ -1,115 +1,93 @@
-From: Jeff King <peff@peff.net>
+From: zhifeng hu <zf@ancientrocklab.com>
 Subject: Re: How to resume broke clone ?
-Date: Thu, 28 Nov 2013 04:29:35 -0500
-Message-ID: <20131128092935.GC11444@sigill.intra.peff.net>
-References: <AAA12788-A242-41B8-B47D-1A0A52F33FC1@ancientrocklab.com>
- <5296F343.6050506@gmail.com>
- <560807D9-CE82-4CF6-A1CC-54E7CCA624F9@ancientrocklab.com>
- <CACsJy8DbJZmBCnfzNqfmEnRpqVcc42Q_-jz3r=sYVRPhsCkS5A@mail.gmail.com>
- <5297004F.4090003@gmail.com>
- <CACsJy8AdOAPT-RfD0NfZj_cQPBSUrVKn8yS7JRe=-4k8C8TvQg@mail.gmail.com>
- <211D44CB-64A2-4FCA-B4A7-40845B97E9A1@ancientrocklab.com>
- <CACsJy8AOVWF2HssWNeYkVvYdmAXJOQ8HOehxJ0wpBFchA87ZWw@mail.gmail.com>
-Mime-Version: 1.0
+Date: Thu, 28 Nov 2013 17:29:49 +0800
+Message-ID: <F569EBDF-D8B5-47D5-8C2F-DA3A0F6C207E@ancientrocklab.com>
+References: <AAA12788-A242-41B8-B47D-1A0A52F33FC1@ancientrocklab.com> <5296F343.6050506@gmail.com> <560807D9-CE82-4CF6-A1CC-54E7CCA624F9@ancientrocklab.com> <CACsJy8DbJZmBCnfzNqfmEnRpqVcc42Q_-jz3r=sYVRPhsCkS5A@mail.gmail.com> <CALUzUxrEvuKuN+v-hJLQd5KoV-fzxVYvg5pj7XoLBVap7mgA=Q@mail.gmail.com>
+Mime-Version: 1.0 (Mac OS X Mail 7.0 \(1822\))
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: zhifeng hu <zf@ancientrocklab.com>,
-	Karsten Blees <karsten.blees@gmail.com>,
-	=?utf-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 28 10:29:46 2013
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	=?utf-8?Q?Tr=E1=BA=A7n_Ng=E1=BB=8Dc_Qu=C3=A2n?= 
+	<vnwildman@gmail.com>, Git Mailing List <git@vger.kernel.org>
+To: Tay Ray Chuan <rctay89@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 28 10:30:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vlxuq-0007eE-Cu
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Nov 2013 10:29:45 +0100
+	id 1VlxvN-00081N-MW
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Nov 2013 10:30:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753003Ab3K1J3l convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Nov 2013 04:29:41 -0500
-Received: from cloud.peff.net ([50.56.180.127]:47096 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751148Ab3K1J3h (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Nov 2013 04:29:37 -0500
-Received: (qmail 21833 invoked by uid 102); 28 Nov 2013 09:29:38 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 28 Nov 2013 03:29:38 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 28 Nov 2013 04:29:35 -0500
-Content-Disposition: inline
-In-Reply-To: <CACsJy8AOVWF2HssWNeYkVvYdmAXJOQ8HOehxJ0wpBFchA87ZWw@mail.gmail.com>
+	id S1754031Ab3K1JaO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Nov 2013 04:30:14 -0500
+Received: from imap1.ox.registrar-servers.com ([198.187.29.233]:35568 "EHLO
+	imap1.ox.registrar-servers.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751271Ab3K1JaM convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Nov 2013 04:30:12 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by oxmail.registrar-servers.com (Postfix) with ESMTP id 787D7200096;
+	Thu, 28 Nov 2013 04:30:11 -0500 (EST)
+X-Virus-Scanned: Debian amavisd-new at imap1.ox.registrar-servers.com
+Received: from oxmail.registrar-servers.com ([127.0.0.1])
+	by localhost (imap1.ox.registrar-servers.com [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id geV4WbVOh0iy; Thu, 28 Nov 2013 04:30:11 -0500 (EST)
+Received: from [192.168.1.101] (unknown [119.98.73.69])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by oxmail.registrar-servers.com (Postfix) with ESMTPSA id A611B200093;
+	Thu, 28 Nov 2013 04:30:06 -0500 (EST)
+In-Reply-To: <CALUzUxrEvuKuN+v-hJLQd5KoV-fzxVYvg5pj7XoLBVap7mgA=Q@mail.gmail.com>
+X-Mailer: Apple Mail (2.1822)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238486>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238487>
 
-On Thu, Nov 28, 2013 at 04:09:18PM +0700, Duy Nguyen wrote:
+Once using git clone =E2=80=94depth or git fetch =E2=80=94depth,
+While you want to move backward.
+you may face problem
 
-> > Git should be better support resume transfer.
-> > It now seems not doing better it=E2=80=99s job.
-> > Share code, manage code, transfer code, what would it be a VCS we i=
-magine it ?
+ git fetch --depth=3D105
+error: Could not read 483bbf41ca5beb7e38b3b01f21149c56a1154b7a
+error: Could not read aacb82de3ff8ae7b0a9e4cfec16c1807b6c315ef
+error: Could not read 5a1758710d06ce9ddef754a8ee79408277032d8b
+error: Could not read a7d5629fe0580bd3e154206388371f5b8fc832db
+error: Could not read 073291c476b4edb4d10bbada1e64b471ba153b6b
+
+
+zhifeng hu=20
+
+
+
+On Nov 28, 2013, at 5:20 PM, Tay Ray Chuan <rctay89@gmail.com> wrote:
+
+> On Thu, Nov 28, 2013 at 4:14 PM, Duy Nguyen <pclouds@gmail.com> wrote=
+:
+>> On Thu, Nov 28, 2013 at 2:41 PM, zhifeng hu <zf@ancientrocklab.com> =
+wrote:
+>>> Thanks for reply, But I am developer, I want to clone full reposito=
+ry, I need to view code since very early.
+>>=20
+>> if it works with --depth =3D1, you can incrementally run "fetch
+>> --depth=3DN" with N larger and larger.
 >=20
-> You're welcome to step up and do it. On top of my head  there are a f=
-ew options:
+> I second Duy Nguyen's and Tr=E1=BA=A7n Ng=E1=BB=8Dc Qu=C3=A2n's sugge=
+stion to 1) initially
+> create a "shallow" clone then 2) incrementally deepen your clone.
 >=20
->  - better integration with git bundles, provide a way to seamlessly
-> create/fetch/resume the bundles with "git clone" and "git fetch"
-
-I posted patches for this last year. One of the things that I got hung
-up on was that I spooled the bundle to disk, and then cloned from it.
-Which meant that you needed twice the disk space for a moment. I wanted
-to teach index-pack to "--fix-thin" a pack that was already on disk, so
-that we could spool to disk, and then finalize it without making anothe=
-r
-copy.
-
-One of the downsides of this approach is that it requires the repo
-provider (or somebody else) to provide the bundle. I think that is
-something that a big site like GitHub would do (and probably push the
-bundles out to a CDN, too, to make getting them faster). But it's not a
-universal solution.
-
->  - stablize pack order so we can resume downloading a pack
-
-I think stabilizing in all cases (e.g., including ones where the conten=
-t
-has changed) is hard, but I wonder if it would be enough to handle the
-easy cases, where nothing has changed. If the server does not use
-multiple threads for delta computation, it should generate the same pac=
-k
-from the same on-disk deterministically. We just need a way for the
-client to indicate that it has the same partial pack.
-
-I'm thinking that the server would report some opaque hash representing
-the current pack. The client would record that, along with the number o=
-f
-pack bytes it received. If the transfer is interrupted, the client come=
-s
-back with the hash/bytes pair. The server starts to generate the pack,
-checks whether the hash matches, and if so, says "here is the same pack=
-,
-resuming at byte X".
-
-What would need to go into such a hash? It would need to represent the
-exact bytes that will go into the pack, but without actually generating
-those bytes. Perhaps a sha1 over the sequence of <object sha1, type,
-base (if applicable), length> for each object would be enough. We shoul=
-d
-know that after calling compute_write_order. If the client has a match,
-we should be able to skip ahead to the correct byte.
-
->  - remote alternates, the repo will ask for more and more objects as
-> you need them (so goodbye to distributed model)
-
-This is also something I've been playing with, but just for very large
-objects (so to support something like git-media, but below the object
-graph layer). I don't think it would apply here, as the kernel has a lo=
-t
-of small objects, and getting them in the tight delta'd pack format
-increases efficiency a lot.
-
--Peff
+> Zhifeng, in the course of your research into resumable cloning, you
+> might have learnt that while it's a really valuable feature, it's als=
+o
+> a pretty hard problem at the same time. So it's not because git
+> doesn't want to have this feature.
+>=20
+> --=20
+> Cheers,
+> Ray Chuan
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
