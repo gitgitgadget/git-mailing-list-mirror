@@ -1,86 +1,66 @@
 From: Andrew Wong <andrew.kw.w@gmail.com>
-Subject: [RFC 1/3] git-svn: Generate mergeinfo for every commit
-Date: Thu, 28 Nov 2013 10:52:15 -0500
-Message-ID: <1385653937-29595-2-git-send-email-andrew.kw.w@gmail.com>
-References: <1385653937-29595-1-git-send-email-andrew.kw.w@gmail.com>
+Subject: [RFC 0/3] git-svn: Add support for cherry-pick merges
+Date: Thu, 28 Nov 2013 10:52:14 -0500
+Message-ID: <1385653937-29595-1-git-send-email-andrew.kw.w@gmail.com>
 Cc: Andrew Wong <andrew.kw.w@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 28 16:52:16 2013
+X-From: git-owner@vger.kernel.org Thu Nov 28 16:52:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vm3t1-0004kl-1w
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Nov 2013 16:52:15 +0100
+	id 1Vm3t0-0004kl-HJ
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Nov 2013 16:52:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758831Ab3K1PwM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Nov 2013 10:52:12 -0500
-Received: from mail-ie0-f169.google.com ([209.85.223.169]:34544 "EHLO
-	mail-ie0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754857Ab3K1PwK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Nov 2013 10:52:10 -0500
-Received: by mail-ie0-f169.google.com with SMTP id e14so14931077iej.28
-        for <git@vger.kernel.org>; Thu, 28 Nov 2013 07:52:10 -0800 (PST)
+	id S1757762Ab3K1PwJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Nov 2013 10:52:09 -0500
+Received: from mail-ie0-f182.google.com ([209.85.223.182]:52555 "EHLO
+	mail-ie0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754857Ab3K1PwH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Nov 2013 10:52:07 -0500
+Received: by mail-ie0-f182.google.com with SMTP id as1so14725278iec.13
+        for <git@vger.kernel.org>; Thu, 28 Nov 2013 07:52:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=BTOKXDRdzHEm5baEUSmh0pBLvORRpP/bV7ypRQET+6c=;
-        b=Et2s6BxkpR67Rk+H7agF8aVtE/OHYRWgYwokQ7hUSRGzAWsIuMDBFw1Eb0aNdhsjwA
-         fqHt2q9mUwRqkZ+pea5occCwVGmdCOUAZR9L/oKwe0TukowZucM9N4KJU1RYrE2VnL6Y
-         EAaOtipf85f67So5q5LCWnbpOF0YkjwanfqV6vPaVyEzT7QpDgSb0720U/ASvBTQA83N
-         VeaEcgxmF2vOkQiVuxt8/HbfywFL3IPgReM2IlJ39UskeKFtEpn81XTz/xi68IybJSt7
-         eYQamOsMgKAI5yE1H1HWw9+TFvdLBXCg/ODnSTI1QOODomVDQu8+/8sqQdn+W0PPFAGu
-         Cyyg==
-X-Received: by 10.42.113.66 with SMTP id b2mr10044042icq.21.1385653930035;
-        Thu, 28 Nov 2013 07:52:10 -0800 (PST)
+        h=from:to:cc:subject:date:message-id;
+        bh=KahNkXBKK9k1KhZFxVcdZA1TgN66hwKjTowB+AHuM4s=;
+        b=yE/l9rn1orA5xq5ZzMo7x65AuLW2vcf8AGercL3dBXssIpcVIvzjWwJrQEKFicysD0
+         X+RN6QPLD1uDz9YeFgjUL23lTr4G8Rr7Imqry2WoZMyP1t2xVMTnpozIZbyjFk1ogaPV
+         5YSMA2rS9TkDWkIGdMj+5ibNemX34yvPDWQloDE7OovbnDYzJ9nCcguhAsun0XbUPOj+
+         IJbq63XhaCZVaRvKiUTMB+mUAnORkvBrexhNyo17f8PQWZUkfyKx2zsjne6ZpM6PxyfB
+         BE74ctCdYRgP+NJygroGoWtHlsQ4O73Slf1eOd+GM8nDg6rIpDJwrVRXhRXet1z0K+7S
+         /rFw==
+X-Received: by 10.43.49.1 with SMTP id uy1mr9900577icb.48.1385653926286;
+        Thu, 28 Nov 2013 07:52:06 -0800 (PST)
 Received: from zanarkand.local (24-212-191-132.cable.teksavvy.com. [24.212.191.132])
-        by mx.google.com with ESMTPSA id qi3sm45309190igc.8.2013.11.28.07.52.08
+        by mx.google.com with ESMTPSA id qi3sm45309190igc.8.2013.11.28.07.52.03
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 28 Nov 2013 07:52:09 -0800 (PST)
+        Thu, 28 Nov 2013 07:52:04 -0800 (PST)
 X-Mailer: git-send-email 1.8.5
-In-Reply-To: <1385653937-29595-1-git-send-email-andrew.kw.w@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238496>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238497>
 
-The previous behavior would only generate mergeinfo once using the first
-commit, and use that mergeinfo for all remaining commits. The new behavior will
-generate it once for every commit.
----
- git-svn.perl | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+This is a work-in-progress for adding support for cherry-pick merges.
 
-diff --git a/git-svn.perl b/git-svn.perl
-index 7349ffe..9ddeaf4 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -974,8 +974,12 @@ sub cmd_dcommit {
- 		} else {
- 			my $cmt_rev;
- 
--			unless (defined($_merge_info) || ! $push_merge_info) {
--				$_merge_info = populate_merge_info($d, $gs,
-+			my $rev_merge_info;
-+			if (defined($_merge_info)) {
-+				$rev_merge_info = $_merge_info;
-+			}
-+			unless (defined($rev_merge_info) || ! $push_merge_info) {
-+				$rev_merge_info = populate_merge_info($d, $gs,
- 				                             $uuid,
- 				                             $linear_refs,
- 				                             $rewritten_parent);
-@@ -993,7 +997,7 @@ sub cmd_dcommit {
- 			                       print "Committed r$_[0]\n";
- 			                       $cmt_rev = $_[0];
- 			                },
--					mergeinfo => $_merge_info,
-+					mergeinfo => $rev_merge_info,
- 			                svn_path => '');
- 
- 			my $err_handler = $SVN::Error::handler;
+When using git-svn, cherry-picked commits from another git-svn branch are now
+being treated as simple commits. But in SVN, if the user uses "svn merge -c" to
+cherry-pick commits from another SVN branch, SVN records that information in
+svn:mergeinfo. These patches will enable git-svn to do the same.
+
+Andrew Wong (3):
+  git-svn: Generate mergeinfo for every commit
+  git-svn: Support cherry-pick merges
+  git-svn: Add config to control the path of mergeinfo
+
+ git-svn.perl                      | 79 ++++++++++++++++++++++++++++++++++-----
+ perl/Git/SVN/Editor.pm            |  5 ++-
+ t/t9161-git-svn-mergeinfo-push.sh | 67 +++++++++++++++++++++++++++++++++
+ 3 files changed, 141 insertions(+), 10 deletions(-)
+
 -- 
 1.8.5.rc3.5.g96ccada
