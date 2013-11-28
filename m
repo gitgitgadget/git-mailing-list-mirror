@@ -1,93 +1,104 @@
-From: zhifeng hu <zf@ancientrocklab.com>
-Subject: Re: How to resume broke clone ?
-Date: Thu, 28 Nov 2013 17:29:49 +0800
-Message-ID: <F569EBDF-D8B5-47D5-8C2F-DA3A0F6C207E@ancientrocklab.com>
-References: <AAA12788-A242-41B8-B47D-1A0A52F33FC1@ancientrocklab.com> <5296F343.6050506@gmail.com> <560807D9-CE82-4CF6-A1CC-54E7CCA624F9@ancientrocklab.com> <CACsJy8DbJZmBCnfzNqfmEnRpqVcc42Q_-jz3r=sYVRPhsCkS5A@mail.gmail.com> <CALUzUxrEvuKuN+v-hJLQd5KoV-fzxVYvg5pj7XoLBVap7mgA=Q@mail.gmail.com>
-Mime-Version: 1.0 (Mac OS X Mail 7.0 \(1822\))
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	=?utf-8?Q?Tr=E1=BA=A7n_Ng=E1=BB=8Dc_Qu=C3=A2n?= 
-	<vnwildman@gmail.com>, Git Mailing List <git@vger.kernel.org>
-To: Tay Ray Chuan <rctay89@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 28 10:30:19 2013
+From: Thomas Gummerer <t.gummerer@gmail.com>
+Subject: Re: [PATCH v4 20/24] introduce GIT_INDEX_VERSION environment variable
+Date: Thu, 28 Nov 2013 10:57:02 +0100
+Message-ID: <20131128095615.GA25478@goose.lan>
+References: <1385553659-9928-1-git-send-email-t.gummerer@gmail.com>
+ <1385553659-9928-21-git-send-email-t.gummerer@gmail.com>
+ <CAPig+cSHcL62EW5z5n68jQcS4BWW9cZ=GqRwZaoyYM69NE55+w@mail.gmail.com>
+ <xmqqk3ftsdk4.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Git List <git@vger.kernel.org>, Thomas Rast <tr@thomasrast.ch>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	Robin Rosenberg <robin.rosenberg@dewire.com>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Nov 28 10:57:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VlxvN-00081N-MW
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Nov 2013 10:30:18 +0100
+	id 1VlyLR-0008S6-JW
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Nov 2013 10:57:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754031Ab3K1JaO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Nov 2013 04:30:14 -0500
-Received: from imap1.ox.registrar-servers.com ([198.187.29.233]:35568 "EHLO
-	imap1.ox.registrar-servers.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751271Ab3K1JaM convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Nov 2013 04:30:12 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by oxmail.registrar-servers.com (Postfix) with ESMTP id 787D7200096;
-	Thu, 28 Nov 2013 04:30:11 -0500 (EST)
-X-Virus-Scanned: Debian amavisd-new at imap1.ox.registrar-servers.com
-Received: from oxmail.registrar-servers.com ([127.0.0.1])
-	by localhost (imap1.ox.registrar-servers.com [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id geV4WbVOh0iy; Thu, 28 Nov 2013 04:30:11 -0500 (EST)
-Received: from [192.168.1.101] (unknown [119.98.73.69])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by oxmail.registrar-servers.com (Postfix) with ESMTPSA id A611B200093;
-	Thu, 28 Nov 2013 04:30:06 -0500 (EST)
-In-Reply-To: <CALUzUxrEvuKuN+v-hJLQd5KoV-fzxVYvg5pj7XoLBVap7mgA=Q@mail.gmail.com>
-X-Mailer: Apple Mail (2.1822)
+	id S1751309Ab3K1J5K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Nov 2013 04:57:10 -0500
+Received: from mail-la0-f45.google.com ([209.85.215.45]:57604 "EHLO
+	mail-la0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756783Ab3K1J5E (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Nov 2013 04:57:04 -0500
+Received: by mail-la0-f45.google.com with SMTP id eh20so5818812lab.4
+        for <git@vger.kernel.org>; Thu, 28 Nov 2013 01:57:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=Th+TSQ9O34nbE1NxarKGG6DIUvGX/gHrAiAvaFhDfIE=;
+        b=qul5TK/+zqQv8idUwSe9KNTeYa0DxR0pMnY4C3DRzaoHe/feFRlp0ePQdGZI34RkRq
+         FjTVRJpGID9ecwLeFo5pO+B7FlRQVyQY8gEqeUApadq2pwYgfyX6iAp4jY1pY/q/A9DD
+         3i2zaG+tFSXIp7oCbke5yZ5dqfYJN5nlNBU6hnooHf2EeORC/05bcgS+zkysPlmZRYiN
+         lXBLKWItOGfhJqD1lWOKzwvKQo1OYOQUv/zD9w2XijnYflFcb2hhaxiqZHgRqkvaiEpA
+         F6IvG4Ttiqirzl8wpozAO98Q0x5VshRXRCk0fT3f69SkU5PUgTkGBISUkCR32WhnSdjA
+         49WA==
+X-Received: by 10.112.139.72 with SMTP id qw8mr9499524lbb.16.1385632622373;
+        Thu, 28 Nov 2013 01:57:02 -0800 (PST)
+Received: from localhost (213-66-41-37-no99.tbcn.telia.com. [213.66.41.37])
+        by mx.google.com with ESMTPSA id r7sm48963920lbo.5.2013.11.28.01.56.59
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 28 Nov 2013 01:57:00 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <xmqqk3ftsdk4.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.21 (2012-12-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238487>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238488>
 
-Once using git clone =E2=80=94depth or git fetch =E2=80=94depth,
-While you want to move backward.
-you may face problem
+On 11/27, Junio C Hamano wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+> 
+> > On Wed, Nov 27, 2013 at 7:00 AM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
+> >> Respect a GIT_INDEX_VERSION environment variable, when a new index is
+> >> initialized.  Setting the environment variable will not cause existing
+> >> index files to be converted to another format for additional safety.
+> >>
+> >> Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
+> >> ---
+> >> diff --git a/read-cache.c b/read-cache.c
+> >> index 46551af..04430e5 100644
+> >> --- a/read-cache.c
+> >> +++ b/read-cache.c
+> >> @@ -1233,8 +1233,13 @@ static struct cache_entry *refresh_cache_entry(struct cache_entry *ce, int reall
+> >>  void initialize_index(struct index_state *istate, int version)
+> >>  {
+> >>         istate->initialized = 1;
+> >> -       if (!version)
+> >> -               version = INDEX_FORMAT_DEFAULT;
+> >> +       if (!version) {
+> >> +               char *envversion = getenv("GIT_INDEX_VERSION");
+> >> +               if (!envversion)
+> >> +                       version = INDEX_FORMAT_DEFAULT;
+> >> +               else
+> >> +                       version = atoi(envversion);
+> >
+> > Do you want to check that atoi() returned a valid value and emit a
+> > diagnostic if it did not?
+> 
+> 
+> Good eyes.
+> 
+> We use strtoul() for this kind of thing instead of atoi() for format
+> checking.  The code also needs to make sure that the value obtained
+> thusly are among the versions that are supported.
+> 
+> Thanks.
 
- git fetch --depth=3D105
-error: Could not read 483bbf41ca5beb7e38b3b01f21149c56a1154b7a
-error: Could not read aacb82de3ff8ae7b0a9e4cfec16c1807b6c315ef
-error: Could not read 5a1758710d06ce9ddef754a8ee79408277032d8b
-error: Could not read a7d5629fe0580bd3e154206388371f5b8fc832db
-error: Could not read 073291c476b4edb4d10bbada1e64b471ba153b6b
+Thanks both.  Will use strtoul and check the value in the re-roll.
 
-
-zhifeng hu=20
-
-
-
-On Nov 28, 2013, at 5:20 PM, Tay Ray Chuan <rctay89@gmail.com> wrote:
-
-> On Thu, Nov 28, 2013 at 4:14 PM, Duy Nguyen <pclouds@gmail.com> wrote=
-:
->> On Thu, Nov 28, 2013 at 2:41 PM, zhifeng hu <zf@ancientrocklab.com> =
-wrote:
->>> Thanks for reply, But I am developer, I want to clone full reposito=
-ry, I need to view code since very early.
->>=20
->> if it works with --depth =3D1, you can incrementally run "fetch
->> --depth=3DN" with N larger and larger.
->=20
-> I second Duy Nguyen's and Tr=E1=BA=A7n Ng=E1=BB=8Dc Qu=C3=A2n's sugge=
-stion to 1) initially
-> create a "shallow" clone then 2) incrementally deepen your clone.
->=20
-> Zhifeng, in the course of your research into resumable cloning, you
-> might have learnt that while it's a really valuable feature, it's als=
-o
-> a pretty hard problem at the same time. So it's not because git
-> doesn't want to have this feature.
->=20
-> --=20
-> Cheers,
-> Ray Chuan
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+-- 
+Thomas
