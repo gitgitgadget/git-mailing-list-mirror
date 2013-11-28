@@ -1,50 +1,60 @@
-From: Antoine Pelisse <apelisse@gmail.com>
-Subject: Can't connect to git-scm.com
-Date: Thu, 28 Nov 2013 14:47:03 +0100
-Message-ID: <CALWbr2xdmh3DfgaJr=MEWwpwpoR0x=Go1oyUm9_ri31mvDyCEQ@mail.gmail.com>
+From: John Szakmeister <john@szakmeister.net>
+Subject: Re: Can't connect to git-scm.com
+Date: Thu, 28 Nov 2013 09:05:58 -0500
+Message-ID: <CAEBDL5WodmZnC4Sde0axgw5tMhgot3s-oOrkAMp5d6uhY4+coA@mail.gmail.com>
+References: <CALWbr2xdmh3DfgaJr=MEWwpwpoR0x=Go1oyUm9_ri31mvDyCEQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Nov 28 14:47:14 2013
+Cc: git <git@vger.kernel.org>
+To: Antoine Pelisse <apelisse@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 28 15:06:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vm1w2-0000Mv-6j
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Nov 2013 14:47:14 +0100
+	id 1Vm2EK-0005Ee-V1
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Nov 2013 15:06:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758539Ab3K1NrJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Nov 2013 08:47:09 -0500
-Received: from mail-la0-f43.google.com ([209.85.215.43]:40349 "EHLO
-	mail-la0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757926Ab3K1NrH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Nov 2013 08:47:07 -0500
-Received: by mail-la0-f43.google.com with SMTP id n7so5982092lam.2
-        for <git@vger.kernel.org>; Thu, 28 Nov 2013 05:47:04 -0800 (PST)
+	id S1757411Ab3K1OGD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Nov 2013 09:06:03 -0500
+Received: from mail-wi0-f178.google.com ([209.85.212.178]:58473 "EHLO
+	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751213Ab3K1OGA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Nov 2013 09:06:00 -0500
+Received: by mail-wi0-f178.google.com with SMTP id ca18so888675wib.11
+        for <git@vger.kernel.org>; Thu, 28 Nov 2013 06:05:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=O0TQO1B6cFsPxDbgKAiWeS0R1zkvwpkYhTA5qDNNAxg=;
-        b=cyp4bxTblx3T2idw9zvWTIAeOanZNZ+8MgsDLDCTMHYspq4CmZH/xQWUetsjLWLYvr
-         fEw/H2VVoPVU/mWCo/urhL45OqRDe8szvzKT6G2RNFm+4NHsJZfLxknU6m0tJ/uu4K5c
-         Tcn8+BH/7OM/5UZjitHnhQ7e2E0LZQmmH/tMEA5NsXdZY7L/F2GhwKF6ZKJr2LQZf+TV
-         5LLtDA1oRDacB9GXWXZn2uKT1jA4dnjOGFb2PEu5yCb72ygcUrK85I/vCf4yudR9hMVP
-         QYnyQo5G1tActZQ+f6VbjgP+065h6rbsHXzYTfQNt/4bX2Q6u0Rs21+Fcz0pg8ufvOr2
-         +vJA==
-X-Received: by 10.112.89.42 with SMTP id bl10mr30050390lbb.18.1385646424036;
- Thu, 28 Nov 2013 05:47:04 -0800 (PST)
-Received: by 10.112.134.135 with HTTP; Thu, 28 Nov 2013 05:47:03 -0800 (PST)
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=gepD7eQqkMB1/baWRjJlpMpJIVkBssnFYBm92qGIxTo=;
+        b=k1B2srseU7O/IxUaWDsCB6aqo0NnU2YJ7s4/HRH60iqPJ1xIQNGewYtL3s4kcmmcTa
+         HDDyDNRlNixnbmED28dHMk5xXkWh7VQou6dJ0j8iSJNMCFeclY6hrl2tzu+ZTZblZ5A/
+         74QYH/CnuJmYpapApta9nRfFeCget4Vf3ZeTvxRvbQxFVSn4FQGFctzWiW3fyI/kWvG3
+         tK9kMm4xx//aql7z6IlbS1WCetg14DWfslWoIq5fEw6UF6IFAuDNx+otnVr2BC7ZRaSK
+         luCBdK+KeE+qe1TNF/03C+iAE8PkNeeWWs4Afz8JveS+LX1LvcxxBanf4yd97q2Cx7Gd
+         5GYg==
+X-Received: by 10.180.73.111 with SMTP id k15mr2598803wiv.39.1385647558718;
+ Thu, 28 Nov 2013 06:05:58 -0800 (PST)
+Received: by 10.180.99.169 with HTTP; Thu, 28 Nov 2013 06:05:58 -0800 (PST)
+In-Reply-To: <CALWbr2xdmh3DfgaJr=MEWwpwpoR0x=Go1oyUm9_ri31mvDyCEQ@mail.gmail.com>
+X-Google-Sender-Auth: aoG2WDW6qsSMTXnftl-2fCFvWos
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238494>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238495>
 
-Hello,
+On Thu, Nov 28, 2013 at 8:47 AM, Antoine Pelisse <apelisse@gmail.com> wrote:
+> Hello,
+>
+> Should we be worried by this behavior ?
+>
+> git-scm.com is returning 301 to www.git-scm.com (I don't remember that
+> it was happening before)
+> And www.git-scm.com is returning 200: Sorry, no Host found.
 
-Should we be worried by this behavior ?
+I'm not sure what happened, but it seems to be working now.
 
-git-scm.com is returning 301 to www.git-scm.com (I don't remember that
-it was happening before)
-And www.git-scm.com is returning 200: Sorry, no Host found.
+-John
