@@ -1,191 +1,124 @@
 From: Torsten =?utf-8?q?B=C3=B6gershausen?= <tboegi@web.de>
-Subject: [PATCH v7 04/10] git_connect: factor out discovery of the protocol and its parts
-Date: Thu, 28 Nov 2013 20:49:01 +0100
-Message-ID: <201311282049.02492.tboegi@web.de>
+Subject: [PATCH v7 06/10] t5500: Test case for diag-url
+Date: Thu, 28 Nov 2013 20:49:29 +0100
+Message-ID: <201311282049.30311.tboegi@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: tboegi@web.de
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 28 20:49:39 2013
+X-From: git-owner@vger.kernel.org Thu Nov 28 20:49:42 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vm7ah-0002uH-Sm
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Nov 2013 20:49:36 +0100
+	id 1Vm7am-0002xl-Si
+	for gcvg-git-2@plane.gmane.org; Thu, 28 Nov 2013 20:49:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759406Ab3K1TtL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Nov 2013 14:49:11 -0500
-Received: from mout.web.de ([212.227.15.3]:51950 "EHLO mout.web.de"
+	id S1759457Ab3K1Tth convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Nov 2013 14:49:37 -0500
+Received: from mout.web.de ([212.227.17.11]:63778 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759267Ab3K1TtJ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 Nov 2013 14:49:09 -0500
-Received: from appes.localnet ([78.72.74.102]) by smtp.web.de (mrweb101) with
- ESMTPA (Nemesis) id 0M8iH2-1Vw2fY11kC-00C7kt for <git@vger.kernel.org>; Thu,
- 28 Nov 2013 20:49:08 +0100
-X-Provags-ID: V03:K0:Mc6DoGO8ZRmO7wmU5/xgptaGNPT1liLSm8I6jtoasMXYqe4xkBP
- YDxHqZdQmS3v7db4+tpImphWI0KUVDhn6h4MTetmROGKWbH2WVo0BYUCz6kMldHFDEI1HNK
- VtANmdPHb9r3ZhBoj4uA3SaZv7syAw4MgL3WC2A58B5nhqsoFUW4zFaEvCFRRER5I5RoOqS
- kZJNeR7OMDvbKuEL1QBtw==
+	id S1755994Ab3K1Ttg convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 28 Nov 2013 14:49:36 -0500
+Received: from appes.localnet ([78.72.74.102]) by smtp.web.de (mrweb102) with
+ ESMTPA (Nemesis) id 0MAvGa-1Vtqpe36fs-009y2F for <git@vger.kernel.org>; Thu,
+ 28 Nov 2013 20:49:34 +0100
+X-Provags-ID: V03:K0:BdhlT/sCO+PlIDKLUoNvbg8EZ73YRuGw2EZxHNJlr/RSouKtTw+
+ 5l2wSYM6UlpvACDENTWtIDf9aMCiuU9QriPwMnyTRvSJToWKFy6pbTjzuinG23f0hliTDtU
+ 8FZNr+sYz7NbFNIi4dQAmpuwJsgGnM/UFUGADyZmRaAGwNRsOVn+jivIi2JZOk5ISmI6q2o
+ aB1aMICxHwfuhQNKdoa3Q==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238507>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238508>
 
-git_connect has grown large due to the many different protocols syntaxe=
-s
-that are supported. Move the part of the function that parses the URL t=
-o
-connect to into a separate function for readability.
+Add test cases using git fetch-pack --diag-url:
 
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+- parse out host and path for URLs with a scheme (git:// file:// ssh://=
+)
+- parse host names embedded by [] correctly
+- extract the port number, if present
+- separate URLs like "file" (which are local)
+  from URLs like "host:repo" which should use ssh
+
 Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
 ---
- connect.c | 80 ++++++++++++++++++++++++++++++++++++++++++-------------=
---------
- 1 file changed, 53 insertions(+), 27 deletions(-)
+ t/t5500-fetch-pack.sh | 59 +++++++++++++++++++++++++++++++++++++++++++=
+++++++++
+ 1 file changed, 59 insertions(+)
 
-diff --git a/connect.c b/connect.c
-index 6cc1f8d..a6cf345 100644
---- a/connect.c
-+++ b/connect.c
-@@ -543,37 +543,20 @@ static char *get_port(char *host)
- 	return NULL;
- }
-=20
--static struct child_process no_fork;
--
- /*
-- * This returns a dummy child_process if the transport protocol does n=
-ot
-- * need fork(2), or a struct child_process object if it does.  Once do=
-ne,
-- * finish the connection with finish_connect() with the value returned=
- from
-- * this function (it is safe to call finish_connect() with NULL to sup=
-port
-- * the former case).
-- *
-- * If it returns, the connect is successful; it just dies on errors (t=
-his
-- * will hopefully be changed in a libification effort, to return NULL =
-when
-- * the connection failed).
-+ * Extract protocol and relevant parts from the specified connection U=
-RL.
-+ * The caller must free() the returned strings.
-  */
--struct child_process *git_connect(int fd[2], const char *url_orig,
--				  const char *prog, int flags)
-+static enum protocol parse_connect_url(const char *url_orig, char **re=
-t_host,
-+				       char **ret_port, char **ret_path)
- {
- 	char *url;
- 	char *host, *path;
- 	char *end;
- 	int c;
--	struct child_process *conn =3D &no_fork;
- 	enum protocol protocol =3D PROTO_LOCAL;
- 	int free_path =3D 0;
- 	char *port =3D NULL;
--	const char **arg;
--	struct strbuf cmd =3D STRBUF_INIT;
--
--	/* Without this we cannot rely on waitpid() to tell
--	 * what happened to our children.
--	 */
--	signal(SIGCHLD, SIG_DFL);
-=20
- 	if (is_url(url_orig))
- 		url =3D url_decode(url_orig);
-@@ -645,6 +628,49 @@ struct child_process *git_connect(int fd[2], const=
- char *url_orig,
- 	if (protocol =3D=3D PROTO_SSH && host !=3D url)
- 		port =3D get_port(end);
-=20
-+	*ret_host =3D xstrdup(host);
-+	if (port)
-+		*ret_port =3D xstrdup(port);
-+	else
-+		*ret_port =3D NULL;
-+	if (free_path)
-+		*ret_path =3D path;
-+	else
-+		*ret_path =3D xstrdup(path);
-+	free(url);
-+	return protocol;
+diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
+index d87ddf7..a2b37af 100755
+--- a/t/t5500-fetch-pack.sh
++++ b/t/t5500-fetch-pack.sh
+@@ -531,5 +531,64 @@ test_expect_success 'shallow fetch with tags does =
+not break the repository' '
+ 		git fsck
+ 	)
+ '
++check_prot_path() {
++	cat >expected <<-EOF &&
++	Diag: url=3D$1
++	Diag: protocol=3D$2
++	Diag: path=3D$3
++	EOF
++	git fetch-pack --diag-url "$1" | grep -v hostandport=3D >actual &&
++	test_cmp expected actual
 +}
 +
-+static struct child_process no_fork;
++check_prot_host_path() {
++	cat >expected <<-EOF &&
++	Diag: url=3D$1
++	Diag: protocol=3D$2
++	Diag: hostandport=3D$3
++	Diag: path=3D$4
++	EOF
++	git fetch-pack --diag-url "$1" >actual &&
++	test_cmp expected actual
++}
 +
-+/*
-+ * This returns a dummy child_process if the transport protocol does n=
-ot
-+ * need fork(2), or a struct child_process object if it does.  Once do=
-ne,
-+ * finish the connection with finish_connect() with the value returned=
- from
-+ * this function (it is safe to call finish_connect() with NULL to sup=
-port
-+ * the former case).
-+ *
-+ * If it returns, the connect is successful; it just dies on errors (t=
-his
-+ * will hopefully be changed in a libification effort, to return NULL =
-when
-+ * the connection failed).
-+ */
-+struct child_process *git_connect(int fd[2], const char *url,
-+				  const char *prog, int flags)
-+{
-+	char *host, *path;
-+	struct child_process *conn =3D &no_fork;
-+	enum protocol protocol;
-+	char *port;
-+	const char **arg;
-+	struct strbuf cmd =3D STRBUF_INIT;
-+
-+	/* Without this we cannot rely on waitpid() to tell
-+	 * what happened to our children.
-+	 */
-+	signal(SIGCHLD, SIG_DFL);
-+
-+	protocol =3D parse_connect_url(url, &host, &port, &path);
-+
- 	if (protocol =3D=3D PROTO_GIT) {
- 		/* These underlying connection commands die() if they
- 		 * cannot connect.
-@@ -666,9 +692,9 @@ struct child_process *git_connect(int fd[2], const =
-char *url_orig,
- 			     prog, path, 0,
- 			     target_host, 0);
- 		free(target_host);
--		free(url);
--		if (free_path)
--			free(path);
-+		free(host);
-+		free(port);
-+		free(path);
- 		return conn;
- 	}
++for r in repo re:po re/po
++do
++	# git or ssh with scheme
++	for p in "ssh+git" "git+ssh" git ssh
++	do
++		for h in host host:12 [::1] [::1]:23
++		do
++			case "$p" in
++			*ssh*)
++				hh=3D$(echo $h | tr -d "[]")
++				pp=3Dssh
++				;;
++			*)
++				hh=3D$h
++				pp=3D$p
++			;;
++			esac
++			test_expect_success "fetch-pack --diag-url $p://$h/$r" '
++				check_prot_host_path $p://$h/$r $pp "$hh" "/$r"
++			'
++			# "/~" -> "~" conversion
++			test_expect_success "fetch-pack --diag-url $p://$h/~$r" '
++				check_prot_host_path $p://$h/~$r $pp "$hh" "~$r"
++			'
++		done
++	done
++	# file with scheme
++	for p in file
++	do
++		test_expect_success "fetch-pack --diag-url $p://$h/$r" '
++			check_prot_path $p://$h/$r $p "/$r"
++		'
++		# No "/~" -> "~" conversion for file
++		test_expect_success "fetch-pack --diag-url $p://$h/~$r" '
++			check_prot_path $p://$h/~$r $p "/~$r"
++		'
++	done
++done
 =20
-@@ -709,9 +735,9 @@ struct child_process *git_connect(int fd[2], const =
-char *url_orig,
- 	fd[0] =3D conn->out; /* read from child's stdout */
- 	fd[1] =3D conn->in;  /* write to child's stdin */
- 	strbuf_release(&cmd);
--	free(url);
--	if (free_path)
--		free(path);
-+	free(host);
-+	free(port);
-+	free(path);
- 	return conn;
- }
-=20
+ test_done
 --=20
 1.8.5.rc0.23.gaa27064
