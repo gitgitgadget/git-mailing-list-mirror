@@ -1,97 +1,93 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: Git merge: conflict is expected, but not detected
-Date: Fri, 29 Nov 2013 18:37:40 +0000
-Message-ID: <20131129183740.GB57602@vauxhall.crustytoothpaste.net>
-References: <CAO6Ho0d=JHk4ydd1PdcWP1XHxvXpjfYVK+B_QLgd0vpyFTh_xQ@mail.gmail.com>
+From: Thomas Rast <tr@thomasrast.ch>
+Subject: Re: [PATCH/WIP] Repair DF conflicts during fetch.
+Date: Fri, 29 Nov 2013 20:07:02 +0100
+Message-ID: <871u1zf2nd.fsf@thomasrast.ch>
+References: <1385747858-29343-1-git-send-email-jackerran@gmail.com>
+	<1385747858-29343-2-git-send-email-jackerran@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="9zSXsLTf0vkW971A"
+Content-Type: text/plain
 Cc: git@vger.kernel.org
-To: Evgeniy Ivanov <lolkaantimat@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 29 19:38:02 2013
+To: Tom Miller <jackerran@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 29 20:07:31 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VmSwy-0005ze-03
-	for gcvg-git-2@plane.gmane.org; Fri, 29 Nov 2013 19:38:00 +0100
+	id 1VmTPW-0004JZ-Ia
+	for gcvg-git-2@plane.gmane.org; Fri, 29 Nov 2013 20:07:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754683Ab3K2Shw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Nov 2013 13:37:52 -0500
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:34301 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752741Ab3K2Sht (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 29 Nov 2013 13:37:49 -0500
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:f85e:b702:8063:7207])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id AB5CE2807E;
-	Fri, 29 Nov 2013 18:37:45 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <CAO6Ho0d=JHk4ydd1PdcWP1XHxvXpjfYVK+B_QLgd0vpyFTh_xQ@mail.gmail.com>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 3.11-1-amd64)
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754610Ab3K2THV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Nov 2013 14:07:21 -0500
+Received: from psi.thgersdorf.net ([176.9.98.78]:35977 "EHLO mail.psioc.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754024Ab3K2THS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Nov 2013 14:07:18 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by localhost.psioc.net (Postfix) with ESMTP id 098124D6574;
+	Fri, 29 Nov 2013 20:07:13 +0100 (CET)
+X-Virus-Scanned: amavisd-new at psioc.net
+Received: from mail.psioc.net ([127.0.0.1])
+	by localhost (mail.psioc.net [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id dtt6sUdoXaVz; Fri, 29 Nov 2013 20:07:02 +0100 (CET)
+Received: from linux-1gf2.thomasrast.ch (unknown [213.55.184.182])
+	(using TLSv1.2 with cipher AES128-GCM-SHA256 (128/128 bits))
+	(Client did not present a certificate)
+	by mail.psioc.net (Postfix) with ESMTPSA id 7130D4D64DE;
+	Fri, 29 Nov 2013 20:07:02 +0100 (CET)
+In-Reply-To: <1385747858-29343-2-git-send-email-jackerran@gmail.com> (Tom
+	Miller's message of "Fri, 29 Nov 2013 11:57:38 -0600")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238532>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238533>
+
+Tom Miller <jackerran@gmail.com> writes:
+
+> When a DF conflict occurs during a fetch, --prune should be able to fix
+> it. When fetching with --prune, the fetching process happens before
+> pruning causing the DF conflict to persist and report an error. This
+> patch prunes before fetching, thus correcting DF conflicts during a
+> fetch.
+>
+> Signed-off-by: Tom Miller <jackerran@gmail.com>
+> ---
+>  builtin/fetch.c | 10 +++++-----
+>  1 file changed, 5 insertions(+), 5 deletions(-)
+
+Good catch.
+
+I can't comment on the correctness of the patch right now, but here's a
+test you could steal.  It just reproduces what you describe, and I did
+verify that it confirms the fix ;-)
+
+diff --git i/t/t5510-fetch.sh w/t/t5510-fetch.sh
+index 5d4581d..a981125 100755
+--- i/t/t5510-fetch.sh
++++ w/t/t5510-fetch.sh
+@@ -614,4 +614,18 @@ test_expect_success 'all boundary commits are excluded' '
+ 	test_bundle_object_count .git/objects/pack/pack-${pack##pack	}.pack 3
+ '
+ 
++test_expect_success 'branchname D/F conflict resolved by --prune' '
++	git branch dir/file &&
++	git clone . prune-df-conflict &&
++	git branch -D dir/file &&
++	git branch dir &&
++	(
++		cd prune-df-conflict &&
++		git fetch --prune &&
++		git rev-parse origin/dir >../actual
++	) &&
++	git rev-parse dir >expect &&
++	test_cmp expect actual
++'
++
+ test_done
 
 
---9zSXsLTf0vkW971A
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Fri, Nov 29, 2013 at 06:26:25PM +0400, Evgeniy Ivanov wrote:
-> Hi!
->=20
-> Let's say I have two identical branches: master and topic. In master I
-> remove some code, i.e. function bar(). In topic I do the same (commit)
-> and after some time I realize I need bar() and revert previous commit
-> with removal.
-> So I end with master with no bar() and topic with bar() in its
-> original state. When I merge I get code without bar() and no merge
-> conflict (recursive or resolve strategies). Is it possible to detect
-> such situations as conflicts? When bar() is C++ virtual there is no
-> possibility to catch this with compiler.
-
-I don't believe so.  The problem you're seeing is that by default, git
-considers only a small set of points for merges: the heads of the two
-branches and the merge base.  So if one side has changed but the other
-has not, the changed code takes effect.  This is not specifically a git
-problem, but a three-way merge problem in general.
-
-If you rebase instead of merge, then the code ends up the way you want
-it, but this may or may not be appropriate for your workflow.
-
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
-
---9zSXsLTf0vkW971A
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
-
-iQIcBAEBCgAGBQJSmN70AAoJEL9TXYEfUvaLI38P/Rhp22QVzt7QmLL+sVM9Sg2l
-dRSZcjC9NTAfgqhLQjb3bOx2dUk3LiuU9rc/lBiOxWzwIfeXCvHK4//t/aHUGm7j
-yEEok9ale05zjaxAZCqHf3fFfaI/jUgB5jw3GfKV0cEe6GKiCNnqudMCX0X/vtVG
-AAr4fwyNjHC0r5RhrDTaoMFMs1qfxo+x3njoa4bFU6d9qLLFZ9bkX+E7MqbhQ8T0
-ALLqR/7mMiVPJW9WU8LUJh9Lz0xTzOxvIWkifgcslnny9+JQcgUNa1H1UIR7vqma
-grk2kqov6w8GDndvQnaarmX9LdEuPastvCAirQQVqL1JdpNFQj2a32wDTA+bJvyu
-Zbm8V2Muvp3TtrvNRn1kozYrr97obysM41HWymCoMcXgK9KfH+XxGnPZ6f391kI8
-x6/tzyC818wFCcx39dlKrwwbn3F1VK0OzMrQzHHR/5FxshuEiPDC1Dw2e5bbY8co
-NQE28hZr7IdtXd/Ohk6W8gKlvNNHo+EeSgT960gFeSRZPzK8M3TaEyfpvS3Bc/+9
-T6ColQFVROvRb+uRWM8R2hJUpC/yKro6p4o6C44s9eCc6Y1pcTyoVpeIR49eXQnP
-Vcn+tkebd2VvdE6lHOGETQwO/uJ7Nfw2rJm3HkJNlHojh9SqECpe/kDiKBhyC+Kj
-bi25OynwHrjbzug7Jl9q
-=5em5
------END PGP SIGNATURE-----
-
---9zSXsLTf0vkW971A--
+-- 
+Thomas Rast
+tr@thomasrast.ch
