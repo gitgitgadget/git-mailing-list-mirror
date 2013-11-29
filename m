@@ -1,153 +1,158 @@
-From: =?UTF-8?q?=C3=98ystein=20Walle?= <oystwa@gmail.com>
-Subject: [PATCH v2] stash: handle specifying stashes with spaces
-Date: Fri, 29 Nov 2013 22:00:45 +0100
-Message-ID: <1385758845-8627-1-git-send-email-oystwa@gmail.com>
-References: <87k3frdlwc.fsf@thomasrast.ch>
+From: Thomas Rast <tr@thomasrast.ch>
+Subject: Re: [PATCH v3 10/21] pack-bitmap: add support for bitmap indexes
+Date: Fri, 29 Nov 2013 22:21:04 +0100
+Message-ID: <87siuedhvj.fsf@thomasrast.ch>
+References: <20131114124157.GA23784@sigill.intra.peff.net>
+	<20131114124432.GJ10757@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Thomas Rast <tr@thomasrast.ch>,
-	=?UTF-8?q?=C3=98ystein=20Walle?= <oystwa@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 29 22:05:15 2013
+Cc: git@vger.kernel.org,
+	Vicent =?utf-8?Q?Mart=C3=AD?= <vicent@github.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Nov 29 22:22:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VmVFT-0004zh-5Q
-	for gcvg-git-2@plane.gmane.org; Fri, 29 Nov 2013 22:05:15 +0100
+	id 1VmVWN-0001y9-53
+	for gcvg-git-2@plane.gmane.org; Fri, 29 Nov 2013 22:22:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754241Ab3K2VEw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 29 Nov 2013 16:04:52 -0500
-Received: from mail-lb0-f176.google.com ([209.85.217.176]:61209 "EHLO
-	mail-lb0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751231Ab3K2VEv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Nov 2013 16:04:51 -0500
-Received: by mail-lb0-f176.google.com with SMTP id x18so7150710lbi.7
-        for <git@vger.kernel.org>; Fri, 29 Nov 2013 13:04:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=3IHaXr3uJD4IxvrqS66SXYtTBTxo94Bub5TuhPXEgy8=;
-        b=rp3710CHFx8kLrtWHIdW+0kYkGD75GEMScPneZ0jtJJov+ZcIklLM3sxP+THNsho31
-         I/52yfBb/BwtVcPm1UDnrYDlgjMLvURC3f9Wdw1a/VJDIps/ffR3IdmgYSlfCA6JuLN7
-         GK+lVnb3mS/kpiZAEO1/XUlcXpGmnXT0bDRUATRVcUbCShH+of6ocCepiT+GEz+dfpu7
-         0Je/2uWB/XGeSh4RZVlVlntIykgICofr930JlttsvgfsUgc3U3hI2Bt4ukvjoxwFwC1k
-         MfOomtKJlesar6Hdr3e4WiAaWIeVyVKMu2BEucZRq3WuplQGaMN02vUZgPQ4c9hSq6oU
-         AhPg==
-X-Received: by 10.112.199.196 with SMTP id jm4mr49604lbc.59.1385759090095;
-        Fri, 29 Nov 2013 13:04:50 -0800 (PST)
-Received: from localhost.localdomain (80.156.189.109.customer.cdi.no. [109.189.156.80])
-        by mx.google.com with ESMTPSA id z3sm51889416lag.10.2013.11.29.13.04.48
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 29 Nov 2013 13:04:49 -0800 (PST)
-X-Mailer: git-send-email 1.8.5.1.g11435f1
-In-Reply-To: <87k3frdlwc.fsf@thomasrast.ch>
+	id S1754241Ab3K2VWj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 29 Nov 2013 16:22:39 -0500
+Received: from psi.thgersdorf.net ([176.9.98.78]:36208 "EHLO mail.psioc.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752606Ab3K2VWi convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 29 Nov 2013 16:22:38 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by localhost.psioc.net (Postfix) with ESMTP id 95A854D64E4;
+	Fri, 29 Nov 2013 22:22:33 +0100 (CET)
+X-Virus-Scanned: amavisd-new at psioc.net
+Received: from mail.psioc.net ([127.0.0.1])
+	by localhost (mail.psioc.net [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id Y5OeIeN2NZah; Fri, 29 Nov 2013 22:22:23 +0100 (CET)
+Received: from linux-1gf2.thomasrast.ch (unknown [89.204.130.229])
+	(using TLSv1.2 with cipher AES128-GCM-SHA256 (128/128 bits))
+	(Client did not present a certificate)
+	by mail.psioc.net (Postfix) with ESMTPSA id 6CE0E4D64DE;
+	Fri, 29 Nov 2013 22:22:22 +0100 (CET)
+In-Reply-To: <20131114124432.GJ10757@sigill.intra.peff.net> (Jeff King's
+	message of "Thu, 14 Nov 2013 07:44:32 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238537>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238538>
 
-When trying to pop/apply a stash specified with an argument containing
-spaces git-stash will throw an error:
+TLDR: nitpicks.  Thanks for a very nice read.
 
-    $ git stash pop 'stash@{two hours ago}'
-    Too many revisions specified: stash@{two hours ago}
+I do think it's worth fixing the syntax pedantry at the end so that we
+can keep supporting arcane compilers, but otherwise, meh.
 
-This happens because word splitting is used to count non-option
-arguments. Make use of rev-parse's --sq option to quote the arguments
-for us to ensure a correct count. Add quotes where necessary.
+> +static int open_pack_bitmap_1(struct packed_git *packfile)
 
-Also add a test that verifies correct behaviour.
+This goes somewhat against the naming convention (if you can call it
+that) used elsewhere in git.  Usually foo_1() is an implementation
+detail of foo(), used because it is convenient to wrap the main part in
+another function, e.g. so that it can consistently free resources or
+some such.  But this one operates on one pack file, so in the terms of
+the rest of git, it should probably be called open_pack_bitmap_one().
 
-Helped-by: Thomas Rast <tr@thomasrast.ch>
-Signed-off-by: =C3=98ystein Walle <oystwa@gmail.com>
----
-Many thanks to Thomas Rast for helping me with this approach.
+> +static void show_object(struct object *object, const struct name_pat=
+h *path,
+> +			const char *last, void *data)
+> +{
+> +	struct bitmap *base =3D data;
+> +	int bitmap_pos;
+> +
+> +	bitmap_pos =3D bitmap_position(object->sha1);
+> +
+> +	if (bitmap_pos < 0) {
+> +		char *name =3D path_name(path, last);
+> +		bitmap_pos =3D ext_index_add_object(object, name);
+> +		free(name);
+> +	}
+> +
+> +	bitmap_set(base, bitmap_pos);
+> +}
+> +
+> +static void show_commit(struct commit *commit, void *data)
+> +{
+> +}
 
- git-stash.sh     | 14 +++++++-------
- t/t3903-stash.sh | 11 +++++++++++
- 2 files changed, 18 insertions(+), 7 deletions(-)
+A bit unfortunate that you inherit the strange show_* naming from
+builtin/pack-objects.c, which seems to have stolen some code from
+builtin/rev-list.c at some point without worrying about better naming..=
+=2E
 
-diff --git a/git-stash.sh b/git-stash.sh
-index 1e541a2..f0a94ab 100755
---- a/git-stash.sh
-+++ b/git-stash.sh
-@@ -358,7 +358,7 @@ parse_flags_and_rev()
- 	i_tree=3D
- 	u_tree=3D
-=20
--	REV=3D$(git rev-parse --no-flags --symbolic "$@") || exit 1
-+	REV=3D$(git rev-parse --no-flags --symbolic --sq "$@") || exit 1
-=20
- 	FLAGS=3D
- 	for opt
-@@ -376,7 +376,7 @@ parse_flags_and_rev()
- 		esac
- 	done
-=20
--	set -- $REV
-+	eval set -- $REV
-=20
- 	case $# in
- 		0)
-@@ -391,13 +391,13 @@ parse_flags_and_rev()
- 		;;
- 	esac
-=20
--	REV=3D$(git rev-parse --quiet --symbolic --verify $1 2>/dev/null) || =
-{
-+	REV=3D$(git rev-parse --quiet --symbolic --verify "$1" 2>/dev/null) |=
-| {
- 		reference=3D"$1"
- 		die "$(eval_gettext "\$reference is not valid reference")"
- 	}
-=20
--	i_commit=3D$(git rev-parse --quiet --verify $REV^2 2>/dev/null) &&
--	set -- $(git rev-parse $REV $REV^1 $REV: $REV^1: $REV^2: 2>/dev/null)=
- &&
-+	i_commit=3D$(git rev-parse --quiet --verify "$REV^2" 2>/dev/null) &&
-+	set -- $(git rev-parse "$REV" "$REV^1" "$REV:" "$REV^1:" "$REV^2:" 2>=
-/dev/null) &&
- 	s=3D$1 &&
- 	w_commit=3D$1 &&
- 	b_commit=3D$2 &&
-@@ -408,8 +408,8 @@ parse_flags_and_rev()
- 	test "$ref_stash" =3D "$(git rev-parse --symbolic-full-name "${REV%@*=
-}")" &&
- 	IS_STASH_REF=3Dt
-=20
--	u_commit=3D$(git rev-parse --quiet --verify $REV^3 2>/dev/null) &&
--	u_tree=3D$(git rev-parse $REV^3: 2>/dev/null)
-+	u_commit=3D$(git rev-parse --quiet --verify "$REV^3" 2>/dev/null) &&
-+	u_tree=3D$(git rev-parse "$REV^3:" 2>/dev/null)
- }
-=20
- is_stash_like()
-diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-index debda7a..0568ec5 100755
---- a/t/t3903-stash.sh
-+++ b/t/t3903-stash.sh
-@@ -673,4 +673,15 @@ test_expect_success 'store updates stash ref and r=
-eflog' '
- 	grep quux bazzy
- '
-=20
-+test_expect_success 'handle stash specification with spaces' '
-+	git stash clear
-+	echo mook > file &&
-+	git stash &&
-+	test_tick &&
-+	echo kleb > file &&
-+	git stash &&
-+	git stash apply "stash@{Thu Apr 7 15:17:13 2005 -0700}" &&
-+	grep mook file
-+'
-+
- test_done
+> +static void show_objects_for_type(
+> +	struct bitmap *objects,
+> +	struct ewah_bitmap *type_filter,
+> +	enum object_type object_type,
+> +	show_reachable_fn show_reach)
+> +{
+[...]
+> +	while (i < objects->word_alloc && ewah_iterator_next(&filter, &it))=
+ {
+> +		eword_t word =3D objects->words[i] & filter;
+> +
+> +		for (offset =3D 0; offset < BITS_IN_WORD; ++offset) {
+> +			const unsigned char *sha1;
+> +			struct revindex_entry *entry;
+> +			uint32_t hash =3D 0;
+> +
+> +			if ((word >> offset) =3D=3D 0)
+> +				break;
+> +
+> +			offset +=3D ewah_bit_ctz64(word >> offset);
+> +
+> +			if (pos + offset < bitmap_git.reuse_objects)
+> +				continue;
+> +
+> +			entry =3D &bitmap_git.reverse_index->revindex[pos + offset];
+> +			sha1 =3D nth_packed_object_sha1(bitmap_git.pack, entry->nr);
+> +
+> +			show_reach(sha1, object_type, 0, hash, bitmap_git.pack, entry->of=
+fset);
+> +		}
+
+You have a very nice bitmap_each_bit() function in ewah/bitmap.c, why
+not use it here?
+
+> +int reuse_partial_packfile_from_bitmap(struct packed_git **packfile,
+> +				       uint32_t *entries,
+> +				       off_t *up_to)
+> +{
+> +	/*
+> +	 * Reuse the packfile content if we need more than
+> +	 * 90% of its objects
+> +	 */
+> +	static const double REUSE_PERCENT =3D 0.9;
+
+Curious: is this based on some measurements or just a guess?
+
+
+> diff --git a/pack-bitmap.h b/pack-bitmap.h
+[...]
+> +static const char BITMAP_IDX_SIGNATURE[] =3D {'B', 'I', 'T', 'M'};;
+
+There's a stray ; at the end of the line that is technically not
+permitted:
+
+pack-bitmap.h:22:65: warning: ISO C does not allow extra =E2=80=98;=E2=80=
+=99 outside of a function [-Wpedantic]
+
+> +enum pack_bitmap_opts {
+> +	BITMAP_OPT_FULL_DAG =3D 1,
+
+And I think this trailing comma on the last enum item is also strictly
+speaking not allowed, even though it is very nice to have:
+
+pack-bitmap.h:28:27: warning: comma at end of enumerator list [-Wpedant=
+ic]
+
 --=20
-1.8.5.rc0.23.gaa27064.dirty
+Thomas Rast
+tr@thomasrast.ch
