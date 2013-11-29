@@ -1,178 +1,76 @@
-From: =?UTF-8?q?=C3=98ystein=20Walle?= <oystwa@gmail.com>
-Subject: [PATCH] stash: handle specifying stashes with spaces
-Date: Fri, 29 Nov 2013 20:22:59 +0100
-Message-ID: <1385752979-28162-1-git-send-email-oystwa@gmail.com>
+From: Thomas Rast <tr@thomasrast.ch>
+Subject: Re: [PATCH 1/2] commit-slab: document clear_$slabname()
+Date: Fri, 29 Nov 2013 20:35:09 +0100
+Message-ID: <87txevdms2.fsf@thomasrast.ch>
+References: <cover.1385405977.git.tr@thomasrast.ch>
+	<7f773c5c5ea16b19840f67ba99961be132940d32.1385405977.git.tr@thomasrast.ch>
+	<20131125202409.GO4212@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?=C3=98ystein=20Walle?= <oystwa@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 29 20:27:18 2013
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 29 20:35:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VmTie-00031w-AI
-	for gcvg-git-2@plane.gmane.org; Fri, 29 Nov 2013 20:27:16 +0100
+	id 1VmTqf-0001Ay-Qd
+	for gcvg-git-2@plane.gmane.org; Fri, 29 Nov 2013 20:35:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754704Ab3K2T1M convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 29 Nov 2013 14:27:12 -0500
-Received: from mail-la0-f49.google.com ([209.85.215.49]:60958 "EHLO
-	mail-la0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754631Ab3K2T1J (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Nov 2013 14:27:09 -0500
-Received: by mail-la0-f49.google.com with SMTP id er20so6881692lab.8
-        for <git@vger.kernel.org>; Fri, 29 Nov 2013 11:27:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:mime-version:content-type
-         :content-transfer-encoding;
-        bh=n2/fpYPDjeXVhR84ZRmH7AWvBHBW/7ugZ4MBrJji7QM=;
-        b=l/IbZmFfGqXypULDepH1MNi/fuNC6e+lJaZVZz0JrFzkJA28aSvjtEv/lYW6DrsW+1
-         ICm8+O3OzWyMbZes8YoVQwee7DPj8b0M+5K02AsVkYB20FkajgvZX6QhmhedSk0Yl1DK
-         6dxRB2FdZqfJiuY/uWVyc+Zr5GIGhPhix3cFCYCn67wl6zJLWr+lyCIfCzR/sI52LbtU
-         uyieoZSBc4NJT4qiWS1ZEc5wWd9hcFNmLCFJuT0Rq1DYTmvtbXu3GqGr7Qdy0ecYLS/E
-         c5XAAaUzDCC6eFACsjWkpH3h1HdDY4E03MukvRSH6KebGqf10EVqDbcO/0qbwilf0HyT
-         qvJQ==
-X-Received: by 10.112.173.70 with SMTP id bi6mr305635lbc.56.1385753228101;
-        Fri, 29 Nov 2013 11:27:08 -0800 (PST)
-Received: from localhost.localdomain (80.156.189.109.customer.cdi.no. [109.189.156.80])
-        by mx.google.com with ESMTPSA id ox6sm26672980lbb.6.2013.11.29.11.27.06
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 29 Nov 2013 11:27:07 -0800 (PST)
-X-Mailer: git-send-email 1.8.5.1.gd74b616
+	id S1753816Ab3K2Tfa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Nov 2013 14:35:30 -0500
+Received: from psi.thgersdorf.net ([176.9.98.78]:36040 "EHLO mail.psioc.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752634Ab3K2Tf3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Nov 2013 14:35:29 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by localhost.psioc.net (Postfix) with ESMTP id C26A54D6574;
+	Fri, 29 Nov 2013 20:35:22 +0100 (CET)
+X-Virus-Scanned: amavisd-new at psioc.net
+Received: from mail.psioc.net ([127.0.0.1])
+	by localhost (mail.psioc.net [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 67SbAdEXiTVV; Fri, 29 Nov 2013 20:35:12 +0100 (CET)
+Received: from linux-1gf2.thomasrast.ch (unknown [213.55.184.182])
+	(using TLSv1.2 with cipher AES128-GCM-SHA256 (128/128 bits))
+	(Client did not present a certificate)
+	by mail.psioc.net (Postfix) with ESMTPSA id E9D554D64DE;
+	Fri, 29 Nov 2013 20:35:10 +0100 (CET)
+In-Reply-To: <20131125202409.GO4212@google.com> (Jonathan Nieder's message of
+	"Mon, 25 Nov 2013 12:24:09 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238534>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238535>
 
-When trying to pop/apply a stash specified with an argument containing
-spaces the user will see an error:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-    $ git stash pop 'stash@{two hours ago}'
-    Too many revisions specified: stash@{two hours ago}
+> Thomas Rast wrote:
+>
+>> + *
+>> + * - void clear_indegree(struct indegree *);
+>> + *
+>> + *   Free the slab's data structures.
+>
+> Tense shift (previous descriptions were in the present tense, while
+> this one is in the imperative).
+>
+> More importantly, this doesn't answer the questions I'd have if I were
+> in a hurry, which are what exactly is being freed (has the slab taken
+> ownership of any memory from the user, e.g. when elemtype is a
+> pointer?) and whether the slab needs to be init_ ed again.
+>
+> Maybe something like the following would work?
+[...]
 
-This happens because word splitting is used to count non-option
-arguments. Instead shift the positional arguments as the options are
-processed; the number of arguments left is then the number we're after.
-Add quotes where necessary.
+Ok, I see that while I was procrastinating, you sorted this out and
+Junio merged it to next.
 
-Also add a test that verifies correct behaviour.
+Thanks, both.
 
-Signed-off-by: =C3=98ystein Walle <oystwa@gmail.com>
----
-This is perhaps an esoteric use case but it's still worth fixing in my =
-opinion.
-It also saves a fork/exec so I see it as a win-win :)
-
-Comments welcome, of course. Especially on the test. I couldn't use a r=
-elative
-date spec since the commits and stashes are made with bogus timestamps =
-and the
-spec is compared to the local time. It looks a bit icky the way it's wr=
-itten
-now.
-
- git-stash.sh     | 20 ++++++++++----------
- t/t3903-stash.sh | 11 +++++++++++
- 2 files changed, 21 insertions(+), 10 deletions(-)
-
-diff --git a/git-stash.sh b/git-stash.sh
-index 1e541a2..0a48d42 100755
---- a/git-stash.sh
-+++ b/git-stash.sh
-@@ -358,26 +358,25 @@ parse_flags_and_rev()
- 	i_tree=3D
- 	u_tree=3D
-=20
--	REV=3D$(git rev-parse --no-flags --symbolic "$@") || exit 1
--
- 	FLAGS=3D
- 	for opt
- 	do
- 		case "$opt" in
- 			-q|--quiet)
- 				GIT_QUIET=3D-t
-+				shift
- 			;;
- 			--index)
- 				INDEX_OPTION=3D--index
-+				shift
- 			;;
- 			-*)
- 				FLAGS=3D"${FLAGS}${FLAGS:+ }$opt"
-+				shift
- 			;;
- 		esac
- 	done
-=20
--	set -- $REV
--
- 	case $# in
- 		0)
- 			have_stash || die "$(gettext "No stash found.")"
-@@ -387,17 +386,18 @@ parse_flags_and_rev()
- 			:
- 		;;
- 		*)
--			die "$(eval_gettext "Too many revisions specified: \$REV")"
-+			refs=3D"$*"
-+			die "$(eval_gettext "Too many revisions specified: \$refs")"
- 		;;
- 	esac
-=20
--	REV=3D$(git rev-parse --quiet --symbolic --verify $1 2>/dev/null) || =
-{
-+	REV=3D$(git rev-parse --quiet --symbolic --verify "$1" 2>/dev/null) |=
-| {
- 		reference=3D"$1"
- 		die "$(eval_gettext "\$reference is not valid reference")"
- 	}
-=20
--	i_commit=3D$(git rev-parse --quiet --verify $REV^2 2>/dev/null) &&
--	set -- $(git rev-parse $REV $REV^1 $REV: $REV^1: $REV^2: 2>/dev/null)=
- &&
-+	i_commit=3D$(git rev-parse --quiet --verify "$REV^2" 2>/dev/null) &&
-+	set -- $(git rev-parse "$REV" "$REV^1" "$REV:" "$REV^1:" "$REV^2:" 2>=
-/dev/null) &&
- 	s=3D$1 &&
- 	w_commit=3D$1 &&
- 	b_commit=3D$2 &&
-@@ -408,8 +408,8 @@ parse_flags_and_rev()
- 	test "$ref_stash" =3D "$(git rev-parse --symbolic-full-name "${REV%@*=
-}")" &&
- 	IS_STASH_REF=3Dt
-=20
--	u_commit=3D$(git rev-parse --quiet --verify $REV^3 2>/dev/null) &&
--	u_tree=3D$(git rev-parse $REV^3: 2>/dev/null)
-+	u_commit=3D$(git rev-parse --quiet --verify "$REV^3" 2>/dev/null) &&
-+	u_tree=3D$(git rev-parse "$REV^3:" 2>/dev/null)
- }
-=20
- is_stash_like()
-diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-index debda7a..0568ec5 100755
---- a/t/t3903-stash.sh
-+++ b/t/t3903-stash.sh
-@@ -673,4 +673,15 @@ test_expect_success 'store updates stash ref and r=
-eflog' '
- 	grep quux bazzy
- '
-=20
-+test_expect_success 'handle stash specification with spaces' '
-+	git stash clear
-+	echo pig > file &&
-+	git stash &&
-+	test_tick &&
-+	echo cow > file &&
-+	git stash &&
-+	git stash apply "stash@{Thu Apr 7 15:17:13 2005 -0700}" &&
-+	grep pig file
-+'
-+
- test_done
---=20
-1.8.5.1.g359345f
+-- 
+Thomas Rast
+tr@thomasrast.ch
