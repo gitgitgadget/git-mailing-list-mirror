@@ -1,107 +1,88 @@
-From: Pierre Penninckx <ibizapeanut@gmail.com>
-Subject: Re: [PATCH] subtree: add squash handling for split and push
-Date: Thu, 28 Nov 2013 23:58:23 +0100
-Message-ID: <1B2468D5-F0B7-4D11-8710-A3A7C8D66215@gmail.com>
-References: <C3EF61D4-5274-4A10-9594-4E631D75C3F4@gmail.com> <20131128182309.GA3655@comcast.net>
-Mime-Version: 1.0 (Mac OS X Mail 7.0 \(1822\))
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, greened@obbligato.org, amdmi3@amdmi3.ru,
-	john@keeping.me.uk, git@cryptocrack.de, techlivezheng@gmail.com,
-	apenwarr@gmail.com, cstanfield@antifusion.net,
-	jakub.suder@gmail.com, jesse.greenwald@gmail.com,
-	pelle@kodfabrik.se, treese@acm.org, wayne@tickzoom.com
-To: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
-X-From: git-owner@vger.kernel.org Thu Nov 28 23:58:34 2013
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v3] gitweb: Add an option for adding more branch refs
+Date: Thu, 28 Nov 2013 20:13:42 -0500
+Message-ID: <CAPig+cSjzpSatp9EhpwA9b_XScAPUpkMxmPo70qJCxxakMwq3Q@mail.gmail.com>
+References: <1385639092-13362-1-git-send-email-krzesimir@endocode.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+To: Krzesimir Nowak <krzesimir@endocode.com>
+X-From: git-owner@vger.kernel.org Fri Nov 29 02:13:49 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VmAXY-0006AB-Qf
-	for gcvg-git-2@plane.gmane.org; Thu, 28 Nov 2013 23:58:33 +0100
+	id 1VmCeS-0006uH-DW
+	for gcvg-git-2@plane.gmane.org; Fri, 29 Nov 2013 02:13:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751210Ab3K1W63 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Nov 2013 17:58:29 -0500
-Received: from mail-wg0-f53.google.com ([74.125.82.53]:43773 "EHLO
-	mail-wg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751001Ab3K1W62 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 Nov 2013 17:58:28 -0500
-Received: by mail-wg0-f53.google.com with SMTP id k14so6223358wgh.32
-        for <git@vger.kernel.org>; Thu, 28 Nov 2013 14:58:27 -0800 (PST)
+	id S1752250Ab3K2BNo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Nov 2013 20:13:44 -0500
+Received: from mail-lb0-f182.google.com ([209.85.217.182]:57148 "EHLO
+	mail-lb0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751329Ab3K2BNn (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Nov 2013 20:13:43 -0500
+Received: by mail-lb0-f182.google.com with SMTP id u14so6521119lbd.41
+        for <git@vger.kernel.org>; Thu, 28 Nov 2013 17:13:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=content-type:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=E4Q2zoiuitDYWKOSyyijm50v19HbZYdODxGLgla8hsQ=;
-        b=VgkqV2eyXjELq6NbbjsiOjKtGOukNp/CWOKf+kA4G8KKoYnWKwyG9luRZ4AYkDWr65
-         OE3dKP3ovGd8xzYjfejTaFQrYqbvlPLeg+Yyw3QlO46PdD8vbWRntRrgALn+GdrBFMNr
-         OqJyqXXO0WkwTe7GCMSoKfzNkQ8Dql78TYgqjo21KtJtYz4uhRZYg/JFi0JoHk6ACVe0
-         B4/aKHKmStJHsTwvF3hhj3TBvY5sxs+EmX1mJQ6QkM5KrYnXrumO/BdjqkQ7gEYlJlBQ
-         feKgqqlhpZBcVylB/+xed6opO8iG0ZbzADHtr/8bfs/9J5nKWoEm5+Ij0XzJnR9XiZ2f
-         Gncg==
-X-Received: by 10.194.104.42 with SMTP id gb10mr38675839wjb.16.1385679506966;
-        Thu, 28 Nov 2013 14:58:26 -0800 (PST)
-Received: from [10.118.12.101] ([109.128.254.82])
-        by mx.google.com with ESMTPSA id a19sm85989118wib.1.2013.11.28.14.58.25
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 28 Nov 2013 14:58:25 -0800 (PST)
-In-Reply-To: <20131128182309.GA3655@comcast.net>
-X-Mailer: Apple Mail (2.1822)
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=uPlIpfsjHL9QGRxO7h+zu3+drjg2PBiu8rcT8+muby4=;
+        b=IgRUpEgaJm+zTtxCezoU7k9bwCk4YWMqC8lf0xSmVP46JJtNVacoYp4YnBrincol//
+         nNYv91qQkTwdfxQjDmdz/jsdhHqR+cE9HJeuFrijd0KPo3eC+uZuzWJio204CqxzUGhU
+         z8dBuGEvsKy5/BVJegSKL+eNqYSlSgX5IY3DLzbQgS3L/A1Omvq1oTRKKnOReum8QxBd
+         q2Ag1ZX1+ldsGYeJx+bfx2mHU03yfKVjdCg52CQ5zqTbd6TKydKQhPmRFh6AlSzagwO3
+         AJt79Lg2hS2w+dhHzcEp0WQGrVH6687l4SLvBAyJQjykyFtW9DXQita/dFybdeOrculA
+         zQ3w==
+X-Received: by 10.152.120.102 with SMTP id lb6mr338057lab.37.1385687622108;
+ Thu, 28 Nov 2013 17:13:42 -0800 (PST)
+Received: by 10.114.175.130 with HTTP; Thu, 28 Nov 2013 17:13:42 -0800 (PST)
+In-Reply-To: <1385639092-13362-1-git-send-email-krzesimir@endocode.com>
+X-Google-Sender-Auth: hwxnuelt8GicynRzmylLZ-rN1RY
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238519>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238521>
 
-Hi Matthew,
+On Thu, Nov 28, 2013 at 6:44 AM, Krzesimir Nowak <krzesimir@endocode.com> wrote:
+> Allow @additional_branch_refs configuration variable to tell gitweb to
+> show refs from additional hierarchies in addition to branches in the
+> list-of-branches view.
+>
+> Signed-off-by: Krzesimir Nowak <krzesimir@endocode.com>
+> ---
+> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> index 68c77f6..25e1d37 100755
+> --- a/gitweb/gitweb.perl
+> +++ b/gitweb/gitweb.perl
+> @@ -680,6 +688,19 @@ sub read_config_file {
+>         return;
+>  }
+>
+> +# performs sanity checks on parts of configuration.
+> +sub config_sanity_check {
+> +       # check additional refs validity
+> +       my %unique_branch_refs = ();
+> +       for my $ref (@additional_branch_refs) {
+> +               die_error(500, "Invalid ref '$ref' in \@additional_branch_refs") unless (validate_ref($ref));
+> +               # 'heads' are added implicitly in get_branch_refs().
+> +               $unique_branch_refs{$ref} = 1 if ($ref ne 'heads');
+> +       }
+> +       @additional_branch_refs = sort keys %unique_branch_refs;
+> +       %unique_branch_refs = undef;
+> +}
 
-> Clarification: The current documentation (correctly) doesn't
-> actually claim to support "split --squash", but it does erroneously
-> claim to support "push --squash =BB.
+%unique_branch_refs is going out of scope here, so clearing it seems
+unnecessary.
 
-Yes indeed. ;)
+Moreover, with warnings enabled, perl should be complaining about an
+"Odd number of elements in hash assignment". (Normally, you would
+clear a hash with '%foo=()' or 'undef %foo'.)
 
-> It looks like your patch is basically squashing the new subtree commi=
-ts
-> together, throwing out those commits completely, and only keeping
-> the squashed commit in the split =97branch.
-
-Exactly.
-
-> 3. (new/better) Use "split --rejoin --squash" (or some other
->   invocation to be defined).  The subtree branch is generated
->   exactly like normal, including fine-grained history.  But
->   instead of merging the subtree branch directly, --rejoin
->   will squash all the changes to that branch, and merge in
->   just the squash (referencing the unsquashed split
->   branch tip in the commit message, but not the
->   parent).  Subsequent splits can run very fast, while the
->   "--rejoin" only generated two commits instead of the=20
->   potentially thousands of (mostly) duplicates it would pull
->   in without the "--squash =BB.
-
-Isn=92t this similar to "my" way? I mean I too generate the fine-graine=
-d history and make a squash afterwards, no?
-I also don=92t get why would your solution generate any duplicates. Wou=
-ld mine generate some?
-I suppose the two answers are linked.
-
-> I have this third option half-coded already, but I still need
-> to finish it.
-
-I=92m eager to test it!
-
-> Does anyone have any suggestions about the UI?  Do we need to also
-> support Pierre Penninckx's "split --squash" semantics somehow?  If
-> so, what command line options would allow for distinguishing the
-> two cases?
-
-Maybe `split --rejoin-squash` since it=92s really a third way?
-I intended to use `push --squash` to send a squash of the commits to hi=
-de the actual tinkering. So if your way allows to do it, I vote to stic=
-k with yours.
-
-Regards,
-Pierre Penninckx
+> +
+>  our ($GITWEB_CONFIG, $GITWEB_CONFIG_SYSTEM, $GITWEB_CONFIG_COMMON);
+>  sub evaluate_gitweb_config {
+>         our $GITWEB_CONFIG = $ENV{'GITWEB_CONFIG'} || "++GITWEB_CONFIG++";
