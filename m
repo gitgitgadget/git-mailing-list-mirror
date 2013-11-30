@@ -1,100 +1,106 @@
-From: Aaron Brooks <aaron@brooks1.net>
-Subject: git stash doesn't honor --work-tree or GIT_WORK_TREE
-Date: Sat, 30 Nov 2013 14:04:03 -0500
-Message-ID: <CABL6xpD9jvJWjUj0n+mgC419fGzA2N-b_yJho9zharCD6YTSiw@mail.gmail.com>
+From: Thomas Gummerer <t.gummerer@gmail.com>
+Subject: Re: [PATCH v4 09/24] ls-files.c: use index api
+Date: Sat, 30 Nov 2013 21:08:23 +0100
+Message-ID: <87r49xy7ns.fsf@gmail.com>
+References: <1385553659-9928-1-git-send-email-t.gummerer@gmail.com> <1385553659-9928-10-git-send-email-t.gummerer@gmail.com> <CALWbr2yaD9Z98ysEzVHiQQR_W_zEj7bp0uEgZ3Z=Tp=Yc1NnoQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Nov 30 20:04:31 2013
+Content-Type: text/plain
+Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Thomas Rast <tr@thomasrast.ch>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	Robin Rosenberg <robin.rosenberg@dewire.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	ramsay@ramsay1.demon.co.uk
+To: Antoine Pelisse <apelisse@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Nov 30 21:08:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VmpqA-0001Es-LC
-	for gcvg-git-2@plane.gmane.org; Sat, 30 Nov 2013 20:04:30 +0100
+	id 1Vmqq3-0006zs-U9
+	for gcvg-git-2@plane.gmane.org; Sat, 30 Nov 2013 21:08:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750994Ab3K3TE0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 Nov 2013 14:04:26 -0500
-Received: from caiajhbdcbbj.dreamhost.com ([208.97.132.119]:53108 "EHLO
-	homiemail-a23.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1750766Ab3K3TE0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 30 Nov 2013 14:04:26 -0500
-X-Greylist: delayed 11036 seconds by postgrey-1.27 at vger.kernel.org; Sat, 30 Nov 2013 14:04:26 EST
-Received: from homiemail-a23.g.dreamhost.com (localhost [127.0.0.1])
-	by homiemail-a23.g.dreamhost.com (Postfix) with ESMTP id F0EBB4B0063
-	for <git@vger.kernel.org>; Sat, 30 Nov 2013 11:04:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=brooks1.net; h=
-	mime-version:from:date:message-id:subject:to:content-type; s=
-	brooks1.net; bh=cE+fiJ6F5dZfGY+T+jdoYP+iw6g=; b=XriQZxYxdArwzEJV
-	JD+qDmPZtDGtcTF5dM85ahbrPEOXovhQ5CrSVzseUiSYoNun2q7MvlK3eF6MYuhe
-	owVZvxiVXNrGTqic7UwB3Y53m6FPsCHhmINy9a/mtXZW9MLq10P2LhJaPK44eQcB
-	v4w8jMeMalcXXNiLQnCavkYCH0Y=
-Received: from mail-lb0-f174.google.com (mail-lb0-f174.google.com [209.85.217.174])
-	(using TLSv1 with cipher RC4-SHA (128/128 bits))
-	(No client certificate requested)
-	(Authenticated sender: aaron@brooks1.net)
-	by homiemail-a23.g.dreamhost.com (Postfix) with ESMTPSA id 9430F4B0062
-	for <git@vger.kernel.org>; Sat, 30 Nov 2013 11:04:25 -0800 (PST)
-Received: by mail-lb0-f174.google.com with SMTP id c11so7727042lbj.33
-        for <git@vger.kernel.org>; Sat, 30 Nov 2013 11:04:23 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=TyN0qtNeVZx7ZBf5XfHX/sR9lcPKSZb3bX0DNJxBzJ0=;
-        b=EW5UvFZmqYbKk/f6jqhrpARqPXcAHPj1Rijn/Q7H8/yGSAXzI9HZjocLRpKl7NqzDJ
-         K6UyG8bCVh2pCTRPk7AZWVfjU1EUXngqdkimNYqe5vhovIM9KwfX8hVImLLSa1fVzehH
-         hH8h+5pimGbOwB5sE/yy3zyso6HUQO1KRIeQk9JgtqcvLy5CPpr89YwhI+nx04kSHT3D
-         asoLAHqG5/zlRZf1gymXO3gHe7SdwoH94dEM6V3ABaIO/QEa2aMjAI+K6sm34rJs+VG8
-         6cckdyI0KeKZvfvFIR9GuDpp7Atp0vMQN4n1N48nwE4k5kNziJUA9Cxg06tPGjy4flKp
-         dMWg==
-X-Received: by 10.112.53.97 with SMTP id a1mr342509lbp.38.1385838263700; Sat,
- 30 Nov 2013 11:04:23 -0800 (PST)
-Received: by 10.114.78.165 with HTTP; Sat, 30 Nov 2013 11:04:03 -0800 (PST)
+	id S1751562Ab3K3UIY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 30 Nov 2013 15:08:24 -0500
+Received: from mail-la0-f41.google.com ([209.85.215.41]:63573 "EHLO
+	mail-la0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751559Ab3K3UIX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Nov 2013 15:08:23 -0500
+Received: by mail-la0-f41.google.com with SMTP id eo20so7521989lab.14
+        for <git@vger.kernel.org>; Sat, 30 Nov 2013 12:08:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:in-reply-to:references:user-agent:date
+         :message-id:mime-version:content-type;
+        bh=AkpuYiRcgcEeFwRABnEu2hcujW+p9n1b9lHHjJV/NYk=;
+        b=KfkF2CGDV6+aK1GNkrqk6/XE2uPfYb5PXpVU9LOkUyhnV3AqTyCnEnyN9GDHJSx2Wi
+         B+tmt6Uy55WFm5/3FBxMHWFpD9oVx+BgEWeHtgtJJLbzqX6ixteI3gFJp53k82PNnBbB
+         j05pZMFmWluyF9v+C0IZJSYOwHfLs2yQ8PP3oddWDWGWevngpv2dtlO3pWMa2Yu1uM6f
+         Q4rHpedHq9qkOcrXdlWE85SqU3a+ka9OYkaWT8Y7Y4bE99cthMmmcKIz8InNbkUVLEmp
+         DieKaMdSn1TNyJUUSu6EjLmKpkHIqESkq2vPQ8LeeCJ59CKRFuzIkJsoGR4IH6Abn2W+
+         1DZQ==
+X-Received: by 10.152.180.228 with SMTP id dr4mr472284lac.32.1385842101615;
+        Sat, 30 Nov 2013 12:08:21 -0800 (PST)
+Received: from goose.tgummerer.com (213-66-41-37-no99.tbcn.telia.com. [213.66.41.37])
+        by mx.google.com with ESMTPSA id e1sm18901062lbe.0.2013.11.30.12.08.19
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 30 Nov 2013 12:08:20 -0800 (PST)
+In-Reply-To: <CALWbr2yaD9Z98ysEzVHiQQR_W_zEj7bp0uEgZ3Z=Tp=Yc1NnoQ@mail.gmail.com>
+User-Agent: Notmuch/0.17~rc1+8~g4a09c1a (http://notmuchmail.org) Emacs/24.3.1 (x86_64-unknown-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238568>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238569>
 
-Unlike other commands, git stash doesn't work outside of the worktree,
-even when --work-tree is specified:
+Antoine Pelisse <apelisse@gmail.com> writes:
 
-abrooks@host:~/tmp$ mkdir test-repo
-abrooks@host:~/tmp$ cd !$
-cd test-repo
-abrooks@host:~/tmp/test-repo$ git init
-Initialized empty Git repository in /home/abrooks/tmp/test-repo/.git/
-abrooks@host:~/tmp/test-repo$ echo "foo" > foo.txt
-abrooks@host:~/tmp/test-repo$ git add foo.txt
-abrooks@host:~/tmp/test-repo$ git commit -m "adding foo"
-[master (root-commit) 9d0705e] adding foo
- 1 file changed, 1 insertion(+)
- create mode 100644 foo.txt
-abrooks@host:~/tmp/test-repo$ echo "bar" >> foo.txt
-abrooks@host:~/tmp/test-repo$ cd ..
-abrooks@host:~/tmp$ git --git-dir=./test-repo/.git --work-tree=./test-repo stash
-fatal: /usr/lib/git-core/git-stash cannot be used without a working tree.
-abrooks@host:~/tmp$ cd test-repo/
-abrooks@host:~/tmp/test-repo$ git stash
-Saved working directory and index state WIP on master: 9d0705e adding foo
-HEAD is now at 9d0705e adding foo
-abrooks@host:~/tmp/test-repo$ cd ../
-abrooks@host:~/tmp$ git --git-dir=./test-repo/.git
---work-tree=./test-repo stash list
-fatal: /usr/lib/git-core/git-stash cannot be used without a working tree.
+> On Wed, Nov 27, 2013 at 1:00 PM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
+>> @@ -447,6 +463,7 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
+>>         struct dir_struct dir;
+>>         struct exclude_list *el;
+>>         struct string_list exclude_list = STRING_LIST_INIT_NODUP;
+>> +       struct filter_opts *opts = xmalloc(sizeof(*opts));
+>>         struct option builtin_ls_files_options[] = {
+>>                 { OPTION_CALLBACK, 'z', NULL, NULL, NULL,
+>>                         N_("paths are separated with NUL character"),
+>> @@ -512,9 +529,6 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
+>>                 prefix_len = strlen(prefix);
+>>         git_config(git_default_config, NULL);
+>>
+>> -       if (read_cache() < 0)
+>> -               die("index file corrupt");
+>> -
+>>         argc = parse_options(argc, argv, prefix, builtin_ls_files_options,
+>>                         ls_files_usage, 0);
+>>         el = add_exclude_list(&dir, EXC_CMDL, "--exclude option");
+>> @@ -550,6 +564,24 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
+>>                        PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP,
+>>                        prefix, argv);
+>>
+>> +       if (!with_tree && !needs_trailing_slash_stripped()) {
+>> +               memset(opts, 0, sizeof(*opts));
+>> +               opts->pathspec = &pathspec;
+>> +               opts->read_staged = 1;
+>> +               if (show_resolve_undo)
+>> +                       opts->read_resolve_undo = 1;
+>> +               if (read_cache_filtered(opts) < 0)
+>> +                       die("index file corrupt");
+>> +       } else {
+>> +               if (read_cache() < 0)
+>> +                       die("index file corrupt");
+>> +               parse_pathspec(&pathspec, 0,
+>> +                              PATHSPEC_PREFER_CWD |
+>> +                              PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP,
+>> +                              prefix, argv);
+>> +
+>> +       }
+>> +
+>
+> Would it make sense to move the declaration of "opts" as a non-pointer
+> to the block where it's used ?
 
-The same also does not work when setting GIT_DIR and GIT_WORK_TREE.
-
-As a user, this seems wrong.
-
-It looks like the "require_work_tree" function should check the
-environment variables in addition to the status of the PWD (via
-git-rev-parse).
-
-Having looked through several of the other git-*.sh scripts, I think
-other shell based git commands will have similar problems.
-
-Thanks,
-
-Aaron
+Yes, I think that would make sense, will do so in the re-roll. Thanks!
