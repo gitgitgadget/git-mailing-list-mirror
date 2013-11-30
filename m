@@ -1,120 +1,129 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 3/5] Add an "unsigned flags" parameter to
- sha1_object_info_extended()
-Date: Sat, 30 Nov 2013 14:51:21 +0100
-Message-ID: <20131130135124.2697.9050.chriscool@tuxfamily.org>
-References: <20131130133934.2697.75781.chriscool@tuxfamily.org>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Joey Hess <joey@kitenet.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Nov 30 14:52:28 2013
+From: "MR PETER SAND" <pesa_san@yahoo.gr>
+Subject: RE: IMMEDIATE PAYMENT REMITTANCE
+Date: Sat, 30 Nov 2013 22:49:42 +0800
+Message-ID: <201311300035.rAU0ZTuP009630@tx.cpta.com.cn>
+Reply-To: <rezamogadam@accountant.com>
+Mime-Version: 1.0
+Content-Type: text/plain;
+	charset="Windows-1251"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Sat Nov 30 15:56:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VmkyB-0004gz-4T
-	for gcvg-git-2@plane.gmane.org; Sat, 30 Nov 2013 14:52:27 +0100
+	id 1Vmly4-0000rV-1R
+	for gcvg-git-2@plane.gmane.org; Sat, 30 Nov 2013 15:56:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752201Ab3K3NwX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 Nov 2013 08:52:23 -0500
-Received: from mail-1y.bbox.fr ([194.158.98.14]:45366 "EHLO mail-1y.bbox.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751911Ab3K3NwI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Nov 2013 08:52:08 -0500
-Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-1y.bbox.fr (Postfix) with ESMTP id 86A7C158;
-	Sat, 30 Nov 2013 14:52:07 +0100 (CET)
-X-git-sha1: 631b74c17abb6aba1f7e311648eaaef1b7167212 
-X-Mailer: git-mail-commits v0.5.2
-In-Reply-To: <20131130133934.2697.75781.chriscool@tuxfamily.org>
+	id S1752482Ab3K3O4T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 30 Nov 2013 09:56:19 -0500
+Received: from [114.255.29.133] ([114.255.29.133]:50844 "EHLO tx.cpta.com.cn"
+	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751807Ab3K3O4S (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Nov 2013 09:56:18 -0500
+Received: from User ([180.74.213.172])
+	(authenticated bits=0)
+	by tx.cpta.com.cn (8.12.8p1/8.12.6) with ESMTP id rAU0ZTuP009630;
+	Sat, 30 Nov 2013 08:35:30 +0800
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2600.0000
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2600.0000
+To: <giuochi1@yahoo.com>
+To: <giovanni.sarti@wanadoo.fr>
+To: <git@vger.kernel.org>
+To: <gis@ufm.edu.gt>
+To: <git@server.com>
+To: <gisrqlghml@rkyvky.com>
+To: <git@remoterepo.com>
+To: <giq1@psu.edu>
+To: <git@progriumapp.com>
+To: <girls@play.ht>
+To: <gippolito@nemf.com>
+To: <gisele@naturalperfumers.com>
+To: <git@myserver.com>
+To: <giselle@mobilemarketer.com>
+To: <gita@mkpr.com>
+To: <girosen@mac.com>
+To: <giuiuistan@lamebook.com>
+To: <gistubisib@lamebook.com>
+To: <gispocruwr@lamebook.com>
+To: <gislocista@lamebook.com>
+To: <girl@lalalaoleg.com>
+To: <girltroublehq@juno.com>
+To: <gispmguan@hotmail.com>
+To: <girlydos@hotmail.com>
+To: <girl_of_god21@hotmail.com>
+To: <git@heroku.com>
+To: <givant43089@gmail.com>
+To: <gitbe@gmail.com>
+To: <gita_eden@gmail.com>
+To: <gisele.abduzeedo@gmail.com>
+To: <girlstalkinsmack@gmail.com>
+To: <girlsname04@gmail.com>
+To: <girlmakescents@gmail.com>
+To: <git@github.com>
+To: <girl@girlgoingcountry.com>
+To: <girlz@frothygirlz.com>
+To: <girlfriend@fhm.com>
+To: <gis4foqfq0@examiner.com>
+To: <gisbrechts@elms.edu>
+To: <giovanna@atlantarentalproperty.com>
+To: <girllinks@annabelleigh.net>
+To: <gitx@2x.pn>
+To: <github-for-windows@2x.pn>
+To: <github-for-mac@2x.pn>
+To: <giteye@2x.pn>
+To: <git-extensions@2x.pn>
+To: <git-cola@2x.pn>
+To: <gitbox@2x.pn>
+To: <git-in-the-trenches@2x.jp>
+To: <git-internals@2x.jp>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238563>
+X-Spam-Report: 10.7 points;
+ *  1.8 SUBJ_ALL_CAPS Subject is all capitals
+ *  3.2 SUSPICIOUS_RECIPS Similar addresses in recipient list
+ *  1.8 MILLION_USD BODY: Talks about millions of dollars
+ * -8.0 RCVD_IN_DNSWL_HI RBL: Sender listed at http://www.dnswl.org/, high
+ *      trust
+ *      [209.132.180.67 listed in list.dnswl.org]
+ *  2.8 RCVD_IN_SBL RBL: Received via a relay in Spamhaus SBL
+ *      [114.255.29.133 listed in zen.spamhaus.org]
+ *  0.7 MSOE_MID_WRONG_CASE MSOE_MID_WRONG_CASE
+ *  2.0 ADVANCE_FEE_2 Appears to be advance fee fraud (Nigerian 419)
+ *  0.0 FM_IS_IT_OUR_ACCOUNT Is it our account?
+ *  2.2 FAKE_REPLY_C FAKE_REPLY_C
+ *  4.2 FORGED_MUA_OUTLOOK Forged mail pretending to be from MS Outlook
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238564>
 
-This parameter is not used yet, but it will be used to tell
-sha1_object_info_extended() if it should perform object
-replacement or not.
+RE: IMMEDIATE PAYMENT REMITTANCE
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- builtin/cat-file.c | 2 +-
- cache.h            | 2 +-
- sha1_file.c        | 6 +++---
- streaming.c        | 2 +-
- 4 files changed, 6 insertions(+), 6 deletions(-)
+This is to notify you that your over due entitlement fund has been gazetted to be released in which an indoor meetings were held between my governments, International Monetary Fund (IMF), World Bank Auditors, representatives of the European Union, Asian and American Congress respectively concerning the inheritance.
 
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index b2ca775..a2d3a9b 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -238,7 +238,7 @@ static int batch_one_object(const char *obj_name, struct batch_options *opt,
- 		return 0;
- 	}
- 
--	if (sha1_object_info_extended(data->sha1, &data->info) < 0) {
-+	if (sha1_object_info_extended(data->sha1, &data->info, READ_SHA1_FILE_REPLACE) < 0) {
- 		printf("%s missing\n", obj_name);
- 		fflush(stdout);
- 		return 0;
-diff --git a/cache.h b/cache.h
-index b845485..3be03dc 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1104,7 +1104,7 @@ struct object_info {
- 		} packed;
- 	} u;
- };
--extern int sha1_object_info_extended(const unsigned char *, struct object_info *);
-+extern int sha1_object_info_extended(const unsigned char *, struct object_info *, unsigned flags);
- 
- /* Dumb servers support */
- extern int update_server_info(int);
-diff --git a/sha1_file.c b/sha1_file.c
-index b0a3964..09e56ef 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -2514,7 +2514,7 @@ static int sha1_loose_object_info(const unsigned char *sha1,
- 	return 0;
- }
- 
--int sha1_object_info_extended(const unsigned char *sha1, struct object_info *oi)
-+int sha1_object_info_extended(const unsigned char *sha1, struct object_info *oi, unsigned flags)
- {
- 	struct cached_object *co;
- 	struct pack_entry e;
-@@ -2548,7 +2548,7 @@ int sha1_object_info_extended(const unsigned char *sha1, struct object_info *oi)
- 	rtype = packed_object_info(e.p, e.offset, oi);
- 	if (rtype < 0) {
- 		mark_bad_packed_object(e.p, sha1);
--		return sha1_object_info_extended(sha1, oi);
-+		return sha1_object_info_extended(sha1, oi, 0);
- 	} else if (in_delta_base_cache(e.p, e.offset)) {
- 		oi->whence = OI_DBCACHED;
- 	} else {
-@@ -2570,7 +2570,7 @@ int sha1_object_info(const unsigned char *sha1, unsigned long *sizep)
- 
- 	oi.typep = &type;
- 	oi.sizep = sizep;
--	if (sha1_object_info_extended(sha1, &oi) < 0)
-+	if (sha1_object_info_extended(sha1, &oi, READ_SHA1_FILE_REPLACE) < 0)
- 		return -1;
- 	return type;
- }
-diff --git a/streaming.c b/streaming.c
-index debe904..9659f18 100644
---- a/streaming.c
-+++ b/streaming.c
-@@ -113,7 +113,7 @@ static enum input_source istream_source(const unsigned char *sha1,
- 
- 	oi->typep = type;
- 	oi->sizep = &size;
--	status = sha1_object_info_extended(sha1, oi);
-+	status = sha1_object_info_extended(sha1, oi, 0);
- 	if (status < 0)
- 		return stream_error;
- 
--- 
-1.8.4.1.561.g12affca
+It generated an interest of US$ 15.5 Million united state dollars, which we are about to pay to you via Special Bank Instrument directly to your account on the instruction from the Government.
+
+Be informed that your name was stipulated under the category "A" awaiting the receipt of his payment therefore; you are advised as a matter of urgency, to reconfirm the following details:
+
+YOUR FULL NAMES
+CORRESPONDING ADDRESS
+TELEPHONE / FAX NUMBERS
+MOBILE PHONE and
+AGE
+
+Note that if you have received this message by (electronic email sending error) to your system; kindly help us by informing us to enable us sort this out as my office has been instructed by the Government to take the issues of the release of all payment owed to foreign beneficiaries very serious.
+
+It will interest you to know that as soon as we receive the above details, we will commence with all needed necessary procedures and issue all payments details to you, in other to approve the release of your long over due entitlement fund, I want you to understand that this arrangement supersedes all the previous arrangements given to you. 
+
+Nevertheless, if we do not hear from you within the next seven (7) working days from today, it shall attract indefinite postponement of your payment and my government will not be blamed for such action, any question should be directed to this office. 
+
+The Government is sorry for any inconvenience the delay in releasing your entitlement fund must have caused you as a result of unprofessional services rendered by the banking and financial institutes and that is our aim of objective.
+
+Congratulations!!!!!!
+
+Truly yours,
+
+MR PETER SAND.
