@@ -1,110 +1,73 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 5/5] sha1_file: perform object replacement in
- sha1_object_info_extended()
-Date: Sat, 30 Nov 2013 14:51:23 +0100
-Message-ID: <20131130135124.2697.62573.chriscool@tuxfamily.org>
+Subject: [PATCH 4/5] t6050: show that git cat-file --batch fails with replace
+ objects
+Date: Sat, 30 Nov 2013 14:51:22 +0100
+Message-ID: <20131130135124.2697.79815.chriscool@tuxfamily.org>
 References: <20131130133934.2697.75781.chriscool@tuxfamily.org>
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Joey Hess <joey@kitenet.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Nov 30 14:52:15 2013
+X-From: git-owner@vger.kernel.org Sat Nov 30 14:52:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vmkxz-0004XU-Ch
-	for gcvg-git-2@plane.gmane.org; Sat, 30 Nov 2013 14:52:15 +0100
+	id 1VmkyA-0004gz-KT
+	for gcvg-git-2@plane.gmane.org; Sat, 30 Nov 2013 14:52:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752100Ab3K3NwM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 Nov 2013 08:52:12 -0500
-Received: from mail-2y.bbox.fr ([194.158.98.15]:55433 "EHLO mail-2y.bbox.fr"
+	id S1752164Ab3K3NwV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 30 Nov 2013 08:52:21 -0500
+Received: from mail-1y.bbox.fr ([194.158.98.14]:45378 "EHLO mail-1y.bbox.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752050Ab3K3NwJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Nov 2013 08:52:09 -0500
+	id S1751919Ab3K3NwI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Nov 2013 08:52:08 -0500
 Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-2y.bbox.fr (Postfix) with ESMTP id 629C3194;
-	Sat, 30 Nov 2013 14:52:08 +0100 (CET)
-X-git-sha1: 7726536d687214b836cd505c8b536b9db3e8464f 
+	by mail-1y.bbox.fr (Postfix) with ESMTP id F27CB49;
+	Sat, 30 Nov 2013 14:52:07 +0100 (CET)
+X-git-sha1: d7a82e17fb92fe7b45b5dc792994b30357927674 
 X-Mailer: git-mail-commits v0.5.2
 In-Reply-To: <20131130133934.2697.75781.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238561>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238562>
 
-sha1_object_info_extended() should perform object replacement
-if it is needed.
+When --batch is passed to git cat-file, the sha1_object_info_extended()
+function is used to get information about the objects passed to
+git cat-file.
 
-The simplest way to do that is to make it call
-lookup_replace_object_extended().
+Unfortunately sha1_object_info_extended() doesn't take care of
+object replacement properly, so it will often fail with a
+message like this:
 
-And now its "unsigned flags" parameter is used as it is passed
-to lookup_replace_object_extended().
+$ echo a3fb2e1845a1aaf129b7975048973414dc172173 | git cat-file --batch
+a3fb2e1845a1aaf129b7975048973414dc172173 commit 231
+fatal: object a3fb2e1845a1aaf129b7975048973414dc172173 change size!?
+
+The goal of this patch is to show this breakage.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- sha1_file.c        | 13 +++++++------
- t/t6050-replace.sh |  2 +-
- 2 files changed, 8 insertions(+), 7 deletions(-)
+ t/t6050-replace.sh | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/sha1_file.c b/sha1_file.c
-index 09e56ef..d715553 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -2519,8 +2519,9 @@ int sha1_object_info_extended(const unsigned char *sha1, struct object_info *oi,
- 	struct cached_object *co;
- 	struct pack_entry e;
- 	int rtype;
-+	const unsigned char *real = lookup_replace_object_extended(sha1, flags);
- 
--	co = find_cached_object(sha1);
-+	co = find_cached_object(real);
- 	if (co) {
- 		if (oi->typep)
- 			*(oi->typep) = co->type;
-@@ -2532,23 +2533,23 @@ int sha1_object_info_extended(const unsigned char *sha1, struct object_info *oi,
- 		return 0;
- 	}
- 
--	if (!find_pack_entry(sha1, &e)) {
-+	if (!find_pack_entry(real, &e)) {
- 		/* Most likely it's a loose object. */
--		if (!sha1_loose_object_info(sha1, oi)) {
-+		if (!sha1_loose_object_info(real, oi)) {
- 			oi->whence = OI_LOOSE;
- 			return 0;
- 		}
- 
- 		/* Not a loose object; someone else may have just packed it. */
- 		reprepare_packed_git();
--		if (!find_pack_entry(sha1, &e))
-+		if (!find_pack_entry(real, &e))
- 			return -1;
- 	}
- 
- 	rtype = packed_object_info(e.p, e.offset, oi);
- 	if (rtype < 0) {
--		mark_bad_packed_object(e.p, sha1);
--		return sha1_object_info_extended(sha1, oi, 0);
-+		mark_bad_packed_object(e.p, real);
-+		return sha1_object_info_extended(real, oi, 0);
- 	} else if (in_delta_base_cache(e.p, e.offset)) {
- 		oi->whence = OI_DBCACHED;
- 	} else {
 diff --git a/t/t6050-replace.sh b/t/t6050-replace.sh
-index b90dbdc..bb785ec 100755
+index 7d47984..b90dbdc 100755
 --- a/t/t6050-replace.sh
 +++ b/t/t6050-replace.sh
-@@ -276,7 +276,7 @@ test_expect_success '-f option bypasses the type check' '
+@@ -276,6 +276,11 @@ test_expect_success '-f option bypasses the type check' '
  	git replace -f HEAD^ $BLOB
  '
  
--test_expect_failure 'git cat-file --batch works on replace objects' '
-+test_expect_success 'git cat-file --batch works on replace objects' '
- 	git replace | grep $PARA3 &&
- 	echo $PARA3 | git cat-file --batch
- '
++test_expect_failure 'git cat-file --batch works on replace objects' '
++	git replace | grep $PARA3 &&
++	echo $PARA3 | git cat-file --batch
++'
++
+ test_expect_success 'replace ref cleanup' '
+ 	test -n "$(git replace)" &&
+ 	git replace -d $(git replace) &&
 -- 
 1.8.4.1.561.g12affca
