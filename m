@@ -1,58 +1,110 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 2/2] commit-slab: declare functions "static inline"
-Date: Sun, 1 Dec 2013 17:36:31 +0700
-Message-ID: <CACsJy8CnxvPRwC_xXgBNF_JEmkpfnk=faMwOWtkJOFU-18aHgA@mail.gmail.com>
-References: <cover.1385405977.git.tr@thomasrast.ch> <f4d1ff9f487f797da35faa86c72d11832903a50d.1385405977.git.tr@thomasrast.ch>
+From: Evgeniy Ivanov <lolkaantimat@gmail.com>
+Subject: Re: Git merge: conflict is expected, but not detected
+Date: Sun, 1 Dec 2013 15:02:40 +0400
+Message-ID: <CAO6Ho0f2S9==GYy3-Rjmyn8-sPrnz0U_nGXqUAXDxTxQhCTDCg@mail.gmail.com>
+References: <CAO6Ho0d=JHk4ydd1PdcWP1XHxvXpjfYVK+B_QLgd0vpyFTh_xQ@mail.gmail.com>
+	<CAH3AnroU9cP67iQnC1pwed_J-CDCHZm06G1e48R-nOtA5+591A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Thomas Rast <tr@thomasrast.ch>
-X-From: git-owner@vger.kernel.org Sun Dec 01 11:37:39 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jon Seymour <jon.seymour@gmail.com>, sandals@crustytoothpaste.net,
+	mackyle@gmail.com
+X-From: git-owner@vger.kernel.org Sun Dec 01 12:03:04 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vn4PC-00039s-45
-	for gcvg-git-2@plane.gmane.org; Sun, 01 Dec 2013 11:37:38 +0100
+	id 1Vn4nn-0004AJ-Mk
+	for gcvg-git-2@plane.gmane.org; Sun, 01 Dec 2013 12:03:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751475Ab3LAKhD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 1 Dec 2013 05:37:03 -0500
-Received: from mail-qe0-f41.google.com ([209.85.128.41]:40591 "EHLO
-	mail-qe0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751389Ab3LAKhC (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Dec 2013 05:37:02 -0500
-Received: by mail-qe0-f41.google.com with SMTP id gh4so9655910qeb.0
-        for <git@vger.kernel.org>; Sun, 01 Dec 2013 02:37:01 -0800 (PST)
+	id S1751522Ab3LALCn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 1 Dec 2013 06:02:43 -0500
+Received: from mail-ie0-f171.google.com ([209.85.223.171]:34476 "EHLO
+	mail-ie0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751227Ab3LALCm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 Dec 2013 06:02:42 -0500
+Received: by mail-ie0-f171.google.com with SMTP id ar20so19267273iec.30
+        for <git@vger.kernel.org>; Sun, 01 Dec 2013 03:02:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=iTW9wMYazxOYjy5jVDPb4fdy+7bV6WDdNI9bvB9YpJs=;
-        b=kcIzxCtCoh7gSuJtKYZ4q2zoS95tJS7Pac8muR9dyXEjV6+e824/Uq9XD7S7fJl+aC
-         yfX3H2Jf+p/mp91DOcSZ3JtHm/VWtVVU3eMdFIKPHNNpaZ1rt1TAYlbrPr738PYgR7Z5
-         bzLb+71yVH21vQs59ooThChX6PWUtZwm30uEF0xzCQIJJJJKN1d1FcCW3TgyslOauPsi
-         z7puTNicCXWym2tJEtuxZibJfHDR8HKSiDVgpHQ9IfLIwPrQI/oiUSeMPW7vzBTOEpuf
-         dSOx3eI2648aGuUukd+W2HgPoU+4kJ4w6717nlc1T+bWrT/vw+gKjCNuLqHy0sdLLKua
-         9PNA==
-X-Received: by 10.49.105.138 with SMTP id gm10mr73283231qeb.7.1385894221440;
- Sun, 01 Dec 2013 02:37:01 -0800 (PST)
-Received: by 10.96.134.68 with HTTP; Sun, 1 Dec 2013 02:36:31 -0800 (PST)
-In-Reply-To: <f4d1ff9f487f797da35faa86c72d11832903a50d.1385405977.git.tr@thomasrast.ch>
+        bh=V8LbQivGqyJ+R3SYwP0hjDoz6w2Vte+5894y/1/+b6I=;
+        b=m7G22yJqZ38TFRrApY2GGkkf/ebl62GePAN2EW+GGgBpmGAZfvTtmwftr99NsdjPGC
+         +VmNpFVZC0oMOMFyC4u7mY59/HZfcUYXNIjEvunMSw0tIJW9pDqmZ8Ebp482hduIdOKV
+         69K8L02qA0A9iEplj7QyE9bHBItaoY6wI6yXAV2joyiPsVkbur11h70yOhSs54LHnfiR
+         cfDR3Ox26E35lx7OAFyhuTFr/hZFcUUQkNi/hgcB55xpkD1GSD/ujvW46QnvT8D/NZjt
+         7ETExgKD0Y1eJZIpzu9AA1pEaP7Ht61dmK0RuraEiwxwwq0WvrlRm/Hi2I8zfs3FRrfm
+         5cjw==
+X-Received: by 10.43.103.133 with SMTP id di5mr819142icc.38.1385895760166;
+ Sun, 01 Dec 2013 03:02:40 -0800 (PST)
+Received: by 10.64.77.52 with HTTP; Sun, 1 Dec 2013 03:02:40 -0800 (PST)
+In-Reply-To: <CAH3AnroU9cP67iQnC1pwed_J-CDCHZm06G1e48R-nOtA5+591A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238584>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238585>
 
-Thomas,
+Jon, Kyle, Brian,
 
-As you're touching this, perhaps you coud fix this line in slabname_at() too?
+Thanks a lot for your answers!
 
-s->slab = xrealloc(s->slab, (nth_slab + 1) * sizeof(s->slab));
+On Sat, Nov 30, 2013 at 12:51 PM, Jon Seymour <jon.seymour@gmail.com> wrote:
+> From the perspective of topic there had been no change to the
+> definition of bar(), hence there was no change to contribute to the
+> eventual merge with master.
+>
+> One way to avoid this kind of problem is to avoid making (or
+> cherry-picking) the same change on different branches, but instead use
+> a merge of a branch with a common base to implement changes needed on
+> multiple branches.
+>
+> So, assuming you recognized the need to delete bar() from both topic
+> and master, create a new branch from the merge-base of topic and
+> master and delete bar() in that branch. Then merge this branch into
+> both topic and master.
+>
+> If you subsequently decide to revert the removal of bar() on topic
+> then when you decide to merge topic back into master, git will see
+> that the removal branch has been merged into both branches and will
+> see the subsequent revert on topic as a change that needs to be merged
+> and you will get the result you are looking for.
+>
+> So, as a general rule of thumb, try to avoid making the same change on
+> two different branches and instead factor out a change needed in
+> multiple places into a separate branch which is then merged into the
+> branches that need iit.
+>
+>
+> On Sat, Nov 30, 2013 at 1:26 AM, Evgeniy Ivanov <lolkaantimat@gmail.com> wrote:
+>> Hi!
+>>
+>> Let's say I have two identical branches: master and topic. In master I
+>> remove some code, i.e. function bar(). In topic I do the same (commit)
+>> and after some time I realize I need bar() and revert previous commit
+>> with removal.
+>> So I end with master with no bar() and topic with bar() in its
+>> original state. When I merge I get code without bar() and no merge
+>> conflict (recursive or resolve strategies). Is it possible to detect
+>> such situations as conflicts? When bar() is C++ virtual there is no
+>> possibility to catch this with compiler.
+>>
+>> Please, CC me since I'm not subscribed.
+>>
+>> Thanks in advance!
+>>
+>> --
+>> Cheers,
+>> Evgeniy
+>> --
+>> To unsubscribe from this list: send the line "unsubscribe git" in
+>> the body of a message to majordomo@vger.kernel.org
+>> More majordomo info at  http://vger.kernel.org/majordomo-info.html
 
-I think it should be sizeof(*s->slab), not sizeof(s->slab), even
-though the end result is the same.
+
+
 -- 
-Duy
+Cheers,
+Evgeniy
