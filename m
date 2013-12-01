@@ -1,110 +1,80 @@
-From: Evgeniy Ivanov <lolkaantimat@gmail.com>
-Subject: Re: Git merge: conflict is expected, but not detected
-Date: Sun, 1 Dec 2013 15:02:40 +0400
-Message-ID: <CAO6Ho0f2S9==GYy3-Rjmyn8-sPrnz0U_nGXqUAXDxTxQhCTDCg@mail.gmail.com>
-References: <CAO6Ho0d=JHk4ydd1PdcWP1XHxvXpjfYVK+B_QLgd0vpyFTh_xQ@mail.gmail.com>
-	<CAH3AnroU9cP67iQnC1pwed_J-CDCHZm06G1e48R-nOtA5+591A@mail.gmail.com>
+From: Thomas Rast <tr@thomasrast.ch>
+Subject: Re: git stash doesn't honor --work-tree or GIT_WORK_TREE
+Date: Sun, 01 Dec 2013 12:12:48 +0100
+Message-ID: <874n6sddu7.fsf@thomasrast.ch>
+References: <CABL6xpD9jvJWjUj0n+mgC419fGzA2N-b_yJho9zharCD6YTSiw@mail.gmail.com>
+	<loom.20131130T221443-682@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Jon Seymour <jon.seymour@gmail.com>, sandals@crustytoothpaste.net,
-	mackyle@gmail.com
-X-From: git-owner@vger.kernel.org Sun Dec 01 12:03:04 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?Q?=C3=98ystein?= Walle <oystwa@gmail.com>,
+	=?utf-8?B?Tmd1eQ==?= =?utf-8?B?4buFbiBUaMOhaSBOZ+G7jWM=?= Duy 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Dec 01 12:13:30 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vn4nn-0004AJ-Mk
-	for gcvg-git-2@plane.gmane.org; Sun, 01 Dec 2013 12:03:04 +0100
+	id 1Vn4xt-00035P-4J
+	for gcvg-git-2@plane.gmane.org; Sun, 01 Dec 2013 12:13:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751522Ab3LALCn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 1 Dec 2013 06:02:43 -0500
-Received: from mail-ie0-f171.google.com ([209.85.223.171]:34476 "EHLO
-	mail-ie0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751227Ab3LALCm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Dec 2013 06:02:42 -0500
-Received: by mail-ie0-f171.google.com with SMTP id ar20so19267273iec.30
-        for <git@vger.kernel.org>; Sun, 01 Dec 2013 03:02:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=V8LbQivGqyJ+R3SYwP0hjDoz6w2Vte+5894y/1/+b6I=;
-        b=m7G22yJqZ38TFRrApY2GGkkf/ebl62GePAN2EW+GGgBpmGAZfvTtmwftr99NsdjPGC
-         +VmNpFVZC0oMOMFyC4u7mY59/HZfcUYXNIjEvunMSw0tIJW9pDqmZ8Ebp482hduIdOKV
-         69K8L02qA0A9iEplj7QyE9bHBItaoY6wI6yXAV2joyiPsVkbur11h70yOhSs54LHnfiR
-         cfDR3Ox26E35lx7OAFyhuTFr/hZFcUUQkNi/hgcB55xpkD1GSD/ujvW46QnvT8D/NZjt
-         7ETExgKD0Y1eJZIpzu9AA1pEaP7Ht61dmK0RuraEiwxwwq0WvrlRm/Hi2I8zfs3FRrfm
-         5cjw==
-X-Received: by 10.43.103.133 with SMTP id di5mr819142icc.38.1385895760166;
- Sun, 01 Dec 2013 03:02:40 -0800 (PST)
-Received: by 10.64.77.52 with HTTP; Sun, 1 Dec 2013 03:02:40 -0800 (PST)
-In-Reply-To: <CAH3AnroU9cP67iQnC1pwed_J-CDCHZm06G1e48R-nOtA5+591A@mail.gmail.com>
+	id S1751632Ab3LALNH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 1 Dec 2013 06:13:07 -0500
+Received: from psi.thgersdorf.net ([176.9.98.78]:38555 "EHLO mail.psioc.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751494Ab3LALNF convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 1 Dec 2013 06:13:05 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by localhost.psioc.net (Postfix) with ESMTP id 4FBE14D64FC;
+	Sun,  1 Dec 2013 12:12:59 +0100 (CET)
+X-Virus-Scanned: amavisd-new at psioc.net
+Received: from mail.psioc.net ([127.0.0.1])
+	by localhost (mail.psioc.net [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id rchWA53k3IUA; Sun,  1 Dec 2013 12:12:49 +0100 (CET)
+Received: from linux-1gf2.thomasrast.ch (pD9EB3CC1.dip0.t-ipconnect.de [217.235.60.193])
+	(using TLSv1.2 with cipher AES128-GCM-SHA256 (128/128 bits))
+	(Client did not present a certificate)
+	by mail.psioc.net (Postfix) with ESMTPSA id 0DE304D64C4;
+	Sun,  1 Dec 2013 12:12:49 +0100 (CET)
+In-Reply-To: <loom.20131130T221443-682@post.gmane.org> (=?utf-8?Q?=22?=
+ =?utf-8?Q?=C3=98ystein?= Walle"'s
+	message of "Sat, 30 Nov 2013 21:22:01 +0000 (UTC)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238585>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238586>
 
-Jon, Kyle, Brian,
+=C3=98ystein Walle <oystwa@gmail.com> writes:
 
-Thanks a lot for your answers!
+> Aaron Brooks <aaron <at> brooks1.net> writes:
+>
+>> Unlike other commands, git stash doesn't work outside of the worktre=
+e,
+>> even when --work-tree is specified:
+[...]
+> The environment variables are properly exported. I verified this by
+> adding 'echo $GIT_WORK_TREE; echo $GIT_DIR' at the top of git-stash.s=
+h.
+> So these should propagate to "child gits" just fine, and so it should=
+n't
+> be necessary to test them explicitly.
+>
+> The problem seems to be that git rev-parse --is-inside-work-tree does
+> not honor these. In fact it doesn't even honor --git-dir or --work-tr=
+ee.
+> Judging by the name this may be intentional.
 
-On Sat, Nov 30, 2013 at 12:51 PM, Jon Seymour <jon.seymour@gmail.com> wrote:
-> From the perspective of topic there had been no change to the
-> definition of bar(), hence there was no change to contribute to the
-> eventual merge with master.
->
-> One way to avoid this kind of problem is to avoid making (or
-> cherry-picking) the same change on different branches, but instead use
-> a merge of a branch with a common base to implement changes needed on
-> multiple branches.
->
-> So, assuming you recognized the need to delete bar() from both topic
-> and master, create a new branch from the merge-base of topic and
-> master and delete bar() in that branch. Then merge this branch into
-> both topic and master.
->
-> If you subsequently decide to revert the removal of bar() on topic
-> then when you decide to merge topic back into master, git will see
-> that the removal branch has been merged into both branches and will
-> see the subsequent revert on topic as a change that needs to be merged
-> and you will get the result you are looking for.
->
-> So, as a general rule of thumb, try to avoid making the same change on
-> two different branches and instead factor out a change needed in
-> multiple places into a separate branch which is then merged into the
-> branches that need iit.
->
->
-> On Sat, Nov 30, 2013 at 1:26 AM, Evgeniy Ivanov <lolkaantimat@gmail.com> wrote:
->> Hi!
->>
->> Let's say I have two identical branches: master and topic. In master I
->> remove some code, i.e. function bar(). In topic I do the same (commit)
->> and after some time I realize I need bar() and revert previous commit
->> with removal.
->> So I end with master with no bar() and topic with bar() in its
->> original state. When I merge I get code without bar() and no merge
->> conflict (recursive or resolve strategies). Is it possible to detect
->> such situations as conflicts? When bar() is C++ virtual there is no
->> possibility to catch this with compiler.
->>
->> Please, CC me since I'm not subscribed.
->>
->> Thanks in advance!
->>
->> --
->> Cheers,
->> Evgeniy
->> --
->> To unsubscribe from this list: send the line "unsubscribe git" in
->> the body of a message to majordomo@vger.kernel.org
->> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Thanks for investigating this.
 
+Duy, you are the expert on the worktree detection logic.  Do you know i=
+f
+there is a reason for --is-inside-work-tree to not honor the
+GIT_WORK_TREE / GIT_DIR overrides?
 
-
--- 
-Cheers,
-Evgeniy
+--=20
+Thomas Rast
+tr@thomasrast.ch
