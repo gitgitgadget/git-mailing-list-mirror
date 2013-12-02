@@ -1,131 +1,76 @@
-From: Antoine Pelisse <apelisse@gmail.com>
-Subject: Re: git-blame segfault
-Date: Mon, 2 Dec 2013 15:15:38 +0100
-Message-ID: <CALWbr2w8sRRPJdjnpEwiGYe+T4KnvmRtV2n3yTesz8869q_=zA@mail.gmail.com>
-References: <20131202125748.GA275@x4>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 0/5] teach replace objects to sha1_object_info_extended()
+Date: Mon, 2 Dec 2013 09:52:25 -0500
+Message-ID: <20131202145225.GA12457@sigill.intra.peff.net>
+References: <20131130133934.2697.75781.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>
-To: Markus Trippelsdorf <markus@trippelsdorf.de>
-X-From: git-owner@vger.kernel.org Mon Dec 02 15:15:46 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Joey Hess <joey@kitenet.net>
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Mon Dec 02 15:52:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VnUHo-0003YR-PG
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Dec 2013 15:15:45 +0100
+	id 1VnUrQ-00068J-BP
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Dec 2013 15:52:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751510Ab3LBOPk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Dec 2013 09:15:40 -0500
-Received: from mail-pb0-f52.google.com ([209.85.160.52]:36375 "EHLO
-	mail-pb0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751383Ab3LBOPj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Dec 2013 09:15:39 -0500
-Received: by mail-pb0-f52.google.com with SMTP id uo5so18871490pbc.25
-        for <git@vger.kernel.org>; Mon, 02 Dec 2013 06:15:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=DZtXDqOXAPOd7jUdVxlfLRjwCSHqWvOAXCX0KXYiEE8=;
-        b=H50Sqwf1c/0BLW/9vLRwmrdW7Qce4p89ME54ON/o+4Clg/o1HxFZIhb/K2PKD9qsxP
-         5pOyP08zz6qEfOWkuHlI+zHS5LSorkgbLMzEiLQUxHZEqsP2cS/5WNtFF2UqcW1O+H2E
-         6BaawV4XQp3mOERsH8OJ0RoMN0D6pb+JAzixN8n1+giMZAXK656y+D2R+4DLKR3BjKWC
-         tbk5M4aNksT70f+xzwYPtFQOchJMnB3MJ4yn7R1ojk1uD2eh34b99k074kFPWKc/PG1m
-         6AoPPa1KX0jEQVm0TrddqwodSLYa/lERV2pE5SqDUnuJ76+BORoccRlqe6VTUv5DF/x/
-         sR7g==
-X-Received: by 10.66.2.66 with SMTP id 2mr68730631pas.72.1385993738950; Mon,
- 02 Dec 2013 06:15:38 -0800 (PST)
-Received: by 10.70.93.35 with HTTP; Mon, 2 Dec 2013 06:15:38 -0800 (PST)
-In-Reply-To: <20131202125748.GA275@x4>
+	id S1751697Ab3LBOw2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Dec 2013 09:52:28 -0500
+Received: from cloud.peff.net ([50.56.180.127]:49026 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751132Ab3LBOw1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Dec 2013 09:52:27 -0500
+Received: (qmail 20634 invoked by uid 102); 2 Dec 2013 14:52:27 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 02 Dec 2013 08:52:27 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 02 Dec 2013 09:52:25 -0500
+Content-Disposition: inline
+In-Reply-To: <20131130133934.2697.75781.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238631>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238632>
 
-On Mon, Dec 2, 2013 at 1:57 PM, Markus Trippelsdorf
-<markus@trippelsdorf.de> wrote:
-> When git is compiled with current gcc and "-march=native"
-> git-blame segfaults:
->
-> For example:
->
->  % gdb --args /var/tmp/git/git-blame gcc/tree-object-size.c
-> ...
-> Program received signal SIGSEGV, Segmentation fault.
-> 0x0000000000000000 in ?? ()
-> (gdb) bt
-> #0  0x0000000000000000 in ?? ()
-> #1  0x000000000051240d in xdl_emit_hunk_hdr (s1=s1@entry=30, c1=<optimized out>, s2=s2@entry=30, c2=c2@entry=6, func=func@entry=0x7fffffffd2d8 "", funclen=0,
->     ecb=ecb@entry=0x7fffffffd580) at xdiff/xutils.c:460
-> #2  0x0000000000512af7 in xdl_emit_diff (xe=0x7fffffffd390, xscr=<optimized out>, ecb=0x7fffffffd580, xecfg=0x7fffffffd590) at xdiff/xemit.c:237
+On Sat, Nov 30, 2013 at 02:51:18PM +0100, Christian Couder wrote:
 
-xdl_emit_diff() should not be called, because xecfg->hunk_func should
-be non-null and called instead. xld_emit_diff() is the one that needs
-outf to be set.
+> Here is a patch series to improve the way sha1_object_info_extended()
+> behaves when it is passed a replaced object.
+> [...]
+> Christian Couder (5):
+>   replace_object: don't check read_replace_refs twice
+>   introduce lookup_replace_object_extended() to pass flags
+>   Add an "unsigned flags" parameter to sha1_object_info_extended()
+>   t6050: show that git cat-file --batch fails with replace objects
+>   sha1_file: perform object replacement in sha1_object_info_extended()
 
-> #3  0x0000000000510a5d in xdl_diff (mf1=mf1@entry=0x7fffffffd510, mf2=mf2@entry=0x7fffffffd520, xpp=xpp@entry=0x7fffffffd570, xecfg=xecfg@entry=0x7fffffffd590,
->     ecb=ecb@entry=0x7fffffffd580) at xdiff/xdiffi.c:601
+Overall looks OK to me.
 
-Here we decide that xecfg->hunk_func is empty, and ef is set to xdl_emit_diff.
+I find it a little funny that we reuse the READ_SHA1_FILE_REPLACE flag
+directly in lookup_replace_object. That means that it is now a
+meaningful flag for sha1_object_info_extended, even though the name does
+not say so. It also means that the two may have to coordinate further
+flags (since a portion of their flag namespace is shared by
+lookup_replace_object). I don't foresee adding a lot of new flags,
+though, so it probably isn't a huge deal.
 
-> #4  0x000000000050b005 in xdi_diff (mf1=<optimized out>, mf2=<optimized out>, xpp=xpp@entry=0x7fffffffd570, xecfg=xecfg@entry=0x7fffffffd590, xecb=xecb@entry=0x7fffffffd580)
->     at xdiff-interface.c:136
-> #5  0x00000000004104df in diff_hunks (file_a=<optimized out>, file_b=<optimized out>, ctxlen=ctxlen@entry=0, hunk_func=hunk_func@entry=0x411320 <blame_chunk_cb>,
->     cb_data=cb_data@entry=0x7fffffffd830) at builtin/blame.c:105
+I also would have expected sha1_object_info_extended to simply receive
+the new flag via the struct object_info. Again, probably not a big deal,
+because there aren't many callsites that needed updating. But if we were
+not sharing flags with read_sha1_file, I think doing it as a flag in the
+struct would be nicer.
 
-As we can see in your code below, ecb.outf is not set here, because
-it's not needed by hunk_func.
-hunk_func is set to blame_chunck_cb, passed by the function below.
+I checked the resulting behavior against the list I made earlier; looks
+like all of the _extended callsites are doing the right thing.
 
-> #6  0x0000000000412b54 in pass_blame_to_parent (parent=0x11da810, target=0x11dab50, sb=0x7fffffffd6e0) at builtin/blame.c:815
+I do think the checks you added in 277336a (replace: forbid replacing an
+object with one of a different type, 2013-09-06) need updating. I
+started on that, but I wonder if all of cmd_replace should simply turn
+off read_replace_refs. I'd think it would always want to be dealing with
+the true objects.
 
-diff_hunks() is called with blame_chunck_cb as hunk_func.
-
-I think the best thing to do is to find out where xecfg->hunk_func
-loses the blame_chunck_cb value to NULL. You could start with a
-watchpoint.
-
->[...]
-> 460             if (ecb->outf(ecb->priv, &mb, 1) < 0)
-> (gdb) l
-> 455             }
-> 456             buf[nb++] = '\n';
-> 457
-> 458             mb.ptr = buf;
-> 459             mb.size = nb;
-> 460             if (ecb->outf(ecb->priv, &mb, 1) < 0)
-> 461                     return -1;
-> 462
-> 463             return 0;
-> 464     }
-> (gdb) p *ecb
-> $1 = {
->   priv = 0x7fffffffd830,
->   outf = 0x0
-> }
->
-> If I leave xecfg uninitialized in the following function the issue goes
-> away.
-
-Would that mean that gcc is doing some steps in the wrong order ? That
-is setting xecfg.hunk_func and then emptying the structure ? I've
-already had a similar bug, but that's very unfortunate.
-
-> From builtin/blame.c:
->   94 static int diff_hunks(mmfile_t *file_a, mmfile_t *file_b, long ctxlen,
->   95                       xdl_emit_hunk_consume_func_t hunk_func, void *cb_data)
->   96 {
->   97         xpparam_t xpp = {0};
->   98         xdemitconf_t xecfg = {0};
->   99         xdemitcb_t ecb = {NULL};
->  100
->  101         xpp.flags = xdl_opts;
->  102         xecfg.ctxlen = ctxlen;
->  103         xecfg.hunk_func = hunk_func;
->  104         ecb.priv = cb_data;
->  105         return xdi_diff(file_a, file_b, &xpp, &xecfg, &ecb);
->  106 }
->  107
+-Peff
