@@ -1,178 +1,132 @@
-From: =?UTF-8?B?SmFrdWIgTmFyxJlic2tp?= <jnareb@gmail.com>
-Subject: Re: [PATCH v3] gitweb: Add an option for adding more branch refs
-Date: Mon, 02 Dec 2013 18:34:04 +0100
-Message-ID: <529CC48C.5080902@gmail.com>
-References: <1385639092-13362-1-git-send-email-krzesimir@endocode.com>  <CANQwDwfbNfbFqX+hw09bPLVKAN3RZciJmwdixzHrj89KY8FsTQ@mail.gmail.com> <1385985997.2054.27.camel@localhost.localdomain>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git stash doesn't honor --work-tree or GIT_WORK_TREE
+Date: Mon, 02 Dec 2013 10:01:33 -0800
+Message-ID: <xmqqfvqbrv2a.fsf@gitster.dls.corp.google.com>
+References: <CABL6xpD9jvJWjUj0n+mgC419fGzA2N-b_yJho9zharCD6YTSiw@mail.gmail.com>
+	<loom.20131130T221443-682@post.gmane.org>
+	<874n6sddu7.fsf@thomasrast.ch>
+	<CACsJy8BFqqy8T1zwZd7Ly1-sAKGoxh0YfhFBgX6fBMTt_b5Dbw@mail.gmail.com>
+	<87zjokpo47.fsf@linux-1gf2.Speedport_W723_V_Typ_A_1_00_098>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	sunshine@sunshineco.com
-To: Krzesimir Nowak <krzesimir@endocode.com>
-X-From: git-owner@vger.kernel.org Mon Dec 02 18:34:20 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	=?utf-8?Q?=C3=98ystein?= Walle <oystwa@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Thomas Rast <tr@thomasrast.ch>
+X-From: git-owner@vger.kernel.org Mon Dec 02 19:01:49 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VnXNy-0002Nm-VX
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Dec 2013 18:34:19 +0100
+	id 1VnXoa-0006Ht-7b
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Dec 2013 19:01:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753063Ab3LBReM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 Dec 2013 12:34:12 -0500
-Received: from mail-ea0-f177.google.com ([209.85.215.177]:49620 "EHLO
-	mail-ea0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753045Ab3LBReK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Dec 2013 12:34:10 -0500
-Received: by mail-ea0-f177.google.com with SMTP id n15so9256112ead.36
-        for <git@vger.kernel.org>; Mon, 02 Dec 2013 09:34:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
-         :subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=tmGKkIdNwdT/hSCkrjwyijqaWbl0s5+GGgbYHt3Zrb8=;
-        b=BpKF/VOt2hh8YfepQwgP9Dxrg2v6vmg2GfVJMp0x2KZBBxm+Kh0c8tIrr3BDf4Izss
-         s687+hBlai881dpND6BL7GHgarU6haGzZJAfBKRv6Nmx9rXaerUzhiR4the+3xuJrcsB
-         8xDvs8VHAVgZjH+Gzv1fFLG/kt0umtU+nJ12KEhje4IIvdkbV4I+DXxJB6NX8PsZ1MWD
-         ZZXyhkgbDbDWoMAvfcTPZ4S8gzHmK6Ws2vpPnbfBwc+IMBgNKGSyGL/Wx7CnlIwX5LCa
-         VRlpjBaYkvLWu2mjrMJSgEmUv1rdEnqaKS62V7t04tSXrtRwC5u2ITpMZcm1ssIoE0HB
-         Goig==
-X-Received: by 10.15.67.195 with SMTP id u43mr42748788eex.14.1386005649543;
-        Mon, 02 Dec 2013 09:34:09 -0800 (PST)
-Received: from [158.75.2.83] ([158.75.2.83])
-        by mx.google.com with ESMTPSA id j46sm73232895eew.18.2013.12.02.09.34.08
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 02 Dec 2013 09:34:08 -0800 (PST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <1385985997.2054.27.camel@localhost.localdomain>
+	id S1753253Ab3LBSBo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Dec 2013 13:01:44 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33737 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753168Ab3LBSBn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Dec 2013 13:01:43 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 959F85201A;
+	Mon,  2 Dec 2013 13:01:37 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=4K2hjWMO659JlJ4xqRnwaFROiLA=; b=oYIM4J
+	NIrenTbZdkugxJmGX6OGChV59eVwf/0Ji9Z3qx47V6Wr44rWZO38P9bjBJCdylTK
+	b8V9Y9pj6xUhvfGFUlMeLu3TtzfrkuKJu3AdE1cwQsJtQpiGUD47kKaq0c0/s44q
+	24UPB5RjS8ltBK1CjX8nsrjdAMIyWUlK96tfM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=EekJkgT519330wphPHnAwN71FxMzt1ca
+	bFCFgFlblernUN8aGLV6BCLzmBEuqydfuJ2V5wGLgWVJN+KYJA1Qk4kVPC/N+iCT
+	gxv11BlwajfyT4rT4bE25jhhWh0ey66V1qZ6hvFHsZxzl0VRDdEEP1OOJbjwuZSj
+	AF4U5WcSG8A=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8765052018;
+	Mon,  2 Dec 2013 13:01:37 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B114C52014;
+	Mon,  2 Dec 2013 13:01:36 -0500 (EST)
+In-Reply-To: <87zjokpo47.fsf@linux-1gf2.Speedport_W723_V_Typ_A_1_00_098>
+	(Thomas Rast's message of "Sun, 01 Dec 2013 16:50:00 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: C94902A2-5B7B-11E3-BC1A-D331802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238639>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238640>
 
-W dniu 2013-12-02 13:06, Krzesimir Nowak pisze:
-> On Mon, 2013-12-02 at 01:21 +0100, Jakub Nar=C4=99bski wrote:
->> On Thu, Nov 28, 2013 at 12:44 PM, Krzesimir Nowak
->> <krzesimir@endocode.com>  wrote:
->>
->>> Allow @additional_branch_refs configuration variable to tell gitweb=
- to
->>> show refs from additional hierarchies in addition to branches in th=
-e
->>> list-of-branches view.
->>>
->>> Signed-off-by: Krzesimir Nowak<krzesimir@endocode.com>
->>
->> Why not use %feature hash instead of adding new configuration variab=
-le?
->> I think that this option is similar enough to 'remote_heads' feature
->> (which BTW should be 'remote-heads'), and could conceivably enabled
->> on a per-repository basis, i.e. with repository configuration overri=
-de,
->> isn't it?
+Thomas Rast <tr@thomasrast.ch> writes:
+
+> The problem here is that shell scripts that want to do something with a
+> worktree tend to call require_work_tree in git-sh-setup:
 >
-> I'd like to see some consensus on it before I start changing the patc=
-h
-> again.
-
-%feature hash is mainly (but not only) about options that can be
-configured on per-repository basis.  Configuration variables are
-about options that are per-instance (per gitweb).
-
->> Usually %feature hash is preferred over adding new configuration var=
-iable
->> but this is not some hard rule. Note however that patches adding new=
- config
->> are met with more scrutiny, as it is harder to fix mistakes because =
-of
->> requirement of backwards compatibility of configuration files.
->>
+> require_work_tree () {
+> 	test "$(git rev-parse --is-inside-work-tree 2>/dev/null)" = true ||
+> 	die "fatal: $0 cannot be used without a working tree."
+> }
 >
-> I don't know what kind of backwards compatibility you mention. Whethe=
-r
-> you want gitweb to survive reading old config file or to honor
-> deprecated/old config variables.
+> However, when an explicit GIT_WORK_TREE is in effect, that seems a bit
+> silly.  The _intent_ of that command is "I need a worktree to work
+> with".  But what it currently checks is something completely different,
+> namely "am I _inside_ the worktree".
 
-I meant here honoring deprecated/old variables, i.e. honoring existing
-configuration files.  See for example backward compatibility for old
-$stylesheet variable vs new @stylesheets in print_header_links().
+Correct.
 
-Though in this case it shouldn't be much of a problem; it would be
-easy to honor @additional_branch_refs by setting 'default' for
-'extra-branch-refs' feature to it.
+I have a few issues with the proposed "solution", though.
 
->> BTW. there really should be gitweb/CodingGuidelines...
->>
->
-> Yes, would be useful. As in every other project. :)
+ - require_work_tree has always meant that "This command has to be
+   run inside a working tree".  That automatically implies that you
+   cannot be working with a bare repository but it is much stronger
+   than that.  You actually have to be inside one.
 
-Well, Git itself *has* Documentation/CodingGuidelines, but perhaps
-gitweb subsystem should have it's own...
+ - $GIT_WORK_TREE (and core.worktree) never meant "I do not bother
+   to chdir there myself".  More specifically, "GIT_WORK_TREE=$there
+   git foo" is not "cd $there && git foo".  It only means "Because
+   the working tree may not have .git directory embedded in it, even
+   though you may be able to know where the .git repository is
+   (perhaps because I am telling you with $GIT_DIR), you may not be
+   able to tell where the top level of the working tree is---hence I
+   am telling you where it is".
 
-[...]
->>> @@ -3662,7 +3701,8 @@ sub git_get_heads_list {
->>>                  my ($committer, $epoch, $tz) =3D
->>>                          ($committerinfo =3D~ /^(.*) ([0-9]+) (.*)$=
-/);
->>>                  $ref_item{'fullname'}  =3D $name;
->>> -               $name =3D~ s!^refs/(?:head|remote)s/!!;
->>> +               my $strip_refs =3D join '|', map { quotemeta } get_=
-branch_refs();
->>> +               $name =3D~ s!^refs/(?:$strip_refs|remotes)/!!;
->>>
->>>                  $ref_item{'name'}  =3D $name;
->>>                  $ref_item{'id'}    =3D $hash;
->>> @@ -7179,7 +7219,8 @@ sub snapshot_name {
->>>                  $ver =3D $1;
->>>          } else {
->>>                  # branches and other need shortened SHA-1 hash
->>> -               if ($hash =3D~ m!^refs/(?:heads|remotes)/(.*)$!) {
->>> +               my $strip_refs =3D join '|', map { quotemeta } get_=
-branch_refs();
->>> +               if ($hash =3D~ m!^refs/(?:$strip_refs|remotes)/(.*)=
-$!) {
->>>                          $ver =3D $1;
->>>                  }
->>>                  $ver .=3D '-' . git_get_short_hash($project, $hash=
-);
->>
->> One one hand, it is about threating extra branch refs the same way a=
-s 'head'.
->> On the other hand we loose distinction between 'refs/heads/foo' and =
-e.g.
->> 'refs/wip/foo'. But maybe that's all right...
->>
->
-> In git_get_heads_list sub I could append a " ($ref_dir)" to refs whic=
-h
-> are in neither 'heads' nor 'remotes', so heads view would look like:
-> master
-> old-stable
-> some-work-in-progress (wip)
-> some-other-branch (other)
->
-> where both master and old-stable are in refs/heads/,
-> some-work-in-progress in refs/wip/ and some-other-branch in refs/othe=
-r/.
->
-> In case of branch snapshot names (snapshot_name sub) I could change i=
-t,
-> so names for branches mentioned above would be
-> "Project-master-<short-hash>.tgz",
-> "Project-old_stable-<short-hash>.tgz",
-> "Project-wip-some-work-in-progress-<short-hash>.tgz"
-> "Project-other-some-other-branch-<short-hash>.tgz"
->
-> What do you think?
+ - "I do not bother to chdir there myself" has long been treated as
+   a non-issue desire, but recently we added "git -C $there". We
+   should not conflate GIT_WORK_TREE, which is a discovery mechanism
+   for where the working tree is, with that.
 
-That is, I think, a very good idea.  Though perhaps it would be more=20
-readable to add this extra feature as a separate patch, on top of main =
-one.
+ - Some command "git foo" may want to affect and/or look at only a
+   part of the working tree, and the $cwd is one way of specifying
+   that, e.g. "cd doc && git grep foo".  "If a command that needs to
+   be run from somewhere in a working tree was run outside, error
+   out." has been the general design principle for commands that
+   interact with files in the working tree.
 
---=20
-Jakub Narebski
+   It may be OK to propose changing it to "Instead of erroring out,
+   pretend as if the command were run from the top-level of the
+   working tree", but there is an issue of what to do with the
+   command line arguments that are path-like.  For example,
+   should this command sequence:
+
+	cd /tmp
+	GIT_WORK_TREE=/var/tmp/work git foo -f inputFile
+
+   read from /tmp/inputFile, or /var/tmp/work/inputFile?  There may
+   be other "unintuitive interactions with silent chdir"; with "git
+   -C $there", we are very clear that chdir is the first thing that
+   happens and everything path-like are relative to $there, which is
+   similar to what "make" does, but doing the same for core.worktree
+   or $GIT_WORK_TREE may be surprising, given that environment is
+   "set and forget" (the examples in this message explicitly spell
+   it out with one-shot export syntax, but that is only for
+   illustration) and not visible during usual use of the commands.
+
+> But it would give require_work_tree somewhat interesting and unintuitive
+> side effects.
+
+Exactly. My knee-jerk reaction is that I do not think we would want
+to go there, but I haven't thought things through.
