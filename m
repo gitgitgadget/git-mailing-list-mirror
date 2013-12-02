@@ -1,114 +1,143 @@
-From: Thomas Rast <tr@thomasrast.ch>
-Subject: Re: [PATCH 3/3] send-email: set SSL options through IO::Socket::SSL::set_client_defaults
-Date: Tue, 03 Dec 2013 00:23:28 +0100
-Message-ID: <87k3fmon0v.fsf@linux-1gf2.Speedport_W723_V_Typ_A_1_00_098>
-References: <3bb0c80c70e1c40236034552bec037cb0c26167c.1385938050.git.tr@thomasrast.ch>
-	<c5308d5ffb34b70cbfea5a39e08902904fac1400.1385938050.git.tr@thomasrast.ch>
-	<CALkWK0nn867+3+cToc=QMyA0u+0oPJkq+nmB1T3DP+kiiwb72Q@mail.gmail.com>
+From: Martin Fick <mfick@codeaurora.org>
+Subject: Ideas to speed up repacking
+Date: Mon, 2 Dec 2013 16:30:45 -0700
+Organization: CAF
+Message-ID: <201312021630.45767.mfick@codeaurora.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 03 00:23:48 2013
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 03 00:30:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vncq9-0006F8-Ik
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Dec 2013 00:23:45 +0100
+	id 1Vncx3-0002eg-GM
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Dec 2013 00:30:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752130Ab3LBXXl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Dec 2013 18:23:41 -0500
-Received: from psi.thgersdorf.net ([176.9.98.78]:41816 "EHLO mail.psioc.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752686Ab3LBXXk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Dec 2013 18:23:40 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by localhost.psioc.net (Postfix) with ESMTP id B690F4D6579;
-	Tue,  3 Dec 2013 00:23:38 +0100 (CET)
-X-Virus-Scanned: amavisd-new at psioc.net
-Received: from mail.psioc.net ([127.0.0.1])
-	by localhost (mail.psioc.net [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id Io8kqXvAyZkf; Tue,  3 Dec 2013 00:23:28 +0100 (CET)
-Received: from linux-1gf2.Speedport_W723_V_Typ_A_1_00_098.thomasrast.ch (46-126-8-85.dynamic.hispeed.ch [46.126.8.85])
-	(using TLSv1.2 with cipher AES128-GCM-SHA256 (128/128 bits))
-	(Client did not present a certificate)
-	by mail.psioc.net (Postfix) with ESMTPSA id B670F4D64C4;
-	Tue,  3 Dec 2013 00:23:27 +0100 (CET)
-In-Reply-To: <CALkWK0nn867+3+cToc=QMyA0u+0oPJkq+nmB1T3DP+kiiwb72Q@mail.gmail.com>
-	(Ramkumar Ramachandra's message of "Mon, 2 Dec 2013 16:14:09 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1754295Ab3LBXat (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Dec 2013 18:30:49 -0500
+Received: from smtp.codeaurora.org ([198.145.11.231]:55709 "EHLO
+	smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753405Ab3LBXas (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Dec 2013 18:30:48 -0500
+Received: from smtp.codeaurora.org (localhost [127.0.0.1])
+	by smtp.codeaurora.org (Postfix) with ESMTP id 1C4C613EF80;
+	Mon,  2 Dec 2013 23:30:48 +0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 486)
+	id 0F36713F279; Mon,  2 Dec 2013 23:30:48 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on
+	pdx-caf-smtp.dmz.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=5.0 tests=ALL_TRUSTED,BAYES_00
+	autolearn=ham version=3.3.1
+Received: from mfick-lnx.localnet (mfick-lnx.qualcomm.com [129.46.10.58])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	(Authenticated sender: mfick@smtp.codeaurora.org)
+	by smtp.codeaurora.org (Postfix) with ESMTPSA id 8315A13EF80
+	for <git@vger.kernel.org>; Mon,  2 Dec 2013 23:30:47 +0000 (UTC)
+User-Agent: KMail/1.13.5 (Linux/2.6.32.49+drm33.21-mfick7; KDE/4.4.5; x86_64; ; )
+X-Length: 3824
+X-UID: 268
+X-Virus-Scanned: ClamAV using ClamSMTP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238659>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238660>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+I wanted to explore the idea of exploiting knowledge about 
+previous repacks to help speed up future repacks.  
 
-> Thomas Rast wrote:
->> When --smtp-encryption=ssl, we use a Net::SMTP::SSL connection,
->> passing its ->new all the options that would otherwise go to
->> Net::SMTP->new (most options) and IO::Socket::SSL->start_SSL (for the
->> SSL options).
->>
->> However, while Net::SMTP::SSL replaces the underlying socket class
->> with an SSL socket, it does nothing to allow passing options to that
->> socket.  So the SSL-relevant options are lost.
->
-> Both [1/3] and [2/3] look good. However, I'm curious about this one:
-> Net::SMTP::SSL inherits from IO::Socket::SSL, where new() is defined.
-> In the documentation for IO::Socket::SSL,
->
->   $ perldoc IO::Socket::SSL
->
-> I can see examples where SSL_verify_mode and SSL_ca_path are passed to
-> new(). So, I'm not sure what this patch is about.
+I had various ideas that seemed like they might be good 
+places to start, but things quickly got away from me.  
+Mainly I wanted to focus on reducing and even sometimes 
+eliminating reachability calculations since that seems to be 
+be the one major unsolved slow piece during repacking.
 
-Net::SMTP::SSL is merely steals all the code from Net::SMTP into a class
-that has IO::Socket::SSL as its first inheritance line.
+My first line of thinking goes like this:  "After a full 
+repack, reachability of the current refs is known.  Exploit 
+that knowledge for future repacks."  There are some very 
+simple scenarios where if we could figure out how to 
+identify them reliably, I think we could simply avoid 
+reachability calculations entirely, and yet end up with the 
+same repacked files as if we had done the reachability 
+calculations.  Let me outline some to see if they make sense 
+as starting place for further discussion.
 
-This works because Net::SMTP (no SSL) inherits from IO::Socket::INET
-instead, and uses SUPER:: methods to access the latter's features.  So
-by effectively replacing IO::Socket::INET with IO::Socket::SSL,
-Net::SMTP::SSL can apply all of Net::SMTP's code on an SSL socket.
+-------------
 
-However!
+* Setup 1:  
 
-That SUPER:: access does not pass anything SSLey.  In particular,
-Net::SMTP::SSL->new (which is just the same as Net::SMTP->new) runs this
-to initialize its socket:
+  Do a full repack.  All loose and packed objects are added 
+to a single pack file (assumes git config repack options do 
+not create multiple packs).
 
-    $obj = $type->SUPER::new(
-      PeerAddr => ($host = $h),
-      PeerPort => $arg{Port} || 'smtp(25)',
-      LocalAddr => $arg{LocalAddr},
-      LocalPort => $arg{LocalPort},
-      Proto     => 'tcp',
-      Timeout   => defined $arg{Timeout}
-      ? $arg{Timeout}
-      : 120
-      )
+* Scenario 1:
 
-Note the conspicuous absence of any kind of SSL arguments, or any kind
-of args-I-don't-know-myself passthrough.
+  Start with Setup 1.  Nothing has changed on the repo 
+contents (no new object/packs, refs all the same), but 
+repacking config options have changed (for example 
+compression level has changed).
 
-If you _do_ specify SSL arguments (i.e. key-value style arguments that
-would normally be accepted by IO::Socket::SSL->new) to
-Net::SMTP::SSL->new, they will simply be ignored, because of how the
-key-value argument passing treats the argument list as a hash.
+* Scenario 2:
 
-Does that clarify it?
+   Starts with Setup 1.  Add one new pack file that was 
+pushed to the repo by adding a new ref to the repo (existing 
+refs did not change).
 
-This is all assuming I got the details vaguely correct, and the source
-snippets are from my perl v5.18.1 installed by opensuse 13.1.
+* Scenario 3: 
 
-It turns out the server I was trying to talk to on Sunday had an expired
-certificate, and despite the code from 35035bb, my efforts to set
-SSL_VERIFY_NONE were futile.  Until I noticed the set_client_defaults()
-trick.  So I'm pretty convinced the patch does *something* right.
+   Starts with Setup 1.  Add one new pack file that was 
+pushed to the repo by updating an existing ref with a fast 
+forward.
+
+* Scenario 4:
+
+   Starts with Setup 1.  Add some loose objects to the repo 
+via a local fast forward ref update (I am assuming this is 
+possible without adding any new unreferenced objects?)
+
+
+In all 4 scenarios, I believe we should be able to skip 
+history traversal and simply grab all objects and repack 
+them into a new file?
+
+-------------
+
+Of the 4 scenarios above, it seems like #3 and #4 are very 
+common operations (#2 is perhaps even more common for 
+Gerrit)?  If these scenarios can be reliably identified 
+somehow, then perhaps they could be used to reduce repacking 
+time for these scenarios, and later used as building blocks 
+to reduce repacking time for other related but slightly more 
+complicated scenarios (with reduced history walking instead 
+of none)?
+
+For example to identify scenario 1, what if we kept a copy 
+of all refs and their shas used during a full repack along 
+with the newly repacked file?  A simplistic approach would 
+store them in the same format as the packed-refs file as 
+pack-<sha>.refs.  During repacking, if none of the refs have 
+changed and there are no new objects...  
+
+Then, if none of the refs have changed and there are new 
+objects, we can just throw the new objects away?
+
+...
+
+I am going to stop here because this email is long enough 
+and I wanted to get some feedback on the ideas first before 
+offering more solutions.
+
+Thanks,
+
+-Martin
 
 -- 
-Thomas Rast
-tr@thomasrast.ch
+The Qualcomm Innovation Center, Inc. is a member of Code 
+Aurora Forum, hosted by The Linux Foundation
+ 
