@@ -1,148 +1,178 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [BUG] git mv file directory/ creates the file directory
-Date: Mon, 02 Dec 2013 18:07:54 +0100
-Message-ID: <vpq61r7npud.fsf@anie.imag.fr>
-References: <vpqli03sh61.fsf@anie.imag.fr> <20131202133544.GA8755@lanh>
+From: =?UTF-8?B?SmFrdWIgTmFyxJlic2tp?= <jnareb@gmail.com>
+Subject: Re: [PATCH v3] gitweb: Add an option for adding more branch refs
+Date: Mon, 02 Dec 2013 18:34:04 +0100
+Message-ID: <529CC48C.5080902@gmail.com>
+References: <1385639092-13362-1-git-send-email-krzesimir@endocode.com>  <CANQwDwfbNfbFqX+hw09bPLVKAN3RZciJmwdixzHrj89KY8FsTQ@mail.gmail.com> <1385985997.2054.27.camel@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Dec 02 18:08:09 2013
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	sunshine@sunshineco.com
+To: Krzesimir Nowak <krzesimir@endocode.com>
+X-From: git-owner@vger.kernel.org Mon Dec 02 18:34:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VnWyb-0007mu-70
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Dec 2013 18:08:05 +0100
+	id 1VnXNy-0002Nm-VX
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Dec 2013 18:34:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753002Ab3LBRIA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Dec 2013 12:08:00 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:41185 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752589Ab3LBRIA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Dec 2013 12:08:00 -0500
-Received: from globule.imag.fr (globule.imag.fr [129.88.34.238])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id rB2H7qY1031058
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 2 Dec 2013 18:07:52 +0100
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	(authenticated bits=0)
-	by globule.imag.fr (8.13.8/8.13.8) with ESMTP id rB2H7som000938
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Mon, 2 Dec 2013 18:07:54 +0100
-In-Reply-To: <20131202133544.GA8755@lanh> (Duy Nguyen's message of "Mon, 2 Dec
-	2013 20:35:44 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 02 Dec 2013 18:07:53 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: rB2H7qY1031058
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1386608875.9544@BSUloBgTItFLAZ4JZljiVA
+	id S1753063Ab3LBReM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 Dec 2013 12:34:12 -0500
+Received: from mail-ea0-f177.google.com ([209.85.215.177]:49620 "EHLO
+	mail-ea0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753045Ab3LBReK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Dec 2013 12:34:10 -0500
+Received: by mail-ea0-f177.google.com with SMTP id n15so9256112ead.36
+        for <git@vger.kernel.org>; Mon, 02 Dec 2013 09:34:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
+         :subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=tmGKkIdNwdT/hSCkrjwyijqaWbl0s5+GGgbYHt3Zrb8=;
+        b=BpKF/VOt2hh8YfepQwgP9Dxrg2v6vmg2GfVJMp0x2KZBBxm+Kh0c8tIrr3BDf4Izss
+         s687+hBlai881dpND6BL7GHgarU6haGzZJAfBKRv6Nmx9rXaerUzhiR4the+3xuJrcsB
+         8xDvs8VHAVgZjH+Gzv1fFLG/kt0umtU+nJ12KEhje4IIvdkbV4I+DXxJB6NX8PsZ1MWD
+         ZZXyhkgbDbDWoMAvfcTPZ4S8gzHmK6Ws2vpPnbfBwc+IMBgNKGSyGL/Wx7CnlIwX5LCa
+         VRlpjBaYkvLWu2mjrMJSgEmUv1rdEnqaKS62V7t04tSXrtRwC5u2ITpMZcm1ssIoE0HB
+         Goig==
+X-Received: by 10.15.67.195 with SMTP id u43mr42748788eex.14.1386005649543;
+        Mon, 02 Dec 2013 09:34:09 -0800 (PST)
+Received: from [158.75.2.83] ([158.75.2.83])
+        by mx.google.com with ESMTPSA id j46sm73232895eew.18.2013.12.02.09.34.08
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 02 Dec 2013 09:34:08 -0800 (PST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:12.0) Gecko/20120428 Thunderbird/12.0.1
+Newsgroups: gmane.comp.version-control.git
+In-Reply-To: <1385985997.2054.27.camel@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238638>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238639>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+W dniu 2013-12-02 13:06, Krzesimir Nowak pisze:
+> On Mon, 2013-12-02 at 01:21 +0100, Jakub Nar=C4=99bski wrote:
+>> On Thu, Nov 28, 2013 at 12:44 PM, Krzesimir Nowak
+>> <krzesimir@endocode.com>  wrote:
+>>
+>>> Allow @additional_branch_refs configuration variable to tell gitweb=
+ to
+>>> show refs from additional hierarchies in addition to branches in th=
+e
+>>> list-of-branches view.
+>>>
+>>> Signed-off-by: Krzesimir Nowak<krzesimir@endocode.com>
+>>
+>> Why not use %feature hash instead of adding new configuration variab=
+le?
+>> I think that this option is similar enough to 'remote_heads' feature
+>> (which BTW should be 'remote-heads'), and could conceivably enabled
+>> on a per-repository basis, i.e. with repository configuration overri=
+de,
+>> isn't it?
+>
+> I'd like to see some consensus on it before I start changing the patc=
+h
+> again.
 
-> This may be a start. Does not seem to break anything..
+%feature hash is mainly (but not only) about options that can be
+configured on per-repository basis.  Configuration variables are
+about options that are per-instance (per gitweb).
 
-I did not thoroughly review/test, but it does fix my case. Below is the
-same patch with one test case. No time to do more right now.
+>> Usually %feature hash is preferred over adding new configuration var=
+iable
+>> but this is not some hard rule. Note however that patches adding new=
+ config
+>> are met with more scrutiny, as it is harder to fix mistakes because =
+of
+>> requirement of backwards compatibility of configuration files.
+>>
+>
+> I don't know what kind of backwards compatibility you mention. Whethe=
+r
+> you want gitweb to survive reading old config file or to honor
+> deprecated/old config variables.
 
-Thanks,
+I meant here honoring deprecated/old variables, i.e. honoring existing
+configuration files.  See for example backward compatibility for old
+$stylesheet variable vs new @stylesheets in print_header_links().
 
->From 99985341ed1312cf6a7b63e14be7da0d51c701b4 Mon Sep 17 00:00:00 2001
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Date: Mon, 2 Dec 2013 18:03:20 +0100
-Subject: [PATCH] WIP: error out on git mv file no-such-dir/
+Though in this case it shouldn't be much of a problem; it would be
+easy to honor @additional_branch_refs by setting 'default' for
+'extra-branch-refs' feature to it.
 
----
- builtin/mv.c  | 18 +++++++++++-------
- t/t7001-mv.sh |  9 +++++++++
- 2 files changed, 20 insertions(+), 7 deletions(-)
+>> BTW. there really should be gitweb/CodingGuidelines...
+>>
+>
+> Yes, would be useful. As in every other project. :)
 
-diff --git a/builtin/mv.c b/builtin/mv.c
-index 2e0e61b..0fcccd5 100644
---- a/builtin/mv.c
-+++ b/builtin/mv.c
-@@ -16,9 +16,12 @@ static const char * const builtin_mv_usage[] = {
- 	NULL
- };
- 
-+#define DUP_BASENAME 1
-+#define KEEP_TRAILING_SLASH 2
-+
- static const char **internal_copy_pathspec(const char *prefix,
- 					   const char **pathspec,
--					   int count, int base_name)
-+					   int count, unsigned flags)
- {
- 	int i;
- 	const char **result = xmalloc((count + 1) * sizeof(const char *));
-@@ -27,11 +30,12 @@ static const char **internal_copy_pathspec(const char *prefix,
- 	for (i = 0; i < count; i++) {
- 		int length = strlen(result[i]);
- 		int to_copy = length;
--		while (to_copy > 0 && is_dir_sep(result[i][to_copy - 1]))
-+		while (!(flags & KEEP_TRAILING_SLASH) &&
-+		       to_copy > 0 && is_dir_sep(result[i][to_copy - 1]))
- 			to_copy--;
--		if (to_copy != length || base_name) {
-+		if (to_copy != length || flags & DUP_BASENAME) {
- 			char *it = xmemdupz(result[i], to_copy);
--			if (base_name) {
-+			if (flags & DUP_BASENAME) {
- 				result[i] = xstrdup(basename(it));
- 				free(it);
- 			} else
-@@ -87,16 +91,16 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 
- 	source = internal_copy_pathspec(prefix, argv, argc, 0);
- 	modes = xcalloc(argc, sizeof(enum update_mode));
--	dest_path = internal_copy_pathspec(prefix, argv + argc, 1, 0);
-+	dest_path = internal_copy_pathspec(prefix, argv + argc, 1, KEEP_TRAILING_SLASH);
- 	submodule_gitfile = xcalloc(argc, sizeof(char *));
- 
- 	if (dest_path[0][0] == '\0')
- 		/* special case: "." was normalized to "" */
--		destination = internal_copy_pathspec(dest_path[0], argv, argc, 1);
-+		destination = internal_copy_pathspec(dest_path[0], argv, argc, DUP_BASENAME);
- 	else if (!lstat(dest_path[0], &st) &&
- 			S_ISDIR(st.st_mode)) {
- 		dest_path[0] = add_slash(dest_path[0]);
--		destination = internal_copy_pathspec(dest_path[0], argv, argc, 1);
-+		destination = internal_copy_pathspec(dest_path[0], argv, argc, DUP_BASENAME);
- 	} else {
- 		if (argc != 1)
- 			die("destination '%s' is not a directory", dest_path[0]);
-diff --git a/t/t7001-mv.sh b/t/t7001-mv.sh
-index b90e985..7e74bf3 100755
---- a/t/t7001-mv.sh
-+++ b/t/t7001-mv.sh
-@@ -72,6 +72,15 @@ rm -f idontexist untracked1 untracked2 \
-      .git/index.lock
- 
- test_expect_success \
-+    'moving to target with trailing slash' \
-+    'test_must_fail git mv path0/COPYING no-such-dir/ &&
-+     git mv path0/ no-such-dir/'
-+
-+test_expect_success \
-+    'clean up' \
-+    'git reset --hard'
-+
-+test_expect_success \
-     'adding another file' \
-     'cp "$TEST_DIRECTORY"/../README path0/README &&
-      git add path0/README &&
--- 
-1.8.5.rc3.4.g8bd3721
+Well, Git itself *has* Documentation/CodingGuidelines, but perhaps
+gitweb subsystem should have it's own...
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+[...]
+>>> @@ -3662,7 +3701,8 @@ sub git_get_heads_list {
+>>>                  my ($committer, $epoch, $tz) =3D
+>>>                          ($committerinfo =3D~ /^(.*) ([0-9]+) (.*)$=
+/);
+>>>                  $ref_item{'fullname'}  =3D $name;
+>>> -               $name =3D~ s!^refs/(?:head|remote)s/!!;
+>>> +               my $strip_refs =3D join '|', map { quotemeta } get_=
+branch_refs();
+>>> +               $name =3D~ s!^refs/(?:$strip_refs|remotes)/!!;
+>>>
+>>>                  $ref_item{'name'}  =3D $name;
+>>>                  $ref_item{'id'}    =3D $hash;
+>>> @@ -7179,7 +7219,8 @@ sub snapshot_name {
+>>>                  $ver =3D $1;
+>>>          } else {
+>>>                  # branches and other need shortened SHA-1 hash
+>>> -               if ($hash =3D~ m!^refs/(?:heads|remotes)/(.*)$!) {
+>>> +               my $strip_refs =3D join '|', map { quotemeta } get_=
+branch_refs();
+>>> +               if ($hash =3D~ m!^refs/(?:$strip_refs|remotes)/(.*)=
+$!) {
+>>>                          $ver =3D $1;
+>>>                  }
+>>>                  $ver .=3D '-' . git_get_short_hash($project, $hash=
+);
+>>
+>> One one hand, it is about threating extra branch refs the same way a=
+s 'head'.
+>> On the other hand we loose distinction between 'refs/heads/foo' and =
+e.g.
+>> 'refs/wip/foo'. But maybe that's all right...
+>>
+>
+> In git_get_heads_list sub I could append a " ($ref_dir)" to refs whic=
+h
+> are in neither 'heads' nor 'remotes', so heads view would look like:
+> master
+> old-stable
+> some-work-in-progress (wip)
+> some-other-branch (other)
+>
+> where both master and old-stable are in refs/heads/,
+> some-work-in-progress in refs/wip/ and some-other-branch in refs/othe=
+r/.
+>
+> In case of branch snapshot names (snapshot_name sub) I could change i=
+t,
+> so names for branches mentioned above would be
+> "Project-master-<short-hash>.tgz",
+> "Project-old_stable-<short-hash>.tgz",
+> "Project-wip-some-work-in-progress-<short-hash>.tgz"
+> "Project-other-some-other-branch-<short-hash>.tgz"
+>
+> What do you think?
+
+That is, I think, a very good idea.  Though perhaps it would be more=20
+readable to add this extra feature as a separate patch, on top of main =
+one.
+
+--=20
+Jakub Narebski
