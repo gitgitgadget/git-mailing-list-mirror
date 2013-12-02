@@ -1,150 +1,148 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 10/21] pack-bitmap: add support for bitmap indexes
-Date: Mon, 2 Dec 2013 11:12:08 -0500
-Message-ID: <20131202161208.GB24202@sigill.intra.peff.net>
-References: <20131114124157.GA23784@sigill.intra.peff.net>
- <20131114124432.GJ10757@sigill.intra.peff.net>
- <87siuedhvj.fsf@thomasrast.ch>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [BUG] git mv file directory/ creates the file directory
+Date: Mon, 02 Dec 2013 18:07:54 +0100
+Message-ID: <vpq61r7npud.fsf@anie.imag.fr>
+References: <vpqli03sh61.fsf@anie.imag.fr> <20131202133544.GA8755@lanh>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org,
-	Vicent =?utf-8?B?TWFydMOt?= <vicent@github.com>
-To: Thomas Rast <tr@thomasrast.ch>
-X-From: git-owner@vger.kernel.org Mon Dec 02 17:12:17 2013
+Content-Type: text/plain
+Cc: git <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Dec 02 18:08:09 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VnW6a-0007kg-Fk
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Dec 2013 17:12:16 +0100
+	id 1VnWyb-0007mu-70
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Dec 2013 18:08:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752494Ab3LBQMM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Dec 2013 11:12:12 -0500
-Received: from cloud.peff.net ([50.56.180.127]:49096 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752024Ab3LBQMK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Dec 2013 11:12:10 -0500
-Received: (qmail 25786 invoked by uid 102); 2 Dec 2013 16:12:09 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 02 Dec 2013 10:12:09 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 02 Dec 2013 11:12:08 -0500
-Content-Disposition: inline
-In-Reply-To: <87siuedhvj.fsf@thomasrast.ch>
+	id S1753002Ab3LBRIA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Dec 2013 12:08:00 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:41185 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752589Ab3LBRIA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Dec 2013 12:08:00 -0500
+Received: from globule.imag.fr (globule.imag.fr [129.88.34.238])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id rB2H7qY1031058
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 2 Dec 2013 18:07:52 +0100
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	(authenticated bits=0)
+	by globule.imag.fr (8.13.8/8.13.8) with ESMTP id rB2H7som000938
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Mon, 2 Dec 2013 18:07:54 +0100
+In-Reply-To: <20131202133544.GA8755@lanh> (Duy Nguyen's message of "Mon, 2 Dec
+	2013 20:35:44 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 02 Dec 2013 18:07:53 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: rB2H7qY1031058
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1386608875.9544@BSUloBgTItFLAZ4JZljiVA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238637>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238638>
 
-On Fri, Nov 29, 2013 at 10:21:04PM +0100, Thomas Rast wrote:
+Duy Nguyen <pclouds@gmail.com> writes:
 
-> I do think it's worth fixing the syntax pedantry at the end so that we
-> can keep supporting arcane compilers, but otherwise, meh.
+> This may be a start. Does not seem to break anything..
 
-Agreed. I've picked up those changes in my tree.
+I did not thoroughly review/test, but it does fix my case. Below is the
+same patch with one test case. No time to do more right now.
 
-> > +static int open_pack_bitmap_1(struct packed_git *packfile)
-> 
-> This goes somewhat against the naming convention (if you can call it
-> that) used elsewhere in git.  Usually foo_1() is an implementation
-> detail of foo(), used because it is convenient to wrap the main part in
-> another function, e.g. so that it can consistently free resources or
-> some such.  But this one operates on one pack file, so in the terms of
-> the rest of git, it should probably be called open_pack_bitmap_one().
+Thanks,
 
-Hmm. I see your point, but I think that my (and Vicent's) mental model
-was that is _was_ a helper for open_pack_bitmap. It just happens to also
-fill the role of open_pack_bitmap_one(), but you would not want the
-latter. We only support a single bitmap at a time; by calling the
-helper, you would miss out on the assert which would catch the error.
+>From 99985341ed1312cf6a7b63e14be7da0d51c701b4 Mon Sep 17 00:00:00 2001
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Date: Mon, 2 Dec 2013 18:03:20 +0100
+Subject: [PATCH] WIP: error out on git mv file no-such-dir/
 
-So I don't care much, but I have a slight preference to leave it, as it
-signals "you should not be calling this directly" more clearly.
+---
+ builtin/mv.c  | 18 +++++++++++-------
+ t/t7001-mv.sh |  9 +++++++++
+ 2 files changed, 20 insertions(+), 7 deletions(-)
 
-> A bit unfortunate that you inherit the strange show_* naming from
-> builtin/pack-objects.c, which seems to have stolen some code from
-> builtin/rev-list.c at some point without worrying about better naming...
+diff --git a/builtin/mv.c b/builtin/mv.c
+index 2e0e61b..0fcccd5 100644
+--- a/builtin/mv.c
++++ b/builtin/mv.c
+@@ -16,9 +16,12 @@ static const char * const builtin_mv_usage[] = {
+ 	NULL
+ };
+ 
++#define DUP_BASENAME 1
++#define KEEP_TRAILING_SLASH 2
++
+ static const char **internal_copy_pathspec(const char *prefix,
+ 					   const char **pathspec,
+-					   int count, int base_name)
++					   int count, unsigned flags)
+ {
+ 	int i;
+ 	const char **result = xmalloc((count + 1) * sizeof(const char *));
+@@ -27,11 +30,12 @@ static const char **internal_copy_pathspec(const char *prefix,
+ 	for (i = 0; i < count; i++) {
+ 		int length = strlen(result[i]);
+ 		int to_copy = length;
+-		while (to_copy > 0 && is_dir_sep(result[i][to_copy - 1]))
++		while (!(flags & KEEP_TRAILING_SLASH) &&
++		       to_copy > 0 && is_dir_sep(result[i][to_copy - 1]))
+ 			to_copy--;
+-		if (to_copy != length || base_name) {
++		if (to_copy != length || flags & DUP_BASENAME) {
+ 			char *it = xmemdupz(result[i], to_copy);
+-			if (base_name) {
++			if (flags & DUP_BASENAME) {
+ 				result[i] = xstrdup(basename(it));
+ 				free(it);
+ 			} else
+@@ -87,16 +91,16 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
+ 
+ 	source = internal_copy_pathspec(prefix, argv, argc, 0);
+ 	modes = xcalloc(argc, sizeof(enum update_mode));
+-	dest_path = internal_copy_pathspec(prefix, argv + argc, 1, 0);
++	dest_path = internal_copy_pathspec(prefix, argv + argc, 1, KEEP_TRAILING_SLASH);
+ 	submodule_gitfile = xcalloc(argc, sizeof(char *));
+ 
+ 	if (dest_path[0][0] == '\0')
+ 		/* special case: "." was normalized to "" */
+-		destination = internal_copy_pathspec(dest_path[0], argv, argc, 1);
++		destination = internal_copy_pathspec(dest_path[0], argv, argc, DUP_BASENAME);
+ 	else if (!lstat(dest_path[0], &st) &&
+ 			S_ISDIR(st.st_mode)) {
+ 		dest_path[0] = add_slash(dest_path[0]);
+-		destination = internal_copy_pathspec(dest_path[0], argv, argc, 1);
++		destination = internal_copy_pathspec(dest_path[0], argv, argc, DUP_BASENAME);
+ 	} else {
+ 		if (argc != 1)
+ 			die("destination '%s' is not a directory", dest_path[0]);
+diff --git a/t/t7001-mv.sh b/t/t7001-mv.sh
+index b90e985..7e74bf3 100755
+--- a/t/t7001-mv.sh
++++ b/t/t7001-mv.sh
+@@ -72,6 +72,15 @@ rm -f idontexist untracked1 untracked2 \
+      .git/index.lock
+ 
+ test_expect_success \
++    'moving to target with trailing slash' \
++    'test_must_fail git mv path0/COPYING no-such-dir/ &&
++     git mv path0/ no-such-dir/'
++
++test_expect_success \
++    'clean up' \
++    'git reset --hard'
++
++test_expect_success \
+     'adding another file' \
+     'cp "$TEST_DIRECTORY"/../README path0/README &&
+      git add path0/README &&
+-- 
+1.8.5.rc3.4.g8bd3721
 
-Yes, I agree they're not very descriptive. Let's leave it for now to
-stay consistent with pack-objects, and I'd be happy to see a patch
-giving all of them better names come later.
-
-> > +	while (i < objects->word_alloc && ewah_iterator_next(&filter, &it)) {
-> > +		eword_t word = objects->words[i] & filter;
-> > +
-> > +		for (offset = 0; offset < BITS_IN_WORD; ++offset) {
-> > +			const unsigned char *sha1;
-> > +			struct revindex_entry *entry;
-> > +			uint32_t hash = 0;
-> > +
-> > +			if ((word >> offset) == 0)
-> > +				break;
-> > +
-> > +			offset += ewah_bit_ctz64(word >> offset);
-> > +
-> > +			if (pos + offset < bitmap_git.reuse_objects)
-> > +				continue;
-> > +
-> > +			entry = &bitmap_git.reverse_index->revindex[pos + offset];
-> > +			sha1 = nth_packed_object_sha1(bitmap_git.pack, entry->nr);
-> > +
-> > +			show_reach(sha1, object_type, 0, hash, bitmap_git.pack, entry->offset);
-> > +		}
-> 
-> You have a very nice bitmap_each_bit() function in ewah/bitmap.c, why
-> not use it here?
-
-We are bitwise-ANDing against an on-disk ewah bitmap to filter out
-objects which do not match the desired type. bitmap_each_bit would make
-this more complicated, because we wouldn't be able to move the
-ewah_iterator in single-word lockstep. And it would probably be slower
-(if you did it naively), because we'd end up checking each bit in the
-ewah, rather than AND-ing whole words.
-
-The right, reusable way to do it would probably be to bitmap_and_ewah
-the original and the filter together, and then bitmap_each_bit the
-result. But you would have to write bitmap_and_ewah first. :)
-
-> > +	/*
-> > +	 * Reuse the packfile content if we need more than
-> > +	 * 90% of its objects
-> > +	 */
-> > +	static const double REUSE_PERCENT = 0.9;
-> 
-> Curious: is this based on some measurements or just a guess?
-
-I think it's mostly a guess.
-
-> > +enum pack_bitmap_opts {
-> > +	BITMAP_OPT_FULL_DAG = 1,
-> 
-> And I think this trailing comma on the last enum item is also strictly
-> speaking not allowed, even though it is very nice to have:
-> 
-> pack-bitmap.h:28:27: warning: comma at end of enumerator list [-Wpedantic]
-
-It's allowed in C99, but was not in C89.  I've fixed this site for
-consistency with the rest of git. But I wonder how relevant it still is.
-The only data points I know of are:
-
-  http://article.gmane.org/gmane.comp.version-control.git/145739
-
-and
-
-  http://article.gmane.org/gmane.comp.version-control.git/145739
-
-It sounds like an ancient IBM VisualAge is the only reported problem.
-And according to IBM, they stopped supporting it 10 years ago (well,
-technically we have a few more weeks to hit the 10-year mark):
-
-  http://www-01.ibm.com/common/ssi/cgi-bin/ssialias?infotype=an&subtype=ca&supplier=897&appname=IBMLinkRedirect&letternum=ENUS903-227
-
-I do wonder if at some point we should revisit our "do not use any
-C99-isms" philosophy. It was very good advice in 2005. I don't know how
-good it is over 8 years later (it seems like even ancient systems should
-be able to get gcc compiled as a last resort, but maybe there really are
-people for whom that is a burden).
-
--Peff
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
