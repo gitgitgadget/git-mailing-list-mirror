@@ -1,65 +1,64 @@
-From: lists@haller-berlin.de (Stefan Haller)
-Subject: Re: [PATCH v2] gitk: make pointer selection visible in highlighted lines
-Date: Mon, 2 Dec 2013 11:04:09 +0100
-Message-ID: <1ld8zlh.1h4guajnkaralM%lists@haller-berlin.de>
-References: <20131201224132.GB12576@iris.ozlabs.ibm.com>
-Cc: git@vger.kernel.org, sunshine@sunshineco.com (Eric Sunshine),
-	tr@thomasrast.ch (Thomas Rast)
-To: paulus@samba.org (Paul Mackerras), max@max630.net (Max Kirillov)
-X-From: git-owner@vger.kernel.org Mon Dec 02 11:04:16 2013
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: [BUG] git mv file directory/ creates the file directory
+Date: Mon, 02 Dec 2013 11:04:06 +0100
+Message-ID: <vpqli03sh61.fsf@anie.imag.fr>
+Mime-Version: 1.0
+Content-Type: text/plain
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Dec 02 11:04:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VnQMR-0003g6-5Y
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Dec 2013 11:04:15 +0100
+	id 1VnQMW-0003hl-Jr
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Dec 2013 11:04:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752723Ab3LBKEL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1752777Ab3LBKEO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Dec 2013 05:04:14 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:55810 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752606Ab3LBKEL (ORCPT <rfc822;git@vger.kernel.org>);
 	Mon, 2 Dec 2013 05:04:11 -0500
-Received: from server90.greatnet.de ([83.133.96.186]:58896 "EHLO
-	server90.greatnet.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752547Ab3LBKEK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Dec 2013 05:04:10 -0500
-Received: from [10.1.12.147] (nat1.ableton.net [217.110.199.117])
-	by server90.greatnet.de (Postfix) with ESMTPA id 3C7773B105E;
-	Mon,  2 Dec 2013 11:04:08 +0100 (CET)
-In-Reply-To: <20131201224132.GB12576@iris.ozlabs.ibm.com>
-User-Agent: MacSOUP/2.8.4 (Mac OS X version 10.9 (x86))
+Received: from globule.imag.fr (globule.imag.fr [129.88.34.238])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id rB2A46jG001584
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 2 Dec 2013 11:04:06 +0100
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	(authenticated bits=0)
+	by globule.imag.fr (8.13.8/8.13.8) with ESMTP id rB2A460p026116
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Mon, 2 Dec 2013 11:04:07 +0100
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 02 Dec 2013 11:04:06 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: rB2A46jG001584
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1386583447.91744@P/TSuom3hzwsjKLy83x86A
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238621>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238622>
 
-Paul Mackerras <paulus@samba.org> wrote:
+Hi,
 
-> On Thu, Nov 28, 2013 at 11:20:18PM +0200, Max Kirillov wrote:
-> > Custom tags have higher priority than `sel`, and when they define their
-> > own background, it makes selection invisible. Especially inconvenient
-> > for `filesep` (to select filenames), but also affects other tags.
-> > Use `tag raise` to fix `sel`'s priority.
-> > 
-> > Also change `omark` tag handling, so that it is created once, together
-> > with others, and then only removed from text rather than deleted. Then
-> > it will not get larger priority than the `sel` tag.
-> 
-> This conflicts with the recent change to highlight the current search
-> hit in orange (c46149, "gitk: Highlight current search hit in
-> orange").  With the selection being the highest-priority tag, the
-> current search hit gets shown in grey instead.  I think I prefer the
-> orange.  I agree though that if the user explicitly selects part of
-> the text using the mouse, the selection highlight should be the
-> highest priority in that case.  Maybe the solution is to not select
-> the search hit automatically?
+When directory/ does not exist, I'd expect this to fail:
 
-I don't think that not selecting the search hint is an option: the
-selection is used to keep track of where to search next.
+  git mv existing-file directory/
 
-Can't we just raise the currentsearchhit tag above the sel tag?
+(note the trailing slash, to make it clear that directory/ is a
+directory). Unix's mv does fail:
 
+  $ mv existing-file directory/
+  mv: cannot move `existing-file' to `directory/': Not a directory
+
+Instead, "git mv" seems to do the equivalent of
+
+  git mv existing-file directory # without trailing slash
 
 -- 
-Stefan Haller
-Berlin, Germany
-http://www.haller-berlin.de/
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
