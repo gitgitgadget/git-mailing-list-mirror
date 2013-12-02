@@ -1,83 +1,178 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 10/21] pack-bitmap: add support for bitmap indexes
-Date: Mon, 2 Dec 2013 15:47:15 -0500
-Message-ID: <20131202204715.GA18842@sigill.intra.peff.net>
-References: <20131114124157.GA23784@sigill.intra.peff.net>
- <20131114124432.GJ10757@sigill.intra.peff.net>
- <87siuedhvj.fsf@thomasrast.ch>
- <20131202161208.GB24202@sigill.intra.peff.net>
- <xmqqk3fnq9bh.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] difftool: Change prompt to display the number of files in the diff queue
+Date: Mon, 02 Dec 2013 13:08:26 -0800
+Message-ID: <xmqqfvqbq7ud.fsf@gitster.dls.corp.google.com>
+References: <1385599794-6002-1-git-send-email-zoltan.klinger@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Thomas Rast <tr@thomasrast.ch>, git@vger.kernel.org,
-	Vicent =?utf-8?B?TWFydMOt?= <vicent@github.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Dec 02 21:47:30 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Zoltan Klinger <zoltan.klinger@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Dec 02 22:08:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VnaOr-0005aP-4w
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Dec 2013 21:47:25 +0100
+	id 1VnajQ-0004hk-Af
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Dec 2013 22:08:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757115Ab3LBUrU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Dec 2013 15:47:20 -0500
-Received: from cloud.peff.net ([50.56.180.127]:49245 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757164Ab3LBUrS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Dec 2013 15:47:18 -0500
-Received: (qmail 8635 invoked by uid 102); 2 Dec 2013 20:47:17 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 02 Dec 2013 14:47:17 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 02 Dec 2013 15:47:15 -0500
-Content-Disposition: inline
-In-Reply-To: <xmqqk3fnq9bh.fsf@gitster.dls.corp.google.com>
+	id S1759202Ab3LBVIf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Dec 2013 16:08:35 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35805 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754670Ab3LBVIb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Dec 2013 16:08:31 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 32E0458293;
+	Mon,  2 Dec 2013 16:08:30 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=VgzrXjzvIEKubh6Q1P0NUCg+IaQ=; b=cTFtW/
+	JFPfJUSCsbGdUeJCQB8iTnywWP8y2sz9RqlVxLvi6Qq6Aqv4FNdg/r4r3JnI3jaW
+	boKCQtqQmVnyL/aRXbnJN3QpPJcAEp6NbCOmd/PDAeXsqoWzBF9LxpPhnAQaLWu6
+	6+33FySTayJlKASTOeAGPii4r1JNgFXsGktuY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=vajxi9OzdF0NqE5FTS1xsg4OujDiqeCG
+	sv5Y28GG/sNr3lzT8PwthOIqlKzYowVFURW6/Ts8lqUS3d+Qo4hYZIUjm/ieeJVR
+	h1fuF/WUqIb2wTxsT1GTKn0sKgAb08JC627PYcks7uKBMzF9gx63nH09dO+YQDmN
+	rsnEpvM7p0c=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1CDDB58291;
+	Mon,  2 Dec 2013 16:08:30 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5CDA158290;
+	Mon,  2 Dec 2013 16:08:29 -0500 (EST)
+In-Reply-To: <1385599794-6002-1-git-send-email-zoltan.klinger@gmail.com>
+	(Zoltan Klinger's message of "Thu, 28 Nov 2013 11:49:54 +1100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: E48C0B26-5B95-11E3-889E-D331802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238652>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238653>
 
-On Mon, Dec 02, 2013 at 12:36:34PM -0800, Junio C Hamano wrote:
+Zoltan Klinger <zoltan.klinger@gmail.com> writes:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > I do wonder if at some point we should revisit our "do not use any
-> > C99-isms" philosophy. It was very good advice in 2005. I don't know how
-> > good it is over 8 years later (it seems like even ancient systems should
-> > be able to get gcc compiled as a last resort, but maybe there really are
-> > people for whom that is a burden).
-> 
-> Well, we are not kernel where being able to precisely control
-> generated machine code matters and enforcement of acceptable
-> compiler versions to achieve that goal is warranted, so I'd prefer
-> to avoid anything that tells the users "go get a newer gcc".
+> When --prompt option is set, git-difftool displays a prompt for each
+> modified file to be viewed in an external diff program. At that point it
+> could be useful to display a counter and the total number of files in
+> the diff queue.
+>
+> Below is the current difftool prompt for the first of 5 modified files:
+> Viewing: 'diff.c'
+> Launch 'vimdiff' [Y/n]:
+>
+> Consider the modified prompt:
+> Viewing (1/5): 'diff.c'
+> Launch 'vimdiff' [Y/n]:
+>
+> (1) Modify run_external_diff() function in diff.c to pass a counter and
+> the total number of files in the diff queue to the external program.
+>
+> (2) Modify git-difftool--helper.sh script to display the counter and the
+> diff queue count values in the difftool prompt.
+>
+> (3) Update git.txt documentation
+>
+> (4) Update t4020-diff-external.sh test script
+>
+> Signed-off-by: Zoltan Klinger <zoltan.klinger@gmail.com>
+> ---
+>  Documentation/git.txt    |  6 +++++-
+>  diff.c                   | 14 +++++++++++++-
+>  git-difftool--helper.sh  |  8 +++++---
+>  t/t4020-diff-external.sh | 27 +++++++++++++++++++++------
+>  4 files changed, 44 insertions(+), 11 deletions(-)
+>
+> diff --git a/Documentation/git.txt b/Documentation/git.txt
+> index b73a24a..d8241bb 100644
+> --- a/Documentation/git.txt
+> +++ b/Documentation/git.txt
+> @@ -785,9 +785,10 @@ Git Diffs
+>  	When the environment variable 'GIT_EXTERNAL_DIFF' is set, the
+>  	program named by it is called, instead of the diff invocation
+>  	described above.  For a path that is added, removed, or modified,
+> -        'GIT_EXTERNAL_DIFF' is called with 7 parameters:
+> +	'GIT_EXTERNAL_DIFF' is called with 9 parameters:
+>  
+>  	path old-file old-hex old-mode new-file new-hex new-mode
+> +	counter total
 
-Sorry, I was not very clear about what I said. I do not think "go get a
-newer gcc" is a good thing to be telling people. But I wonder:
+As the "git difftool" is not the only thing that reads using the
+GIT_EXTERNAL_DIFF mechanism (it is for general consumption by end
+user scripts), I wonder how/if this change breaks existing scripts.
+I do recall writing an EXTERNAL_DIFF script myself that began by
+switching on $# (i.e. the number of arguments) to check the state of
+the given path, like this:
 
-  a. if there are actually people on systems that have pre-c99 compilers
-     in 2013
+	case $# in
+        1)
+        	... handle unmerged path ...
+                ;;
+	7)
+        	... handle comparison ...
+		;;
+	*)
+        	die "Unexpected number of arguments to $0: $#"
+                ;;
+	esac
 
-  b. if there are, do they actually _use_ the ancient system compiler,
-     and not just install gcc as the first step anyway?
+which will be broken by this change. Updating such scripts is
+trivial but that does not change the fact that this change is
+forcing an unnecessary work on our users to adjust their scripts
+that have been working perfectly fine.  So I think this, if we were
+to apply, may need a compatibility warning in large flashing red
+letters in the release notes.
 
-In other words, I am questioning whether we would have to tell anybody
-"go install gcc" these days. I'm not sure of the best way to answer that
-question, though.
+>  +
+>  where:
+>  
+> @@ -795,6 +796,9 @@ where:
+>                           contents of <old|new>,
+>  	<old|new>-hex:: are the 40-hexdigit SHA-1 hashes,
+>  	<old|new>-mode:: are the octal representation of the file modes.
+> +	counter:: is a numeric value incremented by one for every modified
+> +				file
+> +	total:: is the total number of modified files
+>  +
+>  The file parameters can point at the user's working file
+>  (e.g. `new-file` in "git-diff-files"), `/dev/null` (e.g. `old-file`
+> diff --git a/diff.c b/diff.c
+> index e34bf97..938f00a 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -37,6 +37,7 @@ static int diff_stat_graph_width;
+>  static int diff_dirstat_permille_default = 30;
+>  static struct diff_options default_diff_options;
+>  static long diff_algorithm;
+> +static int diff_display_counter = 1;
 
-> There are certain things outside C89 that would make our code easier
-> to read and maintain (e.g. named member initialization of
-> struct/union, cf. ANSI C99 s6.7.9, just to name one) that I would
-> love to be able to use in our codebase, but being able to leave an
-> extra comma at the list of enums is very low on that list.
+There should be a place somewhere, e.g. diff_setup_done(), to reset
+this counter to 0 (and the site that uses the variable should
+pre-increment it instead of relying the initial value being 1), so
+that a single program could later run the diff machinery more than
+once for different set of files.  This counter may actually belong
+to diff_options, just like existing "found_changes" and
+"found_follow" fields are there to keep track of state of the diff
+machinery per invocation.
 
-Yes, I can live without trailing commas. I was musing more on the
-general issue (of course, we don't _have_ to take C99 as a whole, and
-can pick and choose features that even pre-C99 compilers got right, but
-I was wondering mainly when it would be time to say C99 is "old enough"
-that everybody supports it).
+Having said all that, the fact that the current arrangement since we
+introduced GIT_EXTERNAL_DIFF mechanism does not tell how many paths
+there are in the output is indeed bad.  If a script that uses
+GIT_EXTERNAL_DIFF wants to first collect all the paths and the
+parameters and then show everything in a single UI, such a script
+may want to (1) start collecting the paths and args to a persistent
+place (e.g. starting a GUI diff daemon for the first path it gets,
+or starting a new temporary file), (2) keep collecting the paths and
+args, and then (3) after collecting all, present diff for all paths
+it obtained, but it is impossible because there is no cue when a
+series of external diff calls starts or ends.
 
--Peff
+And this "counter/total" mechanism could be one possible solution to
+it (another possibility is to make an extra dummy call to signal the
+end, perhaps with no parameters---the one that is collecting can
+then know how many paths there are and which one is the Nth path).
