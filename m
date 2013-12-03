@@ -1,100 +1,95 @@
-From: =?utf-8?B?UGF3ZcWC?= Sikora <pawel.sikora@agmk.net>
-Subject: Re: slow git-cherry-pick.
-Date: Tue, 03 Dec 2013 20:31:26 +0100
-Message-ID: <2679995.THr9ekVpkO@localhost.localdomain>
-References: <2142926.gg3W3MsbJZ@localhost.localdomain> <32998962.pucYdvRloz@localhost.localdomain> <xmqqd2loz92n.fsf@gitster.dls.corp.google.com>
-Reply-To: pawel.sikora@agmk.net
+From: =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+Subject: Re: [PATCH 1/3] gitweb: Move check-ref-format code into separate function
+Date: Tue, 3 Dec 2013 20:38:39 +0100
+Message-ID: <CANQwDwd0_bgKfjsRFjohmzBAnN7vDm-pYYsfe0Q71Za2K7Hw4w@mail.gmail.com>
+References: <1386082603-8404-1-git-send-email-krzesimir@endocode.com>
+ <1386082603-8404-2-git-send-email-krzesimir@endocode.com> <xmqqd2ldoj0s.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Cc: Krzesimir Nowak <krzesimir@endocode.com>,
+	git <git@vger.kernel.org>,
+	Eric Sunshine <sunshine@sunshineco.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Dec 03 20:31:50 2013
+X-From: git-owner@vger.kernel.org Tue Dec 03 20:39:41 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VnvhF-0002Sa-E1
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Dec 2013 20:31:49 +0100
+	id 1Vnvoq-0006j9-QO
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Dec 2013 20:39:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754727Ab3LCTbp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Dec 2013 14:31:45 -0500
-Received: from adamg.eu ([91.192.224.99]:33658 "EHLO adamg.eu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754610Ab3LCTbn convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 3 Dec 2013 14:31:43 -0500
-Received: from mail.agmk.net ([91.192.224.71]:37470)
-	by adamg.eu with esmtp (Exim 4.82)
-	(envelope-from <pluto@agmk.net>)
-	id 1Vnvh1-0000tK-Nq; Tue, 03 Dec 2013 20:31:36 +0100
-Received: from localhost.localdomain (unknown [185.28.248.14])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	(Authenticated sender: pluto@agmk.net)
-	by mail.agmk.net (Postfix) with ESMTPSA id 2F37A1EE65E5;
-	Tue,  3 Dec 2013 20:31:20 +0100 (CET)
-User-Agent: KMail/4.11.3 (Linux/3.11.10-300.fc20.x86_64; KDE/4.11.3; x86_64; ; )
-In-Reply-To: <xmqqd2loz92n.fsf@gitster.dls.corp.google.com>
+	id S1752050Ab3LCTjV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Dec 2013 14:39:21 -0500
+Received: from mail-wi0-f174.google.com ([209.85.212.174]:60731 "EHLO
+	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752028Ab3LCTjU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Dec 2013 14:39:20 -0500
+Received: by mail-wi0-f174.google.com with SMTP id z2so5588614wiv.13
+        for <git@vger.kernel.org>; Tue, 03 Dec 2013 11:39:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=9Hmm3Li+LqTfI7zfD5wqPBCQ0OLjvF7L/Fg+ek7MNYA=;
+        b=jzDORtMe/eoi8CAQ2I1X6M6ABLWG4FTNwNrOTK+6vyqgo6tAauFkyIvDmpHsx02Kjk
+         lqTtTmVKckdt8Qh33l3zXG3bVlhy6hF23bi9pix1EzuzQg4uxcDgIMCLEKapxbKLJVN5
+         G2gaCvAZiFOJaks+urIc1Mw3+8/Mi6rYkol9td5asyb6VJNKDtDVSb64a8X1ZmEB+Dg3
+         ggvu6Ob82UBlLfkmootpMdhWVYVsqGphwdnlbEEDIK4aTlRu+tIJQiZOfqFr9xrDZLZY
+         NbwHlVv9sXWynNCdNAj1FmMHw7VihZVd2WfACxsoJGLnGK9dI/hF3OvwuR1wTkcg3oBQ
+         Pycg==
+X-Received: by 10.180.10.135 with SMTP id i7mr4141828wib.1.1386099559492; Tue,
+ 03 Dec 2013 11:39:19 -0800 (PST)
+Received: by 10.227.108.131 with HTTP; Tue, 3 Dec 2013 11:38:39 -0800 (PST)
+In-Reply-To: <xmqqd2ldoj0s.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238723>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238725>
 
-On Monday 25 of November 2013 09:26:40 Junio C Hamano wrote:
-> Pawe=C5=82 Sikora <pawel.sikora@agmk.net> writes:
-> > On Sunday 24 of November 2013 19:47:10 Duy Nguyen wrote:
-> >> On Sun, Nov 24, 2013 at 5:45 PM, Pawe=C5=82 Sikora <pawel.sikora@a=
-gmk.net>=20
-wrote:
-> >> > i've recently reinstalled a fresh system (fc20-beta) on my works=
-tation
-> >> > and observing a big slowdown on git cherry-pick operation
-> >> > (git-1.8.4.2-1).
-> >> > the previous centos installation with an old git version works f=
-aster
-> >> > (few seconds per cherry pick). now the same operation takes >1 m=
-in.
-> >>=20
-> >> What is the git version before the reinstallation?
-> >=20
-> > git-1.7.11.3-1.el5.rf.
-> >=20
-> > i've checked this version on another machine with centos-5.$latest
-> > and it does similar amout of stat/read operation quickly (~6s).
-> > this "fast" centos-5 machine has /home on raid-0 (2x500GB) while
-> > my "slow (>1min)" workstation has /home on linear lvm (250G+1T).
-> >=20
-> > so, i suppose that my "slow" working copy crosses disks boundary
-> > or spread over 1TB drive and the random git i/o impacts performance=
-=2E
-> >=20
-> > the question still remains - does the git need to scan whole checko=
-ut
-> > during picking well defined set of files?
->=20
-> We do update-index to see what local changes you have upfront in
-> order to avoid stomping on them (and we do not know upfront what
-> paths the cherry-picked commit would change, given that there may be
-> renames involved), so the answer is unfortunately yes, we would need
-> to do lstat(2) the whole thing.
+On Tue, Dec 3, 2013 at 8:02 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Krzesimir Nowak <krzesimir@endocode.com> writes:
 
-this is quite weird for me (user). git pull also fetches objects from
-server and aborts user's action if working copy contains uncommitted
-modifications on files that will be modified by incoming objects.
+>> +sub check_ref_format {
+>> +     my $input = shift || return undef;
+>> +
+>> +     # restrictions on ref name according to git-check-ref-format
+>> +     if ($input =~ m!(/\.|\.\.|[\000-\040\177 ~^:?*\[]|/$)!) {
+>> +             return undef;
+>> +     }
+>> +     return $input;
+>> +}
+[...]
+>> @@ -1462,10 +1472,9 @@ sub validate_refname {
+>>       # it must be correct pathname
+>>       $input = validate_pathname($input)
+>>               or return undef;
+>> -     # restrictions on ref name according to git-check-ref-format
+>> -     if ($input =~ m!(/\.|\.\.|[\000-\040\177 ~^:?*\[]|/$)!) {
+>> -             return undef;
+>> -     }
+>
+> So far, so good.
+>
+>> +     # check git-check-ref-format restrictions
+>> +     $input = check_ref_format($input)
+>> +             or return undef;
+>>       return $input;
+>
+> Hmmm.  Why do you need "<LF><INDENT>or return under" here?  It would
+> not hurt too much per-se (strictly speaking, if the $input were a
+> string "0", this will return undef instead of "0", which should be
+> an OK name as far as the regexp is concerned), but it seems to be
+> making the logic unnecessarily complex for no real gain.
 
-from the other side, the cherry-pick needs to stat() the whole working
-copy to achieve similar precondition. looks like suboptimal implementat=
-ion.
+I think this simply follows  "$input = validate_sth($input) or return undef;"
+pattern used in this area of gitweb code (perhaps mis-used).
 
-> Doing that lstat(2) more lazily and do away with the update-index
-> might be possible, but I suspect that may be quite a lot of work.
+Stricly speaking pure refactoring (no functional change, e.g. no assign
+to $input) would be  "check_ref_format($input) or return undef;", or even
+"return check_ref_format($input);" if we keep check_ref_format() passthru
+on valid refname.
 
-maybe you can use the existing implementation used by 'pull' ?
-
-
---=20
-gpg key fingerprint =3D 60B4 9886 AD53 EB3E 88BB  1EB5 C52E D01B 683B 9=
-411
+-- 
+Jakub Narebski
