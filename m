@@ -1,88 +1,133 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Fwd: [PATCH 4/5] Replace {pre,suf}fixcmp() with
- {starts,ends}_with()
-Date: Tue, 3 Dec 2013 07:46:45 -0500
-Message-ID: <20131203124645.GB26667@sigill.intra.peff.net>
-References: <20131201074818.3042.57357.chriscool@tuxfamily.org>
- <20131201074919.3042.92026.chriscool@tuxfamily.org>
- <CAP8UFD0jg_Vr7Zf+DiMX9RG6vmmQvmk2NvmL7j=MC-x3fLOOBA@mail.gmail.com>
+From: =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+Subject: Re: [PATCH v3] gitweb: Add an option for adding more branch refs
+Date: Tue, 3 Dec 2013 14:02:26 +0100
+Message-ID: <CANQwDwcBx-rbiLwVY6zAmixr=93vyvpVWcCZMLuSEBgjTJ4-tg@mail.gmail.com>
+References: <1385639092-13362-1-git-send-email-krzesimir@endocode.com>
+ <CANQwDwfbNfbFqX+hw09bPLVKAN3RZciJmwdixzHrj89KY8FsTQ@mail.gmail.com>
+ <1385985997.2054.27.camel@localhost.localdomain> <529CC48C.5080902@gmail.com> <1386068026.2208.16.camel@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 03 13:46:53 2013
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Krzesimir Nowak <krzesimir@endocode.com>
+X-From: git-owner@vger.kernel.org Tue Dec 03 14:03:37 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VnpNM-00089R-QW
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Dec 2013 13:46:53 +0100
+	id 1VnpdV-00010P-RK
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Dec 2013 14:03:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753049Ab3LCMqt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Dec 2013 07:46:49 -0500
-Received: from cloud.peff.net ([50.56.180.127]:49614 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752465Ab3LCMqs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Dec 2013 07:46:48 -0500
-Received: (qmail 23479 invoked by uid 102); 3 Dec 2013 12:46:47 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 03 Dec 2013 06:46:47 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 03 Dec 2013 07:46:45 -0500
-Content-Disposition: inline
-In-Reply-To: <CAP8UFD0jg_Vr7Zf+DiMX9RG6vmmQvmk2NvmL7j=MC-x3fLOOBA@mail.gmail.com>
+	id S1752830Ab3LCNDU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Dec 2013 08:03:20 -0500
+Received: from mail-wi0-f175.google.com ([209.85.212.175]:64410 "EHLO
+	mail-wi0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753442Ab3LCNDJ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 3 Dec 2013 08:03:09 -0500
+Received: by mail-wi0-f175.google.com with SMTP id hi5so6482077wib.2
+        for <git@vger.kernel.org>; Tue, 03 Dec 2013 05:03:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=TdlEDZ1mWcQLdf4o20A3auKtpWYwNuSldbz4elCgHCw=;
+        b=J/4zaWCVxaQL5qIv79EGL3/+zlPpwt/y5T5IASFET/cRETG/AL0IzKfXdSNxzkirCv
+         lm58bwNMrTuhrNrw1h+PK3sDmDRFDdYkTzDgZuJeTP2EqpRZfF+mNXvsswCWWGDt9Ne5
+         ipVxBPNW3/1BuNfd31oJfuo5BshYhXd/tDY1dEICZOpgANGJreXt27wMTGE8Y2cjnVoY
+         bM1IIgJnCFytx4snw3zO8j3p0f6luWJKtGmrebzgtJPq0l5T0Esa2mWmSkQ4hm3LYOjO
+         e06gaFpVdGQk7VFtEXmxh5hfiw1Co07z/UjJL2IpDZy4Ta6O+dkKx1zvTQnzGQc+PyiF
+         V/5g==
+X-Received: by 10.180.188.229 with SMTP id gd5mr2422965wic.38.1386075788117;
+ Tue, 03 Dec 2013 05:03:08 -0800 (PST)
+Received: by 10.227.108.131 with HTTP; Tue, 3 Dec 2013 05:02:26 -0800 (PST)
+In-Reply-To: <1386068026.2208.16.camel@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238688>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238689>
 
-On Tue, Dec 03, 2013 at 08:03:39AM +0100, Christian Couder wrote:
+On Tue, Dec 3, 2013 at 11:53 AM, Krzesimir Nowak <krzesimir@endocode.co=
+m> wrote:
+> On Mon, 2013-12-02 at 18:34 +0100, Jakub Nar=C4=99bski wrote:
+>> W dniu 2013-12-02 13:06, Krzesimir Nowak pisze:
+>>> On Mon, 2013-12-02 at 01:21 +0100, Jakub Nar=C4=99bski wrote:
+>>>> On Thu, Nov 28, 2013 at 12:44 PM, Krzesimir Nowak
+>>>> <krzesimir@endocode.com>  wrote:
+>>>>
+>>>>> Allow @additional_branch_refs configuration variable to tell gitw=
+eb to
+>>>>> show refs from additional hierarchies in addition to branches in =
+the
+>>>>> list-of-branches view.
+>>>>>
+>>>>> Signed-off-by: Krzesimir Nowak<krzesimir@endocode.com>
+>>>>
+>>>> Why not use %feature hash instead of adding new configuration vari=
+able?
+>>>> I think that this option is similar enough to 'remote_heads' featu=
+re
+>>>> (which BTW should be 'remote-heads'), and could conceivably enable=
+d
+>>>> on a per-repository basis, i.e. with repository configuration over=
+ride,
+>>>> isn't it?
+>>>
+>>> I'd like to see some consensus on it before I start changing the pa=
+tch
+>>> again.
+>>
+>> %feature hash is mainly (but not only) about options that can be
+>> configured on per-repository basis.  Configuration variables are
+>> about options that are per-instance (per gitweb).
+>
+> Well, I am mostly interested in per-instance configuration in this ca=
+se,
+> but if that is also possible with %feature hash, then ok, I'll try to
+> make it work.
 
-> I am trying to forward this patch from my gmail address, as it doesn't
-> seem to go through when I send it from my home machine.
+Yes, it is possible to have per-instance configuration (you can even
+forbid per-repository configuration).
 
-This made it through to me, but not the list. There are at least two
-things going on:
+> From what I've seen (correct me please if I got it wrong) feature
+> settings is taken from per-repository config file from [gitweb] secti=
+on.
+> If there's nothing then some default value is taken. That default val=
+ue
+> can be overriden with per-instance perl config file.
 
-  1. The message is 172K, which is over the 100K limit imposed by vger;
-     the list is silently dropping it.
+%feature settings are taken from gitweb configuration (the 'default'
+key), and if given feature is overrideable and per-repository configura=
+tion
+in the form of appropriate key in [gitweb] section of repository config
+file exists, it is used instead.
 
-  2. In my case, the direct mail was being flagged by spam because it
-     contains the blacklisted domain "old.name". Which of course is not
-     a domain at all but rather this code:
+> So it is easy to override it from per-instance perl config by typing:
+> $feature{'additional-branch-refs'}{'default'} =3D ['wip', 'no|tf"un,n=
+y'];
+> $feature{'additional-branch-refs'}{'override'} =3D 1;
 
-       old.name = old.path + strlen("refs/heads/");
+Yes.  The 'override' is about checking (which imposes a bit of
+performance penalty) and respecting per-repository configuration.
 
-     I've tweaked my server.
+> (Note the edge case of refs/no|tf"un,ny, which passes the git
+> check-ref-format scrutiny.)
+>
+> But for now, most of features are quite simple - either booleans,
+> integers or list of simple strings (in snapshot feature). What I need
+> here is a list of strings, like CSV in following example:
+> [gitweb]
+>         additional_branch_refs =3D wip,"no|tf""un,ny"
+>
+> Is dependency on external module like Text::CSV or Text::CSV_XS ok? I=
+f
+> not, I can hack some CSV reading code.
 
-I can't say why it wasn't getting to Junio via direct mail. Maybe the
-same spam thing, or maybe something else.
+Why not use space, which is forbidden in refnames, to separate
+entries?  Similar to feature_snapshot(), which is about comma separated
+list, without escaping.
 
-> From: Christian Couder <chriscool@tuxfamily.org>
-> Date: Sun, Dec 1, 2013 at 8:49 AM
-> Subject: [PATCH 4/5] Replace {pre,suf}fixcmp() with {starts,ends}_with()
-> To: christian.couder@gmail.com
-> 
-> This patch was generated automatically using the following
-> commands:
-> 
-> git grep --name-only prefixcmp | grep -v '\.h' | grep -v 'strbuf.c' |
-> xargs perl -pi -e 's/!prefixcmp\(/starts_with\(/g'
-> git grep --name-only prefixcmp | grep -v '\.h' | grep -v 'strbuf.c' |
-> xargs perl -pi -e 's/prefixcmp\(/!starts_with\(/g'
-> git grep --name-only suffixcmp | grep -v '\.h' | grep -v 'strbuf.c' |
-> xargs perl -pi -e 's/!suffixcmp\(/ends_with\(/g'
-> git grep --name-only suffixcmp | grep -v '\.h' | grep -v 'strbuf.c' |
-> xargs perl -pi -e 's/suffixcmp\(/!ends_with\(/g'
-> 
-> It was generated on version 1.8.5 of the git codebase.
-
-I skimmed the patch and didn't notice any problems. It's
-whitespace-damaged by gmail, of course. The simplest thing is probably
-to just point us at a public repo with the commit, if you have one.
-
--Peff
+--=20
+Jakub Narebski
