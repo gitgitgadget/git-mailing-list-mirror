@@ -1,73 +1,115 @@
-From: Karsten Blees <karsten.blees@gmail.com>
-Subject: Re: [PATCH] path_treatment: also ignore $GIT_DIR if it's not .git
-Date: Tue, 03 Dec 2013 20:00:03 +0100
-Message-ID: <529E2A33.7000804@gmail.com>
-References: <1385922611.3240.6.camel@localhost>	<20131201190447.GA31367@kaarsemaker.net> <529DF64A.70801@gmail.com> <xmqqtxepokej.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/3] gitweb: Move check-ref-format code into separate function
+Date: Tue, 03 Dec 2013 11:02:11 -0800
+Message-ID: <xmqqd2ldoj0s.fsf@gitster.dls.corp.google.com>
+References: <1386082603-8404-1-git-send-email-krzesimir@endocode.com>
+	<1386082603-8404-2-git-send-email-krzesimir@endocode.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Dennis Kaarsemaker <dennis@kaarsemaker.net>, git@vger.kernel.org,
-	ingy@ingy.net
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Dec 03 20:00:13 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, jnareb@gmail.com, sunshine@sunshineco.com
+To: Krzesimir Nowak <krzesimir@endocode.com>
+X-From: git-owner@vger.kernel.org Tue Dec 03 20:02:22 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VnvCc-0001u5-IF
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Dec 2013 20:00:10 +0100
+	id 1VnvEh-00039G-Fk
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Dec 2013 20:02:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754558Ab3LCTAG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Dec 2013 14:00:06 -0500
-Received: from mail-ea0-f176.google.com ([209.85.215.176]:40911 "EHLO
-	mail-ea0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752829Ab3LCTAF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Dec 2013 14:00:05 -0500
-Received: by mail-ea0-f176.google.com with SMTP id h14so10229675eaj.35
-        for <git@vger.kernel.org>; Tue, 03 Dec 2013 11:00:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=2SKOgQurlrOA2xv+PvYKLrsyjFGZ7b2w0s0lNQG2pxQ=;
-        b=VRzIrm2Qk0pWR7iz9fP32aW0t+ji5Zn0NQFgvvmuwo6YFVtCpLQjvOlbYElhqUNTrI
-         CAKrKUnz5bLTxvOdsszlzujgFR5syIVzEBEmwcbImAvzGookfG2DOsuO3U33XMdY8Gix
-         3oJmCqncV6zOhHrBkX+52CakHqTTbQw2zq4LmmNqhNeAdvifzTZK0kjPDNqTocETT1R9
-         AolPAYG7KWv3HQ23iKowvHIbXN8mFtZGOXo1wgoU8BSif5l+1JhLM5ekGWFpfnsqN4uO
-         Zq2Oa9SlVeRNszNC5BA05m1+l57nngnfBoDApU1t+0K0w0buPHPJoc9IfqRHdumAqkHY
-         VI8w==
-X-Received: by 10.14.104.201 with SMTP id i49mr4125146eeg.78.1386097203845;
-        Tue, 03 Dec 2013 11:00:03 -0800 (PST)
-Received: from [10.1.100.54] (ns.dcon.de. [77.244.111.149])
-        by mx.google.com with ESMTPSA id o47sm85919574eem.21.2013.12.03.11.00.02
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 03 Dec 2013 11:00:03 -0800 (PST)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.1.1
-In-Reply-To: <xmqqtxepokej.fsf@gitster.dls.corp.google.com>
+	id S1754185Ab3LCTCQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Dec 2013 14:02:16 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47357 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753757Ab3LCTCO convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 3 Dec 2013 14:02:14 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 01C32551CE;
+	Tue,  3 Dec 2013 14:02:14 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=t6/m5WZ8ci/I
+	k2ajik5XPHSfgl0=; b=ZepVoYeDeu0cy0fE5cwaDZjMk61nVjPvnMoyCc8CzdV/
+	+re2GB5QiMJmx0eWpE0rl/gYltDMD9uWcTxS3c6uZMBjTYxlA7JRLo/TGqC0Yns9
+	7URe5t9ovxsW2YBYHbbT0rRXte3uONXIuqQVdVSKcK6tl6fNQMUj38fGHWzTH9k=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=TE8ScL
+	yiNntb8doftzfqEqWpkU0e0PYjGBQQIyQ5n1YBckPNZFFmueZDoaJTTi06IHShEJ
+	7GRdoYpP8WeyPxe7/KVgND+gm1ygzQoZlHfhfe39XKyo18bWxg/oRuBA7mNL1mJl
+	/Bil82b96CbeawWNLTzdWbhfR9mvtyG5H33IY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D6FEC551CD;
+	Tue,  3 Dec 2013 14:02:13 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2389C551C8;
+	Tue,  3 Dec 2013 14:02:13 -0500 (EST)
+In-Reply-To: <1386082603-8404-2-git-send-email-krzesimir@endocode.com>
+	(Krzesimir Nowak's message of "Tue, 3 Dec 2013 15:56:41 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 6B2C2FAA-5C4D-11E3-9893-D331802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238715>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238716>
 
-Am 03.12.2013 19:32, schrieb Junio C Hamano:
-> Karsten Blees <karsten.blees@gmail.com> writes:
-> 
->> So I figure that GIT_DIR is not meant to _rename_ the ".git" dir,
->> but to point somewhere _outside_ the worktree (or somewhere within
->> the .git dir).
-> 
-> Correct.
-> 
->> If we don't want to support this, though, I think it would be more
->> approrpiate to issue a warning if GIT_DIR points to a worktree
->> location.
-> 
-> But how do tell what is and isn't a "worktree location"?  Having the
-> path in the index would be one, but you may find it out only after
-> issuing "git checkout $antient_commit".
-> 
+Krzesimir Nowak <krzesimir@endocode.com> writes:
 
-In setup_work_tree(), the result of remove_leading_path(git_dir, work_tree) must be absolute or start with ".." or ".git", otherwise warn?
+> This check will be used in more than one place later.
+>
+> Signed-off-by: Krzesimir Nowak <krzesimir@endocode.com>
+> Reviewed-by: Junio C Hamano <gitster@pobox.com>
+> Reviewed-by: Jakub Nar=C4=99bski <jnareb@gmail.com>
+> Reviewed-by: Eric Sunshine <sunshine@sunshineco.com>
+> ---
+>  gitweb/gitweb.perl | 17 +++++++++++++----
+>  1 file changed, 13 insertions(+), 4 deletions(-)
+>
+> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> index 68c77f6..f7730d7 100755
+> --- a/gitweb/gitweb.perl
+> +++ b/gitweb/gitweb.perl
+> @@ -1452,6 +1452,16 @@ sub validate_pathname {
+>  	return $input;
+>  }
+> =20
+> +sub check_ref_format {
+> +	my $input =3D shift || return undef;
+> +
+> +	# restrictions on ref name according to git-check-ref-format
+> +	if ($input =3D~ m!(/\.|\.\.|[\000-\040\177 ~^:?*\[]|/$)!) {
+> +		return undef;
+> +	}
+> +	return $input;
+> +}
+> +
+>  sub validate_refname {
+>  	my $input =3D shift || return undef;
+> =20
+> @@ -1462,10 +1472,9 @@ sub validate_refname {
+>  	# it must be correct pathname
+>  	$input =3D validate_pathname($input)
+>  		or return undef;
+> -	# restrictions on ref name according to git-check-ref-format
+> -	if ($input =3D~ m!(/\.|\.\.|[\000-\040\177 ~^:?*\[]|/$)!) {
+> -		return undef;
+> -	}
+
+So far, so good.
+
+> +	# check git-check-ref-format restrictions
+> +	$input =3D check_ref_format($input)
+> +		or return undef;
+>  	return $input;
+
+Hmmm.  Why do you need "<LF><INDENT>or return under" here?  It would
+not hurt too much per-se (strictly speaking, if the $input were a
+string "0", this will return undef instead of "0", which should be
+an OK name as far as the regexp is concerned), but it seems to be
+making the logic unnecessarily complex for no real gain.
+
+>  }
