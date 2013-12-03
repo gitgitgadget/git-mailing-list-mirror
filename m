@@ -1,122 +1,60 @@
 From: Nick Townsend <nick.townsend@mac.com>
-Subject: Fwd: [PATCH] submodule recursion in git-archive
-Date: Mon, 02 Dec 2013 16:03:37 -0800
-Message-ID: <D8D13DC5-0E93-4900-A738-A4A6700BC92F@mac.com>
-References: <3651F1C2-741E-4170-9468-0EF07F120CB9@mac.com>
+Subject: [PATCH] submodule recursion in git-archive
+Date: Mon, 02 Dec 2013 16:05:08 -0800
+Message-ID: <7E48A538-D4C6-4E46-8147-092A5470EC8C@mac.com>
+References: <3C71BC83-4DD0-43F8-9E36-88594CA63FC5@mac.com>
 Mime-Version: 1.0 (Mac OS X Mail 7.0 \(1822\))
 Content-Type: text/plain; charset=windows-1252
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 03 01:04:15 2013
+X-From: git-owner@vger.kernel.org Tue Dec 03 01:05:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VndTK-0008OE-I6
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Dec 2013 01:04:15 +0100
+	id 1VndUO-0000ds-6q
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Dec 2013 01:05:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752442Ab3LCAEK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 Dec 2013 19:04:10 -0500
-Received: from nk11p03mm-asmtp002.mac.com ([17.158.232.237]:45936 "EHLO
+	id S1752569Ab3LCAFQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 Dec 2013 19:05:16 -0500
+Received: from nk11p03mm-asmtp002.mac.com ([17.158.232.237]:49268 "EHLO
 	nk11p03mm-asmtp002.mac.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750874Ab3LCAEI convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 2 Dec 2013 19:04:08 -0500
+	by vger.kernel.org with ESMTP id S1750874Ab3LCAFP convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 2 Dec 2013 19:05:15 -0500
 Received: from [172.16.1.4]
  (99-120-78-245.lightspeed.sntcca.sbcglobal.net [99.120.78.245])
  by nk11p03mm-asmtp002.mac.com
  (Oracle Communications Messaging Server 7u4-27.08(7.0.4.27.7) 64bit (built Aug
  22 2013)) with ESMTPSA id <0MX7003M0EUVWD00@nk11p03mm-asmtp002.mac.com> for
- git@vger.kernel.org; Tue, 03 Dec 2013 00:04:08 +0000 (GMT)
+ git@vger.kernel.org; Tue, 03 Dec 2013 00:05:08 +0000 (GMT)
 X-Proofpoint-Virus-Version: vendor=fsecure
  engine=2.50.10432:5.11.72,1.0.14,0.0.0000
  definitions=2013-12-02_04:2013-12-02,2013-12-02,1970-01-01 signatures=0
 X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
- suspectscore=13 phishscore=0 adultscore=0 bulkscore=0 classifier=spam adjust=0
+ suspectscore=14 phishscore=0 adultscore=0 bulkscore=0 classifier=spam adjust=0
  reason=mlx scancount=1 engine=7.0.1-1308280000 definitions=main-1312020193
 X-Mailer: Apple Mail (2.1822)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238664>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238665>
 
 
+=46rom: Nick Townsend <nick.townsend@mac.com>
+Subject: Re: [PATCH] submodule recursion in git-archive
+Date: 2 December 2013 15:55:36 GMT-8
+To: Heiko Voigt <hvoigt@hvoigt.net>
+Cc: Junio C Hamano <gitster@pobox.com>, Ren=E9 Scharfe <l.s.r@web.de>, =
+Jens Lehmann <Jens.Lehmann@web.de>, git@vger.kernel.org, Jeff King <pef=
+f@peff.net>
 
-Begin forwarded message:
 
-> From: Nick Townsend <nick.townsend@mac.com>
-> Subject: Re: [PATCH] submodule recursion in git-archive
-> Date: 2 December 2013 16:00:50 GMT-8
-> To: Junio C Hamano <gitster@pobox.com>
-> Cc: Ren=E9 Scharfe <l.s.r@web.de>, Jens Lehmann <Jens.Lehmann@web.de>=
-, git@vger.kernel.org, Jeff King <peff@peff.net>
->=20
->=20
-> On 27 Nov 2013, at 11:43, Junio C Hamano <gitster@pobox.com> wrote:
->=20
+On 29 Nov 2013, at 14:38, Heiko Voigt <hvoigt@hvoigt.net> wrote:
+
+> On Wed, Nov 27, 2013 at 11:43:44AM -0800, Junio C Hamano wrote:
 >> Nick Townsend <nick.townsend@mac.com> writes:
->>=20
->>> On 26 Nov 2013, at 14:18, Junio C Hamano <gitster@pobox.com> wrote:
->>>=20
->>>> Even if the code is run inside a repository with a working tree,
->>>> when producing a tarball out of an ancient commit that had a
->>>> submodule not at its current location, --recurse-submodules option
->>>> should do the right thing, so asking for working tree location of
->>>> that submodule to find its repository is wrong, I think.  It may
->>>> happen to find one if the archived revision is close enough to wha=
-t
->>>> is currently checked out, but that may not necessarily be the case=
-=2E
->>>>=20
->>>> At that point when the code discovers an S_ISGITLINK entry, it
->>>> should have both a pathname to the submodule relative to the
->>>> toplevel and the commit object name bound to that submodule
->>>> location.  What it should do, when it does not find the repository
->>>> at the given path (maybe because there is no working tree, or the
->>>> sudmodule directory has moved over time) is roughly:
->>>>=20
->>>> - Read from .gitmodules at the top-level from the tree it is
->>>> creating the tarball out of;
->>>>=20
->>>> - Find "submodule.$name.path" entry that records that path to the
->>>> submodule; and then
->>>>=20
->>>> - Using that $name, find the stashed-away location of the submodul=
-e
->>>> repository in $GIT_DIR/modules/$name.
->>>>=20
->>>> or something like that.
->>>>=20
->>>> This is a related tangent, but when used in a repository that peop=
-le
->>>> often use as their remote, the repository discovery may have to
->>>> interact with the relative URL.  People often ship .gitmodules wit=
-h
->>>>=20
->>>> 	[submodule "bar"]
->>>>      	URL =3D ../bar.git
->>>> 		path =3D barDir
->>>>=20
->>>> for a top-level project "foo" that can be cloned thusly:
->>>>=20
->>>> 	git clone git://site.xz/foo.git
->>>>=20
->>>> and host bar.git to be clonable with
->>>>=20
->>>> 	git clone git://site.xz/bar.git barDir/
->>>>=20
->>>> inside the working tree of the foo project.  In such a case, when
->>>> "archive --recurse-submodules" is running, it would find the
->>>> repository for the "bar" submodule at "../bar.git", I would think.
->>>>=20
->>>> So this part needs a bit more thought, I am afraid.
->>>=20
->>> I see that there is a lot of potential complexity around setting up=
- a submodule:
->>=20
->> No question about it.
->>=20
 >>> * The .gitmodules file can be dirty (easy to flag, but should we
 >>> allow archive to proceed?)
 >>=20
@@ -153,30 +91,30 @@ h
 >> (1) We are archiving a tree with a submodule at "linux/";
 >>=20
 >> (2) We read .gitmodules from that tree and learn that the submodule
->>    has name "kernel";
+>>     has name "kernel";
 >>=20
 >> (3) There is no ".git/modules/kernel" because the repository uses
->>    the old layout (if the user never was interested in this
->>    submodule, .git/modules/kernel may also be missing, and we
->>    should tell these two cases apart by checking .git/config to
->>    see if a corresponding entry for the "kernel" submodule exists
->>    there);
+>>     the old layout (if the user never was interested in this
+>>     submodule, .git/modules/kernel may also be missing, and we
+>>     should tell these two cases apart by checking .git/config to
+>>     see if a corresponding entry for the "kernel" submodule exists
+>>     there);
 >>=20
 >> (4) In a repository that uses the old layout, there must be the
->>    repository somewhere embedded in the current working tree (this
->>    inability to remove is why we use the new layout these days).
->>    We can learn where it is by looking at .gitmodules in the
->>    working tree---map the name "kernel" we learned earlier, and
->>    map it to the current path ("linux-3.0/" if you have been
->>    following this example so far).
+>>     repository somewhere embedded in the current working tree (this
+>>     inability to remove is why we use the new layout these days).
+>>     We can learn where it is by looking at .gitmodules in the
+>>     working tree---map the name "kernel" we learned earlier, and
+>>     map it to the current path ("linux-3.0/" if you have been
+>>     following this example so far).
 >>=20
 >> And in that fallback context, I would say that reading from a dirty
 >> (or "messed with by the user") .gitmodules is the right thing to
 >> do.  Perhaps the user may be in the process of moving the submodule
 >> in his working tree with
 >>=20
->>   $ mv linux-3.0 linux-3.2
->>   $ git config -f .gitmodules submodule.kernel.path linux-3.2
+>>    $ mv linux-3.0 linux-3.2
+>>    $ git config -f .gitmodules submodule.kernel.path linux-3.2
 >>=20
 >> but hasn't committed the change yet.
 >>=20
@@ -188,19 +126,44 @@ h
 >> project the submodule belongs to and the path to the submodule in
 >> question" deserves a separate thread to discuss with area experts.
 >=20
-> As per my email to Heiko on this thread, I=92m happy to start such=20
-> a discussion - I=92ll use your notes as a starting point. I=92m much =
-more comfortable
-> using a wiki for this - is this common or should I start a new mail t=
-hread
-> with RFC in the title or similar?
+> FYI, I already started to implement this lookup of submodule paths ea=
+rly
+> this year[1] but have not found the time to proceed on that yet. I am
+> planning to continue on that topic soonish. We need it to implement a
+> correct recursive fetch with clone on-demand as a basis for the futur=
+e
+> recursive checkout.
 >=20
-> I did complete my work on my version of git-archive (for internal use=
-) and added some regression tests
-> for current behaviour. Also the add_submodule_odb patch should IMHO b=
-e incorporated
-> anyway. I=92ll resubmit those two for consideration in a new thread.
+> During the work on this I hit too many open questions. Thats why I am
+> currently working on a complete plan[2] so we can discuss and define =
+how
+> this needs to be implemented. It is an asciidoc document which I will
+> send out once I am finished with it.
 >=20
-> Kind Regards
-> Nick Townsend
+> Cheers Heiko
 >=20
+> [1] http://article.gmane.org/gmane.comp.version-control.git/217020
+> [2] https://github.com/hvoigt/git/wiki/submodule-fetch-config
+
+Heiko
+It seems to me that the question that you are trying to solve is
+more complex than the problem I faced in git-archive, where we have a
+single commit of the top-level repository that we are chasing.=20
+Perhaps we should split the work into two pieces:
+
+a. Identifying the complete submodule configuration for a single commit=
+, and
+b. the complexity of behaviour when fetching and cloning recursively (w=
+hich=20
+    of course requires a.)
+
+I=92m very happy to work on the first, but the second seems to me to re=
+quire more
+understanding than I currently possess. In order to do this it would he=
+lp to have a
+place to discuss this. I see you have used the wiki of your fork of git=
+ on GitHub.
+Is that the right place to solicit input?
+
+Kind Regards
+Nick
