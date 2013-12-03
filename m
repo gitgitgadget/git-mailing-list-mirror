@@ -1,103 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [ANNOUNCE] Git v1.8.4.5
-Date: Tue, 03 Dec 2013 13:48:11 -0800
-Message-ID: <xmqq38m9mwlr.fsf@gitster.dls.corp.google.com>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: git filter-branch --directory-filter oddity
+Date: Tue, 3 Dec 2013 17:44:40 -0500
+Message-ID: <CACPiFC+nCj8VMqb+aK-C5gMyX6R0dDba1U1U49KTktF3WDQ9ZA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linux Kernel <linux-kernel@vger.kernel.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 03 22:52:23 2013
+Content-Type: text/plain; charset=ISO-8859-1
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Dec 03 23:45:09 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VnxtG-0006T8-Hz
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Dec 2013 22:52:22 +0100
+	id 1VnyiJ-0002LS-Dq
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Dec 2013 23:45:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755228Ab3LCVwD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Dec 2013 16:52:03 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33945 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755041Ab3LCVvt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Dec 2013 16:51:49 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 77B7C56E9B;
-	Tue,  3 Dec 2013 16:51:48 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=K
-	eyyT2g0dHuKl755Ehnydr0H5Qk=; b=HVWnuDG3JcKu31d7VwL8NA+IvLz29v2Kh
-	7t9P6PwdMw85MW+8I/MjyXY8zOxldQHAtj+39qH3H8Fxe5KR0kYwNxmewMX3J+K8
-	av4k8XQTKviE3RjTjxwce19vy5EIt7kBOm7tN7G9aTUVK6JNFMcwA0nTCEmCR4CB
-	DqnPZw59Rw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:mime-version:content-type; q=dns; s=
-	sasl; b=t9Q3CKJWFIcEXHYvzn1SLmbZODQHwiRJQK1zjfxaGYEYPDob+3qsjxa7
-	+urJJZBYBmPzYS65FOHyVfrK8jtPoxDMyqAta0m5acJOJL9pTjveGSj0ucz4mn0v
-	omAPtfCv+46g2SO23VyhNmrZDcPFQV1Jd1J9ZLJljPW835ayl7A=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 765E656E98;
-	Tue,  3 Dec 2013 16:51:47 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3505456E8F;
-	Tue,  3 Dec 2013 16:51:46 -0500 (EST)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 1ACEE06C-5C65-11E3-9BFA-D331802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755402Ab3LCWpD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Dec 2013 17:45:03 -0500
+Received: from mail-vc0-f178.google.com ([209.85.220.178]:61391 "EHLO
+	mail-vc0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755294Ab3LCWpC (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Dec 2013 17:45:02 -0500
+Received: by mail-vc0-f178.google.com with SMTP id lh4so10380773vcb.23
+        for <git@vger.kernel.org>; Tue, 03 Dec 2013 14:45:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=LzgiEoW1+wbJwHJcAs9IJIOQJQRMjBL898p8hBEh2Dc=;
+        b=n2Zc9eGWi7aWoNNu+9ObNdWwdvO7cInH+xQ6mTq1Ajfb/ssmOwxs8nLOPav57CSt9P
+         1CUsL816Eme+dX4a1p46CeztmqEAnDIQdJCds1Lz3Y2zQtmEmFXsWlz76gDDIb9VGdRz
+         odf4U5+XIe0IHkg4a7lm++YUqbTnbjL40j6ShLs6BeyU3aFC3M+dN/lDoZfmq5gWqsdl
+         nD3J5h1hWkLjNupLlOFi/GTFs0y0rn7OjC/EXnPvy7NuZ36RI1wxbbiM6GBb0aLiSD3A
+         OFyIGTP4D52KXBhaewwjXpld3o7iGxlFM3513V+LThv3HTKKkuo3M6G5FJQrCyW/1rR1
+         H0DA==
+X-Received: by 10.52.233.2 with SMTP id ts2mr348637vdc.44.1386110700751; Tue,
+ 03 Dec 2013 14:45:00 -0800 (PST)
+Received: by 10.220.74.133 with HTTP; Tue, 3 Dec 2013 14:44:40 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238741>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238742>
 
-A maintenance release Git v1.8.4.5 is now available at the
-usual places.
+When using git filter-branch --prune-empty --directory-filter foo/bar
+to extract the history of the foo/bar directory, I am getting a very
+strange result.
 
-The release tarballs are found at:
+Directory foo/bar is "slow moving". Say, 22 commits out of several
+thousand. I would like to extract just those 22 commits.
 
-    http://code.google.com/p/git-core/downloads/list
+Instead, I get ~1500 commits, which seem to have not been skipped
+because they are merge commits. Merges completely immaterial to this
+directory.
 
-and their SHA-1 checksums are:
+As they have not been skipped, they are fully fleshed out. By this, I
+mean that we have the whole tree in place. So these 22 commits appear
+with foo/bar pulled out to the root of the project, in the midst of
+1500 commits with a full tree.
 
-b43c0cc46749ad62b8ac74237ceca00c8e386edb  git-1.8.4.5.tar.gz
-bd66db8c9528e53d2b93e88ef8e96164e597333f  git-htmldocs-1.8.4.5.tar.gz
-1ff6380e60c879a563ef89452ca461e9610e41c0  git-manpages-1.8.4.5.tar.gz
+The commit diffs make no sense what-so-ever.
 
-The following public repositories all have a copy of the v1.8.4.5
-tag and the maint-1.8.4 branch that the tag points at:
+Am I doing it wrong?
 
-  url = https://kernel.googlesource.com/pub/scm/git/git
-  url = git://repo.or.cz/alt-git.git
-  url = https://code.google.com/p/git-core/
-  url = git://git.sourceforge.jp/gitroot/git-core/git.git
-  url = git://git-core.git.sourceforge.net/gitroot/git-core/git-core
-  url = https://github.com/gitster/git
 
-Also, http://www.kernel.org/pub/software/scm/git/ has copies of the
-release tarballs.
 
-Git v1.8.4.5 Release Notes
-==========================
-
-Fixes since v1.8.4.4
---------------------
-
- * Recent update to remote-hg that attempted to make it work better
-   with non ASCII pathnames fed Unicode strings to the underlying Hg
-   API, which was wrong.
-
- * "git submodule init" copied "submodule.$name.update" settings from
-   .gitmodules to .git/config without making sure if the suggested
-   value was sensible.
-
-----------------------------------------------------------------
-
-Changes since v1.8.4.4 are as follows:
-
-Junio C Hamano (2):
-      submodule: do not copy unknown update mode from .gitmodules
-      Git 1.8.4.5
-
-Richard Hansen (1):
-      remote-hg: don't decode UTF-8 paths into Unicode objects
+m
+-- 
+ martin.langhoff@gmail.com
+ -  ask interesting questions
+ - don't get distracted with shiny stuff  - working code first
+ ~ http://docs.moodle.org/en/User:Martin_Langhoff
