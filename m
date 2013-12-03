@@ -1,159 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Duy Nguyen <pclouds@gmail.com>
 Subject: Re: Ideas to speed up repacking
-Date: Mon, 02 Dec 2013 16:44:09 -0800
-Message-ID: <xmqqpppepxuu.fsf@gitster.dls.corp.google.com>
-References: <201312021630.45767.mfick@codeaurora.org>
+Date: Tue, 3 Dec 2013 10:27:09 +0700
+Message-ID: <CACsJy8DJU2YTE1iNdb=fvo0fVOgLUK2mKXUhjcoJh8Ac0wW_EA@mail.gmail.com>
+References: <201312021630.45767.mfick@codeaurora.org> <xmqqpppepxuu.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Martin Fick <mfick@codeaurora.org>
-X-From: git-owner@vger.kernel.org Tue Dec 03 01:44:19 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: Martin Fick <mfick@codeaurora.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Dec 03 04:27:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vne66-00010M-5H
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Dec 2013 01:44:18 +0100
+	id 1VngeH-0007uT-Hz
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Dec 2013 04:27:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752224Ab3LCAoO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Dec 2013 19:44:14 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59718 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751853Ab3LCAoN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Dec 2013 19:44:13 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9634A574DB;
-	Mon,  2 Dec 2013 19:44:12 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=p2x99q4sa/Iug2I5OMCzCSVGB9A=; b=kRZ7ri
-	8G+MpF70zmthELKzZ6zKOK6p1aKAJmS+q6Hf2fSwJXkhfwiNr3DDGmSkiZXP6c5I
-	E+a+sPOQORzPClSCFiERz0jwCh6HU++5SO79Cr7UwH6EaVSzc/Nquc6HZaHdHGrO
-	5Ws6ucTEDpuovyWnFn6rgdB7zFoRT/Tc3c+Ec=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=UGsgjtC0Hl8uxmywYDDrjdbpvxwu6ypz
-	WxdrKhVAfxpZ16UFdrsEqMUL+R55UvoUQ4Dt9vV0ri6lQcQQoL2MS5nMjUxy7uz2
-	mItd3ATyYt6fMFphupqfy0CsJz7g6HO6mCVl0nOvaMrpO4lQ5M/URiRBDdbsD/jG
-	jMzBQoOFidc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 80712574DA;
-	Mon,  2 Dec 2013 19:44:12 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C1F9C574D9;
-	Mon,  2 Dec 2013 19:44:11 -0500 (EST)
-In-Reply-To: <201312021630.45767.mfick@codeaurora.org> (Martin Fick's message
-	of "Mon, 2 Dec 2013 16:30:45 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 06D3A7DE-5BB4-11E3-A866-D331802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753037Ab3LCD1l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Dec 2013 22:27:41 -0500
+Received: from mail-qc0-f172.google.com ([209.85.216.172]:55015 "EHLO
+	mail-qc0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751025Ab3LCD1k (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Dec 2013 22:27:40 -0500
+Received: by mail-qc0-f172.google.com with SMTP id e16so1598788qcx.3
+        for <git@vger.kernel.org>; Mon, 02 Dec 2013 19:27:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=hI+Czl793ejWoknDy9XmstLIe/Smbk5iWmn9YVzhXok=;
+        b=r8t5TFsTaadjglDXjUwKFI3ZnT3K4Mo679vUPm8zS5NAS6JQuPr5dxdesAGxrIPKTI
+         I5iTXo08j1DrBqMkyyAYzzwCW0YUFW8vSfrERq+UD3U6FnWhcG1/QVGWPOfx3GYCW5n2
+         XtKM/tEr7BfoDgxkd43EnNgWDvYZmU4zBZWo/bvhmvYKJHMwnpsZWIE6cjU5UUSlthMm
+         hrIbQO6ZtJbFb0xM7uesJ4zuQLVHCgehhpcRXYszq/QfZlCw2Xo7IL0ZOq6gdimGFmoN
+         T2SGl2gCofTVOhyzp7fJEgn6UV+81yBkd2J35WypSnWSwLlWQKwVHpa3tH5h6IQKWPeA
+         aiKw==
+X-Received: by 10.229.105.9 with SMTP id r9mr101545844qco.12.1386041260121;
+ Mon, 02 Dec 2013 19:27:40 -0800 (PST)
+Received: by 10.96.124.101 with HTTP; Mon, 2 Dec 2013 19:27:09 -0800 (PST)
+In-Reply-To: <xmqqpppepxuu.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238670>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238671>
 
-Martin Fick <mfick@codeaurora.org> writes:
+On Tue, Dec 3, 2013 at 7:44 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> * Scenario 4:
+>>
+>>    Starts with Setup 1.  Add some loose objects to the repo
+>> via a local fast forward ref update (I am assuming this is
+>> possible without adding any new unreferenced objects?)
+>>
+>>
+>> In all 4 scenarios, I believe we should be able to skip
+>> history traversal and simply grab all objects and repack
+>> them into a new file?
+>
+> If nothing else has happened in the repository, perhaps, but I
+> suspect that the real problem is how you would prove it.  For
+> example, I am guessing that your Scenario 4 could be something like:
+>
+>     : setup #1
+>     $ git repack -a -d -f
+>     $ git prune
+>
+>     : scenario #4
+>     $ git commit --allow-empty -m 'new commit'
+>
+> which would add a single loose object to the repository, advancing
+> the current branch ref by one commit, fast-forwarding relative to
+> the state you were in after setup #1.
+>
+> But how would you efficiently prove that it was the only thing that
+> happened?
 
-> I wanted to explore the idea of exploiting knowledge about 
-> previous repacks to help speed up future repacks.  
->
-> I had various ideas that seemed like they might be good 
-> places to start, but things quickly got away from me.  
-> Mainly I wanted to focus on reducing and even sometimes 
-> eliminating reachability calculations since that seems to be 
-> be the one major unsolved slow piece during repacking.
->
-> My first line of thinking goes like this:  "After a full 
-> repack, reachability of the current refs is known.  Exploit 
-> that knowledge for future repacks."  There are some very 
-> simple scenarios where if we could figure out how to 
-> identify them reliably, I think we could simply avoid 
-> reachability calculations entirely, and yet end up with the 
-> same repacked files as if we had done the reachability 
-> calculations.  Let me outline some to see if they make sense 
-> as starting place for further discussion.
->
-> -------------
->
-> * Setup 1:  
->
->   Do a full repack.  All loose and packed objects are added 
-> to a single pack file (assumes git config repack options do 
-> not create multiple packs).
->
-> * Scenario 1:
->
->   Start with Setup 1.  Nothing has changed on the repo 
-> contents (no new object/packs, refs all the same), but 
-> repacking config options have changed (for example 
-> compression level has changed).
->
-> * Scenario 2:
->
->    Starts with Setup 1.  Add one new pack file that was 
-> pushed to the repo by adding a new ref to the repo (existing 
-> refs did not change).
->
-> * Scenario 3: 
->
->    Starts with Setup 1.  Add one new pack file that was 
-> pushed to the repo by updating an existing ref with a fast 
-> forward.
->
-> * Scenario 4:
->
->    Starts with Setup 1.  Add some loose objects to the repo 
-> via a local fast forward ref update (I am assuming this is 
-> possible without adding any new unreferenced objects?)
->
->
-> In all 4 scenarios, I believe we should be able to skip 
-> history traversal and simply grab all objects and repack 
-> them into a new file?
+Shawn mentioned elsewhere that we could generate bundle header in and
+keep it in pack-XXX.bh file at pack creation time. With that
+information we could verify if a ref has been reset, just fast
+forwarded or even deleted.
 
-If nothing else has happened in the repository, perhaps, but I
-suspect that the real problem is how you would prove it.  For
-example, I am guessing that your Scenario 4 could be something like:
+> Also with Scenario #2, how would you prove that the new pack does
+> not contain any cruft that is not reachable?  When receiving a pack
+> and updating our refs, we only prove that we have all the objects
+> needed to complete updated refs---we do not reject packs with crufts
+> that are not necessary.
 
-    : setup #1
-    $ git repack -a -d -f
-    $ git prune
-
-    : scenario #4
-    $ git commit --allow-empty -m 'new commit'
-
-which would add a single loose object to the repository, advancing
-the current branch ref by one commit, fast-forwarding relative to
-the state you were in after setup #1.
-
-But how would you efficiently prove that it was the only thing that
-happened?  The user could have done this instead of a single commit:
-
-    : scenario #4 look-alike
-    $ git commit --allow-empty -m 'lost commit'
-    $ git reset --hard HEAD^
-    $ git commit --allow-empty -m 'new commit'
-
-and the reflog entry for HEAD or the current branch ref for that
-lost commit may be already ancient when you looked at this state.
-Your object database has two loose commits, and you would want to
-lose the older one 'lost commit' which is not reachable.
-
-Also with Scenario #2, how would you prove that the new pack does
-not contain any cruft that is not reachable?  When receiving a pack
-and updating our refs, we only prove that we have all the objects
-needed to complete updated refs---we do not reject packs with crufts
-that are not necessary.
-
-These two are only examples, and we might be able to convince
-ourselves that not pruning (or ejecting cruft from packs) is OK, but
-that is introducing a different mode of operation, not optimizing
-the repacking without changing what "repacking" means (I am not
-saying it is bad to change the meaning if we can make a good
-argument between pros-and-cons; a small bloat might be acceptable
-relative to a good enough performance gain, but only unless the user
-is using repack && prune as a way to eradicate undesirable contents
-out of the object database).
+We trust the pack producer to do it correctly, I guess. If a pack
+producer guarantees not to store any cruft, it could mark the pack
+somehow.
+-- 
+Duy
