@@ -1,104 +1,149 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Ideas to speed up repacking
-Date: Mon, 02 Dec 2013 23:17:24 -0800
-Message-ID: <xmqqli02pfnf.fsf@gitster.dls.corp.google.com>
-References: <201312021630.45767.mfick@codeaurora.org>
-	<xmqqpppepxuu.fsf@gitster.dls.corp.google.com>
-	<CACsJy8DJU2YTE1iNdb=fvo0fVOgLUK2mKXUhjcoJh8Ac0wW_EA@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Martin Fick <mfick@codeaurora.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 03 08:17:33 2013
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH] mv: let 'git mv file no-such-dir/' error out
+Date: Tue,  3 Dec 2013 09:32:04 +0100
+Message-ID: <1386059524-14442-1-git-send-email-Matthieu.Moy@imag.fr>
+Cc: Duy Nguyen <pclouds@gmail.com>, Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Tue Dec 03 09:32:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VnkEe-0004En-RK
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Dec 2013 08:17:33 +0100
+	id 1VnlPF-0003F5-Fb
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Dec 2013 09:32:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753064Ab3LCHR3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Dec 2013 02:17:29 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61315 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752995Ab3LCHR1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Dec 2013 02:17:27 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8D1884B556;
-	Tue,  3 Dec 2013 02:17:26 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ng+RFp1+alQm0aKrA//QJLpdx7E=; b=PyOhei
-	0AeB5R+3zn2doUHI/9hzawmxMTS/Wnl0L8QgDoOldZ8xQzx2RUe9EEDzMhI621Dr
-	e36QbCrB6mQl+vn+uWZY5T9z4bDbgwlJHFdAcJrSk5krV6OrFDqvpNF2q3p662OZ
-	O9cFDFvzaPPvoXG5hiqlhgYki1gVPM1Oq+4rA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=KjqEuGg0nInUjDl88rODwnAkrTSiDs4q
-	N6VjWXWYQH71eX2Ns8I3aChyAuLBIzmzhHUChBo/f15IH17Y7F7FYld+5M2O8l4x
-	4F0Fd7DE8KOGrGZjf9iAvHbs2p4y7yrXlvz2GRzzKvOnXwzteMJylm5J7T7/lWGa
-	YG5NZEIbp+8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7BD3E4B555;
-	Tue,  3 Dec 2013 02:17:26 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BA9294B552;
-	Tue,  3 Dec 2013 02:17:25 -0500 (EST)
-In-Reply-To: <CACsJy8DJU2YTE1iNdb=fvo0fVOgLUK2mKXUhjcoJh8Ac0wW_EA@mail.gmail.com>
-	(Duy Nguyen's message of "Tue, 3 Dec 2013 10:27:09 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: F5EE68C8-5BEA-11E3-B243-D331802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752115Ab3LCIc3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Dec 2013 03:32:29 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:59586 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751766Ab3LCIc2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Dec 2013 03:32:28 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id rB38WG2e015599
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 3 Dec 2013 09:32:16 +0100
+Received: from anie.imag.fr ([129.88.7.32])
+	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <moy@imag.fr>)
+	id 1VnlOz-0003Tp-53; Tue, 03 Dec 2013 09:32:17 +0100
+Received: from moy by anie.imag.fr with local (Exim 4.80)
+	(envelope-from <moy@imag.fr>)
+	id 1VnlOy-0003ll-Qp; Tue, 03 Dec 2013 09:32:16 +0100
+X-Mailer: git-send-email 1.8.5.rc3.4.g8bd3721
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 03 Dec 2013 09:32:16 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: rB38WG2e015599
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1386664339.75339@onUV1IAbde3+q1DJh3I6uA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238674>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238675>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+Git used to trim the trailing slash, and make the command equivalent to
+'git mv file no-such-dir', which created the file no-such-dir (while the
+trailing slash explicitly stated that it could only be a directory).
 
->> If nothing else has happened in the repository, perhaps, but I
->> suspect that the real problem is how you would prove it.  For
->> example, I am guessing that your Scenario 4 could be something like:
->>
->>     : setup #1
->>     $ git repack -a -d -f
->>     $ git prune
->>
->>     : scenario #4
->>     $ git commit --allow-empty -m 'new commit'
->>
->> which would add a single loose object to the repository, advancing
->> the current branch ref by one commit, fast-forwarding relative to
->> the state you were in after setup #1.
->>
->> But how would you efficiently prove that it was the only thing that
->> happened?
->
-> Shawn mentioned elsewhere that we could generate bundle header in and
-> keep it in pack-XXX.bh file at pack creation time. With that
-> information we could verify if a ref has been reset, just fast
-> forwarded or even deleted.
+This patch skips the trailing slash removal for the destination path. The
+path with its trailing slash is passed to rename(2), which errors out
+with the appropriate message:
 
-With what information? If you keep the back-then-current information
-and nothing else, how would you differentiate between the simple
-scenario #4 above vs 'lost and new' two commit versions of the
-scenario?  The endpoints should both show that one ref (and only one
-ref) advanced by one commit, but one has cruft in the object
-database while the other does not.
+  $ git mv file no-such-dir/
+  fatal: renaming 'file' failed: Not a directory
 
->> Also with Scenario #2, how would you prove that the new pack does
->> not contain any cruft that is not reachable?  When receiving a pack
->> and updating our refs, we only prove that we have all the objects
->> needed to complete updated refs---we do not reject packs with crufts
->> that are not necessary.
->
-> We trust the pack producer to do it correctly, I guess. If a pack
-> producer guarantees not to store any cruft, it could mark the pack
-> somehow.
+Original-patch-by: Duy Nguyen <pclouds@gmail.com>
+Tests, tweaks and commit message by: Matthieu Moy <Matthieu.Moy@imag.fr>
 
-That is not an answer.  Since when do we design to blindly trust
-anybody on the other end of the wire?
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+ builtin/mv.c  | 23 ++++++++++++++++-------
+ t/t7001-mv.sh | 10 ++++++++++
+ 2 files changed, 26 insertions(+), 7 deletions(-)
+
+diff --git a/builtin/mv.c b/builtin/mv.c
+index 2e0e61b..08fbc03 100644
+--- a/builtin/mv.c
++++ b/builtin/mv.c
+@@ -16,9 +16,12 @@ static const char * const builtin_mv_usage[] = {
+ 	NULL
+ };
+ 
++#define DUP_BASENAME 1
++#define KEEP_TRAILING_SLASH 2
++
+ static const char **internal_copy_pathspec(const char *prefix,
+ 					   const char **pathspec,
+-					   int count, int base_name)
++					   int count, unsigned flags)
+ {
+ 	int i;
+ 	const char **result = xmalloc((count + 1) * sizeof(const char *));
+@@ -27,11 +30,12 @@ static const char **internal_copy_pathspec(const char *prefix,
+ 	for (i = 0; i < count; i++) {
+ 		int length = strlen(result[i]);
+ 		int to_copy = length;
+-		while (to_copy > 0 && is_dir_sep(result[i][to_copy - 1]))
++		while (!(flags & KEEP_TRAILING_SLASH) &&
++		       to_copy > 0 && is_dir_sep(result[i][to_copy - 1]))
+ 			to_copy--;
+-		if (to_copy != length || base_name) {
++		if (to_copy != length || flags & DUP_BASENAME) {
+ 			char *it = xmemdupz(result[i], to_copy);
+-			if (base_name) {
++			if (flags & DUP_BASENAME) {
+ 				result[i] = xstrdup(basename(it));
+ 				free(it);
+ 			} else
+@@ -87,16 +91,21 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
+ 
+ 	source = internal_copy_pathspec(prefix, argv, argc, 0);
+ 	modes = xcalloc(argc, sizeof(enum update_mode));
+-	dest_path = internal_copy_pathspec(prefix, argv + argc, 1, 0);
++	/*
++	 * Keep trailing slash, needed to let
++	 * "git mv file no-such-dir/" error out.
++	 */
++	dest_path = internal_copy_pathspec(prefix, argv + argc, 1,
++					   KEEP_TRAILING_SLASH);
+ 	submodule_gitfile = xcalloc(argc, sizeof(char *));
+ 
+ 	if (dest_path[0][0] == '\0')
+ 		/* special case: "." was normalized to "" */
+-		destination = internal_copy_pathspec(dest_path[0], argv, argc, 1);
++		destination = internal_copy_pathspec(dest_path[0], argv, argc, DUP_BASENAME);
+ 	else if (!lstat(dest_path[0], &st) &&
+ 			S_ISDIR(st.st_mode)) {
+ 		dest_path[0] = add_slash(dest_path[0]);
+-		destination = internal_copy_pathspec(dest_path[0], argv, argc, 1);
++		destination = internal_copy_pathspec(dest_path[0], argv, argc, DUP_BASENAME);
+ 	} else {
+ 		if (argc != 1)
+ 			die("destination '%s' is not a directory", dest_path[0]);
+diff --git a/t/t7001-mv.sh b/t/t7001-mv.sh
+index b90e985..e5c8084 100755
+--- a/t/t7001-mv.sh
++++ b/t/t7001-mv.sh
+@@ -72,6 +72,16 @@ rm -f idontexist untracked1 untracked2 \
+      .git/index.lock
+ 
+ test_expect_success \
++    'moving to target with trailing slash' \
++    'test_must_fail git mv path0/COPYING no-such-dir/ &&
++     test_must_fail git mv path0/COPYING no-such-dir// &&
++     git mv path0/ no-such-dir/'
++
++test_expect_success \
++    'clean up' \
++    'git reset --hard'
++
++test_expect_success \
+     'adding another file' \
+     'cp "$TEST_DIRECTORY"/../README path0/README &&
+      git add path0/README &&
+-- 
+1.8.5.rc3.4.g8bd3721
