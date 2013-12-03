@@ -1,74 +1,115 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] path_treatment: also ignore $GIT_DIR if it's not .git
-Date: Tue, 03 Dec 2013 10:32:20 -0800
-Message-ID: <xmqqtxepokej.fsf@gitster.dls.corp.google.com>
-References: <1385922611.3240.6.camel@localhost>
-	<20131201190447.GA31367@kaarsemaker.net> <529DF64A.70801@gmail.com>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: Re: [PATCH] submodule recursion in git-archive
+Date: Tue, 3 Dec 2013 19:33:01 +0100
+Message-ID: <20131203183301.GB4629@sandbox-ub>
+References: <2E636B58-47EB-4712-93CA-39E8D1BA3DB9@mac.com>
+ <5294BB97.7010707@web.de>
+ <xmqqmwkqvmck.fsf@gitster.dls.corp.google.com>
+ <9AB10474-6DEF-4FFD-B6B3-ED2AB21424AC@mac.com>
+ <xmqqzjopsk9b.fsf@gitster.dls.corp.google.com>
+ <20131129223845.GA31636@sandbox-ub>
+ <3C71BC83-4DD0-43F8-9E36-88594CA63FC5@mac.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Dennis Kaarsemaker <dennis@kaarsemaker.net>, git@vger.kernel.org,
-	ingy@ingy.net
-To: Karsten Blees <karsten.blees@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 03 19:32:29 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>,
+	Jens Lehmann <Jens.Lehmann@web.de>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>
+To: Nick Townsend <nick.townsend@mac.com>
+X-From: git-owner@vger.kernel.org Tue Dec 03 19:35:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vnulo-0003XS-Ss
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Dec 2013 19:32:29 +0100
+	id 1Vnuoq-0005Jo-Qu
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Dec 2013 19:35:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753576Ab3LCScZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Dec 2013 13:32:25 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56177 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751977Ab3LCScY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Dec 2013 13:32:24 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D71F75594B;
-	Tue,  3 Dec 2013 13:32:23 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=tcGderPeZ4kl314lRvleH9jm4cY=; b=DRRgiC
-	peNghk9CqwOkbmzOD/dMRgIfpMPSfXFIzyzLZkBJWk7nJ7BwBpT4N5krdma9ZE87
-	c7aLArJpMAcQEC06H23ogseLnAgD7KSgetWwU4nqApPf9bKAcBwrvX125KpZH/gx
-	LBRbzgbBs2EQKfh0eyxqjiiXmyJQuC9QwATNo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=j/jJw2rLH63QsyQ4316OF3GpnAjOVAqb
-	IabJTdQemQvxa+9LRaqxXKA+ivoTQyRmT2V1FlTm4oeiVDTkjPfiqAeEwQpsWeTj
-	29TW5g9SzXBeUlvh/s8E7G3226kQeac+JZ7dKnArCOU8l7bYbW5k9UOI9DhGY5cJ
-	vTIdBcs7SGY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C7E4355949;
-	Tue,  3 Dec 2013 13:32:23 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2721A55945;
-	Tue,  3 Dec 2013 13:32:23 -0500 (EST)
-In-Reply-To: <529DF64A.70801@gmail.com> (Karsten Blees's message of "Tue, 03
-	Dec 2013 16:18:34 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 40423D7E-5C49-11E3-9817-D331802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754335Ab3LCSfc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Dec 2013 13:35:32 -0500
+Received: from smtprelay03.ispgateway.de ([80.67.31.30]:41305 "EHLO
+	smtprelay03.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752630Ab3LCSf0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Dec 2013 13:35:26 -0500
+Received: from [77.20.33.19] (helo=sandbox-ub)
+	by smtprelay03.ispgateway.de with esmtpsa (TLSv1:AES128-SHA:128)
+	(Exim 4.68)
+	(envelope-from <hvoigt@hvoigt.net>)
+	id 1VnumO-0006Zi-32; Tue, 03 Dec 2013 19:35:21 +0100
+Content-Disposition: inline
+In-Reply-To: <3C71BC83-4DD0-43F8-9E36-88594CA63FC5@mac.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238709>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238710>
 
-Karsten Blees <karsten.blees@gmail.com> writes:
+Hi,
 
->So I figure that GIT_DIR is not meant to _rename_ the ".git" dir,
->but to point somewhere _outside_ the worktree (or somewhere within
->the .git dir).
+On Mon, Dec 02, 2013 at 03:55:36PM -0800, Nick Townsend wrote:
+>=20
+> On 29 Nov 2013, at 14:38, Heiko Voigt <hvoigt@hvoigt.net> wrote:
+> > FYI, I already started to implement this lookup of submodule paths =
+early
+> > this year[1] but have not found the time to proceed on that yet. I =
+am
+> > planning to continue on that topic soonish. We need it to implement=
+ a
+> > correct recursive fetch with clone on-demand as a basis for the fut=
+ure
+> > recursive checkout.
+> >=20
+> > During the work on this I hit too many open questions. Thats why I =
+am
+> > currently working on a complete plan[2] so we can discuss and defin=
+e how
+> > this needs to be implemented. It is an asciidoc document which I wi=
+ll
+> > send out once I am finished with it.
+> >=20
+> > Cheers Heiko
+> >=20
+> > [1] http://article.gmane.org/gmane.comp.version-control.git/217020
+> > [2] https://github.com/hvoigt/git/wiki/submodule-fetch-config
+>=20
+> It seems to me that the question that you are trying to solve is
+> more complex than the problem I faced in git-archive, where we have a
+> single commit of the top-level repository that we are chasing.=20
+> Perhaps we should split the work into two pieces:
+>=20
+> a. Identifying the complete submodule configuration for a single comm=
+it, and
+> b. the complexity of behaviour when fetching and cloning recursively =
+(which=20
+>     of course requires a.)
 
-Correct.
+You are right the latter (b) is a separate topic. So how about I extrac=
+t the
+submodule config parsing part from the mentioned patch and you can then
+use that patch as a basis for your work? As far as I understand you onl=
+y
+need to parse the .gitmodules file for one commit and then lookup the
+submodule names from paths right? That would simplify matters and we ca=
+n
+postpone the caching of multiple commits for the time when I continue o=
+n b.
 
-> If we don't want to support this, though, I think it would be more
-> approrpiate to issue a warning if GIT_DIR points to a worktree
-> location.
+> I=E2=80=99m very happy to work on the first, but the second seems to =
+me to require more
+> understanding than I currently possess. In order to do this it would =
+help to have a
+> place to discuss this. I see you have used the wiki of your fork of g=
+it on GitHub.
+> Is that the right place to solicit input?
 
-But how do tell what is and isn't a "worktree location"?  Having the
-path in the index would be one, but you may find it out only after
-issuing "git checkout $antient_commit".
+I only used that to collect all information into one place. I am not
+sure if thats actually necessary for the .gitmodules parsing you need.
+
+I think we should discuss everything related to the design and patches
+here on the list. If you have questions regarding my code I am also
+happy to answer that via private mail.
+
+Cheers Heiko
