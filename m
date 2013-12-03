@@ -1,78 +1,61 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/3] gitweb: Add a feature for adding more branch refs
-Date: Tue, 03 Dec 2013 10:51:16 -0800
-Message-ID: <xmqqli01ojiz.fsf@gitster.dls.corp.google.com>
-References: <1386082603-8404-1-git-send-email-krzesimir@endocode.com>
-	<1386082603-8404-3-git-send-email-krzesimir@endocode.com>
+From: Ralf Thielow <ralf.thielow@gmail.com>
+Subject: Segfault when fetching from current git.git on GitHub
+Date: Tue, 3 Dec 2013 19:56:31 +0100
+Message-ID: <CAN0XMOKPWm1CzS3289SHpH=N0osFszuvnK6e9BVxwtQe3b2YJg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, jnareb@gmail.com, sunshine@sunshineco.com
-To: Krzesimir Nowak <krzesimir@endocode.com>
-X-From: git-owner@vger.kernel.org Tue Dec 03 19:51:29 2013
+Content-Type: text/plain; charset=UTF-8
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Dec 03 19:56:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vnv48-0005Yz-HD
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Dec 2013 19:51:24 +0100
+	id 1Vnv9B-0008Pk-No
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Dec 2013 19:56:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754606Ab3LCSvU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Dec 2013 13:51:20 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63776 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752829Ab3LCSvU convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 3 Dec 2013 13:51:20 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 877EF55EA3;
-	Tue,  3 Dec 2013 13:51:19 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=VfVPi4XX1U0Q
-	DiL2gUQ9gKeVwcQ=; b=inU7qggN8az5WV2hvQsfAB67b2LjrzmXd6rzCRonZ409
-	it1trjE/XQsE1w24rlglqbQM5zxEi2h3MtZLjN/Y+xPDeXFT4kUN9zo07cu65Zha
-	XvQvfWItivfBxqE13sC57HiU+DnfSMHS73G0xd3S8VEudWJqugWPtFonxgW0E8M=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=h7DYiq
-	++Aw0GAT5LLdPFhsqwcNy5LQjm7BjnkKJW/YiJEk3XZAQIlhE6OVvHANGy7Yh2WS
-	HRQoj13rPVGjXaedUnuK5PyEb4I9waom0lj54PBtw+ooYqCnG14b98vPhmPFlWTv
-	cAY426zQnvXoAzm1SHkxOzo3KwKfqBfDOcbPY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 76FA955EA2;
-	Tue,  3 Dec 2013 13:51:19 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A852455EA1;
-	Tue,  3 Dec 2013 13:51:18 -0500 (EST)
-In-Reply-To: <1386082603-8404-3-git-send-email-krzesimir@endocode.com>
-	(Krzesimir Nowak's message of "Tue, 3 Dec 2013 15:56:42 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: E516785E-5C4B-11E3-B441-D331802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753750Ab3LCS4d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Dec 2013 13:56:33 -0500
+Received: from mail-we0-f178.google.com ([74.125.82.178]:43209 "EHLO
+	mail-we0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752630Ab3LCS4c (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Dec 2013 13:56:32 -0500
+Received: by mail-we0-f178.google.com with SMTP id u57so8183248wes.23
+        for <git@vger.kernel.org>; Tue, 03 Dec 2013 10:56:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=h8Czl9TCec7Gy4oehcY1xFT8k/APiiusNIas7vNBM1U=;
+        b=Vju6FyVY1WsyD7a+H1ZJdOs1E5YQRw8NpupYheImewvfmaBcQjEWEQViA0UEbJODBD
+         B/NhyMAsHOwnCAbptzDpQPFanP2og6ozt/eSQpQSwqT/tlOwdYYeMACxUXaVa0aS2gDC
+         7nJnj9WFtnK/NQIIguTkvOZ5hqqeZYsk/xmDsIVmCveh+i9dS0+73oaSwWBbAJVNORjE
+         MGX9HtBgakdZW85UME/fzypn0E99CoAwB7WEUU1iEiIbq3MKJ1FXue6xiiI56cHX02wn
+         JdqM/xzbqxdpJ1liFDqpiRC7DQQcVV2hs752AS5xA52kgQHaGCAg9xz3yYS+RFQWSTBG
+         tc2w==
+X-Received: by 10.180.105.199 with SMTP id go7mr3767096wib.53.1386096991463;
+ Tue, 03 Dec 2013 10:56:31 -0800 (PST)
+Received: by 10.194.165.163 with HTTP; Tue, 3 Dec 2013 10:56:31 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238713>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238714>
 
-Krzesimir Nowak <krzesimir@endocode.com> writes:
+Hi,
 
-> Allow extra-branch-refs feature to tell gitweb to show refs from
-> additional hierarchies in addition to branches in the list-of-branche=
-s
-> view.
->
-> Signed-off-by: Krzesimir Nowak <krzesimir@endocode.com>
-> Reviewed-by: Junio C Hamano <gitster@pobox.com>
+I've fetched from the current git.git on GitHub minutes ago and got a
+segfault. I could reproduce it with the Git version of the current "next" branch
+(1.8.5.392.gf545f4d) with the steps below. The segfault does not appear with
+version 1.8.5.
 
-Please do not add "Reviewed-by:" like this; I've never reviewed this
-version of the patch.
+Steps to reproduce:
+git init tmp
+cd tmp
+git remote add origin https://github.com/git/git.git
+git fetch -v
 
-These are to be added only when you re-send, for final application,
-the version as exactly reviewed, or adjusted a previous version you
-got reviewed in a way that match suggestions given by reviewers.
+Full stacktrace: http://pastebin.com/zK8epKWj
+ProcMaps and ProcStatus from Ubuntu's Apport: http://pastebin.com/ZpPk1WSA
 
-> Reviewed-by: Jakub Nar=C4=99bski <jnareb@gmail.com>
-> Reviewed-by: Eric Sunshine <sunshine@sunshineco.com>
+
+Ralf
