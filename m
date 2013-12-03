@@ -1,61 +1,88 @@
-From: Kirill Likhodedov <kirill.likhodedov@jetbrains.com>
-Subject: git log --no-walk --tags produces strange result for certain user
-Date: Tue, 3 Dec 2013 14:08:25 +0400
-Message-ID: <5EE449B7-AB75-4EFF-85F9-292727FA1C53@jetbrains.com>
-Mime-Version: 1.0 (Mac OS X Mail 6.6 \(1510\))
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Kirill Likhodedov <kirill.likhodedov@jetbrains.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 03 11:15:15 2013
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: Ideas to speed up repacking
+Date: Tue, 3 Dec 2013 17:17:57 +0700
+Message-ID: <CACsJy8CBOp_5nwm=WWBG_AZ+h6M7L6WpdX4ACeJxwuJ0kqu0Gw@mail.gmail.com>
+References: <201312021630.45767.mfick@codeaurora.org> <xmqqpppepxuu.fsf@gitster.dls.corp.google.com>
+ <CACsJy8DJU2YTE1iNdb=fvo0fVOgLUK2mKXUhjcoJh8Ac0wW_EA@mail.gmail.com> <xmqqli02pfnf.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Martin Fick <mfick@codeaurora.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Dec 03 11:18:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vnn0d-0000kF-2O
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Dec 2013 11:15:15 +0100
+	id 1Vnn3r-0003CP-J6
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Dec 2013 11:18:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751938Ab3LCKPK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Dec 2013 05:15:10 -0500
-Received: from mail1.intellij.net ([46.137.178.215]:38358 "EHLO
-	mail1.intellij.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751438Ab3LCKPH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 3 Dec 2013 05:15:07 -0500
-X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Tue, 03 Dec 2013 05:15:06 EST
-Received: (qmail 6272 invoked by uid 89); 3 Dec 2013 10:08:24 -0000
-Received: from unknown (HELO loki.labs.intellij.net) (Kirill.Likhodedov@jetbrains.com@81.3.129.2)
-  by ip-10-62-119-91.eu-west-1.compute.internal with ESMTPA; 3 Dec 2013 10:08:23 -0000
-X-Mailer: Apple Mail (2.1510)
+	id S1752141Ab3LCKSc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Dec 2013 05:18:32 -0500
+Received: from mail-qa0-f52.google.com ([209.85.216.52]:35151 "EHLO
+	mail-qa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751438Ab3LCKS2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Dec 2013 05:18:28 -0500
+Received: by mail-qa0-f52.google.com with SMTP id k4so5459484qaq.11
+        for <git@vger.kernel.org>; Tue, 03 Dec 2013 02:18:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=2URjqzVOET7u476qVO6fnDSap4zVB3V0UehR6Q05Buk=;
+        b=TiPesAjzxcFyGrVa4KayuiHaX1UXnkb5xthofhEWgmlkJuXtW0hdgpYF2kQErx3DVc
+         VpfHNMqpWLwMg1wJSvsHda+i1BWkLeQdXjyUoybAJF4VtY1PFplx59q942PfcdqHzl/0
+         RG+lgRd3l7QHd+6NfevXmfUnuxSFzBIO1NcShQNCNKTQnUfBaB30vPe+WENiEBXvtSFP
+         rSNDg+ZmRcKt6WDbW77Wej7wLNLY6GA1+9jeL+OH28JAmoOPw8UpYnZq7pqD3aqW144N
+         d6XvF5YGGSYUifn2W/UucrPahE0IDtK6uZWuGXX0IVuKLFQPqc529cbzMmEs708rHpkz
+         LG9w==
+X-Received: by 10.224.136.136 with SMTP id r8mr96763887qat.0.1386065907771;
+ Tue, 03 Dec 2013 02:18:27 -0800 (PST)
+Received: by 10.96.124.101 with HTTP; Tue, 3 Dec 2013 02:17:57 -0800 (PST)
+In-Reply-To: <xmqqli02pfnf.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238682>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238683>
 
-Hey,
+On Tue, Dec 3, 2013 at 2:17 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Duy Nguyen <pclouds@gmail.com> writes:
+>
+>>> If nothing else has happened in the repository, perhaps, but I
+>>> suspect that the real problem is how you would prove it.  For
+>>> example, I am guessing that your Scenario 4 could be something like:
+>>>
+>>>     : setup #1
+>>>     $ git repack -a -d -f
+>>>     $ git prune
+>>>
+>>>     : scenario #4
+>>>     $ git commit --allow-empty -m 'new commit'
+>>>
+>>> which would add a single loose object to the repository, advancing
+>>> the current branch ref by one commit, fast-forwarding relative to
+>>> the state you were in after setup #1.
+>>>
+>>> But how would you efficiently prove that it was the only thing that
+>>> happened?
+>>
+>> Shawn mentioned elsewhere that we could generate bundle header in and
+>> keep it in pack-XXX.bh file at pack creation time. With that
+>> information we could verify if a ref has been reset, just fast
+>> forwarded or even deleted.
+>
+> With what information? If you keep the back-then-current information
+> and nothing else, how would you differentiate between the simple
+> scenario #4 above vs 'lost and new' two commit versions of the
+> scenario?  The endpoints should both show that one ref (and only one
+> ref) advanced by one commit, but one has cruft in the object
+> database while the other does not.
 
-I use the following commands to receive the list of tags together with hashes the point to:
-  
-    git log --tags --no-walk --format=%H%d%x01 --decorate=full
-
-Generally it works fine, however a user reported that for his repository this command returns the list containing several hashes without tag references. Something like this:
-
-    05c9a3a6247698ff740ca3a79828456347afdcef (HEAD, tag: refs/tags/2.33, refs/remotes/origin/master, refs/remotes/origin/HEAD, refs/heads/master)
-    a7fda708d76d7f83d5a160b6b137b98b7677f771 (tag: refs/tags/2.44)
-    f119c2e7c69bb5ed1da5bae29c8754550ab96bde
-    07385a6ebe5a2e01e6ba9c8d0cb7b15c9a13f65d (tag: refs/tags/1.69)
-
-Here third hash doesn't have a reference. There are 3 such hashes in his repository.
-
-How can this happen? Is it a bug or some special scenario?
-
-* I've already asked the user to execute `git tag --points-at` on these "suspiciously tagged" hashes: nothing was returned.
-* `git show --decorate=full` executed on these hashes return commit details, and no references on them.
-* From the log user sees that these hashes indicate some "normal" commits, nothing special at first glance.
-
-Git version that he uses is 1.8.4.0.
-
-Thanks!
-
--- Kirill.
+Yeah I was wrong. Reading Martin's mail again I wonder how we just
+"grab all objects and skip history traversal". Who will decide object
+order in the new pack if we don't traverse history and collect path
+information.
+-- 
+Duy
