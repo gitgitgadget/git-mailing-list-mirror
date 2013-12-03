@@ -1,80 +1,67 @@
-From: Javier Domingo <javierdo1@gmail.com>
-Subject: Branching workflow
-Date: Tue, 3 Dec 2013 19:06:20 +0100
-Message-ID: <CALZVapnjN_69y0+PLFA2t8b72WDK+D4BhjDRnRPxU_9iX+_NuA@mail.gmail.com>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: Re: [PATCH] Improvements to git-archive tests and
+ add_submodule_odb()
+Date: Tue, 3 Dec 2013 19:18:07 +0100
+Message-ID: <20131203181807.GA4629@sandbox-ub>
+References: <C74C17E7-0780-4FE1-B916-D1A444F3B592@mac.com>
+ <6D370472-81BB-4249-9ADA-1C906C26D88F@mac.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Dec 03 19:07:01 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	=?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>,
+	Jens Lehmann <Jens.Lehmann@web.de>
+To: Nick Townsend <nick.townsend@mac.com>
+X-From: git-owner@vger.kernel.org Tue Dec 03 19:18:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VnuN8-00052y-9t
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Dec 2013 19:06:58 +0100
+	id 1VnuY6-00043A-IS
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Dec 2013 19:18:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754705Ab3LCSGy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Dec 2013 13:06:54 -0500
-Received: from mail-ve0-f179.google.com ([209.85.128.179]:39441 "EHLO
-	mail-ve0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752227Ab3LCSGl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Dec 2013 13:06:41 -0500
-Received: by mail-ve0-f179.google.com with SMTP id jw12so10616460veb.38
-        for <git@vger.kernel.org>; Tue, 03 Dec 2013 10:06:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=07XyWadp9INwaxXwQsmz9nR+JFqTE0iVstMQXAMlI0Q=;
-        b=T2Xn7BkV/JfVFXL9yeZ6qnuj3w483qQ2dCSWGsCLOv4sLjki4wMJUEPA7VWnCn7JPl
-         SLo+0l2LrgErgJMYb9iWoZj8IjCM1/OOjpC21Nubyzgf/xpUrT2yKDWJciWeky/DLixB
-         KbI8rlAJQ9DGMng7/GozsIY4dSrJr1WHiHb+WV4gT8PRgIZpeGHZHQDX3TZfzQFVG86L
-         VGRofEzC9i7zVwl7/cUn3vR8tjCAqc0bBlqRIc58sY0vUY0i66jIS/OGljZI8AYjpX0s
-         Nawyy4hCS2Cm5SGT+6HevyElUjc94mylnV1cpj9J6M4BaCgI/24wJoY2VvLqLQNNLpmE
-         7zvQ==
-X-Received: by 10.220.113.143 with SMTP id a15mr62400vcq.38.1386094001074;
- Tue, 03 Dec 2013 10:06:41 -0800 (PST)
-Received: by 10.58.233.203 with HTTP; Tue, 3 Dec 2013 10:06:20 -0800 (PST)
+	id S1754601Ab3LCSSP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Dec 2013 13:18:15 -0500
+Received: from smtprelay03.ispgateway.de ([80.67.31.30]:47233 "EHLO
+	smtprelay03.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753306Ab3LCSSO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Dec 2013 13:18:14 -0500
+Received: from [77.20.33.19] (helo=sandbox-ub)
+	by smtprelay03.ispgateway.de with esmtpsa (TLSv1:AES128-SHA:128)
+	(Exim 4.68)
+	(envelope-from <hvoigt@hvoigt.net>)
+	id 1VnuXz-0000h5-LY; Tue, 03 Dec 2013 19:18:11 +0100
+Content-Disposition: inline
+In-Reply-To: <6D370472-81BB-4249-9ADA-1C906C26D88F@mac.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238705>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238706>
 
-Hi,
+On Mon, Dec 02, 2013 at 04:14:37PM -0800, Nick Townsend wrote:
+> diff --git a/submodule.c b/submodule.c
+> index 1905d75..1ea46be 100644
+> --- a/submodule.c
+> +++ b/submodule.c
+> @@ -143,7 +143,7 @@ void stage_updated_gitmodules(void)
+>  		die(_("staging updated .gitmodules failed"));
+>  }
+>  
+> -static int add_submodule_odb(const char *path)
+> +int add_submodule_odb(const char *path)
 
-I have been using a very basic workflow for branching, features each
-in a branch.
+I am not against making add_submodule_odb() usable from outside
+submodule.c but I would prefer if this change goes along with some code
+actually using it. The reason being that when refactoring or extending
+you immediately know that a function is file local only with the static
+keyword. Without anyone using this function from outside submodule.c
+this fact is still true and so the code should say, IMO.
 
-My branches would be:
-- develop <= Main upstream branch
-- feature/* fix/*  <= Feature and fix branches
-- master <= Integration of the whole feature and fix branches
+Its not a big deal to postpone removing this keyword in a later commit
+so I would like to drop this change from the patch. The documentation
+fix is fine with me.
 
-So I have now came up with a very difficult task. I just discovered
-that one of those branches, lest call it feature/bad, is evil and is
-making the integration branch (master) fail horribly.
-
-In my workflow, I tend to merge develop (official updates) into my
-feature branches, and them into master.
-
-So now I have the big problem on how to undo all changes from
-feature/fix. I have been told that one alternative workflow would be
-to revert the last merge and remerge it into master, so that I have
-always just one commit to revert if necessary (instead of the
-monstrous quantity I have now to).
-
-The workflow proposal should be in order of importance:
-- Let me stay up-to-date with develop branch
-- Easy to revert in master
-- Have a clean history
-- Easy to follow
-
-I think I should be capable of doing some sort of merge/rebase
-branching workflow to avoid having to do that. I have thought about
-rebasing always the feature branches, and rebasing master into all of
-them, but it seems pretty strange to me.
-
-If anyone can give any advice, I would fully appreciate!
-
-Javier Domingo Cansino
+Cheers Heiko
