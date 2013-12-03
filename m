@@ -1,265 +1,209 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH/RESEND] transport.c: mark push status strings for translation
-Date: Tue,  3 Dec 2013 17:26:49 +0700
-Message-ID: <1386066409-15262-1-git-send-email-pclouds@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 03 11:22:26 2013
+From: John Szakmeister <john@szakmeister.net>
+Subject: [PATCH] contrib/git-credential-gnome-keyring.c: small stylistic cleanups
+Date: Tue,  3 Dec 2013 05:32:44 -0500
+Message-ID: <1386066764-49711-1-git-send-email-john@szakmeister.net>
+Cc: git@vger.kernel.org, John Szakmeister <john@szakmeister.net>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Tue Dec 03 11:34:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vnn7Y-00063q-8B
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Dec 2013 11:22:24 +0100
+	id 1VnnIw-0005ru-4m
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Dec 2013 11:34:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751857Ab3LCKWU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Dec 2013 05:22:20 -0500
-Received: from mail-pa0-f53.google.com ([209.85.220.53]:58399 "EHLO
-	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751438Ab3LCKWR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Dec 2013 05:22:17 -0500
-Received: by mail-pa0-f53.google.com with SMTP id hz1so2764608pad.12
-        for <git@vger.kernel.org>; Tue, 03 Dec 2013 02:22:17 -0800 (PST)
+	id S1752514Ab3LCKeG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Dec 2013 05:34:06 -0500
+Received: from mail-qe0-f45.google.com ([209.85.128.45]:46969 "EHLO
+	mail-qe0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752342Ab3LCKeE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Dec 2013 05:34:04 -0500
+Received: by mail-qe0-f45.google.com with SMTP id 6so14770987qea.18
+        for <git@vger.kernel.org>; Tue, 03 Dec 2013 02:34:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:mime-version:content-type
-         :content-transfer-encoding;
-        bh=XRNAT+gs5e2rkbEaWk04UwL9SwY042puA9fwvnrHBJc=;
-        b=Vfm3Y5YRpBud1dqf5RRvDny/WR5tQEEAjsHOTqs9AmXuYK7+wRwtToCpnIjfakMUin
-         od76SrHLgNuiucTKla6pgkaHOM9CIQOM/6MBeg9bVoTGzi0u1sPjbTcOmutYsM9sEAG3
-         Ktwhh8Ib7kgA3JQsuFPaLlHi8N3aqPUBI0o+5godwpZNZNihv6O7fhJ7TjT+lG1YPGiV
-         LDnM8yAf5TPwxoCi1olwGQblgj8mPu/zM5JN+5rXXrNNU4nuVAzx//x5uPrQUgHqV4Wj
-         1zTYMV1Tt+BWY/I/+l/uM+ALzbFwC4LcSmFZkyOcYztiRoZoFstrqYewG06B55+cOCRB
-         1n1w==
-X-Received: by 10.66.102.39 with SMTP id fl7mr74620760pab.43.1386066137256;
-        Tue, 03 Dec 2013 02:22:17 -0800 (PST)
-Received: from lanh ([115.73.233.204])
-        by mx.google.com with ESMTPSA id hn5sm117873277pbb.25.2013.12.03.02.22.14
+        h=sender:from:to:cc:subject:date:message-id;
+        bh=aLFdIXvcBBQ0yxPTvedPJMHr/l+AKd3ZFqlWf0pBE4s=;
+        b=igRpRUw6PtFyXKLXVsKvdM4FSSL7bQVcJ6hfil9be6uKSmWbMEmwKQ6wcO9nna05XU
+         czM8d4GWDrOsFcbCkHNdPqm/QPWa6NHZLvNOEuuP03fXdcoKoUUvATkit9QlWeW5yut+
+         J09Py17EcM9zjGsivid7JL2IMxk1ei0kGwmJCpRMn+/87z0pcgdQZd20h4Ql55SDWYVX
+         cmDt8MlFLosequ2509MHLUQ/cDM4rVKkjkIawrEtBsEAZIj55nIWgZ/EwLKF5MIU11Pp
+         pxsgMGQzluXEA1FVTGK/yjydD2GSAfq081/MLXx6Zv7cWraNzwElesy6DtQoXYLBHhmw
+         jaSQ==
+X-Received: by 10.224.168.194 with SMTP id v2mr63280456qay.17.1386066842673;
+        Tue, 03 Dec 2013 02:34:02 -0800 (PST)
+Received: from localhost.localdomain (pool-173-59-254-58.bltmmd.fios.verizon.net. [173.59.254.58])
+        by mx.google.com with ESMTPSA id b4sm26616637qai.7.2013.12.03.02.34.01
         for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 03 Dec 2013 02:22:16 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Tue, 03 Dec 2013 17:27:00 +0700
-X-Mailer: git-send-email 1.8.2.83.gc99314b
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Tue, 03 Dec 2013 02:34:01 -0800 (PST)
+X-Mailer: git-send-email 1.8.3.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238684>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238685>
 
-Mark strings like "[up to date]" passed to print_ref_status() for
-translation with N_() instead of _() so they can remain untranslated
-in porcelain mode.
-
-While at there, mark some error strings in git push for translation
-too.
-
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: John Szakmeister <john@szakmeister.net>
 ---
- builtin/push.c |  8 +++---
- transport.c    | 81 ++++++++++++++++++++++++++++++++++----------------=
---------
- 2 files changed, 52 insertions(+), 37 deletions(-)
+The gnome-keyring credential backend had a number of coding style
+violations.  I believe this fixes all of them.
 
-diff --git a/builtin/push.c b/builtin/push.c
-index 7b1b66c..22e2d4c 100644
---- a/builtin/push.c
-+++ b/builtin/push.c
-@@ -319,7 +319,7 @@ static int push_with_options(struct transport *tran=
-sport, int flags)
-=20
- 	if (!is_empty_cas(&cas)) {
- 		if (!transport->smart_options)
--			die("underlying transport does not support --%s option",
-+			die(_("underlying transport does not support --%s option"),
- 			    CAS_OPT_NAME);
- 		transport->smart_options->cas =3D &cas;
+ .../gnome-keyring/git-credential-gnome-keyring.c   | 55 ++++++++++------------
+ 1 file changed, 25 insertions(+), 30 deletions(-)
+
+diff --git a/contrib/credential/gnome-keyring/git-credential-gnome-keyring.c b/contrib/credential/gnome-keyring/git-credential-gnome-keyring.c
+index 635c96b..1613404 100644
+--- a/contrib/credential/gnome-keyring/git-credential-gnome-keyring.c
++++ b/contrib/credential/gnome-keyring/git-credential-gnome-keyring.c
+@@ -95,9 +95,9 @@ static const char* gnome_keyring_result_to_message(GnomeKeyringResult result)
+ 
+ static void gnome_keyring_done_cb(GnomeKeyringResult result, gpointer user_data)
+ {
+-	gpointer *data = (gpointer*) user_data;
+-	int *done = (int*) data[0];
+-	GnomeKeyringResult *r = (GnomeKeyringResult*) data[1];
++	gpointer *data = (gpointer *) user_data;
++	int *done = (int *) data[0];
++	GnomeKeyringResult *r = (GnomeKeyringResult *) data[1];
+ 
+ 	*r = result;
+ 	*done = 1;
+@@ -132,27 +132,25 @@ static GnomeKeyringResult gnome_keyring_item_delete_sync(const char *keyring, gu
+  */
+ struct credential
+ {
+-	char          *protocol;
+-	char          *host;
++	char *protocol;
++	char *host;
+ 	unsigned short port;
+-	char          *path;
+-	char          *username;
+-	char          *password;
++	char *path;
++	char *username;
++	char *password;
+ };
+ 
+-#define CREDENTIAL_INIT \
+-  { NULL,NULL,0,NULL,NULL,NULL }
++#define CREDENTIAL_INIT { NULL, NULL, 0, NULL, NULL, NULL }
+ 
+-typedef int (*credential_op_cb)(struct credential*);
++typedef int (*credential_op_cb)(struct credential *);
+ 
+ struct credential_operation
+ {
+-	char             *name;
++	char *name;
+ 	credential_op_cb op;
+ };
+ 
+-#define CREDENTIAL_OP_END \
+-  { NULL,NULL }
++#define CREDENTIAL_OP_END { NULL, NULL }
+ 
+ /* ----------------- GNOME Keyring functions ----------------- */
+ 
+@@ -221,7 +219,7 @@ static int keyring_get(struct credential *c)
+ static int keyring_store(struct credential *c)
+ {
+ 	guint32 item_id;
+-	char  *object = NULL;
++	char *object = NULL;
+ 	GnomeKeyringResult result;
+ 
+ 	/*
+@@ -262,7 +260,7 @@ static int keyring_store(struct credential *c)
+ 
+ static int keyring_erase(struct credential *c)
+ {
+-	char  *object = NULL;
++	char *object = NULL;
+ 	GList *entries;
+ 	GnomeKeyringNetworkPasswordData *password_data;
+ 	GnomeKeyringResult result;
+@@ -298,8 +296,7 @@ static int keyring_erase(struct credential *c)
+ 	if (result == GNOME_KEYRING_RESULT_CANCELLED)
+ 		return EXIT_SUCCESS;
+ 
+-	if (result != GNOME_KEYRING_RESULT_OK)
+-	{
++	if (result != GNOME_KEYRING_RESULT_OK) {
+ 		g_critical("%s", gnome_keyring_result_to_message(result));
+ 		return EXIT_FAILURE;
  	}
-@@ -426,7 +426,7 @@ static int option_parse_recurse_submodules(const st=
-ruct option *opt,
-=20
- 	if (*flags & (TRANSPORT_RECURSE_SUBMODULES_CHECK |
- 		      TRANSPORT_RECURSE_SUBMODULES_ON_DEMAND))
--		die("%s can only be used once.", opt->long_name);
-+		die(_("%s can only be used once."), opt->long_name);
-=20
- 	if (arg) {
- 		if (!strcmp(arg, "check"))
-@@ -434,9 +434,9 @@ static int option_parse_recurse_submodules(const st=
-ruct option *opt,
- 		else if (!strcmp(arg, "on-demand"))
- 			*flags |=3D TRANSPORT_RECURSE_SUBMODULES_ON_DEMAND;
- 		else
--			die("bad %s argument: %s", opt->long_name, arg);
-+			die(_("bad %s argument: %s"), opt->long_name, arg);
- 	} else
--		die("option %s needs an argument (check|on-demand)",
-+		die(_("option %s needs an argument (check|on-demand)"),
- 				opt->long_name);
-=20
- 	return 0;
-diff --git a/transport.c b/transport.c
-index 7202b77..1fb92a1 100644
---- a/transport.c
-+++ b/transport.c
-@@ -14,6 +14,7 @@
- #include "url.h"
- #include "submodule.h"
- #include "string-list.h"
-+#include "utf8.h"
-=20
- /* rsync support */
-=20
-@@ -627,16 +628,23 @@ static void print_ref_status(char flag, const cha=
-r *summary, struct ref *to, str
- 		else
- 			fprintf(stdout, "%s\n", summary);
- 	} else {
--		fprintf(stderr, " %c %-*s ", flag, TRANSPORT_SUMMARY_WIDTH, summary)=
-;
-+		int width =3D TRANSPORT_SUMMARY_WIDTH;
-+		const char *localized_summary =3D _(summary);
-+		/*
-+		 * Compensate for the invisible bytes in utf-8
-+		 * strings. The expression below is guaranteed always
-+		 * positive (or zero in case of ascii strings) because
-+		 * none of the doublewidth characters are ASCII
-+		 * characters.
-+		 */
-+		width +=3D strlen(localized_summary) - utf8_strwidth(localized_summa=
-ry);
-+		fprintf(stderr, " %c %-*s ", flag, width, localized_summary);
- 		if (from)
- 			fprintf(stderr, "%s -> %s", prettify_refname(from->name), prettify_=
-refname(to->name));
- 		else
- 			fputs(prettify_refname(to->name), stderr);
--		if (msg) {
--			fputs(" (", stderr);
--			fputs(msg, stderr);
--			fputc(')', stderr);
--		}
-+		if (msg)
-+			fprintf(stderr, " (%s)", _(msg));
- 		fputc('\n', stderr);
+@@ -312,8 +309,7 @@ static int keyring_erase(struct credential *c)
+ 
+ 	gnome_keyring_network_password_list_free(entries);
+ 
+-	if (result != GNOME_KEYRING_RESULT_OK)
+-	{
++	if (result != GNOME_KEYRING_RESULT_OK) {
+ 		g_critical("%s", gnome_keyring_result_to_message(result));
+ 		return EXIT_FAILURE;
  	}
+@@ -325,9 +321,8 @@ static int keyring_erase(struct credential *c)
+  * Table with helper operation callbacks, used by generic
+  * credential helper main function.
+  */
+-static struct credential_operation const credential_helper_ops[] =
+-{
+-	{ "get",   keyring_get   },
++static struct credential_operation const credential_helper_ops[] = {
++	{ "get",   keyring_get },
+ 	{ "store", keyring_store },
+ 	{ "erase", keyring_erase },
+ 	CREDENTIAL_OP_END
+@@ -370,7 +365,7 @@ static int credential_read(struct credential *c)
+ 		if (!line_len)
+ 			break;
+ 
+-		value = strchr(buf,'=');
++		value = strchr(buf, '=');
+ 		if (!value) {
+ 			g_warning("invalid credential line: %s", key);
+ 			gnome_keyring_memory_free(buf);
+@@ -384,7 +379,7 @@ static int credential_read(struct credential *c)
+ 		} else if (!strcmp(key, "host")) {
+ 			g_free(c->host);
+ 			c->host = g_strdup(value);
+-			value = strrchr(c->host,':');
++			value = strrchr(c->host, ':');
+ 			if (value) {
+ 				*value++ = '\0';
+ 				c->port = atoi(value);
+@@ -429,16 +424,16 @@ static void credential_write(const struct credential *c)
+ static void usage(const char *name)
+ {
+ 	struct credential_operation const *try_op = credential_helper_ops;
+-	const char *basename = strrchr(name,'/');
++	const char *basename = strrchr(name, '/');
+ 
+ 	basename = (basename) ? basename + 1 : name;
+ 	fprintf(stderr, "usage: %s <", basename);
+ 	while (try_op->name) {
+-		fprintf(stderr,"%s",(try_op++)->name);
++		fprintf(stderr, "%s", (try_op++)->name);
+ 		if (try_op->name)
+-			fprintf(stderr,"%s","|");
++			fprintf(stderr, "%s", "|");
+ 	}
+-	fprintf(stderr,"%s",">\n");
++	fprintf(stderr, "%s", ">\n");
  }
-@@ -649,11 +657,11 @@ static const char *status_abbrev(unsigned char sh=
-a1[20])
- static void print_ok_ref_status(struct ref *ref, int porcelain)
- {
- 	if (ref->deletion)
--		print_ref_status('-', "[deleted]", ref, NULL, NULL, porcelain);
-+		print_ref_status('-', N_("[deleted]"), ref, NULL, NULL, porcelain);
- 	else if (is_null_sha1(ref->old_sha1))
- 		print_ref_status('*',
--			(!prefixcmp(ref->name, "refs/tags/") ? "[new tag]" :
--			"[new branch]"),
-+			(!prefixcmp(ref->name, "refs/tags/") ? N_("[new tag]") :
-+			 N_("[new branch]")),
- 			ref, ref->peer_ref, NULL, porcelain);
- 	else {
- 		char quickref[84];
-@@ -664,7 +672,7 @@ static void print_ok_ref_status(struct ref *ref, in=
-t porcelain)
- 		if (ref->forced_update) {
- 			strcat(quickref, "...");
- 			type =3D '+';
--			msg =3D "forced update";
-+			msg =3D N_("forced update");
- 		} else {
- 			strcat(quickref, "..");
- 			type =3D ' ';
-@@ -678,50 +686,57 @@ static void print_ok_ref_status(struct ref *ref, =
-int porcelain)
-=20
- static int print_one_push_status(struct ref *ref, const char *dest, in=
-t count, int porcelain)
- {
--	if (!count)
--		fprintf(porcelain ? stdout : stderr, "To %s\n", dest);
-+	if (!count) {
-+		if (porcelain)
-+			fprintf(stdout, "To %s\n", dest);
-+		else
-+			fprintf_ln(stderr, _("To %s"), dest);
-+	}
-=20
- 	switch(ref->status) {
- 	case REF_STATUS_NONE:
--		print_ref_status('X', "[no match]", ref, NULL, NULL, porcelain);
-+		print_ref_status('X', N_("[no match]"), ref, NULL,
-+				 NULL, porcelain);
- 		break;
- 	case REF_STATUS_REJECT_NODELETE:
--		print_ref_status('!', "[rejected]", ref, NULL,
--						 "remote does not support deleting refs", porcelain);
-+		print_ref_status('!', N_("[rejected]"), ref, NULL,
-+				 N_("remote does not support deleting refs"),
-+				 porcelain);
- 		break;
- 	case REF_STATUS_UPTODATE:
--		print_ref_status('=3D', "[up to date]", ref,
--						 ref->peer_ref, NULL, porcelain);
-+		print_ref_status('=3D', N_("[up to date]"), ref,
-+				 ref->peer_ref, NULL, porcelain);
- 		break;
- 	case REF_STATUS_REJECT_NONFASTFORWARD:
--		print_ref_status('!', "[rejected]", ref, ref->peer_ref,
--						 "non-fast-forward", porcelain);
-+		print_ref_status('!', N_("[rejected]"), ref, ref->peer_ref,
-+				 N_("non-fast-forward"), porcelain);
- 		break;
- 	case REF_STATUS_REJECT_ALREADY_EXISTS:
--		print_ref_status('!', "[rejected]", ref, ref->peer_ref,
--						 "already exists", porcelain);
-+		print_ref_status('!', N_("[rejected]"), ref, ref->peer_ref,
-+				 N_("already exists"), porcelain);
- 		break;
- 	case REF_STATUS_REJECT_FETCH_FIRST:
--		print_ref_status('!', "[rejected]", ref, ref->peer_ref,
--						 "fetch first", porcelain);
-+		print_ref_status('!', N_("[rejected]"), ref, ref->peer_ref,
-+				 N_("fetch first"), porcelain);
- 		break;
- 	case REF_STATUS_REJECT_NEEDS_FORCE:
--		print_ref_status('!', "[rejected]", ref, ref->peer_ref,
--						 "needs force", porcelain);
-+		print_ref_status('!', N_("[rejected]"), ref, ref->peer_ref,
-+				 N_("needs force"), porcelain);
- 		break;
- 	case REF_STATUS_REJECT_STALE:
--		print_ref_status('!', "[rejected]", ref, ref->peer_ref,
--						 "stale info", porcelain);
-+		print_ref_status('!', N_("[rejected]"), ref, ref->peer_ref,
-+				 N_("stale info"), porcelain);
- 		break;
- 	case REF_STATUS_REMOTE_REJECT:
--		print_ref_status('!', "[remote rejected]", ref,
--						 ref->deletion ? NULL : ref->peer_ref,
--						 ref->remote_status, porcelain);
-+		print_ref_status('!', N_("[remote rejected]"), ref,
-+				 ref->deletion ? NULL : ref->peer_ref,
-+				 ref->remote_status, porcelain);
- 		break;
- 	case REF_STATUS_EXPECTING_REPORT:
--		print_ref_status('!', "[remote failure]", ref,
--						 ref->deletion ? NULL : ref->peer_ref,
--						 "remote failed to report status", porcelain);
-+		print_ref_status('!', N_("[remote failure]"), ref,
-+				 ref->deletion ? NULL : ref->peer_ref,
-+				 N_("remote failed to report status"),
-+				 porcelain);
- 		break;
- 	case REF_STATUS_OK:
- 		print_ok_ref_status(ref, porcelain);
---=20
-1.8.2.83.gc99314b
+ 
+ int main(int argc, char *argv[])
+@@ -446,7 +441,7 @@ int main(int argc, char *argv[])
+ 	int ret = EXIT_SUCCESS;
+ 
+ 	struct credential_operation const *try_op = credential_helper_ops;
+-	struct credential                  cred   = CREDENTIAL_INIT;
++	struct credential cred = CREDENTIAL_INIT;
+ 
+ 	if (!argv[1]) {
+ 		usage(argv[0]);
+-- 
+1.8.3.1
