@@ -1,192 +1,78 @@
-From: "Pyeron, Jason J CTR (US)" <jason.j.pyeron.ctr@mail.mil>
-Subject: RE: trouble on windows network share
-Date: Tue, 3 Dec 2013 17:30:11 +0000
-Message-ID: <871B6C10EBEFE342A772D1159D13208557777F3F@ukelhp6y.easf.csd.disa.mil>
-References: <871B6C10EBEFE342A772D1159D1320853F63D205@umechphj.easf.csd.disa.mil>
- <1367529968647-7584800.post@n2.nabble.com>
- <87ppx8o1lj.fsf@linux-k42r.v.cablecom.net>
- <8B6563E531152E4190313499F193F94214A9C966@mbx500-u1-lo-3.exch500.msoutlookonline.net>
- <87ip2wla12.fsf@linux-k42r.v.cablecom.net>
- <871B6C10EBEFE342A772D1159D1320853F65E5B6@umechphj.easf.csd.disa.mil>
- <8B6563E531152E4190313499F193F94214AB8CED@mbx500-u1-lo-3.exch500.msoutlookonline.net>
- <871B6C10EBEFE342A772D1159D1320853F65F7E0@umechphj.easf.csd.disa.mil>
- <loom.20131203T174155-97@post.gmane.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Ideas to speed up repacking
+Date: Tue, 03 Dec 2013 09:50:07 -0800
+Message-ID: <xmqqhaapq0xc.fsf@gitster.dls.corp.google.com>
+References: <201312021630.45767.mfick@codeaurora.org>
+	<xmqqpppepxuu.fsf@gitster.dls.corp.google.com>
+	<CACsJy8DJU2YTE1iNdb=fvo0fVOgLUK2mKXUhjcoJh8Ac0wW_EA@mail.gmail.com>
+	<xmqqli02pfnf.fsf@gitster.dls.corp.google.com>
+	<CACsJy8CBOp_5nwm=WWBG_AZ+h6M7L6WpdX4ACeJxwuJ0kqu0Gw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; protocol="application/x-pkcs7-signature";
-	micalg=SHA1; boundary="----=_NextPart_000_0040_01CEF023.5FA73BC0"
-To: Phil Wiffen <phil.m.wiffen@outlook.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Dec 03 18:40:52 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Martin Fick <mfick@codeaurora.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 03 18:50:23 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vntxr-0006J4-2x
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Dec 2013 18:40:51 +0100
+	id 1Vnu74-0003OS-DT
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Dec 2013 18:50:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754435Ab3LCRkr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Dec 2013 12:40:47 -0500
-Received: from ukel19pa17.eemsg.mail.mil ([214.24.22.85]:51325 "EHLO
-	ukel19pa17.eemsg.mail.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754123Ab3LCRkq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Dec 2013 12:40:46 -0500
-X-Greylist: delayed 578 seconds by postgrey-1.27 at vger.kernel.org; Tue, 03 Dec 2013 12:40:46 EST
-X-EEMSG-Attachment-filename: smime.p7s
-Received: from edge-satx.mail.mil ([214.22.240.11])
-  by ukel19pa17.eemsg.mail.mil with ESMTP; 03 Dec 2013 17:31:06 +0000
-Received: from UKELHP4S.easf.csd.disa.mil (214.22.240.146) by
- edge-satx.mail.mil (214.22.240.11) with Microsoft SMTP Server (TLS) id
- 14.3.158.1; Tue, 3 Dec 2013 17:31:18 +0000
-Received: from UKELHP6Y.easf.csd.disa.mil ([169.254.2.179]) by
- UKELHP4S.easf.csd.disa.mil ([214.22.240.146]) with mapi id 14.03.0158.002;
- Tue, 3 Dec 2013 17:30:11 +0000
-Thread-Topic: trouble on windows network share
-Thread-Index: AQHOSj3+8HmkEZnOSbCnphFucszy2pj4IXCwgALphYCAAddioIFHGNblgAAKwrA=
-In-Reply-To: <loom.20131203T174155-97@post.gmane.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: yes
-X-MS-TNEF-Correlator: 
-x-originating-ip: [214.22.91.4]
+	id S1754644Ab3LCRuQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Dec 2013 12:50:16 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60932 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754181Ab3LCRuO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Dec 2013 12:50:14 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3401553CF2;
+	Tue,  3 Dec 2013 12:50:13 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=YeG0pdKmTdFazzoK1hrsYo78x/s=; b=DwdQqb
+	gL6Isc4wI/uU1zIZ3Swmg5IBtjh0fLlOJDEOcpPg6lushq5r4pww4QDNtmOzrcoD
+	XCP1lwpiKyXw7wFx8fx8s7zFj5f4VOeoGDgLmNerz8nPJRazQMXK/WFQnndszw8f
+	yFc2TN1CmfQy2DU6AUzjvXizm1X+/iFH8jq4A=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=mF9wTg239PpEsbpCnvEqbe0gRbO7gzAX
+	qv2Xwod624EH70JKs1dTASpsSPe07hG+rVAW+e10zehaEYV14XlnCJypgin2ncOI
+	2vZHP5ce5QboxgQKcus2bGzVSEknMwbeuPQgTejHleHo0xHZtMEDywmYOeBpgDPj
+	vSQHQGFykCs=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 20C1753CF1;
+	Tue,  3 Dec 2013 12:50:13 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4D0F153CEE;
+	Tue,  3 Dec 2013 12:50:12 -0500 (EST)
+In-Reply-To: <CACsJy8CBOp_5nwm=WWBG_AZ+h6M7L6WpdX4ACeJxwuJ0kqu0Gw@mail.gmail.com>
+	(Duy Nguyen's message of "Tue, 3 Dec 2013 17:17:57 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 5BC1C6C4-5C43-11E3-9F5E-D331802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238701>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238702>
 
-------=_NextPart_000_0040_01CEF023.5FA73BC0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Duy Nguyen <pclouds@gmail.com> writes:
 
-That is a new detail (SMB 1 vs. 2) that can be used to debug this further.
+> Reading Martin's mail again I wonder how we just
+> "grab all objects and skip history traversal". Who will decide object
+> order in the new pack if we don't traverse history and collect path
+> information.
 
-> -----Original Message-----
-> From: git-owner@vger.kernel.org [mailto:git-owner@vger.kernel.org] On
-> Behalf Of Phil Wiffen
-> Sent: Tuesday, December 03, 2013 11:48 AM
-> To: git@vger.kernel.org
-> Subject: Re: trouble on windows network share
-> 
-> Did anyone ever get to the bottom of this? I'm seeing this exact issue
-> on
-> both NetApp storage systems with SMB 2.x enabled and also on Windows 7
-> and
-> Server 2008 R2 shares (which also use SMB 2.x). If we use SMB 1.x (such
-> as
-> XP), things work fine.
-> 
-> 
-> 
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-
-------=_NextPart_000_0040_01CEF023.5FA73BC0
-Content-Type: application/x-pkcs7-signature; name="smime.p7s"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="smime.p7s"
-
-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
-GDAWBgNVBAMTD0RPRCBFTUFJTCBDQS0zMDCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEB
-AOYpItQUJtGYGlJexYSDc37BYLOz0JS+/RyUVb/2hCybycB0c+/MwpnymcltyhTTdP++EPL3Lb/L
-uwaj7phQQWUB4VcstsvkyhysflI0DrGOByY+MjWvo2EKxeUIthJ5jFTBeunxUB9dgzpnMLMp2x06
-TDkhUNgYLI0Gde5jcnhorWKcdaSUBtMyaxKvBgcpvhOgwKfwJU+3/h+3V+AYEo0hahW5WlT7d2XY
-TD/1ujzAN+EGfsK+niOMKNGa18ZnONdzyb0HHYVv1ZUKmtzaOk4o8KXrCd/l2wvNR6+KzbtvlEDj
-WZxQn8kOqXECudzpaYA6iTtFBSIYBYS1EvA8wIECAwEAAaOCAhwwggIYMA4GA1UdDwEB/wQEAwIB
-hjAfBgNVHSMEGDAWgBRJdLsMXrp6/gJU73ugxpXGCYBwljAdBgNVHQ4EFgQUNWFmKAm8ViVbi8y/
-gV5hLDA50yEwEgYDVR0TAQH/BAgwBgEB/wIBADAMBgNVHSQEBTADgAEAMGYGA1UdIARfMF0wCwYJ
-YIZIAWUCAQsFMAsGCWCGSAFlAgELCTALBglghkgBZQIBCxEwCwYJYIZIAWUCAQsSMAsGCWCGSAFl
-AgELEzAMBgpghkgBZQMCAQMaMAwGCmCGSAFlAwIBAxswNwYDVR0fBDAwLjAsoCqgKIYmaHR0cDov
-L2NybC5kaXNhLm1pbC9jcmwvRE9EUk9PVENBMi5jcmwwggEBBggrBgEFBQcBAQSB9DCB8TA6Bggr
-BgEFBQcwAoYuaHR0cDovL2NybC5kaXNhLm1pbC9pc3N1ZWR0by9ET0RST09UQ0EyX0lULnA3YzAg
-BggrBgEFBQcwAYYUaHR0cDovL29jc3AuZGlzYS5taWwwgZAGCCsGAQUFBzAChoGDbGRhcDovL2Ny
-bC5nZHMuZGlzYS5taWwvY24lM2REb0QlMjBSb290JTIwQ0ElMjAyJTJjb3UlM2RQS0klMmNvdSUz
-ZERvRCUyY28lM2RVLlMuJTIwR292ZXJubWVudCUyY2MlM2RVUz9jcm9zc0NlcnRpZmljYXRlUGFp
-cjtiaW5hcnkwDQYJKoZIhvcNAQEFBQADggEBAAqIVhylVyZaYst10N2GxVLiL/O8EWQ/jC8+EfyY
-YEDygA0ogppo/uBISyfTOgp7lfYDDIEUkUI6YGziK1Mt7N8RrvVUF/AB+ZcHp5urC9usl4kJxu/5
-BzQWAKh+EVOefC+hOKKZeTk0QW59uFgwVoie5KpkRdmgRGI6t+Ux05GA8RsQsmdw1VurWbRaSBZC
-xAJM2mxoylAdMb43mcfPU8xCKVbDnRfKA+cQWvE5PBzM+xuXCibzMd/gq1wknZ7eOH0CUWdG+ZNw
-he0KVcL0wWhanwjJHXubdtxU7zmMGOUMRO73BrIf9cvmDr3Uof/U+ZEHIlJ5t8D97LL4hfRE+1wx
-ggMyMIIDLgIBATBkMF0xCzAJBgNVBAYTAlVTMRgwFgYDVQQKEw9VLlMuIEdvdmVybm1lbnQxDDAK
-BgNVBAsTA0RvRDEMMAoGA1UECxMDUEtJMRgwFgYDVQQDEw9ET0QgRU1BSUwgQ0EtMzACA0j/OjAJ
-BgUrDgMCGgUAoIIBozAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0x
-MzEyMDMxNzI5NTVaMCMGCSqGSIb3DQEJBDEWBBRsR3PJ5Pvp3WIiy53ERTJgGIZyeDBYBgkqhkiG
-9w0BCQ8xSzBJMAoGCCqGSIb3DQMHMA4GCCqGSIb3DQMCAgIAgDAHBgUrDgMCBzANBggqhkiG9w0D
-AgIBKDAHBgUrDgMCGjAKBggqhkiG9w0CBTBzBgkrBgEEAYI3EAQxZjBkMF0xCzAJBgNVBAYTAlVT
-MRgwFgYDVQQKEw9VLlMuIEdvdmVybm1lbnQxDDAKBgNVBAsTA0RvRDEMMAoGA1UECxMDUEtJMRgw
-FgYDVQQDEw9ET0QgRU1BSUwgQ0EtMzACA0j/PjB1BgsqhkiG9w0BCRACCzFmoGQwXTELMAkGA1UE
-BhMCVVMxGDAWBgNVBAoTD1UuUy4gR292ZXJubWVudDEMMAoGA1UECxMDRG9EMQwwCgYDVQQLEwNQ
-S0kxGDAWBgNVBAMTD0RPRCBFTUFJTCBDQS0zMAIDSP8+MA0GCSqGSIb3DQEBAQUABIIBAHO3eHCp
-zwD4gJ/TcDwBoDGxaSot7Z/77UgH3IaE+LRoWkgChCHmggtBJrVVofTnlljbriznuRN84dlbWcDQ
-p1wDgsxbyH6ZbP6cljMExAIGDvhb/EGJu0xODfcybEObnZNmvYTqpI8Zp8JWEmNkLyTbmhyT7SSZ
-w400O9DGXIsZGHNK63ICDYael+sHVHMRW3HiMaIa8oZ8WajIxtrUDo1y3a15fLFvnYfb62iR56od
-QD/49y0ikPT5KVemQi+sltLAg8R7+VawQ5lO0o2cLd8uw0iqHgG1/Q/0HJ2ZgupqdpiXPiv7yLF0
-iB+DeiRnUBcpZ41dQHmxqRrmc89sViAAAAAAAAA=
-
-------=_NextPart_000_0040_01CEF023.5FA73BC0--
+I vaguely recall raising a related topic for "quick repack, assuming
+everything in existing packfiles are reachable, that only removes
+loose cruft" several weeks ago.  Once you decide that your quick
+repack do not care about ejecting objects from existing packs, like
+how I suspect Martin's outline will lead us to, we can repack the
+reachable loose ones on the recent surface of the history and then
+concatenate the contents of existing packs, excluding duplicates and
+possibly adjusting the delta base offsets for some entries, without
+traversing the bulk of the history.
