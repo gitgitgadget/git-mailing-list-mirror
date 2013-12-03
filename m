@@ -1,115 +1,132 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: Re: [PATCH] submodule recursion in git-archive
-Date: Tue, 3 Dec 2013 19:33:01 +0100
-Message-ID: <20131203183301.GB4629@sandbox-ub>
-References: <2E636B58-47EB-4712-93CA-39E8D1BA3DB9@mac.com>
- <5294BB97.7010707@web.de>
- <xmqqmwkqvmck.fsf@gitster.dls.corp.google.com>
- <9AB10474-6DEF-4FFD-B6B3-ED2AB21424AC@mac.com>
- <xmqqzjopsk9b.fsf@gitster.dls.corp.google.com>
- <20131129223845.GA31636@sandbox-ub>
- <3C71BC83-4DD0-43F8-9E36-88594CA63FC5@mac.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re* [PATCH] Improvements to git-archive tests and add_submodule_odb()
+Date: Tue, 03 Dec 2013 10:39:36 -0800
+Message-ID: <xmqqpppdok2f.fsf_-_@gitster.dls.corp.google.com>
+References: <C74C17E7-0780-4FE1-B916-D1A444F3B592@mac.com>
+	<6D370472-81BB-4249-9ADA-1C906C26D88F@mac.com>
+	<20131203181807.GA4629@sandbox-ub>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>,
-	Jens Lehmann <Jens.Lehmann@web.de>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>
-To: Nick Townsend <nick.townsend@mac.com>
-X-From: git-owner@vger.kernel.org Tue Dec 03 19:35:43 2013
+Cc: Nick Townsend <nick.townsend@mac.com>, git@vger.kernel.org,
+	=?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+	Jens Lehmann <Jens.Lehmann@web.de>
+To: Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Tue Dec 03 19:39:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vnuoq-0005Jo-Qu
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Dec 2013 19:35:37 +0100
+	id 1Vnusq-0007Xx-NA
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Dec 2013 19:39:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754335Ab3LCSfc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Dec 2013 13:35:32 -0500
-Received: from smtprelay03.ispgateway.de ([80.67.31.30]:41305 "EHLO
-	smtprelay03.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752630Ab3LCSf0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Dec 2013 13:35:26 -0500
-Received: from [77.20.33.19] (helo=sandbox-ub)
-	by smtprelay03.ispgateway.de with esmtpsa (TLSv1:AES128-SHA:128)
-	(Exim 4.68)
-	(envelope-from <hvoigt@hvoigt.net>)
-	id 1VnumO-0006Zi-32; Tue, 03 Dec 2013 19:35:21 +0100
-Content-Disposition: inline
-In-Reply-To: <3C71BC83-4DD0-43F8-9E36-88594CA63FC5@mac.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
+	id S1754384Ab3LCSjk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Dec 2013 13:39:40 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45248 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753856Ab3LCSjj convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 3 Dec 2013 13:39:39 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3BF4055B3E;
+	Tue,  3 Dec 2013 13:39:39 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=CuHTOn5bPcER
+	18Tb1+SIvNnUnoU=; b=wnro/O1NkJmTv1/mYftoFuaorRflGATDVN966Gqkp6hC
+	YlJO4rxerTbHbWSWcJISFO39Izvwmiq7QILDWGBFeWLSIrbpS1Gih2IJJul5WLOm
+	CC5oPKfo2SrBRzM2F5mjFfI0ByZV670DBzEtEYvJAbGDD4wNdhjdaMtfmyX4QlY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=e2i8mI
+	hZw3IBzw0UBbXCsXv+llzMmj4LjRgpbTW8GPi7dUBRqpj+RxkXYACSfY0zhVFIwq
+	Klp/bfkE9jjYlst64vO2IRAye4L4pAnGo1k2gCj6PegoeNIpveqbc1NpDvHKoft5
+	Y7PJAZUJg8QLX49CuTPgd2qBccSjVYON268bo=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2D52055B3D;
+	Tue,  3 Dec 2013 13:39:39 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6D8E655B3C;
+	Tue,  3 Dec 2013 13:39:38 -0500 (EST)
+In-Reply-To: <20131203181807.GA4629@sandbox-ub> (Heiko Voigt's message of
+	"Tue, 3 Dec 2013 19:18:07 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 43B5EF90-5C4A-11E3-A432-D331802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238710>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238711>
 
-Hi,
+Heiko Voigt <hvoigt@hvoigt.net> writes:
 
-On Mon, Dec 02, 2013 at 03:55:36PM -0800, Nick Townsend wrote:
->=20
-> On 29 Nov 2013, at 14:38, Heiko Voigt <hvoigt@hvoigt.net> wrote:
-> > FYI, I already started to implement this lookup of submodule paths =
-early
-> > this year[1] but have not found the time to proceed on that yet. I =
-am
-> > planning to continue on that topic soonish. We need it to implement=
- a
-> > correct recursive fetch with clone on-demand as a basis for the fut=
-ure
-> > recursive checkout.
-> >=20
-> > During the work on this I hit too many open questions. Thats why I =
-am
-> > currently working on a complete plan[2] so we can discuss and defin=
-e how
-> > this needs to be implemented. It is an asciidoc document which I wi=
-ll
-> > send out once I am finished with it.
-> >=20
-> > Cheers Heiko
-> >=20
-> > [1] http://article.gmane.org/gmane.comp.version-control.git/217020
-> > [2] https://github.com/hvoigt/git/wiki/submodule-fetch-config
->=20
-> It seems to me that the question that you are trying to solve is
-> more complex than the problem I faced in git-archive, where we have a
-> single commit of the top-level repository that we are chasing.=20
-> Perhaps we should split the work into two pieces:
->=20
-> a. Identifying the complete submodule configuration for a single comm=
-it, and
-> b. the complexity of behaviour when fetching and cloning recursively =
-(which=20
->     of course requires a.)
+> On Mon, Dec 02, 2013 at 04:14:37PM -0800, Nick Townsend wrote:
+>> diff --git a/submodule.c b/submodule.c
+>> index 1905d75..1ea46be 100644
+>> --- a/submodule.c
+>> +++ b/submodule.c
+>> @@ -143,7 +143,7 @@ void stage_updated_gitmodules(void)
+>>  		die(_("staging updated .gitmodules failed"));
+>>  }
+>> =20
+>> -static int add_submodule_odb(const char *path)
+>> +int add_submodule_odb(const char *path)
+>
+> I am not against making add_submodule_odb() usable from outside
+> submodule.c but I would prefer if this change goes along with some co=
+de
+> actually using it. The reason being that when refactoring or extendin=
+g
+> you immediately know that a function is file local only with the stat=
+ic
+> keyword. Without anyone using this function from outside submodule.c
+> this fact is still true and so the code should say, IMO.
+>
+> Its not a big deal to postpone removing this keyword in a later commi=
+t
+> so I would like to drop this change from the patch. The documentation
+> fix is fine with me.
 
-You are right the latter (b) is a separate topic. So how about I extrac=
-t the
-submodule config parsing part from the mentioned patch and you can then
-use that patch as a basis for your work? As far as I understand you onl=
-y
-need to parse the .gitmodules file for one commit and then lookup the
-submodule names from paths right? That would simplify matters and we ca=
-n
-postpone the caching of multiple commits for the time when I continue o=
-n b.
+OK, thanks, then let's do this.
 
-> I=E2=80=99m very happy to work on the first, but the second seems to =
-me to require more
-> understanding than I currently possess. In order to do this it would =
-help to have a
-> place to discuss this. I see you have used the wiki of your fork of g=
-it on GitHub.
-> Is that the right place to solicit input?
+-- >8 --
+=46rom: Nick Townsend <nick.townsend@mac.com>
+Date: Mon, 25 Nov 2013 15:31:09 -0800
+Subject: [PATCH] ref-iteration doc: add_submodule_odb() returns 0 for s=
+uccess
 
-I only used that to collect all information into one place. I am not
-sure if thats actually necessary for the .gitmodules parsing you need.
+The usage sample of add_submodule_odb() function in the Submodules
+section expects non-zero return value for success, but the function
+actually reports success with zero.
 
-I think we should discuss everything related to the design and patches
-here on the list. If you have questions regarding my code I am also
-happy to answer that via private mail.
+Helped-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+Reviewed-by: Heiko Voigt <hvoigt@hvoigt.net>
+Signed-off-by: Nick Townsend <nick.townsend@mac.com>
+---
+ Documentation/technical/api-ref-iteration.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Cheers Heiko
+diff --git a/Documentation/technical/api-ref-iteration.txt b/Documentat=
+ion/technical/api-ref-iteration.txt
+index aa1c50f..02adfd4 100644
+--- a/Documentation/technical/api-ref-iteration.txt
++++ b/Documentation/technical/api-ref-iteration.txt
+@@ -50,10 +50,10 @@ submodules object database. You can do this by a co=
+de-snippet like
+ this:
+=20
+ 	const char *path =3D "path/to/submodule"
+-	if (!add_submodule_odb(path))
++	if (add_submodule_odb(path))
+ 		die("Error submodule '%s' not populated.", path);
+=20
+-`add_submodule_odb()` will return an non-zero value on success. If you
++`add_submodule_odb()` will return zero on success. If you
+ do not do this you will get an error for each ref that it does not poi=
+nt
+ to a valid object.
+=20
+--=20
+1.8.5-262-g1a2486c
