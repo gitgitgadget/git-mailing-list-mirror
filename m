@@ -1,102 +1,95 @@
-From: =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-Subject: Re: [PATCH 3/5] gitweb: Return plain booleans in validation methods
-Date: Wed, 4 Dec 2013 17:07:08 +0100
-Message-ID: <CANQwDweGgQpnqDqaekBWt-rczjHkJEmFyXW9qDh2En2r=ZXbMw@mail.gmail.com>
-References: <1386164583-14109-1-git-send-email-krzesimir@endocode.com> <1386164583-14109-4-git-send-email-krzesimir@endocode.com>
+From: "SCHILZ MANFRED" <manfred.schilz@bgl.lu>
+Subject: problems with git --git-dir on windows 7
+Date: Wed, 4 Dec 2013 17:11:01 +0100
+Message-ID: <EF40980AA2C4C4449E2D87B419007B7F18E0FACB@SPMWB01L.luinternal.fortis.bank>
+References: <EF40980AA2C4C4449E2D87B419007B7F18E0FACA@SPMWB01L.luinternal.fortis.bank>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Krzesimir Nowak <krzesimir@endocode.com>
-X-From: git-owner@vger.kernel.org Wed Dec 04 17:07:59 2013
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Dec 04 17:11:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VoEzW-0001cF-JC
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Dec 2013 17:07:58 +0100
+	id 1VoF2c-0003gw-Le
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Dec 2013 17:11:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755786Ab3LDQHx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Dec 2013 11:07:53 -0500
-Received: from mail-wg0-f41.google.com ([74.125.82.41]:43257 "EHLO
-	mail-wg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755767Ab3LDQHw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Dec 2013 11:07:52 -0500
-Received: by mail-wg0-f41.google.com with SMTP id y10so7130554wgg.4
-        for <git@vger.kernel.org>; Wed, 04 Dec 2013 08:07:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=05mLz/jw7+ck+ng7WM2KLnsxEACButOLXNbLZSpQZt4=;
-        b=iZC0WpJWDTFSrnaFq0fvsUwvQg6bkcSJ+0hyAXLlcifkirnQs4oi21Dh4PDn9eoWrL
-         cBzK1vRb6AaxNNBrQf0u+Xy2Tso8T5HBNYD0v7UFpe2I/IoZS1yYBcMSqOPR7Yt0ovxS
-         qx3yEBJp0tDTOlTBidnXGM0BDlT8OCC8ygQoHur6Bb7GiguAJT3afcFlDleGiA0PCn+n
-         4IqVfex1Nv7azdZSlxlrNkZ60bY3Ggbl9ieoeBDnT0xfROGH2k54ijFUvR4DWEvei6b4
-         fef0P6dEQ1ei/sKs4ixDHCC2gBjN9RbG+PNBmNVMHQvhKL7QccLtjmmLCtvSaOFSPJLR
-         91Ng==
-X-Received: by 10.194.48.115 with SMTP id k19mr12972937wjn.47.1386173268401;
- Wed, 04 Dec 2013 08:07:48 -0800 (PST)
-Received: by 10.227.108.131 with HTTP; Wed, 4 Dec 2013 08:07:08 -0800 (PST)
-In-Reply-To: <1386164583-14109-4-git-send-email-krzesimir@endocode.com>
+	id S932782Ab3LDQLF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Dec 2013 11:11:05 -0500
+Received: from mail3.fortis.lu ([212.190.206.132]:1382 "EHLO mail3.fortis.lu"
+	rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1755766Ab3LDQLE convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 4 Dec 2013 11:11:04 -0500
+X-TM-IMSS-Message-ID: <53fff03e001c23d6@bgl.lu>
+Received: from spmwf01l.luinternal.fortis.bank (unverified) by 
+    swina164.lumgt.fortis.bank (mail.fortis.lu) with ESMTP id 
+    <Tafcb001bdf0ab105471554@swina164.lumgt.fortis.bank> for 
+    <git@vger.kernel.org>; Wed, 4 Dec 2013 17:10:58 +0100
+Received: from SPMWB01L.luinternal.fortis.bank ([10.173.124.243]) by 
+    spmwf01l.luinternal.fortis.bank with Microsoft SMTPSVC(6.0.3790.4675);
+     Wed, 4 Dec 2013 17:11:01 +0100
+Content-class: urn:content-classes:message
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+In-Reply-To: <EF40980AA2C4C4449E2D87B419007B7F18E0FACA@SPMWB01L.luinternal.fortis.bank>
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: problems with git --git-dir on windows 7
+Thread-Index: Ac7xBc1el3rmsEosT/S3765ejaj9uAABWBxQ
+X-OriginalArrivalTime: 04 Dec 2013 16:11:01.0521 (UTC) 
+    FILETIME=[6CF45810:01CEF10B]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238787>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238788>
 
-On Wed, Dec 4, 2013 at 2:43 PM, Krzesimir Nowak <krzesimir@endocode.com> wrote:
+Hello,
+We are using git on windows7(git-version 1.8.1; see below) and we get t=
+he following problem in using the command 'git --git-dir=3D'
 
-> Users of validate_* passing "0" might get failures on correct name
-> because of coercion of "0" to false in code like:
-> die_error(500, "invalid ref") unless (check_ref_format ("0"));
 
-I would say that the problem was that validate_sth() subroutines returned
-value of parameter if it was valid, which could be a problem if said value is
-false-ish (e.g. validate_refname("0"), or validate_pathname("0")).
+C:\UserTemp\git\appli3>git=A0 --git-dir=3DC:\UserTemp\git\appli3 tag
+fatal: Not a git repository: 'C:\UserTemp\git\appli3'
 
-Returning undef on invalid data newer was a problem, using 'return $input;'
-on valid input was, especially that validate_sth() functions were ever used
-in a conditional:
 
-  if (!validate_sth($param)) {
-      die_error(...)
-  }
+but the repository is well defined,as we can run the following command:
 
-While at it validate_sth() is not a best name for boolean predicate:
-is_valid_sth() would be better, I think.
+C:\UserTemp\git\appli3>git log -1 --oneline
+37cdbe0 Merge branch 'master' of L:/_ApplicationData/FBLU_IT-FLIT/se-De=
+velopSupp
 
-> Signed-off-by: Krzesimir Nowak <krzesimir@endocode.com>
-> ---
->  gitweb/gitweb.perl | 45 +++++++++++++++++++++++++--------------------
->  1 file changed, 25 insertions(+), 20 deletions(-)
->
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index 67415b9..3434602 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -1419,63 +1419,68 @@ sub href {
->  ## validation, quoting/unquoting and escaping
->
->  sub validate_action {
-> -       my $input = shift || return undef;
-> -       return undef unless exists $actions{$input};
-> -       return $input;
-> +       my $input = shift;
-> +
-> +       return 0 unless defined $input;
-> +       return 0 unless exists $actions{$input};
-> +       return 1;
->  }
+When running the equivalent command on Linux, we don't have any problem=
+s:
+On Linux:
+>git --git-dir=3D"/tmp/GITPOC/appli3" tag
+V1.0
+V1.1
+V2.0
+V3.0
 
-The only change that needs to be doe is replacing
+Could you help me please ?
 
-           return $input;
+Best regards
 
-with
+Manfred Schilz
 
-           return 1;
+-----------------------------------------------------------------------=
+----------------
+C:\UserTemp\git\appli3>git --version
+git version 1.8.1.msysgit.1
 
--- 
-Jakub Narebski
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Internet communications are not secure and therefore BGL BNP Paribas do=
+es not accept legal responsibility for the contents of this message. Th=
+e information contained in this e-mail is confidential and may be legal=
+ly privileged. It is intended solely for the addressee. If you are not =
+the intended recipient, any disclosure, copying, distribution or any ac=
+tion taken or omitted to be taken in reliance on it, is prohibited and =
+may be unlawful. Nothing in the message is capable or intended to creat=
+e any legally binding obligations on either party and it is not intende=
+d to provide legal advice.
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
