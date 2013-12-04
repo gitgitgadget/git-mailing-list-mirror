@@ -1,91 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Use mongoose to test smart-http unconditionally?
-Date: Wed, 04 Dec 2013 14:53:13 -0800
-Message-ID: <xmqq38m8jkiu.fsf@gitster.dls.corp.google.com>
-References: <CACsJy8BHnTHRugJoTDGs7h=dF1qQUWyPXYxCU8YsDU57s+5gyg@mail.gmail.com>
-	<xmqqa9ggl6oq.fsf@gitster.dls.corp.google.com>
-	<20131204222522.GA16706@sigill.intra.peff.net>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Publishing "filtered branch repositories" - workflow / recommendations?
+Date: Wed, 4 Dec 2013 18:01:07 -0500
+Message-ID: <CACPiFCJPq0fqOQrJD-8CHH405Xw61ZDynqqfN+_aZb3ZBgV2VA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Dec 04 23:53:24 2013
+Content-Type: text/plain; charset=ISO-8859-1
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Dec 05 00:01:33 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VoLJr-0003Xv-4W
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Dec 2013 23:53:23 +0100
+	id 1VoLRk-0008VC-B0
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Dec 2013 00:01:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756110Ab3LDWxT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Dec 2013 17:53:19 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38262 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755434Ab3LDWxS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Dec 2013 17:53:18 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2BCCA5779E;
-	Wed,  4 Dec 2013 17:53:18 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=hzc3rpHe79R9gFVHB0UPBVp4yLc=; b=RiCa7L
-	AonSszmTdDzeWTv0chcDzcJZcJ2ZZHmddGHu0L3wtcHaNmJihJ/xqSOJAGMFa0M4
-	2r8eew/WC1ys/Z3580f+uys6MvA2hofm715KtEcEyC5ib0x41v0km91NLlOa7fsx
-	GErlLtM/e5biKVd4Sej4zJycpnaF+0BlL/RDI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=U+crWhpx/78Lf3HILpVNoknoh42R+9+n
-	VwuGZjM7eITmFPs6gpZ/o73Ax8EsAQT/mfbNa009gRTragK/GfvNhbFTFOyShu22
-	nPoYcZwQ38fBcaewK/6YwWj1ClGzLLBdgFNFxRYz7HvDQT8BOQmV4wKOyxZCR7vA
-	TKq90eFgufg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1D26D5779D;
-	Wed,  4 Dec 2013 17:53:18 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0E6105779B;
-	Wed,  4 Dec 2013 17:53:16 -0500 (EST)
-In-Reply-To: <20131204222522.GA16706@sigill.intra.peff.net> (Jeff King's
-	message of "Wed, 4 Dec 2013 17:25:22 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: DD2127B6-5D36-11E3-9E3D-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S932078Ab3LDXB2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Dec 2013 18:01:28 -0500
+Received: from mail-vc0-f175.google.com ([209.85.220.175]:53287 "EHLO
+	mail-vc0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755146Ab3LDXB2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Dec 2013 18:01:28 -0500
+Received: by mail-vc0-f175.google.com with SMTP id ld13so12214056vcb.34
+        for <git@vger.kernel.org>; Wed, 04 Dec 2013 15:01:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=Bz4dwR8ic4Na6DQkudkMtiDUD26DwGB5rqB9ot9NUww=;
+        b=jnTcZgFAi/h8Swr/bWGoe7onzu7oOPGkEvVfNPzmJ7Y90LDoRtXZUTeCMI3rznV0SS
+         BL6QRtfUPqmoB51wWbICBBt2R9dnovb87nO+uXG0KTnhPLM2shNKtuFblMCeB70OPChj
+         5qGh6kL17nJugkBOE4J2jbgwcxyblMg/G1Uwg6xf3S4rOf8bpf2B6jpEvSo5KksPQndN
+         J0sXuzRlneaFHQ6IfPMlbyeRIq3mz6crfc+hd6r4bhQ8adxYzEwDcm3950rVry7/gyfQ
+         ZEwRTbx2AqmLeU+7sF4+gWdbS+JQP2nhav2bRk9Zlj4k/tnorHd4nmMK3QioPUIeKcok
+         YSfQ==
+X-Received: by 10.220.64.69 with SMTP id d5mr61777966vci.11.1386198087221;
+ Wed, 04 Dec 2013 15:01:27 -0800 (PST)
+Received: by 10.220.74.133 with HTTP; Wed, 4 Dec 2013 15:01:07 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238825>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238826>
 
-Jeff King <peff@peff.net> writes:
+Hi folks.
 
-> The rollout would be:
->
->   1. add contrib/mongoose/*
->
->   2. add test-httpd which links against mongoose, built by default in the
->      Makefile
->
->   3. convert lib-httpd/apache.conf into mongoose config as necessary
->
->   4. convert lib-httpd.sh to run test-httpd instead of LIB_HTTPD_PATH
->
->   5. delete apache.conf, LIB_HTTPD_PATH and any other apache remnants
->
->   6. default GIT_TEST_HTTPD to yes
->
-> Step 3 is the part where I would anticipate trouble (i.e., finding out
-> that the new server does not do everything the tests expect).
+currently working on a project based on Moodle (the LMS that got me
+into git in the first place). This is a highly modular software, and I
+would like to maintain a bunch of "out of tree" modules in a single
+repository, and be able to publish them in "per-module" repositories.
 
-If it involves making things not tested with apache, I'd actually be
-less supportive for the whole plan.  I thought the primary objective
-was to encourage people who currently are _not_ running httpd tests
-by making a lightweight server available out of the box, robbing an
-excuse "my box does not have apache installed" from them.
+So I would like to maintain a tree with looking like
 
-As long as a server supports bog standard CGI interface, smart-http
-should work the same way with any such server.  For that reason, it
-should be theoretically sufficient to test with one non-apache
-server (i.e. mongoose) for the purpose of making sure _our_ end of
-the set-up works, but still...
+  auth/foomatic/{code}
+  mod/foomatic/{code}
+
+where I can develop, branch and tag all the foomatic code together.
+Yet, at release time I want to _also_ publish two repos
+
+  auth-foomatic.git
+  mod-foomatic.git
+
+each of them with matching tags and code at the "root" of the git
+tree, and ideally with a truthful history (i.e.: similar to having run
+git filter-branch --subdirectory-filter, but able to update that
+filtered history incrementally).
+
+Is there a reasonable approach to scripting this?
+
+Alternatively, has git submodule been improved so that it's usable by
+mere mortals (i.e.: my team), or are there strong alternatives to git
+submodule?
+
+cheers,
+
+
+
+m
+-- 
+ martin.langhoff@gmail.com
+ -  ask interesting questions
+ - don't get distracted with shiny stuff  - working code first
+ ~ http://docs.moodle.org/en/User:Martin_Langhoff
