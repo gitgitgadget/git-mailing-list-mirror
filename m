@@ -1,103 +1,100 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/1] tests: fix gzip with exported GZIP variable in environment
-Date: Wed, 04 Dec 2013 14:07:08 -0800
-Message-ID: <xmqqbo0wjmnn.fsf@gitster.dls.corp.google.com>
-References: <1386061054-30796-1-git-send-email-mail@eworm.de>
-	<CAPig+cQqKQdVEojYF+-+ZE2hQjxsH4WrgPymj8g7P6pSQzfVpw@mail.gmail.com>
-	<20131203131812.GC26667@sigill.intra.peff.net>
-	<xmqqy541okwg.fsf@gitster.dls.corp.google.com>
-	<20131204193232.GB11024@sigill.intra.peff.net>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: [RFC/WIP PATCH 0/4] less ignorance of submodules for ignore=all
+Date: Wed, 4 Dec 2013 23:16:59 +0100
+Message-ID: <20131204221659.GA7326@sandbox-ub>
+References: <CALkWK0muxsRUtO6KYk5G3=RVN0nqd=8gOZn=jsNbTc4B9KCATQ@mail.gmail.com>
+ <528FC638.5060403@web.de>
+ <20131122215454.GA4952@sandbox-ub>
+ <20131122220953.GI4212@google.com>
+ <52910BC4.1030800@web.de>
+ <20131124005256.GA3500@sandbox-ub>
+ <52922962.3090407@web.de>
+ <CAErtv2729o-xf=49xY06aVL1ZJzJpeH+cc_Pd1cAP52r32Ss_g@mail.gmail.com>
+ <20131125174945.GA3847@sandbox-ub>
+ <CAErtv259jxCtvbJYZHgQZv-VJ9U+JwNzWo0tn007SDTCCBScrA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Christian Hesse <mail@eworm.de>, Git List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Dec 04 23:07:20 2013
+Cc: Jens Lehmann <Jens.Lehmann@web.de>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Sergey Sharybin <sergey.vfx@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 04 23:17:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VoKbI-0008Gg-24
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Dec 2013 23:07:20 +0100
+	id 1VoKkw-0006Ah-Jv
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Dec 2013 23:17:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755394Ab3LDWHP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Dec 2013 17:07:15 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51853 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754216Ab3LDWHO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Dec 2013 17:07:14 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 97C6556BA0;
-	Wed,  4 Dec 2013 17:07:13 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=XmagVjNRbF71lXiYF4Ui0JQCuwM=; b=qYCj9T
-	xzVPZirIFYAxG3g4q+b6xT7Uj9dh3p0F8WpFbj4U7IaMeV2VGncpaISPoauahIaa
-	u6ceBWUdk2KY7r8aD7f0D7Yp0AP8YMsITMdmRr7/xreq2hayv/+qBlplHhdNvdXF
-	i+iJS3ygAU6Vq6GdVITtBa8zA1ig2MevibdHI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=iGOEqAd8qF0oOijH1xR5BRhxERL3VC2w
-	HauSFSNz9XkAqdo34dyAkxKhxzF5ILFTYEHvkqmdC00sRSJU8NpYyaZyqfn6TevT
-	N8SejG2/quaTLXA6P84m1yIYEaB9d1nXXTTkXrCpd7ZT5cauOQGoYkWSHF2szUIB
-	Ml5X+PfwxG4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5A8F056B9D;
-	Wed,  4 Dec 2013 17:07:13 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 062BF56B9A;
-	Wed,  4 Dec 2013 17:07:11 -0500 (EST)
-In-Reply-To: <20131204193232.GB11024@sigill.intra.peff.net> (Jeff King's
-	message of "Wed, 4 Dec 2013 14:32:32 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 6D08BD3C-5D30-11E3-875F-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756079Ab3LDWRN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Dec 2013 17:17:13 -0500
+Received: from smtprelay05.ispgateway.de ([80.67.31.94]:59389 "EHLO
+	smtprelay05.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753613Ab3LDWRN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Dec 2013 17:17:13 -0500
+Received: from [77.21.76.49] (helo=sandbox-ub)
+	by smtprelay05.ispgateway.de with esmtpsa (TLSv1:AES128-SHA:128)
+	(Exim 4.68)
+	(envelope-from <hvoigt@hvoigt.net>)
+	id 1VoKkk-00023X-EN; Wed, 04 Dec 2013 23:17:06 +0100
+Content-Disposition: inline
+In-Reply-To: <CAErtv259jxCtvbJYZHgQZv-VJ9U+JwNzWo0tn007SDTCCBScrA@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238815>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238816>
 
-Jeff King <peff@peff.net> writes:
+This is my current work in progress. Sergey it would be awesome if you
+could test these and tell me whether the behaviour is what you would
+expect. Once that is settled I will add some tests and possibly clean up
+some code.
 
-> On Tue, Dec 03, 2013 at 10:21:35AM -0800, Junio C Hamano wrote:
->
->> Jeff King <peff@peff.net> writes:
->> 
->> > There are a few options I see:
->> >
->> >   1. Drop $GZIP variable, and hard-code the prerequisite check to
->> >      "gzip", which is what is being tested.
->> > ...
->> > I think I'd be in favor of (1). It's the simplest, and we have not seen
->> > any reports of people who do not actually have gzip called "gzip". Users
->> > can still override it via config if they really want to.
->> 
->> I am OK with (1).
->> 
->> A related tangent is that we may have to worry about is how/if a
->> random setting coming from GZIP in the environment (e.g. "GZIP=-1v")
->> would interfere with the test.  It may be the simplest to unset
->> $GZIP at the beginning of these tests, regardless of which of the
->> above three is taken.
->
-> I don't think we should worry about it.
->
-> There are two levels to consider here. One, people may put junk in their
-> GZIP variable, which will impact normal running of git itself...
+Since nobody spoke against this change of behavior I assume that we
+agree on the general approach I am taking here. If not please speak up
+now so we can work something out and save me implementation time ;-)
 
-This wasn't something I was worried about. We should support
-reasonable setting of GZIP without breaking ourselves.
+Whats still missing is:
 
-> That leaves options which change the compressed output, like "-9".
+ * it seems reset does not care at all about the ignore settings. It
+   still shows a
 
-Yes, I was solely focusing on the stability of the tests.
+   M	submodule
 
-> If somebody shows up complaining that a test fails when they have GZIP
-> set, then that may be catching a bug, or it may be catching a fragility
-> in the test. But since we do not have a real-world complaint yet, I'd
-> rather leave it and judge when we have an actual case.
+   line even when the submodule in question was not in the index and is
+   marked as ignored. Have not looked at the code yet.
 
-OK.
+ * The git diff $commit question Junio mentioned here[1] it does not yet
+   show diffs of ignore=all submodules.
+
+For testing convenience you can also find all patches applied to Junio's
+current master here:
+
+https://github.com/hvoigt/git/commits/hv/fix_ignore_all_submodules
+
+Cheers Heiko
+
+Heiko Voigt (4):
+  disable complete ignorance of submodules for index <-> HEAD diff
+  fix 'git add' to skip submodules configured as ignored
+  teach add -f option for ignored submodules
+  always show committed submodules in summary after commit
+
+ builtin/add.c             | 55 ++++++++++++++++++++++++++++++++++++-----------
+ builtin/commit.c          |  1 +
+ builtin/diff.c            |  2 ++
+ diff-lib.c                |  3 +++
+ diff.h                    |  2 +-
+ submodule.c               | 26 ++++++++++++++++++++--
+ submodule.h               |  2 ++
+ t/t4027-diff-submodule.sh | 12 ++++++++---
+ t/t7508-status.sh         |  6 +++++-
+ 9 files changed, 90 insertions(+), 19 deletions(-)
+
+-- 
+1.8.5.1.43.gf00fb86
