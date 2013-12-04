@@ -1,95 +1,84 @@
-From: "SCHILZ MANFRED" <manfred.schilz@bgl.lu>
-Subject: problems with git --git-dir on windows 7
-Date: Wed, 4 Dec 2013 17:11:01 +0100
-Message-ID: <EF40980AA2C4C4449E2D87B419007B7F18E0FACB@SPMWB01L.luinternal.fortis.bank>
-References: <EF40980AA2C4C4449E2D87B419007B7F18E0FACA@SPMWB01L.luinternal.fortis.bank>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: [PATCH 1/5] gitweb: Add a comment explaining the meaning of $/
+Date: Wed, 4 Dec 2013 11:19:02 -0500
+Message-ID: <CACPiFCJON33dz64qSZDnrCo8hbVpbxk7k65xmW1oBiZ4Muzcbg@mail.gmail.com>
+References: <1386164583-14109-1-git-send-email-krzesimir@endocode.com>
+ <1386164583-14109-2-git-send-email-krzesimir@endocode.com>
+ <CANQwDwdiNHFCChVdkKxkEa+HOKzzhgfzy4d6iZB6ejSfva3Z3A@mail.gmail.com> <1386171977.2173.23.camel@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Dec 04 17:11:11 2013
+Cc: =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
+	git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Krzesimir Nowak <krzesimir@endocode.com>
+X-From: git-owner@vger.kernel.org Wed Dec 04 17:19:31 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VoF2c-0003gw-Le
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Dec 2013 17:11:11 +0100
+	id 1VoFAg-0000u8-1f
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Dec 2013 17:19:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932782Ab3LDQLF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Dec 2013 11:11:05 -0500
-Received: from mail3.fortis.lu ([212.190.206.132]:1382 "EHLO mail3.fortis.lu"
-	rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1755766Ab3LDQLE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 4 Dec 2013 11:11:04 -0500
-X-TM-IMSS-Message-ID: <53fff03e001c23d6@bgl.lu>
-Received: from spmwf01l.luinternal.fortis.bank (unverified) by 
-    swina164.lumgt.fortis.bank (mail.fortis.lu) with ESMTP id 
-    <Tafcb001bdf0ab105471554@swina164.lumgt.fortis.bank> for 
-    <git@vger.kernel.org>; Wed, 4 Dec 2013 17:10:58 +0100
-Received: from SPMWB01L.luinternal.fortis.bank ([10.173.124.243]) by 
-    spmwf01l.luinternal.fortis.bank with Microsoft SMTPSVC(6.0.3790.4675);
-     Wed, 4 Dec 2013 17:11:01 +0100
-Content-class: urn:content-classes:message
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-In-Reply-To: <EF40980AA2C4C4449E2D87B419007B7F18E0FACA@SPMWB01L.luinternal.fortis.bank>
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: problems with git --git-dir on windows 7
-Thread-Index: Ac7xBc1el3rmsEosT/S3765ejaj9uAABWBxQ
-X-OriginalArrivalTime: 04 Dec 2013 16:11:01.0521 (UTC) 
-    FILETIME=[6CF45810:01CEF10B]
+	id S1755830Ab3LDQTY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Dec 2013 11:19:24 -0500
+Received: from mail-ve0-f181.google.com ([209.85.128.181]:36863 "EHLO
+	mail-ve0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755824Ab3LDQTX convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 4 Dec 2013 11:19:23 -0500
+Received: by mail-ve0-f181.google.com with SMTP id oy12so12029468veb.26
+        for <git@vger.kernel.org>; Wed, 04 Dec 2013 08:19:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=1yRprgRlfXPLhWN13h6YNkukA8MZMxX6sK2lihj4K0s=;
+        b=js5/sjhxtoZxGQzuZ5yJhaX+3iGPd1ZmeiFoJ7vbBcot30EICnJ7U92YKCB2L3HWCO
+         zKkGcALds/+EHtJLGNLk5s0/HnV66buZ151i8fSc4cGaGSmeAa4HvDRSgmwgv105g/8z
+         7siUeZ/adrEDHbGAxsw+AjwbF6RcmIPOCs7sIkTTlO29OcRZ+JZdgbwDrdttmHZcMGRq
+         zbm/jTRKZ40nTIefD7tAMCDiCezc0rcF6FnqhB7ign24z8bVaCXISqF+5ABVguE7Jtm7
+         JFYfPSrJsTaGYeghgE9nRzsNohZ6Pg6LhkbDUrt/80mmMH7MRuxQvfjd9EkpF0+/9qI1
+         nh6A==
+X-Received: by 10.52.28.78 with SMTP id z14mr887463vdg.54.1386173962452; Wed,
+ 04 Dec 2013 08:19:22 -0800 (PST)
+Received: by 10.220.74.133 with HTTP; Wed, 4 Dec 2013 08:19:02 -0800 (PST)
+In-Reply-To: <1386171977.2173.23.camel@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238788>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238789>
 
-Hello,
-We are using git on windows7(git-version 1.8.1; see below) and we get t=
-he following problem in using the command 'git --git-dir=3D'
+On Wed, Dec 4, 2013 at 10:46 AM, Krzesimir Nowak <krzesimir@endocode.co=
+m> wrote:
+> On Wed, 2013-12-04 at 16:11 +0100, Jakub Nar=C4=99bski wrote:
+>> On Wed, Dec 4, 2013 at 2:42 PM, Krzesimir Nowak <krzesimir@endocode.=
+com> wrote:
+>>
+>> > So future reader will know what does it mean without running "perl=
+doc
+>> > perlvar".
+>>
+>> Hmmm... shouldn't future reader know it anyway?  It is not that cryp=
+tic.
+>> I'd say it is idiomatic Perl.
+>
+> It's plainly obscure. And I think it is not that often used -
+
+It's classic Perl.
+
+Perhaps you'd want to "use English;" and call it
+$INPUT_RECORD_SEPARATOR in a patch titled "Make things readable to
+non-Perl natives".
+
+cheers,
 
 
-C:\UserTemp\git\appli3>git=A0 --git-dir=3DC:\UserTemp\git\appli3 tag
-fatal: Not a git repository: 'C:\UserTemp\git\appli3'
 
-
-but the repository is well defined,as we can run the following command:
-
-C:\UserTemp\git\appli3>git log -1 --oneline
-37cdbe0 Merge branch 'master' of L:/_ApplicationData/FBLU_IT-FLIT/se-De=
-velopSupp
-
-When running the equivalent command on Linux, we don't have any problem=
-s:
-On Linux:
->git --git-dir=3D"/tmp/GITPOC/appli3" tag
-V1.0
-V1.1
-V2.0
-V3.0
-
-Could you help me please ?
-
-Best regards
-
-Manfred Schilz
-
------------------------------------------------------------------------=
-----------------
-C:\UserTemp\git\appli3>git --version
-git version 1.8.1.msysgit.1
-
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Internet communications are not secure and therefore BGL BNP Paribas do=
-es not accept legal responsibility for the contents of this message. Th=
-e information contained in this e-mail is confidential and may be legal=
-ly privileged. It is intended solely for the addressee. If you are not =
-the intended recipient, any disclosure, copying, distribution or any ac=
-tion taken or omitted to be taken in reliance on it, is prohibited and =
-may be unlawful. Nothing in the message is capable or intended to creat=
-e any legally binding obligations on either party and it is not intende=
-d to provide legal advice.
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+m
+--=20
+ martin.langhoff@gmail.com
+ -  ask interesting questions
+ - don't get distracted with shiny stuff  - working code first
+ ~ http://docs.moodle.org/en/User:Martin_Langhoff
