@@ -1,143 +1,171 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/3] gitweb: Add a feature for adding more branch refs
-Date: Wed, 04 Dec 2013 09:57:31 -0800
-Message-ID: <xmqqli00lcs4.fsf@gitster.dls.corp.google.com>
-References: <1386082603-8404-1-git-send-email-krzesimir@endocode.com>
-	<1386082603-8404-3-git-send-email-krzesimir@endocode.com>
-	<xmqqr49tn11c.fsf@gitster.dls.corp.google.com>
-	<CANQwDwcpkbbfND9MmB9wGcL7mrhV_Mxb1amvGPgWeR344_fcfw@mail.gmail.com>
-	<1386161398.2173.9.camel@localhost.localdomain>
+From: =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+Subject: Re: [PATCH 4/5] gitweb: Add a feature for adding more branch refs
+Date: Wed, 4 Dec 2013 19:06:28 +0100
+Message-ID: <CANQwDwe+a2P0Jxqw0k7sHWv3exdb4k+NU3jL3ogR-rcetd82TQ@mail.gmail.com>
+References: <1386164583-14109-1-git-send-email-krzesimir@endocode.com> <1386164583-14109-5-git-send-email-krzesimir@endocode.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>,
-	git <git@vger.kernel.org>,
+Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
 	Eric Sunshine <sunshine@sunshineco.com>
 To: Krzesimir Nowak <krzesimir@endocode.com>
-X-From: git-owner@vger.kernel.org Wed Dec 04 18:57:44 2013
+X-From: git-owner@vger.kernel.org Wed Dec 04 19:07:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VoGhg-0007Q8-Lr
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Dec 2013 18:57:41 +0100
+	id 1VoGqw-0005N3-Fw
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Dec 2013 19:07:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932559Ab3LDR5g convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Dec 2013 12:57:36 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42486 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755872Ab3LDR5f convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 4 Dec 2013 12:57:35 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EAE0956F93;
-	Wed,  4 Dec 2013 12:57:34 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=UhJXKtIWBV6L
-	lOSunX0xADyQwCU=; b=F47wyV4ok8LkzX7Phfqa+bm1aSuA6eUoDNG7CCMgrPsm
-	TWlzHGG4tX9o6TgTcf5Tnx8x2nkvociy2JnfMh4ENyyFmsLSryxMNILVcV4pu9WU
-	mxltAD/B2o5rva8iWHVXZMFX7IsTZH1rDlKgFcBUc7lQVJUrpiXG7DPzXpgc6p4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=WvDXxi
-	n5XnP8+DIs2teKVe9ZKzWJGukqa9G0jbmtevICIRez45MdyCLeZeGOy1MLIDSC1Q
-	SSuG9xqFXljCcrEXGaOxXNpnawT1k83cOxvZ3dt8SsiDkweahhCNDDb22ghEL2af
-	Sy5F331AxWcZWGZuYK3mYe5sApV4kbhj8kmes=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DA3A656F8F;
-	Wed,  4 Dec 2013 12:57:34 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 12F2456F8E;
-	Wed,  4 Dec 2013 12:57:33 -0500 (EST)
-In-Reply-To: <1386161398.2173.9.camel@localhost.localdomain> (Krzesimir
-	Nowak's message of "Wed, 04 Dec 2013 13:49:58 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 8D7B4C60-5D0D-11E3-91E4-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S932909Ab3LDSHK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Dec 2013 13:07:10 -0500
+Received: from mail-we0-f173.google.com ([74.125.82.173]:34731 "EHLO
+	mail-we0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932904Ab3LDSHJ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 4 Dec 2013 13:07:09 -0500
+Received: by mail-we0-f173.google.com with SMTP id u57so9730886wes.4
+        for <git@vger.kernel.org>; Wed, 04 Dec 2013 10:07:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=WLIkM3U0sUGYpJfWEOryqnVdDnktzwGwLOFg2On0q40=;
+        b=I5sUYF3PLfst893STYlm9Ryl6EW3m+4NEVvUkoJbwX4G6QECnwRXzR1ivzBX+Py8t9
+         fAMvU4GCbOHJ2QYUeYZJ6zZfmghA3hA7N7gf7kqB7REkgELmD144zEDbzhRjLz/lVPKh
+         naPwZncQr3jXlPbeobbMG/FzZ9lZLWRNubIOfuaBPSTIDaweG/3BVG+afe1ZOHXhJQ07
+         1C1earhfVNh+wTM6KKyknF9ngP1rN3q3BIiJqjUQc65p8cHGlsAao0njuV/ZWBcs+JFU
+         9dsWYtpGnFCrMYF/LI0GhOSiNrLcmcCtpigMbPbL+9ylUerdpsTdNE/PGAu4nEyUtmii
+         3sSw==
+X-Received: by 10.180.188.229 with SMTP id gd5mr8516486wic.38.1386180428277;
+ Wed, 04 Dec 2013 10:07:08 -0800 (PST)
+Received: by 10.227.108.131 with HTTP; Wed, 4 Dec 2013 10:06:28 -0800 (PST)
+In-Reply-To: <1386164583-14109-5-git-send-email-krzesimir@endocode.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238796>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238797>
 
-Krzesimir Nowak <krzesimir@endocode.com> writes:
-
-> On Tue, 2013-12-03 at 21:38 +0100, Jakub Nar=C4=99bski wrote:
->> On Tue, Dec 3, 2013 at 9:15 PM, Junio C Hamano <gitster@pobox.com> w=
-rote:
->> > Krzesimir Nowak <krzesimir@endocode.com> writes:
->> >
->> >> @@ -626,6 +640,17 @@ sub feature_avatar {
->> >>       return @val ? @val : @_;
->> >>  }
->> >>
->> >> +sub feature_extra_branch_refs {
->> >> +     my (@branch_refs) =3D @_;
->> >> +     my $values =3D git_get_project_config('extra_branch_refs');
->> >
->> > Hmph.  Three points.
->> >
->> > * Almost all callers of this function use
->> >
->> >     my ($val) =3D git_get_project_config(...);
->> >     my @val =3D git_get_project_config(...);
->> >
->> >   to expect that the function returns a list of things (and grab t=
-he
->> >   first one among them, not the length of the list).  Shouldn't th=
-is
->> >   part do the same?
->>=20
->> Right. feature_snapshot() has here
->>=20
->>     my (@fmts) =3D @_;
->>     my ($val) =3D git_get_project_config('snapshot');
->>=20
->> ...though git_get_project_config returns scalar.
+On Wed, Dec 4, 2013 at 2:43 PM, Krzesimir Nowak <krzesimir@endocode.com=
+> wrote:
 >
-> So what's the point of it? 'my @val =3D git_get_project_config ()' ju=
-st
-> creates an array with one element.
+> Allow extra-branch-refs feature to tell gitweb to show refs from
+> additional hierarchies in addition to branches in the list-of-branche=
+s
+> view.
+>
+> Signed-off-by: Krzesimir Nowak <krzesimir@endocode.com>
+> Reviewed-by: Junio C Hamano <gitster@pobox.com>
+> Reviewed-by: Jakub Nar=C4=99bski <jnareb@gmail.com>
 
-The point is that "my ($val) =3D git_get_project_config('name')" calls
-the sub in the list context like everybody else, which would be more
-robust, if you want to be prepared for somebody else's change to the
-implementation in the future, I think.
+This version is Helped-by (maybe), but not (yet!) Reviewed-by.
 
->> > * Wouldn't this be a good candidate for a multi-valued configurati=
+> ---
+>  Documentation/gitweb.conf.txt | 37 +++++++++++++++++++
+>  gitweb/gitweb.perl            | 85 +++++++++++++++++++++++++++++++++=
+++++------
+>  2 files changed, 110 insertions(+), 12 deletions(-)
+>
+> diff --git a/Documentation/gitweb.conf.txt b/Documentation/gitweb.con=
+f.txt
+> index e2113d9..5a77452 100644
+> --- a/Documentation/gitweb.conf.txt
+> +++ b/Documentation/gitweb.conf.txt
+> @@ -849,6 +849,43 @@ time zones in the form of "+/-HHMM", such as "+0=
+200".
+>  +
+>  Project specific override is not supported.
+>
+> +extra-branch-refs::
+> +       List of additional directories under "refs" which are going t=
+o
+> +       be used as branch refs. For example if you have a gerrit setu=
+p
+> +       where all branches under refs/heads/ are official,
+> +       push-after-review ones and branches under refs/sandbox/,
+> +       refs/wip and refs/other are user ones where permissions are
+> +       much wider, then you might want to set this variable as
+> +       follows:
+> ++
+> +--------------------------------------------------------------------=
+------------
+> +$feature{'extra-branch-refs'}{'default'} =3D
+> +       ['sandbox', 'wip', 'other'];
+> +--------------------------------------------------------------------=
+------------
+> ++
+> +If overriding was enabled then this feature can be configured on a
+
+s/was/is/;
+
+Perhaps it would better read as
+
+    This feature can be configured on per-repository basis after settin=
+g
+    $feature{'extra-branch-refs'}{'override'} to true, via repository's
+    `gitweb.extraBranchRefs` ...
+
+> +per-repository basis via repository's `gitweb.extrabranchrefs`
+> +configuration variable, which contains a space separated list of
+> +refs. An example:
+> ++
+> +--------------------------------------------------------------------=
+------------
+> +[gitweb]
+> +       extrabranchrefs =3D sandbox wip other
+> +--------------------------------------------------------------------=
+------------
+
+O.K.
+
+> ++
+> +The gitweb.extrabranchrefs is actually a multi-valued configuration
+> +variable, so following example is also correct and the result is the
+> +same as of the snippet above:
+> ++
+> +--------------------------------------------------------------------=
+------------
+> +[gitweb]
+> +       extrabranchrefs =3D sandbox
+> +       extrabranchrefs =3D wip other
+> +--------------------------------------------------------------------=
+------------
+
+I think this part should be better left for a separate patch. There is
+important difference between single-valued and multi-valued configurati=
 on
->> >   variable, e.g. shouldn't this
->> >
->> >         [gitweb]
->> >                 extraBranchRefs =3D wip
->> >                 extraBranchRefs =3D sandbox other
->> >
->> >   be parsed as a three-item list, qw(wip sandbox other)?
->>=20
->> This would require changes in git_get_project_config(), which would
->> need to be able to deal with multi-valued result (it caches these
->> results, so we pay only one cost of `git config` call).
->
-> Hm, actually not at all. Now, if I have a setup like Junio wrote the
-> git_get_project_config just returns an array ref. So modifying the
-> feature_extra_branch_refs to handle the returned value as either simp=
-le
-> scalar or array reference should be enough.
+variable: with single-valued later occurrences override earlier ones,
+which includes settings in more specific config file (e.g. per-reposito=
+ry)
+overriding setting in more general one (e.g. per-user or system-wide).
 
-Yes, changing the calling site to use of config_to_multi() around
-(see the handling of 'ctag' for an example) and then concatenate the
-result of splitting each returned element would be one way to do
-this.
+With multi-valued we won't be able to override earlier / more generic
+settings... well, unless we add support for no-value, or empty-value
+as clearer, i.e.
 
-Jakub may have had in mind to teach git_get_project_config() to
-return a list; because existing callers call the sub in the list
-context, they will not get surprising result---even though they may
-only use the first one and discard the rest.
+  [gitweb]
+           extrabranchrefs =3D sandbox
+           extrabranchrefs
+ # or    extrabranchrefs =3D
+           extrabranchrefs =3D wip other
 
-Which might not be a bad thing in the longer term, but I think it is
-outside the scope of this particular topic, but in order to prepare
-for that kind of internal API enhancement, it would still help to
-make sure that this new caller calls the sub in the list context
-like others.
+resulting in ('wip', 'other').
+
+> ++
+> +It is an error to specify a ref that does not pass "git check-ref-fo=
+rmat"
+> +scrutiny. Duplicated values are filtered.
+> +
+
+Hmmm... 'snapshot' feature ignores invalid values, but in this case
+formerly valid compression schemes might get invalid via tightening
+%known_snapshot_formats, and we don't want existing config getting
+suddenly invalid.
+
+[cut]
+
+Nice!
+
+--=20
+Jakub Narebski
