@@ -1,148 +1,150 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [RFC 00/11] Make reference pruning more configurable
-Date: Wed,  4 Dec 2013 06:44:39 +0100
-Message-ID: <1386135890-13954-1-git-send-email-mhagger@alum.mit.edu>
+Subject: [RFC 03/11] fetch: use the new functions for handling --prune options
+Date: Wed,  4 Dec 2013 06:44:42 +0100
+Message-ID: <1386135890-13954-4-git-send-email-mhagger@alum.mit.edu>
+References: <1386135890-13954-1-git-send-email-mhagger@alum.mit.edu>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 04 06:52:31 2013
+X-From: git-owner@vger.kernel.org Wed Dec 04 06:52:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vo5Nu-0007oC-M5
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Dec 2013 06:52:31 +0100
+	id 1Vo5Ny-0007pN-QW
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Dec 2013 06:52:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753928Ab3LDFw0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Dec 2013 00:52:26 -0500
-Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:43886 "EHLO
-	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752158Ab3LDFwZ (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 4 Dec 2013 00:52:25 -0500
-X-Greylist: delayed 422 seconds by postgrey-1.27 at vger.kernel.org; Wed, 04 Dec 2013 00:52:25 EST
-X-AuditID: 1207440d-b7f4c6d000004a16-d8-529ec172024e
+	id S1754006Ab3LDFwa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Dec 2013 00:52:30 -0500
+Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:53412 "EHLO
+	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752158Ab3LDFw2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 4 Dec 2013 00:52:28 -0500
+X-Greylist: delayed 422 seconds by postgrey-1.27 at vger.kernel.org; Wed, 04 Dec 2013 00:52:28 EST
+X-AuditID: 12074412-b7fc96d0000023d5-3d-529ec176fd94
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 26.3D.18966.271CE925; Wed,  4 Dec 2013 00:45:22 -0500 (EST)
+	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id 7A.80.09173.671CE925; Wed,  4 Dec 2013 00:45:26 -0500 (EST)
 Received: from michael.fritz.box (p57A24C7E.dip0.t-ipconnect.de [87.162.76.126])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id rB45jCA5016667
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id rB45jCA8016667
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 4 Dec 2013 00:45:21 -0500
+	Wed, 4 Dec 2013 00:45:25 -0500
 X-Mailer: git-send-email 1.8.4.3
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprJIsWRmVeSWpSXmKPExsUixO6iqFt0cF6QwcIFJhZdV7qZLBp6rzBb
-	3F4xn9mB2ePv+w9MHhcvKXt83iQXwBzFbZOUWFIWnJmep2+XwJ3RPv8iY8Ek+YretfeYGhh/
-	inUxcnJICJhI7N3fxQRhi0lcuLeeDcQWErjMKPH5cHUXIxeQfZ5J4sOFrywgCTYBXYlFPc1g
-	DSIC4hJvj89k72Lk4GAWiJA49LYEJCwsYCux+MgXdhCbRUBVYs2F9WA2r4CLRPuXX6wQuxQk
-	Otf8Z5zAyL2AkWEVo1xiTmmubm5iZk5xarJucXJiXl5qka6RXm5miV5qSukmRojneXcw/l8n
-	c4hRgINRiYc3gXNekBBrYllxZe4hRkkOJiVR3vrtQCG+pPyUyozE4oz4otKc1OJDjBIczEoi
-	vDZlQDnelMTKqtSifJiUNAeLkjiv2hJ1PyGB9MSS1OzU1ILUIpisDAeHkgTvxgNAjYJFqemp
-	FWmZOSUIaSYOThDBBbKBB2jDOpBC3uKCxNzizHSIolOMilLivJNBEgIgiYzSPLgBsBh9xSgO
-	9I8wbwtIFQ8wvuG6XwENZgIabP5qFsjgkkSElFQDo8i1c1GzxLXCjW2vbwoQ41ax1jh3iUvM
-	7Ijj++V8jsrRWxcssFl8IeVJ1OuqnFc3rsq8X7frRpNuyXkuw7ZHbubBfFXCKfVz1EyWrLj5
-	RHmFwn4d5lobeba9teYW7EfDIxu3n2u+mXLbWeVMaI7ug+Ump+zm5+TWJKs3brp1nXNi4r6j
-	Cj9OK7EUZyQaajEXFScCAFfvL5esAgAA
+In-Reply-To: <1386135890-13954-1-git-send-email-mhagger@alum.mit.edu>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrHIsWRmVeSWpSXmKPExsUixO6iqFt2cF6QwfQeWYuuK91MFg29V5gt
+	bq+Yz+zA7PH3/Qcmj4uXlD0+b5ILYI7itklKLCkLzkzP07dL4M74e0mr4JRUxc/W+ewNjOtF
+	uxg5OSQETCS+Hp/ADGGLSVy4t56ti5GLQ0jgMqNEw4K7LBDOeSaJNZ1XmUCq2AR0JRb1NIPZ
+	IgLiEm+Pz2TvYuTgYBaIkDj0tgTEFBbwk1gymROkgkVAVaL/wi2wCl4BF4kvK9ggVilIdK75
+	zwhicwq4SnT0LmEGKRECKrl31mkCI+8CRoZVjHKJOaW5urmJmTnFqcm6xcmJeXmpRbpmermZ
+	JXqpKaWbGCEhIrSDcf1JuUOMAhyMSjy8CZzzgoRYE8uKK3MPMUpyMCmJ8tZvBwrxJeWnVGYk
+	FmfEF5XmpBYfYpTgYFYS4bUpA8rxpiRWVqUW5cOkpDlYlMR5fy5W9xMSSE8sSc1OTS1ILYLJ
+	ynBwKEnwWh0AahQsSk1PrUjLzClBSDNxcIIILpANPEAbTEEKeYsLEnOLM9Mhik4xKkqJ84aB
+	JARAEhmleXADYNH8ilEc6B9hXk+QKh5gIoDrfgU0mAlosPmrWSCDSxIRUlINjCG89w0O111/
+	dWHCyXihrQzz169O3zab2Yj13Y9/m4Ifz5zUvJDvytxtGW7hj/xu3eKPOBq5XPjd1GnhXG9E
+	dhlE5LbvubjgEa9f5rGGh6GPHH70ud+KyT7op/Rv5tzzT9oqI7sePfp0xie+S9tg3vpr1125
+	5kcfdNkyVWXJjGYP0cTtK6SO915SYinOSDTUYi4qTgQA7ceEgsECAAA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238756>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238757>
 
-This patch series applies on top of
+Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+---
+ builtin/fetch.c | 36 ++++++++----------------------------
+ 1 file changed, 8 insertions(+), 28 deletions(-)
 
-    mh/fetch-tags-in-addition-to-normal-refs
-
-and has some minor conflicts with that branch (mostly related to
-documentation).
-
-Let me state in advance that I personally think that the features
-implemented in this patch series are overkill.  But since it was
-already implemented, I thought I would throw it out there and see if
-anybody likes it.
-
-This patch series makes it possible for the user to specify explicitly
-which reference namespaces should be subjected to pruning when
-fetching from a remote.
-
-* It allows a <pattern> to be passed to the --prune option for the
-  following commands:
-
-      git fetch --prune=<pattern> [...]
-      git remote update --prune=<pattern> [...]
-      git remote prune --prune=<pattern> [...]
-
-          Only references that match the specified pattern(s) are
-          considered for pruning.
-
-      git remote show --prune=<pattern> [...]
-
-          Only show prunable references that match the specified
-          pattern(s).
-
-  The --prune=<pattern> option can be specified multiple times.
-
-* It introduces the following multivalued configuration values:
-
-      fetch.pruneRef
-      remote.<name>.pruneRef
-
-          Configuration settings for setting the default
-          "--prune=<pattern>" options, globally and per-remote.
-
-Background: I started working on this feature as my first approach to
-solving the problem that
-
-    git fetch --tags --prune
-
-can nuke tags unrelated to the remote being fetched from.  Only later
-did I hit upon the better solution that is implemented in
-mh/fetch-tags-in-addition-to-normal-refs, namely to change the
-semantics of the --tags option to *not* subject tags to pruning.
-
-But even though "--prune=<pattern>" is no longer needed to prevent tag
-nuking, it might be useful to somebody for other purposes, and
-therefore I am submitting it to the list as an RFC.  Maybe there is a
-use case associated with non-branch, non-tag references, like perhaps
-Gerrit pull request-related references?
-
-Personally, I am -0 on this series.  I think it adds more complication
-(code, documentation, etc) than its usefulness justifies.  I think the
-functionality in mh/fetch-tags-in-addition-to-normal-refs (which we
-want in any case!) will satisfy 99% of users and I can't think of use
-cases where additional configurability of reference pruning is needed.
-
-So, if anybody can think of a compelling use case for this feature,
-please make your case!
-
-Michael
-
-Michael Haggerty (11):
-  get_stale_heads(): allow limiting to refname patterns
-  remote.c: add infrastructure for parsing --prune options
-  fetch: use the new functions for handling --prune options
-  remote: use the new functions for handling --prune options
-  remote.c: add infrastructure to handle --prune=<pattern>
-  fetch --prune: allow refname patterns to be specified
-  remote update --prune: allow refname patterns to be specified
-  string_list_append_list(): new function
-  remote prune: allow --prune=<pattern> options
-  remote show: allow --prune=<pattern> options
-  remote: allow prune patterns to be configured
-
- Documentation/config.txt                    |  28 ++++--
- Documentation/fetch-options.txt             |  13 ++-
- Documentation/git-remote.txt                |  29 +++++--
- Documentation/technical/api-string-list.txt |  10 ++-
- builtin/fetch.c                             |  43 +++------
- builtin/remote.c                            |  85 ++++++++++++------
- remote.c                                    | 130 +++++++++++++++++++++++++++-
- remote.h                                    |  48 +++++++++-
- string-list.c                               |   9 ++
- string-list.h                               |   8 ++
- t/t5505-remote.sh                           |  88 +++++++++++++++++++
- t/t5510-fetch.sh                            |  25 ++++++
- 12 files changed, 441 insertions(+), 75 deletions(-)
-
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 9a04512..fcc06a4 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -30,8 +30,7 @@ enum {
+ 	TAGS_SET = 2
+ };
+ 
+-static int fetch_prune_config = -1; /* unspecified */
+-static int prune = -1; /* unspecified */
++static struct prune_option prune_option = PRUNE_OPTION_INIT;
+ #define PRUNE_BY_DEFAULT 0 /* do we prune by default? */
+ 
+ static int all, append, dry_run, force, keep, multiple, update_head_ok, verbosity;
+@@ -59,15 +58,6 @@ static int option_parse_recurse_submodules(const struct option *opt,
+ 	return 0;
+ }
+ 
+-static int git_fetch_config(const char *k, const char *v, void *cb)
+-{
+-	if (!strcmp(k, "fetch.prune")) {
+-		fetch_prune_config = git_config_bool(k, v);
+-		return 0;
+-	}
+-	return 0;
+-}
+-
+ static struct option builtin_fetch_options[] = {
+ 	OPT__VERBOSITY(&verbosity),
+ 	OPT_BOOL(0, "all", &all,
+@@ -83,8 +73,9 @@ static struct option builtin_fetch_options[] = {
+ 		    N_("fetch all tags and associated objects"), TAGS_SET),
+ 	OPT_SET_INT('n', NULL, &tags,
+ 		    N_("do not fetch all tags (--no-tags)"), TAGS_UNSET),
+-	OPT_BOOL('p', "prune", &prune,
+-		 N_("prune remote-tracking branches no longer on remote")),
++	{ OPTION_CALLBACK, 'p', "prune", &prune_option, N_("pattern"),
++		    N_("prune remote-tracking branches no longer on remote"),
++		    PARSE_OPT_NOARG, prune_option_parse },
+ 	{ OPTION_CALLBACK, 0, "recurse-submodules", NULL, N_("on-demand"),
+ 		    N_("control recursive fetching of submodules"),
+ 		    PARSE_OPT_OPTARG, option_parse_recurse_submodules },
+@@ -848,7 +839,7 @@ static int do_fetch(struct transport *transport,
+ 		retcode = 1;
+ 		goto cleanup;
+ 	}
+-	if (prune) {
++	if (prune_option.prune) {
+ 		/*
+ 		 * We only prune based on refspecs specified
+ 		 * explicitly (via command line or configuration); we
+@@ -935,8 +926,7 @@ static void add_options_to_argv(struct argv_array *argv)
+ {
+ 	if (dry_run)
+ 		argv_array_push(argv, "--dry-run");
+-	if (prune != -1)
+-		argv_array_push(argv, prune ? "--prune" : "--no-prune");
++	argv_push_prune_option(argv, &prune_option);
+ 	if (update_head_ok)
+ 		argv_array_push(argv, "--update-head-ok");
+ 	if (force)
+@@ -1002,17 +992,9 @@ static int fetch_one(struct remote *remote, int argc, const char **argv)
+ 		die(_("No remote repository specified.  Please, specify either a URL or a\n"
+ 		    "remote name from which new revisions should be fetched."));
+ 
+-	gtransport = prepare_transport(remote);
++	prune_option_fill(remote, &prune_option, PRUNE_BY_DEFAULT);
+ 
+-	if (prune < 0) {
+-		/* no command line request */
+-		if (0 <= gtransport->remote->prune)
+-			prune = gtransport->remote->prune;
+-		else if (0 <= fetch_prune_config)
+-			prune = fetch_prune_config;
+-		else
+-			prune = PRUNE_BY_DEFAULT;
+-	}
++	gtransport = prepare_transport(remote);
+ 
+ 	if (argc > 0) {
+ 		int j = 0;
+@@ -1063,8 +1045,6 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+ 	for (i = 1; i < argc; i++)
+ 		strbuf_addf(&default_rla, " %s", argv[i]);
+ 
+-	git_config(git_fetch_config, NULL);
+-
+ 	argc = parse_options(argc, argv, prefix,
+ 			     builtin_fetch_options, builtin_fetch_usage, 0);
+ 
 -- 
 1.8.4.3
