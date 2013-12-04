@@ -1,150 +1,172 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [RFC 03/11] fetch: use the new functions for handling --prune options
-Date: Wed,  4 Dec 2013 06:44:42 +0100
-Message-ID: <1386135890-13954-4-git-send-email-mhagger@alum.mit.edu>
+Subject: [RFC 01/11] get_stale_heads(): allow limiting to refname patterns
+Date: Wed,  4 Dec 2013 06:44:40 +0100
+Message-ID: <1386135890-13954-2-git-send-email-mhagger@alum.mit.edu>
 References: <1386135890-13954-1-git-send-email-mhagger@alum.mit.edu>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 04 06:52:35 2013
+X-From: git-owner@vger.kernel.org Wed Dec 04 06:52:51 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vo5Ny-0007pN-QW
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Dec 2013 06:52:35 +0100
+	id 1Vo5OD-0007zb-0M
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Dec 2013 06:52:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754006Ab3LDFwa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Dec 2013 00:52:30 -0500
-Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:53412 "EHLO
-	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752158Ab3LDFw2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 4 Dec 2013 00:52:28 -0500
-X-Greylist: delayed 422 seconds by postgrey-1.27 at vger.kernel.org; Wed, 04 Dec 2013 00:52:28 EST
-X-AuditID: 12074412-b7fc96d0000023d5-3d-529ec176fd94
+	id S1754243Ab3LDFwn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Dec 2013 00:52:43 -0500
+Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:43888 "EHLO
+	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754240Ab3LDFwk (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 4 Dec 2013 00:52:40 -0500
+X-AuditID: 1207440d-b7f4c6d000004a16-da-529ec17461fc
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id 7A.80.09173.671CE925; Wed,  4 Dec 2013 00:45:26 -0500 (EST)
+	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 66.3D.18966.471CE925; Wed,  4 Dec 2013 00:45:24 -0500 (EST)
 Received: from michael.fritz.box (p57A24C7E.dip0.t-ipconnect.de [87.162.76.126])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id rB45jCA8016667
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id rB45jCA6016667
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 4 Dec 2013 00:45:25 -0500
+	Wed, 4 Dec 2013 00:45:23 -0500
 X-Mailer: git-send-email 1.8.4.3
 In-Reply-To: <1386135890-13954-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrHIsWRmVeSWpSXmKPExsUixO6iqFt2cF6QwfQeWYuuK91MFg29V5gt
-	bq+Yz+zA7PH3/Qcmj4uXlD0+b5ILYI7itklKLCkLzkzP07dL4M74e0mr4JRUxc/W+ewNjOtF
-	uxg5OSQETCS+Hp/ADGGLSVy4t56ti5GLQ0jgMqNEw4K7LBDOeSaJNZ1XmUCq2AR0JRb1NIPZ
-	IgLiEm+Pz2TvYuTgYBaIkDj0tgTEFBbwk1gymROkgkVAVaL/wi2wCl4BF4kvK9ggVilIdK75
-	zwhicwq4SnT0LmEGKRECKrl31mkCI+8CRoZVjHKJOaW5urmJmTnFqcm6xcmJeXmpRbpmermZ
-	JXqpKaWbGCEhIrSDcf1JuUOMAhyMSjy8CZzzgoRYE8uKK3MPMUpyMCmJ8tZvBwrxJeWnVGYk
-	FmfEF5XmpBYfYpTgYFYS4bUpA8rxpiRWVqUW5cOkpDlYlMR5fy5W9xMSSE8sSc1OTS1ILYLJ
-	ynBwKEnwWh0AahQsSk1PrUjLzClBSDNxcIIILpANPEAbTEEKeYsLEnOLM9Mhik4xKkqJ84aB
-	JARAEhmleXADYNH8ilEc6B9hXk+QKh5gIoDrfgU0mAlosPmrWSCDSxIRUlINjCG89w0O111/
-	dWHCyXihrQzz169O3zab2Yj13Y9/m4Ifz5zUvJDvytxtGW7hj/xu3eKPOBq5XPjd1GnhXG9E
-	dhlE5LbvubjgEa9f5rGGh6GPHH70ud+KyT7op/Rv5tzzT9oqI7sePfp0xie+S9tg3vpr1125
-	5kcfdNkyVWXJjGYP0cTtK6SO915SYinOSDTUYi4qTgQA7ceEgsECAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrAIsWRmVeSWpSXmKPExsUixO6iqFtycF6Qwf+XrBZdV7qZLBp6rzBb
+	3F4xn9mB2ePv+w9MHhcvKXt83iQXwBzFbZOUWFIWnJmep2+XwJ3xfUs/U8EB+Ypljf1sDYx9
+	kl2MnBwSAiYSj86+Y4WwxSQu3FvPBmILCVxmlOiYU9DFyAVkn2eSeP1jETNIgk1AV2JRTzMT
+	iC0iIC7x9vhM9i5GDg5mgQiJQ29LQMLCAl4Sz383sIDYLAKqEj8vPQcr5xVwkTgzoZcZYpeC
+	ROea/4wgNqeAq0RH7xJmkDFCQDX3zjpNYORdwMiwilEuMac0Vzc3MTOnODVZtzg5MS8vtUjX
+	SC83s0QvNaV0EyMkTHh3MP5fJ3OIUYCDUYmHN4FzXpAQa2JZcWXuIUZJDiYlUd767UAhvqT8
+	lMqMxOKM+KLSnNTiQ4wSHMxKIrw2ZUA53pTEyqrUonyYlDQHi5I4r9oSdT8hgfTEktTs1NSC
+	1CKYrAwHh5IE78YDQI2CRanpqRVpmTklCGkmDk4QwQWygQdowzqQQt7igsTc4sx0iKJTjIpS
+	4ryTQRICIImM0jy4AbCIfsUoDvSPMG8LSBUPMBnAdb8CGswENNj81SyQwSWJCCmpBkbP1acC
+	cyauvnQ8Ic0y/2rmgf9R7/6nfavcJsWQeST0lfOiVR5TSjedKq58xLKjYOs2savZwdMYdqR2
+	iBl6KaQkbd4Wsl4gY5n93Rvv1z6Z97dl1erVc6/er939hfvdtRl8qzRVZ0yz0i0ObimS3pfL
+	9N8oW6f9Zan2jp9pmVq+zVL94porShiVWIozEg21mIuKEwGwk54EwwIAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238757>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238758>
+
+Add a "patterns" argument to get_stale_heads().  If it is non-NULL,
+then only refnames matching one of the glob patterns in the string
+list will be included in the output.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- builtin/fetch.c | 36 ++++++++----------------------------
- 1 file changed, 8 insertions(+), 28 deletions(-)
+ builtin/fetch.c  |  3 ++-
+ builtin/remote.c |  3 ++-
+ remote.c         | 26 ++++++++++++++++++++++++--
+ remote.h         |  9 +++++++--
+ 4 files changed, 35 insertions(+), 6 deletions(-)
 
 diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 9a04512..fcc06a4 100644
+index 3d978eb..9a04512 100644
 --- a/builtin/fetch.c
 +++ b/builtin/fetch.c
-@@ -30,8 +30,7 @@ enum {
- 	TAGS_SET = 2
+@@ -711,7 +711,8 @@ static int fetch_refs(struct transport *transport, struct ref *ref_map)
+ static int prune_refs(struct refspec *refs, int ref_count, struct ref *ref_map)
+ {
+ 	int result = 0;
+-	struct ref *ref, *stale_refs = get_stale_heads(refs, ref_count, ref_map);
++	struct ref *stale_refs = get_stale_heads(refs, ref_count, ref_map, NULL);
++	struct ref *ref;
+ 	const char *dangling_msg = dry_run
+ 		? _("   (%s will become dangling)")
+ 		: _("   (%s has become dangling)");
+diff --git a/builtin/remote.c b/builtin/remote.c
+index f532f35..c08dfa8 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -347,7 +347,8 @@ static int get_ref_states(const struct ref *remote_refs, struct ref_states *stat
+ 			string_list_append(&states->tracked, abbrev_branch(ref->name));
+ 	}
+ 	stale_refs = get_stale_heads(states->remote->fetch,
+-				     states->remote->fetch_refspec_nr, fetch_map);
++				     states->remote->fetch_refspec_nr,
++				     fetch_map, NULL);
+ 	for (ref = stale_refs; ref; ref = ref->next) {
+ 		struct string_list_item *item =
+ 			string_list_append(&states->stale, abbrev_branch(ref->name));
+diff --git a/remote.c b/remote.c
+index dc56619..075ed71 100644
+--- a/remote.c
++++ b/remote.c
+@@ -1986,13 +1986,31 @@ struct stale_heads_info {
+ 	struct ref **stale_refs_tail;
+ 	struct refspec *refs;
+ 	int ref_count;
++	struct string_list *patterns;
  };
  
--static int fetch_prune_config = -1; /* unspecified */
--static int prune = -1; /* unspecified */
-+static struct prune_option prune_option = PRUNE_OPTION_INIT;
- #define PRUNE_BY_DEFAULT 0 /* do we prune by default? */
+ static int get_stale_heads_cb(const char *refname,
+-	const unsigned char *sha1, int flags, void *cb_data)
++			      const unsigned char *sha1, int flags,
++			      void *cb_data)
+ {
+ 	struct stale_heads_info *info = cb_data;
+ 	struct refspec query;
++	struct string_list *patterns = info->patterns;
++
++	if (patterns) {
++		int refname_matches = 0;
++		struct string_list_item *item;
++
++		for_each_string_list_item(item, patterns) {
++			if (!fnmatch(item->string, refname, 0)) {
++				refname_matches = 1;
++				break;
++			}
++		}
++		if (!refname_matches)
++			return 0;
++	}
++
+ 	memset(&query, 0, sizeof(struct refspec));
+ 	query.dst = (char *)refname;
  
- static int all, append, dry_run, force, keep, multiple, update_head_ok, verbosity;
-@@ -59,15 +58,6 @@ static int option_parse_recurse_submodules(const struct option *opt,
+@@ -2014,15 +2032,19 @@ static int get_stale_heads_cb(const char *refname,
  	return 0;
  }
  
--static int git_fetch_config(const char *k, const char *v, void *cb)
--{
--	if (!strcmp(k, "fetch.prune")) {
--		fetch_prune_config = git_config_bool(k, v);
--		return 0;
--	}
--	return 0;
--}
--
- static struct option builtin_fetch_options[] = {
- 	OPT__VERBOSITY(&verbosity),
- 	OPT_BOOL(0, "all", &all,
-@@ -83,8 +73,9 @@ static struct option builtin_fetch_options[] = {
- 		    N_("fetch all tags and associated objects"), TAGS_SET),
- 	OPT_SET_INT('n', NULL, &tags,
- 		    N_("do not fetch all tags (--no-tags)"), TAGS_UNSET),
--	OPT_BOOL('p', "prune", &prune,
--		 N_("prune remote-tracking branches no longer on remote")),
-+	{ OPTION_CALLBACK, 'p', "prune", &prune_option, N_("pattern"),
-+		    N_("prune remote-tracking branches no longer on remote"),
-+		    PARSE_OPT_NOARG, prune_option_parse },
- 	{ OPTION_CALLBACK, 0, "recurse-submodules", NULL, N_("on-demand"),
- 		    N_("control recursive fetching of submodules"),
- 		    PARSE_OPT_OPTARG, option_parse_recurse_submodules },
-@@ -848,7 +839,7 @@ static int do_fetch(struct transport *transport,
- 		retcode = 1;
- 		goto cleanup;
- 	}
--	if (prune) {
-+	if (prune_option.prune) {
- 		/*
- 		 * We only prune based on refspecs specified
- 		 * explicitly (via command line or configuration); we
-@@ -935,8 +926,7 @@ static void add_options_to_argv(struct argv_array *argv)
+-struct ref *get_stale_heads(struct refspec *refs, int ref_count, struct ref *fetch_map)
++struct ref *get_stale_heads(struct refspec *refs, int ref_count,
++			    struct ref *fetch_map,
++			    struct string_list *patterns)
  {
- 	if (dry_run)
- 		argv_array_push(argv, "--dry-run");
--	if (prune != -1)
--		argv_array_push(argv, prune ? "--prune" : "--no-prune");
-+	argv_push_prune_option(argv, &prune_option);
- 	if (update_head_ok)
- 		argv_array_push(argv, "--update-head-ok");
- 	if (force)
-@@ -1002,17 +992,9 @@ static int fetch_one(struct remote *remote, int argc, const char **argv)
- 		die(_("No remote repository specified.  Please, specify either a URL or a\n"
- 		    "remote name from which new revisions should be fetched."));
+ 	struct ref *ref, *stale_refs = NULL;
+ 	struct string_list ref_names = STRING_LIST_INIT_NODUP;
+ 	struct stale_heads_info info;
++
+ 	info.ref_names = &ref_names;
+ 	info.stale_refs_tail = &stale_refs;
+ 	info.refs = refs;
+ 	info.ref_count = ref_count;
++	info.patterns = patterns;
+ 	for (ref = fetch_map; ref; ref = ref->next)
+ 		string_list_append(&ref_names, ref->name);
+ 	sort_string_list(&ref_names);
+diff --git a/remote.h b/remote.h
+index c07eb99..afa3792 100644
+--- a/remote.h
++++ b/remote.h
+@@ -234,8 +234,13 @@ struct ref *guess_remote_head(const struct ref *head,
+ 			      const struct ref *refs,
+ 			      int all);
  
--	gtransport = prepare_transport(remote);
-+	prune_option_fill(remote, &prune_option, PRUNE_BY_DEFAULT);
+-/* Return refs which no longer exist on remote */
+-struct ref *get_stale_heads(struct refspec *refs, int ref_count, struct ref *fetch_map);
++/*
++ * Return refs that no longer exist on remote and that match one of
++ * the patterns.
++ */
++struct ref *get_stale_heads(struct refspec *refs, int ref_count,
++			    struct ref *fetch_map,
++			    struct string_list *patterns);
  
--	if (prune < 0) {
--		/* no command line request */
--		if (0 <= gtransport->remote->prune)
--			prune = gtransport->remote->prune;
--		else if (0 <= fetch_prune_config)
--			prune = fetch_prune_config;
--		else
--			prune = PRUNE_BY_DEFAULT;
--	}
-+	gtransport = prepare_transport(remote);
- 
- 	if (argc > 0) {
- 		int j = 0;
-@@ -1063,8 +1045,6 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 	for (i = 1; i < argc; i++)
- 		strbuf_addf(&default_rla, " %s", argv[i]);
- 
--	git_config(git_fetch_config, NULL);
--
- 	argc = parse_options(argc, argv, prefix,
- 			     builtin_fetch_options, builtin_fetch_usage, 0);
- 
+ /*
+  * Compare-and-swap
 -- 
 1.8.4.3
