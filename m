@@ -1,173 +1,104 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH v2] mv: let 'git mv file no-such-dir/' error out
-Date: Wed,  4 Dec 2013 18:37:01 +0100
-Message-ID: <1386178621-12822-1-git-send-email-Matthieu.Moy@imag.fr>
-References: <CACsJy8BdXkzzZpEaOvqkJ8ckubbQ0ArOMUT8qnMHMDscupfj_A@mail.gmail.com>
-Cc: Duy Nguyen <pclouds@gmail.com>, Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Dec 04 18:38:03 2013
+From: =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+Subject: Re: [PATCH 1/5] gitweb: Add a comment explaining the meaning of $/
+Date: Wed, 4 Dec 2013 18:37:59 +0100
+Message-ID: <CANQwDwdUY7FunkZEsAn5PuXH+e1yBL7mfA2vTdQwfOTTmAh+ig@mail.gmail.com>
+References: <1386164583-14109-1-git-send-email-krzesimir@endocode.com>
+ <1386164583-14109-2-git-send-email-krzesimir@endocode.com>
+ <CANQwDwdiNHFCChVdkKxkEa+HOKzzhgfzy4d6iZB6ejSfva3Z3A@mail.gmail.com>
+ <1386171977.2173.23.camel@localhost.localdomain> <CANQwDwfiYAz7dro9mppR62xEFMPTSNjEKYM=7Dhq7auBvyXjSg@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Krzesimir Nowak <krzesimir@endocode.com>
+X-From: git-owner@vger.kernel.org Wed Dec 04 18:38:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VoGOg-0002i3-Q3
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Dec 2013 18:38:03 +0100
+	id 1VoGPN-0003AT-68
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Dec 2013 18:38:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932106Ab3LDRh7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Dec 2013 12:37:59 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:45989 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754327Ab3LDRh6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Dec 2013 12:37:58 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id rB4Hb2LC013619
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 4 Dec 2013 18:37:02 +0100
-Received: from anie.imag.fr ([129.88.7.32])
-	by mail-veri.imag.fr with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <moy@imag.fr>)
-	id 1VoGNk-0005PG-Ip; Wed, 04 Dec 2013 18:37:04 +0100
-Received: from moy by anie.imag.fr with local (Exim 4.80)
-	(envelope-from <moy@imag.fr>)
-	id 1VoGNk-0003La-5Y; Wed, 04 Dec 2013 18:37:04 +0100
-X-Mailer: git-send-email 1.8.5.rc3.4.g8bd3721
-In-Reply-To: <CACsJy8BdXkzzZpEaOvqkJ8ckubbQ0ArOMUT8qnMHMDscupfj_A@mail.gmail.com>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 04 Dec 2013 18:37:02 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: rB4Hb2LC013619
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1386783425.00323@enhvH2tUYihqLMKkTpeA9A
+	id S1755517Ab3LDRil convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Dec 2013 12:38:41 -0500
+Received: from mail-wg0-f47.google.com ([74.125.82.47]:50730 "EHLO
+	mail-wg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753193Ab3LDRik convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 4 Dec 2013 12:38:40 -0500
+Received: by mail-wg0-f47.google.com with SMTP id n12so14071545wgh.26
+        for <git@vger.kernel.org>; Wed, 04 Dec 2013 09:38:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=7hXj+Zy3c9scZzoSfCn8couypX2STar7zkI91WZDOD4=;
+        b=qzEZVpOKs/l345M7AG3Uf4QS1YGqxz10/bP7LRP9WWuvT4narQOWSvR1X1pHhIpvoy
+         HsBHuWJzncVW5Ndb0Z5gXeim3FXzIM2L7RipEF9npXFiofl3hwqMU+aShiJj4oTKhJw1
+         Ur5ryxw1PHru53qS0eiiJ+PpgLBx5Z8UhGjAZafd0CfFGms4WgUZFJ/xnjmjWU37gm7G
+         /jd+fioMMIEmOJPOmk68f9yFIFvOsrHB4W6YyThmvlHv5ALZsFCqzb1cM404DMJZDqqy
+         GIma0O/wKAEHuTGx3DNrgWJkHQTuH1EiQrKXo4gISS6+NjCq9fhB2aNb4cAbkb1IL8hS
+         sDQA==
+X-Received: by 10.194.237.99 with SMTP id vb3mr65484269wjc.28.1386178719715;
+ Wed, 04 Dec 2013 09:38:39 -0800 (PST)
+Received: by 10.227.108.131 with HTTP; Wed, 4 Dec 2013 09:37:59 -0800 (PST)
+In-Reply-To: <CANQwDwfiYAz7dro9mppR62xEFMPTSNjEKYM=7Dhq7auBvyXjSg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238792>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238793>
 
-Git used to trim the trailing slash, and make the command equivalent to
-'git mv file no-such-dir', which created the file no-such-dir (while the
-trailing slash explicitly stated that it could only be a directory).
+On Wed, Dec 4, 2013 at 6:34 PM, Jakub Nar=C4=99bski <jnareb@gmail.com> =
+wrote:
+> On Wed, Dec 4, 2013 at 4:46 PM, Krzesimir Nowak <krzesimir@endocode.c=
+om> wrote:
+>> On Wed, 2013-12-04 at 16:11 +0100, Jakub Nar=C4=99bski wrote:
+>>> On Wed, Dec 4, 2013 at 2:42 PM, Krzesimir Nowak <krzesimir@endocode=
+=2Ecom> wrote:
+>>>
+>>> > So future reader will know what does it mean without running "per=
+ldoc
+>>> > perlvar".
+>>>
+>>> Hmmm... shouldn't future reader know it anyway?  It is not that cry=
+ptic.
+>>> I'd say it is idiomatic Perl.
+>>
+>> It's plainly obscure. And I think it is not that often used - I keep
+>> forgetting what that pair of punctuation is actually meaning.
+>
+> I think it depends on what kind of Perl code one is used to. It is no=
+t
+> as obscure as $; and similar to $|, I think.
+>
+>> In this case I guess it would be more readable to use the following =
+code
+>> instead:
+>>
+>>    $fh->input_record_separator ("\0");
+>
+> That would be a good change to replace
+>
+>         local $/ =3D "\0";
+>
+>         open my $fh, "-|", git_cmd(), ..., '-z', ...
+>
+> with
+>
+>         open my $fh, "-|", git_cmd(), ..., '-z', ...
+>         $fh->input_record_separator ("\0");
+>
+> (not forgetting about "use IO::Handle", which module is core Perl mod=
+ule);
 
-This patch skips the trailing slash removal for the destination path. The
-path with its trailing slash is passed to rename(2), which errors out
-with the appropriate message:
+Actually it is replacing
 
-  $ git mv file no-such-dir/
-  fatal: renaming 'file' failed: Not a directory
+         local $/ =3D "\0";
 
-Original-patch-by: Duy Nguyen <pclouds@gmail.com>
-Tests, tweaks and commit message by: Matthieu Moy <Matthieu.Moy@imag.fr>
+with
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
-So, this patch adds more tests, as suggested by Duy. They all pass
-without modifying the code.
+        IO::Handle->input_record_separator("\0");
 
- builtin/mv.c  | 23 ++++++++++++++++-------
- t/t7001-mv.sh | 29 +++++++++++++++++++++++++++++
- 2 files changed, 45 insertions(+), 7 deletions(-)
-
-diff --git a/builtin/mv.c b/builtin/mv.c
-index 2e0e61b..08fbc03 100644
---- a/builtin/mv.c
-+++ b/builtin/mv.c
-@@ -16,9 +16,12 @@ static const char * const builtin_mv_usage[] = {
- 	NULL
- };
- 
-+#define DUP_BASENAME 1
-+#define KEEP_TRAILING_SLASH 2
-+
- static const char **internal_copy_pathspec(const char *prefix,
- 					   const char **pathspec,
--					   int count, int base_name)
-+					   int count, unsigned flags)
- {
- 	int i;
- 	const char **result = xmalloc((count + 1) * sizeof(const char *));
-@@ -27,11 +30,12 @@ static const char **internal_copy_pathspec(const char *prefix,
- 	for (i = 0; i < count; i++) {
- 		int length = strlen(result[i]);
- 		int to_copy = length;
--		while (to_copy > 0 && is_dir_sep(result[i][to_copy - 1]))
-+		while (!(flags & KEEP_TRAILING_SLASH) &&
-+		       to_copy > 0 && is_dir_sep(result[i][to_copy - 1]))
- 			to_copy--;
--		if (to_copy != length || base_name) {
-+		if (to_copy != length || flags & DUP_BASENAME) {
- 			char *it = xmemdupz(result[i], to_copy);
--			if (base_name) {
-+			if (flags & DUP_BASENAME) {
- 				result[i] = xstrdup(basename(it));
- 				free(it);
- 			} else
-@@ -87,16 +91,21 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 
- 	source = internal_copy_pathspec(prefix, argv, argc, 0);
- 	modes = xcalloc(argc, sizeof(enum update_mode));
--	dest_path = internal_copy_pathspec(prefix, argv + argc, 1, 0);
-+	/*
-+	 * Keep trailing slash, needed to let
-+	 * "git mv file no-such-dir/" error out.
-+	 */
-+	dest_path = internal_copy_pathspec(prefix, argv + argc, 1,
-+					   KEEP_TRAILING_SLASH);
- 	submodule_gitfile = xcalloc(argc, sizeof(char *));
- 
- 	if (dest_path[0][0] == '\0')
- 		/* special case: "." was normalized to "" */
--		destination = internal_copy_pathspec(dest_path[0], argv, argc, 1);
-+		destination = internal_copy_pathspec(dest_path[0], argv, argc, DUP_BASENAME);
- 	else if (!lstat(dest_path[0], &st) &&
- 			S_ISDIR(st.st_mode)) {
- 		dest_path[0] = add_slash(dest_path[0]);
--		destination = internal_copy_pathspec(dest_path[0], argv, argc, 1);
-+		destination = internal_copy_pathspec(dest_path[0], argv, argc, DUP_BASENAME);
- 	} else {
- 		if (argc != 1)
- 			die("destination '%s' is not a directory", dest_path[0]);
-diff --git a/t/t7001-mv.sh b/t/t7001-mv.sh
-index b90e985..2f82478 100755
---- a/t/t7001-mv.sh
-+++ b/t/t7001-mv.sh
-@@ -70,6 +70,35 @@ test_expect_success \
- rm -f idontexist untracked1 untracked2 \
-      path0/idontexist path0/untracked1 path0/untracked2 \
-      .git/index.lock
-+rmdir path1
-+
-+test_expect_success \
-+    'moving to absent target with trailing slash' \
-+    'test_must_fail git mv path0/COPYING no-such-dir/ &&
-+     test_must_fail git mv path0/COPYING no-such-dir// &&
-+     git mv path0/ no-such-dir/ &&
-+     test_path_is_dir no-such-dir/'
-+
-+test_expect_success \
-+    'clean up' \
-+    'git reset --hard'
-+
-+test_expect_success \
-+    'moving to existing untracked target with trailing slash' \
-+    'mkdir path1 &&
-+     git mv path0/ path1/ &&
-+     test_path_is_dir path1/path0/'
-+
-+test_expect_success \
-+    'moving to existing tracked target with trailing slash' \
-+    'mkdir path2 &&
-+     >path2/file && git add path2/file &&
-+     git mv path1/path0/ path2/ &&
-+     test_path_is_dir path2/path0/'
-+
-+test_expect_success \
-+    'clean up' \
-+    'git reset --hard'
- 
- test_expect_success \
-     'adding another file' \
--- 
-1.8.5.rc3.4.g8bd3721
+see http://p3rl.org/IO::Handle
