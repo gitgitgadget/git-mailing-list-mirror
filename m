@@ -1,93 +1,62 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/WIP PATCH 0/4] less ignorance of submodules for ignore=all
-Date: Wed, 04 Dec 2013 14:32:46 -0800
-Message-ID: <xmqq7gbkjlgx.fsf@gitster.dls.corp.google.com>
-References: <CALkWK0muxsRUtO6KYk5G3=RVN0nqd=8gOZn=jsNbTc4B9KCATQ@mail.gmail.com>
-	<528FC638.5060403@web.de> <20131122215454.GA4952@sandbox-ub>
-	<20131122220953.GI4212@google.com> <52910BC4.1030800@web.de>
-	<20131124005256.GA3500@sandbox-ub> <52922962.3090407@web.de>
-	<CAErtv2729o-xf=49xY06aVL1ZJzJpeH+cc_Pd1cAP52r32Ss_g@mail.gmail.com>
-	<20131125174945.GA3847@sandbox-ub>
-	<CAErtv259jxCtvbJYZHgQZv-VJ9U+JwNzWo0tn007SDTCCBScrA@mail.gmail.com>
-	<20131204221659.GA7326@sandbox-ub>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: git filter-branch --directory-filter oddity
+Date: Wed, 4 Dec 2013 17:48:26 -0500
+Message-ID: <CACPiFCJQeK7+8Ob23HPrzhoSwuTiHdaz8NYhhn2ki-egzJT6dQ@mail.gmail.com>
+References: <CACPiFC+nCj8VMqb+aK-C5gMyX6R0dDba1U1U49KTktF3WDQ9ZA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Sergey Sharybin <sergey.vfx@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>
-To: Heiko Voigt <hvoigt@hvoigt.net>
-X-From: git-owner@vger.kernel.org Wed Dec 04 23:32:58 2013
+Content-Type: text/plain; charset=ISO-8859-1
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Dec 04 23:48:53 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VoL04-0007Rj-Nd
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Dec 2013 23:32:57 +0100
+	id 1VoLFU-0000ny-7C
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Dec 2013 23:48:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756104Ab3LDWcx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Dec 2013 17:32:53 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60538 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756076Ab3LDWcw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Dec 2013 17:32:52 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 739D05723B;
-	Wed,  4 Dec 2013 17:32:51 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=g2Ulh/3ZVpu0CpVD5xfEj8KyrEE=; b=wgj+Eg
-	HpNACKOKTJjjmr68Ge+8TBUHs1HRh+0KRAtymzsl9Ma9xyZ9OOlRfn8D8NnMgI4Y
-	0juG37ydYakjCqnoO/pAMljCUKUqgYYWplh5n8vsgDLqbLsdAVv2DVUcISYv1sH1
-	JT5OiRw4Nrmc0LPaM/nIQsFdnOLQK7/BJLJRI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=qcsKPCLtfB3Fw3rajN4OQ19VATTbxhUd
-	/b5uHxHfOZvVtWMNV6mvIIzQJ8LRjxaJBW/LlHM6/wj/iIoPJMRajAlqqr6H/ul5
-	qB72vzxejkZ86E7vNsQ1bagjqoMiqNcarQe5n9et2uwHCeIl+zYpFZRXP22Y9Kjd
-	CMtWme3+dHw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6272D5723A;
-	Wed,  4 Dec 2013 17:32:51 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 99DC357236;
-	Wed,  4 Dec 2013 17:32:50 -0500 (EST)
-In-Reply-To: <20131204221659.GA7326@sandbox-ub> (Heiko Voigt's message of
-	"Wed, 4 Dec 2013 23:16:59 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 02283B10-5D34-11E3-803B-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756198Ab3LDWss (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Dec 2013 17:48:48 -0500
+Received: from mail-ve0-f181.google.com ([209.85.128.181]:62902 "EHLO
+	mail-ve0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755146Ab3LDWsr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Dec 2013 17:48:47 -0500
+Received: by mail-ve0-f181.google.com with SMTP id oy12so12656757veb.40
+        for <git@vger.kernel.org>; Wed, 04 Dec 2013 14:48:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-type;
+        bh=C27Iqq+zXR1W8uYPZmOjJzAwy77DQOATQBhmvuShggk=;
+        b=daAfyS6C6e08oMjf30W0hkDmKwk7lCG3I+bq5aaUcSdSgfbXtOlu55VLpp+gGZ1Ofx
+         U7yDSTnRI1MD83vqg1hTSGqRZvc5W15EEZTwMulkFHx8pXawhHpDq702sikkbo/jkrKG
+         tbpumLodMdPkYOQEX8Rd9tBkStd2YOPRsz4BaDV0gMy8bVYMIr/hstfflclrHnEKmeQU
+         s8CiKh3zv++bhXfBvsssEnZ8lxevNLJI9ytgdTUicq8E6S2CRNrLG4IV4r0api1St/pZ
+         wAae6442ZzQI64EhbHhbnEbD7+R3f7cyZcmrqQHvf02vlloPoIMrQ90xghKE1jYjk0zs
+         14LQ==
+X-Received: by 10.52.121.104 with SMTP id lj8mr3457400vdb.33.1386197327057;
+ Wed, 04 Dec 2013 14:48:47 -0800 (PST)
+Received: by 10.220.74.133 with HTTP; Wed, 4 Dec 2013 14:48:26 -0800 (PST)
+In-Reply-To: <CACPiFC+nCj8VMqb+aK-C5gMyX6R0dDba1U1U49KTktF3WDQ9ZA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238823>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238824>
 
-Heiko Voigt <hvoigt@hvoigt.net> writes:
+On Tue, Dec 3, 2013 at 5:44 PM, Martin Langhoff
+<martin.langhoff@gmail.com> wrote:
+> Am I doing it wrong?
 
-> This is my current work in progress. Sergey it would be awesome if you
-> could test these and tell me whether the behaviour is what you would
-> expect. Once that is settled I will add some tests and possibly clean up
-> some code.
->
-> Since nobody spoke against this change of behavior I assume that we
-> agree on the general approach I am taking here. If not please speak up
-> now so we can work something out and save me implementation time ;-)
->
-> Whats still missing is:
+Looks like I was doing something wrong. Apologies about the noise.
 
-Before listing what's missing, can you describe what "the general
-approach" is?  After all, that is what you are assuming that has got
-a silent concensus, but without getting it spelled out, others would
-easily miss what they "agreed" to.
+cheers,
 
-I do think that it is a good thing to make what "git add ." does and
-what "git status ." reports consistent, and "git add ." that does
-not add everything may be a good step in that direction (another
-possible solution may be to admit that ignore=all was a mistake and
-remove that special case altogether, so that "git status" will
-always report a submodule that does not match what is in the HEAD
-and/or index).
+
+
+m
+-- 
+ martin.langhoff@gmail.com
+ -  ask interesting questions
+ - don't get distracted with shiny stuff  - working code first
+ ~ http://docs.moodle.org/en/User:Martin_Langhoff
