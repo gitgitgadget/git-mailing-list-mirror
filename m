@@ -1,62 +1,91 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: git filter-branch --directory-filter oddity
-Date: Wed, 4 Dec 2013 17:48:26 -0500
-Message-ID: <CACPiFCJQeK7+8Ob23HPrzhoSwuTiHdaz8NYhhn2ki-egzJT6dQ@mail.gmail.com>
-References: <CACPiFC+nCj8VMqb+aK-C5gMyX6R0dDba1U1U49KTktF3WDQ9ZA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Use mongoose to test smart-http unconditionally?
+Date: Wed, 04 Dec 2013 14:53:13 -0800
+Message-ID: <xmqq38m8jkiu.fsf@gitster.dls.corp.google.com>
+References: <CACsJy8BHnTHRugJoTDGs7h=dF1qQUWyPXYxCU8YsDU57s+5gyg@mail.gmail.com>
+	<xmqqa9ggl6oq.fsf@gitster.dls.corp.google.com>
+	<20131204222522.GA16706@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Dec 04 23:48:53 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Dec 04 23:53:24 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VoLFU-0000ny-7C
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Dec 2013 23:48:52 +0100
+	id 1VoLJr-0003Xv-4W
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Dec 2013 23:53:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756198Ab3LDWss (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Dec 2013 17:48:48 -0500
-Received: from mail-ve0-f181.google.com ([209.85.128.181]:62902 "EHLO
-	mail-ve0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755146Ab3LDWsr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Dec 2013 17:48:47 -0500
-Received: by mail-ve0-f181.google.com with SMTP id oy12so12656757veb.40
-        for <git@vger.kernel.org>; Wed, 04 Dec 2013 14:48:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-type;
-        bh=C27Iqq+zXR1W8uYPZmOjJzAwy77DQOATQBhmvuShggk=;
-        b=daAfyS6C6e08oMjf30W0hkDmKwk7lCG3I+bq5aaUcSdSgfbXtOlu55VLpp+gGZ1Ofx
-         U7yDSTnRI1MD83vqg1hTSGqRZvc5W15EEZTwMulkFHx8pXawhHpDq702sikkbo/jkrKG
-         tbpumLodMdPkYOQEX8Rd9tBkStd2YOPRsz4BaDV0gMy8bVYMIr/hstfflclrHnEKmeQU
-         s8CiKh3zv++bhXfBvsssEnZ8lxevNLJI9ytgdTUicq8E6S2CRNrLG4IV4r0api1St/pZ
-         wAae6442ZzQI64EhbHhbnEbD7+R3f7cyZcmrqQHvf02vlloPoIMrQ90xghKE1jYjk0zs
-         14LQ==
-X-Received: by 10.52.121.104 with SMTP id lj8mr3457400vdb.33.1386197327057;
- Wed, 04 Dec 2013 14:48:47 -0800 (PST)
-Received: by 10.220.74.133 with HTTP; Wed, 4 Dec 2013 14:48:26 -0800 (PST)
-In-Reply-To: <CACPiFC+nCj8VMqb+aK-C5gMyX6R0dDba1U1U49KTktF3WDQ9ZA@mail.gmail.com>
+	id S1756110Ab3LDWxT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Dec 2013 17:53:19 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38262 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755434Ab3LDWxS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Dec 2013 17:53:18 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2BCCA5779E;
+	Wed,  4 Dec 2013 17:53:18 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=hzc3rpHe79R9gFVHB0UPBVp4yLc=; b=RiCa7L
+	AonSszmTdDzeWTv0chcDzcJZcJ2ZZHmddGHu0L3wtcHaNmJihJ/xqSOJAGMFa0M4
+	2r8eew/WC1ys/Z3580f+uys6MvA2hofm715KtEcEyC5ib0x41v0km91NLlOa7fsx
+	GErlLtM/e5biKVd4Sej4zJycpnaF+0BlL/RDI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=U+crWhpx/78Lf3HILpVNoknoh42R+9+n
+	VwuGZjM7eITmFPs6gpZ/o73Ax8EsAQT/mfbNa009gRTragK/GfvNhbFTFOyShu22
+	nPoYcZwQ38fBcaewK/6YwWj1ClGzLLBdgFNFxRYz7HvDQT8BOQmV4wKOyxZCR7vA
+	TKq90eFgufg=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1D26D5779D;
+	Wed,  4 Dec 2013 17:53:18 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0E6105779B;
+	Wed,  4 Dec 2013 17:53:16 -0500 (EST)
+In-Reply-To: <20131204222522.GA16706@sigill.intra.peff.net> (Jeff King's
+	message of "Wed, 4 Dec 2013 17:25:22 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: DD2127B6-5D36-11E3-9E3D-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238824>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238825>
 
-On Tue, Dec 3, 2013 at 5:44 PM, Martin Langhoff
-<martin.langhoff@gmail.com> wrote:
-> Am I doing it wrong?
+Jeff King <peff@peff.net> writes:
 
-Looks like I was doing something wrong. Apologies about the noise.
+> The rollout would be:
+>
+>   1. add contrib/mongoose/*
+>
+>   2. add test-httpd which links against mongoose, built by default in the
+>      Makefile
+>
+>   3. convert lib-httpd/apache.conf into mongoose config as necessary
+>
+>   4. convert lib-httpd.sh to run test-httpd instead of LIB_HTTPD_PATH
+>
+>   5. delete apache.conf, LIB_HTTPD_PATH and any other apache remnants
+>
+>   6. default GIT_TEST_HTTPD to yes
+>
+> Step 3 is the part where I would anticipate trouble (i.e., finding out
+> that the new server does not do everything the tests expect).
 
-cheers,
+If it involves making things not tested with apache, I'd actually be
+less supportive for the whole plan.  I thought the primary objective
+was to encourage people who currently are _not_ running httpd tests
+by making a lightweight server available out of the box, robbing an
+excuse "my box does not have apache installed" from them.
 
-
-
-m
--- 
- martin.langhoff@gmail.com
- -  ask interesting questions
- - don't get distracted with shiny stuff  - working code first
- ~ http://docs.moodle.org/en/User:Martin_Langhoff
+As long as a server supports bog standard CGI interface, smart-http
+should work the same way with any such server.  For that reason, it
+should be theoretically sufficient to test with one non-apache
+server (i.e. mongoose) for the purpose of making sure _our_ end of
+the set-up works, but still...
