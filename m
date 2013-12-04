@@ -1,93 +1,110 @@
-From: Marius Schamschula <mschamschula@gmail.com>
-Subject: Build issue for git 1.8.5.1 under Mac OS X 10.8 (Mountain Lion)
-Date: Wed, 4 Dec 2013 12:48:21 -0600
-Message-ID: <6D4FDF40-DD9A-4875-9D8F-9678BE95FF73@gmail.com>
-Mime-Version: 1.0 (Mac OS X Mail 6.6 \(1510\))
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 04 19:57:04 2013
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/1] tests: fix gzip with exported GZIP variable in
+ environment
+Date: Wed, 4 Dec 2013 14:32:32 -0500
+Message-ID: <20131204193232.GB11024@sigill.intra.peff.net>
+References: <1386061054-30796-1-git-send-email-mail@eworm.de>
+ <CAPig+cQqKQdVEojYF+-+ZE2hQjxsH4WrgPymj8g7P6pSQzfVpw@mail.gmail.com>
+ <20131203131812.GC26667@sigill.intra.peff.net>
+ <xmqqy541okwg.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Christian Hesse <mail@eworm.de>, Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Dec 04 20:32:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VoHd9-0004nN-LN
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Dec 2013 19:57:03 +0100
+	id 1VoIBb-0002al-9W
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Dec 2013 20:32:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933173Ab3LDS46 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Dec 2013 13:56:58 -0500
-Received: from physics.aamu.edu ([198.180.133.30]:64727 "HELO physics.aamu.edu"
+	id S933128Ab3LDTcf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Dec 2013 14:32:35 -0500
+Received: from cloud.peff.net ([50.56.180.127]:50430 "HELO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S933141Ab3LDS4z convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 4 Dec 2013 13:56:55 -0500
-X-Greylist: delayed 498 seconds by postgrey-1.27 at vger.kernel.org; Wed, 04 Dec 2013 13:56:45 EST
-Received: from viz.physics.aamu.edu (viz.physics.aamu.edu [198.180.133.99])
-	by physics.aamu.edu (Postfix) with ESMTPA id 4E5C58B3563B
-	for <git@vger.kernel.org>; Wed,  4 Dec 2013 12:48:21 -0600 (CST)
-X-Mailer: Apple Mail (2.1510)
+	id S933112Ab3LDTce (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Dec 2013 14:32:34 -0500
+Received: (qmail 22809 invoked by uid 102); 4 Dec 2013 19:32:34 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 04 Dec 2013 13:32:34 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 04 Dec 2013 14:32:32 -0500
+Content-Disposition: inline
+In-Reply-To: <xmqqy541okwg.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238802>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238804>
 
-Hi all,
+On Tue, Dec 03, 2013 at 10:21:35AM -0800, Junio C Hamano wrote:
 
-Over the years I have built many versions of git and released them on h=
-mug.org. git 1.8.5.1 builds just fine under OS 10.7 (Lion) and 10.9 (Ma=
-vericks), but the build fails (also for 1.8.5) on 10.8 (Mountain Lion):
+> Jeff King <peff@peff.net> writes:
+> 
+> > There are a few options I see:
+> >
+> >   1. Drop $GZIP variable, and hard-code the prerequisite check to
+> >      "gzip", which is what is being tested.
+> >
+> >   2. Keep $GZIP (but rename it to $GIT_GZIP), and explicitly set up
+> >      tar.tgz.command as "$GIT_GZIP -cn".
+> >
+> >   3. Teach the Makefile a knob to set the value for "gzip" at compile
+> >      time, and use that for the baked-in config (and propagate it to the
+> >      test to check the prerequisite).
+> >
+> > I think I'd be in favor of (1). It's the simplest, and we have not seen
+> > any reports of people who do not actually have gzip called "gzip". Users
+> > can still override it via config if they really want to.
+> 
+> I am OK with (1).
+> 
+> A related tangent is that we may have to worry about is how/if a
+> random setting coming from GZIP in the environment (e.g. "GZIP=-1v")
+> would interfere with the test.  It may be the simplest to unset
+> $GZIP at the beginning of these tests, regardless of which of the
+> above three is taken.
 
-<snip>
-GIT_VERSION =3D 1.8.5.1
-    * new build flags
-    CC credential-store.o
-In file included from git-compat-util.h:330:0,
-                 from cache.h:4,
-                 from credential-store.c:1:
-compat/apple-common-crypto.h: In function 'git_CC_EVP_EncodeBlock':
-compat/apple-common-crypto.h:32:2: error: 'SecTransformRef' undeclared =
-(first use in this function)
-compat/apple-common-crypto.h:32:2: note: each undeclared identifier is =
-reported only once for each function it appears in
-compat/apple-common-crypto.h:32:18: error: expected ';' before 'encoder=
-'
-compat/apple-common-crypto.h:36:2: error: 'encoder' undeclared (first u=
-se in this function)
-compat/apple-common-crypto.h:36:2: warning: implicit declaration of fun=
-ction 'SecEncodeTransformCreate'
-compat/apple-common-crypto.h:36:37: error: 'kSecBase64Encoding' undecla=
-red (first use in this function)
-compat/apple-common-crypto.h:40:2: warning: implicit declaration of fun=
-ction 'SecTransformSetAttribute'
-compat/apple-common-crypto.h:40:36: error: 'kSecTransformInputAttribute=
-Name' undeclared (first use in this function)
-compat/apple-common-crypto.h:44:2: warning: implicit declaration of fun=
-ction 'SecTransformExecute'
-compat/apple-common-crypto.h: In function 'git_CC_EVP_DecodeBlock':
-compat/apple-common-crypto.h:62:2: error: 'SecTransformRef' undeclared =
-(first use in this function)
-compat/apple-common-crypto.h:62:18: error: expected ';' before 'decoder=
-'
-compat/apple-common-crypto.h:66:2: error: 'decoder' undeclared (first u=
-se in this function)
-compat/apple-common-crypto.h:66:2: warning: implicit declaration of fun=
-ction 'SecDecodeTransformCreate'
-compat/apple-common-crypto.h:66:37: error: 'kSecBase64Encoding' undecla=
-red (first use in this function)
-compat/apple-common-crypto.h:70:36: error: 'kSecTransformInputAttribute=
-Name' undeclared (first use in this function)
-Makefile:1975: recipe for target 'credential-store.o' failed
-make: *** [credential-store.o] Error 1
-</snip>
+I don't think we should worry about it.
 
-Apparently a header issue: I tried force feeding the Security/SecEncryp=
-tTransform.h file, and just got an other error=85
+There are two levels to consider here. One, people may put junk in their
+GZIP variable, which will impact normal running of git itself (e.g.,
+when you run "git archive"). And two, they may put options in which
+affect the test output (e.g., "-v").
 
-Any help would be welcome!
+In the former case, I do not think it is worth worrying about. If you
+put something in your GZIP variable that causes "gzip -cn" to stop
+working (like GZIP=-d), then it is your fault for breaking gzip (and it
+is not just broken for git, but everywhere). If you put in tame things
+like "--rsyncable" or "-9", I think it is a _good_ thing that git's
+invocation of gzip is respecting your choice.  "Fixing" that would
+involve git-archive clearing the GZIP variable, but I do not think it is
+a good idea.
 
-Thanks in advance.
+For tests, we could potentially clear GZIP to give us a more consistent
+state for running the tests. But I do not think there is anything you
+would put in GZIP that should negatively affect the tests. Obvious just
+like "-d" is in the same boat as above; if you break gzip completely,
+you deserve it. If you use "-v" or "-q" to change stderr, we handle that
+just fine.
 
-Marius
---
-Marius Schamschula
+That leaves options which change the compressed output, like "-9". I'm
+inclined to say that letting them affect the tests is a good thing. It
+is true that we do not have a consistent state, but that also means we
+are testing the real world a little bit better. Part of the point of
+git's test suite is to make sure that from commit to commit, we do not
+break things. But it is also to show that for a given commit, from
+machine to machine we do not break things. Though we try to give a
+consistent baseline, we must tolerate some amount of variance, and that
+uncovers portability bugs (e.g., tests reveal that the shell on platform
+X does not like our script).
+
+If somebody shows up complaining that a test fails when they have GZIP
+set, then that may be catching a bug, or it may be catching a fragility
+in the test. But since we do not have a real-world complaint yet, I'd
+rather leave it and judge when we have an actual case.
+
+-Peff
