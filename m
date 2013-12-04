@@ -1,77 +1,139 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Use mongoose to test smart-http unconditionally?
-Date: Wed, 4 Dec 2013 13:48:42 -0500
-Message-ID: <20131204184842.GA11024@sigill.intra.peff.net>
-References: <CACsJy8BHnTHRugJoTDGs7h=dF1qQUWyPXYxCU8YsDU57s+5gyg@mail.gmail.com>
- <CAJo=hJuzP=zYsEZvC5ugKaAWPLAcTzmFJxT5PNFKbBEv0ctnDw@mail.gmail.com>
+From: =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+Subject: Re: [PATCH 5/5] gitweb: Denote non-heads, non-remotes branches
+Date: Wed, 4 Dec 2013 19:54:59 +0100
+Message-ID: <CANQwDwfBWbgUfi8w+p3K1OySiMhp_OaxL2TGRyX6Qaeape=DCA@mail.gmail.com>
+References: <1386164583-14109-1-git-send-email-krzesimir@endocode.com> <1386164583-14109-6-git-send-email-krzesimir@endocode.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Shawn Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Dec 04 19:48:51 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Krzesimir Nowak <krzesimir@endocode.com>
+X-From: git-owner@vger.kernel.org Wed Dec 04 19:55:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VoHVB-0007qf-Cr
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Dec 2013 19:48:49 +0100
+	id 1VoHbw-0003y4-EY
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Dec 2013 19:55:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933021Ab3LDSsp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Dec 2013 13:48:45 -0500
-Received: from cloud.peff.net ([50.56.180.127]:50403 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932867Ab3LDSso (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Dec 2013 13:48:44 -0500
-Received: (qmail 20554 invoked by uid 102); 4 Dec 2013 18:48:44 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 04 Dec 2013 12:48:44 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 04 Dec 2013 13:48:42 -0500
-Content-Disposition: inline
-In-Reply-To: <CAJo=hJuzP=zYsEZvC5ugKaAWPLAcTzmFJxT5PNFKbBEv0ctnDw@mail.gmail.com>
+	id S933144Ab3LDSzo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Dec 2013 13:55:44 -0500
+Received: from mail-wg0-f45.google.com ([74.125.82.45]:65245 "EHLO
+	mail-wg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933010Ab3LDSzn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Dec 2013 13:55:43 -0500
+Received: by mail-wg0-f45.google.com with SMTP id y10so13650692wgg.0
+        for <git@vger.kernel.org>; Wed, 04 Dec 2013 10:55:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=PJizueh6E/3/Spf8mKkI/9OnCoR1GHiCcx1KRTg/0go=;
+        b=XOVFe2udGyGmOYWYNicJT7l+0RG+Day4rv5+XPEy7VUMDpbiCYDreeKvcFWJ3d5yx7
+         FWNMo1z+gJkRF9lfKswSHH7bNRQfzKy7qqgvF/V2LWJN/L+5gQdxQna5Rw1JEwnFL9jl
+         lZHX/qRpP1mUqbJMC7WbFTxJtkTBhmPOflwTRkYEy3VMFSZYAl2dM/sfvYn/JFq8q7kt
+         jvR39AEbF0W/X0/hNcxNwtN7RWVUufbFF2vMpE/fLgY2k2RhAtnUZu9ABlSXrLus1rw6
+         vRzE2ikkGZIy8Wb17C1R1l/3VkgrAOJCb9hXzcdhzE5kGxRiExI+0qY62Bz6LqM4iv8q
+         jtKA==
+X-Received: by 10.194.48.115 with SMTP id k19mr13690599wjn.47.1386183339792;
+ Wed, 04 Dec 2013 10:55:39 -0800 (PST)
+Received: by 10.227.108.131 with HTTP; Wed, 4 Dec 2013 10:54:59 -0800 (PST)
+In-Reply-To: <1386164583-14109-6-git-send-email-krzesimir@endocode.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238800>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238801>
 
-On Wed, Dec 04, 2013 at 10:13:11AM -0800, Shawn Pearce wrote:
+On Wed, Dec 4, 2013 at 2:43 PM, Krzesimir Nowak <krzesimir@endocode.com> wrote:
 
-> On Wed, Dec 4, 2013 at 2:53 AM, Duy Nguyen <pclouds@gmail.com> wrote:
-> > I was thinking of an alternative to apache for testing smart-http so
-> > that most of http tests could always run. Mongoose [1] looks like a
-> > good candidate to bundle with git. Just one pair of source files,
-> > mongoose.[ch], a mainloop wrapper and we have an http server. Just
-> > wondering, do we rely on any apache-specific features? I'm not so
-> > familiar with lib-httpd.sh..
-> 
-> I don't think we do anything Apache specific in the test suite. It
-> basically relies on CGI execution, being able to configure a URL to
-> serve a directory, and making some URLs 404 or 500 so we can emulate a
-> broken or failing server to test the client behavior in those
-> conditions. At worst that 404/500 forced failure mode could be handled
-> by a CGI.
+> Given two branches residing in refs/heads/master and refs/wip/feature
+> the list-of-branches view will present them in following way:
+>
+> master
+> feature (wip)
+>
+> When getting a snapshot of a 'feature' branch, the tarball is going to
+> have name like 'project-wip-feature-<short hash>.tgz'.
+>
+> Signed-off-by: Krzesimir Nowak <krzesimir@endocode.com>
 
-I don't think there's anything apache specific, but there's a fair bit
-of config for handling various auth scenarios. It's stuff I'd expect any
-decent server implementation to handle, but somebody actually needs to
-go through and translate all of the config to mongoose.
+Very nice feature, which allows to distinguish between refs/heads/feature
+and refs/wip/feature.
 
-I've been tempted to add lighttpd support, as I generally find its
-config much more readable (and less prone to breaking during upgrades).
-But I think it would be a mistake to support multiple servers, as it
-would mean updates to the tests need to hit all of the servers. If
-mongoose gives a sane lowest common denominator, that's fine with me.
+> ---
+>  gitweb/gitweb.perl | 27 +++++++++++++++++++++++++--
+>  1 file changed, 25 insertions(+), 2 deletions(-)
+>
+> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> index 6d3d52d..9a63ea9 100755
+> --- a/gitweb/gitweb.perl
+> +++ b/gitweb/gitweb.perl
+> @@ -3739,8 +3739,14 @@ sub git_get_heads_list {
+>                 $ref_item{'fullname'}  = $name;
+>                 my $strip_refs = join '|', map { quotemeta } get_branch_refs();
+>                 $name =~ s!^refs/($strip_refs|remotes)/!!;
+> +               $ref_item{'name'} = $name;
+> +               # for refs neither in 'heads' nor 'remotes' we want to
+> +               # show their different ref dir
 
-I don't know if it is worth all that much effort, though. I suppose it
-could get us more exposure to the httpd tests, but I do not know if it
-would be a good idea to turn them on by default anyway. They touch
-global machine resources (like ports) that can cause conflicts or test
-failures. I assume that is the reason we do not turn on git-daemon tests
-by default (though perhaps it would be better in both cases to have it
-on by default and let people with special needs, like running multiple
-test instances at once, turn it off).
+Perhaps simply:
 
--Peff
+  +               # for refs neither in 'heads' nor 'remotes' we want
+to show their ref dir
+
+> +               my $ref_dir = (defined $1) ? $1 : '';
+> +               if ($ref_dir ne '' and $ref_dir ne 'heads' and $ref_dir ne 'remotes') {
+> +                   $ref_item{'name'} .= ' (' . $ref_dir . ')';
+> +               }
+>
+> -               $ref_item{'name'}  = $name;
+>                 $ref_item{'id'}    = $hash;
+>                 $ref_item{'title'} = $title || '(no commit message)';
+>                 $ref_item{'epoch'} = $epoch;
+> @@ -7257,7 +7263,24 @@ sub snapshot_name {
+>                 # branches and other need shortened SHA-1 hash
+>                 my $strip_refs = join '|', map { quotemeta } get_branch_refs();
+>                 if ($hash =~ m!^refs/($strip_refs|remotes)/(.*)$!) {
+> -                       $ver = $1;
+> +                       my $ref_dir = $1;
+> +                       $ver = $2;
+> +
+> +                       if (defined $ref_dir) {
+> +                               # this is going to be a part of
+> +                               # filename, so lets stick to
+> +                               # alphanumerics, dashes and underlines
+> +                               # only - some filesystems do not like
+> +                               # some punctuation symbols for
+> +                               # example.
+> +                               $ref_dir =~ s/[^[:alnum:]_-]//g;
+> +                       }
+
+I think this safety replacement should apply also to other parts of filename,
+if it is to be used.
+
+$ref_dir should be compatibile with path-part - in loose form it is stored
+on filesystem... though different filesystems might have different restrictions.
+
+One thing we should worry about is '/' in hierarchical refdir names, e.g.
+'wip/jk', which needs to be replaced / sanitized somehow, though probably
+as 'wip-jk' or 'wip_jk' rather than 'wipjk', isn't it?
+
+> +
+> +                       # for refs not in heads nor remotes we want to
+> +                       # add a ref dir to archive name
+> +                       if ($ref_dir ne '' and $ref_dir ne 'heads' and $ref_dir ne 'remotes') {
+> +                               $ver = $ref_dir . '-' . $ver;
+> +                       }
+>                 }
+>                 $ver .= '-' . git_get_short_hash($project, $hash);
+>         }
+> --
+> 1.8.3.1
+>
+
+
+
+-- 
+Jakub Narebski
