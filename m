@@ -1,113 +1,91 @@
 From: Krzesimir Nowak <krzesimir@endocode.com>
-Subject: [PATCH 5/5] gitweb: Denote non-heads, non-remotes branches
-Date: Wed,  4 Dec 2013 14:43:03 +0100
-Message-ID: <1386164583-14109-6-git-send-email-krzesimir@endocode.com>
-References: <1386164583-14109-1-git-send-email-krzesimir@endocode.com>
-Cc: gitster@pobox.com, jnareb@gmail.com, sunshine@sunshineco.com,
-	Krzesimir Nowak <krzesimir@endocode.com>
+Subject: Re: [PATCH 0/3] Show extra branch refs in gitweb
+Date: Wed, 04 Dec 2013 14:44:57 +0100
+Message-ID: <1386164697.2173.16.camel@localhost.localdomain>
+References: <1386082603-8404-1-git-send-email-krzesimir@endocode.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: gitster@pobox.com, jnareb@gmail.com, sunshine@sunshineco.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 04 14:43:55 2013
+X-From: git-owner@vger.kernel.org Wed Dec 04 14:45:09 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VoCk6-0007JN-P9
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Dec 2013 14:43:55 +0100
+	id 1VoClH-000863-5y
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Dec 2013 14:45:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932476Ab3LDNnl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Dec 2013 08:43:41 -0500
-Received: from mail-ee0-f48.google.com ([74.125.83.48]:49186 "EHLO
-	mail-ee0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932468Ab3LDNnh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Dec 2013 08:43:37 -0500
-Received: by mail-ee0-f48.google.com with SMTP id e49so2387874eek.21
-        for <git@vger.kernel.org>; Wed, 04 Dec 2013 05:43:36 -0800 (PST)
+	id S932494Ab3LDNpB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Dec 2013 08:45:01 -0500
+Received: from mail-ea0-f169.google.com ([209.85.215.169]:60743 "EHLO
+	mail-ea0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932462Ab3LDNpA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Dec 2013 08:45:00 -0500
+Received: by mail-ea0-f169.google.com with SMTP id l9so10841114eaj.0
+        for <git@vger.kernel.org>; Wed, 04 Dec 2013 05:44:59 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=ghiBn/bWc7xtOil+TWJb7mGl9NYxosHXXF1VdouXFmg=;
-        b=WAAlSwu1me9juC+2dsozWrkEq11zB2TtZ88fJVsGJFLQHj0rXW3yb570fspHy/R4XZ
-         /dbM7zSYM51K6DpKmXf7N680lisRMP6tCSGiiBXsOWZbSuV51kQKAm+skvWRCiYeiIcZ
-         iwgZLZZ4mn3uVKSf2UtxxtKXNBO9jwT2AsTTOKGWqOPZRnHuVG0q+P7t5GSm62kOBxrL
-         eRbAmmTqjiE0OqLKBeYmWq7gvP08KUdm932r3zQtRhX8UMmivXdK4jb8CNzo/ooPYdo0
-         Vd5eo6wVi4d8kAJzYDt7Axzu3pPR46jbVnwGYrLHbYhjzvzjL472NPAOkjNRzdwgnvLF
-         mVMA==
-X-Gm-Message-State: ALoCoQlqVJFqhHmtBftOXcohTkQG0CYg7UGEtHu6h/tYoeptk7DNaxB5Ro0JaKXXq78MvuhPYS0+
-X-Received: by 10.14.241.131 with SMTP id g3mr76425eer.116.1386164615894;
-        Wed, 04 Dec 2013 05:43:35 -0800 (PST)
-Received: from localhost.home (95-91-240-208-dynip.superkabel.de. [95.91.240.208])
-        by mx.google.com with ESMTPSA id z42sm22327433eeo.17.2013.12.04.05.43.34
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:content-type:mime-version:content-transfer-encoding;
+        bh=1sF7Dps+SoVkK0zT3ZtJ5qgg3eFxb+PV+lV5A3F0u0g=;
+        b=Us9QV+4/XMOuQTa3PTwesZ53tZF4kTQ6WR1EZwxrk0LuGFicIecKCPm44dRbng7DbZ
+         q2aGoFKupRHcPymGv7R31GJSaB3GDSk0idSZPD4/a4WoyFtleMvjCm0oH+2jeLPcuVOW
+         7u1Xo4N9zmqnW8BYrAxga4SNBZskPZ/CS5eGso/3Vl521Cn4ZG4/SKszIBCG1bUwy0x5
+         b9Lv6lGzRNJuAh7GIY+q4rfxASj8u35zEjKjpRYJTg7SsP3Eayl4314CmKbNOkxCoE0d
+         tPRdVl5pNUpPV9m+U3bUpsLJUpHfHx0P+ZQzDDQ3eseFwZfaL9Zox53X2Fz/Pe5OQWe6
+         F8YQ==
+X-Gm-Message-State: ALoCoQkiLnBEO60DEzck1Me/Z6cadvQ52TVMDkMgDhiWQd/fOJ4dHqhF+m4wuVRLq3BUlTZ3bun6
+X-Received: by 10.14.88.5 with SMTP id z5mr4118200eee.101.1386164699335;
+        Wed, 04 Dec 2013 05:44:59 -0800 (PST)
+Received: from [192.168.1.100] (95-91-240-208-dynip.superkabel.de. [95.91.240.208])
+        by mx.google.com with ESMTPSA id v7sm77319976eel.2.2013.12.04.05.44.58
         for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 04 Dec 2013 05:43:35 -0800 (PST)
-X-Mailer: git-send-email 1.8.3.1
-In-Reply-To: <1386164583-14109-1-git-send-email-krzesimir@endocode.com>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Wed, 04 Dec 2013 05:44:58 -0800 (PST)
+In-Reply-To: <1386082603-8404-1-git-send-email-krzesimir@endocode.com>
+X-Mailer: Evolution 3.8.5 (3.8.5-2.fc19) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238782>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238783>
 
-Given two branches residing in refs/heads/master and refs/wip/feature
-the list-of-branches view will present them in following way:
-master
-feature (wip)
+On Tue, 2013-12-03 at 15:56 +0100, Krzesimir Nowak wrote:
+> First patch just splits some code to a function, second patch adds th=
+e
+> extra-branch-refs feature and third one adds some visual
+> differentation of branches from non-standard ref directories.
+>=20
+> Krzesimir Nowak (3):
+>   gitweb: Move check-ref-format code into separate function
+>   gitweb: Add a feature for adding more branch refs
+>   gitweb: Denote non-heads, non-remotes branches.
+>=20
+>  Documentation/gitweb.conf.txt |  27 ++++++++++
+>  gitweb/gitweb.perl            | 120 ++++++++++++++++++++++++++++++++=
++++-------
+>  2 files changed, 129 insertions(+), 18 deletions(-)
+>=20
 
-When getting a snapshot of a 'feature' branch, the tarball is going to
-have name like 'project-wip-feature-<short hash>.tgz'.
+New version of patches are in "Show extra branch refs in gitweb v6"
+thread.
 
-Signed-off-by: Krzesimir Nowak <krzesimir@endocode.com>
----
- gitweb/gitweb.perl | 27 +++++++++++++++++++++++++--
- 1 file changed, 25 insertions(+), 2 deletions(-)
+Cheers,
+--=20
+Krzesimir Nowak
+Software Developer
+Endocode AG
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 6d3d52d..9a63ea9 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -3739,8 +3739,14 @@ sub git_get_heads_list {
- 		$ref_item{'fullname'}  = $name;
- 		my $strip_refs = join '|', map { quotemeta } get_branch_refs();
- 		$name =~ s!^refs/($strip_refs|remotes)/!!;
-+		$ref_item{'name'} = $name;
-+		# for refs neither in 'heads' nor 'remotes' we want to
-+		# show their different ref dir
-+		my $ref_dir = (defined $1) ? $1 : '';
-+		if ($ref_dir ne '' and $ref_dir ne 'heads' and $ref_dir ne 'remotes') {
-+		    $ref_item{'name'} .= ' (' . $ref_dir . ')';
-+		}
- 
--		$ref_item{'name'}  = $name;
- 		$ref_item{'id'}    = $hash;
- 		$ref_item{'title'} = $title || '(no commit message)';
- 		$ref_item{'epoch'} = $epoch;
-@@ -7257,7 +7263,24 @@ sub snapshot_name {
- 		# branches and other need shortened SHA-1 hash
- 		my $strip_refs = join '|', map { quotemeta } get_branch_refs();
- 		if ($hash =~ m!^refs/($strip_refs|remotes)/(.*)$!) {
--			$ver = $1;
-+			my $ref_dir = $1;
-+			$ver = $2;
-+
-+			if (defined $ref_dir) {
-+				# this is going to be a part of
-+				# filename, so lets stick to
-+				# alphanumerics, dashes and underlines
-+				# only - some filesystems do not like
-+				# some punctuation symbols for
-+				# example.
-+				$ref_dir =~ s/[^[:alnum:]_-]//g;
-+			}
-+
-+			# for refs not in heads nor remotes we want to
-+			# add a ref dir to archive name
-+			if ($ref_dir ne '' and $ref_dir ne 'heads' and $ref_dir ne 'remotes') {
-+				$ver = $ref_dir . '-' . $ver;
-+			}
- 		}
- 		$ver .= '-' . git_get_short_hash($project, $hash);
- 	}
--- 
-1.8.3.1
+krzesimir@endocode.com
+
+------
+Endocode AG, Johannisstra=C3=9Fe 20, 10117 Berlin
+info@endocode.com | www.endocode.com
+
+Vorstandsvorsitzender: Mirko Boehm
+Vorst=C3=A4nde: Dr. Karl Beecher, Chris K=C3=BChl, Sebastian Sucker
+Aufsichtsratsvorsitzende: Jennifer Beecher
+
+Registergericht: Amtsgericht Charlottenburg - HRB 150748 B
