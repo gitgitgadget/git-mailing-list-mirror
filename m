@@ -1,59 +1,68 @@
 From: =?ISO-8859-1?Q?Gauthier_=D6stervall?= <gauthier@ostervall.se>
-Subject: Re: gitk refresh keeps showing dangling commits
-Date: Wed, 4 Dec 2013 10:45:13 +0100
-Message-ID: <CAM8gEgg2v+isLEcf_rmACBLoaKL0VoA8k=2BpM2JAiY8wNvWuA@mail.gmail.com>
-References: <CAByu6UVWWW+5QKfVD30_LR4UF3991PLMRHGo6WWgrxOPXws0mQ@mail.gmail.com>
- <CAByu6UXXVRoQtFkU+A3E885pxVoiPdXXwXbozBP9gciD9BZMBQ@mail.gmail.com>
+Subject: Re: Command-line git Vs IDE+plugin?
+Date: Wed, 4 Dec 2013 10:56:51 +0100
+Message-ID: <CAM8gEgi1+4EYXAMzHxWbh0qZiFWGSU52fLKSeiPS-O3Uk5ifgw@mail.gmail.com>
+References: <vpqiovpfxd1.fsf@anie.imag.fr> <201311191336.31000.thomas@koch.ro>
+ <xmqqbo1g9vua.fsf@gitster.dls.corp.google.com> <vpq1u2c9ukx.fsf@anie.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Cc: git <git@vger.kernel.org>
-To: Thibault Kruse <tibokruse@googlemail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 04 10:45:43 2013
+To: unlisted-recipients:; (no To-header on input)
+X-From: git-owner@vger.kernel.org Wed Dec 04 10:57:23 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vo91Z-0007My-7s
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Dec 2013 10:45:41 +0100
+	id 1Vo9Cs-0006Tk-1N
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Dec 2013 10:57:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755154Ab3LDJpg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Dec 2013 04:45:36 -0500
-Received: from mail-wi0-f178.google.com ([209.85.212.178]:48997 "EHLO
-	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754260Ab3LDJpe (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Dec 2013 04:45:34 -0500
-Received: by mail-wi0-f178.google.com with SMTP id ca18so7869624wib.5
-        for <git@vger.kernel.org>; Wed, 04 Dec 2013 01:45:33 -0800 (PST)
+	id S1755080Ab3LDJ5P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Dec 2013 04:57:15 -0500
+Received: from mail-wg0-f49.google.com ([74.125.82.49]:43855 "EHLO
+	mail-wg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755037Ab3LDJ5N (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Dec 2013 04:57:13 -0500
+Received: by mail-wg0-f49.google.com with SMTP id x12so14507900wgg.28
+        for <git@vger.kernel.org>; Wed, 04 Dec 2013 01:57:12 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=Nj6V9BKHM9xdrSzrY5mhCPgLgKzLYyyTJWRLIOW8vCM=;
-        b=crd8XfsjOIdUITVteiz0cx2iaJY/vZ7zVSkIRZJ26KAko4Q9utZTDtT1IJiOpavFDh
-         UU22gVuLZECWA+sFWQDlHSf2oO5DR3Et8mumff+LIODcOOxrREXg/d+W+f4zgEuHuPRC
-         EOM6Jc3d0F3UGEJdwFqx4+zi23R//vmdRgHsjfqrWZy7Z56ikQ3OdjgAIampZ210cuPa
-         I7UOcnlVO8ryaXP9dpIJ8m4UNHoD7SJj+CMZC6uGX8PkxqvmsrJZLPBen5NB0QYrRiB8
-         ZFvtqxWrysbAR419lWWbHdFh9X1ACLomtMGh64pGH0HQeMUMl2Hydh57BaIKA3HLCcZy
-         XpNA==
-X-Gm-Message-State: ALoCoQmxvTqIxhfgOmgJppkWUNdRC0E3J3auh6L/A0FRhLJLjojtumFmG98e899LSIhAusQQJYHz
-X-Received: by 10.194.6.161 with SMTP id c1mr157253wja.89.1386150333251; Wed,
- 04 Dec 2013 01:45:33 -0800 (PST)
-Received: by 10.180.104.165 with HTTP; Wed, 4 Dec 2013 01:45:13 -0800 (PST)
+         :message-id:subject:cc:content-type;
+        bh=lYRVn3IWoF8R/ES2AdM5K9k3Ol+fme/V4pJ8aXYn9JA=;
+        b=XehMzYT3LEybGQ4dbIheVTsjKie1s/2EoeugUvykPJybi+oj/zcfSx3Au+qbkO1DTd
+         Uz+5Lyd0Y+oENRUwvUXmKXtDHYJRzC75iJnCvdEc+s0XlK5cLiazECh6h5Gfz7s4Tbww
+         QgIP4bJEdTXmOVhHiS7W1+x5C/AUbr//A50zQ7+VRL+BdjeAKtWh9K2J18EBL2C2DBTI
+         xUZ66/veO616SVsNn6nrdAgcQ122m8FQwEcpSJaGLURSJSHChCrxQeqNiYmmOX3BNn64
+         Aq7m4JqTsjkfTruf8Lta9UodaPA8M/XSf9izHBsyOEoHdDvic6+6YcdHgw1iE0hpJ3yx
+         fvbg==
+X-Gm-Message-State: ALoCoQlQY+XtyVa7yYza/L7OugLh+orVx4LY9MH8Y6dkuPG8lRjvqlsgc76qXvjm7p7ls7T09UO+
+X-Received: by 10.180.211.71 with SMTP id na7mr6343532wic.5.1386151031927;
+ Wed, 04 Dec 2013 01:57:11 -0800 (PST)
+Received: by 10.180.104.165 with HTTP; Wed, 4 Dec 2013 01:56:51 -0800 (PST)
 X-Originating-IP: [212.247.43.194]
-In-Reply-To: <CAByu6UXXVRoQtFkU+A3E885pxVoiPdXXwXbozBP9gciD9BZMBQ@mail.gmail.com>
+In-Reply-To: <vpq1u2c9ukx.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238767>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238768>
 
-On Fri, Nov 29, 2013 at 4:27 PM, Thibault Kruse
-<tibokruse@googlemail.com> wrote:
+On Tue, Nov 19, 2013 at 6:20 PM, Matthieu Moy
+<Matthieu.Moy@grenoble-inp.fr> wrote:
+> One thing the command-line does well is to give names to concepts
+> (basically, command names, option names, ...). It's easy to write in a
+> tutorial or an email "run the command 'git foo'". It's less easy to
+> write "click on that red button, on the right of the green one".
 
-> and in gitk, I select "Reload"(Ctrl-F5), and I still see both commits,
-> not just commit foo.
+And it is also easier for many to press a button than writing a
+command. This is a bad thing, in my experience. In a GUI, people tend
+to take chances: "Oh, reset, that sounds like what I want. What, it
+did not work? Oh there is this option 'hard', let's tick it and see
+what happens."
 
-Do you use the menu entry Reload, or the keyboard shortcut Ctrl+F5?
-The shortcut was changed a while ago to Shift+F5.
-http://git.661346.n2.nabble.com/PATCH-gitk-avoid-Meta1-F5-td7444531.html
+Another thing GUIs do not (often) offer is history. I would be lost if
+I couldn't see what I was trying to do 5 commands ago (before someone
+interrupted me), or refer to a previous error message.
+
+But if you cannot touch-type, buttons are going to be more attractive.
