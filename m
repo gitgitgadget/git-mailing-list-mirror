@@ -1,83 +1,180 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Use mongoose to test smart-http unconditionally?
-Date: Wed, 4 Dec 2013 21:49:38 -0500
-Message-ID: <20131205024938.GA19376@sigill.intra.peff.net>
-References: <CACsJy8BHnTHRugJoTDGs7h=dF1qQUWyPXYxCU8YsDU57s+5gyg@mail.gmail.com>
- <xmqqa9ggl6oq.fsf@gitster.dls.corp.google.com>
- <20131204222522.GA16706@sigill.intra.peff.net>
- <xmqq38m8jkiu.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Dec 05 03:49:45 2013
+From: Nick Townsend <nick.townsend@mac.com>
+Subject: [PATCH] Additional git-archive tests
+Date: Wed, 04 Dec 2013 18:49:39 -0800
+Message-ID: <CA9E9538-E39B-41CA-BB82-BDD8CF7A2E3F@mac.com>
+References: <C74C17E7-0780-4FE1-B916-D1A444F3B592@mac.com>
+ <8143BEDD-8CFA-46ED-9B52-760BBB1DACE8@mac.com>
+ <CAPig+cTUjvfWLC5vX0=BwtSDb613E9jMoyVXWp=de_Tyb5Ei7w@mail.gmail.com>
+ <xmqq61r5q0qs.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0 (Mac OS X Mail 7.0 \(1822\))
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	=?iso-8859-1?Q?Ren=E9_Scharfe?= <l.s.r@web.de>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Heiko Voigt <hvoigt@hvoigt.net>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Dec 05 03:50:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VoP0a-0002wU-I4
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Dec 2013 03:49:44 +0100
+	id 1VoP12-0003EU-JX
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Dec 2013 03:50:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933209Ab3LECtk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Dec 2013 21:49:40 -0500
-Received: from cloud.peff.net ([50.56.180.127]:50650 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756255Ab3LECtk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Dec 2013 21:49:40 -0500
-Received: (qmail 13944 invoked by uid 102); 5 Dec 2013 02:49:40 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 04 Dec 2013 20:49:40 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 04 Dec 2013 21:49:38 -0500
-Content-Disposition: inline
-In-Reply-To: <xmqq38m8jkiu.fsf@gitster.dls.corp.google.com>
+	id S1756523Ab3LECuI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Dec 2013 21:50:08 -0500
+Received: from nk11p03mm-asmtpout001.mac.com ([17.158.232.236]:52355 "EHLO
+	nk11p03mm-asmtp001.mac.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753566Ab3LECuG convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 4 Dec 2013 21:50:06 -0500
+Received: from [172.16.1.4]
+ (99-120-78-245.lightspeed.sntcca.sbcglobal.net [99.120.78.245])
+ by nk11p03mm-asmtp001.mac.com
+ (Oracle Communications Messaging Server 7u4-27.08(7.0.4.27.7) 64bit (built Aug
+ 22 2013)) with ESMTPSA id <0MXB00CP6BVG0940@nk11p03mm-asmtp001.mac.com> for
+ git@vger.kernel.org; Thu, 05 Dec 2013 02:50:05 +0000 (GMT)
+X-Proofpoint-Virus-Version: vendor=fsecure
+ engine=2.50.10432:5.11.72,1.0.14,0.0.0000
+ definitions=2013-12-04_08:2013-12-05,2013-12-04,1970-01-01 signatures=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
+ suspectscore=0 phishscore=0 adultscore=0 bulkscore=0 classifier=spam adjust=0
+ reason=mlx scancount=1 engine=7.0.1-1308280000 definitions=main-1312040226
+In-reply-to: <xmqq61r5q0qs.fsf@gitster.dls.corp.google.com>
+X-Mailer: Apple Mail (2.1822)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238838>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238839>
 
-On Wed, Dec 04, 2013 at 02:53:13PM -0800, Junio C Hamano wrote:
 
-> If it involves making things not tested with apache, I'd actually be
-> less supportive for the whole plan.
+Interplay between paths specified in three ways now tested:
+* After a : in the tree-ish,
+* As a pathspec in the command,
+* By virtue of the current working directory
 
-I hadn't really considered that angle. Apache is a much more realistic
-real-world deployment. We give advice for it in git-http-backend(1), and
-the tests do check that that advice works (OTOH, we also give advice for
-lighttpd, but that is not checked in the test scripts).
+Note that these tests are based on the behaviours
+as found in 1.8.5. They may not be intentional.
+They were developed to regression test enhancements
+made to parse_treeish_arg() in archive.c
 
-> I thought the primary objective was to encourage people who currently
-> are _not_ running httpd tests by making a lightweight server available
-> out of the box, robbing an excuse "my box does not have apache
-> installed" from them.
+Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+Signed-off-by: Nick Townsend <nick.townsend@mac.com>
+---
+ t/t5004-archive-corner-cases.sh | 71 +++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 71 insertions(+)
 
-Whether we get rid of apache or not, I think a new lightweight server
-would fulfill that goal. I just did not want the maintenance burden of
-managing multiple configs (and our test harness apache config has grown
-non-trivial).
+diff --git a/t/t5004-archive-corner-cases.sh b/t/t5004-archive-corner-cases.sh
+index 67f3b54..a81a836 100755
+--- a/t/t5004-archive-corner-cases.sh
++++ b/t/t5004-archive-corner-cases.sh
+@@ -113,4 +113,75 @@ test_expect_success 'archive empty subtree by direct pathspec' '
+ 	check_dir extract sub
+ '
+ 
++test_expect_success 'setup - repository with subdirs' '
++	mkdir -p a/b/c a/b/d &&
++	echo af >a/af &&
++	echo bf >a/b/bf &&
++	echo cf >a/b/c/cf &&
++	git add a &&
++	git commit -m "commit 1" &&
++	git tag -a -m "rev-1" rev-1
++'
++
++test_expect_success 'archive subtree from root by treeish' '
++	git archive --format=tar HEAD:a >atreeroot.tar &&
++	make_dir extract &&
++	"$TAR" xf atreeroot.tar -C extract &&
++	check_dir extract af b b/bf b/c b/c/cf
++'
++
++test_expect_success 'archive subtree from root with pathspec' '
++	git archive --format=tar HEAD a >atreepath.tar &&
++	make_dir extract &&
++	"$TAR" xf atreepath.tar -C extract &&
++	check_dir extract a a/af a/b a/b/bf a/b/c a/b/c/cf
++'
++
++test_expect_success 'archive subtree from root by 2-level treeish' '
++	git archive --format=tar HEAD:a/b >abtreeroot.tar &&
++	make_dir extract &&
++	"$TAR" xf abtreeroot.tar -C extract &&
++	check_dir extract bf c c/cf
++'
++
++test_expect_success 'archive subtree from subdir' '
++	(
++		cd a &&
++		git archive --format=tar HEAD >../asubtree.tar
++	) &&
++	make_dir extract &&
++	"$TAR" xf asubtree.tar -C extract &&
++	check_dir extract af b b/bf b/c b/c/cf
++'
++
++test_expect_success 'archive subtree from subdir with treeish' '
++	(
++		cd a &&
++		git archive --format=tar HEAD:./b >../absubtree.tar
++	) &&
++	make_dir extract &&
++	"$TAR" xf absubtree.tar -C extract &&
++	check_dir extract bf c c/cf
++'
++
++test_expect_success 'archive subtree from subdir with treeish and pathspec' '
++	(
++		cd a &&
++		git archive --format=tar HEAD:./b c >../absubtree.tar
++	) &&
++	make_dir extract &&
++	"$TAR" xf absubtree.tar -C extract &&
++	check_dir extract c c/cf
++'
++
++test_expect_success 'archive subtree from subdir with alt treeish' '
++	(
++		cd a &&
++		git archive --format=tar HEAD:b >../abxsubtree.tar
++	) &&
++	make_dir extract &&
++	"$TAR" xf abxsubtree.tar -C extract &&
++	check_dir extract bf c c/cf
++'
++
+ test_done
+-- 
+1.8.5
 
-> As long as a server supports bog standard CGI interface, smart-http
-> should work the same way with any such server.  For that reason, it
-> should be theoretically sufficient to test with one non-apache
-> server (i.e. mongoose) for the purpose of making sure _our_ end of
-> the set-up works, but still...
+On 3 Dec 2013, at 09:54, Junio C Hamano <gitster@pobox.com> wrote:
 
-There are definitely subtleties between servers. For example, when I
-worked on fetching bundles over http a while back, there was a big
-difference between lighttpd and apache. A request for
-"http://example.com/foo.bundle/info/refs" would return the bundle under
-lighttpd, but not under apache (for an apache server, we would have to
-make a fallback request). The client needs to be able to handle both
-scenarios gracefully.
-
-That's a case where it would be nice to be able to test _both_ cases,
-and that may be an argument for having multiple (or trying to configure
-apache to do both behaviors). But it shows that there may be subtle
-differences between a fake test server and a real deployment.
-
-So thinking on it more, I'm somewhat less enthusiastic about mongoose.
-
--Peff
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+> 
+>>> +test_expect_success 'archive subtree from subdir' '
+>>> +       cd a &&
+>>> +       git archive --format=tar HEAD >../asubtree.tar &&
+>>> +       cd .. &&
+>>> +       make_dir extract &&
+>>> +       "$TAR" xf asubtree.tar -C extract &&
+>>> +       check_dir extract af b b/bf b/c b/c/cf
+>>> +'
+>> 
+>> If git-archive fails, the subsequent 'cd ..' will not be invoked,
+>> hence all tests following this one will fail since the current
+>> directory has not been restored. If you place the 'cd a' in a
+>> subshell, then the current directory remains unchanged for commands
+>> outside the subshell (and you can drop the 'cd ..'):
+>> 
+>>    (
+>>    cd a &&
+>>    git archive ...
+>>    ) &&
+>>    make_dir ...
+>>    ...
+> 
+> Thanks, and please indent the commands run in the subshell for
+> better readability.
