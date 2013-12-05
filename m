@@ -1,116 +1,72 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] t5551: test fetch.c:backfill_tags() code
-Date: Thu,  5 Dec 2013 10:34:00 +0700
-Message-ID: <1386214440-16560-1-git-send-email-pclouds@gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: Thin pack
+Date: Thu, 5 Dec 2013 10:43:31 +0700
+Message-ID: <CACsJy8D0wrBJnigNaPt=_5Sa1PWrqaWzttA8Mun3H74mzYRNVA@mail.gmail.com>
+References: <CAHtLG6SBOi+v7uchwr1iHtMvzwLOW1hkpNT5x4vVhOKL=t2SdA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 05 04:29:25 2013
+Cc: git <git@vger.kernel.org>
+To: =?UTF-8?B?5LmZ6YW46Yuw?= <ch3cooli@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 05 04:44:09 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VoPcy-0001Zx-1f
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Dec 2013 04:29:24 +0100
+	id 1VoPrF-0001jC-3n
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Dec 2013 04:44:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756127Ab3LED3U convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Dec 2013 22:29:20 -0500
-Received: from mail-pb0-f48.google.com ([209.85.160.48]:39183 "EHLO
-	mail-pb0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752620Ab3LED3T (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Dec 2013 22:29:19 -0500
-Received: by mail-pb0-f48.google.com with SMTP id md12so24921314pbc.35
-        for <git@vger.kernel.org>; Wed, 04 Dec 2013 19:29:18 -0800 (PST)
+	id S1756542Ab3LEDoF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Dec 2013 22:44:05 -0500
+Received: from mail-qc0-f171.google.com ([209.85.216.171]:65175 "EHLO
+	mail-qc0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756524Ab3LEDoC convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 4 Dec 2013 22:44:02 -0500
+Received: by mail-qc0-f171.google.com with SMTP id c9so3034312qcz.16
+        for <git@vger.kernel.org>; Wed, 04 Dec 2013 19:44:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:mime-version:content-type
-         :content-transfer-encoding;
-        bh=eI3KM/7jME3lObw/RTxnjh5YfDTmWPKn7us5fQke1ds=;
-        b=TG4YYiEdWjKE3o5nM6QSIMeQwYBJhB8l5k5ZksWNVxjqzjjM4pxpFZ21f/KazT/L+O
-         CknVSWEHrsetusTTvax27ZnyCS6m3Rav5OTfyFuUl16y7RDdOQZ/IrqI4OFwZ+x+/RpG
-         kLitopjzyXWHcuG5KwBtQwDGrtJHE4zmk16oklQ5BCgwnH6F94ZMYInbez3T1ziv8p/+
-         euA/PVQ9lVbKrjtQ42loMETMQ0gx8Iw3mOnqEm5WCbf/R4XRKzHKp+vbkx/tRGHdd+2D
-         LqHrsrL+FCdhasusde6sCRJPfqk8LcNwrZGVRjSf7L8lTwAAAOZpgnRpze/acqN2FXod
-         dHPg==
-X-Received: by 10.68.136.34 with SMTP id px2mr49175352pbb.113.1386214157933;
-        Wed, 04 Dec 2013 19:29:17 -0800 (PST)
-Received: from lanh ([115.73.194.163])
-        by mx.google.com with ESMTPSA id oj6sm162330276pab.9.2013.12.04.19.29.14
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 04 Dec 2013 19:29:17 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Thu, 05 Dec 2013 10:34:01 +0700
-X-Mailer: git-send-email 1.8.5.1.25.g8667982
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=VpOkgVR9mKwK1sSdAn/BthRe2aPsDSAQksRYC7ypp+o=;
+        b=IJjEv4hmMH/BFvjGa2EgBoPZSN+eU2/GEekQM57L7eEzCHscTGwNerSXvFxPPH+dJO
+         CeMRKgudLFPqEcyk/jFo43XSe4H9Yl5h7KXx/iISQVftOZVNGpJIb1oiRCkypDpV6q+A
+         v1h1ZSJpoPRvm1zHNZmWvvd5moPJaZNCPCgtaS7+E4pw4c7o6TEXrJara05nClIaF9Hl
+         +pl3AOT5Rn/xbPA/BxMaG6ZhpdN49W/un7en7/ZndBX964unbFjReFcfbric8VzWSAOv
+         1rubwoIN80poP2oFP2GBo7Nild+HMXwLa1eORPqlhvItjNLiC86sKC/RJVNGDlftToOU
+         K6Ww==
+X-Received: by 10.224.61.1 with SMTP id r1mr100809123qah.97.1386215041531;
+ Wed, 04 Dec 2013 19:44:01 -0800 (PST)
+Received: by 10.96.124.101 with HTTP; Wed, 4 Dec 2013 19:43:31 -0800 (PST)
+In-Reply-To: <CAHtLG6SBOi+v7uchwr1iHtMvzwLOW1hkpNT5x4vVhOKL=t2SdA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238842>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238843>
 
-This makes sure the second fetch with transport helper code path is
-exercised in the test suite.
+On Thu, Dec 5, 2013 at 8:44 AM, =E4=B9=99=E9=85=B8=E9=8B=B0 <ch3cooli@g=
+mail.com> wrote:
+> What are the difference between pre 1.8.5 and 1.8.5 about thin pack s=
+upport?
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- This should catch the problem by aa/transport-non-positive-depth-only.
- The GIT_TEST_BACKFILL_TAGS is bad but I don't know any sure way to
- verify it, assuming the shallow code may change in future and stop
- triggering backfill_tags().
+No idea.
 
- builtin/fetch.c       |  2 ++
- t/t5551-http-fetch.sh | 16 ++++++++++++++++
- 2 files changed, 18 insertions(+)
+> Could you describe thin pack?
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 5647055..2496ad2 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -750,6 +750,8 @@ static struct transport *prepare_transport(struct r=
-emote *remote)
-=20
- static void backfill_tags(struct transport *transport, struct ref *ref=
-_map)
- {
-+	if (getenv("GIT_TEST_BACKFILL_TAGS"))
-+		fprintf(stderr, "backfill_tags executed\n");
- 	if (transport->cannot_reuse) {
- 		gsecondary =3D prepare_transport(transport->remote);
- 		transport =3D gsecondary;
-diff --git a/t/t5551-http-fetch.sh b/t/t5551-http-fetch.sh
-index 1b71bb5..7eeb043 100755
---- a/t/t5551-http-fetch.sh
-+++ b/t/t5551-http-fetch.sh
-@@ -181,6 +181,22 @@ test_expect_success 'create namespaced refs' '
- 		symbolic-ref refs/namespaces/ns/HEAD refs/namespaces/ns/refs/heads/m=
-aster
- '
-=20
-+test_expect_success 'trigger backfill_tags() over smart-http' '
-+	git tag -m two tag-two &&
-+	echo content >>file &&
-+	git commit -a -m three &&
-+	git push public master tag-two &&
-+	git rev-parse master tag-two >expected &&
-+	(
-+	git init shallow &&
-+	cd shallow &&
-+	GIT_TEST_BACKFILL_TAGS=3D1 git fetch --depth=3D2 $HTTPD_URL/smart/rep=
-o.git master:foo 2>err &&
-+	grep "backfill_tags executed" err &&
-+	git rev-parse foo tag-two >../actual
-+	) &&
-+	test_cmp expected actual
-+'
-+
- test_expect_success 'smart clone respects namespace' '
- 	git clone "$HTTPD_URL/smart_namespace/repo.git" ns-smart &&
- 	echo namespaced >expect &&
+It gets a bit technical. Under the hood objects are deltified, only
+the differences between an object and its base are stored. If both the
+diff and the base are in a pack, it's a normal pack. If the pack lacks
+the base, it's "thin". This makes thin packs more suited for network
+transfer because you transfer much less. Imagine you have a 5k file,
+you fetch another version of the same file that changes 1 line. With
+thin pack, you receive just that line (not entirely true, but good
+enough). Without thin pack, you also receive the 5k file you already
+have because it's the base of the new version.
+
+> From the doc, it says --thin is default option. Is that true?
+
+Yes.
 --=20
-1.8.5.1.25.g8667982
+Duy
