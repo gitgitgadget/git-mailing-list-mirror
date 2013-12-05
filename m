@@ -1,109 +1,83 @@
-From: Jeff King <peff@peff.net>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [BUG] redundant error message
-Date: Thu, 5 Dec 2013 16:28:51 -0500
-Message-ID: <20131205212851.GA21776@sigill.intra.peff.net>
+Date: Thu, 05 Dec 2013 13:44:12 -0800
+Message-ID: <xmqq8uvz3rdf.fsf@gitster.dls.corp.google.com>
 References: <CACsJy8BtCi_QSMZXfnscQmRyjvgSV1fG6smAOoCSab_e2YATxQ@mail.gmail.com>
- <20131205191518.GB19039@sigill.intra.peff.net>
- <xmqqsiu73w6n.fsf@gitster.dls.corp.google.com>
- <20131205200306.GA13443@sigill.intra.peff.net>
- <xmqqfvq73vhw.fsf@gitster.dls.corp.google.com>
- <20131205210000.GA19617@sigill.intra.peff.net>
+	<20131205191518.GB19039@sigill.intra.peff.net>
+	<xmqqsiu73w6n.fsf@gitster.dls.corp.google.com>
+	<20131205200306.GA13443@sigill.intra.peff.net>
+	<xmqqfvq73vhw.fsf@gitster.dls.corp.google.com>
+	<20131205210000.GA19617@sigill.intra.peff.net>
+	<20131205212851.GA21776@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Cc: Duy Nguyen <pclouds@gmail.com>,
 	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Dec 05 22:28:58 2013
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Dec 05 22:44:23 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VogTi-0005r5-GY
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Dec 2013 22:28:58 +0100
+	id 1Vogid-00081g-9m
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Dec 2013 22:44:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751709Ab3LEV2y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Dec 2013 16:28:54 -0500
-Received: from cloud.peff.net ([50.56.180.127]:51217 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751276Ab3LEV2y (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Dec 2013 16:28:54 -0500
-Received: (qmail 3268 invoked by uid 102); 5 Dec 2013 21:28:53 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 05 Dec 2013 15:28:53 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 05 Dec 2013 16:28:51 -0500
-Content-Disposition: inline
-In-Reply-To: <20131205210000.GA19617@sigill.intra.peff.net>
+	id S1754035Ab3LEVoT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Dec 2013 16:44:19 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39865 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752148Ab3LEVoR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Dec 2013 16:44:17 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E45D058390;
+	Thu,  5 Dec 2013 16:44:16 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=PfXgYSC13pmpxwzjRbNRZOv6R/U=; b=Kr/gB0
+	5P1x/Vf68zb1hjW7ozSqzar6aZmUtDZKVNvmDOsjfwqIXt13C6YoCf5Yz/cqfx4r
+	PFrS6b82jPiMliniTdPsPj9KxseXaNrjAv+tySe2mbMpaI26uetJCaPWPygOcmr2
+	YfsWoPtu7oCFJ61XpBdj8CKw+Ws3itChfoAlI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=slCqs/giLsS4pGXX32HCvcQnpkAUHqjp
+	UYAfDZwZkoB1yJPmqO+1ZL4MrkxSS0q7QBQ04mmXeWycCF21NQkh+7B6atD9J7er
+	q0bYw598I4phmX0KsR8O30330VdA8x/R8FWyroCBqCkJDAPyP0KgNJauGdEufaKB
+	qFFc3blNTCI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D20955838F;
+	Thu,  5 Dec 2013 16:44:16 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E41665838E;
+	Thu,  5 Dec 2013 16:44:15 -0500 (EST)
+In-Reply-To: <20131205212851.GA21776@sigill.intra.peff.net> (Jeff King's
+	message of "Thu, 5 Dec 2013 16:28:51 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 633B975E-5DF6-11E3-9E34-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238912>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238913>
 
-On Thu, Dec 05, 2013 at 04:00:00PM -0500, Jeff King wrote:
+Jeff King <peff@peff.net> writes:
 
-> Yes, I do expect an error. But it should not be "-- after filename". It
-> should be "foobar is not a revision".
-> [...]
-> It would be nice to get the error messages right, though. I do not see
-> any reason why it could not follow the same steps as "git log",
-> converting revisions (or throwing an error as appropriate) on the left
-> side of the "--", and passing through the right side untouched.
+> BTW, the raw looping to find "--" made me wonder how we handle:
+>
+>   git log --grep -- HEAD
+>
+> I'd expect it to be equivalent to:
+>
+>   git log --grep=-- HEAD
+>
+> but it's not; we truncate the arguments and complain that --grep is
+> missing its argument. Which is probably good enough, given that the
+> alternative is doing a pass that understands all of the options. But it
+> does mean that the "--long-opt=arg" form is safer than the split form if
+> you are passing along an arbitrary "arg".
 
-IOW, the patch below, which is the same strategy that setup_revisions
-uses:
-
-diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
-index c76b89d..845eab9 100644
---- a/builtin/rev-parse.c
-+++ b/builtin/rev-parse.c
-@@ -476,6 +476,7 @@ N_("git rev-parse --parseopt [options] -- [<args>...]\n"
- int cmd_rev_parse(int argc, const char **argv, const char *prefix)
- {
- 	int i, as_is = 0, verify = 0, quiet = 0, revs_count = 0, type = 0;
-+	int has_dashdash = 0;
- 	int output_prefix = 0;
- 	unsigned char sha1[20];
- 	const char *name = NULL;
-@@ -489,6 +490,14 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
- 	if (argc > 1 && !strcmp("-h", argv[1]))
- 		usage(builtin_rev_parse_usage);
- 
-+
-+	for (i = 1; i < argc; i++) {
-+		if (!strcmp(argv[i], "--")) {
-+			has_dashdash = 1;
-+			break;
-+		}
-+	}
-+
- 	prefix = setup_git_directory();
- 	git_config(git_default_config, NULL);
- 	for (i = 1; i < argc; i++) {
-@@ -765,6 +774,8 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
- 		}
- 		if (verify)
- 			die_no_single_rev(quiet);
-+		if (has_dashdash)
-+			die("bad revision '%s'", arg);
- 		as_is = 1;
- 		if (!show_file(arg, output_prefix))
- 			continue;
-
-
-BTW, the raw looping to find "--" made me wonder how we handle:
-
-  git log --grep -- HEAD
-
-I'd expect it to be equivalent to:
-
-  git log --grep=-- HEAD
-
-but it's not; we truncate the arguments and complain that --grep is
-missing its argument. Which is probably good enough, given that the
-alternative is doing a pass that understands all of the options. But it
-does mean that the "--long-opt=arg" form is safer than the split form if
-you are passing along an arbitrary "arg".
-
--Peff
+;-) Good flow of thought.  As to your rev-parse change, I don't
+immediately think of a hole/flaw offhand; it looked a good
+straight-forward change to me.
