@@ -1,144 +1,258 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v4 00/28] First class shallow clone
-Date: Thu,  5 Dec 2013 20:02:27 +0700
-Message-ID: <1386248575-10206-1-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v4 02/28] Replace struct extra_have_objects with struct sha1_array
+Date: Thu,  5 Dec 2013 20:02:29 +0700
+Message-ID: <1386248575-10206-3-git-send-email-pclouds@gmail.com>
 References: <1385351754-9954-1-git-send-email-pclouds@gmail.com>
+ <1386248575-10206-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 05 13:58:27 2013
+X-From: git-owner@vger.kernel.org Thu Dec 05 13:58:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VoYVb-000186-V3
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Dec 2013 13:58:24 +0100
+	id 1VoYVm-0001IJ-KS
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Dec 2013 13:58:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932086Ab3LEM6T convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Dec 2013 07:58:19 -0500
-Received: from mail-pb0-f53.google.com ([209.85.160.53]:48816 "EHLO
-	mail-pb0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932072Ab3LEM6S (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Dec 2013 07:58:18 -0500
-Received: by mail-pb0-f53.google.com with SMTP id ma3so25708473pbc.40
-        for <git@vger.kernel.org>; Thu, 05 Dec 2013 04:58:17 -0800 (PST)
+	id S932119Ab3LEM6a convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Dec 2013 07:58:30 -0500
+Received: from mail-pd0-f179.google.com ([209.85.192.179]:40771 "EHLO
+	mail-pd0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932090Ab3LEM62 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Dec 2013 07:58:28 -0500
+Received: by mail-pd0-f179.google.com with SMTP id r10so24790891pdi.10
+        for <git@vger.kernel.org>; Thu, 05 Dec 2013 04:58:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=IQBA/IMpMq7/TzYlisDens5fYJGRVNnFSC87vRgA+eo=;
-        b=aW6lfZWbOLaydDtpvteqmqaljSJRIqlvmLYrHyWxPAPdG988PhkTtGBq9PZf+8kImM
-         Fgnnj2N+ZAoI6CxeE4pYuByO/cAu/JoFaNke3BeYSHY6M3XfPfdoFG/kyQJVg4nGBYUw
-         Z0cr3W6hzLu5rJmhTvsFnuHtZHq2k+CNdWFQLVrzk/dcIz0YYmrrQR+XtOPe4zX9Vr9Q
-         hLWwe31PVA0c73xmoDAB4H6C7fSflLt92RYb6RfZNizTw/axFfXMytkHKu0cE4X6PSHM
-         dTEkoQxYC0P0u12OuLrzb6a8IRHMypd65k6ahS7xYqPNwkPI1Xf4m4eahwls+0aA/liS
-         aBzQ==
-X-Received: by 10.66.254.200 with SMTP id ak8mr31711331pad.24.1386248296609;
-        Thu, 05 Dec 2013 04:58:16 -0800 (PST)
+        bh=7dtxnnVP/wlbzW3864SpOvqZOmgrOyfGxvHoHUNtfjc=;
+        b=yNN6AUsMFLO/ubdhzwun9gW5ymdypvX+4vrxKmW7bBeRrfx/yBvoyUhOnrS6T2k3i5
+         qK0k+Hwagy+RzDoj4wrJYzTserQ1M8mnPDvmWf/MCsWb7WgiZuS1VNgRZ4fhu/hRbH3P
+         QVu42/SBSEpH1fRQYg/4fUYfxvLEZYQXj2BFUzYSjnDOQ281hSb7l1ZROcz0Ybnr8Hmz
+         NdlH1KuI47i+dYhhM7TiLCn+rh0fd1T+4PXt8bFw2k6410MNMnmU8+c0hcq6tlh//XiQ
+         Cldu6j7kL4fYflMKCobQ06sh/RwsbykqYvgSnIQfzmeSovPPoAKH6Kg9K+4zGbxdmkyn
+         dzKA==
+X-Received: by 10.66.123.5 with SMTP id lw5mr87640841pab.83.1386248308311;
+        Thu, 05 Dec 2013 04:58:28 -0800 (PST)
 Received: from lanh ([115.73.194.163])
-        by mx.google.com with ESMTPSA id at4sm144594134pbc.30.2013.12.05.04.58.13
+        by mx.google.com with ESMTPSA id vh3sm111396119pbc.8.2013.12.05.04.58.25
         for <multiple recipients>
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 05 Dec 2013 04:58:15 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Thu, 05 Dec 2013 20:03:00 +0700
+        Thu, 05 Dec 2013 04:58:27 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Thu, 05 Dec 2013 20:03:12 +0700
 X-Mailer: git-send-email 1.8.5.1.25.g8667982
-In-Reply-To: <1385351754-9954-1-git-send-email-pclouds@gmail.com>
+In-Reply-To: <1386248575-10206-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238856>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238857>
 
-This reroll should fix all comments I have received in v3. I reordered
-the shallow checks a bit so in common case it should be as cheap as
-a normal fetch or push. See 08/28 and 20/28 for the big picture. I'm no=
-t
-entirely happy with the hook issue in 20/28, but it looks good enough
-for me. There are a few XXXes for further improvement, but I'll keep
-them until this lands.
+The latter can do everything the former can and is used in many more
+places.
 
-To recap, this series allows you to clone from a shallow repo, push to
-or fetch from any shallow repo. Normally it will reject new refs
-that introduce new shallow boundaries to your repository, so if you're
-in a full clone, it will always stay a full clone. Use "fetch
---update-shallow" or set receive.shallowupdate to accept those refs.
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ builtin/send-pack.c |  5 ++---
+ connect.c           | 12 +++---------
+ remote.h            |  7 ++-----
+ send-pack.c         |  7 ++++---
+ send-pack.h         |  2 +-
+ transport.c         |  3 ++-
+ 6 files changed, 14 insertions(+), 22 deletions(-)
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (28):
-  transport.h: remove send_pack prototype, already defined in send-pack=
-=2Eh
-  Replace struct extra_have_objects with struct sha1_array
-  send-pack: forbid pushing from a shallow repository
-  clone: prevent --reference to a shallow repository
-  Make the sender advertise shallow commits to the receiver
-  connect.c: teach get_remote_heads to parse "shallow" lines
-  shallow.c: extend setup_*_shallow() to accept extra shallow commits
-  shallow.c: the 8 steps to select new commits for .git/shallow
-  shallow.c: steps 6 and 7 to select new commits for .git/shallow
-  fetch-pack.c: move shallow update code out of fetch_pack()
-  fetch-pack.h: one statement per bitfield declaration
-  clone: support remote shallow repository
-  fetch: support fetching from a shallow repository
-  upload-pack: make sure deepening preserves shallow roots
-  fetch: add --update-shallow to accept refs that update .git/shallow
-  receive-pack: reorder some code in unpack()
-  receive/send-pack: support pushing from a shallow clone
-  New var GIT_SHALLOW_FILE to propagate --shallow-file to subprocesses
-  connected.c: add new variant that runs with --shallow-file
-  receive-pack: allow pushes that update .git/shallow
-  send-pack: support pushing to a shallow clone
-  remote-curl: pass ref SHA-1 to fetch-pack as well
-  Support shallow fetch/clone over smart-http
-  receive-pack: support pushing to a shallow clone via http
-  send-pack: support pushing from a shallow clone via http
-  clone: use git protocol for cloning shallow repo locally
-  prune: clean .git/shallow after pruning objects
-  git-clone.txt: remove shallow clone limitations
-
- Documentation/config.txt                  |   4 +
- Documentation/fetch-options.txt           |  14 +-
- Documentation/git-clone.txt               |   7 +-
- Documentation/git-prune.txt               |   2 +
- Documentation/gitremote-helpers.txt       |   7 +
- Documentation/technical/pack-protocol.txt |   7 +-
- builtin/clone.c                           |  18 +-
- builtin/fetch-pack.c                      |  23 +-
- builtin/fetch.c                           |  15 +-
- builtin/gc.c                              |   1 +
- builtin/prune.c                           |   4 +
- builtin/receive-pack.c                    | 314 +++++++++++++++----
- builtin/send-pack.c                       |   9 +-
- cache.h                                   |   3 +
- commit.h                                  |  39 ++-
- connect.c                                 |  22 +-
- connected.c                               |  42 ++-
- connected.h                               |   2 +
- environment.c                             |   6 +
- fetch-pack.c                              | 132 +++++++-
- fetch-pack.h                              |  29 +-
- git.c                                     |   2 +-
- remote-curl.c                             |  34 ++-
- remote.h                                  |   9 +-
- send-pack.c                               |  27 +-
- send-pack.h                               |   2 +-
- shallow.c                                 | 486 ++++++++++++++++++++++=
-+++++++-
- t/t5304-prune.sh                          |  10 +
- t/t5536-fetch-shallow.sh (new +x)         | 203 +++++++++++++
- t/t5537-push-shallow.sh (new +x)          | 183 +++++++++++
- t/t5601-clone.sh                          |   7 +
- trace.c                                   |   2 +-
- transport-helper.c                        |   6 +
- transport.c                               |  25 +-
- transport.h                               |  16 +-
- upload-pack.c                             |   8 +-
- 36 files changed, 1555 insertions(+), 165 deletions(-)
- create mode 100755 t/t5536-fetch-shallow.sh
- create mode 100755 t/t5537-push-shallow.sh
-
+diff --git a/builtin/send-pack.c b/builtin/send-pack.c
+index 4482f16..faaa603 100644
+--- a/builtin/send-pack.c
++++ b/builtin/send-pack.c
+@@ -10,6 +10,7 @@
+ #include "quote.h"
+ #include "transport.h"
+ #include "version.h"
++#include "sha1-array.h"
+=20
+ static const char send_pack_usage[] =3D
+ "git send-pack [--all | --mirror] [--dry-run] [--force] [--receive-pac=
+k=3D<git-receive-pack>] [--verbose] [--thin] [<host>:]<directory> [<ref=
+>...]\n"
+@@ -99,7 +100,7 @@ int cmd_send_pack(int argc, const char **argv, const=
+ char *prefix)
+ 	const char *dest =3D NULL;
+ 	int fd[2];
+ 	struct child_process *conn;
+-	struct extra_have_objects extra_have;
++	struct sha1_array extra_have =3D SHA1_ARRAY_INIT;
+ 	struct ref *remote_refs, *local_refs;
+ 	int ret;
+ 	int helper_status =3D 0;
+@@ -228,8 +229,6 @@ int cmd_send_pack(int argc, const char **argv, cons=
+t char *prefix)
+ 			args.verbose ? CONNECT_VERBOSE : 0);
+ 	}
+=20
+-	memset(&extra_have, 0, sizeof(extra_have));
+-
+ 	get_remote_heads(fd[0], NULL, 0, &remote_refs, REF_NORMAL, &extra_hav=
+e);
+=20
+ 	transport_verify_remote_names(nr_refspecs, refspecs);
+diff --git a/connect.c b/connect.c
+index 06e88b0..48eec41 100644
+--- a/connect.c
++++ b/connect.c
+@@ -8,6 +8,7 @@
+ #include "connect.h"
+ #include "url.h"
+ #include "string-list.h"
++#include "sha1-array.h"
+=20
+ static char *server_capabilities;
+ static const char *parse_feature_value(const char *, const char *, int=
+ *);
+@@ -45,13 +46,6 @@ int check_ref_type(const struct ref *ref, int flags)
+ 	return check_ref(ref->name, strlen(ref->name), flags);
+ }
+=20
+-static void add_extra_have(struct extra_have_objects *extra, unsigned =
+char *sha1)
+-{
+-	ALLOC_GROW(extra->array, extra->nr + 1, extra->alloc);
+-	hashcpy(&(extra->array[extra->nr][0]), sha1);
+-	extra->nr++;
+-}
+-
+ static void die_initial_contact(int got_at_least_one_head)
+ {
+ 	if (got_at_least_one_head)
+@@ -122,7 +116,7 @@ static void annotate_refs_with_symref_info(struct r=
+ef *ref)
+  */
+ struct ref **get_remote_heads(int in, char *src_buf, size_t src_len,
+ 			      struct ref **list, unsigned int flags,
+-			      struct extra_have_objects *extra_have)
++			      struct sha1_array *extra_have)
+ {
+ 	struct ref **orig_list =3D list;
+ 	int got_at_least_one_head =3D 0;
+@@ -160,7 +154,7 @@ struct ref **get_remote_heads(int in, char *src_buf=
+, size_t src_len,
+=20
+ 		if (extra_have &&
+ 		    name_len =3D=3D 5 && !memcmp(".have", name, 5)) {
+-			add_extra_have(extra_have, old_sha1);
++			sha1_array_append(extra_have, old_sha1);
+ 			continue;
+ 		}
+=20
+diff --git a/remote.h b/remote.h
+index 131130a..984519b 100644
+--- a/remote.h
++++ b/remote.h
+@@ -137,13 +137,10 @@ int check_ref_type(const struct ref *ref, int fla=
+gs);
+  */
+ void free_refs(struct ref *ref);
+=20
+-struct extra_have_objects {
+-	int nr, alloc;
+-	unsigned char (*array)[20];
+-};
++struct sha1_array;
+ extern struct ref **get_remote_heads(int in, char *src_buf, size_t src=
+_len,
+ 				     struct ref **list, unsigned int flags,
+-				     struct extra_have_objects *);
++				     struct sha1_array *extra_have);
+=20
+ int resolve_remote_symref(struct ref *ref, struct ref *list);
+ int ref_newer(const unsigned char *new_sha1, const unsigned char *old_=
+sha1);
+diff --git a/send-pack.c b/send-pack.c
+index fab62e3..14005fa 100644
+--- a/send-pack.c
++++ b/send-pack.c
+@@ -10,6 +10,7 @@
+ #include "quote.h"
+ #include "transport.h"
+ #include "version.h"
++#include "sha1-array.h"
+=20
+ static int feed_object(const unsigned char *sha1, int fd, int negative=
+)
+ {
+@@ -28,7 +29,7 @@ static int feed_object(const unsigned char *sha1, int=
+ fd, int negative)
+ /*
+  * Make a pack stream and spit it out into file descriptor fd
+  */
+-static int pack_objects(int fd, struct ref *refs, struct extra_have_ob=
+jects *extra, struct send_pack_args *args)
++static int pack_objects(int fd, struct ref *refs, struct sha1_array *e=
+xtra, struct send_pack_args *args)
+ {
+ 	/*
+ 	 * The child becomes pack-objects --revs; we feed
+@@ -71,7 +72,7 @@ static int pack_objects(int fd, struct ref *refs, str=
+uct extra_have_objects *ext
+ 	 * parameters by writing to the pipe.
+ 	 */
+ 	for (i =3D 0; i < extra->nr; i++)
+-		if (!feed_object(extra->array[i], po.in, 1))
++		if (!feed_object(extra->sha1[i], po.in, 1))
+ 			break;
+=20
+ 	while (refs) {
+@@ -177,7 +178,7 @@ static int sideband_demux(int in, int out, void *da=
+ta)
+ int send_pack(struct send_pack_args *args,
+ 	      int fd[], struct child_process *conn,
+ 	      struct ref *remote_refs,
+-	      struct extra_have_objects *extra_have)
++	      struct sha1_array *extra_have)
+ {
+ 	int in =3D fd[0];
+ 	int out =3D fd[1];
+diff --git a/send-pack.h b/send-pack.h
+index 05d7ab1..8e84392 100644
+--- a/send-pack.h
++++ b/send-pack.h
+@@ -16,6 +16,6 @@ struct send_pack_args {
+=20
+ int send_pack(struct send_pack_args *args,
+ 	      int fd[], struct child_process *conn,
+-	      struct ref *remote_refs, struct extra_have_objects *extra_have)=
+;
++	      struct ref *remote_refs, struct sha1_array *extra_have);
+=20
+ #endif
+diff --git a/transport.c b/transport.c
+index 7202b77..12e46ad 100644
+--- a/transport.c
++++ b/transport.c
+@@ -14,6 +14,7 @@
+ #include "url.h"
+ #include "submodule.h"
+ #include "string-list.h"
++#include "sha1-array.h"
+=20
+ /* rsync support */
+=20
+@@ -454,7 +455,7 @@ struct git_transport_data {
+ 	struct child_process *conn;
+ 	int fd[2];
+ 	unsigned got_remote_heads : 1;
+-	struct extra_have_objects extra_have;
++	struct sha1_array extra_have;
+ };
+=20
+ static int set_git_option(struct git_transport_options *opts,
 --=20
 1.8.5.1.25.g8667982
