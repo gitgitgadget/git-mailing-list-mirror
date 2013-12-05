@@ -1,225 +1,231 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: [PATCH v4] commit -v: strip diffs and submodule shortlogs from the
- commit message
-Date: Thu, 05 Dec 2013 20:44:14 +0100
-Message-ID: <52A0D78E.4030509@web.de>
-References: <528D385F.2070906@web.de>	<xmqqpppu65fs.fsf@gitster.dls.corp.google.com>	<528E7A6E.8080603@web.de> <xmqqsiup2y3u.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Additional git-archive tests
+Date: Thu, 05 Dec 2013 11:52:58 -0800
+Message-ID: <xmqqwqjj3wit.fsf@gitster.dls.corp.google.com>
+References: <C74C17E7-0780-4FE1-B916-D1A444F3B592@mac.com>
+	<8143BEDD-8CFA-46ED-9B52-760BBB1DACE8@mac.com>
+	<CAPig+cTUjvfWLC5vX0=BwtSDb613E9jMoyVXWp=de_Tyb5Ei7w@mail.gmail.com>
+	<xmqq61r5q0qs.fsf@gitster.dls.corp.google.com>
+	<CA9E9538-E39B-41CA-BB82-BDD8CF7A2E3F@mac.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Johannes Sixt <j6t@kdbg.org>, Ari Pollak <ari@debian.org>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Dec 05 20:44:22 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	=?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Heiko Voigt <hvoigt@hvoigt.net>
+To: Nick Townsend <nick.townsend@mac.com>
+X-From: git-owner@vger.kernel.org Thu Dec 05 20:53:10 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VoeqU-0000Rl-00
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Dec 2013 20:44:22 +0100
+	id 1Voez0-0006aE-3k
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Dec 2013 20:53:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752221Ab3LEToR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Dec 2013 14:44:17 -0500
-Received: from mout.web.de ([212.227.17.11]:61940 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751190Ab3LEToQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Dec 2013 14:44:16 -0500
-Received: from [192.168.178.41] ([84.132.154.249]) by smtp.web.de (mrweb101)
- with ESMTPA (Nemesis) id 0MDP6H-1VnqyJ3qZB-00Gqbt for <git@vger.kernel.org>;
- Thu, 05 Dec 2013 20:44:15 +0100
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.1.1
-In-Reply-To: <xmqqsiup2y3u.fsf@gitster.dls.corp.google.com>
-X-Enigmail-Version: 1.6
-X-Provags-ID: V03:K0:Hoigl3heN/iNPClQmgqb0khG53nFpLFjPsMzrjDkoitzkxTy4B0
- 1a6GW4hLItmmJv66WaVvO6Y0lzdzUNvpCD4awmB5lqrfZoFWeuNUL02IWIrjEza9IOVwGv5
- oSyz/zYRxQCe6hGWBOqOK3V6KkllcBDWpHfoFXkVWAP3xCwoPIcipScG8NUM1L5H/aq7gPI
- 6x7TquxUxckktXcbgrgtg==
+	id S1752905Ab3LETxG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Dec 2013 14:53:06 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52092 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752579Ab3LETxE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Dec 2013 14:53:04 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DB3DA58440;
+	Thu,  5 Dec 2013 14:53:02 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=xq+A4bCnL2tCwp04GxA+VA60ItM=; b=HoaHBF
+	F5h/l5qMTnfIIzWdNyR48pG6BOImjJSVTqQfktiGu77M9sxFi84fB0fp2XxiBC83
+	skobakrS0K2Lowh2mLjcarvt3tjUw63bgdPOHZiKuA6RU6BhQXItZD6IPKP2yyw7
+	1RMCq2d23n+LmDbuX8J4Z5efofrOMrJy9Rfx0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=r67RBry0LQBhk9qTDu5/dz/y/tJUfCH4
+	EI4ZvNY7H2uhr1C1CPfKxAYFkIFX1/Dlxkhubdw5RiUWwChzuj+O4pWhB8TqJWEq
+	ynp8K3p/+TpCjBHjR5WOODSwdLYfg1e6vo6YKxjCEkXROnKb+Ienh4YNobTSZbfe
+	xAqNRwFMWdU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C3F315843F;
+	Thu,  5 Dec 2013 14:53:02 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A4BB45843C;
+	Thu,  5 Dec 2013 14:53:01 -0500 (EST)
+In-Reply-To: <CA9E9538-E39B-41CA-BB82-BDD8CF7A2E3F@mac.com> (Nick Townsend's
+	message of "Wed, 04 Dec 2013 18:49:39 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: D91CAD60-5DE6-11E3-9300-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238901>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238902>
 
-When using the '-v' option of "git commit" the diff added to the commit
-message temporarily for editing is stripped off after the user exited the
-editor by searching for "\ndiff --git " and truncating the commmit message
-there if it is found.
+Nick Townsend <nick.townsend@mac.com> writes:
 
-But this approach has two problems:
+> Interplay between paths specified in three ways now tested:
+> * After a : in the tree-ish,
+> * As a pathspec in the command,
+> * By virtue of the current working directory
+>
+> Note that these tests are based on the behaviours
+> as found in 1.8.5. They may not be intentional.
+> They were developed to regression test enhancements
+> made to parse_treeish_arg() in archive.c
 
-- when the commit message itself contains a line starting with
-  "diff --git" it will be truncated there prematurely; and
+In other words, are all these new tests expected to pass?
 
-- when the "diff.submodule" setting is set to "log", the diff may
-  start with "Submodule <hash1>..<hash2>", which will be left in
-  the commit message while it shouldn't.
+My cursory read of parse_treeish_arg() in archive.c is:
 
-Fix that by introducing a special scissor separator line starting with the
-comment character ('#' or the core.commentChar config if set) followed by
-two lines describing what it is for. The scissor line - which will not be
-translated - is used to reliably detect the start of the diff so it can be
-chopped off from the commit message, no matter what the user enters there.
+ - It reads the given object with get_sha1(), checking if it is a
+   commit-ish or tree-ish to decide if it wants to add the pax
+   header to record the commit object name;
 
-Turn a known test failure fixed by this change into a successful test;
-also add one for a diff starting with a submodule log and another one for
-proper handling of the comment char.
+ - It parses the tree object;
 
-Reported-by: Ari Pollak <ari@debian.org>
-Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
----
+ - If run from a subdirectory, attempts to grab the "prefix"
+   (i.e. the path to the current subdirectory---in the tests you
+   added, they are all "a/") out of that tree object (it errors out
+   if it can't); and then
 
-Changes to v3:
+ - It archives the tree object.
 
-- separating comment_line_char from the cut_line
+So I do not think it is expected to accept tree object names with
+the HEAD:<path> style syntax, if the user expects a predictable and
+consistent result.  The third step above attempts to make sure that
+you name a tree-ish that corresponds to the top-level of the
+project, i.e. with no <path>.
 
-- using strbuf_add_commented_lines() for the comment
+What seems to be supported are:
 
-All issues raised should be addressed with this version.
+    cd a && git archive HEAD ;# archives HEAD:a tree
+    cd a && git archive HEAD -- b ;# archives a/b/ part of HEAD:a as b/
 
+Specifically, it appears that HEAD:./b, HEAD:b etc. are not designed
+to work, at least to me.
 
- builtin/commit.c          |  9 +++------
- t/t7507-commit-verbose.sh | 28 +++++++++++++++++++++++++++-
- wt-status.c               | 29 +++++++++++++++++++++++++++--
- wt-status.h               |  1 +
- 4 files changed, 58 insertions(+), 9 deletions(-)
+I am not saying that these should _not_ work, but it is unclear what
+it means to "work".  For example, what should this do?
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 6ab4605..fedb45a 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -1505,7 +1505,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 	struct strbuf sb = STRBUF_INIT;
- 	struct strbuf author_ident = STRBUF_INIT;
- 	const char *index_file, *reflog_msg;
--	char *nl, *p;
-+	char *nl;
- 	unsigned char sha1[20];
- 	struct ref_lock *ref_lock;
- 	struct commit_list *parents = NULL, **pptr = &parents;
-@@ -1601,11 +1601,8 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 	}
+    cd a && git archive HEAD:./b $pathspec
 
- 	/* Truncate the message just before the diff, if any. */
--	if (verbose) {
--		p = strstr(sb.buf, "\ndiff --git ");
--		if (p != NULL)
--			strbuf_setlen(&sb, p - sb.buf + 1);
--	}
-+	if (verbose)
-+		wt_status_truncate_message_at_cut_line(&sb);
+The extended SHA-1 expression HEAD:./b in the subdirectory a/ is
+interpreted by get_sha1_with_context_1() to be the name of the tree
+object at path "a/b" in the commit HEAD.  Further, you are giving a
+pathspec while in a subdirectory a/ to the command.  What should
+that pathspec be relative to?
 
- 	if (cleanup_mode != CLEANUP_NONE)
- 		stripspace(&sb, cleanup_mode == CLEANUP_ALL);
-diff --git a/t/t7507-commit-verbose.sh b/t/t7507-commit-verbose.sh
-index da5bd3b..2ddf28c 100755
---- a/t/t7507-commit-verbose.sh
-+++ b/t/t7507-commit-verbose.sh
-@@ -65,9 +65,35 @@ test_expect_success 'diff in message is retained without -v' '
- 	check_message diff
- '
+In a normal Git command, the pathspec always is relative to the
+current subdirectory, so, the way to learn about the tree object
+a/b/c in the HEAD while in subdirectory a/ would be:
 
--test_expect_failure 'diff in message is retained with -v' '
-+test_expect_success 'diff in message is retained with -v' '
- 	git commit --amend -F diff -v &&
- 	check_message diff
- '
+    cd a && git ls-tree HEAD b/c
 
-+test_expect_success 'submodule log is stripped out too with -v' '
-+	git config diff.submodule log &&
-+	git submodule add ./. sub &&
-+	git commit -m "sub added" &&
-+	(
-+		cd sub &&
-+		echo "more" >>file &&
-+		git commit -a -m "submodule commit"
-+	) &&
-+	(
-+		GIT_EDITOR=cat &&
-+		export GIT_EDITOR &&
-+		test_must_fail git commit -a -v 2>err
-+	) &&
-+	test_i18ngrep "Aborting commit due to empty commit message." err
-+'
-+
-+test_expect_success 'verbose diff is stripped out with set core.commentChar' '
-+	(
-+		GIT_EDITOR=cat &&
-+		export GIT_EDITOR &&
-+		test_must_fail git -c core.commentchar=";" commit -a -v 2>err
-+	) &&
-+	test_i18ngrep "Aborting commit due to empty commit message." err
-+'
-+
- test_done
-diff --git a/wt-status.c b/wt-status.c
-index b4e44ba..99c3d1c 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -16,6 +16,9 @@
- #include "column.h"
- #include "strbuf.h"
+But what should the command line for archive to grab HEAD:a/b/c be?
+It feels wrong to say:
 
-+static char cut_line[] =
-+"------------------------ >8 ------------------------\n";
-+
- static char default_wt_status_colors[][COLOR_MAXLEN] = {
- 	GIT_COLOR_NORMAL, /* WT_STATUS_HEADER */
- 	GIT_COLOR_GREEN,  /* WT_STATUS_UPDATED */
-@@ -767,6 +770,18 @@ conclude:
- 	status_printf_ln(s, GIT_COLOR_NORMAL, "");
- }
+    cd a && git archive HEAD:./b b/c
 
-+void wt_status_truncate_message_at_cut_line(struct strbuf *buf)
-+{
-+	const char *p;
-+	struct strbuf pattern = STRBUF_INIT;
-+
-+	strbuf_addf(&pattern, "%c %s", comment_line_char, cut_line);
-+	p = strstr(buf->buf, pattern.buf);
-+	if (p && (p == buf->buf || p[-1] == '\n'))
-+		strbuf_setlen(buf, p - buf->buf);
-+	strbuf_release(&pattern);
-+}
-+
- static void wt_status_print_verbose(struct wt_status *s)
- {
- 	struct rev_info rev;
-@@ -787,10 +802,20 @@ static void wt_status_print_verbose(struct wt_status *s)
- 	 * If we're not going to stdout, then we definitely don't
- 	 * want color, since we are going to the commit message
- 	 * file (and even the "auto" setting won't work, since it
--	 * will have checked isatty on stdout).
-+	 * will have checked isatty on stdout). But we then do want
-+	 * to insert the scissor line here to reliably remove the
-+	 * diff before committing.
- 	 */
--	if (s->fp != stdout)
-+	if (s->fp != stdout) {
-+		const char *explanation = _("Do not touch the line above.\nEverything below will be removed.");
-+		struct strbuf buf = STRBUF_INIT;
-+
- 		rev.diffopt.use_color = 0;
-+		fprintf(s->fp, "%c %s", comment_line_char, cut_line);
-+		strbuf_add_commented_lines(&buf, explanation, strlen(explanation));
-+		fprintf(s->fp, buf.buf);
-+		strbuf_release(&buf);
-+	}
- 	run_diff_index(&rev, 1);
- }
+and it also feels wrong to say
 
-diff --git a/wt-status.h b/wt-status.h
-index 6c29e6f..30a4812 100644
---- a/wt-status.h
-+++ b/wt-status.h
-@@ -91,6 +91,7 @@ struct wt_status_state {
- 	unsigned char cherry_pick_head_sha1[20];
- };
+    cd a && git archive HEAD:./b c
 
-+void wt_status_truncate_message_at_cut_line(struct strbuf *);
- void wt_status_prepare(struct wt_status *s);
- void wt_status_print(struct wt_status *s);
- void wt_status_collect(struct wt_status *s);
--- 
-1.8.5.4.g9a09ec7
+No matter what we would do, we should behave consistently with this
+case:
+
+    treeish=$(git rev-parse HEAD:a/b) &&
+    cd a &&
+    git archive $treeish -- $pathspec
+
+so "take the pathspec relative to the tree when the treeish was
+given with '<treeish>:<path>' syntax, and otherwise treat it
+relative to the cwd" is not a workable solution.
+
+> Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+> Signed-off-by: Nick Townsend <nick.townsend@mac.com>
+> ---
+>  t/t5004-archive-corner-cases.sh | 71 +++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 71 insertions(+)
+>
+> diff --git a/t/t5004-archive-corner-cases.sh b/t/t5004-archive-corner-cases.sh
+> index 67f3b54..a81a836 100755
+> --- a/t/t5004-archive-corner-cases.sh
+> +++ b/t/t5004-archive-corner-cases.sh
+> @@ -113,4 +113,75 @@ test_expect_success 'archive empty subtree by direct pathspec' '
+>  	check_dir extract sub
+>  '
+>  
+> +test_expect_success 'setup - repository with subdirs' '
+> +	mkdir -p a/b/c a/b/d &&
+> +	echo af >a/af &&
+> +	echo bf >a/b/bf &&
+> +	echo cf >a/b/c/cf &&
+> +	git add a &&
+> +	git commit -m "commit 1" &&
+> +	git tag -a -m "rev-1" rev-1
+> +'
+> +
+> +test_expect_success 'archive subtree from root by treeish' '
+> +	git archive --format=tar HEAD:a >atreeroot.tar &&
+> +	make_dir extract &&
+> +	"$TAR" xf atreeroot.tar -C extract &&
+> +	check_dir extract af b b/bf b/c b/c/cf
+> +'
+> +
+> +test_expect_success 'archive subtree from root with pathspec' '
+> +	git archive --format=tar HEAD a >atreepath.tar &&
+> +	make_dir extract &&
+> +	"$TAR" xf atreepath.tar -C extract &&
+> +	check_dir extract a a/af a/b a/b/bf a/b/c a/b/c/cf
+> +'
+> +
+> +test_expect_success 'archive subtree from root by 2-level treeish' '
+> +	git archive --format=tar HEAD:a/b >abtreeroot.tar &&
+> +	make_dir extract &&
+> +	"$TAR" xf abtreeroot.tar -C extract &&
+> +	check_dir extract bf c c/cf
+> +'
+> +
+> +test_expect_success 'archive subtree from subdir' '
+> +	(
+> +		cd a &&
+> +		git archive --format=tar HEAD >../asubtree.tar
+> +	) &&
+> +	make_dir extract &&
+> +	"$TAR" xf asubtree.tar -C extract &&
+> +	check_dir extract af b b/bf b/c b/c/cf
+> +'
+> +
+> +test_expect_success 'archive subtree from subdir with treeish' '
+> +	(
+> +		cd a &&
+> +		git archive --format=tar HEAD:./b >../absubtree.tar
+> +	) &&
+> +	make_dir extract &&
+> +	"$TAR" xf absubtree.tar -C extract &&
+> +	check_dir extract bf c c/cf
+> +'
+> +
+> +test_expect_success 'archive subtree from subdir with treeish and pathspec' '
+> +	(
+> +		cd a &&
+> +		git archive --format=tar HEAD:./b c >../absubtree.tar
+> +	) &&
+> +	make_dir extract &&
+> +	"$TAR" xf absubtree.tar -C extract &&
+> +	check_dir extract c c/cf
+> +'
+> +
+> +test_expect_success 'archive subtree from subdir with alt treeish' '
+> +	(
+> +		cd a &&
+> +		git archive --format=tar HEAD:b >../abxsubtree.tar
+> +	) &&
+> +	make_dir extract &&
+> +	"$TAR" xf abxsubtree.tar -C extract &&
+> +	check_dir extract bf c c/cf
+> +'
+> +
+>  test_done
