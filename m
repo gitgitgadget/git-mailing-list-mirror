@@ -1,56 +1,75 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: Publishing "filtered branch repositories" - workflow / recommendations?
-Date: Thu, 05 Dec 2013 20:54:29 +0100
-Message-ID: <52A0D9F5.3030101@web.de>
-References: <CACPiFCJPq0fqOQrJD-8CHH405Xw61ZDynqqfN+_aZb3ZBgV2VA@mail.gmail.com> <52A0D199.1010403@web.de> <CACPiFCKHprB_oO_eXMYkey_CGbT7WOn5VDDjBdHbLRzcDpHnZw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [BUG] redundant error message
+Date: Thu, 05 Dec 2013 12:00:16 -0800
+Message-ID: <xmqqsiu73w6n.fsf@gitster.dls.corp.google.com>
+References: <CACsJy8BtCi_QSMZXfnscQmRyjvgSV1fG6smAOoCSab_e2YATxQ@mail.gmail.com>
+	<20131205191518.GB19039@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Martin Langhoff <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 05 20:54:36 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Dec 05 21:00:27 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vof0N-0007Wr-JH
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Dec 2013 20:54:35 +0100
+	id 1Vof61-00039n-3x
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Dec 2013 21:00:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752546Ab3LETyc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Dec 2013 14:54:32 -0500
-Received: from mout.web.de ([212.227.15.14]:62237 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752513Ab3LETyb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Dec 2013 14:54:31 -0500
-Received: from [192.168.178.41] ([84.132.154.249]) by smtp.web.de (mrweb102)
- with ESMTPA (Nemesis) id 0M8Qpi-1Vbmyt3eYE-00vukt for <git@vger.kernel.org>;
- Thu, 05 Dec 2013 20:54:29 +0100
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.1.1
-In-Reply-To: <CACPiFCKHprB_oO_eXMYkey_CGbT7WOn5VDDjBdHbLRzcDpHnZw@mail.gmail.com>
-X-Enigmail-Version: 1.6
-X-Provags-ID: V03:K0:yTCaZEdolGr8Ncf2FPGQi0uT4h8vlnOQFGAYzvI0oxNF3sNI0r3
- y1K2MiELdX8yzJsF18maq2EcKBHxrNyT9BRWigthZCPcKn42G7IxwgZ//XG6RvSYI9CZZTC
- wM4lOIZdy0py1+4hmFv1qt+Cjqod/XWGOJGlXjuWCisYvOuCoargFU6ydmvYWRAMm5BnPt7
- 5fY0uXvzvuuLa3IbcrLRA==
+	id S1752192Ab3LEUAV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Dec 2013 15:00:21 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48817 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751957Ab3LEUAU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Dec 2013 15:00:20 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 68B1B5867C;
+	Thu,  5 Dec 2013 15:00:20 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=3ZfpSxdBddFnfs6gPJ5bmSX7vPA=; b=ZCk+1m
+	Y/D4MhadyLZL7UsEWj/4LHYqnep4BSHrJC5jDNUAVMAi6xA1e0NFFNySZFT6nq1U
+	DnUTNDN4+x+tIZDjP7D/IlurEKHKkkmSMvQIP1NUaz82czS1luNseFsA8m4y9HCt
+	eyvZrLKyWoyhwFH/SZz2dtjjtBo7vsTcLkpk8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=FM6veX1hOLMTw2xbQGXfsu0GBsv6m7TZ
+	NmS/KjknO/BpTBtPMvLRToUjj+2Wdyu74rR2uGsARI5UWJkSOAlw6a3pkDazvrIH
+	gQbWM9I4E+4ddkVyir1zkxa0r8mhLob6G0p6RsMaeJDhSSuDb6uJRytW5tVmE7Ib
+	Lj8WZ9e5xk8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 553455867B;
+	Thu,  5 Dec 2013 15:00:20 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3180E58677;
+	Thu,  5 Dec 2013 15:00:19 -0500 (EST)
+In-Reply-To: <20131205191518.GB19039@sigill.intra.peff.net> (Jeff King's
+	message of "Thu, 5 Dec 2013 14:15:18 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: DDD9CB48-5DE7-11E3-AD45-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238903>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238904>
 
-Am 05.12.2013 20:27, schrieb Martin Langhoff:
-> On Thu, Dec 5, 2013 at 2:18 PM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
->> Without knowing more I can't think of a reason why submodules should
->> not suit your use case (but you'd have to script branching and tagging
->> yourself until these commands learn to recurse into submodules too).
-> 
-> The submodules feature is way too fiddly and has abundant gotchas.
+Jeff King <peff@peff.net> writes:
 
-Care to explain what bothers you the most? Being one of the people
-improving submodules I'm really interested in hearing more about that.
+>   $ >foobar
+>   $ git rev-parse foobar --
+>   foobar
+>   --
+>   fatal: bad flag '--' used after filename
+>
+> That's not right.
 
-> I am diving into subtrees, and finding it a lot more workable.
+Hmph, it looks like it is following the usual "zero-or-more dashed
+options, zero-or-more revs and then zero-or-one double-dash and then
+zero-or-more paths" rule to parse the thing.  "foobar" is a file and
+not a rev, so "--" should not be there, no?
 
-Yep, for exporting parts of your repo as separate repos one way
-subtree might be just what you want.
+Confused why you think it is not right...
