@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v4 21/28] send-pack: support pushing to a shallow clone
-Date: Thu,  5 Dec 2013 20:02:48 +0700
-Message-ID: <1386248575-10206-22-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v4 22/28] remote-curl: pass ref SHA-1 to fetch-pack as well
+Date: Thu,  5 Dec 2013 20:02:49 +0700
+Message-ID: <1386248575-10206-23-git-send-email-pclouds@gmail.com>
 References: <1385351754-9954-1-git-send-email-pclouds@gmail.com>
  <1386248575-10206-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
@@ -11,150 +11,90 @@ Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 05 14:00:44 2013
+X-From: git-owner@vger.kernel.org Thu Dec 05 14:00:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VoYXr-0002mV-Fk
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Dec 2013 14:00:43 +0100
+	id 1VoYXs-0002mV-19
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Dec 2013 14:00:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932220Ab3LENAj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Dec 2013 08:00:39 -0500
-Received: from mail-pb0-f45.google.com ([209.85.160.45]:46730 "EHLO
-	mail-pb0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932215Ab3LENAi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Dec 2013 08:00:38 -0500
-Received: by mail-pb0-f45.google.com with SMTP id rp16so25858275pbb.32
-        for <git@vger.kernel.org>; Thu, 05 Dec 2013 05:00:34 -0800 (PST)
+	id S932226Ab3LENAk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Dec 2013 08:00:40 -0500
+Received: from mail-pd0-f172.google.com ([209.85.192.172]:33985 "EHLO
+	mail-pd0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932215Ab3LENAj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Dec 2013 08:00:39 -0500
+Received: by mail-pd0-f172.google.com with SMTP id g10so24552921pdj.17
+        for <git@vger.kernel.org>; Thu, 05 Dec 2013 05:00:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=sxFsHMWGvMhXX6A8SaTE4iYvWFo3yINiKxlOm9Yzg9A=;
-        b=WbdFcaxWrWnDmhsOCQo+PfdwzRdxxJNw+HpQR8yvU0WXMn0XmkSKRq7Sa4O2eCLinh
-         XbAv8PXs0K2L24k19zp0xLXVUbwzKppybqyFXp4IaKoyChupds2zw4G2qzKBtWUAi5gC
-         P8OoE+GmWjihq6+qtics1yZr/bSsNRGIEM35613+90m0DCovrzpI1OkRqfIZgOKjfmdq
-         N7p0OxEd4gDmN5zoOxCPw5dKuyfpE+fpgLad0qAuZYQfDA+/0xGWG9zHaneHjkrCo3/b
-         x/ifuQv3sjjB1fcm/AKUsRN5sfeyTbtERi/8Lsfvz78jCI3tiVJinlSeRSzKAXiNl4BV
-         WIXw==
-X-Received: by 10.66.234.131 with SMTP id ue3mr87360272pac.35.1386248432586;
-        Thu, 05 Dec 2013 05:00:32 -0800 (PST)
+        bh=FEGy0H1aAudeWDWzEvriHq9w93SFVTXUr+s35nDc7ZI=;
+        b=rhobd6Miv8LVMUcd2lG4XQop6CfP2pdFWmvYKWtujgVwbCE1yeGpb2YasMDfWV1K1n
+         3IotmrFaYUpobT9C/HOKSD1RlV/nA9D7S3OOMrqdfPfiOcHQADdq98nosNTJ2DQZaL3U
+         00+NA4tapLTqd66hioqX3te5UOpUbxV632pyuc5JjG+FPv/x3fW3rvC0RPH2eZUztcfp
+         AH8X5niJ07HSVRA4N2YwmSFvuPVSoX7fflWBwwmEJsuGczq8V07pETicBcuA7skaZDdg
+         KyBsdMWiDZam8TSCEfLg8kd7Lp98mZjybdf/Tt5L5Cbj/ZgRKgPfT7Yd26X+mSJWdSCQ
+         g3oA==
+X-Received: by 10.66.179.143 with SMTP id dg15mr88841695pac.52.1386248439180;
+        Thu, 05 Dec 2013 05:00:39 -0800 (PST)
 Received: from lanh ([115.73.194.163])
-        by mx.google.com with ESMTPSA id sd3sm144595943pbb.42.2013.12.05.05.00.29
+        by mx.google.com with ESMTPSA id qw8sm144608285pbb.27.2013.12.05.05.00.36
         for <multiple recipients>
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 05 Dec 2013 05:00:31 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Thu, 05 Dec 2013 20:05:16 +0700
+        Thu, 05 Dec 2013 05:00:38 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Thu, 05 Dec 2013 20:05:22 +0700
 X-Mailer: git-send-email 1.8.5.1.25.g8667982
 In-Reply-To: <1386248575-10206-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238877>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238878>
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- builtin/send-pack.c     |  4 +++-
- t/t5537-push-shallow.sh | 38 ++++++++++++++++++++++++++++++++++++++
- transport.c             |  5 ++---
- 3 files changed, 43 insertions(+), 4 deletions(-)
+ builtin/fetch-pack.c | 7 +++++++
+ remote-curl.c        | 3 ++-
+ 2 files changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/send-pack.c b/builtin/send-pack.c
-index ea2ab28..664dd20 100644
---- a/builtin/send-pack.c
-+++ b/builtin/send-pack.c
-@@ -101,6 +101,7 @@ int cmd_send_pack(int argc, const char **argv, cons=
-t char *prefix)
- 	int fd[2];
- 	struct child_process *conn;
- 	struct sha1_array extra_have =3D SHA1_ARRAY_INIT;
-+	struct sha1_array shallow =3D SHA1_ARRAY_INIT;
- 	struct ref *remote_refs, *local_refs;
- 	int ret;
- 	int helper_status =3D 0;
-@@ -232,7 +233,8 @@ int cmd_send_pack(int argc, const char **argv, cons=
-t char *prefix)
- 			args.verbose ? CONNECT_VERBOSE : 0);
- 	}
-=20
--	get_remote_heads(fd[0], NULL, 0, &remote_refs, REF_NORMAL, &extra_hav=
-e, NULL);
-+	get_remote_heads(fd[0], NULL, 0, &remote_refs, REF_NORMAL,
-+			 &extra_have, &shallow);
-=20
- 	transport_verify_remote_names(nr_refspecs, refspecs);
-=20
-diff --git a/t/t5537-push-shallow.sh b/t/t5537-push-shallow.sh
-index ff5eb5b..f5c74e6 100755
---- a/t/t5537-push-shallow.sh
-+++ b/t/t5537-push-shallow.sh
-@@ -82,4 +82,42 @@ EOF
- 	test_cmp expect actual
- '
-=20
-+test_expect_success 'push from shallow to shallow' '
-+	(
-+	cd shallow &&
-+	git --git-dir=3D../shallow2/.git config receive.shallowupdate true &&
-+	git push ../shallow2/.git +master:refs/remotes/shallow/master &&
-+	git --git-dir=3D../shallow2/.git config receive.shallowupdate false
-+	) &&
-+	(
-+	cd shallow2 &&
-+	git log --format=3D%s shallow/master >actual &&
-+	git fsck &&
-+	cat <<EOF >expect &&
-+5
-+4
-+3
-+EOF
-+	test_cmp expect actual
-+	)
-+'
+diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
+index 927424b..aa6e596 100644
+--- a/builtin/fetch-pack.c
++++ b/builtin/fetch-pack.c
+@@ -13,6 +13,13 @@ static void add_sought_entry_mem(struct ref ***sough=
+t, int *nr, int *alloc,
+ 				 const char *name, int namelen)
+ {
+ 	struct ref *ref =3D xcalloc(1, sizeof(*ref) + namelen + 1);
++	unsigned char sha1[20];
 +
-+test_expect_success 'push from full to shallow' '
-+	! git --git-dir=3Dshallow2/.git cat-file blob `echo 1|git hash-object=
- --stdin` &&
-+	commit 1 &&
-+	git push shallow2/.git +master:refs/remotes/top/master &&
-+	(
-+	cd shallow2 &&
-+	git log --format=3D%s top/master >actual &&
-+	git fsck &&
-+	cat <<EOF >expect &&
-+1
-+4
-+3
-+EOF
-+	test_cmp expect actual &&
-+	git cat-file blob `echo 1|git hash-object --stdin` >/dev/null
-+	)
-+'
-+
- test_done
-diff --git a/transport.c b/transport.c
-index a09fdb6..d596abb 100644
---- a/transport.c
-+++ b/transport.c
-@@ -819,11 +819,10 @@ static int git_transport_push(struct transport *t=
-ransport, struct ref *remote_re
- 		struct ref *tmp_refs;
- 		connect_setup(transport, 1, 0);
++	if (namelen > 41 && name[40] =3D=3D ' ' && !get_sha1_hex(name, sha1))=
+ {
++		hashcpy(ref->old_sha1, sha1);
++		name +=3D 41;
++		namelen -=3D 41;
++	}
 =20
--		get_remote_heads(data->fd[0], NULL, 0, &tmp_refs, REF_NORMAL, NULL, =
-NULL);
-+		get_remote_heads(data->fd[0], NULL, 0, &tmp_refs, REF_NORMAL,
-+				 NULL, &data->shallow);
- 		data->got_remote_heads =3D 1;
+ 	memcpy(ref->name, name, namelen);
+ 	ref->name[namelen] =3D '\0';
+diff --git a/remote-curl.c b/remote-curl.c
+index 222210f..25d6730 100644
+--- a/remote-curl.c
++++ b/remote-curl.c
+@@ -719,7 +719,8 @@ static int fetch_git(struct discovery *heads,
+ 		struct ref *ref =3D to_fetch[i];
+ 		if (!ref->name || !*ref->name)
+ 			die("cannot fetch by sha1 over smart http");
+-		packet_buf_write(&preamble, "%s\n", ref->name);
++		packet_buf_write(&preamble, "%s %s\n",
++				 sha1_to_hex(ref->old_sha1), ref->name);
  	}
--	if (data->shallow.nr)
--		die("pushing to a shallow repository is not supported");
+ 	packet_buf_flush(&preamble);
 =20
- 	memset(&args, 0, sizeof(args));
- 	args.send_mirror =3D !!(flags & TRANSPORT_PUSH_MIRROR);
 --=20
 1.8.5.1.25.g8667982
