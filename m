@@ -1,83 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [BUG] redundant error message
-Date: Thu, 05 Dec 2013 13:44:12 -0800
-Message-ID: <xmqq8uvz3rdf.fsf@gitster.dls.corp.google.com>
-References: <CACsJy8BtCi_QSMZXfnscQmRyjvgSV1fG6smAOoCSab_e2YATxQ@mail.gmail.com>
-	<20131205191518.GB19039@sigill.intra.peff.net>
-	<xmqqsiu73w6n.fsf@gitster.dls.corp.google.com>
-	<20131205200306.GA13443@sigill.intra.peff.net>
-	<xmqqfvq73vhw.fsf@gitster.dls.corp.google.com>
-	<20131205210000.GA19617@sigill.intra.peff.net>
-	<20131205212851.GA21776@sigill.intra.peff.net>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [PATCH] pack-objects: name pack files after trailer hash
+Date: Thu, 5 Dec 2013 13:56:03 -0800
+Message-ID: <CAJo=hJtSppKYGSG9RS74AjDC_OfNy+EWWf+V7BETO0gASJS9gg@mail.gmail.com>
+References: <CACsJy8DbJZmBCnfzNqfmEnRpqVcc42Q_-jz3r=sYVRPhsCkS5A@mail.gmail.com>
+ <5297004F.4090003@gmail.com> <CACsJy8AdOAPT-RfD0NfZj_cQPBSUrVKn8yS7JRe=-4k8C8TvQg@mail.gmail.com>
+ <211D44CB-64A2-4FCA-B4A7-40845B97E9A1@ancientrocklab.com> <CACsJy8AOVWF2HssWNeYkVvYdmAXJOQ8HOehxJ0wpBFchA87ZWw@mail.gmail.com>
+ <20131128092935.GC11444@sigill.intra.peff.net> <CAJo=hJuBTjGfF2PvaCn_v4hy4qDfFyB=FXbY0=Oz3hcE0L=L4Q@mail.gmail.com>
+ <20131204200850.GB16603@sigill.intra.peff.net> <CAJo=hJuRz9Qc8ztQATkEs8huDfiANMA6gZEOapoofVdoY82k4g@mail.gmail.com>
+ <20131205160418.GA27869@sigill.intra.peff.net> <20131205202807.GA19042@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git Mailing List <git@vger.kernel.org>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Dec 05 22:44:23 2013
+X-From: git-owner@vger.kernel.org Thu Dec 05 22:56:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vogid-00081g-9m
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Dec 2013 22:44:23 +0100
+	id 1VoguL-000807-5j
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Dec 2013 22:56:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754035Ab3LEVoT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Dec 2013 16:44:19 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39865 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752148Ab3LEVoR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Dec 2013 16:44:17 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E45D058390;
-	Thu,  5 Dec 2013 16:44:16 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=PfXgYSC13pmpxwzjRbNRZOv6R/U=; b=Kr/gB0
-	5P1x/Vf68zb1hjW7ozSqzar6aZmUtDZKVNvmDOsjfwqIXt13C6YoCf5Yz/cqfx4r
-	PFrS6b82jPiMliniTdPsPj9KxseXaNrjAv+tySe2mbMpaI26uetJCaPWPygOcmr2
-	YfsWoPtu7oCFJ61XpBdj8CKw+Ws3itChfoAlI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=slCqs/giLsS4pGXX32HCvcQnpkAUHqjp
-	UYAfDZwZkoB1yJPmqO+1ZL4MrkxSS0q7QBQ04mmXeWycCF21NQkh+7B6atD9J7er
-	q0bYw598I4phmX0KsR8O30330VdA8x/R8FWyroCBqCkJDAPyP0KgNJauGdEufaKB
-	qFFc3blNTCI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D20955838F;
-	Thu,  5 Dec 2013 16:44:16 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E41665838E;
-	Thu,  5 Dec 2013 16:44:15 -0500 (EST)
-In-Reply-To: <20131205212851.GA21776@sigill.intra.peff.net> (Jeff King's
-	message of "Thu, 5 Dec 2013 16:28:51 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 633B975E-5DF6-11E3-9E34-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752656Ab3LEV4Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Dec 2013 16:56:25 -0500
+Received: from mail-wi0-f169.google.com ([209.85.212.169]:46397 "EHLO
+	mail-wi0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751139Ab3LEV4Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Dec 2013 16:56:24 -0500
+Received: by mail-wi0-f169.google.com with SMTP id hn6so175200wib.0
+        for <git@vger.kernel.org>; Thu, 05 Dec 2013 13:56:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=spearce.org; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=GIFDAvyK1g9iocM2e/M+TcHcSYrr4H/xxBjc5bhnh9c=;
+        b=FOC1vD6A+HkIXS9ArTiKgbQ2B7Lq8PtCbqKSe9vKwNO66WYFD3DEwqb2m0m/wZFLXt
+         Li0SCV8XUfZAznbTyINhUuyDD3qxksBb0B+pdMnUdzBY/wHS9/FZV1snt5t24heERrRp
+         f8b2g/e0kbNaMqhw7bKybBoXj2p2ZwSs6zE0k=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=GIFDAvyK1g9iocM2e/M+TcHcSYrr4H/xxBjc5bhnh9c=;
+        b=XcI9WmA3p6Lo740CKUjuojsBSZNAMMIUurBx1FEiDX/Aq3hyriOsjaYiN5xi1UNZjl
+         bBCz/CQEKUGrG4/D9RS0X7J+kAstLPdcmWHrfBrN8eXyMffu4UDYfSwRHM0YqmzWW/Np
+         /o5QjetbmkzO6fOiNKvgz9t3XKIp9awQSMoqrjCdcaczWbQKyCRzmWM/2iRvMMz0/653
+         T1Ldez35S8vwPHWwKE3gVly6m6Mm+RB67Z4ZsYUJQ+bPyF53gtBIZrJEp+CkAm7XHUoM
+         66SpDucySIfLOZfCwt1SCWrscQD0xk8x2E5pNHTRessHXwTIaq4u8nzEdYdqhGoI3QJL
+         H/7Q==
+X-Gm-Message-State: ALoCoQlLiLqWgK8xnzOLkyti3hzF0+ho1CCCUQ3fDGAsozWJXFMYztpF5to/+ksZt249a3XUU35E
+X-Received: by 10.180.228.132 with SMTP id si4mr93075wic.2.1386280583566; Thu,
+ 05 Dec 2013 13:56:23 -0800 (PST)
+Received: by 10.227.192.198 with HTTP; Thu, 5 Dec 2013 13:56:03 -0800 (PST)
+In-Reply-To: <20131205202807.GA19042@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238913>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238914>
 
-Jeff King <peff@peff.net> writes:
+On Thu, Dec 5, 2013 at 12:28 PM, Jeff King <peff@peff.net> wrote:
+> Subject: pack-objects: name pack files after trailer hash
+>
+> Our current scheme for naming packfiles is to calculate the
+> sha1 hash of the sorted list of objects contained in the
+> packfile. This gives us a unique name, so we are reasonably
+> sure that two packs with the same name will contain the same
+> objects.
 
-> BTW, the raw looping to find "--" made me wonder how we handle:
->
->   git log --grep -- HEAD
->
-> I'd expect it to be equivalent to:
->
->   git log --grep=-- HEAD
->
-> but it's not; we truncate the arguments and complain that --grep is
-> missing its argument. Which is probably good enough, given that the
-> alternative is doing a pass that understands all of the options. But it
-> does mean that the "--long-opt=arg" form is safer than the split form if
-> you are passing along an arbitrary "arg".
+Yay-by: Shawn Pearce <spearce@spearce.org>
 
-;-) Good flow of thought.  As to your rev-parse change, I don't
-immediately think of a hole/flaw offhand; it looked a good
-straight-forward change to me.
+> ---
+>  pack-write.c          | 8 +-------
+>  pack.h                | 2 +-
+>  t/t5302-pack-index.sh | 4 ++--
+>  3 files changed, 4 insertions(+), 10 deletions(-)
+
+Obviously this is correct given the diffstat. :-)
