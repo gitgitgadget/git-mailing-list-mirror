@@ -1,79 +1,105 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [PATCH] pack-objects: name pack files after trailer hash
-Date: Thu, 5 Dec 2013 13:56:03 -0800
-Message-ID: <CAJo=hJtSppKYGSG9RS74AjDC_OfNy+EWWf+V7BETO0gASJS9gg@mail.gmail.com>
-References: <CACsJy8DbJZmBCnfzNqfmEnRpqVcc42Q_-jz3r=sYVRPhsCkS5A@mail.gmail.com>
- <5297004F.4090003@gmail.com> <CACsJy8AdOAPT-RfD0NfZj_cQPBSUrVKn8yS7JRe=-4k8C8TvQg@mail.gmail.com>
- <211D44CB-64A2-4FCA-B4A7-40845B97E9A1@ancientrocklab.com> <CACsJy8AOVWF2HssWNeYkVvYdmAXJOQ8HOehxJ0wpBFchA87ZWw@mail.gmail.com>
- <20131128092935.GC11444@sigill.intra.peff.net> <CAJo=hJuBTjGfF2PvaCn_v4hy4qDfFyB=FXbY0=Oz3hcE0L=L4Q@mail.gmail.com>
- <20131204200850.GB16603@sigill.intra.peff.net> <CAJo=hJuRz9Qc8ztQATkEs8huDfiANMA6gZEOapoofVdoY82k4g@mail.gmail.com>
- <20131205160418.GA27869@sigill.intra.peff.net> <20131205202807.GA19042@sigill.intra.peff.net>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: Publishing "filtered branch repositories" - workflow / recommendations?
+Date: Thu, 5 Dec 2013 17:06:14 -0500
+Message-ID: <CACPiFCJ3mkOj=E+siideBpPfgS1tSicVQ46KqPK+Tha0DbkZHw@mail.gmail.com>
+References: <CACPiFCJPq0fqOQrJD-8CHH405Xw61ZDynqqfN+_aZb3ZBgV2VA@mail.gmail.com>
+ <52A0D199.1010403@web.de> <CACPiFCKHprB_oO_eXMYkey_CGbT7WOn5VDDjBdHbLRzcDpHnZw@mail.gmail.com>
+ <52A0D9F5.3030101@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Cc: Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Dec 05 22:56:29 2013
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Thu Dec 05 23:06:42 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VoguL-000807-5j
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Dec 2013 22:56:29 +0100
+	id 1Voh4D-0006Xg-6D
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Dec 2013 23:06:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752656Ab3LEV4Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Dec 2013 16:56:25 -0500
-Received: from mail-wi0-f169.google.com ([209.85.212.169]:46397 "EHLO
-	mail-wi0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751139Ab3LEV4Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Dec 2013 16:56:24 -0500
-Received: by mail-wi0-f169.google.com with SMTP id hn6so175200wib.0
-        for <git@vger.kernel.org>; Thu, 05 Dec 2013 13:56:23 -0800 (PST)
+	id S1751654Ab3LEWGh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Dec 2013 17:06:37 -0500
+Received: from mail-vc0-f169.google.com ([209.85.220.169]:44430 "EHLO
+	mail-vc0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751287Ab3LEWGg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Dec 2013 17:06:36 -0500
+Received: by mail-vc0-f169.google.com with SMTP id hu19so14081119vcb.28
+        for <git@vger.kernel.org>; Thu, 05 Dec 2013 14:06:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spearce.org; s=google;
+        d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=GIFDAvyK1g9iocM2e/M+TcHcSYrr4H/xxBjc5bhnh9c=;
-        b=FOC1vD6A+HkIXS9ArTiKgbQ2B7Lq8PtCbqKSe9vKwNO66WYFD3DEwqb2m0m/wZFLXt
-         Li0SCV8XUfZAznbTyINhUuyDD3qxksBb0B+pdMnUdzBY/wHS9/FZV1snt5t24heERrRp
-         f8b2g/e0kbNaMqhw7bKybBoXj2p2ZwSs6zE0k=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=GIFDAvyK1g9iocM2e/M+TcHcSYrr4H/xxBjc5bhnh9c=;
-        b=XcI9WmA3p6Lo740CKUjuojsBSZNAMMIUurBx1FEiDX/Aq3hyriOsjaYiN5xi1UNZjl
-         bBCz/CQEKUGrG4/D9RS0X7J+kAstLPdcmWHrfBrN8eXyMffu4UDYfSwRHM0YqmzWW/Np
-         /o5QjetbmkzO6fOiNKvgz9t3XKIp9awQSMoqrjCdcaczWbQKyCRzmWM/2iRvMMz0/653
-         T1Ldez35S8vwPHWwKE3gVly6m6Mm+RB67Z4ZsYUJQ+bPyF53gtBIZrJEp+CkAm7XHUoM
-         66SpDucySIfLOZfCwt1SCWrscQD0xk8x2E5pNHTRessHXwTIaq4u8nzEdYdqhGoI3QJL
-         H/7Q==
-X-Gm-Message-State: ALoCoQlLiLqWgK8xnzOLkyti3hzF0+ho1CCCUQ3fDGAsozWJXFMYztpF5to/+ksZt249a3XUU35E
-X-Received: by 10.180.228.132 with SMTP id si4mr93075wic.2.1386280583566; Thu,
- 05 Dec 2013 13:56:23 -0800 (PST)
-Received: by 10.227.192.198 with HTTP; Thu, 5 Dec 2013 13:56:03 -0800 (PST)
-In-Reply-To: <20131205202807.GA19042@sigill.intra.peff.net>
+        bh=auAiP2C1g3BXO3f0aC8pru4amsAPPVrv09zw/yXTZs8=;
+        b=b3L3DdFdbBtohbMWA6n+IUuNR+mNwPiHi8ZfLPqQ8MF+rbIA2cWuxai/660bBlo1YK
+         erqoR2SRuN8sxU0LmQGQGxBD8deI/1xlCmAm1o1MbA84A1HGknkL3XjNEauYgfQH3ngj
+         g+O1OI/SEBXRWiL/LxJmzmNvBta3ik+JCz9rnQ093daIAEw3azJ/IjXLd1n6lrttQIz4
+         0YvjXkMuatEirwaGQgPuCitYl3FurRABKKMkcZRU5uoYG5CNtIsuv5I0Y5sxp3UYBWtt
+         KaUL7YuLntvlWbLVoTsVGZdXuZuI5j/s0ZD4AO9AMv58N12SVWPC9TUil2yg6fYBWfl+
+         5aQg==
+X-Received: by 10.52.241.105 with SMTP id wh9mr135421vdc.83.1386281195083;
+ Thu, 05 Dec 2013 14:06:35 -0800 (PST)
+Received: by 10.220.74.133 with HTTP; Thu, 5 Dec 2013 14:06:14 -0800 (PST)
+In-Reply-To: <52A0D9F5.3030101@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238914>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238915>
 
-On Thu, Dec 5, 2013 at 12:28 PM, Jeff King <peff@peff.net> wrote:
-> Subject: pack-objects: name pack files after trailer hash
+On Thu, Dec 5, 2013 at 2:54 PM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
+> Am 05.12.2013 20:27, schrieb Martin Langhoff:
+>> On Thu, Dec 5, 2013 at 2:18 PM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
+>>> Without knowing more I can't think of a reason why submodules should
+>>> not suit your use case (but you'd have to script branching and tagging
+>>> yourself until these commands learn to recurse into submodules too).
+>>
+>> The submodules feature is way too fiddly and has abundant gotchas.
 >
-> Our current scheme for naming packfiles is to calculate the
-> sha1 hash of the sorted list of objects contained in the
-> packfile. This gives us a unique name, so we are reasonably
-> sure that two packs with the same name will contain the same
-> objects.
+> Care to explain what bothers you the most? Being one of the people
+> improving submodules I'm really interested in hearing more about that.
 
-Yay-by: Shawn Pearce <spearce@spearce.org>
+Very glad to hear submodules is getting TLC! I have other scenarios at
+$dayjob where I may need submodules, so happy happy.
 
-> ---
->  pack-write.c          | 8 +-------
->  pack.h                | 2 +-
->  t/t5302-pack-index.sh | 4 ++--
->  3 files changed, 4 insertions(+), 10 deletions(-)
+I may be unaware of recent improvements, here's my (perhaps outdated) list
 
-Obviously this is correct given the diffstat. :-)
+ - git clone does not clone existing submodules by default. An ideal
+workflow assumes that the user wants a fully usable checkout.
+
+ - git pull does not fetch&update all submodules (assuming a trivial
+"tracking repos" scenario)
+
+ - git push does not warn if you forgot to push commits in the submodule
+
+there's possibly a few others that I've forgotten. The main issue is
+that things that are conceptually simple (clone, git pull with no
+local changes) are very fiddly. Our new developers, testers and
+support folks hurt themselves with it plenty.
+
+I don't mind complex scenarios being complex to handle. If you hit a
+nasty merge conflict in your submodule, and that's gnarly to resolve,
+that's not a showstopper.
+
+
+While writing this email, I reviewed Documentation/git-submodule.txt
+in git master, and it does seem to have grown some new options. I
+wonder if there is a tutorial with an example workflow anywhere
+showing the current level of usability. My hope is actually for some
+bits of automagic default behaviors to help things along (rather than
+new options)...
+
+Early git was very pedantic, and over time it learned some DWIMery.
+You're giving me hope that similar smarts might have grown in around
+submodule support ...
+
+cheers,
+
+
+
+m
+-- 
+ martin.langhoff@gmail.com
+ -  ask interesting questions
+ - don't get distracted with shiny stuff  - working code first
+ ~ http://docs.moodle.org/en/User:Martin_Langhoff
