@@ -1,79 +1,106 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Use mongoose to test smart-http unconditionally?
-Date: Wed, 4 Dec 2013 22:00:15 -0500
-Message-ID: <20131205030015.GB19376@sigill.intra.peff.net>
-References: <CACsJy8BHnTHRugJoTDGs7h=dF1qQUWyPXYxCU8YsDU57s+5gyg@mail.gmail.com>
- <CAJo=hJuzP=zYsEZvC5ugKaAWPLAcTzmFJxT5PNFKbBEv0ctnDw@mail.gmail.com>
- <20131204184842.GA11024@sigill.intra.peff.net>
- <20131204232800.GG29959@google.com>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH] clone,fetch: catch non positive --depth option value
+Date: Thu,  5 Dec 2013 10:31:11 +0700
+Message-ID: <1386214271-16464-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Shawn Pearce <spearce@spearce.org>, Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 05 04:00:23 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: knocte@gmail.com, Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 05 04:26:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VoPAt-0000oh-4J
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Dec 2013 04:00:23 +0100
+	id 1VoPaF-0008Qa-Pe
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Dec 2013 04:26:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756269Ab3LEDAS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Dec 2013 22:00:18 -0500
-Received: from cloud.peff.net ([50.56.180.127]:50658 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753515Ab3LEDAR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Dec 2013 22:00:17 -0500
-Received: (qmail 14401 invoked by uid 102); 5 Dec 2013 03:00:17 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 04 Dec 2013 21:00:17 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 04 Dec 2013 22:00:15 -0500
-Content-Disposition: inline
-In-Reply-To: <20131204232800.GG29959@google.com>
+	id S1756344Ab3LED0c convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Dec 2013 22:26:32 -0500
+Received: from mail-pb0-f47.google.com ([209.85.160.47]:47439 "EHLO
+	mail-pb0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756148Ab3LED0b (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Dec 2013 22:26:31 -0500
+Received: by mail-pb0-f47.google.com with SMTP id um1so24741610pbc.6
+        for <git@vger.kernel.org>; Wed, 04 Dec 2013 19:26:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:mime-version:content-type
+         :content-transfer-encoding;
+        bh=RPxAEJ5ur7FdZJ+B6Ya9fdDrJPUGrsByKjXO25x0Aw0=;
+        b=hbDW4NCj5Q0OTbHMhsKdV0ODN7IFPGnwhI/cjSEzAyfYPkemDfb2X0qt2IO6xU6+S/
+         KFsl8Rix/wsCnXnubBE4M4zmSoF2NarBmMBRA1UiFBcl4NohtbDYXJ0nEp6FyBfdBYlg
+         WB24Vjk3t1BPdMj3NXmmWGsRidPKKkLLTQaHAEfbwbQxiSRPO8B8XbR+cZd2i/VxF9ZY
+         73qr4YFORD3GRi70L+F8EvN0FaIXAbxvgCXP6V4TBZFWvSTCDpmt6hlph1v5EJ+Cksvj
+         PTETD82yAA/6RBc2bExOSp6FCvxpTVG4ykUdYv7hnKWH3I16Jgnqs7O+YcvArZDHQfWq
+         MoYA==
+X-Received: by 10.68.160.69 with SMTP id xi5mr5653867pbb.168.1386213989828;
+        Wed, 04 Dec 2013 19:26:29 -0800 (PST)
+Received: from lanh ([115.73.194.163])
+        by mx.google.com with ESMTPSA id i10sm162324020pat.11.2013.12.04.19.26.26
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 04 Dec 2013 19:26:29 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Thu, 05 Dec 2013 10:31:12 +0700
+X-Mailer: git-send-email 1.8.5.1.25.g8667982
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238840>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238841>
 
-On Wed, Dec 04, 2013 at 03:28:00PM -0800, Jonathan Nieder wrote:
+Instead of simply ignoring the value passed to --depth option when
+it is zero or negative, catch and report it as an error to let
+people know that they were using the option incorrectly.
 
-> For what it's worth, when I build git and run tests I tend to be in an
-> environment with apache available, but I'm too lazy to configure git's
-> tests to pick the right port and make sure it is reserved and so on.
-> Perhaps there's some way to help lazy people in the same boat?  (E.g.,
-> picking a port randomly and skipping instead of failing a test when
-> it's taken or something)
+Original-patch-by: Andr=C3=A9s G. Aragoneses <knocte@gmail.com>
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ This replaces aa/transport-non-positive-depth-only
 
-What level of magic do you need?
+ builtin/clone.c | 4 ++++
+ builtin/fetch.c | 4 ++++
+ 2 files changed, 8 insertions(+)
 
-For most people, "apt-get install apache && make GIT_TEST_HTTPD=yes
-test" is enough to run the tests. It uses ports in the 5000-range; this
-_can_ conflict with other services the user is running, but it should
-not usually (we don't match anything in a typical /etc/services file).
-And each script uses its own port, so running the tests in parallel is
-fine.
-
-If you are planning on running "make test" from multiple git checkouts
-at the same time, though, they will conflict.
-
-The failure mode is reasonable. You should get something like:
-
-  $ GIT_TEST_HTTPD=1 LIB_HTTPD_PORT=80 ./t5540-http-push.sh
-  1..0 # SKIP skipping test, web server setup failed
-
-We could do better by retrying with a range of ports, but unless
-somebody really needs that, I'd prefer to avoid complicating it more.
-
-The one thing I have occasionally run into is a stale apache hanging
-around. But I think that only happens when I am abusing the test script
-(e.g., sticking a test_pause in, poking around, and then not letting the
-script complete and do its cleanup).
-
-So is the current behavior good enough to meet your needs and you
-didn't know it, or do we need more?
-
--Peff
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 552f340..535b52f 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -797,6 +797,10 @@ int cmd_clone(int argc, const char **argv, const c=
+har *prefix)
+ 	if (option_local > 0 && !is_local)
+ 		warning(_("--local is ignored"));
+=20
++	/* no need to be strict, transport_set_option() will validate it agai=
+n */
++	if (option_depth && atoi(option_depth) < 1)
++		die(_("depth %s is not a positive number"), option_depth);
++
+ 	if (argc =3D=3D 2)
+ 		dir =3D xstrdup(argv[1]);
+ 	else
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 2496ad2..ed399eb 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -1047,6 +1047,10 @@ int cmd_fetch(int argc, const char **argv, const=
+ char *prefix)
+ 		}
+ 	}
+=20
++	/* no need to be strict, transport_set_option() will validate it agai=
+n */
++	if (depth && atoi(depth) < 1)
++		die(_("depth %s is not a positive number"), depth);
++
+ 	if (recurse_submodules !=3D RECURSE_SUBMODULES_OFF) {
+ 		if (recurse_submodules_default) {
+ 			int arg =3D parse_fetch_recurse_submodules_arg("--recurse-submodule=
+s-default", recurse_submodules_default);
+--=20
+1.8.5.1.25.g8667982
