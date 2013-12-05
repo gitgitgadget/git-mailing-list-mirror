@@ -1,137 +1,203 @@
-From: Shawn Pearce <spearce@spearce.org>
+From: Jeff King <peff@peff.net>
 Subject: Re: How to resume broke clone ?
-Date: Thu, 5 Dec 2013 07:11:15 -0800
-Message-ID: <CAJo=hJuRTHEO6Mpaaa7b=_ozDq3UfVNEx6iabKP4xRVoRZLcUw@mail.gmail.com>
-References: <AAA12788-A242-41B8-B47D-1A0A52F33FC1@ancientrocklab.com>
- <5296F343.6050506@gmail.com> <560807D9-CE82-4CF6-A1CC-54E7CCA624F9@ancientrocklab.com>
+Date: Thu, 5 Dec 2013 11:04:18 -0500
+Message-ID: <20131205160418.GA27869@sigill.intra.peff.net>
+References: <560807D9-CE82-4CF6-A1CC-54E7CCA624F9@ancientrocklab.com>
  <CACsJy8DbJZmBCnfzNqfmEnRpqVcc42Q_-jz3r=sYVRPhsCkS5A@mail.gmail.com>
- <5297004F.4090003@gmail.com> <CACsJy8AdOAPT-RfD0NfZj_cQPBSUrVKn8yS7JRe=-4k8C8TvQg@mail.gmail.com>
- <211D44CB-64A2-4FCA-B4A7-40845B97E9A1@ancientrocklab.com> <CACsJy8AOVWF2HssWNeYkVvYdmAXJOQ8HOehxJ0wpBFchA87ZWw@mail.gmail.com>
- <20131128092935.GC11444@sigill.intra.peff.net> <CAJo=hJuBTjGfF2PvaCn_v4hy4qDfFyB=FXbY0=Oz3hcE0L=L4Q@mail.gmail.com>
- <20131204200850.GB16603@sigill.intra.peff.net> <CAJo=hJuRz9Qc8ztQATkEs8huDfiANMA6gZEOapoofVdoY82k4g@mail.gmail.com>
- <52A07DC5.5090508@alum.mit.edu>
+ <5297004F.4090003@gmail.com>
+ <CACsJy8AdOAPT-RfD0NfZj_cQPBSUrVKn8yS7JRe=-4k8C8TvQg@mail.gmail.com>
+ <211D44CB-64A2-4FCA-B4A7-40845B97E9A1@ancientrocklab.com>
+ <CACsJy8AOVWF2HssWNeYkVvYdmAXJOQ8HOehxJ0wpBFchA87ZWw@mail.gmail.com>
+ <20131128092935.GC11444@sigill.intra.peff.net>
+ <CAJo=hJuBTjGfF2PvaCn_v4hy4qDfFyB=FXbY0=Oz3hcE0L=L4Q@mail.gmail.com>
+ <20131204200850.GB16603@sigill.intra.peff.net>
+ <CAJo=hJuRz9Qc8ztQATkEs8huDfiANMA6gZEOapoofVdoY82k4g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>,
-	zhifeng hu <zf@ancientrocklab.com>,
+Content-Type: text/plain; charset=utf-8
+Cc: Duy Nguyen <pclouds@gmail.com>, zhifeng hu <zf@ancientrocklab.com>,
 	Karsten Blees <karsten.blees@gmail.com>,
-	=?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
+	=?utf-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
 	Git Mailing List <git@vger.kernel.org>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Thu Dec 05 16:11:53 2013
+To: Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Dec 05 17:04:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Voaag-0001dH-Ec
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Dec 2013 16:11:46 +0100
+	id 1VobPd-00053f-JL
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Dec 2013 17:04:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756780Ab3LEPLl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Dec 2013 10:11:41 -0500
-Received: from mail-we0-f177.google.com ([74.125.82.177]:41073 "EHLO
-	mail-we0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756848Ab3LEPLi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Dec 2013 10:11:38 -0500
-Received: by mail-we0-f177.google.com with SMTP id u56so928785wes.8
-        for <git@vger.kernel.org>; Thu, 05 Dec 2013 07:11:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spearce.org; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=ibGBgnVjrz1bmsb8786kD1SqZVT8TU7aI0w9lMmAaTk=;
-        b=SzkWMKdIpdjdvmERa5SGvFyuSuKGKGlKO2qGaOLkVnRCiycDpr0LlESkLzGoMce1Lt
-         hm8eCWbIP01ZoYfQdOM4Eqtcn520AYihYfplhuzDACO7ZJAAgdlvn16ZbM74Izqb0uk3
-         nIGyfTE8RHFqHXvqit78Sgq6clFT62LkNOpok=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=ibGBgnVjrz1bmsb8786kD1SqZVT8TU7aI0w9lMmAaTk=;
-        b=bsFBaU5n1CSzHc0V+PpkG2S+ZXRSToNHHUSyBG/XWI+3n9HykRQL2lwau3UbSNqWDE
-         KhV+UXHMPAHZYROFD1ETRf3bvaDOq14CX95cOwbAHiybxD/pO4P+dXxrGB0g4X/n/U1R
-         YyHoCytsWBfo5Osj+JNZt+3YuA013EMuIoBkThNySfNfp6oavMR0THbh1Z6GOXv0achZ
-         iwyoOdEO5rwS0iCeyfF7wgQlnFvZmk0uDOY5tWjkilFjMtFpRQvmJdm2PogLva7huVa/
-         5iHXPqGIafkif1i9WBtt0wyEvpXScc3rSEbcnvzYeqLpKNhqjZvVa13T1nqm8bmOAJfW
-         eQrQ==
-X-Gm-Message-State: ALoCoQlztJk6IZ77dXulsBQE1HYcFh/DixNcurSGBR+c2UYTJ02n2lEuAX9R+g6fQNDEQs1WZEuX
-X-Received: by 10.180.10.74 with SMTP id g10mr12616682wib.11.1386256296807;
- Thu, 05 Dec 2013 07:11:36 -0800 (PST)
-Received: by 10.227.192.198 with HTTP; Thu, 5 Dec 2013 07:11:15 -0800 (PST)
-In-Reply-To: <52A07DC5.5090508@alum.mit.edu>
+	id S932590Ab3LEQEV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Dec 2013 11:04:21 -0500
+Received: from cloud.peff.net ([50.56.180.127]:50989 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932336Ab3LEQEU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Dec 2013 11:04:20 -0500
+Received: (qmail 17852 invoked by uid 102); 5 Dec 2013 16:04:20 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 05 Dec 2013 10:04:20 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 05 Dec 2013 11:04:18 -0500
+Content-Disposition: inline
+In-Reply-To: <CAJo=hJuRz9Qc8ztQATkEs8huDfiANMA6gZEOapoofVdoY82k4g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238886>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238889>
 
-On Thu, Dec 5, 2013 at 5:21 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
-> This discussion has mostly been about letting small Git servers delegate
-> the work of an initial clone to a beefier server.  I haven't seen any
-> explicit mention of the inverse:
->
-> Suppose a company has a central Git server that is meant to be the
-> "single source of truth", but has worldwide offices and wants to locate
-> bootstrap mirrors in each office.  The end users would not even want to
-> know that there are multiple servers.  Hosters like GitHub might also
-> encourage their big customers to set up bootstrap mirror(s) in-house to
-> make cloning faster for their users while reducing internet traffic and
-> the burden on their own infrastructure.  The goal would be to make the
-> system transparent to users and easily reconfigurable as circumstances
-> change.
+On Wed, Dec 04, 2013 at 10:50:27PM -0800, Shawn Pearce wrote:
 
-I think there is a different way to do that.
+> I wasn't thinking about using a "well known blob" for this.
+> 
+> Jonathan, Dave, Colby and I were kicking this idea around on Monday
+> during lunch. If the initial ref advertisement included a "mirrors"
+> capability the client could respond with "want mirrors" instead of the
+> usual want/have negotiation. The server could then return the mirror
+> URLs as pkt-lines, one per pkt. Its one extra RTT, but this is trivial
+> compared to the cost to really clone the repository.
 
-Build a caching Git proxy server. And teach Git clients to use it.
+I don't think this is any more or less efficient than the blob scheme.
+In both cases, the client sends a single "want" line and no "have"
+lines, and then the server responds with the output (either pkt-lines,
+or a single-blob pack).
 
+What I like about the blob approach is:
 
-One idea we had at $DAY_JOB a couple of years ago was to build a
-daemon that sat in the background and continuously fetched content
-from repository upstreams. We made it efficient by modifying the Git
-protocol to use a hanging network socket, and the upstream server
-would broadcast push pack files down these hanging streams as pushes
-were received.
+  1. It requires zero extra code on the server. This makes
+     implementation simple, but also means you can deploy it
+     on existing servers (or even on non-pkt-line servers like
+     dumb http).
 
-The original intent was for an Android developer to be able to have
-his working tree forest of 500 repositories subscribe to our internal
-server's broadcast stream. We figured if the server knows exactly
-which refs every client has, because they all have the same ones, and
-their streams are all still open and active, then the server can make
-exactly one incremental thin pack and send the same copy to every
-client. Its "just" a socket write problem. Instead of packing the same
-stuff 100x for 100x clients its packed once and sent 100x.
+  2. It's very debuggable from the client side. You can fetch the blob,
+     look at it, and decide which mirror you want outside of git if you
+     want to (true, you can teach the git client to dump the pkt-line
+     URLs, too, but that's extra code). You could even do this with an
+     existing git client that has not yet learned about the mirror
+     redirect.
 
-Then we realized remote offices could also install this software on a
-local server, and use this as a fan-out distributor within the LAN. We
-were originally thinking about some remote offices on small Internet
-connections, where delivery of 10 MiB x 20 was a lot but delivery of
-10 MiB once and local fan-out on the Ethernet was easy.
+  3. It removes any size or structure limits that the protocol imposes
+     (I was planning to use git-config format for the blob itself). The
+     URLs themselves aren't big, but we may want to annotate them with
+     metadata.
 
-The JGit patches for this work are still pending[1].
+     You mentioned "this is a bundle" versus "this is a regular http
+     server" below. You might also want to provide network location
+     information (e.g., "this is a good mirror if you are in Asia"),
+     though for the most part I'd expect that to happen magically via
+     CDN.
 
+     When we discussed this before, the concept came up of offering not
+     just a clone bundle, but "slices" of history (as thin-pack
+     bundles), so that a fetch could grab a sequence of resumable
+     slices, starting with what they have, and then topping off with a
+     true fetch. You would want to provide the start and end points of
+     each slice.
 
-If clients had a local Git-aware cache server in their office and
-~/.gitconfig had the address of it, your problem becomes simple.
+  4. You can manage it remotely via the git protocol (more discussion
+     below).
 
-Clients clone from the public URL e.g. GitHub, but the local cache
-server first gives the client a URL to clone from itself. After that
-is complete then the client can fetch from the upstream. The cache
-server can be self-maintaining, watching its requests to see what is
-accessed often-ish, and keep those repositories current-ish locally by
-running git fetch itself in the background.
+  5. A clone done with "--mirror" will actually propagate the mirror
+     file automatically.
 
-Its easy to do this with bundles on "CDN" like HTTP. Just use the
-office's caching HTTP proxy server. Assuming its cache is big enough
-for those large Git bundle payloads, and the viral cat videos. But you
-are at the mercy of the upstream bundler rebuilding the bundles. And
-refetching them in whole. Neither of which is great.
+What are the advantages of the pkt-line approach? The biggest one I can
+think of is that it does not pollute the refs namespace. While (5) is
+convenient in some cases, it would make it more of a pain if you are
+trying to keep a clone mirror up to date, but do _not_ want to pass
+along upstream's mirror file.
 
-A simple self-contained server that doesn't accept pushes, but knows
-how to clone repositories, fetch them periodically, and run `git gc`,
-works well. And the mirror URL extension we have been discussing in
-this thread would work fine here. The cache server can return URLs
-that point to itself. Or flat out proxy the Git transaction with the
-origin server.
+You may want to have a server implementation that offers a dynamic
+mirror, rather than a true object we have in the ODB. That is possible
+with a mirror blob, but is slightly harder (you have to fake the object
+rather than just dumping a line).
 
+> These pkt-lines need to be a bit more than just URL. Or we need a new
+> URL like "bundle:http://...." to denote a resumable bundle over HTTP
+> vs. a normal HTTP URL that might not be a bundle file, and is just a
+> better connected server.
 
-[1] https://git.eclipse.org/r/#/q/owner:wetherbeei%2540google.com+status:open,n,z
+Right, I think that's the most critical one (though you could also just
+use the convention of ".bundle" in the URL). I think we may want to
+leave room for more metadata, though.
+
+> The mirror URLs could be stored in $GIT_DIR/config as a simple
+> multi-value variable. Unfortunately that isn't easily remotely
+> editable. But I am not sure I care?
+
+For big sites that manage the bundles on behalf of the user, I don't
+think it is an issue. For somebody running their own small site, I think
+it is a useful way of moving the data to the server.
+
+> For the average home user sharing their working repository over git://
+> from their home ADSL or cable connection, editing .git/config is
+> easier than a blob in refs/mirrors. They already know how to edit
+> .git/config to manage remotes.
+
+Yes, but it's editing .git/config on the server, not on the client,
+which may be slightly harder for some people. I do think we'd want
+some tool support on the client side. git-config recently learned to
+read from a blob. The next step is:
+
+  git config --blob=refs/mirrors --edit
+
+or
+
+  git config --blob=refs/mirrors mirror.ko.url git://git.kernel.org/...
+  git config --blob=refs/mirrors mirror.ko.bundle true
+
+We can't add tool support for editing .git/config on the server side,
+because the method for doing so isn't standard.
+
+> Heck, remote.origin.url might already
+> be a good mirror address to advertise, especially if the client isn't
+> on the same /24 as the server and the remote.origin.url is something
+> like "git.kernel.org". :-)
+
+You could have a "git-advertise-upstream" that generates a mirror blob
+from your remotes config and pushes it to your publishing point. That
+may be overkill, but I don't think it's possible with a
+.git/config-based solution.
+
+> > That's clever. It does not work out of the box if you are using
+> > alternates, but I think it could be adapted in certain situations. E.g.,
+> > if you layer the pack so that one "base" repo always has its full pack
+> > at the start, which is something we're already doing at GitHub.
+> 
+> Yes, well, I was assuming the pack was a fully connected repack.
+> Alternates always creates a partial pack. But if you have an
+> alternate, that alternate maybe should be given as a mirror URL? And
+> allow the client to recurse the alternate mirror URL list too?
+
+The problem for us is not that we have a partial pack, but that the
+alternates pack has a lot of other junk in it. A linux.git clone is
+650MB or so. The packfile for all of the linux.git forks together on
+GitHub is several gigabytes.
+
+> What really got us worried was the bundle header has no checksums, and
+> a resume in the bundle header from the wrong version could be
+> interesting.
+
+The bundle header is small enough that you should just throw it away if
+you didn't get the whole thing (IIRC, that is what my patches do,
+because it does not do _anything_ until we receive the whole ref
+advertisement, at which point we decide if it is smart, dumb, or a
+bundle).
+
+> Yes. And this is why the packfile name algorithm is horribly flawed. I
+> keep saying we should change it to name the pack using the last 20
+> bytes of the file but ... nobody has written the patch for that?  :-)
+
+Totally agree. I think we could also get rid of the horrible hacks in
+repack where we pack to a tempfile, then have to do another tempfile
+dance (which is not atomic!) to move the same-named packfile out of the
+way. If the name were based on the content, we could just throw away our
+new pack if one of the same name is already there (just like we do for
+loose objects).
+
+I haven't looked at making such a patch, but I think it shouldn't be too
+complicated. My big worry would be weird fallouts from some hidden part
+of the code that we don't realize is depending on the current naming
+scheme. :)
+
+-Peff
