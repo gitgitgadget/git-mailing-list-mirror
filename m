@@ -1,135 +1,80 @@
-From: =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-Subject: Re: Build issue for git 1.8.5.1 under Mac OS X 10.8 (Mountain Lion)
-Date: Thu, 05 Dec 2013 08:07:21 +0100
-Message-ID: <52A02629.7030906@web.de>
-References: <6D4FDF40-DD9A-4875-9D8F-9678BE95FF73@gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: Fwd: [PATCH 4/5] Replace {pre,suf}fixcmp() with {starts,ends}_with()
+Date: Thu, 5 Dec 2013 08:19:11 +0100
+Message-ID: <CAP8UFD1+2-JuU0EPcfWUHpcfqrp9MODZBd4XEwVv-d6C8Nk=nA@mail.gmail.com>
+References: <20131201074818.3042.57357.chriscool@tuxfamily.org>
+	<20131201074919.3042.92026.chriscool@tuxfamily.org>
+	<CAP8UFD0jg_Vr7Zf+DiMX9RG6vmmQvmk2NvmL7j=MC-x3fLOOBA@mail.gmail.com>
+	<20131203124645.GB26667@sigill.intra.peff.net>
+	<CAP8UFD0By77QVH1amsh85dX6h1S3iFZcmPzs3JjPZmiD_AmOPQ@mail.gmail.com>
+	<xmqqk3fkjq5c.fsf@gitster.dls.corp.google.com>
+	<xmqqfvq8jmv5.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Marius Schamschula <mschamschula@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 05 08:07:42 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Jeff King <peff@peff.net>, git <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Dec 05 08:19:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VoT2E-0002le-2h
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Dec 2013 08:07:42 +0100
+	id 1VoTDQ-0001Gu-RO
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Dec 2013 08:19:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751698Ab3LEHHa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Dec 2013 02:07:30 -0500
-Received: from mout.web.de ([212.227.15.4]:55282 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751453Ab3LEHH3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Dec 2013 02:07:29 -0500
-Received: from [192.168.1.103] ([194.47.242.237]) by smtp.web.de (mrweb103)
- with ESMTPSA (Nemesis) id 0MNcMo-1Vvdll16XC-007B5n for <git@vger.kernel.org>;
- Thu, 05 Dec 2013 08:07:27 +0100
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:17.0) Gecko/20131104 Icedove/17.0.10
-In-Reply-To: <6D4FDF40-DD9A-4875-9D8F-9678BE95FF73@gmail.com>
-X-Provags-ID: V03:K0:Ukq2xtLidRuxTz4cXs9gf1MAGwn8aXfWm7c0W9Y2ydyvXxd2LAl
- vw5V24DYeNr6oOqISogBdrb+9Y+VfHzwvjonFYsL9AJjUqL3MhboVHiFEv4BKFIX68trpyi
- +o1vMB8a/UDEajt/JFwiCvOAvAYg9059fShfFPh3W1aJMEw/CEzgEXVa84CIpD6WNNpfzGc
- mflPuKO4r40d8LdZL8eHg==
+	id S1751958Ab3LEHTN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Dec 2013 02:19:13 -0500
+Received: from mail-vc0-f170.google.com ([209.85.220.170]:38813 "EHLO
+	mail-vc0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751453Ab3LEHTM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Dec 2013 02:19:12 -0500
+Received: by mail-vc0-f170.google.com with SMTP id ht10so12889736vcb.1
+        for <git@vger.kernel.org>; Wed, 04 Dec 2013 23:19:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=d02fvuqz5azWmsofGeOUkccOwkp2NjvgJANjRMwyyqQ=;
+        b=ulyNA4KPa0JM23WOlcW9ywuNLaa346FeNyNp5UukuDuwXfRrLS0qDoExVSbcovpJ7Z
+         kpzYLJPQ+p6/UTcNGLRpmUvtbRb8Uekv+G11bgwzYSk1Vh+h2FmDFeXx7cZNB3MSZqqC
+         lkYUvYCbVXqLq+30tzHQu/z6wKeWfvEjrmhPgWPzNio1S1gwv9n48LD0H94IoJeq+Rdf
+         //58ZdJ9zBRzNoU/3z2/HdC6nZdpCUYIUIqMjdL9x60Vzpe337/sED8LY8uJ5Lo3MTkF
+         FzN4ePXLzNnbsMQeWXpoj6s96ram6HCz6az1hQRt8HEommAYB+YjLrASduwDkrC4+/Zl
+         5fMw==
+X-Received: by 10.58.118.36 with SMTP id kj4mr10085614veb.2.1386227951688;
+ Wed, 04 Dec 2013 23:19:11 -0800 (PST)
+Received: by 10.58.253.136 with HTTP; Wed, 4 Dec 2013 23:19:11 -0800 (PST)
+In-Reply-To: <xmqqfvq8jmv5.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238845>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238846>
 
-On 12/04/2013 07:48 PM, Marius Schamschula wrote:
-> Hi all,
+On Wed, Dec 4, 2013 at 11:02 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
 >
-> Over the years I have built many versions of git and released them on=
- hmug.org. git 1.8.5.1 builds just fine under OS 10.7 (Lion) and 10.9 (=
-Mavericks), but the build fails (also for 1.8.5) on 10.8 (Mountain Lion=
-):
->
-> <snip>
-> GIT_VERSION =3D 1.8.5.1
->      * new build flags
->      CC credential-store.o
-> In file included from git-compat-util.h:330:0,
->                   from cache.h:4,
->                   from credential-store.c:1:
-> compat/apple-common-crypto.h: In function 'git_CC_EVP_EncodeBlock':
-> compat/apple-common-crypto.h:32:2: error: 'SecTransformRef' undeclare=
-d (first use in this function)
-> compat/apple-common-crypto.h:32:2: note: each undeclared identifier i=
-s reported only once for each function it appears in
-> compat/apple-common-crypto.h:32:18: error: expected ';' before 'encod=
-er'
-> compat/apple-common-crypto.h:36:2: error: 'encoder' undeclared (first=
- use in this function)
-> compat/apple-common-crypto.h:36:2: warning: implicit declaration of f=
-unction 'SecEncodeTransformCreate'
-> compat/apple-common-crypto.h:36:37: error: 'kSecBase64Encoding' undec=
-lared (first use in this function)
-> compat/apple-common-crypto.h:40:2: warning: implicit declaration of f=
-unction 'SecTransformSetAttribute'
-> compat/apple-common-crypto.h:40:36: error: 'kSecTransformInputAttribu=
-teName' undeclared (first use in this function)
-> compat/apple-common-crypto.h:44:2: warning: implicit declaration of f=
-unction 'SecTransformExecute'
-> compat/apple-common-crypto.h: In function 'git_CC_EVP_DecodeBlock':
-> compat/apple-common-crypto.h:62:2: error: 'SecTransformRef' undeclare=
-d (first use in this function)
-> compat/apple-common-crypto.h:62:18: error: expected ';' before 'decod=
-er'
-> compat/apple-common-crypto.h:66:2: error: 'decoder' undeclared (first=
- use in this function)
-> compat/apple-common-crypto.h:66:2: warning: implicit declaration of f=
-unction 'SecDecodeTransformCreate'
-> compat/apple-common-crypto.h:66:37: error: 'kSecBase64Encoding' undec=
-lared (first use in this function)
-> compat/apple-common-crypto.h:70:36: error: 'kSecTransformInputAttribu=
-teName' undeclared (first use in this function)
-> Makefile:1975: recipe for target 'credential-store.o' failed
-> make: *** [credential-store.o] Error 1
-> </snip>
->
-> Apparently a header issue: I tried force feeding the Security/SecEncr=
-yptTransform.h file, and just got an other error=85
->
-> Any help would be welcome!
->
-> Thanks in advance.
->
-> Marius
-> --
-> Marius Schamschula
+>> Christian Couder <christian.couder@gmail.com> writes:
+>>
+>>> Ok, the commit is in the use_starts_ends_with branch on this github repo:
+>>>
+>>> https://github.com/chriscool/git.git
+>>
+>> I looked at the patches, and they looked alright.  The endgame needs
+>> to be on a separate topic to be held until a distant future, though.
+>>
+>> Will queue.  Thanks.
 
-I can't reproduce it here (in other words, it compiles)
-What could help is to run the preprocessor, and see what the compiler s=
-ee.
+Great!
 
-a) Patch the Makefile of git like this:
+> It turns out that, naturally, there are many new uses of prefixcmp
+> in the topics in flight.  I can manage, but adjusting all of them
+> would not look too pretty X-<.
 
--- a/Makefile
-+++ b/Makefile
-@@ -349,7 +349,8 @@ GIT-VERSION-FILE: FORCE
+Tell me if I can do something.
+I can prepare patches for the topics in flight in 'next' for example.
 
-  # CFLAGS and LDFLAGS are for the users to override from the command l=
-ine.
-
--CFLAGS =3D -g -O2 -Wall
-+#CFLAGS =3D -g -O2 -Wall
-+CFLAGS=3D -E
-b) Compile credential-store.o (Which is now an ASCII file)
-
-credential-store.o ; make credential-store.o
-
-c) Take an editor and have a look.
-    On my system SecTransform.h is here:
------------------
-/System/Library/Frameworks/Security.framework/Headers/SecTransform.h"
-
-d) And the file contains something like this:
----------------
-typedef CFTypeRef SecTransformRef;
-typedef CFTypeRef SecGroupTransformRef;
-
-
-/Torsten
+Thanks,
+Christian.
