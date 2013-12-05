@@ -1,61 +1,83 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: What's cooking in git.git (Dec 2013, #01; Wed, 4)
-Date: Thu, 5 Dec 2013 09:01:09 +0700
-Message-ID: <CACsJy8BR-DPSxdNzJupHsktP1nPW79TJ_8N__xfOaAdP4MBp5g@mail.gmail.com>
-References: <xmqqiov4hz07.fsf@gitster.dls.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Use mongoose to test smart-http unconditionally?
+Date: Wed, 4 Dec 2013 21:49:38 -0500
+Message-ID: <20131205024938.GA19376@sigill.intra.peff.net>
+References: <CACsJy8BHnTHRugJoTDGs7h=dF1qQUWyPXYxCU8YsDU57s+5gyg@mail.gmail.com>
+ <xmqqa9ggl6oq.fsf@gitster.dls.corp.google.com>
+ <20131204222522.GA16706@sigill.intra.peff.net>
+ <xmqq38m8jkiu.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=utf-8
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Dec 05 03:01:46 2013
+X-From: git-owner@vger.kernel.org Thu Dec 05 03:49:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VoOG9-0007pF-RE
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Dec 2013 03:01:46 +0100
+	id 1VoP0a-0002wU-I4
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Dec 2013 03:49:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933402Ab3LECBm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Dec 2013 21:01:42 -0500
-Received: from mail-qa0-f48.google.com ([209.85.216.48]:35726 "EHLO
-	mail-qa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756337Ab3LECBl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Dec 2013 21:01:41 -0500
-Received: by mail-qa0-f48.google.com with SMTP id w5so7285579qac.14
-        for <git@vger.kernel.org>; Wed, 04 Dec 2013 18:01:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=/YLhmFX59oMidTz9cnRrR22n/KxtUv/LlsJUnwzruRU=;
-        b=rcgq3KGJxOGJ+dHv8rS1r5WCjjdkwxVKNq4rC4gPKZQxXdXvRzF/CdGJ2sHVdeoucU
-         zdsxqDWXtDIJMTfVHwk0hF0HAKp4WUL/q9SOevqJs9a+CXOUBwdAg3OlpBH9M+sQtCe2
-         KHufUyV6V0oO7+IrGeAkKbFoRJ4hUaerZW1oVPYZ2PT+R02qoQitkohaMQFqjQPix+2/
-         OnvTc5giUnwpoeFvY/pzzs8vbS1fdhGgSzT7PybdcwC1jWTXL0O47wJsnBM/YfQaFq0Q
-         YmBUoYND8ZlTt2qC6ME3yxPqjjPIYrUt4TUiS24z03TZCRxjieIyGZlP1HnbV/CnJM5C
-         Vgig==
-X-Received: by 10.224.24.131 with SMTP id v3mr140723766qab.48.1386208899642;
- Wed, 04 Dec 2013 18:01:39 -0800 (PST)
-Received: by 10.96.124.101 with HTTP; Wed, 4 Dec 2013 18:01:09 -0800 (PST)
-In-Reply-To: <xmqqiov4hz07.fsf@gitster.dls.corp.google.com>
+	id S933209Ab3LECtk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Dec 2013 21:49:40 -0500
+Received: from cloud.peff.net ([50.56.180.127]:50650 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756255Ab3LECtk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Dec 2013 21:49:40 -0500
+Received: (qmail 13944 invoked by uid 102); 5 Dec 2013 02:49:40 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 04 Dec 2013 20:49:40 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 04 Dec 2013 21:49:38 -0500
+Content-Disposition: inline
+In-Reply-To: <xmqq38m8jkiu.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238837>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238838>
 
-On Thu, Dec 5, 2013 at 8:23 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> * aa/transport-non-positive-depth-only (2013-11-26) 1 commit
->   (merged to 'next' on 2013-11-27 at b01f05b)
->  + transport: catch non positive --depth option value
->
->  Will merge to 'master'.
+On Wed, Dec 04, 2013 at 02:53:13PM -0800, Junio C Hamano wrote:
 
-Don't. It breaks smart-http [1]. I'm starting to think catching this
-at fetch/clone level is probably better. But I need to add a test case
-to exercise this backfill_tags code in smart-http first.
+> If it involves making things not tested with apache, I'd actually be
+> less supportive for the whole plan.
 
-[1] http://thread.gmane.org/gmane.comp.version-control.git/238714/focus=238720
--- 
-Duy
+I hadn't really considered that angle. Apache is a much more realistic
+real-world deployment. We give advice for it in git-http-backend(1), and
+the tests do check that that advice works (OTOH, we also give advice for
+lighttpd, but that is not checked in the test scripts).
+
+> I thought the primary objective was to encourage people who currently
+> are _not_ running httpd tests by making a lightweight server available
+> out of the box, robbing an excuse "my box does not have apache
+> installed" from them.
+
+Whether we get rid of apache or not, I think a new lightweight server
+would fulfill that goal. I just did not want the maintenance burden of
+managing multiple configs (and our test harness apache config has grown
+non-trivial).
+
+> As long as a server supports bog standard CGI interface, smart-http
+> should work the same way with any such server.  For that reason, it
+> should be theoretically sufficient to test with one non-apache
+> server (i.e. mongoose) for the purpose of making sure _our_ end of
+> the set-up works, but still...
+
+There are definitely subtleties between servers. For example, when I
+worked on fetching bundles over http a while back, there was a big
+difference between lighttpd and apache. A request for
+"http://example.com/foo.bundle/info/refs" would return the bundle under
+lighttpd, but not under apache (for an apache server, we would have to
+make a fallback request). The client needs to be able to handle both
+scenarios gracefully.
+
+That's a case where it would be nice to be able to test _both_ cases,
+and that may be an argument for having multiple (or trying to configure
+apache to do both behaviors). But it shows that there may be subtle
+differences between a fake test server and a real deployment.
+
+So thinking on it more, I'm somewhat less enthusiastic about mongoose.
+
+-Peff
