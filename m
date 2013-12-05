@@ -1,73 +1,58 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Use mongoose to test smart-http unconditionally?
-Date: Wed, 4 Dec 2013 15:28:00 -0800
-Message-ID: <20131204232800.GG29959@google.com>
-References: <CACsJy8BHnTHRugJoTDGs7h=dF1qQUWyPXYxCU8YsDU57s+5gyg@mail.gmail.com>
- <CAJo=hJuzP=zYsEZvC5ugKaAWPLAcTzmFJxT5PNFKbBEv0ctnDw@mail.gmail.com>
- <20131204184842.GA11024@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] contrib/git-credential-gnome-keyring.c: small stylistic cleanups
+Date: Wed, 04 Dec 2013 16:16:00 -0800
+Message-ID: <xmqqtxeoi24f.fsf@gitster.dls.corp.google.com>
+References: <1386066764-49711-1-git-send-email-john@szakmeister.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Shawn Pearce <spearce@spearce.org>, Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Dec 05 00:28:14 2013
+Cc: git@vger.kernel.org
+To: John Szakmeister <john@szakmeister.net>
+X-From: git-owner@vger.kernel.org Thu Dec 05 01:16:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VoLrZ-0007xw-I6
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Dec 2013 00:28:13 +0100
+	id 1VoMc5-0003H8-0O
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Dec 2013 01:16:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756185Ab3LDX2I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Dec 2013 18:28:08 -0500
-Received: from mail-yh0-f44.google.com ([209.85.213.44]:55418 "EHLO
-	mail-yh0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753641Ab3LDX2F (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Dec 2013 18:28:05 -0500
-Received: by mail-yh0-f44.google.com with SMTP id f64so12096380yha.17
-        for <git@vger.kernel.org>; Wed, 04 Dec 2013 15:28:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=/xqp+X1kk6khBKrdVDAu8HJa1lhW1nLwg+5sjRxtVSo=;
-        b=G7mi5HWmPrcLLi+ayrBrcxOXuaFlhRKgUVeFzSOoskmmuWJ1fhYHcWcCasHKWDMqKa
-         6Er6/E6wjvL869Rw9AodoZARn1oeP3q42cJvHzUEqc3NcsEyCg3nP8vh7RyctTaTNpEv
-         kMbAIA9U7IPWdDkEF4JN5JkXBknUjtGc0QGyupZMt3Cgfpofd6Fx815ITpJEPwx0+5q+
-         MUDIy5pZm7c1wm8tOigHys6ZH/N5g4EP3aDSqnrGDVmD8igygQ2N7PpxaQA7rhtqyeYM
-         +G7OVuOOA6gtj9Np7EHkmERGOUMFbmimY68AlEArXSowXNi4I3rTIPVSQtwT1y3sbYxH
-         vyJg==
-X-Received: by 10.236.35.71 with SMTP id t47mr8466738yha.72.1386199684871;
-        Wed, 04 Dec 2013 15:28:04 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id o27sm10964876yhb.19.2013.12.04.15.28.02
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 04 Dec 2013 15:28:03 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20131204184842.GA11024@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1756102Ab3LEAQM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Dec 2013 19:16:12 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38349 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753140Ab3LEAQK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Dec 2013 19:16:10 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 13CFB589C7;
+	Wed,  4 Dec 2013 19:16:10 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=d8SN2ftBLo8S+nEqUgWPPSiFfoY=; b=kQ1ZRP
+	uj0l4lejBfY260QVnlAlA+K9wekVCo8BMCItcbfr4yA/IiakwpQcqJYYI1PwnRZX
+	mQInHa4ahTzwtcP7pZDNUzcdD2ErAl+pEz3IYxQWh6mAdHdPrWFg81gg/GYZ/Oph
+	UTXp8gxtqfZAjHyOq9RCoLreEp98nyyKlncQM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=jOYX9NF85IFhLZErLrmbEwtBCrnQPNX1
+	TXsOZAXZjgHoLXfepMV2U3inggbkUuVPeosLGQF51vCNkfiFbN8LLgYWjMSPDhgX
+	4ZWDbUD3ZInQ530VSyMAbszfdI8rfJ2g6WbleCXKxfOD/jR6RogXcrWWNPK6tQ98
+	YqTR0yu3cSE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DCAB8589C5;
+	Wed,  4 Dec 2013 19:16:09 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BC571589BD;
+	Wed,  4 Dec 2013 19:16:05 -0500 (EST)
+In-Reply-To: <1386066764-49711-1-git-send-email-john@szakmeister.net> (John
+	Szakmeister's message of "Tue, 3 Dec 2013 05:32:44 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 6EBB133E-5D42-11E3-B346-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238828>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238829>
 
-Jeff King wrote:
-
-> I don't know if it is worth all that much effort, though. I suppose it
-> could get us more exposure to the httpd tests, but I do not know if it
-> would be a good idea to turn them on by default anyway. They touch
-> global machine resources (like ports) that can cause conflicts or test
-> failures. I assume that is the reason we do not turn on git-daemon tests
-> by default
-
-Yup, that's why I don't run them.
-
-For what it's worth, when I build git and run tests I tend to be in an
-environment with apache available, but I'm too lazy to configure git's
-tests to pick the right port and make sure it is reserved and so on.
-Perhaps there's some way to help lazy people in the same boat?  (E.g.,
-picking a port randomly and skipping instead of failing a test when
-it's taken or something)
+Thanks, will queue.
