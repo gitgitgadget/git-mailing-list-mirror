@@ -1,137 +1,106 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH 3/3] pathspec.c: support adding prefix magic to a pathspec with mnemonic magic
-Date: Fri,  6 Dec 2013 14:30:49 +0700
-Message-ID: <1386315049-19097-4-git-send-email-pclouds@gmail.com>
-References: <1386315049-19097-1-git-send-email-pclouds@gmail.com>
+From: "SCHILZ MANFRED" <manfred.schilz@bgl.lu>
+Subject: RE: problems with git --git-dir on windows 7
+Date: Fri, 6 Dec 2013 09:17:29 +0100
+Message-ID: <EF40980AA2C4C4449E2D87B419007B7F18E0FAD5@SPMWB01L.luinternal.fortis.bank>
+References: <EF40980AA2C4C4449E2D87B419007B7F18E0FACA@SPMWB01L.luinternal.fortis.bank>     <EF40980AA2C4C4449E2D87B419007B7F18E0FACB@SPMWB01L.luinternal.fortis.bank>     <CACsJy8DBYOwTOapOdLf=hTTWQB1U5U74FKSbUmqwXBAG++C=kg@mail.gmail.com> <52A129D5.3050109@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 06 08:26:29 2013
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: base64
+Cc: "Duy Nguyen" <pclouds@gmail.com>,
+	"Git Mailing List" <git@vger.kernel.org>,
+	"msysGit" <msysgit@googlegroups.com>
+To: <vnwildman@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 06 09:17:41 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vopnw-0005Is-HJ
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Dec 2013 08:26:28 +0100
+	id 1VoqbT-0003j8-Dr
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Dec 2013 09:17:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754029Ab3LFH0Y convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 6 Dec 2013 02:26:24 -0500
-Received: from mail-pd0-f176.google.com ([209.85.192.176]:35029 "EHLO
-	mail-pd0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753822Ab3LFH0X (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Dec 2013 02:26:23 -0500
-Received: by mail-pd0-f176.google.com with SMTP id w10so546975pde.35
-        for <git@vger.kernel.org>; Thu, 05 Dec 2013 23:26:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=QCw08M4xgwkiFKJYJjkAoJ8JrhEfQoWSNHJD1MWXI38=;
-        b=uHiq7qLQ7N97TNqQ3pfaOjm9ewqHGumPvhF7+SYtoYYzTyR66k6y9NJimc70O3T9oG
-         2UHGOYwM86Aj4rqco+WXMK+RhUuzdUxhIxxl/y/JGHahs3a0R6Q3zEi03MT+NN6RGDXx
-         u4/GZd32B10Q5qH6cI+rQzsDsOQZ9+nZ0o8JHpmsORfvQgVSv0Ze9wcHR/X+Eq8B85Kw
-         1bDYmF6rpZlTWt2m59Aa2DiBmzrtOf0rNueCtuxdJRMjDB+e9RT9B8ELiiUkQXUr+A7A
-         QCtCEzxM94OoDbUwy5+JhwjH3Ib8bGR9cykERBPeYbm3y4pBYiWAnaztAH00nBMn1cd8
-         wuNg==
-X-Received: by 10.66.162.167 with SMTP id yb7mr2479395pab.16.1386314783061;
-        Thu, 05 Dec 2013 23:26:23 -0800 (PST)
-Received: from lanh ([115.73.194.163])
-        by mx.google.com with ESMTPSA id bp5sm149576593pbb.18.2013.12.05.23.26.20
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 05 Dec 2013 23:26:22 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Fri, 06 Dec 2013 14:31:07 +0700
-X-Mailer: git-send-email 1.8.5.1.25.g8667982
-In-Reply-To: <1386315049-19097-1-git-send-email-pclouds@gmail.com>
+	id S1751958Ab3LFIRf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Dec 2013 03:17:35 -0500
+Received: from mail3.fortis.lu ([212.190.206.132]:2100 "EHLO mail3.fortis.lu"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751619Ab3LFIRe (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Dec 2013 03:17:34 -0500
+X-TM-IMSS-Message-ID: <5c9b2220001cdd6c@bgl.lu>
+Received: from spmwf01l.luinternal.fortis.bank (unverified) by swina164.lumgt.fortis.bank
+ (mail.fortis.lu) with ESMTP id <Tafd39b52930ab105471554@swina164.lumgt.fortis.bank>;
+ Fri, 6 Dec 2013 09:17:28 +0100
+Received: from SPMWB01L.luinternal.fortis.bank ([10.173.124.243]) by spmwf01l.luinternal.fortis.bank with Microsoft SMTPSVC(6.0.3790.4675);
+	 Fri, 6 Dec 2013 09:17:30 +0100
+Content-class: urn:content-classes:message
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+In-Reply-To: <52A129D5.3050109@gmail.com>
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: problems with git --git-dir on windows 7
+Thread-Index: Ac7yI3mtcpM2sT89Q9Ki4Pfajbs+nAANhshA
+X-OriginalArrivalTime: 06 Dec 2013 08:17:30.0216 (UTC) FILETIME=[9B52BE80:01CEF25B]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238928>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238929>
 
-Back in 233c3e6 (parse_pathspec: preserve prefix length via
-PATHSPEC_PREFIX_ORIGIN - 2013-07-14), parse_pathspec() is taught to
-save prefix length as a dynamic magic. This is needed when the
-pathspec is passed to another process and and prefix lenght would be
-lost.
-
-Back then we support two cases. If the pathspec is normal, e.g. "abc",
-we simply add the prefix to become ":(prefix:2)abc". If the pathspec
-contains long magic, e.g. ":(foo,bar)abc" then we turn it to
-":(foo,bar,prefix:2)abc". We do not support prefixing on short form,
-because the only supported mnemonic '/' disappears after the the
-preprocessing steps.
-
-With the introduction of exclude magic with mnemonic '!', we need to
-add support for the short form case so that ':!abc' becomes
-':(exclude,prefix:2)abc'. Without this, it will break
-
-    cd Documentation
-    git add -p -- . ':!technical'
-
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- pathspec.c | 28 ++++++++++++++++++----------
- 1 file changed, 18 insertions(+), 10 deletions(-)
-
-diff --git a/pathspec.c b/pathspec.c
-index 4e6a727..2b7f2e2 100644
---- a/pathspec.c
-+++ b/pathspec.c
-@@ -74,6 +74,20 @@ static struct pathspec_magic {
- 	{ PATHSPEC_EXCLUDE, '!', "exclude" },
- };
-=20
-+static void prefix_short_magic(struct strbuf *sb, int prefixlen,
-+			       unsigned short_magic)
-+{
-+	int i;
-+	strbuf_addstr(sb, ":(");
-+	for (i =3D 0; i < ARRAY_SIZE(pathspec_magic); i++)
-+		if (short_magic & pathspec_magic[i].bit) {
-+			if (sb->buf[sb->len - 1] !=3D '(')
-+				strbuf_addch(sb, ',');
-+			strbuf_addstr(sb, pathspec_magic[i].name);
-+		}
-+	strbuf_addf(sb, ",prefix:%d)", prefixlen);
-+}
-+
- /*
-  * Take an element of a pathspec and check for magic signatures.
-  * Append the result to the prefix. Return the magic bitmap.
-@@ -233,22 +247,16 @@ static unsigned prefix_pathspec(struct pathspec_i=
-tem *item,
- 	 */
- 	if (flags & PATHSPEC_PREFIX_ORIGIN) {
- 		struct strbuf sb =3D STRBUF_INIT;
--		const char *start =3D elt;
- 		if (prefixlen && !literal_global) {
- 			/* Preserve the actual prefix length of each pattern */
- 			if (short_magic)
--				die("BUG: prefixing on short magic is not supported");
-+				prefix_short_magic(&sb, prefixlen, short_magic);
- 			else if (long_magic_end) {
--				strbuf_add(&sb, start, long_magic_end - start);
--				strbuf_addf(&sb, ",prefix:%d", prefixlen);
--				start =3D long_magic_end;
--			} else {
--				if (*start =3D=3D ':')
--					start++;
-+				strbuf_add(&sb, elt, long_magic_end - elt);
-+				strbuf_addf(&sb, ",prefix:%d)", prefixlen);
-+			} else
- 				strbuf_addf(&sb, ":(prefix:%d)", prefixlen);
--			}
- 		}
--		strbuf_add(&sb, start, copyfrom - start);
- 		strbuf_addstr(&sb, match);
- 		item->original =3D strbuf_detach(&sb, NULL);
- 	} else
---=20
-1.8.5.1.25.g8667982
+SGkgYWxsLA0KDQpUaGFua3MgZm9yIHlvdXIgYW5zd2VyczoNCkFzIHlvdSBzYWlkIHRoZSBzb2x1
+dGlvbiBpczoNCg0KRm9yIG5vbi1iYXJlLXJlcG9zIHRoZSAuZ2l0LWRpcmVjdG9yeSBtdXN0IGJl
+IHNwZWNpZmllZDogIA0KZ2l0IC0tZ2l0LWRpcj1jOlx1c2VydGVtcFxnaXRcYXBwbGkyXC5naXQg
+dGFnDQoNCmZvciBiYXJlLXJlcG9zaXRvcmllcyB0aGUgLmdpdCBkb2VzIG5vdCBleGlzdCAsIHNv
+DQpnaXQgLS1naXQtZGlyPWM6XHVzZXJ0ZW1wXGdpdFxhcHBsaTNfYmFyZSB0YWcgICAgICAgIA0K
+d29ya3MoYmFyZS1yZXBvKSBjb3JyZWN0bHkNCg0KDQp0aGFua3MgYSBsb3QNCg0KTWFuZnJlZA0K
+DQotLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KRnJvbTogVHLhuqduIE5n4buNYyBRdcOibiBb
+bWFpbHRvOnZud2lsZG1hbkBnbWFpbC5jb21dIA0KU2VudDogdmVuZHJlZGkgNiBkw6ljZW1icmUg
+MjAxMyAwMjozNQ0KVG86IFNDSElMWiBNQU5GUkVEDQpDYzogRHV5IE5ndXllbjsgR2l0IE1haWxp
+bmcgTGlzdDsgbXN5c0dpdA0KU3ViamVjdDogUmU6IHByb2JsZW1zIHdpdGggZ2l0IC0tZ2l0LWRp
+ciBvbiB3aW5kb3dzIDcNCg0KKioqKiogVGhpcyBtZXNzYWdlIGNvbWVzIGZyb20gdGhlIEludGVy
+bmV0IE5ldHdvcmsgKioqKioNCg0KT24gMDYvMTIvMjAxMyAwODowNywgRHV5IE5ndXllbiB3cm90
+ZToNCj4gT24gV2VkLCBEZWMgNCwgMjAxMyBhdCAxMToxMSBQTSwgU0NISUxaIE1BTkZSRUQgPG1h
+bmZyZWQuc2NoaWx6QGJnbC5sdT4gd3JvdGU6DQo+PiBIZWxsbywNCj4+IFdlIGFyZSB1c2luZyBn
+aXQgb24gd2luZG93czcoZ2l0LXZlcnNpb24gMS44LjE7IHNlZSBiZWxvdykgYW5kIHdlIGdldCB0
+aGUgZm9sbG93aW5nIHByb2JsZW0gaW4gdXNpbmcgdGhlIGNvbW1hbmQgJ2dpdCAtLWdpdC1kaXI9
+Jw0KPj4NCj4+DQo+PiBDOlxVc2VyVGVtcFxnaXRcYXBwbGkzPmdpdCAgLS1naXQtZGlyPUM6XFVz
+ZXJUZW1wXGdpdFxhcHBsaTMgdGFnDQo+PiBmYXRhbDogTm90IGEgZ2l0IHJlcG9zaXRvcnk6ICdD
+OlxVc2VyVGVtcFxnaXRcYXBwbGkzJw0KPj4NCj4+DQo+PiBidXQgdGhlIHJlcG9zaXRvcnkgaXMg
+d2VsbCBkZWZpbmVkLGFzIHdlIGNhbiBydW4gdGhlIGZvbGxvd2luZyBjb21tYW5kOg0KPj4NCj4+
+IEM6XFVzZXJUZW1wXGdpdFxhcHBsaTM+Z2l0IGxvZyAtMSAtLW9uZWxpbmUNCj4+IDM3Y2RiZTAg
+TWVyZ2UgYnJhbmNoICdtYXN0ZXInIG9mIA0KPj4gTDovX0FwcGxpY2F0aW9uRGF0YS9GQkxVX0lU
+LUZMSVQvc2UtRGV2ZWxvcFN1cHANCj4gSSBoYXZlIG5vIGNsdWUuIFRoZSAtLWdpdC1kaXIgY2Fs
+bHMNCj4gaXNfZ2l0X2RpcmVjdG9yeSgiQzpcXFVzZXJUZW1wXFxnaXRcXGFwcGxpMyIpIHdoaWxl
+IHRoZSAiZ2l0IGxvZyINCj4gY2FsbHMgaXNfZ2l0X2RpcmVjdG9yeSgiLiIpLiBUaGUgZm9ybWVy
+IGZhaWxzIGFuZCB0aGUgbGF0dGVyIHN1Y2VlZHMuLg0KPiBDb3B5aW5nIG1zeXNnaXRAIG1heWJl
+IHRoZXkga25vdyBzb21ldGhpbmcuIEJ0dyB3aGF0IGlmIHlvdSB0cnkNCj4NCj4gZ2l0IC0tZ2l0
+LWRpcj0uIHRhZw0KaW4gbGludXg6DQokIGdpdCAtLWdpdC1kaXI9LiB0YWcNCmZhdGFsOiBOb3Qg
+YSBnaXQgcmVwb3NpdG9yeTogJy4nDQoNCj4NCj4gPw0KWW91IGhhdmUgdG8gc3BlY2lmeSBnaXQg
+ZGlyIGluc3RlYWQgb2YgdGhlIGRpciBjb250YWluIC5naXQgVGhpcyBvcHRpb24gdXNlIHdoZW4g
+eW91ciBhcmUgbm90IGluIGdpdCByZXBvIG9yIGdpdCBkaXIgaXNuJ3QgLmdpdCBhcyBieSBkZWZh
+dWx0ICQgZ2l0IC0tZ2l0LWRpcj0uZ2l0IHRhZyAkIGdpdCAtLWdpdC1kaXI9L21udC9FL015UHJv
+amVjdHMvZ2l0Ly5naXQgdGFnICQgZ2l0IC0tdmVyc2lvbiBnaXQgdmVyc2lvbiAxLjguNS1yYzEN
+Cg0KPg0KPj4gV2hlbiBydW5uaW5nIHRoZSBlcXVpdmFsZW50IGNvbW1hbmQgb24gTGludXgsIHdl
+IGRvbid0IGhhdmUgYW55IHByb2JsZW1zOg0KPj4gT24gTGludXg6DQo+Pj4gZ2l0IC0tZ2l0LWRp
+cj0iL3RtcC9HSVRQT0MvYXBwbGkzIiB0YWcNCj4+IFYxLjANCj4+IFYxLjENCj4+IFYyLjANCj4+
+IFYzLjANCj4+DQo+PiBDb3VsZCB5b3UgaGVscCBtZSBwbGVhc2UgPw0KPj4NCj4+IEJlc3QgcmVn
+YXJkcw0KPj4NCj4+IE1hbmZyZWQgU2NoaWx6DQo+Pg0KPj4gLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQo+PiAtLS0t
+LS0tLS0tLS0tLS0tLS0NCj4+IEM6XFVzZXJUZW1wXGdpdFxhcHBsaTM+Z2l0IC0tdmVyc2lvbg0K
+Pj4gZ2l0IHZlcnNpb24gMS44LjEubXN5c2dpdC4xDQo+Pg0KPj4gPT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT0NCj4+IEludGVybmV0IGNvbW11bmljYXRpb25zIGFy
+ZSBub3Qgc2VjdXJlIGFuZCB0aGVyZWZvcmUgQkdMIEJOUCBQYXJpYmFzIGRvZXMgbm90IGFjY2Vw
+dCBsZWdhbCByZXNwb25zaWJpbGl0eSBmb3IgdGhlIGNvbnRlbnRzIG9mIHRoaXMgbWVzc2FnZS4g
+VGhlIGluZm9ybWF0aW9uIGNvbnRhaW5lZCBpbiB0aGlzIGUtbWFpbCBpcyBjb25maWRlbnRpYWwg
+YW5kIG1heSBiZSBsZWdhbGx5IHByaXZpbGVnZWQuIEl0IGlzIGludGVuZGVkIHNvbGVseSBmb3Ig
+dGhlIGFkZHJlc3NlZS4gSWYgeW91IGFyZSBub3QgdGhlIGludGVuZGVkIHJlY2lwaWVudCwgYW55
+IGRpc2Nsb3N1cmUsIGNvcHlpbmcsIGRpc3RyaWJ1dGlvbiBvciBhbnkgYWN0aW9uIHRha2VuIG9y
+IG9taXR0ZWQgdG8gYmUgdGFrZW4gaW4gcmVsaWFuY2Ugb24gaXQsIGlzIHByb2hpYml0ZWQgYW5k
+IG1heSBiZSB1bmxhd2Z1bC4gTm90aGluZyBpbiB0aGUgbWVzc2FnZSBpcyBjYXBhYmxlIG9yIGlu
+dGVuZGVkIHRvIGNyZWF0ZSBhbnkgbGVnYWxseSBiaW5kaW5nIG9ibGlnYXRpb25zIG9uIGVpdGhl
+ciBwYXJ0eSBhbmQgaXQgaXMgbm90IGludGVuZGVkIHRvIHByb3ZpZGUgbGVnYWwgYWR2aWNlLg0K
+Pj4gPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0NCj4+DQo+PiAt
+LQ0KPj4gVG8gdW5zdWJzY3JpYmUgZnJvbSB0aGlzIGxpc3Q6IHNlbmQgdGhlIGxpbmUgInVuc3Vi
+c2NyaWJlIGdpdCIgaW4gdGhlIA0KPj4gYm9keSBvZiBhIG1lc3NhZ2UgdG8gbWFqb3Jkb21vQHZn
+ZXIua2VybmVsLm9yZyBNb3JlIG1ham9yZG9tbyBpbmZvIGF0ICANCj4+IGh0dHA6Ly92Z2VyLmtl
+cm5lbC5vcmcvbWFqb3Jkb21vLWluZm8uaHRtbA0KPg0KPg0KDQoNCi0tDQpUcuG6p24gTmfhu41j
+IFF1w6JuLg0KDQo=
