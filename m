@@ -1,130 +1,148 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] fixup! config: arbitrary number of matches for --unset and --replace-all
-Date: Fri,  6 Dec 2013 10:46:42 -0800
-Message-ID: <1386355602-21818-1-git-send-email-gitster@pobox.com>
-References: <06ba1524cbe4fa31b6e1a8d644882521aeaff4f4.1384337608.git.tr@thomasrast.ch>
-Cc: Thomas Rast <tr@thomasrast.ch>, Jeff King <peff@peff.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 06 19:47:05 2013
+From: Muzaffer Tolga Ozses <tolga@ozses.net>
+Subject: Re: Git reports
+Date: Fri, 6 Dec 2013 21:19:43 +0200
+Message-ID: <CAMAQ3nLgnpDo1jWFL1rqtEvmQm8LeEpZ41Uxo0GTQOk8ttpSZA@mail.gmail.com>
+References: <CAMAQ3n+OtBdYALh4pg6kywtbgPtQjHr6Xc-2ff63df-h=TLwbA@mail.gmail.com>
+	<20131206210035.17413ee7bcdf3ca0c9655d81@domain007.com>
+	<20131206210958.59f553060e3802d56f4a53b8@domain007.com>
+	<CAMAQ3nKVjF-5oW2pZZaD9MSz9wqoXJBQDoGcdy5mb=gxCguuSA@mail.gmail.com>
+	<20131206215334.1a9031a1450d9c436943ce3d@domain007.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Konstantin Khomoutov <flatworm@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Fri Dec 06 20:19:59 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vp0QN-0006Mk-Rd
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Dec 2013 19:46:52 +0100
+	id 1Vp0wK-0000Ru-1M
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Dec 2013 20:19:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758572Ab3LFSqr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Dec 2013 13:46:47 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38701 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758262Ab3LFSqp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Dec 2013 13:46:45 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D5F3C56D37;
-	Fri,  6 Dec 2013 13:46:44 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=hGqg
-	OE47mZ2xUGlB5OSu/12tDtY=; b=wCs9KQrmer6s0ujJdFMsJecaldNBDQFiUqMo
-	1rZRCpA1bjM7hkKbI4pLcCGuQUKRkMr4xD7+lSCsk/IZ1k8fDSc6ItS52M92fcUO
-	IVdkCatTxUShm+fpcyTc6valUujriadewRE+3vG3/ZSUkXNOyXtYngtzUz58U45k
-	wG+ZW+s=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references; q=dns; s=sasl; b=
-	DVPIzew+5KuPHAEZMLAxh1AqfQ/fLHDOpOv4GodH6sovSPGyM3G94oKlr6oHrVF3
-	jk4cJjwcNRmAz0hLzcjGyAryi0RXDLJb+NmdeiE2luPJrw+7eLq2OicocacnXmTW
-	MrSr16KW5ZYRLxLWfn6jFdevH4b0U1ZOuK0PJr+5PJk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B44AB56D36;
-	Fri,  6 Dec 2013 13:46:44 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 01DA356D35;
-	Fri,  6 Dec 2013 13:46:43 -0500 (EST)
-X-Mailer: git-send-email 1.8.5.1-402-gdd8f092
-In-Reply-To: <06ba1524cbe4fa31b6e1a8d644882521aeaff4f4.1384337608.git.tr@thomasrast.ch>
-X-Pobox-Relay-ID: C09A7248-5EA6-11E3-B5D5-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753652Ab3LFTTr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Dec 2013 14:19:47 -0500
+Received: from mail-we0-f180.google.com ([74.125.82.180]:57223 "EHLO
+	mail-we0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753223Ab3LFTTq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Dec 2013 14:19:46 -0500
+Received: by mail-we0-f180.google.com with SMTP id t61so1096527wes.25
+        for <git@vger.kernel.org>; Fri, 06 Dec 2013 11:19:43 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=C15uEx3qCrmA3nZaalrIEKDYQWqzzM24DQutESr31lQ=;
+        b=HQM9Scj5DAmwtJrJOCkmAmGBiyeWFJd7q2AjTNt3iMXjdIzEIlQTB7UYRZM/13Lvy0
+         X+tlRHzozAFnHj6JnUBUFG3ncnCOGEwA0hf1SVu9g36nY7NnaA55m+brZ+QElGdYRsMr
+         O0AN8cnLnNGse6AEyGFTvBpV9kAhib4pRmwEgD+UnemtcJw22YsqO4qIPF7gYZWZ9jPZ
+         kbO9PjD6XM/r2/mWUTUAw39SxOyDgxWUbVksOGRxgbsgzRFCKjg7X7iN0GGH5tqxYWkB
+         HyUPjq3Su5ggy7GymeZPsM7r9+MvaZpJQrewqx5/RVLPMxdk/pvXYl6k3DMcA59Q3ZvE
+         1RZQ==
+X-Gm-Message-State: ALoCoQkkZbYMqxrVtdKZ++zbwIMSjNgn3DNySd40tRUqDi85tZUi6qp5rvjppPoI8PC8x0/r4/UO
+X-Received: by 10.180.90.65 with SMTP id bu1mr3915992wib.15.1386357583305;
+ Fri, 06 Dec 2013 11:19:43 -0800 (PST)
+Received: by 10.216.174.70 with HTTP; Fri, 6 Dec 2013 11:19:43 -0800 (PST)
+X-Originating-IP: [46.196.57.29]
+In-Reply-To: <20131206215334.1a9031a1450d9c436943ce3d@domain007.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238943>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238944>
 
----
- * I'll squash this to tr/config-multivalue-lift-max in preparation
-   for merging it to 'master',which should happen by the end of
-   this week.
+Hi,
 
-   Thanks.
+> What protocol/transport are you using (http, ssh, git)?
+I am cloning over http
 
- config.c                |  8 ++++----
- t/t1303-wacky-config.sh | 14 +++++++-------
- 2 files changed, 11 insertions(+), 11 deletions(-)
+> Can you try running with:
 
-diff --git a/config.c b/config.c
-index 431dcb7..a1e80da 100644
---- a/config.c
-+++ b/config.c
-@@ -1192,7 +1192,7 @@ static int store_aux(const char *key, const char *value, void *cb)
- 				warning("%s has multiple values", key);
- 			}
- 
--			ALLOC_GROW(store.offset, store.seen+1,
-+			ALLOC_GROW(store.offset, store.seen + 1,
- 				   store.offset_alloc);
- 
- 			store.offset[store.seen] = cf->do_ftell(cf);
-@@ -1222,14 +1222,14 @@ static int store_aux(const char *key, const char *value, void *cb)
- 		 * Do not increment matches: this is no match, but we
- 		 * just made sure we are in the desired section.
- 		 */
--		ALLOC_GROW(store.offset, store.seen+1,
-+		ALLOC_GROW(store.offset, store.seen + 1,
- 			   store.offset_alloc);
- 		store.offset[store.seen] = cf->do_ftell(cf);
- 		/* fallthru */
- 	case SECTION_END_SEEN:
- 	case START:
- 		if (matches(key, value)) {
--			ALLOC_GROW(store.offset, store.seen+1,
-+			ALLOC_GROW(store.offset, store.seen + 1,
- 				   store.offset_alloc);
- 			store.offset[store.seen] = cf->do_ftell(cf);
- 			store.state = KEY_SEEN;
-@@ -1239,7 +1239,7 @@ static int store_aux(const char *key, const char *value, void *cb)
- 			      !strncmp(key, store.key, store.baselen)) {
- 					store.state = SECTION_SEEN;
- 					ALLOC_GROW(store.offset,
--						   store.seen+1,
-+						   store.seen + 1,
- 						   store.offset_alloc);
- 					store.offset[store.seen] = cf->do_ftell(cf);
- 			}
-diff --git a/t/t1303-wacky-config.sh b/t/t1303-wacky-config.sh
-index 7d55730..3a2c819 100755
---- a/t/t1303-wacky-config.sh
-+++ b/t/t1303-wacky-config.sh
-@@ -66,13 +66,13 @@ setup_many() {
- 	# Semi-efficient way of concatenating 5^5 = 3125 lines. Note
- 	# that because 'setup' already put one line, this means 3126
- 	# entries for section.key in the config file.
--	cat >5to1 <<EOF
--  key = foo
--  key = foo
--  key = foo
--  key = foo
--  key = foo
--EOF
-+	cat >5to1 <<-\EOF &&
-+	  key = foo
-+	  key = foo
-+	  key = foo
-+	  key = foo
-+	  key = foo
-+	EOF
- 	cat 5to1 5to1 5to1 5to1 5to1 >5to2 &&	   # 25
- 	cat 5to2 5to2 5to2 5to2 5to2 >5to3 &&	   # 125
- 	cat 5to3 5to3 5to3 5to3 5to3 >5to4 &&	   # 635
--- 
-1.8.5.1-402-gdd8f092
+ GIT_TRACE_PACKET=$PWD/trace.out git clone ...
+GIT_TRACE_PACKET=$PWD/trace.out git clone
+http://git.webciniz.im/project/night_pharmacy.git
+Cloning into 'night_pharmacy'...
+Checking connectivity... done
+
+That's all I get. No trace.out was written.
+
+> So let's do the next test: does
+
+    echo test >&2
+
+print "test" on the box where Git does not report progress?
+
+Yes it does.
+
+> Another one: does Git report progress if you explicitly pass --progress
+to it?
+
+git clone --progress http://git.webciniz.im/project/night_pharmacy.git
+Cloning into 'night_pharmacy'...
+Checking connectivity... done
+
+That's all I get
+
+> Does it work if you do
+
+    git clone $URL 2>&1
+
+git clone http://git.webciniz.im/project/night_pharmacy.git 2>&1
+Cloning into 'night_pharmacy'...
+Checking connectivity... done
+
+That's all I get.
+
+Regards
+mto
+
+On 6 December 2013 19:53, Konstantin Khomoutov
+<flatworm@users.sourceforge.net> wrote:
+> On Fri, 6 Dec 2013 19:44:21 +0200
+> Muzaffer Tolga Ozses <tolga@ozses.net> wrote:
+>
+> [...]
+>> >> > Resolving deltas: 100% (369/369), done.
+>> >> >
+>> >> > whereas I don't get those with my own. What could I be doing
+>> >> > wrong?
+> [...]
+>> >> So it might turn out on your own server Git for some reason fails
+>> >> to figure out its standard error stream is connected to a terminal.
+>> >> Or, the error stream of your shell process is redirected somewhere
+>> >> (and hence inherited by Git).
+> [...]
+>> > So you might face a misbehaving shell logon script for instance.
+>> >
+>> > As to whether Git senses the TTY -- what does running
+>> >
+>> >   stty
+>> >
+>> > tells you?  Does it fail with something like "inappropriate ioctl
+>> > for device" or prints a couple of settings?
+>> stty tells me
+>> speed 38400 baud; line = 0;
+>> eol = M-^?; eol2 = M-^?; swtch = M-^?;
+>> ixany iutf8
+>>
+>> And I run identical commands on both servers, only URL changes.
+>
+> OK, so we could supposedly rule out the possibility Git does not sense
+> it's connected to a terminal.
+>
+> So let's do the next test: does
+>
+>     echo test >&2
+>
+> print "test" on the box where Git does not report progress?
+>
+> Another one: does Git report progress if you explicitly pass --progress
+> to it?
+>
+> Does it work if you do
+>
+>     git clone $URL 2>&1
+>
+> ?
+>
+> What Git and OS versions are on both machines?
