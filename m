@@ -1,74 +1,60 @@
-From: Charlie Dyson <charlie@charliedyson.net>
-Subject: git-submodule.sh respects submodule.$name.update in .git/config but
- not .gitmodules
-Date: Fri, 6 Dec 2013 15:48:46 +0000
-Message-ID: <CABYr9QtSeX=Euf73MZPq6suo+GpVA=f+tH73Ct0tP-3LYogh9w@mail.gmail.com>
+From: Muzaffer Tolga Ozses <tolga@ozses.net>
+Subject: Git reports
+Date: Fri, 6 Dec 2013 18:51:47 +0200
+Message-ID: <CAMAQ3n+OtBdYALh4pg6kywtbgPtQjHr6Xc-2ff63df-h=TLwbA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 06 16:48:55 2013
+X-From: git-owner@vger.kernel.org Fri Dec 06 17:51:57 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Voxe9-0002ia-TO
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Dec 2013 16:48:54 +0100
+	id 1Voyd9-0000JH-VE
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Dec 2013 17:51:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757767Ab3LFPsu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Dec 2013 10:48:50 -0500
-Received: from mail-pb0-f48.google.com ([209.85.160.48]:61804 "EHLO
-	mail-pb0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754021Ab3LFPss (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Dec 2013 10:48:48 -0500
-Received: by mail-pb0-f48.google.com with SMTP id md12so1279128pbc.35
-        for <git@vger.kernel.org>; Fri, 06 Dec 2013 07:48:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:date:message-id:subject:from:to:content-type;
-        bh=WhY+Ba1evq07eEs3SEGtwMBD7WqhldMbXWKhZ73aSWk=;
-        b=ziMf73ayBi5ASunAFYn7LtLtKokMLSYj65FKQhdPmjveadD+z814TcOZt/fpYX3wAj
-         5Mb769zReoKd4CTh18VRqbVeKEZNSSQvqUo6TCV3CB1Y2OO5V4n4AQycFktVA8hrTfMy
-         NEWTy4it0nPY2DnaAbUoQ9iqvC5B1P7MlKcqwnzDyytxVw/IHra/+5eP5prURoGmDyO2
-         R6sDuVYj0+S4uy+cUX6wVfIpljKPGafwu0UBRpoc/sqDzlw6jLEaxqMylSPFjVe0VNNJ
-         1umG3EmY/zejYQlxW61yVUniKw1H4GSbJh8rFAE6ikaSY65KwN/19wW0OebU1iQgFw1C
-         GTtQ==
-X-Received: by 10.66.182.199 with SMTP id eg7mr4960367pac.135.1386344926904;
- Fri, 06 Dec 2013 07:48:46 -0800 (PST)
-Received: by 10.68.247.161 with HTTP; Fri, 6 Dec 2013 07:48:46 -0800 (PST)
-X-Google-Sender-Auth: QlYlJNeaqmbucgMj_Uwb_QkhrBA
+	id S1161024Ab3LFQvv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Dec 2013 11:51:51 -0500
+Received: from mail-wi0-f169.google.com ([209.85.212.169]:64319 "EHLO
+	mail-wi0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751287Ab3LFQvv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Dec 2013 11:51:51 -0500
+Received: by mail-wi0-f169.google.com with SMTP id hn6so1244547wib.4
+        for <git@vger.kernel.org>; Fri, 06 Dec 2013 08:51:47 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=binxy0Qj9jLpibBIdcqZfpxHdjMbwfmzna8q+CAdovA=;
+        b=KkaaWl6ZxNgAIZhvNjgwqJjNd0MfBPix8mVTWGVaONq5YO0EuTbeT/MZLtcLqphuEu
+         LpnhhGY3nnQHUe9K+Dtp2EEJkfzLP7JtdkwM/jFe3Ye02IzEhzRfyqbWE2q2iuCKBZS3
+         /otYjB+QKaHojHVHOjFjLBlJjXLuBf+9y8Zobp13mN3ZxQPRPfUvJKc4NLpo0jHxgG0m
+         FC1wyUqgYidAL63bqFUWOugYTHttt6+zdYuQUhKI7pcqMPIcog+9cQwneb8uzKYnUGHE
+         FXFsV3ECkUuok9vv+/eBXLFhRNfGC2o74DMwe39zuT9e6esh5PF01vTTqv82Scytxm78
+         DdzQ==
+X-Gm-Message-State: ALoCoQk0cwSLFN778v+NT9rwmbnL6H6te0bBNTJablcf9XsQRfANWIIsgStT5JufQoIU6hLJcY7Z
+X-Received: by 10.180.108.42 with SMTP id hh10mr3346091wib.15.1386348707467;
+ Fri, 06 Dec 2013 08:51:47 -0800 (PST)
+Received: by 10.216.174.70 with HTTP; Fri, 6 Dec 2013 08:51:47 -0800 (PST)
+X-Originating-IP: [46.196.57.29]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238932>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238933>
 
-gitmodules(5) states that submodule.$name.update should be defined in
-.gitmodules. However in cmd_update() in git-submodule.sh, git config
-is used with "-f .gitmodules". Consequently this flag is only
-respected in .git/config
+Hi,
 
-Tested against: 1.8.2.1 [sorry! I've checked the relevant bit of
-source and it's the same]
+On another git server, I get reports like
+Cloning into 'tcmb'...
+remote: Counting objects: 704, done.
+remote: Compressing objects: 100% (574/574), done.
+remote: Total 704 (delta 369), reused 107 (delta 60)
+Receiving objects: 100% (704/704), 129.99 KiB | 23 KiB/s, done.
+Resolving deltas: 100% (369/369), done.
 
-Steps to reproduce:
-$ git init
-$ git submodule add -b master someproject
-$ git config -f .gitmodules --add submodule.someproject.update merge
-$ # Go to someproject and commit something
-$ git submodule update --remote
+whereas I don't get those with my own. What could I be doing wrong?
 
-The latter does not perform a merge, and behaviour is visibly
-different to adding --merge.
-
-I would submit a patch but I'm not completely sure what the behaviour
-would be - simply adding "-f .gitmodules" would hurt users that have
-adopted the practice of specifying their update preference in
-.git/config.
-
-Perhaps the right thing to do is read from .git/config and fall back
-to .gitmodules using get_submodule_config().
-
-Cheers,
-
-Charlie
+Regards,
+mto
