@@ -1,106 +1,114 @@
-From: "SCHILZ MANFRED" <manfred.schilz@bgl.lu>
-Subject: RE: problems with git --git-dir on windows 7
-Date: Fri, 6 Dec 2013 09:17:29 +0100
-Message-ID: <EF40980AA2C4C4449E2D87B419007B7F18E0FAD5@SPMWB01L.luinternal.fortis.bank>
-References: <EF40980AA2C4C4449E2D87B419007B7F18E0FACA@SPMWB01L.luinternal.fortis.bank>     <EF40980AA2C4C4449E2D87B419007B7F18E0FACB@SPMWB01L.luinternal.fortis.bank>     <CACsJy8DBYOwTOapOdLf=hTTWQB1U5U74FKSbUmqwXBAG++C=kg@mail.gmail.com> <52A129D5.3050109@gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: Publishing "filtered branch repositories" - workflow / recommendations?
+Date: Fri, 06 Dec 2013 09:48:41 +0100
+Message-ID: <52A18F69.70002@web.de>
+References: <CACPiFCJPq0fqOQrJD-8CHH405Xw61ZDynqqfN+_aZb3ZBgV2VA@mail.gmail.com> <52A0D199.1010403@web.de> <CACPiFCKHprB_oO_eXMYkey_CGbT7WOn5VDDjBdHbLRzcDpHnZw@mail.gmail.com> <52A0D9F5.3030101@web.de> <CACPiFCJ3mkOj=E+siideBpPfgS1tSicVQ46KqPK+Tha0DbkZHw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: base64
-Cc: "Duy Nguyen" <pclouds@gmail.com>,
-	"Git Mailing List" <git@vger.kernel.org>,
-	"msysGit" <msysgit@googlegroups.com>
-To: <vnwildman@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 06 09:17:41 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Martin Langhoff <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 06 09:48:49 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VoqbT-0003j8-Dr
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Dec 2013 09:17:39 +0100
+	id 1Vor5c-0001FM-Fj
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Dec 2013 09:48:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751958Ab3LFIRf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Dec 2013 03:17:35 -0500
-Received: from mail3.fortis.lu ([212.190.206.132]:2100 "EHLO mail3.fortis.lu"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751619Ab3LFIRe (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Dec 2013 03:17:34 -0500
-X-TM-IMSS-Message-ID: <5c9b2220001cdd6c@bgl.lu>
-Received: from spmwf01l.luinternal.fortis.bank (unverified) by swina164.lumgt.fortis.bank
- (mail.fortis.lu) with ESMTP id <Tafd39b52930ab105471554@swina164.lumgt.fortis.bank>;
- Fri, 6 Dec 2013 09:17:28 +0100
-Received: from SPMWB01L.luinternal.fortis.bank ([10.173.124.243]) by spmwf01l.luinternal.fortis.bank with Microsoft SMTPSVC(6.0.3790.4675);
-	 Fri, 6 Dec 2013 09:17:30 +0100
-Content-class: urn:content-classes:message
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-In-Reply-To: <52A129D5.3050109@gmail.com>
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: problems with git --git-dir on windows 7
-Thread-Index: Ac7yI3mtcpM2sT89Q9Ki4Pfajbs+nAANhshA
-X-OriginalArrivalTime: 06 Dec 2013 08:17:30.0216 (UTC) FILETIME=[9B52BE80:01CEF25B]
+	id S1754035Ab3LFIsn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Dec 2013 03:48:43 -0500
+Received: from mout.web.de ([212.227.15.3]:58266 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751543Ab3LFIsm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Dec 2013 03:48:42 -0500
+Received: from [192.168.178.41] ([84.132.154.249]) by smtp.web.de (mrweb004)
+ with ESMTPA (Nemesis) id 0LgK3g-1VCGg129Ey-00nhjN for <git@vger.kernel.org>;
+ Fri, 06 Dec 2013 09:48:41 +0100
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.1.1
+In-Reply-To: <CACPiFCJ3mkOj=E+siideBpPfgS1tSicVQ46KqPK+Tha0DbkZHw@mail.gmail.com>
+X-Enigmail-Version: 1.6
+X-Provags-ID: V03:K0:UQS4V1qfFQR5xwE1gWNJNPHY2riDk07vO/f6yOvlG4hGgoI/RnB
+ M55hhJjULcI7f+2A6izE+wQH2szwKVxh2UQUCsLqtoNoqu8v0PSHdJ+5r/dwiafVl+3ZSwt
+ pUaUAPnh79RJ4jdbwVyk0SwV9EOlOU+F1RyA8dfOdEiBraKyIv9u0+CouSBlMXPkbiqJ8+K
+ uwjS0LevRQX1vCAg/N26Q==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238929>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238930>
 
-SGkgYWxsLA0KDQpUaGFua3MgZm9yIHlvdXIgYW5zd2VyczoNCkFzIHlvdSBzYWlkIHRoZSBzb2x1
-dGlvbiBpczoNCg0KRm9yIG5vbi1iYXJlLXJlcG9zIHRoZSAuZ2l0LWRpcmVjdG9yeSBtdXN0IGJl
-IHNwZWNpZmllZDogIA0KZ2l0IC0tZ2l0LWRpcj1jOlx1c2VydGVtcFxnaXRcYXBwbGkyXC5naXQg
-dGFnDQoNCmZvciBiYXJlLXJlcG9zaXRvcmllcyB0aGUgLmdpdCBkb2VzIG5vdCBleGlzdCAsIHNv
-DQpnaXQgLS1naXQtZGlyPWM6XHVzZXJ0ZW1wXGdpdFxhcHBsaTNfYmFyZSB0YWcgICAgICAgIA0K
-d29ya3MoYmFyZS1yZXBvKSBjb3JyZWN0bHkNCg0KDQp0aGFua3MgYSBsb3QNCg0KTWFuZnJlZA0K
-DQotLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KRnJvbTogVHLhuqduIE5n4buNYyBRdcOibiBb
-bWFpbHRvOnZud2lsZG1hbkBnbWFpbC5jb21dIA0KU2VudDogdmVuZHJlZGkgNiBkw6ljZW1icmUg
-MjAxMyAwMjozNQ0KVG86IFNDSElMWiBNQU5GUkVEDQpDYzogRHV5IE5ndXllbjsgR2l0IE1haWxp
-bmcgTGlzdDsgbXN5c0dpdA0KU3ViamVjdDogUmU6IHByb2JsZW1zIHdpdGggZ2l0IC0tZ2l0LWRp
-ciBvbiB3aW5kb3dzIDcNCg0KKioqKiogVGhpcyBtZXNzYWdlIGNvbWVzIGZyb20gdGhlIEludGVy
-bmV0IE5ldHdvcmsgKioqKioNCg0KT24gMDYvMTIvMjAxMyAwODowNywgRHV5IE5ndXllbiB3cm90
-ZToNCj4gT24gV2VkLCBEZWMgNCwgMjAxMyBhdCAxMToxMSBQTSwgU0NISUxaIE1BTkZSRUQgPG1h
-bmZyZWQuc2NoaWx6QGJnbC5sdT4gd3JvdGU6DQo+PiBIZWxsbywNCj4+IFdlIGFyZSB1c2luZyBn
-aXQgb24gd2luZG93czcoZ2l0LXZlcnNpb24gMS44LjE7IHNlZSBiZWxvdykgYW5kIHdlIGdldCB0
-aGUgZm9sbG93aW5nIHByb2JsZW0gaW4gdXNpbmcgdGhlIGNvbW1hbmQgJ2dpdCAtLWdpdC1kaXI9
-Jw0KPj4NCj4+DQo+PiBDOlxVc2VyVGVtcFxnaXRcYXBwbGkzPmdpdCAgLS1naXQtZGlyPUM6XFVz
-ZXJUZW1wXGdpdFxhcHBsaTMgdGFnDQo+PiBmYXRhbDogTm90IGEgZ2l0IHJlcG9zaXRvcnk6ICdD
-OlxVc2VyVGVtcFxnaXRcYXBwbGkzJw0KPj4NCj4+DQo+PiBidXQgdGhlIHJlcG9zaXRvcnkgaXMg
-d2VsbCBkZWZpbmVkLGFzIHdlIGNhbiBydW4gdGhlIGZvbGxvd2luZyBjb21tYW5kOg0KPj4NCj4+
-IEM6XFVzZXJUZW1wXGdpdFxhcHBsaTM+Z2l0IGxvZyAtMSAtLW9uZWxpbmUNCj4+IDM3Y2RiZTAg
-TWVyZ2UgYnJhbmNoICdtYXN0ZXInIG9mIA0KPj4gTDovX0FwcGxpY2F0aW9uRGF0YS9GQkxVX0lU
-LUZMSVQvc2UtRGV2ZWxvcFN1cHANCj4gSSBoYXZlIG5vIGNsdWUuIFRoZSAtLWdpdC1kaXIgY2Fs
-bHMNCj4gaXNfZ2l0X2RpcmVjdG9yeSgiQzpcXFVzZXJUZW1wXFxnaXRcXGFwcGxpMyIpIHdoaWxl
-IHRoZSAiZ2l0IGxvZyINCj4gY2FsbHMgaXNfZ2l0X2RpcmVjdG9yeSgiLiIpLiBUaGUgZm9ybWVy
-IGZhaWxzIGFuZCB0aGUgbGF0dGVyIHN1Y2VlZHMuLg0KPiBDb3B5aW5nIG1zeXNnaXRAIG1heWJl
-IHRoZXkga25vdyBzb21ldGhpbmcuIEJ0dyB3aGF0IGlmIHlvdSB0cnkNCj4NCj4gZ2l0IC0tZ2l0
-LWRpcj0uIHRhZw0KaW4gbGludXg6DQokIGdpdCAtLWdpdC1kaXI9LiB0YWcNCmZhdGFsOiBOb3Qg
-YSBnaXQgcmVwb3NpdG9yeTogJy4nDQoNCj4NCj4gPw0KWW91IGhhdmUgdG8gc3BlY2lmeSBnaXQg
-ZGlyIGluc3RlYWQgb2YgdGhlIGRpciBjb250YWluIC5naXQgVGhpcyBvcHRpb24gdXNlIHdoZW4g
-eW91ciBhcmUgbm90IGluIGdpdCByZXBvIG9yIGdpdCBkaXIgaXNuJ3QgLmdpdCBhcyBieSBkZWZh
-dWx0ICQgZ2l0IC0tZ2l0LWRpcj0uZ2l0IHRhZyAkIGdpdCAtLWdpdC1kaXI9L21udC9FL015UHJv
-amVjdHMvZ2l0Ly5naXQgdGFnICQgZ2l0IC0tdmVyc2lvbiBnaXQgdmVyc2lvbiAxLjguNS1yYzEN
-Cg0KPg0KPj4gV2hlbiBydW5uaW5nIHRoZSBlcXVpdmFsZW50IGNvbW1hbmQgb24gTGludXgsIHdl
-IGRvbid0IGhhdmUgYW55IHByb2JsZW1zOg0KPj4gT24gTGludXg6DQo+Pj4gZ2l0IC0tZ2l0LWRp
-cj0iL3RtcC9HSVRQT0MvYXBwbGkzIiB0YWcNCj4+IFYxLjANCj4+IFYxLjENCj4+IFYyLjANCj4+
-IFYzLjANCj4+DQo+PiBDb3VsZCB5b3UgaGVscCBtZSBwbGVhc2UgPw0KPj4NCj4+IEJlc3QgcmVn
-YXJkcw0KPj4NCj4+IE1hbmZyZWQgU2NoaWx6DQo+Pg0KPj4gLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQo+PiAtLS0t
-LS0tLS0tLS0tLS0tLS0NCj4+IEM6XFVzZXJUZW1wXGdpdFxhcHBsaTM+Z2l0IC0tdmVyc2lvbg0K
-Pj4gZ2l0IHZlcnNpb24gMS44LjEubXN5c2dpdC4xDQo+Pg0KPj4gPT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT0NCj4+IEludGVybmV0IGNvbW11bmljYXRpb25zIGFy
-ZSBub3Qgc2VjdXJlIGFuZCB0aGVyZWZvcmUgQkdMIEJOUCBQYXJpYmFzIGRvZXMgbm90IGFjY2Vw
-dCBsZWdhbCByZXNwb25zaWJpbGl0eSBmb3IgdGhlIGNvbnRlbnRzIG9mIHRoaXMgbWVzc2FnZS4g
-VGhlIGluZm9ybWF0aW9uIGNvbnRhaW5lZCBpbiB0aGlzIGUtbWFpbCBpcyBjb25maWRlbnRpYWwg
-YW5kIG1heSBiZSBsZWdhbGx5IHByaXZpbGVnZWQuIEl0IGlzIGludGVuZGVkIHNvbGVseSBmb3Ig
-dGhlIGFkZHJlc3NlZS4gSWYgeW91IGFyZSBub3QgdGhlIGludGVuZGVkIHJlY2lwaWVudCwgYW55
-IGRpc2Nsb3N1cmUsIGNvcHlpbmcsIGRpc3RyaWJ1dGlvbiBvciBhbnkgYWN0aW9uIHRha2VuIG9y
-IG9taXR0ZWQgdG8gYmUgdGFrZW4gaW4gcmVsaWFuY2Ugb24gaXQsIGlzIHByb2hpYml0ZWQgYW5k
-IG1heSBiZSB1bmxhd2Z1bC4gTm90aGluZyBpbiB0aGUgbWVzc2FnZSBpcyBjYXBhYmxlIG9yIGlu
-dGVuZGVkIHRvIGNyZWF0ZSBhbnkgbGVnYWxseSBiaW5kaW5nIG9ibGlnYXRpb25zIG9uIGVpdGhl
-ciBwYXJ0eSBhbmQgaXQgaXMgbm90IGludGVuZGVkIHRvIHByb3ZpZGUgbGVnYWwgYWR2aWNlLg0K
-Pj4gPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0NCj4+DQo+PiAt
-LQ0KPj4gVG8gdW5zdWJzY3JpYmUgZnJvbSB0aGlzIGxpc3Q6IHNlbmQgdGhlIGxpbmUgInVuc3Vi
-c2NyaWJlIGdpdCIgaW4gdGhlIA0KPj4gYm9keSBvZiBhIG1lc3NhZ2UgdG8gbWFqb3Jkb21vQHZn
-ZXIua2VybmVsLm9yZyBNb3JlIG1ham9yZG9tbyBpbmZvIGF0ICANCj4+IGh0dHA6Ly92Z2VyLmtl
-cm5lbC5vcmcvbWFqb3Jkb21vLWluZm8uaHRtbA0KPg0KPg0KDQoNCi0tDQpUcuG6p24gTmfhu41j
-IFF1w6JuLg0KDQo=
+Am 05.12.2013 23:06, schrieb Martin Langhoff:
+> On Thu, Dec 5, 2013 at 2:54 PM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
+>> Am 05.12.2013 20:27, schrieb Martin Langhoff:
+>>> On Thu, Dec 5, 2013 at 2:18 PM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
+>>>> Without knowing more I can't think of a reason why submodules should
+>>>> not suit your use case (but you'd have to script branching and tagging
+>>>> yourself until these commands learn to recurse into submodules too).
+>>>
+>>> The submodules feature is way too fiddly and has abundant gotchas.
+>>
+>> Care to explain what bothers you the most? Being one of the people
+>> improving submodules I'm really interested in hearing more about that.
+> 
+> Very glad to hear submodules is getting TLC! I have other scenarios at
+> $dayjob where I may need submodules, so happy happy.
+>
+> I may be unaware of recent improvements, here's my (perhaps outdated) list
+
+Thanks a lot for your feedback!
+
+>  - git clone does not clone existing submodules by default. An ideal
+> workflow assumes that the user wants a fully usable checkout.
+
+You get that when using "git clone --recurse-submodules", but there
+is no configuration option yet to switch that on by default (but we
+are planning to add one).
+
+>  - git pull does not fetch&update all submodules (assuming a trivial
+> "tracking repos" scenario)
+
+Current pull does fetch them (when changes to them are found in the
+fetched commits of the superproject), but it does not yet update
+them (there is the "recursive update" work in progress to do that).
+
+>  - git push does not warn if you forgot to push commits in the submodule
+
+We do have a command line option ("--recurse-submodules=check" is
+what you want here), but no configuration option yet.
+
+> there's possibly a few others that I've forgotten. The main issue is
+> that things that are conceptually simple (clone, git pull with no
+> local changes) are very fiddly. Our new developers, testers and
+> support folks hurt themselves with it plenty.
+
+Seems like we already solved some of those, and your feedback shows
+me that we are moving in the right direction. I keep a list of open
+issues we are aware of at:
+
+  https://github.com/jlehmann/git-submod-enhancements/wiki
+
+Feel free to point out missing topics.
+
+> I don't mind complex scenarios being complex to handle. If you hit a
+> nasty merge conflict in your submodule, and that's gnarly to resolve,
+> that's not a showstopper.
+
+Good to hear that! Solving them automatically is hard, only fast
+forwards are currently resolved without user intervention.
+
+> While writing this email, I reviewed Documentation/git-submodule.txt
+> in git master, and it does seem to have grown some new options. I
+> wonder if there is a tutorial with an example workflow anywhere
+> showing the current level of usability. My hope is actually for some
+> bits of automagic default behaviors to help things along (rather than
+> new options)...
+
+Right you are, we need tutorials for the most prominent use cases.
+
+> Early git was very pedantic, and over time it learned some DWIMery.
+> You're giving me hope that similar smarts might have grown in around
+> submodule support ...
+
+That's what we are aiming at :-)
