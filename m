@@ -1,242 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/WIP PATCH 3/4] teach add -f option for ignored submodules
-Date: Fri, 06 Dec 2013 15:10:31 -0800
-Message-ID: <xmqqob4t1spk.fsf@gitster.dls.corp.google.com>
-References: <528FC638.5060403@web.de> <20131122215454.GA4952@sandbox-ub>
-	<20131122220953.GI4212@google.com> <52910BC4.1030800@web.de>
-	<20131124005256.GA3500@sandbox-ub> <52922962.3090407@web.de>
-	<CAErtv2729o-xf=49xY06aVL1ZJzJpeH+cc_Pd1cAP52r32Ss_g@mail.gmail.com>
-	<20131125174945.GA3847@sandbox-ub>
-	<CAErtv259jxCtvbJYZHgQZv-VJ9U+JwNzWo0tn007SDTCCBScrA@mail.gmail.com>
-	<20131204221659.GA7326@sandbox-ub> <20131204222156.GD7326@sandbox-ub>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v2 0/3] rev-parse and "--"
+Date: Fri, 6 Dec 2013 15:25:56 -0800
+Message-ID: <20131206232556.GN29959@google.com>
+References: <20131206211222.GB20482@sigill.intra.peff.net>
+ <20131206211509.GB20536@sigill.intra.peff.net>
+ <20131206220520.GA30652@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Sergey Sharybin <sergey.vfx@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>
-To: Heiko Voigt <hvoigt@hvoigt.net>
-X-From: git-owner@vger.kernel.org Sat Dec 07 00:10:54 2013
+Cc: Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Dec 07 00:26:09 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vp4Xr-00030o-1a
-	for gcvg-git-2@plane.gmane.org; Sat, 07 Dec 2013 00:10:51 +0100
+	id 1Vp4mf-0002Qt-0c
+	for gcvg-git-2@plane.gmane.org; Sat, 07 Dec 2013 00:26:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753873Ab3LFXKh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Dec 2013 18:10:37 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33834 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752535Ab3LFXKg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Dec 2013 18:10:36 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 728C159FDF;
-	Fri,  6 Dec 2013 18:10:35 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=nlyYUCCHE1QOKwF0TVGoL6fxVyQ=; b=HF5yJY
-	IweYsO8nVjRxZfa0XuFo2HLmI3yhYb/E2r4+2UIi2CCrjAVqADK47SKHoUJn+i9V
-	xSxwwipqh/DpRAEOb3lx6+og+ALHB24HJICIEwK50Ke7iRcBee23LwtsmzDTKBYI
-	ThszUaKxy2hfioQlJsyjO4NLFHa/A9YeY8eWQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=UwDS+oCCGo62fGzjtvU5AQIMuHxA2a63
-	66v477a/CvO9gzx9fP7R6m9JWOPc9e5s1733bsXFY6mTmMut4bebMVQQC2k1ULez
-	xX0JjfYDvjrkZS/5o5+MLr1OVu6a+EjVmg0e7UJkV+FF5kzOO2yhUzIE8aptCcCO
-	Ip2qOikBkAM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 60AD359FDE;
-	Fri,  6 Dec 2013 18:10:35 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7CC9E59FDD;
-	Fri,  6 Dec 2013 18:10:34 -0500 (EST)
-In-Reply-To: <20131204222156.GD7326@sandbox-ub> (Heiko Voigt's message of
-	"Wed, 4 Dec 2013 23:21:56 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 9C5C8EFA-5ECB-11E3-BB5F-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1760095Ab3LFX0D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Dec 2013 18:26:03 -0500
+Received: from mail-yh0-f45.google.com ([209.85.213.45]:36609 "EHLO
+	mail-yh0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758915Ab3LFX0A (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Dec 2013 18:26:00 -0500
+Received: by mail-yh0-f45.google.com with SMTP id v1so1047473yhn.32
+        for <git@vger.kernel.org>; Fri, 06 Dec 2013 15:25:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=taaGNiWkcAA0A9uHZgdjQJ+vlEKH7cdhsVqhI4kWP5o=;
+        b=hIevZtGNJg2YnHncGr7paHHAyv60skkd8IVQ3Wa7octUDpw1ohHMHcScr/Q4Zf5Q6F
+         FPgaMCy0BwiI+3SYTmjcScu/4thvrZ8k55JBd/Wf+FdLwxfBqttIJXj2TLeLdF6x63qT
+         eP9gQD1SZQYXupiZJJHS5tnGJvb4jK5LfaKN4tPTviGDbVqjoKE5lRD37Egm6qszKkPP
+         K7ppsPtSNRwUTXkWwOTKJEXedX/5c91vegRZNg75J4qPmbDH6e5HUbGmABSLtqvFeaBD
+         ATvYQ2RoaCneM+4t+J6E4CdvD7MX4UVdeJi1LeRTzDhJVv0iKgO1Wahy4PZ1xt+Ziofx
+         zX8g==
+X-Received: by 10.236.38.129 with SMTP id a1mr4288270yhb.137.1386372359685;
+        Fri, 06 Dec 2013 15:25:59 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id r98sm273440yhp.3.2013.12.06.15.25.58
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 06 Dec 2013 15:25:59 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <20131206220520.GA30652@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238962>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238963>
 
-Heiko Voigt <hvoigt@hvoigt.net> writes:
+Jeff King wrote:
 
-> When the user wants to bypass the ignored status configured by
-> submodule.<name>.ignore=all it is now allowed by using the -f option.
+> Patch 3 is the revised version of this patch which notices ambiguity.
+> However, I'm having second thoughts on it. I think it's the right thing
+> to do if you want to help people build something like "git log"
+> themselves. But it does mean that we are breaking somebody who does:
 >
-> Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
-> ---
->  builtin/add.c | 49 +++++++++++++++++++++++++++++++++++++------------
->  submodule.c   | 10 ++++++++++
->  submodule.h   |  1 +
->  3 files changed, 48 insertions(+), 12 deletions(-)
+>   echo foo >HEAD
+>   commit=$(git rev-parse HEAD)
 >
-> diff --git a/builtin/add.c b/builtin/add.c
-> index 2d0d2ef..d6cab7f 100644
-> --- a/builtin/add.c
-> +++ b/builtin/add.c
-> @@ -16,6 +16,7 @@
->  #include "revision.h"
->  #include "bulk-checkin.h"
->  #include "submodule.h"
-> +#include "string-list.h"
->  
->  static const char * const builtin_add_usage[] = {
->  	N_("git add [options] [--] <pathspec>..."),
-> @@ -37,6 +38,20 @@ struct update_callback_data {
->  static const char *option_with_implicit_dot;
->  static const char *short_option_with_implicit_dot;
->  
-> +static struct lock_file lock_file;
-> +
-> +static const char ignore_error[] =
-> +N_("The following paths are ignored by one of your .gitignore files:\n");
-> +static const char submodule_ignore_error[] =
-> +N_("The following paths are ignored submodules:\n");
-> +
-> +static int verbose, show_only, ignored_too, refresh_only;
-> +static int ignore_add_errors, intent_to_add, ignore_missing;
-> +
-> +#define ADDREMOVE_DEFAULT 0 /* Change to 1 in Git 2.0 */
-> +static int addremove = ADDREMOVE_DEFAULT;
-> +static int addremove_explicit = -1; /* unspecified */
-> +
->  static void warn_pathless_add(void)
->  {
->  	static int shown;
-> @@ -140,6 +155,9 @@ static void update_callback(struct diff_queue_struct *q,
->  			warn_pathless_add();
->  			continue;
->  		}
-> +		if (is_ignored_submodule(path) && !ignored_too)
-> +			continue;
-> +
->  		switch (fix_unmerged_status(p, data)) {
->  		default:
->  			die(_("unexpected diff status %c"), p->status);
-> @@ -174,6 +192,7 @@ static void update_files_in_cache(const char *prefix,
->  	struct rev_info rev;
->  
->  	init_revisions(&rev, prefix);
-> +	enforce_no_complete_ignore_submodule(&rev.diffopt);
->  	setup_revisions(0, NULL, &rev, NULL);
->  	if (pathspec)
->  		copy_pathspec(&rev.prune_data, pathspec);
-> @@ -332,18 +351,6 @@ static int edit_patch(int argc, const char **argv, const char *prefix)
->  	return 0;
->  }
->  
-> -static struct lock_file lock_file;
-> -
-> -static const char ignore_error[] =
-> -N_("The following paths are ignored by one of your .gitignore files:\n");
-> -
-> -static int verbose, show_only, ignored_too, refresh_only;
-> -static int ignore_add_errors, intent_to_add, ignore_missing;
-> -
-> -#define ADDREMOVE_DEFAULT 0 /* Change to 1 in Git 2.0 */
-> -static int addremove = ADDREMOVE_DEFAULT;
-> -static int addremove_explicit = -1; /* unspecified */
-> -
->  static int ignore_removal_cb(const struct option *opt, const char *arg, int unset)
->  {
->  	/* if we are told to ignore, we are not adding removals */
-> @@ -407,6 +414,17 @@ static int add_files(struct dir_struct *dir, int flags)
->  	return exit_status;
->  }
->  
-> +static void die_ignored_submodules(struct string_list *ignored_submodules)
-> +{
-> +	struct string_list_item *path;
-> +
-> +	fprintf(stderr, _(submodule_ignore_error));
-> +	for_each_string_list_item(path, ignored_submodules)
-> +		fprintf(stderr, "%s\n", path->string);
-> +	fprintf(stderr, _("Use -f if you really want to add them.\n"));
-> +	die(_("no files added"));
-> +}
-> +
->  int cmd_add(int argc, const char **argv, const char *prefix)
->  {
->  	int exit_status = 0;
-> @@ -419,6 +437,7 @@ int cmd_add(int argc, const char **argv, const char *prefix)
->  	char *seen = NULL;
->  	int implicit_dot = 0;
->  	struct update_callback_data update_data;
-> +	struct string_list ignored_submodules = STRING_LIST_INIT_NODUP;
->  
->  	gitmodules_config();
->  	git_config(add_config, NULL);
-> @@ -550,6 +569,7 @@ int cmd_add(int argc, const char **argv, const char *prefix)
->  
->  		for (i = 0; i < pathspec.nr; i++) {
->  			const char *path = pathspec.items[i].match;
-> +			char path_copy[PATH_MAX];
->  			if (!seen[i] &&
->  			    ((pathspec.items[i].magic &
->  			      (PATHSPEC_GLOB | PATHSPEC_ICASE)) ||
-> @@ -562,6 +582,9 @@ int cmd_add(int argc, const char **argv, const char *prefix)
->  					die(_("pathspec '%s' did not match any files"),
->  					    pathspec.items[i].original);
->  			}
-> +			normalize_path_copy(path_copy, path);
-> +			if (is_ignored_submodule(path_copy))
-> +				string_list_insert(&ignored_submodules, path);
->  		}
->  		free(seen);
->  	}
-> @@ -583,6 +606,8 @@ int cmd_add(int argc, const char **argv, const char *prefix)
->  	update_files_in_cache(prefix, &pathspec, &update_data);
->  
->  	exit_status |= !!update_data.add_errors;
-> +	if (!ignored_too && ignored_submodules.nr)
-> +		die_ignored_submodules(&ignored_submodules);
+> I'm tempted to say that people who did that are stupid and wrong (and
+> ugly, too). They should probably be using "--verify" in this case. But
+> it has been that way for a long time, and there are two instances in our
+> test scripts that are broken by the patch.
 
-Why is this done so late in the process?  Shouldn't it be done
-immediately after we have finished iterating over the pathspecs,
-checking with is_ignored_submodule() and stuffing them into
-ignored_submodules string list, not waiting for plugging bulk
-checkin or updating paths already tracked in the index?
+Wouldn't the same thing happen for $(git rev-parse HEAD^..HEAD) when
+there is a 'HEAD^..HEAD' file, too?  --verify doesn't support that.
 
->  	if (add_new_files)
->  		exit_status |= add_files(&dir, flags);
->  
-> diff --git a/submodule.c b/submodule.c
-> index e0719b6..c28a926 100644
-> --- a/submodule.c
-> +++ b/submodule.c
-> @@ -199,6 +199,16 @@ void set_diffopt_flags_from_submodule_config(struct diff_options *diffopt,
->  	}
->  }
->  
-> +int is_ignored_submodule(const char *path)
-> +{
-> +	struct diff_options diffopt;
-> +	memset(&diffopt, 0, sizeof(diffopt));
-> +	set_diffopt_flags_from_submodule_config(&diffopt, path);
-> +	if (DIFF_OPT_TST(&diffopt, IGNORE_SUBMODULES))
-> +		return 1;
-> +	return 0;
-> +}
-> +
->  int submodule_config(const char *var, const char *value, void *cb)
->  {
->  	if (!prefixcmp(var, "submodule."))
-> diff --git a/submodule.h b/submodule.h
-> index 2c8087e..e067580 100644
-> --- a/submodule.h
-> +++ b/submodule.h
-> @@ -17,6 +17,7 @@ int remove_path_from_gitmodules(const char *path);
->  void stage_updated_gitmodules(void);
->  void set_diffopt_flags_from_submodule_config(struct diff_options *diffopt,
->  		const char *path);
-> +int is_ignored_submodule(const char *path);
->  int submodule_config(const char *var, const char *value, void *cb);
->  void gitmodules_config(void);
->  int parse_submodule_config_option(const char *var, const char *value);
+I think it's a nice idea to provide this functionality for people who
+need it, which would mean protected by an option (--check-ambiguity or
+something).  I don't think it's a good change to do it
+unconditionally.
+
+My two cents,
+Jonathan
