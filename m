@@ -1,79 +1,66 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v2 03/10] Introduce lookup_replace_object_extended() to pass
- flags
-Date: Sat, 07 Dec 2013 17:20:58 +0100
-Message-ID: <20131207162106.21478.83418.chriscool@tuxfamily.org>
-References: <20131207160514.21478.72966.chriscool@tuxfamily.org>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Joey Hess <joey@kitenet.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Dec 07 17:22:24 2013
+From: Thomas Rast <tr@thomasrast.ch>
+Subject: Re: [PATCH v3 13/21] pack-objects: implement bitmap writing
+Date: Sat, 07 Dec 2013 17:32:43 +0100
+Message-ID: <87d2l8k4es.fsf@linux-1gf2.Speedport_W723_V_Typ_A_1_00_098>
+References: <20131114124157.GA23784@sigill.intra.peff.net>
+	<20131114124544.GM10757@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: git@vger.kernel.org,
+	Vicent =?utf-8?Q?Mart=C3=AD?= <vicent@github.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Dec 07 17:33:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VpKe4-0004xp-QA
-	for gcvg-git-2@plane.gmane.org; Sat, 07 Dec 2013 17:22:21 +0100
+	id 1VpKoP-0000bG-Qs
+	for gcvg-git-2@plane.gmane.org; Sat, 07 Dec 2013 17:33:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758889Ab3LGQWL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Dec 2013 11:22:11 -0500
-Received: from mail-1y.bbox.fr ([194.158.98.14]:44301 "EHLO mail-1y.bbox.fr"
+	id S1755264Ab3LGQc6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 Dec 2013 11:32:58 -0500
+Received: from psi.thgersdorf.net ([176.9.98.78]:52241 "EHLO mail.psioc.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755326Ab3LGQVt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Dec 2013 11:21:49 -0500
-Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-1y.bbox.fr (Postfix) with ESMTP id 13A954A;
-	Sat,  7 Dec 2013 17:21:48 +0100 (CET)
-X-git-sha1: 723d0efc21fc38c6279d4e9cb26f5192ed30f71e 
-X-Mailer: git-mail-commits v0.5.2
-In-Reply-To: <20131207160514.21478.72966.chriscool@tuxfamily.org>
+	id S1755193Ab3LGQc5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Dec 2013 11:32:57 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by localhost.psioc.net (Postfix) with ESMTP id A35524D6510;
+	Sat,  7 Dec 2013 17:32:54 +0100 (CET)
+X-Virus-Scanned: amavisd-new at psioc.net
+Received: from mail.psioc.net ([127.0.0.1])
+	by localhost (mail.psioc.net [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 0_YN_jX96R6s; Sat,  7 Dec 2013 17:32:44 +0100 (CET)
+Received: from linux-1gf2.Speedport_W723_V_Typ_A_1_00_098.thomasrast.ch (84-73-190-173.dclient.hispeed.ch [84.73.190.173])
+	(using TLSv1.2 with cipher AES128-GCM-SHA256 (128/128 bits))
+	(Client did not present a certificate)
+	by mail.psioc.net (Postfix) with ESMTPSA id 561894D64C4;
+	Sat,  7 Dec 2013 17:32:44 +0100 (CET)
+In-Reply-To: <20131114124544.GM10757@sigill.intra.peff.net> (Jeff King's
+	message of "Thu, 14 Nov 2013 07:45:45 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238998>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238999>
 
-Currently, there is only one caller to lookup_replace_object()
-that can benefit from passing it some flags, but we expect
-that there could be more.
+Reviewed-by: Thomas Rast <tr@thomasrast.ch>
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- cache.h     | 6 ++++++
- sha1_file.c | 3 +--
- 2 files changed, 7 insertions(+), 2 deletions(-)
+You could fix this:
 
-diff --git a/cache.h b/cache.h
-index 873a6b5..563f85f 100644
---- a/cache.h
-+++ b/cache.h
-@@ -773,6 +773,12 @@ static inline const unsigned char *lookup_replace_object(const unsigned char *sh
- 		return sha1;
- 	return do_lookup_replace_object(sha1);
- }
-+static inline const unsigned char *lookup_replace_object_extended(const unsigned char *sha1, unsigned flag)
-+{
-+	if (! (flag & LOOKUP_REPLACE_OBJECT))
-+		return sha1;
-+	return lookup_replace_object(sha1);
-+}
- 
- /* Read and unpack a sha1 file into memory, write memory to a sha1 file */
- extern int sha1_object_info(const unsigned char *, unsigned long *);
-diff --git a/sha1_file.c b/sha1_file.c
-index 76e9f32..4fb2f17 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -2591,8 +2591,7 @@ void *read_sha1_file_extended(const unsigned char *sha1,
- 	void *data;
- 	char *path;
- 	const struct packed_git *p;
--	const unsigned char *repl = (flag & LOOKUP_REPLACE_OBJECT)
--		? lookup_replace_object(sha1) : sha1;
-+	const unsigned char *repl = lookup_replace_object_extended(sha1, flag);
- 
- 	errno = 0;
- 	data = read_object(repl, type, size);
+> +pack.writebitmaps::
+> +	When true, git will write a bitmap index when packing all
+> +	objects to disk (e.g., as when `git repack -a` is run).  This
+                               ^^
+
+Doesn't sound right in my ears.  Remove the "as"?
+
+> +	index can speed up the "counting objects" phase of subsequent
+> +	packs created for clones and fetches, at the cost of some disk
+> +	space and extra time spent on the initial repack.  Defaults to
+> +	false.
+
 -- 
-1.8.5.1.102.g090758b
+Thomas Rast
+tr@thomasrast.ch
