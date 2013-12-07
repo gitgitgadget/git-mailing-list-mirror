@@ -1,174 +1,286 @@
 From: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
-Subject: [PATCH 3/4] subtree: add --edit option
-Date: Sat,  7 Dec 2013 11:21:24 -0700
-Message-ID: <1386440485-3092-3-git-send-email-mmogilvi_git@miniinfo.net>
+Subject: [PATCH/BAD 4/4] subtree: poor bugfix for split new commits with parents before previous split
+Date: Sat,  7 Dec 2013 11:21:25 -0700
+Message-ID: <1386440485-3092-4-git-send-email-mmogilvi_git@miniinfo.net>
 References: <1386440485-3092-1-git-send-email-mmogilvi_git@miniinfo.net>
 Cc: greened@obbligato.org, amdmi3@amdmi3.ru, john@keeping.me.uk,
 	techlivezheng@gmail.com, apenwarr@gmail.com,
 	Matthew Ogilvie <mmogilvi_git@miniinfo.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 07 19:24:52 2013
+X-From: git-owner@vger.kernel.org Sat Dec 07 19:30:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VpMYY-0006KW-3r
-	for gcvg-git-2@plane.gmane.org; Sat, 07 Dec 2013 19:24:46 +0100
+	id 1VpMeI-0000UW-0w
+	for gcvg-git-2@plane.gmane.org; Sat, 07 Dec 2013 19:30:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755773Ab3LGSYi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Dec 2013 13:24:38 -0500
-Received: from qmta09.emeryville.ca.mail.comcast.net ([76.96.30.96]:44080 "EHLO
-	qmta09.emeryville.ca.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755618Ab3LGSY1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 7 Dec 2013 13:24:27 -0500
-Received: from omta06.emeryville.ca.mail.comcast.net ([76.96.30.51])
-	by qmta09.emeryville.ca.mail.comcast.net with comcast
-	id yhlG1m00116AWCUA9iQTeq; Sat, 07 Dec 2013 18:24:27 +0000
+	id S1755618Ab3LGSai (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 Dec 2013 13:30:38 -0500
+Received: from qmta14.emeryville.ca.mail.comcast.net ([76.96.27.212]:48449
+	"EHLO qmta14.emeryville.ca.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754630Ab3LGSah (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 7 Dec 2013 13:30:37 -0500
+X-Greylist: delayed 365 seconds by postgrey-1.27 at vger.kernel.org; Sat, 07 Dec 2013 13:30:37 EST
+Received: from omta20.emeryville.ca.mail.comcast.net ([76.96.30.87])
+	by qmta14.emeryville.ca.mail.comcast.net with comcast
+	id yiJp1m0011smiN4AEiQXuS; Sat, 07 Dec 2013 18:24:31 +0000
 Received: from mmogilvi.dynu.net ([50.183.100.68])
-	by omta06.emeryville.ca.mail.comcast.net with comcast
-	id yiQR1m00j1UYGSS8SiQSHG; Sat, 07 Dec 2013 18:24:27 +0000
+	by omta20.emeryville.ca.mail.comcast.net with comcast
+	id yiQW1m00K1UYGSS8giQWoD; Sat, 07 Dec 2013 18:24:31 +0000
 Received: from rand.mmogilvi.local (rand.mmogilvi.local [192.168.30.68])
-	by mmogilvi.dynu.net (Postfix) with ESMTP id C3E001E9601A;
-	Sat,  7 Dec 2013 11:24:25 -0700 (MST)
+	by mmogilvi.dynu.net (Postfix) with ESMTP id 5486E1E9601A;
+	Sat,  7 Dec 2013 11:24:30 -0700 (MST)
 X-Mailer: git-send-email 1.8.3.2
 In-Reply-To: <1386440485-3092-1-git-send-email-mmogilvi_git@miniinfo.net>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-	s=q20121106; t=1386440667;
-	bh=Mz/kRMEMy7HDHOSJc6tAuv0qpzhad+W2tBVWFCrDsGs=;
+	s=q20121106; t=1386440671;
+	bh=Y9hwNzq8UxMCb0O3pkO7GFbpUfZegVg738PIQ8WyqX0=;
 	h=Received:Received:Received:From:To:Subject:Date:Message-Id;
-	b=Z98tEWVG8gbL/71sDo5p6QdALU4ApZGzZB1Mo79yDNxTU6oN3rd2FrOz5u/WU9vRx
-	 PujJ3SfVmNRKN7MxmjPXKbtXHYN9+E0ap/SIylCU/p0oltU1epIETC+VKMyOJQFlmd
-	 aEiafE3WQvSW8pDp21TAIMaxGS0J7gZu6WP6gFbT7Xgl/CMmG1vIF7uX0mMfOmZH5V
-	 DPD6zvy5JvzEw8/xtKhMPkpW//7XBLDBLizrrxppgXxxoEBt3q8sbsCjAJJFQ9OHnL
-	 KLGXF2JP6od9CbpXKCPer9K4z+hPGTPPx30u1aCrA1fsY6wRr/G4k3xMlOp1OQe6nv
-	 fZYNLSZotk8KA==
+	b=oHtcy0qBfV2cnnnG+R6uG1oAcoyS9Lmn7CUK8cHT8v0jVeT42KypY99ENF7Nv8U1f
+	 VdHMOVRogGPqwUEcUN7CG+dBVdhbjT7VhzIPfeC1vsVRzHmp4mUTXX2HHHpWDFeCEh
+	 3UaAn01fMeDU0e9Lwu6A8DphYprOVnd1iDCzn0Uhg+2ZZ7yZM2Z7XsjoME5Xhr8SBE
+	 ZctAK61XwhHsojQT2k1ecnAzYsX1N/L/itdWNfD2GQT/6m4rr79lzxP7Gylgv8pAdH
+	 w+xe+CqU9A/lebvNDa6SXFtB1QpR+PjMkbuzjFhm1ELL1+fkAiFKvJxsfHxJhTY7cK
+	 MoQ8C77Piq/jQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239011>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239012>
 
-Signed-off-by: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
+Bug description: Unless you use --ignore-joins, "git subtree split"'s
+optimization to avoid re-scanning all of history can trim too much.
+Any new merged branches that have parents before the previous "split"
+will not be re-attached properly in the split-off subtree.
+In the extreme case (if all the changes occurred on such
+branches), I've seen the old subtree head might not be an
+ancestor of the new head at all.
+
+This "fix" is only for illustration.  It probably should not be
+included as-is; it probably scales worse than using --ignore-joins
+for anything much beyond trivial cases.
+
+I'm not sure it is possible to speed it up much (while remaining
+correct) without switching to a better language than shell script.
+
+I'm not sure how to explain the constraint clearly (or even
+precisely define the "minimal" constraint).  One attempt:
+Exclude from "unrevs" any rejoin commit X for which ANY new commit
+(not just revs itself) has some other common ancestor (merge base)
+besides X.  ("New commit" is one that is not an ancestor of
+some previous rejoin commit.)
+
+It would probably be fairly straightforward to adapt
+graph traversal algorithms to do this efficiently, but as near
+as I can tell, none of the existing options in git-rev-list or
+git-merge-base really does anything useful for optimizing this
+in shell script...
+
+The simplest traversal technique to fix this might
+be if there was a way to make history traversal only stop
+at SPECIFIC unrevs, instead of any ancestor of any unrevs.
+
+Other workarounds besides this patch:
+   * Use --ignore-joins and wait for the really slow processing...
+   * Plan ahead and delay: After using git subtree split --rejoin,
+     leave the rejoin merge commit off on a side branch until such time
+     that all other pre-split branches have been merged.  Then
+     "merge the merge" at that later time.  Only do rejoins fairly
+     rarely, based on the schedule of merging other branches.
+   * Ignore the problem: Allow the occasional falsely-disconnected
+     branch roots to be generated by split.  Of course, this
+     means --ignore-joins would no longer generate a consistent
+     subtree history, it is hard to examine what actually changed
+     in the false roots, etc.
+   * Perhaps manually use temporary grafts or similar to hide rejoins
+     that would throw it off when doing later splits.
+
+[Intentionally not signed off: Poor performance.]
 ---
- contrib/subtree/git-subtree.sh  | 37 +++++++++++++++++++++++++++++--------
- contrib/subtree/git-subtree.txt |  4 ++++
- 2 files changed, 33 insertions(+), 8 deletions(-)
+
+Testing: Below I include a script I've been using to help with
+mostly-manual testing.  I regularly modify it based on
+what I'm testing at the moment.  It basically
+creates and manipulates a subtree out of git's own "contrib"
+directory.
+
+It may be convenient to use this on a copy of git's
+repository instead of the copy in which you are messing with
+git-subtree (avoiding changing code out from under the script).
+It may also be convenient to symlink git-subtree to the top-level
+directory, rather than copy it, so you don't need to keep
+re-copying it.
+
+------CUT------
+#!/bin/sh
+
+die()
+{ echo "$@" 1>&2
+  exit 1
+}
+
+GIT=../git-sandbox/bin-wrappers/git
+#GIT=git
+
+DBG=
+#DBG=-d
+
+EDIT=
+#EDIT=--edit
+
+git branch -D br-contrib
+
+git checkout 73bbc0796b4ce65bfb1a12b47a0edc27845ecf50 || die "checkout"
+
+"$GIT" subtree split -P contrib \
+         --branch br-contrib --squash --rejoin $EDIT || die "subtree 1"
+
+git tag -f step1
+
+git merge -m 'MY MERGE1' 68a65f5fe54c2b21bfe16ef3a0b48956ecf5658a ||
+        die "merge 1"
+
+"$GIT" subtree split -P contrib \
+         --branch br-contrib --squash --rejoin || die "subtree 2"
+
+git tag -f step2
+
+git merge -m 'MY MERGE2' 15f7221686eac053902b906c278680b485c865ce || \
+        die "merge 2"
+
+"$GIT" subtree split -P contrib \
+         --branch br-contrib --squash --rejoin $EDIT || die "subtree 3"
+
+#####
+if [ -n "$EDIT" ]; then
+    exit 0
+fi
+
+git tag -f step3
+
+git merge -m 'MY MERGE3' 26145c9c73ed51bbd8261949d31899d6507519d5 || \
+        die "merge 3"
+
+"$GIT" subtree split -P contrib \
+         $DBG --branch br-contrib --squash --rejoin || die "subtree 4"
+
+git tag -f step4
+
+git merge -m 'MY MERGE4' 583736c0bcf09adaa5621b142d8e43c22354041b || \
+        die "merge 4"
+
+"$GIT" subtree split -P contrib \
+         --branch br-contrib --squash --rejoin || die "subtree 5"
+
+git tag -f step5
+------CUT------
+
+
+
+ contrib/subtree/git-subtree.sh | 61 +++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 55 insertions(+), 6 deletions(-)
 
 diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
-index 56d915f..ac82b4d 100755
+index ac82b4d..6ff4362 100755
 --- a/contrib/subtree/git-subtree.sh
 +++ b/contrib/subtree/git-subtree.sh
-@@ -21,6 +21,7 @@ d             show debug messages
- P,prefix=     the name of the subdir to split out
- m,message=    use the given message as the commit message for the merge commit
- squash        merge subtree changes as a single commit
-+edit          allow user to edit squash commit message interactively
-  options for 'split'
- annotate=     add a prefix to commit message of new commits
- b,branch=     create a new branch from the split subtree
-@@ -45,6 +46,7 @@ ignore_joins=
- annotate=
- squash=
- message=
-+edit=
+@@ -36,6 +36,8 @@ PATH=$PATH:$(git --exec-path)
  
- debug()
- {
-@@ -91,6 +93,7 @@ while [ $# -gt 0 ]; do
- 		--ignore-joins) ignore_joins=1 ;;
- 		--no-ignore-joins) ignore_joins= ;;
- 		--squash) squash=1 ;;
-+		--edit) edit=1 ;;
- 		--no-squash) squash= ;;
- 		--) break ;;
- 		*) die "Unexpected option: $opt" ;;
-@@ -434,13 +437,12 @@ new_squash_commit()
- 	old="$1"
- 	oldsub="$2"
- 	newsub="$3"
-+	msg_file="$4"
- 	tree=$(toptree_for_commit $newsub) || exit $?
- 	if [ -n "$old" ]; then
--		squash_msg "$dir" "$oldsub" "$newsub" | 
--			git commit-tree "$tree" -p "$old" || exit $?
-+		git commit-tree "$tree" -p "$old" -F "$msg_file" || exit $?
- 	else
--		squash_msg "$dir" "" "$newsub" |
--			git commit-tree "$tree" || exit $?
-+		git commit-tree "$tree" -F "$msg_file" || exit $?
+ require_work_tree
+ 
++nl='
++'
+ quiet=
+ branch=
+ debug=
+@@ -224,6 +226,13 @@ try_remove_previous()
  	fi
  }
  
-@@ -556,7 +558,13 @@ cmd_add_commit()
++try_remove()
++{
++	if rev_exists "$1"; then
++		echo "$1"
++	fi
++}
++
+ find_latest_squash()
+ {
+ 	debug "Looking for latest squash ($dir)..."
+@@ -293,8 +302,8 @@ find_existing_splits()
+ 					debug "  Prior: $main -> $sub"
+ 					cache_set $main $sub
+ 					cache_set $sub $sub
+-					try_remove_previous "$main"
+-					try_remove_previous "$sub"
++					try_remove "$main"
++					try_remove "$sub"
+ 				fi
+ 				main=
+ 				sub=
+@@ -303,6 +312,40 @@ find_existing_splits()
+ 	done
+ }
+ 
++filter_out_needed_existing()
++{
++	revs="$1"
++	existing="$2"
++	base=
++	git rev-list --merges --parents $revs --not $existing | \
++		sed -e 's/^[^ ]* //' -e "y/ /\\$nl/" | sort | uniq | \
++	{
++		debug "filter_out_needed_existing"
++		debug "  revs: $revs"
++		debug "  existing: $existing"
++		while read needed; do
++			debug "loop: $needed"
++			nextexisting=
++			for exist in $existing ; do
++				tmp="$(git merge-base $exist $needed)"
++				if [ x"$tmp" = x"$exist" -o -z "$tmp" ]; then
++					nextexisting="$nextexisting $exist"
++				fi
++			done
++			existing=$nextexisting
++		done
++		echo "$existing"
++	}
++}
++
++existing_to_unrevs()
++{
++	existing="$1"
++	for exist in $existing ; do
++		try_remove_previous $exist
++	done
++}
++
+ copy_commit()
+ {
+ 	# We're going to set some environment vars here, so
+@@ -599,10 +642,16 @@ cmd_split()
+ 		done
  	fi
  	
- 	if [ -n "$squash" ]; then
--		rev=$(new_squash_commit "" "" "$rev") || exit $?
-+		msg_file="$GIT_DIR/COMMIT_EDITMSG"
-+		squash_msg "$dir" "" "$rev" >"$msg_file"
-+		if [ -n "$edit" ]; then
-+			git_editor "$msg_file"
+-	if [ -n "$ignore_joins" ]; then
+-		unrevs=
+-	else
+-		unrevs="$(find_existing_splits "$dir" "$revs")"
++	unrevs=
++	if [ -z "$ignore_joins" ]; then
++		existing="$(find_existing_splits "$dir" "$revs")"
++		if [ -n "$existing" ]; then
++			debug "existing: $existing"
++			existing="$(filter_out_needed_existing "$revs" "$existing")"
++			unrevs="$(existing_to_unrevs "$existing")"
++			debug "base: $base"
++			debug "unrevs: $unrevs"
 +		fi
-+		rev=$(new_squash_commit "" "" "$rev" "$msg_file") || exit $?
-+		rm -f "$msg_file"
- 		commit=$(add_squashed_msg "$rev" "$dir" |
- 			 git commit-tree $tree $headp -p "$rev") || exit $?
- 	else
-@@ -672,8 +680,14 @@ cmd_split()
- 				say "Subtree is already at commit $latest_new."
- 				exit 0
- 			fi
--			new=$(new_squash_commit "$old" "$sub" "$latest_new") \
--				|| exit $?
-+			msg_file="$GIT_DIR/COMMIT_EDITMSG"
-+			squash_msg "$dir" "$sub" "$latest_new" >"$msg_file"
-+			if [ -n "$edit" ]; then
-+				git_editor "$msg_file"
-+			fi
-+			new=$(new_squash_commit "$old" "$sub" "$latest_new" \
-+						"$msg_file") || exit $?
-+			rm -f "$msg_file"
- 			debug "New squash commit: $new"
- 		fi
- 
-@@ -708,7 +722,13 @@ cmd_merge()
- 			say "Subtree is already at commit $rev."
- 			exit 0
- 		fi
--		new=$(new_squash_commit "$old" "$sub" "$rev") || exit $?
-+		msg_file="$GIT_DIR/COMMIT_EDITMSG"
-+		squash_msg "$dir" "$sub" "$rev" >"$msg_file"
-+		if [ -n "$edit" ]; then
-+			git_editor "$msg_file"
-+		fi
-+		new=$(new_squash_commit "$old" "$sub" "$rev" "$msg_file") || exit $?
-+		rm -f "$msg_file"
- 		debug "New squash commit: $new"
- 		rev="$new"
  	fi
-@@ -748,6 +768,7 @@ cmd_push()
- 	if [ -n "$squash" ]; then
- 		opts="-squash"
- 	fi
-+	# Can't easily pass on --edit because of stdout capture redirection
- 
- 	if [ -e "$dir" ]; then
- 	    repository=$1
-diff --git a/contrib/subtree/git-subtree.txt b/contrib/subtree/git-subtree.txt
-index 03092bc..16525d4 100644
---- a/contrib/subtree/git-subtree.txt
-+++ b/contrib/subtree/git-subtree.txt
-@@ -177,6 +177,10 @@ OPTIONS
- 	the merge back to the mainline, not the synthetic subtree
- 	history.
- 
-+--edit::
-+	When used with '--squash', bring up an editor on the squash
-+	commit message, to allow customizing it.
-+
- 
- OPTIONS FOR split
- -----------------
+ 	
+ 	# We can't restrict rev-list to only $dir here, because some of our
 -- 
 1.8.3.2
