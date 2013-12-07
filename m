@@ -1,175 +1,58 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v8 6/6] remote-bzr: support the new 'force' option
-Date: Sat,  7 Dec 2013 15:08:12 -0600
-Message-ID: <1386450492-22348-7-git-send-email-felipe.contreras@gmail.com>
-References: <1386450492-22348-1-git-send-email-felipe.contreras@gmail.com>
-Cc: Richard Hansen <rhansen@bbn.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 07 22:16:09 2013
+From: Thomas Rast <tr@thomasrast.ch>
+Subject: Re: What's cooking in git.git (Dec 2013, #02; Fri, 6)
+Date: Sat, 07 Dec 2013 23:23:11 +0100
+Message-ID: <87fvq41esw.fsf@thomasrast.ch>
+References: <xmqqk3fh1qrc.fsf@gitster.dls.corp.google.com>
+	<52A37D70.3090400@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Karsten Blees <karsten.blees@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Dec 07 23:23:33 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VpPEN-0002zd-Fl
-	for gcvg-git-2@plane.gmane.org; Sat, 07 Dec 2013 22:16:07 +0100
+	id 1VpQHb-0001qf-K9
+	for gcvg-git-2@plane.gmane.org; Sat, 07 Dec 2013 23:23:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759097Ab3LGVQE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Dec 2013 16:16:04 -0500
-Received: from mail-ob0-f171.google.com ([209.85.214.171]:59502 "EHLO
-	mail-ob0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758934Ab3LGVP7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Dec 2013 16:15:59 -0500
-Received: by mail-ob0-f171.google.com with SMTP id wp18so2255095obc.30
-        for <git@vger.kernel.org>; Sat, 07 Dec 2013 13:15:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=E69U+IllsIVgOljOv38i54lrNVqAV4Q3DjxQew6y1t4=;
-        b=BsabI4wcL72I9sXedOqqCfm8Rx2xya8O9n9cA9r0hJuPQp9w/oU4Dbn1hjfrFeOqMH
-         OPlduCUq0YW+r6GqusJ1ZXxlVpOXuYRou6caZ/dOy/J8eDPjbY8d3dT1680equgwJYbG
-         BMPue5bS3vi7zPjXxOY68TVMi1i71ecJ3Qe2T8gxckiTRmd1lpbHHX0qnhEeScmbkZtP
-         oDUY1NmOtQUjSry8orYws02e5gs4wfRUpKbhC/Pw+E75dc8NVvfUEqYcddZQoqry5pZQ
-         cz9L17oemhz4V7cr9/Bj3gMDUB1uwIEp1/FmddRLteMy43Qz441+nx1XTLJ4yVrUh22T
-         AyyQ==
-X-Received: by 10.60.47.228 with SMTP id g4mr7634638oen.10.1386450959462;
-        Sat, 07 Dec 2013 13:15:59 -0800 (PST)
-Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
-        by mx.google.com with ESMTPSA id m4sm7801938oen.7.2013.12.07.13.15.57
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 07 Dec 2013 13:15:58 -0800 (PST)
-X-Mailer: git-send-email 1.8.5.1+fc1
-In-Reply-To: <1386450492-22348-1-git-send-email-felipe.contreras@gmail.com>
+	id S1755098Ab3LGWX1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 Dec 2013 17:23:27 -0500
+Received: from psi.thgersdorf.net ([176.9.98.78]:52870 "EHLO mail.psioc.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754289Ab3LGWX0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Dec 2013 17:23:26 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by localhost.psioc.net (Postfix) with ESMTP id D58CB4D6510;
+	Sat,  7 Dec 2013 23:23:23 +0100 (CET)
+X-Virus-Scanned: amavisd-new at psioc.net
+Received: from mail.psioc.net ([127.0.0.1])
+	by localhost (mail.psioc.net [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id dl_qe5tTHKDk; Sat,  7 Dec 2013 23:23:13 +0100 (CET)
+Received: from hexa.thomasrast.ch (46-126-8-85.dynamic.hispeed.ch [46.126.8.85])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(Client did not present a certificate)
+	by mail.psioc.net (Postfix) with ESMTPSA id 7FA064D64C4;
+	Sat,  7 Dec 2013 23:23:13 +0100 (CET)
+In-Reply-To: <52A37D70.3090400@gmail.com> (Karsten Blees's message of "Sat, 07
+	Dec 2013 20:56:32 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239026>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239027>
 
-From: Richard Hansen <rhansen@bbn.com>
+Karsten Blees <karsten.blees@gmail.com> writes:
 
-Signed-off-by: Richard Hansen <rhansen@bbn.com>
-Acked-by: Felipe Contreras <felipe.contreras@gmail.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- contrib/remote-helpers/git-remote-bzr | 31 ++++++++++++++++++++++++++++++-
- contrib/remote-helpers/test-bzr.sh    | 22 +++++++++++++++++++++-
- 2 files changed, 51 insertions(+), 2 deletions(-)
+> Extending 'struct hashmap_entry' with an int-sized member shouldn't waste
+> memory on 64-bit systems. This is already documented in api-hashmap.txt,
+> but needs '__attribute__((__packed__))' to work. Reduces e.g.
 
-diff --git a/contrib/remote-helpers/git-remote-bzr b/contrib/remote-helpers/git-remote-bzr
-index 054161a..f1ba477 100755
---- a/contrib/remote-helpers/git-remote-bzr
-+++ b/contrib/remote-helpers/git-remote-bzr
-@@ -685,7 +685,8 @@ def do_export(parser):
-                 peer = bzrlib.branch.Branch.open(peers[name],
-                                                  possible_transports=transports)
-                 try:
--                    peer.bzrdir.push_branch(branch, revision_id=revid)
-+                    peer.bzrdir.push_branch(branch, revision_id=revid,
-+                                            overwrite=force)
-                 except bzrlib.errors.DivergedBranches:
-                     print "error %s non-fast forward" % ref
-                     continue
-@@ -719,8 +720,32 @@ def do_capabilities(parser):
-         print "*import-marks %s" % path
-     print "*export-marks %s" % path
- 
-+    print "option"
-     print
- 
-+class InvalidOptionValue(Exception):
-+    pass
-+
-+def get_bool_option(val):
-+    if val == 'true':
-+        return True
-+    elif val == 'false':
-+        return False
-+    else:
-+        raise InvalidOptionValue()
-+
-+def do_option(parser):
-+    global force
-+    opt, val = parser[1:3]
-+    try:
-+        if opt == 'force':
-+            force = get_bool_option(val)
-+            print 'ok'
-+        else:
-+            print 'unsupported'
-+    except InvalidOptionValue:
-+        print "error '%s' is not a valid value for option '%s'" % (val, opt)
-+
- def ref_is_valid(name):
-     return not True in [c in name for c in '~^: \\']
- 
-@@ -883,6 +908,7 @@ def main(args):
-     global is_tmp
-     global branches, peers
-     global transports
-+    global force
- 
-     alias = args[1]
-     url = args[2]
-@@ -896,6 +922,7 @@ def main(args):
-     branches = {}
-     peers = {}
-     transports = []
-+    force = False
- 
-     if alias[5:] == url:
-         is_tmp = True
-@@ -931,6 +958,8 @@ def main(args):
-             do_import(parser)
-         elif parser.check('export'):
-             do_export(parser)
-+        elif parser.check('option'):
-+            do_option(parser)
-         else:
-             die('unhandled command: %s' % line)
-         sys.stdout.flush()
-diff --git a/contrib/remote-helpers/test-bzr.sh b/contrib/remote-helpers/test-bzr.sh
-index 5c50251..ae26dbb 100755
---- a/contrib/remote-helpers/test-bzr.sh
-+++ b/contrib/remote-helpers/test-bzr.sh
-@@ -65,13 +65,33 @@ test_expect_success 'pushing' '
- 	test_cmp expected actual
- '
- 
-+test_expect_success 'forced pushing' '
-+	(
-+	cd gitrepo &&
-+	echo three-new >content &&
-+	git commit -a --amend -m three-new &&
-+	git push -f
-+	) &&
-+
-+	(
-+	cd bzrrepo &&
-+	# the forced update overwrites the bzr branch but not the bzr
-+	# working directory (it tries to merge instead)
-+	bzr revert
-+	) &&
-+
-+	echo three-new >expected &&
-+	cat bzrrepo/content >actual &&
-+	test_cmp expected actual
-+'
-+
- test_expect_success 'roundtrip' '
- 	(
- 	cd gitrepo &&
- 	git pull &&
- 	git log --format="%s" -1 origin/master >actual
- 	) &&
--	echo three >expected &&
-+	echo three-new >expected &&
- 	test_cmp expected actual &&
- 
- 	(cd gitrepo && git push && git pull) &&
+You'd have to guard __attribute__((__packed__)) with some compiler
+detection in git-compat-util.h though.
+
 -- 
-1.8.5.1+fc1
+Thomas Rast
+tr@thomasrast.ch
