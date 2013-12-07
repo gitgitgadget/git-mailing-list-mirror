@@ -1,59 +1,66 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: What's cooking in git.git (Dec 2013, #02; Fri, 6)
-Date: Sat, 07 Dec 2013 19:49:56 +0100
-Message-ID: <vpqzjocwl63.fsf@anie.imag.fr>
-References: <xmqqk3fh1qrc.fsf@gitster.dls.corp.google.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH v2 09/10] builtin/replace: unset =?utf-8?b?cmVhZF9yZXBsYWNlX3JlZnM=?=
+Date: Sat, 7 Dec 2013 19:02:38 +0000 (UTC)
+Message-ID: <loom.20131207T200130-598@post.gmane.org>
+References: <20131207160514.21478.72966.chriscool@tuxfamily.org> <20131207162106.21478.98950.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Dec 07 19:50:37 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Dec 07 20:03:09 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VpMxY-0000vk-Sc
-	for gcvg-git-2@plane.gmane.org; Sat, 07 Dec 2013 19:50:37 +0100
+	id 1VpN9f-00072b-Pf
+	for gcvg-git-2@plane.gmane.org; Sat, 07 Dec 2013 20:03:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755715Ab3LGSuZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Dec 2013 13:50:25 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:59085 "EHLO shiva.imag.fr"
+	id S1758852Ab3LGTDD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 7 Dec 2013 14:03:03 -0500
+Received: from plane.gmane.org ([80.91.229.3]:57965 "EHLO plane.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755666Ab3LGSuM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Dec 2013 13:50:12 -0500
-Received: from globule.imag.fr (globule.imag.fr [129.88.34.238])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id rB7Inwxl021779
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 7 Dec 2013 19:49:58 +0100
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	(authenticated bits=0)
-	by globule.imag.fr (8.13.8/8.13.8) with ESMTP id rB7InvEE004822
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Sat, 7 Dec 2013 19:50:00 +0100
-In-Reply-To: <xmqqk3fh1qrc.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Fri, 06 Dec 2013 15:52:39 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Sat, 07 Dec 2013 19:49:59 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: rB7Inwxl021779
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1387047003.6708@Bob03anuxua+MidNIXAOkQ
+	id S1754761Ab3LGTDB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Dec 2013 14:03:01 -0500
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1VpN9Y-0006za-BM
+	for git@vger.kernel.org; Sat, 07 Dec 2013 20:03:00 +0100
+Received: from eph38.neoplus.adsl.tpnet.pl ([83.20.49.38])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 07 Dec 2013 20:03:00 +0100
+Received: from jnareb by eph38.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 07 Dec 2013 20:03:00 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 83.20.49.38 (Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/30.0.1599.114 Chrome/30.0.1599.114 Safari/537.36)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239013>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239014>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Christian Couder <chriscool <at> tuxfamily.org> writes:
 
-> * mm/mv-file-to-no-such-dir-with-slash (2013-12-04) 1 commit
->  - mv: let 'git mv file no-such-dir/' error out
+>=20
+> When checking to see if some objects are of the same type
+> and when displaying the type of objects, git replace uses
+> the sha1_object_info() function.
+>=20
+> Unfortunately this function by default respects replace
+> refs, so instead of the type of a replaced object, it
+> gives the type of the replacement object which might
+> be different.
 
-Why is it "stalled"? I think I took all remarks into account.
+Wasn't replace mechanism tightened, so that replacing object
+must be the same type as replaced object?
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Is there a situation where you might want replace object
+with different type of object?
+
+--=20
+Jakub Nar=C4=99bski
