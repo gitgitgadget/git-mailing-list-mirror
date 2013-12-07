@@ -1,108 +1,80 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: RE: [PATCH] push: Allow @ shortcut with git-push
-Date: Sat, 07 Dec 2013 03:45:41 -0600
-Message-ID: <52a2ee45b8644_29836d5e9877@nysa.notmuch>
-References: <1386310392-26882-1-git-send-email-tkrajina@gmail.com>
+Subject: Re: [PATCH v6 06/10] fast-export: add new --refspec option
+Date: Sat, 07 Dec 2013 04:00:37 -0600
+Message-ID: <52a2f1c59de6f_29836d5e9830@nysa.notmuch>
+References: <1384210507-26561-1-git-send-email-felipe.contreras@gmail.com>
+ <1384210507-26561-6-git-send-email-felipe.contreras@gmail.com>
+ <xmqqd2m6jyue.fsf@gitster.dls.corp.google.com>
+ <CAMP44s2ubU_R0GkEUpEh24TxER3uONQJprh9Ot7+PL0QiDRmDg@mail.gmail.com>
+ <5281DB46.2010004@bbn.com>
+ <5282977b2ecd_3b98795e785e@nysa.notmuch>
+ <xmqq38n1guo8.fsf@gitster.dls.corp.google.com>
+ <xmqqob5pfa6j.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
 Content-Transfer-Encoding: 7bit
-Cc: felipe.contreras@gmail.com, Tomo Krajina <tkrajina@gmail.com>
-To: Tomo Krajina <tkrajina@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 07 10:56:25 2013
+Cc: Richard Hansen <rhansen@bbn.com>, git@vger.kernel.org,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Dec 07 11:10:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VpEca-00025S-FO
-	for gcvg-git-2@plane.gmane.org; Sat, 07 Dec 2013 10:56:24 +0100
+	id 1VpEqR-0007ZM-N6
+	for gcvg-git-2@plane.gmane.org; Sat, 07 Dec 2013 11:10:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753780Ab3LGJ4S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Dec 2013 04:56:18 -0500
-Received: from mail-ob0-f175.google.com ([209.85.214.175]:60376 "EHLO
-	mail-ob0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752758Ab3LGJ4P (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Dec 2013 04:56:15 -0500
-Received: by mail-ob0-f175.google.com with SMTP id uz6so1851874obc.20
-        for <git@vger.kernel.org>; Sat, 07 Dec 2013 01:56:15 -0800 (PST)
+	id S1754685Ab3LGKKi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 Dec 2013 05:10:38 -0500
+Received: from mail-oa0-f51.google.com ([209.85.219.51]:38745 "EHLO
+	mail-oa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754651Ab3LGKKe (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Dec 2013 05:10:34 -0500
+Received: by mail-oa0-f51.google.com with SMTP id i7so1945928oag.24
+        for <git@vger.kernel.org>; Sat, 07 Dec 2013 02:10:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-type:content-transfer-encoding;
-        bh=cV4y8tMNsl1bMn4xPfkwLN/s5SDhLW5i0CF5QU78cxU=;
-        b=rIM1VkC4Y58QOJLgWe/r9+64V+7zx3E3SJIhF17y2VhjwuIFreVIZ7pJGD6KlofQ2O
-         5V2knq+jnvV396wmsQP83SnBvdDZTqtUAhBqQs1906y31dKKy9ThFuut2q0yV2dNbXa5
-         wOIR/VIeSq5E2gbyP7Spv8ezJf0XVo/qwUCXb4GTMFB/VvWI8ptD3G3RgNEDnh2zkXMA
-         ptdB7OmhJBGer8cB36QJU9c0ADa9Xs6u9VEoa8dd8aaVroowOoOpvjYnZPwJZS1s0C8c
-         YOl/e3hmfu8GJwBdFOmDZmeHkfTl01+ATruDmLj+x3UbZvWYRyQwCfqucSjWUF3nNr6F
-         gLuA==
-X-Received: by 10.182.16.33 with SMTP id c1mr5951236obd.4.1386410175398;
-        Sat, 07 Dec 2013 01:56:15 -0800 (PST)
+        bh=EBliUxCf6NoC9wNLOnQ1bX8xy7Q7cMEIN96BKr5wtx0=;
+        b=riDYw3egjuNRSpbgQ5iB+YEEjKjVOtt6ZB7FmE0dQj4QpEuuDHfT5GxFSoz1pXW4li
+         a5oaT7epcXFMen7woVDiFBI+LSetI3ZUNCxSI3s35eiRbEvXMPJnq1RtEO4iMkw0IpMi
+         CtPdUzOv6PeLNnx69mIs9fzGLVsXDgFO4uwbuS6xXTyjopl3+5tJvkoSd0rqRgyEsbRP
+         QvxClk4JMyvOaJajM8OFmsKoCfM2oKCtuaJ5AzwCeU1Y/TAsBhEJyWCmOIZg2TGtq448
+         UogILz43rmQhP+oP2iFnbcFW+tLPxIoPMGHNDv16shekIXTGnoOXcKp4P+JruOOQyovO
+         fn/g==
+X-Received: by 10.60.59.5 with SMTP id v5mr5990568oeq.30.1386411033329;
+        Sat, 07 Dec 2013 02:10:33 -0800 (PST)
 Received: from localhost (187-162-140-241.static.axtel.net. [187.162.140.241])
-        by mx.google.com with ESMTPSA id ru3sm3242997obc.2.2013.12.07.01.56.13
+        by mx.google.com with ESMTPSA id qe2sm3312102obc.1.2013.12.07.02.10.31
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 07 Dec 2013 01:56:14 -0800 (PST)
-In-Reply-To: <1386310392-26882-1-git-send-email-tkrajina@gmail.com>
+        Sat, 07 Dec 2013 02:10:32 -0800 (PST)
+In-Reply-To: <xmqqob5pfa6j.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238973>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/238974>
 
-Tomo Krajina wrote:
-> Until now, HEAD could be used with git-push to push the current
-> branch. Now @ is a shortcut to HEAD, but it didn't work when
-> pushing branches. It fails with:
-> 
->   fatal: remote part of refspec is not a valid name in @
-> 
-> Reinterpret all branch names from argv in order for @ to be used
-> when pushing branches.
-> 
-> Signed-off-by: Tomo Krajina <tkrajina@gmail.com>
-> ---
->  builtin/push.c | 15 ++++++++++++++-
->  1 file changed, 14 insertions(+), 1 deletion(-)
-> 
-> diff --git a/builtin/push.c b/builtin/push.c
-> index 7b1b66c..51c0200 100644
-> --- a/builtin/push.c
-> +++ b/builtin/push.c
-> @@ -494,7 +494,20 @@ int cmd_push(int argc, const char **argv, const char *prefix)
->  
->  	if (argc > 0) {
->  		repo = argv[0];
-> -		set_refspecs(argv + 1, argc - 1);
-> +
-> +		char *refs[argc - 1];
-> +		int i;
-> +		for(i = 1; i < argc; i++) {
-> +			refs[i - 1] = argv[i];
-> +
-> +			struct strbuf buf = STRBUF_INIT;
-> +			interpret_branch_name(argv[i], strlen(argv[i]), &buf);
-> +
-> +			if(buf.buf && strlen(buf.buf) > 0)
-> +				refs[i - 1] = buf.buf;
-> +		}
-> +
-> +		set_refspecs(refs, argc - 1);
->  	}
->  
->  	rc = do_push(repo, flags);
-> -- 
+Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> > Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-I don't think this is the right way to go. There are many places where HEAD
-cannot be replaced with @, or @{u}, or any of such syntaxes.
+> But it does not have to stay that way.  In order to move things
+> forward in that direction, this new configuration has to be
+> distinguishable from the traditional "refspec", as it embodies a
+> different concept.
 
-We might want to do this kind of replacement in many other places, but we would
-need to make sure it makes sense.
+Is it a different concept?
 
-Moreover, in order for this patch to be considered you need to add tests.
+ % git config remote.origin.fetch '+refs/heads/*:refs/remotes-test/origin/*'
+ % git fetch origin master
 
-Cheers.
+What do you call this thing? ------^
 
 -- 
 Felipe Contreras
