@@ -1,122 +1,101 @@
-From: Karsten Blees <karsten.blees@gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
 Subject: Re: What's cooking in git.git (Dec 2013, #02; Fri, 6)
-Date: Sat, 07 Dec 2013 20:56:32 +0100
-Message-ID: <52A37D70.3090400@gmail.com>
+Date: Sat, 7 Dec 2013 14:30:40 -0600
+Message-ID: <CAMP44s0sankG67rknVo=g5aOJXS_GZBh+hkr9cyVSiYrEvt83Q@mail.gmail.com>
 References: <xmqqk3fh1qrc.fsf@gitster.dls.corp.google.com>
+	<52a2f27bfe07_29836d5e98f5@nysa.notmuch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
 To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 07 20:56:40 2013
+X-From: git-owner@vger.kernel.org Sat Dec 07 21:30:49 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VpNzS-0007Nw-CA
-	for gcvg-git-2@plane.gmane.org; Sat, 07 Dec 2013 20:56:38 +0100
+	id 1VpOWW-0006rE-Fk
+	for gcvg-git-2@plane.gmane.org; Sat, 07 Dec 2013 21:30:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755671Ab3LGT4b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Dec 2013 14:56:31 -0500
-Received: from mail-ee0-f49.google.com ([74.125.83.49]:54272 "EHLO
-	mail-ee0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755576Ab3LGT4a (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Dec 2013 14:56:30 -0500
-Received: by mail-ee0-f49.google.com with SMTP id c41so853827eek.22
-        for <git@vger.kernel.org>; Sat, 07 Dec 2013 11:56:29 -0800 (PST)
+	id S1755627Ab3LGUam (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 Dec 2013 15:30:42 -0500
+Received: from mail-la0-f53.google.com ([209.85.215.53]:40608 "EHLO
+	mail-la0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755531Ab3LGUam (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Dec 2013 15:30:42 -0500
+Received: by mail-la0-f53.google.com with SMTP id mc6so542604lab.40
+        for <git@vger.kernel.org>; Sat, 07 Dec 2013 12:30:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:subject:references
-         :in-reply-to:content-type:content-transfer-encoding;
-        bh=WFaGW8yFsDe8M12zc1c7ZoNy8zL1wt7GhEcepl4VPIY=;
-        b=oOI7qsIr2zu7a4MUkKhhJncuivqBUxMS3jyWQXSk++L3yru1cFKl2++WHmMTJcFQ9b
-         fAFLfY395CqaHM9eZ2y2agrW8U/m/ZgxurM04ETRPbXjMOLFxffN+31DDlhDVo4tJ8PY
-         8AliOM40M5yUHs55XHeUxFKRVFusWDVTUMc4bT9UInKHOstW09NJHvn7tCpPPRGvQ5WW
-         fjm7apmlXIkVtawVzkVYmc+ZrioOAq/HkBOlAeRLrhfzZgzPjZstEfc9dV2MeOoVbbhM
-         +C3PNftaw2PinBrh9CMu1KEmhiPjnWkIILO//ftMY2rfDcwof1R4VvEqH8sURTatwi04
-         kggQ==
-X-Received: by 10.14.207.194 with SMTP id n42mr1596273eeo.76.1386446189453;
-        Sat, 07 Dec 2013 11:56:29 -0800 (PST)
-Received: from [10.1.100.54] (ns.dcon.de. [77.244.111.149])
-        by mx.google.com with ESMTPSA id n1sm9570677eep.20.2013.12.07.11.56.28
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 07 Dec 2013 11:56:28 -0800 (PST)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.1.1
-In-Reply-To: <xmqqk3fh1qrc.fsf@gitster.dls.corp.google.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type;
+        bh=j0pMiU9n2pzdTifxqKi6GnCB0Q5J1ySe4SB2jyKQpE8=;
+        b=ppWYHiTG49XPOZVuoz3+Uguiyli6aGgteLmbKuSCdzxuQ2k9PAR6PAkw5DE5QLnvdu
+         VTRk0gfo4Eg7YZ/KRm5HxgKduK0C5BePYQPZ0x0UBdLcdEZtqZV0cXOg2fkWB4JXus/7
+         CHlj0mF3eWw2bBrSx4WYkqUq3KZjuWNVQJr7fBjVm+qI7HRH2HziVVZeSDEJgaRrRrWn
+         kWBeOUj84wO9cLV7iAEpHOL3SZcZPNqbw7jSTJQohKVkEu+U9zAYA0LnhX/47XIPYZpL
+         MZhywPOiDX4nHILUok6AycMWTClprrl82TFO09CZkTnRPxbLXW2T6nctGqYAQQzSw6W8
+         dQRQ==
+X-Received: by 10.152.4.162 with SMTP id l2mr27871lal.75.1386448240644; Sat,
+ 07 Dec 2013 12:30:40 -0800 (PST)
+Received: by 10.114.201.69 with HTTP; Sat, 7 Dec 2013 12:30:40 -0800 (PST)
+In-Reply-To: <52a2f27bfe07_29836d5e98f5@nysa.notmuch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239017>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239018>
 
-Am 07.12.2013 00:52, schrieb Junio C Hamano:
+On Sat, Dec 7, 2013 at 4:03 AM, Felipe Contreras
+<felipe.contreras@gmail.com> wrote:
+> Junio C Hamano wrote:
+>> * fc/transport-helper-fixes (2013-11-13) 12 commits
+>>  - remote-bzr: support the new 'force' option
+>>  - transport-helper: add support to delete branches
+>>  - fast-export: add support to delete refs
+>>  - fast-import: add support to delete refs
+>>  - transport-helper: add support for old:new refspec
+>>  - fast-export: add new --refspec option
+>>  - fast-export: improve argument parsing
+>>  - test-hg.sh: tests are now expected to pass
+>>  - transport-helper: check for 'forced update' message
+>>  - transport-helper: add 'force' to 'export' helpers
+>>  - transport-helper: don't update refs in dry-run
+>>  - transport-helper: mismerge fix
+>>
+>>  Updates transport-helper, fast-import and fast-export to allow the
+>>  ref mapping and ref deletion in a way similar to the natively
+>>  supported transports.
+>>
+>>  The option name "--refspec" needs to be rethought. It does not mean
+>>  what refspec usually means, even though it shares the same syntax
+>>  with refspec; calling it --refspec only because it shares the same
+>>  syntax is like calling it --asciistring and does not make sense.
+>
+> Not true. remote.<name>.fetch is a refspec, and doesn't specify what to fetch,
+> so does the "refspec" capability in remote helpers, and so does the proposed
+> --refspec option.
+>
+> It is exactly what it already means.
 
-> * kb/doc-exclude-directory-semantics (2013-11-07) 1 commit
->  - gitignore.txt: clarify recursive nature of excluded directories
-> 
->  Originally merged to 'next' on 2013-11-13
-> 
->  Kicked back to 'pu' to replace with a newer reroll ($gmane/237814
->  looked OK but there seems to have some loose ends in the
->  discussion).
+Not to mention that you can apply the first part of the series without
+any problems:
 
-I'm unaware of any loose ends, could you clarify?
+>>  - fast-export: improve argument parsing
+>>  - test-hg.sh: tests are now expected to pass
+>>  - transport-helper: check for 'forced update' message
+>>  - transport-helper: add 'force' to 'export' helpers
+>>  - transport-helper: don't update refs in dry-run
+>>  - transport-helper: mismerge fix
 
-Btw. $gmane/237814 seems to be a different topic, the version in next (and now in pu) was $gmane/237429.
+Even:
 
+>>  - remote-bzr: support the new 'force' option
 
-> * kb/fast-hashmap (2013-11-18) 14 commits
->   (merged to 'next' on 2013-12-06 at f90be3d) 
+The rest is for old:new :to-delete refspecs.
 
-Damn, a day too late :-) I found these two glitches today...is a fixup patch OK or should I do a reroll (or separate patch on top)?
+To take hostage the whole patch series because of the name --refspec
+(which is perfectly fine) is just an excuse to not fix the issues
+already present.
 
-Thanks,
-Karsten
-
---- 8< ---
-Subject: [PATCH] fixup! add a hashtable implementation that supports O(1) removal
-
-Use 'unsigned int' for hash-codes everywhere.
-
-Extending 'struct hashmap_entry' with an int-sized member shouldn't waste
-memory on 64-bit systems. This is already documented in api-hashmap.txt,
-but needs '__attribute__((__packed__))' to work. Reduces e.g.
-
- struct name_entry {
-     struct hashmap_entry ent;
-     int namelen;
-     char *name;
- };
-
-from 32 to 24 bytes.
-
-Signed-off-by: Karsten Blees <blees@dcon.de>
----
- hashmap.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/hashmap.h b/hashmap.h
-index f5b3b61..b64567b 100644
---- a/hashmap.h
-+++ b/hashmap.h
-@@ -15,7 +15,7 @@ extern unsigned int memihash(const void *buf, size_t len);
- 
- /* data structures */
- 
--struct hashmap_entry {
-+struct __attribute__((__packed__)) hashmap_entry {
- 	struct hashmap_entry *next;
- 	unsigned int hash;
- };
-@@ -43,7 +43,7 @@ extern void hashmap_free(struct hashmap *map, int free_entries);
- 
- /* hashmap_entry functions */
- 
--static inline void hashmap_entry_init(void *entry, int hash)
-+static inline void hashmap_entry_init(void *entry, unsigned int hash)
- {
- 	struct hashmap_entry *e = entry;
- 	e->hash = hash;
 -- 
-1.8.5.1.178.g0a9afc1.dirty
+Felipe Contreras
