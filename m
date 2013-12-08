@@ -1,124 +1,75 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [PATCH 6/7] sha1_name: cleanup interpret_branch_name()
-Date: Sun, 8 Dec 2013 09:42:55 -0000
-Organization: OPDS
-Message-ID: <67130C4F312A414DAB7EA610C78C9103@PhilipOakley>
-References: <1386482220-18558-1-git-send-email-felipe.contreras@gmail.com> <1386482220-18558-7-git-send-email-felipe.contreras@gmail.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Thomas Rast <tr@thomasrast.ch>
+Subject: Re: What's cooking in git.git (Dec 2013, #02; Fri, 6)
+Date: Sun, 08 Dec 2013 11:20:44 +0100
+Message-ID: <87lhzvhceb.fsf@linux-1gf2.Speedport_W723_V_Typ_A_1_00_098>
+References: <xmqqk3fh1qrc.fsf@gitster.dls.corp.google.com>
+	<52A37D70.3090400@gmail.com> <87fvq41esw.fsf@thomasrast.ch>
+	<52A3A1F5.3080906@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-To: "Felipe Contreras" <felipe.contreras@gmail.com>,
-	<git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Dec 08 10:42:54 2013
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Karsten Blees <karsten.blees@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Dec 08 11:21:01 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vpat2-0000SV-R3
-	for gcvg-git-2@plane.gmane.org; Sun, 08 Dec 2013 10:42:53 +0100
+	id 1VpbTw-00080Q-TU
+	for gcvg-git-2@plane.gmane.org; Sun, 08 Dec 2013 11:21:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754012Ab3LHJml (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Dec 2013 04:42:41 -0500
-Received: from out1.ip05ir2.opaltelecom.net ([62.24.128.241]:62490 "EHLO
-	out1.ip05ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752127Ab3LHJmh (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 8 Dec 2013 04:42:37 -0500
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AvYYAAE+pFJZ8YsO/2dsb2JhbABZgwc4iRCwTQEBAgGBFhd0aQEBgR8BARQBBAEBBQgBAR0RFggBASwCAwUCAQMVDCUUAQQIEAIGBxcGAQcLCAIBAgMBDASFKAcBghINAxMJuRoNhn6MfYU6gRMDiQqGEocNgxuJG4IPhTmDKTw
-X-IPAS-Result: AvYYAAE+pFJZ8YsO/2dsb2JhbABZgwc4iRCwTQEBAgGBFhd0aQEBgR8BARQBBAEBBQgBAR0RFggBASwCAwUCAQMVDCUUAQQIEAIGBxcGAQcLCAIBAgMBDASFKAcBghINAxMJuRoNhn6MfYU6gRMDiQqGEocNgxuJG4IPhTmDKTw
-X-IronPort-AV: E=Sophos;i="4.93,850,1378854000"; 
-   d="scan'208";a="439289662"
-Received: from host-89-241-139-14.as13285.net (HELO PhilipOakley) ([89.241.139.14])
-  by out1.ip05ir2.opaltelecom.net with SMTP; 08 Dec 2013 09:42:34 +0000
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1752507Ab3LHKU5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Dec 2013 05:20:57 -0500
+Received: from psi.thgersdorf.net ([176.9.98.78]:53708 "EHLO mail.psioc.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751248Ab3LHKU4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Dec 2013 05:20:56 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by localhost.psioc.net (Postfix) with ESMTP id 92D6C4D6560;
+	Sun,  8 Dec 2013 11:20:54 +0100 (CET)
+X-Virus-Scanned: amavisd-new at psioc.net
+Received: from mail.psioc.net ([127.0.0.1])
+	by localhost (mail.psioc.net [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id HULYmIn9MamF; Sun,  8 Dec 2013 11:20:44 +0100 (CET)
+Received: from linux-1gf2.Speedport_W723_V_Typ_A_1_00_098.thomasrast.ch (46-126-8-85.dynamic.hispeed.ch [46.126.8.85])
+	(using TLSv1.2 with cipher AES128-GCM-SHA256 (128/128 bits))
+	(Client did not present a certificate)
+	by mail.psioc.net (Postfix) with ESMTPSA id 2A7274D64C4;
+	Sun,  8 Dec 2013 11:20:44 +0100 (CET)
+In-Reply-To: <52A3A1F5.3080906@gmail.com> (Karsten Blees's message of "Sat, 07
+	Dec 2013 23:32:21 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239042>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239043>
 
-From: "Felipe Contreras" <felipe.contreras@gmail.com>
-> The 'upstream' variable doesn't hold an "upstream", but a branch, so
-> make it clearer.
->
-> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
-> ---
-> sha1_name.c | 18 +++++++++---------
-> 1 file changed, 9 insertions(+), 9 deletions(-)
->
-> diff --git a/sha1_name.c b/sha1_name.c
-> index e9c2999..e27db88 100644
-> --- a/sha1_name.c
-> +++ b/sha1_name.c
-> @@ -1072,7 +1072,7 @@ static int reinterpret(const char *name, int 
-> namelen, int len, struct strbuf *bu
-> int interpret_branch_name(const char *name, int namelen, struct strbuf 
-> *buf)
-> {
->  char *cp;
-> - struct branch *upstream;
-> + struct branch *branch;
->  int len = interpret_nth_prior_checkout(name, buf);
->  int tmp_len;
->
-> @@ -1102,26 +1102,26 @@ int interpret_branch_name(const char *name, 
-> int namelen, struct strbuf *buf)
->
->  len = cp + tmp_len - name;
->  cp = xstrndup(name, cp - name);
-> - upstream = branch_get(*cp ? cp : NULL);
-> + branch = branch_get(*cp ? cp : NULL);
->  /*
->  * Upstream can be NULL only if cp refers to HEAD and HEAD
->  * points to something different than a branch.
+Karsten Blees <karsten.blees@gmail.com> writes:
 
-Doesn't this comment also need updating, or at least clarifying any 
-contradictions between variable names and the concepts described. That 
-is does "Upstream" refer to the original variable 'upstream', and now 
-the final "branch" can be confused with the new variable name.
-
-I'm not arguing against the change, rather just noting an additional 
-consequence.
-
->  */
-> - if (!upstream)
-> + if (!branch)
->  die(_("HEAD does not point to a branch"));
-> - if (!upstream->merge || !upstream->merge[0]->dst) {
-> - if (!ref_exists(upstream->refname))
-> + if (!branch->merge || !branch->merge[0]->dst) {
-> + if (!ref_exists(branch->refname))
->  die(_("No such branch: '%s'"), cp);
-> - if (!upstream->merge) {
-> + if (!branch->merge) {
->  die(_("No upstream configured for branch '%s'"),
-> - upstream->name);
-> + branch->name);
->  }
->  die(
->  _("Upstream branch '%s' not stored as a remote-tracking branch"),
-> - upstream->merge[0]->src);
-> + branch->merge[0]->src);
->  }
->  free(cp);
-> - cp = shorten_unambiguous_ref(upstream->merge[0]->dst, 0);
-> + cp = shorten_unambiguous_ref(branch->merge[0]->dst, 0);
->  strbuf_reset(buf);
->  strbuf_addstr(buf, cp);
->  free(cp);
-> -- 
-> 1.8.5.1+fc1.2.gebd1fb1
+> Am 07.12.2013 23:23, schrieb Thomas Rast:
+>> Karsten Blees <karsten.blees@gmail.com> writes:
+>> 
+>>> Extending 'struct hashmap_entry' with an int-sized member shouldn't waste
+>>> memory on 64-bit systems. This is already documented in api-hashmap.txt,
+>>> but needs '__attribute__((__packed__))' to work. Reduces e.g.
+>> 
+>> You'd have to guard __attribute__((__packed__)) with some compiler
+>> detection in git-compat-util.h though.
+>> 
 >
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
+> Isn't that already handled? __attribute__ is already widely used
+> (e.g. for printf formats), and platforms that don't support it define
+> it as empty (e.g. MSVC). Or do you mean I should account for
+> compiler-specific variants (#pragma pack...)?
+
+True, __attribute__ expands to nothing on unknown compilers, but what
+does the compiler do when it sees an unknown attribute?  If some of them
+choke, you need a separate macro.
+
+I'm a bit confused myself though, many attributes have special macros in
+git-compat-util.h but others we just use in the code.
+
+-- 
+Thomas Rast
+tr@thomasrast.ch
