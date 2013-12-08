@@ -1,81 +1,59 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: [PATCH] pull: use merge-base --fork-point when appropriate
-Date: Sun,  8 Dec 2013 12:47:25 +0000
-Message-ID: <b208a2edcaf47bf1a97ec19718854dc1b3646828.1386506845.git.john@keeping.me.uk>
-Cc: Martin von Zweigbergk <martinvonz@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	John Keeping <john@keeping.me.uk>
+From: Stefanus Du Toit <sjdutoit@gmail.com>
+Subject: git-subtree manpage missing from git-manpages tarballs
+Date: Sun, 8 Dec 2013 11:14:39 -0500
+Message-ID: <CABGRy0o3AJLMhmVJL8XAjrnQJd=yuV+1Q=cLToetnhmB0V=hfA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 08 13:47:47 2013
+X-From: git-owner@vger.kernel.org Sun Dec 08 17:15:01 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vpdly-000585-6K
-	for gcvg-git-2@plane.gmane.org; Sun, 08 Dec 2013 13:47:46 +0100
+	id 1Vph0W-00072O-CH
+	for gcvg-git-2@plane.gmane.org; Sun, 08 Dec 2013 17:15:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754184Ab3LHMrm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Dec 2013 07:47:42 -0500
-Received: from jackal.aluminati.org ([72.9.247.210]:52993 "EHLO
-	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752765Ab3LHMrl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Dec 2013 07:47:41 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by jackal.aluminati.org (Postfix) with ESMTP id 8E5C6CDA59E;
-	Sun,  8 Dec 2013 12:47:40 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -2.899
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.899 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, BAYES_00=-1.9, URIBL_BLOCKED=0.001]
-	autolearn=no
-Received: from jackal.aluminati.org ([127.0.0.1])
-	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id dlfwb3PVWLsk; Sun,  8 Dec 2013 12:47:39 +0000 (GMT)
-Received: from river.lan (chimera.aluminati.org [10.0.16.60])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by jackal.aluminati.org (Postfix) with ESMTPSA id 1A36DCDA566;
-	Sun,  8 Dec 2013 12:47:31 +0000 (GMT)
-X-Mailer: git-send-email 1.8.5.226.g0d60d77
+	id S1759371Ab3LHQOl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Dec 2013 11:14:41 -0500
+Received: from mail-wi0-f171.google.com ([209.85.212.171]:61983 "EHLO
+	mail-wi0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751850Ab3LHQOk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Dec 2013 11:14:40 -0500
+Received: by mail-wi0-f171.google.com with SMTP id bz8so2657207wib.4
+        for <git@vger.kernel.org>; Sun, 08 Dec 2013 08:14:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=b1k9Bwh8Dw3LJJu4ZxF68iEHX3zL1ScZsIgSZUYgNEI=;
+        b=fLZJMmphjbGDsoq4Y2UwQ+ZP+6M5O0XCSyZf9AI69hjzK4+aErKNlzlBHb5uOIw7c4
+         SaCiVAwBeCbC11IoSV1hEMeiUxcAQ0Ijk4GT62RgbDVPah6LnKIEgotGphd9xvi4fb2L
+         H7dIGMWqkga3/ON9Sjjsq35jTRRaIusi1uF7eplQ89LCeaHBc44euTDY+V0GxEDMhasl
+         DMA6bOb884GXxOto1z2J0UjVNQN5T9rSgFVxmrjIcMEvNweNa+Y9HArgKQHdAlZIVQa7
+         ZRN28meoXhidblNi4fcMxbNKbMmEWCXXsqUoaEZ1nHR1uk8sMuELUtWbV3y9oXQthitL
+         hrkw==
+X-Received: by 10.194.174.36 with SMTP id bp4mr11920330wjc.7.1386519279564;
+ Sun, 08 Dec 2013 08:14:39 -0800 (PST)
+Received: by 10.195.9.5 with HTTP; Sun, 8 Dec 2013 08:14:39 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239044>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239046>
 
-Since commit d96855f (merge-base: teach "--fork-point" mode, 2013-10-23)
-we can replace a shell loop in git-pull with a single call to
-git-merge-base.  So let's do so.
+The git-subtree manpage is currently missing from the git-manpages
+tarballs at https://code.google.com/p/git-core/.
 
-Signed-off-by: John Keeping <john@keeping.me.uk>
----
- git-pull.sh | 10 +---------
- 1 file changed, 1 insertion(+), 9 deletions(-)
+For example, https://code.google.com/p/git-core/downloads/detail?name=git-manpages-1.8.5.1.tar.gz
+does not include it.
 
-diff --git a/git-pull.sh b/git-pull.sh
-index b946fd9..605e957 100755
---- a/git-pull.sh
-+++ b/git-pull.sh
-@@ -229,15 +229,7 @@ test true = "$rebase" && {
- 	test -n "$curr_branch" &&
- 	. git-parse-remote &&
- 	remoteref="$(get_remote_merge_branch "$@" 2>/dev/null)" &&
--	oldremoteref="$(git rev-parse -q --verify "$remoteref")" &&
--	for reflog in $(git rev-list -g $remoteref 2>/dev/null)
--	do
--		if test "$reflog" = "$(git merge-base $reflog $curr_branch)"
--		then
--			oldremoteref="$reflog"
--			break
--		fi
--	done
-+	oldremoteref=$(git merge-base --fork-point "$remoteref" $curr_branch)
- }
- orig_head=$(git rev-parse -q --verify HEAD)
- git fetch $verbosity $progress $dry_run $recurse_submodules --update-head-ok "$@" || exit 1
--- 
-1.8.5.226.g0d60d77
+A side effect of this is that "git help subtree" fails when using git
+installed from homebrew, because the homebrew recipe uses those
+tarballs as its source of documentation.
+
+Is it possible to include the manpage starting with an upcoming
+release, or is there a good reason it's excluded?
+
+Thanks,
+
+Stefanus
