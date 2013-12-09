@@ -1,107 +1,199 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2] diff: don't read index when --no-index is given
-Date: Mon, 9 Dec 2013 15:57:21 -0500
-Message-ID: <CAPig+cT_TXEAV-Jb_1N8vhKyenpEJLpw+7J45bsQ6aycdO3ftg@mail.gmail.com>
-References: <20131209192000.GS29959@google.com>
-	<1386621634-25444-1-git-send-email-t.gummerer@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v6 06/10] fast-export: add new --refspec option
+Date: Mon, 09 Dec 2013 13:00:09 -0800
+Message-ID: <xmqqbo0pyc2u.fsf@gitster.dls.corp.google.com>
+References: <1384210507-26561-1-git-send-email-felipe.contreras@gmail.com>
+	<1384210507-26561-6-git-send-email-felipe.contreras@gmail.com>
+	<xmqqd2m6jyue.fsf@gitster.dls.corp.google.com>
+	<CAMP44s2ubU_R0GkEUpEh24TxER3uONQJprh9Ot7+PL0QiDRmDg@mail.gmail.com>
+	<5281DB46.2010004@bbn.com> <5282977b2ecd_3b98795e785e@nysa.notmuch>
+	<xmqq38n1guo8.fsf@gitster.dls.corp.google.com>
+	<xmqqob5pfa6j.fsf@gitster.dls.corp.google.com>
+	<52a2f1c59de6f_29836d5e9830@nysa.notmuch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	=?ISO-8859-1?Q?Ren=E9_Scharfe?= <l.s.r@web.de>,
-	Tim Henigan <tim.henigan@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Alexey Borzenkov <snaury@gmail.com>,
-	Bobby Powers <bobbypowers@gmail.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Jeff King <peff@peff.net>
-To: Thomas Gummerer <t.gummerer@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Dec 09 21:57:39 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Richard Hansen <rhansen@bbn.com>, git@vger.kernel.org,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Dec 09 22:00:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vq7ta-0001dJ-IH
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Dec 2013 21:57:38 +0100
+	id 1Vq7wF-0003J5-QU
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Dec 2013 22:00:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933059Ab3LIU5X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Dec 2013 15:57:23 -0500
-Received: from mail-la0-f41.google.com ([209.85.215.41]:42731 "EHLO
-	mail-la0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932820Ab3LIU5W (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Dec 2013 15:57:22 -0500
-Received: by mail-la0-f41.google.com with SMTP id eo20so2031176lab.0
-        for <git@vger.kernel.org>; Mon, 09 Dec 2013 12:57:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=WnhURj2rZlF/5l41jiH/Eq0P3TaZNmu3sqBVXYJdroc=;
-        b=QaWwVJyfum56e8WP5C8V9Gr/a65WTZ2+aWASoPapUvrwpiszLIDY1DfGhtY50ubpz9
-         /87EjmdFdJwCbOIXd1Fm+vcqtJ0pAndmzoUu/EztfN4Vd+zFKq7MmzCRkbZnP7qqYkNu
-         V4Rhg2WFO53fAxzQp2UAM/t1d0P00fZJ4/8YxEEDSrfKEcYHc6DeScOysE3vyHiiw4kq
-         8tAgJhZdWAGBKA2a5wT03Ksn27IjCcUJ2ne6opffsz6ycKBCCDMHRo13vHYKr0v+IoGP
-         7H05nwLIAcmUkkmtciW7qdPRWge3FEowrDzaKIyFuOPZdzai5MPzY7hFqkpkfAjkcrWS
-         UAuA==
-X-Received: by 10.152.116.46 with SMTP id jt14mr6380598lab.31.1386622641106;
- Mon, 09 Dec 2013 12:57:21 -0800 (PST)
-Received: by 10.114.175.130 with HTTP; Mon, 9 Dec 2013 12:57:21 -0800 (PST)
-In-Reply-To: <1386621634-25444-1-git-send-email-t.gummerer@gmail.com>
-X-Google-Sender-Auth: J2wXBUeGwy0Z5VYxCN9NI8tWUio
+	id S1753005Ab3LIVAT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Dec 2013 16:00:19 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55827 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751280Ab3LIVAS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Dec 2013 16:00:18 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4F4BB5920A;
+	Mon,  9 Dec 2013 16:00:17 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 s=sasl; bh=ubZ47gL2uzHCa0GOTF0d+yGtA24=; b=kyF16mOY+MNiiBFfCSvC
+	sOeTFvX2hQ8Rybi3ixWcjzu1RyNo5E5vLqwvgMwXJX9jUpWHFh8bs52NGZZmUoY0
+	UB+lsBlNck9VP/t1zenfEr1C6baZE5325n1xuL+S9ou7HThh+N7Qa0cDgT82rmu7
+	JBGs2WyGkc+L07gxd6OYv0E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=FaXToAZiOGRs35tQl8qMhWOJFakesg0pWtdIIbigUVTzKj
+	de/gG1tQZmT31sC/ytbr7AGE6/XR3Jq1wd2sBIG/q6l6VXe4+DTetOBUZYZWAkqb
+	L6Uvk6hi0FEP9AcK/+1FYjda4yJCzs/AXsbxTNmzvPUCD4Cpac3YwhabomwVM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BC14859207;
+	Mon,  9 Dec 2013 16:00:16 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0DB42591FE;
+	Mon,  9 Dec 2013 16:00:14 -0500 (EST)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: E6CCBB7C-6114-11E3-8C04-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239097>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239098>
 
-On Mon, Dec 9, 2013 at 3:40 PM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
-> git diff --no-index ... currently reads the index, during setup, when
-> calling gitmodules_config().  This results in worse performance when
-> the index is not actually needed.  This patch avoids calling
-> gitmodules_config() when the --no-index option is given.  The times for
-> executing "git diff --no-index" in the WebKit repository are improved as
-> follows:
->
-> Test                      HEAD~3            HEAD
-> ------------------------------------------------------------------
-> 4001.1: diff --no-index   0.24(0.15+0.09)   0.01(0.00+0.00) -95.8%
->
-> An additional improvement of this patch is that "git diff --no-index" no
-> longer breaks when the index file is corrupt, which makes it possible to
-> use it for investigating the broken repository.
->
-> To improve the possible usage as investigation tool for broken
-> repositories, setup_git_directory_gently() is also not called when the
-> --no-index option is given.
->
-> Also add a test to guard against future breakages, and a performance
-> test to show the improvements.
->
-> Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
-> ---
-> diff --git a/t/t4053-diff-no-index.sh b/t/t4053-diff-no-index.sh
-> index 979e983..d3dbf6b 100755
-> --- a/t/t4053-diff-no-index.sh
-> +++ b/t/t4053-diff-no-index.sh
-> @@ -29,4 +29,10 @@ test_expect_success 'git diff --no-index relative path outside repo' '
->         )
->  '
->
-> +test_expect_success 'git diff --no-index with broken index' '
-> +       cd repo &&
-> +       echo broken >.git/index &&
-> +       git diff --no-index a ../non/git/a &&
-> +'
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-Stray && on the last line of the test.
+> Junio C Hamano wrote:
+>> Junio C Hamano <gitster@pobox.com> writes:
+>> > Felipe Contreras <felipe.contreras@gmail.com> writes:
+>
+>> But it does not have to stay that way.  In order to move things
+>> forward in that direction, this new configuration has to be
+>> distinguishable from the traditional "refspec", as it embodies a
+>> different concept.
+>
+> Is it a different concept?
+>
+>  % git config remote.origin.fetch '+refs/heads/*:refs/remotes-test/origin/*'
+>  % git fetch origin master
+>
+> What do you call this thing? ------^
 
-Also, don't you want to do the 'cd' and subsequent commands inside a
-subshell so that tests added after this one won't have to worry about
-cd'ing back to the top-level?
+The answer to that question is the "value of the 'remote.*.fetch'
+configuration variable".
 
-> +
->  test_done
-> --
-> 1.8.5.4.g8639e57
+The refspec mechanism and syntax used in "fetch" and "push" were
+invented and designed to express two things [*1*]:
+
+ 1) what is the set of objects that are necessary and sufficient to
+    complete some histories need to be transferred; what are the
+    tips of these histories that are being completed?
+
+ 2) after the object transfer, some refs on the side that receive
+    the objects are optionally to be updated;
+
+    2-a) which refs are they?
+    2-b) what objects are they updated to point at?
+
+A refspec consists of one or more elements, each of which has
+right and left hand side separated by a colon, i.e. RHS:LHS, and
+
+ 1) is determined by the RHS
+ 2-a) is determined by the LHS
+ 2-b) is determined by the correspondence between RHS-to-LHS.
+
+A wildcarded "refs/heads/*:refs/remotes/origin/*" dynamically
+expands to what the side that sends objects have, e.g. if fetching
+from a repository with 'master' and 'next' branches, it becomes
+
+	refs/heads/master:refs/remotes/origin/master
+        refs/heads/next:refs/remotes/origin/next
+
+So with
+
+	$ refspec='refs/heads/master:refs/remotes/origin/master
+	        refs/heads/next:refs/remotes/origin/next'
+	$ git fetch origin $refspec
+
+we transfer objects to allow us to have complete histories leading
+to 'master' and 'next' from the origin repository.  And we update
+our refs/remotes/origin/{next,master} refs.
+
+Traditionally, when there is _no_ refspec on the command line, the
+value of 'remote.*.fetch' configuration variable is used as the
+fallback default, and that usage is still true.  When used in that
+way, the value of the variable _is taken as_ a refspec.
+
+However, we can no longer say that the variable _is_ a refspec with
+the modern Git, and here is why.
+
+"git fetch origin master" used to ignore the 'remote.*.fetch'
+configuration variable completely, but since f2690487 (which is a
+fairly recent invention), the variable participates in the "fetch"
+process in a different way [*2*].  With this in the config:
+
+    [remote "origin"]
+    	fetch = refs/heads/master:refs/remotes/origin/master
+        fetch = refs/heads/next:refs/remotes/origin/next
+
+the command with 'master' refspec on the command line transfers the
+objects required to complete the history only for the 'master', and
+not 'next':
+
+	$ git fetch origin master
+
+In this usage, 'master' on the command line is the only thing that
+determines what histories are completed (because it does not say
+'next', the objects necessary to complete its history are not
+transferred unless they are needed to complete 'master').  The value
+of the 'remote.*.fetch' configuration does not participate in the
+determination of the history being transferred at all.  It is not
+used as a refspec.
+
+But unlike Git of the last year, we do map this 'master' using the
+'remote.*.fetch' configuration variable, in order to decide 2)
+above.  We find that the given remote ref, 'master', has an element
+that corresopnds to it in the 'remote.*.fetch' configuration, and
+that element tells us to update refs/remotes/origin/master to point
+at the object they call 'master', effectively turning the above
+command line into this form (using "refspec" that has only one
+element, refs/heads/master:refs/remotes/origin/master):
+
+	$ git fetch origin refs/heads/master:refs/remotes/origin/master
+
+There is no "refs/heads/next:refs/remotes/origin/next" here, because
+the 'fetch' configuration is not used as a refspec, but as something
+else.
+
+My understanding of the added option parameter to "git fast-export"
+is that it is not about specifying the history being transferred,
+but is about mapping the name of the destination.  For example, does
+object between 'master' and 'next' participate in the datastream
+produced with this?
+
+	fast-export \
+            --refspec=refs/heads/master:refs/remotes/origin/master \
+            --refspec=refs/heads/next:refs/remotes/origin/next \
+            master
+
+If this parameter were a refspec, as we have discussed already in
+previous rounds [*3*], we should be able to give it on the command line,
+like any normal refspec, instead of repeating the same thing
+(i.e. up to what commit should the history be transported) as in:
+
+	fast-export --refspec=refs/heads/master:refs/remotes/origin/master master
+
+but just
+
+	fast-export refs/heads/master:refs/remotes/origin/master
+
+
+[Footnote]
+
+ *1* Note that readers are hearing the authoritative definition
+     given by the person who invented and designed it back in August
+     2005.
+
+ *2* And a recent $gmane/238832 moves "push" in the direction to be
+     in line with "fetch" in this regard.
+
+ *3* And I think I even outlined the code to do so.
