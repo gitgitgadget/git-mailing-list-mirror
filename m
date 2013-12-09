@@ -1,225 +1,56 @@
-From: Thomas Gummerer <t.gummerer@gmail.com>
-Subject: Re: [PATCH v4 00/24] Index-v5
-Date: Mon, 09 Dec 2013 11:14:43 +0100
-Message-ID: <87vbyyfi0c.fsf@gmail.com>
-References: <1385553659-9928-1-git-send-email-t.gummerer@gmail.com>
+From: George Papanikolaou <g3orge.app@gmail.com>
+Subject: mv/rm submodules
+Date: Mon, 9 Dec 2013 12:59:11 +0200
+Message-ID: <CAByyCQCakKyUqJQDdFrTMf2CUJihRhqSUVCwT21VDN1EOerVWw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: gitster@pobox.com, tr@thomasrast.ch, mhagger@alum.mit.edu,
-	pclouds@gmail.com, robin.rosenberg@dewire.com,
-	sunshine@sunshineco.com, ramsay@ramsay1.demon.co.uk,
-	Antoine Pelisse <apelisse@gmail.com>
+Content-Type: text/plain; charset=ISO-8859-1
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 09 11:14:58 2013
+X-From: git-owner@vger.kernel.org Mon Dec 09 11:59:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vpxrc-0004DP-PY
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Dec 2013 11:14:57 +0100
+	id 1VpyYY-00009F-5a
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Dec 2013 11:59:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760972Ab3LIKOw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Dec 2013 05:14:52 -0500
-Received: from mail-pb0-f54.google.com ([209.85.160.54]:57818 "EHLO
-	mail-pb0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760524Ab3LIKOv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Dec 2013 05:14:51 -0500
-Received: by mail-pb0-f54.google.com with SMTP id un15so5202509pbc.27
-        for <git@vger.kernel.org>; Mon, 09 Dec 2013 02:14:50 -0800 (PST)
+	id S1760423Ab3LIK7O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Dec 2013 05:59:14 -0500
+Received: from mail-wg0-f50.google.com ([74.125.82.50]:50928 "EHLO
+	mail-wg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759819Ab3LIK7N (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Dec 2013 05:59:13 -0500
+Received: by mail-wg0-f50.google.com with SMTP id a1so3252417wgh.5
+        for <git@vger.kernel.org>; Mon, 09 Dec 2013 02:59:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:in-reply-to:references:user-agent:date
-         :message-id:mime-version:content-type;
-        bh=0+Ly7iIXOf+m4IORI21GjPpZIcWK5Ex4wjbRS61O/K4=;
-        b=pdEipRSfWV39aE5Q35T9qXz5TcOYiLk61SA25KXI6C5zV/fc+3Im7arNdgi+d0EEbI
-         5MIIB7ZF1v6kimiV3/xEQvmcaNzdJLhZX8mvWibOazvjwlfa/qPUpff2UQnLao8v0I0e
-         83HTKbyUttKQjj8Ui/OIHh/5khZ3OIkvUstiaGslnIatjmIOZXOMm4btQh6/CnuhvsWx
-         UGM+6Q764MZD4fz2hflpQyxbQ120ezAPei7vOoKl2l1ssHcxNeoQulqwciFyPVVObgVu
-         bccLx4waEfUYDk/m7Uu2hXcuo8dEvcyNAUlebATubK+J7N7scmhidlwIPL9lm2Y5/rg0
-         mofQ==
-X-Received: by 10.66.132.69 with SMTP id os5mr19358156pab.114.1386584090890;
-        Mon, 09 Dec 2013 02:14:50 -0800 (PST)
-Received: from localhost ([216.18.212.218])
-        by mx.google.com with ESMTPSA id lh13sm23527992pab.4.2013.12.09.02.14.37
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 09 Dec 2013 02:14:50 -0800 (PST)
-In-Reply-To: <1385553659-9928-1-git-send-email-t.gummerer@gmail.com>
-User-Agent: Notmuch/0.17~rc1+8~g4a09c1a (http://notmuchmail.org) Emacs/24.3.1 (x86_64-unknown-linux-gnu)
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=hocw5VjPoXqlZeF1A/wqjJ2oSGzi6mHqgWjjHabj7zo=;
+        b=m6JsU4R7njR0/YP69OlUpAiGpvx+8i1gP2DjsyoFC2jTSQDIqwIxIWI62pladMq3tM
+         bvMQcA1MJ76MQg/TErV2JZSshRjA/9IMNbM/f+X0Mngvg7shZGfyQZXTciOTG9C03n0A
+         8vV4pHVp3c0wcxtqWknUag1f/wKJqbo2aJrVzeOidYh2SDZT0N7Ka0e7/4VlsRrHHyJm
+         5D918B89egbZPncVI2o6px3ChGcRWJe7DZrVUxXTz81iVpDyFtlY3SHBsZyci2DcXQ3c
+         LmhzO/e8aD+Abkh+paG0XlDGlmfzVEC1MEwj8sORCXfnwH58PpW/ydJJ4RJNmVeqaNMs
+         wZVw==
+X-Received: by 10.180.36.231 with SMTP id t7mr13724421wij.40.1386586751426;
+ Mon, 09 Dec 2013 02:59:11 -0800 (PST)
+Received: by 10.194.75.132 with HTTP; Mon, 9 Dec 2013 02:59:11 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239065>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239066>
 
-Thomas Gummerer <t.gummerer@gmail.com> writes:
+Hi list,
 
-> Hi,
->
-> previous rounds (without api) are at $gmane/202752, $gmane/202923,
-> $gmane/203088 and $gmane/203517, the previous rounds with api were at
-> $gmane/229732, $gmane/230210 and $gmane/232488.  Thanks to Duy for
-> reviewing the the last round and Junio, Ramsay and Eric for additional
-> comments.
->
-> Since the last round I've added a POC for partial writing, resulting
-> in the following performance improvements for update-index:
->
-> Test                                        1063432           HEAD
-> ------------------------------------------------------------------------------------
-> 0003.2: v[23]: update-index                 0.60(0.38+0.20)   0.76(0.36+0.17) +26.7%
-> 0003.3: v[23]: grep nonexistent -- subdir   0.28(0.17+0.11)   0.28(0.18+0.09) +0.0%
-> 0003.4: v[23]: ls-files -- subdir           0.26(0.15+0.10)   0.24(0.14+0.09) -7.7%
-> 0003.7: v[23] update-index                  0.59(0.36+0.22)   0.58(0.36+0.20) -1.7%
-> 0003.9: v4: update-index                    0.46(0.28+0.17)   0.45(0.30+0.11) -2.2%
-> 0003.10: v4: grep nonexistent -- subdir     0.26(0.14+0.11)   0.21(0.14+0.07) -19.2%
-> 0003.11: v4: ls-files -- subdir             0.24(0.14+0.10)   0.20(0.12+0.08) -16.7%
-> 0003.14: v4 update-index                    0.49(0.31+0.18)   0.65(0.34+0.17) +32.7%
-> 0003.16: v5: update-index                   0.53(0.30+0.22)   0.50(0.28+0.20) -5.7%
-> 0003.17: v5: ls-files                       0.27(0.15+0.12)   0.27(0.17+0.10) +0.0%
-> 0003.18: v5: grep nonexistent -- subdir     0.02(0.01+0.01)   0.03(0.01+0.01) +50.0%
-> 0003.19: v5: ls-files -- subdir             0.02(0.00+0.02)   0.02(0.01+0.01) +0.0%
-> 0003.22: v5 update-index                    0.53(0.29+0.23)   0.02(0.01+0.01) -96.2%
->
-> Given this, I don't think a complete change of the in-core format for
-> the cache-entries is necessary to take full advantage of the new index
-> file format.  Instead some changes to the current in-core format would
-> work well with the new on-disk format.
->
-> The current in-memory format fits the internal needs of git fairly well,
-> so I don't think changing it to fit a better index file format would
-> make a lot of sense, given that we can take advantage of the new format
-> with the existing in-memory format.
+I was just playing with the new features of 'git mv' in 1.8.5 and
+realized that both rm
+and mv don't change the .git/config file. Is that on purpuse?
+Also after mv you need to run 'submodule update' and I think this should be
+documented somewhere.
 
-Any more opinions on this series?  I've applied the changes suggested by
-Duy, Antoine and Eric locally, but I wouldn't want to spam the list with
-the whole series without a chance of this being applied.  How do you
-want me to proceed?
+Thanks..
 
-> This series doesn't use kb/fast-hashmap yet, but that should be fairly
-> simple to change if the series is deemed a good change.  The
-> performance tests for update-index test require
-> tg/perf-lib-test-perf-cleanup.
->
-> Other changes, made following the review comments are:
->
-> documentation: add documentation of the index-v5 file format
->   - Update documentation that directory flags are now 32-bits.  That
->     makes aligned access simpler
->   - offset_to_offset is no longer included in the checksum for files.
->     It's unnecessary.
->
-> read-cache: read index-v5
->   - Add fix for reading with different level pathspecs given
->   - Use init_directory_entry to initialize all fields in a new
->     directory entry
->   - use memset to simplify the create_new_conflict function
->   - Add comments to explain -5 when reading directories and files
->   - Add comments for the more complex functions
->   - Add name flex_array to the end of ondisk_directory_entry for
->     simplified reading
->   - Add name flex_array to the end of ondisk_cache_entry for
->     simplified reading
->   - Move conflict reading functions to next patch
->   - mark functions as static when they are
->
-> read-cache: read resolve-undo data
->   - Add comments for the more complex function
->   - Read conflicts + resolve undo data as extension
->
-> read-cache: read cache-tree in index-v5
->   - Add comments for the more complex function
->   - Instead of sorting the directory entries, sort the cache-tree
->     directly.  This also required changing the algorithms with which
->     the cache entries are extracted from the directory tree.
->
-> read-cache: write index-v5
->   - Free pointers allocated by super_directory
->   - Rewrite condition as suggested by Duy
->   - Don't check for CE_REMOVE'd entries in the writing code, they are
->     already checked in the compile_directory_data code
->   - Remove overly complicated directory size calculation since flags
->     are now 32-bits
->
-> read-cache: write resolve-undo data for index-v5
->   - Free pointers allocated by super_directory
->   - Write conflicts + resolve undo data as extension
->
-> introduce GIT_INDEX_VERSION environment variable
->   - Add documentation for GIT_INDEX_VERSION
->
-> test-lib: allow setting the index format version
->
-> Removed commits:
->   - read-cache: don't check uid, gid, ino
->   - read-cache: use fixed width integer types (independently in pu)
->   - read-cache: clear version in discard_index()
->
-> Typos fixed as suggested by Eric Sunshine
->
-> Thomas Gummerer (22):
->   read-cache: split index file version specific functionality
->   read-cache: move index v2 specific functions to their own file
->   read-cache: Re-read index if index file changed
->   add documentation for the index api
->   read-cache: add index reading api
->   make sure partially read index is not changed
->   grep.c: use index api
->   ls-files.c: use index api
->   documentation: add documentation of the index-v5 file format
->   read-cache: make in-memory format aware of stat_crc
->   read-cache: read index-v5
->   read-cache: read resolve-undo data
->   read-cache: read cache-tree in index-v5
->   read-cache: write index-v5
->   read-cache: write index-v5 cache-tree data
->   read-cache: write resolve-undo data for index-v5
->   update-index.c: rewrite index when index-version is given
->   introduce GIT_INDEX_VERSION environment variable
->   test-lib: allow setting the index format version
->   t1600: add index v5 specific tests
->   POC for partial writing
->   perf: add partial writing test
->
-> Thomas Rast (1):
->   p0003-index.sh: add perf test for the index formats
->
->  Documentation/git.txt                            |    5 +
->  Documentation/technical/api-in-core-index.txt    |   56 +-
->  Documentation/technical/index-file-format-v5.txt |  294 +++++
->  Makefile                                         |   10 +
->  builtin/apply.c                                  |    2 +
->  builtin/grep.c                                   |   69 +-
->  builtin/ls-files.c                               |   36 +-
->  builtin/update-index.c                           |   50 +-
->  cache-tree.c                                     |   15 +-
->  cache-tree.h                                     |    2 +
->  cache.h                                          |  115 +-
->  lockfile.c                                       |    2 +-
->  read-cache-v2.c                                  |  561 +++++++++
->  read-cache-v5.c                                  | 1406 ++++++++++++++++++++++
->  read-cache.c                                     |  691 +++--------
->  read-cache.h                                     |   67 ++
->  resolve-undo.c                                   |    1 +
->  t/perf/p0003-index.sh                            |   74 ++
->  t/t1600-index-v5.sh                              |   25 +
->  t/t2101-update-index-reupdate.sh                 |   12 +-
->  t/test-lib-functions.sh                          |    5 +
->  t/test-lib.sh                                    |    3 +
->  test-index-version.c                             |    6 +
->  unpack-trees.c                                   |    3 +-
->  24 files changed, 2921 insertions(+), 589 deletions(-)
->  create mode 100644 Documentation/technical/index-file-format-v5.txt
->  create mode 100644 read-cache-v2.c
->  create mode 100644 read-cache-v5.c
->  create mode 100644 read-cache.h
->  create mode 100755 t/perf/p0003-index.sh
->  create mode 100755 t/t1600-index-v5.sh
->
-> --
-> 1.8.4.2
->
-
---
-Thomas
+-- 
+George 'papanikge' Papanikolaou
+g3orge.app@gmail.com
