@@ -1,92 +1,106 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Setting file timestamps to commit time (git-checkout)
-Date: Mon, 09 Dec 2013 12:35:38 -0800
-Message-ID: <xmqqsiu1yd7p.fsf@gitster.dls.corp.google.com>
-References: <20131209112528.GA5309@linux.vnet.ibm.com>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [RFC/PATCH] rebase: use reflog to find common base with upstream
+Date: Mon, 9 Dec 2013 20:40:08 +0000
+Message-ID: <20131209204008.GF3163@serenity.lan>
+References: <9e5fa57b027e1a5cd11a456c14f43b64f8f5386c.1386531376.git.john@keeping.me.uk>
+ <xmqq7gbdzsvt.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: vogt@linux.vnet.ibm.com
-X-From: git-owner@vger.kernel.org Mon Dec 09 21:35:48 2013
+Cc: git@vger.kernel.org, Martin von Zweigbergk <martinvonz@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Dec 09 21:40:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vq7YR-0004s5-Ta
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Dec 2013 21:35:48 +0100
+	id 1Vq7cv-0007kv-AW
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Dec 2013 21:40:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932537Ab3LIUfo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Dec 2013 15:35:44 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45724 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932216Ab3LIUfn (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Dec 2013 15:35:43 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E1AB6599E5;
-	Mon,  9 Dec 2013 15:35:42 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=K+kWhhyOsrdARh0MGTD7uLZWGI8=; b=fX9z4n
-	Wc6QoX54K6xqSwNBKupQfc8WMoX1CN/z7By/Ebp1SN7vsfaBp6fUZen8iGSEskOz
-	Gqy4IwPzsLf1m+lEFvKw2ltMwTY7fh9lABRFYnUwq2l9TLU1JfMzPn0saVEL/Xy9
-	NZj2XB3RtzQMfP5V0gDG4dCOgPOqY5gTInbaw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=cf62Y87pYEZW+mFWvFdbvMxxPlFQ0mEA
-	DZv7dNEM2nLtTO+GkciANvfpJ7nZa6uNawxqqrOPVUIR/FUI/51SCsTlHSpT06CO
-	rY4jrZ2eaz9A6f9M/wqdgkf7qrbJVujqbPt61jqnjswdpQQ/hGXOoIAkigbJOj/I
-	PiyADHlBDfI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CEFED599E4;
-	Mon,  9 Dec 2013 15:35:42 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	id S933009Ab3LIUkV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Dec 2013 15:40:21 -0500
+Received: from coyote.aluminati.org ([72.9.247.114]:33214 "EHLO
+	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932582Ab3LIUkT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Dec 2013 15:40:19 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by coyote.aluminati.org (Postfix) with ESMTP id 3DEEF6064D2;
+	Mon,  9 Dec 2013 20:40:19 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -1
+X-Spam-Level: 
+X-Spam-Status: No, score=-1 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1] autolearn=no
+Received: from coyote.aluminati.org ([127.0.0.1])
+	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id n3TFoJgS1jNT; Mon,  9 Dec 2013 20:40:18 +0000 (GMT)
+Received: from serenity.lan (mink.aluminati.org [10.0.7.180])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F1DEF599E2;
-	Mon,  9 Dec 2013 15:35:41 -0500 (EST)
-In-Reply-To: <20131209112528.GA5309@linux.vnet.ibm.com> (Dominik Vogt's
-	message of "Mon, 9 Dec 2013 12:25:28 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 78C882BC-6111-11E3-8ACD-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	by coyote.aluminati.org (Postfix) with ESMTPSA id C8D906064CA;
+	Mon,  9 Dec 2013 20:40:10 +0000 (GMT)
+Content-Disposition: inline
+In-Reply-To: <xmqq7gbdzsvt.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.22 (2013-10-16)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239089>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239090>
 
-Dominik Vogt <vogt@linux.vnet.ibm.com> writes:
+On Mon, Dec 09, 2013 at 12:11:50PM -0800, Junio C Hamano wrote:
+> John Keeping <john@keeping.me.uk> writes:
+> 
+> > Last time this came up [1], there was some discussion about moving the
+> > added block of code to affect upstreams given on the command line as
+> > well as when the upstream is discovered from the config.  Having tried
+> > that, it has some more fallout on the test suite than I like; this
+> > pattern ends up dropping the tip commit of "side" because it's in the
+> > reflog of "master":
+> >
+> > 	# start on "master"
+> > 	git branch side &&
+> > 	git reset --hard HEAD^ &&
+> > 	git checkout side &&
+> > 	git rebase master
+> 
+> We shouldn't do anything funky using the reflog when an explicit
+> commit object name was given like in the last step above, I think.
+> Automation to help human end-users is good, but at some level there
+> must be a mechanism to reliably reproduce the same result given the
+> same precondition for those who implement such automation, and I do
+> not think it is a good idea to force scripts to say
+> 
+> 	git rebase --do-not-look-at-reflog master
+> 
+> in order to do so.
+> 
+> > I wonder if it would be better to add a --fork-point argument to
+> > git-rebase and default it to true when no upstream is given on the
+> > command line.
+> 
+> I am not sure what you exactly mean by "when no upstream is given",
+> though.  Do you mean
+> 
+> 	git rebase <no other arguments>
+> 
+> which we interpret as "rebase the current branch on @{u}", and it
+> should behave as if the command was run like so:
+> 
+> 	git rebase --fork-point @{u}
+> 
+> If that is what you suggest, I certainly can buy that.  Those who
+> want to disable the automation can explicitly say
+> 
+> 	git rebase @{u}
+> 
+> and rebase the current exactly on top of the named commit (e.g. the
+> current value of refs/remotes/origin/master or whatever remote-tracking
+> branch you forked from).
 
-> Me and some colleagues work on gcc in lots of different branches.
-> For each branch there is a separate build directory for each
-> branch, e.g. build-a, build-b and build-c.  Let's assume that all
-> branches are identical at the moment.  If a file in branch a is
-> changed that triggers a complete rebuild of gcc (e.g.
-> <target>.opt), rebuilding in build-a takes about an hour.  Now,
->  when I switch to one of the other branches, said file is not
-> identical anymore and stamped with the _current_ time during
-> checkout.  Although branch b and c have not changed at all, they
-> will now be rebuilt completely because the timestamp on that files
-> has changed.
-
-I am not quite sure I follow your set-up.  Do you have three working
-trees connected to a repository (via contrib/workdir/git-new-workdir
-perhaps), each having a checkout of its own branch?  And in one
-working directory that has build-a checked out, a new commit touches
-one file, <target>.opt, to make a new commit:
-
-Before:
-
-    ---o---o---X
-               ^ refs/heads/build-a
-                 refs/heads/build-b
-                 refs/heads/build-c
-
-After:
-                   v refs/heads/build-a
-    ---o---o---X---Y
-               ^ refs/heads/build-b
-                 refs/heads/build-c
-
-Because you said that branch b and c hasn't changed at all, I do not
-see how your build-b and/or build-c directories become dirty.
+Yes, that's what I meant; the first non-option argument to "git rebase"
+is called "upstream" in the manpage (and throughout the code).  So if
+"<no other arguments>" means "<no non-option arguments>" then that's
+exactly what I meant.
