@@ -1,103 +1,225 @@
-From: Brett Randall <javabrett@gmail.com>
-Subject: Re: A couple of rebase --autosquash proposals
-Date: Mon, 9 Dec 2013 20:52:21 +1100
-Message-ID: <CALeEUB5kaJ0j2qqzDN4ZcZbQ1W3Zttvmuqr73Jv+i79FM=b4eg@mail.gmail.com>
-References: <CALeEUB4mTpd9tHJCC9Ffrfe6L=m0+gaDsXYSFGaO_tMcxCX_nA@mail.gmail.com>
-	<52A56887.4070909@viscovery.net>
-	<52A58CBB.6040809@gmail.com>
+From: Thomas Gummerer <t.gummerer@gmail.com>
+Subject: Re: [PATCH v4 00/24] Index-v5
+Date: Mon, 09 Dec 2013 11:14:43 +0100
+Message-ID: <87vbyyfi0c.fsf@gmail.com>
+References: <1385553659-9928-1-git-send-email-t.gummerer@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Chris Packham <judge.packham@gmail.com>
+Content-Type: text/plain
+Cc: gitster@pobox.com, tr@thomasrast.ch, mhagger@alum.mit.edu,
+	pclouds@gmail.com, robin.rosenberg@dewire.com,
+	sunshine@sunshineco.com, ramsay@ramsay1.demon.co.uk,
+	Antoine Pelisse <apelisse@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 09 10:52:30 2013
+X-From: git-owner@vger.kernel.org Mon Dec 09 11:14:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VpxVr-0001XW-Pc
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Dec 2013 10:52:28 +0100
+	id 1Vpxrc-0004DP-PY
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Dec 2013 11:14:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755282Ab3LIJwY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Dec 2013 04:52:24 -0500
-Received: from mail-ie0-f180.google.com ([209.85.223.180]:54253 "EHLO
-	mail-ie0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933132Ab3LIJwW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Dec 2013 04:52:22 -0500
-Received: by mail-ie0-f180.google.com with SMTP id tp5so5645688ieb.39
-        for <git@vger.kernel.org>; Mon, 09 Dec 2013 01:52:21 -0800 (PST)
+	id S1760972Ab3LIKOw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Dec 2013 05:14:52 -0500
+Received: from mail-pb0-f54.google.com ([209.85.160.54]:57818 "EHLO
+	mail-pb0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760524Ab3LIKOv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Dec 2013 05:14:51 -0500
+Received: by mail-pb0-f54.google.com with SMTP id un15so5202509pbc.27
+        for <git@vger.kernel.org>; Mon, 09 Dec 2013 02:14:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=gSGV5pOnNEx/guyqlup1nxRIkGqbx4ifvgLNDXYizYc=;
-        b=Jg/Y09MQvczBMciY81UyQB9OYNPoPUci4lIf56mN0iX4b+UGTmhxblCcwIf7rRwjhL
-         zZxnQppJZykSsna9c4SY2FAjMzx66nnV+BPKRmO7f/g16Obfz/zjGasVL4zv3znuyAPw
-         ZEMME/EILYkxtEwJcBYKQEj4bHgqqMuEluhfSKrzNm43djq4wlG9mZ8e9Vq2ukG/y7+D
-         UnX8C9Cm2JbF6nQpB6eKDxPFUbNhRrMzhjLlWp7otjs3TQAbrTwlkI6cvwUEy/wtJW+Y
-         suBvTIVhlDjVq9r4zigb6QWcuQZpAU4jyRkC/ptYCeIo5miqIjTwf8e4GGaV0Up8tffh
-         p48g==
-X-Received: by 10.42.113.66 with SMTP id b2mr51272175icq.21.1386582741254;
- Mon, 09 Dec 2013 01:52:21 -0800 (PST)
-Received: by 10.64.126.169 with HTTP; Mon, 9 Dec 2013 01:52:21 -0800 (PST)
-In-Reply-To: <52A58CBB.6040809@gmail.com>
+        h=from:to:cc:subject:in-reply-to:references:user-agent:date
+         :message-id:mime-version:content-type;
+        bh=0+Ly7iIXOf+m4IORI21GjPpZIcWK5Ex4wjbRS61O/K4=;
+        b=pdEipRSfWV39aE5Q35T9qXz5TcOYiLk61SA25KXI6C5zV/fc+3Im7arNdgi+d0EEbI
+         5MIIB7ZF1v6kimiV3/xEQvmcaNzdJLhZX8mvWibOazvjwlfa/qPUpff2UQnLao8v0I0e
+         83HTKbyUttKQjj8Ui/OIHh/5khZ3OIkvUstiaGslnIatjmIOZXOMm4btQh6/CnuhvsWx
+         UGM+6Q764MZD4fz2hflpQyxbQ120ezAPei7vOoKl2l1ssHcxNeoQulqwciFyPVVObgVu
+         bccLx4waEfUYDk/m7Uu2hXcuo8dEvcyNAUlebATubK+J7N7scmhidlwIPL9lm2Y5/rg0
+         mofQ==
+X-Received: by 10.66.132.69 with SMTP id os5mr19358156pab.114.1386584090890;
+        Mon, 09 Dec 2013 02:14:50 -0800 (PST)
+Received: from localhost ([216.18.212.218])
+        by mx.google.com with ESMTPSA id lh13sm23527992pab.4.2013.12.09.02.14.37
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 09 Dec 2013 02:14:50 -0800 (PST)
+In-Reply-To: <1385553659-9928-1-git-send-email-t.gummerer@gmail.com>
+User-Agent: Notmuch/0.17~rc1+8~g4a09c1a (http://notmuchmail.org) Emacs/24.3.1 (x86_64-unknown-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239064>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239065>
 
-This aims to support code-review workflows of teams that prefer rebase
-over merge, when committing a new peer-reviewed feature.
+Thomas Gummerer <t.gummerer@gmail.com> writes:
 
-* Developer starts with commit OM, commits A.
-* During testing, the developer may make further changes, either
-through --amend or new commits, but either way, all work is rebased to
-a single new commit for review, OM -> A' .
-* A' is pushed as a new branch to origin for team review.  The review
-system facilitates the review of the change, and review comments are
-made.
-* The developer responds to the review comments by making changes in
-commits B and C, and pushes OM -> A' -> B -> C.  Reviewers can
-understand the feedback that has been addressed in the changes with
-through the commit-log in B and C.
-* Code passes review.  Because the team prefers rebased commits, A'..C
-is rebased onto the current OM (which may now be OM+10) and committed.
-
-If the commit-log entries for B and C allow simultaneous
-fixup!/squash! syntax together with and free-text log-text, they can
-serve both purposes: 1) they communicate that the change is a
-feedback-generated fix (rather than a new feature), and describe which
-parts of the feedback each commit addresses, and 2) they pre-empt and
-support the eventual rebase-before-origin-push, through --autosquash
-annotation.
-
-Brett
-
-On 9 December 2013 20:26, Chris Packham <judge.packham@gmail.com> wrote:
-> On 09/12/13 19:51, Johannes Sixt wrote:
->> Am 12/9/2013 3:23, schrieb Brett Randall:
->>> * fixup! or squash! on it's own would default to fixing-up the
->>> previous commit (or result of previous step of rebase if that was a
->>> squash/fixup).
->>
->> Why would you want that? To fixup the previous commit, just use 'git
->> commit --amend'. What am I missing?
+> Hi,
 >
-> In the past I've used this kind of approach when doing merging/porting
-> work with 3rd party code (or just large integrations). The first (and
-> eventually final) commit introduces the new code. The subsequent fixups
-> address build issues which are either errors in the 3rd party code
-> (which I will want to submit bug reports for later and carry in my tree
-> as real commits) or errors in my merging (which I want to squash into
-> the merge commit). When faced with a screen full of compilation errors
-> I'm not sure which of these 2 categories are applicable at the time so I
-> tend to have lots of little fixups that I need to juggle around with git
-> rebase once I've got the code compiling and passing some tests.
+> previous rounds (without api) are at $gmane/202752, $gmane/202923,
+> $gmane/203088 and $gmane/203517, the previous rounds with api were at
+> $gmane/229732, $gmane/230210 and $gmane/232488.  Thanks to Duy for
+> reviewing the the last round and Junio, Ramsay and Eric for additional
+> comments.
 >
-> All that being said I think allowing multiple "fixup!\n" stack up on
-> each other might be a bit dangerous. There are cases where
-> fixup!-fixup!-real might be useful but those would be hard to
-> distinguish those from cases where someone absent mindedly forgot to put
-> something after "fixup!".
+> Since the last round I've added a POC for partial writing, resulting
+> in the following performance improvements for update-index:
+>
+> Test                                        1063432           HEAD
+> ------------------------------------------------------------------------------------
+> 0003.2: v[23]: update-index                 0.60(0.38+0.20)   0.76(0.36+0.17) +26.7%
+> 0003.3: v[23]: grep nonexistent -- subdir   0.28(0.17+0.11)   0.28(0.18+0.09) +0.0%
+> 0003.4: v[23]: ls-files -- subdir           0.26(0.15+0.10)   0.24(0.14+0.09) -7.7%
+> 0003.7: v[23] update-index                  0.59(0.36+0.22)   0.58(0.36+0.20) -1.7%
+> 0003.9: v4: update-index                    0.46(0.28+0.17)   0.45(0.30+0.11) -2.2%
+> 0003.10: v4: grep nonexistent -- subdir     0.26(0.14+0.11)   0.21(0.14+0.07) -19.2%
+> 0003.11: v4: ls-files -- subdir             0.24(0.14+0.10)   0.20(0.12+0.08) -16.7%
+> 0003.14: v4 update-index                    0.49(0.31+0.18)   0.65(0.34+0.17) +32.7%
+> 0003.16: v5: update-index                   0.53(0.30+0.22)   0.50(0.28+0.20) -5.7%
+> 0003.17: v5: ls-files                       0.27(0.15+0.12)   0.27(0.17+0.10) +0.0%
+> 0003.18: v5: grep nonexistent -- subdir     0.02(0.01+0.01)   0.03(0.01+0.01) +50.0%
+> 0003.19: v5: ls-files -- subdir             0.02(0.00+0.02)   0.02(0.01+0.01) +0.0%
+> 0003.22: v5 update-index                    0.53(0.29+0.23)   0.02(0.01+0.01) -96.2%
+>
+> Given this, I don't think a complete change of the in-core format for
+> the cache-entries is necessary to take full advantage of the new index
+> file format.  Instead some changes to the current in-core format would
+> work well with the new on-disk format.
+>
+> The current in-memory format fits the internal needs of git fairly well,
+> so I don't think changing it to fit a better index file format would
+> make a lot of sense, given that we can take advantage of the new format
+> with the existing in-memory format.
+
+Any more opinions on this series?  I've applied the changes suggested by
+Duy, Antoine and Eric locally, but I wouldn't want to spam the list with
+the whole series without a chance of this being applied.  How do you
+want me to proceed?
+
+> This series doesn't use kb/fast-hashmap yet, but that should be fairly
+> simple to change if the series is deemed a good change.  The
+> performance tests for update-index test require
+> tg/perf-lib-test-perf-cleanup.
+>
+> Other changes, made following the review comments are:
+>
+> documentation: add documentation of the index-v5 file format
+>   - Update documentation that directory flags are now 32-bits.  That
+>     makes aligned access simpler
+>   - offset_to_offset is no longer included in the checksum for files.
+>     It's unnecessary.
+>
+> read-cache: read index-v5
+>   - Add fix for reading with different level pathspecs given
+>   - Use init_directory_entry to initialize all fields in a new
+>     directory entry
+>   - use memset to simplify the create_new_conflict function
+>   - Add comments to explain -5 when reading directories and files
+>   - Add comments for the more complex functions
+>   - Add name flex_array to the end of ondisk_directory_entry for
+>     simplified reading
+>   - Add name flex_array to the end of ondisk_cache_entry for
+>     simplified reading
+>   - Move conflict reading functions to next patch
+>   - mark functions as static when they are
+>
+> read-cache: read resolve-undo data
+>   - Add comments for the more complex function
+>   - Read conflicts + resolve undo data as extension
+>
+> read-cache: read cache-tree in index-v5
+>   - Add comments for the more complex function
+>   - Instead of sorting the directory entries, sort the cache-tree
+>     directly.  This also required changing the algorithms with which
+>     the cache entries are extracted from the directory tree.
+>
+> read-cache: write index-v5
+>   - Free pointers allocated by super_directory
+>   - Rewrite condition as suggested by Duy
+>   - Don't check for CE_REMOVE'd entries in the writing code, they are
+>     already checked in the compile_directory_data code
+>   - Remove overly complicated directory size calculation since flags
+>     are now 32-bits
+>
+> read-cache: write resolve-undo data for index-v5
+>   - Free pointers allocated by super_directory
+>   - Write conflicts + resolve undo data as extension
+>
+> introduce GIT_INDEX_VERSION environment variable
+>   - Add documentation for GIT_INDEX_VERSION
+>
+> test-lib: allow setting the index format version
+>
+> Removed commits:
+>   - read-cache: don't check uid, gid, ino
+>   - read-cache: use fixed width integer types (independently in pu)
+>   - read-cache: clear version in discard_index()
+>
+> Typos fixed as suggested by Eric Sunshine
+>
+> Thomas Gummerer (22):
+>   read-cache: split index file version specific functionality
+>   read-cache: move index v2 specific functions to their own file
+>   read-cache: Re-read index if index file changed
+>   add documentation for the index api
+>   read-cache: add index reading api
+>   make sure partially read index is not changed
+>   grep.c: use index api
+>   ls-files.c: use index api
+>   documentation: add documentation of the index-v5 file format
+>   read-cache: make in-memory format aware of stat_crc
+>   read-cache: read index-v5
+>   read-cache: read resolve-undo data
+>   read-cache: read cache-tree in index-v5
+>   read-cache: write index-v5
+>   read-cache: write index-v5 cache-tree data
+>   read-cache: write resolve-undo data for index-v5
+>   update-index.c: rewrite index when index-version is given
+>   introduce GIT_INDEX_VERSION environment variable
+>   test-lib: allow setting the index format version
+>   t1600: add index v5 specific tests
+>   POC for partial writing
+>   perf: add partial writing test
+>
+> Thomas Rast (1):
+>   p0003-index.sh: add perf test for the index formats
+>
+>  Documentation/git.txt                            |    5 +
+>  Documentation/technical/api-in-core-index.txt    |   56 +-
+>  Documentation/technical/index-file-format-v5.txt |  294 +++++
+>  Makefile                                         |   10 +
+>  builtin/apply.c                                  |    2 +
+>  builtin/grep.c                                   |   69 +-
+>  builtin/ls-files.c                               |   36 +-
+>  builtin/update-index.c                           |   50 +-
+>  cache-tree.c                                     |   15 +-
+>  cache-tree.h                                     |    2 +
+>  cache.h                                          |  115 +-
+>  lockfile.c                                       |    2 +-
+>  read-cache-v2.c                                  |  561 +++++++++
+>  read-cache-v5.c                                  | 1406 ++++++++++++++++++++++
+>  read-cache.c                                     |  691 +++--------
+>  read-cache.h                                     |   67 ++
+>  resolve-undo.c                                   |    1 +
+>  t/perf/p0003-index.sh                            |   74 ++
+>  t/t1600-index-v5.sh                              |   25 +
+>  t/t2101-update-index-reupdate.sh                 |   12 +-
+>  t/test-lib-functions.sh                          |    5 +
+>  t/test-lib.sh                                    |    3 +
+>  test-index-version.c                             |    6 +
+>  unpack-trees.c                                   |    3 +-
+>  24 files changed, 2921 insertions(+), 589 deletions(-)
+>  create mode 100644 Documentation/technical/index-file-format-v5.txt
+>  create mode 100644 read-cache-v2.c
+>  create mode 100644 read-cache-v5.c
+>  create mode 100644 read-cache.h
+>  create mode 100755 t/perf/p0003-index.sh
+>  create mode 100755 t/t1600-index-v5.sh
+>
+> --
+> 1.8.4.2
+>
+
+--
+Thomas
