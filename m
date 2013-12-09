@@ -1,88 +1,85 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: git-submodule.sh respects submodule.$name.update in .git/config
- but not .gitmodules
-Date: Mon, 9 Dec 2013 23:35:06 +0100
-Message-ID: <20131209223506.GF9606@sandbox-ub>
-References: <CABYr9QtSeX=Euf73MZPq6suo+GpVA=f+tH73Ct0tP-3LYogh9w@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Dec 2013, #02; Fri, 6)
+Date: Mon, 09 Dec 2013 14:51:05 -0800
+Message-ID: <xmqqtxehvdt2.fsf@gitster.dls.corp.google.com>
+References: <xmqqk3fh1qrc.fsf@gitster.dls.corp.google.com>
+	<87ppp8h9ut.fsf@linux-1gf2.Speedport_W723_V_Typ_A_1_00_098>
+	<20131209223345.GB11677@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jens Lehmann <jens.lehmann@web.de>
-To: Charlie Dyson <charlie@charliedyson.net>
-X-From: git-owner@vger.kernel.org Mon Dec 09 23:35:15 2013
+Cc: Thomas Rast <tr@thomasrast.ch>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Dec 09 23:51:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vq9Q2-0000IG-Cs
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Dec 2013 23:35:14 +0100
+	id 1Vq9fo-0002eE-GP
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Dec 2013 23:51:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755891Ab3LIWfK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Dec 2013 17:35:10 -0500
-Received: from smtprelay02.ispgateway.de ([80.67.31.29]:40355 "EHLO
-	smtprelay02.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754438Ab3LIWfJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Dec 2013 17:35:09 -0500
-Received: from [77.21.76.49] (helo=sandbox-ub)
-	by smtprelay02.ispgateway.de with esmtpsa (TLSv1:AES128-SHA:128)
-	(Exim 4.68)
-	(envelope-from <hvoigt@hvoigt.net>)
-	id 1Vq9Pv-0002WR-Nc; Mon, 09 Dec 2013 23:35:07 +0100
-Content-Disposition: inline
-In-Reply-To: <CABYr9QtSeX=Euf73MZPq6suo+GpVA=f+tH73Ct0tP-3LYogh9w@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
+	id S1754742Ab3LIWvL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Dec 2013 17:51:11 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55195 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752951Ab3LIWvK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Dec 2013 17:51:10 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 77153593FE;
+	Mon,  9 Dec 2013 17:51:09 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=JCHUg7YTOo7YxtI49qBYy7PPIeM=; b=tTExw8
+	dHQRlPH3yCr1HFq0xSqUdvHE3XNoExXCh3lzam77BoWYMoeAJOF7QQpoQkU2S6VF
+	nVk2QHbIEr9G8QW27Wp1obZLsV+MhLYcp+ZkKzOk6SEcQuff6Yz+Ja9tmtkWl6Ax
+	h/L4+4wMYMxULEhExZyDpPwjUz/229mXT335U=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=qR0NmvAwIzwbDq/8Lz63jKuzoPTIy/ON
+	PGQQzEUJPuYz0BKgnncf8SgKwm7TtU/LbIJjd+aRTUCbBL0T65y8rWxWJJ6r0ZXC
+	oLOaqpcdWr8lGowGT6DX08UK/BJvYC7fg0IuBzm0x9FljC/tab2WkWcMBPjOy59n
+	nmQzi2aWg5Y=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5F7B2593FD;
+	Mon,  9 Dec 2013 17:51:09 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 76A10593FC;
+	Mon,  9 Dec 2013 17:51:08 -0500 (EST)
+In-Reply-To: <20131209223345.GB11677@sigill.intra.peff.net> (Jeff King's
+	message of "Tue, 10 Dec 2013 06:33:47 +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 648D57F6-6124-11E3-B785-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239115>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239116>
 
-On Fri, Dec 06, 2013 at 03:48:46PM +0000, Charlie Dyson wrote:
-> gitmodules(5) states that submodule.$name.update should be defined in
-> .gitmodules. However in cmd_update() in git-submodule.sh, git config
-> is used with "-f .gitmodules". Consequently this flag is only
-> respected in .git/config
-> 
-> Tested against: 1.8.2.1 [sorry! I've checked the relevant bit of
-> source and it's the same]
-> 
-> Steps to reproduce:
-> $ git init
-> $ git submodule add -b master someproject
-> $ git config -f .gitmodules --add submodule.someproject.update merge
-> $ # Go to someproject and commit something
-> $ git submodule update --remote
-> 
-> The latter does not perform a merge, and behaviour is visibly
-> different to adding --merge.
+Jeff King <peff@peff.net> writes:
 
-This is because of histerical reasons. When submodules were first
-implemented the notion was that .gitmodules should only be used as a
-starting point to initialise the configuration in .git/config when init
-was called.
+> On Sat, Dec 07, 2013 at 06:03:22PM +0100, Thomas Rast wrote:
+>
+>> Junio C Hamano <gitster@pobox.com> writes:
+>> 
+>> > * jk/pack-bitmap (2013-11-18) 22 commits
+>> [...]
+>> Peff can decide if he wants to reroll with my nits or not; either way
+>> I'm all for moving it forward and aiming for one of the next releases.
+>
+> I'm going to be a bit slow this week, as I'm traveling in China.
+>
+> I have at least one more local fix queued up (one of the re-rolls
+> introduced a use-after-free). Your comments make sense to me, though
+> some of them are "if this is not too hard", and I haven't looked yet to
+> see how hard some of the requisite refactoring would be. So expect at
+> least one more re-roll, and I'll try to incorporate your comments.
+> Thanks for giving it a careful reading.
+>
+> As an aside, we have been running the last version sent to the list
+> (modulo the fix I mentioned above) on github.com for a week or two
+> (previously we were running the old, based-on-v1.8.4 version). So it is
+> getting exercised.
 
-This notion has changed in a way that only the url (by that the name)
-should be copied on init. The default for everything else should come
-from .gitmodules or gits own default.
-
-The update configuration option was implemented before we realized that.
-So currently it is still copied when submodule init is called. The main
-reason is that we have not found the time to change that.
-
-> I would submit a patch but I'm not completely sure what the behaviour
-> would be - simply adding "-f .gitmodules" would hurt users that have
-> adopted the practice of specifying their update preference in
-> .git/config.
-
-Well .gitmodules should only be the fallback if there is nothing in
-.git/config.
-
-> Perhaps the right thing to do is read from .git/config and fall back
-> to .gitmodules using get_submodule_config().
-
-Yes IMO that is the right thing to do. If you implement it that way (and
-remove the automatic copying on init) you should not break peoples
-expectations. So if you want to go ahead please send a patch.
-
-Cheers Heiko
+;-).
