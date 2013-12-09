@@ -1,97 +1,104 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 0/3] rev-parse and "--"
-Date: Mon, 09 Dec 2013 12:48:08 -0800
-Message-ID: <xmqqob4pycmv.fsf@gitster.dls.corp.google.com>
-References: <20131206211222.GB20482@sigill.intra.peff.net>
-	<20131206211509.GB20536@sigill.intra.peff.net>
-	<20131206220520.GA30652@sigill.intra.peff.net>
-	<xmqqmwk9zvyy.fsf@gitster.dls.corp.google.com>
-	<20131209191224.GR29959@google.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Setting file timestamps to commit time (git-checkout)
+Date: Mon, 9 Dec 2013 12:48:16 -0800
+Message-ID: <20131209204815.GV29959@google.com>
+References: <20131209112528.GA5309@linux.vnet.ibm.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Dec 09 21:48:19 2013
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 09 21:48:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vq7kX-0004FK-12
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Dec 2013 21:48:17 +0100
+	id 1Vq7kf-0004JS-4h
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Dec 2013 21:48:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933105Ab3LIUsN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Dec 2013 15:48:13 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53449 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932216Ab3LIUsM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Dec 2013 15:48:12 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 477C559D8F;
-	Mon,  9 Dec 2013 15:48:11 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=wQ82S9OU9ad9O6ZfU03XnzNA32Y=; b=F2SMyY
-	oMsPwfscEz9is/N4NuG4w6f50UB6mV20cYjOrUkWXqE3GdN3OmHqDGK33uAH+gef
-	USPLGn39N7001ggArt0j20stsgKSDW+j66mKle15/VqAG29M0t8H3/IC8S6cnC2O
-	CggHXZCwPWdDEgAej35E7F8kDif8WNPRPjy7k=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=JgmWaE58PT5GFKNm5cnvlGZnJMO/pMdx
-	FY3BdgvE/2Ry2SK7/KoCqRW4rR4uZVAglonXY/I8eajH65qOwCGl7MOsL3vIMOkY
-	WZIE1a4i0XdRaqF4wUM1xzN6rCivgjKtbRmp/OP1t6tf8uymmT8bI9P1I1LuKAVK
-	8t+ryQ2lBeE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2E85759D8E;
-	Mon,  9 Dec 2013 15:48:11 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6821F59D8B;
-	Mon,  9 Dec 2013 15:48:10 -0500 (EST)
-In-Reply-To: <20131209191224.GR29959@google.com> (Jonathan Nieder's message of
-	"Mon, 9 Dec 2013 11:12:24 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 36E2FC54-6113-11E3-B2E4-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S933206Ab3LIUsU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Dec 2013 15:48:20 -0500
+Received: from mail-qe0-f50.google.com ([209.85.128.50]:58399 "EHLO
+	mail-qe0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932216Ab3LIUsU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Dec 2013 15:48:20 -0500
+Received: by mail-qe0-f50.google.com with SMTP id 1so3282188qec.37
+        for <git@vger.kernel.org>; Mon, 09 Dec 2013 12:48:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=w9wImE4vd73MS4KlR20QdOYqehO42WCrlcXKshACr6c=;
+        b=CU3IG6gJej1Q2O4UzEWFv/5gGC8CEeLdEok0yKMxU+c0cCUhLNMg+gGTDPFYWpd4z7
+         ZxkIurpDLHxRQbIJmp+lU6d3rRvTwFxXdlaPALcKYj6ghXDi9lvU0wnHwRLLOLUjd5Tu
+         Z5fGY+UYqWcOZ/947MhEz1tKwrxKjqm36aLPkyGJ3oL4Ls4ZTsUVZSYT6LwQFQGWucOU
+         NFH7lc2HeqP6q2upaqiPvYetDl7MKW7//jrpTbxGkACxSajMCUlo8IPDN6iGpgzVhkMS
+         LY+oGP72ypZsIcsX4woVmj2IJbiRrlAWQKxHISjFmAKynQ4EbL0ZLjm3QwhJLmzDSlDe
+         zuLg==
+X-Received: by 10.49.2.132 with SMTP id 4mr37008673qeu.15.1386622099528;
+        Mon, 09 Dec 2013 12:48:19 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id fc16sm22049844qeb.3.2013.12.09.12.48.18
+        for <git@vger.kernel.org>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 09 Dec 2013 12:48:18 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <20131209112528.GA5309@linux.vnet.ibm.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239092>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239093>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Hi,
 
-> Junio C Hamano wrote:
+Dominik Vogt wrote:
+
+>                                                            Now,
+> when I switch to one of the other branches, said file is not
+> identical anymore and stamped with the _current_ time during
+> checkout.  Although branch b and c have not changed at all, they
+> will now be rebuilt completely because the timestamp on that files
+> has changed.  I.e. a chance on one branch forces a rebuild on n
+> other branches, which can take many hours.
 >
->>>                                      So maybe we are doing a favor by
->>> calling out the problem; if they want a rev, they should be using
->>> "--verify" (or "--").
->>
->> I tend to agree with the reasoning in the last sentence. Let's cook
->> it for a while and see what happens.
+> I think this situation could be improved with an option to
+> git-checkout with the following logic:
 >
-> Isn't this essentially breaking a contract that would have been relied
-> on by any script that used "git rev-parse HEAD~3..HEAD"?  Worse, it's
-> breaking that contract in a way that no one would notice until they
-> are asked to manipulate a worktree with a file named 'HEAD~3..HEAD'
-> --- in other words, the breakage it introduces is painfully subtle.
->
-> I agree that "git rev-parse HEAD" is better written as "git rev-parse
-> --verify HEAD" and hence not so much worth worrying about,
+> $ git checkout <new branch>
+>   FOR EACH <file> in working directory of <new branch>
+>     IF <file> is identical to the version in the <old branch>
+>       THEN leave the file untouched
+>     ELSE IF <commit timestamp> of the HEAD of the <new branch>
+>             is in the future
+>       THEN checkout the new version of <file> and stamp it with
+>            the current time
+>     ELSE (commit timestamp is current or in the past)
+>       THEN checkout the new version of <file> and stamp it with
+>            the commit timestamp of the current HEAD of <new branch>
 
-I do not share the "with --verify is better hence no problem"
-reasoning.  My "not so much worth worrying about" comes solely from
-a hunch that nobody has "HEAD~3..HEAD" in their working directory,
-and if somebody has one, then they must be using "--verify" (or a
-clarifying "--"), because their "git log" and whatever they use "git
-rev-parse HEAD~3..HEAD" for would behave very differently otherwise.
+Wouldn't that break "make"?  When you switch to an old branch, changed
+files would then a timestamp *before* the corresponding build targets,
+causing the stale (wrong function signatures, etc) build results from
+the newer branch to be reused and breaking the build.
 
-So it is not merely "--verify is better"---in a situation where the
-backward incompatibility matters, I doubt the existing behaves
-sensibly in the first place.
+I suspect the simplest way to accomplish what you're looking for would
+be to keep separate worktrees for each branch you regularly build.
+It's possible to do that using entirely independent clones, clones
+sharing some objects (using "git clone --shared" from some master
+copy), or even multiple worktrees for the same clone (using the
+git-new-workdir script from contrib/workdir/).
 
-But if we cook it for a while, I suspect that we will find more and
-more breakages of expectations in the existing scripts in and out of
-the tree; in general, I hate _any_ change, and I do not mind
-dropping it ;-).
+See [1] and [2] for more hints.
+
+[...]
+> (Please do not cc me on replies, I'm subscribed to the list.)
+
+The convention on this list is to always reply-to-all, but I'm happy
+to make an exception. :)
+
+Hope that helps,
+Jonathan
+
+[1] https://git.wiki.kernel.org/index.php/Git_FAQ#Why_isn.27t_Git_preserving_modification_time_on_files.3F
+[2] https://git.wiki.kernel.org/index.php/ExampleScripts#Setting_the_timestamps_of_the_files_to_the_commit_timestamp_of_the_commit_which_last_touched_them
