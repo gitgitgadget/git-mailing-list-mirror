@@ -1,109 +1,116 @@
-From: Brett Randall <javabrett@gmail.com>
-Subject: A couple of rebase --autosquash proposals
-Date: Mon, 9 Dec 2013 13:23:00 +1100
-Message-ID: <CALeEUB4mTpd9tHJCC9Ffrfe6L=m0+gaDsXYSFGaO_tMcxCX_nA@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 08/10] t6050: add tests for listing with --format
+Date: Sun, 8 Dec 2013 22:19:39 -0500
+Message-ID: <CAPig+cTcacoNGstYeYRd3_WKAP6=ga7gV4puSsr7c2sO_OMNTQ@mail.gmail.com>
+References: <20131207160514.21478.72966.chriscool@tuxfamily.org>
+	<20131207162106.21478.8850.chriscool@tuxfamily.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 09 03:23:07 2013
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>, Joey Hess <joey@kitenet.net>
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Mon Dec 09 04:19:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VpqV0-00022P-Jm
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Dec 2013 03:23:06 +0100
+	id 1VprNp-000395-6o
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Dec 2013 04:19:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760264Ab3LICXB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Dec 2013 21:23:01 -0500
-Received: from mail-ie0-f172.google.com ([209.85.223.172]:53150 "EHLO
-	mail-ie0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755336Ab3LICXA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Dec 2013 21:23:00 -0500
-Received: by mail-ie0-f172.google.com with SMTP id qd12so5176431ieb.17
-        for <git@vger.kernel.org>; Sun, 08 Dec 2013 18:23:00 -0800 (PST)
+	id S932138Ab3LIDTl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Dec 2013 22:19:41 -0500
+Received: from mail-la0-f47.google.com ([209.85.215.47]:49332 "EHLO
+	mail-la0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932109Ab3LIDTk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Dec 2013 22:19:40 -0500
+Received: by mail-la0-f47.google.com with SMTP id ep20so1122736lab.20
+        for <git@vger.kernel.org>; Sun, 08 Dec 2013 19:19:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=IrJ45nEaekOa+ym4RtxuiRxFcDvWHIsUPAtrwmOly4c=;
-        b=ozqWTGu80YxhA3viGh4wmUi7BJYlCgQ/HssMiCw4Kw/cRfYLEnSYVv7YkejdUDlPde
-         qe5bP/9CcaM/g11srvmKrZQ48qzpoBC9YVz9KIPsdE69Xn74WHxFFVjcM5RMJqL3tdaX
-         AndF/e/ot3PMT28BglXHdn30rkY7WuGbxApQWPMM7K5HzuROHCiHJM3rKhZ1OeXA1WkM
-         wHVe8hFzK2J88QeUBOaVqNFFoTbhTS9mZ50UAxgWREKx4nJepaKoU+3DbGFtvOGDJOOB
-         +ZoJvg5At1WHZfQGLlupn6AivedbZ2F0DENpCOd2Wp7AwaHbV5s/sKlLPaYWwIhA5a5O
-         pkYg==
-X-Received: by 10.50.66.195 with SMTP id h3mr13663730igt.41.1386555780442;
- Sun, 08 Dec 2013 18:23:00 -0800 (PST)
-Received: by 10.64.126.169 with HTTP; Sun, 8 Dec 2013 18:23:00 -0800 (PST)
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=J5UAs6/EVKMZn+QL1nszu1BuZRmVawoiItAeVjgha1I=;
+        b=mKvwIhMskhRHfGp8uyQhLWQivyPeINO337dh+vT7/frN384CT0yNAnFsgNBdwJadvX
+         H8B0/jIbDwe6SLmIOLXYFAZdldeFoDf2gwzq79QNNAtjFPANUwZuSVZSIsODoIZlnJXK
+         YEoBWbi8/TwFPiOKyd83fnfys0K/+uIDKPqACr3zVNpOMy8qcz6OF6H4lZNrcBBJSgVc
+         Xz36D/QUOUqPbDhD/eRYmbk2fuHDrnej2V6I1TWq9SCvXhfyNmfARNbHFeLsCwYf6ep0
+         YtN8ii4B8aSteoqplDfE1FWYMMybHWTS5f0xTwMTlNyYBqOfBKXrHCkGNjEqyRaaRJms
+         /87g==
+X-Received: by 10.152.197.67 with SMTP id is3mr1122105lac.61.1386559179086;
+ Sun, 08 Dec 2013 19:19:39 -0800 (PST)
+Received: by 10.114.175.130 with HTTP; Sun, 8 Dec 2013 19:19:39 -0800 (PST)
+In-Reply-To: <20131207162106.21478.8850.chriscool@tuxfamily.org>
+X-Google-Sender-Auth: -EkQktUbV9exS2MW5uGBz-c9sAg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239058>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239059>
 
-Hi,
+On Sat, Dec 7, 2013 at 11:21 AM, Christian Couder
+<chriscool@tuxfamily.org> wrote:
+> This patch adds tests for "git replace -l --format=<fmt>".
+> Only tests when <fmt> is 'medium' and 'full' are needed
+> because 'short' is the same as with no --format option.
 
-I am using Git 1.8.4.3 compiled by me on OEL6.  I'd like to be able to
-use rebase --autosquash like this:
+Nevertheless, don't you want to test that it behaves in the expected
+manner when given --format=short and other legal or illegal
+combinations?
 
-======================
-# git log
+  --format
+  --format short
+  --format bogus
+  ...etc...
 
-commit b94f970cd869dfbf5254b19867fa7200df732d4f
-Author: Me <me@me.com>
-Date:   Mon Dec 9 17:02:32 2013 -0800
-
-    fixup!
-    This is a second fixup.
-
-commit 64e516c8b26b7e0531a1e8b2fc8dfa21de259b85
-Author: Me <me@me.com>
-Date:   Sun Dec 8 17:02:32 2013 -0800
-
-    fixup!
-    This is a meaningful commit-log message, on a new line, that will
-be discarded later during rebase --autosquash.
-
-commit f21cd48d5eeac92130dc0617252c6ee6989c0252
-Author: Me <me@me.com>
-Date:   Tue Dec 3 21:47:52 2013 -0800
-
-    This is the commit that will be fixed-up.
-
-commit 259c0eb41ef16ac94868ee3c9253ba938ed24c9f
-Author: Me <me@me.com>
-Date:   Mon Dec 2 21:47:52 2013 -0800
-
-    This commit is origin/master.
-======================
-
-then
-
-# git rebase -i --autosquash 259c0eb41ef16ac94868ee3c9253ba938ed24c9f
-
-The differences here are:
-
-* fixup! or squash! on it's own would default to fixing-up the
-previous commit (or result of previous step of rebase if that was a
-squash/fixup).  Interestingly using HEAD~1 or HEAD^1 works, but it
-only works for a single fixup/squash.  Is there another treeish that
-would work?
-* Allow real commit-log text, perhaps only on lines other than the
-first line (the one containing the fixup).
-
-The motivations are:
-
-* I can default a fixup to apply to the previous commit (a common
-wish) without explicitly stating it's treeish or commit-message.
-* I can easily apply multiple fixups.
-* I can retain a meaningful WIP commit-log prior to the rebase - I can
-still see what each commit does, without needing to forgo the future
-autosquash capability - just put the !fixup or !squash on the first
-line on its own, and put the real changes on line 2 and onwards.  In
-the case of squash! instead of fixup!, this means I could retain some
-valuable text to be squashed into the original commit.
-
-Thoughts on these two ideas?
-
-Thanks
-Brett
+> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+> ---
+>  t/t6050-replace.sh | 27 +++++++++++++++++++++++++++
+>  1 file changed, 27 insertions(+)
+>
+> diff --git a/t/t6050-replace.sh b/t/t6050-replace.sh
+> index bb785ec..3627b4c 100755
+> --- a/t/t6050-replace.sh
+> +++ b/t/t6050-replace.sh
+> @@ -281,6 +281,33 @@ test_expect_success 'git cat-file --batch works on replace objects' '
+>         echo $PARA3 | git cat-file --batch
+>  '
+>
+> +test_expect_success 'test --format medium' '
+> +       H1=$(git --no-replace-objects rev-parse HEAD~1) &&
+> +       HT=$(git --no-replace-objects rev-parse HEAD^{tree}) &&
+> +       MYTAG=$(git --no-replace-objects rev-parse mytag) &&
+> +       {
+> +               echo "$H1 -> $BLOB" &&
+> +               echo "$BLOB -> $REPLACED" &&
+> +               echo "$HT -> $H1" &&
+> +               echo "$PARA3 -> $S" &&
+> +               echo "$MYTAG -> $HASH1"
+> +       } | sort >expected &&
+> +       git replace -l --format medium | sort > actual &&
+> +       test_cmp expected actual
+> +'
+> +
+> +test_expect_failure 'test --format full' '
+> +       {
+> +               echo "$H1 (commit) -> $BLOB (blob)" &&
+> +               echo "$BLOB (blob) -> $REPLACED (blob)" &&
+> +               echo "$HT (tree) -> $H1 (commit)" &&
+> +               echo "$PARA3 (commit) -> $S (commit)" &&
+> +               echo "$MYTAG (tag) -> $HASH1 (commit)"
+> +       } | sort >expected &&
+> +       git replace --format=full | sort > actual &&
+> +       test_cmp expected actual
+> +'
+> +
+>  test_expect_success 'replace ref cleanup' '
+>         test -n "$(git replace)" &&
+>         git replace -d $(git replace) &&
+> --
+> 1.8.5.1.102.g090758b
+>
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
