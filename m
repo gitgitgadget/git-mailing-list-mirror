@@ -1,87 +1,207 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: Re: Publishing "filtered branch repositories" - workflow /
- recommendations?
-Date: Mon, 9 Dec 2013 23:59:50 +0100
-Message-ID: <20131209225950.GG9606@sandbox-ub>
-References: <CACPiFCJPq0fqOQrJD-8CHH405Xw61ZDynqqfN+_aZb3ZBgV2VA@mail.gmail.com>
- <52A0D199.1010403@web.de>
- <CACPiFCKHprB_oO_eXMYkey_CGbT7WOn5VDDjBdHbLRzcDpHnZw@mail.gmail.com>
- <52A0D9F5.3030101@web.de>
- <CACPiFCJ3mkOj=E+siideBpPfgS1tSicVQ46KqPK+Tha0DbkZHw@mail.gmail.com>
- <52A18F69.70002@web.de>
- <CACPiFCJ5hCPvRHB1knvMocN0XdHfSMpbZnqjf7yHAT4mMOSfzw@mail.gmail.com>
+From: John Keeping <john@keeping.me.uk>
+Subject: [PATCH v2] rebase: use reflog to find common base with upstream
+Date: Mon, 9 Dec 2013 23:16:16 +0000
+Message-ID: <20131209231616.GG3163@serenity.lan>
+References: <9e5fa57b027e1a5cd11a456c14f43b64f8f5386c.1386531376.git.john@keeping.me.uk>
+ <xmqq7gbdzsvt.fsf@gitster.dls.corp.google.com>
+ <20131209204008.GF3163@serenity.lan>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jens Lehmann <Jens.Lehmann@web.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Martin Langhoff <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 10 00:00:23 2013
+Cc: git@vger.kernel.org, Martin von Zweigbergk <martinvonz@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Dec 10 00:16:33 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vq9oM-0007yo-Nt
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Dec 2013 00:00:23 +0100
+	id 1VqA40-0001wO-KJ
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Dec 2013 00:16:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754368Ab3LIW74 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Dec 2013 17:59:56 -0500
-Received: from smtprelay05.ispgateway.de ([80.67.31.99]:33549 "EHLO
-	smtprelay05.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753964Ab3LIW7y (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Dec 2013 17:59:54 -0500
-Received: from [77.21.76.49] (helo=sandbox-ub)
-	by smtprelay05.ispgateway.de with esmtpsa (TLSv1:AES128-SHA:128)
-	(Exim 4.68)
-	(envelope-from <hvoigt@hvoigt.net>)
-	id 1Vq9nr-0005KO-MZ; Mon, 09 Dec 2013 23:59:51 +0100
+	id S1761491Ab3LIXQ2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Dec 2013 18:16:28 -0500
+Received: from jackal.aluminati.org ([72.9.247.210]:51000 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754831Ab3LIXQ0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Dec 2013 18:16:26 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id 685DCCDA5B8;
+	Mon,  9 Dec 2013 23:16:25 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -0.999
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.999 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, URIBL_BLOCKED=0.001] autolearn=disabled
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id KrfhlvnUlneC; Mon,  9 Dec 2013 23:16:24 +0000 (GMT)
+Received: from serenity.lan (mink.aluminati.org [10.0.7.180])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by jackal.aluminati.org (Postfix) with ESMTPSA id EB05DCDA487;
+	Mon,  9 Dec 2013 23:16:18 +0000 (GMT)
 Content-Disposition: inline
-In-Reply-To: <CACPiFCJ5hCPvRHB1knvMocN0XdHfSMpbZnqjf7yHAT4mMOSfzw@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
+In-Reply-To: <20131209204008.GF3163@serenity.lan>
+User-Agent: Mutt/1.5.22 (2013-10-16)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239117>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239118>
 
-On Fri, Dec 06, 2013 at 02:40:15PM -0500, Martin Langhoff wrote:
-> On Fri, Dec 6, 2013 at 3:48 AM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
-> > Right you are, we need tutorials for the most prominent use cases.
+Commit 15a147e (rebase: use @{upstream} if no upstream specified,
+2011-02-09) says:
+
+	Make it default to 'git rebase @{upstream}'. That is also what
+	'git pull [--rebase]' defaults to, so it only makes sense that
+	'git rebase' defaults to the same thing.
+
+but that isn't actually the case.  Since commit d44e712 (pull: support
+rebased upstream + fetch + pull --rebase, 2009-07-19), pull has actually
+chosen the most recent reflog entry which is an ancestor of the current
+branch if it can find one.
+
+Add a '--fork-point' argument to git-rebase that can be used to trigger
+this behaviour.  This option is turned on by default if no non-option
+arguments are specified on the command line, otherwise we treat an
+upstream specified on the command-line literally.
+
+Signed-off-by: John Keeping <john@keeping.me.uk>
+---
+On Mon, Dec 09, 2013 at 08:40:08PM +0000, John Keeping wrote:
+> On Mon, Dec 09, 2013 at 12:11:50PM -0800, Junio C Hamano wrote:
+> >          Do you mean
+> > 
+> > 	git rebase <no other arguments>
+> > 
+> > which we interpret as "rebase the current branch on @{u}", and it
+> > should behave as if the command was run like so:
+> > 
+> > 	git rebase --fork-point @{u}
+> > 
+> > If that is what you suggest, I certainly can buy that.  Those who
+> > want to disable the automation can explicitly say
+> > 
+> > 	git rebase @{u}
+> > 
+> > and rebase the current exactly on top of the named commit (e.g. the
+> > current value of refs/remotes/origin/master or whatever remote-tracking
+> > branch you forked from).
 > 
-> In the meantime, are there any hints? Emails on this list showing a
-> current "smart" workflow? Blog posts? Notes on a wiki?
+> Yes, that's what I meant; the first non-option argument to "git rebase"
+> is called "upstream" in the manpage (and throughout the code).  So if
+> "<no other arguments>" means "<no non-option arguments>" then that's
+> exactly what I meant.
 
-None that I know of mainly because we have not yet reached the goal we
-are aiming at. Maybe we should write something, A few points from
-$dayjob that come to my mind:
+Here's an updated patch that adds a --fork-point option to git-rebase,
+with the behaviour described above.
 
-  * A submodule commit is only allowed to be merged into master in a
-    superproject commit if it is merged into master (or a stable branch)
-    in the submodule. That way you ensure that any submodules commits
-    that are tracked in a superproject are contained in each other and
-    can be cleanly merged. (no rewinds, one commit contains the other)
+ Documentation/git-rebase.txt | 10 ++++++++++
+ git-rebase.sh                | 19 +++++++++++++++++++
+ t/t3400-rebase.sh            |  6 ++++--
+ 3 files changed, 33 insertions(+), 2 deletions(-)
 
-  * Submodule should be selfcontained (i.e. if its a library have tests
-    that use the code you implement). That way changes in the submodule
-    can be made independent from the superproject
-
-  * If a submodule needs another submodule have them side by side
-    instead of one inside another. See the next point for explanation.
-
-  * Only one depth of recursion for submodules. Even though intuition
-    tell you that if some submodule needs another it should contain the
-    other its IMO not wise to do so. There will be times when some other
-    submodule needs the same submodule that is contained in the other
-    and then you end up with two copies of the same code. My suggestion:
-    Let the superproject bundle all the dependencies between modules.
-
-  * Submodules are a good solution for shared code where the dependency
-    goes superproject needs submodule. If you divide code into
-    submodules because of access control and the dependency is actually
-    that the submodule needs the superproject it works but is less than
-    optimal.
-
-Thats what I can quickly suggest and probably far from complete.
-
-Cheers Heiko
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index 94e07fd..2889be6 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -324,6 +324,16 @@ fresh commits so it can be remerged successfully without needing to "revert
+ the reversion" (see the
+ link:howto/revert-a-faulty-merge.html[revert-a-faulty-merge How-To] for details).
+ 
++--fork-point::
++--no-fork-point::
++	Use 'git merge-base --fork-point' to find a better common ancestor
++	between `upstream` and `branch` when calculating which commits have
++	have been introduced by `branch` (see linkgit:git-merge-base[1]).
+++
++If no non-option arguments are given on the command line, then the default is
++`--fork-point @{u}` otherwise the `upstream` argument is interpreted literally
++unless the `--fork-point` option is specified.
++
+ --ignore-whitespace::
+ --whitespace=<option>::
+ 	These flag are passed to the 'git apply' program
+diff --git a/git-rebase.sh b/git-rebase.sh
+index 226752f..7185dc8 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -14,6 +14,7 @@ git-rebase --continue | --abort | --skip | --edit-todo
+ v,verbose!         display a diffstat of what changed upstream
+ q,quiet!           be quiet. implies --no-stat
+ autostash!         automatically stash/stash pop before and after
++fork-point         use 'merge-base --fork-point' to refine upstream
+ onto=!             rebase onto given branch instead of upstream
+ p,preserve-merges! try to recreate merges instead of ignoring them
+ s,strategy=!       use the given merge strategy
+@@ -66,6 +67,7 @@ verbose=
+ diffstat=
+ test "$(git config --bool rebase.stat)" = true && diffstat=t
+ autostash="$(git config --bool rebase.autostash || echo false)"
++fork_point=auto
+ git_am_opt=
+ rebase_root=
+ force_rebase=
+@@ -260,6 +262,12 @@ do
+ 	--no-autosquash)
+ 		autosquash=
+ 		;;
++	--fork-point)
++		fork_point=t
++		;;
++	--no-fork-point)
++		fork_point=
++		;;
+ 	-M|-m)
+ 		do_merge=t
+ 		;;
+@@ -437,6 +445,8 @@ then
+ 			error_on_missing_default_upstream "rebase" "rebase" \
+ 				"against" "git rebase <branch>"
+ 		fi
++
++		test "$fork_point" = auto && fork_point=t
+ 		;;
+ 	*)	upstream_name="$1"
+ 		shift
+@@ -522,6 +532,15 @@ case "$#" in
+ 	;;
+ esac
+ 
++if test "$fork_point" = t
++then
++	new_upstream=$(git merge-base --fork-point "$upstream_name" "$switch_to")
++	if test -n "$new_upstream"
++	then
++		upstream=$new_upstream
++	fi
++fi
++
+ if test "$autostash" = true && ! (require_clean_work_tree) 2>/dev/null
+ then
+ 	stash_sha1=$(git stash create "autostash") ||
+diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
+index ebf93b0..998503d 100755
+--- a/t/t3400-rebase.sh
++++ b/t/t3400-rebase.sh
+@@ -134,12 +134,14 @@ test_expect_success 'fail when upstream arg is missing and not configured' '
+ 	test_must_fail git rebase
+ '
+ 
+-test_expect_success 'default to @{upstream} when upstream arg is missing' '
++test_expect_success 'default to common base in @{upstream}s reflog if no upstream arg' '
+ 	git checkout -b default topic &&
+ 	git config branch.default.remote . &&
+ 	git config branch.default.merge refs/heads/master &&
+ 	git rebase &&
+-	test "$(git rev-parse default~1)" = "$(git rev-parse master)"
++	git rev-parse --verify master >expect &&
++	git rev-parse default~1 >actual &&
++	test_cmp expect actual
+ '
+ 
+ test_expect_success 'rebase -q is quiet' '
+-- 
+1.8.5.226.g0d60d77
