@@ -1,207 +1,91 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: [PATCH v2] rebase: use reflog to find common base with upstream
-Date: Mon, 9 Dec 2013 23:16:16 +0000
-Message-ID: <20131209231616.GG3163@serenity.lan>
-References: <9e5fa57b027e1a5cd11a456c14f43b64f8f5386c.1386531376.git.john@keeping.me.uk>
- <xmqq7gbdzsvt.fsf@gitster.dls.corp.google.com>
- <20131209204008.GF3163@serenity.lan>
+From: Karsten Blees <karsten.blees@gmail.com>
+Subject: Re: What's cooking in git.git (Dec 2013, #02; Fri, 6)
+Date: Tue, 10 Dec 2013 00:19:05 +0100
+Message-ID: <52A64FE9.5010004@gmail.com>
+References: <xmqqk3fh1qrc.fsf@gitster.dls.corp.google.com> <52A37D70.3090400@gmail.com> <87fvq41esw.fsf@thomasrast.ch> <52A3A1F5.3080906@gmail.com> <87lhzvhceb.fsf@linux-1gf2.Speedport_W723_V_Typ_A_1_00_098> <52A5CDB0.2020206@gmail.com> <20131209200820.GU29959@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Martin von Zweigbergk <martinvonz@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Dec 10 00:16:33 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Thomas Rast <tr@thomasrast.ch>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 10 00:19:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VqA40-0001wO-KJ
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Dec 2013 00:16:33 +0100
+	id 1VqA6b-0003k9-N7
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Dec 2013 00:19:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761491Ab3LIXQ2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Dec 2013 18:16:28 -0500
-Received: from jackal.aluminati.org ([72.9.247.210]:51000 "EHLO
-	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754831Ab3LIXQ0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Dec 2013 18:16:26 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by jackal.aluminati.org (Postfix) with ESMTP id 685DCCDA5B8;
-	Mon,  9 Dec 2013 23:16:25 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -0.999
-X-Spam-Level: 
-X-Spam-Status: No, score=-0.999 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, URIBL_BLOCKED=0.001] autolearn=disabled
-Received: from jackal.aluminati.org ([127.0.0.1])
-	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id KrfhlvnUlneC; Mon,  9 Dec 2013 23:16:24 +0000 (GMT)
-Received: from serenity.lan (mink.aluminati.org [10.0.7.180])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by jackal.aluminati.org (Postfix) with ESMTPSA id EB05DCDA487;
-	Mon,  9 Dec 2013 23:16:18 +0000 (GMT)
-Content-Disposition: inline
-In-Reply-To: <20131209204008.GF3163@serenity.lan>
-User-Agent: Mutt/1.5.22 (2013-10-16)
+	id S1750712Ab3LIXTK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Dec 2013 18:19:10 -0500
+Received: from mail-ea0-f170.google.com ([209.85.215.170]:43556 "EHLO
+	mail-ea0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750710Ab3LIXTH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Dec 2013 18:19:07 -0500
+Received: by mail-ea0-f170.google.com with SMTP id k10so1904380eaj.29
+        for <git@vger.kernel.org>; Mon, 09 Dec 2013 15:19:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=g6ZAth0fIeMClP3aLtvh1kB7bMGXOndi7E4m0lfCET4=;
+        b=GEYvlQtMUurRPUF+Ecxsvt+26tlXEdOPDVps/iyo4XSHbYrnau8eJigC3ivjh4Q3bq
+         5e8dbnrwUNnIDoeS/huyh6e88Nfo4o+JdMVXSWS9RE8NkOmLcCOsGT/Rq6eYTodJQFln
+         Laz9UvX/pUNCfpHyY4jz8kpOQ6ejyqy/zvswNQ+0t00nVZ8GFV8flFv1VK2d7b41a+66
+         yyPGttLrnOGQjlJSYCr6MOo04SdZfJ2oA6kTCGieN7OGqPCFlkTIkig9sLqbribjjJFn
+         6ZJUxu3IxboEyGZQ5GvgH++ktR2zaEIa2ddPcyhNb+x0jtED4V9IMhtDlowLy1Q0IgYD
+         Pdbw==
+X-Received: by 10.15.26.200 with SMTP id n48mr14851893eeu.46.1386631146482;
+        Mon, 09 Dec 2013 15:19:06 -0800 (PST)
+Received: from [10.1.100.53] (ns.dcon.de. [77.244.111.149])
+        by mx.google.com with ESMTPSA id 1sm34172842eeg.4.2013.12.09.15.19.05
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 09 Dec 2013 15:19:05 -0800 (PST)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.1.1
+In-Reply-To: <20131209200820.GU29959@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239118>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239119>
 
-Commit 15a147e (rebase: use @{upstream} if no upstream specified,
-2011-02-09) says:
-
-	Make it default to 'git rebase @{upstream}'. That is also what
-	'git pull [--rebase]' defaults to, so it only makes sense that
-	'git rebase' defaults to the same thing.
-
-but that isn't actually the case.  Since commit d44e712 (pull: support
-rebased upstream + fetch + pull --rebase, 2009-07-19), pull has actually
-chosen the most recent reflog entry which is an ancestor of the current
-branch if it can find one.
-
-Add a '--fork-point' argument to git-rebase that can be used to trigger
-this behaviour.  This option is turned on by default if no non-option
-arguments are specified on the command line, otherwise we treat an
-upstream specified on the command-line literally.
-
-Signed-off-by: John Keeping <john@keeping.me.uk>
----
-On Mon, Dec 09, 2013 at 08:40:08PM +0000, John Keeping wrote:
-> On Mon, Dec 09, 2013 at 12:11:50PM -0800, Junio C Hamano wrote:
-> >          Do you mean
-> > 
-> > 	git rebase <no other arguments>
-> > 
-> > which we interpret as "rebase the current branch on @{u}", and it
-> > should behave as if the command was run like so:
-> > 
-> > 	git rebase --fork-point @{u}
-> > 
-> > If that is what you suggest, I certainly can buy that.  Those who
-> > want to disable the automation can explicitly say
-> > 
-> > 	git rebase @{u}
-> > 
-> > and rebase the current exactly on top of the named commit (e.g. the
-> > current value of refs/remotes/origin/master or whatever remote-tracking
-> > branch you forked from).
+Am 09.12.2013 21:08, schrieb Jonathan Nieder:
+> Karsten Blees wrote:
 > 
-> Yes, that's what I meant; the first non-option argument to "git rebase"
-> is called "upstream" in the manpage (and throughout the code).  So if
-> "<no other arguments>" means "<no non-option arguments>" then that's
-> exactly what I meant.
+>> GCC supports __packed__ as of 2.3 (1992), so any other compilers
+>> that copied the __attribute__ feature probably won't complain.
+> 
+> Alas, it looks like HP C doesn't support __packed__ (not that I
+> care much about HP C):
+> 
+>  http://h21007.www2.hp.com/portal/download/files/unprot/aCxx/Online_Help/pragmas.htm#Attributes
+> 
 
-Here's an updated patch that adds a --fork-point option to git-rebase,
-with the behaviour described above.
+Thanks for the link
 
- Documentation/git-rebase.txt | 10 ++++++++++
- git-rebase.sh                | 19 +++++++++++++++++++
- t/t3400-rebase.sh            |  6 ++++--
- 3 files changed, 33 insertions(+), 2 deletions(-)
+> Maybe a macro expanding to __attribute__((aligned(1))) on the fields
+> would work?  The same macro could expand to __declspec(align(1)) in
+> the MSVC build.
+> 
 
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index 94e07fd..2889be6 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -324,6 +324,16 @@ fresh commits so it can be remerged successfully without needing to "revert
- the reversion" (see the
- link:howto/revert-a-faulty-merge.html[revert-a-faulty-merge How-To] for details).
- 
-+--fork-point::
-+--no-fork-point::
-+	Use 'git merge-base --fork-point' to find a better common ancestor
-+	between `upstream` and `branch` when calculating which commits have
-+	have been introduced by `branch` (see linkgit:git-merge-base[1]).
-++
-+If no non-option arguments are given on the command line, then the default is
-+`--fork-point @{u}` otherwise the `upstream` argument is interpreted literally
-+unless the `--fork-point` option is specified.
-+
- --ignore-whitespace::
- --whitespace=<option>::
- 	These flag are passed to the 'git apply' program
-diff --git a/git-rebase.sh b/git-rebase.sh
-index 226752f..7185dc8 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -14,6 +14,7 @@ git-rebase --continue | --abort | --skip | --edit-todo
- v,verbose!         display a diffstat of what changed upstream
- q,quiet!           be quiet. implies --no-stat
- autostash!         automatically stash/stash pop before and after
-+fork-point         use 'merge-base --fork-point' to refine upstream
- onto=!             rebase onto given branch instead of upstream
- p,preserve-merges! try to recreate merges instead of ignoring them
- s,strategy=!       use the given merge strategy
-@@ -66,6 +67,7 @@ verbose=
- diffstat=
- test "$(git config --bool rebase.stat)" = true && diffstat=t
- autostash="$(git config --bool rebase.autostash || echo false)"
-+fork_point=auto
- git_am_opt=
- rebase_root=
- force_rebase=
-@@ -260,6 +262,12 @@ do
- 	--no-autosquash)
- 		autosquash=
- 		;;
-+	--fork-point)
-+		fork_point=t
-+		;;
-+	--no-fork-point)
-+		fork_point=
-+		;;
- 	-M|-m)
- 		do_merge=t
- 		;;
-@@ -437,6 +445,8 @@ then
- 			error_on_missing_default_upstream "rebase" "rebase" \
- 				"against" "git rebase <branch>"
- 		fi
-+
-+		test "$fork_point" = auto && fork_point=t
- 		;;
- 	*)	upstream_name="$1"
- 		shift
-@@ -522,6 +532,15 @@ case "$#" in
- 	;;
- esac
- 
-+if test "$fork_point" = t
-+then
-+	new_upstream=$(git merge-base --fork-point "$upstream_name" "$switch_to")
-+	if test -n "$new_upstream"
-+	then
-+		upstream=$new_upstream
-+	fi
-+fi
-+
- if test "$autostash" = true && ! (require_clean_work_tree) 2>/dev/null
- then
- 	stash_sha1=$(git stash create "autostash") ||
-diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
-index ebf93b0..998503d 100755
---- a/t/t3400-rebase.sh
-+++ b/t/t3400-rebase.sh
-@@ -134,12 +134,14 @@ test_expect_success 'fail when upstream arg is missing and not configured' '
- 	test_must_fail git rebase
- '
- 
--test_expect_success 'default to @{upstream} when upstream arg is missing' '
-+test_expect_success 'default to common base in @{upstream}s reflog if no upstream arg' '
- 	git checkout -b default topic &&
- 	git config branch.default.remote . &&
- 	git config branch.default.merge refs/heads/master &&
- 	git rebase &&
--	test "$(git rev-parse default~1)" = "$(git rev-parse master)"
-+	git rev-parse --verify master >expect &&
-+	git rev-parse default~1 >actual &&
-+	test_cmp expect actual
- '
- 
- test_expect_success 'rebase -q is quiet' '
--- 
-1.8.5.226.g0d60d77
+But alignment is not the same as packing. We still want the structure to be 8-byte aligned (i.e. variables of the type should start at 8-byte boundaries). We just don't want the size of the structure to be padded to a multiple of 8, so that we can extend it without penalty. (Besides, __attribute__((aligned)) / __declspec(align) can only _increase_ the alignment, so aligned(1) would have no effect).
+
+Googling some more, I believe the most protable way to achieve this via 'compiler settings' is
+
+ #pragma pack(push)
+ #pragma pack(4)
+ struct hashmap_entry {
+   struct hashmap_entry *next;
+   unsigned int hash;
+ };
+ #pragma pack(pop)
+
+This is supported by at least GCC, MSVC and HP (see your link). The downside is that we cannot use macros (in git-compat-util.h) to emit #pragmas. But we wouldn't have to, as compilers aren't supposed to barf on unknown #pragmas.
+
+
+However, considering the portability issues, the macro solution (injecting just the two fields instead of a struct) becomes more and more attractive in my mind...
+
+Karsten
