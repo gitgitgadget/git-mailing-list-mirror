@@ -1,112 +1,72 @@
-From: =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-Subject: Re: [PATCH 4/5] gitweb: Add a feature for adding more branch refs
-Date: Tue, 10 Dec 2013 20:06:25 +0100
-Message-ID: <CANQwDwdoba5SbiiF1ZA2LHCwM-5KnEkVek5ekvrrQ-minLYNew@mail.gmail.com>
-References: <1386164583-14109-1-git-send-email-krzesimir@endocode.com>
- <1386164583-14109-5-git-send-email-krzesimir@endocode.com>
- <CANQwDwe+a2P0Jxqw0k7sHWv3exdb4k+NU3jL3ogR-rcetd82TQ@mail.gmail.com> <xmqq4n6gv8n0.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Refspec wildcards for remotes require trailing slash
+Date: Tue, 10 Dec 2013 11:14:33 -0800
+Message-ID: <xmqqzjo8tt5y.fsf@gitster.dls.corp.google.com>
+References: <3B290FD1-EF2B-4419-8845-45C5A3B4A3D3@sweattechnologies.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Krzesimir Nowak <krzesimir@endocode.com>,
-	git <git@vger.kernel.org>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Dec 10 20:07:16 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Monte Goulding <monte@sweattechnologies.com>
+X-From: git-owner@vger.kernel.org Tue Dec 10 20:14:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VqSeJ-0007If-N5
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Dec 2013 20:07:16 +0100
+	id 1VqSlW-0004hP-VA
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Dec 2013 20:14:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751789Ab3LJTHJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Dec 2013 14:07:09 -0500
-Received: from mail-wi0-f173.google.com ([209.85.212.173]:58690 "EHLO
-	mail-wi0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751697Ab3LJTHH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 Dec 2013 14:07:07 -0500
-Received: by mail-wi0-f173.google.com with SMTP id hn9so5939575wib.12
-        for <git@vger.kernel.org>; Tue, 10 Dec 2013 11:07:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=kbqITW30nIBa/NT3oLIeE3+CmorTpXbJsZXXtcpsXW8=;
-        b=D2HkHez3kPtXrGxH5ZPJaERtSyuUJgF2PhgGGbELogIs8nL3zkW5FmIcbGFtlfa0MJ
-         TjUanNEDJgA6sVsRWdf+wZLkTkD5iX+h5d0ZoOHk9fHsjh2old4/KrAFcDO/XTcnKkxf
-         t0a8pobcavRaZTkVqMIJPeFJVaNdjh0nVvnM0fSppQM87WLcJ8+KUA9vfQOsAzndTfYk
-         LXODtInpeTEeuzCbd8K6Wvy5zfy88eX0T0QDBCu8kKDys18bZWiE2Fux5EIkepOgM7FS
-         LcAAYO5XI/1kC6lyvLnVDA9UqaQ+G5CDoChuo2gR6yEmlD1joxMJzHMBYp7afOb3xPGg
-         b0ng==
-X-Received: by 10.180.39.140 with SMTP id p12mr21169073wik.12.1386702426033;
- Tue, 10 Dec 2013 11:07:06 -0800 (PST)
-Received: by 10.227.86.201 with HTTP; Tue, 10 Dec 2013 11:06:25 -0800 (PST)
-In-Reply-To: <xmqq4n6gv8n0.fsf@gitster.dls.corp.google.com>
+	id S1752689Ab3LJTOj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Dec 2013 14:14:39 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57807 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751064Ab3LJTOi (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Dec 2013 14:14:38 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DC9E55A0AC;
+	Tue, 10 Dec 2013 14:14:37 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ECe8h2LsL9/QmB1xdSOmcjgcA5Y=; b=wNNJrt
+	qJ7E+bK898iwC+DBCsaqx7xuw8pKhiXbpjFR+zQV1fvHDpC4Ss9w/GaF6Zewl/gq
+	r7wiXRtEqyAc+ED1txjUOJkruXdv8GDq0F0yFj/QS5HrUIX0HlnEpUXLmTbojVpg
+	+kJW9yaG5PkUhMGS2WLXiH7GLyooZw6+aowpA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=BiIMGGYD20EObe+RH+omn2DS0bR1jbzx
+	Ido2Ue47MQMnFjBCWl/2iknvFBXUDrlAQ9dkLcQVsE+x4Q2vt2c7O74d2fIiu8JG
+	zsW8sFHEcQLe98Xje7rX87COj6fMt4IuS0gPZs0cb4YOcRXfCwm2Tnng0H/sDJb5
+	NLoU41Um6NA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 832A75A0A9;
+	Tue, 10 Dec 2013 14:14:37 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1D0985A0A8;
+	Tue, 10 Dec 2013 14:14:36 -0500 (EST)
+In-Reply-To: <3B290FD1-EF2B-4419-8845-45C5A3B4A3D3@sweattechnologies.com>
+	(Monte Goulding's message of "Tue, 10 Dec 2013 13:32:26 +1100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 4EE96042-61CF-11E3-856D-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239151>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239152>
 
-On Tue, Dec 10, 2013 at 7:54 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Jakub Nar=C4=99bski <jnareb@gmail.com> writes:
->
->> With multi-valued we won't be able to override earlier / more generi=
-c
->> settings... well, unless we add support for no-value, or empty-value
->> as clearer, i.e.
->>
->>   [gitweb]
->>            extrabranchrefs =3D sandbox
->>            extrabranchrefs
->>  # or    extrabranchrefs =3D
->>            extrabranchrefs =3D wip other
->>
->> resulting in ('wip', 'other').
->
-> Please don't, unless you are going to change the entire config
-> machinery (including config.c bits that are used by the rest of the
-> system) to follow such a convention to "clear settings so far read".
+Monte Goulding <monte@sweattechnologies.com> writes:
 
-Right. Also I haven't noticed that gitweb already uses some
-multi-valued config variables, though not for %features.
+> Before I go ahead and look at what needs to be done for a patch I
+> thought it would be polite to ask if there is any reasoning behind
+> the trailing slash rule that I'm missing? Or if you are interested
+> in changing this behavior at all.
 
-Please disregard this.
+The log messages of the two commits you cited in your message says
+that "refs/a/b/* should not match refs/a/b1, but the old code
+mistakenly allowed to".  As long that fix is not broken, allowing
+"refs/a/b*" to match "refs/a/b1" is OK, I would think.
 
->>> ++
->>> +It is an error to specify a ref that does not pass "git check-ref-=
-format"
->>> +scrutiny. Duplicated values are filtered.
->>> +
->>
->> Hmmm... 'snapshot' feature ignores invalid values, but in this case
->> formerly valid compression schemes might get invalid via tightening
->> %known_snapshot_formats, and we don't want existing config getting
->> suddenly invalid.
->
-> Sorry, but what does check-ref-format have to do with "formerly
-> valid compression scheme that suddenly gets invalidated"???
-
-What I started to write was that 'snapshot' feature ignores invalid
-values, but halfway through writing it out I have noticed that the
-situation is really different.
-
-In 'snapshot' case one can have formerly valid per-repository config,
-made invalid by gitweb admin tightening %known_snapshot_formats
-(for example removing some compression format due to bug). We
-do not want for repository to stop being displayed because of something
-that is outside control of repository owner.
-
-In 'check-ref-format' feature we have ref either valid or not. This doe=
-s
-not depend on external factors. Something that is valid ref would
-remain valid ref.
-
-So 'snaphot' being forgiving doesn't mean that 'check-ref-format'
-should be forgiving.
-
---=20
-Jakub Narebski
+But it is debatable if such a change should allow "refs/a/b*" to
+match "refs/a/b/2".  Arguments can be made in both ways, and my
+knee-jerk reaction is it shouldn't.
