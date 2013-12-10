@@ -1,72 +1,84 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Compiling git svn from source
-Date: Tue, 10 Dec 2013 11:01:29 -0800
-Message-ID: <20131210190129.GD2311@google.com>
-References: <CAHCisteVsy4_GX_1PNZfO44w1WmW28vAY0PBfwo9CL_Ze8fw2A@mail.gmail.com>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: Setting file timestamps to commit time (git-checkout)
+Date: Tue, 10 Dec 2013 20:02:29 +0100
+Message-ID: <87bo0olebe.fsf@igel.home>
+References: <20131209112528.GA5309@linux.vnet.ibm.com>
+	<xmqqsiu1yd7p.fsf@gitster.dls.corp.google.com>
+	<20131210083531.GB4087@linux.vnet.ibm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: avinash r <nashpapa@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 10 20:01:39 2013
+Content-Type: text/plain
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 10 20:02:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VqSYt-0002v1-3M
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Dec 2013 20:01:39 +0100
+	id 1VqSZs-0003gj-4A
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Dec 2013 20:02:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752671Ab3LJTBe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Dec 2013 14:01:34 -0500
-Received: from mail-yh0-f46.google.com ([209.85.213.46]:54299 "EHLO
-	mail-yh0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752094Ab3LJTBd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Dec 2013 14:01:33 -0500
-Received: by mail-yh0-f46.google.com with SMTP id l109so4191021yhq.19
-        for <git@vger.kernel.org>; Tue, 10 Dec 2013 11:01:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=GOrFZtl+/2ZX5cZBRz5aMz7VMpxkqPI+w6P9E5bCZuc=;
-        b=A6oqfelkR5IkQgrfrWSE4PrUQqALSS16+o4ih7ZiaK10tvRRHZ/iX7jhBdFdGEv/Ea
-         TptZld5eW33Q9R1xUooItQ8STPc4vl7p/Wax2BaYkzQmw5H052bjr4ebQj7gAMw0918n
-         ivYWdwXs0lZCi9E1TsyZkv7dDMUjkF6wHppkYyxXwVugY7eNwPFN1JCUpYFUp+l8jACp
-         rST1ZJ7HaNVuX/d9iSvNC14o0cYTamirvIPktS4GRI+fr0BHQXp17veK7rAubeE8PxVB
-         uTwrcX8sUL/ko6jtD0xs2FicsZPuu+rIJSVMEyp865zlxxnbEv8QJIBC1XPh0AsZlffu
-         85tg==
-X-Received: by 10.236.135.15 with SMTP id t15mr2530745yhi.106.1386702093117;
-        Tue, 10 Dec 2013 11:01:33 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id s21sm23973254yhk.9.2013.12.10.11.01.31
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 10 Dec 2013 11:01:32 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <CAHCisteVsy4_GX_1PNZfO44w1WmW28vAY0PBfwo9CL_Ze8fw2A@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752797Ab3LJTCg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Dec 2013 14:02:36 -0500
+Received: from mail-out.m-online.net ([212.18.0.9]:59720 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751415Ab3LJTCf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Dec 2013 14:02:35 -0500
+Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id 3df9d6109hz4KK23
+	for <git@vger.kernel.org>; Tue, 10 Dec 2013 20:02:33 +0100 (CET)
+Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
+	by mail.m-online.net (Postfix) with ESMTP id 3df9d56fVXzbbfN
+	for <git@vger.kernel.org>; Tue, 10 Dec 2013 20:02:33 +0100 (CET)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.180])
+	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
+	with ESMTP id kvbxH-RBdGdH for <git@vger.kernel.org>;
+	Tue, 10 Dec 2013 20:02:31 +0100 (CET)
+X-Auth-Info: QFEpmXO0hZEMXWSKMDGn82qiia21lJ5gUHXQIMKBNGM=
+Received: from igel.home (ppp-46-244-235-149.dynamic.mnet-online.de [46.244.235.149])
+	by mail.mnet-online.de (Postfix) with ESMTPA
+	for <git@vger.kernel.org>; Tue, 10 Dec 2013 20:02:31 +0100 (CET)
+Received: by igel.home (Postfix, from userid 1000)
+	id F41592C025B; Tue, 10 Dec 2013 20:02:29 +0100 (CET)
+X-Yow: I'm rated PG-34!!
+In-Reply-To: <20131210083531.GB4087@linux.vnet.ibm.com> (Dominik Vogt's
+	message of "Tue, 10 Dec 2013 09:35:31 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239149>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239150>
 
-Hi,
+Dominik Vogt <vogt@linux.vnet.ibm.com> writes:
 
-avinash r wrote:
+> The second best approach I could think of is to stamp files with the
+> timestamp of the last commit that touched that, but I guess that is
+> not a cheap operation either.
 
->                    I followed the installation instructions at
-> git-scm.com, but somehow the sub-command svn (git svn) is not being
-> installed.
-[...]
-> Here is how i'm compiling:
->
-> $ make all
->
-> $ sudo make install
+I'm using this script for this:
 
-What is the content of "config.mak"?  Is there a file named
-"config.mak.autogen"?  What is the output of "git help -a | grep svn"?
+#!/bin/sh
+git log --name-only --format=format:%n%ct -- "$@" |
+perl -e 'my $do_date = 0; chomp(my $cdup = `git rev-parse --show-cdup`);
+    while (<>) {
+	chomp;
+	if ($do_date) {
+	    next if ($_ eq "");
+	    die "Unexpected $_\n" unless /^[0-9]+$/;
+	    $d = $_;
+	    $do_date = 0;
+	} elsif ($_ eq "") {
+	    $do_date = 1;
+	} elsif (!defined($seen{$_})) {
+	    $seen{$_} = 1;
+ 	    utime $d, $d, "$cdup$_";
+ 	}
+    }'
 
-Curious,
-Jonathan
+Andreas.
+
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
