@@ -1,66 +1,57 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] pull: use merge-base --fork-point when appropriate
-Date: Mon, 9 Dec 2013 17:58:51 -0800
-Message-ID: <20131210015851.GA2311@google.com>
-References: <b208a2edcaf47bf1a97ec19718854dc1b3646828.1386506845.git.john@keeping.me.uk>
-Mime-Version: 1.0
+From: Monte Goulding <monte@sweattechnologies.com>
+Subject: Refspec wildcards for remotes require trailing slash
+Date: Tue, 10 Dec 2013 13:32:26 +1100
+Message-ID: <3B290FD1-EF2B-4419-8845-45C5A3B4A3D3@sweattechnologies.com>
+Mime-Version: 1.0 (Apple Message framework v1283)
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Martin von Zweigbergk <martinvonz@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Tue Dec 10 02:59:09 2013
+Content-Transfer-Encoding: 8BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 10 04:41:42 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VqCbM-0006fS-B7
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Dec 2013 02:59:08 +0100
+	id 1VqECb-00084U-Rz
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Dec 2013 04:41:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751751Ab3LJB7C (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Dec 2013 20:59:02 -0500
-Received: from mail-yh0-f42.google.com ([209.85.213.42]:33840 "EHLO
-	mail-yh0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751412Ab3LJB67 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Dec 2013 20:58:59 -0500
-Received: by mail-yh0-f42.google.com with SMTP id z6so3458509yhz.1
-        for <git@vger.kernel.org>; Mon, 09 Dec 2013 17:58:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=dzejhaMJY30Um3ev9aPyO0olj1AeZB+viuDPa8rXH94=;
-        b=B18zwj4jYm7XigWn7MfMxU4NJrFItIEx7ssYWic7GgK76iKTgY3ZlFP6bA9+4UBDa2
-         3QtylktQdUc4dN3lelkualsfL6MZgpbkTIPNIqhyrCUVcl+PVcOykt8txpZSoFowfl6Y
-         LoSWDxv615MOwATbGKWWODjVhdwkqFFDe1FfRj+2NzuDlG0P9aystrBJXf9yzd8Gl763
-         0+pXgxMIHiC7hwqkQBWH143RLfXe+sPqxRxoSUQv+yfkVcOVu3Odxo+tfb5b98B6i9My
-         VmkPotOYK9g0Pm6o43/ssRmsx9M5A5/bIcicrp52i4bWyI7lOSmS9nHb1BELE8CeyP3K
-         GgoA==
-X-Received: by 10.236.125.230 with SMTP id z66mr5442354yhh.104.1386640738450;
-        Mon, 09 Dec 2013 17:58:58 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id h66sm20095496yhb.7.2013.12.09.17.58.57
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 09 Dec 2013 17:58:58 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <b208a2edcaf47bf1a97ec19718854dc1b3646828.1386506845.git.john@keeping.me.uk>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751802Ab3LJDli (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Dec 2013 22:41:38 -0500
+Received: from pancake.on-rev.com ([37.59.34.226]:38836 "EHLO
+	pancake.on-rev.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751292Ab3LJDlh convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 9 Dec 2013 22:41:37 -0500
+X-Greylist: delayed 4142 seconds by postgrey-1.27 at vger.kernel.org; Mon, 09 Dec 2013 22:41:37 EST
+Received: from [120.29.242.42] (port=58062 helo=[192.168.2.101])
+	by pancake.on-rev.com with esmtpsa (TLSv1:AES128-SHA:128)
+	(Exim 4.80.1)
+	(envelope-from <monte@sweattechnologies.com>)
+	id 1VqD7g-0007zh-ID
+	for git@vger.kernel.org; Tue, 10 Dec 2013 03:32:33 +0100
+X-Mailer: Apple Mail (2.1283)
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - pancake.on-rev.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - sweattechnologies.com
+X-Get-Message-Sender-Via: pancake.on-rev.com: authenticated_id: monte+sweattechnologies.com/only user confirmed/virtual account not confirmed
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239125>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239126>
 
-John Keeping wrote:
 
-> Since commit d96855f (merge-base: teach "--fork-point" mode, 2013-10-23)
-> we can replace a shell loop in git-pull with a single call to
-> git-merge-base.  So let's do so.
->
-> Signed-off-by: John Keeping <john@keeping.me.uk>
-> ---
->  git-pull.sh | 10 +---------
->  1 file changed, 1 insertion(+), 9 deletions(-)
+Hi
 
-Yay!  Looks good.
+I came across this issue the other day while trying to optimise a fetch to a repo with release branches named release-X.X.X. I wanted to just fetch just those branches but because of the trailing slash rule I couldn't. The following StackOverflow post has details of the issue:
+
+http://stackoverflow.com/questions/20450003/is-it-possible-to-use-filters-in-refspec-in-places-other-than-directory-namespac
+
+The trailing slash rule appears to be introduced in 46220ca and further tightened in b2a5627
+
+Before I go ahead and look at what needs to be done for a patch I thought it would be polite to ask if there is any reasoning behind the trailing slash rule that I'm missing? Or if you are interested in changing this behavior at all.
+
+Cheers
+
+Monte
