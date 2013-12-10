@@ -1,71 +1,54 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/5] gitweb: Add a feature for adding more branch refs
-Date: Tue, 10 Dec 2013 11:44:07 -0800
-Message-ID: <xmqqr49ktrso.fsf@gitster.dls.corp.google.com>
-References: <1386164583-14109-1-git-send-email-krzesimir@endocode.com>
-	<1386164583-14109-5-git-send-email-krzesimir@endocode.com>
-	<CANQwDwe+a2P0Jxqw0k7sHWv3exdb4k+NU3jL3ogR-rcetd82TQ@mail.gmail.com>
-	<xmqq4n6gv8n0.fsf@gitster.dls.corp.google.com>
-	<CANQwDwdoba5SbiiF1ZA2LHCwM-5KnEkVek5ekvrrQ-minLYNew@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Krzesimir Nowak <krzesimir@endocode.com>,
-	git <git@vger.kernel.org>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 10 20:44:24 2013
+From: Monte Goulding <monte@sweattechnologies.com>
+Subject: Re: Refspec wildcards for remotes require trailing slash
+Date: Wed, 11 Dec 2013 06:59:45 +1100
+Message-ID: <569D9126-F0FB-41A2-AB83-D002C2C2B679@sweattechnologies.com>
+References: <3B290FD1-EF2B-4419-8845-45C5A3B4A3D3@sweattechnologies.com> <xmqqzjo8tt5y.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0 (Mac OS X Mail 6.5 \(1508\))
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Dec 10 20:59:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VqTEG-0002ud-98
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Dec 2013 20:44:24 +0100
+	id 1VqTTH-00070H-K9
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Dec 2013 20:59:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750707Ab3LJToU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Dec 2013 14:44:20 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57765 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750706Ab3LJToT convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 Dec 2013 14:44:19 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DB1665A9EA;
-	Tue, 10 Dec 2013 14:44:18 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=Fp6kRXYHQz8a
-	Yh6mwn971RYCX8U=; b=yO8oGAAMqXiRIIChhJ6/9ynQrPYA295GB3GpJhC4SvwB
-	6XX8I8Sy8QGLvPxSGaFQ5apNMfwbvrqN0iw1u6tFK57yHvgc8YY+MlSPot088WBF
-	NfNFUooKPE+Wv52t+SlBSzQ5rfeofmLB0B8vpaZ+hh7n4OG4Dd+tPyVL7/pALPw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=xNef3J
-	1jySOJeBvYZfT2FHaZZQS5BgBb/QQ9ppDoRWJcHCpJjHJR9NMNQyTURhn2u3f2sE
-	pmGHyph4K6Kq3GWPhdblCr5vPYLPIGR90A10w6ERoWtWTZsWJ/oVaTDIu4jbY+Mg
-	E5UPZ6GEVUCUgRhenN73GgugNfqJGgdjdmFig=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 16B8D5A9E7;
-	Tue, 10 Dec 2013 14:44:18 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 980E35A9DF;
-	Tue, 10 Dec 2013 14:44:10 -0500 (EST)
-In-Reply-To: <CANQwDwdoba5SbiiF1ZA2LHCwM-5KnEkVek5ekvrrQ-minLYNew@mail.gmail.com>
-	("Jakub =?utf-8?Q?Nar=C4=99bski=22's?= message of "Tue, 10 Dec 2013
- 20:06:25 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 70992D86-61D3-11E3-9F57-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1750856Ab3LJT7v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Dec 2013 14:59:51 -0500
+Received: from pancake.on-rev.com ([37.59.34.226]:51401 "EHLO
+	pancake.on-rev.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750743Ab3LJT7u (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Dec 2013 14:59:50 -0500
+Received: from [120.29.242.42] (port=50812 helo=[192.168.2.6])
+	by pancake.on-rev.com with esmtpsa (TLSv1:AES128-SHA:128)
+	(Exim 4.80.1)
+	(envelope-from <monte@sweattechnologies.com>)
+	id 1VqTTB-0000iW-7t; Tue, 10 Dec 2013 20:59:49 +0100
+In-Reply-To: <xmqqzjo8tt5y.fsf@gitster.dls.corp.google.com>
+X-Mailer: Apple Mail (2.1508)
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - pancake.on-rev.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - sweattechnologies.com
+X-Get-Message-Sender-Via: pancake.on-rev.com: authenticated_id: monte+sweattechnologies.com/only user confirmed/virtual account not confirmed
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239154>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239155>
 
-Jakub Nar=C4=99bski <jnareb@gmail.com> writes:
 
-> So 'snaphot' being forgiving doesn't mean that 'check-ref-format'
-> should be forgiving.
+On 11/12/2013, at 6:14 AM, Junio C Hamano <gitster@pobox.com> wrote:
 
-OK, thanks for clarifying.
+> But it is debatable if such a change should allow "refs/a/b*" to
+> match "refs/a/b/2".  Arguments can be made in both ways, and my
+> knee-jerk reaction is it shouldn't.
+
+Hmm.. for-each-ref doesn't match it but ls-remote does
+
+Sorry: forgot to CC the list
