@@ -1,93 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Publishing "filtered branch repositories" - workflow / recommendations?
-Date: Mon, 09 Dec 2013 15:56:29 -0800
-Message-ID: <xmqqhaahvas2.fsf@gitster.dls.corp.google.com>
-References: <CACPiFCJPq0fqOQrJD-8CHH405Xw61ZDynqqfN+_aZb3ZBgV2VA@mail.gmail.com>
-	<52A0D199.1010403@web.de>
-	<CACPiFCKHprB_oO_eXMYkey_CGbT7WOn5VDDjBdHbLRzcDpHnZw@mail.gmail.com>
-	<52A0D9F5.3030101@web.de>
-	<CACPiFCJ3mkOj=E+siideBpPfgS1tSicVQ46KqPK+Tha0DbkZHw@mail.gmail.com>
-	<52A18F69.70002@web.de>
-	<CACPiFCJ5hCPvRHB1knvMocN0XdHfSMpbZnqjf7yHAT4mMOSfzw@mail.gmail.com>
-	<20131209225950.GG9606@sandbox-ub>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] pull: use merge-base --fork-point when appropriate
+Date: Mon, 9 Dec 2013 17:58:51 -0800
+Message-ID: <20131210015851.GA2311@google.com>
+References: <b208a2edcaf47bf1a97ec19718854dc1b3646828.1386506845.git.john@keeping.me.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Martin Langhoff <martin.langhoff@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Heiko Voigt <hvoigt@hvoigt.net>
-X-From: git-owner@vger.kernel.org Tue Dec 10 00:56:39 2013
+Cc: git@vger.kernel.org, Martin von Zweigbergk <martinvonz@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Tue Dec 10 02:59:09 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VqAgp-0003Gz-0D
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Dec 2013 00:56:39 +0100
+	id 1VqCbM-0006fS-B7
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Dec 2013 02:59:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751318Ab3LIX4f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Dec 2013 18:56:35 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41875 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750912Ab3LIX4e (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Dec 2013 18:56:34 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9DC0559545;
-	Mon,  9 Dec 2013 18:56:33 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ytQfsbjNoybYTnGmAsM/+MQjxM8=; b=g30Dpg
-	5chgPAaNjq/z6UtnCTTd9osLid1Q2TPinGEv2BVUfl6ojDo+jwcTMUsqUkkGaCO0
-	bUywYuUESBO8+efS6HYnU/TbYKbPSP4G2lbbx6fWpOtnyOMZ/Fv7WGrXVHls4YMx
-	FLHI+FAZT4qqcX6kfMgQsP3JRHl63ULrq+B3A=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=RfYl3D/X9SPHmitVeoU4Hr4vJxLHZ1en
-	Jhmff4KwYoNL5SJBCQOCZrrjUvLtHWAqpHuVYJWyZW8LpkD7fd7vE4LMq4KzZNDl
-	R/OcrkBVGgE5mCvfb+czLBO+1iXd/rbBspdkyKDpO7LPCJp/X6r9TS0iBX388KH/
-	vEmeNW2u2cs=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8D0FB59544;
-	Mon,  9 Dec 2013 18:56:33 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BCA265953F;
-	Mon,  9 Dec 2013 18:56:32 -0500 (EST)
-In-Reply-To: <20131209225950.GG9606@sandbox-ub> (Heiko Voigt's message of
-	"Mon, 9 Dec 2013 23:59:50 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 879BFE1A-612D-11E3-8FEA-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751751Ab3LJB7C (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Dec 2013 20:59:02 -0500
+Received: from mail-yh0-f42.google.com ([209.85.213.42]:33840 "EHLO
+	mail-yh0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751412Ab3LJB67 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Dec 2013 20:58:59 -0500
+Received: by mail-yh0-f42.google.com with SMTP id z6so3458509yhz.1
+        for <git@vger.kernel.org>; Mon, 09 Dec 2013 17:58:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=dzejhaMJY30Um3ev9aPyO0olj1AeZB+viuDPa8rXH94=;
+        b=B18zwj4jYm7XigWn7MfMxU4NJrFItIEx7ssYWic7GgK76iKTgY3ZlFP6bA9+4UBDa2
+         3QtylktQdUc4dN3lelkualsfL6MZgpbkTIPNIqhyrCUVcl+PVcOykt8txpZSoFowfl6Y
+         LoSWDxv615MOwATbGKWWODjVhdwkqFFDe1FfRj+2NzuDlG0P9aystrBJXf9yzd8Gl763
+         0+pXgxMIHiC7hwqkQBWH143RLfXe+sPqxRxoSUQv+yfkVcOVu3Odxo+tfb5b98B6i9My
+         VmkPotOYK9g0Pm6o43/ssRmsx9M5A5/bIcicrp52i4bWyI7lOSmS9nHb1BELE8CeyP3K
+         GgoA==
+X-Received: by 10.236.125.230 with SMTP id z66mr5442354yhh.104.1386640738450;
+        Mon, 09 Dec 2013 17:58:58 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id h66sm20095496yhb.7.2013.12.09.17.58.57
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 09 Dec 2013 17:58:58 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <b208a2edcaf47bf1a97ec19718854dc1b3646828.1386506845.git.john@keeping.me.uk>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239124>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239125>
 
-Heiko Voigt <hvoigt@hvoigt.net> writes:
+John Keeping wrote:
 
-> On Fri, Dec 06, 2013 at 02:40:15PM -0500, Martin Langhoff wrote:
->> On Fri, Dec 6, 2013 at 3:48 AM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
->> > Right you are, we need tutorials for the most prominent use cases.
->> 
->> In the meantime, are there any hints? Emails on this list showing a
->> current "smart" workflow? Blog posts? Notes on a wiki?
+> Since commit d96855f (merge-base: teach "--fork-point" mode, 2013-10-23)
+> we can replace a shell loop in git-pull with a single call to
+> git-merge-base.  So let's do so.
 >
-> None that I know of mainly because we have not yet reached the goal we
-> are aiming at. Maybe we should write something, A few points from
-> $dayjob that come to my mind:
->
->   * A submodule commit is only allowed to be merged into master in a
->     superproject commit if it is merged into master (or a stable branch)
->     in the submodule. That way you ensure that any submodules commits
->     that are tracked in a superproject are contained in each other and
->     can be cleanly merged. (no rewinds, one commit contains the other)
+> Signed-off-by: John Keeping <john@keeping.me.uk>
+> ---
+>  git-pull.sh | 10 +---------
+>  1 file changed, 1 insertion(+), 9 deletions(-)
 
-I think this is closely related to Martin's list of wishes we
-earlier saw in the thread: remind the user to push necessary
-submodule tip before the top-level commit that needs that commit in
-the submodule is pushed out.  Giving projects a way to implement
-such a policy decision would be good, and having a default policy,
-if we can find one that would be reasonable for any submodule users,
-would be even better.  Would adding a generic pre-push hook at the
-top-level sufficient for that kind of thing, I have to wonder.
+Yay!  Looks good.
