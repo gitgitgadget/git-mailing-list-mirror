@@ -1,81 +1,102 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [Question] Git recovery with HEAD commit broken
-Date: Wed, 11 Dec 2013 16:01:48 +0100
-Message-ID: <vpqzjo7whwj.fsf@anie.imag.fr>
-References: <CAP9B-Q=ARp00Bj5zJ0J=3qv9R16YGu5AZgLpqoO0y+cY1at1Zw@mail.gmail.com>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: [PATCH] t5541: Improve push test
+Date: Wed, 11 Dec 2013 16:13:46 +0100
+Message-ID: <52A8812A.4060004@web.de>
+References: <201312092103.29047.tboegi@web.de> <xmqq61qxwu8f.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Wang Shilong <wangsl.fnst@cn.fujitsu.com>
-To: Shilong Wang <wangshilong1991@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 11 16:02:08 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1?= =?UTF-8?B?c2Vu?= 
+	<tboegi@web.de>, Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 11 16:13:53 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VqlIc-0006OR-5C
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Dec 2013 16:02:06 +0100
+	id 1VqlU1-0007Ks-5T
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Dec 2013 16:13:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751400Ab3LKPCB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Dec 2013 10:02:01 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:45244 "EHLO shiva.imag.fr"
+	id S1751959Ab3LKPNt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Dec 2013 10:13:49 -0500
+Received: from mout.web.de ([212.227.17.12]:56274 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751350Ab3LKPCA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Dec 2013 10:02:00 -0500
-Received: from globule.imag.fr (globule.imag.fr [129.88.34.238])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id rBBF1lAa031980
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 11 Dec 2013 16:01:47 +0100
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	(authenticated bits=0)
-	by globule.imag.fr (8.13.8/8.13.8) with ESMTP id rBBF1mZa019500
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Wed, 11 Dec 2013 16:01:49 +0100
-In-Reply-To: <CAP9B-Q=ARp00Bj5zJ0J=3qv9R16YGu5AZgLpqoO0y+cY1at1Zw@mail.gmail.com>
-	(Shilong Wang's message of "Wed, 11 Dec 2013 22:38:37 +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 11 Dec 2013 16:01:48 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: rBBF1lAa031980
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1387378911.3227@0H30xolmgfeXl9gytnH16Q
+	id S1751417Ab3LKPNs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Dec 2013 10:13:48 -0500
+Received: from [192.168.209.26] ([78.72.74.102]) by smtp.web.de (mrweb001)
+ with ESMTPA (Nemesis) id 0LpfFO-1VNVHA2YsA-00fOXt for <git@vger.kernel.org>;
+ Wed, 11 Dec 2013 16:13:46 +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:24.0) Gecko/20100101 Thunderbird/24.1.1
+In-Reply-To: <xmqq61qxwu8f.fsf@gitster.dls.corp.google.com>
+X-Provags-ID: V03:K0:nB23HJAVx2pRz1Xm5/4j4eqZymOmCgvspLZS0xquYcyI2nHBcaq
+ ZjJ3+zb9RAtyQtLDFsglRODOJCOWTaJEiUCjxB3LNqOb1lLzROVEPA128Ql9y2EnRGpZ/X7
+ rulNwk+UatW/RJPUcqfyq2CQsgPIdQmlxRN6CEkW3jn3nfQA09aFEWgUcYakw751yf5YeGh
+ bRnEuCZOcsS3s4bj1LS1g==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239203>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239204>
 
-Shilong Wang <wangshilong1991@gmail.com> writes:
+On 2013-12-09 23.10, Junio C Hamano wrote:
+> Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+>=20
+>> The old log-line looked like this:
+>>  + 9d498b0...8598732 master -> master (forced update)
+>> And the new one like this:
+>>    9d498b0..8598732  master -> master
+>>
+>> - Loosen the grep pattern by not demanding "(forced update)"
+>=20
+> Hmm, what is the reason for the change the output?  The output this
+> piece is testing is the result of this:
+>=20
+> 	git push origin master:retsam
+>=20
+> 	echo "change changed" > path2 &&
+> 	git commit -a -m path2 --amend &&
+>=20
+> 	# push master too; this ensures there is at least one '"'push'"' com=
+mand to
+> 	# the remote helper and triggers interaction with the helper.
+> 	test_must_fail git push -v origin +master master:retsam >output 2>&1=
+'
+>=20
+> This is run inside test_repo_clone, which has /smart/test_repo.git
+> as its origin, which in turn has 'master' branch (and nothing else).
+>=20
+> It
+>=20
+>  - pushes master to another branch retsam;
+>=20
+>  - amends its 'master';
+>=20
+>  - attempts to push the updated master to force-update master, and
+>    also retsam without forcing.  The latter needs to be forced to
+>    succeed, and that is why we expect it to fail.
+>=20
+> If the output from the push process says
+>=20
+>   + 9d498b0...8598732 master -> master (forced update)
+>   ! [rejected]        master -> retsam (non-fast-forward)
+>   error: failed to push some refs to '../test_repo_copy/'
+>=20
+> I think that is a good thing to do, no?  After all, that is what we
+> show with Git native transports.
+>=20
+> Is this patch merely matching a test to a broken behaviour of some
+> sort?  Puzzled...
+Thanks for the analysis: I thing the patch isn't the way to go.
+The regression in t5541 was introduced in f9e3c6bebb89de12.
+Which was a cleanup to previous commits:
+"transport-helper: add 'force' to 'export' helpers"
+So reverting f9e3c6bebb89de fixes t5541, but breaks
+contrib/remote-helpers.
 
-> A power off cause my top commit broken, and then git
-> branch/log/reflog..etc won't work.
+=46elipe, could you have a look, please ?
+/Torsten
 
-With a bit of luck, the reflog actually contain useful information. Look
-at .git/logs/HEAD (or refs/heads/* instead of HEAD for branches'
-reflog). It's a human-readable text format. You should be able to walk
-up the history looking for a good commit.
-
-> I do a hack that
-
-Before anything else: do a backup of your full repository while it's
-still time.
-
-> i change the HEAD commit to the one that i can make sure is right,
-
-(don't forget to run "git fsck" to make sure that not only the commit
-but also its ancestry is right).
-
-> In fact, i hope git fsck can fix up such problems(maybe can backup top
-> commit for example)...
-
-Not as far as I know. But "git fsck" has a --lost-found option that can
-help recovering unreachable (dangling) commits.
-
-You may have a look at http://hackage.haskell.org/package/git-repair but
-I do not think it would solve your particular case.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+=20
+force
