@@ -1,61 +1,81 @@
-From: Shilong Wang <wangshilong1991@gmail.com>
-Subject: [Question] Git recovery with HEAD commit broken
-Date: Wed, 11 Dec 2013 22:38:37 +0800
-Message-ID: <CAP9B-Q=ARp00Bj5zJ0J=3qv9R16YGu5AZgLpqoO0y+cY1at1Zw@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [Question] Git recovery with HEAD commit broken
+Date: Wed, 11 Dec 2013 16:01:48 +0100
+Message-ID: <vpqzjo7whwj.fsf@anie.imag.fr>
+References: <CAP9B-Q=ARp00Bj5zJ0J=3qv9R16YGu5AZgLpqoO0y+cY1at1Zw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Wang Shilong <wangsl.fnst@cn.fujitsu.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 11 15:38:44 2013
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Wang Shilong <wangsl.fnst@cn.fujitsu.com>
+To: Shilong Wang <wangshilong1991@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 11 16:02:08 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vqkw0-0004OE-2T
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Dec 2013 15:38:44 +0100
+	id 1VqlIc-0006OR-5C
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Dec 2013 16:02:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750922Ab3LKOik (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Dec 2013 09:38:40 -0500
-Received: from mail-qe0-f45.google.com ([209.85.128.45]:60801 "EHLO
-	mail-qe0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750707Ab3LKOij (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Dec 2013 09:38:39 -0500
-Received: by mail-qe0-f45.google.com with SMTP id 6so5483295qea.32
-        for <git@vger.kernel.org>; Wed, 11 Dec 2013 06:38:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        bh=pFtRun/YwmwLg+S2SOO+Ve9oJqX55dy5VnLXVEsZTuw=;
-        b=yPxpQNtB5/axi7VKLuZdE/gowzAY2jroXXsupy6wnuIcBId0uXGqWMjimbo0TDteiO
-         16ZT4fnKLKcI2OwTyls8IS2HILvdDk6iUuxTuavTflENKUnnORudhe06SKIAORlB9CnH
-         Cx16G7tK853/zB/Qd/0QOKSV8wMrpsbSud8scSVvyCanOOvv51+A7NrYQR0QqDPzQPVI
-         woAGcyn3hO+/gbi79MF/k8piQlH7Et86X0RttpkB31iMHjY1NcvmuOYXtiLKyBBC+KPl
-         7MJTTf0aXBnR2QrxJy2PJxv+uV85ym8i6WYFAEtGMeCi9XDIjE24ZMK7UDxVzc99yh2+
-         zHYw==
-X-Received: by 10.224.7.10 with SMTP id b10mr3396258qab.12.1386772717450; Wed,
- 11 Dec 2013 06:38:37 -0800 (PST)
-Received: by 10.229.144.195 with HTTP; Wed, 11 Dec 2013 06:38:37 -0800 (PST)
+	id S1751400Ab3LKPCB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Dec 2013 10:02:01 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:45244 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751350Ab3LKPCA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Dec 2013 10:02:00 -0500
+Received: from globule.imag.fr (globule.imag.fr [129.88.34.238])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id rBBF1lAa031980
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 11 Dec 2013 16:01:47 +0100
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	(authenticated bits=0)
+	by globule.imag.fr (8.13.8/8.13.8) with ESMTP id rBBF1mZa019500
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Wed, 11 Dec 2013 16:01:49 +0100
+In-Reply-To: <CAP9B-Q=ARp00Bj5zJ0J=3qv9R16YGu5AZgLpqoO0y+cY1at1Zw@mail.gmail.com>
+	(Shilong Wang's message of "Wed, 11 Dec 2013 22:38:37 +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 11 Dec 2013 16:01:48 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: rBBF1lAa031980
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1387378911.3227@0H30xolmgfeXl9gytnH16Q
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239202>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239203>
 
-I am not a developer for git, but i am a regular user with git, i came
-the following problem:
+Shilong Wang <wangshilong1991@gmail.com> writes:
 
-A power off cause my top commit broken, and then git
-branch/log/reflog..etc won't work.
-I do a hack that i change the HEAD commit to the one that i can make
-sure is right, and then
-i do:
+> A power off cause my top commit broken, and then git
+> branch/log/reflog..etc won't work.
 
-# git reset --hard HEAD
+With a bit of luck, the reflog actually contain useful information. Look
+at .git/logs/HEAD (or refs/heads/* instead of HEAD for branches'
+reflog). It's a human-readable text format. You should be able to walk
+up the history looking for a good commit.
 
-In fact, i hope git fsck can fix up such problems(maybe can backup top
-commit for example)...
-Someone has faced such problems or have some suggestion for this?
+> I do a hack that
 
-Thanks,
-Wang
+Before anything else: do a backup of your full repository while it's
+still time.
+
+> i change the HEAD commit to the one that i can make sure is right,
+
+(don't forget to run "git fsck" to make sure that not only the commit
+but also its ancestry is right).
+
+> In fact, i hope git fsck can fix up such problems(maybe can backup top
+> commit for example)...
+
+Not as far as I know. But "git fsck" has a --lost-found option that can
+help recovering unreachable (dangling) commits.
+
+You may have a look at http://hackage.haskell.org/package/git-repair but
+I do not think it would solve your particular case.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
