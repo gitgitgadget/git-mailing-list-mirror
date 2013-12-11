@@ -1,69 +1,79 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [Question] Git recovery with HEAD commit broken
-Date: Wed, 11 Dec 2013 11:12:07 -0800
-Message-ID: <20131211191207.GL2311@google.com>
-References: <CAP9B-Q=ARp00Bj5zJ0J=3qv9R16YGu5AZgLpqoO0y+cY1at1Zw@mail.gmail.com>
- <vpqzjo7whwj.fsf@anie.imag.fr>
- <20131211161407.GA15939@kitenet.net>
+Subject: Re: [PATCH 1/2] cat-file: pass expand_data to print_object_or_die
+Date: Wed, 11 Dec 2013 12:11:12 -0800
+Message-ID: <20131211201112.GM2311@google.com>
+References: <20131211115458.GA10561@sigill.intra.peff.net>
+ <20131211115642.GA10594@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Shilong Wang <wangshilong1991@gmail.com>, git@vger.kernel.org,
-	Wang Shilong <wangsl.fnst@cn.fujitsu.com>
-To: Joey Hess <joey@kitenet.net>
-X-From: git-owner@vger.kernel.org Wed Dec 11 20:12:24 2013
+Cc: Samuel Bronson <naesten@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Dec 11 21:11:24 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VqpCo-0005Gn-06
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Dec 2013 20:12:22 +0100
+	id 1Vqq7t-00078j-Nk
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Dec 2013 21:11:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751959Ab3LKTMP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Dec 2013 14:12:15 -0500
-Received: from mail-yh0-f51.google.com ([209.85.213.51]:57286 "EHLO
-	mail-yh0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751512Ab3LKTMM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Dec 2013 14:12:12 -0500
-Received: by mail-yh0-f51.google.com with SMTP id c41so5382557yho.38
-        for <git@vger.kernel.org>; Wed, 11 Dec 2013 11:12:12 -0800 (PST)
+	id S1751510Ab3LKULT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Dec 2013 15:11:19 -0500
+Received: from mail-yh0-f50.google.com ([209.85.213.50]:34091 "EHLO
+	mail-yh0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751222Ab3LKULR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Dec 2013 15:11:17 -0500
+Received: by mail-yh0-f50.google.com with SMTP id b6so5568076yha.37
+        for <git@vger.kernel.org>; Wed, 11 Dec 2013 12:11:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        bh=eX0ylwffzZr09FiPHXQQXLVAbAWfpopSRrTTMwAEQN8=;
-        b=Mv+cEJaOuEyJFq/yJASn8AsE+old7C7ehyW+ge+ARf/omrynGiSXog3fdcf/MOQX0h
-         SfpYUrQKLfd2uiO0UiahZ/NSjlN95dB//zgz1EnpxWU79cY4mR8Fp/KZwwF0TZI3M5OK
-         ALMheHHNqb5d21VYXZ0+uNPfjTZLYt89Vp4f8BHprAyDAduD9hCMmEsGI3C2ZUJZ+xRd
-         n2R21+TvZ355yBR6oEcbFIFzaMhS11I0bH64O9VIyJSSulZMihHYMRnto1LyCEQbIkGz
-         yriroFN1EyK5HLGQmViOkx44MaHXu6RDSH2EqgUiXD+YSIShtw/ftREI97b+yrFcynX8
-         NWmA==
-X-Received: by 10.236.62.194 with SMTP id y42mr2672658yhc.54.1386789131152;
-        Wed, 11 Dec 2013 11:12:11 -0800 (PST)
+        bh=eoIEGDOAeHNBn4qJTG3cg5AWwjQQv5oPJNAX0jHhVRA=;
+        b=u2CDMIGGpepIC9BIv9cEGOBgEaMqFMQ1nFtfu5x4qAUzT4H9UraikSNm/BgoY+bu3e
+         CWfITRMmrCFclGSCdxxLvkDwT3nX8hjmZHd5z9E671JIxblkfIQVQmAVmPP99yQ4wlEH
+         kDFmxzwYA8AGEzivlAOg92gzYHRfOKt3Uk/j8slHljmkUj5xX6DcQvBxojzM+XzMhakA
+         SrtZk0SgOuDNUe3Is0c3Y6PnwUYF65Zgaf7IthrfzpgSBIcf7iGjszOgStjZIM7ckcHY
+         7zADT+umZoSmb0reyAiy1nE70u1MrJtJPcEB2o687HvofAX4VTN7pJ61s2bzZnlV+8UF
+         yHZQ==
+X-Received: by 10.236.158.226 with SMTP id q62mr2909271yhk.2.1386792676074;
+        Wed, 11 Dec 2013 12:11:16 -0800 (PST)
 Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id 9sm29729698yhe.21.2013.12.11.11.12.09
+        by mx.google.com with ESMTPSA id o27sm30034949yhb.19.2013.12.11.12.11.14
         for <multiple recipients>
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 11 Dec 2013 11:12:10 -0800 (PST)
+        Wed, 11 Dec 2013 12:11:15 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <20131211161407.GA15939@kitenet.net>
+In-Reply-To: <20131211115642.GA10594@sigill.intra.peff.net>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239209>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239210>
 
-Joey Hess wrote:
+Hi,
 
-> [2] A particularly annoying one is that git branch -d cannot be used
->     to remove a branch that is directly pointing to a corrupted commit!
+Jeff King wrote:
 
-It's generally considered okay for everyday commands like "git branch -d"
-not to cope well with corrupted repositories, but we try to keep
-plumbing like "git update-ref -d" working to give people a way out.
-Is update-ref -d broken in this situation, too?
+>                                        However, if we pass
+> the whole struct, the called function can make more
+> intelligent decisions about which fields were actualled
+> filled by sha1_object_info.
 
-Curious,
-Jonathan
+Thanks.
+
+s/actualled/actually/, I think.
+
+At first I thought this patch was going to be about making those
+intelligent decisions.  Maybe s/the called function can/a future patch
+can teach the called function/ or something?
+
+[...]
+> There should be no functional change to this patch.
+
+The patch itself looks straightforward, yep. :)
+
+With the typofix mentioned above,
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
