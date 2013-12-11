@@ -1,7 +1,8 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v3 09/10] builtin/replace: unset read_replace_refs
-Date: Wed, 11 Dec 2013 08:46:12 +0100
-Message-ID: <20131211074614.11117.18678.chriscool@tuxfamily.org>
+Subject: [PATCH v3 07/10] builtin/replace: teach listing using short, medium
+ or full formats
+Date: Wed, 11 Dec 2013 08:46:10 +0100
+Message-ID: <20131211074614.11117.96106.chriscool@tuxfamily.org>
 References: <20131211074147.11117.1155.chriscool@tuxfamily.org>
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Joey Hess <joey@kitenet.net>,
@@ -13,73 +14,171 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VqeWf-0007xL-62
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Dec 2013 08:48:09 +0100
+	id 1VqeWg-0007xL-Ai
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Dec 2013 08:48:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751370Ab3LKHsC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Dec 2013 02:48:02 -0500
-Received: from [194.158.98.15] ([194.158.98.15]:58271 "EHLO mail-2y.bbox.fr"
+	id S1750779Ab3LKHsE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Dec 2013 02:48:04 -0500
+Received: from [194.158.98.45] ([194.158.98.45]:37589 "EHLO mail-3y.bbox.fr"
 	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751280Ab3LKHrv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Dec 2013 02:47:51 -0500
+	id S1751271Ab3LKHru (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Dec 2013 02:47:50 -0500
 Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-2y.bbox.fr (Postfix) with ESMTP id 38EA255;
-	Wed, 11 Dec 2013 08:47:30 +0100 (CET)
-X-git-sha1: b9a089528bff10e00c9cb766597b62e3ad11e40f 
+	by mail-3y.bbox.fr (Postfix) with ESMTP id 4865551;
+	Wed, 11 Dec 2013 08:47:29 +0100 (CET)
+X-git-sha1: f8370f9f5e8566d7c8d7b1c532fbf5ce38c05cd0 
 X-Mailer: git-mail-commits v0.5.2
 In-Reply-To: <20131211074147.11117.1155.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239177>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239178>
 
-When checking to see if some objects are of the same type
-and when displaying the type of objects, git replace uses
-the sha1_object_info() function.
+By default when listing replace refs, only the sha1 of the
+replaced objects are shown.
 
-Unfortunately this function by default respects replace
-refs, so instead of the type of a replaced object, it
-gives the type of the replacement object which might
-be different.
+In many cases, it is much nicer to be able to list all the
+sha1 of the replaced objects along with the sha1 of the
+replacment objects.
 
-To fix this bug, and because git replace should work at a
-level before replacement takes place, let's unset the
-read_replace_refs global variable at the beginning of
-cmd_replace().
+And in other cases it might be interesting to also show the
+types of the replaced and replacement objects.
 
-Suggested-by: Jeff King <peff@peff.net>
+This patch introduce a new --format=<fmt> option where
+<fmt> can be any of the following:
+
+	'short': this is the same as when no --format
+		option is used, that is only the sha1 of
+		the replaced objects are shown
+	'medium': this also lists the sha1 of the
+		replacement objects
+	'full': this shows the sha1 and the type of both
+		the replaced and the replacement objects
+
+Some documentation and some tests will follow.
+
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/replace.c  | 2 ++
- t/t6050-replace.sh | 2 +-
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ builtin/replace.c | 61 ++++++++++++++++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 54 insertions(+), 7 deletions(-)
 
 diff --git a/builtin/replace.c b/builtin/replace.c
-index 9f3619a..1672870 100644
+index b1bd3ef..9f3619a 100644
 --- a/builtin/replace.c
 +++ b/builtin/replace.c
-@@ -174,6 +174,8 @@ int cmd_replace(int argc, const char **argv, const char *prefix)
+@@ -16,27 +16,65 @@
+ static const char * const git_replace_usage[] = {
+ 	N_("git replace [-f] <object> <replacement>"),
+ 	N_("git replace -d <object>..."),
+-	N_("git replace -l [<pattern>]"),
++	N_("git replace [--format=<format>] [-l [<pattern>]]"),
+ 	NULL
+ };
+ 
++enum repl_fmt { SHORT, MEDIUM, FULL };
++
++struct show_data {
++	const char *pattern;
++	enum repl_fmt fmt;
++};
++
+ static int show_reference(const char *refname, const unsigned char *sha1,
+ 			  int flag, void *cb_data)
+ {
+-	const char *pattern = cb_data;
++	struct show_data *data = cb_data;
++
++	if (!fnmatch(data->pattern, refname, 0)) {
++		if (data->fmt == SHORT)
++			printf("%s\n", refname);
++		else if (data->fmt == MEDIUM)
++			printf("%s -> %s\n", refname, sha1_to_hex(sha1));
++		else { /* data->fmt == FULL */
++			unsigned char object[20];
++			enum object_type obj_type, repl_type;
+ 
+-	if (!fnmatch(pattern, refname, 0))
+-		printf("%s\n", refname);
++			if (get_sha1(refname, object))
++				return error("Failed to resolve '%s' as a valid ref.", refname);
++
++			obj_type = sha1_object_info(object, NULL);
++			repl_type = sha1_object_info(sha1, NULL);
++
++			printf("%s (%s) -> %s (%s)\n", refname, typename(obj_type),
++			       sha1_to_hex(sha1), typename(repl_type));
++		}
++	}
+ 
+ 	return 0;
+ }
+ 
+-static int list_replace_refs(const char *pattern)
++static int list_replace_refs(const char *pattern, const char *format)
+ {
++	struct show_data data;
++
+ 	if (pattern == NULL)
+ 		pattern = "*";
++	data.pattern = pattern;
++
++	if (format == NULL || *format == '\0' || !strcmp(format, "short"))
++		data.fmt = SHORT;
++	else if (!strcmp(format, "medium"))
++		data.fmt = MEDIUM;
++	else if (!strcmp(format, "full"))
++		data.fmt = FULL;
++	else
++		die("invalid replace format '%s'\n"
++		    "valid formats are 'short', 'medium' and 'full'\n",
++		    format);
+ 
+-	for_each_replace_ref(show_reference, (void *) pattern);
++	for_each_replace_ref(show_reference, (void *) &data);
+ 
+ 	return 0;
+ }
+@@ -127,10 +165,12 @@ static int replace_object(const char *object_ref, const char *replace_ref,
+ int cmd_replace(int argc, const char **argv, const char *prefix)
+ {
+ 	int list = 0, delete = 0, force = 0;
++	const char *format = NULL;
+ 	struct option options[] = {
+ 		OPT_BOOL('l', "list", &list, N_("list replace refs")),
+ 		OPT_BOOL('d', "delete", &delete, N_("delete replace refs")),
+ 		OPT_BOOL('f', "force", &force, N_("replace the ref if it exists")),
++		OPT_STRING(0, "format", &format, N_("format"), N_("use this format")),
  		OPT_END()
  	};
  
-+	read_replace_refs = 0;
+@@ -140,6 +180,10 @@ int cmd_replace(int argc, const char **argv, const char *prefix)
+ 		usage_msg_opt("-l and -d cannot be used together",
+ 			      git_replace_usage, options);
+ 
++	if (format && delete)
++		usage_msg_opt("--format and -d cannot be used together",
++			      git_replace_usage, options);
 +
- 	argc = parse_options(argc, argv, prefix, options, git_replace_usage, 0);
+ 	if (force && (list || delete))
+ 		usage_msg_opt("-f cannot be used with -d or -l",
+ 			      git_replace_usage, options);
+@@ -157,6 +201,9 @@ int cmd_replace(int argc, const char **argv, const char *prefix)
+ 		if (argc != 2)
+ 			usage_msg_opt("bad number of arguments",
+ 				      git_replace_usage, options);
++		if (format)
++			usage_msg_opt("--format cannot be used when not listing",
++				      git_replace_usage, options);
+ 		return replace_object(argv[0], argv[1], force);
+ 	}
  
- 	if (list && delete)
-diff --git a/t/t6050-replace.sh b/t/t6050-replace.sh
-index e1cc3b8..d0c62f7 100755
---- a/t/t6050-replace.sh
-+++ b/t/t6050-replace.sh
-@@ -306,7 +306,7 @@ test_expect_success 'test --format medium' '
- 	test_cmp expected actual
- '
+@@ -168,5 +215,5 @@ int cmd_replace(int argc, const char **argv, const char *prefix)
+ 		usage_msg_opt("-f needs some arguments",
+ 			      git_replace_usage, options);
  
--test_expect_failure 'test --format full' '
-+test_expect_success 'test --format full' '
- 	{
- 		echo "$H1 (commit) -> $BLOB (blob)" &&
- 		echo "$BLOB (blob) -> $REPLACED (blob)" &&
+-	return list_replace_refs(argv[0]);
++	return list_replace_refs(argv[0], format);
+ }
 -- 
 1.8.5.1.102.g090758b
