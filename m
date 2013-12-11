@@ -1,136 +1,89 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 2/2] cat-file: handle --batch format with missing type/size
-Date: Wed, 11 Dec 2013 19:58:45 +0800
-Message-ID: <20131211115844.GB10594@sigill.intra.peff.net>
-References: <20131211115458.GA10561@sigill.intra.peff.net>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH/POC 0/7] Support multiple worktrees
+Date: Wed, 11 Dec 2013 21:15:26 +0700
+Message-ID: <1386771333-32574-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Samuel Bronson <naesten@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 11 12:58:56 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jonathan Niedier <jrnieder@gmail.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 11 15:10:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VqiRL-0005li-PK
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Dec 2013 12:58:56 +0100
+	id 1VqkV2-0007LN-KF
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Dec 2013 15:10:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751702Ab3LKL6w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Dec 2013 06:58:52 -0500
-Received: from cloud.peff.net ([50.56.180.127]:34812 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751546Ab3LKL6v (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Dec 2013 06:58:51 -0500
-Received: (qmail 11150 invoked by uid 102); 11 Dec 2013 11:58:52 -0000
-Received: from Unknown (HELO sigill.intra.peff.net) (123.127.199.235)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 11 Dec 2013 05:58:52 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 11 Dec 2013 19:58:45 +0800
-Content-Disposition: inline
-In-Reply-To: <20131211115458.GA10561@sigill.intra.peff.net>
+	id S1751932Ab3LKOKs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Dec 2013 09:10:48 -0500
+Received: from mail-pd0-f179.google.com ([209.85.192.179]:45994 "EHLO
+	mail-pd0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751350Ab3LKOKr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Dec 2013 09:10:47 -0500
+Received: by mail-pd0-f179.google.com with SMTP id r10so9546065pdi.24
+        for <git@vger.kernel.org>; Wed, 11 Dec 2013 06:10:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:mime-version:content-type
+         :content-transfer-encoding;
+        bh=9ux58qOk18jJsF1q4CFSRlyYLoltyntI4ALZpLJ4pdk=;
+        b=SDaK0xTwGuD81d6yPXS4bRBgsszrCOdP1Im/ygGuAze7rkav80QdbkbMasW061k7Y8
+         F8tfdr0KZN5R+9b8VwIgEZaNCSuj/qpZX3CYeKUlnQeHkJYwQPEzV1E5tS/EE/TJv74c
+         OIDAn8Euesno/6BDIdcn0olhjqMgZq/D5o5ZPQQsALSsplBKHGP5Ln+jDWNmeevDOOqr
+         9olhQDRrWiyLkZurGee1f/bynrUye0had/BqupQNtdSxYdSc6QDAaSAYvUIVOpxAV8vz
+         YOmjH63PuVFwEsUp374ZXgMhYlgI7tVs+y5QtALHddDlxVEUShHdLjHVZkMNq7JfNrS5
+         hxbg==
+X-Received: by 10.66.221.199 with SMTP id qg7mr1892831pac.13.1386771045785;
+        Wed, 11 Dec 2013 06:10:45 -0800 (PST)
+Received: from lanh ([115.73.201.231])
+        by mx.google.com with ESMTPSA id g6sm45377030pat.2.2013.12.11.06.10.42
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 11 Dec 2013 06:10:44 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Wed, 11 Dec 2013 21:15:35 +0700
+X-Mailer: git-send-email 1.8.5.1.77.g42c48fa
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239193>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239194>
 
-Commit 98e2092 taught cat-file to stream blobs with --batch,
-which requires that we look up the object type before
-loading it into memory.  As a result, we now print the
-object header from information in sha1_object_info, and the
-actual contents from the read_sha1_file. We double-check
-that the information we printed in the header matches the
-content we are about to show.
+This is what I imagine multi worktree support (aka git-new-workdir)
+looks like. Basically two variables will control access to the repo:
+$GIT_SUPER_DIR for worktree specific stuff and $GIT_DIR for the rest.
 
-Later, commit 93d2a60 allowed custom header lines for
---batch, and commit 5b08640 made type lookups optional. As a
-result, specifying a header line without the type or size
-means that we will not look up those items at all.
+I like the idea of using git_path() to hide path relocation caused by
+GIT_SUPER_DIR, but I may have made some design mistakes here..
+setup_git_directory() changes are hairy. It's not surprise if I broke
+something in there. Not important for a PoC though.
 
-This causes our double-checking to erroneously die with an
-error; we think the type or size has changed, when in fact
-it was simply left at "0".
+=46inal series may be a few patches longer as I only lay the foundation
+in this series.
 
-For the size, we can fix this by only doing the consistency
-double-check when we have retrieved the size via
-sha1_object_info. In the case that we have not retrieved the
-value, that means we also did not print it, so there is
-nothing for us to check that we are consistent with.
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (7):
+  Make git_path() beware of file relocation in $GIT_DIR
+  Add new environment variable $GIT_SUPER_DIR
+  setup.c: add split-repo support to .git files
+  setup.c: add split-repo support to is_git_directory()
+  setup.c: reduce cleanup sites in setup_explicit_git_dir()
+  setup.c: add split-repo support to setup_git_directory*
+  init: add --split-repo with the same functionality as git-new-workdir
 
-We could do the same for the type. However, besides our
-consistency check, we also care about the type in deciding
-whether to stream or not. We therefore make sure to always
-trigger a type lookup when we are printing, so that even a
-format without the type will stream as we would in the
-normal case.
+ builtin/init-db.c     |  42 +++++++++++++++
+ cache.h               |   5 ++
+ environment.c         |  37 ++++++++++++--
+ path.c                |  45 ++++++++++++++--
+ setup.c               | 139 ++++++++++++++++++++++++++++++++++--------=
+--------
+ t/t0060-path-utils.sh | 115 +++++++++++++++++++++++++++++++++++++++++
+ test-path-utils.c     |   7 +++
+ trace.c               |   1 +
+ 8 files changed, 339 insertions(+), 52 deletions(-)
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- builtin/cat-file.c  |  9 ++++++++-
- t/t1006-cat-file.sh | 22 ++++++++++++++++++++++
- 2 files changed, 30 insertions(+), 1 deletion(-)
-
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index 1434afb..4af67fd 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -211,7 +211,7 @@ static void print_object_or_die(int fd, struct expand_data *data)
- 			die("object %s disappeared", sha1_to_hex(sha1));
- 		if (type != data->type)
- 			die("object %s changed type!?", sha1_to_hex(sha1));
--		if (size != data->size)
-+		if (data->info.sizep && size != data->size)
- 			die("object %s changed size!?", sha1_to_hex(sha1));
- 
- 		write_or_die(fd, contents, size);
-@@ -276,6 +276,13 @@ static int batch_objects(struct batch_options *opt)
- 	data.mark_query = 0;
- 
- 	/*
-+	 * If we are printing out the object, then always fill in the type,
-+	 * since we will want to decide whether or not to stream.
-+	 */
-+	if (opt->print_contents)
-+		data.info.typep = &data.type;
-+
-+	/*
- 	 * We are going to call get_sha1 on a potentially very large number of
- 	 * objects. In most large cases, these will be actual object sha1s. The
- 	 * cost to double-check that each one is not also a ref (just so we can
-diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
-index 8a1bc5c..1687098 100755
---- a/t/t1006-cat-file.sh
-+++ b/t/t1006-cat-file.sh
-@@ -85,6 +85,28 @@ $content"
- 		git cat-file --batch-check="%(objecttype) %(rest)" >actual &&
- 	test_cmp expect actual
-     '
-+
-+    test -z "$content" ||
-+    test_expect_success "--batch without type ($type)" '
-+	{
-+		echo "$size" &&
-+		maybe_remove_timestamp "$content" $no_ts
-+	} >expect &&
-+	echo $sha1 | git cat-file --batch="%(objectsize)" >actual.full &&
-+	maybe_remove_timestamp "$(cat actual.full)" $no_ts >actual &&
-+	test_cmp expect actual
-+    '
-+
-+    test -z "$content" ||
-+    test_expect_success "--batch without size ($type)" '
-+	{
-+		echo "$type" &&
-+		maybe_remove_timestamp "$content" $no_ts
-+	} >expect &&
-+	echo $sha1 | git cat-file --batch="%(objecttype)" >actual.full &&
-+	maybe_remove_timestamp "$(cat actual.full)" $no_ts >actual &&
-+	test_cmp expect actual
-+    '
- }
- 
- hello_content="Hello World"
--- 
-1.8.5.524.g6743da6
+--=20
+1.8.5.1.77.g42c48fa
