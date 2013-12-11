@@ -1,75 +1,71 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [BUG] "echo HEAD | git cat-file --batch=''" fails
- catastrophically
-Date: Wed, 11 Dec 2013 19:54:58 +0800
-Message-ID: <20131211115458.GA10561@sigill.intra.peff.net>
-References: <CAJYzjmdHdLZaBijahepOQDJtDd_TdojT4ivNxGrcerRfEuHQEg@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Samuel Bronson <naesten@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 11 12:55:22 2013
+From: Krzesimir Nowak <krzesimir@endocode.com>
+Subject: [PATCH v7 0/4] Show extra branch refs in gitweb
+Date: Wed, 11 Dec 2013 12:54:40 +0100
+Message-ID: <1386762884-7564-1-git-send-email-krzesimir@endocode.com>
+Cc: gitster@pobox.com, jnareb@gmail.com, sunshine@sunshineco.com,
+	Krzesimir Nowak <krzesimir@endocode.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 11 12:55:28 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VqiNt-00031g-Ly
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Dec 2013 12:55:22 +0100
+	id 1VqiNz-00037Y-6f
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Dec 2013 12:55:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751674Ab3LKLzR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Dec 2013 06:55:17 -0500
-Received: from cloud.peff.net ([50.56.180.127]:34794 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751345Ab3LKLzQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Dec 2013 06:55:16 -0500
-Received: (qmail 10829 invoked by uid 102); 11 Dec 2013 11:55:16 -0000
-Received: from Unknown (HELO sigill.intra.peff.net) (123.127.199.235)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 11 Dec 2013 05:55:16 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 11 Dec 2013 19:54:58 +0800
-Content-Disposition: inline
-In-Reply-To: <CAJYzjmdHdLZaBijahepOQDJtDd_TdojT4ivNxGrcerRfEuHQEg@mail.gmail.com>
+	id S1751892Ab3LKLzX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Dec 2013 06:55:23 -0500
+Received: from mail-ea0-f169.google.com ([209.85.215.169]:35401 "EHLO
+	mail-ea0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751773Ab3LKLzV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Dec 2013 06:55:21 -0500
+Received: by mail-ea0-f169.google.com with SMTP id l9so2746346eaj.28
+        for <git@vger.kernel.org>; Wed, 11 Dec 2013 03:55:19 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=GXaEIKVwTKukFjLSHdcRC79Ba5Jbvm6J9Kpr722uNh8=;
+        b=YB6ZgdzVTYtrN20BNl7wCTriCe365LElTrKeBmX1j8bbqhHd0uD42Rrh6MihRas+Cq
+         wbIuZ+VYwT85isdhHe3jmrPjUSae7EhGxIFmhJ4ZD9Wo2gotm4D7C1g2t27KdOqFJJe7
+         QJqkEmzRqGmvmHXlBKpvWHLnsv8NrCCkyf7pD0H436/U2qBoGDjv9JYyHLHT/bhjuNvi
+         jyuQWhzmwFAC9FHjsVd/Njm+Z5JFD/6LITtR3bhlVNU3t0vl1Du2ezA6bHBus7A0/Pb6
+         rt8xBC3x3MbfvNDl8lb2elHrnJLbyceFhP8rhH4l4hafDJY9O1dziVGqyYCjiQYsaTLM
+         ViuA==
+X-Gm-Message-State: ALoCoQkLJOnITt1ER2Xddan1dmhq3aEORwI6mHhowRDbwXPixuhAdkpCWA162pa8VLvxDLg3Lusb
+X-Received: by 10.14.211.130 with SMTP id w2mr1228449eeo.111.1386762919000;
+        Wed, 11 Dec 2013 03:55:19 -0800 (PST)
+Received: from localhost.home (95-91-241-58-dynip.superkabel.de. [95.91.241.58])
+        by mx.google.com with ESMTPSA id z42sm52742677eeo.17.2013.12.11.03.55.17
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 11 Dec 2013 03:55:18 -0800 (PST)
+X-Mailer: git-send-email 1.8.3.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239186>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239187>
 
-On Tue, Dec 10, 2013 at 11:37:14PM -0500, Samuel Bronson wrote:
+First patch splits some code to a function.
 
-> % echo HEAD | git cat-file --batch=
-> 
-> fatal: object fde075cb72fc0773d8e8ca93d55a35d77bb6688b changed type!?
-> 
-> Without the =, it works fine; with a string that has both
-> "%(objecttype)" and "%(objectsize)", it's fine; but when you don't
-> include both, it complains about one of the values that you did not
-> mention having changed.
-> 
-> jrnieder fingered v1.8.4-rc0~7^2~15 as the (likely?) culprit here.
+Second patch fixes validation functions to return either 0 or 1,
+instead of undef or passed $input.
 
-It's not actually that commit itself, but rather that commit in
-conjunction with further optimizations in that patch series.
+Third patch adds the extra-branch-feature and some documentation.
 
-The rest of the series tries hard to avoid looking up items that we
-aren't going to print, for --batch-check. But I didn't think about the
-fact that "--batch" got the same custom-header feature, but was relying
-on the values from the default header to do its consistency checks.
+Fourth patch adds some visual differentation of branches from
+non-standard ref directories.
 
-The following patches should fix it.
+Krzesimir Nowak (4):
+  gitweb: Move check-ref-format code into separate function
+  gitweb: Return 1 on validation success instead of passed input
+  gitweb: Add a feature for adding more branch refs
+  gitweb: Denote non-heads, non-remotes branches
 
-  [1/2]: cat-file: pass expand_data to print_object_or_die
-  [2/2]: cat-file: handle --batch format with missing type/size
+ Documentation/gitweb.conf.txt |  37 +++++++++
+ gitweb/gitweb.perl            | 184 +++++++++++++++++++++++++++++++-----------
+ 2 files changed, 175 insertions(+), 46 deletions(-)
 
-Doing "--batch=" is somewhat pointless. If you do not get the size, you
-cannot know when the object content ends, so it only makes sense with a
-single object. At which point using --batch is pointless. Doing
-"--batch=%(objectsize)" is reasonable, though, and that is broken, too.
-
-v1.8.4 has the breakage, though it's not a regression (doing
-"--batch=anything" did not exist before that). This can probably just go
-to the regular "maint" track for v1.8.5).
-
--Peff
+-- 
+1.8.3.1
