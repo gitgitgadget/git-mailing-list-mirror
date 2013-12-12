@@ -1,73 +1,95 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: git-submodule.sh respects submodule.$name.update in .git/config
- but not .gitmodules
-Date: Thu, 12 Dec 2013 19:57:51 +0100
-Message-ID: <52AA072F.2000105@web.de>
-References: <CABYr9QtSeX=Euf73MZPq6suo+GpVA=f+tH73Ct0tP-3LYogh9w@mail.gmail.com>	<20131209223506.GF9606@sandbox-ub>	<xmqqlhztvbi8.fsf@gitster.dls.corp.google.com> <52A8E689.80701@web.de>	<20131211224424.GB25409@odin.tremily.us> <7vtxeeuaw7.fsf@alter.siamese.dyndns.org>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: I have end-of-lifed cvsps
+Date: Thu, 12 Dec 2013 14:08:33 -0500
+Message-ID: <CACPiFCJ22xiedXAoQktMLd=gASgD0NS24Pya9TvCo9aQP5JaBQ@mail.gmail.com>
+References: <20131212001738.996EB38055C@snark.thyrsus.com> <CACPiFCK+Z7dOfO2v29PMKz+Y_fH1++xqMuTquSQ84d8KyjjFeQ@mail.gmail.com>
+ <20131212042624.GB8909@thyrsus.com> <CACPiFC+bopf32cgDcQcVpL5vW=3KxmSP8Oh1see4KduQ1BNcPw@mail.gmail.com>
+ <20131212171756.GA6954@inner.h.apk.li> <20131212182932.GB16960@thyrsus.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Heiko Voigt <hvoigt@hvoigt.net>,
-	Charlie Dyson <charlie@charliedyson.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>,
-	"W. Trevor King" <wking@tremily.us>
-X-From: git-owner@vger.kernel.org Thu Dec 12 19:58:02 2013
+Cc: Andreas Krey <a.krey@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Eric Raymond <esr@thyrsus.com>
+X-From: git-owner@vger.kernel.org Thu Dec 12 20:09:12 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VrBSS-0003D6-7O
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Dec 2013 19:58:00 +0100
+	id 1VrBd7-0003bq-Nv
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Dec 2013 20:09:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751907Ab3LLS54 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Dec 2013 13:57:56 -0500
-Received: from mout.web.de ([212.227.15.3]:51298 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751774Ab3LLS54 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Dec 2013 13:57:56 -0500
-Received: from [192.168.178.41] ([84.132.160.5]) by smtp.web.de (mrweb102)
- with ESMTPA (Nemesis) id 0M9XQB-1Vh2q63d2l-00D1lA for <git@vger.kernel.org>;
- Thu, 12 Dec 2013 19:57:54 +0100
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.2.0
-In-Reply-To: <7vtxeeuaw7.fsf@alter.siamese.dyndns.org>
-X-Enigmail-Version: 1.6
-X-Provags-ID: V03:K0:bvtXBDA7vcFh2J/sk3CTo3rH9lFpi0JvQyg8JzhRIzCv2voO1eS
- ZXdDmNpju+qzv4TDqQtSUgcWciS8FP3w03KNp5DbBtb/Tzk2VL9sOkc0blqJv8qipykb+HA
- 0A6bo5M61CYGb0Gs2ERKG379SCD1J0r3n7K59uIzOu7IJJoroxaM3YMLWQtrHg0XqzJJ+yQ
- iWILpyAF5JLXftgoXGEAg==
+	id S1752502Ab3LLTI5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Dec 2013 14:08:57 -0500
+Received: from mail-vb0-f50.google.com ([209.85.212.50]:46782 "EHLO
+	mail-vb0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752462Ab3LLTIz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Dec 2013 14:08:55 -0500
+Received: by mail-vb0-f50.google.com with SMTP id w18so603539vbj.37
+        for <git@vger.kernel.org>; Thu, 12 Dec 2013 11:08:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=UjwtIvvZr6qNQbDKjaCsQAk1cnU/L6Iw5NFIJ398hck=;
+        b=ZWvTzS/sRc4Pl89yR79Noj/E9bfMzg+jpBwB24KyN1jy9hI1IdG5fKO8XZZbseVc/S
+         lpQr6jmacDK7yIzW50r1OEuU1EbkNjuf6lhXLsXLUMcoWpVC6HTBer7kjQJIJElKg+Li
+         5rh7WVaaoWtauhw4uUDiwC1bx57/h3Unr63smSUXTXmbPYNqIQqZgTO7+ZBfjSbYFgRF
+         eqb93r9YHXdv/pbLAknUycLvVe1u6WexwfIs1PqIczvyrCsNpN+Ug6pJiyj1iTt0jt85
+         Odye4W94Hj8RvchF01MY39fd5LFrbTicyTzu0LMRfDm26LA+PZpU3mT8mOk7ksMFcQwD
+         26Dw==
+X-Received: by 10.58.11.73 with SMTP id o9mr4644868veb.8.1386875334328; Thu,
+ 12 Dec 2013 11:08:54 -0800 (PST)
+Received: by 10.220.74.133 with HTTP; Thu, 12 Dec 2013 11:08:33 -0800 (PST)
+In-Reply-To: <20131212182932.GB16960@thyrsus.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239236>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239237>
 
-Am 12.12.2013 02:16, schrieb Junio C Hamano:
-> "W. Trevor King" <wking@tremily.us> writes:
-> 
->> For
->> safety, maybe the default `init` should copy *everything* into
->> .git/config, after which users can remove stuff they'd like to
->> delegate to .gitmodules.
-> 
-> Copying everything into config is "be unsafe and inconvenient by
-> default for everybody", isn't it?  Folks who want safety are forced
-> to inspect the resulting entries in their config file (which is more
-> inconvenent if you compare with the design where nothing is copied
-> and nothing dynamically defaults to what then-current .gitmodules
-> happens to contain).  Folks who trust those who update .gitmodules
-> for them are forced to update their config every time upstream
-> decides to use different settings in .gitmodules, because they have
-> stale values in their config that mask what are in .gitmodules.
-> 
-> I think the solution we want is to copy only minimum to the config
-> (and that "minimum" may turn out to be "nothing"), and to default
-> keys that are only absolutely safe to .gitmodules file.
+On Thu, Dec 12, 2013 at 1:29 PM, Eric S. Raymond <esr@thyrsus.com> wrote:
+> I am almost certain the output of cvs-fast-export is stable.  I
+> believe the output of cvsps-3.x was, too.  Not sure about 2.x.
 
-I agree and will prepare a patch for that.
+IIRC, making the output stable is nontrivial, specially on branches.
+Two cases are still in my mind, from when I was wrestling with cvsps.
 
-What about teaching "git submodule sync" the "--url", "--update",
-"--fetch", "--ignore", "--branch" and "--all" options to allow the
-user to copy the current settings he wants from .gitmodules to
-.git/config (but only safe values of course)? Trevor, would you be
-ok to issue another command to copy everything to .git/config?
+1 - For a history with CVS HEAD and a long-running "stable release"
+branch ("STABLE"), which branched at P1...
+
+   a - adding a file only at the tip of STABLE "retroactively changes
+history"  for P1 and perhaps CVS HEAD
+
+   b - forgetting to properly tag a subset of files with the branch
+tag, and doing it later retroactively changes history
+
+2 - you can create a new branch or tag with files that do not belong
+together in any "commit". Doing so changes history retroactively
+
+... when I say "changes history", I mean that the importers I know
+revise their guesses of what files were seen together in a 'commit'.
+This is specially true for history recorded with early cvs versions
+that did not record a 'commit id'.
+
+cvsps has the strange "feature" that it will cache its
+assumptions/guesses, and continue incrementally from there. So if a
+change in the CVS repo means that the old guess is now invalidated, it
+continues the charade instead of forcing a complete rewrite of the git
+history.
+
+Maybe the current crop of tools have developed stronger magic than
+what was available a few years ago... the task did seem impossible to
+me.
+
+cheers,
+
+
+
+
+m
+-- 
+ martin.langhoff@gmail.com
+ -  ask interesting questions
+ - don't get distracted with shiny stuff  - working code first
+ ~ http://docs.moodle.org/en/User:Martin_Langhoff
