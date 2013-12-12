@@ -1,55 +1,56 @@
-From: Adam Spiers <git@adamspiers.org>
-Subject: Re: Subtree: My Status
-Date: Thu, 12 Dec 2013 18:24:39 +0000
-Message-ID: <20131212182439.GM18340@gmail.com>
-References: <87d2tp9j7b.fsf@waller.obbligato.org>
- <567618909.1800335.1366615126779.JavaMail.root@openwide.fr>
+From: "Eric S. Raymond" <esr@thyrsus.com>
+Subject: Re: I have end-of-lifed cvsps
+Date: Thu, 12 Dec 2013 13:35:33 -0500
+Organization: Eric Conspiracy Secret Labs
+Message-ID: <20131212183533.GC16960@thyrsus.com>
+References: <20131212001738.996EB38055C@snark.thyrsus.com>
+ <CACPiFCK+Z7dOfO2v29PMKz+Y_fH1++xqMuTquSQ84d8KyjjFeQ@mail.gmail.com>
+ <20131212042624.GB8909@thyrsus.com>
+ <CACPiFC+bopf32cgDcQcVpL5vW=3KxmSP8Oh1see4KduQ1BNcPw@mail.gmail.com>
+ <20131212171756.GA6954@inner.h.apk.li>
+ <CACPiFC+CAhh1S6Wt0bO2pDrXWgBW7AEFahGJjq0W7rG9LfTb8A@mail.gmail.com>
+Reply-To: esr@thyrsus.com
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: David Greene <greened@obbligato.org>, git@vger.kernel.org
-To: Jeremy Rosen <jeremy.rosen@openwide.fr>
-X-From: git-owner@vger.kernel.org Thu Dec 12 19:30:55 2013
+Cc: Andreas Krey <a.krey@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Martin Langhoff <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 12 19:35:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VrB2E-0006eq-63
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Dec 2013 19:30:54 +0100
+	id 1VrB6o-00021Z-Ha
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Dec 2013 19:35:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751798Ab3LLSau (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Dec 2013 13:30:50 -0500
-Received: from coral.adamspiers.org ([85.119.82.20]:54479 "EHLO
-	coral.adamspiers.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751171Ab3LLSat (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Dec 2013 13:30:49 -0500
-X-Greylist: delayed 368 seconds by postgrey-1.27 at vger.kernel.org; Thu, 12 Dec 2013 13:30:49 EST
-Received: from localhost (243.103.2.81.in-addr.arpa [81.2.103.243])
-	by coral.adamspiers.org (Postfix) with ESMTPSA id 44FD22E317;
-	Thu, 12 Dec 2013 18:24:40 +0000 (GMT)
+	id S1751709Ab3LLSfe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Dec 2013 13:35:34 -0500
+Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:41006
+	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751092Ab3LLSfe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Dec 2013 13:35:34 -0500
+Received: by snark.thyrsus.com (Postfix, from userid 1000)
+	id 7AF1C380445; Thu, 12 Dec 2013 13:35:33 -0500 (EST)
 Content-Disposition: inline
-In-Reply-To: <567618909.1800335.1366615126779.JavaMail.root@openwide.fr>
-X-OS: GNU/Linux
+In-Reply-To: <CACPiFC+CAhh1S6Wt0bO2pDrXWgBW7AEFahGJjq0W7rG9LfTb8A@mail.gmail.com>
+X-Eric-Conspiracy: There is no conspiracy
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239233>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239234>
 
-On Mon, Apr 22, 2013 at 09:18:46AM +0200, Jeremy Rosen wrote:
-> David Green wrote:
-> > Please remember that I don't consider myself a gatekeeper to git
-> > subtree.  In fact I could use some help reviewing and approving
-> > patches.
-> > If anyone thinks a patch looks good, let Junio know.  It's my
-> > responsibility to object to things, not your responsibility to wait
-> > for
-> 
-> I guess it's more or less everybody's responsability to review patches, but
-> it seems to me that for the actual gate-keeping, Junio considers you 
-> in charge of git-subtree... Maybe there is an organisational quirk to sort-
-> out here... Junio ?
+Martin Langhoff <martin.langhoff@gmail.com>:
+> In my prior work, the "better" CVS importers would not have stable
+> output, so were not appropriate for incremental imports.
 
-I can't see any resolution to this in the mail archives.  What's the
-process for getting subtree patches accepted?
+That is disturbing.  I would consider lack of stability a severe and
+unacceptable failure mode in such a tool, if only because of the
+difficulties it creates for proper regression testing.
+
+If cvs-fast-export does not already have this property I will fix it 
+so it does.  And document that fact.
+-- 
+		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
