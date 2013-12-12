@@ -1,83 +1,108 @@
-From: "Eric S. Raymond" <esr@thyrsus.com>
-Subject: Re: I have end-of-lifed cvsps
-Date: Wed, 11 Dec 2013 23:26:24 -0500
-Organization: Eric Conspiracy Secret Labs
-Message-ID: <20131212042624.GB8909@thyrsus.com>
-References: <20131212001738.996EB38055C@snark.thyrsus.com>
- <CACPiFCK+Z7dOfO2v29PMKz+Y_fH1++xqMuTquSQ84d8KyjjFeQ@mail.gmail.com>
-Reply-To: esr@thyrsus.com
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: Re: [RFC/WIP PATCH] implement reading of submodule .gitmodules
+ configuration into cache
+Date: Thu, 12 Dec 2013 14:03:07 +0100
+Message-ID: <20131212130307.GA6183@t2784.greatnet.de>
+References: <2E636B58-47EB-4712-93CA-39E8D1BA3DB9@mac.com>
+ <5294BB97.7010707@web.de>
+ <xmqqmwkqvmck.fsf@gitster.dls.corp.google.com>
+ <9AB10474-6DEF-4FFD-B6B3-ED2AB21424AC@mac.com>
+ <xmqqzjopsk9b.fsf@gitster.dls.corp.google.com>
+ <20131129223845.GA31636@sandbox-ub>
+ <3C71BC83-4DD0-43F8-9E36-88594CA63FC5@mac.com>
+ <20131203183301.GB4629@sandbox-ub>
+ <20131209205501.GC9606@sandbox-ub>
+ <xmqqppp5vbn5.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Martin Langhoff <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 12 05:26:32 2013
+Cc: Nick Townsend <nick.townsend@mac.com>,
+	=?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>,
+	Jens Lehmann <Jens.Lehmann@web.de>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Dec 12 14:03:37 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vqxr6-0004wr-3U
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Dec 2013 05:26:32 +0100
+	id 1Vr5vV-0001oH-1m
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Dec 2013 14:03:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751438Ab3LLE00 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Dec 2013 23:26:26 -0500
-Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:34955
-	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751086Ab3LLE0Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Dec 2013 23:26:25 -0500
-Received: by snark.thyrsus.com (Postfix, from userid 1000)
-	id 9C2973805F8; Wed, 11 Dec 2013 23:26:24 -0500 (EST)
+	id S1751506Ab3LLNDd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Dec 2013 08:03:33 -0500
+Received: from smtprelay04.ispgateway.de ([80.67.31.42]:48884 "EHLO
+	smtprelay04.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751429Ab3LLNDc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Dec 2013 08:03:32 -0500
+Received: from [83.133.105.219] (helo=t2784.greatnet.de)
+	by smtprelay04.ispgateway.de with esmtpsa (TLSv1:AES128-SHA:128)
+	(Exim 4.68)
+	(envelope-from <hvoigt@hvoigt.net>)
+	id 1Vr5v6-0003pO-Fh; Thu, 12 Dec 2013 14:03:12 +0100
 Content-Disposition: inline
-In-Reply-To: <CACPiFCK+Z7dOfO2v29PMKz+Y_fH1++xqMuTquSQ84d8KyjjFeQ@mail.gmail.com>
-X-Eric-Conspiracy: There is no conspiracy
+In-Reply-To: <xmqqppp5vbn5.fsf@gitster.dls.corp.google.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239225>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239226>
 
-Martin Langhoff <martin.langhoff@gmail.com>:
-> On Wed, Dec 11, 2013 at 7:17 PM, Eric S. Raymond <esr@thyrsus.com> wrote:
-> > I tried very hard to salvage this program - the ability to
-> > remote-fetch CVS repos without rsync access was appealing
+On Mon, Dec 09, 2013 at 03:37:50PM -0800, Junio C Hamano wrote:
+> > +void submodule_config_cache_free(struct submodule_config_cache *cache)
+> > +{
+> > +	/* NOTE: its important to iterate over the name hash here
+> > +	 * since paths might have multiple entries */
 > 
-> Is that the only thing we lose, if we abandon cusps? More to the
-> point, is there today an incremental import option, outside of
-> git-cvsimport+cvsps?
+> Style (multi-line comments).
 
-You'll have to remind me what you mean by "incremental" here. Possibly
-it's something cvs-fast-export could support.
+Will fix.
 
-But what I'm trying to tell you is that, even after I've done a dozen
-releases and fixed the worst problems I could find, cvsps is far too
-likely to mangle anything that passes through it.  The idea that you
-are preserving *anything* valuable by sticking with it is a mirage.
+> This is interesting.  I wonder what the practical consequence is to
+> have a single submodule bound to the top-level tree more than once.
+> Updating from one of the working tree will make the other working
+> tree out of sync because the ultimate location of the submodule
+> directory pointed at by the two .git gitdirs can only have a single
+> HEAD, be it detached or on a branch, and a single index.
 
-"That bear trap!  It's mangling your leg!"  "But it's so *shiny*..."
+To clarify, when writing this comment I was not thinking about the same
+submodule with multiple paths in the same tree but rather with the same
+name under different paths in different commits.
 
-> [ I am a bit out of touch with the current codebase but I coded and
-> maintained a good part of it back in the day. However naive/limited
-> the cvsps parser was, it did help a lot of projects make the leap to
-> git... ]
+> Not that the decision to enforce that names are unique in the
+> top-level .gitmodules, and follow that decision in this part of the
+> code to be defensive (not rely on the "one submodule can be bound
+> only once to a top-level tree"), but shouldn't such a configuration
+> to have a single submodule bound to more than one place in the
+> top-level tree be forbidden?
 
-I fear those "lots of projects" have subtly damaged repository
-histories, then.  I warned about this problem a year ago; today I
-found out it is much worse than I knew then, in fact so bad that I
-cannot responsibly do anything but try to get cvsps turfed out of use
-*as soon as possible*.
+Yes IMO, that should be forbidden currently. I do not think we actually
+prevent the user from doing so but it can not happen by accident since
+we derive the initial name from the local path. Maybe we should be more
+strict about that and put more guards in place to avoid such
+configurations from entering the database.
 
-And no, that should *not* wait on cvs-fast-export getting better 
-support for "incremental" or any other legacy feature.  Every week
-that cvsps remains the git project's choice is another week in which
-somebody's project history is likely to get trashed.
+> > +	for_each_hash(&cache->for_name, free_one_submodule_config, NULL);
+> > +	free_hash(&cache->for_path);
+> > +	free_hash(&cache->for_name);
+> > +}
+> > +
+> > +static unsigned int hash_sha1_string(const unsigned char *sha1, const char *string)
+> > +{
+> > +	int c;
+> > +	unsigned int hash, string_hash = 5381;
+> > +	memcpy(&hash, sha1, sizeof(hash));
+> > +
+> > +	/* djb2 hash */
+> > +	while ((c = *string++))
+> > +		string_hash = ((string_hash << 5) + hash) + c; /* hash * 33 + c */
+> 
+> Hmm, the comment and the code does not seem to match in math here...
 
-This feels very strange and unpleasant.  I've never had to shoot one
-of my own projects through the head before.
+Yeah sorry that was a leftover from the code I started with. In the
+beginning it was a pure string hash. Will remove both comments (since
+its also not a pure djb2 hash anymore).
 
-I blogged about it: http://esr.ibiblio.org/?p=5167
-
-Ignore the malware warning. It's triggered by something else on ibiblio.org;
-they're fixing it.
--- 
-		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
+Cheers Heiko
