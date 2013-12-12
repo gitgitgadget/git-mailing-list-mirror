@@ -1,73 +1,82 @@
-From: esr@thyrsus.com (Eric S. Raymond)
-Subject: I have end-of-lifed cvsps
-Date: Wed, 11 Dec 2013 19:17:38 -0500 (EST)
-Message-ID: <20131212001738.996EB38055C@snark.thyrsus.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 12 01:24:05 2013
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git-submodule.sh respects submodule.$name.update in .git/config but not .gitmodules
+Date: Wed, 11 Dec 2013 17:16:08 -0800
+Message-ID: <7vtxeeuaw7.fsf@alter.siamese.dyndns.org>
+References: <CABYr9QtSeX=Euf73MZPq6suo+GpVA=f+tH73Ct0tP-3LYogh9w@mail.gmail.com>
+	<20131209223506.GF9606@sandbox-ub>
+	<xmqqlhztvbi8.fsf@gitster.dls.corp.google.com> <52A8E689.80701@web.de>
+	<20131211224424.GB25409@odin.tremily.us>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Jens Lehmann <Jens.Lehmann@web.de>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Charlie Dyson <charlie@charliedyson.net>, git@vger.kernel.org
+To: "W. Trevor King" <wking@tremily.us>
+X-From: git-owner@vger.kernel.org Thu Dec 12 02:16:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vqu4S-0004Wk-Nq
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Dec 2013 01:24:05 +0100
+	id 1Vqut2-0007WE-5O
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Dec 2013 02:16:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751475Ab3LLAX6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Dec 2013 19:23:58 -0500
-Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:60166
-	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751076Ab3LLAX6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Dec 2013 19:23:58 -0500
-X-Greylist: delayed 379 seconds by postgrey-1.27 at vger.kernel.org; Wed, 11 Dec 2013 19:23:58 EST
-Received: by snark.thyrsus.com (Postfix, from userid 1000)
-	id 996EB38055C; Wed, 11 Dec 2013 19:17:38 -0500 (EST)
+	id S1751300Ab3LLBQQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Dec 2013 20:16:16 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62566 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751013Ab3LLBQP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Dec 2013 20:16:15 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9893B5AA0C;
+	Wed, 11 Dec 2013 20:16:14 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=fHL//ydD588k8pLJHENUqNsJumA=; b=AExJqw
+	Q3wrHrrmHYe1v2q04/lmO5GL/6fe4tkKVlcZnU3J9AfirUktcHqf8njeeif1qpaN
+	baGaffnEVYub4mOeON5H4DXVo2B5t6C35HGq4ZEJQ7tlW+jELDB7Em7YDfKxL8Ru
+	hvlKd6grLnDYdCeZJlud76R/s5UPA2O1DTwtM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=uSDM77LDAdtK2EN9V3LxV8LX/qCYbmZx
+	4Lc0QBB0nHJpsaufloraFXXPBmUC+km/oFfzpdJbypHQhaTVsMHb6Xou8GecC/C9
+	K+3CR8MqIlLmFpVcIW7ARFaz+lA2hkauUANGcn1zUhnS94nBgSY6Aa4Ukf2zafhI
+	qrkQyPVGrfE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7960D5AA0B;
+	Wed, 11 Dec 2013 20:16:14 -0500 (EST)
+Received: from pobox.com (unknown [198.0.213.178])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8628E5AA08;
+	Wed, 11 Dec 2013 20:16:12 -0500 (EST)
+In-Reply-To: <20131211224424.GB25409@odin.tremily.us> (W. Trevor King's
+	message of "Wed, 11 Dec 2013 14:44:24 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+X-Pobox-Relay-ID: FD67BFAA-62CA-11E3-A46B-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239220>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239221>
 
-On the git tools wiki, the first paragraph of the entry for cvsps now
-reads:
+"W. Trevor King" <wking@tremily.us> writes:
 
-  Warning: this code has been end-of-lifed by its maintainer in favor of
-  cvs-fast-export. Several attempts over the space of a year to repair
-  its deficient branch analysis and tag assignment have failed.  Do not
-  use it unless you are converting a strictly linear repository and
-  cannot get rsync/ssh read access to the repo masters. If you must use
-  it, be prepared to inspect and manually correct the history using
-  reposurgeon.
+> For
+> safety, maybe the default `init` should copy *everything* into
+> .git/config, after which users can remove stuff they'd like to
+> delegate to .gitmodules.
 
-I tried very hard to salvage this program - the ability to
-remote-fetch CVS repos without rsync access was appealing - but I
-reached my limit earlier today when I actually found time to assemble
-a test set of CVS repos and run head-to-head tests comparing cvsps
-output to cvs-fast-export output.
+Copying everything into config is "be unsafe and inconvenient by
+default for everybody", isn't it?  Folks who want safety are forced
+to inspect the resulting entries in their config file (which is more
+inconvenent if you compare with the design where nothing is copied
+and nothing dynamically defaults to what then-current .gitmodules
+happens to contain).  Folks who trust those who update .gitmodules
+for them are forced to update their config every time upstream
+decides to use different settings in .gitmodules, because they have
+stale values in their config that mask what are in .gitmodules.
 
-I've long believed that that cvs-fast-export has a better analyzer
-than cvsps just from having read the code for both of them, and having
-had to fix some serious bugs in cvsps that have no analogs in
-cvs-fast-export.  Direct comparison of the stream outputs revealed
-that the difference in quality was larger than I had prevously grasped.
-
-Alas, I'm afraid the cvsps repo analysis code turns out to be crap all
-the way down on anything but the simplest linear and near-linear
-cases, and it doesn't do so hot on even those (all this *after* I
-fixed the most obvious bugs in the 2.x version). In retrospect, trying
-to repair it was misdirected effort.
-
-I recommend that git sever its dependency on this tool as soon as
-possible. I have shipped a 3.13 release with deprecation warnings fot
-archival purposes, after which I will cease maintainance and redirect
-anyone inquiring about cvsps to cvs-fast-export.
-
-(I also maintain cvs-fast-export, but credit for the excellent analysis code 
-goes to Keith Packard.  All I did was write the output stage, document
-it, and fix a few minor bugs.)
--- 
-		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
-
-You [should] not examine legislation in the light of the benefits it will
-convey if properly administered, but in the light of the wrongs it
-would do and the harm it would cause if improperly administered
-	-- Lyndon Johnson, former President of the U.S.
+I think the solution we want is to copy only minimum to the config
+(and that "minimum" may turn out to be "nothing"), and to default
+keys that are only absolutely safe to .gitmodules file.
