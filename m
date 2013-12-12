@@ -1,95 +1,127 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: I have end-of-lifed cvsps
-Date: Thu, 12 Dec 2013 14:08:33 -0500
-Message-ID: <CACPiFCJ22xiedXAoQktMLd=gASgD0NS24Pya9TvCo9aQP5JaBQ@mail.gmail.com>
-References: <20131212001738.996EB38055C@snark.thyrsus.com> <CACPiFCK+Z7dOfO2v29PMKz+Y_fH1++xqMuTquSQ84d8KyjjFeQ@mail.gmail.com>
- <20131212042624.GB8909@thyrsus.com> <CACPiFC+bopf32cgDcQcVpL5vW=3KxmSP8Oh1see4KduQ1BNcPw@mail.gmail.com>
- <20131212171756.GA6954@inner.h.apk.li> <20131212182932.GB16960@thyrsus.com>
+From: "W. Trevor King" <wking@tremily.us>
+Subject: Re: git-submodule.sh respects submodule.$name.update in .git/config
+ but not .gitmodules
+Date: Thu, 12 Dec 2013 11:14:29 -0800
+Message-ID: <20131212191429.GI25409@odin.tremily.us>
+References: <CABYr9QtSeX=Euf73MZPq6suo+GpVA=f+tH73Ct0tP-3LYogh9w@mail.gmail.com>
+ <20131209223506.GF9606@sandbox-ub>
+ <xmqqlhztvbi8.fsf@gitster.dls.corp.google.com>
+ <52A8E689.80701@web.de>
+ <20131211224424.GB25409@odin.tremily.us>
+ <7vtxeeuaw7.fsf@alter.siamese.dyndns.org>
+ <52AA072F.2000105@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Andreas Krey <a.krey@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Eric Raymond <esr@thyrsus.com>
-X-From: git-owner@vger.kernel.org Thu Dec 12 20:09:12 2013
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="Encpt1P6Mxii2VuT"
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Charlie Dyson <charlie@charliedyson.net>, git@vger.kernel.org
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Thu Dec 12 20:20:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VrBd7-0003bq-Nv
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Dec 2013 20:09:02 +0100
+	id 1VrBoQ-0004Hu-Cb
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Dec 2013 20:20:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752502Ab3LLTI5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Dec 2013 14:08:57 -0500
-Received: from mail-vb0-f50.google.com ([209.85.212.50]:46782 "EHLO
-	mail-vb0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752462Ab3LLTIz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Dec 2013 14:08:55 -0500
-Received: by mail-vb0-f50.google.com with SMTP id w18so603539vbj.37
-        for <git@vger.kernel.org>; Thu, 12 Dec 2013 11:08:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=UjwtIvvZr6qNQbDKjaCsQAk1cnU/L6Iw5NFIJ398hck=;
-        b=ZWvTzS/sRc4Pl89yR79Noj/E9bfMzg+jpBwB24KyN1jy9hI1IdG5fKO8XZZbseVc/S
-         lpQr6jmacDK7yIzW50r1OEuU1EbkNjuf6lhXLsXLUMcoWpVC6HTBer7kjQJIJElKg+Li
-         5rh7WVaaoWtauhw4uUDiwC1bx57/h3Unr63smSUXTXmbPYNqIQqZgTO7+ZBfjSbYFgRF
-         eqb93r9YHXdv/pbLAknUycLvVe1u6WexwfIs1PqIczvyrCsNpN+Ug6pJiyj1iTt0jt85
-         Odye4W94Hj8RvchF01MY39fd5LFrbTicyTzu0LMRfDm26LA+PZpU3mT8mOk7ksMFcQwD
-         26Dw==
-X-Received: by 10.58.11.73 with SMTP id o9mr4644868veb.8.1386875334328; Thu,
- 12 Dec 2013 11:08:54 -0800 (PST)
-Received: by 10.220.74.133 with HTTP; Thu, 12 Dec 2013 11:08:33 -0800 (PST)
-In-Reply-To: <20131212182932.GB16960@thyrsus.com>
+	id S1751825Ab3LLTUi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Dec 2013 14:20:38 -0500
+Received: from qmta04.westchester.pa.mail.comcast.net ([76.96.62.40]:43374
+	"EHLO qmta04.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751519Ab3LLTUh (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 Dec 2013 14:20:37 -0500
+X-Greylist: delayed 365 seconds by postgrey-1.27 at vger.kernel.org; Thu, 12 Dec 2013 14:20:37 EST
+Received: from omta13.westchester.pa.mail.comcast.net ([76.96.62.52])
+	by qmta04.westchester.pa.mail.comcast.net with comcast
+	id 0cqw1n00117dt5G54jEXqa; Thu, 12 Dec 2013 19:14:31 +0000
+Received: from odin.tremily.us ([24.18.63.50])
+	by omta13.westchester.pa.mail.comcast.net with comcast
+	id 0jEV1n00e152l3L3ZjEW9U; Thu, 12 Dec 2013 19:14:31 +0000
+Received: by odin.tremily.us (Postfix, from userid 1000)
+	id 60DABD62513; Thu, 12 Dec 2013 11:14:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
+	t=1386875669; bh=iMpZtU94N9xZil5vgxZx5nALorFUrvYfGPFQjvV95RA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=iJzJG01y8dUwQf4ljYjW6B0VD2/Li2MGIKeloBuHzjAnhs6Lak2TtPqKiUrpDoy7L
+	 IOu7JjcCcdBddAIOkDCGCGoFIq+wPTwaiIyADv62a+TXYHK26eqazxEjmebOBrKAQ/
+	 vHMnSANFag+ffBnAButAxr47UhgmWhxjhWRmUQzg=
+Content-Disposition: inline
+In-Reply-To: <52AA072F.2000105@web.de>
+OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
+ url=http://tremily.us/pubkey.txt
+User-Agent: Mutt/1.5.22 (2013-10-16)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
+	s=q20121106; t=1386875671;
+	bh=XiBFb8scDpK9hElpQSBWIhNzBbVl/M2aOG4dQqThRPw=;
+	h=Received:Received:Received:Date:From:To:Subject:Message-ID:
+	 MIME-Version:Content-Type;
+	b=J/nI/o1SrpxX4QuRiylQj+BdI7ZZOO9s1STkzyc0zyUYD69LD4od2sJbCGERvnGAG
+	 qeuFsLHtp6Ygf3JiW+anGg+vHFEiisoP+KyRE6oRSjlFdk5siDL4+GqFnouUF820c/
+	 oa0VLgB02Dg7fEDiw1CAbAbblzWn5DBDathc75iKqMrFASDh7WvPnlvK1Vu04JZT0R
+	 P1i6Y5J1NrQ6QQjo5NUF3cpvpSak3YRPpSEHMsf6GEYBdp4Sth6j24Rblh4ztixwG5
+	 ZP3h3QGqO+uNfwtqHm4chp+FPdc+jCCm0tWl7Eu1VlmINw0CzsttfOUNSY1lXgLOjS
+	 hGQGP3TS85t4Q==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239237>
-
-On Thu, Dec 12, 2013 at 1:29 PM, Eric S. Raymond <esr@thyrsus.com> wrote:
-> I am almost certain the output of cvs-fast-export is stable.  I
-> believe the output of cvsps-3.x was, too.  Not sure about 2.x.
-
-IIRC, making the output stable is nontrivial, specially on branches.
-Two cases are still in my mind, from when I was wrestling with cvsps.
-
-1 - For a history with CVS HEAD and a long-running "stable release"
-branch ("STABLE"), which branched at P1...
-
-   a - adding a file only at the tip of STABLE "retroactively changes
-history"  for P1 and perhaps CVS HEAD
-
-   b - forgetting to properly tag a subset of files with the branch
-tag, and doing it later retroactively changes history
-
-2 - you can create a new branch or tag with files that do not belong
-together in any "commit". Doing so changes history retroactively
-
-... when I say "changes history", I mean that the importers I know
-revise their guesses of what files were seen together in a 'commit'.
-This is specially true for history recorded with early cvs versions
-that did not record a 'commit id'.
-
-cvsps has the strange "feature" that it will cache its
-assumptions/guesses, and continue incrementally from there. So if a
-change in the CVS repo means that the old guess is now invalidated, it
-continues the charade instead of forcing a complete rewrite of the git
-history.
-
-Maybe the current crop of tools have developed stronger magic than
-what was available a few years ago... the task did seem impossible to
-me.
-
-cheers,
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239238>
 
 
+--Encpt1P6Mxii2VuT
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
+On Thu, Dec 12, 2013 at 07:57:51PM +0100, Jens Lehmann wrote:
+> Am 12.12.2013 02:16, schrieb Junio C Hamano:
+> > I think the solution we want is to copy only minimum to the config
+> > (and that "minimum" may turn out to be "nothing"), and to default
+> > keys that are only absolutely safe to .gitmodules file.
+>=20
+> I agree and will prepare a patch for that.
+>=20
+> What about teaching "git submodule sync" the "--url", "--update",
+> "--fetch", "--ignore", "--branch" and "--all" options to allow the
+> user to copy the current settings he wants from .gitmodules to
+> .git/config (but only safe values of course)? Trevor, would you be
+> ok to issue another command to copy everything to .git/config?
 
-m
--- 
- martin.langhoff@gmail.com
- -  ask interesting questions
- - don't get distracted with shiny stuff  - working code first
- ~ http://docs.moodle.org/en/User:Martin_Langhoff
+Sounds good to me.  The more stuff I can leave in .gitmodules, the
+happier I'll be ;).  My second step will be removing =E2=80=9Cunsafe=E2=80=
+=9D values
+=66rom .git/config where possible, and I'll trust myself to check
+=2Egitmodules after pulls.
+
+Cheers,
+Trevor
+
+--=20
+This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
+For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
+
+--Encpt1P6Mxii2VuT
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (GNU/Linux)
+
+iQIcBAEBAgAGBQJSqgsTAAoJEKKfehoaNkbtIkoP/0YuWzern5lPVaivVFYuQZoR
+h5K0/wKg2oUsPgNmv9Ik9XHtNxukWbnD+nYvkZ9qDuGG3tCuRJGR3imBDmjuSwnu
+KkeiduPTh67awbvNuDmmwrJkwdnkftu3sYkEAzboDBLSz+4QMjYubSRq9L6zajxo
+t7I2fg82o32GOBzCNQ8X72f4SovjRXj6FYWaJKz+wYxmtcti+PnrWOk9pm6Huoxq
+Ky/JU77YgfqQqu9/Q4BWXtg3ydTriQpsJZRyJnflEn7XAtkodTgP6PaimC7vc9oO
+jQndJDJJSFAScaP/KoIKKHKhzJWVLNIO3w54i2opNQnEreFPxOCiKGUhZH52PNNu
+PSpHHeQsOGQ0OBLEZyRS6XVGg+9oHtnLOyCSqhgaXico59LRWBErDamhatLmC5aY
+JYQ4K1NxhY5VLclzlMe1k6s0DhSF0waQRUJ21LV+x42wdXvWcKMvo5oaWStjcjSq
+17CCB2/HMwtwwUGZq4CNSpkqRiGPGpNnkElEFPuZAdsfofCuVTuVDttFQr8lztDc
+E38mwL02/86wwtCxrXMBWYjKzIXljO1gyaya4l5Lh5PZOBT2wj2KaNBcOGCfTndC
+N3LApB10a6hcLtWTIW07AUNUHHfVh14MDH5bjwMhM5dmxotQF5qFml6vLQ4TTQ4K
+JR1o69EDZ+XMv7sGAg2E
+=6AOZ
+-----END PGP SIGNATURE-----
+
+--Encpt1P6Mxii2VuT--
