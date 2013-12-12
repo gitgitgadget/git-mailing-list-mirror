@@ -1,71 +1,73 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: I have end-of-lifed cvsps
-Date: Thu, 12 Dec 2013 13:53:27 -0500
-Message-ID: <CACPiFCLxC-WkiiwXwLTv4s-1GtbX7GrNVGs94Z10Nz+LW8YCEQ@mail.gmail.com>
-References: <20131212001738.996EB38055C@snark.thyrsus.com> <CACPiFCK+Z7dOfO2v29PMKz+Y_fH1++xqMuTquSQ84d8KyjjFeQ@mail.gmail.com>
- <20131212042624.GB8909@thyrsus.com> <CACPiFC+bopf32cgDcQcVpL5vW=3KxmSP8Oh1see4KduQ1BNcPw@mail.gmail.com>
- <20131212181513.GA16960@thyrsus.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: git-submodule.sh respects submodule.$name.update in .git/config
+ but not .gitmodules
+Date: Thu, 12 Dec 2013 19:57:51 +0100
+Message-ID: <52AA072F.2000105@web.de>
+References: <CABYr9QtSeX=Euf73MZPq6suo+GpVA=f+tH73Ct0tP-3LYogh9w@mail.gmail.com>	<20131209223506.GF9606@sandbox-ub>	<xmqqlhztvbi8.fsf@gitster.dls.corp.google.com> <52A8E689.80701@web.de>	<20131211224424.GB25409@odin.tremily.us> <7vtxeeuaw7.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Eric Raymond <esr@thyrsus.com>
-X-From: git-owner@vger.kernel.org Thu Dec 12 19:53:54 2013
+Content-Transfer-Encoding: 7bit
+Cc: Heiko Voigt <hvoigt@hvoigt.net>,
+	Charlie Dyson <charlie@charliedyson.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>,
+	"W. Trevor King" <wking@tremily.us>
+X-From: git-owner@vger.kernel.org Thu Dec 12 19:58:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VrBOT-0008GZ-D6
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Dec 2013 19:53:53 +0100
+	id 1VrBSS-0003D6-7O
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Dec 2013 19:58:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752012Ab3LLSxt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Dec 2013 13:53:49 -0500
-Received: from mail-vc0-f180.google.com ([209.85.220.180]:33827 "EHLO
-	mail-vc0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751774Ab3LLSxs (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Dec 2013 13:53:48 -0500
-Received: by mail-vc0-f180.google.com with SMTP id if17so578496vcb.25
-        for <git@vger.kernel.org>; Thu, 12 Dec 2013 10:53:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=sLXmrHmAvrqXFOfh2hiROm/EjN6ld6nFqc/KF2Ir4FE=;
-        b=NdlcdhI6jK4YA3wKxrlRWO40NArCBUob65aAtum4HYEvlC3Kb3LqeawcWcCUqCao2H
-         K8db+432qRGe1XMFuF41C7W7aFVULY00A4mxFldwncg/sL2cHLRr8gARDpTndYlgx9k7
-         MQRg3rfR2jNaryRMPCOCXtIGnzndH+6tGqo4yHfmByN8RdwUZei5PiK8eatjKZzFFXTH
-         i2Vh+XjnJc4aHqMt1IrVPrDGsYoGdSPlrODUvOdSGPUe3kpDw6zQpejNQn+kHxgd/OoY
-         U5GdEv1CGRdCanoMfcUgUrEgVbUV64g3meDgSei0LUzyKdNWB1BSeyZu3/aT0cnciYvk
-         UGoA==
-X-Received: by 10.220.116.136 with SMTP id m8mr223174vcq.77.1386874427827;
- Thu, 12 Dec 2013 10:53:47 -0800 (PST)
-Received: by 10.220.74.133 with HTTP; Thu, 12 Dec 2013 10:53:27 -0800 (PST)
-In-Reply-To: <20131212181513.GA16960@thyrsus.com>
+	id S1751907Ab3LLS54 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Dec 2013 13:57:56 -0500
+Received: from mout.web.de ([212.227.15.3]:51298 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751774Ab3LLS54 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Dec 2013 13:57:56 -0500
+Received: from [192.168.178.41] ([84.132.160.5]) by smtp.web.de (mrweb102)
+ with ESMTPA (Nemesis) id 0M9XQB-1Vh2q63d2l-00D1lA for <git@vger.kernel.org>;
+ Thu, 12 Dec 2013 19:57:54 +0100
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.2.0
+In-Reply-To: <7vtxeeuaw7.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.6
+X-Provags-ID: V03:K0:bvtXBDA7vcFh2J/sk3CTo3rH9lFpi0JvQyg8JzhRIzCv2voO1eS
+ ZXdDmNpju+qzv4TDqQtSUgcWciS8FP3w03KNp5DbBtb/Tzk2VL9sOkc0blqJv8qipykb+HA
+ 0A6bo5M61CYGb0Gs2ERKG379SCD1J0r3n7K59uIzOu7IJJoroxaM3YMLWQtrHg0XqzJJ+yQ
+ iWILpyAF5JLXftgoXGEAg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239235>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239236>
 
-On Thu, Dec 12, 2013 at 1:15 PM, Eric S. Raymond <esr@thyrsus.com> wrote:
-> That terminology -- "flying fish" and "dovetail" -- is interesting, and
-> I have not heard it before.  It might be woth putting in the Jargon File.
-> Can you point me at examples of live usage?
+Am 12.12.2013 02:16, schrieb Junio C Hamano:
+> "W. Trevor King" <wking@tremily.us> writes:
+> 
+>> For
+>> safety, maybe the default `init` should copy *everything* into
+>> .git/config, after which users can remove stuff they'd like to
+>> delegate to .gitmodules.
+> 
+> Copying everything into config is "be unsafe and inconvenient by
+> default for everybody", isn't it?  Folks who want safety are forced
+> to inspect the resulting entries in their config file (which is more
+> inconvenent if you compare with the design where nothing is copied
+> and nothing dynamically defaults to what then-current .gitmodules
+> happens to contain).  Folks who trust those who update .gitmodules
+> for them are forced to update their config every time upstream
+> decides to use different settings in .gitmodules, because they have
+> stale values in their config that mask what are in .gitmodules.
+> 
+> I think the solution we want is to copy only minimum to the config
+> (and that "minimum" may turn out to be "nothing"), and to default
+> keys that are only absolutely safe to .gitmodules file.
 
-The canonical reference would be
-http://cvsbook.red-bean.com/cvsbook.html#Going%20Out%20On%20A%20Limb%20(How%20To%20Work%20With%20Branches%20And%20Survive)
+I agree and will prepare a patch for that.
 
-just by being on the internet and widely referenced it has probably
-eclipsed in google-juice examples of earlier usage. Karl Fogel may
-remember where he got the names from.
-
-cheers,
-
-
-
-m
--- 
- martin.langhoff@gmail.com
- -  ask interesting questions
- - don't get distracted with shiny stuff  - working code first
- ~ http://docs.moodle.org/en/User:Martin_Langhoff
+What about teaching "git submodule sync" the "--url", "--update",
+"--fetch", "--ignore", "--branch" and "--all" options to allow the
+user to copy the current settings he wants from .gitmodules to
+.git/config (but only safe values of course)? Trevor, would you be
+ok to issue another command to copy everything to .git/config?
