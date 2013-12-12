@@ -1,120 +1,117 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: Re: Publishing "filtered branch repositories" - workflow /
- recommendations?
-Date: Thu, 12 Dec 2013 14:39:19 +0100
-Message-ID: <20131212133919.GB6183@t2784.greatnet.de>
-References: <52A0D199.1010403@web.de>
- <CACPiFCKHprB_oO_eXMYkey_CGbT7WOn5VDDjBdHbLRzcDpHnZw@mail.gmail.com>
- <52A0D9F5.3030101@web.de>
- <CACPiFCJ3mkOj=E+siideBpPfgS1tSicVQ46KqPK+Tha0DbkZHw@mail.gmail.com>
- <52A18F69.70002@web.de>
- <CACPiFCJ5hCPvRHB1knvMocN0XdHfSMpbZnqjf7yHAT4mMOSfzw@mail.gmail.com>
- <20131209225950.GG9606@sandbox-ub>
- <xmqqhaahvas2.fsf@gitster.dls.corp.google.com>
- <52A8E124.4000002@web.de>
- <xmqqa9g7t1vb.fsf@gitster.dls.corp.google.com>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: I have end-of-lifed cvsps
+Date: Thu, 12 Dec 2013 08:42:25 -0500
+Message-ID: <CACPiFC+bopf32cgDcQcVpL5vW=3KxmSP8Oh1see4KduQ1BNcPw@mail.gmail.com>
+References: <20131212001738.996EB38055C@snark.thyrsus.com> <CACPiFCK+Z7dOfO2v29PMKz+Y_fH1++xqMuTquSQ84d8KyjjFeQ@mail.gmail.com>
+ <20131212042624.GB8909@thyrsus.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jens Lehmann <Jens.Lehmann@web.de>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Dec 12 14:39:38 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Eric Raymond <esr@thyrsus.com>
+X-From: git-owner@vger.kernel.org Thu Dec 12 14:42:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vr6UJ-0004VY-F2
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Dec 2013 14:39:35 +0100
+	id 1Vr6XV-00078J-Hd
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Dec 2013 14:42:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751571Ab3LLNjb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Dec 2013 08:39:31 -0500
-Received: from smtprelay02.ispgateway.de ([80.67.29.24]:42789 "EHLO
-	smtprelay02.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751466Ab3LLNja (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Dec 2013 08:39:30 -0500
-Received: from [83.133.105.219] (helo=t2784.greatnet.de)
-	by smtprelay02.ispgateway.de with esmtpsa (TLSv1:AES128-SHA:128)
-	(Exim 4.68)
-	(envelope-from <hvoigt@hvoigt.net>)
-	id 1Vr6U4-0003kp-N6; Thu, 12 Dec 2013 14:39:20 +0100
-Content-Disposition: inline
-In-Reply-To: <xmqqa9g7t1vb.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
+	id S1751929Ab3LLNmt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Dec 2013 08:42:49 -0500
+Received: from mail-ve0-f169.google.com ([209.85.128.169]:64158 "EHLO
+	mail-ve0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751623Ab3LLNms (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Dec 2013 08:42:48 -0500
+Received: by mail-ve0-f169.google.com with SMTP id c14so309241vea.28
+        for <git@vger.kernel.org>; Thu, 12 Dec 2013 05:42:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=Ia6tgGyQbRvioYZqyybB0Pe9somRMwKlkcOcU7pez68=;
+        b=DT0UGWstHnnSApdGQZ4EFvvsDXT4rLI7cdxvsADcgAjKC8fn9VgYZ0qXhCbUlxAwah
+         ynSAsVPdcIRMe3EGKZqqA9V2iiwRRXkA21AxT99cI6et+h2dupgdwa5NJ41LHlxWmBGZ
+         H2Ynbxqswlo1Ft3ZHcr700Z+4NoYCFFtNSL/zMTg1qTon/aLGRVa7PL78UCGh87nOXqC
+         d9IlDwQXCWb/+Fli93ZoCRrjZfVOwoF2gUubjNtn7WVr+BadZKn+m2kvZMolBJNiQDLP
+         YhR3hQh1oMygGtM1dfc456Msb4CE17/nBIqj63YVKzoneRqDh+tGcxnqY+D4c2QGARZh
+         8brw==
+X-Received: by 10.58.187.81 with SMTP id fq17mr2870961vec.14.1386855767658;
+ Thu, 12 Dec 2013 05:42:47 -0800 (PST)
+Received: by 10.220.74.133 with HTTP; Thu, 12 Dec 2013 05:42:25 -0800 (PST)
+In-Reply-To: <20131212042624.GB8909@thyrsus.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239227>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239228>
 
-On Wed, Dec 11, 2013 at 03:16:24PM -0800, Junio C Hamano wrote:
-> Jens Lehmann <Jens.Lehmann@web.de> writes:
-> 
-> >> I think this is closely related to Martin's list of wishes we
-> >> earlier saw in the thread: remind the user to push necessary
-> >> submodule tip before the top-level commit that needs that commit in
-> >> the submodule is pushed out.  Giving projects a way to implement
-> >> such a policy decision would be good, and having a default policy,
-> >> if we can find one that would be reasonable for any submodule users,
-> >> would be even better.  Would adding a generic pre-push hook at the
-> >> top-level sufficient for that kind of thing, I have to wonder.
-> >
-> > That could call "git push --dry-run --recurse-submodules=check" to
-> > deny the push if the submodule commit isn't on a remote branch.
-> > that would only work for a single hardcoded remote, as the remote
-> > itself does not seem to be passed to the pre-push hook.
-> >
-> > So me thinks adding a configuration option for the --recurse-submodule
-> > option of push is the best way to achieve that. This could be set to
-> > "check" ...
-> 
-> Yes, that uses only a single hard-coded decision, and making the
-> branch name or remote name customizable is not enough, as you are
-> still hardcoding "if ... isn't on" part. It is not far-fetched to
-> imagine a project wants to add more restrictions to what commit in
-> the submodule history can be bound to a tree of a published commit
-> in the top-level project (e.g. "must be a tagged release point",
-> "must be older at least by more than two weeks", "must be signed by
-> one of these developers' keys", etc.).
-> 
-> So I am not yet convinced that a simple "option" that supplies a few
-> parameters to a single hard-coded policy is sufficient in the long
-> run.
+On Wed, Dec 11, 2013 at 11:26 PM, Eric S. Raymond <esr@thyrsus.com> wrote:
+> You'll have to remind me what you mean by "incremental" here. Possibly
+> it's something cvs-fast-export could support.
 
-Well, for the implementation of --recurse-submodules=check on push we
-tried to be as dumb as possible and just try to find out whether the
-commit is on any remote. The reason is that when someone works on a
-branch and pushes it for demonstration/backup/before holiday the most
-common mistake is that he forgets to push the submodule when pushing the
-superproject. So "some remote" seems to be the most common denominator
-for push here. At least its better than no check at all.
+User can
 
-For extended rules that answer questions like: "When am I allowed to
-merge in master?" we need some kind of workflow definition from which we
-can deduct such rules. A pre-push hook would allow to define rules but
-how about an approach that is easier for the user and can maybe guide
-him to the correct workflow.
+ - run a cvs to git import at time T, resulting in repo G
+ - make commits to cvs repo
+ - run cvs to git import at time T1, pointed to G, and the import tool
+will only add the new commits found in cvs between T and T1.
 
-I find workflow guidance is a general problem in git and even though we
-use hooks at $dayjob they are not always sufficient. E.g. we enforce an
-"all commits have to be reviewed first before they enter master" policy
-which is correct in most situations. But for more lightweight projects I
-would like to loosen this rule. The problem relies in the automatic
-distribution of hooks or options for them by project instead of by
-installation.
+> But what I'm trying to tell you is that, even after I've done a dozen
+> releases and fixed the worst problems I could find, cvsps is far too
+> likely to mangle anything that passes through it.  The idea that you
+> are preserving *anything* valuable by sticking with it is a mirage.
 
-One idea: We could distribute a default set of enabled hooks that
-implement several typical workflow options which can then be enabled by
-simply choosing one option. The configuration should be distributeable
-via the project e.g. a .githookconfig or .gitworkflowconfig ?
+The bugs that lead to a mangled history are real. I acknowledge and
+respect that.
 
-The git tools could then adapt their defaults depending on such a
-workflow definition. But it also means we would first have to collect
-and define some typical workflows.
+However, with those limitations, the incremental feature has value in
+many scenarios.
 
-What do others think? There probably have been other ideas about
-workflow definitions already, no?
+The two main ones are as follows:
 
-Cheers Heiko
+ - A developer is tracking his/her own patches on top of a CVS-based
+project with git. This is often done with git-svn for example. If
+old/convoluted branches in the far past are mangled, this user won't
+care; as long as HEAD->master and/or the current/recent branch are
+consistent with reality, the tool fits a need.
+
+ - A project plans to transition to git gradually. Experienced
+developers who'd normally work on CVS HEAD start working on git (and
+landing their work on CVS afterwards). Old/mangled branches and tags
+are of little interest, the big value is CVS HEAD (which is linear)
+and possibly recent release/stable branches. The history captured is
+good enough for git blame/log/pickaxe along the "master" line. At
+transition time the original CVS repo can be kept around in readonly
+mode, so people can still checkout the exact contents of an old branch
+or tag for example (assuming no destructive "surgery" was done in the
+CVS repo).
+
+The above examples assume that the CVS repos have used "flying fish"
+approach in the "interesting" (i.e.: recent) parts of their history.
+
+[ Simplifying a bit for non-CVS-geeks -- flying fish is using CVS HEAD
+for your development, plus 'feature branches' that get landed, plus
+long-lived 'stable release' branches. Most CVS projects in modern
+times use flying fish, which is a lot like what the git project uses
+in its own repo, but tuned to CVS's strengths (interesting commits
+linearized in CVS HEAD).
+
+Other approaches ('dovetail') tend to end up with unworkable messes
+given CVS's weaknesses. ]
+
+The cvsimport+cvsps combo does a reasonable (though imperfect) job on
+'flying fish' CVS histories _and that is what most projects evolved to
+use_. If other cvs import tools can handle crazy histories, hats off
+to them. But careful with knifing cvsps!
+
+cheers,
+
+
+
+m
+-- 
+ martin.langhoff@gmail.com
+ -  ask interesting questions
+ - don't get distracted with shiny stuff  - working code first
+ ~ http://docs.moodle.org/en/User:Martin_Langhoff
