@@ -1,70 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v7 0/4] Show extra branch refs in gitweb
-Date: Thu, 12 Dec 2013 13:46:13 -0800
-Message-ID: <xmqqfvpxspy2.fsf@gitster.dls.corp.google.com>
-References: <1386762884-7564-1-git-send-email-krzesimir@endocode.com>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: I have end-of-lifed cvsps
+Date: Thu, 12 Dec 2013 17:51:13 -0500
+Message-ID: <CACPiFCJDP6OVju2xzm2NWR5gc=bZDeNmXsD_MFH2mgHQru_u6Q@mail.gmail.com>
+References: <20131212001738.996EB38055C@snark.thyrsus.com> <CACPiFCK+Z7dOfO2v29PMKz+Y_fH1++xqMuTquSQ84d8KyjjFeQ@mail.gmail.com>
+ <20131212042624.GB8909@thyrsus.com> <CACPiFC+bopf32cgDcQcVpL5vW=3KxmSP8Oh1see4KduQ1BNcPw@mail.gmail.com>
+ <20131212171756.GA6954@inner.h.apk.li> <20131212182932.GB16960@thyrsus.com>
+ <CACPiFCJ22xiedXAoQktMLd=gASgD0NS24Pya9TvCo9aQP5JaBQ@mail.gmail.com>
+ <20131212193918.GA17529@thyrsus.com> <CACPiFCLXeK9DH=f80ReSmYHJ7zjOn-D2zvs3WmdiV-k=wBGgjA@mail.gmail.com>
+ <20131212205819.GA18166@thyrsus.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, jnareb@gmail.com, sunshine@sunshineco.com
-To: Krzesimir Nowak <krzesimir@endocode.com>
-X-From: git-owner@vger.kernel.org Thu Dec 12 22:46:23 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Andreas Krey <a.krey@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Eric Raymond <esr@thyrsus.com>
+X-From: git-owner@vger.kernel.org Thu Dec 12 23:51:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VrE5N-0004lo-Nd
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Dec 2013 22:46:22 +0100
+	id 1VrF6o-0003aS-3e
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Dec 2013 23:51:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751631Ab3LLVqR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Dec 2013 16:46:17 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33215 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751608Ab3LLVqQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Dec 2013 16:46:16 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3FB9259B4A;
-	Thu, 12 Dec 2013 16:46:16 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ftpambhnBeR5VKyX8P3QMOokuSo=; b=oWxfr5
-	fo1LB+nJso9eHjcAyRg7zg+V68tQV6vQLPy53ausRFh1FXd4A4atCluScSUS1/Hy
-	xs6EKfp767/g+qRVnuJrPCF34w7qni0aZbsphxVgbIk3iMLS2uQemciN9BJH+hrJ
-	/ll4mJDvlacKtpopXZ5ldo0BFuJuSQYzNaDBU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=XWy83Rr/4NY02G3Und13UC9nL+XN/Q0q
-	5XDj/yATXuU3bT45kQhufoNzxTF8/UthohRRDt9O4W6tmyl8dsy5XUEgBlPP5B34
-	7RVRaTeXbzcuIy15qLKOM+PKi7mrn1sOLW8yOF53xQqMNbqksyzBg6e3lQs881Gl
-	igVT6QP62go=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 24C7459B49;
-	Thu, 12 Dec 2013 16:46:16 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5128F59B47;
-	Thu, 12 Dec 2013 16:46:15 -0500 (EST)
-In-Reply-To: <1386762884-7564-1-git-send-email-krzesimir@endocode.com>
-	(Krzesimir Nowak's message of "Wed, 11 Dec 2013 12:54:40 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: D34A8AAC-6376-11E3-8639-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751585Ab3LLWvg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Dec 2013 17:51:36 -0500
+Received: from mail-ve0-f174.google.com ([209.85.128.174]:33933 "EHLO
+	mail-ve0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751496Ab3LLWvf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Dec 2013 17:51:35 -0500
+Received: by mail-ve0-f174.google.com with SMTP id pa12so840258veb.33
+        for <git@vger.kernel.org>; Thu, 12 Dec 2013 14:51:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=4XrM4u0FuUgX1//paDYY2ZpvhZ5n+LnzlFkR6gN2DhI=;
+        b=fBebxKTuLJWZzP12OK7TYIgJOsI+GU9F0NiUKl/SZ+aDT2zbtvqem23qegk2tteEgW
+         bEgONdh9OghA4nLc2vzyIA4aKiaDzeIC/L562uTlbZWxpT0qF3ysKfTSQSDOt7b37v+L
+         Xys1Xvt1NzbGTs+T3Y55DbN0SOwUZGJbQd5siQewYuiyXof28dw1aQgq+vm8DU1wzWY6
+         XztPyFj4C1xwZsyjWAzVfs5Z/IH5yL1c68A4RK+CKzFCkWXXJRA7AQG608Gby9/vUyjE
+         +Luijx05qmN1D/kKsdA6QyMA1zpHOfgZxOcUbjj5SBv5MnQSFdoSFW8V8ehS+CdyEU86
+         Yirw==
+X-Received: by 10.220.244.132 with SMTP id lq4mr1029186vcb.31.1386888694630;
+ Thu, 12 Dec 2013 14:51:34 -0800 (PST)
+Received: by 10.220.74.133 with HTTP; Thu, 12 Dec 2013 14:51:13 -0800 (PST)
+In-Reply-To: <20131212205819.GA18166@thyrsus.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239247>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239248>
 
-Krzesimir Nowak <krzesimir@endocode.com> writes:
+On Thu, Dec 12, 2013 at 3:58 PM, Eric S. Raymond <esr@thyrsus.com> wrote:
+>>  - regardless of commit ids, do you synthesize an artificial commit?
+>> How do you define parenthood for that artificial commit?
+>
+> Because tagging is never used to deduce changesets, the case does not arise.
 
-> First patch splits some code to a function.
->
-> Second patch fixes validation functions to return either 0 or 1,
-> instead of undef or passed $input.
->
-> Third patch adds the extra-branch-feature and some documentation.
->
-> Fourth patch adds some visual differentation of branches from
-> non-standard ref directories.
+So if a branch has a nonsensical branching point, or a tag is
+nonsensical, is it ignored and not imported?
 
-Thanks; will queue.
+curious,
+
+
+
+m
+-- 
+ martin.langhoff@gmail.com
+ -  ask interesting questions
+ - don't get distracted with shiny stuff  - working code first
+ ~ http://docs.moodle.org/en/User:Martin_Langhoff
