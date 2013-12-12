@@ -1,80 +1,87 @@
-From: "Eric S. Raymond" <esr@thyrsus.com>
-Subject: Re: I have end-of-lifed cvsps
-Date: Thu, 12 Dec 2013 18:04:54 -0500
-Organization: Eric Conspiracy Secret Labs
-Message-ID: <20131212230454.GA20054@thyrsus.com>
-References: <CACPiFCK+Z7dOfO2v29PMKz+Y_fH1++xqMuTquSQ84d8KyjjFeQ@mail.gmail.com>
- <20131212042624.GB8909@thyrsus.com>
- <CACPiFC+bopf32cgDcQcVpL5vW=3KxmSP8Oh1see4KduQ1BNcPw@mail.gmail.com>
- <20131212171756.GA6954@inner.h.apk.li>
- <20131212182932.GB16960@thyrsus.com>
- <CACPiFCJ22xiedXAoQktMLd=gASgD0NS24Pya9TvCo9aQP5JaBQ@mail.gmail.com>
- <20131212193918.GA17529@thyrsus.com>
- <CACPiFCLXeK9DH=f80ReSmYHJ7zjOn-D2zvs3WmdiV-k=wBGgjA@mail.gmail.com>
- <20131212205819.GA18166@thyrsus.com>
- <CACPiFCJDP6OVju2xzm2NWR5gc=bZDeNmXsD_MFH2mgHQru_u6Q@mail.gmail.com>
-Reply-To: esr@thyrsus.com
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: [PATCH] send-pack.c: mark a file-local function static
+Date: Thu, 12 Dec 2013 23:15:54 +0000
+Message-ID: <52AA43AA.9030703@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Andreas Krey <a.krey@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Martin Langhoff <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 13 00:05:01 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 13 00:16:06 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VrFJU-0004c0-Bc
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Dec 2013 00:05:00 +0100
+	id 1VrFUD-0004D0-8S
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Dec 2013 00:16:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751849Ab3LLXE4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Dec 2013 18:04:56 -0500
-Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:43196
-	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751717Ab3LLXEz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Dec 2013 18:04:55 -0500
-Received: by snark.thyrsus.com (Postfix, from userid 1000)
-	id D18A3380459; Thu, 12 Dec 2013 18:04:54 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <CACPiFCJDP6OVju2xzm2NWR5gc=bZDeNmXsD_MFH2mgHQru_u6Q@mail.gmail.com>
-X-Eric-Conspiracy: There is no conspiracy
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751915Ab3LLXQA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Dec 2013 18:16:00 -0500
+Received: from mdfmta005.mxout.tbr.inty.net ([91.221.168.46]:45202 "EHLO
+	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751579Ab3LLXQA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Dec 2013 18:16:00 -0500
+Received: from mdfmta005.tbr.inty.net (unknown [127.0.0.1])
+	by mdfmta005.tbr.inty.net (Postfix) with ESMTP id 28184A64F51;
+	Thu, 12 Dec 2013 23:15:58 +0000 (GMT)
+Received: from mdfmta005.tbr.inty.net (unknown [127.0.0.1])
+	by mdfmta005.tbr.inty.net (Postfix) with ESMTP id EF227A648E4;
+	Thu, 12 Dec 2013 23:15:57 +0000 (GMT)
+Received: from [192.168.254.16] (unknown [80.176.147.220])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mdfmta005.tbr.inty.net (Postfix) with ESMTP;
+	Thu, 12 Dec 2013 23:15:57 +0000 (GMT)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.2.0
+X-MDF-HostID: 8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239249>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239250>
 
-Martin Langhoff <martin.langhoff@gmail.com>:
-> On Thu, Dec 12, 2013 at 3:58 PM, Eric S. Raymond <esr@thyrsus.com> wrote:
-> >>  - regardless of commit ids, do you synthesize an artificial commit?
-> >> How do you define parenthood for that artificial commit?
-> >
-> > Because tagging is never used to deduce changesets, the case does not arise.
-> 
-> So if a branch has a nonsensical branching point, or a tag is
-> nonsensical, is it ignored and not imported?
 
-I don't know what happens when identically-named tags point at changes that
-resolve into two different commits.  I will figure that out and document it.
+Commit f2c681cf ("send-pack: support pushing from a shallow clone
+via http", 05-12-2013) adds the 'advertise_shallow_grafts_buf'
+function as an external symbol. This symbol does not require
+more than file visibility.
 
-There's evidence, in the form of some code that is #ifdefed out, that 
-Keith considered trying to make synthetic commits from tag cliques. But
-abandoned the idea because he couldn't figure out how to assign such
-cliques to a branch.
+Noticed by sparse. ("'advertise_shallow_grafts_buf' was not declared.
+Should it be static?")
 
-I'm not sure what counts as a nonsensical branching point. I do know that
-Keith left this rather cryptic note in a REAME:
+Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+---
 
-	Disjoint branch resolution. Branches occurring in a subset of the
-	files are not correctly resolved; instead, an entirely disjoint
-	history will be created containing the branch revisions and all
-	parents back to the root. I'm not sure how to fix this; it seems
-	to implicitly assume there will be only a single place to attach as
-	branch parent, which may not be the case. In any case, the right
-	revision will have a superset of the revisions present in the
-	original branch parent; perhaps that will suffice.
+Hi Duy,
 
+If you need to re-roll the patches in your 'nd/shallow-clone' branch,
+could you please squash this into your patch. Thanks!
+
+BTW, I have not been following these patches, but I noticed that the
+'remove_nonexistent_ours_in_pack()' function has no callers. (There are
+two commented out callers - but they seem to have *always* been commented
+out ;-) ). So, step 5 is no longer required? :-D
+
+ATB,
+Ramsay Jones
+
+ send-pack.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/send-pack.c b/send-pack.c
+index 2a199cc..6129b0f 100644
+--- a/send-pack.c
++++ b/send-pack.c
+@@ -183,7 +183,7 @@ static int advertise_shallow_grafts_cb(const struct commit_graft *graft, void *c
+ 	return 0;
+ }
+ 
+-void advertise_shallow_grafts_buf(struct strbuf *sb)
++static void advertise_shallow_grafts_buf(struct strbuf *sb)
+ {
+ 	if (!is_repository_shallow())
+ 		return;
 -- 
-		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
+1.8.5
