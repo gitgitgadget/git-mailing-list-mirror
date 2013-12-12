@@ -1,103 +1,81 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: I have end-of-lifed cvsps
-Date: Thu, 12 Dec 2013 14:48:44 -0500
-Message-ID: <CACPiFCLXeK9DH=f80ReSmYHJ7zjOn-D2zvs3WmdiV-k=wBGgjA@mail.gmail.com>
-References: <20131212001738.996EB38055C@snark.thyrsus.com> <CACPiFCK+Z7dOfO2v29PMKz+Y_fH1++xqMuTquSQ84d8KyjjFeQ@mail.gmail.com>
- <20131212042624.GB8909@thyrsus.com> <CACPiFC+bopf32cgDcQcVpL5vW=3KxmSP8Oh1see4KduQ1BNcPw@mail.gmail.com>
- <20131212171756.GA6954@inner.h.apk.li> <20131212182932.GB16960@thyrsus.com>
- <CACPiFCJ22xiedXAoQktMLd=gASgD0NS24Pya9TvCo9aQP5JaBQ@mail.gmail.com> <20131212193918.GA17529@thyrsus.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 00/10] teach replace objects to sha1_object_info_extended()
+Date: Thu, 12 Dec 2013 12:05:46 -0800
+Message-ID: <xmqq1u1hu95x.fsf@gitster.dls.corp.google.com>
+References: <20131211074147.11117.1155.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Andreas Krey <a.krey@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Eric Raymond <esr@thyrsus.com>
-X-From: git-owner@vger.kernel.org Thu Dec 12 20:49:16 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Joey Hess <joey@kitenet.net>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Thu Dec 12 21:05:57 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VrCG2-0001vG-Tz
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Dec 2013 20:49:15 +0100
+	id 1VrCWB-0005zW-TH
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Dec 2013 21:05:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751800Ab3LLTtL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Dec 2013 14:49:11 -0500
-Received: from mail-vc0-f171.google.com ([209.85.220.171]:62888 "EHLO
-	mail-vc0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751608Ab3LLTtI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Dec 2013 14:49:08 -0500
-Received: by mail-vc0-f171.google.com with SMTP id ik5so648966vcb.16
-        for <git@vger.kernel.org>; Thu, 12 Dec 2013 11:49:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=Oe+xjFxGYHrIhNW6FAzX7Lqo+Kt9r0/yLc93adu/0VQ=;
-        b=fYTw2wrY+38sbQi3+y8tdYxN2+z0m7F+bUvNRt18XDpsAr54u5JAp3QaQHy9r+K++3
-         /RKVDu2KHzpA+qQdyvYtJHLCeMNszSVXo8tXmaJXt2wCqPdR3JxKkXSWxVn1niroj+2B
-         BSflk2VgmK239jIyrZ9Wgv+gT8KOaTNrQpeEXVfCg+sovIUvxPlJ0n4VCSiwEzUzqeS+
-         utzXTm6I9gd6s7ImMsQvQXX9/DU3QCEAqjvYILOCqGr8p2cD7dtuuO0GebK1Cb/U+ylJ
-         fwgINBCwIdNyZ4dXbs/d8m6D3lBKmXjFnZ+Jcg9Kab0wQj+BSkci3VkngXYEFv7LW/oT
-         9Bpg==
-X-Received: by 10.58.54.69 with SMTP id h5mr4610330vep.25.1386877747962; Thu,
- 12 Dec 2013 11:49:07 -0800 (PST)
-Received: by 10.220.74.133 with HTTP; Thu, 12 Dec 2013 11:48:44 -0800 (PST)
-In-Reply-To: <20131212193918.GA17529@thyrsus.com>
+	id S1751625Ab3LLUFw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Dec 2013 15:05:52 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64082 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751474Ab3LLUFv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Dec 2013 15:05:51 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AF3C659AC0;
+	Thu, 12 Dec 2013 15:05:50 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=KjDPOaWgKgx4Zysz5QGbnwxxpns=; b=iGqIQU
+	/8qJ1PUIDKw5bDvZRHMCIPU3tNXssihB4uCQjtRSZmLkVpP4QBtZXK7HI2EEYssF
+	tYA9b2MJj9GE+w2F385WjMqjzuCRy0isyn8i4a4GFPHg0oaBXmYYX6y0QabD+4B5
+	soiKpyHEAiWhZDw6a0ZOG+9ZpfEfHkqM0YsnA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=OyozWTg98EEIjfYJouH50WJclvJepVLk
+	5XqCMVcqg9lswF5KECvtfz6IBRP8x2TJRV21mJoPNJ9aWenJbCDO5sPl/2oaYeEp
+	XVYassPpjZiSM3DcYZmg4okzfOmX5Oj5xu8DwlTSKYlH5rvDXD08K/7iIUirqTK9
+	lo+jLsc+nMM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 96D3159ABF;
+	Thu, 12 Dec 2013 15:05:50 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A8E9159ABE;
+	Thu, 12 Dec 2013 15:05:49 -0500 (EST)
+In-Reply-To: <20131211074147.11117.1155.chriscool@tuxfamily.org> (Christian
+	Couder's message of "Wed, 11 Dec 2013 08:46:03 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: CBBB58B0-6368-11E3-AE16-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239242>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239243>
 
-On Thu, Dec 12, 2013 at 2:39 PM, Eric S. Raymond <esr@thyrsus.com> wrote:
-> Yikes!  That is a much stricter stability criterion than I thought you
-> were specifying.
+Christian Couder <chriscool@tuxfamily.org> writes:
 
-:-) -- cvsps's approach is: if you have a cache, you can remember the
-lies you told earlier.
+> Here is version 3 of a patch series to improve the way
+> sha1_object_info_extended() behaves when it is passed a
+> replaced object. The idea is to add a flags argument to it
+> in the same way as what has been done to read_sha1_file().
 
-It is impossible to be stable purely from the source data in the face
-of these issues.
+Thanks.
 
-CVS is truly a PoS.
+Will take a look again (in the meantime, will queue on 'pu').
 
-> I think it would handle 1a in a stable way
+I do not think the new name for the bit is necessary nor it is a
+good change, though.  Given an object name, reading the data and
+inspecting the metadata (i.e. type and size) should yield consistent
+results, so the original name is a perfectly appropriate name that
+means "use the replacement object when using read-sha1-file and
+friends to ask about an object".  The use of the replacement object
+happens to be implmented via lookup-replace-object helper, but that
+is an implementation detail of _how_ it is done, not the high level
+descroption of _what_ the callers want to see done.
 
-that is pretty important. Files added on a branch not affecting HEAD
-and earlier branch checkout matters.
-
-
-> What I think this means is that cvs-fast-export is stable if you are
-> using a server/client combination that generates commitids (that is,
-> GNU CVS of any version newer than 1.12 of 2004, or CVS-NT). It is
-> *not* necessary for stability that the entire history have them.
->
-> Here's how the logic works out:
->
-> 1. Commits grouped by commitid are stable - nothing in CVS ever rewrites
-> those or assigns a duplicate.
->
-> 2. No file change made with a commitid can destabilize a commit guess
-> made without them, because the similarity checker never tries to put both
-> kinds in a single changeset.
->
-> Can you detect any flaw in this?
-
-If someone creates a nonsensical tag or branch point, tagging files
-from different commits, how do you handle it?
-
- - without commit ids, does it affect your guesses?
-
- - regardless of commit ids, do you synthesize an artificial commit?
-How do you define parenthood for that artificial commit?
-
-curious,
-
-
-
-m
--- 
- martin.langhoff@gmail.com
- -  ask interesting questions
- - don't get distracted with shiny stuff  - working code first
- ~ http://docs.moodle.org/en/User:Martin_Langhoff
+But that is just a minor nit.
