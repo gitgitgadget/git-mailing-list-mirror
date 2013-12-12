@@ -1,56 +1,71 @@
-From: "Eric S. Raymond" <esr@thyrsus.com>
+From: Martin Langhoff <martin.langhoff@gmail.com>
 Subject: Re: I have end-of-lifed cvsps
-Date: Thu, 12 Dec 2013 13:35:33 -0500
-Organization: Eric Conspiracy Secret Labs
-Message-ID: <20131212183533.GC16960@thyrsus.com>
-References: <20131212001738.996EB38055C@snark.thyrsus.com>
- <CACPiFCK+Z7dOfO2v29PMKz+Y_fH1++xqMuTquSQ84d8KyjjFeQ@mail.gmail.com>
- <20131212042624.GB8909@thyrsus.com>
- <CACPiFC+bopf32cgDcQcVpL5vW=3KxmSP8Oh1see4KduQ1BNcPw@mail.gmail.com>
- <20131212171756.GA6954@inner.h.apk.li>
- <CACPiFC+CAhh1S6Wt0bO2pDrXWgBW7AEFahGJjq0W7rG9LfTb8A@mail.gmail.com>
-Reply-To: esr@thyrsus.com
+Date: Thu, 12 Dec 2013 13:53:27 -0500
+Message-ID: <CACPiFCLxC-WkiiwXwLTv4s-1GtbX7GrNVGs94Z10Nz+LW8YCEQ@mail.gmail.com>
+References: <20131212001738.996EB38055C@snark.thyrsus.com> <CACPiFCK+Z7dOfO2v29PMKz+Y_fH1++xqMuTquSQ84d8KyjjFeQ@mail.gmail.com>
+ <20131212042624.GB8909@thyrsus.com> <CACPiFC+bopf32cgDcQcVpL5vW=3KxmSP8Oh1see4KduQ1BNcPw@mail.gmail.com>
+ <20131212181513.GA16960@thyrsus.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Andreas Krey <a.krey@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Martin Langhoff <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 12 19:35:39 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Eric Raymond <esr@thyrsus.com>
+X-From: git-owner@vger.kernel.org Thu Dec 12 19:53:54 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VrB6o-00021Z-Ha
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Dec 2013 19:35:38 +0100
+	id 1VrBOT-0008GZ-D6
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Dec 2013 19:53:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751709Ab3LLSfe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Dec 2013 13:35:34 -0500
-Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:41006
-	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751092Ab3LLSfe (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Dec 2013 13:35:34 -0500
-Received: by snark.thyrsus.com (Postfix, from userid 1000)
-	id 7AF1C380445; Thu, 12 Dec 2013 13:35:33 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <CACPiFC+CAhh1S6Wt0bO2pDrXWgBW7AEFahGJjq0W7rG9LfTb8A@mail.gmail.com>
-X-Eric-Conspiracy: There is no conspiracy
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752012Ab3LLSxt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Dec 2013 13:53:49 -0500
+Received: from mail-vc0-f180.google.com ([209.85.220.180]:33827 "EHLO
+	mail-vc0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751774Ab3LLSxs (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Dec 2013 13:53:48 -0500
+Received: by mail-vc0-f180.google.com with SMTP id if17so578496vcb.25
+        for <git@vger.kernel.org>; Thu, 12 Dec 2013 10:53:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=sLXmrHmAvrqXFOfh2hiROm/EjN6ld6nFqc/KF2Ir4FE=;
+        b=NdlcdhI6jK4YA3wKxrlRWO40NArCBUob65aAtum4HYEvlC3Kb3LqeawcWcCUqCao2H
+         K8db+432qRGe1XMFuF41C7W7aFVULY00A4mxFldwncg/sL2cHLRr8gARDpTndYlgx9k7
+         MQRg3rfR2jNaryRMPCOCXtIGnzndH+6tGqo4yHfmByN8RdwUZei5PiK8eatjKZzFFXTH
+         i2Vh+XjnJc4aHqMt1IrVPrDGsYoGdSPlrODUvOdSGPUe3kpDw6zQpejNQn+kHxgd/OoY
+         U5GdEv1CGRdCanoMfcUgUrEgVbUV64g3meDgSei0LUzyKdNWB1BSeyZu3/aT0cnciYvk
+         UGoA==
+X-Received: by 10.220.116.136 with SMTP id m8mr223174vcq.77.1386874427827;
+ Thu, 12 Dec 2013 10:53:47 -0800 (PST)
+Received: by 10.220.74.133 with HTTP; Thu, 12 Dec 2013 10:53:27 -0800 (PST)
+In-Reply-To: <20131212181513.GA16960@thyrsus.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239234>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239235>
 
-Martin Langhoff <martin.langhoff@gmail.com>:
-> In my prior work, the "better" CVS importers would not have stable
-> output, so were not appropriate for incremental imports.
+On Thu, Dec 12, 2013 at 1:15 PM, Eric S. Raymond <esr@thyrsus.com> wrote:
+> That terminology -- "flying fish" and "dovetail" -- is interesting, and
+> I have not heard it before.  It might be woth putting in the Jargon File.
+> Can you point me at examples of live usage?
 
-That is disturbing.  I would consider lack of stability a severe and
-unacceptable failure mode in such a tool, if only because of the
-difficulties it creates for proper regression testing.
+The canonical reference would be
+http://cvsbook.red-bean.com/cvsbook.html#Going%20Out%20On%20A%20Limb%20(How%20To%20Work%20With%20Branches%20And%20Survive)
 
-If cvs-fast-export does not already have this property I will fix it 
-so it does.  And document that fact.
+just by being on the internet and widely referenced it has probably
+eclipsed in google-juice examples of earlier usage. Karl Fogel may
+remember where he got the names from.
+
+cheers,
+
+
+
+m
 -- 
-		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
+ martin.langhoff@gmail.com
+ -  ask interesting questions
+ - don't get distracted with shiny stuff  - working code first
+ ~ http://docs.moodle.org/en/User:Martin_Langhoff
