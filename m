@@ -1,108 +1,120 @@
 From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: Re: [RFC/WIP PATCH] implement reading of submodule .gitmodules
- configuration into cache
-Date: Thu, 12 Dec 2013 14:03:07 +0100
-Message-ID: <20131212130307.GA6183@t2784.greatnet.de>
-References: <2E636B58-47EB-4712-93CA-39E8D1BA3DB9@mac.com>
- <5294BB97.7010707@web.de>
- <xmqqmwkqvmck.fsf@gitster.dls.corp.google.com>
- <9AB10474-6DEF-4FFD-B6B3-ED2AB21424AC@mac.com>
- <xmqqzjopsk9b.fsf@gitster.dls.corp.google.com>
- <20131129223845.GA31636@sandbox-ub>
- <3C71BC83-4DD0-43F8-9E36-88594CA63FC5@mac.com>
- <20131203183301.GB4629@sandbox-ub>
- <20131209205501.GC9606@sandbox-ub>
- <xmqqppp5vbn5.fsf@gitster.dls.corp.google.com>
+Subject: Re: Re: Publishing "filtered branch repositories" - workflow /
+ recommendations?
+Date: Thu, 12 Dec 2013 14:39:19 +0100
+Message-ID: <20131212133919.GB6183@t2784.greatnet.de>
+References: <52A0D199.1010403@web.de>
+ <CACPiFCKHprB_oO_eXMYkey_CGbT7WOn5VDDjBdHbLRzcDpHnZw@mail.gmail.com>
+ <52A0D9F5.3030101@web.de>
+ <CACPiFCJ3mkOj=E+siideBpPfgS1tSicVQ46KqPK+Tha0DbkZHw@mail.gmail.com>
+ <52A18F69.70002@web.de>
+ <CACPiFCJ5hCPvRHB1knvMocN0XdHfSMpbZnqjf7yHAT4mMOSfzw@mail.gmail.com>
+ <20131209225950.GG9606@sandbox-ub>
+ <xmqqhaahvas2.fsf@gitster.dls.corp.google.com>
+ <52A8E124.4000002@web.de>
+ <xmqqa9g7t1vb.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Nick Townsend <nick.townsend@mac.com>,
-	=?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>,
-	Jens Lehmann <Jens.Lehmann@web.de>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>
+Cc: Jens Lehmann <Jens.Lehmann@web.de>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Dec 12 14:03:37 2013
+X-From: git-owner@vger.kernel.org Thu Dec 12 14:39:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vr5vV-0001oH-1m
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Dec 2013 14:03:37 +0100
+	id 1Vr6UJ-0004VY-F2
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Dec 2013 14:39:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751506Ab3LLNDd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Dec 2013 08:03:33 -0500
-Received: from smtprelay04.ispgateway.de ([80.67.31.42]:48884 "EHLO
-	smtprelay04.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751429Ab3LLNDc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Dec 2013 08:03:32 -0500
+	id S1751571Ab3LLNjb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Dec 2013 08:39:31 -0500
+Received: from smtprelay02.ispgateway.de ([80.67.29.24]:42789 "EHLO
+	smtprelay02.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751466Ab3LLNja (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Dec 2013 08:39:30 -0500
 Received: from [83.133.105.219] (helo=t2784.greatnet.de)
-	by smtprelay04.ispgateway.de with esmtpsa (TLSv1:AES128-SHA:128)
+	by smtprelay02.ispgateway.de with esmtpsa (TLSv1:AES128-SHA:128)
 	(Exim 4.68)
 	(envelope-from <hvoigt@hvoigt.net>)
-	id 1Vr5v6-0003pO-Fh; Thu, 12 Dec 2013 14:03:12 +0100
+	id 1Vr6U4-0003kp-N6; Thu, 12 Dec 2013 14:39:20 +0100
 Content-Disposition: inline
-In-Reply-To: <xmqqppp5vbn5.fsf@gitster.dls.corp.google.com>
+In-Reply-To: <xmqqa9g7t1vb.fsf@gitster.dls.corp.google.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239226>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239227>
 
-On Mon, Dec 09, 2013 at 03:37:50PM -0800, Junio C Hamano wrote:
-> > +void submodule_config_cache_free(struct submodule_config_cache *cache)
-> > +{
-> > +	/* NOTE: its important to iterate over the name hash here
-> > +	 * since paths might have multiple entries */
+On Wed, Dec 11, 2013 at 03:16:24PM -0800, Junio C Hamano wrote:
+> Jens Lehmann <Jens.Lehmann@web.de> writes:
 > 
-> Style (multi-line comments).
-
-Will fix.
-
-> This is interesting.  I wonder what the practical consequence is to
-> have a single submodule bound to the top-level tree more than once.
-> Updating from one of the working tree will make the other working
-> tree out of sync because the ultimate location of the submodule
-> directory pointed at by the two .git gitdirs can only have a single
-> HEAD, be it detached or on a branch, and a single index.
-
-To clarify, when writing this comment I was not thinking about the same
-submodule with multiple paths in the same tree but rather with the same
-name under different paths in different commits.
-
-> Not that the decision to enforce that names are unique in the
-> top-level .gitmodules, and follow that decision in this part of the
-> code to be defensive (not rely on the "one submodule can be bound
-> only once to a top-level tree"), but shouldn't such a configuration
-> to have a single submodule bound to more than one place in the
-> top-level tree be forbidden?
-
-Yes IMO, that should be forbidden currently. I do not think we actually
-prevent the user from doing so but it can not happen by accident since
-we derive the initial name from the local path. Maybe we should be more
-strict about that and put more guards in place to avoid such
-configurations from entering the database.
-
-> > +	for_each_hash(&cache->for_name, free_one_submodule_config, NULL);
-> > +	free_hash(&cache->for_path);
-> > +	free_hash(&cache->for_name);
-> > +}
-> > +
-> > +static unsigned int hash_sha1_string(const unsigned char *sha1, const char *string)
-> > +{
-> > +	int c;
-> > +	unsigned int hash, string_hash = 5381;
-> > +	memcpy(&hash, sha1, sizeof(hash));
-> > +
-> > +	/* djb2 hash */
-> > +	while ((c = *string++))
-> > +		string_hash = ((string_hash << 5) + hash) + c; /* hash * 33 + c */
+> >> I think this is closely related to Martin's list of wishes we
+> >> earlier saw in the thread: remind the user to push necessary
+> >> submodule tip before the top-level commit that needs that commit in
+> >> the submodule is pushed out.  Giving projects a way to implement
+> >> such a policy decision would be good, and having a default policy,
+> >> if we can find one that would be reasonable for any submodule users,
+> >> would be even better.  Would adding a generic pre-push hook at the
+> >> top-level sufficient for that kind of thing, I have to wonder.
+> >
+> > That could call "git push --dry-run --recurse-submodules=check" to
+> > deny the push if the submodule commit isn't on a remote branch.
+> > that would only work for a single hardcoded remote, as the remote
+> > itself does not seem to be passed to the pre-push hook.
+> >
+> > So me thinks adding a configuration option for the --recurse-submodule
+> > option of push is the best way to achieve that. This could be set to
+> > "check" ...
 > 
-> Hmm, the comment and the code does not seem to match in math here...
+> Yes, that uses only a single hard-coded decision, and making the
+> branch name or remote name customizable is not enough, as you are
+> still hardcoding "if ... isn't on" part. It is not far-fetched to
+> imagine a project wants to add more restrictions to what commit in
+> the submodule history can be bound to a tree of a published commit
+> in the top-level project (e.g. "must be a tagged release point",
+> "must be older at least by more than two weeks", "must be signed by
+> one of these developers' keys", etc.).
+> 
+> So I am not yet convinced that a simple "option" that supplies a few
+> parameters to a single hard-coded policy is sufficient in the long
+> run.
 
-Yeah sorry that was a leftover from the code I started with. In the
-beginning it was a pure string hash. Will remove both comments (since
-its also not a pure djb2 hash anymore).
+Well, for the implementation of --recurse-submodules=check on push we
+tried to be as dumb as possible and just try to find out whether the
+commit is on any remote. The reason is that when someone works on a
+branch and pushes it for demonstration/backup/before holiday the most
+common mistake is that he forgets to push the submodule when pushing the
+superproject. So "some remote" seems to be the most common denominator
+for push here. At least its better than no check at all.
+
+For extended rules that answer questions like: "When am I allowed to
+merge in master?" we need some kind of workflow definition from which we
+can deduct such rules. A pre-push hook would allow to define rules but
+how about an approach that is easier for the user and can maybe guide
+him to the correct workflow.
+
+I find workflow guidance is a general problem in git and even though we
+use hooks at $dayjob they are not always sufficient. E.g. we enforce an
+"all commits have to be reviewed first before they enter master" policy
+which is correct in most situations. But for more lightweight projects I
+would like to loosen this rule. The problem relies in the automatic
+distribution of hooks or options for them by project instead of by
+installation.
+
+One idea: We could distribute a default set of enabled hooks that
+implement several typical workflow options which can then be enabled by
+simply choosing one option. The configuration should be distributeable
+via the project e.g. a .githookconfig or .gitworkflowconfig ?
+
+The git tools could then adapt their defaults depending on such a
+workflow definition. But it also means we would first have to collect
+and define some typical workflows.
+
+What do others think? There probably have been other ideas about
+workflow definitions already, no?
 
 Cheers Heiko
