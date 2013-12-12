@@ -1,74 +1,76 @@
-From: Andreas Krey <a.krey@gmx.de>
+From: Martin Langhoff <martin.langhoff@gmail.com>
 Subject: Re: I have end-of-lifed cvsps
-Date: Thu, 12 Dec 2013 18:17:56 +0100
-Message-ID: <20131212171756.GA6954@inner.h.apk.li>
-References: <20131212001738.996EB38055C@snark.thyrsus.com> <CACPiFCK+Z7dOfO2v29PMKz+Y_fH1++xqMuTquSQ84d8KyjjFeQ@mail.gmail.com> <20131212042624.GB8909@thyrsus.com> <CACPiFC+bopf32cgDcQcVpL5vW=3KxmSP8Oh1see4KduQ1BNcPw@mail.gmail.com>
+Date: Thu, 12 Dec 2013 12:26:40 -0500
+Message-ID: <CACPiFC+CAhh1S6Wt0bO2pDrXWgBW7AEFahGJjq0W7rG9LfTb8A@mail.gmail.com>
+References: <20131212001738.996EB38055C@snark.thyrsus.com> <CACPiFCK+Z7dOfO2v29PMKz+Y_fH1++xqMuTquSQ84d8KyjjFeQ@mail.gmail.com>
+ <20131212042624.GB8909@thyrsus.com> <CACPiFC+bopf32cgDcQcVpL5vW=3KxmSP8Oh1see4KduQ1BNcPw@mail.gmail.com>
+ <20131212171756.GA6954@inner.h.apk.li>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
 Cc: Eric Raymond <esr@thyrsus.com>,
 	Git Mailing List <git@vger.kernel.org>
-To: Martin Langhoff <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 12 18:18:16 2013
+To: Andreas Krey <a.krey@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Dec 12 18:27:10 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vr9tv-0001Hj-R1
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Dec 2013 18:18:16 +0100
+	id 1VrA2V-00082g-B1
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Dec 2013 18:27:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751886Ab3LLRSJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Dec 2013 12:18:09 -0500
-Received: from continuum.iocl.org ([217.140.74.2]:51245 "EHLO
-	continuum.iocl.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751530Ab3LLRSH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Dec 2013 12:18:07 -0500
-Received: (from krey@localhost)
-	by continuum.iocl.org (8.11.3/8.9.3) id rBCHHuQ07352;
-	Thu, 12 Dec 2013 18:17:56 +0100
-Content-Disposition: inline
-In-Reply-To: <CACPiFC+bopf32cgDcQcVpL5vW=3KxmSP8Oh1see4KduQ1BNcPw@mail.gmail.com>
-User-Agent: Mutt/1.4.2.1i
-X-message-flag: What did you expect to see here?
+	id S1751671Ab3LLR1E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Dec 2013 12:27:04 -0500
+Received: from mail-ve0-f182.google.com ([209.85.128.182]:42608 "EHLO
+	mail-ve0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751469Ab3LLR1B (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Dec 2013 12:27:01 -0500
+Received: by mail-ve0-f182.google.com with SMTP id jy13so544982veb.41
+        for <git@vger.kernel.org>; Thu, 12 Dec 2013 09:27:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=F5POrwsuc2gggzZigtire3+H79EPwwCHOBnWIFrw60g=;
+        b=JJIkCdoo0LAX935VJCYUcIdI6/RX81YcnHEpBPBci+cYrcYYvfNdYQ3le7BhKmncJM
+         TUM2YJGnXLA0N6BVPBikgXZUIdAmOwf3aouv4lpYD3NRGpaSl36bXrdHcyKE304y3wlh
+         pBiW5bvEzsXfMXsJ37V6WLd441yUfao4zgIqhAnIqtiP/9IdJdFTy3fXmBkQV4aMKewp
+         WSC9J1+hTXlrZfN7F+EbVx8e42ZWfNWD+Xr85VTR9B6Frtsv2x86xtPMmAS0ORPx+ZuA
+         HQyAlOsThwoLiA0uMyKOQewKjGq38lXG9yDioqarlRDTiVabDOUDqy0eN8RVGU+E+yxB
+         tmhg==
+X-Received: by 10.52.230.202 with SMTP id ta10mr287366vdc.41.1386869220434;
+ Thu, 12 Dec 2013 09:27:00 -0800 (PST)
+Received: by 10.220.74.133 with HTTP; Thu, 12 Dec 2013 09:26:40 -0800 (PST)
+In-Reply-To: <20131212171756.GA6954@inner.h.apk.li>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239229>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239230>
 
-On Thu, 12 Dec 2013 08:42:25 +0000, Martin Langhoff wrote:
-...
->  - run a cvs to git import at time T, resulting in repo G
->  - make commits to cvs repo
->  - run cvs to git import at time T1, pointed to G, and the import tool
-> will only add the new commits found in cvs between T and T1.
+On Thu, Dec 12, 2013 at 12:17 PM, Andreas Krey <a.krey@gmx.de> wrote:
+> But anyway, the replacement question is a) how fast the cvs-fast-export is
+> and b) whether its output is stable
 
-I'm pretty sure that being given only G the incremental approach wouldn't
-work - some extra state would be required.
+In my prior work, the "better" CVS importers would not have stable
+output, so were not appropriate for incremental imports.
 
-But anyway, the replacement question is a) how fast the cvs-fast-export is
-and b) whether its output is stable, that is, if the cvs repo C yields
-a git repo G, will then C with a few extra commits yield G' where every
-commit in G (as identified by its SHA1) is also in G', and G' additionally
-contains the new commits that were made to the CVS repo.
+And even the fastest ones were very slow on large repos.
 
-If that is the case you effectively have an incremental mode, except that
-it's not quite as fast.
+That is why I am asking the question.
 
-At least that would be good enough for us - we ended up running a
-filter-branch on the resulting history, and that takes some time anyway.
+> It won't magically disappear from your machine, and you have been warned. :-)
 
-...
-> The cvsimport+cvsps combo does a reasonable (though imperfect) job on
-> 'flying fish' CVS histories _and that is what most projects evolved to
-> use_. If other cvs import tools can handle crazy histories, hats off
-> to them. But careful with knifing cvsps!
+However, esr is making the case that git-cvsimport should stop using
+cvsps. My questions are aimed at understanding whether this actually
+results in proposing that an important feature is dropped.
 
-It won't magically disappear from your machine, and you have been warned. :-)
+Perhaps a better alternative is now available.
 
-Andreas
 
+m
 -- 
-"Totally trivial. Famous last words."
-From: Linus Torvalds <torvalds@*.org>
-Date: Fri, 22 Jan 2010 07:29:21 -0800
+ martin.langhoff@gmail.com
+ -  ask interesting questions
+ - don't get distracted with shiny stuff  - working code first
+ ~ http://docs.moodle.org/en/User:Martin_Langhoff
