@@ -1,77 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] cat-file: handle --batch format with missing type/size
-Date: Wed, 11 Dec 2013 19:05:46 -0800
-Message-ID: <7viouuu5th.fsf@alter.siamese.dyndns.org>
-References: <20131211115458.GA10561@sigill.intra.peff.net>
-	<20131211115844.GB10594@sigill.intra.peff.net>
-	<20131211204200.GN2311@google.com>
-	<20131211231549.GB16606@sigill.intra.peff.net>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: I have end-of-lifed cvsps
+Date: Wed, 11 Dec 2013 22:38:20 -0500
+Message-ID: <CACPiFCK+Z7dOfO2v29PMKz+Y_fH1++xqMuTquSQ84d8KyjjFeQ@mail.gmail.com>
+References: <20131212001738.996EB38055C@snark.thyrsus.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Samuel Bronson <naesten@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Dec 12 04:05:55 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git Mailing List <git@vger.kernel.org>
+To: "Eric S. Raymond" <esr@thyrsus.com>
+X-From: git-owner@vger.kernel.org Thu Dec 12 04:39:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vqwb4-0007q4-SU
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Dec 2013 04:05:55 +0100
+	id 1Vqx79-0005VZ-5w
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Dec 2013 04:39:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751203Ab3LLDFv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Dec 2013 22:05:51 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50678 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750882Ab3LLDFu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Dec 2013 22:05:50 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 15CF35AFEE;
-	Wed, 11 Dec 2013 22:05:50 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=s6l4xU+kJE9zKoTO0ZkH2uTqcZk=; b=UtNCN3
-	zHNd2//2GU5Hc2p2jWbY241s8K6hgybGX+LcctbPhq/g/ONH2EEAchMz6PSEgSCL
-	zVZNvo04jjk9W+QXJTzHiPR2xJp+Fvou3ZU0jyZd4AsVfzpsG7krhXvr01uWia3p
-	e3ulLdbdKbn+hP5uqaqotWO+3+TLjmfLVhcCE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=M2DPRjeXKTI7JBqkAeRB9+idGO5EXGh9
-	hPZURWY5yN5YhN2LGevSry9oqsMtLmKeQbsl1fETpgjoq+HEMjbPb5jtpomhLrdW
-	anmburnBRqlrq4Tkng9qQsta0fha+RESPsdfJ5IxNh0/McFwEoBH3cj+zMAl9l8m
-	JYrYKyvmY9c=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E6F835AFED;
-	Wed, 11 Dec 2013 22:05:49 -0500 (EST)
-Received: from pobox.com (unknown [198.0.213.178])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C32185AFEC;
-	Wed, 11 Dec 2013 22:05:48 -0500 (EST)
-In-Reply-To: <20131211231549.GB16606@sigill.intra.peff.net> (Jeff King's
-	message of "Thu, 12 Dec 2013 07:15:50 +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-X-Pobox-Relay-ID: 4D27730A-62DA-11E3-82B3-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751364Ab3LLDim (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Dec 2013 22:38:42 -0500
+Received: from mail-vb0-f52.google.com ([209.85.212.52]:40192 "EHLO
+	mail-vb0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751290Ab3LLDil (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Dec 2013 22:38:41 -0500
+Received: by mail-vb0-f52.google.com with SMTP id p5so2335416vbn.11
+        for <git@vger.kernel.org>; Wed, 11 Dec 2013 19:38:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=L/NutwL2Cn/+iL+KRJiA7Htz4108xND9oLZiD2Uqu+Q=;
+        b=Zmr1ykaMYDRyvrBrVZIvCZ89J/0ANzhcuSm/Aw0QWnlO4sBr7oBTBluC4tNDKiOUKr
+         cN5E2coGrkWJmtu/MGvZBDihYcJbhspUIFBFlVwJEAWI3wcho7ljL5O2L52CsRagzb5G
+         jUXzO4+pJm2/VQz9G6WVNTgUmshzd3aT29JGo7d83UVePS5WnDkhoB5zk1isHMhI6dE+
+         aNjOuQODl5fmZtWFGmWcHPw/BYM1wjyPdqCpZZd2/72mEJ8FVNbhRdXKMwvARoJNryxd
+         bYyPSL1UGDBl9qM7HJlxapaVEgIewR7UWKfogRv2ZXDGF82RvdZirpcSoMVtESIQ1kJo
+         f0Wg==
+X-Received: by 10.52.231.130 with SMTP id tg2mr1869870vdc.16.1386819520570;
+ Wed, 11 Dec 2013 19:38:40 -0800 (PST)
+Received: by 10.220.74.133 with HTTP; Wed, 11 Dec 2013 19:38:20 -0800 (PST)
+In-Reply-To: <20131212001738.996EB38055C@snark.thyrsus.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239223>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239224>
 
-Jeff King <peff@peff.net> writes:
+On Wed, Dec 11, 2013 at 7:17 PM, Eric S. Raymond <esr@thyrsus.com> wrote:
+> I tried very hard to salvage this program - the ability to
+> remote-fetch CVS repos without rsync access was appealing
 
-> Yes. The loss of the optimization was a small thing compared to being
-> totally broken. :)
-> ...
->> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
->
-> Thanks. Updated patch is below.
+Is that the only thing we lose, if we abandon cusps? More to the
+point, is there today an incremental import option, outside of
+git-cvsimport+cvsps?
 
-;-)
+[ I am a bit out of touch with the current codebase but I coded and
+maintained a good part of it back in the day. However naive/limited
+the cvsps parser was, it did help a lot of projects make the leap to
+git... ]
 
-I like it when I see patches are polished between the submitter and
-reviewer(s) fully, before the maintainer has a chance to pick an
-intermediate version (only to later replace and requeue).
+regards,
 
-Thanks, both.
+
+
+m
+-- 
+ martin.langhoff@gmail.com
+ -  ask interesting questions
+ - don't get distracted with shiny stuff  - working code first
+ ~ http://docs.moodle.org/en/User:Martin_Langhoff
