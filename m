@@ -1,122 +1,122 @@
-From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-Subject: Re: [PATCH] completion: fix completion of certain aliases
-Date: Fri, 13 Dec 2013 15:16:24 +0100
-Message-ID: <20131213141624.GA28369@goldbirke>
-References: <1386421873-27863-1-git-send-email-felipe.contreras@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/POC 1/7] Make git_path() beware of file relocation in $GIT_DIR
+Date: Fri, 13 Dec 2013 08:30:27 -0800
+Message-ID: <xmqqsitwr9wc.fsf@gitster.dls.corp.google.com>
+References: <1386771333-32574-1-git-send-email-pclouds@gmail.com>
+	<1386771333-32574-2-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 13 15:16:34 2013
+Cc: git@vger.kernel.org, Jonathan Niedier <jrnieder@gmail.com>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 13 17:30:38 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VrTXc-0005ZL-HA
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Dec 2013 15:16:32 +0100
+	id 1VrVdN-0004tB-GP
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Dec 2013 17:30:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752699Ab3LMOQ1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 Dec 2013 09:16:27 -0500
-Received: from moutng.kundenserver.de ([212.227.126.187]:57165 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752567Ab3LMOQ0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Dec 2013 09:16:26 -0500
-Received: from localhost6.localdomain6 (g226129228.adsl.alicedsl.de [92.226.129.228])
-	by mrelayeu.kundenserver.de (node=mreu3) with ESMTP (Nemesis)
-	id 0M7A1q-1Vf0ak2xjK-00wuzF; Fri, 13 Dec 2013 15:16:24 +0100
-Content-Disposition: inline
-In-Reply-To: <1386421873-27863-1-git-send-email-felipe.contreras@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Provags-ID: V02:K0:bt4POWcpPzr0fpWY5K0di2JJwQqb5yUF/DsQ+1FeYO1
- bsUKlYMJ6SnlL4NbPSO5IBilfbXJWElCpdF7TrzuusvTuh8pPF
- y8/XvyYACBaBoYEmQKlSQt8k0xaFG89b6u8JpzsyRx7rL9uRl8
- djx7+s3qMxkI3dJ7J/9sPf5VEuw4oniqiOa8BpI+aK0uzhiFqL
- QcxK33clcTmbKz8lvNnoMrYh9uI1Q8E0xAIC/ervXZYm+Fwgv/
- xx9C5uLh9+mkZpyQvnijW88URFgRwgIDRRXL9pdxCYlZvfTKZe
- QKvUB6K5kCS4km59OhIbRGcUR+/Bson/2VXXxWWCnB3Ij2s6Up
- 23ZrfGAB1Mpp12CMDRWDkLeRcb7fgNrtqq8uCt8EE
+	id S1752238Ab3LMQad convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 Dec 2013 11:30:33 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48820 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752018Ab3LMQac convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 13 Dec 2013 11:30:32 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0E32B56899;
+	Fri, 13 Dec 2013 11:30:32 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=uWFbcJN+rl8T
+	85XNfZBtVFA0s0g=; b=rezyx3yuB3hZgAjCr3c67czvQDyE3E5uVj75opep3fKv
+	GgybdfJcUjgcIACEZV9emiI+iIGnMl0WI/3eA6hIMBnCPXbqCskKDRCqqzgig1A5
+	Uqe9bQIjAa0kXvkD69/DU94LJYvTlCOqiTHDBqKaWpg3wsse7JxYZIUs/EIRf4E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=geQiXA
+	Ev1ZofxuKsMIZna3ucWxHN9j5ykFiqXjht/hR2a5AIgk67HGU24dGDFhCvsSwW7k
+	hs7CeNRZVOtI6iigtjLbZo9uIJjsqpKwzTccaBkSA7zdWFzwBhzNv4Lg7CGTNXnz
+	0PJTTphcHqj4yLUNrCcjGOt3RTvamCVGAC+pQ=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EC8CF56898;
+	Fri, 13 Dec 2013 11:30:31 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0A7A656897;
+	Fri, 13 Dec 2013 11:30:30 -0500 (EST)
+In-Reply-To: <1386771333-32574-2-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Wed, 11
+ Dec 2013 21:15:27 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: E206F39E-6413-11E3-831D-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239258>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239259>
 
-Hi,
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-On Sat, Dec 07, 2013 at 07:11:13AM -0600, Felipe Contreras wrote:
-> Some commands need the first word to determine the actual action that=
- is
-> being executed, however, the command is wrong when we use an alias,
-
-This first sentence was hard to understand for me because of the wrong
-terminology used.  How about this instead:
-
-  Some completion helper functions need to know the name of the git
-  command to act properly.  However, ...
-
-> for
-> example 'alias.p=3Dpush', if we try to complete 'git p origin ', the
-> result would be wrong because __git_complete_remote_or_refspec() does=
-n't
-> know where it come from.
-
-Are there other helper functions that are affected?  After a quick
-glance I didn't find any.  In this case we could even write the above
-as
-
-  The __git_complete_remote_or_refspec() completion helper function
-  needs to know ...
-
-
-> So let's override words[1], so the alias 'p' is override by the actua=
-l
-> command, 'push'.
-
-words[1] is not always the name of the git command, it can also be an
-option to the main git command, e.g. in case of 'git -c key=3Dvalue pus=
-h
-=2E..' with this patch '-c' would be overwritten.
-
-
-Best,
-G=E1bor
-
-> Reported-by: Aymeric Beaumet <aymeric.beaumet@gmail.com>
-> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
-> ---
->  contrib/completion/git-completion.bash | 1 +
->  contrib/completion/git-completion.zsh  | 1 +
->  2 files changed, 2 insertions(+)
->=20
-> diff --git a/contrib/completion/git-completion.bash b/contrib/complet=
-ion/git-completion.bash
-> index dba3c15..c14bac4 100644
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -2530,6 +2530,7 @@ __git_main ()
+> +static void adjust_git_path(char *buf, int git_dir_len)
+> +{
+> +	/* XXX buffer overflow */
+> +	char *base =3D buf + git_dir_len;
+> +	if (git_graft_env && !strcmp(base, "info/grafts"))
+> +		strcpy(buf, get_graft_file());
+> +	else if (git_index_env && !strcmp(base, "index"))
+> +		strcpy(buf, get_index_file());
+> +	else if (git_db_env && dir_prefix(base, "objects"))
+> +		replace_dir(buf, git_dir_len + 7, get_object_directory());
+> +}
+> +
+>  static char *vsnpath(char *buf, size_t n, const char *fmt, va_list a=
+rgs)
+>  {
+>  	const char *git_dir =3D get_git_dir();
+> -	size_t len;
+> +	size_t len, total_len;
 > =20
->  	local expansion=3D$(__git_aliased_command "$command")
->  	if [ -n "$expansion" ]; then
-> +		words[1]=3D$expansion
->  		completion_func=3D"_git_${expansion//-/_}"
->  		declare -f $completion_func >/dev/null && $completion_func
->  	fi
-> diff --git a/contrib/completion/git-completion.zsh b/contrib/completi=
-on/git-completion.zsh
-> index fac5e71..3eeb7f8 100644
-> --- a/contrib/completion/git-completion.zsh
-> +++ b/contrib/completion/git-completion.zsh
-> @@ -96,6 +96,7 @@ __git_zsh_bash_func ()
-> =20
->  	local expansion=3D$(__git_aliased_command "$command")
->  	if [ -n "$expansion" ]; then
-> +		words[1]=3D$expansion
->  		completion_func=3D"_git_${expansion//-/_}"
->  		declare -f $completion_func >/dev/null && $completion_func
->  	fi
-> --=20
-> 1.8.4.2+fc1
->=20
->=20
+>  	len =3D strlen(git_dir);
+>  	if (n < len + 1)
+> @@ -60,9 +88,10 @@ static char *vsnpath(char *buf, size_t n, const ch=
+ar *fmt, va_list args)
+>  	memcpy(buf, git_dir, len);
+>  	if (len && !is_dir_sep(git_dir[len-1]))
+>  		buf[len++] =3D '/';
+> -	len +=3D vsnprintf(buf + len, n - len, fmt, args);
+> -	if (len >=3D n)
+> +	total_len =3D len + vsnprintf(buf + len, n - len, fmt, args);
+> +	if (total_len >=3D n)
+>  		goto bad;
+> +	adjust_git_path(buf, len);
+
+This is a minor tangent, but this part of the patch made me raise my
+eyebrow, wondering what Git-specific path mangler is doing in a
+function vsnpath that is named as if it is a lot more generic, until
+I read the change in context.
+
+The vnspath() is already Git-specific---it is a helper that is used
+to create a path inside the $GIT_DIR directory.
+
+We probably should do two things to clear things up:
+
+ - Right now, path.c has definitions of functions in this order:
+
+    char *mksnpath(char *buf, size_t n, const char *fmt, ...)
+    static char *vsnpath(char *buf, size_t n, const char *fmt, va_list =
+args)
+    char *git_snpath(char *buf, size_t n, const char *fmt, ...)
+    char *git_pathdup(const char *fmt, ...)
+    char *mkpathdup(const char *fmt, ...)
+    char *mkpath(const char *fmt, ...)
+    char *git_path(const char *fmt, ...)
+
+   The two functions mkpathdup() and mkpath() are not Git specific
+   at all.  They should be moved up to be grouped together with
+   mksnpath() that is also not Git-specific.
+
+ - Rename the static vsnpath() to further clarify that it is Git
+   specific.
