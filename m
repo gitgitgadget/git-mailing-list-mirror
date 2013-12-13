@@ -1,219 +1,116 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] contrib/git-credential-gnome-keyring.c: small stylistic cleanups
-Date: Fri, 13 Dec 2013 12:07:49 -0800
-Message-ID: <xmqqeh5gqzu2.fsf@gitster.dls.corp.google.com>
-References: <1386066764-49711-1-git-send-email-john@szakmeister.net>
-	<xmqq38m1292g.fsf@gitster.dls.corp.google.com>
-	<CAEBDL5Wb+fU=qX4eypt3SrAKQjWRqf9KkNDoutbt7fTsdk02rw@mail.gmail.com>
-	<xmqq8uvpskld.fsf@gitster.dls.corp.google.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH/POC 3/7] setup.c: add split-repo support to .git files
+Date: Fri, 13 Dec 2013 12:43:48 -0800
+Message-ID: <20131213204348.GX2311@google.com>
+References: <1386771333-32574-1-git-send-email-pclouds@gmail.com>
+ <1386771333-32574-4-git-send-email-pclouds@gmail.com>
+ <xmqqiousr4bg.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: John Szakmeister <john@szakmeister.net>
-X-From: git-owner@vger.kernel.org Fri Dec 13 21:07:59 2013
+Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Dec 13 21:43:57 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VrZ1i-00039w-Lm
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Dec 2013 21:07:59 +0100
+	id 1VrZaX-0003Sr-4o
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Dec 2013 21:43:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752796Ab3LMUHy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Dec 2013 15:07:54 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53179 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752799Ab3LMUHx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Dec 2013 15:07:53 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A31F158787;
-	Fri, 13 Dec 2013 15:07:52 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=JsJFf8BUWKPS3iCdgG/0SuS1e4A=; b=D49k4s
-	AxYAWfzfIh/eELW7Afxql9rOG//W/eODS6JcJB8LRl14wmPy4+4ry79+o7Rzrg/S
-	7sgmRqdNUicebHjte84PgNMiTDvioEUOubxKoP8M47gwE7Jj1GW0eaaaHyivUZtg
-	z9yOc+RO/JnFa1h2TFnF0omqO963FiOpewOLA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=FSYPuOwIdEx/qkM+TymYeUSYIdBrWIGi
-	p7nftGG5hEctBj2GMPGCgKRG7Dr2E7IjaNooN/BblNw32nEFS2rnczHKRhD9lG0b
-	lUYR/0qF6N7MJvKeKU8fh6HQbmxlgbypdUsOYd1ToDYj6DvaW2s/eOh4huSN5SxI
-	863j3rGoZFE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7982B58786;
-	Fri, 13 Dec 2013 15:07:52 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9A5C658785;
-	Fri, 13 Dec 2013 15:07:51 -0500 (EST)
-In-Reply-To: <xmqq8uvpskld.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Thu, 12 Dec 2013 15:41:50 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 3ED2F37A-6432-11E3-A49E-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752991Ab3LMUnx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Dec 2013 15:43:53 -0500
+Received: from mail-yh0-f41.google.com ([209.85.213.41]:52979 "EHLO
+	mail-yh0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752713Ab3LMUnw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Dec 2013 15:43:52 -0500
+Received: by mail-yh0-f41.google.com with SMTP id f11so1978104yha.0
+        for <git@vger.kernel.org>; Fri, 13 Dec 2013 12:43:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=FRPAH8Pqx76Q+c0qBv+eKcFIQCIS7WXHtkAqtC4iEYo=;
+        b=ZtD5yjXWD2lZRdSkHYZgODNKiLd052eWtHq+IINIw5zaNUTuAzKbjrkP42dbuqi2zd
+         Vg+BGiwT7jGEfCWEeG5ky6LNZ4PudpbKi95925K9tvb33Oi3GqFzsaR7mXgVKC7IhI3N
+         ByxqK4SntfyGwKAESkH7ggoxTyFsp4eRGxqMhQxQVfUouf1ozWEyNk/fmPA8afxv5U5x
+         fs9AAupYqekov5kAqzsw5I0kYubWksyjJHAxSs7fyq7xBpIzpGeHJLIC5nGLB2zU5aXF
+         sCR/1m6i9U4Xxh1lt02/LwKJ5odHGjcT1j/aDiTXEfxcNSw0DcfRGoMX/aBU7BDov9ZZ
+         29Wg==
+X-Received: by 10.236.228.137 with SMTP id f9mr4188370yhq.44.1386967432025;
+        Fri, 13 Dec 2013 12:43:52 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id w45sm5029107yhk.4.2013.12.13.12.43.50
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 13 Dec 2013 12:43:51 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <xmqqiousr4bg.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239264>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239265>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Junio C Hamano wrote:
 
-> John Szakmeister <john@szakmeister.net> writes:
->
->> On Mon, Dec 9, 2013 at 1:06 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> [snip]
->>>
->>> I thought we cast without SP after the (typename), i.e.
->>>
->>>         gpointer *data = (gpointer *)user_data;
->>
->> I've found a mixture of both in the code base, and the
->> CodingGuidelines doesn't say either way.  I'm happy to switch the file
->> to no SP after the typename if that's the project preference.
->
-> Somewhat arbitrary and unscientific, but between
->
->     git grep -e '[^f]([a-z_ ]* \*)[^ ]' -- \*.c | wc -l
->     422
->     $ git grep -e '[^f]([a-z_ ]* \*) ' -- \*.c | wc -l
->     233
->
-> I see that we favor "(struct blah *)apointer" over "(int *)
-> apointer".  Many hits in the latter grep come from compat/
-> that are borrowed pieces of code we tend not to style-fix.
->
-> The leading [^f] is crudely excludes "sizeof(typename *)"; it does
-> not change the resulting picture in a major way, though.
->
-> Thanks.
+>  - Do we want to record where the working tree directory is in
+>    $GIT_SUPER_DIR/repos/<id> somewhere?  Would it help to have such
+>    a record?
 
-Here is a squashable diff on top of your clean-up:
+That could be nice for the purpose of garbage collecting them.  I fear
+that for users it is too tempting to remove a worktree with "rm -rf"
+without considering the relationship from the parent repo that might
+be making walking through all reflogs slower or holding on to objects
+no one cares about any more.
 
- * A few more violations of the same "asterisk sticks to what is the
-   pointer, not the name of the type";
+I imagine it would work like this:
 
- * No SP between (typename) and castee;
+ 1. At worktree creation time, full path to the working tree directory
+    is stored in $GIT_SUPER_DIR/repos/<id>.
 
- * Opening parenthesis of "struct/union name" comes on the same line
-   as the "struct/union" keyword;
+ 2. "git gc" notices that the worktree is missing and writes a file
+    under $GIT_SUPER_DIR/repos/<id> with a timestamp, saying so.
 
- * Opening parenthesis of structured statements e.g. if/while/for/...
-   comes on the same line as the starting keyword;
+ 3. If the worktree still hasn't existed for a month, "git gc" deletes
+    the corresponding $GIT_SUPER_DIR/repos/<id> directory.
 
- * Body of structured controls e.g. if/while/... on a separate line.
+Problems:
 
-I may have caught all of them, but I wasn't trying to be super
-careful, so...
+ * What if I move my worktree with "mv"?  Then I still need the
+   corresponding $GIT_SUPER_DIR/repos/<id> directory, and nobody told
+   the GIT_SUPER_DIR about it.
 
+ * What if my worktree is on removable media (think "network
+   filesystem") and has just been temporarily unmounted instead of
+   deleted?
 
-diff --git a/contrib/credential/gnome-keyring/git-credential-gnome-keyring.c b/contrib/credential/gnome-keyring/git-credential-gnome-keyring.c
-index 1613404..d45503c 100644
---- a/contrib/credential/gnome-keyring/git-credential-gnome-keyring.c
-+++ b/contrib/credential/gnome-keyring/git-credential-gnome-keyring.c
-@@ -60,7 +60,7 @@
- #define gnome_keyring_memory_free gnome_keyring_free_password
- #define gnome_keyring_memory_strdup g_strdup
- 
--static const char* gnome_keyring_result_to_message(GnomeKeyringResult result)
-+static const char *gnome_keyring_result_to_message(GnomeKeyringResult result)
- {
- 	switch (result) {
- 	case GNOME_KEYRING_RESULT_OK:
-@@ -95,9 +95,9 @@ static const char* gnome_keyring_result_to_message(GnomeKeyringResult result)
- 
- static void gnome_keyring_done_cb(GnomeKeyringResult result, gpointer user_data)
- {
--	gpointer *data = (gpointer *) user_data;
--	int *done = (int *) data[0];
--	GnomeKeyringResult *r = (GnomeKeyringResult *) data[1];
-+	gpointer *data = (gpointer *)user_data;
-+	int *done = (int *)data[0];
-+	GnomeKeyringResult *r = (GnomeKeyringResult *)data[1];
- 
- 	*r = result;
- 	*done = 1;
-@@ -130,8 +130,7 @@ static GnomeKeyringResult gnome_keyring_item_delete_sync(const char *keyring, gu
- /*
-  * This credential struct and API is simplified from git's credential.{h,c}
-  */
--struct credential
--{
-+struct credential {
- 	char *protocol;
- 	char *host;
- 	unsigned short port;
-@@ -144,8 +143,7 @@ struct credential
- 
- typedef int (*credential_op_cb)(struct credential *);
- 
--struct credential_operation
--{
-+struct credential_operation {
- 	char *name;
- 	credential_op_cb op;
- };
-@@ -155,7 +153,7 @@ struct credential_operation
- /* ----------------- GNOME Keyring functions ----------------- */
- 
- /* create a special keyring option string, if path is given */
--static char* keyring_object(struct credential *c)
-+static char *keyring_object(struct credential *c)
- {
- 	if (!c->path)
- 		return NULL;
-@@ -168,7 +166,7 @@ static char* keyring_object(struct credential *c)
- 
- static int keyring_get(struct credential *c)
- {
--	char* object = NULL;
-+	char *object = NULL;
- 	GList *entries;
- 	GnomeKeyringNetworkPasswordData *password_data;
- 	GnomeKeyringResult result;
-@@ -202,7 +200,7 @@ static int keyring_get(struct credential *c)
- 	}
- 
- 	/* pick the first one from the list */
--	password_data = (GnomeKeyringNetworkPasswordData *) entries->data;
-+	password_data = (GnomeKeyringNetworkPasswordData *)entries->data;
- 
- 	gnome_keyring_memory_free(c->password);
- 	c->password = gnome_keyring_memory_strdup(password_data->password);
-@@ -302,7 +300,7 @@ static int keyring_erase(struct credential *c)
- 	}
- 
- 	/* pick the first one from the list (delete all matches?) */
--	password_data = (GnomeKeyringNetworkPasswordData *) entries->data;
-+	password_data = (GnomeKeyringNetworkPasswordData *)entries->data;
- 
- 	result = gnome_keyring_item_delete_sync(
- 		password_data->keyring, password_data->item_id);
-@@ -355,12 +353,11 @@ static int credential_read(struct credential *c)
- 
- 	key = buf = gnome_keyring_memory_alloc(1024);
- 
--	while (fgets(buf, 1024, stdin))
--	{
-+	while (fgets(buf, 1024, stdin)) {
- 		line_len = strlen(buf);
- 
- 		if (line_len && buf[line_len-1] == '\n')
--			buf[--line_len]='\0';
-+			buf[--line_len] = '\0';
- 
- 		if (!line_len)
- 			break;
-@@ -393,7 +390,8 @@ static int credential_read(struct credential *c)
- 		} else if (!strcmp(key, "password")) {
- 			gnome_keyring_memory_free(c->password);
- 			c->password = gnome_keyring_memory_strdup(value);
--			while (*value) *value++ = '\0';
-+			while (*value)
-+				*value++ = '\0';
- 		}
- 		/*
- 		 * Ignore other lines; we don't know what they mean, but
--- 
-1.8.5.1-251-gaaad5e7
+So maybe it would be nicer to:
+
+  i. When the worktree is on the same filesystem, keep a *hard link* to
+     some file in the worktree (e.g., the .git file).  If the link count
+     goes down, it is safe to remove the $GIT_SUPER_DIR/repos/<id>
+     directory.
+
+ ii. When the worktree is on another filesystem, always keep
+     $GIT_SUPER_DIR/repos/<id> unless the user decides to manually
+     remove it.  Provide documentation or a command to list basic
+     information about $GIT_SUPER_DIR/repos directories (path to
+     worktree, what branch they're on, etc).
+
+(i) doesn't require any futureproofing.  As soon as someone wants it,
+they can implement the check and fall back to (ii) for worktrees
+without the magic hard link.
+
+(ii) would benefit from recording the working tree directory as a
+possibly unreliable, human-friendly reminder.
+
+>  - How would this interact with core.worktree in .git/config of that
+>    "super" repository?
+
+Eek.
+
+Thanks,
+Jonathan
