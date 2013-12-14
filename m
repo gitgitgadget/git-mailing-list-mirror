@@ -1,129 +1,93 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH] l10n:gitk: Init Vietnamese translation
-Date: Sat, 14 Dec 2013 10:13:04 +0700
-Message-ID: <CACsJy8BAYeCDZkeNtGTKNGdYmWk=Ub8jV7uNhVU7bqZ1ko30kw@mail.gmail.com>
-References: <1386988922-10199-1-git-send-email-vnwildman@gmail.com>
+From: Antoine Pelisse <apelisse@gmail.com>
+Subject: Re: Unexpected cherry-pick behaviour
+Date: Sat, 14 Dec 2013 10:40:14 +0100
+Message-ID: <CALWbr2y1YDX0dzjpZoF8WL4+ND+8drurH+Wrf1wBs_-=0datOA@mail.gmail.com>
+References: <118044938ad8ebf6b069bcc1d220a986@matos-sorge.com>
+	<xmqqvbywts9d.fsf@gitster.dls.corp.google.com>
+	<7050e7272bb83d083a56a2c391228ed8@matos-sorge.com>
+	<CALWbr2zPPnDiv7oVBhnM9dSW=pfz2jUA_A5u_gk2ttgXTStvkw@mail.gmail.com>
+	<beee32a53ece8b839578703deb851eaa@matos-sorge.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git-malling-list <git@vger.kernel.org>,
-	Paul Mackerras <paulus@samba.org>
-To: Tran Ngoc Quan <vnwildman@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Dec 14 04:13:59 2013
+Cc: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
+	git-owner@vger.kernel.org
+To: Paulo Matos <paulo@matos-sorge.com>
+X-From: git-owner@vger.kernel.org Sat Dec 14 10:40:27 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vrffy-00067c-1A
-	for gcvg-git-2@plane.gmane.org; Sat, 14 Dec 2013 04:13:58 +0100
+	id 1Vrlhy-0002yE-Kk
+	for gcvg-git-2@plane.gmane.org; Sat, 14 Dec 2013 10:40:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753228Ab3LNDNg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 Dec 2013 22:13:36 -0500
-Received: from mail-qc0-f175.google.com ([209.85.216.175]:56434 "EHLO
-	mail-qc0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753098Ab3LNDNf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 13 Dec 2013 22:13:35 -0500
-Received: by mail-qc0-f175.google.com with SMTP id e9so2200762qcy.34
-        for <git@vger.kernel.org>; Fri, 13 Dec 2013 19:13:35 -0800 (PST)
+	id S1752372Ab3LNJkR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Dec 2013 04:40:17 -0500
+Received: from mail-pd0-f181.google.com ([209.85.192.181]:44680 "EHLO
+	mail-pd0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752166Ab3LNJkP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Dec 2013 04:40:15 -0500
+Received: by mail-pd0-f181.google.com with SMTP id p10so3444274pdj.12
+        for <multiple recipients>; Sat, 14 Dec 2013 01:40:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=CuRfUS5cWG6CbXWmlSI62iKl3UbyQnTQSX/9jwuvd70=;
-        b=vZOGw234+AJF4r9t+37nsmPr8VkGFICykA3ECHj0avZbOgIqArl2kR+eab6FdYy6Ap
-         CCJqrjJTNahGEPFMAR2/CM57ZuxIYFrd+BIAru8h/qUuqLOFQJyVX/0SpdhD7bMuFnKz
-         PISxwNpYEdy99padH3XFJy9mjUguRdmmQu/8SKQvpgG+Hb/Z8T/QY1x+ORhc/bhDlKp/
-         HjdNOGcZtwsz5EBQLySUzefRD7EZWVpiN2g+FG4Dy2VT/m355U8E2UwBkkY9uCzOO6V4
-         ZwDYPMcy1Zcu0Gm8GdAFnQFtwMviPfgPGXBBcByARhcJ13wAjnzp930B1746pyoStF+6
-         Aumw==
-X-Received: by 10.224.51.74 with SMTP id c10mr10830234qag.7.1386990815020;
- Fri, 13 Dec 2013 19:13:35 -0800 (PST)
-Received: by 10.96.124.101 with HTTP; Fri, 13 Dec 2013 19:13:04 -0800 (PST)
-In-Reply-To: <1386988922-10199-1-git-send-email-vnwildman@gmail.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=U3YKuybtc0o0xvfUSfdytOiqH8Y+t0GBTXOzECaEdxA=;
+        b=MQM4T9mPFrjzzEVUdWnAasU3XaChIIZ3fsG+mf2T153hgl+WrafnKBS6Xh6phGjhPE
+         fa6g2N7isqT52OHCltpgAkDIr7V6rSvVGNy80SaV+YDxvKwZ7TefGUeFPBxdNE9yxLnv
+         pS9lBDFGvPhtMfSy2PI1h5BS2GzawkwUY5ClcNCHZ3vy0EwO8Uo0G0k3gOgPzxMQRWkD
+         d9DZ0Bf02R3EzwbFU2qQ36RYAQI7gr/dMQW1f5rR9azJN+FKGml6n5wpkPPTa4tvfXcw
+         nVSAx/rxOw9zRgPOTYfp5PjF311Icl+LpNhWsMLB6saJh6Iu1KIIQX5jsHawCIP4dMHo
+         JIZQ==
+X-Received: by 10.66.149.135 with SMTP id ua7mr8629204pab.124.1387014014845;
+ Sat, 14 Dec 2013 01:40:14 -0800 (PST)
+Received: by 10.70.124.228 with HTTP; Sat, 14 Dec 2013 01:40:14 -0800 (PST)
+In-Reply-To: <beee32a53ece8b839578703deb851eaa@matos-sorge.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239279>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239280>
 
-You should have copied Paul, gitk maintainer. I think Junio only pulls
-gitk patches from him, not random ones on the list. +Paul as I have
-something to say about gitk itself, not just the translations.
+On Wed, Dec 11, 2013 at 12:19 PM, Paulo Matos <paulo@matos-sorge.com> wrote:
+> On 11/12/2013 11:09, Antoine Pelisse wrote:
+>>>
+>>>
+>>> I don't know how to interpret the fact that the line you sent (with the
+>>> obvious --conflicts being --conflict) outputs nothing...
+>>
+>>
+>> That is expected. git-checkout with this option [1] will reset the
+>> conflict on gcc/tree-ssa-threadedge.c file to the initial conflict
+>> state, and use the diff3 markers. You should have a new look at that
+>> file as you will now be able to see the "ancestor" in the conflict.
+>>
+>> [1] You can have a look either at git-checkout manpage or here:
+>> http://git-scm.com/docs/git-checkout, especially --merge and
+>> --conflict options.
+>> --
+>
+>
+> Got it, but still not helpful as git is still modifying code out of the
+> conflicting zone.
 
-2013/12/14 Tran Ngoc Quan <vnwildman@gmail.com>:
-> +#: gitk:494 gitk:4429
-> +msgid "Reading commits..."
-> +msgstr "=C4=90ang =C4=91=E1=BB=8Dc c=C3=A1c l=E1=BA=A7n chuy=E1=BB=83=
-n giao..."
-> +
-> +#: gitk:497 gitk:1635 gitk:4432
-> +msgid "No commits selected"
-> +msgstr "Ch=C6=B0a ch=E1=BB=8Dn c=C3=A1c l=E1=BA=A7n chuy=E1=BB=83n g=
-iao"
-> +
-> +#: gitk:1738
-> +msgid "No commit information available"
-> +msgstr "Kh=C3=B4ng c=C3=B3 th=C3=B4ng tin v=E1=BB=81 l=E1=BA=A7n chu=
-y=E1=BB=83n giao n=C3=A0o"
+Actually it didn't modify out of the conflicting zone.
+This is because you are having a look at a combine-diff which tries to
+show both how it changed master *and* the cherry-picked patch at the
+same time. If you only want to see the diff applied to master, you
+should run:
 
-I'd rather keep "commit" untranslated until we find a Vietnamese word
-that fits the concept. I see you keep "commit" in many strings down,
-perhaps keep them here too for consistent?
+    $ git diff --ours
 
-> +#: gitk:2066
-> +msgid "File"
-> +msgstr "Ch=C3=ADnh"
+You can also have a look at what is currently being applied:
 
-This keeps bugging me. Why do GUI apps always name the first menu
-"File" even if it has nothing to do with files? Should gitk rename
-"File" to "General", "Main" or something?
+    $ git diff :1:gcc/tree-ssa-threadedge.c :3:gcc/tree-ssa-threadedge.c
 
-> +#: gitk:2287 gitk:4757 gitk:6621
-> +msgid "IgnCase"
-> +msgstr "BquaHt"
-> +
-> +#: gitk:2287 gitk:4639 gitk:4755 gitk:6617
-> +msgid "Regexp"
-> +msgstr "BTCQ"
+By the way, does anybody know a better way to do that ? I happen to do
+that quite a lot when fixing complex conflicts and the command is
+quite inconvenient (I always end-up forgetting which numbers to use,
+etc..).
 
-This is in a drop box whose width is auto adjusted to fit the text. I
-think you could translate as if the original strings are "Ignore case"
-and "Regular expression" (and perhaps gitk should update "IgnCase" to
-"Ignore Case" as well)
-
-> +#: gitk:2291 gitk:4774 gitk:6684 gitk:7220
-> +msgid "Committer"
-> +msgstr "Ng=C6=B0=E1=BB=9Di chuy=E1=BB=83n giao"
-
-"Ng=C6=B0=E1=BB=9Di commit" may be more inline if you keep "commit" uns=
-tranlated.
-
-> +#: gitk:2330
-> +msgid "Diff"
-> +msgstr "Diff"
-
-"So s=C3=A1nh" maybe?
-
-> +#: gitk:3991
-"> +msgid "Committer:"
-> +msgstr "Ng=C6=B0=E1=BB=9Di g=E1=BB=ADi:"
-
-Inconsistent with the previous translation above.
-
-> +#: gitk:11235
-> +#, tcl-format
-> +msgid "Maximum graph width (% of pane)"
-> +msgstr "=C4=90=E1=BB=99 r=E1=BB=99ng bi=E1=BB=83u =C4=91=E1=BB=93 t=E1=
-=BB=91i =C4=91a (% c=E1=BB=A7a b=E1=BA=A3ng hi=E1=BB=83n)"
-
-Not sure what "b=E1=BA=A3ng hi=E1=BB=83n" means, perhaps "b=E1=BA=A3ng"=
- is enough?
-
-> +#: gitk:11341
-> +msgid "Main font"
-> +msgstr "C=E1=BB=A1 ph=C3=B4ng ch=E1=BB=AF ch=C3=ADnh"
-
-Remove "C=E1=BB=A1"? There's no "size" in the original string.
---=20
-Duy
+Hope that helps,
+Antoine
