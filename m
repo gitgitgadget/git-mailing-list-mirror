@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v2 13/21] setup: support $GIT_SUPER_DIR as well as super .git files
-Date: Sat, 14 Dec 2013 17:54:59 +0700
-Message-ID: <1387018507-21999-14-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v2 14/21] checkout: support checking out into a new working directory
+Date: Sat, 14 Dec 2013 17:55:00 +0700
+Message-ID: <1387018507-21999-15-git-send-email-pclouds@gmail.com>
 References: <1386771333-32574-1-git-send-email-pclouds@gmail.com>
  <1387018507-21999-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
@@ -13,526 +13,264 @@ Cc: Jonathan Niedier <jrnieder@gmail.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 14 11:52:36 2013
+X-From: git-owner@vger.kernel.org Sat Dec 14 11:52:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vrmpn-0001Ar-0q
-	for gcvg-git-2@plane.gmane.org; Sat, 14 Dec 2013 11:52:35 +0100
+	id 1Vrmpt-0001EJ-2E
+	for gcvg-git-2@plane.gmane.org; Sat, 14 Dec 2013 11:52:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753543Ab3LNKwb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 14 Dec 2013 05:52:31 -0500
-Received: from mail-pa0-f54.google.com ([209.85.220.54]:55660 "EHLO
-	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753300Ab3LNKw3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Dec 2013 05:52:29 -0500
-Received: by mail-pa0-f54.google.com with SMTP id rd3so1070927pab.27
-        for <git@vger.kernel.org>; Sat, 14 Dec 2013 02:52:29 -0800 (PST)
+	id S1753552Ab3LNKwh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 14 Dec 2013 05:52:37 -0500
+Received: from mail-pd0-f174.google.com ([209.85.192.174]:59844 "EHLO
+	mail-pd0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753300Ab3LNKwg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Dec 2013 05:52:36 -0500
+Received: by mail-pd0-f174.google.com with SMTP id y13so3482892pdi.19
+        for <git@vger.kernel.org>; Sat, 14 Dec 2013 02:52:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=Sq8EMfcPCOzQ8Ed+ii6j5FCdtIADpGaapYw+Wtd6m6A=;
-        b=yQPiMPptqvc7Nj7icGUSuKek+xTfSZcaTV/8Wvb4pfUDX/1hMVybBTVRpruhojkNNv
-         qOZswd3OLrYkNkJYUpQfy2ryzTTVOq3Rg1kFQHoUt2HJPyNyF7IvHEzqdpG7ynmBpefU
-         lpmuLq9MoxlNifyvgejic6OndnkFRtrl8UucLW+O24V/cNbMqm9Etc8v51FJQltC9elS
-         qqNoOFM+nKYAOQW6kyIWSnITAuy3Qwy3762AZm7e6sFzMjE6KOOARriA+GFcm1BC1GGs
-         ceAEYMdpteywtlIAGDn0wI7YrBffEypEb8/+HQ8ERXGZqCWmCpqGREBw1WR/DLwyzkgu
-         yb/Q==
-X-Received: by 10.68.170.225 with SMTP id ap1mr8663938pbc.117.1387018349348;
-        Sat, 14 Dec 2013 02:52:29 -0800 (PST)
+        bh=vbW8F5PkkeDqoZdceCs7I7E8LjtUAnqTudoRfm4/Ku8=;
+        b=I7gmw8FDMluc7epcqUK8FVnTU0tfNl2CpEMhf/88r16iUy6SLXsdNLPtemRKdtHk5x
+         ws5aHnl0kPa448I+WOkCWNJGWQykNDc49Y7bYhFHbyYqWbNf0LjFLP4oogkFKq3SYtOw
+         tU0QzfWE2xqGOxtbr3/pAL+tXZgrGaOLS5suf7JymiNMgSn8DhaLZrg+CCJ9S2BuoN0L
+         oJDJhev1Wx3kTyVzGvqgIlbq6+p73dp8uy+sOtB4ATEU2HaqCSTbe+8A5YoSYMI20ykt
+         wMOOVVBfLCE+9YBsS4caubmhoT2+uBWLkbQsbox3GsDiCCK53JCsIVn6vJg2NXbM4mUQ
+         qPAA==
+X-Received: by 10.66.197.135 with SMTP id iu7mr8573458pac.149.1387018355594;
+        Sat, 14 Dec 2013 02:52:35 -0800 (PST)
 Received: from lanh ([115.73.245.131])
-        by mx.google.com with ESMTPSA id ik1sm11439330pbc.9.2013.12.14.02.52.26
+        by mx.google.com with ESMTPSA id qv8sm11414816pbc.31.2013.12.14.02.52.32
         for <multiple recipients>
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 14 Dec 2013 02:52:28 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Sat, 14 Dec 2013 17:57:21 +0700
+        Sat, 14 Dec 2013 02:52:34 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Sat, 14 Dec 2013 17:57:28 +0700
 X-Mailer: git-send-email 1.8.5.1.77.g42c48fa
 In-Reply-To: <1387018507-21999-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239295>
-
-The same rules for git repo setup apply except:
-
-- detect super .git files, set $GIT_SUPER_DIR accordingly
-
-- if $GIT_SUPER_DIR is set (or specified by super .git files), look
-  for non-worktree stuff in this directory instead of $GIT_DIR. This
-  mostly affects is_git_directory() and check_repository_format()
-
-- the worktree setting precedence goes from lower to higher:
-  core.worktree, GIT_SUPER_DIR then GIT_WORK_TREE
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239296>
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- Documentation/config.txt               |  3 +-
- Documentation/gitrepository-layout.txt | 10 ++++
- builtin/rev-parse.c                    |  6 +++
- cache.h                                |  1 +
- environment.c                          | 11 +++++
- setup.c                                | 89 ++++++++++++++++++++++++--=
---------
- t/t1501-worktree.sh                    | 52 ++++++++++++++++++++
- t/t1510-repo-setup.sh                  |  1 +
- trace.c                                |  1 +
- 9 files changed, 147 insertions(+), 27 deletions(-)
+ Documentation/git-checkout.txt         |  6 +++
+ Documentation/gitrepository-layout.txt |  3 +-
+ builtin/checkout.c                     | 94 ++++++++++++++++++++++++++=
+++++++++
+ path.c                                 |  3 +-
+ 4 files changed, 104 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index a405806..df19aa8 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -381,7 +381,8 @@ false), while all other repositories are assumed to=
- be bare (bare
+diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkou=
+t.txt
+index 91294f8..06076c8 100644
+--- a/Documentation/git-checkout.txt
++++ b/Documentation/git-checkout.txt
+@@ -225,6 +225,12 @@ This means that you can use `git checkout -p` to s=
+electively discard
+ edits from your current working tree. See the ``Interactive Mode''
+ section of linkgit:git-add[1] to learn how to operate the `--patch` mo=
+de.
 =20
- core.worktree::
- 	Set the path to the root of the working tree.
--	This can be overridden by the GIT_WORK_TREE environment
-+	This can be overridden by the GIT_WORK_TREE
-+	or GIT_SUPER_DIR environment
- 	variable and the '--work-tree' command line option.
- 	The value can be an absolute path or relative to the path to
- 	the .git directory, which is either specified by --git-dir
++--to=3D<path>::
++	Check out a new branch in a separate working directory at
++	`<path>`. A new repository is initialized at `<path>` that
++	shares everything with the current repository except working
++	directory specific files.
++
+ <branch>::
+ 	Branch to checkout; if it refers to a branch (i.e., a name that,
+ 	when prepended with "refs/heads/", is a valid ref), then that
 diff --git a/Documentation/gitrepository-layout.txt b/Documentation/git=
 repository-layout.txt
-index aa03882..7ce31d4 100644
+index 7ce31d4..3c6149e 100644
 --- a/Documentation/gitrepository-layout.txt
 +++ b/Documentation/gitrepository-layout.txt
-@@ -29,6 +29,10 @@ containing superproject to `git checkout` a branch t=
-hat does not
- have the submodule.  The `checkout` has to remove the entire
- submodule working tree, without losing the submodule repository.
+@@ -222,7 +222,8 @@ repos/<id>::
+ 	If a repository's .git is a file contains two lines `gitsuper:
+ 	<path>` and `repo: <id>`. The directory `<path>/repos/<id>`
+ 	contains the real non-shared part of .git directory of the
+-	repository in question (e.g. HEAD or index).
++	repository in question (e.g. HEAD or index). Such .git files
++	are created by `git checkout --to`.
 =20
-+If the text file contains `gitsuper: <path>`, this is a "working
-+directory only" repository, attached to another repository and share
-+everything with the attached repository except HEAD and the index.
-+
- These things may exist in a Git repository.
-=20
- objects::
-@@ -214,6 +218,12 @@ shallow::
- modules::
- 	Contains the git-repositories of the submodules.
-=20
-+repos/<id>::
-+	If a repository's .git is a file contains two lines `gitsuper:
-+	<path>` and `repo: <id>`. The directory `<path>/repos/<id>`
-+	contains the real non-shared part of .git directory of the
-+	repository in question (e.g. HEAD or index).
-+
  SEE ALSO
  --------
- linkgit:git-init[1],
-diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
-index 1d9ecaf..f5f766a 100644
---- a/builtin/rev-parse.c
-+++ b/builtin/rev-parse.c
-@@ -725,6 +725,12 @@ int cmd_rev_parse(int argc, const char **argv, con=
-st char *prefix)
- 				printf("%s%s.git\n", cwd, len && cwd[len-1] !=3D '/' ? "/" : "");
- 				continue;
- 			}
-+			if (!strcmp(arg, "--git-super-dir")) {
-+				const char *gitdir =3D getenv(GIT_SUPER_DIR_ENVIRONMENT);
-+				if (gitdir)
-+					puts(gitdir);
-+				continue;
-+			}
- 			if (!strcmp(arg, "--resolve-git-dir")) {
- 				const char *gitdir =3D resolve_gitdir(argv[i+1]);
- 				if (!gitdir)
-diff --git a/cache.h b/cache.h
-index f85ee70..4c09223 100644
---- a/cache.h
-+++ b/cache.h
-@@ -406,6 +406,7 @@ extern char *get_object_directory(void);
- extern char *get_index_file(void);
- extern char *get_graft_file(void);
- extern int set_git_dir(const char *path);
-+extern int set_git_dir_super(const char *path, const char *super);
- extern const char *get_git_namespace(void);
- extern const char *strip_namespace(const char *namespaced_ref);
- extern const char *get_git_work_tree(void);
-diff --git a/environment.c b/environment.c
-index cbfa879..5cbbe11 100644
---- a/environment.c
-+++ b/environment.c
-@@ -284,6 +284,17 @@ int set_git_dir(const char *path)
- 	return 0;
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 904fd71..95a1a61 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -48,6 +48,9 @@ struct checkout_opts {
+ 	const char *prefix;
+ 	struct pathspec pathspec;
+ 	struct tree *source_tree;
++
++	const char *new_worktree;
++	const char **saved_argv;
+ };
+=20
+ static int post_checkout_hook(struct commit *old, struct commit *new,
+@@ -250,6 +253,9 @@ static int checkout_paths(const struct checkout_opt=
+s *opts,
+ 		die(_("Cannot update paths and switch to branch '%s' at the same tim=
+e."),
+ 		    opts->new_branch);
+=20
++	if (opts->new_worktree)
++		die(_("'%s' cannot be used with updating paths"), "--to");
++
+ 	if (opts->patch_mode)
+ 		return run_add_interactive(revision, "--patch=3Dcheckout",
+ 					   &opts->pathspec);
+@@ -808,6 +814,82 @@ static int switch_branches(const struct checkout_o=
+pts *opts,
+ 	return ret || writeout_error;
  }
 =20
-+int set_git_dir_super(const char *path, const char *super)
++static void write_to_file(const char *path, const char *fmt, ...)
 +{
-+	if (super && super !=3D path &&
-+	    setenv(GIT_SUPER_DIR_ENVIRONMENT, super, 1))
-+		return error("Could not set GIT_SUPER_DIR to '%s'", super);
-+	if (setenv(GIT_DIR_ENVIRONMENT, path, 1))
-+		return error("Could not set GIT_DIR to '%s'", path);
-+	setup_git_env();
-+	return 0;
++	va_list params;
++	FILE *fp =3D fopen(path, "w");
++	if (!fp)
++		die_errno(_("could not create file '%s'"), path);
++	va_start(params, fmt);
++	vfprintf(fp, fmt, params);
++	va_end(params);
++	fclose(fp);
 +}
 +
- const char *get_log_output_encoding(void)
- {
- 	return git_log_output_encoding ? git_log_output_encoding
-diff --git a/setup.c b/setup.c
-index 397eecc..7ccb1f8 100644
---- a/setup.c
-+++ b/setup.c
-@@ -243,7 +243,8 @@ int is_inside_work_tree(void)
-=20
- void setup_work_tree(void)
- {
--	const char *work_tree, *git_dir;
-+	const char *work_tree, *git_dir, *git_super_dir;
-+	char *super_new =3D NULL, *super_relative =3D NULL;
- 	static int initialized =3D 0;
-=20
- 	if (initialized)
-@@ -252,6 +253,9 @@ void setup_work_tree(void)
- 	git_dir =3D get_git_dir();
- 	if (!is_absolute_path(git_dir))
- 		git_dir =3D real_path(get_git_dir());
-+	git_super_dir =3D get_git_super_dir();
-+	if (git_super_dir && !is_absolute_path(git_super_dir))
-+		git_super_dir =3D super_new =3D xstrdup(real_path(get_git_super_dir(=
-)));
- 	if (!work_tree || chdir(work_tree))
- 		die("This operation must be run in a work tree");
-=20
-@@ -262,8 +266,16 @@ void setup_work_tree(void)
- 	if (getenv(GIT_WORK_TREE_ENVIRONMENT))
- 		setenv(GIT_WORK_TREE_ENVIRONMENT, ".", 1);
-=20
--	set_git_dir(remove_leading_path(git_dir, work_tree));
-+	if (git_super_dir) {
-+		super_relative =3D xstrdup(remove_leading_path(git_super_dir, work_t=
-ree));
-+		git_super_dir =3D super_relative;
-+	}
++static int checkout_new_worktree(const struct checkout_opts *opts,
++				 struct branch_info *new)
++{
++	struct strbuf sb_git =3D STRBUF_INIT, sb_repo =3D STRBUF_INIT;
++	struct strbuf sb =3D STRBUF_INIT;
++	const char *path =3D opts->new_worktree;
++	struct stat st;
++	const char *name;
++	struct child_process cp;
++	int counter =3D 0, len;
 +
-+	set_git_dir_super(remove_leading_path(git_dir, work_tree),
-+			  git_super_dir);
- 	initialized =3D 1;
-+	free(super_new);
-+	free(super_relative);
- }
-=20
- static int check_repository_format_gently(const char *gitdir, int *non=
-git_ok)
-@@ -386,24 +398,30 @@ const char *read_gitfile(const char *path)
-=20
-=20
- static const char *setup_explicit_git_dir(const char *gitdirenv,
-+					  const char *super,
- 					  char *cwd, int len,
- 					  int *nongit_ok)
- {
- 	const char *work_tree_env =3D getenv(GIT_WORK_TREE_ENVIRONMENT);
- 	const char *worktree;
--	char *gitfile;
-+	char *gitfile, *super_new =3D NULL;
- 	int offset;
-=20
- 	if (PATH_MAX - 40 < strlen(gitdirenv))
- 		die("'$%s' too big", GIT_DIR_ENVIRONMENT);
-=20
--	gitfile =3D (char*)read_gitfile(gitdirenv);
-+	if (super)
-+		gitfile =3D (char*)read_gitfile(gitdirenv);
-+	else {
-+		gitfile =3D (char*)read_gitfile_super(gitdirenv, &super_new);
-+		super =3D super_new;
-+	}
- 	if (gitfile) {
- 		gitfile =3D xstrdup(gitfile);
- 		gitdirenv =3D gitfile;
- 	}
-=20
--	if (!is_git_directory(gitdirenv)) {
-+	if (!is_git_directory_super(gitdirenv, super)) {
- 		if (nongit_ok) {
- 			*nongit_ok =3D 1;
- 			goto done_null;
-@@ -411,7 +429,7 @@ static const char *setup_explicit_git_dir(const cha=
-r *gitdirenv,
- 		die("Not a git repository: '%s'", gitdirenv);
- 	}
-=20
--	if (check_repository_format_gently(gitdirenv, nongit_ok))
-+	if (check_repository_format_gently(super ? super : gitdirenv, nongit_=
-ok))
- 		goto done_null;
-=20
- 	/* #3, #7, #11, #15, #19, #23, #27, #31 (see t1510) */
-@@ -422,10 +440,10 @@ static const char *setup_explicit_git_dir(const c=
-har *gitdirenv,
- 			die("core.bare and core.worktree do not make sense");
-=20
- 		/* #18, #26 */
--		set_git_dir(gitdirenv);
-+		set_git_dir_super(gitdirenv, super);
- 		goto done_null;
- 	}
--	else if (git_work_tree_cfg) { /* #6, #14 */
-+	else if (git_work_tree_cfg && !super) { /* #6, #14 */
- 		if (is_absolute_path(git_work_tree_cfg))
- 			set_git_work_tree(git_work_tree_cfg);
- 		else {
-@@ -443,7 +461,7 @@ static const char *setup_explicit_git_dir(const cha=
-r *gitdirenv,
- 	}
- 	else if (!git_env_bool(GIT_IMPLICIT_WORK_TREE_ENVIRONMENT, 1)) {
- 		/* #16d */
--		set_git_dir(gitdirenv);
-+		set_git_dir_super(gitdirenv, super);
- 		goto done_null;
- 	}
- 	else /* #2, #10 */
-@@ -454,43 +472,47 @@ static const char *setup_explicit_git_dir(const c=
-har *gitdirenv,
-=20
- 	/* both get_git_work_tree() and cwd are already normalized */
- 	if (!strcmp(cwd, worktree)) { /* cwd =3D=3D worktree */
--		set_git_dir(gitdirenv);
-+		set_git_dir_super(gitdirenv, super);
- 		goto done_null;
- 	}
-=20
- 	offset =3D dir_inside_of(cwd, worktree);
- 	if (offset >=3D 0) {	/* cwd inside worktree? */
--		set_git_dir(real_path(gitdirenv));
-+		set_git_dir_super(real_path(gitdirenv), super);
- 		if (chdir(worktree))
- 			die_errno("Could not chdir to '%s'", worktree);
- 		cwd[len++] =3D '/';
- 		cwd[len] =3D '\0';
- 		free(gitfile);
-+		free(super_new);
- 		return cwd + offset;
- 	}
-=20
- 	/* cwd outside worktree */
--	set_git_dir(gitdirenv);
-+	set_git_dir_super(gitdirenv, super);
-=20
- done_null:
- 	free(gitfile);
-+	free(super_new);
- 	return NULL;
- }
-=20
- static const char *setup_discovered_git_dir(const char *gitdir,
-+					    const char *super,
- 					    char *cwd, int offset, int len,
- 					    int *nongit_ok)
- {
--	if (check_repository_format_gently(gitdir, nongit_ok))
-+	if (check_repository_format_gently(super ? super : gitdir, nongit_ok)=
-)
- 		return NULL;
-=20
- 	/* --work-tree is set without --git-dir; use discovered one */
--	if (getenv(GIT_WORK_TREE_ENVIRONMENT) || git_work_tree_cfg) {
-+	if (getenv(GIT_WORK_TREE_ENVIRONMENT) ||
-+	    (git_work_tree_cfg && !super)) {
- 		if (offset !=3D len && !is_absolute_path(gitdir))
- 			gitdir =3D xstrdup(real_path(gitdir));
- 		if (chdir(cwd))
- 			die_errno("Could not come back to cwd");
--		return setup_explicit_git_dir(gitdir, cwd, len, nongit_ok);
-+		return setup_explicit_git_dir(gitdir, super, cwd, len, nongit_ok);
- 	}
-=20
- 	/* #16.2, #17.2, #20.2, #21.2, #24, #25, #28, #29 (see t1510) */
-@@ -503,8 +525,8 @@ static const char *setup_discovered_git_dir(const c=
-har *gitdir,
-=20
- 	/* #0, #1, #5, #8, #9, #12, #13 */
- 	set_git_work_tree(".");
--	if (strcmp(gitdir, DEFAULT_GIT_DIR_ENVIRONMENT))
--		set_git_dir(gitdir);
-+	if (strcmp(gitdir, DEFAULT_GIT_DIR_ENVIRONMENT) || super)
-+		set_git_dir_super(gitdir, super);
- 	inside_git_dir =3D 0;
- 	inside_work_tree =3D 1;
- 	if (offset =3D=3D len)
-@@ -534,7 +556,7 @@ static const char *setup_bare_git_dir(char *cwd, in=
-t offset, int len, int *nongi
- 		gitdir =3D offset =3D=3D len ? "." : xmemdupz(cwd, offset);
- 		if (chdir(cwd))
- 			die_errno("Could not come back to cwd");
--		return setup_explicit_git_dir(gitdir, cwd, len, nongit_ok);
-+		return setup_explicit_git_dir(gitdir, NULL, cwd, len, nongit_ok);
- 	}
-=20
- 	inside_git_dir =3D 1;
-@@ -613,8 +635,8 @@ static const char *setup_git_directory_gently_1(int=
- *nongit_ok)
- 	const char *env_ceiling_dirs =3D getenv(CEILING_DIRECTORIES_ENVIRONME=
-NT);
- 	struct string_list ceiling_dirs =3D STRING_LIST_INIT_DUP;
- 	static char cwd[PATH_MAX + 1];
--	const char *gitdirenv, *ret;
--	char *gitfile;
-+	const char *gitdirenv, *ret, *super;
-+	char *gitfile, *super_new =3D NULL;
- 	int len, offset, offset_parent, ceil_offset =3D -1;
- 	dev_t current_device =3D 0;
- 	int one_filesystem =3D 1;
-@@ -637,8 +659,10 @@ static const char *setup_git_directory_gently_1(in=
-t *nongit_ok)
- 	 * validation.
- 	 */
- 	gitdirenv =3D getenv(GIT_DIR_ENVIRONMENT);
-+	super =3D getenv(GIT_SUPER_DIR_ENVIRONMENT);
- 	if (gitdirenv)
--		return setup_explicit_git_dir(gitdirenv, cwd, len, nongit_ok);
-+		return setup_explicit_git_dir(gitdirenv, super,
-+					      cwd, len, nongit_ok);
-=20
- 	if (env_ceiling_dirs) {
- 		int empty_entry_found =3D 0;
-@@ -668,25 +692,38 @@ static const char *setup_git_directory_gently_1(i=
-nt *nongit_ok)
- 	if (one_filesystem)
- 		current_device =3D get_device_or_die(".", NULL, 0);
- 	for (;;) {
--		gitfile =3D (char*)read_gitfile(DEFAULT_GIT_DIR_ENVIRONMENT);
-+		if (super)
-+			gitfile =3D (char*)read_gitfile(DEFAULT_GIT_DIR_ENVIRONMENT);
-+		else {
-+			gitfile =3D (char*)read_gitfile_super(DEFAULT_GIT_DIR_ENVIRONMENT,
-+							    &super_new);
-+			super =3D super_new;
++	if (!new->commit)
++		die(_("no branch specified"));
++
++	len =3D strlen(path);
++	if (!len || is_dir_sep(path[len - 1]))
++		die(_("'--to' argument '%s' cannot end with a slash"), path);
++
++	for (name =3D path + len - 1; name > path; name--)
++		if (is_dir_sep(*name)) {
++			name++;
++			break;
 +		}
- 		if (gitfile)
- 			gitdirenv =3D gitfile =3D xstrdup(gitfile);
- 		else {
--			if (is_git_directory(DEFAULT_GIT_DIR_ENVIRONMENT))
-+			if (is_git_directory_super(DEFAULT_GIT_DIR_ENVIRONMENT, super))
- 				gitdirenv =3D DEFAULT_GIT_DIR_ENVIRONMENT;
- 		}
++	strbuf_addstr(&sb_repo, git_path("repos/%s", name));
++	len =3D sb_repo.len;
++	if (safe_create_leading_directories_const(sb_repo.buf))
++		die_errno(_("could not create leading directories of '%s'"),
++			  sb_repo.buf);
++	while (!stat(sb_repo.buf, &st)) {
++		counter++;
++		strbuf_setlen(&sb_repo, len);
++		strbuf_addf(&sb_repo, "%d", counter);
++	}
++	name =3D sb_repo.buf + len - strlen(name);
++	if (mkdir(sb_repo.buf, 0777))
++		die_errno(_("could not create directory of '%s'"), sb_repo.buf);
++
++	strbuf_addf(&sb_git, "%s/.git", path);
++	if (safe_create_leading_directories_const(sb_git.buf))
++		die_errno(_("could not create leading directories of '%s'"),
++			  sb_git.buf);
++
++	write_to_file(sb_git.buf, "gitsuper: %s\ngitdir: %s\n",
++		      real_path(get_git_dir()), name);
++	strbuf_addf(&sb, "%s/HEAD", sb_repo.buf);
++	write_to_file(sb.buf, "%s\n", sha1_to_hex(new->commit->object.sha1));
++
++	if (!opts->quiet)
++		fprintf_ln(stderr, _("Enter %s (identifier %s)"), path, name);
++
++	/*
++	 * Rerun checkout in the new worktree. This way is safer than
++	 * set_git_dir() because a path relative to cwd could have
++	 * been cached somewhere undetected.
++	 */
++	setenv("GIT_CHECKOUT_NEW_WORKTREE", "1", 1);
++	setenv(GIT_DIR_ENVIRONMENT, sb_git.buf, 1);
++	setenv(GIT_WORK_TREE_ENVIRONMENT, path, 1);
++	memset(&cp, 0, sizeof(cp));
++	cp.git_cmd =3D 1;
++	cp.argv =3D opts->saved_argv;
++	return run_command(&cp);
++}
++
+ static int git_checkout_config(const char *var, const char *value, voi=
+d *cb)
+ {
+ 	if (!strcmp(var, "diff.ignoresubmodules")) {
+@@ -1069,6 +1151,9 @@ static int checkout_branch(struct checkout_opts *=
+opts,
+ 		die(_("Cannot switch branch to a non-commit '%s'"),
+ 		    new->name);
 =20
- 		if (gitdirenv) {
--			ret =3D setup_discovered_git_dir(gitdirenv,
-+			ret =3D setup_discovered_git_dir(gitdirenv, super,
- 						       cwd, offset, len,
- 						       nongit_ok);
- 			free(gitfile);
-+			free(super_new);
- 			return ret;
- 		}
- 		free(gitfile);
++	if (opts->new_worktree)
++		return checkout_new_worktree(opts, new);
++
+ 	if (!new->commit && opts->new_branch) {
+ 		unsigned char rev[20];
+ 		int flag;
+@@ -1111,6 +1196,8 @@ int cmd_checkout(int argc, const char **argv, con=
+st char *prefix)
+ 			 N_("do not limit pathspecs to sparse entries only")),
+ 		OPT_HIDDEN_BOOL(0, "guess", &dwim_new_local_branch,
+ 				N_("second guess 'git checkout no-such-branch'")),
++		OPT_STRING(0, "to", &opts.new_worktree, N_("path"),
++			   N_("check a branch out in a separate working directory")),
+ 		OPT_END(),
+ 	};
 =20
--		if (is_git_directory("."))
--			return setup_bare_git_dir(cwd, offset, len, nongit_ok);
-+		if (is_git_directory(".")) {
-+			ret =3D setup_bare_git_dir(cwd, offset, len, nongit_ok);
-+			free(super_new);
-+			return ret;
-+		}
-+
-+		free(super_new);
-+		super_new =3D NULL;
+@@ -1119,6 +1206,9 @@ int cmd_checkout(int argc, const char **argv, con=
+st char *prefix)
+ 	opts.overwrite_ignore =3D 1;
+ 	opts.prefix =3D prefix;
 =20
- 		offset_parent =3D offset;
- 		while (--offset_parent > ceil_offset && cwd[offset_parent] !=3D '/')=
-;
-diff --git a/t/t1501-worktree.sh b/t/t1501-worktree.sh
-index 8f36aa9..dcd8d16 100755
---- a/t/t1501-worktree.sh
-+++ b/t/t1501-worktree.sh
-@@ -346,4 +346,56 @@ test_expect_success 'relative $GIT_WORK_TREE and g=
-it subprocesses' '
- 	test_cmp expected actual
- '
++	opts.saved_argv =3D xmalloc(sizeof(const char *) * (argc + 2));
++	memcpy(opts.saved_argv, argv, sizeof(const char *) * (argc + 1));
++
+ 	gitmodules_config();
+ 	git_config(git_checkout_config, &opts);
 =20
-+test_expect_success 'Split repo setup' '
-+	mkdir work &&
-+	mkdir -p repo.git/repos/foo &&
-+	cp repo.git/HEAD repo.git/index repo.git/repos/foo
-+'
-+
-+test_expect_success 'GIT_SUPER_DIR set' '
-+	unset GIT_WORK_TREE GIT_DIR GIT_CONFIG &&
-+	GIT_SUPER_DIR=3Drepo.git GIT_DIR=3Drepo.git/repos/foo git rev-parse -=
--git-super-dir >actual &&
-+	echo repo.git >expect &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'GIT_DIR set (1)' '
-+	(
-+		cat <<EOF >gitfile &&
-+gitsuper: repo.git
-+gitdir: foo
-+EOF
-+		cd work &&
-+		GIT_DIR=3D../gitfile git rev-parse --git-super-dir >actual &&
-+		echo ../repo.git >expect &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'GIT_DIR set (2)' '
-+	(
-+		cat <<EOF >gitfile &&
-+gitsuper: $TRASH_DIRECTORY/repo.git
-+gitdir: foo
-+EOF
-+		cd work &&
-+		GIT_DIR=3D../gitfile git rev-parse --git-super-dir >actual &&
-+		echo "$TRASH_DIRECTORY"/repo.git >expect &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'Auto discovery' '
-+	(
-+		cat <<EOF >.git &&
-+gitsuper: repo.git
-+gitdir: foo
-+EOF
-+		cd work &&
-+		git rev-parse --git-super-dir >actual &&
-+		echo repo.git >expect &&
-+		test_cmp expect actual
-+	)
-+'
-+
- test_done
-diff --git a/t/t1510-repo-setup.sh b/t/t1510-repo-setup.sh
-index cf2ee78..713f4d7 100755
---- a/t/t1510-repo-setup.sh
-+++ b/t/t1510-repo-setup.sh
-@@ -106,6 +106,7 @@ setup_env () {
- expect () {
- 	cat >"$1/expected" <<-EOF
- 	setup: git_dir: $2
-+	setup: git_super_dir: (null)
- 	setup: worktree: $3
- 	setup: cwd: $4
- 	setup: prefix: $5
-diff --git a/trace.c b/trace.c
-index 3d744d1..53d800b 100644
---- a/trace.c
-+++ b/trace.c
-@@ -173,6 +173,7 @@ void trace_repo_setup(const char *prefix)
- 		prefix =3D "(null)";
+@@ -1127,6 +1217,10 @@ int cmd_checkout(int argc, const char **argv, co=
+nst char *prefix)
+ 	argc =3D parse_options(argc, argv, prefix, options, checkout_usage,
+ 			     PARSE_OPT_KEEP_DASHDASH);
 =20
- 	trace_printf_key(key, "setup: git_dir: %s\n", quote_crnl(get_git_dir(=
-)));
-+	trace_printf_key(key, "setup: git_super_dir: %s\n", quote_crnl(get_gi=
-t_super_dir()));
- 	trace_printf_key(key, "setup: worktree: %s\n", quote_crnl(git_work_tr=
-ee));
- 	trace_printf_key(key, "setup: cwd: %s\n", quote_crnl(cwd));
- 	trace_printf_key(key, "setup: prefix: %s\n", quote_crnl(prefix));
++	if (getenv("GIT_CHECKOUT_NEW_WORKTREE"))
++		/* recursive execution from checkout_new_worktree() */
++		opts.new_worktree =3D NULL;
++
+ 	if (conflict_style) {
+ 		opts.merge =3D 1; /* implied */
+ 		git_xmerge_config("merge.conflictstyle", conflict_style, NULL);
+diff --git a/path.c b/path.c
+index e51fc35..1a2478a 100644
+--- a/path.c
++++ b/path.c
+@@ -93,7 +93,8 @@ static void update_super_dir(char *buf, size_t n, int=
+ git_dir_len)
+ {
+ 	const char *super_dir_list[] =3D {
+ 		"branches", "hooks", "info", "logs", "modules",
+-		"objects", "refs", "remotes", "rr-cache", "svn", NULL
++		"objects", "refs", "remotes", "repos", "rr-cache",
++		"svn", NULL
+ 	};
+ 	const char *super_top_file_list[] =3D {
+ 		"config", "packed-refs", "shallow", NULL
 --=20
 1.8.5.1.77.g42c48fa
