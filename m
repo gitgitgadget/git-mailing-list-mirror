@@ -1,85 +1,80 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: [PATCH v2 02/21] path.c: rename vsnpath() to git_vsnpath()
-Date: Sat, 14 Dec 2013 20:23:07 +0000
-Message-ID: <52ACBE2B.3040909@ramsay1.demon.co.uk>
-References: <1386771333-32574-1-git-send-email-pclouds@gmail.com> <1387018507-21999-1-git-send-email-pclouds@gmail.com> <1387018507-21999-3-git-send-email-pclouds@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Niedier <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 14 21:23:24 2013
+From: Samuel Bronson <naesten@gmail.com>
+Subject: [PATCH v3 0/3] diff: Add diff.orderfile configuration variable
+Date: Sat, 14 Dec 2013 17:18:38 -0500
+Message-ID: <1387059521-23616-1-git-send-email-naesten@gmail.com>
+References: <CADsOX3DBmNituJsiYEBRENQeosASXtV_hd0zUW13cBoDZWHRhg@mail.gmail.com>
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Anders Waldenborg <anders@0x63.nu>,
+	Samuel Bronson <naesten@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Dec 14 23:19:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VrvkB-000455-Me
-	for gcvg-git-2@plane.gmane.org; Sat, 14 Dec 2013 21:23:24 +0100
+	id 1VrxYT-0002Sh-Cd
+	for gcvg-git-2@plane.gmane.org; Sat, 14 Dec 2013 23:19:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753928Ab3LNUXM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 14 Dec 2013 15:23:12 -0500
-Received: from mdfmta005.mxout.tch.inty.net ([91.221.169.46]:35988 "EHLO
-	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753870Ab3LNUXL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Dec 2013 15:23:11 -0500
-Received: from mdfmta005.tch.inty.net (unknown [127.0.0.1])
-	by mdfmta005.tch.inty.net (Postfix) with ESMTP id B62CC18C761;
-	Sat, 14 Dec 2013 20:23:09 +0000 (GMT)
-Received: from mdfmta005.tch.inty.net (unknown [127.0.0.1])
-	by mdfmta005.tch.inty.net (Postfix) with ESMTP id 8020F18C55B;
-	Sat, 14 Dec 2013 20:23:09 +0000 (GMT)
-Received: from [192.168.254.17] (unknown [80.176.147.220])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mdfmta005.tch.inty.net (Postfix) with ESMTP;
-	Sat, 14 Dec 2013 20:23:09 +0000 (GMT)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.2.0
-In-Reply-To: <1387018507-21999-3-git-send-email-pclouds@gmail.com>
-X-MDF-HostID: 18
+	id S1754258Ab3LNWTT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Dec 2013 17:19:19 -0500
+Received: from mail-qa0-f41.google.com ([209.85.216.41]:36712 "EHLO
+	mail-qa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754238Ab3LNWTR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Dec 2013 17:19:17 -0500
+Received: by mail-qa0-f41.google.com with SMTP id j5so544328qaq.7
+        for <git@vger.kernel.org>; Sat, 14 Dec 2013 14:19:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=9mpkdjGNN2pLkAo+1gcNxiiNt4G9JRDFY01cRE2mYxQ=;
+        b=m7HjWf0f9SmQI3Fv2Uoxz3VJ89+ron/QliA0MfnGTj6Wu4xVktmz7VLm3V3+PyFtgZ
+         eTCpb84ay3SdTTQSEI/JmARIPrCh3BSQvRyU1RmFVZNySyEDgzzDHT8ZDgkJD6wqqwRi
+         yEun5Au9COHhpj+lC5x0tmik1P5MPjzcmMEJwH8TwhcBlhh91VOqDJksQhWrN6+xmrfi
+         pnw7dWtWn3MmOTw4jGu+wL7wFjJKmIuOT5dlUsv70DIIna40n9moOf97BKB7aqJ7jpUn
+         KmrgJ70HWlAPJ65SLS3XzRBLihNDvGImoocpLGJQxYcu2yLBPaBpDnydxOyHi0dkr6AI
+         /V4g==
+X-Received: by 10.224.138.4 with SMTP id y4mr18032215qat.65.1387059556463;
+        Sat, 14 Dec 2013 14:19:16 -0800 (PST)
+Received: from hydrogen (naesten-pt.tunnel.tserv4.nyc4.ipv6.he.net. [2001:470:1f06:57::2])
+        by mx.google.com with ESMTPSA id o10sm24627192qaa.6.2013.12.14.14.19.15
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Sat, 14 Dec 2013 14:19:15 -0800 (PST)
+Received: from naesten by hydrogen with local (Exim 4.80)
+	(envelope-from <naesten@gmail.com>)
+	id 1VrxYH-00069d-GR; Sat, 14 Dec 2013 17:19:13 -0500
+X-Mailer: git-send-email 1.8.4.3
+In-Reply-To: <CADsOX3DBmNituJsiYEBRENQeosASXtV_hd0zUW13cBoDZWHRhg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239316>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239317>
 
-On 14/12/13 10:54, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
-> This is the underlying implementation of git_path(), git_pathdup() an=
-d
-> git_snpath() which will prefix $GIT_DIR in the result string. Put git=
-_
-> prefix in front of it to avoid the confusion that this is a generic
-> path handling function.#
->=20
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
-> ---
->  path.c | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
->=20
-> diff --git a/path.c b/path.c
-> index 4c1c144..06863b7 100644
-> --- a/path.c
-> +++ b/path.c
-> @@ -50,7 +50,7 @@ char *mksnpath(char *buf, size_t n, const char *fmt=
-, ...)
->  	return cleanup_path(buf);
->  }
-> =20
-> -static char *vsnpath(char *buf, size_t n, const char *fmt, va_list a=
-rgs)
-> +static char *git_vsnpath(char *buf, size_t n, const char *fmt, va_li=
-st args)
+The original purpose of this patch [series] was to allow specifying
+the "-O" option for "git diff" in the config, but I need help with the
+relative path handling [RFC 3].
 
-:-D I renamed this _from_ git_vsnpath() in commit 5b3b8fa2 ("path.c: Re=
-move the
-'git_' prefix from a file scope function", 04-09-2012), because ... wel=
-l it's a
-file scope function! (i.e. the git_ prefix implies greater than file sc=
-ope).
-I'm not very good at naming things, so ...
+It also added tests for "git diff -O", which I have split out because
+they are independantly useful [PATCH 1].
 
-ATB,
-Ramsay Jones
+I also noticed that -O had terrible error handling and could only read
+mmappable files, so I fixed that [PATCH 2].
+
+Samuel Bronson (3):
+  diff: Tests for "git diff -O"
+  diff: Let "git diff -O" read orderfile from any file, failing when
+    appropriate
+  diff: Add diff.orderfile configuration variable
+
+ Documentation/diff-config.txt  |   5 ++
+ Documentation/diff-options.txt |   3 ++
+ diff.c                         |   5 ++
+ diffcore-order.c               |  23 ++++-----
+ t/t4056-diff-order.sh          | 105 +++++++++++++++++++++++++++++++++++++++++
+ 5 files changed, 126 insertions(+), 15 deletions(-)
+ create mode 100755 t/t4056-diff-order.sh
+
+-- 
+1.8.4.3
