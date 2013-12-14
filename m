@@ -1,265 +1,234 @@
-From: Antoine Pelisse <apelisse@gmail.com>
-Subject: [PATCH] Prevent buffer overflows when path is too long
-Date: Sat, 14 Dec 2013 12:31:16 +0100
-Message-ID: <1387020676-5569-1-git-send-email-apelisse@gmail.com>
-References: <xmqqwqjvuelv.fsf@gitster.dls.corp.google.com>
-Cc: Antoine Pelisse <apelisse@gmail.com>
-To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Dec 14 12:31:32 2013
+From: Thomas Gummerer <t.gummerer@gmail.com>
+Subject: [PATCH v5 1/2] diff: move no-index detection to builtin/diff.c
+Date: Sat, 14 Dec 2013 14:07:20 +0100
+Message-ID: <1387026441-14539-1-git-send-email-t.gummerer@gmail.com>
+References: <20131214004347.GZ2311@google.com>
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Thomas Gummerer <t.gummerer@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Dec 14 14:07:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VrnRT-0005l0-Tw
-	for gcvg-git-2@plane.gmane.org; Sat, 14 Dec 2013 12:31:32 +0100
+	id 1VrowH-0004Gm-2m
+	for gcvg-git-2@plane.gmane.org; Sat, 14 Dec 2013 14:07:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752993Ab3LNLb1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Dec 2013 06:31:27 -0500
-Received: from mail-we0-f172.google.com ([74.125.82.172]:33913 "EHLO
-	mail-we0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752794Ab3LNLb0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Dec 2013 06:31:26 -0500
-Received: by mail-we0-f172.google.com with SMTP id w62so2905740wes.3
-        for <git@vger.kernel.org>; Sat, 14 Dec 2013 03:31:25 -0800 (PST)
+	id S1753480Ab3LNNHU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Dec 2013 08:07:20 -0500
+Received: from mail-bk0-f48.google.com ([209.85.214.48]:52308 "EHLO
+	mail-bk0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753053Ab3LNNHT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Dec 2013 08:07:19 -0500
+Received: by mail-bk0-f48.google.com with SMTP id r7so1751069bkg.35
+        for <git@vger.kernel.org>; Sat, 14 Dec 2013 05:07:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=feEVsA6A9EGv211ZSc1N52ogP8kPVY8m0fwAwxnd6Ew=;
-        b=M4bkbbH84J2TLNJQ2+sXn17cDTMRV2duyN7D2dSP+M5DmakE3H9ewIo5ZP3bi83kg8
-         lYmrTxk3Mj+oTL7iLVH0beP65Soc8AKXO0k1VtZzfF+osIMYqKP2YdPWNNv0Tzl7WHC3
-         nOj5U/Qyf+7/p5TGMXbD6Gy87CeoOx4dNAHDK8/7B+81x31xcG3w2Flgo0HV/XID2a+7
-         ZoKBR3L08n9adC2H/iuydZZ8eG58AK1VCMgOnig0CSh2pTv4puQK+JZ9mwrStMWpWAHB
-         l1h1QrGtyj5BeSWi1EShUzTWWMldD34Tjvv2FExiffPynaeyejOfc3H5BIo4iie8IlVV
-         8H7g==
-X-Received: by 10.180.189.6 with SMTP id ge6mr5996408wic.1.1387020685252;
-        Sat, 14 Dec 2013 03:31:25 -0800 (PST)
-Received: from localhost.localdomain (freepel.fr. [82.247.80.218])
-        by mx.google.com with ESMTPSA id xl18sm6229068wib.9.2013.12.14.03.31.22
+        bh=+3GFSbea33NDC7MF7mPKnvkfqhO4urWYhl44swIx/zc=;
+        b=Wix/JPfwKJ9YspiJhln/Z61SPbqjlpZmaLY1n3BFD/lwYQPmiTD9LG+MfnUCz2PEw6
+         GQLPPYWlClCEGeDlTFQF9+NCHK3gnOKCq8xVXTkzNCuxudQJ7Ef6Gxh4afyTsdvZBIjW
+         gej96RdmwH8Fo/7YuN4tcZ+Cb8H5pibyYNe7vPZLw7AAv0DpEIBCYQtr/1a72tmFMl5+
+         7nNVsAUJnLkdmOyeX2KjR6lLV24jzXaOMylIuuys1/WFhaqXHX/D3aPwAUL9R9D0ns6A
+         lfmYmCtDWtpW2EJJbOxpP0TZ/D+TFJ/JlYgfNq7+eT+1i8912zy3Oge86+jBrqnh+IpD
+         Nphg==
+X-Received: by 10.204.101.199 with SMTP id d7mr1823522bko.18.1387026436755;
+        Sat, 14 Dec 2013 05:07:16 -0800 (PST)
+Received: from localhost ([2001:5c0:1400:a::103b])
+        by mx.google.com with ESMTPSA id q5sm4778531bkr.5.2013.12.14.05.07.14
         for <multiple recipients>
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 14 Dec 2013 03:31:23 -0800 (PST)
-X-Mailer: git-send-email 1.8.5.1.94.g19422b2
-In-Reply-To: <xmqqwqjvuelv.fsf@gitster.dls.corp.google.com>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 14 Dec 2013 05:07:15 -0800 (PST)
+X-Mailer: git-send-email 1.8.5.4.g8639e57
+In-Reply-To: <20131214004347.GZ2311@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239305>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239306>
 
-Some buffers created with PATH_MAX length are not checked when being
-written, and can overflow if PATH_MAX is not big enough to hold the
-path.
+Currently the --no-index option is parsed in diff_no_index().  Move the
+detection if a no-index diff should be executed to builtin/diff.c, where
+we can use it for executing diff_no_index() conditionally.  This will
+also allow us to execute other operations conditionally, which will be
+done in the next patch.
 
-Replace those buffers by strbufs so that their size is automatically
-grown if necessary. They are created as static local variables to avoid
-reallocating memory on each call. Note that prefix_filename() returns
-this static buffer so each callers should copy or use the string
-immediately (this is currently true).
+There are no functional changes.
 
-Reported-by: Wataru Noguchi <wnoguchi.0727@gmail.com>
-Signed-off-by: Antoine Pelisse <apelisse@gmail.com>
+Helped-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
 ---
- abspath.c        | 16 +++++++++-------
- diffcore-order.c | 11 ++++++-----
- unpack-trees.c   | 51 +++++++++++++++++++++++++++------------------------
- 3 files changed, 42 insertions(+), 36 deletions(-)
 
-diff --git a/abspath.c b/abspath.c
-index e390994..9c908e3 100644
---- a/abspath.c
-+++ b/abspath.c
-@@ -215,23 +215,25 @@ const char *absolute_path(const char *path)
-  */
- const char *prefix_filename(const char *pfx, int pfx_len, const char *arg)
- {
--	static char path[PATH_MAX];
-+	static struct strbuf path = STRBUF_INIT;
- #ifndef GIT_WINDOWS_NATIVE
- 	if (!pfx_len || is_absolute_path(arg))
- 		return arg;
--	memcpy(path, pfx, pfx_len);
--	strcpy(path + pfx_len, arg);
-+	strbuf_reset(&path);
-+	strbuf_add(&path, pfx, pfx_len);
-+	strbuf_addstr(&path, arg);
- #else
- 	char *p;
- 	/* don't add prefix to absolute paths, but still replace '\' by '/' */
-+	strbuf_reset(&path);
- 	if (is_absolute_path(arg))
- 		pfx_len = 0;
- 	else if (pfx_len)
--		memcpy(path, pfx, pfx_len);
--	strcpy(path + pfx_len, arg);
--	for (p = path + pfx_len; *p; p++)
-+		strbuf_add(&path, pfx, pfx_len);
-+	strbuf_addstr(&path, arg);
-+	for (p = path.buf + pfx_len; *p; p++)
- 		if (*p == '\\')
- 			*p = '/';
- #endif
--	return path;
-+	return path.buf;
- }
-diff --git a/diffcore-order.c b/diffcore-order.c
-index 23e9385..50c089b 100644
---- a/diffcore-order.c
-+++ b/diffcore-order.c
-@@ -73,15 +73,16 @@ struct pair_order {
- static int match_order(const char *path)
- {
- 	int i;
--	char p[PATH_MAX];
-+	static struct strbuf p = STRBUF_INIT;
+Thanks Jonathan for reviewing the last round, this version addresses
+those comments, fixing the error message when git diff --no-index is
+run outside of a git directory and avoids some nesting as suggested.
+
+ builtin/diff.c  | 53 ++++++++++++++++++++++++++++++++++++++++++++++++++---
+ diff-no-index.c | 44 +-------------------------------------------
+ diff.h          |  2 +-
+ 3 files changed, 52 insertions(+), 47 deletions(-)
+
+diff --git a/builtin/diff.c b/builtin/diff.c
+index adb93a9..f49a938 100644
+--- a/builtin/diff.c
++++ b/builtin/diff.c
+@@ -16,6 +16,9 @@
+ #include "submodule.h"
+ #include "sha1-array.h"
  
- 	for (i = 0; i < order_cnt; i++) {
--		strcpy(p, path);
--		while (p[0]) {
-+		strbuf_reset(&p);
-+		strbuf_addstr(&p, path);
-+		while (p.buf[0]) {
- 			char *cp;
--			if (!fnmatch(order[i], p, 0))
-+			if (!fnmatch(order[i], p.buf, 0))
- 				return i;
--			cp = strrchr(p, '/');
-+			cp = strrchr(p.buf, '/');
- 			if (!cp)
- 				break;
- 			*cp = 0;
-diff --git a/unpack-trees.c b/unpack-trees.c
-index ad3e9a0..164354d 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -830,23 +830,24 @@ static int unpack_callback(int n, unsigned long mask, unsigned long dirmask, str
- }
++#define DIFF_NO_INDEX_EXPLICIT 1
++#define DIFF_NO_INDEX_IMPLICIT 2
++
+ struct blobinfo {
+ 	unsigned char sha1[20];
+ 	const char *name;
+@@ -257,7 +260,7 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
+ 	int blobs = 0, paths = 0;
+ 	const char *path = NULL;
+ 	struct blobinfo blob[2];
+-	int nongit;
++	int nongit = 0, no_index = 0;
+ 	int result = 0;
  
- static int clear_ce_flags_1(struct cache_entry **cache, int nr,
--			    char *prefix, int prefix_len,
-+			    struct strbuf *prefix,
- 			    int select_mask, int clear_mask,
- 			    struct exclude_list *el, int defval);
- 
- /* Whole directory matching */
- static int clear_ce_flags_dir(struct cache_entry **cache, int nr,
--			      char *prefix, int prefix_len,
-+			      struct strbuf *prefix,
- 			      char *basename,
- 			      int select_mask, int clear_mask,
- 			      struct exclude_list *el, int defval)
- {
- 	struct cache_entry **cache_end;
- 	int dtype = DT_DIR;
--	int ret = is_excluded_from_list(prefix, prefix_len,
-+	int ret = is_excluded_from_list(prefix->buf, prefix->len,
- 					basename, &dtype, el);
-+	int rc;
- 
--	prefix[prefix_len++] = '/';
-+	strbuf_addch(prefix, '/');
- 
- 	/* If undecided, use matching result of parent dir in defval */
- 	if (ret < 0)
-@@ -854,7 +855,7 @@ static int clear_ce_flags_dir(struct cache_entry **cache, int nr,
- 
- 	for (cache_end = cache; cache_end != cache + nr; cache_end++) {
- 		struct cache_entry *ce = *cache_end;
--		if (strncmp(ce->name, prefix, prefix_len))
-+		if (strncmp(ce->name, prefix->buf, prefix->len))
- 			break;
- 	}
- 
-@@ -865,10 +866,12 @@ static int clear_ce_flags_dir(struct cache_entry **cache, int nr,
- 	 * calling clear_ce_flags_1(). That function will call
- 	 * the expensive is_excluded_from_list() on every entry.
+ 	/*
+@@ -283,14 +286,58 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
+ 	 * Other cases are errors.
  	 */
--	return clear_ce_flags_1(cache, cache_end - cache,
--				prefix, prefix_len,
--				select_mask, clear_mask,
--				el, ret);
-+	rc = clear_ce_flags_1(cache, cache_end - cache,
-+			      prefix,
-+			      select_mask, clear_mask,
-+			      el, ret);
-+	strbuf_setlen(prefix, prefix->len - 1);
-+	return rc;
- }
  
- /*
-@@ -887,7 +890,7 @@ static int clear_ce_flags_dir(struct cache_entry **cache, int nr,
-  * Top level path has prefix_len zero.
-  */
- static int clear_ce_flags_1(struct cache_entry **cache, int nr,
--			    char *prefix, int prefix_len,
-+			    struct strbuf *prefix,
- 			    int select_mask, int clear_mask,
- 			    struct exclude_list *el, int defval)
++	/* Were we asked to do --no-index explicitly? */
++	for (i = 1; i < argc; i++) {
++		if (!strcmp(argv[i], "--")) {
++			i++;
++			break;
++		}
++		if (!strcmp(argv[i], "--no-index"))
++			no_index = DIFF_NO_INDEX_EXPLICIT;
++		if (argv[i][0] != '-')
++			break;
++	}
++
+ 	prefix = setup_git_directory_gently(&nongit);
++	if (!no_index) {
++		/*
++		 * Treat git diff with at least one path outside of the
++		 * repo the same as if the command would have been executed
++		 * outside of a git repository.  In this case it behaves
++		 * the same way as "git diff --no-index <a> <b>", which acts
++		 * as a colourful "diff" replacement.
++		 */
++		if (nongit || ((argc == i + 2) &&
++			       (!path_inside_repo(prefix, argv[i]) ||
++				!path_inside_repo(prefix, argv[i + 1]))))
++			no_index = DIFF_NO_INDEX_IMPLICIT;
++	}
++
+ 	gitmodules_config();
+ 	git_config(git_diff_ui_config, NULL);
+ 
+ 	init_revisions(&rev, prefix);
+ 
+-	/* If this is a no-index diff, just run it and exit there. */
+-	diff_no_index(&rev, argc, argv, nongit, prefix);
++	if (no_index && argc != i + 2) {
++		if (no_index == DIFF_NO_INDEX_IMPLICIT) {
++			/*
++			 * There was no --no-index and there were not two
++			 * paths. It is possible that the user intended
++			 * to do an inside-repository operation.
++			 */
++			fprintf(stderr, "Not a git repository\n");
++			fprintf(stderr,
++				"To compare two paths outside a working tree:\n");
++		}
++		/* Give the usage message for non-repository usage and exit. */
++		usagef("git diff %s <path> <path>",
++		       no_index == DIFF_NO_INDEX_EXPLICIT ?
++		       "--no-index" : "[--no-index]");
++
++	}
++	if (no_index)
++		/* If this is a no-index diff, just run it and exit there. */
++		diff_no_index(&rev, argc, argv, prefix);
+ 
+ 	/* Otherwise, we are doing the usual "git" diff */
+ 	rev.diffopt.skip_stat_unmatch = !!diff_auto_refresh_index;
+diff --git a/diff-no-index.c b/diff-no-index.c
+index 00a8eef..33e5982 100644
+--- a/diff-no-index.c
++++ b/diff-no-index.c
+@@ -183,54 +183,12 @@ static int queue_diff(struct diff_options *o,
+ 
+ void diff_no_index(struct rev_info *revs,
+ 		   int argc, const char **argv,
+-		   int nongit, const char *prefix)
++		   const char *prefix)
  {
-@@ -907,10 +910,10 @@ static int clear_ce_flags_1(struct cache_entry **cache, int nr,
- 			continue;
- 		}
+ 	int i, prefixlen;
+-	int no_index = 0;
+ 	unsigned deprecated_show_diff_q_option_used = 0;
+ 	const char *paths[2];
  
--		if (prefix_len && strncmp(ce->name, prefix, prefix_len))
-+		if (prefix->len && strncmp(ce->name, prefix->buf, prefix->len))
- 			break;
- 
--		name = ce->name + prefix_len;
-+		name = ce->name + prefix->len;
- 		slash = strchr(name, '/');
- 
- 		/* If it's a directory, try whole directory match first */
-@@ -918,29 +921,26 @@ static int clear_ce_flags_1(struct cache_entry **cache, int nr,
- 			int processed;
- 
- 			len = slash - name;
--			memcpy(prefix + prefix_len, name, len);
-+			strbuf_add(prefix, name, len);
- 
+-	/* Were we asked to do --no-index explicitly? */
+-	for (i = 1; i < argc; i++) {
+-		if (!strcmp(argv[i], "--")) {
+-			i++;
+-			break;
+-		}
+-		if (!strcmp(argv[i], "--no-index"))
+-			no_index = 1;
+-		if (argv[i][0] != '-')
+-			break;
+-	}
+-
+-	if (!no_index && !nongit) {
+-		/*
+-		 * Inside a git repository, without --no-index.  Only
+-		 * when a path outside the repository is given,
+-		 * e.g. "git diff /var/tmp/[12]", or "git diff
+-		 * Makefile /var/tmp/Makefile", allow it to be used as
+-		 * a colourful "diff" replacement.
+-		 */
+-		if ((argc != i + 2) ||
+-		    (path_inside_repo(prefix, argv[i]) &&
+-		     path_inside_repo(prefix, argv[i+1])))
+-			return;
+-	}
+-	if (argc != i + 2) {
+-		if (!no_index) {
 -			/*
--			 * terminate the string (no trailing slash),
--			 * clear_c_f_dir needs it
+-			 * There was no --no-index and there were not two
+-			 * paths. It is possible that the user intended
+-			 * to do an inside-repository operation.
 -			 */
--			prefix[prefix_len + len] = '\0';
- 			processed = clear_ce_flags_dir(cache, cache_end - cache,
--						       prefix, prefix_len + len,
--						       prefix + prefix_len,
-+						       prefix,
-+						       prefix->buf + prefix->len - len,
- 						       select_mask, clear_mask,
- 						       el, defval);
+-			fprintf(stderr, "Not a git repository\n");
+-			fprintf(stderr,
+-				"To compare two paths outside a working tree:\n");
+-		}
+-		/* Give the usage message for non-repository usage and exit. */
+-		usagef("git diff %s <path> <path>",
+-		       no_index ? "--no-index" : "[--no-index]");
+-	}
+-
+ 	diff_setup(&revs->diffopt);
+ 	for (i = 1; i < argc - 2; ) {
+ 		int j;
+diff --git a/diff.h b/diff.h
+index e342325..de105d3 100644
+--- a/diff.h
++++ b/diff.h
+@@ -330,7 +330,7 @@ extern int diff_flush_patch_id(struct diff_options *, unsigned char *);
  
- 			/* clear_c_f_dir eats a whole dir already? */
- 			if (processed) {
- 				cache += processed;
-+				strbuf_setlen(prefix, prefix->len - len);
- 				continue;
- 			}
+ extern int diff_result_code(struct diff_options *, int);
  
--			prefix[prefix_len + len++] = '/';
-+			strbuf_addch(prefix, '/');
- 			cache += clear_ce_flags_1(cache, cache_end - cache,
--						  prefix, prefix_len + len,
-+						  prefix,
- 						  select_mask, clear_mask, el, defval);
-+			strbuf_setlen(prefix, prefix->len - len - 1);
- 			continue;
- 		}
+-extern void diff_no_index(struct rev_info *, int, const char **, int, const char *);
++extern void diff_no_index(struct rev_info *, int, const char **, const char *);
  
-@@ -961,9 +961,12 @@ static int clear_ce_flags(struct cache_entry **cache, int nr,
- 			    int select_mask, int clear_mask,
- 			    struct exclude_list *el)
- {
--	char prefix[PATH_MAX];
-+	static struct strbuf prefix = STRBUF_INIT;
-+
-+	strbuf_reset(&prefix);
-+
- 	return clear_ce_flags_1(cache, nr,
--				prefix, 0,
-+				&prefix,
- 				select_mask, clear_mask,
- 				el, 0);
- }
+ extern int index_differs_from(const char *def, int diff_flags);
+ 
 -- 
-1.8.5.1.94.g19422b2
+1.8.5.4.g8639e57
