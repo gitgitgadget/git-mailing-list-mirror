@@ -1,89 +1,75 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: Unexpected cherry-pick behaviour
-Date: Sat, 14 Dec 2013 14:53:30 -0000
-Organization: OPDS
-Message-ID: <3FFF08967D2E480FA6B0E0EE3A72A8D9@PhilipOakley>
-References: <118044938ad8ebf6b069bcc1d220a986@matos-sorge.com><xmqqvbywts9d.fsf@gitster.dls.corp.google.com><7050e7272bb83d083a56a2c391228ed8@matos-sorge.com><CALWbr2zPPnDiv7oVBhnM9dSW=pfz2jUA_A5u_gk2ttgXTStvkw@mail.gmail.com><beee32a53ece8b839578703deb851eaa@matos-sorge.com> <CALWbr2y1YDX0dzjpZoF8WL4+ND+8drurH+Wrf1wBs_-=0datOA@mail.gmail.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Adam Spiers <git@adamspiers.org>
+Subject: Re: Subtree: My Status
+Date: Sat, 14 Dec 2013 15:33:51 +0000
+Message-ID: <20131214153351.GB31739@pacific.linksys.moosehall>
+References: <87d2tp9j7b.fsf@waller.obbligato.org>
+ <567618909.1800335.1366615126779.JavaMail.root@openwide.fr>
+ <20131212182439.GM18340@gmail.com>
+ <xmqq61qtuaz7.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="UTF-8";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>, "git" <git@vger.kernel.org>,
-	<git-owner@vger.kernel.org>
-To: "Antoine Pelisse" <apelisse@gmail.com>,
-	"Paulo Matos" <paulo@matos-sorge.com>
-X-From: git-owner@vger.kernel.org Sat Dec 14 15:52:40 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeremy Rosen <jeremy.rosen@openwide.fr>,
+	David Greene <greened@obbligato.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Dec 14 16:34:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vrqa7-0006nz-Rz
-	for gcvg-git-2@plane.gmane.org; Sat, 14 Dec 2013 15:52:40 +0100
+	id 1VrrET-0004Ee-1t
+	for gcvg-git-2@plane.gmane.org; Sat, 14 Dec 2013 16:34:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753627Ab3LNOwg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 14 Dec 2013 09:52:36 -0500
-Received: from out1.ip04ir2.opaltelecom.net ([62.24.128.240]:5734 "EHLO
-	out1.ip04ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753602Ab3LNOwf (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 14 Dec 2013 09:52:35 -0500
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AtgYAM5vrFJOl3cg/2dsb2JhbABZgwo4g1iFPrAaAQECAQGBGhd0giAFAQEEAQgBARkVHgEBHAULAQEDBQIBAw4HBQIFIQICFAEECBIGBxcGARIIAgECAwGHXwMJDAmyIJBCDYcYgSmLXRmBeoJ1NYETAQOPHocNgxuLKoU6gyo8
-X-IPAS-Result: AtgYAM5vrFJOl3cg/2dsb2JhbABZgwo4g1iFPrAaAQECAQGBGhd0giAFAQEEAQgBARkVHgEBHAULAQEDBQIBAw4HBQIFIQICFAEECBIGBxcGARIIAgECAwGHXwMJDAmyIJBCDYcYgSmLXRmBeoJ1NYETAQOPHocNgxuLKoU6gyo8
-X-IronPort-AV: E=Sophos;i="4.95,485,1384300800"; 
-   d="scan'208";a="430613160"
-Received: from host-78-151-119-32.as13285.net (HELO PhilipOakley) ([78.151.119.32])
-  by out1.ip04ir2.opaltelecom.net with SMTP; 14 Dec 2013 14:52:33 +0000
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1753612Ab3LNPdz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Dec 2013 10:33:55 -0500
+Received: from coral.adamspiers.org ([85.119.82.20]:58574 "EHLO
+	coral.adamspiers.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753576Ab3LNPdz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Dec 2013 10:33:55 -0500
+Received: from localhost (243.103.2.81.in-addr.arpa [81.2.103.243])
+	by coral.adamspiers.org (Postfix) with ESMTPSA id 0CC212E2E4;
+	Sat, 14 Dec 2013 15:33:52 +0000 (GMT)
+Content-Disposition: inline
+In-Reply-To: <xmqq61qtuaz7.fsf@gitster.dls.corp.google.com>
+X-OS: GNU/Linux
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239308>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239309>
 
+On Thu, Dec 12, 2013 at 11:26:36AM -0800, Junio C Hamano wrote:
+> Adam Spiers <git@adamspiers.org> writes:
+> > On Mon, Apr 22, 2013 at 09:18:46AM +0200, Jeremy Rosen wrote:
+> >> David Green wrote:
+> >> > Please remember that I don't consider myself a gatekeeper to
+> >> > git subtree.  In fact I could use some help reviewing and
+> >> > approving patches.  If anyone thinks a patch looks good, let
+> >> > Junio know.  It's my responsibility to object to things, not
+> >> > your responsibility to wait for
+> >> 
+> >> I guess it's more or less everybody's responsability to review
+> >> patches, but it seems to me that for the actual gate-keeping,
+> >> Junio considers you in charge of git-subtree... Maybe there is an
+> >> organisational quirk to sort- out here... Junio ?
+> >
+> > I can't see any resolution to this in the mail archives.  What's the
+> > process for getting subtree patches accepted?
+> 
+> Somebody take the ownership of the area, if David Green who earlier
+> volunteered to do so and worked on it needs help reviewing, helping
+> polishing and giving thumbs-up on the patches, perhaps?
 
------ Original Message ----- 
-From: "Antoine Pelisse" <apelisse@gmail.com>
-<snip>
->
-> You can also have a look at what is currently being applied:
->
->    $ git diff :1:gcc/tree-ssa-threadedge.c 
-> :3:gcc/tree-ssa-threadedge.c
->
-> By the way, does anybody know a better way to do that ? I happen to do
-> that quite a lot when fixing complex conflicts and the command is
-> quite inconvenient (I always end-up forgetting which numbers to use,
-> etc..).
+I *may* be able to help a bit in the coming weeks, given that it's
+reasonably likely I'll be using git-subtree for professional reasons.
 
-Would this be a good use of the
-    * Magic pathspecs like ":(icase)
-that was recently released (v1.8.5  2Dec13)  so that the merge stages 
-can be named.
+However I'm not clear from the above whether you're suggesting that
+someone should take over ownership from David, or merely help him?
 
-I'm not sure that the three 'merge stages' have well defined short names 
-yet though.
+And in either case, what would be your criteria and process for
+accepting patches, given that ultimately you're still in control of
+the repository?
 
-[1] 
-http://schacon.github.io/gitbook/5_advanced_branching_and_merging.html
-[2] https://www.kernel.org/pub/software/scm/git/docs/git-merge.html see 
-True Merge 4.
-
-Aside: the 'merge stages' terminology does overlap the common user 
-discussion of commit staging e.g. $gmane/236127 (Officially start moving 
-to the term 'staging area'). Any pathspec magic names should reflect the 
-concept being indicated rather than the implementation - a thorny 
-problem.
-
->
-> Hope that helps,
-> Antoine
-> --
-
-Philip 
+Thanks,
+Adam
