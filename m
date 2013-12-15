@@ -1,80 +1,92 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: Unexpected cherry-pick behaviour
-Date: Sun, 15 Dec 2013 14:48:57 -0000
-Organization: OPDS
-Message-ID: <0172E9F1B5F945EB9294F1066C2FB72E@PhilipOakley>
-References: <118044938ad8ebf6b069bcc1d220a986@matos-sorge.com><xmqqvbywts9d.fsf@gitster.dls.corp.google.com><7050e7272bb83d083a56a2c391228ed8@matos-sorge.com><CALWbr2zPPnDiv7oVBhnM9dSW=pfz2jUA_A5u_gk2ttgXTStvkw@mail.gmail.com><beee32a53ece8b839578703deb851eaa@matos-sorge.com><CALWbr2y1YDX0dzjpZoF8WL4+ND+8drurH+Wrf1wBs_-=0datOA@mail.gmail.com><3FFF08967D2E480FA6B0E0EE3A72A8D9@PhilipOakley> <7vmwk3gr39.fsf@alter.siamese.dyndns.org>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: Re: [PATCH v2 02/21] path.c: rename vsnpath() to git_vsnpath()
+Date: Sun, 15 Dec 2013 21:13:02 +0000
+Message-ID: <52AE1B5E.6020506@ramsay1.demon.co.uk>
+References: <1386771333-32574-1-git-send-email-pclouds@gmail.com> <1387018507-21999-1-git-send-email-pclouds@gmail.com> <1387018507-21999-3-git-send-email-pclouds@gmail.com> <52ACBE2B.3040909@ramsay1.demon.co.uk> <CACsJy8BdLt8ZUU2z4LAgTcfXUjruFaOFsvrv6dSziZVizAopGA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: "Antoine Pelisse" <apelisse@gmail.com>,
-	"Paulo Matos" <paulo@matos-sorge.com>, "git" <git@vger.kernel.org>,
-	<git-owner@vger.kernel.org>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Dec 15 15:48:32 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Jonathan Niedier <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Dec 15 22:13:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VsCzg-0000Cj-29
-	for gcvg-git-2@plane.gmane.org; Sun, 15 Dec 2013 15:48:32 +0100
+	id 1VsIzy-00045s-GM
+	for gcvg-git-2@plane.gmane.org; Sun, 15 Dec 2013 22:13:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751600Ab3LOOs2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Dec 2013 09:48:28 -0500
-Received: from out1.ip05ir2.opaltelecom.net ([62.24.128.241]:58681 "EHLO
-	out1.ip05ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751571Ab3LOOs1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 15 Dec 2013 09:48:27 -0500
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AmkZABDBrVJZ8YR9/2dsb2JhbABZgwqJTrAdAQIBAYEYF3RpAQGBHwEBFAEEAQEFCAEBLh4BARwFCwIDBQIBAxUMJRQBBBoGBxcGEwgCAQIDAYU4BwGCEiXIRo8ZgyqBEwSJC4YTmwyDKjw
-X-IPAS-Result: AmkZABDBrVJZ8YR9/2dsb2JhbABZgwqJTrAdAQIBAYEYF3RpAQGBHwEBFAEEAQEFCAEBLh4BARwFCwIDBQIBAxUMJRQBBBoGBxcGEwgCAQIDAYU4BwGCEiXIRo8ZgyqBEwSJC4YTmwyDKjw
-X-IronPort-AV: E=Sophos;i="4.95,489,1384300800"; 
-   d="scan'208";a="439807564"
-Received: from host-89-241-132-125.as13285.net (HELO PhilipOakley) ([89.241.132.125])
-  by out1.ip05ir2.opaltelecom.net with SMTP; 15 Dec 2013 14:48:11 +0000
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1751865Ab3LOVNI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 15 Dec 2013 16:13:08 -0500
+Received: from mdfmta010.mxout.tch.inty.net ([91.221.169.51]:35007 "EHLO
+	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750831Ab3LOVNH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Dec 2013 16:13:07 -0500
+Received: from mdfmta010.tch.inty.net (unknown [127.0.0.1])
+	by mdfmta010.tch.inty.net (Postfix) with ESMTP id A6B2C400CB2;
+	Sun, 15 Dec 2013 21:13:04 +0000 (GMT)
+Received: from mdfmta010.tch.inty.net (unknown [127.0.0.1])
+	by mdfmta010.tch.inty.net (Postfix) with ESMTP id 6F094400CB1;
+	Sun, 15 Dec 2013 21:13:04 +0000 (GMT)
+Received: from [192.168.254.18] (unknown [80.176.147.220])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mdfmta010.tch.inty.net (Postfix) with ESMTP;
+	Sun, 15 Dec 2013 21:13:03 +0000 (GMT)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.2.0
+In-Reply-To: <CACsJy8BdLt8ZUU2z4LAgTcfXUjruFaOFsvrv6dSziZVizAopGA@mail.gmail.com>
+X-MDF-HostID: 19
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239327>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239328>
 
-From: "Junio C Hamano" <gitster@pobox.com>, Saturday, December 14, 2013 
-7:39 PM
-> "Philip Oakley" <philipoakley@iee.org> writes:
->
->> Would this be a good use of the
->>    * Magic pathspecs like ":(icase)
->> that was recently released (v1.8.5  2Dec13)  so that the merge stages
->> can be named.
->
-> Because the pathspec mechahism is for you to tell an operation that
-> works on a collection of paths (e.g. "all the paths in the HEAD",
-> "all the paths at stage #1 in the index") to narrow the set it
-> operates on down to only those that match, I do not think it is a
-> good match at all to what you are trying to do.
->
+On 15/12/13 02:25, Duy Nguyen wrote:
+> On Sun, Dec 15, 2013 at 3:23 AM, Ramsay Jones
+> <ramsay@ramsay1.demon.co.uk> wrote:
+>> On 14/12/13 10:54, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+>>> This is the underlying implementation of git_path(), git_pathdup() =
+and
+>>> git_snpath() which will prefix $GIT_DIR in the result string. Put g=
+it_
+>>> prefix in front of it to avoid the confusion that this is a generic
+>>> path handling function.#
+>>>
+>>> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@g=
+mail.com>
+>>> ---
+>>>  path.c | 8 ++++----
+>>>  1 file changed, 4 insertions(+), 4 deletions(-)
+>>>
+>>> diff --git a/path.c b/path.c
+>>> index 4c1c144..06863b7 100644
+>>> --- a/path.c
+>>> +++ b/path.c
+>>> @@ -50,7 +50,7 @@ char *mksnpath(char *buf, size_t n, const char *f=
+mt, ...)
+>>>       return cleanup_path(buf);
+>>>  }
+>>>
+>>> -static char *vsnpath(char *buf, size_t n, const char *fmt, va_list=
+ args)
+>>> +static char *git_vsnpath(char *buf, size_t n, const char *fmt, va_=
+list args)
+>>
+>> :-D I renamed this _from_ git_vsnpath() in commit 5b3b8fa2 ("path.c:=
+ Remove the
+>> 'git_' prefix from a file scope function", 04-09-2012), because ... =
+well it's a
+>> file scope function! (i.e. the git_ prefix implies greater than file=
+ scope).
+>> I'm not very good at naming things, so ...
+>=20
+> maybe gitdir_vsnpath() then to avoid the global scope prefix git_?
 
-My point was that the ":1:" syntax already was a "path at stage #1 in 
-the index" indicator, and that it would be good to have a memorable name 
-for the :1:2:3: stages as per Antoine's  query.
+Sounds fine to me (but then so does vsnpath ;-) ).
 
-It maybe that my referring to it as a 'magic pathspec' was a mistake, 
-but the difficulty of remembering which number is ours:theirs:base still 
-stands.
-
-(for general info; the :<stage>:  format is defined in 'git revision 
-(7)' as the last method for Specifying Revisions)
-
-Philip
---
-PS should the cc: git-owner@vger.kernel.org be dropped as effectively a 
-duplicate? 
+ATB,
+Ramsay Jones
