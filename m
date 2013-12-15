@@ -1,76 +1,80 @@
-From: Antoine Pelisse <apelisse@gmail.com>
-Subject: Re: [PATCH v2 01/21] path.c: avoid PATH_MAX as buffer size from get_pathname()
-Date: Sun, 15 Dec 2013 10:33:34 +0100
-Message-ID: <CALWbr2w-ibuoV5x3GGjJ3Lazeumdj7LhvnK+zfpWvyr10nc4Fw@mail.gmail.com>
-References: <1386771333-32574-1-git-send-email-pclouds@gmail.com>
-	<1387018507-21999-1-git-send-email-pclouds@gmail.com>
-	<1387018507-21999-2-git-send-email-pclouds@gmail.com>
-	<52AD69D4.30605@web.de>
-	<CACsJy8CVQfWdTY_aoH6uMTp0cgTnvF09tC7iLD7CjEL9d9=bzw@mail.gmail.com>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: Unexpected cherry-pick behaviour
+Date: Sun, 15 Dec 2013 14:48:57 -0000
+Organization: OPDS
+Message-ID: <0172E9F1B5F945EB9294F1066C2FB72E@PhilipOakley>
+References: <118044938ad8ebf6b069bcc1d220a986@matos-sorge.com><xmqqvbywts9d.fsf@gitster.dls.corp.google.com><7050e7272bb83d083a56a2c391228ed8@matos-sorge.com><CALWbr2zPPnDiv7oVBhnM9dSW=pfz2jUA_A5u_gk2ttgXTStvkw@mail.gmail.com><beee32a53ece8b839578703deb851eaa@matos-sorge.com><CALWbr2y1YDX0dzjpZoF8WL4+ND+8drurH+Wrf1wBs_-=0datOA@mail.gmail.com><3FFF08967D2E480FA6B0E0EE3A72A8D9@PhilipOakley> <7vmwk3gr39.fsf@alter.siamese.dyndns.org>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jonathan Niedier <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Dec 15 10:34:02 2013
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: "Antoine Pelisse" <apelisse@gmail.com>,
+	"Paulo Matos" <paulo@matos-sorge.com>, "git" <git@vger.kernel.org>,
+	<git-owner@vger.kernel.org>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Dec 15 15:48:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vs85K-0003nx-5X
-	for gcvg-git-2@plane.gmane.org; Sun, 15 Dec 2013 10:34:02 +0100
+	id 1VsCzg-0000Cj-29
+	for gcvg-git-2@plane.gmane.org; Sun, 15 Dec 2013 15:48:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753317Ab3LOJdm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 15 Dec 2013 04:33:42 -0500
-Received: from mail-pb0-f48.google.com ([209.85.160.48]:58887 "EHLO
-	mail-pb0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752784Ab3LOJdf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 15 Dec 2013 04:33:35 -0500
-Received: by mail-pb0-f48.google.com with SMTP id md12so4270418pbc.7
-        for <git@vger.kernel.org>; Sun, 15 Dec 2013 01:33:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=fZzP1rQhruohaTqNB/DdFp+/c6N1Lo1ADfNCO6JTIn4=;
-        b=J2zu/xLIbGKazkR0M+uedK+2DvLMjlznsBTp1nM3oF2iXUgKGHhl1gsKZo9FDgDTYf
-         lNwvh/4+prQWNDbvrlka2lMvpzIcVOfNinYH1hmtp+UXWgTkLp29aA8JysvXz5Ecj3Sd
-         alEPCw6WS0feV+dq7Hh3KGCiGvi0CETPaExuLT313GDFcjOu6bnOi9R5VEzQv+qqYmvC
-         /tU3RXjacYR5YUwhcGmk2nYZ41D8N5n9AKcOCx8m3BzueenDLsjJ1VOySSGEIMs0xKDs
-         9jG/Jd7dT65SpIRlBmIEt2jwwJrKdFhR8UJEgiWUwCK++4VrZDaifTN8vPpSNLeM0wxy
-         i5hQ==
-X-Received: by 10.68.219.72 with SMTP id pm8mr81585pbc.164.1387100014325; Sun,
- 15 Dec 2013 01:33:34 -0800 (PST)
-Received: by 10.70.124.228 with HTTP; Sun, 15 Dec 2013 01:33:34 -0800 (PST)
-In-Reply-To: <CACsJy8CVQfWdTY_aoH6uMTp0cgTnvF09tC7iLD7CjEL9d9=bzw@mail.gmail.com>
+	id S1751600Ab3LOOs2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Dec 2013 09:48:28 -0500
+Received: from out1.ip05ir2.opaltelecom.net ([62.24.128.241]:58681 "EHLO
+	out1.ip05ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751571Ab3LOOs1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 15 Dec 2013 09:48:27 -0500
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AmkZABDBrVJZ8YR9/2dsb2JhbABZgwqJTrAdAQIBAYEYF3RpAQGBHwEBFAEEAQEFCAEBLh4BARwFCwIDBQIBAxUMJRQBBBoGBxcGEwgCAQIDAYU4BwGCEiXIRo8ZgyqBEwSJC4YTmwyDKjw
+X-IPAS-Result: AmkZABDBrVJZ8YR9/2dsb2JhbABZgwqJTrAdAQIBAYEYF3RpAQGBHwEBFAEEAQEFCAEBLh4BARwFCwIDBQIBAxUMJRQBBBoGBxcGEwgCAQIDAYU4BwGCEiXIRo8ZgyqBEwSJC4YTmwyDKjw
+X-IronPort-AV: E=Sophos;i="4.95,489,1384300800"; 
+   d="scan'208";a="439807564"
+Received: from host-89-241-132-125.as13285.net (HELO PhilipOakley) ([89.241.132.125])
+  by out1.ip05ir2.opaltelecom.net with SMTP; 15 Dec 2013 14:48:11 +0000
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239326>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239327>
 
-On Sun, Dec 15, 2013 at 10:02 AM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Sun, Dec 15, 2013 at 3:35 PM, Torsten B=C3=B6gershausen <tboegi@we=
-b.de> wrote:
->> If we really want to go away from PATH_MAX, is a hard-coded value of=
- 4096 so attractive ?
->> Because we can either
->>
->> a) Re-define PATH_MAX in git-compat-util.h
->> b) Use an own  #define in git-compat-util.h, like e.g. GIT_PATH_MAX
->> c) Change the code to use a "strbuf" which can grow on demand.
->>
->> I would prefer c) over b) over a)
+From: "Junio C Hamano" <gitster@pobox.com>, Saturday, December 14, 2013 
+7:39 PM
+> "Philip Oakley" <philipoakley@iee.org> writes:
 >
-> Looking at the code again, c) looks feasible after updating
-> git_snpath() to accept a strbuf instead of buffer/size pair.
+>> Would this be a good use of the
+>>    * Magic pathspecs like ":(icase)
+>> that was recently released (v1.8.5  2Dec13)  so that the merge stages
+>> can be named.
+>
+> Because the pathspec mechahism is for you to tell an operation that
+> works on a collection of paths (e.g. "all the paths in the HEAD",
+> "all the paths at stage #1 in the index") to narrow the set it
+> operates on down to only those that match, I do not think it is a
+> good match at all to what you are trying to do.
+>
 
-I agree that this is probably the way to go.
-We are not trying to avoid PATH_MAX, but static-size array that can ove=
-rflow.
+My point was that the ":1:" syntax already was a "path at stage #1 in 
+the index" indicator, and that it would be good to have a memorable name 
+for the :1:2:3: stages as per Antoine's  query.
 
-Antoine,
+It maybe that my referring to it as a 'magic pathspec' was a mistake, 
+but the difficulty of remembering which number is ours:theirs:base still 
+stands.
+
+(for general info; the :<stage>:  format is defined in 'git revision 
+(7)' as the last method for Specifying Revisions)
+
+Philip
+--
+PS should the cc: git-owner@vger.kernel.org be dropped as effectively a 
+duplicate? 
