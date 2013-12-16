@@ -1,105 +1,84 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] pack-objects: name pack files after trailer hash
-Date: Mon, 16 Dec 2013 14:04:45 -0500
-Message-ID: <20131216190445.GB29324@sigill.intra.peff.net>
-References: <CACsJy8AdOAPT-RfD0NfZj_cQPBSUrVKn8yS7JRe=-4k8C8TvQg@mail.gmail.com>
- <211D44CB-64A2-4FCA-B4A7-40845B97E9A1@ancientrocklab.com>
- <CACsJy8AOVWF2HssWNeYkVvYdmAXJOQ8HOehxJ0wpBFchA87ZWw@mail.gmail.com>
- <20131128092935.GC11444@sigill.intra.peff.net>
- <CAJo=hJuBTjGfF2PvaCn_v4hy4qDfFyB=FXbY0=Oz3hcE0L=L4Q@mail.gmail.com>
- <20131204200850.GB16603@sigill.intra.peff.net>
- <CAJo=hJuRz9Qc8ztQATkEs8huDfiANMA6gZEOapoofVdoY82k4g@mail.gmail.com>
- <20131205160418.GA27869@sigill.intra.peff.net>
- <20131205202807.GA19042@sigill.intra.peff.net>
- <52AEAEB2.6060203@alum.mit.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Looking for pre-commit hook to check whitespace errors but not for all files
+Date: Mon, 16 Dec 2013 11:06:59 -0800
+Message-ID: <xmqq8uvkpqcs.fsf@gitster.dls.corp.google.com>
+References: <1387034894.4636.9.camel@mattotaupa>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Shawn Pearce <spearce@spearce.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Mon Dec 16 20:04:53 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Paul Menzel <paulepanter@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Mon Dec 16 20:07:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VsdTI-0004rF-Mj
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Dec 2013 20:04:53 +0100
+	id 1VsdVa-0006kK-KH
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Dec 2013 20:07:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755260Ab3LPTEs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Dec 2013 14:04:48 -0500
-Received: from cloud.peff.net ([50.56.180.127]:45672 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755190Ab3LPTEs (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Dec 2013 14:04:48 -0500
-Received: (qmail 23586 invoked by uid 102); 16 Dec 2013 19:04:47 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 16 Dec 2013 13:04:47 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 16 Dec 2013 14:04:45 -0500
-Content-Disposition: inline
-In-Reply-To: <52AEAEB2.6060203@alum.mit.edu>
+	id S1755371Ab3LPTHH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Dec 2013 14:07:07 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46861 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754943Ab3LPTHC (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Dec 2013 14:07:02 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 44F1F5B43A;
+	Mon, 16 Dec 2013 14:07:02 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=uzRglNFYsQg08XQtWV8JnNePKTU=; b=Sbjogn
+	ra1vvK0VwMFyHoE6ie+WV20Q/6m82vQ6pplu2/uX+PAA2KKsrvB2qCR2NQsL22bD
+	83r79R5Vv7skIQczcJYzHM/8CXShUmNa4U4wF5ONuXCI5JTaQuCizYph2pxZRvAP
+	MC/pKLguXFHdY/puneJB7IQmgnLNzmYkzXCo8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=AILvb6MdmEaTZ3XiHFu7w2rAa1KX0yfO
+	csoe/gVz62GE3O8hs6RQzQ7tdl9FpKGKmgGM7fmqwmzyVKLB4XCT/rXL7oFyH5hT
+	BVck7DKSDsKbVlX8B7k59VLSN5THutPr/PpTheA91URq417paNPyRfowdoPwqt57
+	lTgzp76lB6I=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2FA555B439;
+	Mon, 16 Dec 2013 14:07:02 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6851F5B438;
+	Mon, 16 Dec 2013 14:07:01 -0500 (EST)
+In-Reply-To: <1387034894.4636.9.camel@mattotaupa> (Paul Menzel's message of
+	"Sat, 14 Dec 2013 16:28:14 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 3E5F4F7E-6685-11E3-B59A-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239345>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239346>
 
-On Mon, Dec 16, 2013 at 08:41:38AM +0100, Michael Haggerty wrote:
+Paul Menzel <paulepanter@users.sourceforge.net> writes:
 
-> The old naming scheme is documented in
-> Documentation/git-pack-objects.txt, under "OPTIONS" -> "base-name":
-> 
-> > base-name::
-> > 	Write into a pair of files (.pack and .idx), using
-> > 	<base-name> to determine the name of the created file.
-> > 	When this option is used, the two files are written in
-> > 	<base-name>-<SHA-1>.{pack,idx} files.  <SHA-1> is a hash
-> > 	of the sorted object names to make the resulting filename
-> > 	based on the pack content, and written to the standard
-> > 	output of the command.
-> 
-> The documentation should either be updated or the description of the
-> naming scheme should be removed altogether.
+> 1. Only the files actually committed should be checked. That means
+> running `git commit -a`, abort that and then running `git commit
+> some/file` should only check `some/file` for whitespace errors.
 
-Thanks. I looked in Documentation/technical for anything to update, but
-didn't imagine we would be advertising the format in the user-facing
-documentation. :)
+Doesn't hooks/pre-commit.sample we ship already gets this right?
 
-The original patch is in next, so here's one on top. I just updated the
-description. I was tempted to explicitly say something like "this is
-opaque and meaningless to you, don't rely on it", but I don't know that
-there is any need.
+	$ git init foobar && cd foobar
+	$ mv .git/hooks/pre-commit.sample .git/hooks/pre-commit
+        $ for i in foo bar; do echo $i >$i.txt; done
+        $ git commit -m initial
+        $ for i in foo bar; do echo "$i " >$i.txt; done
+        $ git commit -a
+        bar.txt:1: trailing whitespace.
+        +bar
+        foo.txt:1: trailing whitespace.
+        +foo
+        $ git commit foo.txt
+        foo.txt:1: trailing whitespace.
+        +foo
 
--- >8 --
-Subject: docs: update pack-objects "base-name" description
+> 2. There are certain files that are allowed to have whitespace errors.
 
-As of 1190a1a, the SHA-1 used to determine the filename is
-now calculated differently. Update the documentation to
-reflect this.
-
-Noticed-by: Michael Haggerty <mhagger@alum.mit.edu>
-Signed-off-by: Jeff King <peff@peff.net>
----
-On top of jk/name-pack-after-byte-representations, naturally.
-
- Documentation/git-pack-objects.txt | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
-
-diff --git a/Documentation/git-pack-objects.txt b/Documentation/git-pack-objects.txt
-index d94edcd..c69affc 100644
---- a/Documentation/git-pack-objects.txt
-+++ b/Documentation/git-pack-objects.txt
-@@ -51,8 +51,7 @@ base-name::
- 	<base-name> to determine the name of the created file.
- 	When this option is used, the two files are written in
- 	<base-name>-<SHA-1>.{pack,idx} files.  <SHA-1> is a hash
--	of the sorted object names to make the resulting filename
--	based on the pack content, and written to the standard
-+	of the bytes of the packfile, and is written to the standard
- 	output of the command.
- 
- --stdout::
--- 
-1.8.5.524.g6743da6
+As John Keeping alraedy pointed out, you can use the attributes
+mechanism to mark what kind of payload each path has to control
+this kind of thing.
