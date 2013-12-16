@@ -1,117 +1,70 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] pack-objects: name pack files after trailer hash
-Date: Mon, 16 Dec 2013 11:19:33 -0800
-Message-ID: <20131216191933.GE2311@google.com>
-References: <211D44CB-64A2-4FCA-B4A7-40845B97E9A1@ancientrocklab.com>
- <CACsJy8AOVWF2HssWNeYkVvYdmAXJOQ8HOehxJ0wpBFchA87ZWw@mail.gmail.com>
- <20131128092935.GC11444@sigill.intra.peff.net>
- <CAJo=hJuBTjGfF2PvaCn_v4hy4qDfFyB=FXbY0=Oz3hcE0L=L4Q@mail.gmail.com>
- <20131204200850.GB16603@sigill.intra.peff.net>
- <CAJo=hJuRz9Qc8ztQATkEs8huDfiANMA6gZEOapoofVdoY82k4g@mail.gmail.com>
- <20131205160418.GA27869@sigill.intra.peff.net>
- <20131205202807.GA19042@sigill.intra.peff.net>
- <52AEAEB2.6060203@alum.mit.edu>
- <20131216190445.GB29324@sigill.intra.peff.net>
+From: Samuel Bronson <naesten@gmail.com>
+Subject: Re: [RFC v3 3/3] diff: Add diff.orderfile configuration variable
+Date: Mon, 16 Dec 2013 14:21:13 -0500
+Message-ID: <CAJYzjmcxswLUw3wU6TO_s_vFXYM1mu4HCXZ=8ksWELxXCSt4cg@mail.gmail.com>
+References: <1387059521-23616-1-git-send-email-naesten@gmail.com>
+	<1387059521-23616-4-git-send-email-naesten@gmail.com>
+	<xmqqfvpspqyj.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	Junio C Hamano <gitster@pobox.com>,
-	Shawn Pearce <spearce@spearce.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Dec 16 20:19:57 2013
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+	Anders Waldenborg <anders@0x63.nu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Dec 16 20:21:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vsdhp-0008Gj-80
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Dec 2013 20:19:53 +0100
+	id 1VsdjC-0000x0-9l
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Dec 2013 20:21:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754735Ab3LPTTt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Dec 2013 14:19:49 -0500
-Received: from mail-yh0-f54.google.com ([209.85.213.54]:49659 "EHLO
-	mail-yh0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755335Ab3LPTTp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Dec 2013 14:19:45 -0500
-Received: by mail-yh0-f54.google.com with SMTP id z12so4090757yhz.41
-        for <git@vger.kernel.org>; Mon, 16 Dec 2013 11:19:43 -0800 (PST)
+	id S1754897Ab3LPTVO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Dec 2013 14:21:14 -0500
+Received: from mail-oa0-f44.google.com ([209.85.219.44]:33198 "EHLO
+	mail-oa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754565Ab3LPTVN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Dec 2013 14:21:13 -0500
+Received: by mail-oa0-f44.google.com with SMTP id m1so5547262oag.31
+        for <git@vger.kernel.org>; Mon, 16 Dec 2013 11:21:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=8G+PhXhtBNiUxkHhKVPD3N7R9koPrGIrV9wvTLsgIeg=;
-        b=qkzsENJy/nVWXhJaQu4Cr3qqEC4tb085BMwHBJuRoGntxgoVbrTmaegpDSCUwUehFH
-         y21fv1LKzZgeOYKFlSIZcOJmEqizI0xlI0y3eqYeggPs49JXwAzdSjatDa3zLNKx3Yr+
-         DVXHV2EJ5ThwF+Uwn3K40F43e5UqQAMxtkLDXCxgF3tDhm4Z7Nu0QOoI+cxZ5Iy7Rgn1
-         vgh3kH8+gcP2E8bIaavdnL+DXkva95115HOme9RrKAvJR/gOU3o/25+yFxQ1LJpoDr+C
-         C5ifniIjI/TeS7TqVlL2aVC2y2n0F6/tjfwaCYrVhlY1UUldsYwCXWBqNCEZFoNTd5We
-         B7XA==
-X-Received: by 10.236.97.5 with SMTP id s5mr8166095yhf.68.1387221582441;
-        Mon, 16 Dec 2013 11:19:42 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id w45sm20316046yhk.4.2013.12.16.11.19.37
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 16 Dec 2013 11:19:41 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20131216190445.GB29324@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=Kso7VCQlhzKDFRyr67W+SdBhvaRG3fW9ufRBKadLWsA=;
+        b=LzTr7g2xBXgBgwIP0w+an22z7iDyFuQFzaNYL0Ijx8rn6/OFJVXxEMxqnDGxRNfU2I
+         PQHG6Ab67NzUkEZE3p3bWR1TKeCr1jHhRh7XoutjirPVF9Gk3x3G2i4w4uGX/hhqo8Sp
+         2cMQ5I0Ae81xn1AUryhpyEtp16bmBWAkP2M9MigTMX3BSvfjC9mnEhwtV/5aTM8MUC9d
+         SiijQlUXeJQag3db/pktdO+Nas+Ouly398fjBJoFpwY5nkDI15QnMSfMgdyB2SqWW28j
+         +TI63DGwdbMbZ+tGhKdwp/ha7cob9PFavMsR9ZQKqr5EQBPJpQmD74oN3+vZlBMX+sYH
+         +hXg==
+X-Received: by 10.60.44.239 with SMTP id h15mr12986601oem.22.1387221673150;
+ Mon, 16 Dec 2013 11:21:13 -0800 (PST)
+Received: by 10.182.135.3 with HTTP; Mon, 16 Dec 2013 11:21:13 -0800 (PST)
+In-Reply-To: <xmqqfvpspqyj.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239349>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239350>
 
-Jeff King wrote:
+On Mon, Dec 16, 2013 at 1:53 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Samuel Bronson <naesten@gmail.com> writes:
 
-> The original patch is in next, so here's one on top. I just updated the
-> description.
+> Path-like parameters and values given by the end user should be
+> relative to the directory where the end user is (i.e. both -O
+> parameters in the above example name docs/orderfile).  All Git
+> processes, even the ones that are capable of being run from a
+> subdirectory, are supposed to first chdir to the top level of the
+> working tree before doing anything else, and adjust the path-like
+> things they get from the end user from the command line accordingly.
+> By the time diffcore_order() to prepare_order() callchain is called,
+> we certainly should have passed that chdir already, so the value of
+> the option needs to be prepended with the "prefix" when parsed.
+>
+> The value specified for the diff.orderfile configuration can just be
+> a path relative to the top level of the working tree, I think.
 
-Thanks.
-
->              I was tempted to explicitly say something like "this is
-> opaque and meaningless to you, don't rely on it", but I don't know that
-> there is any need.
-[...]
-> On top of jk/name-pack-after-byte-representations, naturally.
-
-I think there is --- if someone starts caring about the SHA-1 used,
-they won't be able to act on old packfiles that were created before
-this change.  How about something like the following instead?
-
--- >8 --
-From: Jeff King <peff@peff.net>
-Subject: pack-objects doc: treat output filename as opaque
-
-After 1190a1a (pack-objects: name pack files after trailer hash,
-2013-12-05), the SHA-1 used to determine the filename is calculated
-differently.  Update the documentation to not guarantee anything more
-than that the SHA-1 depends on the pack content somehow.
-
-Hopefully this will discourage readers from depending on the old or
-the new calculation.
-
-Reported-by: Michael Haggerty <mhagger@alum.mit.edu>
-Signed-off-by: Jeff King <peff@peff.net>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
- Documentation/git-pack-objects.txt | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
-
-diff --git a/Documentation/git-pack-objects.txt b/Documentation/git-pack-objects.txt
-index d94edcd..cdab9ed 100644
---- a/Documentation/git-pack-objects.txt
-+++ b/Documentation/git-pack-objects.txt
-@@ -51,8 +51,7 @@ base-name::
- 	<base-name> to determine the name of the created file.
- 	When this option is used, the two files are written in
- 	<base-name>-<SHA-1>.{pack,idx} files.  <SHA-1> is a hash
--	of the sorted object names to make the resulting filename
--	based on the pack content, and written to the standard
-+	based on the pack content and is written to the standard
- 	output of the command.
- 
- --stdout::
--- 
-1.8.5.1
+Oh, cool.  So I'll just change the git_config_string() call to use
+git_config_pathname(), since the user might easily want to use ~
+notation there, especially in a user-level setting ...
