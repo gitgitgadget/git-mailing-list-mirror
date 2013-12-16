@@ -1,70 +1,103 @@
-From: Samuel Bronson <naesten@gmail.com>
-Subject: Re: [RFC v3 3/3] diff: Add diff.orderfile configuration variable
-Date: Mon, 16 Dec 2013 14:21:13 -0500
-Message-ID: <CAJYzjmcxswLUw3wU6TO_s_vFXYM1mu4HCXZ=8ksWELxXCSt4cg@mail.gmail.com>
-References: <1387059521-23616-1-git-send-email-naesten@gmail.com>
-	<1387059521-23616-4-git-send-email-naesten@gmail.com>
-	<xmqqfvpspqyj.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+From: Thomas Gummerer <t.gummerer@gmail.com>
+Subject: [PATCH 1/2] diff: add test for --no-index executed outside repo
+Date: Mon, 16 Dec 2013 20:23:29 +0100
+Message-ID: <1387221810-32374-1-git-send-email-t.gummerer@gmail.com>
+References: <xmqqtxe8pu05.fsf@gitster.dls.corp.google.com>
 Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
-	Anders Waldenborg <anders@0x63.nu>
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	=?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Thomas Gummerer <t.gummerer@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Dec 16 20:21:18 2013
+X-From: git-owner@vger.kernel.org Mon Dec 16 20:24:45 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VsdjC-0000x0-9l
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Dec 2013 20:21:18 +0100
+	id 1VsdmV-0003bI-RG
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Dec 2013 20:24:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754897Ab3LPTVO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Dec 2013 14:21:14 -0500
-Received: from mail-oa0-f44.google.com ([209.85.219.44]:33198 "EHLO
-	mail-oa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754565Ab3LPTVN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Dec 2013 14:21:13 -0500
-Received: by mail-oa0-f44.google.com with SMTP id m1so5547262oag.31
-        for <git@vger.kernel.org>; Mon, 16 Dec 2013 11:21:13 -0800 (PST)
+	id S1754993Ab3LPTYj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Dec 2013 14:24:39 -0500
+Received: from mail-bk0-f41.google.com ([209.85.214.41]:39254 "EHLO
+	mail-bk0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754826Ab3LPTYi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Dec 2013 14:24:38 -0500
+Received: by mail-bk0-f41.google.com with SMTP id v15so2530271bkz.28
+        for <git@vger.kernel.org>; Mon, 16 Dec 2013 11:24:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=Kso7VCQlhzKDFRyr67W+SdBhvaRG3fW9ufRBKadLWsA=;
-        b=LzTr7g2xBXgBgwIP0w+an22z7iDyFuQFzaNYL0Ijx8rn6/OFJVXxEMxqnDGxRNfU2I
-         PQHG6Ab67NzUkEZE3p3bWR1TKeCr1jHhRh7XoutjirPVF9Gk3x3G2i4w4uGX/hhqo8Sp
-         2cMQ5I0Ae81xn1AUryhpyEtp16bmBWAkP2M9MigTMX3BSvfjC9mnEhwtV/5aTM8MUC9d
-         SiijQlUXeJQag3db/pktdO+Nas+Ouly398fjBJoFpwY5nkDI15QnMSfMgdyB2SqWW28j
-         +TI63DGwdbMbZ+tGhKdwp/ha7cob9PFavMsR9ZQKqr5EQBPJpQmD74oN3+vZlBMX+sYH
-         +hXg==
-X-Received: by 10.60.44.239 with SMTP id h15mr12986601oem.22.1387221673150;
- Mon, 16 Dec 2013 11:21:13 -0800 (PST)
-Received: by 10.182.135.3 with HTTP; Mon, 16 Dec 2013 11:21:13 -0800 (PST)
-In-Reply-To: <xmqqfvpspqyj.fsf@gitster.dls.corp.google.com>
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=cbqZWJZBVdvP3GXQA0a7srEH7Foye6DmIU8aRGFYQ6g=;
+        b=dE8MNfNsi0xZiejwunV4HA3pFJ2PnupFFNlokubGcAF77km1/Nbw5Du21wyo+LXeoy
+         QY7gwSpfhzUkKOEh4VnaYnXbQHPxxro+PONjuQVW4wabcOKhw3+fyL9ukre/M5HK2ZKz
+         kjkdDnCWsK3NxY/CqsszxsdUz3vxcRKMTCwhp+aV0r28dfmLiUymtZ1v9TzEHqh4C3X/
+         bm+71ReuzaFlUbPQL+Gsy9zQHev51MuBRexoYzXmN/rqeGsghaeNz2w6DIF8whCWMZM8
+         0b1Y3BmbimDZsDxHt8hzdHV8waGzI1z+oDEvhUtKF4X5bLF1XLIf84OBv3VaSAy+ViMK
+         wfog==
+X-Received: by 10.204.100.9 with SMTP id w9mr806828bkn.131.1387221877399;
+        Mon, 16 Dec 2013 11:24:37 -0800 (PST)
+Received: from localhost ([2001:5c0:1400:a::1b8d])
+        by mx.google.com with ESMTPSA id t2sm11344993bkh.3.2013.12.16.11.24.34
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 16 Dec 2013 11:24:35 -0800 (PST)
+X-Mailer: git-send-email 1.8.5.4.g8639e57
+In-Reply-To: <xmqqtxe8pu05.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239350>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239351>
 
-On Mon, Dec 16, 2013 at 1:53 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Samuel Bronson <naesten@gmail.com> writes:
+470faf9 diff: move no-index detection to builtin/diff.c breaks the error
+message for "git diff --no-index", when the command is executed outside
+of a git repository and the wrong number of arguments are given. 6df5762
+diff: don't read index when --no-index is given fixes the problem.
 
-> Path-like parameters and values given by the end user should be
-> relative to the directory where the end user is (i.e. both -O
-> parameters in the above example name docs/orderfile).  All Git
-> processes, even the ones that are capable of being run from a
-> subdirectory, are supposed to first chdir to the top level of the
-> working tree before doing anything else, and adjust the path-like
-> things they get from the end user from the command line accordingly.
-> By the time diffcore_order() to prepare_order() callchain is called,
-> we certainly should have passed that chdir already, so the value of
-> the option needs to be prepended with the "prefix" when parsed.
+Add a test to guard against similar breakages in the future.
+
+Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
+---
+
+>> Thanks, I've missed that one.  It only happens when run outside a git
+>> repository, but the same  comments still apply.  Will fix and send a
+>> re-roll.
 >
-> The value specified for the diff.orderfile configuration can just be
-> a path relative to the top level of the working tree, I think.
+> Please don't, as the last round has already been pushed on 'next'.
 
-Oh, cool.  So I'll just change the git_config_string() call to use
-git_config_pathname(), since the user might easily want to use ~
-notation there, especially in a user-level setting ...
+Sorry about that, should have checked first.
+
+> An incremental change on top would also illustrate more clearly what
+> breakage needed to be fixed, which would be another good thing. It
+> could even come with a new test that makes sure that the above
+> command line is diagnosed correctly as a mistake ;-).
+
+The breakage is actually fixed with the second patch as described in
+the commit message above, so here is just a test against future
+breakages.  This test only works when the test root is outside of a
+git repository, as otherwise nongit will not be set.  Is there another
+way to write it?
+
+t/t4053-diff-no-index.sh | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/t/t4053-diff-no-index.sh b/t/t4053-diff-no-index.sh
+index 077c775..eb4f380 100755
+--- a/t/t4053-diff-no-index.sh
++++ b/t/t4053-diff-no-index.sh
+@@ -44,4 +44,11 @@ test_expect_success 'git diff outside repo with broken index' '
+ 	)
+ '
+ 
++test_expect_success 'git diff --no-index executed outside repo gives correct error message' '
++	rm -rf .git &&
++	test_must_fail git diff --no-index a b b 2>actual.err &&
++	echo "usage: git diff --no-index <path> <path>" >expect.err &&
++	test_cmp expect.err actual.err
++'
++
+ test_done
+-- 
+1.8.5.4.g8639e57
