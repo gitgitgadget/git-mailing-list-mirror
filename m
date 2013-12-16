@@ -1,88 +1,117 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Subtree: My Status
-Date: Mon, 16 Dec 2013 11:18:14 -0800
-Message-ID: <xmqq4n68ppu1.fsf@gitster.dls.corp.google.com>
-References: <87d2tp9j7b.fsf@waller.obbligato.org>
-	<567618909.1800335.1366615126779.JavaMail.root@openwide.fr>
-	<20131212182439.GM18340@gmail.com>
-	<xmqq61qtuaz7.fsf@gitster.dls.corp.google.com>
-	<20131214153351.GB31739@pacific.linksys.moosehall>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] pack-objects: name pack files after trailer hash
+Date: Mon, 16 Dec 2013 11:19:33 -0800
+Message-ID: <20131216191933.GE2311@google.com>
+References: <211D44CB-64A2-4FCA-B4A7-40845B97E9A1@ancientrocklab.com>
+ <CACsJy8AOVWF2HssWNeYkVvYdmAXJOQ8HOehxJ0wpBFchA87ZWw@mail.gmail.com>
+ <20131128092935.GC11444@sigill.intra.peff.net>
+ <CAJo=hJuBTjGfF2PvaCn_v4hy4qDfFyB=FXbY0=Oz3hcE0L=L4Q@mail.gmail.com>
+ <20131204200850.GB16603@sigill.intra.peff.net>
+ <CAJo=hJuRz9Qc8ztQATkEs8huDfiANMA6gZEOapoofVdoY82k4g@mail.gmail.com>
+ <20131205160418.GA27869@sigill.intra.peff.net>
+ <20131205202807.GA19042@sigill.intra.peff.net>
+ <52AEAEB2.6060203@alum.mit.edu>
+ <20131216190445.GB29324@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jeremy Rosen <jeremy.rosen@openwide.fr>,
-	David Greene <greened@obbligato.org>, git@vger.kernel.org
-To: Adam Spiers <git@adamspiers.org>
-X-From: git-owner@vger.kernel.org Mon Dec 16 20:18:30 2013
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Junio C Hamano <gitster@pobox.com>,
+	Shawn Pearce <spearce@spearce.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Dec 16 20:19:57 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VsdgT-0007EZ-P7
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Dec 2013 20:18:30 +0100
+	id 1Vsdhp-0008Gj-80
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Dec 2013 20:19:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755189Ab3LPTSW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Dec 2013 14:18:22 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43778 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754704Ab3LPTSS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Dec 2013 14:18:18 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 39A945B6BD;
-	Mon, 16 Dec 2013 14:18:18 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=z322WgTjq/2//NM2MoYbmvV6ceQ=; b=dMS8gM
-	clnEPc8PZ8WvXqfyZsBfYJfsCfwFSR96soGigdWdAb8WlMGMKBc+cKCEAjLG9bSu
-	xXx7eTNlySprdHqZrqB4iDheP2DEvyvsr2lbrOrmk7ICURkrYRB7uY/+P3iLiaKt
-	3f/HLKsEuFTPQX9P/nfQ6WlbfZhACgRQYv/As=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=SSLjsdKv9TrybrYjgYdI5B08SRl9XxGk
-	IMrzmy6jwoW+dGSebHVTdXvMYWWydpW0fbFmhtch7hXyRsgUrVg3+kdbPuMSmVEQ
-	7Pmz16Kcz9iA7q3BXM64s9GzKLoQl6+do0VkPUQhn3d+0goJR2mqYEAXUvqja0Z4
-	danjmCD4aJk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 276D55B6BC;
-	Mon, 16 Dec 2013 14:18:18 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5B6C25B6BB;
-	Mon, 16 Dec 2013 14:18:17 -0500 (EST)
-In-Reply-To: <20131214153351.GB31739@pacific.linksys.moosehall> (Adam Spiers's
-	message of "Sat, 14 Dec 2013 15:33:51 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: D1449604-6686-11E3-B368-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754735Ab3LPTTt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Dec 2013 14:19:49 -0500
+Received: from mail-yh0-f54.google.com ([209.85.213.54]:49659 "EHLO
+	mail-yh0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755335Ab3LPTTp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Dec 2013 14:19:45 -0500
+Received: by mail-yh0-f54.google.com with SMTP id z12so4090757yhz.41
+        for <git@vger.kernel.org>; Mon, 16 Dec 2013 11:19:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=8G+PhXhtBNiUxkHhKVPD3N7R9koPrGIrV9wvTLsgIeg=;
+        b=qkzsENJy/nVWXhJaQu4Cr3qqEC4tb085BMwHBJuRoGntxgoVbrTmaegpDSCUwUehFH
+         y21fv1LKzZgeOYKFlSIZcOJmEqizI0xlI0y3eqYeggPs49JXwAzdSjatDa3zLNKx3Yr+
+         DVXHV2EJ5ThwF+Uwn3K40F43e5UqQAMxtkLDXCxgF3tDhm4Z7Nu0QOoI+cxZ5Iy7Rgn1
+         vgh3kH8+gcP2E8bIaavdnL+DXkva95115HOme9RrKAvJR/gOU3o/25+yFxQ1LJpoDr+C
+         C5ifniIjI/TeS7TqVlL2aVC2y2n0F6/tjfwaCYrVhlY1UUldsYwCXWBqNCEZFoNTd5We
+         B7XA==
+X-Received: by 10.236.97.5 with SMTP id s5mr8166095yhf.68.1387221582441;
+        Mon, 16 Dec 2013 11:19:42 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id w45sm20316046yhk.4.2013.12.16.11.19.37
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 16 Dec 2013 11:19:41 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <20131216190445.GB29324@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239348>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239349>
 
-Adam Spiers <git@adamspiers.org> writes:
+Jeff King wrote:
 
->> Somebody take the ownership of the area, if David Green who earlier
->> volunteered to do so and worked on it needs help reviewing, helping
->> polishing and giving thumbs-up on the patches, perhaps?
->
-> I *may* be able to help a bit in the coming weeks, given that it's
-> reasonably likely I'll be using git-subtree for professional reasons.
->
-> However I'm not clear from the above whether you're suggesting that
-> someone should take over ownership from David, or merely help him?
+> The original patch is in next, so here's one on top. I just updated the
+> description.
 
-I'll leave that between you and David, and possibly other people who
-are interested in advancing "git subtree" who may volunteer.
+Thanks.
 
-> And in either case, what would be your criteria and process for
-> accepting patches, given that ultimately you're still in control of
-> the repository?
+>              I was tempted to explicitly say something like "this is
+> opaque and meaningless to you, don't rely on it", but I don't know that
+> there is any need.
+[...]
+> On top of jk/name-pack-after-byte-representations, naturally.
 
-I'd imagine for the first few rounds of patchsets I'll be picky
-about styles and design, but once whoever eventually becomes the
-volunteer subarea maintainer (perhaps you) demonsrates that s/he has
-good enough motivation and taste to keep the codebase clean and user
-experience consistent, I'd delegate more and more decision what to
-include and reject to that subarea maintainer, just like any
-material in the contrib/ area.
+I think there is --- if someone starts caring about the SHA-1 used,
+they won't be able to act on old packfiles that were created before
+this change.  How about something like the following instead?
+
+-- >8 --
+From: Jeff King <peff@peff.net>
+Subject: pack-objects doc: treat output filename as opaque
+
+After 1190a1a (pack-objects: name pack files after trailer hash,
+2013-12-05), the SHA-1 used to determine the filename is calculated
+differently.  Update the documentation to not guarantee anything more
+than that the SHA-1 depends on the pack content somehow.
+
+Hopefully this will discourage readers from depending on the old or
+the new calculation.
+
+Reported-by: Michael Haggerty <mhagger@alum.mit.edu>
+Signed-off-by: Jeff King <peff@peff.net>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+ Documentation/git-pack-objects.txt | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/Documentation/git-pack-objects.txt b/Documentation/git-pack-objects.txt
+index d94edcd..cdab9ed 100644
+--- a/Documentation/git-pack-objects.txt
++++ b/Documentation/git-pack-objects.txt
+@@ -51,8 +51,7 @@ base-name::
+ 	<base-name> to determine the name of the created file.
+ 	When this option is used, the two files are written in
+ 	<base-name>-<SHA-1>.{pack,idx} files.  <SHA-1> is a hash
+-	of the sorted object names to make the resulting filename
+-	based on the pack content, and written to the standard
++	based on the pack content and is written to the standard
+ 	output of the command.
+ 
+ --stdout::
+-- 
+1.8.5.1
