@@ -1,85 +1,105 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: Unexpected cherry-pick behaviour
-Date: Mon, 16 Dec 2013 19:00:53 -0000
-Organization: OPDS
-Message-ID: <B4E4F29CB20847DEB23F21255A040187@PhilipOakley>
-References: <118044938ad8ebf6b069bcc1d220a986@matos-sorge.com><xmqqvbywts9d.fsf@gitster.dls.corp.google.com><7050e7272bb83d083a56a2c391228ed8@matos-sorge.com><CALWbr2zPPnDiv7oVBhnM9dSW=pfz2jUA_A5u_gk2ttgXTStvkw@mail.gmail.com><beee32a53ece8b839578703deb851eaa@matos-sorge.com><CALWbr2y1YDX0dzjpZoF8WL4+ND+8drurH+Wrf1wBs_-=0datOA@mail.gmail.com><3FFF08967D2E480FA6B0E0EE3A72A8D9@PhilipOakley> <7vmwk3gr39.fsf@alter.siamese.dyndns.org> <0172E9F1B5F945EB9294F1066C2FB72E@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] pack-objects: name pack files after trailer hash
+Date: Mon, 16 Dec 2013 14:04:45 -0500
+Message-ID: <20131216190445.GB29324@sigill.intra.peff.net>
+References: <CACsJy8AdOAPT-RfD0NfZj_cQPBSUrVKn8yS7JRe=-4k8C8TvQg@mail.gmail.com>
+ <211D44CB-64A2-4FCA-B4A7-40845B97E9A1@ancientrocklab.com>
+ <CACsJy8AOVWF2HssWNeYkVvYdmAXJOQ8HOehxJ0wpBFchA87ZWw@mail.gmail.com>
+ <20131128092935.GC11444@sigill.intra.peff.net>
+ <CAJo=hJuBTjGfF2PvaCn_v4hy4qDfFyB=FXbY0=Oz3hcE0L=L4Q@mail.gmail.com>
+ <20131204200850.GB16603@sigill.intra.peff.net>
+ <CAJo=hJuRz9Qc8ztQATkEs8huDfiANMA6gZEOapoofVdoY82k4g@mail.gmail.com>
+ <20131205160418.GA27869@sigill.intra.peff.net>
+ <20131205202807.GA19042@sigill.intra.peff.net>
+ <52AEAEB2.6060203@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=response
-Content-Transfer-Encoding: 7bit
-Cc: "Antoine Pelisse" <apelisse@gmail.com>,
-	"Paulo Matos" <paulo@matos-sorge.com>, "git" <git@vger.kernel.org>,
-	"Junio C Hamano" <gitster@pobox.com>
-To: "Philip Oakley" <philipoakley@iee.org>
-X-From: git-owner@vger.kernel.org Mon Dec 16 20:00:04 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Shawn Pearce <spearce@spearce.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Mon Dec 16 20:04:53 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VsdOd-00014g-CL
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Dec 2013 20:00:03 +0100
+	id 1VsdTI-0004rF-Mj
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Dec 2013 20:04:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755193Ab3LPS77 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Dec 2013 13:59:59 -0500
-Received: from out1.ip01ir2.opaltelecom.net ([62.24.128.237]:61147 "EHLO
-	out1.ip01ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754466Ab3LPS76 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 16 Dec 2013 13:59:58 -0500
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: ApEYALRMr1JZ8YR9/2dsb2JhbABZgwqBAQEBiEuwLAECAQGBJhd0aQEBgR8BARQBBAEBAQECAQgBAS4eAQEcBQsCAwUCAQMVDCUUAQQaBgcXBhMIAgECAwGFOAcBghIZDMhOjxmDKoETBIkLhhOaKWODKjw
-X-IPAS-Result: ApEYALRMr1JZ8YR9/2dsb2JhbABZgwqBAQEBiEuwLAECAQGBJhd0aQEBgR8BARQBBAEBAQECAQgBAS4eAQEcBQsCAwUCAQMVDCUUAQQaBgcXBhMIAgECAwGFOAcBghIZDMhOjxmDKoETBIkLhhOaKWODKjw
-X-IronPort-AV: E=Sophos;i="4.95,496,1384300800"; 
-   d="scan'208";a="450051687"
-Received: from host-89-241-132-125.as13285.net (HELO PhilipOakley) ([89.241.132.125])
-  by out1.ip01ir2.opaltelecom.net with SMTP; 16 Dec 2013 18:59:57 +0000
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1755260Ab3LPTEs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Dec 2013 14:04:48 -0500
+Received: from cloud.peff.net ([50.56.180.127]:45672 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755190Ab3LPTEs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Dec 2013 14:04:48 -0500
+Received: (qmail 23586 invoked by uid 102); 16 Dec 2013 19:04:47 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 16 Dec 2013 13:04:47 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 16 Dec 2013 14:04:45 -0500
+Content-Disposition: inline
+In-Reply-To: <52AEAEB2.6060203@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239344>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239345>
 
-From: "Philip Oakley" <philipoakley@iee.org>
-> From: "Junio C Hamano" <gitster@pobox.com>, Saturday, December 14, 
-> 2013 7:39 PM
->> "Philip Oakley" <philipoakley@iee.org> writes:
->>
->>> Would this be a good use of the
->>>    * Magic pathspecs like ":(icase)
->>> that was recently released (v1.8.5  2Dec13)  so that the merge 
->>> stages
->>> can be named.
->>
->> Because the pathspec mechahism is for you to tell an operation that
->> works on a collection of paths (e.g. "all the paths in the HEAD",
->> "all the paths at stage #1 in the index") to narrow the set it
->> operates on down to only those that match, I do not think it is a
->> good match at all to what you are trying to do.
->>
->
-> My point was that the ":1:" syntax already was a "path at stage #1 in 
-> the index" indicator, and that it would be good to have a memorable 
-> name for the :1:2:3: stages as per Antoine's  query.
+On Mon, Dec 16, 2013 at 08:41:38AM +0100, Michael Haggerty wrote:
 
-Could someone point me at where is this syntax decoded?
-My initial hunt around the code base didn't find the relevant location.
+> The old naming scheme is documented in
+> Documentation/git-pack-objects.txt, under "OPTIONS" -> "base-name":
+> 
+> > base-name::
+> > 	Write into a pair of files (.pack and .idx), using
+> > 	<base-name> to determine the name of the created file.
+> > 	When this option is used, the two files are written in
+> > 	<base-name>-<SHA-1>.{pack,idx} files.  <SHA-1> is a hash
+> > 	of the sorted object names to make the resulting filename
+> > 	based on the pack content, and written to the standard
+> > 	output of the command.
+> 
+> The documentation should either be updated or the description of the
+> naming scheme should be removed altogether.
 
->
-> It maybe that my referring to it as a 'magic pathspec' was a mistake, 
-> but the difficulty of remembering which number is ours:theirs:base 
-> still stands.
->
-> (for general info; the :<stage>:  format is defined in 'git revision 
-> (7)' as the last method for Specifying Revisions)
->
-> Philip
-> --
-Philip
+Thanks. I looked in Documentation/technical for anything to update, but
+didn't imagine we would be advertising the format in the user-facing
+documentation. :)
+
+The original patch is in next, so here's one on top. I just updated the
+description. I was tempted to explicitly say something like "this is
+opaque and meaningless to you, don't rely on it", but I don't know that
+there is any need.
+
+-- >8 --
+Subject: docs: update pack-objects "base-name" description
+
+As of 1190a1a, the SHA-1 used to determine the filename is
+now calculated differently. Update the documentation to
+reflect this.
+
+Noticed-by: Michael Haggerty <mhagger@alum.mit.edu>
+Signed-off-by: Jeff King <peff@peff.net>
+---
+On top of jk/name-pack-after-byte-representations, naturally.
+
+ Documentation/git-pack-objects.txt | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/Documentation/git-pack-objects.txt b/Documentation/git-pack-objects.txt
+index d94edcd..c69affc 100644
+--- a/Documentation/git-pack-objects.txt
++++ b/Documentation/git-pack-objects.txt
+@@ -51,8 +51,7 @@ base-name::
+ 	<base-name> to determine the name of the created file.
+ 	When this option is used, the two files are written in
+ 	<base-name>-<SHA-1>.{pack,idx} files.  <SHA-1> is a hash
+-	of the sorted object names to make the resulting filename
+-	based on the pack content, and written to the standard
++	of the bytes of the packfile, and is written to the standard
+ 	output of the command.
+ 
+ --stdout::
+-- 
+1.8.5.524.g6743da6
