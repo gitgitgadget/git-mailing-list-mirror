@@ -1,121 +1,114 @@
 From: Nicolas Vigier <boklm@mars-attacks.org>
-Subject: Re: What's cooking in git.git (Dec 2013, #03; Thu, 12)
-Date: Mon, 16 Dec 2013 13:30:40 +0100
-Message-ID: <20131216123040.GZ11745@mars-attacks.org>
-References: <xmqqwqj9r2ig.fsf@gitster.dls.corp.google.com>
- <xmqqa9g1qrzj.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Cc: git@vger.kernel.org
+Subject: [PATCH] test the commit.gpgsign config option
+Date: Mon, 16 Dec 2013 14:55:04 +0100
+Message-ID: <1387202104-17580-1-git-send-email-boklm@mars-attacks.org>
+References: <xmqqa9g1qrzj.fsf@gitster.dls.corp.google.com>
+Cc: git@vger.kernel.org, Nicolas Vigier <boklm@mars-attacks.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Dec 16 13:40:57 2013
+X-From: git-owner@vger.kernel.org Mon Dec 16 14:55:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VsXTk-0002LQ-Cz
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Dec 2013 13:40:56 +0100
+	id 1VsYdp-0002jt-Mz
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Dec 2013 14:55:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753832Ab3LPMkv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Dec 2013 07:40:51 -0500
-Received: from mx0.mars-attacks.org ([92.243.25.60]:49334 "EHLO
+	id S1754385Ab3LPNzS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Dec 2013 08:55:18 -0500
+Received: from mx0.mars-attacks.org ([92.243.25.60]:49839 "EHLO
 	mx0.mars-attacks.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753603Ab3LPMku (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Dec 2013 07:40:50 -0500
-X-Greylist: delayed 605 seconds by postgrey-1.27 at vger.kernel.org; Mon, 16 Dec 2013 07:40:50 EST
+	with ESMTP id S1754372Ab3LPNzR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Dec 2013 08:55:17 -0500
 Received: from localhost (localhost [127.0.0.1])
-	by mx0.mars-attacks.org (Postfix) with ESMTP id 096B14E66;
-	Mon, 16 Dec 2013 13:31:04 +0100 (CET)
+	by mx0.mars-attacks.org (Postfix) with ESMTP id A3CBF4FA4;
+	Mon, 16 Dec 2013 14:55:35 +0100 (CET)
 X-Virus-Scanned: amavisd-new at mars-attacks.org
 Received: from mx0.mars-attacks.org ([127.0.0.1])
 	by localhost (mx0.mars-attacks.org [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 6Ib_mAEsl6XD; Mon, 16 Dec 2013 13:31:02 +0100 (CET)
+	with LMTP id urqp-dTRtWB9; Mon, 16 Dec 2013 14:55:35 +0100 (CET)
 Received: from wxy.mars-attacks.org (moow.mars-attacks.org [82.242.116.57])
-	by mx0.mars-attacks.org (Postfix) with ESMTPS id 956863ECC;
-	Mon, 16 Dec 2013 13:31:02 +0100 (CET)
+	by mx0.mars-attacks.org (Postfix) with ESMTPS id EFEA04676;
+	Mon, 16 Dec 2013 14:55:34 +0100 (CET)
 Received: by wxy.mars-attacks.org (Postfix, from userid 500)
-	id EA58D438C5; Mon, 16 Dec 2013 13:30:40 +0100 (CET)
-Content-Disposition: inline
+	id 0D399438C5; Mon, 16 Dec 2013 14:55:13 +0100 (CET)
+X-Mailer: git-send-email 1.8.4.2
 In-Reply-To: <xmqqa9g1qrzj.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239334>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239335>
 
-On Sun, 15 Dec 2013, Junio C Hamano wrote:
+The tests are checking that :
 
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
-> > [Stalled]
-> >
-> > * nv/commit-gpgsign-config (2013-11-06) 1 commit
-> >  - Add the commit.gpgsign option to sign all commits
-> >
-> >  Introduce commit.gpgsign configuration variable to force every
-> >  commit to be GPG signed.
-> >
-> >  Needs tests, perhaps?
+- when commit.gpgsign is true, "git commit" creates signed commits
 
-Ok, I'll add some tests.
+- when commit.gpgsign is false, "git commit" creates unsigned commits
 
-> 
-> Besides, we would need at least something like this to make sure
-> that people have a way to selectively disable configured default
-> when necessary, perhaps like this.
+- when commit.gpgsign is true, "git commit --no-gpg-sign" creates
+  unsigned commits
 
-This looks like a good idea.
+- when commit.gpgsign is true, "git rebase -f" creates signed commits
 
-> 
-> -- >8 --
-> Subject: [PATCH] commit-tree: add and document --no-gpg-sign
-> 
-> Document how to override commit.gpgsign configuration that is set to
-> true per "git commit" invocation (parse-options machinery lets us
-> say "--no-gpg-sign" to do so).
-> 
-> "git commit-tree" does not use parse-options, so manually add the
-> corresponding option for now.
-> 
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  Documentation/git-commit-tree.txt | 5 +++++
->  Documentation/git-commit.txt      | 4 ++++
->  builtin/commit-tree.c             | 5 +++++
->  3 files changed, 14 insertions(+)
-> 
-> diff --git a/Documentation/git-commit-tree.txt b/Documentation/git-commit-tree.txt
-> index cafdc96..a469eab 100644
-> --- a/Documentation/git-commit-tree.txt
-> +++ b/Documentation/git-commit-tree.txt
-> @@ -55,8 +55,13 @@ OPTIONS
->  	from the standard input.
->  
->  -S[<keyid>]::
-> +--gpg-sign[=<keyid>]::
->  	GPG-sign commit.
+Signed-off-by: Nicolas Vigier <boklm@mars-attacks.org>
+---
+ t/t7510-signed-commit.sh | 25 +++++++++++++++++++++----
+ 1 file changed, 21 insertions(+), 4 deletions(-)
 
-Looking at the code, commit-tree does not currently support the
-"--gpg-sign=" option, only the short one -S.
-
-If we want to add it for consistency with the --no-gpg-sign option, it
-can be added with this change :
-
-diff --git a/builtin/commit-tree.c b/builtin/commit-tree.c
-index 1646d5b25e4f..b380d486c89a 100644
---- a/builtin/commit-tree.c
-+++ b/builtin/commit-tree.c
-@@ -71,6 +71,11 @@ int cmd_commit_tree(int argc, const char **argv, const char *prefix)
- 			continue;
- 		}
+diff --git a/t/t7510-signed-commit.sh b/t/t7510-signed-commit.sh
+index 1d3c56fe61fa..537bfba76ecf 100755
+--- a/t/t7510-signed-commit.sh
++++ b/t/t7510-signed-commit.sh
+@@ -25,12 +25,29 @@ test_expect_success GPG 'create signed commits' '
+ 	git tag fourth-unsigned &&
  
-+		if (!memcmp(arg, "--gpg-sign=", 11)) {
-+			sign_commit = arg + 11;
-+			continue;
-+		}
+ 	test_tick && git commit --amend -S -m "fourth signed" &&
+-	git tag fourth-signed
++	git tag fourth-signed &&
 +
- 		if (!strcmp(arg, "-m")) {
- 			if (argc <= ++i)
- 				usage(commit_tree_usage);
++	git config commit.gpgsign true &&
++	echo 5 >file && test_tick && git commit -a -m "fifth signed" &&
++	git tag fifth-signed &&
++
++	git config commit.gpgsign false &&
++	echo 6 >file && test_tick && git commit -a -m "sixth" &&
++	git tag sixth-unsigned &&
++
++	git config commit.gpgsign true &&
++	echo 7 >file && test_tick && git commit -a -m "seventh" --no-gpg-sign &&
++	git tag seventh-unsigned &&
++
++	test_tick && git rebase -f HEAD^^ && git tag sixth-signed HEAD^ &&
++	git tag seventh-signed &&
++
++	git config --unset commit.gpgsign
+ '
+ 
+ test_expect_success GPG 'show signatures' '
+ 	(
+-		for commit in initial second merge master
++		for commit in initial second merge fourth-signed fifth-signed sixth-signed master
+ 		do
+ 			git show --pretty=short --show-signature $commit >actual &&
+ 			grep "Good signature from" actual || exit 1
+@@ -39,7 +56,7 @@ test_expect_success GPG 'show signatures' '
+ 		done
+ 	) &&
+ 	(
+-		for commit in merge^2 fourth-unsigned
++		for commit in merge^2 fourth-unsigned sixth-unsigned seventh-unsigned
+ 		do
+ 			git show --pretty=short --show-signature $commit >actual &&
+ 			grep "Good signature from" actual && exit 1
+@@ -52,7 +69,7 @@ test_expect_success GPG 'show signatures' '
+ test_expect_success GPG 'detect fudged signature' '
+ 	git cat-file commit master >raw &&
+ 
+-	sed -e "s/fourth signed/4th forged/" raw >forged1 &&
++	sed -e "s/seventh/7th forged/" raw >forged1 &&
+ 	git hash-object -w -t commit forged1 >forged1.commit &&
+ 	git show --pretty=short --show-signature $(cat forged1.commit) >actual1 &&
+ 	grep "BAD signature from" actual1 &&
+-- 
+1.8.4.2
