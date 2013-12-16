@@ -1,101 +1,110 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] diff: add test for --no-index executed outside repo
-Date: Mon, 16 Dec 2013 11:42:42 -0800
-Message-ID: <xmqqob4goa4t.fsf@gitster.dls.corp.google.com>
-References: <xmqqtxe8pu05.fsf@gitster.dls.corp.google.com>
-	<1387221810-32374-1-git-send-email-t.gummerer@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v3] difftool: Change prompt to display the number of
+ files in the diff queue
+Date: Mon, 16 Dec 2013 15:02:21 -0500
+Message-ID: <20131216200221.GA23689@sigill.intra.peff.net>
+References: <1386286726-26653-1-git-send-email-zoltan.klinger@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Thomas Gummerer <t.gummerer@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Dec 16 20:42:51 2013
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, sunshine@sunshineco.com, gitster@pobox.com
+To: Zoltan Klinger <zoltan.klinger@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Dec 16 21:02:30 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vse42-0000jP-L8
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Dec 2013 20:42:50 +0100
+	id 1VseN2-00082C-2v
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Dec 2013 21:02:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755406Ab3LPTmq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Dec 2013 14:42:46 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35202 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755341Ab3LPTmq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Dec 2013 14:42:46 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7A67C5BD48;
-	Mon, 16 Dec 2013 14:42:45 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=qLsuSEKJ3F7FVPyjQslhBUyFTIY=; b=Y269Uu
-	Vcq8QOX1tZpSHA8ERUGE6AsJ9A78o8wsfLE8DImoojlMpJYsnUAUygd7lpb+5bQ3
-	2aOI94xUu+FsxE9Tzs9ZxkAYMIm9xJbAJnCnADBzw9pWLyiAOExJ6a8MuBXDFCu+
-	7n9CumKSeXYdx3tXRuqiLm8FDTOX3LPKn0n2g=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=szqU+AGiInOfcmVdP2+fvstb0/TR7bUC
-	wHoWORgLQ5qpOy+8DcABFDDz39XUMHazWpyr8qusW/ysWMTRA2rbUu8Rg/7OAV1P
-	TV5+sK6ZrURO2qlSXv1UsKdMsK4eBcua3WPnCMV98MZ9cjasBy7E1e6oshxgvC+J
-	YoCO0kqG1tQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 599305BD47;
-	Mon, 16 Dec 2013 14:42:45 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8D1AF5BD45;
-	Mon, 16 Dec 2013 14:42:44 -0500 (EST)
-In-Reply-To: <1387221810-32374-1-git-send-email-t.gummerer@gmail.com> (Thomas
-	Gummerer's message of "Mon, 16 Dec 2013 20:23:29 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 3BD5AFC8-668A-11E3-B4DD-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751188Ab3LPUCY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Dec 2013 15:02:24 -0500
+Received: from cloud.peff.net ([50.56.180.127]:45742 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751019Ab3LPUCX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Dec 2013 15:02:23 -0500
+Received: (qmail 27240 invoked by uid 102); 16 Dec 2013 20:02:23 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 16 Dec 2013 14:02:23 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 16 Dec 2013 15:02:21 -0500
+Content-Disposition: inline
+In-Reply-To: <1386286726-26653-1-git-send-email-zoltan.klinger@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239357>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239358>
 
-Thomas Gummerer <t.gummerer@gmail.com> writes:
+On Fri, Dec 06, 2013 at 10:38:46AM +1100, Zoltan Klinger wrote:
 
-> 470faf9 diff: move no-index detection to builtin/diff.c breaks the error
-> message for "git diff --no-index", when the command is executed outside
-> of a git repository and the wrong number of arguments are given. 6df5762
-> diff: don't read index when --no-index is given fixes the problem.
->
-> Add a test to guard against similar breakages in the future.
->
-> Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
-> ---
->
->>> Thanks, I've missed that one.  It only happens when run outside a git
->>> repository, but the same  comments still apply.  Will fix and send a
->>> re-roll.
->>
->> Please don't, as the last round has already been pushed on 'next'.
->
-> Sorry about that, should have checked first.
->
->> An incremental change on top would also illustrate more clearly what
->> breakage needed to be fixed, which would be another good thing. It
->> could even come with a new test that makes sure that the above
->> command line is diagnosed correctly as a mistake ;-).
->
-> The breakage is actually fixed with the second patch as described in
-> the commit message above, so here is just a test against future
-> breakages.  This test only works when the test root is outside of a
-> git repository, as otherwise nongit will not be set.  Is there another
-> way to write it?
+> @@ -2928,7 +2933,14 @@ static void run_external_diff(const char *pgm,
+>  	}
+>  	*arg = NULL;
+>  	fflush(NULL);
+> -	retval = run_command_v_opt(spawn_arg, RUN_USING_SHELL);
+> +
+> +	env[0] = env_counter;
+> +	snprintf(env_counter, sizeof(env_counter), "GIT_DIFF_PATH_COUNTER=%d",
+> +			++o->diff_path_counter);
 
-Perhaps use CEILING, like this (untested)?
+I don't think we have a particular rule, but our usual style is to line
+up the continued line of arguments with the open-paren of the function,
+like:
 
-	mkdir -p test-outside/non/git &&
-        (
-                GIT_CEILING_DIRECTORIES=$TRASH_DIRECTORY/test-outside &&
-		export GIT_CEILING_DIRECTORIES &&
-		cd test-outside/non/git &&
-		do whatever non-git thing here
-	)
+  foo(arg1, arg2,
+      arg3, arg4);
+
+> @@ -3317,6 +3329,8 @@ void diff_setup_done(struct diff_options *options)
+>  		options->output_format = DIFF_FORMAT_NO_OUTPUT;
+>  		DIFF_OPT_SET(options, EXIT_WITH_STATUS);
+>  	}
+> +
+> +    options->diff_path_counter = 0;
+
+It's hard to see with the email quoting, but this is a 4-space indent
+rather than the usual 1-tab (which should be 8-wide on the terminals of
+all True Believers).
+
+
+Both are minor, but worth fixing IMHO (especially the second one). Looks
+like it's too late for squashing, so here's a patch that can go on top
+(doing it now is still of value, though, as it's less likely to create
+conflicts since nobody is building on top yet).
+
+-- >8 --
+Subject: diff.c: fix some recent whitespace style violations
+
+These were introduced by ee7fb0b.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+On top of zk/difftool-counts.
+
+ diff.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/diff.c b/diff.c
+index a7d5a47..d69cc1b 100644
+--- a/diff.c
++++ b/diff.c
+@@ -2936,7 +2936,7 @@ static void run_external_diff(const char *pgm,
+ 
+ 	env[0] = env_counter;
+ 	snprintf(env_counter, sizeof(env_counter), "GIT_DIFF_PATH_COUNTER=%d",
+-			++o->diff_path_counter);
++		 ++o->diff_path_counter);
+ 	env[1] = env_total;
+ 	snprintf(env_total, sizeof(env_total), "GIT_DIFF_PATH_TOTAL=%d", q->nr);
+ 
+@@ -3330,7 +3330,7 @@ void diff_setup_done(struct diff_options *options)
+ 		DIFF_OPT_SET(options, EXIT_WITH_STATUS);
+ 	}
+ 
+-    options->diff_path_counter = 0;
++	options->diff_path_counter = 0;
+ }
+ 
+ static int opt_arg(const char *arg, int arg_short, const char *arg_long, int *val)
+-- 
+1.8.5.1.399.g900e7cd
