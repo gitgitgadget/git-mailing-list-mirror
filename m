@@ -1,118 +1,80 @@
-From: Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH 2/2] diff: avoid some nesting
-Date: Mon, 16 Dec 2013 20:23:30 +0100
-Message-ID: <1387221810-32374-2-git-send-email-t.gummerer@gmail.com>
-References: <xmqqtxe8pu05.fsf@gitster.dls.corp.google.com>
- <1387221810-32374-1-git-send-email-t.gummerer@gmail.com>
-Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	=?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Thomas Gummerer <t.gummerer@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Dec 16 20:24:52 2013
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] pack-objects: name pack files after trailer hash
+Date: Mon, 16 Dec 2013 14:28:30 -0500
+Message-ID: <20131216192830.GA30238@sigill.intra.peff.net>
+References: <CACsJy8AOVWF2HssWNeYkVvYdmAXJOQ8HOehxJ0wpBFchA87ZWw@mail.gmail.com>
+ <20131128092935.GC11444@sigill.intra.peff.net>
+ <CAJo=hJuBTjGfF2PvaCn_v4hy4qDfFyB=FXbY0=Oz3hcE0L=L4Q@mail.gmail.com>
+ <20131204200850.GB16603@sigill.intra.peff.net>
+ <CAJo=hJuRz9Qc8ztQATkEs8huDfiANMA6gZEOapoofVdoY82k4g@mail.gmail.com>
+ <20131205160418.GA27869@sigill.intra.peff.net>
+ <20131205202807.GA19042@sigill.intra.peff.net>
+ <52AEAEB2.6060203@alum.mit.edu>
+ <20131216190445.GB29324@sigill.intra.peff.net>
+ <20131216191933.GE2311@google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Junio C Hamano <gitster@pobox.com>,
+	Shawn Pearce <spearce@spearce.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Dec 16 20:28:37 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vsdma-0003fY-3a
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Dec 2013 20:24:48 +0100
+	id 1VsdqG-0006eh-PP
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Dec 2013 20:28:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755118Ab3LPTYm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Dec 2013 14:24:42 -0500
-Received: from mail-bk0-f49.google.com ([209.85.214.49]:63639 "EHLO
-	mail-bk0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755017Ab3LPTYl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Dec 2013 14:24:41 -0500
-Received: by mail-bk0-f49.google.com with SMTP id my13so2479252bkb.36
-        for <git@vger.kernel.org>; Mon, 16 Dec 2013 11:24:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=I0rGa05CEi2svuLLVRj85gu3zE7bmkIOaJZfzuNbogE=;
-        b=qzVp3ccjGdSexh8t9XpgPmHZi6Ke6DhjufflcAP3ZaVPesX7PQxCOvV4b8A2XPG0Uy
-         Hb+siE859mo0jqXxgUiiCoTgrgkMtbjsaF5pj6Qdky3pIRM0Tq1nFGziU1IlVCSVqYfv
-         7WPf9Da2T7HmAT/KwhfY26gfYDoH00zvgsna1ZPZaFzCLy6rwXdTS9lkQ6KQ7WtHBEGN
-         OTO+zojN3/ys+MkhEq8R8XPOV6n6gzm1aPDCtNXh4j6z3Ss5LfhKjfPkrkEKzqXR97cr
-         XmbDyv8Nkne0xb7nUOst3aCVZzD8DQ3Ptyjr0diKrmQjLfTM2BhL7H3tU4QbOyJ9MLMP
-         IO7g==
-X-Received: by 10.204.228.11 with SMTP id jc11mr808094bkb.135.1387221880558;
-        Mon, 16 Dec 2013 11:24:40 -0800 (PST)
-Received: from localhost ([2001:5c0:1400:a::1b8d])
-        by mx.google.com with ESMTPSA id a4sm11342793bko.11.2013.12.16.11.24.38
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 16 Dec 2013 11:24:39 -0800 (PST)
-X-Mailer: git-send-email 1.8.5.4.g8639e57
-In-Reply-To: <1387221810-32374-1-git-send-email-t.gummerer@gmail.com>
+	id S1755153Ab3LPT2d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Dec 2013 14:28:33 -0500
+Received: from cloud.peff.net ([50.56.180.127]:45709 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754466Ab3LPT2c (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Dec 2013 14:28:32 -0500
+Received: (qmail 25257 invoked by uid 102); 16 Dec 2013 19:28:32 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 16 Dec 2013 13:28:32 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 16 Dec 2013 14:28:30 -0500
+Content-Disposition: inline
+In-Reply-To: <20131216191933.GE2311@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239352>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239353>
 
-Avoid some nesting in builtin/diff.c, to make the code easier to
-read.  No functional changes.
+On Mon, Dec 16, 2013 at 11:19:33AM -0800, Jonathan Nieder wrote:
 
-Helped-by: Jonathan Nieder <jrnieder@gmail.com>
-Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
----
+> >              I was tempted to explicitly say something like "this is
+> > opaque and meaningless to you, don't rely on it", but I don't know that
+> > there is any need.
+> [...]
+> > On top of jk/name-pack-after-byte-representations, naturally.
+> 
+> I think there is --- if someone starts caring about the SHA-1 used,
+> they won't be able to act on old packfiles that were created before
+> this change.  How about something like the following instead?
 
-This is based on comments by Jonathan on the version that is already
-next.
+Right, my point was that I do not think anybody has ever cared, and I do
+not see them starting now. But that is just my intuition.
 
-builtin/diff.c | 35 +++++++++++++++++------------------
- 1 file changed, 17 insertions(+), 18 deletions(-)
+> diff --git a/Documentation/git-pack-objects.txt b/Documentation/git-pack-objects.txt
+> index d94edcd..cdab9ed 100644
+> --- a/Documentation/git-pack-objects.txt
+> +++ b/Documentation/git-pack-objects.txt
+> @@ -51,8 +51,7 @@ base-name::
+>  	<base-name> to determine the name of the created file.
+>  	When this option is used, the two files are written in
+>  	<base-name>-<SHA-1>.{pack,idx} files.  <SHA-1> is a hash
+> -	of the sorted object names to make the resulting filename
+> -	based on the pack content, and written to the standard
+> +	based on the pack content and is written to the standard
 
-diff --git a/builtin/diff.c b/builtin/diff.c
-index ea1dd65..24d6271 100644
---- a/builtin/diff.c
-+++ b/builtin/diff.c
-@@ -319,27 +319,26 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
- 
- 	init_revisions(&rev, prefix);
- 
--	if (no_index) {
--		if (argc != i + 2) {
--			if (no_index == DIFF_NO_INDEX_IMPLICIT) {
--				/*
--				 * There was no --no-index and there were not two
--				 * paths. It is possible that the user intended
--				 * to do an inside-repository operation.
--				 */
--				fprintf(stderr, "Not a git repository\n");
--				fprintf(stderr,
--					"To compare two paths outside a working tree:\n");
--			}
--			/* Give the usage message for non-repository usage and exit. */
--			usagef("git diff %s <path> <path>",
--			       no_index == DIFF_NO_INDEX_EXPLICIT ?
--					"--no-index" : "[--no-index]");
--
-+	if (no_index && argc != i + 2) {
-+		if (no_index == DIFF_NO_INDEX_IMPLICIT) {
-+			/*
-+			 * There was no --no-index and there were not two
-+			 * paths. It is possible that the user intended
-+			 * to do an inside-repository operation.
-+			 */
-+			fprintf(stderr, "Not a git repository\n");
-+			fprintf(stderr,
-+				"To compare two paths outside a working tree:\n");
- 		}
-+		/* Give the usage message for non-repository usage and exit. */
-+		usagef("git diff %s <path> <path>",
-+		       no_index == DIFF_NO_INDEX_EXPLICIT ?
-+		       "--no-index" : "[--no-index]");
-+
-+	}
-+	if (no_index)
- 		/* If this is a no-index diff, just run it and exit there. */
- 		diff_no_index(&rev, argc, argv, prefix);
--	}
- 
- 	/* Otherwise, we are doing the usual "git" diff */
- 	rev.diffopt.skip_stat_unmatch = !!diff_auto_refresh_index;
--- 
-1.8.5.4.g8639e57
+I'm fine with that. I was worried it would get clunky, but the way you
+have worded it is good.
+
+-Peff
