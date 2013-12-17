@@ -1,132 +1,95 @@
-From: "Eric S. Raymond" <esr@thyrsus.com>
-Subject: Re: I have end-of-lifed cvsps
-Date: Tue, 17 Dec 2013 17:41:36 -0500
-Organization: Eric Conspiracy Secret Labs
-Message-ID: <20131217224136.GB19511@thyrsus.com>
-References: <20131212001738.996EB38055C@snark.thyrsus.com>
- <CACPiFCK+Z7dOfO2v29PMKz+Y_fH1++xqMuTquSQ84d8KyjjFeQ@mail.gmail.com>
- <20131212042624.GB8909@thyrsus.com>
- <CACPiFC+bopf32cgDcQcVpL5vW=3KxmSP8Oh1see4KduQ1BNcPw@mail.gmail.com>
- <52B02DFF.5010408@gmail.com>
- <CALKQrgf3kuXRpbWmSp_nk8+zDFYNzkgV+dSBHaBbmUkxqjaDUA@mail.gmail.com>
- <20131217145809.GC15010@thyrsus.com>
- <CALKQrgeegcsO7YVqEmQxD4=HfR4eitodAov0tEh7MRvBxtRKUA@mail.gmail.com>
- <20131217184724.GA17709@thyrsus.com>
- <CALKQrgeRKosOSOhcbUArkh03mwJLPkcOH-DROCCnmbTdQ8afyg@mail.gmail.com>
-Reply-To: esr@thyrsus.com
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 2/3] diff: Let "git diff -O" read orderfile from any file, fail properly
+Date: Tue, 17 Dec 2013 15:11:29 -0800
+Message-ID: <xmqqvbynkr8e.fsf@gitster.dls.corp.google.com>
+References: <1387224586-10169-1-git-send-email-naesten@gmail.com>
+	<1387224586-10169-3-git-send-email-naesten@gmail.com>
+	<xmqqwqj4mqhe.fsf@gitster.dls.corp.google.com>
+	<CAJYzjmd_EWcQ5OzuZBQwhkfAtdxbPbvhVxUSsh98SzMzyz=-8w@mail.gmail.com>
+	<xmqqsitrmkhe.fsf@gitster.dls.corp.google.com>
+	<CALWbr2zXNF-aJHHnBnW1q1yaCmWt-rmMWypBWFanTBAK1pMWiQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Tue Dec 17 23:41:47 2013
+Cc: Samuel Bronson <naesten@gmail.com>, git <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Anders Waldenborg <anders@0x63.nu>
+To: Antoine Pelisse <apelisse@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 18 00:11:39 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vt3Kg-0006Yr-3w
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Dec 2013 23:41:42 +0100
+	id 1Vt3nf-0006hg-5R
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Dec 2013 00:11:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752020Ab3LQWli (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Dec 2013 17:41:38 -0500
-Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:36688
-	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752216Ab3LQWlh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Dec 2013 17:41:37 -0500
-Received: by snark.thyrsus.com (Postfix, from userid 1000)
-	id 316AE380868; Tue, 17 Dec 2013 17:41:36 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <CALKQrgeRKosOSOhcbUArkh03mwJLPkcOH-DROCCnmbTdQ8afyg@mail.gmail.com>
-X-Eric-Conspiracy: There is no conspiracy
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751433Ab3LQXLf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Dec 2013 18:11:35 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43367 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750839Ab3LQXLe (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Dec 2013 18:11:34 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BBE1A5C1EB;
+	Tue, 17 Dec 2013 18:11:33 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=7OiM+EMPWiSogehUhbcXa/GJvJ4=; b=JOoDc/
+	oaJX3eHcFFMDoJXMvk8rCNdnrNEh79HdIQ334VEv8c3wsUufIt3enH+K+VtbQhkD
+	HpxEn9PjdNShbdiOpspmKqsEZuXFEgaowsDjFxx1ysYtYNB8g1E/h79l3NqWezfr
+	c3x0YbvHZspD2db9eNg6lfRDPs7O5de+q0WCM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=N/ja2s0eZTRUo3QzhdNWH6cnPbUmPYNA
+	XM4fZ+9yG4Mj+rv/crxvjwKNZEX9wn0pK1QdGqhQsyIazvS2REgYJIReKf3Xv+UH
+	JrS8rKAW3wYhkT0PwNzPrn/5psF+FuVDpj2+pZX3nV5IM7Mlk311irQJxlLXvCdl
+	RfLA0PEj2PQ=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9EF365C1EA;
+	Tue, 17 Dec 2013 18:11:33 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DA2CE5C1E9;
+	Tue, 17 Dec 2013 18:11:32 -0500 (EST)
+In-Reply-To: <CALWbr2zXNF-aJHHnBnW1q1yaCmWt-rmMWypBWFanTBAK1pMWiQ@mail.gmail.com>
+	(Antoine Pelisse's message of "Tue, 17 Dec 2013 21:37:26 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 91A92038-6770-11E3-A62A-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239408>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239409>
 
-Johan Herland <johan@herland.net>:
-> > Alan and I are going to take a good hard whack at modifying cvs-fast-export
-> > to make this work. Because there really aren't any feasible alternatives.
-> > The analysis code in cvsps was never good enough. cvs2git, being written
-> > in Python, would hit the core limit faster than anything written in C.
-> 
-> Depends on how it organizes its data structures. Have you actually
-> tried running cvs2git on it? I'm not saying you are wrong, but I had
-> similar problems with my custom converter (also written in Python),
-> and solved them by adding multiple passes/phases instead of trying to
-> do too much work in fewer passes. In the end I ended up storing the
-> largest inter-phase data structures outside of Python (sqlite in my
-> case) to save memory. Obviously it cost a lot in runtime, but it meant
-> that I could actually chew through our largest CVS modules without
-> running out of memory.
+Antoine Pelisse <apelisse@gmail.com> writes:
 
-You make a good point.  cvs2git is descended from cvs2svn, which has
-such a multipass organization - it will only have to avoid memory
-limits per pass.  Alan and I will try that as a fallback if
-cvs-fast-import continues to choke.
- 
-> > It is certainly the case that a sufficiently large CVS repo will break
-> > anything, like a star with a mass over the Chandrasekhar limit becoming a
-> > black hole :-)
-> 
-> :) True, although it's not the sheer size of the files themselves that
-> is the actual problem. Most of those bytes are (deltified) file data,
-> which you can pretty much stream through and convert to a
-> corresponding fast-export stream of blob objects. The code for that
-> should be fairly straightforward (and should also be eminently
-> parallelizable, given enough cores and available I/O), resulting in a
-> table mapping CVS file:revision pairs to corresponding Git blob SHA1s,
-> and an accompanying (set of) packfile(s) holding said blobs.
+> I'm not sure about the deadlock though. Both read and write will wait
+> for each other to start operating on the fifo.
 
-Allowing for the fact that cvs-fast-export isn't git and doesn't use
-SHA1s or packfiles, this is in fact how a large portion of
-cvs-fast-export works.  The blob files get created during the walk
-through the master file list, before actual topo analysis is done.
+It is true only if the fifo already exists.  That is, if you did
+this:
 
-> The hard part comes when trying to correlate the metadata for all the
-> per-file revisions, and distill that into a consistent sequence/DAG of
-> changesets/commits across the entire CVS repo. And then, of course,
-> trying to fit all the branches and tags into that DAG of commits is
-> what really drives you mad... ;-)
+	a lot of &&
+        commands &&
+        before &&
+        mkfifo fifo &&
+        feed >fifo &
 
-Well I know this...:-)
+	git diff -Ofifo
+        
+the consumer may attempt to open and read fifo when the other
+process is still running a lot of commands, no?
 
-> > The question is how common such supermassive cases are. My own guess is that
-> > the *BSD repos and a handful of the oldest GNU projects are pretty much the
-> > whole set; everybody else converted to Subversion within the last decade.
-> 
-> You may be right. At least for the open-source cases. I suspect
-> there's still a considerable number of huge CVS repos within
-> companies' walls...
-
-If people with money want to hire me to slay those beasts, I'm available.
-I'm not proud, I'll use cvs2git if I have to.
- 
-> > I find the very idea of writing anything that encourages
-> > non-history-correct conversions disturbing and want no part of it.
-> >
-> > Which matters, because right now the set of people working on CVS lifters
-> > begins with me and ends with Michael Rafferty (cvs2git),
-> 
-> s/Rafferty/Haggerty/?
-
-Yup, I thinkoed.
- 
-> > who seems even
-> > less interested in incremental conversion than I am.  Unless somebody
-> > comes out of nowhere and wants to own that problem, it's not going
-> > to get solved.
-> 
-> Agreed. It would be nice to have something to point to for people that
-> want something similar to git-svn for CVS, but without a motivated
-> owner, it won't happen.
-
-I think the fact that it hasn't happened already is a good clue that
-it's not going to. Given the decline curve of CVS usage, writing 
-git-cvs might have looked like a decent investment of time once,
-but that era probably ended five to eight years ago.
--- 
-		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
+>
+> You can probably fix the &&-chain by doing something like:
+>
+>     mkfifo order_fifo && {
+>         cat order_file_$i >order_fifo &
+>         git diff -O order_fifo --name-only HEAD^..HEAD >actual
+>     } && ...
+>
+> Also, "rm -f order_fifo" should probably be done in test_when_finished
+> rather than at the beginning of the test.
+>
+> Antoine,
