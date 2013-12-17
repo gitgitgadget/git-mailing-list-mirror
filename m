@@ -1,80 +1,75 @@
-From: "Eric S. Raymond" <esr@thyrsus.com>
-Subject: Re: I have end-of-lifed cvsps
-Date: Tue, 17 Dec 2013 09:58:09 -0500
-Organization: Eric Conspiracy Secret Labs
-Message-ID: <20131217145809.GC15010@thyrsus.com>
-References: <20131212001738.996EB38055C@snark.thyrsus.com>
- <CACPiFCK+Z7dOfO2v29PMKz+Y_fH1++xqMuTquSQ84d8KyjjFeQ@mail.gmail.com>
- <20131212042624.GB8909@thyrsus.com>
- <CACPiFC+bopf32cgDcQcVpL5vW=3KxmSP8Oh1see4KduQ1BNcPw@mail.gmail.com>
- <52B02DFF.5010408@gmail.com>
- <CALKQrgf3kuXRpbWmSp_nk8+zDFYNzkgV+dSBHaBbmUkxqjaDUA@mail.gmail.com>
-Reply-To: esr@thyrsus.com
+From: =?UTF-8?B?Sm9lIEJvcsSh?= <mail@jdborg.com>
+Subject: Fwd: instaweb fails with mongoose
+Date: Tue, 17 Dec 2013 15:26:03 +0000
+Message-ID: <CAFFYk1W4BcJ5V3OdQWtpmbBdYwt3ZqSd441YOixGDuT1w945Dg@mail.gmail.com>
+References: <CAFFYk1VaXCcGXbSXSGmU2TO0bAGQEDvVxKFKtK4PO3a4L8SgAA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Tue Dec 17 15:58:18 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Dec 17 16:26:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vsw6B-0008I9-8Y
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Dec 2013 15:58:15 +0100
+	id 1VswXh-0007zF-2C
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Dec 2013 16:26:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753625Ab3LQO6L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Dec 2013 09:58:11 -0500
-Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:60901
-	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752340Ab3LQO6K (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Dec 2013 09:58:10 -0500
-Received: by snark.thyrsus.com (Postfix, from userid 1000)
-	id 72927380868; Tue, 17 Dec 2013 09:58:09 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <CALKQrgf3kuXRpbWmSp_nk8+zDFYNzkgV+dSBHaBbmUkxqjaDUA@mail.gmail.com>
-X-Eric-Conspiracy: There is no conspiracy
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754134Ab3LQP0c convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 17 Dec 2013 10:26:32 -0500
+Received: from starscream.3v0.net ([46.249.202.240]:52249 "EHLO
+	starscream.3v0.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753325Ab3LQP0b convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 17 Dec 2013 10:26:31 -0500
+Received: from mail-oa0-f46.google.com ([209.85.219.46]:46933)
+	by starscream.3v0.net with esmtpsa (TLSv1:RC4-SHA:128)
+	(Exim 4.82)
+	(envelope-from <mail@jdborg.com>)
+	id 1VswXS-000NsT-3m
+	for git@vger.kernel.org; Tue, 17 Dec 2013 15:26:26 +0000
+Received: by mail-oa0-f46.google.com with SMTP id o6so6761071oag.33
+        for <git@vger.kernel.org>; Tue, 17 Dec 2013 07:26:24 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-type:content-transfer-encoding;
+        bh=2x6TKTp09eF52qDXAMJcw5Y8tWeEn+XcVELInRDH8wI=;
+        b=SyD5Fz+ObuGrM1vdo4rE83vfii2cAqLrSL6GEJqjpUVvGOpz82cKz0S64uQnrJ9x7Q
+         kHjjcwmfiYQ28mSWGqcqfnDSAo1+8VBbUxfR2nZgtpOQQqhB/dh4U1XcqouGDCM4hEbg
+         WU6wzerE27a4LHdNlQiIoBaPO/rt2gFz/0MosY94WtOi7LuDDvWZIFjxQAPdp4vqOamL
+         Beya39WM8OKGGMhUGfsGe31R1V/M4No8ddMrasmQPRNhb4lsGmUfUp8iyt/wg3Nsy/VO
+         3QWZgJiilZL3dsEFvkkEh2acxHUSsEbElPhr0LxbzjaZPvvd2JCdNmP+pWcdcqcorH3h
+         v5nA==
+X-Received: by 10.60.98.69 with SMTP id eg5mr16755757oeb.42.1387293984116;
+ Tue, 17 Dec 2013 07:26:24 -0800 (PST)
+Received: by 10.76.104.206 with HTTP; Tue, 17 Dec 2013 07:26:03 -0800 (PST)
+In-Reply-To: <CAFFYk1VaXCcGXbSXSGmU2TO0bAGQEDvVxKFKtK4PO3a4L8SgAA@mail.gmail.com>
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - starscream.3v0.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - jdborg.com
+X-Get-Message-Sender-Via: starscream.3v0.net: authenticated_id: mail+jdborg.com/only user confirmed/virtual account not confirmed
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239389>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239390>
 
-Johan Herland <johan@herland.net>:
-> HOWEVER, this only solves the "cheap" half of the problem. The reason
-> people want incremental CVS import, is to avoid having to repeatedly
-> convert the ENTIRE CVS history. This means that the CVS exporter must
-> learn to start from a given point in the CVS history (identified by
-> the above mapping) and then quickly and efficiently convert only the
-> "new stuff" without having to consult/convert the rest of the CVS
-> history. THIS is the hard part of incremental import. And it is much
-> harder for systems like CVS - where the starting point has a broken
-> concept of history...
+Using git 1.8.5 and Mongoose 3.7 (also tried 5.0), I cannot start the
+instaweb server.
 
-I know of *no* importer that solves what you call the "deep" part of
-the problem.  cvsps didn't, cvs-fast-import doesn't, cvs2git doesn't.
-All take the easy way out; parse the entire history, and limit what
-is emitted in the output stage.
+$ git instaweb --httpd=3Dmongoose
+Loading config file /scratch/workspace/git/myproject/.git/gitweb/mongoo=
+se.conf
+=46ailed to set option [root]: No such option
+Waiting for 'mongoose' to start
+=2E....................................................................=
+=2E..........^C
 
-Actually, given what I know about delta-file parsing I'd say a "true"
-incremental CVS exporter would be so hard that it's really not worth the
-bother.  The problem is the delta-based history representation.
-Trying to interpret that without building a complete set of history
-states in the process (which is most of the work a whole-history
-exporter does) would be brutally difficult - barely possible in
-principle maybe, but I wouldn't care to try it.
-
-It's much more practical to tune up a whole-history exporter so it's
-acceptably fast, then do incremental dumping by suppressing part of
-the conversion in the output stage. 
-
-cvs-fast-export's benchmark repo is the history of GNU troff.  That's
-3057 commits in 1549 master files; when I reran it just now the
-whole-history conversion took 49 seconds.  That's 3.7K commits a
-minute, which is plenty fast enough for anything smaller than (say)
-one of the *BSD repositories.
--- 
-		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
+Regards,
+Joseph David Bor=C4=A1
