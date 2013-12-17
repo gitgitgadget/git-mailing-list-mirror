@@ -1,95 +1,183 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 2/3] diff: Let "git diff -O" read orderfile from any file, fail properly
-Date: Tue, 17 Dec 2013 15:11:29 -0800
-Message-ID: <xmqqvbynkr8e.fsf@gitster.dls.corp.google.com>
-References: <1387224586-10169-1-git-send-email-naesten@gmail.com>
-	<1387224586-10169-3-git-send-email-naesten@gmail.com>
-	<xmqqwqj4mqhe.fsf@gitster.dls.corp.google.com>
-	<CAJYzjmd_EWcQ5OzuZBQwhkfAtdxbPbvhVxUSsh98SzMzyz=-8w@mail.gmail.com>
-	<xmqqsitrmkhe.fsf@gitster.dls.corp.google.com>
-	<CALWbr2zXNF-aJHHnBnW1q1yaCmWt-rmMWypBWFanTBAK1pMWiQ@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/3] prune_object_dir(): verify that path fits in the
+ temporary buffer
+Date: Tue, 17 Dec 2013 18:22:31 -0500
+Message-ID: <20131217232231.GA14807@sigill.intra.peff.net>
+References: <1387287838-25779-1-git-send-email-mhagger@alum.mit.edu>
+ <1387287838-25779-3-git-send-email-mhagger@alum.mit.edu>
+ <xmqq8uvjmhu5.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Samuel Bronson <naesten@gmail.com>, git <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Anders Waldenborg <anders@0x63.nu>
-To: Antoine Pelisse <apelisse@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 18 00:11:39 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Dec 18 00:22:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vt3nf-0006hg-5R
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Dec 2013 00:11:39 +0100
+	id 1Vt3yI-0007SZ-8q
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Dec 2013 00:22:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751433Ab3LQXLf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Dec 2013 18:11:35 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43367 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750839Ab3LQXLe (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Dec 2013 18:11:34 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BBE1A5C1EB;
-	Tue, 17 Dec 2013 18:11:33 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=7OiM+EMPWiSogehUhbcXa/GJvJ4=; b=JOoDc/
-	oaJX3eHcFFMDoJXMvk8rCNdnrNEh79HdIQ334VEv8c3wsUufIt3enH+K+VtbQhkD
-	HpxEn9PjdNShbdiOpspmKqsEZuXFEgaowsDjFxx1ysYtYNB8g1E/h79l3NqWezfr
-	c3x0YbvHZspD2db9eNg6lfRDPs7O5de+q0WCM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=N/ja2s0eZTRUo3QzhdNWH6cnPbUmPYNA
-	XM4fZ+9yG4Mj+rv/crxvjwKNZEX9wn0pK1QdGqhQsyIazvS2REgYJIReKf3Xv+UH
-	JrS8rKAW3wYhkT0PwNzPrn/5psF+FuVDpj2+pZX3nV5IM7Mlk311irQJxlLXvCdl
-	RfLA0PEj2PQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9EF365C1EA;
-	Tue, 17 Dec 2013 18:11:33 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DA2CE5C1E9;
-	Tue, 17 Dec 2013 18:11:32 -0500 (EST)
-In-Reply-To: <CALWbr2zXNF-aJHHnBnW1q1yaCmWt-rmMWypBWFanTBAK1pMWiQ@mail.gmail.com>
-	(Antoine Pelisse's message of "Tue, 17 Dec 2013 21:37:26 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 91A92038-6770-11E3-A62A-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751090Ab3LQXWe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Dec 2013 18:22:34 -0500
+Received: from cloud.peff.net ([50.56.180.127]:46356 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750905Ab3LQXWd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Dec 2013 18:22:33 -0500
+Received: (qmail 8542 invoked by uid 102); 17 Dec 2013 23:22:33 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 17 Dec 2013 17:22:33 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 17 Dec 2013 18:22:31 -0500
+Content-Disposition: inline
+In-Reply-To: <xmqq8uvjmhu5.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239409>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239410>
 
-Antoine Pelisse <apelisse@gmail.com> writes:
+On Tue, Dec 17, 2013 at 10:51:30AM -0800, Junio C Hamano wrote:
 
-> I'm not sure about the deadlock though. Both read and write will wait
-> for each other to start operating on the fifo.
+> Michael Haggerty <mhagger@alum.mit.edu> writes:
+> 
+> > Dimension the buffer based on PATH_MAX rather than a magic number, and
+> > verify that the path fits in it before continuing.
+> >
+> > Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+> > ---
+> >
+> > I don't think that this problem is remotely exploitable, because the
+> > size of the string doesn't depend on inputs that can be influenced by
+> > a client (at least not within Git).
+> 
+> This is shrinking the buffer on some platforms where PATH_MAX is
+> lower than 4k---granted, we will die() with the new check instead of
+> crashing uncontrolled, but it still feels somewhat wrong.
 
-It is true only if the fifo already exists.  That is, if you did
-this:
+On such a system, though, does the resulting prune_dir call actually do
+anything? We will feed the result to opendir(), which I would think
+would choke on the long name.
 
-	a lot of &&
-        commands &&
-        before &&
-        mkfifo fifo &&
-        feed >fifo &
+Still, it is probably better to do everything we can and let the OS
+choke (especially because we would want to continue operating on other
+paths in this case).
 
-	git diff -Ofifo
-        
-the consumer may attempt to open and read fifo when the other
-process is still running a lot of commands, no?
+Converting it to use strbuf looks like it will actually let us drop a
+bunch of copying, too, as we just end up in mkpath at the very lowest
+level. I.e., something like below.
 
->
-> You can probably fix the &&-chain by doing something like:
->
->     mkfifo order_fifo && {
->         cat order_file_$i >order_fifo &
->         git diff -O order_fifo --name-only HEAD^..HEAD >actual
->     } && ...
->
-> Also, "rm -f order_fifo" should probably be done in test_when_finished
-> rather than at the beginning of the test.
->
-> Antoine,
+As an aside, I have noticed us using this "push/pop" approach to treating a
+strbuf as a stack of paths elsewhere, too. I.e:
+
+  size_t baselen = base->len;
+  strbuf_addf(base, "/%s", some_thing);
+  some_call(base);
+  base->len = baselen;
+
+I wondered if there was any kind of helper we could add to make it look
+nicer. But I don't think so; the hairy part is that you must remember to
+reset base->len after the call, and there is no easy way around that in
+C. If you had object destructors that ran as the stack unwound, or
+dynamic scoping, it would be easy to manipulate the object. Wrapping
+won't work because strbuf isn't just a length wrapping an immutable
+buffer; it actually has to move the NUL in the buffer.
+
+Anyway, not important, but perhaps somebody is more clever than I am.
+
+diff --git a/builtin/prune.c b/builtin/prune.c
+index 6366917..4ca8ec1 100644
+--- a/builtin/prune.c
++++ b/builtin/prune.c
+@@ -17,9 +17,8 @@ static int verbose;
+ static unsigned long expire;
+ static int show_progress = -1;
+ 
+-static int prune_tmp_object(const char *path, const char *filename)
++static int prune_tmp_object(const char *fullpath)
+ {
+-	const char *fullpath = mkpath("%s/%s", path, filename);
+ 	struct stat st;
+ 	if (lstat(fullpath, &st))
+ 		return error("Could not stat '%s'", fullpath);
+@@ -32,9 +31,8 @@ static int prune_tmp_object(const char *path, const char *filename)
+ 	return 0;
+ }
+ 
+-static int prune_object(char *path, const char *filename, const unsigned char *sha1)
++static int prune_object(const char *fullpath, const unsigned char *sha1)
+ {
+-	const char *fullpath = mkpath("%s/%s", path, filename);
+ 	struct stat st;
+ 	if (lstat(fullpath, &st))
+ 		return error("Could not stat '%s'", fullpath);
+@@ -50,9 +48,10 @@ static int prune_object(char *path, const char *filename, const unsigned char *s
+ 	return 0;
+ }
+ 
+-static int prune_dir(int i, char *path)
++static int prune_dir(int i, struct strbuf *path)
+ {
+-	DIR *dir = opendir(path);
++	size_t baselen = path->len;
++	DIR *dir = opendir(path->buf);
+ 	struct dirent *de;
+ 
+ 	if (!dir)
+@@ -77,28 +76,39 @@ static int prune_dir(int i, char *path)
+ 			if (lookup_object(sha1))
+ 				continue;
+ 
+-			prune_object(path, de->d_name, sha1);
++			strbuf_addf(path, "/%s", de->d_name);
++			prune_object(path->buf, sha1);
++			path->len = baselen;
+ 			continue;
+ 		}
+ 		if (!prefixcmp(de->d_name, "tmp_obj_")) {
+-			prune_tmp_object(path, de->d_name);
++			strbuf_addf(path, "/%s", de->d_name);
++			prune_tmp_object(path->buf);
++			path->len = baselen;
+ 			continue;
+ 		}
+-		fprintf(stderr, "bad sha1 file: %s/%s\n", path, de->d_name);
++		fprintf(stderr, "bad sha1 file: %s/%s\n", path->buf, de->d_name);
+ 	}
+ 	closedir(dir);
+ 	if (!show_only)
+-		rmdir(path);
++		rmdir(path->buf);
+ 	return 0;
+ }
+ 
+ static void prune_object_dir(const char *path)
+ {
++	struct strbuf buf = STRBUF_INIT;
++	size_t baselen;
+ 	int i;
++
++	strbuf_addstr(&buf, path);
++	strbuf_addch(&buf, '/');
++	baselen = buf.len;
++
+ 	for (i = 0; i < 256; i++) {
+-		static char dir[4096];
+-		sprintf(dir, "%s/%02x", path, i);
+-		prune_dir(i, dir);
++		strbuf_addf(&buf, "%02x", i);
++		prune_dir(i, &buf);
++		buf.len = baselen;
+ 	}
+ }
+ 
+@@ -120,7 +130,7 @@ static void remove_temporary_files(const char *path)
+ 	}
+ 	while ((de = readdir(dir)) != NULL)
+ 		if (!prefixcmp(de->d_name, "tmp_"))
+-			prune_tmp_object(path, de->d_name);
++			prune_tmp_object(mkpath("%s/%s", path, de->d_name));
+ 	closedir(dir);
+ }
+ 
