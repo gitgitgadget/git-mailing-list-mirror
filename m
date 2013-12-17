@@ -1,103 +1,88 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: [PATCH] log: properly handle decorations with chained tags
-Date: Tue, 17 Dec 2013 04:28:21 +0000
-Message-ID: <1387254501-319329-1-git-send-email-sandals@crustytoothpaste.net>
-References: <20131217004044.GB259467@vauxhall.crustytoothpaste.net>
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	Kirill Likhodedov <kirill.likhodedov@jetbrains.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 17 05:28:40 2013
+From: Samuel Bronson <naesten@gmail.com>
+Subject: Re: [PATCH v4 2/3] diff: Let "git diff -O" read orderfile from any
+ file, fail properly
+Date: Tue, 17 Dec 2013 00:03:29 -0500
+Message-ID: <CAJYzjmd_EWcQ5OzuZBQwhkfAtdxbPbvhVxUSsh98SzMzyz=-8w@mail.gmail.com>
+References: <1387224586-10169-1-git-send-email-naesten@gmail.com>
+	<1387224586-10169-3-git-send-email-naesten@gmail.com>
+	<xmqqwqj4mqhe.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+	Anders Waldenborg <anders@0x63.nu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Dec 17 06:03:35 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VsmGr-0003Dv-4p
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Dec 2013 05:28:37 +0100
+	id 1Vsmog-0006Rd-L7
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Dec 2013 06:03:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752694Ab3LQE2d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Dec 2013 23:28:33 -0500
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:34813 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751765Ab3LQE2c (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 16 Dec 2013 23:28:32 -0500
-Received: from vauxhall.crustytoothpaste.net (vauxhall.local [172.16.2.247])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 58A02F;
-	Tue, 17 Dec 2013 04:28:30 +0000 (UTC)
-X-Mailer: git-send-email 1.8.5.1
-In-Reply-To: <20131217004044.GB259467@vauxhall.crustytoothpaste.net>
+	id S1751008Ab3LQFDb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Dec 2013 00:03:31 -0500
+Received: from mail-ob0-f171.google.com ([209.85.214.171]:51851 "EHLO
+	mail-ob0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750991Ab3LQFDa (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Dec 2013 00:03:30 -0500
+Received: by mail-ob0-f171.google.com with SMTP id wp18so5835349obc.2
+        for <git@vger.kernel.org>; Mon, 16 Dec 2013 21:03:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=iPiqn560zixvyGaRNZ39SRAHA8xjIu/wfE6CB82uhWE=;
+        b=brsLL3OwGWfhyEBQBdJa1BgWv4WtyXlV/NdbHIptJgGGyVGLiwcskRIO26o1QrsVWN
+         XHFbYWCnwZRUU6TRAKj792xPkH8JMmPdBrjHka2QX5LUEt/t8uCahJtV1LMiWgTzWTT+
+         fx9AlazMyRLnMapqAcAmiaDq++maeb4wrDVbPZLEXcz4PEW2acbNQnlFCQROCaeVPhVL
+         ubcxl09xAXC/hMOLH9uikONO6hwAtWBTaTakOVMhTdaOUrV7Aruqat2iC07d7JF1jGuG
+         17Nznw2JcmUJA4UxKvR6uC6LL6uuJilpLGKM3y++vx7u1M3v5t66WpIl6hKooVqRU9xk
+         lPLA==
+X-Received: by 10.182.44.167 with SMTP id f7mr14395891obm.3.1387256609397;
+ Mon, 16 Dec 2013 21:03:29 -0800 (PST)
+Received: by 10.182.135.3 with HTTP; Mon, 16 Dec 2013 21:03:29 -0800 (PST)
+In-Reply-To: <xmqqwqj4mqhe.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239374>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239375>
 
-git log did not correctly handle decorations when a tag object referenced
-another tag object that was no longer a ref, such as when the second tag was
-deleted.  The commit would not be decorated correctly because parse_object had
-not been called on the second tag and therefore its tagged field had not been
-filled in, resulting in none of the tags being associated with the relevant
-commit.
+On Mon, Dec 16, 2013 at 4:32 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Samuel Bronson <naesten@gmail.com> writes:
+>
+>>  for i in 1 2
+>>  do
+>>       test_expect_success "orderfile using option ($i)" '
+>>       git diff -Oorder_file_$i --name-only HEAD^..HEAD >actual &&
+>>       test_cmp expect_$i actual
+>>  '
+>
+> This funny indentation in the previous step needs to be fixed, and
+> the added block below should match.
 
-Call parse_object to fill in this field if it is absent so that the chain of
-tags can be dereferenced and the commit can be properly decorated.  Include
-tests as well to prevent future regressions.
+Even though this results in oddly-indented --verbose output?
 
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
- log-tree.c                    | 13 ++++++++++---
- t/t4205-log-pretty-formats.sh | 15 +++++++++++++++
- 2 files changed, 25 insertions(+), 3 deletions(-)
+>> +     rm -f order_fifo &&
+>> +     mkfifo order_fifo &&
+>> +     cat order_file_$i >order_fifo &
+>> +     git diff -O order_fifo --name-only HEAD^..HEAD >actual &&
+>
+> I think this part can be racy depending on which between cat and
+> "git diff" are scheduled first, no?  Try running this test under
+> load and I think you will see it deadlocked.
+>
+> Besides, the above breaks && chain; even if mkfifo breaks (hence not
+> allowing cat to run), "git diff" will go ahead and run, no?
 
-diff --git a/log-tree.c b/log-tree.c
-index 642faff..a6b60b7 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -131,9 +131,16 @@ static int add_ref_decoration(const char *refname, const unsigned char *sha1, in
- 		refname = prettify_refname(refname);
- 	add_name_decoration(type, refname, obj);
- 	while (obj->type == OBJ_TAG) {
--		obj = ((struct tag *)obj)->tagged;
--		if (!obj)
--			break;
-+		struct object *tagged = ((struct tag *)obj)->tagged;
-+		if (!tagged) {
-+			obj = parse_object(obj->sha1);
-+			if (!obj)
-+				break;
-+			tagged = ((struct tag *)obj)->tagged;
-+			if (!tagged)
-+				break;
-+		}
-+		obj = tagged;
- 		add_name_decoration(DECORATION_REF_TAG, refname, obj);
- 	}
- 	return 0;
-diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
-index fb00041..2a6278b 100755
---- a/t/t4205-log-pretty-formats.sh
-+++ b/t/t4205-log-pretty-formats.sh
-@@ -310,4 +310,19 @@ EOF
- 	test_cmp expected actual
- '
- 
-+test_expect_success 'log decoration properly follows tag chain' '
-+	git tag -a tag1 -m tag1 &&
-+	git tag -a tag2 -m tag2 tag1 &&
-+	git tag -d tag1 &&
-+	git commit --amend -m shorter &&
-+	git log --no-walk --tags --pretty="%H %d" --decorate=full >actual &&
-+	cat <<EOF >expected &&
-+6a908c10688b2503073c39c9ba26322c73902bb5  (tag: refs/tags/tag2)
-+9f716384d92283fb915a4eee5073f030638e05f9  (tag: refs/tags/message-one)
-+b87e4cccdb77336ea79d89224737be7ea8e95367  (tag: refs/tags/message-two)
-+EOF
-+	sort actual >actual1 &&
-+	test_cmp expected actual1
-+'
-+
- test_done
--- 
-1.8.5.1
+Hmm.  Well, what I really wanted to put here was a "process substitution":
+
+    git diff -O <(cat order_file_$i) --name-only HEAD^..HEAD >actual &&
+
+but I did not see this feature listed in the dash(1) manpage, so I
+assumed it wasn't allowed by POSIX.  And, having looked, I indeed
+don't see it mentioned in POSIX either.
+
+I'm not terribly surprised that I screwed up the translation to FIFOs;
+how would I really want to do it?
