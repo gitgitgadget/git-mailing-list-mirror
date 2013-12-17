@@ -1,113 +1,92 @@
-From: "Eric S. Raymond" <esr@thyrsus.com>
-Subject: Re: I have end-of-lifed cvsps
-Date: Tue, 17 Dec 2013 13:47:24 -0500
-Organization: Eric Conspiracy Secret Labs
-Message-ID: <20131217184724.GA17709@thyrsus.com>
-References: <20131212001738.996EB38055C@snark.thyrsus.com>
- <CACPiFCK+Z7dOfO2v29PMKz+Y_fH1++xqMuTquSQ84d8KyjjFeQ@mail.gmail.com>
- <20131212042624.GB8909@thyrsus.com>
- <CACPiFC+bopf32cgDcQcVpL5vW=3KxmSP8Oh1see4KduQ1BNcPw@mail.gmail.com>
- <52B02DFF.5010408@gmail.com>
- <CALKQrgf3kuXRpbWmSp_nk8+zDFYNzkgV+dSBHaBbmUkxqjaDUA@mail.gmail.com>
- <20131217145809.GC15010@thyrsus.com>
- <CALKQrgeegcsO7YVqEmQxD4=HfR4eitodAov0tEh7MRvBxtRKUA@mail.gmail.com>
-Reply-To: esr@thyrsus.com
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/3] prune_object_dir(): verify that path fits in the temporary buffer
+Date: Tue, 17 Dec 2013 10:51:30 -0800
+Message-ID: <xmqq8uvjmhu5.fsf@gitster.dls.corp.google.com>
+References: <1387287838-25779-1-git-send-email-mhagger@alum.mit.edu>
+	<1387287838-25779-3-git-send-email-mhagger@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Tue Dec 17 19:47:37 2013
+Cc: git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Tue Dec 17 19:51:40 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vszg8-0005zF-In
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Dec 2013 19:47:36 +0100
+	id 1Vszk3-00015D-D8
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Dec 2013 19:51:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932403Ab3LQSr2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Dec 2013 13:47:28 -0500
-Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:34793
-	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932332Ab3LQSr0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Dec 2013 13:47:26 -0500
-Received: by snark.thyrsus.com (Postfix, from userid 1000)
-	id CEBD2380868; Tue, 17 Dec 2013 13:47:24 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <CALKQrgeegcsO7YVqEmQxD4=HfR4eitodAov0tEh7MRvBxtRKUA@mail.gmail.com>
-X-Eric-Conspiracy: There is no conspiracy
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754050Ab3LQSvf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Dec 2013 13:51:35 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38644 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753361Ab3LQSve (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Dec 2013 13:51:34 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F1CA459009;
+	Tue, 17 Dec 2013 13:51:33 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Nmzcw9WUQ9n0o8SDGrxmiFNgDVA=; b=fxy9Zg
+	X7XliuEawmgI3DCp5TXU+GD4OWHDKVibzCCT8YBL8afBqMGXi+UuAn8QGcVtUbOx
+	uLVnJY0zDkCTGMWPMfjRmaqsv58dYgJmsvJqJOxVdu8kemE+JSXotJHHIxiTk+gL
+	qKBQ2GSSiX5L3J052DsyK3/QcsvEwqTgYYWco=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=qi20iIqDrgq+KUsKwnVveUhA15C9JsEG
+	FY4ln99Hxyx8UUW7hDCfnMDHfUp/Tv9Zbs8ipoEthNP9TY1ZNC+IntuCHdNLWjy+
+	U5QuYJ4G5wrBnNnljf0adMkfCDtFZNQoz0an9iM305a1nC7jjk8Q2d5XjcEtNp/s
+	HFAdlajIeJk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DE3D159008;
+	Tue, 17 Dec 2013 13:51:33 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0CC5759004;
+	Tue, 17 Dec 2013 13:51:32 -0500 (EST)
+In-Reply-To: <1387287838-25779-3-git-send-email-mhagger@alum.mit.edu> (Michael
+	Haggerty's message of "Tue, 17 Dec 2013 14:43:57 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 3F6E209E-674C-11E3-8311-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239398>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239399>
 
-Johan Herland <johan@herland.net>:
-> However, I fear that you underestimate the number of users that want
-> to use Git against CVS repos that are orders of magnitude larger (in
-> both dimensions: #commits and #files) than your example repo.
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-You may be right. See below...
+> Dimension the buffer based on PATH_MAX rather than a magic number, and
+> verify that the path fits in it before continuing.
+>
+> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+> ---
+>
+> I don't think that this problem is remotely exploitable, because the
+> size of the string doesn't depend on inputs that can be influenced by
+> a client (at least not within Git).
 
-I'm working with Alan Barret now on trying to convert the NetBSD
-repositories. They break cvs-fast-export through sheer bulk of
-metadata, by running the machine out of core.  This is exactly
-the kind of huge case that you're talking about.
+This is shrinking the buffer on some platforms where PATH_MAX is
+lower than 4k---granted, we will die() with the new check instead of
+crashing uncontrolled, but it still feels somewhat wrong.
 
-Alan and I are going to take a good hard whack at modifying cvs-fast-export 
-to make this work. Because there really aren't any feasible alternatives.
-The analysis code in cvsps was never good enough. cvs2git, being written
-in Python, would hit the core limit faster than anything written in C.
-
-> Although a full-history converter with fairly stable output can be
-> made to support this second problem for repos up to a certain size,
-> there will probably still be users that want to work incrementally
-> against much bigger repos, and I don't think _any_
-> full-history-gone-incremental importer will be able to support the
-> biggest repos.
-> 
-> Consequently I believe that for these big repos it is _impossible_ to
-> get both fast incremental workflows and a high degree of (historical)
-> correctness.
-> 
-> cvsps tried to be all of the above, and failed badly at the
-> correctness criteria. Therefore I support your decision to "shoot it
-> through the head". I certainly also support any work towards making a
-> full-history converter work in an incremental manner, as it will be
-> immensely useful for smaller CVS repos. But at the same time we should
-> realize that it won't be a solution for incrementally working against
-> _large_ CVS repos.
-
-It is certainly the case that a sufficiently large CVS repo will break
-anything, like a star with a mass over the Chandrasekhar limit becoming a 
-black hole :-)
-
-The question is how common such supermassive cases are. My own guess is that
-the *BSD repos and a handful of the oldest GNU projects are pretty much the
-whole set; everybody else converted to Subversion within the last decade. 
- 
-> Although it should have been made obvious a long time ago, the removal
-> of cvsps has now made it abundantly clear that Git currently provides
-> no way to support the incremental workflow against large CVS repos.
-> Maybe that is ok, and we can ignore that, waiting for the few
-> remaining large CVS repos to die? Or maybe we need a new effort to
-> fill this niche? Something that is NOT based on a full-history
-> converter, and does NOT try to guarantee a history-correct conversion,
-> but that DOES try to guarantee fast and relatively worry-free two-way
-> synchronization against a CVS server. Unfortunately (or fortunately,
-> depending on POV) I have not had to touch CVS in a long while, and I
-> don't see that changing soon, so it is not my itch to scratch.
-
-Nor mine.  I find the very idea of writing anything that encourages
-non-history-correct conversions disturbing and want no part of it.
-
-Which matters, because right now the set of people working on CVS lifters
-begins with me and ends with Michael Rafferty (cvs2git), who seems even
-less interested in incremental conversion than I am.  Unless somebody
-comes out of nowhere and wants to own that problem, it's not going
-to get solved.
--- 
-		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
+>  builtin/prune.c | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
+>
+> diff --git a/builtin/prune.c b/builtin/prune.c
+> index 6366917..ae34d04 100644
+> --- a/builtin/prune.c
+> +++ b/builtin/prune.c
+> @@ -96,7 +96,9 @@ static void prune_object_dir(const char *path)
+>  {
+>  	int i;
+>  	for (i = 0; i < 256; i++) {
+> -		static char dir[4096];
+> +		static char dir[PATH_MAX + 1];
+> +		if (strlen(path) + 3 > PATH_MAX)
+> +			die("impossible object directory");
+>  		sprintf(dir, "%s/%02x", path, i);
+>  		prune_dir(i, dir);
+>  	}
