@@ -1,138 +1,75 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: I have end-of-lifed cvsps
-Date: Tue, 17 Dec 2013 22:26:57 +0100
-Message-ID: <CALKQrgeRKosOSOhcbUArkh03mwJLPkcOH-DROCCnmbTdQ8afyg@mail.gmail.com>
-References: <20131212001738.996EB38055C@snark.thyrsus.com>
-	<CACPiFCK+Z7dOfO2v29PMKz+Y_fH1++xqMuTquSQ84d8KyjjFeQ@mail.gmail.com>
-	<20131212042624.GB8909@thyrsus.com>
-	<CACPiFC+bopf32cgDcQcVpL5vW=3KxmSP8Oh1see4KduQ1BNcPw@mail.gmail.com>
-	<52B02DFF.5010408@gmail.com>
-	<CALKQrgf3kuXRpbWmSp_nk8+zDFYNzkgV+dSBHaBbmUkxqjaDUA@mail.gmail.com>
-	<20131217145809.GC15010@thyrsus.com>
-	<CALKQrgeegcsO7YVqEmQxD4=HfR4eitodAov0tEh7MRvBxtRKUA@mail.gmail.com>
-	<20131217184724.GA17709@thyrsus.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 2/3] diff: Let "git diff -O" read orderfile from any file, fail properly
+Date: Tue, 17 Dec 2013 14:09:19 -0800
+Message-ID: <xmqq4n67m8og.fsf@gitster.dls.corp.google.com>
+References: <1387224586-10169-1-git-send-email-naesten@gmail.com>
+	<1387224586-10169-3-git-send-email-naesten@gmail.com>
+	<xmqqwqj4mqhe.fsf@gitster.dls.corp.google.com>
+	<CAJYzjmd_EWcQ5OzuZBQwhkfAtdxbPbvhVxUSsh98SzMzyz=-8w@mail.gmail.com>
+	<xmqqsitrmkhe.fsf@gitster.dls.corp.google.com>
+	<CALWbr2zXNF-aJHHnBnW1q1yaCmWt-rmMWypBWFanTBAK1pMWiQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Eric Raymond <esr@thyrsus.com>
-X-From: git-owner@vger.kernel.org Tue Dec 17 22:27:12 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Samuel Bronson <naesten@gmail.com>, git <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Anders Waldenborg <anders@0x63.nu>
+To: Antoine Pelisse <apelisse@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 17 23:09:30 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vt2AY-0007sd-Mu
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Dec 2013 22:27:11 +0100
+	id 1Vt2pV-0002wJ-N4
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Dec 2013 23:09:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752472Ab3LQV1G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Dec 2013 16:27:06 -0500
-Received: from mail12.copyleft.no ([188.94.218.224]:38088 "EHLO
-	mail12.copyleft.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751706Ab3LQV1E (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Dec 2013 16:27:04 -0500
-Received: from locusts.copyleft.no ([188.94.218.116] helo=mail.mailgateway.no)
-	by mail12.copyleft.no with esmtp (Exim 4.76)
-	(envelope-from <johan@herland.net>)
-	id 1Vt2AP-0000AD-QV
-	for git@vger.kernel.org; Tue, 17 Dec 2013 22:27:01 +0100
-Received: from mail-pa0-f44.google.com ([209.85.220.44])
-	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
-	(Exim 4.72 (FreeBSD))
-	(envelope-from <johan@herland.net>)
-	id 1Vt2AP-0009dP-H2
-	for git@vger.kernel.org; Tue, 17 Dec 2013 22:27:01 +0100
-Received: by mail-pa0-f44.google.com with SMTP id fa1so5041043pad.3
-        for <git@vger.kernel.org>; Tue, 17 Dec 2013 13:26:57 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=zQWFhz5hG68esQBcwXWTX8+uqhLsT85Cl4h6ItaulVg=;
-        b=f9Tm24Pe3Uin8TJbPMH14IQCFSzqx/iUTGKt+CDtvUiVziqUORzrsKg4KZPMFaeJHE
-         lKFWVs21M/nf4W463Iu1mGKYpSOAHdxJS6gdr6aw+jX0MyA1l9hZXbgXcORd2Upskvnz
-         6h87B85aLdxiQ4+D8f3mn08zIYhGus/rNH+d6h7WVBBhoMcI4ZoD1ejBTPQRIi0ib/G6
-         SFtld9Imxz8N05nsNXvuZV0bmnl8pHZJIZ6Y+GDwOXvpw/Fn/mDXSNW7WPnZmo8U5WnF
-         CXc0lMIZ6xL+v97acq6OJ+EPu4dGIIJAr9wS+hD75u598SmzO5sVe1gNUlCjHRabMOaO
-         RL3Q==
-X-Received: by 10.68.212.37 with SMTP id nh5mr30015504pbc.16.1387315617476;
- Tue, 17 Dec 2013 13:26:57 -0800 (PST)
-Received: by 10.70.24.226 with HTTP; Tue, 17 Dec 2013 13:26:57 -0800 (PST)
-In-Reply-To: <20131217184724.GA17709@thyrsus.com>
+	id S1752089Ab3LQWJZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Dec 2013 17:09:25 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58190 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751963Ab3LQWJY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Dec 2013 17:09:24 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 747FB5C526;
+	Tue, 17 Dec 2013 17:09:23 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=YUhFSgL443Z5tXmqpFpDU9eTAqY=; b=c90XyG
+	BKDdy79pC8yUb92EJjkS8jjE7GHPlrK6IA7CzjYitnLpU+ptodSyQoTyRf3gAgEo
+	7uPVm9w1Uim4CxdD4pEYDjmyvkzCJkU0ZPSzXplmjjfZgc5amEjVSW6q7NF8FHtb
+	fmkjbLu3HrnreDNBRU/WNXCNB8Do/2jb5ot4I=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=F1+W/7fiW1j+9U2VvsyKlVBy99ME4QPd
+	XXt7HZ+e9KnO4BVVc7oC6b2vsczPCy/m3NI8Jh1F8YsHrK6MIdMZPi5kUEw3tFBE
+	PuL5l5RXkSrw6nqiEMBtIcD+gCiZ5wr89ooFgn9+lYRipGHV1zjKKh0SEJDbECS+
+	UbAz5GVLhu4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 53CB35C525;
+	Tue, 17 Dec 2013 17:09:23 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2417E5C524;
+	Tue, 17 Dec 2013 17:09:21 -0500 (EST)
+In-Reply-To: <CALWbr2zXNF-aJHHnBnW1q1yaCmWt-rmMWypBWFanTBAK1pMWiQ@mail.gmail.com>
+	(Antoine Pelisse's message of "Tue, 17 Dec 2013 21:37:26 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: E1F6E984-6767-11E3-ADD0-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239405>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239406>
 
-On Tue, Dec 17, 2013 at 7:47 PM, Eric S. Raymond <esr@thyrsus.com> wrote:
-> I'm working with Alan Barret now on trying to convert the NetBSD
-> repositories. They break cvs-fast-export through sheer bulk of
-> metadata, by running the machine out of core.  This is exactly
-> the kind of huge case that you're talking about.
+Antoine Pelisse <apelisse@gmail.com> writes:
+
+>> How about not doing a fifo?
 >
-> Alan and I are going to take a good hard whack at modifying cvs-fast-export
-> to make this work. Because there really aren't any feasible alternatives.
-> The analysis code in cvsps was never good enough. cvs2git, being written
-> in Python, would hit the core limit faster than anything written in C.
+> That would certainly defeat the purpose of the test, which is to test
+> against a fifo :-)
 
-Depends on how it organizes its data structures. Have you actually
-tried running cvs2git on it? I'm not saying you are wrong, but I had
-similar problems with my custom converter (also written in Python),
-and solved them by adding multiple passes/phases instead of trying to
-do too much work in fewer passes. In the end I ended up storing the
-largest inter-phase data structures outside of Python (sqlite in my
-case) to save memory. Obviously it cost a lot in runtime, but it meant
-that I could actually chew through our largest CVS modules without
-running out of memory.
-
-> It is certainly the case that a sufficiently large CVS repo will break
-> anything, like a star with a mass over the Chandrasekhar limit becoming a
-> black hole :-)
-
-:) True, although it's not the sheer size of the files themselves that
-is the actual problem. Most of those bytes are (deltified) file data,
-which you can pretty much stream through and convert to a
-corresponding fast-export stream of blob objects. The code for that
-should be fairly straightforward (and should also be eminently
-parallelizable, given enough cores and available I/O), resulting in a
-table mapping CVS file:revision pairs to corresponding Git blob SHA1s,
-and an accompanying (set of) packfile(s) holding said blobs.
-
-The hard part comes when trying to correlate the metadata for all the
-per-file revisions, and distill that into a consistent sequence/DAG of
-changesets/commits across the entire CVS repo. And then, of course,
-trying to fit all the branches and tags into that DAG of commits is
-what really drives you mad... ;-)
-
-> The question is how common such supermassive cases are. My own guess is that
-> the *BSD repos and a handful of the oldest GNU projects are pretty much the
-> whole set; everybody else converted to Subversion within the last decade.
-
-You may be right. At least for the open-source cases. I suspect
-there's still a considerable number of huge CVS repos within
-companies' walls...
-
-> I find the very idea of writing anything that encourages
-> non-history-correct conversions disturbing and want no part of it.
->
-> Which matters, because right now the set of people working on CVS lifters
-> begins with me and ends with Michael Rafferty (cvs2git),
-
-s/Rafferty/Haggerty/?
-
-> who seems even
-> less interested in incremental conversion than I am.  Unless somebody
-> comes out of nowhere and wants to own that problem, it's not going
-> to get solved.
-
-Agreed. It would be nice to have something to point to for people that
-want something similar to git-svn for CVS, but without a motivated
-owner, it won't happen.
-
-...Johan
-
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+My point was that I did not see much value in reading the orderfile
+data from anything but a file.  At that point, you are not testing
+the "diff -O" orderfile option, but if strbuf_readline() reads from
+a non-regular file.
