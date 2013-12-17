@@ -1,113 +1,88 @@
-From: Antoine Pelisse <apelisse@gmail.com>
-Subject: Re: [PATCH v4 2/3] diff: Let "git diff -O" read orderfile from any
- file, fail properly
-Date: Tue, 17 Dec 2013 21:37:26 +0100
-Message-ID: <CALWbr2zXNF-aJHHnBnW1q1yaCmWt-rmMWypBWFanTBAK1pMWiQ@mail.gmail.com>
-References: <1387224586-10169-1-git-send-email-naesten@gmail.com>
-	<1387224586-10169-3-git-send-email-naesten@gmail.com>
-	<xmqqwqj4mqhe.fsf@gitster.dls.corp.google.com>
-	<CAJYzjmd_EWcQ5OzuZBQwhkfAtdxbPbvhVxUSsh98SzMzyz=-8w@mail.gmail.com>
-	<xmqqsitrmkhe.fsf@gitster.dls.corp.google.com>
+From: "Eric S. Raymond" <esr@thyrsus.com>
+Subject: Re: I have end-of-lifed cvsps
+Date: Tue, 17 Dec 2013 16:02:55 -0500
+Organization: Eric Conspiracy Secret Labs
+Message-ID: <20131217210255.GA18217@thyrsus.com>
+References: <20131212001738.996EB38055C@snark.thyrsus.com>
+ <CACPiFCK+Z7dOfO2v29PMKz+Y_fH1++xqMuTquSQ84d8KyjjFeQ@mail.gmail.com>
+ <20131212042624.GB8909@thyrsus.com>
+ <CACPiFC+bopf32cgDcQcVpL5vW=3KxmSP8Oh1see4KduQ1BNcPw@mail.gmail.com>
+ <52B02DFF.5010408@gmail.com>
+ <20131217140746.GB15010@thyrsus.com>
+ <CANQwDwe8AcbCYG5GZcY1tn9BN0x5KWux_CNQY2OWG+qZJ5rS4Q@mail.gmail.com>
+Reply-To: esr@thyrsus.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Samuel Bronson <naesten@gmail.com>, git <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Anders Waldenborg <anders@0x63.nu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Dec 17 21:37:40 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Martin Langhoff <martin.langhoff@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 17 22:03:01 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vt1Ob-0007l9-Vz
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Dec 2013 21:37:38 +0100
+	id 1Vt1nA-0004CX-UW
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Dec 2013 22:03:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753743Ab3LQUh2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Dec 2013 15:37:28 -0500
-Received: from mail-pb0-f47.google.com ([209.85.160.47]:38967 "EHLO
-	mail-pb0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753667Ab3LQUh0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Dec 2013 15:37:26 -0500
-Received: by mail-pb0-f47.google.com with SMTP id um1so7456389pbc.20
-        for <git@vger.kernel.org>; Tue, 17 Dec 2013 12:37:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=6//BS/Dfx9BuU3VQQDjRP41VjO07tFJqvDsHy9ckyQE=;
-        b=PHu9GN2+ttB5NkkzyZZafWgfhL+U7uBcOaiX/B6YG+gjuT9sw9rLia78CJx69oOuBI
-         B/MansZoKOgnjGslxUrrP8eIUBUCk6evoOMAWdsxImT7YDKf+xRKWIOwZst8loSUcQXX
-         0jKjxRQGWwxQxryrN1GbRnulYJfS8owb35pvMVDWxKT5I/83ZS2OqqQGhSV10kbzRWX8
-         oo6YdYDtnWhV7BB6G8xtSU5Hs0fc+LhwiNGXA/r46X0axszEppGKehfCtWMFkZWEwa86
-         2H9d/nCa+oOF6WXY8UPsFq7w45zPLXxq4psmiQKRd/sFaxsvcxXC5luXmReMO/x2oMKB
-         8tzQ==
-X-Received: by 10.66.166.47 with SMTP id zd15mr29628349pab.72.1387312646223;
- Tue, 17 Dec 2013 12:37:26 -0800 (PST)
-Received: by 10.70.124.228 with HTTP; Tue, 17 Dec 2013 12:37:26 -0800 (PST)
-In-Reply-To: <xmqqsitrmkhe.fsf@gitster.dls.corp.google.com>
+	id S1752628Ab3LQVC4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 17 Dec 2013 16:02:56 -0500
+Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:35951
+	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751732Ab3LQVC4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Dec 2013 16:02:56 -0500
+Received: by snark.thyrsus.com (Postfix, from userid 1000)
+	id 3A539380868; Tue, 17 Dec 2013 16:02:55 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <CANQwDwe8AcbCYG5GZcY1tn9BN0x5KWux_CNQY2OWG+qZJ5rS4Q@mail.gmail.com>
+X-Eric-Conspiracy: There is no conspiracy
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239403>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239404>
 
-On Tue, Dec 17, 2013 at 6:54 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Samuel Bronson <naesten@gmail.com> writes:
->
->> On Mon, Dec 16, 2013 at 4:32 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>> Samuel Bronson <naesten@gmail.com> writes:
->>>
->>>>  for i in 1 2
->>>>  do
->>>>       test_expect_success "orderfile using option ($i)" '
->>>>       git diff -Oorder_file_$i --name-only HEAD^..HEAD >actual &&
->>>>       test_cmp expect_$i actual
->>>>  '
->>>
->>> This funny indentation in the previous step needs to be fixed, and
->>> the added block below should match.
->>
->> Even though this results in oddly-indented --verbose output?
->>
->>>> +     rm -f order_fifo &&
->>>> +     mkfifo order_fifo &&
->>>> +     cat order_file_$i >order_fifo &
->>>> +     git diff -O order_fifo --name-only HEAD^..HEAD >actual &&
->>>
->>> I think this part can be racy depending on which between cat and
->>> "git diff" are scheduled first, no?  Try running this test under
->>> load and I think you will see it deadlocked.
->>>
->>> Besides, the above breaks && chain; even if mkfifo breaks (hence not
->>> allowing cat to run), "git diff" will go ahead and run, no?
->>
->> Hmm.  Well, what I really wanted to put here was a "process substitution":
->>
->>     git diff -O <(cat order_file_$i) --name-only HEAD^..HEAD >actual &&
->>
->> but I did not see this feature listed in the dash(1) manpage, so I
->> assumed it wasn't allowed by POSIX.  And, having looked, I indeed
->> don't see it mentioned in POSIX either.
->>
->> I'm not terribly surprised that I screwed up the translation to FIFOs;
->> how would I really want to do it?
->
-> How about not doing a fifo?
+Jakub Nar=C4=99bski <jnareb@gmail.com>:
+> Errr... doesn't cvs-fast-export support --export-marks=3D<file> to sa=
+ve
+> progress and --import-marks=3D<file> to continue incremental import?
 
-That would certainly defeat the purpose of the test, which is to test
-against a fifo :-)
-I'm not sure about the deadlock though. Both read and write will wait
-for each other to start operating on the fifo.
+No, cvs-fast-export does not have --export-marks. It doesn't generate t=
+he
+SHA1s that would require. Even if it did, it's not clear how that would=
+ help.
 
-You can probably fix the &&-chain by doing something like:
+> I would check it in cvs-fast-export manpage, but the page seems to
+> be down:
+>=20
+>   http://isup.me/www.catb.org
+>=20
+>     It's not just you! http://www.catb.org looks down from here.
 
-    mkfifo order_fifo && {
-        cat order_file_$i >order_fifo &
-        git diff -O order_fifo --name-only HEAD^..HEAD >actual
-    } && ...
+Confirmed.  Looks like ibiblio is having a bad day.  I'll file a bug re=
+port.=20
 
-Also, "rm -f order_fifo" should probably be done in test_when_finished
-rather than at the beginning of the test.
+> > Fortunately, incremental dump is trivial to implement in the output
+> > stage of an exporter if you have access to the exporter source code=
+=2E
+> > I've done it in two different exporters.  cvs-fast-export now has a
+> > regression test for this case
+>=20
+> This is I guess assuming that information from later commits doesn't
+> change guesses about shape of history from earlier commits...
 
-Antoine,
+That's the "stability" property that Martin Langhoff and I were discuss=
+ing
+earlier.
+
+cvs-fast-export conversions are stable under incremental
+lifting providing a commitid-generating version of CVS is in use
+during each increment.  Portions of the history *before the first
+lift* may lack commitids and will nevertheless remain stable through
+the whole process.
+
+All versions of CVS have generated commitids since 2004.
+--=20
+		<a href=3D"http://www.catb.org/~esr/">Eric S. Raymond</a>
