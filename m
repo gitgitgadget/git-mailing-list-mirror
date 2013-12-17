@@ -1,183 +1,92 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/3] prune_object_dir(): verify that path fits in the
- temporary buffer
-Date: Tue, 17 Dec 2013 18:22:31 -0500
-Message-ID: <20131217232231.GA14807@sigill.intra.peff.net>
-References: <1387287838-25779-1-git-send-email-mhagger@alum.mit.edu>
- <1387287838-25779-3-git-send-email-mhagger@alum.mit.edu>
- <xmqq8uvjmhu5.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] test the commit.gpgsign config option
+Date: Tue, 17 Dec 2013 15:27:12 -0800
+Message-ID: <xmqqr49bkqi7.fsf@gitster.dls.corp.google.com>
+References: <xmqqa9g1qrzj.fsf@gitster.dls.corp.google.com>
+	<1387202104-17580-1-git-send-email-boklm@mars-attacks.org>
+	<xmqq38lsrakh.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 18 00:22:40 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Nicolas Vigier <boklm@mars-attacks.org>
+X-From: git-owner@vger.kernel.org Wed Dec 18 00:27:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vt3yI-0007SZ-8q
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Dec 2013 00:22:38 +0100
+	id 1Vt42q-0004oE-Hq
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Dec 2013 00:27:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751090Ab3LQXWe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Dec 2013 18:22:34 -0500
-Received: from cloud.peff.net ([50.56.180.127]:46356 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750905Ab3LQXWd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Dec 2013 18:22:33 -0500
-Received: (qmail 8542 invoked by uid 102); 17 Dec 2013 23:22:33 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 17 Dec 2013 17:22:33 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 17 Dec 2013 18:22:31 -0500
-Content-Disposition: inline
-In-Reply-To: <xmqq8uvjmhu5.fsf@gitster.dls.corp.google.com>
+	id S1752042Ab3LQX1R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Dec 2013 18:27:17 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49762 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751008Ab3LQX1Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Dec 2013 18:27:16 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 52DFF5C54D;
+	Tue, 17 Dec 2013 18:27:15 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Z3r19PFt3i5FLjHEw3qCro3u+2E=; b=QBP0RQ
+	M7nUOKwmG2XD8b2mZfjgDbYbAwdqdRhy+Jy6taL/lJjEMIzzW9+TiszJoqwWDOh7
+	4eA7G7KJ6CKa+3dtFiHs+8KAlOhEDhBX44GO8K7iNwvkHKFGz8YJhReAkVdnmy2o
+	cal+GH1pyadnA/rfjFUk7+l3agnFI7EuQJPMo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=SuZQA1WoFqH7yCFP0/eauVyjoQ2SWYWo
+	3nwrxZJV3Re5qivYrxtpArdaG3Gcq3QwTmYdB+psZLe8RimaLM1hBiVDd6hzemle
+	/oZsDRs+lrJSw25we7dMsiZTT3iwixFRSEX6Lg77MKF0Jjs3t2iBvKSq+9HxbT/Z
+	n7AgWqdKWGs=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3ECD65C54C;
+	Tue, 17 Dec 2013 18:27:15 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7AC975C549;
+	Tue, 17 Dec 2013 18:27:14 -0500 (EST)
+In-Reply-To: <xmqq38lsrakh.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Mon, 16 Dec 2013 09:05:02 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: C2E77314-6772-11E3-A0EF-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239410>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239411>
 
-On Tue, Dec 17, 2013 at 10:51:30AM -0800, Junio C Hamano wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Michael Haggerty <mhagger@alum.mit.edu> writes:
-> 
-> > Dimension the buffer based on PATH_MAX rather than a magic number, and
-> > verify that the path fits in it before continuing.
-> >
-> > Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
-> > ---
-> >
-> > I don't think that this problem is remotely exploitable, because the
-> > size of the string doesn't depend on inputs that can be influenced by
-> > a client (at least not within Git).
-> 
-> This is shrinking the buffer on some platforms where PATH_MAX is
-> lower than 4k---granted, we will die() with the new check instead of
-> crashing uncontrolled, but it still feels somewhat wrong.
+> If any of the above fail, the next test will run with an unknown
+> random value in commit.gpgsign depending on where the sequence
+> failed.  Use one test_when_finished with test_unconfig at the very
+> beginning, perhaps.
 
-On such a system, though, does the resulting prune_dir call actually do
-anything? We will feed the result to opendir(), which I would think
-would choke on the long name.
+In other words, I'll squash this in.
 
-Still, it is probably better to do everything we can and let the OS
-choke (especially because we would want to continue operating on other
-paths in this case).
-
-Converting it to use strbuf looks like it will actually let us drop a
-bunch of copying, too, as we just end up in mkpath at the very lowest
-level. I.e., something like below.
-
-As an aside, I have noticed us using this "push/pop" approach to treating a
-strbuf as a stack of paths elsewhere, too. I.e:
-
-  size_t baselen = base->len;
-  strbuf_addf(base, "/%s", some_thing);
-  some_call(base);
-  base->len = baselen;
-
-I wondered if there was any kind of helper we could add to make it look
-nicer. But I don't think so; the hairy part is that you must remember to
-reset base->len after the call, and there is no easy way around that in
-C. If you had object destructors that ran as the stack unwound, or
-dynamic scoping, it would be easy to manipulate the object. Wrapping
-won't work because strbuf isn't just a length wrapping an immutable
-buffer; it actually has to move the NUL in the buffer.
-
-Anyway, not important, but perhaps somebody is more clever than I am.
-
-diff --git a/builtin/prune.c b/builtin/prune.c
-index 6366917..4ca8ec1 100644
---- a/builtin/prune.c
-+++ b/builtin/prune.c
-@@ -17,9 +17,8 @@ static int verbose;
- static unsigned long expire;
- static int show_progress = -1;
+diff --git a/t/t7510-signed-commit.sh b/t/t7510-signed-commit.sh
+index 537bfba..5ddac1a 100755
+--- a/t/t7510-signed-commit.sh
++++ b/t/t7510-signed-commit.sh
+@@ -5,6 +5,8 @@ test_description='signed commit tests'
+ . "$TEST_DIRECTORY/lib-gpg.sh"
  
--static int prune_tmp_object(const char *path, const char *filename)
-+static int prune_tmp_object(const char *fullpath)
- {
--	const char *fullpath = mkpath("%s/%s", path, filename);
- 	struct stat st;
- 	if (lstat(fullpath, &st))
- 		return error("Could not stat '%s'", fullpath);
-@@ -32,9 +31,8 @@ static int prune_tmp_object(const char *path, const char *filename)
- 	return 0;
- }
- 
--static int prune_object(char *path, const char *filename, const unsigned char *sha1)
-+static int prune_object(const char *fullpath, const unsigned char *sha1)
- {
--	const char *fullpath = mkpath("%s/%s", path, filename);
- 	struct stat st;
- 	if (lstat(fullpath, &st))
- 		return error("Could not stat '%s'", fullpath);
-@@ -50,9 +48,10 @@ static int prune_object(char *path, const char *filename, const unsigned char *s
- 	return 0;
- }
- 
--static int prune_dir(int i, char *path)
-+static int prune_dir(int i, struct strbuf *path)
- {
--	DIR *dir = opendir(path);
-+	size_t baselen = path->len;
-+	DIR *dir = opendir(path->buf);
- 	struct dirent *de;
- 
- 	if (!dir)
-@@ -77,28 +76,39 @@ static int prune_dir(int i, char *path)
- 			if (lookup_object(sha1))
- 				continue;
- 
--			prune_object(path, de->d_name, sha1);
-+			strbuf_addf(path, "/%s", de->d_name);
-+			prune_object(path->buf, sha1);
-+			path->len = baselen;
- 			continue;
- 		}
- 		if (!prefixcmp(de->d_name, "tmp_obj_")) {
--			prune_tmp_object(path, de->d_name);
-+			strbuf_addf(path, "/%s", de->d_name);
-+			prune_tmp_object(path->buf);
-+			path->len = baselen;
- 			continue;
- 		}
--		fprintf(stderr, "bad sha1 file: %s/%s\n", path, de->d_name);
-+		fprintf(stderr, "bad sha1 file: %s/%s\n", path->buf, de->d_name);
- 	}
- 	closedir(dir);
- 	if (!show_only)
--		rmdir(path);
-+		rmdir(path->buf);
- 	return 0;
- }
- 
- static void prune_object_dir(const char *path)
- {
-+	struct strbuf buf = STRBUF_INIT;
-+	size_t baselen;
- 	int i;
+ test_expect_success GPG 'create signed commits' '
++	test_when_finished "test_unconfig commit.gpgsign" &&
 +
-+	strbuf_addstr(&buf, path);
-+	strbuf_addch(&buf, '/');
-+	baselen = buf.len;
-+
- 	for (i = 0; i < 256; i++) {
--		static char dir[4096];
--		sprintf(dir, "%s/%02x", path, i);
--		prune_dir(i, dir);
-+		strbuf_addf(&buf, "%02x", i);
-+		prune_dir(i, &buf);
-+		buf.len = baselen;
- 	}
- }
+ 	echo 1 >file && git add file &&
+ 	test_tick && git commit -S -m initial &&
+ 	git tag initial &&
+@@ -40,9 +42,7 @@ test_expect_success GPG 'create signed commits' '
+ 	git tag seventh-unsigned &&
  
-@@ -120,7 +130,7 @@ static void remove_temporary_files(const char *path)
- 	}
- 	while ((de = readdir(dir)) != NULL)
- 		if (!prefixcmp(de->d_name, "tmp_"))
--			prune_tmp_object(path, de->d_name);
-+			prune_tmp_object(mkpath("%s/%s", path, de->d_name));
- 	closedir(dir);
- }
+ 	test_tick && git rebase -f HEAD^^ && git tag sixth-signed HEAD^ &&
+-	git tag seventh-signed &&
+-
+-	git config --unset commit.gpgsign
++	git tag seventh-signed
+ '
  
+ test_expect_success GPG 'show signatures' '
