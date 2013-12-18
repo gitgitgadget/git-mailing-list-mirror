@@ -1,143 +1,121 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/3] prune_object_dir(): verify that path fits in the temporary buffer
-Date: Wed, 18 Dec 2013 11:35:34 -0800
-Message-ID: <xmqqa9fyhrzt.fsf@gitster.dls.corp.google.com>
-References: <1387287838-25779-1-git-send-email-mhagger@alum.mit.edu>
-	<1387287838-25779-3-git-send-email-mhagger@alum.mit.edu>
-	<xmqq8uvjmhu5.fsf@gitster.dls.corp.google.com>
-	<20131217232231.GA14807@sigill.intra.peff.net>
+Subject: Re: RLIMIT_NOFILE fallback
+Date: Wed, 18 Dec 2013 11:50:24 -0800
+Message-ID: <xmqq61qmhrb3.fsf@gitster.dls.corp.google.com>
+References: <20131218171446.GA19657@kitenet.net>
+	<xmqqy53ihwe4.fsf@gitster.dls.corp.google.com>
+	<20131218191702.GA9083@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org
+Cc: Joey Hess <joey@kitenet.net>, git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Dec 18 20:35:52 2013
+X-From: git-owner@vger.kernel.org Wed Dec 18 20:50:37 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VtMuI-00064A-2k
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Dec 2013 20:35:46 +0100
+	id 1VtN8e-0005co-0T
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Dec 2013 20:50:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751677Ab3LRTfl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Dec 2013 14:35:41 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62369 "EHLO
+	id S1752098Ab3LRTub (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Dec 2013 14:50:31 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39847 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751052Ab3LRTfk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Dec 2013 14:35:40 -0500
+	id S1751405Ab3LRTu3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Dec 2013 14:50:29 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5A43C5ACF8;
-	Wed, 18 Dec 2013 14:35:39 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 098CD5A262;
+	Wed, 18 Dec 2013 14:50:29 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=RY5TYepBCqtgExImZ21W6kwc3iE=; b=HF/bbC
-	3o1bGxvx3EqwNebnznRRkaF8eFH/PqZ7RnrgvtGeavUuMge/iqhBjuT1TYbvz91a
-	a8wjw30pwUBzT1z82zjk6qEwMeTc2VAiCtb0xzs7a/1VJt1/Xhtu+sA8L1vqZ3iZ
-	8xEcW035oDyu1kCjbP81zKbhNYRJDRYYhsmwg=
+	:content-type; s=sasl; bh=R/xfxj0LHGApcICfi21YwQn/10Q=; b=YggaX9
+	lRbwbvdqckuI4v4+AGAOhsTiDkJFLwuHKyqj+lzrZwDLQvCwymbMIhPIkO0oXPqW
+	0tFHcS2OlVQlmoRLoUJk6edD9uwYH7H5WFCdSyCnXszRTHv7fDJpqEKNU1NWeYZu
+	Yg4wbM4oTqLAsQFEfheXZGG57k7IHZz4C12qE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=kUnWz8sLxX76YrZN74WXm2NLtBKJ+rjW
-	5wz642bliFA3p80JYjBQbDnplkhWUXVlANuyXe+/9zwmxiqdFtLfVeCnk7IAUYIk
-	oUxr336O1XQuOs0uylzX8IbKPulm7pM1o5dO504bktqv9kVay/sQ+O/NUU7kFuVY
-	GqHVHFOl+54=
+	:content-type; q=dns; s=sasl; b=Dsi5yrDx5ZcpgRMLC0oGr92eFWjraTV2
+	W0/il77pM9+jH59eUQojTKynJjKc64fz/zvpyI896kE3xc8Ovnu6e/QW6gccKUEA
+	wqjsV2vsWYVOGgKsWOmsWLVJ0FN0Lqzn0c+k3m8Ma9860Xhk/qGwhJgUuprhl6Fq
+	QtSEnwEdotg=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4382B5ACF7;
-	Wed, 18 Dec 2013 14:35:39 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EAAA85A261;
+	Wed, 18 Dec 2013 14:50:28 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2F8995ACF5;
-	Wed, 18 Dec 2013 14:35:38 -0500 (EST)
-In-Reply-To: <20131217232231.GA14807@sigill.intra.peff.net> (Jeff King's
-	message of "Tue, 17 Dec 2013 18:22:31 -0500")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 11FBC5A25D;
+	Wed, 18 Dec 2013 14:50:27 -0500 (EST)
+In-Reply-To: <20131218191702.GA9083@sigill.intra.peff.net> (Jeff King's
+	message of "Wed, 18 Dec 2013 14:17:02 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 9278FA28-681B-11E3-A627-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: A4E15AA0-681D-11E3-B1C3-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239472>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239473>
 
 Jeff King <peff@peff.net> writes:
 
-> Converting it to use strbuf looks like it will actually let us drop a
-> bunch of copying, too, as we just end up in mkpath at the very lowest
-> level. I.e., something like below.
+> That is, does sysconf actually work on such a system (or does it need a
+> similar run-time fallback)? And either way, we should try falling back
+> to OPEN_MAX rather than 1 if we have it.
 
-Thanks; I may have a few minor comments, but overall, I like the
-placement of mkpath() in the resulting callchain a lot better than
-the original.
+Interesting.
 
-> As an aside, I have noticed us using this "push/pop" approach to treating a
-> strbuf as a stack of paths elsewhere, too. I.e:
->
->   size_t baselen = base->len;
->   strbuf_addf(base, "/%s", some_thing);
->   some_call(base);
->   base->len = baselen;
->
-> I wondered if there was any kind of helper we could add to make it look
-> nicer. But I don't think so; the hairy part is that you must remember to
-> reset base->len after the call, and there is no easy way around that in
-> C. If you had object destructors that ran as the stack unwound, or
-> dynamic scoping, it would be easy to manipulate the object. Wrapping
-> won't work because strbuf isn't just a length wrapping an immutable
-> buffer; it actually has to move the NUL in the buffer.
->
-> Anyway, not important, but perhaps somebody is more clever than I am.
+> As far as the warning, I am not sure I see a point. The user does not
+> have any useful recourse, and git should continue to operate as normal.
+> Having every single git invocation print "by the way, RLIMIT_NOFILE does
+> not work on your system" seems like it would get annoying.
 
-Hmph... interesting but we would need a lot more thought than the
-time necessary to respond to one piece of e-mail for this ;-)
-Perhaps later...
+Very true.  That makes the resulting function look like this:
 
-> diff --git a/builtin/prune.c b/builtin/prune.c
-> index 6366917..4ca8ec1 100644
-> --- a/builtin/prune.c
-> +++ b/builtin/prune.c
-> @@ -17,9 +17,8 @@ static int verbose;
->  static unsigned long expire;
->  static int show_progress = -1;
->  
-> -static int prune_tmp_object(const char *path, const char *filename)
-> +static int prune_tmp_object(const char *fullpath)
->  {
-> -	const char *fullpath = mkpath("%s/%s", path, filename);
->  	struct stat st;
->  	if (lstat(fullpath, &st))
->  		return error("Could not stat '%s'", fullpath);
+-------------------------------- 8< ------------------------------
 
-This function is called to remove
+static unsigned int get_max_fd_limit(void)
+{
+#ifdef RLIMIT_NOFILE
+	struct rlimit lim;
 
- * Any tmp_* found directly in .git/objects/
- * Any tmp_* found directly in .git/objects/pack/
- * Any tmp_obj_* found directly in .git/objects/??/
+	if (!getrlimit(RLIMIT_NOFILE, &lim))
+		return lim.rlim_cur;
+#endif
 
-and shares the same expiration logic with prune_object().  The only
-difference from the other function is what the file is called in
-dry-run or verbose report ("stale temporary file" vs "<sha-1> <typename>").
+#if defined(_SC_OPEN_MAX)
+	{
+		long sc_open_max = sysconf(_SC_OPEN_MAX);
+		if (0 < sc_open_max)
+			return sc_open_max;
+	}
 
-We may want to rename it to prune_tmp_file(); its usage may have
-been limited to an unborn loose object file at some point in the
-history, but it does not look that way in today's code.
+#if defined(OPEN_MAX)
+	return OPEN_MAX;
+#else
+	return 1; /* see the caller ;-) */
+#endif
+}
 
-> -static int prune_dir(int i, char *path)
-> +static int prune_dir(int i, struct strbuf *path)
->  {
-> -	DIR *dir = opendir(path);
-> +	size_t baselen = path->len;
-> +	DIR *dir = opendir(path->buf);
->  	struct dirent *de;
->  
->  	if (!dir)
-> @@ -77,28 +76,39 @@ static int prune_dir(int i, char *path)
->  			if (lookup_object(sha1))
->  				continue;
->  
-> -			prune_object(path, de->d_name, sha1);
-> +			strbuf_addf(path, "/%s", de->d_name);
-> +			prune_object(path->buf, sha1);
-> +			path->len = baselen;
+-------------------------------- >8 ------------------------------
 
-This is minor, but I prefer using strbuf_setlen() for this.
+But the sysconf part makes me wonder; here is what we see in
+http://pubs.opengroup.org/onlinepubs/9699919799/functions/sysconf.html
 
-Thanks.
+    If name is an invalid value, sysconf() shall return -1 and set errno
+    to indicate the error. If the variable corresponding to name is
+    described in <limits.h> as a maximum or minimum value and the
+    variable has no limit, sysconf() shall return -1 without changing
+    the value of errno. Note that indefinite limits do not imply
+    infinite limits; see <limits.h>.
+
+For a broken system (like RLIMIT_NOFILE defined for the compiler,
+but the actual call returns a bogus error), the compiler may see the
+_SC_OPEN_MAX defined, while sysconf() may say "I've never heard of
+such a name" and return -1, or the system, whether broken or not,
+may want to say "Unlimited" and return -1.  The caller takes
+anything unreasonable as a positive value capped to 25 or something,
+so there isn't a real harm if we returned a bogus value from here,
+but I am not sure what the safe default behaviour of this function
+should be to help such a broken system while not harming systems
+that are functioning correctly.
