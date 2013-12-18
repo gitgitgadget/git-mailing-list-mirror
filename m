@@ -1,123 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git add -A fails in empty repository since 1.8.5
-Date: Wed, 18 Dec 2013 10:54:50 -0800
-Message-ID: <xmqqioumhtvp.fsf@gitster.dls.corp.google.com>
-References: <CAEcj5uWHpem+5os+3Mc_a42pk6f30i4UiV=LRPdXkoqiy1jQ_w@mail.gmail.com>
-	<CALWbr2wXxSU4qD_Gj5P7aYxB39tEVBa-TDALVepuwZLh+RNU1Q@mail.gmail.com>
-	<CACsJy8DY7eZm7-P=azJF-jEiBKM_QPf_GXG3uzbuw5C1vq1Q5A@mail.gmail.com>
+From: "Eric S. Raymond" <esr@thyrsus.com>
+Subject: Re: I have end-of-lifed cvsps
+Date: Wed, 18 Dec 2013 14:16:48 -0500
+Organization: Eric Conspiracy Secret Labs
+Message-ID: <20131218191648.GA4533@thyrsus.com>
+References: <CACPiFC+bopf32cgDcQcVpL5vW=3KxmSP8Oh1see4KduQ1BNcPw@mail.gmail.com>
+ <52B02DFF.5010408@gmail.com>
+ <20131217140746.GB15010@thyrsus.com>
+ <CANQwDwe8AcbCYG5GZcY1tn9BN0x5KWux_CNQY2OWG+qZJ5rS4Q@mail.gmail.com>
+ <20131217210255.GA18217@thyrsus.com>
+ <CANQwDwdQZGhR=hhFHe7wRAeNej_F5fHspN7+f-LiJu06utwC-w@mail.gmail.com>
+ <20131218002122.GA20152@thyrsus.com>
+ <CANQwDwdgZUWcgyZCWoDni+e9jgQ+8j0Yn_HMxiMn5OHzsRzjwQ@mail.gmail.com>
+ <20131218162710.GA3573@thyrsus.com>
+ <20131218174615.GA5597@sigill.intra.peff.net>
+Reply-To: esr@thyrsus.com
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Antoine Pelisse <apelisse@gmail.com>,
-	Thomas Ferris Nicolaisen <tfnico@gmail.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 18 19:55:04 2013
+Cc: Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Dec 18 20:17:04 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VtMGr-0003UA-Ro
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Dec 2013 19:55:02 +0100
+	id 1VtMc5-0002I4-N9
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Dec 2013 20:16:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755051Ab3LRSy4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Dec 2013 13:54:56 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41164 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753427Ab3LRSyz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Dec 2013 13:54:55 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4C6715AFD7;
-	Wed, 18 Dec 2013 13:54:54 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=XQVKdTGgflkDj89641VwXqZRai4=; b=sY5Ieq
-	M7+0OALGhc+Cl4bis0+WrG8RkxT5s5Id0N6kyrHMapFPVnzF6uge0qku8kO4rjkl
-	4D0KGkad62GaxbD75IeJ+CSM4uXHOfLcMlyMRcxgZsS3RTu/BQn+PODHy5e70bVV
-	QP+8GEPZ/FVLOkOqVmOV1mJCDvvXKuymAw8p0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=opZR/23npY/aN4Om/Hzrw4/0G2KMyxJ/
-	jxhPZWT56Swu4l6yKpOwjPQfDhBnfC/YAb5oOT+39UWpilxV0inmqu5vz/skGtGg
-	KkNVfNqSCjyc5PfRoInQMkp+3SCjhfx+4mkfZail+gEp8RCybbX6RgaP4xvbHlMH
-	7wMHTIz0Bsw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 316025AFD6;
-	Wed, 18 Dec 2013 13:54:54 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 32DA55AFD4;
-	Wed, 18 Dec 2013 13:54:52 -0500 (EST)
-In-Reply-To: <CACsJy8DY7eZm7-P=azJF-jEiBKM_QPf_GXG3uzbuw5C1vq1Q5A@mail.gmail.com>
-	(Duy Nguyen's message of "Wed, 18 Dec 2013 18:59:31 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: E08CEFC2-6815-11E3-BA23-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755957Ab3LRTQv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Dec 2013 14:16:51 -0500
+Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:46137
+	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755043Ab3LRTQt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Dec 2013 14:16:49 -0500
+Received: by snark.thyrsus.com (Postfix, from userid 1000)
+	id 30315380488; Wed, 18 Dec 2013 14:16:48 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <20131218174615.GA5597@sigill.intra.peff.net>
+X-Eric-Conspiracy: There is no conspiracy
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239468>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239469>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+Jeff King <peff@peff.net>:
+> In git, it may happen quite a bit during "git am" or "git rebase", in
+> which a large number of commits are replayed in a tight loop.
 
-> On Wed, Dec 18, 2013 at 3:44 PM, Antoine Pelisse <apelisse@gmail.com> wrote:
->> FWIW, git-bisect points to 84b8b5d (that is $gmane/230349).
->>
->> On Wed, Dec 18, 2013 at 9:06 AM, Thomas Ferris Nicolaisen
->> <tfnico@gmail.com> wrote:
->>> This was discussed on the Git user list recently [1].
->>>
->>> #in a repo with no files
->>>> git add -A
->>> fatal: pathspec '.' did not match any files
->>>
->>> The same goes for git add . (and -u).
->>>
->>> Whereas I think some warning feedback is useful, we are curious
->>> whether this is an intentional change or not.
+That's a good point - a repeatable real-world case in which we can
+expect that behavior.
 
-The logic to produce that error message is primarily to catch a typo
-like:
+This case could be solved, though, with a slight tweak to the commit generator
+in git (given subsecond timestamps).  It could keep the time of last commit
+and stall by an arbitrary small amount, enough to show up as a timestamp
+difference. 
 
-	$ git add Nakefile
+Action stamps work pretty well inside reposurgeon because they're
+mainly used to identify commits from older VCSes that can't run that
+fast. Collisions are theoretically possible but I'm never seen one in
+the wild.
 
-when the user meant to say Makefile.
+>                                                       You can
+> use the author timestamp instead, but it also collides (try "%at %ae" in
+> the above command instead).
 
-It could be argued that a "git add [<any option>] .", with an
-explicit "." given by the end-user, that is run in an empty
-directory may be an error worth reporting.  Just like it is likely
-for the user to have wanted to add some other file when he typed
-Nakefile and it is not good to silently decide "ah, nothing matches
-the pathspec, so not adding anything is the right thing to do" in
-such a case, it is plausible that the user thought that he was in
-some other directory he wanted to add its contents to the index when
-he gave us the explicit ".", while he was in fact in a wrong
-directory, and it is not good to silently decide "nothing there to
-add so I won't do anything" without any indication of an error.
+Yes, obviously for the same reason. 
+ 
+> > And now you know why I wish git had subsecond timestamp resolution!  If it
+> > did, uniqueness of these in a git stream could be guaranteed.
+> 
+> It's still not guaranteed. Even with sufficient resolution that no two
+> operations could possibly complete in the same time unit, clocks do not
+> always march forward. They get reset, they may skew from machine to
+> machine, the same operation may happen on different machines, etc.
 
-We should *not* error out "git add [<any option>]" without any
-end-user pathspecs, especially with that error message, on the other
-hand.
-
-> I was not aware of this case when I made the change. It's caused by
-> this change that removes pathspec.raw[i][0] check in builtin/add.c in
-> 84b8b5d .
->
-> -               for (i = 0; pathspec.raw[i]; i++) {
-> -                       if (!seen[i] && pathspec.raw[i][0]
-> -                           && !file_exists(pathspec.raw[i])) {
-> +               for (i = 0; i < pathspec.nr; i++) {
-> +                       const char *path = pathspec.items[i].match;
-> +                       if (!seen[i] && !file_exists(path)) {
->
-> Adding it back requires some thinking because "path" in the new code
-> could be something magic.. and the new behavior makes sense, so I'm
-> inclined to keep it as is, unless people have other opinions.
->
->>>
->>> [1] https://groups.google.com/d/topic/git-users/Qs4YSPhTsqE/discussion
->>> --
->>> To unsubscribe from this list: send the line "unsubscribe git" in
->>> the body of a message to majordomo@vger.kernel.org
->>> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Right...but the *same person* submitting operations from *different
+machines* within the time window required to be caught by these effects
+is at worst fantastically unlikely.  That case is exactly why action 
+stamps have an email part.
+-- 
+		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
