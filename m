@@ -1,90 +1,75 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: I have end-of-lifed cvsps
-Date: Wed, 18 Dec 2013 19:54:51 +0000
-Message-ID: <20131218195450.GK3163@serenity.lan>
-References: <CACPiFC+bopf32cgDcQcVpL5vW=3KxmSP8Oh1see4KduQ1BNcPw@mail.gmail.com>
- <52B02DFF.5010408@gmail.com>
- <20131217140746.GB15010@thyrsus.com>
- <CANQwDwe8AcbCYG5GZcY1tn9BN0x5KWux_CNQY2OWG+qZJ5rS4Q@mail.gmail.com>
- <20131217210255.GA18217@thyrsus.com>
- <CANQwDwdQZGhR=hhFHe7wRAeNej_F5fHspN7+f-LiJu06utwC-w@mail.gmail.com>
- <20131218002122.GA20152@thyrsus.com>
- <CANQwDwdgZUWcgyZCWoDni+e9jgQ+8j0Yn_HMxiMn5OHzsRzjwQ@mail.gmail.com>
- <20131218162710.GA3573@thyrsus.com>
- <CACPiFC+W-RiO-YL=Wgs7YzV=z-p97ehfA+64j5F2KbayPAQm8w@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git add -A fails in empty repository since 1.8.5
+Date: Wed, 18 Dec 2013 11:56:24 -0800
+Message-ID: <xmqq1u1ahr13.fsf@gitster.dls.corp.google.com>
+References: <CAEcj5uWHpem+5os+3Mc_a42pk6f30i4UiV=LRPdXkoqiy1jQ_w@mail.gmail.com>
+	<CALWbr2wXxSU4qD_Gj5P7aYxB39tEVBa-TDALVepuwZLh+RNU1Q@mail.gmail.com>
+	<CACsJy8DY7eZm7-P=azJF-jEiBKM_QPf_GXG3uzbuw5C1vq1Q5A@mail.gmail.com>
+	<xmqqioumhtvp.fsf@gitster.dls.corp.google.com>
+	<vpqvbymarnw.fsf@anie.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Eric Raymond <esr@thyrsus.com>,
-	Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Martin Langhoff <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 18 20:55:09 2013
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Antoine Pelisse <apelisse@gmail.com>,
+	Thomas Ferris Nicolaisen <tfnico@gmail.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed Dec 18 20:56:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VtND2-0002D9-BH
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Dec 2013 20:55:08 +0100
+	id 1VtNEO-0003iq-3p
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Dec 2013 20:56:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751008Ab3LRTzB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Dec 2013 14:55:01 -0500
-Received: from jackal.aluminati.org ([72.9.247.210]:35986 "EHLO
-	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750898Ab3LRTzA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Dec 2013 14:55:00 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by jackal.aluminati.org (Postfix) with ESMTP id B6182CDA5B5;
-	Wed, 18 Dec 2013 19:54:59 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -0.999
-X-Spam-Level: 
-X-Spam-Status: No, score=-0.999 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, URIBL_BLOCKED=0.001] autolearn=disabled
-Received: from jackal.aluminati.org ([127.0.0.1])
-	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 2SMIei-MlJwU; Wed, 18 Dec 2013 19:54:59 +0000 (GMT)
-Received: from serenity.lan (mink.aluminati.org [10.0.7.180])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	id S1751146Ab3LRT42 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Dec 2013 14:56:28 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55350 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751060Ab3LRT41 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Dec 2013 14:56:27 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D41915A466;
+	Wed, 18 Dec 2013 14:56:26 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=X7/t/uUoBI241l9IrdsNTdoXoXs=; b=oDX5m5
+	hIIq8g1cydIhYklQ2p4+cShFVZ8WsW/DUd+SEuTpiGMD1svgeTYDpX2t6BbYMhsu
+	aPHJFVo3TXE4LXihk4mnfMKLv0KK4nSOMuqiiMmZsmj/wnzGJCv2e1NTtKWj19x/
+	VUeo7Ur6e8xtN1akvWyX3k4DuOoMgUgx8xpd4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Z7oH0NJZ4opd28W51FJCCPd6ZJmE85XY
+	k2Qhr5YD5FKvvJyDhar6xdoWa9pv3mx4liLNXnbbDHd7sleKTpxXrluI9pAo7VEG
+	qEfvvREL8+OM98XWWj3mDSnsiTapP7LC5rd5JcYjZk/v0QCUzkypWUoaaRJJ0BOa
+	aQ9Texxiu6A=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BA0215A465;
+	Wed, 18 Dec 2013 14:56:26 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by jackal.aluminati.org (Postfix) with ESMTPSA id 6A139CDA55E;
-	Wed, 18 Dec 2013 19:54:52 +0000 (GMT)
-Content-Disposition: inline
-In-Reply-To: <CACPiFC+W-RiO-YL=Wgs7YzV=z-p97ehfA+64j5F2KbayPAQm8w@mail.gmail.com>
-User-Agent: Mutt/1.5.22 (2013-10-16)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E0CC55A463;
+	Wed, 18 Dec 2013 14:56:25 -0500 (EST)
+In-Reply-To: <vpqvbymarnw.fsf@anie.imag.fr> (Matthieu Moy's message of "Wed,
+	18 Dec 2013 20:24:35 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 7A2CD39C-681E-11E3-86DA-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239474>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239475>
 
-On Wed, Dec 18, 2013 at 11:53:47AM -0500, Martin Langhoff wrote:
-> On Wed, Dec 18, 2013 at 11:27 AM, Eric S. Raymond <esr@thyrsus.com> wrote:
-> >> Anyway I hope that incremental CVS import would be needed less
-> >> and less as CVS is replaced by any more modern version control system.
-> >
-> > I agree.  I have never understood why people on this list are attached to it.
-> 
-> I think I have answered this question already once in this thread, and
-> a few times in similar threads with Eric in the past.
-> 
-> People track CVS repos that they have not control over. Smart
-> programmers forced to work with a corporate CVS repo. It happens also
-> with SVN, and witness the popularity of git-svn which can sanely
-> interact with an "active" svn repo.
-> 
-> This is a valid use case. Hard (impossible?) to support. But there
-> should be no surprise as to its reasons.
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-And at this point the git-cvsimport manpage says:
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> It could be argued that a "git add [<any option>] .", with an
+>> explicit "." given by the end-user, that is run in an empty
+>> directory may be an error worth reporting.
+>
+> But what we have right now is really weird:
 
-   WARNING: git cvsimport uses cvsps version 2, which is considered
-   deprecated; it does not work with cvsps version 3 and later. If you
-   are performing a one-shot import of a CVS repository consider using
-   cvs2git[1] or parsecvs[2].
-
-Which I think sums up the position nicely; if you're doing a one-shot
-import then the standalone tools are going to be a better choice, but if
-you're trying to use Git for your work on top of CVS the only choice is
-cvsps with git-cvsimport.
+I know.  That is why I said "It _could_ be argued".
