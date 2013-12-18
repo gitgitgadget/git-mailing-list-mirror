@@ -1,86 +1,110 @@
-From: "Eric S. Raymond" <esr@thyrsus.com>
-Subject: Re: I have end-of-lifed cvsps
-Date: Wed, 18 Dec 2013 14:16:48 -0500
-Organization: Eric Conspiracy Secret Labs
-Message-ID: <20131218191648.GA4533@thyrsus.com>
-References: <CACPiFC+bopf32cgDcQcVpL5vW=3KxmSP8Oh1see4KduQ1BNcPw@mail.gmail.com>
- <52B02DFF.5010408@gmail.com>
- <20131217140746.GB15010@thyrsus.com>
- <CANQwDwe8AcbCYG5GZcY1tn9BN0x5KWux_CNQY2OWG+qZJ5rS4Q@mail.gmail.com>
- <20131217210255.GA18217@thyrsus.com>
- <CANQwDwdQZGhR=hhFHe7wRAeNej_F5fHspN7+f-LiJu06utwC-w@mail.gmail.com>
- <20131218002122.GA20152@thyrsus.com>
- <CANQwDwdgZUWcgyZCWoDni+e9jgQ+8j0Yn_HMxiMn5OHzsRzjwQ@mail.gmail.com>
- <20131218162710.GA3573@thyrsus.com>
- <20131218174615.GA5597@sigill.intra.peff.net>
-Reply-To: esr@thyrsus.com
+From: Jeff King <peff@peff.net>
+Subject: Re: RLIMIT_NOFILE fallback
+Date: Wed, 18 Dec 2013 14:17:02 -0500
+Message-ID: <20131218191702.GA9083@sigill.intra.peff.net>
+References: <20131218171446.GA19657@kitenet.net>
+ <xmqqy53ihwe4.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Dec 18 20:17:04 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Joey Hess <joey@kitenet.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Dec 18 20:17:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VtMc5-0002I4-N9
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Dec 2013 20:16:58 +0100
+	id 1VtMcM-0002Z0-0i
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Dec 2013 20:17:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755957Ab3LRTQv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Dec 2013 14:16:51 -0500
-Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:46137
-	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755043Ab3LRTQt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Dec 2013 14:16:49 -0500
-Received: by snark.thyrsus.com (Postfix, from userid 1000)
-	id 30315380488; Wed, 18 Dec 2013 14:16:48 -0500 (EST)
+	id S1755973Ab3LRTRI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Dec 2013 14:17:08 -0500
+Received: from cloud.peff.net ([50.56.180.127]:46818 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755766Ab3LRTRE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Dec 2013 14:17:04 -0500
+Received: (qmail 368 invoked by uid 102); 18 Dec 2013 19:17:04 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 18 Dec 2013 13:17:04 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 18 Dec 2013 14:17:02 -0500
 Content-Disposition: inline
-In-Reply-To: <20131218174615.GA5597@sigill.intra.peff.net>
-X-Eric-Conspiracy: There is no conspiracy
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <xmqqy53ihwe4.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239469>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239470>
 
-Jeff King <peff@peff.net>:
-> In git, it may happen quite a bit during "git am" or "git rebase", in
-> which a large number of commits are replayed in a tight loop.
+On Wed, Dec 18, 2013 at 10:00:35AM -0800, Junio C Hamano wrote:
 
-That's a good point - a repeatable real-world case in which we can
-expect that behavior.
-
-This case could be solved, though, with a slight tweak to the commit generator
-in git (given subsecond timestamps).  It could keep the time of last commit
-and stall by an arbitrary small amount, enough to show up as a timestamp
-difference. 
-
-Action stamps work pretty well inside reposurgeon because they're
-mainly used to identify commits from older VCSes that can't run that
-fast. Collisions are theoretically possible but I'm never seen one in
-the wild.
-
->                                                       You can
-> use the author timestamp instead, but it also collides (try "%at %ae" in
-> the above command instead).
-
-Yes, obviously for the same reason. 
- 
-> > And now you know why I wish git had subsecond timestamp resolution!  If it
-> > did, uniqueness of these in a git stream could be guaranteed.
+> Joey Hess <joey@kitenet.net> writes:
 > 
-> It's still not guaranteed. Even with sufficient resolution that no two
-> operations could possibly complete in the same time unit, clocks do not
-> always march forward. They get reset, they may skew from machine to
-> machine, the same operation may happen on different machines, etc.
+> > In sha1_file.c, when git is built on linux, it will use 
+> > getrlimit(RLIMIT_NOFILE). I've been deploying git binaries to some
+> > unusual systems, like embedded NAS devices, and it seems some with older
+> > kernels like 2.6.33 fail with "fatal: cannot get RLIMIT_NOFILE: Bad address".
+> >
+> > I could work around this by building git without RLIMIT_NOFILE defined,
+> > but perhaps it would make sense to improve the code to fall back
+> > to one of the other methods for getting the limit, and/or return the
+> > hardcoded 1 as a fallback. This would make git binaries more robust
+> > against old/broken/misconfigured kernels.
+> 
+> Hmph, perhaps you are right.  Like this?
+> 
+>  sha1_file.c | 8 ++++++--
+>  1 file changed, 6 insertions(+), 2 deletions(-)
+> 
+> diff --git a/sha1_file.c b/sha1_file.c
+> index daacc0c..a3a0014 100644
+> --- a/sha1_file.c
+> +++ b/sha1_file.c
+> @@ -809,8 +809,12 @@ static unsigned int get_max_fd_limit(void)
+>  #ifdef RLIMIT_NOFILE
+>  	struct rlimit lim;
+>  
+> -	if (getrlimit(RLIMIT_NOFILE, &lim))
+> -		die_errno("cannot get RLIMIT_NOFILE");
+> +	if (getrlimit(RLIMIT_NOFILE, &lim)) {
+> +		static int warn_only_once;
+> +		if (!warn_only_once++)
+> +			warning("cannot get RLIMIT_NOFILE: %s", strerror(errno));
+> +		return 1; /* see the caller ;-) */
+> +	}
 
-Right...but the *same person* submitting operations from *different
-machines* within the time window required to be caught by these effects
-is at worst fantastically unlikely.  That case is exactly why action 
-stamps have an email part.
--- 
-		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
+I wish we understood why getrlimit was failing. Returning EFAULT seems
+like an odd choice if it is not implemented for the system. On such a
+system, do the other fallbacks actually work? Would it work to do:
+
+diff --git a/sha1_file.c b/sha1_file.c
+index daacc0c..ab38795 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -809,11 +809,11 @@ static unsigned int get_max_fd_limit(void)
+ #ifdef RLIMIT_NOFILE
+ 	struct rlimit lim;
+ 
+-	if (getrlimit(RLIMIT_NOFILE, &lim))
+-		die_errno("cannot get RLIMIT_NOFILE");
++	if (!getrlimit(RLIMIT_NOFILE, &lim))
++		return lim.rlim_cur;
++#endif
+ 
+-	return lim.rlim_cur;
+-#elif defined(_SC_OPEN_MAX)
++#if defined(_SC_OPEN_MAX)
+ 	return sysconf(_SC_OPEN_MAX);
+ #elif defined(OPEN_MAX)
+ 	return OPEN_MAX;
+
+That is, does sysconf actually work on such a system (or does it need a
+similar run-time fallback)? And either way, we should try falling back
+to OPEN_MAX rather than 1 if we have it.
+
+As far as the warning, I am not sure I see a point. The user does not
+have any useful recourse, and git should continue to operate as normal.
+Having every single git invocation print "by the way, RLIMIT_NOFILE does
+not work on your system" seems like it would get annoying.
+
+-Peff
