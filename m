@@ -1,121 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: RLIMIT_NOFILE fallback
-Date: Wed, 18 Dec 2013 11:50:24 -0800
-Message-ID: <xmqq61qmhrb3.fsf@gitster.dls.corp.google.com>
-References: <20131218171446.GA19657@kitenet.net>
-	<xmqqy53ihwe4.fsf@gitster.dls.corp.google.com>
-	<20131218191702.GA9083@sigill.intra.peff.net>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: I have end-of-lifed cvsps
+Date: Wed, 18 Dec 2013 19:54:51 +0000
+Message-ID: <20131218195450.GK3163@serenity.lan>
+References: <CACPiFC+bopf32cgDcQcVpL5vW=3KxmSP8Oh1see4KduQ1BNcPw@mail.gmail.com>
+ <52B02DFF.5010408@gmail.com>
+ <20131217140746.GB15010@thyrsus.com>
+ <CANQwDwe8AcbCYG5GZcY1tn9BN0x5KWux_CNQY2OWG+qZJ5rS4Q@mail.gmail.com>
+ <20131217210255.GA18217@thyrsus.com>
+ <CANQwDwdQZGhR=hhFHe7wRAeNej_F5fHspN7+f-LiJu06utwC-w@mail.gmail.com>
+ <20131218002122.GA20152@thyrsus.com>
+ <CANQwDwdgZUWcgyZCWoDni+e9jgQ+8j0Yn_HMxiMn5OHzsRzjwQ@mail.gmail.com>
+ <20131218162710.GA3573@thyrsus.com>
+ <CACPiFC+W-RiO-YL=Wgs7YzV=z-p97ehfA+64j5F2KbayPAQm8w@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Joey Hess <joey@kitenet.net>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Dec 18 20:50:37 2013
+Cc: Eric Raymond <esr@thyrsus.com>,
+	Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Martin Langhoff <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 18 20:55:09 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VtN8e-0005co-0T
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Dec 2013 20:50:36 +0100
+	id 1VtND2-0002D9-BH
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Dec 2013 20:55:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752098Ab3LRTub (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Dec 2013 14:50:31 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39847 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751405Ab3LRTu3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Dec 2013 14:50:29 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 098CD5A262;
-	Wed, 18 Dec 2013 14:50:29 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=R/xfxj0LHGApcICfi21YwQn/10Q=; b=YggaX9
-	lRbwbvdqckuI4v4+AGAOhsTiDkJFLwuHKyqj+lzrZwDLQvCwymbMIhPIkO0oXPqW
-	0tFHcS2OlVQlmoRLoUJk6edD9uwYH7H5WFCdSyCnXszRTHv7fDJpqEKNU1NWeYZu
-	Yg4wbM4oTqLAsQFEfheXZGG57k7IHZz4C12qE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Dsi5yrDx5ZcpgRMLC0oGr92eFWjraTV2
-	W0/il77pM9+jH59eUQojTKynJjKc64fz/zvpyI896kE3xc8Ovnu6e/QW6gccKUEA
-	wqjsV2vsWYVOGgKsWOmsWLVJ0FN0Lqzn0c+k3m8Ma9860Xhk/qGwhJgUuprhl6Fq
-	QtSEnwEdotg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EAAA85A261;
-	Wed, 18 Dec 2013 14:50:28 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	id S1751008Ab3LRTzB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Dec 2013 14:55:01 -0500
+Received: from jackal.aluminati.org ([72.9.247.210]:35986 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750898Ab3LRTzA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Dec 2013 14:55:00 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id B6182CDA5B5;
+	Wed, 18 Dec 2013 19:54:59 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -0.999
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.999 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, URIBL_BLOCKED=0.001] autolearn=disabled
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 2SMIei-MlJwU; Wed, 18 Dec 2013 19:54:59 +0000 (GMT)
+Received: from serenity.lan (mink.aluminati.org [10.0.7.180])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 11FBC5A25D;
-	Wed, 18 Dec 2013 14:50:27 -0500 (EST)
-In-Reply-To: <20131218191702.GA9083@sigill.intra.peff.net> (Jeff King's
-	message of "Wed, 18 Dec 2013 14:17:02 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: A4E15AA0-681D-11E3-B1C3-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	by jackal.aluminati.org (Postfix) with ESMTPSA id 6A139CDA55E;
+	Wed, 18 Dec 2013 19:54:52 +0000 (GMT)
+Content-Disposition: inline
+In-Reply-To: <CACPiFC+W-RiO-YL=Wgs7YzV=z-p97ehfA+64j5F2KbayPAQm8w@mail.gmail.com>
+User-Agent: Mutt/1.5.22 (2013-10-16)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239473>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239474>
 
-Jeff King <peff@peff.net> writes:
+On Wed, Dec 18, 2013 at 11:53:47AM -0500, Martin Langhoff wrote:
+> On Wed, Dec 18, 2013 at 11:27 AM, Eric S. Raymond <esr@thyrsus.com> wrote:
+> >> Anyway I hope that incremental CVS import would be needed less
+> >> and less as CVS is replaced by any more modern version control system.
+> >
+> > I agree.  I have never understood why people on this list are attached to it.
+> 
+> I think I have answered this question already once in this thread, and
+> a few times in similar threads with Eric in the past.
+> 
+> People track CVS repos that they have not control over. Smart
+> programmers forced to work with a corporate CVS repo. It happens also
+> with SVN, and witness the popularity of git-svn which can sanely
+> interact with an "active" svn repo.
+> 
+> This is a valid use case. Hard (impossible?) to support. But there
+> should be no surprise as to its reasons.
 
-> That is, does sysconf actually work on such a system (or does it need a
-> similar run-time fallback)? And either way, we should try falling back
-> to OPEN_MAX rather than 1 if we have it.
+And at this point the git-cvsimport manpage says:
 
-Interesting.
+   WARNING: git cvsimport uses cvsps version 2, which is considered
+   deprecated; it does not work with cvsps version 3 and later. If you
+   are performing a one-shot import of a CVS repository consider using
+   cvs2git[1] or parsecvs[2].
 
-> As far as the warning, I am not sure I see a point. The user does not
-> have any useful recourse, and git should continue to operate as normal.
-> Having every single git invocation print "by the way, RLIMIT_NOFILE does
-> not work on your system" seems like it would get annoying.
-
-Very true.  That makes the resulting function look like this:
-
--------------------------------- 8< ------------------------------
-
-static unsigned int get_max_fd_limit(void)
-{
-#ifdef RLIMIT_NOFILE
-	struct rlimit lim;
-
-	if (!getrlimit(RLIMIT_NOFILE, &lim))
-		return lim.rlim_cur;
-#endif
-
-#if defined(_SC_OPEN_MAX)
-	{
-		long sc_open_max = sysconf(_SC_OPEN_MAX);
-		if (0 < sc_open_max)
-			return sc_open_max;
-	}
-
-#if defined(OPEN_MAX)
-	return OPEN_MAX;
-#else
-	return 1; /* see the caller ;-) */
-#endif
-}
-
--------------------------------- >8 ------------------------------
-
-But the sysconf part makes me wonder; here is what we see in
-http://pubs.opengroup.org/onlinepubs/9699919799/functions/sysconf.html
-
-    If name is an invalid value, sysconf() shall return -1 and set errno
-    to indicate the error. If the variable corresponding to name is
-    described in <limits.h> as a maximum or minimum value and the
-    variable has no limit, sysconf() shall return -1 without changing
-    the value of errno. Note that indefinite limits do not imply
-    infinite limits; see <limits.h>.
-
-For a broken system (like RLIMIT_NOFILE defined for the compiler,
-but the actual call returns a bogus error), the compiler may see the
-_SC_OPEN_MAX defined, while sysconf() may say "I've never heard of
-such a name" and return -1, or the system, whether broken or not,
-may want to say "Unlimited" and return -1.  The caller takes
-anything unreasonable as a positive value capped to 25 or something,
-so there isn't a real harm if we returned a bogus value from here,
-but I am not sure what the safe default behaviour of this function
-should be to help such a broken system while not harming systems
-that are functioning correctly.
+Which I think sums up the position nicely; if you're doing a one-shot
+import then the standalone tools are going to be a better choice, but if
+you're trying to use Git for your work on top of CVS the only choice is
+cvsps with git-cvsimport.
