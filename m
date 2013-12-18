@@ -1,7 +1,8 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: incremental fast-import and marks (Re: I have end-of-lifed cvsps)
-Date: Wed, 18 Dec 2013 08:23:34 -0800
-Message-ID: <20131218162239.GA26668@google.com>
+From: "Eric S. Raymond" <esr@thyrsus.com>
+Subject: Re: I have end-of-lifed cvsps
+Date: Wed, 18 Dec 2013 11:27:10 -0500
+Organization: Eric Conspiracy Secret Labs
+Message-ID: <20131218162710.GA3573@thyrsus.com>
 References: <CACPiFCK+Z7dOfO2v29PMKz+Y_fH1++xqMuTquSQ84d8KyjjFeQ@mail.gmail.com>
  <20131212042624.GB8909@thyrsus.com>
  <CACPiFC+bopf32cgDcQcVpL5vW=3KxmSP8Oh1see4KduQ1BNcPw@mail.gmail.com>
@@ -12,65 +13,116 @@ References: <CACPiFCK+Z7dOfO2v29PMKz+Y_fH1++xqMuTquSQ84d8KyjjFeQ@mail.gmail.com>
  <CANQwDwdQZGhR=hhFHe7wRAeNej_F5fHspN7+f-LiJu06utwC-w@mail.gmail.com>
  <20131218002122.GA20152@thyrsus.com>
  <CANQwDwdgZUWcgyZCWoDni+e9jgQ+8j0Yn_HMxiMn5OHzsRzjwQ@mail.gmail.com>
+Reply-To: esr@thyrsus.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Eric Raymond <esr@thyrsus.com>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Martin Langhoff <martin.langhoff@gmail.com>,
 	Git Mailing List <git@vger.kernel.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 18 17:23:50 2013
+To: Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 18 17:27:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VtJuW-0004O9-3i
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Dec 2013 17:23:48 +0100
+	id 1VtJxs-00007n-6i
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Dec 2013 17:27:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754754Ab3LRQXo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Dec 2013 11:23:44 -0500
-Received: from mail-yh0-f42.google.com ([209.85.213.42]:40355 "EHLO
-	mail-yh0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754713Ab3LRQXn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Dec 2013 11:23:43 -0500
-Received: by mail-yh0-f42.google.com with SMTP id z6so5391086yhz.15
-        for <git@vger.kernel.org>; Wed, 18 Dec 2013 08:23:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=i8wxVypVK6ysVhYR56V/0Hq2IovSSB8T4wKZ00Ncdfk=;
-        b=FzR2D/CN2V9kFY6OcorACaaePN+YDnye4+9Hso7FZrUjczlWG2SN5nkOVcwsp77v6q
-         hkt6Y8U7/d53vuFcMxuVeDnR+zWeuPX1uG+L4nz5FkRvNNq5OyTlWeDGCurRGRJlk6vx
-         ke0BlbmWxNOLSNbwc7kS4gcDBfpPSakNxUzgQoU9J8i/s6M9OJVbLVn7Y1/a00vMc6VZ
-         nzHIFmmf7EkY4UmYXi44pNG8B9jXgPSQvi+IYx+auXnhwQ8XtuV+YEPsourzpUL2SOyG
-         2maihhh3ntEAK05axCiD6KXU9ygdZ5qRy7GXan50OAKb0HsiIVdyWT8bQ+f8Fh0OUHSc
-         NVgg==
-X-Received: by 10.236.28.162 with SMTP id g22mr23228222yha.52.1387383822602;
-        Wed, 18 Dec 2013 08:23:42 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id r98sm956482yhp.3.2013.12.18.08.23.40
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 18 Dec 2013 08:23:41 -0800 (PST)
+	id S1753243Ab3LRQ1M convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 18 Dec 2013 11:27:12 -0500
+Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:44900
+	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751896Ab3LRQ1M (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Dec 2013 11:27:12 -0500
+Received: by snark.thyrsus.com (Postfix, from userid 1000)
+	id 457FE380488; Wed, 18 Dec 2013 11:27:10 -0500 (EST)
 Content-Disposition: inline
 In-Reply-To: <CANQwDwdgZUWcgyZCWoDni+e9jgQ+8j0Yn_HMxiMn5OHzsRzjwQ@mail.gmail.com>
+X-Eric-Conspiracy: There is no conspiracy
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239453>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239454>
 
-Jakub Narebski wrote:
+Jakub Nar=C4=99bski <jnareb@gmail.com>:
+> It is a bit strange that markfile has explicitly SHA-1 (":markid <SHA=
+-1>"),
+> instead of generic reference to commit, in the case of CVS it would b=
+e
+> commitid (what to do for older repositories, though?), in case of Baz=
+aar
+> its revision id (GUID), etc.  Can we assume that SCM v1 fast-export a=
+nd
+> SCM v2 fast-import markfile uses compatibile commit names in markfile=
+?
 
-> It is a bit strange that markfile has explicitly SHA-1 (":markid <SHA-1>"),
-> instead of generic reference to commit, in the case of CVS it would be
-> commitid (what to do for older repositories, though?), in case of Bazaar
-> its revision id (GUID), etc.
+=46or use in reposurgeon I have defined a generic cross-VCS reference t=
+o
+commit I call an "action stamp"; it consists of an RFC3339 date followe=
+d by=20
+a committer email address. Here's an example:
 
-Usually importers use at least two separate files to save state, one
-mapping between git object names and mark numbers, and the other mapping
-between native revision identifiers and mark numbers.  That way,
-when the importer uses marks to refer to previously imported commits or
-blobs, fast-import knows what commits or blobs it is talking about.
+	 2013-02-06T09:35:10Z!esr@thyrsus.com
+
+In any VCS with changesets (git, Subversion, bzr, Mercurial) this
+almost always suffices to uniquely identify a commit. The "almost" is
+because in these systems it is possible for a user to do multiple commi=
+ts
+in the same second.
+
+And now you know why I wish git had subsecond timestamp resolution!  If=
+ it
+did, uniqueness of these in a git stream could be guaranteed.
+
+The implied model completely breaks for CVS, of course.  There you have=
+ to=20
+use commitids and plain give up when those don't exist.
+=20
+> I think it would be possible for remote-helper for cvs-fast-export to=
+ find
+> this cutoff date automatically (perhaps with some safety margin), for
+> fetching (incremental import).
+
+Yes.
+=20
+> > As I tried to explain previously in my response to John Herland, it=
+'s
+> > incremental output only.  There is *no* CVS exporter known to me, o=
+r
+> > him, that supports incremental work.  That would be at best be impr=
+actically
+> > difficult; given CVS's limitations it may be actually impossible. I=
+ wouldn't
+> > bet against impossible.
+>=20
+> Even with saving (or re-calculating from git import) guesses about CV=
+S
+> history made so far?
+
+Even with that.  cvsps-2.x tried to do something like this.  It was a l=
+ose.
+=20
+> Anyway I hope that incremental CVS import would be needed less
+> and less as CVS is replaced by any more modern version control system=
+=2E
+
+I agree.  I have never understood why people on this list are attached =
+to it.
+
+> I was thinking about creating remote-helper for cvs-fast-export, so t=
+hat
+> git can use local CVS repository as "remote", using e.g. "cvsroot::<p=
+ath>"
+> as repo URL, and using this mechanism for incremental import (aka fet=
+ch).
+> (Or even "cvssync::<URL>" for automatic cvssync + cvs-fast-export).
+>=20
+> But from what I understand this is not as easy as it seems, even with
+> remote-helper API having support for fast-import stream.
+
+It's a swamp I wouldn't want to walk into.
+--=20
+		<a href=3D"http://www.catb.org/~esr/">Eric S. Raymond</a>
