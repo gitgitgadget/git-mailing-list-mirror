@@ -1,92 +1,120 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] docs: add filter-branch note about The BFG
-Date: Tue, 17 Dec 2013 21:57:37 -0800
-Message-ID: <xmqqr49ak8fi.fsf@gitster.dls.corp.google.com>
-References: <1387277599-69719-1-git-send-email-roberto.tyley@gmail.com>
-	<xmqqk3f3mjl5.fsf@gitster.dls.corp.google.com>
-	<CAFY1edaEZzDUuG9kopbAp9h2Frc2aLRKkjKMUnpSonML2xZN=A@mail.gmail.com>
+Subject: Re: [PATCH v3] difftool: Change prompt to display the number of files in the diff queue
+Date: Tue, 17 Dec 2013 22:06:19 -0800
+Message-ID: <xmqqmwjyk810.fsf@gitster.dls.corp.google.com>
+References: <1386286726-26653-1-git-send-email-zoltan.klinger@gmail.com>
+	<20131218052523.GB90546@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, jrnieder@gmail.com, Jeff King <peff@peff.net>,
-	tr@thomasrast.ch
-To: Roberto Tyley <roberto.tyley@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 18 06:57:46 2013
+Cc: Zoltan Klinger <zoltan.klinger@gmail.com>, git@vger.kernel.org,
+	sunshine@sunshineco.com
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 18 07:06:29 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VtA8e-0005F2-HF
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Dec 2013 06:57:44 +0100
+	id 1VtAH5-0005St-Bt
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Dec 2013 07:06:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750975Ab3LRF5l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Dec 2013 00:57:41 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47555 "EHLO
+	id S1750988Ab3LRGGW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Dec 2013 01:06:22 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59026 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750817Ab3LRF5k (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Dec 2013 00:57:40 -0500
+	id S1750910Ab3LRGGW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Dec 2013 01:06:22 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 949C351512;
-	Wed, 18 Dec 2013 00:57:39 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9C3235166D;
+	Wed, 18 Dec 2013 01:06:21 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=0XU53nFTGaASnqtJ3EIxHXqi7ug=; b=R/PAkh
-	L1g07ALF2YbFoPwFeOCMOXCfVykblHVvcASjOzwv9bWrY+df2QcDIg/7bqvioD08
-	EK9Dgd0mXyxfwO7BMBpJsloN2OU5rycAemgO39DQKtTxVY8DplYUhk3+Ti24M8Dv
-	IfbiyzFk9SQ5c0/n9uVNnvPGc0cwMTps/Zce8=
+	:content-type; s=sasl; bh=zYlb+AKKK467KODsHSeVeObKuB0=; b=I2/IRY
+	vIsGK/ePJgv9CmQEID9g1Y2uZAI2WPseJTX88eMrpTXZEEvtGDG0x3EQfV2MMfAR
+	U0FMBj0s8G0QUgcp0bz8AyRnAG8Wb2QX0yfJl2TytGPN0HxMyAVDl6lB1QVZuaQu
+	XrO9cfZl2bjEj0r4R5GJNC/5JfGGhlMX53Pnw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=CllBD/WNq0aloOerZrAluxZXUCz7m51I
-	eyqKFBYYcFyH3yqxvZ0++p2B2D5ebKQOGKgsd5/l+06wQ2nqF3zn70QoaD7ra6y6
-	tc0nIzoEHr2FgbbrSeexwBhBUEjbKqw6PL1IcpaJLRSQQdjeQ98lEak2yuaYr+Vq
-	jUrCIVWzj7Y=
+	:content-type; q=dns; s=sasl; b=iXeNiBTuQSkNg4bmE6BQ+LJS80qDbt9C
+	Ekj0Dd3fC8vPr/3M97R+S5oYTVmK9A5fImd7lPV1GQk1SJ2QTQIqOv5vEXRFs96c
+	KR7qemixMArGkTmtq3EvBMFyxHdbqqb2uCyOel9RrYSheBmMvs8KkBIKwpxD5zfZ
+	4Wo5k/xzo/0=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 805EB51511;
-	Wed, 18 Dec 2013 00:57:39 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 894E65166A;
+	Wed, 18 Dec 2013 01:06:21 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CC37D51510;
-	Wed, 18 Dec 2013 00:57:38 -0500 (EST)
-In-Reply-To: <CAFY1edaEZzDUuG9kopbAp9h2Frc2aLRKkjKMUnpSonML2xZN=A@mail.gmail.com>
-	(Roberto Tyley's message of "Wed, 18 Dec 2013 01:04:26 +0000")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D51E551668;
+	Wed, 18 Dec 2013 01:06:20 -0500 (EST)
+In-Reply-To: <20131218052523.GB90546@gmail.com> (David Aguilar's message of
+	"Tue, 17 Dec 2013 21:25:25 -0800")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 4CE4F114-67A9-11E3-BFA5-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 840D6C88-67AA-11E3-A2EF-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239424>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239425>
 
-Roberto Tyley <roberto.tyley@gmail.com> writes:
+David Aguilar <davvid@gmail.com> writes:
 
-> * The BFG takes advantage of multi-core machines, cleaning commit
-> file-trees in parallel, which git-filter-branch currently does not do.
-> * Any particular version of a file is cleaned exactly _once_. The BFG,
-> unlike git-filter-branch, does not give you the opportunity to handle
-> a file differently based on where or when it was committed within your
-> history.
-> * The link:http://rtyley.github.io/bfg-repo-cleaner/#examples[command-set]
-> is much more restrictive than git-filter branch, and dedicated just to
-> the tasks of removing unwanted data - e.g. `--strip-blobs-bigger-than
-> 1M`.
+> Thanks for the patch, and sorry for the late response.
+> I have just a couple of notes below...
+>
+> On Fri, Dec 06, 2013 at 10:38:46AM +1100, Zoltan Klinger wrote:
+>> diff --git a/diff.c b/diff.c
+>> index e34bf97..a7d5a47 100644
+>> --- a/diff.c
+>> +++ b/diff.c
+>> @@ -2899,11 +2899,16 @@ static void run_external_diff(const char *pgm,
+>>  			      struct diff_filespec *one,
+>>  			      struct diff_filespec *two,
+>>  			      const char *xfrm_msg,
+>> -			      int complete_rewrite)
+>> +			      int complete_rewrite,
+>> +			      struct diff_options *o)
+>
+> Very minor nit -- "o" is a very terse variable name.
+> Maybe "opts"?
 
-I do not know offhand if the above formats well with AsciiDoc.  You
-may have to do it like this:
+The diff-options parameter passed around in the callchain has always
+been "o" throughout this file from the beginning of time, though ;-).
 
-* The first line of the bulletted paragraph is
-  followed by the second and subsequent lines indented
-  to align with the first one.
+>
+>>  {
+>>  	const char *spawn_arg[10];
+>>  	int retval;
+>>  	const char **arg = &spawn_arg[0];
+>> +	struct diff_queue_struct *q = &diff_queued_diff;
+>> +	const char *env[3] = { NULL };
+>> +	char env_counter[50];
+>> +	char env_total[50];
+>
+> Hard-coded 50; what's the length of the maximum signed int?
 
-The first bullet point may be somewhat misleading, though.  Nothing
-stops your script you use in filter-branch from processing blobs
-belonging to a single tree in parallel---the user just needs to do a
-bit more work to do so.
+;-) A bit of slack is fine, but 50 might be excessive (more than
+twice as big as necessary).
 
-I think the second point is the most characteristic in BFG (and that
-is what allows easy parallelization of the filtering).  Also, it
-cannot be stressed enough that the "removing unwanted contents" use
-case can take advantage of the "bad contents in a blob is bad, no
-matter where in the tree and when in the history the blob appears".
-That is what makes BFG particularly shine  for the use case. Its
-design very much aligns the objective the use case wants to achieve.
+>> diff --git a/diff.h b/diff.h
+>> index e342325..42bd34c 100644
+>> --- a/diff.h
+>> +++ b/diff.h
+>> @@ -164,6 +164,8 @@ struct diff_options {
+>>  	diff_prefix_fn_t output_prefix;
+>>  	int output_prefix_length;
+>>  	void *output_prefix_data;
+>> +
+>> +	int diff_path_counter;
+>>  };
+>
+> Since these are already "diff_options" it seems redundant to call
+> the struct entry the "diff_path_counter" when "path_count"
+> should be specific enough.  Would it make sense to rename it?
+
+Yeah, makes sense.  diff_options->diff_path_counter++ sounds awful,
+while options->path_count++ looks quite tame and reasonable.
+
+> These are tiny nitpicky style notes; it looks good otherwise.
+
+Thanks.
