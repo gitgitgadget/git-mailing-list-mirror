@@ -1,94 +1,76 @@
-From: Marc Branchaud <marcnarc@xiplink.com>
-Subject: [PATCHv2] gitk: Replace "next" and "prev" buttons with down and up arrows.
-Date: Wed, 18 Dec 2013 11:04:13 -0500
-Message-ID: <1387382653-8385-1-git-send-email-marcnarc@xiplink.com>
-References: <20131008193618.GE9464@google.com>
-Cc: git@vger.kernel.org,
-	"Lucas Sandery [three am design]" <lucas@threeamdesign.com.au>,
-	Paul Mackerras <paulus@samba.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 18 17:03:55 2013
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: incremental fast-import and marks (Re: I have end-of-lifed cvsps)
+Date: Wed, 18 Dec 2013 08:23:34 -0800
+Message-ID: <20131218162239.GA26668@google.com>
+References: <CACPiFCK+Z7dOfO2v29PMKz+Y_fH1++xqMuTquSQ84d8KyjjFeQ@mail.gmail.com>
+ <20131212042624.GB8909@thyrsus.com>
+ <CACPiFC+bopf32cgDcQcVpL5vW=3KxmSP8Oh1see4KduQ1BNcPw@mail.gmail.com>
+ <52B02DFF.5010408@gmail.com>
+ <20131217140746.GB15010@thyrsus.com>
+ <CANQwDwe8AcbCYG5GZcY1tn9BN0x5KWux_CNQY2OWG+qZJ5rS4Q@mail.gmail.com>
+ <20131217210255.GA18217@thyrsus.com>
+ <CANQwDwdQZGhR=hhFHe7wRAeNej_F5fHspN7+f-LiJu06utwC-w@mail.gmail.com>
+ <20131218002122.GA20152@thyrsus.com>
+ <CANQwDwdgZUWcgyZCWoDni+e9jgQ+8j0Yn_HMxiMn5OHzsRzjwQ@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Eric Raymond <esr@thyrsus.com>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 18 17:23:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VtJbE-0006sU-DK
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Dec 2013 17:03:52 +0100
+	id 1VtJuW-0004O9-3i
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Dec 2013 17:23:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754345Ab3LRQDs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Dec 2013 11:03:48 -0500
-Received: from IP-192-252-130-194.static.fibrenoire.ca ([192.252.130.194]:9707
-	"EHLO cubert.xiplink.com" rhost-flags-OK-FAIL-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1754021Ab3LRQDr (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 Dec 2013 11:03:47 -0500
-Received: from xiplink.com (rincewind.xiplink.com [10.10.1.32])
-	by cubert.xiplink.com (Postfix) with ESMTP id E0636600C4;
-	Wed, 18 Dec 2013 11:03:45 -0500 (EST)
-X-Mailer: git-send-email 1.8.5.2.2.g49768e2
-In-Reply-To: <20131008193618.GE9464@google.com>
+	id S1754754Ab3LRQXo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Dec 2013 11:23:44 -0500
+Received: from mail-yh0-f42.google.com ([209.85.213.42]:40355 "EHLO
+	mail-yh0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754713Ab3LRQXn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Dec 2013 11:23:43 -0500
+Received: by mail-yh0-f42.google.com with SMTP id z6so5391086yhz.15
+        for <git@vger.kernel.org>; Wed, 18 Dec 2013 08:23:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=i8wxVypVK6ysVhYR56V/0Hq2IovSSB8T4wKZ00Ncdfk=;
+        b=FzR2D/CN2V9kFY6OcorACaaePN+YDnye4+9Hso7FZrUjczlWG2SN5nkOVcwsp77v6q
+         hkt6Y8U7/d53vuFcMxuVeDnR+zWeuPX1uG+L4nz5FkRvNNq5OyTlWeDGCurRGRJlk6vx
+         ke0BlbmWxNOLSNbwc7kS4gcDBfpPSakNxUzgQoU9J8i/s6M9OJVbLVn7Y1/a00vMc6VZ
+         nzHIFmmf7EkY4UmYXi44pNG8B9jXgPSQvi+IYx+auXnhwQ8XtuV+YEPsourzpUL2SOyG
+         2maihhh3ntEAK05axCiD6KXU9ygdZ5qRy7GXan50OAKb0HsiIVdyWT8bQ+f8Fh0OUHSc
+         NVgg==
+X-Received: by 10.236.28.162 with SMTP id g22mr23228222yha.52.1387383822602;
+        Wed, 18 Dec 2013 08:23:42 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id r98sm956482yhp.3.2013.12.18.08.23.40
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 18 Dec 2013 08:23:41 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <CANQwDwdgZUWcgyZCWoDni+e9jgQ+8j0Yn_HMxiMn5OHzsRzjwQ@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239452>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239453>
 
-Users often find that "next" and "prev" do the opposite of what they
-expect.  For example, "next" moves to the next match down the list, but
-that is almost always backwards in time.  Replacing the text with arrows
-makes it clear where the buttons will take the user.
+Jakub Narebski wrote:
 
-Signed-off-by: Marc Branchaud <marcnarc@xiplink.com>
----
+> It is a bit strange that markfile has explicitly SHA-1 (":markid <SHA-1>"),
+> instead of generic reference to commit, in the case of CVS it would be
+> commitid (what to do for older repositories, though?), in case of Bazaar
+> its revision id (GUID), etc.
 
-Finally got around to drawing some up and down arrows.
-
-		M.
-
- gitk | 30 ++++++++++++++++++++++++++++--
- 1 file changed, 28 insertions(+), 2 deletions(-)
-
-diff --git a/gitk b/gitk
-index 33c3a6c..abd2ef3 100755
---- a/gitk
-+++ b/gitk
-@@ -2263,9 +2263,35 @@ proc makewindow {} {
- 
-     # build up the bottom bar of upper window
-     ${NS}::label .tf.lbar.flabel -text "[mc "Find"] "
--    ${NS}::button .tf.lbar.fnext -text [mc "next"] -command {dofind 1 1}
--    ${NS}::button .tf.lbar.fprev -text [mc "prev"] -command {dofind -1 1}
-+
-+    set bm_down_data {
-+	#define down_width 16
-+	#define down_height 16
-+	static unsigned char down_bits[] = {
-+	0x80, 0x01, 0x80, 0x01, 0x80, 0x01, 0x80, 0x01,
-+	0x80, 0x01, 0x80, 0x01, 0x80, 0x01, 0x80, 0x01,
-+	0x87, 0xe1, 0x8e, 0x71, 0x9c, 0x39, 0xb8, 0x1d,
-+	0xf0, 0x0f, 0xe0, 0x07, 0xc0, 0x03, 0x80, 0x01};
-+    }
-+    image create bitmap bm-down -data $bm_down_data -foreground $uifgcolor
-+    ${NS}::button .tf.lbar.fnext -width 26 -command {dofind 1 1}
-+    .tf.lbar.fnext configure -image bm-down
-+
-+    set bm_up_data {
-+	#define up_width 16
-+	#define up_height 16
-+	static unsigned char up_bits[] = {
-+	0x80, 0x01, 0xc0, 0x03, 0xe0, 0x07, 0xf0, 0x0f,
-+	0xb8, 0x1d, 0x9c, 0x39, 0x8e, 0x71, 0x87, 0xe1,
-+	0x80, 0x01, 0x80, 0x01, 0x80, 0x01, 0x80, 0x01,
-+	0x80, 0x01, 0x80, 0x01, 0x80, 0x01, 0x80, 0x01};
-+    }
-+    image create bitmap bm-up -data $bm_up_data -foreground $uifgcolor
-+    ${NS}::button .tf.lbar.fprev -width 26 -command {dofind -1 1}
-+    .tf.lbar.fprev configure -image bm-up
-+
-     ${NS}::label .tf.lbar.flab2 -text " [mc "commit"] "
-+
-     pack .tf.lbar.flabel .tf.lbar.fnext .tf.lbar.fprev .tf.lbar.flab2 \
- 	-side left -fill y
-     set gdttype [mc "containing:"]
--- 
-1.8.5.2.2.g49768e2
+Usually importers use at least two separate files to save state, one
+mapping between git object names and mark numbers, and the other mapping
+between native revision identifiers and mark numbers.  That way,
+when the importer uses marks to refer to previously imported commits or
+blobs, fast-import knows what commits or blobs it is talking about.
