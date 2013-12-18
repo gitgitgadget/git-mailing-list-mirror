@@ -1,182 +1,107 @@
 From: Tom Miller <jackerran@gmail.com>
-Subject: [PATCH 1/3] builtin/fetch.c: Add pretty_url() and print_url()
-Date: Wed, 18 Dec 2013 15:22:54 -0600
-Message-ID: <1387401776-30994-1-git-send-email-jackerran@gmail.com>
+Subject: [PATCH 2/3] fetch --prune: Always print header url
+Date: Wed, 18 Dec 2013 15:22:55 -0600
+Message-ID: <1387401776-30994-2-git-send-email-jackerran@gmail.com>
+References: <1387401776-30994-1-git-send-email-jackerran@gmail.com>
 Cc: Tom Miller <jackerran@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 18 22:23:30 2013
+X-From: git-owner@vger.kernel.org Wed Dec 18 22:23:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VtOaX-0005U0-Oy
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Dec 2013 22:23:30 +0100
+	id 1VtOaY-0005U0-SQ
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Dec 2013 22:23:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755123Ab3LRVXN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Dec 2013 16:23:13 -0500
-Received: from mail-qc0-f173.google.com ([209.85.216.173]:57913 "EHLO
+	id S1755133Ab3LRVXS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Dec 2013 16:23:18 -0500
+Received: from mail-qc0-f173.google.com ([209.85.216.173]:52106 "EHLO
 	mail-qc0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755020Ab3LRVXL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Dec 2013 16:23:11 -0500
-Received: by mail-qc0-f173.google.com with SMTP id m20so204627qcx.18
-        for <git@vger.kernel.org>; Wed, 18 Dec 2013 13:23:10 -0800 (PST)
+	with ESMTP id S1754751Ab3LRVXO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Dec 2013 16:23:14 -0500
+Received: by mail-qc0-f173.google.com with SMTP id m20so208340qcx.32
+        for <git@vger.kernel.org>; Wed, 18 Dec 2013 13:23:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=UGj4rnVTaY2ZZw7rKxhZku4mw4tcREOSbTz3VhhhotY=;
-        b=YKjnvlaJQJRoU4sqCXA9K+dMhaGjAHOkQFkV/TN/XM36RQ5VMSlzVL308pxMi6sKo1
-         rGvg4tAeqInwtBSH4v8/VwvMkWEnvDNjaXoQjXj0ixeUOwANm3IVYXBUn0eeP5V64ey2
-         yVL5UgQdUQSLvDqbgmcne3sttXrj7q0DthHNwgQ0IiT4xidDMVWKwMrqacAN/xpIle3t
-         IMOWykj0GqR+jUcgBq87k/Dccdjaj/89F6ufnpODbN74xWwcun7T5Y1t+ilKSxBVyDQ7
-         n9BOkekYEY1NrrxG3FLWk5Lac9eigI48xH0SGuj2K81C1nkHiS0M/JQsLeIpSDo/xjZA
-         p9tQ==
-X-Received: by 10.224.121.140 with SMTP id h12mr6719614qar.41.1387401789175;
-        Wed, 18 Dec 2013 13:23:09 -0800 (PST)
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=2juRABj9na88iH8S4ugYXIevjNoxpxKKrbY+X4lkU8M=;
+        b=PSM1nbKSTwlX7xTHNCU5Jr4wgmR9dspqsQFO9zRwDGEq4v5oU1LyAfLzPJ61OXI4O8
+         voXv/KgsiA7n4+nOLPpxoPoOdIFRL0PYhTBE/oQu89EQT1M4QzgFdiKvmtfS6qmynTq7
+         6Vend4QuNgLShqIJp6V4JYDQFHPdV6SouOgFwtMd5GdtVtlt/vY03VfLbPkkZ7S36n6r
+         o9gnkO44xM3ODmQOSInJMamshBhvqBn2Uog4iQXdZh9EfJWCtRX6fxogAIr/C/jtQYZQ
+         KKkzZ0+xGWnJSlaxPZplQS54qv9vh6ioYYPKLq1ZKU3CL9yv1GEVNNIpQbfuOBdq/KX+
+         MEoQ==
+X-Received: by 10.49.76.66 with SMTP id i2mr57683435qew.35.1387401793413;
+        Wed, 18 Dec 2013 13:23:13 -0800 (PST)
 Received: from localhost.localdomain (24-197-19-70.static.leds.al.charter.com. [24.197.19.70])
-        by mx.google.com with ESMTPSA id 4sm3512957qak.11.2013.12.18.13.23.08
+        by mx.google.com with ESMTPSA id 4sm3512957qak.11.2013.12.18.13.23.12
         for <multiple recipients>
         (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Wed, 18 Dec 2013 13:23:08 -0800 (PST)
+        Wed, 18 Dec 2013 13:23:13 -0800 (PST)
 X-Mailer: git-send-email 1.8.5.1.163.gd7aced9
+In-Reply-To: <1387401776-30994-1-git-send-email-jackerran@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239486>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239487>
 
-In order to fix branchname DF conflicts during `fetch --prune`, the way
-the header is output to the screen needs to be refactored. Here is an
-exmaple of the output with the line in question denoted by '>':
+If fetch --prune is run with no new refs to fetch, but it has refs
+to prune. Then, the header url is not printed as it would if there were
+new refs to fetch. the following is example output showing this
+behavior:
 
-	$ git fetch --prune --dry-run upstream
->	From https://github.com/git/git
-	   a155a5f..5512ac5  maint      -> upstream/maint
-	   d7aced9..7794a68  master     -> upstream/master
-	   523f7c4..3e57c29  next       -> upstream/next
-	 + 462f102...0937cdf pu         -> upstream/pu  (forced update)
-	   e24105a..5d352bc  todo       -> upstream/todo
-	 * [new tag]         v1.8.5.2   -> v1.8.5.2
-	 * [new tag]         v1.8.5.2   -> v1.8.5.2
+$ git fetch --prune --dry-run origin
+ x [deleted]         (none)     -> origin/world
 
-pretty_url():
-This function when passed a transport url will anonymize the transport
-of the url. It will strip a trailing '/'. It will also strip a trailing
-'.git'. It will return the newly formated url for use. I do not believe
-there is a need for stripping the trailing '/' and '.git' from a url,
-but it was already there and I wanted to make as little changes as
-possible.
+After this patch the output of fetch --prune should look like this:
 
-print_url():
-This function will convert a transport url to a pretty url using
-pretty_url(). Then it will print out the pretty url to stderr as
-indicated above in the example output. It uses a global variable
-named "gshown_url' to prevent this header for being printed twice.
+$ git fetch --prune --dry-run origin
+From https://github.com/git/git
+ x [deleted]         (none)     -> origin/test
 
 Signed-off-by: Tom Miller <jackerran@gmail.com>
 ---
- builtin/fetch.c | 60 ++++++++++++++++++++++++++++++++++++++++-----------------
- 1 file changed, 42 insertions(+), 18 deletions(-)
+ builtin/fetch.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
 diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 3d978eb..b3145f6 100644
+index b3145f6..e50b697 100644
 --- a/builtin/fetch.c
 +++ b/builtin/fetch.c
-@@ -44,6 +44,42 @@ static struct transport *gtransport;
- static struct transport *gsecondary;
- static const char *submodule_prefix = "";
- static const char *recurse_submodules_default;
-+static int gshown_url = 0;
-+
-+static char *pretty_url(const char *raw_url) {
-+	if (raw_url) {
-+		int url_len, i;
-+		char *pretty_url, *url;
-+
-+		url = transport_anonymize_url(raw_url);
-+
-+		url_len = strlen(url);
-+		for (i = url_len - 1; url[i] == '/' && 0 <= i; i--)
-+			;
-+		url_len = i + 1;
-+		if (4 < i && !strncmp(".git", url + i - 3, 4))
-+			url_len = i - 3;
-+
-+		pretty_url = xcalloc(1, 1 + url_len);
-+		memcpy(pretty_url, url, url_len);
-+
-+		free(url);
-+		return pretty_url;
-+	}
-+	return xstrdup("foreign");
-+}
-+
-+static void print_url(const char *raw_url) {
-+	if (!gshown_url) {
-+		char *url = pretty_url(raw_url);
-+
-+		fprintf(stderr, _("From %s\n"), url);
-+
-+		gshown_url = 1;
-+		free(url);
-+	}
-+}
-+
+@@ -732,7 +732,8 @@ static int fetch_refs(struct transport *transport, struct ref *ref_map)
+ 	return ret;
+ }
  
- static int option_parse_recurse_submodules(const struct option *opt,
- 				   const char *arg, int unset)
-@@ -535,7 +571,7 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
+-static int prune_refs(struct refspec *refs, int ref_count, struct ref *ref_map)
++static int prune_refs(struct refspec *refs, int ref_count, struct ref *ref_map,
++			const char *raw_url)
  {
- 	FILE *fp;
- 	struct commit *commit;
--	int url_len, i, shown_url = 0, rc = 0;
-+	int url_len, i, rc = 0;
- 	struct strbuf note = STRBUF_INIT;
- 	const char *what, *kind;
- 	struct ref *rm;
-@@ -546,10 +582,8 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
- 	if (!fp)
- 		return error(_("cannot open %s: %s\n"), filename, strerror(errno));
- 
--	if (raw_url)
--		url = transport_anonymize_url(raw_url);
--	else
--		url = xstrdup("foreign");
-+	url = pretty_url(raw_url);
-+	url_len = strlen(url);
- 
- 	rm = ref_map;
- 	if (check_everything_connected(iterate_ref_map, 0, &rm)) {
-@@ -606,13 +640,6 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
- 				what = rm->name;
- 			}
- 
--			url_len = strlen(url);
--			for (i = url_len - 1; url[i] == '/' && 0 <= i; i--)
--				;
--			url_len = i + 1;
--			if (4 < i && !strncmp(".git", url + i - 3, 4))
--				url_len = i - 3;
--
- 			strbuf_reset(&note);
- 			if (*what) {
- 				if (*kind)
-@@ -651,13 +678,10 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
- 					    REFCOL_WIDTH,
- 					    *what ? what : "HEAD");
- 			if (note.len) {
--				if (verbosity >= 0 && !shown_url) {
--					fprintf(stderr, _("From %.*s\n"),
--							url_len, url);
--					shown_url = 1;
--				}
--				if (verbosity >= 0)
-+				if (verbosity >= 0) {
-+					print_url(raw_url);
- 					fprintf(stderr, " %s\n", note.buf);
-+				}
- 			}
+ 	int result = 0;
+ 	struct ref *ref, *stale_refs = get_stale_heads(refs, ref_count, ref_map);
+@@ -744,6 +745,7 @@ static int prune_refs(struct refspec *refs, int ref_count, struct ref *ref_map)
+ 		if (!dry_run)
+ 			result |= delete_ref(ref->name, NULL, 0);
+ 		if (verbosity >= 0) {
++			print_url(raw_url);
+ 			fprintf(stderr, " x %-*s %-*s -> %s\n",
+ 				TRANSPORT_SUMMARY(_("[deleted]")),
+ 				REFCOL_WIDTH, _("(none)"), prettify_refname(ref->name));
+@@ -878,11 +880,12 @@ static int do_fetch(struct transport *transport,
+ 		 * don't care whether --tags was specified.
+ 		 */
+ 		if (ref_count) {
+-			prune_refs(refs, ref_count, ref_map);
++			prune_refs(refs, ref_count, ref_map, transport->url);
+ 		} else {
+ 			prune_refs(transport->remote->fetch,
+ 				   transport->remote->fetch_refspec_nr,
+-				   ref_map);
++				   ref_map,
++				   transport->url);
  		}
  	}
+ 	free_refs(ref_map);
 -- 
 1.8.5.1.163.gd7aced9
