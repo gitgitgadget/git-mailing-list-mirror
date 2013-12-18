@@ -1,127 +1,127 @@
-From: fREW Schmidt <frioux@gmail.com>
-Subject: Bug when moving submodules (I think?)
-Date: Wed, 18 Dec 2013 17:32:05 -0600
-Message-ID: <20131218233146.GR17291@wanderlust>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: I have end-of-lifed cvsps
+Date: Thu, 19 Dec 2013 00:44:29 +0100
+Message-ID: <52B2335D.2030607@alum.mit.edu>
+References: <20131212001738.996EB38055C@snark.thyrsus.com> <CACPiFCK+Z7dOfO2v29PMKz+Y_fH1++xqMuTquSQ84d8KyjjFeQ@mail.gmail.com> <20131212042624.GB8909@thyrsus.com> <CACPiFC+bopf32cgDcQcVpL5vW=3KxmSP8Oh1see4KduQ1BNcPw@mail.gmail.com> <52B02DFF.5010408@gmail.com> <CALKQrgf3kuXRpbWmSp_nk8+zDFYNzkgV+dSBHaBbmUkxqjaDUA@mail.gmail.com> <20131217145809.GC15010@thyrsus.com> <CALKQrgeegcsO7YVqEmQxD4=HfR4eitodAov0tEh7MRvBxtRKUA@mail.gmail.com> <20131217184724.GA17709@thyrsus.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="53TzBEXPl5+8hjUY"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 19 00:32:35 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Johan Herland <johan@herland.net>,
+	=?UTF-8?B?SmFrdWIgTmFyxJlic2tp?= <jnareb@gmail.com>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: esr@thyrsus.com
+X-From: git-owner@vger.kernel.org Thu Dec 19 00:44:41 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VtQbS-0005oN-CA
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Dec 2013 00:32:34 +0100
+	id 1VtQnA-0001Na-Ke
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Dec 2013 00:44:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751848Ab3LRXcK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Dec 2013 18:32:10 -0500
-Received: from mail-oa0-f52.google.com ([209.85.219.52]:37532 "EHLO
-	mail-oa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751356Ab3LRXcI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Dec 2013 18:32:08 -0500
-Received: by mail-oa0-f52.google.com with SMTP id h16so419431oag.39
-        for <git@vger.kernel.org>; Wed, 18 Dec 2013 15:32:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:subject:message-id:mime-version:content-type
-         :content-disposition:user-agent;
-        bh=YK1HB9qGPofMdQ+ysl3/OAB9WveWEvb2QQldN7wSoqU=;
-        b=YIOkweotwxDs4Tx6i/Wynm12IjfiXKocxEpn1PY9I6Dv5dY+yDysPzlbPMcNkuqjBZ
-         AKloX9HBc9NaG1xi1XUR0rGjCzMK3sksxvXWagFSaXiADKS3Mtg2oU5YHR2kNjXyjOrx
-         k/39SsOvCqCw02+1M95eUt58c9UrPmN8BdSyBErHx6CwXYLfHSWDWGHY1wz2iLyiuzC+
-         UgMOOtID76FWlZn7zJB3qIMRXtUOfFLmJ48ZTB78G28zpbe93wruHEksufu9F82mXtz+
-         aXbCGf63WU147saIjPSS5OWbZqUbgwaw9j9eA2IY3g6Q7+ttuHp7kp6Gc6S0pCrJeQAQ
-         c6nA==
-X-Received: by 10.60.51.102 with SMTP id j6mr22641408oeo.6.1387409527968;
-        Wed, 18 Dec 2013 15:32:07 -0800 (PST)
-Received: from localhost (24-182-106-91.dhcp.ftwo.tx.charter.com. [24.182.106.91])
-        by mx.google.com with ESMTPSA id fz6sm2287451obb.3.2013.12.18.15.32.05
-        for <git@vger.kernel.org>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 18 Dec 2013 15:32:06 -0800 (PST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.22 (2013-10-16)
+	id S1751877Ab3LRXog (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Dec 2013 18:44:36 -0500
+Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:63993 "EHLO
+	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751231Ab3LRXof (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 18 Dec 2013 18:44:35 -0500
+X-AuditID: 12074414-b7fb46d000002a4d-a3-52b23362e23d
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 7A.BF.10829.26332B25; Wed, 18 Dec 2013 18:44:34 -0500 (EST)
+Received: from [192.168.69.148] (p57A24A3C.dip0.t-ipconnect.de [87.162.74.60])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id rBINiVLQ019286
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Wed, 18 Dec 2013 18:44:32 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20131005 Icedove/17.0.9
+In-Reply-To: <20131217184724.GA17709@thyrsus.com>
+X-Enigmail-Version: 1.6
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrMKsWRmVeSWpSXmKPExsUixO6iqJtkvCnIYMJ6ZYurW3wsuq50M1ms
+	uDqH2WLe3V1MFhvXmTiweuycdZfd49LL72wey752snh83iQXwBLFbZOUWFIWnJmep2+XwJ2x
+	sP8uU8E7iYpLV54xNjAeFu5i5OSQEDCR+Pd2FxuELSZx4d56MFtI4DKjxJYVSl2MXED2OSaJ
+	GxtfsoAkeAW0JVoOTQIq4uBgEVCV2HIrFiTMJqArsainmQnEFhUIknh06CE7RLmgxMmZT1hA
+	ykUEhCWO9amBjGQWOMMo0btoE9guYQE1iWdPVzFC7LrJLPHp9XZmkASngKHE+xe/GEGaJQTE
+	JXoag0BMZgF1ifXzhEAqmAXkJba/ncM8gVFwFpJtsxCqZiGpWsDIvIpRLjGnNFc3NzEzpzg1
+	Wbc4OTEvL7VI10IvN7NELzWldBMjJNBFdjAeOSl3iFGAg1GJhzfg+cYgIdbEsuLK3EOMkhxM
+	SqK8s402BQnxJeWnVGYkFmfEF5XmpBYfYpTgYFYS4b3CApTjTUmsrEotyodJSXOwKInzflus
+	7ickkJ5YkpqdmlqQWgSTleHgUJLgXQQyVLAoNT21Ii0zpwQhzcTBCTKcS0qkODUvJbUosbQk
+	Ix4Uu/HFwOgFSfEA7Z0I0s5bXJCYCxSFaD3FqMsx78uHb4xCLHn5ealS4rxLQIoEQIoySvPg
+	VsDS2itGcaCPhXkngVTxAFMi3KRXQEuYgJY8X7MOZElJIkJKqoExZseblWoSNgJ6k6wSQ85X
+	K6y8tX2eUXnzaafNZ00U3vjlxr62Z9dTlS3YlLRyHrdz9Cb+l99D1Vb8WLQptN3/ 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239499>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239500>
 
+On 12/17/2013 07:47 PM, Eric S. Raymond wrote:
+> Johan Herland <johan@herland.net>:
+>> However, I fear that you underestimate the number of users that want
+>> to use Git against CVS repos that are orders of magnitude larger (in
+>> both dimensions: #commits and #files) than your example repo.
+> 
+> You may be right. See below...
+> 
+> I'm working with Alan Barret now on trying to convert the NetBSD
+> repositories. They break cvs-fast-export through sheer bulk of
+> metadata, by running the machine out of core.  This is exactly
+> the kind of huge case that you're talking about.
+> 
+> Alan and I are going to take a good hard whack at modifying cvs-fast-export 
+> to make this work. Because there really aren't any feasible alternatives.
+> The analysis code in cvsps was never good enough. cvs2git, being written
+> in Python, would hit the core limit faster than anything written in C.
 
---53TzBEXPl5+8hjUY
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+cvs2git goes to great lengths to store intermediate data to disk and
+keep the working set small and therefore (despite the Python overhead) I
+am confident that it scales better than cvs-fast-export.  My usual test
+repo was gcc:
 
-I tried to make a script to repro this from scratch but ran into other
-issues, which may or may not be a bug.  I'll put that at the end.
+Total CVS Files:             25013
+Total CVS Revisions:        578010
+Total CVS Branches:        1487929
+Total CVS Tags:           11435500
+Total Unique Tags:             814
+Total Unique Branches:         116
+CVS Repos Size in KB:      2074248
+Total SVN Commits:           64501
 
-To repro all you have to do is:=20
+I also regularly converted mozilla (4.2 GB) and emacs (560 MB) for
+testing purposes.  These could all be converted on a 32-bit computer.
 
- git checkout git://github.com/frioux/dotfiles
- git reset --hard 92c85161ceec9e52b0b2d2de893ba11f49c80198
- git mv zsh .zsh
+Other projects that cvs2svn/cvs2git could handle: FreeBSD, Gentoo, KDE,
+GNOME, PostgreSQL.  (Though for KDE, which I think was in the 16 GB
+range, I know that they used a giant machine for the conversion.)
 
-(sha included so this email continues to be valid in the future)
+If you haven't tried cvs2git yet, please start it up somewhere in the
+background.  It might take a while but it should have no trouble with
+your repos, and then you can compare the tools based on experience
+rather than speculation.
 
-You can now see that .git/index.lock has been left behind.  On a
-non-fresh checkout (I'm not sure why my old checkout is special) I get
-the following error:
+> Which matters, because right now the set of people working on CVS lifters
+> begins with me and ends with Michael Rafferty (cvs2git), who seems even
+> less interested in incremental conversion than I am.  Unless somebody
+> comes out of nowhere and wants to own that problem, it's not going
+> to get solved.
 
- git: builtin/mv.c:248: cmd_mv: Assertion `pos >=3D 0' failed.
+A correct incremental converter could be done (as long as the CVS users
+don't literally change history retroactively) but it would be a lot of
+work.  Parsing the CVS files isn't the problem; after all, CVS has to do
+that every time you check out a branch.  The problem is the extra
+bookkeeping that would be needed to keep the overlapping history
+consistent between runs N and N+1 of the tool.  I sketched out what
+would be necessary once and it came out to several solid weeks of work.
 
-I assumed this was just related to moving submodules that are in
-subdirectories, but when I do that from a fresh repo I get a different
-error.
+But the traffic on the cvs2svn/cvs2git mailing list has trailed off
+essentially to zero, so either the software is perfect already (haha) or
+most everybody has already converted.  Therefore I don't invest any
+significant time in that project these days.
 
- mkdir -p test/a test/b
- cd test/a
- git init
- touch a.txt
- git add a.txt
- git ci -m 'initial commit'
- cd ../b
- git init
- mkdir c
- touch c/c.txt
- git submodule add ../a c/a
- git ci -m 'initial commit'
- git mv c d
- git status
+Michael
 
-And the error:
-
- fatal: Could not chdir to '../../../../c/a': No such file or directory
- fatal: 'git status --porcelain' failed in submodule d/a
-
-I am using git v1.8.5.1 built from source on the latest ubuntu.  If
-there is anything else I can do to help repro this please do not
-hesitate to ask.
---=20
-fREW Schmidt
-http://blog.afoolishmanifesto.com
-
---53TzBEXPl5+8hjUY
-Content-Type: application/pgp-signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
-
-iQIcBAABCgAGBQJSsjB0AAoJEG6zMC9zenWC3RcP/j7XsjyPrQfT/zP0vyHVBPO4
-akgYJ/Bfh9GTTfHbwS4CX5dJLs4dBw8/dMy1yhlNEG1QkJf8x2jpGUoWKqLWT5Dh
-TWCzwzK3g9LZqp7kaxE46Xt5/eFoak9HS5ywYo5th63h83Cual/JMP9M+W+z6Fug
-MU7SKBj0n1VDrcIyLGuUbBKVNClDZWb0+2H5MnufR9dyGdzS3eacDczB7porbTsr
-dhgUa58/kBvSSs9qCneydazEFuWb4DlOkziXR8FD8u2dYmAHQK5v7Yf9bKq+9FnE
-ytAjkAO8RZSBXXUx6qzXZdXFUqJ9r3g+Chxk4NHyBy/iENNYo1tdyBIg6WJ8nykW
-pVATefdlYDTamff74Cv/Al2R+kIPXE7iImM04v86+ylCegYr3MQataMR3EFHnFq5
-0o2fdKzwl2N49zjS+OI52qe95fML828VY86PZXXYT9G4wl1sOtVJg7vB+/VouJZC
-ko7HHHT08+alWnecIoR/5rLMgdjqm9aQwlHZpPF/AuUfH0a3yJwTT/5xka96vsGv
-W42IUsLUBkG8jZC9olAUbeQwtssVhLbLm2DsPoZjPgSdMUHe+7XdtJLM+S9o8077
-wayBHOI9cw2XW58a//dIMuFFK8Nb+RUhjFbud2PASN9V8dq8VqXDz3bjje65Lhym
-9d4yo7wztaAqxDcRaacV
-=G5+q
------END PGP SIGNATURE-----
-
---53TzBEXPl5+8hjUY--
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
