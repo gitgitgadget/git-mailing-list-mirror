@@ -1,136 +1,61 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: RLIMIT_NOFILE fallback
-Date: Wed, 18 Dec 2013 12:18:21 -0800
-Message-ID: <xmqqlhzhhq0i.fsf@gitster.dls.corp.google.com>
-References: <20131218171446.GA19657@kitenet.net>
-	<xmqqy53ihwe4.fsf@gitster.dls.corp.google.com>
-	<20131218191702.GA9083@sigill.intra.peff.net>
-	<xmqq61qmhrb3.fsf@gitster.dls.corp.google.com>
+From: "Eric S. Raymond" <esr@thyrsus.com>
+Subject: Re: I have end-of-lifed cvsps
+Date: Wed, 18 Dec 2013 15:20:09 -0500
+Organization: Eric Conspiracy Secret Labs
+Message-ID: <20131218202009.GA4935@thyrsus.com>
+References: <52B02DFF.5010408@gmail.com>
+ <20131217140746.GB15010@thyrsus.com>
+ <CANQwDwe8AcbCYG5GZcY1tn9BN0x5KWux_CNQY2OWG+qZJ5rS4Q@mail.gmail.com>
+ <20131217210255.GA18217@thyrsus.com>
+ <CANQwDwdQZGhR=hhFHe7wRAeNej_F5fHspN7+f-LiJu06utwC-w@mail.gmail.com>
+ <20131218002122.GA20152@thyrsus.com>
+ <CANQwDwdgZUWcgyZCWoDni+e9jgQ+8j0Yn_HMxiMn5OHzsRzjwQ@mail.gmail.com>
+ <20131218162710.GA3573@thyrsus.com>
+ <CACPiFC+W-RiO-YL=Wgs7YzV=z-p97ehfA+64j5F2KbayPAQm8w@mail.gmail.com>
+ <20131218195450.GK3163@serenity.lan>
+Reply-To: esr@thyrsus.com
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Joey Hess <joey@kitenet.net>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Dec 18 21:18:39 2013
+Cc: Martin Langhoff <martin.langhoff@gmail.com>,
+	Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Wed Dec 18 21:20:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VtNZl-0002Pk-4V
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Dec 2013 21:18:37 +0100
+	id 1VtNbP-0004Ib-En
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Dec 2013 21:20:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751463Ab3LRUSd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Dec 2013 15:18:33 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62847 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751223Ab3LRUSc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Dec 2013 15:18:32 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E79E55AB65;
-	Wed, 18 Dec 2013 15:18:31 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=cBBsneDEbN8GEjRH3lAewcSgJWo=; b=mwGB78
-	c2N51ZIw9+xqHHBWspCWb5rsMTYCx10D9NcCjUaLMR6mu8xPRT4aOlcHAbv1ERHU
-	rYBKUB+zG41m5HYAzg0qThyevjMKPQ0lIdKOOu3E0fzAV+aGmXD0eTIqgwbWfe/r
-	OLFI26gdniB8VI8Dzl1xXXtsJpqbsCbyhoBdo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=uy+G5lWKexa5uq2Ik2L5ASmq7PdG1vod
-	EVSjyGY/HWIEAF2lfKgvF90RxmLw4jcWZNN9ntutGrnN+pHth5Pm6+xupuypKPaj
-	HV6Sfx40kGwkpSkTvU0PaPX1nuca0Dduh0HNa/+epffwAurjTKeE8GPHYBySk31F
-	wqJ/DMO3XEQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B452B5AB64;
-	Wed, 18 Dec 2013 15:18:31 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 810215AB61;
-	Wed, 18 Dec 2013 15:18:30 -0500 (EST)
-In-Reply-To: <xmqq61qmhrb3.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Wed, 18 Dec 2013 11:50:24 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 8FB3B818-6821-11E3-BDC6-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751373Ab3LRUUM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Dec 2013 15:20:12 -0500
+Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:46890
+	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751148Ab3LRUUL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Dec 2013 15:20:11 -0500
+Received: by snark.thyrsus.com (Postfix, from userid 1000)
+	id 0DFF2380488; Wed, 18 Dec 2013 15:20:10 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <20131218195450.GK3163@serenity.lan>
+X-Eric-Conspiracy: There is no conspiracy
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239481>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239482>
 
-Junio C Hamano <gitster@pobox.com> writes:
+John Keeping <john@keeping.me.uk>:
+> Which I think sums up the position nicely; if you're doing a one-shot
+> import then the standalone tools are going to be a better choice, but if
+> you're trying to use Git for your work on top of CVS the only choice is
+> cvsps with git-cvsimport.
 
-> Jeff King <peff@peff.net> writes:
->
->> That is, does sysconf actually work on such a system (or does it need a
->> similar run-time fallback)? And either way, we should try falling back
->> to OPEN_MAX rather than 1 if we have it.
->
-> Interesting.
->
->> As far as the warning, I am not sure I see a point. The user does not
->> have any useful recourse, and git should continue to operate as normal.
->> Having every single git invocation print "by the way, RLIMIT_NOFILE does
->> not work on your system" seems like it would get annoying.
->
-> Very true.  That makes the resulting function look like this:
->
->
-> -------------------------------- 8< ------------------------------
->
-> static unsigned int get_max_fd_limit(void)
-> {
-> #ifdef RLIMIT_NOFILE
-> 	struct rlimit lim;
->
-> 	if (!getrlimit(RLIMIT_NOFILE, &lim))
-> 		return lim.rlim_cur;
-> #endif
->
-> #if defined(_SC_OPEN_MAX)
-> 	{
-> 		long sc_open_max = sysconf(_SC_OPEN_MAX);
-> 		if (0 < sc_open_max)
-> 			return sc_open_max;
-> 	}
+Which will trash your history - the bugs in that are worse than the bugs
+in 3.0, which are bad enough that I *terminated* it.
 
-err, here we need
-
-#endif /* defined(_SC_OPEN_MAX) */
-
-to truly implement the structure "try all the available functions,
-and then fall back to OPEN_MAX".
-
-
-
->
-> #if defined(OPEN_MAX)
-> 	return OPEN_MAX;
-> #else
-> 	return 1; /* see the caller ;-) */
-> #endif
-> }
->
-> -------------------------------- >8 ------------------------------
->
->
-> But the sysconf part makes me wonder; here is what we see in
-> http://pubs.opengroup.org/onlinepubs/9699919799/functions/sysconf.html
->
->     If name is an invalid value, sysconf() shall return -1 and set errno
->     to indicate the error. If the variable corresponding to name is
->     described in <limits.h> as a maximum or minimum value and the
->     variable has no limit, sysconf() shall return -1 without changing
->     the value of errno. Note that indefinite limits do not imply
->     infinite limits; see <limits.h>.
->
-> For a broken system (like RLIMIT_NOFILE defined for the compiler,
-> but the actual call returns a bogus error), the compiler may see the
-> _SC_OPEN_MAX defined, while sysconf() may say "I've never heard of
-> such a name" and return -1, or the system, whether broken or not,
-> may want to say "Unlimited" and return -1.  The caller takes
-> anything unreasonable as a positive value capped to 25 or something,
-> so there isn't a real harm if we returned a bogus value from here,
-> but I am not sure what the safe default behaviour of this function
-> should be to help such a broken system while not harming systems
-> that are functioning correctly.
+Lovely....
+-- 
+		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
