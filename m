@@ -1,110 +1,87 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: RLIMIT_NOFILE fallback
-Date: Wed, 18 Dec 2013 14:17:02 -0500
-Message-ID: <20131218191702.GA9083@sigill.intra.peff.net>
-References: <20131218171446.GA19657@kitenet.net>
- <xmqqy53ihwe4.fsf@gitster.dls.corp.google.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: git add -A fails in empty repository since 1.8.5
+Date: Wed, 18 Dec 2013 20:24:35 +0100
+Message-ID: <vpqvbymarnw.fsf@anie.imag.fr>
+References: <CAEcj5uWHpem+5os+3Mc_a42pk6f30i4UiV=LRPdXkoqiy1jQ_w@mail.gmail.com>
+	<CALWbr2wXxSU4qD_Gj5P7aYxB39tEVBa-TDALVepuwZLh+RNU1Q@mail.gmail.com>
+	<CACsJy8DY7eZm7-P=azJF-jEiBKM_QPf_GXG3uzbuw5C1vq1Q5A@mail.gmail.com>
+	<xmqqioumhtvp.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Joey Hess <joey@kitenet.net>, git@vger.kernel.org
+Content-Type: text/plain
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Antoine Pelisse <apelisse@gmail.com>,
+	Thomas Ferris Nicolaisen <tfnico@gmail.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 18 20:17:15 2013
+X-From: git-owner@vger.kernel.org Wed Dec 18 20:24:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VtMcM-0002Z0-0i
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Dec 2013 20:17:14 +0100
+	id 1VtMjn-0002YQ-4y
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Dec 2013 20:24:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755973Ab3LRTRI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Dec 2013 14:17:08 -0500
-Received: from cloud.peff.net ([50.56.180.127]:46818 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755766Ab3LRTRE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Dec 2013 14:17:04 -0500
-Received: (qmail 368 invoked by uid 102); 18 Dec 2013 19:17:04 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 18 Dec 2013 13:17:04 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 18 Dec 2013 14:17:02 -0500
-Content-Disposition: inline
-In-Reply-To: <xmqqy53ihwe4.fsf@gitster.dls.corp.google.com>
+	id S1751256Ab3LRTYv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Dec 2013 14:24:51 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:33493 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750956Ab3LRTYu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Dec 2013 14:24:50 -0500
+Received: from globule.imag.fr (globule.imag.fr [129.88.34.238])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id rBIJOalG018266
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 18 Dec 2013 20:24:36 +0100
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	(authenticated bits=0)
+	by globule.imag.fr (8.13.8/8.13.8) with ESMTP id rBIJOaAs011222
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Wed, 18 Dec 2013 20:24:38 +0100
+In-Reply-To: <xmqqioumhtvp.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Wed, 18 Dec 2013 10:54:50 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 18 Dec 2013 20:24:36 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: rBIJOalG018266
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1387999481.37804@cNp7KjS7++5KjPI1rIw3sg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239470>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239471>
 
-On Wed, Dec 18, 2013 at 10:00:35AM -0800, Junio C Hamano wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Joey Hess <joey@kitenet.net> writes:
-> 
-> > In sha1_file.c, when git is built on linux, it will use 
-> > getrlimit(RLIMIT_NOFILE). I've been deploying git binaries to some
-> > unusual systems, like embedded NAS devices, and it seems some with older
-> > kernels like 2.6.33 fail with "fatal: cannot get RLIMIT_NOFILE: Bad address".
-> >
-> > I could work around this by building git without RLIMIT_NOFILE defined,
-> > but perhaps it would make sense to improve the code to fall back
-> > to one of the other methods for getting the limit, and/or return the
-> > hardcoded 1 as a fallback. This would make git binaries more robust
-> > against old/broken/misconfigured kernels.
-> 
-> Hmph, perhaps you are right.  Like this?
-> 
->  sha1_file.c | 8 ++++++--
->  1 file changed, 6 insertions(+), 2 deletions(-)
-> 
-> diff --git a/sha1_file.c b/sha1_file.c
-> index daacc0c..a3a0014 100644
-> --- a/sha1_file.c
-> +++ b/sha1_file.c
-> @@ -809,8 +809,12 @@ static unsigned int get_max_fd_limit(void)
->  #ifdef RLIMIT_NOFILE
->  	struct rlimit lim;
->  
-> -	if (getrlimit(RLIMIT_NOFILE, &lim))
-> -		die_errno("cannot get RLIMIT_NOFILE");
-> +	if (getrlimit(RLIMIT_NOFILE, &lim)) {
-> +		static int warn_only_once;
-> +		if (!warn_only_once++)
-> +			warning("cannot get RLIMIT_NOFILE: %s", strerror(errno));
-> +		return 1; /* see the caller ;-) */
-> +	}
+> It could be argued that a "git add [<any option>] .", with an
+> explicit "." given by the end-user, that is run in an empty
+> directory may be an error worth reporting.
 
-I wish we understood why getrlimit was failing. Returning EFAULT seems
-like an odd choice if it is not implemented for the system. On such a
-system, do the other fallbacks actually work? Would it work to do:
+But what we have right now is really weird:
 
-diff --git a/sha1_file.c b/sha1_file.c
-index daacc0c..ab38795 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -809,11 +809,11 @@ static unsigned int get_max_fd_limit(void)
- #ifdef RLIMIT_NOFILE
- 	struct rlimit lim;
- 
--	if (getrlimit(RLIMIT_NOFILE, &lim))
--		die_errno("cannot get RLIMIT_NOFILE");
-+	if (!getrlimit(RLIMIT_NOFILE, &lim))
-+		return lim.rlim_cur;
-+#endif
- 
--	return lim.rlim_cur;
--#elif defined(_SC_OPEN_MAX)
-+#if defined(_SC_OPEN_MAX)
- 	return sysconf(_SC_OPEN_MAX);
- #elif defined(OPEN_MAX)
- 	return OPEN_MAX;
+# setup repo with one empty dir:
+$ rm -fr test
+$ git init test
+Initialized empty Git repository in /tmp/test/.git/
+$ cd test
+$ mkdir foo
 
-That is, does sysconf actually work on such a system (or does it need a
-similar run-time fallback)? And either way, we should try falling back
-to OPEN_MAX rather than 1 if we have it.
+$ git add .
+fatal: pathspec '.' did not match any files
 
-As far as the warning, I am not sure I see a point. The user does not
-have any useful recourse, and git should continue to operate as normal.
-Having every single git invocation print "by the way, RLIMIT_NOFILE does
-not work on your system" seems like it would get annoying.
+=> The one we're discussing.
 
--Peff
+$ git add foo
+
+=> No error when an empty directory other than . is given.
+
+$ cd foo
+$ git add .
+
+=> No error either for "git add ." when not at the root of the repo.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
