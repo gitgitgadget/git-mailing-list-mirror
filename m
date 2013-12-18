@@ -1,149 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/3] fetch --prune: Repair branchname DF conflicts
-Date: Wed, 18 Dec 2013 13:54:15 -0800
-Message-ID: <xmqq4n65hlko.fsf@gitster.dls.corp.google.com>
-References: <1387401776-30994-1-git-send-email-jackerran@gmail.com>
-	<1387401776-30994-3-git-send-email-jackerran@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: "git fsck" fails on malloc of 80 G
+Date: Wed, 18 Dec 2013 16:58:21 -0500
+Message-ID: <20131218215821.GA14276@sigill.intra.peff.net>
+References: <201312161605.rBGG5Wm5027739@hobgoblin.ariadne.com>
+ <20131216191500.GD29324@sigill.intra.peff.net>
+ <201312180306.rBI36KCm016209@hobgoblin.ariadne.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Tom Miller <jackerran@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 18 22:54:34 2013
+To: "Dale R. Worley" <worley@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Wed Dec 18 22:58:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VtP4b-0004Hb-C1
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Dec 2013 22:54:33 +0100
+	id 1VtP8n-0000SC-E2
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Dec 2013 22:58:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755298Ab3LRVyX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Dec 2013 16:54:23 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54988 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753354Ab3LRVyU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Dec 2013 16:54:20 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 65B4C5A448;
-	Wed, 18 Dec 2013 16:54:19 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Q7FjsRlZTM4NJtGpOjag0sJdzks=; b=h85MIT
-	nMI9huQPkfI5xDrrV6BPk9zGfG6HE+od/85ZfhsOj8K1xx9sxNowTeKTy2B21LZB
-	uBKoRzrqti+fXyfhdVLwOyDpHXOO+vKa9pIWwpMiOayxk5y4Mn8nTXzBoRQcppjN
-	sq4GKSgPpA81n3nhT4f9hmRmKhbTrLAMQBMSg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=uQKuWgvnjHksWbzlTROg0fVSnsUIPtjy
-	jT3HeoHtWqpMjdS7dEF2TmIAvsH66VEiIyA7uZL4zL06riYVixAyVCxhRMXMo+nZ
-	aAg+r5+ywGmssDUskEwRRXraArytuFZvY4mq8hHbsFUdc7+2TVVHzQKKoyEl2rGK
-	e4W36faONfM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4C1015A447;
-	Wed, 18 Dec 2013 16:54:19 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7DF845A444;
-	Wed, 18 Dec 2013 16:54:18 -0500 (EST)
-In-Reply-To: <1387401776-30994-3-git-send-email-jackerran@gmail.com> (Tom
-	Miller's message of "Wed, 18 Dec 2013 15:22:56 -0600")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: F1C4C882-682E-11E3-9B85-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1756051Ab3LRV6a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Dec 2013 16:58:30 -0500
+Received: from cloud.peff.net ([50.56.180.127]:46943 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755766Ab3LRV6Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Dec 2013 16:58:25 -0500
+Received: (qmail 10134 invoked by uid 102); 18 Dec 2013 21:58:25 -0000
+Received: from va-71-48-137-223.dhcp.embarqhsd.net (HELO sigill.intra.peff.net) (71.48.137.223)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 18 Dec 2013 15:58:25 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 18 Dec 2013 16:58:21 -0500
+Content-Disposition: inline
+In-Reply-To: <201312180306.rBI36KCm016209@hobgoblin.ariadne.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239493>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239494>
 
-Tom Miller <jackerran@gmail.com> writes:
+On Tue, Dec 17, 2013 at 10:06:20PM -0500, Dale R. Worley wrote:
 
-> When a branchname DF conflict occurs during a fetch,
+> Here's the basic backtrace information, and the values of the "size"
+> variables, which seem to be the immediate culprits:
+> [...]
+>     #1  0x00000000004f3633 in xmallocz (size=size@entry=80530636800)
+> 	at wrapper.c:73
+>     #2  0x00000000004d922f in unpack_compressed_entry (p=p@entry=0x7e4020, 
+> 	w_curs=w_curs@entry=0x7fffffffc9f0, curpos=654214694, size=80530636800)
+> 	at sha1_file.c:1797
+>     #3  0x00000000004db4cb in unpack_entry (p=p@entry=0x7e4020, 
+> 	obj_offset=654214688, final_type=final_type@entry=0x7fffffffd088, 
+> 	final_size=final_size@entry=0x7fffffffd098) at sha1_file.c:2072
+>     #4  0x00000000004b1e3f in verify_packfile (base_count=0, progress=0x9bdd80, 
+> 	fn=0x42fc00 <fsck_obj_buffer>, w_curs=0x7fffffffd090, p=0x7e4020)
+> 	at pack-check.c:119
 
-You may have started with a specific case in which you want to
-change the behaviour of current Git, so it may be clear what you
-meant by "branchname DF conflict", but that is true for nobody other
-than you who will read this log message.  Introducing new lingo is
-OK as long as it is necessary, but in a case like this, where you
-have to describe what situation you are trying to address anyway,
-I do not think you need to add a new word to our vocabulary.
+Thanks, that's helpful. Unfortunately the patch I mentioned before won't
+help you. The packfile format (like the experimental loose format that my patch
+dropped) stores the size outside of the zlib crc. So it has the same
+problem: we want to allocate the buffer up front to store the zlib
+results.
 
-	When we have a remote-tracking branch frotz/nitfol from a
-	previous fetch, and the upstream now has branch frotz, we
-	used to fail to remove frotz/nitfol and recreate frotz with
-	"git fetch --prune" from the upstream.
+The pack index does store a crc (calculated when we made or received
+the pack) over each object's on-disk representation. So we could check
+that, though doing it on every access has performance implications.
 
-or something like that?
+The pack data itself also has a SHA-1 checksum over the whole thing. We
+should probably do a better job in verify-pack of:
 
-But what should happen when we do not give --prune to "git fetch" in
-such a situation?  Should it fail, because we still have frotz/nitfol
-and we cannot create frotz without losing it?
+  1. Check the whole sha1 checksum before doing anything else.
 
-> --prune should
-> be able to fix it. When fetching with --prune, the fetching process
-> happens before pruning causing the branchname DF conflict to persist
-> and report an error. This patch prunes before fetching, thus
-> correcting DF conflicts during a fetch.
->
-> Signed-off-by: Tom Miller <jackerran@gmail.com>
-> Tested-by: Thomas Rast <tr@thomasrast.ch>
+  2. In the uncommon case that it fails, check each individual object
+     crc to find the broken object (and if none, assume either the
+     header or the checksum itself is what got munged).
 
-I wasn't following previous threads closely (was there a previous
-thread???); has this iteration been already tested by trast?
+In the meantime, you should be able to do step 1 manually like:
 
-> ---
->  builtin/fetch.c  | 10 +++++-----
->  t/t5510-fetch.sh | 14 ++++++++++++++
->  2 files changed, 19 insertions(+), 5 deletions(-)
->
-> diff --git a/builtin/fetch.c b/builtin/fetch.c
-> index e50b697..845c687 100644
-> --- a/builtin/fetch.c
-> +++ b/builtin/fetch.c
-> @@ -868,11 +868,6 @@ static int do_fetch(struct transport *transport,
->  
->  	if (tags == TAGS_DEFAULT && autotags)
->  		transport_set_option(transport, TRANS_OPT_FOLLOWTAGS, "1");
-> -	if (fetch_refs(transport, ref_map)) {
-> -		free_refs(ref_map);
-> -		retcode = 1;
-> -		goto cleanup;
-> -	}
->  	if (prune) {
->  		/*
->  		 * We only prune based on refspecs specified
-> @@ -888,6 +883,11 @@ static int do_fetch(struct transport *transport,
->  				   transport->url);
->  		}
->  	}
-> +	if (fetch_refs(transport, ref_map)) {
-> +		free_refs(ref_map);
-> +		retcode = 1;
-> +		goto cleanup;
-> +	}
->  	free_refs(ref_map);
->  
->  	/* if neither --no-tags nor --tags was specified, do automated tag
-> diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-> index 5d4581d..a981125 100755
-> --- a/t/t5510-fetch.sh
-> +++ b/t/t5510-fetch.sh
-> @@ -614,4 +614,18 @@ test_expect_success 'all boundary commits are excluded' '
->  	test_bundle_object_count .git/objects/pack/pack-${pack##pack	}.pack 3
->  '
->  
-> +test_expect_success 'branchname D/F conflict resolved by --prune' '
-> +	git branch dir/file &&
-> +	git clone . prune-df-conflict &&
-> +	git branch -D dir/file &&
-> +	git branch dir &&
-> +	(
-> +		cd prune-df-conflict &&
-> +		git fetch --prune &&
-> +		git rev-parse origin/dir >../actual
-> +	) &&
-> +	git rev-parse dir >expect &&
-> +	test_cmp expect actual
-> +'
-> +
->  test_done
+  # check first N-20 bytes of packfile against the checksum in the
+  # final 20 bytes. NB: pretty sure this use of "head" is a GNU-ism,
+  # and of course you need openssl
+  for i in objects/pack/*.pack; do
+    tail -c 20 "$i" >want.tmp &&
+    head -c -20 "$i" | openssl sha1 -binary >have.tmp &&
+    cmp want.tmp have.tmp ||
+    echo >&2 "broken: $i"
+  done
+
+git-fsck should be doing this check itself, but I wonder if you are not
+making it that far.
+
+> If I understand the code correctly, the object header buffer
+> \260\200\200\200\340\022x\234\354\301\001\001
+> really does encode the size value 0x12c0000000.
+
+If it does, and you do not have an 80G file, then it sounds like you may
+have a corrupt packfile.
+
+-Peff
