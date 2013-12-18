@@ -1,58 +1,66 @@
-From: "Kent R. Spillner" <kspillner@acm.org>
-Subject: Re: [PATCH 03/12] Add and use skip_prefix_defval()
-Date: Wed, 18 Dec 2013 10:27:46 -0600
-Message-ID: <20131218162746.GA15334@sl4mmy.zerosphere.org>
-References: <1387378437-20646-1-git-send-email-pclouds@gmail.com>
- <1387378437-20646-4-git-send-email-pclouds@gmail.com>
-Reply-To: "Kent R. Spillner" <kspillner@acm.org>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH v3 07/10] builtin/replace: teach listing using short,
+ medium or full formats
+Date: Wed, 18 Dec 2013 17:49:49 +0100
+Message-ID: <CAP8UFD3UsdcDg2D2nysMZgGAxLebYm-qQX3LZfqdwF9gNbyxgA@mail.gmail.com>
+References: <20131211074147.11117.1155.chriscool@tuxfamily.org>
+	<20131211074614.11117.96106.chriscool@tuxfamily.org>
+	<52B196F1.3060003@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 18 17:36:56 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Christian Couder <chriscool@tuxfamily.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Joey Hess <joey@kitenet.net>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Karsten Blees <karsten.blees@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 18 17:49:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VtK7A-0002zv-UC
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Dec 2013 17:36:53 +0100
+	id 1VtKJn-00011o-2h
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Dec 2013 17:49:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754301Ab3LRQgn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 18 Dec 2013 11:36:43 -0500
-Received: from smtp130.ord.emailsrvr.com ([173.203.6.130]:58939 "EHLO
-	smtp130.ord.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752692Ab3LRQgk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Dec 2013 11:36:40 -0500
-X-Greylist: delayed 529 seconds by postgrey-1.27 at vger.kernel.org; Wed, 18 Dec 2013 11:36:40 EST
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by smtp21.relay.ord1a.emailsrvr.com (SMTP Server) with ESMTP id 17956300D60;
-	Wed, 18 Dec 2013 11:27:50 -0500 (EST)
-X-Virus-Scanned: OK
-Received: by smtp21.relay.ord1a.emailsrvr.com (Authenticated sender: sl4mmy-AT-zerosphere.org) with ESMTPSA id F32E2300D83;
-	Wed, 18 Dec 2013 11:27:49 -0500 (EST)
-Mail-Followup-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <1387378437-20646-4-git-send-email-pclouds@gmail.com>
-User-Agent: Mutt/1.5.22 (2013-10-16)
+	id S1755092Ab3LRQtv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Dec 2013 11:49:51 -0500
+Received: from mail-vc0-f169.google.com ([209.85.220.169]:38413 "EHLO
+	mail-vc0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751930Ab3LRQtu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Dec 2013 11:49:50 -0500
+Received: by mail-vc0-f169.google.com with SMTP id hu19so5221085vcb.14
+        for <git@vger.kernel.org>; Wed, 18 Dec 2013 08:49:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=tRH7XMptijXEeFRYaENMB4R5GTmoOLX4wdwF3710hdc=;
+        b=E4d+uYJCO8dqF2BE7Z8V02XhPz7j5UgjJoFhCMj2U6fLaWT1/rP1YJgPyQJhsDDpkF
+         vXyfFNM+O6EzK+zUqzGsFrX2SMUODCZvVyPLqhJTfFr0+c0qZu7w5vzoUuaRtxHCQcjF
+         O/49K4k2D08g4VvJSMPxBVWvT63IAzhm1QAAOA9IRbkmhkQD52FDAzrwZ5KPfkgsvm8g
+         tkTeSSD9AGnM+rJtlTxy7AgU17UAegrEfxXmiz8dyr7pSgliPiudLO0tUcqtBCccaSm0
+         cnbgnpqBeKaxZ7iUvsR9wtUSaKY6SN88pAewRrbbThERl4hmcXbRm3U0IlBhnP3xc7hR
+         t5Wg==
+X-Received: by 10.221.18.70 with SMTP id qf6mr1305575vcb.37.1387385389705;
+ Wed, 18 Dec 2013 08:49:49 -0800 (PST)
+Received: by 10.58.253.136 with HTTP; Wed, 18 Dec 2013 08:49:49 -0800 (PST)
+In-Reply-To: <52B196F1.3060003@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239455>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239456>
 
-On Wed, Dec 18, 2013 at 09:53:48PM +0700, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=
-=BB=8Dc Duy wrote:
-> This is a variant of skip_prefix() that returns a specied pointer
-> instead of NULL if no prefix is found. It's helpful to simplify
->=20
->   if (starts_with(foo, "bar"))
->     foo +=3D 3;
->=20
-> into
->=20
->   foo =3D skip_prefix_gently(foo, "bar", foo);
+On Wed, Dec 18, 2013 at 1:37 PM, Karsten Blees <karsten.blees@gmail.com> wrote:
+> Am 11.12.2013 08:46, schrieb Christian Couder:
+>> +enum repl_fmt { SHORT, MEDIUM, FULL };
+>
+> SHORT is predefined on Windows, could you choose another name?
 
-Should this be skip_prefix_defval instead of skip_prefix_gently?
+Ok, I will change to:
+
+enum repl_fmt { SHORT_FMT, MEDIUM_FMT, FULL_FMT };
+
+Thanks,
+Christian.
