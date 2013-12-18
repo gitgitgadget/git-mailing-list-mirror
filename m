@@ -1,41 +1,41 @@
 From: Tom Miller <jackerran@gmail.com>
-Subject: [PATCH 2/3] fetch --prune: Always print header url
-Date: Wed, 18 Dec 2013 15:22:55 -0600
-Message-ID: <1387401776-30994-2-git-send-email-jackerran@gmail.com>
+Subject: [PATCH 3/3] fetch --prune: Repair branchname DF conflicts
+Date: Wed, 18 Dec 2013 15:22:56 -0600
+Message-ID: <1387401776-30994-3-git-send-email-jackerran@gmail.com>
 References: <1387401776-30994-1-git-send-email-jackerran@gmail.com>
 Cc: Tom Miller <jackerran@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 18 22:23:32 2013
+X-From: git-owner@vger.kernel.org Wed Dec 18 22:23:31 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VtOaY-0005U0-SQ
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Dec 2013 22:23:31 +0100
+	id 1VtOaY-0005U0-Aa
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Dec 2013 22:23:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755133Ab3LRVXS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Dec 2013 16:23:18 -0500
-Received: from mail-qc0-f173.google.com ([209.85.216.173]:52106 "EHLO
-	mail-qc0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754751Ab3LRVXO (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1755126Ab3LRVXQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Dec 2013 16:23:16 -0500
+Received: from mail-qc0-f181.google.com ([209.85.216.181]:55342 "EHLO
+	mail-qc0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754950Ab3LRVXO (ORCPT <rfc822;git@vger.kernel.org>);
 	Wed, 18 Dec 2013 16:23:14 -0500
-Received: by mail-qc0-f173.google.com with SMTP id m20so208340qcx.32
-        for <git@vger.kernel.org>; Wed, 18 Dec 2013 13:23:13 -0800 (PST)
+Received: by mail-qc0-f181.google.com with SMTP id e9so197750qcy.40
+        for <git@vger.kernel.org>; Wed, 18 Dec 2013 13:23:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=2juRABj9na88iH8S4ugYXIevjNoxpxKKrbY+X4lkU8M=;
-        b=PSM1nbKSTwlX7xTHNCU5Jr4wgmR9dspqsQFO9zRwDGEq4v5oU1LyAfLzPJ61OXI4O8
-         voXv/KgsiA7n4+nOLPpxoPoOdIFRL0PYhTBE/oQu89EQT1M4QzgFdiKvmtfS6qmynTq7
-         6Vend4QuNgLShqIJp6V4JYDQFHPdV6SouOgFwtMd5GdtVtlt/vY03VfLbPkkZ7S36n6r
-         o9gnkO44xM3ODmQOSInJMamshBhvqBn2Uog4iQXdZh9EfJWCtRX6fxogAIr/C/jtQYZQ
-         KKkzZ0+xGWnJSlaxPZplQS54qv9vh6ioYYPKLq1ZKU3CL9yv1GEVNNIpQbfuOBdq/KX+
-         MEoQ==
-X-Received: by 10.49.76.66 with SMTP id i2mr57683435qew.35.1387401793413;
-        Wed, 18 Dec 2013 13:23:13 -0800 (PST)
+        bh=6Kwx3wKbfMy7pDjbaJHriR47gmKVleewn6MrR36PbG4=;
+        b=f2YdF9oMdd8IkXTL2sA4NvmfPbz7e67AKZAKwjJcYMD+tFDZXv1ahEAm9N0Wxa0HNi
+         4jgN6Z3cmhyf/wrbxxHaQNXD/CcSkzCN0QQyG1SQOK6js9F1SVhFM3/IyNnuqXcm+hZn
+         82mK9oiqdZzg4rcWpWZfRCxkLAF2Bo2YWlUj/Xbv/RQ4vwAFlnk/pVOflWa2oprt+yjg
+         8nG7N/h3EMqc7crFDSVQSb1kuRn872L2Yo6z/L5hHN76YRrTwvcxT0pmQ/hYZpjmb2X0
+         mbwQG+8+zSAqm5kOkNQ2NRDB2WBR4HWSVBWdi24uNuMbb5gQjsjuF6TMJyVdx24J/nfV
+         FGiQ==
+X-Received: by 10.49.30.197 with SMTP id u5mr57544335qeh.33.1387401794054;
+        Wed, 18 Dec 2013 13:23:14 -0800 (PST)
 Received: from localhost.localdomain (24-197-19-70.static.leds.al.charter.com. [24.197.19.70])
-        by mx.google.com with ESMTPSA id 4sm3512957qak.11.2013.12.18.13.23.12
+        by mx.google.com with ESMTPSA id 4sm3512957qak.11.2013.12.18.13.23.13
         for <multiple recipients>
         (version=TLSv1 cipher=RC4-SHA bits=128/128);
         Wed, 18 Dec 2013 13:23:13 -0800 (PST)
@@ -45,63 +45,71 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239487>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239488>
 
-If fetch --prune is run with no new refs to fetch, but it has refs
-to prune. Then, the header url is not printed as it would if there were
-new refs to fetch. the following is example output showing this
-behavior:
-
-$ git fetch --prune --dry-run origin
- x [deleted]         (none)     -> origin/world
-
-After this patch the output of fetch --prune should look like this:
-
-$ git fetch --prune --dry-run origin
-From https://github.com/git/git
- x [deleted]         (none)     -> origin/test
+When a branchname DF conflict occurs during a fetch, --prune should
+be able to fix it. When fetching with --prune, the fetching process
+happens before pruning causing the branchname DF conflict to persist
+and report an error. This patch prunes before fetching, thus
+correcting DF conflicts during a fetch.
 
 Signed-off-by: Tom Miller <jackerran@gmail.com>
+Tested-by: Thomas Rast <tr@thomasrast.ch>
 ---
- builtin/fetch.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ builtin/fetch.c  | 10 +++++-----
+ t/t5510-fetch.sh | 14 ++++++++++++++
+ 2 files changed, 19 insertions(+), 5 deletions(-)
 
 diff --git a/builtin/fetch.c b/builtin/fetch.c
-index b3145f6..e50b697 100644
+index e50b697..845c687 100644
 --- a/builtin/fetch.c
 +++ b/builtin/fetch.c
-@@ -732,7 +732,8 @@ static int fetch_refs(struct transport *transport, struct ref *ref_map)
- 	return ret;
- }
+@@ -868,11 +868,6 @@ static int do_fetch(struct transport *transport,
  
--static int prune_refs(struct refspec *refs, int ref_count, struct ref *ref_map)
-+static int prune_refs(struct refspec *refs, int ref_count, struct ref *ref_map,
-+			const char *raw_url)
- {
- 	int result = 0;
- 	struct ref *ref, *stale_refs = get_stale_heads(refs, ref_count, ref_map);
-@@ -744,6 +745,7 @@ static int prune_refs(struct refspec *refs, int ref_count, struct ref *ref_map)
- 		if (!dry_run)
- 			result |= delete_ref(ref->name, NULL, 0);
- 		if (verbosity >= 0) {
-+			print_url(raw_url);
- 			fprintf(stderr, " x %-*s %-*s -> %s\n",
- 				TRANSPORT_SUMMARY(_("[deleted]")),
- 				REFCOL_WIDTH, _("(none)"), prettify_refname(ref->name));
-@@ -878,11 +880,12 @@ static int do_fetch(struct transport *transport,
- 		 * don't care whether --tags was specified.
- 		 */
- 		if (ref_count) {
--			prune_refs(refs, ref_count, ref_map);
-+			prune_refs(refs, ref_count, ref_map, transport->url);
- 		} else {
- 			prune_refs(transport->remote->fetch,
- 				   transport->remote->fetch_refspec_nr,
--				   ref_map);
-+				   ref_map,
-+				   transport->url);
+ 	if (tags == TAGS_DEFAULT && autotags)
+ 		transport_set_option(transport, TRANS_OPT_FOLLOWTAGS, "1");
+-	if (fetch_refs(transport, ref_map)) {
+-		free_refs(ref_map);
+-		retcode = 1;
+-		goto cleanup;
+-	}
+ 	if (prune) {
+ 		/*
+ 		 * We only prune based on refspecs specified
+@@ -888,6 +883,11 @@ static int do_fetch(struct transport *transport,
+ 				   transport->url);
  		}
  	}
++	if (fetch_refs(transport, ref_map)) {
++		free_refs(ref_map);
++		retcode = 1;
++		goto cleanup;
++	}
  	free_refs(ref_map);
+ 
+ 	/* if neither --no-tags nor --tags was specified, do automated tag
+diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+index 5d4581d..a981125 100755
+--- a/t/t5510-fetch.sh
++++ b/t/t5510-fetch.sh
+@@ -614,4 +614,18 @@ test_expect_success 'all boundary commits are excluded' '
+ 	test_bundle_object_count .git/objects/pack/pack-${pack##pack	}.pack 3
+ '
+ 
++test_expect_success 'branchname D/F conflict resolved by --prune' '
++	git branch dir/file &&
++	git clone . prune-df-conflict &&
++	git branch -D dir/file &&
++	git branch dir &&
++	(
++		cd prune-df-conflict &&
++		git fetch --prune &&
++		git rev-parse origin/dir >../actual
++	) &&
++	git rev-parse dir >expect &&
++	test_cmp expect actual
++'
++
+ test_done
 -- 
 1.8.5.1.163.gd7aced9
