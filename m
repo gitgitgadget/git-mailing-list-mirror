@@ -1,156 +1,140 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH 11/12] diff.c: convert diff_scoreopt_parse to use skip_prefix()
-Date: Wed, 18 Dec 2013 21:53:56 +0700
-Message-ID: <1387378437-20646-12-git-send-email-pclouds@gmail.com>
-References: <1387378437-20646-1-git-send-email-pclouds@gmail.com>
+From: =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+Subject: Re: I have end-of-lifed cvsps
+Date: Wed, 18 Dec 2013 16:39:39 +0100
+Message-ID: <CANQwDwdgZUWcgyZCWoDni+e9jgQ+8j0Yn_HMxiMn5OHzsRzjwQ@mail.gmail.com>
+References: <20131212001738.996EB38055C@snark.thyrsus.com> <CACPiFCK+Z7dOfO2v29PMKz+Y_fH1++xqMuTquSQ84d8KyjjFeQ@mail.gmail.com>
+ <20131212042624.GB8909@thyrsus.com> <CACPiFC+bopf32cgDcQcVpL5vW=3KxmSP8Oh1see4KduQ1BNcPw@mail.gmail.com>
+ <52B02DFF.5010408@gmail.com> <20131217140746.GB15010@thyrsus.com>
+ <CANQwDwe8AcbCYG5GZcY1tn9BN0x5KWux_CNQY2OWG+qZJ5rS4Q@mail.gmail.com>
+ <20131217210255.GA18217@thyrsus.com> <CANQwDwdQZGhR=hhFHe7wRAeNej_F5fHspN7+f-LiJu06utwC-w@mail.gmail.com>
+ <20131218002122.GA20152@thyrsus.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 18 15:55:29 2013
+Cc: Martin Langhoff <martin.langhoff@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Eric Raymond <esr@thyrsus.com>
+X-From: git-owner@vger.kernel.org Wed Dec 18 16:40:59 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VtIWw-0004PC-24
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Dec 2013 15:55:22 +0100
+	id 1VtJF2-0005qk-Ti
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Dec 2013 16:40:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755207Ab3LROzP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 18 Dec 2013 09:55:15 -0500
-Received: from mail-pb0-f53.google.com ([209.85.160.53]:36324 "EHLO
-	mail-pb0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754693Ab3LROzL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Dec 2013 09:55:11 -0500
-Received: by mail-pb0-f53.google.com with SMTP id ma3so8530157pbc.12
-        for <git@vger.kernel.org>; Wed, 18 Dec 2013 06:55:10 -0800 (PST)
+	id S1755098Ab3LRPkx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 18 Dec 2013 10:40:53 -0500
+Received: from mail-wi0-f180.google.com ([209.85.212.180]:57160 "EHLO
+	mail-wi0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754774Ab3LRPkw convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 18 Dec 2013 10:40:52 -0500
+Received: by mail-wi0-f180.google.com with SMTP id hm19so818404wib.1
+        for <git@vger.kernel.org>; Wed, 18 Dec 2013 07:40:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=rKQQHem8JkECu+0qMV3/r9HEARrRi5y1ZaZxtJKuJao=;
-        b=Og1Mit7kuVlPXqf86pXaAXu9T/VOz9OuilZFy0/sfGck/Dm8rKvlieTV88YRtEfH+y
-         l4FmaeWQeax7RWAqRmNyhhX0M2jzPTnG8DYXC3Tp6O9/h+62UmFystDk3EwHb8zHSOM6
-         B+Jp2UYvx+EvHFd3JtjSGqwocZnr+6NRvwStQO7lPgFV+5H94zRQdRAloeDurtvO139U
-         9DcFR3sFly51R5KUech74JTO6GY664ofB9ZT7m3mMwkbZET6+L3imbaWULeZ5LhpKrie
-         lNI/oHNHR6Fdz9RmVNbhCT730JdS5ys+Q/S/5/SQRWuxiH99epW3/7Ja30Xg0ZyixN0c
-         4bcw==
-X-Received: by 10.68.218.3 with SMTP id pc3mr34695351pbc.71.1387378510809;
-        Wed, 18 Dec 2013 06:55:10 -0800 (PST)
-Received: from lanh ([115.73.220.136])
-        by mx.google.com with ESMTPSA id z10sm718192pas.6.2013.12.18.06.55.07
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 18 Dec 2013 06:55:10 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Wed, 18 Dec 2013 21:55:07 +0700
-X-Mailer: git-send-email 1.8.5.1.208.g019362e
-In-Reply-To: <1387378437-20646-1-git-send-email-pclouds@gmail.com>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=u5anfFFEvIil6avM53PJbQKDxYyPVjYtKeRTY101Juc=;
+        b=nwqA8Ld98d7RlYqSRJWYOMS+65eupDr/QUtaBuBOyZa14yNWTYqOjNfXn0naa8SoLA
+         +7w36QlgyR+wRV5H86KWgAOtgLYOfMemac0UJghEehX6mdLl7bFtfDAX7N8ljmpMuBQl
+         9dt6wRFlrkk1oZxxNUPsyQfB+uocoVugZR9P5UPmEAUVetwfk04aXIVC6luAGQWKbDUh
+         plOcYgU2tduyqZssS2A41uqc+cbP/2FmNrdcAO1YZlnv1BdcfPWrVZ0O9dWAl5ZA14yW
+         6h96eykgJAOsiwJqQ2f+Uowt8DPYIg8c+eRAkdhgAd1/HlL6egsA36Ekpjm3yz04l7F5
+         WYkA==
+X-Received: by 10.180.205.205 with SMTP id li13mr8916342wic.12.1387381219099;
+ Wed, 18 Dec 2013 07:40:19 -0800 (PST)
+Received: by 10.227.86.201 with HTTP; Wed, 18 Dec 2013 07:39:39 -0800 (PST)
+In-Reply-To: <20131218002122.GA20152@thyrsus.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239450>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239451>
 
-While at there, partly fix the reporting as well. The reported value
-with "arg+2" is only correct with -C/-B/-M, not with long option names.
+On Wed, Dec 18, 2013 at 1:21 AM, Eric S. Raymond <esr@thyrsus.com> wrot=
+e:
+> Jakub Nar=C4=99bski <jnareb@gmail.com>:
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- diff.c | 28 ++++++++++++++--------------
- 1 file changed, 14 insertions(+), 14 deletions(-)
+>>> No, cvs-fast-export does not have --export-marks. It doesn't genera=
+te the
+>>> SHA1s that would require. Even if it did, it's not clear how that w=
+ould help.
+>>
+>> I was thinking about how the following part of git-fast-export
+>> `--import-marks=3D<file>`
+>>
+>>   Any commits that have already been marked will not be exported aga=
+in.
+>>   If the backend uses a similar --import-marks file, this allows for=
+ incremental
+>>   bidirectional exporting of the repository by keeping the marks the=
+ same
+>>   across runs.
+>
+> I understand that. But it's not relevant - cvs-fast-import doesn't kn=
+ow about
+> git SHA1s, and cannot.
 
-diff --git a/diff.c b/diff.c
-index 4da77fd..d629cc5 100644
---- a/diff.c
-+++ b/diff.c
-@@ -3367,7 +3367,7 @@ static int opt_arg(const char *arg, int arg_short=
-, const char *arg_long, int *va
- 	return 1;
- }
-=20
--static int diff_scoreopt_parse(const char *opt);
-+static int diff_scoreopt_parse(const char **opt);
-=20
- static inline int short_opt(char opt, const char **argv,
- 			    const char **optarg)
-@@ -3627,13 +3627,13 @@ int diff_opt_parse(struct diff_options *options=
-, const char **av, int ac)
- 	/* renames options */
- 	else if (starts_with(arg, "-B") || starts_with(arg, "--break-rewrites=
-=3D") ||
- 		 !strcmp(arg, "--break-rewrites")) {
--		if ((options->break_opt =3D diff_scoreopt_parse(arg)) =3D=3D -1)
--			return error("invalid argument to -B: %s", arg+2);
-+		if ((options->break_opt =3D diff_scoreopt_parse(&arg)) =3D=3D -1)
-+			return error("invalid argument to -B: %s", arg);
- 	}
- 	else if (starts_with(arg, "-M") || starts_with(arg, "--find-renames=3D=
-") ||
- 		 !strcmp(arg, "--find-renames")) {
--		if ((options->rename_score =3D diff_scoreopt_parse(arg)) =3D=3D -1)
--			return error("invalid argument to -M: %s", arg+2);
-+		if ((options->rename_score =3D diff_scoreopt_parse(&arg)) =3D=3D -1)
-+			return error("invalid argument to -M: %s", arg);
- 		options->detect_rename =3D DIFF_DETECT_RENAME;
- 	}
- 	else if (!strcmp(arg, "-D") || !strcmp(arg, "--irreversible-delete"))=
- {
-@@ -3643,8 +3643,8 @@ int diff_opt_parse(struct diff_options *options, =
-const char **av, int ac)
- 		 !strcmp(arg, "--find-copies")) {
- 		if (options->detect_rename =3D=3D DIFF_DETECT_COPY)
- 			DIFF_OPT_SET(options, FIND_COPIES_HARDER);
--		if ((options->rename_score =3D diff_scoreopt_parse(arg)) =3D=3D -1)
--			return error("invalid argument to -C: %s", arg+2);
-+		if ((options->rename_score =3D diff_scoreopt_parse(&arg)) =3D=3D -1)
-+			return error("invalid argument to -C: %s", arg);
- 		options->detect_rename =3D DIFF_DETECT_COPY;
- 	}
- 	else if (!strcmp(arg, "--no-renames"))
-@@ -3879,29 +3879,29 @@ int parse_rename_score(const char **cp_p)
- 	return (int)((num >=3D scale) ? MAX_SCORE : (MAX_SCORE * num / scale)=
-);
- }
-=20
--static int diff_scoreopt_parse(const char *opt)
-+static int diff_scoreopt_parse(const char **opt_p)
- {
-+	const char *opt =3D *opt_p;
- 	int opt1, opt2, cmd;
-=20
- 	if (*opt++ !=3D '-')
- 		return -1;
- 	cmd =3D *opt++;
-+	*opt_p =3D opt;
- 	if (cmd =3D=3D '-') {
- 		/* convert the long-form arguments into short-form versions */
--		if (starts_with(opt, "break-rewrites")) {
--			opt +=3D strlen("break-rewrites");
-+		if ((opt =3D skip_prefix_defval(opt, "break-rewrites", *opt_p)) !=3D=
- *opt_p) {
- 			if (*opt =3D=3D 0 || *opt++ =3D=3D '=3D')
- 				cmd =3D 'B';
--		} else if (starts_with(opt, "find-copies")) {
--			opt +=3D strlen("find-copies");
-+		} else if ((opt =3D skip_prefix_defval(opt, "find-copies", *opt_p)) =
-!=3D *opt_p) {
- 			if (*opt =3D=3D 0 || *opt++ =3D=3D '=3D')
- 				cmd =3D 'C';
--		} else if (starts_with(opt, "find-renames")) {
--			opt +=3D strlen("find-renames");
-+		} else if ((opt =3D skip_prefix_defval(opt, "find-renames", *opt_p))=
- !=3D *opt_p) {
- 			if (*opt =3D=3D 0 || *opt++ =3D=3D '=3D')
- 				cmd =3D 'M';
- 		}
- 	}
-+	*opt_p =3D opt;
- 	if (cmd !=3D 'M' && cmd !=3D 'C' && cmd !=3D 'B')
- 		return -1; /* that is not a -M, -C nor -B option */
-=20
+It is a bit strange that markfile has explicitly SHA-1 (":markid <SHA-1=
+>"),
+instead of generic reference to commit, in the case of CVS it would be
+commitid (what to do for older repositories, though?), in case of Bazaa=
+r
+its revision id (GUID), etc.  Can we assume that SCM v1 fast-export and
+SCM v2 fast-import markfile uses compatibile commit names in markfile?
+
+>> How cvs-fast-export know where to start exporting from in incrementa=
+l mode?
+>
+> You give it a cutoff date. This is the same way cvsps-2.x and 3.x wor=
+ked,
+> and it's what the cvsimport wrapper expects to pass down.
+
+Nice to know.
+
+I think it would be possible for remote-helper for cvs-fast-export to f=
+ind
+this cutoff date automatically (perhaps with some safety margin), for
+fetching (incremental import).
+
+>> BTW. does cvs-fast-export support incremental *output*, or does it
+>> perform also incremental *work*?
+>
+> As I tried to explain previously in my response to John Herland, it's
+> incremental output only.  There is *no* CVS exporter known to me, or
+> him, that supports incremental work.  That would be at best be imprac=
+tically
+> difficult; given CVS's limitations it may be actually impossible. I w=
+ouldn't
+> bet against impossible.
+
+Even with saving (or re-calculating from git import) guesses about CVS
+history made so far?
+
+Anyway I hope that incremental CVS import would be needed less
+and less as CVS is replaced by any more modern version control system.
+
+>> Anyway, that might mean that generic fast-import stream based increm=
+ental
+>> (i.e. supporting proper thin fetch) remote helper is out of question=
+, perhaps
+>> writing one for cvs / cvs-fe would bring incremental import from CVS=
+ to
+>> git?
+>
+> Sorry, I don't understand that.
+
+I was thinking about creating remote-helper for cvs-fast-export, so tha=
+t
+git can use local CVS repository as "remote", using e.g. "cvsroot::<pat=
+h>"
+as repo URL, and using this mechanism for incremental import (aka fetch=
+).
+(Or even "cvssync::<URL>" for automatic cvssync + cvs-fast-export).
+
+But from what I understand this is not as easy as it seems, even with
+remote-helper API having support for fast-import stream.
+
 --=20
-1.8.5.1.208.g019362e
+Jakub Nar=C4=99bski
