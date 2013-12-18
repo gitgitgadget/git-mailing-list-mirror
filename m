@@ -1,72 +1,100 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: RLIMIT_NOFILE fallback
-Date: Wed, 18 Dec 2013 16:40:01 -0500
-Message-ID: <20131218214001.GA14354@sigill.intra.peff.net>
-References: <20131218171446.GA19657@kitenet.net>
- <xmqqy53ihwe4.fsf@gitster.dls.corp.google.com>
- <20131218191702.GA9083@sigill.intra.peff.net>
- <xmqq61qmhrb3.fsf@gitster.dls.corp.google.com>
- <20131218212847.GA13685@sigill.intra.peff.net>
- <xmqqd2kthmcr.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/3] builtin/fetch.c: Add pretty_url() and print_url()
+Date: Wed, 18 Dec 2013 13:47:11 -0800
+Message-ID: <xmqq8uvhhlwg.fsf@gitster.dls.corp.google.com>
+References: <1387401776-30994-1-git-send-email-jackerran@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Joey Hess <joey@kitenet.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 18 22:40:37 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Tom Miller <jackerran@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 18 22:47:27 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VtOqi-000650-D4
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Dec 2013 22:40:12 +0100
+	id 1VtOxi-0005PN-Fu
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Dec 2013 22:47:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755818Ab3LRVkG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Dec 2013 16:40:06 -0500
-Received: from cloud.peff.net ([50.56.180.127]:46936 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753645Ab3LRVkF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Dec 2013 16:40:05 -0500
-Received: (qmail 9231 invoked by uid 102); 18 Dec 2013 21:40:05 -0000
-Received: from va-71-48-137-223.dhcp.embarqhsd.net (HELO sigill.intra.peff.net) (71.48.137.223)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 18 Dec 2013 15:40:05 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 18 Dec 2013 16:40:01 -0500
-Content-Disposition: inline
-In-Reply-To: <xmqqd2kthmcr.fsf@gitster.dls.corp.google.com>
+	id S1754364Ab3LRVrS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Dec 2013 16:47:18 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35981 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751528Ab3LRVrO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Dec 2013 16:47:14 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 754675A2C1;
+	Wed, 18 Dec 2013 16:47:14 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=VTtEmC90j+CtTOXHTCM/fftrRoI=; b=TBRyIZ
+	0NV8paYs8hKHYMT8Q2Vr5TJqnk+DnguHGSdWacwRwJtpuJpIYDc9/xYG/ohCdbDr
+	OS1WGEO/TFAZpY9W2at/5c2qIEUIECOf1PlALhXJZVNJwDsidRrz/5SkgBpJN+Lj
+	uRkSNpJrTpLYmQUeR5FPRfGtfnJEK5Z46zQGg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Am9+dU+mSHYWUV0FYRp0PpRs7J9E+vt1
+	jbHM9lYssFjXWHe7tExiuhtcgUxylhngqh+PGo/6+3uKWRXBkfLTTFif0I5GxBCU
+	rRuKtmnIwEHnux82ixiXAzUOU2juAhuBGpDE5U/GVgTPayrpmX7QZT869YJBzGOj
+	to6C0a7vxpw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 560A35A2C0;
+	Wed, 18 Dec 2013 16:47:14 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 65B875A2BC;
+	Wed, 18 Dec 2013 16:47:13 -0500 (EST)
+In-Reply-To: <1387401776-30994-1-git-send-email-jackerran@gmail.com> (Tom
+	Miller's message of "Wed, 18 Dec 2013 15:22:54 -0600")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: F46476E2-682D-11E3-BF17-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239491>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239492>
 
-On Wed, Dec 18, 2013 at 01:37:24PM -0800, Junio C Hamano wrote:
+Tom Miller <jackerran@gmail.com> writes:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > According to the POSIX quote above, it sounds like we could do:
-> >
-> >   #if defined (_SC_OPEN_MAX)
-> >   {
-> >           long max;
-> >           errno = 0;
-> >           max = sysconf(_SC_OPEN_MAX);
-> >           if (0 < max) /* got the limit */
-> >                   return max;
-> >           else if (!errno) /* unlimited, cast to int-max */
-> >                   return max;
-> >           /* otherwise, fall through */
-> >   }
-> >   #endif
-> >
-> > Obviously you could collapse the two branches of the conditional, though
-> > I think it deserves at least a comment to explain what is going on.
-> 
-> Yes, that is locally OK, but depending on how the caller behaves, we
-> might need to have an extra saved_errno dance here, which I didn't
-> want to get into...
+> In order to fix branchname DF conflicts during `fetch --prune`, the way
+> the header is output to the screen needs to be refactored. Here is an
+> exmaple of the output with the line in question denoted by '>':
+>
+> 	$ git fetch --prune --dry-run upstream
+>>	From https://github.com/git/git
+> 	   a155a5f..5512ac5  maint      -> upstream/maint
+> 	   d7aced9..7794a68  master     -> upstream/master
+> 	   523f7c4..3e57c29  next       -> upstream/next
+> 	 + 462f102...0937cdf pu         -> upstream/pu  (forced update)
+> 	   e24105a..5d352bc  todo       -> upstream/todo
+> 	 * [new tag]         v1.8.5.2   -> v1.8.5.2
+> 	 * [new tag]         v1.8.5.2   -> v1.8.5.2
+>
+> pretty_url():
+> This function when passed a transport url will anonymize the transport
+> of the url. It will strip a trailing '/'. It will also strip a trailing
+> '.git'. It will return the newly formated url for use. I do not believe
+> there is a need for stripping the trailing '/' and '.git' from a url,
+> but it was already there and I wanted to make as little changes as
+> possible.
 
-I think we are fine. The only caller is about to clobber errno by
-closing packs anyway.
+OK.  I tend to agree that stripping the trailing part is probably
+not a good idea and we would want to remove that but that definitely
+should be done as a separate step, or even as a separate series on
+top of this one.
 
--Peff
+> print_url():
+> This function will convert a transport url to a pretty url using
+> pretty_url(). Then it will print out the pretty url to stderr as
+> indicated above in the example output. It uses a global variable
+> named "gshown_url' to prevent this header for being printed twice.
+
+Gaah.  What is that 'g' doing there?  Please don't do that
+meaningless naming.
+
+I do not think the change to introduce such a global variable
+belongs to this refactoring step.  The current caller can decide
+itself if it called that function, and if you are going to introduce
+new callers in later steps, they can coordinate among themselves,
+no?
