@@ -1,126 +1,120 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH v3 07/10] builtin/replace: teach listing using short,
- medium or full formats
-Date: Thu, 19 Dec 2013 17:36:16 +0100
-Message-ID: <CAP8UFD1+kydjrjhTxKDSMmOa+KiOYgMGK5gyxCe-LPih02=VYQ@mail.gmail.com>
-References: <20131211074147.11117.1155.chriscool@tuxfamily.org>
-	<20131211074614.11117.96106.chriscool@tuxfamily.org>
-	<52B196F1.3060003@gmail.com>
-	<CAP8UFD3UsdcDg2D2nysMZgGAxLebYm-qQX3LZfqdwF9gNbyxgA@mail.gmail.com>
-	<xmqqioumjc1n.fsf@gitster.dls.corp.google.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH 1/3] prune-packed: fix a possible buffer overflow
+Date: Thu, 19 Dec 2013 17:33:55 +0100
+Message-ID: <52B31FF3.1060102@alum.mit.edu>
+References: <1387287838-25779-1-git-send-email-mhagger@alum.mit.edu> <1387287838-25779-2-git-send-email-mhagger@alum.mit.edu> <CACsJy8DVc4soBrS1RbTLv93b5rere3htyL1DjRw=UcT4zVN9FA@mail.gmail.com> <xmqqd2kvmi85.fsf@gitster.dls.corp.google.com> <52B2256A.3060802@alum.mit.edu> <20131219000415.GA17420@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Karsten Blees <karsten.blees@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Joey Hess <joey@kitenet.net>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Dec 19 17:36:23 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Antoine Pelisse <apelisse@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Dec 19 17:41:10 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VtgaE-0007tq-4E
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Dec 2013 17:36:22 +0100
+	id 1Vtger-0004HG-9Q
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Dec 2013 17:41:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754771Ab3LSQgT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Dec 2013 11:36:19 -0500
-Received: from mail-ve0-f176.google.com ([209.85.128.176]:36577 "EHLO
-	mail-ve0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754759Ab3LSQgR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Dec 2013 11:36:17 -0500
-Received: by mail-ve0-f176.google.com with SMTP id oz11so832580veb.35
-        for <git@vger.kernel.org>; Thu, 19 Dec 2013 08:36:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=3WQTqf2F2N3UELAG/LqqwursGRnNhN1uywG5VShZynM=;
-        b=cpTMlWVwiWGWceNwHTbwUUAbBnGt+9KhYgB24WhpGpsCnEIdbkeoUCaI0kCtov2L0I
-         dYM0wFPcNHR9yERoIWfVcCSrnXwK6fRruhogw9jQ/M/glHrNMZxkQcX+BcqWEk9RE7e1
-         RUjY7l/REuk1yKrqDEPcPOX0ryVdKz/cBD3m5I28PNjqM0ZzmvJxawcNMbLjW8JB/NI8
-         FDrbImpxWCVSwBBQkUB5vt3t/mSEHHxBQquBEMnkQJ4Q+X3V1ZZTuM0Cffuzn801fEQR
-         I5ktNSFyc26OmKxSMdgTgHSnI9wzKD5HaWoPiKX1INs+YSaxhmvkkPSsr+cY5YRR5xh2
-         em4A==
-X-Received: by 10.220.174.200 with SMTP id u8mr1529180vcz.6.1387470976964;
- Thu, 19 Dec 2013 08:36:16 -0800 (PST)
-Received: by 10.58.253.136 with HTTP; Thu, 19 Dec 2013 08:36:16 -0800 (PST)
-In-Reply-To: <xmqqioumjc1n.fsf@gitster.dls.corp.google.com>
+	id S1751357Ab3LSQlE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Dec 2013 11:41:04 -0500
+Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:64811 "EHLO
+	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750954Ab3LSQlD (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 19 Dec 2013 11:41:03 -0500
+X-Greylist: delayed 422 seconds by postgrey-1.27 at vger.kernel.org; Thu, 19 Dec 2013 11:41:02 EST
+X-AuditID: 1207440c-b7f566d000004272-1e-52b31ff798ae
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id 76.AD.17010.7FF13B25; Thu, 19 Dec 2013 11:33:59 -0500 (EST)
+Received: from [172.16.46.13] ([178.19.210.163])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id rBJGXtTW029553
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Thu, 19 Dec 2013 11:33:57 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20131005 Icedove/17.0.9
+In-Reply-To: <20131219000415.GA17420@sigill.intra.peff.net>
+X-Enigmail-Version: 1.6
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrGKsWRmVeSWpSXmKPExsUixO6iqPtdfnOQwa0+E4tfZ3exWHRd6Way
+	aOi9wmzRPeUto8WPlh5mB1aPnbPusns8693D6HHxkrLH501yASxR3DZJiSVlwZnpefp2CdwZ
+	J07zFjwRr7j26CVzA2OLcBcjJ4eEgInE5R/7mSBsMYkL99azdTFycQgJXGaUePz1EjOEs4FJ
+	onvSORaQKl4BbYnFt+Yyg9gsAqoSZw7/ZQSx2QR0JRb1NINNEhUIknh06CE7RL2gxMmZT8B6
+	RQRkJb4f3sgIMpRZYBmjxK7+p2ANwgKuEh+W72CC2HaASWJW412wqZwC1hKXvn4HmsQBdJ+4
+	RE9jEIjJLKAusX6eEEgFs4C8xPa3c5gnMArOQrJuFkLVLCRVCxiZVzHKJeaU5urmJmbmFKcm
+	6xYnJ+blpRbpGurlZpbopaaUbmKEhDvPDsZv62QOMQpwMCrx8K54uTFIiDWxrLgy9xCjJAeT
+	kiivOjBahPiS8lMqMxKLM+KLSnNSiw8xSnAwK4nw3pIByvGmJFZWpRblw6SkOViUxHlVl6j7
+	CQmkJ5akZqemFqQWwWRlODiUJHijQIYKFqWmp1akZeaUIKSZODhBhnNJiRSn5qWkFiWWlmTE
+	g+I3vhgYwSApHqC9NSDtvMUFiblAUYjWU4y6HPO+fPjGKMSSl5+XKiXOO0MWqEgApCijNA9u
+	BSy5vWIUB/pYmNcdZBQPMDHCTXoFtIQJaInx2k0gS0oSEVJSDYzlfZt3JwVMnfmDbc7k965n
+	mqfGybIIH73Mc/1NzsevjhY7pdZEZ4VtvVr2cveMqVdXLryrtm2Sgpxv4ZSaxtUT 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239524>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239525>
 
-On Wed, Dec 18, 2013 at 6:37 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Christian Couder <christian.couder@gmail.com> writes:
->
->> On Wed, Dec 18, 2013 at 1:37 PM, Karsten Blees <karsten.blees@gmail.com> wrote:
->>> Am 11.12.2013 08:46, schrieb Christian Couder:
->>>> +enum repl_fmt { SHORT, MEDIUM, FULL };
->>>
->>> SHORT is predefined on Windows, could you choose another name?
->>
->> Ok, I will change to:
->>
->> enum repl_fmt { SHORT_FMT, MEDIUM_FMT, FULL_FMT };
->
-> What are these for in the first place?  Your "SHORT" conflicting
-> with something totally unrelated is a sign that you should be naming
-> them in a way that is more specific to your use.  SHORT_FMT is still
-> not specific enough to tell what they are for.  With SHOW_REPLACE_
-> prefix, perhaps?  Also perhaps give characterization better than
-> their output lengths?
+On 12/19/2013 01:04 AM, Jeff King wrote:
+> On Wed, Dec 18, 2013 at 11:44:58PM +0100, Michael Haggerty wrote:
+> 
+>> [While doing so, I got sidetracked by the question: what happens if a
+>> prune process deletes the "objects/XX" directory just the same moment
+>> that another process is trying to write an object into that directory?
+>> I think the relevant function is sha1_file.c:create_tmpfile().  It looks
+>> like there is a nonzero but very small race window that could result in
+>> a spurious "unable to create temporary file" error, but even then I
+>> don't think there would be any corruption or anything.]
+> 
+> There's a race there, but I think it's hard to trigger.
+> 
+> Our strategy with object creation is to call open, recognize ENOENT,
+> mkdir, and then try again. If the rmdir happens before our call to open,
+> then we're fine. If open happens first, then the rmdir will fail.
+> 
+> But we don't loop on ENOENT. So if the rmdir happens in the middle,
+> after the mkdir but before we call open again, we'd fail, because we
+> don't treat ENOENT specially in the second call to open. That is
+> unlikely to happen, though, as prune would not be removing a directory
+> it did not just enter and clean up an object from (in which case we
+> would not have gotten the first ENOENT in the creator). [...]
 
-I am ok with SHORT_REPLACE_FMT and so on.
+The way I read it, prune tries to delete the directory whether or not
+there were any files in it.  So the race could be triggered by a single
+writer that wants to write an object to a not-yet-existent shard
+directory and a single prune process that encounters the directory
+between when it is created and when the object file is added.
 
-> My quick read of show_reference() tells me that they are "name
-> only", "name and value", and something else that does not seem
-> very useful unless you are debugging.
+But that doesn't mean I disagree with your conclusion:
 
-Yeah, SHORT_REPLACE_FMT is "name only" which means something like:
+> So it seems unlikely and the worst case is a temporary failure, not a
+> corruption. It's probably not worth caring too much about, but we could
+> solve it pretty easily by looping on ENOENT on creation.
 
-$ git replace --format=short
-14ac020163ea60a9d683ce68e36c946f31ecc856
-4b48deed3a433909bfd6b6ab3d4b91348b6af464
-5c37393794868bc8e708cccd7c9d9aaa7a5e53cb
-a3fb2e1845a1aaf129b7975048973414dc172173
-e25dc7954f0832d962347872884aab2dffb426c5
+Regarding references:
 
-MEDIUM_REPLACE_FMT is "name and value", like this:
+> On a similar note, I imagine that a simultaneous "branch foo/bar" and
+> "branch -d foo/baz" could race over the creation/deletion of
+> "refs/heads/foo", but I didn't look into it.
 
-$ git replace --format=medium
-14ac020163ea60a9d683ce68e36c946f31ecc856 ->
-4b48deed3a433909bfd6b6ab3d4b91348b6af464
-4b48deed3a433909bfd6b6ab3d4b91348b6af464 ->
-feae347d8510cfba5eb8c8ac80056777b07c2528
-5c37393794868bc8e708cccd7c9d9aaa7a5e53cb ->
-14ac020163ea60a9d683ce68e36c946f31ecc856
-a3fb2e1845a1aaf129b7975048973414dc172173 ->
-9af2a15082b7c95982473e32f3376558c149a7e7
-e25dc7954f0832d962347872884aab2dffb426c5 ->
-00ad688edb1a79423184992de45a5f0322c8bdf5
+Deleting a loose reference doesn't cause the directory containing it to
+be deleted.  The directory is only deleted by pack-refs (and then only
+when a reference in the directory was just packed) or when there is an
+attempt to create a new reference that conflicts with the directory.  So
+the question is whether the creation of a loose ref file is robust
+against the disappearance of a directory that it just created.
 
-and FULL _REPLACE_FMT is "name with type and value with type", like this:
+And the answer is "no".  It looks like there are a bunch of places where
+similar races occur involving references.  And probably many others
+elsewhere in the code.  (Any caller of safe_create_leading_directories()
+is a candidate problem point, and in fact that function itself has an
+internal race.)  I've started fixing some of these but it might take a
+while.
 
-$ git replace --format=full
-14ac020163ea60a9d683ce68e36c946f31ecc856 (commit) ->
-4b48deed3a433909bfd6b6ab3d4b91348b6af464 (blob)
-4b48deed3a433909bfd6b6ab3d4b91348b6af464 (blob) ->
-feae347d8510cfba5eb8c8ac80056777b07c2528 (blob)
-5c37393794868bc8e708cccd7c9d9aaa7a5e53cb (tree) ->
-14ac020163ea60a9d683ce68e36c946f31ecc856 (commit)
-a3fb2e1845a1aaf129b7975048973414dc172173 (commit) ->
-9af2a15082b7c95982473e32f3376558c149a7e7 (commit)
-e25dc7954f0832d962347872884aab2dffb426c5 (tag) ->
-00ad688edb1a79423184992de45a5f0322c8bdf5 (commit)
+Michael
 
-I think this last one might be useful for people replacing objects
-with objects that have another type.
-And as we let people do that using --force, it could be useful for
-them to have a way to easily see what they have done.
-
-Thanks,
-Christian.
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
