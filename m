@@ -1,124 +1,75 @@
-From: Adam Spiers <git@adamspiers.org>
-Subject: script for reproducing history example in git-log(1) man page
-Date: Thu, 19 Dec 2013 18:36:45 +0000
-Message-ID: <20131219183645.GD23496@pacific.linksys.moosehall>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] log: properly handle decorations with chained tags
+Date: Thu, 19 Dec 2013 10:44:22 -0800
+Message-ID: <xmqqfvpofzp5.fsf@gitster.dls.corp.google.com>
+References: <20131217004044.GB259467@vauxhall.crustytoothpaste.net>
+	<1387254501-319329-1-git-send-email-sandals@crustytoothpaste.net>
+	<xmqq38lrknbd.fsf@gitster.dls.corp.google.com>
+	<20131219031809.GG259467@vauxhall.crustytoothpaste.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git mailing list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Dec 19 19:36:53 2013
+Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
+	Kirill Likhodedov <kirill.likhodedov@jetbrains.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+X-From: git-owner@vger.kernel.org Thu Dec 19 19:44:41 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VtiSq-0004fG-7c
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Dec 2013 19:36:52 +0100
+	id 1VtiaL-0001Ob-Ni
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Dec 2013 19:44:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753703Ab3LSSgs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Dec 2013 13:36:48 -0500
-Received: from coral.adamspiers.org ([85.119.82.20]:45697 "EHLO
-	coral.adamspiers.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753271Ab3LSSgr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Dec 2013 13:36:47 -0500
-Received: from localhost (243.103.2.81.in-addr.arpa [81.2.103.243])
-	by coral.adamspiers.org (Postfix) with ESMTPSA id 270882E30D
-	for <git@vger.kernel.org>; Thu, 19 Dec 2013 18:36:46 +0000 (GMT)
-Content-Disposition: inline
-X-OS: GNU/Linux
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754956Ab3LSSoe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Dec 2013 13:44:34 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50962 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753937Ab3LSSod (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Dec 2013 13:44:33 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7BA9D5B822;
+	Thu, 19 Dec 2013 13:44:27 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=h0vrb3O1zU+pi5PUlq2YEazyTNE=; b=MDwW/Z
+	qUkszaWmEikJlgeyqgWVMSNDH4XdFXC56P2/vovXDGGRKXilOdlIYaZwk/h5lB1J
+	Byd1Qa7i/n1GLVjcXdYO/uuuwlP0Y7F3crV0brLHzgyZyAXD7lc2QyADUmDH7+ht
+	FDcjmO6emue2yFnpeMCcPNU5Bf2Ifb9bNnezQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=vb+XMmswURH8gjUgoHu9agzAgeTlWTe4
+	8wainBF0RZXOJUyIUfAZARDgaYJXUAhUQSj1vkc24aE3eE7nhxMVAfF0tbe/jilM
+	U+zJ2HwQfwcIGvwPArMI17zm5j1g6fWmojj+otXsVzNEic9Yxt2O3WWARwegOPkC
+	ApTCC54qtno=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 696075B821;
+	Thu, 19 Dec 2013 13:44:27 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7CDEF5B820;
+	Thu, 19 Dec 2013 13:44:26 -0500 (EST)
+In-Reply-To: <20131219031809.GG259467@vauxhall.crustytoothpaste.net> (brian
+	m. carlson's message of "Thu, 19 Dec 2013 03:18:09 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 9604D92E-68DD-11E3-A119-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239529>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239530>
 
-I wanted to be able to experiment with the TREESAME example given in
-the git-log(1) man page, so I built this script which recreates it:
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
---------- 8< --------- 8< --------- 8< --------- 8< --------- 8< ---------
-#!/bin/bash
+> On Tue, Dec 17, 2013 at 04:36:06PM -0800, Junio C Hamano wrote:
+>> I think all we need to do, in addition to what the existing code
+>> does, is to make sure that we _parse_ the object that the tag points
+>> at, to avoid this problem.  Something like this, perhaps, instead?
+>
+> Yeah, that's the clean fix I was looking for, but couldn't quite come up
+> with.  I'm going to re-roll with your fix instead of mine and my tests.
+> Any objections to adding your sign-off?
 
-mkdir git-log-example
-cd git-log-example
-
-git init
-
-# I
-echo asdf > foo; echo quux > quux
-git add .
-git commit -mI; git tag I
-
-# A
-echo foo > foo
-git add .
-git commit -mA; git tag A
-
-# B
-git checkout -b b I
-echo foo > foo
-git add .
-git commit -mB; git tag B
-
-# M
-git checkout master
-git merge --no-commit b
-git commit -m"M: merge of A and B"; git tag M
-
-# C
-git checkout -b c I
-git commit --allow-empty -mC; git tag C
-
-# N
-git checkout master
-git merge --no-commit c
-git commit -m"N: merge of M and C"; git tag N
-
-# D
-git checkout -b d I
-echo baz > foo
-git add .
-git commit -mD; git tag D
-
-# O
-git checkout master
-git merge --no-commit d
-echo foobarbaz > foo
-git add .
-git commit -m"O: merge of N and D"; git tag O
-
-# E
-git checkout -b e I
-echo xyzzy > quux
-git add .
-git commit -mE; git tag E
-
-# P
-git checkout master
-git merge --no-commit e
-echo "quux xyzzy" > quux
-git add .
-git commit -m"P: merge of O and E"; git tag P
-
-# X
-git checkout -b x I
-rm foo quux; echo side > side
-git add -A .
-git commit --amend -m"X"; git tag X
-
-# Y
-git checkout -b y x
-echo side2 > side
-git add .
-git commit -m"Y"; git tag Y
-
-# Q
-git checkout master
-git merge --no-commit y
-git commit -mQ; git tag Q
-
-# cleanup unneeded branches
-git branch -D b c d e x y
---------- 8< --------- 8< --------- 8< --------- 8< --------- 8< ---------
-
-Would it be worth including this in (say) contrib/, and then referring
-to it from the man page, in case anyone else feels a similar urge?
+I was actually planning to just squash 35a34ce281 as a fixup! to
+your 5e65a201 and call it a day.  I think your proposed log message
+in the latter clearly describes why the fix is correct.
