@@ -1,138 +1,92 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 3/3] fetch --prune: Repair branchname DF conflicts
-Date: Thu, 19 Dec 2013 06:44:14 -0500
-Message-ID: <20131219114413.GA23298@sigill.intra.peff.net>
-References: <1387401776-30994-1-git-send-email-jackerran@gmail.com>
- <1387401776-30994-3-git-send-email-jackerran@gmail.com>
- <xmqq4n65hlko.fsf@gitster.dls.corp.google.com>
- <20131219014859.GA32240@gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v2 00/21] Support multiple worktrees
+Date: Thu, 19 Dec 2013 21:12:41 +0700
+Message-ID: <CACsJy8BV6uerMyHNHviL0Jy8s+_jca8NM-hVfnM=u4cr-=JX1Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Tom Miller <jackerran@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 19 12:44:24 2013
+Content-Type: text/plain; charset=UTF-8
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Dec 19 15:13:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vtc1f-0007zq-Rh
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Dec 2013 12:44:24 +0100
+	id 1VteLo-0003z9-AI
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Dec 2013 15:13:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753237Ab3LSLoU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Dec 2013 06:44:20 -0500
-Received: from cloud.peff.net ([50.56.180.127]:47273 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752488Ab3LSLoT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Dec 2013 06:44:19 -0500
-Received: (qmail 16288 invoked by uid 102); 19 Dec 2013 11:44:19 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 19 Dec 2013 05:44:19 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 19 Dec 2013 06:44:14 -0500
-Content-Disposition: inline
-In-Reply-To: <20131219014859.GA32240@gmail.com>
+	id S1753484Ab3LSONO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Dec 2013 09:13:14 -0500
+Received: from mail-qa0-f47.google.com ([209.85.216.47]:64717 "EHLO
+	mail-qa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752700Ab3LSONM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Dec 2013 09:13:12 -0500
+Received: by mail-qa0-f47.google.com with SMTP id w5so4792856qac.20
+        for <git@vger.kernel.org>; Thu, 19 Dec 2013 06:13:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=LWhilfVhqmcMUzGussGXmw6ZbAZuH2rBWEsbFu3kzPE=;
+        b=Xgk4k0oCjVE+itt2wPfi6FY+hs9mjKQJImRUJgkv/G1VXpIP1PngEM9SJ/czU6ZcLa
+         xXux1ER6pJvoN12gJX72wwnCQf6RhXtflExXZAStHhUwQRGTDToXGOj2iMJms0RJCymZ
+         HPDIc4sisocUqNOk3UuNh1/AAy1CDrXlPtT08h/fv0kNTXO5Rg1zwOkNOXLHGnlRU4RT
+         H4SykAMo7hUG7cpSpEjPjqlkMDIx27x0+71HYh7vCvRxDgAOalanm6wxXaGhZQckFJxT
+         MCc8u1GNVHDOVY7+NT2kzHs7BI/CnjaNqPZ79hbzpHDo/spLxSsxtPxcLtmoLHowuGQo
+         4uBw==
+X-Received: by 10.224.51.7 with SMTP id b7mr3277010qag.74.1387462392321; Thu,
+ 19 Dec 2013 06:13:12 -0800 (PST)
+Received: by 10.96.124.101 with HTTP; Thu, 19 Dec 2013 06:12:41 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239519>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239520>
 
-On Wed, Dec 18, 2013 at 07:48:59PM -0600, Tom Miller wrote:
+I've got a better version [1] that fixes everything I can think of
+(there's still some room for improvements). I'm going to use it a bit
+longer before reposting again. But here's its basic design without
+going down to code
 
-> I did not intend to introduce new lingo. I did some searching through
-> history to see if something like this had been worked on before and
-> I found a commit by Jeff King that introduced me the the idea of
-> "DF conflicts"
+New .git file format includes two lines:
+-- 8< --
+gitid: <id>
+gitdir: <path>
+-- 8< --
 
-I take all the blame. :)
+Which would set $GIT_COMMON_DIR to <path> and $GIT_DIR to
+<path>/repos/<id>. Repository split is the same as before, worktree
+stuff in $GIT_DIR, the rest in $GIT_COMMON_DIR. This .git file format
+takes precedence over core.worktree but can still be overriden with
+$GIT_WORK_TREE. The main interface to create new worktree is "git
+checkout --to".
 
-As for the patch itself:
+"repos" belongs to $GIT_COMMON_DIR (i.e. shared across all checkouts).
+The new worktrees (which I call "linked checkouts") can also access
+HEAD of the original worktree via a virtual path "main/HEAD". This
+makes it possible for a linked checkout to detach HEAD of the main
+one.
 
-> >> diff --git a/builtin/fetch.c b/builtin/fetch.c
-> >> index e50b697..845c687 100644
-> >> --- a/builtin/fetch.c
-> >> +++ b/builtin/fetch.c
-> >> @@ -868,11 +868,6 @@ static int do_fetch(struct transport *transport,
-> >>
-> >>       if (tags == TAGS_DEFAULT && autotags)
-> >>               transport_set_option(transport, TRANS_OPT_FOLLOWTAGS, "1");
-> >> -     if (fetch_refs(transport, ref_map)) {
-> >> -             free_refs(ref_map);
-> >> -             retcode = 1;
-> >> -             goto cleanup;
-> >> -     }
-> >>       if (prune) {
-> >>               /*
-> >>                * We only prune based on refspecs specified
-> >> @@ -888,6 +883,11 @@ static int do_fetch(struct transport *transport,
-> >>                                  transport->url);
-> >>               }
-> >>       }
-> >> +     if (fetch_refs(transport, ref_map)) {
-> >> +             free_refs(ref_map);
-> >> +             retcode = 1;
-> >> +             goto cleanup;
-> >> +     }
+There are three entries in repos/<id>: "gitdir" should point to the
+.git file that points it back here. Every time a linked checkout is
+used, git should update mtime of this "gitdir" file to help pruning.
+It should update the file content too if the repo is moved. "link" is
+a hardlink to .git file, if supported, again for pruning support.
+"locked", if exists, means no automatic pruning (e.g. the linked
+checkout is on a portable device).
 
-I think this is _probably_ a good thing to do, but it does have an
-interesting side effect for concurrent operations, and I haven't seen
-that mentioned so far in the discussion.
+The interesting thing is support for third party scripts (or hooks,
+maybe) so that they could work with both old and new git versions
+without some sort of git version/feature detection. Of course old git
+versions will only work with ordinary worktrees. To that end, "git
+rev-parse --git-dir" behavior could be changed by two environment
+variables. $GIT_ONE_PATH makes 'rev-parse --git-dir' return the .git
+_file_ in this case, which makes it much easier to pass the repo's
+checkout view around with "git --git-dir=... ".$GIT_COMMON_DIR_PATH
+makes 'rev-parse --git-dir' return $GIT_COMMON_DIR if it's from a
+linked checkout, or $GIT_DIR otherwise. This makes 'rev-parse
+--git-dir' falls back safely when running using old git versions. The
+last patch in [1] that updates git-completion.bash could demonstrate
+how it's used.
 
-Readers of the ref namespace don't have any sort of transactionally
-consistent view of all of the refs. So if a remote has moved a branch
-"foo" to "bar" and we "fetch --prune", there will be a moment where a
-simultaneous reader will see one of two states that never existed on the
-remote (depending on the order the fetch chooses): either both refs
-exist, or neither exists.
-
-Right now fetch creates first and deletes after, so a simultaneous
-reader may see both refs. After your change, it may see no refs at all.
-Even though both are technically wrong, the current behavior is safer.
-If the reader is calculating reachability (e.g., for a repack or "git
-prune), it is better to have too many references than too few.
-
-I'm not sure to what degree we want to care. This is a race, but it's a
-reasonably unlikely one, and the D/F thing bites people in the real
-world.
-
-And further confounding this is the fact that even if the writer does
-everything correctly, the way we read refs can still cause an odd view
-of the whole namespace. For example, consider moving "refs/heads/z/foo"
-to "refs/heads/a/foo", while somebody else reads simultaneously. Even
-with create-before-delete, we can get the sequence:
-
-  1. Reader reads "refs/heads/a/" and sees it does not contain "foo".
-
-  2. Writer writes "refs/heads/a/foo".
-
-  3. Writer deletes "refs/heads/z/foo".
-
-  4. Reader reads "refs/heads/z", which does not contain "foo".
-
-That race can be closed with a double-read of the ref namespaces, but
-that has poor performance. A more reasonable fix, IMHO, would be to have
-an alternate ref store that represents transactions atomically (keeping
-in mind that this really only matters for busy repos with simultaneous
-readers and writers, so it would not even need to be the default ref
-store). And once you have such a store, that solves the other problem,
-too: you can just treat the delete-create as a transaction anyway. It
-also solves a similar problem with refs that rewind.
-
-So even leaving it as-is does not make the problem go away, though the
-proposed change does exacerbate it somewhat. I wonder how hard it would
-be to do the safer thing in the common case that there is no D/F
-conflict. That is, do multiple passes at updating the refs:
-
-  1. Create/update any refs we can. Those with D/F conflicts are put
-     aside for the moment.
-
-  2. Delete any refs according to the --prune rules.
-
-  3. Come back to any D/F conflicts and try them again.
-
-I dunno. As far as I know, this is not a race that people see often in
-real life (I do not have any confirmed cases of it yet). So it may
-simply not be worth worrying about.
-
--Peff
+[1] https://github.com/pclouds/git.git checkout-new-worktree
+-- 
+Duy
