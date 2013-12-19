@@ -1,81 +1,65 @@
-From: Samuel Bronson <naesten@gmail.com>
-Subject: [PATCH] git-cherry.txt: cross reference "git log --cherry"
-Date: Thu, 19 Dec 2013 15:20:50 -0500
-Message-ID: <1387484450-935-1-git-send-email-naesten@gmail.com>
-References: <5167369f.ea15340a.5e12.0282@mx.google.com>
-Cc: Samuel Bronson <naesten@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 19 21:21:55 2013
+From: Adam Spiers <git@adamspiers.org>
+Subject: Re: questions / suggestions about history simplification
+Date: Thu, 19 Dec 2013 20:36:35 +0000
+Message-ID: <20131219203635.GG23496@pacific.linksys.moosehall>
+References: <20131219183645.GD23496@pacific.linksys.moosehall>
+ <20131219190333.GE23496@pacific.linksys.moosehall>
+ <xmqq38lofv8b.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+To: git mailing list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Dec 19 21:36:50 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vtk6V-00077U-Bf
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Dec 2013 21:21:55 +0100
+	id 1VtkKw-0000Cw-IN
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Dec 2013 21:36:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755736Ab3LSUVv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Dec 2013 15:21:51 -0500
-Received: from mail-qe0-f49.google.com ([209.85.128.49]:37843 "EHLO
-	mail-qe0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753389Ab3LSUVu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Dec 2013 15:21:50 -0500
-Received: by mail-qe0-f49.google.com with SMTP id w7so1519972qeb.8
-        for <git@vger.kernel.org>; Thu, 19 Dec 2013 12:21:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=c9GKfB2BuL2aM7YtK9PZMmXv5T8101yYtmoGCdMyB9c=;
-        b=nIwsgBn/4EN+U4+TaAEW4xlex2zJMybRkWDQFmoUbCBv3kk8kyqGYoBULpHH9IqzO9
-         CSJHvnh1fS9pDGZSlOStLTTZkbxJd4ayH4FTEqGWzXQ91cdtp3fMgzlm5nipbC1sAChl
-         7AtzZWDiMjOq2JvIcHpL5fjWFQcHYujwtVnWGiEQm/Nc+1cTR27eXGfzVpDcivja0+op
-         EqIJDmgwlEKodVIAyePxFxiZEKfnXSFAgilC05HJOBkiAdNHRVf6TeUl288h4Y/czBfF
-         LLUDU30xZ8euV3IaCww6boZqYFZG55uFUJWBlIy2csudJrBM/CBxtn1NS8IDJwcTLvFz
-         LiTA==
-X-Received: by 10.224.0.68 with SMTP id 4mr6730932qaa.17.1387484510466;
-        Thu, 19 Dec 2013 12:21:50 -0800 (PST)
-Received: from hydrogen (naesten-pt.tunnel.tserv4.nyc4.ipv6.he.net. [2001:470:1f06:57::2])
-        by mx.google.com with ESMTPSA id nq5sm12916298qeb.8.2013.12.19.12.21.48
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 19 Dec 2013 12:21:48 -0800 (PST)
-Received: from naesten by hydrogen with local (Exim 4.80)
-	(envelope-from <naesten@gmail.com>)
-	id 1Vtk6M-0000Fs-2Z; Thu, 19 Dec 2013 15:21:46 -0500
-X-Mailer: git-send-email 1.8.4.3
-In-Reply-To: <5167369f.ea15340a.5e12.0282@mx.google.com>
+	id S1756441Ab3LSUgj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Dec 2013 15:36:39 -0500
+Received: from coral.adamspiers.org ([85.119.82.20]:45951 "EHLO
+	coral.adamspiers.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756433Ab3LSUgh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Dec 2013 15:36:37 -0500
+Received: from localhost (243.103.2.81.in-addr.arpa [81.2.103.243])
+	by coral.adamspiers.org (Postfix) with ESMTPSA id 08BC52E30D
+	for <git@vger.kernel.org>; Thu, 19 Dec 2013 20:36:36 +0000 (GMT)
+Content-Disposition: inline
+In-Reply-To: <xmqq38lofv8b.fsf@gitster.dls.corp.google.com>
+X-OS: GNU/Linux
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239539>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239540>
 
-I learned of "git cherry" some days ago, but only learned of --cherry
-and related options to "git log" today[1] (more-or-less by chance).
+On Thu, Dec 19, 2013 at 12:20:52PM -0800, Junio C Hamano wrote:
+> Adam Spiers <git@adamspiers.org> writes:
+> 
+> > 2. What difference does --dense ever make?
+> 
+> It is set by default, and --sparse is its opposite option, i.e. it
+> turns revs->dense off.
 
-If the git-cherry(1) manpage had mentioned --cherry, I would have
-learned of these options sooner.
+Ah.  It appears to be missing from the man page that it's the default.
 
-[1]: Thu, 11 Apr 2013
+> When revs->dense is turned off, the usual treesame logic does not
+> kick in to rewrite parents in a single strand of pearls (i.e. a
+> stretch of history that solely consists of non-merge commits).
 
-Signed-off-by: Samuel Bronson <naesten@gmail.com>
----
- Documentation/git-cherry.txt | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+I see.
 
-diff --git a/Documentation/git-cherry.txt b/Documentation/git-cherry.txt
-index 0ea921a..cff9ae5 100644
---- a/Documentation/git-cherry.txt
-+++ b/Documentation/git-cherry.txt
-@@ -138,7 +138,8 @@ $ git cherry origin/master topic base
- 
- SEE ALSO
- --------
--linkgit:git-patch-id[1]
-+linkgit:git-patch-id[1],
-+the `--cherry` option to linkgit:git-log[1]
- 
- GIT
- ---
--- 
-1.8.4.3
+> > 3. Why is --sparse so called, given that it increases rather than
+> >    decreases the number of commits shown?
+> 
+> The number of commits in the output will increase by including
+> commits that are irrelevant to explain the history of paths
+> specified by pathspec in revs->prune.  The information density
+> decreases as the result, and that is what "sparse" signifies.
+
+Ah OK, that makes sense now, but not the most intuitive choice of name
+IMHO.  I would have gone for something like --all-commits, but I guess
+it's way too late to change now.
