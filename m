@@ -1,144 +1,124 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: RLIMIT_NOFILE fallback
-Date: Thu, 19 Dec 2013 09:39:55 -0800
-Message-ID: <xmqqmwjwg2ok.fsf@gitster.dls.corp.google.com>
-References: <20131218171446.GA19657@kitenet.net>
-	<xmqqy53ihwe4.fsf@gitster.dls.corp.google.com>
-	<20131218191702.GA9083@sigill.intra.peff.net>
-	<xmqq61qmhrb3.fsf@gitster.dls.corp.google.com>
-	<20131218212847.GA13685@sigill.intra.peff.net>
-	<xmqqd2kthmcr.fsf@gitster.dls.corp.google.com>
-	<20131218214001.GA14354@sigill.intra.peff.net>
-	<xmqqzjnxg3zz.fsf@gitster.dls.corp.google.com>
-	<20131219001519.GB17420@sigill.intra.peff.net> <52B32D18.80400@web.de>
+From: Thomas Miller <jackerran@gmail.com>
+Subject: Re: [PATCH 1/3] builtin/fetch.c: Add pretty_url() and print_url()
+Date: Thu, 19 Dec 2013 11:41:09 -0600
+Message-ID: <CAECD2aGPbJEUD5Vr0XH23eP_353hKwzRs7Q3sJ65LRjFKMr6Yw@mail.gmail.com>
+References: <1387401776-30994-1-git-send-email-jackerran@gmail.com>
+	<xmqq8uvhhlwg.fsf@gitster.dls.corp.google.com>
+	<20131219011817.GA31924@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, Joey Hess <joey@kitenet.net>,
-	git@vger.kernel.org
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Thu Dec 19 18:40:07 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Dec 19 18:41:17 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VthZv-0000Lm-1a
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Dec 2013 18:40:07 +0100
+	id 1Vthb2-00019d-3r
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Dec 2013 18:41:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753389Ab3LSRkA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 Dec 2013 12:40:00 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49295 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752749Ab3LSRj7 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 19 Dec 2013 12:39:59 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DC2B15A387;
-	Thu, 19 Dec 2013 12:39:58 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=esgI0U5VJGei
-	KStN/oTyL55Ij7w=; b=Lw7EJKN6DQvr0oOmtyIZDBDif+fhFzU9ThLhxeuVltml
-	XtEk4ycHs0wBRz0Nq1k10pTYm1+VQgi2fizTanb17PQCNLLnGnbwg2VOpJqWq3SJ
-	R1sNmN7mqwwmyaHrMRK3+B1ztbHggIFYl8BJm9pPlDlPWefxDQ4UMYta+t+eWwM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=gNpCzL
-	tcw9OrfEYcmPyUNXQeHa8yMYTk1zHko1kTvAZdrYxFtxn24L48Fg/5VgoUBKqH8l
-	OBVnwOZC16Iggbyt/EPJv7mwxjbebu0nsbANUrFlOtvonPf5y9HVzfUtSbnDsDo0
-	9gzc/kMVIHuStT8DsQHkkSWADYey9t37dVbVE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B3DAA5A386;
-	Thu, 19 Dec 2013 12:39:58 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E75515A384;
-	Thu, 19 Dec 2013 12:39:57 -0500 (EST)
-In-Reply-To: <52B32D18.80400@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershausen?=
- =?utf-8?Q?=22's?= message of
-	"Thu, 19 Dec 2013 18:30:00 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 942CEBE0-68D4-11E3-8B47-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754078Ab3LSRlL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Dec 2013 12:41:11 -0500
+Received: from mail-qc0-f169.google.com ([209.85.216.169]:54223 "EHLO
+	mail-qc0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753320Ab3LSRlK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Dec 2013 12:41:10 -0500
+Received: by mail-qc0-f169.google.com with SMTP id r5so1253508qcx.0
+        for <git@vger.kernel.org>; Thu, 19 Dec 2013 09:41:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=rJc4IhHZHMC9oObdwT/CzNwiU9HVLFFuYKSi8TlwsYs=;
+        b=nYA9p5IQpLNnVx+vB1zV0C+9wm9l+ZmJtjY0VAYBfSp72FriNXSzJ1UjYz/oN5J99E
+         Wv/zo5etMmjDzt1TyEjfH2KeSalM8+74BvLwkEywcWyvg48wm04yuogvC9Ow6EKzt7eC
+         N3ZujFmLGOIkeOEq1jtdSe625YwH+P3UCoB00cKn+EZhAL1z1lejffph2xJRcBZADej8
+         KT8z7755yOsDwbXHP4PLd8Rb27JIlu2C7Sq24AfiJOvi2JdpWTQ4C4oEdkjTWvrSjvmX
+         juJ6Mc+IjZCyHeN2wdmyeNA0dBCDJIV/3Fa/rNH8kZvPh5ayA9reFxAYcgMYofrthrIg
+         bfPQ==
+X-Received: by 10.49.105.138 with SMTP id gm10mr5230495qeb.7.1387474869674;
+ Thu, 19 Dec 2013 09:41:09 -0800 (PST)
+Received: by 10.229.238.131 with HTTP; Thu, 19 Dec 2013 09:41:09 -0800 (PST)
+In-Reply-To: <20131219011817.GA31924@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239527>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239528>
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
-
-> Thanks for an interesting reading,
-> please allow a side question:
-> Could it be, that "-1 =3D=3D unlimited" is Linux specific?
-> And therefore not 100% portable ?
+On Wed, Dec 18, 2013 at 7:18 PM, Tom Miller <jackerran@gmail.com> wrote:
+> On Wed, Dec 18, 2013 at 3:47 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Tom Miller <jackerran@gmail.com> writes:
+>>
+>>> In order to fix branchname DF conflicts during `fetch --prune`, the way
+>>> the header is output to the screen needs to be refactored. Here is an
+>>> exmaple of the output with the line in question denoted by '>':
+>>>
+>>>       $ git fetch --prune --dry-run upstream
+>>>>      From https://github.com/git/git
+>>>          a155a5f..5512ac5  maint      -> upstream/maint
+>>>          d7aced9..7794a68  master     -> upstream/master
+>>>          523f7c4..3e57c29  next       -> upstream/next
+>>>        + 462f102...0937cdf pu         -> upstream/pu  (forced update)
+>>>          e24105a..5d352bc  todo       -> upstream/todo
+>>>        * [new tag]         v1.8.5.2   -> v1.8.5.2
+>>>        * [new tag]         v1.8.5.2   -> v1.8.5.2
+>>>
+>>> pretty_url():
+>>> This function when passed a transport url will anonymize the transport
+>>> of the url. It will strip a trailing '/'. It will also strip a trailing
+>>> '.git'. It will return the newly formated url for use. I do not believe
+>>> there is a need for stripping the trailing '/' and '.git' from a url,
+>>> but it was already there and I wanted to make as little changes as
+>>> possible.
+>>
+>> OK.  I tend to agree that stripping the trailing part is probably
+>> not a good idea and we would want to remove that but that definitely
+>> should be done as a separate step, or even as a separate series on
+>> top of this one.
 >
-> And doesn't "unlimited" number of files call for trouble,
-> having the risk to starve the machine ?
+> I think that removing the trailing part will greatly reduce the complexity
+> to the point were it is unnecessary to have pretty_url().  My goal with
+> extracting this function is to isolate the complexity of formatting the
+> url to a single spot. I am thinking along the lines of the following
+> commit order:
 >
-> BTW: cygwin returns 256.
-
-If you look at the caller, you will see that we do cap the value
-returned from this helper function down to a more reasonable and not
-so selfish maximum, exactly for the purpose of avoiding the risk of
-starving other processes.
-
+> 1. Remove the "remove trailing part"
+> 2. Add print_url()
+> 3. Always print url when pruning
+> 4. Reverse order of prune and fetch
 >
-> ------------
-> http://pubs.opengroup.org/onlinepubs/007908799/xsh/sysconf.html
-> RETURN VALUE
+>>> print_url():
+>>> This function will convert a transport url to a pretty url using
+>>> pretty_url(). Then it will print out the pretty url to stderr as
+>>> indicated above in the example output. It uses a global variable
+>>> named "gshown_url' to prevent this header for being printed twice.
+>>
+>> Gaah.  What is that 'g' doing there?  Please don't do that
+>> meaningless naming.
 >
->     If name is an invalid value, sysconf() returns -1 and sets errno =
-to indicate the error. If the variable corresponding to name is associa=
-ted with functionality that is not supported by the system, sysconf() r=
-eturns -1 without changing the value of errno.=20
-
-That is a rather dated document.  POSIX.1-2013 (look for the URL to
-the corresponding page in an earlier message from me) has a bit
-tighter wording than that to clarify the "there is no limit" case.
-
-In addition, the final version Peff and I worked out does not even
-look at the value of errno, in order not to rely on possibly
-ambiguous interpretations of negative return values.  So I think we
-are good.
-
-Thanks.
-
-> ---------- Mac OS, based on BSD (?): ----------=20
-> RETURN VALUES
->      If the call to sysconf() is not successful, -1 is returned and e=
-rrno is
->      set appropriately.  Otherwise, if the variable is associated wit=
-h func-
->      tionality that is not supported, -1 is returned and errno is not=
- modi-
->      fied.  Otherwise, the current variable value is returned.
+> I am not familiar with C conventions and I was trying to stay consistent.
+> I saw other global variables starting with 'g' and made an assumption.
+> It will use the original name in the upcoming patches.
 >
-> ERRORS
->      The sysconf() function may fail and set errno for any of the err=
-ors spec-
->      ified for the library function sysctl(3).  In addition, the foll=
-owing
->      error may be reported:
+>> I do not think the change to introduce such a global variable
+>> belongs to this refactoring step.  The current caller can decide
+>> itself if it called that function, and if you are going to introduce
+>> new callers in later steps, they can coordinate among themselves,
+>> no?
 >
->      [EINVAL]           The value of the name argument is invalid.
-> [snip]
->      The sysconf() function first appeared in 4.4BSD.
->
-> -----------
-> Linux, Debian:
->       OPEN_MAX - _SC_OPEN_MAX
->               The  maximum number of files that a process can have op=
-en at any
->               time.  Must not be less than _POSIX_OPEN_MAX (20).
-> [snip]
-> RETURN VALUE
->        If name is invalid, -1 is returned, and errno is set to EINVAL=
-=2E  Other=E2=80=90
->        wise, the value returned is the value of the system resource a=
-nd  errno
->        is  not  changed.  In the case of options, a positive value is=
- returned
->        if a queried option is available, and -1 if it is not.  In the=
- case  of
->        limits, -1 means that there is no definite limit.
+> I agree, there is no reason for introducing it in this step. Thanks for
+> pointing that out.
+
+After working on this some more and realizing there is more work to
+be done on the "fetch --prune should prune before fetching" issue. Also,
+seeing Jeff's response opened my eyes even more. I believe you are
+correct. The "trailing parts" piece should be split off into another patch set.
+I think it would make sense to add the "fetch --prune should print the header
+url" to that patch set. Should I submit those patches as a separate thread
+or reply to this thread with just those patches?
+
+-- 
+Tom Miller
+jackerran@gmail.com
