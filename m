@@ -1,120 +1,76 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: RLIMIT_NOFILE fallback
-Date: Wed, 18 Dec 2013 19:15:19 -0500
-Message-ID: <20131219001519.GB17420@sigill.intra.peff.net>
-References: <20131218171446.GA19657@kitenet.net>
- <xmqqy53ihwe4.fsf@gitster.dls.corp.google.com>
- <20131218191702.GA9083@sigill.intra.peff.net>
- <xmqq61qmhrb3.fsf@gitster.dls.corp.google.com>
- <20131218212847.GA13685@sigill.intra.peff.net>
- <xmqqd2kthmcr.fsf@gitster.dls.corp.google.com>
- <20131218214001.GA14354@sigill.intra.peff.net>
- <xmqqzjnxg3zz.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Joey Hess <joey@kitenet.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Dec 19 01:15:32 2013
+From: Samuel Bronson <naesten@gmail.com>
+Subject: [PATCH v5 0/3] diff: Add diff.orderfile configuration variable
+Date: Wed, 18 Dec 2013 19:08:09 -0500
+Message-ID: <1387411692-15562-1-git-send-email-naesten@gmail.com>
+References: <CADsOX3DBmNituJsiYEBRENQeosASXtV_hd0zUW13cBoDZWHRhg@mail.gmail.com>
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Anders Waldenborg <anders@0x63.nu>,
+	Antoine Pelisse <apelisse@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Samuel Bronson <naesten@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 19 01:19:02 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VtRGx-0007gF-Hg
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Dec 2013 01:15:27 +0100
+	id 1VtRKQ-0002yY-1M
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Dec 2013 01:19:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751842Ab3LSAPW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Dec 2013 19:15:22 -0500
-Received: from cloud.peff.net ([50.56.180.127]:47021 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751367Ab3LSAPV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Dec 2013 19:15:21 -0500
-Received: (qmail 16922 invoked by uid 102); 19 Dec 2013 00:15:21 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 18 Dec 2013 18:15:21 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 18 Dec 2013 19:15:19 -0500
-Content-Disposition: inline
-In-Reply-To: <xmqqzjnxg3zz.fsf@gitster.dls.corp.google.com>
+	id S1752683Ab3LSAS6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Dec 2013 19:18:58 -0500
+Received: from mail-qc0-f180.google.com ([209.85.216.180]:48975 "EHLO
+	mail-qc0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751793Ab3LSAS5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Dec 2013 19:18:57 -0500
+Received: by mail-qc0-f180.google.com with SMTP id w7so352440qcr.25
+        for <git@vger.kernel.org>; Wed, 18 Dec 2013 16:18:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=BlmzNtrNkwang6ydIHaKf/dGog+7GdYhePnn7DRRwZE=;
+        b=ObBsjV4kih8AbrcPtfCe4QqXw62qh175mQ/gFcBt/BM3/tyRI40bpMN9PObOPMWpDs
+         BAxwjwPkw42H0SMOWnZJemtpC1/1MQpk15vSg0jqRezQlCgZYgVICu+VL9XpQVbWiSVN
+         1E8MKJH6Juflp6rYBFIwe0lhBhzeuYcpbJo4BY2pr5nRiv0d/24B+B6oogEmIahonAWp
+         QUn/T5E+raxbYonjX+jO4j6Gmly2gB5JbrW7X2gkIoaqBiH06CwTFLiA8gK/SmteRVYR
+         EKev3KAnhGzdhk3sbsuBHTnrVvroFjKwbBgKYXqAdnQ6NrlANvetgp1g7uoowx338lKi
+         Cxwg==
+X-Received: by 10.49.12.102 with SMTP id x6mr59099962qeb.5.1387412336662;
+        Wed, 18 Dec 2013 16:18:56 -0800 (PST)
+Received: from hydrogen (naesten-pt.tunnel.tserv4.nyc4.ipv6.he.net. [2001:470:1f06:57::2])
+        by mx.google.com with ESMTPSA id o3sm4937104qak.5.2013.12.18.16.18.54
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 18 Dec 2013 16:18:55 -0800 (PST)
+Received: from naesten by hydrogen with local (Exim 4.80)
+	(envelope-from <naesten@gmail.com>)
+	id 1VtRKF-00046I-Pr; Wed, 18 Dec 2013 19:18:51 -0500
+X-Mailer: git-send-email 1.8.4.3
+In-Reply-To: <CADsOX3DBmNituJsiYEBRENQeosASXtV_hd0zUW13cBoDZWHRhg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239502>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239503>
 
-On Wed, Dec 18, 2013 at 02:59:12PM -0800, Junio C Hamano wrote:
+I expect you've figured out what this patch series is about by now.
+In this version, I've applied Junio's suggestions from the last
+version, and also the stuff from the FIXUP commit he made after my
+stuff in the branch he merged into 'pu'.
 
-> Jeff King <peff@peff.net> writes:
->
-> >> Yes, that is locally OK, but depending on how the caller behaves, we
-> >> might need to have an extra saved_errno dance here, which I didn't
-> >> want to get into...
-> >
-> > I think we are fine. The only caller is about to clobber errno by
-> > closing packs anyway.
+Samuel Bronson (3):
+  diff: Tests for "git diff -O"
+  diff: Let "git diff -O" read orderfile from any file, fail properly
+  diff: Add diff.orderfile configuration variable
 
-Also, I do not think we would be any worse off than the current code.
-getrlimit almost certainly just clobbered errno anyway. Either it is
-worth saving for the whole function, or not at all (and I think not at
-all).
+ Documentation/diff-config.txt  |   5 ++
+ Documentation/diff-options.txt |   3 ++
+ diff.c                         |   5 ++
+ diffcore-order.c               |  23 ++++-----
+ t/t4056-diff-order.sh          | 106 +++++++++++++++++++++++++++++++++++++++++
+ 5 files changed, 127 insertions(+), 15 deletions(-)
+ create mode 100755 t/t4056-diff-order.sh
 
-> diff --git a/sha1_file.c b/sha1_file.c
-> index 760dd60..288badd 100644
-> --- a/sha1_file.c
-> +++ b/sha1_file.c
-> @@ -807,15 +807,38 @@ void free_pack_by_name(const char *pack_name)
->  static unsigned int get_max_fd_limit(void)
->  {
->  #ifdef RLIMIT_NOFILE
-> -	struct rlimit lim;
-> +	{
-> +		struct rlimit lim;
->  
-> -	if (getrlimit(RLIMIT_NOFILE, &lim))
-> -		die_errno("cannot get RLIMIT_NOFILE");
-> +		if (!getrlimit(RLIMIT_NOFILE, &lim))
-> +			return lim.rlim_cur;
-> +	}
-> +#endif
-
-Yeah, I think pulling the variable into its own block makes this more
-readable.
-
-> +#ifdef _SC_OPEN_MAX
-> +	{
-> +		long open_max = sysconf(_SC_OPEN_MAX);
-> +		if (0 < open_max)
-> +			return open_max;
-> +		/*
-> +		 * Otherwise, we got -1 for one of the two
-> +		 * reasons:
-> +		 *
-> +		 * (1) sysconf() did not understand _SC_OPEN_MAX
-> +		 *     and signaled an error with -1; or
-> +		 * (2) sysconf() said there is no limit.
-> +		 *
-> +		 * We _could_ clear errno before calling sysconf() to
-> +		 * tell these two cases apart and return a huge number
-> +		 * in the latter case to let the caller cap it to a
-> +		 * value that is not so selfish, but letting the
-> +		 * fallback OPEN_MAX codepath take care of these cases
-> +		 * is a lot simpler.
-> +		 */
-> +	}
-> +#endif
-
-This is probably OK. I assume sane systems actually provide OPEN_MAX,
-and/or have a working getrlimit in the first place.
-
-The fallback of "1" is actually quite low and can have an impact. Both
-for performance, but also for concurrent use. We used to run into a
-problem at GitHub where pack-objects serving a clone would have its
-packfile removed from under it (by a concurrent repack), and then would
-die. The normal code paths are able to just retry the object lookup and
-find the new pack, but the pack-objects code is a bit more intimate with
-the particular packfile and cannot (currently) do so. With a large
-enough mmap window and descriptor limit, we just keep the packfiles
-open. But if we have to close them for resource limits (like a too-low
-descriptor limit), then we can end up in the die() situation above.
-
--Peff
+-- 
+1.8.4.3
