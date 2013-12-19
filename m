@@ -1,127 +1,80 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: I have end-of-lifed cvsps
-Date: Thu, 19 Dec 2013 00:44:29 +0100
-Message-ID: <52B2335D.2030607@alum.mit.edu>
-References: <20131212001738.996EB38055C@snark.thyrsus.com> <CACPiFCK+Z7dOfO2v29PMKz+Y_fH1++xqMuTquSQ84d8KyjjFeQ@mail.gmail.com> <20131212042624.GB8909@thyrsus.com> <CACPiFC+bopf32cgDcQcVpL5vW=3KxmSP8Oh1see4KduQ1BNcPw@mail.gmail.com> <52B02DFF.5010408@gmail.com> <CALKQrgf3kuXRpbWmSp_nk8+zDFYNzkgV+dSBHaBbmUkxqjaDUA@mail.gmail.com> <20131217145809.GC15010@thyrsus.com> <CALKQrgeegcsO7YVqEmQxD4=HfR4eitodAov0tEh7MRvBxtRKUA@mail.gmail.com> <20131217184724.GA17709@thyrsus.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/3] prune-packed: fix a possible buffer overflow
+Date: Wed, 18 Dec 2013 19:04:15 -0500
+Message-ID: <20131219000415.GA17420@sigill.intra.peff.net>
+References: <1387287838-25779-1-git-send-email-mhagger@alum.mit.edu>
+ <1387287838-25779-2-git-send-email-mhagger@alum.mit.edu>
+ <CACsJy8DVc4soBrS1RbTLv93b5rere3htyL1DjRw=UcT4zVN9FA@mail.gmail.com>
+ <xmqqd2kvmi85.fsf@gitster.dls.corp.google.com>
+ <52B2256A.3060802@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Johan Herland <johan@herland.net>,
-	=?UTF-8?B?SmFrdWIgTmFyxJlic2tp?= <jnareb@gmail.com>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: esr@thyrsus.com
-X-From: git-owner@vger.kernel.org Thu Dec 19 00:44:41 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Antoine Pelisse <apelisse@gmail.com>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Thu Dec 19 01:04:25 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VtQnA-0001Na-Ke
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Dec 2013 00:44:41 +0100
+	id 1VtR6E-0004hK-DZ
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Dec 2013 01:04:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751877Ab3LRXog (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Dec 2013 18:44:36 -0500
-Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:63993 "EHLO
-	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751231Ab3LRXof (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 Dec 2013 18:44:35 -0500
-X-AuditID: 12074414-b7fb46d000002a4d-a3-52b23362e23d
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 7A.BF.10829.26332B25; Wed, 18 Dec 2013 18:44:34 -0500 (EST)
-Received: from [192.168.69.148] (p57A24A3C.dip0.t-ipconnect.de [87.162.74.60])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id rBINiVLQ019286
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 18 Dec 2013 18:44:32 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20131005 Icedove/17.0.9
-In-Reply-To: <20131217184724.GA17709@thyrsus.com>
-X-Enigmail-Version: 1.6
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrMKsWRmVeSWpSXmKPExsUixO6iqJtkvCnIYMJ6ZYurW3wsuq50M1ms
-	uDqH2WLe3V1MFhvXmTiweuycdZfd49LL72wey752snh83iQXwBLFbZOUWFIWnJmep2+XwJ2x
-	sP8uU8E7iYpLV54xNjAeFu5i5OSQEDCR+Pd2FxuELSZx4d56MFtI4DKjxJYVSl2MXED2OSaJ
-	GxtfsoAkeAW0JVoOTQIq4uBgEVCV2HIrFiTMJqArsainmQnEFhUIknh06CE7RLmgxMmZT1hA
-	ykUEhCWO9amBjGQWOMMo0btoE9guYQE1iWdPVzFC7LrJLPHp9XZmkASngKHE+xe/GEGaJQTE
-	JXoag0BMZgF1ifXzhEAqmAXkJba/ncM8gVFwFpJtsxCqZiGpWsDIvIpRLjGnNFc3NzEzpzg1
-	Wbc4OTEvL7VI10IvN7NELzWldBMjJNBFdjAeOSl3iFGAg1GJhzfg+cYgIdbEsuLK3EOMkhxM
-	SqK8s402BQnxJeWnVGYkFmfEF5XmpBYfYpTgYFYS4b3CApTjTUmsrEotyodJSXOwKInzflus
-	7ickkJ5YkpqdmlqQWgSTleHgUJLgXQQyVLAoNT21Ii0zpwQhzcTBCTKcS0qkODUvJbUosbQk
-	Ix4Uu/HFwOgFSfEA7Z0I0s5bXJCYCxSFaD3FqMsx78uHb4xCLHn5ealS4rxLQIoEQIoySvPg
-	VsDS2itGcaCPhXkngVTxAFMi3KRXQEuYgJY8X7MOZElJIkJKqoExZseblWoSNgJ6k6wSQ85X
-	K6y8tX2eUXnzaafNZ00U3vjlxr62Z9dTlS3YlLRyHrdz9Cb+l99D1Vb8WLQptN3/ 
+	id S1751528Ab3LSAES (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Dec 2013 19:04:18 -0500
+Received: from cloud.peff.net ([50.56.180.127]:47007 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750975Ab3LSAER (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Dec 2013 19:04:17 -0500
+Received: (qmail 16251 invoked by uid 102); 19 Dec 2013 00:04:17 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 18 Dec 2013 18:04:17 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 18 Dec 2013 19:04:15 -0500
+Content-Disposition: inline
+In-Reply-To: <52B2256A.3060802@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239500>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239501>
 
-On 12/17/2013 07:47 PM, Eric S. Raymond wrote:
-> Johan Herland <johan@herland.net>:
->> However, I fear that you underestimate the number of users that want
->> to use Git against CVS repos that are orders of magnitude larger (in
->> both dimensions: #commits and #files) than your example repo.
-> 
-> You may be right. See below...
-> 
-> I'm working with Alan Barret now on trying to convert the NetBSD
-> repositories. They break cvs-fast-export through sheer bulk of
-> metadata, by running the machine out of core.  This is exactly
-> the kind of huge case that you're talking about.
-> 
-> Alan and I are going to take a good hard whack at modifying cvs-fast-export 
-> to make this work. Because there really aren't any feasible alternatives.
-> The analysis code in cvsps was never good enough. cvs2git, being written
-> in Python, would hit the core limit faster than anything written in C.
+On Wed, Dec 18, 2013 at 11:44:58PM +0100, Michael Haggerty wrote:
 
-cvs2git goes to great lengths to store intermediate data to disk and
-keep the working set small and therefore (despite the Python overhead) I
-am confident that it scales better than cvs-fast-export.  My usual test
-repo was gcc:
+> [While doing so, I got sidetracked by the question: what happens if a
+> prune process deletes the "objects/XX" directory just the same moment
+> that another process is trying to write an object into that directory?
+> I think the relevant function is sha1_file.c:create_tmpfile().  It looks
+> like there is a nonzero but very small race window that could result in
+> a spurious "unable to create temporary file" error, but even then I
+> don't think there would be any corruption or anything.]
 
-Total CVS Files:             25013
-Total CVS Revisions:        578010
-Total CVS Branches:        1487929
-Total CVS Tags:           11435500
-Total Unique Tags:             814
-Total Unique Branches:         116
-CVS Repos Size in KB:      2074248
-Total SVN Commits:           64501
+There's a race there, but I think it's hard to trigger.
 
-I also regularly converted mozilla (4.2 GB) and emacs (560 MB) for
-testing purposes.  These could all be converted on a 32-bit computer.
+Our strategy with object creation is to call open, recognize ENOENT,
+mkdir, and then try again. If the rmdir happens before our call to open,
+then we're fine. If open happens first, then the rmdir will fail.
 
-Other projects that cvs2svn/cvs2git could handle: FreeBSD, Gentoo, KDE,
-GNOME, PostgreSQL.  (Though for KDE, which I think was in the 16 GB
-range, I know that they used a giant machine for the conversion.)
+But we don't loop on ENOENT. So if the rmdir happens in the middle,
+after the mkdir but before we call open again, we'd fail, because we
+don't treat ENOENT specially in the second call to open. That is
+unlikely to happen, though, as prune would not be removing a directory
+it did not just enter and clean up an object from (in which case we
+would not have gotten the first ENOENT in the creator). I think you'd So
+you'd have to have something creating and then pruning the directory in
+the time between our open and mkdir. It would probably be more likely to
+see it if you had two prunes running (the first one kills the directory,
+creator notices and calls mkdir, then the second prune kills the
+directory, too).
 
-If you haven't tried cvs2git yet, please start it up somewhere in the
-background.  It might take a while but it should have no trouble with
-your repos, and then you can compare the tools based on experience
-rather than speculation.
+So it seems unlikely and the worst case is a temporary failure, not a
+corruption. It's probably not worth caring too much about, but we could
+solve it pretty easily by looping on ENOENT on creation.
 
-> Which matters, because right now the set of people working on CVS lifters
-> begins with me and ends with Michael Rafferty (cvs2git), who seems even
-> less interested in incremental conversion than I am.  Unless somebody
-> comes out of nowhere and wants to own that problem, it's not going
-> to get solved.
+On a similar note, I imagine that a simultaneous "branch foo/bar" and
+"branch -d foo/baz" could race over the creation/deletion of
+"refs/heads/foo", but I didn't look into it.
 
-A correct incremental converter could be done (as long as the CVS users
-don't literally change history retroactively) but it would be a lot of
-work.  Parsing the CVS files isn't the problem; after all, CVS has to do
-that every time you check out a branch.  The problem is the extra
-bookkeeping that would be needed to keep the overlapping history
-consistent between runs N and N+1 of the tool.  I sketched out what
-would be necessary once and it came out to several solid weeks of work.
-
-But the traffic on the cvs2svn/cvs2git mailing list has trailed off
-essentially to zero, so either the software is perfect already (haha) or
-most everybody has already converted.  Therefore I don't invest any
-significant time in that project these days.
-
-Michael
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+-Peff
