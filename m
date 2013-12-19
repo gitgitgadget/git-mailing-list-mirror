@@ -1,125 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/3] fetch --prune: Repair branchname DF conflicts
-Date: Wed, 18 Dec 2013 22:28:22 -0800
-Message-ID: <7vzjnxjqwp.fsf@alter.siamese.dyndns.org>
-References: <1387401776-30994-1-git-send-email-jackerran@gmail.com>
-	<1387401776-30994-3-git-send-email-jackerran@gmail.com>
-	<xmqq4n65hlko.fsf@gitster.dls.corp.google.com>
-	<20131219014859.GA32240@gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: [PATCH] gitk: Fix typo in proc blobdiffmaybeseehere
+Date: Thu, 19 Dec 2013 08:14:00 +0100
+Message-ID: <52B29CB8.8090304@viscovery.net>
+References: <52AF0688.3070104@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Tom Miller <jackerran@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 19 07:28:30 2013
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Paul Mackerras <paulus@samba.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Thomas Rast <trast@inf.ethz.ch>
+X-From: git-owner@vger.kernel.org Thu Dec 19 08:15:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VtX5x-0001ge-Ei
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Dec 2013 07:28:29 +0100
+	id 1VtXoN-0007RI-Ud
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Dec 2013 08:14:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751218Ab3LSG2W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Dec 2013 01:28:22 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51489 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751158Ab3LSG2W (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Dec 2013 01:28:22 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 434045526A;
-	Thu, 19 Dec 2013 01:28:21 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=+7E41cyQYESnMX9IytVV0ssZb6A=; b=OMK7/w
-	JlmeanltGCe3/y5KiI3nWXdRr5oBuFK8j6nKQRJieRTijGld/EmhEXjyH5TIxIJL
-	o053ZbtSFpw6cJEjVM+tXkUJULP/sE4JcGywX+R+XMLDQgs5oOzAEZa7HacqlsOo
-	YLY1yNe6NmPDdD4/bLvfK7HW1WcFhfp3g4wEk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=lBPJQUIvhBRbz0VI3JeK6TNEJOWdi8LD
-	9lUQNoWizddZG3xtvJQDOsifWP1zEECb5ebxZbfiNd8C91pWBEMwm5ht3JOykUZW
-	sQfbxzfGZmIb0MQ/cS0N/WNLWMYSaLPRY2h13BwK+COyJx8dWpmna2j2S4+rfMWG
-	nbwzaiZcyZA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2B10B55269;
-	Thu, 19 Dec 2013 01:28:21 -0500 (EST)
-Received: from pobox.com (unknown [198.0.213.178])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3C4A055268;
-	Thu, 19 Dec 2013 01:28:20 -0500 (EST)
-In-Reply-To: <20131219014859.GA32240@gmail.com> (Tom Miller's message of "Wed,
-	18 Dec 2013 19:48:59 -0600")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.4 (gnu/linux)
-X-Pobox-Relay-ID: C0DF9BFA-6876-11E3-A264-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1750964Ab3LSHOJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Dec 2013 02:14:09 -0500
+Received: from so.liwest.at ([212.33.55.18]:60083 "EHLO so.liwest.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750807Ab3LSHOI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Dec 2013 02:14:08 -0500
+Received: from [81.10.228.254] (helo=theia.linz.viscovery)
+	by so.liwest.at with esmtpa (Exim 4.80.1)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1VtXo1-0006Zh-HE; Thu, 19 Dec 2013 08:14:01 +0100
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 18BAD16613;
+	Thu, 19 Dec 2013 08:14:00 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:24.0) Gecko/20100101 Thunderbird/24.1.0
+In-Reply-To: <52AF0688.3070104@viscovery.net>
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239515>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239516>
 
-Tom Miller <jackerran@gmail.com> writes:
+From: Johannes Sixt <j6t@kdbg.org>
 
-> The commit below should be the same patch he tested. The test was added
-> by him, and I made it part of this commit. Did I do this wrong?
+The recent 5de460a2 (Refactor per-line part of getblobdiffline and its
+support) introduced blobdiffmaybeseehere, and accidentally forgot the '$'
+to access the parameter as a TCL variable. This resulted in a failing
+"Back" button with the error
 
-No, no, no.  All my questions were true questions, not complaints
-veiled as rhetorical questions.  Thanks for many pointers for
-clarification.
+can't use non-numeric string as operand of "!"
+    while executing
+"if {!$ateof} {
+	set nlines [expr {[winfo height $ctext]
+			  / [font metrics textfont -linespace]}]
+	if {[$ctext compare "$target_scrollpos + $nlines ..."
+    (procedure "maybe_scroll_ctext" line 5)
 
->>>> ---
->>>  builtin/fetch.c  | 10 +++++-----
->>>  t/t5510-fetch.sh | 14 ++++++++++++++
->>>  2 files changed, 19 insertions(+), 5 deletions(-)
->>>
->>> diff --git a/builtin/fetch.c b/builtin/fetch.c
->>> index e50b697..845c687 100644
->>> --- a/builtin/fetch.c
->>> +++ b/builtin/fetch.c
->>> @@ -868,11 +868,6 @@ static int do_fetch(struct transport *transport,
->>>
->>>       if (tags == TAGS_DEFAULT && autotags)
->>>               transport_set_option(transport, TRANS_OPT_FOLLOWTAGS, "1");
->>> -     if (fetch_refs(transport, ref_map)) {
->>> -             free_refs(ref_map);
->>> -             retcode = 1;
->>> -             goto cleanup;
->>> -     }
->>>       if (prune) {
->>>               /*
->>>                * We only prune based on refspecs specified
->>> @@ -888,6 +883,11 @@ static int do_fetch(struct transport *transport,
->>>                                  transport->url);
->>>               }
->>>       }
->>> +     if (fetch_refs(transport, ref_map)) {
->>> +             free_refs(ref_map);
->>> +             retcode = 1;
->>> +             goto cleanup;
->>> +     }
->>>       free_refs(ref_map);
->>>
->>>       /* if neither --no-tags nor --tags was specified, do automated tag
->>> diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
->>> index 5d4581d..a981125 100755
->>> --- a/t/t5510-fetch.sh
->>> +++ b/t/t5510-fetch.sh
->>> @@ -614,4 +614,18 @@ test_expect_success 'all boundary commits are excluded' '
->>>       test_bundle_object_count .git/objects/pack/pack-${pack##pack    }.pack 3
->>>  '
->>>
->>> +test_expect_success 'branchname D/F conflict resolved by --prune' '
->>> +     git branch dir/file &&
->>> +     git clone . prune-df-conflict &&
->>> +     git branch -D dir/file &&
->>> +     git branch dir &&
->>> +     (
->>> +             cd prune-df-conflict &&
->>> +             git fetch --prune &&
->>> +             git rev-parse origin/dir >../actual
->>> +     ) &&
->>> +     git rev-parse dir >expect &&
->>> +     test_cmp expect actual
->>> +'
->>> +
->>>  test_done
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+---
+Am 12/16/2013 14:56, schrieb Johannes Sixt:
+> To reproduce, start gitk in any repository, click a commit, then the
+> "back" button (left-pointing arrow button) or type Alt+Cursor-Left. The
+> error I get is this:
+> 
+> can't use non-numeric string as operand of "!"
+
+It turns out to be just a simple typo.
+
+-- Hannes
+
+ gitk | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/gitk b/gitk
+index 33c3a6c..1f14796 100755
+--- a/gitk
++++ b/gitk
+@@ -7922,7 +7922,7 @@ proc blobdiffmaybeseehere {ateof} {
+     if {$diffseehere >= 0} {
+ 	mark_ctext_line [lindex [split $diffseehere .] 0]
+     }
+-    maybe_scroll_ctext ateof
++    maybe_scroll_ctext $ateof
+ }
+ 
+ proc getblobdiffline {bdf ids} {
+-- 
+1.8.5.1.1587.g3845a3d
