@@ -1,90 +1,74 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH] log: properly handle decorations with chained tags
-Date: Thu, 19 Dec 2013 03:18:09 +0000
-Message-ID: <20131219031809.GG259467@vauxhall.crustytoothpaste.net>
-References: <20131217004044.GB259467@vauxhall.crustytoothpaste.net>
- <1387254501-319329-1-git-send-email-sandals@crustytoothpaste.net>
- <xmqq38lrknbd.fsf@gitster.dls.corp.google.com>
+From: "Eric S. Raymond" <esr@thyrsus.com>
+Subject: Re: I have end-of-lifed cvsps
+Date: Wed, 18 Dec 2013 23:06:04 -0500
+Organization: Eric Conspiracy Secret Labs
+Message-ID: <20131219040604.GA7654@thyrsus.com>
+References: <20131212001738.996EB38055C@snark.thyrsus.com>
+ <CACPiFCK+Z7dOfO2v29PMKz+Y_fH1++xqMuTquSQ84d8KyjjFeQ@mail.gmail.com>
+ <20131212042624.GB8909@thyrsus.com>
+ <CACPiFC+bopf32cgDcQcVpL5vW=3KxmSP8Oh1see4KduQ1BNcPw@mail.gmail.com>
+ <52B02DFF.5010408@gmail.com>
+ <CALKQrgf3kuXRpbWmSp_nk8+zDFYNzkgV+dSBHaBbmUkxqjaDUA@mail.gmail.com>
+ <20131217145809.GC15010@thyrsus.com>
+ <CALKQrgeegcsO7YVqEmQxD4=HfR4eitodAov0tEh7MRvBxtRKUA@mail.gmail.com>
+ <20131217184724.GA17709@thyrsus.com>
+ <52B2335D.2030607@alum.mit.edu>
+Reply-To: esr@thyrsus.com
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="ISKrrfpKsPiF35CV"
-Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
-	Kirill Likhodedov <kirill.likhodedov@jetbrains.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Dec 19 04:18:28 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Johan Herland <johan@herland.net>,
+	Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Thu Dec 19 05:06:13 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VtU83-0004s6-DH
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Dec 2013 04:18:27 +0100
+	id 1VtUsF-0003w5-S9
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Dec 2013 05:06:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751993Ab3LSDSX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Dec 2013 22:18:23 -0500
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:34898 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751885Ab3LSDSX (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 Dec 2013 22:18:23 -0500
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:25f2:d8a1:a1:c2])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 045662806B;
-	Thu, 19 Dec 2013 03:18:15 +0000 (UTC)
-Mail-Followup-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Kirill Likhodedov <kirill.likhodedov@jetbrains.com>
+	id S1752719Ab3LSEGH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Dec 2013 23:06:07 -0500
+Received: from static-71-162-243-5.phlapa.fios.verizon.net ([71.162.243.5]:49775
+	"EHLO snark.thyrsus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752415Ab3LSEGF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Dec 2013 23:06:05 -0500
+Received: by snark.thyrsus.com (Postfix, from userid 1000)
+	id D1FF2380488; Wed, 18 Dec 2013 23:06:04 -0500 (EST)
 Content-Disposition: inline
-In-Reply-To: <xmqq38lrknbd.fsf@gitster.dls.corp.google.com>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 3.11-1-amd64)
+In-Reply-To: <52B2335D.2030607@alum.mit.edu>
+X-Eric-Conspiracy: There is no conspiracy
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239513>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239514>
 
+Michael Haggerty <mhagger@alum.mit.edu>:
+> If you haven't tried cvs2git yet, please start it up somewhere in the
+> background.  It might take a while but it should have no trouble with
+> your repos, and then you can compare the tools based on experience
+> rather than speculation.
 
---ISKrrfpKsPiF35CV
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+That would be a good thing.
 
-On Tue, Dec 17, 2013 at 04:36:06PM -0800, Junio C Hamano wrote:
-> I think all we need to do, in addition to what the existing code
-> does, is to make sure that we _parse_ the object that the tag points
-> at, to avoid this problem.  Something like this, perhaps, instead?
+Michael, in case you're wondering why I've continued to work on
+cvs-fast-export when cvs2git exists, there are exactly two reasons:
+(a) it's a whole lot faster on repos that aren't large enough to
+demand multipass, and (b) the single-whole-dumpfile output makes it a
+better reposurgeon front end.
 
-Yeah, that's the clean fix I was looking for, but couldn't quite come up
-with.  I'm going to re-roll with your fix instead of mine and my tests.
-Any objections to adding your sign-off?
+> But the traffic on the cvs2svn/cvs2git mailing list has trailed off
+> essentially to zero, so either the software is perfect already (haha) or
+> most everybody has already converted.  Therefore I don't invest any
+> significant time in that project these days.
 
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
-
---ISKrrfpKsPiF35CV
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
-
-iQIcBAEBCgAGBQJSsmVxAAoJEL9TXYEfUvaLB+0QALjeX47pB54BwsUp+o7AvAk6
-yQMltszRqHgqZQmLnyoFP6aTnAYDPW64e2ZY0VsjbNt6sYh9JODL3KVJf+HIvwZd
-11NN/JI0cUrGbdF3ZYXqI+MlizhR42DUELUYBXYwZ+tQx8VPY4CZgKGrfqxv1ZXD
-f2H6XxMnL+k311hdHW8+H6aQeJZWcnUBIY4uipZG20KV2MMWsB6VuRac03mxZpDL
-z2XgEWx8hcYB/iUh8SxteRW0QkqnYAegBe8jjIR5J8KqUc/vm4O+VnWJuPIA8SY2
-6TthYndK4pRNPCcOOW9b2ZEWVZkHS/VOYIwyIb92Ji5shNJiUWvItqSLAvum3ND6
-5qMiJ2CI9XqNql9RMIU8/M8nTUF2RJ7fitcy61ajXzalNzkqRxiceZX1zNOduH+y
-CKZJZ+Fkzk/IjU2wdONyu2UUe/upH/x33gL6GypXV0oAe1+c5k1I1vbJTlYRqvgD
-t3NfJkf1/f419nwlgv1XoHBGSeY1LeiyhijAfVS/VCld2YeFXvDG8T1aP6cySffq
-XUxwTyMpJBpxiSMiKIHCUlxvB9aIx4KiiHfjYtPkWxpac86+j+j2NvtrQN88cprt
-AQcLVCmahmooGebhGmP6/kYTmg7tdPCirReiPSC0PA9ddqhsJjydnUVhtkKumXvi
-wjZB/Ctk8OfQ29b+qLmV
-=gcuA
------END PGP SIGNATURE-----
-
---ISKrrfpKsPiF35CV--
+Reasonable.  I'm doing this as a temporary break from working on GPSD.
+I don't expect to be investing a lot of time in it after I get it
+to a 1.0 state.
+-- 
+		<a href="http://www.catb.org/~esr/">Eric S. Raymond</a>
