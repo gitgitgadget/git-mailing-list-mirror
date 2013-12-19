@@ -1,78 +1,102 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: git: problematic git status output with some translations (such
- as fr_FR)
-Date: Thu, 19 Dec 2013 12:50:49 -0800
-Message-ID: <20131219205049.GE20443@google.com>
-References: <20131008085036.11434.25160.reportbug@x230-buxy.home.ouaza.com>
- <20131219104613.GA18379@x230-buxy.home.ouaza.com>
- <20131219194319.GB20443@google.com>
- <xmqqk3f0efhe.fsf@gitster.dls.corp.google.com>
+From: Adam Spiers <git@adamspiers.org>
+Subject: Re: questions / suggestions about history simplification
+Date: Thu, 19 Dec 2013 20:58:58 +0000
+Message-ID: <20131219205858.GJ23496@pacific.linksys.moosehall>
+References: <20131219183645.GD23496@pacific.linksys.moosehall>
+ <20131219190333.GE23496@pacific.linksys.moosehall>
+ <xmqqsitoefvi.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Raphael Hertzog <hertzog@debian.org>, git@vger.kernel.org,
-	=?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Dec 19 21:51:00 2013
+To: git mailing list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Dec 19 21:59:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VtkYe-0001G4-9e
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Dec 2013 21:51:00 +0100
+	id 1Vtkgf-0006dV-NN
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Dec 2013 21:59:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932089Ab3LSUu4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Dec 2013 15:50:56 -0500
-Received: from mail-yh0-f46.google.com ([209.85.213.46]:60939 "EHLO
-	mail-yh0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932182Ab3LSUuz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Dec 2013 15:50:55 -0500
-Received: by mail-yh0-f46.google.com with SMTP id l109so440845yhq.19
-        for <git@vger.kernel.org>; Thu, 19 Dec 2013 12:50:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=16swiuRBuwxdnobVGZyY0CXkBWRnRfkLqyQoAwOaJ28=;
-        b=uSkq8MC47EcBlrIO0PfojoZuiDBrobOcGva9lMiUKON970is7U0vrkMDIJ4zU69TzF
-         b5t1jvbgRuXwhUWa4MdjQp+cGe7Psp331MdhlwUhwTNc2a6lby+6ckg8miTpfAmAgSQo
-         8npdqOt5dNwVdEy8bkE2DoZoU8kp3HE4qI/D/xgPq7fJOlEf7Ns8CI84MUQw1MhRiPgf
-         7Bpx4JoD3VVJSUgbe0mfgB9RAGsEogdkDkTOVOvFcngNUCZ22oDCVB9NfuL4iSmBhUSI
-         Y8u0/u5G8VKEfY/b8QkeFGARybpXivM95a3SVepOBoy1VLPJd5zJmgMNCwakOR+Yfa3/
-         KJEQ==
-X-Received: by 10.236.149.176 with SMTP id x36mr2985900yhj.27.1387486253882;
-        Thu, 19 Dec 2013 12:50:53 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id c44sm7799889yho.20.2013.12.19.12.50.52
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 19 Dec 2013 12:50:53 -0800 (PST)
+	id S1755800Ab3LSU7A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Dec 2013 15:59:00 -0500
+Received: from coral.adamspiers.org ([85.119.82.20]:45999 "EHLO
+	coral.adamspiers.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753703Ab3LSU67 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Dec 2013 15:58:59 -0500
+Received: from localhost (243.103.2.81.in-addr.arpa [81.2.103.243])
+	by coral.adamspiers.org (Postfix) with ESMTPSA id 4A50F2E30D
+	for <git@vger.kernel.org>; Thu, 19 Dec 2013 20:58:58 +0000 (GMT)
 Content-Disposition: inline
-In-Reply-To: <xmqqk3f0efhe.fsf@gitster.dls.corp.google.com>
+In-Reply-To: <xmqqsitoefvi.fsf@gitster.dls.corp.google.com>
+X-OS: GNU/Linux
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239546>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239547>
 
-Junio C Hamano wrote:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
+On Thu, Dec 19, 2013 at 12:37:53PM -0800, Junio C Hamano wrote:
+> Adam Spiers <git@adamspiers.org> writes:
+> 
+> > On Thu, Dec 19, 2013 at 06:36:45PM +0000, Adam Spiers wrote:
+> >> I wanted to be able to experiment with the TREESAME example given in
+> >> the git-log(1) man page, so I built this script which recreates it:
+> >
+> > [snipped]
+> >
+> >> Would it be worth including this in (say) contrib/, and then referring
+> >> to it from the man page, in case anyone else feels a similar urge?
+> 
+> I doubt it.  75% of the work for such a person to understand the
+> behaviour from such an example is to understand what kind of history
+> the example is building.
 
->> This includes the colon in the translated string, to make it easier to
->> remember to keep the non-breaking space before it.
->
-> Hmph, recent 3651e45c (wt-status: take the alignment burden off
-> translators, 2013-11-05) seems to have gone in the different
-> direction when it updated similar code for the non-unmerged paths.
+Agreed.  And that's precisely why I wanted a real repository
+manifesting the given example: being able to view it in gitk makes
+that a lot easier to understand, for obvious reasons.
 
-Yes, if this seems to go in the right direction, I'd add a follow-up
-for that when rerolling.
+> As you noticed, we do have existing tests
+> to build "interesting" sample histories, but the fact that you did
+> not bother with them and instead rolled your own should tell us
+> something ;-)
 
-Alternatively if there is some library function to append a colon to a
-string in a locale-appropriate way, that could work, too.  Pointers
-welcome.
+Well I didn't roll my own; I just copied the example from the man
+page.  So it only tells you that I was spending a fair amount of
+effort trying to understand the man page ;-)  A user should not have to
+read the test suite to understand how the thing works - that's only
+for developers (conveniently ignoring for the sake of this argument
+that I am occasionally a git developer too ;-)
 
-Thanks,
-Jonathan
+> The next person is unlikely to read your sample in
+> contrib/ but will roll his own,
+
+Not if the man page says "if you wish to experiment with these options
+yourself, you can easily recreate the repository in this example by
+running the script contrib/foo bundled in the source distribution".
+
+> which is probably more efficient way
+> than learning from a series of commands.
+
+The goal of sharing the series of commands is not to educate users
+through reading them, but simply to save them the time they would have
+to spend manually recreating the example scenario given in the man
+page.  After all, the useful information is not how to set up a
+repository reflecting the scenario, but rather, how the various
+git-log options affect behaviour when run on that repository.
+
+> What we _could_ do instead may be to better annotate sample
+> histories in the existing tests.  Some of them (e.g. 6004, 6007) do
+> have topology illustrations with what paths are changed at each node
+> in the graph, but many lack such a visual aid to help readers
+> understand what is going on at a glance.
+
+Again, this has the flaw of requiring non-developer users to read the
+test suite.  On most distributions, the test suite code isn't even
+installed, so this means they would have to accurately recreate the
+source from which their installed binary packages were built.  Surely
+that is considerably more effort than most users should reasonably be
+expected to spend.  In contrast, it would be trivial to extend
+standard distro packages to include a file e.g.
+
+  /usr/share/git-core/examples/git-log-history-simplification.sh
