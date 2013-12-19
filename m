@@ -1,120 +1,79 @@
-From: Tom Miller <jackerran@gmail.com>
-Subject: [PATCH V2 2/2] fetch --prune: Run prune before fetching
-Date: Thu, 19 Dec 2013 16:57:12 -0600
-Message-ID: <1387493832-13588-2-git-send-email-jackerran@gmail.com>
-References: <1387401776-30994-1-git-send-email-jackerran@gmail.com>
- <1387493832-13588-1-git-send-email-jackerran@gmail.com>
-Cc: Tom Miller <jackerran@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 19 23:57:31 2013
+From: Thomas Rast <tr@thomasrast.ch>
+Subject: Re: [PATCH] gitk: Fix typo in proc blobdiffmaybeseehere
+Date: Fri, 20 Dec 2013 00:16:58 +0100
+Message-ID: <87ob4cctxx.fsf@linux-1gf2.Speedport_W723_V_Typ_A_1_00_098>
+References: <52AF0688.3070104@viscovery.net> <52B29CB8.8090304@viscovery.net>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Paul Mackerras <paulus@samba.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Fri Dec 20 00:17:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VtmX4-0000dt-Tg
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Dec 2013 23:57:31 +0100
+	id 1VtmqB-0000oP-AR
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Dec 2013 00:17:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755736Ab3LSW52 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Dec 2013 17:57:28 -0500
-Received: from mail-qe0-f50.google.com ([209.85.128.50]:46396 "EHLO
-	mail-qe0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755309Ab3LSW50 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Dec 2013 17:57:26 -0500
-Received: by mail-qe0-f50.google.com with SMTP id 1so1736944qec.9
-        for <git@vger.kernel.org>; Thu, 19 Dec 2013 14:57:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=3rBtt23xN6zTDe6oMli3JvQ01pV560wOEwLC5o0PFhI=;
-        b=hzz+Fd+3z9fjT2fR4znUN7brl0iSuHz6QptLu6EF9k8oE4pqxMLu1jTUlgHRlPofIk
-         LwNDPPbr99CLOMpaQ9sd4WpSlBvLQOOtLQzqhAsoFcYinHhxZj9LoS2dQ+XgDSKcEzt+
-         7Oe+fBBKtLAbvNVrIuCR4aiW+F1bGgf83/4uIeTmJJwUYWIu1RTPF6d+ahJf4S647v2w
-         0bVu7ibvgulFKaKTEIBFIXnfVpBKkMqGhQUkl+/lHV7IZMoo2VGnQl3IyxjZPb/B1Q6o
-         kW00Lpo39CnoF5toOD4Up/MwKbvX15CcRUliBZnMI6PbTXCo/y6AG43/NgLa0T04/4Li
-         d0+g==
-X-Received: by 10.224.8.132 with SMTP id h4mr7914985qah.103.1387493845857;
-        Thu, 19 Dec 2013 14:57:25 -0800 (PST)
-Received: from localhost.localdomain (24-197-19-70.static.leds.al.charter.com. [24.197.19.70])
-        by mx.google.com with ESMTPSA id c6sm3068737qev.15.2013.12.19.14.57.24
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Thu, 19 Dec 2013 14:57:25 -0800 (PST)
-X-Mailer: git-send-email 1.8.5.2.194.g00457d4
-In-Reply-To: <1387493832-13588-1-git-send-email-jackerran@gmail.com>
+	id S1756576Ab3LSXRL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Dec 2013 18:17:11 -0500
+Received: from psi.thgersdorf.net ([176.9.98.78]:50533 "EHLO mail.psioc.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755822Ab3LSXRK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Dec 2013 18:17:10 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by localhost.psioc.net (Postfix) with ESMTP id F20C14D6580;
+	Fri, 20 Dec 2013 00:17:08 +0100 (CET)
+X-Virus-Scanned: amavisd-new at psioc.net
+Received: from mail.psioc.net ([127.0.0.1])
+	by localhost (mail.psioc.net [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id bO6Nwimzz9q7; Fri, 20 Dec 2013 00:16:58 +0100 (CET)
+Received: from linux-1gf2.Speedport_W723_V_Typ_A_1_00_098.thomasrast.ch (46-126-8-85.dynamic.hispeed.ch [46.126.8.85])
+	(using TLSv1.2 with cipher AES128-GCM-SHA256 (128/128 bits))
+	(Client did not present a certificate)
+	by mail.psioc.net (Postfix) with ESMTPSA id 75BC24D64C4;
+	Fri, 20 Dec 2013 00:16:58 +0100 (CET)
+In-Reply-To: <52B29CB8.8090304@viscovery.net> (Johannes Sixt's message of
+	"Thu, 19 Dec 2013 08:14:00 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239552>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239553>
 
-When we have a remote-tracking branch named "frotz/nitfol" from a
-previous fetch, and the upstream now has a branch named "frotz". Prior
-to this patch fetch would fail to remove "frotz/nitfol" with a "git
-fetch --prune" from the upstream. git would inform the user to use "git
-remote prune" to fix the problem.
+Johannes Sixt <j.sixt@viscovery.net> writes:
 
-This patch changes the way "fetch --prune" works by moving the pruning
-operation before the fetching operation. Instead of warning the user of
-a conflict, it autmatically fixes it.
+> can't use non-numeric string as operand of "!"
+>     while executing
+> "if {!$ateof} {
+> 	set nlines [expr {[winfo height $ctext]
+> 			  / [font metrics textfont -linespace]}]
+> 	if {[$ctext compare "$target_scrollpos + $nlines ..."
+>     (procedure "maybe_scroll_ctext" line 5)
+>
+> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+> ---
+> Am 12/16/2013 14:56, schrieb Johannes Sixt:
+>> To reproduce, start gitk in any repository, click a commit, then the
+>> "back" button (left-pointing arrow button) or type Alt+Cursor-Left. The
+>> error I get is this:
+>> 
+>> can't use non-numeric string as operand of "!"
+>
+> It turns out to be just a simple typo.
+[...]
+> -    maybe_scroll_ctext ateof
+> +    maybe_scroll_ctext $ateof
+>  }
 
-Signed-off-by: Tom Miller <jackerran@gmail.com>
-Tested-by: Thomas Rast <tr@thomasrast.ch>
----
- builtin/fetch.c  | 10 +++++-----
- t/t5510-fetch.sh | 14 ++++++++++++++
- 2 files changed, 19 insertions(+), 5 deletions(-)
+Ew.  Sorry about that!
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index e6dc2d6..ef3f0bb 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -855,11 +855,6 @@ static int do_fetch(struct transport *transport,
- 
- 	if (tags == TAGS_DEFAULT && autotags)
- 		transport_set_option(transport, TRANS_OPT_FOLLOWTAGS, "1");
--	if (fetch_refs(transport, ref_map)) {
--		free_refs(ref_map);
--		retcode = 1;
--		goto cleanup;
--	}
- 	if (prune) {
- 		/*
- 		 * We only prune based on refspecs specified
-@@ -875,6 +870,11 @@ static int do_fetch(struct transport *transport,
- 				   transport->url);
- 		}
- 	}
-+	if (fetch_refs(transport, ref_map)) {
-+		free_refs(ref_map);
-+		retcode = 1;
-+		goto cleanup;
-+	}
- 	free_refs(ref_map);
- 
- 	/* if neither --no-tags nor --tags was specified, do automated tag
-diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-index 08a4841..3e64af4 100755
---- a/t/t5510-fetch.sh
-+++ b/t/t5510-fetch.sh
-@@ -626,4 +626,18 @@ test_expect_success 'fetch --prune prints the remotes full url' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'branchname D/F conflict resolved by --prune' '
-+	git branch dir/file &&
-+	git clone . prune-df-conflict &&
-+	git branch -D dir/file &&
-+	git branch dir &&
-+	(
-+		cd prune-df-conflict &&
-+		git fetch --prune &&
-+		git rev-parse origin/dir >../actual
-+	) &&
-+	git rev-parse dir >expect &&
-+	test_cmp expect actual
-+'
-+
- test_done
+It's very polite of you to call it a typo, but I think it's safe to
+blame it on my lack of practice in Tcl :-)
+
 -- 
-1.8.5.2.194.g00457d4
+Thomas Rast
+tr@thomasrast.ch
