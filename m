@@ -1,102 +1,138 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: I have end-of-lifed cvsps
-Date: Thu, 19 Dec 2013 10:43:23 +0100
-Message-ID: <52B2BFBB.5090100@alum.mit.edu>
-References: <20131212001738.996EB38055C@snark.thyrsus.com> <CACPiFCK+Z7dOfO2v29PMKz+Y_fH1++xqMuTquSQ84d8KyjjFeQ@mail.gmail.com> <20131212042624.GB8909@thyrsus.com> <CACPiFC+bopf32cgDcQcVpL5vW=3KxmSP8Oh1see4KduQ1BNcPw@mail.gmail.com> <52B02DFF.5010408@gmail.com> <CALKQrgf3kuXRpbWmSp_nk8+zDFYNzkgV+dSBHaBbmUkxqjaDUA@mail.gmail.com> <20131217145809.GC15010@thyrsus.com> <CALKQrgeegcsO7YVqEmQxD4=HfR4eitodAov0tEh7MRvBxtRKUA@mail.gmail.com> <20131217184724.GA17709@thyrsus.com> <52B2335D.2030607@alum.mit.edu> <20131219040604.GA7654@thyrsus.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/3] fetch --prune: Repair branchname DF conflicts
+Date: Thu, 19 Dec 2013 06:44:14 -0500
+Message-ID: <20131219114413.GA23298@sigill.intra.peff.net>
+References: <1387401776-30994-1-git-send-email-jackerran@gmail.com>
+ <1387401776-30994-3-git-send-email-jackerran@gmail.com>
+ <xmqq4n65hlko.fsf@gitster.dls.corp.google.com>
+ <20131219014859.GA32240@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Johan Herland <johan@herland.net>,
-	=?UTF-8?B?SmFrdWIgTmFyxJlic2tp?= <jnareb@gmail.com>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: esr@thyrsus.com
-X-From: git-owner@vger.kernel.org Thu Dec 19 10:43:37 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Tom Miller <jackerran@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 19 12:44:24 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vta8l-0004lu-5u
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Dec 2013 10:43:35 +0100
+	id 1Vtc1f-0007zq-Rh
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Dec 2013 12:44:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752086Ab3LSJna (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Dec 2013 04:43:30 -0500
-Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:58769 "EHLO
-	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751196Ab3LSJn1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 19 Dec 2013 04:43:27 -0500
-X-AuditID: 12074413-b7fc76d000002aba-4c-52b2bfbe36a7
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 69.0D.10938.EBFB2B25; Thu, 19 Dec 2013 04:43:26 -0500 (EST)
-Received: from [192.168.69.148] (p57A24715.dip0.t-ipconnect.de [87.162.71.21])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id rBJ9hNgr012016
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 19 Dec 2013 04:43:24 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20131005 Icedove/17.0.9
-In-Reply-To: <20131219040604.GA7654@thyrsus.com>
-X-Enigmail-Version: 1.6
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrKKsWRmVeSWpSXmKPExsUixO6iqLtv/6Yggy/XlS2ubvGx6LrSzWSx
-	4uocZot5d3cxWWxcZ+LA6rFz1l12j0svv7N5LPvayeLxeZNcAEsUt01SYklZcGZ6nr5dAnfG
-	msZprAXfeCpm7DrN1MC4nquLkZNDQsBEYt7dqewQtpjEhXvr2boYuTiEBC4zStxcuIMFwjnH
-	JHFyeSczSBWvgLbE/xfvGUFsFgFViZVbpjKB2GwCuhKLeprBbFGBIIlHhx6yQ9QLSpyc+QRo
-	EAeHiICwxLE+NZCZzAJnGCV6F21iA6kRFlCTePZ0FSPEsrksEp0LfoMt4BQwkJhy4TYTSLOE
-	gLhET2MQiMksoC6xfp4QSAWzgLzE9rdzmCcwCs5Csm0WQtUsJFULGJlXMcol5pTm6uYmZuYU
-	pybrFicn5uWlFuma6+VmluilppRuYoQEu/AOxl0n5Q4xCnAwKvHwrni5MUiINbGsuDL3EKMk
-	B5OSKK/x7k1BQnxJ+SmVGYnFGfFFpTmpxYcYJTiYlUR4FUFyvCmJlVWpRfkwKWkOFiVxXrUl
-	6n5CAumJJanZqakFqUUwWRkODiUJ3p17gBoFi1LTUyvSMnNKENJMHJwgw7mkRIpT81JSixJL
-	SzLiQfEbXwyMYJAUD9Deon0ge4sLEnOBohCtpxh1OeZ9+fCNUYglLz8vVUqctwlkhwBIUUZp
-	HtwKWGp7xSgO9LEw72aQUTzAtAg36RXQEiagJcZrwZaUJCKkpBoY5fpzvZrCIwKKf76YkTdj
-	fubBWZqXc95cWFty+sDZ/pmWMi5Jd5k/njxjIHzjIl/F+0OrdnNNszRkTs+5/nir 
+	id S1753237Ab3LSLoU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Dec 2013 06:44:20 -0500
+Received: from cloud.peff.net ([50.56.180.127]:47273 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752488Ab3LSLoT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Dec 2013 06:44:19 -0500
+Received: (qmail 16288 invoked by uid 102); 19 Dec 2013 11:44:19 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 19 Dec 2013 05:44:19 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 19 Dec 2013 06:44:14 -0500
+Content-Disposition: inline
+In-Reply-To: <20131219014859.GA32240@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239518>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239519>
 
-On 12/19/2013 05:06 AM, Eric S. Raymond wrote:
-> Michael Haggerty <mhagger@alum.mit.edu>:
->> If you haven't tried cvs2git yet, please start it up somewhere in the
->> background.  It might take a while but it should have no trouble with
->> your repos, and then you can compare the tools based on experience
->> rather than speculation.
-> 
-> That would be a good thing.
-> 
-> Michael, in case you're wondering why I've continued to work on
-> cvs-fast-export when cvs2git exists, there are exactly two reasons:
-> (a) it's a whole lot faster on repos that aren't large enough to
-> demand multipass,
+On Wed, Dec 18, 2013 at 07:48:59PM -0600, Tom Miller wrote:
 
-What difference does speed make on little repositories?  They are fast
-enough anyway.
+> I did not intend to introduce new lingo. I did some searching through
+> history to see if something like this had been worked on before and
+> I found a commit by Jeff King that introduced me the the idea of
+> "DF conflicts"
 
-If you are worried about the speed of testing and iterating on your
-reposurgeon configuration, then just write the output of cvs2svn to a
-temporary file and use the temporary file as input to reposurgeon.
+I take all the blame. :)
 
-> and (b) the single-whole-dumpfile output makes it a
-> better reposurgeon front end.
+As for the patch itself:
 
-I can't believe you are still hung up on this!  OK, just for you, here
-it is: cvs2git-3.0, in gorgeous pipey purity:
+> >> diff --git a/builtin/fetch.c b/builtin/fetch.c
+> >> index e50b697..845c687 100644
+> >> --- a/builtin/fetch.c
+> >> +++ b/builtin/fetch.c
+> >> @@ -868,11 +868,6 @@ static int do_fetch(struct transport *transport,
+> >>
+> >>       if (tags == TAGS_DEFAULT && autotags)
+> >>               transport_set_option(transport, TRANS_OPT_FOLLOWTAGS, "1");
+> >> -     if (fetch_refs(transport, ref_map)) {
+> >> -             free_refs(ref_map);
+> >> -             retcode = 1;
+> >> -             goto cleanup;
+> >> -     }
+> >>       if (prune) {
+> >>               /*
+> >>                * We only prune based on refspecs specified
+> >> @@ -888,6 +883,11 @@ static int do_fetch(struct transport *transport,
+> >>                                  transport->url);
+> >>               }
+> >>       }
+> >> +     if (fetch_refs(transport, ref_map)) {
+> >> +             free_refs(ref_map);
+> >> +             retcode = 1;
+> >> +             goto cleanup;
+> >> +     }
 
-    #! /bin/sh
-    blobfile=$(mktemp /tmp/myblobs-XXXXXX.out)
-    dumpfile=$(mktemp /tmp/mydump-XXXXXX.out)
-    cvs2git-2.0 --blobfile="$blobfile" --dumpfile="$dumpfile" "$@" 1>&2 &&
-    cat "$blobfile" "$dumpfile"
-    rm "$blobfile" "$dumpfile"
+I think this is _probably_ a good thing to do, but it does have an
+interesting side effect for concurrent operations, and I haven't seen
+that mentioned so far in the discussion.
 
-I don't think that cvs2git-2.0 outputs any junk to stdout, but just in
-case it does I've redirected stdout explicitly to stderr to avoid
-commingling it with the output of this script.
+Readers of the ref namespace don't have any sort of transactionally
+consistent view of all of the refs. So if a remote has moved a branch
+"foo" to "bar" and we "fetch --prune", there will be a moment where a
+simultaneous reader will see one of two states that never existed on the
+remote (depending on the order the fetch chooses): either both refs
+exist, or neither exists.
 
-Michael
+Right now fetch creates first and deletes after, so a simultaneous
+reader may see both refs. After your change, it may see no refs at all.
+Even though both are technically wrong, the current behavior is safer.
+If the reader is calculating reachability (e.g., for a repack or "git
+prune), it is better to have too many references than too few.
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+I'm not sure to what degree we want to care. This is a race, but it's a
+reasonably unlikely one, and the D/F thing bites people in the real
+world.
+
+And further confounding this is the fact that even if the writer does
+everything correctly, the way we read refs can still cause an odd view
+of the whole namespace. For example, consider moving "refs/heads/z/foo"
+to "refs/heads/a/foo", while somebody else reads simultaneously. Even
+with create-before-delete, we can get the sequence:
+
+  1. Reader reads "refs/heads/a/" and sees it does not contain "foo".
+
+  2. Writer writes "refs/heads/a/foo".
+
+  3. Writer deletes "refs/heads/z/foo".
+
+  4. Reader reads "refs/heads/z", which does not contain "foo".
+
+That race can be closed with a double-read of the ref namespaces, but
+that has poor performance. A more reasonable fix, IMHO, would be to have
+an alternate ref store that represents transactions atomically (keeping
+in mind that this really only matters for busy repos with simultaneous
+readers and writers, so it would not even need to be the default ref
+store). And once you have such a store, that solves the other problem,
+too: you can just treat the delete-create as a transaction anyway. It
+also solves a similar problem with refs that rewind.
+
+So even leaving it as-is does not make the problem go away, though the
+proposed change does exacerbate it somewhat. I wonder how hard it would
+be to do the safer thing in the common case that there is no D/F
+conflict. That is, do multiple passes at updating the refs:
+
+  1. Create/update any refs we can. Those with D/F conflicts are put
+     aside for the moment.
+
+  2. Delete any refs according to the --prune rules.
+
+  3. Come back to any D/F conflicts and try them again.
+
+I dunno. As far as I know, this is not a race that people see often in
+real life (I do not have any confirmed cases of it yet). So it may
+simply not be worth worrying about.
+
+-Peff
