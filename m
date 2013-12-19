@@ -1,129 +1,117 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: I have end-of-lifed cvsps
-Date: Thu, 19 Dec 2013 02:11:53 +0100
-Message-ID: <CALKQrgdin=8h9dr=h+VfGjX3suOGRXNsvzzcF=_L9cQDYtKPgg@mail.gmail.com>
-References: <20131212001738.996EB38055C@snark.thyrsus.com>
-	<CACPiFCK+Z7dOfO2v29PMKz+Y_fH1++xqMuTquSQ84d8KyjjFeQ@mail.gmail.com>
-	<20131212042624.GB8909@thyrsus.com>
-	<CACPiFC+bopf32cgDcQcVpL5vW=3KxmSP8Oh1see4KduQ1BNcPw@mail.gmail.com>
-	<52B02DFF.5010408@gmail.com>
-	<CALKQrgf3kuXRpbWmSp_nk8+zDFYNzkgV+dSBHaBbmUkxqjaDUA@mail.gmail.com>
-	<20131217145809.GC15010@thyrsus.com>
-	<CALKQrgeegcsO7YVqEmQxD4=HfR4eitodAov0tEh7MRvBxtRKUA@mail.gmail.com>
-	<20131217184724.GA17709@thyrsus.com>
-	<52B2335D.2030607@alum.mit.edu>
+From: Tom Miller <jackerran@gmail.com>
+Subject: Re: [PATCH 1/3] builtin/fetch.c: Add pretty_url() and print_url()
+Date: Wed, 18 Dec 2013 19:18:17 -0600
+Message-ID: <20131219011817.GA31924@gmail.com>
+References: <1387401776-30994-1-git-send-email-jackerran@gmail.com>
+ <xmqq8uvhhlwg.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Eric Raymond <esr@thyrsus.com>,
-	=?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Thu Dec 19 02:12:14 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Dec 19 02:18:30 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VtS9t-0007XS-FE
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Dec 2013 02:12:13 +0100
+	id 1VtSFu-0005mG-9k
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Dec 2013 02:18:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751050Ab3LSBMI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Dec 2013 20:12:08 -0500
-Received: from mail12.copyleft.no ([188.94.218.224]:41723 "EHLO
-	mail12.copyleft.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750872Ab3LSBMH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Dec 2013 20:12:07 -0500
-Received: from locusts.copyleft.no ([188.94.218.116] helo=mail.mailgateway.no)
-	by mail12.copyleft.no with esmtp (Exim 4.76)
-	(envelope-from <johan@herland.net>)
-	id 1VtS9g-0004ai-FS
-	for git@vger.kernel.org; Thu, 19 Dec 2013 02:12:01 +0100
-Received: from mail-pd0-f175.google.com ([209.85.192.175])
-	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
-	(Exim 4.72 (FreeBSD))
-	(envelope-from <johan@herland.net>)
-	id 1VtS9d-000Euk-U1
-	for git@vger.kernel.org; Thu, 19 Dec 2013 02:11:58 +0100
-Received: by mail-pd0-f175.google.com with SMTP id w10so404028pde.6
-        for <git@vger.kernel.org>; Wed, 18 Dec 2013 17:11:54 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=IzeSAT73leCxg6xo8hVlurjUE/MxC8lxWGYZEfb7A/8=;
-        b=eudnZORBlVFtSD+8kdx/YzcW94wdV/FwPba36HTRBUVjeGzjk/ctICeteHATRHrRdV
-         1/bcLs3VydJ6FdqPi6n7c9I+eJQKpJiOqSt9kqFBFY410A5ylT/bmRcNBeC/suV8ocC3
-         m9ps33IXAwFI1n4F6hH2LnnTZ2agbndas7U0qKUOo0eB0t5yH1Xm+jeTUNdJJFEl5Yia
-         nKdrkdV9q+cWOW3UO1LYvcugp/3l1khsv+GTYWfTo944k4XI6vcImyVeHNQaPmqzeQbo
-         mcDxNLIpYYyjsm2VFi90YR0okZEUf3+WhNtmJJ6Z5DEIsTm8TQY8xA+1Adfdsnp4lGyi
-         5F/A==
-X-Received: by 10.68.134.200 with SMTP id pm8mr37883804pbb.123.1387415514001;
- Wed, 18 Dec 2013 17:11:54 -0800 (PST)
-Received: by 10.70.24.226 with HTTP; Wed, 18 Dec 2013 17:11:53 -0800 (PST)
-In-Reply-To: <52B2335D.2030607@alum.mit.edu>
+	id S1751373Ab3LSBSW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Dec 2013 20:18:22 -0500
+Received: from mail-qe0-f53.google.com ([209.85.128.53]:58345 "EHLO
+	mail-qe0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750975Ab3LSBSV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Dec 2013 20:18:21 -0500
+Received: by mail-qe0-f53.google.com with SMTP id nc12so424668qeb.12
+        for <git@vger.kernel.org>; Wed, 18 Dec 2013 17:18:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=NH/ZOyabYX0h4Eu4H2KbtfO4xE0dI6NptBLQlBpXNl4=;
+        b=gL0a+ld3InbntY4ASbKP1UAtzrEw/seYCWNqvQe3J3dR2pmpymTsjZ4YQuXyLNSmPM
+         hnkTrtdlt9E8FPFVwyMMV0H/RJ1aZVVSNm7jdMqDfyeCOAanTAb7NWTtCTh9IIhFS8HA
+         P1A8LYvDh+ADuhjRhVNBHc6tgBta4i8piCKd4oyhfu2rQkaczK7w6mThjzlAnRajlHKq
+         CbDlpAjZ8eoTx4OvxfnRFXbm0LtJIiccyH3JSBvgUvPXJHlR0bwnDbar+bMgRt1jE9of
+         202mBcb9HWEBKvGikBCD9FOHyVEZS44wEodw8d1Wa4X3tNjUwz4dvQQc0nWJiYxy/pGJ
+         aV2w==
+X-Received: by 10.49.2.132 with SMTP id 4mr59208038qeu.15.1387415900703;
+        Wed, 18 Dec 2013 17:18:20 -0800 (PST)
+Received: from gmail.com (24-197-19-70.static.leds.al.charter.com. [24.197.19.70])
+        by mx.google.com with ESMTPSA id r5sm5379470qaj.13.2013.12.18.17.18.19
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 18 Dec 2013 17:18:20 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <xmqq8uvhhlwg.fsf@gitster.dls.corp.google.com>
+Received: by 10.229.238.131 with HTTP; Wed, 18 Dec 2013 15:55:27 -0800 (PST)
+User-Agent: Mutt/1.5.22 (2013-10-16)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239510>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239511>
 
-On Thu, Dec 19, 2013 at 12:44 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
-> A correct incremental converter could be done (as long as the CVS users
-> don't literally change history retroactively) but it would be a lot of work.
+On Wed, Dec 18, 2013 at 3:47 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Tom Miller <jackerran@gmail.com> writes:
+>
+>> In order to fix branchname DF conflicts during `fetch --prune`, the way
+>> the header is output to the screen needs to be refactored. Here is an
+>> exmaple of the output with the line in question denoted by '>':
+>>
+>>       $ git fetch --prune --dry-run upstream
+>>>      From https://github.com/git/git
+>>          a155a5f..5512ac5  maint      -> upstream/maint
+>>          d7aced9..7794a68  master     -> upstream/master
+>>          523f7c4..3e57c29  next       -> upstream/next
+>>        + 462f102...0937cdf pu         -> upstream/pu  (forced update)
+>>          e24105a..5d352bc  todo       -> upstream/todo
+>>        * [new tag]         v1.8.5.2   -> v1.8.5.2
+>>        * [new tag]         v1.8.5.2   -> v1.8.5.2
+>>
+>> pretty_url():
+>> This function when passed a transport url will anonymize the transport
+>> of the url. It will strip a trailing '/'. It will also strip a trailing
+>> '.git'. It will return the newly formated url for use. I do not believe
+>> there is a need for stripping the trailing '/' and '.git' from a url,
+>> but it was already there and I wanted to make as little changes as
+>> possible.
+>
+> OK.  I tend to agree that stripping the trailing part is probably
+> not a good idea and we would want to remove that but that definitely
+> should be done as a separate step, or even as a separate series on
+> top of this one.
 
-Although I agree with that sentence as it is stated, I also believe
-that the parenthesized condition rules out a _majority_ of CVS repo of
-non-trivial size/history. So even though a correct incremental
-converter could be built, it would be pretty much useless if it did
-not gracefully handle rewritten history. And in the face of rewritten
-history it becomes pretty much impossible to define what a "correct"
-conversion should even look like (not to mention the difficulty of
-actually implementing that converter...).
+I think that removing the trailing part will greatly reduce the complexity
+to the point were it is unnecessary to have pretty_url().  My goal with
+extracting this function is to isolate the complexity of formatting the
+url to a single spot. I am thinking along the lines of the following
+commit order:
 
-Here are just a couple of things a CVS user can do (and that happened
-fairly regularly at my previous $dayjob) that would make life
-difficult for an incremental converter (and that also makes stable
-output from a non-incremental converter hard to solve in practice):
+1. Remove the "remove trailing part"
+2. Add print_url()
+3. Always print url when pruning
+4. Reverse order of prune and fetch
 
- - A user "deletes" $file from $branch by simply removing the $branch
-symbol on $file (cvs tag -B -d $branch $file). CVS stores no record of
-this. Many non-incremental importers will see $file as never having
-existed on $branch. An incremental importer starting from a previously
-converted state, must somehow deal with that previous state no longer
-existing from the POV of CVS.
+>> print_url():
+>> This function will convert a transport url to a pretty url using
+>> pretty_url(). Then it will print out the pretty url to stderr as
+>> indicated above in the example output. It uses a global variable
+>> named "gshown_url' to prevent this header for being printed twice.
+>
+> Gaah.  What is that 'g' doing there?  Please don't do that
+> meaningless naming.
 
- - A user moves a release tag on a few files to include a late bugfix
-into an upcoming release (cvs tag -F -r $new_rev $tag $file). There
-might be no single point in time where the tagged state existed in the
-repo, it has become a "Frankentag". You could claim user error here,
-and that such shortcuts should not happen, but that doesn't really
-prevent it from ever happening. Recreating the tree state of the
-Frankentag in Git is easy, but what kind of history do you construct
-to lead up to that tree?
+I am not familiar with C conventions and I was trying to stay consistent.
+I saw other global variables starting with 'g' and made an assumption.
+It will use the original name in the upcoming patches.
 
- - A modularized project develops code on HEAD, and make regular
-releases of each module by tagging the files in the module dir with
-"$modulename-$version". Afterwards a project-wide "stable" tag is
-moved on that subset of files to include the new module release into
-the "stable" tag. ("stable" is conceptually a branch, but the CVS
-mechanism used here is still the tag, since CVS branches cannot
-"follow" eachother like in Git). This is pretty much the same
-Frankentag scenario as above, except that in this case it might be
-considered Best Practice (it was at our $dayjob), and not a
-shortcut/user error made by a single user.
+> I do not think the change to introduce such a global variable
+> belongs to this refactoring step.  The current caller can decide
+> itself if it called that function, and if you are going to introduce
+> new callers in later steps, they can coordinate among themselves,
+> no?
 
-(None of these examples even involve the "cvs admin" which allows you
-to do some truly scary and demented things to your CVS history...)
-
-My point here is that people will use whatever available tools they
-have to solve whatever problems they are currently having. And when
-CVS is your tool, you will sooner or later end up with a "solution"
-that irrevocably rewrites your CVS history.
-
-
-...Johan
-
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+I agree, there is no reason for introducing it in this step. Thanks for
+pointing that out.
