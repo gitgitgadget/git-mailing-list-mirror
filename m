@@ -1,108 +1,125 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/3] prune-packed: fix a possible buffer overflow
-Date: Fri, 20 Dec 2013 04:30:48 -0500
-Message-ID: <20131220093048.GB9637@sigill.intra.peff.net>
-References: <1387287838-25779-1-git-send-email-mhagger@alum.mit.edu>
- <1387287838-25779-2-git-send-email-mhagger@alum.mit.edu>
- <CACsJy8DVc4soBrS1RbTLv93b5rere3htyL1DjRw=UcT4zVN9FA@mail.gmail.com>
- <xmqqd2kvmi85.fsf@gitster.dls.corp.google.com>
- <52B2256A.3060802@alum.mit.edu>
- <20131219000415.GA17420@sigill.intra.peff.net>
- <52B31FF3.1060102@alum.mit.edu>
+From: Wang Nan <wangnan0@huawei.com>
+Subject: [PATCH] git-quiltimport: add a --series option
+Date: Fri, 20 Dec 2013 18:21:27 +0800
+Message-ID: <1387534887-68321-1-git-send-email-wangnan0@huawei.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Antoine Pelisse <apelisse@gmail.com>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Fri Dec 20 10:31:01 2013
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
+Content-Type: text/plain
+Cc: Wang Nan <wangnan0@huawei.com>
+To: <git@vger.kernel.org>
+X-From: linux-kernel-owner@vger.kernel.org Fri Dec 20 11:22:34 2013
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VtwQ9-000639-9g
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Dec 2013 10:31:01 +0100
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1VtxE1-0003lT-UN
+	for glk-linux-kernel-3@plane.gmane.org; Fri, 20 Dec 2013 11:22:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755886Ab3LTJaz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Dec 2013 04:30:55 -0500
-Received: from cloud.peff.net ([50.56.180.127]:47796 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755536Ab3LTJau (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Dec 2013 04:30:50 -0500
-Received: (qmail 13733 invoked by uid 102); 20 Dec 2013 09:30:50 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 20 Dec 2013 03:30:50 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 20 Dec 2013 04:30:48 -0500
-Content-Disposition: inline
-In-Reply-To: <52B31FF3.1060102@alum.mit.edu>
-Sender: git-owner@vger.kernel.org
+	id S1756113Ab3LTKWX (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Fri, 20 Dec 2013 05:22:23 -0500
+Received: from szxga01-in.huawei.com ([119.145.14.64]:16031 "EHLO
+	szxga01-in.huawei.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755888Ab3LTKWU (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Fri, 20 Dec 2013 05:22:20 -0500
+Received: from 172.24.2.119 (EHLO szxeml205-edg.china.huawei.com) ([172.24.2.119])
+	by szxrg01-dlp.huawei.com (MOS 4.3.7-GA FastPath queued)
+	with ESMTP id BOV30577;
+	Fri, 20 Dec 2013 18:22:18 +0800 (CST)
+Received: from SZXEML403-HUB.china.huawei.com (10.82.67.35) by
+ szxeml205-edg.china.huawei.com (172.24.2.58) with Microsoft SMTP Server (TLS)
+ id 14.3.158.1; Fri, 20 Dec 2013 18:22:15 +0800
+Received: from lggeml430-hub.china.huawei.com (10.72.61.130) by
+ szxeml403-hub.china.huawei.com (10.82.67.35) with Microsoft SMTP Server (TLS)
+ id 14.3.158.1; Fri, 20 Dec 2013 18:22:17 +0800
+Received: from kernel-host.huawei (10.107.197.247) by
+ lggeml430-hub.china.huawei.com (10.72.61.130) with Microsoft SMTP Server id
+ 14.3.158.1; Fri, 20 Dec 2013 18:22:11 +0800
+X-Mailer: git-send-email 1.8.4
+X-Originating-IP: [10.107.197.247]
+X-CFilter-Loop: Reflected
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239567>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239568>
 
-On Thu, Dec 19, 2013 at 05:33:55PM +0100, Michael Haggerty wrote:
+This patch add a --series option to git-quiltimport to allow users to
+select the name of series file. This option is an analog of quilt's
+QUILT_SERIES environment variable.
 
-> > But we don't loop on ENOENT. So if the rmdir happens in the middle,
-> > after the mkdir but before we call open again, we'd fail, because we
-> > don't treat ENOENT specially in the second call to open. That is
-> > unlikely to happen, though, as prune would not be removing a directory
-> > it did not just enter and clean up an object from (in which case we
-> > would not have gotten the first ENOENT in the creator). [...]
-> 
-> The way I read it, prune tries to delete the directory whether or not
-> there were any files in it.  So the race could be triggered by a single
-> writer that wants to write an object to a not-yet-existent shard
-> directory and a single prune process that encounters the directory
-> between when it is created and when the object file is added.
+Signed-off-by: Wang Nan <wangnan0@huawei.com>
+---
+ Documentation/git-quiltimport.txt |  5 +++++
+ git-quiltimport.sh                | 21 ++++++++++++++++++++-
+ 2 files changed, 25 insertions(+), 1 deletion(-)
 
-Yes, that's true. It does make the race slightly more difficult than a
-straight deletion because the prune has to catch it in the moment where
-it exists but does not yet have an object. But it's still possible.
-
-> But that doesn't mean I disagree with your conclusion:
-
-I think we're in violent agreement at this point. :)
-
-> Regarding references:
-> 
-> > On a similar note, I imagine that a simultaneous "branch foo/bar" and
-> > "branch -d foo/baz" could race over the creation/deletion of
-> > "refs/heads/foo", but I didn't look into it.
-> 
-> Deleting a loose reference doesn't cause the directory containing it to
-> be deleted.  The directory is only deleted by pack-refs (and then only
-> when a reference in the directory was just packed) or when there is an
-> attempt to create a new reference that conflicts with the directory.  So
-> the question is whether the creation of a loose ref file is robust
-> against the disappearance of a directory that it just created.
-
-Ah, right, I forgot we leave the directories sitting around after
-deletion. So we may run into a collision with another creator, but by
-definition we would have a D/F conflict with such a creator anyway, so
-we cannot both succeed.
-
-But we can hit the problem with pack-refs, as you note:
-
-> And the answer is "no".  It looks like there are a bunch of places where
-> similar races occur involving references.  And probably many others
-> elsewhere in the code.  (Any caller of safe_create_leading_directories()
-> is a candidate problem point, and in fact that function itself has an
-> internal race.)  I've started fixing some of these but it might take a
-> while.
-
-Yeah, I think you'd have to teach safe_create_leading_directories to
-atomically try-to-create-and-check-errno rather than stat+mkdir. And
-then teach it to backtrack when an expected leading path goes missing
-after we created it (so mkdir("foo"), then mkdir("foo/bar"), then step
-back to mkdir("foo") if we got ENOENT).
-
-I don't think the races are a big deal, though. As with the prune case,
-we will ultimately fail to create the lockfile and get a temporary
-failure rather than a corruption. So unless we actually have reports of
-it happening (and I have seen none), it's probably not worth spending
-much time on.
-
--Peff
+diff --git a/Documentation/git-quiltimport.txt b/Documentation/git-quiltimport.txt
+index a356196..39d8e4b 100644
+--- a/Documentation/git-quiltimport.txt
++++ b/Documentation/git-quiltimport.txt
+@@ -44,6 +44,11 @@ OPTIONS
+ --patches <dir>::
+ 	The directory to find the quilt patches and the
+ 	quilt series file.
++
++--series <file>::
++	The name of the series file, defaulting to "series". Relative to
++	patches directory unless an absolute path is used.
++
+ +
+ The default for the patch directory is patches
+ or the value of the $QUILT_PATCHES environment
+diff --git a/git-quiltimport.sh b/git-quiltimport.sh
+index 8e17525..11a97b4 100755
+--- a/git-quiltimport.sh
++++ b/git-quiltimport.sh
+@@ -6,6 +6,7 @@ git quiltimport [options]
+ n,dry-run     dry run
+ author=       author name and email address for patches without any
+ patches=      path to the quilt series and patches
++series=       name of the series file
+ "
+ SUBDIRECTORY_ON=Yes
+ . git-sh-setup
+@@ -26,6 +27,10 @@ do
+ 		shift
+ 		QUILT_PATCHES="$1"
+ 		;;
++	--series)
++		shift
++		QUILT_SERIES="$1"
++		;;
+ 	--)
+ 		shift
+ 		break;;
+@@ -52,6 +57,20 @@ if ! [ -d "$QUILT_PATCHES" ] ; then
+ 	exit 1
+ fi
+ 
++: ${QUILT_SERIES:=series}
++case ${QUILT_SERIES} in
++	/*)
++		QUILT_SERIES_FILE=${QUILT_SERIES}
++	   ;;
++	*)
++		QUILT_SERIES_FILE=${QUILT_PATCHES}/${QUILT_SERIES}
++esac
++
++if ! [ -f "$QUILT_SERIES_FILE" ] ; then
++	echo "The \"$QUILT_SERIES_FILE\" file does not exist."
++	exit 1
++fi
++
+ # Temporary directories
+ tmp_dir="$GIT_DIR"/rebase-apply
+ tmp_msg="$tmp_dir/msg"
+@@ -134,5 +153,5 @@ do
+ 		commit=$( (echo "$SUBJECT"; echo; cat "$tmp_msg") | git commit-tree $tree -p $commit) &&
+ 		git update-ref -m "quiltimport: $patch_name" HEAD $commit || exit 4
+ 	fi
+-done 3<"$QUILT_PATCHES/series"
++done 3<"$QUILT_SERIES_FILE"
+ rm -rf $tmp_dir || exit 5
+-- 
+1.8.4
