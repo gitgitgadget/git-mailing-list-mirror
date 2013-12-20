@@ -1,112 +1,97 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH 02/12] Convert starts_with() to skip_prefix() for option parsing
-Date: Fri, 20 Dec 2013 09:46:41 +0100
-Message-ID: <CAP8UFD1Otpm209EGL0XWS5sCDXev9HqZT2BZ9+Sk285J-sZ-yg@mail.gmail.com>
-References: <1387378437-20646-1-git-send-email-pclouds@gmail.com>
-	<1387378437-20646-3-git-send-email-pclouds@gmail.com>
-	<52B3E8D4.1030805@viscovery.net>
-	<20131220070449.GA29717@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: RLIMIT_NOFILE fallback
+Date: Fri, 20 Dec 2013 04:12:33 -0500
+Message-ID: <20131220091232.GA9637@sigill.intra.peff.net>
+References: <xmqqy53ihwe4.fsf@gitster.dls.corp.google.com>
+ <20131218191702.GA9083@sigill.intra.peff.net>
+ <xmqq61qmhrb3.fsf@gitster.dls.corp.google.com>
+ <20131218212847.GA13685@sigill.intra.peff.net>
+ <xmqqd2kthmcr.fsf@gitster.dls.corp.google.com>
+ <20131218214001.GA14354@sigill.intra.peff.net>
+ <xmqqzjnxg3zz.fsf@gitster.dls.corp.google.com>
+ <20131219001519.GB17420@sigill.intra.peff.net>
+ <52B32D18.80400@web.de>
+ <xmqqmwjwg2ok.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
-	git <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Dec 20 09:46:50 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+	Joey Hess <joey@kitenet.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Dec 20 10:12:53 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VtvjL-0005S7-CE
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Dec 2013 09:46:47 +0100
+	id 1Vtw8a-0000OL-T9
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Dec 2013 10:12:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754414Ab3LTIqn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Dec 2013 03:46:43 -0500
-Received: from mail-vc0-f177.google.com ([209.85.220.177]:61971 "EHLO
-	mail-vc0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753501Ab3LTIqm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Dec 2013 03:46:42 -0500
-Received: by mail-vc0-f177.google.com with SMTP id hq11so1257975vcb.36
-        for <git@vger.kernel.org>; Fri, 20 Dec 2013 00:46:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=kfPOb9wLFAEVgbdwg1sto4ORq/QruLJc/pvPFacS4PU=;
-        b=Rgq6Sn5BL3h2o2mCbe6uhEMQMXrPTJAknFDadUadLjQfA85G5wYGo7mPCd3HH+7J3c
-         hzyI0xfvFnsjmZcqOmzObsa8sFzCwd9Cit9KsX94CRFZG2Wr7ap+yy/ulnKkz6GYcYwg
-         8YUUJF2dR/pKSuWRVby3DZT5SaJsoHxIjkdU7t7NoodoXfQL7EczAaiKeRIOU/lRwTla
-         p0kRtjy6S/uTYnrId76TsqralQ4kGjREhp2L0taKwVoHxQ+11/4I8KQRRHIa4XXiDsHG
-         2BAN0elFJ1hYhDc+CyYGpN86fMI5xvYd8Z0HRQUAnrKG1NJ0bOA93oWAl6h4xhkVc0+S
-         SE0w==
-X-Received: by 10.220.184.70 with SMTP id cj6mr635812vcb.23.1387529201583;
- Fri, 20 Dec 2013 00:46:41 -0800 (PST)
-Received: by 10.58.253.136 with HTTP; Fri, 20 Dec 2013 00:46:41 -0800 (PST)
-In-Reply-To: <20131220070449.GA29717@sigill.intra.peff.net>
+	id S1755358Ab3LTJMr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 20 Dec 2013 04:12:47 -0500
+Received: from cloud.peff.net ([50.56.180.127]:47787 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755022Ab3LTJMf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Dec 2013 04:12:35 -0500
+Received: (qmail 12944 invoked by uid 102); 20 Dec 2013 09:12:35 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 20 Dec 2013 03:12:35 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 20 Dec 2013 04:12:33 -0500
+Content-Disposition: inline
+In-Reply-To: <xmqqmwjwg2ok.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239565>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239566>
 
-On Fri, Dec 20, 2013 at 8:04 AM, Jeff King <peff@peff.net> wrote:
-> On Fri, Dec 20, 2013 at 07:51:00AM +0100, Johannes Sixt wrote:
->
->> >     for (i = 1; i < argc && *argv[i] == '-'; i++) {
->> >             const char *arg = argv[i];
->> > +           const char *optarg;
->> >
->> > -           if (starts_with(arg, "--upload-pack=")) {
->> > -                   args.uploadpack = arg + 14;
->> > +           if ((optarg = skip_prefix(arg, "--upload-pack=")) != NULL) {
->> > +                   args.uploadpack = optarg;
->>
->> Quite frankly, I do not think this is an improvement. The old code is
->> *MUCH* easier to understand because "starts_with" is clearly a predicate
->> that is either true or false, but the code with "skip_prefix" is much
->> heavier on the eye with its extra level of parenthesis. That it removes a
->> hard-coded constant does not count much IMHO because it is very clear
->> where the value comes from.
->
-> Yeah, I agree that is unfortunate.
+On Thu, Dec 19, 2013 at 09:39:55AM -0800, Junio C Hamano wrote:
 
-I agree too.
+> Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+>=20
+> > Thanks for an interesting reading,
+> > please allow a side question:
+> > Could it be, that "-1 =3D=3D unlimited" is Linux specific?
+> > And therefore not 100% portable ?
+> >
+> > And doesn't "unlimited" number of files call for trouble,
+> > having the risk to starve the machine ?
+> >
+> > BTW: cygwin returns 256.
+>=20
+> If you look at the caller, you will see that we do cap the value
+> returned from this helper function down to a more reasonable and not
+> so selfish maximum, exactly for the purpose of avoiding the risk of
+> starving other processes.
 
-> Maybe we could have the best of both
-> worlds, like:
->
->   if (starts_with(arg, "--upload-pack=", &optarg))
->           ... use optarg ...
->
-> Probably we do not want to call it just "starts_with", as quite a few
-> callers to do not care about what comes next, and would just pass NULL.
-> I cannot seem to think of a good name, though, as the "with" means that
-> obvious things like "starts_with_value" naturally parse as a single
-> (nonsensical) sentence.  Something like "parse_prefix" would work, but
-> it is not as clearly a predicate as "starts_with" (but we have at least
-> gotten rid of the extra parentheses).
->
-> Elsewhere in the thread, the concept was discussed of returning the full
-> string to mean "did not match", which makes some other idioms simpler
-> (but IMHO makes the simple cases like this even harder to read). My
-> proposal splits the "start of string" out parameter from the boolean
-> return, so it handles both cases naturally:
->
->   /* here we care if we saw the prefix, as above */
->   if (parse_prefix(foo, prefix, &the_rest))
->       ...
->
->   /*
->    * and here we do not care, and just want to optionally strip the
->    * prefix, and take the full value otherwise; we just have to ignore
->    * the return value in this case.
->    */
->   parse_prefix(foo, prefix, &foo);
+I am not sure you are reading the capping in the right direction. We do
+not cap at 25, but rather keep 25 open for "other stuff". So at
+unlimited, we are consuming a mere UINT_MAX-25 descriptors. :)
 
-Yeah, I agree that the function signature you suggest is better, but I
-like the "skip_prefix" name better.
-Or perhaps "remove_prefix"?
+I think that 25 is not for the benefit of the rest of the system, but
+rather for _us_ to avoid running out of descriptors for normal
+operations. I do not think we need to be careful about starving other
+processes at all. That is the job of the ulimit in the first place, and
+we respect it. If the sysadmin turns off the limit, then we are just
+following their instructions.
 
-Thanks,
-Christian.
+In practice, I'd be shocked if git behaved reasonably above about 500
+packs anyway, so that puts a practical cap on our fd use. :)
+
+None of that impacts the patch under discussion, though. The only thing
+I was trying to bring up earlier is that on a system with:
+
+  1. No (or broken) getrlimit
+
+  2. No OPEN_MAX defined
+
+  3. sysconf that works, and returns -1 for unlimited
+
+  4. a sysadmin who has set the descriptor limit to "unlimited"
+
+We will end up at "1". Which is not great, but I am skeptical that a
+system matching the above 4 constraints actually exists. So I think the
+patch is fine in practice.
+
+-Peff
