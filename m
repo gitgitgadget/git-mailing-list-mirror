@@ -1,186 +1,98 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 00/12] Hard coded string length cleanup
-Date: Fri, 20 Dec 2013 09:29:32 +0700
-Message-ID: <CACsJy8BqzgC6t_rFJ+Q7MHqEoHjdT8f-XgvRBY1aNjiUvCq=WQ@mail.gmail.com>
-References: <1387378437-20646-1-git-send-email-pclouds@gmail.com>
- <52B38213.2070702@web.de> <CACsJy8Bb4+V1DEdEmRwj10Oozi8U430ZHDCj_UhnXZcaR-wQ=g@mail.gmail.com>
- <52B397FF.4050808@web.de>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH 02/12] Convert starts_with() to skip_prefix() for option
+ parsing
+Date: Fri, 20 Dec 2013 07:51:00 +0100
+Message-ID: <52B3E8D4.1030805@viscovery.net>
+References: <1387378437-20646-1-git-send-email-pclouds@gmail.com> <1387378437-20646-3-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-X-From: git-owner@vger.kernel.org Fri Dec 20 03:30:14 2013
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 20 07:51:19 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vtpqv-0000mN-UA
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Dec 2013 03:30:14 +0100
+	id 1Vttva-0002Yf-Pc
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Dec 2013 07:51:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932195Ab3LTCaH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 Dec 2013 21:30:07 -0500
-Received: from mail-qe0-f46.google.com ([209.85.128.46]:64122 "EHLO
-	mail-qe0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932127Ab3LTCaG convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 19 Dec 2013 21:30:06 -0500
-Received: by mail-qe0-f46.google.com with SMTP id a11so1832540qen.19
-        for <git@vger.kernel.org>; Thu, 19 Dec 2013 18:30:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=6ICfY3RWUY2S+Xfq2Cgmvz6knbuXa0fnONR6TjMo88I=;
-        b=TXpjNHJ+f9Hr/ZWYOfnUQP398hrzFkYQrHCEVKN0K7pNrZe0rlMgFNWyG/+ubsqElZ
-         zSVCbBcxIT7n4lJ5yAwr0i7gwhTov3YpfOMZMOUrWHCcxCvkzHpc/yT5ntL83UGkfTcx
-         NFH4ZV+llbvCjYziDAtSBZBYZW0PVEWc0T0PcopPILhyylwZnkbOb7qibKF3osA3xChF
-         1wc+gQ2KQsAyOoQVUqIHKUEtxYyHWUCRWWyHxpixaIb4+AeTLsAdFF2jH+BZvfGvXIhK
-         UtxIVBgOZp8U0hnaaVTK3QpzWQXwuz7JdWc84AufOKJXc0S1Q+9Kcmd/bv07ToIDC7OS
-         P3ew==
-X-Received: by 10.224.103.129 with SMTP id k1mr9408091qao.77.1387506602438;
- Thu, 19 Dec 2013 18:30:02 -0800 (PST)
-Received: by 10.96.124.101 with HTTP; Thu, 19 Dec 2013 18:29:32 -0800 (PST)
-In-Reply-To: <52B397FF.4050808@web.de>
+	id S1752682Ab3LTGvH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 20 Dec 2013 01:51:07 -0500
+Received: from so.liwest.at ([212.33.55.18]:38216 "EHLO so.liwest.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752004Ab3LTGvG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Dec 2013 01:51:06 -0500
+Received: from [81.10.228.254] (helo=theia.linz.viscovery)
+	by so.liwest.at with esmtpa (Exim 4.80.1)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1VttvJ-0005X9-Me; Fri, 20 Dec 2013 07:51:01 +0100
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 3C7AB16613;
+	Fri, 20 Dec 2013 07:51:01 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:24.0) Gecko/20100101 Thunderbird/24.1.0
+In-Reply-To: <1387378437-20646-3-git-send-email-pclouds@gmail.com>
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239562>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239563>
 
-On Fri, Dec 20, 2013 at 8:06 AM, Ren=C3=A9 Scharfe <l.s.r@web.de> wrote=
-:
-> Am 20.12.2013 00:50, schrieb Duy Nguyen:
->> On Fri, Dec 20, 2013 at 6:32 AM, Ren=C3=A9 Scharfe <l.s.r@web.de> wr=
-ote:
->>> Seeing that skip_prefix_defval is mostly used in the form
->>> skip_prefix_defval(foo, prefix, foo) I wonder if it makes sense to
->>> first change skip_prefix to return the full string instead of NULL
->>> if the prefix is not matched.  Would the resulting function cover
->>> most use cases?  And would it still be easily usable?
->>
->> That was skip_prefix_gently() that I forgot to replace in a commit
->> message, before I turned it into _defval variant. The reason for
->> _defval is it could be use to chain expression together without addi=
-ng
->> temporary variables, e.g.
->>
->> -       if (starts_with(line->buf, ">From") && isspace(line->buf[5])=
-) {
->> +       if (isspace(*skip_prefix_defval(line->buf, ">From", "NOSPACE=
-"))) {
->>
->> Without _defval, one would need to do if ((p =3D skip_prefix(..)) &&
->> isspace(*p)). I'm not entirely sure this is a good thing though as i=
-t
->> could make it a bit harder to read.
->
-> That usage is quite rare compared to occurrences of
-> skip_prefix_defval(foo, prefix, foo), no?  Adding a temporary variabl=
-e
-> for them wouldn't be that bad if we can simplify the API to a single
-> function -- if that one is usable, that is.
->
-> On the other hand, we could add a special function for that example
-> and we'd already have three users in the tree (patch below).  I think
-> that's too narrow a use case for a library function, though.  Doing
-> the following instead in the three cases doesn't seem to be too bad:
->
->         rest =3D skip_prefix(line->buf, ">From");
->         if (rest !=3D line->buf && isspace(*rest)) {
->
-
-OK I agree it's the minority and probably not even worth a wrapper.
-But I disagree on changing the behavior of skip_prefix(). Some
-in-flight topics might depend on "old" skip_prefix(). The
-"skip_prefix() returns full string if not found" should have a
-different name. I'll go with _gently again, unless you suggest another
-name.
-
+Am 12/18/2013 15:53, schrieb Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy:
+> The code that's not converted to use parse_options() often does
+>=20
+>   if (!starts_with(arg, "foo=3D")) {
+>      value =3D atoi(arg + 4);
+>   }
+>=20
+> This patch removes those magic numbers with skip_prefix()
+>=20
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
 > ---
->  builtin/apply.c    | 2 +-
->  builtin/mailinfo.c | 4 ++--
->  git-compat-util.h  | 1 +
->  strbuf.c           | 9 +++++++++
->  4 files changed, 13 insertions(+), 3 deletions(-)
->
-> diff --git a/builtin/apply.c b/builtin/apply.c
-> index b0d0986..b96befd 100644
-> --- a/builtin/apply.c
-> +++ b/builtin/apply.c
-> @@ -433,7 +433,7 @@ static unsigned long linelen(const char *buffer, =
-unsigned long size)
->
->  static int is_dev_null(const char *str)
->  {
-> -       return !memcmp("/dev/null", str, 9) && isspace(str[9]);
-> +       return skip_prefix_and_space(str, "/dev/null") !=3D str;
->  }
->
->  #define TERM_SPACE     1
-> diff --git a/builtin/mailinfo.c b/builtin/mailinfo.c
-> index 2c3cd8e..2575989 100644
-> --- a/builtin/mailinfo.c
-> +++ b/builtin/mailinfo.c
-> @@ -328,11 +328,11 @@ static int check_header(const struct strbuf *li=
-ne,
->         }
->
->         /* for inbody stuff */
-> -       if (starts_with(line->buf, ">From") && isspace(line->buf[5]))=
- {
-> +       if (skip_prefix_and_space(line->buf, ">From") !=3D line->buf)=
- {
->                 ret =3D 1; /* Should this return 0? */
->                 goto check_header_out;
->         }
-> -       if (starts_with(line->buf, "[PATCH]") && isspace(line->buf[7]=
-)) {
-> +       if (skip_prefix_and_space(line->buf, "[PATCH]") !=3D line->bu=
-f) {
->                 for (i =3D 0; header[i]; i++) {
->                         if (!memcmp("Subject", header[i], 7)) {
->                                 handle_header(&hdr_data[i], line);
-> diff --git a/git-compat-util.h b/git-compat-util.h
-> index dcb92c4..a083918 100644
-> --- a/git-compat-util.h
-> +++ b/git-compat-util.h
-> @@ -355,6 +355,7 @@ extern int prefixcmp(const char *str, const char =
-*prefix);
->  extern int ends_with(const char *str, const char *suffix);
->  extern int suffixcmp(const char *str, const char *suffix);
->  extern const char *skip_prefix(const char *str, const char *prefix);
-> +extern const char *skip_prefix_and_space(const char *str, const char=
- *prefix);
->
->  #if defined(NO_MMAP) || defined(USE_WIN32_MMAP)
->
-> diff --git a/strbuf.c b/strbuf.c
-> index 222df13..768331f 100644
-> --- a/strbuf.c
-> +++ b/strbuf.c
-> @@ -47,6 +47,15 @@ const char *skip_prefix(const char *str, const cha=
-r *prefix)
->                         return str;
->  }
->
-> +const char *skip_prefix_and_space(const char *str, const char *prefi=
-x)
-> +{
-> +       const char *p =3D skip_prefix(str, prefix);
-> +       if (((p !=3D str) || !*prefix) && isspace(*p))
-> +               return p + 1;
-> +       else
-> +               return str;
-> +}
-> +
->  /*
->   * Used as the default ->buf value, so that people can always assume
->   * buf is non NULL and ->buf is NUL terminated even for a freshly
-> --
-> 1.8.5.2
+>  builtin/fetch-pack.c     | 13 +++++----
+>  builtin/index-pack.c     | 17 +++++------
+>  builtin/ls-remote.c      |  9 +++---
+>  builtin/mailinfo.c       |  5 ++--
+>  builtin/reflog.c         |  9 +++---
+>  builtin/rev-parse.c      | 41 +++++++++++++-------------
+>  builtin/send-pack.c      | 18 ++++++------
+>  builtin/unpack-objects.c |  5 ++--
+>  builtin/update-ref.c     | 21 +++++++-------
+>  daemon.c                 | 75 ++++++++++++++++++++++++--------------=
+----------
+>  diff.c                   | 49 +++++++++++++++----------------
+>  git.c                    | 13 +++++----
+>  merge-recursive.c        | 13 +++++----
+>  revision.c               | 60 +++++++++++++++++++-------------------
+>  upload-pack.c            |  5 ++--
+>  15 files changed, 182 insertions(+), 171 deletions(-)
+>=20
+> diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
+> index 8b8978a2..2df1423 100644
+> --- a/builtin/fetch-pack.c
+> +++ b/builtin/fetch-pack.c
+> @@ -47,13 +47,14 @@ int cmd_fetch_pack(int argc, const char **argv, c=
+onst char *prefix)
+> =20
+>  	for (i =3D 1; i < argc && *argv[i] =3D=3D '-'; i++) {
+>  		const char *arg =3D argv[i];
+> +		const char *optarg;
+> =20
+> -		if (starts_with(arg, "--upload-pack=3D")) {
+> -			args.uploadpack =3D arg + 14;
+> +		if ((optarg =3D skip_prefix(arg, "--upload-pack=3D")) !=3D NULL) {
+> +			args.uploadpack =3D optarg;
 
+Quite frankly, I do not think this is an improvement. The old code is
+*MUCH* easier to understand because "starts_with" is clearly a predicat=
+e
+that is either true or false, but the code with "skip_prefix" is much
+heavier on the eye with its extra level of parenthesis. That it removes=
+ a
+hard-coded constant does not count much IMHO because it is very clear
+where the value comes from.
 
-
---=20
-Duy
+-- Hannes
