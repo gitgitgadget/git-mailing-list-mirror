@@ -1,1763 +1,1513 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH v4 08/23] ewah: compressed bitmap implementation
-Date: Sat, 21 Dec 2013 08:59:54 -0500
-Message-ID: <20131221135953.GH21145@sigill.intra.peff.net>
+Subject: [PATCH v4 10/23] pack-bitmap: add support for bitmap indexes
+Date: Sat, 21 Dec 2013 09:00:01 -0500
+Message-ID: <20131221140001.GJ21145@sigill.intra.peff.net>
 References: <20131221135651.GA20818@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 21 15:00:06 2013
+X-From: git-owner@vger.kernel.org Sat Dec 21 15:00:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VuN61-00053L-DH
-	for gcvg-git-2@plane.gmane.org; Sat, 21 Dec 2013 15:00:02 +0100
+	id 1VuN6E-0005F9-SH
+	for gcvg-git-2@plane.gmane.org; Sat, 21 Dec 2013 15:00:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755141Ab3LUN75 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Dec 2013 08:59:57 -0500
-Received: from cloud.peff.net ([50.56.180.127]:48480 "HELO peff.net"
+	id S1755200Ab3LUOAG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Dec 2013 09:00:06 -0500
+Received: from cloud.peff.net ([50.56.180.127]:48484 "HELO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755102Ab3LUN7z (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Dec 2013 08:59:55 -0500
-Received: (qmail 7368 invoked by uid 102); 21 Dec 2013 13:59:55 -0000
+	id S1755169Ab3LUOAD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Dec 2013 09:00:03 -0500
+Received: (qmail 7392 invoked by uid 102); 21 Dec 2013 14:00:02 -0000
 Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 21 Dec 2013 07:59:55 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 21 Dec 2013 08:59:54 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 21 Dec 2013 08:00:02 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 21 Dec 2013 09:00:01 -0500
 Content-Disposition: inline
 In-Reply-To: <20131221135651.GA20818@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239601>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239602>
 
 From: Vicent Marti <tanoku@gmail.com>
 
-EWAH is a word-aligned compressed variant of a bitset (i.e. a data
-structure that acts as a 0-indexed boolean array for many entries).
+A bitmap index is a `.bitmap` file that can be found inside
+`$GIT_DIR/objects/pack/`, next to its corresponding packfile, and
+contains precalculated reachability information for selected commits.
+The full specification of the format for these bitmap indexes can be found
+in `Documentation/technical/bitmap-format.txt`.
 
-It uses a 64-bit run-length encoding (RLE) compression scheme,
-trading some compression for better processing speed.
+For a given commit SHA1, if it happens to be available in the bitmap
+index, its bitmap will represent every single object that is reachable
+from the commit itself. The nth bit in the bitmap is the nth object in
+the packfile; if it's set to 1, the object is reachable.
 
-The goal of this word-aligned implementation is not to achieve
-the best compression, but rather to improve query processing time.
-As it stands right now, this EWAH implementation will always be more
-efficient storage-wise than its uncompressed alternative.
+By using the bitmaps available in the index, this commit implements
+several new functions:
 
-EWAH arrays will be used as the on-disk format to store reachability
-bitmaps for all objects in a repository while keeping reasonable sizes,
-in the same way that JGit does.
+	- `prepare_bitmap_git`
+	- `prepare_bitmap_walk`
+	- `traverse_bitmap_commit_list`
+	- `reuse_partial_packfile_from_bitmap`
 
-This EWAH implementation is a mostly straightforward port of the
-original `javaewah` library that JGit currently uses. The library is
-self-contained and has been embedded whole (4 files) inside the `ewah`
-folder to ease redistribution.
+The `prepare_bitmap_walk` function tries to build a bitmap of all the
+objects that can be reached from the commit roots of a given `rev_info`
+struct by using the following algorithm:
 
-The library is re-licensed under the GPLv2 with the permission of Daniel
-Lemire, the original author. The source code for the C version can
-be found on GitHub:
+- If all the interesting commits for a revision walk are available in
+the index, the resulting reachability bitmap is the bitwise OR of all
+the individual bitmaps.
 
-	https://github.com/vmg/libewok
+- When the full set of WANTs is not available in the index, we perform a
+partial revision walk using the commits that don't have bitmaps as
+roots, and limiting the revision walk as soon as we reach a commit that
+has a corresponding bitmap. The earlier OR'ed bitmap with all the
+indexed commits can now be completed as this walk progresses, so the end
+result is the full reachability list.
 
-The original Java implementation can also be found on GitHub:
+- For revision walks with a HAVEs set (a set of commits that are deemed
+uninteresting), first we perform the same method as for the WANTs, but
+using our HAVEs as roots, in order to obtain a full reachability bitmap
+of all the uninteresting commits. This bitmap then can be used to:
 
-	https://github.com/lemire/javaewah
+	a) limit the subsequent walk when building the WANTs bitmap
+	b) finding the final set of interesting commits by performing an
+	   AND-NOT of the WANTs and the HAVEs.
+
+If `prepare_bitmap_walk` runs successfully, the resulting bitmap is
+stored and the equivalent of a `traverse_commit_list` call can be
+performed by using `traverse_bitmap_commit_list`; the bitmap version
+of this call yields the objects straight from the packfile index
+(without having to look them up or parse them) and hence is several
+orders of magnitude faster.
+
+As an extra optimization, when `prepare_bitmap_walk` succeeds, the
+`reuse_partial_packfile_from_bitmap` call can be attempted: it will find
+the amount of objects at the beginning of the on-disk packfile that can
+be reused as-is, and return an offset into the packfile. The source
+packfile can then be loaded and the bytes up to `offset` can be written
+directly to the result without having to consider the entires inside the
+packfile individually.
+
+If the `prepare_bitmap_walk` call fails (e.g. because no bitmap files
+are available), the `rev_info` struct is left untouched, and can be used
+to perform a manual rev-walk using `traverse_commit_list`.
+
+Hence, this new set of functions are a generic API that allows to
+perform the equivalent of
+
+	git rev-list --objects [roots...] [^uninteresting...]
+
+for any set of commits, even if they don't have specific bitmaps
+generated for them.
+
+In further patches, we'll use this bitmap traversal optimization to
+speed up the `pack-objects` and `rev-list` commands.
 
 Signed-off-by: Vicent Marti <tanoku@gmail.com>
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- Makefile           |  11 +-
- ewah/bitmap.c      | 221 ++++++++++++++++
- ewah/ewah_bitmap.c | 726 +++++++++++++++++++++++++++++++++++++++++++++++++++++
- ewah/ewah_io.c     | 193 ++++++++++++++
- ewah/ewah_rlw.c    | 115 +++++++++
- ewah/ewok.h        | 235 +++++++++++++++++
- ewah/ewok_rlw.h    | 114 +++++++++
- 7 files changed, 1613 insertions(+), 2 deletions(-)
- create mode 100644 ewah/bitmap.c
- create mode 100644 ewah/ewah_bitmap.c
- create mode 100644 ewah/ewah_io.c
- create mode 100644 ewah/ewah_rlw.c
- create mode 100644 ewah/ewok.h
- create mode 100644 ewah/ewok_rlw.h
+ Makefile      |   2 +
+ khash.h       | 338 ++++++++++++++++++++
+ pack-bitmap.c | 970 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ pack-bitmap.h |  43 +++
+ 4 files changed, 1353 insertions(+)
+ create mode 100644 khash.h
+ create mode 100644 pack-bitmap.c
+ create mode 100644 pack-bitmap.h
 
 diff --git a/Makefile b/Makefile
-index 48ff0bd..64a1ed7 100644
+index 64a1ed7..b983d78 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -667,6 +667,8 @@ LIB_H += diff.h
- LIB_H += diffcore.h
- LIB_H += dir.h
- LIB_H += exec_cmd.h
-+LIB_H += ewah/ewok.h
-+LIB_H += ewah/ewok_rlw.h
- LIB_H += fetch-pack.h
- LIB_H += fmt-merge-msg.h
- LIB_H += fsck.h
-@@ -800,6 +802,10 @@ LIB_OBJS += dir.o
- LIB_OBJS += editor.o
- LIB_OBJS += entry.o
- LIB_OBJS += environment.o
-+LIB_OBJS += ewah/bitmap.o
-+LIB_OBJS += ewah/ewah_bitmap.o
-+LIB_OBJS += ewah/ewah_io.o
-+LIB_OBJS += ewah/ewah_rlw.o
- LIB_OBJS += exec_cmd.o
- LIB_OBJS += fetch-pack.o
- LIB_OBJS += fsck.o
-@@ -2474,8 +2480,9 @@ profile-clean:
- 	$(RM) $(addsuffix *.gcno,$(addprefix $(PROFILE_DIR)/, $(object_dirs)))
- 
- clean: profile-clean coverage-clean
--	$(RM) *.o *.res block-sha1/*.o ppc/*.o compat/*.o compat/*/*.o xdiff/*.o vcs-svn/*.o \
--		builtin/*.o $(LIB_FILE) $(XDIFF_LIB) $(VCSSVN_LIB)
-+	$(RM) *.o *.res block-sha1/*.o ppc/*.o compat/*.o compat/*/*.o
-+	$(RM) xdiff/*.o vcs-svn/*.o ewah/*.o builtin/*.o
-+	$(RM) $(LIB_FILE) $(XDIFF_LIB) $(VCSSVN_LIB)
- 	$(RM) $(ALL_PROGRAMS) $(SCRIPT_LIB) $(BUILT_INS) git$X
- 	$(RM) $(TEST_PROGRAMS) $(NO_INSTALL)
- 	$(RM) -r bin-wrappers $(dep_dirs)
-diff --git a/ewah/bitmap.c b/ewah/bitmap.c
+@@ -699,6 +699,7 @@ LIB_H += object.h
+ LIB_H += pack-objects.h
+ LIB_H += pack-revindex.h
+ LIB_H += pack.h
++LIB_H += pack-bitmap.h
+ LIB_H += parse-options.h
+ LIB_H += patch-ids.h
+ LIB_H += pathspec.h
+@@ -837,6 +838,7 @@ LIB_OBJS += notes-cache.o
+ LIB_OBJS += notes-merge.o
+ LIB_OBJS += notes-utils.o
+ LIB_OBJS += object.o
++LIB_OBJS += pack-bitmap.o
+ LIB_OBJS += pack-check.o
+ LIB_OBJS += pack-objects.o
+ LIB_OBJS += pack-revindex.o
+diff --git a/khash.h b/khash.h
 new file mode 100644
-index 0000000..710e58c
+index 0000000..57ff603
 --- /dev/null
-+++ b/ewah/bitmap.c
-@@ -0,0 +1,221 @@
-+/**
-+ * Copyright 2013, GitHub, Inc
-+ * Copyright 2009-2013, Daniel Lemire, Cliff Moon,
-+ *	David McIntosh, Robert Becho, Google Inc. and Veronika Zenz
-+ *
-+ * This program is free software; you can redistribute it and/or
-+ * modify it under the terms of the GNU General Public License
-+ * as published by the Free Software Foundation; either version 2
-+ * of the License, or (at your option) any later version.
-+ *
-+ * This program is distributed in the hope that it will be useful,
-+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+ * GNU General Public License for more details.
-+ *
-+ * You should have received a copy of the GNU General Public License
-+ * along with this program; if not, write to the Free Software
-+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
++++ b/khash.h
+@@ -0,0 +1,338 @@
++/* The MIT License
++
++   Copyright (c) 2008, 2009, 2011 by Attractive Chaos <attractor@live.co.uk>
++
++   Permission is hereby granted, free of charge, to any person obtaining
++   a copy of this software and associated documentation files (the
++   "Software"), to deal in the Software without restriction, including
++   without limitation the rights to use, copy, modify, merge, publish,
++   distribute, sublicense, and/or sell copies of the Software, and to
++   permit persons to whom the Software is furnished to do so, subject to
++   the following conditions:
++
++   The above copyright notice and this permission notice shall be
++   included in all copies or substantial portions of the Software.
++
++   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
++   EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
++   MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
++   NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
++   BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
++   ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
++   CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
++   SOFTWARE.
++*/
++
++#ifndef __AC_KHASH_H
++#define __AC_KHASH_H
++
++#define AC_VERSION_KHASH_H "0.2.8"
++
++typedef uint32_t khint32_t;
++typedef uint64_t khint64_t;
++
++typedef khint32_t khint_t;
++typedef khint_t khiter_t;
++
++#define __ac_isempty(flag, i) ((flag[i>>4]>>((i&0xfU)<<1))&2)
++#define __ac_isdel(flag, i) ((flag[i>>4]>>((i&0xfU)<<1))&1)
++#define __ac_iseither(flag, i) ((flag[i>>4]>>((i&0xfU)<<1))&3)
++#define __ac_set_isdel_false(flag, i) (flag[i>>4]&=~(1ul<<((i&0xfU)<<1)))
++#define __ac_set_isempty_false(flag, i) (flag[i>>4]&=~(2ul<<((i&0xfU)<<1)))
++#define __ac_set_isboth_false(flag, i) (flag[i>>4]&=~(3ul<<((i&0xfU)<<1)))
++#define __ac_set_isdel_true(flag, i) (flag[i>>4]|=1ul<<((i&0xfU)<<1))
++
++#define __ac_fsize(m) ((m) < 16? 1 : (m)>>4)
++
++#define kroundup32(x) (--(x), (x)|=(x)>>1, (x)|=(x)>>2, (x)|=(x)>>4, (x)|=(x)>>8, (x)|=(x)>>16, ++(x))
++
++static inline khint_t __ac_X31_hash_string(const char *s)
++{
++	khint_t h = (khint_t)*s;
++	if (h) for (++s ; *s; ++s) h = (h << 5) - h + (khint_t)*s;
++	return h;
++}
++
++#define kh_str_hash_func(key) __ac_X31_hash_string(key)
++#define kh_str_hash_equal(a, b) (strcmp(a, b) == 0)
++
++static const double __ac_HASH_UPPER = 0.77;
++
++#define __KHASH_TYPE(name, khkey_t, khval_t) \
++	typedef struct { \
++		khint_t n_buckets, size, n_occupied, upper_bound; \
++		khint32_t *flags; \
++		khkey_t *keys; \
++		khval_t *vals; \
++	} kh_##name##_t;
++
++#define __KHASH_PROTOTYPES(name, khkey_t, khval_t)	 					\
++	extern kh_##name##_t *kh_init_##name(void);							\
++	extern void kh_destroy_##name(kh_##name##_t *h);					\
++	extern void kh_clear_##name(kh_##name##_t *h);						\
++	extern khint_t kh_get_##name(const kh_##name##_t *h, khkey_t key); 	\
++	extern int kh_resize_##name(kh_##name##_t *h, khint_t new_n_buckets); \
++	extern khint_t kh_put_##name(kh_##name##_t *h, khkey_t key, int *ret); \
++	extern void kh_del_##name(kh_##name##_t *h, khint_t x);
++
++#define __KHASH_IMPL(name, SCOPE, khkey_t, khval_t, kh_is_map, __hash_func, __hash_equal) \
++	SCOPE kh_##name##_t *kh_init_##name(void) {							\
++		return (kh_##name##_t*)xcalloc(1, sizeof(kh_##name##_t));		\
++	}																	\
++	SCOPE void kh_destroy_##name(kh_##name##_t *h)						\
++	{																	\
++		if (h) {														\
++			free((void *)h->keys); free(h->flags);					\
++			free((void *)h->vals);										\
++			free(h);													\
++		}																\
++	}																	\
++	SCOPE void kh_clear_##name(kh_##name##_t *h)						\
++	{																	\
++		if (h && h->flags) {											\
++			memset(h->flags, 0xaa, __ac_fsize(h->n_buckets) * sizeof(khint32_t)); \
++			h->size = h->n_occupied = 0;								\
++		}																\
++	}																	\
++	SCOPE khint_t kh_get_##name(const kh_##name##_t *h, khkey_t key) 	\
++	{																	\
++		if (h->n_buckets) {												\
++			khint_t k, i, last, mask, step = 0; \
++			mask = h->n_buckets - 1;									\
++			k = __hash_func(key); i = k & mask;							\
++			last = i; \
++			while (!__ac_isempty(h->flags, i) && (__ac_isdel(h->flags, i) || !__hash_equal(h->keys[i], key))) { \
++				i = (i + (++step)) & mask; \
++				if (i == last) return h->n_buckets;						\
++			}															\
++			return __ac_iseither(h->flags, i)? h->n_buckets : i;		\
++		} else return 0;												\
++	}																	\
++	SCOPE int kh_resize_##name(kh_##name##_t *h, khint_t new_n_buckets) \
++	{ /* This function uses 0.25*n_buckets bytes of working space instead of [sizeof(key_t+val_t)+.25]*n_buckets. */ \
++		khint32_t *new_flags = NULL;										\
++		khint_t j = 1;													\
++		{																\
++			kroundup32(new_n_buckets); 									\
++			if (new_n_buckets < 4) new_n_buckets = 4;					\
++			if (h->size >= (khint_t)(new_n_buckets * __ac_HASH_UPPER + 0.5)) j = 0;	/* requested size is too small */ \
++			else { /* hash table size to be changed (shrink or expand); rehash */ \
++				new_flags = (khint32_t*)xmalloc(__ac_fsize(new_n_buckets) * sizeof(khint32_t));	\
++				if (!new_flags) return -1;								\
++				memset(new_flags, 0xaa, __ac_fsize(new_n_buckets) * sizeof(khint32_t)); \
++				if (h->n_buckets < new_n_buckets) {	/* expand */		\
++					khkey_t *new_keys = (khkey_t*)xrealloc((void *)h->keys, new_n_buckets * sizeof(khkey_t)); \
++					if (!new_keys) return -1;							\
++					h->keys = new_keys;									\
++					if (kh_is_map) {									\
++						khval_t *new_vals = (khval_t*)xrealloc((void *)h->vals, new_n_buckets * sizeof(khval_t)); \
++						if (!new_vals) return -1;						\
++						h->vals = new_vals;								\
++					}													\
++				} /* otherwise shrink */								\
++			}															\
++		}																\
++		if (j) { /* rehashing is needed */								\
++			for (j = 0; j != h->n_buckets; ++j) {						\
++				if (__ac_iseither(h->flags, j) == 0) {					\
++					khkey_t key = h->keys[j];							\
++					khval_t val;										\
++					khint_t new_mask;									\
++					new_mask = new_n_buckets - 1; 						\
++					if (kh_is_map) val = h->vals[j];					\
++					__ac_set_isdel_true(h->flags, j);					\
++					while (1) { /* kick-out process; sort of like in Cuckoo hashing */ \
++						khint_t k, i, step = 0; \
++						k = __hash_func(key);							\
++						i = k & new_mask;								\
++						while (!__ac_isempty(new_flags, i)) i = (i + (++step)) & new_mask; \
++						__ac_set_isempty_false(new_flags, i);			\
++						if (i < h->n_buckets && __ac_iseither(h->flags, i) == 0) { /* kick out the existing element */ \
++							{ khkey_t tmp = h->keys[i]; h->keys[i] = key; key = tmp; } \
++							if (kh_is_map) { khval_t tmp = h->vals[i]; h->vals[i] = val; val = tmp; } \
++							__ac_set_isdel_true(h->flags, i); /* mark it as deleted in the old hash table */ \
++						} else { /* write the element and jump out of the loop */ \
++							h->keys[i] = key;							\
++							if (kh_is_map) h->vals[i] = val;			\
++							break;										\
++						}												\
++					}													\
++				}														\
++			}															\
++			if (h->n_buckets > new_n_buckets) { /* shrink the hash table */ \
++				h->keys = (khkey_t*)xrealloc((void *)h->keys, new_n_buckets * sizeof(khkey_t)); \
++				if (kh_is_map) h->vals = (khval_t*)xrealloc((void *)h->vals, new_n_buckets * sizeof(khval_t)); \
++			}															\
++			free(h->flags); /* free the working space */				\
++			h->flags = new_flags;										\
++			h->n_buckets = new_n_buckets;								\
++			h->n_occupied = h->size;									\
++			h->upper_bound = (khint_t)(h->n_buckets * __ac_HASH_UPPER + 0.5); \
++		}																\
++		return 0;														\
++	}																	\
++	SCOPE khint_t kh_put_##name(kh_##name##_t *h, khkey_t key, int *ret) \
++	{																	\
++		khint_t x;														\
++		if (h->n_occupied >= h->upper_bound) { /* update the hash table */ \
++			if (h->n_buckets > (h->size<<1)) {							\
++				if (kh_resize_##name(h, h->n_buckets - 1) < 0) { /* clear "deleted" elements */ \
++					*ret = -1; return h->n_buckets;						\
++				}														\
++			} else if (kh_resize_##name(h, h->n_buckets + 1) < 0) { /* expand the hash table */ \
++				*ret = -1; return h->n_buckets;							\
++			}															\
++		} /* TODO: to implement automatically shrinking; resize() already support shrinking */ \
++		{																\
++			khint_t k, i, site, last, mask = h->n_buckets - 1, step = 0; \
++			x = site = h->n_buckets; k = __hash_func(key); i = k & mask; \
++			if (__ac_isempty(h->flags, i)) x = i; /* for speed up */	\
++			else {														\
++				last = i; \
++				while (!__ac_isempty(h->flags, i) && (__ac_isdel(h->flags, i) || !__hash_equal(h->keys[i], key))) { \
++					if (__ac_isdel(h->flags, i)) site = i;				\
++					i = (i + (++step)) & mask; \
++					if (i == last) { x = site; break; }					\
++				}														\
++				if (x == h->n_buckets) {								\
++					if (__ac_isempty(h->flags, i) && site != h->n_buckets) x = site; \
++					else x = i;											\
++				}														\
++			}															\
++		}																\
++		if (__ac_isempty(h->flags, x)) { /* not present at all */		\
++			h->keys[x] = key;											\
++			__ac_set_isboth_false(h->flags, x);							\
++			++h->size; ++h->n_occupied;									\
++			*ret = 1;													\
++		} else if (__ac_isdel(h->flags, x)) { /* deleted */				\
++			h->keys[x] = key;											\
++			__ac_set_isboth_false(h->flags, x);							\
++			++h->size;													\
++			*ret = 2;													\
++		} else *ret = 0; /* Don't touch h->keys[x] if present and not deleted */ \
++		return x;														\
++	}																	\
++	SCOPE void kh_del_##name(kh_##name##_t *h, khint_t x)				\
++	{																	\
++		if (x != h->n_buckets && !__ac_iseither(h->flags, x)) {			\
++			__ac_set_isdel_true(h->flags, x);							\
++			--h->size;													\
++		}																\
++	}
++
++#define KHASH_DECLARE(name, khkey_t, khval_t)		 					\
++	__KHASH_TYPE(name, khkey_t, khval_t) 								\
++	__KHASH_PROTOTYPES(name, khkey_t, khval_t)
++
++#define KHASH_INIT2(name, SCOPE, khkey_t, khval_t, kh_is_map, __hash_func, __hash_equal) \
++	__KHASH_TYPE(name, khkey_t, khval_t) 								\
++	__KHASH_IMPL(name, SCOPE, khkey_t, khval_t, kh_is_map, __hash_func, __hash_equal)
++
++#define KHASH_INIT(name, khkey_t, khval_t, kh_is_map, __hash_func, __hash_equal) \
++	KHASH_INIT2(name, static inline, khkey_t, khval_t, kh_is_map, __hash_func, __hash_equal)
++
++/* Other convenient macros... */
++
++/*! @function
++  @abstract     Test whether a bucket contains data.
++  @param  h     Pointer to the hash table [khash_t(name)*]
++  @param  x     Iterator to the bucket [khint_t]
++  @return       1 if containing data; 0 otherwise [int]
 + */
-+#include "git-compat-util.h"
-+#include "ewok.h"
++#define kh_exist(h, x) (!__ac_iseither((h)->flags, (x)))
 +
-+#define MASK(x) ((eword_t)1 << (x % BITS_IN_WORD))
-+#define BLOCK(x) (x / BITS_IN_WORD)
++/*! @function
++  @abstract     Get key given an iterator
++  @param  h     Pointer to the hash table [khash_t(name)*]
++  @param  x     Iterator to the bucket [khint_t]
++  @return       Key [type of keys]
++ */
++#define kh_key(h, x) ((h)->keys[x])
 +
-+struct bitmap *bitmap_new(void)
++/*! @function
++  @abstract     Get value given an iterator
++  @param  h     Pointer to the hash table [khash_t(name)*]
++  @param  x     Iterator to the bucket [khint_t]
++  @return       Value [type of values]
++  @discussion   For hash sets, calling this results in segfault.
++ */
++#define kh_val(h, x) ((h)->vals[x])
++
++/*! @function
++  @abstract     Alias of kh_val()
++ */
++#define kh_value(h, x) ((h)->vals[x])
++
++/*! @function
++  @abstract     Get the start iterator
++  @param  h     Pointer to the hash table [khash_t(name)*]
++  @return       The start iterator [khint_t]
++ */
++#define kh_begin(h) (khint_t)(0)
++
++/*! @function
++  @abstract     Get the end iterator
++  @param  h     Pointer to the hash table [khash_t(name)*]
++  @return       The end iterator [khint_t]
++ */
++#define kh_end(h) ((h)->n_buckets)
++
++/*! @function
++  @abstract     Get the number of elements in the hash table
++  @param  h     Pointer to the hash table [khash_t(name)*]
++  @return       Number of elements in the hash table [khint_t]
++ */
++#define kh_size(h) ((h)->size)
++
++/*! @function
++  @abstract     Get the number of buckets in the hash table
++  @param  h     Pointer to the hash table [khash_t(name)*]
++  @return       Number of buckets in the hash table [khint_t]
++ */
++#define kh_n_buckets(h) ((h)->n_buckets)
++
++/*! @function
++  @abstract     Iterate over the entries in the hash table
++  @param  h     Pointer to the hash table [khash_t(name)*]
++  @param  kvar  Variable to which key will be assigned
++  @param  vvar  Variable to which value will be assigned
++  @param  code  Block of code to execute
++ */
++#define kh_foreach(h, kvar, vvar, code) { khint_t __i;		\
++	for (__i = kh_begin(h); __i != kh_end(h); ++__i) {		\
++		if (!kh_exist(h,__i)) continue;						\
++		(kvar) = kh_key(h,__i);								\
++		(vvar) = kh_val(h,__i);								\
++		code;												\
++	} }
++
++/*! @function
++  @abstract     Iterate over the values in the hash table
++  @param  h     Pointer to the hash table [khash_t(name)*]
++  @param  vvar  Variable to which value will be assigned
++  @param  code  Block of code to execute
++ */
++#define kh_foreach_value(h, vvar, code) { khint_t __i;		\
++	for (__i = kh_begin(h); __i != kh_end(h); ++__i) {		\
++		if (!kh_exist(h,__i)) continue;						\
++		(vvar) = kh_val(h,__i);								\
++		code;												\
++	} }
++
++static inline khint_t __kh_oid_hash(const unsigned char *oid)
 +{
-+	struct bitmap *bitmap = ewah_malloc(sizeof(struct bitmap));
-+	bitmap->words = ewah_calloc(32, sizeof(eword_t));
-+	bitmap->word_alloc = 32;
-+	return bitmap;
++	khint_t hash;
++	memcpy(&hash, oid, sizeof(hash));
++	return hash;
 +}
 +
-+void bitmap_set(struct bitmap *self, size_t pos)
++#define __kh_oid_cmp(a, b) (hashcmp(a, b) == 0)
++
++KHASH_INIT(sha1, const unsigned char *, void *, 1, __kh_oid_hash, __kh_oid_cmp)
++typedef kh_sha1_t khash_sha1;
++
++KHASH_INIT(sha1_pos, const unsigned char *, int, 1, __kh_oid_hash, __kh_oid_cmp)
++typedef kh_sha1_pos_t khash_sha1_pos;
++
++#endif /* __AC_KHASH_H */
+diff --git a/pack-bitmap.c b/pack-bitmap.c
+new file mode 100644
+index 0000000..33e7482
+--- /dev/null
++++ b/pack-bitmap.c
+@@ -0,0 +1,970 @@
++#include "cache.h"
++#include "commit.h"
++#include "tag.h"
++#include "diff.h"
++#include "revision.h"
++#include "progress.h"
++#include "list-objects.h"
++#include "pack.h"
++#include "pack-bitmap.h"
++#include "pack-revindex.h"
++#include "pack-objects.h"
++
++/*
++ * An entry on the bitmap index, representing the bitmap for a given
++ * commit.
++ */
++struct stored_bitmap {
++	unsigned char sha1[20];
++	struct ewah_bitmap *root;
++	struct stored_bitmap *xor;
++	int flags;
++};
++
++/*
++ * The currently active bitmap index. By design, repositories only have
++ * a single bitmap index available (the index for the biggest packfile in
++ * the repository), since bitmap indexes need full closure.
++ *
++ * If there is more than one bitmap index available (e.g. because of alternates),
++ * the active bitmap index is the largest one.
++ */
++static struct bitmap_index {
++	/* Packfile to which this bitmap index belongs to */
++	struct packed_git *pack;
++
++	/* reverse index for the packfile */
++	struct pack_revindex *reverse_index;
++
++	/*
++	 * Mark the first `reuse_objects` in the packfile as reused:
++	 * they will be sent as-is without using them for repacking
++	 * calculations
++	 */
++	uint32_t reuse_objects;
++
++	/* mmapped buffer of the whole bitmap index */
++	unsigned char *map;
++	size_t map_size; /* size of the mmaped buffer */
++	size_t map_pos; /* current position when loading the index */
++
++	/*
++	 * Type indexes.
++	 *
++	 * Each bitmap marks which objects in the packfile  are of the given
++	 * type. This provides type information when yielding the objects from
++	 * the packfile during a walk, which allows for better delta bases.
++	 */
++	struct ewah_bitmap *commits;
++	struct ewah_bitmap *trees;
++	struct ewah_bitmap *blobs;
++	struct ewah_bitmap *tags;
++
++	/* Map from SHA1 -> `stored_bitmap` for all the bitmapped comits */
++	khash_sha1 *bitmaps;
++
++	/* Number of bitmapped commits */
++	uint32_t entry_count;
++
++	/*
++	 * Extended index.
++	 *
++	 * When trying to perform bitmap operations with objects that are not
++	 * packed in `pack`, these objects are added to this "fake index" and
++	 * are assumed to appear at the end of the packfile for all operations
++	 */
++	struct eindex {
++		struct object **objects;
++		uint32_t *hashes;
++		uint32_t count, alloc;
++		khash_sha1_pos *positions;
++	} ext_index;
++
++	/* Bitmap result of the last performed walk */
++	struct bitmap *result;
++
++	/* Version of the bitmap index */
++	unsigned int version;
++
++	unsigned loaded : 1;
++
++} bitmap_git;
++
++static struct ewah_bitmap *lookup_stored_bitmap(struct stored_bitmap *st)
 +{
-+	size_t block = BLOCK(pos);
++	struct ewah_bitmap *parent;
++	struct ewah_bitmap *composed;
 +
-+	if (block >= self->word_alloc) {
-+		size_t old_size = self->word_alloc;
-+		self->word_alloc = block * 2;
-+		self->words = ewah_realloc(self->words,
-+			self->word_alloc * sizeof(eword_t));
++	if (st->xor == NULL)
++		return st->root;
 +
-+		memset(self->words + old_size, 0x0,
-+			(self->word_alloc - old_size) * sizeof(eword_t));
++	composed = ewah_pool_new();
++	parent = lookup_stored_bitmap(st->xor);
++	ewah_xor(st->root, parent, composed);
++
++	ewah_pool_free(st->root);
++	st->root = composed;
++	st->xor = NULL;
++
++	return composed;
++}
++
++/*
++ * Read a bitmap from the current read position on the mmaped
++ * index, and increase the read position accordingly
++ */
++static struct ewah_bitmap *read_bitmap_1(struct bitmap_index *index)
++{
++	struct ewah_bitmap *b = ewah_pool_new();
++
++	int bitmap_size = ewah_read_mmap(b,
++		index->map + index->map_pos,
++		index->map_size - index->map_pos);
++
++	if (bitmap_size < 0) {
++		error("Failed to load bitmap index (corrupted?)");
++		ewah_pool_free(b);
++		return NULL;
 +	}
 +
-+	self->words[block] |= MASK(pos);
++	index->map_pos += bitmap_size;
++	return b;
 +}
 +
-+void bitmap_clear(struct bitmap *self, size_t pos)
++static int load_bitmap_header(struct bitmap_index *index)
 +{
-+	size_t block = BLOCK(pos);
++	struct bitmap_disk_header *header = (void *)index->map;
 +
-+	if (block < self->word_alloc)
-+		self->words[block] &= ~MASK(pos);
++	if (index->map_size < sizeof(*header) + 20)
++		return error("Corrupted bitmap index (missing header data)");
++
++	if (memcmp(header->magic, BITMAP_IDX_SIGNATURE, sizeof(BITMAP_IDX_SIGNATURE)) != 0)
++		return error("Corrupted bitmap index file (wrong header)");
++
++	index->version = ntohs(header->version);
++	if (index->version != 1)
++		return error("Unsupported version for bitmap index file (%d)", index->version);
++
++	/* Parse known bitmap format options */
++	{
++		uint32_t flags = ntohs(header->options);
++
++		if ((flags & BITMAP_OPT_FULL_DAG) == 0)
++			return error("Unsupported options for bitmap index file "
++				"(Git requires BITMAP_OPT_FULL_DAG)");
++	}
++
++	index->entry_count = ntohl(header->entry_count);
++	index->map_pos += sizeof(*header);
++	return 0;
 +}
 +
-+int bitmap_get(struct bitmap *self, size_t pos)
++static struct stored_bitmap *store_bitmap(struct bitmap_index *index,
++					  struct ewah_bitmap *root,
++					  const unsigned char *sha1,
++					  struct stored_bitmap *xor_with,
++					  int flags)
 +{
-+	size_t block = BLOCK(pos);
-+	return block < self->word_alloc &&
-+		(self->words[block] & MASK(pos)) != 0;
++	struct stored_bitmap *stored;
++	khiter_t hash_pos;
++	int ret;
++
++	stored = xmalloc(sizeof(struct stored_bitmap));
++	stored->root = root;
++	stored->xor = xor_with;
++	stored->flags = flags;
++	hashcpy(stored->sha1, sha1);
++
++	hash_pos = kh_put_sha1(index->bitmaps, stored->sha1, &ret);
++
++	/* a 0 return code means the insertion succeeded with no changes,
++	 * because the SHA1 already existed on the map. this is bad, there
++	 * shouldn't be duplicated commits in the index */
++	if (ret == 0) {
++		error("Duplicate entry in bitmap index: %s", sha1_to_hex(sha1));
++		return NULL;
++	}
++
++	kh_value(index->bitmaps, hash_pos) = stored;
++	return stored;
 +}
 +
-+struct ewah_bitmap *bitmap_to_ewah(struct bitmap *bitmap)
++static int load_bitmap_entries_v1(struct bitmap_index *index)
 +{
-+	struct ewah_bitmap *ewah = ewah_new();
-+	size_t i, running_empty_words = 0;
-+	eword_t last_word = 0;
++	static const size_t MAX_XOR_OFFSET = 160;
 +
-+	for (i = 0; i < bitmap->word_alloc; ++i) {
-+		if (bitmap->words[i] == 0) {
-+			running_empty_words++;
-+			continue;
++	uint32_t i;
++	struct stored_bitmap **recent_bitmaps;
++	struct bitmap_disk_entry *entry;
++
++	recent_bitmaps = xcalloc(MAX_XOR_OFFSET, sizeof(struct stored_bitmap));
++
++	for (i = 0; i < index->entry_count; ++i) {
++		int xor_offset, flags;
++		struct ewah_bitmap *bitmap = NULL;
++		struct stored_bitmap *xor_bitmap = NULL;
++		uint32_t commit_idx_pos;
++		const unsigned char *sha1;
++
++		entry = (struct bitmap_disk_entry *)(index->map + index->map_pos);
++		index->map_pos += sizeof(struct bitmap_disk_entry);
++
++		commit_idx_pos = ntohl(entry->object_pos);
++		sha1 = nth_packed_object_sha1(index->pack, commit_idx_pos);
++
++		xor_offset = (int)entry->xor_offset;
++		flags = (int)entry->flags;
++
++		bitmap = read_bitmap_1(index);
++		if (!bitmap)
++			return -1;
++
++		if (xor_offset > MAX_XOR_OFFSET || xor_offset > i)
++			return error("Corrupted bitmap pack index");
++
++		if (xor_offset > 0) {
++			xor_bitmap = recent_bitmaps[(i - xor_offset) % MAX_XOR_OFFSET];
++
++			if (xor_bitmap == NULL)
++				return error("Invalid XOR offset in bitmap pack index");
 +		}
 +
-+		if (last_word != 0)
-+			ewah_add(ewah, last_word);
++		recent_bitmaps[i % MAX_XOR_OFFSET] = store_bitmap(
++			index, bitmap, sha1, xor_bitmap, flags);
++	}
 +
-+		if (running_empty_words > 0) {
-+			ewah_add_empty_words(ewah, 0, running_empty_words);
-+			running_empty_words = 0;
++	return 0;
++}
++
++static int open_pack_bitmap_1(struct packed_git *packfile)
++{
++	int fd;
++	struct stat st;
++	char *idx_name;
++
++	if (open_pack_index(packfile))
++		return -1;
++
++	idx_name = pack_bitmap_filename(packfile);
++	fd = git_open_noatime(idx_name);
++	free(idx_name);
++
++	if (fd < 0)
++		return -1;
++
++	if (fstat(fd, &st)) {
++		close(fd);
++		return -1;
++	}
++
++	if (bitmap_git.pack) {
++		warning("ignoring extra bitmap file: %s", packfile->pack_name);
++		close(fd);
++		return -1;
++	}
++
++	bitmap_git.pack = packfile;
++	bitmap_git.map_size = xsize_t(st.st_size);
++	bitmap_git.map = xmmap(NULL, bitmap_git.map_size, PROT_READ, MAP_PRIVATE, fd, 0);
++	bitmap_git.map_pos = 0;
++	close(fd);
++
++	if (load_bitmap_header(&bitmap_git) < 0) {
++		munmap(bitmap_git.map, bitmap_git.map_size);
++		bitmap_git.map = NULL;
++		bitmap_git.map_size = 0;
++		return -1;
++	}
++
++	return 0;
++}
++
++static int load_pack_bitmap(void)
++{
++	assert(bitmap_git.map && !bitmap_git.loaded);
++
++	bitmap_git.bitmaps = kh_init_sha1();
++	bitmap_git.ext_index.positions = kh_init_sha1_pos();
++	bitmap_git.reverse_index = revindex_for_pack(bitmap_git.pack);
++
++	if (!(bitmap_git.commits = read_bitmap_1(&bitmap_git)) ||
++		!(bitmap_git.trees = read_bitmap_1(&bitmap_git)) ||
++		!(bitmap_git.blobs = read_bitmap_1(&bitmap_git)) ||
++		!(bitmap_git.tags = read_bitmap_1(&bitmap_git)))
++		goto failed;
++
++	if (load_bitmap_entries_v1(&bitmap_git) < 0)
++		goto failed;
++
++	bitmap_git.loaded = 1;
++	return 0;
++
++failed:
++	munmap(bitmap_git.map, bitmap_git.map_size);
++	bitmap_git.map = NULL;
++	bitmap_git.map_size = 0;
++	return -1;
++}
++
++char *pack_bitmap_filename(struct packed_git *p)
++{
++	char *idx_name;
++	int len;
++
++	len = strlen(p->pack_name) - strlen(".pack");
++	idx_name = xmalloc(len + strlen(".bitmap") + 1);
++
++	memcpy(idx_name, p->pack_name, len);
++	memcpy(idx_name + len, ".bitmap", strlen(".bitmap") + 1);
++
++	return idx_name;
++}
++
++static int open_pack_bitmap(void)
++{
++	struct packed_git *p;
++	int ret = -1;
++
++	assert(!bitmap_git.map && !bitmap_git.loaded);
++
++	prepare_packed_git();
++	for (p = packed_git; p; p = p->next) {
++		if (open_pack_bitmap_1(p) == 0)
++			ret = 0;
++	}
++
++	return ret;
++}
++
++int prepare_bitmap_git(void)
++{
++	if (bitmap_git.loaded)
++		return 0;
++
++	if (!open_pack_bitmap())
++		return load_pack_bitmap();
++
++	return -1;
++}
++
++struct include_data {
++	struct bitmap *base;
++	struct bitmap *seen;
++};
++
++static inline int bitmap_position_extended(const unsigned char *sha1)
++{
++	khash_sha1_pos *positions = bitmap_git.ext_index.positions;
++	khiter_t pos = kh_get_sha1_pos(positions, sha1);
++
++	if (pos < kh_end(positions)) {
++		int bitmap_pos = kh_value(positions, pos);
++		return bitmap_pos + bitmap_git.pack->num_objects;
++	}
++
++	return -1;
++}
++
++static inline int bitmap_position_packfile(const unsigned char *sha1)
++{
++	off_t offset = find_pack_entry_one(sha1, bitmap_git.pack);
++	if (!offset)
++		return -1;
++
++	return find_revindex_position(bitmap_git.reverse_index, offset);
++}
++
++static int bitmap_position(const unsigned char *sha1)
++{
++	int pos = bitmap_position_packfile(sha1);
++	return (pos >= 0) ? pos : bitmap_position_extended(sha1);
++}
++
++static int ext_index_add_object(struct object *object, const char *name)
++{
++	struct eindex *eindex = &bitmap_git.ext_index;
++
++	khiter_t hash_pos;
++	int hash_ret;
++	int bitmap_pos;
++
++	hash_pos = kh_put_sha1_pos(eindex->positions, object->sha1, &hash_ret);
++	if (hash_ret > 0) {
++		if (eindex->count >= eindex->alloc) {
++			eindex->alloc = (eindex->alloc + 16) * 3 / 2;
++			eindex->objects = xrealloc(eindex->objects,
++				eindex->alloc * sizeof(struct object *));
++			eindex->hashes = xrealloc(eindex->hashes,
++				eindex->alloc * sizeof(uint32_t));
 +		}
 +
-+		last_word = bitmap->words[i];
++		bitmap_pos = eindex->count;
++		eindex->objects[eindex->count] = object;
++		eindex->hashes[eindex->count] = pack_name_hash(name);
++		kh_value(eindex->positions, hash_pos) = bitmap_pos;
++		eindex->count++;
++	} else {
++		bitmap_pos = kh_value(eindex->positions, hash_pos);
 +	}
 +
-+	ewah_add(ewah, last_word);
-+	return ewah;
++	return bitmap_pos + bitmap_git.pack->num_objects;
 +}
 +
-+struct bitmap *ewah_to_bitmap(struct ewah_bitmap *ewah)
++static void show_object(struct object *object, const struct name_path *path,
++			const char *last, void *data)
 +{
-+	struct bitmap *bitmap = bitmap_new();
-+	struct ewah_iterator it;
-+	eword_t blowup;
-+	size_t i = 0;
++	struct bitmap *base = data;
++	int bitmap_pos;
 +
-+	ewah_iterator_init(&it, ewah);
++	bitmap_pos = bitmap_position(object->sha1);
 +
-+	while (ewah_iterator_next(&blowup, &it)) {
-+		if (i >= bitmap->word_alloc) {
-+			bitmap->word_alloc *= 1.5;
-+			bitmap->words = ewah_realloc(
-+				bitmap->words, bitmap->word_alloc * sizeof(eword_t));
++	if (bitmap_pos < 0) {
++		char *name = path_name(path, last);
++		bitmap_pos = ext_index_add_object(object, name);
++		free(name);
++	}
++
++	bitmap_set(base, bitmap_pos);
++}
++
++static void show_commit(struct commit *commit, void *data)
++{
++}
++
++static int add_to_include_set(struct include_data *data,
++			      const unsigned char *sha1,
++			      int bitmap_pos)
++{
++	khiter_t hash_pos;
++
++	if (data->seen && bitmap_get(data->seen, bitmap_pos))
++		return 0;
++
++	if (bitmap_get(data->base, bitmap_pos))
++		return 0;
++
++	hash_pos = kh_get_sha1(bitmap_git.bitmaps, sha1);
++	if (hash_pos < kh_end(bitmap_git.bitmaps)) {
++		struct stored_bitmap *st = kh_value(bitmap_git.bitmaps, hash_pos);
++		bitmap_or_ewah(data->base, lookup_stored_bitmap(st));
++		return 0;
++	}
++
++	bitmap_set(data->base, bitmap_pos);
++	return 1;
++}
++
++static int should_include(struct commit *commit, void *_data)
++{
++	struct include_data *data = _data;
++	int bitmap_pos;
++
++	bitmap_pos = bitmap_position(commit->object.sha1);
++	if (bitmap_pos < 0)
++		bitmap_pos = ext_index_add_object((struct object *)commit, NULL);
++
++	if (!add_to_include_set(data, commit->object.sha1, bitmap_pos)) {
++		struct commit_list *parent = commit->parents;
++
++		while (parent) {
++			parent->item->object.flags |= SEEN;
++			parent = parent->next;
 +		}
 +
-+		bitmap->words[i++] = blowup;
++		return 0;
 +	}
 +
-+	bitmap->word_alloc = i;
-+	return bitmap;
++	return 1;
 +}
 +
-+void bitmap_and_not(struct bitmap *self, struct bitmap *other)
++static struct bitmap *find_objects(struct rev_info *revs,
++				   struct object_list *roots,
++				   struct bitmap *seen)
 +{
-+	const size_t count = (self->word_alloc < other->word_alloc) ?
-+		self->word_alloc : other->word_alloc;
++	struct bitmap *base = NULL;
++	int needs_walk = 0;
 +
-+	size_t i;
++	struct object_list *not_mapped = NULL;
 +
-+	for (i = 0; i < count; ++i)
-+		self->words[i] &= ~other->words[i];
-+}
++	/*
++	 * Go through all the roots for the walk. The ones that have bitmaps
++	 * on the bitmap index will be `or`ed together to form an initial
++	 * global reachability analysis.
++	 *
++	 * The ones without bitmaps in the index will be stored in the
++	 * `not_mapped_list` for further processing.
++	 */
++	while (roots) {
++		struct object *object = roots->item;
++		roots = roots->next;
 +
-+void bitmap_or_ewah(struct bitmap *self, struct ewah_bitmap *other)
-+{
-+	size_t original_size = self->word_alloc;
-+	size_t other_final = (other->bit_size / BITS_IN_WORD) + 1;
-+	size_t i = 0;
-+	struct ewah_iterator it;
-+	eword_t word;
++		if (object->type == OBJ_COMMIT) {
++			khiter_t pos = kh_get_sha1(bitmap_git.bitmaps, object->sha1);
 +
-+	if (self->word_alloc < other_final) {
-+		self->word_alloc = other_final;
-+		self->words = ewah_realloc(self->words,
-+			self->word_alloc * sizeof(eword_t));
-+		memset(self->words + original_size, 0x0,
-+			(self->word_alloc - original_size) * sizeof(eword_t));
-+	}
++			if (pos < kh_end(bitmap_git.bitmaps)) {
++				struct stored_bitmap *st = kh_value(bitmap_git.bitmaps, pos);
++				struct ewah_bitmap *or_with = lookup_stored_bitmap(st);
 +
-+	ewah_iterator_init(&it, other);
++				if (base == NULL)
++					base = ewah_to_bitmap(or_with);
++				else
++					bitmap_or_ewah(base, or_with);
 +
-+	while (ewah_iterator_next(&word, &it))
-+		self->words[i++] |= word;
-+}
-+
-+void bitmap_each_bit(struct bitmap *self, ewah_callback callback, void *data)
-+{
-+	size_t pos = 0, i;
-+
-+	for (i = 0; i < self->word_alloc; ++i) {
-+		eword_t word = self->words[i];
-+		uint32_t offset;
-+
-+		if (word == (eword_t)~0) {
-+			for (offset = 0; offset < BITS_IN_WORD; ++offset)
-+				callback(pos++, data);
-+		} else {
-+			for (offset = 0; offset < BITS_IN_WORD; ++offset) {
-+				if ((word >> offset) == 0)
-+					break;
-+
-+				offset += ewah_bit_ctz64(word >> offset);
-+				callback(pos + offset, data);
++				object->flags |= SEEN;
++				continue;
 +			}
-+			pos += BITS_IN_WORD;
 +		}
++
++		object_list_insert(object, &not_mapped);
++	}
++
++	/*
++	 * Best case scenario: We found bitmaps for all the roots,
++	 * so the resulting `or` bitmap has the full reachability analysis
++	 */
++	if (not_mapped == NULL)
++		return base;
++
++	roots = not_mapped;
++
++	/*
++	 * Let's iterate through all the roots that don't have bitmaps to
++	 * check if we can determine them to be reachable from the existing
++	 * global bitmap.
++	 *
++	 * If we cannot find them in the existing global bitmap, we'll need
++	 * to push them to an actual walk and run it until we can confirm
++	 * they are reachable
++	 */
++	while (roots) {
++		struct object *object = roots->item;
++		int pos;
++
++		roots = roots->next;
++		pos = bitmap_position(object->sha1);
++
++		if (pos < 0 || base == NULL || !bitmap_get(base, pos)) {
++			object->flags &= ~UNINTERESTING;
++			add_pending_object(revs, object, "");
++			needs_walk = 1;
++		} else {
++			object->flags |= SEEN;
++		}
++	}
++
++	if (needs_walk) {
++		struct include_data incdata;
++
++		if (base == NULL)
++			base = bitmap_new();
++
++		incdata.base = base;
++		incdata.seen = seen;
++
++		revs->include_check = should_include;
++		revs->include_check_data = &incdata;
++
++		if (prepare_revision_walk(revs))
++			die("revision walk setup failed");
++
++		traverse_commit_list(revs, show_commit, show_object, base);
++	}
++
++	return base;
++}
++
++static void show_extended_objects(struct bitmap *objects,
++				  show_reachable_fn show_reach)
++{
++	struct eindex *eindex = &bitmap_git.ext_index;
++	uint32_t i;
++
++	for (i = 0; i < eindex->count; ++i) {
++		struct object *obj;
++
++		if (!bitmap_get(objects, bitmap_git.pack->num_objects + i))
++			continue;
++
++		obj = eindex->objects[i];
++		show_reach(obj->sha1, obj->type, 0, eindex->hashes[i], NULL, 0);
 +	}
 +}
 +
-+size_t bitmap_popcount(struct bitmap *self)
++static void show_objects_for_type(
++	struct bitmap *objects,
++	struct ewah_bitmap *type_filter,
++	enum object_type object_type,
++	show_reachable_fn show_reach)
 +{
-+	size_t i, count = 0;
++	size_t pos = 0, i = 0;
++	uint32_t offset;
 +
-+	for (i = 0; i < self->word_alloc; ++i)
-+		count += ewah_bit_popcount64(self->words[i]);
++	struct ewah_iterator it;
++	eword_t filter;
++
++	if (bitmap_git.reuse_objects == bitmap_git.pack->num_objects)
++		return;
++
++	ewah_iterator_init(&it, type_filter);
++
++	while (i < objects->word_alloc && ewah_iterator_next(&filter, &it)) {
++		eword_t word = objects->words[i] & filter;
++
++		for (offset = 0; offset < BITS_IN_WORD; ++offset) {
++			const unsigned char *sha1;
++			struct revindex_entry *entry;
++			uint32_t hash = 0;
++
++			if ((word >> offset) == 0)
++				break;
++
++			offset += ewah_bit_ctz64(word >> offset);
++
++			if (pos + offset < bitmap_git.reuse_objects)
++				continue;
++
++			entry = &bitmap_git.reverse_index->revindex[pos + offset];
++			sha1 = nth_packed_object_sha1(bitmap_git.pack, entry->nr);
++
++			show_reach(sha1, object_type, 0, hash, bitmap_git.pack, entry->offset);
++		}
++
++		pos += BITS_IN_WORD;
++		i++;
++	}
++}
++
++static int in_bitmapped_pack(struct object_list *roots)
++{
++	while (roots) {
++		struct object *object = roots->item;
++		roots = roots->next;
++
++		if (find_pack_entry_one(object->sha1, bitmap_git.pack) > 0)
++			return 1;
++	}
++
++	return 0;
++}
++
++int prepare_bitmap_walk(struct rev_info *revs)
++{
++	unsigned int i;
++	unsigned int pending_nr = revs->pending.nr;
++	struct object_array_entry *pending_e = revs->pending.objects;
++
++	struct object_list *wants = NULL;
++	struct object_list *haves = NULL;
++
++	struct bitmap *wants_bitmap = NULL;
++	struct bitmap *haves_bitmap = NULL;
++
++	if (!bitmap_git.loaded) {
++		/* try to open a bitmapped pack, but don't parse it yet
++		 * because we may not need to use it */
++		if (open_pack_bitmap() < 0)
++			return -1;
++	}
++
++	for (i = 0; i < pending_nr; ++i) {
++		struct object *object = pending_e[i].item;
++
++		if (object->type == OBJ_NONE)
++			parse_object_or_die(object->sha1, NULL);
++
++		while (object->type == OBJ_TAG) {
++			struct tag *tag = (struct tag *) object;
++
++			if (object->flags & UNINTERESTING)
++				object_list_insert(object, &haves);
++			else
++				object_list_insert(object, &wants);
++
++			if (!tag->tagged)
++				die("bad tag");
++			object = parse_object_or_die(tag->tagged->sha1, NULL);
++		}
++
++		if (object->flags & UNINTERESTING)
++			object_list_insert(object, &haves);
++		else
++			object_list_insert(object, &wants);
++	}
++
++	/*
++	 * if we have a HAVES list, but none of those haves is contained
++	 * in the packfile that has a bitmap, we don't have anything to
++	 * optimize here
++	 */
++	if (haves && !in_bitmapped_pack(haves))
++		return -1;
++
++	/* if we don't want anything, we're done here */
++	if (!wants)
++		return -1;
++
++	/*
++	 * now we're going to use bitmaps, so load the actual bitmap entries
++	 * from disk. this is the point of no return; after this the rev_list
++	 * becomes invalidated and we must perform the revwalk through bitmaps
++	 */
++	if (!bitmap_git.loaded && load_pack_bitmap() < 0)
++		return -1;
++
++	revs->pending.nr = 0;
++	revs->pending.alloc = 0;
++	revs->pending.objects = NULL;
++
++	if (haves) {
++		haves_bitmap = find_objects(revs, haves, NULL);
++		reset_revision_walk();
++
++		if (haves_bitmap == NULL)
++			die("BUG: failed to perform bitmap walk");
++	}
++
++	wants_bitmap = find_objects(revs, wants, haves_bitmap);
++
++	if (!wants_bitmap)
++		die("BUG: failed to perform bitmap walk");
++
++	if (haves_bitmap)
++		bitmap_and_not(wants_bitmap, haves_bitmap);
++
++	bitmap_git.result = wants_bitmap;
++
++	bitmap_free(haves_bitmap);
++	return 0;
++}
++
++int reuse_partial_packfile_from_bitmap(struct packed_git **packfile,
++				       uint32_t *entries,
++				       off_t *up_to)
++{
++	/*
++	 * Reuse the packfile content if we need more than
++	 * 90% of its objects
++	 */
++	static const double REUSE_PERCENT = 0.9;
++
++	struct bitmap *result = bitmap_git.result;
++	uint32_t reuse_threshold;
++	uint32_t i, reuse_objects = 0;
++
++	assert(result);
++
++	for (i = 0; i < result->word_alloc; ++i) {
++		if (result->words[i] != (eword_t)~0) {
++			reuse_objects += ewah_bit_ctz64(~result->words[i]);
++			break;
++		}
++
++		reuse_objects += BITS_IN_WORD;
++	}
++
++#ifdef GIT_BITMAP_DEBUG
++	{
++		const unsigned char *sha1;
++		struct revindex_entry *entry;
++
++		entry = &bitmap_git.reverse_index->revindex[reuse_objects];
++		sha1 = nth_packed_object_sha1(bitmap_git.pack, entry->nr);
++
++		fprintf(stderr, "Failed to reuse at %d (%016llx)\n",
++			reuse_objects, result->words[i]);
++		fprintf(stderr, " %s\n", sha1_to_hex(sha1));
++	}
++#endif
++
++	if (!reuse_objects)
++		return -1;
++
++	if (reuse_objects >= bitmap_git.pack->num_objects) {
++		bitmap_git.reuse_objects = *entries = bitmap_git.pack->num_objects;
++		*up_to = -1; /* reuse the full pack */
++		*packfile = bitmap_git.pack;
++		return 0;
++	}
++
++	reuse_threshold = bitmap_popcount(bitmap_git.result) * REUSE_PERCENT;
++
++	if (reuse_objects < reuse_threshold)
++		return -1;
++
++	bitmap_git.reuse_objects = *entries = reuse_objects;
++	*up_to = bitmap_git.reverse_index->revindex[reuse_objects].offset;
++	*packfile = bitmap_git.pack;
++
++	return 0;
++}
++
++void traverse_bitmap_commit_list(show_reachable_fn show_reachable)
++{
++	assert(bitmap_git.result);
++
++	show_objects_for_type(bitmap_git.result, bitmap_git.commits,
++		OBJ_COMMIT, show_reachable);
++	show_objects_for_type(bitmap_git.result, bitmap_git.trees,
++		OBJ_TREE, show_reachable);
++	show_objects_for_type(bitmap_git.result, bitmap_git.blobs,
++		OBJ_BLOB, show_reachable);
++	show_objects_for_type(bitmap_git.result, bitmap_git.tags,
++		OBJ_TAG, show_reachable);
++
++	show_extended_objects(bitmap_git.result, show_reachable);
++
++	bitmap_free(bitmap_git.result);
++	bitmap_git.result = NULL;
++}
++
++static uint32_t count_object_type(struct bitmap *objects,
++				  enum object_type type)
++{
++	struct eindex *eindex = &bitmap_git.ext_index;
++
++	uint32_t i = 0, count = 0;
++	struct ewah_iterator it;
++	eword_t filter;
++
++	switch (type) {
++	case OBJ_COMMIT:
++		ewah_iterator_init(&it, bitmap_git.commits);
++		break;
++
++	case OBJ_TREE:
++		ewah_iterator_init(&it, bitmap_git.trees);
++		break;
++
++	case OBJ_BLOB:
++		ewah_iterator_init(&it, bitmap_git.blobs);
++		break;
++
++	case OBJ_TAG:
++		ewah_iterator_init(&it, bitmap_git.tags);
++		break;
++
++	default:
++		return 0;
++	}
++
++	while (i < objects->word_alloc && ewah_iterator_next(&filter, &it)) {
++		eword_t word = objects->words[i++] & filter;
++		count += ewah_bit_popcount64(word);
++	}
++
++	for (i = 0; i < eindex->count; ++i) {
++		if (eindex->objects[i]->type == type &&
++			bitmap_get(objects, bitmap_git.pack->num_objects + i))
++			count++;
++	}
 +
 +	return count;
 +}
 +
-+int bitmap_equals(struct bitmap *self, struct bitmap *other)
++void count_bitmap_commit_list(uint32_t *commits, uint32_t *trees,
++			      uint32_t *blobs, uint32_t *tags)
 +{
-+	struct bitmap *big, *small;
-+	size_t i;
++	assert(bitmap_git.result);
 +
-+	if (self->word_alloc < other->word_alloc) {
-+		small = self;
-+		big = other;
-+	} else {
-+		small = other;
-+		big = self;
-+	}
++	if (commits)
++		*commits = count_object_type(bitmap_git.result, OBJ_COMMIT);
 +
-+	for (i = 0; i < small->word_alloc; ++i) {
-+		if (small->words[i] != big->words[i])
-+			return 0;
-+	}
++	if (trees)
++		*trees = count_object_type(bitmap_git.result, OBJ_TREE);
 +
-+	for (; i < big->word_alloc; ++i) {
-+		if (big->words[i] != 0)
-+			return 0;
-+	}
++	if (blobs)
++		*blobs = count_object_type(bitmap_git.result, OBJ_BLOB);
 +
-+	return 1;
++	if (tags)
++		*tags = count_object_type(bitmap_git.result, OBJ_TAG);
 +}
 +
-+void bitmap_reset(struct bitmap *bitmap)
-+{
-+	memset(bitmap->words, 0x0, bitmap->word_alloc * sizeof(eword_t));
-+}
-+
-+void bitmap_free(struct bitmap *bitmap)
-+{
-+	if (bitmap == NULL)
-+		return;
-+
-+	free(bitmap->words);
-+	free(bitmap);
-+}
-diff --git a/ewah/ewah_bitmap.c b/ewah/ewah_bitmap.c
-new file mode 100644
-index 0000000..f104b87
---- /dev/null
-+++ b/ewah/ewah_bitmap.c
-@@ -0,0 +1,726 @@
-+/**
-+ * Copyright 2013, GitHub, Inc
-+ * Copyright 2009-2013, Daniel Lemire, Cliff Moon,
-+ *	David McIntosh, Robert Becho, Google Inc. and Veronika Zenz
-+ *
-+ * This program is free software; you can redistribute it and/or
-+ * modify it under the terms of the GNU General Public License
-+ * as published by the Free Software Foundation; either version 2
-+ * of the License, or (at your option) any later version.
-+ *
-+ * This program is distributed in the hope that it will be useful,
-+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+ * GNU General Public License for more details.
-+ *
-+ * You should have received a copy of the GNU General Public License
-+ * along with this program; if not, write to the Free Software
-+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-+ */
-+#include "git-compat-util.h"
-+#include "ewok.h"
-+#include "ewok_rlw.h"
-+
-+static inline size_t min_size(size_t a, size_t b)
-+{
-+	return a < b ? a : b;
-+}
-+
-+static inline size_t max_size(size_t a, size_t b)
-+{
-+	return a > b ? a : b;
-+}
-+
-+static inline void buffer_grow(struct ewah_bitmap *self, size_t new_size)
-+{
-+	size_t rlw_offset = (uint8_t *)self->rlw - (uint8_t *)self->buffer;
-+
-+	if (self->alloc_size >= new_size)
-+		return;
-+
-+	self->alloc_size = new_size;
-+	self->buffer = ewah_realloc(self->buffer,
-+		self->alloc_size * sizeof(eword_t));
-+	self->rlw = self->buffer + (rlw_offset / sizeof(size_t));
-+}
-+
-+static inline void buffer_push(struct ewah_bitmap *self, eword_t value)
-+{
-+	if (self->buffer_size + 1 >= self->alloc_size)
-+		buffer_grow(self, self->buffer_size * 3 / 2);
-+
-+	self->buffer[self->buffer_size++] = value;
-+}
-+
-+static void buffer_push_rlw(struct ewah_bitmap *self, eword_t value)
-+{
-+	buffer_push(self, value);
-+	self->rlw = self->buffer + self->buffer_size - 1;
-+}
-+
-+static size_t add_empty_words(struct ewah_bitmap *self, int v, size_t number)
-+{
-+	size_t added = 0;
-+	eword_t runlen, can_add;
-+
-+	if (rlw_get_run_bit(self->rlw) != v && rlw_size(self->rlw) == 0) {
-+		rlw_set_run_bit(self->rlw, v);
-+	} else if (rlw_get_literal_words(self->rlw) != 0 ||
-+			rlw_get_run_bit(self->rlw) != v) {
-+		buffer_push_rlw(self, 0);
-+		if (v) rlw_set_run_bit(self->rlw, v);
-+		added++;
-+	}
-+
-+	runlen = rlw_get_running_len(self->rlw);
-+	can_add = min_size(number, RLW_LARGEST_RUNNING_COUNT - runlen);
-+
-+	rlw_set_running_len(self->rlw, runlen + can_add);
-+	number -= can_add;
-+
-+	while (number >= RLW_LARGEST_RUNNING_COUNT) {
-+		buffer_push_rlw(self, 0);
-+		added++;
-+		if (v) rlw_set_run_bit(self->rlw, v);
-+		rlw_set_running_len(self->rlw, RLW_LARGEST_RUNNING_COUNT);
-+		number -= RLW_LARGEST_RUNNING_COUNT;
-+	}
-+
-+	if (number > 0) {
-+		buffer_push_rlw(self, 0);
-+		added++;
-+
-+		if (v) rlw_set_run_bit(self->rlw, v);
-+		rlw_set_running_len(self->rlw, number);
-+	}
-+
-+	return added;
-+}
-+
-+size_t ewah_add_empty_words(struct ewah_bitmap *self, int v, size_t number)
-+{
-+	if (number == 0)
-+		return 0;
-+
-+	self->bit_size += number * BITS_IN_WORD;
-+	return add_empty_words(self, v, number);
-+}
-+
-+static size_t add_literal(struct ewah_bitmap *self, eword_t new_data)
-+{
-+	eword_t current_num = rlw_get_literal_words(self->rlw);
-+
-+	if (current_num >= RLW_LARGEST_LITERAL_COUNT) {
-+		buffer_push_rlw(self, 0);
-+
-+		rlw_set_literal_words(self->rlw, 1);
-+		buffer_push(self, new_data);
-+		return 2;
-+	}
-+
-+	rlw_set_literal_words(self->rlw, current_num + 1);
-+
-+	/* sanity check */
-+	assert(rlw_get_literal_words(self->rlw) == current_num + 1);
-+
-+	buffer_push(self, new_data);
-+	return 1;
-+}
-+
-+void ewah_add_dirty_words(
-+	struct ewah_bitmap *self, const eword_t *buffer,
-+	size_t number, int negate)
-+{
-+	size_t literals, can_add;
-+
-+	while (1) {
-+		literals = rlw_get_literal_words(self->rlw);
-+		can_add = min_size(number, RLW_LARGEST_LITERAL_COUNT - literals);
-+
-+		rlw_set_literal_words(self->rlw, literals + can_add);
-+
-+		if (self->buffer_size + can_add >= self->alloc_size)
-+			buffer_grow(self, (self->buffer_size + can_add) * 3 / 2);
-+
-+		if (negate) {
-+			size_t i;
-+			for (i = 0; i < can_add; ++i)
-+				self->buffer[self->buffer_size++] = ~buffer[i];
-+		} else {
-+			memcpy(self->buffer + self->buffer_size,
-+				buffer, can_add * sizeof(eword_t));
-+			self->buffer_size += can_add;
-+		}
-+
-+		self->bit_size += can_add * BITS_IN_WORD;
-+
-+		if (number - can_add == 0)
-+			break;
-+
-+		buffer_push_rlw(self, 0);
-+		buffer += can_add;
-+		number -= can_add;
-+	}
-+}
-+
-+static size_t add_empty_word(struct ewah_bitmap *self, int v)
-+{
-+	int no_literal = (rlw_get_literal_words(self->rlw) == 0);
-+	eword_t run_len = rlw_get_running_len(self->rlw);
-+
-+	if (no_literal && run_len == 0) {
-+		rlw_set_run_bit(self->rlw, v);
-+		assert(rlw_get_run_bit(self->rlw) == v);
-+	}
-+
-+	if (no_literal && rlw_get_run_bit(self->rlw) == v &&
-+		run_len < RLW_LARGEST_RUNNING_COUNT) {
-+		rlw_set_running_len(self->rlw, run_len + 1);
-+		assert(rlw_get_running_len(self->rlw) == run_len + 1);
-+		return 0;
-+	} else {
-+		buffer_push_rlw(self, 0);
-+
-+		assert(rlw_get_running_len(self->rlw) == 0);
-+		assert(rlw_get_run_bit(self->rlw) == 0);
-+		assert(rlw_get_literal_words(self->rlw) == 0);
-+
-+		rlw_set_run_bit(self->rlw, v);
-+		assert(rlw_get_run_bit(self->rlw) == v);
-+
-+		rlw_set_running_len(self->rlw, 1);
-+		assert(rlw_get_running_len(self->rlw) == 1);
-+		assert(rlw_get_literal_words(self->rlw) == 0);
-+		return 1;
-+	}
-+}
-+
-+size_t ewah_add(struct ewah_bitmap *self, eword_t word)
-+{
-+	self->bit_size += BITS_IN_WORD;
-+
-+	if (word == 0)
-+		return add_empty_word(self, 0);
-+
-+	if (word == (eword_t)(~0))
-+		return add_empty_word(self, 1);
-+
-+	return add_literal(self, word);
-+}
-+
-+void ewah_set(struct ewah_bitmap *self, size_t i)
-+{
-+	const size_t dist =
-+		(i + BITS_IN_WORD) / BITS_IN_WORD -
-+		(self->bit_size + BITS_IN_WORD - 1) / BITS_IN_WORD;
-+
-+	assert(i >= self->bit_size);
-+
-+	self->bit_size = i + 1;
-+
-+	if (dist > 0) {
-+		if (dist > 1)
-+			add_empty_words(self, 0, dist - 1);
-+
-+		add_literal(self, (eword_t)1 << (i % BITS_IN_WORD));
-+		return;
-+	}
-+
-+	if (rlw_get_literal_words(self->rlw) == 0) {
-+		rlw_set_running_len(self->rlw,
-+			rlw_get_running_len(self->rlw) - 1);
-+		add_literal(self, (eword_t)1 << (i % BITS_IN_WORD));
-+		return;
-+	}
-+
-+	self->buffer[self->buffer_size - 1] |=
-+		((eword_t)1 << (i % BITS_IN_WORD));
-+
-+	/* check if we just completed a stream of 1s */
-+	if (self->buffer[self->buffer_size - 1] == (eword_t)(~0)) {
-+		self->buffer[--self->buffer_size] = 0;
-+		rlw_set_literal_words(self->rlw,
-+			rlw_get_literal_words(self->rlw) - 1);
-+		add_empty_word(self, 1);
-+	}
-+}
-+
-+void ewah_each_bit(struct ewah_bitmap *self, void (*callback)(size_t, void*), void *payload)
-+{
-+	size_t pos = 0;
-+	size_t pointer = 0;
-+	size_t k;
-+
-+	while (pointer < self->buffer_size) {
-+		eword_t *word = &self->buffer[pointer];
-+
-+		if (rlw_get_run_bit(word)) {
-+			size_t len = rlw_get_running_len(word) * BITS_IN_WORD;
-+			for (k = 0; k < len; ++k, ++pos)
-+				callback(pos, payload);
-+		} else {
-+			pos += rlw_get_running_len(word) * BITS_IN_WORD;
-+		}
-+
-+		++pointer;
-+
-+		for (k = 0; k < rlw_get_literal_words(word); ++k) {
-+			int c;
-+
-+			/* todo: zero count optimization */
-+			for (c = 0; c < BITS_IN_WORD; ++c, ++pos) {
-+				if ((self->buffer[pointer] & ((eword_t)1 << c)) != 0)
-+					callback(pos, payload);
-+			}
-+
-+			++pointer;
-+		}
-+	}
-+}
-+
-+struct ewah_bitmap *ewah_new(void)
-+{
-+	struct ewah_bitmap *self;
-+
-+	self = ewah_malloc(sizeof(struct ewah_bitmap));
-+	if (self == NULL)
-+		return NULL;
-+
-+	self->buffer = ewah_malloc(32 * sizeof(eword_t));
-+	self->alloc_size = 32;
-+
-+	ewah_clear(self);
-+	return self;
-+}
-+
-+void ewah_clear(struct ewah_bitmap *self)
-+{
-+	self->buffer_size = 1;
-+	self->buffer[0] = 0;
-+	self->bit_size = 0;
-+	self->rlw = self->buffer;
-+}
-+
-+void ewah_free(struct ewah_bitmap *self)
-+{
-+	if (!self)
-+		return;
-+
-+	if (self->alloc_size)
-+		free(self->buffer);
-+
-+	free(self);
-+}
-+
-+static void read_new_rlw(struct ewah_iterator *it)
-+{
-+	const eword_t *word = NULL;
-+
-+	it->literals = 0;
-+	it->compressed = 0;
-+
-+	while (1) {
-+		word = &it->buffer[it->pointer];
-+
-+		it->rl = rlw_get_running_len(word);
-+		it->lw = rlw_get_literal_words(word);
-+		it->b = rlw_get_run_bit(word);
-+
-+		if (it->rl || it->lw)
-+			return;
-+
-+		if (it->pointer < it->buffer_size - 1) {
-+			it->pointer++;
-+		} else {
-+			it->pointer = it->buffer_size;
-+			return;
-+		}
-+	}
-+}
-+
-+int ewah_iterator_next(eword_t *next, struct ewah_iterator *it)
-+{
-+	if (it->pointer >= it->buffer_size)
-+		return 0;
-+
-+	if (it->compressed < it->rl) {
-+		it->compressed++;
-+		*next = it->b ? (eword_t)(~0) : 0;
-+	} else {
-+		assert(it->literals < it->lw);
-+
-+		it->literals++;
-+		it->pointer++;
-+
-+		assert(it->pointer < it->buffer_size);
-+
-+		*next = it->buffer[it->pointer];
-+	}
-+
-+	if (it->compressed == it->rl && it->literals == it->lw) {
-+		if (++it->pointer < it->buffer_size)
-+			read_new_rlw(it);
-+	}
-+
-+	return 1;
-+}
-+
-+void ewah_iterator_init(struct ewah_iterator *it, struct ewah_bitmap *parent)
-+{
-+	it->buffer = parent->buffer;
-+	it->buffer_size = parent->buffer_size;
-+	it->pointer = 0;
-+
-+	it->lw = 0;
-+	it->rl = 0;
-+	it->compressed = 0;
-+	it->literals = 0;
-+	it->b = 0;
-+
-+	if (it->pointer < it->buffer_size)
-+		read_new_rlw(it);
-+}
-+
-+void ewah_dump(struct ewah_bitmap *self)
-+{
-+	size_t i;
-+	fprintf(stderr, "%"PRIuMAX" bits | %"PRIuMAX" words | ",
-+		(uintmax_t)self->bit_size, (uintmax_t)self->buffer_size);
-+
-+	for (i = 0; i < self->buffer_size; ++i)
-+		fprintf(stderr, "%016"PRIx64" ", (uint64_t)self->buffer[i]);
-+
-+	fprintf(stderr, "\n");
-+}
-+
-+void ewah_not(struct ewah_bitmap *self)
-+{
-+	size_t pointer = 0;
-+
-+	while (pointer < self->buffer_size) {
-+		eword_t *word = &self->buffer[pointer];
-+		size_t literals, k;
-+
-+		rlw_xor_run_bit(word);
-+		++pointer;
-+
-+		literals = rlw_get_literal_words(word);
-+		for (k = 0; k < literals; ++k) {
-+			self->buffer[pointer] = ~self->buffer[pointer];
-+			++pointer;
-+		}
-+	}
-+}
-+
-+void ewah_xor(
-+	struct ewah_bitmap *ewah_i,
-+	struct ewah_bitmap *ewah_j,
-+	struct ewah_bitmap *out)
-+{
-+	struct rlw_iterator rlw_i;
-+	struct rlw_iterator rlw_j;
-+	size_t literals;
-+
-+	rlwit_init(&rlw_i, ewah_i);
-+	rlwit_init(&rlw_j, ewah_j);
-+
-+	while (rlwit_word_size(&rlw_i) > 0 && rlwit_word_size(&rlw_j) > 0) {
-+		while (rlw_i.rlw.running_len > 0 || rlw_j.rlw.running_len > 0) {
-+			struct rlw_iterator *prey, *predator;
-+			size_t index;
-+			int negate_words;
-+
-+			if (rlw_i.rlw.running_len < rlw_j.rlw.running_len) {
-+				prey = &rlw_i;
-+				predator = &rlw_j;
-+			} else {
-+				prey = &rlw_j;
-+				predator = &rlw_i;
-+			}
-+
-+			negate_words = !!predator->rlw.running_bit;
-+			index = rlwit_discharge(prey, out,
-+				predator->rlw.running_len, negate_words);
-+
-+			ewah_add_empty_words(out, negate_words,
-+				predator->rlw.running_len - index);
-+
-+			rlwit_discard_first_words(predator,
-+				predator->rlw.running_len);
-+		}
-+
-+		literals = min_size(
-+			rlw_i.rlw.literal_words,
-+			rlw_j.rlw.literal_words);
-+
-+		if (literals) {
-+			size_t k;
-+
-+			for (k = 0; k < literals; ++k) {
-+				ewah_add(out,
-+					rlw_i.buffer[rlw_i.literal_word_start + k] ^
-+					rlw_j.buffer[rlw_j.literal_word_start + k]
-+				);
-+			}
-+
-+			rlwit_discard_first_words(&rlw_i, literals);
-+			rlwit_discard_first_words(&rlw_j, literals);
-+		}
-+	}
-+
-+	if (rlwit_word_size(&rlw_i) > 0)
-+		rlwit_discharge(&rlw_i, out, ~0, 0);
-+	else
-+		rlwit_discharge(&rlw_j, out, ~0, 0);
-+
-+	out->bit_size = max_size(ewah_i->bit_size, ewah_j->bit_size);
-+}
-+
-+void ewah_and(
-+	struct ewah_bitmap *ewah_i,
-+	struct ewah_bitmap *ewah_j,
-+	struct ewah_bitmap *out)
-+{
-+	struct rlw_iterator rlw_i;
-+	struct rlw_iterator rlw_j;
-+	size_t literals;
-+
-+	rlwit_init(&rlw_i, ewah_i);
-+	rlwit_init(&rlw_j, ewah_j);
-+
-+	while (rlwit_word_size(&rlw_i) > 0 && rlwit_word_size(&rlw_j) > 0) {
-+		while (rlw_i.rlw.running_len > 0 || rlw_j.rlw.running_len > 0) {
-+			struct rlw_iterator *prey, *predator;
-+
-+			if (rlw_i.rlw.running_len < rlw_j.rlw.running_len) {
-+				prey = &rlw_i;
-+				predator = &rlw_j;
-+			} else {
-+				prey = &rlw_j;
-+				predator = &rlw_i;
-+			}
-+
-+			if (predator->rlw.running_bit == 0) {
-+				ewah_add_empty_words(out, 0,
-+					predator->rlw.running_len);
-+				rlwit_discard_first_words(prey,
-+					predator->rlw.running_len);
-+				rlwit_discard_first_words(predator,
-+					predator->rlw.running_len);
-+			} else {
-+				size_t index = rlwit_discharge(prey, out,
-+					predator->rlw.running_len, 0);
-+				ewah_add_empty_words(out, 0,
-+					predator->rlw.running_len - index);
-+				rlwit_discard_first_words(predator,
-+					predator->rlw.running_len);
-+			}
-+		}
-+
-+		literals = min_size(
-+			rlw_i.rlw.literal_words,
-+			rlw_j.rlw.literal_words);
-+
-+		if (literals) {
-+			size_t k;
-+
-+			for (k = 0; k < literals; ++k) {
-+				ewah_add(out,
-+					rlw_i.buffer[rlw_i.literal_word_start + k] &
-+					rlw_j.buffer[rlw_j.literal_word_start + k]
-+				);
-+			}
-+
-+			rlwit_discard_first_words(&rlw_i, literals);
-+			rlwit_discard_first_words(&rlw_j, literals);
-+		}
-+	}
-+
-+	if (rlwit_word_size(&rlw_i) > 0)
-+		rlwit_discharge_empty(&rlw_i, out);
-+	else
-+		rlwit_discharge_empty(&rlw_j, out);
-+
-+	out->bit_size = max_size(ewah_i->bit_size, ewah_j->bit_size);
-+}
-+
-+void ewah_and_not(
-+	struct ewah_bitmap *ewah_i,
-+	struct ewah_bitmap *ewah_j,
-+	struct ewah_bitmap *out)
-+{
-+	struct rlw_iterator rlw_i;
-+	struct rlw_iterator rlw_j;
-+	size_t literals;
-+
-+	rlwit_init(&rlw_i, ewah_i);
-+	rlwit_init(&rlw_j, ewah_j);
-+
-+	while (rlwit_word_size(&rlw_i) > 0 && rlwit_word_size(&rlw_j) > 0) {
-+		while (rlw_i.rlw.running_len > 0 || rlw_j.rlw.running_len > 0) {
-+			struct rlw_iterator *prey, *predator;
-+
-+			if (rlw_i.rlw.running_len < rlw_j.rlw.running_len) {
-+				prey = &rlw_i;
-+				predator = &rlw_j;
-+			} else {
-+				prey = &rlw_j;
-+				predator = &rlw_i;
-+			}
-+
-+			if ((predator->rlw.running_bit && prey == &rlw_i) ||
-+				(!predator->rlw.running_bit && prey != &rlw_i)) {
-+				ewah_add_empty_words(out, 0,
-+					predator->rlw.running_len);
-+				rlwit_discard_first_words(prey,
-+					predator->rlw.running_len);
-+				rlwit_discard_first_words(predator,
-+					predator->rlw.running_len);
-+			} else {
-+				size_t index;
-+				int negate_words;
-+
-+				negate_words = (&rlw_i != prey);
-+				index = rlwit_discharge(prey, out,
-+					predator->rlw.running_len, negate_words);
-+				ewah_add_empty_words(out, negate_words,
-+					predator->rlw.running_len - index);
-+				rlwit_discard_first_words(predator,
-+					predator->rlw.running_len);
-+			}
-+		}
-+
-+		literals = min_size(
-+			rlw_i.rlw.literal_words,
-+			rlw_j.rlw.literal_words);
-+
-+		if (literals) {
-+			size_t k;
-+
-+			for (k = 0; k < literals; ++k) {
-+				ewah_add(out,
-+					rlw_i.buffer[rlw_i.literal_word_start + k] &
-+					~(rlw_j.buffer[rlw_j.literal_word_start + k])
-+				);
-+			}
-+
-+			rlwit_discard_first_words(&rlw_i, literals);
-+			rlwit_discard_first_words(&rlw_j, literals);
-+		}
-+	}
-+
-+	if (rlwit_word_size(&rlw_i) > 0)
-+		rlwit_discharge(&rlw_i, out, ~0, 0);
-+	else
-+		rlwit_discharge_empty(&rlw_j, out);
-+
-+	out->bit_size = max_size(ewah_i->bit_size, ewah_j->bit_size);
-+}
-+
-+void ewah_or(
-+	struct ewah_bitmap *ewah_i,
-+	struct ewah_bitmap *ewah_j,
-+	struct ewah_bitmap *out)
-+{
-+	struct rlw_iterator rlw_i;
-+	struct rlw_iterator rlw_j;
-+	size_t literals;
-+
-+	rlwit_init(&rlw_i, ewah_i);
-+	rlwit_init(&rlw_j, ewah_j);
-+
-+	while (rlwit_word_size(&rlw_i) > 0 && rlwit_word_size(&rlw_j) > 0) {
-+		while (rlw_i.rlw.running_len > 0 || rlw_j.rlw.running_len > 0) {
-+			struct rlw_iterator *prey, *predator;
-+
-+			if (rlw_i.rlw.running_len < rlw_j.rlw.running_len) {
-+				prey = &rlw_i;
-+				predator = &rlw_j;
-+			} else {
-+				prey = &rlw_j;
-+				predator = &rlw_i;
-+			}
-+
-+			if (predator->rlw.running_bit) {
-+				ewah_add_empty_words(out, 0,
-+					predator->rlw.running_len);
-+				rlwit_discard_first_words(prey,
-+					predator->rlw.running_len);
-+				rlwit_discard_first_words(predator,
-+					predator->rlw.running_len);
-+			} else {
-+				size_t index = rlwit_discharge(prey, out,
-+					predator->rlw.running_len, 0);
-+				ewah_add_empty_words(out, 0,
-+					predator->rlw.running_len - index);
-+				rlwit_discard_first_words(predator,
-+					predator->rlw.running_len);
-+			}
-+		}
-+
-+		literals = min_size(
-+			rlw_i.rlw.literal_words,
-+			rlw_j.rlw.literal_words);
-+
-+		if (literals) {
-+			size_t k;
-+
-+			for (k = 0; k < literals; ++k) {
-+				ewah_add(out,
-+					rlw_i.buffer[rlw_i.literal_word_start + k] |
-+					rlw_j.buffer[rlw_j.literal_word_start + k]
-+				);
-+			}
-+
-+			rlwit_discard_first_words(&rlw_i, literals);
-+			rlwit_discard_first_words(&rlw_j, literals);
-+		}
-+	}
-+
-+	if (rlwit_word_size(&rlw_i) > 0)
-+		rlwit_discharge(&rlw_i, out, ~0, 0);
-+	else
-+		rlwit_discharge(&rlw_j, out, ~0, 0);
-+
-+	out->bit_size = max_size(ewah_i->bit_size, ewah_j->bit_size);
-+}
-+
-+
-+#define BITMAP_POOL_MAX 16
-+static struct ewah_bitmap *bitmap_pool[BITMAP_POOL_MAX];
-+static size_t bitmap_pool_size;
-+
-+struct ewah_bitmap *ewah_pool_new(void)
-+{
-+	if (bitmap_pool_size)
-+		return bitmap_pool[--bitmap_pool_size];
-+
-+	return ewah_new();
-+}
-+
-+void ewah_pool_free(struct ewah_bitmap *self)
-+{
-+	if (self == NULL)
-+		return;
-+
-+	if (bitmap_pool_size == BITMAP_POOL_MAX ||
-+		self->alloc_size == 0) {
-+		ewah_free(self);
-+		return;
-+	}
-+
-+	ewah_clear(self);
-+	bitmap_pool[bitmap_pool_size++] = self;
-+}
-+
-+uint32_t ewah_checksum(struct ewah_bitmap *self)
-+{
-+	const uint8_t *p = (uint8_t *)self->buffer;
-+	uint32_t crc = (uint32_t)self->bit_size;
-+	size_t size = self->buffer_size * sizeof(eword_t);
-+
-+	while (size--)
-+		crc = (crc << 5) - crc + (uint32_t)*p++;
-+
-+	return crc;
-+}
-diff --git a/ewah/ewah_io.c b/ewah/ewah_io.c
-new file mode 100644
-index 0000000..aed0da6
---- /dev/null
-+++ b/ewah/ewah_io.c
-@@ -0,0 +1,193 @@
-+/**
-+ * Copyright 2013, GitHub, Inc
-+ * Copyright 2009-2013, Daniel Lemire, Cliff Moon,
-+ *	David McIntosh, Robert Becho, Google Inc. and Veronika Zenz
-+ *
-+ * This program is free software; you can redistribute it and/or
-+ * modify it under the terms of the GNU General Public License
-+ * as published by the Free Software Foundation; either version 2
-+ * of the License, or (at your option) any later version.
-+ *
-+ * This program is distributed in the hope that it will be useful,
-+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+ * GNU General Public License for more details.
-+ *
-+ * You should have received a copy of the GNU General Public License
-+ * along with this program; if not, write to the Free Software
-+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-+ */
-+#include "git-compat-util.h"
-+#include "ewok.h"
-+
-+int ewah_serialize_native(struct ewah_bitmap *self, int fd)
-+{
-+	uint32_t write32;
-+	size_t to_write = self->buffer_size * 8;
-+
-+	/* 32 bit -- bit size for the map */
-+	write32 = (uint32_t)self->bit_size;
-+	if (write(fd, &write32, 4) != 4)
-+		return -1;
-+
-+	/** 32 bit -- number of compressed 64-bit words */
-+	write32 = (uint32_t)self->buffer_size;
-+	if (write(fd, &write32, 4) != 4)
-+		return -1;
-+
-+	if (write(fd, self->buffer, to_write) != to_write)
-+		return -1;
-+
-+	/** 32 bit -- position for the RLW */
-+	write32 = self->rlw - self->buffer;
-+	if (write(fd, &write32, 4) != 4)
-+		return -1;
-+
-+	return (3 * 4) + to_write;
-+}
-+
-+int ewah_serialize_to(struct ewah_bitmap *self,
-+		      int (*write_fun)(void *, const void *, size_t),
-+		      void *data)
-+{
-+	size_t i;
-+	eword_t dump[2048];
-+	const size_t words_per_dump = sizeof(dump) / sizeof(eword_t);
-+	uint32_t bitsize, word_count, rlw_pos;
-+
-+	const eword_t *buffer;
-+	size_t words_left;
-+
-+	/* 32 bit -- bit size for the map */
-+	bitsize =  htonl((uint32_t)self->bit_size);
-+	if (write_fun(data, &bitsize, 4) != 4)
-+		return -1;
-+
-+	/** 32 bit -- number of compressed 64-bit words */
-+	word_count =  htonl((uint32_t)self->buffer_size);
-+	if (write_fun(data, &word_count, 4) != 4)
-+		return -1;
-+
-+	/** 64 bit x N -- compressed words */
-+	buffer = self->buffer;
-+	words_left = self->buffer_size;
-+
-+	while (words_left >= words_per_dump) {
-+		for (i = 0; i < words_per_dump; ++i, ++buffer)
-+			dump[i] = htonll(*buffer);
-+
-+		if (write_fun(data, dump, sizeof(dump)) != sizeof(dump))
-+			return -1;
-+
-+		words_left -= words_per_dump;
-+	}
-+
-+	if (words_left) {
-+		for (i = 0; i < words_left; ++i, ++buffer)
-+			dump[i] = htonll(*buffer);
-+
-+		if (write_fun(data, dump, words_left * 8) != words_left * 8)
-+			return -1;
-+	}
-+
-+	/** 32 bit -- position for the RLW */
-+	rlw_pos = (uint8_t*)self->rlw - (uint8_t *)self->buffer;
-+	rlw_pos = htonl(rlw_pos / sizeof(eword_t));
-+
-+	if (write_fun(data, &rlw_pos, 4) != 4)
-+		return -1;
-+
-+	return (3 * 4) + (self->buffer_size * 8);
-+}
-+
-+static int write_helper(void *fd, const void *buf, size_t len)
-+{
-+	return write((intptr_t)fd, buf, len);
-+}
-+
-+int ewah_serialize(struct ewah_bitmap *self, int fd)
-+{
-+	return ewah_serialize_to(self, write_helper, (void *)(intptr_t)fd);
-+}
-+
-+int ewah_read_mmap(struct ewah_bitmap *self, void *map, size_t len)
-+{
-+	uint32_t *read32 = map;
-+	eword_t *read64;
-+	size_t i;
-+
-+	self->bit_size = ntohl(*read32++);
-+	self->buffer_size = self->alloc_size = ntohl(*read32++);
-+	self->buffer = ewah_realloc(self->buffer,
-+		self->alloc_size * sizeof(eword_t));
-+
-+	if (!self->buffer)
-+		return -1;
-+
-+	for (i = 0, read64 = (void *)read32; i < self->buffer_size; ++i)
-+		self->buffer[i] = ntohll(*read64++);
-+
-+	read32 = (void *)read64;
-+	self->rlw = self->buffer + ntohl(*read32++);
-+
-+	return (3 * 4) + (self->buffer_size * 8);
-+}
-+
-+int ewah_deserialize(struct ewah_bitmap *self, int fd)
-+{
-+	size_t i;
-+	eword_t dump[2048];
-+	const size_t words_per_dump = sizeof(dump) / sizeof(eword_t);
-+	uint32_t bitsize, word_count, rlw_pos;
-+
-+	eword_t *buffer = NULL;
-+	size_t words_left;
-+
-+	ewah_clear(self);
-+
-+	/* 32 bit -- bit size for the map */
-+	if (read(fd, &bitsize, 4) != 4)
-+		return -1;
-+
-+	self->bit_size = (size_t)ntohl(bitsize);
-+
-+	/** 32 bit -- number of compressed 64-bit words */
-+	if (read(fd, &word_count, 4) != 4)
-+		return -1;
-+
-+	self->buffer_size = self->alloc_size = (size_t)ntohl(word_count);
-+	self->buffer = ewah_realloc(self->buffer,
-+		self->alloc_size * sizeof(eword_t));
-+
-+	if (!self->buffer)
-+		return -1;
-+
-+	/** 64 bit x N -- compressed words */
-+	buffer = self->buffer;
-+	words_left = self->buffer_size;
-+
-+	while (words_left >= words_per_dump) {
-+		if (read(fd, dump, sizeof(dump)) != sizeof(dump))
-+			return -1;
-+
-+		for (i = 0; i < words_per_dump; ++i, ++buffer)
-+			*buffer = ntohll(dump[i]);
-+
-+		words_left -= words_per_dump;
-+	}
-+
-+	if (words_left) {
-+		if (read(fd, dump, words_left * 8) != words_left * 8)
-+			return -1;
-+
-+		for (i = 0; i < words_left; ++i, ++buffer)
-+			*buffer = ntohll(dump[i]);
-+	}
-+
-+	/** 32 bit -- position for the RLW */
-+	if (read(fd, &rlw_pos, 4) != 4)
-+		return -1;
-+
-+	self->rlw = self->buffer + ntohl(rlw_pos);
-+	return 0;
-+}
-diff --git a/ewah/ewah_rlw.c b/ewah/ewah_rlw.c
-new file mode 100644
-index 0000000..c723f1a
---- /dev/null
-+++ b/ewah/ewah_rlw.c
-@@ -0,0 +1,115 @@
-+/**
-+ * Copyright 2013, GitHub, Inc
-+ * Copyright 2009-2013, Daniel Lemire, Cliff Moon,
-+ *	David McIntosh, Robert Becho, Google Inc. and Veronika Zenz
-+ *
-+ * This program is free software; you can redistribute it and/or
-+ * modify it under the terms of the GNU General Public License
-+ * as published by the Free Software Foundation; either version 2
-+ * of the License, or (at your option) any later version.
-+ *
-+ * This program is distributed in the hope that it will be useful,
-+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+ * GNU General Public License for more details.
-+ *
-+ * You should have received a copy of the GNU General Public License
-+ * along with this program; if not, write to the Free Software
-+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-+ */
-+#include "git-compat-util.h"
-+#include "ewok.h"
-+#include "ewok_rlw.h"
-+
-+static inline int next_word(struct rlw_iterator *it)
-+{
-+	if (it->pointer >= it->size)
-+		return 0;
-+
-+	it->rlw.word = &it->buffer[it->pointer];
-+	it->pointer += rlw_get_literal_words(it->rlw.word) + 1;
-+
-+	it->rlw.literal_words = rlw_get_literal_words(it->rlw.word);
-+	it->rlw.running_len = rlw_get_running_len(it->rlw.word);
-+	it->rlw.running_bit = rlw_get_run_bit(it->rlw.word);
-+	it->rlw.literal_word_offset = 0;
-+
-+	return 1;
-+}
-+
-+void rlwit_init(struct rlw_iterator *it, struct ewah_bitmap *from_ewah)
-+{
-+	it->buffer = from_ewah->buffer;
-+	it->size = from_ewah->buffer_size;
-+	it->pointer = 0;
-+
-+	next_word(it);
-+
-+	it->literal_word_start = rlwit_literal_words(it) +
-+		it->rlw.literal_word_offset;
-+}
-+
-+void rlwit_discard_first_words(struct rlw_iterator *it, size_t x)
-+{
-+	while (x > 0) {
-+		size_t discard;
-+
-+		if (it->rlw.running_len > x) {
-+			it->rlw.running_len -= x;
-+			return;
-+		}
-+
-+		x -= it->rlw.running_len;
-+		it->rlw.running_len = 0;
-+
-+		discard = (x > it->rlw.literal_words) ? it->rlw.literal_words : x;
-+
-+		it->literal_word_start += discard;
-+		it->rlw.literal_words -= discard;
-+		x -= discard;
-+
-+		if (x > 0 || rlwit_word_size(it) == 0) {
-+			if (!next_word(it))
-+				break;
-+
-+			it->literal_word_start =
-+				rlwit_literal_words(it) + it->rlw.literal_word_offset;
-+		}
-+	}
-+}
-+
-+size_t rlwit_discharge(
-+	struct rlw_iterator *it, struct ewah_bitmap *out, size_t max, int negate)
-+{
-+	size_t index = 0;
-+
-+	while (index < max && rlwit_word_size(it) > 0) {
-+		size_t pd, pl = it->rlw.running_len;
-+
-+		if (index + pl > max)
-+			pl = max - index;
-+
-+		ewah_add_empty_words(out, it->rlw.running_bit ^ negate, pl);
-+		index += pl;
-+
-+		pd = it->rlw.literal_words;
-+		if (pd + index > max)
-+			pd = max - index;
-+
-+		ewah_add_dirty_words(out,
-+			it->buffer + it->literal_word_start, pd, negate);
-+
-+		rlwit_discard_first_words(it, pd + pl);
-+		index += pd;
-+	}
-+
-+	return index;
-+}
-+
-+void rlwit_discharge_empty(struct rlw_iterator *it, struct ewah_bitmap *out)
-+{
-+	while (rlwit_word_size(it) > 0) {
-+		ewah_add_empty_words(out, 0, rlwit_word_size(it));
-+		rlwit_discard_first_words(it, rlwit_word_size(it));
-+	}
-+}
-diff --git a/ewah/ewok.h b/ewah/ewok.h
-new file mode 100644
-index 0000000..619afaa
---- /dev/null
-+++ b/ewah/ewok.h
-@@ -0,0 +1,235 @@
-+/**
-+ * Copyright 2013, GitHub, Inc
-+ * Copyright 2009-2013, Daniel Lemire, Cliff Moon,
-+ *	David McIntosh, Robert Becho, Google Inc. and Veronika Zenz
-+ *
-+ * This program is free software; you can redistribute it and/or
-+ * modify it under the terms of the GNU General Public License
-+ * as published by the Free Software Foundation; either version 2
-+ * of the License, or (at your option) any later version.
-+ *
-+ * This program is distributed in the hope that it will be useful,
-+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+ * GNU General Public License for more details.
-+ *
-+ * You should have received a copy of the GNU General Public License
-+ * along with this program; if not, write to the Free Software
-+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-+ */
-+#ifndef __EWOK_BITMAP_H__
-+#define __EWOK_BITMAP_H__
-+
-+#ifndef ewah_malloc
-+#	define ewah_malloc xmalloc
-+#endif
-+#ifndef ewah_realloc
-+#	define ewah_realloc xrealloc
-+#endif
-+#ifndef ewah_calloc
-+#	define ewah_calloc xcalloc
-+#endif
-+
-+typedef uint64_t eword_t;
-+#define BITS_IN_WORD (sizeof(eword_t) * 8)
-+
-+/**
-+ * Do not use __builtin_popcountll. The GCC implementation
-+ * is notoriously slow on all platforms.
-+ *
-+ * See: http://gcc.gnu.org/bugzilla/show_bug.cgi?id=36041
-+ */
-+static inline uint32_t ewah_bit_popcount64(uint64_t x)
-+{
-+	x = (x & 0x5555555555555555ULL) + ((x >>  1) & 0x5555555555555555ULL);
-+	x = (x & 0x3333333333333333ULL) + ((x >>  2) & 0x3333333333333333ULL);
-+	x = (x & 0x0F0F0F0F0F0F0F0FULL) + ((x >>  4) & 0x0F0F0F0F0F0F0F0FULL);
-+	return (x * 0x0101010101010101ULL) >> 56;
-+}
-+
-+#ifdef __GNUC__
-+#define ewah_bit_ctz64(x) __builtin_ctzll(x)
-+#else
-+static inline int ewah_bit_ctz64(uint64_t x)
-+{
-+	int n = 0;
-+	if ((x & 0xffffffff) == 0) { x >>= 32; n += 32; }
-+	if ((x &     0xffff) == 0) { x >>= 16; n += 16; }
-+	if ((x &       0xff) == 0) { x >>=  8; n +=  8; }
-+	if ((x &        0xf) == 0) { x >>=  4; n +=  4; }
-+	if ((x &        0x3) == 0) { x >>=  2; n +=  2; }
-+	if ((x &        0x1) == 0) { x >>=  1; n +=  1; }
-+	return n + !x;
-+}
-+#endif
-+
-+struct ewah_bitmap {
-+	eword_t *buffer;
-+	size_t buffer_size;
-+	size_t alloc_size;
-+	size_t bit_size;
-+	eword_t *rlw;
++struct bitmap_test_data {
++	struct bitmap *base;
++	struct progress *prg;
++	size_t seen;
 +};
 +
-+typedef void (*ewah_callback)(size_t pos, void *);
++static void test_show_object(struct object *object,
++			     const struct name_path *path,
++			     const char *last, void *data)
++{
++	struct bitmap_test_data *tdata = data;
++	int bitmap_pos;
 +
-+struct ewah_bitmap *ewah_pool_new(void);
-+void ewah_pool_free(struct ewah_bitmap *self);
++	bitmap_pos = bitmap_position(object->sha1);
++	if (bitmap_pos < 0)
++		die("Object not in bitmap: %s\n", sha1_to_hex(object->sha1));
 +
-+/**
-+ * Allocate a new EWAH Compressed bitmap
-+ */
-+struct ewah_bitmap *ewah_new(void);
++	bitmap_set(tdata->base, bitmap_pos);
++	display_progress(tdata->prg, ++tdata->seen);
++}
 +
-+/**
-+ * Clear all the bits in the bitmap. Does not free or resize
-+ * memory.
-+ */
-+void ewah_clear(struct ewah_bitmap *self);
++static void test_show_commit(struct commit *commit, void *data)
++{
++	struct bitmap_test_data *tdata = data;
++	int bitmap_pos;
 +
-+/**
-+ * Free all the memory of the bitmap
-+ */
-+void ewah_free(struct ewah_bitmap *self);
++	bitmap_pos = bitmap_position(commit->object.sha1);
++	if (bitmap_pos < 0)
++		die("Object not in bitmap: %s\n", sha1_to_hex(commit->object.sha1));
 +
-+int ewah_serialize_to(struct ewah_bitmap *self,
-+		      int (*write_fun)(void *out, const void *buf, size_t len),
-+		      void *out);
-+int ewah_serialize(struct ewah_bitmap *self, int fd);
-+int ewah_serialize_native(struct ewah_bitmap *self, int fd);
++	bitmap_set(tdata->base, bitmap_pos);
++	display_progress(tdata->prg, ++tdata->seen);
++}
 +
-+int ewah_deserialize(struct ewah_bitmap *self, int fd);
-+int ewah_read_mmap(struct ewah_bitmap *self, void *map, size_t len);
-+int ewah_read_mmap_native(struct ewah_bitmap *self, void *map, size_t len);
++void test_bitmap_walk(struct rev_info *revs)
++{
++	struct object *root;
++	struct bitmap *result = NULL;
++	khiter_t pos;
++	size_t result_popcnt;
++	struct bitmap_test_data tdata;
 +
-+uint32_t ewah_checksum(struct ewah_bitmap *self);
++	if (prepare_bitmap_git())
++		die("failed to load bitmap indexes");
 +
-+/**
-+ * Logical not (bitwise negation) in-place on the bitmap
-+ *
-+ * This operation is linear time based on the size of the bitmap.
-+ */
-+void ewah_not(struct ewah_bitmap *self);
++	if (revs->pending.nr != 1)
++		die("you must specify exactly one commit to test");
 +
-+/**
-+ * Call the given callback with the position of every single bit
-+ * that has been set on the bitmap.
-+ *
-+ * This is an efficient operation that does not fully decompress
-+ * the bitmap.
-+ */
-+void ewah_each_bit(struct ewah_bitmap *self, ewah_callback callback, void *payload);
++	fprintf(stderr, "Bitmap v%d test (%d entries loaded)\n",
++		bitmap_git.version, bitmap_git.entry_count);
 +
-+/**
-+ * Set a given bit on the bitmap.
-+ *
-+ * The bit at position `pos` will be set to true. Because of the
-+ * way that the bitmap is compressed, a set bit cannot be unset
-+ * later on.
-+ *
-+ * Furthermore, since the bitmap uses streaming compression, bits
-+ * can only set incrementally.
-+ *
-+ * E.g.
-+ *		ewah_set(bitmap, 1); // ok
-+ *		ewah_set(bitmap, 76); // ok
-+ *		ewah_set(bitmap, 77); // ok
-+ *		ewah_set(bitmap, 8712800127); // ok
-+ *		ewah_set(bitmap, 25); // failed, assert raised
-+ */
-+void ewah_set(struct ewah_bitmap *self, size_t i);
++	root = revs->pending.objects[0].item;
++	pos = kh_get_sha1(bitmap_git.bitmaps, root->sha1);
 +
-+struct ewah_iterator {
-+	const eword_t *buffer;
-+	size_t buffer_size;
++	if (pos < kh_end(bitmap_git.bitmaps)) {
++		struct stored_bitmap *st = kh_value(bitmap_git.bitmaps, pos);
++		struct ewah_bitmap *bm = lookup_stored_bitmap(st);
 +
-+	size_t pointer;
-+	eword_t compressed, literals;
-+	eword_t rl, lw;
-+	int b;
-+};
++		fprintf(stderr, "Found bitmap for %s. %d bits / %08x checksum\n",
++			sha1_to_hex(root->sha1), (int)bm->bit_size, ewah_checksum(bm));
 +
-+/**
-+ * Initialize a new iterator to run through the bitmap in uncompressed form.
-+ *
-+ * The iterator can be stack allocated. The underlying bitmap must not be freed
-+ * before the iteration is over.
-+ *
-+ * E.g.
-+ *
-+ *		struct ewah_bitmap *bitmap = ewah_new();
-+ *		struct ewah_iterator it;
-+ *
-+ *		ewah_iterator_init(&it, bitmap);
-+ */
-+void ewah_iterator_init(struct ewah_iterator *it, struct ewah_bitmap *parent);
++		result = ewah_to_bitmap(bm);
++	}
 +
-+/**
-+ * Yield every single word in the bitmap in uncompressed form. This is:
-+ * yield single words (32-64 bits) where each bit represents an actual
-+ * bit from the bitmap.
-+ *
-+ * Return: true if a word was yield, false if there are no words left
-+ */
-+int ewah_iterator_next(eword_t *next, struct ewah_iterator *it);
++	if (result == NULL)
++		die("Commit %s doesn't have an indexed bitmap", sha1_to_hex(root->sha1));
 +
-+void ewah_or(
-+	struct ewah_bitmap *ewah_i,
-+	struct ewah_bitmap *ewah_j,
-+	struct ewah_bitmap *out);
++	revs->tag_objects = 1;
++	revs->tree_objects = 1;
++	revs->blob_objects = 1;
 +
-+void ewah_and_not(
-+	struct ewah_bitmap *ewah_i,
-+	struct ewah_bitmap *ewah_j,
-+	struct ewah_bitmap *out);
++	result_popcnt = bitmap_popcount(result);
 +
-+void ewah_xor(
-+	struct ewah_bitmap *ewah_i,
-+	struct ewah_bitmap *ewah_j,
-+	struct ewah_bitmap *out);
++	if (prepare_revision_walk(revs))
++		die("revision walk setup failed");
 +
-+void ewah_and(
-+	struct ewah_bitmap *ewah_i,
-+	struct ewah_bitmap *ewah_j,
-+	struct ewah_bitmap *out);
++	tdata.base = bitmap_new();
++	tdata.prg = start_progress("Verifying bitmap entries", result_popcnt);
++	tdata.seen = 0;
 +
-+void ewah_dump(struct ewah_bitmap *self);
++	traverse_commit_list(revs, &test_show_commit, &test_show_object, &tdata);
 +
-+/**
-+ * Direct word access
-+ */
-+size_t ewah_add_empty_words(struct ewah_bitmap *self, int v, size_t number);
-+void ewah_add_dirty_words(
-+	struct ewah_bitmap *self, const eword_t *buffer, size_t number, int negate);
-+size_t ewah_add(struct ewah_bitmap *self, eword_t word);
++	stop_progress(&tdata.prg);
 +
-+
-+/**
-+ * Uncompressed, old-school bitmap that can be efficiently compressed
-+ * into an `ewah_bitmap`.
-+ */
-+struct bitmap {
-+	eword_t *words;
-+	size_t word_alloc;
-+};
-+
-+struct bitmap *bitmap_new(void);
-+void bitmap_set(struct bitmap *self, size_t pos);
-+void bitmap_clear(struct bitmap *self, size_t pos);
-+int bitmap_get(struct bitmap *self, size_t pos);
-+void bitmap_reset(struct bitmap *self);
-+void bitmap_free(struct bitmap *self);
-+int bitmap_equals(struct bitmap *self, struct bitmap *other);
-+int bitmap_is_subset(struct bitmap *self, struct bitmap *super);
-+
-+struct ewah_bitmap * bitmap_to_ewah(struct bitmap *bitmap);
-+struct bitmap *ewah_to_bitmap(struct ewah_bitmap *ewah);
-+
-+void bitmap_and_not(struct bitmap *self, struct bitmap *other);
-+void bitmap_or_ewah(struct bitmap *self, struct ewah_bitmap *other);
-+void bitmap_or(struct bitmap *self, const struct bitmap *other);
-+
-+void bitmap_each_bit(struct bitmap *self, ewah_callback callback, void *data);
-+size_t bitmap_popcount(struct bitmap *self);
-+
-+#endif
-diff --git a/ewah/ewok_rlw.h b/ewah/ewok_rlw.h
++	if (bitmap_equals(result, tdata.base))
++		fprintf(stderr, "OK!\n");
++	else
++		fprintf(stderr, "Mismatch!\n");
++}
+diff --git a/pack-bitmap.h b/pack-bitmap.h
 new file mode 100644
-index 0000000..63efdf9
+index 0000000..b4510d5
 --- /dev/null
-+++ b/ewah/ewok_rlw.h
-@@ -0,0 +1,114 @@
-+/**
-+ * Copyright 2013, GitHub, Inc
-+ * Copyright 2009-2013, Daniel Lemire, Cliff Moon,
-+ *	David McIntosh, Robert Becho, Google Inc. and Veronika Zenz
-+ *
-+ * This program is free software; you can redistribute it and/or
-+ * modify it under the terms of the GNU General Public License
-+ * as published by the Free Software Foundation; either version 2
-+ * of the License, or (at your option) any later version.
-+ *
-+ * This program is distributed in the hope that it will be useful,
-+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+ * GNU General Public License for more details.
-+ *
-+ * You should have received a copy of the GNU General Public License
-+ * along with this program; if not, write to the Free Software
-+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-+ */
-+#ifndef __EWOK_RLW_H__
-+#define __EWOK_RLW_H__
++++ b/pack-bitmap.h
+@@ -0,0 +1,43 @@
++#ifndef PACK_BITMAP_H
++#define PACK_BITMAP_H
 +
-+#define RLW_RUNNING_BITS (sizeof(eword_t) * 4)
-+#define RLW_LITERAL_BITS (sizeof(eword_t) * 8 - 1 - RLW_RUNNING_BITS)
++#include "ewah/ewok.h"
++#include "khash.h"
 +
-+#define RLW_LARGEST_RUNNING_COUNT (((eword_t)1 << RLW_RUNNING_BITS) - 1)
-+#define RLW_LARGEST_LITERAL_COUNT (((eword_t)1 << RLW_LITERAL_BITS) - 1)
++struct bitmap_disk_entry {
++	uint32_t object_pos;
++	uint8_t xor_offset;
++	uint8_t flags;
++} __attribute__((packed));
 +
-+#define RLW_LARGEST_RUNNING_COUNT_SHIFT (RLW_LARGEST_RUNNING_COUNT << 1)
-+
-+#define RLW_RUNNING_LEN_PLUS_BIT (((eword_t)1 << (RLW_RUNNING_BITS + 1)) - 1)
-+
-+static int rlw_get_run_bit(const eword_t *word)
-+{
-+	return *word & (eword_t)1;
-+}
-+
-+static inline void rlw_set_run_bit(eword_t *word, int b)
-+{
-+	if (b) {
-+		*word |= (eword_t)1;
-+	} else {
-+		*word &= (eword_t)(~1);
-+	}
-+}
-+
-+static inline void rlw_xor_run_bit(eword_t *word)
-+{
-+	if (*word & 1) {
-+		*word &= (eword_t)(~1);
-+	} else {
-+		*word |= (eword_t)1;
-+	}
-+}
-+
-+static inline void rlw_set_running_len(eword_t *word, eword_t l)
-+{
-+	*word |= RLW_LARGEST_RUNNING_COUNT_SHIFT;
-+	*word &= (l << 1) | (~RLW_LARGEST_RUNNING_COUNT_SHIFT);
-+}
-+
-+static inline eword_t rlw_get_running_len(const eword_t *word)
-+{
-+	return (*word >> 1) & RLW_LARGEST_RUNNING_COUNT;
-+}
-+
-+static inline eword_t rlw_get_literal_words(const eword_t *word)
-+{
-+	return *word >> (1 + RLW_RUNNING_BITS);
-+}
-+
-+static inline void rlw_set_literal_words(eword_t *word, eword_t l)
-+{
-+	*word |= ~RLW_RUNNING_LEN_PLUS_BIT;
-+	*word &= (l << (RLW_RUNNING_BITS + 1)) | RLW_RUNNING_LEN_PLUS_BIT;
-+}
-+
-+static inline eword_t rlw_size(const eword_t *self)
-+{
-+	return rlw_get_running_len(self) + rlw_get_literal_words(self);
-+}
-+
-+struct rlw_iterator {
-+	const eword_t *buffer;
-+	size_t size;
-+	size_t pointer;
-+	size_t literal_word_start;
-+
-+	struct {
-+		const eword_t *word;
-+		int literal_words;
-+		int running_len;
-+		int literal_word_offset;
-+		int running_bit;
-+	} rlw;
++struct bitmap_disk_header {
++	char magic[4];
++	uint16_t version;
++	uint16_t options;
++	uint32_t entry_count;
++	unsigned char checksum[20];
 +};
 +
-+void rlwit_init(struct rlw_iterator *it, struct ewah_bitmap *bitmap);
-+void rlwit_discard_first_words(struct rlw_iterator *it, size_t x);
-+size_t rlwit_discharge(
-+	struct rlw_iterator *it, struct ewah_bitmap *out, size_t max, int negate);
-+void rlwit_discharge_empty(struct rlw_iterator *it, struct ewah_bitmap *out);
++static const char BITMAP_IDX_SIGNATURE[] = {'B', 'I', 'T', 'M'};
 +
-+static inline size_t rlwit_word_size(struct rlw_iterator *it)
-+{
-+	return it->rlw.running_len + it->rlw.literal_words;
-+}
++enum pack_bitmap_opts {
++	BITMAP_OPT_FULL_DAG = 1
++};
 +
-+static inline size_t rlwit_literal_words(struct rlw_iterator *it)
-+{
-+	return it->pointer - it->rlw.literal_words;
-+}
++typedef int (*show_reachable_fn)(
++	const unsigned char *sha1,
++	enum object_type type,
++	int flags,
++	uint32_t hash,
++	struct packed_git *found_pack,
++	off_t found_offset);
++
++int prepare_bitmap_git(void);
++void count_bitmap_commit_list(uint32_t *commits, uint32_t *trees, uint32_t *blobs, uint32_t *tags);
++void traverse_bitmap_commit_list(show_reachable_fn show_reachable);
++void test_bitmap_walk(struct rev_info *revs);
++char *pack_bitmap_filename(struct packed_git *p);
++int prepare_bitmap_walk(struct rev_info *revs);
++int reuse_partial_packfile_from_bitmap(struct packed_git **packfile, uint32_t *entries, off_t *up_to);
 +
 +#endif
 -- 
