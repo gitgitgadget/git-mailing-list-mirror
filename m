@@ -1,81 +1,85 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 02/12] Convert starts_with() to skip_prefix() for option parsing
-Date: Sat, 21 Dec 2013 11:44:08 +0700
-Message-ID: <CACsJy8A0TAyBoTdyrRDb54j9uoZ0=cOuxgTfFavRiUOpHTV_ag@mail.gmail.com>
-References: <1387378437-20646-1-git-send-email-pclouds@gmail.com>
- <1387378437-20646-3-git-send-email-pclouds@gmail.com> <52B3E8D4.1030805@viscovery.net>
- <20131220070449.GA29717@sigill.intra.peff.net> <xmqq38lndxae.fsf@gitster.dls.corp.google.com>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH v3 07/10] builtin/replace: teach listing using short,
+ medium or full formats
+Date: Sat, 21 Dec 2013 10:34:06 +0100
+Message-ID: <CAP8UFD1hdNE__+bVtKegChBT4u3Rx7NEzBYYkdEmUwfFLLpkzg@mail.gmail.com>
+References: <20131211074147.11117.1155.chriscool@tuxfamily.org>
+	<20131211074614.11117.96106.chriscool@tuxfamily.org>
+	<52B196F1.3060003@gmail.com>
+	<CAP8UFD3UsdcDg2D2nysMZgGAxLebYm-qQX3LZfqdwF9gNbyxgA@mail.gmail.com>
+	<xmqqioumjc1n.fsf@gitster.dls.corp.google.com>
+	<CAP8UFD1+kydjrjhTxKDSMmOa+KiOYgMGK5gyxCe-LPih02=VYQ@mail.gmail.com>
+	<xmqqbo0cfz1x.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, Johannes Sixt <j.sixt@viscovery.net>,
-	Git Mailing List <git@vger.kernel.org>,
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Karsten Blees <karsten.blees@gmail.com>,
 	Christian Couder <chriscool@tuxfamily.org>,
-	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+	git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Joey Hess <joey@kitenet.net>,
+	Eric Sunshine <sunshine@sunshineco.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Dec 21 05:45:02 2013
+X-From: git-owner@vger.kernel.org Sat Dec 21 10:34:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VuEQu-0001j1-V6
-	for gcvg-git-2@plane.gmane.org; Sat, 21 Dec 2013 05:45:01 +0100
+	id 1VuIxI-0003vT-Os
+	for gcvg-git-2@plane.gmane.org; Sat, 21 Dec 2013 10:34:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753642Ab3LUEok (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Dec 2013 23:44:40 -0500
-Received: from mail-qe0-f42.google.com ([209.85.128.42]:48215 "EHLO
-	mail-qe0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753512Ab3LUEoj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Dec 2013 23:44:39 -0500
-Received: by mail-qe0-f42.google.com with SMTP id b4so3356144qen.1
-        for <git@vger.kernel.org>; Fri, 20 Dec 2013 20:44:38 -0800 (PST)
+	id S1752752Ab3LUJeL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Dec 2013 04:34:11 -0500
+Received: from mail-vb0-f47.google.com ([209.85.212.47]:45757 "EHLO
+	mail-vb0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752601Ab3LUJeH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Dec 2013 04:34:07 -0500
+Received: by mail-vb0-f47.google.com with SMTP id q12so1875766vbe.6
+        for <git@vger.kernel.org>; Sat, 21 Dec 2013 01:34:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=8YlwW1/edmMTn+asHX1qam4Ew0e8n7TsK6kwIRYz2d8=;
-        b=BOsq+c/0mdXJuZQih8zx6KjcHQDMS96re7c4mkHiLM/7C0y6/2opOdya8CAFaj35yb
-         sPeqquLhHEutq6SK+ypY8LyqpjHpQUUyulP+o3Uxo58QaxgjbfJGpKo4l+iC4jgD2Bee
-         FNIPqU6+0HsY8mP3zngyU9Wh1NMsYUI0Pu5qREUlde5g1EyVah2Fk/XeuOWFXTYhUwtn
-         f2dXkPEGimUlBIurT+xsJ1+8lq7/GUNxruJf3RVXRyskQc17AcEx/xft9BGmH2cGomtg
-         Ln4bcC2dmUbo43o4FuXlTrb47NViWfQLk7Oq1qEkYgPDzk/64PLpbRDtLWanxe8n0mBI
-         +jkg==
-X-Received: by 10.224.168.13 with SMTP id s13mr21413965qay.18.1387601078638;
- Fri, 20 Dec 2013 20:44:38 -0800 (PST)
-Received: by 10.96.124.101 with HTTP; Fri, 20 Dec 2013 20:44:08 -0800 (PST)
-In-Reply-To: <xmqq38lndxae.fsf@gitster.dls.corp.google.com>
+        bh=IkEPNK1lZUESc7iupXCOlPBirnd9yJ2TMMPq5I7ZXQk=;
+        b=yBwfeAWsfBR8W1rI+OgjC553mHZSom39wU4OHgV4PQUiSjrJo8kw+ne8yZBZUrdTlI
+         CYmXqcaENKPLtUCp0ctZxJDBxKcTJep+GNAGUx2TKS47BgS8EbPxpvpqh3H1dj0kVXxt
+         I/rcYD4wwaHHEjS5NB2/PjxGs7k7KPg2mwVakief0UzzY04eZK2A4+Ok4dqOicJGc/mO
+         NyTDC6MgfSIEnGd/PGUxVF9u7PjxMYrcLKGhjjjxr3DMh3tYY4MnZpm0MZLexhwjdXQg
+         A4beN8VxJEdhKqBB52W1UArj9SCUbx0dxYGrPoN+zWoaylV0GoF/MX6wz7dtO9CRgeyV
+         pfqQ==
+X-Received: by 10.220.147.16 with SMTP id j16mr1070521vcv.28.1387618446168;
+ Sat, 21 Dec 2013 01:34:06 -0800 (PST)
+Received: by 10.58.253.136 with HTTP; Sat, 21 Dec 2013 01:34:06 -0800 (PST)
+In-Reply-To: <xmqqbo0cfz1x.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239585>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239586>
 
-On Sat, Dec 21, 2013 at 4:31 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Jeff King <peff@peff.net> writes:
+On Thu, Dec 19, 2013 at 7:58 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Christian Couder <christian.couder@gmail.com> writes:
 >
->>   /* here we care if we saw the prefix, as above */
->>   if (parse_prefix(foo, prefix, &the_rest))
->>       ...
->>
->>   /*
->>    * and here we do not care, and just want to optionally strip the
->>    * prefix, and take the full value otherwise; we just have to ignore
->>    * the return value in this case.
->>    */
->>   parse_prefix(foo, prefix, &foo);
+>> I think this last one might be useful for people replacing objects
+>> with objects that have another type.
 >
-> Sounds fine.  I recall earlier somebody wanting to have a good name
-> for this thing, and I think foo_gently is *not* it (the name is
-> about adding a variant that does not die outright to foo that checks
-> and dies if condition is not right).
+> ... which IIUC is strongly discouraged---didn't you have to tighten
+> it recently?
 >
->         starts_with(foo, prefix);
->         strip_prefix(foo, prefix, &foo);
->
-> perhaps?
+> And that makes it "useful primarily for debugging" unusual
+> situations.
 
-I still need consensus on the name here guys, parse_prefix.
-remove_prefix or strip_prefix? If no other opinions i'll go with
-strip_prefix (Jeff's comment before parse_prefix() also uses "strip")
--- 
-Duy
+Ok, so would you prefer the following:
+
+- NAME_ONLY_REPLACE_FMT and "--format=name_only" instead of
+SHORT_REPLACE_FMT and "--format=short"
+
+- NAME_AND_VALUE_REPLACE_FMT and "--format=name_and_value" instead of
+MEDIUM_REPLACE_FMT and "--format=medium"
+
+- DEBUG_REPLACE_FMT and "--format=debug" instead of FULL _REPLACE_FMT
+and "--format=full"
+
+?
+
+Thanks,
+Christian.
