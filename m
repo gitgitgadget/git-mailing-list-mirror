@@ -1,99 +1,94 @@
-From: Thomas Rast <tr@thomasrast.ch>
-Subject: Re: [PATCH v4 0/22] pack bitmaps
-Date: Sat, 21 Dec 2013 19:34:59 +0100
-Message-ID: <87d2kqm4rw.fsf@thomasrast.ch>
-References: <20131221135651.GA20818@sigill.intra.peff.net>
+From: Samuel Bronson <naesten@gmail.com>
+Subject: Re: [PATCH] wt-status.c: disable those distracting
+ -Wformat-zero-length warnings
+Date: Sat, 21 Dec 2013 15:09:22 -0500
+Message-ID: <CAJYzjmc2Mvr=d9CtR_KCPF3Msy6vJWVO7_pE7FGNL5p=2Bn6cA@mail.gmail.com>
+References: <1387554301-23901-1-git-send-email-naesten@gmail.com>
+	<20131221094202.GA32622@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Dec 21 19:35:39 2013
+X-From: git-owner@vger.kernel.org Sat Dec 21 21:09:30 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VuROj-0004nm-7G
-	for gcvg-git-2@plane.gmane.org; Sat, 21 Dec 2013 19:35:37 +0100
+	id 1VuSrZ-0000NB-D5
+	for gcvg-git-2@plane.gmane.org; Sat, 21 Dec 2013 21:09:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754887Ab3LUSfE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Dec 2013 13:35:04 -0500
-Received: from psi.thgersdorf.net ([176.9.98.78]:53924 "EHLO mail.psioc.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754727Ab3LUSfD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Dec 2013 13:35:03 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by localhost.psioc.net (Postfix) with ESMTP id 13DC54D6572;
-	Sat, 21 Dec 2013 19:35:01 +0100 (CET)
-X-Virus-Scanned: amavisd-new at psioc.net
-Received: from mail.psioc.net ([127.0.0.1])
-	by localhost (mail.psioc.net [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id NCqfU0xex74B; Sat, 21 Dec 2013 19:34:59 +0100 (CET)
-Received: from hexa.thomasrast.ch (46-126-8-85.dynamic.hispeed.ch [46.126.8.85])
-	(using TLSv1.2 with cipher AES128-GCM-SHA256 (128/128 bits))
-	(Client did not present a certificate)
-	by mail.psioc.net (Postfix) with ESMTPSA id 92B364D64C4;
-	Sat, 21 Dec 2013 19:34:59 +0100 (CET)
-In-Reply-To: <20131221135651.GA20818@sigill.intra.peff.net> (Jeff King's
-	message of "Sat, 21 Dec 2013 08:56:51 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1755874Ab3LUUJY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Dec 2013 15:09:24 -0500
+Received: from mail-la0-f47.google.com ([209.85.215.47]:58026 "EHLO
+	mail-la0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755723Ab3LUUJX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Dec 2013 15:09:23 -0500
+Received: by mail-la0-f47.google.com with SMTP id ep20so1681874lab.34
+        for <git@vger.kernel.org>; Sat, 21 Dec 2013 12:09:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=e2YPIZaL+ZlpFsqCeKnPaTjVUMSTLydlO1rTI05qTRo=;
+        b=xtSM6bYMVutrN0TY8ZH3rEVDYKuw01E5v+s+AwfvkUH6TCYvgW67hRQTXWR6WLvVR6
+         RSh0f6otmtIU1nasIk7DkH61+an92GAd0BQuS9G8WG/gJHSyxGtlxkspc5H41nPfgkdO
+         IJgGEUs2hWeKDBXvdHIlupncAaflUoiAtf6e7OagAggew/rhB2tOwY3bG4CH+yhqpHbK
+         w2ubN6dDE2KBbstitxW74bvAl79W1+VZUq/Ui20KFF+zCbVrSwZl/4D9537iEWdTuAgW
+         46APehDLs2/64I2TpHHvU4tbLt4KPAV2k6EITwUTNdENzGe0r/h1EAo0qx5THw4SZq6D
+         mVrg==
+X-Received: by 10.112.158.231 with SMTP id wx7mr4397901lbb.27.1387656562196;
+ Sat, 21 Dec 2013 12:09:22 -0800 (PST)
+Received: by 10.112.133.227 with HTTP; Sat, 21 Dec 2013 12:09:22 -0800 (PST)
+In-Reply-To: <20131221094202.GA32622@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239626>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239627>
 
-Jeff King <peff@peff.net> writes:
-
-> Here's the v4 re-roll of the pack bitmap series.
+On Sat, Dec 21, 2013 at 4:42 AM, Jeff King <peff@peff.net> wrote:
+> On Fri, Dec 20, 2013 at 10:45:01AM -0500, Samuel Bronson wrote:
 >
-> The changes from v3 are:
+>> These warnings don't really seem to make much sense for this file.
 >
->  - reworked add_object_entry refactoring (see patch 11, which is new,
->    and patch 12 which builds on it in a more natural way)
+> Agreed, though the advice so far has been to put -Wno-format-zero-length
+> in your CFLAGS.
 
-This now looks like this (pasting because it is hard to see in the diffs):
+Yes, auto-detecting acceptance of this flag and using it automatically
+might be a reasonable approach as well, but I thought this warning
+might potentially be useful WRT other printf-like functions.
 
-  static int add_object_entry(const unsigned char *sha1, enum object_type type,
-                              const char *name, int exclude)
-  {
-          struct packed_git *found_pack;
-          off_t found_offset;
-          uint32_t index_pos;
+>> +/* We have good reasons for using zero-length format strings, and
+>> + * there's unfortunately no way to turn this off on a per-function
+>> + * basis ... */
+>> +#pragma GCC diagnostic ignored "-Wformat-zero-length"
+>
+> Are other compilers happy to ignore this pragma? I guess we could wrap
+> it in an #ifdef, if so.
 
-          if (have_duplicate_entry(sha1, exclude, &index_pos))
-                  return 0;
+I assume you meant we could use an #ifdef if *not*?
 
-          if (!want_object_in_pack(sha1, exclude, &found_pack, &found_offset))
-                  return 0;
+> It's also really not about this file in particular. The whole concept of
+> format-zero-length is questionable, as it ignores the concept that a
+> format function might actually do something useful with an empty format
+> (e.g., by adding boilerplate, or having a side-effect). It's just that
+> this file is the only one that happens to do so.
 
-          create_object_entry(sha1, type, pack_name_hash(name),
-                              exclude, name && no_try_delta(name),
-                              index_pos, found_pack, found_offset);
+Hmm, I think I saw one other instance of this warning, actually, but
+it didn't seem worth adding the pragma to a file for just one warning.
 
-          display_progress(progress_state, to_pack.nr_objects);
-          return 1;
-  }
+> Annotating the _function_ to say "it's useful to pass an empty format
+> into this function" would make sense, but as you note, there is no way
+> to do that.
 
-  static int add_object_entry_from_bitmap(const unsigned char *sha1,
-                                          enum object_type type,
-                                          int flags, uint32_t name_hash,
-                                          struct packed_git *pack, off_t offset)
-  {
-          uint32_t index_pos;
+I made a note about this at
+<http://gcc.gnu.org/bugzilla/show_bug.cgi?id=47901#c9> (comment #9 on
+"-Wall should not imply -Wformat-zero-length by default")
 
-          if (have_duplicate_entry(sha1, 0, &index_pos))
-                  return 0;
+> So I dunno. This seems like it does not quite specify what we want to
+> say as well as just "-Wno-format-zero-length", but it is more convenient
+> in practice (because we take care of it in the source code, rather than
+> relying on the user's build settings).
 
-          create_object_entry(sha1, type, name_hash, 0, 0, index_pos, pack, offset);
-
-          display_progress(progress_state, to_pack.nr_objects);
-          return 1;
-  }
-
-
-Much nicer.  Thanks for going the extra mile!
-
--- 
-Thomas Rast
-tr@thomasrast.ch
+Yeah.
