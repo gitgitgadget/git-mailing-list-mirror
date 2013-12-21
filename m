@@ -1,190 +1,133 @@
-From: fREW Schmidt <frioux@gmail.com>
-Subject: git-mv-submodule
-Date: Sat, 21 Dec 2013 03:48:33 -0600
-Message-ID: <20131221094833.GA7917@wanderlust>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v3 11/21] pack-objects: use bitmaps when packing objects
+Date: Sat, 21 Dec 2013 08:15:03 -0500
+Message-ID: <20131221131502.GA10123@sigill.intra.peff.net>
+References: <20131114124157.GA23784@sigill.intra.peff.net>
+ <20131114124510.GK10757@sigill.intra.peff.net>
+ <87zjock6if.fsf@linux-1gf2.Speedport_W723_V_Typ_A_1_00_098>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="hHWLQfXTYDoKhP50"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 21 10:48:48 2013
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org,
+	Vicent =?utf-8?B?TWFydMOt?= <vicent@github.com>
+To: Thomas Rast <tr@thomasrast.ch>
+X-From: git-owner@vger.kernel.org Sat Dec 21 14:15:31 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VuJAt-0005dg-HY
-	for gcvg-git-2@plane.gmane.org; Sat, 21 Dec 2013 10:48:47 +0100
+	id 1VuMOx-0007ui-1C
+	for gcvg-git-2@plane.gmane.org; Sat, 21 Dec 2013 14:15:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753000Ab3LUJsk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Dec 2013 04:48:40 -0500
-Received: from mail-ob0-f172.google.com ([209.85.214.172]:46452 "EHLO
-	mail-ob0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752640Ab3LUJsh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Dec 2013 04:48:37 -0500
-Received: by mail-ob0-f172.google.com with SMTP id gq1so3795475obb.31
-        for <git@vger.kernel.org>; Sat, 21 Dec 2013 01:48:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:subject:message-id:mime-version:content-type
-         :content-disposition:user-agent;
-        bh=ssqUn2TkWKysIrfAJnw0x1OjnsCnDT4XekRlOZ1EUlU=;
-        b=E+adeKCVZKblWcc4oVQ43TchgMjfPb7dBD9UaEfaqt7H2O6eEPoH3vUrwbzp8WWGvG
-         JH5nuvn01iml1287eNJ9kk2V0BXoSd+Ng/P6WQ+rdJxR0VfMclnct6rAvYghbmLXdyVN
-         4T2xHRzqFYBHkpJRw8GYZqkqfzBsseW6ue0UTElrZKxSfJJz3b/AXGe2NPRjN4nt8aop
-         eCkVrS7jiGGnbO+IIcM+IfqvJEqSSO8YFj4f5rknR2ET0jz7zctWl4pUk/PSO8DSkLkn
-         s8sH2UUEiAeyyPYJMJw+JkIjGt1QlDbhfN9zmLz4McIwmRL3Xns41HphC4hhYD3oXEpV
-         tamw==
-X-Received: by 10.60.233.9 with SMTP id ts9mr5752057oec.65.1387619316490;
-        Sat, 21 Dec 2013 01:48:36 -0800 (PST)
-Received: from localhost (24-182-106-91.dhcp.ftwo.tx.charter.com. [24.182.106.91])
-        by mx.google.com with ESMTPSA id m7sm13960450obo.7.2013.12.21.01.48.34
-        for <git@vger.kernel.org>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Sat, 21 Dec 2013 01:48:34 -0800 (PST)
+	id S1753512Ab3LUNPI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Dec 2013 08:15:08 -0500
+Received: from cloud.peff.net ([50.56.180.127]:48428 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753217Ab3LUNPH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Dec 2013 08:15:07 -0500
+Received: (qmail 4557 invoked by uid 102); 21 Dec 2013 13:15:07 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 21 Dec 2013 07:15:07 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 21 Dec 2013 08:15:03 -0500
 Content-Disposition: inline
-User-Agent: Mutt/1.5.22 (2013-10-16)
+In-Reply-To: <87zjock6if.fsf@linux-1gf2.Speedport_W723_V_Typ_A_1_00_098>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239588>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239589>
 
+On Sat, Dec 07, 2013 at 04:47:20PM +0100, Thomas Rast wrote:
 
---hHWLQfXTYDoKhP50
-Content-Type: multipart/mixed; boundary="MGYHOYXEY6WxJCY8"
-Content-Disposition: inline
+> > +static off_t write_reused_pack(struct sha1file *f)
+> > +{
+> > +	uint8_t buffer[8192];
+> 
+> We usually just call this 'unsigned char'.  I can see why this would be
+> more portable, but git would already fall apart badly on an architecture
+> where char is not 8 bits.
 
+I think it's worth switching just for consistency with the rest of git.
+Fixed.
 
---MGYHOYXEY6WxJCY8
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> } +			packfile_size = write_reused_pack(f);
+> } +			if (!packfile_size)
+> } +				die_errno("failed to re-use existing pack");
+> 
+> So if you just died here, when the error happens, you could take the
+> chance to tell the user _which_ syscall failed.
 
-Hello all,
+Yeah, agreed (and especially the fact that we may get bogus errno
+values). Fixed.
 
-I was on a plane, moving around some of the many (30ish) submodules in
-my dotfiles and got really annoyed at how much work it is (move the
-dir, remove old from git, add new to git, fix .gitmodules, fix
-=2Egit/config, fix all the parts of the submodule config) so I wrote a
-perl script to work for the most common case.
+> Not your fault, but sha1write() is an odd function -- it purportedly is
+> 
+>   int sha1write(struct sha1file *f, const void *buf, unsigned int count);
+> 
+> but it can only return 0.  This goes back all the way to c38138c
+> (git-pack-objects: write the pack files with a SHA1 csum, 2005-06-26).
 
-As far as I know it should work for anyone not doing Something Weird,
-ie manually fiddling with their submodules.  The main case it does not
-support that I'd like to in the future is submodules containing
-submodules, and also at some point I'd like to wrap git mv to invoke
-this script on demand automatically.
+It looks like there's exactly one site that checks its return value, and
+it's just to die. We should drop the return value from sha1write
+entirely to make it clear that it dies on error. But that's orthogonal
+to this series.
 
-Note that this script requires perl 5.10.1, released in 2009.  If you
-are stuck with something inferior to that you can comment out the
-version at the top and the autodie usage and it should work further
-back, but won't be quite as robust.
+> > -static int add_object_entry(const unsigned char *sha1, enum object_type type,
+> > -			    const char *name, int exclude)
+> > +static int add_object_entry_1(const unsigned char *sha1, enum object_type type,
+> > +			      int flags, uint32_t name_hash,
+> > +			      struct packed_git *found_pack, off_t found_offset)
+> [...]
+> This function makes my head spin, and you're indenting it yet another
+> level.
 
-Enjoy!
---=20
-fREW Schmidt
-http://blog.afoolishmanifesto.com
+Yeah. In addition, the use of the "flags" here is somewhat questionable.
+We use them for internal values in the call from add_object_entry to
+add_object_entry_1. But we also pass the latter as a traversal callback,
+meaning that what it would get in "flags" is totally different. It's not
+actually a bug in the current code, since the bitmap traversal always
+passes empty flags, but it's still rather confusing.
 
---MGYHOYXEY6WxJCY8
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: attachment; filename=git-mv-submodule
+> If it's not too much work, can you split it into the three parts that it
+> really is?  IIUC it boils down to
+> 
+>   do we have this already?
+>       possibly apply 'exclude', then return
+>   are we coming from a call path that doesn't tell us which pack to take
+>   it from?
+>       find _all_ instances in packs
+>       check if any of them are local .keep packs
+>           if so, return
+>   construct a packlist entry to taste
 
-#!/usr/bin/env perl
+I did this split. By itself, I was on the fence, as there are actually
+some interdependencies between the three parts that make it hairy.
 
-use 5.10.1;
-use strict;
-use warnings;
+But then I realized that instead of making the weird relationship
+between add_object_entry and add_object_entry_1, we can simply make a
+new function that composes the functions differently.
 
-use autodie;
-use File::Basename 'dirname';
-use File::Path 'make_path';
+So we get:
 
-die "you must pass both a from and a to" unless @ARGV == 2;
++static int add_object_entry_from_bitmap(const unsigned char *sha1,
++					enum object_type type,
++					int flags, uint32_t name_hash,
++					struct packed_git *pack, off_t offset)
++{
++	uint32_t index_pos;
++
++	if (have_duplicate_entry(sha1, 0, &index_pos))
++		return 0;
++
++	create_object_entry(sha1, type, name_hash, 0, 0, index_pos, pack, offset);
++
++	display_progress(progress_state, to_pack.nr_objects);
++	return 1;
++}
+[...]
++	traverse_bitmap_commit_list(&add_object_entry_from_bitmap);
 
-my ($from, $to) = @ARGV;
+which makes much more sense.
 
-die "you have changes in your working copy!"
-   unless is_clean();
-
-# move the real dir
-make_path(dirname($to));
-safe_system('mv', $from, $to);
-
-# move the git dir (not really that important)
-make_path(dirname(".git/modules/$to"));
-safe_system('mv', ".git/modules/$from", ".git/modules/$to");
-
-# update .gitmodules and .git/config book keeping
-spew($_, slurp($_) =~ s/\Q$from\E/$to/gr)
-   for qw( .gitmodules .git/config );
-
-my $dir_count = scalar split qr(/), $to =~ s(/$)()r;
-
-my $derp = ('../' x (2 + $dir_count)) . $to;
-
-# update .git/modules/$to/config book keeping
-spew(
-   ".git/modules/$to/config",
-   slurp(".git/modules/$to/config") =~ s/worktree.*/worktree = $derp/gr
-);
-
-# update $to book keeping
-spew(
-   "$to/.git",
-   'gitdir: ' . ('../' x $dir_count) . ".git/modules/$to"
-);
-
-safe_system(qw( git add -A ), $from, $to, '.gitmodules' );
-
-sub safe_system {
-   system(@_);
-
-   die "@_ exited poorly :("
-      if $? >> 8;
-}
-
-sub safe_capture {
-   my $ret = qx(@_);
-
-   die "@_ exited poorly :("
-      if $? >> 8;
-
-   return $ret;
-}
-
-sub slurp {
-   open my $fh, '<', $_[0];
-   local $/ = undef;
-   scalar <$fh>
-}
-
-sub spew {
-   open my $fh, '>', $_[0];
-   print {$fh} $_[1]
-}
-
-sub is_clean { !safe_capture(qw(git status --porcelain)) }
-
---MGYHOYXEY6WxJCY8--
-
---hHWLQfXTYDoKhP50
-Content-Type: application/pgp-signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
-
-iQIcBAABCgAGBQJStWPuAAoJEG6zMC9zenWCvkEP/128ZrhyDq53jF7dHxT3Qntw
-UuBhwPHFipEf2m34UBkrNqh+ci43RH1+VRf8qTyxYYEpP85118wOf1bba0eDktWJ
-SMqkNcIUklU+VWPuhd6TCkjBwMtBtrHIQmKBs3v+AEpXapz/dSYZ/1O9tCz9qAsZ
-0icPLiF6a6fzQB7qpg1bRhZmazSUfV+1bMFqdR0jPNg56myVLaWwk0vG+y6gW+QC
-g53I9hEupjhPUXUppe5LuPwjtRXI0yVZgOofa+HXHwaViM5Rh5TQ3S0B2gCpFGVY
-EiYmazz+DIDLB5BkkgCIIoqOpc7SbGvXXC0eeReYRdYe1tV0rYBVCuYkT+iGw4h5
-O4NY9wzFT8EK4N2TEhUdgcoQbAOCQ0NK4Um847LvNn9sICeSOj/9irQ0Oo+iQPRi
-SWRtPcOJLE9dAki2c8rr1S1h3DDLJakkSlwoGdMXFTYyOlyr7ZHX40tc233xPXYe
-rwbu60l5V2jlR2xKh1cLLVdnOT5Rp4CYsxWM+zBjSN11EOhdFys4F4YYYOyvGd64
-uGvyTPp5lPNI9396/vnd0BSPHariKoBLAI8x3aiIRveHbn9LuqYW70ejl3IXSZW8
-HBy6OiS1aX81L9RCWpdrt0pDdqjjF6M8chpZzZDUqdK6OZztFRuuFK7YCll9DpYA
-cWHa0cGfG7opzVrTrkTI
-=fw1a
------END PGP SIGNATURE-----
-
---hHWLQfXTYDoKhP50--
+-Peff
