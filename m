@@ -1,161 +1,153 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 1/2] sha1_object_info_extended: provide delta base sha1s
-Date: Sat, 21 Dec 2013 09:24:20 -0500
-Message-ID: <20131221142419.GA29679@sigill.intra.peff.net>
+Subject: [PATCH 2/2] cat-file: provide %(deltabase) batch format
+Date: Sat, 21 Dec 2013 09:25:22 -0500
+Message-ID: <20131221142522.GB29679@sigill.intra.peff.net>
 References: <20131221142336.GA28649@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 21 15:25:47 2013
+X-From: git-owner@vger.kernel.org Sat Dec 21 15:25:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VuNTe-0005y6-Kn
-	for gcvg-git-2@plane.gmane.org; Sat, 21 Dec 2013 15:24:26 +0100
+	id 1VuNUe-00075a-7F
+	for gcvg-git-2@plane.gmane.org; Sat, 21 Dec 2013 15:25:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754700Ab3LUOYV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Dec 2013 09:24:21 -0500
-Received: from cloud.peff.net ([50.56.180.127]:48533 "HELO peff.net"
+	id S1754867Ab3LUOZY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Dec 2013 09:25:24 -0500
+Received: from cloud.peff.net ([50.56.180.127]:48540 "HELO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754262Ab3LUOYV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Dec 2013 09:24:21 -0500
-Received: (qmail 9257 invoked by uid 102); 21 Dec 2013 14:24:21 -0000
+	id S1754262Ab3LUOZY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Dec 2013 09:25:24 -0500
+Received: (qmail 9631 invoked by uid 102); 21 Dec 2013 14:25:23 -0000
 Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 21 Dec 2013 08:24:21 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 21 Dec 2013 09:24:20 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 21 Dec 2013 08:25:23 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 21 Dec 2013 09:25:22 -0500
 Content-Disposition: inline
 In-Reply-To: <20131221142336.GA28649@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239621>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239622>
 
-A caller of sha1_object_info_extended technically has enough
-information to determine the base sha1 from the results of
-the call. It knows the pack, offset, and delta type of the
-object, which is sufficient to find the base.
+It can be useful for debugging or analysis to see which
+objects are stored as delta bases on top of others. This
+information is available by running `git verify-pack`, but
+that is extremely expensive (and is harder than necessary to
+parse).
 
-However, the functions to do so are not publicly available,
-and the code itself is intimate enough with the pack details
-that it should be abstracted away. We could add a public
-helper to allow callers to query the delta base separately,
-but it is simpler and slightly more efficient to optionally
-grab it along with the rest of the object_info data.
-
-For cases where the object is not stored as a delta, we
-write the null sha1 into the query field. A careful caller
-could check "oi.whence == OI_PACKED && oi.u.packed.is_delta"
-before looking at the base sha1, but using the null sha1
-provides a simple alternative (and gives a better sanity
-check for a non-careful caller than simply returning random
-bytes).
+Instead, let's make it available as a cat-file query format,
+which makes it fast and simple to get the bases for a subset
+of the objects.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- cache.h     |  1 +
- sha1_file.c | 53 +++++++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 54 insertions(+)
+ Documentation/git-cat-file.txt | 12 +++++++++---
+ builtin/cat-file.c             |  6 ++++++
+ t/t1006-cat-file.sh            | 34 ++++++++++++++++++++++++++++++++++
+ 3 files changed, 49 insertions(+), 3 deletions(-)
 
-diff --git a/cache.h b/cache.h
-index ce377e1..67356db 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1074,6 +1074,7 @@ struct object_info {
- 	enum object_type *typep;
- 	unsigned long *sizep;
- 	unsigned long *disk_sizep;
-+	unsigned char *delta_base_sha1;
+diff --git a/Documentation/git-cat-file.txt b/Documentation/git-cat-file.txt
+index 322f5ed..f6a16f4 100644
+--- a/Documentation/git-cat-file.txt
++++ b/Documentation/git-cat-file.txt
+@@ -109,6 +109,11 @@ newline. The available atoms are:
+ 	The size, in bytes, that the object takes up on disk. See the
+ 	note about on-disk sizes in the `CAVEATS` section below.
  
- 	/* Response */
- 	enum {
-diff --git a/sha1_file.c b/sha1_file.c
-index daacc0c..4e8dd8b 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -1667,6 +1667,38 @@ static off_t get_delta_base(struct packed_git *p,
- 	return base_offset;
- }
++`deltabase`::
++	If the object is stored as a delta on-disk, this expands to the
++	40-hex sha1 of the delta base object. Otherwise, expands to the
++	null sha1 (40 zeroes). See `CAVEATS` below.
++
+ `rest`::
+ 	If this atom is used in the output string, input lines are split
+ 	at the first whitespace boundary. All characters before that
+@@ -152,10 +157,11 @@ should be taken in drawing conclusions about which refs or objects are
+ responsible for disk usage. The size of a packed non-delta object may be
+ much larger than the size of objects which delta against it, but the
+ choice of which object is the base and which is the delta is arbitrary
+-and is subject to change during a repack. Note also that multiple copies
+-of an object may be present in the object database; in this case, it is
+-undefined which copy's size will be reported.
++and is subject to change during a repack.
  
-+/*
-+ * Like get_delta_base above, but we return the sha1 instead of the pack
-+ * offset. This means it is cheaper for REF deltas (we do not have to do
-+ * the final object lookup), but more expensive for OFS deltas (we
-+ * have to load the revidx to convert the offset back into a sha1).
-+ */
-+static const unsigned char *get_delta_base_sha1(struct packed_git *p,
-+						struct pack_window **w_curs,
-+						off_t curpos,
-+						enum object_type type,
-+						off_t delta_obj_offset)
-+{
-+	if (type == OBJ_REF_DELTA) {
-+		unsigned char *base = use_pack(p, w_curs, curpos, NULL);
-+		return base;
-+	} else if (type == OBJ_OFS_DELTA) {
-+		struct revindex_entry *revidx;
-+		off_t base_offset = get_delta_base(p, w_curs, &curpos,
-+						   type, delta_obj_offset);
-+
-+		if (!base_offset)
-+			return NULL;
-+
-+		revidx = find_pack_revindex(p, base_offset);
-+		if (!revidx)
-+			return NULL;
-+
-+		return nth_packed_object_sha1(p, revidx->nr);
-+	} else
-+		return NULL;
-+}
-+
- int unpack_object_header(struct packed_git *p,
- 			 struct pack_window **w_curs,
- 			 off_t *curpos,
-@@ -1824,6 +1856,22 @@ static int packed_object_info(struct packed_git *p, off_t obj_offset,
- 		}
- 	}
++Note also that multiple copies of an object may be present in the object
++database; in this case, it is undefined which copy's size or delta base
++will be reported.
  
-+	if (oi->delta_base_sha1) {
-+		if (type == OBJ_OFS_DELTA || type == OBJ_REF_DELTA) {
-+			const unsigned char *base;
-+
-+			base = get_delta_base_sha1(p, &w_curs, curpos,
-+						   type, obj_offset);
-+			if (!base) {
-+				type = OBJ_BAD;
-+				goto out;
-+			}
-+
-+			hashcpy(oi->delta_base_sha1, base);
-+		} else
-+			hashclr(oi->delta_base_sha1);
-+	}
-+
- out:
- 	unuse_pack(&w_curs);
- 	return type;
-@@ -2407,6 +2455,9 @@ static int sha1_loose_object_info(const unsigned char *sha1,
- 	git_zstream stream;
- 	char hdr[32];
+ GIT
+ ---
+diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+index b2ca775..2e0af2e 100644
+--- a/builtin/cat-file.c
++++ b/builtin/cat-file.c
+@@ -118,6 +118,7 @@ struct expand_data {
+ 	unsigned long size;
+ 	unsigned long disk_size;
+ 	const char *rest;
++	unsigned char delta_base_sha1[20];
  
-+	if (oi->delta_base_sha1)
-+		hashclr(oi->delta_base_sha1);
-+
  	/*
- 	 * If we don't care about type or size, then we don't
- 	 * need to look inside the object at all. Note that we
-@@ -2457,6 +2508,8 @@ int sha1_object_info_extended(const unsigned char *sha1, struct object_info *oi)
- 			*(oi->sizep) = co->size;
- 		if (oi->disk_sizep)
- 			*(oi->disk_sizep) = 0;
-+		if (oi->delta_base_sha1)
-+			hashclr(oi->delta_base_sha1);
- 		oi->whence = OI_CACHED;
- 		return 0;
- 	}
+ 	 * If mark_query is true, we do not expand anything, but rather
+@@ -174,6 +175,11 @@ static void expand_atom(struct strbuf *sb, const char *atom, int len,
+ 			data->split_on_whitespace = 1;
+ 		else if (data->rest)
+ 			strbuf_addstr(sb, data->rest);
++	} else if (is_atom("deltabase", atom, len)) {
++		if (data->mark_query)
++			data->info.delta_base_sha1 = data->delta_base_sha1;
++		else
++			strbuf_addstr(sb, sha1_to_hex(data->delta_base_sha1));
+ 	} else
+ 		die("unknown format element: %.*s", len, atom);
+ }
+diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
+index 8a1bc5c..633dc82 100755
+--- a/t/t1006-cat-file.sh
++++ b/t/t1006-cat-file.sh
+@@ -240,4 +240,38 @@ test_expect_success "--batch-check with multiple sha1s gives correct format" '
+     "$(echo_without_newline "$batch_check_input" | git cat-file --batch-check)"
+ '
+ 
++test_expect_success 'setup blobs which are likely to delta' '
++	test-genrandom foo 10240 >foo &&
++	{ cat foo; echo plus; } >foo-plus &&
++	git add foo foo-plus &&
++	git commit -m foo &&
++	cat >blobs <<-\EOF
++	HEAD:foo
++	HEAD:foo-plus
++	EOF
++'
++
++test_expect_success 'confirm that neither loose blob is a delta' '
++	cat >expect <<-EOF
++	$_z40
++	$_z40
++	EOF
++	git cat-file --batch-check="%(deltabase)" <blobs >actual &&
++	test_cmp expect actual
++'
++
++# To avoid relying too much on the current delta heuristics,
++# we will check only that one of the two objects is a delta
++# against the other, but not the order. We can do so by just
++# asking for the base of both, and checking whether either
++# sha1 appears in the output.
++test_expect_success '%(deltabase) reports packed delta bases' '
++	git repack -ad &&
++	git cat-file --batch-check="%(deltabase)" <blobs >actual &&
++	{
++		grep "$(git rev-parse HEAD:foo)" actual ||
++		grep "$(git rev-parse HEAD:foo-plus)" actual
++	}
++'
++
+ test_done
 -- 
 1.8.5.1.399.g900e7cd
