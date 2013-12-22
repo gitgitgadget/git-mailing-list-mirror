@@ -1,94 +1,111 @@
-From: Samuel Bronson <naesten@gmail.com>
-Subject: Re: [PATCH] wt-status.c: disable those distracting
- -Wformat-zero-length warnings
-Date: Sat, 21 Dec 2013 15:09:22 -0500
-Message-ID: <CAJYzjmc2Mvr=d9CtR_KCPF3Msy6vJWVO7_pE7FGNL5p=2Bn6cA@mail.gmail.com>
-References: <1387554301-23901-1-git-send-email-naesten@gmail.com>
-	<20131221094202.GA32622@sigill.intra.peff.net>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH] commit.c: make "tree" a const pointer in commit_tree*()
+Date: Sun, 22 Dec 2013 09:56:41 +0700
+Message-ID: <1387681001-3165-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Dec 21 21:09:30 2013
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Dec 22 03:56:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VuSrZ-0000NB-D5
-	for gcvg-git-2@plane.gmane.org; Sat, 21 Dec 2013 21:09:29 +0100
+	id 1VuZDr-0005gf-6R
+	for gcvg-git-2@plane.gmane.org; Sun, 22 Dec 2013 03:56:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755874Ab3LUUJY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Dec 2013 15:09:24 -0500
-Received: from mail-la0-f47.google.com ([209.85.215.47]:58026 "EHLO
-	mail-la0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755723Ab3LUUJX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Dec 2013 15:09:23 -0500
-Received: by mail-la0-f47.google.com with SMTP id ep20so1681874lab.34
-        for <git@vger.kernel.org>; Sat, 21 Dec 2013 12:09:22 -0800 (PST)
+	id S1754152Ab3LVC4v convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 21 Dec 2013 21:56:51 -0500
+Received: from mail-pa0-f51.google.com ([209.85.220.51]:37266 "EHLO
+	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752737Ab3LVC4u (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Dec 2013 21:56:50 -0500
+Received: by mail-pa0-f51.google.com with SMTP id fa1so4117781pad.24
+        for <git@vger.kernel.org>; Sat, 21 Dec 2013 18:56:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=e2YPIZaL+ZlpFsqCeKnPaTjVUMSTLydlO1rTI05qTRo=;
-        b=xtSM6bYMVutrN0TY8ZH3rEVDYKuw01E5v+s+AwfvkUH6TCYvgW67hRQTXWR6WLvVR6
-         RSh0f6otmtIU1nasIk7DkH61+an92GAd0BQuS9G8WG/gJHSyxGtlxkspc5H41nPfgkdO
-         IJgGEUs2hWeKDBXvdHIlupncAaflUoiAtf6e7OagAggew/rhB2tOwY3bG4CH+yhqpHbK
-         w2ubN6dDE2KBbstitxW74bvAl79W1+VZUq/Ui20KFF+zCbVrSwZl/4D9537iEWdTuAgW
-         46APehDLs2/64I2TpHHvU4tbLt4KPAV2k6EITwUTNdENzGe0r/h1EAo0qx5THw4SZq6D
-         mVrg==
-X-Received: by 10.112.158.231 with SMTP id wx7mr4397901lbb.27.1387656562196;
- Sat, 21 Dec 2013 12:09:22 -0800 (PST)
-Received: by 10.112.133.227 with HTTP; Sat, 21 Dec 2013 12:09:22 -0800 (PST)
-In-Reply-To: <20131221094202.GA32622@sigill.intra.peff.net>
+        h=from:to:cc:subject:date:message-id:mime-version:content-type
+         :content-transfer-encoding;
+        bh=h4CymNFXB+q61CODXNcym45fcGV29u3N+a/CdWg8OQ0=;
+        b=aFn6o7noQ0ivphL+yWEl9m5pIf3u3W0XXATC1XFCfVuK25sj6uWix7OkCrP4k49eAQ
+         O7cs+3YknZPuRB+gTuchgfN709mvn7LywIhuHGjxPTBqG46wo7hDAyjFFomGpL98ou4U
+         QPmfnTK5PiZGi1V2LCU3W66SIYBmkBChJ48igicxk3XpwIUMtv3Ohp8gnr2jFiZWOZqd
+         qVdVfIM3FxH/qLk2MbtflrMom0lOH2eRgEQXHvNVW9vEH2FN/vcP/E6TI1cSEOg41Uik
+         uqJRUpCYFHTzL21CRDWYKfzgLTBNDDCuKyh1TaTxNNKF6VbIVMf6ub6hQFa9Bq1qZkLF
+         daIA==
+X-Received: by 10.66.184.168 with SMTP id ev8mr370302pac.152.1387681009583;
+        Sat, 21 Dec 2013 18:56:49 -0800 (PST)
+Received: from lanh ([115.73.203.37])
+        by mx.google.com with ESMTPSA id ja5sm24403915pbc.14.2013.12.21.18.56.45
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sat, 21 Dec 2013 18:56:48 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Sun, 22 Dec 2013 09:56:44 +0700
+X-Mailer: git-send-email 1.8.5.1.208.g019362e
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239627>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239629>
 
-On Sat, Dec 21, 2013 at 4:42 AM, Jeff King <peff@peff.net> wrote:
-> On Fri, Dec 20, 2013 at 10:45:01AM -0500, Samuel Bronson wrote:
->
->> These warnings don't really seem to make much sense for this file.
->
-> Agreed, though the advice so far has been to put -Wno-format-zero-length
-> in your CFLAGS.
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ commit.c | 4 ++--
+ commit.h | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-Yes, auto-detecting acceptance of this flag and using it automatically
-might be a reasonable approach as well, but I thought this warning
-might potentially be useful WRT other printf-like functions.
-
->> +/* We have good reasons for using zero-length format strings, and
->> + * there's unfortunately no way to turn this off on a per-function
->> + * basis ... */
->> +#pragma GCC diagnostic ignored "-Wformat-zero-length"
->
-> Are other compilers happy to ignore this pragma? I guess we could wrap
-> it in an #ifdef, if so.
-
-I assume you meant we could use an #ifdef if *not*?
-
-> It's also really not about this file in particular. The whole concept of
-> format-zero-length is questionable, as it ignores the concept that a
-> format function might actually do something useful with an empty format
-> (e.g., by adding boilerplate, or having a side-effect). It's just that
-> this file is the only one that happens to do so.
-
-Hmm, I think I saw one other instance of this warning, actually, but
-it didn't seem worth adding the pragma to a file for just one warning.
-
-> Annotating the _function_ to say "it's useful to pass an empty format
-> into this function" would make sense, but as you note, there is no way
-> to do that.
-
-I made a note about this at
-<http://gcc.gnu.org/bugzilla/show_bug.cgi?id=47901#c9> (comment #9 on
-"-Wall should not imply -Wformat-zero-length by default")
-
-> So I dunno. This seems like it does not quite specify what we want to
-> say as well as just "-Wno-format-zero-length", but it is more convenient
-> in practice (because we take care of it in the source code, rather than
-> relying on the user's build settings).
-
-Yeah.
+diff --git a/commit.c b/commit.c
+index 5df1df7..5ff5538 100644
+--- a/commit.c
++++ b/commit.c
+@@ -1356,7 +1356,7 @@ void free_commit_extra_headers(struct commit_extr=
+a_header *extra)
+ 	}
+ }
+=20
+-int commit_tree(const struct strbuf *msg, unsigned char *tree,
++int commit_tree(const struct strbuf *msg, const unsigned char *tree,
+ 		struct commit_list *parents, unsigned char *ret,
+ 		const char *author, const char *sign_commit)
+ {
+@@ -1485,7 +1485,7 @@ static const char commit_utf8_warn[] =3D
+ "You may want to amend it after fixing the message, or set the config\=
+n"
+ "variable i18n.commitencoding to the encoding your project uses.\n";
+=20
+-int commit_tree_extended(const struct strbuf *msg, unsigned char *tree=
+,
++int commit_tree_extended(const struct strbuf *msg, const unsigned char=
+ *tree,
+ 			 struct commit_list *parents, unsigned char *ret,
+ 			 const char *author, const char *sign_commit,
+ 			 struct commit_extra_header *extra)
+diff --git a/commit.h b/commit.h
+index 934af88..f8a451d 100644
+--- a/commit.h
++++ b/commit.h
+@@ -232,11 +232,11 @@ struct commit_extra_header {
+ extern void append_merge_tag_headers(struct commit_list *parents,
+ 				     struct commit_extra_header ***tail);
+=20
+-extern int commit_tree(const struct strbuf *msg, unsigned char *tree,
++extern int commit_tree(const struct strbuf *msg, const unsigned char *=
+tree,
+ 		       struct commit_list *parents, unsigned char *ret,
+ 		       const char *author, const char *sign_commit);
+=20
+-extern int commit_tree_extended(const struct strbuf *msg, unsigned cha=
+r *tree,
++extern int commit_tree_extended(const struct strbuf *msg, const unsign=
+ed char *tree,
+ 				struct commit_list *parents, unsigned char *ret,
+ 				const char *author, const char *sign_commit,
+ 				struct commit_extra_header *);
+--=20
+1.8.5.2.221.g812bf82.dirty
