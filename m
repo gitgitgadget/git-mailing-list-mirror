@@ -1,64 +1,101 @@
-From: Ben Maurer <bmaurer@fb.com>
-Subject: RE: [PATCH] [RFC] Making use of bitmaps for thin objects
-Date: Sun, 22 Dec 2013 21:55:23 +0000
-Message-ID: <5CDDBDF2D36D9F43B9F5E99003F6A0D43B67C0DA@PRN-MBX02-1.TheFacebook.com>
-References: <1387741654-14890-1-git-send-email-bmaurer@fb.com>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: Re: [PATCH 4/5] safe_create_leading_directories(): fix a mkdir/rmdir
+ race
+Date: Sun, 22 Dec 2013 22:42:55 +0000
+Message-ID: <52B76AEF.70200@ramsay1.demon.co.uk>
+References: <1387696451-32224-1-git-send-email-mhagger@alum.mit.edu> <1387696451-32224-5-git-send-email-mhagger@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: "peff@peff.net" <peff@peff.net>
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Dec 22 22:55:34 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Dec 22 23:43:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vuqzk-0000hI-H9
-	for gcvg-git-2@plane.gmane.org; Sun, 22 Dec 2013 22:55:32 +0100
+	id 1Vurjq-0005uL-PU
+	for gcvg-git-2@plane.gmane.org; Sun, 22 Dec 2013 23:43:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756571Ab3LVVz2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Dec 2013 16:55:28 -0500
-Received: from mx0a-00082601.pphosted.com ([67.231.145.42]:38816 "EHLO
-	mx0a-00082601.pphosted.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755718Ab3LVVz1 convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Dec 2013 16:55:27 -0500
-Received: from pps.filterd (m0044012 [127.0.0.1])
-	by mx0a-00082601.pphosted.com (8.14.5/8.14.5) with SMTP id rBMLkrE3023575;
-	Sun, 22 Dec 2013 13:55:26 -0800
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fb.com; h=from : to : cc : subject :
- date : message-id : references : in-reply-to : content-type :
- content-transfer-encoding : mime-version; s=facebook;
- bh=Dl+sT/ccrSevuff/qNam8eCmYCHd1RLprEtLXqpl5oc=;
- b=I7Di0P+PJHFQJ38h30XKwzz//GfQ9pLDSHTH2QTn2tgb44DlABOiMOWh2ZLAbzGBtm2N
- /s1poZGGD+dvR3Gr8ko/jZKNV2b7b/zgUOvApFcJCgkbzseo/cP23gly+vHZflCadeXR
- vDbGkIKA8hxEDQsD8XZ1OtxKB1jeoQjj9oU= 
-Received: from mail.thefacebook.com (prn1-cmdf-dc01-fw1-nat.corp.tfbnw.net [173.252.71.129] (may be forged))
-	by mx0a-00082601.pphosted.com with ESMTP id 1gvg7bq2fd-1
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=OK);
-	Sun, 22 Dec 2013 13:55:26 -0800
-Received: from PRN-MBX02-1.TheFacebook.com ([169.254.1.64]) by
- PRN-CHUB13.TheFacebook.com ([fe80::8c35:7ba8:bb32:ee09%12]) with mapi id
- 14.03.0174.001; Sun, 22 Dec 2013 13:55:25 -0800
-Thread-Topic: [PATCH] [RFC] Making use of bitmaps for thin objects
-Thread-Index: AQHO/06wG06Z2WW/kESY1GiAdQ1uTppgwIzT
-In-Reply-To: <1387741654-14890-1-git-send-email-bmaurer@fb.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [192.168.16.4]
-X-Proofpoint-Spam-Reason: safe
-X-FB-Internal: Safe
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:5.11.87,1.0.14,0.0.0000
- definitions=2013-12-22_02:2013-12-20,2013-12-22,1970-01-01 signatures=0
+	id S1755713Ab3LVWnG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Dec 2013 17:43:06 -0500
+Received: from mdfmta010.mxout.tch.inty.net ([91.221.169.51]:37863 "EHLO
+	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1755438Ab3LVWnF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Dec 2013 17:43:05 -0500
+Received: from mdfmta010.tch.inty.net (unknown [127.0.0.1])
+	by mdfmta010.tch.inty.net (Postfix) with ESMTP id 6E97C400C0A;
+	Sun, 22 Dec 2013 22:43:02 +0000 (GMT)
+Received: from mdfmta010.tch.inty.net (unknown [127.0.0.1])
+	by mdfmta010.tch.inty.net (Postfix) with ESMTP id 24DB3400741;
+	Sun, 22 Dec 2013 22:43:02 +0000 (GMT)
+Received: from [192.168.254.1] (unknown [80.176.147.220])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mdfmta010.tch.inty.net (Postfix) with ESMTP;
+	Sun, 22 Dec 2013 22:43:01 +0000 (GMT)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.2.0
+In-Reply-To: <1387696451-32224-5-git-send-email-mhagger@alum.mit.edu>
+X-MDF-HostID: 19
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239648>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239649>
 
-One issue with this approach is that it seems git-pack-index doesn't perform as well with thin packs. git-index-pack uses a multi-threaded approach to resolving the deltas. However, the multithreading only works on deltas that are exclusively in the pack. After the multi-threaded phase, it incrementally brings in objects from external packs, but in single threaded manner. Many objects in the pack have some dependency on an external object, therefore, defeating the multithreading.
+On 22/12/13 07:14, Michael Haggerty wrote:
+> It could be that some other process is trying to clean up empty
+> directories at the same time that safe_create_leading_directories() is
+> attempting to create them.  In this case, it could happen that
+> directory "a/b" was present at the end of one iteration of the loop
+> (either it was already present or we just created it ourselves), but
+> by the time we try to create directory "a/b/c", directory "a/b" has
+> been deleted.  In fact, directory "a" might also have been deleted.
+> 
+> So, if a call to mkdir() fails with ENOENT, then try checking/making
+> all directories again from the beginning.  Attempt up to three times
+> before giving up.
+> 
+> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+> ---
+>  sha1_file.c | 11 +++++++++++
+>  1 file changed, 11 insertions(+)
+> 
+> diff --git a/sha1_file.c b/sha1_file.c
+> index dcfd35a..abcb56b 100644
+> --- a/sha1_file.c
+> +++ b/sha1_file.c
+> @@ -108,6 +108,7 @@ int mkdir_in_gitdir(const char *path)
+>  int safe_create_leading_directories(char *path)
+>  {
+>  	char *next_component = path + offset_1st_component(path);
+> +	int attempts = 3;
+>  	int retval = 0;
+>  
+>  	while (!retval && next_component) {
+> @@ -132,6 +133,16 @@ int safe_create_leading_directories(char *path)
+>  			if (errno == EEXIST &&
+>  			    !stat(path, &st) && S_ISDIR(st.st_mode)) {
+>  				; /* somebody created it since we checked */
+> +			} else if (errno == ENOENT && --attempts) {
+> +				/*
+> +				 * Either mkdir() failed bacause
 
-What's the use case for a pack file with a SHA1 reference living inside the pack file (why not just use an offset?) Would it make sense to assume that all such files are external and bring them in in the first phase.
+s/bacause/because/
+
+> +				 * somebody just pruned the containing
+> +				 * directory, or stat() failed because
+> +				 * the file that was in our way was
+> +				 * just removed.  Either way, try
+> +				 * again from the beginning:
+> +				 */
+> +				next_component = path + offset_1st_component(path);
+>  			} else {
+>  				retval = -1;
+>  			}
+> 
+
+ATB,
+Ramsay Jones
