@@ -1,74 +1,111 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 2/5] safe_create_leading_directories(): reduce scope of local variable
-Date: Sun, 22 Dec 2013 08:14:08 +0100
-Message-ID: <1387696451-32224-3-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH 5/5] rename_ref(): fix a mkdir()/rmdir() race
+Date: Sun, 22 Dec 2013 08:14:11 +0100
+Message-ID: <1387696451-32224-6-git-send-email-mhagger@alum.mit.edu>
 References: <1387696451-32224-1-git-send-email-mhagger@alum.mit.edu>
 Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Dec 22 08:15:06 2013
+X-From: git-owner@vger.kernel.org Sun Dec 22 08:15:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VudFg-0006Rg-1v
-	for gcvg-git-2@plane.gmane.org; Sun, 22 Dec 2013 08:15:04 +0100
+	id 1VudFn-0006ZN-47
+	for gcvg-git-2@plane.gmane.org; Sun, 22 Dec 2013 08:15:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752499Ab3LVHOk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Dec 2013 02:14:40 -0500
-Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:64389 "EHLO
-	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752229Ab3LVHOj (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 22 Dec 2013 02:14:39 -0500
-X-AuditID: 12074412-b7fc96d0000023d5-41-52b6915e8756
+	id S1752720Ab3LVHPF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Dec 2013 02:15:05 -0500
+Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:50298 "EHLO
+	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752147Ab3LVHOn (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 22 Dec 2013 02:14:43 -0500
+X-AuditID: 1207440d-b7f4c6d000004a16-bf-52b691625add
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id AB.60.09173.E5196B25; Sun, 22 Dec 2013 02:14:38 -0500 (EST)
+	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id BE.C6.18966.26196B25; Sun, 22 Dec 2013 02:14:42 -0500 (EST)
 Received: from michael.fritz.box (p57A25B75.dip0.t-ipconnect.de [87.162.91.117])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id rBM7ERFM023935
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id rBM7ERFP023935
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Sun, 22 Dec 2013 02:14:37 -0500
+	Sun, 22 Dec 2013 02:14:41 -0500
 X-Mailer: git-send-email 1.8.5.1
 In-Reply-To: <1387696451-32224-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrEIsWRmVeSWpSXmKPExsUixO6iqBs3cVuQwa3rJhZdV7qZLBp6rzBb
-	3F4xn9mB2ePv+w9MHhcvKXt83iQXwBzFbZOUWFIWnJmep2+XwJ3x/8sK1oLZLBWLtpY0MK5k
-	7mLk5JAQMJG48PEfE4QtJnHh3nq2LkYuDiGBy4wS1/ZtZYFwTjBJTD91EKyDTUBXYlFPM1iH
-	iICaxMS2QywgNrOAg8Tmz42MILawQJjEtDnL2UFsFgFViRlbd4P18gq4SHz9ug1qs4LEvksn
-	weZwCrhKTP2ykRXEFgKq2fHqEdMERt4FjAyrGOUSc0pzdXMTM3OKU5N1i5MT8/JSi3TN9HIz
-	S/RSU0o3MUJCRWgH4/qTcocYBTgYlXh4M8S2BQmxJpYVV+YeYpTkYFIS5eWeABTiS8pPqcxI
-	LM6ILyrNSS0+xCjBwawkwrvGFSjHm5JYWZValA+TkuZgURLn/blY3U9IID2xJDU7NbUgtQgm
-	K8PBoSTB6w0yVLAoNT21Ii0zpwQhzcTBCSK4QDbwAG1IBSnkLS5IzC3OTIcoOsWoKCXOGwWS
-	EABJZJTmwQ2ARfUrRnGgf4R5M0CqeIAJAa77FdBgJqDBxms3gQwuSURISTUwFj+Zus1E6NH+
-	KTeUtny23HTwu/DdNm+hZZ57U5zvMqws/c/OM9X+XK1U71N9q/26uZKLu66/NqwK3RPzTvLm
-	ucuf+WV+V/N0OebMLfq6IJ1z0UqWgwqPzidd162tX6Oa+eLpi023JU0m/4+xOqBaemytQ87e
-	/W9X7na27//++U7RRFt2U/69H5RYijMSDbWYi4oTAcHWwQPFAgAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrAIsWRmVeSWpSXmKPExsUixO6iqJs0cVuQwZaFOhZdV7qZLBp6rzBb
+	3F4xn9mB2ePv+w9MHhcvKXt83iQXwBzFbZOUWFIWnJmep2+XwJ3xcuYK1oI2gYqVE+saGM/x
+	dDFyckgImEic+bGODcIWk7hwbz2QzcUhJHCZUWL73UnMIAkhgRNMEl8XpIPYbAK6Eot6mplA
+	bBEBNYmJbYdYQGxmAQeJzZ8bGUFsYQFbia7eyUA2BweLgKrElqmpIGFeAReJp9P7WCB2KUjs
+	u3QSbAyngKvE1C8bWSFWuUjsePWIaQIj7wJGhlWMcok5pbm6uYmZOcWpybrFyYl5ealFukZ6
+	uZkleqkppZsYIWHCu4Px/zqZQ4wCHIxKPLwZYtuChFgTy4orcw8xSnIwKYnyck8ACvEl5adU
+	ZiQWZ8QXleakFh9ilOBgVhLhXeMKlONNSaysSi3Kh0lJc7AoifOqLVH3ExJITyxJzU5NLUgt
+	gsnKcHAoSfB6gwwVLEpNT61Iy8wpQUgzcXCCCC6QDTxAG1JBCnmLCxJzizPTIYpOMSpKifNG
+	gSQEQBIZpXlwA2AR/YpRHOgfYd4MkCoeYDKA634FNJgJaLDx2k0gg0sSEVJSDYz6XgutUlWX
+	VLG79fZxXGsJv13z+kdLsvd1adlFtWd5/6/P6ZF1k/92qyXy2tYZW3huJ9Z/ifm3Trv7iqrA
+	WctTdzqb/1rqG+Vsv3qU1eqkwGWNL6wZs92Omb/0uD/l7Ze+v62t2a/0uVOPvip/yPtUWP1p
+	hFTmhRnzfrlErFNYGKhjOH2vVIkSS3FGoqEWc1FxIgDhviR3wwIAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239635>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239636>
+
+When renaming a reflog file, it was possible that an empty directory
+that we just created using safe_create_leading_directories() might get
+deleted by another process before we have a chance to move the new
+file into it.
+
+So if the rename fails with ENOENT, then retry from the beginning.
+Make up to three attempts before giving up.
+
+It could theoretically happen that the ENOENT comes from the
+disappearance of TMP_RENAMED_LOG.  In that case three pointless
+attempts will be made to move the nonexistent file, but no other harm
+should come of it.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- sha1_file.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ refs.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/sha1_file.c b/sha1_file.c
-index c9245a6..cc9957e 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -108,9 +108,10 @@ int mkdir_in_gitdir(const char *path)
- int safe_create_leading_directories(char *path)
- {
- 	char *pos = path + offset_1st_component(path);
--	struct stat st;
+diff --git a/refs.c b/refs.c
+index 3926136..3ab1491 100644
+--- a/refs.c
++++ b/refs.c
+@@ -2516,6 +2516,7 @@ int rename_ref(const char *oldrefname, const char *newrefname, const char *logms
+ 	struct stat loginfo;
+ 	int log = !lstat(git_path("logs/%s", oldrefname), &loginfo);
+ 	const char *symref = NULL;
++	int attempts = 3;
  
- 	while (pos) {
-+		struct stat st;
-+
- 		pos = strchr(pos, '/');
- 		if (!pos)
- 			break;
+ 	if (log && S_ISLNK(loginfo.st_mode))
+ 		return error("reflog for %s is a symlink", oldrefname);
+@@ -2555,12 +2556,12 @@ int rename_ref(const char *oldrefname, const char *newrefname, const char *logms
+ 		}
+ 	}
+ 
++ retry:
+ 	if (log && safe_create_leading_directories(git_path("logs/%s", newrefname))) {
+ 		error("unable to create directory for %s", newrefname);
+ 		goto rollback;
+ 	}
+ 
+- retry:
+ 	if (log && rename(git_path(TMP_RENAMED_LOG), git_path("logs/%s", newrefname))) {
+ 		if (errno==EISDIR || errno==ENOTDIR) {
+ 			/*
+@@ -2574,6 +2575,13 @@ int rename_ref(const char *oldrefname, const char *newrefname, const char *logms
+ 			}
+ 			goto retry;
+ 		} else {
++			if (errno == ENOENT && --attempts)
++				/*
++				 * Perhaps somebody just pruned the empty
++				 * directory into which we wanted to move the
++				 * file.
++				 */
++				goto retry;
+ 			error("unable to move logfile "TMP_RENAMED_LOG" to logs/%s: %s",
+ 				newrefname, strerror(errno));
+ 			goto rollback;
 -- 
 1.8.5.1
