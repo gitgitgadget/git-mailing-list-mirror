@@ -1,87 +1,125 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-cherry.txt: cross reference "git log --cherry"
-Date: Sat, 21 Dec 2013 22:58:02 -0800
-Message-ID: <7vk3exjrt1.fsf@alter.siamese.dyndns.org>
-References: <5167369f.ea15340a.5e12.0282@mx.google.com>
-	<1387484450-935-1-git-send-email-naesten@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Samuel Bronson <naesten@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Dec 22 07:58:04 2013
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [PATCH 3/5] safe_create_leading_directories(): add "slash" pointer
+Date: Sun, 22 Dec 2013 08:14:09 +0100
+Message-ID: <1387696451-32224-4-git-send-email-mhagger@alum.mit.edu>
+References: <1387696451-32224-1-git-send-email-mhagger@alum.mit.edu>
+Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Dec 22 08:15:05 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VuczC-0001Sw-Qq
-	for gcvg-git-2@plane.gmane.org; Sun, 22 Dec 2013 07:58:03 +0100
+	id 1VudFg-0006Rg-Jf
+	for gcvg-git-2@plane.gmane.org; Sun, 22 Dec 2013 08:15:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752899Ab3LVG57 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Dec 2013 01:57:59 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45073 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752129Ab3LVG56 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Dec 2013 01:57:58 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E3CB04D5E2;
-	Sun, 22 Dec 2013 01:57:57 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=BMVF2Ta43wUuo6dPSE5j2xKZZ9s=; b=EMCWcQ
-	OwZJBoGl4F9WNUM6YlnUDRaOge2ZIex7yCWQlE5X1yfT4lO6pMSlGEEvq/I8HdDf
-	w1OsHZkYnJTtvxDgozbZt13gOIgVV9ZIm/Dr+FT7uBWfo8OxE3UZzjj0BLyyNnM+
-	HCgR2zFcMW2O26bQ4f/k81Hpq5kJbgXXzjTk0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Ilud2a0YBFuH2Ig1YbErIYGvbOfEBklT
-	jLxRZIvwpniPtfZjbPCZ9L3zATDV+fApdkl0kzjo1GfBy1IzmTZwnAVcIdU74cc+
-	vfuikTThQTpUN/IATDW4CNyhwbB3sLpJQ3Y1M6LwaX7gkW1uKKvvyoyNsixWFi2o
-	mzBbnWhjhis=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CFD8A4D5E1;
-	Sun, 22 Dec 2013 01:57:57 -0500 (EST)
-Received: from pobox.com (unknown [198.0.213.178])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C1EC94D5E0;
-	Sun, 22 Dec 2013 01:57:56 -0500 (EST)
-In-Reply-To: <1387484450-935-1-git-send-email-naesten@gmail.com> (Samuel
-	Bronson's message of "Thu, 19 Dec 2013 15:20:50 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.4 (gnu/linux)
-X-Pobox-Relay-ID: 63047F20-6AD6-11E3-8DFF-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752616Ab3LVHOr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Dec 2013 02:14:47 -0500
+Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:57087 "EHLO
+	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752467Ab3LVHOk (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 22 Dec 2013 02:14:40 -0500
+X-AuditID: 1207440e-b7fbc6d000004ad9-a2-52b6915fabd9
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id 66.FE.19161.F5196B25; Sun, 22 Dec 2013 02:14:40 -0500 (EST)
+Received: from michael.fritz.box (p57A25B75.dip0.t-ipconnect.de [87.162.91.117])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id rBM7ERFN023935
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+	Sun, 22 Dec 2013 02:14:39 -0500
+X-Mailer: git-send-email 1.8.5.1
+In-Reply-To: <1387696451-32224-1-git-send-email-mhagger@alum.mit.edu>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrMIsWRmVeSWpSXmKPExsUixO6iqJswcVuQwa9eJouuK91MFg29V5gt
+	bq+Yz+zA7PH3/Qcmj4uXlD0+b5ILYI7itklKLCkLzkzP07dL4M5obJ3LXtDNV7Hq/UfWBsbt
+	XF2MnBwSAiYS2798Z4SwxSQu3FvP1sXIxSEkcJlR4u7iLijnBJPE5xsrWECq2AR0JRb1NDOB
+	2CICahIT2w6BxZkFHCQ2f24EmyQs4C3xfftDsBoWAVWJvj/b2UBsXgEXicV7V7FDbFOQ2Hfp
+	JFgNp4CrxNQvG1lBbCGgmh2vHjFNYORdwMiwilEuMac0Vzc3MTOnODVZtzg5MS8vtUjXWC83
+	s0QvNaV0EyMkWPh2MLavlznEKMDBqMTDe0BiW5AQa2JZcWXuIUZJDiYlUV7uCUAhvqT8lMqM
+	xOKM+KLSnNTiQ4wSHMxKIrxrXIFyvCmJlVWpRfkwKWkOFiVxXrUl6n5CAumJJanZqakFqUUw
+	WRkODiUJXm+QoYJFqempFWmZOSUIaSYOThDBBbKBB2hDKkghb3FBYm5xZjpE0SlGRSlx3h6Q
+	hABIIqM0D24ALK5fMYoD/SPMmwFSxQNMCXDdr4AGMwENNl67CWRwSSJCSqqBsUz/t0Bjpm7N
+	FLW9176f+uAZuagtS189gp+tvdjk+YElbPNm2k/9seXa14llNxe6Gux+NjfvRc3LHfkrvFqa
+	8krqcvU/t3vsVPS8dWR7f3rf8p/zj8wOda+IbVHneO4q+Hx68/vZH7LdeaR37hLaqrrCr3nN
+	8q+ps84cuXl34ZzQGhbNcK6QOUosxRmJhlrMRcWJAAEK8cjGAgAA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239633>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239634>
 
-Samuel Bronson <naesten@gmail.com> writes:
+Keep track of the position of the slash character separately, and
+restore the slash character at a single place, at the end of the while
+loop.  This makes the next change easier to implement.
 
-> I learned of "git cherry" some days ago, but only learned of --cherry
-> and related options to "git log" today[1] (more-or-less by chance).
->
-> If the git-cherry(1) manpage had mentioned --cherry, I would have
-> learned of these options sooner.
+Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+---
+ sha1_file.c | 36 ++++++++++++++++++------------------
+ 1 file changed, 18 insertions(+), 18 deletions(-)
 
-This proposed log message is of an unusual style.  It is curious
-that somebody learn "cherry" first before "log".
-
->  SEE ALSO
->  --------
-> -linkgit:git-patch-id[1]
-> +linkgit:git-patch-id[1],
-> +the `--cherry` option to linkgit:git-log[1]
-
-The description text talks about "changeset (or "diff")", "compares
-the changeset rather than the commit id", "diffs are compared",
-etc., which is a hint that a lone reference to "patch-id" would be a
-page to read about that comparison, which is a good motivation that
-may entice the readers to follow that reference.
-
-I am not sure what value the readers of this man page would see to
-this addition, though. Unlike the reference to patch-id, it is not
-so obvious what gives them motivation to follow this new reference
-to "log --cherry".  A new sentence in DESCRIPTION section to mention
-it (e.g. "'log --cherry' gives similar information") may be needed
-at the same time.
+diff --git a/sha1_file.c b/sha1_file.c
+index cc9957e..dcfd35a 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -107,40 +107,40 @@ int mkdir_in_gitdir(const char *path)
+ 
+ int safe_create_leading_directories(char *path)
+ {
+-	char *pos = path + offset_1st_component(path);
++	char *next_component = path + offset_1st_component(path);
++	int retval = 0;
+ 
+-	while (pos) {
++	while (!retval && next_component) {
+ 		struct stat st;
++		char *slash = strchr(next_component, '/');
+ 
+-		pos = strchr(pos, '/');
+-		if (!pos)
+-			break;
+-		while (*++pos == '/')
+-			;
+-		if (!*pos)
+-			break;
+-		*--pos = '\0';
++		if (!slash)
++			return 0;
++		while (*(slash + 1) == '/')
++			slash++;
++		next_component = slash + 1;
++		if (!*next_component)
++			return 0;
++
++		*slash = '\0';
+ 		if (!stat(path, &st)) {
+ 			/* path exists */
+ 			if (!S_ISDIR(st.st_mode)) {
+-				*pos = '/';
+-				return -3;
++				retval = -3;
+ 			}
+ 		} else if (mkdir(path, 0777)) {
+ 			if (errno == EEXIST &&
+ 			    !stat(path, &st) && S_ISDIR(st.st_mode)) {
+ 				; /* somebody created it since we checked */
+ 			} else {
+-				*pos = '/';
+-				return -1;
++				retval = -1;
+ 			}
+ 		} else if (adjust_shared_perm(path)) {
+-			*pos = '/';
+-			return -2;
++			retval = -2;
+ 		}
+-		*pos++ = '/';
++		*slash = '/';
+ 	}
+-	return 0;
++	return retval;
+ }
+ 
+ int safe_create_leading_directories_const(const char *path)
+-- 
+1.8.5.1
