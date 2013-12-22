@@ -1,97 +1,81 @@
-From: Stefan Beller <stefanbeller@googlemail.com>
+From: Jed Brown <jed@59A2.org>
 Subject: Re: Rationale behind 'extern' on protypes in .h files
-Date: Sun, 22 Dec 2013 18:11:00 +0100
-Message-ID: <52B71D24.4000207@googlemail.com>
-References: <CAKTJ_1zecXP03k_2YRnm_26n=anxkG6=k+isZxnnjWgfec70LA@mail.gmail.com>
+Date: Sun, 22 Dec 2013 11:26:52 -0700
+Message-ID: <87eh54spw3.fsf@jedbrown.org>
+References: <CAKTJ_1zecXP03k_2YRnm_26n=anxkG6=k+isZxnnjWgfec70LA@mail.gmail.com> <52B71D24.4000207@googlemail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: Ravi Shekhar Jethani <rsjethani@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 22 18:11:12 2013
+Content-Type: multipart/signed; boundary="=-=-=";
+	micalg=pgp-sha1; protocol="application/pgp-signature"
+To: Stefan Beller <stefanbeller@googlemail.com>,
+	Ravi Shekhar Jethani <rsjethani@gmail.com>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Dec 22 19:35:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VumYZ-0003dS-FR
-	for gcvg-git-2@plane.gmane.org; Sun, 22 Dec 2013 18:11:11 +0100
+	id 1VunsD-0003kP-KE
+	for gcvg-git-2@plane.gmane.org; Sun, 22 Dec 2013 19:35:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754521Ab3LVRLG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Dec 2013 12:11:06 -0500
-Received: from mail-ea0-f176.google.com ([209.85.215.176]:41887 "EHLO
-	mail-ea0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754018Ab3LVRLF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Dec 2013 12:11:05 -0500
-Received: by mail-ea0-f176.google.com with SMTP id h14so1921793eaj.21
-        for <git@vger.kernel.org>; Sun, 22 Dec 2013 09:11:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:subject:references
-         :in-reply-to:content-type:content-transfer-encoding;
-        bh=Uz/Q3OW5ZmSbi/AHeRSC7YJanJbfWk2WYJF9UHSIOAg=;
-        b=J07or/KrdwJBV4+WjK78nry1jil7dPQpA9XEZbviLCqdVtXU0hCvpD/aZ0ywONnIDl
-         6Ab4XNx7wqOhtkCizkRvL2mYSFlmTEuoOj9VF0i/0YZzD4yp0y8V5PiPc83Ggfo2m8UU
-         C7cSGnWQwOdEOnPHVF77TrRKV9kVmljTcUNqnn8ViEbXG6BzoxNQ4p66WYiker3AaEHS
-         eKBG3xROnpyWPaJ+F6bGKASlpHL55x8o6d6KDAkdTEKsI+QPgt2ecKk2dxXHxZSIDWy5
-         DAtfm/BBYlvrLZ01TYNTU4hyQQ9Afg9KR25+HKJvg2k5sJPFQf/N3PxswPd7ro/m822c
-         oiQw==
-X-Received: by 10.14.203.6 with SMTP id e6mr15834404eeo.33.1387732262928;
-        Sun, 22 Dec 2013 09:11:02 -0800 (PST)
-Received: from [192.168.1.7] (ip-109-91-109-128.unitymediagroup.de. [109.91.109.128])
-        by mx.google.com with ESMTPSA id v7sm38002665eel.2.2013.12.22.09.11.01
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 22 Dec 2013 09:11:01 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.2.0
-In-Reply-To: <CAKTJ_1zecXP03k_2YRnm_26n=anxkG6=k+isZxnnjWgfec70LA@mail.gmail.com>
-X-Enigmail-Version: 1.5.2
+	id S1754947Ab3LVSfQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Dec 2013 13:35:16 -0500
+Received: from jedbrown.org ([198.199.121.66]:59811 "EHLO jedbrown.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754548Ab3LVSfP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Dec 2013 13:35:15 -0500
+X-Greylist: delayed 495 seconds by postgrey-1.27 at vger.kernel.org; Sun, 22 Dec 2013 13:35:15 EST
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by jedbrown.org (Postfix) with ESMTPSA id 934C380E68;
+	Sun, 22 Dec 2013 18:26:57 +0000 (UTC)
+In-Reply-To: <52B71D24.4000207@googlemail.com>
+User-Agent: Notmuch/0.17~rc2+3~g5fa88cb (http://notmuchmail.org) Emacs/24.3.1 (x86_64-unknown-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239645>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239646>
 
-On 22.12.2013 16:51, Ravi Shekhar Jethani wrote:
+--=-=-=
+Content-Type: text/plain
 
-> 
-> Now, my real question :
-> 1) I cannot understand the reason behind making function prototypes as
-> extern. What purpose does this serve? AFAIK we put definition in a .c
-> file and the prototype in a .h thats it.
-> 
-> 2) Why are some  prototypes in some of the .h file are extern and
-> others are not?
-> 
-> Thank you guys for reading through. Any suggestions are humbly welcome.
-> Ravi S. Jethani
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
+Stefan Beller <stefanbeller@googlemail.com> writes:
+> From my understanding there is no
+> difference for functions declarations being set to extern or not,
+> because extern is the default on functions.
 
-That's an interesting question. From my understanding there is no
-difference for functions declarations being set to extern or not,
-because extern is the default on functions. It is however important
-for variables to mark them extern if they're in a header file.
+There is a difference for shared libraries if you would like to control
+which symbols are exported.  With gcc, for example, you might compile
+using -fvisibility=hidden.  Any functions explicitly declared with
+extern, bearing __attribute__((visibility("default")), or using
+visibility pragmas will be exported (similar to __declspec(dllexport) on
+Windows).  Other functions will be internal to the shared library so you
+don't have to worry about callers depending on those symbols and
+performance can be a bit better by skipping the PLT and avoiding symbol
+relocations at load time.  See Drepper's guide for more.
 
-After a quick research on the web, it may be there for historical
-reasons. Back then, when there were one pass compilers,
-the compiler needed to know where the function is to be found.
-(extern was not default at these times?)
+http://www.akkadia.org/drepper/dsohowto.pdf
 
-Another reason I could make up, would be to indicate,
-whether the function is in the c file having the
-same name as the header file.
-For example in builtin.h there are all the functions declared
-extern, as the implementation of the functions are found in
-builtin/*.c
-In another header cache-tree.h there are function declarations
-without explicit extern keyword, and the implementation
-is found in the cache-tree.c file (${SAME-NAME-AS-HEADER}.C)
-This is however not always the case as found in archive.{c,h}
+--=-=-=
+Content-Type: application/pgp-signature
 
-I'd be also interested in knowing the real reason for this rationale.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (GNU/Linux)
 
-Thanks,
-Stefan
+iQIcBAEBAgAGBQJSty7wAAoJEM+2iNHeMalN0GUP/RbHYiLURj3obpnCJBQEpTxI
+t+P17LI1BkbSCkeeM8e6O1aCok/KuoicwtJwBl5f4ZHIdwMnDq31Jm/KGK1h4hOl
+f5X8qvqoSK1bCkLTmmygk1otJ8SzOgL5JJpPnbFUiyi7PoJvgImSxF+pTKvPzctE
+Wa7AIuhg/bn656F0FhgmlimD/UrPUzgnV2zjk+UF1xsK8JuvyGofVIHoK6HqFUV1
+48fhNI0jU0B6I7TozU+1NwQWEqY8rmCXcXP3sAowCLonF+exMYVXGBbQ9cdlhAQl
+MF/rvsXv5gL7OK5kHdTLrbzf2j0Pa5OHmvKKAwZENkFXTMs8l19EmtdWi6ytOhmV
+EYhg6+1cPj2ohXg+EDFPCA0eJQ50XcWBOirSbVyFxdzMHhK4gGshj8gjIUnKFu5N
+n2WV7gx1V1MLxtBJmAwXPf0NX7zYFMOewhCfh000PXiNF0vDU5mABbW4yQgBemGN
+1xtvkcKsMmVw7O7YA17V1llTBZvK62Br1hUJyqaKC7X3/htWOe0wNebK3r9zMZ2B
+ZiRFbhHWoLogeokAKcKygobMDIaoxVrDzVM2mYjHB6HlgpVAyd11mfZH8iVZxeep
+ab054HTJRScVYXTKKXa8NT6RUZnNa2OazwCtBl+WgFynWydXsw5rCcARCRKqWOny
+3Jzg0/eLOIqWT31A/bRj
+=pwW5
+-----END PGP SIGNATURE-----
+--=-=-=--
