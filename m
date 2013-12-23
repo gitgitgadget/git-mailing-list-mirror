@@ -1,84 +1,110 @@
-From: Antoine Pelisse <apelisse@gmail.com>
-Subject: [PATCH] remote-hg: test 'shared_path' in a moved clone
-Date: Mon, 23 Dec 2013 21:23:43 +0100
-Message-ID: <1387830223-19780-1-git-send-email-apelisse@gmail.com>
-References: <xmqqzjnzktdr.fsf@gitster.dls.corp.google.com>
-Cc: Felipe Contreras <felipe.contreras@gmail.com>,
-	git <git@vger.kernel.org>, Antoine Pelisse <apelisse@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Dec 23 21:25:27 2013
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH] add: don't complain when adding empty project root
+Date: Tue, 24 Dec 2013 06:46:06 +0700
+Message-ID: <CACsJy8A7j_ERqH_TDuKDdssaLFCvM5yVT4eUjTqkN_qW4iXuGA@mail.gmail.com>
+References: <CAEcj5uWHpem+5os+3Mc_a42pk6f30i4UiV=LRPdXkoqiy1jQ_w@mail.gmail.com>
+ <1387789361-29036-1-git-send-email-pclouds@gmail.com> <52B87759.2090901@web.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Thomas Ferris Nicolaisen <tfnico@gmail.com>
+To: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Tue Dec 24 00:46:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VvC47-0003Q2-32
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Dec 2013 21:25:27 +0100
+	id 1VvFCr-0000JC-OX
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Dec 2013 00:46:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757624Ab3LWUY5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Dec 2013 15:24:57 -0500
-Received: from mail-wg0-f44.google.com ([74.125.82.44]:57076 "EHLO
-	mail-wg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757468Ab3LWUY4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Dec 2013 15:24:56 -0500
-Received: by mail-wg0-f44.google.com with SMTP id a1so5214384wgh.23
-        for <git@vger.kernel.org>; Mon, 23 Dec 2013 12:24:55 -0800 (PST)
+	id S1758291Ab3LWXqi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 Dec 2013 18:46:38 -0500
+Received: from mail-qc0-f181.google.com ([209.85.216.181]:34330 "EHLO
+	mail-qc0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758262Ab3LWXqh convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 23 Dec 2013 18:46:37 -0500
+Received: by mail-qc0-f181.google.com with SMTP id e9so5367472qcy.40
+        for <git@vger.kernel.org>; Mon, 23 Dec 2013 15:46:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=hlnQvswnWLfWSpGqUE1k+VWCVEWQCTdeRTKxH9PJcLI=;
-        b=e61zgmqQGdjp+n2XUoUnkx1QVOcjSPc6BFtGOzAICyA6d6v2vIM9XKhy7gRsrAtjdJ
-         WhWXjScIqynJ7N6dcLJtUBQsl6hNwE0QZqZjiNb075N62VtpMWj9pTRR0hZkquhnyxDq
-         PMUSz3Nwuk46mh+o22Sf7d4fsoDf3f6cRRj7jE62RiR0foG/wEDYRHR1CXQIGUU9eyUj
-         kuz1QcTWVKOswq1anq2j60QbbybuMgI2StS3SuXq9Ke1P2erdaB+s2JyWxhcRPQ6Qf9c
-         D+Z9pb8jLoEJdyO/fBmRo1xhMj6JSZBcHZu6byrRJsixVtou8vdXHumtX5k30ZhSiiGS
-         dFmg==
-X-Received: by 10.180.14.10 with SMTP id l10mr19803210wic.6.1387830295098;
-        Mon, 23 Dec 2013 12:24:55 -0800 (PST)
-Received: from localhost.localdomain (freepel.fr. [82.247.80.218])
-        by mx.google.com with ESMTPSA id cx3sm35492944wib.0.2013.12.23.12.24.53
-        for <multiple recipients>
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 23 Dec 2013 12:24:53 -0800 (PST)
-X-Mailer: git-send-email 1.8.5.1.97.g8d784da.dirty
-In-Reply-To: <xmqqzjnzktdr.fsf@gitster.dls.corp.google.com>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=pkfeup+357F+3x5tvMcH66yEgCBTO41zTXURnfs27lg=;
+        b=sAb73KMLUsPCT7nKq7fHbE3q1+7nYSp33Qs1rG8KT10ULlKUBVsU+VkSF66LJut2cJ
+         9vtMec4dm1E36vhFBz/VoUa6DTKVXkzJn1kGXifKvcjQyVMAuPt/X8lN0VnjfHahcPra
+         uJoKEg+gW5Y5NJB3E3PrJCRSHDruC8ghcW5frGaaqOIHyR/Fjl79OYJ/qr8LpSMsHuHh
+         6ssPZ+ptRPnfK5ZTkhnQ5eGP9jZLrIOFTUr2LllKNdd/i68OmswbUCGZv37bi+tBf2dk
+         5TPLWYc/FfXDC3M7Q/7gBI/cHINW5KFNNLMol6QPSm4KUDNKJE4JtEL4K5v7SGbqQbNj
+         mCpQ==
+X-Received: by 10.224.151.145 with SMTP id c17mr47728387qaw.24.1387842396216;
+ Mon, 23 Dec 2013 15:46:36 -0800 (PST)
+Received: by 10.96.136.98 with HTTP; Mon, 23 Dec 2013 15:46:06 -0800 (PST)
+In-Reply-To: <52B87759.2090901@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239655>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239656>
 
-Since e71d1378 (remote-hg: fix 'shared path' path, 2013-12-07),
-Mercurial 'shared_path' file is correctly updated whenever a clone is
-moved. Make sure it keeps working, especially as this is depending on a
-private Mercurial file.
+On Tue, Dec 24, 2013 at 12:48 AM, Torsten B=C3=B6gershausen <tboegi@web=
+=2Ede> wrote:
+>> +test_expect_success 'git add -A on empty repo does not error out' '
+>> +     git init empty && ( cd empty && git add -A . )
+>> +'
+>> +
+>>  test_done
+>>
+> I am (a little bit) confused.
+>
+> This is what git does:
+>  rm -rf test && mkdir test && cd test && git init && touch A && mkdir=
+ D && cd D && touch B && git add . && git status
+> Initialized empty Git repository in /Users/tb/test/test/.git/
+> On branch master
+>
+> Initial commit
+>
+> Changes to be committed:
+>   (use "git rm --cached <file>..." to unstage)
+>
+>         new file:   B
+>
+> Untracked files:
+>   (use "git add <file>..." to include in what will be committed)
+>
+>         ../A
+> ----------------
+> And the behaviour is in line with
+> https://www.kernel.org/pub/software/scm/git/docs/git-add.html
+>
+> "." stands for the current directory somewhere in the worktree,
+> not only the "project root".
 
-Signed-off-by: Antoine Pelisse <apelisse@gmail.com>
----
- contrib/remote-helpers/test-hg.sh | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+Yes, except in this case "." is project root because current dir is. I
+could have done "git add -A" (without the dot) like reported, but that
+will be deprecated soon. Another way to make it clear about project
+root is use "git add -A :/". I'll send an update if it makes it
+clearer.
 
-diff --git a/contrib/remote-helpers/test-hg.sh b/contrib/remote-helpers/test-hg.sh
-index 0b7df11..5d128a5 100755
---- a/contrib/remote-helpers/test-hg.sh
-+++ b/contrib/remote-helpers/test-hg.sh
-@@ -337,6 +337,17 @@ test_expect_success 'remote cloning' '
- 	check gitrepo HEAD zero
- '
- 
-+test_expect_success 'moving remote clone' '
-+	test_when_finished "rm -rf gitrepo*" &&
-+
-+	(
-+	git clone "hg::hgrepo" gitrepo &&
-+	mv gitrepo gitrepo2 &&
-+	cd gitrepo2 &&
-+	git fetch
-+	)
-+'
-+
- test_expect_success 'remote update bookmark' '
- 	test_when_finished "rm -rf gitrepo*" &&
- 
--- 
-1.8.5.1.97.g8d784da.dirty
+> -----------------
+>
+> Could it make sense to mention that replace
+> [PATCH] add: don't complain when adding empty project root
+> with
+> [PATCH] add: don't complain when adding empty directory.
+
+We don't complain about adding an empty directory before or after this =
+patch.
+
+>
+> (and similar in the commit message)
+> /Torsten
+>
+
+
+
+--=20
+Duy
