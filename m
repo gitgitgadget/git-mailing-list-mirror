@@ -1,86 +1,100 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH/POC 3/7] setup.c: add split-repo support to .git files
-Date: Mon, 23 Dec 2013 10:38:31 +0700
-Message-ID: <CACsJy8AWCRLqnQK5SV4yPRjU-3JX9BwgbrRvpBtJngdjad6Eew@mail.gmail.com>
-References: <1386771333-32574-1-git-send-email-pclouds@gmail.com>
- <1386771333-32574-4-git-send-email-pclouds@gmail.com> <xmqqiousr4bg.fsf@gitster.dls.corp.google.com>
- <20131213204348.GX2311@google.com>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH] add: don't complain when adding empty project root
+Date: Mon, 23 Dec 2013 16:02:41 +0700
+Message-ID: <1387789361-29036-1-git-send-email-pclouds@gmail.com>
+References: <CAEcj5uWHpem+5os+3Mc_a42pk6f30i4UiV=LRPdXkoqiy1jQ_w@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Dec 23 04:39:12 2013
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, tfnico@gmail.com,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 23 10:06:32 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VuwMJ-0003kr-3d
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Dec 2013 04:39:11 +0100
+	id 1Vv1T5-0007pU-79
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Dec 2013 10:06:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756705Ab3LWDjE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Dec 2013 22:39:04 -0500
-Received: from mail-qc0-f173.google.com ([209.85.216.173]:64746 "EHLO
-	mail-qc0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756617Ab3LWDjD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Dec 2013 22:39:03 -0500
-Received: by mail-qc0-f173.google.com with SMTP id m20so4438821qcx.18
-        for <git@vger.kernel.org>; Sun, 22 Dec 2013 19:39:01 -0800 (PST)
+	id S1757191Ab3LWJGX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 Dec 2013 04:06:23 -0500
+Received: from mail-pa0-f45.google.com ([209.85.220.45]:35065 "EHLO
+	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757113Ab3LWJGV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Dec 2013 04:06:21 -0500
+Received: by mail-pa0-f45.google.com with SMTP id fb1so5110571pad.32
+        for <git@vger.kernel.org>; Mon, 23 Dec 2013 01:06:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=vrru095PdP9UG8RRoQXZ9i06PQoznWlb01AeyrGxIs4=;
-        b=CZgA0sSWc1v7Au/ZghslcFA1+RNxOuK8k8rbfbV6Z+KXEGqghS9aWKmp3YSUT1NdSr
-         1TIx1daViSs76or3ITy0HVbaueBEpe1dHAN17hiw93zV8N4x+byypVhesi1uhvVFVKgC
-         V0G/VHuAKTJas3QB8RFeUUksadiMO5GZpfWRCm1WUtCQsRwJnlV9SqZ2QF+kAa23Jxm0
-         W9FYw3dcV9kmL187Glth5sgvbzhzk2SfjpeakzExAoiHsKlXR9y+a5KdIZMtSFc71HAJ
-         mwJUmHSxcSdQdBlGZbDdmz3UisyMJ3S0bTb5oAhjbc5Tiz1Asc1d0tRMrLMOq+OBGlNM
-         lBGA==
-X-Received: by 10.49.12.102 with SMTP id x6mr38291279qeb.5.1387769941562; Sun,
- 22 Dec 2013 19:39:01 -0800 (PST)
-Received: by 10.96.136.98 with HTTP; Sun, 22 Dec 2013 19:38:31 -0800 (PST)
-In-Reply-To: <20131213204348.GX2311@google.com>
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=DzGKhdI/lDTxKpqePj7cMOu/oee+XxZN6zAGWvdY2N0=;
+        b=YWr4VbxmJlRcIIaOM8rraTzXJ9xIW5PCaDp6YutGuLutnH/roc6LSx/Dqow/5xHIBV
+         iB1uTYfACucL7KLTw+RQgGV3y2wX6usV2PHVm2Yvvo1Dx6/a8oWdrNkW7JT/xcFVxLcn
+         wWzDfpAAP9xDAZamEXXjF1d21dx4CjLJbCG/BMNwZ4KElzLoIWqH1ItODeS4DyJEKZEX
+         DOidF4TVP26r7YblfKo58gDRoGl0EjkTvNedSHComZkrZBzVnkdZLEDvKUZTOwx6+Ca0
+         e88Sf1rgADLyU6UYY8j4kYQiBW3U8LyIsUeDjSLgnkRn/7YTYaaPTovquFrkev5xDIJY
+         Bp0Q==
+X-Received: by 10.66.8.66 with SMTP id p2mr24327066paa.129.1387789580789;
+        Mon, 23 Dec 2013 01:06:20 -0800 (PST)
+Received: from lanh ([115.73.238.111])
+        by mx.google.com with ESMTPSA id yg3sm42860058pab.16.2013.12.23.01.06.16
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 23 Dec 2013 01:06:19 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Mon, 23 Dec 2013 16:06:16 +0700
+X-Mailer: git-send-email 1.8.5.2.240.g8478abd
+In-Reply-To: <CAEcj5uWHpem+5os+3Mc_a42pk6f30i4UiV=LRPdXkoqiy1jQ_w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239650>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239651>
 
-On Sat, Dec 14, 2013 at 3:43 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Problems:
->
->  * What if I move my worktree with "mv"?  Then I still need the
->    corresponding $GIT_SUPER_DIR/repos/<id> directory, and nobody told
->    the GIT_SUPER_DIR about it.
->
->  * What if my worktree is on removable media (think "network
->    filesystem") and has just been temporarily unmounted instead of
->    deleted?
->
-> So maybe it would be nicer to:
->
->   i. When the worktree is on the same filesystem, keep a *hard link* to
->      some file in the worktree (e.g., the .git file).  If the link count
->      goes down, it is safe to remove the $GIT_SUPER_DIR/repos/<id>
->      directory.
+This behavior was added in 07d7bed (add: don't complain when adding
+empty project root - 2009-04-28) then broken by 84b8b5d (remove
+match_pathspec() in favor of match_pathspec_depth() -
+2013-07-14). Reinstate it.
 
-Link count goes down to 1 if I move the worktree to a different
-filesystem and it's not safe to remove $GIT_SUPER_DIR/repos/<id> in
-this case, I think.
+Noticed-by: Thomas Ferris Nicolaisen <tfnico@gmail.com>
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ builtin/add.c  | 2 +-
+ t/t3700-add.sh | 4 ++++
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
->  ii. When the worktree is on another filesystem, always keep
->      $GIT_SUPER_DIR/repos/<id> unless the user decides to manually
->      remove it.  Provide documentation or a command to list basic
->      information about $GIT_SUPER_DIR/repos directories (path to
->      worktree, what branch they're on, etc).
->
-> (i) doesn't require any futureproofing.  As soon as someone wants it,
-> they can implement the check and fall back to (ii) for worktrees
-> without the magic hard link.
->
-> (ii) would benefit from recording the working tree directory as a
-> possibly unreliable, human-friendly reminder.
--- 
-Duy
+diff --git a/builtin/add.c b/builtin/add.c
+index 226f758..fbd3f3a 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -544,7 +544,7 @@ int cmd_add(int argc, const char **argv, const char=
+ *prefix)
+=20
+ 		for (i =3D 0; i < pathspec.nr; i++) {
+ 			const char *path =3D pathspec.items[i].match;
+-			if (!seen[i] &&
++			if (!seen[i] && pathspec.items[i].match[0] &&
+ 			    ((pathspec.items[i].magic &
+ 			      (PATHSPEC_GLOB | PATHSPEC_ICASE)) ||
+ 			     !file_exists(path))) {
+diff --git a/t/t3700-add.sh b/t/t3700-add.sh
+index aab86e8..1535d8f 100755
+--- a/t/t3700-add.sh
++++ b/t/t3700-add.sh
+@@ -307,4 +307,8 @@ test_expect_success 'git add --dry-run --ignore-mis=
+sing of non-existing file out
+ 	test_i18ncmp expect.err actual.err
+ '
+=20
++test_expect_success 'git add -A on empty repo does not error out' '
++	git init empty && ( cd empty && git add -A . )
++'
++
+ test_done
+--=20
+1.8.5.2.240.g8478abd
