@@ -1,125 +1,118 @@
-From: Jed Brown <jed@59a2.org>
-Subject: Re: Rationale behind 'extern' on protypes in .h files
-Date: Mon, 23 Dec 2013 09:59:25 -0700
-Message-ID: <87fvpjqz9u.fsf@jedbrown.org>
-References: <CAKTJ_1zecXP03k_2YRnm_26n=anxkG6=k+isZxnnjWgfec70LA@mail.gmail.com> <52B71D24.4000207@googlemail.com> <87eh54spw3.fsf@jedbrown.org> <CAKTJ_1z-pMePmh4phM2TXSMx0kOjGJ0afQ_JRESggi=k6+y-jA@mail.gmail.com>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: [PATCH] add: don't complain when adding empty project root
+Date: Mon, 23 Dec 2013 18:48:09 +0100
+Message-ID: <52B87759.2090901@web.de>
+References: <CAEcj5uWHpem+5os+3Mc_a42pk6f30i4UiV=LRPdXkoqiy1jQ_w@mail.gmail.com> <1387789361-29036-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-	micalg=pgp-sha1; protocol="application/pgp-signature"
-Cc: Stefan Beller <stefanbeller@googlemail.com>, git@vger.kernel.org
-To: Ravi Shekhar Jethani <rsjethani@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Dec 23 17:59:39 2013
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, tfnico@gmail.com
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 23 18:49:11 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vv8qv-0005wG-64
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Dec 2013 17:59:37 +0100
+	id 1Vv9cr-0005A7-LJ
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Dec 2013 18:49:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757611Ab3LWQ7d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Dec 2013 11:59:33 -0500
-Received: from jedbrown.org ([198.199.121.66]:60225 "EHLO jedbrown.org"
+	id S932370Ab3LWRsT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 Dec 2013 12:48:19 -0500
+Received: from mout.web.de ([212.227.17.11]:58334 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757326Ab3LWQ7c (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Dec 2013 11:59:32 -0500
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by jedbrown.org (Postfix) with ESMTPSA id 337F180E66;
-	Mon, 23 Dec 2013 16:59:30 +0000 (UTC)
-In-Reply-To: <CAKTJ_1z-pMePmh4phM2TXSMx0kOjGJ0afQ_JRESggi=k6+y-jA@mail.gmail.com>
-User-Agent: Notmuch/0.17~rc2+3~g5fa88cb (http://notmuchmail.org) Emacs/24.3.1 (x86_64-unknown-linux-gnu)
+	id S932361Ab3LWRsQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Dec 2013 12:48:16 -0500
+Received: from [192.168.37.101] ([87.146.154.79]) by smtp.web.de (mrweb101)
+ with ESMTPSA (Nemesis) id 0MfHsM-1W6ciK1RjG-00Omln for <git@vger.kernel.org>;
+ Mon, 23 Dec 2013 18:48:14 +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:24.0) Gecko/20100101 Thunderbird/24.2.0
+In-Reply-To: <1387789361-29036-1-git-send-email-pclouds@gmail.com>
+X-Provags-ID: V03:K0:Jkw4ZsGEAgjnzz/HPkVpgIyN+wvHnyk8zpgHPkDhPJEXTpbLvmh
+ FU2WAdgqb5KQgBc4yLsr9P9JlgbaFZwlnQvWCatswhdiuAa/JOo8nNZIThQbtUsfC1CPZzS
+ 96gfvO25pWDPB50pd8UqNTI9sj5M2ITrYGSssBauQorX+7vAYrhpF7ZrPIoLR9HqOmstDuZ
+ vBxnMyjc6gqYAaRLMA/DA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239653>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239654>
 
---=-=-=
-Content-Type: text/plain
+On 2013-12-23 10.02, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+> This behavior was added in 07d7bed (add: don't complain when adding
+> empty project root - 2009-04-28) then broken by 84b8b5d (remove
+> match_pathspec() in favor of match_pathspec_depth() -
+> 2013-07-14). Reinstate it.
+>=20
+> Noticed-by: Thomas Ferris Nicolaisen <tfnico@gmail.com>
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
+> ---
+>  builtin/add.c  | 2 +-
+>  t/t3700-add.sh | 4 ++++
+>  2 files changed, 5 insertions(+), 1 deletion(-)
+>=20
+> diff --git a/builtin/add.c b/builtin/add.c
+> index 226f758..fbd3f3a 100644
+> --- a/builtin/add.c
+> +++ b/builtin/add.c
+> @@ -544,7 +544,7 @@ int cmd_add(int argc, const char **argv, const ch=
+ar *prefix)
+> =20
+>  		for (i =3D 0; i < pathspec.nr; i++) {
+>  			const char *path =3D pathspec.items[i].match;
+> -			if (!seen[i] &&
+> +			if (!seen[i] && pathspec.items[i].match[0] &&
+>  			    ((pathspec.items[i].magic &
+>  			      (PATHSPEC_GLOB | PATHSPEC_ICASE)) ||
+>  			     !file_exists(path))) {
+> diff --git a/t/t3700-add.sh b/t/t3700-add.sh
+> index aab86e8..1535d8f 100755
+> --- a/t/t3700-add.sh
+> +++ b/t/t3700-add.sh
+> @@ -307,4 +307,8 @@ test_expect_success 'git add --dry-run --ignore-m=
+issing of non-existing file out
+>  	test_i18ncmp expect.err actual.err
+>  '
+> =20
+> +test_expect_success 'git add -A on empty repo does not error out' '
+> +	git init empty && ( cd empty && git add -A . )
+> +'
+> +
+>  test_done
+>=20
+I am (a little bit) confused.
 
-Ravi Shekhar Jethani <rsjethani@gmail.com> writes:
-> To check this I installed the libgit2-dev package which installed:
-> /usr/include/git2/*.h , /usr/lib/libgit2.so
-> Now, I exported all symbols using:
-> $ readelf -s /usr/lib/libgit2.so
-> and tried to match these with 'externed' prototypes in the Git source
-> directory..no matches.
-> I am confused!!!.
+This is what git does:
+ rm -rf test && mkdir test && cd test && git init && touch A && mkdir D=
+ && cd D && touch B && git add . && git status
+Initialized empty Git repository in /Users/tb/test/test/.git/
+On branch master
 
-libgit2 is an entirely different package from Git.  If you look at the
-libgit2 sources (https://github.com/libgit2/libgit2), look in
-include/git2/common.h:
+Initial commit
 
-/** Declare a public function exported for application use. */
-#if __GNUC__ >= 4
-# define GIT_EXTERN(type) extern \
-                         __attribute__((visibility("default"))) \
-                         type
-#elif defined(_MSC_VER)
-# define GIT_EXTERN(type) __declspec(dllexport) type
-#else
-# define GIT_EXTERN(type) extern type
-#endif
+Changes to be committed:
+  (use "git rm --cached <file>..." to unstage)
 
+        new file:   B
 
-I have always used __attribute__((visibility("default"))), but the gcc
-man page says
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
 
-    extern declarations are not affected by -fvisibility, so a lot of
-    code can be recompiled with -fvisibility=hidden with no
-    modifications.  However, this means that calls to "extern" functions
-    with no explicit visibility use the PLT, so it is more effective to
-    use "__attribute ((visibility))" and/or "#pragma GCC visibility" to
-    tell the compiler which "extern" declarations should be treated as
-    hidden.
+        ../A
+----------------
+And the behaviour is in line with
+https://www.kernel.org/pub/software/scm/git/docs/git-add.html
 
-However, I don't understand what the first statement means
-(documentation bug?) since -fvisibility=hidden causes functions declared
-with 'extern' to be hidden.
+"." stands for the current directory somewhere in the worktree,
+not only the "project root".
+-----------------
 
-symbols.c:
-EXTERN int foo(void);
-int foo(void) {return 1;}
+Could it make sense to mention that replace
+[PATCH] add: don't complain when adding empty project root
+with
+[PATCH] add: don't complain when adding empty directory.
 
-$ gcc -fvisibility=hidden -DEXTERN=extern -shared -o libsymbols.so symbols.c
-$ nm -D libsymbols.so | grep foo
-$
-
-meanwhile,
-
-$ gcc -fvisibility=hidden -DEXTERN='__attribute((visibility("default")))' -shared -o libsymbols.so symbols.c
-$ nm -D libsymbols.so | grep foo
-000000000000055c T foo
-
-> Also I checked this:
-> $ ldd git
-> There is no 'gitish' .so in the output; it seems everything is packed
-> inside one executable.
-> So your second point 'skipping the PLT...' also doesn't seem to apply here.
-
-My comment applied to shared libraries in general, not specifically to
-Git (which isn't a shared library).
-
---=-=-=
-Content-Type: application/pgp-signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (GNU/Linux)
-
-iQIcBAEBAgAGBQJSuGvxAAoJEM+2iNHeMalNM2sP/04z0Mw6ywoamHn8y9v75MbH
-3FsPtUcEHio2ddQdKNrIJpO64yuFhM18ZZsFn+dqTSaElJ/hvn85rrxvIQzpDsE9
-CwfHgR5MXOl17nB5kYrUIWp4rOM1JZiBJGbgCL92CvKOp3+LpLnw9NG6wPIRHMQv
-7eNUpGhPiFyu8oYNNoDFN2/nW1Ta3ojwH7UsY4yms0MNpjf4ZlhWQpcEbEWaO+Ly
-rwyDrvo3d6PDoZBSfmOvE8YMcnYrlNKld1oMlBdeUrH+8N+EeQTzM58l1rLd7UD5
-hRgMQ0K3GaQ8iVNjxSkhZVueEKESPEOKEdhU/KvO8F3xbDpOZHQV77f5uejUbJcW
-cOelfQtKkQR4tARdpHMGGFWabBHn48c0qaWB3aXzxtwhVaxTeeYQ4parFOmefXiL
-zur32n9YpaPp1E0uK+bUv5AxAl3QciUPRESidGujmntbznIAwr2DNKbFeFZhQpFt
-nIYvB5cEvh34Fd768rKpoR36LGKSfMvuMNwDMu/jmIagVo6GbsVN6hgGdl8G/xZy
-+/y+xJi2pfR8TOeTU1lv5M5IaPMLNA1K5j4/t/SGgrIKCweiKF3qrcugILuhQbZG
-heH/zC6AtUjKtRVLYsjVJw1f9AXT1KFzFtBybS2SSxXAIOAb28Y9tijEHKkRao/c
-9qQbOL9ePAo9yYa71H3s
-=l19G
------END PGP SIGNATURE-----
---=-=-=--
+(and similar in the commit message)
+/Torsten
