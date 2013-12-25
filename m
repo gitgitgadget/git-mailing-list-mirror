@@ -1,89 +1,68 @@
-From: Thomas Rast <tr@thomasrast.ch>
-Subject: Re: Fwd: Error with git-svn pushing a rename
-Date: Wed, 25 Dec 2013 17:31:59 +0100
-Message-ID: <87ha9wdh8g.fsf@linux-1gf2.Speedport_W723_V_Typ_A_1_00_098>
-References: <CAM-uYMiLpsQdN41Gs8iJOT-v0qKgod2vEeoC3C+QJ5+wKiVK-Q@mail.gmail.com>
-	<1387919476-27921-1-git-send-email-rkagan@mail.ru>
+From: Wolfgang Rohdewald <wolfgang@rohdewald.de>
+Subject: german translation bug
+Date: Wed, 25 Dec 2013 20:53:58 +0100
+Message-ID: <1573480.3a5WD62Cc4@i5>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Benjamin Pabst <benjamin.pabst85@gmail.com>, git@vger.kernel.org
-To: Roman Kagan <rkagan@mail.ru>
-X-From: git-owner@vger.kernel.org Wed Dec 25 17:39:34 2013
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 25 20:54:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VvrUc-0004hV-0K
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Dec 2013 17:39:34 +0100
+	id 1VvuX4-0002hH-B6
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Dec 2013 20:54:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752209Ab3LYQj2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Dec 2013 11:39:28 -0500
-Received: from static.194.9.251.148.clients.your-server.de ([148.251.9.194]:41968
-	"EHLO mail.psioc.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752193Ab3LYQjO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Dec 2013 11:39:14 -0500
-X-Greylist: delayed 418 seconds by postgrey-1.27 at vger.kernel.org; Wed, 25 Dec 2013 11:39:14 EST
-Received: from localhost (localhost [127.0.0.1])
-	by localhost.psioc.net (Postfix) with ESMTP id 58E414D6588;
-	Wed, 25 Dec 2013 17:32:14 +0100 (CET)
-X-Virus-Scanned: amavisd-new at psioc.net
-Received: from mail.psioc.net ([127.0.0.1])
-	by localhost (mail.psioc.net [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id Y806RQ7KPsnW; Wed, 25 Dec 2013 17:32:04 +0100 (CET)
-Received: from linux-1gf2.Speedport_W723_V_Typ_A_1_00_098.thomasrast.ch (unknown [213.55.184.149])
-	(using TLSv1.2 with cipher AES128-GCM-SHA256 (128/128 bits))
-	(Client did not present a certificate)
-	by mail.psioc.net (Postfix) with ESMTPSA id 133DF4D64BD;
-	Wed, 25 Dec 2013 17:32:02 +0100 (CET)
-In-Reply-To: <1387919476-27921-1-git-send-email-rkagan@mail.ru> (Roman Kagan's
-	message of "Wed, 25 Dec 2013 01:11:16 +0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1752313Ab3LYTxw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Dec 2013 14:53:52 -0500
+Received: from mo4-p00-ob.smtp.rzone.de ([81.169.146.161]:58405 "EHLO
+	mo4-p00-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752294Ab3LYTxv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Dec 2013 14:53:51 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; t=1388001228; l=379;
+	s=domk; d=rohdewald.de;
+	h=Content-Type:Content-Transfer-Encoding:MIME-Version:Date:Subject:To:
+	From:X-RZG-CLASS-ID:X-RZG-AUTH;
+	bh=+GS0SbulPQt1Sk4FgP54NRzua6k=;
+	b=Jxs0RZbOSxCedcwZ6QwugH3ohQzGwYXF2bG3r1mULVCGHXCztdlFtxJSwFSkc7xuOKn
+	caeeOm+r8bTPjlyGQNLcUIJe3QIzB45u6nbzzwf/+oWdSkwKzfdySN+wzqNtACtn1C/Ii
+	aMbib3TbdlJ3+rCFwcT/bHvAu67DgdAeS6k=
+X-RZG-AUTH: :O2MIc0epdfgAjoV+frHI3UhxNCLBO5P+YS73lHhJYRD2uAuzaM+5N8MTpvX1LBI=
+X-RZG-CLASS-ID: mo00
+Received: from i5.rohdewald.de (p5B3E3307.dip0.t-ipconnect.de [91.62.51.7])
+	by smtp.strato.de (RZmta 32.17 DYNA|AUTH)
+	with (SSLv3:DHE-RSA-AES256-SHA encrypted) ESMTPSA id i00c38pBPJrmM0e
+	for <git@vger.kernel.org>; Wed, 25 Dec 2013 20:53:48 +0100 (CET)
+Received: from i5.localnet (localhost.localdomain [127.0.0.1])
+	by i5.rohdewald.de (Postfix) with ESMTP id AB4975E0190
+	for <git@vger.kernel.org>; Wed, 25 Dec 2013 20:53:58 +0100 (CET)
+User-Agent: KMail/4.12 (Linux/3.11.0-14-generic; KDE/4.12.0; x86_64; ; )
+X-Spam-Status: No, score=0.0 required=5.0 tests=UNPARSEABLE_RELAY
+	shortcircuit=no autolearn=unavailable version=3.3.2
+X-Spam-Checker-Version: SpamAssassin 3.3.2 (2011-06-06) on i5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239675>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239676>
 
-Roman Kagan <rkagan@mail.ru> writes:
+"Arbeitsverzeichnis leer" means
+"working directory empty" which is obviously wrong.
 
-> --- a/perl/Git/SVN/Editor.pm
-> +++ b/perl/Git/SVN/Editor.pm
-> @@ -304,8 +304,9 @@ sub C {
->  	my ($self, $m, $deletions) = @_;
->  	my ($dir, $file) = split_path($m->{file_b});
->  	my $pbat = $self->ensure_path($dir, $deletions);
-> +	my $upa = $self->url_path($m->{file_a});
->  	my $fbat = $self->add_file($self->repo_path($m->{file_b}), $pbat,
-> -				$self->url_path($m->{file_a}), $self->{r});
-> +				$upa, $self->{r});
->  	print "\tC\t$m->{file_a} => $m->{file_b}\n" unless $::_q;
->  	$self->chg_file($fbat, $m);
->  	$self->close_file($fbat,undef,$self->{pool});
-> @@ -323,8 +324,9 @@ sub R {
->  	my ($self, $m, $deletions) = @_;
->  	my ($dir, $file) = split_path($m->{file_b});
->  	my $pbat = $self->ensure_path($dir, $deletions);
-> +	my $upa = $self->url_path($m->{file_a});
->  	my $fbat = $self->add_file($self->repo_path($m->{file_b}), $pbat,
-> -				$self->url_path($m->{file_a}), $self->{r});
-> +				$upa, $self->{r});
->  	print "\tR\t$m->{file_a} => $m->{file_b}\n" unless $::_q;
->  	$self->apply_autoprops($file, $fbat);
->  	$self->chg_file($fbat, $m);
->
->
-> What it does is store the value to be passed to add_file() in a local
-> variable, and rely on perl to keep it alive through the end of function
-> scope, beyond the call to close_file() where it's actually used.
->
-> I'm going to submit a patch adding apr_pstrdup() to subversion folks.
-> Meanwhile if people find the above workarond a sensible thing to do in
-> git, I can submit a properly formed patch here too.
+It should say
 
-If you go this way, please add a comment that explains why we need the
-local variable.
+"Arbeitsverzeichnis sauber"
+
+wr@s5:~/src/linux$ git status
+# Auf Zweig drm-intel-testing
+Nichts zum Einreichen, Arbeitsverzeichnis leer
+wr@s5:~/src/linux$ LANG=C git status
+# On branch drm-intel-testing
+nothing to commit, working directory clean
+
+
 
 -- 
-Thomas Rast
-tr@thomasrast.ch
+Wolfgang
