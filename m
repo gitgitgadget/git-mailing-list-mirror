@@ -1,86 +1,84 @@
 From: Drew Northup <n1xim.email@gmail.com>
-Subject: Re: git fuse
-Date: Wed, 25 Dec 2013 18:01:12 -0500
-Message-ID: <CAM9Z-nmVaBDcRABMRJGLdFVDSLRGL31jMS9KpaWiQ4y_SYONdg@mail.gmail.com>
-References: <201312192215.01103.thomas@koch.ro>
+Subject: Re: german translation bug
+Date: Wed, 25 Dec 2013 18:12:59 -0500
+Message-ID: <CAM9Z-nkmsLfzKY+2h8r4y9LjM+6OXTo65ZzLRG7-Z4G_cCdHyw@mail.gmail.com>
+References: <1573480.3a5WD62Cc4@i5>
+	<1513689.dimJgKglhA@i5>
+	<CAM9Z-n=MF+MibS3ziHkixX+iTNAvB+D0+naKkzS8rb5ZSvgEzw@mail.gmail.com>
+	<6038171.4XUs8Nu1vH@i5>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Thomas Koch <thomas@koch.ro>
-X-From: git-owner@vger.kernel.org Thu Dec 26 00:08:13 2013
+Cc: Ralf Thielow <ralf.thielow@gmail.com>, git <git@vger.kernel.org>
+To: Wolfgang Rohdewald <wolfgang@rohdewald.de>
+X-From: git-owner@vger.kernel.org Thu Dec 26 00:13:08 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VvxYi-0003gz-2N
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Dec 2013 00:08:12 +0100
+	id 1VvxdR-00081X-5x
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Dec 2013 00:13:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752391Ab3LYXHs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Dec 2013 18:07:48 -0500
-Received: from mail-ie0-f173.google.com ([209.85.223.173]:35517 "EHLO
-	mail-ie0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752330Ab3LYXHr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Dec 2013 18:07:47 -0500
-Received: by mail-ie0-f173.google.com with SMTP id to1so8179886ieb.18
-        for <git@vger.kernel.org>; Wed, 25 Dec 2013 15:07:47 -0800 (PST)
+	id S1752406Ab3LYXNA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Dec 2013 18:13:00 -0500
+Received: from mail-ig0-f173.google.com ([209.85.213.173]:60904 "EHLO
+	mail-ig0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752355Ab3LYXNA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Dec 2013 18:13:00 -0500
+X-Greylist: delayed 706 seconds by postgrey-1.27 at vger.kernel.org; Wed, 25 Dec 2013 18:13:00 EST
+Received: by mail-ig0-f173.google.com with SMTP id uq10so26336032igb.0
+        for <git@vger.kernel.org>; Wed, 25 Dec 2013 15:12:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=3wGTsPa5UMEW+UQ45XSEtW9S5Ee2MtXBvMBSewllN1w=;
-        b=0HIueFP53DmFFwv5SSks4fdYZbsd8+wX70RzaELol35OQPv4ZyGK5hNnLsBI7RWD6G
-         J7yr5A6Q+Zc4DS9pBsjSgvBwBVfC2gIJKuChriGKoCr38YZwpaaOthgvKQejmaVSmWi8
-         5d48my6gjVlb1U+Wd3uD1STm87HLMY19bIBOQJWJ48SHqTwVC5c7rC7eEGa/GVHHgQxc
-         GJj0q59miD1sRtPDd1xafw01iUVkFYEH4YCcdJlmMGD2ikg/JzueEHNgXWj1sqQRFssT
-         XpGwSU0o+mPrCK0jwPGd3LRT2YXlgcR2JJ1AB2ufq/tiZe4wdyFot7yuUnm1G2Zu2t2F
-         N7fA==
-X-Received: by 10.50.43.134 with SMTP id w6mr31705235igl.20.1388012472848;
- Wed, 25 Dec 2013 15:01:12 -0800 (PST)
-Received: by 10.43.138.9 with HTTP; Wed, 25 Dec 2013 15:01:12 -0800 (PST)
-In-Reply-To: <201312192215.01103.thomas@koch.ro>
+        bh=5AyA/iFT8sGTmZak/bmSfQu0KncVScktifEUrySjOm8=;
+        b=pGOaeGAwVNcXUNoCdkriy/2AIbFQLtPE0UrDOe5sgrwMM9D9YFziU7gZnksa5wOMMV
+         MMwdGWiZk9Ak0MpPYB1+EEvAhf0g7ozF9YlZN25sOGCMcyQloPIwNyKJfXcTG/6TQWJ/
+         hCIeTQK5Xoaqr3wN+1VD9aT5oTp/VJV447a7FmQUGkK6gBBjpCh5cqord2POK/VTG72f
+         Ibe+uEJR+2b27LBv2XYYnpHmjIaiLKTWbMz7UnXMK+6+vV6Cyw+CbZ+zFqBXJ2fxAPm6
+         2EGUKMlQx/GYTU4AjWMeWu/bpX5uHiHHSSlVwPHwQ8Pnvk4yb85mfA7IuisVBa6Byp3p
+         +Ozg==
+X-Received: by 10.50.56.38 with SMTP id x6mr31896285igp.31.1388013179602; Wed,
+ 25 Dec 2013 15:12:59 -0800 (PST)
+Received: by 10.43.138.9 with HTTP; Wed, 25 Dec 2013 15:12:59 -0800 (PST)
+In-Reply-To: <6038171.4XUs8Nu1vH@i5>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239683>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239684>
 
-On Thu, Dec 19, 2013 at 4:15 PM, Thomas Koch <thomas@koch.ro> wrote:
-> Hi,
+On Wed, Dec 25, 2013 at 5:28 PM, Wolfgang Rohdewald
+<wolfgang@rohdewald.de> wrote:
+> Am Mittwoch, 25. Dezember 2013, 17:14:31 schrieb Drew Northup:
+>> Git does not use KDE's language packs.
 >
-> I'm thinking about using Git for web application deployment and thought that I
-> wouldn't even need to checkout a worktree if I could access the bare git repo
-> via fuse.
+> Sorry, I meant ubuntu. I believe I heard before that they tend to replace
+> upstream translations but I never actually experienced a problem with that.
+>
+>> What does dpkg report for info about the installed git package (if you
+>> are using the packaged version)?
+>
+> Yes, I am using the packaged version. This package does not contain
+> any translations.
+>
+> root@s5:/var/cache/apt/archives# dpkg --info git_1%3a1.8.3.2-1_amd64.deb
+>  neues Debian-Paket, Version 2.0.
 
-Thomas,
-Given that gitweb (and more than a few other similar tools) doesn't
-use FUSE and works on bare repositories I question why you think you'd
-need (or want) to introduce the additional layer.
+>  Package: git
+>  Version: 1:1.8.3.2-1
+>  Architecture: amd64
 
-> What would be the performance impact? Once the files are in the filesystem cache
-> it shouldn't matter anymore, how fast the git fuse layer is, should it?
+Wolfgang,
+My suggestion is to consider compiling Git from sources, as Ubuntu has
+stopped applying non-security updates (for the most part) to
+13.10--which includes most Git updates. That's the best way to ensure
+you get the latest translations checked out, QA'd and submitted by
+Ralf.
 
-If your concern is caching, it should be implemented upon already
-rendered / prepared objects whenever possible--frequently not a file
-system level implementation. This is a design concern that has no
-specific requirement whatsoever to do with FUSE (or for that matter,
-with most of the VFS layer when accessing raw disk--as VFS itself is
-highly optimized already).
-
-I am not qualified to answer questions about FUSE use of the VFS cache.
-
-I would strongly consider using a tool such as Varnish if you are
-concerned about performance when serving static or semi-static content
-(may it reside in a Git repo or elsewhere). The architectural concerns
-of your web-app should probably guide your design in this sort of
-direction anyway if it will be expected to sustain notable throughput
-over time.
-
-I hope that helps.
-
-(If you want to discuss this further it would be worth considering if
-your questions are Git questions or web-app design questions. The
-latter should be taken elsewhere.)
+(I'm probably going to do that with a 13.10 that I have at home when I
+get a chance--most likely next week.)
 
 -- 
 -Drew Northup
