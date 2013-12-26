@@ -1,95 +1,165 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 00/21] Support multiple worktrees
-Date: Thu, 26 Dec 2013 09:12:43 -0800
-Message-ID: <7vy537k038.fsf@alter.siamese.dyndns.org>
-References: <CACsJy8BV6uerMyHNHviL0Jy8s+_jca8NM-hVfnM=u4cr-=JX1Q@mail.gmail.com>
-	<xmqq7gaze00k.fsf@gitster.dls.corp.google.com>
-	<CACsJy8DuXbCTjcVJNH=w6h3zgo0sxRgMfSQXZFtngYy2FLJTDg@mail.gmail.com>
-	<7vvbyhjsp4.fsf@alter.siamese.dyndns.org>
-	<CACsJy8DL5=B=jch6j6g_3xj3KRsLXxwMChVHF9MUFvafhWhYag@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] add: don't complain when adding empty project root
+Date: Thu, 26 Dec 2013 09:25:42 -0800
+Message-ID: <20131226172542.GS20443@google.com>
+References: <CAEcj5uWHpem+5os+3Mc_a42pk6f30i4UiV=LRPdXkoqiy1jQ_w@mail.gmail.com>
+ <1387789361-29036-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 26 18:13:03 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	tfnico@gmail.com
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 26 18:25:55 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VwEUY-0001xc-UU
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Dec 2013 18:13:03 +0100
+	id 1VwEh1-00034s-4X
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Dec 2013 18:25:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753525Ab3LZRMl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Dec 2013 12:12:41 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35536 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753505Ab3LZRMk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Dec 2013 12:12:40 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 955E55AEA8;
-	Thu, 26 Dec 2013 12:12:39 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Izxy5qpkV94JgpThWvH6EbC66tY=; b=okKRHI
-	vMKzXn9bm0XdQm1xchrpC/WNKzcaKM8fRcdvL6C/2sbJQ+7IZGzGkEgUZyqeXfOE
-	Zbob+F8WkdX1RrhICLT0Mn0vS6vtRxb9vJBdgar2i6AwesH35jJB5+TukwvOZ3gI
-	K3oTETKwxEwvsX0TGZAa+ziqXg+LwPAqKtoSA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=KEtzHtkuOSVjd89Hsxqq3/Y3eDl3/NlX
-	NYRUAv0+8kYgjuJdFVWNe2NrXFTt+09AIH713WM1iNtrNOV2sgotW3HgjhI9fsfw
-	C9tgPXnobnepitZDJulNxd5pG7CDJ599BkDGKl9q3yL8kcpNC72vLYPCOt0Ll9kd
-	7L3OzpPKwb8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 82DC85AEA6;
-	Thu, 26 Dec 2013 12:12:39 -0500 (EST)
-Received: from pobox.com (unknown [198.0.213.178])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A210A5AEA5;
-	Thu, 26 Dec 2013 12:12:38 -0500 (EST)
-In-Reply-To: <CACsJy8DL5=B=jch6j6g_3xj3KRsLXxwMChVHF9MUFvafhWhYag@mail.gmail.com>
-	(Duy Nguyen's message of "Sun, 22 Dec 2013 15:44:52 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.4 (gnu/linux)
-X-Pobox-Relay-ID: EBFA4E0E-6E50-11E3-9585-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753561Ab3LZRZu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 Dec 2013 12:25:50 -0500
+Received: from mail-yh0-f44.google.com ([209.85.213.44]:50536 "EHLO
+	mail-yh0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753541Ab3LZRZs (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Dec 2013 12:25:48 -0500
+Received: by mail-yh0-f44.google.com with SMTP id f64so1809347yha.3
+        for <git@vger.kernel.org>; Thu, 26 Dec 2013 09:25:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=8UJAF7iJtClO0LHIhyCZDslpPT9zjB0x3Xjarg2q32s=;
+        b=Kt7PZmUceT5AWByURaKtyyxQp3UIVENvWjwURxk9Foz/nBiXmTj9mVTsClZPGTrQHx
+         +/1J/rIGr4AzXNNrmOfAAXKMGOyWLInNLG7bK/MaK2scNuJ+CIVoZRGKtkLSQ3Swmusj
+         NMUIapiMnTijJdmxnWq0Twv1EP13n6F3F0Oz2mjC3FV4zSSxiMwXau7yabMnCJIdKrMD
+         THqfo4Rjyp1thJwyRRC7W9r2V2+iE9AWqR9srq+IHh8/zLaGWs65+7dVM+5BfvxFSPyQ
+         amY5X3MXI6y9EkejzbwNCk35vfByVpxSgbHxjyVkuP2PxMOO1bfeNAZ5YWfDROEYNTwT
+         E09g==
+X-Received: by 10.236.92.70 with SMTP id i46mr5701873yhf.83.1388078746205;
+        Thu, 26 Dec 2013 09:25:46 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id w8sm42542242yhg.8.2013.12.26.09.25.44
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 26 Dec 2013 09:25:45 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <1387789361-29036-1-git-send-email-pclouds@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239703>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239704>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+Hi,
 
-> On Sun, Dec 22, 2013 at 1:38 PM, Junio C Hamano <gitster@pobox.com> wrote:
->
->> Do we even need to expose them as ref-like things as a part of the
->> external API/UI in the first place?  For end-user scripts that want
->> to operate in a real or borrowing worktree, there should be no
->> reason to touch this "other" repository directly.  Things like "if
->> one of the wortrees tries to check out a branch that is already
->> checked out elsewhere, error out" policy may need to consult the
->> other worktrees via $GIT_COMMON_DIR mechanism but at that level we
->> have all the control without contaminating end-user facing ref
->> namespace in a way main/FETCH_HEAD... do.
->
-> No, external API/UI is just extra bonus. We need to (or should) do so
-> in order to handle $GIT_COMMON_DIR/HEAD exactly like how we do normal
-> refs.
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
 
-And that is what I consider a confusion-trigger, not a nice bonus.
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
 
-I do not think it is particularly a good idea to contaminate
-end-user namespace for this kind of "peek another repository"
-special operation.
+Thanks.
 
-In order to handle your "multiple worktrees manipulating the same
-branch" case sanely, you need to be aware of not just the real
-repository your worktree is borrowing from, but also _all_ the other
-worktrees that borrow from that same real repository, so a single
-"main" virtual namespace will not cut it. You will be dealing with
-an unbounded set of HEADs, one for each such worktree.
+[...]
+> --- a/builtin/add.c
+> +++ b/builtin/add.c
+> @@ -544,7 +544,7 @@ int cmd_add(int argc, const char **argv, const ch=
+ar *prefix)
+> =20
+>  		for (i =3D 0; i < pathspec.nr; i++) {
+>  			const char *path =3D pathspec.items[i].match;
+> -			if (!seen[i] &&
+> +			if (!seen[i] && pathspec.items[i].match[0] &&
+>  			    ((pathspec.items[i].magic &
+>  			      (PATHSPEC_GLOB | PATHSPEC_ICASE)) ||
+>  			     !file_exists(path))) {
 
-Can't we do this by adding a "with this real repository" layer,
-e.g. "resolve HEAD wrt that repository", somewhat similar to how we
-peek into submodule namespaces?
+Nit: in this loop there's already the synonym 'path' for item.match,
+so perhaps
+
+			if (!seen[i] && path[0] && ...)
+
+would be clearer.
+
+Should "git add --refresh ." get the same treatment?
+
+> --- a/t/t3700-add.sh
+> +++ b/t/t3700-add.sh
+> @@ -307,4 +307,8 @@ test_expect_success 'git add --dry-run --ignore-m=
+issing of non-existing file out
+>  	test_i18ncmp expect.err actual.err
+>  '
+> =20
+> +test_expect_success 'git add -A on empty repo does not error out' '
+> +	git init empty && ( cd empty && git add -A . )
+> +'
+
+Adding a test at the end like this means the tests come in chronologica=
+l
+order instead of logical order and simultaneous patches to the same
+test script become more likely to conflict.
+
+How about something like the following, for squashing in?
+
+With or without the tweaks below,
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+
+diff --git i/builtin/add.c w/builtin/add.c
+index fbd3f3a..d7e3e44 100644
+--- i/builtin/add.c
++++ w/builtin/add.c
+@@ -544,7 +544,7 @@ int cmd_add(int argc, const char **argv, const char=
+ *prefix)
+=20
+ 		for (i =3D 0; i < pathspec.nr; i++) {
+ 			const char *path =3D pathspec.items[i].match;
+-			if (!seen[i] && pathspec.items[i].match[0] &&
++			if (!seen[i] && path[0] &&
+ 			    ((pathspec.items[i].magic &
+ 			      (PATHSPEC_GLOB | PATHSPEC_ICASE)) ||
+ 			     !file_exists(path))) {
+diff --git i/t/t3700-add.sh w/t/t3700-add.sh
+index 1535d8f..fe274e2 100755
+--- i/t/t3700-add.sh
++++ w/t/t3700-add.sh
+@@ -272,6 +272,25 @@ test_expect_success '"add non-existent" should fai=
+l' '
+ 	! (git ls-files | grep "non-existent")
+ '
+=20
++test_expect_success 'git add -A on empty repo does not error out' '
++	rm -fr empty &&
++	git init empty &&
++	(
++		cd empty &&
++		git add -A . &&
++		git add -A
++	)
++'
++
++test_expect_success '"git add ." in empty repo' '
++	rm -fr empty &&
++	git init empty &&
++	(
++		cd empty &&
++		git add .
++	)
++'
++
+ test_expect_success 'git add --dry-run of existing changed file' "
+ 	echo new >>track-this &&
+ 	git add --dry-run track-this >actual 2>&1 &&
+@@ -307,8 +326,4 @@ test_expect_success 'git add --dry-run --ignore-mis=
+sing of non-existing file out
+ 	test_i18ncmp expect.err actual.err
+ '
+=20
+-test_expect_success 'git add -A on empty repo does not error out' '
+-	git init empty && ( cd empty && git add -A . )
+-'
+-
+ test_done
