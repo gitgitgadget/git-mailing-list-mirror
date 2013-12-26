@@ -1,96 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [WIP/PATCH 0/5] git checkout --recurse-submodules
-Date: Thu, 26 Dec 2013 11:58:36 -0800
-Message-ID: <xmqq61qbcrkj.fsf@gitster.dls.corp.google.com>
-References: <20131226155857.GL20443@google.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 0/2] cat-file --batch-check='%(deltabase)'
+Date: Thu, 26 Dec 2013 12:20:09 -0800
+Message-ID: <20131226202009.GU20443@google.com>
+References: <20131221142336.GA28649@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Heiko Voigt <hvoigt@hvoigt.net>
-To: Jens Lehmann <Jens.Lehmann@web.de>,
-	Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 26 20:58:55 2013
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Dec 26 21:20:42 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VwH53-0003zL-8Z
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Dec 2013 20:58:53 +0100
+	id 1VwHQA-0001mZ-0u
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Dec 2013 21:20:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753793Ab3LZT6k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Dec 2013 14:58:40 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56441 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753763Ab3LZT6k (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Dec 2013 14:58:40 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 45F165C2E6;
-	Thu, 26 Dec 2013 14:58:39 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ZW8mx+O2Aws3ed1DgY4/ECVbd9A=; b=ZvMjh1
-	RI8i3YNCSvZO7OKHs1b6QQ/8aDsyaMf61eovRjrblai5xYru2O4zYAsw8aWTXvVN
-	0IJNC+diov0v4z4mWiTmMottUFRpMStU2jsCbM3nF8UrjzEnDaKxhEhwKfgZXof5
-	8PSm9Qcby4Jo+8ko1lJHl8BDVFUhdJYPO0gBc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=BdJtYQIBrY7HZIPB8kBdlq5pEDPnWzDD
-	DfjrpRtPN+LF6B6T3qfra3KzUsLIW7JcJPqbb6IugsevkvmoG6XW9H7Bz4rY1quM
-	w3d9omUzcKzGy+l4xdJorFw9oJUjOdz3SW6LR0ZcQjU7eMYRZrUQfC54mrFpLrjr
-	ZARGi3z/CFk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 357935C2E5;
-	Thu, 26 Dec 2013 14:58:39 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 916CE5C2E4;
-	Thu, 26 Dec 2013 14:58:38 -0500 (EST)
-In-Reply-To: <20131226155857.GL20443@google.com> (Jonathan Nieder's message of
-	"Thu, 26 Dec 2013 07:58:57 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 1C8FA200-6E68-11E3-8F5D-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753359Ab3LZUUP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Dec 2013 15:20:15 -0500
+Received: from mail-gg0-f180.google.com ([209.85.161.180]:45739 "EHLO
+	mail-gg0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753105Ab3LZUUO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Dec 2013 15:20:14 -0500
+Received: by mail-gg0-f180.google.com with SMTP id k1so1764315gga.39
+        for <git@vger.kernel.org>; Thu, 26 Dec 2013 12:20:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=PGBTzlw4UkDtwftz941LMbQgr1PInv4dBjTRpJuhVuU=;
+        b=uSr3Ly78RJthb/O+GRRKbggT/XziKLuYywZNfB+kubZSJQE2uoTLrm7Tv6bBjZoNIo
+         5dRitWJV3/N7b0yZXacyGvLNwQPyqieqX0U7JAWfKPk3svE6qvgMNa+QEsejPsPje+v/
+         KMcSNQQVy6F/JksELs1imwLLBANzJy3icL8b2eldFUeJwjs9db4ymOJrWPTqD+aYRayf
+         AUFYHFSyyGbKToUQYemQmYOFf09bdCT+tia8buSM0th4CDDsZBIO6TM/rRy7z9uVEZOT
+         VmjNYCg3AiYuxK19QhmsBgJLt4XlMY8frRZGAHJUtJCT7YdkMfyEi/2y7/D9VflSJp85
+         NE4Q==
+X-Received: by 10.236.143.10 with SMTP id k10mr3172312yhj.116.1388089212756;
+        Thu, 26 Dec 2013 12:20:12 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id o27sm43130023yhb.19.2013.12.26.12.20.11
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 26 Dec 2013 12:20:12 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <20131221142336.GA28649@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239710>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239711>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Jeff King wrote:
 
-> Hi,
+> I needed this recently to write tests for another (not yet published)
+> series. But I think it stands on its own as a debugging / introspection
+> tool.
 >
-> This patch series comes from
-> https://github.com/jlehmann/git-submod-enhancements branch
-> recursive_submodule_checkout.  It needed some tiny tweaks to apply to
-> current "master" and build without warnings, but nothing major, and I
-> haven't sanity checked it much beyond that and letting the kind folks
-> that use Debian experimental play with it.
->
-> I'm sending it out now to get review and ideas for what needs to
-> happen next to get this series in shape to be included in git.git.
->
-> Thoughts of all kinds welcome.
->
-> Thanks,
-> Jonathan
->
-> Jens Lehmann (5):
->   submodule: prepare for recursive checkout of submodules
->   submodule: teach unpack_trees() to remove submodule contents
->   submodule: teach unpack_trees() to repopulate submodules
->   submodule: teach unpack_trees() to update submodules
->   Teach checkout to recursively checkout submodules
->
->  Documentation/git-checkout.txt |   8 ++
->  builtin/checkout.c             |  14 +++
->  entry.c                        |  19 +++-
->  submodule.c                    | 217 ++++++++++++++++++++++++++++++++++++++++-
->  submodule.h                    |  11 +++
->  t/t2013-checkout-submodule.sh  | 215 +++++++++++++++++++++++++++++++++++++++-
->  unpack-trees.c                 |  94 ++++++++++++++----
->  unpack-trees.h                 |   1 +
->  wrapper.c                      |   3 +
->  9 files changed, 556 insertions(+), 26 deletions(-)
+>   [1/2]: sha1_object_info_extended: provide delta base sha1s
+>   [2/2]: cat-file: provide %(deltabase) batch format
 
-Looks reasonably clean from a cursory read. Thanks.
+Neat.
+
+The error handling looks right.
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
