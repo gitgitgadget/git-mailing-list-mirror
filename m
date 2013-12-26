@@ -1,108 +1,76 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: how to recovery corrupted git blob
-Date: Thu, 26 Dec 2013 10:32:19 +0100
-Message-ID: <CAP8UFD201zWb4nnzG+n7xjr+7Q+8CyzG_z+AavCFT=AAjMgm6g@mail.gmail.com>
-References: <1388046906300-7601221.post@n2.nabble.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: questions / suggestions about history simplification
+Date: Thu, 26 Dec 2013 01:56:39 -0800
+Message-ID: <7v38lgkka0.fsf@alter.siamese.dyndns.org>
+References: <20131219183645.GD23496@pacific.linksys.moosehall>
+	<20131219190333.GE23496@pacific.linksys.moosehall>
+	<xmqqsitoefvi.fsf@gitster.dls.corp.google.com>
+	<20131219205858.GJ23496@pacific.linksys.moosehall>
+	<7vr495jsf8.fsf@alter.siamese.dyndns.org>
+	<20131222134156.GM23496@pacific.linksys.moosehall>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git <git@vger.kernel.org>
-To: Yvonne Leroy <articulation7@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 26 10:32:42 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git mailing list <git@vger.kernel.org>
+To: Adam Spiers <git@adamspiers.org>
+X-From: git-owner@vger.kernel.org Thu Dec 26 10:56:49 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vw7J3-0006y7-Kd
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Dec 2013 10:32:41 +0100
+	id 1Vw7gO-0008CG-Lr
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Dec 2013 10:56:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751728Ab3LZJcV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Dec 2013 04:32:21 -0500
-Received: from mail-vb0-f43.google.com ([209.85.212.43]:48709 "EHLO
-	mail-vb0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750897Ab3LZJcU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Dec 2013 04:32:20 -0500
-Received: by mail-vb0-f43.google.com with SMTP id p6so4203680vbe.30
-        for <git@vger.kernel.org>; Thu, 26 Dec 2013 01:32:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=LZPYYZmsb7FfUbw9eQDTOKwq2zkzDDQljHYew1XwXo4=;
-        b=lhdlmUVmJRNk9ffQuytADiZCWuEFGy17FGi4AbiEd0wb2s2s3T+tLOvBwsaw8Gh3y/
-         ufZSjA7aQ+gMEAFwqTkkYk3Qkcu94wUGgr+K7t8kEtq/Vpu7cEf4FrP/d9/V6f8V1vmk
-         DmtIgeiZWfmCUvj/1ey0YDqWXqmMWko1ek2umNoP3oTVymF9conZLabE7+e8nz8gbj2B
-         B+NXbBo47iCx/l4SAgRs+OedK+zHfHmo2FedDmcB0a36Va4Q+hpy8poZo/XUOk2DaQvb
-         FYJE4mGXBC976gIpTGidkOfVtJDJpWJQa8b3rq0Ut8phzj019U/tJ0syR8UW0p0AjtIY
-         daVQ==
-X-Received: by 10.221.40.10 with SMTP id to10mr1166495vcb.22.1388050340014;
- Thu, 26 Dec 2013 01:32:20 -0800 (PST)
-Received: by 10.58.253.136 with HTTP; Thu, 26 Dec 2013 01:32:19 -0800 (PST)
-In-Reply-To: <1388046906300-7601221.post@n2.nabble.com>
+	id S1752009Ab3LZJ4k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Dec 2013 04:56:40 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33077 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751733Ab3LZJ4j (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Dec 2013 04:56:39 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 01D9F50F3A;
+	Thu, 26 Dec 2013 04:56:34 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=tC9/ZmGmCzLsyq9XnlhmlEI9qPI=; b=Zc73fL
+	8SidV7jjfUt+PK2jDE41j8PluQfCGhL9333Kd7It6b94Dr4kNyQLATNwb+WGFcos
+	YW9seQx2g6CuJ3rt0ArBTePDE6eot0loQOmJK1z53FCoUNZ869AaMozazp2giV6+
+	cPb1nEaRB4S27u5gtGvc7WptDMXjGkjZxymX4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=KQOfhZPm7k/yzJOxnkQDxbHPxSSd2SzN
+	FWf4XfZQQA/f1E+BpkzVDmjwtqplkRiqvQIddq5wwAW8ZnXzKDnsoIfQGQQC0DXv
+	Hj3Km1lJbAz8Ef8yW8b9dh2rZEM9fDiGNmxfvFr6dlux3ozZ/3WSOxrOffiPYeDr
+	HnPkFNdeQH0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E2C1250F39;
+	Thu, 26 Dec 2013 04:56:33 -0500 (EST)
+Received: from pobox.com (unknown [198.0.213.178])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4B59C50F38;
+	Thu, 26 Dec 2013 04:56:33 -0500 (EST)
+In-Reply-To: <20131222134156.GM23496@pacific.linksys.moosehall> (Adam Spiers's
+	message of "Sun, 22 Dec 2013 13:41:56 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.4 (gnu/linux)
+X-Pobox-Relay-ID: 00361796-6E14-11E3-A7E2-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239687>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239688>
 
-Hi,
+Adam Spiers <git@adamspiers.org> writes:
 
-On Thu, Dec 26, 2013 at 9:35 AM, Yvonne Leroy <articulation7@gmail.com> wrote:
->
-> 1- at the beginning, with "git fsck --full", it showed:
+> OTOH, including a sample repository embedded within the git repository
+> is either impossible or very ugly (e.g. having a non-default value of
+> GIT_DIR for the embedded repository).  But I doubt you were suggesting
+> that ;-)
 
-[...]
+No.
 
-> missing blob e187557d07857b974ea51e3ea962ac120cfc9488
+By the way, t/t1200-tutorial.sh was meant to follow what the
+tutorial manual tells the reader to try. We may want to update
+and/or enhance it to cover more materials.
 
-[...]
-
-> commit e415bb6d51ee05d60055d89f2bf63ccb32f4c12c
-> Author: Yvonne Leroy <articulation7@gmail.com>
-> Date:   Sun Dec 15 23:40:39 2013 +0800
->
->     index on master: ec5e609 list
->
-> :100644 100644 595691a... e187557... M  project5/css/style.css
-
-The above show you that the previous version of the blob was 595691a.
-But in the output you showed there was no line with something like:
-
-> :100644 100644 e187557... <newversion>... M  project5/css/style.css
-
-So we know the previous version but not the subsequent version of that file.
-
-Could you check again that there is no subsequent version with something like:
-
-git log --raw --all --full-history -- project5/css/style.css | grep e187557
-
-?
-
-[...]
-
-> 5-here is my problem,how can I looking at those older and newer
-> versions(Could someone point me to which commands I should look at? Still
-> new to git:))
-
-You can use "git cat-file blob 595691a" to look at the previous version.
-
-> so that I can use the next step    git hash-object -w <recreated-file>
-> and could someone tell me what should I do with <recreated-file>,is it still
-> project5/css/style.css ?
-
-If "git hash-object -w <recreated-file>" results in
-e187557d07857b974ea51e3ea962ac120cfc9488
-then it means that the missing blob was successfully rewritten into
-your git repo, so everything should be fine after that.
-To make sure you can run "git fsck" again.
-
-Note that you are trying to recreate the missing blob, but in my
-opinion before trying to do that you should probably try to find the
-missing blob in another repo. The log above showed that the missing
-blob was created on the 15th of December (Sun Dec 15 23:40:39 2013
-+0800). Haven't you pushed your repo somewhere since that day? If you
-did push, it's probably easier to get the missing blob from where you
-pushed.
-
-Regards,
-Christian.
+Thanks.
