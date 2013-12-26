@@ -1,76 +1,95 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: german translation bug
-Date: Thu, 26 Dec 2013 08:58:16 -0800
-Message-ID: <20131226165815.GR20443@google.com>
-References: <1573480.3a5WD62Cc4@i5>
- <CAN0XMOJf=H__eFmbcBs-S50ASun94ASL9FiL1zM6eeTheYpxTg@mail.gmail.com>
- <1513689.dimJgKglhA@i5>
- <3869663.MXlVypzsjR@i5>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 00/21] Support multiple worktrees
+Date: Thu, 26 Dec 2013 09:12:43 -0800
+Message-ID: <7vy537k038.fsf@alter.siamese.dyndns.org>
+References: <CACsJy8BV6uerMyHNHviL0Jy8s+_jca8NM-hVfnM=u4cr-=JX1Q@mail.gmail.com>
+	<xmqq7gaze00k.fsf@gitster.dls.corp.google.com>
+	<CACsJy8DuXbCTjcVJNH=w6h3zgo0sxRgMfSQXZFtngYy2FLJTDg@mail.gmail.com>
+	<7vvbyhjsp4.fsf@alter.siamese.dyndns.org>
+	<CACsJy8DL5=B=jch6j6g_3xj3KRsLXxwMChVHF9MUFvafhWhYag@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Ralf Thielow <ralf.thielow@gmail.com>, git <git@vger.kernel.org>,
-	Jiang Xin <worldhello.net@gmail.com>
-To: Wolfgang Rohdewald <wolfgang@rohdewald.de>
-X-From: git-owner@vger.kernel.org Thu Dec 26 17:59:43 2013
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 26 18:13:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VwEGj-00065e-5K
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Dec 2013 17:58:45 +0100
+	id 1VwEUY-0001xc-UU
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Dec 2013 18:13:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753498Ab3LZQ6W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Dec 2013 11:58:22 -0500
-Received: from mail-yh0-f42.google.com ([209.85.213.42]:56265 "EHLO
-	mail-yh0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753495Ab3LZQ6V (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Dec 2013 11:58:21 -0500
-Received: by mail-yh0-f42.google.com with SMTP id z6so1844836yhz.1
-        for <git@vger.kernel.org>; Thu, 26 Dec 2013 08:58:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=Am01aCN0HJcVGXrmjXqWsmOMyrsC5CBobvcOOaLFq50=;
-        b=HW8FUfZ0/lMXUBYE9xAsMoKxH2geQE7Z0XG1tRQZWBQVh0P6ZI0/9tFQ6TcnYTFrtf
-         YymFievSRhe0EMt+EBAwKyTJlbv4cBmk7RF6+xOMWt6udgNQc2XfJ9dX3CKNL6KXyWeq
-         Uv12wlmzgVG9E2Smib3lvoSRYRp5rzVKrdi5XlDpEXz5Vxxlr/pRT1shhH5pky4Vev+T
-         zRxHbwLngLJJnu86XATtT8g9hfm2A93Eqdb24TaeuV6UXGJPVQ/dhEDhsWzWgVAu14O4
-         UNS9Dyr3TeH8YCcJKorRzAYz4lckLLlOqsA2KN9xwZseiL85gtuCiHwwCT98ndwsT3/T
-         E5Dw==
-X-Received: by 10.236.112.242 with SMTP id y78mr5664917yhg.94.1388077099183;
-        Thu, 26 Dec 2013 08:58:19 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id h66sm42448123yhb.7.2013.12.26.08.58.17
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 26 Dec 2013 08:58:18 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <3869663.MXlVypzsjR@i5>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753525Ab3LZRMl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Dec 2013 12:12:41 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35536 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753505Ab3LZRMk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Dec 2013 12:12:40 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 955E55AEA8;
+	Thu, 26 Dec 2013 12:12:39 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Izxy5qpkV94JgpThWvH6EbC66tY=; b=okKRHI
+	vMKzXn9bm0XdQm1xchrpC/WNKzcaKM8fRcdvL6C/2sbJQ+7IZGzGkEgUZyqeXfOE
+	Zbob+F8WkdX1RrhICLT0Mn0vS6vtRxb9vJBdgar2i6AwesH35jJB5+TukwvOZ3gI
+	K3oTETKwxEwvsX0TGZAa+ziqXg+LwPAqKtoSA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=KEtzHtkuOSVjd89Hsxqq3/Y3eDl3/NlX
+	NYRUAv0+8kYgjuJdFVWNe2NrXFTt+09AIH713WM1iNtrNOV2sgotW3HgjhI9fsfw
+	C9tgPXnobnepitZDJulNxd5pG7CDJ599BkDGKl9q3yL8kcpNC72vLYPCOt0Ll9kd
+	7L3OzpPKwb8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 82DC85AEA6;
+	Thu, 26 Dec 2013 12:12:39 -0500 (EST)
+Received: from pobox.com (unknown [198.0.213.178])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A210A5AEA5;
+	Thu, 26 Dec 2013 12:12:38 -0500 (EST)
+In-Reply-To: <CACsJy8DL5=B=jch6j6g_3xj3KRsLXxwMChVHF9MUFvafhWhYag@mail.gmail.com>
+	(Duy Nguyen's message of "Sun, 22 Dec 2013 15:44:52 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.4 (gnu/linux)
+X-Pobox-Relay-ID: EBFA4E0E-6E50-11E3-9585-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239702>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239703>
 
-Hi,
+Duy Nguyen <pclouds@gmail.com> writes:
 
-Wolfgang Rohdewald wrote:
-> Am Mittwoch, 25. Dezember 2013, 22:53:29 schrieb Wolfgang Rohdewald:
-
->> I suppose I should open a KDE bug report?
+> On Sun, Dec 22, 2013 at 1:38 PM, Junio C Hamano <gitster@pobox.com> wrote:
 >
-> I meant a ubuntu bug report of course.
+>> Do we even need to expose them as ref-like things as a part of the
+>> external API/UI in the first place?  For end-user scripts that want
+>> to operate in a real or borrowing worktree, there should be no
+>> reason to touch this "other" repository directly.  Things like "if
+>> one of the wortrees tries to check out a branch that is already
+>> checked out elsewhere, error out" policy may need to consult the
+>> other worktrees via $GIT_COMMON_DIR mechanism but at that level we
+>> have all the control without contaminating end-user facing ref
+>> namespace in a way main/FETCH_HEAD... do.
+>
+> No, external API/UI is just extra bonus. We need to (or should) do so
+> in order to handle $GIT_COMMON_DIR/HEAD exactly like how we do normal
+> refs.
 
-Yes, please.  Feel free to cc me if doing so.
+And that is what I consider a confusion-trigger, not a nice bonus.
 
-In generally, I'm a bit uncomfortable lately at how Ubuntu's
-translation system works for Git.  They are trying to solve a real
-problem: old Ubuntu releases stick to old versions of git that do not
-have as complete translations as the latest version.  But their
-solution to this problem does not seem to work well and creates a lot
-of confusion.  Worse, it creates duplicated effort, as their custom
-translations don't seem to have been submitted upstream for review or
-inclusion.
+I do not think it is particularly a good idea to contaminate
+end-user namespace for this kind of "peek another repository"
+special operation.
+
+In order to handle your "multiple worktrees manipulating the same
+branch" case sanely, you need to be aware of not just the real
+repository your worktree is borrowing from, but also _all_ the other
+worktrees that borrow from that same real repository, so a single
+"main" virtual namespace will not cut it. You will be dealing with
+an unbounded set of HEADs, one for each such worktree.
+
+Can't we do this by adding a "with this real repository" layer,
+e.g. "resolve HEAD wrt that repository", somewhat similar to how we
+peek into submodule namespaces?
