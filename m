@@ -1,47 +1,47 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 4/5] submodule: teach unpack_trees() to update submodules
-Date: Thu, 26 Dec 2013 08:15:40 -0800
-Message-ID: <20131226161540.GP20443@google.com>
+Subject: [PATCH 5/5] Teach checkout to recursively checkout submodules
+Date: Thu, 26 Dec 2013 08:22:38 -0800
+Message-ID: <20131226162238.GQ20443@google.com>
 References: <20131226155857.GL20443@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Jens Lehmann <Jens.Lehmann@web.de>, Heiko Voigt <hvoigt@hvoigt.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 26 17:15:49 2013
+X-From: git-owner@vger.kernel.org Thu Dec 26 17:23:20 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VwDbA-0007f9-E4
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Dec 2013 17:15:48 +0100
+	id 1VwDiF-0005jP-GH
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Dec 2013 17:23:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753459Ab3LZQPo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Dec 2013 11:15:44 -0500
-Received: from mail-yh0-f45.google.com ([209.85.213.45]:51931 "EHLO
-	mail-yh0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753449Ab3LZQPn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Dec 2013 11:15:43 -0500
-Received: by mail-yh0-f45.google.com with SMTP id v1so1782517yhn.4
-        for <git@vger.kernel.org>; Thu, 26 Dec 2013 08:15:43 -0800 (PST)
+	id S1753473Ab3LZQWo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Dec 2013 11:22:44 -0500
+Received: from mail-gg0-f177.google.com ([209.85.161.177]:39869 "EHLO
+	mail-gg0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753464Ab3LZQWn (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Dec 2013 11:22:43 -0500
+Received: by mail-gg0-f177.google.com with SMTP id 4so1726623ggm.8
+        for <git@vger.kernel.org>; Thu, 26 Dec 2013 08:22:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        bh=2h4C053IPhRS5FFhnwpK4HTFmKv73O6YKotQN44dAlU=;
-        b=KZxArmLlAGhmgRZdjyeSm0joJqYP9CHj3/HVHy3SK0BxgM94YA8IJlDu/hzntcZwBQ
-         J01YdDgWjDVInKj9iw+w8bzzOFAjHOj351i6AL9QY1xlyl9QEgml8V0YGHNhIptdmGEq
-         JEYFLWGHJnY3j6lwyctzmaODUWhru5NttnJ0bVeF2JSGXJlCjI2baYLfwupiuOhQjvTx
-         8etYwbsq+2ELHPJHM0pEEKR+TmOdp3Ygf3R9MT/1RaP5wafi7mJHEk5JWJj4nqv9SrCB
-         6iwYDo57p9KRPbwvoOMmhs/I2zSTyQqZ0iRFjRjYMdYXWIz9EBVjmJoHmTH4jgIdhcX8
-         x14A==
-X-Received: by 10.236.110.132 with SMTP id u4mr2484375yhg.119.1388074543326;
-        Thu, 26 Dec 2013 08:15:43 -0800 (PST)
+        bh=C+gnUzWi/5dp0DWgIslzdJfWnc5lQhyAVbMnPElKOXU=;
+        b=lJ5IJapepW/4teFm+ORtquy4jx22gJj+voxRwNZNwXxg/kuYIC4X7dBiX1afGeYHpC
+         KAP3FjnH5HJuxYp7Fch2ML7bvNQcX5Nq1jdxnB1v1hbjAy5U1sHdq2DPWOZxtiouDNku
+         LEaeVD7XlBkDRqpHEew/yp84joQ8xMQs5ulalt1K/2jzJ1i7rzM9BlcO8xp39BfJCXgv
+         9LWRyh7KQ9QjuwGGLczJ0Jl3bAWNEqhrUvmLz2f05dcr8Ha4ZOiJwHKjFR+ahmeaYPZf
+         nxsuMxrXppKmtYYJH6sZa9oGM/qdJZqcf23XBgeK3a3mzRQ6QtrrTIAwqJoI5ZIHitaZ
+         CxPg==
+X-Received: by 10.236.23.129 with SMTP id v1mr2034376yhv.135.1388074961907;
+        Thu, 26 Dec 2013 08:22:41 -0800 (PST)
 Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id e39sm42275199yhq.15.2013.12.26.08.15.42
+        by mx.google.com with ESMTPSA id e39sm42300052yhq.15.2013.12.26.08.22.40
         for <multiple recipients>
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 26 Dec 2013 08:15:42 -0800 (PST)
+        Thu, 26 Dec 2013 08:22:41 -0800 (PST)
 Content-Disposition: inline
 In-Reply-To: <20131226155857.GL20443@google.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
@@ -49,311 +49,399 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239699>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239700>
 
 From: Jens Lehmann <Jens.Lehmann@web.de>
-Date: Fri, 5 Apr 2013 18:35:27 +0200
+Date: Wed, 13 Jun 2012 18:50:10 +0200
 
 Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
-Also neat, also would benefit from documentation or tests.
+This is the patch that actually introduces the --recurse-submodules
+option, which makes the rest work.
 
- entry.c        | 15 ++++++++--
- submodule.c    | 86 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- submodule.h    |  3 ++
- unpack-trees.c | 69 ++++++++++++++++++++++++++++++++++++----------
- unpack-trees.h |  1 +
- 5 files changed, 157 insertions(+), 17 deletions(-)
+The tests indicate some future directions for improving this, but
+it works reasonably well already.  I think I'd be most comfortable
+applying these if they were rearranged a little to the following
+order:
 
-diff --git a/entry.c b/entry.c
-index d1bf6ec..61a2767 100644
---- a/entry.c
-+++ b/entry.c
-@@ -265,7 +265,7 @@ int checkout_entry(struct cache_entry *ce,
+ 1. First, introducing the --recurse-submodules option, perhaps
+    with no actual effect, with tests that it is parsed correctly,
+    the default works, etc.
+
+ 2. Then, adding the desired behaviors one by one with corresponding
+    tests (handling submodule modifications, removals, additions).
+
+ 3. Finally, any needed tweaks on top.
+
+That way, it is easy to play around with early patches without
+worrying about the later ones at first, and the patches are easy
+to review to confirm that they at least don't break anything in
+the --no-recurse-submodules case.
+
+That said, Debian experimental has these applied as is already,
+and there haven't been any complaints yet.
+
+Thoughts?
+Jonathan
+
+ Documentation/git-checkout.txt |   8 ++
+ builtin/checkout.c             |  14 +++
+ submodule.c                    |  14 +++
+ submodule.h                    |   3 +
+ t/t2013-checkout-submodule.sh  | 215 ++++++++++++++++++++++++++++++++++++++++-
+ 5 files changed, 251 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
+index 91294f8..aabcc65 100644
+--- a/Documentation/git-checkout.txt
++++ b/Documentation/git-checkout.txt
+@@ -225,6 +225,14 @@ This means that you can use `git checkout -p` to selectively discard
+ edits from your current working tree. See the ``Interactive Mode''
+ section of linkgit:git-add[1] to learn how to operate the `--patch` mode.
  
- 	if (!check_path(path, len, &st, state->base_dir_len)) {
- 		unsigned changed = ce_match_stat(ce, &st, CE_MATCH_IGNORE_VALID|CE_MATCH_IGNORE_SKIP_WORKTREE);
--		if (!changed)
-+		if (!changed && (!S_ISDIR(st.st_mode) || !S_ISGITLINK(ce->ce_mode)))
- 			return 0;
- 		if (!state->force) {
- 			if (!state->quiet)
-@@ -280,9 +280,18 @@ int checkout_entry(struct cache_entry *ce,
- 		 * just do the right thing)
- 		 */
- 		if (S_ISDIR(st.st_mode)) {
--			/* If it is a gitlink, leave it alone! */
--			if (S_ISGITLINK(ce->ce_mode))
-+			if (S_ISGITLINK(ce->ce_mode)) {
-+				if (submodule_needs_update(ce->name)) {
-+					if (is_submodule_populated(ce->name)) {
-+						if (update_submodule(ce->name, ce->sha1, state->force))
-+							return error("cannot checkout submodule %s", path);
-+					} else {
-+						if (populate_submodule(path, ce->sha1, state->force))
-+							return error("cannot populate submodule %s", path);
-+					}
-+				}
- 				return 0;
-+			}
- 			if (!state->force)
- 				return error("%s is a directory", path);
- 			remove_subtree(path);
++--[no-]recurse-submodules::
++	Using --recurse-submodules will update the content of all initialized
++	submodules according to the commit recorded in the superproject.If
++	local modifications in a submodule would be overwritten the checkout
++	will fail until `-f` is used. If nothing (or --no-recurse-submodules)
++	is used, the work trees of submodules will not be updated, only the
++	hash recorded in the superproject will be changed.
++
+ <branch>::
+ 	Branch to checkout; if it refers to a branch (i.e., a name that,
+ 	when prepended with "refs/heads/", is a valid ref), then that
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 5df3837..ac2f8d8 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -21,6 +21,9 @@
+ #include "submodule.h"
+ #include "argv-array.h"
+ 
++static const char *recurse_submodules_default = "off";
++static int recurse_submodules = RECURSE_SUBMODULES_DEFAULT;
++
+ static const char * const checkout_usage[] = {
+ 	N_("git checkout [options] <branch>"),
+ 	N_("git checkout [options] [<branch>] -- <file>..."),
+@@ -1111,6 +1114,12 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
+ 			 N_("do not limit pathspecs to sparse entries only")),
+ 		OPT_HIDDEN_BOOL(0, "guess", &dwim_new_local_branch,
+ 				N_("second guess 'git checkout no-such-branch'")),
++		{ OPTION_CALLBACK, 0, "recurse-submodules", &recurse_submodules,
++			    "checkout", "control recursive updating of submodules",
++			    PARSE_OPT_OPTARG, option_parse_update_submodules },
++		{ OPTION_STRING, 0, "recurse-submodules-default",
++			   &recurse_submodules_default, NULL,
++			   "default mode for recursion", PARSE_OPT_HIDDEN },
+ 		OPT_END(),
+ 	};
+ 
+@@ -1132,6 +1141,11 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
+ 		git_xmerge_config("merge.conflictstyle", conflict_style, NULL);
+ 	}
+ 
++	set_config_update_recurse_submodules(
++		parse_fetch_recurse_submodules_arg("--recurse-submodules-default",
++						   recurse_submodules_default),
++		recurse_submodules);
++
+ 	if ((!!opts.new_branch + !!opts.new_branch_force + !!opts.new_orphan_branch) > 1)
+ 		die(_("-b, -B and --orphan are mutually exclusive"));
+ 
 diff --git a/submodule.c b/submodule.c
-index 06df5ae..3365987 100644
+index 3365987..bdce1b2 100644
 --- a/submodule.c
 +++ b/submodule.c
-@@ -485,6 +485,42 @@ int depopulate_submodule(const char *path)
- 	return 0;
+@@ -398,6 +398,20 @@ int parse_update_recurse_submodules_arg(const char *opt, const char *arg)
+ 	}
  }
  
-+int update_submodule(const char *path, const unsigned char sha1[20], int force)
++int option_parse_update_submodules(const struct option *opt,
++				   const char *arg, int unset)
 +{
-+	struct strbuf buf = STRBUF_INIT;
-+	struct child_process cp;
-+	const char *hex_sha1 = sha1_to_hex(sha1);
-+	const char *argv[] = {
-+		"checkout",
-+		force ? "-fq" : "-q",
-+		hex_sha1,
-+		NULL,
-+	};
-+	const char *git_dir;
-+
-+	strbuf_addf(&buf, "%s/.git", path);
-+	git_dir = read_gitfile(buf.buf);
-+	if (!git_dir)
-+		git_dir = buf.buf;
-+	if (!is_directory(git_dir)) {
-+		strbuf_release(&buf);
-+		/* The submodule is not populated, so we can't check it out */
-+		return 0;
++	if (unset) {
++		*(int *)opt->value = RECURSE_SUBMODULES_OFF;
++	} else {
++		if (arg)
++			*(int *)opt->value = parse_update_recurse_submodules_arg(opt->long_name, arg);
++		else
++			*(int *)opt->value = RECURSE_SUBMODULES_ON;
 +	}
-+	strbuf_release(&buf);
-+
-+	memset(&cp, 0, sizeof(cp));
-+	cp.argv = argv;
-+	cp.env = local_repo_env;
-+	cp.git_cmd = 1;
-+	cp.no_stdin = 1;
-+	cp.dir = path;   /* GIT_WORK_TREE doesn't work for git checkout */
-+	if (run_command(&cp))
-+		return error("Could not checkout submodule %s", path);
-+
 +	return 0;
 +}
 +
- void show_submodule_summary(FILE *f, const char *path,
- 		const char *line_prefix,
- 		unsigned char one[20], unsigned char two[20],
-@@ -926,6 +962,17 @@ out:
- 	return result;
- }
- 
-+int is_submodule_populated(const char *path)
-+{
-+	int retval = 0;
-+	struct strbuf gitdir = STRBUF_INIT;
-+	strbuf_addf(&gitdir, "%s/.git", path);
-+	if (resolve_gitdir(gitdir.buf))
-+		retval = 1;
-+	strbuf_release(&gitdir);
-+	return retval;
-+}
-+
- unsigned is_submodule_modified(const char *path, int ignore_untracked)
+ int submodule_needs_update(const char *path)
  {
- 	ssize_t len;
-@@ -1075,6 +1122,45 @@ int ok_to_remove_submodule(const char *path)
- 	return ok_to_remove;
- }
- 
-+unsigned is_submodule_checkout_safe(const char *path, const unsigned char sha1[20])
-+{
-+	struct strbuf buf = STRBUF_INIT;
-+	struct child_process cp;
-+	const char *hex_sha1 = sha1_to_hex(sha1);
-+	const char *argv[] = {
-+		"read-tree",
-+		"-n",
-+		"-m",
-+		"HEAD",
-+		hex_sha1,
-+		NULL,
-+	};
-+	const char *git_dir;
-+
-+	strbuf_addf(&buf, "%s/.git", path);
-+	git_dir = read_gitfile(buf.buf);
-+	if (!git_dir)
-+		git_dir = buf.buf;
-+	if (!is_directory(git_dir)) {
-+		strbuf_release(&buf);
-+		/* The submodule is not populated, it's safe to check it out */
-+		/*
-+		 * TODO: When git learns to re-populate submodules, a check must be
-+		 * added here to assert that no local files will be overwritten.
-+		 */
-+		return 1;
-+	}
-+	strbuf_release(&buf);
-+
-+	memset(&cp, 0, sizeof(cp));
-+	cp.argv = argv;
-+	cp.env = local_repo_env;
-+	cp.git_cmd = 1;
-+	cp.no_stdin = 1;
-+	cp.dir = path;
-+	return run_command(&cp) == 0;
-+}
-+
- static int find_first_merges(struct object_array *result, const char *path,
- 		struct commit *a, struct commit *b)
- {
+ 	struct string_list_item *path_option;
 diff --git a/submodule.h b/submodule.h
-index 3657ca8..b42ae91 100644
+index b42ae91..9841da3 100644
 --- a/submodule.h
 +++ b/submodule.h
-@@ -26,6 +26,7 @@ int parse_update_recurse_submodules_arg(const char *opt, const char *arg);
+@@ -3,6 +3,7 @@
+ 
+ struct diff_options;
+ struct argv_array;
++struct option;
+ 
+ enum {
+ 	RECURSE_SUBMODULES_ON_DEMAND = -1,
+@@ -23,6 +24,8 @@ int parse_submodule_config_option(const char *var, const char *value);
+ void handle_ignore_submodules_arg(struct diff_options *diffopt, const char *);
+ int parse_fetch_recurse_submodules_arg(const char *opt, const char *arg);
+ int parse_update_recurse_submodules_arg(const char *opt, const char *arg);
++int option_parse_update_submodules(const struct option *opt,
++		const char *arg, int unset);
  int submodule_needs_update(const char *path);
  int populate_submodule(const char *path, unsigned char sha1[20], int force);
  int depopulate_submodule(const char *path);
-+int update_submodule(const char *path, const unsigned char sha1[20], int force);
- void show_submodule_summary(FILE *f, const char *path,
- 		const char *line_prefix,
- 		unsigned char one[20], unsigned char two[20],
-@@ -37,9 +38,11 @@ void check_for_new_submodule_commits(unsigned char new_sha1[20]);
- int fetch_populated_submodules(const struct argv_array *options,
- 			       const char *prefix, int command_line_option,
- 			       int quiet);
-+int is_submodule_populated(const char *path);
- unsigned is_submodule_modified(const char *path, int ignore_untracked);
- int submodule_uses_gitfile(const char *path);
- int ok_to_remove_submodule(const char *path);
-+unsigned is_submodule_checkout_safe(const char *path, const unsigned char sha1[20]);
- int merge_submodule(unsigned char result[20], const char *path, const unsigned char base[20],
- 		    const unsigned char a[20], const unsigned char b[20], int search);
- int find_unpushed_submodules(unsigned char new_sha1[20], const char *remotes_name,
-diff --git a/unpack-trees.c b/unpack-trees.c
-index ed48d41..fc8855e 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -27,6 +27,9 @@ static const char *unpack_plumbing_errors[NB_UNPACK_TREES_ERROR_TYPES] = {
- 	/* ERROR_NOT_UPTODATE_DIR */
- 	"Updating '%s' would lose untracked files in it",
+diff --git a/t/t2013-checkout-submodule.sh b/t/t2013-checkout-submodule.sh
+index 06b18f8..bc3e1ca 100755
+--- a/t/t2013-checkout-submodule.sh
++++ b/t/t2013-checkout-submodule.sh
+@@ -4,17 +4,57 @@ test_description='checkout can handle submodules'
  
-+	/* ERROR_NOT_UPTODATE_SUBMODULE */
-+	"Updating submodule '%s' would lose modifications in it",
+ . ./test-lib.sh
+ 
++submodule_creation_must_succeed() {
++	# checkout base ($1)
++	git checkout -f --recurse-submodules $1 &&
++	git diff-files --quiet &&
++	git diff-index --quiet --cached $1 &&
 +
- 	/* ERROR_WOULD_LOSE_UNTRACKED_OVERWRITTEN */
- 	"Untracked working tree file '%s' would be overwritten by merge.",
- 
-@@ -71,6 +74,8 @@ void setup_unpack_trees_porcelain(struct unpack_trees_options *opts,
- 
- 	msgs[ERROR_NOT_UPTODATE_DIR] =
- 		"Updating the following directories would lose untracked files in it:\n%s";
-+	msgs[ERROR_NOT_UPTODATE_SUBMODULE] =
-+		"Updating the following submodules would lose modifications in it:\n%s";
- 
- 	if (advice_commit_before_merge)
- 		msg = "The following untracked working tree files would be %s by %s:\n%%s"
-@@ -1221,17 +1226,15 @@ static int verify_uptodate_1(const struct cache_entry *ce,
- 	if (!lstat(ce->name, &st)) {
- 		int flags = CE_MATCH_IGNORE_VALID|CE_MATCH_IGNORE_SKIP_WORKTREE;
- 		unsigned changed = ie_match_stat(o->src_index, ce, &st, flags);
--		if (!changed)
--			return 0;
--		/*
--		 * NEEDSWORK: the current default policy is to allow
--		 * submodule to be out of sync wrt the superproject
--		 * index.  This needs to be tightened later for
--		 * submodules that are marked to be automatically
--		 * checked out.
--		 */
--		if (S_ISGITLINK(ce->ce_mode))
--			return 0;
-+		if (!changed) {
-+			if (!S_ISGITLINK(ce->ce_mode) || !submodule_needs_update(ce->name) ||
-+			    (ce_stage(ce) ? is_submodule_checkout_safe(ce->name, ce->sha1)
-+			    : !is_submodule_modified(ce->name, 1)))
-+				return 0;
-+		} else
-+			if (S_ISGITLINK(ce->ce_mode) && !submodule_needs_update(ce->name))
-+				return 0;
-+
- 		errno = 0;
- 	}
- 	if (errno == ENOENT)
-@@ -1254,6 +1257,36 @@ static int verify_uptodate_sparse(const struct cache_entry *ce,
- 	return verify_uptodate_1(ce, o, ERROR_SPARSE_NOT_UPTODATE_FILE);
- }
- 
-+/*
-+ * When a submodule gets turned into an unmerged entry, we want it to be
-+ * up-to-date regarding the merge changes.
-+ */
-+static int verify_uptodate_submodule(const struct cache_entry *old,
-+				     const struct cache_entry *new,
-+				     struct unpack_trees_options *o)
-+{
-+	struct stat st;
-+
-+	if (o->index_only || (!((old->ce_flags & CE_VALID) || ce_skip_worktree(old)) && (o->reset || ce_uptodate(old))))
-+		return 0;
-+	if (!lstat(old->name, &st)) {
-+		unsigned changed = ie_match_stat(o->src_index, old, &st, CE_MATCH_IGNORE_VALID|CE_MATCH_IGNORE_SKIP_WORKTREE);
-+		if (!changed) {
-+			if (!S_ISGITLINK(old->ce_mode) ||
-+			    !submodule_needs_update(new->name) ||
-+			    is_submodule_checkout_safe(new->name, new->sha1))
-+				return 0;
-+		} else
-+			if (S_ISGITLINK(old->ce_mode) && !submodule_needs_update(new->name))
-+				return 0;
-+		errno = 0;
-+	}
-+	if (errno == ENOENT)
-+		return 0;
-+	return o->gently ? -1 :
-+		add_rejected_path(o, ERROR_NOT_UPTODATE_SUBMODULE, old->name);
++	# checkout target ($2)
++	if test -d submodule; then
++		echo change>>submodule/first.t &&
++		test_must_fail git checkout --recurse-submodules $2 &&
++		git checkout -f --recurse-submodules $2
++	else
++		git checkout --recurse-submodules $2
++	fi &&
++	test -e submodule/.git &&
++	test -f submodule/first.t &&
++	test -f submodule/second.t &&
++	git diff-files --quiet &&
++	git diff-index --quiet --cached $2
 +}
 +
- static void invalidate_ce_path(const struct cache_entry *ce,
- 			       struct unpack_trees_options *o)
- {
-@@ -1532,9 +1565,17 @@ static int merged_entry(const struct cache_entry *ce,
- 			copy_cache_entry(merge, old);
- 			update = 0;
- 		} else {
--			if (verify_uptodate(old, o)) {
--				free(merge);
--				return -1;
-+			if (S_ISGITLINK(old->ce_mode) ||
-+			    S_ISGITLINK(merge->ce_mode)) {
-+				if (verify_uptodate_submodule(old, merge, o)) {
-+					free(merge);
-+					return -1;
-+				}
-+			} else {
-+				if (verify_uptodate(old, o)) {
-+					free(merge);
-+					return -1;
-+				}
- 			}
- 			/* Migrate old flags over */
- 			update |= old->ce_flags & (CE_SKIP_WORKTREE | CE_NEW_SKIP_WORKTREE);
-diff --git a/unpack-trees.h b/unpack-trees.h
-index 36a73a6..bee8740 100644
---- a/unpack-trees.h
-+++ b/unpack-trees.h
-@@ -15,6 +15,7 @@ enum unpack_trees_error_types {
- 	ERROR_WOULD_OVERWRITE = 0,
- 	ERROR_NOT_UPTODATE_FILE,
- 	ERROR_NOT_UPTODATE_DIR,
-+	ERROR_NOT_UPTODATE_SUBMODULE,
- 	ERROR_WOULD_LOSE_UNTRACKED_OVERWRITTEN,
- 	ERROR_WOULD_LOSE_UNTRACKED_REMOVED,
- 	ERROR_BIND_OVERLAP,
++submodule_removal_must_succeed() {
++	# checkout base ($1)
++	git checkout -f --recurse-submodules $1 &&
++	git submodule update -f &&
++	test -e submodule/.git &&
++	git diff-files --quiet &&
++	git diff-index --quiet --cached $1 &&
++
++	# checkout target ($2)
++	echo change>>submodule/first.t &&
++	test_must_fail git checkout --recurse-submodules $2 &&
++	git checkout -f --recurse-submodules $2 &&
++	git diff-files --quiet &&
++	git diff-index --quiet --cached $2 &&
++	! test -d submodule
++}
++
+ test_expect_success 'setup' '
+ 	mkdir submodule &&
+ 	(cd submodule &&
+ 	 git init &&
+ 	 test_commit first) &&
+-	git add submodule &&
++	echo first > file &&
++	git add file submodule &&
+ 	test_tick &&
+ 	git commit -m superproject &&
+ 	(cd submodule &&
+ 	 test_commit second) &&
+-	git add submodule &&
++	echo second > file &&
++	git add file submodule &&
+ 	test_tick &&
+ 	git commit -m updated.superproject
+ '
+@@ -36,7 +76,8 @@ test_expect_success '"checkout <submodule>" updates the index only' '
+ 	git checkout HEAD^ submodule &&
+ 	test_must_fail git diff-files --quiet &&
+ 	git checkout HEAD submodule &&
+-	git diff-files --quiet
++	git diff-files --quiet &&
++	git diff-index --quiet --cached HEAD
+ '
+ 
+ test_expect_success '"checkout <submodule>" honors diff.ignoreSubmodules' '
+@@ -62,4 +103,172 @@ test_expect_success '"checkout <submodule>" honors submodule.*.ignore from .git/
+ 	! test -s actual
+ '
+ 
++test_expect_success '"checkout --recurse-submodules" removes deleted submodule' '
++	git config -f .gitmodules submodule.submodule.path submodule &&
++	git config -f .gitmodules submodule.submodule.url submodule.bare &&
++	(cd submodule && git clone --bare . ../submodule.bare) &&
++	echo submodule.bare >>.gitignore &&
++	git config submodule.submodule.ignore none &&
++	git add .gitignore .gitmodules submodule &&
++	git submodule update --init &&
++	git commit -m "submodule registered" &&
++	git checkout -b base &&
++	git checkout -b delete_submodule &&
++	rm -rf submodule &&
++	git rm submodule &&
++	git commit -m "submodule deleted" &&
++	submodule_removal_must_succeed base delete_submodule
++'
++
++test_expect_success '"checkout --recurse-submodules" repopulates submodule' '
++	submodule_creation_must_succeed delete_submodule base
++'
++
++test_expect_success '"checkout --recurse-submodules" repopulates submodule in existing directory' '
++	git checkout --recurse-submodules delete_submodule &&
++	mkdir submodule &&
++	submodule_creation_must_succeed delete_submodule base
++'
++
++test_expect_success '"checkout --recurse-submodules" replaces submodule with files' '
++	git checkout -f base &&
++	git checkout -b replace_submodule_with_dir &&
++	git update-index --force-remove submodule &&
++	rm -rf submodule/.git .gitmodules &&
++	git add .gitmodules submodule/* &&
++	git commit -m "submodule replaced" &&
++	git checkout -f base &&
++	git submodule update -f &&
++	git checkout --recurse-submodules replace_submodule_with_dir &&
++	test -d submodule &&
++	! test -e submodule/.git &&
++	test -f submodule/first.t &&
++	test -f submodule/second.t
++'
++
++test_expect_success '"checkout --recurse-submodules" removes files and repopulates submodule' '
++	submodule_creation_must_succeed replace_submodule_with_dir base
++'
++
++test_expect_failure '"checkout --recurse-submodules" replaces submodule with a file' '
++	git checkout -f base &&
++	git checkout -b replace_submodule_with_file &&
++	git update-index --force-remove submodule &&
++	rm -rf submodule .gitmodules &&
++	echo content >submodule &&
++	git add .gitmodules submodule &&
++	git commit -m "submodule replaced with file" &&
++	git checkout -f base &&
++	git submodule update -f &&
++	git checkout --recurse-submodules replace_submodule_with_file &&
++	test -d submodule &&
++	! test -e submodule/.git &&
++	test -f submodule/first.t &&
++	test -f submodule/second.t
++'
++
++test_expect_success '"checkout --recurse-submodules" removes the file and repopulates submodule' '
++	submodule_creation_must_succeed replace_submodule_with_file base
++'
++
++test_expect_failure '"checkout --recurse-submodules" replaces submodule with a link' '
++	git checkout -f base &&
++	git checkout -b replace_submodule_with_link &&
++	git update-index --force-remove submodule &&
++	rm -rf submodule .gitmodules &&
++	ln -s submodule &&
++	git add .gitmodules submodule &&
++	git commit -m "submodule replaced with link" &&
++	git checkout -f base &&
++	git submodule update -f &&
++	git checkout --recurse-submodules replace_submodule_with_link &&
++	test -d submodule &&
++	! test -e submodule/.git &&
++	test -f submodule/first.t &&
++	test -f submodule/second.t
++'
++
++test_expect_success '"checkout --recurse-submodules" removes the link and repopulates submodule' '
++	submodule_creation_must_succeed replace_submodule_with_link base
++'
++
++test_expect_success '"checkout --recurse-submodules" updates recursively' '
++	git checkout --recurse-submodules base &&
++	git diff-files --quiet &&
++	git diff-index --quiet --cached HEAD &&
++	git checkout -b updated_submodule &&
++	(cd submodule &&
++	 echo x >>first.t &&
++	 git add first.t &&
++	 test_commit third) &&
++	git add submodule &&
++	test_tick &&
++	git commit -m updated.superproject &&
++	git checkout --recurse-submodules base &&
++	git diff-files --quiet &&
++	git diff-index --quiet --cached HEAD
++'
++
++test_expect_failure '"checkout --recurse-submodules" needs -f to update a modifed submodule commit' '
++	(
++		cd submodule &&
++		git checkout --recurse-submodules HEAD^
++	) &&
++	test_must_fail git checkout --recurse-submodules master &&
++	test_must_fail git diff-files --quiet submodule &&
++	git diff-files --quiet file &&
++	git checkout --recurse-submodules -f master &&
++	git diff-files --quiet &&
++	git diff-index --quiet --cached HEAD
++'
++
++test_expect_failure '"checkout --recurse-submodules" needs -f to update modifed submodule content' '
++	echo modified >submodule/second.t &&
++	test_must_fail git checkout --recurse-submodules HEAD^ &&
++	test_must_fail git diff-files --quiet submodule &&
++	git diff-files --quiet file &&
++	git checkout --recurse-submodules -f HEAD^ &&
++	git diff-files --quiet &&
++	git diff-index --quiet --cached HEAD &&
++	git checkout --recurse-submodules -f master &&
++	git diff-files --quiet &&
++	git diff-index --quiet --cached HEAD
++'
++
++test_expect_failure '"checkout --recurse-submodules" ignores modified submodule content that would not be changed' '
++	echo modified >expected &&
++	cp expected submodule/first.t &&
++	git checkout --recurse-submodules HEAD^ &&
++	test_cmp expected submodule/first.t &&
++	test_must_fail git diff-files --quiet submodule &&
++	git diff-index --quiet --cached HEAD &&
++	git checkout --recurse-submodules -f master &&
++	git diff-files --quiet &&
++	git diff-index --quiet --cached HEAD
++'
++
++test_expect_failure '"checkout --recurse-submodules" does not care about untracked submodule content' '
++	echo untracked >submodule/untracked &&
++	git checkout --recurse-submodules master &&
++	git diff-files --quiet --ignore-submodules=untracked &&
++	git diff-index --quiet --cached HEAD &&
++	rm submodule/untracked
++'
++
++test_expect_failure '"checkout --recurse-submodules" needs -f when submodule commit is not present (but does fail anyway)' '
++	git checkout --recurse-submodules -b bogus_commit master &&
++	git update-index --cacheinfo 160000 0123456789012345678901234567890123456789 submodule
++	BOGUS_TREE=$(git write-tree) &&
++	BOGUS_COMMIT=$(echo "bogus submodule commit" | git commit-tree $BOGUS_TREE) &&
++	git commit -m "bogus submodule commit" &&
++	git checkout --recurse-submodules -f master &&
++	test_must_fail git checkout --recurse-submodules bogus_commit &&
++	git diff-files --quiet &&
++	test_must_fail git checkout --recurse-submodules -f bogus_commit &&
++	test_must_fail git diff-files --quiet submodule &&
++	git diff-files --quiet file &&
++	git diff-index --quiet --cached HEAD &&
++	git checkout --recurse-submodules -f master
++'
++
+ test_done
 -- 
 1.8.5.1
