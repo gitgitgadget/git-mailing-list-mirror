@@ -1,76 +1,103 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] add: don't complain when adding empty project root
-Date: Thu, 26 Dec 2013 10:54:43 -0800
-Message-ID: <xmqqtxdvcuj0.fsf@gitster.dls.corp.google.com>
-References: <CAEcj5uWHpem+5os+3Mc_a42pk6f30i4UiV=LRPdXkoqiy1jQ_w@mail.gmail.com>
-	<1387789361-29036-1-git-send-email-pclouds@gmail.com>
-	<20131226172542.GS20443@google.com>
+Subject: Re: [PATCH v3 07/10] builtin/replace: teach listing using short, medium or full formats
+Date: Thu, 26 Dec 2013 11:10:38 -0800
+Message-ID: <xmqqppojctsh.fsf@gitster.dls.corp.google.com>
+References: <20131211074147.11117.1155.chriscool@tuxfamily.org>
+	<20131211074614.11117.96106.chriscool@tuxfamily.org>
+	<52B196F1.3060003@gmail.com>
+	<CAP8UFD3UsdcDg2D2nysMZgGAxLebYm-qQX3LZfqdwF9gNbyxgA@mail.gmail.com>
+	<xmqqioumjc1n.fsf@gitster.dls.corp.google.com>
+	<CAP8UFD1+kydjrjhTxKDSMmOa+KiOYgMGK5gyxCe-LPih02=VYQ@mail.gmail.com>
+	<xmqqbo0cfz1x.fsf@gitster.dls.corp.google.com>
+	<CAP8UFD1hdNE__+bVtKegChBT4u3Rx7NEzBYYkdEmUwfFLLpkzg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	git@vger.kernel.org, tfnico@gmail.com
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 26 19:55:16 2013
+Cc: Karsten Blees <karsten.blees@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Joey Hess <joey@kitenet.net>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 26 20:11:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VwG5U-0001jq-4H
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Dec 2013 19:55:16 +0100
+	id 1VwGKk-0006jh-F5
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Dec 2013 20:11:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753629Ab3LZSyt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Dec 2013 13:54:49 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34087 "EHLO
+	id S1753639Ab3LZTKn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Dec 2013 14:10:43 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58186 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753496Ab3LZSys (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Dec 2013 13:54:48 -0500
+	id S1753572Ab3LZTKl (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Dec 2013 14:10:41 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C7E785A35D;
-	Thu, 26 Dec 2013 13:54:47 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7E4365A72C;
+	Thu, 26 Dec 2013 14:10:41 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=bBues0lH/BrFAbmRYAHeCU9r23Y=; b=S3BUDa
-	B2DF1w6uwKYh10wxmbeV9LbjcEsoygyMOVgc0V+HNnrQ563jKaucBsX9mCf/Vh5k
-	e6FNkTzJoqxkHwnU5aPUEVoIgJaAWls3IpaG4coz4/s2Tw9df1/SKBNeT8f5gwhS
-	SS/0jFNISERkfBYNEIImHbjsMZsqlF4vYv9WE=
+	:content-type; s=sasl; bh=7vfJEceJVEu8SLFYxjwQKfa0Vtc=; b=BXlV//
+	I1y+inTvfxwAyNn1920Ls5KjzEQCskG/3N9vtnsVaej6Vktp9JMt+NZI3ZWYMW2K
+	ZzBPHJMLx11z7b05K1DXa2ULTUtpZtue2EhrrXRUzNhMRPOAomrn0ZUByJSTum29
+	ZB5wia7mpdZ9RFXmoPNj3GlaotZRbKJjF9lDE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=pidcJKJegzEBA8cKgMPfT3MQPXu09q4g
-	nOJOvwvSFEFus2XNYOUvHSRnurhqjDLP8yDBhdfCUNO74hT8hqi65oVsULwSDgOo
-	/gC9mFkybg3JNlq+djQw6EYHQn6qkue8IpYPnBOAld5s5djWhGKUSl9OAwMdoPlr
-	tlE2mgTB2J4=
+	:content-type; q=dns; s=sasl; b=YN+RHoWSI8uru/qM0eKSDv2LBBvwJY2M
+	5mOSfoim5RCWndGwltDVN9uv7Pwu+KD1wd5nA9+JCYPLxpDM7EyIVPQwopjm39zS
+	FWreprf1Nl7OY7rGgBxvGbe7M1j8QeyqSARuAABD65BKf6cJHjM9dc72yPSE8miF
+	9McTMsbfgkU=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BA6515A35C;
-	Thu, 26 Dec 2013 13:54:47 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 70FEF5A72B;
+	Thu, 26 Dec 2013 14:10:41 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2AE0D5A35B;
-	Thu, 26 Dec 2013 13:54:47 -0500 (EST)
-In-Reply-To: <20131226172542.GS20443@google.com> (Jonathan Nieder's message of
-	"Thu, 26 Dec 2013 09:25:42 -0800")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BCE7B5A728;
+	Thu, 26 Dec 2013 14:10:40 -0500 (EST)
+In-Reply-To: <CAP8UFD1hdNE__+bVtKegChBT4u3Rx7NEzBYYkdEmUwfFLLpkzg@mail.gmail.com>
+	(Christian Couder's message of "Sat, 21 Dec 2013 10:34:06 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 30DAC680-6E5F-11E3-B1DD-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 6949CDF2-6E61-11E3-BD53-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239705>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239706>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Christian Couder <christian.couder@gmail.com> writes:
 
-> How about something like the following, for squashing in?
+> On Thu, Dec 19, 2013 at 7:58 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Christian Couder <christian.couder@gmail.com> writes:
+>>
+>>> I think this last one might be useful for people replacing objects
+>>> with objects that have another type.
+>>
+>> ... which IIUC is strongly discouraged---didn't you have to tighten
+>> it recently?
+>>
+>> And that makes it "useful primarily for debugging" unusual
+>> situations.
 >
-> With or without the tweaks below,
-> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+> Ok, so would you prefer the following:
+>
+> - NAME_ONLY_REPLACE_FMT and "--format=name_only" instead of
+> SHORT_REPLACE_FMT and "--format=short"
+>
+> - NAME_AND_VALUE_REPLACE_FMT and "--format=name_and_value" instead of
+> MEDIUM_REPLACE_FMT and "--format=medium"
+>
+> - DEBUG_REPLACE_FMT and "--format=debug" instead of FULL _REPLACE_FMT
+> and "--format=full"
 
-Thanks, both.
+The end-user facing names are probably fine with short, medium,
+full, as long as what they show are clearly explained in the
+end-user documentation (patch 10/10 covers this).
 
-Regarding "git add --refresh" (no other arguments), it would say
-"Nothing specified, nothing added.", and that is unrelated to the
-breakage reported and fixed in this thread, I think.  It is the same
-message "git add" (no other arguments) gives, which I think is a
-mistake.  "git add --refresh" is like "git add -u" in that the
-affected paths are determined by the index, and running these
-commands while your index is still empty can just be a silent no-op.
+I have a hunch that we may later regret "full" when somebody wants
+to add even fuller information, though. It might be better spelled
+"long" instead;
+
+I'd rather see REPLACE_FMT_ as a prefix, not suffix.  Do we use
+common suffix for enum values elsewhere?
