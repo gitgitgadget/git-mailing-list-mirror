@@ -1,87 +1,112 @@
-From: Drew Northup <n1xim.email@gmail.com>
-Subject: Re: german translation bug
-Date: Wed, 25 Dec 2013 18:12:59 -0500
-Message-ID: <CAM9Z-nkmsLfzKY+2h8r4y9LjM+6OXTo65ZzLRG7-Z4G_cCdHyw@mail.gmail.com>
-References: <1573480.3a5WD62Cc4@i5>
-	<1513689.dimJgKglhA@i5>
-	<CAM9Z-n=MF+MibS3ziHkixX+iTNAvB+D0+naKkzS8rb5ZSvgEzw@mail.gmail.com>
-	<6038171.4XUs8Nu1vH@i5>
+From: Yvonne Leroy <articulation7@gmail.com>
+Subject: how to recovery corrupted git blob
+Date: Thu, 26 Dec 2013 00:30:51 -0800 (PST)
+Message-ID: <1388046651841-7601220.post@n2.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Ralf Thielow <ralf.thielow@gmail.com>, git <git@vger.kernel.org>
-To: Wolfgang Rohdewald <wolfgang@rohdewald.de>
-X-From: git-owner@vger.kernel.org Thu Dec 26 00:13:08 2013
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 26 09:30:58 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VvxdR-00081X-5x
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Dec 2013 00:13:05 +0100
+	id 1Vw6LJ-0002hB-Ed
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Dec 2013 09:30:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752406Ab3LYXNA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Dec 2013 18:13:00 -0500
-Received: from mail-ig0-f173.google.com ([209.85.213.173]:60904 "EHLO
-	mail-ig0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752355Ab3LYXNA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Dec 2013 18:13:00 -0500
-X-Greylist: delayed 706 seconds by postgrey-1.27 at vger.kernel.org; Wed, 25 Dec 2013 18:13:00 EST
-Received: by mail-ig0-f173.google.com with SMTP id uq10so26336032igb.0
-        for <git@vger.kernel.org>; Wed, 25 Dec 2013 15:12:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=5AyA/iFT8sGTmZak/bmSfQu0KncVScktifEUrySjOm8=;
-        b=pGOaeGAwVNcXUNoCdkriy/2AIbFQLtPE0UrDOe5sgrwMM9D9YFziU7gZnksa5wOMMV
-         MMwdGWiZk9Ak0MpPYB1+EEvAhf0g7ozF9YlZN25sOGCMcyQloPIwNyKJfXcTG/6TQWJ/
-         hCIeTQK5Xoaqr3wN+1VD9aT5oTp/VJV447a7FmQUGkK6gBBjpCh5cqord2POK/VTG72f
-         Ibe+uEJR+2b27LBv2XYYnpHmjIaiLKTWbMz7UnXMK+6+vV6Cyw+CbZ+zFqBXJ2fxAPm6
-         2EGUKMlQx/GYTU4AjWMeWu/bpX5uHiHHSSlVwPHwQ8Pnvk4yb85mfA7IuisVBa6Byp3p
-         +Ozg==
-X-Received: by 10.50.56.38 with SMTP id x6mr31896285igp.31.1388013179602; Wed,
- 25 Dec 2013 15:12:59 -0800 (PST)
-Received: by 10.43.138.9 with HTTP; Wed, 25 Dec 2013 15:12:59 -0800 (PST)
-In-Reply-To: <6038171.4XUs8Nu1vH@i5>
+	id S1752629Ab3LZIax (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Dec 2013 03:30:53 -0500
+Received: from sam.nabble.com ([216.139.236.26]:42122 "EHLO sam.nabble.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751381Ab3LZIaw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Dec 2013 03:30:52 -0500
+Received: from jim.nabble.com ([192.168.236.80])
+	by sam.nabble.com with esmtp (Exim 4.72)
+	(envelope-from <articulation7@gmail.com>)
+	id 1Vw6LD-0007HC-Sw
+	for git@vger.kernel.org; Thu, 26 Dec 2013 00:30:51 -0800
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239684>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239685>
 
-On Wed, Dec 25, 2013 at 5:28 PM, Wolfgang Rohdewald
-<wolfgang@rohdewald.de> wrote:
-> Am Mittwoch, 25. Dezember 2013, 17:14:31 schrieb Drew Northup:
->> Git does not use KDE's language packs.
->
-> Sorry, I meant ubuntu. I believe I heard before that they tend to replace
-> upstream translations but I never actually experienced a problem with that.
->
->> What does dpkg report for info about the installed git package (if you
->> are using the packaged version)?
->
-> Yes, I am using the packaged version. This package does not contain
-> any translations.
->
-> root@s5:/var/cache/apt/archives# dpkg --info git_1%3a1.8.3.2-1_amd64.deb
->  neues Debian-Paket, Version 2.0.
+Hi all,
 
->  Package: git
->  Version: 1:1.8.3.2-1
->  Architecture: amd64
+I have a corrupted git repo.I've worked through the process
 
-Wolfgang,
-My suggestion is to consider compiling Git from sources, as Ubuntu has
-stopped applying non-security updates (for the most part) to
-13.10--which includes most Git updates. That's the best way to ensure
-you get the latest translations checked out, QA'd and submitted by
-Ralf.
+<https://git.wiki.kernel.org/index.php/GitFaq#How_to_fix_a_broken_repository.3F> 
+but still have some problem.
 
-(I'm probably going to do that with a 13.10 that I have at home when I
-get a chance--most likely next week.)
+1- at the beginning, with "git fsck --full", it showed:
 
--- 
--Drew Northup
---------------------------------------------------------------
-"As opposed to vegetable or mineral error?"
--John Pescatore, SANS NewsBites Vol. 12 Num. 59
+Checking object directories: 100% (256/256), done.
+dangling blob 13dcdade560f11e8bc2d865a0d4a1a1133e5b132
+dangling tree 5c9e60742ff24bb19fd73a8c1c879c4e10951b78
+missing blob 96209289c92e6ef0e6beb6ec1644f93981b00829
+dangling blob f61e50d30fa95683067aa2a50380e3dd7033e6dd
+dangling tree 95b5c5eeec8ac9359a31b268b938c142443d783a
+dangling commit d41b93032b34e380030207b5c8f502c6ecfd56ad
+dangling blob dae58bd96104c1292a20e1b8c8c948025e2e8924
+missing blob e187557d07857b974ea51e3ea962ac120cfc9488
+
+2- since I don't have a "broken link" message,I use $ git commit -m "fixing
+git repo",it said:
+
+error: invalid object 100644 e187557d07857b974ea51e3ea962ac120cfc9488 for
+'proje
+ct5/css/style.css'
+error: Error building trees
+
+3- and then   I use $ git hash-object -w project5/css/style.css, it said:
+
+git hash-object -w project5/css/style.css
+f61e50d30fa95683067aa2a50380e3dd7033e6dd
+
+the result is not the missing blob
+(e187557d07857b974ea51e3ea962ac120cfc9488)
+
+4- so I use $ git log --raw --all --full-history -- project5/css/style.css,
+it said:
+
+
+commit 7b5314a110b8e2835f7f3d068072429be87be574
+Merge: ec5e609 e415bb6
+Author: Yvonne Leroy <articulation7@gmail.com>
+Date:   Sun Dec 15 23:40:41 2013 +0800
+
+    WIP on master: ec5e609 list
+
+commit e415bb6d51ee05d60055d89f2bf63ccb32f4c12c
+Author: Yvonne Leroy <articulation7@gmail.com>
+Date:   Sun Dec 15 23:40:39 2013 +0800
+
+    index on master: ec5e609 list
+
+:100644 100644 595691a... e187557... M  project5/css/style.css
+
+commit ec76f78324632c3eebd874a724a9ebfe7d1f22ec
+Author: Yvonne Leroy <articulation7@gmail.com>
+Date:   Sat Dec 7 14:48:37 2013 +0800
+
+    nav view
+
+:000000 100644 0000000... 595691a... A  project5/css/style.css
+
+5-here is my problem,how can I looking at those older and newer
+versions(Could someone point me to which commands I should look at? Still
+new to git:))
+so that I can use the next step    git hash-object -w <recreated-file>
+and could someone tell me what should I do with <recreated-file>,is it still
+project5/css/style.css ?
+
+Thanks in advance,
+Yvonne.
+
+
+
+
+--
+View this message in context: http://git.661346.n2.nabble.com/how-to-recovery-corrupted-git-blob-tp7601220.html
+Sent from the git mailing list archive at Nabble.com.
