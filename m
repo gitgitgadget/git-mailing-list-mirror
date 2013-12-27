@@ -1,182 +1,71 @@
-From: "Pyeron, Jason J CTR (US)" <jason.j.pyeron.ctr@mail.mil>
-Subject: RE: git:// protocol over SSL/TLS
-Date: Fri, 27 Dec 2013 14:21:01 +0000
-Message-ID: <871B6C10EBEFE342A772D1159D13208557790479@umechphj.easf.csd.disa.mil>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: git:// protocol over SSL/TLS
+Date: Fri, 27 Dec 2013 15:20:47 +0100
+Message-ID: <vpqwqiqpe80.fsf@anie.imag.fr>
 References: <CAErtv27qUMo9LsGAZtk5Zv9qnZRB_YAXhtskvrrNbWGqadQh7Q@mail.gmail.com>
 	<20131227173655.3f3109e7ba848c90b302e2f9@domain007.com>
 	<CAErtv25JGxEs3ytAB019yajQooNs4k=bzukSE9kuHWAbir9-BQ@mail.gmail.com>
- <87mwjm4c3s.fsf@igel.home>
+	<87mwjm4c3s.fsf@igel.home>
 Mime-Version: 1.0
-Content-Type: multipart/signed; protocol="application/x-pkcs7-signature";
-	micalg=SHA1; boundary="----=_NextPart_000_06E3_01CF02E4.95AF0CB0"
-Cc: Konstantin Khomoutov <flatworm@users.sourceforge.net>,
-	Andreas Schwab <schwab@linux-m68k.org>,
-	Sergey Sharybin <sergey.vfx@gmail.com>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Dec 27 15:20:25 2013
+Content-Type: text/plain
+Cc: Sergey Sharybin <sergey.vfx@gmail.com>,
+	Konstantin Khomoutov <flatworm@users.sourceforge.net>,
+	Git List <git@vger.kernel.org>
+To: Andreas Schwab <schwab@linux-m68k.org>
+X-From: git-owner@vger.kernel.org Fri Dec 27 15:21:26 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VwYH2-0001ci-Si
-	for gcvg-git-2@plane.gmane.org; Fri, 27 Dec 2013 15:20:25 +0100
+	id 1VwYI0-0001zl-61
+	for gcvg-git-2@plane.gmane.org; Fri, 27 Dec 2013 15:21:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754666Ab3L0OUU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Dec 2013 09:20:20 -0500
-Received: from ukel19pa19.eemsg.mail.mil ([214.24.22.87]:19120 "EHLO
-	ukel19pa19.eemsg.mail.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753036Ab3L0OUT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Dec 2013 09:20:19 -0500
-X-EEMSG-Attachment-filename: smime.p7s
-Received: from edge-mech.mail.mil ([214.21.82.9])
-  by ukel19pa19.eemsg.mail.mil with ESMTP; 27 Dec 2013 14:20:16 +0000
-Received: from UMECHPIZ.easf.csd.disa.mil (214.21.83.153) by
- edge-mech.mail.mil (214.21.82.9) with Microsoft SMTP Server (TLS) id
- 14.3.158.1; Fri, 27 Dec 2013 14:21:02 +0000
-Received: from UMECHPHJ.easf.csd.disa.mil ([169.254.5.237]) by
- UMECHPIZ.easf.csd.disa.mil ([214.21.83.153]) with mapi id 14.03.0158.002;
- Fri, 27 Dec 2013 14:20:01 +0000
-Thread-Topic: git:// protocol over SSL/TLS
-Thread-Index: AQHPAw2f3283gaSz4kGvLws3L7lh0ppoFbaw
-In-Reply-To: <87mwjm4c3s.fsf@igel.home>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: yes
-X-MS-TNEF-Correlator: 
-x-originating-ip: [214.21.83.188]
+	id S1754612Ab3L0OVU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Dec 2013 09:21:20 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:57784 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753036Ab3L0OVT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Dec 2013 09:21:19 -0500
+Received: from globule.imag.fr (globule.imag.fr [129.88.34.238])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id rBREKnsJ017246
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 27 Dec 2013 15:20:49 +0100
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	(authenticated bits=0)
+	by globule.imag.fr (8.13.8/8.13.8) with ESMTP id rBREKl74018545
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Fri, 27 Dec 2013 15:20:50 +0100
+In-Reply-To: <87mwjm4c3s.fsf@igel.home> (Andreas Schwab's message of "Fri, 27
+	Dec 2013 15:12:07 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 27 Dec 2013 15:20:49 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: rBREKnsJ017246
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1388758850.75775@Ge4n1D5n5fzxNjH5/d+wEA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239735>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239736>
 
-------=_NextPart_000_06E3_01CF02E4.95AF0CB0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Andreas Schwab <schwab@linux-m68k.org> writes:
 
-> -----Original Message-----
-> From: Andreas Schwab
-> Sent: Friday, December 27, 2013 9:12 AM
-> 
 > Sergey Sharybin <sergey.vfx@gmail.com> writes:
-> 
-> > So guess we just need to recommend using https:// protocol instead of
-> > git:// for our users?
-> 
+>
+>> So guess we just need to recommend using https:// protocol instead of
+>> git:// for our users?
+>
 > Given how easy it is to verify the integrity of a git repository out of
 > band there isn't really much of added security by using TLS for
 > transport.
 
-I have to say, using encryption (TLS, etc) is not just for assurance of the communicating parties, but also to prevent a compromise of confidentiality.
+You can verify integrity after the fact, but not guarantee
+confidentiality ... so it again depends on the definition of "security".
 
-Jason Pyeron
-(please do not add me to the cc)
-
-------=_NextPart_000_06E3_01CF02E4.95AF0CB0
-Content-Type: application/x-pkcs7-signature; name="smime.p7s"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="smime.p7s"
-
-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
-GDAWBgNVBAMTD0RPRCBFTUFJTCBDQS0zMDCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEB
-AOYpItQUJtGYGlJexYSDc37BYLOz0JS+/RyUVb/2hCybycB0c+/MwpnymcltyhTTdP++EPL3Lb/L
-uwaj7phQQWUB4VcstsvkyhysflI0DrGOByY+MjWvo2EKxeUIthJ5jFTBeunxUB9dgzpnMLMp2x06
-TDkhUNgYLI0Gde5jcnhorWKcdaSUBtMyaxKvBgcpvhOgwKfwJU+3/h+3V+AYEo0hahW5WlT7d2XY
-TD/1ujzAN+EGfsK+niOMKNGa18ZnONdzyb0HHYVv1ZUKmtzaOk4o8KXrCd/l2wvNR6+KzbtvlEDj
-WZxQn8kOqXECudzpaYA6iTtFBSIYBYS1EvA8wIECAwEAAaOCAhwwggIYMA4GA1UdDwEB/wQEAwIB
-hjAfBgNVHSMEGDAWgBRJdLsMXrp6/gJU73ugxpXGCYBwljAdBgNVHQ4EFgQUNWFmKAm8ViVbi8y/
-gV5hLDA50yEwEgYDVR0TAQH/BAgwBgEB/wIBADAMBgNVHSQEBTADgAEAMGYGA1UdIARfMF0wCwYJ
-YIZIAWUCAQsFMAsGCWCGSAFlAgELCTALBglghkgBZQIBCxEwCwYJYIZIAWUCAQsSMAsGCWCGSAFl
-AgELEzAMBgpghkgBZQMCAQMaMAwGCmCGSAFlAwIBAxswNwYDVR0fBDAwLjAsoCqgKIYmaHR0cDov
-L2NybC5kaXNhLm1pbC9jcmwvRE9EUk9PVENBMi5jcmwwggEBBggrBgEFBQcBAQSB9DCB8TA6Bggr
-BgEFBQcwAoYuaHR0cDovL2NybC5kaXNhLm1pbC9pc3N1ZWR0by9ET0RST09UQ0EyX0lULnA3YzAg
-BggrBgEFBQcwAYYUaHR0cDovL29jc3AuZGlzYS5taWwwgZAGCCsGAQUFBzAChoGDbGRhcDovL2Ny
-bC5nZHMuZGlzYS5taWwvY24lM2REb0QlMjBSb290JTIwQ0ElMjAyJTJjb3UlM2RQS0klMmNvdSUz
-ZERvRCUyY28lM2RVLlMuJTIwR292ZXJubWVudCUyY2MlM2RVUz9jcm9zc0NlcnRpZmljYXRlUGFp
-cjtiaW5hcnkwDQYJKoZIhvcNAQEFBQADggEBAAqIVhylVyZaYst10N2GxVLiL/O8EWQ/jC8+EfyY
-YEDygA0ogppo/uBISyfTOgp7lfYDDIEUkUI6YGziK1Mt7N8RrvVUF/AB+ZcHp5urC9usl4kJxu/5
-BzQWAKh+EVOefC+hOKKZeTk0QW59uFgwVoie5KpkRdmgRGI6t+Ux05GA8RsQsmdw1VurWbRaSBZC
-xAJM2mxoylAdMb43mcfPU8xCKVbDnRfKA+cQWvE5PBzM+xuXCibzMd/gq1wknZ7eOH0CUWdG+ZNw
-he0KVcL0wWhanwjJHXubdtxU7zmMGOUMRO73BrIf9cvmDr3Uof/U+ZEHIlJ5t8D97LL4hfRE+1wx
-ggMyMIIDLgIBATBkMF0xCzAJBgNVBAYTAlVTMRgwFgYDVQQKEw9VLlMuIEdvdmVybm1lbnQxDDAK
-BgNVBAsTA0RvRDEMMAoGA1UECxMDUEtJMRgwFgYDVQQDEw9ET0QgRU1BSUwgQ0EtMzACA0j/OjAJ
-BgUrDgMCGgUAoIIBozAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0x
-MzEyMjcxNDE4MjBaMCMGCSqGSIb3DQEJBDEWBBRoJLzVqlcC31pSAyXJuNF06oCvrzBYBgkqhkiG
-9w0BCQ8xSzBJMAoGCCqGSIb3DQMHMA4GCCqGSIb3DQMCAgIAgDAHBgUrDgMCBzANBggqhkiG9w0D
-AgIBKDAHBgUrDgMCGjAKBggqhkiG9w0CBTBzBgkrBgEEAYI3EAQxZjBkMF0xCzAJBgNVBAYTAlVT
-MRgwFgYDVQQKEw9VLlMuIEdvdmVybm1lbnQxDDAKBgNVBAsTA0RvRDEMMAoGA1UECxMDUEtJMRgw
-FgYDVQQDEw9ET0QgRU1BSUwgQ0EtMzACA0j/PjB1BgsqhkiG9w0BCRACCzFmoGQwXTELMAkGA1UE
-BhMCVVMxGDAWBgNVBAoTD1UuUy4gR292ZXJubWVudDEMMAoGA1UECxMDRG9EMQwwCgYDVQQLEwNQ
-S0kxGDAWBgNVBAMTD0RPRCBFTUFJTCBDQS0zMAIDSP8+MA0GCSqGSIb3DQEBAQUABIIBAC1OpLmU
-qmXY4UX9UkYzRLNt2+/QvB88/n6Wz+mROpethjhthqvS85L4nn3xjiWtjtcrLDjxhsNUkemy95xy
-gAU0kXbl44PL1wTJf7PXNHEfOfxikW97W8CDST7+hC2tm++grmwhM9eqaxrvQ0ymg0Pjli0R8Mox
-HJzoMpJn80sETQoC//WRQkF+K/UW78cknNZlFsLJofqvkkYS+Tv6Q8ku9cnXpEFwOTdoDEBQuR+G
-N3Bcf9P+lhKWwdcnTjF7ntKCZIEAJ0wBl58tWOaLXF49i3eMPdyNqmfbstOUQurfpvJpBRwirWUn
-0OxUjGiGMLmsOK2UhHsZb7nLzPh65QQAAAAAAAA=
-
-------=_NextPart_000_06E3_01CF02E4.95AF0CB0--
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
