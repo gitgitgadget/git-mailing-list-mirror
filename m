@@ -1,86 +1,131 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git:// protocol over SSL/TLS
-Date: Fri, 27 Dec 2013 14:21:31 -0800
-Message-ID: <7viouaj5p0.fsf@alter.siamese.dyndns.org>
-References: <CAErtv27qUMo9LsGAZtk5Zv9qnZRB_YAXhtskvrrNbWGqadQh7Q@mail.gmail.com>
-	<20131227173655.3f3109e7ba848c90b302e2f9@domain007.com>
+Subject: Re: [PATCH v2] git-svn: workaround for a bug in svn serf backend
+Date: Fri, 27 Dec 2013 14:22:57 -0800
+Message-ID: <7veh4yj5mm.fsf@alter.siamese.dyndns.org>
+References: <20131226202805.GV20443@google.com>
+	<1388131515-3015-1-git-send-email-rkagan@mail.ru>
+	<20131227200708.GD20443@google.com>
+	<20131227203443.GA9189@dcvr.yhbt.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Sergey Sharybin <sergey.vfx@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Konstantin Khomoutov <flatworm@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Fri Dec 27 23:21:32 2013
+Cc: Jonathan Nieder <jrnieder@gmail.com>, Roman Kagan <rkagan@mail.ru>,
+	git@vger.kernel.org, Benjamin Pabst <benjamin.pabst85@gmail.com>
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Fri Dec 27 23:22:57 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vwfmd-00007i-2O
-	for gcvg-git-2@plane.gmane.org; Fri, 27 Dec 2013 23:21:31 +0100
+	id 1Vwfo1-0000ih-8i
+	for gcvg-git-2@plane.gmane.org; Fri, 27 Dec 2013 23:22:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754871Ab3L0WV1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Dec 2013 17:21:27 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38792 "EHLO
+	id S1754843Ab3L0WWx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Dec 2013 17:22:53 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56058 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754864Ab3L0WV0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Dec 2013 17:21:26 -0500
+	id S1754821Ab3L0WWw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Dec 2013 17:22:52 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0A4725CDE4;
-	Fri, 27 Dec 2013 17:21:26 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5C47D5CE55;
+	Fri, 27 Dec 2013 17:22:52 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=oyH/lSy83puqKeJw35Ev+i7Ur7g=; b=Eye2xr
-	8uy3uUzO3lqfleDHG7Dvsleq75sADvdi8gdJvbHjpMb1RVj2xkYBMh9wlyW0GUU5
-	KV+0RlOlkefhGr2SUhMMO8FIqDTpp/gXNFmmakS2Ic8wbMklk2A8Ds2p/haisFm1
-	k8pQEAfHX3dA7D8jwJpw+Ghqrrez+yLFjWE8M=
+	:content-type; s=sasl; bh=6S/sKomoj/ilWyS/EfLuqNxW+vU=; b=t6sLaF
+	Bein7QZtaQeUjZORfJ4U/XLQ2tTAUIPDn7xoAh/+GsHMyjNvbc1ZnBbbmgaMhvgg
+	sWOAgtDyMAz3vNyGq8UR4Ux5uUbzg62F1nXmTX86LZn7w7T2aT0m4LhVyZLfWKKR
+	ovDfYWpwomoeJO577DzFq3dI1ozhgFbT5WM5Q=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Ld77Y4An1Cag2es4XE0iV9ahJdwcmqVB
-	F+qktfPnZBPpnDykf5AAgFTD6XK8pCjrSbg/ARmu76+a7rVKeC3fIYNkqZYGVAlO
-	+SFYS+5CCXyZqKT/jbptLNFkA1mEbE3CL3WIpjIUop7da3bwORBU9dOVIsNuBCpY
-	7IHpgNAzNpM=
+	:content-type; q=dns; s=sasl; b=lcC2YihropQwrFYHDf3Lj6dY/K8EwLiX
+	4N/cuInZMZWdt17v1YLJ6M9K7gfDTQthhViZKypLxk6lLge+9VAFkA9hSs39r07Y
+	lvjgPB0JqchalxuQAvP/j8tGzY2RvHGfZy4UtQUyuk/ZizAszwxrSWXMwCuATC6S
+	i6nhoIzPxSs=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EB76A5CDE3;
-	Fri, 27 Dec 2013 17:21:25 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4C8815CE54;
+	Fri, 27 Dec 2013 17:22:52 -0500 (EST)
 Received: from pobox.com (unknown [198.0.213.178])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D4C745CDE2;
-	Fri, 27 Dec 2013 17:21:24 -0500 (EST)
-In-Reply-To: <20131227173655.3f3109e7ba848c90b302e2f9@domain007.com>
-	(Konstantin Khomoutov's message of "Fri, 27 Dec 2013 17:36:55 +0400")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 361B15CE53;
+	Fri, 27 Dec 2013 17:22:51 -0500 (EST)
+In-Reply-To: <20131227203443.GA9189@dcvr.yhbt.net> (Eric Wong's message of
+	"Fri, 27 Dec 2013 20:34:43 +0000")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.4 (gnu/linux)
-X-Pobox-Relay-ID: 38DF5440-6F45-11E3-AD42-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 6C6A955E-6F45-11E3-A75F-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239752>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239753>
 
-Konstantin Khomoutov <flatworm@users.sourceforge.net> writes:
+Eric Wong <normalperson@yhbt.net> writes:
 
-> On Fri, 27 Dec 2013 18:59:00 +0600
-> Sergey Sharybin <sergey.vfx@gmail.com> wrote:
+> Jonathan Nieder <jrnieder@gmail.com> wrote:
+>> Roman Kagan wrote:
+>> 
+>> > Subversion serf backend in versions 1.8.5 and below has a bug that the
+>> > function creating the descriptor of a file change -- add_file() --
+>> > doesn't make a copy of its third argument when storing it on the
+>> > returned descriptor.  As a result, by the time this field is used (in
+>> > transactions of file copying or renaming) it may well be released, and
+>> > the memory reused.
+>> >
+>> > One of its possible manifestations is the svn assertion triggering on an
+>> > invalid path, with a message
+>> >
+>> > svn_fspath__skip_ancestor: Assertion `svn_fspath__is_canonical(child_fspath)' failed.
+>> [...]
+>> 
+>> Makes sense.  Perhaps also worth mentioning that this is fixed by
+>> r1553376, but no need to reroll just for that.
 >
->> Quick question is, is it possible to use git:// protocol over
->> SSL/TLS/other secure transport?
+> Thanks all, I noted this in an addendum to the commit:
 >
-> The Git protocol does not implement it itself but you can channel it
-> over a TLS tunnel (via stunnel for instance).  Unfortunately, this
-> means a specialized software and setup on both ends so if the question
-> was about a general client using stock Git then the answer is no, it's
-> impossible.
+>     Subversion serf backend in versions 1.8.5 and below has a bug(*) that the
+>
+>     ...
+>
+>     * [ew: fixed in Subversion r1553376 as noted by Jonathan Nieder]
+>
+>> > Cc: Benjamin Pabst <benjamin.pabst85@gmail.com>
+>> > Cc: Eric Wong <normalperson@yhbt.net>
+>> > Cc: Jonathan Nieder <jrnieder@gmail.com>
+>> 
+>> No need for these lines --- the mail header already keeps track of who
+>> is being cc-ed.
+>
+> I don't mind seeing it in history.  At least I've gotten accustomed to
+> it from the Linux kernel and tracking patch flow between dev -> stable
+> trees.
+>
+>> > Signed-off-by: Roman Kagan <rkagan@mail.ru>
+>> 
+>> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+>
+> Signed-off-by: Eric Wong <normalperson@yhbt.net>
+>
+>
+> The following changes since commit 7794a680e63a2a11b73cb1194653662f2769a792:
+>
+>   Sync with 1.8.5.2 (2013-12-17 14:12:17 -0800)
+>
+> are available in the git repository at:
+>
+>
+>   git://git.bogomips.org/git-svn.git master
+>
+> for you to fetch changes up to 2394e94e831991348688831a384b088a424c7ace:
+>
+>   git-svn: workaround for a bug in svn serf backend (2013-12-27 20:22:19 +0000)
+>
+> ----------------------------------------------------------------
+> Roman Kagan (1):
+>       git-svn: workaround for a bug in svn serf backend
+>
+>  perl/Git/SVN/Editor.pm | 10 ++++++++--
+>  1 file changed, 8 insertions(+), 2 deletions(-)
 
-Hmph, I somehow had an impression that you wouldn't need anything
-more complex than a simple helper that uses git-remote-ext on the
-client side. On the remote end, you'd need to have something that
-terminates the incoming SSL/TLS and plugs it to your git daemon.
+Thanks. I almost missed this pull-request, though.
 
->
->> Or the recommended way to do secure anonymous checkout is to simply
->> use https:// ?
->
-> Yes, but it will only be secure if you've managed to verify the
-> server's certificate and do trust its issuer (or a CA higher up the
-> cert's trust chain) -- people tend to confuse "encrypted" with
-> "secure" which is not at all the same thing.
+Will pull.
