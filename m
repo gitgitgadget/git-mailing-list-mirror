@@ -1,106 +1,83 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] Remove the line length limit for graft files
-Date: Fri, 27 Dec 2013 13:59:19 -0800
-Message-ID: <20131227215919.GF20443@google.com>
-References: <alpine.DEB.1.00.1312272146590.1191@s15462909.onlinehome-server.info>
- <20131227210447.GE20443@google.com>
- <alpine.DEB.1.00.1312272208070.1191@s15462909.onlinehome-server.info>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Dec 2013, #05; Thu, 26)
+Date: Fri, 27 Dec 2013 14:13:35 -0800
+Message-ID: <7vmwjmj628.fsf@alter.siamese.dyndns.org>
+References: <xmqq1u0zcoci.fsf@gitster.dls.corp.google.com>
+	<CAPig+cQXsdFocFeSR8YKh8crOwBFP0ZK0td2UbP-yypRYJhREQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, msysgit@googlegroups.com, gitster@pobox.com
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: msysgit+bncBD6LRKOE4AIRBOXQ66KQKGQEZIFLD7I@googlegroups.com Fri Dec 27 22:59:24 2013
-Return-path: <msysgit+bncBD6LRKOE4AIRBOXQ66KQKGQEZIFLD7I@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-vb0-f61.google.com ([209.85.212.61])
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Fri Dec 27 23:13:50 2013
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBD6LRKOE4AIRBOXQ66KQKGQEZIFLD7I@googlegroups.com>)
-	id 1VwfRD-0007RE-Oj
-	for gcvm-msysgit@m.gmane.org; Fri, 27 Dec 2013 22:59:23 +0100
-Received: by mail-vb0-f61.google.com with SMTP id w20sf2121242vbb.16
-        for <gcvm-msysgit@m.gmane.org>; Fri, 27 Dec 2013 13:59:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :in-reply-to:user-agent:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type:content-disposition;
-        bh=PYJ40uGVXDArn1EUvaoM9cHMJLg9ZRKDonwz5zV0JQc=;
-        b=BNK4NUTJHn7A1PqaXMDtbdu7tcRBIllHvJlxiyVSywK8VcWYOXM7ZbJUX44W6FtO6i
-         76XVsmD4gLBB+UUEeQEFuF8C6kFEuf9kTjAbFxd6D5vsgVr8ziaPZEwmmDjy7LNaHil5
-         MeE6jNfj6xhFAep888ntby35nniU7aKkA6KLX5laHM9oX2qTwnUNZEaaBsqGq4sdpx1z
-         InZFbmK2eeG+X+/F7Uosyxk32q2N/JgrQ87IyFRzErI5CFtqdbkgVqQDznqzsOB0pp8L
-         rsX5S8ahtZYwXM10WnJPsoZChYAX5z5kuNzGCxEBpLxcnF6ztjUiSxpgEAPsW12dmEV2
-         VqRg==
-X-Received: by 10.50.79.228 with SMTP id m4mr768170igx.9.1388181562962;
-        Fri, 27 Dec 2013 13:59:22 -0800 (PST)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.50.79.193 with SMTP id l1ls2522199igx.8.canary; Fri, 27 Dec
- 2013 13:59:22 -0800 (PST)
-X-Received: by 10.66.240.4 with SMTP id vw4mr20028540pac.10.1388181562424;
-        Fri, 27 Dec 2013 13:59:22 -0800 (PST)
-Received: from mail-gg0-x234.google.com (mail-gg0-x234.google.com [2607:f8b0:4002:c02::234])
-        by gmr-mx.google.com with ESMTPS id o30si11276186yhn.1.2013.12.27.13.59.22
-        for <msysgit@googlegroups.com>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 27 Dec 2013 13:59:22 -0800 (PST)
-Received-SPF: pass (google.com: domain of jrnieder@gmail.com designates 2607:f8b0:4002:c02::234 as permitted sender) client-ip=2607:f8b0:4002:c02::234;
-Received: by mail-gg0-x234.google.com with SMTP id k1so1954651gga.25
-        for <msysgit@googlegroups.com>; Fri, 27 Dec 2013 13:59:22 -0800 (PST)
-X-Received: by 10.236.135.172 with SMTP id u32mr9734160yhi.107.1388181562229;
-        Fri, 27 Dec 2013 13:59:22 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id m29sm48374651yho.14.2013.12.27.13.59.21
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 27 Dec 2013 13:59:21 -0800 (PST)
-In-Reply-To: <alpine.DEB.1.00.1312272208070.1191@s15462909.onlinehome-server.info>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Original-Sender: jrnieder@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of jrnieder@gmail.com designates 2607:f8b0:4002:c02::234
- as permitted sender) smtp.mail=jrnieder@gmail.com;       dkim=pass
- header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Content-Disposition: inline
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239750>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1VwffB-00058N-OD
+	for gcvg-git-2@plane.gmane.org; Fri, 27 Dec 2013 23:13:50 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1754822Ab3L0WNa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Dec 2013 17:13:30 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43253 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754813Ab3L0WN3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Dec 2013 17:13:29 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 480625CC78;
+	Fri, 27 Dec 2013 17:13:29 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=KtOxP+S0Rm97FYR4H9nfZEKtVmc=; b=JRoK4j
+	RoFhoA7LH5iqGet/dSoOjFMyu1xHXBchgWkFkuA+or9nIVwh90293ywkNCt80nDi
+	bk9+6LqccdOR3Ah/yli75Hx36IUoYGTTuKcJiqkMifXCAUtmmjswG9gieRrcoOLg
+	pw3mEHRjPDp96NYKHkcnQcdPQRIDvAkSFPkBM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=QwSdjwxtg6/wVKndZgqs3EnEBf42/NLG
+	JlT3SW4tSpp0WnUwvYK9FgVnDTRhwDs5UDssHSvuzIt9v4uy6ZGCXxzztDjIOBzP
+	4uIcPNrz8syeRTR8sJk91wVCpxm6CWFtcFQgItho0ruYwqULDsi2A3IrAdkbpPG5
+	tkiJYMTM1fQ=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3B31C5CC77;
+	Fri, 27 Dec 2013 17:13:29 -0500 (EST)
+Received: from pobox.com (unknown [198.0.213.178])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 661B35CC76;
+	Fri, 27 Dec 2013 17:13:28 -0500 (EST)
+In-Reply-To: <CAPig+cQXsdFocFeSR8YKh8crOwBFP0ZK0td2UbP-yypRYJhREQ@mail.gmail.com>
+	(Eric Sunshine's message of "Fri, 27 Dec 2013 16:54:52 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.4 (gnu/linux)
+X-Pobox-Relay-ID: 1CE1BF54-6F44-11E3-B505-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239751>
 
-Johannes Schindelin wrote:
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-> it returns EOF only if ch == EOF *and* sb->len == 0, i.e. if no characters
-> have been read before hitting EOF.
+> On Thu, Dec 26, 2013 at 4:08 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Here are the topics that have been cooking.  Commits prefixed with
+>> '-' are only in 'pu' (proposed updates) while commits prefixed with
+>> '+' are in 'next'.
+>>
+>> You can find the changes described here in the integration branches
+>> of the repositories listed at
+>>
+>>     http://git-blame.blogspot.com/p/git-public-repositories.html
+>>
+>> --------------------------------------------------
+>> [New Topics]
+>
+> Would $gmane/239575 [1] be of interest for "New Topics"?
+>
+> [1]: http://article.gmane.org/gmane.comp.version-control.git/239575/
 
-Yep.  api-strbuf.txt even says so.  Sorry for the nonsense.
+Actually I was planning to scoop it up directly to master but forgot
+to do so.
 
-For what it's worth,
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
-
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/groups/opt_out.
+Running "git diff maint pu -- name-hash.c" shows that we have added
+a comment that mentions index_name_exists---that needs to be
+adjusted, too, by the way.
