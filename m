@@ -1,60 +1,65 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] Remove the line length limit for graft files
-Date: Fri, 27 Dec 2013 21:49:57 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1312272146590.1191@s15462909.onlinehome-server.info>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] Remove the line length limit for graft files
+Date: Fri, 27 Dec 2013 13:04:47 -0800
+Message-ID: <20131227210447.GE20443@google.com>
+References: <alpine.DEB.1.00.1312272146590.1191@s15462909.onlinehome-server.info>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Cc: msysgit@googlegroups.com, gitster@pobox.com
-To: git@vger.kernel.org
-X-From: msysgit+bncBCZPH74Q5YNRB56P66KQKGQESTAP36I@googlegroups.com Fri Dec 27 21:50:01 2013
-Return-path: <msysgit+bncBCZPH74Q5YNRB56P66KQKGQESTAP36I@googlegroups.com>
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org, msysgit@googlegroups.com, gitster@pobox.com
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: msysgit+bncBD6LRKOE4AIRB46W66KQKGQEMKEZ6XY@googlegroups.com Fri Dec 27 22:04:54 2013
+Return-path: <msysgit+bncBD6LRKOE4AIRB46W66KQKGQEMKEZ6XY@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-ve0-f184.google.com ([209.85.128.184])
+Received: from mail-qa0-f55.google.com ([209.85.216.55])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCZPH74Q5YNRB56P66KQKGQESTAP36I@googlegroups.com>)
-	id 1VweM4-0004iL-OO
-	for gcvm-msysgit@m.gmane.org; Fri, 27 Dec 2013 21:50:01 +0100
-Received: by mail-ve0-f184.google.com with SMTP id jz11sf2084308veb.11
-        for <gcvm-msysgit@m.gmane.org>; Fri, 27 Dec 2013 12:49:59 -0800 (PST)
+	(envelope-from <msysgit+bncBD6LRKOE4AIRB46W66KQKGQEMKEZ6XY@googlegroups.com>)
+	id 1VweaS-00021s-I7
+	for gcvm-msysgit@m.gmane.org; Fri, 27 Dec 2013 22:04:52 +0100
+Received: by mail-qa0-f55.google.com with SMTP id i13sf2279790qae.0
+        for <gcvm-msysgit@m.gmane.org>; Fri, 27 Dec 2013 13:04:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
-        h=date:from:to:cc:subject:message-id:user-agent:mime-version
-         :x-original-sender:x-original-authentication-results:precedence
-         :mailing-list:list-id:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe:content-type;
-        bh=k7emxdaMS7jzziovDW0aRGcc/TqrpWQ2kxI20lAKAMo=;
-        b=PfvZaSQWUK1rFE2b65Y+9I9MM22CflCNq5TiZehzIO4zKw/YTYoZa2exJ6/VzB80EC
-         2GPsHvqStdfEnRe5zTUwI+WGD0R2jZos+3CxNhulWgMxS7PSAyC7hqpu4J16Bm5Py1bF
-         YBKRh4pfssn/jcsYiRE9NoqLh0xnvenA3Xj81htmzfQ6G7yh4/XuJgdhwyBBlnKI4VGR
-         1ys0u3ZRCK8RfjSPmW2l9SJuMWdzYlqfXp1Tinjk6VfsGMNVowoaF/RQEQtolELv1I9S
-         EGkgFmzHFJ9DtxEtpLES9CIdOsEBo17byUxj4bwItGutFnCRXqrai/5g5vZul+TOxvVS
-         qRng==
-X-Received: by 10.182.118.170 with SMTP id kn10mr63157obb.20.1388177399817;
-        Fri, 27 Dec 2013 12:49:59 -0800 (PST)
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :in-reply-to:user-agent:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type:content-disposition;
+        bh=orArKHpVrTduGwGE6CAR8+8p3STl+0U4t/44y/VbUlM=;
+        b=yTJ9lUQOcB/4WdXR2IFWqZL8a5Cd+7tkgyNB5R65VraOEq1Z98UE0dEU/HQs0sGRSz
+         gnxiDuChRQ/1wkK1xx2NBj/aZohggK1T6TR308hPNfYyxZoIZK87bbQMZ8RyyOhbc03U
+         yI501KuvmlE1Iu7couy0ACGOdAnKaN38aI/b5oCFTdNI5Osd0Iw5/m6NYlD7ysx3MmyF
+         Q5XtE+FrFblXCRvzGHiQ0Mgm9u1pU9G4sKPC7gzgh6eKZF+520VR92+9fX8vwtMf7bq1
+         RiTjk7oZ19nmlQ3gFXvnbSq5HUOrXC9lidInXKPY1JKBmGPr0/9g2JgD6OPGegyHNCXP
+         uHoQ==
+X-Received: by 10.50.37.133 with SMTP id y5mr431397igj.11.1388178291782;
+        Fri, 27 Dec 2013 13:04:51 -0800 (PST)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.182.205.163 with SMTP id lh3ls1169813obc.84.gmail; Fri, 27 Dec
- 2013 12:49:59 -0800 (PST)
-X-Received: by 10.182.153.68 with SMTP id ve4mr20722615obb.39.1388177399449;
-        Fri, 27 Dec 2013 12:49:59 -0800 (PST)
-Received: from mout.gmx.net (mout.gmx.net. [212.227.17.20])
-        by gmr-mx.google.com with ESMTPS id m7si1999852vdj.2.2013.12.27.12.49.59
+Received: by 10.50.20.2 with SMTP id j2ls6819864ige.21.canary; Fri, 27 Dec
+ 2013 13:04:51 -0800 (PST)
+X-Received: by 10.66.66.35 with SMTP id c3mr20027142pat.12.1388178290988;
+        Fri, 27 Dec 2013 13:04:50 -0800 (PST)
+Received: from mail-yh0-x22c.google.com (mail-yh0-x22c.google.com [2607:f8b0:4002:c01::22c])
+        by gmr-mx.google.com with ESMTPS id k45si11209471yhn.4.2013.12.27.13.04.50
         for <msysgit@googlegroups.com>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 27 Dec 2013 12:49:59 -0800 (PST)
-Received-SPF: pass (google.com: domain of Johannes.Schindelin@gmx.de designates 212.227.17.20 as permitted sender) client-ip=212.227.17.20;
-Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
- mail.gmx.com (mrgmx103) with ESMTPSA (Nemesis) id 0MDR21-1VfrUh0K3p-00GnVu
- for <msysgit@googlegroups.com>; Fri, 27 Dec 2013 21:49:58 +0100
-X-X-Sender: schindelin@s15462909.onlinehome-server.info
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Provags-ID: V03:K0:imESBztBzLYVxVeaOOm45bQy6ilQMMI8suut0bmGyjBEh4YheVX
- NHkIONpcR0wX6DG25k6Suu5mps7eI+gByPJVE9aN+oZ76qxlsYlEN1rEVW5vzI2zDr9uVb5
- +ufrKRhFZHB+IRwCC1bArv6vrssmTnbfZR71+RC2Lj5DVSLc9jZTLAIK+HH8pzrbzvIosKm
- zzN9epZNnuEfb1CIjm5Kg==
-X-Original-Sender: johannes.schindelin@gmx.de
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Fri, 27 Dec 2013 13:04:50 -0800 (PST)
+Received-SPF: pass (google.com: domain of jrnieder@gmail.com designates 2607:f8b0:4002:c01::22c as permitted sender) client-ip=2607:f8b0:4002:c01::22c;
+Received: by mail-yh0-f44.google.com with SMTP id f64so2031158yha.17
+        for <msysgit@googlegroups.com>; Fri, 27 Dec 2013 13:04:50 -0800 (PST)
+X-Received: by 10.236.47.162 with SMTP id t22mr6955323yhb.123.1388178290753;
+        Fri, 27 Dec 2013 13:04:50 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id m29sm48193760yho.14.2013.12.27.13.04.49
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 27 Dec 2013 13:04:49 -0800 (PST)
+In-Reply-To: <alpine.DEB.1.00.1312272146590.1191@s15462909.onlinehome-server.info>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Original-Sender: jrnieder@gmail.com
 X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of Johannes.Schindelin@gmx.de designates 212.227.17.20 as
- permitted sender) smtp.mail=Johannes.Schindelin@gmx.de
+ (google.com: domain of jrnieder@gmail.com designates 2607:f8b0:4002:c01::22c
+ as permitted sender) smtp.mail=jrnieder@gmail.com;       dkim=pass
+ header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
 Precedence: list
 Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
 List-ID: <msysgit.googlegroups.com>
@@ -65,94 +70,61 @@ List-Archive: <http://groups.google.com/group/msysgit>
 Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239745>
+Content-Disposition: inline
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239746>
 
+Hi,
 
-Support for grafts predates Git's strbuf, and hence it is understandable
-that there was a hard-coded line length limit of 1023 characters (which
-was chosen a bit awkwardly, given that it is *exactly* one byte short of
-aligning with the 41 bytes occupied by a commit name and the following
-space or new-line character).
+Johannes Schindelin wrote:
 
-While regular commit histories hardly win comprehensibility in general
-if they merge more than twenty-two branches in one go, it is not Git's
-business to limit grafts in such a way.
+> While regular commit histories hardly win comprehensibility in general
+> if they merge more than twenty-two branches in one go, it is not Git's
+> business to limit grafts in such a way.
 
-In this particular developer's case, the use case that requires
-substantially longer graft lines to be supported is the visualization of
-the commits' order implied by their changes: commits are considered to
-have an implicit relationship iff exchanging them in an interactive
-rebase would result in merge conflicts.
+Fun. :)  Makes sense.
 
-Thusly implied branches tend to be very shallow in general, and the
-resulting thicket of implied branches is usually very wide; It is
-actually quite common that *most* of the commits in a topic branch have
-not even one implied parent, so that a final merge commit has about as
-many implied parents as there are commits in said branch.
+[...]
+> ---
+>  builtin/blame.c |  8 ++++----
+>  commit.c        | 10 +++++-----
+>  2 files changed, 9 insertions(+), 9 deletions(-)
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- builtin/blame.c |  8 ++++----
- commit.c        | 10 +++++-----
- 2 files changed, 9 insertions(+), 9 deletions(-)
+Is this easy to reproduce so some interested but lazy person could
+write a test?
 
-diff --git a/builtin/blame.c b/builtin/blame.c
-index 1407ae7..9047b6e 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -1804,17 +1804,17 @@ static int prepare_lines(struct scoreboard *sb)
- static int read_ancestry(const char *graft_file)
- {
- 	FILE *fp = fopen(graft_file, "r");
--	char buf[1024];
-+	struct strbuf buf = STRBUF_INIT;
- 	if (!fp)
- 		return -1;
--	while (fgets(buf, sizeof(buf), fp)) {
-+	while (!strbuf_getwholeline(&buf, fp, '\n')) {
- 		/* The format is just "Commit Parent1 Parent2 ...\n" */
--		int len = strlen(buf);
--		struct commit_graft *graft = read_graft_line(buf, len);
-+		struct commit_graft *graft = read_graft_line(buf.buf, buf.len);
- 		if (graft)
- 			register_commit_graft(graft, 0);
- 	}
- 	fclose(fp);
-+	strbuf_release(&buf);
- 	return 0;
- }
- 
-diff --git a/commit.c b/commit.c
-index de16a3c..57ebea2 100644
---- a/commit.c
-+++ b/commit.c
-@@ -196,19 +196,19 @@ bad_graft_data:
- static int read_graft_file(const char *graft_file)
- {
- 	FILE *fp = fopen(graft_file, "r");
--	char buf[1024];
-+	struct strbuf buf = STRBUF_INIT;
- 	if (!fp)
- 		return -1;
--	while (fgets(buf, sizeof(buf), fp)) {
-+	while (!strbuf_getwholeline(&buf, fp, '\n')) {
- 		/* The format is just "Commit Parent1 Parent2 ...\n" */
--		int len = strlen(buf);
--		struct commit_graft *graft = read_graft_line(buf, len);
-+		struct commit_graft *graft = read_graft_line(buf.buf, buf.len);
- 		if (!graft)
- 			continue;
- 		if (register_commit_graft(graft, 1))
--			error("duplicate graft data: %s", buf);
-+			error("duplicate graft data: %s", buf.buf);
- 	}
- 	fclose(fp);
-+	strbuf_release(&buf);
- 	return 0;
- }
- 
--- 
-1.8.4.msysgit.0.1109.g3c58b16
+[...]
+> --- a/builtin/blame.c
+> +++ b/builtin/blame.c
+> @@ -1804,17 +1804,17 @@ static int prepare_lines(struct scoreboard *sb)
+>  static int read_ancestry(const char *graft_file)
+>  {
+>  	FILE *fp = fopen(graft_file, "r");
+> -	char buf[1024];
+> +	struct strbuf buf = STRBUF_INIT;
+>  	if (!fp)
+>  		return -1;
+> -	while (fgets(buf, sizeof(buf), fp)) {
+> +	while (!strbuf_getwholeline(&buf, fp, '\n')) {
+
+If there is no newline at EOF, this will skip the last line, while the
+old behavior was to pay attention to it.  I haven't thought through
+whether that's a good or bad change.  Maybe it should just be
+documented?
+
+[...]
+> --- a/commit.c
+> +++ b/commit.c
+> @@ -196,19 +196,19 @@ static int read_graft_file(const char *graft_file)
+[...]
+> -	while (fgets(buf, sizeof(buf), fp)) {
+> +	while (!strbuf_getwholeline(&buf, fp, '\n')) {
+
+Likewise.
+
+The rest of the patch looks good.
+
+Merry christmas,
+Jonathan
 
 -- 
 -- 
