@@ -1,55 +1,69 @@
-From: Sergey Sharybin <sergey.vfx@gmail.com>
-Subject: git:// protocol over SSL/TLS
-Date: Fri, 27 Dec 2013 18:59:00 +0600
-Message-ID: <CAErtv27qUMo9LsGAZtk5Zv9qnZRB_YAXhtskvrrNbWGqadQh7Q@mail.gmail.com>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: git:// protocol over SSL/TLS
+Date: Fri, 27 Dec 2013 14:29:51 +0100
+Message-ID: <87r48y4e28.fsf@igel.home>
+References: <CAErtv27qUMo9LsGAZtk5Zv9qnZRB_YAXhtskvrrNbWGqadQh7Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Dec 27 13:59:12 2013
+Content-Type: text/plain
+Cc: Git List <git@vger.kernel.org>
+To: Sergey Sharybin <sergey.vfx@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 27 14:30:34 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VwX0R-0005tP-QK
-	for gcvg-git-2@plane.gmane.org; Fri, 27 Dec 2013 13:59:12 +0100
+	id 1VwXUn-0000ar-Hy
+	for gcvg-git-2@plane.gmane.org; Fri, 27 Dec 2013 14:30:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754510Ab3L0M7D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Dec 2013 07:59:03 -0500
-Received: from mail-ve0-f173.google.com ([209.85.128.173]:41975 "EHLO
-	mail-ve0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752850Ab3L0M7B (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Dec 2013 07:59:01 -0500
-Received: by mail-ve0-f173.google.com with SMTP id oz11so4935812veb.32
-        for <git@vger.kernel.org>; Fri, 27 Dec 2013 04:59:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=OdHyzmVJ5yr/mdgyIz8+p5Khl18QzPJ5PQAFqNvL2/o=;
-        b=EFNa2lgGr9lBNMweP1U12cXiYAwQLivorFe+C1s59v2XkQ5YRjBdXEABn59fsxIRlE
-         AVbPxq9z7qMYNVjBxt19nLHgM8tlmBPY8y5vYC1lKGQH2Xz5p8ZL4wJWFJ9vRB0VZCaX
-         gJzRnpF2YB8nfq5fqbaepKONyMgQyFB6NOvSEFJI4oK93fYHBkTTq1hLUrd7nQcQU/uG
-         ixkHw6zeF859uLP/UiF1QGx+2twof8CJegHn49SfiB20zogHeTuCfE3V++pOQdtbWwGo
-         b3UiwI9buDe+t1a2hF3YFBERrxDH/viYDW+aJ5qzG4JBhWR9EvwoCUSZmAksKID02lpt
-         PV/g==
-X-Received: by 10.58.39.66 with SMTP id n2mr1016758vek.81.1388149140636; Fri,
- 27 Dec 2013 04:59:00 -0800 (PST)
-Received: by 10.52.169.2 with HTTP; Fri, 27 Dec 2013 04:59:00 -0800 (PST)
+	id S1753241Ab3L0N36 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Dec 2013 08:29:58 -0500
+Received: from mail-out.m-online.net ([212.18.0.9]:41785 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753065Ab3L0N36 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Dec 2013 08:29:58 -0500
+Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id 3drTRP6ys2z4KK4G;
+	Fri, 27 Dec 2013 14:29:53 +0100 (CET)
+Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
+	by mail.m-online.net (Postfix) with ESMTP id 3drTRP6rWrzbblG;
+	Fri, 27 Dec 2013 14:29:53 +0100 (CET)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.180])
+	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
+	with ESMTP id F3IDs3orhX39; Fri, 27 Dec 2013 14:29:51 +0100 (CET)
+X-Auth-Info: 2TvmryKvhgD2/4J29xFaRhCp8Tm4Vmzx0DSri++PoC4=
+Received: from igel.home (ppp-46-244-233-18.dynamic.mnet-online.de [46.244.233.18])
+	by mail.mnet-online.de (Postfix) with ESMTPA;
+	Fri, 27 Dec 2013 14:29:51 +0100 (CET)
+Received: by igel.home (Postfix, from userid 1000)
+	id 3922D2C1C8F; Fri, 27 Dec 2013 14:29:51 +0100 (CET)
+X-Yow: Is this an out-take from the ``BRADY BUNCH''?
+In-Reply-To: <CAErtv27qUMo9LsGAZtk5Zv9qnZRB_YAXhtskvrrNbWGqadQh7Q@mail.gmail.com>
+	(Sergey Sharybin's message of "Fri, 27 Dec 2013 18:59:00 +0600")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239723>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239724>
 
-Hello everyone!
+Sergey Sharybin <sergey.vfx@gmail.com> writes:
 
-Quick question is, is it possible to use git:// protocol over
-SSL/TLS/other secure transport?
+> Quick question is, is it possible to use git:// protocol over
+> SSL/TLS/other secure transport?
 
-Or the recommended way to do secure anonymous checkout is to simply
-use https:// ?
+The git protocol itself performs no encryption or authentication by
+design.  This is the job of the transport protocol.
 
-Thanks in advance!
+> Or the recommended way to do secure anonymous checkout is to simply
+> use https:// ?
+
+Yes.
+
+Andreas.
 
 -- 
-With best regards, Sergey Sharybin
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
