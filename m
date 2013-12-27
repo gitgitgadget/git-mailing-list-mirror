@@ -1,65 +1,63 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: [PATCH] Remove the line length limit for graft files
-Date: Fri, 27 Dec 2013 13:04:47 -0800
-Message-ID: <20131227210447.GE20443@google.com>
-References: <alpine.DEB.1.00.1312272146590.1191@s15462909.onlinehome-server.info>
+Date: Fri, 27 Dec 2013 22:14:22 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1312272208070.1191@s15462909.onlinehome-server.info>
+References: <alpine.DEB.1.00.1312272146590.1191@s15462909.onlinehome-server.info> <20131227210447.GE20443@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
 Cc: git@vger.kernel.org, msysgit@googlegroups.com, gitster@pobox.com
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: msysgit+bncBD6LRKOE4AIRB46W66KQKGQEMKEZ6XY@googlegroups.com Fri Dec 27 22:04:54 2013
-Return-path: <msysgit+bncBD6LRKOE4AIRB46W66KQKGQEMKEZ6XY@googlegroups.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: msysgit+bncBCZPH74Q5YNRBL6366KQKGQEYPPOGEA@googlegroups.com Fri Dec 27 22:14:26 2013
+Return-path: <msysgit+bncBCZPH74Q5YNRBL6366KQKGQEYPPOGEA@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-qa0-f55.google.com ([209.85.216.55])
+Received: from mail-ea0-f185.google.com ([209.85.215.185])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBD6LRKOE4AIRB46W66KQKGQEMKEZ6XY@googlegroups.com>)
-	id 1VweaS-00021s-I7
-	for gcvm-msysgit@m.gmane.org; Fri, 27 Dec 2013 22:04:52 +0100
-Received: by mail-qa0-f55.google.com with SMTP id i13sf2279790qae.0
-        for <gcvm-msysgit@m.gmane.org>; Fri, 27 Dec 2013 13:04:51 -0800 (PST)
+	(envelope-from <msysgit+bncBCZPH74Q5YNRBL6366KQKGQEYPPOGEA@googlegroups.com>)
+	id 1Vwejg-0005gz-Q8
+	for gcvm-msysgit@m.gmane.org; Fri, 27 Dec 2013 22:14:24 +0100
+Received: by mail-ea0-f185.google.com with SMTP id r15sf742490ead.22
+        for <gcvm-msysgit@m.gmane.org>; Fri, 27 Dec 2013 13:14:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :in-reply-to:user-agent:x-original-sender
+        h=date:from:to:cc:subject:in-reply-to:message-id:references
+         :user-agent:mime-version:x-original-sender
          :x-original-authentication-results:precedence:mailing-list:list-id
          :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type:content-disposition;
-        bh=orArKHpVrTduGwGE6CAR8+8p3STl+0U4t/44y/VbUlM=;
-        b=yTJ9lUQOcB/4WdXR2IFWqZL8a5Cd+7tkgyNB5R65VraOEq1Z98UE0dEU/HQs0sGRSz
-         gnxiDuChRQ/1wkK1xx2NBj/aZohggK1T6TR308hPNfYyxZoIZK87bbQMZ8RyyOhbc03U
-         yI501KuvmlE1Iu7couy0ACGOdAnKaN38aI/b5oCFTdNI5Osd0Iw5/m6NYlD7ysx3MmyF
-         Q5XtE+FrFblXCRvzGHiQ0Mgm9u1pU9G4sKPC7gzgh6eKZF+520VR92+9fX8vwtMf7bq1
-         RiTjk7oZ19nmlQ3gFXvnbSq5HUOrXC9lidInXKPY1JKBmGPr0/9g2JgD6OPGegyHNCXP
-         uHoQ==
-X-Received: by 10.50.37.133 with SMTP id y5mr431397igj.11.1388178291782;
-        Fri, 27 Dec 2013 13:04:51 -0800 (PST)
+         :list-unsubscribe:content-type;
+        bh=mjtLuaBSyu8/fL7usEitHaPrpnSNCNL/EqIp5GyMRQg=;
+        b=qnaWHL+05F7d9kClHMGcW8xXYLQcBXIavtfB/Da3towvJOx4npaaJvNXjoULBptor5
+         6a/6xJVsAAdo9iy7O1aWcmOnbrt802DmLJkzcZACPOZ3EgJ7jeauerv7dWqJuYU7UQqh
+         D/sQQ5lf+NVO7qZqwBvxW2HV/cnX+sGTSc9Nx+81Kn9i9sLo0nHKOhyi0Iag8e+bcCWc
+         k97/iRwaDjJH8LHIusLh9jzMCT+wHv7qqUKSWZKTLXtLdv2O4nQG/yEJ0oXCFZmcEM8H
+         cLQKeCqf/xHbzSqiqNpXZzhI/i/6m/91pHACxI2gzbhHM4Nb/wtUxuTdsZJPp/QFe4sr
+         amxw==
+X-Received: by 10.180.89.227 with SMTP id br3mr244621wib.15.1388178864462;
+        Fri, 27 Dec 2013 13:14:24 -0800 (PST)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.50.20.2 with SMTP id j2ls6819864ige.21.canary; Fri, 27 Dec
- 2013 13:04:51 -0800 (PST)
-X-Received: by 10.66.66.35 with SMTP id c3mr20027142pat.12.1388178290988;
-        Fri, 27 Dec 2013 13:04:50 -0800 (PST)
-Received: from mail-yh0-x22c.google.com (mail-yh0-x22c.google.com [2607:f8b0:4002:c01::22c])
-        by gmr-mx.google.com with ESMTPS id k45si11209471yhn.4.2013.12.27.13.04.50
+Received: by 10.180.109.33 with SMTP id hp1ls1241339wib.50.gmail; Fri, 27 Dec
+ 2013 13:14:23 -0800 (PST)
+X-Received: by 10.15.51.132 with SMTP id n4mr18983678eew.3.1388178863437;
+        Fri, 27 Dec 2013 13:14:23 -0800 (PST)
+Received: from mout.gmx.net (mout.gmx.net. [212.227.17.21])
+        by gmr-mx.google.com with ESMTPS id b3si1458388eez.0.2013.12.27.13.14.23
         for <msysgit@googlegroups.com>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 27 Dec 2013 13:04:50 -0800 (PST)
-Received-SPF: pass (google.com: domain of jrnieder@gmail.com designates 2607:f8b0:4002:c01::22c as permitted sender) client-ip=2607:f8b0:4002:c01::22c;
-Received: by mail-yh0-f44.google.com with SMTP id f64so2031158yha.17
-        for <msysgit@googlegroups.com>; Fri, 27 Dec 2013 13:04:50 -0800 (PST)
-X-Received: by 10.236.47.162 with SMTP id t22mr6955323yhb.123.1388178290753;
-        Fri, 27 Dec 2013 13:04:50 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id m29sm48193760yho.14.2013.12.27.13.04.49
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 27 Dec 2013 13:04:49 -0800 (PST)
-In-Reply-To: <alpine.DEB.1.00.1312272146590.1191@s15462909.onlinehome-server.info>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Original-Sender: jrnieder@gmail.com
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 27 Dec 2013 13:14:23 -0800 (PST)
+Received-SPF: pass (google.com: domain of Johannes.Schindelin@gmx.de designates 212.227.17.21 as permitted sender) client-ip=212.227.17.21;
+Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
+ mail.gmx.com (mrgmx001) with ESMTPSA (Nemesis) id 0MPUZ7-1VrzuJ3yLZ-004g1v
+ for <msysgit@googlegroups.com>; Fri, 27 Dec 2013 22:14:23 +0100
+X-X-Sender: schindelin@s15462909.onlinehome-server.info
+In-Reply-To: <20131227210447.GE20443@google.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Provags-ID: V03:K0:K7w+uEROgzdX7BaxOQUD8FTD9z6/CmYLY7CWsWfrH2t3OFiUvXI
+ GJ6jNRifQIWwSAUMAsTQY6AyUACDiU20mccScimwgxyD9xfaOZdp+2mDmKxo0yY9rsPg8A1
+ r7Dt1YipUaJEOJ4qfmFRSKnr/5B6dYdPtKWxgBbg6yTddPLHk8qrDQRn1b0DhVeS9Pxa3ra
+ Y++QG6KMjVGQEXxBQ4D/g==
+X-Original-Sender: johannes.schindelin@gmx.de
 X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of jrnieder@gmail.com designates 2607:f8b0:4002:c01::22c
- as permitted sender) smtp.mail=jrnieder@gmail.com;       dkim=pass
- header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
+ (google.com: domain of Johannes.Schindelin@gmx.de designates 212.227.17.21 as
+ permitted sender) smtp.mail=Johannes.Schindelin@gmx.de
 Precedence: list
 Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
 List-ID: <msysgit.googlegroups.com>
@@ -70,61 +68,82 @@ List-Archive: <http://groups.google.com/group/msysgit>
 Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Content-Disposition: inline
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239746>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239747>
 
 Hi,
 
-Johannes Schindelin wrote:
+On Fri, 27 Dec 2013, Jonathan Nieder wrote:
 
-> While regular commit histories hardly win comprehensibility in general
-> if they merge more than twenty-two branches in one go, it is not Git's
-> business to limit grafts in such a way.
+> Johannes Schindelin wrote:
+> 
+> [...]
+> > ---
+> >  builtin/blame.c |  8 ++++----
+> >  commit.c        | 10 +++++-----
+> >  2 files changed, 9 insertions(+), 9 deletions(-)
+> 
+> Is this easy to reproduce so some interested but lazy person could
+> write a test?
 
-Fun. :)  Makes sense.
+Yep. Make 25 orphan commits, add a graft line to make the first a merge of
+the rest.
 
-[...]
-> ---
->  builtin/blame.c |  8 ++++----
->  commit.c        | 10 +++++-----
->  2 files changed, 9 insertions(+), 9 deletions(-)
+> > --- a/builtin/blame.c
+> > +++ b/builtin/blame.c
+> > @@ -1804,17 +1804,17 @@ static int prepare_lines(struct scoreboard *sb)
+> >  static int read_ancestry(const char *graft_file)
+> >  {
+> >  	FILE *fp = fopen(graft_file, "r");
+> > -	char buf[1024];
+> > +	struct strbuf buf = STRBUF_INIT;
+> >  	if (!fp)
+> >  		return -1;
+> > -	while (fgets(buf, sizeof(buf), fp)) {
+> > +	while (!strbuf_getwholeline(&buf, fp, '\n')) {
+> 
+> If there is no newline at EOF, this will skip the last line, while the
+> old behavior was to pay attention to it.  I haven't thought through
+> whether that's a good or bad change.  Maybe it should just be
+> documented?
 
-Is this easy to reproduce so some interested but lazy person could
-write a test?
+The way I read
 
-[...]
-> --- a/builtin/blame.c
-> +++ b/builtin/blame.c
-> @@ -1804,17 +1804,17 @@ static int prepare_lines(struct scoreboard *sb)
->  static int read_ancestry(const char *graft_file)
->  {
->  	FILE *fp = fopen(graft_file, "r");
-> -	char buf[1024];
-> +	struct strbuf buf = STRBUF_INIT;
->  	if (!fp)
->  		return -1;
-> -	while (fgets(buf, sizeof(buf), fp)) {
-> +	while (!strbuf_getwholeline(&buf, fp, '\n')) {
+	int strbuf_getwholeline(struct strbuf *sb, FILE *fp, int term)
+	{
+		int ch;
 
-If there is no newline at EOF, this will skip the last line, while the
-old behavior was to pay attention to it.  I haven't thought through
-whether that's a good or bad change.  Maybe it should just be
-documented?
+		if (feof(fp))
+			return EOF;
 
-[...]
-> --- a/commit.c
-> +++ b/commit.c
-> @@ -196,19 +196,19 @@ static int read_graft_file(const char *graft_file)
-[...]
-> -	while (fgets(buf, sizeof(buf), fp)) {
-> +	while (!strbuf_getwholeline(&buf, fp, '\n')) {
+		strbuf_reset(sb);
+		while ((ch = fgetc(fp)) != EOF) {
+			strbuf_grow(sb, 1);
+			sb->buf[sb->len++] = ch;
+			if (ch == term)
+				break;
+		}
+		if (ch == EOF && sb->len == 0)
+			return EOF;
 
-Likewise.
+		sb->buf[sb->len] = '\0';
+		return 0;
+	}
 
-The rest of the patch looks good.
+it returns EOF only if ch == EOF *and* sb->len == 0, i.e. if no characters
+have been read before hitting EOF.
 
-Merry christmas,
-Jonathan
+In other words, strbuf_getwholeline() -- despite requiring an explicit
+terminating character argument -- does not require the last line to end
+with that terminating character.
+
+A quick test (in my case, because I am lazy, modifying test-mergesort.c to
+output the lines that were read by strbuf_getwholeline()) also confirms my
+suspicion.
+
+Or maybe I missed something?
+
+Ciao,
+Dscho
 
 -- 
 -- 
