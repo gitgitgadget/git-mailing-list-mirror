@@ -1,79 +1,97 @@
 From: Roman Kagan <rkagan@mail.ru>
-Subject: Re: [PATCH] git-svn: workaround for a bug in svn serf backend
-Date: Fri, 27 Dec 2013 11:52:50 +0400
-Message-ID: <CANiYKX4qGn0ZCVWTwWdrMfV_95mCePdd=q_BLJ6KH=MYOmqWbw@mail.gmail.com>
-References: <87ha9wdh8g.fsf@linux-1gf2.Speedport_W723_V_Typ_A_1_00_098>
-	<1388059524-4864-1-git-send-email-rkagan@mail.ru>
-	<20131226202805.GV20443@google.com>
-	<CANiYKX6VA2KvJ_YWYOegb6+VFg_unL96P9qUBthYPFuo9fhAMA@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, Thomas Rast <tr@thomasrast.ch>,
+Subject: [PATCH v2] git-svn: workaround for a bug in svn serf backend
+Date: Fri, 27 Dec 2013 12:05:15 +0400
+Message-ID: <1388131515-3015-1-git-send-email-rkagan@mail.ru>
+References: <20131226202805.GV20443@google.com>
+Cc: Roman Kagan <rkagan@mail.ru>,
 	Benjamin Pabst <benjamin.pabst85@gmail.com>,
-	Eric Wong <normalperson@yhbt.net>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 27 08:53:18 2013
+	Eric Wong <normalperson@yhbt.net>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 27 09:06:08 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VwSEN-0003zv-Vs
-	for gcvg-git-2@plane.gmane.org; Fri, 27 Dec 2013 08:53:16 +0100
+	id 1VwSQp-0001Lm-K6
+	for gcvg-git-2@plane.gmane.org; Fri, 27 Dec 2013 09:06:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753915Ab3L0Hwv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Dec 2013 02:52:51 -0500
-Received: from mail-qe0-f48.google.com ([209.85.128.48]:57621 "EHLO
-	mail-qe0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753862Ab3L0Hwv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Dec 2013 02:52:51 -0500
-Received: by mail-qe0-f48.google.com with SMTP id gc15so8686724qeb.21
-        for <git@vger.kernel.org>; Thu, 26 Dec 2013 23:52:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=l6KWmbA/bIrDOKWZGxFH1dZWUJ1nCOgB+YXnfIbKAB8=;
-        b=KU/hBvEbKjfq+6DE3FkBRScvH9xQG2Yv3ILuhSHi+xD3vzUxRt14/Gy39hwSq/F+BU
-         raTTbZJefr31mAOSFQ0yFfwUirfGU0GZ4THxRV2Lqpt4YLdC2xjzMfSSUmLk2HdajdRV
-         hEE51ioyjzo1xeWucYWs0f6aE57wFyj2NcGrPl8mU3VKV1ngGMJ61oth+3lUgKLZWBmI
-         rn3aFaIEaV7fT/Wo6vNhInuoS9Jh37+tkBK042eUyEs/vm0aQW2uHTQP5ZEqGOUxsm2q
-         yd25ygxG9l0e78+WcJewIl25tTRb07B4xMLwoSK5NlC+y/nbnwsyogc+RwFUMTgECZ57
-         z4qQ==
-X-Received: by 10.224.67.137 with SMTP id r9mr78701843qai.8.1388130770436;
- Thu, 26 Dec 2013 23:52:50 -0800 (PST)
-Received: by 10.224.98.146 with HTTP; Thu, 26 Dec 2013 23:52:50 -0800 (PST)
-In-Reply-To: <CANiYKX6VA2KvJ_YWYOegb6+VFg_unL96P9qUBthYPFuo9fhAMA@mail.gmail.com>
-X-Google-Sender-Auth: 7qKOPzHUanEm6FbRlVblJFUpYJw
+	id S1753921Ab3L0IFr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Dec 2013 03:05:47 -0500
+Received: from mailhub.sw.ru ([195.214.232.25]:42268 "EHLO relay.sw.ru"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753862Ab3L0IFr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Dec 2013 03:05:47 -0500
+Received: from rkaganb.sw.ru ([10.30.3.95])
+	by relay.sw.ru (8.13.4/8.13.4) with ESMTP id rBR85Wgw015805;
+	Fri, 27 Dec 2013 12:05:37 +0400 (MSK)
+X-Mailer: git-send-email 1.8.4.2
+In-Reply-To: <20131226202805.GV20443@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239721>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239722>
 
-2013/12/27 Roman Kagan <rkagan@mail.ru>:
-> 2013/12/27 Jonathan Nieder <jrnieder@gmail.com>:
->> Could this be reproduced with a test script to make sure we don't
->> reintroduce the bug again later?  (It's okay if the test only fails on
->> machines with the problematic svn version.)
->
-> That would need a fairly fancy setup phase, as the bug triggers only
-> on http(s)-accessed svn repositories.  I'll take a look if there's
-> something already available in the existing test scripts
+Subversion serf backend in versions 1.8.5 and below has a bug that the
+function creating the descriptor of a file change -- add_file() --
+doesn't make a copy of its third argument when storing it on the
+returned descriptor.  As a result, by the time this field is used (in
+transactions of file copying or renaming) it may well be released, and
+the memory reused.
 
-Turns out the stuff is all there, and the tests doing file renames and
-dcomit-ting them do exist (t9115-git-svn-dcommit-funky-renames.sh for
-one).
+One of its possible manifestations is the svn assertion triggering on an
+invalid path, with a message
 
-However, the httpd setup is seriously broken; I haven't managed to get
-it to run on my Fedora 20 with apache 2.4.6.  Apparently git-svn tests
-(almost) never get executed against an http-based repository; even
-those who don't set NO_SVN_TESTS get them run against file-based
-repository and thus don't trigger the error.
+svn_fspath__skip_ancestor: Assertion
+`svn_fspath__is_canonical(child_fspath)' failed.
 
-Someone with better apache-foo needs to take a look into that.  Once
-that is sorted out I believe the tests will start triggering the bug.
+This patch works around this bug, by storing the value to be passed as
+the third argument to add_file() in a local variable with the same scope
+as the file change descriptor, making sure their lifetime is the same.
 
-Meanwhile I assume that the patch doesn't need to include an extra testcase.
+Cc: Benjamin Pabst <benjamin.pabst85@gmail.com>
+Cc: Eric Wong <normalperson@yhbt.net>
+Cc: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: Roman Kagan <rkagan@mail.ru>
+---
+changes since v1:
+  - fix grammar in the patch and the log message
+  - refer to the triggered error message
 
-Roman.
+ perl/Git/SVN/Editor.pm | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
+
+diff --git a/perl/Git/SVN/Editor.pm b/perl/Git/SVN/Editor.pm
+index b3bcd47..34e8af9 100644
+--- a/perl/Git/SVN/Editor.pm
++++ b/perl/Git/SVN/Editor.pm
+@@ -304,8 +304,12 @@ sub C {
+ 	my ($self, $m, $deletions) = @_;
+ 	my ($dir, $file) = split_path($m->{file_b});
+ 	my $pbat = $self->ensure_path($dir, $deletions);
++	# workaround for a bug in svn serf backend (v1.8.5 and below):
++	# store third argument to ->add_file() in a local variable, to make it
++	# have the same lifetime as $fbat
++	my $upa = $self->url_path($m->{file_a});
+ 	my $fbat = $self->add_file($self->repo_path($m->{file_b}), $pbat,
+-				$self->url_path($m->{file_a}), $self->{r});
++				$upa, $self->{r});
+ 	print "\tC\t$m->{file_a} => $m->{file_b}\n" unless $::_q;
+ 	$self->chg_file($fbat, $m);
+ 	$self->close_file($fbat,undef,$self->{pool});
+@@ -323,8 +327,10 @@ sub R {
+ 	my ($self, $m, $deletions) = @_;
+ 	my ($dir, $file) = split_path($m->{file_b});
+ 	my $pbat = $self->ensure_path($dir, $deletions);
++	# workaround for a bug in svn serf backend, see comment in C() above
++	my $upa = $self->url_path($m->{file_a});
+ 	my $fbat = $self->add_file($self->repo_path($m->{file_b}), $pbat,
+-				$self->url_path($m->{file_a}), $self->{r});
++				$upa, $self->{r});
+ 	print "\tR\t$m->{file_a} => $m->{file_b}\n" unless $::_q;
+ 	$self->apply_autoprops($file, $fbat);
+ 	$self->chg_file($fbat, $m);
+-- 
+1.8.4.2
