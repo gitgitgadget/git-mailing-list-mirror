@@ -1,92 +1,97 @@
-From: Jiang Xin <worldhello.net@gmail.com>
-Subject: Re: german translation bug
-Date: Fri, 27 Dec 2013 10:20:11 +0800
-Message-ID: <CANYiYbF2xqhFKJM9gB+jGim=4pjxdPF6_36JjavSin+5XSB3SQ@mail.gmail.com>
-References: <1573480.3a5WD62Cc4@i5>
-	<CAN0XMOJf=H__eFmbcBs-S50ASun94ASL9FiL1zM6eeTheYpxTg@mail.gmail.com>
-	<1513689.dimJgKglhA@i5>
-	<CAN0XMOLAGQbxLXR16+37WFeCUWnNze8CwoV4+-9-FU0Mz5LZkw@mail.gmail.com>
+From: Roman Kagan <rkagan@mail.ru>
+Subject: Re: [PATCH] git-svn: workaround for a bug in svn serf backend
+Date: Fri, 27 Dec 2013 10:09:30 +0400
+Message-ID: <CANiYKX6VA2KvJ_YWYOegb6+VFg_unL96P9qUBthYPFuo9fhAMA@mail.gmail.com>
+References: <87ha9wdh8g.fsf@linux-1gf2.Speedport_W723_V_Typ_A_1_00_098>
+	<1388059524-4864-1-git-send-email-rkagan@mail.ru>
+	<20131226202805.GV20443@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: Wolfgang Rohdewald <wolfgang@rohdewald.de>,
-	git <git@vger.kernel.org>,
-	Dimitri John Ledkov <dimitri.ledkov@canonical.com>
-To: Ralf Thielow <ralf.thielow@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 27 03:20:21 2013
+Cc: git@vger.kernel.org, Thomas Rast <tr@thomasrast.ch>,
+	Benjamin Pabst <benjamin.pabst85@gmail.com>,
+	Eric Wong <normalperson@yhbt.net>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 27 07:09:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VwN2C-00066b-UB
-	for gcvg-git-2@plane.gmane.org; Fri, 27 Dec 2013 03:20:21 +0100
+	id 1VwQcL-00040M-R9
+	for gcvg-git-2@plane.gmane.org; Fri, 27 Dec 2013 07:09:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754064Ab3L0CUN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Dec 2013 21:20:13 -0500
-Received: from mail-wg0-f54.google.com ([74.125.82.54]:43733 "EHLO
-	mail-wg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754011Ab3L0CUM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Dec 2013 21:20:12 -0500
-Received: by mail-wg0-f54.google.com with SMTP id n12so7922735wgh.9
-        for <git@vger.kernel.org>; Thu, 26 Dec 2013 18:20:11 -0800 (PST)
+	id S1751532Ab3L0GJb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Dec 2013 01:09:31 -0500
+Received: from mail-qe0-f54.google.com ([209.85.128.54]:42535 "EHLO
+	mail-qe0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750827Ab3L0GJb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Dec 2013 01:09:31 -0500
+Received: by mail-qe0-f54.google.com with SMTP id cy11so8747138qeb.41
+        for <git@vger.kernel.org>; Thu, 26 Dec 2013 22:09:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=pY3J4CpS25ArRs3iLhgNQI5gkVwGsCb5quubW2aWGfY=;
-        b=FiF0Y10IPeGi3X9NqoZ/Rw7SZdXu7g8jmJqCAUirF2HVAfTm6KZ75FE2Iy1i3HUJad
-         e9AF1guTJDH7ruUTMAtTMQo3L1YLG+SMG2i7W6/kBQt89GdMF7nKmC6DgpJ0sNPP5d4+
-         83ZmR1m4EWveo/rJ6MIrBYIEBM9CL3EOPh1W2svF/7uz9QvOdbSVK/sRfeq4QUqNZGaG
-         2ezaxRWt4gagZ3aaf8I6D6HCuDa/30qSDvPPy2xNLFR4xJpEnR1xx5mrBrCx+mj335ww
-         JfRJz7CU4mHozLIdxXQw6CerKL4HfLbMr2RokwvZqB4XMU6+Uni3UtTjUtjd/ZWfv9Fb
-         LG0A==
-X-Received: by 10.180.79.106 with SMTP id i10mr20832645wix.23.1388110811384;
- Thu, 26 Dec 2013 18:20:11 -0800 (PST)
-Received: by 10.216.213.207 with HTTP; Thu, 26 Dec 2013 18:20:11 -0800 (PST)
-In-Reply-To: <CAN0XMOLAGQbxLXR16+37WFeCUWnNze8CwoV4+-9-FU0Mz5LZkw@mail.gmail.com>
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=CqAMs1GsD3VWOGp4zweKzyGuX9NcOUidEDr5l54sKqY=;
+        b=vWH4odtQuZDxH4w1wkOaY/Nour0eBoaSaDEoZhtN3ECATdsoYylx4jd6/GYtMaKwB+
+         Pia7fZE2Vs1QlCUk3PcDY+mz30A3DqcRkj9vJlRj1xNSD5IgACy4I6/lbKWPz4oF81jm
+         +R0L/Qf885jeITF0KtvKMao4ox/QDPsKKf8mINcQXADU2C98fF9qp7ZlieeV7Z1f+Cm9
+         BjrNQbIdnduEJ4MbAEjDamH3vrOdpmQwdELn05KOInZpYyVt1u2YM2yol2kQjPuy16xn
+         x4N9BkCXU56PjRYnUj4FsYGL8CH6t3Cih1NnVqKcFOXI4AaHsIeTt5zlCaimcXPNv0G9
+         p0Iw==
+X-Received: by 10.49.13.135 with SMTP id h7mr79530179qec.73.1388124570267;
+ Thu, 26 Dec 2013 22:09:30 -0800 (PST)
+Received: by 10.224.98.146 with HTTP; Thu, 26 Dec 2013 22:09:30 -0800 (PST)
+In-Reply-To: <20131226202805.GV20443@google.com>
+X-Google-Sender-Auth: 6i1agIhA3MKLbXqT6swYhxaXnCk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239719>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239720>
 
-2013/12/27 Ralf Thielow <ralf.thielow@gmail.com>:
-> On Wed, Dec 25, 2013 at 10:53 PM, Wolfgang Rohdewald
-> <wolfgang@rohdewald.de> wrote:
->> Am Mittwoch, 25. Dezember 2013, 21:59:10 schrieb Ralf Thielow:
->>> What version of Git do you use? What distro in what version do you use?
->>
->> freshly installed kubuntu 13.10. The package language-pack-de mentioned
->> at the end of this mail is installed.
->>
->> I suppose I should open a KDE bug report?
->>
+2013/12/27 Jonathan Nieder <jrnieder@gmail.com>:
+> Roman Kagan wrote:
 >
-> The Ubuntu translators have already updated the
-> German Git translation for 13.10. So the issue should be
-> fixed in the next language pack update [1].
+>> Subversion serf backend in versions 1.8.5 and below has a bug that the
+>> function creating the descriptor of a file change -- add_file() --
+>> doesn't make a copy of its 3d argument when storing it on the returned
 >
-> AFAIK Ubuntu ships the translations aside software packages
-> that they're able to update l10n without updating the software
-> itself.
-> They also maintain the translations for themselves. Issues that's
-> been reported to them also getting fixed by them. However, those
-> fixes do not necessarily find their way to upstream Git translations.
-> The benefit of reporting issues to Git ML is that they can be fixed
-> in both upstream Git and Ubuntu. I'll try to keep an eye to launchpad
-> and fix bugs in German translation reported on the ML on both places
-> in the future.
->
-> Thanks for reporting the issue.
->
-> [1]
-> https://translations.launchpad.net/ubuntu/saucy/+source/git/+pots/git/de/+translate?batch=10&show=all&search=nothing+to+commit%2C+working+directory+clean
->
+> 3d makes me think of 3-dimensional. ;-)  I think you mean third
+> (or the abbreviation 3rd).
 
-I reported the same issue recently, and you can see reply from
-Canonical in this thread:
+Indeed.
 
-* http://thread.gmane.org/gmane.comp.version-control.git/239130
+>> descriptor.  As a result, by the time this field is used (in
+>> transactions of file copying or renaming) it may well be released.
+>
+> Please describe the symptom so this patch is easy to find when other
+> people run into it.
 
--- 
-Jiang Xin
+OK
+
+> Do I remember correctly that "... released and scribbled over with a
+> new value, causing such-and-such assertion to fire" was what happened?
+
+Exactly.
+
+>> This patch works around this bug, by storing the value to be passed as
+>> the 3d argument to add_file() in a local variable with the same scope as
+>> the file change descriptor, making sure their lifetime is the same.
+>
+> Could this be reproduced with a test script to make sure we don't
+> reintroduce the bug again later?  (It's okay if the test only fails on
+> machines with the problematic svn version.)
+
+That would need a fairly fancy setup phase, as the bug triggers only
+on http(s)-accessed svn repositories.  I'll take a look if there's
+something already available in the existing test scripts; writing one
+from scratch for this specific case is IMO beyond the reasonable
+effort.
+
+> Modulo the confusing 3-dimensional arguments in comments, the code
+> change looks good.
+
+Thanks, I'll adjust the wording and resubmit.
+
+Roman.
