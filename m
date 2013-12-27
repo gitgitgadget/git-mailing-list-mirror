@@ -1,103 +1,175 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH v2] git-svn: workaround for a bug in svn serf backend
-Date: Fri, 27 Dec 2013 20:34:43 +0000
-Message-ID: <20131227203443.GA9189@dcvr.yhbt.net>
-References: <20131226202805.GV20443@google.com>
- <1388131515-3015-1-git-send-email-rkagan@mail.ru>
- <20131227200708.GD20443@google.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] Remove the line length limit for graft files
+Date: Fri, 27 Dec 2013 21:49:57 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1312272146590.1191@s15462909.onlinehome-server.info>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Roman Kagan <rkagan@mail.ru>, git@vger.kernel.org,
-	Benjamin Pabst <benjamin.pabst85@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 27 21:35:09 2013
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Cc: msysgit@googlegroups.com, gitster@pobox.com
+To: git@vger.kernel.org
+X-From: msysgit+bncBCZPH74Q5YNRB56P66KQKGQESTAP36I@googlegroups.com Fri Dec 27 21:50:01 2013
+Return-path: <msysgit+bncBCZPH74Q5YNRB56P66KQKGQESTAP36I@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-ve0-f184.google.com ([209.85.128.184])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vwe7h-0007Dt-Aa
-	for gcvg-git-2@plane.gmane.org; Fri, 27 Dec 2013 21:35:09 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753573Ab3L0Uep (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Dec 2013 15:34:45 -0500
-Received: from dcvr.yhbt.net ([64.71.152.64]:42093 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750723Ab3L0Ueo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Dec 2013 15:34:44 -0500
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D083C44C2FB;
-	Fri, 27 Dec 2013 20:34:43 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <20131227200708.GD20443@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239744>
-
-Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Roman Kagan wrote:
-> 
-> > Subversion serf backend in versions 1.8.5 and below has a bug that the
-> > function creating the descriptor of a file change -- add_file() --
-> > doesn't make a copy of its third argument when storing it on the
-> > returned descriptor.  As a result, by the time this field is used (in
-> > transactions of file copying or renaming) it may well be released, and
-> > the memory reused.
-> >
-> > One of its possible manifestations is the svn assertion triggering on an
-> > invalid path, with a message
-> >
-> > svn_fspath__skip_ancestor: Assertion `svn_fspath__is_canonical(child_fspath)' failed.
-> [...]
-> 
-> Makes sense.  Perhaps also worth mentioning that this is fixed by
-> r1553376, but no need to reroll just for that.
-
-Thanks all, I noted this in an addendum to the commit:
-
-    Subversion serf backend in versions 1.8.5 and below has a bug(*) that the
-
-    ...
-
-    * [ew: fixed in Subversion r1553376 as noted by Jonathan Nieder]
-
-> > Cc: Benjamin Pabst <benjamin.pabst85@gmail.com>
-> > Cc: Eric Wong <normalperson@yhbt.net>
-> > Cc: Jonathan Nieder <jrnieder@gmail.com>
-> 
-> No need for these lines --- the mail header already keeps track of who
-> is being cc-ed.
-
-I don't mind seeing it in history.  At least I've gotten accustomed to
-it from the Linux kernel and tracking patch flow between dev -> stable
-trees.
-
-> > Signed-off-by: Roman Kagan <rkagan@mail.ru>
-> 
-> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
-
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
+	(envelope-from <msysgit+bncBCZPH74Q5YNRB56P66KQKGQESTAP36I@googlegroups.com>)
+	id 1VweM4-0004iL-OO
+	for gcvm-msysgit@m.gmane.org; Fri, 27 Dec 2013 21:50:01 +0100
+Received: by mail-ve0-f184.google.com with SMTP id jz11sf2084308veb.11
+        for <gcvm-msysgit@m.gmane.org>; Fri, 27 Dec 2013 12:49:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=date:from:to:cc:subject:message-id:user-agent:mime-version
+         :x-original-sender:x-original-authentication-results:precedence
+         :mailing-list:list-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe:content-type;
+        bh=k7emxdaMS7jzziovDW0aRGcc/TqrpWQ2kxI20lAKAMo=;
+        b=PfvZaSQWUK1rFE2b65Y+9I9MM22CflCNq5TiZehzIO4zKw/YTYoZa2exJ6/VzB80EC
+         2GPsHvqStdfEnRe5zTUwI+WGD0R2jZos+3CxNhulWgMxS7PSAyC7hqpu4J16Bm5Py1bF
+         YBKRh4pfssn/jcsYiRE9NoqLh0xnvenA3Xj81htmzfQ6G7yh4/XuJgdhwyBBlnKI4VGR
+         1ys0u3ZRCK8RfjSPmW2l9SJuMWdzYlqfXp1Tinjk6VfsGMNVowoaF/RQEQtolELv1I9S
+         EGkgFmzHFJ9DtxEtpLES9CIdOsEBo17byUxj4bwItGutFnCRXqrai/5g5vZul+TOxvVS
+         qRng==
+X-Received: by 10.182.118.170 with SMTP id kn10mr63157obb.20.1388177399817;
+        Fri, 27 Dec 2013 12:49:59 -0800 (PST)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.182.205.163 with SMTP id lh3ls1169813obc.84.gmail; Fri, 27 Dec
+ 2013 12:49:59 -0800 (PST)
+X-Received: by 10.182.153.68 with SMTP id ve4mr20722615obb.39.1388177399449;
+        Fri, 27 Dec 2013 12:49:59 -0800 (PST)
+Received: from mout.gmx.net (mout.gmx.net. [212.227.17.20])
+        by gmr-mx.google.com with ESMTPS id m7si1999852vdj.2.2013.12.27.12.49.59
+        for <msysgit@googlegroups.com>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 27 Dec 2013 12:49:59 -0800 (PST)
+Received-SPF: pass (google.com: domain of Johannes.Schindelin@gmx.de designates 212.227.17.20 as permitted sender) client-ip=212.227.17.20;
+Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
+ mail.gmx.com (mrgmx103) with ESMTPSA (Nemesis) id 0MDR21-1VfrUh0K3p-00GnVu
+ for <msysgit@googlegroups.com>; Fri, 27 Dec 2013 21:49:58 +0100
+X-X-Sender: schindelin@s15462909.onlinehome-server.info
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Provags-ID: V03:K0:imESBztBzLYVxVeaOOm45bQy6ilQMMI8suut0bmGyjBEh4YheVX
+ NHkIONpcR0wX6DG25k6Suu5mps7eI+gByPJVE9aN+oZ76qxlsYlEN1rEVW5vzI2zDr9uVb5
+ +ufrKRhFZHB+IRwCC1bArv6vrssmTnbfZR71+RC2Lj5DVSLc9jZTLAIK+HH8pzrbzvIosKm
+ zzN9epZNnuEfb1CIjm5Kg==
+X-Original-Sender: johannes.schindelin@gmx.de
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of Johannes.Schindelin@gmx.de designates 212.227.17.20 as
+ permitted sender) smtp.mail=Johannes.Schindelin@gmx.de
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239745>
 
 
-The following changes since commit 7794a680e63a2a11b73cb1194653662f2769a792:
+Support for grafts predates Git's strbuf, and hence it is understandable
+that there was a hard-coded line length limit of 1023 characters (which
+was chosen a bit awkwardly, given that it is *exactly* one byte short of
+aligning with the 41 bytes occupied by a commit name and the following
+space or new-line character).
 
-  Sync with 1.8.5.2 (2013-12-17 14:12:17 -0800)
+While regular commit histories hardly win comprehensibility in general
+if they merge more than twenty-two branches in one go, it is not Git's
+business to limit grafts in such a way.
 
-are available in the git repository at:
+In this particular developer's case, the use case that requires
+substantially longer graft lines to be supported is the visualization of
+the commits' order implied by their changes: commits are considered to
+have an implicit relationship iff exchanging them in an interactive
+rebase would result in merge conflicts.
 
+Thusly implied branches tend to be very shallow in general, and the
+resulting thicket of implied branches is usually very wide; It is
+actually quite common that *most* of the commits in a topic branch have
+not even one implied parent, so that a final merge commit has about as
+many implied parents as there are commits in said branch.
 
-  git://git.bogomips.org/git-svn.git master
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ builtin/blame.c |  8 ++++----
+ commit.c        | 10 +++++-----
+ 2 files changed, 9 insertions(+), 9 deletions(-)
 
-for you to fetch changes up to 2394e94e831991348688831a384b088a424c7ace:
+diff --git a/builtin/blame.c b/builtin/blame.c
+index 1407ae7..9047b6e 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -1804,17 +1804,17 @@ static int prepare_lines(struct scoreboard *sb)
+ static int read_ancestry(const char *graft_file)
+ {
+ 	FILE *fp = fopen(graft_file, "r");
+-	char buf[1024];
++	struct strbuf buf = STRBUF_INIT;
+ 	if (!fp)
+ 		return -1;
+-	while (fgets(buf, sizeof(buf), fp)) {
++	while (!strbuf_getwholeline(&buf, fp, '\n')) {
+ 		/* The format is just "Commit Parent1 Parent2 ...\n" */
+-		int len = strlen(buf);
+-		struct commit_graft *graft = read_graft_line(buf, len);
++		struct commit_graft *graft = read_graft_line(buf.buf, buf.len);
+ 		if (graft)
+ 			register_commit_graft(graft, 0);
+ 	}
+ 	fclose(fp);
++	strbuf_release(&buf);
+ 	return 0;
+ }
+ 
+diff --git a/commit.c b/commit.c
+index de16a3c..57ebea2 100644
+--- a/commit.c
++++ b/commit.c
+@@ -196,19 +196,19 @@ bad_graft_data:
+ static int read_graft_file(const char *graft_file)
+ {
+ 	FILE *fp = fopen(graft_file, "r");
+-	char buf[1024];
++	struct strbuf buf = STRBUF_INIT;
+ 	if (!fp)
+ 		return -1;
+-	while (fgets(buf, sizeof(buf), fp)) {
++	while (!strbuf_getwholeline(&buf, fp, '\n')) {
+ 		/* The format is just "Commit Parent1 Parent2 ...\n" */
+-		int len = strlen(buf);
+-		struct commit_graft *graft = read_graft_line(buf, len);
++		struct commit_graft *graft = read_graft_line(buf.buf, buf.len);
+ 		if (!graft)
+ 			continue;
+ 		if (register_commit_graft(graft, 1))
+-			error("duplicate graft data: %s", buf);
++			error("duplicate graft data: %s", buf.buf);
+ 	}
+ 	fclose(fp);
++	strbuf_release(&buf);
+ 	return 0;
+ }
+ 
+-- 
+1.8.4.msysgit.0.1109.g3c58b16
 
-  git-svn: workaround for a bug in svn serf backend (2013-12-27 20:22:19 +0000)
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
 
-----------------------------------------------------------------
-Roman Kagan (1):
-      git-svn: workaround for a bug in svn serf backend
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
 
- perl/Git/SVN/Editor.pm | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/groups/opt_out.
