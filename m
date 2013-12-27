@@ -1,57 +1,55 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [WIP/PATCH 0/5] git checkout --recurse-submodules
-Date: Fri, 27 Dec 2013 14:34:31 +0100
-Message-ID: <52BD81E7.40907@web.de>
-References: <20131226155857.GL20443@google.com>
+From: Konstantin Khomoutov <flatworm@users.sourceforge.net>
+Subject: Re: git:// protocol over SSL/TLS
+Date: Fri, 27 Dec 2013 17:36:55 +0400
+Message-ID: <20131227173655.3f3109e7ba848c90b302e2f9@domain007.com>
+References: <CAErtv27qUMo9LsGAZtk5Zv9qnZRB_YAXhtskvrrNbWGqadQh7Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Cc: Heiko Voigt <hvoigt@hvoigt.net>
-To: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 27 14:34:45 2013
+Cc: Git List <git@vger.kernel.org>
+To: Sergey Sharybin <sergey.vfx@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 27 14:37:03 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VwXYq-00023X-Hb
-	for gcvg-git-2@plane.gmane.org; Fri, 27 Dec 2013 14:34:44 +0100
+	id 1VwXb4-0002se-Rp
+	for gcvg-git-2@plane.gmane.org; Fri, 27 Dec 2013 14:37:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753327Ab3L0Nel (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Dec 2013 08:34:41 -0500
-Received: from mout.web.de ([212.227.15.3]:51630 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753208Ab3L0Nek (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Dec 2013 08:34:40 -0500
-Received: from [192.168.178.41] ([84.132.152.21]) by smtp.web.de (mrweb101)
- with ESMTPA (Nemesis) id 0M9GVO-1Vl2Yc14sI-00CjyX for <git@vger.kernel.org>;
- Fri, 27 Dec 2013 14:34:36 +0100
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.2.0
-In-Reply-To: <20131226155857.GL20443@google.com>
-X-Enigmail-Version: 1.6
-X-Provags-ID: V03:K0:FmERU3ceCNQj0R+727qvt98IaypuGIxSnYoKLM95WPHVpGNUbmG
- kWh5SKxA+Tet78xNqYE2r4hgN+XOrO2RT90LDcQpFC7+jaZfYZ2vMDRtRdpQj7IfRHCKHQf
- C+we/4CfWTVQhAzraoZpq0pR5mNQL7ooWCmpN+QVc2UHiZH21C97c1k7rq0FIOwyOcFBj9C
- 4YGM1Vwzn8nFzAupAF2sw==
+	id S1754509Ab3L0Ng7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Dec 2013 08:36:59 -0500
+Received: from mailhub.007spb.ru ([84.204.203.130]:41505 "EHLO
+	mailhub.007spb.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753208Ab3L0Ng6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Dec 2013 08:36:58 -0500
+Received: from programmer.Domain007.com (programmer.domain007.com [192.168.2.100])
+	by mailhub.007spb.ru (8.14.3/8.14.3/Debian-5+lenny1) with SMTP id rBRDasHS015394;
+	Fri, 27 Dec 2013 17:36:55 +0400
+In-Reply-To: <CAErtv27qUMo9LsGAZtk5Zv9qnZRB_YAXhtskvrrNbWGqadQh7Q@mail.gmail.com>
+X-Mailer: Sylpheed 3.3.0 (GTK+ 2.10.14; i686-pc-mingw32)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239725>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239726>
 
-Am 26.12.2013 16:58, schrieb Jonathan Nieder:
-> This patch series comes from
-> https://github.com/jlehmann/git-submod-enhancements branch
-> recursive_submodule_checkout.  It needed some tiny tweaks to apply to
-> current "master" and build without warnings, but nothing major, and I
-> haven't sanity checked it much beyond that and letting the kind folks
-> that use Debian experimental play with it.
+On Fri, 27 Dec 2013 18:59:00 +0600
+Sergey Sharybin <sergey.vfx@gmail.com> wrote:
 
-Cool! Thanks for rebasing this series and great to hear that more
-people are using it.
+> Quick question is, is it possible to use git:// protocol over
+> SSL/TLS/other secure transport?
 
-> I'm sending it out now to get review and ideas for what needs to
-> happen next to get this series in shape to be included in git.git.
+The Git protocol does not implement it itself but you can channel it
+over a TLS tunnel (via stunnel for instance).  Unfortunately, this
+means a specialized software and setup on both ends so if the question
+was about a general client using stock Git then the answer is no, it's
+impossible.
 
-Excellent timing, Heiko and I wanted to work on this topic in the
-coming days anyway.
+> Or the recommended way to do secure anonymous checkout is to simply
+> use https:// ?
+
+Yes, but it will only be secure if you've managed to verify the
+server's certificate and do trust its issuer (or a CA higher up the
+cert's trust chain) -- people tend to confuse "encrypted" with
+"secure" which is not at all the same thing.
