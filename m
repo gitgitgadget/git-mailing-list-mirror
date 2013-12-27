@@ -1,114 +1,92 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 5/5] rename_ref(): fix a mkdir()/rmdir() race
-Date: Thu, 26 Dec 2013 15:20:23 -0800
-Message-ID: <20131226232023.GA20443@google.com>
-References: <1387696451-32224-1-git-send-email-mhagger@alum.mit.edu>
- <1387696451-32224-6-git-send-email-mhagger@alum.mit.edu>
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: Re: german translation bug
+Date: Fri, 27 Dec 2013 10:20:11 +0800
+Message-ID: <CANYiYbF2xqhFKJM9gB+jGim=4pjxdPF6_36JjavSin+5XSB3SQ@mail.gmail.com>
+References: <1573480.3a5WD62Cc4@i5>
+	<CAN0XMOJf=H__eFmbcBs-S50ASun94ASL9FiL1zM6eeTheYpxTg@mail.gmail.com>
+	<1513689.dimJgKglhA@i5>
+	<CAN0XMOLAGQbxLXR16+37WFeCUWnNze8CwoV4+-9-FU0Mz5LZkw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Fri Dec 27 00:20:34 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Wolfgang Rohdewald <wolfgang@rohdewald.de>,
+	git <git@vger.kernel.org>,
+	Dimitri John Ledkov <dimitri.ledkov@canonical.com>
+To: Ralf Thielow <ralf.thielow@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 27 03:20:21 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VwKEE-0000kH-5b
-	for gcvg-git-2@plane.gmane.org; Fri, 27 Dec 2013 00:20:34 +0100
+	id 1VwN2C-00066b-UB
+	for gcvg-git-2@plane.gmane.org; Fri, 27 Dec 2013 03:20:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753905Ab3LZXUa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Dec 2013 18:20:30 -0500
-Received: from mail-yh0-f49.google.com ([209.85.213.49]:37257 "EHLO
-	mail-yh0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753853Ab3LZXU3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Dec 2013 18:20:29 -0500
-Received: by mail-yh0-f49.google.com with SMTP id z20so1860055yhz.8
-        for <git@vger.kernel.org>; Thu, 26 Dec 2013 15:20:29 -0800 (PST)
+	id S1754064Ab3L0CUN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Dec 2013 21:20:13 -0500
+Received: from mail-wg0-f54.google.com ([74.125.82.54]:43733 "EHLO
+	mail-wg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754011Ab3L0CUM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Dec 2013 21:20:12 -0500
+Received: by mail-wg0-f54.google.com with SMTP id n12so7922735wgh.9
+        for <git@vger.kernel.org>; Thu, 26 Dec 2013 18:20:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=iAT05vzT66hThtkMhixnDMnnGmZiqtZVcJ6dHkE2nYk=;
-        b=F39gqi+mW0LV1LrFh274uyc1yOb5/gvLCASbSAHxLjPHSsEGMyEKDjDywmEeFlHlZN
-         YSaOIzGM540YnwiM08R1Lksl2c1mFpxkCjNDAXN8BMnCe3Mwoe4jFbmJQBO2d2UzUd01
-         TkCN0CcbCaki/ukAlKmTUzGtBULbpFQ/XFrfUltRvuYLeGWo387Pz/e/hX7/Nk+WmLCT
-         zgQpSTZ4FIhSFYGqSwyPKlVf9nQgMvjrm6M2qalFpOZ+E/fo/NfdKndbihSKJ9Yi013I
-         hS3sO9ZK97MkYCm32aMZregsi0I/t6CekO27CH7wAVxB7TYOgOM1tz+KKkog+TCdobxN
-         Qgig==
-X-Received: by 10.236.148.107 with SMTP id u71mr884654yhj.150.1388100027023;
-        Thu, 26 Dec 2013 15:20:27 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id c44sm43723585yho.20.2013.12.26.15.20.25
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 26 Dec 2013 15:20:26 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <1387696451-32224-6-git-send-email-mhagger@alum.mit.edu>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=pY3J4CpS25ArRs3iLhgNQI5gkVwGsCb5quubW2aWGfY=;
+        b=FiF0Y10IPeGi3X9NqoZ/Rw7SZdXu7g8jmJqCAUirF2HVAfTm6KZ75FE2Iy1i3HUJad
+         e9AF1guTJDH7ruUTMAtTMQo3L1YLG+SMG2i7W6/kBQt89GdMF7nKmC6DgpJ0sNPP5d4+
+         83ZmR1m4EWveo/rJ6MIrBYIEBM9CL3EOPh1W2svF/7uz9QvOdbSVK/sRfeq4QUqNZGaG
+         2ezaxRWt4gagZ3aaf8I6D6HCuDa/30qSDvPPy2xNLFR4xJpEnR1xx5mrBrCx+mj335ww
+         JfRJz7CU4mHozLIdxXQw6CerKL4HfLbMr2RokwvZqB4XMU6+Uni3UtTjUtjd/ZWfv9Fb
+         LG0A==
+X-Received: by 10.180.79.106 with SMTP id i10mr20832645wix.23.1388110811384;
+ Thu, 26 Dec 2013 18:20:11 -0800 (PST)
+Received: by 10.216.213.207 with HTTP; Thu, 26 Dec 2013 18:20:11 -0800 (PST)
+In-Reply-To: <CAN0XMOLAGQbxLXR16+37WFeCUWnNze8CwoV4+-9-FU0Mz5LZkw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239718>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239719>
 
-Michael Haggerty wrote:
+2013/12/27 Ralf Thielow <ralf.thielow@gmail.com>:
+> On Wed, Dec 25, 2013 at 10:53 PM, Wolfgang Rohdewald
+> <wolfgang@rohdewald.de> wrote:
+>> Am Mittwoch, 25. Dezember 2013, 21:59:10 schrieb Ralf Thielow:
+>>> What version of Git do you use? What distro in what version do you use?
+>>
+>> freshly installed kubuntu 13.10. The package language-pack-de mentioned
+>> at the end of this mail is installed.
+>>
+>> I suppose I should open a KDE bug report?
+>>
+>
+> The Ubuntu translators have already updated the
+> German Git translation for 13.10. So the issue should be
+> fixed in the next language pack update [1].
+>
+> AFAIK Ubuntu ships the translations aside software packages
+> that they're able to update l10n without updating the software
+> itself.
+> They also maintain the translations for themselves. Issues that's
+> been reported to them also getting fixed by them. However, those
+> fixes do not necessarily find their way to upstream Git translations.
+> The benefit of reporting issues to Git ML is that they can be fixed
+> in both upstream Git and Ubuntu. I'll try to keep an eye to launchpad
+> and fix bugs in German translation reported on the ML on both places
+> in the future.
+>
+> Thanks for reporting the issue.
+>
+> [1]
+> https://translations.launchpad.net/ubuntu/saucy/+source/git/+pots/git/de/+translate?batch=10&show=all&search=nothing+to+commit%2C+working+directory+clean
+>
 
->  refs.c | 10 +++++++++-
->  1 file changed, 9 insertions(+), 1 deletion(-)
+I reported the same issue recently, and you can see reply from
+Canonical in this thread:
 
-A test or example reproduction recipe would be nice.  (But I can
-understand not having one --- races are hard to test.)
+* http://thread.gmane.org/gmane.comp.version-control.git/239130
 
-[...]
-> --- a/refs.c
-> +++ b/refs.c
-[...]
-> @@ -2574,6 +2575,13 @@ int rename_ref(const char *oldrefname, const char *newrefname, const char *logms
->  			}
->  			goto retry;
->  		} else {
-> +			if (errno == ENOENT && --attempts)
-> +				/*
-> +				 * Perhaps somebody just pruned the empty
-> +				 * directory into which we wanted to move the
-> +				 * file.
-> +				 */
-> +				goto retry;
-
-Style nit: it's easier to read a test of errno when the 'else's
-cascade (i.e., using 'else if' here).
-
-This patch doesn't depend on any of the others from the series.  For
-what it's worth, with or without the following squashed in,
-
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
-
-Thanks.
-
-diff --git i/refs.c w/refs.c
-index 3ab1491..ea62395 100644
---- i/refs.c
-+++ w/refs.c
-@@ -2574,14 +2574,14 @@ int rename_ref(const char *oldrefname, const char *newrefname, const char *logms
- 				goto rollback;
- 			}
- 			goto retry;
-+		} else if (errno == ENOENT && --attempts)
-+			/*
-+			 * Perhaps somebody just pruned the empty
-+			 * directory into which we wanted to move the
-+			 * file.
-+			 */
-+			goto retry;
- 		} else {
--			if (errno == ENOENT && --attempts)
--				/*
--				 * Perhaps somebody just pruned the empty
--				 * directory into which we wanted to move the
--				 * file.
--				 */
--				goto retry;
- 			error("unable to move logfile "TMP_RENAMED_LOG" to logs/%s: %s",
- 				newrefname, strerror(errno));
- 			goto rollback;
+-- 
+Jiang Xin
