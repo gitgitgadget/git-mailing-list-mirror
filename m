@@ -1,81 +1,108 @@
-From: Roman Kagan <rkagan@mail.ru>
-Subject: Re: [PATCH v2] git-svn: workaround for a bug in svn serf backend
-Date: Sat, 28 Dec 2013 13:58:22 +0400
-Message-ID: <CANiYKX4fjYYRneqPxFDmpPg7e5ge9-hNktBvXVLQ=JxtM56tAQ@mail.gmail.com>
-References: <20131226202805.GV20443@google.com>
-	<1388131515-3015-1-git-send-email-rkagan@mail.ru>
-	<20131227200708.GD20443@google.com>
-	<20131227203443.GA9189@dcvr.yhbt.net>
-	<7veh4yj5mm.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v4 23/23] compat/mingw.h: Fix the MinGW and msvc builds
+Date: Sat, 28 Dec 2013 05:00:50 -0500
+Message-ID: <20131228100050.GA24929@sigill.intra.peff.net>
+References: <20131221135651.GA20818@sigill.intra.peff.net>
+ <20131221140052.GW21145@sigill.intra.peff.net>
+ <CABPQNSa+mtVoMiN_mxVfYW_=JMxO-0Odv5uLnGhknNhDq1yWrw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Eric Wong <normalperson@yhbt.net>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	Benjamin Pabst <benjamin.pabst85@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Dec 28 10:58:30 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Erik Faye-Lund <kusmabite@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Dec 28 11:00:57 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vwqf5-00045G-Kb
-	for gcvg-git-2@plane.gmane.org; Sat, 28 Dec 2013 10:58:27 +0100
+	id 1VwqhU-0005E6-Gn
+	for gcvg-git-2@plane.gmane.org; Sat, 28 Dec 2013 11:00:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754933Ab3L1J6Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Dec 2013 04:58:24 -0500
-Received: from mail-qe0-f45.google.com ([209.85.128.45]:61345 "EHLO
-	mail-qe0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753822Ab3L1J6X (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Dec 2013 04:58:23 -0500
-Received: by mail-qe0-f45.google.com with SMTP id 6so9994955qea.18
-        for <git@vger.kernel.org>; Sat, 28 Dec 2013 01:58:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=RftidL9S8Jg9Ux4oTPgjaB5rGuR/4eBiqG8g/gJuZ7E=;
-        b=pKS5r1SeB33LKChGVZ63BhGsI45V+aDKccpcMGMB9+cMzw+TOvipIBN0Q00iJHJVwg
-         8J2b1C20qks/UnGhOGwb3Hf4MdI9ufuIILGa5RUGXmY1v8Jpun4qXa0k2qXag5krF7AI
-         tcQFt3pIfjBxFUkVlbIz9V56k7W1nl2PXZS3Cgq1H6qt56oKfLL4I9paohe5gz0Stntp
-         q2skAuxqUcxsralHE3Gqv6MdZPrNahm56leXy9hYSy4aaU7u2JMtoF40/iB9Rl1Bn5ru
-         /Z3//egt8PLhEVT1NysYFcSDlJJH2hdwM+1VKev6B14+b39MYlyxEBYWWzvctnDJdENR
-         HjHQ==
-X-Received: by 10.49.84.195 with SMTP id b3mr89660533qez.32.1388224702389;
- Sat, 28 Dec 2013 01:58:22 -0800 (PST)
-Received: by 10.224.98.146 with HTTP; Sat, 28 Dec 2013 01:58:22 -0800 (PST)
-In-Reply-To: <7veh4yj5mm.fsf@alter.siamese.dyndns.org>
-X-Google-Sender-Auth: jvCQNcgOrIqLbxkxUbgMaqXbmZk
+	id S1755140Ab3L1KAw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Dec 2013 05:00:52 -0500
+Received: from cloud.peff.net ([50.56.180.127]:51524 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753693Ab3L1KAw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Dec 2013 05:00:52 -0500
+Received: (qmail 2536 invoked by uid 102); 28 Dec 2013 10:00:52 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 28 Dec 2013 04:00:52 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 28 Dec 2013 05:00:50 -0500
+Content-Disposition: inline
+In-Reply-To: <CABPQNSa+mtVoMiN_mxVfYW_=JMxO-0Odv5uLnGhknNhDq1yWrw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239767>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239768>
 
-2013/12/28 Junio C Hamano <gitster@pobox.com>:
-> Eric Wong <normalperson@yhbt.net> writes:
->>   git://git.bogomips.org/git-svn.git master
->>
->> for you to fetch changes up to 2394e94e831991348688831a384b088a424c7ace:
->>
->>   git-svn: workaround for a bug in svn serf backend (2013-12-27 20:22:19 +0000)
->>
->> ----------------------------------------------------------------
->> Roman Kagan (1):
->>       git-svn: workaround for a bug in svn serf backend
->>
->>  perl/Git/SVN/Editor.pm | 10 ++++++++--
->>  1 file changed, 8 insertions(+), 2 deletions(-)
->
-> Thanks. I almost missed this pull-request, though.
->
-> Will pull.
+On Wed, Dec 25, 2013 at 11:08:57PM +0100, Erik Faye-Lund wrote:
 
-Thanks!
+> On Sat, Dec 21, 2013 at 3:00 PM, Jeff King <peff@peff.net> wrote:
+> > From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+> >
+> > Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+> > Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> > Signed-off-by: Jeff King <peff@peff.net>
+> > ---
+> >  compat/mingw.h | 1 +
+> >  1 file changed, 1 insertion(+)
+> >
+> > diff --git a/compat/mingw.h b/compat/mingw.h
+> > index 92cd728..8828ede 100644
+> > --- a/compat/mingw.h
+> > +++ b/compat/mingw.h
+> > @@ -345,6 +345,7 @@ static inline char *mingw_find_last_dir_sep(const char *path)
+> >  #define PATH_SEP ';'
+> >  #define PRIuMAX "I64u"
+> >  #define PRId64 "I64d"
+> > +#define PRIx64 "I64x"
+> >
+> 
+> Please, move this before patch #8, and adjust the commit message.
 
-I'd like to note that it's IMO worth including in the 'maint' branch
-as it's a crasher.  Especially so since the real fix has been merged
-in the subversion upstream and nominated for 1.8 branch, so the
-workaround may soon lose its relevance.
+Yeah, that makes sense. Though I think we can do one better and simply
+remove the need for it entirely. The only use of PRIx64 is in a
+debugging function that does not get called.
 
-Roman.
+How about squashing the patch below into patch 8 ("ewah: compressed
+bitmap implementation"):
+
+diff --git a/ewah/ewah_bitmap.c b/ewah/ewah_bitmap.c
+index f104b87..9ced2da 100644
+--- a/ewah/ewah_bitmap.c
++++ b/ewah/ewah_bitmap.c
+@@ -381,18 +381,6 @@ void ewah_iterator_init(struct ewah_iterator *it, struct ewah_bitmap *parent)
+ 		read_new_rlw(it);
+ }
+ 
+-void ewah_dump(struct ewah_bitmap *self)
+-{
+-	size_t i;
+-	fprintf(stderr, "%"PRIuMAX" bits | %"PRIuMAX" words | ",
+-		(uintmax_t)self->bit_size, (uintmax_t)self->buffer_size);
+-
+-	for (i = 0; i < self->buffer_size; ++i)
+-		fprintf(stderr, "%016"PRIx64" ", (uint64_t)self->buffer[i]);
+-
+-	fprintf(stderr, "\n");
+-}
+-
+ void ewah_not(struct ewah_bitmap *self)
+ {
+ 	size_t pointer = 0;
+diff --git a/ewah/ewok.h b/ewah/ewok.h
+index 619afaa..43adeb5 100644
+--- a/ewah/ewok.h
++++ b/ewah/ewok.h
+@@ -193,8 +193,6 @@ void ewah_and(
+ 	struct ewah_bitmap *ewah_j,
+ 	struct ewah_bitmap *out);
+ 
+-void ewah_dump(struct ewah_bitmap *self);
+-
+ /**
+  * Direct word access
+  */
