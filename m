@@ -1,106 +1,195 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: git:// protocol over SSL/TLS
-Date: Sat, 28 Dec 2013 00:11:00 +0000
-Message-ID: <20131228001100.GF451338@vauxhall.crustytoothpaste.net>
-References: <CAErtv27qUMo9LsGAZtk5Zv9qnZRB_YAXhtskvrrNbWGqadQh7Q@mail.gmail.com>
- <20131227173655.3f3109e7ba848c90b302e2f9@domain007.com>
- <CAErtv25JGxEs3ytAB019yajQooNs4k=bzukSE9kuHWAbir9-BQ@mail.gmail.com>
- <87mwjm4c3s.fsf@igel.home>
- <vpqwqiqpe80.fsf@anie.imag.fr>
- <CAErtv25URyB3znN1CMd87374NUjaSFvg=cee_-c=s8bB2j052A@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Remove the line length limit for graft files
+Date: Fri, 27 Dec 2013 16:50:11 -0800
+Message-ID: <xmqqd2khu7cs.fsf@gitster.dls.corp.google.com>
+References: <alpine.DEB.1.00.1312272146590.1191@s15462909.onlinehome-server.info>
+	<20131227210447.GE20443@google.com>
+	<alpine.DEB.1.00.1312272208070.1191@s15462909.onlinehome-server.info>
+	<20131227223240.GG20443@google.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="5oH/S/bF6lOfqCQb"
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Andreas Schwab <schwab@linux-m68k.org>,
-	Konstantin Khomoutov <flatworm@users.sourceforge.net>,
-	Git List <git@vger.kernel.org>
-To: Sergey Sharybin <sergey.vfx@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Dec 28 01:11:16 2013
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,  git@vger.kernel.org,  msysgit@googlegroups.com
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: msysgit+bncBCG77UMM3EJRBSWA7CKQKGQENO4BF7A@googlegroups.com Sat Dec 28 01:50:22 2013
+Return-path: <msysgit+bncBCG77UMM3EJRBSWA7CKQKGQENO4BF7A@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-qa0-f62.google.com ([209.85.216.62])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VwhUp-0005BP-8A
-	for gcvg-git-2@plane.gmane.org; Sat, 28 Dec 2013 01:11:15 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754832Ab3L1ALK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Dec 2013 19:11:10 -0500
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:50692 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754748Ab3L1ALJ (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 27 Dec 2013 19:11:09 -0500
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:7933:e351:9ca4:8c22])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(envelope-from <msysgit+bncBCG77UMM3EJRBSWA7CKQKGQENO4BF7A@googlegroups.com>)
+	id 1Vwi6d-0004UI-Q1
+	for gcvm-msysgit@m.gmane.org; Sat, 28 Dec 2013 01:50:20 +0100
+Received: by mail-qa0-f62.google.com with SMTP id w5sf2367567qac.27
+        for <gcvm-msysgit@m.gmane.org>; Fri, 27 Dec 2013 16:50:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type;
+        bh=9saCjQZxdJzikmXjKkBcvvRLQ6UEMbjFTP02ybX5TkU=;
+        b=yG6Z1NTFsqjVkebTr9sqqbnEP2/Hqhg6UBF8l1md8VV4XQHx9IImhNOn8LpuWREOEr
+         /UbN77oIRMUWyxAIYcd+j+ZKOgDIrqlYVjRP2qQX0e3peMdHmVMISQeF2sogUtJa5Pm9
+         pS1DhpKvpsVf0ss7dxuR5W2NiRRaeCRwgXw5RRkPDtBgdxxEp7VxyIXzH7JeDAy8gemP
+         hPdNGxjMRfbyDj4ICFaHgsslCEa0WTIo45wVEd+u6232MWbMClFwePsiawyROeVHiwmg
+         7HflRiEf6acHmEotXSxxc9sCXW9CxeJ0pLicKQQXuky7BYfLkNogpaVLKO9GOABOBQAY
+         f6RQ==
+X-Received: by 10.50.66.101 with SMTP id e5mr788647igt.12.1388191818888;
+        Fri, 27 Dec 2013 16:50:18 -0800 (PST)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.50.30.170 with SMTP id t10ls4397539igh.9.gmail; Fri, 27 Dec
+ 2013 16:50:18 -0800 (PST)
+X-Received: by 10.66.150.106 with SMTP id uh10mr20640751pab.13.1388191818376;
+        Fri, 27 Dec 2013 16:50:18 -0800 (PST)
+Received: from smtp.pobox.com (b-pb-sasl-quonix.pobox.com. [208.72.237.35])
+        by gmr-mx.google.com with ESMTP id ti10si1157158vdc.3.2013.12.27.16.50.18
+        for <msysgit@googlegroups.com>;
+        Fri, 27 Dec 2013 16:50:18 -0800 (PST)
+Received-SPF: pass (google.com: best guess record for domain of jch@b-sasl-quonix.pobox.com designates 208.72.237.35 as permitted sender) client-ip=208.72.237.35;
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CAA1D5FCCF;
+	Fri, 27 Dec 2013 19:50:17 -0500 (EST)
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B1F785FCCE;
+	Fri, 27 Dec 2013 19:50:17 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 0781628074;
-	Sat, 28 Dec 2013 00:11:07 +0000 (UTC)
-Mail-Followup-To: Sergey Sharybin <sergey.vfx@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Andreas Schwab <schwab@linux-m68k.org>,
-	Konstantin Khomoutov <flatworm@users.sourceforge.net>,
-	Git List <git@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <CAErtv25URyB3znN1CMd87374NUjaSFvg=cee_-c=s8bB2j052A@mail.gmail.com>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 3.11-1-amd64)
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239758>
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 05ADF5FCCC;
+	Fri, 27 Dec 2013 19:50:17 -0500 (EST)
+In-Reply-To: <20131227223240.GG20443@google.com> (Jonathan Nieder's message of
+	"Fri, 27 Dec 2013 14:32:40 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 04E50F8A-6F5A-11E3-8A95-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+X-Original-Sender: gitster@pobox.com
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: best guess record for domain of jch@b-sasl-quonix.pobox.com
+ designates 208.72.237.35 as permitted sender) smtp.mail=jch@b-sasl-quonix.pobox.com;
+       dkim=pass header.i=@pobox.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239759>
 
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
---5oH/S/bF6lOfqCQb
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Johannes Schindelin wrote:
+>> On Fri, 27 Dec 2013, Jonathan Nieder wrote:
+>
+>>> Is this easy to reproduce so some interested but lazy person could
+>>> write a test?
+>>
+>> Yep. Make 25 orphan commits, add a graft line to make the first a merge of
+>> the rest.
+>
+> Thanks.  Here's a pair of tests doing that.
+>
+> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+> ---
+>  t/annotate-tests.sh          | 21 +++++++++++++++++++++
+>  t/t6101-rev-parse-parents.sh | 16 +++++++++++++++-
+>  2 files changed, 36 insertions(+), 1 deletion(-)
 
-On Fri, Dec 27, 2013 at 08:25:16PM +0600, Sergey Sharybin wrote:
-> Security in this case is about being sure everyone gets exactly the
-> same repository as stored on the server, without any modifications to
-> the sources cased by MITM.
+Makes sense.
 
-Besides security, HTTPS is more likely to work across different
-firewalls and proxies, since "odd" ports like 9418 are often blocked and
-HTTPS usually isn't subject to the weirdness of proxies (since they
-can't inspect it or modify it).
+Thanks, both.  Small lint-picking like this change to perfect the
+system, as opposed to earth-shattering new shinies, tend to often
+get neglected but are very much appreciated.
 
-> As for "smart" http, this seems pretty much cool.However, we're
-> currently using lighthttpd, so it might be an issue. We'll check on
-> whether "smart" http is used there, and if not guess it wouldn't be a
-> big deal to switch to apache.
+> diff --git a/t/annotate-tests.sh b/t/annotate-tests.sh
+> index c9d105d..304c7b7 100644
+> --- a/t/annotate-tests.sh
+> +++ b/t/annotate-tests.sh
+> @@ -116,6 +116,27 @@ test_expect_success 'blame evil merge' '
+>  	check_count A 2 B 1 B1 2 B2 1 "A U Thor" 1
+>  '
+>  
+> +test_expect_success 'blame huge graft' '
+> +	test_when_finished "git checkout branch2" &&
+> +	test_when_finished "rm -f .git/info/grafts" &&
+> +	graft= &&
+> +	for i in 0 1 2
+> +	do
+> +		for j in 0 1 2 3 4 5 6 7 8 9
+> +		do
+> +			git checkout --orphan "$i$j" &&
+> +			printf "%s\n" "$i" "$j" >file &&
+> +			test_tick &&
+> +			GIT_AUTHOR_NAME=$i$j GIT_AUTHOR_EMAIL=$i$j@test.git \
+> +			git commit -a -m "$i$j" &&
+> +			commit=$(git rev-parse --verify HEAD) &&
+> +			graft="$graft$commit "
+> +		done
+> +	done &&
+> +	printf "%s " $graft >.git/info/grafts &&
+> +	check_count -h 00 01 1 10 1
+> +'
+> +
+>  test_expect_success 'setup incomplete line' '
+>  	echo "incomplete" | tr -d "\\012" >>file &&
+>  	GIT_AUTHOR_NAME="C" GIT_AUTHOR_EMAIL="C@test.git" \
+> diff --git a/t/t6101-rev-parse-parents.sh b/t/t6101-rev-parse-parents.sh
+> index 7ea14ce..10b1452 100755
+> --- a/t/t6101-rev-parse-parents.sh
+> +++ b/t/t6101-rev-parse-parents.sh
+> @@ -20,7 +20,17 @@ test_expect_success 'setup' '
+>  	test_commit start2 &&
+>  	git checkout master &&
+>  	git merge -m next start2 &&
+> -	test_commit final
+> +	test_commit final &&
+> +
+> +	test_seq 40 |
+> +	while read i
+> +	do
+> +		git checkout --orphan "b$i" &&
+> +		test_tick &&
+> +		git commit --allow-empty -m "$i" &&
+> +		commit=$(git rev-parse --verify HEAD) &&
+> +		printf "$commit " >>.git/info/grafts
+> +	done
+>  '
+>  
+>  test_expect_success 'start is valid' '
+> @@ -79,6 +89,10 @@ test_expect_success 'final^1^! = final^1 ^final^1^1 ^final^1^2' '
+>  	test_cmp expect actual
+>  '
+>  
+> +test_expect_success 'large graft octopus' '
+> +	test_cmp_rev_output b31 "git rev-parse --verify b1^30"
+> +'
+> +
+>  test_expect_success 'repack for next test' '
+>  	git repack -a -d
+>  '
+> -- 
+> 1.8.5.1
+>
+> -- 
 
-You can use Lighttpd if you like.  See
-Documentation/git-http-backend.txt (or git http-backend --help).
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
 
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
 
---5oH/S/bF6lOfqCQb
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.15 (GNU/Linux)
-
-iQIcBAEBCgAGBQJSvhcUAAoJEL9TXYEfUvaLjBoP/3sUN1RA9EtDoLyK9qFgX+Pl
-Dss2RDAlX5F6JBt/dtrYZypCj/BZ7B3kk8SaDEaMtp6g7F990Yn2aeJZiY93Fljo
-ccRnKC6kYxbFyi8e4TiENCMuae6l4aRmPBGaftzeJfiTBMXfMRE8Tro8XSlexiCt
-Ahcy9xYnz9nS6s84dXCBjse1+hZsR2uTEnlWHK1WbTf2AJhs19LlocPO6Mnq0kMf
-wDRyuzw/ejWLm+bafQaUk0hZfqAV74v8EoZBjj+Wb0Zz83OW6UpKqc9qhCknGVR2
-BKeR3TcMfSzmSNqu957LLB4OhJfnNBAM4DNm24R98EVkSoUkbuQyT1c/SLRJxWd+
-VKFATpWqtQIiyq0j7x51T9YRTYBAj/1/6sUOANnLIbwhnhONiOlbu/wLJxtdLYik
-IsTgZ0tu1BzwX3wHEbeexrQJWBPt1fCAkRWvE3vrnNJw0gzZ4N064fcLkYPU4/ME
-delYjj47KV5ABl7feC5jyKGLAxsgtuEqsx9kL/1+fxHDhHlceUT+/zLT4IgFkBh8
-b0nC7RhCvWH1w7opOyv8CuBZdH+j9dsJIgDyHZkvaSGqbGm1+eTD1fEozb7Pvf6c
-YUjA6WSvRfBPs2R26z3a4D8EMip+/A48vbZY1E08LIT+h6W/VoBV4KV+RnY5pRNC
-uX2wyfhrktCbaczVhzRI
-=BxA0
------END PGP SIGNATURE-----
-
---5oH/S/bF6lOfqCQb--
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/groups/opt_out.
