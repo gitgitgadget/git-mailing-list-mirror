@@ -1,62 +1,67 @@
-From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-Subject: Re: git:// protocol over SSL/TLS
-Date: Sat, 28 Dec 2013 22:00:07 +0200
-Message-ID: <20131228200007.GA13655@LK-Perkele-VII>
-References: <CAErtv27qUMo9LsGAZtk5Zv9qnZRB_YAXhtskvrrNbWGqadQh7Q@mail.gmail.com>
- <20131227173655.3f3109e7ba848c90b302e2f9@domain007.com>
- <7viouaj5p0.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 3/3] t0000: drop "known breakage" test
+Date: Sat, 28 Dec 2013 12:51:04 -0800
+Message-ID: <20131228205104.GA5544@google.com>
+References: <20131228092731.GA26337@sigill.intra.peff.net>
+ <20131228093340.GC21109@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Konstantin Khomoutov <flatworm@users.sourceforge.net>,
-	Sergey Sharybin <sergey.vfx@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Dec 28 21:09:18 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, John Keeping <john@keeping.me.uk>,
+	Thomas Rast <tr@thomasrast.ch>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Dec 28 21:51:36 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vx0CD-0005Yy-4j
-	for gcvg-git-2@plane.gmane.org; Sat, 28 Dec 2013 21:09:17 +0100
+	id 1Vx0r9-0000ar-SY
+	for gcvg-git-2@plane.gmane.org; Sat, 28 Dec 2013 21:51:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751025Ab3L1UJL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Dec 2013 15:09:11 -0500
-Received: from emh06.mail.saunalahti.fi ([62.142.5.116]:46626 "EHLO
-	emh06.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750837Ab3L1UJK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Dec 2013 15:09:10 -0500
-X-Greylist: delayed 539 seconds by postgrey-1.27 at vger.kernel.org; Sat, 28 Dec 2013 15:09:10 EST
-Received: from LK-Perkele-VII (a88-112-44-140.elisa-laajakaista.fi [88.112.44.140])
-	by emh06.mail.saunalahti.fi (Postfix) with ESMTP id D8F6169978;
-	Sat, 28 Dec 2013 22:00:07 +0200 (EET)
+	id S1750818Ab3L1UvN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Dec 2013 15:51:13 -0500
+Received: from mail-yh0-f44.google.com ([209.85.213.44]:32931 "EHLO
+	mail-yh0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750739Ab3L1UvM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Dec 2013 15:51:12 -0500
+Received: by mail-yh0-f44.google.com with SMTP id f64so2158925yha.3
+        for <git@vger.kernel.org>; Sat, 28 Dec 2013 12:51:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=/+NLyxzFQ63AfGElKQmWnJ+GBFPYkfHtoVHuLSNJSS4=;
+        b=pDgYGs9XTd/B4X/aZ9Crl174bmsH6BvAEaFXosNJuoUBQL6hOS6ZExd9IlJ5CZrh/K
+         wdussbO5FoZXbV4Af5hhnS2K6LHNATmiQdsrXmKUqW8uaIpETHQuORq8C+HtyIjITdDq
+         Q+cHAsLkL4zCyvvSrhKKwD6pBf/UgFQMdUIqjoEHs+X6Og1uL3J9QVEvEXceMz3yhlSp
+         Av2XSIoOXrU3xceTziVuTFsxRJMBSEyIo823QajDjbDp/Zj289/MIaKrJ3UuT6IgXUA7
+         om9xeyiF9rUd8WYyz1IMwnHiRG0VPtaIjff7pEELhM56dv+qfEdW2zNWLDd5JWOZf88K
+         ePcQ==
+X-Received: by 10.236.44.102 with SMTP id m66mr2946449yhb.89.1388263872030;
+        Sat, 28 Dec 2013 12:51:12 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id 9sm53156536yhe.21.2013.12.28.12.51.10
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Sat, 28 Dec 2013 12:51:10 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <7viouaj5p0.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <20131228093340.GC21109@sigill.intra.peff.net>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239787>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239788>
 
-On Fri, Dec 27, 2013 at 02:21:31PM -0800, Junio C Hamano wrote:
-> Konstantin Khomoutov <flatworm@users.sourceforge.net> writes:
-> >
-> > The Git protocol does not implement it itself but you can channel it
-> > over a TLS tunnel (via stunnel for instance).  Unfortunately, this
-> > means a specialized software and setup on both ends so if the question
-> > was about a general client using stock Git then the answer is no, it's
-> > impossible.
-> 
-> Hmph, I somehow had an impression that you wouldn't need anything
-> more complex than a simple helper that uses git-remote-ext on the
-> client side. On the remote end, you'd need to have something that
-> terminates the incoming SSL/TLS and plugs it to your git daemon.
+Jeff King wrote:
 
-If you have some tool that can do cleartext I/O from stdin/stdout
-and establishes ciphertext connection itself, you can use it with
-git-remote-ext. It was written for cases exactly like that.
+> I am not _that_ bothered by the "known breakage", but AFAICT there is
+> zero benefit to keeping this redundant test.
 
-To do git:// inside, use the %G pseudo-argument.
+Devil's advocate: it ensures that anyone wrapping git's tests (like
+the old smoketest infrastructure experiment) is able to handle an
+expected failure.
 
--Ilari
+But in practice I don't mind the behavior before or after this patch.
+If the test harness is that broken, we'll know.  And people writing
+code that wraps git's tests can write their own custom sanity-checks.
