@@ -1,120 +1,62 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: [PATCH v4 23/23] compat/mingw.h: Fix the MinGW and msvc builds
-Date: Sat, 28 Dec 2013 15:58:07 +0000
-Message-ID: <52BEF50F.6010803@ramsay1.demon.co.uk>
-References: <20131221135651.GA20818@sigill.intra.peff.net> <20131221140052.GW21145@sigill.intra.peff.net> <CABPQNSa+mtVoMiN_mxVfYW_=JMxO-0Odv5uLnGhknNhDq1yWrw@mail.gmail.com> <20131228100050.GA24929@sigill.intra.peff.net>
+From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+Subject: Re: git:// protocol over SSL/TLS
+Date: Sat, 28 Dec 2013 22:00:07 +0200
+Message-ID: <20131228200007.GA13655@LK-Perkele-VII>
+References: <CAErtv27qUMo9LsGAZtk5Zv9qnZRB_YAXhtskvrrNbWGqadQh7Q@mail.gmail.com>
+ <20131227173655.3f3109e7ba848c90b302e2f9@domain007.com>
+ <7viouaj5p0.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>, Erik Faye-Lund <kusmabite@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Dec 28 17:15:28 2013
+Content-Type: text/plain; charset=utf-8
+Cc: Konstantin Khomoutov <flatworm@users.sourceforge.net>,
+	Sergey Sharybin <sergey.vfx@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Dec 28 21:09:18 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VwwHI-0005pX-K4
-	for gcvg-git-2@plane.gmane.org; Sat, 28 Dec 2013 16:58:17 +0100
+	id 1Vx0CD-0005Yy-4j
+	for gcvg-git-2@plane.gmane.org; Sat, 28 Dec 2013 21:09:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755440Ab3L1P6M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Dec 2013 10:58:12 -0500
-Received: from mdfmta009.mxout.tch.inty.net ([91.221.169.50]:52310 "EHLO
-	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754677Ab3L1P6L (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Dec 2013 10:58:11 -0500
-Received: from mdfmta009.tch.inty.net (unknown [127.0.0.1])
-	by mdfmta009.tch.inty.net (Postfix) with ESMTP id B0850128075;
-	Sat, 28 Dec 2013 15:58:09 +0000 (GMT)
-Received: from mdfmta009.tch.inty.net (unknown [127.0.0.1])
-	by mdfmta009.tch.inty.net (Postfix) with ESMTP id 6DE4E128074;
-	Sat, 28 Dec 2013 15:58:09 +0000 (GMT)
-Received: from [192.168.254.3] (unknown [80.176.147.220])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mdfmta009.tch.inty.net (Postfix) with ESMTP;
-	Sat, 28 Dec 2013 15:58:08 +0000 (GMT)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.2.0
-In-Reply-To: <20131228100050.GA24929@sigill.intra.peff.net>
-X-MDF-HostID: 22
+	id S1751025Ab3L1UJL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Dec 2013 15:09:11 -0500
+Received: from emh06.mail.saunalahti.fi ([62.142.5.116]:46626 "EHLO
+	emh06.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750837Ab3L1UJK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Dec 2013 15:09:10 -0500
+X-Greylist: delayed 539 seconds by postgrey-1.27 at vger.kernel.org; Sat, 28 Dec 2013 15:09:10 EST
+Received: from LK-Perkele-VII (a88-112-44-140.elisa-laajakaista.fi [88.112.44.140])
+	by emh06.mail.saunalahti.fi (Postfix) with ESMTP id D8F6169978;
+	Sat, 28 Dec 2013 22:00:07 +0200 (EET)
+Content-Disposition: inline
+In-Reply-To: <7viouaj5p0.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239786>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239787>
 
-On 28/12/13 10:00, Jeff King wrote:
-> On Wed, Dec 25, 2013 at 11:08:57PM +0100, Erik Faye-Lund wrote:
+On Fri, Dec 27, 2013 at 02:21:31PM -0800, Junio C Hamano wrote:
+> Konstantin Khomoutov <flatworm@users.sourceforge.net> writes:
+> >
+> > The Git protocol does not implement it itself but you can channel it
+> > over a TLS tunnel (via stunnel for instance).  Unfortunately, this
+> > means a specialized software and setup on both ends so if the question
+> > was about a general client using stock Git then the answer is no, it's
+> > impossible.
 > 
->> On Sat, Dec 21, 2013 at 3:00 PM, Jeff King <peff@peff.net> wrote:
->>> From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
->>>
->>> Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
->>> Signed-off-by: Junio C Hamano <gitster@pobox.com>
->>> Signed-off-by: Jeff King <peff@peff.net>
->>> ---
->>>  compat/mingw.h | 1 +
->>>  1 file changed, 1 insertion(+)
->>>
->>> diff --git a/compat/mingw.h b/compat/mingw.h
->>> index 92cd728..8828ede 100644
->>> --- a/compat/mingw.h
->>> +++ b/compat/mingw.h
->>> @@ -345,6 +345,7 @@ static inline char *mingw_find_last_dir_sep(const char *path)
->>>  #define PATH_SEP ';'
->>>  #define PRIuMAX "I64u"
->>>  #define PRId64 "I64d"
->>> +#define PRIx64 "I64x"
->>>
->>
->> Please, move this before patch #8, and adjust the commit message.
-> 
-> Yeah, that makes sense. Though I think we can do one better and simply
-> remove the need for it entirely. The only use of PRIx64 is in a
-> debugging function that does not get called.
-> 
-> How about squashing the patch below into patch 8 ("ewah: compressed
-> bitmap implementation"):
-> 
-> diff --git a/ewah/ewah_bitmap.c b/ewah/ewah_bitmap.c
-> index f104b87..9ced2da 100644
-> --- a/ewah/ewah_bitmap.c
-> +++ b/ewah/ewah_bitmap.c
-> @@ -381,18 +381,6 @@ void ewah_iterator_init(struct ewah_iterator *it, struct ewah_bitmap *parent)
->  		read_new_rlw(it);
->  }
->  
-> -void ewah_dump(struct ewah_bitmap *self)
-> -{
-> -	size_t i;
-> -	fprintf(stderr, "%"PRIuMAX" bits | %"PRIuMAX" words | ",
-> -		(uintmax_t)self->bit_size, (uintmax_t)self->buffer_size);
-> -
-> -	for (i = 0; i < self->buffer_size; ++i)
-> -		fprintf(stderr, "%016"PRIx64" ", (uint64_t)self->buffer[i]);
-> -
-> -	fprintf(stderr, "\n");
-> -}
-> -
->  void ewah_not(struct ewah_bitmap *self)
->  {
->  	size_t pointer = 0;
-> diff --git a/ewah/ewok.h b/ewah/ewok.h
-> index 619afaa..43adeb5 100644
-> --- a/ewah/ewok.h
-> +++ b/ewah/ewok.h
-> @@ -193,8 +193,6 @@ void ewah_and(
->  	struct ewah_bitmap *ewah_j,
->  	struct ewah_bitmap *out);
->  
-> -void ewah_dump(struct ewah_bitmap *self);
-> -
->  /**
->   * Direct word access
->   */
+> Hmph, I somehow had an impression that you wouldn't need anything
+> more complex than a simple helper that uses git-remote-ext on the
+> client side. On the remote end, you'd need to have something that
+> terminates the incoming SSL/TLS and plugs it to your git daemon.
 
-I'm always in favour of removing unused (or unwanted) code! :-D
+If you have some tool that can do cleartext I/O from stdin/stdout
+and establishes ciphertext connection itself, you can use it with
+git-remote-ext. It was written for cases exactly like that.
 
-ATB,
-Ramsay Jones
+To do git:// inside, use the %G pseudo-argument.
+
+-Ilari
