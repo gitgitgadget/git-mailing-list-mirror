@@ -1,104 +1,101 @@
-From: =?KOI8-R?B?98HTyczJyiDtwcvB0s/X?= <einmalfel@gmail.com>
-Subject: [PATCH 2/2] t6010: add test to git merge-base --all --octopus
-Date: Sat, 28 Dec 2013 15:04:41 +0400
-Message-ID: <CABEtfDFRYkbVsJc2SZcCPwyUBAN=3dMv9yoYuoRce4c7VBxrkg@mail.gmail.com>
+From: Thomas Rast <tr@thomasrast.ch>
+Subject: Re: german translation bug
+Date: Sat, 28 Dec 2013 14:08:24 +0100
+Message-ID: <87txdtazsn.fsf@linux-1gf2.Speedport_W723_V_Typ_A_1_00_098>
+References: <1573480.3a5WD62Cc4@i5>
+	<CAN0XMOJf=H__eFmbcBs-S50ASun94ASL9FiL1zM6eeTheYpxTg@mail.gmail.com>
+	<1513689.dimJgKglhA@i5> <3869663.MXlVypzsjR@i5>
+	<20131226165815.GR20443@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: jrnieder@gmail.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 28 12:04:49 2013
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Wolfgang Rohdewald <wolfgang@rohdewald.de>,
+	Ralf Thielow <ralf.thielow@gmail.com>,
+	git <git@vger.kernel.org>, Jiang Xin <worldhello.net@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Dec 28 14:15:15 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VwrhH-0000yn-1c
-	for gcvg-git-2@plane.gmane.org; Sat, 28 Dec 2013 12:04:47 +0100
+	id 1VwtjW-00078p-Ao
+	for gcvg-git-2@plane.gmane.org; Sat, 28 Dec 2013 14:15:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755089Ab3L1LEn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Dec 2013 06:04:43 -0500
-Received: from mail-wi0-f171.google.com ([209.85.212.171]:54790 "EHLO
-	mail-wi0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753225Ab3L1LEm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Dec 2013 06:04:42 -0500
-Received: by mail-wi0-f171.google.com with SMTP id bz8so14998722wib.16
-        for <git@vger.kernel.org>; Sat, 28 Dec 2013 03:04:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        bh=ajnDQdccXLeuGaE2wyjrPtKqXh0HRX6RKcuifqdHNzM=;
-        b=CU5NUC9Fejf1WT1jZnuYF7pJlvMzip8uDSUkt+f4zzTa9Coz9eOJ9zKIKJw2mcZROw
-         mnu5no8/ZCiSP+Y3hwIfYoXUvCsmUlBCUiIIRYCm478zPcWNVgF1U+t28keT3WY5jzM5
-         vIZFCjVXmSgwq2zD7H+JaIPZFosq8JvZKECJ77tBylfmuvIN7W2yj6Axf7Ja89okz13P
-         9T/DWko6fqnwM1x0w3vwj8+KjbvlFR25Diq0qUZ6Xs7RD11Sqg4FGMIDwF35e9lw6pqo
-         HP43mWuL/0bIXjZV6BSHB5sqQdlNYA/wUIDa6CpqTDX7A56afuT1sUVAvNrKhMr2qShH
-         FG3A==
-X-Received: by 10.180.205.138 with SMTP id lg10mr36080048wic.30.1388228681316;
- Sat, 28 Dec 2013 03:04:41 -0800 (PST)
-Received: by 10.194.123.228 with HTTP; Sat, 28 Dec 2013 03:04:41 -0800 (PST)
+	id S1755337Ab3L1NOs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 28 Dec 2013 08:14:48 -0500
+Received: from ip1.thgersdorf.net ([148.251.9.194]:45408 "EHLO mail.psioc.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755332Ab3L1NOr convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 28 Dec 2013 08:14:47 -0500
+X-Greylist: delayed 369 seconds by postgrey-1.27 at vger.kernel.org; Sat, 28 Dec 2013 08:14:46 EST
+Received: from localhost (localhost [127.0.0.1])
+	by localhost.psioc.net (Postfix) with ESMTP id 2D4AF4D652C;
+	Sat, 28 Dec 2013 14:08:35 +0100 (CET)
+X-Virus-Scanned: amavisd-new at psioc.net
+Received: from mail.psioc.net ([127.0.0.1])
+	by localhost (mail.psioc.net [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id qEvuQEy_w7pE; Sat, 28 Dec 2013 14:08:25 +0100 (CET)
+Received: from linux-1gf2.Speedport_W723_V_Typ_A_1_00_098.thomasrast.ch (pD9EB29CB.dip0.t-ipconnect.de [217.235.41.203])
+	(using TLSv1.2 with cipher AES128-GCM-SHA256 (128/128 bits))
+	(Client did not present a certificate)
+	by mail.psioc.net (Postfix) with ESMTPSA id EAE184D64BD;
+	Sat, 28 Dec 2013 14:08:24 +0100 (CET)
+In-Reply-To: <20131226165815.GR20443@google.com> (Jonathan Nieder's message of
+	"Thu, 26 Dec 2013 08:58:16 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239783>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239784>
 
-And here is the test:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-with git 1.8.5.2 this test don't pass because of git merge-base may
-return duplicates and incorrect set of bases (not best common
-ancestors)
----
- t/t6010-merge-base.sh | 39 +++++++++++++++++++++++++++++++++++++++
- 1 file changed, 39 insertions(+)
+> Hi,
+>
+> Wolfgang Rohdewald wrote:
+>> Am Mittwoch, 25. Dezember 2013, 22:53:29 schrieb Wolfgang Rohdewald:
+>
+>>> I suppose I should open a KDE bug report?
+>>
+>> I meant a ubuntu bug report of course.
+>
+> Yes, please.  Feel free to cc me if doing so.
+>
+> In generally, I'm a bit uncomfortable lately at how Ubuntu's
+> translation system works for Git.  They are trying to solve a real
+> problem: old Ubuntu releases stick to old versions of git that do not
+> have as complete translations as the latest version.  But their
+> solution to this problem does not seem to work well and creates a lot
+> of confusion.  Worse, it creates duplicated effort, as their custom
+> translations don't seem to have been submitted upstream for review or
+> inclusion.
 
-diff --git a/t/t6010-merge-base.sh b/t/t6010-merge-base.sh
-index f80bba8..8652c12 100755
---- a/t/t6010-merge-base.sh
-+++ b/t/t6010-merge-base.sh
-@@ -230,4 +230,43 @@ test_expect_success 'criss-cross merge-base for
-octopus-step' '
-  test_cmp expected.sorted actual.sorted
- '
+Even worse, the German one under discussion uses an entirely different
+vocabulary to describe git concepts:
 
-+test_expect_success 'merge-base --octopus --all for complex tree' '
-+ # Best common ancestor for JE, JAA and JDD is JC
-+ #             JE
-+ #            / |
-+ #           /  |
-+ #          /   |
-+ #  JAA    /    |
-+ #   |\   /     |
-+ #   | \  | JDD |
-+ #   |  \ |/ |  |
-+ #   |   JC JD  |
-+ #   |    | /|  |
-+ #   |    |/ |  |
-+ #  JA    |  |  |
-+ #   |\  /|  |  |
-+ #   | JB |  |  |
-+ #   \  \ | /   /
-+ #    \__\|/___/
-+ #        J
-+ test_commit J &&
-+ test_commit JB &&
-+ git reset --hard J &&
-+ test_commit JC &&
-+ git reset --hard J &&
-+ test_commit JTEMP1 &&
-+ test_merge JA JB &&
-+ test_merge JAA JC &&
-+ git reset --hard J &&
-+ test_commit JTEMP2 &&
-+ test_merge JD JB &&
-+ test_merge JDD JC &&
-+ git reset --hard J &&
-+ test_commit JTEMP3 &&
-+ test_merge JE JC &&
-+ git rev-parse JC > expected &&
-+ git merge-base --all --octopus JAA JDD JE > actual &&
-+ test_cmp expected actual
-+'
-+
- test_done
--- 
-1.8.3.1
+  ubuntu (from OP):
+    wr@s5:~/src/linux$ git status
+    # Auf Zweig drm-intel-testing
+    Nichts zum Einreichen, Arbeitsverzeichnis leer
+
+  de.po current:
+    msgid "nothing to commit, working directory clean\n"
+    msgstr "nichts zu committen, Arbeitsverzeichnis unver=C3=A4ndert\n"
+
+  de.po before the big vocabulary change:
+     msgid "nothing to commit, working directory clean\n"
+     msgstr "nichts einzutragen, Arbeitsverzeichnis sauber\n"
+
+So their word for "commit (v.)" is "einreichen", whereas we had
+"committen" and before that "eintragen".  As if there weren't enough
+confusion around German terminology yet.
+
+(FWIW I also think it's a terrible choice because it suggests a
+transaction between multiple people, which to me sounds like it should
+mean "push".)
+
+--=20
+Thomas Rast
+tr@thomasrast.ch
