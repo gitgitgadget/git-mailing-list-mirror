@@ -1,7 +1,9 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v4 00/10] teach replace objects to sha1_object_info_extended()
-Date: Sat, 28 Dec 2013 12:00:05 +0100
-Message-ID: <20131228105505.2272.58873.chriscool@tuxfamily.org>
+Subject: [PATCH v4 05/10] t6050: show that git cat-file --batch fails with
+ replace objects
+Date: Sat, 28 Dec 2013 12:00:10 +0100
+Message-ID: <20131228110016.2272.70512.chriscool@tuxfamily.org>
+References: <20131228105505.2272.58873.chriscool@tuxfamily.org>
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Joey Hess <joey@kitenet.net>,
 	Eric Sunshine <sunshine@sunshineco.com>,
@@ -13,69 +15,61 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vwrdw-0007j1-65
-	for gcvg-git-2@plane.gmane.org; Sat, 28 Dec 2013 12:01:20 +0100
+	id 1Vwrdx-0007j1-AC
+	for gcvg-git-2@plane.gmane.org; Sat, 28 Dec 2013 12:01:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754157Ab3L1LAs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Dec 2013 06:00:48 -0500
-Received: from mail-3y.bbox.fr ([194.158.98.45]:34545 "EHLO mail-3y.bbox.fr"
+	id S1755150Ab3L1LAw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Dec 2013 06:00:52 -0500
+Received: from mail-2y.bbox.fr ([194.158.98.15]:46905 "EHLO mail-2y.bbox.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751974Ab3L1LAr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Dec 2013 06:00:47 -0500
+	id S1755089Ab3L1LAt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Dec 2013 06:00:49 -0500
 Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-3y.bbox.fr (Postfix) with ESMTP id 9E8BA50;
-	Sat, 28 Dec 2013 12:00:45 +0100 (CET)
+	by mail-2y.bbox.fr (Postfix) with ESMTP id 753BC43;
+	Sat, 28 Dec 2013 12:00:48 +0100 (CET)
+X-git-sha1: 58390c4fd209626137f6ebaae38f76f53eff3669 
 X-Mailer: git-mail-commits v0.5.2
+In-Reply-To: <20131228105505.2272.58873.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239773>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239774>
 
-Here is version 4 of a patch series to improve the way
-sha1_object_info_extended() behaves when it is passed a
-replaced object. The idea is to add a flags argument to it
-in the same way as what has been done to read_sha1_file().
+When --batch is passed to git cat-file, the sha1_object_info_extended()
+function is used to get information about the objects passed to
+git cat-file.
 
-This patch series was inspired by a sub thread in this
-discussion:
+Unfortunately sha1_object_info_extended() doesn't take care of
+object replacement properly, so it will often fail with a
+message like this:
 
-http://thread.gmane.org/gmane.comp.version-control.git/238118
+$ echo a3fb2e1845a1aaf129b7975048973414dc172173 | git cat-file --batch
+a3fb2e1845a1aaf129b7975048973414dc172173 commit 231
+fatal: object a3fb2e1845a1aaf129b7975048973414dc172173 change size!?
 
-The only changes compared to version 3 are the following:
+The goal of this patch is to show this breakage.
 
-	- the name of the 'full' format is now 'long'
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ t/t6050-replace.sh | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-	- the names of the replace_format enum fields
-	have been prepended with 'REPLACE_FORMAT_'. This
-	avoids a compilation conflict on Windows where
-	SHORT is predefined. Thanks to Karsten for
-	reporting this problem.
-
-These changes only affect patches 7/10, 8/10, 9/10 and 10/10
-that add a new --format option to list replace refs.
-
-Christian Couder (10):
-  Rename READ_SHA1_FILE_REPLACE flag to LOOKUP_REPLACE_OBJECT
-  replace_object: don't check read_replace_refs twice
-  Introduce lookup_replace_object_extended() to pass flags
-  Add an "unsigned flags" parameter to sha1_object_info_extended()
-  t6050: show that git cat-file --batch fails with replace objects
-  sha1_file: perform object replacement in sha1_object_info_extended()
-  builtin/replace: teach listing using short, medium or long formats
-  t6050: add tests for listing with --format
-  builtin/replace: unset read_replace_refs
-  Documentation/git-replace: describe --format option
-
- Documentation/git-replace.txt | 19 +++++++++++-
- builtin/cat-file.c            |  2 +-
- builtin/replace.c             | 67 ++++++++++++++++++++++++++++++++++++++-----
- cache.h                       | 12 ++++++--
- replace_object.c              |  3 --
- sha1_file.c                   | 20 ++++++-------
- streaming.c                   |  2 +-
- t/t6050-replace.sh            | 42 +++++++++++++++++++++++++++
- 8 files changed, 141 insertions(+), 26 deletions(-)
-
+diff --git a/t/t6050-replace.sh b/t/t6050-replace.sh
+index 7d47984..b90dbdc 100755
+--- a/t/t6050-replace.sh
++++ b/t/t6050-replace.sh
+@@ -276,6 +276,11 @@ test_expect_success '-f option bypasses the type check' '
+ 	git replace -f HEAD^ $BLOB
+ '
+ 
++test_expect_failure 'git cat-file --batch works on replace objects' '
++	git replace | grep $PARA3 &&
++	echo $PARA3 | git cat-file --batch
++'
++
+ test_expect_success 'replace ref cleanup' '
+ 	test -n "$(git replace)" &&
+ 	git replace -d $(git replace) &&
 -- 
 1.8.4.1.616.g07f5c81
