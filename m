@@ -1,195 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Remove the line length limit for graft files
-Date: Fri, 27 Dec 2013 16:50:11 -0800
-Message-ID: <xmqqd2khu7cs.fsf@gitster.dls.corp.google.com>
-References: <alpine.DEB.1.00.1312272146590.1191@s15462909.onlinehome-server.info>
-	<20131227210447.GE20443@google.com>
-	<alpine.DEB.1.00.1312272208070.1191@s15462909.onlinehome-server.info>
-	<20131227223240.GG20443@google.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v2 00/21] Support multiple worktrees
+Date: Sat, 28 Dec 2013 09:46:57 +0700
+Message-ID: <CACsJy8BV39frnQo1BW2p1J7H0pU7LifzcUey61J5Jkc6Wn=2rw@mail.gmail.com>
+References: <CACsJy8BV6uerMyHNHviL0Jy8s+_jca8NM-hVfnM=u4cr-=JX1Q@mail.gmail.com>
+ <xmqq7gaze00k.fsf@gitster.dls.corp.google.com> <CACsJy8DuXbCTjcVJNH=w6h3zgo0sxRgMfSQXZFtngYy2FLJTDg@mail.gmail.com>
+ <7vvbyhjsp4.fsf@alter.siamese.dyndns.org> <CACsJy8DL5=B=jch6j6g_3xj3KRsLXxwMChVHF9MUFvafhWhYag@mail.gmail.com>
+ <7vy537k038.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,  git@vger.kernel.org,  msysgit@googlegroups.com
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: msysgit+bncBCG77UMM3EJRBSWA7CKQKGQENO4BF7A@googlegroups.com Sat Dec 28 01:50:22 2013
-Return-path: <msysgit+bncBCG77UMM3EJRBSWA7CKQKGQENO4BF7A@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-qa0-f62.google.com ([209.85.216.62])
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Dec 28 03:47:51 2013
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCG77UMM3EJRBSWA7CKQKGQENO4BF7A@googlegroups.com>)
-	id 1Vwi6d-0004UI-Q1
-	for gcvm-msysgit@m.gmane.org; Sat, 28 Dec 2013 01:50:20 +0100
-Received: by mail-qa0-f62.google.com with SMTP id w5sf2367567qac.27
-        for <gcvm-msysgit@m.gmane.org>; Fri, 27 Dec 2013 16:50:18 -0800 (PST)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1VwjwN-0002z8-1Y
+	for gcvg-git-2@plane.gmane.org; Sat, 28 Dec 2013 03:47:51 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1754875Ab3L1Cr2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Dec 2013 21:47:28 -0500
+Received: from mail-qe0-f52.google.com ([209.85.128.52]:39792 "EHLO
+	mail-qe0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754613Ab3L1Cr1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Dec 2013 21:47:27 -0500
+Received: by mail-qe0-f52.google.com with SMTP id ne12so9499253qeb.25
+        for <git@vger.kernel.org>; Fri, 27 Dec 2013 18:47:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type;
-        bh=9saCjQZxdJzikmXjKkBcvvRLQ6UEMbjFTP02ybX5TkU=;
-        b=yG6Z1NTFsqjVkebTr9sqqbnEP2/Hqhg6UBF8l1md8VV4XQHx9IImhNOn8LpuWREOEr
-         /UbN77oIRMUWyxAIYcd+j+ZKOgDIrqlYVjRP2qQX0e3peMdHmVMISQeF2sogUtJa5Pm9
-         pS1DhpKvpsVf0ss7dxuR5W2NiRRaeCRwgXw5RRkPDtBgdxxEp7VxyIXzH7JeDAy8gemP
-         hPdNGxjMRfbyDj4ICFaHgsslCEa0WTIo45wVEd+u6232MWbMClFwePsiawyROeVHiwmg
-         7HflRiEf6acHmEotXSxxc9sCXW9CxeJ0pLicKQQXuky7BYfLkNogpaVLKO9GOABOBQAY
-         f6RQ==
-X-Received: by 10.50.66.101 with SMTP id e5mr788647igt.12.1388191818888;
-        Fri, 27 Dec 2013 16:50:18 -0800 (PST)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.50.30.170 with SMTP id t10ls4397539igh.9.gmail; Fri, 27 Dec
- 2013 16:50:18 -0800 (PST)
-X-Received: by 10.66.150.106 with SMTP id uh10mr20640751pab.13.1388191818376;
-        Fri, 27 Dec 2013 16:50:18 -0800 (PST)
-Received: from smtp.pobox.com (b-pb-sasl-quonix.pobox.com. [208.72.237.35])
-        by gmr-mx.google.com with ESMTP id ti10si1157158vdc.3.2013.12.27.16.50.18
-        for <msysgit@googlegroups.com>;
-        Fri, 27 Dec 2013 16:50:18 -0800 (PST)
-Received-SPF: pass (google.com: best guess record for domain of jch@b-sasl-quonix.pobox.com designates 208.72.237.35 as permitted sender) client-ip=208.72.237.35;
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CAA1D5FCCF;
-	Fri, 27 Dec 2013 19:50:17 -0500 (EST)
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B1F785FCCE;
-	Fri, 27 Dec 2013 19:50:17 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 05ADF5FCCC;
-	Fri, 27 Dec 2013 19:50:17 -0500 (EST)
-In-Reply-To: <20131227223240.GG20443@google.com> (Jonathan Nieder's message of
-	"Fri, 27 Dec 2013 14:32:40 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 04E50F8A-6F5A-11E3-8A95-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
-X-Original-Sender: gitster@pobox.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: best guess record for domain of jch@b-sasl-quonix.pobox.com
- designates 208.72.237.35 as permitted sender) smtp.mail=jch@b-sasl-quonix.pobox.com;
-       dkim=pass header.i=@pobox.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239759>
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=qUZFdGahdRs6MGLeEp11UW8QbN+W5ijt+TaOYFqn2gU=;
+        b=NwnlPk7qkw9/e/GjeqlqRb+baIlmhqbn6mFGd4cXBhhBZg7fbq3jul6olIe4GxEqzA
+         WK9GCewacP8j3K0r+GYu+bojx38XJ0IiJIG7dP8mmPRLUF/KJAxNqvteRdfDQGzNIk7R
+         eXa5amyG2s8wsqtdCMZXlDxmmoxvIt/10wkhZHuWbquMxd8E+xgOJ708emZ0jLSkn24C
+         2NhHpTMGvigA/pQgmD88U1qiBZUemqhAVUZi+gE6MIMQXgPlA+2jyzm8JA6xdz5NGX+q
+         W1cfW/nuAdC2om4dfkPt7umqe2PrvC+2W1mT9K4UNGtXuFjouGz0w3HZAxAt9KBTZDda
+         auFA==
+X-Received: by 10.224.165.12 with SMTP id g12mr83458814qay.89.1388198847293;
+ Fri, 27 Dec 2013 18:47:27 -0800 (PST)
+Received: by 10.96.136.98 with HTTP; Fri, 27 Dec 2013 18:46:57 -0800 (PST)
+In-Reply-To: <7vy537k038.fsf@alter.siamese.dyndns.org>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239760>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
-
-> Johannes Schindelin wrote:
->> On Fri, 27 Dec 2013, Jonathan Nieder wrote:
+On Fri, Dec 27, 2013 at 12:12 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Duy Nguyen <pclouds@gmail.com> writes:
 >
->>> Is this easy to reproduce so some interested but lazy person could
->>> write a test?
+>> On Sun, Dec 22, 2013 at 1:38 PM, Junio C Hamano <gitster@pobox.com> wrote:
 >>
->> Yep. Make 25 orphan commits, add a graft line to make the first a merge of
->> the rest.
+>>> Do we even need to expose them as ref-like things as a part of the
+>>> external API/UI in the first place?  For end-user scripts that want
+>>> to operate in a real or borrowing worktree, there should be no
+>>> reason to touch this "other" repository directly.  Things like "if
+>>> one of the wortrees tries to check out a branch that is already
+>>> checked out elsewhere, error out" policy may need to consult the
+>>> other worktrees via $GIT_COMMON_DIR mechanism but at that level we
+>>> have all the control without contaminating end-user facing ref
+>>> namespace in a way main/FETCH_HEAD... do.
+>>
+>> No, external API/UI is just extra bonus. We need to (or should) do so
+>> in order to handle $GIT_COMMON_DIR/HEAD exactly like how we do normal
+>> refs.
 >
-> Thanks.  Here's a pair of tests doing that.
+> And that is what I consider a confusion-trigger, not a nice bonus.
 >
-> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
-> ---
->  t/annotate-tests.sh          | 21 +++++++++++++++++++++
->  t/t6101-rev-parse-parents.sh | 16 +++++++++++++++-
->  2 files changed, 36 insertions(+), 1 deletion(-)
-
-Makes sense.
-
-Thanks, both.  Small lint-picking like this change to perfect the
-system, as opposed to earth-shattering new shinies, tend to often
-get neglected but are very much appreciated.
-
-> diff --git a/t/annotate-tests.sh b/t/annotate-tests.sh
-> index c9d105d..304c7b7 100644
-> --- a/t/annotate-tests.sh
-> +++ b/t/annotate-tests.sh
-> @@ -116,6 +116,27 @@ test_expect_success 'blame evil merge' '
->  	check_count A 2 B 1 B1 2 B2 1 "A U Thor" 1
->  '
->  
-> +test_expect_success 'blame huge graft' '
-> +	test_when_finished "git checkout branch2" &&
-> +	test_when_finished "rm -f .git/info/grafts" &&
-> +	graft= &&
-> +	for i in 0 1 2
-> +	do
-> +		for j in 0 1 2 3 4 5 6 7 8 9
-> +		do
-> +			git checkout --orphan "$i$j" &&
-> +			printf "%s\n" "$i" "$j" >file &&
-> +			test_tick &&
-> +			GIT_AUTHOR_NAME=$i$j GIT_AUTHOR_EMAIL=$i$j@test.git \
-> +			git commit -a -m "$i$j" &&
-> +			commit=$(git rev-parse --verify HEAD) &&
-> +			graft="$graft$commit "
-> +		done
-> +	done &&
-> +	printf "%s " $graft >.git/info/grafts &&
-> +	check_count -h 00 01 1 10 1
-> +'
-> +
->  test_expect_success 'setup incomplete line' '
->  	echo "incomplete" | tr -d "\\012" >>file &&
->  	GIT_AUTHOR_NAME="C" GIT_AUTHOR_EMAIL="C@test.git" \
-> diff --git a/t/t6101-rev-parse-parents.sh b/t/t6101-rev-parse-parents.sh
-> index 7ea14ce..10b1452 100755
-> --- a/t/t6101-rev-parse-parents.sh
-> +++ b/t/t6101-rev-parse-parents.sh
-> @@ -20,7 +20,17 @@ test_expect_success 'setup' '
->  	test_commit start2 &&
->  	git checkout master &&
->  	git merge -m next start2 &&
-> -	test_commit final
-> +	test_commit final &&
-> +
-> +	test_seq 40 |
-> +	while read i
-> +	do
-> +		git checkout --orphan "b$i" &&
-> +		test_tick &&
-> +		git commit --allow-empty -m "$i" &&
-> +		commit=$(git rev-parse --verify HEAD) &&
-> +		printf "$commit " >>.git/info/grafts
-> +	done
->  '
->  
->  test_expect_success 'start is valid' '
-> @@ -79,6 +89,10 @@ test_expect_success 'final^1^! = final^1 ^final^1^1 ^final^1^2' '
->  	test_cmp expect actual
->  '
->  
-> +test_expect_success 'large graft octopus' '
-> +	test_cmp_rev_output b31 "git rev-parse --verify b1^30"
-> +'
-> +
->  test_expect_success 'repack for next test' '
->  	git repack -a -d
->  '
-> -- 
-> 1.8.5.1
+> I do not think it is particularly a good idea to contaminate
+> end-user namespace for this kind of "peek another repository"
+> special operation.
 >
-> -- 
+> In order to handle your "multiple worktrees manipulating the same
+> branch" case sanely, you need to be aware of not just the real
+> repository your worktree is borrowing from, but also _all_ the other
+> worktrees that borrow from that same real repository, so a single
+> "main" virtual namespace will not cut it. You will be dealing with
+> an unbounded set of HEADs, one for each such worktree.
 
+Yes. My problem is, while all secondary worktrees are in
+$GIT_DIR/repos and their HEADs can be accessed there with
+"repos/xxx/HEAD", the first worktree's HEAD can't be accessed this way
+because "HEAD" in a linked checkouts means repos/<my worktree>/HEAD.
+
+> Can't we do this by adding a "with this real repository" layer,
+> e.g. "resolve HEAD wrt that repository", somewhat similar to how we
+> peek into submodule namespaces?
+
+Hmm.. never thought of it like a "submodule". Thanks for the idea.
 -- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/groups/opt_out.
+Duy
