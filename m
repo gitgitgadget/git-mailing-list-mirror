@@ -1,79 +1,133 @@
-From: Sergey Sharybin <sergey.vfx@gmail.com>
-Subject: Re: git:// protocol over SSL/TLS
-Date: Sun, 29 Dec 2013 02:52:48 +0600
-Message-ID: <CAErtv24VXqq3HenbygvUG8qhsMTxKfC8-U0Udrgobia0u4vGsw@mail.gmail.com>
-References: <CAErtv27qUMo9LsGAZtk5Zv9qnZRB_YAXhtskvrrNbWGqadQh7Q@mail.gmail.com>
-	<20131227173655.3f3109e7ba848c90b302e2f9@domain007.com>
-	<CAErtv25JGxEs3ytAB019yajQooNs4k=bzukSE9kuHWAbir9-BQ@mail.gmail.com>
-	<87mwjm4c3s.fsf@igel.home>
-	<vpqwqiqpe80.fsf@anie.imag.fr>
-	<CAErtv25URyB3znN1CMd87374NUjaSFvg=cee_-c=s8bB2j052A@mail.gmail.com>
-	<20131227162606.GA6973@client.brlink.eu>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 1/3] t0000: set TEST_OUTPUT_DIRECTORY for sub-tests
+Date: Sat, 28 Dec 2013 14:13:13 -0800
+Message-ID: <20131228221313.GB5544@google.com>
+References: <20131228092731.GA26337@sigill.intra.peff.net>
+ <20131228092915.GA21109@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Andreas Schwab <schwab@linux-m68k.org>,
-	Konstantin Khomoutov <flatworm@users.sourceforge.net>,
-	Git List <git@vger.kernel.org>
-To: "Bernhard R. Link" <brl+git@mail.brlink.eu>
-X-From: git-owner@vger.kernel.org Sat Dec 28 21:52:54 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, John Keeping <john@keeping.me.uk>,
+	Thomas Rast <tr@thomasrast.ch>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Dec 28 23:13:27 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vx0sQ-0001F4-5t
-	for gcvg-git-2@plane.gmane.org; Sat, 28 Dec 2013 21:52:54 +0100
+	id 1Vx28K-0005a0-Dd
+	for gcvg-git-2@plane.gmane.org; Sat, 28 Dec 2013 23:13:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750896Ab3L1Uwu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Dec 2013 15:52:50 -0500
-Received: from mail-ve0-f169.google.com ([209.85.128.169]:48493 "EHLO
-	mail-ve0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750837Ab3L1Uwt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Dec 2013 15:52:49 -0500
-Received: by mail-ve0-f169.google.com with SMTP id c14so5484178vea.14
-        for <git@vger.kernel.org>; Sat, 28 Dec 2013 12:52:48 -0800 (PST)
+	id S1751361Ab3L1WNT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Dec 2013 17:13:19 -0500
+Received: from mail-yh0-f50.google.com ([209.85.213.50]:54002 "EHLO
+	mail-yh0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751037Ab3L1WNS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Dec 2013 17:13:18 -0500
+Received: by mail-yh0-f50.google.com with SMTP id b6so2164997yha.23
+        for <git@vger.kernel.org>; Sat, 28 Dec 2013 14:13:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=YSSbyCKw6ZvhjeirNjJaWQpT0sK51S2mmT2GabJfNv0=;
-        b=JM0sBLNxzaymcDlBfu6e1MOEnXiyV+hs3MqyQetjTYPK/C4R+Aclt1yOLFHyfZrP4a
-         C237qYgMsU2VaBZW9ejWLwP1Cxjk/aAd/pjo4LdsR/43VwY9is5a5Jun0w4CSpLDkbxb
-         sbWfrlXVgO1cX06ihB/QaxasD5tuIqcXErOn5v0ZD5GJGb5vthz88r/P54OG52uGfnHN
-         dnKIKbi65yKBQRK3vdyM8qa466i/oba8yWnt279n3i5XoeswQzDuPNcvcCqn/sdkwUuL
-         Xh5rBaPDpYJ3ublyPt7nhXSZhWHMwn1N7HB0WN4LQWWlveTJl/LxT2m2HcyJ90OECME2
-         eWDw==
-X-Received: by 10.58.100.244 with SMTP id fb20mr31177621veb.6.1388263968479;
- Sat, 28 Dec 2013 12:52:48 -0800 (PST)
-Received: by 10.52.169.2 with HTTP; Sat, 28 Dec 2013 12:52:48 -0800 (PST)
-In-Reply-To: <20131227162606.GA6973@client.brlink.eu>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=jJAQLFy6Vdut8y4xzI2Azk6SH3NMH9RGlngK1/HgL/I=;
+        b=Dgyk/anPWyrlFSpSstRNQvJ7jTzDaXnmefA4dJ8QI6QPQ+lcChdVz6Y1lA5rCVh38f
+         dWrFKHjFBbf0P6/MJ/A743a5H17KFMrH7Kec5zG4RcYnw6YpvQtPVOHzakmnfi/AwYW6
+         DzrvxHpvspmLxBhxX5CYEA3W85+ZqZrAJeW51TJFdB0uA9MD/yd63A8RzjuodZmkXrr1
+         Dg9PPzVyIi0e5pfcizkEZIf+1v6s7K0r6GGjUuUhauabkxU4TswxhFGd0XJ51Nk6Kofu
+         ZlYCCWVNqk+ujwdmU2ZvZDccKDcHuJkyaSCn0NszBP3+p9da6caie2SlcWGkkFITfqkX
+         o3qw==
+X-Received: by 10.236.85.237 with SMTP id u73mr14093503yhe.67.1388268797645;
+        Sat, 28 Dec 2013 14:13:17 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id 9sm53439689yhe.21.2013.12.28.14.13.15
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Sat, 28 Dec 2013 14:13:16 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <20131228092915.GA21109@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239789>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239790>
 
-Yeah, i understand this. We can not protect self from every single
-possible attack..
+Hi,
 
-On Fri, Dec 27, 2013 at 10:26 PM, Bernhard R. Link
-<brl+git@mail.brlink.eu> wrote:
-> * Sergey Sharybin <sergey.vfx@gmail.com> [131227 15:25]:
->> Security in this case is about being sure everyone gets exactly the
->> same repository as stored on the server, without any modifications to
->> the sources cased by MITM.
+Jeff King wrote:
+
+> Once upon a time, the test-lib library would create trash
+> directories in the current working directory, unless we were
+> explicitly told to put it elsewhere via --root. As a result,
+> t0000 created the sub-test trash directories inside its own
+> trash directory.
 >
-> Note that ssl (and thus https) only helps here against a resource-less
-> man-in-the-middle. Getting catch-all CA-signed certificates is said to
-> no longer available to everyone as easily as it was some years ago, but
-> unless you allow only one private CA (and even there clients often fail)
-> you still should assume everyone resourceful enough to still be able to
-> do MITM.
+> However, we noticed that this did not cover all cases, since
+> we would need to respect $TEST_OUTPUT_DIRECTORY even if
+> --root is not given (or is relative). Commit 38b074d fixed
+> this to consistently use the full path.
+
+So the idea if I am reading correctly is "Instead of relying on the
+implicit output directory chosen with chdir, which doesn't even work
+any more, set TEST_OUTPUT_DIRECTORY to decide where output for the
+sub-tests used by t0000's sanity checks for the test harness go".
+
+I'm not sure I completely understand the regression caused by 38b074d.
+Is the idea that before that commit, TEST_OUTPUT_DIRECTORY was only
+used for the test-results/ directory so the only harm done was some
+mixing of test results?
+
+What is the symptom this patch alleviates?
+
+> As a result, t0000's sub-tests are now created in git's
+> original test output directory rather than in our trash
+> directory.
+
+This might be the source of my confusion.  Is "sub-tests" an
+abbreviation for "sub-test trash directories" here?
+
+>            Furthermore, since some of the sub-tests simulate
+> failures, the trash directories do not get cleaned up, and
+> the cruft is left in the t/ directory.
 >
->         Bernhard R. Link
+> We could fix this by passing a new "--root=$TRASH_DIRECTORY"
+> option to the sub-test. However, we do not want the sub-tests
+> to write anything at all to git's directory (e.g., they
+> should not be writing to t/test-results, either, although
+> this is already handled by separate code).
 
+Ah, HARNESS_ACTIVE prevents output of test-results.
 
+Does the git test harness write something else to
+TEST_OUTPUT_DIRECTORY?  Is the idea that using --root would be
+functionally equivalent but (1) more confusing and (2) less
+futureproof?
 
--- 
-With best regards, Sergey Sharybin
+>                                            So the best
+> solution is to simply reset $TEST_OUTPUT_DIRECTORY entirely
+> in the sub-test, which covers this case, as well as any
+> future ones.
+
+So, to sum up: if I understand correctly
+
+ - git used to only use TEST_OUTPUT_DIRECTORY to decide where test
+   results go.  You'd have to use --root to set a custom location for
+   trash directories.
+
+ - in that old setup, t0000 leaves around extra trash directories with
+   --root, since the sub-tests inherit the parent test's $root and put
+   trash directories there.
+
+ - after 38b074d, that old problem still exists and furthermore
+   t0000 leaves around extra trash directories even when --root is not
+   in use, since the sub-tests inherit the value of
+   TEST_OUTPUT_DIRECTORY from the parent test.
+
+ - this patch fixes the TEST_OUTPUT_DIRECTORY problem (but not the $root
+   problem) by setting TEST_OUTPUT_DIRECTORY explicitly
+
+Does that sound right?  If so, should sub-tests unset $root, too?
+
+Thanks and hope that helps,
+Jonathan
