@@ -1,64 +1,119 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 3/3] t0000: drop "known breakage" test
-Date: Sun, 29 Dec 2013 02:22:27 -0500
-Message-ID: <20131229072227.GB31788@sigill.intra.peff.net>
-References: <20131228092731.GA26337@sigill.intra.peff.net>
- <20131228093340.GC21109@sigill.intra.peff.net>
- <20131228205104.GA5544@google.com>
+Subject: Re: Fwd: Runaway "git remote" if group definition contains a remote
+ by the same name
+Date: Sun, 29 Dec 2013 02:58:38 -0500
+Message-ID: <20131229075838.GC31788@sigill.intra.peff.net>
+References: <AANLkTinni=VJLoZp1Hjm4dfW8faChytDObJbXsFF5iXv@mail.gmail.com>
+ <CALxABCbRZ4MmiYS4JF20qf1-iubeTfa+3OLibqdb5+raekuKQg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, John Keeping <john@keeping.me.uk>,
-	Thomas Rast <tr@thomasrast.ch>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Dec 29 08:22:36 2013
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Dec 29 08:59:07 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VxAhl-0000AW-Nn
-	for gcvg-git-2@plane.gmane.org; Sun, 29 Dec 2013 08:22:34 +0100
+	id 1VxBH8-0007Jz-74
+	for gcvg-git-2@plane.gmane.org; Sun, 29 Dec 2013 08:59:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751091Ab3L2HWa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 Dec 2013 02:22:30 -0500
-Received: from cloud.peff.net ([50.56.180.127]:51928 "HELO peff.net"
+	id S1751252Ab3L2H6k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 29 Dec 2013 02:58:40 -0500
+Received: from cloud.peff.net ([50.56.180.127]:51943 "HELO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750971Ab3L2HW3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Dec 2013 02:22:29 -0500
-Received: (qmail 31317 invoked by uid 102); 29 Dec 2013 07:22:29 -0000
+	id S1751048Ab3L2H6k (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Dec 2013 02:58:40 -0500
+Received: (qmail 500 invoked by uid 102); 29 Dec 2013 07:58:40 -0000
 Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 29 Dec 2013 01:22:29 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 29 Dec 2013 02:22:27 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 29 Dec 2013 01:58:40 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 29 Dec 2013 02:58:38 -0500
 Content-Disposition: inline
-In-Reply-To: <20131228205104.GA5544@google.com>
+In-Reply-To: <CALxABCbRZ4MmiYS4JF20qf1-iubeTfa+3OLibqdb5+raekuKQg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239795>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239796>
 
-On Sat, Dec 28, 2013 at 12:51:04PM -0800, Jonathan Nieder wrote:
+On Sat, Dec 28, 2013 at 03:56:55PM +0100, Alex Riesen wrote:
 
-> Jeff King wrote:
+> it is also a way to create a fork bomb out of the innocent tool on platforms
+> where pressing Ctrl-C does not terminate subprocesses of the foreground
+> process (like, of course, Windows).
 > 
-> > I am not _that_ bothered by the "known breakage", but AFAICT there is
-> > zero benefit to keeping this redundant test.
+> To reproduce, run
 > 
-> Devil's advocate: it ensures that anyone wrapping git's tests (like
-> the old smoketest infrastructure experiment) is able to handle an
-> expected failure.
+>    git -c remotes.origin='origin other' remote update origin
 
-Thanks. One of the things I love about open source is that as soon as I
-say "I can't see how...", the answer is crowd-sourced for me. :)
+Hmm. This is a pretty straightforward reference cycle. We expand origin
+to contain itself, so it recurses forever on expansion. As with most
+such problems, the cycle path may be longer than one:
 
-That being said, even if the test has a non-zero possible value...
+  git -c remotes.foo='bar baz' -c remotes.bar='foo baz' fetch foo
 
-> But in practice I don't mind the behavior before or after this patch.
-> If the test harness is that broken, we'll know.  And people writing
-> code that wraps git's tests can write their own custom sanity-checks.
+Detecting the cycle can be done by keeping track of which names we've
+seen, or just by putting in a depth limit that no sane setup would hit.
+In either case, it's complicated slightly by the fact that we pass the
+expanded list to a sub-process (which then recurses on the expansion).
+So we'd have to communicate the depth (or the list of seen remotes) via
+the command line or the environment.
 
-...I think for these reasons that the value is smaller than the
-disruption caused by the test, and the patch is a net win.
+One alternative would be to have the parent "git fetch" recursively
+expand the list itself down to scalar entries, and then invoke
+sub-processes on the result (and tell them not to expand at all). That
+would also let us cull duplicates if a remote is found via multiple
+groups.
+
+Interestingly, the problem does not happen with this:
+
+  git -c remotes.foo=foo fetch foo
+
+Fetch sees that foo expands only to a single item and says "oh, that
+must not be a group". And then treats it like a regular remote, rather
+than recursing. So it's not clear to me whether groups are meant to be
+recursive or not. They are in some cases:
+
+  # fetch remotes 1-4
+  git -c remotes.parent='child1 child2' \
+      -c remotes.child1='remote1 remote2' \
+      -c remotes.child2='remote3 remote4' \
+      fetch parent
+
+but not in others:
+
+  # "foo" should be an alias for "bar", but it's not
+  git -c remotes.foo=bar \
+      -c remotes.bar='remote1 remote2' \
+      fetch foo
+
+If they are not allowed to recurse, the problem is much easier; the
+parent fetch simply tells all of the sub-invocations not to expand the
+arguments further. However, whether it was planned or not, it has been
+this way for a long time. I would not be surprised if somebody is
+relying on the recursion to help organize their groups.
+
+So I think the sanest thing is probably:
+
+  1. Teach "fetch" to expand recursively in a single process, and then
+     tell sub-processes (via a new command-line option) not to expand
+     any further.
+
+  2. Teach "fetch" to detect cycles (probably just by a simple depth
+     counter).
+
+  3. Teach the group-reading code to detect groups more robustly, so
+     that a single-item group like "remotes.foo=bar" correctly recurses
+     to "bar".
+
+  4. (Optional) Teach the expansion code from step 1 to cull duplicates,
+     so that we do not try to fetch from the same remote twice (e.g., if
+     it is mentioned as part of two groups, and both are specified on
+     the command line).
+
+I do not plan to work on this myself in the immediate future, but
+perhaps it is an interesting low-hanging fruit for somebody else.
 
 -Peff
