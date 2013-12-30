@@ -1,134 +1,155 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 0/3] t0000 cleanups
-Date: Mon, 30 Dec 2013 10:51:25 -0800
-Message-ID: <20131230185125.GI20443@google.com>
-References: <20131228092731.GA26337@sigill.intra.peff.net>
- <20131228222129.GE5544@google.com>
- <xmqqwqimry2j.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] merge-base: fix duplicates and not best ancestors in output
+Date: Mon, 30 Dec 2013 11:01:01 -0800
+Message-ID: <xmqqppoerwnm.fsf@gitster.dls.corp.google.com>
+References: <CABEtfDFu=Fc0SXbyFctEyiMCJwqxP25K9mdVhAB0X_vKHxvW_A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
-	John Keeping <john@keeping.me.uk>,
-	Thomas Rast <tr@thomasrast.ch>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Dec 30 19:51:37 2013
+Content-Type: text/plain; charset=iso-2022-jp
+Cc: git@vger.kernel.org, jrnieder@gmail.com
+To: =?iso-2022-jp?B?GyRCJyMnUSdjJ1onXSdaJ1sbKEIgGyRCJy4nUSdcJ1EnYidgGyhC?=
+	 =?iso-2022-jp?B?GyRCJ1MbKEI=?= <einmalfel@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Dec 30 20:01:13 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vxhw7-0004Gc-6n
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Dec 2013 19:51:35 +0100
+	id 1Vxi5Q-0008MF-Om
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Dec 2013 20:01:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932118Ab3L3Svb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Dec 2013 13:51:31 -0500
-Received: from mail-yh0-f47.google.com ([209.85.213.47]:45634 "EHLO
-	mail-yh0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932069Ab3L3Sva (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Dec 2013 13:51:30 -0500
-Received: by mail-yh0-f47.google.com with SMTP id 29so2421488yhl.6
-        for <git@vger.kernel.org>; Mon, 30 Dec 2013 10:51:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=1385iOFAKclDAT9siOBzxkea+touUx7mJJFRVvekue0=;
-        b=vT8Qfo9BwP3v4ES2Op9p1aDqTlfaHHt8lN9tqFS1peR8dusW1F094eKpgbxIhK2eRz
-         YjVRlfikMV2NbKoh59mefofKJhIlyhaH1O6dqISK6FvTo7uMsQ/VVV8oupg/984tRubf
-         zLXwvzWdLZq8/vjLbc6ZETRiDrUStanW8uclqXg/d4qOUwfFF4m71vzaEivtsrNK5JE5
-         +FV1sw2X1hwK+jC1e6dp5Ci8sQ7Aos2ENOo8Y2tHw6jZeu3gbY7T2tWRNzrvQLFI5Hwv
-         TUMxZ2FvwAUGNYkIzqcEMLcTCICf/1yu7rsOo1+SVSq15NW8ZUp25TmmsBoZHZrZKOhe
-         kPTg==
-X-Received: by 10.236.91.201 with SMTP id h49mr427518yhf.96.1388429488765;
-        Mon, 30 Dec 2013 10:51:28 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id 9sm62719537yhe.21.2013.12.30.10.51.27
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 30 Dec 2013 10:51:28 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <xmqqwqimry2j.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S932109Ab3L3TBI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Dec 2013 14:01:08 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49704 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932069Ab3L3TBH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Dec 2013 14:01:07 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9F53E5FDC7;
+	Mon, 30 Dec 2013 14:01:05 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=WnvtcYbd4bii7OerqPeNE8peylE=; b=DIBrdI
+	xWXFSpdWcVzSzBeQgEPgJ58wu6xGdeUFs8fVxFOYvYS9ZVbJkH+WaaMCFj2oO5AC
+	JyLXJUAsV2+Nm/ksECp5p8W0bzBbmHyDzJlGSSsN/rLCxa0RPq4Nuu+ZOhAhWGdu
+	HcxLl1DTFDOX7QGB3JSpj7P0TcyfbrAPS97tw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=R1m1Pf5V3FnEIxdPhsoJpbWZgX/q3P/y
+	Qnw/4Y1VW4jVC3fwqbCY5ejLVGXWvy/5Aul5cWsAtgfqKidcDyFNO6XvBRknqhdA
+	EB9D8SZhBgPOlm8frGoq2/crlQTmjblm56V2sMREim3IJZJ86DByyVhuNH3NwmCi
+	trYqU9CRD4M=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8CDD35FDC6;
+	Mon, 30 Dec 2013 14:01:05 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D30F45FDC5;
+	Mon, 30 Dec 2013 14:01:04 -0500 (EST)
+In-Reply-To: <CABEtfDFu=Fc0SXbyFctEyiMCJwqxP25K9mdVhAB0X_vKHxvW_A@mail.gmail.com>
+	(=?iso-2022-jp?B?IhskQicjJ1EnYydaJ10nWidbGyhCIBskQicuJ1EnXCdRJ2InYCdTGyhC?=
+ =?iso-2022-jp?B?Iidz?= message of "Sat, 28 Dec 2013
+	14:22:26 +0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: BBA0B432-7184-11E3-9C63-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239812>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239813>
 
-Junio C Hamano wrote:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
->> Jeff King wrote:
+Василий Макаров <einmalfel@gmail.com> writes:
 
->>> When I want to debug a failing test, I often end up doing:
->>>
->>>   cd t
->>>   ./t4107-<tab> -v -i
->>>   cd tra<tab>
->>>
->>> The test names are long, so tab-completing on the trash directory is
->>> very helpful. Lately I've noticed that there are a bunch of crufty trash
->>> directories in my t/ directory, which makes my tab-completion more
->>> annoying.
->>
->> Ah, and if I'd read this then I wouldn't have had to be confused at
->> all.
-[...]
-> The third paragraph of 1/3 sufficiently covers it, no?  We could add
-> "It makes it less convenient to use tab completion 'cd t/tra<TAB>'
-> to go to the trash directory of the failed test to inspect the
-> situation" after "... left in the t/ directory.", though.
-[4 paragraphs snipped]
+> Hi there!
+> First of all: I'm new to mailing-lists, sorry if I'm doing it wrong.
+>
+> I've found a bug in git merge-base, causing it to show not best common
+> ancestors and duplicates under some circumstances (example is given in
+> attached test case).
 
-I think it can be better, since the commit message left me scratching
-my head while the patch itself seems pretty simple.  How about
-something like the following?
+Attached???
 
-First, describing the problem:
+> Problem cause is algorithm used in get_octopus_merge_bases(), it
+> iteratively concatenates merge bases, and don't care if there are
+> duplicates or decsendants/ancestors in result.
+> What I suggest as a solution is to simply reduce bases list after
+> get_octopus_merge_bases().
 
-	Running t0000 produces more trash directories than expected
-	and does not clean up after itself:
+I do not offhand remember if it was deliberate that we do not dedup
+the result from the underlying get_octopus_merge_bases() (the most
+likely reason for not deduping is because the caller is expected to
+do that if it wants to).
 
-	 $ ./t0000-basic.sh
-	[...]
-	 $ ls -d trash\ directory.*
-	 trash directory.failing-cleanup
-	 trash directory.mixed-results1
-	 trash directory.mixed-results2
-	 trash directory.partial-pass
-	 trash directory.test-verbose
-	 trash directory.test-verbose-only-2
+Whether it is an improvement to force deduping here or it is an
+regression to do so, I think we should split that helper function
+handle_octopus().  It does two totally unrelated things (one is only
+to list independent heads without showing merge bases, the other is
+to show one or more merge bases across all the heads given).
+Perhaps if we split the "independent" codepath introduced by
+a1e0ad78 (merge-base --independent to print reduced parent list in a
+merge, 2010-08-17) into its own helper function, like this, it would
+make it clear what is going on.
 
-Analysis and fix:
+Thanks.
 
-	These scratch areas for sub-tests should be under the t0000
-	trash directory, but because the TEST_OUTPUT_DIRECTORY
-	setting from the toplevel test leaks into the environment
-	they are created under the toplevel output directory (typically
-	t/) instead.  Because some of the sub-tests simulate failures,
-	their trash directories are kept around.
+ builtin/merge-base.c | 31 +++++++++++++++++++++++++------
+ 1 file changed, 25 insertions(+), 6 deletions(-)
 
-	Fix it by explicitly setting TEST_OUTPUT_DIRECTORY appropriately
-	for sub-tests.
-
-And then, optionally, describing rejected alternatives:
-
-	An alternative fix would be to pass the --root parameter that
-	only specifies where to put the trash directories, which would
-	also work.  However, using TEST_OUTPUT_DIRECTORY is more
-	futureproof in case tests want to write more output in
-	addition to the test-results/ (which are already suppressed in
-	sub-tests using the HARNESS_ACTIVE setting) and trash
-	directories.
-
-And more analysis of why this wasn't caught in the first place:
-
-	This fixes a regression introduced by 38b074d (t/test-lib.sh:
-	fix TRASH_DIRECTORY handling, 2013-04-14).  Before then, the
-	TEST_OUTPUT_DIRECTORY setting was not respected consistently
-	so most tests did their work in a "trash" subdirectory of the
-	current directory instead of the output dir.
-
-Does that make sense?
-
-Thanks,
-Jonathan
+diff --git a/builtin/merge-base.c b/builtin/merge-base.c
+index e88eb93..a00e8f5 100644
+--- a/builtin/merge-base.c
++++ b/builtin/merge-base.c
+@@ -44,19 +44,36 @@ static struct commit *get_commit_reference(const char *arg)
+ 	return r;
+ }
+ 
+-static int handle_octopus(int count, const char **args, int reduce, int show_all)
++static int handle_independent(int count, const char **args)
+ {
+ 	struct commit_list *revs = NULL;
+ 	struct commit_list *result;
+ 	int i;
+ 
+-	if (reduce)
+-		show_all = 1;
++	for (i = count - 1; i >= 0; i--)
++		commit_list_insert(get_commit_reference(args[i]), &revs);
++
++	result = reduce_heads(revs);
++	if (!result)
++		return 1;
++
++	while (result) {
++		printf("%s\n", sha1_to_hex(result->item->object.sha1));
++		result = result->next;
++	}
++	return 0;
++}
++
++static int handle_octopus(int count, const char **args, int show_all)
++{
++	struct commit_list *revs = NULL;
++	struct commit_list *result;
++	int i;
+ 
+ 	for (i = count - 1; i >= 0; i--)
+ 		commit_list_insert(get_commit_reference(args[i]), &revs);
+ 
+-	result = reduce ? reduce_heads(revs) : get_octopus_merge_bases(revs);
++	result = get_octopus_merge_bases(revs);
+ 
+ 	if (!result)
+ 		return 1;
+@@ -114,8 +131,10 @@ int cmd_merge_base(int argc, const char **argv, const char *prefix)
+ 	if (reduce && (show_all || octopus))
+ 		die("--independent cannot be used with other options");
+ 
+-	if (octopus || reduce)
+-		return handle_octopus(argc, argv, reduce, show_all);
++	if (octopus)
++		return handle_octopus(argc, argv, show_all);
++	else if (reduce)
++		return handle_independent(argc, argv);
+ 
+ 	rev = xmalloc(argc * sizeof(*rev));
+ 	while (argc-- > 0)
