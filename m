@@ -1,136 +1,81 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH 2/4] completion: introduce __gitcomp_2 ()
-Date: Mon, 30 Dec 2013 20:22:16 +0530
-Message-ID: <1388415138-11011-3-git-send-email-artagnon@gmail.com>
-References: <1388415138-11011-1-git-send-email-artagnon@gmail.com>
-Cc: Felipe Contreras <felipe.contreras@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Dec 30 15:52:27 2013
+From: Roman Kagan <rkagan@mail.ru>
+Subject: Re: [PATCH] git-svn: workaround for a bug in svn serf backend
+Date: Mon, 30 Dec 2013 20:01:10 +0400
+Message-ID: <CANiYKX5Nd8YTsAKshma_-Ezqzw1tkC_-UJas0_oDxUZbcfaAAA@mail.gmail.com>
+References: <87ha9wdh8g.fsf@linux-1gf2.Speedport_W723_V_Typ_A_1_00_098>
+	<1388059524-4864-1-git-send-email-rkagan@mail.ru>
+	<87lhz2o7ht.fsf@thomasrast.ch>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org, Benjamin Pabst <benjamin.pabst85@gmail.com>,
+	Eric Wong <normalperson@yhbt.net>
+To: Thomas Rast <tr@thomasrast.ch>
+X-From: git-owner@vger.kernel.org Mon Dec 30 17:01:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VxeCf-0006BS-T0
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Dec 2013 15:52:26 +0100
+	id 1VxfHI-0007EQ-7W
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Dec 2013 17:01:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755994Ab3L3OwM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Dec 2013 09:52:12 -0500
-Received: from mail-pa0-f43.google.com ([209.85.220.43]:43126 "EHLO
-	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755988Ab3L3Ov7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Dec 2013 09:51:59 -0500
-Received: by mail-pa0-f43.google.com with SMTP id bj1so11721264pad.30
-        for <git@vger.kernel.org>; Mon, 30 Dec 2013 06:51:59 -0800 (PST)
+	id S1756006Ab3L3QBM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Dec 2013 11:01:12 -0500
+Received: from mail-qc0-f176.google.com ([209.85.216.176]:58630 "EHLO
+	mail-qc0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755986Ab3L3QBL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Dec 2013 11:01:11 -0500
+Received: by mail-qc0-f176.google.com with SMTP id i8so10964963qcq.7
+        for <git@vger.kernel.org>; Mon, 30 Dec 2013 08:01:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=YF50ZoWYTrtCwbajaylklEgMzxlwhgMvKnZ154I84Fk=;
-        b=jJD0Cm5H0O/wTJEjj1r8lX+ahnwFOHqTHtmtcW/Wn/k7Jj0nAjafQoYq67SidbGgIy
-         SNzlPjBnkWrSpF+lu7h8lvmPVmOIYIG9swomJaO9baq5+lUi39oh1JURUq6LmFtsX1w7
-         elE/f+yo9lK1BeLMvAJwmm64INeD7pqNtJEgQR/zUGgyZqbhndc6gPluJrBgMaMINmVH
-         tO+4jMrgXRaSQFd8gLUiGNKoXXCglyTTx3gWhNl/Z32qH5ANR7stdFfSHvDXlOAkCVN8
-         4iFqgY5LytzrfzyflRUgHFlnISJvjhiJevtjqrMoazB02Eawp8rrGDDeBlVPwGQ6IoHb
-         PEHQ==
-X-Received: by 10.66.8.66 with SMTP id p2mr68805155paa.129.1388415118986;
-        Mon, 30 Dec 2013 06:51:58 -0800 (PST)
-Received: from localhost.localdomain ([122.164.121.180])
-        by mx.google.com with ESMTPSA id vn10sm82123744pbc.21.2013.12.30.06.51.56
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 30 Dec 2013 06:51:58 -0800 (PST)
-X-Mailer: git-send-email 1.8.5.2.227.g53f3478
-In-Reply-To: <1388415138-11011-1-git-send-email-artagnon@gmail.com>
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=LeY5MgzWNWKR9UD/BbZJCwAhC+JKS5POzkmZPhKkIb0=;
+        b=c2FSQ4Prvmr5kHb2BWTVbU6hDu0SHFts2W+GMGx316PloBnYAsdFkSYQNGQ7n2Y2Uf
+         M8vqmeA/IOzmv1JqzJXolx/9HGeLfLeV51+41XPlKdMEQ0PXgP5e6Szgi5Pd1mdnHyVP
+         hInnUK6M0W7RoT1/A9LSQEt+76Ezt/sPgUoT4srUwGsEhY8/qCheIuVETDgOd5BgUAD8
+         iLTbvN1zjn2iJIb5KY+WeVCN6wj1osBvBqyYIRLjqnle7Hvu6PqSOTZFQdZnGxsvRinB
+         aXXM4DJBIHxC1yOLQOPR/z3pQI+t9ANwZBEkkFUwjhvHuK/xFs1xjSbuWzG41IU7etoK
+         3D+A==
+X-Received: by 10.49.28.101 with SMTP id a5mr112114760qeh.70.1388419270310;
+ Mon, 30 Dec 2013 08:01:10 -0800 (PST)
+Received: by 10.224.98.146 with HTTP; Mon, 30 Dec 2013 08:01:10 -0800 (PST)
+In-Reply-To: <87lhz2o7ht.fsf@thomasrast.ch>
+X-Google-Sender-Auth: CEvFcVUk2IWeT70joeW6CXY7Sao
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239806>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239807>
 
-There are situations where two classes of completions possible. For
-example
+2013/12/30 Thomas Rast <tr@thomasrast.ch>:
+> Roman Kagan <rkagan@mail.ru> writes:
+>
+>> +     # workaround for a bug in svn serf backend (v1.8.5 and below):
+>> +     # store 3d argument to ->add_file() in a local variable, to make it
+>> +     # have the same lifetime as $fbat
+>> +     my $upa = $self->url_path($m->{file_a});
+>>       my $fbat = $self->add_file($self->repo_path($m->{file_b}), $pbat,
+>> -                             $self->url_path($m->{file_a}), $self->{r});
+>> +                             $upa, $self->{r});
+>
+> Hmm, now that you put it that way, I wonder if the patch is correct.
+>
+> Let me first rephrase the problem to verify that I understand the issue:
+>
+>   $fbat keeps a pointer to the $upa string, without maintaining a
+>   reference to it.  When $fbat is destroyed, it needs this string, so we
+>   must ensure that the lifetime of $upa is at least as long as that of
+>   $fbat.
 
-  branch.<TAB>
+No.  The string is needed in subversion's close_file(), so we want to
+keep it alive until close_file() returns. Surviving till the end of
+the current function scope is sufficient for that.
 
-should try to complete
+> However, does Perl make any guarantees as to the order in which local
+> variables are unreferenced and then destroyed?
 
-  branch.master.
-  branch.autosetupmerge
-  branch.autosetuprebase
+We don't care about the order they are destroyed WRT each other.
 
-The first candidate has the suffix ".", and the second/ third candidates
-have the suffix " ". To facilitate completions of this kind, create a
-variation of __gitcomp_nl () that accepts two sets of arguments and two
-independent suffixes.
-
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
----
- contrib/completion/git-completion.bash | 30 ++++++++++++++++++++++++++++++
- contrib/completion/git-completion.zsh  | 10 ++++++++++
- 2 files changed, 40 insertions(+)
-
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 51c2dd4..64b20b8 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -233,6 +233,36 @@ __gitcomp_nl ()
- 	__gitcompadd "$1" "${2-}" "${3-$cur}" "${4- }"
- }
- 
-+# Generates completion reply from two sets of completion words, with
-+# configurable suffixes for each.
-+#
-+# It accepts 2 to 6 arguments:
-+# 1: First set of possible completion words.
-+# 2: Second set of possible completion words.
-+# 3: A prefix to be added to each completion word (both $1 and $2)
-+#    (optional).
-+# 4: Generate possible completion matches for this word (optional).
-+# 5: A suffix to be appended to each completion word in the first set
-+#    ($1) instead of the default space (optional).
-+# 6: A suffix to be appended to each completion word in the second set
-+#    ($2) instead of the default space (optional).
-+__gitcomp_2 ()
-+{
-+	local pfx="${3-}" cur_="${4-$cur}" sfx="${5- }" sfx2="${6- }" i=0
-+	local IFS=$' \t\n'
-+
-+	for x in $1; do
-+		if [[ "$x" == "$cur_"* ]]; then
-+			COMPREPLY[i++]="$pfx$x$sfx"
-+		fi
-+	done
-+	for x in $2; do
-+		if [[ "$x" == "$cur_"* ]]; then
-+			COMPREPLY[i++]="$pfx$x$sfx2"
-+		fi
-+	done
-+}
-+
- # Generates completion reply with compgen from newline-separated possible
- # completion filenames.
- # It accepts 1 to 3 arguments:
-diff --git a/contrib/completion/git-completion.zsh b/contrib/completion/git-completion.zsh
-index 6fca145..261a7f5 100644
---- a/contrib/completion/git-completion.zsh
-+++ b/contrib/completion/git-completion.zsh
-@@ -76,6 +76,16 @@ __gitcomp_nl ()
- 	compadd -Q -S "${4- }" -p "${2-}" -- ${=1} && _ret=0
- }
- 
-+__gitcomp_2 ()
-+{
-+	emulate -L zsh
-+
-+	local IFS=$' \t\n'
-+	compset -P '*[=:]'
-+	compadd -Q -S "${5- }" -p "${3-}" -- ${=1} && _ret=0
-+	compadd -Q -S "${6- }" -p "${3-}" -- ${=2} && _ret=0
-+}
-+
- __gitcomp_file ()
- {
- 	emulate -L zsh
--- 
-1.8.5.2.227.g53f3478
+Roman.
