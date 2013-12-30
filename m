@@ -1,88 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 9/9] trailer: add tests for "git interpret-trailers"
-Date: Mon, 30 Dec 2013 13:05:25 -0800
-Message-ID: <xmqqfvpaqcbu.fsf@gitster.dls.corp.google.com>
-References: <20131224061541.19560.17773.chriscool@tuxfamily.org>
-	<20131224063726.19560.61859.chriscool@tuxfamily.org>
-	<xmqq1u0utfwk.fsf@gitster.dls.corp.google.com>
-	<20131230202042.GJ27213@leaf>
-	<xmqqk3emqd7a.fsf@gitster.dls.corp.google.com>
-	<20131230205234.GU27213@leaf>
+From: Sebastian Schuberth <sschuberth@gmail.com>
+Subject: [PATCH 1/2] Call load_command_list() only when it is needed
+Date: Mon, 30 Dec 2013 22:05:44 +0100
+Message-ID: <52C1E028.8000004@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org,
-	Johan Herland <johan@herland.net>,
-	Thomas Rast <tr@thomasrast.ch>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Dan Carpenter <dan.carpenter@oracle.com>,
-	Greg Kroah-Hartman <greg@kroah.com>, Jeff King <peff@peff.net>
-To: Josh Triplett <josh@joshtriplett.org>
-X-From: git-owner@vger.kernel.org Mon Dec 30 22:05:35 2013
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: chriscool@tuxfamily.org
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 30 22:06:06 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vxk1m-00067s-29
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Dec 2013 22:05:34 +0100
+	id 1Vxk2E-0006hz-NV
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Dec 2013 22:06:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932277Ab3L3VFa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Dec 2013 16:05:30 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41824 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932169Ab3L3VF3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Dec 2013 16:05:29 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B16305FC07;
-	Mon, 30 Dec 2013 16:05:28 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=T32SyBMW8Fq5MlF3XzlegWYKY7o=; b=N+lnlc
-	v3LnyQro5CdfJL9+NQM+7l8Eo5NlV7oUEBe1r9bJadEe57AY7ROLdnMD7Vog4i9w
-	ZIpX0N6Pw7ZZBCtVHDuaBzzXP+9b7ghE9rANP5VqRP9eHQwTBTyWXFU+Sv//o+Rw
-	Ou8rQJyzFKTb0dyErVRuEBvP2Te3Uhi6wP004=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=syuEWJONp8XGxPQsw1DtsKpDiZCBDs4i
-	T6Cj7YfHn4B2h7pABmbk5JJiZdCTy2mZwhArOETxms4XlN/5h6qOgmgOCAfJbE4E
-	qpx68bY2wlqN9lQj+L1l8sAPVE5F5N2ZjvzcHoi8rk3iPOL3DsdIhcW4XYaF99un
-	T/dY0J3AGn8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A14F55FC06;
-	Mon, 30 Dec 2013 16:05:28 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D8D7C5FC05;
-	Mon, 30 Dec 2013 16:05:26 -0500 (EST)
-In-Reply-To: <20131230205234.GU27213@leaf> (Josh Triplett's message of "Mon,
-	30 Dec 2013 12:52:34 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 1B631F98-7196-11E3-A290-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S932278Ab3L3VF7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Dec 2013 16:05:59 -0500
+Received: from plane.gmane.org ([80.91.229.3]:58463 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932169Ab3L3VF6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Dec 2013 16:05:58 -0500
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1Vxk28-0006d4-US
+	for git@vger.kernel.org; Mon, 30 Dec 2013 22:05:56 +0100
+Received: from p4fc96272.dip0.t-ipconnect.de ([79.201.98.114])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 30 Dec 2013 22:05:56 +0100
+Received: from sschuberth by p4fc96272.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 30 Dec 2013 22:05:56 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: p4fc96272.dip0.t-ipconnect.de
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.12) Gecko/20080213 Thunderbird/2.0.0.12 Mnenhy/0.7.5.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239826>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239827>
 
-Josh Triplett <josh@joshtriplett.org> writes:
+This avoids list_commands_in_dir() being called when not needed which is
+quite slow due to file I/O in order to list matching files in a directory.
 
->>  - The "everybody will have a single SP at the end" may or may not
->>    last forever;
->
-> Trivially fixed if that ever changes, but given the nature of all of
-> these, that seems unlikely.
+Signed-off-by: Sebastian Schuberth <sschuberth@gmail.com>
+---
+ builtin/help.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-Why?  Because we encourage to write tests that are expected to find
-breakages, some of these test vector lines may have to show a broken
-line that lacks SP after label + colon.
-
->>  - With your scheme, if you already had _one_ trailing SPs in the
->>    input, it would be hard to spot in the source;
->
-> Git makes them quite difficult to miss. :)
-
-That is irrelevant, isn't it?
-
-This is about protecting the source in the editor, before you run
-"git show --whitespace=trailing-space", "git diff --check", etc.
+diff --git a/builtin/help.c b/builtin/help.c
+index cc17e67..b6fc15e 100644
+--- a/builtin/help.c
++++ b/builtin/help.c
+@@ -288,6 +288,7 @@ static struct cmdnames main_cmds, other_cmds;
+ 
+ static int is_git_command(const char *s)
+ {
++	load_command_list("git-", &main_cmds, &other_cmds);
+ 	return is_in_cmdlist(&main_cmds, s) ||
+ 		is_in_cmdlist(&other_cmds, s);
+ }
+@@ -449,7 +450,6 @@ int cmd_help(int argc, const char **argv, const char *prefix)
+ 	int nongit;
+ 	const char *alias;
+ 	enum help_format parsed_help_format;
+-	load_command_list("git-", &main_cmds, &other_cmds);
+ 
+ 	argc = parse_options(argc, argv, prefix, builtin_help_options,
+ 			builtin_help_usage, 0);
+@@ -458,6 +458,7 @@ int cmd_help(int argc, const char **argv, const char *prefix)
+ 	if (show_all) {
+ 		git_config(git_help_config, NULL);
+ 		printf(_("usage: %s%s"), _(git_usage_string), "\n\n");
++		load_command_list("git-", &main_cmds, &other_cmds);
+ 		list_commands(colopts, &main_cmds, &other_cmds);
+ 	}
+ 
+-- 
+1.8.4.msysgit.0
