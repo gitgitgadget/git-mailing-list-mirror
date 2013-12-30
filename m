@@ -1,336 +1,81 @@
-From: Sebastian Schuberth <sschuberth@gmail.com>
-Subject: [PATCH 2/2] Speed up is_git_command() by checking early for internal
- commands
-Date: Mon, 30 Dec 2013 22:07:38 +0100
-Message-ID: <52C1E09A.8040907@gmail.com>
-References: <52C1E028.8000004@gmail.com>
+From: Josh Triplett <josh@joshtriplett.org>
+Subject: Re: [PATCH 9/9] trailer: add tests for "git interpret-trailers"
+Date: Mon, 30 Dec 2013 14:27:19 -0800
+Message-ID: <20131230222719.GN6840@leaf>
+References: <20131224061541.19560.17773.chriscool@tuxfamily.org>
+ <20131224063726.19560.61859.chriscool@tuxfamily.org>
+ <xmqq1u0utfwk.fsf@gitster.dls.corp.google.com>
+ <20131230202042.GJ27213@leaf>
+ <xmqqk3emqd7a.fsf@gitster.dls.corp.google.com>
+ <20131230205234.GU27213@leaf>
+ <xmqqfvpaqcbu.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: chriscool@tuxfamily.org
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 30 22:10:13 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org,
+	Johan Herland <johan@herland.net>,
+	Thomas Rast <tr@thomasrast.ch>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Dan Carpenter <dan.carpenter@oracle.com>,
+	Greg Kroah-Hartman <greg@kroah.com>, Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Dec 30 23:27:48 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vxk6G-0003oJ-Px
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Dec 2013 22:10:13 +0100
+	id 1VxlJL-00017i-40
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Dec 2013 23:27:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932306Ab3L3VKG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Dec 2013 16:10:06 -0500
-Received: from plane.gmane.org ([80.91.229.3]:56005 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932221Ab3L3VKE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Dec 2013 16:10:04 -0500
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1Vxk67-0003as-Iw
-	for git@vger.kernel.org; Mon, 30 Dec 2013 22:10:03 +0100
-Received: from p4fc96272.dip0.t-ipconnect.de ([79.201.98.114])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 30 Dec 2013 22:10:03 +0100
-Received: from sschuberth by p4fc96272.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 30 Dec 2013 22:10:03 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: p4fc96272.dip0.t-ipconnect.de
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.12) Gecko/20080213 Thunderbird/2.0.0.12 Mnenhy/0.7.5.0
-In-Reply-To: <52C1E028.8000004@gmail.com>
+	id S932323Ab3L3W1l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Dec 2013 17:27:41 -0500
+Received: from relay3-d.mail.gandi.net ([217.70.183.195]:41327 "EHLO
+	relay3-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932299Ab3L3W13 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Dec 2013 17:27:29 -0500
+Received: from mfilter4-d.gandi.net (mfilter4-d.gandi.net [217.70.178.134])
+	by relay3-d.mail.gandi.net (Postfix) with ESMTP id 4E6A2A80B1;
+	Mon, 30 Dec 2013 23:27:26 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at mfilter4-d.gandi.net
+Received: from relay3-d.mail.gandi.net ([217.70.183.195])
+	by mfilter4-d.gandi.net (mfilter4-d.gandi.net [10.0.15.180]) (amavisd-new, port 10024)
+	with ESMTP id 8vHyBQc35Yw4; Mon, 30 Dec 2013 23:27:25 +0100 (CET)
+X-Originating-IP: 50.43.14.201
+Received: from leaf (static-50-43-14-201.bvtn.or.frontiernet.net [50.43.14.201])
+	(Authenticated sender: josh@joshtriplett.org)
+	by relay3-d.mail.gandi.net (Postfix) with ESMTPSA id 5FB0DA80B0;
+	Mon, 30 Dec 2013 23:27:20 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <xmqqfvpaqcbu.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239828>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239829>
 
-Since 2dce956 is_git_command() was a bit slow as it does file I/O in the
-call to list_commands_in_dir(). Avoid the file I/O by adding an early
-check for internal commands.
+On Mon, Dec 30, 2013 at 01:05:25PM -0800, Junio C Hamano wrote:
+> Josh Triplett <josh@joshtriplett.org> writes:
+> >>  - With your scheme, if you already had _one_ trailing SPs in the
+> >>    input, it would be hard to spot in the source;
+> >
+> > Git makes them quite difficult to miss. :)
+> 
+> That is irrelevant, isn't it?
+> 
+> This is about protecting the source in the editor, before you run
+> "git show --whitespace=trailing-space", "git diff --check", etc.
 
-Signed-off-by: Sebastian Schuberth <sschuberth@gmail.com>
----
- builtin/help.c |   5 ++
- git.c          | 242 ++++++++++++++++++++++++++++++---------------------------
- 2 files changed, 132 insertions(+), 115 deletions(-)
+That was exactly my point: such lines shouldn't exist, and rather than
+including the trailing space and following it with a character that then
+needs removing, it seems more sensible to me to omit the trailing space
+and insert it via an almost identical sed line.  Git already helps
+ensure that trailing space won't exist on *any* line, including those; I
+don't see how an extra character after the space (making it no longer
+trailing space) makes it any more or less likely that those lines would
+have trailing space.
 
-diff --git a/builtin/help.c b/builtin/help.c
-index b6fc15e..1f0261e 100644
---- a/builtin/help.c
-+++ b/builtin/help.c
-@@ -284,10 +284,15 @@ static int git_help_config(const char *var, const char *value, void *cb)
- 	return git_default_config(var, value, cb);
- }
- 
-+extern int is_internal_command(const char *s);
-+
- static struct cmdnames main_cmds, other_cmds;
- 
- static int is_git_command(const char *s)
- {
-+	if (is_internal_command(s))
-+		return 1;
-+
- 	load_command_list("git-", &main_cmds, &other_cmds);
- 	return is_in_cmdlist(&main_cmds, s) ||
- 		is_in_cmdlist(&other_cmds, s);
-diff --git a/git.c b/git.c
-index 3799514..cc81138 100644
---- a/git.c
-+++ b/git.c
-@@ -332,124 +332,136 @@ static int run_builtin(struct cmd_struct *p, int argc, const char **argv)
- 	return 0;
- }
- 
-+static struct cmd_struct commands[] = {
-+	{ "add", cmd_add, RUN_SETUP | NEED_WORK_TREE },
-+	{ "annotate", cmd_annotate, RUN_SETUP },
-+	{ "apply", cmd_apply, RUN_SETUP_GENTLY },
-+	{ "archive", cmd_archive },
-+	{ "bisect--helper", cmd_bisect__helper, RUN_SETUP },
-+	{ "blame", cmd_blame, RUN_SETUP },
-+	{ "branch", cmd_branch, RUN_SETUP },
-+	{ "bundle", cmd_bundle, RUN_SETUP_GENTLY },
-+	{ "cat-file", cmd_cat_file, RUN_SETUP },
-+	{ "check-attr", cmd_check_attr, RUN_SETUP },
-+	{ "check-ignore", cmd_check_ignore, RUN_SETUP | NEED_WORK_TREE },
-+	{ "check-mailmap", cmd_check_mailmap, RUN_SETUP },
-+	{ "check-ref-format", cmd_check_ref_format },
-+	{ "checkout", cmd_checkout, RUN_SETUP | NEED_WORK_TREE },
-+	{ "checkout-index", cmd_checkout_index,
-+		RUN_SETUP | NEED_WORK_TREE},
-+	{ "cherry", cmd_cherry, RUN_SETUP },
-+	{ "cherry-pick", cmd_cherry_pick, RUN_SETUP | NEED_WORK_TREE },
-+	{ "clean", cmd_clean, RUN_SETUP | NEED_WORK_TREE },
-+	{ "clone", cmd_clone },
-+	{ "column", cmd_column, RUN_SETUP_GENTLY },
-+	{ "commit", cmd_commit, RUN_SETUP | NEED_WORK_TREE },
-+	{ "commit-tree", cmd_commit_tree, RUN_SETUP },
-+	{ "config", cmd_config, RUN_SETUP_GENTLY },
-+	{ "count-objects", cmd_count_objects, RUN_SETUP },
-+	{ "credential", cmd_credential, RUN_SETUP_GENTLY },
-+	{ "describe", cmd_describe, RUN_SETUP },
-+	{ "diff", cmd_diff },
-+	{ "diff-files", cmd_diff_files, RUN_SETUP | NEED_WORK_TREE },
-+	{ "diff-index", cmd_diff_index, RUN_SETUP },
-+	{ "diff-tree", cmd_diff_tree, RUN_SETUP },
-+	{ "fast-export", cmd_fast_export, RUN_SETUP },
-+	{ "fetch", cmd_fetch, RUN_SETUP },
-+	{ "fetch-pack", cmd_fetch_pack, RUN_SETUP },
-+	{ "fmt-merge-msg", cmd_fmt_merge_msg, RUN_SETUP },
-+	{ "for-each-ref", cmd_for_each_ref, RUN_SETUP },
-+	{ "format-patch", cmd_format_patch, RUN_SETUP },
-+	{ "fsck", cmd_fsck, RUN_SETUP },
-+	{ "fsck-objects", cmd_fsck, RUN_SETUP },
-+	{ "gc", cmd_gc, RUN_SETUP },
-+	{ "get-tar-commit-id", cmd_get_tar_commit_id },
-+	{ "grep", cmd_grep, RUN_SETUP_GENTLY },
-+	{ "hash-object", cmd_hash_object },
-+	{ "help", cmd_help },
-+	{ "index-pack", cmd_index_pack, RUN_SETUP_GENTLY },
-+	{ "init", cmd_init_db },
-+	{ "init-db", cmd_init_db },
-+	{ "log", cmd_log, RUN_SETUP },
-+	{ "ls-files", cmd_ls_files, RUN_SETUP },
-+	{ "ls-remote", cmd_ls_remote, RUN_SETUP_GENTLY },
-+	{ "ls-tree", cmd_ls_tree, RUN_SETUP },
-+	{ "mailinfo", cmd_mailinfo },
-+	{ "mailsplit", cmd_mailsplit },
-+	{ "merge", cmd_merge, RUN_SETUP | NEED_WORK_TREE },
-+	{ "merge-base", cmd_merge_base, RUN_SETUP },
-+	{ "merge-file", cmd_merge_file, RUN_SETUP_GENTLY },
-+	{ "merge-index", cmd_merge_index, RUN_SETUP },
-+	{ "merge-ours", cmd_merge_ours, RUN_SETUP },
-+	{ "merge-recursive", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE },
-+	{ "merge-recursive-ours", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE },
-+	{ "merge-recursive-theirs", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE },
-+	{ "merge-subtree", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE },
-+	{ "merge-tree", cmd_merge_tree, RUN_SETUP },
-+	{ "mktag", cmd_mktag, RUN_SETUP },
-+	{ "mktree", cmd_mktree, RUN_SETUP },
-+	{ "mv", cmd_mv, RUN_SETUP | NEED_WORK_TREE },
-+	{ "name-rev", cmd_name_rev, RUN_SETUP },
-+	{ "notes", cmd_notes, RUN_SETUP },
-+	{ "pack-objects", cmd_pack_objects, RUN_SETUP },
-+	{ "pack-redundant", cmd_pack_redundant, RUN_SETUP },
-+	{ "pack-refs", cmd_pack_refs, RUN_SETUP },
-+	{ "patch-id", cmd_patch_id },
-+	{ "pickaxe", cmd_blame, RUN_SETUP },
-+	{ "prune", cmd_prune, RUN_SETUP },
-+	{ "prune-packed", cmd_prune_packed, RUN_SETUP },
-+	{ "push", cmd_push, RUN_SETUP },
-+	{ "read-tree", cmd_read_tree, RUN_SETUP },
-+	{ "receive-pack", cmd_receive_pack },
-+	{ "reflog", cmd_reflog, RUN_SETUP },
-+	{ "remote", cmd_remote, RUN_SETUP },
-+	{ "remote-ext", cmd_remote_ext },
-+	{ "remote-fd", cmd_remote_fd },
-+	{ "repack", cmd_repack, RUN_SETUP },
-+	{ "replace", cmd_replace, RUN_SETUP },
-+	{ "rerere", cmd_rerere, RUN_SETUP },
-+	{ "reset", cmd_reset, RUN_SETUP },
-+	{ "rev-list", cmd_rev_list, RUN_SETUP },
-+	{ "rev-parse", cmd_rev_parse },
-+	{ "revert", cmd_revert, RUN_SETUP | NEED_WORK_TREE },
-+	{ "rm", cmd_rm, RUN_SETUP },
-+	{ "send-pack", cmd_send_pack, RUN_SETUP },
-+	{ "shortlog", cmd_shortlog, RUN_SETUP_GENTLY | USE_PAGER },
-+	{ "show", cmd_show, RUN_SETUP },
-+	{ "show-branch", cmd_show_branch, RUN_SETUP },
-+	{ "show-ref", cmd_show_ref, RUN_SETUP },
-+	{ "stage", cmd_add, RUN_SETUP | NEED_WORK_TREE },
-+	{ "status", cmd_status, RUN_SETUP | NEED_WORK_TREE },
-+	{ "stripspace", cmd_stripspace },
-+	{ "symbolic-ref", cmd_symbolic_ref, RUN_SETUP },
-+	{ "tag", cmd_tag, RUN_SETUP },
-+	{ "unpack-file", cmd_unpack_file, RUN_SETUP },
-+	{ "unpack-objects", cmd_unpack_objects, RUN_SETUP },
-+	{ "update-index", cmd_update_index, RUN_SETUP },
-+	{ "update-ref", cmd_update_ref, RUN_SETUP },
-+	{ "update-server-info", cmd_update_server_info, RUN_SETUP },
-+	{ "upload-archive", cmd_upload_archive },
-+	{ "upload-archive--writer", cmd_upload_archive_writer },
-+	{ "var", cmd_var, RUN_SETUP_GENTLY },
-+	{ "verify-pack", cmd_verify_pack },
-+	{ "verify-tag", cmd_verify_tag, RUN_SETUP },
-+	{ "version", cmd_version },
-+	{ "whatchanged", cmd_whatchanged, RUN_SETUP },
-+	{ "write-tree", cmd_write_tree, RUN_SETUP },
-+};
-+
-+int is_internal_command(const char *s)
-+{
-+	int i;
-+	for (i = 0; i < ARRAY_SIZE(commands); i++) {
-+		struct cmd_struct *p = commands+i;
-+		if (!strcmp(s, p->cmd))
-+			return 1;
-+	}
-+	return 0;
-+}
-+
- static void handle_internal_command(int argc, const char **argv)
- {
- 	const char *cmd = argv[0];
--	static struct cmd_struct commands[] = {
--		{ "add", cmd_add, RUN_SETUP | NEED_WORK_TREE },
--		{ "annotate", cmd_annotate, RUN_SETUP },
--		{ "apply", cmd_apply, RUN_SETUP_GENTLY },
--		{ "archive", cmd_archive },
--		{ "bisect--helper", cmd_bisect__helper, RUN_SETUP },
--		{ "blame", cmd_blame, RUN_SETUP },
--		{ "branch", cmd_branch, RUN_SETUP },
--		{ "bundle", cmd_bundle, RUN_SETUP_GENTLY },
--		{ "cat-file", cmd_cat_file, RUN_SETUP },
--		{ "check-attr", cmd_check_attr, RUN_SETUP },
--		{ "check-ignore", cmd_check_ignore, RUN_SETUP | NEED_WORK_TREE },
--		{ "check-mailmap", cmd_check_mailmap, RUN_SETUP },
--		{ "check-ref-format", cmd_check_ref_format },
--		{ "checkout", cmd_checkout, RUN_SETUP | NEED_WORK_TREE },
--		{ "checkout-index", cmd_checkout_index,
--			RUN_SETUP | NEED_WORK_TREE},
--		{ "cherry", cmd_cherry, RUN_SETUP },
--		{ "cherry-pick", cmd_cherry_pick, RUN_SETUP | NEED_WORK_TREE },
--		{ "clean", cmd_clean, RUN_SETUP | NEED_WORK_TREE },
--		{ "clone", cmd_clone },
--		{ "column", cmd_column, RUN_SETUP_GENTLY },
--		{ "commit", cmd_commit, RUN_SETUP | NEED_WORK_TREE },
--		{ "commit-tree", cmd_commit_tree, RUN_SETUP },
--		{ "config", cmd_config, RUN_SETUP_GENTLY },
--		{ "count-objects", cmd_count_objects, RUN_SETUP },
--		{ "credential", cmd_credential, RUN_SETUP_GENTLY },
--		{ "describe", cmd_describe, RUN_SETUP },
--		{ "diff", cmd_diff },
--		{ "diff-files", cmd_diff_files, RUN_SETUP | NEED_WORK_TREE },
--		{ "diff-index", cmd_diff_index, RUN_SETUP },
--		{ "diff-tree", cmd_diff_tree, RUN_SETUP },
--		{ "fast-export", cmd_fast_export, RUN_SETUP },
--		{ "fetch", cmd_fetch, RUN_SETUP },
--		{ "fetch-pack", cmd_fetch_pack, RUN_SETUP },
--		{ "fmt-merge-msg", cmd_fmt_merge_msg, RUN_SETUP },
--		{ "for-each-ref", cmd_for_each_ref, RUN_SETUP },
--		{ "format-patch", cmd_format_patch, RUN_SETUP },
--		{ "fsck", cmd_fsck, RUN_SETUP },
--		{ "fsck-objects", cmd_fsck, RUN_SETUP },
--		{ "gc", cmd_gc, RUN_SETUP },
--		{ "get-tar-commit-id", cmd_get_tar_commit_id },
--		{ "grep", cmd_grep, RUN_SETUP_GENTLY },
--		{ "hash-object", cmd_hash_object },
--		{ "help", cmd_help },
--		{ "index-pack", cmd_index_pack, RUN_SETUP_GENTLY },
--		{ "init", cmd_init_db },
--		{ "init-db", cmd_init_db },
--		{ "log", cmd_log, RUN_SETUP },
--		{ "ls-files", cmd_ls_files, RUN_SETUP },
--		{ "ls-remote", cmd_ls_remote, RUN_SETUP_GENTLY },
--		{ "ls-tree", cmd_ls_tree, RUN_SETUP },
--		{ "mailinfo", cmd_mailinfo },
--		{ "mailsplit", cmd_mailsplit },
--		{ "merge", cmd_merge, RUN_SETUP | NEED_WORK_TREE },
--		{ "merge-base", cmd_merge_base, RUN_SETUP },
--		{ "merge-file", cmd_merge_file, RUN_SETUP_GENTLY },
--		{ "merge-index", cmd_merge_index, RUN_SETUP },
--		{ "merge-ours", cmd_merge_ours, RUN_SETUP },
--		{ "merge-recursive", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE },
--		{ "merge-recursive-ours", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE },
--		{ "merge-recursive-theirs", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE },
--		{ "merge-subtree", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE },
--		{ "merge-tree", cmd_merge_tree, RUN_SETUP },
--		{ "mktag", cmd_mktag, RUN_SETUP },
--		{ "mktree", cmd_mktree, RUN_SETUP },
--		{ "mv", cmd_mv, RUN_SETUP | NEED_WORK_TREE },
--		{ "name-rev", cmd_name_rev, RUN_SETUP },
--		{ "notes", cmd_notes, RUN_SETUP },
--		{ "pack-objects", cmd_pack_objects, RUN_SETUP },
--		{ "pack-redundant", cmd_pack_redundant, RUN_SETUP },
--		{ "pack-refs", cmd_pack_refs, RUN_SETUP },
--		{ "patch-id", cmd_patch_id },
--		{ "pickaxe", cmd_blame, RUN_SETUP },
--		{ "prune", cmd_prune, RUN_SETUP },
--		{ "prune-packed", cmd_prune_packed, RUN_SETUP },
--		{ "push", cmd_push, RUN_SETUP },
--		{ "read-tree", cmd_read_tree, RUN_SETUP },
--		{ "receive-pack", cmd_receive_pack },
--		{ "reflog", cmd_reflog, RUN_SETUP },
--		{ "remote", cmd_remote, RUN_SETUP },
--		{ "remote-ext", cmd_remote_ext },
--		{ "remote-fd", cmd_remote_fd },
--		{ "repack", cmd_repack, RUN_SETUP },
--		{ "replace", cmd_replace, RUN_SETUP },
--		{ "rerere", cmd_rerere, RUN_SETUP },
--		{ "reset", cmd_reset, RUN_SETUP },
--		{ "rev-list", cmd_rev_list, RUN_SETUP },
--		{ "rev-parse", cmd_rev_parse },
--		{ "revert", cmd_revert, RUN_SETUP | NEED_WORK_TREE },
--		{ "rm", cmd_rm, RUN_SETUP },
--		{ "send-pack", cmd_send_pack, RUN_SETUP },
--		{ "shortlog", cmd_shortlog, RUN_SETUP_GENTLY | USE_PAGER },
--		{ "show", cmd_show, RUN_SETUP },
--		{ "show-branch", cmd_show_branch, RUN_SETUP },
--		{ "show-ref", cmd_show_ref, RUN_SETUP },
--		{ "stage", cmd_add, RUN_SETUP | NEED_WORK_TREE },
--		{ "status", cmd_status, RUN_SETUP | NEED_WORK_TREE },
--		{ "stripspace", cmd_stripspace },
--		{ "symbolic-ref", cmd_symbolic_ref, RUN_SETUP },
--		{ "tag", cmd_tag, RUN_SETUP },
--		{ "unpack-file", cmd_unpack_file, RUN_SETUP },
--		{ "unpack-objects", cmd_unpack_objects, RUN_SETUP },
--		{ "update-index", cmd_update_index, RUN_SETUP },
--		{ "update-ref", cmd_update_ref, RUN_SETUP },
--		{ "update-server-info", cmd_update_server_info, RUN_SETUP },
--		{ "upload-archive", cmd_upload_archive },
--		{ "upload-archive--writer", cmd_upload_archive_writer },
--		{ "var", cmd_var, RUN_SETUP_GENTLY },
--		{ "verify-pack", cmd_verify_pack },
--		{ "verify-tag", cmd_verify_tag, RUN_SETUP },
--		{ "version", cmd_version },
--		{ "whatchanged", cmd_whatchanged, RUN_SETUP },
--		{ "write-tree", cmd_write_tree, RUN_SETUP },
--	};
- 	int i;
- 	static const char ext[] = STRIP_EXTENSION;
- 
--- 
-1.8.4.msysgit.0
+In any case, I don't care enough to argue the point further; it was just
+a style suggestion.
+
+- Josh Triplett
