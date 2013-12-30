@@ -1,93 +1,130 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: [PATCH] remote-hg: do not fail on invalid bookmarks
-Date: Tue, 31 Dec 2013 08:22:39 +0900
-Message-ID: <20131230232239.GA5688@glandium.org>
-References: <1388316602-22443-1-git-send-email-apelisse@gmail.com>
- <20131229222433.GA31355@glandium.org>
- <CALWbr2wYqxdMhaWfXQCOk3J_Mxy6=NcScyg9-__j8PPdhY7reA@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Git for Windows 1.8.5.2 (preview)
+Date: Tue, 31 Dec 2013 00:57:20 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1312310043240.1191@s15462909.onlinehome-server.info>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git <git@vger.kernel.org>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: Antoine Pelisse <apelisse@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 31 00:22:54 2013
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: msysgit@googlegroups.com
+X-From: msysgit+bncBCZPH74Q5YNRBYMQRCLAKGQEBIX7JFA@googlegroups.com Tue Dec 31 00:57:22 2013
+Return-path: <msysgit+bncBCZPH74Q5YNRBYMQRCLAKGQEBIX7JFA@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-bk0-f55.google.com ([209.85.214.55])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VxmAe-0005aS-OM
-	for gcvg-git-2@plane.gmane.org; Tue, 31 Dec 2013 00:22:53 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932386Ab3L3XWs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Dec 2013 18:22:48 -0500
-Received: from ks3293202.kimsufi.com ([5.135.186.141]:43779 "EHLO
-	jigen.glandium.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932343Ab3L3XWs (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Dec 2013 18:22:48 -0500
-Received: from mh by jigen.glandium.org with local (Exim 4.82)
-	(envelope-from <mh@glandium.org>)
-	id 1VxmAR-0001pN-Gm; Tue, 31 Dec 2013 08:22:39 +0900
-Content-Disposition: inline
-In-Reply-To: <CALWbr2wYqxdMhaWfXQCOk3J_Mxy6=NcScyg9-__j8PPdhY7reA@mail.gmail.com>
-X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239830>
+	(envelope-from <msysgit+bncBCZPH74Q5YNRBYMQRCLAKGQEBIX7JFA@googlegroups.com>)
+	id 1Vxmi2-0002Hg-N9
+	for gcvm-msysgit@m.gmane.org; Tue, 31 Dec 2013 00:57:22 +0100
+Received: by mail-bk0-f55.google.com with SMTP id v15sf1065571bkz.10
+        for <gcvm-msysgit@m.gmane.org>; Mon, 30 Dec 2013 15:57:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=date:from:to:cc:subject:message-id:user-agent:mime-version
+         :x-original-sender:x-original-authentication-results:precedence
+         :mailing-list:list-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe:content-type;
+        bh=AhVJk6lFc/T/7y1ylLP8eXVvMZXQpKjuij9Pr+7kWUc=;
+        b=Kv0lAURXYhKkRP8Tm/bsb+HeU/0Vyuup3/tUWFhSZ3kU6vd3MrIWQnhyfqkQJFxU1u
+         x8/QKXpwZutWYjJnAKs4GH52JW8cCKYwL0Geqg119nT17WYZi7LAry2vC1CKoBydT6ff
+         hv7M9YbUtfv0/IGFHLfAl35YZCklVvBA07//AUqslXoDeOqk+RYAVUbrVWpQ4FYlDB0Y
+         GeJcb9fKfKZtWIQlIFGK0u7FU7eVbunXJ7ltBCHcw+QBwERT5KF7yefLZbY/iwCSKJYz
+         5ojNVQbZ7chLqmgTbusTPrYVpXidqueQ1O1ZLOPFBE4wC5642ThLhLJtEZi/DhnaEtDe
+         rMoQ==
+X-Received: by 10.180.90.38 with SMTP id bt6mr309858wib.18.1388447842224;
+        Mon, 30 Dec 2013 15:57:22 -0800 (PST)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.180.10.42 with SMTP id f10ls1106289wib.48.gmail; Mon, 30 Dec
+ 2013 15:57:21 -0800 (PST)
+X-Received: by 10.204.69.203 with SMTP id a11mr13457502bkj.0.1388447841290;
+        Mon, 30 Dec 2013 15:57:21 -0800 (PST)
+Received: from mout.gmx.net (mout.gmx.net. [212.227.17.21])
+        by gmr-mx.google.com with ESMTPS id b3si2323844eez.0.2013.12.30.15.57.21
+        for <msysgit@googlegroups.com>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 30 Dec 2013 15:57:21 -0800 (PST)
+Received-SPF: pass (google.com: domain of Johannes.Schindelin@gmx.de designates 212.227.17.21 as permitted sender) client-ip=212.227.17.21;
+Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
+ mail.gmx.com (mrgmx101) with ESMTPSA (Nemesis) id 0Ldcv0-1VX0jK3Np4-00ikYG
+ for <msysgit@googlegroups.com>; Tue, 31 Dec 2013 00:57:20 +0100
+X-X-Sender: schindelin@s15462909.onlinehome-server.info
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Provags-ID: V03:K0:0K6jqPRoC/xFcMtPY2BekHAuyBndtvsPZvIIFcfZBDP52KLwN5J
+ 5Lm99Joo+z4ujZ/YVOLqZvfDajlu1ZGC5SIgHxy6FwDbxx+nNEGydG4hrYj5HiAwkd6Cccv
+ SFjvrox6gcJNdfLAzJhen9jilP7461qJeNo5i7EdT5bU0Co7ljAT70PZd32EEmXNCtgXe2p
+ +yW5ZmManlD6Uj/9LdO7A==
+X-Original-Sender: johannes.schindelin@gmx.de
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of Johannes.Schindelin@gmx.de designates 212.227.17.21 as
+ permitted sender) smtp.mail=Johannes.Schindelin@gmx.de
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239831>
 
-On Mon, Dec 30, 2013 at 08:41:13AM +0100, Antoine Pelisse wrote:
-> On Sun, Dec 29, 2013 at 11:24 PM, Mike Hommey <mh@glandium.org> wrote:
-> > On Sun, Dec 29, 2013 at 12:30:02PM +0100, Antoine Pelisse wrote:
-> >> Mercurial can have bookmarks pointing to "nullid" (the empty root
-> >> revision), while Git can not have references to it.
-> >> When cloning or fetching from a Mercurial repository that has such a
-> >> bookmark, the import will fail because git-remote-hg will not be able to
-> >> create the corresponding reference.
-> >>
-> >> Warn the user about the invalid reference, and continue the import,
-> >> instead of stopping right away.
-> >
-> > It's not invalid, it's used to indicate deleted bookmarks. (Tags have
-> > the same property)
-> 
-> Hey Mike,
-> Indeed, I don't know how I ended-up with such a bookmark, but it
-> prevented me from git-cloning the repository (and the backtrace was
-> not very helpful at first).
-> But I'm still not sure what you mean by "deleted bookmarks" ?
-> I guess it's not "hg bookmark --delete", as it would not be listed at
-> all. Is it "hg strip some_changeset" that end-up deleting the
-> bookmarked changeset ? I think I've tested this use-case and it moved
-> the bookmark to a parent changeset.
+Dear fans of Git,
 
-Mmmm after looking at the mercurial code, it looks like i was wrong and
-bookmarks are not handled like tags. You can actually create such a
-bookmark on purpose with:
+this mail brings to you the good news that Git for Windows is available in
+a new version: 1.8.5.2-preview20131230
 
-$ hg bookmark -r null foo
+Many, many thanks go to the tireless developers working on this
+particularly hard port of Git.
 
-Then, if you do, say:
+Changes since Git-1.8.4-preview20130916
 
-$ hg up -r foo
-$ echo a > a
-$ hg add a
-$ hg commit -m a
+New Features
 
-Then you end up with a completely new head with no ancestors in common
-with the others.
+- Comes with Git 1.8.5.2 plus Windows-specific patches.
 
-In git terms,
+- Windows-specific patches are now grouped into pseudo-branches which
+  should make future development more robust despite the fact that we have
+  had less than stellar success getting the Windows-specific patches accepted
+  by upstream git.git.
 
-$ hg bookmark -r null foo
-$ hg up -r foo
+- Works around more path length limitations (pull request #86)
 
-is equivalent to
+- Has an optional stat() cache toggled via core.fscache (pull request #107)
 
-$ git checkout --orphan foo
+Bugfixes
 
-But git never creates an actual ref in that case.
+- Lots of installer fixes
 
-Mike
+- git-cmd: Handle home directory on a different drive correctly (pull
+  request #146)
+
+- git-cmd: add a helper to work with the ssh agent (pull request #135)
+
+- Git-Cheetah: prevent duplicate menu entries (pull request #7)
+
+- No longer replaces dos2unix with hd2u (a more powerful, but slightly
+  incompatible version of dos2unix)
+
+In keeping with the fine tradition of making a release on the eve of a
+holiday, and immediately going on vacation, it is my pleasure to wish you
+all a happy new year,
+Johannes
+
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/groups/opt_out.
