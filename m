@@ -1,109 +1,134 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
 Subject: Re: [PATCH 0/3] t0000 cleanups
-Date: Mon, 30 Dec 2013 10:30:28 -0800
-Message-ID: <xmqqwqimry2j.fsf@gitster.dls.corp.google.com>
+Date: Mon, 30 Dec 2013 10:51:25 -0800
+Message-ID: <20131230185125.GI20443@google.com>
 References: <20131228092731.GA26337@sigill.intra.peff.net>
-	<20131228222129.GE5544@google.com>
+ <20131228222129.GE5544@google.com>
+ <xmqqwqimry2j.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
 	John Keeping <john@keeping.me.uk>,
 	Thomas Rast <tr@thomasrast.ch>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Dec 30 19:31:02 2013
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Dec 30 19:51:37 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vxhc8-0003q2-Nh
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Dec 2013 19:30:57 +0100
+	id 1Vxhw7-0004Gc-6n
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Dec 2013 19:51:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756126Ab3L3Sad (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Dec 2013 13:30:33 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44145 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755867Ab3L3Sac (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Dec 2013 13:30:32 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E1D9D5F6D6;
-	Mon, 30 Dec 2013 13:30:31 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=fh92ePlawyKRFaBwuaHrBhYvJhg=; b=Eqk45Q
-	PpM8OBrZQfS2VTNOOjZyMBxppdLXiHzQK7BgyHxkHDc4282PNLbsbi+srkXjYI+T
-	foK0gIAWUcuQW/EIj8WEM3upA/ejtDpKELHvJH1c3Um61JVmQBoIvwJVPj6D5yUe
-	g2ckQuUXbGAcwpllQNvJJ4dDITTshjPTIOLQc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=A63LRHtSkpAHv5+Ot1aC5Veuxj7SjWNy
-	nOweRvH0ommVIRxTbuaoXmBcT7v9IH+Q0UszPje1uYJrw6eQRx4tGeFylMaA733B
-	aJMgCiLIsbH0dRynPl72DQuhYVnFs/LGZ6/CsoqNl/VO6Lc3I91z9pU7Frlmqkq5
-	IQUfK/nP3LE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BC0C15F6D5;
-	Mon, 30 Dec 2013 13:30:31 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 015705F6D3;
-	Mon, 30 Dec 2013 13:30:31 -0500 (EST)
-In-Reply-To: <20131228222129.GE5544@google.com> (Jonathan Nieder's message of
-	"Sat, 28 Dec 2013 14:21:29 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 769B0D8C-7180-11E3-B15F-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S932118Ab3L3Svb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Dec 2013 13:51:31 -0500
+Received: from mail-yh0-f47.google.com ([209.85.213.47]:45634 "EHLO
+	mail-yh0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932069Ab3L3Sva (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Dec 2013 13:51:30 -0500
+Received: by mail-yh0-f47.google.com with SMTP id 29so2421488yhl.6
+        for <git@vger.kernel.org>; Mon, 30 Dec 2013 10:51:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=1385iOFAKclDAT9siOBzxkea+touUx7mJJFRVvekue0=;
+        b=vT8Qfo9BwP3v4ES2Op9p1aDqTlfaHHt8lN9tqFS1peR8dusW1F094eKpgbxIhK2eRz
+         YjVRlfikMV2NbKoh59mefofKJhIlyhaH1O6dqISK6FvTo7uMsQ/VVV8oupg/984tRubf
+         zLXwvzWdLZq8/vjLbc6ZETRiDrUStanW8uclqXg/d4qOUwfFF4m71vzaEivtsrNK5JE5
+         +FV1sw2X1hwK+jC1e6dp5Ci8sQ7Aos2ENOo8Y2tHw6jZeu3gbY7T2tWRNzrvQLFI5Hwv
+         TUMxZ2FvwAUGNYkIzqcEMLcTCICf/1yu7rsOo1+SVSq15NW8ZUp25TmmsBoZHZrZKOhe
+         kPTg==
+X-Received: by 10.236.91.201 with SMTP id h49mr427518yhf.96.1388429488765;
+        Mon, 30 Dec 2013 10:51:28 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id 9sm62719537yhe.21.2013.12.30.10.51.27
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 30 Dec 2013 10:51:28 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <xmqqwqimry2j.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239811>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239812>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Junio C Hamano wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
+>> Jeff King wrote:
 
-> Jeff King wrote:
->
->> When I want to debug a failing test, I often end up doing:
+>>> When I want to debug a failing test, I often end up doing:
+>>>
+>>>   cd t
+>>>   ./t4107-<tab> -v -i
+>>>   cd tra<tab>
+>>>
+>>> The test names are long, so tab-completing on the trash directory is
+>>> very helpful. Lately I've noticed that there are a bunch of crufty trash
+>>> directories in my t/ directory, which makes my tab-completion more
+>>> annoying.
 >>
->>   cd t
->>   ./t4107-<tab> -v -i
->>   cd tra<tab>
->>
->> The test names are long, so tab-completing on the trash directory is
->> very helpful. Lately I've noticed that there are a bunch of crufty trash
->> directories in my t/ directory, which makes my tab-completion more
->> annoying.
->
-> Ah, and if I'd read this then I wouldn't have had to be confused at
-> all.  Would it work to replace the commit message with something like
-> this?
+>> Ah, and if I'd read this then I wouldn't have had to be confused at
+>> all.
+[...]
+> The third paragraph of 1/3 sufficiently covers it, no?  We could add
+> "It makes it less convenient to use tab completion 'cd t/tra<TAB>'
+> to go to the trash directory of the failed test to inspect the
+> situation" after "... left in the t/ directory.", though.
+[4 paragraphs snipped]
 
-The third paragraph of 1/3 sufficiently covers it, no?  We could add
-"It makes it less convenient to use tab completion 'cd t/tra<TAB>'
-to go to the trash directory of the failed test to inspect the
-situation" after "... left in the t/ directory.", though.
+I think it can be better, since the commit message left me scratching
+my head while the patch itself seems pretty simple.  How about
+something like the following?
 
-    Once upon a time, the test-lib library would create trash
-    directories in the current working directory, unless we were
-    explicitly told to put it elsewhere via --root. As a result,
-    t0000 created the sub-test trash directories inside its own
-    trash directory.
+First, describing the problem:
 
-    However, we noticed that this did not cover all cases, since
-    we would need to respect $TEST_OUTPUT_DIRECTORY even if
-    --root is not given (or is relative). Commit 38b074d fixed
-    this to consistently use the full path.
+	Running t0000 produces more trash directories than expected
+	and does not clean up after itself:
 
-    As a result, trash directories used by t0000's sub-tests are now
-    created in git's original test output directory rather than in our
-    trash directory. Furthermore, since some of the sub-tests simulate
-    failures, the trash directories do not get cleaned up, and the cruft
-    is left in the t/ directory.
+	 $ ./t0000-basic.sh
+	[...]
+	 $ ls -d trash\ directory.*
+	 trash directory.failing-cleanup
+	 trash directory.mixed-results1
+	 trash directory.mixed-results2
+	 trash directory.partial-pass
+	 trash directory.test-verbose
+	 trash directory.test-verbose-only-2
 
-    We could fix this by passing a new "--root=$TRASH_DIRECTORY"
-    option to the sub-test. However, we do not want the sub-tests
-    to write anything at all to git's directory (e.g., they
-    should not be writing to t/test-results, either, although
-    this is already handled by separate code).  So the best
-    solution is to simply reset $TEST_OUTPUT_DIRECTORY entirely
-    in the sub-test, which covers this case, as well as any
-    future ones.
+Analysis and fix:
+
+	These scratch areas for sub-tests should be under the t0000
+	trash directory, but because the TEST_OUTPUT_DIRECTORY
+	setting from the toplevel test leaks into the environment
+	they are created under the toplevel output directory (typically
+	t/) instead.  Because some of the sub-tests simulate failures,
+	their trash directories are kept around.
+
+	Fix it by explicitly setting TEST_OUTPUT_DIRECTORY appropriately
+	for sub-tests.
+
+And then, optionally, describing rejected alternatives:
+
+	An alternative fix would be to pass the --root parameter that
+	only specifies where to put the trash directories, which would
+	also work.  However, using TEST_OUTPUT_DIRECTORY is more
+	futureproof in case tests want to write more output in
+	addition to the test-results/ (which are already suppressed in
+	sub-tests using the HARNESS_ACTIVE setting) and trash
+	directories.
+
+And more analysis of why this wasn't caught in the first place:
+
+	This fixes a regression introduced by 38b074d (t/test-lib.sh:
+	fix TRASH_DIRECTORY handling, 2013-04-14).  Before then, the
+	TEST_OUTPUT_DIRECTORY setting was not respected consistently
+	so most tests did their work in a "trash" subdirectory of the
+	current directory instead of the output dir.
+
+Does that make sense?
+
+Thanks,
+Jonathan
