@@ -1,74 +1,84 @@
-From: stephen_leake@stephe-leake.org
-Subject: aborted 'git fetch' leaves workspace unusable
-Date: Mon, 30 Dec 2013 10:07:55 -0700
-Message-ID: <7adcf8024c435b9b7178b86f01e447bb@stephe-leake.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 9/9] trailer: add tests for "git interpret-trailers"
+Date: Mon, 30 Dec 2013 09:19:55 -0800
+Message-ID: <xmqq1u0utfwk.fsf@gitster.dls.corp.google.com>
+References: <20131224061541.19560.17773.chriscool@tuxfamily.org>
+	<20131224063726.19560.61859.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 7bit
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Dec 30 18:14:46 2013
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
+	Josh Triplett <josh@joshtriplett.org>,
+	Thomas Rast <tr@thomasrast.ch>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Dan Carpenter <dan.carpenter@oracle.com>,
+	Greg Kroah-Hartman <greg@kroah.com>, Jeff King <peff@peff.net>
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Mon Dec 30 18:20:16 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VxgQO-0007YW-Ky
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Dec 2013 18:14:44 +0100
+	id 1VxgVj-0006Hw-E4
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Dec 2013 18:20:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756128Ab3L3ROl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Dec 2013 12:14:41 -0500
-Received: from alt-proxy17.mail.unifiedlayer.com ([66.147.241.60]:43495 "HELO
-	alt-proxy17.mail.unifiedlayer.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1756051Ab3L3ROk (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 30 Dec 2013 12:14:40 -0500
-X-Greylist: delayed 399 seconds by postgrey-1.27 at vger.kernel.org; Mon, 30 Dec 2013 12:14:40 EST
-Received: (qmail 28833 invoked by uid 0); 30 Dec 2013 17:07:57 -0000
-Received: from unknown (HELO host114.hostmonster.com) (74.220.207.114)
-  by oproxy6.mail.unifiedlayer.com with SMTP; 30 Dec 2013 17:07:57 -0000
-Received: from localhost ([127.0.0.1]:36785 helo=host114.hostmonster.com)
-	by host114.hostmonster.com with esmtpa (Exim 4.80)
-	(envelope-from <stephen_leake@stephe-leake.org>)
-	id 1VxgJp-0003av-H4
-	for git@vger.kernel.org; Mon, 30 Dec 2013 10:07:57 -0700
-X-Sender: stephen_leake@stephe-leake.org
-User-Agent: Roundcube Webmail/0.8.5
-X-Identified-User: {2442:host114.hostmonster.com:stephele:stephe-leake.org} {sentby:smtp auth 127.0.0.1 authed with stephen_leake@stephe-leake.org}
+	id S932297Ab3L3RUJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Dec 2013 12:20:09 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58104 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932291Ab3L3RT6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Dec 2013 12:19:58 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D573E5E59B;
+	Mon, 30 Dec 2013 12:19:57 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=23FGC0HGFP6orT3ffKfpAgIchDQ=; b=rqDaOv
+	fQ+g4YOMxTxbPkFFCJL5xMZFhEiEKRSSxKLhgN8K98B/dvuuNe9b9hbPra1AJv8H
+	EWux6UeMGNZZvLfymt5EsbcAU1D9HU3S5GCoVtjpOzH1GdIoaqwcKw5YGhcilBKX
+	uBqN1o22kH7aQuMO43oOC/f9T9pqGU2B1FVMI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=jYfh9VuIj2iokR8fucTDBNhfry3fSQNA
+	ka7Vc1M3uqPlwkfarXRJ5N4/jTnGImg0tDVh51lFZo4tkQLiefyjjkISjcYjglbL
+	o7iZOLrNXCCfMhm9rqhvcLfeGyI8sm0o+g9ZSJofVihyfJT+eF8FuvZJpC7Ff3QE
+	fbsidosCNg4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C71675E59A;
+	Mon, 30 Dec 2013 12:19:57 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1A4F45E597;
+	Mon, 30 Dec 2013 12:19:57 -0500 (EST)
+In-Reply-To: <20131224063726.19560.61859.chriscool@tuxfamily.org> (Christian
+	Couder's message of "Tue, 24 Dec 2013 07:37:25 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 9B018D72-7176-11E3-8F01-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239809>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239810>
 
-I forgot to do 'ssh-add', so a 'git fetch' running under Windows Emacs
-tried to prompt for the ssh passphrase, could not find an ssh 
-passphrase
-prompt program, and aborted.
+Christian Couder <chriscool@tuxfamily.org> writes:
 
-That left the workspace unusable:
+> +# Do not remove trailing spaces below!
+> +cat >complex_message_trailers <<'EOF'
+> +Fixes: 
+> +Acked-by: 
+> +Reviewed-by: 
+> +Signed-off-by: 
+> +EOF
 
-- .git/FETCH_HEAD is empty
+Just a hint.  I think it is far safer and robust over time to do
+something like this:
 
-     that causes 'git rev-parse FETCH_HEAD' to fail with a confusing
-     error message.
+	sed -e 's/ Z$/ /' <<-\EOF
+        Fixes: Z
+        Acked-by: Z
+        EOF
 
-- 'git fetch' just hangs after outputting:
-
-remote: Counting objects: 15, done.
-remote: Compressing objects: 100% (8/8), done.
-remote: Total 9 (delta 5), reused 0 (delta 0)
-
-     even with -v --progress
-
-A fresh clone allowed me to continue working, but this will happen
-again, so I'd like a better fix.
-
-The fetch is from stephen_leake@git.savannah.gnu.org/emacs/elpa.git
-
-I'm running git 1.7.9 from Cygwin. I have access to Debian, where I can
-compile git and run it under the debugger, if that helps. I have not 
-yet
-tried to reproduce this bug on Debian.
-
---
--- Stephe
+instead of a comment, which can warn human developers but does not
+do anything to prevent their editors' auto-fix features from kicking
+in.
