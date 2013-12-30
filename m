@@ -1,74 +1,74 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH] for-each-ref: remove unused variable
-Date: Mon, 30 Dec 2013 21:58:55 +0530
-Message-ID: <1388420935-14030-1-git-send-email-artagnon@gmail.com>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Dec 30 17:28:38 2013
+From: stephen_leake@stephe-leake.org
+Subject: aborted 'git fetch' leaves workspace unusable
+Date: Mon, 30 Dec 2013 10:07:55 -0700
+Message-ID: <7adcf8024c435b9b7178b86f01e447bb@stephe-leake.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Dec 30 18:14:46 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vxfhi-0008A7-U3
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Dec 2013 17:28:35 +0100
+	id 1VxgQO-0007YW-Ky
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Dec 2013 18:14:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756190Ab3L3Q2a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Dec 2013 11:28:30 -0500
-Received: from mail-pb0-f50.google.com ([209.85.160.50]:60061 "EHLO
-	mail-pb0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756058Ab3L3Q23 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Dec 2013 11:28:29 -0500
-Received: by mail-pb0-f50.google.com with SMTP id rr13so11778402pbb.9
-        for <git@vger.kernel.org>; Mon, 30 Dec 2013 08:28:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:subject:date:message-id;
-        bh=7p6mVUX11d8CcLOV73fLDQmMy+ynPjJITjt0NDuIDE4=;
-        b=hrAHH/w/hz0jQYr6WUgm4eDTCmUoMi7/tMXIlriOJVIeRnpdZgEC06jf7lQUGECVww
-         23gMDVY5H647fofFgkje1XP9twbxOBRx7ZoL7gDUY/mJV8mAaQu4oHMHAXKVOafgQ7yB
-         VV42cGWy8qx6o/mOxdGRkA9tfO9rdqpE3TnmJvSxm4J6nizMnOF3PNEQosoxTISsk0rI
-         dj0+DOJY6Tvr5fSFFPU2KfpsmGNAIJyX5SOeWO5nAYZm1b1f8E80sNGbrrGi9PiLeW6A
-         tvl/7flmlTA4UOQuZPvKWr83jHJSodXKWWZaq0b+1usH695kyqnxCrcDZaWQ9tbqcihj
-         vsYA==
-X-Received: by 10.68.108.194 with SMTP id hm2mr70455181pbb.22.1388420907793;
-        Mon, 30 Dec 2013 08:28:27 -0800 (PST)
-Received: from localhost.localdomain ([122.164.141.93])
-        by mx.google.com with ESMTPSA id pa1sm108196551pac.17.2013.12.30.08.28.25
-        for <git@vger.kernel.org>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 30 Dec 2013 08:28:27 -0800 (PST)
-X-Mailer: git-send-email 1.8.5.2.227.g53f3478
+	id S1756128Ab3L3ROl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Dec 2013 12:14:41 -0500
+Received: from alt-proxy17.mail.unifiedlayer.com ([66.147.241.60]:43495 "HELO
+	alt-proxy17.mail.unifiedlayer.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1756051Ab3L3ROk (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 30 Dec 2013 12:14:40 -0500
+X-Greylist: delayed 399 seconds by postgrey-1.27 at vger.kernel.org; Mon, 30 Dec 2013 12:14:40 EST
+Received: (qmail 28833 invoked by uid 0); 30 Dec 2013 17:07:57 -0000
+Received: from unknown (HELO host114.hostmonster.com) (74.220.207.114)
+  by oproxy6.mail.unifiedlayer.com with SMTP; 30 Dec 2013 17:07:57 -0000
+Received: from localhost ([127.0.0.1]:36785 helo=host114.hostmonster.com)
+	by host114.hostmonster.com with esmtpa (Exim 4.80)
+	(envelope-from <stephen_leake@stephe-leake.org>)
+	id 1VxgJp-0003av-H4
+	for git@vger.kernel.org; Mon, 30 Dec 2013 10:07:57 -0700
+X-Sender: stephen_leake@stephe-leake.org
+User-Agent: Roundcube Webmail/0.8.5
+X-Identified-User: {2442:host114.hostmonster.com:stephele:stephe-leake.org} {sentby:smtp auth 127.0.0.1 authed with stephen_leake@stephe-leake.org}
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239808>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239809>
 
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
----
- builtin/for-each-ref.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+I forgot to do 'ssh-add', so a 'git fetch' running under Windows Emacs
+tried to prompt for the ssh passphrase, could not find an ssh 
+passphrase
+prompt program, and aborted.
 
-diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
-index 6551e7b..51798b4 100644
---- a/builtin/for-each-ref.c
-+++ b/builtin/for-each-ref.c
-@@ -92,7 +92,7 @@ static struct {
-  */
- static const char **used_atom;
- static cmp_type *used_atom_type;
--static int used_atom_cnt, sort_atom_limit, need_tagged, need_symref;
-+static int used_atom_cnt, need_tagged, need_symref;
- static int need_color_reset_at_eol;
- 
- /*
-@@ -1105,7 +1105,6 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
- 
- 	if (!sort)
- 		sort = default_sort();
--	sort_atom_limit = used_atom_cnt;
- 
- 	/* for warn_ambiguous_refs */
- 	git_config(git_default_config, NULL);
--- 
-1.8.5.2.227.g53f3478
+That left the workspace unusable:
+
+- .git/FETCH_HEAD is empty
+
+     that causes 'git rev-parse FETCH_HEAD' to fail with a confusing
+     error message.
+
+- 'git fetch' just hangs after outputting:
+
+remote: Counting objects: 15, done.
+remote: Compressing objects: 100% (8/8), done.
+remote: Total 9 (delta 5), reused 0 (delta 0)
+
+     even with -v --progress
+
+A fresh clone allowed me to continue working, but this will happen
+again, so I'd like a better fix.
+
+The fetch is from stephen_leake@git.savannah.gnu.org/emacs/elpa.git
+
+I'm running git 1.7.9 from Cygwin. I have access to Debian, where I can
+compile git and run it under the debugger, if that helps. I have not 
+yet
+tried to reproduce this bug on Debian.
+
+--
+-- Stephe
