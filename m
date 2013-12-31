@@ -1,85 +1,101 @@
-From: Roman Kagan <rkagan@mail.ru>
-Subject: Re: [PATCH v2] git-svn: workaround for a bug in svn serf backend
-Date: Tue, 31 Dec 2013 11:20:28 +0400
-Message-ID: <CANiYKX5aUYWV2Kt_yMmAxeC07SuNcs-tJEe8e2SY4p1NHBPKUA@mail.gmail.com>
-References: <20131226202805.GV20443@google.com>
-	<1388131515-3015-1-git-send-email-rkagan@mail.ru>
-	<20131227200708.GD20443@google.com>
-	<20131227203443.GA9189@dcvr.yhbt.net>
-	<7veh4yj5mm.fsf@alter.siamese.dyndns.org>
-	<CANiYKX4fjYYRneqPxFDmpPg7e5ge9-hNktBvXVLQ=JxtM56tAQ@mail.gmail.com>
-	<xmqq4n5qrume.fsf@gitster.dls.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Fwd: Runaway "git remote" if group definition contains a remote
+ by the same name
+Date: Tue, 31 Dec 2013 03:06:47 -0500
+Message-ID: <20131231080647.GA25838@sigill.intra.peff.net>
+References: <AANLkTinni=VJLoZp1Hjm4dfW8faChytDObJbXsFF5iXv@mail.gmail.com>
+ <CALxABCbRZ4MmiYS4JF20qf1-iubeTfa+3OLibqdb5+raekuKQg@mail.gmail.com>
+ <20131229075838.GC31788@sigill.intra.peff.net>
+ <xmqqlhz2rw7s.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Eric Wong <normalperson@yhbt.net>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	Benjamin Pabst <benjamin.pabst85@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Cc: Alex Riesen <raa.lkml@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Dec 31 08:20:48 2013
+X-From: git-owner@vger.kernel.org Tue Dec 31 09:06:56 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VxtdA-0000qq-CF
-	for gcvg-git-2@plane.gmane.org; Tue, 31 Dec 2013 08:20:48 +0100
+	id 1VxuLm-0000HX-CV
+	for gcvg-git-2@plane.gmane.org; Tue, 31 Dec 2013 09:06:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751830Ab3LaHUa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 Dec 2013 02:20:30 -0500
-Received: from mail-qc0-f171.google.com ([209.85.216.171]:65359 "EHLO
-	mail-qc0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751757Ab3LaHU3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Dec 2013 02:20:29 -0500
-Received: by mail-qc0-f171.google.com with SMTP id c9so11541002qcz.16
-        for <git@vger.kernel.org>; Mon, 30 Dec 2013 23:20:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=Q0C3B9BO7DbN9M5ndbyuazR34fvsMDAt5X1rPqSRn3k=;
-        b=LM3c6nt4nBg7Nq5C1o3s/cu6ZQyST7bdVT0hwEI010HzkfEsRoWJkiXLDDwNwXxFGp
-         fLEUyWAqraCsi+DgK3Bww2f8svZoi0VKu4tbEsvWX4EU+S03LxdMdK4gyqVQPC6XINLf
-         rmvVNR466p3QwHiIZyBcjmAH8ReB0Y68vFITlBEDG+iGmepTSeQ1xKIfKTbJ7cOfxNjY
-         fk8/LdlsjfHO+WyZWDV0p422T886MGnP+uiOL1jxyQkRvUc9xz6RcJY1RxhPm+6bj7W1
-         PwprMiaS9dXPE/D86cYps7CBVVtH0crC1zAyej3b9xSmn1O331c1Z3+is7XZdhkshuWQ
-         Mh1Q==
-X-Received: by 10.49.84.195 with SMTP id b3mr118086762qez.32.1388474428702;
- Mon, 30 Dec 2013 23:20:28 -0800 (PST)
-Received: by 10.224.98.146 with HTTP; Mon, 30 Dec 2013 23:20:28 -0800 (PST)
-In-Reply-To: <xmqq4n5qrume.fsf@gitster.dls.corp.google.com>
-X-Google-Sender-Auth: pzYnvl2ESPOT9T8hiOwxBqF4An0
+	id S1752062Ab3LaIGu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 Dec 2013 03:06:50 -0500
+Received: from cloud.peff.net ([50.56.180.127]:52895 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752025Ab3LaIGt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Dec 2013 03:06:49 -0500
+Received: (qmail 3430 invoked by uid 102); 31 Dec 2013 08:06:49 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 31 Dec 2013 02:06:49 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 31 Dec 2013 03:06:47 -0500
+Content-Disposition: inline
+In-Reply-To: <xmqqlhz2rw7s.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239833>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239834>
 
-2013/12/30 Junio C Hamano <gitster@pobox.com>:
-> Roman Kagan <rkagan@mail.ru> writes:
->> I'd like to note that it's IMO worth including in the 'maint' branch
->> as it's a crasher.  Especially so since the real fix has been merged
->> in the subversion upstream and nominated for 1.8 branch, so the
->> workaround may soon lose its relevance.
->
-> I do not quite get this part, though.
->
-> If they refused to fix it for real, it would make it likely that
-> this workaround will stay relevant for a long time, in which case it
-> would be worth cherry-picking to an older maintenance track.  But if
-> this workaround is expected to lose its relevance shortly, I see it
-> as one less reason to cherry-pick it to an older maintenance track.
->
-> Confused...
+On Mon, Dec 30, 2013 at 11:10:31AM -0800, Junio C Hamano wrote:
 
-I thought it was exactly the other way around.  By the time the next
-feature release reaches users, chances are they'd already have
-subversion with the fix.  OTOH the workaround would benefit those who
-get their maintenance release of git (e.g. through their Linux distro
-update) before they get their maintenance release of subversion.
+> > So I think the sanest thing is probably:
+> >
+> >   1. Teach "fetch" to expand recursively in a single process, and then
+> >      tell sub-processes (via a new command-line option) not to expand
+> >      any further.
+> >
+> >   2. Teach "fetch" to detect cycles (probably just by a simple depth
+> >      counter).
+> 
+> I suspect that the expansion code will just accumulate remotes found
+> into a string-list (as part of 4. below), so deduping would be
+> fairly easily done without a depth counter.
 
-Documentation/SubmittingPatches also suggests to submit bugfixes
-against 'maint'.
+I don't think that will work (at least not naively). The end-product of
+step 1, and the string_list that is de-duped in step 4, is a list of the
+concrete remotes. The cycles occur between groups, which are not
+mentioned in the final list.
 
-But I might have got it wrong...
+You can keep a separate list of the groups we visit, of course, but we
+do not otherwise need it.
 
-Roman.
+One thing that does make such a list easier is that we do not need to
+care about order. E.g., in config like this:
+
+  [remotes]
+  a = c
+  b = c
+  c = d e
+
+you can mark "c" as seen after visiting it via "a". It is not
+technically a cycle, but since we would want to suppress duplicates
+anyway, we can be overly broad.
+
+> >   3. Teach the group-reading code to detect groups more robustly, so
+> >      that a single-item group like "remotes.foo=bar" correctly recurses
+> >      to "bar".
+> 
+> A single-item remote group is somewhat annoying, but expanding it
+> only at some places while ignoring it at other places is even more
+> annoying, so this sounds like a right thing to do.
+
+The only configuration that I think would be negatively affected is
+something like:
+
+  [remote]
+  foo = foo
+  [remote "foo"]
+  url = ...
+
+that silently works now, but would become broken (because we would
+complain about the cycle). I think that's OK; that config is clearly
+stupid and broken. If it were "remote.foo = foo bar", trying to expand
+the concrete "foo" and "bar", that might make some sense, but then it is
+already broken in the current code (that is the example that started the
+discussion).
+
+-Peff
