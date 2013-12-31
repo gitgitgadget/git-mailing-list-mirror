@@ -1,101 +1,92 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Fwd: Runaway "git remote" if group definition contains a remote
- by the same name
-Date: Tue, 31 Dec 2013 03:06:47 -0500
-Message-ID: <20131231080647.GA25838@sigill.intra.peff.net>
-References: <AANLkTinni=VJLoZp1Hjm4dfW8faChytDObJbXsFF5iXv@mail.gmail.com>
- <CALxABCbRZ4MmiYS4JF20qf1-iubeTfa+3OLibqdb5+raekuKQg@mail.gmail.com>
- <20131229075838.GC31788@sigill.intra.peff.net>
- <xmqqlhz2rw7s.fsf@gitster.dls.corp.google.com>
+From: stephen_leake@stephe-leake.org
+Subject: Re: aborted 'git fetch' leaves workspace unusable
+Date: Tue, 31 Dec 2013 01:19:25 -0700
+Message-ID: <32eeea08963ec4438f97ff9ef6553a75@stephe-leake.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Alex Riesen <raa.lkml@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Dec 31 09:06:56 2013
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Dec 31 09:19:43 2013
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VxuLm-0000HX-CV
-	for gcvg-git-2@plane.gmane.org; Tue, 31 Dec 2013 09:06:54 +0100
+	id 1VxuY8-0007d1-I3
+	for gcvg-git-2@plane.gmane.org; Tue, 31 Dec 2013 09:19:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752062Ab3LaIGu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 Dec 2013 03:06:50 -0500
-Received: from cloud.peff.net ([50.56.180.127]:52895 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752025Ab3LaIGt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Dec 2013 03:06:49 -0500
-Received: (qmail 3430 invoked by uid 102); 31 Dec 2013 08:06:49 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 31 Dec 2013 02:06:49 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 31 Dec 2013 03:06:47 -0500
-Content-Disposition: inline
-In-Reply-To: <xmqqlhz2rw7s.fsf@gitster.dls.corp.google.com>
+	id S1752060Ab3LaITa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 Dec 2013 03:19:30 -0500
+Received: from qproxy1-pub.mail.unifiedlayer.com ([173.254.64.10]:34411 "HELO
+	qproxy1.mail.unifiedlayer.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with SMTP id S1751830Ab3LaIT3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 31 Dec 2013 03:19:29 -0500
+Received: (qmail 29657 invoked by uid 0); 31 Dec 2013 15:19:27 -0000
+Received: from unknown (HELO host114.hostmonster.com) (74.220.207.114)
+  by qproxy1.mail.unifiedlayer.com with SMTP; 31 Dec 2013 15:19:27 -0000
+Received: from localhost ([127.0.0.1]:42815 helo=host114.hostmonster.com)
+	by host114.hostmonster.com with esmtpa (Exim 4.80)
+	(envelope-from <stephen_leake@stephe-leake.org>)
+	id 1VxuXv-0004rE-F5
+	for git@vger.kernel.org; Tue, 31 Dec 2013 01:19:27 -0700
+X-Sender: stephen_leake@stephe-leake.org
+User-Agent: Roundcube Webmail/0.8.5
+X-Identified-User: {2442:host114.hostmonster.com:stephele:stephe-leake.org} {sentby:smtp auth 127.0.0.1 authed with stephen_leake@stephe-leake.org}
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239834>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239835>
 
-On Mon, Dec 30, 2013 at 11:10:31AM -0800, Junio C Hamano wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> > So I think the sanest thing is probably:
-> >
-> >   1. Teach "fetch" to expand recursively in a single process, and then
-> >      tell sub-processes (via a new command-line option) not to expand
-> >      any further.
-> >
-> >   2. Teach "fetch" to detect cycles (probably just by a simple depth
-> >      counter).
+> stephen_leake@stephe-leake.org writes:
 > 
-> I suspect that the expansion code will just accumulate remotes found
-> into a string-list (as part of 4. below), so deduping would be
-> fairly easily done without a depth counter.
-
-I don't think that will work (at least not naively). The end-product of
-step 1, and the string_list that is de-duped in step 4, is a list of the
-concrete remotes. The cycles occur between groups, which are not
-mentioned in the final list.
-
-You can keep a separate list of the groups we visit, of course, but we
-do not otherwise need it.
-
-One thing that does make such a list easier is that we do not need to
-care about order. E.g., in config like this:
-
-  [remotes]
-  a = c
-  b = c
-  c = d e
-
-you can mark "c" as seen after visiting it via "a". It is not
-technically a cycle, but since we would want to suppress duplicates
-anyway, we can be overly broad.
-
-> >   3. Teach the group-reading code to detect groups more robustly, so
-> >      that a single-item group like "remotes.foo=bar" correctly recurses
-> >      to "bar".
+>> That left the workspace unusable:
+>> 
+>> - .git/FETCH_HEAD is empty
+>> 
+>>     that causes 'git rev-parse FETCH_HEAD' to fail with a confusing
+>>     error message.
 > 
-> A single-item remote group is somewhat annoying, but expanding it
-> only at some places while ignoring it at other places is even more
-> annoying, so this sounds like a right thing to do.
+> This is not limited to your Cygwin environment.  I can see that we
+> leave an empty file there after a failed fetch with
+> 
+> 	$ git fetch ssh://no.such.place/
+> 
+> But I would not call it leaving "the workspace unusable".  If you
+> ask "git rev-parse" "What is in FETCH_HEAD?", you would get "that is
+> not even a revision", which is what you would get.
 
-The only configuration that I think would be negatively affected is
-something like:
+Yes, and I also discovered that FETCH_HEAD is not present after a 
+clone.
+So in general I need to be tolerant of an empty/missing FETCH_HEAD (I'm
+actually working on an Emacs front end for git).
 
-  [remote]
-  foo = foo
-  [remote "foo"]
-  url = ...
+However, in this case, even running the fetch was a mistake; I would
+have prefered that it leave FETCH_HEAD in its previous state. Is there
+any way to reconstruct it? refs/heads/master was untouched, but I don't
+know how to find the fetched head.
 
-that silently works now, but would become broken (because we would
-complain about the cycle). I think that's OK; that config is clearly
-stupid and broken. If it were "remote.foo = foo bar", trying to expand
-the concrete "foo" and "bar", that might make some sense, but then it is
-already broken in the current code (that is the example that started the
-discussion).
+>> - 'git fetch' just hangs after outputting:
+>> 
+>> remote: Counting objects: 15, done.
+>> remote: Compressing objects: 100% (8/8), done.
+>> remote: Total 9 (delta 5), reused 0 (delta 0)
+> 
+> This looks more serious, but I suspect it is totally unrelated to
+> your previous fetch failing and leaving FETCH_HEAD there.  Is this
+> "'git fetch' hangs" reproduce in a clean clone _without_ first
+> encountering the failure (due to the forgotton "ssh-add")?
 
--Peff
+no, the clone worked (so the network is up, the server is up), and a
+subsequent 'git fetch' did not hang. Although there was also nothing to
+fetch.
+
+I'll have to wait until there is something to fetch, and see if I can
+reproduce the bug. Or set up a git server and test branch - not high
+enough on my priority list.
+
+--
+-- Stephe
