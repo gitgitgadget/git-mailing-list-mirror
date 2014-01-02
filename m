@@ -1,119 +1,76 @@
-From: "Bernhard R. Link" <brl+git@mail.brlink.eu>
-Subject: Re: [RFC] blame: new option to better handle merged cherry-picks
-Date: Thu, 2 Jan 2014 22:15:07 +0100
-Message-ID: <20140102211507.GA6323@client.brlink.eu>
-References: <20140102175529.GA4669@client.brlink.eu>
- <xmqqlhyyp1oo.fsf@gitster.dls.corp.google.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Fix safe_create_leading_directories() for Windows
+Date: Thu, 2 Jan 2014 22:19:41 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1401022212150.1191@s15462909.onlinehome-server.info>
+References: <52C5A039.6030408@gmail.com> <alpine.DEB.1.00.1401021826120.1191@s15462909.onlinehome-server.info> <xmqqtxdmp39a.fsf@gitster.dls.corp.google.com> <52C5D0AB.7050309@gmail.com> <xmqqha9mozvc.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Sebastian Schuberth <sschuberth@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 02 22:17:13 2014
+X-From: git-owner@vger.kernel.org Thu Jan 02 22:19:49 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vypdg-0007jZ-WC
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Jan 2014 22:17:13 +0100
+	id 1VypgC-00047F-Fd
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Jan 2014 22:19:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751928AbaABVRI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Jan 2014 16:17:08 -0500
-Received: from server.brlink.eu ([78.46.187.186]:49405 "EHLO server.brlink.eu"
+	id S1752822AbaABVTn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Jan 2014 16:19:43 -0500
+Received: from mout.gmx.net ([212.227.17.20]:50656 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750782AbaABVRH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Jan 2014 16:17:07 -0500
-Received: from workstation.brlink.eu 
-	by server.brlink.eu with esmtpsa (tls-peer-hash VPEZql)
-	id 1VypdX-0008It-DL; Thu, 02 Jan 2014 22:17:03 +0100
-Received: with local; Thu, 02 Jan 2014 22:15:08 +0100
-Content-Disposition: inline
-In-Reply-To: <xmqqlhyyp1oo.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752817AbaABVTm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Jan 2014 16:19:42 -0500
+Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
+ mail.gmx.com (mrgmx002) with ESMTPSA (Nemesis) id 0Le5bY-1VdojB1BN6-00psTC
+ for <git@vger.kernel.org>; Thu, 02 Jan 2014 22:19:41 +0100
+X-X-Sender: schindelin@s15462909.onlinehome-server.info
+In-Reply-To: <xmqqha9mozvc.fsf@gitster.dls.corp.google.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Provags-ID: V03:K0:KIjKbWKjkgGOs3ftbGWF37ZDlB7r1gEvzeUhByEii7fKs5+FXl4
+ E7cD6hLMu4u0lPaatH3frfon3Q4ga8srrxTM7cX3iQT6uo+DOEBlR3K7/gW4sezKdEujR9H
+ 9jvRU/0Ij216nWSVawxvv8I9GOPoA5GKeopmxn0o4OINl4GHb9XXBx7sb1dqk35MtDzwOrw
+ pHHdXSwDgqSe0bxK8bVIQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239884>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239885>
 
-* Junio C Hamano <gitster@pobox.com> [140102 21:29]:
-> > This optimization, while being faster in the usual case, means that in
-> > the case of cherry-picks the blamed commit depends on which other commits
-> > touched a file.
-> >
-> > If for example one commit A modified both files b and c. And there are
-> > commits B and C, B only modifies file b and C only modifies file c
-> > (so that no conflicts happen), and assume A is cherry-picked as A'
-> > and the two branches then merged:
-> >
-> > --o-----B---A
-> >    \         \
-> >     ---C---A'--M---
->
-> So the contents of b at M is as the same as in A, so following 'b'
-> will see A and B changed that path, which is correct.
->
-> The contents of c at M is?  It is different from A because at A c
-> lacks the change made to it at C.  The merged result at M would
-> match C in A', no?  So following 'c' will see A' and C changed that
-> path, no?
->
-> So what is wrong about it?
+Hi Junio,
 
-It's not wrong (that's why I do not suggest to change the default
-behaviour), but it's inconsistent and can be a bit confusing to
-have either the one or the other commit blamed depending on whether
-some file was touched or not.
-The history I'm a bit more concerned is something like (with ...
-being unrelated commits not touching B or C):
+On Thu, 2 Jan 2014, Junio C Hamano wrote:
 
- --o-----...---A--...---B---...--
-    \                            \
-     ---...---A'--...---C---...---M---
+> If we are going to change the meaning of the function so that it can
+> now take any random path in platform-specific convention
 
+Note that nothing in the function name or documentation suggests
+otherwise.
 
-Here having B or C touching b or c determines which of A or A' is
-blamed for which part of the patch.
+> that may be incompatible with the internal notion of paths Git has (i.e.
+> what is passed to safe_create_leading_directories() may have to be
+> massaged into a slash-separated form before it can be used in the index
 
-It's even enough to have:
+The safe_create_leading_directories() function never interacts with the
+index, so you find me quite puzzled as to your objection.
 
-       --...---A'--...---B---...--
-      /                            \
- ---o---...---A--................---M---
+> and parsed to be stuffed into trees), it is fine to do so as long as all
+> the codepaths understands the new world order, but my earlier "git grep"
+> hits did not tell me that such a change is warranted.
 
-To have the A/A' changes of c to be attributed to A while the b changes
-are attributed to A'. I.e. you have a master branch that has commit A,
-which is also cherry-picked to some previously forked side-branch.
-Once that side-branch is merged back, parts of the change are attributed
-to A' if they are in a file that is not touched otherwise in the main
-branch.
+You call safe_create_leading_directories() with an argument that is
+supposed to be the final path, correct? So what exactly is wrong with
+safe_create_leading_directories() creating all the directories necessary
+so that we can write to the path afterwards, *even* if that path is
+interpreted in a platform-dependent manner (as one would actually expect
+it to)?
 
+Last time I checked we did not make a fuss about
+safe_create_leading_directories() interpreting the argument in a
+case-insensitive fashion on certain setups, either. So it is not exactly a
+new thing that the paths are interpreted in a platform-dependent manner.
 
-> Also, when handling a merge, we have to handle parents sequencially,
-> checking the difference between M with its first parent first, and
-> then passing blame for the remaining common lines to the remaining
-> parents.  If you flip the order of parents of M when you merge A and
-> A' in your original history, and with your patch, what would you
-> see when you blame c?  Wouldn't it notice that M:c is identical to c
-> in its first parent (now A') and pass the whole blame to A' anyway
-> with or without your change?
-
-When giving git-blame the new option introduced with my patch, only
-the order of parents determines which commit is blamed. Without
-the option (i.e. the currently only possible behaviour) which commit
-is blamed depends what else touches other parts of the file.
-If both branches make modifications to the file (or if there is
-any merge conflict resolution in the merge) then the bahaviour with
-or without the option are the same.
-
-But in the example with one commit B touching also b and one commit C
-touching also c, there is (without the new option) always one part
-of the cherry-picked commit is blamed on the original and one on the
-cherry-picked, no matter how you order the parents.
-(While by having your mainline always the most leftward parent, with
-the the new option you always get those commit blamed that is the
-"first one this was introduced to mainline".)
-
-	Bernhard R. Link
--- 
-F8AC 04D5 0B9B 064B 3383  C3DA AFFC 96D1 151D FFDC
+Ciao,
+Johannes
