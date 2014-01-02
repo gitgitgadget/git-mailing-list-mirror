@@ -1,111 +1,75 @@
-From: "Bernhard R. Link" <brl+git@mail.brlink.eu>
-Subject: [RFC] blame: new option to better handle merged cherry-picks
-Date: Thu, 2 Jan 2014 18:55:37 +0100
-Message-ID: <20140102175529.GA4669@client.brlink.eu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: aborted 'git fetch' leaves workspace unusable
+Date: Thu, 02 Jan 2014 10:09:45 -0800
+Message-ID: <xmqqbnzuqmqe.fsf@gitster.dls.corp.google.com>
+References: <32eeea08963ec4438f97ff9ef6553a75@stephe-leake.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 02 18:57:40 2014
+Cc: <git@vger.kernel.org>
+To: stephen_leake@stephe-leake.org
+X-From: git-owner@vger.kernel.org Thu Jan 02 19:10:04 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VymWZ-0002Ac-Mn
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Jan 2014 18:57:40 +0100
+	id 1VymiZ-0007PS-FT
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Jan 2014 19:10:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751075AbaABR5g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Jan 2014 12:57:36 -0500
-Received: from server.brlink.eu ([78.46.187.186]:37617 "EHLO server.brlink.eu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750814AbaABR5f (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Jan 2014 12:57:35 -0500
-Received: from workstation.brlink.eu 
-	by server.brlink.eu with esmtpsa (tls-peer-hash VPEZql)
-	id 1VymWS-00089B-N3; Thu, 02 Jan 2014 18:57:32 +0100
-Received: with local; Thu, 02 Jan 2014 18:55:37 +0100
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752070AbaABSJ7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Jan 2014 13:09:59 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53105 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751552AbaABSJ7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Jan 2014 13:09:59 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 196635F8DD;
+	Thu,  2 Jan 2014 13:09:53 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=E2cRwlpRllRlRK2Bk8bV7VhaSoo=; b=hTs04p
+	5xd67NCodEV18bI7EFywfm2p+xsOIw+J4zfEV/q4Z889FB99SlvRLh65FYhZuVs4
+	k3oU1Zb0FOeJbXAtpT+PKtJ2nlkusjtlR0Ubt00p0ObS6H/vgjh8TSHWPH6cgewq
+	lZIuwcA4n1iYviULoc26HYSBkj/RK6OZ1H7co=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ofVkmsGV/i+OME+HCcAsr8D+y7xEhCm2
+	l9sFKc7kV6aE5Lyg3+VNBwpci0/7fmOzasz2EVMjDUNYEEWFrtzqaWnwQ3ECVsAX
+	UYZMyqI1qrxLaLeuc3zFkwV464WZ4Hs0tb0Pm5LJnJtkhvg4r+taOOtct3jezePO
+	CCekK4XR1/I=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 26C535F8DA;
+	Thu,  2 Jan 2014 13:09:52 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 206875F8D9;
+	Thu,  2 Jan 2014 13:09:50 -0500 (EST)
+In-Reply-To: <32eeea08963ec4438f97ff9ef6553a75@stephe-leake.org> (stephen
+	leake's message of "Tue, 31 Dec 2013 01:19:25 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 122F0F32-73D9-11E3-8669-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239861>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239862>
 
-Allows to disable the git blame optimization of assuming that if there is a
-parent of a merge commit that has the exactly same file content, then
-only this parent is to be looked at.
+stephen_leake@stephe-leake.org writes:
 
-This optimization, while being faster in the usual case, means that in
-the case of cherry-picks the blamed commit depends on which other commits
-touched a file.
+> However, in this case, even running the fetch was a mistake; I would
+> have prefered that it leave FETCH_HEAD in its previous state.
 
-If for example one commit A modified both files b and c. And there are
-commits B and C, B only modifies file b and C only modifies file c
-(so that no conflicts happen), and assume A is cherry-picked as A'
-and the two branches then merged:
+I think the clearing of leftover FETCH_HEAD is one of the early
+things "git fetch" does, unless "--append" is in effect.  I haven't
+looked at the code for a long time, but it may be possible to move
+the logic of doing so around so that this clearing is done as lazily
+as possible.
 
---o-----B---A
-   \         \
-    ---C---A'--M---
+I however suspect that such a change may have fallouts on other
+people who are writing tools like yours; they may be depending on
+seeing FETCH_HEAD cleared after a failed fetch, and be surprised to
+see a stale contents after they (attempt to) run "git fetch" in it.
 
-Then without this new option git blame blames the A|A' changes of
-file b to A while blaming the changes of c to A'.
-With the new option --no-parent-shortcut it blames both changes to the
-same commit.
-
-Signed-off-by: Bernhard R. Link <brlink@debian.org>
----
- Documentation/blame-options.txt | 6 ++++++
- builtin/blame.c                 | 5 ++++-
- 2 files changed, 10 insertions(+), 1 deletion(-)
-
-diff --git a/Documentation/blame-options.txt b/Documentation/blame-options.txt
-index 0cebc4f..55dd12b 100644
---- a/Documentation/blame-options.txt
-+++ b/Documentation/blame-options.txt
-@@ -48,6 +48,12 @@ include::line-range-format.txt[]
- 	Show the result incrementally in a format designed for
- 	machine consumption.
- 
-+--no-parent-shortcut::
-+	Always look at all parents of a merge and do not shortcut
-+	to the first parent with no changes to the file looked at.
-+	This takes more time but produces more reliable results
-+	if branches with cherry-picked commits were merged.
-+
- --encoding=<encoding>::
- 	Specifies the encoding used to output author names
- 	and commit summaries. Setting it to `none` makes blame
-diff --git a/builtin/blame.c b/builtin/blame.c
-index 4916eb2..dab2c36 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -45,6 +45,7 @@ static int incremental;
- static int xdl_opts;
- static int abbrev = -1;
- static int no_whole_file_rename;
-+static int no_parent_shortcut;
- 
- static enum date_mode blame_date_mode = DATE_ISO8601;
- static size_t blame_date_width;
-@@ -1248,7 +1249,8 @@ static void pass_blame(struct scoreboard *sb, struct origin *origin, int opt)
- 			porigin = find(sb, p, origin);
- 			if (!porigin)
- 				continue;
--			if (!hashcmp(porigin->blob_sha1, origin->blob_sha1)) {
-+			if (!no_parent_shortcut &&
-+			    !hashcmp(porigin->blob_sha1, origin->blob_sha1)) {
- 				pass_whole_blame(sb, origin, porigin);
- 				origin_decref(porigin);
- 				goto finish;
-@@ -2247,6 +2249,7 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
- 	static const char *contents_from = NULL;
- 	static const struct option options[] = {
- 		OPT_BOOL(0, "incremental", &incremental, N_("Show blame entries as we find them, incrementally")),
-+		OPT_BOOL(0, "no-parent-shortcut", &no_parent_shortcut, N_("Don't take shortcuts in some merges but handle cherry-picks better")),
- 		OPT_BOOL('b', NULL, &blank_boundary, N_("Show blank SHA-1 for boundary commits (Default: off)")),
- 		OPT_BOOL(0, "root", &show_root, N_("Do not treat root commits as boundaries (Default: off)")),
- 		OPT_BOOL(0, "show-stats", &show_stats, N_("Show work cost statistics")),
--- 
-1.8.5.1
+So it is not so clear if it is a good thing to change the behaviour
+of "git fetch" not to touch FETCH_HEAD upon a failure.
