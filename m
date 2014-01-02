@@ -1,98 +1,77 @@
 From: Sebastian Schuberth <sschuberth@gmail.com>
-Subject: [PATCH v2] Fix safe_create_leading_directories() for Windows
-Date: Thu, 02 Jan 2014 21:54:25 +0100
-Message-ID: <52C5D201.5070008@gmail.com>
-References: <52C5A039.6030408@gmail.com>	<alpine.DEB.1.00.1401021826120.1191@s15462909.onlinehome-server.info> <xmqqtxdmp39a.fsf@gitster.dls.corp.google.com> <52C5D0AB.7050309@gmail.com>
+Subject: Re: [PATCH v2 4/4] Move builtin-related implementations to a new
+ builtin.c file
+Date: Thu, 2 Jan 2014 21:58:48 +0100
+Message-ID: <CAHGBnuMathrjUt10AqnEP=d4b306=+D4DFhPeDX0zmpsniA-rg@mail.gmail.com>
+References: <52C58FD7.6010608@gmail.com>
+	<52C59130.4050003@gmail.com>
+	<xmqqy52yp3tm.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jan 02 21:54:38 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 02 21:58:57 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VypHq-0008Ny-Aa
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Jan 2014 21:54:38 +0100
+	id 1VypLy-0007WV-Dy
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Jan 2014 21:58:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751669AbaABUye (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Jan 2014 15:54:34 -0500
-Received: from mail-bk0-f46.google.com ([209.85.214.46]:55237 "EHLO
-	mail-bk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751084AbaABUyd (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Jan 2014 15:54:33 -0500
-Received: by mail-bk0-f46.google.com with SMTP id u15so4698505bkz.19
-        for <git@vger.kernel.org>; Thu, 02 Jan 2014 12:54:32 -0800 (PST)
+	id S1752696AbaABU6u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Jan 2014 15:58:50 -0500
+Received: from mail-qa0-f52.google.com ([209.85.216.52]:34910 "EHLO
+	mail-qa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750740AbaABU6t (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Jan 2014 15:58:49 -0500
+Received: by mail-qa0-f52.google.com with SMTP id cm18so13618158qab.18
+        for <git@vger.kernel.org>; Thu, 02 Jan 2014 12:58:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
-         :subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=uGlau3UuYrbdFuGJ7lZd5nFD+eeZcccn3vcugo5TkUg=;
-        b=J4cFmM21BUrA98cPdkTgR8dRcB44JKYEhjrXhmmrwcZ9bzR3xjSqhnHrbe2tyab8m7
-         JzJbGsZrR9llfwPO1FDNbw2uhVUPMJMOpPeqNuNp5wVtUspDfYY75fY93MQxn6hRtRlv
-         dXjgpROb3o1pxM4ii6VUPzRdV0G+leJU/rCmfHNIa3DmnMer9X0RKr+5uQtQ9loKTrAv
-         /Nincs0tOuAkdKL8TFODJ1emftGpmoXeUzlKJMtcQVPxUe/qEGMphOAlvvlomoc11Ext
-         2ITGJ/DTMF5YrdlXXG3/6dgLP3BosiwKLncHd5KVNsWV3oG0aiel2hmd+Anp8HEzzujm
-         6feg==
-X-Received: by 10.204.122.1 with SMTP id j1mr8979bkr.57.1388696072725;
-        Thu, 02 Jan 2014 12:54:32 -0800 (PST)
-Received: from [192.168.188.20] (p5DDB39A7.dip0.t-ipconnect.de. [93.219.57.167])
-        by mx.google.com with ESMTPSA id bg1sm27775644bkc.4.2014.01.02.12.54.31
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 02 Jan 2014 12:54:31 -0800 (PST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.12) Gecko/20080213 Thunderbird/2.0.0.12 Mnenhy/0.7.5.0
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <52C5D0AB.7050309@gmail.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=m4XblTA1wSgQjVdWZOFoqQdTMkbBNxv+xymonH1Eb38=;
+        b=NTJXZHLwc53zNB2LMMSek3zcAuOqOBPi8HRoqlNXanDC/cAkRvU+qZF5nraIzj774V
+         MsgixtGrViRFs4KxPKqP87C/IAp9Jkb9hE279D+xO3REQaCo06Ch33vp8e5KRIH877jw
+         ASVmnPyPQiBMJUJ65di8/wivPtvQkBAmhJn/mwvllfvtMBYCW6tls3yxk/QcoijEjoXh
+         p2eh6uSTo0HzG/e/KhATGnY4xiNDEnCrZNcAUXBpt3ddaEo0kuaKyoZ4I0yH4fcLyKvh
+         1UqNNMOtvo4Who2clQKW8j3eCRWjwslOF0Jg8Tkucc0YrcyfunP/KbuNOJJ6Vv1Bv2Yp
+         V1OQ==
+X-Received: by 10.229.122.195 with SMTP id m3mr139997825qcr.7.1388696328514;
+ Thu, 02 Jan 2014 12:58:48 -0800 (PST)
+Received: by 10.96.22.229 with HTTP; Thu, 2 Jan 2014 12:58:48 -0800 (PST)
+In-Reply-To: <xmqqy52yp3tm.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239878>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239879>
 
-When cloning to a directory "C:\foo\bar" from Windows' cmd.exe where "foo"
-does not exist yet, Git would throw an error like
+On Thu, Jan 2, 2014 at 8:43 PM, Junio C Hamano <gitster@pobox.com> wrote:
 
-fatal: could not create work tree dir 'c:\foo\bar'.: No such file or directory
+>>  Documentation/technical/api-builtin.txt |   2 +-
+>>  Makefile                                |   1 +
+>>  builtin.c                               | 225 ++++++++++++++++++++++++++++++
+>>  builtin.h                               |  21 +++
+>>  git.c                                   | 238 --------------------------------
+>>  5 files changed, 248 insertions(+), 239 deletions(-)
+>>  create mode 100644 builtin.c
+>
+> I'm sorry but I do not see a point in this.
+>
+> It is not like builtin.c can be used outside the context of the main
+> Git program, and many helper functions you moved out of git.c that
+> used to be static want to be called from other places.
 
-Fix this by not hard-coding a platform specific directory separator into
-safe_create_leading_directories().
+I've added this commit because Christian suggested so in [1], and also
+because it has always bothered me that the Git project does not define
+a function in a file named after the header file that declares the
+function. Anyway, I've made this the last commit in the series on
+purpose, I can just drop it in the next re-roll.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-Signed-off-by: Sebastian Schuberth <sschuberth@gmail.com>
----
- sha1_file.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+[1] http://www.spinics.net/lists/git/msg222452.html.
 
-diff --git a/sha1_file.c b/sha1_file.c
-index 760dd60..2114c58 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -110,12 +110,15 @@ int safe_create_leading_directories(char *path)
- 	char *pos = path + offset_1st_component(path);
- 	struct stat st;
- 
--	while (pos) {
--		pos = strchr(pos, '/');
--		if (!pos)
--			break;
--		while (*++pos == '/')
--			;
-+	while (*pos) {
-+		while (!is_dir_sep(*pos)) {
-+			++pos;
-+			if (!*pos)
-+				break;
-+		}
-+		/* skip consecutive directory separators */
-+		while (is_dir_sep(*pos))
-+			++pos;
- 		if (!*pos)
- 			break;
- 		*--pos = '\0';
 -- 
-1.8.4.msysgit.0.1.ge705bba.dirty
+Sebastian Schuberth
