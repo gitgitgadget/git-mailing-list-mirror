@@ -1,99 +1,117 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] Fix safe_create_leading_directories() for Windows
-Date: Thu, 02 Jan 2014 13:51:14 -0800
-Message-ID: <xmqqzjnenjcd.fsf@gitster.dls.corp.google.com>
-References: <52C5A039.6030408@gmail.com>
-	<alpine.DEB.1.00.1401021826120.1191@s15462909.onlinehome-server.info>
-	<xmqqtxdmp39a.fsf@gitster.dls.corp.google.com>
-	<52C5D0AB.7050309@gmail.com> <52C5D201.5070008@gmail.com>
-	<xmqq8uuyoz5g.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Sebastian Schuberth <sschuberth@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 02 22:51:31 2014
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH v2] name-hash: retire unused index_name_exists()
+Date: Thu,  2 Jan 2014 16:57:12 -0500
+Message-ID: <1388699832-4075-1-git-send-email-sunshine@sunshineco.com>
+Cc: Eric Sunshine <sunshine@sunshineco.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 02 22:58:17 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VyqAk-0000aY-9Z
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Jan 2014 22:51:22 +0100
+	id 1VyqHO-0004FT-E6
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Jan 2014 22:58:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752059AbaABVvS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Jan 2014 16:51:18 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56119 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750814AbaABVvS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Jan 2014 16:51:18 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7E9655E8DC;
-	Thu,  2 Jan 2014 16:51:17 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Amn02scIBOaeEDJx9B77yBbezao=; b=HtUkEE
-	JFTreo+zKO0bij8F0uHKt6oloG673YTfNLUoHg2n2hSbAT8x/eqFbxjo7F3cDmHf
-	nUYOLJ6hS3n9Y3wIvwsuQHdgQiqft54AXmkgswYE1DrpSnSAbA/xXyanD7jCiXFV
-	tZrXN8IKCKgYHDK0fPy5Kh+xUeXJc28YvUY/s=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=dBYau7NFp/3vea3RkowVYhM3vcJ+reR9
-	thN+d2R9w+ovXLoLiFcMXIVBwgwczkHj0eJVnGANxGKg2uz07cHAnMUil2u+qZK9
-	4EjzhXyrPAsTB4meaK+7kzWpsTuj0SSsJAmJvUhpAYo1Y+9iVnniwMIT9JeWCJRG
-	92F5W4ubKg4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4CCB55E8DB;
-	Thu,  2 Jan 2014 16:51:17 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 31BFD5E8DA;
-	Thu,  2 Jan 2014 16:51:16 -0500 (EST)
-In-Reply-To: <xmqq8uuyoz5g.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Thu, 02 Jan 2014 13:24:27 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 014CB06A-73F8-11E3-9F16-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752623AbaABV6J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Jan 2014 16:58:09 -0500
+Received: from mail-ig0-f169.google.com ([209.85.213.169]:54661 "EHLO
+	mail-ig0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752183AbaABV6H (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Jan 2014 16:58:07 -0500
+Received: by mail-ig0-f169.google.com with SMTP id hk11so42460780igb.0
+        for <git@vger.kernel.org>; Thu, 02 Jan 2014 13:58:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:from:to:cc:subject:date:message-id;
+        bh=0NklSXgoGI2nzYNRLBGiXKFtFDTNUU9o+Wgakhb8dXw=;
+        b=QMQ0swLYpWh2z1XHO/4Ds3ZffFIoaIvnVjKtd+I6Jr3VFsnvELXOt8m2o7pFwyutgW
+         wtW2qnkkhA2rPBXaZlQyQ4RPpp5irdwJNmcko5k7nW45G9a1sfnZAQ6cXi0JNdwjCa+z
+         XqWiQsAGaJI8hMR0Ow07Kw/Jx3HORcD6WoP1eKru/XxOZbUOkxWIM/8/i3F7Pa2+b0Tt
+         ck4o9TDTWzz6xhqWmzqVOSN35NzUtNf9BJ88DbhxRJ3Cc57TxQQN+u5DHEc/zC9meFLL
+         MnANSJqJExRv+A06MLYsooeq0NY9GnnKzoTygrCTU8b4qVM304uExLpWbr7MKy4fvCdf
+         JHEA==
+X-Received: by 10.42.208.211 with SMTP id gd19mr61475139icb.15.1388699887112;
+        Thu, 02 Jan 2014 13:58:07 -0800 (PST)
+Received: from floomp.local (user-12l3cpl.cable.mindspring.com. [69.81.179.53])
+        by mx.google.com with ESMTPSA id a1sm1957853igo.0.2014.01.02.13.58.05
+        for <multiple recipients>
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 02 Jan 2014 13:58:06 -0800 (PST)
+X-Mailer: git-send-email 1.8.3.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239889>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239890>
 
-Junio C Hamano <gitster@pobox.com> writes:
+db5360f3f496 (name-hash: refactor polymorphic index_name_exists();
+2013-09-17) split index_name_exists() into index_file_exists() and
+index_dir_exists() but retained index_name_exists() as a thin wrapper
+to avoid disturbing possible in-flight topics. Since this change
+landed in 'master' some time ago and there are no in-flight topics
+referencing index_name_exists(), retire it.
 
-> This has a bit of conflict with another topic in flight; I think I
-> resolved it correctly, but please double check.  The following is
-> how it would apply on top of 'pu'.
->
->  sha1_file.c | 9 +++++----
->  1 file changed, 5 insertions(+), 4 deletions(-)
->
-> diff --git a/sha1_file.c b/sha1_file.c
-> index 131ca97..9e686eb 100644
-> --- a/sha1_file.c
-> +++ b/sha1_file.c
-> @@ -113,11 +113,12 @@ int safe_create_leading_directories(char *path)
->  
->  	while (!retval && next_component) {
->  		struct stat st;
-> -		char *slash = strchr(next_component, '/');
-> -
-> -		if (!slash)
-> +		char *slash = next_component;
-> +		while (!is_dir_sep(*slash))
+Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+---
 
-Gaah; we need to check for the end of string here, i.e.
+The only difference from v1 [1] is that a comment added by
+kb/fast-hashmap in 'next' referencing obsolete index_name_exists()
+is also adjusted.
 
-		while (*slash && !is_dir_sep(*slash))
+[1]: http://article.gmane.org/gmane.comp.version-control.git/239575/
 
-will be what I'll queue on 'pu' for today.
 
-> +			++slash;
-> +		if (!*slash)
->  			return 0;
-> -		while (*(slash + 1) == '/')
-> +		while (is_dir_sep(*(slash + 1)))
->  			slash++;
->  		next_component = slash + 1;
->  		if (!*next_component)
+ cache.h     | 2 --
+ name-hash.c | 9 +--------
+ 2 files changed, 1 insertion(+), 10 deletions(-)
+
+diff --git a/cache.h b/cache.h
+index 2a21fbc..d0d1f2b 100644
+--- a/cache.h
++++ b/cache.h
+@@ -316,7 +316,6 @@ extern void free_name_hash(struct index_state *istate);
+ #define ce_modified(ce, st, options) ie_modified(&the_index, (ce), (st), (options))
+ #define cache_dir_exists(name, namelen) index_dir_exists(&the_index, (name), (namelen))
+ #define cache_file_exists(name, namelen, igncase) index_file_exists(&the_index, (name), (namelen), (igncase))
+-#define cache_name_exists(name, namelen, igncase) index_name_exists(&the_index, (name), (namelen), (igncase))
+ #define cache_name_is_other(name, namelen) index_name_is_other(&the_index, (name), (namelen))
+ #define resolve_undo_clear() resolve_undo_clear_index(&the_index)
+ #define unmerge_cache_entry_at(at) unmerge_index_entry_at(&the_index, at)
+@@ -466,7 +465,6 @@ extern int unmerged_index(const struct index_state *);
+ extern int verify_path(const char *path);
+ extern struct cache_entry *index_dir_exists(struct index_state *istate, const char *name, int namelen);
+ extern struct cache_entry *index_file_exists(struct index_state *istate, const char *name, int namelen, int igncase);
+-extern struct cache_entry *index_name_exists(struct index_state *istate, const char *name, int namelen, int igncase);
+ extern int index_name_pos(const struct index_state *, const char *name, int namelen);
+ #define ADD_CACHE_OK_TO_ADD 1		/* Ok to add */
+ #define ADD_CACHE_OK_TO_REPLACE 2	/* Ok to replace file/directory */
+diff --git a/name-hash.c b/name-hash.c
+index 9a3bd3f..97444d0 100644
+--- a/name-hash.c
++++ b/name-hash.c
+@@ -115,7 +115,7 @@ static int cache_entry_cmp(const struct cache_entry *ce1,
+ {
+ 	/*
+ 	 * For remove_name_hash, find the exact entry (pointer equality); for
+-	 * index_name_exists, find all entries with matching hash code and
++	 * index_file_exists, find all entries with matching hash code and
+ 	 * decide whether the entry matches in same_name.
+ 	 */
+ 	return remove ? !(ce1 == ce2) : 0;
+@@ -227,13 +227,6 @@ struct cache_entry *index_file_exists(struct index_state *istate, const char *na
+ 	return NULL;
+ }
+ 
+-struct cache_entry *index_name_exists(struct index_state *istate, const char *name, int namelen, int icase)
+-{
+-	if (namelen > 0 && name[namelen - 1] == '/')
+-		return index_dir_exists(istate, name, namelen - 1);
+-	return index_file_exists(istate, name, namelen, icase);
+-}
+-
+ void free_name_hash(struct index_state *istate)
+ {
+ 	if (!istate->name_hash_initialized)
+-- 
+1.8.3.2
