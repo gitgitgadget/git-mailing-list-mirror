@@ -1,78 +1,83 @@
-From: Sebastian Schuberth <sschuberth@gmail.com>
+From: John Keeping <john@keeping.me.uk>
 Subject: Re: [PATCH] Fix safe_create_leading_directories() for Windows
-Date: Thu, 02 Jan 2014 19:11:42 +0100
-Message-ID: <52C5ABDE.1010006@gmail.com>
-References: <52C5A039.6030408@gmail.com> <alpine.DEB.1.00.1401021826120.1191@s15462909.onlinehome-server.info>
+Date: Thu, 2 Jan 2014 18:18:57 +0000
+Message-ID: <20140102181857.GG7608@serenity.lan>
+References: <52C5A039.6030408@gmail.com>
+ <alpine.DEB.1.00.1401021826120.1191@s15462909.onlinehome-server.info>
+ <52C5ABDE.1010006@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>,
 	Junio C Hamano <gitster@pobox.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jan 02 19:11:55 2014
+To: Sebastian Schuberth <sschuberth@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 02 19:19:13 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VymkN-0002EX-Da
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Jan 2014 19:11:55 +0100
+	id 1VymrQ-000770-O1
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Jan 2014 19:19:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751886AbaABSLv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Jan 2014 13:11:51 -0500
-Received: from mail-bk0-f50.google.com ([209.85.214.50]:38711 "EHLO
-	mail-bk0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750814AbaABSLu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Jan 2014 13:11:50 -0500
-Received: by mail-bk0-f50.google.com with SMTP id e11so4575764bkh.23
-        for <git@vger.kernel.org>; Thu, 02 Jan 2014 10:11:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
-         :subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=7tNQjdUnHbbk2ZuPdGx9rQBH2GOzYHKAj3wagqAKqk0=;
-        b=sYtXpe6D9C28M+CVdFhEqm0d3PpWvz52pZBruSk8Dk82zzWwsJyQud9L2rZk6OLojl
-         seN4TWCjABz4qI9ZPAutrtQP8A7ZF88e3KV8h81Z8FOFULnRoM4uNBVCEyF/x6onTEL+
-         dluYysi1wr4a9+pu1rZgIm99QrV+f+evb6rL5tDH+fpi4Mw2UqZEmWsZDqG4nwFYEkup
-         d5krSY4QWAQxniTDJab47R0Vj9LsvXTlthn5Ae+9/fBNUYfd8vACU7ufMooUB9mAuOlh
-         IrTxvkpHZzI5P/qRHcGZn+svfM9Ri6d26v+KAK46uNmkJXvmpRS7Qy0H+KfioJ+qdr6e
-         BILg==
-X-Received: by 10.205.15.7 with SMTP id ps7mr197375bkb.106.1388686309672;
-        Thu, 02 Jan 2014 10:11:49 -0800 (PST)
-Received: from [192.168.188.20] (p5DDB39A7.dip0.t-ipconnect.de. [93.219.57.167])
-        by mx.google.com with ESMTPSA id np8sm42527546bkb.11.2014.01.02.10.11.48
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 02 Jan 2014 10:11:48 -0800 (PST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.12) Gecko/20080213 Thunderbird/2.0.0.12 Mnenhy/0.7.5.0
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <alpine.DEB.1.00.1401021826120.1191@s15462909.onlinehome-server.info>
+	id S1752059AbaABSTI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Jan 2014 13:19:08 -0500
+Received: from jackal.aluminati.org ([72.9.247.210]:44003 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751349AbaABSTH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Jan 2014 13:19:07 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id 31AFFCDA57C;
+	Thu,  2 Jan 2014 18:19:07 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -1
+X-Spam-Level: 
+X-Spam-Status: No, score=-1 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1] autolearn=disabled
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 6URr6TxfAIII; Thu,  2 Jan 2014 18:19:06 +0000 (GMT)
+Received: from serenity.lan (chimera.aluminati.org [10.0.16.60])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by jackal.aluminati.org (Postfix) with ESMTPSA id E0DF0CDA591;
+	Thu,  2 Jan 2014 18:19:00 +0000 (GMT)
+Content-Disposition: inline
+In-Reply-To: <52C5ABDE.1010006@gmail.com>
+User-Agent: Mutt/1.5.22 (2013-10-16)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239863>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239864>
 
-On 02.01.2014 18:33, Johannes Schindelin wrote:
+On Thu, Jan 02, 2014 at 07:11:42PM +0100, Sebastian Schuberth wrote:
+> On 02.01.2014 18:33, Johannes Schindelin wrote:
+> 
+> > -- snip --
+> > On Linux, we can get away with assuming that the directory separator is a
+> > forward slash, but that is wrong in general. For that purpose, the
+> > is_dir_sep() function was introduced a long time ago. By using it in
+> > safe_create_leading_directories(), we proof said function for use on
+> > platforms where the directory separator is different from Linux'.
+> > -- snap --
+> 
+> While I'd be fine with this, I do not think we really need it. As you 
+> say, is_dir_sep() has been introduced a long time ago, so people should 
+> be aware of it, and it should also be immediately clear from the diff 
+> why using it is better than hard-coding '/'.
+> 
+> That said, I see any further explanations on top of the commit message 
+> title is an added bonus, and as "just" a bonus a link to a pull request 
+> should be fine. You don't need to understand or appreciate the concept 
+> of pull requests in order to follow the link and read the text in there.
 
-> -- snip --
-> On Linux, we can get away with assuming that the directory separator is a
-> forward slash, but that is wrong in general. For that purpose, the
-> is_dir_sep() function was introduced a long time ago. By using it in
-> safe_create_leading_directories(), we proof said function for use on
-> platforms where the directory separator is different from Linux'.
-> -- snap --
+The commit message serves as an historical record of why a change was
+made; depending on an external service to provide this information when
+it can quite easily be included in the commit itself lessens the value
+of the commit message.
 
-While I'd be fine with this, I do not think we really need it. As you 
-say, is_dir_sep() has been introduced a long time ago, so people should 
-be aware of it, and it should also be immediately clear from the diff 
-why using it is better than hard-coding '/'.
-
-That said, I see any further explanations on top of the commit message 
-title is an added bonus, and as "just" a bonus a link to a pull request 
-should be fine. You don't need to understand or appreciate the concept 
-of pull requests in order to follow the link and read the text in there.
-
--- 
-Sebastian Schuberth
+If you look at other commits in git.git you will see that there is a
+strong preference for summarising the discussion and rationale for a
+commit in its message.
