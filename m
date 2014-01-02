@@ -1,365 +1,281 @@
-From: Francesco Pretto <ceztko@gmail.com>
-Subject: Re: [PATCH/RFC] Introduce git submodule add|update --attach
-Date: Thu, 2 Jan 2014 19:48:30 +0100
-Message-ID: <CALas-igDaweib14zaLJk3m1zmBWk=14oA7h_e7G82vpxmBjiOg@mail.gmail.com>
-References: <1388368184-18418-1-git-send-email-ceztko@gmail.com> <CABURp0pQHw7qvG_tq8oK=6DBOUoYy=Rb5othV+zBpNonuv=PLw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] drop unnecessary copying in credential_ask_one
+Date: Thu, 02 Jan 2014 11:08:51 -0800
+Message-ID: <xmqq7gaiqjzw.fsf@gitster.dls.corp.google.com>
+References: <1388624793-5563-1-git-send-email-rctay89@gmail.com>
+	<20140102030330.GA10976@sigill.intra.peff.net>
+	<20140102073835.GA5431@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Phil Hord <phil.hord@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 02 19:49:02 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Tay Ray Chuan <rctay89@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jan 02 20:09:07 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VynKC-0002Jp-Pu
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Jan 2014 19:48:57 +0100
+	id 1Vyndf-0004nD-71
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Jan 2014 20:09:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752271AbaABSsx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Jan 2014 13:48:53 -0500
-Received: from mail-oa0-f47.google.com ([209.85.219.47]:43487 "EHLO
-	mail-oa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751755AbaABSsv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Jan 2014 13:48:51 -0500
-Received: by mail-oa0-f47.google.com with SMTP id k1so15175127oag.34
-        for <git@vger.kernel.org>; Thu, 02 Jan 2014 10:48:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=hM83D/iy1NPE2vW9dcxytHwU2Ndr2/BGsaZfnCf+FkE=;
-        b=T/zHe4+8VVsr/a41w8G5XRHZ2sQIAsR1JCKElEA61Js3alWeJYbfNuJDOqgp5+T0Rn
-         oY1qh0H3bFbePpkSQxgG087n/cay3jxpKM1CUBnU0IKkNr4WOPq7znWaFfKErLHzSuud
-         NSOWwggGBm5pxgdFt/l3loxxmr3MfHElmEFqzu9vsZsRqVO6t7P3WyadCGur2HMj7TjF
-         ZRYY5owyXy8f4cZTREoQyFPYDHcLJk68WCQZsN66P3stbL72XcXxviy0NhOi67hE91i0
-         UPmwoc8NSDPUiQp88mPAiNE/XWbmTLl3uuj2YH7gxvxxzasALrh1NWowpVOCCUl/DaNC
-         ku/w==
-X-Received: by 10.60.80.137 with SMTP id r9mr23449880oex.30.1388688531114;
- Thu, 02 Jan 2014 10:48:51 -0800 (PST)
-Received: by 10.76.80.165 with HTTP; Thu, 2 Jan 2014 10:48:30 -0800 (PST)
-In-Reply-To: <CABURp0pQHw7qvG_tq8oK=6DBOUoYy=Rb5othV+zBpNonuv=PLw@mail.gmail.com>
+	id S1751433AbaABTI6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Jan 2014 14:08:58 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34027 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750814AbaABTI6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Jan 2014 14:08:58 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D4CAA5E5C4;
+	Thu,  2 Jan 2014 14:08:56 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Bf6u+4azOO5RYwzHvghp8ED6iV8=; b=fo+TzZ
+	Xrm5h8VTI3JYoNtd4u6y8fKcJ7sIaRaMp4QvgEZPN4II9MEMKe4rUtoU0K/Jn66S
+	czsKw3x6VRNZKnnbBITi8ha+QEYOPwIAXY8GJqned4vhrUHM+sNqBVKQth4roH/r
+	OFGQCkrAwvywU6SpUa1WqcaxklrUOfANCumzc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=NfvAFdgkPMRut904HYbBt41Fm+SpJfEu
+	oSWLCvBvquMmPStmqTB4t/K0r1GWe4cMQUo5nhSV4UobVu1CdhlKBV6PV7YICtJ2
+	IR318kFZWo39orSc6IivrUKJsUaIHrfBetB20G/pMbsxXJH4VKuzdzj+C0flp7XB
+	yaBVpO5fSPs=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 890565E5C2;
+	Thu,  2 Jan 2014 14:08:56 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D21F05E5C1;
+	Thu,  2 Jan 2014 14:08:54 -0500 (EST)
+In-Reply-To: <20140102073835.GA5431@sigill.intra.peff.net> (Jeff King's
+	message of "Thu, 2 Jan 2014 02:38:35 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 5301C86C-73E1-11E3-90EB-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239865>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239866>
 
-Thanks for the comments, my replies below. Before, a couple of general
-questions:
-- I'm also writing some tests, should I commit them together with the
-feature patch?
-- to determine the attached/detached state I did this:
+Jeff King <peff@peff.net> writes:
 
-head_detached=
-if test "$(rev-parse --abbrev-ref HEAD)" = "HEAD"
-then
-    head_detached="true"
-fi
+> ... But the test suite, of course, always uses askpass because it
+> cannot rely on accessing a terminal (we'd have to do some magic with
+> lib-terminal, I think).
+>
+> So it doesn't detect the problem in your patch, but I wonder if it is
+> worth applying the patch below anyway, as it makes the test suite
+> slightly more robust.
 
-Is this correct?
-
-2013/12/31 Phil Hord <phil.hord@gmail.com>
->
-> On Sun, Dec 29, 2013 at 8:49 PM, Francesco Pretto <ceztko@gmail.com> wrote:
->  [...]
-> >
-> > When updating, using the '--attach' switch or operating in a repository with
-> > 'submodule.<name>.attach' set to 'true' will:
-> > - checkout a branch with an attached HEAD if the repository was just cloned;
-> > - perform a fast-forward only merge of changes if it's a 'checkout' update,
-> > keeping the HEAD attached;
-> > - reattach the HEAD prior performing a 'merge', 'rebase' or '!command' update
-> > operation if the HEAD was found detached.
->
-> I need to understand this "reattach the HEAD" case better. Can you
-> give some examples of the expected behavior when merge, rebase or
-> !command is encountered?
->
-
-Thanks for pointing this out, actually my patch was a bit lacking at
-this. Reattaching the HEAD prior to merge, rebase or "!command" would
-have caused just a *silent* "git checkout "<branch>", possibly leaving
-orphaned commits forgotten.
-
-My plans for the patch are now to implement this safer and, IMO,
-intuitive behavior: let set say we have a submodule "mod" with the
-HEAD detached at orphaned commit <orphaned-sha1>. Let say
-"origin/<branch>" is at commit <origin-sha1>. Let say I set
-"submodule.mod.attach" to "true" or I run "git submodule update" with
-the "--attach" switch. The expected behavior for submodule "mod" would
-be (pseudocode):
-
-git checkout <branch>
-if "merge" and "head_detached" then
-    git merge <orphaned-sha1>
-case:
-    "merge":
-        git merge <origin-sha1>
-    "rebase":
-        git rebase <origin-sha1>
-    "!<command>":
-        <command> <origin-sha1>
-if "rebase" and "head_detached" then
-   git merge <orphaned-sha1>
-
-So, in both "merge|rebase" cases we merge back orphaned commits with a
-"git merge", but the effect will be a merge or a rebase depending of
-the ordering of the main "update" operation. We can't assume a merge
-or rebase operation in the case of !command so we let the
-responsibility of merging back orphaned commits to the user.
-
-Sounds good?
-
->
-> > +
-> > +--attach::
-> > +       This option is only valid for the add and update commands. Cause the
->
-> Grammar: 'Causes the result'
->
-
-Ok.
-
->
-> > +       result of an add or update operation to be an attached HEAD. In the
-> > +       update command , if `submodule.<name>.branch` is not set, it will
->
-> typo: space before comma.
->
-
-Ok.
-
->
-> Also, the pronoun "it" here is unclear to me.  Does this convey the
-> correct meaning?
->
->    In the update operation, the branch named by 'submodule.<name>.branch' is
->    checked out as the new HEAD of the submodule repository. If
->    'submodule.<name>.branch' is not set, the 'master' branch is
-> checked out as the
->    new HEAD of the submodule.
->
-
-Sounds good to me.
-
->
-> > +       default to `master`. Note: for the update command `--attach` also
-> > +       implies `--remote`.
-> > +
-> > +--detach::
-> > +       This option is only valid for the update command. Cause the result
->
->  Grammar: 'Causes the result'
->
-
-Ok.
-
->
-> > +       of the update operation to be forcedly a detached HEAD.
->
-> "Forcedly" is a bit strong, maybe, slightly misplaced, and not a word,
-> besides.   How's this, instead:
->
->    Forces the result of the update operation to be a detached HEAD in
-> the submodule.
+Sounds like a good first step in the right direction.  Thanks.
 
 
-Sounds good to me.
-
+> -- >8 --
+> Subject: use distinct username/password for http auth tests
 >
-> >  submodule.<name>.update::
-> >         Defines what to do when the submodule is updated by the superproject.
-> > -       If 'checkout' (the default), the new commit specified in the
-> > -       superproject will be checked out in the submodule on a detached HEAD.
-> > +       If 'checkout' (the default), the new commit (or the branch, when using
-> > +       the '--attach' switch or the 'submodule.<name>.attach' property is set
-> > +       to 'true' during an update operation) specified in the superproject will
-> > +       be checked out in the submodule.
+> The httpd server we set up to test git's http client code
+> knows about a single account, in which both the username and
+> password are "user@host" (the unusual use of the "@" here is
+> to verify that we handle the character correctly when URL
+> escaped).
 >
-> IMHO, this wording is overcomplicated by this change.  How about:
+> This means that we may miss a certain class of errors in
+> which the username and password are mixed up internally by
+> git. We can make our tests more robust by having distinct
+> values for the username and password.
 >
->        If 'checkout' (the default), the new commit specified in the superproject
->        (or branch, with '--attach') will be checked out in the submodule.
+> In addition to tweaking the server passwd file and the
+> client URL, we must teach the "askpass" harness to accept
+> multiple values. As a bonus, this makes the setup of some
+> tests more obvious; when we are expecting git to ask
+> only about the password, we can seed the username askpass
+> response with a bogus value.
 >
-
-Sounds good to me.
-
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  t/lib-httpd.sh        | 15 ++++++++++++---
+>  t/lib-httpd/passwd    |  2 +-
+>  t/t5540-http-push.sh  |  4 ++--
+>  t/t5541-http-push.sh  |  6 +++---
+>  t/t5550-http-fetch.sh | 10 +++++-----
+>  t/t5551-http-fetch.sh |  6 +++---
+>  6 files changed, 26 insertions(+), 17 deletions(-)
 >
-> >         If 'rebase', the current branch of the submodule will be rebased onto
-> >         the commit specified in the superproject. If 'merge', the commit
-> >         specified in the superproject will be merged into the current branch
->
-> Does the 'merge', 'rebase' and '!command' description need to be
-> updated, too?  Here and above it seems to still suggest the old
-> behavior is kept when --attach is used.
->
-
-You are right, I'll improve those. Also I think the documentation was
-a bit innacurate because, with the current git features state, it's
-possible merge changes keeping the HEAD detached, and that's what
-happen.
-
-
->
-> > @@ -54,6 +56,11 @@ submodule.<name>.branch::
-> >         If the option is not specified, it defaults to 'master'.  See the
-> >         `--remote` documentation in linkgit:git-submodule[1] for details.
-> >
-> > +submodule.<name>.attach::
-> > +       Determine if the update operation will produce a detached HEAD or not.
-> > +       Valid values are `true` or `false`. If the property is set to `true`
-> > +       and `submodule.<name>.branch`, it will default to `master`
->
-> I think you mean "...and 'submodule.<name>.branch' is not set, it
-> will...", right?
-
-
-Correct. I'll fix it.
-
->
-> Some explanation of what happens when it _is_ set would be useful
-> here, too, I think.  But maybe I do not understand the nuances yet.
->
-
-I think you're right. I'll improve it.
-
->
-> > @@ -475,8 +479,17 @@ Use -f if you really want to add it." >&2
-> >                         cd "$sm_path" &&
-> >                         # ash fails to wordsplit ${branch:+-b "$branch"...}
-> >                         case "$branch" in
-> > -                       '') git checkout -f -q ;;
-> > -                       ?*) git checkout -f -q -B "$branch" "origin/$branch" ;;
-> > +                       '')
-> > +                               git checkout -f -q
-> > +                               ;;
->
-> Is this whitespace change intentional and necessary?
->
-
-It's unnecessary but it was intentional. In the file there are mixed
-indentation styles for cases but when there are multiple statements
-clauses the more frequent style is to span single statement clauses to
-multi-line too. I touched the clause below to become muti-statenent so
-here we are. Please tell me if it's more correct to not touch that
-line.
-
-
->
-> >  }
-> > @@ -622,7 +641,7 @@ cmd_init()
-> >                    test -z "$(git config submodule."$name".update)"
-> >                 then
-> >                         case "$upd" in
-> > -                       rebase | merge | none)
-> > +                       checkout | rebase | merge | none)
->
-> This belongs in a commit of its own.
->
-
-Agreed. I'll do it.
-
->
-> >                                 ;; # known modes of updating
-> >                         *)
-> >                                 echo >&2 "warning: unknown update mode '$upd' suggested for submodule '$name'"
-> > @@ -632,6 +651,23 @@ cmd_init()
-> >                         git config submodule."$name".update "$upd" ||
-> >                         die "$(eval_gettext "Failed to register update mode for submodule path '\$displaypath'")"
-> >                 fi
-> > +
-> > +               # Copy "attach" setting when it is not set yet
-> > +               if attached="$(git config -f .gitmodules submodule."$name".attach)" &&
-> > +                  test -n "$attached" &&
-> > +                  test -z "$(git config submodule."$name".attach)"
-> > +               then
-> > +                       case "$attached" in
-> > +                       true | false)
-> > +                               ;; # Valid attach flag values
-> > +                       *)
-> > +                               echo >&2 "warning: invalid attach flag value for submodule '$name'"
-> > +                               upd=none
-> > +                               ;;
-> > +                       esac
-> > +                       git config submodule."$name".attach "$attached" ||
-> > +                       die "$(eval_gettext "Failed to register attached option for submodule path '\$displaypath'")"
-> > +               fi
-> >         done
-> >  }
-> >
-> > @@ -750,6 +786,14 @@ cmd_update()
-> >                 --reference=*)
-> >                         reference="$1"
-> >                         ;;
-> > +               --attach)
-> > +                       if test "$attach" = "false" ; then usage ; fi
-> > +                       attach="true"
-> > +                       ;;
-> > +               --detach)
-> > +                       if test "$attach" = "true" ; then usage ; fi
-> > +                       attach="false"
-> > +                       ;;
-> >                 -m|--merge)
-> >                         update="merge"
-> >                         ;;
-> > @@ -800,11 +844,44 @@ cmd_update()
-> >                 name=$(module_name "$sm_path") || exit
-> >                 url=$(git config submodule."$name".url)
-> >                 branch=$(get_submodule_config "$name" branch master)
-> > +               if test -n "$attach"
-> > +               then
-> > +                       attach_module=$attach
-> > +               else
-> > +                       attach_module=$(git config submodule."$name".attach)
-> > +                       case "$attach_module" in
-> > +                       '')
-> > +                               ;; # Unset attach flag
-> > +                       true|false)
-> > +                               ;; # Valid attach flag values
-> > +                       *)
-> > +                               echo >&2 "warning: invalid attach flag value for submodule '$name'"
-> > +                               attach_module=
-> > +                               ;;
-> > +                       esac
-> > +               fi
-> > +               if test "$attach_module" = "false"
-> > +               then
-> > +                       # Normalize attach 'false' flag value
-> > +                       attach_module=
-> > +               fi
-> >                 if ! test -z "$update"
-> >                 then
-> >                         update_module=$update
-> >                 else
-> >                         update_module=$(git config submodule."$name".update)
-> > +                       case "$update_module" in
-> > +                       '')
-> > +                               ;; # Unset update mode
-> > +                       checkout | rebase | merge | none)
-> > +                               ;; # Known update modes
-> > +                       !*)
-> > +                               ;; # Custom update command
-> > +                       *)
-> > +                               update_module=
-> > +                               echo >&2 "warning: invalid update mode for submodule '$name'"
-> > +                               ;;
-> > +                       esac
->
-> Probably belongs to the same "other" commit mentioned before.
->
-
-Agreed. Please confirm that you meant only the
-submodule."$module".update part here as you quoted also a lof of code
-that does belongs to the main "--attach" functionality.
-
->
-> I didn't have time to parse out all these conditional completion
-> commands in this review, but the feature seems sane to me, as I
-> understand it.
->
-
-Good. After a response I should be able to produce an improved patch.
-
-Thanks,
-Francesco
+> diff --git a/t/lib-httpd.sh b/t/lib-httpd.sh
+> index c470784..bfdff2a 100644
+> --- a/t/lib-httpd.sh
+> +++ b/t/lib-httpd.sh
+> @@ -129,7 +129,7 @@ prepare_httpd() {
+>  	HTTPD_DEST=127.0.0.1:$LIB_HTTPD_PORT
+>  	HTTPD_URL=$HTTPD_PROTO://$HTTPD_DEST
+>  	HTTPD_URL_USER=$HTTPD_PROTO://user%40host@$HTTPD_DEST
+> -	HTTPD_URL_USER_PASS=$HTTPD_PROTO://user%40host:user%40host@$HTTPD_DEST
+> +	HTTPD_URL_USER_PASS=$HTTPD_PROTO://user%40host:pass%40host@$HTTPD_DEST
+>  
+>  	if test -n "$LIB_HTTPD_DAV" -o -n "$LIB_HTTPD_SVN"
+>  	then
+> @@ -217,7 +217,15 @@ setup_askpass_helper() {
+>  	test_expect_success 'setup askpass helper' '
+>  		write_script "$TRASH_DIRECTORY/askpass" <<-\EOF &&
+>  		echo >>"$TRASH_DIRECTORY/askpass-query" "askpass: $*" &&
+> -		cat "$TRASH_DIRECTORY/askpass-response"
+> +		case "$*" in
+> +		*Username*)
+> +			what=user
+> +			;;
+> +		*Password*)
+> +			what=pass
+> +			;;
+> +		esac &&
+> +		cat "$TRASH_DIRECTORY/askpass-$what"
+>  		EOF
+>  		GIT_ASKPASS="$TRASH_DIRECTORY/askpass" &&
+>  		export GIT_ASKPASS &&
+> @@ -227,7 +235,8 @@ setup_askpass_helper() {
+>  
+>  set_askpass() {
+>  	>"$TRASH_DIRECTORY/askpass-query" &&
+> -	echo "$*" >"$TRASH_DIRECTORY/askpass-response"
+> +	echo "$1" >"$TRASH_DIRECTORY/askpass-user" &&
+> +	echo "$2" >"$TRASH_DIRECTORY/askpass-pass"
+>  }
+>  
+>  expect_askpass() {
+> diff --git a/t/lib-httpd/passwd b/t/lib-httpd/passwd
+> index f2fbcad..99a34d6 100644
+> --- a/t/lib-httpd/passwd
+> +++ b/t/lib-httpd/passwd
+> @@ -1 +1 @@
+> -user@host:nKpa8pZUHx/ic
+> +user@host:xb4E8pqD81KQs
+> diff --git a/t/t5540-http-push.sh b/t/t5540-http-push.sh
+> index 01d0d95..5b0198c 100755
+> --- a/t/t5540-http-push.sh
+> +++ b/t/t5540-http-push.sh
+> @@ -154,7 +154,7 @@ test_http_push_nonff "$HTTPD_DOCUMENT_ROOT_PATH"/test_repo.git \
+>  
+>  test_expect_success 'push to password-protected repository (user in URL)' '
+>  	test_commit pw-user &&
+> -	set_askpass user@host &&
+> +	set_askpass user@host pass@host &&
+>  	git push "$HTTPD_URL_USER/auth/dumb/test_repo.git" HEAD &&
+>  	git rev-parse --verify HEAD >expect &&
+>  	git --git-dir="$HTTPD_DOCUMENT_ROOT_PATH/auth/dumb/test_repo.git" \
+> @@ -168,7 +168,7 @@ test_expect_failure 'user was prompted only once for password' '
+>  
+>  test_expect_failure 'push to password-protected repository (no user in URL)' '
+>  	test_commit pw-nouser &&
+> -	set_askpass user@host &&
+> +	set_askpass user@host pass@host &&
+>  	git push "$HTTPD_URL/auth/dumb/test_repo.git" HEAD &&
+>  	expect_askpass both user@host
+>  	git rev-parse --verify HEAD >expect &&
+> diff --git a/t/t5541-http-push.sh b/t/t5541-http-push.sh
+> index 470ac54..bfd241e 100755
+> --- a/t/t5541-http-push.sh
+> +++ b/t/t5541-http-push.sh
+> @@ -274,7 +274,7 @@ test_expect_success 'push over smart http with auth' '
+>  	cd "$ROOT_PATH/test_repo_clone" &&
+>  	echo push-auth-test >expect &&
+>  	test_commit push-auth-test &&
+> -	set_askpass user@host &&
+> +	set_askpass user@host pass@host &&
+>  	git push "$HTTPD_URL"/auth/smart/test_repo.git &&
+>  	git --git-dir="$HTTPD_DOCUMENT_ROOT_PATH/test_repo.git" \
+>  		log -1 --format=%s >actual &&
+> @@ -286,7 +286,7 @@ test_expect_success 'push to auth-only-for-push repo' '
+>  	cd "$ROOT_PATH/test_repo_clone" &&
+>  	echo push-half-auth >expect &&
+>  	test_commit push-half-auth &&
+> -	set_askpass user@host &&
+> +	set_askpass user@host pass@host &&
+>  	git push "$HTTPD_URL"/auth-push/smart/test_repo.git &&
+>  	git --git-dir="$HTTPD_DOCUMENT_ROOT_PATH/test_repo.git" \
+>  		log -1 --format=%s >actual &&
+> @@ -316,7 +316,7 @@ test_expect_success 'push into half-auth-complete requires password' '
+>  	cd "$ROOT_PATH/half-auth-clone" &&
+>  	echo two >expect &&
+>  	test_commit two &&
+> -	set_askpass user@host &&
+> +	set_askpass user@host pass@host &&
+>  	git push "$HTTPD_URL/half-auth-complete/smart/half-auth.git" &&
+>  	git --git-dir="$HTTPD_DOCUMENT_ROOT_PATH/half-auth.git" \
+>  		log -1 --format=%s >actual &&
+> diff --git a/t/t5550-http-fetch.sh b/t/t5550-http-fetch.sh
+> index f7d0f14..8392624 100755
+> --- a/t/t5550-http-fetch.sh
+> +++ b/t/t5550-http-fetch.sh
+> @@ -62,13 +62,13 @@ test_expect_success 'http auth can use user/pass in URL' '
+>  '
+>  
+>  test_expect_success 'http auth can use just user in URL' '
+> -	set_askpass user@host &&
+> +	set_askpass wrong pass@host &&
+>  	git clone "$HTTPD_URL_USER/auth/dumb/repo.git" clone-auth-pass &&
+>  	expect_askpass pass user@host
+>  '
+>  
+>  test_expect_success 'http auth can request both user and pass' '
+> -	set_askpass user@host &&
+> +	set_askpass user@host pass@host &&
+>  	git clone "$HTTPD_URL/auth/dumb/repo.git" clone-auth-both &&
+>  	expect_askpass both user@host
+>  '
+> @@ -77,7 +77,7 @@ test_expect_success 'http auth respects credential helper config' '
+>  	test_config_global credential.helper "!f() {
+>  		cat >/dev/null
+>  		echo username=user@host
+> -		echo password=user@host
+> +		echo password=pass@host
+>  	}; f" &&
+>  	set_askpass wrong &&
+>  	git clone "$HTTPD_URL/auth/dumb/repo.git" clone-auth-helper &&
+> @@ -86,14 +86,14 @@ test_expect_success 'http auth respects credential helper config' '
+>  
+>  test_expect_success 'http auth can get username from config' '
+>  	test_config_global "credential.$HTTPD_URL.username" user@host &&
+> -	set_askpass user@host &&
+> +	set_askpass wrong pass@host &&
+>  	git clone "$HTTPD_URL/auth/dumb/repo.git" clone-auth-user &&
+>  	expect_askpass pass user@host
+>  '
+>  
+>  test_expect_success 'configured username does not override URL' '
+>  	test_config_global "credential.$HTTPD_URL.username" wrong &&
+> -	set_askpass user@host &&
+> +	set_askpass wrong pass@host &&
+>  	git clone "$HTTPD_URL_USER/auth/dumb/repo.git" clone-auth-user2 &&
+>  	expect_askpass pass user@host
+>  '
+> diff --git a/t/t5551-http-fetch.sh b/t/t5551-http-fetch.sh
+> index afb439e..a124efe 100755
+> --- a/t/t5551-http-fetch.sh
+> +++ b/t/t5551-http-fetch.sh
+> @@ -119,7 +119,7 @@ test_expect_success 'redirects re-root further requests' '
+>  
+>  test_expect_success 'clone from password-protected repository' '
+>  	echo two >expect &&
+> -	set_askpass user@host &&
+> +	set_askpass user@host pass@host &&
+>  	git clone --bare "$HTTPD_URL/auth/smart/repo.git" smart-auth &&
+>  	expect_askpass both user@host &&
+>  	git --git-dir=smart-auth log -1 --format=%s >actual &&
+> @@ -137,7 +137,7 @@ test_expect_success 'clone from auth-only-for-push repository' '
+>  
+>  test_expect_success 'clone from auth-only-for-objects repository' '
+>  	echo two >expect &&
+> -	set_askpass user@host &&
+> +	set_askpass user@host pass@host &&
+>  	git clone --bare "$HTTPD_URL/auth-fetch/smart/repo.git" half-auth &&
+>  	expect_askpass both user@host &&
+>  	git --git-dir=half-auth log -1 --format=%s >actual &&
+> @@ -151,7 +151,7 @@ test_expect_success 'no-op half-auth fetch does not require a password' '
+>  '
+>  
+>  test_expect_success 'redirects send auth to new location' '
+> -	set_askpass user@host &&
+> +	set_askpass user@host pass@host &&
+>  	git -c credential.useHttpPath=true \
+>  	  clone $HTTPD_URL/smart-redir-auth/repo.git repo-redir-auth &&
+>  	expect_askpass both user@host auth/smart/repo.git
