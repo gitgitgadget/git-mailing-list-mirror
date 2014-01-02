@@ -1,75 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: aborted 'git fetch' leaves workspace unusable
-Date: Thu, 02 Jan 2014 10:09:45 -0800
-Message-ID: <xmqqbnzuqmqe.fsf@gitster.dls.corp.google.com>
-References: <32eeea08963ec4438f97ff9ef6553a75@stephe-leake.org>
+From: Sebastian Schuberth <sschuberth@gmail.com>
+Subject: Re: [PATCH] Fix safe_create_leading_directories() for Windows
+Date: Thu, 02 Jan 2014 19:11:42 +0100
+Message-ID: <52C5ABDE.1010006@gmail.com>
+References: <52C5A039.6030408@gmail.com> <alpine.DEB.1.00.1401021826120.1191@s15462909.onlinehome-server.info>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>
-To: stephen_leake@stephe-leake.org
-X-From: git-owner@vger.kernel.org Thu Jan 02 19:10:04 2014
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jan 02 19:11:55 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VymiZ-0007PS-FT
-	for gcvg-git-2@plane.gmane.org; Thu, 02 Jan 2014 19:10:03 +0100
+	id 1VymkN-0002EX-Da
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Jan 2014 19:11:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752070AbaABSJ7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Jan 2014 13:09:59 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53105 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751552AbaABSJ7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Jan 2014 13:09:59 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 196635F8DD;
-	Thu,  2 Jan 2014 13:09:53 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=E2cRwlpRllRlRK2Bk8bV7VhaSoo=; b=hTs04p
-	5xd67NCodEV18bI7EFywfm2p+xsOIw+J4zfEV/q4Z889FB99SlvRLh65FYhZuVs4
-	k3oU1Zb0FOeJbXAtpT+PKtJ2nlkusjtlR0Ubt00p0ObS6H/vgjh8TSHWPH6cgewq
-	lZIuwcA4n1iYviULoc26HYSBkj/RK6OZ1H7co=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ofVkmsGV/i+OME+HCcAsr8D+y7xEhCm2
-	l9sFKc7kV6aE5Lyg3+VNBwpci0/7fmOzasz2EVMjDUNYEEWFrtzqaWnwQ3ECVsAX
-	UYZMyqI1qrxLaLeuc3zFkwV464WZ4Hs0tb0Pm5LJnJtkhvg4r+taOOtct3jezePO
-	CCekK4XR1/I=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 26C535F8DA;
-	Thu,  2 Jan 2014 13:09:52 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 206875F8D9;
-	Thu,  2 Jan 2014 13:09:50 -0500 (EST)
-In-Reply-To: <32eeea08963ec4438f97ff9ef6553a75@stephe-leake.org> (stephen
-	leake's message of "Tue, 31 Dec 2013 01:19:25 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 122F0F32-73D9-11E3-8669-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751886AbaABSLv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Jan 2014 13:11:51 -0500
+Received: from mail-bk0-f50.google.com ([209.85.214.50]:38711 "EHLO
+	mail-bk0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750814AbaABSLu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Jan 2014 13:11:50 -0500
+Received: by mail-bk0-f50.google.com with SMTP id e11so4575764bkh.23
+        for <git@vger.kernel.org>; Thu, 02 Jan 2014 10:11:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
+         :subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=7tNQjdUnHbbk2ZuPdGx9rQBH2GOzYHKAj3wagqAKqk0=;
+        b=sYtXpe6D9C28M+CVdFhEqm0d3PpWvz52pZBruSk8Dk82zzWwsJyQud9L2rZk6OLojl
+         seN4TWCjABz4qI9ZPAutrtQP8A7ZF88e3KV8h81Z8FOFULnRoM4uNBVCEyF/x6onTEL+
+         dluYysi1wr4a9+pu1rZgIm99QrV+f+evb6rL5tDH+fpi4Mw2UqZEmWsZDqG4nwFYEkup
+         d5krSY4QWAQxniTDJab47R0Vj9LsvXTlthn5Ae+9/fBNUYfd8vACU7ufMooUB9mAuOlh
+         IrTxvkpHZzI5P/qRHcGZn+svfM9Ri6d26v+KAK46uNmkJXvmpRS7Qy0H+KfioJ+qdr6e
+         BILg==
+X-Received: by 10.205.15.7 with SMTP id ps7mr197375bkb.106.1388686309672;
+        Thu, 02 Jan 2014 10:11:49 -0800 (PST)
+Received: from [192.168.188.20] (p5DDB39A7.dip0.t-ipconnect.de. [93.219.57.167])
+        by mx.google.com with ESMTPSA id np8sm42527546bkb.11.2014.01.02.10.11.48
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 02 Jan 2014 10:11:48 -0800 (PST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.12) Gecko/20080213 Thunderbird/2.0.0.12 Mnenhy/0.7.5.0
+Newsgroups: gmane.comp.version-control.git
+In-Reply-To: <alpine.DEB.1.00.1401021826120.1191@s15462909.onlinehome-server.info>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239862>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239863>
 
-stephen_leake@stephe-leake.org writes:
+On 02.01.2014 18:33, Johannes Schindelin wrote:
 
-> However, in this case, even running the fetch was a mistake; I would
-> have prefered that it leave FETCH_HEAD in its previous state.
+> -- snip --
+> On Linux, we can get away with assuming that the directory separator is a
+> forward slash, but that is wrong in general. For that purpose, the
+> is_dir_sep() function was introduced a long time ago. By using it in
+> safe_create_leading_directories(), we proof said function for use on
+> platforms where the directory separator is different from Linux'.
+> -- snap --
 
-I think the clearing of leftover FETCH_HEAD is one of the early
-things "git fetch" does, unless "--append" is in effect.  I haven't
-looked at the code for a long time, but it may be possible to move
-the logic of doing so around so that this clearing is done as lazily
-as possible.
+While I'd be fine with this, I do not think we really need it. As you 
+say, is_dir_sep() has been introduced a long time ago, so people should 
+be aware of it, and it should also be immediately clear from the diff 
+why using it is better than hard-coding '/'.
 
-I however suspect that such a change may have fallouts on other
-people who are writing tools like yours; they may be depending on
-seeing FETCH_HEAD cleared after a failed fetch, and be surprised to
-see a stale contents after they (attempt to) run "git fetch" in it.
+That said, I see any further explanations on top of the commit message 
+title is an added bonus, and as "just" a bonus a link to a pull request 
+should be fine. You don't need to understand or appreciate the concept 
+of pull requests in order to follow the link and read the text in there.
 
-So it is not so clear if it is a good thing to change the behaviour
-of "git fetch" not to touch FETCH_HEAD upon a failure.
+-- 
+Sebastian Schuberth
