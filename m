@@ -1,150 +1,148 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH 3/5] safe_create_leading_directories(): add "slash" pointer
-Date: Wed, 01 Jan 2014 22:10:25 +0100
-Message-ID: <52C48441.8060605@alum.mit.edu>
-References: <1387696451-32224-1-git-send-email-mhagger@alum.mit.edu> <1387696451-32224-4-git-send-email-mhagger@alum.mit.edu> <20131226223444.GY20443@google.com>
+Subject: Re: [PATCH 4/5] safe_create_leading_directories(): fix a mkdir/rmdir
+ race
+Date: Thu, 02 Jan 2014 01:53:49 +0100
+Message-ID: <52C4B89D.5020902@alum.mit.edu>
+References: <1387696451-32224-1-git-send-email-mhagger@alum.mit.edu> <1387696451-32224-5-git-send-email-mhagger@alum.mit.edu> <20131226230204.GZ20443@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 01 22:10:58 2014
+X-From: git-owner@vger.kernel.org Thu Jan 02 01:54:03 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VyT43-0006MC-JM
-	for gcvg-git-2@plane.gmane.org; Wed, 01 Jan 2014 22:10:55 +0100
+	id 1VyWXw-0001a3-TH
+	for gcvg-git-2@plane.gmane.org; Thu, 02 Jan 2014 01:54:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754591AbaAAVKa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Jan 2014 16:10:30 -0500
-Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:58616 "EHLO
-	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754556AbaAAVK3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 1 Jan 2014 16:10:29 -0500
-X-AuditID: 1207440c-b7f566d000004272-91-52c484442da6
+	id S1750765AbaABAxz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Jan 2014 19:53:55 -0500
+Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:60376 "EHLO
+	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750706AbaABAxy (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 1 Jan 2014 19:53:54 -0500
+X-AuditID: 1207440d-b7f4c6d000004a16-74-52c4b8a2144e
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id 4F.41.17010.44484C25; Wed,  1 Jan 2014 16:10:28 -0500 (EST)
+	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 27.0D.18966.2A8B4C25; Wed,  1 Jan 2014 19:53:54 -0500 (EST)
 Received: from [192.168.69.148] (p57A256B4.dip0.t-ipconnect.de [87.162.86.180])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s01LAPsB004359
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s020romA013535
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 1 Jan 2014 16:10:26 -0500
+	Wed, 1 Jan 2014 19:53:52 -0500
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20131005 Icedove/17.0.9
-In-Reply-To: <20131226223444.GY20443@google.com>
+In-Reply-To: <20131226230204.GZ20443@google.com>
 X-Enigmail-Version: 1.6
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrOKsWRmVeSWpSXmKPExsUixO6iqOvSciTIYG2jokXXlW4mi4beK8wW
-	b28uYXRg9tg56y67x8VLyh6fN8kFMEdx2yQllpQFZ6bn6dslcGfsPXGVsWCyeMWF+XeZGhgn
-	CnUxcnJICJhIvJ53gA3CFpO4cG89kM3FISRwmVFi6oUeZgjnHJPE3as9jF2MHBy8AtoSp046
-	gZgsAqoS9x/Lg/SyCehKLOppZgKxRQWCJB4desgOYvMKCEqcnPmEBcQWEdCQeP7pG9guZgFr
-	iRWvD4PVCwv4S3xqOQq1aiGjxO3t31hBEpwCBhJnH89mBtklISAu0dMYBNGrI/Gu7wEzhC0v
-	sf3tHOYJjIKzkKybhaRsFpKyBYzMqxjlEnNKc3VzEzNzilOTdYuTE/PyUot0DfVyM0v0UlNK
-	NzFCAppnB+O3dTKHGAU4GJV4eH9EHgkSYk0sK67MPcQoycGkJMp7uRwoxJeUn1KZkVicEV9U
-	mpNafIhRgoNZSYRXKgMox5uSWFmVWpQPk5LmYFES51Vdou4nJJCeWJKanZpakFoEk5Xh4FCS
-	4E1pBmoULEpNT61Iy8wpQUgzcXCCDOeSEilOzUtJLUosLcmIB8VvfDEwgkFSPEB7d4O08xYX
-	JOYCRSFaTzHqcsz78uEboxBLXn5eqpQ471qQIgGQoozSPLgVsPT1ilEc6GNh3g6QKh5g6oOb
-	9ApoCRPQEpGSQyBLShIRUlINjALvfDg80/o2VDClms7Ji6neUPQhMeTV1lShyh0y/L/nGLEJ
-	TpugJ/G087L4ly1Tswtfv9DMy1vHytF2o/Clz+rjXgUtj5LWvDVNuSjY1Xz/i5DD 
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrBKsWRmVeSWpSXmKPExsUixO6iqLtox5Egg03vWS26rnQzWTT0XmG2
+	eHtzCaMDs8fOWXfZPS5eUvb4vEkugDmK2yYpsaQsODM9T98ugTtjwc1/LAV35CouXJjL3MA4
+	XaKLkYNDQsBEYv0jlS5GTiBTTOLCvfVsXYxcHEIClxkl2r51MkM455gkfl/YxAhSxSugLfGs
+	dSqYzSKgKtH6ag2YzSagK7Gop5kJxBYVCJJ4dOghO0S9oMTJmU9YQGwRAQ2J55++sYHYzALW
+	EiteHwarFxYIkTjW1Q+1eSGjxOJdE8CGcgoYSGy8eYgN4lJxiZ7GIIheHYl3fQ+YIWx5ie1v
+	5zBPYBSchWTdLCRls5CULWBkXsUol5hTmqubm5iZU5yarFucnJiXl1qka6SXm1mil5pSuokR
+	EtK8Oxj/r5M5xCjAwajEw7sg/EiQEGtiWXFl7iFGSQ4mJVHe2i1AIb6k/JTKjMTijPii0pzU
+	4kOMEhzMSiK8T7YB5XhTEiurUovyYVLSHCxK4rxqS9T9hATSE0tSs1NTC1KLYLIyHBxKErwX
+	tgM1ChalpqdWpGXmlCCkmTg4QYZzSYkUp+alpBYllpZkxIMiOL4YGMMgKR6gvRog7bzFBYm5
+	QFGI1lOMuhzzvnz4xijEkpeflyolzvsApEgApCijNA9uBSyBvWIUB/pYmPcZSBUPMPnBTXoF
+	tIQJaIlIySGQJSWJCCmpBsa5GTztJ3cG7T5co8wktEEyrHv+lmW5P/8YHFBgejUncpXjsSqN
+	pB1p+7YE9TxVFlkjELPdj6PGo3N5r3Tiu93eaXz+fv2l67Q8m5yqUvc3GE558Irn 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239846>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239847>
 
-On 12/26/2013 11:34 PM, Jonathan Nieder wrote:
+On 12/27/2013 12:02 AM, Jonathan Nieder wrote:
 > Michael Haggerty wrote:
 > 
->> [Subject: safe_create_leading_directories(): add "slash" pointer]
+>> It could be that some other process is trying to clean up empty
+>> directories at the same time that safe_create_leading_directories() is
+>> attempting to create them.  In this case, it could happen that
+>> directory "a/b" was present at the end of one iteration of the loop
+>> (either it was already present or we just created it ourselves), but
+>> by the time we try to create directory "a/b/c", directory "a/b" has
+>> been deleted.  In fact, directory "a" might also have been deleted.
 > 
-> Is this a cleanup or improving the (internal) functionality of the
-> function somehow?  The above one-liner doesn't sum up for me in an
-> obvious way why this is a good change.
+> When does this happen in practice?  Is this about git racing with
+> itself or with some other program?
 
-It's hard to make the subject more self-explanatory, given so few
-characters.  But I will make the rest of the log message better in the
-reroll.
+I think it could be triggered by a reference creation racing with a
+reference packing.  See below.
 
->> Keep track of the position of the slash character separately, and
+> I fear that the aggressive directory creator fighting the aggressive
+> directory remover might be waging a losing battle.
+
+That may be so, but it would be strange for a directory remover to be
+aggressive.  And even if it were, the worst consequence would be that
+the director creator would try three times before giving up.
+
+> Is this about a push that creates a ref racing against a push that
+> deletes a ref from the same hierarchy?
+
+The race could be triggered in this scenario but I don't think it would
+result in a spurious error (at least not if there are only two
+racers...)  The reason is that empty loose reference directories are not
+deleted when a reference is *deleted*, but rather when a new
+d/f-conflicting reference is *created*.  E.g., if
+
+    git branch foo/bar
+    git branch -d foo/bar # this leaves directory foo behind
+    # this removes directory foo and creates file foo:
+    git branch foo &
+        git branch foo/baz
+
+The last two commands could fight.  However, in this scenario one of the
+reference creations would ultimately have to fail anyway, so this patch
+doesn't really help.
+
+However, when packing references, the directories that used to hold the
+old references are deleted right away.  So
+
+    git branch foo/bar
+    git pack-refs --all &
+        git branch foo/baz
+
+Here, the last two commands could fight.
+
+>> So, if a call to mkdir() fails with ENOENT, then try checking/making
+>> all directories again from the beginning.  Attempt up to three times
+>> before giving up.
 > 
-> Separately from what?
+> If we are racing against a ref deletion, then we can retry while our
+> rival keeps walking up the directory tree and deleting parent
+> directories.  As soon as we successfully create a directory, we have
+> won the race.
 > 
->> restore the slash character at a single place, at the end of the while
->> loop.  This makes the next change easier to implement.
->>
->> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
-> 
-> Ah, do I understand correctly that this is about cleaning up
-> after the code that scribbles over 'path' in one place, to make
-> it harder to forget to do that cleanup as new code paths are
-> introduced?
+> But what happens if the entire safe_create_leading_directories
+> operation succeeds and *then* our racing partner deletes the
+> directory?  No one is putting in a file to reserve the directory for
+> the directory creator.
+>
+> If we care enough to retry more than once, I fear this is retrying at
+> the wrong level.
 
-Yes.
+I realize that this change doesn't solve the whole problem.  But you
+make a good point, that if the caller is going to retry anyway, then
+there is no need to retry within this function.  It would be sufficient
+for this function to return a specific error value indicating that
+"creating the directory failed, but there's a chance of success if you
+try again".
 
-> It's too bad there's no variant of 'stat' and 'mkdir' that takes
-> a (buf, len) pair which would avoid the scribbling altogether.
+On the other hand, your argument assumes that all callers really *do*
+retry, which isn't the case, and I doubt that all callers are going to
+be fixed.  So there might be some value in retrying within this function
+anyway (it's a game of averages we're playing here anyway).
 
-Yes.
+I'll think some more about it.
 
->> ---
->>  sha1_file.c | 36 ++++++++++++++++++------------------
->>  1 file changed, 18 insertions(+), 18 deletions(-)
->>
->> diff --git a/sha1_file.c b/sha1_file.c
->> index cc9957e..dcfd35a 100644
->> --- a/sha1_file.c
->> +++ b/sha1_file.c
->> @@ -107,40 +107,40 @@ int mkdir_in_gitdir(const char *path)
->>  
->>  int safe_create_leading_directories(char *path)
->>  {
->> -	char *pos = path + offset_1st_component(path);
->> +	char *next_component = path + offset_1st_component(path);
-> 
-> This name change is probably worth also mentioning in the commit
-> message (or lifting into a separate patch) so the reader doesn't get
-> distracted.
+> Tests?
 
-OK, I split the renaming into a separate commit.
-
->> +	int retval = 0;
->>  
->> -	while (pos) {
->> +	while (!retval && next_component) {
-> 
-> A more usual style would be
-> [...]
-> Using retval for control flow instead makes it eight lines more
-> concise, which is probably worth it.
-
-Agreed.
-
-> [...]
->> 			if (!S_ISDIR(st.st_mode)) {
->> -				*pos = '/';
->> -				return -3;
->> +				retval = -3;
->> 			}
-> 
-> Now the 'if' body is one line, so we can drop the braces and save
-> another line. :)
-
-Will fix.
-
-> One more nit: elsewhere in this file, a variable keeping track of the
-> return value is named 'ret', so it probably makes sense to also use
-> that name here.
-
-OK, will change.
-
-> That would mean the following changes to be potentially squashed in
-> [...]
-
-While going over the code again, I noticed another problem in the
-original version; namely, that the handling of redundant multiple
-slashes in the input path is not correct.  I will fix this problem and
-split up the commit into smaller steps in the re-roll.
+I can't think of how to test this short of either instrumenting the code
+(which I did for my own tests, but didn't include the test code in this
+submission) or running the test within some kind of malicious virtual
+filesystem.  Ideas?
 
 Michael
 
