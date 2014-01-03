@@ -1,60 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] gc: notice gc processes run by other users
-Date: Thu, 02 Jan 2014 16:15:11 -0800
-Message-ID: <xmqq61q1or8w.fsf@gitster.dls.corp.google.com>
-References: <720d7a5676f8cbfc76c80198f9d3816@74d39fa044aa309eaea14b9f57fe79c>
-	<02BCE0EB-ADA1-48F9-BD00-369FFDB5E372@gmail.com>
+From: Francesco Pretto <ceztko@gmail.com>
+Subject: Re: [PATCH/RFC] Introduce git submodule add|update --attach
+Date: Fri, 3 Jan 2014 01:26:44 +0100
+Message-ID: <CALas-ij4b-y0=6wa+VnEmnyq9a0c3ACQ+yOgESBeXOy32mm_MQ@mail.gmail.com>
+References: <1388368184-18418-1-git-send-email-ceztko@gmail.com>
+ <xmqqppoap2qb.fsf@gitster.dls.corp.google.com> <CALas-ihAkUGOZsmWRHN7fG+5D0OnpWmSNtrMH2mwNm51gcYdRw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Kyle <kiltnaked@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 03 01:15:23 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Heiko Voigt <hvoigt@hvoigt.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jan 03 01:27:22 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VysQ6-0003Py-3M
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Jan 2014 01:15:22 +0100
+	id 1Vysbi-00088s-0L
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Jan 2014 01:27:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753607AbaACAPQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Jan 2014 19:15:16 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39596 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753494AbaACAPO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Jan 2014 19:15:14 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 52DDF60677;
-	Thu,  2 Jan 2014 19:15:14 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=58TUtX7PRKuYWjlTJ473tDInOi0=; b=bfV1lB
-	sMFcfFX3l5zHcjOnBCHecNIShsi6i/lDsM8yRUknDQB0VfUZOMvz7kh77ZKeGIC0
-	wWPBZgWVOcp57chekcH1PH4yr77QRqzsy13wtrYYhqhGAKPGAEBsBcxAgra78jEF
-	tLNVUDlSJuItSMpqfXdnw6hHwEmAaqR3i4bKU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=jlXk+iSZ9eHsebfU/yFlt2g6Zj7ZgCJ4
-	CcnIEC+g1cIRfNyrPRiQCuOn1dH/7MBJhG2u2o4fFEy9uM3usdRnLIWFiTlBFOIo
-	JHyw04Ppsixw0m4bk60rkTbZfTXU7DS+P4jdZfJFIDgSXVUV2LQxN92z2v+SEXk4
-	7SR7sBvpoJM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 40ACE60676;
-	Thu,  2 Jan 2014 19:15:14 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9544860675;
-	Thu,  2 Jan 2014 19:15:13 -0500 (EST)
-In-Reply-To: <02BCE0EB-ADA1-48F9-BD00-369FFDB5E372@gmail.com> (Kyle's message
-	of "Thu, 2 Jan 2014 16:11:24 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 1D98CB64-740C-11E3-914F-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753558AbaACA1M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Jan 2014 19:27:12 -0500
+Received: from mail-ob0-f176.google.com ([209.85.214.176]:46396 "EHLO
+	mail-ob0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752822AbaACA1F (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Jan 2014 19:27:05 -0500
+Received: by mail-ob0-f176.google.com with SMTP id vb8so15019027obc.35
+        for <git@vger.kernel.org>; Thu, 02 Jan 2014 16:27:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=UmGJigl/yREk2+GsWjPXKhi0euKpDzYtPNBJ8xldBDo=;
+        b=jfDKVZi5K80tsGHiOCnFRVTxU6K9zs64npuj0xKQJdQYiZ8RcyV1nWm4uzItFBjYcR
+         bR+n5cp8YC/H8RRdWqkq7RX8QZmNaSGzJHt+h7FYejEWs8rhMj9GxIwmzPtAOF4Cdlqw
+         1iHISEkCTWiLaJ6S9oUgO83uQK0k0cdUjhnzJVcikNG+IQJn8FEqgXeSaWcTsc4+H0/o
+         r4QIsKRl4M8lcbj/2lmZfHlzE1+v1dbkXMZIe0/oziBuCoao9Hdnbpo3yvvFtUHrTeU2
+         AO9tce+I78whHWufW4ppO9SQfST9efD7NafFlJHTXWybCNO7zJFWiP24i+QKEAVSUN+G
+         RA6Q==
+X-Received: by 10.60.47.116 with SMTP id c20mr129979oen.60.1388708824486; Thu,
+ 02 Jan 2014 16:27:04 -0800 (PST)
+Received: by 10.76.80.165 with HTTP; Thu, 2 Jan 2014 16:26:44 -0800 (PST)
+In-Reply-To: <CALas-ihAkUGOZsmWRHN7fG+5D0OnpWmSNtrMH2mwNm51gcYdRw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239898>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239899>
 
-Thanks.
+2014/1/3 Francesco Pretto <ceztko@gmail.com>:
+> Concluding, my point is that at the current state submodules in git
+> seem to be flawed because of the inconsistent HEAD state between "add"
+> and "update" users. With my patch applied the attached HEAD behavior
+> would be fully supported. At some point "git submodule add" (without
+> the "--attached" switch) could be also modified to produce a detached
+> HEAD by default, removing any remaining inconsistency.
+>
+
+Also consider that ultimately my desired behavior for submodules is
+the following:
+1) I'd like cloning users to have an attached HEAD by default when
+doing "git submodule update";
+2) when using an attached HEAD, I'd like "git submodule update" to
+also imply "--remote".
+
+An alternative approach would be, for example, make "git submodule
+update" honor the current documentation about the behavior of "merge"
+and "rebase" update operations, if confirmed to be wrong, really
+keeping the HEAD attached. That would be a breaking change, but at
+least it would reflect currently documented behavior. I prefer my
+original approach, because it adds more feasibility and it's not
+breaking in the short time, but I'm open to that and other solutions.
+
+Please let me know, what do you think about it.
+
+Thank you,
+Francesco
