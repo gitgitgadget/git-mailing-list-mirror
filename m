@@ -1,142 +1,98 @@
-From: Ralf Thielow <ralf.thielow@gmail.com>
-Subject: [PATCH] l10n: de.po: fix translation of 'prefix'
-Date: Fri,  3 Jan 2014 18:28:30 +0100
-Message-ID: <1388770110-3691-1-git-send-email-ralf.thielow@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/4] completion: fix branch.autosetup(merge|rebase)
+Date: Fri, 03 Jan 2014 09:32:56 -0800
+Message-ID: <xmqq1u0pnf7b.fsf@gitster.dls.corp.google.com>
+References: <1388415138-11011-1-git-send-email-artagnon@gmail.com>
+	<1388415138-11011-4-git-send-email-artagnon@gmail.com>
+	<xmqqa9fendj3.fsf@gitster.dls.corp.google.com>
+	<CALkWK0=tL4K7UHDBp_jGz5zUaHE9m=OESo2=2a0fUZwXB4auGg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Ralf Thielow <ralf.thielow@gmail.com>
-To: tr@thomasrast.ch, jk@jk.gs, stimming@tuhh.de
-X-From: git-owner@vger.kernel.org Fri Jan 03 18:28:46 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 03 18:33:08 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vz8Y7-00039B-UH
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Jan 2014 18:28:44 +0100
+	id 1Vz8cN-0001gq-5l
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Jan 2014 18:33:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751770AbaACR2k convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 3 Jan 2014 12:28:40 -0500
-Received: from mail-ee0-f48.google.com ([74.125.83.48]:39599 "EHLO
-	mail-ee0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751098AbaACR2j (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Jan 2014 12:28:39 -0500
-Received: by mail-ee0-f48.google.com with SMTP id e49so6755634eek.35
-        for <git@vger.kernel.org>; Fri, 03 Jan 2014 09:28:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:mime-version:content-type
-         :content-transfer-encoding;
-        bh=De8D+TFPXBZBk0OfhG0hFafKILFdnT35DyVwNVoTKc4=;
-        b=BUxuXN+XoJnu3fVAsrxDpWSw4mSFoMmVVQSWYCW/UqaKZlremBRncZwuiwnPKbQ29I
-         12soaDXbJ0FmHDUb5gxFiceYeg9oKoQ3vyxUGtrJ2JDGSUWZ7Qhp5wEhP/Xn9oboA7+d
-         8UgYyyD3LxbvFRk4mys4zm5LrD1RH6VgxRY7p76BgtqP3XJoBRR1I+cmIE8BECSphPIk
-         Om1w/wYWM4nPhYsuw25yyiAI8ZJeBioZxRALcUObunrLMBG+JnfAIKRxjN7BkX0SUiKK
-         I4rKh7tImJpH05qSTmfMeNR/XWhyW4OtiXVduNENLNlqbh0+I3lt37zZYlyxSVg4ghPH
-         6Vig==
-X-Received: by 10.14.199.197 with SMTP id x45mr75840442een.8.1388770118028;
-        Fri, 03 Jan 2014 09:28:38 -0800 (PST)
-Received: from localhost (dslb-188-103-232-122.pools.arcor-ip.net. [188.103.232.122])
-        by mx.google.com with ESMTPSA id 1sm146670407eeg.4.2014.01.03.09.28.36
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 03 Jan 2014 09:28:37 -0800 (PST)
-X-Mailer: git-send-email 1.8.5.2.314.gb83cf2e
+	id S1751190AbaACRdC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Jan 2014 12:33:02 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61426 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750935AbaACRdB (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Jan 2014 12:33:01 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 31EC15C423;
+	Fri,  3 Jan 2014 12:33:00 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=PumRdwlyHXB1QTgvDyallHEzw4Q=; b=hzD0H3
+	ikwnzCn78O+i6IncnFnb3+5ap+ozWOS1u9t1A9bd5TpIjCN1fV68TBoBnrDy6qZa
+	vBVwmdHKmD9fG/nXd+I9hT2Zzc0LqNX3/l8CoYvwRfzfHY/PgQw64fNETWnAGqVX
+	0PPoin+Dtl0cet3zhuAQrumpzs5HG7Hm3BSUU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ec4Gx8FAjwRbB+WHc/H9AHUVlTo7hqQh
+	BjfqUjSuDiEu1//m1IOaL8hJCXiKJdOtG3K/cQnFBw0RyMuB4NqCYdwE2zrbqfRH
+	BrHUp+G6IUm6bQACrVWyfc+W7su6ks9gUd5FlX5phF2GZJyAT4caK1MVvVAd6mxm
+	tT3J/8s7HjM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1E2775C422;
+	Fri,  3 Jan 2014 12:33:00 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 679705C421;
+	Fri,  3 Jan 2014 12:32:59 -0500 (EST)
+In-Reply-To: <CALkWK0=tL4K7UHDBp_jGz5zUaHE9m=OESo2=2a0fUZwXB4auGg@mail.gmail.com>
+	(Ramkumar Ramachandra's message of "Fri, 3 Jan 2014 13:06:27 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 16E93A56-749D-11E3-8AAE-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239916>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239917>
 
-The word 'prefix' is currently translated as 'Prefix'
-which is not a German word. It should be translated as
-'Pr=C3=A4fix'.
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
----
- po/de.po | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+> Junio C Hamano wrote:
+>> If we are looking at "branch.autosetupmerge." followed by something,
+>> who typed that final dot?
+>
+> I admit that it's a very unlikely case. The user did:
+>
+>   $ branch.autosetupmer<TAB>
+>
+> hit backspace to delete the trailing space, inserted a dot, and hit <TAB> again.
+>
+>> If you are working on a topic about
+>> auto-setup-merge and named your branch "autosetupmerge", don't you
+>> want to be able to configure various aspect of that branch via
+>> branch.autosetupmerge.{remote,merge} etc., just like you can do so
+>> for your "topic" branch via branch.topic.{remote,merge} etc.,
+>> regardless of your use of "autosetupmerge" option across branches?
+>
+> My reasoning was that being correct was more important that being
+> complete. So, if by some horrible chance, the user names her branch
+> "autosetupmerge", we don't aid her in completions.
+>
+>> Besides, it smells fishy to me that you need to enumerate and
+>> special case these two here, and then you have to repeat them below
+>> in a separate case arm.
+>
+> I'm not too irked about correctness in this odd case; seeing that you
+> aren't either, I'll resubmit the series without this hunk (+ the hunk
+> in remote.pushdefault).
 
-diff --git a/po/de.po b/po/de.po
-index 5e2d709..c0bbb65 100644
---- a/po/de.po
-+++ b/po/de.po
-@@ -72,7 +72,7 @@ msgstr "Archivformat"
-=20
- #: archive.c:328 builtin/log.c:1193
- msgid "prefix"
--msgstr "Prefix"
-+msgstr "Pr=C3=A4fix"
-=20
- #: archive.c:329
- msgid "prepend prefix to each pathname in the archive"
-@@ -3716,7 +3716,7 @@ msgid ""
- msgstr ""
- "Eingabehilfe:\n"
- "1          - nummeriertes Element ausw=C3=A4hlen\n"
--"foo        - Element anhand eines eindeutigen Prefix ausw=C3=A4hlen\n=
-"
-+"foo        - Element anhand eines eindeutigen Pr=C3=A4fix ausw=C3=A4h=
-len\n"
- "           - (leer) nichts ausw=C3=A4hlen"
-=20
- #: builtin/clean.c:298
-@@ -3734,7 +3734,7 @@ msgstr ""
- "1          - einzelnes Element ausw=C3=A4hlen\n"
- "3-5        - Bereich von Elementen ausw=C3=A4hlen\n"
- "2-3,6-9    - mehrere Bereiche ausw=C3=A4hlen\n"
--"foo        - Element anhand eines eindeutigen Prefix ausw=C3=A4hlen\n=
-"
-+"foo        - Element anhand eines eindeutigen Pr=C3=A4fix ausw=C3=A4h=
-len\n"
- "-...       - angegebenes Element abw=C3=A4hlen\n"
- "*          - alle Elemente ausw=C3=A4hlen\n"
- "           - (leer) Auswahl beenden"
-@@ -6452,7 +6452,7 @@ msgstr "kennzeichnet die Serie als n-te Fassung"
-=20
- #: builtin/log.c:1194
- msgid "Use [<prefix>] instead of [PATCH]"
--msgstr "verwendet [<Prefix>] anstatt [PATCH]"
-+msgstr "verwendet [<Pr=C3=A4fix>] anstatt [PATCH]"
-=20
- #: builtin/log.c:1197
- msgid "store resulting files in <dir>"
-@@ -8182,7 +8182,7 @@ msgid ""
- "[-u [--exclude-per-directory=3D<gitignore>] | -i]] [--no-sparse-check=
-out] [--"
- "index-output=3D<file>] (--empty | <tree-ish1> [<tree-ish2> [<tree-ish=
-3>]])"
- msgstr ""
--"git read-tree [[-m [--trivial] [--aggressive] | --reset | --prefix=3D=
-<Prefix>] "
-+"git read-tree [[-m [--trivial] [--aggressive] | --reset | --prefix=3D=
-<Pr=C3=A4fix>] "
- "[-u [--exclude-per-directory=3D<gitignore>] | -i]] [--no-sparse-check=
-out] [--"
- "index-output=3D<Datei>] (--empty | <Commit-Referenz1> [<Commit-Refere=
-nz2> "
- "[<Commit-Referenz3>]])"
-@@ -9782,15 +9782,15 @@ msgstr "gibt Tag-Inhalte aus"
-=20
- #: builtin/write-tree.c:13
- msgid "git write-tree [--missing-ok] [--prefix=3D<prefix>/]"
--msgstr "git write-tree [--missing-ok] [--prefix=3D<Prefix>/]"
-+msgstr "git write-tree [--missing-ok] [--prefix=3D<Pr=C3=A4fix>/]"
-=20
- #: builtin/write-tree.c:26
- msgid "<prefix>/"
--msgstr "<Prefix>/"
-+msgstr "<Pr=C3=A4fix>/"
-=20
- #: builtin/write-tree.c:27
- msgid "write tree object for a subdirectory <prefix>"
--msgstr "schreibt das \"Tree\"-Objekt f=C3=BCr ein Unterverzeichnis <Pr=
-efix>"
-+msgstr "schreibt das \"Tree\"-Objekt f=C3=BCr ein Unterverzeichnis <Pr=
-=C3=A4fix>"
-=20
- #: builtin/write-tree.c:30
- msgid "only useful for debugging"
---=20
-1.8.5.2.314.gb83cf2e
+You seem to be calling it "incorrect" to give the same degree of
+completion for a branch the user named "autosetupmerge" as another
+branch "topic", but I think it is incorrect not to, so I cannot tell
+if we are agreeing or disagreeing.
+
+Puzzled...
