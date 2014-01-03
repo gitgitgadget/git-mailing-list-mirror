@@ -1,126 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] get_octopus_merge_bases(): cleanup redundant variable
-Date: Fri, 03 Jan 2014 10:26:43 -0800
-Message-ID: <xmqqeh4oncpo.fsf@gitster.dls.corp.google.com>
-References: <1388760346-19515-1-git-send-email-einmalfel@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, vmiklos@frugalware.org
-To: Vasily Makarov <einmalfel@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 03 19:26:58 2014
+From: "W. Trevor King" <wking@tremily.us>
+Subject: [PATCH] Documentation/gitmodules: Only 'update' and 'url' are required
+Date: Fri,  3 Jan 2014 10:31:22 -0800
+Message-ID: <c22c81472bb8b8943d34bdf1ac9ef61f5a489a16.1388773808.git.wking@tremily.us>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	"W. Trevor King" <wking@tremily.us>
+To: Git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jan 03 19:31:37 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vz9SR-0006tV-UH
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Jan 2014 19:26:56 +0100
+	id 1Vz9Wz-0006Jn-60
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Jan 2014 19:31:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753234AbaACS0w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Jan 2014 13:26:52 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56669 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752896AbaACS0v (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Jan 2014 13:26:51 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CE14A5D0FF;
-	Fri,  3 Jan 2014 13:26:50 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=OegzcdgWPVhlTBNBHGyU4nrnFZY=; b=aM8EVl
-	tZWRrZVCcl4nVbZBK+WvadAmvwtDuwU7WECIwRCPu4AbeTGPWdXH5sqT7pzS+PiC
-	w/ysuc86YU7+Bx9EJCatMJOtxDjIM5HrnSk0sfNUq7+IXH/R6JHQAuz9dfOKVTze
-	s46dKdB7IhEyKzu4DUBbMVftLXRsM2D9lfUQg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=p4HDldwlwv09usKTHiFWYDV9lTBlq7CU
-	sFPcCQElbOuhxEKSrAjyaZupHUICHm442jWTdQ/uG+pra8ECLYwoJsncKmOeOciY
-	n3he5TA/9Y+DPw0o9u4lG9VbJTf2KYPax1PTm6uqnBW4cudAhbeAuiLbr8FoAq22
-	COE0exyZTro=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C6F615D0F5;
-	Fri,  3 Jan 2014 13:26:47 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B8DEA5D0F0;
-	Fri,  3 Jan 2014 13:26:45 -0500 (EST)
-In-Reply-To: <1388760346-19515-1-git-send-email-einmalfel@gmail.com> (Vasily
-	Makarov's message of "Fri, 3 Jan 2014 18:45:46 +0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 99F6468A-74A4-11E3-BF95-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752103AbaACSbd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Jan 2014 13:31:33 -0500
+Received: from qmta14.westchester.pa.mail.comcast.net ([76.96.59.212]:40554
+	"EHLO qmta14.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751139AbaACSbc (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 3 Jan 2014 13:31:32 -0500
+Received: from omta19.westchester.pa.mail.comcast.net ([76.96.62.98])
+	by qmta14.westchester.pa.mail.comcast.net with comcast
+	id 9WHD1n00627AodY5EWXXFC; Fri, 03 Jan 2014 18:31:31 +0000
+Received: from odin.tremily.us ([24.18.63.50])
+	by omta19.westchester.pa.mail.comcast.net with comcast
+	id 9WXW1n00K152l3L3fWXWgV; Fri, 03 Jan 2014 18:31:31 +0000
+Received: by odin.tremily.us (Postfix, from userid 1000)
+	id D4F4FE66FEB; Fri,  3 Jan 2014 10:31:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
+	t=1388773889; bh=/rZfK4QtdeWKA3f8/cr7jM2ZmB37UIowe6yhpNOJQew=;
+	h=From:To:Cc:Subject:Date;
+	b=eZ+ZSKGjUciHda4dsSVAxqt+n011wIHyFDx/xjqm18u+xeM2Svq7BiAisJ0imgSUw
+	 gNC6VwJl+4JrqAg8Z9TAkWBVeNP5i6en/VxNjx62jLsAWYn9C/vGJTXTCW29U4AE9L
+	 ke94hkPVahJGMXBVILkDA8TuUfoopAThhvz5cZ74=
+X-Mailer: git-send-email 1.8.3.2
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
+	s=q20121106; t=1388773891;
+	bh=q2hk1BvVjW0aOSo+E9e/R7QmHbhN69t01vtEi0DRvJM=;
+	h=Received:Received:Received:From:To:Subject:Date:Message-Id;
+	b=E+IidmKiuQgT8EPvLFrB82wzWnxMmmSw4cbFWKoMZsL0QyUiWXjprsONw7AnCU5QE
+	 4EzS3WOcuTD+PKnUw6kOgDThLb7Wii3NuiZr+fUQtZfrUfMQS4tQWRAppUcI+beN5Q
+	 YuQ9SRRr7fLUJq9sKJo0NkEzMkB9SXAzOeIhCcuGywcyHf4X2UZwnV8JFH1VZyaV40
+	 Il0Eai0jOfVLJ9GYFndOm2hYw+vm34ZpUKz2t5mW1u7n1KbdgOyEJkrc+MkWKmIIr4
+	 D0LrIcDB9f6ZJrat9ekA6GunMzcrQjSi0eR133XeSYEreOxTm4LOzqpQE2dj1giggJ
+	 PueMruTqR9GBg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239923>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239924>
 
-Vasily Makarov <einmalfel@gmail.com> writes:
+From: "W. Trevor King" <wking@tremily.us>
 
-> pptr is needless. Some related code got cleaned as well
->
-> Signed-off-by: Vasily Makarov <einmalfel@gmail.com>
-> ---
->  commit.c | 33 +++++++++++++++------------------
->  1 file changed, 15 insertions(+), 18 deletions(-)
->
-> diff --git a/commit.c b/commit.c
-> index de16a3c..4a7a192 100644
-> --- a/commit.c
-> +++ b/commit.c
-> @@ -834,26 +834,23 @@ static struct commit_list *merge_bases_many(struct commit *one, int n, struct co
->  struct commit_list *get_octopus_merge_bases(struct commit_list *in)
->  {
->  	struct commit_list *i, *j, *k, *ret = NULL;
-> -	struct commit_list **pptr = &ret;
->  
-> -	for (i = in; i; i = i->next) {
-> -		if (!ret)
-> -			pptr = &commit_list_insert(i->item, pptr)->next;
-> -		else {
-> -			struct commit_list *new = NULL, *end = NULL;
-> -
-> -			for (j = ret; j; j = j->next) {
-> -				struct commit_list *bases;
-> -				bases = get_merge_bases(i->item, j->item, 1);
-> -				if (!new)
-> -					new = bases;
-> -				else
-> -					end->next = bases;
-> -				for (k = bases; k; k = k->next)
-> -					end = k;
-> -			}
-> -			ret = new;
-> +	commit_list_insert(in->item, &ret);
+Before this commit, all the settings fell under the initial "Each
+submodule section also contains the following required keys:".  The
+example shows sections with just 'update' and 'url' entries, but we
+should still make the required/optional distinction explicit for the
+descriptions.
 
-I suspect that the original code would have behaved well (and I also
-suspect that it was designed to) even if in==NULL upon entry, but
-this version will crash here.  Nothing a simple
+Signed-off-by: W. Trevor King <wking@tremily.us>
+---
+ Documentation/gitmodules.txt | 2 ++
+ 1 file changed, 2 insertions(+)
 
-	if (!in)
-        	return NULL;
-
-upfront cannot fix, though.
-
-And if we add these three lines back, the patch will become 18
-insertions with 18 deletions but the result is very much more
-readable than the original ;-).
-
-> +
-> +	for (i = in->next; i; i = i->next) {
-> +		struct commit_list *new = NULL, *end = NULL;
-> +
-> +		for (j = ret; j; j = j->next) {
-> +			struct commit_list *bases;
-> +			bases = get_merge_bases(i->item, j->item, 1);
-> +			if (!new)
-> +				new = bases;
-> +			else
-> +				end->next = bases;
-> +			for (k = bases; k; k = k->next)
-> +				end = k;
->  		}
-> +		ret = new;
->  	}
->  	return ret;
->  }
+diff --git a/Documentation/gitmodules.txt b/Documentation/gitmodules.txt
+index f7be93f..347a9f7 100644
+--- a/Documentation/gitmodules.txt
++++ b/Documentation/gitmodules.txt
+@@ -35,6 +35,8 @@ submodule.<name>.url::
+ 	linkgit:git-clone[1] or (if it begins with ./ or ../) a location
+ 	relative to the superproject's origin repository.
+ 
++In addition, there are a number of optional keys:
++
+ submodule.<name>.update::
+ 	Defines what to do when the submodule is updated by the superproject.
+ 	If 'checkout' (the default), the new commit specified in the
+-- 
+1.8.5.2.gaa5d535.dirty
