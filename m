@@ -1,77 +1,60 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 3/4] completion: fix branch.autosetup(merge|rebase)
-Date: Fri, 3 Jan 2014 13:06:27 +0530
-Message-ID: <CALkWK0=tL4K7UHDBp_jGz5zUaHE9m=OESo2=2a0fUZwXB4auGg@mail.gmail.com>
+Subject: Re: [PATCH 2/4] completion: introduce __gitcomp_2 ()
+Date: Fri, 3 Jan 2014 13:21:17 +0530
+Message-ID: <CALkWK0mgqJFz1Lf_UVX8fdvnT+u+rp705dak7kXVFFBSr2bTQA@mail.gmail.com>
 References: <1388415138-11011-1-git-send-email-artagnon@gmail.com>
- <1388415138-11011-4-git-send-email-artagnon@gmail.com> <xmqqa9fendj3.fsf@gitster.dls.corp.google.com>
+ <1388415138-11011-3-git-send-email-artagnon@gmail.com> <xmqqeh4qndxs.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Git List <git@vger.kernel.org>,
 	Felipe Contreras <felipe.contreras@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 03 08:37:44 2014
+X-From: git-owner@vger.kernel.org Fri Jan 03 08:52:03 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VyzKB-0006Xm-Gz
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Jan 2014 08:37:43 +0100
+	id 1VyzY2-000772-I5
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Jan 2014 08:52:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750813AbaACHhL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Jan 2014 02:37:11 -0500
-Received: from mail-ie0-f180.google.com ([209.85.223.180]:52574 "EHLO
-	mail-ie0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750802AbaACHhK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Jan 2014 02:37:10 -0500
-Received: by mail-ie0-f180.google.com with SMTP id tp5so15629555ieb.39
-        for <git@vger.kernel.org>; Thu, 02 Jan 2014 23:37:08 -0800 (PST)
+	id S1751099AbaACHv7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Jan 2014 02:51:59 -0500
+Received: from mail-ie0-f171.google.com ([209.85.223.171]:36382 "EHLO
+	mail-ie0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750999AbaACHv6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Jan 2014 02:51:58 -0500
+Received: by mail-ie0-f171.google.com with SMTP id ar20so15736880iec.2
+        for <git@vger.kernel.org>; Thu, 02 Jan 2014 23:51:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=0utEz0Rx6Txgoahw7EQ5QK/nOqOHa1UVf7jhYnCka1o=;
-        b=BZByeTSttB25ToikQZdb5RzLjmr9uQwVBLRCD/oSZlrvaeiEx5SvuxNE+6WRzaSFiz
-         OTp1dRpotN4zBxZxO3rHDHCn8/awpZwKGZeUQORZ8/pum5K4RM4h0uAD6lD1k97nJVsB
-         Hds58fhCP7IpINk/1zny9Xh6Yy+wh4Y43L8Lq+YUKLtRgiLeGfu1M1FSgkpQeI6tvJSk
-         csPjuIbRp+DDPvX12j/MInLTnowaAftPFeg5IVLy4tH4o7rwqIz8v/veNrU5tGmOVASt
-         UrXmKxm44fMLAhNUfdmXYGGBZ4T1HYEP9s+PUSW8LEpNsoXyxfODp2/mDP9MUngXjlGR
-         1g0Q==
-X-Received: by 10.50.36.67 with SMTP id o3mr1141951igj.47.1388734628017; Thu,
- 02 Jan 2014 23:37:08 -0800 (PST)
-Received: by 10.64.195.9 with HTTP; Thu, 2 Jan 2014 23:36:27 -0800 (PST)
-In-Reply-To: <xmqqa9fendj3.fsf@gitster.dls.corp.google.com>
+        bh=vv05onEXXn6+w1+mY/w2bZvMisEZnZ8oLyJ1jmzGNBY=;
+        b=qXEER81QQH8s9MGoKBjCJDx+YLEHETrRXrwHbrESKMDuLIyRdMIraWMUp2wSUhiZfC
+         66oxLvWH/k9D7CYhHslfSQ/gboZP1T/VQ7TcgldVYhn3irZJpMcqi1frc2ozYBrieu6Y
+         TQyR4eN9tZd6Dk9wHkyKa9m+r54HFrOamGq1Tg7I7HDF+eu6xtX7REFoWc4ISmORA0cS
+         4GuzRMjsv3zveggvho/PfY40zhi7gnxNmo/WnDUgfxHmQ657OPGVGu0XyJgEeUG8SD3C
+         NJGI5BOQ6e6QNzdSjls9iCdtlhIAWVuQzGIL1bokX2BLnsy0OYveDg6N2aooHhf3UDm+
+         5vYA==
+X-Received: by 10.50.150.174 with SMTP id uj14mr1339422igb.16.1388735517875;
+ Thu, 02 Jan 2014 23:51:57 -0800 (PST)
+Received: by 10.64.195.9 with HTTP; Thu, 2 Jan 2014 23:51:17 -0800 (PST)
+In-Reply-To: <xmqqeh4qndxs.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239904>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239905>
 
 Junio C Hamano wrote:
-> If we are looking at "branch.autosetupmerge." followed by something,
-> who typed that final dot?
+>         __gitcomp_nl "$(__git_heads)" "$pfx" "$cur_" "."
+>         __gitcomp_nl_append $"autosetupmerge\nautosetuprebase\n" "$pfx" "$cur_" " "
 
-I admit that it's a very unlikely case. The user did:
+This is not a bad idea at all. I'm just afraid that we might be
+leaving open ends: What happens if the $pfx isn't the same in both
+cases? Who keeps track of the index "i" of COMPREPLY (it's currently a
+local variable)? If we make it global, doesn't every function that
+deals with COMPREPLY be careful to reset it?
 
-  $ branch.autosetupmer<TAB>
-
-hit backspace to delete the trailing space, inserted a dot, and hit <TAB> again.
-
-> If you are working on a topic about
-> auto-setup-merge and named your branch "autosetupmerge", don't you
-> want to be able to configure various aspect of that branch via
-> branch.autosetupmerge.{remote,merge} etc., just like you can do so
-> for your "topic" branch via branch.topic.{remote,merge} etc.,
-> regardless of your use of "autosetupmerge" option across branches?
-
-My reasoning was that being correct was more important that being
-complete. So, if by some horrible chance, the user names her branch
-"autosetupmerge", we don't aid her in completions.
-
-> Besides, it smells fishy to me that you need to enumerate and
-> special case these two here, and then you have to repeat them below
-> in a separate case arm.
-
-I'm not too irked about correctness in this odd case; seeing that you
-aren't either, I'll resubmit the series without this hunk (+ the hunk
-in remote.pushdefault).
+More importantly, can you see a usecase for more than two completion classes?
