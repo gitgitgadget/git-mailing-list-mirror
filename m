@@ -1,77 +1,100 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 2/4] completion: introduce __gitcomp_2 ()
-Date: Sat, 4 Jan 2014 00:39:24 +0530
-Message-ID: <CALkWK0nQ30fg0RjgKq9WSb2Mv9W8xQsK+wy9hzHt7RGpBbad-Q@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/4] completion: fix branch.autosetup(merge|rebase)
+Date: Fri, 03 Jan 2014 11:13:28 -0800
+Message-ID: <xmqqa9fcnajr.fsf@gitster.dls.corp.google.com>
 References: <1388415138-11011-1-git-send-email-artagnon@gmail.com>
- <1388415138-11011-3-git-send-email-artagnon@gmail.com> <xmqqeh4qndxs.fsf@gitster.dls.corp.google.com>
- <CALkWK0mgqJFz1Lf_UVX8fdvnT+u+rp705dak7kXVFFBSr2bTQA@mail.gmail.com> <xmqqwqihlzuj.fsf@gitster.dls.corp.google.com>
+	<1388415138-11011-4-git-send-email-artagnon@gmail.com>
+	<xmqqa9fendj3.fsf@gitster.dls.corp.google.com>
+	<CALkWK0=tL4K7UHDBp_jGz5zUaHE9m=OESo2=2a0fUZwXB4auGg@mail.gmail.com>
+	<xmqq1u0pnf7b.fsf@gitster.dls.corp.google.com>
+	<CALkWK0mGJ2V9V=KzuaAraNX-edEVBEpp-9DcAaBF-dZCqp6bsw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
 Cc: Git List <git@vger.kernel.org>,
 	Felipe Contreras <felipe.contreras@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 03 20:10:24 2014
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 03 20:13:43 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VzA8U-0002vN-Uf
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Jan 2014 20:10:23 +0100
+	id 1VzABh-000052-Q9
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Jan 2014 20:13:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752819AbaACTKP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Jan 2014 14:10:15 -0500
-Received: from mail-ie0-f175.google.com ([209.85.223.175]:41906 "EHLO
-	mail-ie0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752463AbaACTKF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Jan 2014 14:10:05 -0500
-Received: by mail-ie0-f175.google.com with SMTP id x13so16329744ief.34
-        for <git@vger.kernel.org>; Fri, 03 Jan 2014 11:10:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=J9gljDAmBYgXBzRPsZH3vPQivomk/g4KASZuc6WcM0U=;
-        b=zmw+F2Z/AXSqKmW0S9AgvIycJNFnz4y2PoegCyW7s/oNhQXq/wdHsv2tl9+dk8qpW3
-         BLM6HJdtkz5lDx7mANmdrWX2TDsAUepPsb+R5KGFJUT+0lVCxKBR0nE2IRiDxS/xFHmW
-         O+vAl2503ru+SNdL4CaM5sS2xDmZuuPKEGppGZ36XDlpVQU/D3sHiFWfI0r9nRo99yPg
-         On7iYR67XZHj+Ddla/YvSLsnB0ZUp0A2Euv/4+fo7tFgkITD2xf207Yofxc5IYyLZNRX
-         fPPcb1jL75b8ztx7fysYNbgxVbWSCT5WjCyOCu6IHWiPmbsqF5WteHs5Vpy4lTkyM519
-         6q7A==
-X-Received: by 10.42.44.9 with SMTP id z9mr281210ice.88.1388776204492; Fri, 03
- Jan 2014 11:10:04 -0800 (PST)
-Received: by 10.64.195.9 with HTTP; Fri, 3 Jan 2014 11:09:24 -0800 (PST)
-In-Reply-To: <xmqqwqihlzuj.fsf@gitster.dls.corp.google.com>
+	id S1753262AbaACTNh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Jan 2014 14:13:37 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57218 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752635AbaACTNf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Jan 2014 14:13:35 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A1B085DD62;
+	Fri,  3 Jan 2014 14:13:34 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=eGUVSf7Gv1sKQgd0+DVxyQ23t/g=; b=m4nGTl
+	qfs3JsuaEYdpW5UuQ+IjK97X4+GOZTFfuGzU3ufy2V3IhaI0zlc3EZEmoso+ZS/9
+	G3VyaI7LluY/sy8b47CmNGiruKTFL6lztWtn7R5c2nbwkrtl3AdkoR9xIi/UYenL
+	uFMfFdK+MQB9vyrBwqOZSB2s3dUTXLatgZtXU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=IkM+vpO+mA/byZWRG/o8090IwEfVAltv
+	GuAFJwoCykUFJYjkM6i3D+icgT54DvBkgaqspCTJpd/dCDxYDpCzaUzm7huDyCWo
+	tOE1XCVq4e7YvDdFITOydiMq2lVqT7cROC4WrJiwU6Y8ZYchyF3QKhzg0yXlofLT
+	xfqcvq8Axqg=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 89A995DD5F;
+	Fri,  3 Jan 2014 14:13:33 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E4C025DD59;
+	Fri,  3 Jan 2014 14:13:31 -0500 (EST)
+In-Reply-To: <CALkWK0mGJ2V9V=KzuaAraNX-edEVBEpp-9DcAaBF-dZCqp6bsw@mail.gmail.com>
+	(Ramkumar Ramachandra's message of "Sat, 4 Jan 2014 00:28:31 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 2291A98E-74AB-11E3-974F-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239927>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239928>
 
-Junio C Hamano wrote:
-> I am not sure what you are worried about $pfx; what does it do when
-> you have strings with different prefix in COMPREPLY? If it breaks,
-> then the answer is "don't do it then".
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
+
+> Junio C Hamano wrote:
+>> You seem to be calling it "incorrect" to give the same degree of
+>> completion for a branch the user named "autosetupmerge" as another
+>> branch "topic", but I think it is incorrect not to, so I cannot tell
+>> if we are agreeing or disagreeing.
 >
-> Doesn't an array know its own length and give you a way to ask?
+> No, what's incorrect is providing completions for
+>
+>   $ git config branch.autosetupmerge.<TAB>
+>
+> when no branch called "autosetupmerge" exists.  The purpose of the
+> hunk (which I now removed) was to prevent such completions, ...
 
-Right. I was just throwing counterpoints at the wall.
+Hmph, but in a repository without 'foo', I just did
 
-> Imagine if one is flipping 47 topic branches from 6 contributors
-> whose names all begin with 'j'.  I can see that such a person would
-> appreciate if "git config branch.j<TAB>" did not dump all 47 topics
-> at once but offered "jc/ jk/ jl/ jm/ jn/ js/" instead, and then a
-> follow-up completion of "git config branch.jk/<TAB>" expanded to
-> names of topics from that single contributor "jk".  Wouldn't the way
-> to give these be either to return these two-letter hierarchy names
-> with slash as the suffix or to return list of two-letter plus a
-> slash with an empty suffix?  Either way, that is using something
-> different from a dot or a space, so that may count as the third, I
-> guess.
+	$ git config branch.foo.<TAB>
+        branch.foo.merge          branch.foo.rebase         
+        branch.foo.mergeoptions   branch.foo.remote         
 
-Ah, after completing branch.jk/, we would want no suffix: so the
-example definitely counts as a third "completion class". I agree with
-your reasoning, and will rework the series to do the _append () thing
-you suggested.
+and got offered the above. How would that removed hunk that special
+cased those autosetupmerge etc. helped such case?
 
-Thanks.
+If it _were_ about correctness, and the definition of correctness
+were that "completing branch.foo.<TAB> to offer these four variables
+is wrong until refs/heads/foo materializes", the "fix" would have
+checked if there already is such a branch and refused to complete
+otherwise, not special case a few known names such as autosetup*.
+
+As there is no reason to forbid setting configuration variables for
+a branch 'foo' you are going to create before you actually create it
+with "git branch foo", I do not necessarily agree with the above
+definition of correctness, either.
+
+So it was completely bogus hunk and it is good we noticed and
+decided to remove it, I guess.
