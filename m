@@ -1,60 +1,71 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 2/4] completion: introduce __gitcomp_2 ()
-Date: Fri, 3 Jan 2014 13:21:17 +0530
-Message-ID: <CALkWK0mgqJFz1Lf_UVX8fdvnT+u+rp705dak7kXVFFBSr2bTQA@mail.gmail.com>
-References: <1388415138-11011-1-git-send-email-artagnon@gmail.com>
- <1388415138-11011-3-git-send-email-artagnon@gmail.com> <xmqqeh4qndxs.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 03 08:52:03 2014
+Subject: [PATCH v2 0/4] Fix branch.autosetup(merge|rebase) completion
+Date: Fri,  3 Jan 2014 13:30:27 +0530
+Message-ID: <1388736031-6068-1-git-send-email-artagnon@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jan 03 09:00:43 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VyzY2-000772-I5
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Jan 2014 08:52:02 +0100
+	id 1VyzgQ-00059v-8h
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Jan 2014 09:00:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751099AbaACHv7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Jan 2014 02:51:59 -0500
-Received: from mail-ie0-f171.google.com ([209.85.223.171]:36382 "EHLO
-	mail-ie0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750999AbaACHv6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Jan 2014 02:51:58 -0500
-Received: by mail-ie0-f171.google.com with SMTP id ar20so15736880iec.2
-        for <git@vger.kernel.org>; Thu, 02 Jan 2014 23:51:58 -0800 (PST)
+	id S1750995AbaACIAi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Jan 2014 03:00:38 -0500
+Received: from mail-pa0-f49.google.com ([209.85.220.49]:37827 "EHLO
+	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750812AbaACIAh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Jan 2014 03:00:37 -0500
+Received: by mail-pa0-f49.google.com with SMTP id kx10so15298094pab.8
+        for <git@vger.kernel.org>; Fri, 03 Jan 2014 00:00:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=vv05onEXXn6+w1+mY/w2bZvMisEZnZ8oLyJ1jmzGNBY=;
-        b=qXEER81QQH8s9MGoKBjCJDx+YLEHETrRXrwHbrESKMDuLIyRdMIraWMUp2wSUhiZfC
-         66oxLvWH/k9D7CYhHslfSQ/gboZP1T/VQ7TcgldVYhn3irZJpMcqi1frc2ozYBrieu6Y
-         TQyR4eN9tZd6Dk9wHkyKa9m+r54HFrOamGq1Tg7I7HDF+eu6xtX7REFoWc4ISmORA0cS
-         4GuzRMjsv3zveggvho/PfY40zhi7gnxNmo/WnDUgfxHmQ657OPGVGu0XyJgEeUG8SD3C
-         NJGI5BOQ6e6QNzdSjls9iCdtlhIAWVuQzGIL1bokX2BLnsy0OYveDg6N2aooHhf3UDm+
-         5vYA==
-X-Received: by 10.50.150.174 with SMTP id uj14mr1339422igb.16.1388735517875;
- Thu, 02 Jan 2014 23:51:57 -0800 (PST)
-Received: by 10.64.195.9 with HTTP; Thu, 2 Jan 2014 23:51:17 -0800 (PST)
-In-Reply-To: <xmqqeh4qndxs.fsf@gitster.dls.corp.google.com>
+        h=from:to:cc:subject:date:message-id;
+        bh=cYdDbFtQcaf4UBHL/cJqk6J/A/4lodVEby+ygMlMoJI=;
+        b=CFcbWgI/6FpI8SqaU1He1C+6nCCrHe1EaXbdHgesj5iE5SARCeFMwA+6szFaYjqqAQ
+         +y5v4h00aIe6ctdSvk11A4hIRLj2FZ0b9EdKsHnZnW7/I/SLMIf/AueYIUkfo6Ju4d2A
+         VhqDZaVCgirGwPhInobVWVTuEdCUZjLZ773JnmpcJ9r2D1X1DOVgqADSkRz7ds0uuyil
+         KRBzneiAw8xDooR8RZUcSiFpPjfqX5IJ4qLPDlpeuauuchld7rky55IKMjAOhb6+ERvO
+         znAWZUJOo6B63lGAgl6tFuHupwXY1oMjOKnIgErSem6AleE/MTqSZnfu+ZhMduNPS0we
+         S1rw==
+X-Received: by 10.68.143.33 with SMTP id sb1mr54452897pbb.99.1388736036897;
+        Fri, 03 Jan 2014 00:00:36 -0800 (PST)
+Received: from localhost.localdomain ([122.164.141.93])
+        by mx.google.com with ESMTPSA id gf5sm106943913pbc.22.2014.01.03.00.00.34
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 03 Jan 2014 00:00:35 -0800 (PST)
+X-Mailer: git-send-email 1.8.5.2.227.g53f3478
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239905>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239906>
 
-Junio C Hamano wrote:
->         __gitcomp_nl "$(__git_heads)" "$pfx" "$cur_" "."
->         __gitcomp_nl_append $"autosetupmerge\nautosetuprebase\n" "$pfx" "$cur_" " "
+Hi,
 
-This is not a bad idea at all. I'm just afraid that we might be
-leaving open ends: What happens if the $pfx isn't the same in both
-cases? Who keeps track of the index "i" of COMPREPLY (it's currently a
-local variable)? If we make it global, doesn't every function that
-deals with COMPREPLY be careful to reset it?
+In this iteration, I've removed hunks to prevent completing:
 
-More importantly, can you see a usecase for more than two completion classes?
+  $ git config remote.pushdefault.<TAB>
+  $ git config branch.autosetupmerge.<TAB>
+  $ git config branch.autosetuprebase.<TAB>
+
+Since they're perfectly valid remote/ branch names.
+
+Thanks.
+
+Ramkumar Ramachandra (4):
+  completion: prioritize ./git-completion.bash
+  completion: introduce __gitcomp_2 ()
+  completion: fix branch.autosetup(merge|rebase)
+  completion: fix remote.pushdefault
+
+ contrib/completion/git-completion.bash | 36 ++++++++++++++++++++++++++++++++--
+ contrib/completion/git-completion.zsh  | 12 +++++++++++-
+ 2 files changed, 45 insertions(+), 3 deletions(-)
+
+-- 
+1.8.5.2.227.g53f3478
