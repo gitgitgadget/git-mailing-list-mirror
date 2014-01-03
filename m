@@ -1,83 +1,66 @@
-From: "W. Trevor King" <wking@tremily.us>
-Subject: [PATCH] Documentation/gitmodules: Only 'update' and 'url' are required
-Date: Fri,  3 Jan 2014 10:31:22 -0800
-Message-ID: <c22c81472bb8b8943d34bdf1ac9ef61f5a489a16.1388773808.git.wking@tremily.us>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	"W. Trevor King" <wking@tremily.us>
-To: Git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jan 03 19:31:37 2014
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 3/4] completion: fix branch.autosetup(merge|rebase)
+Date: Sat, 4 Jan 2014 00:28:31 +0530
+Message-ID: <CALkWK0mGJ2V9V=KzuaAraNX-edEVBEpp-9DcAaBF-dZCqp6bsw@mail.gmail.com>
+References: <1388415138-11011-1-git-send-email-artagnon@gmail.com>
+ <1388415138-11011-4-git-send-email-artagnon@gmail.com> <xmqqa9fendj3.fsf@gitster.dls.corp.google.com>
+ <CALkWK0=tL4K7UHDBp_jGz5zUaHE9m=OESo2=2a0fUZwXB4auGg@mail.gmail.com> <xmqq1u0pnf7b.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jan 03 19:59:23 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vz9Wz-0006Jn-60
-	for gcvg-git-2@plane.gmane.org; Fri, 03 Jan 2014 19:31:37 +0100
+	id 1Vz9xn-00020V-81
+	for gcvg-git-2@plane.gmane.org; Fri, 03 Jan 2014 19:59:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752103AbaACSbd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Jan 2014 13:31:33 -0500
-Received: from qmta14.westchester.pa.mail.comcast.net ([76.96.59.212]:40554
-	"EHLO qmta14.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751139AbaACSbc (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 3 Jan 2014 13:31:32 -0500
-Received: from omta19.westchester.pa.mail.comcast.net ([76.96.62.98])
-	by qmta14.westchester.pa.mail.comcast.net with comcast
-	id 9WHD1n00627AodY5EWXXFC; Fri, 03 Jan 2014 18:31:31 +0000
-Received: from odin.tremily.us ([24.18.63.50])
-	by omta19.westchester.pa.mail.comcast.net with comcast
-	id 9WXW1n00K152l3L3fWXWgV; Fri, 03 Jan 2014 18:31:31 +0000
-Received: by odin.tremily.us (Postfix, from userid 1000)
-	id D4F4FE66FEB; Fri,  3 Jan 2014 10:31:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
-	t=1388773889; bh=/rZfK4QtdeWKA3f8/cr7jM2ZmB37UIowe6yhpNOJQew=;
-	h=From:To:Cc:Subject:Date;
-	b=eZ+ZSKGjUciHda4dsSVAxqt+n011wIHyFDx/xjqm18u+xeM2Svq7BiAisJ0imgSUw
-	 gNC6VwJl+4JrqAg8Z9TAkWBVeNP5i6en/VxNjx62jLsAWYn9C/vGJTXTCW29U4AE9L
-	 ke94hkPVahJGMXBVILkDA8TuUfoopAThhvz5cZ74=
-X-Mailer: git-send-email 1.8.3.2
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-	s=q20121106; t=1388773891;
-	bh=q2hk1BvVjW0aOSo+E9e/R7QmHbhN69t01vtEi0DRvJM=;
-	h=Received:Received:Received:From:To:Subject:Date:Message-Id;
-	b=E+IidmKiuQgT8EPvLFrB82wzWnxMmmSw4cbFWKoMZsL0QyUiWXjprsONw7AnCU5QE
-	 4EzS3WOcuTD+PKnUw6kOgDThLb7Wii3NuiZr+fUQtZfrUfMQS4tQWRAppUcI+beN5Q
-	 YuQ9SRRr7fLUJq9sKJo0NkEzMkB9SXAzOeIhCcuGywcyHf4X2UZwnV8JFH1VZyaV40
-	 Il0Eai0jOfVLJ9GYFndOm2hYw+vm34ZpUKz2t5mW1u7n1KbdgOyEJkrc+MkWKmIIr4
-	 D0LrIcDB9f6ZJrat9ekA6GunMzcrQjSi0eR133XeSYEreOxTm4LOzqpQE2dj1giggJ
-	 PueMruTqR9GBg==
+	id S1752888AbaACS7P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Jan 2014 13:59:15 -0500
+Received: from mail-ie0-f173.google.com ([209.85.223.173]:41693 "EHLO
+	mail-ie0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751139AbaACS7O (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Jan 2014 13:59:14 -0500
+Received: by mail-ie0-f173.google.com with SMTP id to1so16287281ieb.4
+        for <git@vger.kernel.org>; Fri, 03 Jan 2014 10:59:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=JT+jEZbUFs/ruSphQum0ml9j2Fj9kTdr5AFGZPm9xiI=;
+        b=nMG9H8oAMDv0+Rmi/FwWgBTG80NNOP/+uOT4obqE1KxitIliPyTEvh3+NsASt2O4jx
+         G1QkejZmIDCI/tPqx/JMRviD0womvynF/lYhy7+kktAg2+nU+VRsR9IeP20ferR9S2IX
+         jRtizXOwlxoWWhRqWsdk8mB/nDsiFLhkTVIWjkeR6tP27TQq8lw4qsdW7TUn6xvn05E9
+         R1yIV0GJLCynfmf7OYBP81XZJ3KOVYDZqgZJZofK9lPuL/LIpCTxilCoysBxKeQQJIiW
+         T+Xy4RP+BThddx/b9tyowMO07RlQKbLLzFtKzNGzZ8Shb35lStreqM2UH2+8W5saj2lB
+         DoFw==
+X-Received: by 10.42.24.210 with SMTP id x18mr45936814icb.38.1388775551981;
+ Fri, 03 Jan 2014 10:59:11 -0800 (PST)
+Received: by 10.64.195.9 with HTTP; Fri, 3 Jan 2014 10:58:31 -0800 (PST)
+In-Reply-To: <xmqq1u0pnf7b.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239924>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239925>
 
-From: "W. Trevor King" <wking@tremily.us>
+Junio C Hamano wrote:
+> You seem to be calling it "incorrect" to give the same degree of
+> completion for a branch the user named "autosetupmerge" as another
+> branch "topic", but I think it is incorrect not to, so I cannot tell
+> if we are agreeing or disagreeing.
 
-Before this commit, all the settings fell under the initial "Each
-submodule section also contains the following required keys:".  The
-example shows sections with just 'update' and 'url' entries, but we
-should still make the required/optional distinction explicit for the
-descriptions.
+No, what's incorrect is providing completions for
 
-Signed-off-by: W. Trevor King <wking@tremily.us>
----
- Documentation/gitmodules.txt | 2 ++
- 1 file changed, 2 insertions(+)
+  $ git config branch.autosetupmerge.<TAB>
 
-diff --git a/Documentation/gitmodules.txt b/Documentation/gitmodules.txt
-index f7be93f..347a9f7 100644
---- a/Documentation/gitmodules.txt
-+++ b/Documentation/gitmodules.txt
-@@ -35,6 +35,8 @@ submodule.<name>.url::
- 	linkgit:git-clone[1] or (if it begins with ./ or ../) a location
- 	relative to the superproject's origin repository.
- 
-+In addition, there are a number of optional keys:
-+
- submodule.<name>.update::
- 	Defines what to do when the submodule is updated by the superproject.
- 	If 'checkout' (the default), the new commit specified in the
--- 
-1.8.5.2.gaa5d535.dirty
+when no branch called "autosetupmerge" exists. The purpose of the hunk
+(which I now removed) was to prevent such completions, but it has the
+side-effect of also preventing a legitimate completion in the case
+when the user really has a branch named "autosetupmerge".
+
+What is your take on the issue?
