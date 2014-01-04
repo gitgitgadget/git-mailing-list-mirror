@@ -1,59 +1,67 @@
-From: Thomas Ackermann <th.acker@arcor.de>
-Subject: [Bug report] 'git status' always says "Your branch is up-to-date
- with 'origin/master'"
-Date: Sat, 4 Jan 2014 18:25:29 +0100 (CET)
-Message-ID: <86886772.1529128.1388856329849.JavaMail.ngmail@webmail08.arcor-online.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] Improve user-manual html and pdf formatting
+Date: Sat, 4 Jan 2014 13:18:34 -0800
+Message-ID: <20140104211834.GC12251@google.com>
+References: <352636633.1492236.1388826471175.JavaMail.ngmail@webmail10.arcor-online.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: gitster@pobox.com, worldhello.net@gmail.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 04 18:25:37 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Thomas Ackermann <th.acker@arcor.de>
+X-From: git-owner@vger.kernel.org Sat Jan 04 22:18:47 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VzUye-0008QG-5U
-	for gcvg-git-2@plane.gmane.org; Sat, 04 Jan 2014 18:25:36 +0100
+	id 1VzYcG-00082h-LM
+	for gcvg-git-2@plane.gmane.org; Sat, 04 Jan 2014 22:18:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754709AbaADRZc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 4 Jan 2014 12:25:32 -0500
-Received: from mail-in-02.arcor-online.net ([151.189.21.42]:55804 "EHLO
-	mail-in-02.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751279AbaADRZb (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 4 Jan 2014 12:25:31 -0500
-Received: from mail-in-13-z2.arcor-online.net (mail-in-13-z2.arcor-online.net [151.189.8.30])
-	by mx.arcor.de (Postfix) with ESMTP id EA5A63018A;
-	Sat,  4 Jan 2014 18:25:29 +0100 (CET)
-Received: from mail-in-12.arcor-online.net (mail-in-12.arcor-online.net [151.189.21.52])
-	by mail-in-13-z2.arcor-online.net (Postfix) with ESMTP id E3DE114B01B;
-	Sat,  4 Jan 2014 18:25:29 +0100 (CET)
-Received: from webmail08.arcor-online.net (webmail08.arcor-online.net [151.189.8.44])
-	by mail-in-12.arcor-online.net (Postfix) with ESMTP id CC2F0262E3;
-	Sat,  4 Jan 2014 18:25:29 +0100 (CET)
-X-DKIM: Sendmail DKIM Filter v2.8.2 mail-in-12.arcor-online.net CC2F0262E3
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arcor.de; s=mail-in;
-	t=1388856329; bh=MQaLceENugI3mXO9kQBkupQ70nRZsVV3NI3jTo+HZyA=;
-	h=Date:From:To:Cc:Message-ID:Subject:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding;
-	b=C0BI/GXKSpM3wGDtraiqJR5m/P7QgsWJvJhvam5fbT7ZACgJvpbGSSjxbmZZL7/2M
-	 BRkmEWtYvsuc7EUTVy956laZj+sZOZGDKxWIMIlmk+pAXjWwF8OtoIj1k60+AAsAtw
-	 3I2lIsMV7unRSkLbh0IMGzMaaXNrTFpoxNt2o6kE=
-Received: from [94.217.18.252] by webmail08.arcor-online.net (151.189.8.44) with HTTP (Arcor Webmail); Sat, 4 Jan 2014 18:25:29 +0100 (CET)
-X-ngMessageSubType: MessageSubType_MAIL
-X-WebmailclientIP: 94.217.18.252
+	id S1754800AbaADVSl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 4 Jan 2014 16:18:41 -0500
+Received: from mail-yh0-f44.google.com ([209.85.213.44]:53107 "EHLO
+	mail-yh0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753866AbaADVSk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Jan 2014 16:18:40 -0500
+Received: by mail-yh0-f44.google.com with SMTP id f64so3386722yha.17
+        for <git@vger.kernel.org>; Sat, 04 Jan 2014 13:18:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=0bYqN+XFR2Bz02/RCXKIE5LcHcVNZxqEt86TRZ6qSs0=;
+        b=dusg4MeUo2zM4OIesBjCP8dAdQ5mDFs2PuTN5x3FylF/7JrodDqmrdga/+UJrDoqAb
+         kQ3c/x41G7lB4Tf/DKW2a6fXE+MUUxdIaVPOW5NZSNZKSSJ5hIqRlwslKR+rBsXM6RNI
+         JJAQWMNGUO0FRB3RRJY8NOfC5KIziY33F79I1asfZMraXuszixHNIx5SbTC2+xoYhss8
+         8D4dL4OuenMxlKoTctw/Bl/PZizj/YTCN+b386Z03QYmOXI7qiMTkbwcvqqIR5n+ZhZ8
+         QJ0wtqq0pngCHZHt5fwxobAHUa0YBjA2QVvogOj+GBM8D1QuQPG/4T22Pzwga2fLYAMx
+         PUig==
+X-Received: by 10.236.206.101 with SMTP id k65mr22871221yho.23.1388870317660;
+        Sat, 04 Jan 2014 13:18:37 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id c44sm10374967yho.20.2014.01.04.13.18.36
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Sat, 04 Jan 2014 13:18:37 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <352636633.1492236.1388826471175.JavaMail.ngmail@webmail10.arcor-online.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239943>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239944>
 
-Since f223459 "status: always show tracking branch even no change" 
-'git status' (and 'git checkout master' always says 
-"Your branch is up-to-date with 'origin/master'"
-even if 'origin/master' is way ahead from local 'master'.
+Hi,
 
+Thomas Ackermann wrote:
 
----
-Thomas
+> --- a/Documentation/user-manual.txt
+> +++ b/Documentation/user-manual.txt
+> @@ -1,5 +1,5 @@
+> -Git User Manual
+> +&#65279;Git User Manual
+
+Why?
+
+Puzzled,
+Jonathan
