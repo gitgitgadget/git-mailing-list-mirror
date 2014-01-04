@@ -1,66 +1,57 @@
-From: =?utf-8?b?w5h5c3RlaW4=?= Walle <oystwa@gmail.com>
-Subject: Re: [PATCH] Improve user-manual html and pdf formatting
-Date: Sat, 4 Jan 2014 22:12:00 +0000 (UTC)
-Message-ID: <loom.20140104T230716-552@post.gmane.org>
-References: <352636633.1492236.1388826471175.JavaMail.ngmail@webmail10.arcor-online.net> <20140104211834.GC12251@google.com> <loom.20140104T223713-502@post.gmane.org> <87lhyv5s79.fsf@igel.home>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: [PATCH] Documentation/gitmodules: Only 'update' and 'url' are
+ required
+Date: Sat, 4 Jan 2014 23:17:54 +0100
+Message-ID: <20140104221754.GB5697@book-mint>
+References: <c22c81472bb8b8943d34bdf1ac9ef61f5a489a16.1388773808.git.wking@tremily.us>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 04 23:12:31 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>
+To: "W. Trevor King" <wking@tremily.us>
+X-From: git-owner@vger.kernel.org Sat Jan 04 23:18:15 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VzZSI-0005w1-Oy
-	for gcvg-git-2@plane.gmane.org; Sat, 04 Jan 2014 23:12:31 +0100
+	id 1VzZXq-0007du-30
+	for gcvg-git-2@plane.gmane.org; Sat, 04 Jan 2014 23:18:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755102AbaADWM1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 4 Jan 2014 17:12:27 -0500
-Received: from plane.gmane.org ([80.91.229.3]:45086 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754416AbaADWM0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Jan 2014 17:12:26 -0500
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1VzZSC-0005jW-CZ
-	for git@vger.kernel.org; Sat, 04 Jan 2014 23:12:24 +0100
-Received: from 80.156.189.109.customer.cdi.no ([109.189.156.80])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 04 Jan 2014 23:12:24 +0100
-Received: from oystwa by 80.156.189.109.customer.cdi.no with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 04 Jan 2014 23:12:24 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 109.189.156.80 (Mozilla/5.0 (Windows NT 6.1; WOW64; rv:26.0) Gecko/20100101 Firefox/26.0)
+	id S1754921AbaADWSI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 4 Jan 2014 17:18:08 -0500
+Received: from smtprelay01.ispgateway.de ([80.67.29.23]:55993 "EHLO
+	smtprelay01.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754352AbaADWSH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Jan 2014 17:18:07 -0500
+Received: from [77.20.146.74] (helo=book-mint)
+	by smtprelay01.ispgateway.de with esmtpsa (TLSv1:AES128-SHA:128)
+	(Exim 4.68)
+	(envelope-from <hvoigt@hvoigt.net>)
+	id 1VzZXb-0003eH-8u; Sat, 04 Jan 2014 23:17:59 +0100
+Content-Disposition: inline
+In-Reply-To: <c22c81472bb8b8943d34bdf1ac9ef61f5a489a16.1388773808.git.wking@tremily.us>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239948>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239949>
 
-Andreas Schwab <schwab <at> linux-m68k.org> writes:
+On Fri, Jan 03, 2014 at 10:31:22AM -0800, W. Trevor King wrote:
+> From: "W. Trevor King" <wking@tremily.us>
+> 
+> Before this commit, all the settings fell under the initial "Each
+> submodule section also contains the following required keys:".  The
+> example shows sections with just 'update' and 'url' entries, but we
 
-> > That's a Unicode Byte Order Mark.
->=20
-> No, its an ampersand, a hash, a number and a semicolon.  Definitely n=
-ot
-> a BOM.
->=20
-> Andreas.
->=20
+You mean:
 
-You're right, of course :) I was a bit hasty.
+	...with just 'path' and 'url' entries...
 
-#65279; is a HTML entity (or at least something like looks like one) fo=
-r the
-character U+FEFF, which also serves as the Byte Order Mark. I assume th=
-e
-entity was added to the file by mistake.
+?
 
-=C3=98sse
+Other than that, the patch looks good to me.
+
+Cheers Heiko
