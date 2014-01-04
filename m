@@ -1,114 +1,93 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 1/4] completion: prioritize ./git-completion.bash
-Date: Fri, 03 Jan 2014 15:03:00 -0800
-Message-ID: <xmqqtxdkllcr.fsf@gitster.dls.corp.google.com>
-References: <1388736031-6068-1-git-send-email-artagnon@gmail.com>
-	<1388736031-6068-2-git-send-email-artagnon@gmail.com>
-	<20140103225541.GG3338@vauxhall.crustytoothpaste.net>
+From: Thomas Ackermann <th.acker@arcor.de>
+Subject: [PATCH] Improve user-manual html and pdf formatting
+Date: Sat, 4 Jan 2014 10:07:51 +0100 (CET)
+Message-ID: <352636633.1492236.1388826471175.JavaMail.ngmail@webmail10.arcor-online.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-X-From: git-owner@vger.kernel.org Sat Jan 04 00:03:25 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jan 04 10:08:22 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1VzDlz-00032w-Ck
-	for gcvg-git-2@plane.gmane.org; Sat, 04 Jan 2014 00:03:23 +0100
+	id 1VzNDQ-000193-JY
+	for gcvg-git-2@plane.gmane.org; Sat, 04 Jan 2014 10:08:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753552AbaACXDN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Jan 2014 18:03:13 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40618 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753385AbaACXDI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Jan 2014 18:03:08 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4330A5F127;
-	Fri,  3 Jan 2014 18:03:07 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=yQn8Ztzvk/2sgxgf6+0gD8GkssA=; b=qnxU10
-	wHK3WKQx3oZD9R65t2WmXWeLq37TynW8oaJF4gl+cazotaqlbUW6AQOqrWZzNueN
-	S4RavdERJhIVZNCDMg7RfqWUWbsundOGobmt5laITOMboxORqeeywIGyDSLfkAp+
-	wfg0ie7cdBgv7HjNfnF52qpOvFJZYL/KuFkRw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ANyOl1B79z5+0vX/5iAXv+XG0i3kOHge
-	2a5BI9Tdn4qhY/zrDxw/LZG4vVNQK0KU4tUix+R62LeRHgjsd5nZ+GpvuNxI+0qi
-	1Xvk5tQClGbQ+StMAEDKqpfQkcdT9SBVBT0gcpnSYx7u0xwceNWKdVOFt75d6XOS
-	P+zjKo0is+I=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 224055F126;
-	Fri,  3 Jan 2014 18:03:07 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2810D5F122;
-	Fri,  3 Jan 2014 18:03:05 -0500 (EST)
-In-Reply-To: <20140103225541.GG3338@vauxhall.crustytoothpaste.net> (brian
-	m. carlson's message of "Fri, 3 Jan 2014 22:55:41 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 340DAFE4-74CB-11E3-9913-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751359AbaADJHz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 4 Jan 2014 04:07:55 -0500
+Received: from mail-in-03.arcor-online.net ([151.189.21.43]:46421 "EHLO
+	mail-in-03.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751138AbaADJHw (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 4 Jan 2014 04:07:52 -0500
+Received: from mail-in-18-z2.arcor-online.net (mail-in-18-z2.arcor-online.net [151.189.8.35])
+	by mx.arcor.de (Postfix) with ESMTP id 4014DD9273;
+	Sat,  4 Jan 2014 10:07:51 +0100 (CET)
+Received: from mail-in-09.arcor-online.net (mail-in-09.arcor-online.net [151.189.21.49])
+	by mail-in-18-z2.arcor-online.net (Postfix) with ESMTP id 3696733B2B0;
+	Sat,  4 Jan 2014 10:07:51 +0100 (CET)
+Received: from webmail10.arcor-online.net (webmail10.arcor-online.net [151.189.8.93])
+	by mail-in-09.arcor-online.net (Postfix) with ESMTP id 308F5198863;
+	Sat,  4 Jan 2014 10:07:51 +0100 (CET)
+X-DKIM: Sendmail DKIM Filter v2.8.2 mail-in-09.arcor-online.net 308F5198863
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arcor.de; s=mail-in;
+	t=1388826471; bh=Q6h44ADo7ucOKRM9FWrkgYIK0Ce51kjgE/XQrxJLqE0=;
+	h=Date:From:To:Cc:Message-ID:Subject:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding;
+	b=NcKX7bS09jzYeXYdQDBKKojxLZ0ddIav/Qf9jw526M3iwQ5zOT8zO8nWJgqFlJ96o
+	 OOAeIB39xg47mVns/FFSRQZPMZdKVZjpK+njVJs6MFuLnmDSk/389/9Km1CPy7/WzM
+	 DcsMaB7BEEIPdV0Q6Nkes0fQpvdujnYcNWM/D4uk=
+Received: from [94.217.18.252] by webmail10.arcor-online.net (151.189.8.93) with HTTP (Arcor Webmail); Sat, 4 Jan 2014 10:07:51 +0100 (CET)
+X-ngMessageSubType: MessageSubType_MAIL
+X-WebmailclientIP: 94.217.18.252
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239941>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239942>
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-> On Fri, Jan 03, 2014 at 01:30:28PM +0530, Ramkumar Ramachandra wrote:
->> To ease development, prioritize ./git-completion.bash over other
->> standard system paths.
->> 
->> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
->> ---
->>  contrib/completion/git-completion.zsh | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->> 
->> diff --git a/contrib/completion/git-completion.zsh b/contrib/completion/git-completion.zsh
->> index fac5e71..6fca145 100644
->> --- a/contrib/completion/git-completion.zsh
->> +++ b/contrib/completion/git-completion.zsh
->> @@ -30,10 +30,10 @@ if [ -z "$script" ]; then
->>  	local -a locations
->>  	local e
->>  	locations=(
->> +		$(dirname ${funcsourcetrace[1]%:*})/git-completion.bash
->>  		'/etc/bash_completion.d/git' # fedora, old debian
->>  		'/usr/share/bash-completion/completions/git' # arch, ubuntu, new debian
->>  		'/usr/share/bash-completion/git' # gentoo
->> -		$(dirname ${funcsourcetrace[1]%:*})/git-completion.bash
->>  		)
->>  	for e in $locations; do
->>  		test -f $e && script="$e" && break
->
-> I'm not clear on this change.  It looks like this loads
-> git-completion.bash from the same directory as git-completion.zsh.  Is
-> this correct?
+Use asciidoc style 'article' instead of 'book' and change asciidoc title level.
+This removes blank first page and superfluous "Part I" page (there is no "Part II")
+in pdf output. Also pdf size is decreased by this from 77 to 67 pages.
+In html output this removes unnecessary sub-tocs and chapter numbering.
 
-I think the idea is to help those who have installed a closer to
-bleeding-edge version of completion scripts --- they will not be
-reading their zsh completions from the system default locations,
-and the place next to it would be a place more likely to have the
-matching bleeding-edge version of bash completion than the system
-default place.
+Signed-off-by: Thomas Ackermann <th.acker@arcor.de>
+---
+ Documentation/Makefile        | 2 +-
+ Documentation/user-manual.txt | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-> Your commit message says "./", and if that's the case, it
-> has the same security problems as putting "." first in your PATH.
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index 91a12c7..36c58fc 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -324,7 +324,7 @@ manpage-base-url.xsl: manpage-base-url.xsl.in
+ 
+ user-manual.xml: user-manual.txt user-manual.conf
+ 	$(QUIET_ASCIIDOC)$(RM) $@+ $@ && \
+-	$(ASCIIDOC) $(ASCIIDOC_EXTRA) -b docbook -d book -o $@+ $< && \
++	$(ASCIIDOC) $(ASCIIDOC_EXTRA) -b docbook -d article -o $@+ $< && \
+ 	mv $@+ $@
+ 
+ technical/api-index.txt: technical/api-index-skel.txt \
+diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
+index cbb01a1..130c2f4 100644
+--- a/Documentation/user-manual.txt
++++ b/Documentation/user-manual.txt
+@@ -1,5 +1,5 @@
+-Git User Manual
+-_______________
++&#65279;Git User Manual
++===============
+ 
+ Git is a fast distributed revision control system.
+ 
+-- 
+1.8.5.2.msysgit.0
 
-A correct observation. I think
 
-	Subject: zsh completion: find matching custom bash completion
-
-	If zsh completion is being read from a location that is
-	different from system-wide default, it is likely that the
-	user is trying to use a custom version, perhaps closer to
-	the bleeding edge, installed in her own directory. We will
-	more likely to find the matching bash completion script in
-	the same directory than in those system default places.
-
-would probably a lot closer to what the patch really does.
+---
+Thomas
