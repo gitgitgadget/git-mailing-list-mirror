@@ -1,81 +1,59 @@
-From: Thomas Ackermann <th.acker@arcor.de>
-Subject: Aw: Re: [PATCH] Improve user-manual html and pdf formatting
-Date: Sun, 5 Jan 2014 09:22:30 +0100 (CET)
-Message-ID: <1182656556.701681.1388910150664.JavaMail.ngmail@webmail16.arcor-online.net>
-References: <20140104211834.GC12251@google.com> <352636633.1492236.1388826471175.JavaMail.ngmail@webmail10.arcor-online.net>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH v3 2/4] completion: introduce __gitcomp_nl_append ()
+Date: Sun, 5 Jan 2014 15:36:21 +0530
+Message-ID: <CALkWK0=rrcTFdpymGB5QJhdLhYvm4FLMGurqugbCGvAdDKVhqA@mail.gmail.com>
+References: <1388779022-14536-1-git-send-email-artagnon@gmail.com>
+ <1388779022-14536-3-git-send-email-artagnon@gmail.com> <xmqq38l4n6h9.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: jrnieder@gmail.com, th.acker@arcor.de
-X-From: git-owner@vger.kernel.org Sun Jan 05 09:22:38 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jan 05 11:07:23 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Vziyj-0004aU-FT
-	for gcvg-git-2@plane.gmane.org; Sun, 05 Jan 2014 09:22:37 +0100
+	id 1Vzkc6-0007od-K7
+	for gcvg-git-2@plane.gmane.org; Sun, 05 Jan 2014 11:07:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751095AbaAEIWc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Jan 2014 03:22:32 -0500
-Received: from mail-in-04.arcor-online.net ([151.189.21.44]:43951 "EHLO
-	mail-in-04.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750816AbaAEIWc (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 5 Jan 2014 03:22:32 -0500
-Received: from mail-in-11-z2.arcor-online.net (mail-in-11-z2.arcor-online.net [151.189.8.28])
-	by mx.arcor.de (Postfix) with ESMTP id 9EC5AAA33C;
-	Sun,  5 Jan 2014 09:22:30 +0100 (CET)
-Received: from mail-in-15.arcor-online.net (mail-in-15.arcor-online.net [151.189.21.55])
-	by mail-in-11-z2.arcor-online.net (Postfix) with ESMTP id 9D5F87FECC1;
-	Sun,  5 Jan 2014 09:22:30 +0100 (CET)
-Received: from webmail16.arcor-online.net (webmail16.arcor-online.net [151.189.8.70])
-	by mail-in-15.arcor-online.net (Postfix) with ESMTP id 960231AB52E;
-	Sun,  5 Jan 2014 09:22:30 +0100 (CET)
-X-DKIM: Sendmail DKIM Filter v2.8.2 mail-in-15.arcor-online.net 960231AB52E
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arcor.de; s=mail-in;
-	t=1388910150; bh=5GD5wQi7zqV3qWyXlq90a4vVKj/1VmO4jsFRbC3HYsQ=;
-	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	b=fwyFsQpoU/ZPAi59K2HeH2EEFA0+jdvZ7T9/FcpnlgZuohX/JjZfcukGqdhwx5iig
-	 oa8Rekq5dJtZk2dqb7za7tNalHburqGYn4Hd3/RIhdCIp6B9fm5TKpK5HeEJFafdjp
-	 AnVd91v49IsgLTbQoMjUycTYrtt5TcpxTK18+zQI=
-Received: from [188.99.35.168] by webmail16.arcor-online.net (151.189.8.70) with HTTP (Arcor Webmail); Sun, 5 Jan 2014 09:22:30 +0100 (CET)
-In-Reply-To: <20140104211834.GC12251@google.com>
-X-ngMessageSubType: MessageSubType_MAIL
-X-WebmailclientIP: 188.99.35.168
+	id S1751050AbaAEKHD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Jan 2014 05:07:03 -0500
+Received: from mail-ie0-f170.google.com ([209.85.223.170]:42570 "EHLO
+	mail-ie0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750915AbaAEKHC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Jan 2014 05:07:02 -0500
+Received: by mail-ie0-f170.google.com with SMTP id qd12so17584479ieb.15
+        for <git@vger.kernel.org>; Sun, 05 Jan 2014 02:07:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=6l4bW1HUv3lbYWgn3CxyrRvfpEz3myoZ6RjmEwxSuTs=;
+        b=qfSFH8Xfk56ztXLTyVflqerudkeuNA6IWldMqF6wEpd9EbiU9G7QU7euoS/mp9wHmi
+         UZ2BOTvCyZp14EtoGWGZ0u31ulWHIblU6nhVwpBJ1x5yqW5CKq4kMu6yFvo7/u+bDJY1
+         DIKdYeIDXWtH2zN0Gaa8DQ0un0lZ5Xq4YJqHRziscwrvt+aOmisJZ9Wdit/FqBz0Vz2N
+         R7ejvBfrfN6UGI7GhtAMmaSFpFzHhNjHdu1G5wsCTYy6NGch+jPD69y/qKzKrVCQlImF
+         XGvcj+4KuHtXWnzdq67hBQ/FOt6UudgGS9eIVkpiNCR97wQBqAI95Nvqsujm+doiY6d6
+         vcDQ==
+X-Received: by 10.42.40.83 with SMTP id k19mr71055577ice.3.1388916421166; Sun,
+ 05 Jan 2014 02:07:01 -0800 (PST)
+Received: by 10.64.195.9 with HTTP; Sun, 5 Jan 2014 02:06:21 -0800 (PST)
+In-Reply-To: <xmqq38l4n6h9.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239958>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/239959>
 
- 
-This originally was an UTF8-BOM in user-manual.txt and notepad++ was so clever
-not to show it in the patch-file :-| Pasting this into my webmail then produced 
-complete rubbish which I didn't noticed ...
+Junio C Hamano wrote:
+> Is it because going this route and doing it at such a low level
+> would make zsh completion (which I have no clue about ;-)
+> unnecessarily complex?
 
------ Original Nachricht ----
-Von:     Jonathan Nieder <jrnieder@gmail.com>
-An:      Thomas Ackermann <th.acker@arcor.de>
-Datum:   04.01.2014 22:18
-Betreff: Re: [PATCH] Improve user-manual html and pdf formatting
-
-> Hi,
-> 
-> Thomas Ackermann wrote:
-> 
-> > --- a/Documentation/user-manual.txt
-> > +++ b/Documentation/user-manual.txt
-> > @@ -1,5 +1,5 @@
-> > -Git User Manual
-> > +&#65279;Git User Manual
-> 
-> Why?
-> 
-> Puzzled,
-> Jonathan
-> 
-
----
-Thomas
+The zsh completion only cares to override __gitcomp_nl () and
+__gitcomp_nl_append (), without bothering to re-implement the
+lower-level functions; so it's no problem at all. I wrote mine out by
+thinking of a non-intrusive direct translation, while your version
+focuses on eliminating duplication. I don't have a strong preference
+either way, so I will resubmit with your version.
