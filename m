@@ -1,151 +1,92 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: Re: [RFC v2] submodule: Respect requested branch on all clones
-Date: Mon, 6 Jan 2014 17:02:03 +0100
-Message-ID: <20140106160202.GE27265@t2784.greatnet.de>
-References: <CALas-ii90x07Kbxzy_siBJV_RHPkvBw7spFBD9vi6o43mU1k6g@mail.gmail.com>
- <d0de817dfc687fd943349c9d3e1d410161a0f01e.1388938473.git.wking@tremily.us>
- <20140105194850.GA2994@book.hvoigt.net>
- <20140105212458.GG3156@odin.tremily.us>
- <20140105225733.GB4660@book.hvoigt.net>
- <20140105233943.GJ3156@odin.tremily.us>
- <20140106003314.GL3156@odin.tremily.us>
- <20140106011255.GM3156@odin.tremily.us>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Bug report: stash in upstream caused remote fetch to fail
+Date: Mon, 06 Jan 2014 08:16:31 -0800
+Message-ID: <xmqqbnzpkrvk.fsf@gitster.dls.corp.google.com>
+References: <CAECVvXYD69Xrp85bVJg6XogvctUTwrFDae+3tawFgoCAUGhwGg@mail.gmail.com>
+	<20140106152742.GA26221@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git <git@vger.kernel.org>, Francesco Pretto <ceztko@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: "W. Trevor King" <wking@tremily.us>
-X-From: git-owner@vger.kernel.org Mon Jan 06 17:02:16 2014
+Cc: Matt Burke <spraints@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Jan 06 17:17:03 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W0Cd3-0002wg-SP
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Jan 2014 17:02:14 +0100
+	id 1W0CrD-00034n-Fa
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Jan 2014 17:16:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755351AbaAFQCJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Jan 2014 11:02:09 -0500
-Received: from smtprelay03.ispgateway.de ([80.67.31.41]:33562 "EHLO
-	smtprelay03.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754752AbaAFQCH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Jan 2014 11:02:07 -0500
-Received: from [83.133.105.219] (helo=t2784.greatnet.de)
-	by smtprelay03.ispgateway.de with esmtpsa (TLSv1:AES128-SHA:128)
-	(Exim 4.68)
-	(envelope-from <hvoigt@hvoigt.net>)
-	id 1W0Ccu-0008G5-85; Mon, 06 Jan 2014 17:02:04 +0100
-Content-Disposition: inline
-In-Reply-To: <20140106011255.GM3156@odin.tremily.us>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
+	id S1755433AbaAFQQp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Jan 2014 11:16:45 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63716 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755431AbaAFQQo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Jan 2014 11:16:44 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4281F5F2E5;
+	Mon,  6 Jan 2014 11:16:38 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=xCBSJALuWTSOEiFClOdbTstzyF0=; b=GXjWBH
+	Ly4LKTR14IRUWbveSdMgmyAnsxBFp00ogEP62dECiWEJ20uBmiCu4dwWGG9vj8xg
+	bJQL2xQiu7dDj/bXP/YDp/UK0h59jSaYJbq4YGW5QqLe/llCZOK9ncs4z6sMvRFy
+	B0tCV5TErVPs8W7oQ/kzu4bwuZ9iWGcgn9BkM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=UPyqi+uUN3/3G9dyZp/UqUZJ6Im2XB/s
+	4CoXIl2EAN5J23Gfjc69H8mA9Q/wk37Kmti1Dg/y4cqhnAIqw7HtVwqUgX498E1X
+	FFjvqhDZDWlsx5HX7unKwAw4CSMOSnEmHb756JJ8disjzlgKKtkW+mM+1xP03dwk
+	X39R1dYU9aU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9D9CA5F2DE;
+	Mon,  6 Jan 2014 11:16:37 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C3BF15F2DB;
+	Mon,  6 Jan 2014 11:16:34 -0500 (EST)
+In-Reply-To: <20140106152742.GA26221@sigill.intra.peff.net> (Jeff King's
+	message of "Mon, 6 Jan 2014 10:27:42 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: E980FEE8-76ED-11E3-A75D-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240021>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240022>
 
-On Sun, Jan 05, 2014 at 05:12:56PM -0800, W. Trevor King wrote:
-> On Sun, Jan 05, 2014 at 04:33:14PM -0800, W. Trevor King wrote:
-> > The only people who would need *automatic* rebase recovery would be
-> > superproject devs update-cloning the subproject.  That's a small
-> > enough cross-section that I don't think it deserves the ambiguity of
-> > gitlink-to-reference.  In that case, all you really need is a way to
-> > force a recovery gitlink (i.e. add a 'commit' object to the tree by
-> > hand).
-> 
-> Actually, you recovering by hand is a lot easier.  Setup a
-> rebased-away gitlink target:
-> 
->   mkdir subproject &&
->   (
->     cd subproject &&
->     git init
->     echo 'Subproject' > README &&
->     git add README &&
->     git commit -m 'Subproject v1' &&
->     echo 'Changes' >> README &&
->     git commit -am 'Subproject v2'
->   ) &&
->   mkdir superproject &&
->   (
->     cd superproject &&
->     git init
->     git submodule add ../subproject &&
->     git commit -m 'Superproject v1'
->   ) &&
->   (
->     cd subproject &&
->     git reset --hard HEAD^ &&
->     git reflog expire --expire=now --all &&
->     git gc --aggressive --prune=now
->   )
-> 
-> Then a recursive clone of the superproject dies:
-> 
->   $ git clone --recursive superproject super2
->   Cloning into 'super2'...
->   done.
->   Submodule 'subproject' (/tmp/x/subproject) registered for path 'subproject'
->   Cloning into 'subproject'...
->   done.
->   fatal: reference is not a tree: f589144d16282d1a80d17a9032c6f1d332e38dd0
->   Unable to checkout 'f589144d16282d1a80d17a9032c6f1d332e38dd0' in submodule path 'subproject'
-> 
-> But you still have the submodule checkout (up until the $sha1 setup):
-> 
->   $ cd super2
->   $ git diff
->   diff --git a/subproject b/subproject
->   index f589144..82d4553 160000
->   --- a/subproject
->   +++ b/subproject
->   @@ -1 +1 @@
->   -Subproject commit f589144d16282d1a80d17a9032c6f1d332e38dd0
->   +Subproject commit 82d4553fe437ae014f22bbc87a082c6d19e5d9f9-dirty
-> 
-> And you can automatically update to match the upstream remote:
-> 
->   $ git submodule update --remote --force
->   Submodule path 'subproject': checked out '82d4553fe437ae014f22bbc87a082c6d19e5d9f9'
->   $ git diff
->   diff --git a/subproject b/subproject
->   index f589144..82d4553 160000
->   --- a/subproject
->   +++ b/subproject
->   @@ -1 +1 @@
->   -Subproject commit f589144d16282d1a80d17a9032c6f1d332e38dd0
->   +Subproject commit 82d4553fe437ae014f22bbc87a082c6d19e5d9f9
-> 
-> When explicitly updating to the superproject or subproject's
-> (--remote) new tip is so easy, I don't see a need for floating the
-> gitlinks themselves.
+Jeff King <peff@peff.net> writes:
 
-I agree. If we were to support this more easily we could add a
-configuration option so you can omit the --remote (i.e.:
-submodule.<name>.remote=true, as I also suggested in the other email).
+> On Fri, Jan 03, 2014 at 04:12:51PM -0500, Matt Burke wrote:
+>
+>> + git init -q
+>> + git fetch -q -fu ../../../other '+refs/*:refs/*'
+>> fatal: bad object 9b985fbe6a2b783c16756077a8be261c94b6c197
+>> error: ../../../other did not send all necessary objects
+>
+> I was going to ask you to send your repository, but I can easily
+> reproduce here. I guess people don't run into it because it's uncommon
+> to fetch the whole refs/ namespace from a non-bare repo (and bare repos
+> do not tend to have stashes). Here's a minimal reproduction recipe:
+>
+>   git init repo &&
+>   cd repo &&
+>   echo content >foo &&
+>   git add . &&
+>   git commit -m foo &&
+>   echo more >>foo &&
+>   git stash &&
+>   git init --bare sub &&
+>   cd sub &&
+>   git fetch .. 'refs/*:refs/*'
+>
+> It looks like we are not feeding refs/stash properly to pack-objects.
+> I'll try to take a closer look later today.
 
-That way the developer checking out a branch in flight does not even
-need to know whether (and which) submodules sha1s are still in flight
-and temporarily set this configuration in the branches .gitmodules file.
+I looked at this in the past and I vaguely recall that we reject it
+in the for-each-ref loop with check-ref-format saying "eh, that is a
+single-level name".
 
-Maybe that could actually be the attach operation Francesco is
-suggesting:
-
-	git submodule attach [--pull] <submodule path> <branchname>
-
-will attach the specified submodule to a branch. That means it changes
-the .gitmodule file accordingly and stages it. With the --pull switch
-one can specify whether a local branch tracking the remote branch should
-be automatically created. Names and the command format are just a
-suggestion here.
-
-That way we can support the
-
-	fork superproject needing submodule changes and send submodule
-	changes upstream first.
-
-workflow. What do you think?
-
-Cheers Heiko
+At that point I stopped digging, thinking it was a feature ;-)
+based on your exact observation about stash vs bare/non-bare.
