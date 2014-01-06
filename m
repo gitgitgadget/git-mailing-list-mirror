@@ -1,104 +1,103 @@
-From: Jeff King <peff@peff.net>
+From: John Szakmeister <john@szakmeister.net>
 Subject: Re: [PATCH 2/2] format-patch: introduce format.defaultTo
-Date: Mon, 6 Jan 2014 15:55:26 -0500
-Message-ID: <20140106205526.GC643@sigill.intra.peff.net>
+Date: Mon, 6 Jan 2014 16:13:44 -0500
+Message-ID: <CAEBDL5VD9C8DXFUS9VawxZhAC0AnR=abV-FEVTdi25NVBPvDVg@mail.gmail.com>
 References: <1389028732-27760-1-git-send-email-artagnon@gmail.com>
- <1389028732-27760-3-git-send-email-artagnon@gmail.com>
- <xmqqlhythrzq.fsf@gitster.dls.corp.google.com>
- <CALkWK0kZn44x98td9YXNT5VfhVs=ueeSty9M7Vh08bdoGjGQYg@mail.gmail.com>
- <xmqqa9f8j2n8.fsf@gitster.dls.corp.google.com>
- <20140106201854.GA28162@sigill.intra.peff.net>
- <xmqq1u0kj16h.fsf@gitster.dls.corp.google.com>
+	<1389028732-27760-3-git-send-email-artagnon@gmail.com>
+	<xmqqlhythrzq.fsf@gitster.dls.corp.google.com>
+	<CALkWK0kZn44x98td9YXNT5VfhVs=ueeSty9M7Vh08bdoGjGQYg@mail.gmail.com>
+	<xmqqa9f8j2n8.fsf@gitster.dls.corp.google.com>
+	<20140106201854.GA28162@sigill.intra.peff.net>
+	<CAEBDL5UaS2Hd-Yb417W+Fw_7j1+5sRAgszko-PbU7z901_X+cw@mail.gmail.com>
+	<20140106204203.GI3881@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+Content-Type: text/plain; charset=UTF-8
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
 	Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 06 21:55:33 2014
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 06 22:13:52 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W0HCv-0006YY-1w
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Jan 2014 21:55:33 +0100
+	id 1W0HUc-0000Hw-Px
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Jan 2014 22:13:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755479AbaAFUz3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Jan 2014 15:55:29 -0500
-Received: from cloud.peff.net ([50.56.180.127]:56104 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754645AbaAFUz2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Jan 2014 15:55:28 -0500
-Received: (qmail 17745 invoked by uid 102); 6 Jan 2014 20:55:28 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 06 Jan 2014 14:55:28 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 06 Jan 2014 15:55:26 -0500
-Content-Disposition: inline
-In-Reply-To: <xmqq1u0kj16h.fsf@gitster.dls.corp.google.com>
+	id S1756241AbaAFVNr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Jan 2014 16:13:47 -0500
+Received: from mail-we0-f178.google.com ([74.125.82.178]:51494 "EHLO
+	mail-we0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755984AbaAFVNq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Jan 2014 16:13:46 -0500
+Received: by mail-we0-f178.google.com with SMTP id u57so15978665wes.23
+        for <git@vger.kernel.org>; Mon, 06 Jan 2014 13:13:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=L37QbuikfLETMwrgu1gNQ7GwjQhGR0qc22XVriV5O1o=;
+        b=kPzHe3CGYd5EGxoAnqaj8sUS5+mhdb2jTdcIrCxiLD/xllhzjvxrPBsefsbUBUz19u
+         O8yJK6e5YYlohxpmCscDbIpG11m75acFUuKKO7IJvnxM4rmjgvJBILi5LXd9QhTBGQ8r
+         mOw0SRAUJM1h6bUp6euv298KT4/3ARwmA22pSlMOKLHxUp8UFf0fZJBSLnLYcPFh82nO
+         ATK6b6JlJjedSPMqPgzaH2/Z/h+bDrGDA837lEws493PGFJf6wtjOOzm1HwCZUg9zE/O
+         RdzwWQ9VlkBs+tlW68lrMpn9ei6zERGFBg1PAJl2CkT/jy3zQU0zNC5+6W27Js8B7bUo
+         M16Q==
+X-Received: by 10.180.19.165 with SMTP id g5mr13852332wie.31.1389042824888;
+ Mon, 06 Jan 2014 13:13:44 -0800 (PST)
+Received: by 10.180.74.232 with HTTP; Mon, 6 Jan 2014 13:13:44 -0800 (PST)
+In-Reply-To: <20140106204203.GI3881@google.com>
+X-Google-Sender-Auth: MBWQeUznIr3pCb53H1-6eHwMatA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240063>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240064>
 
-On Mon, Jan 06, 2014 at 12:38:30PM -0800, Junio C Hamano wrote:
+On Mon, Jan 6, 2014 at 3:42 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> John Szakmeister wrote:
+>
+>>                                                        I think in a
+>> typical, feature branch-based workflow @{u} would be nearly useless.
+>
+> I thought the idea of @{u} was that it represents which ref one
+> typically wants to compare the current branch to.  It is used by
+> 'git branch -v' to show how far ahead or behind a branch is and
+> used by 'git pull --rebase' to forward-port a branch, for example.
+>
+> So a topic branch with @{u} pointing to 'master' or 'origin/master'
+> seems pretty normal and hopefully the shortcuts it allows can make
+> life more convenient.
 
-> > I wonder if it is too late to try to clarify this dual usage. It kind of
-> > seems like the push config is "this is the place I publish to". Which,
-> > in many workflows, just so happens to be the exact same as the place you
-> > forked from. Could we introduce a new branch.*.pushupstream variable
-> > that falls back to branch.*.merge? Or is that just throwing more fuel on
-> > the fire (more sand in the pit in my analogy, I guess).
-> >
-> > I admit I haven't thought it through yet, though. And even if it does
-> > work, it may throw a slight monkey wrench in the proposed push.default
-> > transition.
-> 
-> Yeah, when I say "upstream", I never mean it as "where I publish".
-> Your upstream is where you get others' work from.
+Is there an outline of this git workflow in the documentation
+somewhere?  Do you save your work in a forked repo anywhere?  If so,
+how do you typically save your work.  I typically have my @{u}
+pointing to where I save my work.  Perhaps I'm missing something
+important here, but I don't feel like the current command set and
+typical workflow (at least those in tutorials) leads you in that
+direction.
 
-That's my thinking, as well, but it means the "upstream" push.default is
-nonsensical. I've thought that all along, but it seems like other people
-find it useful. I guess because they are in a non-triangular,
-non-feature-branch setup (I suppose you could think of a central-repo
-feature-branch workflow as a special form of triangular setup, where
-the remote is bi-directional, but the branch names are triangular).
+Here is one example:
+   <https://www.atlassian.com/git/workflows#!workflow-feature-branch>
 
-If we want to declare "push -u" and "push.default=upstream" as tools for
-certain simple bi-directional workflows, that makes sense. But I suspect
-it may cause extra confusion when people make the jump to using a
-triangular workflow.
+> It is *not* primarily about where the branch gets pushed.  After all,
+> in both the 'matching' and the 'simple' mode, "git push" does not push
+> the current branch to its upstream @{u} unless @{u} happens to have
+> the same name.
 
-> For a "push to somewhere for safekeeping or other people to look at"
-> triangular workflow, it does not make any sense to treat that "I
-> publish there" place as an upstream (hence having branch.*.remote
-> pointing at that publishing point).
+Then where does it get pushed?  Do you always specify where to save your work?
 
-You _might_ treat it the same way we treat the upstream, in some special
-cases. For example, when you say "git status", it is useful to see how
-your topic and the upstream have progressed (i.e., do I need to pull
-from upstream?). But you may _also_ want to know how your local branch
-differs from its pushed counterpart (i.e., do I have unsaved commits
-here that I want to push up?).
+FWIW, I think the idea of treating @{u} as the eventual recipient of
+your changes is good, but then it seems like Git is lacking the
+"publish my changes to this other branch" concept.
 
-So having two config options might help with that. Of course, your "push
-upstream" (or whatever you want to call it) does not logically have one
-value. You may push to several places, and would want to compare to
-each.
+Am I missing something?  If there is something other than @{u} to
+represent this latter concept, I think `git push` should default to
+that instead.  But, at least with my current knowledge, that doesn't
+exist--without explicitly saying so--or treating @{u} as that branch.
+If there's a better way to do this, I'd love to hear it!
 
-> Once you stop doing that, and
-> instead using branch.*.remote = origin, and branch.*.merge = master,
-> where 'origin' is not your publishing point, @{u} will again start
-> making sense, I think.
-> 
-> And I thought that is what setting "remote.pushdefault" to the
-> publishing point repository was about.
+Thanks!
 
-If that were sufficient, then we would just need "push.default =
-current", and not "upstream" (nor "simple"). I lobbied for that during
-the discussion, but people seemed to think that "upstream" was
-better/more useful. Maybe it was just because remote.pushdefault did not
-exist then.
-
--Peff
+-John
