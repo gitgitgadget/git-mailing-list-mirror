@@ -1,148 +1,96 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH 2/2] format-patch: introduce format.defaultTo
-Date: Mon,  6 Jan 2014 22:48:52 +0530
-Message-ID: <1389028732-27760-3-git-send-email-artagnon@gmail.com>
-References: <1389028732-27760-1-git-send-email-artagnon@gmail.com>
-Cc: Jeff King <peff@peff.net>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jan 06 18:19:14 2014
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Improve user-manual html and pdf formatting
+Date: Mon, 06 Jan 2014 09:20:33 -0800
+Message-ID: <xmqqd2k5jace.fsf@gitster.dls.corp.google.com>
+References: <352636633.1492236.1388826471175.JavaMail.ngmail@webmail10.arcor-online.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Thomas Ackermann <th.acker@arcor.de>
+X-From: git-owner@vger.kernel.org Mon Jan 06 18:20:49 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W0DpS-0000Vo-Co
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Jan 2014 18:19:06 +0100
+	id 1W0Dr3-0003df-4T
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Jan 2014 18:20:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755854AbaAFRS5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Jan 2014 12:18:57 -0500
-Received: from mail-pd0-f172.google.com ([209.85.192.172]:54722 "EHLO
-	mail-pd0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755259AbaAFRSz (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Jan 2014 12:18:55 -0500
-Received: by mail-pd0-f172.google.com with SMTP id g10so18321601pdj.17
-        for <git@vger.kernel.org>; Mon, 06 Jan 2014 09:18:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=ymNRlRgNwMBhuwEMkHX+xloPoFkOSzT3g6ybvz3+Uts=;
-        b=SG6QRXjtJJg2KK4stvAt+R/9Btp24Q/jfgBBaDlAeorVFDmHqWIqosGypdV1Wwi6CO
-         LXMGPOIVIpDAf1GVkFue/ZFgvgXR115vytoRZpupiTe7UpOZxdA4unlwKH2lOx1a+UfF
-         c4C32fSMLYz+F//JsEmzPb1JWadnaHH8CSHrEEj0cxytWPU4acjZ7GWekYDjZFBJxBTN
-         4kfJNF1Y9tw9yfA357tdLDg8B3tbmN85ot5fWJ2fVEaVSPd/FlmixgJ+247RAIfMoBwH
-         MWzj2gEtQdSCQcOXammBLhCmBb0WubPm2YtW4gWqMVM2oZNoyngLJz0NU9zcpgo/EKGe
-         1IOQ==
-X-Received: by 10.68.65.168 with SMTP id y8mr127634291pbs.89.1389028734634;
-        Mon, 06 Jan 2014 09:18:54 -0800 (PST)
-Received: from localhost.localdomain ([122.164.141.93])
-        by mx.google.com with ESMTPSA id jk16sm130131323pbb.34.2014.01.06.09.18.49
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 06 Jan 2014 09:18:52 -0800 (PST)
-X-Mailer: git-send-email 1.8.5.2.229.g4448466.dirty
-In-Reply-To: <1389028732-27760-1-git-send-email-artagnon@gmail.com>
+	id S1755351AbaAFRUl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Jan 2014 12:20:41 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44166 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754645AbaAFRUk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Jan 2014 12:20:40 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A9ABA5D929;
+	Mon,  6 Jan 2014 12:20:39 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=An/ceBBD+bS2LAzWjmOq0/lNIKc=; b=ZMgZ7t
+	zVzK4pbIEGkTT7MHXg9zod977PXtE1iUOdSSCBa+0n03Z4BqborK1RZIITppP88E
+	az3hk7mHPv6E9SkI2WC+jY6r23VSksiBKZ3ZoeEQalh7SWK6Me1FWBORRITj3191
+	S3E45VpHCHs+cZR91HINNUrvIhhIS6NEpowAM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=WrbyjDIWUeakqvPXSopXiAzawcqQjw3q
+	NcYrt4e+6WgtVNpSG7RMrh93UnNd3o9NNxPG+LgL+Erv2hXeUaEnTyMZpfx4QGe0
+	Jn+UONmgdZfrtErvLKrTERug7BTPLhQE8GufNig2H8/EPhWn/7JGnADLjwmLEGjU
+	nM/ycQOueTk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D86C65D925;
+	Mon,  6 Jan 2014 12:20:37 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CC2995D921;
+	Mon,  6 Jan 2014 12:20:35 -0500 (EST)
+In-Reply-To: <352636633.1492236.1388826471175.JavaMail.ngmail@webmail10.arcor-online.net>
+	(Thomas Ackermann's message of "Sat, 4 Jan 2014 10:07:51 +0100 (CET)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: DAF01BBC-76F6-11E3-9168-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240031>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240032>
 
-A very common workflow for preparing patches involves working off a
-topic branch and generating patches against 'master' to send off to the
-maintainer. However, a plain
+Thomas Ackermann <th.acker@arcor.de> writes:
 
-  $ git format-patch -o outgoing
+> Use asciidoc style 'article' instead of 'book' and change asciidoc title level.
+> This removes blank first page and superfluous "Part I" page (there is no "Part II")
+> in pdf output. Also pdf size is decreased by this from 77 to 67 pages.
+> In html output this removes unnecessary sub-tocs and chapter numbering.
+>
+> Signed-off-by: Thomas Ackermann <th.acker@arcor.de>
+> ---
+>  Documentation/Makefile        | 2 +-
+>  Documentation/user-manual.txt | 4 ++--
+>  2 files changed, 3 insertions(+), 3 deletions(-)
+>
+> diff --git a/Documentation/Makefile b/Documentation/Makefile
+> index 91a12c7..36c58fc 100644
+> --- a/Documentation/Makefile
+> +++ b/Documentation/Makefile
+> @@ -324,7 +324,7 @@ manpage-base-url.xsl: manpage-base-url.xsl.in
+>  
+>  user-manual.xml: user-manual.txt user-manual.conf
+>  	$(QUIET_ASCIIDOC)$(RM) $@+ $@ && \
+> -	$(ASCIIDOC) $(ASCIIDOC_EXTRA) -b docbook -d book -o $@+ $< && \
+> +	$(ASCIIDOC) $(ASCIIDOC_EXTRA) -b docbook -d article -o $@+ $< && \
+>  	mv $@+ $@
+>  
+>  technical/api-index.txt: technical/api-index-skel.txt \
+> diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
+> index cbb01a1..130c2f4 100644
+> --- a/Documentation/user-manual.txt
+> +++ b/Documentation/user-manual.txt
+> @@ -1,5 +1,5 @@
+> -Git User Manual
+> -_______________
+> +&#65279;Git User Manual
+> +===============
 
-is a no-op on a topic branch, and the user has to remember to specify
-'master' explicitly everytime. Save the user the extra keystrokes by
-introducing format.defaultTo which can contain the name of a branch
-against which to base patches.
+Will queue after dropping the extra.
 
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
----
- Documentation/config.txt               |  4 ++++
- builtin/log.c                          |  7 +++++++
- contrib/completion/git-completion.bash |  1 +
- t/t4014-format-patch.sh                | 10 ++++++++++
- 4 files changed, 22 insertions(+)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index a405806..b90abd1 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1135,6 +1135,10 @@ format.coverLetter::
- 	format-patch is invoked, but in addition can be set to "auto", to
- 	generate a cover-letter only when there's more than one patch.
- 
-+format.defaultTo::
-+	The name of a branch against which to generate patches by
-+	default. You'd usually want this to be 'master'.
-+
- filter.<driver>.clean::
- 	The command which is used to convert the content of a worktree
- 	file to a blob upon checkin.  See linkgit:gitattributes[5] for
-diff --git a/builtin/log.c b/builtin/log.c
-index b97373d..ebc419e 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -674,6 +674,7 @@ static int thread;
- static int do_signoff;
- static const char *signature = git_version_string;
- static int config_cover_letter;
-+static const char *config_defaultto;
- 
- enum {
- 	COVER_UNSET,
-@@ -750,6 +751,8 @@ static int git_format_config(const char *var, const char *value, void *cb)
- 		config_cover_letter = git_config_bool(var, value) ? COVER_ON : COVER_OFF;
- 		return 0;
- 	}
-+	if (!strcmp(var, "format.defaultto"))
-+		return git_config_string(&config_defaultto, var, value);
- 
- 	return git_log_config(var, value, cb);
- }
-@@ -1324,6 +1327,10 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 		die (_("--subject-prefix and -k are mutually exclusive."));
- 	rev.preserve_subject = keep_subject;
- 
-+	if (argc < 2 && config_defaultto) {
-+		argv[1] = config_defaultto;
-+		argc++;
-+	}
- 	argc = setup_revisions(argc, argv, &rev, &s_r_opt);
- 	if (argc > 1)
- 		die (_("unrecognized argument: %s"), argv[1]);
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 39b81f7..75699d4 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1992,6 +1992,7 @@ _git_config ()
- 		format.attach
- 		format.cc
- 		format.coverLetter
-+		format.defaultTo
- 		format.headers
- 		format.numbered
- 		format.pretty
-diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-index 73194b2..46c0337 100755
---- a/t/t4014-format-patch.sh
-+++ b/t/t4014-format-patch.sh
-@@ -1370,4 +1370,14 @@ test_expect_success 'cover letter auto user override' '
- 	test_line_count = 2 list
- '
- 
-+test_expect_success 'defaultTo side' '
-+	mkdir -p tmp &&
-+	test_when_finished "rm -rf tmp;
-+		git config --unset format.defaultTo" &&
-+
-+	git config format.defaultTo side &&
-+	git format-patch -o tmp >list &&
-+	test_line_count = 3 list
-+'
-+
- test_done
--- 
-1.8.5.2.229.g4448466.dirty
+Thanks.
