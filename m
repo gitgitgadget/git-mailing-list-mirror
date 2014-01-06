@@ -1,123 +1,100 @@
-From: Ben Maurer <bmaurer@fb.com>
-Subject: RE: [PATCH] [RFC] Making use of bitmaps for thin objects
-Date: Mon, 6 Jan 2014 22:14:30 +0000
-Message-ID: <5CDDBDF2D36D9F43B9F5E99003F6A0D4466885EE@PRN-MBX02-1.TheFacebook.com>
-References: <1387741654-14890-1-git-send-email-bmaurer@fb.com>
- <20140106145723.GA15489@sigill.intra.peff.net>
- <5CDDBDF2D36D9F43B9F5E99003F6A0D4466883DF@PRN-MBX02-1.TheFacebook.com>,<20140106215713.GA7133@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] format-patch: introduce format.defaultTo
+Date: Mon, 06 Jan 2014 14:22:59 -0800
+Message-ID: <xmqqha9ghhrw.fsf@gitster.dls.corp.google.com>
+References: <1389028732-27760-1-git-send-email-artagnon@gmail.com>
+	<1389028732-27760-3-git-send-email-artagnon@gmail.com>
+	<xmqqlhythrzq.fsf@gitster.dls.corp.google.com>
+	<CALkWK0kZn44x98td9YXNT5VfhVs=ueeSty9M7Vh08bdoGjGQYg@mail.gmail.com>
+	<xmqqa9f8j2n8.fsf@gitster.dls.corp.google.com>
+	<CALkWK0nSed9vvRvTR00_vV3tHL8mSQA=8JJ_Y7=pQchoVcvhzA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Jan 06 23:14:46 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 06 23:23:15 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W0IRX-0007Mo-V8
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Jan 2014 23:14:44 +0100
+	id 1W0IZl-0006mB-IH
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Jan 2014 23:23:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755704AbaAFWOk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Jan 2014 17:14:40 -0500
-Received: from mx0a-00082601.pphosted.com ([67.231.145.42]:29554 "EHLO
-	mx0a-00082601.pphosted.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755376AbaAFWOj convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 6 Jan 2014 17:14:39 -0500
-Received: from pps.filterd (m0044010 [127.0.0.1])
-	by mx0a-00082601.pphosted.com (8.14.5/8.14.5) with SMTP id s06M9cUJ026320;
-	Mon, 6 Jan 2014 14:14:33 -0800
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fb.com; h=from : to : cc : subject :
- date : message-id : references : in-reply-to : content-type :
- content-transfer-encoding : mime-version; s=facebook;
- bh=duckJN+xzbSL1tAqQZuZtFsOik9isl9uRcYBTA5urDE=;
- b=EYh6g9DtpISdWHtXX5zZFwUBnuWyIVUnC9cJAenkxxJ9ws6m7Tx8ZBQY+ONOAmSV7VHO
- s9nefKO6V/6F87+4MBP4OtYOqWr/01LlEjB4thwQ00Ul5hb1NOrL2za8+z3jqfGAhDlU
- gqHe2H8ZyAOU0LVmCYTjY7RPZXvJ8e++30w= 
-Received: from mail.thefacebook.com (mailwest.thefacebook.com [173.252.71.148])
-	by mx0a-00082601.pphosted.com with ESMTP id 1h82rjgney-1
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=OK);
-	Mon, 06 Jan 2014 14:14:32 -0800
-Received: from PRN-MBX02-1.TheFacebook.com ([169.254.1.64]) by
- PRN-CHUB01.TheFacebook.com ([fe80::d5cc:849:f520:db6b%12]) with mapi id
- 14.03.0174.001; Mon, 6 Jan 2014 14:14:31 -0800
-Thread-Topic: [PATCH] [RFC] Making use of bitmaps for thin objects
-Thread-Index: AQHO/06wG06Z2WW/kESY1GiAdQ1uTpp4ZrUA//+vgJaAAMXMgP//e6Vm
-In-Reply-To: <20140106215713.GA7133@sigill.intra.peff.net>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [192.168.16.4]
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:5.11.87,1.0.14,0.0.0000
- definitions=2014-01-06_04:2014-01-06,2014-01-06,1970-01-01 signatures=0
-X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
- kscore.is_bulkscore=5.68989300120393e-12 kscore.compositescore=0
- circleOfTrustscore=0 compositescore=0.997600857122248
- urlsuspect_oldscore=0.997600857122248 suspectscore=0
- recipient_domain_to_sender_totalscore=0 phishscore=0 bulkscore=0
- kscore.is_spamscore=0 recipient_to_sender_totalscore=0
- recipient_domain_to_sender_domain_totalscore=64355
- rbsscore=0.997600857122248 spamscore=0
- recipient_to_sender_domain_totalscore=0 urlsuspectscore=0.9 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=7.0.1-1305240000
- definitions=main-1401060159
-X-FB-Internal: deliver
+	id S1755289AbaAFWXJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Jan 2014 17:23:09 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36004 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754093AbaAFWXH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Jan 2014 17:23:07 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BFC3A614E7;
+	Mon,  6 Jan 2014 17:23:06 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Svi7qrj6r8scIPK/041smwQsSXk=; b=yF9+v+
+	lXE0Og3W8KaEKYVvV0KMyTCAYWw0Qjsya2dCIj0R0qszBo4eclk1JfO15q6Z7e3t
+	5cWqdVBce2SG0IYH9yxGVINg3ayw/G3q2Uyro1zVC14BSlUzWBZMwHkih3kd5Ilo
+	BCBkgG1QHw7T5R6mPK3DZFwQtwowT/KgWgUAU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=sBz6YmY1+mxA0Gly2l6liOaa3VAIFDcT
+	KHM30ZTcznd5txMWkhLkFR06ylo8FVdpEDrfXk8N7CBzzAzrpQ9zDJmiIFxy0Zyv
+	UjKeLGKhehIKJobDeOAXQ0M/R1Ur6rUdA9c4h5oGXccPpjmAjAhhOuJ53jNk61w0
+	yITskwm8PLY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 83F6A614E4;
+	Mon,  6 Jan 2014 17:23:05 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2A85A614E0;
+	Mon,  6 Jan 2014 17:23:03 -0500 (EST)
+In-Reply-To: <CALkWK0nSed9vvRvTR00_vV3tHL8mSQA=8JJ_Y7=pQchoVcvhzA@mail.gmail.com>
+	(Ramkumar Ramachandra's message of "Tue, 7 Jan 2014 03:29:39 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 1C32A318-7721-11E3-9366-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240074>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240075>
 
-It looks like for my repo the size win wasn't as big (~10%). Is it possible that with the kernel test you got extremely lucky and there was some huge binary blob that thin packing turned into a tiny delta?
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-The repo I'm testing with here isn't a typical codebase -- it is used to store configuration information and it has very different update patterns than most codebases.
-
-When you get a chance, it'd be handy if you could push an updated version of your change out to your public github repo. I'd like to see if folks here are interested in testing this more, and it'd be good to make sure we're testing the diff that is targeted for upstream.
-
-Bitmap index, without thin packing:
-
-Counting objects: 158825, done.
-Delta compression using up to 32 threads.
-Compressing objects: 100% (18113/18113), done.
-Writing objects: 100% (158825/158825), 89.87 MiB | 11.23 MiB/s, done.
-Total 158825 (delta 139493), reused 153076 (delta 135730)
-real 15.60
-user 34.38
-sys 2.99
-
-
-Bitmap index, with thin packing:
-
-Counting objects: 158825, done.
-Delta compression using up to 32 threads.
-Compressing objects: 100% (12364/12364), done.
-Writing objects: 100% (158825/158825), 81.35 MiB | 0 bytes/s, done.
-Total 158825 (delta 135730), reused 158825 (delta 141479)
-real 2.70
-user 2.28
-sys 0.65
-
-
-________________________________________
-From: Jeff King [peff@peff.net]
-Sent: Monday, January 06, 2014 1:57 PM
-To: Ben Maurer
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] [RFC] Making use of bitmaps for thin objects
-
-On Mon, Jan 06, 2014 at 09:15:04PM +0000, Ben Maurer wrote:
-
-> > Let me know how this patch does for you. My testing has been fairly
-> > limited so far.
+> Junio C Hamano wrote:
+>> I meant "a single branch" as opposed to "depending on what branch
+>> you are sending out, you may have to use a different upstream
+>> starting point", and a single "format.defaultTo" that does not read
+>> what your HEAD currently points at may not be enough.
+>>
+>> Unless you set @{u} to this new configuration, in which case the
+>> choice becomes dynamic depending on the current branch, but
+>>
+>>  - if that is the only sane choice based on the current branch, why
+>>    not use that as the default without having to set the
+>>    configuration?
+>>
+>>  - Or if that is still insufficient, don't we need branch.*.forkedFrom
+>>    that is different from branch.*.merge, so that different branches
+>>    you want to show "format-patch" output can have different
+>>    reference points?
 >
-> This patch looks like a much cleaner version :-). Works well for me,
-> but my test setup may not be great since I didn't get any errors from
-> completely ignoring the haves bitmap :-).
+> Ah, I was going for an equivalent of merge.defaultToUpstream, but I
+> guess branch.*.forkedFrom is a good way to go.
 
-Great. Out of curiosity, can you show the before/after? The timings
-should be similar to what your patch produced, but I'm really curious to
-see how the pack size changes.
+As I said in the different subthread, I am not convinced that you
+would need the complexity of branch.*.forkedFrom.  If you set your
+"upstream" to the true upstream (not your publishing point), and
+have "remote.pushdefault" set to 'publish', you can expect
 
--Peff
+	git push
+
+to do the right thing, and then always say
+
+	git show-branch publish/topic topic
+
+to see where your last published branch is relative to what you
+have, no?  Mapping "topic@{publish}" to "refs/remotes/publish/topic"
+(or when you have 'topic' checked out, mapping "@{publish}" to it)
+is a trivial but is a separate usefulness, I would guess.
