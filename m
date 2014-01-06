@@ -1,130 +1,118 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Bug report: stash in upstream caused remote fetch to fail
-Date: Mon, 6 Jan 2014 18:03:48 -0500
-Message-ID: <20140106230348.GA7811@sigill.intra.peff.net>
-References: <CAECVvXYD69Xrp85bVJg6XogvctUTwrFDae+3tawFgoCAUGhwGg@mail.gmail.com>
- <20140106152742.GA26221@sigill.intra.peff.net>
- <xmqqbnzpkrvk.fsf@gitster.dls.corp.google.com>
- <20140106193625.GA27062@sigill.intra.peff.net>
- <xmqq61pwj25q.fsf@gitster.dls.corp.google.com>
+From: Francesco Pretto <ceztko@gmail.com>
+Subject: Re: Re: [RFC v2] submodule: Respect requested branch on all clones
+Date: Tue, 7 Jan 2014 00:10:24 +0100
+Message-ID: <CALas-ijXQFcUHWk-jJrLifqsMHAKo6NNKya+jR6RJGGDXY76hg@mail.gmail.com>
+References: <CALas-ii90x07Kbxzy_siBJV_RHPkvBw7spFBD9vi6o43mU1k6g@mail.gmail.com>
+ <d0de817dfc687fd943349c9d3e1d410161a0f01e.1388938473.git.wking@tremily.us>
+ <20140105194850.GA2994@book.hvoigt.net> <20140105212458.GG3156@odin.tremily.us>
+ <20140105225733.GB4660@book.hvoigt.net> <20140105233943.GJ3156@odin.tremily.us>
+ <20140106003314.GL3156@odin.tremily.us> <20140106011255.GM3156@odin.tremily.us>
+ <20140106160202.GE27265@t2784.greatnet.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Matt Burke <spraints@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 07 00:04:16 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: "W. Trevor King" <wking@tremily.us>, Git <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>
+To: Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Tue Jan 07 00:10:58 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W0JDS-0002Bg-EX
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Jan 2014 00:04:14 +0100
+	id 1W0JJx-000777-Lu
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Jan 2014 00:10:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757298AbaAFXEJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Jan 2014 18:04:09 -0500
-Received: from cloud.peff.net ([50.56.180.127]:56181 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757279AbaAFXDu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Jan 2014 18:03:50 -0500
-Received: (qmail 25428 invoked by uid 102); 6 Jan 2014 23:03:50 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 06 Jan 2014 17:03:50 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 06 Jan 2014 18:03:48 -0500
-Content-Disposition: inline
-In-Reply-To: <xmqq61pwj25q.fsf@gitster.dls.corp.google.com>
+	id S933252AbaAFXKs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Jan 2014 18:10:48 -0500
+Received: from mail-ob0-f172.google.com ([209.85.214.172]:43102 "EHLO
+	mail-ob0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753508AbaAFXKp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Jan 2014 18:10:45 -0500
+Received: by mail-ob0-f172.google.com with SMTP id gq1so19162324obb.3
+        for <git@vger.kernel.org>; Mon, 06 Jan 2014 15:10:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=u89smDlye93lpVJU3RDu1fGT3mGTpUKLtAr9PsXyy2M=;
+        b=Cu150Tzn5XLH5ZhH0E954pRcsJXHH2U66jwfRoDyEIjYLu6JXdKSa3ShzWSbc2Yhq7
+         713+vMfCzhOgAsV6WRlZ2iGQwPJAfcdr2NSS0jQdNtVo9LCEVaLjy9w/m0u8sC1FMk0x
+         T0e4M2RE3acJ5QYe6tmBoAKRLKXIz5X7rW2SzjWJ9vbE0NKxhaV3vaXllwO8dA9ncDiW
+         W7Lbuc6z/0fHrRH7P8fFSVMNrS4lqu4xDgV6+3nBXe26RvjIGMrqnIDKrp4W6woCaclb
+         JTnQmev2hwDVENic9lXuZx1mDSEIT1A4epWP5lzD8pPN2e2twDeJdluKoOcovX5M2xQA
+         DGSA==
+X-Received: by 10.60.124.138 with SMTP id mi10mr3248092oeb.57.1389049844297;
+ Mon, 06 Jan 2014 15:10:44 -0800 (PST)
+Received: by 10.76.80.165 with HTTP; Mon, 6 Jan 2014 15:10:24 -0800 (PST)
+In-Reply-To: <20140106160202.GE27265@t2784.greatnet.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240079>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240080>
 
-On Mon, Jan 06, 2014 at 12:17:21PM -0800, Junio C Hamano wrote:
+2014/1/6 Heiko Voigt <hvoigt@hvoigt.net>:
+>
+> I agree. If we were to support this more easily we could add a
+> configuration option so you can omit the --remote (i.e.:
+> submodule.<name>.remote=true, as I also suggested in the other email).
+>
+> That way the developer checking out a branch in flight does not even
+> need to know whether (and which) submodules sha1s are still in flight
+> and temporarily set this configuration in the branches .gitmodules file.
+>
 
-> > I am fine with rejecting it with a warning, but we should not then
-> > complain that the other side did not send us the object, since we should
-> > not be asking for it at all. I also do not see us complaining about the
-> > funny ref anywhere.  So there is definitely _a_ bug here. :)
-> 
-> Oh, no question about that.  I was just pointing somebody who
-> already has volunteered to take a look in a direction I recall was
-> where the issue was ;-)
+"submodule.<name>.remote" can be useful but can be added later to aid
+the current use case.
 
-Oh, crud, did I volunteer? :)
+To not break the existing behavior what it's really needed here, IMO,
+is a "submodule.<name>.attached" property that says two things:
+- at the first clone on "git submodule update" stay attached to
+"submodule.<name>.branch";
+- implies "--remote", as it's the only thing that makes sense when the
+submodules are attached.
 
-So I found the problem, but I'm really not sure what to make of it. We
-do check the refname format when evaluating the refspecs, in:
+My patch at the current unreleased state does exactly this.
 
-    do_fetch
-      get_ref_map
-        get_fetch_map
-          check_refname_format
+> Maybe that could actually be the attach operation Francesco is
+> suggesting:
+>
+>         git submodule attach [--pull] <submodule path> <branchname>
+>
+> will attach the specified submodule to a branch. That means it changes
+> the .gitmodule file accordingly and stages it. With the --pull switch
+> one can specify whether a local branch tracking the remote branch should
+> be automatically created. Names and the command format are just a
+> suggestion here.
+>
+> That way we can support the
+>
+>         fork superproject needing submodule changes and send submodule
+>         changes upstream first.
+>
 
-Before calling it, we check that it starts with "refs/", and then pass
-the _whole_ refname into check_refname_format. So the latter sees
-"refs/stash". And that's acceptable, as it's not a single-level ref.
-Thus we do not get the "funny ref" message.
+My patch didn't do this, as the maintainer can do these things quite
+easily[1] (maintainer is "cooler" with respect to other devs :) ), but
+I think it could be good to also have this feature.
 
-The code looks like this:
+The feature I think that are still needed and you don't mention are:
+- an "--attached" switch for the "add" command when the maintainer
+create the submodule the first time (DONE in patch);
+- a easy way to attach|detach the submodule locally by developer. This should:
+    * fix the head state (DONE in patch);
+    * fix the local .git/config "submodule.<name>.attached" property
+accordingly (DONE in patch, unreleased).
 
-  if (!starts_with((*rmp)->peer_ref->name, "refs/") ||
-      check_refname_format((*rmp)->peer_ref->name, 0)) {
-        /* print funny ref and ignore */
+I do the latest in the "update" command but it seems bad to touch
+.git/config in the "update" command...
 
-Then we ask fetch_refs_via_pack to get the actual objects for us. And
-it checks our refs again, with this call chain:
+Maybe we should have a "git submodule head" command that does all
+these things: --attach (for the maintainer), --attach|--detach (for
+the developer).
 
-  do_fetch
-    fetch_refs
-      transport_fetch_refs
-        fetch_refs_via_pack
-          fetch_pack
-            do_fetch_pack
-              everything_local
-                filter_refs
-                  check_refname_format
-
-Here, the code looks like this:
-
-  if (!memcmp(ref->name, "refs/", 5) &&
-      check_refname_format(ref->name + 5, 0))
-    ; /* trash */
-
-At first I thought we are doing the same check (is it syntactically
-valid, and is it in "refs/"), but we're not. We are actually checking
-the format _only_ of stuff in "refs/", and ignoring the rest. Which
-really makes no sense to me.
-
-If it were "memcmp(...) || check_refname_format()", then it would be
-roughly the same check. But it would still be wrong, because note that
-we pass only the bits under "refs/" to check_refname_format. So it sees
-only "stash", and then complains that it is single-level.
-
-So the symptom we are seeing is because we are filtering with two
-different rulesets in different places. But I'm really not sure how to
-resolve it. The one in filter_refs seems nonsensical to me.
-
-Checking _only_ things under refs/ doesn't make sense. And even if that
-was sensible, feeding half a ref to check_refname_format does not work.
-In addition to the single-level check, it has other rules that want
-to see the whole ref (e.g., the ref "@" is not valid, but "refs/@" is
-OK; it cannot distinguish them without seeing the prefix).
-
-So I can see two options:
-
-  1. Make the check in filter_refs look like the one in get_fetch_map.
-     That at least makes them the same, which alleviates the symptom.
-     But we still are running two checks, and if they ever get out of
-     sync, it causes problems.
-
-  2. Abolish the check in filter_refs. I think this makes the most sense
-     from the perspective of fetch, because we will already have cleaned up
-     the ref list. But we might need to leave the filtering in place for
-     people who call fetch-pack as a bare plumbing command.
-
-It's really not clear to me what the check in filter_refs was trying to
-do. It dates all the way back to 1baaae5 (Make maximal use of the remote
-refs, 2005-10-28), but there is not much explanation. I haven't dug into
-the list around that time to see if there's any discussion.
-
--Peff
+[1]
+$ ( cd submodule && git branch newbranch && git push -u origin HEAD)
+$ git config -f .gitmodules submodule.newbranch.branch newbranch
+$ git config -f .gitmodules submodule.newbranch.attached true
+$ git add . && git commit -m "Forked superproject" && git push
