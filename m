@@ -1,78 +1,108 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] format-patch: introduce format.defaultTo
-Date: Mon, 06 Jan 2014 13:37:07 -0800
-Message-ID: <xmqqlhyshjwc.fsf@gitster.dls.corp.google.com>
-References: <1389028732-27760-1-git-send-email-artagnon@gmail.com>
-	<1389028732-27760-3-git-send-email-artagnon@gmail.com>
-	<xmqqlhythrzq.fsf@gitster.dls.corp.google.com>
-	<CALkWK0kZn44x98td9YXNT5VfhVs=ueeSty9M7Vh08bdoGjGQYg@mail.gmail.com>
-	<xmqqa9f8j2n8.fsf@gitster.dls.corp.google.com>
-	<20140106201854.GA28162@sigill.intra.peff.net>
-	<CAEBDL5UaS2Hd-Yb417W+Fw_7j1+5sRAgszko-PbU7z901_X+cw@mail.gmail.com>
-	<20140106204203.GI3881@google.com>
-	<CAEBDL5VD9C8DXFUS9VawxZhAC0AnR=abV-FEVTdi25NVBPvDVg@mail.gmail.com>
+From: Antoine Pelisse <apelisse@gmail.com>
+Subject: Re: [PATCH] remote-hg: do not fail on invalid bookmarks
+Date: Mon, 6 Jan 2014 22:51:58 +0100
+Message-ID: <CALWbr2zC-Q8YduW9b1feThBtz38Tsk7D1BoCRd7KxnCuht27PQ@mail.gmail.com>
+References: <1388316602-22443-1-git-send-email-apelisse@gmail.com>
+	<52CAB508.5010002@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: John Szakmeister <john@szakmeister.net>
-X-From: git-owner@vger.kernel.org Mon Jan 06 22:37:24 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git <git@vger.kernel.org>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Mon Jan 06 22:52:08 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W0HrQ-0002Qz-Ea
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Jan 2014 22:37:24 +0100
+	id 1W0I5e-0004x3-MT
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Jan 2014 22:52:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755563AbaAFVhR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Jan 2014 16:37:17 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54765 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755441AbaAFVhQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Jan 2014 16:37:16 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1DDF45F905;
-	Mon,  6 Jan 2014 16:37:15 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=asP2UE0Z8YGAfMTH3bR6Kb+MQnQ=; b=TWtZIi
-	wvdIOsBl+DDvS9u9jDDgN28PUVPcEwshoVvgdRHU4mwNVKNh5/pfqKIr3Ppr/kl8
-	uatOhMFnsP4tQVFf5iF8+ofr69QgEMA6W5jOFelHjVefqjNqi/ZSEeuZUNxImF4R
-	1uuwtwflTaLKijwuIiOEEWYnlOghYOotTN6QQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=UnepGNnabMa5n3KLL+ou25YNGC6FUXd1
-	5dJ7UFTVsAKXNwxoqeDxs06uBoZB5ruMAw3qyI00zm+jFrUXvjgZy9mCLibujeL3
-	2DmHG/AGhHpEWih818LOzirSdEKo+DXgvSEYpwBpAiXLOJ9bSZrwGrNkpkhF8Tpn
-	lhj6L14CvNw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 96FC55F902;
-	Mon,  6 Jan 2014 16:37:14 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CA9995F900;
-	Mon,  6 Jan 2014 16:37:11 -0500 (EST)
-In-Reply-To: <CAEBDL5VD9C8DXFUS9VawxZhAC0AnR=abV-FEVTdi25NVBPvDVg@mail.gmail.com>
-	(John Szakmeister's message of "Mon, 6 Jan 2014 16:13:44 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: B3AA75CE-771A-11E3-8989-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755952AbaAFVwB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Jan 2014 16:52:01 -0500
+Received: from mail-lb0-f180.google.com ([209.85.217.180]:50877 "EHLO
+	mail-lb0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755704AbaAFVwA convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 6 Jan 2014 16:52:00 -0500
+Received: by mail-lb0-f180.google.com with SMTP id x18so10021177lbi.25
+        for <git@vger.kernel.org>; Mon, 06 Jan 2014 13:51:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=v160D++cRW8h0egc5K7yxH8clDtQGKokp7JKJVDuzhA=;
+        b=VcZuOlkeFPQr/eb+fRfIzE6Aod7vBl/pFTjFK6XoIfsw4yAZ7RAUkvkEtIGv3QNKMC
+         KrcSfrD5EmXj55JZbPm2td//Zf49smngomsM4PgPjdbH1Q1GPBzkWF6DoKZWzCpECRq7
+         3x/liB6bfrD0yU5AlC4gvfWKNaNl8keB9PjK71p3iBsCYsn8flZqukQvKuo1ScA8B89t
+         UqwTeG0Hn6RgA1TVS2d9sXT7jUWyaITSCZXO6SkHBrXRwFX51tKUV/X+o7pT50pkS5C0
+         MB6W6utlQVvDjtbScnU8MTvOZME0DGbljj1JxsFHChzRK8xQJKk5B5BbyxbifPwZnFe2
+         1MrQ==
+X-Received: by 10.152.87.211 with SMTP id ba19mr46017351lab.13.1389045118998;
+ Mon, 06 Jan 2014 13:51:58 -0800 (PST)
+Received: by 10.112.52.40 with HTTP; Mon, 6 Jan 2014 13:51:58 -0800 (PST)
+In-Reply-To: <52CAB508.5010002@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240068>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240069>
 
-John Szakmeister <john@szakmeister.net> writes:
+Thanks for noticing,
+I can reproduce at work, I will try to come-up with an improved version=
+ soon,
 
-> Am I missing something?  If there is something other than @{u} to
-> represent this latter concept, I think `git push` should default to
-> that instead.  But, at least with my current knowledge, that doesn't
-> exist--without explicitly saying so--or treating @{u} as that branch.
-> If there's a better way to do this, I'd love to hear it!
+Cheers,
+Antoine
 
-I see Ram who worked on landing the remote.pushdefault feature is
-CC'ed; this work was started in early April 2013 and your config and
-workflow may not have been adjusted to it.
+On Mon, Jan 6, 2014 at 2:52 PM, Torsten B=C3=B6gershausen <tboegi@web.d=
+e> wrote:
+> On 2013-12-29 12.30, Antoine Pelisse wrote:
+>> Mercurial can have bookmarks pointing to "nullid" (the empty root
+>> revision), while Git can not have references to it.
+>> When cloning or fetching from a Mercurial repository that has such a
+>> bookmark, the import will fail because git-remote-hg will not be abl=
+e to
+>> create the corresponding reference.
+>>
+>> Warn the user about the invalid reference, and continue the import,
+>> instead of stopping right away.
+>>
+>> Signed-off-by: Antoine Pelisse <apelisse@gmail.com>
+>> ---
+>>  contrib/remote-helpers/git-remote-hg | 3 +++
+>>  1 file changed, 3 insertions(+)
+>>
+>> diff --git a/contrib/remote-helpers/git-remote-hg b/contrib/remote-h=
+elpers/git-remote-hg
+>> index eb89ef6..12d850e 100755
+>> --- a/contrib/remote-helpers/git-remote-hg
+>> +++ b/contrib/remote-helpers/git-remote-hg
+>> @@ -625,6 +625,9 @@ def list_head(repo, cur):
+>>  def do_list(parser):
+>>      repo =3D parser.repo
+>>      for bmark, node in bookmarks.listbookmarks(repo).iteritems():
+>> +        if node =3D=3D '0000000000000000000000000000000000000000':
+>> +            warn("Ignoring invalid bookmark '%s'", bmark)
+>> +            continue
+>>          bmarks[bmark] =3D repo[node]
+>>
+>>      cur =3D repo.dirstate.branch()
+>>
+> (Side note: ap/remote-hg-skip-null-bookmarks)
+>
+> When I run the test-suite like this:
+> ~/projects/git/git.pu/contrib/remote-helpers$ debug=3Dt verbose=3Dt m=
+ake test-hg-hg-git.sh
+>
+> All 11 test cases fail on my systems (Debian Wheezy and Mac OS X):
+> [snip]
+> WARNING: Ignoring invalid bookmark 'master'
+> To hg::../hgrepo-git
+>  ! [remote rejected] master -> master
+> error: failed to push some refs to 'hg::../hgrepo-git'
+> not ok 1 - executable bit
+> #
+> [snip]
+>
+>
