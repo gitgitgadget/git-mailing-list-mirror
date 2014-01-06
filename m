@@ -1,7 +1,7 @@
-From: John Szakmeister <john@szakmeister.net>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH 2/2] format-patch: introduce format.defaultTo
-Date: Mon, 6 Jan 2014 15:29:57 -0500
-Message-ID: <CAEBDL5UaS2Hd-Yb417W+Fw_7j1+5sRAgszko-PbU7z901_X+cw@mail.gmail.com>
+Date: Mon, 06 Jan 2014 12:38:30 -0800
+Message-ID: <xmqq1u0kj16h.fsf@gitster.dls.corp.google.com>
 References: <1389028732-27760-1-git-send-email-artagnon@gmail.com>
 	<1389028732-27760-3-git-send-email-artagnon@gmail.com>
 	<xmqqlhythrzq.fsf@gitster.dls.corp.google.com>
@@ -9,60 +9,69 @@ References: <1389028732-27760-1-git-send-email-artagnon@gmail.com>
 	<xmqqa9f8j2n8.fsf@gitster.dls.corp.google.com>
 	<20140106201854.GA28162@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
 	Git List <git@vger.kernel.org>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Jan 06 21:30:06 2014
+X-From: git-owner@vger.kernel.org Mon Jan 06 21:38:39 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W0GoH-0007Wc-G4
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Jan 2014 21:30:05 +0100
+	id 1W0GwZ-0007OI-Ae
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Jan 2014 21:38:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755523AbaAFU37 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Jan 2014 15:29:59 -0500
-Received: from mail-wg0-f45.google.com ([74.125.82.45]:33992 "EHLO
-	mail-wg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755496AbaAFU37 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Jan 2014 15:29:59 -0500
-Received: by mail-wg0-f45.google.com with SMTP id y10so15973361wgg.0
-        for <git@vger.kernel.org>; Mon, 06 Jan 2014 12:29:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=9KkSTz611sng8By9u3nCXuZuKsPxhH2SvV0sNEpCEcw=;
-        b=NrG3l4QkycX1nuM/yxpon/vOPGAoSIv3qCKjYGzfkTJ0ud84vooeV0X+fkX58ni+LX
-         x3b0yNGsMQSHNOYUI5iDMcY0qJ1yoUiE6lkcm7yKcPLQ5btcE7tIQKweUl5KmMIWiNlo
-         kywvN/D9zSyow6ikMuwgEtbSk99DYbS9l6arLFe9lGcOsuVkaMm2NfophXDd5Tx0nnS9
-         I2C97cnyUM7O9Y9+OV+8H2AJdEL+48ZgRfq8BGY0k/Vm4Mh50rqDIDbjIRZEQ3byMaXT
-         Ce+/hmCZCyIe4SlcxPJCl9P9HI5P4QJwF75DyB7OV+v8syKlYI4LqeDONJfUWS5cNhmv
-         YClg==
-X-Received: by 10.180.36.40 with SMTP id n8mr13752274wij.54.1389040197932;
- Mon, 06 Jan 2014 12:29:57 -0800 (PST)
-Received: by 10.180.74.232 with HTTP; Mon, 6 Jan 2014 12:29:57 -0800 (PST)
-In-Reply-To: <20140106201854.GA28162@sigill.intra.peff.net>
-X-Google-Sender-Auth: 0t-hq7ARjdipZd39hTHZxyxEdXs
+	id S1755650AbaAFUif (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Jan 2014 15:38:35 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63140 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755191AbaAFUie (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Jan 2014 15:38:34 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CC14761858;
+	Mon,  6 Jan 2014 15:38:33 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=4WSSly9bmrdcgz4VekaHRP1+aPc=; b=aCuWXD
+	kBGZxVftT39ic/uFDkuXMi+2kD438UGfFqo/CmF8jxtlcDWihAoJGFVt+XO7CAgh
+	g0VchW2FuX+c5eUrcFshWc/+ewESTk9VuFJCL3bskXylTp88i/3rwtHp41YMe06x
+	5DbfWJCyCCOK9gJ8dpUfhZjJ5xaLRZpGApBQA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=VRk8ukb0Nmsc/rXO0fb1zk5BQ5UIx+2m
+	AtJvirxw6o7aMIQjBuENDVnVwJPKJYwPvvG46P3n+0rbRrDKlHdCD0F6adXLh1pf
+	NfgU//z3l4ic7BG/Dna+MFmZ2WBbpLZ1eW8HUWBH/5LZ2I08gF/CHVxVFL4gKoZ4
+	5ICYMlE5cio=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B767661857;
+	Mon,  6 Jan 2014 15:38:33 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 114B761856;
+	Mon,  6 Jan 2014 15:38:32 -0500 (EST)
+In-Reply-To: <20140106201854.GA28162@sigill.intra.peff.net> (Jeff King's
+	message of "Mon, 6 Jan 2014 15:18:54 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 82525FD0-7712-11E3-82DF-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240058>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240059>
 
-On Mon, Jan 6, 2014 at 3:18 PM, Jeff King <peff@peff.net> wrote:
+Jeff King <peff@peff.net> writes:
+
 > On Mon, Jan 06, 2014 at 12:06:51PM -0800, Junio C Hamano wrote:
 >
 >> Unless you set @{u} to this new configuration, in which case the
 >> choice becomes dynamic depending on the current branch, but
->>
+>> 
 >>  - if that is the only sane choice based on the current branch, why
 >>    not use that as the default without having to set the
 >>    configuration?
->>
+>> 
 >>  - Or if that is still insufficient, don't we need branch.*.forkedFrom
 >>    that is different from branch.*.merge, so that different branches
 >>    you want to show "format-patch" output can have different
@@ -73,10 +82,33 @@ On Mon, Jan 6, 2014 at 3:18 PM, Jeff King <peff@peff.net> wrote:
 > like "git rebase" and "git merge" defaulting to upstream. But then there
 > is "git push -u" and "push.default = upstream", which treats the
 > upstream config as something else entirely.
+>
+> So it seems like there is already some confusion, and either way we go,
+> thisis making it worse to some degree (I do not blame Ram, but rather he
+> has stumbled into a hidden sand pit that we have been building for the
+> past few years... :).
+>
+> I wonder if it is too late to try to clarify this dual usage. It kind of
+> seems like the push config is "this is the place I publish to". Which,
+> in many workflows, just so happens to be the exact same as the place you
+> forked from. Could we introduce a new branch.*.pushupstream variable
+> that falls back to branch.*.merge? Or is that just throwing more fuel on
+> the fire (more sand in the pit in my analogy, I guess).
+>
+> I admit I haven't thought it through yet, though. And even if it does
+> work, it may throw a slight monkey wrench in the proposed push.default
+> transition.
 
-Just for more reference, I rarely use "branch.*.merge" as
-"forkedFrom".  I typically want to use master as my target, but like
-Ram, I publish my changes elsewhere for safe keeping.  I think in a
-typical, feature branch-based workflow @{u} would be nearly useless.
+Yeah, when I say "upstream", I never mean it as "where I publish".
+Your upstream is where you get others' work from.
 
--John
+For a "push to somewhere for safekeeping or other people to look at"
+triangular workflow, it does not make any sense to treat that "I
+publish there" place as an upstream (hence having branch.*.remote
+pointing at that publishing point).  Once you stop doing that, and
+instead using branch.*.remote = origin, and branch.*.merge = master,
+where 'origin' is not your publishing point, @{u} will again start
+making sense, I think.
+
+And I thought that is what setting "remote.pushdefault" to the
+publishing point repository was about.
