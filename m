@@ -1,103 +1,91 @@
-From: John Szakmeister <john@szakmeister.net>
-Subject: Re: [PATCH 2/2] format-patch: introduce format.defaultTo
-Date: Mon, 6 Jan 2014 16:13:44 -0500
-Message-ID: <CAEBDL5VD9C8DXFUS9VawxZhAC0AnR=abV-FEVTdi25NVBPvDVg@mail.gmail.com>
-References: <1389028732-27760-1-git-send-email-artagnon@gmail.com>
-	<1389028732-27760-3-git-send-email-artagnon@gmail.com>
-	<xmqqlhythrzq.fsf@gitster.dls.corp.google.com>
-	<CALkWK0kZn44x98td9YXNT5VfhVs=ueeSty9M7Vh08bdoGjGQYg@mail.gmail.com>
-	<xmqqa9f8j2n8.fsf@gitster.dls.corp.google.com>
-	<20140106201854.GA28162@sigill.intra.peff.net>
-	<CAEBDL5UaS2Hd-Yb417W+Fw_7j1+5sRAgszko-PbU7z901_X+cw@mail.gmail.com>
-	<20140106204203.GI3881@google.com>
+From: Ben Maurer <bmaurer@fb.com>
+Subject: RE: [PATCH] [RFC] Making use of bitmaps for thin objects
+Date: Mon, 6 Jan 2014 21:15:04 +0000
+Message-ID: <5CDDBDF2D36D9F43B9F5E99003F6A0D4466883DF@PRN-MBX02-1.TheFacebook.com>
+References: <1387741654-14890-1-git-send-email-bmaurer@fb.com>,<20140106145723.GA15489@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 06 22:13:52 2014
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Jan 06 22:15:23 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W0HUc-0000Hw-Px
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Jan 2014 22:13:51 +0100
+	id 1W0HW2-0002lR-HL
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Jan 2014 22:15:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756241AbaAFVNr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Jan 2014 16:13:47 -0500
-Received: from mail-we0-f178.google.com ([74.125.82.178]:51494 "EHLO
-	mail-we0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755984AbaAFVNq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Jan 2014 16:13:46 -0500
-Received: by mail-we0-f178.google.com with SMTP id u57so15978665wes.23
-        for <git@vger.kernel.org>; Mon, 06 Jan 2014 13:13:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=L37QbuikfLETMwrgu1gNQ7GwjQhGR0qc22XVriV5O1o=;
-        b=kPzHe3CGYd5EGxoAnqaj8sUS5+mhdb2jTdcIrCxiLD/xllhzjvxrPBsefsbUBUz19u
-         O8yJK6e5YYlohxpmCscDbIpG11m75acFUuKKO7IJvnxM4rmjgvJBILi5LXd9QhTBGQ8r
-         mOw0SRAUJM1h6bUp6euv298KT4/3ARwmA22pSlMOKLHxUp8UFf0fZJBSLnLYcPFh82nO
-         ATK6b6JlJjedSPMqPgzaH2/Z/h+bDrGDA837lEws493PGFJf6wtjOOzm1HwCZUg9zE/O
-         RdzwWQ9VlkBs+tlW68lrMpn9ei6zERGFBg1PAJl2CkT/jy3zQU0zNC5+6W27Js8B7bUo
-         M16Q==
-X-Received: by 10.180.19.165 with SMTP id g5mr13852332wie.31.1389042824888;
- Mon, 06 Jan 2014 13:13:44 -0800 (PST)
-Received: by 10.180.74.232 with HTTP; Mon, 6 Jan 2014 13:13:44 -0800 (PST)
-In-Reply-To: <20140106204203.GI3881@google.com>
-X-Google-Sender-Auth: MBWQeUznIr3pCb53H1-6eHwMatA
+	id S1756297AbaAFVPL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Jan 2014 16:15:11 -0500
+Received: from mx0a-00082601.pphosted.com ([67.231.145.42]:21984 "EHLO
+	mx0a-00082601.pphosted.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756304AbaAFVPI convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 6 Jan 2014 16:15:08 -0500
+Received: from pps.filterd (m0044010 [127.0.0.1])
+	by mx0a-00082601.pphosted.com (8.14.5/8.14.5) with SMTP id s06LDsOO008676;
+	Mon, 6 Jan 2014 13:15:07 -0800
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fb.com; h=from : to : cc : subject :
+ date : message-id : references : in-reply-to : content-type :
+ content-transfer-encoding : mime-version; s=facebook;
+ bh=jPESNLj8qkgid2cezUYMPiNInfo0e0v7PPX6RNMwLZI=;
+ b=DrWoaOsmG9DKBI9pYdQ4QDFCkH6OUXLiw5B3m6efdqGvFdDsRMayJbISmBte1rf6TaH2
+ /OmPkblpA8chEbsIjazSOfM3xTnF9EWZ8Rm5xPsCPbreAakJR9701DLsgBmi8grLoiuE
+ do61rcDczujUtdve43hXP2jwiRmqxdVUndk= 
+Received: from mail.thefacebook.com (mailwest.thefacebook.com [173.252.71.148])
+	by mx0a-00082601.pphosted.com with ESMTP id 1h82rjgdfk-1
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=OK);
+	Mon, 06 Jan 2014 13:15:07 -0800
+Received: from PRN-MBX02-1.TheFacebook.com ([169.254.1.64]) by
+ PRN-CHUB02.TheFacebook.com ([fe80::5de8:34:5a87:6990%12]) with mapi id
+ 14.03.0174.001; Mon, 6 Jan 2014 13:15:04 -0800
+Thread-Topic: [PATCH] [RFC] Making use of bitmaps for thin objects
+Thread-Index: AQHO/06wG06Z2WW/kESY1GiAdQ1uTpp4ZrUA//+vgJY=
+In-Reply-To: <20140106145723.GA15489@sigill.intra.peff.net>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [192.168.16.4]
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:5.11.87,1.0.14,0.0.0000
+ definitions=2014-01-06_04:2014-01-06,2014-01-06,1970-01-01 signatures=0
+X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
+ kscore.is_bulkscore=5.51525491943039e-12 kscore.compositescore=0
+ circleOfTrustscore=0 compositescore=0.997600857122248
+ urlsuspect_oldscore=0.997600857122248 suspectscore=0
+ recipient_domain_to_sender_totalscore=0 phishscore=0 bulkscore=0
+ kscore.is_spamscore=0 recipient_to_sender_totalscore=0
+ recipient_domain_to_sender_domain_totalscore=64355
+ rbsscore=0.997600857122248 spamscore=0
+ recipient_to_sender_domain_totalscore=0 urlsuspectscore=0.9 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=7.0.1-1305240000
+ definitions=main-1401060146
+X-FB-Internal: deliver
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240064>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240065>
 
-On Mon, Jan 6, 2014 at 3:42 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> John Szakmeister wrote:
->
->>                                                        I think in a
->> typical, feature branch-based workflow @{u} would be nearly useless.
->
-> I thought the idea of @{u} was that it represents which ref one
-> typically wants to compare the current branch to.  It is used by
-> 'git branch -v' to show how far ahead or behind a branch is and
-> used by 'git pull --rebase' to forward-port a branch, for example.
->
-> So a topic branch with @{u} pointing to 'master' or 'origin/master'
-> seems pretty normal and hopefully the shortcuts it allows can make
-> life more convenient.
+> Sorry for the slow reply; I've been on vacation.
 
-Is there an outline of this git workflow in the documentation
-somewhere?  Do you save your work in a forked repo anywhere?  If so,
-how do you typically save your work.  I typically have my @{u}
-pointing to where I save my work.  Perhaps I'm missing something
-important here, but I don't feel like the current command set and
-typical workflow (at least those in tutorials) leads you in that
-direction.
+No worries.
 
-Here is one example:
-   <https://www.atlassian.com/git/workflows#!workflow-feature-branch>
+> When you build your bitmaps, do you set the pack.writeBitmapHashCache
+> option? We found that it makes a significant difference during the
+> compression phase, as otherwise git attempts deltas between random files
+> based on size. Here are some numbers for a simulated fetch from
+> torvalds/linux, representing about 7 weeks of history. Running:
 
-> It is *not* primarily about where the branch gets pushed.  After all,
-> in both the 'matching' and the 'simple' mode, "git push" does not push
-> the current branch to its upstream @{u} unless @{u} happens to have
-> the same name.
+Yeah, I enabled this option. I don't have timings for generating the bitmap index without this option unfortunately (this is a pretty large repo, doing the full repack that I needed to do to generate the first version took 15+ minutes)
 
-Then where does it get pushed?  Do you always specify where to save your work?
+> Having been confused by it myself before, I think the magic keyword is
+> "preferred base". Once you know that, the code makes more sense. :)
 
-FWIW, I think the idea of treating @{u} as the eventual recipient of
-your changes is good, but then it seems like Git is lacking the
-"publish my changes to this other branch" concept.
+Ah, nice! That was pretty confusing :-)
 
-Am I missing something?  If there is something other than @{u} to
-represent this latter concept, I think `git push` should default to
-that instead.  But, at least with my current knowledge, that doesn't
-exist--without explicitly saying so--or treating @{u} as that branch.
-If there's a better way to do this, I'd love to hear it!
+> Let me know how this patch does for you. My testing has been fairly
+> limited so far.
 
-Thanks!
-
--John
+This patch looks like a much cleaner version :-). Works well for me, but my test setup may not be great since I didn't get any errors from completely ignoring the haves bitmap :-). 
