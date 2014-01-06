@@ -1,7 +1,7 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
+From: Jeff King <peff@peff.net>
 Subject: Re: [PATCH 2/2] format-patch: introduce format.defaultTo
-Date: Mon, 6 Jan 2014 12:42:03 -0800
-Message-ID: <20140106204203.GI3881@google.com>
+Date: Mon, 6 Jan 2014 15:43:54 -0500
+Message-ID: <20140106204353.GB643@sigill.intra.peff.net>
 References: <1389028732-27760-1-git-send-email-artagnon@gmail.com>
  <1389028732-27760-3-git-send-email-artagnon@gmail.com>
  <xmqqlhythrzq.fsf@gitster.dls.corp.google.com>
@@ -10,73 +10,65 @@ References: <1389028732-27760-1-git-send-email-artagnon@gmail.com>
  <20140106201854.GA28162@sigill.intra.peff.net>
  <CAEBDL5UaS2Hd-Yb417W+Fw_7j1+5sRAgszko-PbU7z901_X+cw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
 	Ramkumar Ramachandra <artagnon@gmail.com>,
 	Git List <git@vger.kernel.org>
 To: John Szakmeister <john@szakmeister.net>
-X-From: git-owner@vger.kernel.org Mon Jan 06 21:42:14 2014
+X-From: git-owner@vger.kernel.org Mon Jan 06 21:44:01 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W0H01-00063H-TE
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Jan 2014 21:42:14 +0100
+	id 1W0H1k-00019R-Ec
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Jan 2014 21:44:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755628AbaAFUmJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Jan 2014 15:42:09 -0500
-Received: from mail-yh0-f45.google.com ([209.85.213.45]:34266 "EHLO
-	mail-yh0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753702AbaAFUmI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Jan 2014 15:42:08 -0500
-Received: by mail-yh0-f45.google.com with SMTP id v1so3760863yhn.32
-        for <git@vger.kernel.org>; Mon, 06 Jan 2014 12:42:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=RU4Q3iPpciAi1FtS+zWGOyWETqPfw/zEIj39NId2VUQ=;
-        b=jZyR2M43ZFTolepq1B/pmSulufRDYuTDgovhYNWO0NPGsvzMeu+2uU3ESbjANNjTLP
-         MUQuUHuCyC4AZ2vOYGQLTEg/lQHU+VJKqxMPlJaKvgosBt/Yn+n84y0FD0xsnH6Qntti
-         Gzk7WxMaENVW+5OWUh06a6FgFuJwwnYD8Q6m6fRvJUih9B71/4rh24i4FaB30zS39Mdc
-         RunxWTR5/yLvAzFfhIb3TbBOeXjUFp8SRn7Law6dYedrfwQ1nZcpg2CV4m7mJUetLdyM
-         D1BcbSvBoFoQSqFA19yWvTy4eFTBlnB4IC95s+GQjRURlMwvIHZ19o0/qfHEN2SK/dlb
-         jb7Q==
-X-Received: by 10.236.51.71 with SMTP id a47mr45046028yhc.22.1389040926640;
-        Mon, 06 Jan 2014 12:42:06 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id m68sm20673363yhj.22.2014.01.06.12.42.05
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 06 Jan 2014 12:42:06 -0800 (PST)
+	id S1756124AbaAFUn4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Jan 2014 15:43:56 -0500
+Received: from cloud.peff.net ([50.56.180.127]:56095 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755760AbaAFUnz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Jan 2014 15:43:55 -0500
+Received: (qmail 17242 invoked by uid 102); 6 Jan 2014 20:43:55 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 06 Jan 2014 14:43:55 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 06 Jan 2014 15:43:54 -0500
 Content-Disposition: inline
 In-Reply-To: <CAEBDL5UaS2Hd-Yb417W+Fw_7j1+5sRAgszko-PbU7z901_X+cw@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240061>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240062>
 
-John Szakmeister wrote:
+On Mon, Jan 06, 2014 at 03:29:57PM -0500, John Szakmeister wrote:
 
->                                                        I think in a
+> > Yeah, I had similar thoughts. I personally use "branch.*.merge" as
+> > "forkedFrom", and it seems like we are going that way anyway with things
+> > like "git rebase" and "git merge" defaulting to upstream. But then there
+> > is "git push -u" and "push.default = upstream", which treats the
+> > upstream config as something else entirely.
+> 
+> Just for more reference, I rarely use "branch.*.merge" as
+> "forkedFrom".  I typically want to use master as my target, but like
+> Ram, I publish my changes elsewhere for safe keeping.  I think in a
 > typical, feature branch-based workflow @{u} would be nearly useless.
 
-I thought the idea of @{u} was that it represents which ref one
-typically wants to compare the current branch to.  It is used by
-'git branch -v' to show how far ahead or behind a branch is and
-used by 'git pull --rebase' to forward-port a branch, for example.
+In my feature-branch development for git.git, my upstream is almost
+always origin/master[1]. However, sometimes feature branches have
+dependencies[2] on each other. Representing that via the "upstream"
+field makes sense, since that is what you forked from, and what you
+would want "git rebase" to start from.
 
-So a topic branch with @{u} pointing to 'master' or 'origin/master'
-seems pretty normal and hopefully the shortcuts it allows can make
-life more convenient.
+-Peff
 
-It is *not* primarily about where the branch gets pushed.  After all,
-in both the 'matching' and the 'simple' mode, "git push" does not push
-the current branch to its upstream @{u} unless @{u} happens to have
-the same name.
+[1] I do not even have a local "master" branch for git.git work, as it
+    would just be a pain to keep up to date. I am either working
+    directly on a topic branch, or I am integrating in my own personal
+    branch.
 
-Hoping that clarifies,
-Jonathan
+[2] You should try to minimize dependencies between feature branches, of
+    course, but sometimes they simply form a logical progression of
+    features.
