@@ -1,75 +1,62 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [BUG] rebase --onto doesn't abort properly
-Date: Mon, 06 Jan 2014 10:44:32 -0800
-Message-ID: <xmqqha9hhrvz.fsf@gitster.dls.corp.google.com>
-References: <CALkWK0mEN=LjWKKdWznCXk5YwRQXVDPwtxUvVJnrG9zPPvH-Rw@mail.gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 2/2] format-patch: introduce format.defaultTo
+Date: Tue, 7 Jan 2014 00:19:02 +0530
+Message-ID: <CALkWK0kZn44x98td9YXNT5VfhVs=ueeSty9M7Vh08bdoGjGQYg@mail.gmail.com>
+References: <1389028732-27760-1-git-send-email-artagnon@gmail.com>
+ <1389028732-27760-3-git-send-email-artagnon@gmail.com> <xmqqlhythrzq.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 06 19:44:42 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jan 06 19:49:49 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W0FAH-0003zL-BU
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Jan 2014 19:44:41 +0100
+	id 1W0FFD-0005RV-Mj
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Jan 2014 19:49:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755990AbaAFSoh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Jan 2014 13:44:37 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45694 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755831AbaAFSog (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Jan 2014 13:44:36 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BD62F5FC8E;
-	Mon,  6 Jan 2014 13:44:35 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=fEIbQfOWZU6rO9fe8ErAiJTXnhQ=; b=efX1Ca
-	BZ/khPVRVzJHa9cHUVuHeujUoNdRp5sM7+Pa/CkJkm4h5JVwCOaIKBUyMdzw+nF7
-	wDWLWv0aeada7/lWcUlmG/v5ECuwn8uaaCszKjVLQmRCxBvYO3SeRkxA9oxcwLZP
-	nGBERrXI6YK/bAbOw5r3Ruid0kzvL7AT9+dVo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=YlY78lriYKlnIjL5fSm0bgHe/+fEA/e2
-	s6eZm/LkJxZMEWncVmHHZcUBp4429GRXrMJnn1krctFRrF+cUA5EAn4Hr8/FGha8
-	VTm6QKQotlhQ/VPCo+PdtlCJT32fukQp9JVRhHjLem+I/tMK6U6XLbw+l3kOwUqm
-	r7sIyyilCZ8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AB87D5FC8C;
-	Mon,  6 Jan 2014 13:44:35 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C24ED5FC8B;
-	Mon,  6 Jan 2014 13:44:34 -0500 (EST)
-In-Reply-To: <CALkWK0mEN=LjWKKdWznCXk5YwRQXVDPwtxUvVJnrG9zPPvH-Rw@mail.gmail.com>
-	(Ramkumar Ramachandra's message of "Mon, 6 Jan 2014 23:12:01 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 966433B4-7702-11E3-884E-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755873AbaAFSto (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Jan 2014 13:49:44 -0500
+Received: from mail-ie0-f181.google.com ([209.85.223.181]:65443 "EHLO
+	mail-ie0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754699AbaAFStn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Jan 2014 13:49:43 -0500
+Received: by mail-ie0-f181.google.com with SMTP id e14so17996613iej.26
+        for <git@vger.kernel.org>; Mon, 06 Jan 2014 10:49:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=nDR6R5cYjQjBihXTqvGcRCiCUP9LyKjCvHgIp3MURX0=;
+        b=hsP+UWR+70G0YDW78ZpaIVGtih85XnIMz5T9q9c+pxPBFyR8BFtrULU78U7qfRI87O
+         XAHmtSHD1hDBLDQb/5ECEtPaFmPE+WgaNW/qqSW/LSVFdkVopYC9lyHnUWnOEO8PLJG/
+         USjPxCBzC6T43m7wV/hPAYY+hUbXacdyMcqhWzOl7s+wy9LlVklzpAv7YrjSCpgKizC/
+         PpO7g7NmiNyX5B8huvQkBlz/lnb4ODV7bgk6P33cuSQAOgRogq9922ml1ANZbEiVJpzg
+         z3TDGspn1YavXTNpC3KREPe87jEr4BvIuJkX6LUsmoFPlk7vh2TWIvfl3dttu+MVztP7
+         dHaw==
+X-Received: by 10.50.25.227 with SMTP id f3mr21527004igg.16.1389034183013;
+ Mon, 06 Jan 2014 10:49:43 -0800 (PST)
+Received: by 10.64.195.9 with HTTP; Mon, 6 Jan 2014 10:49:02 -0800 (PST)
+In-Reply-To: <xmqqlhythrzq.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240046>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240047>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+Junio C Hamano wrote:
+>  - why is a single branch name sufficient?
 
-> Hi,
->
-> On the latest git, I noticed that a rebase --onto doesn't abort
-> properly. Steps to reproduce:
->
->   # on some topic branch
->   $ git rebase --onto master @~10
->   ^C # quickly!
->   $ git rebase --abort
->   # HEAD is still detached
+It does accept a <revision>, so any form is allowed; but why would
+anyone want that in a format.defaultTo? I'm not sure we want to impose
+an artificial restriction on the configuration variable though.
 
-I do not think --abort was designed to abort an uncontrolled stop
-like ^C in the first place.  To allow that kind of "recovery", you
-need to teach "rebase" to first record the state you would want to
-go back to before doing anything, but then what happens if the ^C
-comes when you are still in the middle of doing so?
+>  - is it a better option to simply default to @{u}, if one exists,
+>    instead of failing?
+
+I'm not sure @{u} is a good default. Personally, my workflow involves
+publishing my fork before sending out patches; mainly so that I can
+compare with @{u} when I do re-spins. People can put @{u} in
+format.defaultTo if it suits their workflow though.
