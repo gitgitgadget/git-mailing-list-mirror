@@ -1,121 +1,86 @@
-From: "W. Trevor King" <wking@tremily.us>
-Subject: Re: [PATCH 2/2] Introduce git submodule attached update
-Date: Mon, 6 Jan 2014 07:58:49 -0800
-Message-ID: <20140106155849.GS3156@odin.tremily.us>
-References: <1388890249-3577-1-git-send-email-ceztko@gmail.com>
- <1388890249-3577-2-git-send-email-ceztko@gmail.com>
- <20140105203349.GB3737@book.hvoigt.net>
- <CALas-ijydCqhx5mgmMkcBE73TqNVckRooZ5x22uSq1Ldm4CGDA@mail.gmail.com>
- <20140106141805.GB27265@t2784.greatnet.de>
+From: Thomas Ackermann <th.acker@arcor.de>
+Subject: Aw: Re: Re: Re: [Bug report] 'git status' always says "Your branch
+ is up-to-date with 'origin/master'"
+Date: Mon, 6 Jan 2014 17:00:23 +0100 (CET)
+Message-ID: <1067660482.1596252.1389024023072.JavaMail.ngmail@webmail11.arcor-online.net>
+References: <20140106154552.GA22189@google.com> <CAGyf7-FX1sPjwvKdxeEXopffFPiftgDRqoe7NRWyM1Cm=5n6Sw@mail.gmail.com>
+ <1963290835.719443.1388996669450.JavaMail.ngmail@webmail15.arcor-online.net>
+ <1283978462.720554.1388999328222.JavaMail.ngmail@webmail15.arcor-online.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="ffBYM5qgR8HH9Mta"
-Cc: Francesco Pretto <ceztko@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Jens Lehmann <jens.lehmann@web.de>,
-	Junio C Hamano <gitster@pobox.com>
-To: Heiko Voigt <hvoigt@hvoigt.net>
-X-From: git-owner@vger.kernel.org Mon Jan 06 16:59:03 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: bturner@atlassian.com, worldhello.net@gmail.com,
+	git@vger.kernel.org, gitster@pobox.com
+To: jrnieder@gmail.com, th.acker@arcor.de
+X-From: git-owner@vger.kernel.org Mon Jan 06 17:00:43 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W0CZu-0005wf-J1
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Jan 2014 16:58:58 +0100
+	id 1W0CbX-0000Sk-Er
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Jan 2014 17:00:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754769AbaAFP6y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Jan 2014 10:58:54 -0500
-Received: from qmta09.westchester.pa.mail.comcast.net ([76.96.62.96]:51279
-	"EHLO qmta09.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753572AbaAFP6x (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 6 Jan 2014 10:58:53 -0500
-Received: from omta15.westchester.pa.mail.comcast.net ([76.96.62.87])
-	by qmta09.westchester.pa.mail.comcast.net with comcast
-	id Aepc1n00A1swQuc59fysvY; Mon, 06 Jan 2014 15:58:52 +0000
-Received: from odin.tremily.us ([24.18.63.50])
-	by omta15.westchester.pa.mail.comcast.net with comcast
-	id Afyr1n00U152l3L3bfysCA; Mon, 06 Jan 2014 15:58:52 +0000
-Received: by odin.tremily.us (Postfix, from userid 1000)
-	id 1866AE90D36; Mon,  6 Jan 2014 07:58:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
-	t=1389023930; bh=tLbbo3z91Zs5b7c0BCd4heNeAaKSPUFYGxf6ldi/cvY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=I4V6Qlfo2m9mBExE5zDfTrK/hbpymKM5/pjYLJLbEzKgjF/ssYKytrmTqjoYaS2D4
-	 R2NN1ExmibeEVtc9QfRYB0OQA6ORCaaqBZEasTdAGivWBepq6EsRYgsvOCsPmw7DOB
-	 Ze//qAPHbXPt1ce+TPjPtDAGEqdH7cy7Y2kzy6qc=
-Content-Disposition: inline
-In-Reply-To: <20140106141805.GB27265@t2784.greatnet.de>
-OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
- url=http://tremily.us/pubkey.txt
-User-Agent: Mutt/1.5.22 (2013-10-16)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-	s=q20121106; t=1389023932;
-	bh=1Ga+Ob+tYZ+Z+ZeK40EiJen3veo0iGLnitOBsBHUMTY=;
-	h=Received:Received:Received:Date:From:To:Subject:Message-ID:
-	 MIME-Version:Content-Type;
-	b=Pzs0OLCUQZpcBiQdNCXzGxTWQj7p2f8O2RFEiLXH8ZrofqfabDXiydhz5Xk0CUWoL
-	 nR0OYu7aOaBjDbE/3DaZBmDdfiBb72H0PE47B6IiOP4Sy6PiZtmG2lVf2IO7oqNcUz
-	 eltK9T3I16ByQCtIGGcAzkTgMoUSzo5tYyqGJn3NHEw5+bYrOGe8QenL4zRN6g+pW+
-	 Byec5DYGBPUHbZLXsPch+UO1aFOYNFfD32vp3/oJdrlXhXxNOzRbI8WgQ3fNHNkMR/
-	 I9I9vVAU6UaG1ueZrMKeTZ7EG7spqq+G2uAuomsAPNKZjdXCdqcFTQiCPKmrHPj32l
-	 /gotT6j31n3QA==
+	id S1754919AbaAFQA3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Jan 2014 11:00:29 -0500
+Received: from mail-in-03.arcor-online.net ([151.189.21.43]:59659 "EHLO
+	mail-in-03.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754733AbaAFQAY (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 6 Jan 2014 11:00:24 -0500
+Received: from mail-in-01-z2.arcor-online.net (mail-in-01-z2.arcor-online.net [151.189.8.13])
+	by mx.arcor.de (Postfix) with ESMTP id 24D33D8FB8;
+	Mon,  6 Jan 2014 17:00:23 +0100 (CET)
+Received: from mail-in-07.arcor-online.net (mail-in-07.arcor-online.net [151.189.21.47])
+	by mail-in-01-z2.arcor-online.net (Postfix) with ESMTP id 1E2E37DAF0F;
+	Mon,  6 Jan 2014 17:00:23 +0100 (CET)
+Received: from webmail11.arcor-online.net (webmail11.arcor-online.net [151.189.8.83])
+	by mail-in-07.arcor-online.net (Postfix) with ESMTP id 16918107A70;
+	Mon,  6 Jan 2014 17:00:23 +0100 (CET)
+X-DKIM: Sendmail DKIM Filter v2.8.2 mail-in-07.arcor-online.net 16918107A70
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arcor.de; s=mail-in;
+	t=1389024023; bh=VsvymcMRQqfSa+v6ReMafaTx9LvXt9Zj14Rr1QkaZSU=;
+	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	b=mRnWnwCn5FTVAELsrYNcxOxPCXs/gbm4PLo9+ZuY00Oni06ZKsePg67cPZaAZjTGw
+	 yz6FqokX/JsC5zwa+kaRfFXY2kbtF4GVbckjYw5GTY4bCyGt+Dh/OVabclo9rJNmpU
+	 HMy0rLFKlmj/JYoUFd8sSuYDW2gocgUgayiOUnK0=
+Received: from [178.7.31.225] by webmail11.arcor-online.net (151.189.8.83) with HTTP (Arcor Webmail); Mon, 6 Jan 2014 17:00:17 +0100 (CET)
+In-Reply-To: <20140106154552.GA22189@google.com>
+X-ngMessageSubType: MessageSubType_MAIL
+X-WebmailclientIP: 178.7.31.225
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240019>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240020>
 
+ 
+> > But for the simple use case where you only have a master
+> > branch I consider it not really helpful and - at least for me -
+> > misleading.
+> 
+> I see what you mean, and you're not the only one.
+> 
+> Git follows a rule of "never contact another machine unless explicitly
+> asked to using a command such as 'git pull' or 'git fetch'".  To
+> support this, it makes a distinction between (1) the remote-tracking
+> ref origin/master and (2) the actual branch "master" in the remote
+> repository.  The former is what is updated by 'git fetch', and the
+> latter is something git does not know about without talking to the
+> remote server.
+> 
+> What documentation did you use when first starting to learn git?
+> Perhaps it can be fixed to emphasize the distinction between (1) and
+> (2) earlier.
 
---ffBYM5qgR8HH9Mta
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I think it's not the problem of the documentation but of myself
+not having it read thorough enough ;-)
 
-On Mon, Jan 06, 2014 at 03:18:05PM +0100, Heiko Voigt wrote:
-> If you simply want to always checkout the development tip of some
-> project you could do something like this:
->=20
-> 	git submodule foreach 'git fetch && git checkout origin/master'
+(This new feature in V1.8.5 of course is not documented in any of the books
+up to now but in the future could be used to explain the above mentioned
+rule.)
 
-Or (respecting submodule.<name>.branch):
+Thanks to you, Bryan and Jiang for your help!
 
-  $ git submodule update --remote
-
-You can even:
-
-  $ git submodule update --remote --recursive
-
-whenever you get an itch to upgrade everything everything in one
-sweeping, hard-to-debug move ;).
-
-Cheers,
-Trevor
-
---=20
-This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
-For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
-
---ffBYM5qgR8HH9Mta
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (GNU/Linux)
-
-iQIcBAEBAgAGBQJSytK3AAoJEKKfehoaNkbtsmMQAJJMF56oCruv1mIuvEkEOlic
-XuaHTKZXRoAPS76MQozgyJ6+k8YVBsW3eyezu2mNs1TU0p1lz1qHiy0sjte62bLS
-9qsAaqu3/xoWi60t4y7uxRchkHFHEi1d0FwOeJ8lX0rTtRT0IanzWAZILsozpIv+
-84fQNAzEJCkQhaFytwGBbwjCtsqXXZ1aMTZ/rGznzGdAOO33Lzh4DdohScQJHVas
-Z3c2K6XiJa+avRANyjZyIgUOJKwhu45rmlIbv/OuuD9jMJbmrUe3KlXweT0R2/f+
-UfRomE0rcv7BdZq1kmox8e5WHYv6Ho0tyr1QPs28Sw86fOJPfEyLFqfSOLBD+AI2
-tzEeOKYYJyEjIi6QYy0e25wc43jxnVUWVf9sVcffEV480sdflH3TzyIVg6JlUYI1
-RRle76pPxt2PCpaMIUnkD1B0ftxwSINakv6w3opfJk+zecx0yu9JhXaNpMdkL1kM
-pgDPnxCuXNSY7JQ1J27DkJWbgkQ0CEpFOaCEotVFYNJZ9EDEQYgGx8wEDPaxT9bZ
-+ZbWk6cjj7iVlE7vWT/c+ZNIiIFUKCtKt7DPHz/VfywtfmoeLSVeycmmWutW3JfO
-YPJs8xQ9lHSCmJeBgykR0mm4hcj2WsqehALgpXaPqnYFSz0mL/CwrM+AzJJuW6GP
-yKtpNHOHd26I9Pt8lDdx
-=8+ol
------END PGP SIGNATURE-----
-
---ffBYM5qgR8HH9Mta--
+---
+Thomas
