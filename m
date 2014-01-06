@@ -1,79 +1,78 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC v2] submodule: Respect requested branch on all clones
-Date: Mon, 06 Jan 2014 13:32:52 -0800
-Message-ID: <xmqqsit0hk3f.fsf@gitster.dls.corp.google.com>
-References: <CALas-ii90x07Kbxzy_siBJV_RHPkvBw7spFBD9vi6o43mU1k6g@mail.gmail.com>
-	<d0de817dfc687fd943349c9d3e1d410161a0f01e.1388938473.git.wking@tremily.us>
-	<CALas-ijwb+20dArOGCnZJSqEwU8+ufUpOEktUJ2hAOW_BLpgxw@mail.gmail.com>
-	<20140106144708.GC27265@t2784.greatnet.de>
-	<xmqqtxdhjbgp.fsf@gitster.dls.corp.google.com>
-	<20140106173708.GU3156@odin.tremily.us>
+Subject: Re: [PATCH 2/2] format-patch: introduce format.defaultTo
+Date: Mon, 06 Jan 2014 13:37:07 -0800
+Message-ID: <xmqqlhyshjwc.fsf@gitster.dls.corp.google.com>
+References: <1389028732-27760-1-git-send-email-artagnon@gmail.com>
+	<1389028732-27760-3-git-send-email-artagnon@gmail.com>
+	<xmqqlhythrzq.fsf@gitster.dls.corp.google.com>
+	<CALkWK0kZn44x98td9YXNT5VfhVs=ueeSty9M7Vh08bdoGjGQYg@mail.gmail.com>
+	<xmqqa9f8j2n8.fsf@gitster.dls.corp.google.com>
+	<20140106201854.GA28162@sigill.intra.peff.net>
+	<CAEBDL5UaS2Hd-Yb417W+Fw_7j1+5sRAgszko-PbU7z901_X+cw@mail.gmail.com>
+	<20140106204203.GI3881@google.com>
+	<CAEBDL5VD9C8DXFUS9VawxZhAC0AnR=abV-FEVTdi25NVBPvDVg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Heiko Voigt <hvoigt@hvoigt.net>,
-	Francesco Pretto <ceztko@gmail.com>, Git <git@vger.kernel.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: "W. Trevor King" <wking@tremily.us>
-X-From: git-owner@vger.kernel.org Mon Jan 06 22:33:03 2014
+Cc: Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: John Szakmeister <john@szakmeister.net>
+X-From: git-owner@vger.kernel.org Mon Jan 06 22:37:24 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W0HnD-0002FD-6r
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Jan 2014 22:33:03 +0100
+	id 1W0HrQ-0002Qz-Ea
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Jan 2014 22:37:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756249AbaAFVc7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Jan 2014 16:32:59 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41547 "EHLO
+	id S1755563AbaAFVhR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Jan 2014 16:37:17 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54765 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755441AbaAFVc6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Jan 2014 16:32:58 -0500
+	id S1755441AbaAFVhQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Jan 2014 16:37:16 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E7AD65F7D1;
-	Mon,  6 Jan 2014 16:32:57 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1DDF45F905;
+	Mon,  6 Jan 2014 16:37:15 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=mlLPWc4p6K3KGRWJSyJqK0qaqM4=; b=YNNnom
-	sccD/PGl9m6yZSn7feSz0LKQ0o3Qa8YGsEwP/2N2o4CWQAJEtz/9/G9jfCZeRa9K
-	FB7suRarAINI7QOpBMbwEGRcIyh4MnAA7PcC1E3bU174WNt4qnjaVwPNojZv7ehV
-	OrD7g6VF286SQ1Rjl4uFzAsd0uzk+g43FyeE8=
+	:content-type; s=sasl; bh=asP2UE0Z8YGAfMTH3bR6Kb+MQnQ=; b=TWtZIi
+	wvdIOsBl+DDvS9u9jDDgN28PUVPcEwshoVvgdRHU4mwNVKNh5/pfqKIr3Ppr/kl8
+	uatOhMFnsP4tQVFf5iF8+ofr69QgEMA6W5jOFelHjVefqjNqi/ZSEeuZUNxImF4R
+	1uuwtwflTaLKijwuIiOEEWYnlOghYOotTN6QQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Gww0yuxTQCF9vI0Jg+z5NaT7LMjUfjbW
-	hoN0GQogNqL7s1B+YOZVsleBQ+1zdSA7wsXszDUn/qP9QslCwOZW29YOE8zNsHHT
-	dqlGlyb4aluDDGtmO+UMZO55AHHpPn/cEMdSyD5pDjeLxlLTrJGOzJhUgzQUEhsB
-	rHZhSE6C9YI=
+	:content-type; q=dns; s=sasl; b=UnepGNnabMa5n3KLL+ou25YNGC6FUXd1
+	5dJ7UFTVsAKXNwxoqeDxs06uBoZB5ruMAw3qyI00zm+jFrUXvjgZy9mCLibujeL3
+	2DmHG/AGhHpEWih818LOzirSdEKo+DXgvSEYpwBpAiXLOJ9bSZrwGrNkpkhF8Tpn
+	lhj6L14CvNw=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D75AB5F7D0;
-	Mon,  6 Jan 2014 16:32:57 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 96FC55F902;
+	Mon,  6 Jan 2014 16:37:14 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 082445F7CF;
-	Mon,  6 Jan 2014 16:32:56 -0500 (EST)
-In-Reply-To: <20140106173708.GU3156@odin.tremily.us> (W. Trevor King's message
-	of "Mon, 6 Jan 2014 09:37:08 -0800")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CA9995F900;
+	Mon,  6 Jan 2014 16:37:11 -0500 (EST)
+In-Reply-To: <CAEBDL5VD9C8DXFUS9VawxZhAC0AnR=abV-FEVTdi25NVBPvDVg@mail.gmail.com>
+	(John Szakmeister's message of "Mon, 6 Jan 2014 16:13:44 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 1BCBC672-771A-11E3-8F6A-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: B3AA75CE-771A-11E3-8989-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240067>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240068>
 
-"W. Trevor King" <wking@tremily.us> writes:
+John Szakmeister <john@szakmeister.net> writes:
 
->> And wouldn't it make it unnecessary to have a new "re-attach" option
->> if such a mode that never have to detach is used?
->
-> I think so, but we currently don't have a "never detached" route for
-> folks that are cloning submodules via update (instead of via
-> 'submodule add').  Currently, new clone-updates will always leave you
-> with a detached HEAD (unless you have branch-creation in your update
-> !command).  My patch aims to close this detached-HEAD gap, for folks
-> we expect will be doing local development, by creating an initial
-> branch at clone-update time.
+> Am I missing something?  If there is something other than @{u} to
+> represent this latter concept, I think `git push` should default to
+> that instead.  But, at least with my current knowledge, that doesn't
+> exist--without explicitly saying so--or treating @{u} as that branch.
+> If there's a better way to do this, I'd love to hear it!
 
-I am not a submodule expert so I may be missing some other gaps, but
-what your change does sounds sensible to me.
+I see Ram who worked on landing the remote.pushdefault feature is
+CC'ed; this work was started in early April 2013 and your config and
+workflow may not have been adjusted to it.
