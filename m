@@ -1,118 +1,136 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 15/17] rename_tmp_log(): handle a possible mkdir/rmdir race
-Date: Mon,  6 Jan 2014 14:45:33 +0100
-Message-ID: <1389015935-21936-16-git-send-email-mhagger@alum.mit.edu>
-References: <1389015935-21936-1-git-send-email-mhagger@alum.mit.edu>
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>, git@vger.kernel.org,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 06 14:54:00 2014
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: Re: [PATCH 2/2] Introduce git submodule attached update
+Date: Mon, 6 Jan 2014 15:06:27 +0100
+Message-ID: <20140106140627.GA27265@t2784.greatnet.de>
+References: <1388890249-3577-1-git-send-email-ceztko@gmail.com>
+ <1388890249-3577-2-git-send-email-ceztko@gmail.com>
+ <20140105203349.GB3737@book.hvoigt.net>
+ <CALas-ijjzyRVuc0NaAS5QS98pX2198mv4HoHDacgYFYNLXbXFw@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Jens Lehmann <jens.lehmann@web.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	"W. Trevor King" <wking@tremily.us>
+To: Francesco Pretto <ceztko@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 06 15:06:45 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W0Acv-0002IH-LO
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Jan 2014 14:53:58 +0100
+	id 1W0ApI-0001tM-4F
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Jan 2014 15:06:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754484AbaAFNxy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Jan 2014 08:53:54 -0500
-Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:60384 "EHLO
-	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753572AbaAFNxx (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 6 Jan 2014 08:53:53 -0500
-X-Greylist: delayed 437 seconds by postgrey-1.27 at vger.kernel.org; Mon, 06 Jan 2014 08:53:52 EST
-X-AuditID: 12074414-b7fb46d000002a4d-f5-52cab3baa189
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 89.84.10829.AB3BAC25; Mon,  6 Jan 2014 08:46:34 -0500 (EST)
-Received: from michael.fritz.box (p57A25457.dip0.t-ipconnect.de [87.162.84.87])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s06DjfPG021935
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Mon, 6 Jan 2014 08:46:33 -0500
-X-Mailer: git-send-email 1.8.5.2
-In-Reply-To: <1389015935-21936-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrGIsWRmVeSWpSXmKPExsUixO6iqLtr86kgg7bnkhZdV7qZLBp6rzBb
-	vL25hNHi9or5zBa7py1gc2D1+Pv+A5PHzll32T0uXlL2eDzxBKvH501yAaxR3DZJiSVlwZnp
-	efp2CdwZ27ctYCmYJFhx7IBpA+M63i5GTg4JAROJr7O3skDYYhIX7q1n62Lk4hASuMwocWL3
-	RXYI5xiTxJ7tn5hBqtgEdCUW9TQzgdgiAmoSE9sOsYAUMQssZpTomvaNESQhLOAnMefyE7AG
-	FgFVidN7VrCD2LwCrhITd50FsjmA1ilIrL4uBBLmBApPm3aYDcQWEnCRWHPoEcsERt4FjAyr
-	GOUSc0pzdXMTM3OKU5N1i5MT8/JSi3Qt9HIzS/RSU0o3MUJCSmQH45GTcocYBTgYlXh4Pzw+
-	GSTEmlhWXJl7iFGSg0lJlJdz9akgIb6k/JTKjMTijPii0pzU4kOMEhzMSiK8XAuAcrwpiZVV
-	qUX5MClpDhYlcd5vi9X9hATSE0tSs1NTC1KLYLIyHBxKErwbNgE1ChalpqdWpGXmlCCkmTg4
-	QQQXyAYeoA0zQAp5iwsSc4sz0yGKTjEqSonzTgFJCIAkMkrz4AbAov8VozjQP8K85SBVPMDE
-	Adf9CmgwE9Dg0DiwwSWJCCmpBsYUMYfjExNqGDYnH+sqUHfSXHiy/P3+WVIcWRd8vdieLtJc
-	/nzT0Ul7yrS3zxeaPSHuxSpbI+fZn5cstrvFwtp1JKFi/c5Jr/ZsDJjqkFrl0Fn6Vl9II2VO
-	XPAeyb1szN887b/uq/3/fm+qs0mu8fGshsPNrNy/Gjx2TNrLevqA+KHPgn9m7OxT 
+	id S1751417AbaAFOGk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Jan 2014 09:06:40 -0500
+Received: from smtprelay04.ispgateway.de ([80.67.31.31]:36886 "EHLO
+	smtprelay04.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751099AbaAFOGj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Jan 2014 09:06:39 -0500
+Received: from [83.133.105.219] (helo=t2784.greatnet.de)
+	by smtprelay04.ispgateway.de with esmtpsa (TLSv1:AES128-SHA:128)
+	(Exim 4.68)
+	(envelope-from <hvoigt@hvoigt.net>)
+	id 1W0Ap5-0006Vi-NN; Mon, 06 Jan 2014 15:06:31 +0100
+Content-Disposition: inline
+In-Reply-To: <CALas-ijjzyRVuc0NaAS5QS98pX2198mv4HoHDacgYFYNLXbXFw@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240010>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240011>
 
-If a directory vanishes while renaming the temporary reflog file,
-retry (up to 3 times).  This could happen if another process deletes
-the directory created by safe_create_leading_directories() just before
-we rename the file into the directory.
+On Sun, Jan 05, 2014 at 10:46:11PM +0100, Francesco Pretto wrote:
+> 2014/1/5 Heiko Voigt <hvoigt@hvoigt.net>:
+> > The following questions directly pop into my mind:
+> >
+> >  - What means the maintainer does not track the submodules sha1? Does
+> >    that mean the superproject always refers to submodule commits using
+> >    branches?
+> 
+> It means he doesn't need to control other developers commit to be
+> checked out so he sets "submodule.<name>.ignore" to "all". In this way
+> he and the developers can work actively in their submodule copy.
 
-As far as I can tell, this race could not occur internal to git.  The
-only time that a directory under $GIT_DIR/logs is deleted is if room
-has to be made for a log file for a reference with the same name;
-for example, in the following sequence:
+So practically speaking: You mean that the value of
+submodule.<name>.ignore is set to "all" in the master branch of the
+superproject? From your other email referring to svn:externals I figure
+that.
 
-    git branch foo/bar    # Creates file .git/logs/refs/heads/foo/bar
-    git branch -d foo/bar # Deletes file but leaves .git/logs/refs/heads/foo/
-    git branch foo        # Deletes .git/logs/refs/heads/foo/
+> >  - What happens if you want to go back to an earlier revision? Lets say
+> >    a tagged release? How is ensured that you get the correct revision in
+> >    the submodules?
+> 
+> "submodule.<name>.branch" is one setting that is not copied in
+> ".git/config" by "git submodule init". "git submodule update" will use
+> the setting in ".gitmodules" if not overridden voluntarily by the
+> developer in ".git/config". The maintainer can change that setting in
+> ".gitmodules" and commit the change. Modifies will be propagated by
+> the next "git pull && git submodule update" of the developer in the
+> superproject.
 
-But the only reason the last command deletes the directory is because
-it wants to create a file with the same name.  So if another process
-(e.g.,
+I do not understand how does that ensure you get the correct submodule
+revision when checking out a tagged release? To get a precise revision
+the superproject needs to track a sha1 of a submodule commit. I do not
+see how that has anything to do with submodule.<name>.branch?
 
-    git branch foo/baz
+> >  - In which situations does the developer or maintainer switch between
+> >    your attached/detached mode?
+> 
+> The developer/maintainer does so optionally and voluntarily and it
+> effects only its private working tree.
 
-) wants to create that directory, one of the two is doomed to failure
-anyway because of a D/F conflict.
+This does not answer my question. I would like to find out the reason
+why one would do the switch.
 
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
----
- refs.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+> >  - What is the "repository branch" which is given to the developer by
+> >    the maintainer used for? Who creates this branch and who merges into
+> >    it?
+> 
+> The branch of course must exist prior submodule adding. In this
+> use-case it does not really matter who creates it and who merges into
+> it. Everyone with the right to merge into it has to work in the
+> submodule seamlessly, as it was working on separate clone of the same
+> repository used as the submodule.
+o
+Here is the same. I am searching for a description like:
 
-diff --git a/refs.c b/refs.c
-index 5bc01a7..8de636e 100644
---- a/refs.c
-+++ b/refs.c
-@@ -2530,12 +2530,14 @@ int delete_ref(const char *refname, const unsigned char *sha1, int delopt)
- 
- static int rename_tmp_log(const char *newrefname)
- {
-+	int attempts = 3;
-+
-+ retry:
- 	if (safe_create_leading_directories(git_path("logs/%s", newrefname))) {
- 		error("unable to create directory for %s", newrefname);
- 		return -1;
- 	}
- 
-- retry:
- 	if (rename(git_path(TMP_RENAMED_LOG), git_path("logs/%s", newrefname))) {
- 		if (errno==EISDIR || errno==ENOTDIR) {
- 			/*
-@@ -2548,6 +2550,13 @@ static int rename_tmp_log(const char *newrefname)
- 				return -1;
- 			}
- 			goto retry;
-+		} else if (errno == ENOENT && --attempts > 0) {
-+			/*
-+			 * Maybe another process just deleted one of
-+			 * the directories in the path to newrefname.
-+			 * Try again from the beginning.
-+			 */
-+			goto retry;
- 		} else {
- 			error("unable to move logfile "TMP_RENAMED_LOG" to logs/%s: %s",
- 				newrefname, strerror(errno));
--- 
-1.8.5.2
+If the developer works on a feature that needs a submodule change he:
+  - creates a submodule branch
+  - configures that submodule branch in the superproject:
+  	git config -f .gitmodules submodule.common.branch dev/some-feature
+	git commit -am "TEMP: track submodule common on branch"
+ - and pushes out his superproject branch
+
+The submodule branch is then posted for review and continued to work on.
+
+Once everyone involved is happy with the submodule change the branch in
+there gets merged to master.
+
+Now the branch in the superproject is modified to drop the change in
+.gitmodules and the sha1 reference in the superproject is updated to the
+current master of the superproject.
+
+The superproject branch is posted for review.
+
+...
+
+Could you describe something like this for your workflow? A complete
+change lifecycle when a developer works, as you call it, "actively" in a
+submodule?
+
+> >  - What are these subsequent "merge" or "rebase" update operations? Do
+> >    you mean everyone has submodule.name.update configured to merge or
+> >    rebase?
+> >
+> 
+> subsequent "merge" or "rebase" update operations are just the ones
+> after the initial clone/checkout, nothing particular.
+
+To clarify you are talking about issuing "git merge" or "git rebase"
+commands in the superproject?
+
+Cheers Heiko
