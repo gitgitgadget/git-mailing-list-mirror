@@ -1,145 +1,94 @@
-From: David Engster <deng@randomsample.de>
-Subject: Re: [PATCH 2/2] Introduce git submodule attached update
-Date: Mon, 06 Jan 2014 20:21:24 +0100
-Message-ID: <87ppo4zzkb.fsf@engster.org>
-References: <1388890249-3577-1-git-send-email-ceztko@gmail.com>
-	<1388890249-3577-2-git-send-email-ceztko@gmail.com>
-	<20140105203349.GB3737@book.hvoigt.net>
-	<CALas-ijjzyRVuc0NaAS5QS98pX2198mv4HoHDacgYFYNLXbXFw@mail.gmail.com>
-	<20140106140627.GA27265@t2784.greatnet.de>
-	<CALas-ihHD_eJOXLUrhCVZjidQDmrCN=QpdfMKoN1i9A7FAo3RQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] format-patch: introduce format.defaultTo
+Date: Mon, 06 Jan 2014 12:06:51 -0800
+Message-ID: <xmqqa9f8j2n8.fsf@gitster.dls.corp.google.com>
+References: <1389028732-27760-1-git-send-email-artagnon@gmail.com>
+	<1389028732-27760-3-git-send-email-artagnon@gmail.com>
+	<xmqqlhythrzq.fsf@gitster.dls.corp.google.com>
+	<CALkWK0kZn44x98td9YXNT5VfhVs=ueeSty9M7Vh08bdoGjGQYg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Heiko Voigt <hvoigt@hvoigt.net>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>,
-	Jens Lehmann <jens.lehmann@web.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	"W. Trevor King" <wking@tremily.us>
-To: Francesco Pretto <ceztko@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 06 20:52:11 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 06 21:07:06 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W0GDZ-0008Fe-Re
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Jan 2014 20:52:10 +0100
+	id 1W0GRz-0004n7-1l
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Jan 2014 21:07:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755456AbaAFTvm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Jan 2014 14:51:42 -0500
-Received: from randomsample.de ([5.45.97.173]:60930 "EHLO randomsample.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755102AbaAFTvl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Jan 2014 14:51:41 -0500
-X-Greylist: delayed 1810 seconds by postgrey-1.27 at vger.kernel.org; Mon, 06 Jan 2014 14:51:41 EST
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=randomsample.de; s=a;
-	h=Content-Type:MIME-Version:Message-ID:Date:References:In-Reply-To:Subject:Cc:To:From; bh=vJqqwyOFp8Bcv5TsAvHeKC8DVbEkDuJBnttpXdF3JOM=;
-	b=BOdgW32BkSPoFgQUxEnbTPkiyWEBPETbt/KJvDNjCBk1n+nBqBvNLJPj8dhEJGYAQxFXuTc+DJR253ka47CTbRM0Vk72kwb9tUzHYhNecqEqqkEpJQvv+Hx3i5+Fb7ZT;
-Received: from dslc-082-083-045-175.pools.arcor-ip.net ([82.83.45.175] helo=spaten)
-	by randomsample.de with esmtpsa (TLS1.2:DHE_RSA_AES_128_CBC_SHA1:128)
-	(Exim 4.80)
-	(envelope-from <deng@randomsample.de>)
-	id 1W0Fjq-0000kw-6c; Mon, 06 Jan 2014 20:21:26 +0100
-In-Reply-To: <CALas-ihHD_eJOXLUrhCVZjidQDmrCN=QpdfMKoN1i9A7FAo3RQ@mail.gmail.com>
-	(Francesco Pretto's message of "Mon, 6 Jan 2014 18:47:58 +0100")
-User-Agent: Gnus/5.130008 (Ma Gnus v0.8) Emacs/24.3 (gnu/linux)
+	id S1755386AbaAFUG7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Jan 2014 15:06:59 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64564 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751446AbaAFUG6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Jan 2014 15:06:58 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3FD9E5FD4F;
+	Mon,  6 Jan 2014 15:06:57 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=U6W6rF1BH7CawXiCS3qodx5m5Ec=; b=H2hWlv
+	bxMYASBuDh+Hvn54aH9fZnY5r6nNXvRYcmWYVlSRz+hqHwCOsOVDlHU0SJa6RaxE
+	HwHYtL1AGTCvHOfd83IPm3WXqVcEGkCWIPgz6HNj4FQPOyuT2kbPmRCyhGyXDL1U
+	1tVc9wcxg1KEE3OQFJf3FUBp4zmpPLcWV96FA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=F46JUfH6eCljYg18KvSM6ThftqmbpRFn
+	moNNur6TFCtVlD4epBSnsQ4GIHjajDJStnBy4+jTJFMxQHmm1r6ekJeC5GvfougT
+	ftuIaoTYm/mLjoYIKlizBaKiEC5EXjc+OaeKFxA2/O6qQcp5IRU2KpPvE8WRPdUT
+	qWe873FuSy0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A2EDC5FD4E;
+	Mon,  6 Jan 2014 15:06:56 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 146905FD47;
+	Mon,  6 Jan 2014 15:06:55 -0500 (EST)
+In-Reply-To: <CALkWK0kZn44x98td9YXNT5VfhVs=ueeSty9M7Vh08bdoGjGQYg@mail.gmail.com>
+	(Ramkumar Ramachandra's message of "Tue, 7 Jan 2014 00:19:02 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 170876E6-770E-11E3-AF57-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240054>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240055>
 
-Francesco Pretto writes:
-> 2014/1/6 Heiko Voigt <hvoigt@hvoigt.net>:
->> Could you describe something like this for your workflow? A complete
->> change lifecycle when a developer works, as you call it, "actively" in a
->> submodule?
->>
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
+
+> Junio C Hamano wrote:
+>>  - why is a single branch name sufficient?
 >
-> I'm really sorry, I thought this was already clear from the first
-> patch iteration. I will go more in depth:
+> It does accept a <revision>, so any form is allowed; but why would
+> anyone want that in a format.defaultTo? I'm not sure we want to impose
+> an artificial restriction on the configuration variable though.
 
-While I have some trouble understanding all the details of Francesco's
-description, I find the idea of "attaching submodules to branches" very
-useful.  I think I could well use that to simplify my merging grunt work
-for GNU Emacs (which, in case you're wondering, is probably switching to
-git as its VCS). I don't mean to hijack this thread, and I guess my use
-case is a bit different than what Francesco has in mind; still, I think
-it is similar enough that my use case could help in talking about the
-details of his patch; if not, please feel free to ignore it.
+I meant "a single branch" as opposed to "depending on what branch
+you are sending out, you may have to use a different upstream
+starting point", and a single "format.defaultTo" that does not read
+what your HEAD currently points at may not be enough.
 
-GNU Emacs ships with some pretty large packages, namely Gnus, Org and
-CEDET, which are also available as "stand-alone" versions for manual
-installation, and their development happens in separate upstream
-repositories. Since I'm a CEDET developer, I'll use it as an example in
-the following.
+Unless you set @{u} to this new configuration, in which case the
+choice becomes dynamic depending on the current branch, but
 
-First off, it is important to note that merges are always
-bi-directional: not only is new CEDET code pulled into Emacs, but Emacs
-developers also change things which have to be merged back upstream. So
-far, merging between the two repositories was done manually by me, which
-is error-prone (and boring). I think that by pulling in CEDET directly
-as a submodule, this merging could be made easier. Most importantly, my
-hope is that more people than me could do it. :-)
+ - if that is the only sane choice based on the current branch, why
+   not use that as the default without having to set the
+   configuration?
 
-Here's how I would like this to work; first the CEDET -> Emacs part,
-which is rather straight-forward:
+ - Or if that is still insufficient, don't we need branch.*.forkedFrom
+   that is different from branch.*.merge, so that different branches
+   you want to show "format-patch" output can have different
+   reference points?
 
-- The CEDET repository has two branches: 'master' and 'stable'.
-
-- The Emacs repository imports CEDET's 'stable' branch as a submodule.
-
-- CEDET's main development happens in 'master', and the CEDET developers
-  are responsible for merging stable code to 'stable'. They will then
-  make a new commit for the submodule in Emacs accordingly.
-
-The Emacs -> CEDET part is more hairy. Most of the time, the fixes
-happening in the Emacs repository for CEDET are very small and/or
-trivial and can usually be considered "always stable": fixes for
-spelling, compiler warnings, or small refactorings like renames,
-etc. This kind of "merging back to CEDET upstream" should hence be as
-easy as possible for Emacs developers:
-
-- When an Emacs developer changes something in the CEDET submodule, the
-  changes they commit should by default automatically land in CEDET's
-  'stable' branch. That means that when they enter the submodule, they
-  should be in the branch 'stable' instead of being detached, and a push
-  should update the 'stable' branch in CEDET accordingly. The submodule
-  must then be committed as well.
-
-- It is then up to the CEDET developers to merge these changes into the
-  'master' branch of the CEDET repo.
-
-I know that the "correct" workflow would be to always use feature
-branches, but it'd be nice if that could be avoided if one so chooses.
-
-A little picture in the hope that it makes things clearer:
-
-             +-----------+
-             |  master   | <--
-+-------+    +-----------+    | Merges to/from master
-| CEDET |                     | done only by CEDET developers
-+-------+                     | 
-             +-----------+    |
-             |  stable   | <--  <--------
-             +-----------+               |
-                                         |
-                                         |
-                                         | Any Emacs developer
-                                         | can push and commit
-                                         | submodule
-+--------+    +----------------------+   |
-| Emacs  | -- | lisp/cedet submodule | <-
-+--------+    +----------------------+
-
-AFAICS the main problem with this approach is that one always has to
-think of committing the new SHA1 of the submodule. If I understand
-Francesco correctly, he wants to eliminate the need for that by simply
-always taking the head of the attached branch. I also think that would
-be a nice feature, since in the above drawing, the lisp/cedet submodule
-should always follow the 'stable' branch in CEDET upstream. However, as
-Heiko notes, the history must be preserved to be able to go back to
-earlier revisions, so there must be some kind of commit for the
-submodule when 'stable' changes; maybe that could be automated somehow?
-
--David
+After all, "format-patch" to send things out to upstream is like
+asking the other side to do a "rebase" you would do in your
+repository, so whatever "git rebase" that were too lazy to specify
+what the fork point was when applying may be a reasonable type-saver
+default.  Yes, sometimes people need to rebase onto somewhere they
+did not fork from, but that is why they can give explicit $upstream
+and $onto to the command---I do not think it is any different for
+"format-patch".
