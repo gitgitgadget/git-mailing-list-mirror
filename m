@@ -1,86 +1,151 @@
-From: Thomas Ackermann <th.acker@arcor.de>
-Subject: Aw: Re: Re: Re: [Bug report] 'git status' always says "Your branch
- is up-to-date with 'origin/master'"
-Date: Mon, 6 Jan 2014 17:00:23 +0100 (CET)
-Message-ID: <1067660482.1596252.1389024023072.JavaMail.ngmail@webmail11.arcor-online.net>
-References: <20140106154552.GA22189@google.com> <CAGyf7-FX1sPjwvKdxeEXopffFPiftgDRqoe7NRWyM1Cm=5n6Sw@mail.gmail.com>
- <1963290835.719443.1388996669450.JavaMail.ngmail@webmail15.arcor-online.net>
- <1283978462.720554.1388999328222.JavaMail.ngmail@webmail15.arcor-online.net>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: Re: [RFC v2] submodule: Respect requested branch on all clones
+Date: Mon, 6 Jan 2014 17:02:03 +0100
+Message-ID: <20140106160202.GE27265@t2784.greatnet.de>
+References: <CALas-ii90x07Kbxzy_siBJV_RHPkvBw7spFBD9vi6o43mU1k6g@mail.gmail.com>
+ <d0de817dfc687fd943349c9d3e1d410161a0f01e.1388938473.git.wking@tremily.us>
+ <20140105194850.GA2994@book.hvoigt.net>
+ <20140105212458.GG3156@odin.tremily.us>
+ <20140105225733.GB4660@book.hvoigt.net>
+ <20140105233943.GJ3156@odin.tremily.us>
+ <20140106003314.GL3156@odin.tremily.us>
+ <20140106011255.GM3156@odin.tremily.us>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: bturner@atlassian.com, worldhello.net@gmail.com,
-	git@vger.kernel.org, gitster@pobox.com
-To: jrnieder@gmail.com, th.acker@arcor.de
-X-From: git-owner@vger.kernel.org Mon Jan 06 17:00:43 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Git <git@vger.kernel.org>, Francesco Pretto <ceztko@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>
+To: "W. Trevor King" <wking@tremily.us>
+X-From: git-owner@vger.kernel.org Mon Jan 06 17:02:16 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W0CbX-0000Sk-Er
-	for gcvg-git-2@plane.gmane.org; Mon, 06 Jan 2014 17:00:39 +0100
+	id 1W0Cd3-0002wg-SP
+	for gcvg-git-2@plane.gmane.org; Mon, 06 Jan 2014 17:02:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754919AbaAFQA3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Jan 2014 11:00:29 -0500
-Received: from mail-in-03.arcor-online.net ([151.189.21.43]:59659 "EHLO
-	mail-in-03.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754733AbaAFQAY (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 6 Jan 2014 11:00:24 -0500
-Received: from mail-in-01-z2.arcor-online.net (mail-in-01-z2.arcor-online.net [151.189.8.13])
-	by mx.arcor.de (Postfix) with ESMTP id 24D33D8FB8;
-	Mon,  6 Jan 2014 17:00:23 +0100 (CET)
-Received: from mail-in-07.arcor-online.net (mail-in-07.arcor-online.net [151.189.21.47])
-	by mail-in-01-z2.arcor-online.net (Postfix) with ESMTP id 1E2E37DAF0F;
-	Mon,  6 Jan 2014 17:00:23 +0100 (CET)
-Received: from webmail11.arcor-online.net (webmail11.arcor-online.net [151.189.8.83])
-	by mail-in-07.arcor-online.net (Postfix) with ESMTP id 16918107A70;
-	Mon,  6 Jan 2014 17:00:23 +0100 (CET)
-X-DKIM: Sendmail DKIM Filter v2.8.2 mail-in-07.arcor-online.net 16918107A70
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arcor.de; s=mail-in;
-	t=1389024023; bh=VsvymcMRQqfSa+v6ReMafaTx9LvXt9Zj14Rr1QkaZSU=;
-	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	b=mRnWnwCn5FTVAELsrYNcxOxPCXs/gbm4PLo9+ZuY00Oni06ZKsePg67cPZaAZjTGw
-	 yz6FqokX/JsC5zwa+kaRfFXY2kbtF4GVbckjYw5GTY4bCyGt+Dh/OVabclo9rJNmpU
-	 HMy0rLFKlmj/JYoUFd8sSuYDW2gocgUgayiOUnK0=
-Received: from [178.7.31.225] by webmail11.arcor-online.net (151.189.8.83) with HTTP (Arcor Webmail); Mon, 6 Jan 2014 17:00:17 +0100 (CET)
-In-Reply-To: <20140106154552.GA22189@google.com>
-X-ngMessageSubType: MessageSubType_MAIL
-X-WebmailclientIP: 178.7.31.225
+	id S1755351AbaAFQCJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Jan 2014 11:02:09 -0500
+Received: from smtprelay03.ispgateway.de ([80.67.31.41]:33562 "EHLO
+	smtprelay03.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754752AbaAFQCH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Jan 2014 11:02:07 -0500
+Received: from [83.133.105.219] (helo=t2784.greatnet.de)
+	by smtprelay03.ispgateway.de with esmtpsa (TLSv1:AES128-SHA:128)
+	(Exim 4.68)
+	(envelope-from <hvoigt@hvoigt.net>)
+	id 1W0Ccu-0008G5-85; Mon, 06 Jan 2014 17:02:04 +0100
+Content-Disposition: inline
+In-Reply-To: <20140106011255.GM3156@odin.tremily.us>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240020>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240021>
 
- 
-> > But for the simple use case where you only have a master
-> > branch I consider it not really helpful and - at least for me -
-> > misleading.
+On Sun, Jan 05, 2014 at 05:12:56PM -0800, W. Trevor King wrote:
+> On Sun, Jan 05, 2014 at 04:33:14PM -0800, W. Trevor King wrote:
+> > The only people who would need *automatic* rebase recovery would be
+> > superproject devs update-cloning the subproject.  That's a small
+> > enough cross-section that I don't think it deserves the ambiguity of
+> > gitlink-to-reference.  In that case, all you really need is a way to
+> > force a recovery gitlink (i.e. add a 'commit' object to the tree by
+> > hand).
 > 
-> I see what you mean, and you're not the only one.
+> Actually, you recovering by hand is a lot easier.  Setup a
+> rebased-away gitlink target:
 > 
-> Git follows a rule of "never contact another machine unless explicitly
-> asked to using a command such as 'git pull' or 'git fetch'".  To
-> support this, it makes a distinction between (1) the remote-tracking
-> ref origin/master and (2) the actual branch "master" in the remote
-> repository.  The former is what is updated by 'git fetch', and the
-> latter is something git does not know about without talking to the
-> remote server.
+>   mkdir subproject &&
+>   (
+>     cd subproject &&
+>     git init
+>     echo 'Subproject' > README &&
+>     git add README &&
+>     git commit -m 'Subproject v1' &&
+>     echo 'Changes' >> README &&
+>     git commit -am 'Subproject v2'
+>   ) &&
+>   mkdir superproject &&
+>   (
+>     cd superproject &&
+>     git init
+>     git submodule add ../subproject &&
+>     git commit -m 'Superproject v1'
+>   ) &&
+>   (
+>     cd subproject &&
+>     git reset --hard HEAD^ &&
+>     git reflog expire --expire=now --all &&
+>     git gc --aggressive --prune=now
+>   )
 > 
-> What documentation did you use when first starting to learn git?
-> Perhaps it can be fixed to emphasize the distinction between (1) and
-> (2) earlier.
+> Then a recursive clone of the superproject dies:
+> 
+>   $ git clone --recursive superproject super2
+>   Cloning into 'super2'...
+>   done.
+>   Submodule 'subproject' (/tmp/x/subproject) registered for path 'subproject'
+>   Cloning into 'subproject'...
+>   done.
+>   fatal: reference is not a tree: f589144d16282d1a80d17a9032c6f1d332e38dd0
+>   Unable to checkout 'f589144d16282d1a80d17a9032c6f1d332e38dd0' in submodule path 'subproject'
+> 
+> But you still have the submodule checkout (up until the $sha1 setup):
+> 
+>   $ cd super2
+>   $ git diff
+>   diff --git a/subproject b/subproject
+>   index f589144..82d4553 160000
+>   --- a/subproject
+>   +++ b/subproject
+>   @@ -1 +1 @@
+>   -Subproject commit f589144d16282d1a80d17a9032c6f1d332e38dd0
+>   +Subproject commit 82d4553fe437ae014f22bbc87a082c6d19e5d9f9-dirty
+> 
+> And you can automatically update to match the upstream remote:
+> 
+>   $ git submodule update --remote --force
+>   Submodule path 'subproject': checked out '82d4553fe437ae014f22bbc87a082c6d19e5d9f9'
+>   $ git diff
+>   diff --git a/subproject b/subproject
+>   index f589144..82d4553 160000
+>   --- a/subproject
+>   +++ b/subproject
+>   @@ -1 +1 @@
+>   -Subproject commit f589144d16282d1a80d17a9032c6f1d332e38dd0
+>   +Subproject commit 82d4553fe437ae014f22bbc87a082c6d19e5d9f9
+> 
+> When explicitly updating to the superproject or subproject's
+> (--remote) new tip is so easy, I don't see a need for floating the
+> gitlinks themselves.
 
-I think it's not the problem of the documentation but of myself
-not having it read thorough enough ;-)
+I agree. If we were to support this more easily we could add a
+configuration option so you can omit the --remote (i.e.:
+submodule.<name>.remote=true, as I also suggested in the other email).
 
-(This new feature in V1.8.5 of course is not documented in any of the books
-up to now but in the future could be used to explain the above mentioned
-rule.)
+That way the developer checking out a branch in flight does not even
+need to know whether (and which) submodules sha1s are still in flight
+and temporarily set this configuration in the branches .gitmodules file.
 
-Thanks to you, Bryan and Jiang for your help!
+Maybe that could actually be the attach operation Francesco is
+suggesting:
 
----
-Thomas
+	git submodule attach [--pull] <submodule path> <branchname>
+
+will attach the specified submodule to a branch. That means it changes
+the .gitmodule file accordingly and stages it. With the --pull switch
+one can specify whether a local branch tracking the remote branch should
+be automatically created. Names and the command format are just a
+suggestion here.
+
+That way we can support the
+
+	fork superproject needing submodule changes and send submodule
+	changes upstream first.
+
+workflow. What do you think?
+
+Cheers Heiko
