@@ -1,65 +1,61 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Fix safe_create_leading_directories() for Windows
-Date: Tue, 7 Jan 2014 18:56:14 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1401071854330.20365@s15462909.onlinehome-server.info>
-References: <52C5A039.6030408@gmail.com> <alpine.DEB.1.00.1401021826120.1191@s15462909.onlinehome-server.info> <52C5ABDE.1010006@gmail.com> <alpine.DEB.1.00.1401022143310.1191@s15462909.onlinehome-server.info>
- <CABPQNSaBbcgpE98j7mChvu6N7QqCG0CEmUgvJRURXLTdUTyFGg@mail.gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH] mv: better document side effects when moving a submodule
+Date: Tue, 07 Jan 2014 18:57:53 +0100
+Message-ID: <52CC4021.60209@web.de>
+References: <CAByyCQCakKyUqJQDdFrTMf2CUJihRhqSUVCwT21VDN1EOerVWw@mail.gmail.com>	<52A602A2.6060909@web.de> <52CB023C.2050001@web.de> <xmqq8uushgz3.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Sebastian Schuberth <sschuberth@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Erik Faye-Lund <kusmabite@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 07 18:56:24 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: George Papanikolaou <g3orge.app@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 07 18:58:05 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W0at4-0005uO-GX
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Jan 2014 18:56:22 +0100
+	id 1W0aue-00018m-3R
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Jan 2014 18:58:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753658AbaAGR4T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jan 2014 12:56:19 -0500
-Received: from mout.gmx.net ([212.227.17.22]:62725 "EHLO mout.gmx.net"
+	id S1753473AbaAGR54 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jan 2014 12:57:56 -0500
+Received: from mout.web.de ([212.227.17.11]:54008 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753152AbaAGR4R (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jan 2014 12:56:17 -0500
-Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
- mail.gmx.com (mrgmx001) with ESMTPSA (Nemesis) id 0LyVIk-1VMatq1HqY-015tEQ
- for <git@vger.kernel.org>; Tue, 07 Jan 2014 18:56:16 +0100
-X-X-Sender: schindelin@s15462909.onlinehome-server.info
-In-Reply-To: <CABPQNSaBbcgpE98j7mChvu6N7QqCG0CEmUgvJRURXLTdUTyFGg@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Provags-ID: V03:K0:qOymuw4ZiiqlzbkPQtpI2Ee0lnu16TqcmUzkZGuYuf2gI6DUafB
- rVT9mkMI/Hi4WXTqnzf3/S7GpQrfovZ27RmDH3CmvVR/0sl+pPaEdyfbQ7gpe6VaadB9QCI
- diMdkw6C56LlZGrPR2sJwLL4zEzI7tecfqXg/u30P+/r3GasmC1RXru1kGBX+7w+Wt2bMr9
- 3m/12yvzhakMJodU0ndFA==
+	id S1753007AbaAGR5z (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jan 2014 12:57:55 -0500
+Received: from [192.168.178.41] ([84.132.139.6]) by smtp.web.de (mrweb101)
+ with ESMTPA (Nemesis) id 0M7KZO-1VDjzL2i50-00x25A for <git@vger.kernel.org>;
+ Tue, 07 Jan 2014 18:57:53 +0100
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.2.0
+In-Reply-To: <xmqq8uushgz3.fsf@gitster.dls.corp.google.com>
+X-Enigmail-Version: 1.6
+X-Provags-ID: V03:K0:43TJh5hhCZC5wXBuZJvb6EUDXJQLqf3++fPeL+ibLAz0Tim1Fj8
+ U/jiDNJm+8an8kg47H8ly25b/HqHFpTAFw9BiWNnmnQkD5LuiLP846Ma3gZ6DOfyVvYv2Ax
+ eBV90Fzwi+ogqZODtO6JqLN6cgDGT2ZbaSz6k6563elVTxtsdhR0RrYOrtxIQgI4w+GYc6Y
+ oEejoevaPgbVvdCdiqovA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240121>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240122>
 
-Hi,
-
-On Tue, 7 Jan 2014, Erik Faye-Lund wrote:
-
-> On Thu, Jan 2, 2014 at 9:46 PM, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
->
-> > Well, you and I both know how easy GitHub's pull request made things
-> > for us as well as for contributors. I really cannot thank Erik enough
-> > for bullying me into using and accepting them.
+Am 06.01.2014 23:40, schrieb Junio C Hamano:
+> Jens Lehmann <Jens.Lehmann@web.de> writes:
+>> Does this new paragraph make it clearer?
 > 
-> Huh? I don't think you refer to me, because I really dislike them (and I
-> always have IIRC).
+> Don't we have bugs section that we can use to list the known
+> limitations like this?
 
-Ah yes, I misremembered. You were actually opposed to using them and I
-thought we should be pragmatic to encourage contributions.
+Right, will change accordingly in v2.
 
-In any case, I do think that the contributions we got via pull requests
-were in general contributions we would not otherwise have gotten.
+>>  Documentation/git-mv.txt | 10 ++++++++++
+>>  t/t7001-mv.sh            | 21 +++++++++++++++++++++
+> 
+> It also may make sense to express the test as "this is what we would
+> like to see happen eventually" in the form of test_expect_failure;
+> it is not a big deal though.
 
-Sorry for my mistake!
-Dscho
+We'll get the "what we would like to see happen eventually" test for
+free from the recursive submodule update framework I'm currently
+implementing, so I propose we don't implement this exepected failure
+in this patch.
