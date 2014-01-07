@@ -1,93 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] sha1_name: don't resolve refs when core.warnambiguousrefs is false
-Date: Tue, 07 Jan 2014 09:24:47 -0800
-Message-ID: <xmqqd2k3g0ww.fsf@gitster.dls.corp.google.com>
-References: <1389065521-46331-1-git-send-email-brodie@sf.io>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] [RFC] Making use of bitmaps for thin objects
+Date: Tue, 7 Jan 2014 12:26:44 -0500
+Message-ID: <20140107172644.GA19051@sigill.intra.peff.net>
+References: <1387741654-14890-1-git-send-email-bmaurer@fb.com>
+ <20140106145723.GA15489@sigill.intra.peff.net>
+ <5CDDBDF2D36D9F43B9F5E99003F6A0D4466883DF@PRN-MBX02-1.TheFacebook.com>
+ <20140106215713.GA7133@sigill.intra.peff.net>
+ <5CDDBDF2D36D9F43B9F5E99003F6A0D4466885EE@PRN-MBX02-1.TheFacebook.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	=?utf-8?B?Tmd1eQ==?= =?utf-8?B?4buFbiBUaMOhaSBOZ+G7jWM=?= Duy 
-	<pclouds@gmail.com>
-To: Brodie Rao <brodie@sf.io>
-X-From: git-owner@vger.kernel.org Tue Jan 07 18:24:59 2014
+Content-Type: text/plain; charset=utf-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Ben Maurer <bmaurer@fb.com>
+X-From: git-owner@vger.kernel.org Tue Jan 07 18:26:54 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W0aOf-0002ID-Sq
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Jan 2014 18:24:58 +0100
+	id 1W0aQU-0005Wp-HX
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Jan 2014 18:26:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753223AbaAGRYy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jan 2014 12:24:54 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48297 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753201AbaAGRYx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jan 2014 12:24:53 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B49A7607AB;
-	Tue,  7 Jan 2014 12:24:52 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Ariu8E3GNOhJytsgLvDElumBb0Q=; b=Y3sTFB
-	0BZO/s3ztlp0WTvB09CHkReF7G/JpA+hNp/I27Lha3ukCiex6BYJn72m4pX66CDQ
-	EFHBrmzJYEswlRVBX1FDhns5XRBXbpd3rRo3ed5hgSVCiyEGyBf2dR5S0QaLkd8i
-	U44WQoUy1ZUg2l006MyymIvhH/NwqeYsMiSqA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ODpO4CkuwvfM768BLV/y01V86TCGaxao
-	hOlg/xtPNzOuv4KY5LlMHjmvhFu7myDxxk+budNL4iFrpFyBypkxmtOEwp5R73Tp
-	I6KZOok4WxTv+ni8oRvU4hsOKQqEkZHEztzo0HZcwF638FUximfJA16/ZtuhIv52
-	IfxddNx1PO0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 33D38607AA;
-	Tue,  7 Jan 2014 12:24:52 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5BFEF607A8;
-	Tue,  7 Jan 2014 12:24:50 -0500 (EST)
-In-Reply-To: <1389065521-46331-1-git-send-email-brodie@sf.io> (Brodie Rao's
-	message of "Mon, 6 Jan 2014 19:32:01 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 9D11C33E-77C0-11E3-8FFF-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752498AbaAGR0r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jan 2014 12:26:47 -0500
+Received: from cloud.peff.net ([50.56.180.127]:56553 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752220AbaAGR0q (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jan 2014 12:26:46 -0500
+Received: (qmail 11879 invoked by uid 102); 7 Jan 2014 17:26:45 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 07 Jan 2014 11:26:45 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 07 Jan 2014 12:26:44 -0500
+Content-Disposition: inline
+In-Reply-To: <5CDDBDF2D36D9F43B9F5E99003F6A0D4466885EE@PRN-MBX02-1.TheFacebook.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240112>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240113>
 
-Brodie Rao <brodie@sf.io> writes:
+On Mon, Jan 06, 2014 at 10:14:30PM +0000, Ben Maurer wrote:
 
-> This change ensures get_sha1_basic() doesn't try to resolve full hashes
-> as refs when ambiguous ref warnings are disabled.
->
-> This provides a substantial performance improvement when passing many
-> hashes to a command (like "git rev-list --stdin") when
-> core.warnambiguousrefs is false. The check incurs 6 stat()s for every
-> hash supplied, which can be costly over NFS.
-> ---
+> It looks like for my repo the size win wasn't as big (~10%). Is it
+> possible that with the kernel test you got extremely lucky and there
+> was some huge binary blob that thin packing turned into a tiny delta?
 
-Needs sign-off.  The patch looks good.
+I don't think so. When I look at the reused-delta numbers, I see that we
+reused ~3000 extra deltas (and the "compressing" progress meter drops by
+the same amount. If I do a full clone (or just index-pack the result),
+it claims ~3000 thin objects completed with local objects (versus 0 in
+the normal case).
 
-Thanks.
+So I think we really are getting a lot of little savings adding up,
+which makes sense. If there were thousands of changed files, a non-thin
+pack has to have at least _one_ full version of each file. With thin
+packs, we might literally have only deltas.
 
->  sha1_name.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/sha1_name.c b/sha1_name.c
-> index e9c2999..10bd007 100644
-> --- a/sha1_name.c
-> +++ b/sha1_name.c
-> @@ -451,9 +451,9 @@ static int get_sha1_basic(const char *str, int len, unsigned char *sha1)
->  	int at, reflog_len, nth_prior = 0;
->  
->  	if (len == 40 && !get_sha1_hex(str, sha1)) {
-> -		if (warn_on_object_refname_ambiguity) {
-> +		if (warn_ambiguous_refs && warn_on_object_refname_ambiguity) {
->  			refs_found = dwim_ref(str, len, tmp_sha1, &real_ref);
-> -			if (refs_found > 0 && warn_ambiguous_refs) {
-> +			if (refs_found > 0) {
->  				warning(warn_msg, len, str);
->  				if (advice_object_name_warning)
->  					fprintf(stderr, "%s\n", _(object_name_msg));
+It was a 7-week period, which might make more difference. I'm going to
+run some experiments with different time periods to see if that changes
+anything.
+
+It might also be the repo contents. I'm going to try my experiments on a
+few different repositories. It may be that either the kernel or your
+repo is unusual in some way.
+
+Or maybe I was just lucky. :)
+
+> When you get a chance, it'd be handy if you could push an updated
+> version of your change out to your public github repo. I'd like to see
+> if folks here are interested in testing this more, and it'd be good to
+> make sure we're testing the diff that is targeted for upstream.
+
+I've pushed it to:
+
+  git://github.com/peff/git.git jk/bitmap-reuse-delta
+
+I'll continue to rebase it forward as time goes on (until a cleaned-up
+version gets merged upstream), but the tip of that branch should always
+be in a working state.
+
+-Peff
