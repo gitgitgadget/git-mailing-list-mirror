@@ -1,82 +1,87 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 03/17] safe_create_leading_directories(): add explicit "slash" pointer
-Date: Tue, 07 Jan 2014 09:41:15 -0800
-Message-ID: <xmqq4n5fg05g.fsf@gitster.dls.corp.google.com>
-References: <1389015935-21936-1-git-send-email-mhagger@alum.mit.edu>
-	<1389015935-21936-4-git-send-email-mhagger@alum.mit.edu>
-	<xmqqppo5hsf9.fsf@gitster.dls.corp.google.com>
-	<52CBC854.2060602@alum.mit.edu>
+From: Francesco Pretto <ceztko@gmail.com>
+Subject: Re: [PATCH] git-submodule.sh: Support 'checkout' as a valid update command
+Date: Tue, 7 Jan 2014 18:42:02 +0100
+Message-ID: <CALas-igswi9ro=j1r3YJ9wLd2ikp9fa6M-3ZSYQZXKmaTfGOWw@mail.gmail.com>
+References: <1389034726-8744-1-git-send-email-ceztko@gmail.com>
+ <xmqqtxdgfz8a.fsf@gitster.dls.corp.google.com> <CALas-ijrD1VnyUcr2yQw_1Je4K3eEdXtxqDNDKdGPZE=1=Nm3A@mail.gmail.com>
+ <xmqqlhyrg49c.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>, git@vger.kernel.org,
-	Sebastian Schuberth <sschuberth@gmail.com>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Tue Jan 07 18:41:34 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 07 18:42:32 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W0aea-0002Li-Rm
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Jan 2014 18:41:25 +0100
+	id 1W0afb-0004Dn-AE
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Jan 2014 18:42:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752334AbaAGRlV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jan 2014 12:41:21 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51148 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752212AbaAGRlT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jan 2014 12:41:19 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CE2C160C7B;
-	Tue,  7 Jan 2014 12:41:18 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=RRnW6r/7Bc1W5eQi6EZDw8lHULg=; b=TxwqV4
-	1ZVGOduoh+dT+ZHGkQUCtWXt/78EYAVRXO+ejd9Sl+iR9Hq0kCiG1L+u9MmOwVY3
-	PYn2c9T/ZAKTZ0XCIsfFFQ9SClIhcXs7QJy8RIAfw5Sd2RoBAQylITKNZbvOkTkS
-	GzPaSLHVL/nj03HSv8+DHLUz4T1/3Xc7h69zY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=hKk264ELSTLvK7C2nFdj6i1MNcEFMdZW
-	/nttIvgzj11DMmksxSlzaczC8mliQcdg2jAa7+xKpnyj5p/Yg8OM7AcqGfBEjvei
-	rmc5fTZbpM4UZqSEnlA5vxPw7Qtb/xc4nZoYor3wIn3pFENP//6KkDPlNrEKzJDr
-	DliU8B50EOM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B14A260C7A;
-	Tue,  7 Jan 2014 12:41:18 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8B7DD60C78;
-	Tue,  7 Jan 2014 12:41:17 -0500 (EST)
-In-Reply-To: <52CBC854.2060602@alum.mit.edu> (Michael Haggerty's message of
-	"Tue, 07 Jan 2014 10:26:44 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: E988319C-77C2-11E3-820F-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753230AbaAGRmY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jan 2014 12:42:24 -0500
+Received: from mail-oa0-f41.google.com ([209.85.219.41]:47861 "EHLO
+	mail-oa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753129AbaAGRmW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jan 2014 12:42:22 -0500
+Received: by mail-oa0-f41.google.com with SMTP id j17so537617oag.14
+        for <git@vger.kernel.org>; Tue, 07 Jan 2014 09:42:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=D+8Yx17zQnChv7XRSXGqZWFZ7TyP7lvdEzx7IMkSViU=;
+        b=X/yCDCiu+yxr00n/MrMhxdF431Hb44Asvda4nt9VX/2RUCjUvV3tZcS/0ZV1rNuMTt
+         oiuYIFm1semANnA6tqR4zYOt44A3OZe1RacxdHQTpth9UjyA7yRjlRNCMqhpmhxfMXCK
+         ag/5cRt/VM9GvymeAa0yGRZZAcR2ZqewF3rttQ5/aIlKxd6ttOFgfimGKDW7cdj3kxxz
+         P3b3e4XpSDTbrS37EbYBHJuaSxpOZ0CcH1VsG0mZUNCG6X3xKgF+0nttAps1K7JElxY1
+         eWURgMn/wNL1eTb/IPpuBKWk5Bi7DO6VIcXd3WsOKKI6H0Y6iAuOPlZmIIIeRuYBDK2S
+         dwSw==
+X-Received: by 10.60.51.102 with SMTP id j6mr75854933oeo.6.1389116542108; Tue,
+ 07 Jan 2014 09:42:22 -0800 (PST)
+Received: by 10.76.80.165 with HTTP; Tue, 7 Jan 2014 09:42:02 -0800 (PST)
+In-Reply-To: <xmqqlhyrg49c.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240115>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240116>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
-
-> I agree that it would be reasonable to use is_dir_sep() in the
-> implementation of this function, at least unless/until somebody does the
-> work to figure out whether callers should really only be passing it
-> forward-slash-normalized paths.
+2014/1/7 Junio C Hamano <gitster@pobox.com>:
+> It is not about preference but what we want to convey to the
+> readers.  When you start the sentence with "Oh, it already works
+> correctly", the readers need to see this sentence finished: "It
+> already works, it is handled correctly, but we change the code
+> nevertheless because ...?".
 >
-> Please be careful, though, because I don't think this function is
-> capable of handling arbitrary Windows paths, like for example
-> //host/path format, either before or after my change.
+> Here is my attempt to fill that "because ..." part:
 >
-> Let me know if you would like me to merge or rebase the is_dir_sep()
-> changes into this patch series.
+>         Subject: git-submodule.sh: 'checkout' is a valid update mode
+>
+>         'checkout' is documented as one of the valid values for
+>         'submodule.<name>.update' variable, and in a repository with
+>         the variable set to 'checkout', "git submodule update"
+>         command do update using the 'checkout' mode.
+>
+>         However, it has been an accident that the implementation
+>         works this way; any unknown value would trigger the same
+>         codepath and update using the 'checkout' mode.
+>
+>         Tighten the codepath and explicitly list 'checkout' as one
+>         of the known update modes, and error out when an unknown
+>         update mode is used.
+>
+>         Also, teach the codepath that initializes the configuration
+>         variable from in-tree .gitmodules that 'checkout' is one of
+>         the valid values---the code since ac1fbbda (submodule: do
+>         not copy unknown update mode from .gitmodules, 2013-12-02)
+>         used to treat the value 'checkout' as unknown and mapped it
+>         to 'none', which made little sense.
+>
 
-I'd want SSchuberth and windows folks to be at least aware of this
-series and preferrably see that they offer inputs to this series,
-making their is_dir_sep() change just one step in this series.  That
-way I have one less series to worry about ;-)
+I wouldn't be able to explain the change better than your description.
+Also, I was under the improper assumption that the change was obvious.
+Thank you very much for the amended patch description.
 
-Thanks.
+Cheers,
+Francesco
