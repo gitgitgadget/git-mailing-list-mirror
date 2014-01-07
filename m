@@ -1,95 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-submodule.sh: Support 'checkout' as a valid update command
-Date: Tue, 07 Jan 2014 08:12:31 -0800
-Message-ID: <xmqqlhyrg49c.fsf@gitster.dls.corp.google.com>
-References: <1389034726-8744-1-git-send-email-ceztko@gmail.com>
-	<xmqqtxdgfz8a.fsf@gitster.dls.corp.google.com>
-	<CALas-ijrD1VnyUcr2yQw_1Je4K3eEdXtxqDNDKdGPZE=1=Nm3A@mail.gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 2/2] format-patch: introduce format.defaultTo
+Date: Tue, 7 Jan 2014 22:17:46 +0530
+Message-ID: <CALkWK0=VT_MaLJKzhRyrEjG_PH=rEGiMuyHeuEXpSqgeVLqjuA@mail.gmail.com>
+References: <1389028732-27760-1-git-send-email-artagnon@gmail.com>
+ <1389028732-27760-3-git-send-email-artagnon@gmail.com> <xmqqlhythrzq.fsf@gitster.dls.corp.google.com>
+ <CALkWK0kZn44x98td9YXNT5VfhVs=ueeSty9M7Vh08bdoGjGQYg@mail.gmail.com>
+ <xmqqa9f8j2n8.fsf@gitster.dls.corp.google.com> <20140106201854.GA28162@sigill.intra.peff.net>
+ <CAEBDL5UaS2Hd-Yb417W+Fw_7j1+5sRAgszko-PbU7z901_X+cw@mail.gmail.com>
+ <20140106204203.GI3881@google.com> <CAEBDL5VD9C8DXFUS9VawxZhAC0AnR=abV-FEVTdi25NVBPvDVg@mail.gmail.com>
+ <CALkWK0mQJcFw45uWz08h+gzn6rTdVOdHkUtU3oRTyQ00LbtcbA@mail.gmail.com> <CAEBDL5W+3zRb1c51N2JfTR2acwvrUi8TpOw-DkjUn_r114mhAA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
-To: Francesco Pretto <ceztko@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 07 17:12:45 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git List <git@vger.kernel.org>
+To: John Szakmeister <john@szakmeister.net>
+X-From: git-owner@vger.kernel.org Tue Jan 07 17:48:33 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W0ZGm-0008Gc-Jx
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Jan 2014 17:12:44 +0100
+	id 1W0ZpQ-0008Qv-AO
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Jan 2014 17:48:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752454AbaAGQMl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jan 2014 11:12:41 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39125 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752543AbaAGQMk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jan 2014 11:12:40 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 156495F1A7;
-	Tue,  7 Jan 2014 11:12:39 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=HY6g7QU3yXU2XcC6bat0eIsLCoE=; b=J4kQNj
-	EtK/fMVhZoozargMF60nf10fk0P3VKC+nkdm8L0OVWWW8fPxTz49GCYpzgdVfSwX
-	wv+YhkuUum8PUKZIG9MLnQ2CORoYRp3WKqhHXG9VlQsPtRVEoM/rl2nDvNpB7mFd
-	/+Gri6mOTHT7SLFvA6cV5APAiluI/AZD4T0zk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=UiOhk7nUuELoWrcKsdGQC27HMV83bMEA
-	V7WJQhoE0E9EUtrzbwKjRMT48VovJ9snlU/ktD3HocC042esSfCTBQbdAMpYL1wF
-	YqLBc29coMYIfRiXSDWzu03fuZQW6WAk7uHcfwcCi4yEY5fG9w6TX8MMd5h1bdFW
-	0kSOccqAlGA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EA9FD5F1A6;
-	Tue,  7 Jan 2014 11:12:38 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7DC8F5F1A2;
-	Tue,  7 Jan 2014 11:12:36 -0500 (EST)
-In-Reply-To: <CALas-ijrD1VnyUcr2yQw_1Je4K3eEdXtxqDNDKdGPZE=1=Nm3A@mail.gmail.com>
-	(Francesco Pretto's message of "Tue, 7 Jan 2014 01:05:04 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 85E2ED50-77B6-11E3-B090-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752348AbaAGQs3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jan 2014 11:48:29 -0500
+Received: from mail-ie0-f172.google.com ([209.85.223.172]:40450 "EHLO
+	mail-ie0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751383AbaAGQs1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jan 2014 11:48:27 -0500
+Received: by mail-ie0-f172.google.com with SMTP id qd12so660679ieb.17
+        for <git@vger.kernel.org>; Tue, 07 Jan 2014 08:48:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=5kP3DtvACR8XL6s4LjBosqna1p611rDeXM1qyXGfPA4=;
+        b=AhyucX9OkgpFQgwTvslY43poIbkNbqs5yah0eGl9140bZlLT4G26+Ss6wBqv/x045C
+         d4lnjgtxBGvnglocsQ1AZyFS4LbD0REuLQVjli2hFaLAMAV70UfNQUt3fCsyv1XCn+Ie
+         Na8erOC9nr0lUBf22kFiGxqfhPkf4DggHNzEyz8nrxwOgtdYYhpK/LtGQN7a10/taLEQ
+         kpHRcF6vuqiR4ue4jQ25pLMCQ04Z+pPqzPyCsD2zgOX2SaLnpdIC9sGYQO4fOocknxHK
+         ysA/MmIr2DXqrsdH44QInDQzO3sKiN2XOrZHEb4tFs/nMbBPIJoPKHE3hoz9MDaEP+6B
+         ysxw==
+X-Received: by 10.50.79.228 with SMTP id m4mr26507521igx.47.1389113307018;
+ Tue, 07 Jan 2014 08:48:27 -0800 (PST)
+Received: by 10.64.17.10 with HTTP; Tue, 7 Jan 2014 08:47:46 -0800 (PST)
+In-Reply-To: <CAEBDL5W+3zRb1c51N2JfTR2acwvrUi8TpOw-DkjUn_r114mhAA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240108>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240109>
 
-Francesco Pretto <ceztko@gmail.com> writes:
+John Szakmeister wrote:
+> I guess it's not a good idea to
+> set 'push.default' to 'upstream' in this triangle workflow then,
+> otherwise the branch name being pushed to will be 'branch.*.merge'.
+> Is that correct?  I just want to make sure I understand what's
+> happening here.
 
-> Like you said, "it already refers to checkout and handles it
-> correctly". I think the use of the simple present tense here is
-> correct: it's a fact. Feel free to advice another wording if you
-> prefer.
+push.default = upstream does not support triangular workflows. See
+builtin/push.c:setup_push_upstream().
 
-It is not about preference but what we want to convey to the
-readers.  When you start the sentence with "Oh, it already works
-correctly", the readers need to see this sentence finished: "It
-already works, it is handled correctly, but we change the code
-nevertheless because ...?".
+> Given this new found knowledge, I'm not sure it makes sense for `git
+> status` to show me the status against the upstream vs. the publish
+> location.  The latter makes a little more sense to me, though I see
+> the usefulness of either one.
 
-Here is my attempt to fill that "because ..." part:
-
-	Subject: git-submodule.sh: 'checkout' is a valid update mode
-
-	'checkout' is documented as one of the valid values for
-	'submodule.<name>.update' variable, and in a repository with
-	the variable set to 'checkout', "git submodule update"
-	command do update using the 'checkout' mode.
-
-	However, it has been an accident that the implementation
-	works this way; any unknown value would trigger the same
-	codepath and update using the 'checkout' mode.
-
-        Tighten the codepath and explicitly list 'checkout' as one
-	of the known update modes, and error out when an unknown
-	update mode is used.
-
-	Also, teach the codepath that initializes the configuration
-	variable from in-tree .gitmodules that 'checkout' is one of
-	the valid values---the code since ac1fbbda (submodule: do
-	not copy unknown update mode from .gitmodules, 2013-12-02)
-	used to treat the value 'checkout' as unknown and mapped it
-	to 'none', which made little sense.
+Currently, status information is only against @{u}; we haven't
+invented a @{publish} yet.
