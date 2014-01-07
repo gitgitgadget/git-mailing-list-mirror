@@ -1,105 +1,79 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: [PATCH v2 2/2] rm: better document side effects when removing a submodule
-Date: Tue, 07 Jan 2014 22:32:37 +0100
-Message-ID: <52CC7275.3040907@web.de>
-References: <CAByyCQCakKyUqJQDdFrTMf2CUJihRhqSUVCwT21VDN1EOerVWw@mail.gmail.com>	<52A602A2.6060909@web.de> <52CB023C.2050001@web.de> <xmqq8uushgz3.fsf@gitster.dls.corp.google.com> <52CC4021.60209@web.de> <52CC71E0.7010603@web.de>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [RFC/PATCH] format-patch: introduce branch.*.forkedFrom
+Date: Wed, 8 Jan 2014 03:05:48 +0530
+Message-ID: <CALkWK0=UkWEGhU6D8CQctdgTvZUUj276LSuNhSmRUMZ5mwZTeA@mail.gmail.com>
+References: <1389126588-3663-1-git-send-email-artagnon@gmail.com>
+ <CALkWK0=g5-9r05vTkys8Tk7iv7PqPZJvMvkYsAOnN_F90Mtgxg@mail.gmail.com>
+ <20140107204035.GA27932@sigill.intra.peff.net> <CALkWK0mGPhU-8vVg+xY-MGWNstxoXSU9MGQiNzyFN+-Q6Bw28A@mail.gmail.com>
+ <20140107211645.GC28102@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: George Papanikolaou <g3orge.app@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 07 22:32:50 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jan 07 22:36:34 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W0eGU-00014q-3i
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Jan 2014 22:32:46 +0100
+	id 1W0eK9-0001bO-1v
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Jan 2014 22:36:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753821AbaAGVcn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jan 2014 16:32:43 -0500
-Received: from mout.web.de ([212.227.15.3]:61352 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753626AbaAGVcl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jan 2014 16:32:41 -0500
-Received: from [192.168.178.41] ([84.132.139.6]) by smtp.web.de (mrweb001)
- with ESMTPA (Nemesis) id 0LgpYk-1VeBji2TDi-00oESZ for <git@vger.kernel.org>;
- Tue, 07 Jan 2014 22:32:40 +0100
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.2.0
-In-Reply-To: <52CC71E0.7010603@web.de>
-X-Enigmail-Version: 1.6
-X-Provags-ID: V03:K0:N4eGXy3motiEaFUlJn0AUnrrwYmdNMXDnBWFGvF0JSi0i1kLLUJ
- S4GUjop0pu0RtRyZLwPJI1/yQR7iE0c3EcVTQINwEvH3PPoR2l2VpPR0NG3TjQpplmyQekw
- Ey3jFn1qK/cbz0OkleWJiOBzrfGRxKnN6vp8WuQULxwgdvomivxBZHyGkC5eck01DOqO5T7
- YAQqLtHnV64jcXaKgXr4A==
+	id S1753687AbaAGVga (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jan 2014 16:36:30 -0500
+Received: from mail-ie0-f182.google.com ([209.85.223.182]:54447 "EHLO
+	mail-ie0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752691AbaAGVg2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jan 2014 16:36:28 -0500
+Received: by mail-ie0-f182.google.com with SMTP id as1so1110833iec.27
+        for <git@vger.kernel.org>; Tue, 07 Jan 2014 13:36:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=m3fWBMvAC0nCOVfubuXPHmqfmT53IWYb+gaccjpqa9U=;
+        b=uotCUOIYWrnupmk/bxqKsaYFr9YyV4qXxt7WBH+qRu80W2IVubjVcdkH1UkXC5KbgO
+         JfdOgIkcXSTQX5bFF089kGUndtBnc9Cy4A6PrXoYSzkF7AiM0NyOPFp5nefirKKpQ9Bg
+         np/+JjiYFpAfoxTtQDpiRT7TEd99ApVquiOz4qCvDsr2mhyJYeKNOqAhOC/FPIUGvx9H
+         YKQVPQb6sIamJCyCfNvF16Iw6DhuutqiZjxs7o/OTc79brtg/0ZvCy+pICaLLzzxxAGc
+         GszqrzPaZOGV4xYVE/4JNBbULOPdb0bXdfsOlqtt8lmNP8J4+tOkxX7HAkjsd1kYDW/u
+         xdsQ==
+X-Received: by 10.50.36.67 with SMTP id o3mr27800843igj.47.1389130588237; Tue,
+ 07 Jan 2014 13:36:28 -0800 (PST)
+Received: by 10.64.17.10 with HTTP; Tue, 7 Jan 2014 13:35:48 -0800 (PST)
+In-Reply-To: <20140107211645.GC28102@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240162>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240163>
 
-The "Submodules" section of the "git rm" documentation mentions what will
-happen when a submodule with a gitfile gets removed with newer git. But it
-doesn't talk about what happens when the user changes between commits
-before and after the removal, which does not remove the submodule from the
-work tree like using the rm command did the first time.
+Jeff King wrote:
+> I definitely respect the desire to reuse the existing tooling we have
+> for @{u}. At the same time, I think you are warping the meaning of
+> @{u} somewhat. It is _not_ your upstream here, but rather another
+> version of the branch that has useful changes in it. That might be
+> splitting hairs a bit, but I think you will find that the differences
+> leak through in inconvenient spots (like format-patch, where you really
+> _do_ want to default to the true upstream).
 
-Explain what happens and what the user has to do manually to fix that in
-the new BUGS section. Also document this behavior in a new test.
+Thanks for the clear reasoning.
 
-Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
----
- Documentation/git-rm.txt |  9 +++++++++
- t/t3600-rm.sh            | 16 ++++++++++++++++
- 2 files changed, 25 insertions(+)
+> If we add "@{publish}" (and "@{pu}"), then it becomes very convenient to
+> refer to the ram/ version of your branch. That seems like an obvious
+> first step to me. We don't have to add new config, because
+> "branch.*.pushremote" already handles this.
 
-diff --git a/Documentation/git-rm.txt b/Documentation/git-rm.txt
-index 9d731b4..f1efc11 100644
---- a/Documentation/git-rm.txt
-+++ b/Documentation/git-rm.txt
-@@ -170,6 +170,15 @@ of files and subdirectories under the `Documentation/` directory.
- 	(i.e. you are listing the files explicitly), it
- 	does not remove `subdir/git-foo.sh`.
+Agreed. I'll start working on @{publish}. It's going to take quite a
+bit of effort, because I won't actually start using it until my prompt
+is @{publish}-aware.
 
-+BUGS
-+----
-+Each time a superproject update removes a populated submodule
-+(e.g. when switching between commits before and after the removal) a
-+stale submodule checkout will remain in the old location. Removing the
-+old directory is only safe when it uses a gitfile, as otherwise the
-+history of the submodule will be deleted too. This step will be
-+obsolete when recursive submodule update has been implemented.
-+
- SEE ALSO
- --------
- linkgit:git-add[1]
-diff --git a/t/t3600-rm.sh b/t/t3600-rm.sh
-index 540c49b..3d30581 100755
---- a/t/t3600-rm.sh
-+++ b/t/t3600-rm.sh
-@@ -705,6 +705,22 @@ test_expect_success 'rm of a populated nested submodule with a nested .git direc
- 	rm -rf submod
- '
+> Now you can do "git rebase @{pu}" which is nice, but not _quite_ as nice
+> as "git rebase", which defaults to "@{u}". That first step might be
+> enough, and I'd hold off there and try it out for a few days or weeks
+> first. But if you find in your workflow that you are having to specify
+> "@{pu}" a lot, then maybe it is worth adding an option to default rebase
+> to "@{pu}" instead of "@{u}".
 
-+test_expect_success 'checking out a commit after submodule removal needs manual updates' '
-+	git commit -m "submodule removal" submod &&
-+	git checkout HEAD^ &&
-+	git submodule update &&
-+	git checkout -q HEAD^ 2>actual &&
-+	git checkout -q master 2>actual &&
-+	echo "warning: unable to rmdir submod: Directory not empty" >expected &&
-+	test_i18ncmp expected actual &&
-+	git status -s submod >actual &&
-+	echo "?? submod/" >expected &&
-+	test_cmp expected actual &&
-+	rm -rf submod &&
-+	git status -s -uno --ignore-submodules=none > actual &&
-+	! test -s actual
-+'
-+
- test_expect_success 'rm of d/f when d has become a non-directory' '
- 	rm -rf d &&
- 	mkdir d &&
--- 
-1.8.5.2.231.gfc86eb1
+Actually, I'm not sure I'd use "git rebase @{pu}"; for me @{pu} is
+mainly a source of information for taking apart to build a new series.
