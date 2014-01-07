@@ -1,85 +1,99 @@
-From: Francesco Pretto <ceztko@gmail.com>
-Subject: Re: [PATCH] git-submodule.sh: Support 'checkout' as a valid update command
-Date: Tue, 7 Jan 2014 01:05:04 +0100
-Message-ID: <CALas-ijrD1VnyUcr2yQw_1Je4K3eEdXtxqDNDKdGPZE=1=Nm3A@mail.gmail.com>
-References: <1389034726-8744-1-git-send-email-ceztko@gmail.com> <xmqqtxdgfz8a.fsf@gitster.dls.corp.google.com>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: Fwd: static initializers
+Date: Tue, 7 Jan 2014 01:19:32 +0100
+Message-ID: <CABPQNSY+xivBoARCP4UbugQk_C4Uv9hWH2_K7AJw_uor0K33Cg@mail.gmail.com>
+References: <CAHOQ7J8vQ-t1knSiWQ+RKv3QvwW2DZBy29DBhkxu7tEeXoJ-CA@mail.gmail.com>
+ <CAHOQ7J-UKvG2j2PZJqhJP=5YLniHpELtOTzF5i1WsiGkhzZHhw@mail.gmail.com>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 07 01:05:40 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: msysGit <msysgit@googlegroups.com>
+To: Stefan Zager <szager@google.com>, GIT Mailing-list <git@vger.kernel.org>
+X-From: msysgit+bncBDR53PPJ7YHRBPEQVWLAKGQEYPWF4NI@googlegroups.com Tue Jan 07 01:20:15 2014
+Return-path: <msysgit+bncBDR53PPJ7YHRBPEQVWLAKGQEYPWF4NI@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-oa0-f59.google.com ([209.85.219.59])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W0KAr-0000B4-UF
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Jan 2014 01:05:38 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758215AbaAGAFb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Jan 2014 19:05:31 -0500
-Received: from mail-oa0-f46.google.com ([209.85.219.46]:52073 "EHLO
-	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756842AbaAGAF1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Jan 2014 19:05:27 -0500
-Received: by mail-oa0-f46.google.com with SMTP id l6so896439oag.19
-        for <git@vger.kernel.org>; Mon, 06 Jan 2014 16:05:27 -0800 (PST)
+	(envelope-from <msysgit+bncBDR53PPJ7YHRBPEQVWLAKGQEYPWF4NI@googlegroups.com>)
+	id 1W0KP0-0004ni-Pm
+	for gcvm-msysgit@m.gmane.org; Tue, 07 Jan 2014 01:20:14 +0100
+Received: by mail-oa0-f59.google.com with SMTP id g12sf991420oah.24
+        for <gcvm-msysgit@m.gmane.org>; Mon, 06 Jan 2014 16:20:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=ZtK/NPWkt1sfPXEdFSDXuNQlHo0MroOfS9h4TxbxGPw=;
-        b=BoVHQQZCL3zUwORFnvWNQUHr2Ze6o5UjLJdBJBhkJNZjBYs9q/a2uKXu6+KJNDFflq
-         7ej/Tc7YucTDUIvSm6dms1xW0Wc+dpbM+JehgT0NY8VCG1u43i0I/1IwiiXilMMDvCiL
-         qOWO2LARmkh1h/GgWOlBlkSSxJ5CNyHy+US65tUEgNl1sl8I5idNdDiAMMa5XvDvmYMt
-         cdK7LIIG0dlBqvD6HYonjEQlzhGKUhO1GrmDguFbgdiC6kU6eTU1zbS59biQBC+y7h+H
-         UjLY7+15ND7h/acz/g7e2iWqzIUmi9LbFwbWuCiVMu+6E84VG55FF4Lpt8O2cET9/HC7
-         oo8w==
-X-Received: by 10.182.87.69 with SMTP id v5mr78678obz.77.1389053126024; Mon,
- 06 Jan 2014 16:05:26 -0800 (PST)
-Received: by 10.76.80.165 with HTTP; Mon, 6 Jan 2014 16:05:04 -0800 (PST)
-In-Reply-To: <xmqqtxdgfz8a.fsf@gitster.dls.corp.google.com>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240088>
+        d=googlegroups.com; s=20120806;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:x-original-sender:x-original-authentication-results
+         :precedence:mailing-list:list-id:list-post:list-help:list-archive
+         :sender:list-subscribe:list-unsubscribe:content-type;
+        bh=uDp1VMkmZg0gyxh3EhNgoYO8gaDVFx6w992erkdlY8g=;
+        b=FHpya7NDJo+sGv691Upe0d4R0wU8I5z6VGBOKk6uLZsUhdE4x2SPVpUzNemaveNek1
+         P3CpixSMp69jCY11j2k8JNF8Dd5EMbUZpYqgLipAmQv0wU72HRF14foiF2u2MnoxnSu3
+         GGN4ZznbH9DkG9GvDba3kc9TQXGrmcHvcb4c4DwExgAdNjmqU3fDpCNpCgnqfmBT9kjC
+         c11xA+cN6DCegCmj/R2nDzQsXLFNKMe48CkraznyGc1We2wMwXaRgEBCN1rp97zSLx8I
+         RZXp1uNz12a0gL4BSO1/MddP7DUmxweidMfQR12SOjkgJ47KYL0b0hIqUJTGXHjcDBGV
+         7OUQ==
+X-Received: by 10.49.49.232 with SMTP id x8mr265350qen.13.1389054013725;
+        Mon, 06 Jan 2014 16:20:13 -0800 (PST)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.49.85.129 with SMTP id h1ls5985114qez.15.gmail; Mon, 06 Jan
+ 2014 16:20:12 -0800 (PST)
+X-Received: by 10.52.159.99 with SMTP id xb3mr40042511vdb.4.1389054012864;
+        Mon, 06 Jan 2014 16:20:12 -0800 (PST)
+Received: from mail-ig0-x22a.google.com (mail-ig0-x22a.google.com [2607:f8b0:4001:c05::22a])
+        by gmr-mx.google.com with ESMTPS id d9si4566802yhl.2.2014.01.06.16.20.12
+        for <msysgit@googlegroups.com>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 06 Jan 2014 16:20:12 -0800 (PST)
+Received-SPF: pass (google.com: domain of kusmabite@gmail.com designates 2607:f8b0:4001:c05::22a as permitted sender) client-ip=2607:f8b0:4001:c05::22a;
+Received: by mail-ig0-f170.google.com with SMTP id k19so8746133igc.1
+        for <msysgit@googlegroups.com>; Mon, 06 Jan 2014 16:20:12 -0800 (PST)
+X-Received: by 10.42.24.210 with SMTP id x18mr61200948icb.38.1389054012429;
+ Mon, 06 Jan 2014 16:20:12 -0800 (PST)
+Received: by 10.64.249.33 with HTTP; Mon, 6 Jan 2014 16:19:32 -0800 (PST)
+In-Reply-To: <CAHOQ7J-UKvG2j2PZJqhJP=5YLniHpELtOTzF5i1WsiGkhzZHhw@mail.gmail.com>
+X-Original-Sender: kusmabite@gmail.com
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of kusmabite@gmail.com designates 2607:f8b0:4001:c05::22a
+ as permitted sender) smtp.mail=kusmabite@gmail.com;       dkim=pass
+ header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240089>
 
-2014/1/7 Junio C Hamano <gitster@pobox.com>:
-> Francesco Pretto <ceztko@gmail.com> writes:
->
->> According to "Documentation/gitmodules.txt", 'checkout' is a valid
->> 'submodule.<name>.update' command.
->
-> As you can see in the surrounding text, we call the value of
-> submodule.*.update a "mode", not a command.
->
+On Mon, Jan 6, 2014 at 11:05 PM, Stefan Zager <szager@google.com> wrote:
+> Forwarding to msysgit for any guidance about win equivalents for
+> PTHREAD_MUTEX_INITIALIZER or __attribute__((constructor)).
 
-Ok.
+As you've probably already guessed, PTHREAD_MUTEX_INITIALIZER isn't
+supported in our pthreads-emulator. I did send out a patch adding
+support for it a while ago, but it hasn't been heavily tested.
 
->> Also "git-submodule.sh" refers to
->> it and processes it correctly.
->
-> This present tense puzzles me.  If it already refers to checkout and
-> handles it correctly is there anything that needs to be done?  Or
-> did you mean "it should refer to and process it but it doesn't, so
-> make it so?"
->
+__attribute__((constructor)) doesn't work on MSVC, which we also build with.
 
-Like you said, "it already refers to checkout and handles it
-correctly". I think the use of the simple present tense here is
-correct: it's a fact. Feel free to advice another wording if you
-prefer.
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
 
->> Reflecting commit 'ac1fbb' to support
->> this syntax and also validate property values during 'update' command,
->> issuing an error if the value found is unknown.
->
-> Sorry, but -ECANNOTPARSE.
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
 
-Not sure what's wrong here, can you explain why it's failing? I'm
-using git-format-patch/git-send-email with default settings. Also, if
-you can edit and keep the sign-off (I'm not familiar with the
-mailing-list maintainer workflow, sorry), feel free to do it.
-
-Thanks
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/groups/opt_out.
