@@ -1,80 +1,153 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH] sha1_name: don't resolve refs when core.warnambiguousrefs
- is false
-Date: Tue, 7 Jan 2014 13:45:22 +0700
-Message-ID: <CACsJy8CBCb1i3iLevmgR2SZYpFyZGDPqDSKEL4B_78JyE9Mhew@mail.gmail.com>
-References: <1389065521-46331-1-git-send-email-brodie@sf.io>
+From: =?UTF-8?q?=C3=98ystein=20Walle?= <oystwa@gmail.com>
+Subject: [PATCH v3] stash: handle specifying stashes with spaces
+Date: Tue,  7 Jan 2014 09:22:15 +0100
+Message-ID: <1389082935-16159-1-git-send-email-oystwa@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>
-To: Brodie Rao <brodie@sf.io>
-X-From: git-owner@vger.kernel.org Tue Jan 07 07:45:59 2014
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Thomas Rast <tr@thomasrast.ch>,
+	=?UTF-8?q?=C3=98ystein=20Walle?= <oystwa@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 07 09:22:36 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W0QQI-0006RA-1B
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Jan 2014 07:45:58 +0100
+	id 1W0Rvn-0007qA-FV
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Jan 2014 09:22:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754573AbaAGGpy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jan 2014 01:45:54 -0500
-Received: from mail-qa0-f42.google.com ([209.85.216.42]:35847 "EHLO
-	mail-qa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753171AbaAGGpx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jan 2014 01:45:53 -0500
-Received: by mail-qa0-f42.google.com with SMTP id ii20so270900qab.15
-        for <git@vger.kernel.org>; Mon, 06 Jan 2014 22:45:52 -0800 (PST)
+	id S1754928AbaAGIWa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 7 Jan 2014 03:22:30 -0500
+Received: from mail-lb0-f169.google.com ([209.85.217.169]:53945 "EHLO
+	mail-lb0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754647AbaAGIW3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jan 2014 03:22:29 -0500
+Received: by mail-lb0-f169.google.com with SMTP id u14so44534lbd.28
+        for <git@vger.kernel.org>; Tue, 07 Jan 2014 00:22:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=iQbaFMj/fVKeqif0/1FCaKJ1RSi/vDwpP1xwCcgc7KY=;
-        b=oEJFDX+RuFBvaf/dYH+14zwlm+zy1JPwslOl3GgUhMPuO0fOT99NYqNkg2a3gZfpDx
-         FJR/czods2IGTGpq1qW9N7Fk5vMWf6E1dcIHZ9WgbUJsMRU16nybV4roHk0Vx3cFssFj
-         WeuETlTu1V7r8HTiGhTV1qpWwUW9rvWst6kWf0Hl1pRdlKMCLX/gWWxya24wTSlxcgpV
-         EE590/0rG+FCazaeqq2nsj0VlckfGiI9HGvfEsFMLBz5f/zeYbGWToKQIRMkR3ANBs8k
-         e9iH/bNfP/12qLIddWnAY1LvQFFBMq2mI+Hx27FfJIEZwBAlWzec0Na0Pfe1ZauUorh5
-         MScA==
-X-Received: by 10.49.81.206 with SMTP id c14mr190724232qey.79.1389077152850;
- Mon, 06 Jan 2014 22:45:52 -0800 (PST)
-Received: by 10.96.136.98 with HTTP; Mon, 6 Jan 2014 22:45:22 -0800 (PST)
-In-Reply-To: <1389065521-46331-1-git-send-email-brodie@sf.io>
+        h=from:to:cc:subject:date:message-id:mime-version:content-type
+         :content-transfer-encoding;
+        bh=XdufVDtdC5SZuGtsT4ccqwAt8E2VIssAmM0C9z2DOUo=;
+        b=TrHFNB7qzFl+V/Mh0JbRTSP0KCTZjSiW8vw7+fEyzbf5AtnueCvbaEQgC6qgHFoZ1E
+         BFc8Vx59MU3O/CdLcH1FbsaO06MGq44oYSp3rTgbqt171yciZftHUVaO5yzSCQFPtrJY
+         U82Vvr8UMxsx/BuACQ//6OefJnMNmEctaCnRdPXeR22IgHa5u2o4RD21/udsDiSjC8ZL
+         JpvW4oYdR5r3pbuLsufZmzlgFdYOC6FK+kr5mYz2uZJLxBctbgjIOEpE64jsvaYjN0Jq
+         9grSGXWzU0t3reGq9vEGZtbg11nICtDwrPlKRzbWZmfujdsJYpbDpd0efQ6o95XzwlPI
+         FqlA==
+X-Received: by 10.152.2.165 with SMTP id 5mr2103229lav.70.1389082948226;
+        Tue, 07 Jan 2014 00:22:28 -0800 (PST)
+Received: from localhost.localdomain (80.156.189.109.customer.cdi.no. [109.189.156.80])
+        by mx.google.com with ESMTPSA id a8sm57118191lae.5.2014.01.07.00.22.25
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 07 Jan 2014 00:22:26 -0800 (PST)
+X-Mailer: git-send-email 1.8.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240099>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240100>
 
-On Tue, Jan 7, 2014 at 10:32 AM, Brodie Rao <brodie@sf.io> wrote:
-> This change ensures get_sha1_basic() doesn't try to resolve full hashes
-> as refs when ambiguous ref warnings are disabled.
->
-> This provides a substantial performance improvement when passing many
-> hashes to a command (like "git rev-list --stdin") when
-> core.warnambiguousrefs is false. The check incurs 6 stat()s for every
-> hash supplied, which can be costly over NFS.
-> ---
->  sha1_name.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/sha1_name.c b/sha1_name.c
-> index e9c2999..10bd007 100644
-> --- a/sha1_name.c
-> +++ b/sha1_name.c
-> @@ -451,9 +451,9 @@ static int get_sha1_basic(const char *str, int len, unsigned char *sha1)
->         int at, reflog_len, nth_prior = 0;
->
->         if (len == 40 && !get_sha1_hex(str, sha1)) {
-> -               if (warn_on_object_refname_ambiguity) {
-> +               if (warn_ambiguous_refs && warn_on_object_refname_ambiguity) {
->                         refs_found = dwim_ref(str, len, tmp_sha1, &real_ref);
-> -                       if (refs_found > 0 && warn_ambiguous_refs) {
-> +                       if (refs_found > 0) {
->                                 warning(warn_msg, len, str);
->                                 if (advice_object_name_warning)
->                                         fprintf(stderr, "%s\n", _(object_name_msg));
+When trying to pop/apply a stash specified with an argument containing
+spaces git-stash will throw an error:
 
-Looks obviously correct. Thanks.
--- 
-Duy
+    $ git stash pop 'stash@{two hours ago}'
+    Too many revisions specified: stash@{two hours ago}
+
+This happens because word splitting is used to count non-option
+arguments. Make use of rev-parse's --sq option to quote the arguments
+for us to ensure a correct count. Add quotes where necessary.
+
+Also add a test that verifies correct behaviour.
+
+Helped-by: Thomas Rast <tr@thomasrast.ch>
+Signed-off-by: =C3=98ystein Walle <oystwa@gmail.com>
+---
+v3 uses the same eval/--sq technique as v2, suggested by Thomas Rast.
+This is basically a resend except that I added a missing '&&' in the
+test that Eric Sunshine noticed when reading v1.
+
+ git-stash.sh     | 14 +++++++-------
+ t/t3903-stash.sh | 11 +++++++++++
+ 2 files changed, 18 insertions(+), 7 deletions(-)
+
+diff --git a/git-stash.sh b/git-stash.sh
+index 1e541a2..f0a94ab 100755
+--- a/git-stash.sh
++++ b/git-stash.sh
+@@ -358,7 +358,7 @@ parse_flags_and_rev()
+ 	i_tree=3D
+ 	u_tree=3D
+=20
+-	REV=3D$(git rev-parse --no-flags --symbolic "$@") || exit 1
++	REV=3D$(git rev-parse --no-flags --symbolic --sq "$@") || exit 1
+=20
+ 	FLAGS=3D
+ 	for opt
+@@ -376,7 +376,7 @@ parse_flags_and_rev()
+ 		esac
+ 	done
+=20
+-	set -- $REV
++	eval set -- $REV
+=20
+ 	case $# in
+ 		0)
+@@ -391,13 +391,13 @@ parse_flags_and_rev()
+ 		;;
+ 	esac
+=20
+-	REV=3D$(git rev-parse --quiet --symbolic --verify $1 2>/dev/null) || =
+{
++	REV=3D$(git rev-parse --quiet --symbolic --verify "$1" 2>/dev/null) |=
+| {
+ 		reference=3D"$1"
+ 		die "$(eval_gettext "\$reference is not valid reference")"
+ 	}
+=20
+-	i_commit=3D$(git rev-parse --quiet --verify $REV^2 2>/dev/null) &&
+-	set -- $(git rev-parse $REV $REV^1 $REV: $REV^1: $REV^2: 2>/dev/null)=
+ &&
++	i_commit=3D$(git rev-parse --quiet --verify "$REV^2" 2>/dev/null) &&
++	set -- $(git rev-parse "$REV" "$REV^1" "$REV:" "$REV^1:" "$REV^2:" 2>=
+/dev/null) &&
+ 	s=3D$1 &&
+ 	w_commit=3D$1 &&
+ 	b_commit=3D$2 &&
+@@ -408,8 +408,8 @@ parse_flags_and_rev()
+ 	test "$ref_stash" =3D "$(git rev-parse --symbolic-full-name "${REV%@*=
+}")" &&
+ 	IS_STASH_REF=3Dt
+=20
+-	u_commit=3D$(git rev-parse --quiet --verify $REV^3 2>/dev/null) &&
+-	u_tree=3D$(git rev-parse $REV^3: 2>/dev/null)
++	u_commit=3D$(git rev-parse --quiet --verify "$REV^3" 2>/dev/null) &&
++	u_tree=3D$(git rev-parse "$REV^3:" 2>/dev/null)
+ }
+=20
+ is_stash_like()
+diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+index debda7a..7eb011c 100755
+--- a/t/t3903-stash.sh
++++ b/t/t3903-stash.sh
+@@ -673,4 +673,15 @@ test_expect_success 'store updates stash ref and r=
+eflog' '
+ 	grep quux bazzy
+ '
+=20
++test_expect_success 'handle stash specification with spaces' '
++	git stash clear &&
++	echo pig > file &&
++	git stash &&
++	test_tick &&
++	echo cow > file &&
++	git stash &&
++	git stash apply "stash@{Thu Apr 7 15:17:13 2005 -0700}" &&
++	grep pig file
++'
++
+ test_done
+--=20
+1.8.5
