@@ -1,67 +1,128 @@
-From: Francesco Pretto <ceztko@gmail.com>
-Subject: Re: [RFC v2] submodule: Respect requested branch on all clones
-Date: Tue, 7 Jan 2014 20:52:07 +0100
-Message-ID: <CALas-ihyPTt60F_cVM8_D07rkN+gtaD9HdWcPvfx-soN4bFrgg@mail.gmail.com>
-References: <CALas-ii90x07Kbxzy_siBJV_RHPkvBw7spFBD9vi6o43mU1k6g@mail.gmail.com>
- <d0de817dfc687fd943349c9d3e1d410161a0f01e.1388938473.git.wking@tremily.us>
- <20140105194850.GA2994@book.hvoigt.net> <20140105212458.GG3156@odin.tremily.us>
- <20140105225733.GB4660@book.hvoigt.net> <20140105233943.GJ3156@odin.tremily.us>
- <20140106003314.GL3156@odin.tremily.us> <20140106011255.GM3156@odin.tremily.us>
- <20140106160202.GE27265@t2784.greatnet.de> <CALas-ijXQFcUHWk-jJrLifqsMHAKo6NNKya+jR6RJGGDXY76hg@mail.gmail.com>
- <CALas-ijNgaTQr77DZw3acypgaJHpDFVnGdq97ECM4zu+CPma0w@mail.gmail.com>
- <xmqqd2k3ejfr.fsf@gitster.dls.corp.google.com> <CALas-ihPmJSf9eH0P7Vf28pB4zN_dsa_2=fe+_moZgiP0C3UTA@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] sha1_name: don't resolve refs when
+ core.warnambiguousrefs is false
+Date: Tue, 7 Jan 2014 14:58:44 -0500
+Message-ID: <20140107195844.GA21812@sigill.intra.peff.net>
+References: <1389065521-46331-1-git-send-email-brodie@sf.io>
+ <CAEfQM484kqLSVeyjhYtg7GfXOQkQNjaO1FV2_U3uAqO=Nargdg@mail.gmail.com>
+ <20140107171307.GA19482@sigill.intra.peff.net>
+ <xmqqzjn7el4k.fsf@gitster.dls.corp.google.com>
+ <20140107175241.GA20415@sigill.intra.peff.net>
+ <xmqqppo3d1lk.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Heiko Voigt <hvoigt@hvoigt.net>,
-	"W. Trevor King" <wking@tremily.us>, Git <git@vger.kernel.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>
+Content-Type: text/plain; charset=utf-8
+Cc: Brodie Rao <brodie@sf.io>, git@vger.kernel.org,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 07 20:52:34 2014
+X-From: git-owner@vger.kernel.org Tue Jan 07 20:58:54 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W0chU-0006Yk-MC
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Jan 2014 20:52:33 +0100
+	id 1W0cnb-0003Ur-Pm
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Jan 2014 20:58:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753026AbaAGTw3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jan 2014 14:52:29 -0500
-Received: from mail-oa0-f46.google.com ([209.85.219.46]:49991 "EHLO
-	mail-oa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751000AbaAGTw2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jan 2014 14:52:28 -0500
-Received: by mail-oa0-f46.google.com with SMTP id l6so719897oag.33
-        for <git@vger.kernel.org>; Tue, 07 Jan 2014 11:52:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=MjjRlm6Lz44XXgtPNza3XWBPhSTVECgum2XvrBACh9U=;
-        b=sDjHt4w01IPmKj7bIJel1mlQLewBvgBcGnjVuQyMpQswXauKbSFOUOVFZ5L2CYf7pZ
-         gr9weU54s/E7J0eKYYCIqm6TOEdmuk0IJ0IOeq7uVLnlRY+K+/rLxYyScEsFk6GopPZ4
-         NP4A6CZyuClpgmwGTBQyviMxzEhb1As7bs/JVq/wy1uzbRYDN+KXgBnqaRgy6nUkPwAg
-         Go0hlLFK5ohK9R//4rCjurHOxwhJmpuUAfA8VXO3Wxm8v6NCNywYg7BHAAvXPCMGSYek
-         zDyg8CsIf3nEDvD8gwkibJ13XDcMu0r0zD66HLxAPJcNAe0f3hxKG/F6AyjrdM+apGXH
-         mSiw==
-X-Received: by 10.182.29.33 with SMTP id g1mr2489116obh.59.1389124347726; Tue,
- 07 Jan 2014 11:52:27 -0800 (PST)
-Received: by 10.76.80.165 with HTTP; Tue, 7 Jan 2014 11:52:07 -0800 (PST)
-In-Reply-To: <CALas-ihPmJSf9eH0P7Vf28pB4zN_dsa_2=fe+_moZgiP0C3UTA@mail.gmail.com>
+	id S1753454AbaAGT6s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jan 2014 14:58:48 -0500
+Received: from cloud.peff.net ([50.56.180.127]:56642 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752610AbaAGT6q (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jan 2014 14:58:46 -0500
+Received: (qmail 20292 invoked by uid 102); 7 Jan 2014 19:58:46 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 07 Jan 2014 13:58:46 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 07 Jan 2014 14:58:44 -0500
+Content-Disposition: inline
+In-Reply-To: <xmqqppo3d1lk.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240141>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240142>
 
-2014/1/7 Francesco Pretto <ceztko@gmail.com>:
-> 2014/1/7 Junio C Hamano <gitster@pobox.com>:
->> It is not immediately obvious to me why anybody who specifies the
->> submodule.*.branch variable to say "I want _that_ branch" not to
->> want to be on that branch but in a detached state, so from that
->> perspective, submodule.*.attach feels superfluous.
->>
->
-> Junio, for what it concerns me I fully support *this* patch as,
+On Tue, Jan 07, 2014 at 11:38:15AM -0800, Junio C Hamano wrote:
 
-Where "this" patch is Trevor's one, don't get me wrong... :)
+> >> > Alternatively, I guess "cat-file
+> >> > --batch" could just turn off warn_ambiguous_refs itself.
+> >> 
+> >> Sounds like a sensible way to go, perhaps on top of this change?
+> >
+> > The downside is that we would not warn about ambiguous refs anymore,
+> > even if the user was expecting it to. I don't know if that matters much.
+> 
+> That is true already with or without Brodie's change, isn't it?
+> With warn_on_object_refname_ambiguity, "cat-file --batch" makes us
+> ignore core.warnambigousrefs setting.  If we redo 25fba78d
+> (cat-file: disable object/refname ambiguity check for batch mode,
+> 2013-07-12) to unconditionally disable warn_ambiguous_refs in
+> "cat-file --batch" and get rid of warn_on_object_refname_ambiguity,
+> the end result would be the same, no?
+
+No, I don't think the end effect is the same (or maybe we are not
+talking about the same thing. :) ).
+
+There are two ambiguity situations:
+
+  1. Ambiguous non-fully-qualified refs (e.g., same tag and head name).
+
+  2. 40-hex sha1 object names which might also be unqualified ref names.
+
+Prior to 25ffba78d, cat-file checked both (like all the rest of git).
+But checking (2) is very expensive, since otherwise a 40-hex sha1 does
+not need to do a ref lookup at all, and something like "rev-list
+--objects | cat-file --batch-check" processes a large number of these.
+
+Detecting (1) is not nearly as expensive. You must already be doing a
+ref lookup to trigger it (so the relative cost is much closer), and your
+query size is bounded by the number of refs, not the number of objects.
+
+Commit 25ffba78d traded off some safety for a lot of performance by
+disabling (2), but left (1) in place because the tradeoff is different.
+
+The two options I was musing over earlier today were (all on top of
+Brodie's patch):
+
+  a. Revert 25ffba78d. With Brodie's patch, core.warnAmbiguousRefs
+     disables _both_ warnings. So we default to safe-but-slow, but
+     people who care about performance can turn off ambiguity warnings.
+     The downside is that you have to know to turn it off manually (and
+     it's a global config flag, so you end up turning it off
+     _everywhere_, not just in big queries where it matters).
+
+  b. Revert 25ffba78d, but then on top of it just turn off
+     warn_ambiguous_refs unconditionally in "cat-file --batch-check".
+     The downside is that we drop the safety from (1). The upside is
+     that the code is a little simpler, as we drop the extra flag.
+
+And obviously:
+
+  c. Just leave it at Brodie's patch with nothing else on top.
+
+My thinking in favor of (b) was basically "does anybody actually care
+about ambiguous refs in this situation anyway?". If they do, then I
+think (c) is my preferred choice.
+
+> > I kind of feel in the --batch situation that it is somewhat useless (I
+> > wonder if "rev-list --stdin" should turn it off, too).
+> 
+> I think doing the same as "cat-file --batch" in "rev-list --stdin"
+> makes sense.  Both interfaces are designed to grok extended SHA-1s,
+> and full 40-hex object names could be ambiguous and we are missing
+> the warning for them.
+
+I'm not sure I understand what you are saying. We _do_ have the warning
+for "rev-list --stdin" currently. We do _not_ have the warning for
+"cat-file --batch", since my 25ffba78d. I was wondering if rev-list
+should go the same way as 25ffba78d, for efficiency reasons (e.g., think
+piping to "rev-list --no-walk --stdin").
+
+> Or are you wondering if we should revert 25fba78d, apply Brodie's
+> change to skip the ref resolution whose result is never used, and
+> tell people who want to use "cat-file --batch" (or "rev-list
+> --stdin") to disable the ambiguity warning themselves?
+
+See above. :)
+
+-Peff
