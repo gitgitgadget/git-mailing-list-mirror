@@ -1,87 +1,95 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: [PATCH] Fix safe_create_leading_directories() for Windows
-Date: Tue, 7 Jan 2014 16:43:22 +0100
-Message-ID: <CABPQNSaBbcgpE98j7mChvu6N7QqCG0CEmUgvJRURXLTdUTyFGg@mail.gmail.com>
-References: <52C5A039.6030408@gmail.com> <alpine.DEB.1.00.1401021826120.1191@s15462909.onlinehome-server.info>
- <52C5ABDE.1010006@gmail.com> <alpine.DEB.1.00.1401022143310.1191@s15462909.onlinehome-server.info>
-Reply-To: kusmabite@gmail.com
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-submodule.sh: Support 'checkout' as a valid update command
+Date: Tue, 07 Jan 2014 08:12:31 -0800
+Message-ID: <xmqqlhyrg49c.fsf@gitster.dls.corp.google.com>
+References: <1389034726-8744-1-git-send-email-ceztko@gmail.com>
+	<xmqqtxdgfz8a.fsf@gitster.dls.corp.google.com>
+	<CALas-ijrD1VnyUcr2yQw_1Je4K3eEdXtxqDNDKdGPZE=1=Nm3A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Sebastian Schuberth <sschuberth@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Jan 07 16:44:12 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
+To: Francesco Pretto <ceztko@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 07 17:12:45 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W0Yp7-0001Tp-LK
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Jan 2014 16:44:10 +0100
+	id 1W0ZGm-0008Gc-Jx
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Jan 2014 17:12:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752600AbaAGPoG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jan 2014 10:44:06 -0500
-Received: from mail-ie0-f170.google.com ([209.85.223.170]:46724 "EHLO
-	mail-ie0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751276AbaAGPoE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jan 2014 10:44:04 -0500
-Received: by mail-ie0-f170.google.com with SMTP id qd12so544494ieb.29
-        for <git@vger.kernel.org>; Tue, 07 Jan 2014 07:44:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=hPJ2MVxJ0SlyG6amf34UlDDkCJR8/V1+osj/StgCcU8=;
-        b=FDAQwgVxY/R+MT2Kpmgo8AdcDuC3qCOMO506lt9n52tassU1s/3Q/IMpdSX6ac52sI
-         X0+AIGTgG/Gobh2gMKoVR4qSbcEUeMHl7fQo/MYRkpj7wdQX4xwvutlV1dz1o60zLPF8
-         pEepft65cBV19diNz3IhQ59b/eQXtkk11kH9pbc167iCgGnrkA4daGnLX96WIjP4qLZi
-         PDexugG//VguPtjHa4F9AQkunRMubWyyf5DAmga/yHDulDfzHR8abLsx/pwUGL6FwTHl
-         GZ6Jta3FkP5ZwzvSeUgVkKD2SeOtmLTVcRyv59cN+KHGMyaV/jYAzDi66OqsueaeZBT+
-         yllg==
-X-Received: by 10.43.82.69 with SMTP id ab5mr762417icc.95.1389109443123; Tue,
- 07 Jan 2014 07:44:03 -0800 (PST)
-Received: by 10.64.249.33 with HTTP; Tue, 7 Jan 2014 07:43:22 -0800 (PST)
-In-Reply-To: <alpine.DEB.1.00.1401022143310.1191@s15462909.onlinehome-server.info>
+	id S1752454AbaAGQMl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jan 2014 11:12:41 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39125 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752543AbaAGQMk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jan 2014 11:12:40 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 156495F1A7;
+	Tue,  7 Jan 2014 11:12:39 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=HY6g7QU3yXU2XcC6bat0eIsLCoE=; b=J4kQNj
+	EtK/fMVhZoozargMF60nf10fk0P3VKC+nkdm8L0OVWWW8fPxTz49GCYpzgdVfSwX
+	wv+YhkuUum8PUKZIG9MLnQ2CORoYRp3WKqhHXG9VlQsPtRVEoM/rl2nDvNpB7mFd
+	/+Gri6mOTHT7SLFvA6cV5APAiluI/AZD4T0zk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=UiOhk7nUuELoWrcKsdGQC27HMV83bMEA
+	V7WJQhoE0E9EUtrzbwKjRMT48VovJ9snlU/ktD3HocC042esSfCTBQbdAMpYL1wF
+	YqLBc29coMYIfRiXSDWzu03fuZQW6WAk7uHcfwcCi4yEY5fG9w6TX8MMd5h1bdFW
+	0kSOccqAlGA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EA9FD5F1A6;
+	Tue,  7 Jan 2014 11:12:38 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7DC8F5F1A2;
+	Tue,  7 Jan 2014 11:12:36 -0500 (EST)
+In-Reply-To: <CALas-ijrD1VnyUcr2yQw_1Je4K3eEdXtxqDNDKdGPZE=1=Nm3A@mail.gmail.com>
+	(Francesco Pretto's message of "Tue, 7 Jan 2014 01:05:04 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 85E2ED50-77B6-11E3-B090-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240107>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240108>
 
-On Thu, Jan 2, 2014 at 9:46 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi Sebastian,
->
-> On Thu, 2 Jan 2014, Sebastian Schuberth wrote:
->
->> On 02.01.2014 18:33, Johannes Schindelin wrote:
->>
->> > -- snip --
->> > On Linux, we can get away with assuming that the directory separator is a
->> > forward slash, but that is wrong in general. For that purpose, the
->> > is_dir_sep() function was introduced a long time ago. By using it in
->> > safe_create_leading_directories(), we proof said function for use on
->> > platforms where the directory separator is different from Linux'.
->> > -- snap --
->>
->> While I'd be fine with this, I do not think we really need it.
->
-> I also would have been fine with your commit message. But I knew Junio
-> wouldn't be.
->
->> As you say, is_dir_sep() has been introduced a long time ago, so people
->> should be aware of it, and it should also be immediately clear from the
->> diff why using it is better than hard-coding '/'.
->>
->> That said, I see any further explanations on top of the commit message
->> title is an added bonus, and as "just" a bonus a link to a pull request
->> should be fine. You don't need to understand or appreciate the concept
->> of pull requests in order to follow the link and read the text in there.
->
-> Well, you and I both know how easy GitHub's pull request made things for
-> us as well as for contributors. I really cannot thank Erik enough for
-> bullying me into using and accepting them.
+Francesco Pretto <ceztko@gmail.com> writes:
 
-Huh? I don't think you refer to me, because I really dislike them (and
-I always have IIRC).
+> Like you said, "it already refers to checkout and handles it
+> correctly". I think the use of the simple present tense here is
+> correct: it's a fact. Feel free to advice another wording if you
+> prefer.
+
+It is not about preference but what we want to convey to the
+readers.  When you start the sentence with "Oh, it already works
+correctly", the readers need to see this sentence finished: "It
+already works, it is handled correctly, but we change the code
+nevertheless because ...?".
+
+Here is my attempt to fill that "because ..." part:
+
+	Subject: git-submodule.sh: 'checkout' is a valid update mode
+
+	'checkout' is documented as one of the valid values for
+	'submodule.<name>.update' variable, and in a repository with
+	the variable set to 'checkout', "git submodule update"
+	command do update using the 'checkout' mode.
+
+	However, it has been an accident that the implementation
+	works this way; any unknown value would trigger the same
+	codepath and update using the 'checkout' mode.
+
+        Tighten the codepath and explicitly list 'checkout' as one
+	of the known update modes, and error out when an unknown
+	update mode is used.
+
+	Also, teach the codepath that initializes the configuration
+	variable from in-tree .gitmodules that 'checkout' is one of
+	the valid values---the code since ac1fbbda (submodule: do
+	not copy unknown update mode from .gitmodules, 2013-12-02)
+	used to treat the value 'checkout' as unknown and mapped it
+	to 'none', which made little sense.
