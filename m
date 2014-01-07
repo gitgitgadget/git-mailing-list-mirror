@@ -1,154 +1,94 @@
-From: "W. Trevor King" <wking@tremily.us>
-Subject: Re: [RFC v2] submodule: Respect requested branch on all clones
-Date: Tue, 7 Jan 2014 10:47:00 -0800
-Message-ID: <20140107184659.GF11060@odin.tremily.us>
-References: <CALas-ii90x07Kbxzy_siBJV_RHPkvBw7spFBD9vi6o43mU1k6g@mail.gmail.com>
- <d0de817dfc687fd943349c9d3e1d410161a0f01e.1388938473.git.wking@tremily.us>
- <xmqqlhyrek02.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] Introduce git submodule attached update
+Date: Tue, 07 Jan 2014 10:56:38 -0800
+Message-ID: <xmqq38kzei3d.fsf@gitster.dls.corp.google.com>
+References: <1388890249-3577-1-git-send-email-ceztko@gmail.com>
+	<1388890249-3577-2-git-send-email-ceztko@gmail.com>
+	<20140105203349.GB3737@book.hvoigt.net>
+	<CALas-ijjzyRVuc0NaAS5QS98pX2198mv4HoHDacgYFYNLXbXFw@mail.gmail.com>
+	<20140106140627.GA27265@t2784.greatnet.de>
+	<CALas-ihHD_eJOXLUrhCVZjidQDmrCN=QpdfMKoN1i9A7FAo3RQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="eDB11BtaWSyaBkpc"
-Cc: Git <git@vger.kernel.org>, Francesco Pretto <ceztko@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Heiko Voigt <hvoigt@hvoigt.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 07 19:47:28 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Heiko Voigt <hvoigt@hvoigt.net>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>,
+	Jens Lehmann <jens.lehmann@web.de>,
+	"W. Trevor King" <wking@tremily.us>
+To: Francesco Pretto <ceztko@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 07 19:56:49 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W0bgV-0002i6-An
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Jan 2014 19:47:27 +0100
+	id 1W0bpY-0006Po-9F
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Jan 2014 19:56:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753323AbaAGSrJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jan 2014 13:47:09 -0500
-Received: from qmta09.westchester.pa.mail.comcast.net ([76.96.62.96]:35266
-	"EHLO qmta09.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750895AbaAGSrG (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 7 Jan 2014 13:47:06 -0500
-Received: from omta19.westchester.pa.mail.comcast.net ([76.96.62.98])
-	by qmta09.westchester.pa.mail.comcast.net with comcast
-	id B6Xb1n00227AodY596n5B6; Tue, 07 Jan 2014 18:47:05 +0000
-Received: from odin.tremily.us ([24.18.63.50])
-	by omta19.westchester.pa.mail.comcast.net with comcast
-	id B6n31n01B152l3L3f6n4Rd; Tue, 07 Jan 2014 18:47:05 +0000
-Received: by odin.tremily.us (Postfix, from userid 1000)
-	id C6587EA923E; Tue,  7 Jan 2014 10:47:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
-	t=1389120421; bh=wc2MrLD5exPXFXp4jA49Si+DdZWJqng/H7RffZ3qcaE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=jdkCjzdYAcjxWofRzsu5qYicA7RiFWoI4MwctOCluBAMdw0EakdDPtruivYZeL2Lf
-	 h+XW/55c0BuPvf5HTCsA2YWgyL5sg/dpaXi97F/4DUIR0nMk03am5qKUyLffCjwor3
-	 yaNfpJcgBMBadxv78DHxfxLIDWBCdz/7j061TmbA=
-Content-Disposition: inline
-In-Reply-To: <xmqqlhyrek02.fsf@gitster.dls.corp.google.com>
-OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
- url=http://tremily.us/pubkey.txt
-User-Agent: Mutt/1.5.22 (2013-10-16)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-	s=q20121106; t=1389120425;
-	bh=j8wEa/WX1WM3WQeMzkcTeKHz3Mi3ktugStFjaqjq6/s=;
-	h=Received:Received:Received:Date:From:To:Subject:Message-ID:
-	 MIME-Version:Content-Type;
-	b=FvlAcf2afoNZHcST+vIeSmBJFn/Yx0mz80mWq8zkG33v1jqaEeTZj57BIArpeGwdN
-	 Sk67sjEezovkkOiUdfvXARY3BaA5qdU9tau9RQChpKOVxAWxUyVxnfHH/DkgPqglfm
-	 vdz+ZZZObRyoIZ9yhG43fUaEapxrg6lqi8FK/oJztHkKwg1C3XLGMY51/Han/tAB4A
-	 0BwTZ1bPHBeifa9ImeGmtbrPGQUAQw5Cbxra3mDonStu+w8exSsft3AKqoANo/AgXX
-	 tUV5JHtc1qypcX1JICeuGrk4kNwpZ4Xr4IxjxrSv/9YnPHGLdVaYElZ3tt0q3cSK7Z
-	 aztwu9lymyQpA==
+	id S1751330AbaAGS4p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jan 2014 13:56:45 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62752 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750857AbaAGS4n (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jan 2014 13:56:43 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D68BE614D2;
+	Tue,  7 Jan 2014 13:56:42 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=BGoL6W0sBR0H8vcp7JHefWXXzQQ=; b=pyWNTC
+	1uD9uwMXGN5t7DffCo6fM6I/nJkDbLetIMKG4MSYHfdReZ16LVHdZs++UH8OAmRf
+	znTwD5A5JfesdXaoR7SVvE3pf+z5qf4VCx0+hOrUzQMJ1Af598FwsPaEx+IPNOlR
+	i1lQlmPIHHKbePAm89C0R8ZmKJjifpE1+SKqw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=DwAn569UUWBPNfNXGWHGtAruuLublHcu
+	TTnhO5z455eayD+P8WgB9BHZbxNpIp9xyK5ckdhCXOvn4zq/ZqT1jYjfLnBTvo/m
+	MqCOKW1Qesq7ONLkjhJTXobd6MXrjwe1OnifJMsgwBACx2gbNp0bNDbMUmMkEC37
+	dsnApS3rvlk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B4B4E614D1;
+	Tue,  7 Jan 2014 13:56:42 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id ED857614CE;
+	Tue,  7 Jan 2014 13:56:41 -0500 (EST)
+In-Reply-To: <CALas-ihHD_eJOXLUrhCVZjidQDmrCN=QpdfMKoN1i9A7FAo3RQ@mail.gmail.com>
+	(Francesco Pretto's message of "Mon, 6 Jan 2014 18:47:58 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 723CD43E-77CD-11E3-978E-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240127>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240128>
 
+Francesco Pretto <ceztko@gmail.com> writes:
 
---eDB11BtaWSyaBkpc
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+>>> >  - In which situations does the developer or maintainer switch between
+>>> >    your attached/detached mode?
+>>>
+>>> The developer/maintainer does so optionally and voluntarily and it
+>>> effects only its private working tree.
+>>
+>> This does not answer my question. I would like to find out the reason
+>> why one would do the switch.
+>
+> The developer does it voluntarily, at his responsibility, because he
+> may decide to partecipate more actively to the development of the
+> submodule and still want to use a simple "git submodule update" to
+> updates his submodules, overriding its configuration as it can be done
+> for other properties like, for example, "branch".
 
-On Tue, Jan 07, 2014 at 10:15:25AM -0800, Junio C Hamano wrote:
->     submodule: respect requested branch on all clones
->=20
->     The previous code only checked out the requested branch in cmd_add
->     but not in cmd_update; this left the user on a detached HEAD after
->     an update initially cloned, and subsequent updates using rebase or
->     merge mode will kept the HEAD detached, unless the user moved to the
->     desired branch himself.
->=20
->     Move the branch-checkout logic into module_clone, where it can be
->     shared by cmd_add and cmd_update.  Also update the initial checkout
->     command to use 'rebase' to preserve branches setup during
->     module_clone.  This way, unless the user explicitly asks to work on
->     a detached HEAD, subsequent updates all happen on the specified
->     branch, which matches the end-user expectation much better.
+It is still unclear to me why we need attached/detached mode for
+that.  The developer may want to do an exploratory development,
+whose result is unknown to deserve to be committed on the specified
+branch at the beginning, and choose to build on a detached HEAD,
+which is a perfectly normal thing to do.  But the standard way to do
+so, whether the developer is working in the top-level superproject
+or in a submodule, would be to just do:
 
-This looks reasonable to me, but there are still changes I'd like to
-make for a v3 (e.g. using submodule.<name>.update to trigger local
-branch checkout).  However, I'm currently leaning towards a new 'git
-submodule checkout' command with explicit preferred local submodule
-branches (see [1]).  Maybe this should all wait until Jens rolls out
-his update implementation [2]?
+	cd $there && git checkout HEAD^0
 
-> Having writing all the above and then looking at the patch again, it
-> is not immediately obvious to me where you use "rebase" when doing
-> the initial checkout, though.
-
-It's used to shift the local branch reference from from the
-(arbitrary) cloned remote branch tip to the explicit submodule $sha1.
-Otherwise the default method for that operation is a HEAD-detaching
-'checkout'. I tried to explain it here [3].
-
-> "W. Trevor King" <wking@tremily.us> writes:
-> > The current Documentation/git-submodule.txt has:
-> >
-> >   update::
-> >     Update the registered submodules, i.e. clone missing submodules
-> >     and checkout the commit specified in the index of the containing
-> >     repository.  This will make the submodules HEAD be detached unless
-> >     `--rebase` or `--merge` is specified or the key
-> >     `submodule.$name.update` is set to `rebase`, `merge` or `none`.
->=20
-> Side note but doesn't Francesco's "'checkout' is a valid update mode"
-> need to update this part of the documentation as well?
-
-That would be nice.  I don't think his patch changes the docs, and I
-don't know if mentioning the --checkout option belongs in that patch
-as well, or in a separate fixup ;).
-
-Cheers,
-Trevor
-
-[1]: http://article.gmane.org/gmane.comp.version-control.git/240097
-[2]: http://article.gmane.org/gmane.comp.version-control.git/240117
-[3]: http://article.gmane.org/gmane.comp.version-control.git/239953
-
---=20
-This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
-For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
-
---eDB11BtaWSyaBkpc
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (GNU/Linux)
-
-iQIcBAEBAgAGBQJSzEuiAAoJEKKfehoaNkbt+7QQAI4DSeSNI/ASsnDqvTlzQnCa
-WJMgtbHP9xFNJzrrK9vqkek70bX3xGsa0/7qCM8UrJoop1nG93cEhKQhXbofm7wg
-A/XhHyXhL27cJQfRDmDzcNlJ4d8CmtTFPXzIneY/H3Wwp7FwIkYm61Y9Gg/tO/aA
-tP9ISCQkpDkcToclcQUj74Fkt/UN3wZ2iyihXNSu3zR+76Fxgr2+J1Doj0exgAWv
-y3ovlOQB+wn/zA3dnWFvEjwg9BggQ9Ro9cjp4Yj0qCVmJvcmexjTD6ih1bP8RfpS
-y8JFSjrL7vviEtT7t0lgfukLlt+b8UDCgmKYYbNwOiAiGEWHkhNo2whKeBujeeTl
-WTJZsQPJ6vw86998AcoOCo0cLUQsDIaDGHd3JkGDjwFw9UBy+l9Ik6ejh0YrwFON
-AREliGtY3LSiCSQCB46QDKW+tpNHtOf3sImprNEDnplKay1zmsYBOn0xEaGnbsL5
-A0gNNCIVk6eOhuZCUh2Uk+r/RNL4xxgFmQpHQCwr8LztsSEJo8Ap6EmnUMQrFV3M
-P+4WWbBs2Dt8m0k7mpS77U/xW9dk7tdzoJuZLyHBmTNIo2wHeDK6Ssmi7uivSYc2
-1L2UIquki4WfM2mnqevLVBJLLjbDBTrNl/71inet3jQ7HXjlqgjXX10cgUwa7ITO
-esQ9KtPRHIHET1SUQoeK
-=eVW6
------END PGP SIGNATURE-----
-
---eDB11BtaWSyaBkpc--
+or use whatever commit the state to be detached is at instead of
+"HEAD" in the above example, no?
