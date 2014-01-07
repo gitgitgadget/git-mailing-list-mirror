@@ -1,156 +1,97 @@
-From: "W. Trevor King" <wking@tremily.us>
-Subject: Re: [PATCH 2/2] Introduce git submodule attached update
-Date: Tue, 7 Jan 2014 11:27:13 -0800
-Message-ID: <20140107192713.GG11060@odin.tremily.us>
-References: <1388890249-3577-1-git-send-email-ceztko@gmail.com>
- <1388890249-3577-2-git-send-email-ceztko@gmail.com>
- <20140105203349.GB3737@book.hvoigt.net>
- <CALas-ijjzyRVuc0NaAS5QS98pX2198mv4HoHDacgYFYNLXbXFw@mail.gmail.com>
- <20140106140627.GA27265@t2784.greatnet.de>
- <CALas-ihHD_eJOXLUrhCVZjidQDmrCN=QpdfMKoN1i9A7FAo3RQ@mail.gmail.com>
- <87ppo4zzkb.fsf@engster.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] sha1_name: don't resolve refs when core.warnambiguousrefs is false
+Date: Tue, 07 Jan 2014 11:38:15 -0800
+Message-ID: <xmqqppo3d1lk.fsf@gitster.dls.corp.google.com>
+References: <1389065521-46331-1-git-send-email-brodie@sf.io>
+	<CAEfQM484kqLSVeyjhYtg7GfXOQkQNjaO1FV2_U3uAqO=Nargdg@mail.gmail.com>
+	<20140107171307.GA19482@sigill.intra.peff.net>
+	<xmqqzjn7el4k.fsf@gitster.dls.corp.google.com>
+	<20140107175241.GA20415@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="eMnpOGXCMazMAbfp"
-Cc: Francesco Pretto <ceztko@gmail.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Jens Lehmann <jens.lehmann@web.de>,
-	Junio C Hamano <gitster@pobox.com>
-To: David Engster <deng@randomsample.de>
-X-From: git-owner@vger.kernel.org Tue Jan 07 20:27:26 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Brodie Rao <brodie@sf.io>, git@vger.kernel.org,
+	=?utf-8?B?Tmd1eQ==?= =?utf-8?B?4buFbiBUaMOhaSBOZ+G7jWM=?= Duy 
+	<pclouds@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jan 07 20:38:34 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W0cJ9-0007k8-IE
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Jan 2014 20:27:24 +0100
+	id 1W0cTw-000875-JX
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Jan 2014 20:38:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751717AbaAGT1U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jan 2014 14:27:20 -0500
-Received: from qmta03.westchester.pa.mail.comcast.net ([76.96.62.32]:34037
-	"EHLO qmta03.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750766AbaAGT1S (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 7 Jan 2014 14:27:18 -0500
-Received: from omta17.westchester.pa.mail.comcast.net ([76.96.62.89])
-	by qmta03.westchester.pa.mail.comcast.net with comcast
-	id B1b41n00A1vXlb8537THFZ; Tue, 07 Jan 2014 19:27:17 +0000
-Received: from odin.tremily.us ([24.18.63.50])
-	by omta17.westchester.pa.mail.comcast.net with comcast
-	id B7TG1n00C152l3L3d7TG2A; Tue, 07 Jan 2014 19:27:17 +0000
-Received: by odin.tremily.us (Postfix, from userid 1000)
-	id 9EA80EA966F; Tue,  7 Jan 2014 11:27:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
-	t=1389122833; bh=kmOoYT1AlJQTj5nshRP43uZ1pXUzokWHioNiOeZwZfM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=prjSlym7dqmlOteqK7VnED5I68rt2g7nldsYCVx/q5Qfd5USKIWQBqh6IeTyqrXLX
-	 cQem7bD2tFBX3NHGP3IdSijMnRQ62LS46pXt+DuDhfTI4QXImvawijVplMnJfo5K6w
-	 xXVJJZ2dYefYd0dKZ+zb+mUXXBrs6T/KcX3lufkw=
-Content-Disposition: inline
-In-Reply-To: <87ppo4zzkb.fsf@engster.org>
-OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
- url=http://tremily.us/pubkey.txt
-User-Agent: Mutt/1.5.22 (2013-10-16)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-	s=q20121106; t=1389122837;
-	bh=aS8Mm9U+MJq0tV4C2gzBhY6kB3irP1x6xNtWtXnUVfE=;
-	h=Received:Received:Received:Date:From:To:Subject:Message-ID:
-	 MIME-Version:Content-Type;
-	b=dUroKqTYS7zFEr3sCmTyOKaAVlsCliUNTnLViChesaHNzrH/pJkV3JITpTaeJlIw5
-	 NrAdVarekwRoBh+FVuD09RpFRyEM7weDFic5MDG4JGEb3DT0292xkWAk+UBPYT+WYo
-	 4H2I7ReEd9oPe6IfIuKY3CXHUlGgV6YOfVaDt5Xp4yKbd1PsIVxluEifuaQmMZdlKN
-	 iWOil/ix8OXXYPJT8b5mf/idPUiEcQA6sk2YW05Z5sxlcNMT6lc0BAqHxW/23N/cbJ
-	 UYMzE+ED/Y3RQeCa6hti1Rc/B2XldSAzxoCOXR6BlEx7LXYgNguyNcNYizpKYUDVnY
-	 7PA06sdX/83eg==
+	id S1753557AbaAGTi3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jan 2014 14:38:29 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57740 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751248AbaAGTi1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jan 2014 14:38:27 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ACFCC5F191;
+	Tue,  7 Jan 2014 14:38:26 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=iA9gZSD9uXTi9pZUhggfjPh4he8=; b=O59mQF
+	R6HoaDoE2g3BI2BnPY7DXAxS9Sz1hb5Lbu/oePeR7ExOolFYYbqxu0Kon/gBs52t
+	aIMkTVw1SZts2uf5sS6/9HGq0anrd6n9emt4E3RZINBPRa81+ZYoRlyVUnUBsOIZ
+	YCjTyJrhMyPO/ooYkxrrm9RWBo70vatxlpfiM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=gOu++vgo/mBXffDK8OZyv+kRaq894tO/
+	RNgyLk6J1h0QEiiMW2xWQQ8NjbuVS2AVv1web3qHHMHtViFMpkGVi99euLzXrxv5
+	oL21SwqmqHJGgT52IIglVyI9F+mHU6Hkdpv49RUmrlpod509UrA/xZ0KdYV10AYX
+	iXLWZmLvW8s=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8D55C5F18C;
+	Tue,  7 Jan 2014 14:38:24 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DCBE25F182;
+	Tue,  7 Jan 2014 14:38:19 -0500 (EST)
+In-Reply-To: <20140107175241.GA20415@sigill.intra.peff.net> (Jeff King's
+	message of "Tue, 7 Jan 2014 12:52:42 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 431EEDC6-77D3-11E3-8616-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240134>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240135>
 
+Jeff King <peff@peff.net> writes:
 
---eMnpOGXCMazMAbfp
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> On Tue, Jan 07, 2014 at 09:51:07AM -0800, Junio C Hamano wrote:
+>
+>> Jeff King <peff@peff.net> writes:
+>> 
+>> > Alternatively, I guess "cat-file
+>> > --batch" could just turn off warn_ambiguous_refs itself.
+>> 
+>> Sounds like a sensible way to go, perhaps on top of this change?
+>
+> The downside is that we would not warn about ambiguous refs anymore,
+> even if the user was expecting it to. I don't know if that matters much.
 
-On Mon, Jan 06, 2014 at 08:21:24PM +0100, David Engster wrote:
->              +-----------+
->              |  master   | <--
-> +-------+    +-----------+    | Merges to/from master
-> | CEDET |                     | done only by CEDET developers
-> +-------+                     |=20
->              +-----------+    |
->              |  stable   | <--  <--------
->              +-----------+               |
->                                          |
->                                          |
->                                          | Any Emacs developer
->                                          | can push and commit
->                                          | submodule
-> +--------+    +----------------------+   |
-> | Emacs  | -- | lisp/cedet submodule | <-
-> +--------+    +----------------------+
+That is true already with or without Brodie's change, isn't it?
+With warn_on_object_refname_ambiguity, "cat-file --batch" makes us
+ignore core.warnambigousrefs setting.  If we redo 25fba78d
+(cat-file: disable object/refname ambiguity check for batch mode,
+2013-07-12) to unconditionally disable warn_ambiguous_refs in
+"cat-file --batch" and get rid of warn_on_object_refname_ambiguity,
+the end result would be the same, no?
 
-This looks reasonable, and except for the detached-HEAD after the
-initial update-clone, I think Git already supports everything you
-need.  If you set submodule.cedet.update to 'rebase' (or 'merge') you
-can easily integrate your local master changes with cedet/master
-(e.g. if a CEDET dev updates cedet/master before the Emacs dev has a
-chance to push their fix).  With the non-checkout update mode, you'll
-also stay on your checked-out master branch during 'submodule update'
-calls.
+> I kind of feel in the --batch situation that it is somewhat useless (I
+> wonder if "rev-list --stdin" should turn it off, too).
 
-> AFAICS the main problem with this approach is that one always has to
-> think of committing the new SHA1 of the submodule.
-> =E2=80=A6
-> However, as Heiko notes, the history must be preserved to be able to
-> go back to earlier revisions, so there must be some kind of commit
-> for the submodule when 'stable' changes; maybe that could be
-> automated somehow?
+I think doing the same as "cat-file --batch" in "rev-list --stdin"
+makes sense.  Both interfaces are designed to grok extended SHA-1s,
+and full 40-hex object names could be ambiguous and we are missing
+the warning for them.
 
-If an Emacs dev in the submodule makes the CEDET change, you could use
-a post-commit hook (in the CEDET submodule) to also commit the change
-to the Emacs superproject).  However, commiting only the submodule
-bump may not be what you want.  Maybe there are other superproject
-changes that should be committed alongside the submodule bump.  Maybe
-there is stuff in the superprojects's staging area that should *not*
-be committed alongside the submodule bump.  This ambiguity makes it
-tricky for Git to automatically do =E2=80=9Cthe right thing=E2=80=9D.
-
-If cedet/master is updated independently by the CEDET devs, there's no
-way for the local Emacs repo to know about the change, so it's
-impossible to automatically update Emacs (without polling for CEDET
-updates or some other transgression ;).
-
-Cheers,
-Trevor
-
---=20
-This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
-For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
-
---eMnpOGXCMazMAbfp
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (GNU/Linux)
-
-iQIcBAEBAgAGBQJSzFUPAAoJEKKfehoaNkbt6+UP/16/j8+g+HvIRqhHBTrOcxQL
-v8xMHi0mZp5JdOUsUVD4hPYe7PBH4FDDxai5w52Rqa3A8gRgz8N34fZ8RQLt0n+D
-xYhnV4FxAm9OOFxhraj4MPeEuSre9ufPvyhVScEyBZu47e3BkIVUKZM0ejOX8DyE
-DuYZTlDSdCAycjzAd36w3Ez46eB/7oexPUAkajEh/7nOrXaCIQDcFBPy4ruTqj3J
-bJsCx478hiA5qchDJq2YFrNvlNu+T7rDS3Hl7m2vUk0cyUqD1wYpjDefbyV9sboM
-McgUDw2xTiXeJ7LmCn37sqOPdihrVXhou4D45UI+J2EXrWqsLeKqAUUwRPo95Nap
-N/kkL+OovQa1h85MUs5pjIex9Vw9dlBw0H24Fek2hawxX4cJzvZMfbesqA2z96Nr
-AcksIWDLZgbbvqe/siQv6fRupFeJ1ko85Y9DzrOScYsuaSBoP1suZlUo03A4F8oY
-Tq1sMVRfQhsmfFwZnxJdmZ3EGeaf4G27nb5/UxzRi7W/I/npxQ/Bo9ZVIEoz66zR
-oMflynpPHxoa6zB3CmTMmt/kaFfISjiGEB8GcOv5gW8PPInW3QBKqLi3hzalgWrS
-QrK4t4eHFdP2yyJ+ytHlncFa9RKVq0ZnoIPxy7PNyozwSMp3sn+L5I27yPM6M487
-5sb9wztXplDXKomYQiG7
-=6Crp
------END PGP SIGNATURE-----
-
---eMnpOGXCMazMAbfp--
+Or are you wondering if we should revert 25fba78d, apply Brodie's
+change to skip the ref resolution whose result is never used, and
+tell people who want to use "cat-file --batch" (or "rev-list
+--stdin") to disable the ambiguity warning themselves?
