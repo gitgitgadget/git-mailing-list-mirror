@@ -1,82 +1,60 @@
-From: Jeff King <peff@peff.net>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
 Subject: Re: [RFC/PATCH] format-patch: introduce branch.*.forkedFrom
-Date: Tue, 7 Jan 2014 15:40:35 -0500
-Message-ID: <20140107204035.GA27932@sigill.intra.peff.net>
-References: <1389126588-3663-1-git-send-email-artagnon@gmail.com>
- <CALkWK0=g5-9r05vTkys8Tk7iv7PqPZJvMvkYsAOnN_F90Mtgxg@mail.gmail.com>
+Date: Wed, 8 Jan 2014 02:10:45 +0530
+Message-ID: <CALkWK0=vXGiHbd__ZNfp42fRS_gK5MNmYx13=uzDfc0m==V5Fw@mail.gmail.com>
+References: <1389126588-3663-1-git-send-email-artagnon@gmail.com> <xmqq8uurcyw2.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 07 21:40:45 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Junio C Hamano <gister@pobox.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 07 21:41:36 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W0dS7-0004BY-Dz
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Jan 2014 21:40:43 +0100
+	id 1W0dSw-0005sB-Fo
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Jan 2014 21:41:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753499AbaAGUkk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jan 2014 15:40:40 -0500
-Received: from cloud.peff.net ([50.56.180.127]:56671 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751541AbaAGUkj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jan 2014 15:40:39 -0500
-Received: (qmail 22555 invoked by uid 102); 7 Jan 2014 20:40:39 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 07 Jan 2014 14:40:39 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 07 Jan 2014 15:40:35 -0500
-Content-Disposition: inline
-In-Reply-To: <CALkWK0=g5-9r05vTkys8Tk7iv7PqPZJvMvkYsAOnN_F90Mtgxg@mail.gmail.com>
+	id S1754020AbaAGUlb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jan 2014 15:41:31 -0500
+Received: from mail-ie0-f170.google.com ([209.85.223.170]:56744 "EHLO
+	mail-ie0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753596AbaAGUl0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jan 2014 15:41:26 -0500
+Received: by mail-ie0-f170.google.com with SMTP id tq11so295213ieb.29
+        for <git@vger.kernel.org>; Tue, 07 Jan 2014 12:41:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=Kyp4Yv7yMj0ROrNMhFbnEFN7XdZeVljdsV1klYCO8kI=;
+        b=eKNg3EY/kgX1q32g0fdRoi0J1Gp3DRs8kLLvoMH5LF6aT09iFSWrgc2rJjfz+qED63
+         zPPSlhjclZQl4YG6WVNMJGZur9VISUtJvjAmHtbcIZP5Wv79Lh6M/nb4t2twJKnAYdr7
+         b/YMr/PaEbFf0YKZ99HG05rkfW4YrCigyuqaZTXScqJ5xDMd806NOB3RlYPoMgoch5eZ
+         zzYELFV1b1U6BHvGXEX8OvZHQd5TjiWJQattTcY+nm6my4/OeyifGEI3AkxcL3aInfJ8
+         opiZQXmvuiftfJZ/OGuPiVU+36XUXIT98Bop9CBZ0+uYu6u0S7k3U61hQrpw+F9UXxNy
+         Wsxg==
+X-Received: by 10.42.40.83 with SMTP id k19mr83494380ice.3.1389127285874; Tue,
+ 07 Jan 2014 12:41:25 -0800 (PST)
+Received: by 10.64.17.10 with HTTP; Tue, 7 Jan 2014 12:40:45 -0800 (PST)
+In-Reply-To: <xmqq8uurcyw2.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240148>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240149>
 
-On Wed, Jan 08, 2014 at 02:00:44AM +0530, Ramkumar Ramachandra wrote:
+Junio C Hamano wrote:
+> I do not mind allowing laziness by defaulting to something, but I am
+> not enthused by an approach that adds the new variable whose value
+> is questionable.  The description does not justify at all why
+> @{upstream} is not a good default (unless the workflow is screwed up
+> and @{upstream} is set to point at somewhere that is _not_ a true
+> upstream, that is).
 
-> On Wed, Jan 8, 2014 at 1:59 AM, Ramkumar Ramachandra <artagnon@gmail.com> wrote:
-> > A very common workflow for preparing patches involves working off a
-> > topic branch and generating patches against 'master' to send off to the
-> > maintainer. However, a plain
-> >
-> >   $ git format-patch -o outgoing
-> >
-> > is a no-op on a topic branch, and the user has to remember to specify
-> > 'master' explicitly everytime. This problem is not unique to
-> > format-patch; even a
-> >
-> >   $ git rebase -i
-> >
-> > is a no-op because the branch to rebase against isn't specified.
-> >
-> > To tackle this problem, introduce branch.*.forkedFrom which can specify
-> > the parent branch of a topic branch. Future patches will build
-> > functionality around this new configuration variable.
-> >
-> > Cc: Jeff King <peff@peff.net>
-> > Cc: Junio C Hamano <gister@pobox.com>
-> > Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
-
-I have not carefully read some of the later bits of the discussion from
-last night / this morning, so maybe I am missing something, but this
-seems backwards to me from what Junio and I were discussing earlier.
-
-The point was that the meaning of "@{upstream}" (and "branch.*.merge")
-is _already_ "forked-from", and "push -u" and "push.default=upstream"
-are the odd men out. If we are going to add an option to distinguish the
-two branch relationships:
-
-  1. Where you forked from
-
-  2. Where you push to
-
-we should leave @{upstream} as (1), and add a new option to represent
-(2). Not the other way around.
-
-Am I missing something?
-
--Peff
+Did you find the explanation I gave in
+http://article.gmane.org/gmane.comp.version-control.git/240077
+reasonable? I don't know why label the respin-workflow as being
+"screwed up".
