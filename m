@@ -1,85 +1,90 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] sha1_name: don't resolve refs when
- core.warnambiguousrefs is false
-Date: Tue, 7 Jan 2014 17:08:56 -0500
-Message-ID: <20140107220856.GA10074@sigill.intra.peff.net>
-References: <1389065521-46331-1-git-send-email-brodie@sf.io>
- <CAEfQM484kqLSVeyjhYtg7GfXOQkQNjaO1FV2_U3uAqO=Nargdg@mail.gmail.com>
- <20140107171307.GA19482@sigill.intra.peff.net>
- <xmqqzjn7el4k.fsf@gitster.dls.corp.google.com>
- <20140107175241.GA20415@sigill.intra.peff.net>
- <xmqqppo3d1lk.fsf@gitster.dls.corp.google.com>
- <20140107195844.GA21812@sigill.intra.peff.net>
- <xmqqd2k3cz42.fsf@gitster.dls.corp.google.com>
+Subject: [PATCH 1/4] cat-file: refactor error handling of batch_objects
+Date: Tue, 7 Jan 2014 17:10:15 -0500
+Message-ID: <20140107221014.GA10161@sigill.intra.peff.net>
+References: <20140107220856.GA10074@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Brodie Rao <brodie@sf.io>, git@vger.kernel.org,
 	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 07 23:09:06 2014
+X-From: git-owner@vger.kernel.org Tue Jan 07 23:10:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W0epd-0002S9-Bs
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Jan 2014 23:09:05 +0100
+	id 1W0eqt-0005M7-Vd
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Jan 2014 23:10:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754180AbaAGWJB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jan 2014 17:09:01 -0500
-Received: from cloud.peff.net ([50.56.180.127]:56746 "HELO peff.net"
+	id S1754508AbaAGWKV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jan 2014 17:10:21 -0500
+Received: from cloud.peff.net ([50.56.180.127]:56752 "HELO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754138AbaAGWI6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jan 2014 17:08:58 -0500
-Received: (qmail 27610 invoked by uid 102); 7 Jan 2014 22:08:58 -0000
+	id S1754154AbaAGWKR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jan 2014 17:10:17 -0500
+Received: (qmail 27789 invoked by uid 102); 7 Jan 2014 22:10:17 -0000
 Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 07 Jan 2014 16:08:58 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 07 Jan 2014 17:08:56 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 07 Jan 2014 16:10:17 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 07 Jan 2014 17:10:15 -0500
 Content-Disposition: inline
-In-Reply-To: <xmqqd2k3cz42.fsf@gitster.dls.corp.google.com>
+In-Reply-To: <20140107220856.GA10074@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240168>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240169>
 
-On Tue, Jan 07, 2014 at 12:31:57PM -0800, Junio C Hamano wrote:
+This just pulls the return value for the function out of the
+inner loop, so we can break out of the loop rather than do
+an early return. This will make it easier to put any cleanup
+for the function in one place.
 
-> >   c. Just leave it at Brodie's patch with nothing else on top.
-> >
-> > My thinking in favor of (b) was basically "does anybody actually care
-> > about ambiguous refs in this situation anyway?". If they do, then I
-> > think (c) is my preferred choice.
-> 
-> OK.  I agree with that line of thinking.  Let's take it one step at
-> a time, i.e. do c. and also use warn_on_object_refname_ambiguity in
-> "rev-list --stdin" first and leave the simplification (i.e. b.) for
-> later.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+Just making the subsequent diffs less noisy...
 
-Here's a series to do that. The first three are just cleanups I noticed
-while looking at the problem.
+ builtin/cat-file.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-While I was writing the commit messages, though, I had a thought. Maybe
-we could simply do the check faster for the common case that most refs
-do not look like object names? Right now we blindly call dwim_ref for
-each get_sha1 call, which is the expensive part. If we instead just
-loaded all of the refnames from the dwim_ref location (basically heads,
-tags and the top-level of "refs/"), we could build an index of all of
-the entries matching the 40-hex pattern. In 99% of cases, this would be
-zero entries, and the check would collapse to a simple integer
-comparison (and even if we did have one, it would be a simple binary
-search in memory).
-
-Our index is more racy than actually checking the filesystem, but I
-don't think it matters here.
-
-Anyway, here is the series I came up with, in the meantime. I can take a
-quick peek at just making it faster, too.
-
-  [1/4]: cat-file: refactor error handling of batch_objects
-  [2/4]: cat-file: fix a minor memory leak in batch_objects
-  [3/4]: cat-file: restore ambiguity warning flag in batch_objects
-  [4/4]: revision: turn off object/refname ambiguity check for --stdin
-
--Peff
+diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+index f8288c8..971cdde 100644
+--- a/builtin/cat-file.c
++++ b/builtin/cat-file.c
+@@ -263,6 +263,7 @@ static int batch_objects(struct batch_options *opt)
+ {
+ 	struct strbuf buf = STRBUF_INIT;
+ 	struct expand_data data;
++	int retval = 0;
+ 
+ 	if (!opt->format)
+ 		opt->format = "%(objectname) %(objecttype) %(objectsize)";
+@@ -294,8 +295,6 @@ static int batch_objects(struct batch_options *opt)
+ 	warn_on_object_refname_ambiguity = 0;
+ 
+ 	while (strbuf_getline(&buf, stdin, '\n') != EOF) {
+-		int error;
+-
+ 		if (data.split_on_whitespace) {
+ 			/*
+ 			 * Split at first whitespace, tying off the beginning
+@@ -310,12 +309,12 @@ static int batch_objects(struct batch_options *opt)
+ 			data.rest = p;
+ 		}
+ 
+-		error = batch_one_object(buf.buf, opt, &data);
+-		if (error)
+-			return error;
++		retval = batch_one_object(buf.buf, opt, &data);
++		if (retval)
++			break;
+ 	}
+ 
+-	return 0;
++	return retval;
+ }
+ 
+ static const char * const cat_file_usage[] = {
+-- 
+1.8.5.2.500.g8060133
