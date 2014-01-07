@@ -1,64 +1,74 @@
-From: Francesco Pretto <ceztko@gmail.com>
-Subject: Re: [RFC v2] submodule: Respect requested branch on all clones
-Date: Tue, 7 Jan 2014 22:51:34 +0100
-Message-ID: <CALas-iiH0GCwy9WMWxBSGbUykwAKikaLUhfdDUbETv91QuM-7g@mail.gmail.com>
-References: <CALas-iizoBjTu2KSXsZExNeLz5hxbzoNNGgYLMP9SmDH+kt9Vw@mail.gmail.com>
- <CALas-ihLbODY6idQizsvH-U6OFRnC6e5=WRB6gkJ7SpBJ3VskQ@mail.gmail.com> <20140107213739.GA29954@odin.tremily.us>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] format-patch: introduce format.defaultTo
+Date: Tue, 07 Jan 2014 14:06:12 -0800
+Message-ID: <xmqqr48jbg6j.fsf@gitster.dls.corp.google.com>
+References: <1389028732-27760-1-git-send-email-artagnon@gmail.com>
+	<1389028732-27760-3-git-send-email-artagnon@gmail.com>
+	<xmqqlhythrzq.fsf@gitster.dls.corp.google.com>
+	<CALkWK0kZn44x98td9YXNT5VfhVs=ueeSty9M7Vh08bdoGjGQYg@mail.gmail.com>
+	<xmqqa9f8j2n8.fsf@gitster.dls.corp.google.com>
+	<20140106201854.GA28162@sigill.intra.peff.net>
+	<CALkWK0k21W4gz9Rm8CyLMwjXq2A9wvm=XCVDsqs06oeW3VUg6w@mail.gmail.com>
+	<20140107205618.GA28102@sigill.intra.peff.net>
+	<xmqqvbxvbiwz.fsf@gitster.dls.corp.google.com>
+	<20140107212432.GD28102@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>, Git <git@vger.kernel.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: "W. Trevor King" <wking@tremily.us>
-X-From: git-owner@vger.kernel.org Tue Jan 07 22:52:01 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jan 07 23:06:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W0eZ5-0000Eq-Va
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Jan 2014 22:52:00 +0100
+	id 1W0en1-0005Xm-3W
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Jan 2014 23:06:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753762AbaAGVv4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jan 2014 16:51:56 -0500
-Received: from mail-oa0-f49.google.com ([209.85.219.49]:48851 "EHLO
-	mail-oa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751541AbaAGVvz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jan 2014 16:51:55 -0500
-Received: by mail-oa0-f49.google.com with SMTP id n16so839751oag.8
-        for <git@vger.kernel.org>; Tue, 07 Jan 2014 13:51:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=jsUAY0UM2Z5lTc67SZjGUPcTLoIfaCJe/PweoTEM+ZA=;
-        b=piRUOpUdo8iCyhDWx5iDXKA97eWEJ4vfEmDIT/yj9PxSSeYTkVJyhmItH3/DIDDAkc
-         c7s6q/MXwoIt0ZDVOmSkuawgJG5SSVxAd58USluqufit+RB5yqfudBftvtUrggwmSNis
-         1YCxYgUSkzr70yUaynt++pbFrgajBzc6ymFZIFUC9ertxf/+6jrDftf7wnJxXKRsfyI9
-         cF8RoM/JnQEQf6twn2hTbGtRGUV4T0aOs/VvDJYBtGVEJr/bDqh0Y5MY1CLKR6GC4nww
-         k3yCE5Y1S/O+p6F2Zb7L+7EbPVCfD7lGU1lvUKGfXyJncEY2hcF3DYaUTd2SC17JILkI
-         1hHw==
-X-Received: by 10.60.58.134 with SMTP id r6mr76562966oeq.17.1389131514762;
- Tue, 07 Jan 2014 13:51:54 -0800 (PST)
-Received: by 10.76.80.165 with HTTP; Tue, 7 Jan 2014 13:51:34 -0800 (PST)
-In-Reply-To: <20140107213739.GA29954@odin.tremily.us>
+	id S1754191AbaAGWGT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jan 2014 17:06:19 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62400 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753515AbaAGWGS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jan 2014 17:06:18 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 63E4A61F4F;
+	Tue,  7 Jan 2014 17:06:17 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=nGTByOVZ4WdzMgLVmHK4Wm0gsiM=; b=GdECiW
+	hPE/8T/C/I4g3hdVp5AwoSnlH+jphPNRP3/6FUah/rbvAOTRpEpb5g9EfZf3O1Gm
+	+ZsRV+sihLKQsYv2/bRDyfWtoIQhQDbpVyo21mNbH1wUz5ln7J7hVq4z2nCJ/2Zr
+	/WqsCRfFWSZ6I0AOQbgNYobZNQrENhZsgMs80=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=G91jaHjCAKZmhUpFko1lGCX2dVTT1UNY
+	6DHgiwUM8m+qzCAaXGpy9KnKMzTUPF8cymV+k5yz3+F/z3VQuH4Uu1i8gaKu/IEa
+	x5/aTe8rbpgFNtjJtvjyQzskMOg85NCwlshP5U9Y2/lj24rfqNuGX2wDN8/BcmeO
+	t53OzpzEU2M=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 261BE61F4D;
+	Tue,  7 Jan 2014 17:06:17 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0CA5061F4B;
+	Tue,  7 Jan 2014 17:06:15 -0500 (EST)
+In-Reply-To: <20140107212432.GD28102@sigill.intra.peff.net> (Jeff King's
+	message of "Tue, 7 Jan 2014 16:24:32 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: EDB750FC-77E7-11E3-BE46-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240166>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240167>
 
-2014/1/7 W. Trevor King <wking@tremily.us>:
->
-> I'd be happy to hear ideas about superproject-branch-specific local
-> overrides to a hypothetical submodule.<name>.local-branch, in the
-> event that a developer doesn't like a default set in .gitmodules.  If
-> I could think of a way to do that, we could avoid this heuristic
-> approach, and make the local submodule.<name>.local-branch
-> vs. remote-tracking submodule.<name>.branch distinction more obvious.
->
+Jeff King <peff@peff.net> writes:
 
-Uh, I think you got it wrong in the other thread: I didn't proposed
-such feature. I just wanted the attached submodule use case to be
-supported and of course "--branch means attached" is even easier to
-get this.
+> I think that is sensible, and only heightens my sense of the "upstream"
+> push.default as useless. :)
+
+Yes, it only is good for centralized world (it was designed back in
+the centralized days after all, wasn't it?).
