@@ -1,103 +1,127 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] drop unnecessary copying in credential_ask_one
-Date: Tue, 07 Jan 2014 11:44:00 -0800
-Message-ID: <xmqqlhyrd1bz.fsf@gitster.dls.corp.google.com>
-References: <1388624793-5563-1-git-send-email-rctay89@gmail.com>
-	<20140102030330.GA10976@sigill.intra.peff.net>
-	<20140102073835.GA5431@sigill.intra.peff.net>
-	<xmqq7gaiqjzw.fsf@gitster.dls.corp.google.com>
-	<20140107175009.GA19691@sigill.intra.peff.net>
+From: "W. Trevor King" <wking@tremily.us>
+Subject: Re: [RFC v2] submodule: Respect requested branch on all clones
+Date: Tue, 7 Jan 2014 11:45:03 -0800
+Message-ID: <20140107194503.GA26583@odin.tremily.us>
+References: <20140105212458.GG3156@odin.tremily.us>
+ <20140105225733.GB4660@book.hvoigt.net>
+ <20140105233943.GJ3156@odin.tremily.us>
+ <20140106003314.GL3156@odin.tremily.us>
+ <20140106011255.GM3156@odin.tremily.us>
+ <20140106160202.GE27265@t2784.greatnet.de>
+ <CALas-ijXQFcUHWk-jJrLifqsMHAKo6NNKya+jR6RJGGDXY76hg@mail.gmail.com>
+ <CALas-ijNgaTQr77DZw3acypgaJHpDFVnGdq97ECM4zu+CPma0w@mail.gmail.com>
+ <xmqqd2k3ejfr.fsf@gitster.dls.corp.google.com>
+ <CALas-ihPmJSf9eH0P7Vf28pB4zN_dsa_2=fe+_moZgiP0C3UTA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Tay Ray Chuan <rctay89@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jan 07 20:44:15 2014
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="UugvWAfsgieZRqgk"
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>, Git <git@vger.kernel.org>,
+	Jens Lehmann <Jens.Lehmann@web.de>
+To: Francesco Pretto <ceztko@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 07 20:45:22 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W0cZS-0004MV-Ni
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Jan 2014 20:44:15 +0100
+	id 1W0caX-0006mF-Dp
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Jan 2014 20:45:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753417AbaAGToL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jan 2014 14:44:11 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53216 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752610AbaAGToI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jan 2014 14:44:08 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D8FC25F35A;
-	Tue,  7 Jan 2014 14:44:07 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ejY8KpGnuFtT8M11+i9mG0EHAZo=; b=MQZ8BC
-	sioYNZe/dgB41+FYGCZdPpwG9I6WB/PCTmvs3bIQuwJcvK4py79KhdRZ1J7Tx/tU
-	v82n0QRvVAujbOiR63bhFd4mqZaOXa3R0n/MWTmWNmmEg4+tSAouOmSnXXYnQvZo
-	Azrv928LD5aaAJfneOJfLo3KXzTtNZVXzsTcM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=I9aaWVUcFvFWy+reaG6iDA6D8NIhoS6B
-	2tD52i09AVttNKbXjydE3fylrU08Pe4mIMcgNLynnTHa2QjJL8o2P54Gmyd1Srr5
-	6TO4Usry2lKZyDG0l+QHcoi2PxU7ssQ8rYfeIbEX1gm2SOVFn/+Y5A54zJ33VEMl
-	lcy6L45fUpI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A6C005F358;
-	Tue,  7 Jan 2014 14:44:07 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 328E75F352;
-	Tue,  7 Jan 2014 14:44:06 -0500 (EST)
-In-Reply-To: <20140107175009.GA19691@sigill.intra.peff.net> (Jeff King's
-	message of "Tue, 7 Jan 2014 12:50:09 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 118847AC-77D4-11E3-98B1-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753952AbaAGTpN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jan 2014 14:45:13 -0500
+Received: from qmta12.westchester.pa.mail.comcast.net ([76.96.59.227]:38986
+	"EHLO qmta12.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752610AbaAGTpH (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 7 Jan 2014 14:45:07 -0500
+Received: from omta13.westchester.pa.mail.comcast.net ([76.96.62.52])
+	by qmta12.westchester.pa.mail.comcast.net with comcast
+	id B0Ym1n00217dt5G5C7l6wJ; Tue, 07 Jan 2014 19:45:06 +0000
+Received: from odin.tremily.us ([24.18.63.50])
+	by omta13.westchester.pa.mail.comcast.net with comcast
+	id B7l51n006152l3L3Z7l5dv; Tue, 07 Jan 2014 19:45:06 +0000
+Received: by odin.tremily.us (Postfix, from userid 1000)
+	id CFC29EA9860; Tue,  7 Jan 2014 11:45:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
+	t=1389123903; bh=2gfjPKdeiMN1J6wa3zc7TI4ZZZxw1YWa1qIv2wdR2nY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=Ya/HeRAHWoC1jd1tp7R4bNK6aWde2bdJ4eQXcOTH3YddptIfPEG9625B7M3UBoud1
+	 eoZwFkkrRNjErRCEqYGj8uBBwdcaub4lxanbBb76A2euWRTdN6pdaohmCj0ctPIzZ5
+	 y5DW//DyIn35qolHpHXy4oaniSmvEVBIXbrOhp7k=
+Content-Disposition: inline
+In-Reply-To: <CALas-ihPmJSf9eH0P7Vf28pB4zN_dsa_2=fe+_moZgiP0C3UTA@mail.gmail.com>
+OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
+ url=http://tremily.us/pubkey.txt
+User-Agent: Mutt/1.5.22 (2013-10-16)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
+	s=q20121106; t=1389123906;
+	bh=on1FKMhVk7LpaXWieg8x98Xmfce6BepIsDX5n6a8Bzw=;
+	h=Received:Received:Received:Date:From:To:Subject:Message-ID:
+	 MIME-Version:Content-Type;
+	b=puZVlFMzBt/tsd/70eHHga90T7KWDrEFop4CFHNjFGc+QraGaGF9MDRr8uT8ugfws
+	 9g8Mi3uw12X76582ZoDVKUa5z3NKsLc/j6vZHrbtRqsgqxONMen8e5hRtebYOaA/RM
+	 c0MxzmWZqrEWamb7I+FObVwGg0oP5ntZzj8xuTNMlSGdbS2fafzMN+Ut4gYQ8Il1YY
+	 nKlJ4lHT2KIlCRxfvEnPWp6QjM9dc3vkFyrd3ToX3UEl+7upmwbpGsRDN3xWQRKRPR
+	 Cuqh2me9xqxCAZ5jO4p2OEHdy4/97xkm5/kyADgvOY/vD1afk+0+tClhxgElH3Cc5X
+	 enPtNubbUwj2A==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240136>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240137>
 
-Jeff King <peff@peff.net> writes:
 
-> On Thu, Jan 02, 2014 at 11:08:51AM -0800, Junio C Hamano wrote:
->
->> Jeff King <peff@peff.net> writes:
->> 
->> > ... But the test suite, of course, always uses askpass because it
->> > cannot rely on accessing a terminal (we'd have to do some magic with
->> > lib-terminal, I think).
->> >
->> > So it doesn't detect the problem in your patch, but I wonder if it is
->> > worth applying the patch below anyway, as it makes the test suite
->> > slightly more robust.
->> 
->> Sounds like a good first step in the right direction.  Thanks.
->
-> I took a brief look at adding "real" terminal tests for the credential
-> code using our test-terminal/lib-terminal.sh setup. Unfortunately, it
-> falls short of what we need.
->
-> test-terminal only handles stdout and stderr streams as fake terminals.
-> We could pretty easily add stdin for input, as it uses fork() to work
-> asynchronously.  But the credential code does not actually read from
-> stdin. It opens and reads from /dev/tty explicitly. So I think we'd have
-> to actually fake setting up a controlling terminal. And that means magic
-> with setsid() and ioctl(TIOCSCTTY), which in turn sounds like a
-> portability headache.
+--UugvWAfsgieZRqgk
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I wonder if "expect" has already solved that for us.
+On Tue, Jan 07, 2014 at 08:19:49PM +0100, Francesco Pretto wrote:
+> 2014/1/7 Junio C Hamano <gitster@pobox.com>:
+> > It is not immediately obvious to me why anybody who specifies the
+> > submodule.*.branch variable to say "I want _that_ branch" not to
+> > want to be on that branch but in a detached state, so from that
+> > perspective, submodule.*.attach feels superfluous.
+>=20
+> Junio, for what it concerns me I fully support this patch as, IMO, it
+> makes cleaner the role of the property "submodule.<name>.branch".
 
-> So it's definitely possible under Linux, and probably under most Unixes.
-> But I'm not sure it's worth the effort, given that review already caught
-> the potential bug here.
->
-> Another option would be to instrument git_terminal_prompt with a
-> mock-terminal interface (say, reading from a file specified in an
-> environment variable). But I really hate polluting the code with test
-> cruft, and it would not actually be testing an interesting segment of
-> the code, anyway.
+No, submodule.<name>.branch is the name of the remote-tracking branch
+for 'update --remote'.  In this patch, I'm using it as a hint for the
+preferred local branch name [1], which I now think was a bad idea.
+After [2], I think that we should just define the preferred local
+branch name explicitly (submodule.<name>.local-branch?).
 
-Agreed.
+Cheers,
+Trevor
+
+[1]: http://article.gmane.org/gmane.comp.version-control.git/239980
+[2]: http://article.gmane.org/gmane.comp.version-control.git/240097
+
+--=20
+This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
+For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
+
+--UugvWAfsgieZRqgk
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (GNU/Linux)
+
+iQIcBAEBAgAGBQJSzFk9AAoJEKKfehoaNkbtPJcQAKcgX5H7grEOjuKH7ixRpJej
+UBijssVcopqDbwvSDAiwN0NLcoWakMWbJjTtwIoEw6sLaUqacviU8ABPWIQZx73Y
+hit6SphiDiamr194EzYZf9HMGBK+dVGuiPQ3ZpsopsO9msCEZ/BCYB2UCPy+iCQ9
+qp8Ai3qM3UM/pobJgmjZTTA23tveMQ+Mp7nNDjvjhRgdLPJtSmqfXRbKRe0v9Iq9
+RNTez9h4MvWnse/uwyhivye2p4SSMFAsLFehxokAWiFZBgOwVAUp74cuzSOSpdwL
+8fhlQYBX+Emm7AWxuzi8nHDvkFW7yYwE2XRkddgBVz6hc2RqHsBs4a2LhCdlOvqU
+/yQQ/zkz4LdO7NMYqIBgSFeS8Ssr8sH3Xgkpi5bQ3lZ1CdGz0+BdEMNc27zZLLgQ
+vi9rRv3XUXB4i6AXNxCAdrUL6qIBGtxchct0RMfwn12uBaKR/daWVRlfsMdUoiCK
+xc6IMQMCrshcsIobHOjDureCRiwS9mtVr0/9TuKhOK34CW0rrfglpwltrj4+at57
+A1eyHq2d0zcYkYqC7xn0tMjh/NRABBmNjao0j2G5tKK3BUKvBmNt4N062fMWPIVz
+b/3cGqwikVuFIJtZqo8xOz/aKBFeRZBC2PhyCBoD2xW8Qw7U9/SmIr446rC9zH3W
+FJW0xY21GWZdCPkX8yiU
+=9rxn
+-----END PGP SIGNATURE-----
+
+--UugvWAfsgieZRqgk--
