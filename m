@@ -1,153 +1,109 @@
-From: =?UTF-8?q?=C3=98ystein=20Walle?= <oystwa@gmail.com>
-Subject: [PATCH v3] stash: handle specifying stashes with spaces
-Date: Tue,  7 Jan 2014 09:22:15 +0100
-Message-ID: <1389082935-16159-1-git-send-email-oystwa@gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v2 03/17] safe_create_leading_directories(): add explicit
+ "slash" pointer
+Date: Tue, 07 Jan 2014 10:26:44 +0100
+Message-ID: <52CBC854.2060602@alum.mit.edu>
+References: <1389015935-21936-1-git-send-email-mhagger@alum.mit.edu> <1389015935-21936-4-git-send-email-mhagger@alum.mit.edu> <xmqqppo5hsf9.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Thomas Rast <tr@thomasrast.ch>,
-	=?UTF-8?q?=C3=98ystein=20Walle?= <oystwa@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 07 09:22:36 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>, git@vger.kernel.org,
+	Sebastian Schuberth <sschuberth@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 07 10:27:01 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W0Rvn-0007qA-FV
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Jan 2014 09:22:35 +0100
+	id 1W0Sw7-0005hV-G3
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Jan 2014 10:26:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754928AbaAGIWa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 7 Jan 2014 03:22:30 -0500
-Received: from mail-lb0-f169.google.com ([209.85.217.169]:53945 "EHLO
-	mail-lb0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754647AbaAGIW3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jan 2014 03:22:29 -0500
-Received: by mail-lb0-f169.google.com with SMTP id u14so44534lbd.28
-        for <git@vger.kernel.org>; Tue, 07 Jan 2014 00:22:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:mime-version:content-type
-         :content-transfer-encoding;
-        bh=XdufVDtdC5SZuGtsT4ccqwAt8E2VIssAmM0C9z2DOUo=;
-        b=TrHFNB7qzFl+V/Mh0JbRTSP0KCTZjSiW8vw7+fEyzbf5AtnueCvbaEQgC6qgHFoZ1E
-         BFc8Vx59MU3O/CdLcH1FbsaO06MGq44oYSp3rTgbqt171yciZftHUVaO5yzSCQFPtrJY
-         U82Vvr8UMxsx/BuACQ//6OefJnMNmEctaCnRdPXeR22IgHa5u2o4RD21/udsDiSjC8ZL
-         JpvW4oYdR5r3pbuLsufZmzlgFdYOC6FK+kr5mYz2uZJLxBctbgjIOEpE64jsvaYjN0Jq
-         9grSGXWzU0t3reGq9vEGZtbg11nICtDwrPlKRzbWZmfujdsJYpbDpd0efQ6o95XzwlPI
-         FqlA==
-X-Received: by 10.152.2.165 with SMTP id 5mr2103229lav.70.1389082948226;
-        Tue, 07 Jan 2014 00:22:28 -0800 (PST)
-Received: from localhost.localdomain (80.156.189.109.customer.cdi.no. [109.189.156.80])
-        by mx.google.com with ESMTPSA id a8sm57118191lae.5.2014.01.07.00.22.25
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 07 Jan 2014 00:22:26 -0800 (PST)
-X-Mailer: git-send-email 1.8.5
+	id S1753170AbaAGJ0y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jan 2014 04:26:54 -0500
+Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:48389 "EHLO
+	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752059AbaAGJ0v (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 7 Jan 2014 04:26:51 -0500
+X-AuditID: 1207440c-b7f566d000004272-0c-52cbc85a7cf4
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id DE.B7.17010.A58CBC25; Tue,  7 Jan 2014 04:26:50 -0500 (EST)
+Received: from [192.168.69.148] (p57A25E76.dip0.t-ipconnect.de [87.162.94.118])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s079Qj0e010500
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 7 Jan 2014 04:26:48 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20131005 Icedove/17.0.9
+In-Reply-To: <xmqqppo5hsf9.fsf@gitster.dls.corp.google.com>
+X-Enigmail-Version: 1.6
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrJKsWRmVeSWpSXmKPExsUixO6iqBt14nSQQftUQYuuK91MFg29V5gt
+	3t5cwmixe9oCNovTN+ezO7B67Jx1l93j4iVlj8cTT7B6fN4kF8ASxW2TlFhSFpyZnqdvl8Cd
+	ce3/JcaCCYIVB+YsZW9gvMnbxcjJISFgIrHy42Z2CFtM4sK99WxdjFwcQgKXGSUenjvGAuGc
+	Y5JY03WPCaSKV0Bb4taOK4wgNouAqsSJvlMsIDabgK7Eop5msBpRgSCJR4ceskPUC0qcnPkE
+	rEZEQE1iYtshsKHMAssYJTqW/wUbJCwQLzHv1U8miG1rGCUWnDrPBpLgFLCW2PT+E9AkDqD7
+	xCV6GoNAwswCOhLv+h4wQ9jyEtvfzmGewCg4C8m+WUjKZiEpW8DIvIpRLjGnNFc3NzEzpzg1
+	Wbc4OTEvL7VI11AvN7NELzWldBMjJOh5djB+WydziFGAg1GJh/fF3lNBQqyJZcWVuYcYJTmY
+	lER5ZXadDhLiS8pPqcxILM6ILyrNSS0+xCjBwawkwntnI1CONyWxsiq1KB8mJc3BoiTOq7pE
+	3U9IID2xJDU7NbUgtQgmK8PBoSTB63scqFGwKDU9tSItM6cEIc3EwQkynEtKpDg1LyW1KLG0
+	JCMeFMXxxcA4BknxAO1dfhRkb3FBYi5QFKL1FKMux7wvH74xCrHk5eelSonzuoHsEAApyijN
+	g1sBS3GvGMWBPhbmVQep4gGmR7hJr4CWMAEtCY07BbKkJBEhJdXAqHGKyZP/9urEWSvM3hem
+	T/BY/nNO0vS15pcmVuvu61Z8mr2NLV9fUvbYnS9v0hjVLFcE+hyXbr10IVzLuVnB 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240100>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240101>
 
-When trying to pop/apply a stash specified with an argument containing
-spaces git-stash will throw an error:
+On 01/06/2014 07:32 PM, Junio C Hamano wrote:
+> Michael Haggerty <mhagger@alum.mit.edu> writes:
+> 
+>> Keep track of the position of the slash character independently of
+>> "pos", thereby making the purpose of each variable clearer and
+>> working towards other upcoming changes.
+>>
+>> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+>> ---
+> 
+> This step has an interaction with $gmane/239878 where Windows folks
+> want it to pay attention to is_dir_sep()---over there, a backslash
+> could separate directory path components.
+> 
+> AFAIK, the function was meant to be used only on paths we internally
+> generate, and the paths we internally generate all are slash
+> separated, so it could be argued that feeding a path, whose path
+> components are separated by backslashes, that we obtained from the
+> end user without converting it to the internal form in some
+> codepaths (e.g. "$there" in "git clone $url $there") are bugs we
+> acquired over time that need to be fixed, but it is easy enough to
+> use is_dir_sep() here to work it around, and doing so will
+> not negatively affect
+> 
+>  1. UNIX-only projects by forbidding use of a byte with backslash in
+>     it as a path component character (yes, I am imagining using
+>     Shift-JIS that can use a backslash as the second byte of
+>     two-byte character in the pathname on UNIX); and
+> 
+>  2. UNIX-and-Windows mixed projects, as you cannot sanely use such a
+>     pathname with backslash as part of a path component if its tree
+>     needs to be checked out on Windows.
 
-    $ git stash pop 'stash@{two hours ago}'
-    Too many revisions specified: stash@{two hours ago}
+I agree that it would be reasonable to use is_dir_sep() in the
+implementation of this function, at least unless/until somebody does the
+work to figure out whether callers should really only be passing it
+forward-slash-normalized paths.
 
-This happens because word splitting is used to count non-option
-arguments. Make use of rev-parse's --sq option to quote the arguments
-for us to ensure a correct count. Add quotes where necessary.
+Please be careful, though, because I don't think this function is
+capable of handling arbitrary Windows paths, like for example
+//host/path format, either before or after my change.
 
-Also add a test that verifies correct behaviour.
+Let me know if you would like me to merge or rebase the is_dir_sep()
+changes into this patch series.
 
-Helped-by: Thomas Rast <tr@thomasrast.ch>
-Signed-off-by: =C3=98ystein Walle <oystwa@gmail.com>
----
-v3 uses the same eval/--sq technique as v2, suggested by Thomas Rast.
-This is basically a resend except that I added a missing '&&' in the
-test that Eric Sunshine noticed when reading v1.
+Michael
 
- git-stash.sh     | 14 +++++++-------
- t/t3903-stash.sh | 11 +++++++++++
- 2 files changed, 18 insertions(+), 7 deletions(-)
-
-diff --git a/git-stash.sh b/git-stash.sh
-index 1e541a2..f0a94ab 100755
---- a/git-stash.sh
-+++ b/git-stash.sh
-@@ -358,7 +358,7 @@ parse_flags_and_rev()
- 	i_tree=3D
- 	u_tree=3D
-=20
--	REV=3D$(git rev-parse --no-flags --symbolic "$@") || exit 1
-+	REV=3D$(git rev-parse --no-flags --symbolic --sq "$@") || exit 1
-=20
- 	FLAGS=3D
- 	for opt
-@@ -376,7 +376,7 @@ parse_flags_and_rev()
- 		esac
- 	done
-=20
--	set -- $REV
-+	eval set -- $REV
-=20
- 	case $# in
- 		0)
-@@ -391,13 +391,13 @@ parse_flags_and_rev()
- 		;;
- 	esac
-=20
--	REV=3D$(git rev-parse --quiet --symbolic --verify $1 2>/dev/null) || =
-{
-+	REV=3D$(git rev-parse --quiet --symbolic --verify "$1" 2>/dev/null) |=
-| {
- 		reference=3D"$1"
- 		die "$(eval_gettext "\$reference is not valid reference")"
- 	}
-=20
--	i_commit=3D$(git rev-parse --quiet --verify $REV^2 2>/dev/null) &&
--	set -- $(git rev-parse $REV $REV^1 $REV: $REV^1: $REV^2: 2>/dev/null)=
- &&
-+	i_commit=3D$(git rev-parse --quiet --verify "$REV^2" 2>/dev/null) &&
-+	set -- $(git rev-parse "$REV" "$REV^1" "$REV:" "$REV^1:" "$REV^2:" 2>=
-/dev/null) &&
- 	s=3D$1 &&
- 	w_commit=3D$1 &&
- 	b_commit=3D$2 &&
-@@ -408,8 +408,8 @@ parse_flags_and_rev()
- 	test "$ref_stash" =3D "$(git rev-parse --symbolic-full-name "${REV%@*=
-}")" &&
- 	IS_STASH_REF=3Dt
-=20
--	u_commit=3D$(git rev-parse --quiet --verify $REV^3 2>/dev/null) &&
--	u_tree=3D$(git rev-parse $REV^3: 2>/dev/null)
-+	u_commit=3D$(git rev-parse --quiet --verify "$REV^3" 2>/dev/null) &&
-+	u_tree=3D$(git rev-parse "$REV^3:" 2>/dev/null)
- }
-=20
- is_stash_like()
-diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-index debda7a..7eb011c 100755
---- a/t/t3903-stash.sh
-+++ b/t/t3903-stash.sh
-@@ -673,4 +673,15 @@ test_expect_success 'store updates stash ref and r=
-eflog' '
- 	grep quux bazzy
- '
-=20
-+test_expect_success 'handle stash specification with spaces' '
-+	git stash clear &&
-+	echo pig > file &&
-+	git stash &&
-+	test_tick &&
-+	echo cow > file &&
-+	git stash &&
-+	git stash apply "stash@{Thu Apr 7 15:17:13 2005 -0700}" &&
-+	grep pig file
-+'
-+
- test_done
---=20
-1.8.5
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
