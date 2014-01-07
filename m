@@ -1,81 +1,52 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v2 17/17] rename_tmp_log(): on SCLD_VANISHED, retry
-Date: Tue, 07 Jan 2014 11:50:01 +0100
-Message-ID: <52CBDBD9.7020607@alum.mit.edu>
-References: <1389015935-21936-1-git-send-email-mhagger@alum.mit.edu> <1389015935-21936-18-git-send-email-mhagger@alum.mit.edu> <xmqqtxdhhsyq.fsf@gitster.dls.corp.google.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 1/2] completion: complete format.coverLetter
+Date: Tue, 7 Jan 2014 16:54:27 +0530
+Message-ID: <CALkWK0=DTB629jUZfQceeEZjjR4RK-b-xBqaTN2+HUG8VGP_0Q@mail.gmail.com>
+References: <1389028732-27760-1-git-send-email-artagnon@gmail.com> <1389028732-27760-2-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>, git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 07 11:50:17 2014
+X-From: git-owner@vger.kernel.org Tue Jan 07 12:25:18 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W0UEg-0001pH-Ox
-	for gcvg-git-2@plane.gmane.org; Tue, 07 Jan 2014 11:50:15 +0100
+	id 1W0UmX-0002Z7-GK
+	for gcvg-git-2@plane.gmane.org; Tue, 07 Jan 2014 12:25:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751377AbaAGKuI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jan 2014 05:50:08 -0500
-Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:42435 "EHLO
-	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751106AbaAGKuG (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 7 Jan 2014 05:50:06 -0500
-X-AuditID: 1207440c-b7f566d000004272-cc-52cbdbddb08d
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id B3.19.17010.DDBDBC25; Tue,  7 Jan 2014 05:50:05 -0500 (EST)
-Received: from [192.168.69.148] (p57A25E76.dip0.t-ipconnect.de [87.162.94.118])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s07Ao2kR013758
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Tue, 7 Jan 2014 05:50:03 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20131005 Icedove/17.0.9
-In-Reply-To: <xmqqtxdhhsyq.fsf@gitster.dls.corp.google.com>
-X-Enigmail-Version: 1.6
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrAKsWRmVeSWpSXmKPExsUixO6iqHv39ukgg5NTFC26rnQzWTT0XmG2
-	eHtzCaPF7mkL2BxYPHbOusvucfGSssfjiSdYPT5vkgtgieK2SUosKQvOTM/Tt0vgzmhr+slY
-	MJOt4nz3OcYGxu8sXYycHBICJhKNl/8wQ9hiEhfurWcDsYUELjNKfGp27GLkArLPMUlcv7Ge
-	HSTBK6Atsfh5O1AzBweLgKrEie/2IGE2AV2JRT3NTCC2qECQxKNDD6HKBSVOznwCtktEQE1i
-	YtshsFZmgUKJG2+KQMLCAu4Sve8PMEOsWssosaxvI9gNnALWEtPXzGYGqZcQEJfoaQwCCTML
-	6Ei863vADGHLS2x/O4d5AqPgLCTbZiEpm4WkbAEj8ypGucSc0lzd3MTMnOLUZN3i5MS8vNQi
-	XUO93MwSvdSU0k2MkBDn2cH4bZ3MIUYBDkYlHt4Xe08FCbEmlhVX5h5ilORgUhLl1b5xOkiI
-	Lyk/pTIjsTgjvqg0J7X4EKMEB7OSCC8zSI43JbGyKrUoHyYlzcGiJM6rukTdT0ggPbEkNTs1
-	tSC1CCYrw8GhJMH75xZQo2BRanpqRVpmTglCmomDE2Q4l5RIcWpeSmpRYmlJRjwoeuOLgfEL
-	kuIB2st0G2RvcUFiLlAUovUUoy7HvC8fvjEKseTl56VKifOeA9khAFKUUZoHtwKW0F4xigN9
-	LMx7C6SKB5gM4Sa9AlrCBLQkNO4UyJKSRISUVAOjfOLeH5lMVc5nE7v1dS/5MPKuXjEjPEzd
-	y+Tbpka9OYwX66dLb563RKXEIC1Pu8lwjR7Txj2bDu12n9We8unU3xBNVdO/N3k2 
+	id S1750806AbaAGLZJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jan 2014 06:25:09 -0500
+Received: from mail-ig0-f175.google.com ([209.85.213.175]:37091 "EHLO
+	mail-ig0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750760AbaAGLZH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jan 2014 06:25:07 -0500
+Received: by mail-ig0-f175.google.com with SMTP id j1so9892098iga.2
+        for <git@vger.kernel.org>; Tue, 07 Jan 2014 03:25:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=0RCKPiQBZucDMlyZGJV2McG9dZUHroRzyUilcG58/N4=;
+        b=tQmsoUA73lFfZ6YnZLvcmAd3KvrQOP+0HZGnthwxqac5MHrDc36WepSsUT9jRu2ib2
+         unqqK0CaTD5tW+Bhx4biA+jXODV11UITphXyiI4xoux75iRJNRamy+6qkp8hP3zrDzcu
+         IwBpR559I3j0oJX9byKMyj8G+CV6BhmnjQ+rLQfBT9LScMe21oRuxtHN/SQBI8dC9K0d
+         t/jpk2TOK1Df7A7tWhDl5PNN75J33xm8tEj1Ef8I4VU6vUahcjQLbyyMn9cWE0YWMyqK
+         LBAGyujPwiSOCEm8VWERdVKR+esaFZcoPXnrN0bRypGyiCykX8oqWE6syt7zt/La4CPC
+         eVhg==
+X-Received: by 10.51.17.11 with SMTP id ga11mr25373081igd.36.1389093907287;
+ Tue, 07 Jan 2014 03:25:07 -0800 (PST)
+Received: by 10.64.17.10 with HTTP; Tue, 7 Jan 2014 03:24:27 -0800 (PST)
+In-Reply-To: <1389028732-27760-2-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240104>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240105>
 
-On 01/06/2014 07:21 PM, Junio C Hamano wrote:
-> Michael Haggerty <mhagger@alum.mit.edu> writes:
-> 
->> If safe_create_leading_directories() fails because a file along the
->> path unexpectedly vanished, try again from the beginning.  Try at most
->> 3 times.
-> 
-> As the previous step bumped it from 3 to 4 without explanation, the
-> above no longer reflects reality ;-)
+Ramkumar Ramachandra wrote:
+>  contrib/completion/git-completion.bash | 1 +
+>  1 file changed, 1 insertion(+)
 
-Good catch.  The increment 3 -> 4 was because the first call to rename()
-is optimistic, and can fail once even if there is no race.  I will
-change the commit message of 16/17 to explain this point, and of 17/17
-to match reality.
-
-> The series mostly looked sane from a cursory read.
-> 
-> Will re-queue.  Thanks.
-
-Michael
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+Junio: Please push this part via 'maint' independently.
