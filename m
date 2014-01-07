@@ -1,7 +1,7 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH v2 3/5] refs: teach for_each_ref a flag to avoid recursion
-Date: Tue, 7 Jan 2014 18:58:50 -0500
-Message-ID: <20140107235850.GC10657@sigill.intra.peff.net>
+Subject: [PATCH v2 4/5] get_sha1: speed up ambiguous 40-hex test
+Date: Tue, 7 Jan 2014 18:59:53 -0500
+Message-ID: <20140107235953.GD10657@sigill.intra.peff.net>
 References: <20140107235631.GA10503@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -9,230 +9,185 @@ Cc: Brodie Rao <brodie@sf.io>, git@vger.kernel.org,
 	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 08 00:59:02 2014
+X-From: git-owner@vger.kernel.org Wed Jan 08 01:00:05 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W0gXw-0007o8-Oy
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Jan 2014 00:58:57 +0100
+	id 1W0gZ1-0002Sf-P0
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Jan 2014 01:00:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754253AbaAGX6x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jan 2014 18:58:53 -0500
-Received: from cloud.peff.net ([50.56.180.127]:56842 "HELO peff.net"
+	id S1754835AbaAGX77 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jan 2014 18:59:59 -0500
+Received: from cloud.peff.net ([50.56.180.127]:56848 "HELO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753999AbaAGX6w (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jan 2014 18:58:52 -0500
-Received: (qmail 1770 invoked by uid 102); 7 Jan 2014 23:58:52 -0000
+	id S1754829AbaAGX7z (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jan 2014 18:59:55 -0500
+Received: (qmail 1826 invoked by uid 102); 7 Jan 2014 23:59:55 -0000
 Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 07 Jan 2014 17:58:52 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 07 Jan 2014 18:58:50 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 07 Jan 2014 17:59:55 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 07 Jan 2014 18:59:53 -0500
 Content-Disposition: inline
 In-Reply-To: <20140107235631.GA10503@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240185>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240186>
 
-The normal for_each_ref traversal descends into
-subdirectories, returning each ref it finds. However, in
-some cases we may want to just iterate over the top-level of
-a certain part of the tree.
+Since 798c35f (get_sha1: warn about full or short object
+names that look like refs, 2013-05-29), a 40-hex sha1 causes
+us to call dwim_ref on the result, on the off chance that we
+have a matching ref. This can cause a noticeable slow-down
+when there are a large number of objects.  E.g., on
+linux.git:
 
-The introduction of the "flags" option is a little
-mysterious. We already have a "flags" option that gets stuck
-in a callback struct and ends up interpreted in do_one_ref.
-But the traversal itself does not currently have any flags,
-and it needs to know about this new flag.
+  [baseline timing]
+  $ best-of-five git rev-list --all --pretty=raw
+  real    0m3.996s
+  user    0m3.900s
+  sys     0m0.100s
 
-We _could_ introduce this as a completely separate flag
-parameter. But instead, we simply put both flag types into a
-single namespace, and make it available at both sites. This
-is simple, and given that we do not have a proliferation of
-flags (we have had exactly one until now), it is probably
-sufficient.
+  [same thing, but calling get_sha1 on each commit from stdin]
+  $ git rev-list --all >commits
+  $ best-of-five -i commits git rev-list --stdin --pretty=raw
+  real    0m7.862s
+  user    0m6.108s
+  sys     0m1.760s
+
+The problem is that each call to dwim_ref individually stats
+the possible refs in refs/heads, refs/tags, etc. In the
+common case, there are no refs that look like sha1s at all.
+We can therefore do the same check much faster by loading
+all ambiguous-looking candidates once, and then checking our
+index for each object.
+
+This is technically more racy (somebody might create such a
+ref after we build our index), but that's OK, as it's just a
+warning (and we provide no guarantees about whether a
+simultaneous process ran before or after the ref was created
+anyway).
+
+Here is the time after this patch, which implements the
+strategy described above:
+
+  $ best-of-five -i commits git rev-list --stdin --pretty=raw
+  real    0m4.966s
+  user    0m4.776s
+  sys     0m0.192s
+
+We still pay some price to read the commits from stdin, but
+notice the system time is much lower, as we are avoiding
+hundreds of thousands of stat() calls.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-I think the flags thing is OK as explained above, but Michael may have a
-different suggestion for refactoring.
+I wanted to make the ref traversal as cheap as possible, hence the
+NO_RECURSE flag I added. I thought INCLUDE_BROKEN used to not open up
+the refs at all, but it looks like it does these days. I wonder if that
+is worth changing or not.
 
- refs.c | 61 ++++++++++++++++++++++++++++++++++++++-----------------------
- 1 file changed, 38 insertions(+), 23 deletions(-)
+ refs.c      | 47 +++++++++++++++++++++++++++++++++++++++++++++++
+ refs.h      |  2 ++
+ sha1_name.c |  4 +---
+ 3 files changed, 50 insertions(+), 3 deletions(-)
 
 diff --git a/refs.c b/refs.c
-index 3926136..ca854d6 100644
+index ca854d6..cddd871 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -589,6 +589,8 @@ static void sort_ref_dir(struct ref_dir *dir)
- 
- /* Include broken references in a do_for_each_ref*() iteration: */
- #define DO_FOR_EACH_INCLUDE_BROKEN 0x01
-+/* Do not recurse into subdirs, just iterate at a single level. */
-+#define DO_FOR_EACH_NO_RECURSE     0x02
+@@ -4,6 +4,7 @@
+ #include "tag.h"
+ #include "dir.h"
+ #include "string-list.h"
++#include "sha1-array.h"
  
  /*
-  * Return true iff the reference described by entry can be resolved to
-@@ -661,7 +663,8 @@ static int do_one_ref(struct ref_entry *entry, void *cb_data)
-  * called for all references, including broken ones.
-  */
- static int do_for_each_entry_in_dir(struct ref_dir *dir, int offset,
--				    each_ref_entry_fn fn, void *cb_data)
-+				    each_ref_entry_fn fn, void *cb_data,
-+				    int flags)
- {
- 	int i;
- 	assert(dir->sorted == dir->nr);
-@@ -669,9 +672,13 @@ static int do_for_each_entry_in_dir(struct ref_dir *dir, int offset,
- 		struct ref_entry *entry = dir->entries[i];
- 		int retval;
- 		if (entry->flag & REF_DIR) {
--			struct ref_dir *subdir = get_ref_dir(entry);
--			sort_ref_dir(subdir);
--			retval = do_for_each_entry_in_dir(subdir, 0, fn, cb_data);
-+			if (flags & DO_FOR_EACH_NO_RECURSE) {
-+				struct ref_dir *subdir = get_ref_dir(entry);
-+				sort_ref_dir(subdir);
-+				retval = do_for_each_entry_in_dir(subdir, 0,
-+								  fn, cb_data,
-+								  flags);
-+			}
- 		} else {
- 			retval = fn(entry, cb_data);
- 		}
-@@ -691,7 +698,8 @@ static int do_for_each_entry_in_dir(struct ref_dir *dir, int offset,
-  */
- static int do_for_each_entry_in_dirs(struct ref_dir *dir1,
- 				     struct ref_dir *dir2,
--				     each_ref_entry_fn fn, void *cb_data)
-+				     each_ref_entry_fn fn, void *cb_data,
-+				     int flags)
- {
- 	int retval;
- 	int i1 = 0, i2 = 0;
-@@ -702,10 +710,12 @@ static int do_for_each_entry_in_dirs(struct ref_dir *dir1,
- 		struct ref_entry *e1, *e2;
- 		int cmp;
- 		if (i1 == dir1->nr) {
--			return do_for_each_entry_in_dir(dir2, i2, fn, cb_data);
-+			return do_for_each_entry_in_dir(dir2, i2, fn, cb_data,
-+							flags);
- 		}
- 		if (i2 == dir2->nr) {
--			return do_for_each_entry_in_dir(dir1, i1, fn, cb_data);
-+			return do_for_each_entry_in_dir(dir1, i1, fn, cb_data,
-+							flags);
- 		}
- 		e1 = dir1->entries[i1];
- 		e2 = dir2->entries[i2];
-@@ -713,12 +723,15 @@ static int do_for_each_entry_in_dirs(struct ref_dir *dir1,
- 		if (cmp == 0) {
- 			if ((e1->flag & REF_DIR) && (e2->flag & REF_DIR)) {
- 				/* Both are directories; descend them in parallel. */
--				struct ref_dir *subdir1 = get_ref_dir(e1);
--				struct ref_dir *subdir2 = get_ref_dir(e2);
--				sort_ref_dir(subdir1);
--				sort_ref_dir(subdir2);
--				retval = do_for_each_entry_in_dirs(
--						subdir1, subdir2, fn, cb_data);
-+				if (!(flags & DO_FOR_EACH_NO_RECURSE)) {
-+					struct ref_dir *subdir1 = get_ref_dir(e1);
-+					struct ref_dir *subdir2 = get_ref_dir(e2);
-+					sort_ref_dir(subdir1);
-+					sort_ref_dir(subdir2);
-+					retval = do_for_each_entry_in_dirs(
-+							subdir1, subdir2,
-+							fn, cb_data, flags);
-+				}
- 				i1++;
- 				i2++;
- 			} else if (!(e1->flag & REF_DIR) && !(e2->flag & REF_DIR)) {
-@@ -743,7 +756,7 @@ static int do_for_each_entry_in_dirs(struct ref_dir *dir1,
- 				struct ref_dir *subdir = get_ref_dir(e);
- 				sort_ref_dir(subdir);
- 				retval = do_for_each_entry_in_dir(
--						subdir, 0, fn, cb_data);
-+						subdir, 0, fn, cb_data, flags);
- 			} else {
- 				retval = fn(e, cb_data);
- 			}
-@@ -817,7 +830,7 @@ static int is_refname_available(const char *refname, const char *oldrefname,
- 	data.conflicting_refname = NULL;
- 
- 	sort_ref_dir(dir);
--	if (do_for_each_entry_in_dir(dir, 0, name_conflict_fn, &data)) {
-+	if (do_for_each_entry_in_dir(dir, 0, name_conflict_fn, &data, 0)) {
- 		error("'%s' exists; cannot create '%s'",
- 		      data.conflicting_refname, refname);
- 		return 0;
-@@ -1651,7 +1664,8 @@ void warn_dangling_symref(FILE *fp, const char *msg_fmt, const char *refname)
-  * 0.
-  */
- static int do_for_each_entry(struct ref_cache *refs, const char *base,
--			     each_ref_entry_fn fn, void *cb_data)
-+			     each_ref_entry_fn fn, void *cb_data,
-+			     int flags)
- {
- 	struct packed_ref_cache *packed_ref_cache;
- 	struct ref_dir *loose_dir;
-@@ -1684,15 +1698,15 @@ static int do_for_each_entry(struct ref_cache *refs, const char *base,
- 		sort_ref_dir(packed_dir);
- 		sort_ref_dir(loose_dir);
- 		retval = do_for_each_entry_in_dirs(
--				packed_dir, loose_dir, fn, cb_data);
-+				packed_dir, loose_dir, fn, cb_data, flags);
- 	} else if (packed_dir) {
- 		sort_ref_dir(packed_dir);
- 		retval = do_for_each_entry_in_dir(
--				packed_dir, 0, fn, cb_data);
-+				packed_dir, 0, fn, cb_data, flags);
- 	} else if (loose_dir) {
- 		sort_ref_dir(loose_dir);
- 		retval = do_for_each_entry_in_dir(
--				loose_dir, 0, fn, cb_data);
-+				loose_dir, 0, fn, cb_data, flags);
- 	}
- 
- 	release_packed_ref_cache(packed_ref_cache);
-@@ -1718,7 +1732,7 @@ static int do_for_each_ref(struct ref_cache *refs, const char *base,
- 	data.fn = fn;
- 	data.cb_data = cb_data;
- 
--	return do_for_each_entry(refs, base, do_one_ref, &data);
-+	return do_for_each_entry(refs, base, do_one_ref, &data, flags);
+  * Make sure "ref" is something reasonable to have under ".git/refs/";
+@@ -2042,6 +2043,52 @@ int dwim_log(const char *str, int len, unsigned char *sha1, char **log)
+ 	return logs_found;
  }
  
- static int do_head_ref(const char *submodule, each_ref_fn fn, void *cb_data)
-@@ -2200,7 +2214,7 @@ int commit_packed_refs(void)
++static int check_ambiguous_sha1_ref(const char *refname,
++				    const unsigned char *sha1,
++				    int flags,
++				    void *data)
++{
++	unsigned char tmp_sha1[20];
++	if (strlen(refname) == 40 && !get_sha1_hex(refname, tmp_sha1))
++		sha1_array_append(data, tmp_sha1);
++	return 0;
++}
++
++static void build_ambiguous_sha1_ref_index(struct sha1_array *idx)
++{
++	const char **rule;
++
++	for (rule = ref_rev_parse_rules; *rule; rule++) {
++		const char *prefix = *rule;
++		const char *end = strstr(prefix, "%.*s");
++		char *buf;
++
++		if (!end)
++			continue;
++
++		buf = xmemdupz(prefix, end - prefix);
++		do_for_each_ref(&ref_cache, buf, check_ambiguous_sha1_ref,
++				end - prefix,
++				DO_FOR_EACH_INCLUDE_BROKEN |
++				DO_FOR_EACH_NO_RECURSE,
++				idx);
++		free(buf);
++	}
++}
++
++int sha1_is_ambiguous_with_ref(const unsigned char *sha1)
++{
++	struct sha1_array idx = SHA1_ARRAY_INIT;
++	static int loaded;
++
++	if (!loaded) {
++		build_ambiguous_sha1_ref_index(&idx);
++		loaded = 1;
++	}
++
++	return sha1_array_lookup(&idx, sha1) >= 0;
++}
++
+ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
+ 					    const unsigned char *old_sha1,
+ 					    int flags, int *type_p)
+diff --git a/refs.h b/refs.h
+index 87a1a79..c7d5f89 100644
+--- a/refs.h
++++ b/refs.h
+@@ -229,4 +229,6 @@ int update_refs(const char *action, const struct ref_update **updates,
+ extern int parse_hide_refs_config(const char *var, const char *value, const char *);
+ extern int ref_is_hidden(const char *);
  
- 	do_for_each_entry_in_dir(get_packed_ref_dir(packed_ref_cache),
- 				 0, write_packed_entry_fn,
--				 &packed_ref_cache->lock->fd);
-+				 &packed_ref_cache->lock->fd, 0);
- 	if (commit_lock_file(packed_ref_cache->lock))
- 		error = -1;
- 	packed_ref_cache->lock = NULL;
-@@ -2345,7 +2359,7 @@ int pack_refs(unsigned int flags)
- 	cbdata.packed_refs = get_packed_refs(&ref_cache);
++int sha1_is_ambiguous_with_ref(const unsigned char *sha1);
++
+ #endif /* REFS_H */
+diff --git a/sha1_name.c b/sha1_name.c
+index a5578f7..f83ecb7 100644
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -452,13 +452,11 @@ static int get_sha1_basic(const char *str, int len, unsigned char *sha1)
  
- 	do_for_each_entry_in_dir(get_loose_refs(&ref_cache), 0,
--				 pack_if_possible_fn, &cbdata);
-+				 pack_if_possible_fn, &cbdata, 0);
- 
- 	if (commit_packed_refs())
- 		die_errno("unable to overwrite old ref-pack file");
-@@ -2447,7 +2461,8 @@ static int repack_without_refs(const char **refnames, int n)
+ 	if (len == 40 && !get_sha1_hex(str, sha1)) {
+ 		if (warn_ambiguous_refs && warn_on_object_refname_ambiguity) {
+-			refs_found = dwim_ref(str, len, tmp_sha1, &real_ref);
+-			if (refs_found > 0) {
++			if (sha1_is_ambiguous_with_ref(sha1)) {
+ 				warning(warn_msg, len, str);
+ 				if (advice_object_name_warning)
+ 					fprintf(stderr, "%s\n", _(object_name_msg));
+ 			}
+-			free(real_ref);
+ 		}
+ 		return 0;
  	}
- 
- 	/* Remove any other accumulated cruft */
--	do_for_each_entry_in_dir(packed, 0, curate_packed_ref_fn, &refs_to_delete);
-+	do_for_each_entry_in_dir(packed, 0, curate_packed_ref_fn,
-+				 &refs_to_delete, 0);
- 	for_each_string_list_item(ref_to_delete, &refs_to_delete) {
- 		if (remove_entry(packed, ref_to_delete->string) == -1)
- 			die("internal error");
 -- 
 1.8.5.2.500.g8060133
