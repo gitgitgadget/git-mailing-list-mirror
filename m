@@ -1,7 +1,7 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH v2 4/5] get_sha1: speed up ambiguous 40-hex test
-Date: Tue, 7 Jan 2014 18:59:53 -0500
-Message-ID: <20140107235953.GD10657@sigill.intra.peff.net>
+Subject: [PATCH v2 5/5] get_sha1: drop object/refname ambiguity flag
+Date: Tue, 7 Jan 2014 19:00:09 -0500
+Message-ID: <20140108000009.GE10657@sigill.intra.peff.net>
 References: <20140107235631.GA10503@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -9,185 +9,127 @@ Cc: Brodie Rao <brodie@sf.io>, git@vger.kernel.org,
 	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
 	Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 08 01:00:05 2014
+X-From: git-owner@vger.kernel.org Wed Jan 08 01:00:24 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W0gZ1-0002Sf-P0
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Jan 2014 01:00:04 +0100
+	id 1W0gZL-0003H7-Oi
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Jan 2014 01:00:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754835AbaAGX77 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jan 2014 18:59:59 -0500
-Received: from cloud.peff.net ([50.56.180.127]:56848 "HELO peff.net"
+	id S1754855AbaAHAAN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jan 2014 19:00:13 -0500
+Received: from cloud.peff.net ([50.56.180.127]:56854 "HELO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754829AbaAGX7z (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jan 2014 18:59:55 -0500
-Received: (qmail 1826 invoked by uid 102); 7 Jan 2014 23:59:55 -0000
+	id S1754829AbaAHAAL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jan 2014 19:00:11 -0500
+Received: (qmail 1840 invoked by uid 102); 8 Jan 2014 00:00:11 -0000
 Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 07 Jan 2014 17:59:55 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 07 Jan 2014 18:59:53 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 07 Jan 2014 18:00:11 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 07 Jan 2014 19:00:09 -0500
 Content-Disposition: inline
 In-Reply-To: <20140107235631.GA10503@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240186>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240187>
 
-Since 798c35f (get_sha1: warn about full or short object
-names that look like refs, 2013-05-29), a 40-hex sha1 causes
-us to call dwim_ref on the result, on the off chance that we
-have a matching ref. This can cause a noticeable slow-down
-when there are a large number of objects.  E.g., on
-linux.git:
+Now that our object/refname ambiguity test is much faster
+(thanks to the previous commit), there is no reason for code
+like "cat-file --batch-check" to turn it off. Here are
+before and after timings with this patch (on git.git):
 
-  [baseline timing]
-  $ best-of-five git rev-list --all --pretty=raw
-  real    0m3.996s
-  user    0m3.900s
-  sys     0m0.100s
+  $ git rev-list --objects --all | cut -d' ' -f1 >objects
 
-  [same thing, but calling get_sha1 on each commit from stdin]
-  $ git rev-list --all >commits
-  $ best-of-five -i commits git rev-list --stdin --pretty=raw
-  real    0m7.862s
-  user    0m6.108s
-  sys     0m1.760s
+  [with flag]
+  $ best-of-five -i objects ./git cat-file --batch-check
+  real    0m0.392s
+  user    0m0.368s
+  sys     0m0.024s
 
-The problem is that each call to dwim_ref individually stats
-the possible refs in refs/heads, refs/tags, etc. In the
-common case, there are no refs that look like sha1s at all.
-We can therefore do the same check much faster by loading
-all ambiguous-looking candidates once, and then checking our
-index for each object.
+  [without flag, without speedup; i.e., pre-25fba78]
+  $ best-of-five -i objects ./git cat-file --batch-check
+  real    0m1.652s
+  user    0m0.904s
+  sys     0m0.748s
 
-This is technically more racy (somebody might create such a
-ref after we build our index), but that's OK, as it's just a
-warning (and we provide no guarantees about whether a
-simultaneous process ran before or after the ref was created
-anyway).
+  [without flag, with speedup]
+  $ best-of-five -i objects ./git cat-file --batch-check
+  real    0m0.388s
+  user    0m0.356s
+  sys     0m0.028s
 
-Here is the time after this patch, which implements the
-strategy described above:
-
-  $ best-of-five -i commits git rev-list --stdin --pretty=raw
-  real    0m4.966s
-  user    0m4.776s
-  sys     0m0.192s
-
-We still pay some price to read the commits from stdin, but
-notice the system time is much lower, as we are avoiding
-hundreds of thousands of stat() calls.
+So the new implementation does just as well as we did with
+the flag turning the whole thing off (better actually, but
+that is within the noise).
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-I wanted to make the ref traversal as cheap as possible, hence the
-NO_RECURSE flag I added. I thought INCLUDE_BROKEN used to not open up
-the refs at all, but it looks like it does these days. I wonder if that
-is worth changing or not.
+ builtin/cat-file.c | 9 ---------
+ cache.h            | 1 -
+ environment.c      | 1 -
+ sha1_name.c        | 2 +-
+ 4 files changed, 1 insertion(+), 12 deletions(-)
 
- refs.c      | 47 +++++++++++++++++++++++++++++++++++++++++++++++
- refs.h      |  2 ++
- sha1_name.c |  4 +---
- 3 files changed, 50 insertions(+), 3 deletions(-)
-
-diff --git a/refs.c b/refs.c
-index ca854d6..cddd871 100644
---- a/refs.c
-+++ b/refs.c
-@@ -4,6 +4,7 @@
- #include "tag.h"
- #include "dir.h"
- #include "string-list.h"
-+#include "sha1-array.h"
+diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+index ce79103..afba21f 100644
+--- a/builtin/cat-file.c
++++ b/builtin/cat-file.c
+@@ -285,15 +285,6 @@ static int batch_objects(struct batch_options *opt)
+ 	if (opt->print_contents)
+ 		data.info.typep = &data.type;
  
- /*
-  * Make sure "ref" is something reasonable to have under ".git/refs/";
-@@ -2042,6 +2043,52 @@ int dwim_log(const char *str, int len, unsigned char *sha1, char **log)
- 	return logs_found;
- }
- 
-+static int check_ambiguous_sha1_ref(const char *refname,
-+				    const unsigned char *sha1,
-+				    int flags,
-+				    void *data)
-+{
-+	unsigned char tmp_sha1[20];
-+	if (strlen(refname) == 40 && !get_sha1_hex(refname, tmp_sha1))
-+		sha1_array_append(data, tmp_sha1);
-+	return 0;
-+}
-+
-+static void build_ambiguous_sha1_ref_index(struct sha1_array *idx)
-+{
-+	const char **rule;
-+
-+	for (rule = ref_rev_parse_rules; *rule; rule++) {
-+		const char *prefix = *rule;
-+		const char *end = strstr(prefix, "%.*s");
-+		char *buf;
-+
-+		if (!end)
-+			continue;
-+
-+		buf = xmemdupz(prefix, end - prefix);
-+		do_for_each_ref(&ref_cache, buf, check_ambiguous_sha1_ref,
-+				end - prefix,
-+				DO_FOR_EACH_INCLUDE_BROKEN |
-+				DO_FOR_EACH_NO_RECURSE,
-+				idx);
-+		free(buf);
-+	}
-+}
-+
-+int sha1_is_ambiguous_with_ref(const unsigned char *sha1)
-+{
-+	struct sha1_array idx = SHA1_ARRAY_INIT;
-+	static int loaded;
-+
-+	if (!loaded) {
-+		build_ambiguous_sha1_ref_index(&idx);
-+		loaded = 1;
-+	}
-+
-+	return sha1_array_lookup(&idx, sha1) >= 0;
-+}
-+
- static struct ref_lock *lock_ref_sha1_basic(const char *refname,
- 					    const unsigned char *old_sha1,
- 					    int flags, int *type_p)
-diff --git a/refs.h b/refs.h
-index 87a1a79..c7d5f89 100644
---- a/refs.h
-+++ b/refs.h
-@@ -229,4 +229,6 @@ int update_refs(const char *action, const struct ref_update **updates,
- extern int parse_hide_refs_config(const char *var, const char *value, const char *);
- extern int ref_is_hidden(const char *);
- 
-+int sha1_is_ambiguous_with_ref(const unsigned char *sha1);
-+
- #endif /* REFS_H */
+-	/*
+-	 * We are going to call get_sha1 on a potentially very large number of
+-	 * objects. In most large cases, these will be actual object sha1s. The
+-	 * cost to double-check that each one is not also a ref (just so we can
+-	 * warn) ends up dwarfing the actual cost of the object lookups
+-	 * themselves. We can work around it by just turning off the warning.
+-	 */
+-	warn_on_object_refname_ambiguity = 0;
+-
+ 	while (strbuf_getline(&buf, stdin, '\n') != EOF) {
+ 		if (data.split_on_whitespace) {
+ 			/*
+diff --git a/cache.h b/cache.h
+index ce377e1..73afc38 100644
+--- a/cache.h
++++ b/cache.h
+@@ -566,7 +566,6 @@ extern int assume_unchanged;
+ extern int prefer_symlink_refs;
+ extern int log_all_ref_updates;
+ extern int warn_ambiguous_refs;
+-extern int warn_on_object_refname_ambiguity;
+ extern int shared_repository;
+ extern const char *apply_default_whitespace;
+ extern const char *apply_default_ignorewhitespace;
+diff --git a/environment.c b/environment.c
+index 3c76905..c59f6d4 100644
+--- a/environment.c
++++ b/environment.c
+@@ -22,7 +22,6 @@ int prefer_symlink_refs;
+ int is_bare_repository_cfg = -1; /* unspecified */
+ int log_all_ref_updates = -1; /* unspecified */
+ int warn_ambiguous_refs = 1;
+-int warn_on_object_refname_ambiguity = 1;
+ int repository_format_version;
+ const char *git_commit_encoding;
+ const char *git_log_output_encoding;
 diff --git a/sha1_name.c b/sha1_name.c
-index a5578f7..f83ecb7 100644
+index f83ecb7..b9aaf74 100644
 --- a/sha1_name.c
 +++ b/sha1_name.c
-@@ -452,13 +452,11 @@ static int get_sha1_basic(const char *str, int len, unsigned char *sha1)
+@@ -451,7 +451,7 @@ static int get_sha1_basic(const char *str, int len, unsigned char *sha1)
+ 	int at, reflog_len, nth_prior = 0;
  
  	if (len == 40 && !get_sha1_hex(str, sha1)) {
- 		if (warn_ambiguous_refs && warn_on_object_refname_ambiguity) {
--			refs_found = dwim_ref(str, len, tmp_sha1, &real_ref);
--			if (refs_found > 0) {
-+			if (sha1_is_ambiguous_with_ref(sha1)) {
+-		if (warn_ambiguous_refs && warn_on_object_refname_ambiguity) {
++		if (warn_ambiguous_refs) {
+ 			if (sha1_is_ambiguous_with_ref(sha1)) {
  				warning(warn_msg, len, str);
  				if (advice_object_name_warning)
- 					fprintf(stderr, "%s\n", _(object_name_msg));
- 			}
--			free(real_ref);
- 		}
- 		return 0;
- 	}
 -- 
 1.8.5.2.500.g8060133
