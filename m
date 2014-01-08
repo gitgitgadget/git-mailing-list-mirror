@@ -1,317 +1,256 @@
-From: "W. Trevor King" <wking@tremily.us>
-Subject: Re: Preferred local submodule branches
-Date: Tue, 7 Jan 2014 19:47:08 -0800
-Message-ID: <20140108034708.GG26583@odin.tremily.us>
-References: <20140107235208.GC29954@odin.tremily.us>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH v3 3/5] refs: teach for_each_ref a flag to avoid recursion
+Date: Tue, 7 Jan 2014 22:47:34 -0500
+Message-ID: <20140108034733.GA17198@sigill.intra.peff.net>
+References: <20140107235631.GA10503@sigill.intra.peff.net>
+ <20140107235850.GC10657@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="z9ECzHErBrwFF8sy"
-Cc: Heiko Voigt <hvoigt@hvoigt.net>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Jens Lehmann <jens.lehmann@web.de>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Francesco Pretto <ceztko@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 08 04:47:23 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Brodie Rao <brodie@sf.io>, git@vger.kernel.org,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 08 04:47:48 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W0k6x-0000HM-Om
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Jan 2014 04:47:20 +0100
+	id 1W0k7J-00018b-3v
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Jan 2014 04:47:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754802AbaAHDrQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jan 2014 22:47:16 -0500
-Received: from qmta13.westchester.pa.mail.comcast.net ([76.96.59.243]:57197
-	"EHLO qmta13.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753994AbaAHDrO (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 7 Jan 2014 22:47:14 -0500
-Received: from omta13.westchester.pa.mail.comcast.net ([76.96.62.52])
-	by qmta13.westchester.pa.mail.comcast.net with comcast
-	id BFms1n00317dt5G5DFnDZF; Wed, 08 Jan 2014 03:47:13 +0000
-Received: from odin.tremily.us ([24.18.63.50])
-	by omta13.westchester.pa.mail.comcast.net with comcast
-	id BFnA1n00R152l3L3ZFnBjU; Wed, 08 Jan 2014 03:47:12 +0000
-Received: by odin.tremily.us (Postfix, from userid 1000)
-	id 05A1EEACC0C; Tue,  7 Jan 2014 19:47:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
-	t=1389152829; bh=PsHLf8cIlCZCwnYgpJeGRHMovEKFYAPcu+7EA10LyGQ=;
-	h=Date:From:To:Cc:Subject:In-Reply-To;
-	b=SSmaU/iM/BxvE1oakU/0TzDEyl4JHBTo/L8MTtPCxvaoGjtSxctUseXaegG23C5W9
-	 3OGfzYNbkVssWwXKEz+CZfegMPfc+2bSVRE5T4O0bjqPozvk5UrF8oxsSMKfuKBTPp
-	 Rt0jz0Pmkre8qQminhDtFETtvvnT+MhpSsvA61Jw=
+	id S1754425AbaAHDrh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jan 2014 22:47:37 -0500
+Received: from cloud.peff.net ([50.56.180.127]:56946 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753994AbaAHDrg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jan 2014 22:47:36 -0500
+Received: (qmail 12113 invoked by uid 102); 8 Jan 2014 03:47:36 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 07 Jan 2014 21:47:36 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 07 Jan 2014 22:47:34 -0500
 Content-Disposition: inline
-In-Reply-To: <20140107235208.GC29954@odin.tremily.us>
-OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
- url=http://tremily.us/pubkey.txt
-User-Agent: Mutt/1.5.22 (2013-10-16)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-	s=q20121106; t=1389152833;
-	bh=l+F636TXvjihbw35VzO1EkNliDc2FXAta1RvDOO7fJQ=;
-	h=Received:Received:Received:Date:From:To:Subject:Message-ID:
-	 MIME-Version:Content-Type;
-	b=pAfRBNISvzJM7zD8vOyAWQ1+FIGGv16JfFGbu6RFum9br/KqaC96dj+W7hQniM57c
-	 xKFG2vR+Te4gg00SWV1X/MlNithJOeg7HwtErPofzqRKEL9fTgRyFoTkA3cALys7T0
-	 H5K8D6qC18108KY9IYZzKhCPrJisJSA4LMNGjc3dkvwcEG6AMrr/kNuteQcKSGU4cg
-	 aFrG4BJ0UUq3LAbsjicDm7SCvcItTKWPRhvuWLvcAXNMREZA0kV8isVW/0RhBYq7si
-	 XVYMD7339uQgabXHbYsxWN27u0B37GkB9qyHtYdSpJEWcYe2OIR99RrbOq0MckkBKm
-	 cA1kdN3XPsypg==
+In-Reply-To: <20140107235850.GC10657@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240192>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240193>
 
+On Tue, Jan 07, 2014 at 06:58:50PM -0500, Jeff King wrote:
 
---z9ECzHErBrwFF8sy
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> +			if (flags & DO_FOR_EACH_NO_RECURSE) {
+> +				struct ref_dir *subdir = get_ref_dir(entry);
+> +				sort_ref_dir(subdir);
+> +				retval = do_for_each_entry_in_dir(subdir, 0,
 
-On Wed, Jan 08, 2014 at 03:12:44AM +0100, Francesco Pretto wrote:
-> 2014/1/8 W. Trevor King <wking@tremily.us>:
-> > Note that I've moved away from =E2=80=9Csubmodule.<name>.branch
-> > set means attached=E2=80=9D towards =E2=80=9Cwe should set per-superpro=
-ject-branch
-> > submodule.<name>.local-branch explicitly=E2=80=9D [1].
->=20
-> Honestly, I'm having an hard time to follow this thread.
+Obviously this is totally wrong and inverts the point of the flag. And
+causes something like half of the test suite to fail.
 
-I tried to refocus things (with a new subject) in this sub-thread.
-Hopefully that helps make the discussion more linear ;).
+Michael was nice enough to point it out to me off-list, but well, I have
+to face the brown paper bag at some point. :) In my defense, it was a
+last minute refactor before going to dinner. That is what I get for
+rushing out the series.
 
-> Also, you didn't update the patch.
+Here's a fixed version of patch 3/5.
 
-I'm waiting [1] to see how the C-level checkout by Jens and Jonathan
-progresses [2,3] before writing more code.
+-- >8 --
+Subject: refs: teach for_each_ref a flag to avoid recursion
 
-> If you were endorsed by someone (Junio, Heiko, ...) for the
-> "submodule.<name>.local-branch" feature please show me where.
+The normal for_each_ref traversal descends into
+subdirectories, returning each ref it finds. However, in
+some cases we may want to just iterate over the top-level of
+a certain part of the tree.
 
-As far as I know, no-one else has endorsed this idea (yet :).  Heiko
-has expressed concern [4], but not convincingly enough (yet :) to win
-me over ;).
+The introduction of the "flags" option is a little
+mysterious. We already have a "flags" option that gets stuck
+in a callback struct and ends up interpreted in do_one_ref.
+But the traversal itself does not currently have any flags,
+and it needs to know about this new flag.
 
-> I somehow understand the point of the
-> "submodule.<name>.local-branch" property, but I can't "see" the the
-> workflow. Please, show me some hypothetical scripting example with
-> as much complete as possible workflow (creation, developer update,
-> mantainers creates feature branch, developer update, developer
-> attach to another branch).
+We _could_ introduce this as a completely separate flag
+parameter. But instead, we simply put both flag types into a
+single namespace, and make it available at both sites. This
+is simple, and given that we do not have a proliferation of
+flags (we have had exactly one until now), it is probably
+sufficient.
 
-I've put this at the bottom of the message to avoid bothering the
-tl;dr crowd, although they have probably long since tuned us out ;).
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ refs.c | 61 ++++++++++++++++++++++++++++++++++++++-----------------------
+ 1 file changed, 38 insertions(+), 23 deletions(-)
 
-> Also, consider I proposed to support the attached HEAD path to
-> reduce complexity and support a simpler use case for git
-> submodules. I would be disappointed if the complexity is reduced in
-> a way and augmented in another.
-
-Agreed.  I think we're all looking for the least-complex solution that
-covers all (or most) reasonable workflows.
-
-> > On Wed, Jan 08, 2014 at 01:17:49AM +0100, Francesco Pretto wrote:
-> >> # Attach the submodule HEAD to <branch>.
-> >> # Also set ".git/config" 'submodule.<module>.branch' to <branch>
-> >> $ git submodule head -b <branch> --attach <module>
-> > [...]
-> > I also prefer 'checkout' to 'head', because 'checkout'
-> > already exists in non-submodule Git for switching between local
-> > branches.
->=20
-> I can agree with similarity to other git commands, but 'checkout'
-> does not give me the idea of something that writes to ".git/config"
-> or ".gitmodules".
-
-Neither does 'head'.  We have precedence in 'git submodule add' for
-embracing and extending a core git command with additional .gitmodules
-manipulation.  I think it's easier to pick up the submodule jargon
-when we add submodule-specific side-effects to submodule-specific
-commands named after their core analogs than it would be if we pick
-unique names for the submodule-specific commands.
-
-> >> # Unset  ".git/config" 'submodule.<module>.branch'
-> >> # Also attach or detach the HEAD according to what is in ".gitmodules":
-> >> # with Trevor's patch 'submodule.<module>.branch' set means attached,
-> >> # unset means detached
-> >> $ git submodule head --reset <module>
-> >
-> > To me this reads =E2=80=9Calways detach HEAD=E2=80=9D (because it unsets
-> > submodule.<name>.branch, and submodule.<name>.branch unset means
-> > detached).
->=20
-> I disagree: this would remove only the value in ".git/config". If the
-> value is till present in ".gitmodules", as I wrote above, the behavior
-> of what is in the index should be respected as for the other
-> properties. Also it gives a nice meaning to a switch like --reset :
-> return to how it was before.
-
-Ah, that makes more sense.  I had confused .git/config with
-=E2=80=9C.gitmodules and .git/config=E2=80=9D.
-
-> >> NOTE: feature branch part!
-> >>
-> >> # Set ".gitmodules" 'submodule.<module>.branch' to <branch>
-> >> $ git submodule head -b <branch> --attach --index <module>
-> >>
-> >> # Unset ".gitmodules" 'submodule.<module>.branch'
-> >> $ git submodule head --reset --index <module>
-> >> ---------------------------------------------------------------------
-> >
-> > These are just manipulating .gitmodules.  I think we also need
-> > per-superproject-branch configs under the superproject's .git/ for
-> > developer overrides.
->=20
-> I disagree: in my idea the --index switch is a maintainer only command
-> to modify the behavior of the developers and touch only indexed files
-> (.gitmodules, or create a new submodule branch). It expressly don't
-> touch .git/config.
-
-Something that just touches the config files is syntactic sugar, so I
-avoided a more detailed review and moved on to address what I saw as a
-more fundamental issue (preferred submodule local branches on a
-per-superproject-branch level).
-
-Here's a detailed workflow for the {my-feature, my-feature, master}
-example I roughed out before [5].
-
-  # create the subproject
-  mkdir subproject &&
-  (
-    cd subproject &&
-    git init &&
-    echo 'Hello, world' > README &&
-    git add README &&
-    git commit -m 'Subproject v1'
-  ) &&
-  # create the superproject
-  mkdir superproject
-  (
-    cd superproject &&
-    git init &&
-    git submodule add ../subproject submod &&
-    git config -f .gitmodules submodule.submod.update merge &&
-    git commit -am 'Superproject v1' &&
-    ( # 'submodule update' doesn't look in .gitmodules (yet [6]) for a
-      # default update mode.  Copy submodule.submod.update over to
-      # .git/config
-      git submodule init
-    )
-  ) &&
-  # start a feature branch on the superproject
-  (
-    cd superproject &&
-    #git checkout -b my-feature --recurse-submodules &&
-    ( # 'git submodule checkout --recurse-submodules' doesn't exist yet, so=
-=2E..
-      git checkout -b my-feature &&
-      git config -f .gitmodules submodule.submod.local-branch my-feature &&
-      cd submod &&
-      git checkout -b my-feature
-    ) &&
-    (
-      cd submod &&
-      echo 'Add the subproject side of this feature' > my-feature &&
-      git add my-feature &&
-      git commit -m 'Add my feature to the subproject'
-    ) &&
-    echo 'Add the superproject side of this feature' > my-feature &&
-    git add my-feature &&
-    git commit -m 'Add the feature to the superproject'
-  ) &&
-  # meanwhile, the subproject has been advancing
-  (
-    cd subproject &&
-    echo 'Goodbye, world' >> README &&
-    git commit -am 'Subproject v2'
-  ) &&
-  # we need to get that critical advance into the superproject quick!
-  (
-    cd superproject &&
-    # update the master branch
-    #git checkout --recurse-submodules master
-    ( # 'git checkout --recurse-submodules' doesn't exist yet [2,3].
-      # Even with that patch, 'git checkout' won't respect
-      # submodule.<name>.local-branch without further work.
-      git checkout master &&
-      cd submod &&
-      git checkout master  # don't pull in our my-feature work
-    )
-    git submodule update --remote &&
-    git commit -am 'Catch submod up with Subproject v2' &&
-    # update the my-feature branch
-    git checkout my-feature
-    ( # 'git checkout' doesn't mess with submodules
-      cd submod &&
-      git checkout my-feature
-    )
-    git submodule update --remote &&
-    git commit -am 'Catch submod up with Subproject v2' &&
-    # what does the history look like?
-    (
-      cd submod &&
-      git --no-pager log --graph --date-order --oneline --decorate --all
-      # *   3a22cef (HEAD, my-feature) Merge commit 'd53958b18277ce5bd6c734=
-e9597a69bb878b31e1' into my-feature
-      # |\ =20
-      # * | 8322dcc Add my feature to the subproject
-      # | * d53958b (origin/master, origin/HEAD, master) Subproject v2
-      # |/ =20
-      # * 9813010 Subproject v1
-    ) &&
-    git ls-tree master submod &&
-    # 160000 commit d53958b18277ce5bd6c734e9597a69bb878b31e1  submod
-    git ls-tree my-feature submod
-    # 160000 commit 3a22cef30db57f1b89251f3e434fa0bd0f1b99a2  submod
-  )
-  git --version
-  # git version 1.8.3.2
-
-The currently-ugly bits could be fixed with:
-
-* 'git submodule update' falling back on .gitmodules for
-  submodule.<name>.update [6].
-* 'git submodule checkout -b my-feature --recurse-submodules' should
-  checkout the submodule.<name>.local-branch configured for the
-  super-project's my-feature branch (but only if that wouldn't destroy
-  some current submodule information).  This would build on work in
-  Jens and Jonathans' branch [2,3].
-
-Cheers,
-Trevor
-
-[1]: http://article.gmane.org/gmane.comp.version-control.git/240127
-[2]: http://article.gmane.org/gmane.comp.version-control.git/240117
-[3]: http://thread.gmane.org/gmane.comp.version-control.git/239695
-[4]: http://article.gmane.org/gmane.comp.version-control.git/240178
-[5]: http://article.gmane.org/gmane.comp.version-control.git/240190
-[6]: http://article.gmane.org/gmane.comp.version-control.git/239246
-
---=20
-This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
-For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
-
---z9ECzHErBrwFF8sy
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (GNU/Linux)
-
-iQIcBAEBAgAGBQJSzMo6AAoJEKKfehoaNkbt/L8P/2wjEVx29pgLJTRyl9+O7q09
-Zik6WfKSsJRtSDEUe2TaKztRx2aFxY1ZW2XZWwVc28hTeJtQ9K8QU9wwCUju7vq5
-mPSmTihnoryDKSG/xOz/Z5XLa9IcZQqPcQ4KRdtkFI8qXZpKVTvFv4DWnr/XVEb7
-oxiqcj7ZFay/lPkstZU/1W0W08Rz+KmYrExcrBg1O0D8pGOkpIvyJGvAclj0TF0Y
-hVXjh76PrEY9ft8OLR8gL17VYZvpeiKclKGFFr2SdzNGfmhpU2h6aWD2g6vYGDl7
-/eGF0dmdLe3KbQ/Zk+Bgql5f9Fkva5kZuQ6H1IBqMV3bf/ErLBYqv5wmEp3ol7Vi
-7cXviO4H4o2haxmnJT8x9DOk5Xgckay3Ylrqz8tpram7WEQnB3JPwMEbI6Sr8CiC
-aZYiH77/W+FzKHKCNjkc9qH0hygNSHqLa6FvGguSVhsAJg97x4Bge9LC4tRWsHFJ
-1mgKVV2aOtYIRTGZjdgbpnD0qMiO6aan7wNJcuIIsEClFPCfEGlLNmQlgmjeHwGy
-Me23zfOLqP35HTNBYje/VwrGjkUALD0rEOfv2cYBmTNOX5lLGiwn1FGwVKbeAdvb
-ijwCn8KHZWDCjOnEuGITufD9a8g8mSKY/HdqxqVpG3kiVuf+lvD1XBQhDQFvgOFv
-CIN65g/TJGU86r1rC5j2
-=n7kG
------END PGP SIGNATURE-----
-
---z9ECzHErBrwFF8sy--
+diff --git a/refs.c b/refs.c
+index 3926136..b70b018 100644
+--- a/refs.c
++++ b/refs.c
+@@ -589,6 +589,8 @@ static void sort_ref_dir(struct ref_dir *dir)
+ 
+ /* Include broken references in a do_for_each_ref*() iteration: */
+ #define DO_FOR_EACH_INCLUDE_BROKEN 0x01
++/* Do not recurse into subdirs, just iterate at a single level. */
++#define DO_FOR_EACH_NO_RECURSE     0x02
+ 
+ /*
+  * Return true iff the reference described by entry can be resolved to
+@@ -661,7 +663,8 @@ static int do_one_ref(struct ref_entry *entry, void *cb_data)
+  * called for all references, including broken ones.
+  */
+ static int do_for_each_entry_in_dir(struct ref_dir *dir, int offset,
+-				    each_ref_entry_fn fn, void *cb_data)
++				    each_ref_entry_fn fn, void *cb_data,
++				    int flags)
+ {
+ 	int i;
+ 	assert(dir->sorted == dir->nr);
+@@ -669,9 +672,13 @@ static int do_for_each_entry_in_dir(struct ref_dir *dir, int offset,
+ 		struct ref_entry *entry = dir->entries[i];
+ 		int retval;
+ 		if (entry->flag & REF_DIR) {
+-			struct ref_dir *subdir = get_ref_dir(entry);
+-			sort_ref_dir(subdir);
+-			retval = do_for_each_entry_in_dir(subdir, 0, fn, cb_data);
++			if (!(flags & DO_FOR_EACH_NO_RECURSE)) {
++				struct ref_dir *subdir = get_ref_dir(entry);
++				sort_ref_dir(subdir);
++				retval = do_for_each_entry_in_dir(subdir, 0,
++								  fn, cb_data,
++								  flags);
++			}
+ 		} else {
+ 			retval = fn(entry, cb_data);
+ 		}
+@@ -691,7 +698,8 @@ static int do_for_each_entry_in_dir(struct ref_dir *dir, int offset,
+  */
+ static int do_for_each_entry_in_dirs(struct ref_dir *dir1,
+ 				     struct ref_dir *dir2,
+-				     each_ref_entry_fn fn, void *cb_data)
++				     each_ref_entry_fn fn, void *cb_data,
++				     int flags)
+ {
+ 	int retval;
+ 	int i1 = 0, i2 = 0;
+@@ -702,10 +710,12 @@ static int do_for_each_entry_in_dirs(struct ref_dir *dir1,
+ 		struct ref_entry *e1, *e2;
+ 		int cmp;
+ 		if (i1 == dir1->nr) {
+-			return do_for_each_entry_in_dir(dir2, i2, fn, cb_data);
++			return do_for_each_entry_in_dir(dir2, i2, fn, cb_data,
++							flags);
+ 		}
+ 		if (i2 == dir2->nr) {
+-			return do_for_each_entry_in_dir(dir1, i1, fn, cb_data);
++			return do_for_each_entry_in_dir(dir1, i1, fn, cb_data,
++							flags);
+ 		}
+ 		e1 = dir1->entries[i1];
+ 		e2 = dir2->entries[i2];
+@@ -713,12 +723,15 @@ static int do_for_each_entry_in_dirs(struct ref_dir *dir1,
+ 		if (cmp == 0) {
+ 			if ((e1->flag & REF_DIR) && (e2->flag & REF_DIR)) {
+ 				/* Both are directories; descend them in parallel. */
+-				struct ref_dir *subdir1 = get_ref_dir(e1);
+-				struct ref_dir *subdir2 = get_ref_dir(e2);
+-				sort_ref_dir(subdir1);
+-				sort_ref_dir(subdir2);
+-				retval = do_for_each_entry_in_dirs(
+-						subdir1, subdir2, fn, cb_data);
++				if (!(flags & DO_FOR_EACH_NO_RECURSE)) {
++					struct ref_dir *subdir1 = get_ref_dir(e1);
++					struct ref_dir *subdir2 = get_ref_dir(e2);
++					sort_ref_dir(subdir1);
++					sort_ref_dir(subdir2);
++					retval = do_for_each_entry_in_dirs(
++							subdir1, subdir2,
++							fn, cb_data, flags);
++				}
+ 				i1++;
+ 				i2++;
+ 			} else if (!(e1->flag & REF_DIR) && !(e2->flag & REF_DIR)) {
+@@ -743,7 +756,7 @@ static int do_for_each_entry_in_dirs(struct ref_dir *dir1,
+ 				struct ref_dir *subdir = get_ref_dir(e);
+ 				sort_ref_dir(subdir);
+ 				retval = do_for_each_entry_in_dir(
+-						subdir, 0, fn, cb_data);
++						subdir, 0, fn, cb_data, flags);
+ 			} else {
+ 				retval = fn(e, cb_data);
+ 			}
+@@ -817,7 +830,7 @@ static int is_refname_available(const char *refname, const char *oldrefname,
+ 	data.conflicting_refname = NULL;
+ 
+ 	sort_ref_dir(dir);
+-	if (do_for_each_entry_in_dir(dir, 0, name_conflict_fn, &data)) {
++	if (do_for_each_entry_in_dir(dir, 0, name_conflict_fn, &data, 0)) {
+ 		error("'%s' exists; cannot create '%s'",
+ 		      data.conflicting_refname, refname);
+ 		return 0;
+@@ -1651,7 +1664,8 @@ void warn_dangling_symref(FILE *fp, const char *msg_fmt, const char *refname)
+  * 0.
+  */
+ static int do_for_each_entry(struct ref_cache *refs, const char *base,
+-			     each_ref_entry_fn fn, void *cb_data)
++			     each_ref_entry_fn fn, void *cb_data,
++			     int flags)
+ {
+ 	struct packed_ref_cache *packed_ref_cache;
+ 	struct ref_dir *loose_dir;
+@@ -1684,15 +1698,15 @@ static int do_for_each_entry(struct ref_cache *refs, const char *base,
+ 		sort_ref_dir(packed_dir);
+ 		sort_ref_dir(loose_dir);
+ 		retval = do_for_each_entry_in_dirs(
+-				packed_dir, loose_dir, fn, cb_data);
++				packed_dir, loose_dir, fn, cb_data, flags);
+ 	} else if (packed_dir) {
+ 		sort_ref_dir(packed_dir);
+ 		retval = do_for_each_entry_in_dir(
+-				packed_dir, 0, fn, cb_data);
++				packed_dir, 0, fn, cb_data, flags);
+ 	} else if (loose_dir) {
+ 		sort_ref_dir(loose_dir);
+ 		retval = do_for_each_entry_in_dir(
+-				loose_dir, 0, fn, cb_data);
++				loose_dir, 0, fn, cb_data, flags);
+ 	}
+ 
+ 	release_packed_ref_cache(packed_ref_cache);
+@@ -1718,7 +1732,7 @@ static int do_for_each_ref(struct ref_cache *refs, const char *base,
+ 	data.fn = fn;
+ 	data.cb_data = cb_data;
+ 
+-	return do_for_each_entry(refs, base, do_one_ref, &data);
++	return do_for_each_entry(refs, base, do_one_ref, &data, flags);
+ }
+ 
+ static int do_head_ref(const char *submodule, each_ref_fn fn, void *cb_data)
+@@ -2200,7 +2214,7 @@ int commit_packed_refs(void)
+ 
+ 	do_for_each_entry_in_dir(get_packed_ref_dir(packed_ref_cache),
+ 				 0, write_packed_entry_fn,
+-				 &packed_ref_cache->lock->fd);
++				 &packed_ref_cache->lock->fd, 0);
+ 	if (commit_lock_file(packed_ref_cache->lock))
+ 		error = -1;
+ 	packed_ref_cache->lock = NULL;
+@@ -2345,7 +2359,7 @@ int pack_refs(unsigned int flags)
+ 	cbdata.packed_refs = get_packed_refs(&ref_cache);
+ 
+ 	do_for_each_entry_in_dir(get_loose_refs(&ref_cache), 0,
+-				 pack_if_possible_fn, &cbdata);
++				 pack_if_possible_fn, &cbdata, 0);
+ 
+ 	if (commit_packed_refs())
+ 		die_errno("unable to overwrite old ref-pack file");
+@@ -2447,7 +2461,8 @@ static int repack_without_refs(const char **refnames, int n)
+ 	}
+ 
+ 	/* Remove any other accumulated cruft */
+-	do_for_each_entry_in_dir(packed, 0, curate_packed_ref_fn, &refs_to_delete);
++	do_for_each_entry_in_dir(packed, 0, curate_packed_ref_fn,
++				 &refs_to_delete, 0);
+ 	for_each_string_list_item(ref_to_delete, &refs_to_delete) {
+ 		if (remove_entry(packed, ref_to_delete->string) == -1)
+ 			die("internal error");
+-- 
+1.8.5.2.500.g8060133
