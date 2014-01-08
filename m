@@ -1,89 +1,84 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] merge: make merge state available to prepare-commit-msg
- hook
-Date: Wed, 8 Jan 2014 14:01:19 -0800
-Message-ID: <20140108220119.GN3881@google.com>
-References: <6B177FFA-1797-45FE-9EF1-2C9E6EE8A234@yaauie.com>
- <DA9E6645-82DC-4714-845F-423726F96A40@yaauie.com>
- <vpqr48ip7bm.fsf@anie.imag.fr>
- <B19C65C1-C2D9-486F-AEA7-1497A3B5C5B4@yaauie.com>
- <vpqtxdenoug.fsf@anie.imag.fr>
+From: Francesco Pretto <ceztko@gmail.com>
+Subject: Re: Re: [RFC v2] submodule: Respect requested branch on all clones
+Date: Thu, 9 Jan 2014 00:07:56 +0100
+Message-ID: <CALas-iheQ4Rfxvty5guEieVwa8SffRnhRdHkNXUKwmuHRXD2Xg@mail.gmail.com>
+References: <20140106003314.GL3156@odin.tremily.us> <20140106011255.GM3156@odin.tremily.us>
+ <20140106160202.GE27265@t2784.greatnet.de> <CALas-ijXQFcUHWk-jJrLifqsMHAKo6NNKya+jR6RJGGDXY76hg@mail.gmail.com>
+ <CALas-ijNgaTQr77DZw3acypgaJHpDFVnGdq97ECM4zu+CPma0w@mail.gmail.com>
+ <xmqqd2k3ejfr.fsf@gitster.dls.corp.google.com> <CALas-ihPmJSf9eH0P7Vf28pB4zN_dsa_2=fe+_moZgiP0C3UTA@mail.gmail.com>
+ <20140107194503.GA26583@odin.tremily.us> <20140107223858.GB10782@sandbox-ub>
+ <CALas-ihk6cVfosQ+Ov4QKUcfzvbXrYSonQvsN8Ay1+GTq_Ae-w@mail.gmail.com> <20140108010504.GE26583@odin.tremily.us>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ryan Biesemeyer <ryan@yaauie.com>, git@vger.kernel.org,
+Content-Type: text/plain; charset=UTF-8
+Cc: Heiko Voigt <hvoigt@hvoigt.net>,
 	Junio C Hamano <gitster@pobox.com>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	Jeff King <peff@peff.net>,
-	=?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Jan 08 23:01:47 2014
+	Git <git@vger.kernel.org>, Jens Lehmann <Jens.Lehmann@web.de>
+To: "W. Trevor King" <wking@tremily.us>
+X-From: git-owner@vger.kernel.org Thu Jan 09 00:08:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W11C6-0000nt-0l
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Jan 2014 23:01:46 +0100
+	id 1W12EX-0005qR-OD
+	for gcvg-git-2@plane.gmane.org; Thu, 09 Jan 2014 00:08:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932148AbaAHWBn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Jan 2014 17:01:43 -0500
-Received: from mail-qa0-f52.google.com ([209.85.216.52]:44149 "EHLO
-	mail-qa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932133AbaAHWBl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Jan 2014 17:01:41 -0500
-Received: by mail-qa0-f52.google.com with SMTP id j15so1738562qaq.39
-        for <git@vger.kernel.org>; Wed, 08 Jan 2014 14:01:41 -0800 (PST)
+	id S1757348AbaAHXIS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Jan 2014 18:08:18 -0500
+Received: from mail-ob0-f169.google.com ([209.85.214.169]:32936 "EHLO
+	mail-ob0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757109AbaAHXIR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Jan 2014 18:08:17 -0500
+Received: by mail-ob0-f169.google.com with SMTP id wm4so2497234obc.0
+        for <git@vger.kernel.org>; Wed, 08 Jan 2014 15:08:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=W5SvW8WOOcAd+H+yPdNTVW/ANpOUj22QYOUzH3ftt9s=;
-        b=xM1b4xCtayZyjrKWoe83vQgDAu3a107kUXvpDfXQbDkzRNGITbJsbkYx41JX9faVOv
-         Lg48Wdmd179kS3fQbRm2WM5OtLGmzqFZ11GC/CF0Ma/LDgajT3DkOiGCto///olX3xtt
-         v88/ecqAMW6s5RoJe8kSN0Q7K9nucdqaJzPUh6xv1dVNgE47VDBCmUxG9X1J6YCb9s3Z
-         9SEH25gKFHYup60oMpRXwFyo30+yx7aWW0Av7QkXbR6afYqdI7e6ucmrP4LJSVNsm5VB
-         MduHtu4xzfiQ0IwVfcWoZ2luCzydrQDffbnCJOiNuV5you3lqyIdZjg+dEyWos2cvR2K
-         pefw==
-X-Received: by 10.49.39.165 with SMTP id q5mr217310031qek.48.1389218500956;
-        Wed, 08 Jan 2014 14:01:40 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id 8sm3144685qas.17.2014.01.08.14.01.31
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 08 Jan 2014 14:01:40 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <vpqtxdenoug.fsf@anie.imag.fr>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=itGxtV/2TkTjARhq25zVw7YCsTelCV+ZqnJgkZI4Vq8=;
+        b=zEMnvg5M791RlFyTDTTCA8hyOJLWbneLa4d55hV+3FCuyEU6djF7GSqLfDM3Vzlg9L
+         4BX7ABsU4Mfur12ywrY5oYSMTOHdWb2QWGnlseSVNNGUANnJ/8UL2j3lFv0oEG9u1kgw
+         E43/9+mgTrPumB32JRjX4UhFQZi28my8MAGNbK+jQhrpByruaYobwPtsH9LVtRV+ZKPq
+         CKS8HeYA8bKskxuL5gPrpVQei3XBjBn1CK7O3U0dNZ0HI8AzE0xX0EpZE9dlIqqw6JQs
+         2To+VYnYST5WbI/wtBidMDQfmEW1zZIk6mstCWswmE7iMRZZGlCUBJk29ATvR1XI1aSS
+         JxiA==
+X-Received: by 10.182.48.130 with SMTP id l2mr13490064obn.44.1389222496589;
+ Wed, 08 Jan 2014 15:08:16 -0800 (PST)
+Received: by 10.76.80.165 with HTTP; Wed, 8 Jan 2014 15:07:56 -0800 (PST)
+In-Reply-To: <20140108010504.GE26583@odin.tremily.us>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240228>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240229>
 
-Matthieu Moy wrote:
+2014/1/8 W. Trevor King <wking@tremily.us>:
+> To elaborate the idea I sketched out here [2], say
+> you want:
+>
+>   Superproject branch  Submodule branch  Upstream branch
+>   ===================  ================  ===============
+>   master               master            master
+>   super-feature        master            master
+>   my-feature           my-feature        master
+>   other-feature        other-feature     other-feature
+>
+> That's only going to work with per-superproject-branch configs for
+> both the local and remote branches.  Using the same name for both
+> local and remote branches does not work.
+>
 
-> Jonathan's answer is an option. Another one is
-[...]
-> So if the cleanup goes wrong, one can notice.
+After long thoughts, I think your idea about a local branch with a
+differently named remote branch looks interesting but I would be
+extremely cautious to add a ' submodule.<name>.local-branch' now. Do
+we have a similar mechanism on regular repository clones? We can clone
+and switch to a branch other than "master" by default, but can we also
+have a different remote by default? If we don't have it, we shouldn't
+add it first on submodules, as there's the chance the feature never
+get coupled on  the regular clones.
 
-test_when_finished also makes the test fail if the cleanup failed.
+Also, I think you fear too much that this can't be added also later.
 
-Another common strategy is
-
-	test_expect_success 'my exciting test' '
-		# this test will rely on these files being absent
-		rm -f a b c etc &&
-
-		... rest of the test goes here ...
-	'
-
-which can be a handy way for an especially picky test to protect
-itself (for example with 'git clean -fdx') regardless of the state
-other test assertions create for it.
-
-This particular example (merge --abort) seems like a good use for
-test_when_finished because it is about a specific test having made a
-mess and needing to clean up after itself to restore sanity.
-
-Hoping that clarifies,
-Jonathan
+I think you should pursue your initial proposal of "--branch means
+attached" to get it upstream first. It's alone, IMO, a great
+improvement on submodules.
