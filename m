@@ -1,235 +1,105 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v3 3/5] refs: teach for_each_ref a flag to avoid recursion
-Date: Wed, 08 Jan 2014 12:29:51 +0100
-Message-ID: <52CD36AF.2080705@alum.mit.edu>
-References: <20140107235631.GA10503@sigill.intra.peff.net> <20140107235850.GC10657@sigill.intra.peff.net> <20140108034733.GA17198@sigill.intra.peff.net>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH] t5537: fix incorrect expectation in test case 10
+Date: Wed,  8 Jan 2014 19:13:19 +0700
+Message-ID: <1389183199-6496-1-git-send-email-pclouds@gmail.com>
+References: <20140108112543.GA4419@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Brodie Rao <brodie@sf.io>,
-	git@vger.kernel.org,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Jan 08 12:37:08 2014
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 08 13:08:37 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W0rRa-0005z3-79
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Jan 2014 12:37:07 +0100
+	id 1W0rw4-00014z-0U
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Jan 2014 13:08:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755380AbaAHLhB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Jan 2014 06:37:01 -0500
-Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:43118 "EHLO
-	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754960AbaAHLg7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 8 Jan 2014 06:36:59 -0500
-X-Greylist: delayed 422 seconds by postgrey-1.27 at vger.kernel.org; Wed, 08 Jan 2014 06:36:59 EST
-X-AuditID: 12074411-b7f426d000005455-00-52cd36b5e78e
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id 1F.AB.21589.5B63DC25; Wed,  8 Jan 2014 06:29:57 -0500 (EST)
-Received: from [192.168.69.148] (p4FDD47EC.dip0.t-ipconnect.de [79.221.71.236])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s08BTqNK013495
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 8 Jan 2014 06:29:53 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20131103 Icedove/17.0.10
-In-Reply-To: <20140108034733.GA17198@sigill.intra.peff.net>
-X-Enigmail-Version: 1.6
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrNKsWRmVeSWpSXmKPExsUixO6iqLvV7GyQwYFdAhYHXj5lsei60s1k
-	0dB7hdmie8pbRosfLT3MDqweO2fdZfd41ruH0ePiJWWPZwdusnl83iQXwBrFbZOUWFIWnJme
-	p2+XwJ1x5P10loLvxhUzNhk3MJ7X7GLk5JAQMJH4ub6bBcIWk7hwbz1bFyMXh5DAZUaJ/bdn
-	s0A455gkDkyYxghSxSugLfH16Tx2EJtFQFViwaxtzCA2m4CuxKKeZiYQW1QgWGL15QcsEPWC
-	EidnPgGzRQRkJb4f3sgIMpRZYAOjxKk/98CGCgv4Sezd85kVYtsMRontF4+DJTgFrCUW7TgF
-	1M0BdJ+4RE9jEIjJLKAusX6eEEgFs4C8xPa3c5gnMArOQrJuFkLVLCRVCxiZVzHKJeaU5urm
-	JmbmFKcm6xYnJ+blpRbpmurlZpbopaaUbmKEBL7gDsYZJ+UOMQpwMCrx8DaonAkSYk0sK67M
-	PcQoycGkJMqbpXM2SIgvKT+lMiOxOCO+qDQntfgQowQHs5IIr54yUI43JbGyKrUoHyYlzcGi
-	JM7Lt0TdT0ggPbEkNTs1tSC1CCYrw8GhJMGbYgrUKFiUmp5akZaZU4KQZuLgBBnOJSVSnJqX
-	klqUWFqSEQ+K3/hiYASDpHiA9l4yAdlbXJCYCxSFaD3FqMsx78uHb4xCLHn5ealS4rylIDsE
-	QIoySvPgVsDS3CtGcaCPhXkngVTxAFMk3KRXQEuYgJaExp0CWVKSiJCSamCMTXHQdGFaauin
-	e8ducbRe30EVNt+vCoq6y8+qM/6/93b+m2I9x2sB+UqfQ9ZlTZ2bUdO41vzKy7Tj 
+	id S1755414AbaAHMId convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 8 Jan 2014 07:08:33 -0500
+Received: from mail-pd0-f170.google.com ([209.85.192.170]:65381 "EHLO
+	mail-pd0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755201AbaAHMIb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Jan 2014 07:08:31 -0500
+Received: by mail-pd0-f170.google.com with SMTP id g10so1714127pdj.1
+        for <git@vger.kernel.org>; Wed, 08 Jan 2014 04:08:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=+8A1XHc06vTVMEtujKi+E6ij9GY/6mFY4LwSA752yRg=;
+        b=cCXeAQlWFjPz/Z4oUAfuS9RBJ/yeR5ZKnKkldleVUmHz4yyg2uH+J8HNCM7IO+jcgv
+         hsfsq+abGh7hch7a9C0P1xkCiVU+czOVPSV1fyiugZAXWRF2kbfaw2H4zPNZg68VHhxo
+         GsjZ48fAu+b4VD2N522d+duRsFXExNUHfknrhLLJ0C1nftCymHxZ45rHQcSR04aNn8Y6
+         w9qSeqUfFFZUTRogNATj6X3E2SHYvuWm/jZ/K/TCw291zvE98G9jz9pIt1UfzMhtg5yY
+         J1+zIBNMf1DK38pfnMagLMDmBq6FeO8APnPtHITrjtmizQoTUKqkRvrprTTua8ZT9y96
+         Tvag==
+X-Received: by 10.68.203.197 with SMTP id ks5mr29805327pbc.14.1389182910851;
+        Wed, 08 Jan 2014 04:08:30 -0800 (PST)
+Received: from lanh ([115.73.249.143])
+        by mx.google.com with ESMTPSA id wp8sm1985984pbc.26.2014.01.08.04.08.07
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 08 Jan 2014 04:08:28 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Wed, 08 Jan 2014 19:13:21 +0700
+X-Mailer: git-send-email 1.8.5.2.240.g8478abd
+In-Reply-To: <20140108112543.GA4419@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240209>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240211>
 
-On 01/08/2014 04:47 AM, Jeff King wrote:
-> On Tue, Jan 07, 2014 at 06:58:50PM -0500, Jeff King wrote:
-> 
->> +			if (flags & DO_FOR_EACH_NO_RECURSE) {
->> +				struct ref_dir *subdir = get_ref_dir(entry);
->> +				sort_ref_dir(subdir);
->> +				retval = do_for_each_entry_in_dir(subdir, 0,
-> 
-> Obviously this is totally wrong and inverts the point of the flag. And
-> causes something like half of the test suite to fail.
-> 
-> Michael was nice enough to point it out to me off-list, but well, I have
-> to face the brown paper bag at some point. :) In my defense, it was a
-> last minute refactor before going to dinner. That is what I get for
-> rushing out the series.
-> 
-> Here's a fixed version of patch 3/5.
+Commit 48d25ca adds a new commit "7" to the repo that the next test cas=
+e
+in commit 1609488 clones from. But the next test case does not expect
+this commit. For these tests, it's the bottom that's important, not
+the top. Fix the expected commit list.
 
-v2 4/5 doesn't apply cleanly on top of v3 3/5.  So I'm basing my review
-on the branch you have at GitHub peff/git "jk/cat-file-warn-ambiguous";
-I hope it is the same.
+While at it, fix the default http port number to 5537. Otherwise when
+t5536 learns to test httpd, running test in parallel may fail.
 
-> -- >8 --
-> Subject: refs: teach for_each_ref a flag to avoid recursion
-> 
-> The normal for_each_ref traversal descends into
+References:
 
-You haven't changed any for_each_ref*() functions; you have only exposed
-the DO_FOR_EACH_NO_RECURSE option to the (static) functions
-for_each_entry*() and do_for_each_ref().  (This is part and parcel of
-your decision not to expose the new functionality in the refs API.)
-Please correct the line above.
+48d25ca fetch: add --update-shallow to accept... - 2013-12-05
+1609488 smart-http: support shallow fetch/clone - 2013-12-05
 
-> subdirectories, returning each ref it finds. However, in
-> some cases we may want to just iterate over the top-level of
-> a certain part of the tree.
-> 
-> The introduction of the "flags" option is a little
-> mysterious. We already have a "flags" option that gets stuck
-> in a callback struct and ends up interpreted in do_one_ref.
-> But the traversal itself does not currently have any flags,
-> and it needs to know about this new flag.
-> 
-> We _could_ introduce this as a completely separate flag
-> parameter. But instead, we simply put both flag types into a
-> single namespace, and make it available at both sites. This
-> is simple, and given that we do not have a proliferation of
-> flags (we have had exactly one until now), it is probably
-> sufficient.
-> 
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  refs.c | 61 ++++++++++++++++++++++++++++++++++++++-----------------------
->  1 file changed, 38 insertions(+), 23 deletions(-)
-> 
-> diff --git a/refs.c b/refs.c
-> index 3926136..b70b018 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -589,6 +589,8 @@ static void sort_ref_dir(struct ref_dir *dir)
->  
->  /* Include broken references in a do_for_each_ref*() iteration: */
->  #define DO_FOR_EACH_INCLUDE_BROKEN 0x01
-> +/* Do not recurse into subdirs, just iterate at a single level. */
-> +#define DO_FOR_EACH_NO_RECURSE     0x02
->  
->  /*
->   * Return true iff the reference described by entry can be resolved to
-> @@ -661,7 +663,8 @@ static int do_one_ref(struct ref_entry *entry, void *cb_data)
->   * called for all references, including broken ones.
->   */
->  static int do_for_each_entry_in_dir(struct ref_dir *dir, int offset,
-> -				    each_ref_entry_fn fn, void *cb_data)
-> +				    each_ref_entry_fn fn, void *cb_data,
-> +				    int flags)
->  {
->  	int i;
->  	assert(dir->sorted == dir->nr);
+Noticed-by: Jeff King <peff@peff.net>
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ I obviously made a mistake with patch reordering or something. And
+ embarassing because I did not run tests with GIT_TEST_HTTPD again
+ before submission.
 
-Please update the docstring for this function, which still says that it
-recurses without mentioning DO_FOR_EACH_NO_RECURSE.
+ t/t5537-fetch-shallow.sh | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-> [...]
-> @@ -817,7 +830,7 @@ static int is_refname_available(const char *refname, const char *oldrefname,
->  	data.conflicting_refname = NULL;
->  
->  	sort_ref_dir(dir);
-> -	if (do_for_each_entry_in_dir(dir, 0, name_conflict_fn, &data)) {
-> +	if (do_for_each_entry_in_dir(dir, 0, name_conflict_fn, &data, 0)) {
->  		error("'%s' exists; cannot create '%s'",
->  		      data.conflicting_refname, refname);
->  		return 0;
-> @@ -1651,7 +1664,8 @@ void warn_dangling_symref(FILE *fp, const char *msg_fmt, const char *refname)
->   * 0.
->   */
->  static int do_for_each_entry(struct ref_cache *refs, const char *base,
-> -			     each_ref_entry_fn fn, void *cb_data)
-> +			     each_ref_entry_fn fn, void *cb_data,
-> +			     int flags)
->  {
->  	struct packed_ref_cache *packed_ref_cache;
->  	struct ref_dir *loose_dir;
-
-A few lines after this, do_for_each_entry() calls
-prime_ref_dir(loose_dir) to ensure that all of the loose references that
-will be iterated over are read before the packed-refs file is checked.
-It seems to me that prime_ref_dir() should also get a flags parameter to
-prevent it reading more loose references than necessary, something like
-this:
-
-====================================================================
-diff --git a/refs.c b/refs.c
-index b70b018..b8b7354 100644
---- a/refs.c
-+++ b/refs.c
-@@ -772,13 +772,13 @@ static int do_for_each_entry_in_dirs(struct
-ref_dir *dir1,
-  * through all of the sub-directories. We do not even need to care about
-  * sorting, as traversal order does not matter to us.
-  */
--static void prime_ref_dir(struct ref_dir *dir)
-+static void prime_ref_dir(struct ref_dir *dir, int flags)
- {
- 	int i;
- 	for (i = 0; i < dir->nr; i++) {
- 		struct ref_entry *entry = dir->entries[i];
--		if (entry->flag & REF_DIR)
--			prime_ref_dir(get_ref_dir(entry));
-+		if (entry->flag & REF_DIR && !(flags & DO_FOR_EACH_NO_RECURSE))
-+			prime_ref_dir(get_ref_dir(entry), flags);
- 	}
- }
- /*
-@@ -1685,7 +1685,7 @@ static int do_for_each_entry(struct ref_cache
-*refs, const char *base,
- 		loose_dir = find_containing_dir(loose_dir, base, 0);
- 	}
- 	if (loose_dir)
--		prime_ref_dir(loose_dir);
-+		prime_ref_dir(loose_dir, flags);
-
- 	packed_ref_cache = get_packed_ref_cache(refs);
- 	acquire_packed_ref_cache(packed_ref_cache);
-
-====================================================================
-
-> [...]
-> @@ -1718,7 +1732,7 @@ static int do_for_each_ref(struct ref_cache *refs, const char *base,
->  	data.fn = fn;
->  	data.cb_data = cb_data;
->  
-> -	return do_for_each_entry(refs, base, do_one_ref, &data);
-> +	return do_for_each_entry(refs, base, do_one_ref, &data, flags);
->  }
->  
->  static int do_head_ref(const char *submodule, each_ref_fn fn, void *cb_data)
-
-This change makes the DO_FOR_EACH_NO_RECURSE option usable with
-do_for_each_ref() (even though it is never in fact used).  It should
-either be mentioned in the docstring or (if there is a reason not to
-allow it) explicitly prohibited.
-
-> [...]
-
-The rest looks fine to me.
-
-It would be possible to use your new flag to speed up
-is_refname_available(), but it would be a little bit of work and I doubt
-that is_refname_available() is ever a bottleneck.
-
-Michael
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+diff --git a/t/t5537-fetch-shallow.sh b/t/t5537-fetch-shallow.sh
+index 79ce472..b0fa738 100755
+--- a/t/t5537-fetch-shallow.sh
++++ b/t/t5537-fetch-shallow.sh
+@@ -178,7 +178,7 @@ if test -n "$NO_CURL" -o -z "$GIT_TEST_HTTPD"; then
+ 	test_done
+ fi
+=20
+-LIB_HTTPD_PORT=3D${LIB_HTTPD_PORT-'5536'}
++LIB_HTTPD_PORT=3D${LIB_HTTPD_PORT-'5537'}
+ . "$TEST_DIRECTORY"/lib-httpd.sh
+ start_httpd
+=20
+@@ -190,6 +190,7 @@ test_expect_success 'clone http repository' '
+ 	git fsck &&
+ 	git log --format=3D%s origin/master >actual &&
+ 	cat <<EOF >expect &&
++7
+ 6
+ 5
+ 4
+--=20
+1.8.5.2.240.g8478abd
