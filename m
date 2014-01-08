@@ -1,62 +1,63 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [RFC/PATCH 0/5] <branch>@{publish} shorthand
-Date: Wed, 8 Jan 2014 18:10:09 +0530
-Message-ID: <CALkWK0=akW-CwQC7hz4Jae5Y7Vtk282dtq_HsnQ=_SHU2iJhyQ@mail.gmail.com>
-References: <1389126588-3663-1-git-send-email-artagnon@gmail.com>
- <CALkWK0=g5-9r05vTkys8Tk7iv7PqPZJvMvkYsAOnN_F90Mtgxg@mail.gmail.com>
- <20140107204035.GA27932@sigill.intra.peff.net> <CALkWK0mGPhU-8vVg+xY-MGWNstxoXSU9MGQiNzyFN+-Q6Bw28A@mail.gmail.com>
- <20140107211645.GC28102@sigill.intra.peff.net> <CALkWK0=UkWEGhU6D8CQctdgTvZUUj276LSuNhSmRUMZ5mwZTeA@mail.gmail.com>
- <20140108093338.GA15659@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Jan 08 13:40:54 2014
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [PATCH 0/3] Generate scanf_fmts more simply
+Date: Wed,  8 Jan 2014 15:43:37 +0100
+Message-ID: <1389192220-13913-1-git-send-email-mhagger@alum.mit.edu>
+Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 08 15:44:21 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W0sRK-0000SW-Eh
-	for gcvg-git-2@plane.gmane.org; Wed, 08 Jan 2014 13:40:54 +0100
+	id 1W0uMm-0005C6-M7
+	for gcvg-git-2@plane.gmane.org; Wed, 08 Jan 2014 15:44:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756236AbaAHMkv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Jan 2014 07:40:51 -0500
-Received: from mail-ig0-f179.google.com ([209.85.213.179]:62832 "EHLO
-	mail-ig0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755773AbaAHMku (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Jan 2014 07:40:50 -0500
-Received: by mail-ig0-f179.google.com with SMTP id hk11so4466187igb.0
-        for <git@vger.kernel.org>; Wed, 08 Jan 2014 04:40:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=a/ANfhonn+aFYUbWAc3WWtC1xElfVTejCsiGSMfbUAU=;
-        b=qXzjrHSQtdLhsxULR1FqyxyxyvJMMiPEvH07NcRJ6vcs7PkwypZIHJ9n3ComBxj2Tv
-         D2ZptPPCNSwJ+u3TA8J21KjjgjC696lAyIAtnrN4VeOknFnyDz1UYUmSeF6/LDf5H57w
-         JcNzuDIsM43uraI+K68YcPdnbFNT0LZvXK2oH3PBnW/KVxbP0OkRn4XdYdyxLalPkJGq
-         xVYHKCdVHr5XI1+I19PudsvzunOh61RIHl2Fkb/5fHKd9+Py3IFWTxSLZlOOQH86OIFL
-         Milco6nkFhOHVWyYmSk1mhli5baFYw4/Dff9oRHMkbf+QMf2FrVq+QALpAGOjmM8AKZ3
-         0QVA==
-X-Received: by 10.42.24.210 with SMTP id x18mr69031293icb.38.1389184849369;
- Wed, 08 Jan 2014 04:40:49 -0800 (PST)
-Received: by 10.64.17.10 with HTTP; Wed, 8 Jan 2014 04:40:09 -0800 (PST)
-In-Reply-To: <20140108093338.GA15659@sigill.intra.peff.net>
+	id S1756849AbaAHOoR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Jan 2014 09:44:17 -0500
+Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:43232 "EHLO
+	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755850AbaAHOoP (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 8 Jan 2014 09:44:15 -0500
+X-AuditID: 12074412-b7fc96d0000023d5-80-52cd643efaec
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id 3F.BF.09173.E346DC25; Wed,  8 Jan 2014 09:44:14 -0500 (EST)
+Received: from michael.fritz.box (p4FDD47EC.dip0.t-ipconnect.de [79.221.71.236])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s08EhhdG022001
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+	Wed, 8 Jan 2014 09:44:13 -0500
+X-Mailer: git-send-email 1.8.5.2
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprFIsWRmVeSWpSXmKPExsUixO6iqGuXcjbIYN1pFYuuK91MFg29V5gt
+	bq+Yz+zA7PH3/Qcmj4uXlD0+b5ILYI7itklKLCkLzkzP07dL4M549ncfe8E35ooV0y4wNzDO
+	Ze5i5OSQEDCRaP7wmwnCFpO4cG89WxcjF4eQwGVGibMPZzBBOMeZJD6//cAKUsUmoCuxqKcZ
+	rENEQE1iYtshFhCbWcBBYvPnRkYQWxhoasf2q2BxFgFVicWzZoD18gq4SGw69RiolwNom4LE
+	6utCExi5FzAyrGKUS8wpzdXNTczMKU5N1i1OTszLSy3SNdPLzSzRS00p3cQI8b3QDsb1J+UO
+	MQpwMCrx8N5QOxMkxJpYVlyZe4hRkoNJSZRXP/pskBBfUn5KZUZicUZ8UWlOavEhRgkOZiUR
+	3ktxQDnelMTKqtSifJiUNAeLkjjvz8XqfkIC6YklqdmpqQWpRTBZGQ4OJQnesmSgRsGi1PTU
+	irTMnBKENBMHJ4jgAtnAA7ShA6SQt7ggMbc4Mx2i6BSjopQ4bx9IQgAkkVGaBzcAFqWvGMWB
+	/hHmnQNSxQOMcLjuV0CDmYAGh8adAhlckoiQkmpgtLjRO1EjbZ1bSubnyQEzwrWXbAtfF+DN
+	ZLnnnX7st3s163+nbPepfVOeyBL9b1lYaml3749ORWmVgqDJvM+6Djy33Pz6arB7mltQxvKF
+	7Gv9O452c+ZHLq/+cD567v0pj6PVG/YXHCwOv8/lW9uylOPKaXmZ/Yyb3F1YXs6eeeRqfNSW
+	I0dllFiKMxINtZiLihMB9PXXNK0CAAA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240213>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240214>
 
-Jeff King wrote:
-> There's a fair bit of refactoring involved. I took a stab at it and came
-> up with the series below. No docs or tests, and some of the refactoring
-> in remote.c feels a little weird. I can't help but feel more of the
-> logic from "git push" should be shared here.
->
-> But it at least works with my rudimentary examples. I'm hoping it will
-> make a good starting point for you to build on. Otherwise, I may get to
-> it eventually, but it's not a high priority for me right now.
+This is just a fun little thing that I noticed while poking around the
+code: the function gen_scanf_fmt() can be replaced with a simple call
+to snprintf().
 
-Thanks; I'll see what I can do about getting it to share code with 'git push'.
+Michael Haggerty (3):
+  shorten_unambiguous_ref(): introduce a new local variable
+  gen_scanf_fmt(): delete function and use snprintf() instead
+  shorten_unambiguous_ref(): tighten up pointer arithmetic
+
+ refs.c | 47 +++++++++++++++--------------------------------
+ 1 file changed, 15 insertions(+), 32 deletions(-)
+
+-- 
+1.8.5.2
