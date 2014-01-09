@@ -1,99 +1,77 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH mm/mv-file-to-no-such-dir-with-slash] mv: let 'git mv file no-such-dir/' error out on Windows, too
-Date: Thu, 09 Jan 2014 14:42:04 -0800
-Message-ID: <xmqq7ga8aibn.fsf@gitster.dls.corp.google.com>
-References: <1386059524-14442-1-git-send-email-Matthieu.Moy@imag.fr>
-	<52CD7DE8.6070101@kdbg.org>
+Subject: Re: Verifiable git archives?
+Date: Thu, 09 Jan 2014 14:46:44 -0800
+Message-ID: <xmqq38kwai3v.fsf@gitster.dls.corp.google.com>
+References: <CALCETrU88evB6VQrE8=8vrc+HYXAX8_Zx7TsYZp6YXeE4dZdvg@mail.gmail.com>
+	<xmqqsiswapav.fsf@gitster.dls.corp.google.com>
+	<CALCETrXTbvHQAWm2z13OwyHCmBZZNDSqyWCdiu6maHRp2mi-Pw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org,
-	Duy Nguyen <pclouds@gmail.com>
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Thu Jan 09 23:42:39 2014
+Cc: git@vger.kernel.org
+To: Andy Lutomirski <luto@amacapital.net>
+X-From: git-owner@vger.kernel.org Thu Jan 09 23:46:58 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W1OJC-0004yC-1s
-	for gcvg-git-2@plane.gmane.org; Thu, 09 Jan 2014 23:42:38 +0100
+	id 1W1ONI-0005QL-NJ
+	for gcvg-git-2@plane.gmane.org; Thu, 09 Jan 2014 23:46:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751741AbaAIWmM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Jan 2014 17:42:12 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58151 "EHLO
+	id S1755082AbaAIWqt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Jan 2014 17:46:49 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39931 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750882AbaAIWmK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Jan 2014 17:42:10 -0500
+	id S1750882AbaAIWqs (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Jan 2014 17:46:48 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CF46E6225D;
-	Thu,  9 Jan 2014 17:42:09 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E2BFD62388;
+	Thu,  9 Jan 2014 17:46:47 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=pFgGjh6E3BQ6GIbDSCYSYzVfmMs=; b=U4pJJq
-	//APUlcFEweentce5IvISvy8aEHLSy/uZpibLS+7qNxvp0dOGY7aBG0BiubeSk+l
-	IfnBYnoo+X0Z5wl20jQfy/xktWPqhi+443JuKVw7seSLRYhpdZUbXyCPLkCVjaXt
-	RfN13HNSA474vFttbyD279C3MDtkV+XiI9yhk=
+	:content-type; s=sasl; bh=JKZZxIa73MDUuO0HlA9lGC5jEtM=; b=jrNT0h
+	MS/z0eu59MBzMCwJXeb2p4wg2FI3E6VxEl8eE/Qt1aq8hoVuOUembUPDWJLuX4/L
+	GM2IV2liQG6JEFlzYN8+646UtkwEcH4OT/moy1g23S/XpdAUVafvQDgAezKL1IQ+
+	YsdFTMXf280Unn7rLRKEK1NKIKaN35/PN7RCg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=pQADg4I1O2U2WQjEQGdSgVFozn30IXti
-	vBM2X7xv0UHoWGzAAIATHglPrMLw0o8UzWu+5wpFPNBR08xeilNnjcqUUoZ6sN5Q
-	aLIJYO90t6RMz3IvnR6QEd7kRaIxhN0OAug/5MScyL3tmknStN1nuRvHpw/f9++O
-	Opob2tvReYY=
+	:content-type; q=dns; s=sasl; b=NDw5HEciEiHgTp7auQjWks6JDh7tG/1E
+	y1FN4aZu+TpMyGIBci7UiT58Em3VO6GaWQhRJ/EJLWHvMwAqDd7eyRvXx6iI34mM
+	1Gxo0Qws/EZJN64b6Bu/g3xy4LxfrvDjNhQyr0B38NaLyliC7nTrsWnLa6dpffbJ
+	WNN0LA/xidU=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AEF646225C;
-	Thu,  9 Jan 2014 17:42:09 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D3E6E62387;
+	Thu,  9 Jan 2014 17:46:47 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BF5FD62259;
-	Thu,  9 Jan 2014 17:42:08 -0500 (EST)
-In-Reply-To: <52CD7DE8.6070101@kdbg.org> (Johannes Sixt's message of "Wed, 08
-	Jan 2014 17:33:44 +0100")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3718162386;
+	Thu,  9 Jan 2014 17:46:47 -0500 (EST)
+In-Reply-To: <CALCETrXTbvHQAWm2z13OwyHCmBZZNDSqyWCdiu6maHRp2mi-Pw@mail.gmail.com>
+	(Andy Lutomirski's message of "Thu, 9 Jan 2014 12:51:22 -0800")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 45ABD790-797F-11E3-B7D0-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: EBA23AD6-797F-11E3-A388-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240281>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240282>
 
-Johannes Sixt <j6t@kdbg.org> writes:
+Andy Lutomirski <luto@amacapital.net> writes:
 
-> The previous commit c57f628 (mv: let 'git mv file no-such-dir/' error out)
-> relies on that rename("src", "dst/") fails if directory dst does not
-> exist (note the trailing slash). This does not work as expected on Windows:
-> This rename() call is successful. Insert an explicit check for this case.
+>> You only need the object name of the top-level tree.  After "untar"
+>> the archive into an empty directory, make it a new repository and
+>> "git add . && git write-tree"---the result should match the
+>> top-level tree the archive was supposed to contain.
+>
+> Hmm.  I didn't realize that there was enough metadata in the 'git
+> archive' output to reproduce the final tree.
 
-Could you care to explain "Successful how" a bit here?  Do we see
-no-such-dir mkdir'ed and then no-such-dir/file created?  Do we see
-file moved to a new file whose name is no-such-dir/?  I am guessing
-that it would be the latter, but if that is the case we would need
-at least an air-quote around "successful".
+We do record the commit object name in the extended header when
+writing a tar archive already, but you have to grab the commit
+object from somewhere in order to read the top-level tree object
+name, which we do not record.
 
-> This changes the error message from
->
->    $ git mv file no-such-dir/
->    fatal: renaming 'file' failed: Not a directory
->
-> to
->
->    $ git mv file no-such-dir/
->    fatal: destination directory does not exist, source=file, destination=no-such-dir/
->
-> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
-> ---
->  builtin/mv.c | 2 ++
->  1 file changed, 2 insertions(+)
->
-> diff --git a/builtin/mv.c b/builtin/mv.c
-> index 08fbc03..21c46d1 100644
-> --- a/builtin/mv.c
-> +++ b/builtin/mv.c
-> @@ -214,6 +214,8 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
->  			}
->  		} else if (string_list_has_string(&src_for_dst, dst))
->  			bad = _("multiple sources for the same target");
-> +		else if (is_dir_sep(dst[strlen(dst) - 1]))
-> +			bad = _("destination directory does not exist");
->  		else
->  			string_list_insert(&src_for_dst, dst);
+Also, if you used keyword substitution and such when creating an
+archive, then the filesystem entities resulting from expanding it
+would not match the original.
