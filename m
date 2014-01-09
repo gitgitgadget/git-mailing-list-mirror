@@ -1,192 +1,134 @@
-From: "W. Trevor King" <wking@tremily.us>
-Subject: [RFC v3 1/4] submodule: Add helpers for configurable local branches
-Date: Wed,  8 Jan 2014 22:17:52 -0800
-Message-ID: <684f061e58bd16e617f438be9d6ed7b8d913463b.1389247320.git.wking@tremily.us>
-References: <20140108040627.GD29954@odin.tremily.us>
- <cover.1389247320.git.wking@tremily.us>
-Cc: Francesco Pretto <ceztko@gmail.com>,
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [RFC v2] submodule: Respect requested branch on all clones
+Date: Thu, 09 Jan 2014 09:31:13 +0100
+Message-ID: <52CE5E51.4060507@web.de>
+References: <20140106160202.GE27265@t2784.greatnet.de> <CALas-ijXQFcUHWk-jJrLifqsMHAKo6NNKya+jR6RJGGDXY76hg@mail.gmail.com> <CALas-ijNgaTQr77DZw3acypgaJHpDFVnGdq97ECM4zu+CPma0w@mail.gmail.com> <xmqqd2k3ejfr.fsf@gitster.dls.corp.google.com> <CALas-ihPmJSf9eH0P7Vf28pB4zN_dsa_2=fe+_moZgiP0C3UTA@mail.gmail.com> <20140107194503.GA26583@odin.tremily.us> <20140107223858.GB10782@sandbox-ub> <CALas-ihk6cVfosQ+Ov4QKUcfzvbXrYSonQvsN8Ay1+GTq_Ae-w@mail.gmail.com> <20140108010504.GE26583@odin.tremily.us> <CALas-iheQ4Rfxvty5guEieVwa8SffRnhRdHkNXUKwmuHRXD2Xg@mail.gmail.com> <20140109000338.GM29954@odin.tremily.us> <CALas-igFQtG1qa2+grMAtZ9mDE-xGuXkDGwGvSXL8_FzPfXBLQ@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Heiko Voigt <hvoigt@hvoigt.net>,
 	Junio C Hamano <gitster@pobox.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Jonathan Nieder <jrnieder@gmail.com>,
+	Git <git@vger.kernel.org>, Jonathan Nieder <jrnieder@gmail.com>
+To: Francesco Pretto <ceztko@gmail.com>,
 	"W. Trevor King" <wking@tremily.us>
-To: Git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jan 09 07:19:03 2014
+X-From: git-owner@vger.kernel.org Thu Jan 09 09:31:27 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W18xJ-00061U-2C
-	for gcvg-git-2@plane.gmane.org; Thu, 09 Jan 2014 07:19:01 +0100
+	id 1W1B1S-0002vZ-5v
+	for gcvg-git-2@plane.gmane.org; Thu, 09 Jan 2014 09:31:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751367AbaAIGSt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Jan 2014 01:18:49 -0500
-Received: from qmta08.westchester.pa.mail.comcast.net ([76.96.62.80]:33731
-	"EHLO qmta08.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751040AbaAIGSU (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 9 Jan 2014 01:18:20 -0500
-Received: from omta16.westchester.pa.mail.comcast.net ([76.96.62.88])
-	by qmta08.westchester.pa.mail.comcast.net with comcast
-	id BiGy1n0011uE5Es58iJJUS; Thu, 09 Jan 2014 06:18:18 +0000
-Received: from odin.tremily.us ([24.18.63.50])
-	by omta16.westchester.pa.mail.comcast.net with comcast
-	id BiJH1n002152l3L3ciJHZ9; Thu, 09 Jan 2014 06:18:18 +0000
-Received: by odin.tremily.us (Postfix, from userid 1000)
-	id 93542EB6888; Wed,  8 Jan 2014 22:18:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
-	t=1389248294; bh=GtjMnW+gfsBTGueOhVM0ntsTJmBfnLraztV9wyLCaUo=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:In-Reply-To:
-	 References;
-	b=mzLe6SmI5O9Fd4++r1mqyI34TmzeK6Or7kdT6vkEGSw4tVK3hl8+gAA1Cwt5ZRnqq
-	 rypiKJw9YZOI+hG4fCPedATTU2jfuvrxRdx+fTYBY+ST4kRqdx1QpC4+IvGU8eAr4R
-	 oUMP+WIBHv+UbQyNJY8OpS86kJ9L0gCDPWJWe6Zg=
-X-Mailer: git-send-email 1.8.3.2
-In-Reply-To: <cover.1389247320.git.wking@tremily.us>
-In-Reply-To: <cover.1389247320.git.wking@tremily.us>
-References: <cover.1389247320.git.wking@tremily.us>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-	s=q20121106; t=1389248298;
-	bh=KabwnS0Ns4jrTFjsRbelQAsP88YzihBfQjZw1zNe4Vg=;
-	h=Received:Received:Received:From:To:Subject:Date:Message-Id;
-	b=Aq60e0jVb8Wxq9w8GweYA/Qhv+ll+MlOPWjSPEeMiDBhjDr1asWGoG1zl5T6zgUO6
-	 Ib67t+HlpThB8kxV1j7Gdsk6rqMZvDj5SYTHe8YpL6zT1UnraewieuhVlT+v6APlNT
-	 Gb6l/ZUIKdpiIyUAAQ/6NaOkipDHALbTqcP8uh0qwiGOB9kUbMzJ4zPtQoa2i/eJAo
-	 rw3UbOPY9CrJf8yfxYDwOZkLw+dws7crRCaEV1MjUqlmwqgcMq8X93Wi+EkvfTFej8
-	 dLiAr0yJnOChoieGjxIpjFQEXOU9qD+ifu58RRYW0FQXGLz2cFGOY26ZoZVmHe6KC3
-	 H1VXEtpsri06g==
+	id S1753984AbaAIIbX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Jan 2014 03:31:23 -0500
+Received: from mout.web.de ([212.227.15.3]:57308 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751508AbaAIIbV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Jan 2014 03:31:21 -0500
+Received: from [192.168.178.41] ([84.132.136.118]) by smtp.web.de (mrweb002)
+ with ESMTPA (Nemesis) id 0M6DjG-1VC4T732SY-00y8c1 for <git@vger.kernel.org>;
+ Thu, 09 Jan 2014 09:31:19 +0100
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.2.0
+In-Reply-To: <CALas-igFQtG1qa2+grMAtZ9mDE-xGuXkDGwGvSXL8_FzPfXBLQ@mail.gmail.com>
+X-Enigmail-Version: 1.6
+X-Provags-ID: V03:K0:heWiKIhaZajcuv2yHdwRob+1LoutK6TD5/FxyiYcmafnJjTpJON
+ 47pJ4bGo1+QtVrjocIbSWUfKQRAVZU8xHK2HOs/PbAjvzUM8/E5HZFJgtmgQHH09Gh3xGfE
+ QrkPR6vUGxnw0vHWfbRULAH5XqJoQqCBGs6xPrCUGxd0xmaQ98Z0k2v0iBUAcRdQcQT9W/m
+ i8fRB9A+qHab5gxEmHdWA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240251>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240252>
 
-From: "W. Trevor King" <wking@tremily.us>
+Am 09.01.2014 02:09, schrieb Francesco Pretto:
+> 2014/1/9 W. Trevor King <wking@tremily.us>:
+>>
+>> However, submodule.<name>.local-branch has nothing to do with remote
+>> repositories or tracking branches.
+> 
+> My bad: this means the feature is still not entirely clear to me.
+> 
+>>
+>>   [branch "my-feature"]
+>>         remote = origin
+>>         merge = refs/heads/my-feature
+>>         [submodule "submod"]
+>>             local-branch = "my-feature"
+>>
+>> and I don't think Git's config supports such nesting.
+>>
+> 
+> Aesthetically, It doesn't look very nice.
 
-There are three branches that submodule folks usually care about:
+And I'm not sure we even need that. What's wrong with having the
+branch setting in the .gitmodules file of the my-feature branch?
+The only problem I can imagine is accidentally merging that into
+a branch where that isn't set, but that could be solved by a merge
+helper for the .gitmodules file.
 
-1. The linked $sha1 in the superproject (set explicitly for every
-   superproject commit, and thus for every superproject branch).
-2. The remote-tracking submodule.<name>.branch that tracks a branch in
-   upstream submodule.<name>.url repository.
-3. The submodule's locally checked out branch, which we currently let
-   the developer setup by hand, which is integrated with one of the
-   other two branches by non-checkout update modes.
+>> I can resuscitate that if folks want, but Heiko felt that my initial
+>> consolidation didn't go far enough [2].  If it turns out that we're ok
+>> with the current level of consolidation, would you be ok with
+>> "non-checkout submodule.<name>.update" as the trigger [3]?
+> 
+> For me it was ok with what you did:
+> -------------------------------------------------
+> if "just_cloned" and "config_branch"
+> then
+>      !git reset --hard -q"
+> fi
+> -------------------------------------------------
+> 
+> So yes: at the first clone 'checkout' keeps attached HEAD, while
+> 'merge' and 'rebase' attach to the branch.
 
-Git is currently a bit weak on conveniently handling branch #3.  "Just
-use what the developer has setup" works well for many basic workflows,
-but falls short for:
+It have the impression that attaching the head to the given branch
+for merge and rebase might be the sensible thing to do, but it
+would be great to hear from users of merge and rebase if that
+would break anything for them in their current use cases for these
+settings.
 
-* Cloning-updates, where we currently always setup a detached HEAD.
-  This is easy to fix if you accept submodule.<name>.branch or the
-  branch pointed to by the cloned repository's HEAD as a guess, but
-  this conflates branch #2 and branch #3, which may confuse users.
+> If it's not the first clone, you should take no action (and your
+> original patch was ok about this).
 
-* Workflows where the preferred #3 branch depends on the superproject
-  branch.  For example, if the remote subproject has only a master
-  branch, but the local superproject needs to develop several
-  submodule feature branches simultaneously, you can have a situation
-  like this:
+I'm not sure this is the right thing to do, after all you
+configured git to follow that branch so I'd expect it to be
+updated later too, no? Otherwise you might end up with an old
+version of your branch while upstream is a zillion commits
+ahead.
 
-    Superproject branch  Submodule branch  Subproject branch
-    ===================  ================  =================
-    master               master            master
-    feature-1            feature-1         master
-    feature-2            feature-2         master
-    feature-3            feature-2         master
+>>  I think
+>> that adding a halfway step between the current status and full(ish)
+>> submodule.<name>.local-branch support is just going to confuse people
+> 
+> Well, for now you got some success in confusing me with this "local-branch" :)
+> 
+> At certain point  you may ask maintainers what are the accepted
+> features (because all these debates should be about getting, or not
+> getting, endorsement about something) and finalize a patch so people
+> can further review.
 
-In order to checkout the appropriate submodule branch for a given
-superproject branch, we need a way to specify the preferred submodule
-branch for a given superproject branch.  This commit adds two helper
-functions:
+First I'd like to see a real consensus about what exactly should
+happen when a branch is configured to be checked out (and if I
+missed such a summary in this thread, please point me to it ;-).
+And we should contrast that to the exact checkout and floating
+branch use cases.
 
-* get_current_branch, to determine which superproject branch you're
-  on, and
-* get_local_branch, to determine the preferred submodule branch for
-  that superproject branch.
+So what should happen on initial clone, later updates, updates
+where the local and the remote branch diverged, when superproject
+branches are merged (with and without conflicts), on a rebase in
+the superproject and so on.
 
-The lookup chain for the local-branch is:
+After that we can discuss about how to implement them (even though I
+believe we won't need a new submodule command at the end of this
+process, simply because if it isn't configurable we cannot teach git
+checkout and friends to do that automatically for us later).
 
-1. superproject.<superproject-branch>.local-branch in the submodule's
-   config (superproject/.git/modules/<submodule-name>/config).  This
-   is where the developer can store local per-superproject-branch
-   overrides (e.g. if they wanted to use submodule branch feature-1
-   with superproject branch feature-3).
-2. submodule.<submodule-name>.local-branch in the superproject's
-   config.  This is where the developer can store local
-   cross-superproject-branch overrides (e.g. if they wanted to use
-   submodule branch master for any superproject branch that didn't
-   have a per-superproject-branch override).
-3. submodule.<submodule-name>.local-branch in the superproject's
-   .gitmodules file.  Because the gitmodules file is stored in the
-   superproject's versioned tree, it is automatically
-   superproject-branch-specific.  For example:
-
-     $ git cat-file -p feature-1:.gitmodules
-     ...
-     [submodule "submod"]
-         ...
-         local-branch = feature-1
-     $ git cat-file -p feature-3:.gitmodules
-     ...
-     [submodule "submod"]
-         ...
-         local-branch = feature-2
-
-   this is where the project-wide defaults are setup and shared
-   between developers.
-4. The default local-branch is 'master'.
-
-The new get_local_branch function handles the first step in this
-chain.  The next two steps are already covered by the existing
-get_submodule_config.
----
- git-submodule.sh | 33 +++++++++++++++++++++++++++++++++
- 1 file changed, 33 insertions(+)
-
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 2677f2e..56fc3f1 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -220,6 +220,39 @@ get_submodule_config () {
- 	printf '%s' "${value:-$default}"
- }
- 
-+#
-+# Print a submodule's configured local branch name
-+#
-+# $1 = superproject branch
-+# $2 = default (from the superproject's .gitmodules)
-+#
-+# To be called from the submodule root directory.
-+#
-+get_local_branch ()
-+{
-+	superproject_branch="$1"
-+	default="${2:-master}"
-+	if test -z "${superproject_branch}"
-+	then
-+		value=""
-+	else
-+		value=$(git config superproject."$superproject_branch".local-branch)
-+	fi
-+	printf '%s' "${value:-$default}"
-+}
-+
-+#
-+# Print the currently checked out branch of the current repository
-+#
-+# $1 = default
-+#
-+get_current_branch ()
-+{
-+	default="$1"
-+	branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null) ||
-+	branch=""
-+	printf '%s' "${branch:-$default}"
-+}
- 
- #
- # Map submodule path to submodule name
--- 
-1.8.5.2.237.g01c62c6
+And from reading this discussion I believe we need another value for
+the ignore option which only ignores changes to the SHA-1 but not to
+work tree modifications of a submodule work tree relative to its HEAD
+(or make that two: another one which ignores untracked files too and
+only shows modification of tracked files). Otherwise users of the
+floating or attached model can easily miss submodule modifications.
