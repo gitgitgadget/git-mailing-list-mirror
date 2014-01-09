@@ -1,78 +1,108 @@
-From: Stefan Beller <stefanbeller@googlemail.com>
-Subject: Re: Verifiable git archives?
-Date: Thu, 09 Jan 2014 20:26:32 +0100
-Message-ID: <52CEF7E8.3060100@googlemail.com>
-References: <CALCETrU88evB6VQrE8=8vrc+HYXAX8_Zx7TsYZp6YXeE4dZdvg@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: Andy Lutomirski <luto@amacapital.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 09 20:26:48 2014
+From: John Keeping <john@keeping.me.uk>
+Subject: [PATCH] rebase: fix fork-point with zero arguments
+Date: Thu,  9 Jan 2014 19:47:34 +0000
+Message-ID: <65fed28c9346aa98a0d9edcbb0c2b483abc0189f.1389296828.git.john@keeping.me.uk>
+References: <20140109160603.GR7102@inner.h.apk.li>
+Cc: Andreas Krey <a.krey@gmx.de>, Junio@domain.unspecified,
+	C@domain.unspecified, "Hamano <gitster"@pobox.com,
+	John Keeping <john@keeping.me.uk>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 09 20:48:01 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W1LFa-0004uS-Uk
-	for gcvg-git-2@plane.gmane.org; Thu, 09 Jan 2014 20:26:43 +0100
+	id 1W1LaD-000379-8m
+	for gcvg-git-2@plane.gmane.org; Thu, 09 Jan 2014 20:48:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754878AbaAIT0k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Jan 2014 14:26:40 -0500
-Received: from mail-ea0-f173.google.com ([209.85.215.173]:46720 "EHLO
-	mail-ea0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751137AbaAIT0i (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Jan 2014 14:26:38 -0500
-Received: by mail-ea0-f173.google.com with SMTP id o10so1673726eaj.4
-        for <git@vger.kernel.org>; Thu, 09 Jan 2014 11:26:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:subject:references
-         :in-reply-to:content-type:content-transfer-encoding;
-        bh=HtBr/PDVKWQNYYNfqzhOl57AeBx5LeL32elZWtUx3h0=;
-        b=AnsFUxSyKxoh9BQwhVOgNm2lMxxTFv2bQtPMyOZAuBBzHW8ClgjwoQaY0aXJmAw9PC
-         /YBKFwLPpK69Kcq+HDW0a3MoohZPdJBaxBNSPNoXGc+0MQu+JbxZRp3CBwLyNWz61s6A
-         uqUNDKwP2N/buk646OwC20PTkLMAyOmT+Zar4cI5D/bv1h6Z5mSxgXB9UVJIgd4vLbIM
-         Ae5KXwrPmlAmIx0cKamuvt1fTk8iRzYUmZRAzltivKcHmvDIPu2w1CngeQAL/c9YCxv4
-         t60FswwPf5Vf43P0/q0vKjqjv4suLzc3FGZweGLjQ4jA9/IbXrsWX7wtNcb8K3zjBrhp
-         DJ2g==
-X-Received: by 10.14.149.139 with SMTP id x11mr4927055eej.35.1389295594646;
-        Thu, 09 Jan 2014 11:26:34 -0800 (PST)
-Received: from [192.168.1.7] (ip-109-91-109-128.unitymediagroup.de. [109.91.109.128])
-        by mx.google.com with ESMTPSA id m1sm8215208eeg.0.2014.01.09.11.26.33
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 09 Jan 2014 11:26:33 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.2.0
-In-Reply-To: <CALCETrU88evB6VQrE8=8vrc+HYXAX8_Zx7TsYZp6YXeE4dZdvg@mail.gmail.com>
-X-Enigmail-Version: 1.5.2
+	id S1757382AbaAITrw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Jan 2014 14:47:52 -0500
+Received: from coyote.aluminati.org ([72.9.247.114]:60070 "EHLO
+	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757354AbaAITrr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Jan 2014 14:47:47 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by coyote.aluminati.org (Postfix) with ESMTP id 1151F606509;
+	Thu,  9 Jan 2014 19:47:47 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -1
+X-Spam-Level: 
+X-Spam-Status: No, score=-1 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1] autolearn=disabled
+Received: from coyote.aluminati.org ([127.0.0.1])
+	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id TAigkmj2xy3Q; Thu,  9 Jan 2014 19:47:46 +0000 (GMT)
+Received: from river.lan (mink.aluminati.org [10.0.7.180])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by coyote.aluminati.org (Postfix) with ESMTPSA id C49986064CB;
+	Thu,  9 Jan 2014 19:47:40 +0000 (GMT)
+X-Mailer: git-send-email 1.8.5.226.g0d60d77
+In-Reply-To: <20140109160603.GR7102@inner.h.apk.li>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240267>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240268>
 
-On 09.01.2014 04:10, Andy Lutomirski wrote:
-> It's possible, in principle, to shove enough metadata into the output
-> of 'git archive' to allow anyone to verify (without cloning the repo)
-> to verify that the archive is a correct copy of a given commit.  Would
-> this be considered a useful feature?
-> 
+When no arguments are specified, $switch_to is empty so we end up
+passing the empty string to "git merge-base --fork-point", which causes
+an error.  git-rebase carries on at this point, but in fact we have
+failed to apply the fork-point operation.
 
-Do you know git bundles?
+It turns out that the test in t3400 that was meant to test this didn't
+actually need the fork-point behaviour, so enhance it to make sure that
+the fork-point is applied correctly.  The modified test fails without
+the change to git-rebase.sh in this patch.
 
+Reported-by: Andreas Krey <a.krey@gmx.de>
+Signed-off-by: John Keeping <john@keeping.me.uk>
+---
+ git-rebase.sh     |  3 ++-
+ t/t3400-rebase.sh | 12 ++++++++++--
+ 2 files changed, 12 insertions(+), 3 deletions(-)
 
-> Presumably there would be a 'git untar' command that would report
-> failure if it fails to verify the archive contents.
-> 
-> This could be as simple as including copies of the commit object and
-> all relevant tree objects and checking all of the hashes when
-> untarring.
-> 
-
-I thought the git archive rather had the purpose of creating plain
-archives not polluted with any gitish stuff.
-
-> (Even better: allow subsets of the repository to be archived and
-> verified as well.)
-
-Stefan
+diff --git a/git-rebase.sh b/git-rebase.sh
+index 7185dc8..8a3efa2 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -534,7 +534,8 @@ esac
+ 
+ if test "$fork_point" = t
+ then
+-	new_upstream=$(git merge-base --fork-point "$upstream_name" "$switch_to")
++	new_upstream=$(git merge-base --fork-point "$upstream_name" \
++			"${switch_to:-HEAD}")
+ 	if test -n "$new_upstream"
+ 	then
+ 		upstream=$new_upstream
+diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
+index 998503d..6d94b1f 100755
+--- a/t/t3400-rebase.sh
++++ b/t/t3400-rebase.sh
+@@ -135,11 +135,19 @@ test_expect_success 'fail when upstream arg is missing and not configured' '
+ '
+ 
+ test_expect_success 'default to common base in @{upstream}s reflog if no upstream arg' '
++	git checkout -b default-base master &&
+ 	git checkout -b default topic &&
+ 	git config branch.default.remote . &&
+-	git config branch.default.merge refs/heads/master &&
++	git config branch.default.merge refs/heads/default-base &&
+ 	git rebase &&
+-	git rev-parse --verify master >expect &&
++	git rev-parse --verify default-base >expect &&
++	git rev-parse default~1 >actual &&
++	test_cmp expect actual &&
++	git checkout default-base &&
++	git reset --hard HEAD^ &&
++	git checkout default &&
++	git rebase &&
++	git rev-parse --verify default-base >expect &&
+ 	git rev-parse default~1 >actual &&
+ 	test_cmp expect actual
+ '
+-- 
+1.8.5.226.g0d60d77
