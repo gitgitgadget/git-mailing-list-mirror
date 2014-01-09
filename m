@@ -1,140 +1,203 @@
-From: "W. Trevor King" <wking@tremily.us>
-Subject: Re: [RFC v2] submodule: Respect requested branch on all clones
-Date: Wed, 8 Jan 2014 18:22:22 -0800
-Message-ID: <20140109022222.GP29954@odin.tremily.us>
-References: <CALas-ijNgaTQr77DZw3acypgaJHpDFVnGdq97ECM4zu+CPma0w@mail.gmail.com>
- <xmqqd2k3ejfr.fsf@gitster.dls.corp.google.com>
- <CALas-ihPmJSf9eH0P7Vf28pB4zN_dsa_2=fe+_moZgiP0C3UTA@mail.gmail.com>
- <20140107194503.GA26583@odin.tremily.us>
- <20140107223858.GB10782@sandbox-ub>
- <CALas-ihk6cVfosQ+Ov4QKUcfzvbXrYSonQvsN8Ay1+GTq_Ae-w@mail.gmail.com>
- <20140108010504.GE26583@odin.tremily.us>
- <CALas-iheQ4Rfxvty5guEieVwa8SffRnhRdHkNXUKwmuHRXD2Xg@mail.gmail.com>
- <20140109000338.GM29954@odin.tremily.us>
- <CALas-igFQtG1qa2+grMAtZ9mDE-xGuXkDGwGvSXL8_FzPfXBLQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="R92lf0Oi2sxyK3LA"
-Cc: Heiko Voigt <hvoigt@hvoigt.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git <git@vger.kernel.org>, Jens Lehmann <Jens.Lehmann@web.de>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Francesco Pretto <ceztko@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 09 03:22:35 2014
+From: Tom Miller <jackerran@gmail.com>
+Subject: [PATCH] fetch: Print full url in header
+Date: Wed,  8 Jan 2014 20:39:18 -0600
+Message-ID: <1389235158-21902-1-git-send-email-jackerran@gmail.com>
+Cc: gitster@pobox.com, Tom Miller <jackerran@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 09 03:40:11 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W15GU-0004D4-6M
-	for gcvg-git-2@plane.gmane.org; Thu, 09 Jan 2014 03:22:34 +0100
+	id 1W15XT-0003Md-0d
+	for gcvg-git-2@plane.gmane.org; Thu, 09 Jan 2014 03:40:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751291AbaAICW2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Jan 2014 21:22:28 -0500
-Received: from qmta10.westchester.pa.mail.comcast.net ([76.96.62.17]:37955
-	"EHLO qmta10.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750986AbaAICW0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 8 Jan 2014 21:22:26 -0500
-Received: from omta03.westchester.pa.mail.comcast.net ([76.96.62.27])
-	by qmta10.westchester.pa.mail.comcast.net with comcast
-	id Be2g1n0040bG4ec5AeNRsP; Thu, 09 Jan 2014 02:22:25 +0000
-Received: from odin.tremily.us ([24.18.63.50])
-	by omta03.westchester.pa.mail.comcast.net with comcast
-	id BeNP1n00W152l3L3PeNQuq; Thu, 09 Jan 2014 02:22:25 +0000
-Received: by odin.tremily.us (Postfix, from userid 1000)
-	id F0435EB4FB7; Wed,  8 Jan 2014 18:22:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
-	t=1389234143; bh=QJlLmy1H2LIN/4/zw6Khssc3cC3siPe4Y7KW81QWkhk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=XwSyFu5QeKM/9RXmvTQk7buWa+kEeJMyS7ObMjZiIS2EwkcngC03ndaVyliYDmnMT
-	 G3Zj/1ikfLSl5TvyyHDJchJi3yu7ijslJq4QPkEYEimLj61kJWI5eP+TE1etspiyrB
-	 GXVm+/cN4DZdf9QZvwuO519Os7k1N+dNgQRonysY=
-Content-Disposition: inline
-In-Reply-To: <CALas-igFQtG1qa2+grMAtZ9mDE-xGuXkDGwGvSXL8_FzPfXBLQ@mail.gmail.com>
-OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
- url=http://tremily.us/pubkey.txt
-User-Agent: Mutt/1.5.22 (2013-10-16)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-	s=q20121106; t=1389234145;
-	bh=MtMcyRLgahlIwZ19lDwvsUFdZbbAJlSyBItUGuhlnCY=;
-	h=Received:Received:Received:Date:From:To:Subject:Message-ID:
-	 MIME-Version:Content-Type;
-	b=bWMZw5Yqt72E0yrCECwdjRM0BThyOEJOB8habHPaELBh0eBUXlhUVv5K9ezG3RGHs
-	 IX0UiptzRVXAXKMWCf/0d37nMWXZK7D0f/kdE3C1r1kJIU1RNqGZg+NK/qFSv+kTBp
-	 IQED2DAyZLFwJaqhsI3bJi4qOVYgn1x2QpCO5tzVuqrvpubKIpM9EUKTuJ+hnP1s58
-	 mPV4CmFkep7R1SNnHwRA34SPIJo+Xn90O+8R0KH+ovC32oZByv9r/iAKBj2gnowp/C
-	 TG44ir4337piZ6TdSDZa5bUQL3AyJhEV2SSMDPZe0qGmf3m7isQ2XP4tF37pPPvw5S
-	 INO0G0RONITcw==
+	id S1751273AbaAICjs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Jan 2014 21:39:48 -0500
+Received: from mail-yh0-f53.google.com ([209.85.213.53]:46926 "EHLO
+	mail-yh0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750952AbaAICjq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Jan 2014 21:39:46 -0500
+Received: by mail-yh0-f53.google.com with SMTP id b20so686041yha.26
+        for <git@vger.kernel.org>; Wed, 08 Jan 2014 18:39:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=kpQDVynwQ+CnCgvSVgbovDXX3Bmc1GKSzz5P2XCM5/4=;
+        b=f3JMJWa27UEKk0XDODWsgvYC0xPgIju+DY17rSf2Y5YhHq5gLACMBDyka1WY4EOMsY
+         dUsKWdihQll7RVLPEep2WwNj2C6q4Jw7i9kUbr8NX9SjQngYfGzoPhAlJzKbl8S9NuoL
+         OO6SpgJlbTNHyCRHivn4Fzzh07rhGH81s5aVvDCneJ2T5kQ6d/+rQEA3/cZkyOtisE5I
+         9G5mo0pSakrnwao5XoHBp7YkiZG5e4Xq8saDtCK9itoX9qTTD6W4+TtNK+0NZCctqyHa
+         FFYxN9UlR/H2NwXlGpDaTJ7SuAm8ZumSrI9Dvo8yX3S2VjanpR/n2J5fjuVz/2R3Lst4
+         b3Gg==
+X-Received: by 10.236.190.100 with SMTP id d64mr837589yhn.76.1389235184171;
+        Wed, 08 Jan 2014 18:39:44 -0800 (PST)
+Received: from localhost.localdomain (24-197-19-70.static.leds.al.charter.com. [24.197.19.70])
+        by mx.google.com with ESMTPSA id m68sm4164725yhj.22.2014.01.08.18.39.43
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Wed, 08 Jan 2014 18:39:43 -0800 (PST)
+X-Mailer: git-send-email 1.8.5.2.374.ga7e4b90
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240240>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240241>
 
+Do not remove "/" and ".git" from the end of the header url when
+fetching. This affects the output of "fetch" and "fetch --prune"
+making the header url more consistent with "remote --verbose".
 
---R92lf0Oi2sxyK3LA
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Add tests to verify that "fetch" and "fetch --prune" do not strip the
+trailing characters from the header url.
 
-On Thu, Jan 09, 2014 at 02:09:37AM +0100, Francesco Pretto wrote:
-> 2014/1/9 W. Trevor King <wking@tremily.us>:
-> >   [branch "my-feature"]
-> >         remote =3D origin
-> >         merge =3D refs/heads/my-feature
-> >         [submodule "submod"]
-> >             local-branch =3D "my-feature"
-> >
-> > and I don't think Git's config supports such nesting.
->=20
-> Aesthetically, It doesn't look very nice.
+Output before this patch:
 
-The INI syntax does not lend itself to easy nesting, but I'm pretty
-sure some mapping from (<superproject-branch>, <submodule-name>) to
-<submodule-local-branch-name> is what we need for submodule checkouts.
-I'm just not sure where local overides to the per-branch .gitmodules
-should live.  We could turn it around, and store:
+    $ git fetch remote-with-dot-git-and-slash
+    From https://github.com/git/git
+       a155a5f..5512ac5  maint      -> upstream/maint
 
-  [superproject "<superproject-branch>"]
-      local-branch =3D "<submodule-local-branch-name>"
+Output after this patch:
 
-in .git/modules/<submodule-name>/config, with the UI:
+    $ git fetch remote-with-dot-git-and-slash
+    From https://github.com/git/git.git/
+       a155a5f..5512ac5  maint      -> upstream/maint
 
-  $ cd submodule
-  $ git config superproject.<superproject-branch>.local-branch =3D <submodu=
-le-branch>
+Signed-off-by: Tom Miller <jackerran@gmail.com>
+---
 
-Not beautiful, but maybe a bit more palatable, and already supported
-by Git's current config parser.  That's enough that I can work up a
-patch that will hopefully clarify my position ;).
+This patch should be based on the tip of "next" because it is dependent
+on the code from "tm/fetch-prune".
 
-Cheers,
-Trevor
+Initially I thought I would stop anonymizing the header url as well.
+Then I ran across this commit.
 
---=20
-This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
-For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
+	> commit 47abd85ba06ed7209d1caa3e5ac7cc6b232bece4
+	> Author: Andreas Ericsson <ae@op5.se>
+	> Date:   Fri Apr 17 10:20:11 2009 +0200
+	>
+	>     fetch: Strip usernames from url's before storing them
+	>
+	>     When pulling from a remote, the full URL including username
+	>     is by default added to the commit message. Since it adds
+	>     very little value but could be used by malicious people to
+	>     glean valid usernames (with matching hostnames), we're far
+	>     better off just stripping the username before storing the
+	>     remote URL locally.
+	>
+	>     Note that this patch has no lasting visible effect when
+	>     "git pull" does not create a merge commit. It simply
+	>     alters what gets written to .git/FETCH_HEAD, which is used
+	>     by "git merge" to automagically create its messages.
+	>
+	>     Signed-off-by: Andreas Ericsson <ae@op5.se>
+	>     Signed-off-by: Junio C Hamano <gitster@pobox.com>
 
---R92lf0Oi2sxyK3LA
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
+After reading this and trying different things with the code. I believe
+it would make sense to continue to anonymize the url for output to the
+terminal. I found if someone is using HTTP basic authentication and has
+the username and password in the url. Then, one could unexpectedly
+compromise their credentials during a fetch. I do not believe that
+anyone should store their credentials in this way, but it is better safe
+than sorry.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (GNU/Linux)
+I also chose to continue to strip the trailing characters for the
+FETCH_HEAD file.  I wanted the input of the mailing list to see if we
+should also stop striping the trailing characters off of the url written
+to FETCH_HEAD? If so, I'll do it as a seperate patch.
 
-iQIcBAEBAgAGBQJSzgfaAAoJEKKfehoaNkbt0FgP/1VjhhE8Jn1jCk3HM4SX3CZc
-gLqLvBF+bDifX9MM2WPwDDGCY8jerzkUUZTFU+dDKZHxaeGv7ml1abKWWOjWY4ub
-QCo8EomJ5pozdEqaFrZTvhdbps3AyOdcs0bQGi9BulrbP+gN4OEFQFdMSaOOlByk
-7QXjNzgQW1SyrTCGQtFTTLcc3GFv4oHzQ7mn/tdJkUZPZ5RdHPHj7s7qnb/RuxAq
-vAyoS3YNvREskOwC++mjnUjfNAi2mDLdbN8M6OrTUE9YqHrzS5U6EI3bZWHvecmz
-h+HESxkg2sEP4GWk6IXhM6uzfFcdSpcCnpE75YXqutoh2rY4bYQpa1IBy2zv5NVR
-gxsiSupB2YLubhEgCT9N08WwunX+ewAQ/YL8uhQBs+OMZoF9XtR5/qrBAokIV7v7
-6ym3muT9rh31QwBdjSF9d1I0e4diGhWZdp9r6AA7vqDMbOvlPrqIzYp1SXdTcZXz
-G4zb8R2FsFMLsoszVmqMeU581Q0SZ7MMKQXw1ikgndgG2M+ttuHlT5GoqBwnFNBY
-SsnQ0ddr50pcrN3s/Y9Cg0zByiN5vflF2tareZUSx1XF9A6dDo2MECNRWdde4Hyl
-CnTU/u3wbtK+rk8ewz2+38TMUE3mkpwmU8LBq1sMZoMWsoJUXzOkBa2XBEHz0fE+
-KnZEFncYS2YGedpE0TqF
-=YEQ0
------END PGP SIGNATURE-----
+ builtin/fetch.c  | 15 +++------------
+ t/t5510-fetch.sh | 29 ++++++++++++++++++++++++-----
+ 2 files changed, 27 insertions(+), 17 deletions(-)
 
---R92lf0Oi2sxyK3LA--
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 025bc3e..01df749 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -664,8 +664,7 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
+ 					    *what ? what : "HEAD");
+ 			if (note.len) {
+ 				if (verbosity >= 0 && !shown_url) {
+-					fprintf(stderr, _("From %.*s\n"),
+-							url_len, url);
++					fprintf(stderr, _("From %s\n"), url);
+ 					shown_url = 1;
+ 				}
+ 				if (verbosity >= 0)
+@@ -723,7 +722,7 @@ static int fetch_refs(struct transport *transport, struct ref *ref_map)
+ static int prune_refs(struct refspec *refs, int ref_count, struct ref *ref_map,
+ 		const char *raw_url)
+ {
+-	int url_len, i, result = 0;
++	int result = 0;
+ 	struct ref *ref, *stale_refs = get_stale_heads(refs, ref_count, ref_map);
+ 	char *url;
+ 	const char *dangling_msg = dry_run
+@@ -735,19 +734,11 @@ static int prune_refs(struct refspec *refs, int ref_count, struct ref *ref_map,
+ 	else
+ 		url = xstrdup("foreign");
+ 
+-	url_len = strlen(url);
+-	for (i = url_len - 1; url[i] == '/' && 0 <= i; i--)
+-		;
+-
+-	url_len = i + 1;
+-	if (4 < i && !strncmp(".git", url + i - 3, 4))
+-		url_len = i - 3;
+-
+ 	for (ref = stale_refs; ref; ref = ref->next) {
+ 		if (!dry_run)
+ 			result |= delete_ref(ref->name, NULL, 0);
+ 		if (verbosity >= 0 && !shown_url) {
+-			fprintf(stderr, _("From %.*s\n"), url_len, url);
++			fprintf(stderr, _("From %s\n"), url);
+ 			shown_url = 1;
+ 		}
+ 		if (verbosity >= 0) {
+diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+index 12674ac..882bfa1 100755
+--- a/t/t5510-fetch.sh
++++ b/t/t5510-fetch.sh
+@@ -614,15 +614,34 @@ test_expect_success 'all boundary commits are excluded' '
+ 	test_bundle_object_count .git/objects/pack/pack-${pack##pack	}.pack 3
+ '
+ 
+-test_expect_success 'fetch --prune prints the remotes url' '
++test_expect_success 'fetch prints the remotes full url' '
++	git clone . fetch-url-repo.git &&
++	git clone --mirror fetch-url-repo.git/ fetch-full-url &&
++	(
++		cd fetch-url-repo.git &&
++		git branch hello
++	) &&
++	(
++		cd fetch-full-url &&
++		git fetch origin 2>&1 | head -n1 >../actual
++	) &&
++	echo "From ${D}/fetch-url-repo.git/" >expect &&
++	test_cmp expect actual
++'
++
++test_expect_success 'fetch --prune prints the remotes full url' '
+ 	git branch goodbye &&
+-	git clone . only-prunes &&
+-	git branch -D goodbye &&
++	git clone --mirror . fetch-prune-url-repo.git &&
++	git clone fetch-prune-url-repo.git/ fetch-prune-full-url &&
++	(
++		cd fetch-prune-url-repo.git &&
++		git branch -D goodbye
++	) &&
+ 	(
+-		cd only-prunes &&
++		cd fetch-prune-full-url &&
+ 		git fetch --prune origin 2>&1 | head -n1 >../actual
+ 	) &&
+-	echo "From ${D}/." >expect &&
++	echo "From ${D}/fetch-prune-url-repo.git/" >expect &&
+ 	test_cmp expect actual
+ '
+ 
+-- 
+1.8.5.2.374.ga7e4b90
