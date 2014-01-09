@@ -1,332 +1,203 @@
-From: "W. Trevor King" <wking@tremily.us>
-Subject: Re: [RFC v2] submodule: Respect requested branch on all clones
-Date: Thu, 9 Jan 2014 14:18:40 -0800
-Message-ID: <20140109221840.GW29954@odin.tremily.us>
-References: <CALas-ihk6cVfosQ+Ov4QKUcfzvbXrYSonQvsN8Ay1+GTq_Ae-w@mail.gmail.com>
- <20140108010504.GE26583@odin.tremily.us>
- <CALas-iheQ4Rfxvty5guEieVwa8SffRnhRdHkNXUKwmuHRXD2Xg@mail.gmail.com>
- <20140109000338.GM29954@odin.tremily.us>
- <CALas-igFQtG1qa2+grMAtZ9mDE-xGuXkDGwGvSXL8_FzPfXBLQ@mail.gmail.com>
- <52CE5E51.4060507@web.de>
- <20140109173218.GA8042@odin.tremily.us>
- <52CEF71B.5010201@web.de>
- <20140109195522.GT29954@odin.tremily.us>
- <52CF1764.40604@web.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 5/5] implement @{publish} shorthand
+Date: Thu, 09 Jan 2014 14:24:09 -0800
+Message-ID: <xmqqbnzkaj5i.fsf@gitster.dls.corp.google.com>
+References: <20140108093338.GA15659@sigill.intra.peff.net>
+	<20140108093716.GE15720@sigill.intra.peff.net>
+	<02F63E901C46405BAAEEFBC48870A7C2@PhilipOakley>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="B0+HW0pjZ+2jqF7e"
-Cc: Francesco Pretto <ceztko@gmail.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git <git@vger.kernel.org>, Jonathan Nieder <jrnieder@gmail.com>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Thu Jan 09 23:18:50 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: "Jeff King" <peff@peff.net>,
+	"Ramkumar Ramachandra" <artagnon@gmail.com>,
+	"Git List" <git@vger.kernel.org>
+To: "Philip Oakley" <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Thu Jan 09 23:24:21 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W1Nw9-0001Nc-LR
-	for gcvg-git-2@plane.gmane.org; Thu, 09 Jan 2014 23:18:50 +0100
+	id 1W1O1R-0004lh-RM
+	for gcvg-git-2@plane.gmane.org; Thu, 09 Jan 2014 23:24:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752072AbaAIWSq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Jan 2014 17:18:46 -0500
-Received: from qmta10.westchester.pa.mail.comcast.net ([76.96.62.17]:50415
-	"EHLO qmta10.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751501AbaAIWSo (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 9 Jan 2014 17:18:44 -0500
-Received: from omta20.westchester.pa.mail.comcast.net ([76.96.62.71])
-	by qmta10.westchester.pa.mail.comcast.net with comcast
-	id BtjP1n0051YDfWL5AyJj9S; Thu, 09 Jan 2014 22:18:43 +0000
-Received: from odin.tremily.us ([24.18.63.50])
-	by omta20.westchester.pa.mail.comcast.net with comcast
-	id ByJh1n00X152l3L3gyJiVv; Thu, 09 Jan 2014 22:18:43 +0000
-Received: by odin.tremily.us (Postfix, from userid 1000)
-	id E4CEEEBC9BD; Thu,  9 Jan 2014 14:18:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
-	t=1389305920; bh=VSj8z73ciQQo0SFLdZuccLzOHo+8SveDejSuzJvw7ps=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=XBzCdkkj1/+eSn+0oWDiSaiOasd1OSFqYxXkI+F24aT0LTT3nCeHUwOpm6alnHi7b
-	 vBNdNECfgjdwj0suU3gygHjr1/tMjmL9XIdt0pLu1cNlsXJ9beaZajgumTKRj55QeA
-	 TgpaxTInGVLizqZbni5U/V1QVgCmbDTkv/y/zCok=
-Content-Disposition: inline
-In-Reply-To: <52CF1764.40604@web.de>
-OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
- url=http://tremily.us/pubkey.txt
-User-Agent: Mutt/1.5.22 (2013-10-16)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-	s=q20121106; t=1389305923;
-	bh=1JpuRZ7d91lG212vP+jEy0ZzwnXX2xZCXCdn3TYckw4=;
-	h=Received:Received:Received:Date:From:To:Subject:Message-ID:
-	 MIME-Version:Content-Type;
-	b=lBJD52euQMcqg39NXZ8GZwsBXy566URRaCFXgzOrngYJD6rUv2tqEJNIAdcv06wjq
-	 kfDK9dP9u7yrdoqifXRT7MQLXct2IMpPcHXvD87LE1wW42UXvSpeJjetO2gEBaawiU
-	 9PVED1hMto64Q5aQLQARIDm5nEJ4Q0Dxwiwr926ligr8Dbz9DfDiK9wShwW/EjopLS
-	 0L7EU3p+w70Bg9c61bMfvbqjP36lwqpIjdliDF/qK1rUFqiJc3ptTPLY5m3Gh7tlD6
-	 S7rJce2I8u1eyb+PLLNt4pViiLpi2oQkypVxqlpccyTEdb58kcQHjQOcYFSdVc8/+Y
-	 i+ZguTVL2ZhGw==
+	id S1752512AbaAIWYO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Jan 2014 17:24:14 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48338 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751472AbaAIWYN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Jan 2014 17:24:13 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7911562DB0;
+	Thu,  9 Jan 2014 17:24:12 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=BYHxs4GxGcyn6sAHdxrWfVWtJkE=; b=WUVAmZ
+	CKygX3fzjlx2vz8xHCqy9oKcYSNPP1iWShUwOpXqSKxdMEI/f49TS4p2BfDQjJmr
+	CyCeAWf+6clIuACYwFxalw1X+JanCk2l7tYeHmnaptKJ4D/X1WVSsDrdsbWC+8Zj
+	GO6R50bZRX+KZdxVGpKXy/up4T8S/b+4sExQ0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=FJ1Y0/rqMI8dIy0INbD8dLIYbojL+0Qa
+	uKZ5PAEhdVkLi9Eh0uhL9U9StSv4GHv1xKdQtAQwmxozDa9urZGBrq+YXh04L1AB
+	DrsAP1tofg1bwFinU+rJSgXDViekTA9/df2RTygswp1lhWo6tkeBIpFJAYmddPHJ
+	/S9dcXsRrw0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 68C4262DAF;
+	Thu,  9 Jan 2014 17:24:12 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8427762DAC;
+	Thu,  9 Jan 2014 17:24:11 -0500 (EST)
+In-Reply-To: <02F63E901C46405BAAEEFBC48870A7C2@PhilipOakley> (Philip Oakley's
+	message of "Thu, 9 Jan 2014 08:39:44 -0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: C3956A20-797C-11E3-AFC9-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240279>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240280>
 
+"Philip Oakley" <philipoakley@iee.org> writes:
 
---B0+HW0pjZ+2jqF7e
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> From: "Jeff King" <peff@peff.net>
+> Sent: Wednesday, January 08, 2014 9:37 AM
+>> In a triangular workflow, you may have a distinct
+>> @{upstream} that you pull changes from, but publish by
+>> default (if you typed "git push") to a different remote (or
+>> a different branch on the remote).
+>
+> One of the broader issues is the lack of _documenation_ about what the
+> normal' naming convention is for the uspstream remote. Especially the
+> implicit convention used within our documentation (and workflow).
 
-On Thu, Jan 09, 2014 at 10:40:52PM +0100, Jens Lehmann wrote:
-> Am 09.01.2014 20:55, schrieb W. Trevor King:
-> > On Thu, Jan 09, 2014 at 08:23:07PM +0100, Jens Lehmann wrote:
-> >> Am 09.01.2014 18:32, schrieb W. Trevor King:
-> >>>  However, the local-branch setting needs to be both
-> >>> per-submodule and per-superproject-branch, so .git/config doesn't work
-> >>> very well.  I think it's better to use something like my
-> >>> .git/modules/<submodule-name>/config implementation [1] to set this
-> >>> override.
-> >>
-> >> Yes, the local branch should be set in the submodule's .git/config
-> >> to make operations done inside the submodule work seamlessly.
-> >=20
-> > Once you're inside the submodule my local-branch setting shouldn't
-> > matter, because it just connects superproject branches with submodule
-> > branches. The submodule's config is just a convenient out-of-tree
-> > place to store per-submodule overrides.
->=20
-> Now I get it, you want to be able to override a submodule branch for
-> every superproject branch. I'm not sure I'd add that in the first
-> iteration though, as it seems to add quite some complexity and I'm
-> not convinced yet users really need it (but I won't object when we
-> find real world use cases for that).
+Sure, let's start trying to come up with what the eventual
+documentation patch may want to say.
 
-Not much complexity in the code, it's all in the first patch of my v3
-series [1].  Adding a new override location doesn't seem that
-complicated to me, but I haven't been very successful at getting this
-idea across, so maybe it's weirder than I think ;).  Clearer
-explanations welcome ;).
+ * The "upstream" is the place the updates by the project-as-a-whole
+   (including others' work but also your previous work) come from.
+   It is what you use "git pull [--rebase]" to integrate the work on
+   your current branch with in order to keep it in sync with the
+   outside world.  Such a repository (often called "origin", and
+   "git clone" sets it up for you) may be called "upstream
+   repository".
 
-> >> And it isn't a "per-superproject-branch override" but a
-> >> "per-superproject-branch default" which can be overridden in
-> >> .git/config (except for 'update', but I intend to fix that).
-> >=20
-> > You're talking about .gitmodules vs. .git/config here, but for
-> > local-branch, I'm talking about a fallback chain like [1]:
-> >=20
-> > 1. superproject.<superproject-branch>.local-branch in the submodule's
-> >    config (superproject/.git/modules/=E2=89=A4submodule-name>/config).
-> > 2. submodule.<submodule-name>.local-branch in the superproject's
-> >    config (.git/config).
-> > 3. submodule.<submodule-name>.local-branch in the superproject's
-> >    .gitmodules file.
-> > 4. default to 'master'
-> >=20
-> > Only #1 is a new idea.
->=20
-> Thanks for the explanation, now I understand what you're aiming at.
+   Each of your branch would often have a single branch in that
+   repository (e.g. "master", which you locally use the
+   "origin/master" remote-tracking branch to keep track of its most
+   recently observed state).  In the simplest case, you clone from
+   your "origin", you get your own "master" branch, which is set to
+   integrate with the "master" branch at the "origin".  Their
+   "master" (i.e. what you view as "origin/master") would be the
+   "upstream branch" for your "master" branch.
 
-For additional clarity, my whole v3 series is not super long [2]=E2=80=A6 ;)
+   For a branch B, B@{upstream} names the remote-tracking branch
+   used for the upstream branch of B.  For example, to fork a new
+   branch 'foo' that has the same upstream branch as your branch
+   'master' does, "git checkout -t -b foo master@{upstream}" can be
+   used.
 
-> >>> On the other hand, maybe an in-tree .gitmodules is good enough,
-> >>> and folks who want a local override can just edit .gitmodules in
-> >>> their local branch?  I've never felt the need to override
-> >>> .gitmodules myself (for any setting), so feedback from someone
-> >>> who has would be useful.
-> >>
-> >> That way these changes would propagate to others working on the
-> >> same branch when pushing, which I believe is a feature.
-> >=20
-> > Sure.  Unless they don't want to propagate them, at which point
-> > they use an out-of-tree override masking the .gitmodules value.
-> > The question is, would folks want local overrides for local-branch
-> > (like they do for submodule.<name>.update), or not?  Since it's
-> > easy to do [1], I don't see the point of *not* supporting
-> > per-superproject-branch overrides.
->=20
-> Unless actual use cases are shown I'd vote for YAGNI here. A new
-> config option means considerable maintenance burden, no matter how
-> easy it is to implement in the first place.
+ * If you and others are using the same repository to advance the
+   project, the repository you cloned from, i.e. your "upstream
+   repository", is the same repository you push your changes back
+   to.  There is no other repository you have to worry about.
 
-Automatically checking out the preferred submodule branch for a given
-superproject branch already requires a new config option.  The
-per-superproject-branch out-of-tree override just renames it (from
-submodule.<submodule-name>.local-branch to
-superproject.<superproject-branch>.local-branch).  So different names
-depending on superproject-level or submodule-level config, but still
-the same option.  That doesn't sound like it's adding that much of a
-maintenance burden.
+   In such a "centralized" setting, it is likely that you may want
+   to update one of three possible branches at the upstream
+   repository when you push your changes back, if your local branch
+   is named differently from its upstream branch.  Either:
 
-On the other hand, I, personally, have no need for out-of-tree
-overrides for *any* submodule-related config, so I'm fine if we drop
-the submodule-level lookup location ;).
+   (1) You started working on a topic (e.g. your "fix-bug-2431"
+       branch) based on an integration branch (e.g. "master" at the
+       upstream, i.e. "origin/master" to you), and you want to
+       publish it so that others can take a look at it and help you
+       polish it while it is still not suitable for the integration
+       branch.  As long as you gave a name to that topic branch that
+       is descriptive and good enough for public consumption, you
+       would want it to go to the same name (e.g. you would want to
+       push to "fix-bug-2431" branch at the upstream repository from
+       your "fix-bug-2431" branch); or
 
-> > I'm all for rolling my 'git submodule checkout' into 'git checkout
-> > --recurse-submodules' [2].  It was just faster to mock up in shell
-> > while we decide how it should work.
->=20
-> Sure. As I said that's perfectly fine for testing this approach,
-> but we should do that right in "git checkout" and friends and not
-> add yet another submodule command.
+   (2) You are working on your copy (e.g. your "master" branch) of
+       an integration branch (e.g. "origin/master" to you), and you
+       want to update the "master" branch at the upstream
+       repository.
 
-The current C code looked fairly focused on detached HEAD sha1
-checkouts, which was so far away from what I think should happen that
-I didn't know where to start ;).  If we like the logic layed out in my
-v3 series, I'll take another look at the C series and see if I can
-come up with something.
+   (3) There is another possibilty, in which you are working on a
+       topic forked from an integration branch (as in (1)), and are
+       done with the topic and want to push the result out directly
+       to the integration branch.  Your "fix-bug-2431" branch may
+       have started from "origin/master" and "git pull [--rebase]"
+       on the branch would integrate with "master" branch at the
+       upstream repository, and your "git push" on the
+       "fix-bug-2431" branch will update that "master" branch at the
+       upstream repository, which makes it look symmetric.
 
-> >>>>> If it's not the first clone, you should take no action (and your
-> >>>>> original patch was ok about this).
-> >>>>
-> >>>> I'm not sure this is the right thing to do, after all you
-> >>>> configured git to follow that branch so I'd expect it to be
-> >>>> updated later too, no? Otherwise you might end up with an old
-> >>>> version of your branch while upstream is a zillion commits
-> >>>> ahead.
-> >>>
-> >>> Non-clone updates should not change the submodule's *local* branch
-> >>> *name*.  They should change the commit that that branch references,
-> >>> otherwise 'git submodule update' would be a no-op ;).
-> >>
-> >> Okay, I seem to have misunderstood that. But what happens when the
-> >> branch setting in .gitmodules changes, shouldn't that be updated?
-> >=20
-> > Not by 'git submodule update'.  If there are no out-of-tree overrides
-> > and the user calls 'git submodule checkout' with a new local-branch in
-> > .gitmodules, *that* should checkout a new submodule branch.
->=20
-> Hmm, but isn't "submodule sync" the command that copies changed
-> upstream config values (currently only the url) into the local config?
-> Then a subsequent "submodule update" could do the actual checkout.
+    The default in Git 2.0 will allow you to do (2) without any
+    further set-up, and you can start living in the future by
+    setting push.default to "simple".  Your current branch, when you
+    run "git push", and its upstream branch must share the same
+    name.
 
-'submodule update' currently only checks out detached HEADs with the
-'checkout' update mode.  I got rid of that in my v3 series, so now all
-'submodule update' does is integrate some branch (the gitlinked sha1
-or the upstream --remote).  It has nothing to do with changing the
-locally-checked-out branch.
+    If you want to do (1), you would want to set push.default to
+    "current".  Your current branch, when you run "git push" may not
+    have an explicit upstream branch (hence "git pull" without any
+    other argument may fail), but the work on your branch will be
+    pushed to the branch of the same name at the upstream
+    repository.
 
-> >>>> later updates,
-> >>>
-> >>> The same thing that currently happens, with the exception that
-> >>> checkout-style updates should use reset to update the
-> >>> currently-checked out branch (or detached-HEAD), instead of
-> >>> always detaching the HEAD.
-> >>
-> >> Won't the user loose any modifications to his local branch here?
-> >=20
-> > They just called for a checkout-style update, so yes.  If they
-> > want to keep local modifications, chose an integration mode that
-> > preserves local changes.
->=20
-> Hmm, as current "submodule updates" already makes it too easy to
-> loose commits, this does not look right to me. I'd prefer to stop at
-> that point and tell the user what he can do to solve the conflict.
+    For (3), you would set push.default to "upstream".  Your current
+    branch, when you run "git push", must have an explicit upstream
+    branch specified and you must be pushing to the upstream
+    repository for this to work for obvious reasons.
 
-Users who are worried about loosing local updates should not be using
-a checkout-style updates.  If they are using a checkout-style update,
-and they ask for an update, they're specifically requesting that we
-blow away their local work and checkout/reset to the new sha1.
-Solving update conflicts is the whole point of the non-checkout update
-modes.
+ * If you originally clone from somewhere you cannot (or do not want
+   to even if you could) push to, you would want your "git push" to
+   go to a repository that is different from your "upstream".  In
+   such a "triangular" setting, the result of your work is published
+   to your own repository (we'd call it "publish"), and others
+   interested in your work would pull from there to integrate it to
+   their work.  Among these other people there may be somebody who
+   integrates work by all relevant people to the project mainline
+   and updates the repository that you and other project participant
+   all call their "upstream", and that is how you see your own work
+   back in your "upstream".
 
-> > Maybe you meant "for checkout I can easily overwrite the local
-> > changes with the upstream branch", which is what I understand
-> > checkout to do.
->=20
-> But which I find really unfriendly and would not like to see in a
-> new feature. We should protect the user from loosing any local
-> changes, not simply throw them away. Recursive update makes sure it
-> won't overwrite any local modification before it checks out anything
-> and will abort before doing so (unless forced of course).
+   Set remote.pushdefault to name the repository that is your
+   "publish" repository if you are using such a triangular workflow
+   (you could use branch.*.pushremote to publish to different
+   repositories per branch).
 
-If you want to get rid of checkout-mode updates, I'm fine with that.
-However, I don't think it supports use-cases like Heiko's (implied) =E2=80=
-=9CI
-don't care what's happening upstream, I never touch that submodule,
-just checkout what the superproject maintainer says should be checked
-out for this branch.  Even if they have been rebasing or whatever=E2=80=9D
-[3].
+   Your local branch in such a triangular setting will have its
+   "upstream" (the repository your "git pull" goes to and one of its
+   branches it integrates with) and its "publish" (the repository
+   and one of its branches your "git push" updates).  Like the way
+   B@{upstream} can be used to refer to the former for your local
+   branch B, B@{publish} can be used to refer to the latter.
 
-> >>>> when superproject branches are merged (with and without conflicts),
-> >>>
-> >>> I don't think this currently does anything to the submodule itself,
-> >>> and that makes sense to me (use 'submodule update' or my 'submodule
-> >>> checkout' if you want such effects).  We should keep the current logic
-> >>> for updating the gitlinked $sha.  In the case that the
-> >>> .gitmodule-configured local-branches disagree, we should give the
-> >>> usual conflict warning (and <<<=3D=3D=3D>>> markup) and let the user =
-resolve
-> >>> the conflict in the usual way.
-> >>
-> >> For me it makes lots of sense that in recursive checkout mode the
-> >> merged submodules are already checked out (if possible) right after
-> >> a superproject merge, making another "submodule update" unnecessary
-> >> (the whole point of recursive update is to make "submodule update"
-> >> obsolete, except for "--remote").
-> >=20
-> > If you force the user to have the configured local-branch checked out
-> > before a non-checkout operations with checkout side-effects (as we
-> > currently do for other kinds of dirty trees), I think you'll avoid
-> > most (all?) of the branch-clobbering problems.
->=20
-> I'm thinking that a local branch works in two directions: It should
-> make it easy to follow an upstream branch and also make changes to it
-> (and publish those) if necessary.
+   In such a "triangular" setting, it is likely that you may want to
+   update the branch of the same name in your "publish" repository.
+   If you have been working on your "fix-bug-2431" branch, you would
+   want the result to go to "fix-bug-2431" branch there.
 
-Those both sound like =E2=80=9Cintegration with the remote submodule=E2=80=
-=9D issues
-to me.  I'm more worried about what happens purely locally as the
-developer checks out different superproject branches and wants the
-submodules to follow along automatically (without detaching HEADs).
-Once we have something that works there, I expect it will be easier to
-add recursive superproject branch integration cleanly.  For example,
-all of the usual branch-level config options (branch.<name>.*) come
-along for free.
+   The default in Git 2.0, when a triangular workflow is used by
+   setting remote.pushdefault (or branch.*.pushremote), will push
+   the current branch to the branch of the same name, so you do not
+   have to do anything further.  You can start living in the future
+   by setting push.default to "simple".
 
-> But neither local nor upstream changes take precedence, so the user
-> should either use "merge" or "rebase" as update strategy
+   The "upstream" setting of push.default would not make any sense
+   in such a triangular workflow, so your "git push" will error out
+   when you push to a repository that is not your "upstream" while
+   the push.default is set to "upstream".
 
-That sounds good to me.
+ * At the conceptual level, anybody who treats the work you publish
+   as his or her "upstream" is your downstream, but because you do
+   not control and keep track of who clones and pulls from you,
+   there is no such notation as @{downstream}.
 
-> or be asked to resolve the conflict manually when "checkout" is
-> configured and the branches diverged.
-
-I still think that checkout-mode updates should be destructive.  See
-my paraphrased-version of Heiko's use case above.  How are they going
-to resolve this manually?  Merge or rebase?  Why weren't they using
-that update mode in the first place?
-
-Cheers,
-Trevor
-
-[1]: http://article.gmane.org/gmane.comp.version-control.git/240251
-[2]: http://article.gmane.org/gmane.comp.version-control.git/240248
-[3]: http://article.gmane.org/gmane.comp.version-control.git/240013
-
---=20
-This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
-For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
-
---B0+HW0pjZ+2jqF7e
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (GNU/Linux)
-
-iQIcBAEBAgAGBQJSzyA+AAoJEKKfehoaNkbtKMsP/jTyOky1yX/myvhck+yxhslB
-XLb6OQcHkgjH/ZhzeEGuIVcezo/8kq8mJ3jOLLITLOKGwAEZK5YoDu3oBw1utY9T
-F13xXykOK3k7Sa3Bs91xiqNzcxZLUxMWe489kiCyl06A9fT/jYS0Q4FQE+LwKhSQ
-/zNwlQxSQo/RaydvpvVOamhQoFc8rjFCBK1eoQBUhcNBz0GR+wLldJGLB0V5iJAW
-6TyYt/7Bm75uQmMjBj1mJLrm8ZtDCEip4qOptjUBtxDKWi1FXdKgxLlOveervBy9
-7QmkGOeWJJ6h8pJumBGU9gAKD2CQN8zYKMjpCiBib3w7efDKuVg46eTgX+D2Yn3Z
-xdB8H7jFSE2yqZoOTJR3amK8Ile4yq0WuIACD78oiviqbCIG6k90+05wx3TL9ReJ
-ek2cvdtLEQpz+V69KZHBO/B6Yqa8o4eS1rqIXqNQU2XuiJGgj1Iy654+xsSXEOnW
-o8j7oP0QLJgln7HqMtDItuo7HL49ubQCfB74N2Tof5ZGPF9xOg/C2BhtUoFypjn9
-YdA5DZgnk2qU4NIZUhp9aAcaeGgEjKzx5BzuvhLVyR9uD7EQMFcCxpi0eAJ20w5b
-U/xrAbOpuw66ThwQgKAf41ZftPE6x8pFVaEvaF4pchUcT0fykX8hiPC8r8PMRgxr
-gZYR7VUjbeb8Tb0lRapB
-=6HWJ
------END PGP SIGNATURE-----
-
---B0+HW0pjZ+2jqF7e--
+It is unfortunate that GitHub worked aroud the lack of "publish"
+concept not by adding it to Git, but by introducing "fork" at the
+server side, which ends up twisting the concept of "upstream" that
+is sets up by "git clone".
