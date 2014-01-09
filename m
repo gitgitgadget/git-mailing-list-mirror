@@ -1,74 +1,71 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] merge: make merge state available to prepare-commit-msg hook
-Date: Thu, 09 Jan 2014 14:25:06 +0100
-Message-ID: <vpq4n5dmgnh.fsf@anie.imag.fr>
-References: <6B177FFA-1797-45FE-9EF1-2C9E6EE8A234@yaauie.com>
-	<DA9E6645-82DC-4714-845F-423726F96A40@yaauie.com>
-	<vpqr48ip7bm.fsf@anie.imag.fr>
-	<B19C65C1-C2D9-486F-AEA7-1497A3B5C5B4@yaauie.com>
-	<vpqtxdenoug.fsf@anie.imag.fr> <20140108220119.GN3881@google.com>
+From: Mathieu Lemoine <mathieu@mlemoine.name>
+Subject: [BUG] git symbolic-ref does not recognize @ as the shortcut for HEAD
+Date: Thu, 9 Jan 2014 10:05:22 -0500
+Message-ID: <CAOBEgJjmoXEDVa4L5LbAGMYR7_+NCf2tDSveieZxtU4bfWyzDw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Ryan Biesemeyer <ryan@yaauie.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	Jeff King <peff@peff.net>,
-	=?iso-8859-1?Q?=C6var?= =?iso-8859-1?Q?_Arnfj=F6r=F0?= Bjarmason 
-	<avarab@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 09 14:25:28 2014
+Content-Type: text/plain; charset=UTF-8
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jan 09 16:06:17 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W1Fbz-0007xG-5O
-	for gcvg-git-2@plane.gmane.org; Thu, 09 Jan 2014 14:25:27 +0100
+	id 1W1HBR-0007gV-K1
+	for gcvg-git-2@plane.gmane.org; Thu, 09 Jan 2014 16:06:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751695AbaAINZY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Jan 2014 08:25:24 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:46954 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751060AbaAINZW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Jan 2014 08:25:22 -0500
-Received: from globule.imag.fr (globule.imag.fr [129.88.34.238])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id s09DP5d5014705
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 9 Jan 2014 14:25:05 +0100
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	(authenticated bits=0)
-	by globule.imag.fr (8.13.8/8.13.8) with ESMTP id s09DP6hg006104
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Thu, 9 Jan 2014 14:25:06 +0100
-In-Reply-To: <20140108220119.GN3881@google.com> (Jonathan Nieder's message of
-	"Wed, 8 Jan 2014 14:01:19 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 09 Jan 2014 14:25:06 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: s09DP5d5014705
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1389878709.66923@2PFbIk60LQPrFBSW4aI+pg
+	id S1751445AbaAIPGG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Jan 2014 10:06:06 -0500
+Received: from mail-qe0-f54.google.com ([209.85.128.54]:54250 "EHLO
+	mail-qe0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750912AbaAIPGD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Jan 2014 10:06:03 -0500
+Received: by mail-qe0-f54.google.com with SMTP id cy11so3214004qeb.13
+        for <git@vger.kernel.org>; Thu, 09 Jan 2014 07:06:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=mlemoine.name; s=google;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=Hd4jIHO03+YdbFxGThiDk8rQeHxCzkWIKu+0NPRz6gM=;
+        b=hFjLCJkbDzJ81pgAeIOdbFIU6+b6Z7goURUDKUhhLMSdyP1Hj0iv25pkQR5WvWfbD/
+         lSJPGpIijeVGKdxTZk1TQftRl+0NWbxR8rbzUo8XVe1eCYv6iYaTc9I6x/mCrXHWSjC4
+         LzDABEYUOrhslPONUwphb2KYC/U3+I3Ep4dRU=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+         :content-type;
+        bh=Hd4jIHO03+YdbFxGThiDk8rQeHxCzkWIKu+0NPRz6gM=;
+        b=Hqu7wOawNoG3VzAM0iDmSFq4qS/OpF29wF/BO/3Luh13UqGJs//nY1OwIRtMWQqelX
+         jAHbnJf8SSPwpwgZck9T+bb+ETCMY0/dlEi/4fNUdppFPdpXNAuT4nfGxNKoUKqmAo7p
+         omrds5dHaP+kkNjDfQ1+ceRfk9Z5g1JVe01QFDWqQcl/sGF4sDzLnIT3Bd8K5lpVsJrP
+         Fya46qcNxY9CiQLAPQ+Vc+OHxNDfn6840aMgjmVkwqF8LfZx/3J54EOnHlQOLek3Wqje
+         eFe0TXR0M6AzPH0euj8+uzzR1w/Rawl0KeN/5QDpi9AgJ6Baph3oF7QfYCSif8Gx3RSw
+         55cg==
+X-Gm-Message-State: ALoCoQn9XdDjFJsNLFPjYKdSvRgLdwgfw9YkSGFx2IQ+0FkKtRrECR2RIqAJ8dly/dawpVyZ5XV7
+X-Received: by 10.49.84.105 with SMTP id x9mr8267889qey.65.1389279962753; Thu,
+ 09 Jan 2014 07:06:02 -0800 (PST)
+Received: by 10.229.230.198 with HTTP; Thu, 9 Jan 2014 07:05:22 -0800 (PST)
+X-Originating-IP: [24.203.176.236]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240255>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240256>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Hello,
 
-> Matthieu Moy wrote:
->
->> Jonathan's answer is an option. Another one is
-> [...]
->> So if the cleanup goes wrong, one can notice.
->
-> test_when_finished also makes the test fail if the cleanup failed.
+In https://raw.github.com/git/git/master/Documentation/RelNotes/1.8.5.txt
+is mentioned:
 
-Yes, I was mentionning it as opposed to "throwing the code at the
-toplevel of the shell", not as opposed to test_when_finished.
+ * Instead of typing four capital letters "HEAD", you can say "@" now,
+e.g. "git log @".
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+However, `git symbolic-ref @`  gives "fatal: No such ref: @", while
+`git symbolic-ref @`  gives "refs/heads/master".
+
+I looked around in the archive and #git, but nobody seemed to be aware
+of the behaviour.
+
+I wonder if it's on purpose given the low level of symbolic-ref or if
+it's a bug.
+
+Mathieu Lemoine.
