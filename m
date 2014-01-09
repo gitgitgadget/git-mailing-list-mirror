@@ -1,83 +1,84 @@
-From: Andy Lutomirski <luto@amacapital.net>
-Subject: Re: Verifiable git archives?
-Date: Thu, 9 Jan 2014 12:51:22 -0800
-Message-ID: <CALCETrXTbvHQAWm2z13OwyHCmBZZNDSqyWCdiu6maHRp2mi-Pw@mail.gmail.com>
-References: <CALCETrU88evB6VQrE8=8vrc+HYXAX8_Zx7TsYZp6YXeE4dZdvg@mail.gmail.com>
- <xmqqsiswapav.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 5/5] implement @{publish} shorthand
+Date: Thu, 09 Jan 2014 13:24:41 -0800
+Message-ID: <xmqqob3kalwm.fsf@gitster.dls.corp.google.com>
+References: <20140108093338.GA15659@sigill.intra.peff.net>
+	<20140108093716.GE15720@sigill.intra.peff.net>
+	<xmqqeh4iavn2.fsf@gitster.dls.corp.google.com>
+	<20140109182024.GA30970@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 09 21:51:49 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jan 09 22:24:54 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W1MZx-0006Ia-5D
-	for gcvg-git-2@plane.gmane.org; Thu, 09 Jan 2014 21:51:49 +0100
+	id 1W1N5u-0005n1-Cl
+	for gcvg-git-2@plane.gmane.org; Thu, 09 Jan 2014 22:24:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756568AbaAIUvp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Jan 2014 15:51:45 -0500
-Received: from mail-ve0-f181.google.com ([209.85.128.181]:60870 "EHLO
-	mail-ve0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754979AbaAIUvo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Jan 2014 15:51:44 -0500
-Received: by mail-ve0-f181.google.com with SMTP id oy12so2791110veb.40
-        for <git@vger.kernel.org>; Thu, 09 Jan 2014 12:51:43 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=2HwK4htw0roN0Z5wmnUU1hQQw8i6thbPzVuYiC1BsNw=;
-        b=ccvJW0YY3RdWIQ6QY0cWCejbN03pNGMzr7CyYZYxWkORGmkDcWh3jNc9HrlTi3ZEX2
-         rrG/jaCmygh1JNqiTd/2kWLgI7z7Ubwg1ScYuSwDf3GwPEwPXAehRnbabEMCNXeOHZdQ
-         ao4X66zpS7iGMqv3ds8RAdEVd1KLwgIAGnU1K3QQmODYQSPYW2kxIDs2PRY3vEgBrSmV
-         fjfzWAD9Y/RKSETM4SExdiK7oSCJd1Dz/T+PrGUNmsUwEnQMJHJ3Y7ShRU8nZ5IThGEJ
-         puSS7RkqkhOG1JKCeMhwvT8bTN5wyRC5R6jbC9/t9zUCpVXDkhBcDWxUX9exbnddDKH3
-         /pdg==
-X-Gm-Message-State: ALoCoQnalBXdYpBikTy0ZbLy0urI2ORAFalSVFRXw6TKpT524WA3VQXTyEZ+sbdvSyeRScEJf/vx
-X-Received: by 10.58.57.194 with SMTP id k2mr4789084veq.0.1389300703657; Thu,
- 09 Jan 2014 12:51:43 -0800 (PST)
-Received: by 10.58.75.131 with HTTP; Thu, 9 Jan 2014 12:51:22 -0800 (PST)
-In-Reply-To: <xmqqsiswapav.fsf@gitster.dls.corp.google.com>
+	id S1757537AbaAIVYq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Jan 2014 16:24:46 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:46962 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753095AbaAIVYp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Jan 2014 16:24:45 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ECB3962F2E;
+	Thu,  9 Jan 2014 16:24:44 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=aL4rFNTH39Hxzosf90EuoVQHgVU=; b=FHNprn
+	0/tJAautRxL6l3F2qAC/GSjPKeVUDqKUf9w8ADeOwOzoeUAlHAHrBeP12ckbgD20
+	nudCWLhpGZXZF5wK/TSBe8gmWpdTNB5rRttLz/yf+wDkktRDQg3C550+mV6xUoIA
+	kzqSvlxQBngKBdQnaazor8HVSk8Z7hepH8Kzc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=cLqtZNKfxf4A8FS4uqLq4vfeqjU0T1Kg
+	NOmXUILWFi3cj8brFJxubd/IMDDEI0WcTwz+bNBXkJAduJWPhpppnxLi/OllWo74
+	GRzmqyw08OLGAsjB4GsqIceqelH947K47Bz31sjSNI0bPYUeZlpXYXefhjogr5NH
+	lwl5TWll8vU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DCB9162F2D;
+	Thu,  9 Jan 2014 16:24:44 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 171DA62F2C;
+	Thu,  9 Jan 2014 16:24:43 -0500 (EST)
+In-Reply-To: <20140109182024.GA30970@sigill.intra.peff.net> (Jeff King's
+	message of "Thu, 9 Jan 2014 13:20:24 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 7538384C-7974-11E3-8103-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240272>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240273>
 
-On Thu, Jan 9, 2014 at 12:11 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Andy Lutomirski <luto@amacapital.net> writes:
+Jeff King <peff@peff.net> writes:
+
+>> Or is @{p} already taken by something and my memory is not
+>> functioning well?
 >
->> It's possible, in principle, to shove enough metadata into the output
->> of 'git archive' to allow anyone to verify (without cloning the repo)
->> to verify that the archive is a correct copy of a given commit.  Would
->> this be considered a useful feature?
->>
->> Presumably there would be a 'git untar' command that would report
->> failure if it fails to verify the archive contents.
->>
->> This could be as simple as including copies of the commit object and
->> all relevant tree objects and checking all of the hashes when
->> untarring.
+> It is my brain that was not functioning well. I somehow thought "well,
+> @{u} is already taken, so we must use "@{pu}". Which of course makes no
+> sense, unless you are middle-endian. :)
 >
-> You only need the object name of the top-level tree.  After "untar"
-> the archive into an empty directory, make it a new repository and
-> "git add . && git write-tree"---the result should match the
-> top-level tree the archive was supposed to contain.
+> We may want to be cautious about giving up a short-and-sweet
+> single-letter, though, until the feature has proved itself. We could
+> also teach upstream_mark and friends to match unambiguous prefixes (so
+> "@{u}, "@{up}", "@{upst}", etc). That means "@{p}" would work
+> immediately, but scripts should use "@{publish}" for future-proofing.
 
-Hmm.  I didn't realize that there was enough metadata in the 'git
-archive' output to reproduce the final tree.  If I can make it work,
-would you accept a patch to add another extended pax header containing
-the commit object and the top-level tree hash to the 'git archive'
-tarball output?
+I recall we wanted to start only with "@{upstream}" without "@{u}";
+justification being "if the concept is solid and useful enough, the
+latter will come later as a natural user-desire", during the
+discussion that ended up introducing them.
 
->
-> Of course, you can write "git verify-archive" that does the same
-> computation all in-core, without actually extracting the archive
-> into an empty directory.
+I am OK with the "unambigous prefix string".
 
-Hmm.  I'll play with this.
-
---Andy
+Thanks for sanity-checking.
