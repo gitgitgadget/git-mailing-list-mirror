@@ -1,282 +1,281 @@
-From: "W. Trevor King" <wking@tremily.us>
-Subject: Re: [RFC v2] submodule: Respect requested branch on all clones
-Date: Thu, 9 Jan 2014 09:32:18 -0800
-Message-ID: <20140109173218.GA8042@odin.tremily.us>
-References: <xmqqd2k3ejfr.fsf@gitster.dls.corp.google.com>
- <CALas-ihPmJSf9eH0P7Vf28pB4zN_dsa_2=fe+_moZgiP0C3UTA@mail.gmail.com>
- <20140107194503.GA26583@odin.tremily.us>
- <20140107223858.GB10782@sandbox-ub>
- <CALas-ihk6cVfosQ+Ov4QKUcfzvbXrYSonQvsN8Ay1+GTq_Ae-w@mail.gmail.com>
- <20140108010504.GE26583@odin.tremily.us>
- <CALas-iheQ4Rfxvty5guEieVwa8SffRnhRdHkNXUKwmuHRXD2Xg@mail.gmail.com>
- <20140109000338.GM29954@odin.tremily.us>
- <CALas-igFQtG1qa2+grMAtZ9mDE-xGuXkDGwGvSXL8_FzPfXBLQ@mail.gmail.com>
- <52CE5E51.4060507@web.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 3/5] refs: teach for_each_ref a flag to avoid recursion
+Date: Thu, 09 Jan 2014 09:51:24 -0800
+Message-ID: <xmqqa9f5avs3.fsf@gitster.dls.corp.google.com>
+References: <20140107235631.GA10503@sigill.intra.peff.net>
+	<20140107235850.GC10657@sigill.intra.peff.net>
+	<20140108034733.GA17198@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="PNTmBPCT7hxwcZjr"
-Cc: Francesco Pretto <ceztko@gmail.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git <git@vger.kernel.org>, Jonathan Nieder <jrnieder@gmail.com>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Thu Jan 09 18:32:30 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Brodie Rao <brodie@sf.io>, git@vger.kernel.org,
+	=?utf-8?B?Tmd1eQ==?= =?utf-8?B?4buFbiBUaMOhaSBOZ+G7jWM=?= Duy 
+	<pclouds@gmail.com>, Michael Haggerty <mhagger@alum.mit.edu>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jan 09 18:51:37 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W1JT1-0007GK-Ha
-	for gcvg-git-2@plane.gmane.org; Thu, 09 Jan 2014 18:32:28 +0100
+	id 1W1JlW-0000qL-WF
+	for gcvg-git-2@plane.gmane.org; Thu, 09 Jan 2014 18:51:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752814AbaAIRcY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Jan 2014 12:32:24 -0500
-Received: from qmta15.westchester.pa.mail.comcast.net ([76.96.59.228]:43282
-	"EHLO qmta15.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751405AbaAIRcW (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 9 Jan 2014 12:32:22 -0500
-Received: from omta01.westchester.pa.mail.comcast.net ([76.96.62.11])
-	by qmta15.westchester.pa.mail.comcast.net with comcast
-	id Bobl1n0020EZKEL5FtYMqy; Thu, 09 Jan 2014 17:32:21 +0000
-Received: from odin.tremily.us ([24.18.63.50])
-	by omta01.westchester.pa.mail.comcast.net with comcast
-	id BtYK1n00e152l3L3MtYLGg; Thu, 09 Jan 2014 17:32:21 +0000
-Received: by odin.tremily.us (Postfix, from userid 1000)
-	id 73868EBABCC; Thu,  9 Jan 2014 09:32:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
-	t=1389288738; bh=9EK60zABHC03RZWEYcqDoeIJ/s53T3nnS4apChp3X+o=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=bBvOliqaQEiXuixugzvZ0e0afdiUWX53CemD+5/7g3Y4J19q32haNgKmw5U6ufzSy
-	 pL5lIC2hBzhcxcsiSaKZElEJARRBTA8/2HuRxRlBoSvn4zdkIiH45hIx10YMqjUAH+
-	 baJE60O7D3VHc1DPfHIHkecJ7eEpiKbAPev0esuM=
-Content-Disposition: inline
-In-Reply-To: <52CE5E51.4060507@web.de>
-OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
- url=http://tremily.us/pubkey.txt
-User-Agent: Mutt/1.5.22 (2013-10-16)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-	s=q20121106; t=1389288741;
-	bh=hd8slYgJaltuDOrGeYETgEzlsHcZFlrReCJWEjb4Otg=;
-	h=Received:Received:Received:Date:From:To:Subject:Message-ID:
-	 MIME-Version:Content-Type;
-	b=hKQbd151DxfrSbhW/4XrycmhNanL5kxK8OQOf7bgd3IG661vZ28i6M4avzJvRLK7j
-	 dUEzldUp926KWJLQF5jc5XcfyEu+8aK22LtHjCR3v6P983RY5TGZCS1AZ/+hQ31tcZ
-	 QWcVkoqZ4nWINd5ZB+BOeE0QqHn82QVab5MiTFUsUiWUxz8vktpTOwBA+inWYj7/tr
-	 X4SoJjsCrK8KnFRnLiPdwChzmOeDPt10uBGex6cXookJB2yjBLp/RmCIRbNdLfr2v3
-	 2d+MmXFSGb17wByfJPuyVF82Z2McvIzPlQcfnpLPNawbx2AReibpy1gXsgdrMU7nBH
-	 vqSlKk01CpqkQ==
+	id S1752543AbaAIRvb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Jan 2014 12:51:31 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62806 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751142AbaAIRv3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Jan 2014 12:51:29 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B9A1A608AA;
+	Thu,  9 Jan 2014 12:51:28 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=GKDlbf7ISOXrBCakcIbPh36u2ag=; b=dQlmj/
+	7mBVhUIdMvY/Vht1BH3t0rTTFIGnZ/reioMb92II8C+vf1xRHUhF1KGoMe8r7pai
+	QH8I4E0CbnOVL7owgzH8KdnOpvue6MObg/d5mi1v7Var19/WuyRuZ5gyAiJCjh58
+	w1RE6STUXDcM0wwnfSlAEQl1RI1kK9wbhDhQM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=gkqJO4BqNmepie9I9vpAYBDXvDJaZ9Ut
+	HhoIxH1JqFVG/i5fh647FZDDxpZIE9PkyPoThHF5Ff9iyavSrps8uYtNNg3hhEZw
+	HLM7nLguqk3Q8g0oMfR4ssblgJd3xyBUTb5u2h9gIIY/4Gp+vbIWdxgeEWMM82FK
+	yjzV5yXt6UM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A206E608A9;
+	Thu,  9 Jan 2014 12:51:28 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8E4BD608A5;
+	Thu,  9 Jan 2014 12:51:27 -0500 (EST)
+In-Reply-To: <20140108034733.GA17198@sigill.intra.peff.net> (Jeff King's
+	message of "Tue, 7 Jan 2014 22:47:34 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: A9F553E4-7956-11E3-9B96-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240260>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240261>
 
+Jeff King <peff@peff.net> writes:
 
---PNTmBPCT7hxwcZjr
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> On Tue, Jan 07, 2014 at 06:58:50PM -0500, Jeff King wrote:
+>
+>> +			if (flags & DO_FOR_EACH_NO_RECURSE) {
+>> +				struct ref_dir *subdir = get_ref_dir(entry);
+>> +				sort_ref_dir(subdir);
+>> +				retval = do_for_each_entry_in_dir(subdir, 0,
+>
+> Obviously this is totally wrong and inverts the point of the flag. And
+> causes something like half of the test suite to fail.
+>
+> Michael was nice enough to point it out to me off-list, but well, I have
+> to face the brown paper bag at some point. :) In my defense, it was a
+> last minute refactor before going to dinner. That is what I get for
+> rushing out the series.
 
-On Thu, Jan 09, 2014 at 09:31:13AM +0100, Jens Lehmann wrote:
-> Am 09.01.2014 02:09, schrieb Francesco Pretto:
-> > 2014/1/9 W. Trevor King <wking@tremily.us>:
-> >>
-> >> However, submodule.<name>.local-branch has nothing to do with remote
-> >> repositories or tracking branches.
-> >=20
-> > My bad: this means the feature is still not entirely clear to me.
-> >=20
-> >>
-> >>   [branch "my-feature"]
-> >>         remote =3D origin
-> >>         merge =3D refs/heads/my-feature
-> >>         [submodule "submod"]
-> >>             local-branch =3D "my-feature"
-> >>
-> >> and I don't think Git's config supports such nesting.
-> >>
-> >=20
-> > Aesthetically, It doesn't look very nice.
->=20
-> And I'm not sure we even need that. What's wrong with having the
-> branch setting in the .gitmodules file of the my-feature branch?
-> The only problem I can imagine is accidentally merging that into
-> a branch where that isn't set, but that could be solved by a merge
-> helper for the .gitmodules file.
+And perhaps a bad naming that calls for double-negation in the
+normal cases, which might have been less likely to happen it the new
+flag were called "onelevel only" or something, perhaps?
 
-=2Egitmodules is fine so long as the config can live in the versioned
-tree.  Many (all?) .gitmodules settings can be overridden in
-=2Egit/config.  However, the local-branch setting needs to be both
-per-submodule and per-superproject-branch, so .git/config doesn't work
-very well.  I think it's better to use something like my
-=2Egit/modules/<submodule-name>/config implementation [1] to set this
-override.
-
-This lack of per-superproject-branch overrides applies to all of the
-submodule.<name>.* settings, but you're unlikely to want an
-out-of-tree override for 'path' or a per-superproject-branch override
-for 'url', 'ignore', 'update', or 'chRecurseSubmodules'.  Maybe folks
-would want per-superproject-branch overrides to 'branch', although I'd
-prefer we reuse branch.<name>.merge in the submodule's config for
-that [2].
-
-On the other hand, maybe an in-tree .gitmodules is good enough, and
-folks who want a local override can just edit .gitmodules in their
-local branch?  I've never felt the need to override .gitmodules myself
-(for any setting), so feedback from someone who has would be useful.
-
-> >> I can resuscitate that if folks want, but Heiko felt that my initial
-> >> consolidation didn't go far enough [2].  If it turns out that we're ok
-> >> with the current level of consolidation, would you be ok with
-> >> "non-checkout submodule.<name>.update" as the trigger [3]?
-> >=20
-> > For me it was ok with what you did:
-> > -------------------------------------------------
-> > if "just_cloned" and "config_branch"
-> > then
-> >      !git reset --hard -q"
-> > fi
-> > -------------------------------------------------
-> >=20
-> > So yes: at the first clone 'checkout' keeps attached HEAD, while
-> > 'merge' and 'rebase' attach to the branch.
->=20
-> It have the impression that attaching the head to the given branch
-> for merge and rebase might be the sensible thing to do, but it
-> would be great to hear from users of merge and rebase if that
-> would break anything for them in their current use cases for these
-> settings.
-
-Which local branch would you attach to before merging?  I think 'git
-submodule update' should always use the current submodule state
-(attached branch or detached HEAD) [3], and we should have a separate
-call that explicitly checked out the desired submodule branch [4].
-
-> > If it's not the first clone, you should take no action (and your
-> > original patch was ok about this).
->=20
-> I'm not sure this is the right thing to do, after all you
-> configured git to follow that branch so I'd expect it to be
-> updated later too, no? Otherwise you might end up with an old
-> version of your branch while upstream is a zillion commits
-> ahead.
-
-Non-clone updates should not change the submodule's *local* branch
-*name*.  They should change the commit that that branch references,
-otherwise 'git submodule update' would be a no-op ;).
-
-> First I'd like to see a real consensus about what exactly should
-> happen when a branch is configured to be checked out (and if I
-> missed such a summary in this thread, please point me to it ;-).
-
-I don't think we have a consensus yet.  A stand-alone outline of my
-current position is in my v3 RFC [5], but I don't have any buy-in yet
-;).
-
-> And we should contrast that to the exact checkout and floating
-> branch use cases.
-
-With my v3 series, there are no more detached HEADs.  Folks using
-checkout updates get a local master branch.  I do not change any of
-the exact checkout (superproject gitlinked sha1) vs. floating
-(subproject's remote submodule.<name>.branch via 'update --remote')
-logic, because that already works well.  The problem is the local
-branch handling, not the update/integration logic.
-
-> So what should happen on initial clone,
-
-For 'add', clone the command line URL and create a new branch 'master'
-pointing at the commit referenced by the remote's HEAD (or other
-branch with --branch).
-
-For 'update', do the same, except use a local-branch setting to
-determine the name for the local branch, falling back to 'master' if
-it is not set.
-
-> later updates,
-
-The same thing that currently happens, with the exception that
-checkout-style updates should use reset to update the
-currently-checked out branch (or detached-HEAD), instead of always
-detaching the HEAD.
-
-> updates where the local and the remote branch diverged,
-
-The same thing that currently happens.  For local (non --remote)
-updates, the integrated branch is the superproject's gitlinked sha1.
-For --remote updates, the integrated branch is the remote subproject's
-submodule.<name>.branch.  We integrate that with the
-currently-checked-out local branch (or detached HEAD) using the user's
-preferred submodule.<name>.update strategy.
-
-> when superproject branches are merged (with and without conflicts),
-
-I don't think this currently does anything to the submodule itself,
-and that makes sense to me (use 'submodule update' or my 'submodule
-checkout' if you want such effects).  We should keep the current logic
-for updating the gitlinked $sha.  In the case that the
-=2Egitmodule-configured local-branches disagree, we should give the
-usual conflict warning (and <<<=3D=3D=3D>>> markup) and let the user resolve
-the conflict in the usual way.
-
-> on a rebase in the superproject and so on.
-
-Same as the merge case.  Why would configuring a preferred
-local-branch that only affects checkout (and the initial clone) have
-anything to do with rebases and merges?
-
-> After that we can discuss about how to implement them (even though I
-> believe we won't need a new submodule command at the end of this
-> process, simply because if it isn't configurable we cannot teach git
-> checkout and friends to do that automatically for us later).
-
-I think it is configurable, and I have an implementation that works
-(modulo bugs) [5].  I think we should teach 'git checkout
---recurse-submodules' this logic, and then we can drop my 'git
-submodule checkout' entirely.
-
-> And from reading this discussion I believe we need another value for
-> the ignore option which only ignores changes to the SHA-1 but not to
-> work tree modifications of a submodule work tree relative to its HEAD
-> (or make that two: another one which ignores untracked files too and
-> only shows modification of tracked files). Otherwise users of the
-> floating or attached model can easily miss submodule modifications.
-
-I am ignore-agnostic ;).  Do whatever you like here.
-
-Cheers,
-Trevor
-
-[1]: http://article.gmane.org/gmane.comp.version-control.git/240251
-[2]: http://article.gmane.org/gmane.comp.version-control.git/240164
-[3]: http://article.gmane.org/gmane.comp.version-control.git/240250
-[4]: http://article.gmane.org/gmane.comp.version-control.git/240249
-[5]: http://article.gmane.org/gmane.comp.version-control.git/240248
-
---=20
-This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
-For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
-
---PNTmBPCT7hxwcZjr
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (GNU/Linux)
-
-iQIcBAEBAgAGBQJSzt0eAAoJEKKfehoaNkbtmMEQALGvrdSMiurhxRS+nDMq1bfj
-yvKMcaG6CvykU8s8LbAnMFAz8RkiF8EdwjyFahpeUfihcxE8oODBfpm9SCYseEx7
-1xrMIuEkyRYdQYKyxDQrLNGAUdDpnWPIeF51MzICev6znxdj5jYACe6bphDf36lI
-3VxfZyaWZX+li4m7Xyf2BwMjgaOikxY14rtpCWhuLajVI+rlMdIDG8hgJMiEmqqf
-ho2c7ILvHsOHGOGTmoVrxe0WsPOUA9CF1nXhzvmvW12h/u6tHsSt5m/k4h2tWb9g
-hypR4aWtjg3B3NYCG1ogJXG3e8okTQBF/UboPxr1XtvU2legNi0oY92kQkbk6pHG
-ZmnWpiAiXocI910e5wLImWGQSc/cP0Ra8zBAmJzIPJmiENAmKOf+BYUb7kK92Hty
-eI5jOzKU0sDRWgpFfdTVoU6b3iBCQp+7c4FfgjWKRJIXkFxYUXqJPj1psqh8Y8EB
-cc4Y9+OyYxydrxTtK2RHrIn+KLpVsfk4JHYC2Kl39a8OjPoP5IBYrJ75NECY/1gF
-czwe9Vvgw122gcd1Tx+Bs/c71zAnYm2GPT1lhWHN2m+B2aWw98dq1aP3P23TR1mw
-bvKKh4jxtilUrkdSqiP5ZBJx/08vOEgOxdTXNDsSAXIo2oVxBgZhcKmfefn9Ib1j
-E5xf3JovdGzI36RYfH3O
-=4NXx
------END PGP SIGNATURE-----
-
---PNTmBPCT7hxwcZjr--
+> Here's a fixed version of patch 3/5.
+>
+> -- >8 --
+> Subject: refs: teach for_each_ref a flag to avoid recursion
+>
+> The normal for_each_ref traversal descends into
+> subdirectories, returning each ref it finds. However, in
+> some cases we may want to just iterate over the top-level of
+> a certain part of the tree.
+>
+> The introduction of the "flags" option is a little
+> mysterious. We already have a "flags" option that gets stuck
+> in a callback struct and ends up interpreted in do_one_ref.
+> But the traversal itself does not currently have any flags,
+> and it needs to know about this new flag.
+>
+> We _could_ introduce this as a completely separate flag
+> parameter. But instead, we simply put both flag types into a
+> single namespace, and make it available at both sites. This
+> is simple, and given that we do not have a proliferation of
+> flags (we have had exactly one until now), it is probably
+> sufficient.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  refs.c | 61 ++++++++++++++++++++++++++++++++++++++-----------------------
+>  1 file changed, 38 insertions(+), 23 deletions(-)
+>
+> diff --git a/refs.c b/refs.c
+> index 3926136..b70b018 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -589,6 +589,8 @@ static void sort_ref_dir(struct ref_dir *dir)
+>  
+>  /* Include broken references in a do_for_each_ref*() iteration: */
+>  #define DO_FOR_EACH_INCLUDE_BROKEN 0x01
+> +/* Do not recurse into subdirs, just iterate at a single level. */
+> +#define DO_FOR_EACH_NO_RECURSE     0x02
+>  
+>  /*
+>   * Return true iff the reference described by entry can be resolved to
+> @@ -661,7 +663,8 @@ static int do_one_ref(struct ref_entry *entry, void *cb_data)
+>   * called for all references, including broken ones.
+>   */
+>  static int do_for_each_entry_in_dir(struct ref_dir *dir, int offset,
+> -				    each_ref_entry_fn fn, void *cb_data)
+> +				    each_ref_entry_fn fn, void *cb_data,
+> +				    int flags)
+>  {
+>  	int i;
+>  	assert(dir->sorted == dir->nr);
+> @@ -669,9 +672,13 @@ static int do_for_each_entry_in_dir(struct ref_dir *dir, int offset,
+>  		struct ref_entry *entry = dir->entries[i];
+>  		int retval;
+>  		if (entry->flag & REF_DIR) {
+> -			struct ref_dir *subdir = get_ref_dir(entry);
+> -			sort_ref_dir(subdir);
+> -			retval = do_for_each_entry_in_dir(subdir, 0, fn, cb_data);
+> +			if (!(flags & DO_FOR_EACH_NO_RECURSE)) {
+> +				struct ref_dir *subdir = get_ref_dir(entry);
+> +				sort_ref_dir(subdir);
+> +				retval = do_for_each_entry_in_dir(subdir, 0,
+> +								  fn, cb_data,
+> +								  flags);
+> +			}
+>  		} else {
+>  			retval = fn(entry, cb_data);
+>  		}
+> @@ -691,7 +698,8 @@ static int do_for_each_entry_in_dir(struct ref_dir *dir, int offset,
+>   */
+>  static int do_for_each_entry_in_dirs(struct ref_dir *dir1,
+>  				     struct ref_dir *dir2,
+> -				     each_ref_entry_fn fn, void *cb_data)
+> +				     each_ref_entry_fn fn, void *cb_data,
+> +				     int flags)
+>  {
+>  	int retval;
+>  	int i1 = 0, i2 = 0;
+> @@ -702,10 +710,12 @@ static int do_for_each_entry_in_dirs(struct ref_dir *dir1,
+>  		struct ref_entry *e1, *e2;
+>  		int cmp;
+>  		if (i1 == dir1->nr) {
+> -			return do_for_each_entry_in_dir(dir2, i2, fn, cb_data);
+> +			return do_for_each_entry_in_dir(dir2, i2, fn, cb_data,
+> +							flags);
+>  		}
+>  		if (i2 == dir2->nr) {
+> -			return do_for_each_entry_in_dir(dir1, i1, fn, cb_data);
+> +			return do_for_each_entry_in_dir(dir1, i1, fn, cb_data,
+> +							flags);
+>  		}
+>  		e1 = dir1->entries[i1];
+>  		e2 = dir2->entries[i2];
+> @@ -713,12 +723,15 @@ static int do_for_each_entry_in_dirs(struct ref_dir *dir1,
+>  		if (cmp == 0) {
+>  			if ((e1->flag & REF_DIR) && (e2->flag & REF_DIR)) {
+>  				/* Both are directories; descend them in parallel. */
+> -				struct ref_dir *subdir1 = get_ref_dir(e1);
+> -				struct ref_dir *subdir2 = get_ref_dir(e2);
+> -				sort_ref_dir(subdir1);
+> -				sort_ref_dir(subdir2);
+> -				retval = do_for_each_entry_in_dirs(
+> -						subdir1, subdir2, fn, cb_data);
+> +				if (!(flags & DO_FOR_EACH_NO_RECURSE)) {
+> +					struct ref_dir *subdir1 = get_ref_dir(e1);
+> +					struct ref_dir *subdir2 = get_ref_dir(e2);
+> +					sort_ref_dir(subdir1);
+> +					sort_ref_dir(subdir2);
+> +					retval = do_for_each_entry_in_dirs(
+> +							subdir1, subdir2,
+> +							fn, cb_data, flags);
+> +				}
+>  				i1++;
+>  				i2++;
+>  			} else if (!(e1->flag & REF_DIR) && !(e2->flag & REF_DIR)) {
+> @@ -743,7 +756,7 @@ static int do_for_each_entry_in_dirs(struct ref_dir *dir1,
+>  				struct ref_dir *subdir = get_ref_dir(e);
+>  				sort_ref_dir(subdir);
+>  				retval = do_for_each_entry_in_dir(
+> -						subdir, 0, fn, cb_data);
+> +						subdir, 0, fn, cb_data, flags);
+>  			} else {
+>  				retval = fn(e, cb_data);
+>  			}
+> @@ -817,7 +830,7 @@ static int is_refname_available(const char *refname, const char *oldrefname,
+>  	data.conflicting_refname = NULL;
+>  
+>  	sort_ref_dir(dir);
+> -	if (do_for_each_entry_in_dir(dir, 0, name_conflict_fn, &data)) {
+> +	if (do_for_each_entry_in_dir(dir, 0, name_conflict_fn, &data, 0)) {
+>  		error("'%s' exists; cannot create '%s'",
+>  		      data.conflicting_refname, refname);
+>  		return 0;
+> @@ -1651,7 +1664,8 @@ void warn_dangling_symref(FILE *fp, const char *msg_fmt, const char *refname)
+>   * 0.
+>   */
+>  static int do_for_each_entry(struct ref_cache *refs, const char *base,
+> -			     each_ref_entry_fn fn, void *cb_data)
+> +			     each_ref_entry_fn fn, void *cb_data,
+> +			     int flags)
+>  {
+>  	struct packed_ref_cache *packed_ref_cache;
+>  	struct ref_dir *loose_dir;
+> @@ -1684,15 +1698,15 @@ static int do_for_each_entry(struct ref_cache *refs, const char *base,
+>  		sort_ref_dir(packed_dir);
+>  		sort_ref_dir(loose_dir);
+>  		retval = do_for_each_entry_in_dirs(
+> -				packed_dir, loose_dir, fn, cb_data);
+> +				packed_dir, loose_dir, fn, cb_data, flags);
+>  	} else if (packed_dir) {
+>  		sort_ref_dir(packed_dir);
+>  		retval = do_for_each_entry_in_dir(
+> -				packed_dir, 0, fn, cb_data);
+> +				packed_dir, 0, fn, cb_data, flags);
+>  	} else if (loose_dir) {
+>  		sort_ref_dir(loose_dir);
+>  		retval = do_for_each_entry_in_dir(
+> -				loose_dir, 0, fn, cb_data);
+> +				loose_dir, 0, fn, cb_data, flags);
+>  	}
+>  
+>  	release_packed_ref_cache(packed_ref_cache);
+> @@ -1718,7 +1732,7 @@ static int do_for_each_ref(struct ref_cache *refs, const char *base,
+>  	data.fn = fn;
+>  	data.cb_data = cb_data;
+>  
+> -	return do_for_each_entry(refs, base, do_one_ref, &data);
+> +	return do_for_each_entry(refs, base, do_one_ref, &data, flags);
+>  }
+>  
+>  static int do_head_ref(const char *submodule, each_ref_fn fn, void *cb_data)
+> @@ -2200,7 +2214,7 @@ int commit_packed_refs(void)
+>  
+>  	do_for_each_entry_in_dir(get_packed_ref_dir(packed_ref_cache),
+>  				 0, write_packed_entry_fn,
+> -				 &packed_ref_cache->lock->fd);
+> +				 &packed_ref_cache->lock->fd, 0);
+>  	if (commit_lock_file(packed_ref_cache->lock))
+>  		error = -1;
+>  	packed_ref_cache->lock = NULL;
+> @@ -2345,7 +2359,7 @@ int pack_refs(unsigned int flags)
+>  	cbdata.packed_refs = get_packed_refs(&ref_cache);
+>  
+>  	do_for_each_entry_in_dir(get_loose_refs(&ref_cache), 0,
+> -				 pack_if_possible_fn, &cbdata);
+> +				 pack_if_possible_fn, &cbdata, 0);
+>  
+>  	if (commit_packed_refs())
+>  		die_errno("unable to overwrite old ref-pack file");
+> @@ -2447,7 +2461,8 @@ static int repack_without_refs(const char **refnames, int n)
+>  	}
+>  
+>  	/* Remove any other accumulated cruft */
+> -	do_for_each_entry_in_dir(packed, 0, curate_packed_ref_fn, &refs_to_delete);
+> +	do_for_each_entry_in_dir(packed, 0, curate_packed_ref_fn,
+> +				 &refs_to_delete, 0);
+>  	for_each_string_list_item(ref_to_delete, &refs_to_delete) {
+>  		if (remove_entry(packed, ref_to_delete->string) == -1)
+>  			die("internal error");
