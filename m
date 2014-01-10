@@ -1,66 +1,87 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: A question about the error: svn_fspath__is_canonical
-Date: Fri, 10 Jan 2014 11:28:25 -0800
-Message-ID: <20140110192825.GG4776@google.com>
-References: <CABRpx=1CvB55zeL1L8QOvyfbJCaG9FK+HEz-iK9cFGrnxmOJtg@mail.gmail.com>
- <20140110191650.GF4776@google.com>
- <CABRpx=3vf-bwtA8_2ndPYo+fWCNiHQdSbLRGFWts4Wp3uN6yDA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH mm/mv-file-to-no-such-dir-with-slash] mv: let 'git mv file no-such-dir/' error out on Windows, too
+Date: Fri, 10 Jan 2014 11:30:54 -0800
+Message-ID: <xmqqd2jz8wi9.fsf@gitster.dls.corp.google.com>
+References: <1386059524-14442-1-git-send-email-Matthieu.Moy@imag.fr>
+	<52CD7DE8.6070101@kdbg.org>
+	<xmqq7ga8aibn.fsf@gitster.dls.corp.google.com>
+	<52D04856.9070005@kdbg.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Dan Kaplan <dank@mirthcorp.com>
-X-From: git-owner@vger.kernel.org Fri Jan 10 20:28:36 2014
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org,
+	Duy Nguyen <pclouds@gmail.com>
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Fri Jan 10 20:31:11 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W1hkw-0004GW-Te
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Jan 2014 20:28:35 +0100
+	id 1W1hnT-0000A7-76
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Jan 2014 20:31:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755491AbaAJT2b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Jan 2014 14:28:31 -0500
-Received: from mail-gg0-f178.google.com ([209.85.161.178]:50863 "EHLO
-	mail-gg0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753341AbaAJT23 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Jan 2014 14:28:29 -0500
-Received: by mail-gg0-f178.google.com with SMTP id q2so100374ggc.37
-        for <git@vger.kernel.org>; Fri, 10 Jan 2014 11:28:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=GSAcdDKMFeDHSQZQ8YeRcmbnEQpW2ycZcsUYAmjU+Tg=;
-        b=Q9+ovwyJzn8pdfvCXqjzSzh4Y/5cOkAKDWazGu1piCR4niiB7tfzYAlKtVCAVI3VZH
-         WVoJol/sL6UXNf9fk7N39tOZjOGXNqGQNRZSb4Zn2JmKptPeYR0qUo2BYugsbS9Z0iFQ
-         F//daDG1kcrxcHwS2Jwf5RLaMNNX9C86o0lpHQeu9YKh+TDhygUH0guJMpCKudvLhk0y
-         SwNM3zoxcMQ5dHctHz56cSS3tkCo9O/9R2Sxl7fYVGuzeLg8Pl7NIZIurTadufnO+aDk
-         uLZROJ7LLDPFZqf31NyGTwoH9a0gIzo0LDy+Iru/TIiC2RCzVdwxEWTsRshmLhMZACqB
-         jj5w==
-X-Received: by 10.236.149.77 with SMTP id w53mr2497523yhj.139.1389382108109;
-        Fri, 10 Jan 2014 11:28:28 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id h80sm2124027yha.23.2014.01.10.11.28.27
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 10 Jan 2014 11:28:27 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <CABRpx=3vf-bwtA8_2ndPYo+fWCNiHQdSbLRGFWts4Wp3uN6yDA@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751803AbaAJTbH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Jan 2014 14:31:07 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43909 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751172AbaAJTbG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Jan 2014 14:31:06 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AE3B2617BB;
+	Fri, 10 Jan 2014 14:31:04 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=H8pmAOlvsedMbnZrT3fRW/iu+BI=; b=d6aMvl
+	2vw8xHR1M+H+ca9O/IjVfTT7TUJWKgGSuMSfBLcow93gzJ/YJ6U5BSxHU6G3JFOZ
+	DEwFpEz1cK77rXQrIeSCfo9Qvp2EP36T6aiJWqLAHbw9vXbxSNaAqpw7e2J3Zmfs
+	kKZYX/pKuwh+cGIgf8BBgZkFD0+Llv4RznYHY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=p6SSCOnxGSq9+LRI34Qk4L0HsPTwaca3
+	vKi4PLFYb1pu5W1oMW2AUf3yABYIKxB0mFtRPrEzbIo1IlLisDQiNbR59zlfvLme
+	IKnti8zOXiBVFwOwaSscTNMtYHuc19L43NJfhqycPyXYfSVkFw3FGvvEv8WH5c/y
+	S4zkJnuMOxk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 85FCE617B9;
+	Fri, 10 Jan 2014 14:31:04 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0A7C7617B5;
+	Fri, 10 Jan 2014 14:31:01 -0500 (EST)
+In-Reply-To: <52D04856.9070005@kdbg.org> (Johannes Sixt's message of "Fri, 10
+	Jan 2014 20:21:58 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: BD5FF72C-7A2D-11E3-96C5-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240312>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240313>
 
-Dan Kaplan wrote:
+Johannes Sixt <j6t@kdbg.org> writes:
 
->                              Do you think it'll still work?
+> The file is renamed to no-such-dir without the slash at the end. The
+> updated commit message would be:
+>
+> mv: let 'git mv file no-such-dir/' error out on Windows, too
+>
+> The previous commit c57f628 (mv: let 'git mv file no-such-dir/' error out)
+> relies on that rename("src", "dst/") fails if directory dst does not
+> exist (note the trailing slash). This does not work as expected on Windows:
+> The rename() call does not fail, but renames src to dst (without the
+> trailing slash). Insert an explicit check for this case to force an error.
+>
+> This changes the error message from
+>
+>    $ git mv file no-such-dir/
+>    fatal: renaming 'file' failed: Not a directory
+>
+> to
+>
+>    $ git mv file no-such-dir/
+>    fatal: destination directory does not exist, source=file, destination=no-such-dir/
+>
+> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
 
-Yes, that's why I suggested it. ;-)
-
-You might need to install the gcc-core, libcurl-devel, openssl-devel,
-and subversion-perl packages first.
-
-Regards,
-Jonathan
+Thanks.
