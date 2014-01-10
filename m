@@ -1,101 +1,89 @@
-From: Dan Kaplan <dank@mirthcorp.com>
-Subject: A question about the error: svn_fspath__is_canonical
-Date: Fri, 10 Jan 2014 11:06:18 -0800
-Message-ID: <CABRpx=1CvB55zeL1L8QOvyfbJCaG9FK+HEz-iK9cFGrnxmOJtg@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: A question about the error: svn_fspath__is_canonical
+Date: Fri, 10 Jan 2014 11:16:50 -0800
+Message-ID: <20140110191650.GF4776@google.com>
+References: <CABRpx=1CvB55zeL1L8QOvyfbJCaG9FK+HEz-iK9cFGrnxmOJtg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 10 20:06:29 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Dan Kaplan <dank@mirthcorp.com>
+X-From: git-owner@vger.kernel.org Fri Jan 10 20:17:00 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W1hPV-0008Q6-P4
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Jan 2014 20:06:26 +0100
+	id 1W1hZi-0001DO-U9
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Jan 2014 20:16:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753487AbaAJTGU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Jan 2014 14:06:20 -0500
-Received: from mail-qe0-f44.google.com ([209.85.128.44]:44914 "EHLO
-	mail-qe0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751209AbaAJTGT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Jan 2014 14:06:19 -0500
-Received: by mail-qe0-f44.google.com with SMTP id nd7so4976040qeb.31
-        for <git@vger.kernel.org>; Fri, 10 Jan 2014 11:06:18 -0800 (PST)
+	id S1751984AbaAJTQz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Jan 2014 14:16:55 -0500
+Received: from mail-gg0-f181.google.com ([209.85.161.181]:55684 "EHLO
+	mail-gg0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751172AbaAJTQy (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Jan 2014 14:16:54 -0500
+Received: by mail-gg0-f181.google.com with SMTP id 21so539872ggh.26
+        for <git@vger.kernel.org>; Fri, 10 Jan 2014 11:16:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=mirthcorp.com; s=google;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=YawItD6s+ZwcQrN30r4DVflJoyIH68artMKA0axAPW4=;
-        b=ROty5nFdnNtHr/zKc+Zido7EL+swGZuSkWN3Z+d/91ZPkdl48150rD5ZYJ3RNJ/yO0
-         d8Ui56vGLC5bD8sxZozk0CIbgeqnN9edNkW9FfAB7naE2cK73lX99znmBs0/8hRdqXHo
-         2r+N1Ue9RhVIQw+JkYs01BIRgSmC3DyV6gNGo=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=YawItD6s+ZwcQrN30r4DVflJoyIH68artMKA0axAPW4=;
-        b=hlpeVqkc1/SyAR3sTpukKPGygeG+oKxRUur/RVjCvpPn61KOB4vJDBRfaBnDx5Hxwo
-         q33qHa2mWng2JW9okBwHMyC6OT9foqWJJthjUt5wRmtvGM7VTIkP/lulcvS+5ionisDn
-         oE6208Zac6+SAFYqE8ZbC40DgWlqUtgVU/8ztr0m8+nrej/hPDlrgXRGAwd1+nmzs/Hs
-         tch/LVKbB0gxejP74/mU2LyFxiuZDwYxp3fZ3V3+6+v73i2h9OPd1vInpUBbYsEF5hVE
-         zqW5e5n6pm4fREs9aoYDuyeNaLoXMXq7rQvMPBoo28b0btFsk03Lusyg3KCwep6S06Ca
-         2U9A==
-X-Gm-Message-State: ALoCoQma1D9nDOMjs3zgNjTBb8Lvi+iHU8suL9T6e6oVEMzNcezKly+k95XqFDSxNGUMbnRJ6UpfhbHLhCPXQRj2emUC5Tl8xVr6F8jMvWkLnoTXtYpl+eg=
-X-Received: by 10.49.48.106 with SMTP id k10mr10565167qen.57.1389380778586;
- Fri, 10 Jan 2014 11:06:18 -0800 (PST)
-Received: by 10.96.76.5 with HTTP; Fri, 10 Jan 2014 11:06:18 -0800 (PST)
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=TClkmpIz8icq/8mD11VkPtyY0PElAA+zaFughWri5XM=;
+        b=lWZ7mH5XyBrZXddeJtlNJY3cgDbMl1WHbktLOjIY7wdI1bCJm3aDfiswizyheitKNR
+         88ANfZ4j255qgVSx1bePTxwVFbvSQT7eZdFFjrc1ska+yEBfLeTQtUTL3aTlqwg/SeHX
+         2rz12Xydxq50yW2B4WD2XtbzoFwty224TwBd7xCF2BAXVA6jjL3AZ9/wRmjTM0okqkP/
+         sL8oQwRGPxQED/kGvkv5ExfWZCVy0+VaPBqkVzdl7wfcSvTAQrWCpO2hDsbT5k3DH/4H
+         PMC4XhVSU36S+6y3XyfUcmaOK6k4sRkgwzXDTYtLyyAyHm7qQ0lBuRiRmed5DS2YAzv5
+         33hQ==
+X-Received: by 10.236.105.236 with SMTP id k72mr13469224yhg.30.1389381413219;
+        Fri, 10 Jan 2014 11:16:53 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id w45sm12988728yhk.4.2014.01.10.11.16.52
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 10 Jan 2014 11:16:52 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <CABRpx=1CvB55zeL1L8QOvyfbJCaG9FK+HEz-iK9cFGrnxmOJtg@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240308>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240309>
 
-I found this mailing list thread discussing the problem I'm currently
-experiencing: http://git.661346.n2.nabble.com/Fwd-Error-with-git-svn-pushing-a-rename-td7599382.html
+Hi Dan,
 
-Apparently a patch was submitted to fix this bug and I'm trying to
-figure out what version of what I need to fix this bug.  The inability
-to rename a class is a pretty limiting.
+Dan Kaplan wrote:
 
-My environment is probably different from most.  I'm using cygwin.
-This makes it very difficult to use different versions of
-git/svn/git-svn, but I'm interested in learning git more so I'm
-willing to try whatever it takes.
+> My environment is probably different from most.  I'm using cygwin.
+> This makes it very difficult to use different versions of
+> git/svn/git-svn, but I'm interested in learning git more so I'm
+> willing to try whatever it takes.
+>
+> $ git version
+> git version 1.8.3.4
+>
+> $ svn --version
+> svn, version 1.8.5 (r1542147)
+>    compiled Nov 25 2013, 10:45:07 on x86_64-unknown-cygwin
 
-$ git version
-git version 1.8.3.4
+You have three choices:
 
-$ svn --version
-svn, version 1.8.5 (r1542147)
-   compiled Nov 25 2013, 10:45:07 on x86_64-unknown-cygwin
+ A) upgrade git to latest "master"
+ B) upgrade subversion to latest "trunk"
+ C) downgrade subversion to a version before that bug was introduced
 
-Copyright (C) 2013 The Apache Software Foundation.
-This software consists of contributions made by many people;
-see the NOTICE file for more information.
-Subversion is open source software, see http://subversion.apache.org/
+(A) is probably simplest.  E.g., something like the following should work:
 
-The following repository access (RA) modules are available:
+  git clone https://kernel.googlesource.com/pub/scm/git/git.git
+  cd git
+  make -j8
+  make test; # optional, to verify that the git you built works ok
+  export PATH=$(pwd)/bin-wrappers:$PATH
 
-* ra_svn : Module for accessing a repository using the svn network protocol.
-  - with Cyrus SASL authentication
-  - handles 'svn' scheme
-* ra_local : Module for accessing a repository on local disk.
-  - handles 'file' scheme
-* ra_serf : Module for accessing a repository via WebDAV protocol using serf.
-  - using serf 1.3.3
-  - handles 'http' scheme
-  - handles 'https' scheme
+Now the updated git is in your $PATH and you can use it.
 
-Thanks for the help
+See INSTALL in the git source tree for more details.
 
---
-Thanks,
-Dan
-
--- 
-CONFIDENTIALITY NOTICE: The information contained in this electronic 
-transmission may be confidential. If you are not an intended recipient, be 
-aware that any disclosure, copying, distribution or use of the information 
-contained in this transmission is prohibited and may be unlawful. If you 
-have received this transmission in error, please notify us by email reply 
-and then erase it from your computer system.
+Hope that helps,
+Jonathan
