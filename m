@@ -1,114 +1,78 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH sb/diff-orderfile-config] diff test: reading a directory as a
- file need not error out
-Date: Fri, 10 Jan 2014 12:10:31 -0800
-Message-ID: <20140110201031.GI4776@google.com>
-References: <CADsOX3DBmNituJsiYEBRENQeosASXtV_hd0zUW13cBoDZWHRhg@mail.gmail.com>
- <1387411692-15562-3-git-send-email-naesten@gmail.com>
+Subject: Re: [PATCH 0/6] Make 'git help everyday' work
+Date: Fri, 10 Jan 2014 12:19:57 -0800
+Message-ID: <20140110201957.GJ4776@google.com>
+References: <1389309192-5748-1-git-send-email-philipoakley@iee.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Anders Waldenborg <anders@0x63.nu>,
-	Antoine Pelisse <apelisse@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Samuel Bronson <naesten@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 10 21:10:49 2014
+Cc: GitList <git@vger.kernel.org>
+To: Philip Oakley <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Fri Jan 10 21:20:10 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W1iPm-0006NJ-0I
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Jan 2014 21:10:46 +0100
+	id 1W1iYq-0005Qt-1X
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Jan 2014 21:20:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758167AbaAJUKh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Jan 2014 15:10:37 -0500
-Received: from mail-yh0-f51.google.com ([209.85.213.51]:57844 "EHLO
-	mail-yh0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751258AbaAJUKf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Jan 2014 15:10:35 -0500
-Received: by mail-yh0-f51.google.com with SMTP id l109so783908yhq.38
-        for <git@vger.kernel.org>; Fri, 10 Jan 2014 12:10:34 -0800 (PST)
+	id S1755987AbaAJUUB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Jan 2014 15:20:01 -0500
+Received: from mail-gg0-f179.google.com ([209.85.161.179]:34958 "EHLO
+	mail-gg0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751209AbaAJUUA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Jan 2014 15:20:00 -0500
+Received: by mail-gg0-f179.google.com with SMTP id e5so344775ggh.10
+        for <git@vger.kernel.org>; Fri, 10 Jan 2014 12:20:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        bh=aT4ChR1mNzHZfnexd/b1n577ePdKokdwqhM7XXW0i5E=;
-        b=v/BoDTzTx0MZ6N0rDFHJNuMBY4Ba6s7cXSVqCd/NF1x+69j4gdjUALeBqIY4/V3qvB
-         dO3FUgAPbgaBXiYEDUcb4O/otKKWbrH2mlzxqt0gNJ706/8d2hFnkC+AA4dUnq2aB0Q0
-         uNSKStgNFM4Ze1AWvqy3e/yYufqkbK0qu7ZcIBdLmXjZ4ZQro05yGHPysCiPyPfoVW40
-         J8I/zlinYQY3C3W4xhTiv3xcCtMjNUL4Q5Z7sctQDX92Ndpvqe+vjqS2qC7s/85w+ghI
-         jnl3B43Ox2r/mT3d0dDmFsLD5qISwkjgo5yYhnRCmEvw2b7APxm05ydR5f+v2ZJnQT1L
-         i+6w==
-X-Received: by 10.236.147.129 with SMTP id t1mr2654204yhj.91.1389384634738;
-        Fri, 10 Jan 2014 12:10:34 -0800 (PST)
+        bh=9znke24mCpdDJEvaJS2TaJk6+Pa/durY+/2bHDosxZA=;
+        b=BpeYBAaicw3KgIYSyvNgax75ZLM/Yx5IHOIbUeAVmafG9Ww9nLyaasf1GqRoRyN2t1
+         zhJ0J22oFeys+pjlgcPlu8gMLt/zkmJuzqVpEKWEGrt5TSDQVuPc3VMhCPc4tKbxxARX
+         ZN8M8/A5TZbS8QqMqya4qKHAMojytEdF1dxc8r7jKfBVkaSyOq+YifnG3puCTPpeDu2p
+         dp35lePCtXk1NqKF+fc5WzQNdDmMtIWf5fvrSIoaYuUTjPPVw9PhByqr1s7EHzm2cBBd
+         tyFplSA9ad+HuuVtIY8E2Ieg6brfu9gkc0tfMGi1Nxd+Lk1n6T4AZpDZzl+xrwU+IXju
+         cEqQ==
+X-Received: by 10.236.60.70 with SMTP id t46mr2670672yhc.117.1389385200052;
+        Fri, 10 Jan 2014 12:20:00 -0800 (PST)
 Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id 23sm5583225yhj.5.2014.01.10.12.10.33
+        by mx.google.com with ESMTPSA id z7sm13214270yha.14.2014.01.10.12.19.59
         for <multiple recipients>
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 10 Jan 2014 12:10:34 -0800 (PST)
+        Fri, 10 Jan 2014 12:19:59 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <1387411692-15562-3-git-send-email-naesten@gmail.com>
+In-Reply-To: <1389309192-5748-1-git-send-email-philipoakley@iee.org>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240315>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240316>
 
-There is no guarantee that strbuf_read_file must error out for
-directories.  On some operating systems (e.g., Debian GNU/kFreeBSD
-wheezy), reading a directory gives its raw content:
-
-	$ head -c5 < / | cat -A
-	^AM-|^_^@^L$
-
-As a result, 'git diff -O/' succeeds instead of erroring out on
-these systems, causing t4056.5 "orderfile is a directory" to fail.
-
-On some weird OS it might even make sense to pass a directory to the
--O option and this is not a common user mistake that needs catching.
-Remove the test.
-
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
 Hi,
 
-t4056 is failing on systems using glibc with the kernel of FreeBSD[1]:
+Philip Oakley wrote:
 
-| expecting success: 
-| 	test_must_fail git diff -O/ --name-only HEAD^..HEAD
-|
-| a.h
-| b.c
-| c/Makefile
-| d.txt
-| test_must_fail: command succeeded: git diff -O/ --name-only HEAD^..HEAD
-| not ok 5 - orderfile is a directory
+> The "Everyday GIT With 20 Commands Or So" guide is not accessible
+> via the git help system. Fix that.
 
-How about this patch?
+Neat. :)
 
-Thanks,
+Junio covered everything I'd want to say about patch 1/6.
+
+After fixing that, I'd suggest squashing all 6 patches into a single
+patch.  They all are part of accomplishing the same task, they are not
+too hard to read together, and the intermediate state after applying a
+few but not the rest doesn't make much sense.  The details of patches
+2-6/6 look good to me.
+
+Alternatively, this could be two patches:
+
+ 1 - modify everyday.txt in place to be a suitable manpage
+ 2 - rename it, add a placeholder for the old name, and modify the
+     build rules to treat it as an actual manpage
+
+Hope that helps,
 Jonathan
-
-[1] https://buildd.debian.org/status/fetch.php?pkg=git&arch=kfreebsd-amd64&ver=1%3A2.0~next.20140107-1&stamp=1389379274
-
- t/t4056-diff-order.sh | 4 ----
- 1 file changed, 4 deletions(-)
-
-diff --git a/t/t4056-diff-order.sh b/t/t4056-diff-order.sh
-index 1ddd226..9e2b29e 100755
---- a/t/t4056-diff-order.sh
-+++ b/t/t4056-diff-order.sh
-@@ -68,10 +68,6 @@ test_expect_success POSIXPERM,SANITY 'unreadable orderfile' '
- 	test_must_fail git diff -Ounreadable_file --name-only HEAD^..HEAD
- '
- 
--test_expect_success 'orderfile is a directory' '
--	test_must_fail git diff -O/ --name-only HEAD^..HEAD
--'
--
- for i in 1 2
- do
- 	test_expect_success "orderfile using option ($i)" '
--- 
-1.8.5.1
