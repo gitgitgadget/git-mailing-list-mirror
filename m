@@ -1,87 +1,56 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH mm/mv-file-to-no-such-dir-with-slash] mv: let 'git mv file no-such-dir/' error out on Windows, too
-Date: Fri, 10 Jan 2014 11:30:54 -0800
-Message-ID: <xmqqd2jz8wi9.fsf@gitster.dls.corp.google.com>
-References: <1386059524-14442-1-git-send-email-Matthieu.Moy@imag.fr>
-	<52CD7DE8.6070101@kdbg.org>
-	<xmqq7ga8aibn.fsf@gitster.dls.corp.google.com>
-	<52D04856.9070005@kdbg.org>
+From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+Subject: Re: A question about the error: svn_fspath__is_canonical
+Date: Fri, 10 Jan 2014 20:34:16 +0100
+Message-ID: <52D04B38.6060203@web.de>
+References: <CABRpx=1CvB55zeL1L8QOvyfbJCaG9FK+HEz-iK9cFGrnxmOJtg@mail.gmail.com> <20140110191650.GF4776@google.com> <CABRpx=3vf-bwtA8_2ndPYo+fWCNiHQdSbLRGFWts4Wp3uN6yDA@mail.gmail.com> <20140110192825.GG4776@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org,
-	Duy Nguyen <pclouds@gmail.com>
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Fri Jan 10 20:31:11 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>,
+	Dan Kaplan <dank@mirthcorp.com>
+X-From: git-owner@vger.kernel.org Fri Jan 10 20:34:29 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W1hnT-0000A7-76
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Jan 2014 20:31:11 +0100
+	id 1W1hqe-0005Ns-Bz
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Jan 2014 20:34:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751803AbaAJTbH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Jan 2014 14:31:07 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43909 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751172AbaAJTbG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Jan 2014 14:31:06 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AE3B2617BB;
-	Fri, 10 Jan 2014 14:31:04 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=H8pmAOlvsedMbnZrT3fRW/iu+BI=; b=d6aMvl
-	2vw8xHR1M+H+ca9O/IjVfTT7TUJWKgGSuMSfBLcow93gzJ/YJ6U5BSxHU6G3JFOZ
-	DEwFpEz1cK77rXQrIeSCfo9Qvp2EP36T6aiJWqLAHbw9vXbxSNaAqpw7e2J3Zmfs
-	kKZYX/pKuwh+cGIgf8BBgZkFD0+Llv4RznYHY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=p6SSCOnxGSq9+LRI34Qk4L0HsPTwaca3
-	vKi4PLFYb1pu5W1oMW2AUf3yABYIKxB0mFtRPrEzbIo1IlLisDQiNbR59zlfvLme
-	IKnti8zOXiBVFwOwaSscTNMtYHuc19L43NJfhqycPyXYfSVkFw3FGvvEv8WH5c/y
-	S4zkJnuMOxk=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 85FCE617B9;
-	Fri, 10 Jan 2014 14:31:04 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0A7C7617B5;
-	Fri, 10 Jan 2014 14:31:01 -0500 (EST)
-In-Reply-To: <52D04856.9070005@kdbg.org> (Johannes Sixt's message of "Fri, 10
-	Jan 2014 20:21:58 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: BD5FF72C-7A2D-11E3-96C5-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1757860AbaAJTeZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Jan 2014 14:34:25 -0500
+Received: from mout.web.de ([212.227.15.14]:53141 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753341AbaAJTeY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Jan 2014 14:34:24 -0500
+Received: from [192.168.209.26] ([78.72.74.102]) by smtp.web.de (mrweb004)
+ with ESMTPSA (Nemesis) id 0MJ1Nh-1W4AgY0Rlx-002btd for <git@vger.kernel.org>;
+ Fri, 10 Jan 2014 20:34:23 +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:24.0) Gecko/20100101 Thunderbird/24.2.0
+In-Reply-To: <20140110192825.GG4776@google.com>
+X-Provags-ID: V03:K0:LF9fY/733CdYMZnyYqkbnVOCUss8rfKc9dPbpDanRqdRmmjekPm
+ Zm/tQYQH6te5OIJFhRU+QPq5vHaEKB2y7zLEbxzGkG8oGcj8nLx1fTjbo4ql2DECBGb8HnY
+ FLCPkK56KicxVPUYwNHCRTOi06JpW9dZtY6ohGMs7ECqAgUce1ffFF4GTudQYeYnaA69x0E
+ trIsHTufIcLzktgtg9wBg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240313>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240314>
 
-Johannes Sixt <j6t@kdbg.org> writes:
-
-> The file is renamed to no-such-dir without the slash at the end. The
-> updated commit message would be:
->
-> mv: let 'git mv file no-such-dir/' error out on Windows, too
->
-> The previous commit c57f628 (mv: let 'git mv file no-such-dir/' error out)
-> relies on that rename("src", "dst/") fails if directory dst does not
-> exist (note the trailing slash). This does not work as expected on Windows:
-> The rename() call does not fail, but renames src to dst (without the
-> trailing slash). Insert an explicit check for this case to force an error.
->
-> This changes the error message from
->
->    $ git mv file no-such-dir/
->    fatal: renaming 'file' failed: Not a directory
->
-> to
->
->    $ git mv file no-such-dir/
->    fatal: destination directory does not exist, source=file, destination=no-such-dir/
->
-> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
-
-Thanks.
+On 2014-01-10 20.28, Jonathan Nieder wrote:
+> Dan Kaplan wrote:
+> 
+>>                              Do you think it'll still work?
+> 
+> Yes, that's why I suggested it. ;-)
+> 
+> You might need to install the gcc-core, libcurl-devel, openssl-devel,
+> and subversion-perl packages first.
+> 
+> Regards,
+> Jonathan
+Out of my head:
+You probably need to install even:
+make, expat-devel (or similar)
