@@ -1,90 +1,85 @@
-From: Enno Weichert <enno.weichert@gmail.com>
-Subject: Re: Subject: Something like cat-file for the index?
-Date: Fri, 10 Jan 2014 15:27:31 +0100
-Message-ID: <CABtFQN4q9un81W3G-o7tbG3-LUSEf2YdP0e9zP84JGYu6qwOfw@mail.gmail.com>
-References: <CABtFQN6n_FKTfGt1ubkL51t8n_iJ0vcYW4ZEYLOkAsFNCq0GQw@mail.gmail.com>
-	<871u0g2dtn.fsf@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/3] shorten_unambiguous_ref(): tighten up pointer arithmetic
+Date: Fri, 10 Jan 2014 10:03:17 -0800
+Message-ID: <xmqqlhyn90ka.fsf@gitster.dls.corp.google.com>
+References: <1389192220-13913-1-git-send-email-mhagger@alum.mit.edu>
+	<1389192220-13913-4-git-send-email-mhagger@alum.mit.edu>
+	<xmqqtxdc92ub.fsf@gitster.dls.corp.google.com>
+	<52D000CC.1060402@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Thomas Gummerer <t.gummerer@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 10 15:27:40 2014
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Fri Jan 10 19:03:35 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W1d3j-0000xt-Ey
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Jan 2014 15:27:39 +0100
+	id 1W1gQd-0004Cc-Bj
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Jan 2014 19:03:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755686AbaAJO1e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Jan 2014 09:27:34 -0500
-Received: from mail-ie0-f178.google.com ([209.85.223.178]:51142 "EHLO
-	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751173AbaAJO1c (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Jan 2014 09:27:32 -0500
-Received: by mail-ie0-f178.google.com with SMTP id lx4so5187517iec.37
-        for <git@vger.kernel.org>; Fri, 10 Jan 2014 06:27:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=SkY31M7TKBEzxdGqNCpHdezS1gMQOx4HPOfHhv3twcY=;
-        b=SKP+NYVswQL3R8x2SsEdLB5vwFb6TdDB9Dt53ZkQtTtq3avd7IPtVYsxj5IfEkZCWv
-         zyM7GGr4KKxXbavG7EhDZH9/Ywbv8XP6+VPWI89nGGJkofposd3groR0FcCCI+mjW1e3
-         TCVELhaB8kYXgFM7Z0xKR2CFQAONwQE53t4J7kN0+06uCv+/F26IcbxBfuiINWHuAJL5
-         0EiG87T9wDSLsS9bFTQPRfibQ2DDx58SCnPL8tYnnQwekmMyVkbwp3rr57mvmMbhvBIW
-         nCiOyiTHrlJbN5BVbkHhJjJJE0NvASLguqE78oDprxC/6tbPFLIO+oH7CWKM5DXSYc2C
-         GBAA==
-X-Received: by 10.50.159.194 with SMTP id xe2mr3693491igb.13.1389364051113;
- Fri, 10 Jan 2014 06:27:31 -0800 (PST)
-Received: by 10.64.17.233 with HTTP; Fri, 10 Jan 2014 06:27:31 -0800 (PST)
-In-Reply-To: <871u0g2dtn.fsf@gmail.com>
+	id S1751306AbaAJSD2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Jan 2014 13:03:28 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34398 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750962AbaAJSD0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Jan 2014 13:03:26 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6562B619D7;
+	Fri, 10 Jan 2014 13:03:25 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=3MUcjuRmuNdY86a4bThvet5o8aA=; b=iF5zXY
+	zv5MlLeqxsKBoPqsPORrHuJNW0pAf/BsK4+kVT+sIKJPpjJowodaHgptgbbamzfH
+	VEnPnY/Do0Gdg3AcKgXO8MZFaO/Nyixsr1gjsTZxYTc9ZX1uLwrVxdMgPyFucd6U
+	6qY3zoC6iJjU8nl7iyHiD400mBhgdziR+9wUk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=H0msa+i19L6G9zPIL3t8XfBXcu1eTY0l
+	bK4TqFXGQ+IfKE+WUJeoc7YhPC7wtVtsRKRcrGv7+9YiZ8pAtvfyWS5zaFsqhxLN
+	czEVJ60Wml/u4+Sf4OtJ4FkEez2GwT05KJcK6QeO3ktl/RrW9lu8wXIn50Uy8dfz
+	OQgO6J2CiKU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3C451619D6;
+	Fri, 10 Jan 2014 13:03:25 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 612F6619CD;
+	Fri, 10 Jan 2014 13:03:21 -0500 (EST)
+In-Reply-To: <52D000CC.1060402@alum.mit.edu> (Michael Haggerty's message of
+	"Fri, 10 Jan 2014 15:16:44 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 7DC93990-7A21-11E3-810F-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240304>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240305>
 
-Thank you :)
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-On 1/10/14, Thomas Gummerer <t.gummerer@gmail.com> wrote:
->
-> Hi,
->
-> Enno Weichert <enno.weichert@gmail.com> writes:
->> Hi,
->>
->> I'd like to have a more technical look into the index file and what/how
->> it
->> stores data; call it educational spelunking.
->>
->> I know the index-format.txt but I'd really like to save me the work to
->> implement a pretty-printed output based on it.
->> I know ls-files but that's obviously not the whole thing.
->>
->> So: is there something like cat-file, that basically gives me a readable
->> version of the information (version number and all...) in the index
->> already
->> implemented or did nobody care until now?
->
-> You can use `git ls-files --debug` and `git ls-files --stage` to get all
-> the information about the files in the index.  The meaning of the flags
-> is the only thing that's not shown by the command, and I don't think
-> there is a tool yet to examine them.
->
-> The undocumented --resolve-undo flag to git ls-files shows you the
-> resolve undo data that is stored in the index.
->
-> If you build git yourself, the `test-dump-cache-tree` helper can be used
-> to show all information about the cache-tree that is stored in the
-> index.
->
-> The you can get the version of the index either by using
-> `test-index-version` when you build git yourself, or by using `file
-> .git/index`, which in addition will give you the number of entries that
-> are in the index.
->
-> --
-> Thomas
->
+> As for removing the third argument of refname_match(): although all
+> callers pass it ref_ref_parse_rules, that array is sometimes passed to
+> the function via the alias "ref_fetch_rules".  So I suppose somebody
+> wanted to leave the way open to make these two rule sets diverge (though
+> I don't know how likely that is to occur).
+
+It is the other way around.  We used to use two separate rules for
+the normal ref resolution dwimming and dwimming done to decide which
+remote ref to grab.  For example, 'x' in 'git log x' can mean
+'refs/remotes/x/HEAD', but 'git fetch origin x' would not grab
+'refs/remotes/x/HEAD' at 'origin'.  Also, 'git fetch origin v1.0'
+did not look into 'refs/tags/v1.0' in the 'origin' repository back
+when these two rules were different.
+
+This was originally done very much on purpose, in order to avoid
+surprises and to discourage meaningless usage---you would not expect
+us to be interested in the state of a third repository that was
+observed by our 'origin' the last time (which we do not even know
+when).
+
+When we harmonized these two rules later and we #defined out
+ref_fetch_rules away to avoid potential breakages for in-flight
+topics.  The old synonym can now go safely.
