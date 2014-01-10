@@ -1,83 +1,149 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/6] Make 'git help everyday' work
-Date: Fri, 10 Jan 2014 10:09:38 -0800
-Message-ID: <xmqqha9b909p.fsf@gitster.dls.corp.google.com>
-References: <1389309192-5748-1-git-send-email-philipoakley@iee.org>
-	<xmqqppo090m7.fsf@gitster.dls.corp.google.com>
-	<0AB7145111924BA986B1E172CD293B1D@PhilipOakley>
+From: Maxime Coste <frrrwww@gmail.com>
+Subject: [PATCH] git-p4: Do not include diff in spec file when just preparing
+ p4
+Date: Fri, 10 Jan 2014 18:18:07 +0000
+Message-ID: <20140110181807.GA29164@nekage>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "GitList" <git@vger.kernel.org>
-To: "Philip Oakley" <philipoakley@iee.org>
-X-From: git-owner@vger.kernel.org Fri Jan 10 19:09:50 2014
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 10 19:16:28 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W1gWk-0006SS-0W
-	for gcvg-git-2@plane.gmane.org; Fri, 10 Jan 2014 19:09:50 +0100
+	id 1W1gd8-0000Zr-Vo
+	for gcvg-git-2@plane.gmane.org; Fri, 10 Jan 2014 19:16:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751311AbaAJSJq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Jan 2014 13:09:46 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50785 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750816AbaAJSJp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Jan 2014 13:09:45 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 695B961BB9;
-	Fri, 10 Jan 2014 13:09:44 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=/Tc9306vYUhvP2jlgcRx/P1HGLo=; b=T1NsJJ
-	tFcOQcqsDZcDA7xTUT0IPcrMMq9XNjcLt14WPRWbw77oSjFvDgHMxwXrjJkZxJX6
-	/ftzlrIVxLs4THs4c7fLdVRiQAN91HRKWsULKW3alwkfNSqDclx28PmLAd6saDNy
-	VODTbHqWOM6V2E1YH1/Thb3FHR8CgIhZeM2qE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=VkqrqeXYzvT4Z9tnUdQHKHhdkz5Darpa
-	uDXwxWnMBqXlvSeCMUNUBZ8TA+UYpQgtJCwONn1ZoH6WToLEdFQv6bEiWxuee01y
-	QX1/s7JhxnLjNGJbIiv0Tvrnff3uHHslt/NyuwnzmpzOzDYZ2NGOSI3kEMOLjWDg
-	aFC0SYMSckw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E942261BB6;
-	Fri, 10 Jan 2014 13:09:42 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B7D7461BB1;
-	Fri, 10 Jan 2014 13:09:39 -0500 (EST)
-In-Reply-To: <0AB7145111924BA986B1E172CD293B1D@PhilipOakley> (Philip Oakley's
-	message of "Fri, 10 Jan 2014 08:06:28 -0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 5F4D2C1E-7A22-11E3-A919-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752235AbaAJSQX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Jan 2014 13:16:23 -0500
+Received: from mail-wi0-f174.google.com ([209.85.212.174]:60184 "EHLO
+	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750855AbaAJSQV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Jan 2014 13:16:21 -0500
+Received: by mail-wi0-f174.google.com with SMTP id z2so8699410wiv.7
+        for <git@vger.kernel.org>; Fri, 10 Jan 2014 10:16:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent;
+        bh=b+LeM28G0nyvXRr98g2jRJRZTbdDyyrIdurqcq7TNKk=;
+        b=oG2o2zyP1xGogpho3HjUewhsm13JMfELAlwAvDiA9ZnZEUC0F9jmTBfItmlyev4EEq
+         6kMPX7WnuGRwApSYud6W+8Y+xlZ08LPC0Bd5wNobSq+DRUxW2IFFyqG2QnOxvAnTUgsu
+         KvKrH5KRuvkM70E4tESTlL/G3zXk/qO2pEjPsLzbKSRNC+taLYscWv+yOQWq79rBkdGl
+         KS/p260WCYSgTrIKgp5CqjjHoPOM5IhccJReSVTaLmBsd7oBuHuECu75RsLblrE7ncPL
+         /nkg7I9Ei8baecBknUIefF3T1ZoK1DmLeGkGABQJmu8Jw2508rwOe+ej9TpePclqfaI9
+         wf4A==
+X-Received: by 10.180.36.51 with SMTP id n19mr4047976wij.48.1389377780406;
+        Fri, 10 Jan 2014 10:16:20 -0800 (PST)
+Received: from localhost ([89.100.253.33])
+        by mx.google.com with ESMTPSA id k10sm4774833wjf.11.2014.01.10.10.16.19
+        for <git@vger.kernel.org>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 10 Jan 2014 10:16:19 -0800 (PST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240306>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240307>
 
-"Philip Oakley" <philipoakley@iee.org> writes:
+The diff information render the spec file unusable as is by p4,
+do not include it when run with --prepare-p4-only so that the
+given file can be directly passed to p4.
+---
+ git-p4.py | 70 +++++++++++++++++++++++++++++++++++----------------------------
+ 1 file changed, 39 insertions(+), 31 deletions(-)
 
-> From: "Junio C Hamano" <gitster@pobox.com>
->>I think we already use a nicer way to set up a page alias to keep
->> old links working than making a copy in Documentation/; please mimic
->> that if possible.
->
-> This was mainly about ensuring that the 'git help' command could
-> access these extra extra guides that it currently misses. (Tt also
-> misses the 'user-manual', which isn't a man page, but could have a
-> link page to guide the seeker of truth between 'git help' and the
-> actual user-manual)
->
-> The only method I can see for that (via help.c) is to get the filename
-> format correct.  Where you thinking of something else?
-
-I do not have an objection against the creation of giteveryday.txt;
-I was questioning the way the original everyday.txt was left behind
-to bit-rot.  It is good to keep _something_ there, because there may
-be old URLs floating around that point at Documentation/everyday.txt,
-but the contents of that file does not have to be a stale copy.
-
-Cf. bd4a3d61 (Rename {git- => git}remote-helpers.txt, 2013-01-31)
-for how we renamed git-remote-helpers.txt to gitremote-helpers.txt
+diff --git a/git-p4.py b/git-p4.py
+index 5ea8bb8..7c65340 100755
+--- a/git-p4.py
++++ b/git-p4.py
+@@ -1397,38 +1397,14 @@ class P4Submit(Command, P4UserMap):
+             submitTemplate += "######## Use option --preserve-user to modify authorship.\n"
+             submitTemplate += "######## Variable git-p4.skipUserNameCheck hides this message.\n"
+ 
+-        separatorLine = "######## everything below this line is just the diff #######\n"
+-
+-        # diff
+-        if os.environ.has_key("P4DIFF"):
+-            del(os.environ["P4DIFF"])
+-        diff = ""
+-        for editedFile in editedFiles:
+-            diff += p4_read_pipe(['diff', '-du',
+-                                  wildcard_encode(editedFile)])
+-
+-        # new file diff
+-        newdiff = ""
+-        for newFile in filesToAdd:
+-            newdiff += "==== new file ====\n"
+-            newdiff += "--- /dev/null\n"
+-            newdiff += "+++ %s\n" % newFile
+-            f = open(newFile, "r")
+-            for line in f.readlines():
+-                newdiff += "+" + line
+-            f.close()
+-
+-        # change description file: submitTemplate, separatorLine, diff, newdiff
+-        (handle, fileName) = tempfile.mkstemp()
+-        tmpFile = os.fdopen(handle, "w+")
+-        if self.isWindows:
+-            submitTemplate = submitTemplate.replace("\n", "\r\n")
+-            separatorLine = separatorLine.replace("\n", "\r\n")
+-            newdiff = newdiff.replace("\n", "\r\n")
+-        tmpFile.write(submitTemplate + separatorLine + diff + newdiff)
+-        tmpFile.close()
+-
+         if self.prepare_p4_only:
++            (handle, fileName) = tempfile.mkstemp()
++            tmpFile = os.fdopen(handle, "w+")
++            if self.isWindows:
++                submitTemplate = submitTemplate.replace("\n", "\r\n")
++            tmpFile.write(submitTemplate)
++            tmpFile.close()
++
+             #
+             # Leave the p4 tree prepared, and the submit template around
+             # and let the user decide what to do next
+@@ -1463,6 +1439,38 @@ class P4Submit(Command, P4UserMap):
+             print
+             return True
+ 
++        else:
++            separatorLine = "######## everything below this line is just the diff #######\n"
++
++            # diff
++            if os.environ.has_key("P4DIFF"):
++                del(os.environ["P4DIFF"])
++            diff = ""
++            for editedFile in editedFiles:
++                diff += p4_read_pipe(['diff', '-du',
++                                      wildcard_encode(editedFile)])
++
++            # new file diff
++            newdiff = ""
++            for newFile in filesToAdd:
++                newdiff += "==== new file ====\n"
++                newdiff += "--- /dev/null\n"
++                newdiff += "+++ %s\n" % newFile
++                f = open(newFile, "r")
++                for line in f.readlines():
++                    newdiff += "+" + line
++                f.close()
++
++            # change description file: submitTemplate, separatorLine, diff, newdiff
++            (handle, fileName) = tempfile.mkstemp()
++            tmpFile = os.fdopen(handle, "w+")
++            if self.isWindows:
++                submitTemplate = submitTemplate.replace("\n", "\r\n")
++                separatorLine = separatorLine.replace("\n", "\r\n")
++                newdiff = newdiff.replace("\n", "\r\n")
++            tmpFile.write(submitTemplate + separatorLine + diff + newdiff)
++            tmpFile.close()
++
+         #
+         # Let the user edit the change description, then submit it.
+         #
+-- 
+1.8.5.2
