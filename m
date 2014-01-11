@@ -1,90 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 3/4] merge: make prepare_to_commit responsible for write_merge_state
-Date: Fri, 10 Jan 2014 16:20:39 -0800
-Message-ID: <xmqqha9b74iw.fsf@gitster.dls.corp.google.com>
-References: <6B177FFA-1797-45FE-9EF1-2C9E6EE8A234@yaauie.com>
-	<1389228344-38813-1-git-send-email-ryan@yaauie.com>
-	<1389228344-38813-4-git-send-email-ryan@yaauie.com>
+From: "Jason St. John" <jstjohn@purdue.edu>
+Subject: Re: [PATCH] Fix typesetting in Bugs section of 'git-rebase' man page
+ (web version)
+Date: Fri, 10 Jan 2014 20:25:12 -0500
+Message-ID: <CAEjxke-fPwTctUt9x_o1YwTKK2fX5TOPA7LStXUh+ejUVxZtpg@mail.gmail.com>
+References: <1384906483-15260-1-git-send-email-jstjohn@purdue.edu> <xmqqwqk37kdy.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkg?= =?utf-8?B?Tmfhu41j?= Duy 
-	<pclouds@gmail.com>, Jeff King <peff@peff.net>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To: Ryan Biesemeyer <ryan@yaauie.com>
-X-From: git-owner@vger.kernel.org Sat Jan 11 01:20:47 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jan 11 02:41:27 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W1mJi-0000L6-E8
-	for gcvg-git-2@plane.gmane.org; Sat, 11 Jan 2014 01:20:46 +0100
+	id 1W1nZm-0006V9-Fl
+	for gcvg-git-2@plane.gmane.org; Sat, 11 Jan 2014 02:41:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758311AbaAKAUn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Jan 2014 19:20:43 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62513 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758307AbaAKAUm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Jan 2014 19:20:42 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C964B62FB4;
-	Fri, 10 Jan 2014 19:20:41 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=fwfmYNqGGHF+4CPyIMivHmHDoEs=; b=NUdAmM
-	NRAKaZyd4+PCN5JTp5//GK3RORs3dMnWauP889l7/MofU3DQJlSF2FSE6ELRVQu2
-	bBR//TLoKsxt7xLwrvuio+Ssgz2fgJFDB78ZAnhAZbb8fUJqc2EcsoXPpN0NX7nX
-	jQ/61SgM7faxLInOhknZVIDe3OXsib1S1DAh0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=GOBV3AcHVJCjvhvWSbuhrRzSCtuZ7knK
-	qYfM+hh+xvAIKMWnpBjcDztKtQGSOQ9WjJB6CUJOomWgBDnyYjpt1jy+el9xIiq4
-	SzMXy2OzTg+GYLWITlZcrnJMFG0uCknnAZ8TNJIURRztLN7EAF3M+j/q2v9U6A1j
-	j+cH8hy/g04=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B9CBC62FB2;
-	Fri, 10 Jan 2014 19:20:41 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1066062FB1;
-	Fri, 10 Jan 2014 19:20:40 -0500 (EST)
-In-Reply-To: <1389228344-38813-4-git-send-email-ryan@yaauie.com> (Ryan
-	Biesemeyer's message of "Thu, 9 Jan 2014 00:45:43 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 34144B16-7A56-11E3-A15A-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751343AbaAKBlX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Jan 2014 20:41:23 -0500
+Received: from mailhub246.itcs.purdue.edu ([128.210.5.246]:41864 "EHLO
+	mailhub246.itcs.purdue.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750931AbaAKBlV (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 10 Jan 2014 20:41:21 -0500
+X-Greylist: delayed 948 seconds by postgrey-1.27 at vger.kernel.org; Fri, 10 Jan 2014 20:41:21 EST
+Received: from mail-qa0-f44.google.com (mail-qa0-f44.google.com [209.85.216.44])
+	(authenticated bits=0)
+	by mailhub246.itcs.purdue.edu (8.14.4/8.14.4/mta-auth.smtp.purdue.edu) with ESMTP id s0B1PW39012233
+	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=NOT)
+	for <git@vger.kernel.org>; Fri, 10 Jan 2014 20:25:32 -0500
+Received: by mail-qa0-f44.google.com with SMTP id o15so4758048qap.17
+        for <git@vger.kernel.org>; Fri, 10 Jan 2014 17:25:32 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=iiWCicp+fhn6YrBd8nUcy9kgq0y9Jkg/6uWBesrsNcM=;
+        b=EtMt4uvlmqE3bJLOWWGFFdRHwyQAhMRq/mz2vvNtoZAEzig3JVFr1jJwYT95D09w/P
+         8gE6SjsY6NaaOxC0TPxl3z/V6YpGIDiqg+TPTn7Vj0Uof+Qpa6EMKZ+i9TMzhHV8JrBb
+         7FEmevjNTe/V6PNyrp7VyCrsBEjweMU+BJdSrXFgzxu/BVIIqzy9BkpzPAFCk74BPXsD
+         Mts4Z6sNCFWypQhEQdnA5xJWlRwcLvPndzQtMTewSr6927vMKfMgiwVRD+EyJVybQ1BR
+         mM8vNADxQUapuPMyvzg3fMfioXto2A6HCCN/RwgqX/7E9JJfsLLHY+c3SjtJfE2MOg/f
+         xd8A==
+X-Received: by 10.224.76.70 with SMTP id b6mr13648805qak.19.1389403532153;
+ Fri, 10 Jan 2014 17:25:32 -0800 (PST)
+Received: by 10.224.59.134 with HTTP; Fri, 10 Jan 2014 17:25:12 -0800 (PST)
+In-Reply-To: <xmqqwqk37kdy.fsf@gitster.dls.corp.google.com>
+X-PMX-Version: 6.0.2.2308539
+X-PerlMx-Virus-Scanned: Yes
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240324>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240325>
 
-Ryan Biesemeyer <ryan@yaauie.com> writes:
+On Tue, Nov 19, 2013 at 11:43 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> "Jason St. John" <jstjohn@purdue.edu> writes:
+>
+>> Documentation/git-rebase.txt: add a blank line after the two AsciiDoc
+>>     listing blocks
+>
+> That looks funnily formatted, out of place and redundant.
+>
+>> Without these blank lines, AsciiDoc thinks the opening "-----" is a
+>> section heading and typesets the word "to" as such, which causes
+>> cascading formatting/typesetting issues until the end of the document.
+>
+>>
+>> Signed-off-by: Jason St. John <jstjohn@purdue.edu>
+>> ---
+>> You can see the carnage here:
+>> http://git-scm.com/docs/git-rebase#_bugs
+>>
+>> This fixes GitHub issue github/gitscm-next#281
+>
+> Hmph. https://git-htmldocs.googlecode.com/git/git.html has HTML
+> documentation pages I preformat, but as far as I can see, the bugs
+> section of git-rebase(1) does not have such a "carnage".
+>
+> Perhaps git-scm.com uses some buggy formatter?
 
-> +	write_script "$HOOK" <<-EOF &&
-> +	if [ -s "$(git rev-parse --git-dir)/MERGE_HEAD" ]; then
-> +		exit 0
-> +	else
-> +		exit 1
-> +	fi
-> +	EOF
+This does seem to be an issue with git-scm.com only, so this is
+probably an issue with the AsciiDoc formatter they use.
 
-The script can be a one-liner
+What AsciiDoc formatter (and version) do you use?
 
-	write_scirpt "$HOOK" <<-\EOF &&
-        test -s "$(git rev-parse --git-dir)/MERGE_HEAD"
-	EOF
+Sorry for the long delay in replying!
 
-can't it?  I also do not think you want to have the rev-parse run
-while writing the script (rather, you would want it run inside the
-script, no?)
-
-> +	git merge other &&
-> +	test "`git log -1 --pretty=format:%s`" = "Merge branch '"'"'other'"'"'" &&
-> +	test ! -s "$(git rev-parse --git-dir)/MERGE_HEAD"
-> +
-> +'
-> +
->  test_done
+Jason
