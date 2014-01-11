@@ -1,72 +1,92 @@
-From: Kevin <ikke@ikke.info>
-Subject: Error in documentation for @{-n} in gitrevisions
-Date: Sat, 11 Jan 2014 18:34:21 +0100
-Message-ID: <CAO54GHBRbVQWDjE70tEZY=nP==gtrqVvmx1JWYNkc_HOeDnYDA@mail.gmail.com>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [PATCH 0/6] Make 'git help everyday' work
+Date: Sat, 11 Jan 2014 19:50:08 -0000
+Organization: OPDS
+Message-ID: <18D97E9015B24D76845BFB980CB14CB8@PhilipOakley>
+References: <1389309192-5748-1-git-send-email-philipoakley@iee.org><xmqqppo090m7.fsf@gitster.dls.corp.google.com><0AB7145111924BA986B1E172CD293B1D@PhilipOakley> <xmqqha9b909p.fsf@gitster.dls.corp.google.com>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: tr@thomasrast.ch
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Jan 11 18:34:50 2014
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: "GitList" <git@vger.kernel.org>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jan 11 20:49:52 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W22SQ-0006Zv-0j
-	for gcvg-git-2@plane.gmane.org; Sat, 11 Jan 2014 18:34:50 +0100
+	id 1W24Z6-0003kj-1u
+	for gcvg-git-2@plane.gmane.org; Sat, 11 Jan 2014 20:49:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751674AbaAKRen convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 11 Jan 2014 12:34:43 -0500
-Received: from mail-ig0-f174.google.com ([209.85.213.174]:62630 "EHLO
-	mail-ig0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751616AbaAKRel convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 11 Jan 2014 12:34:41 -0500
-Received: by mail-ig0-f174.google.com with SMTP id hk11so2004147igb.1
-        for <git@vger.kernel.org>; Sat, 11 Jan 2014 09:34:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=BLKNWVYR+A64DrN/R8Y2lMzQeIc1XAoBZwp+ciTGzPY=;
-        b=fOZ5/jS1dJhuhhEFiFUKHRsYCR7FTMIyzp6cLP5qr7jE1TnOjimc5T/Mm/2M3Dw82K
-         F4fhGOVLPZ7lXzkHd+Q1yltrZNeWSmi/hGBsPXTdWtHPV6sApvvCeQ9ST9a4Dep8avFH
-         2m6O39gFcc8XzRHhbKyM0gpEv/lnGaeNOASjOupCI4/zA0MLzYMQ1h4clO0HtOBL5aAG
-         m2IgURmu9ugBNQ5xSrn2I8N026CskzxQNv/zdaScCJKIMrbyc5DibImGAEa3bawjZJdW
-         q/+SdG5LQNVKA1UZbxYkDoopGhJ5gylo+J2PbMztI1zQ/AKtK8sw10/pwEVgRLkrmC4p
-         kTgw==
-X-Received: by 10.50.66.180 with SMTP id g20mr10329597igt.29.1389461681203;
- Sat, 11 Jan 2014 09:34:41 -0800 (PST)
-Received: by 10.64.7.207 with HTTP; Sat, 11 Jan 2014 09:34:21 -0800 (PST)
-X-Google-Sender-Auth: DjWOGvO6t4cmjDOE_hREuWf38Js
+	id S1753759AbaAKTtt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 11 Jan 2014 14:49:49 -0500
+Received: from out1.ip06ir2.opaltelecom.net ([62.24.128.242]:42597 "EHLO
+	out1.ip06ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752270AbaAKTtr (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 11 Jan 2014 14:49:47 -0500
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AtAYADaf0VJZ8YT8/2dsb2JhbABagwuJSrElAQIBAYEGF3RpAQGBHwEBFAEEAQEBAQMIAQEdER4BASELAgMFAgEDFQwlFAEEGgYHFwYTCAIBAgMBhTgHAYISJcNlF44jZIMrgRMEiQuGE5sOgy08gSw
+X-IPAS-Result: AtAYADaf0VJZ8YT8/2dsb2JhbABagwuJSrElAQIBAYEGF3RpAQGBHwEBFAEEAQEBAQMIAQEdER4BASELAgMFAgEDFQwlFAEEGgYHFwYTCAIBAgMBhTgHAYISJcNlF44jZIMrgRMEiQuGE5sOgy08gSw
+X-IronPort-AV: E=Sophos;i="4.95,644,1384300800"; 
+   d="scan'208";a="598029048"
+Received: from host-89-241-132-252.as13285.net (HELO PhilipOakley) ([89.241.132.252])
+  by out1.ip06ir2.opaltelecom.net with SMTP; 11 Jan 2014 19:49:45 +0000
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240333>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240334>
 
-While discussing the behavior of "git checkout -", I apparently was
-confused because the documentation states:
+From: "Junio C Hamano" <gitster@pobox.com>
+> "Philip Oakley" <philipoakley@iee.org> writes:
+>
+>> From: "Junio C Hamano" <gitster@pobox.com>
+>>>I think we already use a nicer way to set up a page alias to keep
+>>> old links working than making a copy in Documentation/; please mimic
+>>> that if possible.
+>>
+>> This was mainly about ensuring that the 'git help' command could
+>> access these extra extra guides that it currently misses. (Tt also
+>> misses the 'user-manual', which isn't a man page, but could have a
+>> link page to guide the seeker of truth between 'git help' and the
+>> actual user-manual)
+>>
+>> The only method I can see for that (via help.c) is to get the 
+>> filename
+>> format correct.  Where you thinking of something else?
+>
+> I do not have an objection against the creation of giteveryday.txt;
+> I was questioning the way the original everyday.txt was left behind
+> to bit-rot.  It is good to keep _something_ there, because there may
+> be old URLs floating around that point at Documentation/everyday.txt,
+> but the contents of that file does not have to be a stale copy.
+>
+> Cf. bd4a3d61 (Rename {git- => git}remote-helpers.txt, 2013-01-31)
+> for how we renamed git-remote-helpers.txt to gitremote-helpers.txt
+>
 
-  The construct @{-<n>} means the <n>th branch checked out before the
-current one.
+The commit also highlighted a couple of other places I needed to update
 
-But experimenting with it, it also takes you back to previously
-checkout commits.
+What's the right set of options for format-patch to avoid the bulk 
+deletions and bulk insertions between the old an new versions? That 
+commit was amended in situ, so never had the three way 
+delete/move/create problem.
 
-  git-checkout-at-minus-one :: (master) =C2=BB git checkout origin/mast=
-er
-  Note: checking out 'origin/master'.
-  HEAD is now at f8b2f0c... two
+We have:
+everyday.txt (old) -> delete
+everyday.txt (new) ->create (<5% similarity)
+everyday.txt (old) -> giteveryday.txt (>95% similarity)
 
-  git-checkout-at-minus-one :: (f8b2f0c) =C2=BB git checkout -
-  Switched to branch 'master'
+It just feels that 400+ lines of complete deletion doesn't need to be in 
+the summary patch. I have it in my mind that we always end up with the 
+deletions being listed.
 
-  git-checkout-at-minus-one :: (master) =C2=BB git checkout -
-                                              Note: checking out
-'f8b2f0c1419d1fe798159c2c2578d2dbe1323148'.
-  HEAD is now at f8b2f0c... two
-
-Either the documentation is wrong, and should be changed to "<n>th
-branch/commit checkout out before the current one", or the behavior of
-@{-1} is wrong.
+Philip 
