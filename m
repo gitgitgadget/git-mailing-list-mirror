@@ -1,68 +1,81 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: Synchronize git-credential-wincred from msysgit
-Date: Sun, 12 Jan 2014 14:23:05 +0100
-Message-ID: <CABPQNSb0aq74Wg5Pf++Y8HusmuW8MGBYe90dEwLxAXcHbkjEhg@mail.gmail.com>
-References: <CAHtLG6RzQEazvvGhzo6B+v15ROdcs42W6-aReTqMsOH8UO4V7g@mail.gmail.com>
-Reply-To: kusmabite@gmail.com
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>, kuba@berezanscy.pl
-To: =?UTF-8?B?5LmZ6YW46Yuw?= <ch3cooli@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jan 12 14:23:51 2014
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: [PATCH 0/3] Minor preparation for @{publish}
+Date: Sun, 12 Jan 2014 22:41:03 +0530
+Message-ID: <1389546666-17438-1-git-send-email-artagnon@gmail.com>
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Jan 12 18:10:52 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W2L14-0002TV-5b
-	for gcvg-git-2@plane.gmane.org; Sun, 12 Jan 2014 14:23:50 +0100
+	id 1W2OYm-0007jf-AN
+	for gcvg-git-2@plane.gmane.org; Sun, 12 Jan 2014 18:10:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751250AbaALNXr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 12 Jan 2014 08:23:47 -0500
-Received: from mail-ie0-f182.google.com ([209.85.223.182]:46452 "EHLO
-	mail-ie0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750959AbaALNXp convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 12 Jan 2014 08:23:45 -0500
-Received: by mail-ie0-f182.google.com with SMTP id as1so7092631iec.13
-        for <git@vger.kernel.org>; Sun, 12 Jan 2014 05:23:45 -0800 (PST)
+	id S1751315AbaALRKs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 12 Jan 2014 12:10:48 -0500
+Received: from mail-pd0-f178.google.com ([209.85.192.178]:46298 "EHLO
+	mail-pd0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751117AbaALRKq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Jan 2014 12:10:46 -0500
+Received: by mail-pd0-f178.google.com with SMTP id v10so10697pde.9
+        for <git@vger.kernel.org>; Sun, 12 Jan 2014 09:10:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        bh=+ArfmgPSVvd8zn09UbjFLgrFCnFeqg6TkIoT20GD6TU=;
-        b=gk1g4303GKZWv3hdPrrvwfK1Vzk0eUyHCuUmMmVx2XmMSracWr1kNsPc9P+zAHtqD4
-         WmWnMPuVor7b3Xi47Uteet6Kl0hP3T4USHAAGZIhpZ+okGUaTjVqh6MS2jLj+uGFqrW3
-         vJmfbpFc+YhxfSTFdpkNjoueF+pNELvUjm9SNudW7P8cRzopley1wtl0WdgU4r0wBiU5
-         qLCA1aDswqQwpCRdehLh02qQYNwPdl7orzyoHm52NnS2EswhiqoUpgu3lJAXOkofjqN5
-         O5WJ8l/lJVra0j67IZJVt0bgnDkLv8dEubE8I6v/fXnFVDx0YO9ZsWgGxMXtZ96l/HXy
-         ds9A==
-X-Received: by 10.43.49.132 with SMTP id va4mr430927icb.79.1389533025141; Sun,
- 12 Jan 2014 05:23:45 -0800 (PST)
-Received: by 10.64.249.33 with HTTP; Sun, 12 Jan 2014 05:23:05 -0800 (PST)
-In-Reply-To: <CAHtLG6RzQEazvvGhzo6B+v15ROdcs42W6-aReTqMsOH8UO4V7g@mail.gmail.com>
+        h=from:to:cc:subject:date:message-id;
+        bh=5rZN2PHN21exqeoGIVGjfKDMSeAMp2/N5ZCTaMgtWps=;
+        b=sO8pRJZGp31gbIKV6jBCX38k5G/ueFc9+LWVsZYEeIi0r3U9wrNXxEfUuhwHDPYZc/
+         qUtVc0w6yYq4Rkdchk+5BoeuwGNspoYT7zt/+stLRInTAgDd/kKNVoqiL/EzSLL87/1W
+         knblBS4dQdE1kuvQ4t+wXIZMUnDGDQysesqiDrVzLIZpmHN6GT1BNc3UJzn0E0nJEITw
+         MUeZTpddVxRv6y76UIzQEFE2wujvCvtfIKcPWqD5ZPUrQBrE1ezCzw5zGwVKStL/mB6S
+         bmxVCkX8VKtUISsNufuNr2cd5nFN5M+Bwph822+ggrLY4DGj6OevKs0qLZWSrnzB/tei
+         814Q==
+X-Received: by 10.68.197.165 with SMTP id iv5mr3980192pbc.150.1389546645577;
+        Sun, 12 Jan 2014 09:10:45 -0800 (PST)
+Received: from localhost.localdomain ([122.164.134.24])
+        by mx.google.com with ESMTPSA id gn5sm14690070pbc.29.2014.01.12.09.10.43
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 12 Jan 2014 09:10:45 -0800 (PST)
+X-Mailer: git-send-email 1.8.5.2.313.g5abf4c0.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240348>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240349>
 
-On Sun, Jan 12, 2014 at 12:59 PM, =E4=B9=99=E9=85=B8=E9=8B=B0 <ch3cooli=
-@gmail.com> wrote:
-> Hi,
->
-> Please cherry pick from msysgit/git
-> commit 3c8cbb4edc8f577940c52115c992d17575587f99
->
-> to synchronize git-credential-wincred
->
-> This was the change they made half year ago.
+Hi,
 
-It's actually a two-patch series.
+I'm getting ready to switch timezones in a few days, so the @{publish}
+series is on hold for some time. In the meantime, I thought I'd send
+in a few patches early.
 
-Cover-letter:
-http://permalink.gmane.org/gmane.comp.version-control.msysgit/18626
+[1/3] is a minor typo fix I happened to notice while writing tests.
 
-Patches:
-http://article.gmane.org/gmane.comp.version-control.msysgit/18627
-http://article.gmane.org/gmane.comp.version-control.msysgit/18628
+[2/3] is an is an excellent patch by Peff, that greatly helped
+prettify the code. It's a pure refactor and should have no effect on
+functionality.
+
+[3/3] introduces branch->pushremote corresponding to branch->remote,
+which is crucial for getting @{publish} from the branch_get()
+interface. Peff had sent a similar patch, but mine has some subtle
+differences.
+
+Thanks.
+
+Jeff King (1):
+  interpret_branch_name: factor out upstream handling
+
+Ramkumar Ramachandra (2):
+  t1507 (rev-parse-upstream): fix typo in test title
+  remote: introduce and fill branch->pushremote
+
+ remote.c                      | 15 ++++++--
+ remote.h                      |  3 ++
+ sha1_name.c                   | 83 +++++++++++++++++++++++++++----------------
+ t/t1507-rev-parse-upstream.sh |  2 +-
+ 4 files changed, 68 insertions(+), 35 deletions(-)
+
+-- 
+1.8.5.2.313.g5abf4c0.dirty
