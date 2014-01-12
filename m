@@ -1,76 +1,51 @@
-From: THILLOSEN Andreas <thillosen@free.fr>
-Subject: Re: Git: Question about specific subtree usage
-Date: Sun, 12 Jan 2014 13:18:16 +0100
-Message-ID: <52D28808.9010001@free.fr>
-References: <52D1E07C.1010403@free.fr> <52D26E7A.8080003@web.de>
+From: =?Big5?B?pEG7xL5Z?= <ch3cooli@gmail.com>
+Subject: Synchronize git-credential-wincred from msysgit
+Date: Sun, 12 Jan 2014 19:59:50 +0800
+Message-ID: <CAHtLG6RzQEazvvGhzo6B+v15ROdcs42W6-aReTqMsOH8UO4V7g@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 12 12:18:56 2014
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Jan 12 13:00:01 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W2J4B-00073H-PT
-	for gcvg-git-2@plane.gmane.org; Sun, 12 Jan 2014 12:18:56 +0100
+	id 1W2Jhx-0007oM-12
+	for gcvg-git-2@plane.gmane.org; Sun, 12 Jan 2014 13:00:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751212AbaALLSm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 12 Jan 2014 06:18:42 -0500
-Received: from smtpfb2-g21.free.fr ([212.27.42.10]:42093 "EHLO
-	smtpfb2-g21.free.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751175AbaALLSl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Jan 2014 06:18:41 -0500
-Received: from smtp5-g21.free.fr (smtp5-g21.free.fr [212.27.42.5])
-	by smtpfb2-g21.free.fr (Postfix) with ESMTP id CE9D3CA8FDE
-	for <git@vger.kernel.org>; Sun, 12 Jan 2014 12:18:37 +0100 (CET)
-Received: from [192.168.1.100] (unknown [88.178.152.236])
-	by smtp5-g21.free.fr (Postfix) with ESMTP id 96BBDD4805F;
-	Sun, 12 Jan 2014 12:18:21 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.2.0
-In-Reply-To: <52D26E7A.8080003@web.de>
+	id S1751316AbaALL7x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 12 Jan 2014 06:59:53 -0500
+Received: from mail-we0-f172.google.com ([74.125.82.172]:55173 "EHLO
+	mail-we0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751224AbaALL7v (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Jan 2014 06:59:51 -0500
+Received: by mail-we0-f172.google.com with SMTP id q58so1306295wes.31
+        for <git@vger.kernel.org>; Sun, 12 Jan 2014 03:59:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=OZInF9ZOwtTLRDqp2flvlxO8yUZknbchb5k3wB2+0Yc=;
+        b=Pdd5dAUl7wteCgjgB3/iyy+BHlhJD8VBY71fCfOvmUtA2eVeR01gF+AII/nCjrB6h3
+         oUE2pwGwW882x1nCZAIiczDOxVFDmIBkR7ZO91nzDSgFT2w6DJu7gCXkb/UVQWnLb4a1
+         1tFBRl6OKcoTdkEzwX75mfEPgh8AS3TiI2TgryiXykuTs7geL9MPE3cJHPtPzNQVsb3a
+         UlQfMHAwRa6Q0/+HQ8W+Il4FFiAYFQDv9gGOubHI6x06fd2Y3eH/1ArnwajIg1rpc1oX
+         GSJObaLGmfShqWDaV0d36glYpBZAtbIt4lNuQulnnmhtQEbr8X9xeerD8QYn/Yyn+TsL
+         HdlQ==
+X-Received: by 10.194.71.239 with SMTP id y15mr13022wju.96.1389527990311; Sun,
+ 12 Jan 2014 03:59:50 -0800 (PST)
+Received: by 10.216.53.137 with HTTP; Sun, 12 Jan 2014 03:59:50 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240346>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240347>
 
-Well... submodules didn't seem to fit the job, because it seems that th=
-e
-sources of only one submodule at a time can be checked out.
-And in my case, I would need to have the sources of all submodules
-simultaneously.
-I was talking about subtrees, because I thought it could be a better
-tool for this job (and it had the reputation of being less cumbersome
-than submodules).
+Hi,
 
-Maybe such a job cannot be done with pure git commands.
-Thanks for pointing me this "git-repo" script tool... the description
-seems to fit my needs!
-I will test it, and hope it will work on Windows (project is
-unfortunately very Windows-oriented, for the time being).
+Please cherry pick from msysgit/git
+commit 3c8cbb4edc8f577940c52115c992d17575587f99
 
-Thanks for you help!
+to synchronize git-credential-wincred
 
-Andreas THILLOSEN.
-
-
-Le 01/12/14 11:29, Torsten B=F6gershausen a =E9crit :
-> On 2014-01-12 01.23, THILLOSEN Andreas wrote:
->> Hi,
->>
->> I have a question about a specific use case for subtrees, but I'm no=
-t
-> I feel a little bit confused: Are you talking about git submodules?
->
-> And you may want to have a look at the repo tool:
-> https://code.google.com/p/git-repo/
->
-> HTH
-> /Torsten
->
->
->
->
+This was the change they made half year ago.
