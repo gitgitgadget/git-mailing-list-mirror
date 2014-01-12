@@ -1,53 +1,50 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: Error in documentation for @{-n} in gitrevisions
-Date: Sun, 12 Jan 2014 15:49:03 +0530
-Message-ID: <CALkWK0k51=Ek_r4eiX8kve=aoSwHxGjV9m_EbMnEadt6wALFwA@mail.gmail.com>
-References: <CAO54GHBRbVQWDjE70tEZY=nP==gtrqVvmx1JWYNkc_HOeDnYDA@mail.gmail.com>
+From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+Subject: Re: Git: Question about specific subtree usage
+Date: Sun, 12 Jan 2014 11:29:14 +0100
+Message-ID: <52D26E7A.8080003@web.de>
+References: <52D1E07C.1010403@free.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>, Thomas Rast <tr@thomasrast.ch>
-To: Kevin <ikke@ikke.info>
-X-From: git-owner@vger.kernel.org Sun Jan 12 11:19:48 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: THILLOSEN Andreas <thillosen@free.fr>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jan 12 11:29:42 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W2I8y-00043r-4s
-	for gcvg-git-2@plane.gmane.org; Sun, 12 Jan 2014 11:19:48 +0100
+	id 1W2IIX-0005CY-Av
+	for gcvg-git-2@plane.gmane.org; Sun, 12 Jan 2014 11:29:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751207AbaALKTp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 12 Jan 2014 05:19:45 -0500
-Received: from mail-ie0-f175.google.com ([209.85.223.175]:56395 "EHLO
-	mail-ie0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751168AbaALKTn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Jan 2014 05:19:43 -0500
-Received: by mail-ie0-f175.google.com with SMTP id tp5so1043919ieb.34
-        for <git@vger.kernel.org>; Sun, 12 Jan 2014 02:19:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=AR1mAJckXzpKUi3zMvUKkS2DN/S6+f2fUIiKaGKJ6C0=;
-        b=pj9AE/PJKmZXcL3X2xAgbAwI+DyJK8TfkxsNavAWRekQVYaXHLzoCasLCqpFW5hRfP
-         wwIcmbzfXbB4uedk1xQIocvqRDeIdHRVkeQphSr35ylaVpDFwRft86GjVOg8v3mJdnut
-         aieIV5qh+SJ/rj5PN7rcdxBkk6BAdcjEMB53nsT8qp5UkdyvwziheonEOdLQ4nx/aUIO
-         Je/L+HHUr3iYGQpuwCFNcMvuRCHLxKlqHjb7mFLOmHEwd7S06jgH79tqbrbzhsBiR7eb
-         ft5xpVAH5TRISE9FYvMCNLWRyhfnwmK4PQyRYmPHLXGvQy4H8BOG+fTICEG5+xLjXqlI
-         EbqA==
-X-Received: by 10.42.232.206 with SMTP id jv14mr1088350icb.52.1389521983129;
- Sun, 12 Jan 2014 02:19:43 -0800 (PST)
-Received: by 10.64.17.10 with HTTP; Sun, 12 Jan 2014 02:19:03 -0800 (PST)
-In-Reply-To: <CAO54GHBRbVQWDjE70tEZY=nP==gtrqVvmx1JWYNkc_HOeDnYDA@mail.gmail.com>
+	id S1751180AbaALK3Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 12 Jan 2014 05:29:24 -0500
+Received: from mout.web.de ([212.227.15.14]:65220 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751137AbaALK3X (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Jan 2014 05:29:23 -0500
+Received: from [192.168.209.26] ([78.72.74.102]) by smtp.web.de (mrweb002)
+ with ESMTPSA (Nemesis) id 0LpfJW-1VPOVi2McQ-00fVOz for <git@vger.kernel.org>;
+ Sun, 12 Jan 2014 11:29:20 +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:24.0) Gecko/20100101 Thunderbird/24.2.0
+In-Reply-To: <52D1E07C.1010403@free.fr>
+X-Provags-ID: V03:K0:EDJNwxUmjgdiz5P9EiJWNGR4gTkt9a0iQJyDzaxhxuNSZARhKJt
+ 9xjXAwPGxWLng60h9Ngm0Ey9r2XzlAq2g22Uhwl2RXUEnC640vMRLEcR4d3rHqVKVVqFVi+
+ QC/SYpapO6YR2kPU/YKdGKqUzPVn8T937OJPpWv4EPRPpMzH+Z2VupVUTnWGk2d3IqI+lNG
+ LuI3pb7tp3Z1umFuv9mqg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240337>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240338>
 
-Kevin wrote:
-> Either the documentation is wrong, and should be changed to "<n>th
-> branch/commit checkout out before the current one", or the behavior of
-> @{-1} is wrong.
+On 2014-01-12 01.23, THILLOSEN Andreas wrote:
+> Hi,
+> 
+> I have a question about a specific use case for subtrees, but I'm not
+I feel a little bit confused: Are you talking about git submodules?
 
-Yeah, the documentation needs to be updated. Patches welcome.
+And you may want to have a look at the repo tool:
+https://code.google.com/p/git-repo/
+
+HTH
+/Torsten
