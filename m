@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 5/6] read-cache: ask file watcher to watch files
-Date: Sun, 12 Jan 2014 18:03:41 +0700
-Message-ID: <1389524622-6702-6-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 6/6] file-watcher: support inotify
+Date: Sun, 12 Jan 2014 18:03:42 +0700
+Message-ID: <1389524622-6702-7-git-send-email-pclouds@gmail.com>
 References: <1389524622-6702-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -10,297 +10,258 @@ Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 12 11:59:04 2014
+X-From: git-owner@vger.kernel.org Sun Jan 12 11:59:11 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W2Ikx-0006rZ-3I
-	for gcvg-git-2@plane.gmane.org; Sun, 12 Jan 2014 11:59:03 +0100
+	id 1W2Il3-00070S-0r
+	for gcvg-git-2@plane.gmane.org; Sun, 12 Jan 2014 11:59:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751278AbaALK65 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 12 Jan 2014 05:58:57 -0500
-Received: from mail-pb0-f44.google.com ([209.85.160.44]:33279 "EHLO
-	mail-pb0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751248AbaALK64 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Jan 2014 05:58:56 -0500
-Received: by mail-pb0-f44.google.com with SMTP id rq2so6223349pbb.31
-        for <git@vger.kernel.org>; Sun, 12 Jan 2014 02:58:56 -0800 (PST)
+	id S1751289AbaALK7E convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 12 Jan 2014 05:59:04 -0500
+Received: from mail-pb0-f48.google.com ([209.85.160.48]:36847 "EHLO
+	mail-pb0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751248AbaALK7D (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Jan 2014 05:59:03 -0500
+Received: by mail-pb0-f48.google.com with SMTP id up15so707872pbc.21
+        for <git@vger.kernel.org>; Sun, 12 Jan 2014 02:59:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=VHhLlgSnIXQ9BdtsWnchQLwacqjI94hAGzKYV+hlMfo=;
-        b=vbvAp8H/H7o2tHitYruWOu6iTsy1ecZnkGz8sFLyuaWANIvEicPAtkMrOX8CX6lUQq
-         lEh0/cJPu6IDOzzbO19tb3mqLQkyapl+swFZisAr1LOnSXBKGCFZ0uV5bROE4O7fzDk7
-         J4coIKgC9oWAMTfvO0RrtRf5jVo05m5xromwMBxJ3LRcu88u01xFVNCyqnX6Sh1S+1PQ
-         NtyFeYAAGc6ekZGnDWc3z6GH3ahgmn5shtO+e8lspICYmXT2delVidOM+c0MXkGn6DJ5
-         QoOWBMAhv5whEqSBqB4au4bvMHAB/Yh7zd1BCKj0zFYwdWzISdZFdtb7s3YgmOqaJYwG
-         eK8A==
-X-Received: by 10.68.162.131 with SMTP id ya3mr23011824pbb.102.1389524336047;
-        Sun, 12 Jan 2014 02:58:56 -0800 (PST)
+        bh=7o8c22/B0bDJINHr3dwSuy4NOmc1NOthPUEpRY8Epm8=;
+        b=Sf3P8+WQGO6jKdtZqExHoubam75ODQFVUPGPLlRqp10+Il0KDuu1nAuwwlWJ6e/2Tg
+         /mwmChdjjrxfFddaQcXtnFrWOu064iu82gSpWO/nTdmLst0adAc0hnOq5ljj44PBzXGK
+         wpdUfBjpGvff1WhWODVexnqoPuTT6bMr9aLpTIFqCVOzP33KhUhDhv8n+3NhEDT4QaXN
+         P+HkDsVdSPBYx6BQTVlpTKN3HkvlQmVLMGxYTC9qDs0rumU/8DPzvxC5ZOiCuBgQyvf1
+         LGkO8pTkHdmOcXhRzsv3jk+w9CcEmDxifcz/xI98k5wcucuG/9c5gWHuQFgDEWdrN3Wc
+         czSg==
+X-Received: by 10.68.89.162 with SMTP id bp2mr2110248pbb.151.1389524341937;
+        Sun, 12 Jan 2014 02:59:01 -0800 (PST)
 Received: from lanh ([115.73.194.184])
-        by mx.google.com with ESMTPSA id ju10sm30160510pbd.33.2014.01.12.02.58.52
+        by mx.google.com with ESMTPSA id xv2sm30141841pbb.39.2014.01.12.02.58.58
         for <multiple recipients>
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 12 Jan 2014 02:58:55 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Sun, 12 Jan 2014 18:04:13 +0700
+        Sun, 12 Jan 2014 02:59:00 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Sun, 12 Jan 2014 18:04:19 +0700
 X-Mailer: git-send-email 1.8.5.2.240.g8478abd
 In-Reply-To: <1389524622-6702-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240344>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240345>
 
-We want to watch files that are never changed because lstat() on those
-files is a wasted effort. So we sort unwatched files by date and start
-adding them to the file watcher until it barfs (e.g. hits inotify
-limit). Recently updated entries are also excluded from watch list.
-CE_VALID is used in combination with CE_WATCHED. Those entries that
-have CE_VALID already set will never be watched.
+"git diff" on webkit:
 
-We send as many paths as possible in one packet in pkt-line
-format. For small projects like git, all entries can be packed in one
-packet. For large projects like webkit (182k entries) it takes two
-packets. We may do prefix compression as well to send more in fewer
-packets..
-
-The file watcher replies how many entries it can watch (because at
-least inotify has system limits).
-
-Note that we still do lstat() on these new watched files because they
-could have changed before the file watcher could watch them. Watched
-files may only skip lstat() at the next git run.
+        no file watcher  1st run   subsequent runs
+real        0m1.361s    0m1.445s      0m0.691s
+user        0m0.889s    0m0.940s      0m0.649s
+sys         0m0.469s    0m0.495s      0m0.040s
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- file-watcher.c | 27 ++++++++++++++++
- pkt-line.c     |  2 +-
- pkt-line.h     |  2 ++
- read-cache.c   | 97 ++++++++++++++++++++++++++++++++++++++++++++++++++=
+ config.mak.uname |   1 +
+ file-watcher.c   | 139 +++++++++++++++++++++++++++++++++++++++++++++++=
 ++++++++
- 4 files changed, 127 insertions(+), 1 deletion(-)
+ 2 files changed, 140 insertions(+)
 
+diff --git a/config.mak.uname b/config.mak.uname
+index 82d549e..603890d 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -33,6 +33,7 @@ ifeq ($(uname_S),Linux)
+ 	HAVE_PATHS_H =3D YesPlease
+ 	LIBC_CONTAINS_LIBINTL =3D YesPlease
+ 	HAVE_DEV_TTY =3D YesPlease
++	BASIC_CFLAGS +=3D -DHAVE_INOTIFY
+ endif
+ ifeq ($(uname_S),GNU/kFreeBSD)
+ 	NO_STRLCPY =3D YesPlease
 diff --git a/file-watcher.c b/file-watcher.c
-index 6aeed4d..35781fa 100644
+index 35781fa..1512b46 100644
 --- a/file-watcher.c
 +++ b/file-watcher.c
-@@ -1,17 +1,41 @@
- #include "cache.h"
- #include "sigchain.h"
+@@ -3,17 +3,140 @@
  #include "string-list.h"
-+#include "pkt-line.h"
+ #include "pkt-line.h"
 =20
++#ifdef HAVE_INOTIFY
++#include <sys/inotify.h>
++#endif
++
  static char index_signature[41];
  static struct string_list updated =3D STRING_LIST_INIT_DUP;
  static int updated_sorted;
 =20
-+static int watch_path(char *path)
-+{
-+	return -1;
-+}
++#ifdef HAVE_INOTIFY
 +
- static void reset(const char *sig)
- {
- 	string_list_clear(&updated, 0);
- 	strlcpy(index_signature, sig, sizeof(index_signature));
- }
-=20
-+static void watch_paths(char *buf, int maxlen,
-+			int fd, struct sockaddr *sock,
-+			socklen_t socklen)
++static struct string_list watched_dirs =3D STRING_LIST_INIT_DUP;
++static int watched_dirs_sorted;
++static int inotify_fd;
++
++struct dir_info {
++	int wd;
++	struct string_list names;
++	int names_sorted;
++};
++
++static int handle_inotify(int fd)
 +{
-+	char *end =3D buf + maxlen;
-+	int n, ret, len;
-+	for (n =3D ret =3D 0; buf < end && !ret; buf +=3D len) {
-+		char ch;
-+		len =3D packet_length(buf);
-+		ch =3D buf[len];
-+		buf[len] =3D '\0';
-+		if (!(ret =3D watch_path(buf + 4)))
-+			n++;
-+		buf[len] =3D ch;
++	char buf[sizeof(struct inotify_event) + NAME_MAX + 1];
++	struct inotify_event *event;
++	struct dir_info *dir;
++	struct string_list_item *item;
++	int i;
++	int len =3D read(fd, buf, sizeof(buf));
++	if (len < 0)
++		return -1;
++	event =3D (struct inotify_event *)buf;
++
++	if (len <=3D sizeof(struct inotify_event))
++		return 0;
++
++	for (i =3D 0; i < watched_dirs.nr; i++) {
++		struct dir_info *dir =3D watched_dirs.items[i].util;
++		if (dir->wd =3D=3D event->wd)
++			break;
 +	}
-+	sendtof(fd, 0, sock, socklen, "fine %d", n);
-+}
++	if (i =3D=3D watched_dirs.nr)
++		return 0;
++	dir =3D watched_dirs.items[i].util;
 +
- static int handle_command(int fd, char *msg, int msgsize)
- {
- 	struct sockaddr_un sun;
-@@ -41,6 +65,9 @@ static int handle_command(int fd, char *msg, int msgs=
-ize)
- 			       strlen(updated.items[i].string),
- 			       0, &sun, socklen);
- 		sendtof(fd, 0, &sun, socklen, "%c", 0);
-+	} else if (starts_with(msg, "watch ")) {
-+		watch_paths(msg + 6, len - 6,
-+			    fd, (struct sockaddr *)&sun, socklen);
- 	} else if ((arg =3D skip_prefix(msg, "forget "))) {
- 		struct string_list_item *item;
- 		if (!updated_sorted) {
-diff --git a/pkt-line.c b/pkt-line.c
-index bc63b3b..b5af84e 100644
---- a/pkt-line.c
-+++ b/pkt-line.c
-@@ -135,7 +135,7 @@ static int get_packet_data(int fd, char **src_buf, =
-size_t *src_size,
- 	return ret;
- }
-=20
--static int packet_length(const char *linelen)
-+int packet_length(const char *linelen)
- {
- 	int n;
- 	int len =3D 0;
-diff --git a/pkt-line.h b/pkt-line.h
-index 0a838d1..40470b9 100644
---- a/pkt-line.h
-+++ b/pkt-line.h
-@@ -75,6 +75,8 @@ char *packet_read_line(int fd, int *size);
-  */
- char *packet_read_line_buf(char **src_buf, size_t *src_len, int *size)=
-;
-=20
-+int packet_length(const char *linelen);
++	if (!dir->names_sorted) {
++		sort_string_list(&dir->names);
++		dir->names_sorted =3D 1;
++	}
++	item =3D string_list_lookup(&dir->names, event->name);
++	if (item) {
++		if (!strcmp(watched_dirs.items[i].string, "."))
++			string_list_append(&updated, event->name);
++		else {
++			struct strbuf sb =3D STRBUF_INIT;
++			strbuf_addf(&sb, "%s/%s", watched_dirs.items[i].string,
++				    item->string);
++			string_list_append(&updated, sb.buf);
++			updated_sorted =3D 0;
++			strbuf_release(&sb);
++		}
 +
- #define DEFAULT_PACKET_MAX 1000
- #define LARGE_PACKET_MAX 65520
- extern char packet_buffer[LARGE_PACKET_MAX];
-diff --git a/read-cache.c b/read-cache.c
-index caa2298..839fd7c 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -14,6 +14,7 @@
- #include "resolve-undo.h"
- #include "strbuf.h"
- #include "varint.h"
-+#include "pkt-line.h"
-=20
- static struct cache_entry *refresh_cache_entry(struct cache_entry *ce,=
- int really);
-=20
-@@ -1537,6 +1538,90 @@ static void connect_watcher(struct index_state *=
-istate, const char *path)
- 		}
- }
-=20
-+static int sort_by_date(const void *a_, const void *b_)
-+{
-+	const struct cache_entry *a =3D *(const struct cache_entry **)a_;
-+	const struct cache_entry *b =3D *(const struct cache_entry **)b_;
-+	uint32_t seca =3D a->ce_stat_data.sd_mtime.sec;
-+	uint32_t secb =3D b->ce_stat_data.sd_mtime.sec;
-+	return seca - secb;
-+}
-+
-+static inline int ce_watchable(struct cache_entry *ce, time_t now)
-+{
-+	return !(ce->ce_flags & CE_WATCHED) &&
-+		!(ce->ce_flags & CE_VALID) &&
-+		(ce->ce_stat_data.sd_mtime.sec + 1800 < now);
-+}
-+
-+static int do_watch_entries(struct index_state *istate,
-+			    struct cache_entry **cache,
-+			    struct strbuf *sb, int start, int now)
-+{
-+	char line[1024];
-+	int i, len;
-+
-+	write(istate->watcher, sb->buf, sb->len);
-+	len =3D read(istate->watcher, line, sizeof(line) - 1);
-+	if (len <=3D 0)
-+		return -1;
-+	line[len] =3D '\0';
-+	if (starts_with(line, "fine ")) {
-+		char *end;
-+		long n =3D strtoul(line + 5, &end, 10);
-+		if (end !=3D line + len)
-+			return -1;
-+		for (i =3D 0; i < n; i++)
-+			cache[start + i]->ce_flags |=3D CE_WATCHED;
-+		istate->cache_changed =3D 1;
-+		if (i !=3D now)
-+			return -1;
-+	} else
-+		return -1;
-+	start =3D i;
-+	strbuf_reset(sb);
-+	strbuf_addstr(sb, "watch ");
++		unsorted_string_list_delete_item(&dir->names,
++						 item - dir->names.items, 0);
++		if (dir->names.nr =3D=3D 0) {
++			inotify_rm_watch(inotify_fd, dir->wd);
++			unsorted_string_list_delete_item(&watched_dirs, i, 1);
++		}
++	}
 +	return 0;
 +}
 +
-+static void watch_entries(struct index_state *istate)
++static int watch_path(char *path)
 +{
-+	int i, start, nr;
-+	struct cache_entry **sorted;
-+	struct strbuf sb =3D STRBUF_INIT;
-+	int val;
-+	socklen_t vallen =3D sizeof(val);
-+	time_t now =3D time(NULL);
++	struct string_list_item *item;
++	char *sep =3D strrchr(path, '/');
++	struct dir_info *dir;
++	const char *dirname =3D ".";
 +
-+	if (istate->watcher =3D=3D -1)
-+		return;
-+	for (i =3D nr =3D 0; i < istate->cache_nr; i++)
-+		if (ce_watchable(istate->cache[i], now))
-+			nr++;
-+	if (nr < 50)
-+		return;
-+	sorted =3D xmalloc(sizeof(*sorted) * nr);
-+	for (i =3D nr =3D 0; i < istate->cache_nr; i++)
-+		if (ce_watchable(istate->cache[i], now))
-+			sorted[nr++] =3D istate->cache[i];
-+
-+	getsockopt(istate->watcher, SOL_SOCKET, SO_SNDBUF, &val, &vallen);
-+	strbuf_grow(&sb, val);
-+	strbuf_addstr(&sb, "watch ");
-+
-+	qsort(sorted, nr, sizeof(*sorted), sort_by_date);
-+	for (i =3D start =3D 0; i < nr; i++) {
-+		if (sb.len + 4 + ce_namelen(sorted[i]) >=3D val &&
-+		    do_watch_entries(istate, sorted, &sb, start, i))
-+			break;
-+		packet_buf_write(&sb, "%s", sorted[i]->name);
++	if (sep) {
++		*sep =3D '\0';
++		dirname =3D path;
 +	}
-+	if (i =3D=3D nr && start < i)
-+		do_watch_entries(istate, sorted, &sb, start, i);
-+	strbuf_release(&sb);
-+	free(sorted);
++
++	if (!watched_dirs_sorted) {
++		sort_string_list(&watched_dirs);
++		watched_dirs_sorted =3D 1;
++	}
++	item =3D string_list_lookup(&watched_dirs, dirname);
++	if (!item) {
++		int ret =3D inotify_add_watch(inotify_fd, dirname,
++					    IN_ATTRIB | IN_DELETE | IN_MODIFY |
++					    IN_MOVED_FROM | IN_MOVED_TO);
++		if (ret < 0)
++			return -1;
++		dir =3D xmalloc(sizeof(*dir));
++		memset(dir, 0, sizeof(*dir));
++		dir->wd =3D ret;
++		dir->names.strdup_strings =3D 1;
++		item =3D string_list_append(&watched_dirs, dirname);
++		item->util =3D dir;
++	}
++	dir =3D item->util;
++	string_list_append(&dir->names, sep ? sep + 1 : path);
++	dir->names_sorted =3D 0;
++	return 0;
 +}
 +
- static void farewell_watcher(struct index_state *istate,
- 			     const unsigned char *sha1)
++static void reset_watches(void)
++{
++	int i;
++	for (i =3D 0; i < watched_dirs.nr; i++) {
++		struct dir_info *dir =3D watched_dirs.items[i].util;
++		inotify_rm_watch(inotify_fd, dir->wd);
++		string_list_clear(&dir->names, 0);
++	}
++	string_list_clear(&watched_dirs, 1);
++}
++
++#else
++
+ static int watch_path(char *path)
  {
-@@ -1637,6 +1722,7 @@ int read_index_from(struct index_state *istate, c=
-onst char *path)
+ 	return -1;
+ }
+=20
++static void reset_watches(void)
++{
++}
++
++#endif
++
+ static void reset(const char *sig)
+ {
++	reset_watches();
+ 	string_list_clear(&updated, 0);
+ 	strlcpy(index_signature, sig, sizeof(index_signature));
+ }
+@@ -155,6 +278,14 @@ int main(int argc, char **argv)
+ 	atexit(cleanup);
+ 	sigchain_push_common(cleanup_on_signal);
+=20
++#ifdef HAVE_INOTIFY
++	inotify_fd =3D inotify_init();
++	if (inotify_fd < 0)
++		die_errno("unable to initialize inotify");
++#else
++	die("no file watching mechanism is supported");
++#endif
++
+ 	if (getsockopt(fd, SOL_SOCKET, SO_SNDBUF, &msgsize, &vallen))
+ 		die_errno("could not get SO_SNDBUF");
+ 	msg =3D xmalloc(msgsize + 1);
+@@ -173,6 +304,10 @@ int main(int argc, char **argv)
+ 	nr =3D 0;
+ 	pfd[nr].fd =3D fd;
+ 	pfd[nr++].events =3D POLLIN;
++#ifdef HAVE_INOTIFY
++	pfd[nr].fd =3D inotify_fd;
++	pfd[nr++].events =3D POLLIN;
++#endif
+=20
+ 	for (;;) {
+ 		if (poll(pfd, nr, -1) < 0) {
+@@ -185,6 +320,10 @@ int main(int argc, char **argv)
+=20
+ 		if ((pfd[0].revents & POLLIN) && handle_command(fd, msg, msgsize))
+ 			break;
++#ifdef HAVE_INOTIFY
++		if ((pfd[1].revents & POLLIN) && handle_inotify(inotify_fd))
++			break;
++#endif
  	}
- 	munmap(mmap, mmap_size);
- 	connect_watcher(istate, path);
-+	watch_entries(istate);
- 	return istate->cache_nr;
-=20
- unmap:
-@@ -1933,6 +2019,17 @@ int write_index(struct index_state *istate, int =
-newfd)
- 			 * reinstated.
- 			 */
- 			cache[i]->ce_flags &=3D ~CE_VALID;
-+			/*
-+			 * We may set CE_WATCHED (but not CE_VALID)
-+			 * early when refresh has not been done
-+			 * yet. At that time we had no idea if the
-+			 * entry may have been updated. If it has
-+			 * been, remove CE_WATCHED so CE_VALID won't
-+			 * incorrectly be set next time if the file
-+			 * watcher reports no changes.
-+			 */
-+			if (!ce_uptodate(cache[i]))
-+				cache[i]->ce_flags &=3D ~CE_WATCHED;
- 			has_watches++;
- 		}
-=20
+ 	return 0;
+ }
 --=20
 1.8.5.2.240.g8478abd
