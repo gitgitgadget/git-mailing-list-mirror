@@ -1,97 +1,120 @@
-From: Lianheng Tong <lianheng.tong@kcl.ac.uk>
-Subject: Submodule relative URL problems
-Date: Mon, 13 Jan 2014 14:02:56 +0000
-Message-ID: <DAD6CF7D-49F2-4FB5-9EF2-EBAAF86881AA@kcl.ac.uk>
-References: <DC691CA7-BE36-4FE7-895A-FE8E1FD0C080@kcl.ac.uk>
-Mime-Version: 1.0 (Apple Message framework v1085)
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jan 13 15:03:33 2014
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 2/6] read-cache: new extension to mark what file is
+ watched
+Date: Mon, 13 Jan 2014 09:02:22 -0800
+Message-ID: <20140113170222.GA18964@google.com>
+References: <1389524622-6702-1-git-send-email-pclouds@gmail.com>
+ <1389524622-6702-3-git-send-email-pclouds@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 13 18:02:41 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W2i72-0002kO-DU
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Jan 2014 15:03:33 +0100
+	id 1W2kuO-0000nk-Pl
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Jan 2014 18:02:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751068AbaAMODE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Jan 2014 09:03:04 -0500
-Received: from mail-am1lp0017.outbound.protection.outlook.com ([213.199.154.17]:25478
-	"EHLO emea01-am1-obe.outbound.protection.outlook.com"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1750899AbaAMODD convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 13 Jan 2014 09:03:03 -0500
-Received: from [10.230.152.172] (159.92.9.130) by
- DBXPR03MB527.eurprd03.prod.outlook.com (10.141.12.154) with Microsoft SMTP
- Server (TLS) id 15.0.851.15; Mon, 13 Jan 2014 14:03:00 +0000
-In-Reply-To: <DC691CA7-BE36-4FE7-895A-FE8E1FD0C080@kcl.ac.uk>
-X-Mailer: Apple Mail (2.1085)
-X-Originating-IP: [159.92.9.130]
-X-ClientProxiedBy: DB4PR01CA003.eurprd01.prod.exchangelabs.com
- (10.242.152.13) To DBXPR03MB527.eurprd03.prod.outlook.com (10.141.12.154)
-X-Forefront-PRVS: 00909363D5
-X-Forefront-Antispam-Report: SFV:NSPM;SFS:(10009001)(66654002)(52314003)(189002)(199002)(51874003)(53754006)(74366001)(77982001)(59766001)(74826001)(74876001)(47776003)(65816001)(66066001)(80022001)(79102001)(74662001)(31966008)(47446002)(74502001)(74482001)(50466002)(63696002)(74706001)(76786001)(76796001)(93136001)(23726002)(36756003)(56776001)(57306001)(92726001)(92566001)(83716003)(77156001)(85852003)(69226001)(42186004)(85306002)(76482001)(56816005)(90146001)(87976001)(88136002)(89996001)(83072002)(77096001)(81342001)(87286001)(87266001)(82746002)(33656001)(81816001)(47976001)(50986001)(54316002)(62966002)(51856001)(46102001)(80976001)(53806001)(81542001)(19580395003)(19580405001)(83322001)(50226001)(81686001)(4396001)(46406003)(49866001)(47736001);DIR:OUT;SFP:1101;SCL:1;SRVR:DBXPR03M
- B527;H:[10.230.152.172];CLIP:159.92.9.130;FPR:;RD:InfoNoRecords;MX:1;A:1;LANG:en;
-X-OriginatorOrg: kcl.ac.uk
+	id S1753965AbaAMRCi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 Jan 2014 12:02:38 -0500
+Received: from mail-gg0-f176.google.com ([209.85.161.176]:50847 "EHLO
+	mail-gg0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752089AbaAMRCd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Jan 2014 12:02:33 -0500
+Received: by mail-gg0-f176.google.com with SMTP id b1so1740476ggn.7
+        for <git@vger.kernel.org>; Mon, 13 Jan 2014 09:02:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=mVltItZ7WbRqt6UQylvvQVATg5y8Sp8LSSKbW+XqPUk=;
+        b=Nw2SsT5+jKLHzScJRH2bhYWLUQkWZGOrtRdPDIrceNh7LHBFUxf2rgX7LPCBj9ZDtz
+         g4e0UWq9pu/pgGrOX/pjAqrZpWQNoNmjthuem4mHgnydVktPn/xYl39WIqELxZQJXDB4
+         710zdCxBOFHF6VCKLw4addoSq7NBuRSyrpg7P6GUhqpkhhBxrhoKBG0344XtrExQpxbo
+         spJ2S5zbV4Eb6d+lqZxHv+EtDCpc7m/VSGwxPOqPSj44PD36kuKHCPP22gihaD5vZ/OJ
+         jwdISaJGaF8wLdxZg9LBUcAxFc8alrbOFLdaHucsF8u+mzIOV+jSZSqT1VzwPwY08r32
+         yGmg==
+X-Received: by 10.236.141.132 with SMTP id g4mr4148792yhj.93.1389632551944;
+        Mon, 13 Jan 2014 09:02:31 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id s21sm28634765yhk.9.2014.01.13.09.02.30
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 13 Jan 2014 09:02:31 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <1389524622-6702-3-git-send-email-pclouds@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240361>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240362>
 
-Hi All,
+Hi,
 
-I am currently working on a project, call it A, which contains several sub-projects B, C, D.  The B, C, D are actually experimental input and outputs for simulation runs, which I need to keep track of the daily changes.  Most of these calculations are done on workstation, but I do need to occasionally clone the repositories to other machines, and then push the updates back.
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
 
-I version track B, C and D with independent git repositories, and organisationally it makes sense for them to be subdirectories of A.  I would like to version control the overall project A, with B, C, D as submodules.
+> If an entry is "watched", git lets an external program decide if the
+> entry is modified or not. It's more like --assume-unchanged, but
+> designed to be controlled by machine.
+>
+> We are running out of on-disk ce_flags, so instead of extending
+> on-disk entry format again, "watched" flags are in-core only and
+> stored as extension instead.
 
-This is easily done on the main workstation (I will call it W1), with:
+Makes sense.
 
-cd A
-git init
-for ii in B C D ; do
-  git submodule ./${ii}/.git
-done
-git add .
-git commit
+Care to add a brief description of the on-disk format for
+Documetnation/technical/index-format.txt as well?
 
-Repository A/.git on W1 does not have an origin.  All seems to work fine with this step up on W1.
+[...]
+> --- a/cache.h
+> +++ b/cache.h
+> @@ -168,6 +168,7 @@ struct cache_entry {
+> =20
+>  /* used to temporarily mark paths matched by pathspecs */
+>  #define CE_MATCHED           (1 << 26)
+> +#define CE_WATCHED           (1 << 27)
 
-HOWEVER, problem starts to appear when I attempted to clone the overall repository A to another workstation W2:
+Nit: I'd add a blank line before the definition of CE_WATCHED to make
+it clear that the comment doesn't apply to it.
 
-git clone W1:<path to A on W1>/.git  <path to A on W2>
-cd <path to A on W2>
-git submodule init
-git submodule update
+Maybe it belongs with one of the groups before (e.g., UNPACKED +
+NEW_SKIP_WORKTREE).  I dunno.
 
-git then produces an error indicating that:
+> --- a/read-cache.c
+> +++ b/read-cache.c
+[...]
+> @@ -1289,6 +1290,19 @@ static int verify_hdr(struct cache_header *hdr=
+,
+>  	return 0;
+>  }
+> =20
+> +static void read_watch_extension(struct index_state *istate, uint8_t=
+ *data,
+> +				 unsigned long sz)
+> +{
+> +	int i;
+> +	if ((istate->cache_nr + 7) / 8 !=3D sz) {
+> +		error("invalid 'WATC' extension");
+> +		return;
+> +	}
+> +	for (i =3D 0; i < istate->cache_nr; i++)
+> +		if (data[i / 8] & (1 << (i % 8)))
+> +			istate->cache[i]->ce_flags |=3D CE_WATCHED;
+> +}
 
-W1:<path to A on W1>/.git/B/.git
+So the WATC section has one bit per index entry, encoding whether that
+entry is WATCHED.  Makes sense.
 
-is not a valid repository (i.e. directory not found)
+Do I understand correctly that this patch just takes care of the
+bookkeeping for the CE_WATCHED bit and the actual semantics will
+come in a later patch?
 
-The extra .git has been inserted in the URL to submodule repository B, C, and D.
-
-This can be solved by changing the .gitmodules file, replacing ./B/.git to ../B/.git,  and then git submodule sync on W2.
-
-However, this is far from being an optimal solution, because if .gitmodules on W1 is updated accordingly, then the submodule repository for B would point to
-
-<path to A on W1>/../B/.git
-
-which will be incorrect.  I could in principle define the URL for the submodule repositories as absolute paths, but keeping them relative to A has many advantages, such as I will be able to move A around, without effecting the main repositories on W1 in anyway, and I can rsync them to another disk for backup etc.
-
-I would be very grateful if someone can offer me an solution to my problem.
-
-Many thanks in advance!
-
-Lianheng
-
-================================================
-Lianheng Tong                                    Tel: +44 79 1758 3822  
-Room S4.02, Strand Building           Fax: +44 20 7848 2420  
-Department of Physics                       lianheng.tong@kcl.ac.uk
-Kings College London                                  
-Strand, London WC2R 2LS, U.K.                         
-================================================
+Thanks,
+Jonathan
