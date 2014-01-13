@@ -1,122 +1,101 @@
-From: "Bernhard R. Link" <brlink@debian.org>
-Subject: [RFC v2] blame: new option --prefer-first to better handle merged
- cherry-picks
-Date: Mon, 13 Jan 2014 07:30:25 +0100
-Message-ID: <20140113063008.GA3072@client.brlink.eu>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/3] remote: introduce and fill branch->pushremote
+Date: Mon, 13 Jan 2014 03:34:21 -0500
+Message-ID: <20140113083421.GA18531@sigill.intra.peff.net>
+References: <1389546666-17438-1-git-send-email-artagnon@gmail.com>
+ <1389546666-17438-4-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 13 07:32:35 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 13 09:34:29 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W2b4c-0004i5-Fv
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Jan 2014 07:32:34 +0100
+	id 1W2cya-0004Zm-57
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Jan 2014 09:34:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751260AbaAMGcb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Jan 2014 01:32:31 -0500
-Received: from server.brlink.eu ([78.46.187.186]:46469 "EHLO server.brlink.eu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751239AbaAMGca (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Jan 2014 01:32:30 -0500
-Received: from workstation.brlink.eu 
-	by server.brlink.eu with esmtpsa (tls-peer-hash VPEZql)
-	id 1W2b4V-0004d3-Bp; Mon, 13 Jan 2014 07:32:27 +0100
-Received: with local; Mon, 13 Jan 2014 07:30:25 +0100
+	id S1751344AbaAMIeZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Jan 2014 03:34:25 -0500
+Received: from cloud.peff.net ([50.56.180.127]:59722 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751251AbaAMIeX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Jan 2014 03:34:23 -0500
+Received: (qmail 18586 invoked by uid 102); 13 Jan 2014 08:34:23 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 13 Jan 2014 02:34:23 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 13 Jan 2014 03:34:21 -0500
 Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <1389546666-17438-4-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240356>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240357>
 
-Allows to disable the git blame optimization of assuming that if there is a
-parent of a merge commit that has the exactly same file content, then
-only this parent is to be looked at.
+On Sun, Jan 12, 2014 at 10:41:06PM +0530, Ramkumar Ramachandra wrote:
 
-This optimization, while being faster in the usual case, means that in
-the case of cherry-picks the blamed commit depends on which other commits
-touched a file.
+> When a caller uses branch_get() to retrieve a "struct branch", they get
+> the per-branch remote name and a pointer to the remote struct. However,
+> they have no way of knowing about the per-branch pushremote from this
+> interface. So, let's expose that information via fields similar to
+> "remote" and "remote_name"; "pushremote" and "pushremote_name".
 
-If for example one commit A modified both files b and c. And there are
-commits B and C, B only modifies file b and C only modifies file c
-(so that no conflicts happen), and assume A is cherry-picked as A'
-and the two branches then merged:
+Makes sense. This is similar to what I posted before, but stops short of
+setting branch->pushremote based on "default.pushremote". I think that's
+a good thing. Your patch matches branch->remote better, and the logic
+for doing that fallback should probably stay outside of the "struct
+branch" construct.
 
---o-----B---A
-   \         \
-    ---C---A'--M---
+All 3 patches look like sane building blocks to me.
 
-Then without this new option git blame blames the A|A' changes of
-file b to A while blaming the changes of c to A'.
-With the new option --prefer-first it blames both changes to the
-same commit and to the one more on the "left" side of the graph.
+One comment on this hunk, though:
 
-Signed-off-by: Bernhard R. Link <brlink@debian.org>
----
- Documentation/blame-options.txt | 6 ++++++
- builtin/blame.c                 | 7 +++++--
- 2 files changed, 11 insertions(+), 2 deletions(-)
+>  		} else if (!strcmp(subkey, ".pushremote")) {
+> +			if (git_config_string(&branch->pushremote_name, key, value))
+> +				return -1;
+>  			if (branch == current_branch)
+> -				if (git_config_string(&pushremote_name, key, value))
+> -					return -1;
+> +				pushremote_name = branch->pushremote_name;
 
- Differences to first round: rename option and describe the effect
- instead of the implementation in documentation.
+In this code (both before and after your patch), pushremote_name does
+double-duty for storing both "remote.pushdefault", and the current
+branch's "branch.*.pushremote". I introduced an extra variable in my
+version of the patch to store "remote.pushdefault" directly, and turned
+pushremote_name into an alias (either to the current branch config, or
+to the global config).
 
-diff --git a/Documentation/blame-options.txt b/Documentation/blame-options.txt
-index 0cebc4f..b2e7fb8 100644
---- a/Documentation/blame-options.txt
-+++ b/Documentation/blame-options.txt
-@@ -48,6 +48,12 @@ include::line-range-format.txt[]
- 	Show the result incrementally in a format designed for
- 	machine consumption.
- 
-+--prefer-first::
-+	If a line was introduced by two commits (for example via
-+	a merged cherry-pick), prefer the commit that was
-+	first merged in the history of always following the
-+	first parent.
-+
- --encoding=<encoding>::
- 	Specifies the encoding used to output author names
- 	and commit summaries. Setting it to `none` makes blame
-diff --git a/builtin/blame.c b/builtin/blame.c
-index 4916eb2..8ea34cf 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -45,6 +45,7 @@ static int incremental;
- static int xdl_opts;
- static int abbrev = -1;
- static int no_whole_file_rename;
-+static int prefer_first;
- 
- static enum date_mode blame_date_mode = DATE_ISO8601;
- static size_t blame_date_width;
-@@ -1248,7 +1249,8 @@ static void pass_blame(struct scoreboard *sb, struct origin *origin, int opt)
- 			porigin = find(sb, p, origin);
- 			if (!porigin)
- 				continue;
--			if (!hashcmp(porigin->blob_sha1, origin->blob_sha1)) {
-+			if (!prefer_first &&
-+			    !hashcmp(porigin->blob_sha1, origin->blob_sha1)) {
- 				pass_whole_blame(sb, origin, porigin);
- 				origin_decref(porigin);
- 				goto finish;
-@@ -2247,7 +2249,8 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
- 	static const char *contents_from = NULL;
- 	static const struct option options[] = {
- 		OPT_BOOL(0, "incremental", &incremental, N_("Show blame entries as we find them, incrementally")),
--		OPT_BOOL('b', NULL, &blank_boundary, N_("Show blank SHA-1 for boundary commits (Default: off)")),
-+		OPT_BOOL(0, "prefer-first", &prefer_first, N_("Prefer blaming commits merged earlier")),
-+		OPT_BOOL('b', NULL, &blank_boundary, N_("Show blank SHA-1 for boundary commits (Default: ff)")),
- 		OPT_BOOL(0, "root", &show_root, N_("Do not treat root commits as boundaries (Default: off)")),
- 		OPT_BOOL(0, "show-stats", &show_stats, N_("Show work cost statistics")),
- 		OPT_BIT(0, "score-debug", &output_option, N_("Show output score for blame entries"), OUTPUT_SHOW_SCORE),
--- 
-1.8.5.1
+I did that for two reasons, one minor and one that I think will come up
+further in the topic:
 
-	Bernhard R. Link
--- 
-F8AC 04D5 0B9B 064B 3383  C3DA AFFC 96D1 151D FFDC
+  1. After your patch "pushremote_name" sometimes owns its memory (if
+     allocated for remote.pushdefault), and sometimes not (if an alias to
+     branch.*.pushremote). This isn't a problem in the current code,
+     because we never actually free() the string, meaning that if you
+     set push.default twice, we leak. But that probably does not matter
+     too much, and we have many such minor leaks of global config.
+
+  2. If the current branch has a branch.*.pushremote set, but we want to
+     know where a _different_ branch would be pushed, we have no way to
+     access remote.pushdefault (it gets overwritten in the hunk above).
+
+     @{upstream} does not have this problem, because it is _only_
+     defined if branch.*.remote is set. There is no such thing as
+     defaulting to a "remote.default" (or "origin") there, and we never
+     need to look at default_remote_name.
+
+     For @{publish}, though, I think we will want that default. The
+     common config will be to simply set "remote.pushdefault", rather
+     than setting up "branch.*.pushremote" for each branch, and we would
+     want @{publish} to handle that properly.
+
+So I think your patch is OK as-is, as the problem in (2) does not show
+up until later in the series. But I suspect you will need to do
+something to address it (and I think it is fine as a patch that comes
+later to do that refactoring).
+
+-Peff
