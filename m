@@ -1,102 +1,122 @@
-From: Stefan Saasen <ssaasen@atlassian.com>
-Subject: Fwd: Add a bugzilla website
-Date: Mon, 13 Jan 2014 12:06:54 +1100
-Message-ID: <CADoxLGNY6mPNu=d-zXN_Tatp-LbfodWXWQWKZsvmDibqZhXCcQ@mail.gmail.com>
-References: <20131115085326.GA2401@brouette> <551223703.314994127.1384508447263.JavaMail.root@zimbra35-e6.priv.proxad.net>
- <20131115135132.431d3e344dadee64e2be5127@domain007.com> <CAH5451=+N1vYoNeweQXe9vavjmRvkEzP=7U+mDf-0zH9OSpZPA@mail.gmail.com>
- <CADoxLGPnoo_fXsQXE2jb_H4Otf9eRWsN=nQP9smhPbt20H-72Q@mail.gmail.com>
+From: "Bernhard R. Link" <brlink@debian.org>
+Subject: [RFC v2] blame: new option --prefer-first to better handle merged
+ cherry-picks
+Date: Mon, 13 Jan 2014 07:30:25 +0100
+Message-ID: <20140113063008.GA3072@client.brlink.eu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: andrew.ardill@gmail.com
-X-From: git-owner@vger.kernel.org Mon Jan 13 02:08:01 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 13 07:32:35 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W2W0W-00006R-LK
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Jan 2014 02:08:01 +0100
+	id 1W2b4c-0004i5-Fv
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Jan 2014 07:32:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751102AbaAMBHg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 12 Jan 2014 20:07:36 -0500
-Received: from na3sys009aog108.obsmtp.com ([74.125.149.199]:39207 "HELO
-	na3sys009aog108.obsmtp.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1750899AbaAMBHf convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Jan 2014 20:07:35 -0500
-Received: from mail-oa0-f54.google.com ([209.85.219.54]) (using TLSv1) by na3sys009aob108.postini.com ([74.125.148.12]) with SMTP
-	ID DSNKUtM8Vmi5A0Irkn0dHz61lEM0156OJpSL@postini.com; Sun, 12 Jan 2014 17:07:35 PST
-Received: by mail-oa0-f54.google.com with SMTP id o6so7324775oag.41
-        for <git@vger.kernel.org>; Sun, 12 Jan 2014 17:07:34 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=98kQeBJ0AkvuIDp52TAKztpr99sexaNVevdPzCEtauM=;
-        b=GJPPThofnlaCk94GMUNJLxqq2RN0/UrkHecffoYyOuzAWxwXLRrLCR9wjFuNuiv/gh
-         6g+j3dmK18KW9tgv3MqfpSsrYett7Ir4bVZpjlsw8Yp4N66+d+lf/JyT/fSM/meM9Stf
-         zuOp1FP7Df0VgBWj8KDovWvMS3sX4mcBTf04e/dUUTwiJYgnzCoMYIhi03uYb5PkXFsw
-         6Wjq+awCNNiWrsgkBNOaPckwgHXl2/A+s56sneVUdME9X0T1wIT+sGUJsa1HWfnHrUK5
-         Ryut/xadYH4NepsZPJKhjnovMSghaYWvWvVmira4t0nAB4ehu9H+4mCCq0jR/9WM9EHn
-         Iq0g==
-X-Gm-Message-State: ALoCoQlu2bJdE90N67r2w87hNIr/ed7a+3vfOjfVXVWzuJBMrUKIlaZdF41HFQglKZH2r3pidkDuCqypTbTIutYu6Sp6rnarv9XczafabOFFmUPskABZ7SXn/SfK0SSquIzOE9djMQXzazCNKcQ8IbUabBi/LrLTGA==
-X-Received: by 10.182.43.161 with SMTP id x1mr18357095obl.5.1389575254264;
-        Sun, 12 Jan 2014 17:07:34 -0800 (PST)
-X-Received: by 10.182.43.161 with SMTP id x1mr18357090obl.5.1389575254177;
- Sun, 12 Jan 2014 17:07:34 -0800 (PST)
-Received: by 10.76.80.10 with HTTP; Sun, 12 Jan 2014 17:06:54 -0800 (PST)
-In-Reply-To: <CADoxLGPnoo_fXsQXE2jb_H4Otf9eRWsN=nQP9smhPbt20H-72Q@mail.gmail.com>
+	id S1751260AbaAMGcb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Jan 2014 01:32:31 -0500
+Received: from server.brlink.eu ([78.46.187.186]:46469 "EHLO server.brlink.eu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751239AbaAMGca (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Jan 2014 01:32:30 -0500
+Received: from workstation.brlink.eu 
+	by server.brlink.eu with esmtpsa (tls-peer-hash VPEZql)
+	id 1W2b4V-0004d3-Bp; Mon, 13 Jan 2014 07:32:27 +0100
+Received: with local; Mon, 13 Jan 2014 07:30:25 +0100
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240355>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240356>
 
-> In any case, adding value to the existing process is hard (because it
-> works quite well!) and probably requires significantly more work to
-> even understand what that value might look like. This, I think, is th=
-e
-> key reason it is hard to truly get started with any bug tracking
-> solution; the solution is not obvious, and the current (very
-> customised) workflow is not supported directly by any tool.
->
-> Regards,
->
-> Andrew Ardill
->
-> [1] https://git-scm.atlassian.net
+Allows to disable the git blame optimization of assuming that if there is a
+parent of a merge commit that has the exactly same file content, then
+only this parent is to be looked at.
 
+This optimization, while being faster in the usual case, means that in
+the case of cherry-picks the blamed commit depends on which other commits
+touched a file.
 
-I think you summarised the challenges very well and I don=E2=80=99t thi=
-nk there is an
-obvious answer to that.
+If for example one commit A modified both files b and c. And there are
+commits B and C, B only modifies file b and C only modifies file c
+(so that no conflicts happen), and assume A is cherry-picked as A'
+and the two branches then merged:
 
-I=E2=80=99d just like to offer any help that I or we (Atlassian) could =
-give you. Given
-your experience with JIRA I=E2=80=99m sure that you=E2=80=99ve got ever=
-ything covered, but if
-you need anything, please ping me.
+--o-----B---A
+   \         \
+    ---C---A'--M---
 
-Re-reading the old discussions there was a concern that the issue data =
-was not
-available, I just wanted to chime in and mention that if you are using =
-a JIRA
-OnDemand (e.g. the https://git-scm.atlassian.net) instance you can get =
-the full
-backup of your data (including any attachments, data available as XML) =
-and
-there is a JIRA REST API as well.
+Then without this new option git blame blames the A|A' changes of
+file b to A while blaming the changes of c to A'.
+With the new option --prefer-first it blames both changes to the
+same commit and to the one more on the "left" side of the graph.
 
-I know that this is just a very tangential concern given the challenges=
- of
-making an issue tracker work with an email based workflow that has prov=
-en quite
-successful but I at least wanted to address that and offer any help you=
- might
-need.
+Signed-off-by: Bernhard R. Link <brlink@debian.org>
+---
+ Documentation/blame-options.txt | 6 ++++++
+ builtin/blame.c                 | 7 +++++--
+ 2 files changed, 11 insertions(+), 2 deletions(-)
 
+ Differences to first round: rename option and describe the effect
+ instead of the implementation in documentation.
 
-Cheers,
-Stefan
+diff --git a/Documentation/blame-options.txt b/Documentation/blame-options.txt
+index 0cebc4f..b2e7fb8 100644
+--- a/Documentation/blame-options.txt
++++ b/Documentation/blame-options.txt
+@@ -48,6 +48,12 @@ include::line-range-format.txt[]
+ 	Show the result incrementally in a format designed for
+ 	machine consumption.
+ 
++--prefer-first::
++	If a line was introduced by two commits (for example via
++	a merged cherry-pick), prefer the commit that was
++	first merged in the history of always following the
++	first parent.
++
+ --encoding=<encoding>::
+ 	Specifies the encoding used to output author names
+ 	and commit summaries. Setting it to `none` makes blame
+diff --git a/builtin/blame.c b/builtin/blame.c
+index 4916eb2..8ea34cf 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -45,6 +45,7 @@ static int incremental;
+ static int xdl_opts;
+ static int abbrev = -1;
+ static int no_whole_file_rename;
++static int prefer_first;
+ 
+ static enum date_mode blame_date_mode = DATE_ISO8601;
+ static size_t blame_date_width;
+@@ -1248,7 +1249,8 @@ static void pass_blame(struct scoreboard *sb, struct origin *origin, int opt)
+ 			porigin = find(sb, p, origin);
+ 			if (!porigin)
+ 				continue;
+-			if (!hashcmp(porigin->blob_sha1, origin->blob_sha1)) {
++			if (!prefer_first &&
++			    !hashcmp(porigin->blob_sha1, origin->blob_sha1)) {
+ 				pass_whole_blame(sb, origin, porigin);
+ 				origin_decref(porigin);
+ 				goto finish;
+@@ -2247,7 +2249,8 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
+ 	static const char *contents_from = NULL;
+ 	static const struct option options[] = {
+ 		OPT_BOOL(0, "incremental", &incremental, N_("Show blame entries as we find them, incrementally")),
+-		OPT_BOOL('b', NULL, &blank_boundary, N_("Show blank SHA-1 for boundary commits (Default: off)")),
++		OPT_BOOL(0, "prefer-first", &prefer_first, N_("Prefer blaming commits merged earlier")),
++		OPT_BOOL('b', NULL, &blank_boundary, N_("Show blank SHA-1 for boundary commits (Default: ff)")),
+ 		OPT_BOOL(0, "root", &show_root, N_("Do not treat root commits as boundaries (Default: off)")),
+ 		OPT_BOOL(0, "show-stats", &show_stats, N_("Show work cost statistics")),
+ 		OPT_BIT(0, "score-debug", &output_option, N_("Show output score for blame entries"), OUTPUT_SHOW_SCORE),
+-- 
+1.8.5.1
+
+	Bernhard R. Link
+-- 
+F8AC 04D5 0B9B 064B 3383  C3DA AFFC 96D1 151D FFDC
