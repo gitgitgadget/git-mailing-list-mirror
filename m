@@ -1,128 +1,94 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 3/3] remote: introduce and fill branch->pushremote
-Date: Mon, 13 Jan 2014 15:27:30 -0500
-Message-ID: <20140113202730.GA32542@sigill.intra.peff.net>
-References: <1389546666-17438-1-git-send-email-artagnon@gmail.com>
- <1389546666-17438-4-git-send-email-artagnon@gmail.com>
- <20140113083421.GA18531@sigill.intra.peff.net>
- <CALkWK0ncSLza3Q0PSZ0oTZqB2YxjgGSqA7QYxk2+rN_77BKZMA@mail.gmail.com>
- <20140113185946.GA30279@sigill.intra.peff.net>
- <xmqqtxd763lf.fsf@gitster.dls.corp.google.com>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: Re: Submodule relative URL problems
+Date: Mon, 13 Jan 2014 21:31:18 +0100
+Message-ID: <20140113203118.GA2606@sandbox-ub>
+References: <DC691CA7-BE36-4FE7-895A-FE8E1FD0C080@kcl.ac.uk>
+ <DAD6CF7D-49F2-4FB5-9EF2-EBAAF86881AA@kcl.ac.uk>
+ <20140113195518.GB18964@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 13 21:27:41 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Lianheng Tong <lianheng.tong@kcl.ac.uk>, git@vger.kernel.org,
+	Jens Lehmann <Jens.Lehmann@web.de>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 13 21:31:29 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W2o6j-0003cR-Ed
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Jan 2014 21:27:37 +0100
+	id 1W2oAS-0000El-VY
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Jan 2014 21:31:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751623AbaAMU1d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Jan 2014 15:27:33 -0500
-Received: from cloud.peff.net ([50.56.180.127]:60025 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750962AbaAMU1c (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Jan 2014 15:27:32 -0500
-Received: (qmail 21003 invoked by uid 102); 13 Jan 2014 20:27:32 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 13 Jan 2014 14:27:32 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 13 Jan 2014 15:27:30 -0500
+	id S1752124AbaAMUbZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Jan 2014 15:31:25 -0500
+Received: from smtprelay02.ispgateway.de ([80.67.29.24]:34526 "EHLO
+	smtprelay02.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751633AbaAMUbX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Jan 2014 15:31:23 -0500
+Received: from [77.20.146.74] (helo=sandbox-ub)
+	by smtprelay02.ispgateway.de with esmtpsa (TLSv1:AES128-SHA:128)
+	(Exim 4.68)
+	(envelope-from <hvoigt@hvoigt.net>)
+	id 1W2oAK-00013T-K5; Mon, 13 Jan 2014 21:31:20 +0100
 Content-Disposition: inline
-In-Reply-To: <xmqqtxd763lf.fsf@gitster.dls.corp.google.com>
+In-Reply-To: <20140113195518.GB18964@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240372>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240373>
 
-On Mon, Jan 13, 2014 at 12:15:08PM -0800, Junio C Hamano wrote:
+Hi,
 
-> Jeff King <peff@peff.net> writes:
+On Mon, Jan 13, 2014 at 11:55:18AM -0800, Jonathan Nieder wrote:
+> Lianheng Tong wrote:
 > 
-> > It does not matter for actually pushing, because to do a non-default
-> > push, you must always specify a remote. But "@{publish}" will ask the
-> > question "even if I am on 'side' now, what would happen if I were to
-> > default-push on 'master'?".
+> > git clone W1:<path to A on W1>/.git  <path to A on W2>
 > 
-> In a similar wording to yours, it can be said that B@{upstream} is
-> "what would happen if I were to default-pull on 'B'?".
-
-Right. I wondered at first if there was a similar bug in @{upstream},
-but as I noted earlier, it is not defined if a per-branch remote is not
-set. The answer to your question above is "nothing", so we do not have
-to worry about it. :)
-
-> A related tangent is what should B@{publish} should yield when there
-> is no triangular configuration variables like remote.pushdefault,
-> branch.B.pushremote and a possible future extension branch.B.push
-> are defined.  The definition you gave, i.e. "if I were to
-> default-push", gives a good guideline, I think.
-
-Yes, that is what I tried for with my original patches. (e.g.,
-"push.default=upstream" should just make @{publish} a synonym for
-@{upstream}, which is what my patch did). I punted on "simple", but it
-would ideally do the same thing as "push". Which is why I do not think
-my patches are appropriate as-is; they need to somehow share the logic
-with "git push" rather than try to reimplement it.
-
-> I.e. "git push origin master" does tell us to push out 'master', but
-> it does not explicitly say what ref to update.  It may be set to
-> update their remotes/satellite/master when we are emulating a fetch
-> in reverse by pushing, via e.g.
+> Interesting.
 > 
-> 	[remote "origin"]
->         	push = refs/heads/master:refs/remotes/satellite/master
+> Thoughts:
 > 
-> and it would be intuitive if we make "master@{publish}" resolve to
-> "refs/remotes/satellite/master" in such a case.
-
-Right. And my patches did that (or at least I intended them to :) ) by
-applying the push refspec (if any), and then applying the fetch refspec
-on top of that. But again, that seems like policy that should be shared
-with "git push".
-
-That being said, I do not think your example is the best one for
-@{publish}. You have not specified any remote at all. I think the
-closest "push" behavior for @{publish} would be something like:
-
-  git checkout master && git push
-
-I.e., where would _that_ push go?
-
-> One thing that makes things a bit fuzzy is what should happen if
-> you have more than one push destinations.  For example:
+>  * More typical usage is to clone from a bare repository (A.git), which
+>    wouldn't have this problem.  But I think your case is worth
+>    supporting, too.
 > 
-> 	[remote "home"]
->         	pushurl = ...
->                 push = refs/heads/master:refs/remotes/satellite/master
+>  * What would you think of putting symlinks in A's .git directory?
 > 
-> 	[remote "github"]
->         	pushurl = ...
->                 mirror
+> 	cd A/.git
+> 	ln -s ../B ../C ../D .
 > 
-> 	[remote]
->         	pushdefault = ???
-> 
-> "git push home" updates their 'refs/remotes/satellite/master' with
-> my 'master' with the above, while "git push github" will update
-> their 'refs/heads/master' with 'master'.
-> 
-> We can say master@{publish} is 'remotes/satellite/master' if
-> remote.pushdefault (or 'branch.master.pushremote") is set to 'home',
-> it is 'master' if it is 'github', and if "git push" while sitting on
-> 'master' does not push it anywhere then master@{publish} is an
-> error.  There may be a better definition of what "if I were to
-> default-push" really means, but I don't think of any offhand.
+>  * Perhaps as a special case when the superproject is foo/.git, git
+>    should treat relative submodule paths as relative to foo/ instead
+>    of relative to foo/.git/.  I think that would take care of your
+>    case without breaking existing normal practices, though after the
+>    patch is made it still wouldn't take care of people using old
+>    versions of git without that patch.  What do you think?
 
-Exactly.  I do not think the multiple push destinations matter here,
-because it is always "what would I do if I were on the branch".  At most
-one of them can be the default in that case (based on the config as you
-noted).
+I do not fully get the repository layout, since some commands simply do
+not work. Nevertheless I think what Lianheng Tong is running into is
+the following:
 
--Peff
+ * If a superproject has *no remote* a relative submodule url is relative
+   to the *superproject itself*
+ * If a superproject has *a remote* a relative submodule url is relative
+   to the *superprojects remote*
+
+The simplest solution is: Have central bare repositories for everything
+so that every workstation has the same remote.
+
+The second solution: Make sure both repositories have each other as a
+remote. But then you run into a chicken/egg problem when setting the two
+up.
+
+The interpretation of relative urls was a design decision back when the
+relative urls were introduced. I am quite sure it would produce a lot of
+fallout if we change that.
+
+If I get your usecase wrong it would be very helpful if you could
+provide us with a working script that creates the repository setup your
+are using.
+
+Cheers Heiko
