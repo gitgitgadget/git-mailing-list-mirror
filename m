@@ -1,120 +1,75 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 2/6] read-cache: new extension to mark what file is
- watched
-Date: Mon, 13 Jan 2014 09:02:22 -0800
-Message-ID: <20140113170222.GA18964@google.com>
-References: <1389524622-6702-1-git-send-email-pclouds@gmail.com>
- <1389524622-6702-3-git-send-email-pclouds@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFC] Introduce git submodule add|update --attach
+Date: Mon, 13 Jan 2014 09:31:14 -0800
+Message-ID: <xmqqd2jv7pr1.fsf@gitster.dls.corp.google.com>
+References: <1388368184-18418-1-git-send-email-ceztko@gmail.com>
+	<CABURp0pQHw7qvG_tq8oK=6DBOUoYy=Rb5othV+zBpNonuv=PLw@mail.gmail.com>
+	<CALas-igDaweib14zaLJk3m1zmBWk=14oA7h_e7G82vpxmBjiOg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 13 18:02:41 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Phil Hord <phil.hord@gmail.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Francesco Pretto <ceztko@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 13 18:31:54 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W2kuO-0000nk-Pl
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Jan 2014 18:02:41 +0100
+	id 1W2lMf-0005Bk-MG
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Jan 2014 18:31:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753965AbaAMRCi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 Jan 2014 12:02:38 -0500
-Received: from mail-gg0-f176.google.com ([209.85.161.176]:50847 "EHLO
-	mail-gg0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752089AbaAMRCd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Jan 2014 12:02:33 -0500
-Received: by mail-gg0-f176.google.com with SMTP id b1so1740476ggn.7
-        for <git@vger.kernel.org>; Mon, 13 Jan 2014 09:02:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=mVltItZ7WbRqt6UQylvvQVATg5y8Sp8LSSKbW+XqPUk=;
-        b=Nw2SsT5+jKLHzScJRH2bhYWLUQkWZGOrtRdPDIrceNh7LHBFUxf2rgX7LPCBj9ZDtz
-         g4e0UWq9pu/pgGrOX/pjAqrZpWQNoNmjthuem4mHgnydVktPn/xYl39WIqELxZQJXDB4
-         710zdCxBOFHF6VCKLw4addoSq7NBuRSyrpg7P6GUhqpkhhBxrhoKBG0344XtrExQpxbo
-         spJ2S5zbV4Eb6d+lqZxHv+EtDCpc7m/VSGwxPOqPSj44PD36kuKHCPP22gihaD5vZ/OJ
-         jwdISaJGaF8wLdxZg9LBUcAxFc8alrbOFLdaHucsF8u+mzIOV+jSZSqT1VzwPwY08r32
-         yGmg==
-X-Received: by 10.236.141.132 with SMTP id g4mr4148792yhj.93.1389632551944;
-        Mon, 13 Jan 2014 09:02:31 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id s21sm28634765yhk.9.2014.01.13.09.02.30
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 13 Jan 2014 09:02:31 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <1389524622-6702-3-git-send-email-pclouds@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752023AbaAMRbu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Jan 2014 12:31:50 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39161 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751748AbaAMRbs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Jan 2014 12:31:48 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4372660BEA;
+	Mon, 13 Jan 2014 12:31:40 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Q/Z/W4qONgXkAFsscZLrEXgpvco=; b=BkjFdX
+	PwyZ4833joGaQeobHgnj9hO3IdZryMC202onaKn1ZB01VxhDQzmjJ6+gtQKS2M20
+	uNr38JHGI25y0mr4bxXXgdghO59KGky76N2477x1PHgLB1Ml0FM7ZiK4NSOisWlL
+	+2Z2Poq6QJXJSpQlPqIAnbZimsfJGcKZZpC20=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=YHzI8hymVnXN+/dtCvSIR4dLovg1h5u3
+	OgvlPYf5wa9dNb3SQwe46e6V56KO8XC8EAr4Fc5c5jKRPhrbvuy2+Nz04LKVrV3d
+	GdGUV+EBvECuFCGtk77ANB/jGozxz+t387UIPwWjzqYboi0zyilZCtHLIOgb0UBF
+	bkxofV4nGhM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5B42560BE5;
+	Mon, 13 Jan 2014 12:31:39 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DE64F60BDA;
+	Mon, 13 Jan 2014 12:31:19 -0500 (EST)
+In-Reply-To: <CALas-igDaweib14zaLJk3m1zmBWk=14oA7h_e7G82vpxmBjiOg@mail.gmail.com>
+	(Francesco Pretto's message of "Thu, 2 Jan 2014 19:48:30 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 83BACB30-7C78-11E3-8703-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240362>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240363>
 
-Hi,
+Francesco Pretto <ceztko@gmail.com> writes:
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
-
-> If an entry is "watched", git lets an external program decide if the
-> entry is modified or not. It's more like --assume-unchanged, but
-> designed to be controlled by machine.
+> Thanks for the comments, my replies below. Before, a couple of general
+> questions:
+> - I'm also writing some tests, should I commit them together with the
+> feature patch?
+> - to determine the attached/detached state I did this:
 >
-> We are running out of on-disk ce_flags, so instead of extending
-> on-disk entry format again, "watched" flags are in-core only and
-> stored as extension instead.
+> head_detached=
+> if test "$(rev-parse --abbrev-ref HEAD)" = "HEAD"
+> then
+>     head_detached="true"
+> fi
 
-Makes sense.
-
-Care to add a brief description of the on-disk format for
-Documetnation/technical/index-format.txt as well?
-
-[...]
-> --- a/cache.h
-> +++ b/cache.h
-> @@ -168,6 +168,7 @@ struct cache_entry {
-> =20
->  /* used to temporarily mark paths matched by pathspecs */
->  #define CE_MATCHED           (1 << 26)
-> +#define CE_WATCHED           (1 << 27)
-
-Nit: I'd add a blank line before the definition of CE_WATCHED to make
-it clear that the comment doesn't apply to it.
-
-Maybe it belongs with one of the groups before (e.g., UNPACKED +
-NEW_SKIP_WORKTREE).  I dunno.
-
-> --- a/read-cache.c
-> +++ b/read-cache.c
-[...]
-> @@ -1289,6 +1290,19 @@ static int verify_hdr(struct cache_header *hdr=
-,
->  	return 0;
->  }
-> =20
-> +static void read_watch_extension(struct index_state *istate, uint8_t=
- *data,
-> +				 unsigned long sz)
-> +{
-> +	int i;
-> +	if ((istate->cache_nr + 7) / 8 !=3D sz) {
-> +		error("invalid 'WATC' extension");
-> +		return;
-> +	}
-> +	for (i =3D 0; i < istate->cache_nr; i++)
-> +		if (data[i / 8] & (1 << (i % 8)))
-> +			istate->cache[i]->ce_flags |=3D CE_WATCHED;
-> +}
-
-So the WATC section has one bit per index entry, encoding whether that
-entry is WATCHED.  Makes sense.
-
-Do I understand correctly that this patch just takes care of the
-bookkeeping for the CE_WATCHED bit and the actual semantics will
-come in a later patch?
-
-Thanks,
-Jonathan
+Use "git symbolic-ref HEAD" to read off of it.
