@@ -1,145 +1,61 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Create HTML for technical/http-protocol.txt
-Date: Mon, 13 Jan 2014 10:40:05 -0800
-Message-ID: <xmqq38kr7mka.fsf@gitster.dls.corp.google.com>
-References: <196469122.1795615.1389439169514.JavaMail.ngmail@webmail08.arcor-online.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/3] remote: introduce and fill branch->pushremote
+Date: Mon, 13 Jan 2014 13:59:47 -0500
+Message-ID: <20140113185946.GA30279@sigill.intra.peff.net>
+References: <1389546666-17438-1-git-send-email-artagnon@gmail.com>
+ <1389546666-17438-4-git-send-email-artagnon@gmail.com>
+ <20140113083421.GA18531@sigill.intra.peff.net>
+ <CALkWK0ncSLza3Q0PSZ0oTZqB2YxjgGSqA7QYxk2+rN_77BKZMA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, spearce@spearce.org
-To: Thomas Ackermann <th.acker@arcor.de>
-X-From: git-owner@vger.kernel.org Mon Jan 13 19:40:23 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 13 20:00:03 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W2mQw-00032U-9N
-	for gcvg-git-2@plane.gmane.org; Mon, 13 Jan 2014 19:40:22 +0100
+	id 1W2mjx-00047R-MV
+	for gcvg-git-2@plane.gmane.org; Mon, 13 Jan 2014 20:00:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751597AbaAMSkT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Jan 2014 13:40:19 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36877 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751024AbaAMSkQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Jan 2014 13:40:16 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C5332620DA;
-	Mon, 13 Jan 2014 13:40:15 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=pjC2hhAl0U3WedDGTpKyMTptcXs=; b=dbVpDU
-	jdehdyFqosz4Sd6NlwY5OkaH5JYxLFqdE1R1GkgmQyvEbwVH1LPkS37EoVy7i2Y+
-	tQoxmFadG7YsTDS23lDxLOrYiMZKHf3SwEi0tgyJSqODw09KQ7BiOwmMgFAgL3GE
-	4ceSkbuxKifTZm8Jtqwi0mQAc3xJoTZFQ3s88=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=xbGAWeyktv2QkcsoU7xsb1sDCd6mkSTQ
-	q+bvmdk1LBt2JdOTrVC2lmXfpEPc/aKqwssjFAqG8SeWv9ean+ClovLGZCl9qvJd
-	AxWB7CSeekJWoT6vNGVewmDksxaXH9X/FPpaQlcjCJwMb+yKVDNE7v+pQ2iLHB8R
-	PjwhkJwREAY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 95F91620D9;
-	Mon, 13 Jan 2014 13:40:15 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CF8FF620D7;
-	Mon, 13 Jan 2014 13:40:10 -0500 (EST)
-In-Reply-To: <196469122.1795615.1389439169514.JavaMail.ngmail@webmail08.arcor-online.net>
-	(Thomas Ackermann's message of "Sat, 11 Jan 2014 12:19:29 +0100
-	(CET)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 21F7CCCC-7C82-11E3-B785-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752205AbaAMS7w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Jan 2014 13:59:52 -0500
+Received: from cloud.peff.net ([50.56.180.127]:59981 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752060AbaAMS7t (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Jan 2014 13:59:49 -0500
+Received: (qmail 16290 invoked by uid 102); 13 Jan 2014 18:59:48 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 13 Jan 2014 12:59:48 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 13 Jan 2014 13:59:47 -0500
+Content-Disposition: inline
+In-Reply-To: <CALkWK0ncSLza3Q0PSZ0oTZqB2YxjgGSqA7QYxk2+rN_77BKZMA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240366>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240367>
 
-Thomas Ackermann <th.acker@arcor.de> writes:
+On Mon, Jan 13, 2014 at 04:52:52PM +0530, Ramkumar Ramachandra wrote:
 
-> - Add to Documentation/Makefile
-> - Start every TODO with a new line
-> - Fix indentation error
->
-> Signed-off-by: Thomas Ackermann <th.acker@arcor.de>
-> ---
->  Documentation/Makefile                    | 1 +
->  Documentation/technical/http-protocol.txt | 3 +--
->  2 files changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/Documentation/Makefile b/Documentation/Makefile
-> index 36c58fc..b4a4c82 100644
-> --- a/Documentation/Makefile
-> +++ b/Documentation/Makefile
-> @@ -70,6 +70,7 @@ TECH_DOCS += technical/racy-git
->  TECH_DOCS += technical/send-pack-pipeline
->  TECH_DOCS += technical/shallow
->  TECH_DOCS += technical/trivial-merge
-> +TECH_DOCS += technical/http-protocol
+> Not sure I understand what the problem is. Let's say we have two
+> branches: "master", and "side" with remote.pushdefault = ram,
+> branch.*.remote = origin, and branch.side.pushremote = peff. Now, when
+> I query master's pushremote, I get "ram" and when I query side's
+> pushremote, I get "peff"; all the logic for falling-back from
+> branch.*.pushremote to remote.pushdefault to branch.*.remote is in
+> branch_get(), so I need to do nothing extra on the caller-side. From
+> the caller's perspective, why does it matter if the pushremote of a
+> particular branch is due to branch.*.pushremote or remote.pushdefault?
 
-The output from "ls Documentation/technical/[b-z]*.txt" tells me
-that this patch makes the TECH_DOCS cover everything (in other
-words, this is not "I was intereted in http-protocol.txt; I did not
-bother checking if there are others that are not formatted.").
+Imagine your HEAD is at "side". What should "master@{publish}" produce?
+I would argue "ram/master". Where does "ram" come from in your code?
 
-Which is good, but that is something you could have said at the very
-beginning as the motivation (which cannot be read from the patch)
-before going into details of what you did (which can be read in the
-patch).
+It does not matter for actually pushing, because to do a non-default
+push, you must always specify a remote. But "@{publish}" will ask the
+question "even if I am on 'side' now, what would happen if I were to
+default-push on 'master'?".
 
-Also let's keep them in order and move the new line before the
-index-format, as h comes before i.
-
->  SP_ARTICLES += $(TECH_DOCS)
->  SP_ARTICLES += technical/api-index
->  
-> diff --git a/Documentation/technical/http-protocol.txt b/Documentation/technical/http-protocol.txt
-> index d21d77d..c64a5e9 100644
-> --- a/Documentation/technical/http-protocol.txt
-> +++ b/Documentation/technical/http-protocol.txt
-> @@ -332,6 +332,7 @@ server advertises capability "allow-tip-sha1-in-want".
->    have_list         =  *PKT-LINE("have" SP id LF)
->  
->  TODO: Document this further.
-> +
->  TODO: Don't use uppercase for variable names below.
->
->  The Negotiation Algorithm
-> @@ -376,10 +377,8 @@ The computation to select the minimal pack proceeds as follows
->  
->       Commands MUST appear in the following order, if they appear
->       at all in the request stream:
-> -
->         * want
->         * have
-> -
->       The stream is terminated by a pkt-line flush ("0000").
->  
->       A single "want" or "have" command MUST have one hex formatted
-
-The resulting _source_ file read as txt becomes somewhat harder to
-read with these changes.  Admittedly, it is mostly because the
-original text was meant to be easy to read in TEXT, not to be
-formatted via AsciiDoc into HTML.  We can see that in many places in
-the formatted output with your patch.  For example:
-
- - Strings like "200 OK", "304 Not Modified", "HEAD" are italicized
-   ("Discovering References" section); "GET" request is shown as
-   Roman body text.  I think in our documentation it is customery to
-   typeset these "as-is" things in monospaced.
-
- - "dumb server reply:", "smart server reply:" ("Smart Clients"
-   section) are shown in monospace just like the actual protocol
-   message examples that follow them, but we would most likely want
-   to see them as part of the body text.
-
- - As all the descriptions of steps in the Negotiation Algorithm are
-   indented, the AsciiDoc formatted result becomes just a series of
-   fixed-font blocks around there.
-
-So,... I think this patch may be a good first step, but it needs to
-be followed by another that cleans up the mark-up in order for the
-resulting HTML to be truly usable.
-
-Thanks.
+-Peff
