@@ -1,148 +1,154 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: Re: [RFC v2] submodule: Respect requested branch on all clones
-Date: Tue, 14 Jan 2014 11:24:45 +0100
-Message-ID: <20140114102445.GA27915@sandbox-ub>
-References: <20140108010504.GE26583@odin.tremily.us>
- <CALas-iheQ4Rfxvty5guEieVwa8SffRnhRdHkNXUKwmuHRXD2Xg@mail.gmail.com>
- <20140109000338.GM29954@odin.tremily.us>
- <CALas-igFQtG1qa2+grMAtZ9mDE-xGuXkDGwGvSXL8_FzPfXBLQ@mail.gmail.com>
- <52CE5E51.4060507@web.de>
- <20140109173218.GA8042@odin.tremily.us>
- <52CEF71B.5010201@web.de>
- <20140109195522.GT29954@odin.tremily.us>
- <52CF1764.40604@web.de>
- <20140109221840.GW29954@odin.tremily.us>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v2 4/5] get_sha1: speed up ambiguous 40-hex test
+Date: Tue, 14 Jan 2014 12:34:37 +0100
+Message-ID: <52D520CD.7070902@alum.mit.edu>
+References: <20140107235631.GA10503@sigill.intra.peff.net> <20140107235953.GD10657@sigill.intra.peff.net> <52CD7835.2020708@alum.mit.edu> <20140110094120.GB17443@sigill.intra.peff.net> <20140114095002.GA32258@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jens Lehmann <Jens.Lehmann@web.de>,
-	Francesco Pretto <ceztko@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git <git@vger.kernel.org>, Jonathan Nieder <jrnieder@gmail.com>
-To: "W. Trevor King" <wking@tremily.us>
-X-From: git-owner@vger.kernel.org Tue Jan 14 11:25:43 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, Brodie Rao <brodie@sf.io>,
+	git@vger.kernel.org,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jan 14 12:34:54 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W31Bl-0002hb-GV
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Jan 2014 11:25:41 +0100
+	id 1W32Gc-0006QG-N2
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Jan 2014 12:34:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751295AbaANKZG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Jan 2014 05:25:06 -0500
-Received: from smtprelay01.ispgateway.de ([80.67.31.28]:34046 "EHLO
-	smtprelay01.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751090AbaANKZD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Jan 2014 05:25:03 -0500
-Received: from [77.20.146.74] (helo=sandbox-ub)
-	by smtprelay01.ispgateway.de with esmtpsa (TLSv1:AES128-SHA:128)
-	(Exim 4.68)
-	(envelope-from <hvoigt@hvoigt.net>)
-	id 1W31B3-0000dp-BG; Tue, 14 Jan 2014 11:24:57 +0100
-Content-Disposition: inline
-In-Reply-To: <20140109221840.GW29954@odin.tremily.us>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
+	id S1751490AbaANLen (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Jan 2014 06:34:43 -0500
+Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:58489 "EHLO
+	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751342AbaANLel (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 14 Jan 2014 06:34:41 -0500
+X-AuditID: 1207440f-b7f306d000006d99-3d-52d520d0b6cd
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id C6.22.28057.0D025D25; Tue, 14 Jan 2014 06:34:40 -0500 (EST)
+Received: from [192.168.69.148] (p57A241AD.dip0.t-ipconnect.de [87.162.65.173])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s0EBYbcQ008236
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 14 Jan 2014 06:34:38 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20131103 Icedove/17.0.10
+In-Reply-To: <20140114095002.GA32258@sigill.intra.peff.net>
+X-Enigmail-Version: 1.6
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrDKsWRmVeSWpSXmKPExsUixO6iqHtB4WqQwb81chYHXj5lsei60s1k
+	0dB7hdmie8pbRosfLT3MDqweO2fdZfd41ruH0ePiJWWPZwdusnl83iQXwBrFbZOUWFIWnJme
+	p2+XwJ2x5cMmtoImlYo9N/vYGhjfyXQxcnJICJhIvJ/6ixnCFpO4cG89WxcjF4eQwGVGifmb
+	O1kgnPNMEos6v7GCVPEKaEvseLOeBcRmEVCVWPm3F8xmE9CVWNTTzARiiwoES6y+/IAFol5Q
+	4uTMJ2C2iICsxPfDGxlBhjILbGCUOPXnHiNIQljAReLqy9WsENueM0psXf+BDSTBKWAtMWf/
+	baCpHED3iUv0NAaBmMwC6hLr5wmBVDALyEtsfzuHeQKj4Cwk62YhVM1CUrWAkXkVo1xiTmmu
+	bm5iZk5xarJucXJiXl5qka6JXm5miV5qSukmRkjo8+9g7Fovc4hRgINRiYf3BOOVICHWxLLi
+	ytxDjJIcTEqivHskrwYJ8SXlp1RmJBZnxBeV5qQWH2KU4GBWEuF9ApLjTUmsrEotyodJSXOw
+	KInzqi9R9xMSSE8sSc1OTS1ILYLJynBwKEnwSgNjXEiwKDU9tSItM6cEIc3EwQkynEtKpDg1
+	LyW1KLG0JCMeFMHxxcAYBknxAO31kgfZW1yQmAsUhWg9xajLsWLDpz+MQix5+XmpUuK8iiA7
+	BECKMkrz4FbAEt0rRnGgj4V5nUCqeIBJEm7SK6AlTEBLau9fAVlSkoiQkmpgnPUgWjrdudW2
+	wvLU4xmFvqmf1WonpC7i2l1u0Kh3eE/H9k8f/8qZTrrG8VvJruBoQ6PZrClFNvZi 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240394>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240395>
 
-Hi,
+On 01/14/2014 10:50 AM, Jeff King wrote:
+> On Fri, Jan 10, 2014 at 04:41:20AM -0500, Jeff King wrote:
+> 
+>> That being said, we could further optimize this by not opening the files
+>> at all (and make that the responsibility of do_one_ref, which we are
+>> avoiding here). I am slightly worried about the open() cost of my
+>> solution. It's amortized away in a big call, but it is probably
+>> noticeable for something like `git rev-parse <40-hex>`.
+> 
+> I took a look at this. It gets a bit hairy. My strategy is to add a flag
+> to ask read_loose_refs to create REF_INCOMPLETE values. We currently use
+> this flag for loose REF_DIRs to mean "we haven't opendir()'d the
+> subdirectory yet". This would extend it to the non-REF_DIR case to mean
+> "we haven't opened the loose ref file yet". We'd check REF_INCOMPLETE
+> before handing the ref_entry to a callback, and complete it if
+> necessary.
+> 
+> It gets ugly, though, because we need to pass that flag through quite a
+> bit of callstack. get_ref_dir() needs to know it, which means all of
+> find_containing_dir, etc need it, meaning it pollutes all of the
+> packed-refs code paths too.
+> 
+> I have a half-done patch in this direction if that doesn't sound too
+> nasty.
 
-On Thu, Jan 09, 2014 at 02:18:40PM -0800, W. Trevor King wrote:
-> On Thu, Jan 09, 2014 at 10:40:52PM +0100, Jens Lehmann wrote:
-> > Am 09.01.2014 20:55, schrieb W. Trevor King:
-> > > On Thu, Jan 09, 2014 at 08:23:07PM +0100, Jens Lehmann wrote:
-> > >> Am 09.01.2014 18:32, schrieb W. Trevor King:
-> > >>>> later updates,
-> > >>>
-> > >>> The same thing that currently happens, with the exception that
-> > >>> checkout-style updates should use reset to update the
-> > >>> currently-checked out branch (or detached-HEAD), instead of
-> > >>> always detaching the HEAD.
-> > >>
-> > >> Won't the user loose any modifications to his local branch here?
-> > >=20
-> > > They just called for a checkout-style update, so yes.  If they
-> > > want to keep local modifications, chose an integration mode that
-> > > preserves local changes.
-> >=20
-> > Hmm, as current "submodule updates" already makes it too easy to
-> > loose commits, this does not look right to me. I'd prefer to stop a=
-t
-> > that point and tell the user what he can do to solve the conflict.
->=20
-> Users who are worried about loosing local updates should not be using
-> a checkout-style updates.  If they are using a checkout-style update,
-> and they ask for an update, they're specifically requesting that we
-> blow away their local work and checkout/reset to the new sha1.
-> Solving update conflicts is the whole point of the non-checkout updat=
-e
-> modes.
+A long time ago I write a patch series to allow incomplete reading of
+references, but my version *always* read them lazily, so it was much
+simpler (no need to pass a new option down the call stack).  It didn't
+seem to speed things up in general, so I never submitted it.
 
-But checkout is different from reset --hard in that it does not blow
-away local uncommitted changes. Please see below.
+Reading lazily only from particular callers is more complicated, and I
+can see how it would get messy.
 
-> > > Maybe you meant "for checkout I can easily overwrite the local
-> > > changes with the upstream branch", which is what I understand
-> > > checkout to do.
-> >=20
-> > But which I find really unfriendly and would not like to see in a
-> > new feature. We should protect the user from loosing any local
-> > changes, not simply throw them away. Recursive update makes sure it
-> > won't overwrite any local modification before it checks out anythin=
-g
-> > and will abort before doing so (unless forced of course).
->=20
-> If you want to get rid of checkout-mode updates, I'm fine with that.
-> However, I don't think it supports use-cases like Heiko's (implied) =E2=
-=80=9CI
-> don't care what's happening upstream, I never touch that submodule,
-> just checkout what the superproject maintainer says should be checked
-> out for this branch.  Even if they have been rebasing or whatever=E2=80=
-=9D
-> [3].
+Given the race avoidance needed between packed/loose references, lazy
+reading would mean that after each reference is read, the packed-refs
+file would need to be stat()ted again to make sure that it hasn't been
+changed since the last check.  I know this isn't an issue for your use
+case, because you plan *never* to read the file contents.  But it does
+increase the price of lazy reference reading to most callers.
 
-I never stated that in that post. Even with the current checkout-mode
-updates you'll never loose local modifications (without force) that are
-not committed. I think you have to distinguish between local
-modifications in the worktree and the ones that are committed.
+On the other hand, if we ever go in the direction of routing *all*
+reference lookups--including lookups of single references--through the
+cache, then lazy reading of references probably becomes essential to
+avoid populating more of the cache than necessary.
 
-The recursive checkout Jens is working on is simply implementing the
-current checkout-mode to the places where the superproject checks out
-its files. That way submodules get checked out when the superproject is
-checked out. If the submodule does not match the sha1 registered in the
-superproject it either stays there (if the checkout would not need to
-update the submodule) or (if checkout would need to update) git will no=
-t
-do the checkout and bail out with "you have local modifications to ... =
-=2E
+>>> This doesn't correctly handle the rule
+>>>
+>>> 	"refs/remotes/%.*s/HEAD"
+>> [...]
+> 
+>> I'll see how painful it is to make it work.
+> 
+> It's actually reasonably painful. I thought at first we could get away
+> with more cleverly parsing the rule, find the prefix (up to the
+> placeholder), and then look for the suffix ("/HEAD") inside there. But
+> it can never work with the current do_for_each_* code. That code only
+> triggers a callback when we see a concrete ref. It _never_ lets the
+> callbacks see an intermediate directory.
+> 
+> So a NO_RECURSE flag is not sufficient to handle this case. I'd need to
+> teach do_for_each_ref to recurse based on pathspecs, or a custom
+> callback function. And that is getting quite complicated.
 
-I think the whole recursive checkout topic is already complicated enoug=
-h
-as it is so we should currently not add anything from this discussion t=
-o
-it until it is cleaned up and merged. We also need recursive fetch for
-that which I am planning to work on as soon as we settle this
-discussion. I will write another post about how I think we should/can
-proceed.
+Another possibility would be to have an "int recurse" parameter rather
+than "bool recurse", telling how many levels to recurse.  Then one could
+do a
 
-> > or be asked to resolve the conflict manually when "checkout" is
-> > configured and the branches diverged.
->=20
-> I still think that checkout-mode updates should be destructive.  See
-> my paraphrased-version of Heiko's use case above.  How are they going
-> to resolve this manually?  Merge or rebase?  Why weren't they using
-> that update mode in the first place?
+    do_for_each_ref(..., "refs/remotes", ..., recurse=2)
 
-I strongly disagree. They should only be destructive in the sense that
-another commit get checked out but never loose local modifications.
+to get all of the refs/remotes/*/HEAD references.  Though since all of
+the heads for a remote are also siblings of "refs/remotes/foo/HEAD", it
+could still involve a lot of superfluous file reading.  And the integer
+wouldn't fit conveniently in the flags parameter.
 
-> [1]: http://article.gmane.org/gmane.comp.version-control.git/240251
-> [2]: http://article.gmane.org/gmane.comp.version-control.git/240248
-> [3]: http://article.gmane.org/gmane.comp.version-control.git/240013
+> I think it might be simpler to just do my own custom traversal. What I
+> need is much simpler than what do_for_each_entry provides. I don't need
+> recursion, and I don't actually need to look at the loose and packed
+> refs together. It's OK for me to do them one at a time because I don't
+> care about the actual value; I just want to know about which refs exist.
 
-Cheers Heiko
+Yes.  Still, the code is really piling up for this one warning for the
+contrived eventuality that somebody wants to pass SHA-1s and branch
+names together in a single cat-file invocation *and* wants to pass lots
+of inputs at once and so is worried about performance *and* has
+reference names that look like SHA-1s.  Otherwise we could just leave
+the warning disabled in this case, as now.  Or we could add a new
+"--hashes-only" option that tells cat-file to treat all of its
+arguments/inputs as SHA-1s; such an option would permit an even faster
+code path for bulk callers.
+
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
