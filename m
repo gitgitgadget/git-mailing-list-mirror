@@ -1,47 +1,81 @@
-From: Alexander Shopov
-	 =?UTF-8?Q?=28=D0=90=D0=BB=D0=B5=D0=BA=D1=81=D0=B0=D0=BD=D0=B4=D1=8A?=
-	 =?UTF-8?Q?=D1=80_?= =?UTF-8?Q?=D0=A8=D0=BE=D0=BF=D0=BE=D0=B2=29?= 
-	<lists@kambanaria.org>
-Subject: Submitting translations to gitk and git-gui
-Date: Tue, 14 Jan 2014 16:06:03 +0200
-Message-ID: <1389708363.2216.2.camel@localhost.localdomain>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Diagnosing stray/stale .keep files -- explore what is in a pack?
+Date: Tue, 14 Jan 2014 09:54:56 -0500
+Message-ID: <CACPiFCLa3X-Xt5GwrHHA-PFj-Bi9_sW+=y2xidZ7tDbFfM26rA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 14 15:16:30 2014
+Content-Type: text/plain; charset=ISO-8859-1
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jan 14 15:55:33 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W34n7-0002ki-Dx
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Jan 2014 15:16:29 +0100
+	id 1W35Ot-0003wr-DO
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Jan 2014 15:55:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751807AbaANOQ0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Jan 2014 09:16:26 -0500
-Received: from mail.openintegra.com ([193.68.120.3]:48126 "EHLO
-	mail.openintegra.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751451AbaANOQY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Jan 2014 09:16:24 -0500
-X-Greylist: delayed 617 seconds by postgrey-1.27 at vger.kernel.org; Tue, 14 Jan 2014 09:16:24 EST
-Received: from [10.142.88.245] (78-83-52-173.spectrumnet.bg [78.83.52.173])
-	(authenticated bits=0)
-	by mail.openintegra.com (8.13.8/8.13.8) with ESMTP id s0EE644u018485
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
-	for <git@vger.kernel.org>; Tue, 14 Jan 2014 16:06:04 +0200
-X-Mailer: Evolution 3.10.3 (3.10.3-1.fc20) 
-X-Spam-Status: No, score=-0.2 required=1.9 tests=ALL_TRUSTED,BAYES_50
-	autolearn=ham version=3.3.1
-X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on mail.openintegra.com
+	id S1751800AbaANOzY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Jan 2014 09:55:24 -0500
+Received: from mail-wg0-f51.google.com ([74.125.82.51]:63843 "EHLO
+	mail-wg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751766AbaANOzT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Jan 2014 09:55:19 -0500
+Received: by mail-wg0-f51.google.com with SMTP id z12so474339wgg.18
+        for <git@vger.kernel.org>; Tue, 14 Jan 2014 06:55:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=fCz248PuRi0cTWij7tTos8a8lIKt5eTd8Ij2b4Wxk54=;
+        b=mJkD2Y9VUWGdIb40+q7/qrR3PI7mPV5oTFWKC/3eHFR4XefkD/eQuMgJfQXqqzgTKd
+         600z8o2pWpgiLuHHIt2y53GzQ12GWaFJeVIETiB7HJhtSCChGscCldQlGT4VW4HF09QO
+         fCYvRF6YChGQCu6yLzZLGhk8vw1zssBWuqbUpS+YFTmqAH6yy9B1yKq2H/OQQJfYbH6X
+         xnJ8EZt1qbJJQvIKHPSleRt/n8Qa/Ej12ALYkD4VtIDhwttN3Kx5c7iYunlPz6j4It3I
+         5tr6Uj4bITVPuBVMASYqRXYS9a8oz14mbb+ruIGdRdQF9zUgDuE+UZ219HGkhXvs3Kpc
+         I2dg==
+X-Received: by 10.180.39.43 with SMTP id m11mr20684350wik.8.1389711316159;
+ Tue, 14 Jan 2014 06:55:16 -0800 (PST)
+Received: by 10.216.64.66 with HTTP; Tue, 14 Jan 2014 06:54:56 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240398>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240399>
 
-Hi everyone,
-I have completed Bulgarian translation for gtik and git-gui. Should I
-submit them via this list as inline patches?
-Kind regards:
-al_shopov
+hi folks,
+
+I have a git server which gets pushes of data (not code) from a couple
+hundred VMs every hour. Every round of pushes leaves two stray .keep
+files, so I am guessing two clients are having problems completing the
+push. The contents being pushed are reports of a puppet run.
+
+Is there a handy way to list the blobs in a pack, so I can feed them
+to git-cat-file and see what's in there? I'm sure that'll help me
+narrow down on the issue.
+
+Are there other ways to try diagnose this?
+
+Does the server-side record anything if a push fails? There are a
+number of problems I am familiar with, and they always require
+collaboration from the "client" side to spot and diagnose
+
+ - a ref is not up to date and the server rejects non-ft
+ - perms issues over objects or refs
+ - ENOSPC
+ - ... catchable signals (ETERM?)
+
+AFAIK, I think it doesn't, and maybe it should, even if it's as simple
+as trying to spawn a pipe to ""/usr/bin/logger -t git-server" and
+attach it to stderr...
+
+This has veered a bit off topic, but I think it's important for large
+git server installations.
+
+cheers,
+
+
+m
+-- 
+ martin.langhoff@gmail.com
+ -  ask interesting questions
+ - don't get distracted with shiny stuff  - working code first
+ ~ http://docs.moodle.org/en/User:Martin_Langhoff
