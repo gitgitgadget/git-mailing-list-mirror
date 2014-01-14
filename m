@@ -1,95 +1,75 @@
-From: Pete Wyckoff <pw@padd.com>
-Subject: Re: git-p4: exception when cloning a perforce repository
-Date: Mon, 13 Jan 2014 19:18:20 -0500
-Message-ID: <20140114001820.GA12058@padd.com>
-References: <01EF41A4-533B-4A24-8952-CAEB49970272@iwi.me>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC v2] blame: new option --prefer-first to better handle merged cherry-picks
+Date: Mon, 13 Jan 2014 17:00:46 -0800
+Message-ID: <xmqq7ga35qdd.fsf@gitster.dls.corp.google.com>
+References: <20140113063008.GA3072@client.brlink.eu>
+	<xmqqfvor5xil.fsf@gitster.dls.corp.google.com>
+	<20140113225229.GA3418@client.brlink.eu>
+	<xmqqbnzf5vvu.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Alexandru Juncu <alexj@rosedu.org>
-To: Damien =?iso-8859-1?Q?G=E9rard?= <damien@iwi.me>
-X-From: git-owner@vger.kernel.org Tue Jan 14 01:18:33 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Bernhard R. Link" <brl+git@mail.brlink.eu>
+X-From: git-owner@vger.kernel.org Tue Jan 14 02:01:10 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W2riB-0001l9-9j
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Jan 2014 01:18:31 +0100
+	id 1W2sNR-0001y4-18
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Jan 2014 02:01:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751788AbaANAS2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 Jan 2014 19:18:28 -0500
-Received: from honk.padd.com ([74.3.171.149]:56185 "EHLO honk.padd.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751469AbaANAS1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Jan 2014 19:18:27 -0500
-Received: from arf.padd.com (unknown [50.105.0.78])
-	by honk.padd.com (Postfix) with ESMTPSA id 1C34370F4;
-	Mon, 13 Jan 2014 16:18:26 -0800 (PST)
-Received: by arf.padd.com (Postfix, from userid 7770)
-	id C0CCD20077; Mon, 13 Jan 2014 19:18:20 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <01EF41A4-533B-4A24-8952-CAEB49970272@iwi.me>
+	id S1752811AbaANBA6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Jan 2014 20:00:58 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62129 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752684AbaANBAy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Jan 2014 20:00:54 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A0A5163C9D;
+	Mon, 13 Jan 2014 20:00:52 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=bTqOPxfBdk93qBSbsJd5Cc6sIM0=; b=sm77j9
+	dNSblNqF25uxGCLVFpghq03A7eDBBYCXWsV2wquweSjYmVumBnfLyeDxKo2ty1Yy
+	MYgidXtrb70R9BvZ/PGqQUgBDkfagNda9gwzD8kUAQKvuW/gf3uetuaRVRD8Faev
+	ZzkzyJ49NfpqWtB21eGDq2eBn2d8P2x5e2QQs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=EC2nKwM0Ld7KEOzh4Z1n8VnDXID3GvW8
+	PfQE8em3m1wx4N3hsTKZUpB46cR63dyBssO+gfN5lVOwzLgsTFU6YEL6CgEE/fF9
+	BhRFe8Ff3PqLhWx9HzvUy5ym/aFhqayxU78mntCyYNSLsmQlmMSajH7XXhBk7Vvs
+	A4gupViMJEY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7787063C92;
+	Mon, 13 Jan 2014 20:00:50 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6874C63C8E;
+	Mon, 13 Jan 2014 20:00:49 -0500 (EST)
+In-Reply-To: <xmqqbnzf5vvu.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Mon, 13 Jan 2014 15:01:41 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 4ED050AE-7CB7-11E3-BB96-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240381>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240382>
 
-damien@iwi.me wrote on Mon, 13 Jan 2014 14:37 +0100:
-> I am trying to clone a perforce repository via git and I am having th=
-e following backtrace :
->=20
-> {14:20}~/projects/####:master =E2=9C=97 =E2=9E=AD git p4 clone //depo=
-t/@all .
-> Importing revision =E2=80=A6
-> [...]
-> Importing revision 59702 (45%)Traceback (most recent call last):
-[..]
->   File "/opt/git/libexec/git-core/git-p4", line 2078, in streamOneP4F=
-ile
->     if data[-1] =3D=3D '\n':
-> IndexError: string index out of range
->=20
-> git =E2=80=94version: git version 1.8.5.2.309.ga25014b [last commit f=
-rom master from github.com/git/git]
-> os : ubuntu 13.10
+Junio C Hamano <gitster@pobox.com> writes:
 
-This code:
+>> While the result is more consistent and more predictable in the case
+>> of merged cherry picks, it is also slower in every case.
+>
+> Consistent and predictable, perhaps, but I am not sure "exact" would
+> be a good word.
 
-        if type_base =3D=3D "symlink":
-            git_mode =3D "120000"
-            # p4 print on a symlink sometimes contains "target\n";
-            # if it does, remove the newline
-            data =3D ''.join(contents)
-  =3D=3D>       if data[-1] =3D=3D '\n':
-                contents =3D [data[:-1]]
-            else:
-                contents =3D [data]
-
-means that data is an empty string.  Implies you've got a
-symlink pointing to nothing.  Is that even possible?
-
-It could be this is a regression introduced at 1292df1 (git-p4:
-=46ix occasional truncation of symlink contents., 2013-08-08).  The
-old way of doing data[:-1] unconditionally would have worked but
-was broken for other reasons.
-
-Could you investigate the symlink a bit?  We're looking for
-one in change 59702 that points to nowhere.  Maybe do:
-
-    $ p4 describe -s 59702
-
-and see if you can figure out which of those could be a symlink, then
-inspect it:
-
-    $ p4 fstat //depot/symlink@59702
-    (probably shows it is "headRev 1")
-
-    $ p4 print -q //depot/symlink#1
-
-    $ p4 print -q //depot/symlink#1 | od -c
-
-Thanks for checking this depot info first.
-
-		-- Pete
+Another thing I am not enthusiasitc about this change is that I am
+afraid that this may make "git blame -- path" and "git log -- path"
+work inconsistenly.  The both cull side branches whenever one of the
+parents gave the resulting blob, even that parent is not the first
+one.  But "git blame --prefer-first -- path", afaict, behaves quite
+differently from "git log --first-parent -- path", even though they
+share similar option names, adding more to the confusion.
