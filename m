@@ -1,9 +1,8 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
+From: "W. Trevor King" <wking@tremily.us>
 Subject: Re: Re: [RFC v2] submodule: Respect requested branch on all clones
-Date: Tue, 14 Jan 2014 21:58:30 +0100
-Message-ID: <20140114205830.GA838@sandbox-ub>
-References: <20140109000338.GM29954@odin.tremily.us>
- <CALas-igFQtG1qa2+grMAtZ9mDE-xGuXkDGwGvSXL8_FzPfXBLQ@mail.gmail.com>
+Date: Tue, 14 Jan 2014 13:42:09 -0800
+Message-ID: <20140114214209.GJ23617@odin.tremily.us>
+References: <CALas-igFQtG1qa2+grMAtZ9mDE-xGuXkDGwGvSXL8_FzPfXBLQ@mail.gmail.com>
  <52CE5E51.4060507@web.de>
  <20140109173218.GA8042@odin.tremily.us>
  <52CEF71B.5010201@web.de>
@@ -12,170 +11,165 @@ References: <20140109000338.GM29954@odin.tremily.us>
  <20140109221840.GW29954@odin.tremily.us>
  <20140114102445.GA27915@sandbox-ub>
  <20140114165709.GH7078@odin.tremily.us>
+ <20140114205830.GA838@sandbox-ub>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="NqSa+Xr3J/G6Hhls"
 Cc: Jens Lehmann <Jens.Lehmann@web.de>,
 	Francesco Pretto <ceztko@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Git <git@vger.kernel.org>, Jonathan Nieder <jrnieder@gmail.com>
-To: "W. Trevor King" <wking@tremily.us>
-X-From: git-owner@vger.kernel.org Tue Jan 14 21:58:51 2014
+To: Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Tue Jan 14 22:42:20 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W3B4R-0004WS-Qb
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Jan 2014 21:58:48 +0100
+	id 1W3BkX-0000Bs-Pw
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Jan 2014 22:42:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751810AbaANU6o convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Jan 2014 15:58:44 -0500
-Received: from smtprelay04.ispgateway.de ([80.67.29.8]:43698 "EHLO
-	smtprelay04.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751621AbaANU6n (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Jan 2014 15:58:43 -0500
-Received: from [77.20.146.74] (helo=sandbox-ub)
-	by smtprelay04.ispgateway.de with esmtpsa (TLSv1:AES128-SHA:128)
-	(Exim 4.68)
-	(envelope-from <hvoigt@hvoigt.net>)
-	id 1W3B4G-0004R1-10; Tue, 14 Jan 2014 21:58:36 +0100
+	id S1751642AbaANVmO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Jan 2014 16:42:14 -0500
+Received: from qmta11.westchester.pa.mail.comcast.net ([76.96.59.211]:45337
+	"EHLO QMTA11.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751367AbaANVmM (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 14 Jan 2014 16:42:12 -0500
+Received: from omta02.westchester.pa.mail.comcast.net ([76.96.62.19])
+	by QMTA11.westchester.pa.mail.comcast.net with comcast
+	id DrYy1n0090QuhwU5BxiBAC; Tue, 14 Jan 2014 21:42:11 +0000
+Received: from odin.tremily.us ([24.18.63.50])
+	by omta02.westchester.pa.mail.comcast.net with comcast
+	id Dxi91n00Q152l3L3NxiAiR; Tue, 14 Jan 2014 21:42:11 +0000
+Received: by odin.tremily.us (Postfix, from userid 1000)
+	id 4FA95ED1BE5; Tue, 14 Jan 2014 13:42:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
+	t=1389735729; bh=2YITIP3EWDSHbDiGx/SQC7bWhMMxJfnU0ZipBHoJ7to=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=V6aTXMxCHtFoFkN+V1exwswHsfBCwVH9uGfkgXe+99CEG02eN+1VeF2faGfDk8aif
+	 e6MBoTP5pDSEbZD3ki1VXzudkLpWhl37u7/dCTFHQK06XAwyF+k+hP5Y/0iMpgcK6Q
+	 Ea35DOIxcWxT2Kt2UBtlQJQHmxa8WEQblkvdyvSQ=
 Content-Disposition: inline
-In-Reply-To: <20140114165709.GH7078@odin.tremily.us>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
+In-Reply-To: <20140114205830.GA838@sandbox-ub>
+OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
+ url=http://tremily.us/pubkey.txt
+User-Agent: Mutt/1.5.22 (2013-10-16)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
+	s=q20121106; t=1389735731;
+	bh=ghDByjddsEwYmY8FpxPQPFLWLJA+AvnoVfN+ZAJxvao=;
+	h=Received:Received:Received:Date:From:To:Subject:Message-ID:
+	 MIME-Version:Content-Type;
+	b=CQwxF1TR/BwRfe5kmFL5ookPQUUG5pv5UGewU/nIgCQ3gX9dTMFH3hDeCIW7qkoeD
+	 gY5i//h3V2KW0oQLJp8VUvgVGjH5qJ2EmZ0E4Q9ATD+hgWi57ncGHCuKOnYDXwNb8c
+	 hEul+F4Cah1QA++9jtHzzmltExpSCCdTFfPCkRqok/1WRGZYLkDx1vrNDjJy6BhRCZ
+	 4e0Pc0dC5jy2vU0VRzKyB15hfid7/tf1wad7FuAXAgchkrAgAS8qVUsxN0DC6YV5iX
+	 EqRESu4rzxblFNdnznNDljbrCR5kbZAQfrJ8KLp5rWFqEQZWOr0LpP8ahSMk1P1oOo
+	 OwzOBG7Q1dd1A==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240413>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240414>
 
-On Tue, Jan 14, 2014 at 08:57:09AM -0800, W. Trevor King wrote:
-> > > On Thu, Jan 09, 2014 at 10:40:52PM +0100, Jens Lehmann wrote:
-> > > > Am 09.01.2014 20:55, schrieb W. Trevor King:
-> > > > > Maybe you meant "for checkout I can easily overwrite the loca=
-l
-> > > > > changes with the upstream branch", which is what I understand
-> > > > > checkout to do.
-> > > >=20
-> > > > But which I find really unfriendly and would not like to see in
-> > > > a new feature. We should protect the user from loosing any loca=
-l
-> > > > changes, not simply throw them away. Recursive update makes sur=
-e
-> > > > it won't overwrite any local modification before it checks out
-> > > > anything and will abort before doing so (unless forced of
-> > > > course).
-> > >=20
-> > > If you want to get rid of checkout-mode updates, I'm fine with
-> > > that.  However, I don't think it supports use-cases like Heiko's
-> > > (implied) =E2=80=9CI don't care what's happening upstream, I neve=
-r touch
-> > > that submodule, just checkout what the superproject maintainer
-> > > says should be checked out for this branch.  Even if they have
-> > > been rebasing or whatever=E2=80=9D [3].
-> >=20
-> > I never stated that in that post.
+
+--NqSa+Xr3J/G6Hhls
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Tue, Jan 14, 2014 at 09:58:30PM +0100, Heiko Voigt wrote:
+> A typical workflow where a feature in a project needs some extension or
+> change in a submodule goes like this:
 >=20
-> Sorry for misunderstanding.  I think I'm just unclear on your
-> workflow?
-
-Yes probably. We mostly use submodules for shared code and for tracking
-external libraries. For the shared code we want to make sure that
-the changes that come from one project do not break anything in another
-project that also uses that code so the submodules are maintained and
-reviewed separately and ideally contain tests for the expected
-functionality.
-
-A typical workflow where a feature in a project needs some extension or
-change in a submodule goes like this:
-
-1. The developer does his changes locally implementing everything
-   needed. To commit he creates a local branch in the submodule and in
-   the superproject (most of the times from the current HEAD that is
-   checked out).
-
-2. For convenience I usually commit the resulting commit sha1 of the
-   submodule in the commit that needs the change. That way when I switc=
-h
-   to a different branch and back I can simply say: git submodule updat=
-e
-   and get the correct code everywhere.
-
-3. Once done with the whole feature I first do the review process
-   (adding any missing tests to ensure my change does not break, ...)
-   for the submodule to get the feature branch merged into a stable one=
-=2E
-   In our superproject only commits sha1 from a stable branch are
-   allowed so the submodule change needs to be reviewed first.
-
-4. Once the change is in a stable branch in the submodule I then update
-   the commit sha1 link in the superproject that needs the change. That
-   is usually done by rebasing the branch in the superproject and
-   registering the new stable branch (typically master).
-
-5. Then I proceed with the review process in the superproject as if it
-   was a normal change without a submodule.
-
-Thats our main use case.
-
-> > The recursive checkout Jens is working on is simply implementing th=
-e
-> > current checkout-mode to the places where the superproject checks
-> > out its files. That way submodules get checked out when the
-> > superproject is checked out. If the submodule does not match the
-> > sha1 registered in the superproject it either stays there (if the
-> > checkout would not need to update the submodule) or (if checkout
-> > would need to update) git will not do the checkout and bail out wit=
-h
-> > "you have local modifications to ... .
+> 1. The developer does his changes locally implementing everything
+>    needed. To commit he creates a local branch in the submodule and in
+>    the superproject (most of the times from the current HEAD that is
+>    checked out).
 >=20
-> Sounds good to me as far as it goes.  I think it misses the =E2=80=9C=
-what
-> should we do if the gitlinked hashes are different=E2=80=9D case, bec=
-ause the
-> checkout will always leave you with a detached HEAD.
+> 2. For convenience I usually commit the resulting commit sha1 of the
+>    submodule in the commit that needs the change. That way when I switch
+>    to a different branch and back I can simply say: git submodule update
+>    and get the correct code everywhere.
+
+This checkout functionality is exactly what my
+submodule.<name>.localBranch is designed to automate [1].  I think
+that should be different from integrating local and external changes,
+which is what 'git submodule update' is about.  For example, after you
+run 'git submodule update' here, you'll have your original commit
+checked out, but you'll be on a detached HEAD instead of your original
+branch.  If you want to further develop the submodule feature branch,
+you currently have to cd into the submodule and check the branch out
+by hand.
+
+> How about the use-case I sketched above? Is that what you are searching
+> for? In that use-case we have to update to the new master after a
+> submodule change was merged. That could be achieved by
 >=20
-> > > > or be asked to resolve the conflict manually when "checkout" is
-> > > > configured and the branches diverged.
-> > >=20
-> > > I still think that checkout-mode updates should be destructive.
-> > > See my paraphrased-version of Heiko's use case above.  How are
-> > > they going to resolve this manually?  Merge or rebase?  Why
-> > > weren't they using that update mode in the first place?
-> >=20
-> > I strongly disagree. They should only be destructive in the sense
-> > that another commit get checked out but never loose local
-> > modifications.
+> 	git submodule update --remote <submodule>
 >=20
-> I think the key I'm missing is an example workflow where a developer
-> wants to make local submodule changes, but also wants to use
-> checkout-mode updates instead of merge/rebase updates.  Can you sketc=
-h
-> one out for me?
+> with the wanted stable branch configured. But in practise something
+> along the lines of
+>=20
+> 	(cd <submodule> && git checkout origin/<stable>)
+>=20
+> is usually used and simple enough.
 
-How about the use-case I sketched above? Is that what you are searching
-for? In that use-case we have to update to the new master after a
-submodule change was merged. That could be achieved by
+The =E2=80=9Cgitlinked commits must be in the subproject's master=E2=80=9D =
+rule
+protects you from blowing stuff away here.  You could use rebase- or
+merge-style integration as well, assuming the maintainer didn't have
+dirty local work in their submodule.
 
-	git submodule update --remote <submodule>
+> We have a tool in our git gui configuration that does
+>=20
+> 	git submodule foreach 'git fetch && git checkout origin/master'
 
-with the wanted stable branch configured. But in practise something
-along the lines of
+I agree that with 'submodule update' seems superfluous.  With proper
+out-of-tree submodule configs specifying remote URLs and upstream
+branches,
 
-	(cd <submodule> && git checkout origin/<stable>)
+  git submodule foreach 'git fetch && git checkout @{upstream}'
 
-is usually used and simple enough.
+(or merge/rebase/=E2=80=A6) should cover this case more generically and with
+less mental overhead.
 
-We have a tool in our git gui configuration that does
+> I hope that draws a clear picture of how we use submodules.
 
-	git submodule foreach 'git fetch && git checkout origin/master'
+It's certainly clearer, thanks :).  I'm not sure where checkout-mode
+is specifically important, though.  In your step-2, it doesn't restore
+your original branch.  In your =E2=80=9Cupdate the superproject's master=E2=
+=80=9D
+step, you aren't even using 'submodule update' :p.
 
-which can be used by the maintainer before a release to ensure that all
-submodules are up-to-date. But in practise it turn out that all
-submodules are fairly current since everyone is adding features to the
-quite frequently and thus pulling in the current version automatically.
+Cheers,
+Trevor
 
-I hope that draws a clear picture of how we use submodules.
+[1]: http://article.gmane.org/gmane.comp.version-control.git/240336
 
-Cheers Heiko
+--=20
+This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
+For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
+
+--NqSa+Xr3J/G6Hhls
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (GNU/Linux)
+
+iQIcBAEBAgAGBQJS1a8uAAoJEKKfehoaNkbtI0YP/0PR9yySvPPp6NxyABFJPUkv
+zjx91HkxrK811bYkyCO35xq1neywQ4kZKTmUb7Z0dO5QVt+LXn6OvAtJDLJlXHy0
+i8Joqx3QSOzFi2acE1XbmHb8BypT6PSDWx8sP2FRAwnpNsK/1u57Sp/+to1ppQfO
+xx0eLX/k/GqJxx5UTuDY40AEfawn2Jhp3NlYNgyMEEmXfqjYbzbC1f6QByjSvZnc
+m5VpbRmTE5ydEt2NV9GnZIzqfRdCI8sU3EJ1qBj0WedlKFMA2vYYkAD9ixCNv1w9
+MBNpLzVLWGmY9Oum6bse5nXidIwP1DfG1/Lgzn4V3e/+37IiPUioJeKAFiQPEWzu
+Qf/See0AL59SwjdM3uxFg7pEeQPPV1BiITdx5RnAEPiiJC8lCKFd8rBcTR0EdNx3
+pKCzqnC6XOqqpkCQ7CWmkQtwpD3tQUP7IcmFhI3Auqf2UbmeIZsfOvEU/Te/90f3
+63/vOmuWEWHQqDztuwK3p0xHVnmxstHfS2g7mEk9mjuNRFCXLgRexBCfUorhzc05
+9107DhuYCaZDoUcchu0eaHQiUOLyPD6zQ3+hitvMXCWEe8EMZuiJaZsfKKFQQJY/
+d7zfuFng991RUCkIhiScQN2iFFGFj0P/Po/YXFxNsh9N9Zd+W6ZWLp78p0jeXjn8
+FXL/YydhwBF0Jz6Z+BYl
+=OzBb
+-----END PGP SIGNATURE-----
+
+--NqSa+Xr3J/G6Hhls--
