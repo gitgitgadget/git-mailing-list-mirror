@@ -1,75 +1,106 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC v2] blame: new option --prefer-first to better handle merged cherry-picks
-Date: Mon, 13 Jan 2014 17:00:46 -0800
-Message-ID: <xmqq7ga35qdd.fsf@gitster.dls.corp.google.com>
-References: <20140113063008.GA3072@client.brlink.eu>
-	<xmqqfvor5xil.fsf@gitster.dls.corp.google.com>
-	<20140113225229.GA3418@client.brlink.eu>
-	<xmqqbnzf5vvu.fsf@gitster.dls.corp.google.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: git gui crashes ( v 1.8.5.2)
+Date: Mon, 13 Jan 2014 17:11:41 -0800
+Message-ID: <20140114011141.GF18964@google.com>
+References: <CANJSc_uYm7f4LoZoMoVzcsmGrYnUy+2nXFL_cNWqQnwLb5J6mw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Bernhard R. Link" <brl+git@mail.brlink.eu>
-X-From: git-owner@vger.kernel.org Tue Jan 14 02:01:10 2014
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Max Kirillov <max@max630.net>,
+	Pat Thoyts <patthoyts@users.sourceforge.net>
+To: =?iso-8859-1?Q?Beno=EEt_Bourbi=E9?= <benoit.bourbie@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 14 02:11:57 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W2sNR-0001y4-18
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Jan 2014 02:01:09 +0100
+	id 1W2sXr-0000LX-PR
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Jan 2014 02:11:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752811AbaANBA6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Jan 2014 20:00:58 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62129 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752684AbaANBAy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Jan 2014 20:00:54 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A0A5163C9D;
-	Mon, 13 Jan 2014 20:00:52 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=bTqOPxfBdk93qBSbsJd5Cc6sIM0=; b=sm77j9
-	dNSblNqF25uxGCLVFpghq03A7eDBBYCXWsV2wquweSjYmVumBnfLyeDxKo2ty1Yy
-	MYgidXtrb70R9BvZ/PGqQUgBDkfagNda9gwzD8kUAQKvuW/gf3uetuaRVRD8Faev
-	ZzkzyJ49NfpqWtB21eGDq2eBn2d8P2x5e2QQs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=EC2nKwM0Ld7KEOzh4Z1n8VnDXID3GvW8
-	PfQE8em3m1wx4N3hsTKZUpB46cR63dyBssO+gfN5lVOwzLgsTFU6YEL6CgEE/fF9
-	BhRFe8Ff3PqLhWx9HzvUy5ym/aFhqayxU78mntCyYNSLsmQlmMSajH7XXhBk7Vvs
-	A4gupViMJEY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7787063C92;
-	Mon, 13 Jan 2014 20:00:50 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6874C63C8E;
-	Mon, 13 Jan 2014 20:00:49 -0500 (EST)
-In-Reply-To: <xmqqbnzf5vvu.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Mon, 13 Jan 2014 15:01:41 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 4ED050AE-7CB7-11E3-BB96-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754511AbaANBLs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 Jan 2014 20:11:48 -0500
+Received: from mail-qa0-f47.google.com ([209.85.216.47]:53419 "EHLO
+	mail-qa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753904AbaANBLp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Jan 2014 20:11:45 -0500
+Received: by mail-qa0-f47.google.com with SMTP id j5so2942059qaq.34
+        for <git@vger.kernel.org>; Mon, 13 Jan 2014 17:11:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=EdBczbMKKzWGYc6hlNiGEsDycdMLNc7d5bSg3ereZVc=;
+        b=Qr/pAmhM/fJOqiYS/b3BHcX6WxgHQlg5wYdx1SBHwDCLw4Wj93R++emquALWWvVnkt
+         nGPBePrExLzz1SNgQLxRVdVG/uAfHVvouq0JRud1BzsIWwUildlPlxBxLXWiq/57m+hi
+         Cdf9EW1rNMwlkYnmvywz2HZMOMBrdO34E4L37s8gQiVPba48h/17dPXSS8kEBEu3EKOB
+         nPWTgaeIMc0AY65lBvUR6zBZqKJ0WZzF9SoRitKuFyl0dP2w0j1mxekrAUelxqNLwoJh
+         OLDUcYJFiUdmjQDd2TV7Weu/q8vzfAH0UcpooVDEe1gqdHgZr3ehvjrfQvuTBayTREi3
+         J6uA==
+X-Received: by 10.49.48.69 with SMTP id j5mr45053988qen.71.1389661904997;
+        Mon, 13 Jan 2014 17:11:44 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id l8sm28252575qaz.14.2014.01.13.17.11.43
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 13 Jan 2014 17:11:44 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <CANJSc_uYm7f4LoZoMoVzcsmGrYnUy+2nXFL_cNWqQnwLb5J6mw@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240382>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240383>
 
-Junio C Hamano <gitster@pobox.com> writes:
+(just cc-ing some area experts)
+Hi Beno=EEt,
 
->> While the result is more consistent and more predictable in the case
->> of merged cherry picks, it is also slower in every case.
+Beno=EEt Bourbi=E9 wrote:
+
+> git gui crashes on my Linux machin since I updated it to 1.8.5.2.
+
+I assume you mean "master" and not 1.8.5.2, since v1.8.5.2 doesn't
+include the change 918dbf58 (git-gui: right half window is paned,
+2013-08-21).
+
+> I had the message
+> Error in startup script: unknown option "-stretch"
+>     while executing
+> ".vpane.lower paneconfigure .vpane.lower.diff -stretch always"
+>     invoked from within
+> "if {$use_ttk} {
+> .vpane.lower pane .vpane.lower.diff -weight 1
+> .vpane.lower pane .vpane.lower.commarea -weight 0
+> } else {
+> .vpane.lower paneconfigure..."
+>     (file "git/libexec/git-core/git-gui" line 3233)
 >
-> Consistent and predictable, perhaps, but I am not sure "exact" would
-> be a good word.
+> So, I reverted the change that has been made in git-gui/git-gui.sh
+> (Diff and Commit Area)
+>
+> I replaced
+>
+> ${NS}::panedwindow .vpane.lower -orient vertical
+> ${NS}::frame .vpane.lower.commarea
+> ${NS}::frame .vpane.lower.diff -relief sunken -borderwidth 1 -height =
+500
+> .vpane.lower add .vpane.lower.diff
+> .vpane.lower add .vpane.lower.commarea
+> .vpane add .vpane.lower
+>
+> by
+>
+> ${NS}::frame .vpane.lower -height 300 -width 400
+> ${NS}::frame .vpane.lower.commarea
+> ${NS}::frame .vpane.lower.diff -relief sunken -borderwidth 1
+> pack .vpane.lower.diff -fill both -expand 1
+> pack .vpane.lower.commarea -side bottom -fill x
+> .vpane add .vpane.lower
+> if {!$use_ttk} {.vpane paneconfigure .vpane.lower -sticky nsew}
+>
+> and now, git gui works as expected.
 
-Another thing I am not enthusiasitc about this change is that I am
-afraid that this may make "git blame -- path" and "git log -- path"
-work inconsistenly.  The both cull side branches whenever one of the
-parents gave the resulting blob, even that parent is not the first
-one.  But "git blame --prefer-first -- path", afaict, behaves quite
-differently from "git log --first-parent -- path", even though they
-share similar option names, adding more to the confusion.
+Thanks,
+Jonathan
