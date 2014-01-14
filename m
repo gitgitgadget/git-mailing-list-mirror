@@ -1,74 +1,73 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Error logging for git over ssh?
-Date: Tue, 14 Jan 2014 13:44:28 -0500
-Message-ID: <CACPiFCKBK49Zm8oYcGMVfmsgRwDrPyzWcU7vM6DwJeQitBNsnA@mail.gmail.com>
+From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+Subject: Re: Re* manpage for git-pull mentions a non-valid option -m in a
+ comment
+Date: Tue, 14 Jan 2014 19:51:57 +0100
+Message-ID: <52D5874D.7070102@web.de>
+References: <loom.20140114T025825-557@post.gmane.org> <xmqqvbxm4dyq.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jan 14 19:44:55 2014
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>,
+	Ivan Zakharyaschev <imz@altlinux.org>
+X-From: git-owner@vger.kernel.org Tue Jan 14 19:52:09 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W38yr-0007Zt-Jg
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Jan 2014 19:44:53 +0100
+	id 1W395r-00041I-Ew
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Jan 2014 19:52:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751574AbaANSou (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Jan 2014 13:44:50 -0500
-Received: from mail-wi0-f179.google.com ([209.85.212.179]:48478 "EHLO
-	mail-wi0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751481AbaANSot (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Jan 2014 13:44:49 -0500
-Received: by mail-wi0-f179.google.com with SMTP id hr1so1123804wib.0
-        for <git@vger.kernel.org>; Tue, 14 Jan 2014 10:44:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=BQgrXQtPgwzkFd2cgt/7/8e/3VdX5W++85waSYPlmAE=;
-        b=C2dsWSbqrR3gOL+wvF6W7Nj6KG6IJmFaf9v9DwFXoap+hV1E/s2gK1RC6fy/9DcfdU
-         2MTA09y+Ye6RMhboKWA48QE8phN235gJ4mkuJ9KeFmDDeXug0WzG1HtQ0qdF+B5XkG3/
-         M/ptW0ISqekyYO3CxKvqWPP82nGeXStV35PdOYg0NFK+BGmefKLQAqZ/8jp5VBLTA3hz
-         t/aMByEzlBhzM4bgIRe5Oo1u1uUScubudXxRByPt7peKwbKdVP5F7Uj8xtEvElhJC/To
-         jI9SefjSjZp1d2dL5Q+EI7k8gHdjIxnD2EzuacwXIwkkAtHQor/CST8YyH2sa12FBUzE
-         FmLw==
-X-Received: by 10.180.39.43 with SMTP id m11mr21732551wik.8.1389725088308;
- Tue, 14 Jan 2014 10:44:48 -0800 (PST)
-Received: by 10.216.64.66 with HTTP; Tue, 14 Jan 2014 10:44:28 -0800 (PST)
+	id S1751797AbaANSwD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Jan 2014 13:52:03 -0500
+Received: from mout.web.de ([212.227.15.4]:63486 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751579AbaANSwB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Jan 2014 13:52:01 -0500
+Received: from [192.168.209.26] ([78.72.74.102]) by smtp.web.de (mrweb004)
+ with ESMTPSA (Nemesis) id 0M844f-1V7ccT027N-00ve9x for <git@vger.kernel.org>;
+ Tue, 14 Jan 2014 19:52:00 +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:24.0) Gecko/20100101 Thunderbird/24.2.0
+In-Reply-To: <xmqqvbxm4dyq.fsf@gitster.dls.corp.google.com>
+X-Provags-ID: V03:K0:kXBDoNeIkPfZpBszuYFvm1EyoTy3KA0pP4dlXacmxFy7LbkP9ZN
+ NGBcAAFHGUKqk6ryc7MZ/tNnHLPUkBG4x4Tqy8/G6XZ9tomcgfuNyXzzr/7zb0TCUsy/7Hk
+ 02dZofmhK4ZvWUjZmaDFDo085Ts3ib7VyjmbXGf4E1A6XsNsSgzMmONNxPtM0D6JnXW8mbE
+ wlFJ37CMqZDcKL8vtulxg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240405>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240406>
 
-Diagnosing errors with git over ssh has historically required tooling
-up for debugging or looking at things from the client side, because
-git does not log anything on the server side.
-
-It would be a boon to those running busy git servers to be able to
-diagnose by looking at a log. It can be both old-fashioned, or very
-modern (if you are using journald).
-
-After digging around the mailing list, current git master and "what's
-cooking", I fail to see anything. Is there a built-in way in modern
-git to direct stderr on the server side to a logger or to a file? (I
-see git-daemon has some support, but it does not handle git ssh
-connections...)
-
-Some common "use cases" I've had to debug the hard way:
-
- - a ref is not up to date and the server rejects non-FF pushes
- - perms issues over objects or refs
- - ENOSPC
- - refs have a stale .lock file
-
-cheers,
-
-
-
-m
--- 
- martin.langhoff@gmail.com
- -  ask interesting questions
- - don't get distracted with shiny stuff  - working code first
- ~ http://docs.moodle.org/en/User:Martin_Langhoff
+On 2014-01-14 19.26, Junio C Hamano wrote:
+> Ivan Zakharyaschev <imz@altlinux.org> writes:
+> 
+>> Hello!
+>>
+>> git-1.8.4.4
+>>
+>> The manpage for git-pull mentions -m in a comment:
+>>
+>> --edit, -e, --no-edit
+>> Invoke an editor before committing successful mechanical merge to further edit
+>> the auto-generated merge message, so that the user can explain and justify the
+>> merge. The --no-edit option can be used to accept the auto-generated message
+>> (this is generally discouraged). The --edit (or -e) option is still useful if
+>> you are giving a draft message with the -m option from the command line and
+>> want to edit it in the editor.
+>>
+>> but it is not accepted actually:
+> 
+> I do not think "git pull" ever had the "-m <message>" option; what
+> you are seeing probably is a fallout from attempting to share the
+> documentation pieces between "git pull" and "git merge" too
+> agressively without proofreading.
+> 
+> It seems that there are two issues; here is an untested attempt to
+> fix.
+> 
+> -- >8 --
+> Subject: Documentaiotn: exclude irrelevant options from "git pull"
+           ^^^^^^^^^^^^^^
+(Small nit ??)
