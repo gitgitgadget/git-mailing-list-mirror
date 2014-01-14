@@ -1,77 +1,72 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 2/6] read-cache: new extension to mark what file is watched
-Date: Tue, 14 Jan 2014 08:39:31 +0700
-Message-ID: <CACsJy8C9uWkbeHNeTp6WBaj2dh98hXe6q3_V_Ys067jAn1QFbQ@mail.gmail.com>
-References: <1389524622-6702-1-git-send-email-pclouds@gmail.com> <1389524622-6702-3-git-send-email-pclouds@gmail.com>
+From: Ivan Zakharyaschev <imz@altlinux.org>
+Subject: BUG: manpage for git-pull mentions a non-valid option -m in a comment
+Date: Tue, 14 Jan 2014 02:09:47 +0000 (UTC)
+Message-ID: <loom.20140114T025825-557@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jan 14 02:40:18 2014
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 14 03:15:16 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W2szJ-0005Qm-7X
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Jan 2014 02:40:17 +0100
+	id 1W2tX7-0003Sg-KJ
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Jan 2014 03:15:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753286AbaANBkH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 Jan 2014 20:40:07 -0500
-Received: from mail-qc0-f176.google.com ([209.85.216.176]:49683 "EHLO
-	mail-qc0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753284AbaANBkC convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 13 Jan 2014 20:40:02 -0500
-Received: by mail-qc0-f176.google.com with SMTP id e16so4920593qcx.35
-        for <git@vger.kernel.org>; Mon, 13 Jan 2014 17:40:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=kBTfRK9bcfondVvYUsefBCsViddXSLeau0WXdlF1ri8=;
-        b=Hc71q0Vs794up2QNRDSTy6jk6h5i0Lb4TnllWFPYtBdQTFX3Ye3qwU6i39aJ64eDU3
-         AsR1xrWM9x/dFsAbuxdj+9xUiAMTlm2aVHEmetwK12w1mGZPeCMv7CVadYheKMgx8B0h
-         jIFZOnMwAZacAgYMVzdbEWUjZrsdB9u+MTMBJY3/W2RndVozRSF+iIYDIYIV5twyreDO
-         EhyKXqbC63aIA++nIIEXXctJzyiGbBmsiFQE6MNScu6KJj+RUZRUuEmGdPoAy3pVhlHF
-         OeBpNM6mxNDte2IvHo7mac/ZbcrtWHrpAQzem44hOKyfL0NmSx0ZwL0DP8uVYqpDAe+d
-         556g==
-X-Received: by 10.224.165.12 with SMTP id g12mr44580516qay.89.1389663601453;
- Mon, 13 Jan 2014 17:40:01 -0800 (PST)
-Received: by 10.96.136.98 with HTTP; Mon, 13 Jan 2014 17:39:31 -0800 (PST)
-In-Reply-To: <1389524622-6702-3-git-send-email-pclouds@gmail.com>
+	id S1751780AbaANCPJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Jan 2014 21:15:09 -0500
+Received: from plane.gmane.org ([80.91.229.3]:45496 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751759AbaANCPH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Jan 2014 21:15:07 -0500
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1W2tWx-0003D3-Iz
+	for git@vger.kernel.org; Tue, 14 Jan 2014 03:15:03 +0100
+Received: from host-79-165-57-121.qwerty.ru ([host-79-165-57-121.qwerty.ru])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 14 Jan 2014 03:15:03 +0100
+Received: from imz by host-79-165-57-121.qwerty.ru with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 14 Jan 2014 03:15:03 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 79.165.57.121 (Emacs-w3m/1.4.466 w3m/0.5.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240385>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240386>
 
-On Sun, Jan 12, 2014 at 6:03 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc =
-Duy <pclouds@gmail.com> wrote:
-> We are running out of on-disk ce_flags,
+Hello!
 
-Correction, we're not. I saw
+git-1.8.4.4
 
-/*
- * Extended on-disk flags
- */
-#define CE_INTENT_TO_ADD     (1 << 29)
-#define CE_SKIP_WORKTREE     (1 << 30)
+The manpage for git-pull mentions -m in a comment:
 
-followed by
+--edit, -e, --no-edit
+Invoke an editor before committing successful mechanical merge to further edit
+the auto-generated merge message, so that the user can explain and justify the
+merge. The --no-edit option can be used to accept the auto-generated message
+(this is generally discouraged). The --edit (or -e) option is still useful if
+you are giving a draft message with the -m option from the command line and
+want to edit it in the editor.
 
-/* CE_EXTENDED2 is for future extension */
-#define CE_EXTENDED2         (1 << 31)
+but it is not accepted actually:
 
-and panicked, but on-disk flags could be added backward (e.g. bit 28,
-27...). Anyway using extended flags means 2 extra bytes per entry for
-almost every entry in this case (and for index v5 it means redoing
-crc32 for almost every entry too when the bit is updated) so it may
-still be a good idea to keep the new flag separate.
+git pull --no-edit -m 'Restoring config etc from server' \
+  origin server/GITCONFIG/master
+fatal: No such remote or remote group: Restoring config etc from server
 
-> so instead of extending
-> on-disk entry format again, "watched" flags are in-core only and
-> stored as extension instead.
---=20
-Duy
+I'm not sure whether it is a bug of the implementation or of the documentation.
+
+(I've also written down this issue at
+https://bugzilla.altlinux.org/show_bug.cgi?id=29718 .)
+
+Best regards,
+Ivan
