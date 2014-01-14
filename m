@@ -1,70 +1,75 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Re* manpage for git-pull mentions a non-valid option -m in a comment
-Date: Tue, 14 Jan 2014 11:39:49 -0800
-Message-ID: <7v61pm1hfe.fsf@alter.siamese.dyndns.org>
-References: <loom.20140114T025825-557@post.gmane.org>
-	<xmqqvbxm4dyq.fsf@gitster.dls.corp.google.com>
-	<52D5874D.7070102@web.de>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: Diagnosing stray/stale .keep files -- explore what is in a pack?
+Date: Tue, 14 Jan 2014 14:42:09 -0500
+Message-ID: <CACPiFCLxiCOqv=wLeq9LxisWn5T62hk8xDYwXmeFRNT05HY0iQ@mail.gmail.com>
+References: <CACPiFCLa3X-Xt5GwrHHA-PFj-Bi9_sW+=y2xidZ7tDbFfM26rA@mail.gmail.com>
+ <CACPiFCJVx0dkkPQ=LosbAAKq7CvK6_yQL5QDHMYr5oJAS6wb6Q@mail.gmail.com> <201401141236.44393.mfick@codeaurora.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Ivan Zakharyaschev <imz@altlinux.org>, git@vger.kernel.org
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Tue Jan 14 20:40:14 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Martin Fick <mfick@codeaurora.org>
+X-From: git-owner@vger.kernel.org Tue Jan 14 20:42:38 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W39qO-0002y0-M6
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Jan 2014 20:40:13 +0100
+	id 1W39sh-0006ec-Mr
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Jan 2014 20:42:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751723AbaANTjh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Jan 2014 14:39:37 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47207 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751543AbaANTjf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 14 Jan 2014 14:39:35 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5BD4561D6A;
-	Tue, 14 Jan 2014 14:39:34 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=NqcBvDy+Bzo0
-	oU85XfoMVSF22is=; b=L0ikJZRxPINXboZ8peJduLM++xFfOOgLI/rRIQCDWCjO
-	t4EjVRaEEWAO+AS788gSnl/CMeo4ovKFuqyuYo3W+Y8kknWJVQlRSeOlxEUg8H1/
-	dWZ/XRXffNNjeEwQF4J4YoR7f6J5SskXoTxZJSs2qjPnq0y8yIzwDUY/z3pVNAY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=gIrdUE
-	mbY/pg/hAqD0yp1WZDm55ULIcquu2WvC1xMBuR3TfZjwFLcSWQYlUIxW6m1XRSbs
-	mzAzMfujKaqgooaWmppvNxhfWmxXAYZ66NyxOFuRc6hefDfWC4lMDh4A10ABkgcy
-	O6PntbovRPRXQ+xo4RrERxQMwYHvTK4b47nJg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A31F461D65;
-	Tue, 14 Jan 2014 14:39:32 -0500 (EST)
-Received: from pobox.com (unknown [198.0.213.178])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7FB0F61D5C;
-	Tue, 14 Jan 2014 14:39:30 -0500 (EST)
-In-Reply-To: <52D5874D.7070102@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershaus?=
- =?utf-8?Q?en=22's?= message of
-	"Tue, 14 Jan 2014 19:51:57 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.4 (gnu/linux)
-X-Pobox-Relay-ID: 961A4B76-7D53-11E3-B5F6-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751576AbaANTmc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Jan 2014 14:42:32 -0500
+Received: from mail-wi0-f178.google.com ([209.85.212.178]:38861 "EHLO
+	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751462AbaANTmb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Jan 2014 14:42:31 -0500
+Received: by mail-wi0-f178.google.com with SMTP id cc10so1224286wib.5
+        for <git@vger.kernel.org>; Tue, 14 Jan 2014 11:42:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=9h9e+AKPS5gZ/cxjCdS70P7RFoRTM+sYXc39zV69uF8=;
+        b=GLRTTRUIeh6X3xZ+EeKdxMW2pRjiK2Ic3d/IL9K1WG4iQmam1kEy7muuFB3yAWc3ju
+         +WLLSP/+0HAgrL7VH0bvjoaN4COzZiXnb4NkyzsikxeVXm5iuPFXdWewE6kqem6quF66
+         bC/foY48hGeIyF+HIaOpbM6eSYFGHApc1stGXU13eDw1nemJKkdl7lVgAqg1yyTvfFoE
+         8Bf9RrjoLklXGUXbnh6m1WkJHbOVCc4QbYNO6evwaEwBrfFchrApwK1+hPqjGePYZSH8
+         CZGBs8xcBMJLXotcGkGU2qyo+iipdXKp7hVEk0yHl7GV8OayYNn1cfvUK3FNqrYONRDM
+         DyvA==
+X-Received: by 10.194.85.75 with SMTP id f11mr74348wjz.47.1389728550073; Tue,
+ 14 Jan 2014 11:42:30 -0800 (PST)
+Received: by 10.216.64.66 with HTTP; Tue, 14 Jan 2014 11:42:09 -0800 (PST)
+In-Reply-To: <201401141236.44393.mfick@codeaurora.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240409>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240410>
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+ On Tue, Jan 14, 2014 at 2:36 PM, Martin Fick <mfick@codeaurora.org> wrote:
+> Perhaps the receiving process is dying hard and leaving
+> stuff behind?  Out-of-memory, out of disk space?
 
->> Subject: Documentaiotn: exclude irrelevant options from "git pull"
->            ^^^^^^^^^^^^^^
-> (Small nit ??)
+Yes, that's my guess as well. This server had gc misconfigured, so it
+hit ENOSPC a few weeks ago.
 
-;-).
+It is likely that the .lock files were left behind back then, and
+since then the clients pushing to these refs were transferring their
+whole history and still failing to update the ref, leading to rapid
+repo growth.
 
-They are now a small two patch series, with typofix for the above.
+So my situation is diagnosed and solved; I am still unhappy that it
+took so much work and expertise; mainly because git isn't logging
+anywhere. See my "Error logging for git over ssh?" message...
+
+thanks,
+
+
+
+
+m
+-- 
+ martin.langhoff@gmail.com
+ -  ask interesting questions
+ - don't get distracted with shiny stuff  - working code first
+ ~ http://docs.moodle.org/en/User:Martin_Langhoff
