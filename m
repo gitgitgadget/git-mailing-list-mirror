@@ -1,161 +1,175 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] refname_match(): always use the rules in ref_rev_parse_rules
-Date: Tue, 14 Jan 2014 14:16:02 -0800
-Message-ID: <xmqq38kq43bx.fsf@gitster.dls.corp.google.com>
-References: <xmqqlhyn90ka.fsf@gitster.dls.corp.google.com>
-	<1389669367-27343-1-git-send-email-mhagger@alum.mit.edu>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: Re: Re: [RFC v2] submodule: Respect requested branch on all
+ clones
+Date: Tue, 14 Jan 2014 23:19:07 +0100
+Message-ID: <20140114221907.GC838@sandbox-ub>
+References: <52CE5E51.4060507@web.de>
+ <20140109173218.GA8042@odin.tremily.us>
+ <52CEF71B.5010201@web.de>
+ <20140109195522.GT29954@odin.tremily.us>
+ <52CF1764.40604@web.de>
+ <20140109221840.GW29954@odin.tremily.us>
+ <20140114102445.GA27915@sandbox-ub>
+ <20140114165709.GH7078@odin.tremily.us>
+ <20140114205830.GA838@sandbox-ub>
+ <20140114214209.GJ23617@odin.tremily.us>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Tue Jan 14 23:16:22 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jens Lehmann <Jens.Lehmann@web.de>,
+	Francesco Pretto <ceztko@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git <git@vger.kernel.org>, Jonathan Nieder <jrnieder@gmail.com>
+To: "W. Trevor King" <wking@tremily.us>
+X-From: git-owner@vger.kernel.org Tue Jan 14 23:19:23 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W3CHS-0007bb-Jk
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Jan 2014 23:16:18 +0100
+	id 1W3CKQ-0004Gf-6b
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Jan 2014 23:19:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752140AbaANWQP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Jan 2014 17:16:15 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37629 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751889AbaANWQN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Jan 2014 17:16:13 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 665D864E8D;
-	Tue, 14 Jan 2014 17:16:12 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=fAF/mJXRP7xY+pc84L8C2DvLgT0=; b=kesN0x
-	Bri1ElkvCNdBVzHQvLeQPTJWhGPpTeF+oP//+fMq3QEu/vwqeL8CpbVKhwusx7hj
-	jSKN3L+YTwPJkKXvY8RYuuQlflorGKZhtHFjOy89WhDRKJFTr1nDKpPUwUNTwVZZ
-	RjlUBTrShqmCoPEhyIKmSlKWeoNwNIQti3O2Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=b+AQLAe9sLttpGkCnjUXI1ZNRrQH2k5n
-	7/FNINmoWTEgJblPe4TNqPyYKz6FhUsLczMn/6h+nCadU1BdIi6HDIhpfY6Y/9XJ
-	kdHBDXzcyJlhVYRg5WLkhXg4eQBjMvcXz0330FSMRYfLHFPbEhH/N/AqzUS4pCrn
-	Ln6cCd194P4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AAD8A64E8A;
-	Tue, 14 Jan 2014 17:16:11 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C82B264E7D;
-	Tue, 14 Jan 2014 17:16:08 -0500 (EST)
-In-Reply-To: <1389669367-27343-1-git-send-email-mhagger@alum.mit.edu> (Michael
-	Haggerty's message of "Tue, 14 Jan 2014 04:16:07 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 77ECCA96-7D69-11E3-AE51-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752140AbaANWTT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Jan 2014 17:19:19 -0500
+Received: from smtprelay04.ispgateway.de ([80.67.29.8]:33410 "EHLO
+	smtprelay04.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751756AbaANWTR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Jan 2014 17:19:17 -0500
+Received: from [77.20.146.74] (helo=sandbox-ub)
+	by smtprelay04.ispgateway.de with esmtpsa (TLSv1:AES128-SHA:128)
+	(Exim 4.68)
+	(envelope-from <hvoigt@hvoigt.net>)
+	id 1W3CKD-0006or-5G; Tue, 14 Jan 2014 23:19:09 +0100
+Content-Disposition: inline
+In-Reply-To: <20140114214209.GJ23617@odin.tremily.us>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240416>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240417>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+On Tue, Jan 14, 2014 at 01:42:09PM -0800, W. Trevor King wrote:
+> On Tue, Jan 14, 2014 at 09:58:30PM +0100, Heiko Voigt wrote:
+> > A typical workflow where a feature in a project needs some extensio=
+n or
+> > change in a submodule goes like this:
+> >=20
+> > 1. The developer does his changes locally implementing everything
+> >    needed. To commit he creates a local branch in the submodule and=
+ in
+> >    the superproject (most of the times from the current HEAD that i=
+s
+> >    checked out).
+> >=20
+> > 2. For convenience I usually commit the resulting commit sha1 of th=
+e
+> >    submodule in the commit that needs the change. That way when I s=
+witch
+> >    to a different branch and back I can simply say: git submodule u=
+pdate
+> >    and get the correct code everywhere.
+>=20
+> This checkout functionality is exactly what my
+> submodule.<name>.localBranch is designed to automate [1].  I think
+> that should be different from integrating local and external changes,
+> which is what 'git submodule update' is about.  For example, after yo=
+u
+> run 'git submodule update' here, you'll have your original commit
+> checked out, but you'll be on a detached HEAD instead of your origina=
+l
+> branch.  If you want to further develop the submodule feature branch,
+> you currently have to cd into the submodule and check the branch out
+> by hand.
 
-> We used to use two separate rules for the normal ref resolution
-> dwimming and dwimming done to decide which remote ref to grab.  The
-> third parameter to refname_match() selected which rules to use.
->
-> When these two rules were harmonized in
->
->     2011-11-04 dd621df9cd refs DWIMmery: use the same rule for both "git fetch" and others
->
-> , ref_fetch_rules was #defined to avoid potential breakages for
-> in-flight topics.
->
-> It is now safe to remove the backwards-compatibility code, so remove
-> refname_match()'s third parameter, make ref_rev_parse_rules private to
-> refs.c, and remove ref_fetch_rules entirely.
->
-> Suggested-by: Junio C Hamano <gitster@pobox.com>
-> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
-> ---
-> See
->
->     http://article.gmane.org/gmane.comp.version-control.git/240305
->
-> in which Junio made the suggestion and wrote most of the commit
-> message :-)
+Yes and thats exactly what my idea was about but after further thinking
+am afraid that this is the wrong place. I am not sure but afraid as I
+wrote in the other post that it would be way to dangerous to accidental=
+ly
+merge these changes in. We would need something to prevent this
+configuration from ever entering a stable branch.
 
-;-) ...and on top of it this may be an obvious endgame follow-up.
+Another solution (and completely different approach) would be to have
+something that is outside of the tree and actually attached to a
+branchname. E.g. at the gitmerge last year I though it would be nice to
+have a place for a description for a branch inside git. In a short
+discussion we were envisioning a special ref like the notes trees but
+allowing to attach and describe branches. That place could also be wher=
+e
+we could store such a configuration. Once the branchname ceases to exis=
+t
+so would the configuration.
 
-was done mindlessly and mechanically, so there may be some slip-ups,
-though.
+I know this is a completely different piece of work so I am not sure
+whether we want to pursue it at the moment. But at the moment I think
+this would actually be the correct solution.
 
+> > How about the use-case I sketched above? Is that what you are searc=
+hing
+> > for? In that use-case we have to update to the new master after a
+> > submodule change was merged. That could be achieved by
+> >=20
+> > 	git submodule update --remote <submodule>
+> >=20
+> > with the wanted stable branch configured. But in practise something
+> > along the lines of
+> >=20
+> > 	(cd <submodule> && git checkout origin/<stable>)
+> >=20
+> > is usually used and simple enough.
+>=20
+> The =E2=80=9Cgitlinked commits must be in the subproject's master=E2=80=
+=9D rule
+> protects you from blowing stuff away here.  You could use rebase- or
+> merge-style integration as well, assuming the maintainer didn't have
+> dirty local work in their submodule.
 
- refs.c | 24 +++++++++++++-----------
- 1 file changed, 13 insertions(+), 11 deletions(-)
+No we can't. Developers are not allowed to merge in some submodules.
+The most central ones have maintainers and only they are allowed to
+merge into the stable branch. So we need to track exact commits on the
+stable branch, no local merge (except the fast-forward case of course)
+allowed. Thats why the developer does an exact checkout here.
 
-diff --git a/refs.c b/refs.c
-index 5a10c25..b1c9cf5 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1886,16 +1886,16 @@ static const char *ref_rev_parse_rules[] = {
- 	"refs/tags/%.*s",
- 	"refs/heads/%.*s",
- 	"refs/remotes/%.*s",
--	"refs/remotes/%.*s/HEAD",
--	NULL
-+	"refs/remotes/%.*s/HEAD"
- };
- 
- int refname_match(const char *abbrev_name, const char *full_name)
- {
--	const char **p;
-+	int i;
- 	const int abbrev_name_len = strlen(abbrev_name);
- 
--	for (p = ref_rev_parse_rules; *p; p++) {
-+	for (i = 0; i < ARRAY_SIZE(ref_rev_parse_rules); i++) {
-+		const char **p = &ref_rev_parse_rules[i];
- 		if (!strcmp(full_name, mkpath(*p, abbrev_name_len, abbrev_name))) {
- 			return 1;
- 		}
-@@ -1963,11 +1963,13 @@ static char *substitute_branch_name(const char **string, int *len)
- int dwim_ref(const char *str, int len, unsigned char *sha1, char **ref)
- {
- 	char *last_branch = substitute_branch_name(&str, &len);
--	const char **p, *r;
-+	int i;
-+	const char *r;
- 	int refs_found = 0;
- 
- 	*ref = NULL;
--	for (p = ref_rev_parse_rules; *p; p++) {
-+	for (i = 0; i < ARRAY_SIZE(ref_rev_parse_rules); i++) {
-+		const char **p = &ref_rev_parse_rules[i];
- 		char fullref[PATH_MAX];
- 		unsigned char sha1_from_ref[20];
- 		unsigned char *this_result;
-@@ -1994,11 +1996,11 @@ int dwim_ref(const char *str, int len, unsigned char *sha1, char **ref)
- int dwim_log(const char *str, int len, unsigned char *sha1, char **log)
- {
- 	char *last_branch = substitute_branch_name(&str, &len);
--	const char **p;
--	int logs_found = 0;
-+	int logs_found = 0, i;
- 
- 	*log = NULL;
--	for (p = ref_rev_parse_rules; *p; p++) {
-+	for (i = 0; i < ARRAY_SIZE(ref_rev_parse_rules); i++) {
-+		const char **p = &ref_rev_parse_rules[i];
- 		struct stat st;
- 		unsigned char hash[20];
- 		char path[PATH_MAX];
-@@ -3368,8 +3370,8 @@ char *shorten_unambiguous_ref(const char *refname, int strict)
- 	if (!nr_rules) {
- 		size_t total_len = 0;
- 
--		/* the rule list is NULL terminated, count them first */
--		for (nr_rules = 0; ref_rev_parse_rules[nr_rules]; nr_rules++)
-+		/* Count the bytesize needed to hold rule strings */
-+		for (nr_rules = 0; ARRAY_SIZE(ref_rev_parse_rules); nr_rules++)
- 			/* no +1 because strlen("%s") < strlen("%.*s") */
- 			total_len += strlen(ref_rev_parse_rules[nr_rules]);
- 
+> > We have a tool in our git gui configuration that does
+> >=20
+> > 	git submodule foreach 'git fetch && git checkout origin/master'
+>=20
+> I agree that with 'submodule update' seems superfluous.  With proper
+> out-of-tree submodule configs specifying remote URLs and upstream
+> branches,
+>=20
+>   git submodule foreach 'git fetch && git checkout @{upstream}'
+>=20
+> (or merge/rebase/=E2=80=A6) should cover this case more generically a=
+nd with
+> less mental overhead.
+>=20
+> > I hope that draws a clear picture of how we use submodules.
+>=20
+> It's certainly clearer, thanks :).  I'm not sure where checkout-mode
+> is specifically important, though.  In your step-2, it doesn't restor=
+e
+> your original branch.  In your =E2=80=9Cupdate the superproject's mas=
+ter=E2=80=9D
+> step, you aren't even using 'submodule update' :p.
+
+Ah sorry I though that was clear. The "others" are using submodule upda=
+te ;-)
+
+I mean someone who gets stuff from a stable superproject branch by
+either rebasing their development branch or updating their local copy o=
+f
+a stable branch (e.g. master) by using
+
+	git checkout master
+	git pull --ff --ff-only
+	git submodule update --init --recursive
+
+This also prevents the pure "updaters" from creating unnecessary merges=
+=2E
+
+Cheers Heiko
+
+> [1]: http://article.gmane.org/gmane.comp.version-control.git/240336
