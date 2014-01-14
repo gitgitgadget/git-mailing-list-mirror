@@ -1,103 +1,161 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: Re: Re: [RFC v2] submodule: Respect requested branch on all
- clones
-Date: Tue, 14 Jan 2014 22:46:08 +0100
-Message-ID: <20140114214608.GB838@sandbox-ub>
-References: <CALas-iheQ4Rfxvty5guEieVwa8SffRnhRdHkNXUKwmuHRXD2Xg@mail.gmail.com>
- <20140109000338.GM29954@odin.tremily.us>
- <CALas-igFQtG1qa2+grMAtZ9mDE-xGuXkDGwGvSXL8_FzPfXBLQ@mail.gmail.com>
- <52CE5E51.4060507@web.de>
- <20140109173218.GA8042@odin.tremily.us>
- <52CEF71B.5010201@web.de>
- <20140109195522.GT29954@odin.tremily.us>
- <52CF1764.40604@web.de>
- <20140109221840.GW29954@odin.tremily.us>
- <20140114102445.GA27915@sandbox-ub>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] refname_match(): always use the rules in ref_rev_parse_rules
+Date: Tue, 14 Jan 2014 14:16:02 -0800
+Message-ID: <xmqq38kq43bx.fsf@gitster.dls.corp.google.com>
+References: <xmqqlhyn90ka.fsf@gitster.dls.corp.google.com>
+	<1389669367-27343-1-git-send-email-mhagger@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jens Lehmann <Jens.Lehmann@web.de>,
-	Francesco Pretto <ceztko@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git <git@vger.kernel.org>, Jonathan Nieder <jrnieder@gmail.com>
-To: "W. Trevor King" <wking@tremily.us>
-X-From: git-owner@vger.kernel.org Tue Jan 14 22:46:25 2014
+Cc: git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Tue Jan 14 23:16:22 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W3BoV-00075s-JE
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Jan 2014 22:46:23 +0100
+	id 1W3CHS-0007bb-Jk
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Jan 2014 23:16:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752260AbaANVqT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Jan 2014 16:46:19 -0500
-Received: from smtprelay02.ispgateway.de ([80.67.31.25]:59829 "EHLO
-	smtprelay02.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751834AbaANVqS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Jan 2014 16:46:18 -0500
-Received: from [77.20.146.74] (helo=sandbox-ub)
-	by smtprelay02.ispgateway.de with esmtpsa (TLSv1:AES128-SHA:128)
-	(Exim 4.68)
-	(envelope-from <hvoigt@hvoigt.net>)
-	id 1W3BoI-00054y-GF; Tue, 14 Jan 2014 22:46:10 +0100
-Content-Disposition: inline
-In-Reply-To: <20140114102445.GA27915@sandbox-ub>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
+	id S1752140AbaANWQP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Jan 2014 17:16:15 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37629 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751889AbaANWQN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Jan 2014 17:16:13 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 665D864E8D;
+	Tue, 14 Jan 2014 17:16:12 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=fAF/mJXRP7xY+pc84L8C2DvLgT0=; b=kesN0x
+	Bri1ElkvCNdBVzHQvLeQPTJWhGPpTeF+oP//+fMq3QEu/vwqeL8CpbVKhwusx7hj
+	jSKN3L+YTwPJkKXvY8RYuuQlflorGKZhtHFjOy89WhDRKJFTr1nDKpPUwUNTwVZZ
+	RjlUBTrShqmCoPEhyIKmSlKWeoNwNIQti3O2Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=b+AQLAe9sLttpGkCnjUXI1ZNRrQH2k5n
+	7/FNINmoWTEgJblPe4TNqPyYKz6FhUsLczMn/6h+nCadU1BdIi6HDIhpfY6Y/9XJ
+	kdHBDXzcyJlhVYRg5WLkhXg4eQBjMvcXz0330FSMRYfLHFPbEhH/N/AqzUS4pCrn
+	Ln6cCd194P4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AAD8A64E8A;
+	Tue, 14 Jan 2014 17:16:11 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C82B264E7D;
+	Tue, 14 Jan 2014 17:16:08 -0500 (EST)
+In-Reply-To: <1389669367-27343-1-git-send-email-mhagger@alum.mit.edu> (Michael
+	Haggerty's message of "Tue, 14 Jan 2014 04:16:07 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 77ECCA96-7D69-11E3-AE51-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240415>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240416>
 
-Hi,
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-On Tue, Jan 14, 2014 at 11:24:45AM +0100, Heiko Voigt wrote:
-> I will write another post about how I think we should/can proceed.
+> We used to use two separate rules for the normal ref resolution
+> dwimming and dwimming done to decide which remote ref to grab.  The
+> third parameter to refname_match() selected which rules to use.
+>
+> When these two rules were harmonized in
+>
+>     2011-11-04 dd621df9cd refs DWIMmery: use the same rule for both "git fetch" and others
+>
+> , ref_fetch_rules was #defined to avoid potential breakages for
+> in-flight topics.
+>
+> It is now safe to remove the backwards-compatibility code, so remove
+> refname_match()'s third parameter, make ref_rev_parse_rules private to
+> refs.c, and remove ref_fetch_rules entirely.
+>
+> Suggested-by: Junio C Hamano <gitster@pobox.com>
+> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+> ---
+> See
+>
+>     http://article.gmane.org/gmane.comp.version-control.git/240305
+>
+> in which Junio made the suggestion and wrote most of the commit
+> message :-)
 
-and here is my suggestion how we should proceed.
+;-) ...and on top of it this may be an obvious endgame follow-up.
 
-I think there have been many interesting ideas in this thread but IMO
-some of them tried to achieve a little bit to much and were not clear
-enough. I am a fan of: Keep it as simple as possible, but *no simpler*.
-I think some ideas where going in the "make it to simple" direction.
+was done mindlessly and mechanically, so there may be some slip-ups,
+though.
 
-Take my idea for feature branch support from here[1]. After thinking more
-thoroughly it still too many corner cases. E.g. it is way to easy to
-accidentally merge the feature branch configuration into the stable branch. But
-we want to support the user properly so we need to catch stuff like that.
 
-Submodules are separate projects. There is a boundary between
-superproject and submodule and IMO its there for a good reason. E.g.
-take the typical "shared code" use-case. If A and B are using C
-then both want to make sure a change from A does not break B's
-expectations and vice versa. Thats were you usually write unit tests in
-C for: Ensure that the expectations are met. The more users of the code
-the higher the quality and thus the boundary for bad code should be.
+ refs.c | 24 +++++++++++++-----------
+ 1 file changed, 13 insertions(+), 11 deletions(-)
 
-I would like to step back a bit and get back to the original problem at hand:
-Francescos original use case of an attached head for direct commits on a stable
-branch in a submodule. How about we finish discussing the exact solution of
-that first. AFAIK that is already solved with the following:
-
- * Trevor's first patch[2] to create a branch on initial clone of a submodule
- * A possibly a configuration variable for --remote so it can be
-   set as the default update method
- * Combined with submodule.<name>.update=merge/rebase
-
-That should be all (and IIRC Francesco agreed) needed for that use-case.
-
-Lets not implement more than currently is needed. We can revisit the ideas once
-some other real use-case manifests. Also we (Jens and I) would first like to
-proceed with the recursive checkout / fetch (for which the plan is clear) as
-the next complicated step.
-
-Once that is done and people gain some experience with it we can still extend
-further.
-
-What do you think?
-
-Cheers Heiko
-
-[1] http://article.gmane.org/gmane.comp.version-control.git/240178/
-[2] http://article.gmane.org/gmane.comp.version-control.git/239921
+diff --git a/refs.c b/refs.c
+index 5a10c25..b1c9cf5 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1886,16 +1886,16 @@ static const char *ref_rev_parse_rules[] = {
+ 	"refs/tags/%.*s",
+ 	"refs/heads/%.*s",
+ 	"refs/remotes/%.*s",
+-	"refs/remotes/%.*s/HEAD",
+-	NULL
++	"refs/remotes/%.*s/HEAD"
+ };
+ 
+ int refname_match(const char *abbrev_name, const char *full_name)
+ {
+-	const char **p;
++	int i;
+ 	const int abbrev_name_len = strlen(abbrev_name);
+ 
+-	for (p = ref_rev_parse_rules; *p; p++) {
++	for (i = 0; i < ARRAY_SIZE(ref_rev_parse_rules); i++) {
++		const char **p = &ref_rev_parse_rules[i];
+ 		if (!strcmp(full_name, mkpath(*p, abbrev_name_len, abbrev_name))) {
+ 			return 1;
+ 		}
+@@ -1963,11 +1963,13 @@ static char *substitute_branch_name(const char **string, int *len)
+ int dwim_ref(const char *str, int len, unsigned char *sha1, char **ref)
+ {
+ 	char *last_branch = substitute_branch_name(&str, &len);
+-	const char **p, *r;
++	int i;
++	const char *r;
+ 	int refs_found = 0;
+ 
+ 	*ref = NULL;
+-	for (p = ref_rev_parse_rules; *p; p++) {
++	for (i = 0; i < ARRAY_SIZE(ref_rev_parse_rules); i++) {
++		const char **p = &ref_rev_parse_rules[i];
+ 		char fullref[PATH_MAX];
+ 		unsigned char sha1_from_ref[20];
+ 		unsigned char *this_result;
+@@ -1994,11 +1996,11 @@ int dwim_ref(const char *str, int len, unsigned char *sha1, char **ref)
+ int dwim_log(const char *str, int len, unsigned char *sha1, char **log)
+ {
+ 	char *last_branch = substitute_branch_name(&str, &len);
+-	const char **p;
+-	int logs_found = 0;
++	int logs_found = 0, i;
+ 
+ 	*log = NULL;
+-	for (p = ref_rev_parse_rules; *p; p++) {
++	for (i = 0; i < ARRAY_SIZE(ref_rev_parse_rules); i++) {
++		const char **p = &ref_rev_parse_rules[i];
+ 		struct stat st;
+ 		unsigned char hash[20];
+ 		char path[PATH_MAX];
+@@ -3368,8 +3370,8 @@ char *shorten_unambiguous_ref(const char *refname, int strict)
+ 	if (!nr_rules) {
+ 		size_t total_len = 0;
+ 
+-		/* the rule list is NULL terminated, count them first */
+-		for (nr_rules = 0; ref_rev_parse_rules[nr_rules]; nr_rules++)
++		/* Count the bytesize needed to hold rule strings */
++		for (nr_rules = 0; ARRAY_SIZE(ref_rev_parse_rules); nr_rules++)
+ 			/* no +1 because strlen("%s") < strlen("%.*s") */
+ 			total_len += strlen(ref_rev_parse_rules[nr_rules]);
+ 
