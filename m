@@ -1,190 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC v2] blame: new option --prefer-first to better handle merged cherry-picks
-Date: Tue, 14 Jan 2014 00:37:05 -0800
-Message-ID: <7va9ez0xji.fsf@alter.siamese.dyndns.org>
-References: <20140113063008.GA3072@client.brlink.eu>
-	<xmqqfvor5xil.fsf@gitster.dls.corp.google.com>
-	<20140113225229.GA3418@client.brlink.eu>
-	<xmqqbnzf5vvu.fsf@gitster.dls.corp.google.com>
-	<xmqq7ga35qdd.fsf@gitster.dls.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 4/5] get_sha1: speed up ambiguous 40-hex test
+Date: Tue, 14 Jan 2014 04:50:02 -0500
+Message-ID: <20140114095002.GA32258@sigill.intra.peff.net>
+References: <20140107235631.GA10503@sigill.intra.peff.net>
+ <20140107235953.GD10657@sigill.intra.peff.net>
+ <52CD7835.2020708@alum.mit.edu>
+ <20140110094120.GB17443@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Bernhard R. Link" <brl+git@mail.brlink.eu>
-X-From: git-owner@vger.kernel.org Tue Jan 14 09:36:53 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, Brodie Rao <brodie@sf.io>,
+	git@vger.kernel.org,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Tue Jan 14 10:50:15 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W2zUS-0007MM-N3
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Jan 2014 09:36:53 +0100
+	id 1W30dR-0000si-Qb
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Jan 2014 10:50:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751413AbaANIgt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Jan 2014 03:36:49 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45953 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750928AbaANIgs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Jan 2014 03:36:48 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 089FD59F2F;
-	Tue, 14 Jan 2014 03:36:47 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=inuK/717V9XCkjhWa9VP8b4RhUc=; b=UWf8Tr
-	7euCNn5yStRFCR7KOTQFoh9MbMU7XvOn26ud4Yrx6qT/OYLPgCfMoZeZrGBOBwgt
-	jjQagG/ecdwGNSYO8rA2MPZyFE9myxGDTBlltd6G0a1JR4BsWv9enuXN9U1yT/4Q
-	PLF9MXeNtJHlE/VjuZw08Qkg1iQWSMny9hQ0w=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=pXgT46bpHPFzFQPchgZN307GU8caz/ae
-	5S/iRMsGzie6hkS6fleJUENLNPNw5hZRlCQY5raoGUwww6r2/8Pu+4OT5b8BGC3m
-	O28Th/FwNP5EADTeKTJnsmst+nWouVeWSt+SoiiylBdO0DTPa2KeKbPWj/EJBV1L
-	Gf60N0CuziA=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 68D3C59F2C;
-	Tue, 14 Jan 2014 03:36:46 -0500 (EST)
-Received: from pobox.com (unknown [198.0.213.178])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C350059F2A;
-	Tue, 14 Jan 2014 03:36:44 -0500 (EST)
-In-Reply-To: <xmqq7ga35qdd.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Mon, 13 Jan 2014 17:00:46 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.4 (gnu/linux)
-X-Pobox-Relay-ID: FFE29548-7CF6-11E3-BC0B-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751291AbaANJuJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Jan 2014 04:50:09 -0500
+Received: from cloud.peff.net ([50.56.180.127]:60362 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750999AbaANJuF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Jan 2014 04:50:05 -0500
+Received: (qmail 30578 invoked by uid 102); 14 Jan 2014 09:50:05 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 14 Jan 2014 03:50:05 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 14 Jan 2014 04:50:02 -0500
+Content-Disposition: inline
+In-Reply-To: <20140110094120.GB17443@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240392>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240393>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Fri, Jan 10, 2014 at 04:41:20AM -0500, Jeff King wrote:
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->>> While the result is more consistent and more predictable in the case
->>> of merged cherry picks, it is also slower in every case.
->>
->> Consistent and predictable, perhaps, but I am not sure "exact" would
->> be a good word.
->
-> Another thing I am not enthusiasitc about this change is that I am
-> afraid that this may make "git blame -- path" and "git log -- path"
-> work inconsistenly.  The both cull side branches whenever one of the
-> parents gave the resulting blob, even that parent is not the first
-> one.  But "git blame --prefer-first -- path", afaict, behaves quite
-> differently from "git log --first-parent -- path", even though they
-> share similar option names, adding more to the confusion.
+> That being said, we could further optimize this by not opening the files
+> at all (and make that the responsibility of do_one_ref, which we are
+> avoiding here). I am slightly worried about the open() cost of my
+> solution. It's amortized away in a big call, but it is probably
+> noticeable for something like `git rev-parse <40-hex>`.
 
-I think I am starting to understand why this patch felt wrong to me.
-This wasn't about "--first-parent" at all, and you are correct that
-you didn't call the option as such), but I somehow thought that they
-were related; perhaps the fact that both disable the "if the result
-exactly matches one parent, all the other parents can be culled to
-simplify the history" logic blinded me.
+I took a look at this. It gets a bit hairy. My strategy is to add a flag
+to ask read_loose_refs to create REF_INCOMPLETE values. We currently use
+this flag for loose REF_DIRs to mean "we haven't opendir()'d the
+subdirectory yet". This would extend it to the non-REF_DIR case to mean
+"we haven't opened the loose ref file yet". We'd check REF_INCOMPLETE
+before handing the ref_entry to a callback, and complete it if
+necessary.
 
-In reality, the new flag is a lot closer in spirit to the total
-opposite of "--first-parent", i.e. "--full-history".  That option
-also disables that "if same to one parent, other parents do not
-matter" logic, but its effect is quite different.  It makes the
-other histories that did not have to have contributed the end result
-shown in the output.
+It gets ugly, though, because we need to pass that flag through quite a
+bit of callstack. get_ref_dir() needs to know it, which means all of
+find_containing_dir, etc need it, meaning it pollutes all of the
+packed-refs code paths too.
 
-Now, when we step back and think about how the normal "git blame"
-logic apportions the blame to multiple parents when there is no
-exact match, it does so in a pretty arbitrary way.  It lets earlier
-parents to claim the responsibility and later parents only get
-leftover contents that weren't claimed by the earlier ones.  We can
-call that "favouring earler ones", i.e. "--prefer-first".
+I have a half-done patch in this direction if that doesn't sound too
+nasty.
 
-It was implemented this way, not because this order makes any sense,
-but primarily because no order is particularly better than any
-other, and the designer (me) happened to have picked the easiest one
-at random.
+> > This doesn't correctly handle the rule
+> > 
+> > 	"refs/remotes/%.*s/HEAD"
+> [...]
 
-The "pick the one that exactly matches if exists" can be thought of
-an easy hack to hide the problems that come from this arbitrary
-choice.  Without it, if the result matches the second parent (i.e. a
-typical merge of a work done on the topic branch while the mainline
-has been quiescent in the same area), the "give earlier parents a
-chance to claim responsiblity before later ones" rule would have
-split the blame for parts that weren't changed in the side branch
-topic to the mainline and blame would have been passed to the side
-branch only for the portion that were changed by the side branch.
-Instead, "pass the whole blame to the one that exactly matches" hack
-keeps larger blocks of text unsplit, clumping related contents
-together as long as possible while we traverse the history.
+> I'll see how painful it is to make it work.
 
-It is an "easy hack", because we only need to compare the object
-name, but a logical extension to it would have been to compute the
-similarity scores between the result and each of the parents, sort
-the parents by that similarity score order, and give more similar
-ones a chance to claim responsibility before less similar ones.
-We could call it "favouring similar ones", i.e. "--prefer-similar"
-or something.
+It's actually reasonably painful. I thought at first we could get away
+with more cleverly parsing the rule, find the prefix (up to the
+placeholder), and then look for the suffix ("/HEAD") inside there. But
+it can never work with the current do_for_each_* code. That code only
+triggers a callback when we see a concrete ref. It _never_ lets the
+callbacks see an intermediate directory.
 
-That would have made the result more stable.  Imagine that in one
-history, a merge's result matchs exactly the second parent, and in
-another history, a merge's result almost matches exactly the second
-parent but the difference is the result adds one blank line at the
-end of the file relative to what the second parent has.
+So a NO_RECURSE flag is not sufficient to handle this case. I'd need to
+teach do_for_each_ref to recurse based on pathspecs, or a custom
+callback function. And that is getting quite complicated.
 
-With the current code, blaming the file will get quite a different
-result.
+I think it might be simpler to just do my own custom traversal. What I
+need is much simpler than what do_for_each_entry provides. I don't need
+recursion, and I don't actually need to look at the loose and packed
+refs together. It's OK for me to do them one at a time because I don't
+care about the actual value; I just want to know about which refs exist.
 
-In the former history, the sub-history leading to the second parent
-of the merge will get all the blame, but in the latter history, the
-sub-history leading to the first parent of the merge will have a
-chance to claim the responsibility for the shared part before the
-second parent has a say in the output.
-
-If we sorted the parents in the similarity order and gave the first
-refusal right to more similar parents before less similar ones, then
-the resulting output from "git blame" would be very similar in these
-two histories, which would be a very desirable property.  If the
-only difference between the results of the merge in the former and
-the latter histories is one blank line at the end of the file in
-question, blames for the remaining part of the file should be
-assigned the same between the two histories, but the "pass the
-entire blame to the second parent only when the second parent
-exactly matches" hack gets in the way for that ideal, and "sort the
-parents in similarity order" will fix that.
-
-Of course, it would make the computation a lot more costly, but it
-would make the behaviour more predictable and understandable.
-
-But that is a different tangent.
-
-I think the new feature introduced by your change can be explained
-as "'git blame' uses the same history simplification as the commands
-in the 'git log' family that culls other side branches when the
-merge result exactly matches one parent, and in all other cases, it
-lets earlier parents claim responsibility before the later ones.
-This option disables the culling of the irrelevant side branches, in
-a way similar to how '--full-history' option to the commands in the
-'git log' family works, and lets earlier parents claim
-responsibility to the merge result (even when the later parents
-contributed a lot more to the result) before the later parents.".
-
-And if it were sold that way, I think I could at least understand it
-(I do not necessarily buy it as a useful feature, though---at least
-not yet).
-
-In any case, "--prefer-first" is not particularly a good name, as
-that is the default mode of operation for "git blame".  If we were
-ever going to implement the "sort parents by similarity", that would
-be triggered with "--prefer-similar" and "--prefer-first" would
-becomeq a way to choose the current algorithm (i.e. not sort the
-parents by similarity but go from earlier to later parents).  We
-would regret if we gave that option name to the feature proposed by
-the patch under discussion.  How about calling it "--full-history",
-which is a way to tell Git not to cull side branches when the result
-matches one of the parents?  It is even plausible that we may later
-come up with "--prefer-<something>" (sort the parents not in the
-original parent order nor in the similarity order but with some
-other heuristics), and I suspect "--full-history" would be an
-orthogonal axis to the order in which the parents are given a chance
-to claim responsiblity.
-
-Thanks; I'll queue the patch on 'pu' and wait for others to comment.
+-Peff
