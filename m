@@ -1,86 +1,95 @@
-From: =?UTF-8?B?QmVub8OudCBCb3VyYmnDqQ==?= <benoit.bourbie@gmail.com>
-Subject: git gui crashes ( v 1.8.5.2)
-Date: Mon, 13 Jan 2014 18:14:24 -0600
-Message-ID: <CANJSc_uYm7f4LoZoMoVzcsmGrYnUy+2nXFL_cNWqQnwLb5J6mw@mail.gmail.com>
+From: Pete Wyckoff <pw@padd.com>
+Subject: Re: git-p4: exception when cloning a perforce repository
+Date: Mon, 13 Jan 2014 19:18:20 -0500
+Message-ID: <20140114001820.GA12058@padd.com>
+References: <01EF41A4-533B-4A24-8952-CAEB49970272@iwi.me>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 14 01:14:53 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Alexandru Juncu <alexj@rosedu.org>
+To: Damien =?iso-8859-1?Q?G=E9rard?= <damien@iwi.me>
+X-From: git-owner@vger.kernel.org Tue Jan 14 01:18:33 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W2red-00053i-DZ
-	for gcvg-git-2@plane.gmane.org; Tue, 14 Jan 2014 01:14:51 +0100
+	id 1W2riB-0001l9-9j
+	for gcvg-git-2@plane.gmane.org; Tue, 14 Jan 2014 01:18:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751534AbaANAOs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Jan 2014 19:14:48 -0500
-Received: from mail-we0-f179.google.com ([74.125.82.179]:45567 "EHLO
-	mail-we0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751289AbaANAOq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Jan 2014 19:14:46 -0500
-Received: by mail-we0-f179.google.com with SMTP id w62so2081577wes.38
-        for <git@vger.kernel.org>; Mon, 13 Jan 2014 16:14:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=e8Xhpr1kN7NEvlND01TSX9MXmcpv97moE/8frAsiZRo=;
-        b=M7o4N36b1GLSvgcEqDWlX6J0NziqcDukH7nr/KcWUPCtqMHABezbahCzIoA00A1+/A
-         6cEs6npNbwqAxXrgpih75Ks3FJZj7APDZxt062+Q259Xx/qPAWt+vZbOOiZcmjl0Hgvb
-         AS+okp1lLSrd8myVAK3pL3/xhfxIc10zqQQ9iHRsQMDhLoSawxr7FvyqBz56glL5pyLj
-         JXS4CidlMSwemmVneQYfwZctcNdEKt8xUwVqiRfjWYJJvzD/1RcYZvoRWjAbWpTbEzZx
-         3tOyE7H/AZiVF4cSTnPWuUkSzDZnRxdGGJdgIB+YAoYZYgtLQFN7bSVNMPBkJaVStgVO
-         /yKw==
-X-Received: by 10.194.61.3 with SMTP id l3mr24113163wjr.18.1389658484448; Mon,
- 13 Jan 2014 16:14:44 -0800 (PST)
-Received: by 10.194.28.3 with HTTP; Mon, 13 Jan 2014 16:14:24 -0800 (PST)
+	id S1751788AbaANAS2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 Jan 2014 19:18:28 -0500
+Received: from honk.padd.com ([74.3.171.149]:56185 "EHLO honk.padd.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751469AbaANAS1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Jan 2014 19:18:27 -0500
+Received: from arf.padd.com (unknown [50.105.0.78])
+	by honk.padd.com (Postfix) with ESMTPSA id 1C34370F4;
+	Mon, 13 Jan 2014 16:18:26 -0800 (PST)
+Received: by arf.padd.com (Postfix, from userid 7770)
+	id C0CCD20077; Mon, 13 Jan 2014 19:18:20 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <01EF41A4-533B-4A24-8952-CAEB49970272@iwi.me>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240380>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240381>
 
-Hello,
+damien@iwi.me wrote on Mon, 13 Jan 2014 14:37 +0100:
+> I am trying to clone a perforce repository via git and I am having th=
+e following backtrace :
+>=20
+> {14:20}~/projects/####:master =E2=9C=97 =E2=9E=AD git p4 clone //depo=
+t/@all .
+> Importing revision =E2=80=A6
+> [...]
+> Importing revision 59702 (45%)Traceback (most recent call last):
+[..]
+>   File "/opt/git/libexec/git-core/git-p4", line 2078, in streamOneP4F=
+ile
+>     if data[-1] =3D=3D '\n':
+> IndexError: string index out of range
+>=20
+> git =E2=80=94version: git version 1.8.5.2.309.ga25014b [last commit f=
+rom master from github.com/git/git]
+> os : ubuntu 13.10
 
-git gui crashes on my Linux machin since I updated it to 1.8.5.2.
+This code:
 
-I had the message
-Error in startup script: unknown option "-stretch"
-    while executing
-".vpane.lower paneconfigure .vpane.lower.diff -stretch always"
-    invoked from within
-"if {$use_ttk} {
-.vpane.lower pane .vpane.lower.diff -weight 1
-.vpane.lower pane .vpane.lower.commarea -weight 0
-} else {
-.vpane.lower paneconfigure..."
-    (file "git/libexec/git-core/git-gui" line 3233)
+        if type_base =3D=3D "symlink":
+            git_mode =3D "120000"
+            # p4 print on a symlink sometimes contains "target\n";
+            # if it does, remove the newline
+            data =3D ''.join(contents)
+  =3D=3D>       if data[-1] =3D=3D '\n':
+                contents =3D [data[:-1]]
+            else:
+                contents =3D [data]
 
-So, I reverted the change that has been made in git-gui/git-gui.sh
-(Diff and Commit Area)
+means that data is an empty string.  Implies you've got a
+symlink pointing to nothing.  Is that even possible?
 
-I replaced
+It could be this is a regression introduced at 1292df1 (git-p4:
+=46ix occasional truncation of symlink contents., 2013-08-08).  The
+old way of doing data[:-1] unconditionally would have worked but
+was broken for other reasons.
 
-${NS}::panedwindow .vpane.lower -orient vertical
-${NS}::frame .vpane.lower.commarea
-${NS}::frame .vpane.lower.diff -relief sunken -borderwidth 1 -height 500
-.vpane.lower add .vpane.lower.diff
-.vpane.lower add .vpane.lower.commarea
-.vpane add .vpane.lower
+Could you investigate the symlink a bit?  We're looking for
+one in change 59702 that points to nowhere.  Maybe do:
 
-by
+    $ p4 describe -s 59702
 
-${NS}::frame .vpane.lower -height 300 -width 400
-${NS}::frame .vpane.lower.commarea
-${NS}::frame .vpane.lower.diff -relief sunken -borderwidth 1
-pack .vpane.lower.diff -fill both -expand 1
-pack .vpane.lower.commarea -side bottom -fill x
-.vpane add .vpane.lower
-if {!$use_ttk} {.vpane paneconfigure .vpane.lower -sticky nsew}
+and see if you can figure out which of those could be a symlink, then
+inspect it:
 
-and now, git gui works as expected.
+    $ p4 fstat //depot/symlink@59702
+    (probably shows it is "headRev 1")
 
-Regards,
+    $ p4 print -q //depot/symlink#1
 
-Benoit
+    $ p4 print -q //depot/symlink#1 | od -c
+
+Thanks for checking this depot info first.
+
+		-- Pete
