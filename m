@@ -1,74 +1,62 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [BUG] git symbolic-ref does not recognize @ as the shortcut for HEAD
-Date: Wed, 15 Jan 2014 18:26:07 +0700
-Message-ID: <CACsJy8Dy5xgF5m6BOo1cfdzg5dOx58sZo0aa_YKdnyAvJ6g4=Q@mail.gmail.com>
-References: <CAOBEgJjmoXEDVa4L5LbAGMYR7_+NCf2tDSveieZxtU4bfWyzDw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>
-To: Mathieu Lemoine <mathieu@mlemoine.name>
-X-From: git-owner@vger.kernel.org Wed Jan 15 12:26:43 2014
+From: al_shopov@yahoo.com
+Subject: [PATCH] Bulgarian translation of gitk
+Date: Wed, 15 Jan 2014 13:27:27 +0200
+Message-ID: <1389785251-8472-1-git-send-email-lists@kambanaria.org>
+Cc: Paul Mackerras <paulus@samba.org>,
+	Alexander Shopov <ash@kambanaria.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 15 12:27:44 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W3OcM-0000kC-77
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Jan 2014 12:26:42 +0100
+	id 1W3OdK-0002Gt-6G
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Jan 2014 12:27:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751480AbaAOL0j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Jan 2014 06:26:39 -0500
-Received: from mail-qc0-f172.google.com ([209.85.216.172]:48586 "EHLO
-	mail-qc0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750856AbaAOL0h (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Jan 2014 06:26:37 -0500
-Received: by mail-qc0-f172.google.com with SMTP id c9so806498qcz.17
-        for <git@vger.kernel.org>; Wed, 15 Jan 2014 03:26:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=thjchTMj8CAEA8YvSqLqo0Yo6a13BCOuog71sLwNW/g=;
-        b=gK6GCyr2hgjoNVJNsLnmMkpJ5X8TDmW/2jBb5R1GQr7KDPHLykRbgi9Q2Te946eWXb
-         9e8xmrFsAsWDJLsRV6l8+7Ey2AeK7aM2n17ff/Niw6OhGguig8pvR4w/ShpkEav8cppH
-         I9PzKlVACxCDcS//5fwKYS3A7QZNEZhfB6lO1Qiyzh5UUNMQbnXJQcKGE6rg5kOMLqSL
-         RrqdpA/BPb2+i0VTDrAx4VU6UUWRJuMNqqLLv/R1E9IB0qpC4qLP4OeomtGPPW1rbR/B
-         sXoduU0J8agToJwFocgrDk5snZXFMm0oXI+rty+hUzhSHbpFZqdSKg9dJbM5ycuAAprE
-         ceYw==
-X-Received: by 10.224.165.12 with SMTP id g12mr3249845qay.89.1389785197413;
- Wed, 15 Jan 2014 03:26:37 -0800 (PST)
-Received: by 10.96.136.98 with HTTP; Wed, 15 Jan 2014 03:26:07 -0800 (PST)
-In-Reply-To: <CAOBEgJjmoXEDVa4L5LbAGMYR7_+NCf2tDSveieZxtU4bfWyzDw@mail.gmail.com>
+	id S1751814AbaAOL1j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Jan 2014 06:27:39 -0500
+Received: from nm17-vm1.bullet.mail.ir2.yahoo.com ([212.82.96.216]:37356 "EHLO
+	nm17-vm1.bullet.mail.ir2.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750928AbaAOL1i (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 15 Jan 2014 06:27:38 -0500
+Received: from [212.82.98.63] by nm17.bullet.mail.ir2.yahoo.com with NNFMP; 15 Jan 2014 11:27:36 -0000
+Received: from [46.228.39.69] by tm16.bullet.mail.ir2.yahoo.com with NNFMP; 15 Jan 2014 11:27:36 -0000
+Received: from [127.0.0.1] by smtp106.mail.ir2.yahoo.com with NNFMP; 15 Jan 2014 11:27:36 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s1024; t=1389785256; bh=bC3z4OQaHNirXwokttLWfYj6WwtDUs648ohvB1ojZKY=; h=X-Yahoo-Newman-Id:X-Rocket-Received:X-Yahoo-Newman-Property:X-YMail-OSG:X-Yahoo-SMTP:From:To:Cc:Subject:Date:Message-Id:X-Mailer; b=gl6G44W8oD0qWTp+W3lriNms+vQhfeR37jKS8hS9l9+uUSQwwdRfpTsI5h8v+eVERBqR0xcsmJpOPxbU782joeW9WAIKH5uigubeVJuEpKRReqz9gsumwbi/Ajt7kC1ocQV8lRd3wNb4jVjtS4tb2odZj6m4F/GJfFnfL6fMrcY=
+X-Yahoo-Newman-Id: 770637.90545.bm@smtp106.mail.ir2.yahoo.com
+X-Rocket-Received: from localhost.lan (al_shopov@78.83.52.173 with plain [188.125.69.59])
+        by smtp106.mail.ir2.yahoo.com with SMTP; 15 Jan 2014 11:27:36 +0000 UTC
+X-Yahoo-Newman-Property: ymail-3
+X-YMail-OSG: kgDNzmwVM1kAJuB0WqFq2xLzF9jAgMTRbDkFZWJ034QuUmT
+ 4n_XxelerbMThs6ZE2slRTfrXkMykHpUcx7DdY10AdYtrLyrR65hfoA45PYI
+ qc0_99Lh7Kc83f.oBEtfGsbMYQtAHQN7vZ3sFKds9fElyJfGxlPrFyzB80ZP
+ ZPTuACHRvpQ9woDuWp2YwvVYRpnH1oJ8ymw4oKh_1mG7.Vrw_.6nc88FfDqB
+ rP6IITdoElZhNXoCpqXqK0tGUnwBrGY8JAJ9jB4XQ_aq6qQ779jjrW64DoTR
+ NVHYwxZKlv2CSdcmHClE.rpGBENHB2swrPqev.4lv8cQue0hBdJ.vGLL3JeO
+ _sfQW44D3xYRGQIBIS3oONlB6xaBAMDPWKvHiMK2ADTOppLLsgOo7NW2RcDt
+ nbF9BygnIta0fQWZ_PL8s66AhM71G7ix9Yw_0MhOKXhZOLgvekgJDaqMAukw
+ g6BlCSQAjWrNoxlcxG2BtoG_zzMa2SAY0Rv10FO3HJUcdsSaDvEVS4LOUyXH
+ as2nekjkut_8_iFvbaXYU6NuWKczq723psEqrqa00OGWsOYI-
+X-Yahoo-SMTP: yRWQ8BGswBDCUSC0.xLhuVo_zCa4SQ--
+X-Mailer: git-send-email 1.8.4.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240459>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240460>
 
-On Thu, Jan 9, 2014 at 10:05 PM, Mathieu Lemoine <mathieu@mlemoine.name> wrote:
-> Hello,
->
-> In https://raw.github.com/git/git/master/Documentation/RelNotes/1.8.5.txt
-> is mentioned:
->
->  * Instead of typing four capital letters "HEAD", you can say "@" now,
-> e.g. "git log @".
->
-> However, `git symbolic-ref @`  gives "fatal: No such ref: @", while
-> `git symbolic-ref @`  gives "refs/heads/master".
+From: Alexander Shopov <ash@kambanaria.org>
 
-you meant "while `git symbolic-ref _HEAD_` gives refs/heads/master"?
+This is the Bulgarian translation of gitk. Translation is synced
+with git-gui so they have same terms and style.
 
-> I looked around in the archive and #git, but nobody seemed to be aware
-> of the behaviour.
->
-> I wonder if it's on purpose given the low level of symbolic-ref or if
-> it's a bug.
+Alexander Shopov (1):
+  gitk i18n: Added Bulgarian translation (304t)
 
-I think this is because symbolic-ref (and show-ref) takes plain refs,
-either in full or short form, but nothing else fancier. I'm not sure
-if we should add support for @ (and maybe @{u} as it's in the same
-boat) to these commands. If it's confusing and hard to explain in
-documents then maybe we should.
+ po/bg.po | 1334 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 1334 insertions(+)
+ create mode 100644 po/bg.po
+
 -- 
-Duy
+1.8.4.2
