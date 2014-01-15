@@ -1,227 +1,90 @@
-From: =?utf-8?Q?Damien_G=C3=A9rard?= <damien@iwi.me>
-Subject: Re: git-p4: exception when cloning a perforce repository
-Date: Wed, 15 Jan 2014 09:56:13 +0100
-Message-ID: <843E4B24-5EDD-4451-8849-425160576A99@iwi.me>
-References: <01EF41A4-533B-4A24-8952-CAEB49970272@iwi.me> <20140114001820.GA12058@padd.com> <20140114232432.GA31465@padd.com>
-Mime-Version: 1.0 (Mac OS X Mail 7.1 \(1827\))
+From: Jeff King <peff@peff.net>
+Subject: Re: Diagnosing stray/stale .keep files -- explore what is in a pack?
+Date: Wed, 15 Jan 2014 04:12:20 -0500
+Message-ID: <20140115091220.GB14335@sigill.intra.peff.net>
+References: <CACPiFCLa3X-Xt5GwrHHA-PFj-Bi9_sW+=y2xidZ7tDbFfM26rA@mail.gmail.com>
+ <CACPiFCJVx0dkkPQ=LosbAAKq7CvK6_yQL5QDHMYr5oJAS6wb6Q@mail.gmail.com>
+ <201401141236.44393.mfick@codeaurora.org>
+ <CACPiFCLxiCOqv=wLeq9LxisWn5T62hk8xDYwXmeFRNT05HY0iQ@mail.gmail.com>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Alexandru Juncu <alexj@rosedu.org>
-To: Pete Wyckoff <pw@padd.com>
-X-From: git-owner@vger.kernel.org Wed Jan 15 09:56:24 2014
+Cc: Martin Fick <mfick@codeaurora.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Martin Langhoff <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 15 10:12:30 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W3MGs-0002Dp-UE
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Jan 2014 09:56:23 +0100
+	id 1W3MWU-00051J-2K
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Jan 2014 10:12:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750941AbaAOI4U convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 15 Jan 2014 03:56:20 -0500
-Received: from catkin.iwi.me ([91.121.49.159]:55631 "EHLO catkin.iwi.me"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750754AbaAOI4S convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 15 Jan 2014 03:56:18 -0500
-Received: from imac-de-admin.private.4d.fr (unknown [194.98.194.79])
-	(Authenticated sender: damien@iwi.me)
-	by catkin.iwi.me (Postfix) with ESMTPSA id 114C1A2D8B;
-	Wed, 15 Jan 2014 09:56:15 +0100 (CET)
-In-Reply-To: <20140114232432.GA31465@padd.com>
-X-Mailer: Apple Mail (2.1827)
+	id S1751475AbaAOJMZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Jan 2014 04:12:25 -0500
+Received: from cloud.peff.net ([50.56.180.127]:60960 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751362AbaAOJMW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Jan 2014 04:12:22 -0500
+Received: (qmail 11184 invoked by uid 102); 15 Jan 2014 09:12:22 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 15 Jan 2014 03:12:22 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 15 Jan 2014 04:12:20 -0500
+Content-Disposition: inline
+In-Reply-To: <CACPiFCLxiCOqv=wLeq9LxisWn5T62hk8xDYwXmeFRNT05HY0iQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240444>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240445>
 
+On Tue, Jan 14, 2014 at 02:42:09PM -0500, Martin Langhoff wrote:
 
-On 15 Jan 2014, at 00:24, Pete Wyckoff <pw@padd.com> wrote:
+>  On Tue, Jan 14, 2014 at 2:36 PM, Martin Fick <mfick@codeaurora.org> wrote:
+> > Perhaps the receiving process is dying hard and leaving
+> > stuff behind?  Out-of-memory, out of disk space?
+> 
+> Yes, that's my guess as well. This server had gc misconfigured, so it
+> hit ENOSPC a few weeks ago.
+> 
+> It is likely that the .lock files were left behind back then, and
+> since then the clients pushing to these refs were transferring their
+> whole history and still failing to update the ref, leading to rapid
+> repo growth.
 
-> pw@padd.com wrote on Mon, 13 Jan 2014 19:18 -0500:
->> damien@iwi.me wrote on Mon, 13 Jan 2014 14:37 +0100:
->>> I am trying to clone a perforce repository via git and I am having =
-the following backtrace :
->>>=20
->>> {14:20}~/projects/####:master =E2=9C=97 =E2=9E=AD git p4 clone //de=
-pot/@all .
->>> Importing revision =E2=80=A6
->>> [...]
->>> Importing revision 59702 (45%)Traceback (most recent call last):
->> [..]
->>>  File "/opt/git/libexec/git-core/git-p4", line 2078, in streamOneP4=
-=46ile
->>>    if data[-1] =3D=3D '\n':
->>> IndexError: string index out of range
->>>=20
->>> git =E2=80=94version: git version 1.8.5.2.309.ga25014b [last commit=
- from master from github.com/git/git]
->>> os : ubuntu 13.10
->>=20
->> This code:
->>=20
->>        if type_base =3D=3D "symlink":
->>            git_mode =3D "120000"
->>            # p4 print on a symlink sometimes contains "target\n";
->>            # if it does, remove the newline
->>            data =3D ''.join(contents)
->>  =3D=3D>       if data[-1] =3D=3D '\n':
->>                contents =3D [data[:-1]]
->>            else:
->>                contents =3D [data]
->>=20
->> means that data is an empty string.  Implies you've got a
->> symlink pointing to nothing.  Is that even possible?
+We see these occasionally at GitHub, too. I haven't yet figured out a
+definite cause, though whatever it is, it's relatively rare.
 
-It does not seem so but I am so sure.
+I think the ".keep" files and the ".lock" files are in two separate
+boats, though.
 
+pack-objects creates the .keep files as a "lock" between the time it
+moves them into place and when receive-pack updates the refs (so that a
+simultaneous prune does not think they should be removed). Receive-pack
+then updates the refs and removes the ".keep" file. However, in the
+interim code, we are just updating the refs, and are careful to return
+any errors rather than calling die() (so if ENOSPC prevented ref write,
+that would not cause this). So for us to leave a .keep there, it is
+probably one of:
 
->> It could be this is a regression introduced at 1292df1 (git-p4:
->> Fix occasional truncation of symlink contents., 2013-08-08).  The
->> old way of doing data[:-1] unconditionally would have worked but
->> was broken for other reasons.
->>=20
->> Could you investigate the symlink a bit?  We're looking for
->> one in change 59702 that points to nowhere.  Maybe do:
->>=20
->>    $ p4 describe -s 59702
->>=20
->> and see if you can figure out which of those could be a symlink, the=
-n
->> inspect it:
->>=20
->>    $ p4 fstat //depot/symlink@59702
->>    (probably shows it is "headRev 1")
->>=20
->>    $ p4 print -q //depot/symlink#1
->>=20
->>    $ p4 print -q //depot/symlink#1 | od -c
->>=20
->> Thanks for checking this depot info first.
->=20
-> I've tried to hack a test that produces a null symlink,
-> and having done so, find an error later on trying to
-> generate a symlink that points to "".  So the "easy"
-> fix of checking for an empty string is unlikely to work
-> for your repo.
->=20
-> Curious as to how you managed to generate such a thing.
-> If you find the file, and can get at the p4 depot, the
-> full ,v file would be interesting too.
->=20
+  1. A few generic library functions, like xmalloc, can cause us to die.
+     This should be very rare, though.
 
+  2. We tried to unlink the keep-file, but couldn't (could ENOSPC
+     prevent a deletion? I suspect it depends on the filesystem).
 
+  3. We were killed by signal (or system crash).
 
-Indeed, those files are symlinks actually.  But it sems they are all va=
-lid.
+Fetch-pack also will create .keep files, and it is much less careful
+during the time the file exists.  However, busy servers tend to be
+receiving pushes, not initiating fetches.
 
+Actual ".lock" files are added to a signal/atexit handle that cleans
+them up automatically on program exit. So those really should be caused
+by system crash (or "kill -9"), and that has generally been our
+experience at GitHub. But again, if ENOSPC could prevent deletion on
+your filesystem, it could be related. But there is not much git can do
+to clean up if unlink() fails us.
 
-Here is what I can get :
-
-Change 59702 by ##############@VS9 on 2009/03/24 15:53:39
-
-	OpenSSL 0.9.8j
-
-Affected files ...
-
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/aes.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/asn1.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/asn1_mac.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/asn1t.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/bio.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/blowfish.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/bn.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/buffer.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/cast.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/comp.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/conf.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/conf_api.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/crypto.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/des.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/des_old.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/dh.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/dsa.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/dso.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/dtls1.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/e_os2.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/ebcdic.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/ec.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/ecdh.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/ecdsa.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/engine.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/err.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/evp.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/fips.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/fips_rand.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/hmac.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/idea.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/krb5_asn.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/kssl.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/lhash.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/md2.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/md4.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/md5.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/obj_mac.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/objects.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/ocsp.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/opensslconf.h#2 ed=
-it
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/opensslv.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/ossl_typ.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/pem.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/pem2.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/pkcs12.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/pkcs7.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/pq_compat.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/pqueue.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/rand.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/rc2.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/rc4.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/ripemd.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/rsa.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/safestack.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/sha.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/ssl.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/ssl2.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/ssl23.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/ssl3.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/stack.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/store.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/symhacks.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/tls1.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/tmdiff.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/txt_db.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/ui.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/ui_compat.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/x509.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/x509_vfy.h#2 edit
-=2E.. //depot/openssl/0.9.8j/openssl/include/openssl/x509v3.h#2 edit
-
-
-Just in case :
-
-$ p4 describe -s 59700
-59700 - no such changelist.
-
-
-p4 fstat  //depot/openssl/0.9.8j/openssl/include/openssl/bn.h@59702=20
-=2E.. depotFile //depot/openssl/0.9.8j/openssl/include/openssl/bn.h
-=2E.. headAction edit
-=2E.. headType symlink
-=2E.. headTime 1237906419
-=2E.. headRev 2
-=2E.. headChange 59702
-=2E.. headModTime 1231329423
-
-
-p4 print -q //depot/openssl/0.9.8j/openssl/include/openssl/bn.h#2 | od =
--c
-0000000
-
-p4 print  //depot/openssl/0.9.8j/openssl/include/openssl/bn.h#1       =20
-//depot/openssl/0.9.8j/openssl/include/openssl/bn.h#1 - add change 5957=
-4 (text)
-
- p4 print  //depot/openssl/0.9.8j/openssl/include/openssl/bn.h#2
-//depot/openssl/0.9.8j/openssl/include/openssl/bn.h#2 - edit change 597=
-02 (symlink)
+-Peff
