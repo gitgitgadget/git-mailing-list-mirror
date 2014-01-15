@@ -1,82 +1,114 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] send-email: If the ca path is not specified, use the
- defaults
-Date: Wed, 15 Jan 2014 13:50:24 -0800
-Message-ID: <20140115215024.GM18964@google.com>
-References: <1389807071-26746-1-git-send-email-i.gnatenko.brain@gmail.com>
- <xmqqa9ex2gi6.fsf@gitster.dls.corp.google.com>
- <7AD1C6ED-6177-415D-B342-D1FEA9F810B4@rubenkerkhof.com>
- <xmqqob3d0w7g.fsf@gitster.dls.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: git-log --cherry-pick gives different results when using tag or
+ tag^{}
+Date: Wed, 15 Jan 2014 16:53:43 -0500
+Message-ID: <20140115215343.GA16401@sigill.intra.peff.net>
+References: <52CFF27C.1090108@gmail.com>
+ <20140115094945.GD14335@sigill.intra.peff.net>
+ <xmqq1u092f2k.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ruben Kerkhof <ruben@rubenkerkhof.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Igor Gnatenko <i.gnatenko.brain@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=utf-8
+Cc: Francis Moreau <francis.moro@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 15 22:50:35 2014
+X-From: git-owner@vger.kernel.org Wed Jan 15 22:54:12 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W3YM7-0000ca-2o
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Jan 2014 22:50:35 +0100
+	id 1W3YPT-0006VL-7I
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Jan 2014 22:54:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752187AbaAOVub (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Jan 2014 16:50:31 -0500
-Received: from mail-qc0-f174.google.com ([209.85.216.174]:64071 "EHLO
-	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751046AbaAOVua (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Jan 2014 16:50:30 -0500
-Received: by mail-qc0-f174.google.com with SMTP id x13so1586762qcv.33
-        for <git@vger.kernel.org>; Wed, 15 Jan 2014 13:50:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=geRM+nKww4zGmFK5Ck2s6ZoqnljSrifuIACJCto5LhI=;
-        b=EEFNEU6FuDjxcimGpftGE3vV/t8WSZc9AvY2GcFrphhlCspFnbzmBA3NmybpLsPU3j
-         trQ6PPp8rKN3gvEpesGelOkc+DqJ6gie4yVsXy7dkO2wL2p04nuy2vkIcY/OI+QHgsKM
-         ebo5PgONX7Ggi8kVK+vB+C4O46GNYs7REedFp8SwMRSdyQ7Lkmy4TiqOEZB+PEGMBOYE
-         uklYdcN0YStV1CdSJw6r1NgQP3bD0zvVecAK0q4NLGSMcfaAC31DUjvug7YB3cNA5VW8
-         Rws9sPPMyFUV49aLLZGBAk8NhShPouoiMmYA2K2IjbUwomL/gOX1h2HMphLbYBcCiXZK
-         iZSg==
-X-Received: by 10.140.31.75 with SMTP id e69mr1857263qge.76.1389822629298;
-        Wed, 15 Jan 2014 13:50:29 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id h12sm75748qge.0.2014.01.15.13.50.27
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 15 Jan 2014 13:50:28 -0800 (PST)
+	id S1752989AbaAOVxs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Jan 2014 16:53:48 -0500
+Received: from cloud.peff.net ([50.56.180.127]:33128 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752970AbaAOVxq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Jan 2014 16:53:46 -0500
+Received: (qmail 17344 invoked by uid 102); 15 Jan 2014 21:53:45 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 15 Jan 2014 15:53:45 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 15 Jan 2014 16:53:43 -0500
 Content-Disposition: inline
-In-Reply-To: <xmqqob3d0w7g.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <xmqq1u092f2k.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240481>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240482>
 
-Junio C Hamano wrote:
-> Ruben Kerkhof <ruben@rubenkerkhof.com> writes:
+On Wed, Jan 15, 2014 at 11:57:39AM -0800, Junio C Hamano wrote:
 
->> As a last check, I set smtpsslcertpath = /etc/pki/tls/cert.pem in
->> ~/.gitconfig and git-send-email works fine now.
->
-> Which would mean that the existing code, by blindly defaulting to
-> /etc/ssl/certs/ and misdiagnosing that the directory is meant to be
-> used as SSL_ca_path, breaks a set-up that otherwise _should_ work.
-[...]
-> Ram (who did 35035bbf), with the patch from Ruben in the thread, do
-> you get either the warning or SSL failure?  Conceptually, the
-> resulting code is much better, I think, without blindly defaulting
-> /etc/ssl/certs and instead of relying on the underlying platform
-> just working out of the box with its own default,
+> Where do we pass down other flags from tags to commits?  For
+> example, if we do this:
+> 
+> 	$ git log ^v1.8.5 master
+> 
+> we mark v1.8.5 tag as UNINTERESTING, and throw that tag (not commit
+> v1.8.5^0) into revs->pending.objects[].  We do the same for 'master',
+> which is a commit.
+> 
+> Later, in prepare_revision_walk(), we call handle_commit() on them,
+> and unwrap the tag v1.8.5 to get v1.8.5^0, and then handles that
+> commit object with flags obtained from the tag object.  This code
+> only cares about UNINTERESTING and manually propagates it.
 
-FWIW this should help on Mac OS X, too.  Folks using git on mac
-at $DAYJOB have been using the workaround described at
-http://mercurial.selenic.com/wiki/CACertificates#Mac_OS_X_10.6_and_higher
-so I forgot to report it. :/
+Thanks for picking up this line of thought. I had some notion that the
+right solution would be in propagating the flags later from the pending
+tags to the commits, but I didn't quite know where to look. Knowing that
+we explicitly propagate UNINTERESTING but nothing else makes what I was
+seeing make a lot more sense.
 
-Thanks,
-Jonathan
+> Perhaps that code needs to propagate at least SYMMETRIC_LEFT down to
+> the commit object as well, no?  With your patch, the topmost level
+> of tag object and the eventual commit object are marked with the
+> flag, but if we were dealing with a tag that points at another tag
+> that in turn points at a commit, the intermediate tag will not be
+> marked with SYMMETRIC_LEFT (nor UNINTERESTING for that matter),
+> which may not affect the final outcome, but it somewhat feels wrong.
+
+Agreed. I think the lack of flags on intermediate tags has always been
+that way, even before 895c5ba, and I do not know of any case where it
+currently matters. But it seems like the obvious right thing to mark
+those intermediate tags.
+
+> How about doing it this way instead (totally untested, though)?
+
+Makes sense. It also means we will propagate flags down to any
+pointed-to trees and blobs. I can't think of a case where that will
+matter either (and they cannot be SYMMETRIC_LEFT, as that only makes
+sense for commit objects).
+
+I do notice that when we have a tree, we explicitly propagate
+UNINTERESTING to the rest of the tree. Should we be propagating all
+flags instead? Again, I can't think of a reason to do so (and if it is
+not UNINTERESTING, it is a non-trivial amount of time to mark all paths
+in the tree).
+
+
+> @@ -287,7 +288,6 @@ static struct commit *handle_commit(struct rev_info *revs,
+>  		if (parse_commit(commit) < 0)
+>  			die("unable to parse commit %s", name);
+>  		if (flags & UNINTERESTING) {
+> -			commit->object.flags |= UNINTERESTING;
+>  			mark_parents_uninteresting(commit);
+>  			revs->limited = 1;
+>  		}
+
+We don't need to propagate the UNINTERESTING flag here, because either:
+
+  - "object" pointed to the commit, in which case flags comes from
+    object->flags, and we already have it set
+
+or
+
+  - "object" was a tag, and we propagated the flags as we peeled (from
+    your earlier hunk)
+
+Makes sense. I think the "mark_blob_uninteresting" call later in the
+function is now irrelevant for the same reasons. The
+mark_tree_uninteresting call is not, though, because it recurses.
+
+-Peff
