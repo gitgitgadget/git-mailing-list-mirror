@@ -1,118 +1,85 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH] refname_match(): always use the rules in ref_rev_parse_rules
-Date: Wed, 15 Jan 2014 17:54:58 +0100
-Message-ID: <52D6BD62.4020307@alum.mit.edu>
-References: <xmqqlhyn90ka.fsf@gitster.dls.corp.google.com> <1389669367-27343-1-git-send-email-mhagger@alum.mit.edu> <xmqq38kq43bx.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 15 17:55:12 2014
+From: Igor Gnatenko <i.gnatenko.brain@gmail.com>
+Subject: [PATCH] send-email: If the ca path is not specified, use the defaults
+Date: Wed, 15 Jan 2014 21:31:11 +0400
+Message-ID: <1389807071-26746-1-git-send-email-i.gnatenko.brain@gmail.com>
+Cc: git@vger.kernel.org, Ruben Kerkhof <ruben@rubenkerkhof.com>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Wed Jan 15 18:31:50 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W3TkE-0004RG-T4
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Jan 2014 17:55:11 +0100
+	id 1W3UJR-0001sV-Ap
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Jan 2014 18:31:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752141AbaAOQzF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Jan 2014 11:55:05 -0500
-Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:56447 "EHLO
-	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751776AbaAOQzE (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 15 Jan 2014 11:55:04 -0500
-X-AuditID: 1207440e-b7fbc6d000004ad9-81-52d6bd66efd5
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id 03.D7.19161.66DB6D25; Wed, 15 Jan 2014 11:55:02 -0500 (EST)
-Received: from [192.168.69.148] (p4FDD4C39.dip0.t-ipconnect.de [79.221.76.57])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s0FGsxSS022394
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 15 Jan 2014 11:55:01 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20131103 Icedove/17.0.10
-In-Reply-To: <xmqq38kq43bx.fsf@gitster.dls.corp.google.com>
-X-Enigmail-Version: 1.6
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprLKsWRmVeSWpSXmKPExsUixO6iqJu291qQwc4GFYuuK91MFg29V5gd
-	mDwuXlL2+LxJLoApitsmKbGkLDgzPU/fLoE7Y1E3f8FugYp/H96xNTAu4+1i5OSQEDCRWNDb
-	yARhi0lcuLeerYuRi0NI4DKjRP+pX1DOOSaJh7ees4BU8QpoS+y+vZwNxGYRUJXYuLuVGcRm
-	E9CVWNTTDDZJVCBYYvXlB1D1ghInZz4Bs0UE1CQmth0Csjk4mAXEJfr/gYWFBQIldv2exQix
-	axGjxOwTW8DmcwpYS0y8tpMJpF4CqL6nMQgkzCygI/Gu7wEzhC0vsf3tHOYJjIKzkGybhaRs
-	FpKyBYzMqxjlEnNKc3VzEzNzilOTdYuTE/PyUot0jfVyM0v0UlNKNzFCgpdvB2P7eplDjAIc
-	jEo8vJL7rwYJsSaWFVfmHmKU5GBSEuXl3XUtSIgvKT+lMiOxOCO+qDQntfgQowQHs5IIb/Nm
-	oBxvSmJlVWpRPkxKmoNFSZxXbYm6n5BAemJJanZqakFqEUxWhoNDSYI3Zw9Qo2BRanpqRVpm
-	TglCmomDE2Q4l5RIcWpeSmpRYmlJRjwofuOLgREMkuIB2lsL0s5bXJCYCxSFaD3FqMuxYsOn
-	P4xCLHn5ealS4rxOIEUCIEUZpXlwK2Cp6hWjONDHwrxRIFU8wDQHN+kV0BImoCXBFVdBlpQk
-	IqSkGhjDZkvd9Zt16uiPCpOYec3Ox1/v5Tz03Icjf+rTBx5pbZ2ht0NVfjtIpRw5/P/Y+czO
-	CzGbblwR2B/qfufRh7Oz8++tifi5b+rKh/J1Bdkb1f9KpievYm45KqsR2VYSyfZg 
+	id S1751992AbaAORb3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Jan 2014 12:31:29 -0500
+Received: from mail-la0-f41.google.com ([209.85.215.41]:52679 "EHLO
+	mail-la0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751502AbaAORb2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Jan 2014 12:31:28 -0500
+Received: by mail-la0-f41.google.com with SMTP id mc6so1657823lab.14
+        for <git@vger.kernel.org>; Wed, 15 Jan 2014 09:31:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=4NXFzUDxPc5E0UtBO07ZTB9irUjRTCt5qGoGVGfUUQg=;
+        b=DXcjRoOvm/LaWDxyamYWE2CZrnMrEcAxXSePhKCzW2/QVLafR4gKKLwb+jspdrF3Lv
+         qOEx3p//r7kclYA+tW1L7OQLHQ7IYm3uulx4EA2IET6puLoxLr4u37olkZ5dtbZmatcH
+         sZ3jrNxe/qHD0Cico01mIbdTsb5AlKTsnHbCSOiO9TkwlTHBLFkbfvI2UD7C9+xPLrzi
+         0aa3B98QWmmyVU9m5CSZiChaZpyGytHLibY97u7wqJrBeVL7E0rsExyBG0mhYczzGGyb
+         xalj6aPeW8A6I19CqaKYgv1yIVodoqAi/51gM7gOKtSMKy6A5ufOsCbOUBhQx4s5P4hv
+         wIxg==
+X-Received: by 10.112.150.100 with SMTP id uh4mr2146294lbb.3.1389807086957;
+        Wed, 15 Jan 2014 09:31:26 -0800 (PST)
+Received: from localhost.localdomain ([176.192.189.198])
+        by mx.google.com with ESMTPSA id bl6sm2822399lbb.5.2014.01.15.09.31.24
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 15 Jan 2014 09:31:25 -0800 (PST)
+X-Mailer: git-send-email 1.8.4.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240471>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240472>
 
-On 01/14/2014 11:16 PM, Junio C Hamano wrote:
-> Michael Haggerty <mhagger@alum.mit.edu> writes:
-> 
->> We used to use two separate rules for the normal ref resolution
->> dwimming and dwimming done to decide which remote ref to grab.  The
->> third parameter to refname_match() selected which rules to use.
->>
->> When these two rules were harmonized in
->>
->>     2011-11-04 dd621df9cd refs DWIMmery: use the same rule for both "git fetch" and others
->>
->> , ref_fetch_rules was #defined to avoid potential breakages for
->> in-flight topics.
->>
->> It is now safe to remove the backwards-compatibility code, so remove
->> refname_match()'s third parameter, make ref_rev_parse_rules private to
->> refs.c, and remove ref_fetch_rules entirely.
->>
->> Suggested-by: Junio C Hamano <gitster@pobox.com>
->> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
->> ---
->> See
->>
->>     http://article.gmane.org/gmane.comp.version-control.git/240305
->>
->> in which Junio made the suggestion and wrote most of the commit
->> message :-)
-> 
-> ;-) ...and on top of it this may be an obvious endgame follow-up.
-> 
-> was done mindlessly and mechanically, so there may be some slip-ups,
-> though.
-> 
-> 
->  refs.c | 24 +++++++++++++-----------
->  1 file changed, 13 insertions(+), 11 deletions(-)
-> 
-> diff --git a/refs.c b/refs.c
-> index 5a10c25..b1c9cf5 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -1886,16 +1886,16 @@ static const char *ref_rev_parse_rules[] = {
->  	"refs/tags/%.*s",
->  	"refs/heads/%.*s",
->  	"refs/remotes/%.*s",
-> -	"refs/remotes/%.*s/HEAD",
-> -	NULL
-> +	"refs/remotes/%.*s/HEAD"
->  };
-> [...rewrite loops to use ARRAY_SIZE()...]
+From: Ruben Kerkhof <ruben@rubenkerkhof.com>
 
-It's doable, but I don't see the point.  It's several lines longer (tho
-that's not significant either).  The performance difference should be
-negligible.  There are no users who benefit from knowing the length of
-the list ahead of time.  If we ever decide to make the list vary at
-runtime your version won't help.  Why bother?
+I use gmail for sending patches.
+If I have the following defined in my ~/.gitconfig:
+[sendemail]
+	smtpencryption = tls
+	smtpserver = smtp.gmail.com
+	smtpuser = ruben@rubenkerkhof.com
+	smtpserverport = 587
 
-Michael
+and try to send a patch, this fails with:
+STARTTLS failed! SSL connect attempt failed with unknown error
+error:14090086:SSL routines:SSL3_GET_SERVER_CERTIFICATE:certificate
+verify failed at /usr/libexec/git-core/git-send-email line 1236.
 
+Tested-by: Igor Gnatenko <i.gnatenko.brain@gmail.com>
+Signed-off-by: Ruben Kerkhof <ruben@rubenkerkhof.com>
+Reference: https://bugzilla.redhat.com/show_bug.cgi?id=1043194
+---
+ git-send-email.perl | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 3782c3b..689944f 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -1095,7 +1095,8 @@ sub ssl_verify_params {
+ 	}
+ 
+ 	if (!defined $smtp_ssl_cert_path) {
+-		$smtp_ssl_cert_path = "/etc/ssl/certs";
++		# use the OpenSSL defaults
++		return (SSL_verify_mode => SSL_VERIFY_PEER());
+ 	}
+ 
+ 	if ($smtp_ssl_cert_path eq "") {
 -- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+1.8.4.2
