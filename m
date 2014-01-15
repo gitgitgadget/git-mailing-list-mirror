@@ -1,71 +1,74 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: Diagnosing stray/stale .keep files -- explore what is in a pack?
-Date: Wed, 15 Jan 2014 08:42:26 -0500
-Message-ID: <CACPiFCKeOYHUb22d_Ea0PcbU-uAn=fVAn0QP1qbLAiNh1KEoqQ@mail.gmail.com>
-References: <CACPiFCLa3X-Xt5GwrHHA-PFj-Bi9_sW+=y2xidZ7tDbFfM26rA@mail.gmail.com>
- <CACPiFCJVx0dkkPQ=LosbAAKq7CvK6_yQL5QDHMYr5oJAS6wb6Q@mail.gmail.com>
- <201401141236.44393.mfick@codeaurora.org> <CACPiFCLxiCOqv=wLeq9LxisWn5T62hk8xDYwXmeFRNT05HY0iQ@mail.gmail.com>
- <20140115091220.GB14335@sigill.intra.peff.net>
+From: Andreas Krey <a.krey@gmx.de>
+Subject: Re: Consistency question
+Date: Wed, 15 Jan 2014 14:45:08 +0100
+Message-ID: <20140115134508.GE7102@inner.h.apk.li>
+References: <8761pl8raj.fsf@fencepost.gnu.org> <20140115111330.GH14335@sigill.intra.peff.net> <871u098ocy.fsf@fencepost.gnu.org> <20140115124434.GA27030@inner.h.apk.li> <87ppnt7635.fsf@fencepost.gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Martin Fick <mfick@codeaurora.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Jan 15 14:42:53 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Wed Jan 15 14:45:46 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W3Qk8-0007gk-Kr
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Jan 2014 14:42:52 +0100
+	id 1W3Qmo-0004nU-75
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Jan 2014 14:45:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751735AbaAONmt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Jan 2014 08:42:49 -0500
-Received: from mail-we0-f176.google.com ([74.125.82.176]:44873 "EHLO
-	mail-we0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751553AbaAONms (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Jan 2014 08:42:48 -0500
-Received: by mail-we0-f176.google.com with SMTP id q58so1795008wes.35
-        for <git@vger.kernel.org>; Wed, 15 Jan 2014 05:42:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=09HaC8JUyaf+jY+9/Z+bHOwq1VrmKbfES25CxqWdoyE=;
-        b=Zo1ctaoZvHDeoULrB7wLTNaMhmCOy6wx2sOAEjNqkUQaEOOJrB58AON1HS9e+eY8GV
-         EXdVL/fh8dWzRMGzG6FUzsLBh00N/0k5EejEDmhr5KAXLnqKGlXI1ZizkJIb5abiJvD2
-         91DXMEQer1mtIJfa3gQlOD+SIOoUyZXQm/Y2c2aHAWtAGbzAAKhv8CVGzNzep/3njqfJ
-         UZdsUQgXTshknqpc/ExzLqNtk5W9uvV6UDqTOjcmwD5pC6CdcoeXLLz8dCVKcOm5ftaD
-         Sgo4BK5BHvQURrgTqA2wAYNhbJAP4w4HMaCkGhAVpns2H8z/B4Fduxqq+bm4ljfkZwm1
-         H/Yg==
-X-Received: by 10.180.39.43 with SMTP id m11mr2529369wik.8.1389793366577; Wed,
- 15 Jan 2014 05:42:46 -0800 (PST)
-Received: by 10.216.64.66 with HTTP; Wed, 15 Jan 2014 05:42:26 -0800 (PST)
-In-Reply-To: <20140115091220.GB14335@sigill.intra.peff.net>
+	id S1752046AbaAONpZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Jan 2014 08:45:25 -0500
+Received: from continuum.iocl.org ([217.140.74.2]:55676 "EHLO
+	continuum.iocl.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751037AbaAONpT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Jan 2014 08:45:19 -0500
+Received: (from krey@localhost)
+	by continuum.iocl.org (8.11.3/8.9.3) id s0FDj8V29672;
+	Wed, 15 Jan 2014 14:45:08 +0100
+Content-Disposition: inline
+In-Reply-To: <87ppnt7635.fsf@fencepost.gnu.org>
+User-Agent: Mutt/1.4.2.1i
+X-message-flag: What did you expect to see here?
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240469>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240470>
 
-On Wed, Jan 15, 2014 at 4:12 AM, Jeff King <peff@peff.net> wrote:
-> We see these occasionally at GitHub, too. I haven't yet figured out a
-> definite cause, though whatever it is, it's relatively rare.
+On Wed, 15 Jan 2014 14:00:30 +0000, David Kastrup wrote:
+> Andreas Krey <a.krey@gmx.de> writes:
+...
+> > Hmm, how about traversing from all the start commits downwards
+> > simultaneously, noting which start you say each commit from, and stopping
+> > when you have a commit carrying all start labels?
+> 
+> It means that when the start commits are at considerably different
+> depth, you'll traverse much more material than necessary.
 
-Do you have a cleanup script to safely get rid of stale .keep and
-.lock files? I wonder what other stale bits merit a cleanup...
+But it has the advantage that you don't need to traverse the DAG
+to the root when the differences are small - the runtimes are roughly
+proportional to the difference between the commits.
 
-We could draft a 'git-repo-clean' that works akin to git clean (i.e.:
-only reports by default), or add it to gc.
+> Also you need labels.
 
-cheers,
+Yes, I assume that that (marking commits) is not a cost factor.
 
+> > I don't quite see how the same size plus lockstep works out (but the
+> > 'same size' part is possibly the same as my 'concurrent traversal').
+> 
+> It just equalizes the depth before starting, so you don't need labels:
+> any common ancestor is reached at the same time by its descendants.
+> 
+> Of course, I conveniently forgot merge commits.
 
+I finally noticed but forgot to mention in the last post.
 
-m
+Merges also mean that there is not necessarily a unique common
+ancestor between commits.
+
+Andreas
+
 -- 
- martin.langhoff@gmail.com
- -  ask interesting questions
- - don't get distracted with shiny stuff  - working code first
- ~ http://docs.moodle.org/en/User:Martin_Langhoff
+"Totally trivial. Famous last words."
+From: Linus Torvalds <torvalds@*.org>
+Date: Fri, 22 Jan 2010 07:29:21 -0800
