@@ -1,147 +1,81 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 5/5] interpret_branch_name: find all possible @-marks
-Date: Wed, 15 Jan 2014 03:40:46 -0500
-Message-ID: <20140115084045.GE19132@sigill.intra.peff.net>
-References: <20140115082528.GA18974@sigill.intra.peff.net>
+Subject: Re: After stash pop, refs/stash become 40 zeroes
+Date: Wed, 15 Jan 2014 03:51:39 -0500
+Message-ID: <20140115085139.GA14335@sigill.intra.peff.net>
+References: <CAHtLG6TmkYdGRF3H-6CoVvnxZqZBBk3ZUR-ohTVvgeAe9tTuOA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Keith Derrick <keith.derrick@lge.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 15 09:40:53 2014
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git <git@vger.kernel.org>
+To: =?utf-8?B?5LmZ6YW46Yuw?= <ch3cooli@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 15 09:51:48 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W3M1s-0000nK-Kr
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Jan 2014 09:40:52 +0100
+	id 1W3MCP-0003F9-Kw
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Jan 2014 09:51:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751237AbaAOIkt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Jan 2014 03:40:49 -0500
-Received: from cloud.peff.net ([50.56.180.127]:60928 "HELO peff.net"
+	id S1751286AbaAOIvm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 15 Jan 2014 03:51:42 -0500
+Received: from cloud.peff.net ([50.56.180.127]:60933 "HELO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750941AbaAOIkr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Jan 2014 03:40:47 -0500
-Received: (qmail 9753 invoked by uid 102); 15 Jan 2014 08:40:48 -0000
+	id S1751010AbaAOIvk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Jan 2014 03:51:40 -0500
+Received: (qmail 10246 invoked by uid 102); 15 Jan 2014 08:51:41 -0000
 Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 15 Jan 2014 02:40:48 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 15 Jan 2014 03:40:46 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 15 Jan 2014 02:51:41 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 15 Jan 2014 03:51:39 -0500
 Content-Disposition: inline
-In-Reply-To: <20140115082528.GA18974@sigill.intra.peff.net>
+In-Reply-To: <CAHtLG6TmkYdGRF3H-6CoVvnxZqZBBk3ZUR-ohTVvgeAe9tTuOA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240442>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240443>
 
-When we parse a string like "foo@{upstream}", we look for
-the first "@"-sign, and check to see if it is an upstream
-mark. However, since branch names can contain an @, we may
-also see "@foo@{upstream}". In this case, we check only the
-first @, and ignore the second. As a result, we do not find
-the upstream.
+On Wed, Jan 15, 2014 at 01:56:52PM +0800, =E4=B9=99=E9=85=B8=E9=8B=B0 w=
+rote:
 
-We can solve this by iterating through all @-marks in the
-string, and seeing if any is a legitimate upstream or
-empty-at mark.
+> what are the possible causes of this?
+> After stash pop, refs/stash becomes 40 zeroes.
+> This is the only stash, so refs/stash should be deleted after pop.
+> However, it becomes 40 zeroes.
+>=20
+> git 1.8.x
 
-Another strategy would be to parse from the right-hand side
-of the string. However, that does not work for the
-"empty_at" case, which allows "@@{upstream}". We need to
-find the left-most one in this case (and we then recurse as
-"HEAD@{upstream}").
+I can't reproduce the problem here. Running this:
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-And this one actually fixes Keith's bug.
+  git init -q repo && cd repo
+  echo content >file && git add file && git commit -qm file
+  echo more >>file
 
-The diff is noisy due to indentation changes; try it with "-b" for
-increased reading pleasure.
+  echo "=3D=3D> stashed"
+  git stash -q
+  ls -l .git/refs/stash .git/logs/refs/stash
+  git rev-parse --verify refs/stash
 
- sha1_name.c                   | 20 +++++++++++---------
- t/t1507-rev-parse-upstream.sh | 21 +++++++++++++++++++++
- 2 files changed, 32 insertions(+), 9 deletions(-)
+  echo "=3D=3D> popped"
+  git stash pop -q
+  ls -l .git/refs/stash .git/logs/refs/stash
+  git rev-parse --verify refs/stash
 
-diff --git a/sha1_name.c b/sha1_name.c
-index b253a88..6fca869 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -1124,6 +1124,7 @@ static int interpret_upstream_mark(const char *name, int namelen,
- int interpret_branch_name(const char *name, int namelen, struct strbuf *buf)
- {
- 	char *at;
-+	const char *start;
- 	int len = interpret_nth_prior_checkout(name, namelen, buf);
- 
- 	if (!namelen)
-@@ -1138,17 +1139,18 @@ int interpret_branch_name(const char *name, int namelen, struct strbuf *buf)
- 			return reinterpret(name, namelen, len, buf);
- 	}
- 
--	at = memchr(name, '@', namelen);
--	if (!at)
--		return -1;
-+	for (start = name;
-+	     (at = memchr(start, '@', namelen - (start - name)));
-+	     start = at + 1) {
- 
--	len = interpret_empty_at(name, namelen, at - name, buf);
--	if (len > 0)
--		return reinterpret(name, namelen, len, buf);
-+		len = interpret_empty_at(name, namelen, at - name, buf);
-+		if (len > 0)
-+			return reinterpret(name, namelen, len, buf);
- 
--	len = interpret_upstream_mark(name, namelen, at - name, buf);
--	if (len > 0)
--		return len;
-+		len = interpret_upstream_mark(name, namelen, at - name, buf);
-+		if (len > 0)
-+			return len;
-+	}
- 
- 	return -1;
- }
-diff --git a/t/t1507-rev-parse-upstream.sh b/t/t1507-rev-parse-upstream.sh
-index cace1ca..178694e 100755
---- a/t/t1507-rev-parse-upstream.sh
-+++ b/t/t1507-rev-parse-upstream.sh
-@@ -17,6 +17,9 @@ test_expect_success 'setup' '
- 	 test_commit 4 &&
- 	 git branch --track my-side origin/side &&
- 	 git branch --track local-master master &&
-+	 git branch --track fun@ny origin/side &&
-+	 git branch --track @funny origin/side &&
-+	 git branch --track funny@ origin/side &&
- 	 git remote add -t master master-only .. &&
- 	 git fetch master-only &&
- 	 git branch bad-upstream &&
-@@ -54,6 +57,24 @@ test_expect_success 'my-side@{upstream} resolves to correct full name' '
- 	test refs/remotes/origin/side = "$(full_name my-side@{u})"
- '
- 
-+test_expect_success 'upstream of branch with @ in middle' '
-+	full_name fun@ny@{u} >actual &&
-+	echo refs/remotes/origin/side >expect &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'upstream of branch with @ at start' '
-+	full_name @funny@{u} >actual &&
-+	echo refs/remotes/origin/side >expect &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'upstream of branch with @ at end' '
-+	full_name funny@@{u} >actual &&
-+	echo refs/remotes/origin/side >expect &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'refs/heads/my-side@{upstream} does not resolve to my-side{upstream}' '
- 	test_must_fail full_name refs/heads/my-side@{upstream}
- '
--- 
-1.8.5.2.500.g8060133
+yields:
+
+  =3D=3D> stashed
+  -rw-r--r-- 1 peff peff 153 Jan 15 03:49 .git/logs/refs/stash
+  -rw-r--r-- 1 peff peff  41 Jan 15 03:49 .git/refs/stash
+  7fb40812ac4aaf7fa31e584863fc52c4b4a67aa0
+  =3D=3D> popped
+  ls: cannot access .git/refs/stash: No such file or directory
+  ls: cannot access .git/logs/refs/stash: No such file or directory
+  fatal: Needed a single revision
+
+Does running it reproduce the problem for you? If it does, can you be
+more specific about your git version?  If it does not, can you show wha=
+t
+you are doing differently to reproduce?
+
+-Peff
