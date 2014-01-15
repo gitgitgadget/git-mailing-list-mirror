@@ -1,86 +1,75 @@
 From: David Kastrup <dak@gnu.org>
 Subject: Re: Consistency question
-Date: Wed, 15 Jan 2014 12:40:29 +0100
-Message-ID: <871u098ocy.fsf@fencepost.gnu.org>
+Date: Wed, 15 Jan 2014 12:55:02 +0100
+Organization: Organization?!?
+Message-ID: <87wqi17949.fsf@fencepost.gnu.org>
 References: <8761pl8raj.fsf@fencepost.gnu.org>
 	<20140115111330.GH14335@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Jan 15 12:40:52 2014
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 15 12:55:24 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W3Oq1-0001vA-B8
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Jan 2014 12:40:49 +0100
+	id 1W3P45-0005MH-Oj
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Jan 2014 12:55:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751787AbaAOLkq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Jan 2014 06:40:46 -0500
-Received: from fencepost.gnu.org ([208.118.235.10]:56722 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751473AbaAOLko (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Jan 2014 06:40:44 -0500
-Received: from localhost ([127.0.0.1]:55764 helo=lola)
-	by fencepost.gnu.org with esmtp (Exim 4.71)
-	(envelope-from <dak@gnu.org>)
-	id 1W3Opv-0006B4-TS; Wed, 15 Jan 2014 06:40:44 -0500
-Received: by lola (Postfix, from userid 1000)
-	id B041CDF673; Wed, 15 Jan 2014 12:40:29 +0100 (CET)
-In-Reply-To: <20140115111330.GH14335@sigill.intra.peff.net> (Jeff King's
-	message of "Wed, 15 Jan 2014 06:13:30 -0500")
+	id S1751286AbaAOLzS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Jan 2014 06:55:18 -0500
+Received: from plane.gmane.org ([80.91.229.3]:38739 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751170AbaAOLzQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Jan 2014 06:55:16 -0500
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1W3P3x-00053A-9b
+	for git@vger.kernel.org; Wed, 15 Jan 2014 12:55:13 +0100
+Received: from x2f3b11f.dyn.telefonica.de ([2.243.177.31])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 15 Jan 2014 12:55:13 +0100
+Received: from dak by x2f3b11f.dyn.telefonica.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 15 Jan 2014 12:55:13 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: x2f3b11f.dyn.telefonica.de
+X-Face: 2FEFf>]>q>2iw=B6,xrUubRI>pR&Ml9=ao@P@i)L:\urd*t9M~y1^:+Y]'C0~{mAl`oQuAl
+ \!3KEIp?*w`|bL5qr,H)LFO6Q=qx~iH4DN;i";/yuIsqbLLCh/!U#X[S~(5eZ41to5f%E@'ELIi$t^
+ Vc\LWP@J5p^rst0+('>Er0=^1{]M9!p?&:\z]|;&=NP3AhB!B_bi^]Pfkw
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3.50 (gnu/linux)
+Cancel-Lock: sha1:98QtKW/IYgZ90SuN/7UnhwwmOYs=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240464>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240465>
 
 Jeff King <peff@peff.net> writes:
 
-> On Wed, Jan 15, 2014 at 11:37:08AM +0100, David Kastrup wrote:
->
->> The question is what guarantees I have with regard to the commit date of
->> a commit in relation to that of its parent commits:
->> 
->> a) none
->> b) commitdate(child) >= commitdate(parent)
->> c) commitdate(child) > commitdate(parent)
->
-> a) none
->
->> Obviously, I can rely on c) being true "almost always":
->
-> Actually, b) is quite often the case in automated processes (e.g., "git
-> am" or "git rebase"). The author dates are different, but the committer
-> dates may be in the same second.
+> There are some parts of the code that will behave badly with clock skew.
+> For example, "--since" will stop traversing when we hit a certain point.
+> It requires a fixed number of "too old" commits before quitting, though,
+> in an attempt to bypass small runs of skewed clocks.
 
-Ok, thanks.  Assuming that rebases don't happen 1000/s, I should likely
-not worry too much about O(n^2) for this case (and frankly, clearly
-nobody worried about O(n^2) in the current blame.c anyway).  It's also
-not really relevant for linear parts of the history like that of "git
-rebase" since in that case the parent enters my priority queue when its
-child is getting processed: nothing to be confused about here.  This is
-more about sibling rivalries calling a parent to the queue before the
-sibling had a chance to leave.  So it comes into play for my use case
-basically only when dealing with merge commits.
+That actually turns out to be a somewhat sore point for me: I use
+something like
 
-> I suspect there are other algorithms that could be sped up, too, if we
-> had trustworthy generation numbers (I implemented and timed the
-> "--contains" algorithm, but haven't done so for other algorithms).
+git shortlog -n --since 2013/12/01 --until 2014/01/01 master
 
-With a single root, "depth" helps a lot.  When looking for a common
-parent of a number of commits, you first shorten all ancestries to the
-same size and then you can look for the point of convergence in
-lockstep.
+for generating statistics on LilyPond when I am doing my monthly report
+begging the community for money.
 
-But didn't git forego the "single root" requirement in its commit DAG at
-some point of time?
+It turns out that the numbers of commits attributed to me tend to go
+_down_ quite regularly in the time from starting the report to sending
+it out.  Which might also cause me to overlook a particularly
+selfpraiseworthy item.
 
-Thanks for the speedy reply!  I think I'm good with what I need to know
-to go ahead.  The rest is just idle curiosity.
+Not sure how feasible it would be to arrive at a stable and
+complementary set of --since/--until.
 
 -- 
 David Kastrup
