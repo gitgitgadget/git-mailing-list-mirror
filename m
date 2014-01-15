@@ -1,122 +1,74 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] do not discard revindex when re-preparing packfiles
-Date: Wed, 15 Jan 2014 06:17:48 -0500
-Message-ID: <20140115111746.GA8872@sigill.intra.peff.net>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [BUG] git symbolic-ref does not recognize @ as the shortcut for HEAD
+Date: Wed, 15 Jan 2014 18:26:07 +0700
+Message-ID: <CACsJy8Dy5xgF5m6BOo1cfdzg5dOx58sZo0aa_YKdnyAvJ6g4=Q@mail.gmail.com>
+References: <CAOBEgJjmoXEDVa4L5LbAGMYR7_+NCf2tDSveieZxtU4bfWyzDw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 15 12:17:55 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>
+To: Mathieu Lemoine <mathieu@mlemoine.name>
+X-From: git-owner@vger.kernel.org Wed Jan 15 12:26:43 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W3OTq-0001E3-IP
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Jan 2014 12:17:54 +0100
+	id 1W3OcM-0000kC-77
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Jan 2014 12:26:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750998AbaAOLRv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Jan 2014 06:17:51 -0500
-Received: from cloud.peff.net ([50.56.180.127]:32802 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751170AbaAOLRu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Jan 2014 06:17:50 -0500
-Received: (qmail 17120 invoked by uid 102); 15 Jan 2014 11:17:50 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 15 Jan 2014 05:17:50 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 15 Jan 2014 06:17:48 -0500
-Content-Disposition: inline
+	id S1751480AbaAOL0j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Jan 2014 06:26:39 -0500
+Received: from mail-qc0-f172.google.com ([209.85.216.172]:48586 "EHLO
+	mail-qc0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750856AbaAOL0h (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Jan 2014 06:26:37 -0500
+Received: by mail-qc0-f172.google.com with SMTP id c9so806498qcz.17
+        for <git@vger.kernel.org>; Wed, 15 Jan 2014 03:26:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=thjchTMj8CAEA8YvSqLqo0Yo6a13BCOuog71sLwNW/g=;
+        b=gK6GCyr2hgjoNVJNsLnmMkpJ5X8TDmW/2jBb5R1GQr7KDPHLykRbgi9Q2Te946eWXb
+         9e8xmrFsAsWDJLsRV6l8+7Ey2AeK7aM2n17ff/Niw6OhGguig8pvR4w/ShpkEav8cppH
+         I9PzKlVACxCDcS//5fwKYS3A7QZNEZhfB6lO1Qiyzh5UUNMQbnXJQcKGE6rg5kOMLqSL
+         RrqdpA/BPb2+i0VTDrAx4VU6UUWRJuMNqqLLv/R1E9IB0qpC4qLP4OeomtGPPW1rbR/B
+         sXoduU0J8agToJwFocgrDk5snZXFMm0oXI+rty+hUzhSHbpFZqdSKg9dJbM5ycuAAprE
+         ceYw==
+X-Received: by 10.224.165.12 with SMTP id g12mr3249845qay.89.1389785197413;
+ Wed, 15 Jan 2014 03:26:37 -0800 (PST)
+Received: by 10.96.136.98 with HTTP; Wed, 15 Jan 2014 03:26:07 -0800 (PST)
+In-Reply-To: <CAOBEgJjmoXEDVa4L5LbAGMYR7_+NCf2tDSveieZxtU4bfWyzDw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240458>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240459>
 
-When an object lookup fails, we re-read the objects/pack
-directory to pick up any new packfiles that may have been
-created since our last read. We also discard any pack
-revindex structs we've allocated.
+On Thu, Jan 9, 2014 at 10:05 PM, Mathieu Lemoine <mathieu@mlemoine.name> wrote:
+> Hello,
+>
+> In https://raw.github.com/git/git/master/Documentation/RelNotes/1.8.5.txt
+> is mentioned:
+>
+>  * Instead of typing four capital letters "HEAD", you can say "@" now,
+> e.g. "git log @".
+>
+> However, `git symbolic-ref @`  gives "fatal: No such ref: @", while
+> `git symbolic-ref @`  gives "refs/heads/master".
 
-The discarding is a problem for the pack-bitmap code, which keeps
-a pointer to the revindex for the bitmapped pack. After the
-discard, the pointer is invalid, and we may read free()d
-memory.
+you meant "while `git symbolic-ref _HEAD_` gives refs/heads/master"?
 
-Other revindex users do not keep a bare pointer to the
-revindex; instead, they always access it through
-revindex_for_pack(), which lazily builds the revindex. So
-one solution is to teach the pack-bitmap code a similar
-trick. It would be slightly less efficient, but probably not
-all that noticeable.
+> I looked around in the archive and #git, but nobody seemed to be aware
+> of the behaviour.
+>
+> I wonder if it's on purpose given the low level of symbolic-ref or if
+> it's a bug.
 
-However, it turns out this discarding is not actually
-necessary. When we call reprepare_packed_git, we do not
-throw away our old pack list. We keep the existing entries,
-and only add in new ones. So there is no safety problem; we
-will still have the pack struct that matches each revindex.
-The packfile itself may go away, of course, but we are
-already prepared to handle that, and it may happen outside
-of reprepare_packed_git anyway.
-
-Throwing away the revindex may save some RAM if the pack
-never gets reused (about 12 bytes per object). But it also
-wastes some CPU time (to regenerate the index) if the pack
-does get reused. It's hard to say which is more valuable,
-but in either case, it happens very rarely (only when we
-race with a simultaneous repack). Just leaving the revindex
-in place is simple and safe both for current and future
-code.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
-On top of jk/pack-bitmap.
-
- pack-revindex.c | 11 -----------
- pack-revindex.h |  1 -
- sha1_file.c     |  1 -
- 3 files changed, 13 deletions(-)
-
-diff --git a/pack-revindex.c b/pack-revindex.c
-index 0bb13b1..5bd7c61 100644
---- a/pack-revindex.c
-+++ b/pack-revindex.c
-@@ -245,14 +245,3 @@ struct revindex_entry *find_pack_revindex(struct packed_git *p, off_t ofs)
- 
- 	return pridx->revindex + pos;
- }
--
--void discard_revindex(void)
--{
--	if (pack_revindex_hashsz) {
--		int i;
--		for (i = 0; i < pack_revindex_hashsz; i++)
--			free(pack_revindex[i].revindex);
--		free(pack_revindex);
--		pack_revindex_hashsz = 0;
--	}
--}
-diff --git a/pack-revindex.h b/pack-revindex.h
-index 866ca9c..d737f98 100644
---- a/pack-revindex.h
-+++ b/pack-revindex.h
-@@ -15,6 +15,5 @@ struct pack_revindex *revindex_for_pack(struct packed_git *p);
- int find_revindex_position(struct pack_revindex *pridx, off_t ofs);
- 
- struct revindex_entry *find_pack_revindex(struct packed_git *p, off_t ofs);
--void discard_revindex(void);
- 
- #endif
-diff --git a/sha1_file.c b/sha1_file.c
-index df89b57..45f9bb4 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -1279,7 +1279,6 @@ void prepare_packed_git(void)
- 
- void reprepare_packed_git(void)
- {
--	discard_revindex();
- 	prepare_packed_git_run_once = 0;
- 	prepare_packed_git();
- }
+I think this is because symbolic-ref (and show-ref) takes plain refs,
+either in full or short form, but nothing else fancier. I'm not sure
+if we should add support for @ (and maybe @{u} as it's in the same
+boat) to these commands. If it's confusing and hard to explain in
+documents then maybe we should.
 -- 
-1.8.5.2.500.g8060133
+Duy
