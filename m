@@ -1,58 +1,70 @@
-From: =?Big5?B?pEG7xL5Z?= <ch3cooli@gmail.com>
-Subject: Re: After stash pop, refs/stash become 40 zeroes
-Date: Wed, 15 Jan 2014 14:00:43 +0800
-Message-ID: <CAHtLG6SWL3JL6hYskaA3eUqGyDiMVD3=y46pJzGCD9cejK=qwQ@mail.gmail.com>
-References: <CAHtLG6TmkYdGRF3H-6CoVvnxZqZBBk3ZUR-ohTVvgeAe9tTuOA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: BUG: check-ref-format and rev-parse can not handle branches with an @ in their name combined with @{u}
+Date: Tue, 14 Jan 2014 23:46:58 -0800
+Message-ID: <7v1u091ybx.fsf@alter.siamese.dyndns.org>
+References: <52D5C296.7050906@lge.com>
+	<xmqqvbxm2kmg.fsf@gitster.dls.corp.google.com>
+	<20140115050003.GA27237@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=Big5
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jan 15 07:00:50 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Keith Derrick <keith.derrick@lge.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Jan 15 08:46:45 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W3JWy-0000vT-Lb
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Jan 2014 07:00:49 +0100
+	id 1W3LBT-00076e-Jz
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Jan 2014 08:46:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750852AbaAOGAp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 15 Jan 2014 01:00:45 -0500
-Received: from mail-wg0-f49.google.com ([74.125.82.49]:47046 "EHLO
-	mail-wg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750764AbaAOGAo convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 15 Jan 2014 01:00:44 -0500
-Received: by mail-wg0-f49.google.com with SMTP id a1so1298381wgh.4
-        for <git@vger.kernel.org>; Tue, 14 Jan 2014 22:00:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        bh=+vUiIEKB0YUikL7WBmYaOvk+W8DkkV+c9MuDeDSEg88=;
-        b=db9zDk4U95P2YrzZb5M/mywPuwZPVPeJtJgnjkPVxXiDpaICvCi26rwQM6KEYO/jBm
-         /vLkzalzEwEbRC2Q2QxJAeYfq6svnSd3hU+4cQT44Vm8JU4ZXMgsJWB21Z0D7D0p9q0G
-         /bvqgfM/06p4QYfUfFsMifVodqZkf7nk8u7jGP8kQe50uLFLY0CVHDCluqnWj6grGP4N
-         z6Zuqgjxqha/XigWbRwTqbnnwP4bz3NIBC9KEhRlPsynnvwUtgT+1Wx8rFC5lVdKn+Id
-         lNBcyDs+IayNm8mnOR099n6h93vnCuaQ5PeS7e71MZPHbyswUB1c+QaqlHY3KBNhW/fP
-         zOSQ==
-X-Received: by 10.180.37.162 with SMTP id z2mr258072wij.51.1389765643155; Tue,
- 14 Jan 2014 22:00:43 -0800 (PST)
-Received: by 10.216.53.137 with HTTP; Tue, 14 Jan 2014 22:00:43 -0800 (PST)
-In-Reply-To: <CAHtLG6TmkYdGRF3H-6CoVvnxZqZBBk3ZUR-ohTVvgeAe9tTuOA@mail.gmail.com>
+	id S1751754AbaAOHqk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Jan 2014 02:46:40 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61367 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750724AbaAOHqi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Jan 2014 02:46:38 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C90475DE1A;
+	Wed, 15 Jan 2014 02:46:37 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=kLEFELbYw+hFx9erW8pBkmaMU3A=; b=R8QMmt
+	AaYBXNifxIHDTjRj1uc0pw+yalv/QK6qDpCTNFyZMl0vr+wSRdTi8EKzbH5IW0UC
+	HtJQwaQqI+yKVo0OHJemiO9o5XijpZLXB7oEIzy5//ysWf9jKhPRxrz9SoR7HydE
+	NRh99bQb8iGfzbjxhKRefu6+YepeoqnEvYwnk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=vkIRFQBobuCWgbzNdfdqWiOGEkM8Mfsi
+	296SdWUBB8BfOuQcUis/Ll0mieP5mzOHC2UXNNRY2ReKL7EqAKuG2JF/jC/DE9yd
+	Cg5iAVPy4jax8/T8K5KqgtCxXEnfiobv8L9ZqadBfmA543uhoYOZD3oZQXFGX0th
+	Bm7SlT/gcpE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B572C5DE13;
+	Wed, 15 Jan 2014 02:46:37 -0500 (EST)
+Received: from pobox.com (unknown [198.0.213.178])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EAC195DE0C;
+	Wed, 15 Jan 2014 02:46:36 -0500 (EST)
+In-Reply-To: <20140115050003.GA27237@sigill.intra.peff.net> (Jeff King's
+	message of "Wed, 15 Jan 2014 00:00:03 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.4 (gnu/linux)
+X-Pobox-Relay-ID: 297C8D9C-7DB9-11E3-B6A9-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240434>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240435>
 
-Also, logs/refs/stash becomes empty (0 bytes of file size) after pop.
+Jeff King <peff@peff.net> writes:
 
-2014/1/15 =A4A=BB=C4=BEY <ch3cooli@gmail.com>:
-> Hi,
->
-> what are the possible causes of this?
-> After stash pop, refs/stash becomes 40 zeroes.
-> This is the only stash, so refs/stash should be deleted after pop.
-> However, it becomes 40 zeroes.
->
-> git 1.8.x
+> Is that what "--branch" does? I have never used it, but the manpage
+> seems to suggest it is about _parsing_ (which, IMHO, means it probably
+> should have been an option to rev-parse, but that is another issue
+> altogether).
+
+Ahh, of course you are right.  I never use it, and somehow thought
+it was just prepending refs/heads/ to its arguments, but it seems to
+want to do a lot more than that.
