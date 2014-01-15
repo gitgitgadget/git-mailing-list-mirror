@@ -1,89 +1,93 @@
-From: Robert Hancock <hancock@sedsystems.ca>
-Subject: Problem importing from SVN repository with branches/tags at multiple
- levels using git-svn
-Date: Wed, 15 Jan 2014 14:10:42 -0600
-Organization: SED Systems
-Message-ID: <52D6EB42.2060509@sedsystems.ca>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/5] interpret_branch_name bug potpourri
+Date: Wed, 15 Jan 2014 13:03:35 -0800
+Message-ID: <xmqqsisp0xg8.fsf@gitster.dls.corp.google.com>
+References: <52D5C296.7050906@lge.com>
+	<xmqqvbxm2kmg.fsf@gitster.dls.corp.google.com>
+	<20140115050003.GA27237@sigill.intra.peff.net>
+	<20140115082528.GA18974@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 15 21:35:24 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Keith Derrick <keith.derrick@lge.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Jan 15 22:03:50 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W3XB6-0003R3-7U
-	for gcvg-git-2@plane.gmane.org; Wed, 15 Jan 2014 21:35:08 +0100
+	id 1W3Xcq-00085u-Bk
+	for gcvg-git-2@plane.gmane.org; Wed, 15 Jan 2014 22:03:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752599AbaAOUfE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Jan 2014 15:35:04 -0500
-Received: from sed198n136.SEDSystems.ca ([198.169.180.136]:37736 "EHLO
-	sed198n136.sedsystems.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752296AbaAOUfB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Jan 2014 15:35:01 -0500
-X-Greylist: delayed 1475 seconds by postgrey-1.27 at vger.kernel.org; Wed, 15 Jan 2014 15:35:01 EST
-Received: from barney.sedsystems.ca (barney [198.169.180.121])
-	by sed198n136.sedsystems.ca  with ESMTP id s0FKAP6D018979
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT)
-	for <git@vger.kernel.org>; Wed, 15 Jan 2014 14:10:25 -0600 (CST)
-Received: from eng1n65.eng.sedsystems.ca (eng1n65.eng.sedsystems.ca [172.21.1.65])
-	by barney.sedsystems.ca (8.13.1/8.13.1) with ESMTP id s0FKAPwN022956
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
-	for <git@vger.kernel.org>; Wed, 15 Jan 2014 14:10:25 -0600
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.2.0
-X-Enigmail-Version: 1.6
-X-Scanned-By: MIMEDefang 2.64 on 198.169.180.136
+	id S1750900AbaAOVDn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Jan 2014 16:03:43 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45518 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751722AbaAOVDj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Jan 2014 16:03:39 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B78F064D5A;
+	Wed, 15 Jan 2014 16:03:38 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=IMXpPRNSTqAToZBjIj81A89v3QI=; b=vLumEi
+	NRyQ1jyRwJ++1qNfy0tppZ1eqtjGSkAM141+tDiSg8DHGHa5j6bv4X+x0G8AlSb1
+	4pcEc0jEP3tk35SAwkSDr/o7tPzq8Bri/GYBFtS4oSMMLa6+MGa4PCZImHKBYKdB
+	p+rR0LMUN6tuGkng7K44HInEdREp0BEEIv32M=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=DMvIDbVhFtuL/c0sh6/qsm3jDKxgDtIq
+	TMA4nQJRTIeevCXxazKiDOhJmDvkdGJ1HX03trnFjKLVX+hjhfwHhvDtTjKUQgi1
+	yzDM57LHq7Gdf/aSRs1t0DrrhfsCQd0Cg5PqJP475Q1LoGIq4BUULyNsEN3bSPa6
+	ciw1gLRwvjg=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A064664D59;
+	Wed, 15 Jan 2014 16:03:38 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C21EF64D56;
+	Wed, 15 Jan 2014 16:03:37 -0500 (EST)
+In-Reply-To: <20140115082528.GA18974@sigill.intra.peff.net> (Jeff King's
+	message of "Wed, 15 Jan 2014 03:25:28 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 80ECDCDE-7E28-11E3-91DD-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240477>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240478>
 
-We have an SVN repository that has a structure for tags (likewise for
-branches) like this:
+Jeff King <peff@peff.net> writes:
 
-tags/tag1
-tags/tag2
-tags/tag3/
-tags/subdir/tag4
-tags/subdir/tag5
+> On Wed, Jan 15, 2014 at 12:00:03AM -0500, Jeff King wrote:
+>
+>>   $ git rev-parse --symbolic-full-name HEAD@{u}
+>>   refs/remotes/origin/master
+>>   $ git rev-parse --symbolic-full-name @mybranch@{u}
+>>   @mybranch@{u}
+>>   fatal: ambiguous argument '@mybranch@{u}': unknown revision or path
+>>   not in the working tree.
+>> 
+>> So I do think there is a bug. The interpret_branch_name parser somehow
+>> gets confused by the "@" in the name.
+>
+> The "somehow" is because we only look for the first "@", and never
+> consider any possible marks after that. The series below fixes it, along
+> with two other bugs I found while looking at this code. Ugh. Remind me
+> never to look at our object name parser ever again.
+>
+> I feel pretty good that this is fixing real bugs and not regressing
+> anything else. I would not be surprised if there are other weird things
+> lurking, though. See the discussion in patch 4.
+>
+>   [1/5]: interpret_branch_name: factor out upstream handling
+>   [2/5]: interpret_branch_name: rename "cp" variable to "at"
+>   [3/5]: interpret_branch_name: always respect "namelen" parameter
+>   [4/5]: interpret_branch_name: avoid @{upstream} past colon
+>   [5/5]: interpret_branch_name: find all possible @-marks
+>
+> -Peff
 
-The idea is that I want to have git-svn import everything inside subdir
-as tags and everything else inside the root tags directory as tags, so I
-end up with tag1-tag5 in Git. I've got tags= entries like this in the
-Git configuration to try to achieve this:
-
-tags = tags/subdir/*:refs/remotes/tags/*
-tags = tags/*:refs/remotes/tags/*
-
-My expectation was that everything inside subdir would match the first
-line first and everything else would match the second line, so
-everything would work out OK. Unfortunately it seems like for the tags
-inside subdir, it's matching the second line and therefore trying to
-import everything in there as directories inside one tag called subdir.
-Changing the order of those lines doesn't seem to help either, it seems
-determined to try to match to tags/* regardless of what order the lines
-are in.
-
-Clearly it would have been better if the repository had not been
-structured this way. However, rearranging it now won't help since the
-paths are like this in the SVN repository history.
-
-The only solution I've found that kind of works is to use
-tags/{tag1,tag2,tag3} instead of tags/*. Unfortunately there are a ton
-of tags in that directory and adding in a giant list of tags there seems
-to slow down the import process a great deal. Also, there are
-potentially still tags being created in that root directory, so I would
-have to keep regenerating and updating this list in the Git
-configuration every time one was added. So this is not a good solution.
-It would be much easier if I could get a wildcard solution to work here.
-
-Any thoughts?
-
--- 
-Robert Hancock
-System Analyst
-SED Systems
-Email: hancock@sedsystems.ca
+All the steps looked very sensible.  Thanks for a pleasant read.
