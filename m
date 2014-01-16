@@ -1,114 +1,99 @@
-From: "W. Trevor King" <wking@tremily.us>
-Subject: Re: [PATCH v4 6/6] Documentation: Describe 'submodule update' modes
- in detail
-Date: Thu, 16 Jan 2014 14:35:19 -0800
-Message-ID: <20140116223519.GB2647@odin.tremily.us>
-References: <20140114224246.GA13271@book.hvoigt.net>
- <4a8dca477ed5b190767d6a4619c593a83f86f082.1389837412.git.wking@tremily.us>
- <xmqqeh47znin.fsf@gitster.dls.corp.google.com>
- <777D3478B53C4A3F8B4326A96B3F048E@PhilipOakley>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] .gitignore: Ignore editor backup and swap files
+Date: Thu, 16 Jan 2014 14:43:34 -0800
+Message-ID: <20140116224334.GS18964@google.com>
+References: <1389907164-13400-1-git-send-email-alexander@plaimi.net>
+ <xmqqtxd3y43b.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="GlsaLUDw2IYctviq"
-Cc: Junio C Hamano <gitster@pobox.com>, Git <git@vger.kernel.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Francesco Pretto <ceztko@gmail.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Philip Oakley <philipoakley@iee.org>
-X-From: git-owner@vger.kernel.org Thu Jan 16 23:35:28 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Alexander Berntsen <alexander@plaimi.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 16 23:43:45 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W3vX5-0000Lo-He
-	for gcvg-git-2@plane.gmane.org; Thu, 16 Jan 2014 23:35:27 +0100
+	id 1W3vf4-0004Eg-VR
+	for gcvg-git-2@plane.gmane.org; Thu, 16 Jan 2014 23:43:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751468AbaAPWfY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Jan 2014 17:35:24 -0500
-Received: from qmta13.westchester.pa.mail.comcast.net ([76.96.59.243]:38821
-	"EHLO qmta13.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751310AbaAPWfW (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 16 Jan 2014 17:35:22 -0500
-Received: from omta16.westchester.pa.mail.comcast.net ([76.96.62.88])
-	by qmta13.westchester.pa.mail.comcast.net with comcast
-	id Ek7p1n0061uE5Es5DmbMGZ; Thu, 16 Jan 2014 22:35:21 +0000
-Received: from odin.tremily.us ([24.18.63.50])
-	by omta16.westchester.pa.mail.comcast.net with comcast
-	id EmbL1n004152l3L3cmbL4z; Thu, 16 Jan 2014 22:35:21 +0000
-Received: by odin.tremily.us (Postfix, from userid 1000)
-	id 98780EFF4D9; Thu, 16 Jan 2014 14:35:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
-	t=1389911719; bh=+7UV0abytEI7cKXp8oBNoGO9MjI1ti+KoyXxezHP7/k=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=nQW564LZoi/ZlKhO6bDWVnblGXczWsu6WY8scAmM7Viu+7kQZFSZY9+gL6PSdGtrH
-	 Cmok91YytwUW3cjv5hqpPRt4Sdom2quX3YTi6B+HosjLOvH6e0zwfkc7cjwglyzPOc
-	 QTHRx6X7k3YCXsqDYR607HfWqDTleIN8YgFNP56c=
+	id S1751517AbaAPWnj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Jan 2014 17:43:39 -0500
+Received: from mail-yh0-f42.google.com ([209.85.213.42]:63790 "EHLO
+	mail-yh0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750775AbaAPWni (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Jan 2014 17:43:38 -0500
+Received: by mail-yh0-f42.google.com with SMTP id z12so898602yhz.29
+        for <git@vger.kernel.org>; Thu, 16 Jan 2014 14:43:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=kSYR/Jbrj36SrtMkOm9QqkT8WrL0Fh+osHtgYlh2n38=;
+        b=BznYeSVcoh0andvCH+UXGpszIuknpkgGr711StZfo7ktbkQxA+99lQl4hvsQqmLcxR
+         CU/PQqx1Gfi4P1Vo/nqP146GRds3SlYr5FwQK7ykTfA+BofU8Df5JlTgU0y9PhuetlBh
+         tSkYe4ZBGctTo+aCDcbiUW3RMEj4jUA5qJ51lEjk/HLfXf5uQgRGpr8kVkf97JHbH1DS
+         0G+RVh/JasHEdyKb846I9E8FP3gkVV+SPS0t3Orx00Mq04Rfkgl6jWQEQRScvwqJzorW
+         6jasKf7b6RtXxxhZXZTttgpho3Pi/W7YKPOueZSR5njJG1k2AnellKBc6250z8t4Uk6V
+         ttGg==
+X-Received: by 10.236.222.231 with SMTP id t97mr4834904yhp.125.1389912217599;
+        Thu, 16 Jan 2014 14:43:37 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id d7sm14433949yhd.24.2014.01.16.14.43.36
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 16 Jan 2014 14:43:37 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <777D3478B53C4A3F8B4326A96B3F048E@PhilipOakley>
-OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
- url=http://tremily.us/pubkey.txt
-User-Agent: Mutt/1.5.22 (2013-10-16)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-	s=q20121106; t=1389911721;
-	bh=CF2IKDOtmADJFmKVzZI/YleKKj24b8CFzw42it5Rpz8=;
-	h=Received:Received:Received:Date:From:To:Subject:Message-ID:
-	 MIME-Version:Content-Type;
-	b=DzaOcnunvpphOAWtsKkV9ANyfj7NWsOx80COVFtYzv62aoI7MMe2NOVoVGuf48TfF
-	 t4Pq2O3zGJo9yzc0lKOI/acOIA3UjQedBXHzJFfFsFAJ/VQMX49UmJx9kZYYtsema6
-	 AS2e4sIwa6jK6NhyvAhlSB4rkUR9LdtQWHvMjsYGNrsWoWqt/pnEkFiV10eO4Q56/o
-	 8lR09DiJqOeFeb3rSGQguEnT3GnRzoY/1YZgAsjWIk3YOdQMs4PLogQHwxnrbML1fX
-	 luxEyBxiu3UYUHm30HD2ZkuTHngbTNIJfk/PV7sfUShg+xmY9gCcfiQIlVrVL4Ti25
-	 1RG86Fa8XQ+5w==
+In-Reply-To: <xmqqtxd3y43b.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240543>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240544>
 
+Junio C Hamano wrote:
 
---GlsaLUDw2IYctviq
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> These paths that depend on your choice of the editor and other tools
+> can still be managed in your personal .git/info/exclude in the
+> meantime.
 
-On Thu, Jan 16, 2014 at 10:18:06PM -0000, Philip Oakley wrote:
-> From: "Junio C Hamano" <gitster@pobox.com>
-> > "W. Trevor King" <wking@tremily.us> writes:
-> >> + repository.  The update mode defaults to 'checkout', but be
->=20
-> nit:   s/but be/but can be/  ?
+Or $HOME/.config/git/ignore to not have to make the same setting
+in every repository. :)
 
-Thanks.  Queuing for v5.
+Maybe it would make sense to add a hint about that somewhere to
+user-manual.txt.  Even better would be to automatically include some
+common exclude patterns globally without requiring any manual
+configuration, but that would take some care to make sure the patterns
+and how to disable them are documented clearly.
 
-Cheers,
-Trevor
+-- >8 --
+Subject: gitignore doc: add global gitignore to synopsis
 
---=20
-This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
-For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
+The gitignore(5) manpage already documents $XDG_CONFIG_HOME/git/ignore
+but it is easy to forget that it exists.  Add a reminder to the
+synopsis.
 
---GlsaLUDw2IYctviq
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
+Noticed while looking for a place to put a list of scratch filenames
+in the cwd used by one's editor of choice.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (GNU/Linux)
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+ Documentation/gitignore.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-iQIcBAEBAgAGBQJS2F6kAAoJEKKfehoaNkbtXGgP/AlrqMTRKfBIZ5bjcqGlRZti
-H1uitZDDtzPxOdf9Nj//7aLTr74BBDq8otBy+WhqKSJdpWDeFojiQCXWSB9zjdae
-OvzRnErOwI7ot5Bzqd7SCRNVC4oNmsoFepQt+3k+p42zB8hqljmk0VrL7ak+UYKT
-IImuUFHBZr3uvrmfAIMxPdxiNcY5LWQ6qTfBHRT/cppJ2Rm5t+cHs7yqTN2JJAAj
-7WdCpQI9lqBJ8AthyMrZ9dOdd0avHlPaActdSk1RrSwDIfk8oY0ihugHzQWsNA6v
-bKcPtLc69wARFvR1KphYj1tKyvY9FeC5DNYqR5fWHqLvOI5couDbFHoKoPfpdlRK
-zvwqJEb2E6zrkahoTkvIVODGn38ksVDeCzXgqVbJFJ9AtsQ0EbiibvRXl3V80iV8
-omNjBz9oAs8XhbpbajIaGrEk4g13QdkHfpJa3qrmA2Px7FFzjlYLKSdJxJibPp6x
-u46vWDLVgH3UoB2794qEqLpRyOEJAT/HtQlsdoWEaSEYmtO8TZbbDdNzwSddAgi3
-Fw9i4StcWTgzdxhnr8yW1m+Dzb0qx3c9PpaxOESRz/mRbHxmQufH+8XAWPenrXtx
-fgt6DE9FQzGUGNkgZzGgx/8kvdnoAFA/2r2WiYaeh1gU1iYrV6xIgvfOo5OlFyUx
-BefsctnC70h4OS20JKdv
-=nbKM
------END PGP SIGNATURE-----
-
---GlsaLUDw2IYctviq--
+diff --git a/Documentation/gitignore.txt b/Documentation/gitignore.txt
+index f971960..37c9470 100644
+--- a/Documentation/gitignore.txt
++++ b/Documentation/gitignore.txt
+@@ -7,7 +7,7 @@ gitignore - Specifies intentionally untracked files to ignore
+ 
+ SYNOPSIS
+ --------
+-$GIT_DIR/info/exclude, .gitignore
++$HOME/.config/git/ignore, $GIT_DIR/info/exclude, .gitignore
+ 
+ DESCRIPTION
+ -----------
+-- 
+1.8.5.2
