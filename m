@@ -1,124 +1,210 @@
-From: "W. Trevor King" <wking@tremily.us>
-Subject: Re: [PATCH v4 1/6] submodule: Make 'checkout' update_module explicit
-Date: Thu, 16 Jan 2014 12:19:49 -0800
-Message-ID: <20140116201949.GX2647@odin.tremily.us>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 6/6] Documentation: Describe 'submodule update' modes in detail
+Date: Thu, 16 Jan 2014 12:21:04 -0800
+Message-ID: <xmqqeh47znin.fsf@gitster.dls.corp.google.com>
 References: <20140114224246.GA13271@book.hvoigt.net>
- <43e8f3bfdaffefca9edd7a23574816630690e1e5.1389837412.git.wking@tremily.us>
- <xmqqwqhzzrw3.fsf@gitster.dls.corp.google.com>
- <20140116192252.GT2647@odin.tremily.us>
- <CALas-ig4=qKqpopaP163gVdBG39seWH61qqA5Jx0CR6AZkE6ZA@mail.gmail.com>
+	<4a8dca477ed5b190767d6a4619c593a83f86f082.1389837412.git.wking@tremily.us>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="9+ohdFDUqiMJzwPo"
-Cc: Junio C Hamano <gitster@pobox.com>, Git <git@vger.kernel.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git <git@vger.kernel.org>, Jens Lehmann <Jens.Lehmann@web.de>,
+	Francesco Pretto <ceztko@gmail.com>,
 	Heiko Voigt <hvoigt@hvoigt.net>,
 	Jonathan Nieder <jrnieder@gmail.com>
-To: Francesco Pretto <ceztko@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 16 21:20:00 2014
+To: "W. Trevor King" <wking@tremily.us>
+X-From: git-owner@vger.kernel.org Thu Jan 16 21:21:20 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W3tPy-0007s4-8i
-	for gcvg-git-2@plane.gmane.org; Thu, 16 Jan 2014 21:19:58 +0100
+	id 1W3tRC-0001SG-BE
+	for gcvg-git-2@plane.gmane.org; Thu, 16 Jan 2014 21:21:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751489AbaAPUTy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Jan 2014 15:19:54 -0500
-Received: from qmta01.westchester.pa.mail.comcast.net ([76.96.62.16]:56129
-	"EHLO qmta01.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750750AbaAPUTx (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 16 Jan 2014 15:19:53 -0500
-Received: from omta05.westchester.pa.mail.comcast.net ([76.96.62.43])
-	by qmta01.westchester.pa.mail.comcast.net with comcast
-	id Ejoo1n0010vyq2s51kKsee; Thu, 16 Jan 2014 20:19:52 +0000
-Received: from odin.tremily.us ([24.18.63.50])
-	by omta05.westchester.pa.mail.comcast.net with comcast
-	id EkKq1n00g152l3L3RkKrHK; Thu, 16 Jan 2014 20:19:52 +0000
-Received: by odin.tremily.us (Postfix, from userid 1000)
-	id CC482EFF205; Thu, 16 Jan 2014 12:19:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
-	t=1389903589; bh=jGj0tZEy2UJXm9lkwbP+XHNgaeyHGLuvLDJqGzMhgsQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=HOtWYidrd2p/FvKHvyWVU2CU5Ctc+IL/pugLx5G1lF5exMltE5zPIX17eQNTojWPE
-	 6wcMC23MHbmzJboQg7GlAtvbEAYarS+ooacRd7Kj787LN81edMzv1ZIlCGiL+7bRQC
-	 3U8N7/p+AV42jAhn1c3TVaCW+WO+mH4QEs4pRimg=
-Content-Disposition: inline
-In-Reply-To: <CALas-ig4=qKqpopaP163gVdBG39seWH61qqA5Jx0CR6AZkE6ZA@mail.gmail.com>
-OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
- url=http://tremily.us/pubkey.txt
-User-Agent: Mutt/1.5.22 (2013-10-16)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-	s=q20121106; t=1389903592;
-	bh=/LQnWEkxCc2kIaTzhT/dmy0S66csJKcZXrdB5coswKU=;
-	h=Received:Received:Received:Date:From:To:Subject:Message-ID:
-	 MIME-Version:Content-Type;
-	b=qUjMDjWIgbLQbJeA5vaHhQf6fPp5fH62V40IyeqgGWOMNb7PUACxqDDFVVdVB7lq7
-	 Rh6x3XxkotxFCFhonf3qWyprMF0+Ky7HsBCXsTRkp3ItBM3w8iHe0pjxf85faTlovz
-	 6WKfKfNp/IolauEuuLAKtVmOwm32LE7KXF27eE7gQznnXcMT/vBHRoZgu1XhQbq7Ud
-	 8SMBZiiu9GXSiXsLq339eVMhnQ4VUOFD63F+UlOP8Bon/YlzxQTOYmTfO5veqkFCib
-	 lHeV/GCWV+qx3qD4bfgLEfRlWFZ75GFBd2KUXGMoeWqeBXrBCNGNaLHkAol+JJ4oIU
-	 oeQ8q1WYzpCvw==
+	id S1751587AbaAPUVK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 16 Jan 2014 15:21:10 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62016 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751574AbaAPUVI convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 16 Jan 2014 15:21:08 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 620B76209C;
+	Thu, 16 Jan 2014 15:21:07 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=Pq3RF4I7Ohf0
+	5Phv2s/y2N/0eng=; b=PBmludzcwTEWAF7r8g5M/i6w04mxyza0YPvqsceIhd/R
+	VZUQA/WSP1wmoT3wZMQzHGgrkLCwAWBcILbiRcjDqwC49e9kkg2lpj8zV62GqeBZ
+	V3OaTKfejYg5vd0g0IT+oMuA7zUUUTwdd7vUeG4hr3qK6arG6vYUoG743Ronl3A=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=ICc2Gb
+	+1xoPch9u1iTPZtUzauBLPXTUPStN2POoRPxQ8wEM2kqcLxwXhxtc/A+kUdA8iOe
+	vTvmJuVruTW26ost+ZhpZpUyZOo4M2p/CAwaQVCi+hi7EabZM2SiWkOmaVAcVPGL
+	AGJLu+yExpl72XtW3DSV1XYCL4iDtdEfUHJ2s=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 501256209B;
+	Thu, 16 Jan 2014 15:21:07 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6CE6E6209A;
+	Thu, 16 Jan 2014 15:21:06 -0500 (EST)
+In-Reply-To: <4a8dca477ed5b190767d6a4619c593a83f86f082.1389837412.git.wking@tremily.us>
+	(W. Trevor King's message of "Wed, 15 Jan 2014 20:10:27 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: BA9DBF34-7EEB-11E3-91FD-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240528>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240529>
 
+"W. Trevor King" <wking@tremily.us> writes:
 
---9+ohdFDUqiMJzwPo
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> The old documentation did not distinguish between cloning and
+> non-cloning updates and lacked clarity on which operations would lead
+> to detached HEADs, and which would not.  The new documentation
+> addresses these issues while updating the docs to reflect the changes
+> introduced by this branch's explicit local branch creation in
+> module_clone.
+>
+> I also add '--checkout' to the usage summary and group the update-mod=
+e
+> options into a single set.
+>
+> Signed-off-by: W. Trevor King <wking@tremily.us>
+> ---
+>  Documentation/git-submodule.txt | 36 +++++++++++++++++++++++++++----=
+-----
+>  Documentation/gitmodules.txt    |  4 ++++
+>  2 files changed, 31 insertions(+), 9 deletions(-)
+>
+> diff --git a/Documentation/git-submodule.txt b/Documentation/git-subm=
+odule.txt
+> index bfef8a0..02500b4 100644
+> --- a/Documentation/git-submodule.txt
+> +++ b/Documentation/git-submodule.txt
+> @@ -15,8 +15,8 @@ SYNOPSIS
+>  'git submodule' [--quiet] init [--] [<path>...]
+>  'git submodule' [--quiet] deinit [-f|--force] [--] <path>...
+>  'git submodule' [--quiet] update [--init] [--remote] [-N|--no-fetch]
+> -	      [-f|--force] [--rebase] [--reference <repository>] [--depth <=
+depth>]
+> -	      [--merge] [--recursive] [--] [<path>...]
+> +	      [-f|--force] [--rebase|--merge|--checkout] [--reference <repo=
+sitory>]
+> +	      [--depth <depth>] [--recursive] [--] [<path>...]
+>  'git submodule' [--quiet] summary [--cached|--files] [(-n|--summary-=
+limit) <n>]
+>  	      [commit] [--] [<path>...]
+>  'git submodule' [--quiet] foreach [--recursive] <command>
+> @@ -155,13 +155,31 @@ it contains local modifications.
+> =20
+>  update::
+>  	Update the registered submodules, i.e. clone missing submodules and
+> -	checkout the commit specified in the index of the containing reposi=
+tory.
+> -	This will make the submodules HEAD be detached unless `--rebase` or
+> -	`--merge` is specified or the key `submodule.$name.update` is set t=
+o
+> -	`rebase`, `merge` or `none`. `none` can be overridden by specifying
+> -	`--checkout`. Setting the key `submodule.$name.update` to `!command=
+`
+> -	will cause `command` to be run. `command` can be any arbitrary shel=
+l
+> -	command that takes a single argument, namely the sha1 to update to.
+> +	checkout the commit specified in the index of the containing
+> +	repository.  The update mode defaults to 'checkout', but be
+> +	configured with the 'submodule.<name>.update' setting or the
+> +	'--rebase', '--merge', or 'checkout' options.
 
-On Thu, Jan 16, 2014 at 09:07:22PM +0100, Francesco Pretto wrote:
-> 2014/1/16 W. Trevor King <wking@tremily.us>:
-> > Avoiding useless clones is probably more important than avoiding
-> > duplicate "Invalid update mode" messages.
->=20
-> No, it's not duplicate code.
+Not '--checkout'?
 
-I meant =E2=80=9Cduplicating the "Invalid update mode" error message=E2=80=
-=9D.  I
-missed the die-early distinction, but I understand now.  I think its
-non-DRY to have an early case statement to validate the update_module,
-and a later case statement to use it.  Still, keeping those separate
-statements in sync shouldn't be too hard ;).
+Other than that, the updated text above is far easier to
+understand.  Good job.
 
-> Please keep both as Junio said.
+> ++
+> +For updates that clone missing submodules, checkout-mode updates wil=
+l
+> +create submodules with detached HEADs; all other modes will create
+> +submodules with a local branch named after 'submodule.<path>.branch'=
+=2E
+> ++
+> +For updates that do not clone missing submodules, the submodule's HE=
+AD
 
-That's what I said I'd do in the email you're quoting ;).  Are you ok
-with the die-early validation checking all update_module settings
-instead of just checking the loaded-from config branch?
+That is, updates that update submodules that are already checked out?
 
-Cheers,
-Trevor
+> +is only touched when the remote reference does not match the
+> +submodule's HEAD (for none-mode updates, the submodule is never
+> +touched).  The remote reference is usually the gitlinked commit from
+> +the superproject's tree, but with '--remote' it is the upstream
+> +subproject's 'submodule.<name>.branch'.  This remote reference is
+> +integrated with the submodule's HEAD using the specified update mode=
+=2E
 
---=20
-This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
-For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
+I think copying some motivation from the log message of 06b1abb5
+(submodule update: add --remote for submodule's upstream changes,
+2012-12-19) would help the readers here.  A na=C3=AFve expectation from=
+ a
+casual reader of the above would be "The superproject's tree ought
+to point at the same commit as the tip of the branch used in the
+submodule (modulo mirroring delays and somesuch), if the repository
+of the superproject and submodules are maintained properly", which
+would lead to "when would any sane person need to use --remote in
+the first place???".
 
---9+ohdFDUqiMJzwPo
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
+If I am reading 06b1abb5 correctly, the primary motivation behind
+"--remote" seems to be that it is exactly to help the person who
+wants to update superproject to satisify the "... are maintained
+properly" part by fetching the latest in each of the submodules in
+his superproject in preparation to 'git add .' them.  I still do not
+think "--remote" was a better way than the "foreach", but that is a
+separate topic.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (GNU/Linux)
+If the person who works in the superproject does not control the
+progress of, and/or does not care what development is happening in,
+the submodules, he can push the superproject tree out without even
+bothering to update the commits in the submodules bound to his
+superproject tree, and the consumers of such a superproject could
+catch up with the advancement of submodule by using --remote
+individually to bring themselves up to date.  But I do not think
+that is what you envisioned as the best recommended practice when
+you wrote 06b1abb5.
 
-iQIcBAEBAgAGBQJS2D7iAAoJEKKfehoaNkbtnhEQAJGplq3tatELcMS0Xb1ZJuGN
-FPsjwMRw9pFt95a7R/XJINW7rv/6FvP25xGmdGFc4OSkQzxRmSMIiYr42mhlQ57i
-qcB8WaEg6gE56I6vVv+8p3L+SvfbcMqCzheOqSWJyvIihNZTxgyay00IHu2mKH52
-BWAYfY0FadkomRr+ArftWWYYXtq1xoOgf3mMFQvhv+QUINiiEmq9O9i6gtIksaaF
-fr52/9MUTaZtqrplQ4ibJM+Umb+lGZ7fXLAoUSHqAq46MubRJNQMpp6CgrYXQNfO
-fKXLC1UIM+2ATqAhL8vZpv++t4u33CNpEyZjNCXcAf2PXaB2S2g+ylFIR4gBEwlP
-qcq7ZMS9rNhCNbvnPzUKzrDcxxyCx4v63wUDT5r21Jn9wXzX5a7lSsIhH02deb+c
-yrroX8jRIfyuT4ab9LLMG9Q64KmMqvXAQ6zsuDDt30w8sDXgMDfKcpvHIm0OYlks
-DL6l98MrXdVFwOXDOt1g8PqNggkRO4Bx6FYjUFgoUD46h4iYlyGVhtGKoThvuiri
-r82Z/3nCgW+3OHtYwdv51ubY/mWVzwIFn3FL2c78APANNrhT1iY+E19ZhZRni1ZN
-iEmI8cZeaYFxh5JAZqQyOIZq0io7oPWYQqf9FZXAoZXqFj/R+VyDiqkiEi67jDjb
-4QjyKCbaK6EBa0mec5jM
-=e+5w
------END PGP SIGNATURE-----
+> +For checkout-mode updates, that will result in a detached HEAD.  For
+> +rebase- and merge-mode updates, the commit referenced by the
+> +submodule's HEAD may change, but the symbolic reference will remain
+> +unchanged (i.e. checked-out branches will still be checked-out
+> +branches, and detached HEADs will still be detached HEADs).  If none
+> +of the builtin modes fit your needs, set 'submodule.<name>.update' t=
+o
+> +'!command' to configure a custom integration command.  'command' can
+> +be any arbitrary shell command that takes a single argument, namely
+> +the sha1 to update to.
+>  +
+>  If the submodule is not yet initialized, and you just want to use th=
+e
+>  setting as stored in .gitmodules, you can automatically initialize t=
+he
+> diff --git a/Documentation/gitmodules.txt b/Documentation/gitmodules.=
+txt
+> index f7be93f..36e5447 100644
+> --- a/Documentation/gitmodules.txt
+> +++ b/Documentation/gitmodules.txt
+> @@ -53,6 +53,10 @@ submodule.<name>.branch::
+>  	A remote branch name for tracking updates in the upstream submodule=
+=2E
+>  	If the option is not specified, it defaults to 'master'.  See the
+>  	`--remote` documentation in linkgit:git-submodule[1] for details.
+> ++
+> +This branch name is also used for the local branch created by
+> +non-checkout cloning updates.  See the 'update' documentation in
+> +linkgit:git-submodule[1] for details.
+> =20
+>  submodule.<name>.fetchRecurseSubmodules::
+>  	This option can be used to control recursive fetching of this
 
---9+ohdFDUqiMJzwPo--
+Other than the above minor nits, the updated text was very
+readable.  Thanks.
