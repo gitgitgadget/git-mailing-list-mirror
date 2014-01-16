@@ -1,86 +1,110 @@
-From: David Kastrup <dak@gnu.org>
+From: Johannes Sixt <j.sixt@viscovery.net>
 Subject: Re: Potential bug: truncated diff output
-Date: Thu, 16 Jan 2014 07:31:34 +0100
-Organization: Organization?!?
-Message-ID: <87lhyg4eux.fsf@fencepost.gnu.org>
+Date: Thu, 16 Jan 2014 07:55:00 +0100
+Message-ID: <52D78244.7020406@viscovery.net>
 References: <CAAyYaWo7wtsVGGxUeE3wwG6UHZ_qc8wcPu4Dk6=DsF8JtyF6_w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 16 07:31:55 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: Misha Penkov <misha.penkov@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 16 07:55:11 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W3gUc-00052d-9P
-	for gcvg-git-2@plane.gmane.org; Thu, 16 Jan 2014 07:31:54 +0100
+	id 1W3gr8-0007ku-Rp
+	for gcvg-git-2@plane.gmane.org; Thu, 16 Jan 2014 07:55:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751619AbaAPGbv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Jan 2014 01:31:51 -0500
-Received: from plane.gmane.org ([80.91.229.3]:48277 "EHLO plane.gmane.org"
+	id S1751916AbaAPGzH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 16 Jan 2014 01:55:07 -0500
+Received: from so.liwest.at ([212.33.55.18]:50873 "EHLO so.liwest.at"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750759AbaAPGbt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Jan 2014 01:31:49 -0500
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1W3gUS-0004gT-NN
-	for git@vger.kernel.org; Thu, 16 Jan 2014 07:31:44 +0100
-Received: from x2f3b11f.dyn.telefonica.de ([2.243.177.31])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 16 Jan 2014 07:31:44 +0100
-Received: from dak by x2f3b11f.dyn.telefonica.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 16 Jan 2014 07:31:44 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: x2f3b11f.dyn.telefonica.de
-X-Face: 2FEFf>]>q>2iw=B6,xrUubRI>pR&Ml9=ao@P@i)L:\urd*t9M~y1^:+Y]'C0~{mAl`oQuAl
- \!3KEIp?*w`|bL5qr,H)LFO6Q=qx~iH4DN;i";/yuIsqbLLCh/!U#X[S~(5eZ41to5f%E@'ELIi$t^
- Vc\LWP@J5p^rst0+('>Er0=^1{]M9!p?&:\z]|;&=NP3AhB!B_bi^]Pfkw
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3.50 (gnu/linux)
-Cancel-Lock: sha1:7nLOAAAqNFO7VfeWx6s2rzPtJww=
+	id S1750976AbaAPGzF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Jan 2014 01:55:05 -0500
+Received: from [81.10.228.254] (helo=theia.linz.viscovery)
+	by so.liwest.at with esmtpa (Exim 4.80.1)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1W3gqz-0002Sn-HF; Thu, 16 Jan 2014 07:55:01 +0100
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 1E6D116613;
+	Thu, 16 Jan 2014 07:55:00 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:24.0) Gecko/20100101 Thunderbird/24.1.0
+In-Reply-To: <CAAyYaWo7wtsVGGxUeE3wwG6UHZ_qc8wcPu4Dk6=DsF8JtyF6_w@mail.gmail.com>
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240506>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240507>
 
-Misha Penkov <misha.penkov@gmail.com> writes:
-
+Am 1/16/2014 7:19, schrieb Misha Penkov:
 > I have a file in a git repo. It has changed during the last two
 > commits. I want to see the changes made in these two commits. The
 > following command should work:
->
+>=20
 >     git diff HEAD^^
->
+>=20
 > but that doesn't get me the expected results. Read on for details.
+>=20
+> Last commit: I changed some stuff towards the end of the file, for
+> example, around line 3145. Here's the full diff (it's here for
+> reference, don't bother reading all of it):
+>=20
+>     $git diff HEAD^ HEAD ieicej.cls
+>     diff --git a/ieicej.cls b/ieicej.cls
+>     index ecf8beb..01debd9 100644
+>     ...
+>     @@ -3145,11 +3145,11 @@
+>        \kern 2.715\p@}
+>=20
+>      \def\@makefnmark{\hbox{$^{\mbox{\tiny \kern-.5zw
+>     -  =EF=BC=88=E6=B3=A8\kern.1zw\@thefnmark{}=EF=BC=89\kern-.5zw}}$=
+}}
+>     +  =EF=BC=88\kern.1zw\@thefnmark{}=EF=BC=89\kern-.5zw}}$}}
+>=20
+>      \newcommand\@makefntext[1]{\parindent1zw
+>       \noindent\hbox{\kern-.5zw
+>     -  =EF=BC=88=E6=B3=A8\kern.1zw\@thefnmark{}=EF=BC=89\kern-.5zw\hb=
+ox to 1zw{\hss =EF=BC=9A\hss}}#1}
+>     +  =EF=BC=88\kern.1zw\@thefnmark{}=EF=BC=89\kern-.5zw\hbox to 1zw=
+{\hss =EF=BC=9A\hss}}#1}
+>=20
+>      \def\thefootnote{\@arabic\c@footnote}
+>      \def\thempfootnote{\@fnsymbol\c@mpfootnote}
 
-> As I mentioned in the first paragraph, I want to generate a patch that
-> includes both commits:
->
->     $git diff HEAD^^ HEAD ieicej.cls
+Here, you revert the change...
 
-> This looks wrong, since it doesn't include the last commit. For
-> example, changes to line 3145 are not there. It appears to include
-> changes from the second-last commit (e.g. the stuff around line 1714).
->
-> My questions:
->
-> 1) What am I doing wrong?
+> Here's the second-last commit. I changed some things around line 1714=
+=2E
+> Full commit diff (again, for reference only):
+>=20
+>     $git diff -p HEAD^^ HEAD^ ieicej.cls
+>     diff --git a/ieicej.cls b/ieicej.cls
+>     index 1c3b947..ecf8beb 100644
+>     ...
+>     @@ -3135,11 +3145,11 @@
+>        \kern 2.715\p@}
+>=20
+>      \def\@makefnmark{\hbox{$^{\mbox{\tiny \kern-.5zw
+>     -  =EF=BC=88\kern.1zw\@thefnmark{}=EF=BC=89\kern-.5zw}}$}}
+>     +  =EF=BC=88=E6=B3=A8\kern.1zw\@thefnmark{}=EF=BC=89\kern-.5zw}}$=
+}}
+>=20
+>      \newcommand\@makefntext[1]{\parindent1zw
+>       \noindent\hbox{\kern-.5zw
+>     -  =EF=BC=88\kern.1zw\@thefnmark{}=EF=BC=89\kern-.5zw\hbox to 1zw=
+{\hss =EF=BC=9A\hss}}#1}
+>     +  =EF=BC=88=E6=B3=A8\kern.1zw\@thefnmark{}=EF=BC=89\kern-.5zw\hb=
+ox to 1zw{\hss =EF=BC=9A\hss}}#1}
+>=20
+>      \def\thefootnote{\@arabic\c@footnote}
+>      \def\thempfootnote{\@fnsymbol\c@mpfootnote}
 
-You did not commit all your changes.  Some of them are either only in
-your working directory, or in working directory and index.
+=2E.. that you made here.
 
-> 2) How can I get the diff to include all the commits in their
-> entirety?
+Unsurprisingly, the net effect is no change in that area -- and git dif=
+f
+tells you exactly that.
 
-It did.
-
-> 3) Is this a bug?
-
-No.
-
--- 
-David Kastrup
+-- Hannes
