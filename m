@@ -1,141 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 2/2] revision: propagate flag bits from tags to pointees
-Date: Wed, 15 Jan 2014 15:59:44 -0800
-Message-ID: <1389830384-22851-3-git-send-email-gitster@pobox.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v2 1/2] revision: mark contents of an uninteresting tree
+ uninteresting
+Date: Wed, 15 Jan 2014 16:16:07 -0800
+Message-ID: <20140116001607.GN18964@google.com>
 References: <1389830384-22851-1-git-send-email-gitster@pobox.com>
-Cc: Jeff King <peff@peff.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 16 01:00:09 2014
+ <1389830384-22851-2-git-send-email-gitster@pobox.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 16 01:16:17 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W3aNT-0002vs-QC
-	for gcvg-git-2@plane.gmane.org; Thu, 16 Jan 2014 01:00:08 +0100
+	id 1W3ad6-0001Sv-40
+	for gcvg-git-2@plane.gmane.org; Thu, 16 Jan 2014 01:16:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752083AbaAOX77 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Jan 2014 18:59:59 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53988 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751694AbaAOX7w (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Jan 2014 18:59:52 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3AE2964EDD;
-	Wed, 15 Jan 2014 18:59:52 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=CL/G
-	bCVm4G6ahvqOFVgR5huLMCI=; b=eqDbGrBRQgwQGImeUfZoar3CDFFiEQqVam36
-	OSuIv1kbsuZ532WZruhe9rmWeilM96S8rIFfqaNG3BFkcUMoLWwjFGnTVa1WzmfM
-	FI0tIA3HXSp5DwQ5xPRRVlvGkcT4JhkDtkreVdGzplrDhaxRuo2slIdu38epX4De
-	FimggGo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references; q=dns; s=sasl; b=
-	lpkZgtwjd55LC4PZwnFQf1jl1Ob7TnWcn9Ud6FJK3BVfS19SkZOBCH9nHCLbIK1F
-	FM5SUweM/XMWhTxDCeVQxUg0QhlGIWNI/ZXu1RJ4KPD9JcNx8g+WQ+f/Cs/e7ebp
-	Tk76aOeYiX0DHbSy6+8TTlrB9v3XsvDnc4pUI7nQqFE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2CC0664EDC;
-	Wed, 15 Jan 2014 18:59:52 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8678964EDB;
-	Wed, 15 Jan 2014 18:59:51 -0500 (EST)
-X-Mailer: git-send-email 1.8.5.3-493-gb139ac2
-In-Reply-To: <1389830384-22851-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 1F5FEE20-7E41-11E3-9FBA-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752204AbaAPAQN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Jan 2014 19:16:13 -0500
+Received: from mail-yh0-f42.google.com ([209.85.213.42]:41404 "EHLO
+	mail-yh0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752059AbaAPAQL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Jan 2014 19:16:11 -0500
+Received: by mail-yh0-f42.google.com with SMTP id z12so479177yhz.1
+        for <git@vger.kernel.org>; Wed, 15 Jan 2014 16:16:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=r+gTzKR41PDHhgNeuONMA1FNOSn8Dh/43IGH0dgmLA4=;
+        b=i/Qwx1OtJ+MEOH9+CMmp1tByHZbIeoZvwjrTYKk5fXGR7xZyBlZS4qQ4afJQ9j5pRN
+         2GISgRv+fOni0H3c6m+NUDw6nXt4xTJ6N1CiYxshAJI4MmX7AtXBbWNF6ceW449bNfY1
+         9db9W9CDxg7m3b7zG+wUF7DsSXKTW+RJ43h2aq9fLopMWPjPJHz0Gnp78iKe+q+fOJvr
+         LE4/vTKV8c3+F8tQwzLpM2sKY6kFXw7GW5ghsVUnIDK9DxLWhVt+/J5oQ5UMGbE/psJ7
+         fpBkJ1XBYpXhRoAjY1gsocVL9bs8qbMP01RARSU/snKubIWMoVzPnFYOARWEqkqszY6/
+         8GJQ==
+X-Received: by 10.236.63.5 with SMTP id z5mr6172255yhc.49.1389831370852;
+        Wed, 15 Jan 2014 16:16:10 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id k3sm8730204yhc.13.2014.01.15.16.16.09
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 15 Jan 2014 16:16:10 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <1389830384-22851-2-git-send-email-gitster@pobox.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240493>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240494>
 
-With the previous fix 895c5ba3 (revision: do not peel tags used in
-range notation, 2013-09-19), handle_revision_arg() that processes
-command line arguments for the "git log" family of commands no
-longer directly places the object pointed by the tag in the pending
-object array when it sees a tag object.  We used to place pointee
-there after copying the flag bits like UNINTERESTING and
-SYMMETRIC_LEFT.
+Junio C Hamano wrote:
 
-This change meant that any flag that is relevant to later history
-traversal must now be propagated to the pointed objects (most often
-these are commits) while starting the traversal, which is partly
-done by handle_commit() that is called from prepare_revision_walk().
-We did propagate UNINTERESTING, but did not do so for others, most
-notably SYMMETRIC_LEFT.  This caused "git log --left-right v1.0..."
-(where "v1.0" is a tag) to start losing the "leftness" from the
-commit the tag points at.
+> we see the top-level tree marked as uninteresting (i.e. ^A^{tree} in
+> the above example) and call mark_tree_uninteresting() on it; this
+> unfortunately prevents us from recursing into the tree and marking
+> the objects in the tree as uninteresting.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- revision.c               |  8 ++------
- t/t6000-rev-list-misc.sh | 11 +++++++++++
- 2 files changed, 13 insertions(+), 6 deletions(-)
+So the tree is marked uninteresting twice --- once by setting in the
+UNINTERESTING flag in handle_revision_arg() and a second attempted
+time in mark_tree_uninteresting()?   Makes sense.
 
-diff --git a/revision.c b/revision.c
-index 28449c5..aec0333 100644
---- a/revision.c
-+++ b/revision.c
-@@ -273,6 +273,7 @@ static struct commit *handle_commit(struct rev_info *revs, struct object *object
- 				return NULL;
- 			die("bad object %s", sha1_to_hex(tag->tagged->sha1));
- 		}
-+		object->flags |= flags;
- 	}
- 
- 	/*
-@@ -284,7 +285,6 @@ static struct commit *handle_commit(struct rev_info *revs, struct object *object
- 		if (parse_commit(commit) < 0)
- 			die("unable to parse commit %s", name);
- 		if (flags & UNINTERESTING) {
--			commit->object.flags |= UNINTERESTING;
- 			mark_parents_uninteresting(commit);
- 			revs->limited = 1;
- 		}
-@@ -302,7 +302,6 @@ static struct commit *handle_commit(struct rev_info *revs, struct object *object
- 		if (!revs->tree_objects)
- 			return NULL;
- 		if (flags & UNINTERESTING) {
--			tree->object.flags |= UNINTERESTING;
- 			mark_tree_contents_uninteresting(tree);
- 			return NULL;
- 		}
-@@ -314,13 +313,10 @@ static struct commit *handle_commit(struct rev_info *revs, struct object *object
- 	 * Blob object? You know the drill by now..
- 	 */
- 	if (object->type == OBJ_BLOB) {
--		struct blob *blob = (struct blob *)object;
- 		if (!revs->blob_objects)
- 			return NULL;
--		if (flags & UNINTERESTING) {
--			blob->object.flags |= UNINTERESTING;
-+		if (flags & UNINTERESTING)
- 			return NULL;
--		}
- 		add_pending_object(revs, object, "");
- 		return NULL;
- 	}
-diff --git a/t/t6000-rev-list-misc.sh b/t/t6000-rev-list-misc.sh
-index 9ad4971..3794e4c 100755
---- a/t/t6000-rev-list-misc.sh
-+++ b/t/t6000-rev-list-misc.sh
-@@ -62,4 +62,15 @@ test_expect_success 'propagate uninteresting flag down correctly' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'symleft flag bit is propagated down from tag' '
-+	git log --format="%m %s" --left-right v1.0...master >actual &&
-+	cat >expect <<-\EOF &&
-+	> two
-+	> one
-+	< another
-+	< that
-+	EOF
-+	test_cmp expect actual
-+'
-+
- test_done
--- 
-1.8.5.3-493-gb139ac2
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
