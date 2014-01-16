@@ -1,80 +1,160 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: [PATCH] .gitignore: Ignore editor backup and swap files
-Date: Thu, 16 Jan 2014 22:56:47 +0000
-Message-ID: <52D863AF.30506@ramsay1.demon.co.uk>
-References: <1389907164-13400-1-git-send-email-alexander@plaimi.net> <xmqqtxd3y43b.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] send-email: If the ca path is not specified, use the defaults
+Date: Thu, 16 Jan 2014 15:19:14 -0800
+Message-ID: <xmqqppnry0p9.fsf@gitster.dls.corp.google.com>
+References: <1389807071-26746-1-git-send-email-i.gnatenko.brain@gmail.com>
+	<xmqqa9ex2gi6.fsf@gitster.dls.corp.google.com>
+	<7AD1C6ED-6177-415D-B342-D1FEA9F810B4@rubenkerkhof.com>
+	<xmqqob3d0w7g.fsf@gitster.dls.corp.google.com>
+	<20140115215024.GM18964@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>,
-	Alexander Berntsen <alexander@plaimi.net>
-X-From: git-owner@vger.kernel.org Thu Jan 16 23:56:58 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Ruben Kerkhof <ruben@rubenkerkhof.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Igor Gnatenko <i.gnatenko.brain@gmail.com>, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 17 00:19:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W3vrt-00085e-1n
-	for gcvg-git-2@plane.gmane.org; Thu, 16 Jan 2014 23:56:57 +0100
+	id 1W3wDc-0001eD-FG
+	for gcvg-git-2@plane.gmane.org; Fri, 17 Jan 2014 00:19:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751172AbaAPW4w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Jan 2014 17:56:52 -0500
-Received: from mdfmta009.mxout.tbr.inty.net ([91.221.168.50]:49557 "EHLO
-	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750750AbaAPW4v (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Jan 2014 17:56:51 -0500
-Received: from mdfmta009.tbr.inty.net (unknown [127.0.0.1])
-	by mdfmta009.tbr.inty.net (Postfix) with ESMTP id 1335A384082;
-	Thu, 16 Jan 2014 22:56:50 +0000 (GMT)
-Received: from mdfmta009.tbr.inty.net (unknown [127.0.0.1])
-	by mdfmta009.tbr.inty.net (Postfix) with ESMTP id DB6F0384081;
-	Thu, 16 Jan 2014 22:56:49 +0000 (GMT)
-Received: from [192.168.254.10] (unknown [80.176.147.220])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	id S1751366AbaAPXTU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Jan 2014 18:19:20 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57233 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751310AbaAPXTS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Jan 2014 18:19:18 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 000FC64FA4;
+	Thu, 16 Jan 2014 18:19:17 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=JgC86KgMpyPlMxKP77lB+GuR74g=; b=exqLV0
+	C0cemuiQH4sru4wk10qwGT7WAwoGduEkZ+iZgP4ODf5yN7+s+jyb4fJ8JLsw4SSO
+	3adwQPo0xtgelCV0qswF8cjXGOcSn+QQ3HG2FblleaHV8/vF4ZBaUrsxwBbZ39nX
+	Pw5viZOB+ecOBZfoxDgQRWueYLjI1o8yxHBl0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=EXwPM1+I1LjQMKiKPdICIIZtPFLZZuhE
+	sgSDF26OvxDbQWdPB/JDAJpcQfZ8humBI6BeyDgL3s5USnjiwf1DCY81yVSwHUUI
+	OU3/dUB7pxawNL/8CkaDh9oDyTZ7nMU59w7jkdaFF5/yK+SQcvlgdX2rWAEa2IOy
+	xM39OCgbBDA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E28E964FA3;
+	Thu, 16 Jan 2014 18:19:17 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by mdfmta009.tbr.inty.net (Postfix) with ESMTP;
-	Thu, 16 Jan 2014 22:56:48 +0000 (GMT)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.2.0
-In-Reply-To: <xmqqtxd3y43b.fsf@gitster.dls.corp.google.com>
-X-MDF-HostID: 4
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1234064FA2;
+	Thu, 16 Jan 2014 18:19:16 -0500 (EST)
+In-Reply-To: <20140115215024.GM18964@google.com> (Jonathan Nieder's message of
+	"Wed, 15 Jan 2014 13:50:24 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 9EB9F81E-7F04-11E3-82E1-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240545>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240546>
 
-On 16/01/14 22:06, Junio C Hamano wrote:
-> Alexander Berntsen <alexander@plaimi.net> writes:
-> 
->> Signed-off-by: Alexander Berntsen <alexander@plaimi.net>
->> ---
->>  .gitignore | 2 ++
->>  1 file changed, 2 insertions(+)
->>
->> diff --git a/.gitignore b/.gitignore
->> index b5f9def..2905c21 100644
->> --- a/.gitignore
->> +++ b/.gitignore
->> @@ -240,3 +240,5 @@
->>  *.pdb
->>  /Debug/
->>  /Release/
->> +*~
->> +.*.swp
-> 
-> I personally do not mind listing these common ones too much, but if
-> I am not mistaken, our policy on this file so far has been that it
-> lists build artifacts, and not personal preference (the *.swp entry
-> is useless for those who never use vim, for example).
-> 
-> These paths that depend on your choice of the editor and other tools
-> can still be managed in your personal .git/info/exclude in the
-> meantime.
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-As a vim user, I have these set in my ~/.gitignore file, which I refer
-to from ~/.gitconfig using core.excludesfile. ;-)
+> FWIW this should help on Mac OS X, too.  Folks using git on mac
+> at $DAYJOB have been using the workaround described at
+> http://mercurial.selenic.com/wiki/CACertificates#Mac_OS_X_10.6_and_higher
+> so I forgot to report it. :/
 
+Hmph, is that the same issue, though?  That page seems to suggest
+using an empty ca file that does not have any useful information as
+a workaround.  The issue Fedora folks saw is that we see a directory
+/etc/ssl/certs exist on the system, and blindly attempt to use it as
+SSL_ca_path when the directory is not suitable to be used as such.
 
-ATB,
-Ramsay Jones
+In any case, I tried to summarize the discussion in the updated log
+message.  I wanted to say "does not" but stopped at "should not" in
+the last paragraph for now.  Maybe Ram can say something before we
+merge it to 'next'.
+
+The patch in the meantime will be queued on 'pu'.
+
+-- >8 --
+From: Ruben Kerkhof <ruben@rubenkerkhof.com>
+Date: Wed, 15 Jan 2014 21:31:11 +0400
+Subject: [PATCH] send-email: /etc/ssl/certs/ directory may not be usable as ca_path
+
+When sending patches on Fedora rawhide with
+git-1.8.5.2-1.fc21.x86_64 and perl-IO-Socket-SSL-1.962-1.fc21.noarch,
+with the following
+
+    [sendemail]
+	    smtpencryption = tls
+	    smtpserver = smtp.gmail.com
+	    smtpuser = ruben@rubenkerkhof.com
+	    smtpserverport = 587
+
+git-send-email fails with:
+
+    STARTTLS failed! SSL connect attempt failed with unknown error
+    error:14090086:SSL routines:SSL3_GET_SERVER_CERTIFICATE:certificate
+    verify failed at /usr/libexec/git-core/git-send-email line 1236.
+
+The current code detects the presence of /etc/ssl/certs directory
+(it actually is a symlink to another directory, but that does not
+matter) and uses SSL_ca_path to point at it when initializing the
+connection with IO::Socket::SSL or Net::SMTP::SSL.  However, on the
+said platform, it seems that this directory is not designed to be
+used as SSL_ca_path.  Using a single file inside that directory
+(cert.pem, which is a Mozilla CA bundle) with SSL_ca_file does work,
+and also not specifying any SSL_ca_file/SSL_ca_path (and letting the
+library use its own default) and asking for peer verification does
+work.
+
+By removing the code that blindly defaults $smtp_ssl_cert_path to
+"/etc/ssl/certs", we can prevent the codepath that treats any
+directory specified with that variable as usable for SSL_ca_path
+from incorrectly triggering.
+
+This change could introduce a regression for people on a platform
+whose certificate directory is /etc/ssl/certs but its IO::Socket:SSL
+somehow fails to use it as SSL_ca_path without being told.  Using
+/etc/ssl/certs directory as SSL_ca_path by default like the current
+code does would have been hiding such a broken installation without
+its user needing to do anything.  These users can still work around
+such a platform bug by setting the configuration variable explicitly
+to point at /etc/ssl/certs.
+
+This change should not negate what 35035bbf (send-email: be explicit
+with SSL certificate verification, 2013-07-18), which was the
+original change that introduced the defaulting to /etc/ssl/certs/,
+attempted to do, which is to make sure we do not communicate over
+insecure connection by default, triggering warning from the library.
+
+Cf. https://bugzilla.redhat.com/show_bug.cgi?id=1043194
+
+Tested-by: Igor Gnatenko <i.gnatenko.brain@gmail.com>
+Signed-off-by: Ruben Kerkhof <ruben@rubenkerkhof.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ git-send-email.perl | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 3782c3b..689944f 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -1095,7 +1095,8 @@ sub ssl_verify_params {
+ 	}
+ 
+ 	if (!defined $smtp_ssl_cert_path) {
+-		$smtp_ssl_cert_path = "/etc/ssl/certs";
++		# use the OpenSSL defaults
++		return (SSL_verify_mode => SSL_VERIFY_PEER());
+ 	}
+ 
+ 	if ($smtp_ssl_cert_path eq "") {
+-- 
+1.8.5.3-493-gb139ac2
