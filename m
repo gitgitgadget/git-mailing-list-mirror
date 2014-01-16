@@ -1,58 +1,127 @@
-From: =?iso-8859-1?Q?Damien_G=E9rard?= <damien@iwi.me>
-Subject: Re: git-p4: exception when cloning a perforce repository
-Date: Thu, 16 Jan 2014 17:02:18 +0100
-Message-ID: <B6C98918-4339-4D14-8C52-4B3AEC2526E7@iwi.me>
-References: <01EF41A4-533B-4A24-8952-CAEB49970272@iwi.me> <20140114001820.GA12058@padd.com> <20140114232432.GA31465@padd.com> <843E4B24-5EDD-4451-8849-425160576A99@iwi.me> <20140116130833.GA15613@padd.com> <4FE5D5E6-60F6-4111-B538-5CA01092A2F0@iwi.me> <20140116144519.GB15674@padd.com>
-Mime-Version: 1.0 (Mac OS X Mail 7.1 \(1827\))
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Alexandru Juncu <alexj@rosedu.org>
-To: Pete Wyckoff <pw@padd.com>
-X-From: git-owner@vger.kernel.org Thu Jan 16 17:02:32 2014
+From: =?UTF-8?B?QmVub8OudCBCb3VyYmnDqQ==?= <benoit.bourbie@gmail.com>
+Subject: Re: [PATCH] git-gui: fallback right pane to packed widgets with Tk 8.4
+Date: Thu, 16 Jan 2014 10:39:24 -0600
+Message-ID: <CANJSc_uhYU7EPZ89dbEQhc8QM4e-yLj2qhQOJMQyzU-2RdZn8A@mail.gmail.com>
+References: <CANJSc_uYm7f4LoZoMoVzcsmGrYnUy+2nXFL_cNWqQnwLb5J6mw@mail.gmail.com>
+ <20140114011141.GF18964@google.com> <20140114065014.GA29816@wheezy.local> <20140114235809.GA15510@wheezy.local>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Pat Thoyts <patthoyts@users.sourceforge.net>,
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+To: Max Kirillov <max@max630.net>
+X-From: git-owner@vger.kernel.org Thu Jan 16 17:39:58 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W3pOp-0005s3-Vn
-	for gcvg-git-2@plane.gmane.org; Thu, 16 Jan 2014 17:02:32 +0100
+	id 1W3pyv-0007wH-Uf
+	for gcvg-git-2@plane.gmane.org; Thu, 16 Jan 2014 17:39:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751591AbaAPQC1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Jan 2014 11:02:27 -0500
-Received: from catkin.iwi.me ([91.121.49.159]:42051 "EHLO catkin.iwi.me"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751512AbaAPQC0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Jan 2014 11:02:26 -0500
-Received: from imac-de-admin.private.4d.fr (unknown [194.98.194.79])
-	(Authenticated sender: damien@iwi.me)
-	by catkin.iwi.me (Postfix) with ESMTPSA id 5CC38A25E9;
-	Thu, 16 Jan 2014 17:02:20 +0100 (CET)
-In-Reply-To: <20140116144519.GB15674@padd.com>
-X-Mailer: Apple Mail (2.1827)
+	id S1752238AbaAPQjq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 16 Jan 2014 11:39:46 -0500
+Received: from mail-we0-f180.google.com ([74.125.82.180]:46724 "EHLO
+	mail-we0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751625AbaAPQjp convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 16 Jan 2014 11:39:45 -0500
+Received: by mail-we0-f180.google.com with SMTP id q59so3386688wes.25
+        for <git@vger.kernel.org>; Thu, 16 Jan 2014 08:39:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=eZdzgxVF+KkhZ94PeKh5CQ+Oi65TQTjkr976uliEiCc=;
+        b=Ao12RGurrB4NOHNsQq0CLXKdhAx0PC3EOQTdt0F0fzPpLcHPv5c4u17ZFraXTwxD0k
+         CoQ1LKy9AkAn43gKvIQgaTce48Vb3zNF0QNyvRRoad6ql3XBPZ1hHywCHvAvsOMcawXR
+         uhxPg/N9pme3HeLdm9sFLBedPHmPBWf9VqYYXJHlEwsl30i4gJtdHmCRq5UXNiwJJgyf
+         pXYo7iIqhNC0IpOvLPJo/ho656jMSeyq51ur0kWAN5biKqalx2iKN6ud4OIzYhhzSKtq
+         5OMh0HUpxEpJLkxl0dAAnB3hPtd3WRtHU0A2NGFY87zSvDakoiAGmwNLWF+pYNF7bSGj
+         ySHQ==
+X-Received: by 10.180.211.39 with SMTP id mz7mr8925014wic.53.1389890384157;
+ Thu, 16 Jan 2014 08:39:44 -0800 (PST)
+Received: by 10.194.28.3 with HTTP; Thu, 16 Jan 2014 08:39:24 -0800 (PST)
+In-Reply-To: <20140114235809.GA15510@wheezy.local>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240515>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240516>
 
+Hi All,
 
-On 16 Jan 2014, at 15:45, Pete Wyckoff <pw@padd.com> wrote:
+Max, you are right, my TK version is 8.4.
+I applied the patch and it now works perfectly.
 
-> Oh cool, that helps a lot.  P4 is just broken here, so we can get
-> away with being a bit sloppy in git.  I'll try just pretending
-> "empty symlinks" are not in the repo.  Hopefully you'll have a
-> future commit in your p4 repo that brings back bn.h properly.
+Thanks!!
 
-Thanks !
-I would love to use git instead of perforce if possible :)
+Beno=C3=AEt
 
-> Still not sure about how I'll test this.
-
-I can test for you, no probleme with that.
-
-
-> 
-> Thanks,
-> 
-> 		-- Pete
-> 
+On Tue, Jan 14, 2014 at 5:58 PM, Max Kirillov <max@max630.net> wrote:
+> Since 918dbf58, git-gui crashes if started with Tk 8.4. The reason is=
+ that
+> tk < 8.5 does not support -stretch option for panedwindow.
+>
+> Without the option it's not possible to properly expand the right hal=
+f -
+> the commit area is expanded, while desired behavior is to expand the =
+diff
+> area. So the whole feature should be disabled with Tk
+> version less than 8.5.
+>
+> Signed-off-by: Max Kirillov <max@max630.net>
+> ---
+>  git-gui/git-gui.sh | 32 +++++++++++++++++++++-----------
+>  1 file changed, 21 insertions(+), 11 deletions(-)
+>
+> diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
+> index e2e710e..147be8c 100755
+> --- a/git-gui/git-gui.sh
+> +++ b/git-gui/git-gui.sh
+> @@ -3196,18 +3196,28 @@ unset i
+>
+>  # -- Diff and Commit Area
+>  #
+> -${NS}::panedwindow .vpane.lower -orient vertical
+> -${NS}::frame .vpane.lower.commarea
+> -${NS}::frame .vpane.lower.diff -relief sunken -borderwidth 1 -height=
+ 500
+> -.vpane.lower add .vpane.lower.diff
+> -.vpane.lower add .vpane.lower.commarea
+> -.vpane add .vpane.lower
+> -if {$use_ttk} {
+> -       .vpane.lower pane .vpane.lower.diff -weight 1
+> -       .vpane.lower pane .vpane.lower.commarea -weight 0
+> +if {$have_tk85} {
+> +       ${NS}::panedwindow .vpane.lower -orient vertical
+> +       ${NS}::frame .vpane.lower.commarea
+> +       ${NS}::frame .vpane.lower.diff -relief sunken -borderwidth 1 =
+-height 500
+> +       .vpane.lower add .vpane.lower.diff
+> +       .vpane.lower add .vpane.lower.commarea
+> +       .vpane add .vpane.lower
+> +       if {$use_ttk} {
+> +               .vpane.lower pane .vpane.lower.diff -weight 1
+> +               .vpane.lower pane .vpane.lower.commarea -weight 0
+> +       } else {
+> +               .vpane.lower paneconfigure .vpane.lower.diff -stretch=
+ always
+> +               .vpane.lower paneconfigure .vpane.lower.commarea -str=
+etch never
+> +       }
+>  } else {
+> -       .vpane.lower paneconfigure .vpane.lower.diff -stretch always
+> -       .vpane.lower paneconfigure .vpane.lower.commarea -stretch nev=
+er
+> +       frame .vpane.lower -height 300 -width 400
+> +       frame .vpane.lower.commarea
+> +       frame .vpane.lower.diff -relief sunken -borderwidth 1
+> +       pack .vpane.lower.diff -fill both -expand 1
+> +       pack .vpane.lower.commarea -side bottom -fill x
+> +       .vpane add .vpane.lower
+> +       .vpane paneconfigure .vpane.lower -sticky nsew
+>  }
+>
+>  # -- Commit Area Buttons
+> --
+> 1.8.4.2.1566.g3c1a064
