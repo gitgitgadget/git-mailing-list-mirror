@@ -1,7 +1,7 @@
 From: "W. Trevor King" <wking@tremily.us>
-Subject: [PATCH v4 1/6] submodule: Make 'checkout' update_module explicit
-Date: Wed, 15 Jan 2014 20:10:22 -0800
-Message-ID: <43e8f3bfdaffefca9edd7a23574816630690e1e5.1389837412.git.wking@tremily.us>
+Subject: [PATCH v4 5/6] t7406: Add explicit tests for head attachement after cloning updates
+Date: Wed, 15 Jan 2014 20:10:26 -0800
+Message-ID: <b1cc110f1a0b68859af89cf8aed28d8a9eedddb5.1389837412.git.wking@tremily.us>
 References: <20140114224246.GA13271@book.hvoigt.net>
 Cc: Jens Lehmann <Jens.Lehmann@web.de>,
 	Francesco Pretto <ceztko@gmail.com>,
@@ -10,117 +10,126 @@ Cc: Jens Lehmann <Jens.Lehmann@web.de>,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	"W. Trevor King" <wking@tremily.us>
 To: Git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jan 16 05:11:37 2014
+X-From: git-owner@vger.kernel.org Thu Jan 16 05:11:45 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W3eIp-0001Lu-Iw
-	for gcvg-git-2@plane.gmane.org; Thu, 16 Jan 2014 05:11:35 +0100
+	id 1W3eIx-0001c1-M1
+	for gcvg-git-2@plane.gmane.org; Thu, 16 Jan 2014 05:11:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751562AbaAPELb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Jan 2014 23:11:31 -0500
-Received: from qmta14.westchester.pa.mail.comcast.net ([76.96.59.212]:58048
-	"EHLO qmta14.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751051AbaAPELa (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 15 Jan 2014 23:11:30 -0500
-Received: from omta13.westchester.pa.mail.comcast.net ([76.96.62.52])
-	by qmta14.westchester.pa.mail.comcast.net with comcast
-	id EU501n00317dt5G5EUBVep; Thu, 16 Jan 2014 04:11:29 +0000
+	id S1751697AbaAPELf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Jan 2014 23:11:35 -0500
+Received: from qmta01.westchester.pa.mail.comcast.net ([76.96.62.16]:53941
+	"EHLO qmta01.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751559AbaAPELb (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 15 Jan 2014 23:11:31 -0500
+Received: from omta02.westchester.pa.mail.comcast.net ([76.96.62.19])
+	by qmta01.westchester.pa.mail.comcast.net with comcast
+	id ETcV1n0030QuhwU51UBXDp; Thu, 16 Jan 2014 04:11:31 +0000
 Received: from odin.tremily.us ([24.18.63.50])
-	by omta13.westchester.pa.mail.comcast.net with comcast
-	id EUBT1n00M152l3L3ZUBUA2; Thu, 16 Jan 2014 04:11:29 +0000
+	by omta02.westchester.pa.mail.comcast.net with comcast
+	id EUBV1n00Q152l3L3NUBWZ7; Thu, 16 Jan 2014 04:11:31 +0000
 Received: from mjolnir.tremily.us (unknown [192.168.0.141])
-	by odin.tremily.us (Postfix) with ESMTPS id 1F29FEFE487;
-	Wed, 15 Jan 2014 20:11:27 -0800 (PST)
-Received: (nullmailer pid 18536 invoked by uid 1000);
-	Thu, 16 Jan 2014 04:11:03 -0000
+	by odin.tremily.us (Postfix) with ESMTPS id 62A12EFE48F;
+	Wed, 15 Jan 2014 20:11:29 -0800 (PST)
+Received: (nullmailer pid 18569 invoked by uid 1000);
+	Thu, 16 Jan 2014 04:11:04 -0000
 X-Mailer: git-send-email 1.8.5.2.8.g0f6c0d1
 In-Reply-To: <20140114224246.GA13271@book.hvoigt.net>
 In-Reply-To: <cover.1389837412.git.wking@tremily.us>
 References: <cover.1389837412.git.wking@tremily.us>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-	s=q20121106; t=1389845489;
-	bh=tsks5nLsVwUxt0PVKpA6OV/O6BRs1Y7y5ZOeQHSQsmg=;
+	s=q20121106; t=1389845491;
+	bh=NxhtrExjPeuGezlh3wY/i6ao0YFwKuvB7pqfhm19XQY=;
 	h=Received:Received:Received:Received:From:To:Subject:Date:
 	 Message-Id;
-	b=pJ1PPJ7FVIOY14Zsii+Spqe/2usc5EshaPwdcqEK0XQNP2H7RUCXJGT2z4bc0Y+jG
-	 TlBezWV+hoOZRZUVz1yIASyFoiR/vnu4oK1J/YUtNxDxVpQuM2bOaSRfrgia/Eobmv
-	 qtoj2ckVSzx24cxdmi8rWLWoW9bCecihBErJH1Dq7EnepThCDAX46PYbheFa0In1rp
-	 kd4RJKYHs0UCQRy07+/VVI6bqKh+2yhPMB0JPtjzbh5CkxOI7+vx7MAZuPD4jXwn9+
-	 vU6LciO6pVcRBa2aO5mR+SKRl0E50oOsXzOlxPinOEX4HgLk9w7m/8Cr3h974eIOmM
-	 SzCUlwjlan3AA==
+	b=bfOE0Smqq7kyaasb0yax4iyU1+LhNZqsMi+Yyg23P9H8LCrwXCdvfzZjh04to1Cc+
+	 WVszA2i0BwLbWrAOJ5yhM2oNi3rR8RdOVzNNKk4HhkusOFVeZx5qd2woZ+FXzoj61Q
+	 dtOo7LABJRg4HS+tqLbCKCcZOParecJ8bMSGWEbaVdamYPGYSADL3TOpdBRAFM6K28
+	 jUbvoCnRMM2oTVtlY+Q7ho/TQd3nY3gI20RhjeMAL+O49zxpeBbdo5TK9mmzqrwjG/
+	 W2me8uL26Lny5XjxSNrEXdpbGPH8Ocy8fyeI7KuN9jSkpBlF9ic65mw6KAGF0H4Ikn
+	 XUqdEIFqQ2JUw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240500>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240501>
 
-This avoids the current awkwardness of having either '' or 'checkout'
-for checkout-mode updates, which makes testing for checkout-mode
-updates (or non-checkout-mode updates) easier.
+Test that cloning updates checkout the appropriate local branch for
+their update-mode:
+
+* Checkout-mode updates get detached HEADs
+* Everyone else gets a local branch, matching the configured
+  submodule.<name>.branch and defaulting to master.
+
+The 'initial-setup' tag makes it easy to reset the superproject to a
+known state, as several earlier tests commit to submodules and commit
+the changed gitlinks to the superproject, but don't push the new
+submodule commits to the upstream subprojects.  This makes it
+impossible to checkout the current super master, because it references
+submodule commits that don't exist in the upstream subprojects.  For a
+specific example, see the tests that currently generate the
+'two_new_submodule_commits' commits.
 
 Signed-off-by: W. Trevor King <wking@tremily.us>
 ---
- git-submodule.sh | 27 +++++++++++----------------
- 1 file changed, 11 insertions(+), 16 deletions(-)
+ t/t7406-submodule-update.sh | 37 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 37 insertions(+)
 
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 5247f78..5e8776c 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -803,17 +803,10 @@ cmd_update()
- 			update_module=$update
- 		else
- 			update_module=$(git config submodule."$name".update)
--			case "$update_module" in
--			'')
--				;; # Unset update mode
--			checkout | rebase | merge | none)
--				;; # Known update modes
--			!*)
--				;; # Custom update command
--			*)
--				die "$(eval_gettext "Invalid update mode '$update_module' for submodule '$name'")"
--				;;
--			esac
-+			if test -z "$update_module"
-+			then
-+				update_module="checkout"
-+			fi
- 		fi
+diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
+index 5aa9591..f056c01 100755
+--- a/t/t7406-submodule-update.sh
++++ b/t/t7406-submodule-update.sh
+@@ -63,6 +63,9 @@ test_expect_success 'setup a submodule tree' '
+ 	 git submodule add ../none none &&
+ 	 test_tick &&
+ 	 git commit -m "none"
++	) &&
++	(cd super &&
++	 git tag initial-setup
+ 	)
+ '
  
- 		displaypath=$(relative_path "$prefix$sm_path")
-@@ -882,11 +875,16 @@ Maybe you want to use 'update --init'?")"
- 			case ";$cloned_modules;" in
- 			*";$name;"*)
- 				# then there is no local change to integrate
--				update_module= ;;
-+				update_module=checkout ;;
- 			esac
- 
- 			must_die_on_failure=
- 			case "$update_module" in
-+			checkout)
-+				command="git checkout $subforce -q"
-+				die_msg="$(eval_gettext "Unable to checkout '\$sha1' in submodule path '\$displaypath'")"
-+				say_msg="$(eval_gettext "Submodule path '\$displaypath': checked out '\$sha1'")"
-+				;;
- 			rebase)
- 				command="git rebase"
- 				die_msg="$(eval_gettext "Unable to rebase '\$sha1' in submodule path '\$displaypath'")"
-@@ -906,10 +904,7 @@ Maybe you want to use 'update --init'?")"
- 				must_die_on_failure=yes
- 				;;
- 			*)
--				command="git checkout $subforce -q"
--				die_msg="$(eval_gettext "Unable to checkout '\$sha1' in submodule path '\$displaypath'")"
--				say_msg="$(eval_gettext "Submodule path '\$displaypath': checked out '\$sha1'")"
--				;;
-+				die "$(eval_gettext "Invalid update mode '$update_module' for submodule '$name'")"
- 			esac
- 
- 			if (clear_local_git_env; cd "$sm_path" && $command "$sha1")
+@@ -764,4 +767,38 @@ test_expect_success 'submodule update clone shallow submodule' '
+ 	 )
+ 	)
+ '
++
++test_expect_success 'submodule update --checkout clones detached HEAD' '
++	git clone super super4 &&
++	echo "detached HEAD" >expected &&
++	(cd super4 &&
++	 git reset --hard initial-setup &&
++	 git submodule init submodule &&
++	 git submodule update >> /tmp/log 2>&1 &&
++	 (cd submodule &&
++	  git symbolic-ref HEAD > ../../actual ||
++	  echo "detached HEAD" > ../../actual
++	 )
++	) &&
++	test_cmp actual expected &&
++	rm -rf super4
++'
++
++test_expect_success 'submodule update --merge clones attached HEAD' '
++	git clone super super4 &&
++	echo "refs/heads/master" >expected &&
++	(cd super4 &&
++	 git reset --hard initial-setup &&
++	 git submodule init submodule &&
++	 git config submodule.submodule.update merge &&
++	 git submodule update --merge &&
++	 (cd submodule &&
++	  git symbolic-ref HEAD > ../../actual ||
++	  echo "detached HEAD" > ../../actual
++	 )
++	) &&
++	test_cmp actual expected &&
++	rm -rf super4
++'
++
+ test_done
 -- 
 1.8.5.2.8.g0f6c0d1
