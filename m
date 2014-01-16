@@ -1,7 +1,7 @@
 From: "W. Trevor King" <wking@tremily.us>
-Subject: [PATCH v4 6/6] Documentation: Describe 'submodule update' modes in detail
-Date: Wed, 15 Jan 2014 20:10:27 -0800
-Message-ID: <4a8dca477ed5b190767d6a4619c593a83f86f082.1389837412.git.wking@tremily.us>
+Subject: [PATCH v4 3/6] submodule: Explicit local branch creation in module_clone
+Date: Wed, 15 Jan 2014 20:10:24 -0800
+Message-ID: <96f9749de94f7e89f4d113f8cde69f2a960bcb88.1389837412.git.wking@tremily.us>
 References: <20140114224246.GA13271@book.hvoigt.net>
 Cc: Jens Lehmann <Jens.Lehmann@web.de>,
 	Francesco Pretto <ceztko@gmail.com>,
@@ -10,137 +10,207 @@ Cc: Jens Lehmann <Jens.Lehmann@web.de>,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	"W. Trevor King" <wking@tremily.us>
 To: Git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jan 16 05:11:46 2014
+X-From: git-owner@vger.kernel.org Thu Jan 16 05:12:23 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W3eIy-0001c1-QH
-	for gcvg-git-2@plane.gmane.org; Thu, 16 Jan 2014 05:11:45 +0100
+	id 1W3eJb-0002iU-5C
+	for gcvg-git-2@plane.gmane.org; Thu, 16 Jan 2014 05:12:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751800AbaAPELi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Jan 2014 23:11:38 -0500
-Received: from qmta09.westchester.pa.mail.comcast.net ([76.96.62.96]:49559
-	"EHLO qmta09.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751051AbaAPELc (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 15 Jan 2014 23:11:32 -0500
-Received: from omta06.westchester.pa.mail.comcast.net ([76.96.62.51])
-	by qmta09.westchester.pa.mail.comcast.net with comcast
-	id EUBG1n00116LCl059UBXLZ; Thu, 16 Jan 2014 04:11:31 +0000
+	id S1751971AbaAPELq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Jan 2014 23:11:46 -0500
+Received: from qmta05.westchester.pa.mail.comcast.net ([76.96.62.48]:37522
+	"EHLO qmta05.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751435AbaAPELa (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 15 Jan 2014 23:11:30 -0500
+Received: from omta10.westchester.pa.mail.comcast.net ([76.96.62.28])
+	by qmta05.westchester.pa.mail.comcast.net with comcast
+	id EUBH1n00A0cZkys55UBW0D; Thu, 16 Jan 2014 04:11:30 +0000
 Received: from odin.tremily.us ([24.18.63.50])
-	by omta06.westchester.pa.mail.comcast.net with comcast
-	id EUBW1n00J152l3L3SUBWQz; Thu, 16 Jan 2014 04:11:31 +0000
+	by omta10.westchester.pa.mail.comcast.net with comcast
+	id EUBU1n00Q152l3L3WUBVpX; Thu, 16 Jan 2014 04:11:30 +0000
 Received: from mjolnir.tremily.us (unknown [192.168.0.141])
-	by odin.tremily.us (Postfix) with ESMTPS id E0D49EFE492;
-	Wed, 15 Jan 2014 20:11:29 -0800 (PST)
-Received: (nullmailer pid 18581 invoked by uid 1000);
-	Thu, 16 Jan 2014 04:11:04 -0000
+	by odin.tremily.us (Postfix) with ESMTPS id 388E2EFE48B;
+	Wed, 15 Jan 2014 20:11:28 -0800 (PST)
+Received: (nullmailer pid 18562 invoked by uid 1000);
+	Thu, 16 Jan 2014 04:11:03 -0000
 X-Mailer: git-send-email 1.8.5.2.8.g0f6c0d1
 In-Reply-To: <20140114224246.GA13271@book.hvoigt.net>
 In-Reply-To: <cover.1389837412.git.wking@tremily.us>
 References: <cover.1389837412.git.wking@tremily.us>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-	s=q20121106; t=1389845491;
-	bh=fTbaxtLCl0voP1ti89BnWtgVfMSlzafuuEGC596mYKo=;
+	s=q20121106; t=1389845490;
+	bh=yV2rYU2H3gSHRgVistNpX8fUSZT1SiREyfhrfpolc14=;
 	h=Received:Received:Received:Received:From:To:Subject:Date:
 	 Message-Id;
-	b=dKPYZ9rB1tyN3Bvb/qNdrCZRMXloSYnnSxKIkG5NU2bjvLLuUWMDpl+o0vZpQwqSK
-	 fU1L2ZsYDxMOWUgji+kGYIU4QMWZPBCNm9X64hzFViqZ7q4WQyBeQMtzmeISgY7Vf4
-	 GCMefgANoOiyVjWbPqZfaExtXgBbtQRpzEiHyzFfhOSSEwz9ip3DsPZQAdvXFyegyy
-	 gtxbZ1qEFn5oDbAxS3Qf6fEvEUQWzZziwC3NlD5uJbJFqcAInQJqmbn9vD57UDEDvf
-	 NAh9paWlcYYAJsixwLRN9p5b/HLrXXTTAQsdQuhXWT5pErU2hfKuOkDrRinqgrXoh4
-	 7mIVESPhX27uA==
+	b=qS/txFEGr3g48GCwHJ0lCVGGrH1l5GKHelPkS7nv2nhfXHi+W332lqO9dzHGhzNut
+	 a8qmz/1F0IGp0Ta6CoLrorIpED9L2Dcw6eHSOudzUAlk5BmRfqSQjcQF9LJO8OOl0+
+	 1V6EOMZLrdi68f4TNjP8uCtBzEm67yW65ahVxds4fCWBMuhxA44/VlD/e1JDyt5wuU
+	 i+Jplob8It37sybzfyAY+VKvIbNdZRPzMJ6lPDniT3yUafz8/NHUI0rA9rRwkjwUtS
+	 roL3bOkKbAFaZKtzU0gXT6OB6nwFrkiWEvwuEFIKdyqcVh9aZzcTCRxUKFGQHU4Yyv
+	 ZFntsb5z+4asQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240503>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240504>
 
-The old documentation did not distinguish between cloning and
-non-cloning updates and lacked clarity on which operations would lead
-to detached HEADs, and which would not.  The new documentation
-addresses these issues while updating the docs to reflect the changes
-introduced by this branch's explicit local branch creation in
-module_clone.
+The previous code only checked out branches in cmd_add.  This commit
+moves the branch-checkout logic into module_clone, where it can be
+shared by cmd_add and cmd_update.  I also update the initial checkout
+command to use 'reset' to preserve branches setup during module_clone.
 
-I also add '--checkout' to the usage summary and group the update-mode
-options into a single set.
+With this change, folks cloning submodules for the first time via:
+
+  $ git submodule update ...
+
+will get a local branch instead of a detached HEAD, unless they are
+using the default checkout-mode updates.  This is a change from the
+previous situation where cmd_update always used checkout-mode logic
+(regardless of the requested update mode) for updates that triggered
+an initial clone, which always resulted in a detached HEAD.
+
+This commit does not change the logic for updates after the initial
+clone, which will continue to create detached HEADs for checkout-mode
+updates, and integrate remote work with the local HEAD (detached or
+not) in other modes.
+
+The motivation for the change is that developers doing local work
+inside the submodule are likely to select a non-checkout-mode for
+updates so their local work is integrated with upstream work.
+Developers who are not doing local submodule work stick with
+checkout-mode updates so any apparently local work is blown away
+during updates.  For example, if upstream rolls back the remote branch
+or gitlinked commit to an earlier version, the checkout-mode developer
+wants their old submodule checkout to be rolled back as well, instead
+of getting a no-op merge/rebase with the rolled-back reference.
+
+By using the update mode to distinguish submodule developers from
+black-box submodule consumers, we can setup local branches for the
+developers who will want local branches, and stick with detached HEADs
+for the developers that don't care.
 
 Signed-off-by: W. Trevor King <wking@tremily.us>
 ---
- Documentation/git-submodule.txt | 36 +++++++++++++++++++++++++++---------
- Documentation/gitmodules.txt    |  4 ++++
- 2 files changed, 31 insertions(+), 9 deletions(-)
+ git-submodule.sh | 53 ++++++++++++++++++++++++++++++++++++-----------------
+ 1 file changed, 36 insertions(+), 17 deletions(-)
 
-diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
-index bfef8a0..02500b4 100644
---- a/Documentation/git-submodule.txt
-+++ b/Documentation/git-submodule.txt
-@@ -15,8 +15,8 @@ SYNOPSIS
- 'git submodule' [--quiet] init [--] [<path>...]
- 'git submodule' [--quiet] deinit [-f|--force] [--] <path>...
- 'git submodule' [--quiet] update [--init] [--remote] [-N|--no-fetch]
--	      [-f|--force] [--rebase] [--reference <repository>] [--depth <depth>]
--	      [--merge] [--recursive] [--] [<path>...]
-+	      [-f|--force] [--rebase|--merge|--checkout] [--reference <repository>]
-+	      [--depth <depth>] [--recursive] [--] [<path>...]
- 'git submodule' [--quiet] summary [--cached|--files] [(-n|--summary-limit) <n>]
- 	      [commit] [--] [<path>...]
- 'git submodule' [--quiet] foreach [--recursive] <command>
-@@ -155,13 +155,31 @@ it contains local modifications.
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 68dcbe1..4a09951 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -246,6 +246,9 @@ module_name()
+ # $3 = URL to clone
+ # $4 = reference repository to reuse (empty for independent)
+ # $5 = depth argument for shallow clones (empty for deep)
++# $6 = (remote-tracking) starting point for the local branch (empty for HEAD)
++# $7 = local branch to create (empty for a detached HEAD, unless $6 is
++#      also empty, in which case the local branch is left unchanged)
+ #
+ # Prior to calling, cmd_update checks that a possibly existing
+ # path is not a git repository.
+@@ -259,6 +262,8 @@ module_clone()
+ 	url=$3
+ 	reference="$4"
+ 	depth="$5"
++	start_point="$6"
++	local_branch="$7"
+ 	quiet=
+ 	if test -n "$GIT_QUIET"
+ 	then
+@@ -312,7 +317,16 @@ module_clone()
+ 	echo "gitdir: $rel/$a" >"$sm_path/.git"
  
- update::
- 	Update the registered submodules, i.e. clone missing submodules and
--	checkout the commit specified in the index of the containing repository.
--	This will make the submodules HEAD be detached unless `--rebase` or
--	`--merge` is specified or the key `submodule.$name.update` is set to
--	`rebase`, `merge` or `none`. `none` can be overridden by specifying
--	`--checkout`. Setting the key `submodule.$name.update` to `!command`
--	will cause `command` to be run. `command` can be any arbitrary shell
--	command that takes a single argument, namely the sha1 to update to.
-+	checkout the commit specified in the index of the containing
-+	repository.  The update mode defaults to 'checkout', but be
-+	configured with the 'submodule.<name>.update' setting or the
-+	'--rebase', '--merge', or 'checkout' options.
-++
-+For updates that clone missing submodules, checkout-mode updates will
-+create submodules with detached HEADs; all other modes will create
-+submodules with a local branch named after 'submodule.<path>.branch'.
-++
-+For updates that do not clone missing submodules, the submodule's HEAD
-+is only touched when the remote reference does not match the
-+submodule's HEAD (for none-mode updates, the submodule is never
-+touched).  The remote reference is usually the gitlinked commit from
-+the superproject's tree, but with '--remote' it is the upstream
-+subproject's 'submodule.<name>.branch'.  This remote reference is
-+integrated with the submodule's HEAD using the specified update mode.
-+For checkout-mode updates, that will result in a detached HEAD.  For
-+rebase- and merge-mode updates, the commit referenced by the
-+submodule's HEAD may change, but the symbolic reference will remain
-+unchanged (i.e. checked-out branches will still be checked-out
-+branches, and detached HEADs will still be detached HEADs).  If none
-+of the builtin modes fit your needs, set 'submodule.<name>.update' to
-+'!command' to configure a custom integration command.  'command' can
-+be any arbitrary shell command that takes a single argument, namely
-+the sha1 to update to.
- +
- If the submodule is not yet initialized, and you just want to use the
- setting as stored in .gitmodules, you can automatically initialize the
-diff --git a/Documentation/gitmodules.txt b/Documentation/gitmodules.txt
-index f7be93f..36e5447 100644
---- a/Documentation/gitmodules.txt
-+++ b/Documentation/gitmodules.txt
-@@ -53,6 +53,10 @@ submodule.<name>.branch::
- 	A remote branch name for tracking updates in the upstream submodule.
- 	If the option is not specified, it defaults to 'master'.  See the
- 	`--remote` documentation in linkgit:git-submodule[1] for details.
-++
-+This branch name is also used for the local branch created by
-+non-checkout cloning updates.  See the 'update' documentation in
-+linkgit:git-submodule[1] for details.
+ 	rel=$(echo $a | sed -e 's|[^/][^/]*|..|g')
+-	(clear_local_git_env; cd "$sm_path" && GIT_WORK_TREE=. git config core.worktree "$rel/$b")
++	(
++		clear_local_git_env
++		cd "$sm_path" &&
++		GIT_WORK_TREE=. git config core.worktree "$rel/$b" &&
++		# ash fails to wordsplit ${local_branch:+-B "$local_branch"...}
++		case "$local_branch" in
++		'') git checkout -f -q ${start_point:+"$start_point"} ;;
++		?*) git checkout -f -q -B "$local_branch" ${start_point:+"$start_point"} ;;
++		esac
++	) || die "$(eval_gettext "Unable to setup cloned submodule '\$sm_path'")"
+ }
  
- submodule.<name>.fetchRecurseSubmodules::
- 	This option can be used to control recursive fetching of this
+ isnumber()
+@@ -475,16 +489,14 @@ Use -f if you really want to add it." >&2
+ 				echo "$(eval_gettext "Reactivating local git directory for submodule '\$sm_name'.")"
+ 			fi
+ 		fi
+-		module_clone "$sm_path" "$sm_name" "$realrepo" "$reference" "$depth" || exit
+-		(
+-			clear_local_git_env
+-			cd "$sm_path" &&
+-			# ash fails to wordsplit ${branch:+-b "$branch"...}
+-			case "$branch" in
+-			'') git checkout -f -q ;;
+-			?*) git checkout -f -q -B "$branch" "origin/$branch" ;;
+-			esac
+-		) || die "$(eval_gettext "Unable to checkout submodule '\$sm_path'")"
++		if test -n "$branch"
++		then
++			start_point="origin/$branch"
++			local_branch="$branch"
++		else
++			start_point=""
++		fi
++		module_clone "$sm_path" "$sm_name" "$realrepo" "$reference" "$depth" "$start_point" "$local_branch" || exit
+ 	fi
+ 	git config submodule."$sm_name".url "$realrepo"
+ 
+@@ -803,7 +815,9 @@ cmd_update()
+ 		fi
+ 		name=$(module_name "$sm_path") || exit
+ 		url=$(git config submodule."$name".url)
+-		branch=$(get_submodule_config "$name" branch master)
++		config_branch=$(get_submodule_config "$name" branch)
++		branch="${config_branch:-master}"
++		local_branch="$branch"
+ 		if ! test -z "$update"
+ 		then
+ 			update_module=$update
+@@ -817,11 +831,15 @@ cmd_update()
+ 
+ 		displaypath=$(relative_path "$prefix$sm_path")
+ 
+-		if test "$update_module" = "none"
+-		then
++		case "$update_module" in
++		none)
+ 			echo "Skipping submodule '$displaypath'"
+ 			continue
+-		fi
++			;;
++		checkout)
++			local_branch=""
++			;;
++		esac
+ 
+ 		if test -z "$url"
+ 		then
+@@ -835,7 +853,8 @@ Maybe you want to use 'update --init'?")"
+ 
+ 		if ! test -d "$sm_path"/.git -o -f "$sm_path"/.git
+ 		then
+-			module_clone "$sm_path" "$name" "$url" "$reference" "$depth" || exit
++			start_point="origin/${branch}"
++			module_clone "$sm_path" "$name" "$url" "$reference" "$depth" "$start_point" "$local_branch" || exit
+ 			cloned_modules="$cloned_modules;$name"
+ 			subsha1=
+ 		else
+@@ -881,7 +900,7 @@ Maybe you want to use 'update --init'?")"
+ 			case ";$cloned_modules;" in
+ 			*";$name;"*)
+ 				# then there is no local change to integrate
+-				update_module=checkout ;;
++				update_module='!git reset --hard -q'
+ 			esac
+ 
+ 			must_die_on_failure=
 -- 
 1.8.5.2.8.g0f6c0d1
