@@ -1,121 +1,119 @@
-From: "W. Trevor King" <wking@tremily.us>
-Subject: Re: [PATCH v4 4/6] t7406: Just-cloned checkouts update to the
- gitlinked hash with 'reset'
-Date: Thu, 16 Jan 2014 11:32:12 -0800
-Message-ID: <20140116193212.GV2647@odin.tremily.us>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 3/6] submodule: Explicit local branch creation in module_clone
+Date: Thu, 16 Jan 2014 11:43:44 -0800
+Message-ID: <xmqqiotjzp8v.fsf@gitster.dls.corp.google.com>
 References: <20140114224246.GA13271@book.hvoigt.net>
- <09008c79ecc7d4fd92131b4049a25e65db92a30d.1389837412.git.wking@tremily.us>
- <xmqqmwivzq7n.fsf@gitster.dls.corp.google.com>
+	<96f9749de94f7e89f4d113f8cde69f2a960bcb88.1389837412.git.wking@tremily.us>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="A+KtNVtgI4x4SWvL"
+Content-Type: text/plain; charset=us-ascii
 Cc: Git <git@vger.kernel.org>, Jens Lehmann <Jens.Lehmann@web.de>,
 	Francesco Pretto <ceztko@gmail.com>,
 	Heiko Voigt <hvoigt@hvoigt.net>,
 	Jonathan Nieder <jrnieder@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 16 20:32:20 2014
+To: "W. Trevor King" <wking@tremily.us>
+X-From: git-owner@vger.kernel.org Thu Jan 16 20:43:52 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W3sfr-0007uV-EG
-	for gcvg-git-2@plane.gmane.org; Thu, 16 Jan 2014 20:32:19 +0100
+	id 1W3sr2-0000kQ-3P
+	for gcvg-git-2@plane.gmane.org; Thu, 16 Jan 2014 20:43:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751488AbaAPTcQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Jan 2014 14:32:16 -0500
-Received: from qmta07.westchester.pa.mail.comcast.net ([76.96.62.64]:57059
-	"EHLO qmta07.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751170AbaAPTcO (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 16 Jan 2014 14:32:14 -0500
-Received: from omta24.westchester.pa.mail.comcast.net ([76.96.62.76])
-	by qmta07.westchester.pa.mail.comcast.net with comcast
-	id Echm1n0071ei1Bg57jYEYa; Thu, 16 Jan 2014 19:32:14 +0000
-Received: from odin.tremily.us ([24.18.63.50])
-	by omta24.westchester.pa.mail.comcast.net with comcast
-	id EjYC1n00q152l3L3kjYDpZ; Thu, 16 Jan 2014 19:32:14 +0000
-Received: by odin.tremily.us (Postfix, from userid 1000)
-	id 5540AEFF0C4; Thu, 16 Jan 2014 11:32:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
-	t=1389900732; bh=NXinh3XhYHheMpTJLhlaW1GqgKG9SzacNY2EKSoKMrY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=f4sYQxsDfIJVqmwqd3M5w4tygo8XpGWMQfsX3P0dbMrMpfBIdjMkJz60pGZv9pzf+
-	 BeERVLEfaIW+ByUAaHIVGGeFQq6V4NM/2j50JMAzmWoTFtTB467thr5yOB1HsigjCi
-	 7aaGUaGjfnyUVSbMDdluTweNkWhFMcroQ1WFFQ54=
-Content-Disposition: inline
-In-Reply-To: <xmqqmwivzq7n.fsf@gitster.dls.corp.google.com>
-OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
- url=http://tremily.us/pubkey.txt
-User-Agent: Mutt/1.5.22 (2013-10-16)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-	s=q20121106; t=1389900734;
-	bh=Bdjh27HZtiozSOjUmV7E3ikMEPUrUuxTMN3gn0IiRmE=;
-	h=Received:Received:Received:Date:From:To:Subject:Message-ID:
-	 MIME-Version:Content-Type;
-	b=lELpFWg2aAkZZF8GCiHrAzblHv831uA8GgCqL5+79DesiUyf3BuMlLtcRcAMnNAeo
-	 K6Qxz02Ht+/0LUwAGcoCzleLe/O75OgSGALdD9GiU/On3v43qCoFpN/GdphIFftZMi
-	 tlSox9+ALKKAfaa1nQvLZFEwYjz2xMlyA+I2/av6z0yL64WQ2u4UJ6nG7XsBeSas6V
-	 n6QPBz04KbQbRcJdzVQHrbCQjouN5057bpMKTP9guynO16+xOnTRnhWlvLhv710Lng
-	 w4W4XHNHYGmDMKk55qGLZsKVQcEWlVwTsk+VGsgeVaRp4s4qCkuITzT1HQZLi7Ybtp
-	 4eBtxhJ8/8a1w==
+	id S1751289AbaAPTnt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Jan 2014 14:43:49 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54801 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750750AbaAPTnr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Jan 2014 14:43:47 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1272B630AA;
+	Thu, 16 Jan 2014 14:43:47 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ZIf5fj4JzQU0bx+qfEqrbO8vJp8=; b=ppLE9v
+	pEirbGpxt/iukgpIouyAeaqmScEzEiYdIuwG1bPUJzUfYIieBnEqB6dX6QHAlgD5
+	uSBxPoa6B5Zpb1h5B0uY/mLb92Bl/zblmizFDDb/hnJOQRpXga20UUPPlY+1505L
+	Rhxc+F0xyG05Tn+xwt+N3W0AAhlE8b0IaJ2FM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=KJBK20C9q8f1sAvKT54oS/wMK/wLkngg
+	ji4rvPadtn5n3QGoVh+5CVS9fiF4Yi7yjEjjKYj+mDS7L75twhJHQFJS+dt95FA0
+	jFu2GoErK8WTV3NjuK6huyQodA5czCnHiSb1PNxirrB1hgTEcTZoCy9ojjGkaEg0
+	Iulm2MLneyw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F34E3630A9;
+	Thu, 16 Jan 2014 14:43:46 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4814A630A5;
+	Thu, 16 Jan 2014 14:43:46 -0500 (EST)
+In-Reply-To: <96f9749de94f7e89f4d113f8cde69f2a960bcb88.1389837412.git.wking@tremily.us>
+	(W. Trevor King's message of "Wed, 15 Jan 2014 20:10:24 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 836D0F6A-7EE6-11E3-A1E7-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240525>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240526>
 
+"W. Trevor King" <wking@tremily.us> writes:
 
---A+KtNVtgI4x4SWvL
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> @@ -817,11 +831,15 @@ cmd_update()
+>  
+>  		displaypath=$(relative_path "$prefix$sm_path")
+>  
+> -		if test "$update_module" = "none"
+> -		then
+> +		case "$update_module" in
+> +		none)
+>  			echo "Skipping submodule '$displaypath'"
+>  			continue
+> -		fi
+> +			;;
+> +		checkout)
+> +			local_branch=""
+> +			;;
+> +		esac
 
-On Thu, Jan 16, 2014 at 11:22:52AM -0800, Junio C Hamano wrote:
-> "W. Trevor King" <wking@tremily.us> writes:
->=20
-> > To preserve the local branch, for situations where we're not on a
-> > detached HEAD.
-> >
-> > Signed-off-by: W. Trevor King <wking@tremily.us>
-> > ---
->=20
-> This should be a part of some other change that actually changes how
-> this "git submodule update" checks out the submodule, no?
+I wonder if there is a way to avoid detaching (and you may need to
+update the coddpath that resets the submodule to the commit
+specified by the superproject tree) when it is safe to do so.
 
-Sure, we can squash both this test fix and the subsequent new test
-patch into patch #3 in v5.  I was just splitting them out because
-backwards compatibility was a concern, and separate patches makes it
-easy for me to explain why the results changed here without getting
-lost in patch #3's implementation details.
+For an end user, running "submodule update" is similar to running
+"git pull" in a project that does not use submodules, expressing "I
+want to catch up with the work done by others".  In a working tree
+with local changes, we do allow you to run "git pull" as long as
+your local changes do not overlap with the work done by others, and
+the result of the pull would look as if you did not have any of the
+local changes when you ran "git pull" and then you did the local
+changes on top of the state that is up-to-date with their work.
 
-Cheers,
-Trevor
+Can't we design "submodule update --checkout" to work in a similar
+fashion?  The updated superproject may say it wants $oSHA-1 at a
+submodule path P, and also its .gitmodules may say that commit is
+supposed to be at the tip of branch B=submodule.P.branch in the
+submodule repository.  You may locally have advanced that branch in
+your submodule repository in the meantime to point at $ySHA-1 while
+others worked in the superproject and the submodule, and the
+difference $oSHA-1...$ySHA-1 can be considered as the local change
+made by you from the perspective of the superproject.
 
---=20
-This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
-For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
+Without thinking things through, if $ySHA-1 matches or is a
+descendant of $oSHA-1 (assuming that remote-tracking branch
+origin/$B in the submodule does point at $oSHA-1 in either case), it
+should be safe to do this update.
 
---A+KtNVtgI4x4SWvL
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
+And in a situation where you cannot do the checkout safely, it is
+perfectly fine to say "the submodules X and Y have local changes;
+you cannot do 'submodule update' until you upstream them" and fail
+the update, just like we fail a 'git pull' saying "you cannot do
+pull until you commit them", no?
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (GNU/Linux)
-
-iQIcBAEBAgAGBQJS2DO7AAoJEKKfehoaNkbtT0IQAJ4/Nmhe8tq1JaV2gJqSM0Yw
-Yn5A0KcVcr7NmDGHprnS2GCh7UV4v5fGGd+kORrn3+q8n9E3iKtuPuI20n3HLe8C
-Uct+Al7PyGNOvGlrPeWpMyJTBoB+wvk2ipNl9II3Smov83jju9kxg/7WZDM3TJkJ
-d11vOU5FW60nuyhHlZ2ufJX7MfVcE2s4LM7qeJMqjipi+rXbzMl9E6uccs+n+gi3
-dvDjVMPC7iMFKgdR0RUp3IBNUOzZ8F62E7zEu+jFMOP78xXAkBjFb8AVw9dF/UHx
-6pyHLXw950s6+h39kB/JEYyWx1P0eWdfnkYKMcaxstRiDGxLZWIaMJ9NzFKYu4+l
-Sw1vZ6mkMk73pWKxH1jYRvVvqnXdGmvsIqWuo7VVUjxRTNZasV7cc6MrN4MBqjzT
-q3WWQ9GfxF3p5HAG/jS8U9UkKLg3Db89v6CKOcwPxDrZM1i5zPWCaemOudvfH9Sq
-4YfJiQBD7KYlX3HpprWE10rnmoO7r1mQzlhG9p9Yae3uu6g7uuZCsIU9hmBFIoCO
-XOWahnHIHnEDw1qCQxorXZWaNrpL0GUHKfpXmjO7ZDFKm5babGu59jyZMWYAGkiE
-vLL+vfy6YVEHg1OKvQA6LvYaDbBiIb0HtXHWM7R6PUsnqptOh56Ob9z74eKdF7xR
-nv88gn6ruiW3Yo/9zGre
-=nOdZ
------END PGP SIGNATURE-----
-
---A+KtNVtgI4x4SWvL--
+Perhaps that kind of "'git submodule update' is parallel to 'git
+pull' in the project without submodules" is better done with other
+update modes like --rebase or --merge.  If so, how should we explain
+what 'submodule update --checkout' is to the end users?  Is it
+supposed to be like "git fetch && git checkout origin/master"?
