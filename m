@@ -1,91 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 1/2] revision: mark contents of an uninteresting tree uninteresting
-Date: Wed, 15 Jan 2014 16:35:16 -0800
-Message-ID: <xmqq61pk227v.fsf@gitster.dls.corp.google.com>
-References: <1389830384-22851-1-git-send-email-gitster@pobox.com>
-	<1389830384-22851-2-git-send-email-gitster@pobox.com>
-	<20140116001607.GN18964@google.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: Diagnosing stray/stale .keep files -- explore what is in a pack?
+Date: Thu, 16 Jan 2014 08:14:56 +0700
+Message-ID: <CACsJy8Bx4n7DSfA9JFZd_EcfN3baMtVtHHPVVKKq97jx=byigw@mail.gmail.com>
+References: <CACPiFCLa3X-Xt5GwrHHA-PFj-Bi9_sW+=y2xidZ7tDbFfM26rA@mail.gmail.com>
+ <CACPiFCJVx0dkkPQ=LosbAAKq7CvK6_yQL5QDHMYr5oJAS6wb6Q@mail.gmail.com>
+ <201401141236.44393.mfick@codeaurora.org> <CACPiFCLxiCOqv=wLeq9LxisWn5T62hk8xDYwXmeFRNT05HY0iQ@mail.gmail.com>
+ <20140115091220.GB14335@sigill.intra.peff.net> <CACPiFCKeOYHUb22d_Ea0PcbU-uAn=fVAn0QP1qbLAiNh1KEoqQ@mail.gmail.com>
+ <xmqqr4892l0u.fsf@gitster.dls.corp.google.com> <CACPiFC+koU1Fan+tbE2YgOstWGsDtDihpK-7CMOct7XAEpwJ2A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 16 01:35:27 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Martin Fick <mfick@codeaurora.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Martin Langhoff <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 16 02:15:36 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W3avd-0004ha-5C
-	for gcvg-git-2@plane.gmane.org; Thu, 16 Jan 2014 01:35:25 +0100
+	id 1W3bYU-0007RQ-4n
+	for gcvg-git-2@plane.gmane.org; Thu, 16 Jan 2014 02:15:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751379AbaAPAfW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Jan 2014 19:35:22 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56492 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750900AbaAPAfU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Jan 2014 19:35:20 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7545B64A25;
-	Wed, 15 Jan 2014 19:35:19 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=8gMflv+T/64muWCz/JP5o4KFgcM=; b=QNvm2S
-	5ZbDL++/M+O5gTwachHgT23rNUqjrV0eMQGEZFoq83eKps3k8Xa2wmCq8+CnI47g
-	1yEDsEGIoRMvtLe6ZRDdjgFrxjGU0WAEcu+lMlpfVgqq/+QVSlEOCd0VK47anAj8
-	knOa7A4egUbQVwTDFlveIQ1C0Vh8ppFQLY9Jo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=irALkb7e/RsxhH8NEKlk5ihGAWvU5J+F
-	Hx2eVTv0lXhAMY/Dbs0HxCto9ree1a61XWDaUFhQMx6hzicppbLoAWas8Z0Xr/q1
-	zReYM5j8JhOBC/1Kek0DdrLUXs4eR94c0xPtSh+sfaer120pFtQXZiSfHFdc9hZd
-	DoeMyJzN37w=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6876B64A22;
-	Wed, 15 Jan 2014 19:35:19 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C7E2264A21;
-	Wed, 15 Jan 2014 19:35:18 -0500 (EST)
-In-Reply-To: <20140116001607.GN18964@google.com> (Jonathan Nieder's message of
-	"Wed, 15 Jan 2014 16:16:07 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 1353BE68-7E46-11E3-BF14-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752194AbaAPBPb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Jan 2014 20:15:31 -0500
+Received: from mail-qe0-f44.google.com ([209.85.128.44]:62259 "EHLO
+	mail-qe0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751964AbaAPBP3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Jan 2014 20:15:29 -0500
+Received: by mail-qe0-f44.google.com with SMTP id 1so1924952qee.17
+        for <git@vger.kernel.org>; Wed, 15 Jan 2014 17:15:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=hTYLprswSTn2EYJrcO72+/7Qgs6RXfveuwTQq7RkGOs=;
+        b=UBr0y3UcHcEnuNtL4WR06bFdR6Do1l9GJOWsNJ2tkeMFEDmZlNqz/jzadPmPd5N7Ld
+         Murd7CsTYn39ygI2U/wbXRVWyHSRmLePg8Vb1O+EX/oM/Bs+YyCenfmb/cesd7GbcSd6
+         9k9b01Bf5NGVr+R5iX/tJ/t1lS/jSDkErn+UwJjUDT/vYDC2SS1JvdnJl25M17P35Te8
+         In86IQBmiNMLJns4cwVcyP/AqUPViY6bsrbwn4fqiHa4Y4iBoTaNAbS8cF2zeOE7tGMH
+         wPhWYcK27GdJPLP6SseiUUM032tGdlgi2fJQUeSxSz1BzlZ3uUFUU0Zt5/sFp8w8xMWd
+         OM8g==
+X-Received: by 10.224.165.12 with SMTP id g12mr9815168qay.89.1389834927018;
+ Wed, 15 Jan 2014 17:15:27 -0800 (PST)
+Received: by 10.96.136.98 with HTTP; Wed, 15 Jan 2014 17:14:56 -0800 (PST)
+In-Reply-To: <CACPiFC+koU1Fan+tbE2YgOstWGsDtDihpK-7CMOct7XAEpwJ2A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240496>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240497>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
-
-> Junio C Hamano wrote:
+On Thu, Jan 16, 2014 at 6:50 AM, Martin Langhoff
+<martin.langhoff@gmail.com> wrote:
+> On Wed, Jan 15, 2014 at 12:49 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> As long as we can reliably determine that it is safe to do so
+>> without risking races, automatically cleaning .lock files is a good
+>> thing to do.
 >
->> we see the top-level tree marked as uninteresting (i.e. ^A^{tree} in
->> the above example) and call mark_tree_uninteresting() on it; this
->> unfortunately prevents us from recursing into the tree and marking
->> the objects in the tree as uninteresting.
->
-> So the tree is marked uninteresting twice --- once by setting in the
-> UNINTERESTING flag in handle_revision_arg() and a second attempted
-> time in mark_tree_uninteresting()?   Makes sense.
+> If the .lock file is a day old, it seems to me that it should be safe
+> to call it stale.
 
-It is that the original code, the setting of the mark on the object
-itself was inconsistent.  For commits, we did that ourselves; for
-trees, we let the mark_tree_uninteresting() do so.
-
-And mark_tree_uninteresting() has this quirk that it refuses to
-recurse into the given tree, if the tree is already marked as
-uninteresting by the caller.
-
-We did not have the same problem on commits, because we make a
-similar call to mark-parents-uninteresting but the function does not
-care if the commit itself is already marked as uninteresting.
-
-The distinction does not matter when tags are not involved.  But
-once we start propagating the flags from a tag to objects that the
-tag points at, it starts to matter.  The caller will mark the object
-uninteresting in the loop that peels the tag, and the resulting
-object is uninteresting.  It is not a problem for commits.  It was a
-problem for trees, which used mark_tree_uninteresting() to mark all
-the objects inside the tree uninteresting, including the tree itself.
+Perhaps report those stale locks (and stale .keep files as well if you
+can detct them) as garbage in count-objects too.
+-- 
+Duy
