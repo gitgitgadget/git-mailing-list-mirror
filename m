@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH/WIP v2 04/14] read-cache: ask file watcher to watch files
-Date: Fri, 17 Jan 2014 16:47:30 +0700
-Message-ID: <1389952060-12297-5-git-send-email-pclouds@gmail.com>
+Subject: [PATCH/WIP v2 05/14] read-cache: put some limits on file watching
+Date: Fri, 17 Jan 2014 16:47:31 +0700
+Message-ID: <1389952060-12297-6-git-send-email-pclouds@gmail.com>
 References: <1389524622-6702-1-git-send-email-pclouds@gmail.com>
  <1389952060-12297-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
@@ -12,311 +12,268 @@ Cc: tr@thomasrast.ch,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 17 10:48:46 2014
+X-From: git-owner@vger.kernel.org Fri Jan 17 10:49:05 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W462f-0002T2-7R
-	for gcvg-git-2@plane.gmane.org; Fri, 17 Jan 2014 10:48:45 +0100
+	id 1W462y-0002uW-9y
+	for gcvg-git-2@plane.gmane.org; Fri, 17 Jan 2014 10:49:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752297AbaAQJsi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 17 Jan 2014 04:48:38 -0500
-Received: from mail-pd0-f172.google.com ([209.85.192.172]:47542 "EHLO
-	mail-pd0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752273AbaAQJsa (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Jan 2014 04:48:30 -0500
-Received: by mail-pd0-f172.google.com with SMTP id z10so3792451pdj.31
-        for <git@vger.kernel.org>; Fri, 17 Jan 2014 01:48:29 -0800 (PST)
+	id S1752315AbaAQJsr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 17 Jan 2014 04:48:47 -0500
+Received: from mail-pb0-f52.google.com ([209.85.160.52]:56514 "EHLO
+	mail-pb0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751542AbaAQJsf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Jan 2014 04:48:35 -0500
+Received: by mail-pb0-f52.google.com with SMTP id jt11so1830626pbb.11
+        for <git@vger.kernel.org>; Fri, 17 Jan 2014 01:48:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=NxSLhaaY5RlV7mZ8tIRUoiF7FnlVvrSa5w+GqW3rjIs=;
-        b=K+qBacOaQxtrIAW8e7wkUPdcdnuw1B0NRdK0S6HPRxh0l3ldGL+l/sEyoKFDd5fg3m
-         JEn+kx5bnvjyvGCJ9Fz+fWaQuTwQTd0Ckr2FXzcTuU29G5JhS5raYAsSDj11cHZajfoZ
-         uXXaWfxtr0W6Ms0TmZ440ndeAGtd+/+AFeZ1lWLyhM8EsVxhIpVwTa31QSo5TaCdwZdx
-         +R7kDhY68rfxMwFSn8DnHTut5pVLKEZ8gUTA/8ZGtWkmWB2sVSFJMNYjs7eUxA6PggH6
-         6oaJJzGTJBQnj1zmIWsbuBFMzODIVV3Gg6s1nNVDfA79uy3UqAJ5ezXEjECjy3/eSZ3N
-         LErg==
-X-Received: by 10.67.3.34 with SMTP id bt2mr1035749pad.3.1389952109644;
-        Fri, 17 Jan 2014 01:48:29 -0800 (PST)
+        bh=BKL8bWXYnLjlpTEZBJjhXlFMC07cnMzyuLIlpyz62/8=;
+        b=tScbibJbj07DfxOVhmpk7Oiojvm2m7qJa33/E/vvlJTtoLmyDJ4TVv4a3Y5gQK5L6H
+         hHcnrYTXSHOzCyl0UE7B4+adWVd8FxPn6lLZtD8BsX49B6YNMZAEAx0fchKCErgKsdW5
+         8538O3QZzFPfNB0PM05uJ6jdLOL7mzhlxmHU3jw/AbXSHUKvIu7Rmf5s/gH0FNc5oC5L
+         1+lS3DS/9OpdhlKJ8FxrKaZLPr0oUA2f73KjVxokyWmLEBUZWL2ZN/49qPxqvJU5gCEU
+         SMh2hPB1LcV2loyMd+WJR6maPYEgAwjqR9c+SMJxGuBn61hEJHdfTa3ULTVYB7mEQIKG
+         H8lQ==
+X-Received: by 10.66.165.4 with SMTP id yu4mr1112264pab.88.1389952115371;
+        Fri, 17 Jan 2014 01:48:35 -0800 (PST)
 Received: from pclouds@gmail.com ([14.161.32.83])
-        by mx.google.com with ESMTPSA id zc5sm21310220pbc.41.2014.01.17.01.48.26
+        by mx.google.com with ESMTPSA id ns7sm21324281pbc.32.2014.01.17.01.48.32
         for <multiple recipients>
         (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Fri, 17 Jan 2014 01:48:29 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Fri, 17 Jan 2014 16:48:24 +0700
+        Fri, 17 Jan 2014 01:48:34 -0800 (PST)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Fri, 17 Jan 2014 16:48:29 +0700
 X-Mailer: git-send-email 1.8.5.1.208.g05b12ea
 In-Reply-To: <1389952060-12297-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240584>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240585>
 
-We want to watch files that are never changed because lstat() on those
-files is a wasted effort. So we sort unwatched files by date and start
-adding them to the file watcher until it barfs (e.g. hits inotify
-limit). Recently updated entries are also excluded from watch list.
-CE_VALID is used in combination with CE_WATCHED. Those entries that
-have CE_VALID already set will never be watched.
+watch_entries() is a lot of computation and could trigger a lot more
+lookups in file-watcher. Normally after the first set of watches are
+in place, we do not need to update often. Moreover if the number of
+entries is small, the overhead of file watcher may actually slow git
+down.
 
-We send as many paths as possible in one packet in pkt-line format to
-reduce roundtrips. For small projects like git, all entries can be
-packed in one packet. For large projects like webkit (182k entries) it
-takes two packets. We may do prefix compression as well to send more
-in fewer packets..
+This patch only allows to update watches if the number of watchable
+files is over a limit (and there are new files added if this is not
+the first time). Measurements on Core i5-2520M and Linux 3.7.6, about
+920 lstat() take 1ms. Somewhere between 2^16 and 2^17 lstat calls that
+it starts to take longer than 100ms. 2^16 is chosen at the minimum
+limit to start using file watcher.
 
-The file watcher replies how many entries it can watch (because at
-least inotify has system limits).
-
-Note that we still do lstat() on these new watched files because they
-could have changed before the file watcher could watch them. Watched
-files may only skip lstat() at the next git run.
+Recently updated files are not considered watchable because they are
+likely to be updated again soon, not worth the ping-pong game with
+file watcher. The default limit 30min is just a random value.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- file-watcher.c |  31 ++++++++++++++++
- pkt-line.c     |   2 +-
- pkt-line.h     |   2 ++
- read-cache.c   | 111 +++++++++++++++++++++++++++++++++++++++++++++++++=
-++++++--
- 4 files changed, 143 insertions(+), 3 deletions(-)
+ Documentation/config.txt |  9 +++++++++
+ cache.h                  |  1 +
+ read-cache.c             | 44 ++++++++++++++++++++++++++++++++++++----=
+----
+ 3 files changed, 46 insertions(+), 8 deletions(-)
 
-diff --git a/file-watcher.c b/file-watcher.c
-index 36a9a8d..3a54168 100644
---- a/file-watcher.c
-+++ b/file-watcher.c
-@@ -3,6 +3,7 @@
- #include "parse-options.h"
- #include "exec_cmd.h"
- #include "file-watcher-lib.h"
-+#include "pkt-line.h"
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index a405806..e394399 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1038,6 +1038,15 @@ difftool.<tool>.cmd::
+ difftool.prompt::
+ 	Prompt before each invocation of the diff tool.
 =20
- static const char *const file_watcher_usage[] =3D {
- 	N_("git file-watcher [options]"),
-@@ -11,6 +12,34 @@ static const char *const file_watcher_usage[] =3D {
-=20
- static char index_signature[41];
-=20
-+static int watch_path(char *path)
-+{
-+	/*
-+	 * Consider send "wait" every 10ms or so, in case there are
-+	 * many paths to process that takes more than 20ms or the
-+	 * sender won't keep waiting. This is usually one-time cost,
-+	 * waiting a bit is ok.
-+	 */
-+	return -1;
-+}
++filewatcher.minfiles::
++	Start watching files if the number of watchable files are
++	above this limit. Default value is 65536.
 +
-+static void watch_paths(char *buf, int maxlen,
-+			int fd, struct sockaddr_un *sock)
-+{
-+	char *end =3D buf + maxlen;
-+	int n, ret, len;
-+	for (n =3D ret =3D 0; buf < end && !ret; buf +=3D len) {
-+		char ch;
-+		len =3D packet_length(buf);
-+		ch =3D buf[len];
-+		buf[len] =3D '\0';
-+		if (!(ret =3D watch_path(buf + 4)))
-+			n++;
-+		buf[len] =3D ch;
-+	}
-+	send_watcher(fd, sock, "fine %d", n);
-+}
++filewatcher.recentlimit::
++	Files that are last updated within filewatcher.recentlimit
++	seconds from now are not considered watchable. Default value
++	is 1800 (30 minutes).
 +
- static int handle_command(int fd)
- {
- 	struct sockaddr_un sun;
-@@ -29,6 +58,8 @@ static int handle_command(int fd)
- 			 * wrong. Clean up and start over.
- 			 */
- 			index_signature[0] =3D '\0';
-+	} else if (starts_with(msg, "watch ")) {
-+		watch_paths(msg + 6, len - 6, fd, &sun);
- 	} else if (!strcmp(msg, "die")) {
- 		exit(0);
- 	} else {
-diff --git a/pkt-line.c b/pkt-line.c
-index bc63b3b..b5af84e 100644
---- a/pkt-line.c
-+++ b/pkt-line.c
-@@ -135,7 +135,7 @@ static int get_packet_data(int fd, char **src_buf, =
-size_t *src_size,
- 	return ret;
- }
-=20
--static int packet_length(const char *linelen)
-+int packet_length(const char *linelen)
- {
- 	int n;
- 	int len =3D 0;
-diff --git a/pkt-line.h b/pkt-line.h
-index 0a838d1..40470b9 100644
---- a/pkt-line.h
-+++ b/pkt-line.h
-@@ -75,6 +75,8 @@ char *packet_read_line(int fd, int *size);
-  */
- char *packet_read_line_buf(char **src_buf, size_t *src_len, int *size)=
-;
-=20
-+int packet_length(const char *linelen);
-+
- #define DEFAULT_PACKET_MAX 1000
- #define LARGE_PACKET_MAX 65520
- extern char packet_buffer[LARGE_PACKET_MAX];
+ fetch.recurseSubmodules::
+ 	This option can be either set to a boolean value or to 'on-demand'.
+ 	Setting it to a boolean changes the behavior of fetch and pull to
+diff --git a/cache.h b/cache.h
+index 0d55551..bcec29b 100644
+--- a/cache.h
++++ b/cache.h
+@@ -278,6 +278,7 @@ struct index_state {
+ 	struct cache_tree *cache_tree;
+ 	struct cache_time timestamp;
+ 	unsigned name_hash_initialized : 1,
++		 update_watches : 1,
+ 		 initialized : 1;
+ 	struct hashmap name_hash;
+ 	struct hashmap dir_hash;
 diff --git a/read-cache.c b/read-cache.c
-index 76cf0e3..21c3207 100644
+index 21c3207..406834a 100644
 --- a/read-cache.c
 +++ b/read-cache.c
-@@ -15,6 +15,7 @@
- #include "strbuf.h"
- #include "varint.h"
- #include "file-watcher-lib.h"
-+#include "pkt-line.h"
+@@ -38,6 +38,8 @@ static struct cache_entry *refresh_cache_entry(struct=
+ cache_entry *ce, int reall
+ #define CACHE_EXT_WATCH 0x57415443	  /* "WATC" */
 =20
- static struct cache_entry *refresh_cache_entry(struct cache_entry *ce,=
- int really);
+ struct index_state the_index;
++static int watch_lowerlimit =3D 65536;
++static int recent_limit =3D 1800;
 =20
-@@ -1479,6 +1480,98 @@ static void validate_watcher(struct index_state =
-*istate, const char *path)
- 		}
+ static void set_index_entry(struct index_state *istate, int nr, struct=
+ cache_entry *ce)
+ {
+@@ -1014,6 +1016,7 @@ int add_index_entry(struct index_state *istate, s=
+truct cache_entry *ce, int opti
+ 			(istate->cache_nr - pos - 1) * sizeof(ce));
+ 	set_index_entry(istate, pos, ce);
+ 	istate->cache_changed =3D 1;
++	istate->update_watches =3D 1;
+ 	return 0;
  }
 =20
-+static int sort_by_date(const void *a_, const void *b_)
+@@ -1300,13 +1303,14 @@ static void read_watch_extension(struct index_s=
+tate *istate, uint8_t *data,
+ 				 unsigned long sz)
+ {
+ 	int i;
+-	if ((istate->cache_nr + 7) / 8 !=3D sz) {
++	if ((istate->cache_nr + 7) / 8 + 1 !=3D sz) {
+ 		error("invalid 'WATC' extension");
+ 		return;
+ 	}
+ 	for (i =3D 0; i < istate->cache_nr; i++)
+ 		if (data[i / 8] & (1 << (i % 8)))
+ 			istate->cache[i]->ce_flags |=3D CE_WATCHED;
++	istate->update_watches =3D data[sz - 1];
+ }
+=20
+ static int read_index_extension(struct index_state *istate,
+@@ -1449,6 +1453,19 @@ static struct cache_entry *create_from_disk(stru=
+ct ondisk_cache_entry *ondisk,
+ 	return ce;
+ }
+=20
++static int watcher_config(const char *var, const char *value, void *da=
+ta)
 +{
-+	const struct cache_entry *a =3D *(const struct cache_entry **)a_;
-+	const struct cache_entry *b =3D *(const struct cache_entry **)b_;
-+	uint32_t seca =3D a->ce_stat_data.sd_mtime.sec;
-+	uint32_t secb =3D b->ce_stat_data.sd_mtime.sec;
-+	return seca - secb;
-+}
-+
-+static int do_watch_entries(struct index_state *istate,
-+			    struct cache_entry **cache,
-+			    struct strbuf *sb, int start, int now)
-+{
-+	char *line;
-+	int i;
-+	ssize_t len;
-+
-+	send_watcher(istate->watcher, NULL, "%s", sb->buf);
-+	line =3D read_watcher(istate->watcher, &len, NULL);
-+	if (!line) {
-+		if (!len) {
-+			close(istate->watcher);
-+			istate->watcher =3D -1;
-+		}
-+		return -1;
++	if (!strcmp(var, "filewatcher.minfiles")) {
++		watch_lowerlimit =3D git_config_int(var, value);
++		return 0;
 +	}
-+	if (starts_with(line, "fine ")) {
-+		char *end;
-+		long n =3D strtoul(line + 5, &end, 10);
-+		if (end !=3D line + len)
-+			return -1;
-+		for (i =3D 0; i < n; i++)
-+			cache[start + i]->ce_flags |=3D CE_WATCHED;
-+		istate->cache_changed =3D 1;
-+		if (i !=3D now)
-+			return -1;
-+	} else
-+		return -1;
-+	start =3D i;
-+	strbuf_reset(sb);
-+	strbuf_addstr(sb, "watch ");
++	if (!strcmp(var, "filewatcher.recentlimit")) {
++		recent_limit =3D git_config_int(var, value);
++		return 0;
++	}
 +	return 0;
 +}
 +
-+static inline int ce_watchable(struct cache_entry *ce)
-+{
-+	return ce_uptodate(ce) && /* write_index will catch late ce_uptodate =
-bits */
-+		!(ce->ce_flags & CE_WATCHED) &&
-+		!(ce->ce_flags & CE_VALID) &&
-+		/*
-+		 * S_IFGITLINK should not be watched
-+		 * obviously. S_IFLNK could be problematic because
-+		 * inotify may follow symlinks without IN_DONT_FOLLOW
-+		 */
-+		S_ISREG(ce->ce_mode);
-+}
-+
-+static void watch_entries(struct index_state *istate)
-+{
-+	int i, start, nr;
-+	struct cache_entry **sorted;
-+	struct strbuf sb =3D STRBUF_INIT;
-+	int val;
-+	socklen_t vallen =3D sizeof(val);
-+
-+	if (istate->watcher <=3D 0)
-+		return;
-+	for (i =3D nr =3D 0; i < istate->cache_nr; i++)
-+		if (ce_watchable(istate->cache[i]))
-+			nr++;
-+	sorted =3D xmalloc(sizeof(*sorted) * nr);
-+	for (i =3D nr =3D 0; i < istate->cache_nr; i++)
-+		if (ce_watchable(istate->cache[i]))
-+			sorted[nr++] =3D istate->cache[i];
-+
-+	getsockopt(istate->watcher, SOL_SOCKET, SO_SNDBUF, &val, &vallen);
-+	strbuf_grow(&sb, val);
-+	strbuf_addstr(&sb, "watch ");
-+
-+	qsort(sorted, nr, sizeof(*sorted), sort_by_date);
-+	for (i =3D start =3D 0; i < nr; i++) {
-+		if (sb.len + 4 + ce_namelen(sorted[i]) >=3D val &&
-+		    do_watch_entries(istate, sorted, &sb, start, i))
-+			break;
-+		packet_buf_write(&sb, "%s", sorted[i]->name);
-+	}
-+	if (i =3D=3D nr && start < i)
-+		do_watch_entries(istate, sorted, &sb, start, i);
-+	strbuf_release(&sb);
-+	free(sorted);
-+}
-+
- /* remember to discard_cache() before reading a different cache! */
- int read_index_from(struct index_state *istate, const char *path)
+ static void validate_watcher(struct index_state *istate, const char *p=
+ath)
  {
-@@ -1565,6 +1658,7 @@ int read_index_from(struct index_state *istate, c=
-onst char *path)
+ 	int i;
+@@ -1458,6 +1475,7 @@ static void validate_watcher(struct index_state *=
+istate, const char *path)
+ 		return;
  	}
- 	munmap(mmap, mmap_size);
- 	validate_watcher(istate, path);
-+	watch_entries(istate);
- 	return istate->cache_nr;
 =20
- unmap:
-@@ -1844,8 +1938,21 @@ int write_index(struct index_state *istate, int =
-newfd)
- 	for (i =3D removed =3D extended =3D 0; i < entries; i++) {
- 		if (cache[i]->ce_flags & CE_REMOVE)
- 			removed++;
--		else if (cache[i]->ce_flags & CE_WATCHED)
--			has_watches++;
-+		else if (cache[i]->ce_flags & CE_WATCHED) {
-+			/*
-+			 * We may set CE_WATCHED (but not CE_VALID)
-+			 * early when refresh has not been done
-+			 * yet. At that time we had no idea if the
-+			 * entry may have been updated. If it has
-+			 * been, remove CE_WATCHED so CE_VALID won't
-+			 * incorrectly be set next time if the file
-+			 * watcher reports no changes.
-+			 */
-+			if (!ce_uptodate(cache[i]))
-+				cache[i]->ce_flags &=3D ~CE_WATCHED;
-+			else
-+				has_watches++;
-+		}
++	git_config(watcher_config, NULL);
+ 	istate->watcher =3D connect_watcher(path);
+ 	if (istate->watcher !=3D -1) {
+ 		struct strbuf sb =3D STRBUF_INIT;
+@@ -1478,6 +1496,7 @@ static void validate_watcher(struct index_state *=
+istate, const char *path)
+ 			istate->cache[i]->ce_flags &=3D ~CE_WATCHED;
+ 			istate->cache_changed =3D 1;
+ 		}
++	istate->update_watches =3D 1;
+ }
 =20
- 		/* reduce extended entries if possible */
- 		cache[i]->ce_flags &=3D ~CE_EXTENDED;
+ static int sort_by_date(const void *a_, const void *b_)
+@@ -1524,7 +1543,7 @@ static int do_watch_entries(struct index_state *i=
+state,
+ 	return 0;
+ }
+=20
+-static inline int ce_watchable(struct cache_entry *ce)
++static inline int ce_watchable(struct cache_entry *ce, time_t now)
+ {
+ 	return ce_uptodate(ce) && /* write_index will catch late ce_uptodate =
+bits */
+ 		!(ce->ce_flags & CE_WATCHED) &&
+@@ -1534,7 +1553,8 @@ static inline int ce_watchable(struct cache_entry=
+ *ce)
+ 		 * obviously. S_IFLNK could be problematic because
+ 		 * inotify may follow symlinks without IN_DONT_FOLLOW
+ 		 */
+-		S_ISREG(ce->ce_mode);
++		S_ISREG(ce->ce_mode) &&
++		(ce->ce_stat_data.sd_mtime.sec + recent_limit < now);
+ }
+=20
+ static void watch_entries(struct index_state *istate)
+@@ -1544,15 +1564,20 @@ static void watch_entries(struct index_state *i=
+state)
+ 	struct strbuf sb =3D STRBUF_INIT;
+ 	int val;
+ 	socklen_t vallen =3D sizeof(val);
++	time_t now =3D time(NULL);
+=20
+-	if (istate->watcher <=3D 0)
++	if (istate->watcher <=3D 0 || !istate->update_watches)
+ 		return;
++	istate->update_watches =3D 0;
++	istate->cache_changed =3D 1;
+ 	for (i =3D nr =3D 0; i < istate->cache_nr; i++)
+-		if (ce_watchable(istate->cache[i]))
++		if (ce_watchable(istate->cache[i], now))
+ 			nr++;
++	if (nr < watch_lowerlimit)
++		return;
+ 	sorted =3D xmalloc(sizeof(*sorted) * nr);
+ 	for (i =3D nr =3D 0; i < istate->cache_nr; i++)
+-		if (ce_watchable(istate->cache[i]))
++		if (ce_watchable(istate->cache[i], now))
+ 			sorted[nr++] =3D istate->cache[i];
+=20
+ 	getsockopt(istate->watcher, SOL_SOCKET, SO_SNDBUF, &val, &vallen);
+@@ -1616,6 +1641,7 @@ int read_index_from(struct index_state *istate, c=
+onst char *path)
+ 	istate->cache_alloc =3D alloc_nr(istate->cache_nr);
+ 	istate->cache =3D xcalloc(istate->cache_alloc, sizeof(*istate->cache)=
+);
+ 	istate->initialized =3D 1;
++	istate->update_watches =3D 1;
+=20
+ 	if (istate->version =3D=3D 4)
+ 		previous_name =3D &previous_name_buf;
+@@ -2024,8 +2050,9 @@ int write_index(struct index_state *istate, int n=
+ewfd)
+ 		if (err)
+ 			return -1;
+ 	}
+-	if (has_watches) {
+-		int id, sz =3D (entries - removed + 7) / 8;
++	if (has_watches ||
++	    (istate->watcher !=3D -1 && !istate->update_watches)) {
++		int id, sz =3D (entries - removed + 7) / 8 + 1;
+ 		uint8_t *data =3D xmalloc(sz);
+ 		memset(data, 0, sz);
+ 		for (i =3D 0, id =3D 0; i < entries && has_watches; i++) {
+@@ -2038,6 +2065,7 @@ int write_index(struct index_state *istate, int n=
+ewfd)
+ 			}
+ 			id++;
+ 		}
++		data[sz - 1] =3D istate->update_watches;
+ 		err =3D write_index_ext_header(&c, newfd, CACHE_EXT_WATCH, sz) < 0
+ 			|| ce_write(&c, newfd, data, sz) < 0;
+ 		free(data);
 --=20
 1.8.5.1.208.g05b12ea
