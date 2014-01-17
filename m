@@ -1,74 +1,111 @@
-From: Strainu <strainu10@gmail.com>
-Subject: Re: BUG: [Cosmetic] Commiting a gerrit ChangeId before the commit
- hook was installed
-Date: Fri, 17 Jan 2014 23:10:27 +0200
-Message-ID: <CAC9meR+78_EvoqHNcuPyDKOZDjSsUngziGDa2aV1QDtOb8eOXw@mail.gmail.com>
-References: <CAC9meRKiR+60YaGiuCu4twEt6dyWksEjHSH8YPTEvmD=LoB=aw@mail.gmail.com>
- <20140117204132.GB18964@google.com>
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: Workflow on git with 2 branch with specifc code
+Date: Fri, 17 Jan 2014 23:05:07 +0000
+Message-ID: <20140117230507.GD107228@vauxhall.crustytoothpaste.net>
+References: <1389960868.21737.2.camel@pc14.intranet>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>, openstack-infra@lists.openstack.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 17 22:11:15 2014
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="Q0rSlbzrZN6k9QnT"
+Cc: git@vger.kernel.org
+To: Gordon Freeman <freemanmtc@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jan 18 00:05:26 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W4Gh7-0007HG-J0
-	for gcvg-git-2@plane.gmane.org; Fri, 17 Jan 2014 22:11:13 +0100
+	id 1W4ITe-0004CL-Dt
+	for gcvg-git-2@plane.gmane.org; Sat, 18 Jan 2014 00:05:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751897AbaAQVLJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Jan 2014 16:11:09 -0500
-Received: from mail-pd0-f169.google.com ([209.85.192.169]:51580 "EHLO
-	mail-pd0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751484AbaAQVLI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Jan 2014 16:11:08 -0500
-Received: by mail-pd0-f169.google.com with SMTP id v10so4486552pde.28
-        for <git@vger.kernel.org>; Fri, 17 Jan 2014 13:11:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=54hPggutn19hVUOe1hJqSIQkz8hrqfMtc2O7l5Yf8K4=;
-        b=YpEtCD1Gqmho6QKxng6Gr3JS/yA25sG76BgA/6Yt43OInQNWGg6Xwya/euYZPEzCsp
-         YK4D7Qc9E9dmBZ34pCZAjet6W2YipAyVOl+24z8fDiFB0U5WWnl8KNUKd3DqijWC69TH
-         LtVyYb+bp71/yosOdNmABsF8190b0mOg6oIlu5YMVr/I6IYhPrltR2F8E9FLxG2IgGXO
-         rAobt6qoy/DWXZyUksVqWun9QosNQjuTXMJDRJ5fAVLSamiVOfcZsrClk1oiVzQNtuIu
-         MIJIbBsrmZP+U1Okn2mv5Wc5XvrlR+wX9SP9kUjD5vWOXcKe4PW7iOYPkrVs8czcIDkv
-         Piqw==
-X-Received: by 10.68.204.161 with SMTP id kz1mr4579232pbc.156.1389993068056;
- Fri, 17 Jan 2014 13:11:08 -0800 (PST)
-Received: by 10.68.175.225 with HTTP; Fri, 17 Jan 2014 13:10:27 -0800 (PST)
-In-Reply-To: <20140117204132.GB18964@google.com>
+	id S1753443AbaAQXFV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Jan 2014 18:05:21 -0500
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:51143 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751892AbaAQXFU (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 17 Jan 2014 18:05:20 -0500
+Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:8133:d4ab:17ba:f5ea])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 9BCF728074;
+	Fri, 17 Jan 2014 23:05:12 +0000 (UTC)
+Mail-Followup-To: Gordon Freeman <freemanmtc@gmail.com>,
+	git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <1389960868.21737.2.camel@pc14.intranet>
+X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
+ 3.12-1-amd64)
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240632>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240633>
 
-2014/1/17 Jonathan Nieder <jrnieder@gmail.com>:
-> Hi,
->
-> Strainu wrote:
->
->> strainu@emily:~/core> git review -f
->> Creating a git remote called "gerrit" that maps to:
->>         ssh://strainu@gerrit.wikimedia.org:29418/pywikibot/core.git
->> Your change was committed before the commit hook was installed.
->> Amending the commit to add a gerrit change id.
->>
->> At this point I ended the transaction, as I was confused by the last
->> message: I was afraid the ChangeId would have changed, causing the
->> patch to be attached to another review.
->>
->> I think git should not show this message if the change description
->> already has a change id
->
-> This message doesn't come from git.  It comes from the git-review
-> tool (in git_review/cmd.py), so cc-ing the authors in case they
-> have thoughts on that.
 
-Thanks for clarifying that. I'll log a bug on launchpad then.
+--Q0rSlbzrZN6k9QnT
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Strainu
+On Fri, Jan 17, 2014 at 10:14:28AM -0200, Gordon Freeman wrote:
+> Hello guys, im Gordon.
+>
+> I have a question about workflow with git that i dont know if im doing
+> it right.
+> I have 1 repo with 2 branchs the first is the master of the project.
+> the second is a branch copy of the master but he need to have some
+> specifc code because is code for a client.
+> so, every time that i updade master i need to merge master with client
+> branch and it give me conflicts of course that will hapen.
+> Well if was just me who work on this 2 branchs it will be easy to fix
+> the conflicts and let all work and shine.
+> But whe have here, 10 people woking on master branch and some times code
+> are lost on merge and we need to look on commits to search whats goin
+> on.
+> What i just asking here is if its correct the workflow that i do. If for
+> some problem like this, the community have a standard resolution. Or if
+> what im doing here is all wrong.
+
+There are many correct workflows.  I personally use the workflow you've
+mentioned for the exact same reason (customizations for a client), but
+I'm the only developer on that repository.
+
+What you might try instead is a slightly different workflow.  Have each
+developer create a feature branch to add a feature or fix a bug.  Merge
+these into master as they become ready.  Have a specific person or group
+of people be integrators, and have them merge master into the client
+branch as necessary, fixing up any conflicts.  When conflicts are
+non-trivial, use pair programming or a review process to ensure that the
+result is good.
+
+We use a similar workflow at my regular employer, and it is generally
+very successful for a department with 45 employees.
+
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
+
+--Q0rSlbzrZN6k9QnT
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCgAGBQJS2bciAAoJEL9TXYEfUvaLCmsP/0tn0qFBzGouNTbzbzr2Wbgz
+yq77NqABOS9ZTvPFipcqX8xve/gI33pZ9i81l/nzU0zASXbEzh0y8QGTkxTBJu4C
+0PKKijM5xEkNOKYfYj1BbkRcTVZ+qeK6t901RULcpmi46xD5vWJgLEKWeB8x/syp
+iPREW314dz9/dkT2ZyPZJmOhapj7qnxG1sSJWr/s4FXN4f3BRuSPiL2w4FCx1fuO
+eh/Wnpv8OwItVlLeo1BsGV2GArBHtPsr/w+d/fLb1zZd0WuRZKE2UH6/lsY54EaS
+jEr6mN/kdwqX0FZy+Mk9LnMUXu+CDGH+Iy6PYWfrC4SOp7J+BTCVvOwfoHh2MRAN
+TNMWIm4Kql7n5u1nH0C95utY4+C9znsXVANJw86tPxZvSipxQJVyWD4tQpfK1ikb
+YevGAFz3rT4Iug7b+gkxPIjFN9gv0GhvoP/W1QzmxDYmor1EtKP2D6WjJM23mVrQ
+npjimG70o2D8M44WvCBQwhbaMGYG3BSNJqfautHPq6ZDisZGdTgJ20ErQhAyKbMq
+435Yb5FSLIhz0hK4k4aVc5rDC2NaUfo+4OoegqRhJ/YiKTfi4tHLCrSuI0X4kdTz
+EJPEZShgBcvkoFjCLRpsu/eSgEM88J/pQwe/LcHUM+2Em4mYhjWSXjV1Qb6ceFiQ
+J9MgfCs7gqEffAnoX9Lp
+=PL9y
+-----END PGP SIGNATURE-----
+
+--Q0rSlbzrZN6k9QnT--
