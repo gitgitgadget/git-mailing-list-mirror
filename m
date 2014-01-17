@@ -1,92 +1,52 @@
-From: Jeff King <peff@peff.net>
+From: Yuri <yuri@rawbw.com>
 Subject: Re: 'git log' escape symbols shown as ESC[33 and ESC[m
-Date: Thu, 16 Jan 2014 20:47:58 -0500
-Message-ID: <20140117014758.GF7249@sigill.intra.peff.net>
-References: <52D87A79.6060600@rawbw.com>
+Date: Thu, 16 Jan 2014 18:02:24 -0800
+Message-ID: <52D88F30.4000807@rawbw.com>
+References: <52D87A79.6060600@rawbw.com> <20140117014758.GF7249@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Yuri <yuri@rawbw.com>
-X-From: git-owner@vger.kernel.org Fri Jan 17 02:48:08 2014
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Jan 17 03:02:37 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W3yXX-0002my-1a
-	for gcvg-git-2@plane.gmane.org; Fri, 17 Jan 2014 02:48:07 +0100
+	id 1W3ylY-0000zN-EM
+	for gcvg-git-2@plane.gmane.org; Fri, 17 Jan 2014 03:02:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751932AbaAQBsC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Jan 2014 20:48:02 -0500
-Received: from cloud.peff.net ([50.56.180.127]:33893 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751667AbaAQBsA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Jan 2014 20:48:00 -0500
-Received: (qmail 7361 invoked by uid 102); 17 Jan 2014 01:48:00 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 16 Jan 2014 19:48:00 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 16 Jan 2014 20:47:58 -0500
-Content-Disposition: inline
-In-Reply-To: <52D87A79.6060600@rawbw.com>
+	id S1751992AbaAQCCc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Jan 2014 21:02:32 -0500
+Received: from shell0.rawbw.com ([198.144.192.45]:63900 "EHLO shell0.rawbw.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751770AbaAQCCa (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Jan 2014 21:02:30 -0500
+Received: from eagle.yuri.org (stunnel@localhost [127.0.0.1])
+	(authenticated bits=0)
+	by shell0.rawbw.com (8.14.4/8.14.4) with ESMTP id s0H22OX9077115;
+	Thu, 16 Jan 2014 18:02:24 -0800 (PST)
+	(envelope-from yuri@rawbw.com)
+User-Agent: Mozilla/5.0 (X11; FreeBSD amd64; rv:24.0) Gecko/20100101 Thunderbird/24.2.0
+In-Reply-To: <20140117014758.GF7249@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240556>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240557>
 
-On Thu, Jan 16, 2014 at 04:34:01PM -0800, Yuri wrote:
+On 01/16/2014 17:47, Jeff King wrote:
+> Are you using "less" as your pager (it is the default in git unless you
+> have set your PAGER environment variable)? If so, do you have the "R"
+> option set to pass through ANSI codes? Git will set this automatically
+> in your "LESS" variable if you do not already have such a variable (but
+> it will not touch it if you already have it set, and are missing "R").
 
-> When I run 'git log' on FreeBSD-9.2, I get output like this:
-> ESC[33mcommit 398e78c62fd507a317de7c2abb8e25c9fac7ac9eESC[m
-> Merge: 5fb8f6e d2138ba
-> ...
-> 
-> ESC is white on black background.
-> 
-> Why ESC[33m aren't expanded by the terminal? Is this because git
-> prints an unsupported sequence?
+My PAGER variable was set to "more". PAGER=more is also a default for a 
+newly created user in FreeBSD.
 
-Are you using "less" as your pager (it is the default in git unless you
-have set your PAGER environment variable)? If so, do you have the "R"
-option set to pass through ANSI codes? Git will set this automatically
-in your "LESS" variable if you do not already have such a variable (but
-it will not touch it if you already have it set, and are missing "R").
+So what would be the correct fix here in general, so that git will work 
+fine for a new unchanged user?
 
-> Hex of what git writes to terminal is here:
-> 0x0000 1b5b 3333 6d63 6f6d 6d69 7420 6636 6432 6136 3032 3965 6661
-> 6439 6635 6334 3161 6261  |.[33mcommit f6d2a6029efad9f5c41aba|
-> 0x0022 3961 3830 6131 3032 3138 6332 6333 3465 6662 1b5b 6d0a 4d65
-> 7267 653a 2033 3938 6537  |9a80a10218c2c34efb.[m.Merge: 398e7|
-> 
-> I think it tries to print the line in yellow (color code 33), and
-> prints the wrong sequence. The correct sequence would be:
-> \033[1;33mString Goes Here\033[0m
-> It misses "1;" in the beginning, and "0" in the end, this is why the
-> sequence is not interpreted.
-
-No, the "\033[33m" is correct. The "1;" in your string is turning on the
-bold attribute, and we are not trying to do that. The "0" in the reset
-is optional (at least according to [1]; I do not have an actual standard
-to reference).
-
-But I do not think that is your problem anyway; the "ESC" you are seeing
-is almost certainly generated by "less" escaping the \033.
-
-> Why does it print a wrong sequence? Is this because this is some kind
-> of linuxism that doesn't work on FreeBSD maybe?
-
-No. See above.
-
-> Also, there are the termcap functions that allow to determine what
-> does the actual terminal supports. You should first check for cap
-> bits corresponding to the features you expect, if you expect
-> something uncommon.
-
-Almost every terminal supports ANSI colors. The notable exceptions is
-the Windows console, but we handle the translation there. If you have a
-terminal that actually doesn't support ANSI colors, please let us know
-and we can see what is going on. But I'm reasonably sure that you are
-just running up against the escaping in "less" here.
-
--Peff
+Yuri
