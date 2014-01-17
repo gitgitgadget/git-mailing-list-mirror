@@ -1,146 +1,159 @@
-From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-Subject: Re: file permissions in Git repo
-Date: Fri, 17 Jan 2014 20:55:51 +0100
-Message-ID: <52D98AC7.9030101@web.de>
-References: <1389916737.92225.YahooMailNeo@web124906.mail.ne1.yahoo.com> <20140117022623.GC12444@sigill.intra.peff.net> <52D971A7.1040104@web.de> <1389986459.3994.YahooMailNeo@web124902.mail.ne1.yahoo.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/3] setup_pager: set MORE=R
+Date: Fri, 17 Jan 2014 11:57:27 -0800
+Message-ID: <xmqqiotiwfdk.fsf@gitster.dls.corp.google.com>
+References: <20140117041430.GB19551@sigill.intra.peff.net>
+	<20140117042153.GB23443@sigill.intra.peff.net>
+	<xmqqvbxiwh8y.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: SH <saajey@yahoo.com>,
-	=?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
-	Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jan 17 20:56:03 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+	Yuri <yuri@rawbw.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Jan 17 20:57:37 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W4FWM-0006vc-EN
-	for gcvg-git-2@plane.gmane.org; Fri, 17 Jan 2014 20:56:02 +0100
+	id 1W4FXr-0008VM-DB
+	for gcvg-git-2@plane.gmane.org; Fri, 17 Jan 2014 20:57:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752984AbaAQTz7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 17 Jan 2014 14:55:59 -0500
-Received: from mout.web.de ([212.227.15.4]:56579 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752823AbaAQTz5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Jan 2014 14:55:57 -0500
-Received: from [192.168.209.26] ([78.72.74.102]) by smtp.web.de (mrweb001)
- with ESMTPSA (Nemesis) id 0MQvxm-1Vuzq93TP4-00UN2H for <git@vger.kernel.org>;
- Fri, 17 Jan 2014 20:55:56 +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:24.0) Gecko/20100101 Thunderbird/24.2.0
-In-Reply-To: <1389986459.3994.YahooMailNeo@web124902.mail.ne1.yahoo.com>
-X-Provags-ID: V03:K0:mQJ2uea1VuHELoRL170YH/SCTFwjdgRAxJlwP2/Mp4po/9JKfve
- L2qXxVVdnSKixKU0NKWL8Wr5W0Al0lIBEOur/BxRcta88ibdSk7E6Wxk/+jdPSUB379YQlP
- nmvJmdq5lbaa4cJyCHl3EjuvmsBPDLeyM03/UiwzTsCGrfq7LXWpMccZemEitdKbtCg8DI5
- ockC9EksGAz1R3O/LZ02A==
+	id S1753124AbaAQT5c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Jan 2014 14:57:32 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63765 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752819AbaAQT5a (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Jan 2014 14:57:30 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1038B62865;
+	Fri, 17 Jan 2014 14:57:30 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=fPmdEQ2WNMqtUMNgAJQuoFsLouA=; b=RIufrp
+	0aPHAagK+eG+OIBr5egIOuI7PYe90Q10C3oVZlQM8UJYmVmsXMpuEz6/eKNuTIDL
+	xS9DCfulvOPDUVkcRNhwxeYNV9LWrDJAlDzhKW0OyzrhIkP9UZZs74xgb5Kq7y4j
+	sWyDodypXxI37GOlKbGCghwlgKPlvcj/JRwto=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=mmlPuPTZ/CDIQ/7H38YZ8g82JAeNHdDC
+	Eruix77ftgofdXcnXOuVu/1cmexrJVL77hauhwZDCeTCIFPxsJPKrkIOus7/Y9J3
+	N+lQQXltJZMUGO899XLEC1wvj4R8fhFD/SFkO3OnAmUM7IBLgTSNX8nJYnR8LpOE
+	8KxqcnLlzSI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F41E562864;
+	Fri, 17 Jan 2014 14:57:29 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4B8BA62862;
+	Fri, 17 Jan 2014 14:57:29 -0500 (EST)
+In-Reply-To: <xmqqvbxiwh8y.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Fri, 17 Jan 2014 11:17:01 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 98597208-7FB1-11E3-999B-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240618>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240619>
 
-(Please no top posting next time)
-On 2014-01-17 20.20, SH wrote:
-> On Friday, January 17, 2014 10:08 AM, Torsten B=F6gershausen <tboegi@=
-web.de> wrote:
-> On 01/17/2014 03:26 AM, Jeff King wrote:
->=20
->> On Thu, Jan 16, 2014 at 03:58:57PM -0800, SH wrote:
->>
->>> We have a repository which holds lots of shell and perl scripts. We=
- add the
->>> files to repository (from windows client) with executable permissio=
-ns (using
->>> cygwin) but when we pull that repository on another machine (window=
-s or linux),
->>> files dont have executable permission. Can you please provide a sol=
-utions for
->>> this?
->>
->> Git does not preserve file permissions _except_ for the executable b=
-it.
->> So this should be working.
->>
->> However, I suspect that `core.fileMode` is set to `false` in your
->> repository, which causes git to ignore the executable bit. When a
->> repository is initialized, we check whether the filesystem simply
->> creates everything with the executable bit. If so, we turn off
->> core.fileMode for the repository (since otherwise every file would h=
-ave
->> it set).
->>
->> -Peff
-> Cygwin has been a little bit special (and mingw still is).
-> Until this commit:
-> Author: Junio C Hamano <gitster@pobox.com>
-> Date:   Wed Jul 24 19:22:49 2013 -0700
->=20
->     Merge branch 'ml/cygwin-updates'
->=20
->     The tip one does _not_ revert c869753e (Force core.filemode to
->     false on Cygwin., 2006-12-30) on purpose, so that people can
->     still retain the old behaviour if they wanted to.
->=20
->     * ml/cygwin-updates:
->       cygwin: stop forcing core.filemode=3Dfalse
->       Cygwin 1.7 supports mmap
->       Cygwin 1.7 has thread-safe pread
->       Cygwin 1.7 needs compat/regex
-> the repositories created by cygwin had always core.filemode=3Dfalse.
->=20
-> You can easily check your configuration by running
-> git config -l
-> on the cygwin machine, as Peff suggested.
->=20
-> The next step is to check how the files had been recored in git, usin=
-g
-> git ls-files -s | less
-> on any machine.
->=20
-> If I do this on git.git, we find lines like this, where
-> 100755 means an executable file,
-> 100644 means non-executable file.
->=20
-> 100755 9c3f4131b8586408acd81d1e60912b51688575ed 0=20
-> Documentation/technical/api-index.sh
-> 100644 dd894043ae8b04269b3aa2108f96cb935217181d 0=20
-> Documentation/technical/api-lockfile.txt
->=20
->=20
-> The 3rd step is to check how file are shown in cygwin, run
-> ls -l
-> (Do they have the executable bit set ?)
->=20
-> Side note:
-> And I think the way the auto-probing of the file system works is
-> like this:
-> When a git repo is initialized, the .git/config file is created.
-> After that, we try to toggle the executable bit, and if lstat reports
-> it as toggled, we set core.filemode=3Dtrue.
-> (See builtin/init-db.c, search for core.filemode)
->=20
-> I tested to create a repo on a network share exported by SAMBA.
-> The Server was configured so that all new created files had the
-> executable bit set by default.
-> Git detected that the executable bit could be switched off,
-> and configured core.filemode=3Dtrue
-> Nice.
->=20
-> /Torsten
-> Thanks guys.  Sorry but one more question, like I mentioned we have h=
-osted repositories so how do I make some configuration changes are serv=
-er based so whether the client have those changes or not, it wouldn't m=
-atter. Also I have one client on linux and another one on windows (for =
-my testing purpose) and I see that .git/config on both machines are lit=
-tle different. Is that normal?
->=20
-> Thanks Again.
-That a config file has small differences could be normal:
-the server has typically core.bare true.
+Junio C Hamano <gitster@pobox.com> writes:
 
-About other differences, please don't heasitate to consult
-http://git-htmldocs.googlecode.com/git/git-config.html
+> Jeff King <peff@peff.net> writes:
+>
+>> diff --git a/pager.c b/pager.c
+>> index 90d237e..2303164 100644
+>> --- a/pager.c
+>> +++ b/pager.c
+>> @@ -87,6 +87,10 @@ void setup_pager(void)
+>>  		argv_array_push(&env, "LESS=FRSX");
+>>  	if (!getenv("LV"))
+>>  		argv_array_push(&env, "LV=-c");
+>> +#ifdef PAGER_MORE_UNDERSTANDS_R
+>> +	if (!getenv("MORE"))
+>> +		argv_array_push(&env, "MORE=R");
+>> +#endif
+>>  	pager_process.env = argv_array_detach(&env, NULL);
+>>  
+>>  	if (start_command(&pager_process))
+>
+> Let me repeat from $gmane/240110:
+>
+>  - Can we generalize this a bit so that a builder can pass a list
+>    of var=val pairs and demote the existing LESS=FRSX to just a
+>    canned setting of such a mechanism?
+>
+> As we need to maintain this "set these environments when unset" here
+> and also in git-sh-setup.sh, I think it is about time to do that
+> clean-up.  Duplicating two settings was borderline OK, but seeing
+> the third added fairly soon after the second was added tells me that
+> the clean-up must come before adding the third.
 
-And if there are still questions, they are there to be answered here.
-/Torsten
+Perhaps we can start it like this.  Then pager.c can iterate over
+the PAGER_ENV string, parse out LESS=, LV=, etc., and do its thing.
+
+We would also need to muck with git-sh-setup.sh but that file is
+already preprocessed in the Makefile, so we should be able to do
+something similar to "# @@BROKEN_PATH_FIX@@" there.
+
+ Makefile         | 15 ++++++++++++++-
+ config.mak.uname |  1 +
+ 2 files changed, 15 insertions(+), 1 deletion(-)
+
+diff --git a/Makefile b/Makefile
+index b4af1e2..c9e7847 100644
+--- a/Makefile
++++ b/Makefile
+@@ -342,6 +342,14 @@ all::
+ # Define DEFAULT_HELP_FORMAT to "man", "info" or "html"
+ # (defaults to "man") if you want to have a different default when
+ # "git help" is called without a parameter specifying the format.
++#
++# Define PAGER_ENV to a SP separated VAR=VAL pairs to define
++# default environment variables to be passed when a pager is spawned, e.g.
++#
++#    PAGER_ENV = LESS=-FRSX LV=-c
++#
++# to say "export LESS=-FRSX (and LV=-c) if the environment variable
++# LESS (and LV) is not set, respectively".
+ 
+ GIT-VERSION-FILE: FORCE
+ 	@$(SHELL_PATH) ./GIT-VERSION-GEN
+@@ -1506,6 +1514,10 @@ ifeq ($(PYTHON_PATH),)
+ NO_PYTHON = NoThanks
+ endif
+ 
++ifndef PAGER_ENV
++PAGER_ENV = LESS=-FRSX LV=-c
++endif
++
+ QUIET_SUBDIR0  = +$(MAKE) -C # space to separate -C and subdir
+ QUIET_SUBDIR1  =
+ 
+@@ -1585,11 +1597,12 @@ PYTHON_PATH_SQ = $(subst ','\'',$(PYTHON_PATH))
+ TCLTK_PATH_SQ = $(subst ','\'',$(TCLTK_PATH))
+ DIFF_SQ = $(subst ','\'',$(DIFF))
+ PERLLIB_EXTRA_SQ = $(subst ','\'',$(PERLLIB_EXTRA))
++PAGER_ENV_SQ = $(subst ','\'',$(PAGER_ENV))
+ 
+ LIBS = $(GITLIBS) $(EXTLIBS)
+ 
+ BASIC_CFLAGS += -DSHA1_HEADER='$(SHA1_HEADER_SQ)' \
+-	$(COMPAT_CFLAGS)
++	$(COMPAT_CFLAGS) -DPAGER_ENV='$(PAGER_ENV_SQ)'
+ LIB_OBJS += $(COMPAT_OBJS)
+ 
+ # Quote for C
+diff --git a/config.mak.uname b/config.mak.uname
+index 7d31fad..8aea8a6 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -188,6 +188,7 @@ ifeq ($(uname_S),FreeBSD)
+ 	endif
+ 	PYTHON_PATH = /usr/local/bin/python
+ 	HAVE_PATHS_H = YesPlease
++	PAGER_ENV = LESS=-FRSX LV=-c MORE=-R
+ endif
+ ifeq ($(uname_S),OpenBSD)
+ 	NO_STRCASESTR = YesPlease
