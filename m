@@ -1,147 +1,123 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 1/2] prefer xwrite instead of write
-Date: Fri, 17 Jan 2014 10:21:48 -0800
-Message-ID: <20140117182148.GY18964@google.com>
-References: <1389968230-1224-1-git-send-email-kusmabite@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/5] diff_filespec: reorder dirty_submodule macro definitions
+Date: Fri, 17 Jan 2014 10:46:59 -0800
+Message-ID: <xmqqha92xx7g.fsf@gitster.dls.corp.google.com>
+References: <20140117011844.GA6870@sigill.intra.peff.net>
+	<20140117011945.GA7249@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, msysgit@googlegroups.com,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-To: Erik Faye-Lund <kusmabite@gmail.com>
-X-From: msysgit+bncBD6LRKOE4AIRBP7J4WLAKGQEOARKVHY@googlegroups.com Fri Jan 17 19:21:55 2014
-Return-path: <msysgit+bncBD6LRKOE4AIRBP7J4WLAKGQEOARKVHY@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-qc0-f190.google.com ([209.85.216.190])
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Jan 17 19:47:11 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBD6LRKOE4AIRBP7J4WLAKGQEOARKVHY@googlegroups.com>)
-	id 1W4E3F-0005AA-4G
-	for gcvm-msysgit@m.gmane.org; Fri, 17 Jan 2014 19:21:53 +0100
-Received: by mail-qc0-f190.google.com with SMTP id c9sf887672qcz.27
-        for <gcvm-msysgit@m.gmane.org>; Fri, 17 Jan 2014 10:21:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :in-reply-to:user-agent:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type:content-disposition;
-        bh=Vj7e793/BYXbUfYBERo9Me6GrSzRtMOm9excoGW0Tl8=;
-        b=VDMgKDES6ZYoaXpqPKJoLl7FCCDlmDUqVaRBmlxGAZ3i+U08JB5DMN6ckfeLlILLbe
-         87PqyefhNOFFFLR8IDsuxPbVvVHd/lXl9rFfil7vkEAaRTjlZA4cMQ5UO8rj4igy0VYu
-         0Bt4pKmKXSVy7WXyv+S/y63kkzgWVa53uT+zqJ1aiW+3cGhaqmTFm/NWMjWfouP7b6nJ
-         gceXO6EYfOvMEVO4rb2Bf6wjk+8o2257O/UpP2dm9JTjKq+k4ih3LoVlBKAgypdoTpZg
-         cga6cZckinTXY1WiaZS1QKYQ7b5DQxPSQ1UUtaokm6Ooy6A1/5SpfPu7LRzf2+wUdJZW
-         BKCA==
-X-Received: by 10.140.94.11 with SMTP id f11mr93700qge.7.1389982912353;
-        Fri, 17 Jan 2014 10:21:52 -0800 (PST)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.140.87.134 with SMTP id r6ls530471qgd.47.gmail; Fri, 17 Jan
- 2014 10:21:51 -0800 (PST)
-X-Received: by 10.236.118.12 with SMTP id k12mr1192096yhh.35.1389982911653;
-        Fri, 17 Jan 2014 10:21:51 -0800 (PST)
-Received: from mail-yh0-x236.google.com (mail-yh0-x236.google.com [2607:f8b0:4002:c01::236])
-        by gmr-mx.google.com with ESMTPS id 48si3798474yhf.7.2014.01.17.10.21.51
-        for <msysgit@googlegroups.com>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 17 Jan 2014 10:21:51 -0800 (PST)
-Received-SPF: pass (google.com: domain of jrnieder@gmail.com designates 2607:f8b0:4002:c01::236 as permitted sender) client-ip=2607:f8b0:4002:c01::236;
-Received: by mail-yh0-x236.google.com with SMTP id b12so1527206yha.27
-        for <msysgit@googlegroups.com>; Fri, 17 Jan 2014 10:21:51 -0800 (PST)
-X-Received: by 10.236.100.173 with SMTP id z33mr3209604yhf.9.1389982911472;
-        Fri, 17 Jan 2014 10:21:51 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id c44sm19565587yho.20.2014.01.17.10.21.50
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 17 Jan 2014 10:21:50 -0800 (PST)
-In-Reply-To: <1389968230-1224-1-git-send-email-kusmabite@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Original-Sender: jrnieder@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of jrnieder@gmail.com designates 2607:f8b0:4002:c01::236
- as permitted sender) smtp.mail=jrnieder@gmail.com;       dkim=pass
- header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Content-Disposition: inline
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240605>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1W4ERi-0005Ov-8r
+	for gcvg-git-2@plane.gmane.org; Fri, 17 Jan 2014 19:47:10 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752955AbaAQSrF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Jan 2014 13:47:05 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59128 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752689AbaAQSrD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Jan 2014 13:47:03 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EDC6B61FC6;
+	Fri, 17 Jan 2014 13:47:02 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=VmPIAZos5QzGwIZ9HoaXC4q0HJU=; b=WLEfzh
+	XrB1ske54q/X98WJ+b9IwwcJ58Md9IhWgrdeBOX0RFDgV4lU23RKuLqY39zDiRdS
+	B+ScxAA/IUKX2ecrfxTs1Aj7YQwYL+lVV08axfntA6+tB5WaY1rwwvl1coa24SPJ
+	dM/c+UGNE/CKOZO4LJAFjTuXvHiOOgrJGXVYI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ErrdTXJYBHrDWny8zEFGqEc9EzhXnerN
+	h/8mGhSfXnQGWOAh1dDx/Ioly+B4ch+fJjF9Ec8XzWjvFizp/WxasJ2DzVD1qvW1
+	nUk1X2Cp3kGLI1wvY+uKcGg6668Tho8drX9BZQUKDbYE1RJODIf1ZUkdyMAE0en1
+	8ELnVc/gdjw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D52CB61FC5;
+	Fri, 17 Jan 2014 13:47:02 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A3BFF61FBD;
+	Fri, 17 Jan 2014 13:47:01 -0500 (EST)
+In-Reply-To: <20140117011945.GA7249@sigill.intra.peff.net> (Jeff King's
+	message of "Thu, 16 Jan 2014 20:19:46 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: C07B0382-7FA7-11E3-B573-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240606>
 
-Hi,
+Jeff King <peff@peff.net> writes:
 
-Erik Faye-Lund wrote:
+> diff_filespec has a 2-bit "dirty_submodule" field and
+> defines two flags as macros. Originally these were right
+> next to each other, but a new field was accidentally added
+> in between in commit 4682d85.
 
-> --- a/builtin/merge.c
-> +++ b/builtin/merge.c
-> @@ -367,7 +367,7 @@ static void squash_message(struct commit *commit, struct commit_list *remotehead
->  			sha1_to_hex(commit->object.sha1));
->  		pretty_print_commit(&ctx, commit, &out);
->  	}
-> -	if (write(fd, out.buf, out.len) < 0)
-> +	if (xwrite(fd, out.buf, out.len) < 0)
->  		die_errno(_("Writing SQUASH_MSG"));
+Interesting.
 
-Shouldn't this use write_in_full() to avoid a silently truncated result? (*)
+ - 4682d852 (diff-index.c: "git diff" has no need to read blob from
+   the standard input, 2012-06-27) wants to use this rule: all the
+   bitfield definitions first, and then whatever macro constants
+   next.
 
-[...]
-> --- a/streaming.c
-> +++ b/streaming.c
-> @@ -538,7 +538,7 @@ int stream_blob_to_fd(int fd, unsigned const char *sha1, struct stream_filter *f
->  			goto close_and_exit;
->  	}
->  	if (kept && (lseek(fd, kept - 1, SEEK_CUR) == (off_t) -1 ||
-> -		     write(fd, "", 1) != 1))
-> +		     xwrite(fd, "", 1) != 1))
+ - 25e5e2bf (combine-diff: support format_callback, 2011-08-19),
+   wants to use a different rule: a run of (one bitfield definition
+   and zero-or-more macro constants to be used in that bitfield).
 
-Yeah, if we get EINTR then it's worth retrying.
+When they were merged together at d7afe648 (Merge branch
+'jc/refactor-diff-stdin', 2012-07-13), these two conflicting
+philosophies crashed.
 
-[...]
-> --- a/transport-helper.c
-> +++ b/transport-helper.c
-> @@ -1129,9 +1129,8 @@ static int udt_do_write(struct unidirectional_transfer *t)
->  		return 0;	/* Nothing to write. */
->  
->  	transfer_debug("%s is writable", t->dest_name);
-> -	bytes = write(t->dest, t->buf, t->bufuse);
-> -	if (bytes < 0 && errno != EWOULDBLOCK && errno != EAGAIN &&
-> -		errno != EINTR) {
-> +	bytes = xwrite(t->dest, t->buf, t->bufuse);
-> +	if (bytes < 0 && errno != EWOULDBLOCK) {
+That is the commit to be blamed for this mess ;-)
 
-Here the write is limited by BUFFERSIZE, and returning to the outer
-loop to try another read when the write returns EAGAIN, like the
-original code does, seems philosophically like the right thing to do.
+I am of course fine with the end result this patch gives us.
 
-Luckily we don't use O_NONBLOCK anywhere, so the change shouldn't
-matter in practice.  So although it doesn't do any good, using xwrite
-here for consistency should be fine.
+Thanks.
 
-So my only worry is the (*) above.  With that change,
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
-
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/groups/opt_out.
+> This patch puts the field and
+> its flags back together.
+>
+> Using an enum like:
+>
+>   enum {
+> 	  DIRTY_SUBMODULE_UNTRACKED = 1,
+> 	  DIRTY_SUBMODULE_MODIFIED = 2
+>   } dirty_submodule;
+>
+> would be more obvious, but it bloats the structure. Limiting
+> the enum size like:
+>
+>   } dirty_submodule : 2;
+>
+> might work, but it is not portable.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  diffcore.h | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/diffcore.h b/diffcore.h
+> index 1c16c85..f822f9e 100644
+> --- a/diffcore.h
+> +++ b/diffcore.h
+> @@ -43,9 +43,9 @@ struct diff_filespec {
+>  	unsigned should_free : 1; /* data should be free()'ed */
+>  	unsigned should_munmap : 1; /* data should be munmap()'ed */
+>  	unsigned dirty_submodule : 2;  /* For submodules: its work tree is dirty */
+> -	unsigned is_stdin : 1;
+>  #define DIRTY_SUBMODULE_UNTRACKED 1
+>  #define DIRTY_SUBMODULE_MODIFIED  2
+> +	unsigned is_stdin : 1;
+>  	unsigned has_more_entries : 1; /* only appear in combined diff */
+>  	struct userdiff_driver *driver;
+>  	/* data should be considered "binary"; -1 means "don't know yet" */
