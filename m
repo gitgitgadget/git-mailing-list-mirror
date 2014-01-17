@@ -1,75 +1,108 @@
-From: "Kyle J. McKay" <mackyle@gmail.com>
-Subject: Re: [PATCH] send-email: If the ca path is not specified, use the defaults
-Date: Fri, 17 Jan 2014 15:34:08 -0800
-Message-ID: <04260036-28A7-45CC-BD25-BED90A7C6DB4@gmail.com>
-References: <1389807071-26746-1-git-send-email-i.gnatenko.brain@gmail.com> <xmqqa9ex2gi6.fsf@gitster.dls.corp.google.com> <7AD1C6ED-6177-415D-B342-D1FEA9F810B4@rubenkerkhof.com> <xmqqob3d0w7g.fsf@gitster.dls.corp.google.com> <20140115215024.GM18964@google.com> <xmqqppnry0p9.fsf@gitster.dls.corp.google.com> <E036CD5E-69B1-4ABD-957B-8E31D410A897@gmail.com> <xmqqlhyexyp4.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0 (Apple Message framework v936)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
+From: Strainu <strainu10@gmail.com>
+Subject: Re: [OpenStack-Infra] BUG: [Cosmetic] Commiting a gerrit ChangeId
+ before the commit hook was installed
+Date: Sat, 18 Jan 2014 01:38:27 +0200
+Message-ID: <CAC9meR+zViFN5PEZxvYp_4XY28OvcR9SeiOP_5DbBCmChYPONg@mail.gmail.com>
+References: <CAC9meRKiR+60YaGiuCu4twEt6dyWksEjHSH8YPTEvmD=LoB=aw@mail.gmail.com>
+ <20140117204132.GB18964@google.com> <CAC9meR+78_EvoqHNcuPyDKOZDjSsUngziGDa2aV1QDtOb8eOXw@mail.gmail.com>
+ <CAE3ttVgs=F2bWbx5qa=dp1kNzgc5djtB3r+2Qp6tvYv-iZKoCw@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Ruben Kerkhof <ruben@rubenkerkhof.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Igor Gnatenko <i.gnatenko.brain@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jan 18 00:34:19 2014
+	"openstack-infra@lists.openstack.org" 
+	<openstack-infra@lists.openstack.org>, git <git@vger.kernel.org>
+To: Jerry Xinyu Zhao <xyzjerry@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jan 18 00:39:28 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W4IvZ-0008Ac-Je
-	for gcvg-git-2@plane.gmane.org; Sat, 18 Jan 2014 00:34:17 +0100
+	id 1W4J0W-0004cm-WA
+	for gcvg-git-2@plane.gmane.org; Sat, 18 Jan 2014 00:39:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752022AbaAQXeN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Jan 2014 18:34:13 -0500
-Received: from mail-pd0-f179.google.com ([209.85.192.179]:60911 "EHLO
-	mail-pd0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751897AbaAQXeL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Jan 2014 18:34:11 -0500
-Received: by mail-pd0-f179.google.com with SMTP id q10so2533397pdj.24
-        for <git@vger.kernel.org>; Fri, 17 Jan 2014 15:34:11 -0800 (PST)
+	id S1753809AbaAQXjU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Jan 2014 18:39:20 -0500
+Received: from mail-pd0-f169.google.com ([209.85.192.169]:36262 "EHLO
+	mail-pd0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752979AbaAQXjT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Jan 2014 18:39:19 -0500
+Received: by mail-pd0-f169.google.com with SMTP id v10so4607389pde.28
+        for <git@vger.kernel.org>; Fri, 17 Jan 2014 15:39:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:in-reply-to:subject:references:message-id:content-type
-         :content-transfer-encoding:mime-version:date:cc;
-        bh=gYGxI59RlPfBG/+hdus6IjAqDBoYAcG2MWkxXJpcxIs=;
-        b=KxbBQuvsB3Yn68v3OgkrNE8/wCCZs4H4P9HOPaqfLI4qZRVc3lOBfzmgAZJSDz43ZQ
-         cWLTJYwnNkZagS7LDlhTB7o910I8SGVIVYQkImlBG5Ed1wJil3Fa5ygTc7GJgmUsAnNb
-         BoJz1d7Ok59HkpwO0KL9De6od6jVECfy49g7gbo1CyjBa35wgZUvwBBQ9xc6wAL28O8v
-         N14/QSe4cTJCeocoGUVte/CwpLhpbN9M2HMUkKweMQKZjUs8qHQXBqj8tnhBBttFa4hK
-         F1odwGbZw7uDpj6WCSqkrtaT6wIT/mRb5EkeJXYXFF47pgiZuGvISxVxMCkO0efiiWmV
-         l94w==
-X-Received: by 10.66.222.234 with SMTP id qp10mr5114400pac.156.1390001651028;
-        Fri, 17 Jan 2014 15:34:11 -0800 (PST)
-Received: from [172.16.16.105] (ip72-192-173-141.sd.sd.cox.net. [72.192.173.141])
-        by mx.google.com with ESMTPSA id qp15sm25631134pbb.2.2014.01.17.15.34.09
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Fri, 17 Jan 2014 15:34:10 -0800 (PST)
-In-Reply-To: <xmqqlhyexyp4.fsf@gitster.dls.corp.google.com>
-X-Mauler: Craptastic (2.936)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=GYK4xlX1FfE2E89+QvF67IVvDnf6Ci2S3/ub8/20bp0=;
+        b=lXyqWqeTtd+cMWc+BCcbOQODXt0sD/EEzbpn3TJ04w5BnfIbnhAtYWtx/hjv9MyQqP
+         1DwlhdQVOuPXTpqRyeaYpTmVhJBjtFRHHDyXHkrKL90HMtAG4vevHhm//hM8rXRLa5ho
+         f7aviEWa4YGLlM+ThYHBvDmpTGcH+JaA4w3aS7lkU8E3YZRalkqAdzxLeCmxQp/zV5MC
+         jo8DEVDpnBRl3tHsYgewDA6g8GlZDs7/NyCRhFiEl10Ts6yFVECjyny1Gg+/wq5iBp6b
+         Ax+6b9BY4MfwzNXevF2w27aEv1eagoNkUpwzPUQYEFN+xvvoPMmBbHANj1UNyA8lD6Rx
+         ge8g==
+X-Received: by 10.67.22.100 with SMTP id hr4mr5094201pad.112.1390001959223;
+ Fri, 17 Jan 2014 15:39:19 -0800 (PST)
+Received: by 10.68.175.225 with HTTP; Fri, 17 Jan 2014 15:38:27 -0800 (PST)
+In-Reply-To: <CAE3ttVgs=F2bWbx5qa=dp1kNzgc5djtB3r+2Qp6tvYv-iZKoCw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240635>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240636>
 
-On Jan 17, 2014, at 10:14, Junio C Hamano wrote:
-> If I am reading the code correctly, if /etc/ssl/certs does not exist
-> on the filesystem at all, it wouldn't even attempt verification, so
-> I take your "the verification will fail" to mean that you forgot to
-> also mention "And on OS X, /etc/ssl/certs directory still exists,
-> even though OpenSSL does not use it."  If that is the case, then our
-> current code indeed is broken in exactly the same way for OS X as
-> for Fedora.
+Perhaps I haven't been clear enough: the commit already had a change
+ID, added manually, so with or without the hook it would have been
+attached to the correct review.
 
-My bad.  That directory does not normally exist, but, if some errant  
-installer were to create an empty one...
+In this case, the hook will actually do nothing, making the current
+wording of the message confusing IMO. My suggestion was [1] to change
+the mesage to "Amending the commit to add a gerrit change id if none
+is available." or something similar.
 
-> In short, I agree with you on both counts (the current code is wrong
-> for OS X, and the proposed change will fix it).  I just want to make
-> sure that my understanding of the current breakage is in line with
-> the reality ;-)
+Strainu
 
-Yes, you're right.  :)
+[1] https://bugs.launchpad.net/git-review/+bug/1270301
+
+2014/1/18 Jerry Xinyu Zhao <xyzjerry@gmail.com>:
+> I think if you hadn't installed the commit hook for generating change ID,
+> the commit indeed wouldn't have included a change ID, which is necessary for
+> referencing the change when you submit a patch over it. There is nothing
+> wrong with the message.  git review tool will install the hook and add a
+> change ID for you automatically(a new feature of recent git-review release).
+>
+>
+>
+> On Fri, Jan 17, 2014 at 1:10 PM, Strainu <strainu10@gmail.com> wrote:
+>>
+>> 2014/1/17 Jonathan Nieder <jrnieder@gmail.com>:
+>> > Hi,
+>> >
+>> > Strainu wrote:
+>> >
+>> >> strainu@emily:~/core> git review -f
+>> >> Creating a git remote called "gerrit" that maps to:
+>> >>         ssh://strainu@gerrit.wikimedia.org:29418/pywikibot/core.git
+>> >> Your change was committed before the commit hook was installed.
+>> >> Amending the commit to add a gerrit change id.
+>> >>
+>> >> At this point I ended the transaction, as I was confused by the last
+>> >> message: I was afraid the ChangeId would have changed, causing the
+>> >> patch to be attached to another review.
+>> >>
+>> >> I think git should not show this message if the change description
+>> >> already has a change id
+>> >
+>> > This message doesn't come from git.  It comes from the git-review
+>> > tool (in git_review/cmd.py), so cc-ing the authors in case they
+>> > have thoughts on that.
+>>
+>> Thanks for clarifying that. I'll log a bug on launchpad then.
+>>
+>> Strainu
+>>
+>> _______________________________________________
+>> OpenStack-Infra mailing list
+>> OpenStack-Infra@lists.openstack.org
+>> http://lists.openstack.org/cgi-bin/mailman/listinfo/openstack-infra
+>
+>
