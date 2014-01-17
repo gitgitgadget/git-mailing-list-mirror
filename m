@@ -1,111 +1,183 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: Workflow on git with 2 branch with specifc code
-Date: Fri, 17 Jan 2014 23:05:07 +0000
-Message-ID: <20140117230507.GD107228@vauxhall.crustytoothpaste.net>
-References: <1389960868.21737.2.camel@pc14.intranet>
+From: Jerry Xinyu Zhao <xyzjerry-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
+Subject: Re: BUG: [Cosmetic] Commiting a gerrit ChangeId
+ before the commit hook was installed
+Date: Fri, 17 Jan 2014 15:24:21 -0800
+Message-ID: <CAE3ttVgs=F2bWbx5qa=dp1kNzgc5djtB3r+2Qp6tvYv-iZKoCw@mail.gmail.com>
+References: <CAC9meRKiR+60YaGiuCu4twEt6dyWksEjHSH8YPTEvmD=LoB=aw@mail.gmail.com>
+ <20140117204132.GB18964@google.com>
+ <CAC9meR+78_EvoqHNcuPyDKOZDjSsUngziGDa2aV1QDtOb8eOXw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Q0rSlbzrZN6k9QnT"
-Cc: git@vger.kernel.org
-To: Gordon Freeman <freemanmtc@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jan 18 00:05:26 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: multipart/mixed; boundary="===============3032141583287442013=="
+Cc: Jonathan Nieder <jrnieder-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>, "openstack-infra-ZwoEplunGu0gQVYkTtqAhEB+6BGkLq7r@public.gmane.org"
+ <openstack-infra-ZwoEplunGu0gQVYkTtqAhEB+6BGkLq7r@public.gmane.org>, git <git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>
+To: Strainu <strainu10-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
+X-From: openstack-infra-bounces+gcoi-openstack-infra=m.gmane.org-ZwoEplunGu0gQVYkTtqAhEB+6BGkLq7r@public.gmane.org Sat Jan 18 00:25:39 2014
+Return-path: <openstack-infra-bounces+gcoi-openstack-infra=m.gmane.org-ZwoEplunGu0gQVYkTtqAhEB+6BGkLq7r@public.gmane.org>
+Envelope-to: gcoi-openstack-infra@m.gmane.org
+Received: from lists.openstack.org ([50.56.173.222])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W4ITe-0004CL-Dt
-	for gcvg-git-2@plane.gmane.org; Sat, 18 Jan 2014 00:05:26 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753443AbaAQXFV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Jan 2014 18:05:21 -0500
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:51143 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751892AbaAQXFU (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 17 Jan 2014 18:05:20 -0500
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:8133:d4ab:17ba:f5ea])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 9BCF728074;
-	Fri, 17 Jan 2014 23:05:12 +0000 (UTC)
-Mail-Followup-To: Gordon Freeman <freemanmtc@gmail.com>,
-	git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <1389960868.21737.2.camel@pc14.intranet>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 3.12-1-amd64)
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240633>
+	(envelope-from <openstack-infra-bounces+gcoi-openstack-infra=m.gmane.org-ZwoEplunGu0gQVYkTtqAhEB+6BGkLq7r@public.gmane.org>)
+	id 1W4InA-0007ys-A4
+	for gcoi-openstack-infra@m.gmane.org; Sat, 18 Jan 2014 00:25:36 +0100
+Received: from localhost ([127.0.0.1] helo=lists.openstack.org)
+	by lists.openstack.org with esmtp (Exim 4.76)
+	(envelope-from <openstack-infra-bounces-ZwoEplunGu0gQVYkTtqAhEB+6BGkLq7r@public.gmane.org>)
+	id 1W4Imy-0006AF-Iv; Fri, 17 Jan 2014 23:25:24 +0000
+Received: from [2a00:1450:400c:c05::22b] (helo=mail-wi0-x22b.google.com)
+ by lists.openstack.org with esmtp (Exim 4.76)
+ (envelope-from <xyzjerry-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>) id 1W4Ily-0005uT-SC
+ for openstack-infra-ZwoEplunGu0gQVYkTtqAhEB+6BGkLq7r@public.gmane.org; Fri, 17 Jan 2014 23:24:23 +0000
+Received: by mail-wi0-f171.google.com with SMTP id cc10so1372310wib.16
+ for <openstack-infra-ZwoEplunGu0gQVYkTtqAhEB+6BGkLq7r@public.gmane.org>;
+ Fri, 17 Jan 2014 15:24:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20120113;
+ h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+ :cc:content-type;
+ bh=HyOWK5Fvo8QSNwrj981XsFEUz3Hv+7Joe1wQBQsSpSw=;
+ b=t+S0zros127DSP8RnmVaTKIdPl3KrWwyfJvpGW1FiYgO2bsYlaxPphGeNTCgh/Of8Q
+ 6tflUEzLGJ7TEeXykRU9pwbJJnGMDpoqqO9wHzfX8WDx4j3nN8BepJ+8xaSZAdTJhrVV
+ kSfCpZn9ys858Jl/mMxl5fHyG+hXPU9NaOY1BzNEpE1fKuT7nQPSs25FzzweZlzj1+Gv
+ gjPqMvTtVmGXvbzUG2idlJPB20QTOIb5uD/VOTNyUjnfX7MDJCii+bOvP7uDAMOUJvoJ
+ GS6vsIW327jIHu2elS+XVpNcQ58qp6c2R3JyOV56sMnenH/UWmg5Q6o9uN93arEWrQt7
+ TL9w==
+X-Received: by 10.180.97.10 with SMTP id dw10mr566945wib.25.1390001061985;
+ Fri, 17 Jan 2014 15:24:21 -0800 (PST)
+Received: by 10.194.2.177 with HTTP; Fri, 17 Jan 2014 15:24:21 -0800 (PST)
+In-Reply-To: <CAC9meR+78_EvoqHNcuPyDKOZDjSsUngziGDa2aV1QDtOb8eOXw-JsoAwUIsXosN+BqQ9rBEUg@public.gmane.org>
+X-BeenThere: openstack-infra-ZwoEplunGu0gQVYkTtqAhEB+6BGkLq7r@public.gmane.org
+X-Mailman-Version: 2.1.14
+Precedence: list
+List-Id: Infrastructure support for the OpenStack project
+ <openstack-infra.lists.openstack.org>
+List-Unsubscribe: <http://lists.openstack.org/cgi-bin/mailman/options/openstack-infra>, 
+ <mailto:openstack-infra-request-ZwoEplunGu0gQVYkTtqAhEB+6BGkLq7r@public.gmane.org?subject=unsubscribe>
+List-Archive: <http://lists.openstack.org/pipermail/openstack-infra>
+List-Post: <mailto:openstack-infra-ZwoEplunGu0gQVYkTtqAhEB+6BGkLq7r@public.gmane.org>
+List-Help: <mailto:openstack-infra-request-ZwoEplunGu0gQVYkTtqAhEB+6BGkLq7r@public.gmane.org?subject=help>
+List-Subscribe: <http://lists.openstack.org/cgi-bin/mailman/listinfo/openstack-infra>, 
+ <mailto:openstack-infra-request-ZwoEplunGu0gQVYkTtqAhEB+6BGkLq7r@public.gmane.org?subject=subscribe>
+Errors-To: openstack-infra-bounces+gcoi-openstack-infra=m.gmane.org-ZwoEplunGu0gQVYkTtqAhEB+6BGkLq7r@public.gmane.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240634>
+
+--===============3032141583287442013==
+Content-Type: multipart/alternative; boundary=f46d0443064e8984f404f032d735
+
+--f46d0443064e8984f404f032d735
+Content-Type: text/plain; charset=ISO-8859-1
+
+I think if you hadn't installed the commit hook for generating change ID,
+the commit indeed wouldn't have included a change ID, which is necessary
+for referencing the change when you submit a patch over it. There is
+nothing wrong with the message.  git review tool will install the hook and
+add a change ID for you automatically(a new feature of recent git-review
+release).
 
 
---Q0rSlbzrZN6k9QnT
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+
+On Fri, Jan 17, 2014 at 1:10 PM, Strainu <strainu10-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org> wrote:
+
+> 2014/1/17 Jonathan Nieder <jrnieder-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>:
+> > Hi,
+> >
+> > Strainu wrote:
+> >
+> >> strainu@emily:~/core> git review -f
+> >> Creating a git remote called "gerrit" that maps to:
+> >>         ssh://strainu-pdwPRaUiG6tP5deQkEKVHGD2FQJk+8+b@public.gmane.org:29418/pywikibot/core.git
+> >> Your change was committed before the commit hook was installed.
+> >> Amending the commit to add a gerrit change id.
+> >>
+> >> At this point I ended the transaction, as I was confused by the last
+> >> message: I was afraid the ChangeId would have changed, causing the
+> >> patch to be attached to another review.
+> >>
+> >> I think git should not show this message if the change description
+> >> already has a change id
+> >
+> > This message doesn't come from git.  It comes from the git-review
+> > tool (in git_review/cmd.py), so cc-ing the authors in case they
+> > have thoughts on that.
+>
+> Thanks for clarifying that. I'll log a bug on launchpad then.
+>
+> Strainu
+>
+> _______________________________________________
+> OpenStack-Infra mailing list
+> OpenStack-Infra-ZwoEplunGu0gQVYkTtqAhEB+6BGkLq7r@public.gmane.org
+> http://lists.openstack.org/cgi-bin/mailman/listinfo/openstack-infra
+>
+
+--f46d0443064e8984f404f032d735
+Content-Type: text/html; charset=ISO-8859-1
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Jan 17, 2014 at 10:14:28AM -0200, Gordon Freeman wrote:
-> Hello guys, im Gordon.
+<div dir=3D"ltr">I think if you hadn&#39;t installed the commit hook for ge=
+nerating change ID, the commit indeed wouldn&#39;t have included a change I=
+D, which is necessary for referencing the change when you submit a patch ov=
+er it. There is nothing wrong with the message. =A0git review tool will ins=
+tall the hook and add a change ID for you automatically(a new feature of re=
+cent git-review release).=A0<div>
+<br></div></div><div class=3D"gmail_extra"><br><br><div class=3D"gmail_quot=
+e">On Fri, Jan 17, 2014 at 1:10 PM, Strainu <span dir=3D"ltr">&lt;<a href=
+=3D"mailto:strainu10-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org" target=3D"_blank">strainu10-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org</a>&g=
+t;</span> wrote:<br>
+<blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1p=
+x #ccc solid;padding-left:1ex">2014/1/17 Jonathan Nieder &lt;<a href=3D"mai=
+lto:jrnieder-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org">jrnieder-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org</a>&gt;:<br>
+<div class=3D"im">&gt; Hi,<br>
+&gt;<br>
+&gt; Strainu wrote:<br>
+&gt;<br>
+&gt;&gt; strainu@emily:~/core&gt; git review -f<br>
+&gt;&gt; Creating a git remote called &quot;gerrit&quot; that maps to:<br>
+&gt;&gt; =A0 =A0 =A0 =A0 ssh://<a href=3D"http://strainu-pdwPRaUiG6tP5deQkEKVHO46SIhDJjyZ@public.gmane.org=
+rg:29418/pywikibot/core.git" target=3D"_blank">strainu-pdwPRaUiG6tP5deQkEKVHGD2FQJk+8+b@public.gmane.org=
+:29418/pywikibot/core.git</a><br>
+&gt;&gt; Your change was committed before the commit hook was installed.<br=
 >
-> I have a question about workflow with git that i dont know if im doing
-> it right.
-> I have 1 repo with 2 branchs the first is the master of the project.
-> the second is a branch copy of the master but he need to have some
-> specifc code because is code for a client.
-> so, every time that i updade master i need to merge master with client
-> branch and it give me conflicts of course that will hapen.
-> Well if was just me who work on this 2 branchs it will be easy to fix
-> the conflicts and let all work and shine.
-> But whe have here, 10 people woking on master branch and some times code
-> are lost on merge and we need to look on commits to search whats goin
-> on.
-> What i just asking here is if its correct the workflow that i do. If for
-> some problem like this, the community have a standard resolution. Or if
-> what im doing here is all wrong.
+&gt;&gt; Amending the commit to add a gerrit change id.<br>
+&gt;&gt;<br>
+&gt;&gt; At this point I ended the transaction, as I was confused by the la=
+st<br>
+&gt;&gt; message: I was afraid the ChangeId would have changed, causing the=
+<br>
+&gt;&gt; patch to be attached to another review.<br>
+&gt;&gt;<br>
+&gt;&gt; I think git should not show this message if the change description=
+<br>
+&gt;&gt; already has a change id<br>
+&gt;<br>
+&gt; This message doesn&#39;t come from git. =A0It comes from the git-revie=
+w<br>
+&gt; tool (in git_review/cmd.py), so cc-ing the authors in case they<br>
+&gt; have thoughts on that.<br>
+<br>
+</div>Thanks for clarifying that. I&#39;ll log a bug on launchpad then.<br>
+<span class=3D"HOEnZb"><font color=3D"#888888"><br>
+Strainu<br>
+</font></span><div class=3D"HOEnZb"><div class=3D"h5"><br>
+_______________________________________________<br>
+OpenStack-Infra mailing list<br>
+<a href=3D"mailto:OpenStack-Infra-ZwoEplunGu0gQVYkTtqAhEB+6BGkLq7r@public.gmane.org">OpenStack-Infra@list=
+s.openstack.org</a><br>
+<a href=3D"http://lists.openstack.org/cgi-bin/mailman/listinfo/openstack-in=
+fra" target=3D"_blank">http://lists.openstack.org/cgi-bin/mailman/listinfo/=
+openstack-infra</a><br>
+</div></div></blockquote></div><br></div>
 
-There are many correct workflows.  I personally use the workflow you've
-mentioned for the exact same reason (customizations for a client), but
-I'm the only developer on that repository.
+--f46d0443064e8984f404f032d735--
 
-What you might try instead is a slightly different workflow.  Have each
-developer create a feature branch to add a feature or fix a bug.  Merge
-these into master as they become ready.  Have a specific person or group
-of people be integrators, and have them merge master into the client
-branch as necessary, fixing up any conflicts.  When conflicts are
-non-trivial, use pair programming or a review process to ensure that the
-result is good.
 
-We use a similar workflow at my regular employer, and it is generally
-very successful for a department with 45 employees.
+--===============3032141583287442013==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
 
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
+_______________________________________________
+OpenStack-Infra mailing list
+OpenStack-Infra-ZwoEplunGu0gQVYkTtqAhEB+6BGkLq7r@public.gmane.org
+http://lists.openstack.org/cgi-bin/mailman/listinfo/openstack-infra
 
---Q0rSlbzrZN6k9QnT
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCgAGBQJS2bciAAoJEL9TXYEfUvaLCmsP/0tn0qFBzGouNTbzbzr2Wbgz
-yq77NqABOS9ZTvPFipcqX8xve/gI33pZ9i81l/nzU0zASXbEzh0y8QGTkxTBJu4C
-0PKKijM5xEkNOKYfYj1BbkRcTVZ+qeK6t901RULcpmi46xD5vWJgLEKWeB8x/syp
-iPREW314dz9/dkT2ZyPZJmOhapj7qnxG1sSJWr/s4FXN4f3BRuSPiL2w4FCx1fuO
-eh/Wnpv8OwItVlLeo1BsGV2GArBHtPsr/w+d/fLb1zZd0WuRZKE2UH6/lsY54EaS
-jEr6mN/kdwqX0FZy+Mk9LnMUXu+CDGH+Iy6PYWfrC4SOp7J+BTCVvOwfoHh2MRAN
-TNMWIm4Kql7n5u1nH0C95utY4+C9znsXVANJw86tPxZvSipxQJVyWD4tQpfK1ikb
-YevGAFz3rT4Iug7b+gkxPIjFN9gv0GhvoP/W1QzmxDYmor1EtKP2D6WjJM23mVrQ
-npjimG70o2D8M44WvCBQwhbaMGYG3BSNJqfautHPq6ZDisZGdTgJ20ErQhAyKbMq
-435Yb5FSLIhz0hK4k4aVc5rDC2NaUfo+4OoegqRhJ/YiKTfi4tHLCrSuI0X4kdTz
-EJPEZShgBcvkoFjCLRpsu/eSgEM88J/pQwe/LcHUM+2Em4mYhjWSXjV1Qb6ceFiQ
-J9MgfCs7gqEffAnoX9Lp
-=PL9y
------END PGP SIGNATURE-----
-
---Q0rSlbzrZN6k9QnT--
+--===============3032141583287442013==--
