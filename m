@@ -1,80 +1,54 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: with git-next, git pull --rebase can print out "fatal: No such
- ref: ''" for branches without an upstream
-Date: Fri, 17 Jan 2014 08:40:10 +0000
-Message-ID: <20140117084010.GL7608@serenity.lan>
-References: <52D8827E.3060007@fb.com>
- <20140117022152.GB12444@sigill.intra.peff.net>
- <52D899CA.5050409@fb.com>
+From: Yuri <yuri@rawbw.com>
+Subject: Re: [PATCH 0/3] improved out-of-the-box color settings
+Date: Fri, 17 Jan 2014 01:13:32 -0800
+Message-ID: <52D8F43C.9020709@rawbw.com>
+References: <52D87A79.6060600@rawbw.com> <20140117014758.GF7249@sigill.intra.peff.net> <52D88F30.4000807@rawbw.com> <20140117021320.GA12444@sigill.intra.peff.net> <20140117022921.GU18964@google.com> <20140117023548.GB13023@sigill.intra.peff.net> <20140117041430.GB19551@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Siddharth Agarwal <sid0@fb.com>
-X-From: git-owner@vger.kernel.org Fri Jan 17 09:40:26 2014
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Jonathan Nieder <jrnieder@gmail.com>
+To: Jeff King <peff@peff.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 17 10:13:51 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W44yV-0002Ks-Ck
-	for gcvg-git-2@plane.gmane.org; Fri, 17 Jan 2014 09:40:23 +0100
+	id 1W45Ur-0001Vi-1j
+	for gcvg-git-2@plane.gmane.org; Fri, 17 Jan 2014 10:13:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751833AbaAQIkU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Jan 2014 03:40:20 -0500
-Received: from coyote.aluminati.org ([72.9.247.114]:60278 "EHLO
-	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751079AbaAQIkS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Jan 2014 03:40:18 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by coyote.aluminati.org (Postfix) with ESMTP id B8BD76065C5;
-	Fri, 17 Jan 2014 08:40:17 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -1
-X-Spam-Level: 
-X-Spam-Status: No, score=-1 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1] autolearn=disabled
-Received: from coyote.aluminati.org ([127.0.0.1])
-	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id vW6F7VwSzkPH; Fri, 17 Jan 2014 08:40:17 +0000 (GMT)
-Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
-	by coyote.aluminati.org (Postfix) with ESMTP id 5A9AD60659A;
-	Fri, 17 Jan 2014 08:40:17 +0000 (GMT)
-Received: from localhost (localhost [127.0.0.1])
-	by pichi.aluminati.org (Postfix) with ESMTP id 4F7FE161E21B;
-	Fri, 17 Jan 2014 08:40:17 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at aluminati.org
-Received: from pichi.aluminati.org ([127.0.0.1])
-	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 0dLDzwhPlSAl; Fri, 17 Jan 2014 08:40:16 +0000 (GMT)
-Received: from serenity.lan (mink.aluminati.org [10.0.7.180])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by pichi.aluminati.org (Postfix) with ESMTPSA id A58EF161E44A;
-	Fri, 17 Jan 2014 08:40:12 +0000 (GMT)
-Content-Disposition: inline
-In-Reply-To: <52D899CA.5050409@fb.com>
-User-Agent: Mutt/1.5.22 (2013-10-16)
+	id S1751850AbaAQJNp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Jan 2014 04:13:45 -0500
+Received: from shell0.rawbw.com ([198.144.192.45]:59142 "EHLO shell0.rawbw.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751395AbaAQJNl (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Jan 2014 04:13:41 -0500
+Received: from eagle.yuri.org (stunnel@localhost [127.0.0.1])
+	(authenticated bits=0)
+	by shell0.rawbw.com (8.14.4/8.14.4) with ESMTP id s0H9DW4e040251;
+	Fri, 17 Jan 2014 01:13:32 -0800 (PST)
+	(envelope-from yuri@rawbw.com)
+User-Agent: Mozilla/5.0 (X11; FreeBSD amd64; rv:24.0) Gecko/20100101 Thunderbird/24.2.0
+In-Reply-To: <20140117041430.GB19551@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240578>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240579>
 
-On Thu, Jan 16, 2014 at 06:47:38PM -0800, Siddharth Agarwal wrote:
-> On 01/16/2014 06:21 PM, Jeff King wrote:
-> > On Thu, Jan 16, 2014 at 05:08:14PM -0800, Siddharth Agarwal wrote:
-> >
-> >> With git-next, where git pull --rebase can print out "fatal: No such
-> >> ref: ''" if git pull --rebase is run on branches without an upstream.
-> > This is already fixed in bb3f458 (rebase: fix fork-point with zero
-> > arguments, 2014-01-09), I think.
-> 
-> If I'm reading the patch correctly, that only fixes it for git rebase, 
-> not for git pull --rebase. git-pull.sh contains a separate invocation of 
-> git merge-base --fork-point.
+On 01/16/2014 20:14, Jeff King wrote:
+> The second patch turns on "MORE=R" only for FreeBSD. Yuri, if you can
+> confirm that my patch works for you, that would be excellent. And if you
+> (or anyone) has access to NetBSD or OpenBSD to test the second patch on,
+> I'd welcome updates to config.mak.uname for those systems.
 
-I'm pretty sure the invocation in git-pull.sh is OK.  The error then
-comes out of git-rebase.sh when git-pull invokes it.
+I applied 3 patches, and it fixed the issue for me.
 
-Are you running a version of git-next that includes bb3f458?
+Thank you for such a fast response! This is very impressive!
+I saw this issue for a long while, and only last night took time to 
+report it.
+
+Unfortunately, I don't have any other BSDs sitting around. The easiest 
+way to try this is to install them in VM.
+
+Yuri
