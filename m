@@ -1,148 +1,52 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: [PATCH 2/2] mingw: remove mingw_write
-Date: Fri, 17 Jan 2014 15:17:10 +0100
-Message-ID: <1389968230-1224-2-git-send-email-kusmabite@gmail.com>
-References: <1389968230-1224-1-git-send-email-kusmabite@gmail.com>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: [PATCH/WIP v2 03/14] read-cache: connect to file watcher
+Date: Fri, 17 Jan 2014 16:24:29 +0100
+Message-ID: <52D94B2D.2@web.de>
+References: <1389524622-6702-1-git-send-email-pclouds@gmail.com> <1389952060-12297-1-git-send-email-pclouds@gmail.com> <1389952060-12297-4-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: msysgit@googlegroups.com,
-	Erik Faye-Lund <kusmabite@gmail.com>
-To: git@vger.kernel.org
-X-From: msysgit+bncBDR53PPJ7YHRB47W4SLAKGQEHZZOU4I@googlegroups.com Fri Jan 17 15:17:24 2014
-Return-path: <msysgit+bncBDR53PPJ7YHRB47W4SLAKGQEHZZOU4I@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wg0-f57.google.com ([74.125.82.57])
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: tr@thomasrast.ch
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 17 16:24:53 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDR53PPJ7YHRB47W4SLAKGQEHZZOU4I@googlegroups.com>)
-	id 1W4AEe-0002sw-HR
-	for gcvm-msysgit@m.gmane.org; Fri, 17 Jan 2014 15:17:24 +0100
-Received: by mail-wg0-f57.google.com with SMTP id l18sf546869wgh.2
-        for <gcvm-msysgit@m.gmane.org>; Fri, 17 Jan 2014 06:17:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=mime-version:from:to:cc:subject:date:message-id:in-reply-to
-         :references:x-original-sender:x-original-authentication-results
-         :precedence:mailing-list:list-id:list-post:list-help:list-archive
-         :sender:list-subscribe:list-unsubscribe:content-type;
-        bh=9RuKKa62FzrfCdK5zDFIdC7+mWOJrX1na8CugNhhmdw=;
-        b=ulULzW36J/FhxAXb7zbq2uF1xXBzJRhPUCqMLeUL1Al45pghwTWkNUYUnxYq4Kxub3
-         ny49Y4XbGiiqYjc0Rq+avCn2PU3tDYkaJrKDioPy6cIrr4d4gRD2m05S3Afcq2gM3YWK
-         V86bcT+kqJksaMN15//hfHwFoLmIqd5ZaIfC+Dadt+SsZD4vPcLZ/u5vaJhQtVWXLj/b
-         jeGcWVKmlC8zjF1XThpNU2y1O86fbS02CCGvtNWyCRGznnVc2exBO3pxyPfsyIN7cE93
-         ZuH/FDccCYyHQ3jvkT8UnyyIHM/lpBfAAkrvLsSmDfJfagfrHNS2CMhmrYI7V2gHN6ei
-         PlfQ==
-X-Received: by 10.152.3.67 with SMTP id a3mr18729laa.33.1389968244225;
-        Fri, 17 Jan 2014 06:17:24 -0800 (PST)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.19.194 with SMTP id h2ls267002lae.43.gmail; Fri, 17 Jan
- 2014 06:17:23 -0800 (PST)
-X-Received: by 10.112.90.38 with SMTP id bt6mr975772lbb.1.1389968243352;
-        Fri, 17 Jan 2014 06:17:23 -0800 (PST)
-Received: from mail-la0-x22a.google.com (mail-la0-x22a.google.com [2a00:1450:4010:c03::22a])
-        by gmr-mx.google.com with ESMTPS id rk7si1408919bkb.2.2014.01.17.06.17.23
-        for <msysgit@googlegroups.com>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 17 Jan 2014 06:17:23 -0800 (PST)
-Received-SPF: pass (google.com: domain of kusmabite@gmail.com designates 2a00:1450:4010:c03::22a as permitted sender) client-ip=2a00:1450:4010:c03::22a;
-Received: by mail-la0-x22a.google.com with SMTP id hr13so1622141lab.29
-        for <msysgit@googlegroups.com>; Fri, 17 Jan 2014 06:17:23 -0800 (PST)
-X-Received: by 10.152.36.8 with SMTP id m8mr1243159laj.24.1389968243145;
-        Fri, 17 Jan 2014 06:17:23 -0800 (PST)
-Received: from localhost ([77.40.159.131])
-        by mx.google.com with ESMTPSA id mv9sm6872795lbc.0.2014.01.17.06.17.21
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Fri, 17 Jan 2014 06:17:22 -0800 (PST)
-X-Mailer: git-send-email 1.8.4.msysgit.0
-In-Reply-To: <1389968230-1224-1-git-send-email-kusmabite@gmail.com>
-X-Original-Sender: kusmabite@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of kusmabite@gmail.com designates 2a00:1450:4010:c03::22a
- as permitted sender) smtp.mail=kusmabite@gmail.com;       dkim=pass
- header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240598>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1W4BHt-0003IF-Hk
+	for gcvg-git-2@plane.gmane.org; Fri, 17 Jan 2014 16:24:49 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752639AbaAQPYj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 17 Jan 2014 10:24:39 -0500
+Received: from mout.web.de ([212.227.17.11]:58710 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751248AbaAQPYg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Jan 2014 10:24:36 -0500
+Received: from [192.168.209.26] ([78.72.74.102]) by smtp.web.de (mrweb003)
+ with ESMTPSA (Nemesis) id 0LZeYO-1VcqoH3hXQ-00lVBY for <git@vger.kernel.org>;
+ Fri, 17 Jan 2014 16:24:35 +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:24.0) Gecko/20100101 Thunderbird/24.2.0
+In-Reply-To: <1389952060-12297-4-git-send-email-pclouds@gmail.com>
+X-Provags-ID: V03:K0:BmLBKjCgSII+UfXP3cSeeqV4gTidOeYO2/EqnWadIvqjO6VHnuy
+ Iwip4vT/lbeN5cOgKifRKE5biZaz3IMMRPBFdE2oUF6qa3jTbzXtINEvtNlHW4VkwcPX43b
+ LuV3kG0axhjXVe7IxWBEZdsFSVjXYLF6KctNxtZFf5N+Rhkl8YyDDQ9Nd6w7fXEuXLhuLk0
+ igCllT9RxNLKpikE5Hwrg==
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240599>
 
-Since 0b6806b9 ("xread, xwrite: limit size of IO to 8MB"), this
-wrapper is no longer needed, as read and write are already split
-into small chunks.
+On 2014-01-17 10.47, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+[snip[
+> diff --git a/file-watcher-lib.c b/file-watcher-lib.c
 
-Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
----
- compat/mingw.c | 17 -----------------
- compat/mingw.h |  3 ---
- 2 files changed, 20 deletions(-)
 
-diff --git a/compat/mingw.c b/compat/mingw.c
-index fecb98b..e9892f8 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -304,23 +304,6 @@ int mingw_open (const char *filename, int oflags, ...)
- 	return fd;
- }
- 
--#undef write
--ssize_t mingw_write(int fd, const void *buf, size_t count)
--{
--	/*
--	 * While write() calls to a file on a local disk are translated
--	 * into WriteFile() calls with a maximum size of 64KB on Windows
--	 * XP and 256KB on Vista, no such cap is placed on writes to
--	 * files over the network on Windows XP.  Unfortunately, there
--	 * seems to be a limit of 32MB-28KB on X64 and 64MB-32KB on x86;
--	 * bigger writes fail on Windows XP.
--	 * So we cap to a nice 31MB here to avoid write failures over
--	 * the net without changing the number of WriteFile() calls in
--	 * the local case.
--	 */
--	return write(fd, buf, min(count, 31 * 1024 * 1024));
--}
--
- static BOOL WINAPI ctrl_ignore(DWORD type)
- {
- 	return TRUE;
-diff --git a/compat/mingw.h b/compat/mingw.h
-index 92cd728..e033e72 100644
---- a/compat/mingw.h
-+++ b/compat/mingw.h
-@@ -180,9 +180,6 @@ int mingw_rmdir(const char *path);
- int mingw_open (const char *filename, int oflags, ...);
- #define open mingw_open
- 
--ssize_t mingw_write(int fd, const void *buf, size_t count);
--#define write mingw_write
--
- int mingw_fgetc(FILE *stream);
- #define fgetc mingw_fgetc
- 
--- 
-1.8.4.msysgit.0
+> +int connect_watcher(const char *path)
+Could it be worth to check if we can use some code from unix-socket.c ?
 
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/groups/opt_out.
+Especially important could be that unix_sockaddr_init() wotks around a =
+problem
+when "long" path names are used.=20
