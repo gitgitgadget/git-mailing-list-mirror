@@ -1,88 +1,80 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: git log --no-walk --tags produces strange result for certain
- user
-Date: Fri, 17 Jan 2014 09:28:02 +0100
-Message-ID: <52D8E992.3010304@alum.mit.edu>
-References: <5EE449B7-AB75-4EFF-85F9-292727FA1C53@jetbrains.com> <01D3F259-94E1-4084-9210-34E2DB7B7545@jetbrains.com> <52AEB181.9020006@alum.mit.edu> <AEF2BC21-6EE1-479F-BC63-7A5B95406A7F@jetbrains.com> <52D7B4F8.1010209@alum.mit.edu>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: with git-next, git pull --rebase can print out "fatal: No such
+ ref: ''" for branches without an upstream
+Date: Fri, 17 Jan 2014 08:40:10 +0000
+Message-ID: <20140117084010.GL7608@serenity.lan>
+References: <52D8827E.3060007@fb.com>
+ <20140117022152.GB12444@sigill.intra.peff.net>
+ <52D899CA.5050409@fb.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Kirill Likhodedov <kirill.likhodedov@jetbrains.com>
-X-From: git-owner@vger.kernel.org Fri Jan 17 09:35:17 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Siddharth Agarwal <sid0@fb.com>
+X-From: git-owner@vger.kernel.org Fri Jan 17 09:40:26 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W44tW-0004Bj-NI
-	for gcvg-git-2@plane.gmane.org; Fri, 17 Jan 2014 09:35:15 +0100
+	id 1W44yV-0002Ks-Ck
+	for gcvg-git-2@plane.gmane.org; Fri, 17 Jan 2014 09:40:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752070AbaAQIfK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Jan 2014 03:35:10 -0500
-Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:52172 "EHLO
-	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751064AbaAQIfI (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 17 Jan 2014 03:35:08 -0500
-X-Greylist: delayed 423 seconds by postgrey-1.27 at vger.kernel.org; Fri, 17 Jan 2014 03:35:08 EST
-X-AuditID: 12074414-b7fb46d000002a4d-0f-52d8e994526e
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 6E.BF.10829.499E8D25; Fri, 17 Jan 2014 03:28:04 -0500 (EST)
-Received: from [192.168.69.148] (p57A24457.dip0.t-ipconnect.de [87.162.68.87])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s0H8S27p031248
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Fri, 17 Jan 2014 03:28:03 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20131103 Icedove/17.0.10
-In-Reply-To: <52D7B4F8.1010209@alum.mit.edu>
-X-Enigmail-Version: 1.6
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprPKsWRmVeSWpSXmKPExsUixO6iqDvl5Y0gg/YGNYuuK91MFu/ub2Vx
-	YPKYO+8Nq8fnTXIBTFHcNkmJJWXBmel5+nYJ3Bl7t+5jLjjNWbGy+RhLA+Nn9i5GTg4JAROJ
-	6wdvMkHYYhIX7q1n62Lk4hASuMwocXnyeiYI5xyTxKRrDaxdjBwcvALaEjfO24M0sAioSnQ8
-	OgPWzCagK7GopxnMFhUIllh9+QELiM0rIChxcuYTMFtEwFzi8a+lYDazgL7Epz8HwOqFBQIk
-	Oq7MZYTY9YpR4uz9Q2DXcQroSMy6u4AJZK+EgLhET2MQRK+OxLu+B8wQtrzE9rdzmCcwCs5C
-	sm4WkrJZSMoWMDKvYpRLzCnN1c1NzMwpTk3WLU5OzMtLLdK10MvNLNFLTSndxAgJYJEdjEdO
-	yh1iFOBgVOLhlRC/ESTEmlhWXJl7iFGSg0lJlHfDTaAQX1J+SmVGYnFGfFFpTmrxIUYJDmYl
-	Ed6tIDnelMTKqtSifJiUNAeLkjjvt8XqfkIC6YklqdmpqQWpRTBZGQ4OJQnezhdAjYJFqemp
-	FWmZOSUIaSYOTpDhXFIixal5KalFiaUlGfGgCI4vBsYwSIoHaO/b5yB7iwsSc4GiEK2nGHU5
-	Vmz49IdRiCUvPy9VSpw3HWSHAEhRRmke3ApYunrFKA70sTBvC0gVDzDVwU0CRg3Q4yK8bo/A
-	lpQkIqSkGhjNvW4ufzh1S2GtLJ98BmvMhNt/P57y0Wbe1+jJe6DGy2XG3A1LzpT/ZXJ59/LO
-	LSdm0wYOVrFovWmHdi7R33v9pfjff1/M9L2XxNkFBjUU2+z5ZNEgGLvIkJnbnelb 
+	id S1751833AbaAQIkU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Jan 2014 03:40:20 -0500
+Received: from coyote.aluminati.org ([72.9.247.114]:60278 "EHLO
+	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751079AbaAQIkS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Jan 2014 03:40:18 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by coyote.aluminati.org (Postfix) with ESMTP id B8BD76065C5;
+	Fri, 17 Jan 2014 08:40:17 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -1
+X-Spam-Level: 
+X-Spam-Status: No, score=-1 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1] autolearn=disabled
+Received: from coyote.aluminati.org ([127.0.0.1])
+	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id vW6F7VwSzkPH; Fri, 17 Jan 2014 08:40:17 +0000 (GMT)
+Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
+	by coyote.aluminati.org (Postfix) with ESMTP id 5A9AD60659A;
+	Fri, 17 Jan 2014 08:40:17 +0000 (GMT)
+Received: from localhost (localhost [127.0.0.1])
+	by pichi.aluminati.org (Postfix) with ESMTP id 4F7FE161E21B;
+	Fri, 17 Jan 2014 08:40:17 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at aluminati.org
+Received: from pichi.aluminati.org ([127.0.0.1])
+	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 0dLDzwhPlSAl; Fri, 17 Jan 2014 08:40:16 +0000 (GMT)
+Received: from serenity.lan (mink.aluminati.org [10.0.7.180])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by pichi.aluminati.org (Postfix) with ESMTPSA id A58EF161E44A;
+	Fri, 17 Jan 2014 08:40:12 +0000 (GMT)
+Content-Disposition: inline
+In-Reply-To: <52D899CA.5050409@fb.com>
+User-Agent: Mutt/1.5.22 (2013-10-16)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240577>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240578>
 
-On 01/16/2014 11:31 AM, Michael Haggerty wrote:
-> On 12/16/2013 12:52 PM, Kirill Likhodedov wrote:
->> I received one more complaint for this issue, and now it appears in a public repository https://github.com/spray/spray 
->>
->> To reproduce:
->>
->> # git clone https://github.com/spray/spray 
->> # cd spray
->> # git log --no-walk --tags --pretty="%H %d" --decorate=full | tail -3
->> 3273edafcd9f9701d62e061c5257c0a09e2e1fb7  (tag: refs/tags/v0.8.0-RC1)
->> ff3a2946bc54da76ddb47e82c81419cc7ae3db6b  (tag: refs/tags/v0.7.0)
->> 8b4043428b90b7f45b7241b3c2c032cf785479ce 
->>
->> So here the last hash doesn't have a decoration.
+On Thu, Jan 16, 2014 at 06:47:38PM -0800, Siddharth Agarwal wrote:
+> On 01/16/2014 06:21 PM, Jeff King wrote:
+> > On Thu, Jan 16, 2014 at 05:08:14PM -0800, Siddharth Agarwal wrote:
+> >
+> >> With git-next, where git pull --rebase can print out "fatal: No such
+> >> ref: ''" if git pull --rebase is run on branches without an upstream.
+> > This is already fixed in bb3f458 (rebase: fix fork-point with zero
+> > arguments, 2014-01-09), I think.
 > 
-> The problem is that reference refs/tags/v0.5.0 points at a tag object
-> 8f6ca98087 which itself points at another tag object 2eddbcbff4 which
-> finally points at commit 8b4043428b.  Probably we should handle
-> recursive tag objects like this, but OTOH I can't think of a reason why
-> one would want to create them in the first place.
+> If I'm reading the patch correctly, that only fixes it for git rebase, 
+> not for git pull --rebase. git-pull.sh contains a separate invocation of 
+> git merge-base --fork-point.
 
-Junio just pointed out to me that this bug has been fixed already, by
-Brian Carlson, in 5e1361cc, which is already in master.  Sorry for the
-noise.
+I'm pretty sure the invocation in git-pull.sh is OK.  The error then
+comes out of git-rebase.sh when git-pull invokes it.
 
-Michael
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+Are you running a version of git-next that includes bb3f458?
