@@ -1,88 +1,89 @@
-From: Roman Kagan <rkagan@mail.ru>
-Subject: Re: [PATCH v2] git-svn: workaround for a bug in svn serf backend
-Date: Fri, 17 Jan 2014 15:32:01 +0400
-Message-ID: <CANiYKX4VhxZsuwKMfaMToner-+ipYmsFy_T6Bgxwj_a950PA3A@mail.gmail.com>
-References: <20131226202805.GV20443@google.com>
-	<1388131515-3015-1-git-send-email-rkagan@mail.ru>
-	<20131227200708.GD20443@google.com>
-	<20131227203443.GA9189@dcvr.yhbt.net>
-	<7veh4yj5mm.fsf@alter.siamese.dyndns.org>
-	<CANiYKX4fjYYRneqPxFDmpPg7e5ge9-hNktBvXVLQ=JxtM56tAQ@mail.gmail.com>
-	<xmqq4n5qrume.fsf@gitster.dls.corp.google.com>
-	<CANiYKX5aUYWV2Kt_yMmAxeC07SuNcs-tJEe8e2SY4p1NHBPKUA@mail.gmail.com>
+From: =?UTF-8?B?U3RlZmFuIE7DpHdl?= <stefan.naewe@atlas-elektronik.com>
+Subject: Re: [PATCH 0/6] Make 'git help everyday' work -> relnotes
+Date: Fri, 17 Jan 2014 12:59:10 +0100
+Message-ID: <52D91B0E.6080000@atlas-elektronik.com>
+References: <1389309192-5748-1-git-send-email-philipoakley@iee.org> <xmqqppo090m7.fsf@gitster.dls.corp.google.com> <52CFACBB.7000805@atlas-elektronik.com> <F11CD558C63947F9B4AA75501D2F9F62@PhilipOakley>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Eric Wong <normalperson@yhbt.net>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	Benjamin Pabst <benjamin.pabst85@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 17 12:32:10 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: GitList <git@vger.kernel.org>
+To: Philip Oakley <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Fri Jan 17 12:58:43 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W47ei-0000qR-AO
-	for gcvg-git-2@plane.gmane.org; Fri, 17 Jan 2014 12:32:08 +0100
+	id 1W484Q-0005Io-1T
+	for gcvg-git-2@plane.gmane.org; Fri, 17 Jan 2014 12:58:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752068AbaAQLcE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Jan 2014 06:32:04 -0500
-Received: from mail-qc0-f181.google.com ([209.85.216.181]:42249 "EHLO
-	mail-qc0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751274AbaAQLcC (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Jan 2014 06:32:02 -0500
-Received: by mail-qc0-f181.google.com with SMTP id e9so3492959qcy.12
-        for <git@vger.kernel.org>; Fri, 17 Jan 2014 03:32:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=y67buu1cEPt3pG0YeNAKrcof7fjkQlawU9UpHPBudFM=;
-        b=LhgpVL/zGp6vmziIiEzwlg5V5nFpiIAIpctchtk9F+pirVl2qXZ1P/gwLPwsaRBnGA
-         kq8nfW/qPbAxxE8k5lm/vkINCvQ9rlumlSYojzu2qVDF0aJbZtRQNKlKDIiLiO5Y4le4
-         hzYiWB+wvGP9k+Qy56fodJUeNomKE1ovJ7Hzy3T7g6fC1JLvT0+XHl5RdlKFoCX1QU02
-         TBKYBw9g6/u4BV48gqRc+lCw1v0cxrOcr2+/nKlSr0kDv951zR07hZ2kqA/mmy5HQBJd
-         5Ldd12tEUFA2EQaXeN8jA665AdnNw0hyP58k98ei9HQp6DIFBxYnlFbMGdezrvT+Oq8J
-         ye2g==
-X-Received: by 10.140.94.44 with SMTP id f41mr2097426qge.18.1389958321655;
- Fri, 17 Jan 2014 03:32:01 -0800 (PST)
-Received: by 10.224.165.131 with HTTP; Fri, 17 Jan 2014 03:32:01 -0800 (PST)
-In-Reply-To: <CANiYKX5aUYWV2Kt_yMmAxeC07SuNcs-tJEe8e2SY4p1NHBPKUA@mail.gmail.com>
-X-Google-Sender-Auth: _VRioqFfrcOc7lexOujlnUZEGMc
+	id S1751379AbaAQL6i convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 17 Jan 2014 06:58:38 -0500
+Received: from mail96.atlas.de ([194.156.172.86]:24580 "EHLO mail96.atlas.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751276AbaAQL6h (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Jan 2014 06:58:37 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by mail96.atlas.de (Postfix) with ESMTP id BBBDC10798;
+	Fri, 17 Jan 2014 12:58:35 +0100 (CET)
+X-Virus-Scanned: amavisd-new at mail96.atlas.de
+Received: from mail96.atlas.de ([127.0.0.1])
+	by localhost (mail96.atlas.de [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 3KqyL3qZKomZ; Fri, 17 Jan 2014 12:58:35 +0100 (CET)
+Received: from mgsrv01.atlas.de (mail01.atlas.mailrelays.atlas.de [10.200.101.16])
+	by mail96.atlas.de (Postfix) with ESMTP;
+	Fri, 17 Jan 2014 12:58:35 +0100 (CET)
+Received: from MSSRVS1.atlas.de (mssrvs1.atlas.de [10.200.101.71])
+	by mgsrv01.atlas.de (Postfix) with ESMTP id BB3A527169;
+	Fri, 17 Jan 2014 12:58:34 +0100 (CET)
+Received: from [10.200.54.97] (10.200.54.97) by MSSRVS1.atlas.de
+ (10.200.101.71) with Microsoft SMTP Server (TLS) id 8.3.279.5; Fri, 17 Jan
+ 2014 12:58:34 +0100
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:24.0) Gecko/20100101 Thunderbird/24.1.1
+In-Reply-To: <F11CD558C63947F9B4AA75501D2F9F62@PhilipOakley>
+X-Enigmail-Version: 1.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240594>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240595>
 
-2013/12/31 Roman Kagan <rkagan@mail.ru>:
-> 2013/12/30 Junio C Hamano <gitster@pobox.com>:
->> Roman Kagan <rkagan@mail.ru> writes:
->>> I'd like to note that it's IMO worth including in the 'maint' branch
->>> as it's a crasher.  Especially so since the real fix has been merged
->>> in the subversion upstream and nominated for 1.8 branch, so the
->>> workaround may soon lose its relevance.
+Am 16.01.2014 22:14, schrieb Philip Oakley:
+> From: "Stefan N=C3=A4we" <stefan.naewe@atlas-elektronik.com>
+> [...]
 >>
->> I do not quite get this part, though.
+>> I'd really like to see 'git help relnotes' working as well...
 >>
->> If they refused to fix it for real, it would make it likely that
->> this workaround will stay relevant for a long time, in which case it
->> would be worth cherry-picking to an older maintenance track.  But if
->> this workaround is expected to lose its relevance shortly, I see it
->> as one less reason to cherry-pick it to an older maintenance track.
->>
->> Confused...
->
-> I thought it was exactly the other way around.  By the time the next
-> feature release reaches users, chances are they'd already have
-> subversion with the fix.  OTOH the workaround would benefit those who
-> get their maintenance release of git (e.g. through their Linux distro
-> update) before they get their maintenance release of subversion.
+>> Stefan
+>=20
+> Stefan,
+>=20
+> Were you thinking that all the release notes would be quoted verbatim=
+ in=20
+> the one long man page?
+>=20
+> Or that it would be a set of links to each of the individual text fil=
+es=20
+> (see the ifdef::stalenotes[] in git/Documentation/git.txt)?
+>=20
+> The latter allows individual release notes to be checked, but still=20
+> leaves folks with a difficult search problem if they want to find whe=
+n=20
+> some command was 'tweaked'.
+>=20
+> Obviously, any method would need to be easy to maintain. And the=20
+> RelNotes symlink would need handling.
 
-So this actually happened: 1.8.5.3 is out, and some distributions are
-shipping it (Arch, Debian), but the workaround didn't make it there.
+'git help relnotes' should show the current release note with
+a link to the previous.
 
-Could you please consider including it in 'maint', so that 1.8.5.4
-brings them a working combination of git and subversion?
+And 'git help git' should link to the current release note.
 
-Roman.
+
+Stefan
+--=20
+----------------------------------------------------------------
+/dev/random says: We now return you to your regularly scheduled flame-t=
+hrowing
+python -c "print '73746566616e2e6e616577654061746c61732d656c656b74726f6=
+e696b2e636f6d'.decode('hex')"
