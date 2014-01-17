@@ -1,519 +1,212 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH/WIP v2 03/14] read-cache: connect to file watcher
-Date: Fri, 17 Jan 2014 16:47:29 +0700
-Message-ID: <1389952060-12297-4-git-send-email-pclouds@gmail.com>
-References: <1389524622-6702-1-git-send-email-pclouds@gmail.com>
- <1389952060-12297-1-git-send-email-pclouds@gmail.com>
+From: Thomas Gummerer <t.gummerer@gmail.com>
+Subject: Re: [PATCH/WIP v2 02/14] read-cache: new extension to mark what file is watched
+Date: Fri, 17 Jan 2014 12:19:05 +0100
+Message-ID: <87ha92c0uu.fsf@gmail.com>
+References: <1389524622-6702-1-git-send-email-pclouds@gmail.com> <1389952060-12297-1-git-send-email-pclouds@gmail.com> <1389952060-12297-3-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: tr@thomasrast.ch,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 17 10:49:47 2014
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 17 12:18:59 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W463c-0003hM-Ry
-	for gcvg-git-2@plane.gmane.org; Fri, 17 Jan 2014 10:49:45 +0100
+	id 1W47Ry-00038F-B4
+	for gcvg-git-2@plane.gmane.org; Fri, 17 Jan 2014 12:18:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752381AbaAQJtZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 17 Jan 2014 04:49:25 -0500
-Received: from mail-pd0-f175.google.com ([209.85.192.175]:47300 "EHLO
-	mail-pd0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752147AbaAQJsY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Jan 2014 04:48:24 -0500
-Received: by mail-pd0-f175.google.com with SMTP id r10so3792693pdi.20
-        for <git@vger.kernel.org>; Fri, 17 Jan 2014 01:48:23 -0800 (PST)
+	id S1751382AbaAQLSt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 17 Jan 2014 06:18:49 -0500
+Received: from mail-ie0-f182.google.com ([209.85.223.182]:43480 "EHLO
+	mail-ie0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751374AbaAQLSs convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 17 Jan 2014 06:18:48 -0500
+Received: by mail-ie0-f182.google.com with SMTP id as1so5349701iec.13
+        for <git@vger.kernel.org>; Fri, 17 Jan 2014 03:18:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=JMs5Y3ynIvpgb0NgqU+jkBszZDadj0Fb0f40dBYRjOo=;
-        b=obLhUDPypFxDow9eV1G5AFNBNsBTni1o0b6TCAQbv5VBaH6Gt+0lQi1p5Y5ql29Ite
-         L2TlDMsxXMkG+Xd0JvThwbB8wIotWR9uPbXtjt2EP2mkFNG4idwcWj9UrsgkzvoX4YrK
-         RPNG3oKnOtxW5qTaGOqh0eAW98HWvC9tD4NS8eGyBXsEp54MTJ6mnLCgCoeJnQIQ2ZhX
-         2Q5/HtbJ7qz8AW/aMc48JRkX/26gmP9kbeKeQmkMysXdufK/yD7fVZ7t8xQoDhDvBBJe
-         v4HLt0qB/FovSOBocS4s2/d7XKMvYRbvupyTTAfTSclq+Yv+30Yo1+wftCEuHCAsQGvk
-         jPOg==
-X-Received: by 10.68.201.10 with SMTP id jw10mr1028368pbc.25.1389952102997;
-        Fri, 17 Jan 2014 01:48:22 -0800 (PST)
-Received: from pclouds@gmail.com ([14.161.32.83])
-        by mx.google.com with ESMTPSA id dq3sm21317422pbc.35.2014.01.17.01.48.18
+        h=from:to:cc:subject:in-reply-to:references:user-agent:date
+         :message-id:mime-version:content-type:content-transfer-encoding;
+        bh=87+DTK9xUIU6m1uqHb3bhHnCL0gVw4BFrBimOeZ0Exc=;
+        b=XMNjPK05uLHsNScSIt2CS8t4IgTbVQntOtc75O0LUbAEgDgbwGy5hlDwyIVnquKFR5
+         vL5HIDMjmogQqxmQbj4MFE4fRKoktktp2UCUeMZDwYAzDg1YEJOi9ROzt15q2fFUIom/
+         Gl8WaeEzM63uBVXQVBvaOyvRU4VruEMj8oSCaJghFN1Hk506lqe7kXi1MqbOOQJX3EX9
+         s8Tg3G9jqtzI8ved9sBobgVRrWxswocE9A+vWPxXoe76Go+CeQWHhbXidKG+zZfY+O/a
+         g4oZQDSGRKtKak50tJutjdzCiiuj97OHB68w7gynfIOOjpaM3cYB8RuO2+gt3pnXpIEw
+         V6YQ==
+X-Received: by 10.50.79.168 with SMTP id k8mr2200369igx.18.1389957527459;
+        Fri, 17 Jan 2014 03:18:47 -0800 (PST)
+Received: from localhost ([216.18.212.218])
+        by mx.google.com with ESMTPSA id ml2sm2843223igb.10.2014.01.17.03.18.44
         for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Fri, 17 Jan 2014 01:48:21 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Fri, 17 Jan 2014 16:48:16 +0700
-X-Mailer: git-send-email 1.8.5.1.208.g05b12ea
-In-Reply-To: <1389952060-12297-1-git-send-email-pclouds@gmail.com>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 17 Jan 2014 03:18:46 -0800 (PST)
+In-Reply-To: <1389952060-12297-3-git-send-email-pclouds@gmail.com>
+User-Agent: Notmuch/0.17~rc1+8~g4a09c1a (http://notmuchmail.org) Emacs/24.3.1 (x86_64-unknown-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240592>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240593>
 
-This patch establishes a connection between a new file watcher daemon
-and git. Each index file may have at most one file watcher attached to
-it. The file watcher maintains a UNIX socket at
-$GIT_DIR/index.watcher. Any process that has write access to $GIT_DIR
-can talk to the file watcher.
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> writes:
 
-A validation is performed after git connects to the file watcher to
-make sure both sides have the same view. This is done by exchanging
-the index signature (*) The file watcher keeps a copy of the signature
-locally while git computes the signature from the index. If the
-signatures do not match, something has gone wrong so both sides
-reinitialize wrt. to file watching: the file watcher clears all
-watches while git clears CE_WATCHED flags.
+> If an entry is "watched", git lets an external program decide if the
+> entry is modified or not. It's more like --assume-unchanged, but
+> designed to be controlled by machine.
+>
+> We are running out of on-disk ce_flags, so instead of extending
+> on-disk entry format again, "watched" flags are in-core only and
+> stored as extension instead.
 
-If the signatures match, we can trust the file watcher and git can
-start asking questions that are not important to this patch.
+As you said yourself in http://thread.gmane.org/gmane.comp.version-cont=
+rol.git/240339/focus=3D240385
+this is not quite true.  As for your explanation there,
 
-This file watching thing is all about speed. So if the daemon is not
-responding within 20ms (or even hanging), git moves on without it.
+> Anyway using extended flags means 2 extra bytes per entry for
+> almost every entry in this case (and for index v5 it means redoing
+> crc32 for almost every entry too when the bit is updated) so it may
+> still be a good idea to keep the new flag separate.
 
-A note about per-repo vs global (or per-user) daemon approach. While I
-implement per-repo daemon, this is actually implementation
-details. Nothing can stop you from writing a global daemon that opens
-unix sockets to many repos, e.g. to avoid hitting inotify's 128 user
-instances limit.
+I don't think adding 2 extra bytes would be too bad, since we are
+already using 62 bytes plus the bytes for the filename for each index
+entry, so it would be a less than 3% increase in the index file size.
+(And the extended flags may be used anyway in some cases)
 
-If env variable GIT_NO_FILE_WATCHER is set, the file watcher is
-ignored. 'WATC' extension is kept, but if the index is updated
-(likely), it'll become invalid at the next connection.
+As for index-v5 (if that's ever going to happen), it depends mostly on
+how often the CE_WATCHED is going to be updated, to decide whether it
+makes sense to store this as extension.
 
-(*) for current index versions, the signature is the index SHA-1
-trailer. But it could be something else (e.g. v5 does not have SHA-1
-trailer)
+That said, I don't care too deeply if it's stored one way or another,
+but I think it would be good to update the commit message with a better
+rationale for the choice.
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- .gitignore               |   1 +
- Makefile                 |   2 +
- cache.h                  |   3 +
- file-watcher-lib.c (new) |  97 ++++++++++++++++++++++++++++++++
- file-watcher-lib.h (new) |   9 +++
- file-watcher.c (new)     | 142 +++++++++++++++++++++++++++++++++++++++=
-++++++++
- read-cache.c             |  37 ++++++++++++
- trace.c                  |   3 +-
- 8 files changed, 292 insertions(+), 2 deletions(-)
- create mode 100644 file-watcher-lib.c
- create mode 100644 file-watcher-lib.h
- create mode 100644 file-watcher.c
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
+> ---
+>  cache.h      |  2 ++
+>  read-cache.c | 41 ++++++++++++++++++++++++++++++++++++++++-
+>  2 files changed, 42 insertions(+), 1 deletion(-)
+>
+> diff --git a/cache.h b/cache.h
+> index a09d622..069dce7 100644
+> --- a/cache.h
+> +++ b/cache.h
+> @@ -168,6 +168,8 @@ struct cache_entry {
+>  /* used to temporarily mark paths matched by pathspecs */
+>  #define CE_MATCHED           (1 << 26)
+>
+> +#define CE_WATCHED           (1 << 27)
+> +
+>  /*
+>   * Extended on-disk flags
+>   */
+> diff --git a/read-cache.c b/read-cache.c
+> index fe1d153..6f21e3f 100644
+> --- a/read-cache.c
+> +++ b/read-cache.c
+> @@ -33,6 +33,7 @@ static struct cache_entry *refresh_cache_entry(stru=
+ct cache_entry *ce, int reall
+>  #define CACHE_EXT(s) ( (s[0]<<24)|(s[1]<<16)|(s[2]<<8)|(s[3]) )
+>  #define CACHE_EXT_TREE 0x54524545	/* "TREE" */
+>  #define CACHE_EXT_RESOLVE_UNDO 0x52455543 /* "REUC" */
+> +#define CACHE_EXT_WATCH 0x57415443	  /* "WATC" */
+>
+>  struct index_state the_index;
+>
+> @@ -1293,6 +1294,19 @@ static int verify_hdr(struct cache_header *hdr=
+,
+>  	return 0;
+>  }
+>
+> +static void read_watch_extension(struct index_state *istate, uint8_t=
+ *data,
+> +				 unsigned long sz)
+> +{
+> +	int i;
+> +	if ((istate->cache_nr + 7) / 8 !=3D sz) {
+> +		error("invalid 'WATC' extension");
+> +		return;
+> +	}
+> +	for (i =3D 0; i < istate->cache_nr; i++)
+> +		if (data[i / 8] & (1 << (i % 8)))
+> +			istate->cache[i]->ce_flags |=3D CE_WATCHED;
+> +}
+> +
+>  static int read_index_extension(struct index_state *istate,
+>  				const char *ext, void *data, unsigned long sz)
+>  {
+> @@ -1303,6 +1317,9 @@ static int read_index_extension(struct index_st=
+ate *istate,
+>  	case CACHE_EXT_RESOLVE_UNDO:
+>  		istate->resolve_undo =3D resolve_undo_read(data, sz);
+>  		break;
+> +	case CACHE_EXT_WATCH:
+> +		read_watch_extension(istate, data, sz);
+> +		break;
+>  	default:
+>  		if (*ext < 'A' || 'Z' < *ext)
+>  			return error("index uses %.4s extension, which we do not understa=
+nd",
+> @@ -1781,7 +1798,7 @@ int write_index(struct index_state *istate, int=
+ newfd)
+>  {
+>  	git_SHA_CTX c;
+>  	struct cache_header hdr;
+> -	int i, err, removed, extended, hdr_version;
+> +	int i, err, removed, extended, hdr_version, has_watches =3D 0;
+>  	struct cache_entry **cache =3D istate->cache;
+>  	int entries =3D istate->cache_nr;
+>  	struct stat st;
+> @@ -1790,6 +1807,8 @@ int write_index(struct index_state *istate, int=
+ newfd)
+>  	for (i =3D removed =3D extended =3D 0; i < entries; i++) {
+>  		if (cache[i]->ce_flags & CE_REMOVE)
+>  			removed++;
+> +		else if (cache[i]->ce_flags & CE_WATCHED)
+> +			has_watches++;
+>
+>  		/* reduce extended entries if possible */
+>  		cache[i]->ce_flags &=3D ~CE_EXTENDED;
+> @@ -1861,6 +1880,26 @@ int write_index(struct index_state *istate, in=
+t newfd)
+>  		if (err)
+>  			return -1;
+>  	}
+> +	if (has_watches) {
+> +		int id, sz =3D (entries - removed + 7) / 8;
+> +		uint8_t *data =3D xmalloc(sz);
+> +		memset(data, 0, sz);
+> +		for (i =3D 0, id =3D 0; i < entries && has_watches; i++) {
+> +			struct cache_entry *ce =3D cache[i];
+> +			if (ce->ce_flags & CE_REMOVE)
+> +				continue;
+> +			if (ce->ce_flags & CE_WATCHED) {
+> +				data[id / 8] |=3D 1 << (id % 8);
+> +				has_watches--;
+> +			}
+> +			id++;
+> +		}
+> +		err =3D write_index_ext_header(&c, newfd, CACHE_EXT_WATCH, sz) < 0
+> +			|| ce_write(&c, newfd, data, sz) < 0;
+> +		free(data);
+> +		if (err)
+> +			return -1;
+> +	}
+>
+>  	if (ce_flush(&c, newfd) || fstat(newfd, &st))
+>  		return -1;
+> --
+> 1.8.5.1.208.g05b12ea
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
 
-diff --git a/.gitignore b/.gitignore
-index dc600f9..dc870cc 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -56,6 +56,7 @@
- /git-fast-import
- /git-fetch
- /git-fetch-pack
-+/git-file-watcher
- /git-filter-branch
- /git-fmt-merge-msg
- /git-for-each-ref
-diff --git a/Makefile b/Makefile
-index 287e6f8..4369b3b 100644
---- a/Makefile
-+++ b/Makefile
-@@ -536,6 +536,7 @@ PROGRAMS +=3D $(EXTRA_PROGRAMS)
- PROGRAM_OBJS +=3D credential-store.o
- PROGRAM_OBJS +=3D daemon.o
- PROGRAM_OBJS +=3D fast-import.o
-+PROGRAM_OBJS +=3D file-watcher.o
- PROGRAM_OBJS +=3D http-backend.o
- PROGRAM_OBJS +=3D imap-send.o
- PROGRAM_OBJS +=3D sh-i18n--envsubst.o
-@@ -798,6 +799,7 @@ LIB_OBJS +=3D entry.o
- LIB_OBJS +=3D environment.o
- LIB_OBJS +=3D exec_cmd.o
- LIB_OBJS +=3D fetch-pack.o
-+LIB_OBJS +=3D file-watcher-lib.o
- LIB_OBJS +=3D fsck.o
- LIB_OBJS +=3D gettext.o
- LIB_OBJS +=3D gpg-interface.o
-diff --git a/cache.h b/cache.h
-index 069dce7..0d55551 100644
---- a/cache.h
-+++ b/cache.h
-@@ -282,6 +282,7 @@ struct index_state {
- 	struct hashmap name_hash;
- 	struct hashmap dir_hash;
- 	unsigned char sha1[20];
-+	int watcher;
- };
-=20
- extern struct index_state the_index;
-@@ -1241,6 +1242,8 @@ extern void alloc_report(void);
- __attribute__((format (printf, 1, 2)))
- extern void trace_printf(const char *format, ...);
- __attribute__((format (printf, 2, 3)))
-+extern void trace_printf_key(const char *key, const char *fmt, ...);
-+__attribute__((format (printf, 2, 3)))
- extern void trace_argv_printf(const char **argv, const char *format, .=
-=2E.);
- extern void trace_repo_setup(const char *prefix);
- extern int trace_want(const char *key);
-diff --git a/file-watcher-lib.c b/file-watcher-lib.c
-new file mode 100644
-index 0000000..ed14ef9
---- /dev/null
-+++ b/file-watcher-lib.c
-@@ -0,0 +1,97 @@
-+#include "cache.h"
-+
-+#define WAIT_TIME 20		/* in ms */
-+#define TRACE_KEY "GIT_TRACE_WATCHER"
-+
-+int connect_watcher(const char *path)
-+{
-+	struct strbuf sb =3D STRBUF_INIT;
-+	struct stat st;
-+	int fd =3D -1;
-+
-+	strbuf_addf(&sb, "%s.watcher", path);
-+	if (!stat(sb.buf, &st) && S_ISSOCK(st.st_mode)) {
-+		struct sockaddr_un sun;
-+		fd =3D socket(AF_UNIX, SOCK_DGRAM, 0);
-+		sun.sun_family =3D AF_UNIX;
-+		strlcpy(sun.sun_path, sb.buf, sizeof(sun.sun_path));
-+		if (connect(fd, (struct sockaddr *)&sun, sizeof(sun))) {
-+			error(_("unable to connect to file watcher: %s"),
-+			      strerror(errno));
-+			close(fd);
-+			fd =3D -1;
-+		} else {
-+			sprintf(sun.sun_path, "%c%"PRIuMAX, 0, (uintmax_t)getpid());
-+			if (bind(fd, (struct sockaddr *)&sun, sizeof(sun))) {
-+				error(_("unable to bind socket: %s"),
-+				      strerror(errno));
-+				close(fd);
-+				fd =3D -1;
-+			}
-+		}
-+	}
-+	strbuf_release(&sb);
-+	return fd;
-+}
-+
-+ssize_t send_watcher(int sockfd, struct sockaddr_un *dest,
-+		     const char *fmt, ...)
-+{
-+	struct strbuf sb =3D STRBUF_INIT;
-+	struct pollfd pfd;
-+	int ret;
-+
-+	va_list ap;
-+	va_start(ap, fmt);
-+	strbuf_vaddf(&sb, fmt, ap);
-+	va_end(ap);
-+
-+	pfd.fd =3D sockfd;
-+	pfd.events =3D POLLOUT;
-+	ret =3D poll(&pfd, 1, WAIT_TIME);
-+	if (ret > 0 && pfd.revents & POLLOUT) {
-+		trace_printf_key(TRACE_KEY, "< %s\n", sb.buf);
-+		if (dest)
-+			ret =3D sendto(sockfd, sb.buf, sb.len, 0,
-+				     (struct sockaddr *)dest,
-+				     sizeof(struct sockaddr_un));
-+		else
-+			ret =3D write(sockfd, sb.buf, sb.len);
-+	}
-+	strbuf_release(&sb);
-+	return ret;
-+}
-+
-+char *read_watcher(int fd, ssize_t *size, struct sockaddr_un *sun)
-+{
-+	static char *buf;
-+	static int buf_size;
-+	struct pollfd pfd;
-+	ssize_t len;
-+
-+	if (!buf_size) {
-+		socklen_t vallen =3D sizeof(buf_size);
-+		if (getsockopt(fd, SOL_SOCKET, SO_SNDBUF, &buf_size, &vallen))
-+			die_errno("could not get SO_SNDBUF from socket %d", fd);
-+		buf =3D xmalloc(buf_size + 1);
-+	}
-+
-+	pfd.fd =3D fd;
-+	pfd.events =3D POLLIN;
-+	if (poll(&pfd, 1, WAIT_TIME) > 0 &&
-+	    (pfd.revents & POLLIN)) {
-+		if (sun) {
-+			socklen_t socklen =3D sizeof(*sun);
-+			len =3D recvfrom(fd, buf, buf_size, 0, sun, &socklen);
-+		} else
-+			len =3D read(fd, buf, buf_size);
-+		if (len > 0)
-+			buf[len] =3D '\0';
-+		if (size)
-+			*size =3D len;
-+		trace_printf_key(TRACE_KEY, "> %s\n", buf);
-+		return buf;
-+	} else if (size)
-+		*size =3D 0;
-+	return NULL;
-+}
-diff --git a/file-watcher-lib.h b/file-watcher-lib.h
-new file mode 100644
-index 0000000..0fe9399
---- /dev/null
-+++ b/file-watcher-lib.h
-@@ -0,0 +1,9 @@
-+#ifndef __FILE_WATCHER_LIB__
-+#define __FILE_WATCHER_LIB__
-+
-+int connect_watcher(const char *path);
-+ssize_t send_watcher(int sockfd, struct sockaddr_un *dest,
-+		     const char *fmt, ...)
-+	__attribute__((format (printf, 3, 4)));
-+char *read_watcher(int fd, ssize_t *size, struct sockaddr_un *sun);
-+#endif
-diff --git a/file-watcher.c b/file-watcher.c
-new file mode 100644
-index 0000000..36a9a8d
---- /dev/null
-+++ b/file-watcher.c
-@@ -0,0 +1,142 @@
-+#include "cache.h"
-+#include "sigchain.h"
-+#include "parse-options.h"
-+#include "exec_cmd.h"
-+#include "file-watcher-lib.h"
-+
-+static const char *const file_watcher_usage[] =3D {
-+	N_("git file-watcher [options]"),
-+	NULL
-+};
-+
-+static char index_signature[41];
-+
-+static int handle_command(int fd)
-+{
-+	struct sockaddr_un sun;
-+	ssize_t len;
-+	const char *arg;
-+	char *msg;
-+
-+	if (!(msg =3D read_watcher(fd, &len, &sun)))
-+		die_errno("read from socket");
-+
-+	if ((arg =3D skip_prefix(msg, "hello "))) {
-+		send_watcher(fd, &sun, "hello %s", index_signature);
-+		if (strcmp(arg, index_signature))
-+			/*
-+			 * Index SHA-1 mismatch, something has gone
-+			 * wrong. Clean up and start over.
-+			 */
-+			index_signature[0] =3D '\0';
-+	} else if (!strcmp(msg, "die")) {
-+		exit(0);
-+	} else {
-+		die("unrecognized command %s", msg);
-+	}
-+	return 0;
-+}
-+
-+static const char *socket_path;
-+static int do_not_clean_up;
-+
-+static void cleanup(void)
-+{
-+	if (do_not_clean_up)
-+		return;
-+	unlink(socket_path);
-+}
-+
-+static void cleanup_on_signal(int signo)
-+{
-+	cleanup();
-+	sigchain_pop(signo);
-+	raise(signo);
-+}
-+
-+static void daemonize(void)
-+{
-+#ifdef NO_POSIX_GOODIES
-+	die("fork not supported on this platform");
-+#else
-+	switch (fork()) {
-+		case 0:
-+			break;
-+		case -1:
-+			die_errno("fork failed");
-+		default:
-+			do_not_clean_up =3D 1;
-+			exit(0);
-+	}
-+	if (setsid() =3D=3D -1)
-+		die_errno("setsid failed");
-+	close(0);
-+	close(1);
-+	close(2);
-+	sanitize_stdfds();
-+#endif
-+}
-+
-+int main(int argc, const char **argv)
-+{
-+	struct strbuf sb =3D STRBUF_INIT;
-+	struct sockaddr_un sun;
-+	struct pollfd pfd[2];
-+	int fd, err, nr;
-+	const char *prefix;
-+	int daemon =3D 0;
-+	struct option options[] =3D {
-+		OPT_BOOL(0, "daemon", &daemon,
-+			 N_("run in background")),
-+		OPT_END()
-+	};
-+
-+	git_extract_argv0_path(argv[0]);
-+	git_setup_gettext();
-+	prefix =3D setup_git_directory();
-+	argc =3D parse_options(argc, argv, prefix, options,
-+			     file_watcher_usage, 0);
-+	if (argc)
-+		die("too many arguments");
-+
-+	strbuf_addf(&sb, "%s.watcher", get_index_file());
-+	socket_path =3D strbuf_detach(&sb, NULL);
-+	memset(index_signature, 0, sizeof(index_signature));
-+	fd =3D socket(AF_UNIX, SOCK_DGRAM, 0);
-+	sun.sun_family =3D AF_UNIX;
-+	strlcpy(sun.sun_path, socket_path, sizeof(sun.sun_path));
-+	if (bind(fd, (struct sockaddr *)&sun, sizeof(sun)))
-+		die_errno("unable to bind to %s", socket_path);
-+	atexit(cleanup);
-+	sigchain_push_common(cleanup_on_signal);
-+
-+	if (daemon) {
-+		strbuf_addf(&sb, "%s.log", socket_path);
-+		err =3D open(sb.buf, O_CREAT | O_TRUNC | O_WRONLY, 0600);
-+		adjust_shared_perm(sb.buf);
-+		if (err =3D=3D -1)
-+			die_errno("unable to create %s", sb.buf);
-+		daemonize();
-+		dup2(err, 1);
-+		dup2(err, 2);
-+		close(err);
-+	}
-+
-+	nr =3D 0;
-+	pfd[nr].fd =3D fd;
-+	pfd[nr++].events =3D POLLIN;
-+
-+	for (;;) {
-+		if (poll(pfd, nr, -1) < 0) {
-+			if (errno !=3D EINTR) {
-+				error("Poll failed, resuming: %s", strerror(errno));
-+				sleep(1);
-+			}
-+			continue;
-+		}
-+
-+		if ((pfd[0].revents & POLLIN) && handle_command(fd))
-+			break;
-+	}
-+	return 0;
-+}
-diff --git a/read-cache.c b/read-cache.c
-index 6f21e3f..76cf0e3 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -14,6 +14,7 @@
- #include "resolve-undo.h"
- #include "strbuf.h"
- #include "varint.h"
-+#include "file-watcher-lib.h"
-=20
- static struct cache_entry *refresh_cache_entry(struct cache_entry *ce,=
- int really);
-=20
-@@ -1447,6 +1448,37 @@ static struct cache_entry *create_from_disk(stru=
-ct ondisk_cache_entry *ondisk,
- 	return ce;
- }
-=20
-+static void validate_watcher(struct index_state *istate, const char *p=
-ath)
-+{
-+	int i;
-+
-+	if (getenv("GIT_NO_FILE_WATCHER")) {
-+		istate->watcher =3D -1;
-+		return;
-+	}
-+
-+	istate->watcher =3D connect_watcher(path);
-+	if (istate->watcher !=3D -1) {
-+		struct strbuf sb =3D STRBUF_INIT;
-+		char *msg;
-+		strbuf_addf(&sb, "hello %s", sha1_to_hex(istate->sha1));
-+		if (send_watcher(istate->watcher, NULL, "%s", sb.buf) > 0 &&
-+		    (msg =3D read_watcher(istate->watcher, NULL, NULL)) !=3D NULL &&
-+		    !strcmp(msg, sb.buf)) { /* good */
-+			strbuf_release(&sb);
-+			return;
-+		}
-+		strbuf_release(&sb);
-+	}
-+
-+	/* No the file watcher is out of date, clear everything */
-+	for (i =3D 0; i < istate->cache_nr; i++)
-+		if (istate->cache[i]->ce_flags & CE_WATCHED) {
-+			istate->cache[i]->ce_flags &=3D ~CE_WATCHED;
-+			istate->cache_changed =3D 1;
-+		}
-+}
-+
- /* remember to discard_cache() before reading a different cache! */
- int read_index_from(struct index_state *istate, const char *path)
- {
-@@ -1532,6 +1564,7 @@ int read_index_from(struct index_state *istate, c=
-onst char *path)
- 		src_offset +=3D extsize;
- 	}
- 	munmap(mmap, mmap_size);
-+	validate_watcher(istate, path);
- 	return istate->cache_nr;
-=20
- unmap:
-@@ -1557,6 +1590,10 @@ int discard_index(struct index_state *istate)
- 	istate->timestamp.nsec =3D 0;
- 	free_name_hash(istate);
- 	cache_tree_free(&(istate->cache_tree));
-+	if (istate->watcher > 0) {
-+		close(istate->watcher);
-+		istate->watcher =3D -1;
-+	}
- 	istate->initialized =3D 0;
- 	free(istate->cache);
- 	istate->cache =3D NULL;
-diff --git a/trace.c b/trace.c
-index 3d744d1..0b8ebe0 100644
---- a/trace.c
-+++ b/trace.c
-@@ -75,8 +75,7 @@ static void trace_vprintf(const char *key, const char=
- *fmt, va_list ap)
- 	strbuf_release(&buf);
- }
-=20
--__attribute__((format (printf, 2, 3)))
--static void trace_printf_key(const char *key, const char *fmt, ...)
-+void trace_printf_key(const char *key, const char *fmt, ...)
- {
- 	va_list ap;
- 	va_start(ap, fmt);
---=20
-1.8.5.1.208.g05b12ea
+--
+Thomas
