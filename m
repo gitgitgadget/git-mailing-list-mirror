@@ -1,129 +1,147 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] send-email: If the ca path is not specified, use the defaults
-Date: Fri, 17 Jan 2014 10:14:47 -0800
-Message-ID: <xmqqlhyexyp4.fsf@gitster.dls.corp.google.com>
-References: <1389807071-26746-1-git-send-email-i.gnatenko.brain@gmail.com>
-	<xmqqa9ex2gi6.fsf@gitster.dls.corp.google.com>
-	<7AD1C6ED-6177-415D-B342-D1FEA9F810B4@rubenkerkhof.com>
-	<xmqqob3d0w7g.fsf@gitster.dls.corp.google.com>
-	<20140115215024.GM18964@google.com>
-	<xmqqppnry0p9.fsf@gitster.dls.corp.google.com>
-	<E036CD5E-69B1-4ABD-957B-8E31D410A897@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 1/2] prefer xwrite instead of write
+Date: Fri, 17 Jan 2014 10:21:48 -0800
+Message-ID: <20140117182148.GY18964@google.com>
+References: <1389968230-1224-1-git-send-email-kusmabite@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Ruben Kerkhof <ruben@rubenkerkhof.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Igor Gnatenko <i.gnatenko.brain@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: "Kyle J. McKay" <mackyle@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 17 19:14:58 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org, msysgit@googlegroups.com,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+To: Erik Faye-Lund <kusmabite@gmail.com>
+X-From: msysgit+bncBD6LRKOE4AIRBP7J4WLAKGQEOARKVHY@googlegroups.com Fri Jan 17 19:21:55 2014
+Return-path: <msysgit+bncBD6LRKOE4AIRBP7J4WLAKGQEOARKVHY@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-qc0-f190.google.com ([209.85.216.190])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W4DwX-00073R-ST
-	for gcvg-git-2@plane.gmane.org; Fri, 17 Jan 2014 19:14:58 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752974AbaAQSOz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Jan 2014 13:14:55 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60876 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752689AbaAQSOx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Jan 2014 13:14:53 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6B6B46102F;
-	Fri, 17 Jan 2014 13:14:52 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Ajmm/FEYiUw5mJz5mrhX4jjTJjY=; b=u2Xh0o
-	68ipJA9U7vURrDEA5F8q0yVEih818xWMH1JUjjGCqEZUfHDJA4qAzBqiPVogI6rh
-	aadTGog5YwNYcrgh6TTJp+d5JaH45fvLKBG++5Ku4ijwK/jDy/GvmDLL4u9Ku5l9
-	j31GvHzw40z70BfY0zvX8XTtPAyMKid2pWsms=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=cdjAeBfWDusegcyc8+Acowd6DddshvMV
-	JbYZEnKClFGa370k64t0iCdmEXKSa1prpL9pZXRYm/kh3TEUlD5XS59nJnCyLlYt
-	1fcA93C3vaRy/RCHSdoZfjKg8CQOZnbgq+Ky3QMYxHZTCeQ90jB6KigkYEP5hA29
-	/C5pzfHKtdI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 48F556102B;
-	Fri, 17 Jan 2014 13:14:52 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 95A0A6101C;
-	Fri, 17 Jan 2014 13:14:51 -0500 (EST)
-In-Reply-To: <E036CD5E-69B1-4ABD-957B-8E31D410A897@gmail.com> (Kyle J. McKay's
-	message of "Thu, 16 Jan 2014 20:21:32 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 42137758-7FA3-11E3-B950-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240604>
+	(envelope-from <msysgit+bncBD6LRKOE4AIRBP7J4WLAKGQEOARKVHY@googlegroups.com>)
+	id 1W4E3F-0005AA-4G
+	for gcvm-msysgit@m.gmane.org; Fri, 17 Jan 2014 19:21:53 +0100
+Received: by mail-qc0-f190.google.com with SMTP id c9sf887672qcz.27
+        for <gcvm-msysgit@m.gmane.org>; Fri, 17 Jan 2014 10:21:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :in-reply-to:user-agent:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type:content-disposition;
+        bh=Vj7e793/BYXbUfYBERo9Me6GrSzRtMOm9excoGW0Tl8=;
+        b=VDMgKDES6ZYoaXpqPKJoLl7FCCDlmDUqVaRBmlxGAZ3i+U08JB5DMN6ckfeLlILLbe
+         87PqyefhNOFFFLR8IDsuxPbVvVHd/lXl9rFfil7vkEAaRTjlZA4cMQ5UO8rj4igy0VYu
+         0Bt4pKmKXSVy7WXyv+S/y63kkzgWVa53uT+zqJ1aiW+3cGhaqmTFm/NWMjWfouP7b6nJ
+         gceXO6EYfOvMEVO4rb2Bf6wjk+8o2257O/UpP2dm9JTjKq+k4ih3LoVlBKAgypdoTpZg
+         cga6cZckinTXY1WiaZS1QKYQ7b5DQxPSQ1UUtaokm6Ooy6A1/5SpfPu7LRzf2+wUdJZW
+         BKCA==
+X-Received: by 10.140.94.11 with SMTP id f11mr93700qge.7.1389982912353;
+        Fri, 17 Jan 2014 10:21:52 -0800 (PST)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.140.87.134 with SMTP id r6ls530471qgd.47.gmail; Fri, 17 Jan
+ 2014 10:21:51 -0800 (PST)
+X-Received: by 10.236.118.12 with SMTP id k12mr1192096yhh.35.1389982911653;
+        Fri, 17 Jan 2014 10:21:51 -0800 (PST)
+Received: from mail-yh0-x236.google.com (mail-yh0-x236.google.com [2607:f8b0:4002:c01::236])
+        by gmr-mx.google.com with ESMTPS id 48si3798474yhf.7.2014.01.17.10.21.51
+        for <msysgit@googlegroups.com>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Fri, 17 Jan 2014 10:21:51 -0800 (PST)
+Received-SPF: pass (google.com: domain of jrnieder@gmail.com designates 2607:f8b0:4002:c01::236 as permitted sender) client-ip=2607:f8b0:4002:c01::236;
+Received: by mail-yh0-x236.google.com with SMTP id b12so1527206yha.27
+        for <msysgit@googlegroups.com>; Fri, 17 Jan 2014 10:21:51 -0800 (PST)
+X-Received: by 10.236.100.173 with SMTP id z33mr3209604yhf.9.1389982911472;
+        Fri, 17 Jan 2014 10:21:51 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id c44sm19565587yho.20.2014.01.17.10.21.50
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 17 Jan 2014 10:21:50 -0800 (PST)
+In-Reply-To: <1389968230-1224-1-git-send-email-kusmabite@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Original-Sender: jrnieder@gmail.com
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of jrnieder@gmail.com designates 2607:f8b0:4002:c01::236
+ as permitted sender) smtp.mail=jrnieder@gmail.com;       dkim=pass
+ header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Content-Disposition: inline
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240605>
 
-"Kyle J. McKay" <mackyle@gmail.com> writes:
+Hi,
 
-> On my OS X platform depending on which version of OpenSSL I'm using,
-> the OPENSSLDIR path would be one of these:
->
->   /System/Library/OpenSSL
->   /opt/local/etc/openssl
->
-> And neither of those uses a "certs" directory, they both use a
-> "cert.pem" bundle instead:
->
->   $ ls -l /System/Library/OpenSSL
->   total 32
->   lrwxrwxrwx  1 root  wheel    42 cert.pem -> ../../../usr/share/curl/
-> curl-ca-bundle.crt
->   drwxr-xr-x  2 root  wheel    68 certs
->   drwxr-xr-x  8 root  wheel   272 misc
->   -rw-r--r--  1 root  wheel  9381 openssl.cnf
->   drwxr-xr-x  2 root  wheel    68 private
->   # the certs directory is empty
->
->   $ ls -l /opt/local/etc/openssl
->   total 32
->   lrwxrwxrwx   1 root  admin    35 cert.pem@ -> ../../share/curl/curl-
-> ca-bundle.crt
->   drwxr-xr-x   9 root  admin   306 misc/
->   -rw-r--r--   1 root  admin 10835 openssl.cnf
->
-> Notice neither of those refers to /etc/ssl/certs at all.
->
-> So the short answer is, yes, hard-coding /etc/ssl/certs as the path on
-> OS X is incorrect and if setting /etc/ssl/certs as the path has the
-> effect of replacing the default locations the verification will fail.
+Erik Faye-Lund wrote:
 
-The current code says "if nothing is specified, let's pretend
-/etc/ssl/certs was specified.  Then if it is a directory, use it
-with SSL_ca_path, if it is a file, use it with SSL_ca_file, if it
-does not exist, do not even attempt verification."
+> --- a/builtin/merge.c
+> +++ b/builtin/merge.c
+> @@ -367,7 +367,7 @@ static void squash_message(struct commit *commit, struct commit_list *remotehead
+>  			sha1_to_hex(commit->object.sha1));
+>  		pretty_print_commit(&ctx, commit, &out);
+>  	}
+> -	if (write(fd, out.buf, out.len) < 0)
+> +	if (xwrite(fd, out.buf, out.len) < 0)
+>  		die_errno(_("Writing SQUASH_MSG"));
 
-And that "let's pretend" breaks Fedora, where "/etc/ssl/certs" is a
-directory but is not meant to be used with SSL_ca_path---we try to
-use /etc/ssl/certs with SSL_ca_path and verification fails miserably.
+Shouldn't this use write_in_full() to avoid a silently truncated result? (*)
 
-If I am reading the code correctly, if /etc/ssl/certs does not exist
-on the filesystem at all, it wouldn't even attempt verification, so
-I take your "the verification will fail" to mean that you forgot to
-also mention "And on OS X, /etc/ssl/certs directory still exists,
-even though OpenSSL does not use it."  If that is the case, then our
-current code indeed is broken in exactly the same way for OS X as
-for Fedora.
+[...]
+> --- a/streaming.c
+> +++ b/streaming.c
+> @@ -538,7 +538,7 @@ int stream_blob_to_fd(int fd, unsigned const char *sha1, struct stream_filter *f
+>  			goto close_and_exit;
+>  	}
+>  	if (kept && (lseek(fd, kept - 1, SEEK_CUR) == (off_t) -1 ||
+> -		     write(fd, "", 1) != 1))
+> +		     xwrite(fd, "", 1) != 1))
 
-The proposed change in this thread would stop the defaulting
-altogether, and still ask verification to the library using its own
-default, so I can see how that would make the setting you described
-used on OS X work properly.
+Yeah, if we get EINTR then it's worth retrying.
 
-In short, I agree with you on both counts (the current code is wrong
-for OS X, and the proposed change will fix it).  I just want to make
-sure that my understanding of the current breakage is in line with
-the reality ;-)
+[...]
+> --- a/transport-helper.c
+> +++ b/transport-helper.c
+> @@ -1129,9 +1129,8 @@ static int udt_do_write(struct unidirectional_transfer *t)
+>  		return 0;	/* Nothing to write. */
+>  
+>  	transfer_debug("%s is writable", t->dest_name);
+> -	bytes = write(t->dest, t->buf, t->bufuse);
+> -	if (bytes < 0 && errno != EWOULDBLOCK && errno != EAGAIN &&
+> -		errno != EINTR) {
+> +	bytes = xwrite(t->dest, t->buf, t->bufuse);
+> +	if (bytes < 0 && errno != EWOULDBLOCK) {
 
-Thanks.
+Here the write is limited by BUFFERSIZE, and returning to the outer
+loop to try another read when the write returns EAGAIN, like the
+original code does, seems philosophically like the right thing to do.
+
+Luckily we don't use O_NONBLOCK anywhere, so the change shouldn't
+matter in practice.  So although it doesn't do any good, using xwrite
+here for consistency should be fine.
+
+So my only worry is the (*) above.  With that change,
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/groups/opt_out.
