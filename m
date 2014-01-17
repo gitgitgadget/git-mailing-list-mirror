@@ -1,114 +1,86 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: [PATCH 1/2] prefer xwrite instead of write
-Date: Fri, 17 Jan 2014 20:08:51 +0100
-Message-ID: <CABPQNSYQhctwvJgW4N-=56Oiiop6MyyYNyLKQF6WYps7dpC5Ug@mail.gmail.com>
-References: <1389968230-1224-1-git-send-email-kusmabite@gmail.com>
- <20140117182148.GY18964@google.com> <xmqq4n52xw95.fsf@gitster.dls.corp.google.com>
-Reply-To: kusmabite@gmail.com
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/3] setup_pager: set MORE=R
+Date: Fri, 17 Jan 2014 11:11:28 -0800
+Message-ID: <xmqqzjmuwhi7.fsf@gitster.dls.corp.google.com>
+References: <20140117041430.GB19551@sigill.intra.peff.net>
+	<20140117042153.GB23443@sigill.intra.peff.net>
+	<398F146D-72F1-44CD-B205-729665FD8765@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Jonathan Nieder <jrnieder@gmail.com>, GIT Mailing-list <git@vger.kernel.org>, 
-	msysGit <msysgit@googlegroups.com>, Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: msysgit+bncBDR53PPJ7YHRB3P74WLAKGQE3OCRKNQ@googlegroups.com Fri Jan 17 20:09:35 2014
-Return-path: <msysgit+bncBDR53PPJ7YHRB3P74WLAKGQE3OCRKNQ@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-vc0-f189.google.com ([209.85.220.189])
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>, Yuri <yuri@rawbw.com>
+To: "Kyle J. McKay" <mackyle@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 17 20:11:38 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDR53PPJ7YHRB3P74WLAKGQE3OCRKNQ@googlegroups.com>)
-	id 1W4EnO-0002N0-Sf
-	for gcvm-msysgit@m.gmane.org; Fri, 17 Jan 2014 20:09:35 +0100
-Received: by mail-vc0-f189.google.com with SMTP id ij19sf859897vcb.26
-        for <gcvm-msysgit@m.gmane.org>; Fri, 17 Jan 2014 11:09:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:x-original-sender:x-original-authentication-results
-         :precedence:mailing-list:list-id:list-post:list-help:list-archive
-         :sender:list-subscribe:list-unsubscribe:content-type;
-        bh=jZjOSVKiOITeaONvqzoI03UjRz1wcPez98rgJ0/yz1s=;
-        b=U5bIfcfgYKNmx7CsDwtwszo0GI1UOWjNRf+2zfSZOjOqASIdy4qdVGIuM+CaBd9Dvo
-         7C/HtRTC0n0mYPScxtxyVIH2ykgeHFgdW/YRDfVE8Tx11Zi7Ntd8hNRlAlYWJxpsjxKh
-         bvEDL/As54DhHhDA4dk8CDTzgSaaIkEkPRTlTuRIMurJBaIMVYux2uv6O0TTHN8KsuRz
-         HuLcctyz6d3lpc4AOeLnXvhTzUgoM5lnIeZCph9WiMiBgEc4n44AVpJzMbMLfb0J6IJj
-         pgYLciML+JuMyREYR557JN2byh9J29GE9XALcpfXLJFX74TkcetEyuVOnQWDLmBsjIP0
-         xAUg==
-X-Received: by 10.50.29.41 with SMTP id g9mr116164igh.4.1389985774064;
-        Fri, 17 Jan 2014 11:09:34 -0800 (PST)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.50.45.105 with SMTP id l9ls591733igm.27.canary; Fri, 17 Jan
- 2014 11:09:33 -0800 (PST)
-X-Received: by 10.66.231.132 with SMTP id tg4mr1324804pac.31.1389985773151;
-        Fri, 17 Jan 2014 11:09:33 -0800 (PST)
-Received: from mail-ie0-x234.google.com (mail-ie0-x234.google.com [2607:f8b0:4001:c03::234])
-        by gmr-mx.google.com with ESMTPS id 48si3881556yhf.7.2014.01.17.11.09.33
-        for <msysgit@googlegroups.com>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 17 Jan 2014 11:09:33 -0800 (PST)
-Received-SPF: pass (google.com: domain of kusmabite@gmail.com designates 2607:f8b0:4001:c03::234 as permitted sender) client-ip=2607:f8b0:4001:c03::234;
-Received: by mail-ie0-f180.google.com with SMTP id at1so2905692iec.39
-        for <msysgit@googlegroups.com>; Fri, 17 Jan 2014 11:09:32 -0800 (PST)
-X-Received: by 10.50.29.114 with SMTP id j18mr4424244igh.24.1389985772689;
- Fri, 17 Jan 2014 11:09:32 -0800 (PST)
-Received: by 10.64.249.33 with HTTP; Fri, 17 Jan 2014 11:08:51 -0800 (PST)
-In-Reply-To: <xmqq4n52xw95.fsf@gitster.dls.corp.google.com>
-X-Original-Sender: kusmabite@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of kusmabite@gmail.com designates 2607:f8b0:4001:c03::234
- as permitted sender) smtp.mail=kusmabite@gmail.com;       dkim=pass
- header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240610>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1W4EpN-0004IH-GE
+	for gcvg-git-2@plane.gmane.org; Fri, 17 Jan 2014 20:11:37 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752942AbaAQTLe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Jan 2014 14:11:34 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51798 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752689AbaAQTLc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Jan 2014 14:11:32 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 58850627FF;
+	Fri, 17 Jan 2014 14:11:32 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=45qVXAsa+Jh+YKGync4ePbbhjjQ=; b=SEcXNQ
+	KOLOr2gIorM0t1HtJNERu9g930gusxj4/b32SVj/AjmSa7ccRJ2VZnc29hY50LQc
+	1X10C0Um6ZmQBGZIHpGht+npGSy4q+dbi3hFcxsRp+wpw+fhgnfZ4hWVZPSn4xeR
+	Cfmdukvv6IkYMeob5FWI+QEiVtdjnBS7WqXwA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=kP/pqIm2cNIBmIj/Hdkrnimltj+CWTW2
+	9z/qx/IU1l6lS02t+y+v0zgiECsNgmNDqSIBo1doYLBu7Z4IiQXINZ9DTZcrM0RJ
+	y2oUCDxFmXj5u61C4eR8SeFW37/pgHE2T3qYbZ2IiPu5NXjiWxKg8+vseI9wxxXL
+	Dd9YBFVjB9E=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 47B56627FE;
+	Fri, 17 Jan 2014 14:11:32 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 914F0627FD;
+	Fri, 17 Jan 2014 14:11:30 -0500 (EST)
+In-Reply-To: <398F146D-72F1-44CD-B205-729665FD8765@gmail.com> (Kyle J. McKay's
+	message of "Thu, 16 Jan 2014 23:26:50 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 2C073974-7FAB-11E3-ABAB-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240611>
 
-On Fri, Jan 17, 2014 at 8:07 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
+"Kyle J. McKay" <mackyle@gmail.com> writes:
+
+> On Jan 16, 2014, at 20:21, Jeff King wrote:
+>> When we run the pager, we always set "LESS=R" to tell the
+>> pager to pass through ANSI colors. On modern versions of
+>> FreeBSD, the system "more" can do the same trick.
+> [snip]
+>> diff --git a/pager.c b/pager.c
+>> index 90d237e..2303164 100644
+>> --- a/pager.c
+>> +++ b/pager.c
+>> @@ -87,6 +87,10 @@ void setup_pager(void)
+>> 		argv_array_push(&env, "LESS=FRSX");
+>> 	if (!getenv("LV"))
+>> 		argv_array_push(&env, "LV=-c");
+>> +#ifdef PAGER_MORE_UNDERSTANDS_R
+>> +	if (!getenv("MORE"))
+>> +		argv_array_push(&env, "MORE=R");
+>> +#endif
 >
->> Hi,
->>
->> Erik Faye-Lund wrote:
->>
->>> --- a/builtin/merge.c
->>> +++ b/builtin/merge.c
->>> @@ -367,7 +367,7 @@ static void squash_message(struct commit *commit, struct commit_list *remotehead
->>>                      sha1_to_hex(commit->object.sha1));
->>>              pretty_print_commit(&ctx, commit, &out);
->>>      }
->>> -    if (write(fd, out.buf, out.len) < 0)
->>> +    if (xwrite(fd, out.buf, out.len) < 0)
->>>              die_errno(_("Writing SQUASH_MSG"));
->>
->> Shouldn't this use write_in_full() to avoid a silently truncated result? (*)
->
-> Meaning this?  If so, I think it makes sense.
->
+> How about adding a leading "-" to both the LESS and MORE settings?
+> Since you're in there patching... :)
 
-Yeah, I think that's better. Thanks, both!
-
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/groups/opt_out.
+The discussion we had when LV=-c was added, namely $gmane/240124,
+agrees.  I however am perfectly fine to see it done as a separate
+clean-up patch.
