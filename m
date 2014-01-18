@@ -1,125 +1,122 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v3 09/17] safe_create_leading_directories(): add new error value SCLD_VANISHED
-Date: Sat, 18 Jan 2014 23:48:53 +0100
-Message-ID: <1390085341-2553-10-git-send-email-mhagger@alum.mit.edu>
-References: <1390085341-2553-1-git-send-email-mhagger@alum.mit.edu>
-Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [PATCH v2] safe_create_leading_directories(): on Windows, \ can separate path components
+Date: Sun, 19 Jan 2014 00:40:44 +0100
+Message-ID: <1390088444-11439-1-git-send-email-mhagger@alum.mit.edu>
+Cc: git@vger.kernel.org, Sebastian Schuberth <sschuberth@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jan 18 23:56:47 2014
+X-From: git-owner@vger.kernel.org Sun Jan 19 00:41:30 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W4eoo-0000XF-Vv
-	for gcvg-git-2@plane.gmane.org; Sat, 18 Jan 2014 23:56:47 +0100
+	id 1W4fW6-0008Ig-6B
+	for gcvg-git-2@plane.gmane.org; Sun, 19 Jan 2014 00:41:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751557AbaARW4n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Jan 2014 17:56:43 -0500
-Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:43424 "EHLO
-	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751436AbaARW4m (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 18 Jan 2014 17:56:42 -0500
-X-Greylist: delayed 421 seconds by postgrey-1.27 at vger.kernel.org; Sat, 18 Jan 2014 17:56:41 EST
-X-AuditID: 12074414-b7fb46d000002a4d-1e-52db0503080b
+	id S1751899AbaARXlS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Jan 2014 18:41:18 -0500
+Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:59424 "EHLO
+	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751891AbaARXlP (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 18 Jan 2014 18:41:15 -0500
+X-AuditID: 1207440c-b7f566d000004272-14-52db111af8f0
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 17.F1.10829.3050BD25; Sat, 18 Jan 2014 17:49:39 -0500 (EST)
+	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id BA.5F.17010.A111BD25; Sat, 18 Jan 2014 18:41:14 -0500 (EST)
 Received: from michael.fritz.box (p4FDD4E9C.dip0.t-ipconnect.de [79.221.78.156])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s0IMnN92030075
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s0INenjq032137
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Sat, 18 Jan 2014 17:49:38 -0500
+	Sat, 18 Jan 2014 18:41:13 -0500
 X-Mailer: git-send-email 1.8.5.2
-In-Reply-To: <1390085341-2553-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrIIsWRmVeSWpSXmKPExsUixO6iqMvMejvIYOpDLYuuK91MFg29V5gt
-	bq+Yz+zA7PH3/Qcmj4uXlD0+b5ILYI7itklKLCkLzkzP07dL4M54dPgiU8EBsYrXU+UbGN8I
-	djFyckgImEg8mHODEcIWk7hwbz1bFyMXh5DAZUaJsx/+sUA4J5gkTp6eyQxSxSagK7Gop5kJ
-	xBYRUJOY2HaIBcRmFnCQ2Py5EWySsECcRN+Cz2BxFgFViQXbprOC2LwCLhILDk4G6uUA2qYg
-	sfq6EEiYEyh8ZP4FsJFCAs4SN18/YZ/AyLuAkWEVo1xiTmmubm5iZk5xarJucXJiXl5qka6F
-	Xm5miV5qSukmRkigiOxgPHJS7hCjAAejEg/vAabbQUKsiWXFlbmHGCU5mJREeZVBQnxJ+SmV
-	GYnFGfFFpTmpxYcYJTiYlUR4gzfcChLiTUmsrEotyodJSXOwKInzflus7ickkJ5YkpqdmlqQ
-	WgSTleHgUJLgvcQMNFSwKDU9tSItM6cEIc3EwQkiuEA28ABtuAVSyFtckJhbnJkOUXSKUVFK
-	nHcJSEIAJJFRmgc3ABbTrxjFgf4R5l0MUsUDTAdw3a+ABjMBDRaJvQkyuCQRISXVwNjT+Hjt
-	zH/r7iftS7kixq43vWXBw56Zn4uftx/sr6roYnijtl7R88Dm3b11z9tST5+7Nvn+dRc+q2/f
-	4w+azTlh8PTGqkz9QzYVs8oSCubbxxzd/++cUPffaUw7T0yoe3gyfYdjP6vHgrkqB76VLXn5
-	ObFhLtfl5M7HTl+n6z7/d9Tz6bSsVb2XlViKMxINtZiLihMB6cAaH8QCAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrHIsWRmVeSWpSXmKPExsUixO6iqCsleDvI4MhOM4uuK91MFg29V5gt
+	+pd3sVncXjGf2eL0zfnsDqwef99/YPLYOesuu8eHj3EeFy8pe3zeJBfAGsVtk5RYUhacmZ6n
+	b5fAndHcv4mx4LlgxZNJZ5gaGBfydTFyckgImEg8PriaEcIWk7hwbz1bFyMXh5DAZUaJWxM3
+	MEI4J5gkPu0+yAxSxSagK7Gop5kJxBYRUJOY2HaIBaSIWWADo0TPxtfsIAlhgUSJnmm/wMay
+	CKhKXLvdwwZi8wq4SDz4sRvI5gBapyCx+rrQBEbuBYwMqxjlEnNKc3VzEzNzilOTdYuTE/Py
+	Uot0DfVyM0v0UlNKNzFCQoRnB+O3dTKHGAU4GJV4eDMYbgcJsSaWFVfmHmKU5GBSEuV1EAAK
+	8SXlp1RmJBZnxBeV5qQWH2KU4GBWEuEN3nArSIg3JbGyKrUoHyYlzcGiJM6rukTdT0ggPbEk
+	NTs1tSC1CCYrw8GhJMHrCjJUsCg1PbUiLTOnBCHNxMEJIrhANvAAbRAEKeQtLkjMLc5Mhyg6
+	xagoJc4bD5IQAElklObBDYBF8ytGcaB/hHkDQap4gIkArvsV0GAmoMEisTdBBpckIqSkGhg1
+	hV6qcgoaiPROC4i7t796zZzqD9dPOO9pvDNnzw0nYb4Tco+PWwXNM5r47KnVuW/2p60OHk45
+	F7FstY9fzVSxl1dv75rxbds7hwimrysX2Ndcs3vydWNqTVeFxAP+NjO+zyq+vBW7uxIuO2xc
+	sGaajhGztw3v3pv9FTGvdsTlekxacrcjIWaNEktxRqKhFnNRcSIAtgFSzcECAAA= 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240668>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240669>
 
-Add a new possible error result that can be returned by
-safe_create_leading_directories() and
-safe_create_leading_directories_const(): SCLD_VANISHED.  This value
-indicates that a file or directory on the path existed at one point
-(either it already existed or the function created it), but then it
-disappeared.  This probably indicates that another process deleted the
-directory while we were working.  If SCLD_VANISHED is returned, the
-caller might want to retry the function call, as there is a chance
-that a new attempt will succeed.
+When cloning to a directory "C:\foo\bar" from Windows' cmd.exe where
+"foo" does not exist yet, Git would throw an error like
 
-Why doesn't safe_create_leading_directories() do the retrying
-internally?  Because an empty directory isn't really ever safe until
-it holds a file.  So even if safe_create_leading_directories() were
-absolutely sure that the directory existed before it returned, there
-would be no guarantee that the directory still existed when the caller
-tried to write something in it.
+    fatal: could not create work tree dir 'c:\foo\bar'.: No such file or directory
 
+Fix this by not hard-coding a platform specific directory separator
+into safe_create_leading_directories().
+
+This patch, including its entire commit message, is derived from a
+patch by Sebastian Schuberth.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Signed-off-by: Sebastian Schuberth <sschuberth@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- cache.h     | 10 +++++++++-
- sha1_file.c | 11 +++++++++++
- 2 files changed, 20 insertions(+), 1 deletion(-)
+This patch applies on top of v3 of mh/safe-create-leading-directories.
 
-diff --git a/cache.h b/cache.h
-index 8030e36..c0a7a8a 100644
---- a/cache.h
-+++ b/cache.h
-@@ -742,12 +742,20 @@ int adjust_shared_perm(const char *path);
-  * Create the directory containing the named path, using care to be
-  * somewhat safe against races.  Return one of the scld_error values
-  * to indicate success/failure.
-+ *
-+ * SCLD_VANISHED indicates that one of the ancestor directories of the
-+ * path existed at one point during the function call and then
-+ * suddenly vanished, probably because another process pruned the
-+ * directory while we were working.  To be robust against this kind of
-+ * race, callers might want to try invoking the function again when it
-+ * returns SCLD_VANISHED.
-  */
- enum scld_error {
- 	SCLD_OK = 0,
- 	SCLD_FAILED = -1,
- 	SCLD_PERMS = -2,
--	SCLD_EXISTS = -3
-+	SCLD_EXISTS = -3,
-+	SCLD_VANISHED = -4
- };
- enum scld_error safe_create_leading_directories(char *path);
- enum scld_error safe_create_leading_directories_const(const char *path);
+The only logical change from Sebastian's patch is that this version
+restores the original slash character rather than always restoring it
+to '/' (as suggested by Junio).
+
+Please note that I have merely adapted Sebastian's patch to apply on
+top of my changes.  I do not have an opinion about whether slashes
+should rather be normalized before they are passed to this function.
+And I cannot test the patch under Windows (though it passes the test
+suite under Linux).
+
+ sha1_file.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
+
 diff --git a/sha1_file.c b/sha1_file.c
-index a065308..8b0849f 100644
+index 8b0849f..6e8c05d 100644
 --- a/sha1_file.c
 +++ b/sha1_file.c
-@@ -132,6 +132,17 @@ enum scld_error safe_create_leading_directories(char *path)
- 			if (errno == EEXIST &&
- 			    !stat(path, &st) && S_ISDIR(st.st_mode))
- 				; /* somebody created it since we checked */
-+			else if (errno == ENOENT)
-+				/*
-+				 * Either mkdir() failed because
-+				 * somebody just pruned the containing
-+				 * directory, or stat() failed because
-+				 * the file that was in our way was
-+				 * just removed.  Either way, inform
-+				 * the caller that it might be worth
-+				 * trying again:
-+				 */
-+				ret = SCLD_VANISHED;
- 			else
- 				ret = SCLD_FAILED;
+@@ -112,17 +112,21 @@ enum scld_error safe_create_leading_directories(char *path)
+ 
+ 	while (ret == SCLD_OK && next_component) {
+ 		struct stat st;
+-		char *slash = strchr(next_component, '/');
++		char *slash = next_component, slash_character;
+ 
+-		if (!slash)
++		while (*slash && !is_dir_sep(*slash))
++			slash++;
++
++		if (!*slash)
+ 			break;
+ 
+ 		next_component = slash + 1;
+-		while (*next_component == '/')
++		while (is_dir_sep(*next_component))
+ 			next_component++;
+ 		if (!*next_component)
+ 			break;
+ 
++		slash_character = *slash;
+ 		*slash = '\0';
+ 		if (!stat(path, &st)) {
+ 			/* path exists */
+@@ -148,7 +152,7 @@ enum scld_error safe_create_leading_directories(char *path)
  		} else if (adjust_shared_perm(path)) {
+ 			ret = SCLD_PERMS;
+ 		}
+-		*slash = '/';
++		*slash = slash_character;
+ 	}
+ 	return ret;
+ }
 -- 
 1.8.5.2
