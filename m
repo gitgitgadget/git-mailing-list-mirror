@@ -1,79 +1,88 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v3 12/17] remove_dir_recurse(): tighten condition for removing unreadable dir
-Date: Sat, 18 Jan 2014 23:48:56 +0100
-Message-ID: <1390085341-2553-13-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH v3 08/17] cmd_init_db(): when creating directories, handle errors conservatively
+Date: Sat, 18 Jan 2014 23:48:52 +0100
+Message-ID: <1390085341-2553-9-git-send-email-mhagger@alum.mit.edu>
 References: <1390085341-2553-1-git-send-email-mhagger@alum.mit.edu>
 Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jan 18 23:50:23 2014
+X-From: git-owner@vger.kernel.org Sat Jan 18 23:50:29 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W4eib-0005Pp-Kf
-	for gcvg-git-2@plane.gmane.org; Sat, 18 Jan 2014 23:50:22 +0100
+	id 1W4eii-0005WS-Bd
+	for gcvg-git-2@plane.gmane.org; Sat, 18 Jan 2014 23:50:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751838AbaARWuP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Jan 2014 17:50:15 -0500
-Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:48290 "EHLO
-	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751775AbaARWtn (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 18 Jan 2014 17:49:43 -0500
-X-AuditID: 12074413-b7fc76d000002aba-33-52db05071b8a
+	id S1751849AbaARWuY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Jan 2014 17:50:24 -0500
+Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:52577 "EHLO
+	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751742AbaARWti (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 18 Jan 2014 17:49:38 -0500
+X-AuditID: 12074412-b7fc96d0000023d5-7f-52db05021afb
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 56.04.10938.7050BD25; Sat, 18 Jan 2014 17:49:43 -0500 (EST)
+	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id 75.87.09173.2050BD25; Sat, 18 Jan 2014 17:49:38 -0500 (EST)
 Received: from michael.fritz.box (p4FDD4E9C.dip0.t-ipconnect.de [79.221.78.156])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s0IMnN95030075
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s0IMnN91030075
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Sat, 18 Jan 2014 17:49:42 -0500
+	Sat, 18 Jan 2014 17:49:37 -0500
 X-Mailer: git-send-email 1.8.5.2
 In-Reply-To: <1390085341-2553-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrAIsWRmVeSWpSXmKPExsUixO6iqMvOejvIYN96NouuK91MFg29V5gt
-	bq+Yz+zA7PH3/Qcmj4uXlD0+b5ILYI7itklKLCkLzkzP07dL4M64dS6yYC9bRcuCk+wNjA2s
-	XYycHBICJhJrGqYwQthiEhfurWfrYuTiEBK4zCjx5+cqZgjnBJPEnQlNzCBVbAK6Eot6mplA
-	bBEBNYmJbYdYQGxmAQeJzZ8bwSYJC8RKrFrbBGRzcLAIqErM+q8IEuYVcJGYfvc/O0hYQkBB
-	YvV1IZAwJ1D4yPwLYBOFBJwlbr5+wj6BkXcBI8MqRrnEnNJc3dzEzJzi1GTd4uTEvLzUIl1z
-	vdzMEr3UlNJNjJAwEd7BuOuk3CFGAQ5GJR7eg0y3g4RYE8uKK3MPMUpyMCmJ8iqDhPiS8lMq
-	MxKLM+KLSnNSiw8xSnAwK4nwBm+4FSTEm5JYWZValA+TkuZgURLnVVui7ickkJ5YkpqdmlqQ
-	WgSTleHgUJLgvcQMNFSwKDU9tSItM6cEIc3EwQkiuEA28ABtuAVSyFtckJhbnJkOUXSKUVFK
-	nHcJSEIAJJFRmgc3ABbRrxjFgf4R5r0PUsUDTAZw3a+ABjMBDRaJvQkyuCQRISXVwLhe83Wv
-	937XBlFhrcKZs3Psd7o4nRcqlr7cMWWprbDSXl6/zrkq6wICOCw2PN0T96X6p3HzfsVktahJ
-	+vNY5aWulO67lfHSYf7857IXvxzdWvgunfWRyrmZX5tiN2+V+Vqa+u6P9dzs/LddriZJCh7K
-	T/lDPQUFVuvFSU2TXLtrPcuZsCWvrimxFGckGmoxFxUnAgCMk/Y2wwIAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrEIsWRmVeSWpSXmKPExsUixO6iqMvEejvIYN9zYYuuK91MFg29V5gt
+	bq+Yz+zA7PH3/Qcmj4uXlD0+b5ILYI7itklKLCkLzkzP07dL4M7Yc2MWa8F3zopjl76zNDA+
+	Zu9i5OSQEDCRmHmthwXCFpO4cG89WxcjF4eQwGVGiT3HlrFAOCeYJM4d/ckGUsUmoCuxqKeZ
+	CcQWEVCTmNh2CKybWcBBYvPnRkYQW1ggQeLV1InMIDaLgKrE56fbWEFsXgFniemb2oHqOYC2
+	KUisvi4EEuYUcJE4Mv8C2EghoJKbr5+wT2DkXcDIsIpRLjGnNFc3NzEzpzg1Wbc4OTEvL7VI
+	10wvN7NELzWldBMjJFSEdjCuPyl3iFGAg1GJh/cA0+0gIdbEsuLK3EOMkhxMSqK8yiAhvqT8
+	lMqMxOKM+KLSnNTiQ4wSHMxKIrzBG24FCfGmJFZWpRblw6SkOViUxHl/Llb3ExJITyxJzU5N
+	LUgtgsnKcHAoSfAKsAANFSxKTU+tSMvMKUFIM3FwgggukA08QBskQQp5iwsSc4sz0yGKTjEq
+	SonzyoMkBEASGaV5cANgUf2KURzoH2He+8xAVTzAhADX/QpoMBPQYJHYmyCDSxIRUlINjO1M
+	KlEXb786q99/7JN4Pd/kdy0m7bKNaX/YyraZTv6cuyfTgTfDwz1G07nWemly6yIZL04jgc2H
+	BL98+3ip72yDk/BGvbDr8nJqAjM9337W8PxqYF0U3hsyQ5HpW7BsWcYbqTXT2V5es9M4cejE
+	jqkf0s9mXtARO7LX9YoG03z/yZx6lyYVKrEUZyQaajEXFScCABSOhQ7FAgAA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240666>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240667>
 
-If opendir() fails on the top-level directory, it makes sense to try
-to delete it anyway--but only if the failure was due to EACCES.
+safe_create_leading_directories_const() returns a non-zero value on
+error.  The old code at this calling site recognized a couple of
+particular error values, and treated all other return values as
+success.  Instead, be more conservative: recognize the errors we are
+interested in, but treat any other nonzero values as failures.  This
+is more robust in case somebody adds another possible return value
+without telling us.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- dir.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ builtin/init-db.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/dir.c b/dir.c
-index d10a63f..785a83e 100644
---- a/dir.c
-+++ b/dir.c
-@@ -1511,8 +1511,11 @@ static int remove_dir_recurse(struct strbuf *path, int flag, int *kept_up)
- 	flag &= ~REMOVE_DIR_KEEP_TOPLEVEL;
- 	dir = opendir(path->buf);
- 	if (!dir) {
--		/* an empty dir could be removed even if it is unreadble */
--		if (!keep_toplevel)
-+		if (errno == EACCES && !keep_toplevel)
-+			/*
-+			 * An empty dir could be removable even if it
-+			 * is unreadable:
-+			 */
- 			return rmdir(path->buf);
- 		else
- 			return -1;
+diff --git a/builtin/init-db.c b/builtin/init-db.c
+index 6f69593..c7c76bb 100644
+--- a/builtin/init-db.c
++++ b/builtin/init-db.c
+@@ -515,13 +515,14 @@ int cmd_init_db(int argc, const char **argv, const char *prefix)
+ 				saved = shared_repository;
+ 				shared_repository = 0;
+ 				switch (safe_create_leading_directories_const(argv[0])) {
++				case SCLD_OK:
++				case SCLD_PERMS:
++					break;
+ 				case SCLD_EXISTS:
+ 					errno = EEXIST;
+ 					/* fallthru */
+-				case SCLD_FAILED:
+-					die_errno(_("cannot mkdir %s"), argv[0]);
+-					break;
+ 				default:
++					die_errno(_("cannot mkdir %s"), argv[0]);
+ 					break;
+ 				}
+ 				shared_repository = saved;
 -- 
 1.8.5.2
