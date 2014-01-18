@@ -1,88 +1,125 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v3 08/17] cmd_init_db(): when creating directories, handle errors conservatively
-Date: Sat, 18 Jan 2014 23:48:52 +0100
-Message-ID: <1390085341-2553-9-git-send-email-mhagger@alum.mit.edu>
+Subject: [PATCH v3 09/17] safe_create_leading_directories(): add new error value SCLD_VANISHED
+Date: Sat, 18 Jan 2014 23:48:53 +0100
+Message-ID: <1390085341-2553-10-git-send-email-mhagger@alum.mit.edu>
 References: <1390085341-2553-1-git-send-email-mhagger@alum.mit.edu>
 Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jan 18 23:50:29 2014
+X-From: git-owner@vger.kernel.org Sat Jan 18 23:56:47 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W4eii-0005WS-Bd
-	for gcvg-git-2@plane.gmane.org; Sat, 18 Jan 2014 23:50:28 +0100
+	id 1W4eoo-0000XF-Vv
+	for gcvg-git-2@plane.gmane.org; Sat, 18 Jan 2014 23:56:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751849AbaARWuY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Jan 2014 17:50:24 -0500
-Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:52577 "EHLO
-	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751742AbaARWti (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 18 Jan 2014 17:49:38 -0500
-X-AuditID: 12074412-b7fc96d0000023d5-7f-52db05021afb
+	id S1751557AbaARW4n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Jan 2014 17:56:43 -0500
+Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:43424 "EHLO
+	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751436AbaARW4m (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 18 Jan 2014 17:56:42 -0500
+X-Greylist: delayed 421 seconds by postgrey-1.27 at vger.kernel.org; Sat, 18 Jan 2014 17:56:41 EST
+X-AuditID: 12074414-b7fb46d000002a4d-1e-52db0503080b
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id 75.87.09173.2050BD25; Sat, 18 Jan 2014 17:49:38 -0500 (EST)
+	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 17.F1.10829.3050BD25; Sat, 18 Jan 2014 17:49:39 -0500 (EST)
 Received: from michael.fritz.box (p4FDD4E9C.dip0.t-ipconnect.de [79.221.78.156])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s0IMnN91030075
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s0IMnN92030075
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Sat, 18 Jan 2014 17:49:37 -0500
+	Sat, 18 Jan 2014 17:49:38 -0500
 X-Mailer: git-send-email 1.8.5.2
 In-Reply-To: <1390085341-2553-1-git-send-email-mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrEIsWRmVeSWpSXmKPExsUixO6iqMvEejvIYN9zYYuuK91MFg29V5gt
-	bq+Yz+zA7PH3/Qcmj4uXlD0+b5ILYI7itklKLCkLzkzP07dL4M7Yc2MWa8F3zopjl76zNDA+
-	Zu9i5OSQEDCRmHmthwXCFpO4cG89WxcjF4eQwGVGiT3HlrFAOCeYJM4d/ckGUsUmoCuxqKeZ
-	CcQWEVCTmNh2CKybWcBBYvPnRkYQW1ggQeLV1InMIDaLgKrE56fbWEFsXgFniemb2oHqOYC2
-	KUisvi4EEuYUcJE4Mv8C2EghoJKbr5+wT2DkXcDIsIpRLjGnNFc3NzEzpzg1Wbc4OTEvL7VI
-	10wvN7NELzWldBMjJFSEdjCuPyl3iFGAg1GJh/cA0+0gIdbEsuLK3EOMkhxMSqK8yiAhvqT8
-	lMqMxOKM+KLSnNTiQ4wSHMxKIrzBG24FCfGmJFZWpRblw6SkOViUxHl/Llb3ExJITyxJzU5N
-	LUgtgsnKcHAoSfAKsAANFSxKTU+tSMvMKUFIM3FwgggukA08QBskQQp5iwsSc4sz0yGKTjEq
-	SonzyoMkBEASGaV5cANgUf2KURzoH2He+8xAVTzAhADX/QpoMBPQYJHYmyCDSxIRUlINjO1M
-	KlEXb786q99/7JN4Pd/kdy0m7bKNaX/YyraZTv6cuyfTgTfDwz1G07nWemly6yIZL04jgc2H
-	BL98+3ip72yDk/BGvbDr8nJqAjM9337W8PxqYF0U3hsyQ5HpW7BsWcYbqTXT2V5es9M4cejE
-	jqkf0s9mXtARO7LX9YoG03z/yZx6lyYVKrEUZyQaajEXFScCABSOhQ7FAgAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrIIsWRmVeSWpSXmKPExsUixO6iqMvMejvIYOpDLYuuK91MFg29V5gt
+	bq+Yz+zA7PH3/Qcmj4uXlD0+b5ILYI7itklKLCkLzkzP07dL4M54dPgiU8EBsYrXU+UbGN8I
+	djFyckgImEg8mHODEcIWk7hwbz1bFyMXh5DAZUaJsx/+sUA4J5gkTp6eyQxSxSagK7Gop5kJ
+	xBYRUJOY2HaIBcRmFnCQ2Py5EWySsECcRN+Cz2BxFgFViQXbprOC2LwCLhILDk4G6uUA2qYg
+	sfq6EEiYEyh8ZP4FsJFCAs4SN18/YZ/AyLuAkWEVo1xiTmmubm5iZk5xarJucXJiXl5qka6F
+	Xm5miV5qSukmRkigiOxgPHJS7hCjAAejEg/vAabbQUKsiWXFlbmHGCU5mJREeZVBQnxJ+SmV
+	GYnFGfFFpTmpxYcYJTiYlUR4gzfcChLiTUmsrEotyodJSXOwKInzflus7ickkJ5YkpqdmlqQ
+	WgSTleHgUJLgvcQMNFSwKDU9tSItM6cEIc3EwQkiuEA28ABtuAVSyFtckJhbnJkOUXSKUVFK
+	nHcJSEIAJJFRmgc3ABbTrxjFgf4R5l0MUsUDTAdw3a+ABjMBDRaJvQkyuCQRISXVwNjT+Hjt
+	zH/r7iftS7kixq43vWXBw56Zn4uftx/sr6roYnijtl7R88Dm3b11z9tST5+7Nvn+dRc+q2/f
+	4w+azTlh8PTGqkz9QzYVs8oSCubbxxzd/++cUPffaUw7T0yoe3gyfYdjP6vHgrkqB76VLXn5
+	ObFhLtfl5M7HTl+n6z7/d9Tz6bSsVb2XlViKMxINtZiLihMB6cAaH8QCAAA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240667>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240668>
 
-safe_create_leading_directories_const() returns a non-zero value on
-error.  The old code at this calling site recognized a couple of
-particular error values, and treated all other return values as
-success.  Instead, be more conservative: recognize the errors we are
-interested in, but treat any other nonzero values as failures.  This
-is more robust in case somebody adds another possible return value
-without telling us.
+Add a new possible error result that can be returned by
+safe_create_leading_directories() and
+safe_create_leading_directories_const(): SCLD_VANISHED.  This value
+indicates that a file or directory on the path existed at one point
+(either it already existed or the function created it), but then it
+disappeared.  This probably indicates that another process deleted the
+directory while we were working.  If SCLD_VANISHED is returned, the
+caller might want to retry the function call, as there is a chance
+that a new attempt will succeed.
+
+Why doesn't safe_create_leading_directories() do the retrying
+internally?  Because an empty directory isn't really ever safe until
+it holds a file.  So even if safe_create_leading_directories() were
+absolutely sure that the directory existed before it returned, there
+would be no guarantee that the directory still existed when the caller
+tried to write something in it.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- builtin/init-db.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ cache.h     | 10 +++++++++-
+ sha1_file.c | 11 +++++++++++
+ 2 files changed, 20 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/init-db.c b/builtin/init-db.c
-index 6f69593..c7c76bb 100644
---- a/builtin/init-db.c
-+++ b/builtin/init-db.c
-@@ -515,13 +515,14 @@ int cmd_init_db(int argc, const char **argv, const char *prefix)
- 				saved = shared_repository;
- 				shared_repository = 0;
- 				switch (safe_create_leading_directories_const(argv[0])) {
-+				case SCLD_OK:
-+				case SCLD_PERMS:
-+					break;
- 				case SCLD_EXISTS:
- 					errno = EEXIST;
- 					/* fallthru */
--				case SCLD_FAILED:
--					die_errno(_("cannot mkdir %s"), argv[0]);
--					break;
- 				default:
-+					die_errno(_("cannot mkdir %s"), argv[0]);
- 					break;
- 				}
- 				shared_repository = saved;
+diff --git a/cache.h b/cache.h
+index 8030e36..c0a7a8a 100644
+--- a/cache.h
++++ b/cache.h
+@@ -742,12 +742,20 @@ int adjust_shared_perm(const char *path);
+  * Create the directory containing the named path, using care to be
+  * somewhat safe against races.  Return one of the scld_error values
+  * to indicate success/failure.
++ *
++ * SCLD_VANISHED indicates that one of the ancestor directories of the
++ * path existed at one point during the function call and then
++ * suddenly vanished, probably because another process pruned the
++ * directory while we were working.  To be robust against this kind of
++ * race, callers might want to try invoking the function again when it
++ * returns SCLD_VANISHED.
+  */
+ enum scld_error {
+ 	SCLD_OK = 0,
+ 	SCLD_FAILED = -1,
+ 	SCLD_PERMS = -2,
+-	SCLD_EXISTS = -3
++	SCLD_EXISTS = -3,
++	SCLD_VANISHED = -4
+ };
+ enum scld_error safe_create_leading_directories(char *path);
+ enum scld_error safe_create_leading_directories_const(const char *path);
+diff --git a/sha1_file.c b/sha1_file.c
+index a065308..8b0849f 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -132,6 +132,17 @@ enum scld_error safe_create_leading_directories(char *path)
+ 			if (errno == EEXIST &&
+ 			    !stat(path, &st) && S_ISDIR(st.st_mode))
+ 				; /* somebody created it since we checked */
++			else if (errno == ENOENT)
++				/*
++				 * Either mkdir() failed because
++				 * somebody just pruned the containing
++				 * directory, or stat() failed because
++				 * the file that was in our way was
++				 * just removed.  Either way, inform
++				 * the caller that it might be worth
++				 * trying again:
++				 */
++				ret = SCLD_VANISHED;
+ 			else
+ 				ret = SCLD_FAILED;
+ 		} else if (adjust_shared_perm(path)) {
 -- 
 1.8.5.2
