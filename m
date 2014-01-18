@@ -1,132 +1,90 @@
-From: Pete Wyckoff <pw@padd.com>
-Subject: Re: git-p4: exception when cloning a perforce repository
-Date: Sat, 18 Jan 2014 13:22:25 -0500
-Message-ID: <20140118182225.GA6072@padd.com>
-References: <01EF41A4-533B-4A24-8952-CAEB49970272@iwi.me>
- <20140114001820.GA12058@padd.com>
- <20140114232432.GA31465@padd.com>
- <843E4B24-5EDD-4451-8849-425160576A99@iwi.me>
- <20140116130833.GA15613@padd.com>
- <4FE5D5E6-60F6-4111-B538-5CA01092A2F0@iwi.me>
- <20140116144519.GB15674@padd.com>
- <B6C98918-4339-4D14-8C52-4B3AEC2526E7@iwi.me>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Alexandru Juncu <alexj@rosedu.org>
-To: Damien =?iso-8859-1?Q?G=E9rard?= <damien@iwi.me>
-X-From: git-owner@vger.kernel.org Sat Jan 18 19:22:34 2014
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [PATCH v3 00/17] Fix some mkdir/rmdir races
+Date: Sat, 18 Jan 2014 23:48:44 +0100
+Message-ID: <1390085341-2553-1-git-send-email-mhagger@alum.mit.edu>
+Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jan 18 23:49:36 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W4aXR-0001xm-QJ
-	for gcvg-git-2@plane.gmane.org; Sat, 18 Jan 2014 19:22:34 +0100
+	id 1W4ehq-0004yT-Ox
+	for gcvg-git-2@plane.gmane.org; Sat, 18 Jan 2014 23:49:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751480AbaARSWa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 18 Jan 2014 13:22:30 -0500
-Received: from honk.padd.com ([74.3.171.149]:52813 "EHLO honk.padd.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751065AbaARSW3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Jan 2014 13:22:29 -0500
-Received: from arf.padd.com (unknown [50.105.0.78])
-	by honk.padd.com (Postfix) with ESMTPSA id 7AA8270F3;
-	Sat, 18 Jan 2014 10:22:28 -0800 (PST)
-Received: by arf.padd.com (Postfix, from userid 7770)
-	id A89CA26272; Sat, 18 Jan 2014 13:22:25 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <B6C98918-4339-4D14-8C52-4B3AEC2526E7@iwi.me>
+	id S1751697AbaARWtb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Jan 2014 17:49:31 -0500
+Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:58704 "EHLO
+	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751690AbaARWt3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 18 Jan 2014 17:49:29 -0500
+X-AuditID: 1207440c-b7f566d000004272-6d-52db04f8b560
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id CF.BE.17010.8F40BD25; Sat, 18 Jan 2014 17:49:28 -0500 (EST)
+Received: from michael.fritz.box (p4FDD4E9C.dip0.t-ipconnect.de [79.221.78.156])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s0IMnN8r030075
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+	Sat, 18 Jan 2014 17:49:27 -0500
+X-Mailer: git-send-email 1.8.5.2
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprBIsWRmVeSWpSXmKPExsUixO6iqPuD5XaQwbE7ZhZdV7qZLBp6rzBb
+	3F4xn9mB2ePv+w9MHhcvKXt83iQXwBzFbZOUWFIWnJmep2+XwJ0x8+VSpoKFfBUTX29mamC8
+	zd3FyMkhIWAicenddxYIW0ziwr31bF2MXBxCApcZJdacucIKkhASOMEksX+nEYjNJqArsain
+	mQnEFhFQk5jYdgismVnAQWLz50ZGEFsYaOjkB2+Zuxg5OFgEVCW+zPUBCfMKOEtMOzGRESQs
+	IaAgsfq60ARG7gWMDKsY5RJzSnN1cxMzc4pTk3WLkxPz8lKLdA31cjNL9FJTSjcxQvzOs4Px
+	2zqZQ4wCHIxKPLwZDLeDhFgTy4orcw8xSnIwKYnyKjMBhfiS8lMqMxKLM+KLSnNSiw8xSnAw
+	K4nwBm+4FSTEm5JYWZValA+TkuZgURLnVV2i7ickkJ5YkpqdmlqQWgSTleHgUJLgFQCGt5Bg
+	UWp6akVaZk4JQpqJgxNEcIFs4AHaIAlSyFtckJhbnJkOUXSKUVFKnFceJCEAksgozYMbAIvQ
+	V4ziQP8I895nBqriAUY3XPcroMFMQINFYm+CDC5JREhJNTC2btba+n4lm3e2Kud+xg+VD9f7
+	J3m7ay1/YjGJe9bsBHnmCtfVv5qvXPV7IOfktDz5nuzWFy/fmbmHZMYaPu3Zsf/Z5rSbn+fU
+	J4TZye3TzF6asd6QdXbCA/MWBw6rWb6+T2+o9N4rfdW/+pyz4i3vg9//JUey7j7dauq4s8LQ
+	b8GqfrszEz8psRRnJBpqMRcVJwIA4AbITasCAAA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240650>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240651>
 
-damien@iwi.me wrote on Thu, 16 Jan 2014 17:02 +0100:
->=20
-> On 16 Jan 2014, at 15:45, Pete Wyckoff <pw@padd.com> wrote:
->=20
-> > Oh cool, that helps a lot.  P4 is just broken here, so we can get
-> > away with being a bit sloppy in git.  I'll try just pretending
-> > "empty symlinks" are not in the repo.  Hopefully you'll have a
-> > future commit in your p4 repo that brings back bn.h properly.
->=20
-> Thanks !
-> I would love to use git instead of perforce if possible :)
->=20
-> > Still not sure about how I'll test this.
->=20
-> I can test for you, no probleme with that.
+Sorry, I forgot to send this re-roll to the mailing list.
 
-Any chance you can give this a go?  I've a bigger patch in
-a longer series, but this should be the minimal fix.  If it
-works, I'll ship it to Junio.
+This version differs only very slightly from v2:
 
-Thanks,
+* Rebased to the current master (there were no conflicts).
 
-		-- Pete
+* Rename a couple of local variables from "attempts" to
+  "attempts_remaining".
 
-----8<--------
+* Patches 13, 16, and 17 have slightly improved commit messages.
 
-=46rom 8556ab04dd126184e26a380b7ed08998fd33debe Mon Sep 17 00:00:00 200=
-1
-=46rom: Pete Wyckoff <pw@padd.com>
-Date: Thu, 16 Jan 2014 18:34:09 -0500
-Subject: [PATCH] git p4: work around p4 bug that causes empty symlinks
-MIME-Version: 1.0
-Content-Type: text/plain; charset=3DUTF-8
-Content-Transfer-Encoding: 8bit
+Michael Haggerty (17):
+  safe_create_leading_directories(): fix format of "if" chaining
+  safe_create_leading_directories(): reduce scope of local variable
+  safe_create_leading_directories(): add explicit "slash" pointer
+  safe_create_leading_directories(): rename local variable
+  safe_create_leading_directories(): split on first of multiple slashes
+  safe_create_leading_directories(): always restore slash at end of loop
+  safe_create_leading_directories(): introduce enum for return values
+  cmd_init_db(): when creating directories, handle errors conservatively
+  safe_create_leading_directories(): add new error value SCLD_VANISHED
+  lock_ref_sha1_basic(): on SCLD_VANISHED, retry
+  lock_ref_sha1_basic(): if locking fails with ENOENT, retry
+  remove_dir_recurse(): tighten condition for removing unreadable dir
+  remove_dir_recurse(): handle disappearing files and directories
+  rename_ref(): extract function rename_tmp_log()
+  rename_tmp_log(): handle a possible mkdir/rmdir race
+  rename_tmp_log(): limit the number of remote_empty_directories()
+    attempts
+  rename_tmp_log(): on SCLD_VANISHED, retry
 
-Damien G=E9rard highlights an interesting problem.  Some p4
-repositories end up with symlinks that have an empty target.  It
-is not possible to create this with current p4, but they do
-indeed exist.
+ builtin/init-db.c |  9 +++---
+ cache.h           | 25 +++++++++++++--
+ dir.c             | 27 +++++++++++-----
+ merge-recursive.c |  2 +-
+ refs.c            | 92 ++++++++++++++++++++++++++++++++++++++++---------------
+ sha1_file.c       | 67 ++++++++++++++++++++++------------------
+ 6 files changed, 155 insertions(+), 67 deletions(-)
 
-The effect in git p4 is that "p4 print" on the symlink returns an
-empty string, confusing the curret symlink-handling code.
-
-In p4, syncing to a change that includes such a bogus symlink
-creates errors:
-
-    //depot/empty-symlink - updating /home/me/p4/empty-symlink
-    rename: /home/me/p4/empty-symlink: No such file or directory
-
-and leaves no symlink.
-
-Replicate the p4 behavior by ignoring these bogus symlinks.  If
-they are fixed in later revisions, the symlink will be replaced
-properly.
-
-Reported-by: Damien G=E9rard <damien@iwi.me>
-Signed-off-by: Pete Wyckoff <pw@padd.com>
----
- git-p4.py | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
-
-diff --git a/git-p4.py b/git-p4.py
-index 5ea8bb8..e798ecf 100755
---- a/git-p4.py
-+++ b/git-p4.py
-@@ -2075,7 +2075,14 @@ class P4Sync(Command, P4UserMap):
-             # p4 print on a symlink sometimes contains "target\n";
-             # if it does, remove the newline
-             data =3D ''.join(contents)
--            if data[-1] =3D=3D '\n':
-+            if not data:
-+                # Some version of p4 allowed creating a symlink that p=
-ointed
-+                # to nothing.  This causes p4 errors when checking out=
- such
-+                # a change, and errors here too.  Work around it by ig=
-noring
-+                # the bad symlink; hopefully a future change fixes it.
-+                print "\nIgnoring empty symlink in %s" % file['depotFi=
-le']
-+                return
-+            elif data[-1] =3D=3D '\n':
-                 contents =3D [data[:-1]]
-             else:
-                 contents =3D [data]
---=20
-1.8.5.2.320.g99957e5
+-- 
+1.8.5.2
