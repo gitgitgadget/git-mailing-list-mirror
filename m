@@ -1,106 +1,66 @@
-From: David Kastrup <dak@gnu.org>
-Subject: [PATCH 1/2] builtin/blame.c: struct blame_entry does not need a prev link
-Date: Sun, 19 Jan 2014 19:57:49 +0100
-Message-ID: <1390157870-29795-2-git-send-email-dak@gnu.org>
-References: <1390157870-29795-1-git-send-email-dak@gnu.org>
-Cc: David Kastrup <dak@gnu.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 19 19:58:42 2014
+From: Sebastian Schuberth <sschuberth@gmail.com>
+Subject: Re: [PATCH v2] safe_create_leading_directories(): on Windows, \ can
+ separate path components
+Date: Sun, 19 Jan 2014 21:26:38 +0100
+Message-ID: <CAHGBnuMmutYqwZNw+VoZi=R_LaS_fowZrqaU2+JMYN53q6XQ2Q@mail.gmail.com>
+References: <1390088444-11439-1-git-send-email-mhagger@alum.mit.edu>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Sun Jan 19 21:27:06 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W4xZx-0007jA-JF
-	for gcvg-git-2@plane.gmane.org; Sun, 19 Jan 2014 19:58:41 +0100
+	id 1W4yxV-0005t4-1u
+	for gcvg-git-2@plane.gmane.org; Sun, 19 Jan 2014 21:27:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751851AbaASS6h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 Jan 2014 13:58:37 -0500
-Received: from fencepost.gnu.org ([208.118.235.10]:47915 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751727AbaASS6g (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Jan 2014 13:58:36 -0500
-Received: from localhost ([127.0.0.1]:46953 helo=lola)
-	by fencepost.gnu.org with esmtp (Exim 4.71)
-	(envelope-from <dak@gnu.org>)
-	id 1W4xZb-00021u-CA; Sun, 19 Jan 2014 13:58:19 -0500
-Received: by lola (Postfix, from userid 1000)
-	id C699BE0504; Sun, 19 Jan 2014 19:58:04 +0100 (CET)
-X-Mailer: git-send-email 1.8.3.2
-In-Reply-To: <1390157870-29795-1-git-send-email-dak@gnu.org>
+	id S1751959AbaASU0k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 Jan 2014 15:26:40 -0500
+Received: from mail-qc0-f181.google.com ([209.85.216.181]:33272 "EHLO
+	mail-qc0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751909AbaASU0j (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Jan 2014 15:26:39 -0500
+Received: by mail-qc0-f181.google.com with SMTP id e9so5393833qcy.12
+        for <git@vger.kernel.org>; Sun, 19 Jan 2014 12:26:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=KPrLirTTQpChZvhgbuyoSmZFsKdgKyJy485O34qZ0U0=;
+        b=ikiNA+IHIHIcL1U9dKXULJW/oJSYWxC11hm14mi+go8LE+WJXV7lo3dqxq3qy0Qlq7
+         SB6C/DlfqwIbAbJsU8cdeS8RlM9P1MBznX2bOSBfcn+WXPiv78pXn6BrHb1z3qntcaKk
+         Pe7dN3iMJt/Diq3gqYfvcAqvcxC6AD2p6WXczyfjm9KDGeYnbk4nWk3kDRUqFy4BGkNI
+         xthQKGhv8iFZWyHl8RHZVlGQ1I1EN0ZynOujTuuPGHIdgJdN4kiQRUrWGNuAcroTFecy
+         4SzhstnINjbX5OrQOT3WhQPfUqqlgLqZqT2WbwPxH72nNB+4SqiVWSM4+VSoFB8cH82J
+         jpuA==
+X-Received: by 10.224.88.3 with SMTP id y3mr22614535qal.80.1390163198517; Sun,
+ 19 Jan 2014 12:26:38 -0800 (PST)
+Received: by 10.96.22.229 with HTTP; Sun, 19 Jan 2014 12:26:38 -0800 (PST)
+In-Reply-To: <1390088444-11439-1-git-send-email-mhagger@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240699>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240700>
 
----
- builtin/blame.c | 13 ++-----------
- 1 file changed, 2 insertions(+), 11 deletions(-)
+On Sun, Jan 19, 2014 at 12:40 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
 
-diff --git a/builtin/blame.c b/builtin/blame.c
-index e44a6bb..2195595 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -197,7 +197,6 @@ static void drop_origin_blob(struct origin *o)
-  * scoreboard structure, sorted by the target line number.
-  */
- struct blame_entry {
--	struct blame_entry *prev;
- 	struct blame_entry *next;
- 
- 	/* the first line of this group in the final image;
-@@ -282,8 +281,6 @@ static void coalesce(struct scoreboard *sb)
- 		    ent->s_lno + ent->num_lines == next->s_lno) {
- 			ent->num_lines += next->num_lines;
- 			ent->next = next->next;
--			if (ent->next)
--				ent->next->prev = ent;
- 			origin_decref(next->suspect);
- 			free(next);
- 			ent->score = 0;
-@@ -534,7 +531,7 @@ static void add_blame_entry(struct scoreboard *sb, struct blame_entry *e)
- 		prev = ent;
- 
- 	/* prev, if not NULL, is the last one that is below e */
--	e->prev = prev;
-+
- 	if (prev) {
- 		e->next = prev->next;
- 		prev->next = e;
-@@ -543,8 +540,6 @@ static void add_blame_entry(struct scoreboard *sb, struct blame_entry *e)
- 		e->next = sb->ent;
- 		sb->ent = e;
- 	}
--	if (e->next)
--		e->next->prev = e;
- }
- 
- /*
-@@ -555,14 +550,12 @@ static void add_blame_entry(struct scoreboard *sb, struct blame_entry *e)
-  */
- static void dup_entry(struct blame_entry *dst, struct blame_entry *src)
- {
--	struct blame_entry *p, *n;
-+	struct blame_entry *n;
- 
--	p = dst->prev;
- 	n = dst->next;
- 	origin_incref(src->suspect);
- 	origin_decref(dst->suspect);
- 	memcpy(dst, src, sizeof(*src));
--	dst->prev = p;
- 	dst->next = n;
- 	dst->score = 0;
- }
-@@ -2502,8 +2495,6 @@ parse_done:
- 		ent->suspect = o;
- 		ent->s_lno = bottom;
- 		ent->next = next;
--		if (next)
--			next->prev = ent;
- 		origin_incref(o);
- 	}
- 	origin_decref(o);
+> This patch applies on top of v3 of mh/safe-create-leading-directories.
+>
+> The only logical change from Sebastian's patch is that this version
+> restores the original slash character rather than always restoring it
+> to '/' (as suggested by Junio).
+
+Thanks Michael. This is very similar to Junio's current merge conflict
+resultion in pu between your original series and my patch (c2fec83). I
+like this patch of yours slightly better, however, as it uses a
+"while" instead of a "for" loop and the more conclusive
+"slash_character" than the "was_slash" variable name.
+
 -- 
-1.8.3.2
+Sebastian Schuberth
