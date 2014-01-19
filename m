@@ -1,67 +1,74 @@
-From: Thomas Rast <tr@thomasrast.ch>
-Subject: Re: [PATCH/WIP v2 02/14] read-cache: new extension to mark what file is watched
-Date: Sun, 19 Jan 2014 18:06:16 +0100
-Message-ID: <87fvojewaf.fsf@thomasrast.ch>
-References: <1389524622-6702-1-git-send-email-pclouds@gmail.com>
-	<1389952060-12297-1-git-send-email-pclouds@gmail.com>
-	<1389952060-12297-3-git-send-email-pclouds@gmail.com>
+From: David Kastrup <dak@gnu.org>
+Subject: [PATCH 0/2] Two janitorial patches for builtin/blame.c
+Date: Sun, 19 Jan 2014 19:57:48 +0100
+Message-ID: <1390157870-29795-1-git-send-email-dak@gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jan 19 18:06:25 2014
+Cc: David Kastrup <dak@gnu.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jan 19 19:58:35 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W4vpI-0003z4-1e
-	for gcvg-git-2@plane.gmane.org; Sun, 19 Jan 2014 18:06:24 +0100
+	id 1W4xZp-0007fU-O8
+	for gcvg-git-2@plane.gmane.org; Sun, 19 Jan 2014 19:58:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751732AbaASRGV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 19 Jan 2014 12:06:21 -0500
-Received: from ip1.thgersdorf.net ([148.251.9.194]:53182 "EHLO mail.psioc.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751709AbaASRGT convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 19 Jan 2014 12:06:19 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by localhost.psioc.net (Postfix) with ESMTP id 092584D65A0;
-	Sun, 19 Jan 2014 18:06:19 +0100 (CET)
-X-Virus-Scanned: amavisd-new at psioc.net
-Received: from mail.psioc.net ([127.0.0.1])
-	by localhost (mail.psioc.net [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id gtqFRnBdEP9Y; Sun, 19 Jan 2014 18:06:18 +0100 (CET)
-Received: from linux-1gf2.thomasrast.ch (unknown [213.55.184.196])
-	(using TLSv1.2 with cipher AES128-GCM-SHA256 (128/128 bits))
-	(Client did not present a certificate)
-	by mail.psioc.net (Postfix) with ESMTPSA id EB9744D6572;
-	Sun, 19 Jan 2014 18:06:17 +0100 (CET)
-In-Reply-To: <1389952060-12297-3-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Fri, 17
- Jan 2014 16:47:28 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1751709AbaASS6V convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 19 Jan 2014 13:58:21 -0500
+Received: from fencepost.gnu.org ([208.118.235.10]:47911 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751591AbaASS6U convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 19 Jan 2014 13:58:20 -0500
+Received: from localhost ([127.0.0.1]:46952 helo=lola)
+	by fencepost.gnu.org with esmtp (Exim 4.71)
+	(envelope-from <dak@gnu.org>)
+	id 1W4xZb-00021t-7y; Sun, 19 Jan 2014 13:58:19 -0500
+Received: by lola (Postfix, from userid 1000)
+	id C373CE0510; Sun, 19 Jan 2014 19:58:04 +0100 (CET)
+X-Mailer: git-send-email 1.8.3.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240696>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240697>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> writes:
+This is more a warmup than anything else: I'm actually doing a quite
+more involved rewrite of git-blame right now.  But it's been a long
+time since I=C2=A0sent patches for Git, so I'm starting out with someth=
+ing
+reasonably uncontroversial.  Patch 1 is a no-brainer: maintaining
+reverse links is not worth the trouble if you are not going to use
+them.  Now one can be "conservative" and say "but git-blame is awfully
+inefficient and maybe we'll need them in a more efficient version".
+I=C2=A0can answer this with "no": the kind of stuff that would make thi=
+ngs
+more efficient does not require backlinks.
 
-> If an entry is "watched", git lets an external program decide if the
-> entry is modified or not. It's more like --assume-unchanged, but
-> designed to be controlled by machine.
->
-> We are running out of on-disk ce_flags, so instead of extending
-> on-disk entry format again, "watched" flags are in-core only and
-> stored as extension instead.
+Patch 2 is a bit more tricky: basically its contention is that
+I=C2=A0understand some implications of the code better than its author
+appeared to do.  Which is somewhat optimistic.  Since my followup work
+depends on my understanding this correctly, it's better to make sure
+of that by handing in a nicely isolated patch for review.  It's
+conceivable that my understanding of the commit->util cache is not
+fully satisfactory.  I don't use it in my followup work anyway, but it
+still would be nice to get this code path cleaned out in advance.
 
-I wonder if this would be a good use-case for EWAH bitmaps?  Presumably
-most users would end up having only a few large ranges of files that ar=
-e
-being watched.  Quite possibly most users would watch *all* files.
+I don't expect measurable performance improvements from these two
+patches: their main purpose is to get some cruft out of the way so
+that the heavy-duty patches actually dealing with the performance
+sinks will be a bit more focused.
+
+And of course, getting the ball rolling again.
+
+David Kastrup (2):
+  builtin/blame.c: struct blame_entry does not need a prev link
+  Eliminate same_suspect function in builtin/blame.c
+
+ builtin/blame.c | 38 ++++++++++----------------------------
+ 1 file changed, 10 insertions(+), 28 deletions(-)
 
 --=20
-Thomas Rast
-tr@thomasrast.ch
+1.8.3.2
