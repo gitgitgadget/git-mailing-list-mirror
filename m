@@ -1,70 +1,134 @@
-From: Sebastian Schuberth <sschuberth@gmail.com>
-Subject: Re: [PATCH] Fix safe_create_leading_directories() for Windows
-Date: Sun, 19 Jan 2014 08:26:33 +0100
-Message-ID: <CAHGBnuNoTrRwnjp7ZqMgveLHZeV68cxOqawf7nWo7gnAAYfSOw@mail.gmail.com>
-References: <52C5A039.6030408@gmail.com>
-	<alpine.DEB.1.00.1401021826120.1191@s15462909.onlinehome-server.info>
-	<xmqqtxdmp39a.fsf@gitster.dls.corp.google.com>
-	<52C5D0AB.7050309@gmail.com>
-	<xmqqha9mozvc.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH v2 00/16] Add interpret-trailers builtin
+Date: Sun, 19 Jan 2014 09:53:38 +0100
+Message-ID: <20140119083636.2734.14378.chriscool@tuxfamily.org>
+Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
+	Josh Triplett <josh@joshtriplett.org>,
+	Thomas Rast <tr@thomasrast.ch>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Dan Carpenter <dan.carpenter@oracle.com>,
+	Greg Kroah-Hartman <greg@kroah.com>, Jeff King <peff@peff.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jan 19 08:27:00 2014
+X-From: git-owner@vger.kernel.org Sun Jan 19 09:55:19 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W4mmZ-0001ls-N0
-	for gcvg-git-2@plane.gmane.org; Sun, 19 Jan 2014 08:27:00 +0100
+	id 1W4oA2-0008KQ-Fu
+	for gcvg-git-2@plane.gmane.org; Sun, 19 Jan 2014 09:55:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750916AbaASH0f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 Jan 2014 02:26:35 -0500
-Received: from mail-qa0-f43.google.com ([209.85.216.43]:54650 "EHLO
-	mail-qa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750752AbaASH0e (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Jan 2014 02:26:34 -0500
-Received: by mail-qa0-f43.google.com with SMTP id o15so4650485qap.16
-        for <git@vger.kernel.org>; Sat, 18 Jan 2014 23:26:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=a7woNWkhbdAoiJz5zj6g9fs7uvdYLm1vXGfzR1jp+EM=;
-        b=tM0TsTvr+hoE7PcJ2Z7rw0uZAbuPVa8jMQdzW3AOd4Twm0l9rozTCQC8hd23LfUISm
-         ANl+trtAarug8cDdNCq9NaVzpRMvGwUjiuDIW2OOT8tUKszbmX0Um72eZPXfIwWqRywJ
-         kJvnZo+GJcrr0G16yikw7T714N6g1wfHdaNFQTrkUQySBVFbl/FDYdxfbwArUET+coCt
-         mbWrzrVe/gZ8Vqbqh24aD424mqFGINO+wfu2y2bitRk1w1TV1CCLh5+64scipRtFrbb+
-         nnCBKFkFE37+9QnI/YBWFjmq7BjwGNzukrMqzXm29ZOxNPcxpW3hKHI6Am4H4PsxM3Ug
-         62Rw==
-X-Received: by 10.229.24.4 with SMTP id t4mr17848396qcb.13.1390116393991; Sat,
- 18 Jan 2014 23:26:33 -0800 (PST)
-Received: by 10.96.22.229 with HTTP; Sat, 18 Jan 2014 23:26:33 -0800 (PST)
-In-Reply-To: <xmqqha9mozvc.fsf@gitster.dls.corp.google.com>
+	id S1751849AbaASIyr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 Jan 2014 03:54:47 -0500
+Received: from [194.158.98.15] ([194.158.98.15]:49865 "EHLO mail-2y.bbox.fr"
+	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751051AbaASIyq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Jan 2014 03:54:46 -0500
+Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
+	by mail-2y.bbox.fr (Postfix) with ESMTP id 4755842;
+	Sun, 19 Jan 2014 09:54:24 +0100 (CET)
+X-Mailer: git-mail-commits v0.5.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240674>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240675>
 
-On Thu, Jan 2, 2014 at 10:08 PM, Junio C Hamano <gitster@pobox.com> wrote:
+This patch series implements a new command:
 
->> Seems like the path to clone to is taken as-is from argv in
->> cmd_clone(). So maybe another solution would be to replace all
->> backslashes with forward slashes already there?
->
-> That sounds like a workable alternative, and it might even be a
-> preferable solution but if and only if clone's use of the function
-> to create paths that lead to a new working tree location is the only
-> (ab)use of the function.  That was what I meant when I said "it may
-> be that it is a bug in the specific caller".  AFAIK, the function
+        git interpret-trailers
 
-I think Dscho made valid points in his other mail that the better
-solution still is to make safe_create_leading_directories() actually
-safe, also regarding its arguments.
+and an infrastructure to process trailers that can be reused,
+for example in "commit.c".
+
+1) Rationale:
+
+This command should help with RFC 822 style headers, called
+"trailers", that are found at the end of commit messages.
+
+(Note that these headers do not follow and are not intended to
+follow many rules that are in RFC 822. For example they do not
+follow the line breaking rules, the encoding rules and probably
+many other rules.)
+
+For a long time, these trailers have become a de facto standard
+way to add helpful information into commit messages.
+
+Until now git commit has only supported the well known
+"Signed-off-by: " trailer, that is used by many projects like
+the Linux kernel and Git.
+
+It is better to implement features for these trailers first in a
+new command rather than in builtin/commit.c, because this way the
+prepare-commit-msg and commit-msg hooks can reuse this command.
+
+2) Current state:
+
+Currently the usage string of this command is:
+
+git interpret-trailers [--trim-empty] [--infile=file] [<token[=value]>...]
+
+The following features are implemented:
+        - the result is printed on stdout
+        - the [<token[=value]>...] arguments are interpreted
+        - a commit message passed using the "--infile=file" option is interpreted
+        - (new) if --infile is not used a commit message is read from stdin 
+        - the "trailer.<token>.key" options in the config are interpreted
+        - the "trailer.<token>.where" options are interpreted
+        - the "trailer.<token>.ifExist" options are interpreted
+        - the "trailer.<token>.ifMissing" options are interpreted
+        - (new) the "trailer.<token>.command" config works
+        - (new) GIT_{AUTHOR,COMMITTER}_{NAME,EMAIL} env variables
+          can be used in commands 
+        - there are a lot of tests
+
+The following features are planned but not yet implemented:
+        - some documentation
+        - integration with "git commit"
+
+Possible improvements:
+        - support GIT_COMMIT_PROTO env variable in commands
+
+3) Notes:
+
+* I used "sed -e 's/ Z$/ /' <<-\EOF" in the tests as suggested by Junio. 
+
+* I added many commits on top of the previous series, but of course they
+can be squashed.
+
+Christian Couder (16):
+  Add data structures and basic functions for commit trailers
+  trailer: process trailers from file and arguments
+  trailer: read and process config information
+  trailer: process command line trailer arguments
+  strbuf: add strbuf_isspace()
+  trailer: parse trailers from input file
+  trailer: put all the processing together and print
+  trailer: add interpret-trailers command
+  trailer: add tests for "git interpret-trailers"
+  trailer: if no input file is passed, read from stdin
+  trailer: add new_trailer_item() function
+  strbuf: add strbuf_replace()
+  trailer: execute command from 'trailer.<name>.command'
+  trailer: add tests for trailer command
+  trailer: set author and committer env variables
+  trailer: add tests for commands using env variables
+
+ .gitignore                    |   1 +
+ Makefile                      |   2 +
+ builtin.h                     |   1 +
+ builtin/interpret-trailers.c  |  36 +++
+ git.c                         |   1 +
+ strbuf.c                      |  14 +
+ strbuf.h                      |   4 +
+ t/t7513-interpret-trailers.sh | 262 +++++++++++++++++
+ trailer.c                     | 639 ++++++++++++++++++++++++++++++++++++++++++
+ trailer.h                     |   6 +
+ 10 files changed, 966 insertions(+)
+ create mode 100644 builtin/interpret-trailers.c
+ create mode 100755 t/t7513-interpret-trailers.sh
+ create mode 100644 trailer.c
+ create mode 100644 trailer.h
 
 -- 
-Sebastian Schuberth
+1.8.5.2.201.gacc5987
