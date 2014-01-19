@@ -1,7 +1,7 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v2 08/16] trailer: add interpret-trailers command
-Date: Sun, 19 Jan 2014 09:53:46 +0100
-Message-ID: <20140119085355.2734.96098.chriscool@tuxfamily.org>
+Subject: [PATCH v2 06/16] trailer: parse trailers from input file
+Date: Sun, 19 Jan 2014 09:53:44 +0100
+Message-ID: <20140119085355.2734.47364.chriscool@tuxfamily.org>
 References: <20140119083636.2734.14378.chriscool@tuxfamily.org>
 Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
 	Josh Triplett <josh@joshtriplett.org>,
@@ -10,150 +10,110 @@ Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
 	Dan Carpenter <dan.carpenter@oracle.com>,
 	Greg Kroah-Hartman <greg@kroah.com>, Jeff King <peff@peff.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jan 19 09:55:41 2014
+X-From: git-owner@vger.kernel.org Sun Jan 19 09:55:43 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W4oAN-0008R0-Uh
+	id 1W4oAO-0008R0-HT
 	for gcvg-git-2@plane.gmane.org; Sun, 19 Jan 2014 09:55:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752048AbaASIz0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 Jan 2014 03:55:26 -0500
-Received: from [194.158.98.14] ([194.158.98.14]:46062 "EHLO mail-1y.bbox.fr"
+	id S1752050AbaASIz2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 Jan 2014 03:55:28 -0500
+Received: from [194.158.98.15] ([194.158.98.15]:49918 "EHLO mail-2y.bbox.fr"
 	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752012AbaASIyv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Jan 2014 03:54:51 -0500
+	id S1752011AbaASIyu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Jan 2014 03:54:50 -0500
 Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-1y.bbox.fr (Postfix) with ESMTP id 1E45063;
-	Sun, 19 Jan 2014 09:54:30 +0100 (CET)
-X-git-sha1: bcac432403d17a9b09ec721f7d2dff4ae869011a 
+	by mail-2y.bbox.fr (Postfix) with ESMTP id E12E93A;
+	Sun, 19 Jan 2014 09:54:28 +0100 (CET)
+X-git-sha1: 52ad5e3e5ab35403c7bdbe7bd1c352fde06827b4 
 X-Mailer: git-mail-commits v0.5.2
 In-Reply-To: <20140119083636.2734.14378.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240679>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240680>
 
-This patch adds the "git interpret-trailers" command.
-This command uses the previously added process_trailers()
-function in trailer.c.
+This patch reads trailers from an input file, parses
+them and puts the result into a doubly linked list.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- .gitignore                   |  1 +
- Makefile                     |  1 +
- builtin.h                    |  1 +
- builtin/interpret-trailers.c | 36 ++++++++++++++++++++++++++++++++++++
- git.c                        |  1 +
- trailer.h                    |  6 ++++++
- 6 files changed, 46 insertions(+)
- create mode 100644 builtin/interpret-trailers.c
- create mode 100644 trailer.h
+ trailer.c | 62 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 62 insertions(+)
 
-diff --git a/.gitignore b/.gitignore
-index b5f9def..c870ada 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -74,6 +74,7 @@
- /git-index-pack
- /git-init
- /git-init-db
-+/git-interpret-trailers
- /git-instaweb
- /git-log
- /git-ls-files
-diff --git a/Makefile b/Makefile
-index ec90feb..a91465e 100644
---- a/Makefile
-+++ b/Makefile
-@@ -935,6 +935,7 @@ BUILTIN_OBJS += builtin/hash-object.o
- BUILTIN_OBJS += builtin/help.o
- BUILTIN_OBJS += builtin/index-pack.o
- BUILTIN_OBJS += builtin/init-db.o
-+BUILTIN_OBJS += builtin/interpret-trailers.o
- BUILTIN_OBJS += builtin/log.o
- BUILTIN_OBJS += builtin/ls-files.o
- BUILTIN_OBJS += builtin/ls-remote.o
-diff --git a/builtin.h b/builtin.h
-index d4afbfe..30f4c30 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -71,6 +71,7 @@ extern int cmd_hash_object(int argc, const char **argv, const char *prefix);
- extern int cmd_help(int argc, const char **argv, const char *prefix);
- extern int cmd_index_pack(int argc, const char **argv, const char *prefix);
- extern int cmd_init_db(int argc, const char **argv, const char *prefix);
-+extern int cmd_interpret_trailers(int argc, const char **argv, const char *prefix);
- extern int cmd_log(int argc, const char **argv, const char *prefix);
- extern int cmd_log_reflog(int argc, const char **argv, const char *prefix);
- extern int cmd_ls_files(int argc, const char **argv, const char *prefix);
-diff --git a/builtin/interpret-trailers.c b/builtin/interpret-trailers.c
-new file mode 100644
-index 0000000..f79bffa
---- /dev/null
-+++ b/builtin/interpret-trailers.c
-@@ -0,0 +1,36 @@
-+/*
-+ * Builtin "git interpret-trailers"
-+ *
-+ * Copyright (c) 2013 Christian Couder <chriscool@tuxfamily.org>
-+ *
-+ */
+diff --git a/trailer.c b/trailer.c
+index bb1fcfb..36eb1f8 100644
+--- a/trailer.c
++++ b/trailer.c
+@@ -440,3 +440,65 @@ static struct trailer_item *process_command_line_args(int argc, const char **arg
+ 
+ 	return arg_tok_first;
+ }
 +
-+#include "cache.h"
-+#include "builtin.h"
-+#include "parse-options.h"
-+#include "strbuf.h"
-+#include "trailer.h"
-+
-+static const char * const git_interpret_trailers_usage[] = {
-+	N_("git interpret-trailers [--trim-empty] [--infile=file] [<token[=value]>...]"),
-+	NULL
-+};
-+
-+int cmd_interpret_trailers(int argc, const char **argv, const char *prefix)
++static struct strbuf **read_input_file(const char *infile)
 +{
-+	const char *infile = NULL;
-+	int trim_empty = 0;
++	struct strbuf sb = STRBUF_INIT;
 +
-+	struct option options[] = {
-+		OPT_BOOL(0, "trim-empty", &trim_empty, N_("trim empty trailers")),
-+		OPT_FILENAME(0, "infile", &infile, N_("use message from file")),
-+		OPT_END()
-+	};
++	if (strbuf_read_file(&sb, infile, 0) < 0)
++		die_errno(_("could not read input file '%s'"), infile);
 +
-+	argc = parse_options(argc, argv, prefix, options,
-+			     git_interpret_trailers_usage, 0);
-+
-+	process_trailers(infile, trim_empty, argc, argv);
-+
-+	return 0;
++	return strbuf_split(&sb, '\n');
 +}
-diff --git a/git.c b/git.c
-index 3799514..1420b58 100644
---- a/git.c
-+++ b/git.c
-@@ -383,6 +383,7 @@ static void handle_internal_command(int argc, const char **argv)
- 		{ "index-pack", cmd_index_pack, RUN_SETUP_GENTLY },
- 		{ "init", cmd_init_db },
- 		{ "init-db", cmd_init_db },
-+		{ "interpret-trailers", cmd_interpret_trailers, RUN_SETUP },
- 		{ "log", cmd_log, RUN_SETUP },
- 		{ "ls-files", cmd_ls_files, RUN_SETUP },
- 		{ "ls-remote", cmd_ls_remote, RUN_SETUP_GENTLY },
-diff --git a/trailer.h b/trailer.h
-new file mode 100644
-index 0000000..9db4459
---- /dev/null
-+++ b/trailer.h
-@@ -0,0 +1,6 @@
-+#ifndef TRAILER_H
-+#define TRAILER_H
 +
-+void process_trailers(const char *infile, int trim_empty, int argc, const char **argv);
++/*
++ * Return the the (0 based) index of the first trailer line
++ * or the line count if there are no trailers.
++ */
++static int find_trailer_start(struct strbuf **lines)
++{
++	int count, start, empty = 1;
 +
-+#endif /* TRAILER_H */
++	/* Get the line count */
++	for (count = 0; lines[count]; count++);
++
++	/*
++	 * Get the start of the trailers by looking starting from the end
++	 * for a line with only spaces before lines with one ':'.
++	 */
++	for (start = count - 1; start >= 0; start--) {
++		if (strbuf_isspace(lines[start])) {
++			if (empty)
++				continue;
++			return start + 1;
++		}
++		if (strchr(lines[start]->buf, ':')) {
++			if (empty)
++				empty = 0;
++			continue;
++		}
++		return count;
++	}
++
++	return empty ? count : start + 1;
++}
++
++static void process_input_file(const char *infile,
++			       struct trailer_item **infile_tok_first,
++			       struct trailer_item **infile_tok_last)
++{
++	struct strbuf **lines = read_input_file(infile);
++	int start = find_trailer_start(lines);
++	int i;
++
++	/* Print non trailer lines as is */
++	for (i = 0; lines[i] && i < start; i++) {
++		printf("%s", lines[i]->buf);
++	}
++
++	/* Parse trailer lines */
++	for (i = start; lines[i]; i++) {
++		struct trailer_item *new = create_trailer_item(lines[i]->buf);
++		add_trailer_item(infile_tok_first, infile_tok_last, new);
++	}
++}
 -- 
 1.8.5.2.201.gacc5987
