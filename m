@@ -1,90 +1,70 @@
-From: Thomas Rast <tr@thomasrast.ch>
-Subject: [PATCH] Documentation: @{-N} can refer to a commit
-Date: Sun, 19 Jan 2014 08:01:15 +0100
-Message-ID: <c9a93954276440ae251dd763837d5159923b6d59.1390114656.git.tr@thomasrast.ch>
-References: <CAO54GHBRbVQWDjE70tEZY=nP==gtrqVvmx1JWYNkc_HOeDnYDA@mail.gmail.com>
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>, Kevin <ikke@ikke.info>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 19 08:01:34 2014
+From: Sebastian Schuberth <sschuberth@gmail.com>
+Subject: Re: [PATCH] Fix safe_create_leading_directories() for Windows
+Date: Sun, 19 Jan 2014 08:26:33 +0100
+Message-ID: <CAHGBnuNoTrRwnjp7ZqMgveLHZeV68cxOqawf7nWo7gnAAYfSOw@mail.gmail.com>
+References: <52C5A039.6030408@gmail.com>
+	<alpine.DEB.1.00.1401021826120.1191@s15462909.onlinehome-server.info>
+	<xmqqtxdmp39a.fsf@gitster.dls.corp.google.com>
+	<52C5D0AB.7050309@gmail.com>
+	<xmqqha9mozvc.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jan 19 08:27:00 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W4mNx-0008AU-BD
-	for gcvg-git-2@plane.gmane.org; Sun, 19 Jan 2014 08:01:33 +0100
+	id 1W4mmZ-0001ls-N0
+	for gcvg-git-2@plane.gmane.org; Sun, 19 Jan 2014 08:27:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751189AbaASHBa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 Jan 2014 02:01:30 -0500
-Received: from ip1.thgersdorf.net ([148.251.9.194]:52499 "EHLO mail.psioc.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750739AbaASHB2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Jan 2014 02:01:28 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by localhost.psioc.net (Postfix) with ESMTP id 5E2684D6572;
-	Sun, 19 Jan 2014 08:01:26 +0100 (CET)
-X-Virus-Scanned: amavisd-new at psioc.net
-Received: from mail.psioc.net ([127.0.0.1])
-	by localhost (mail.psioc.net [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id LRe4wz_Whyav; Sun, 19 Jan 2014 08:01:16 +0100 (CET)
-Received: from linux.local (unknown [213.55.184.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(Client did not present a certificate)
-	by mail.psioc.net (Postfix) with ESMTPSA id B628C4D64BD;
-	Sun, 19 Jan 2014 08:01:15 +0100 (CET)
-X-Mailer: git-send-email 1.9.rc0.162.g8980120
-In-Reply-To: <CAO54GHBRbVQWDjE70tEZY=nP==gtrqVvmx1JWYNkc_HOeDnYDA@mail.gmail.com>
+	id S1750916AbaASH0f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 Jan 2014 02:26:35 -0500
+Received: from mail-qa0-f43.google.com ([209.85.216.43]:54650 "EHLO
+	mail-qa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750752AbaASH0e (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Jan 2014 02:26:34 -0500
+Received: by mail-qa0-f43.google.com with SMTP id o15so4650485qap.16
+        for <git@vger.kernel.org>; Sat, 18 Jan 2014 23:26:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=a7woNWkhbdAoiJz5zj6g9fs7uvdYLm1vXGfzR1jp+EM=;
+        b=tM0TsTvr+hoE7PcJ2Z7rw0uZAbuPVa8jMQdzW3AOd4Twm0l9rozTCQC8hd23LfUISm
+         ANl+trtAarug8cDdNCq9NaVzpRMvGwUjiuDIW2OOT8tUKszbmX0Um72eZPXfIwWqRywJ
+         kJvnZo+GJcrr0G16yikw7T714N6g1wfHdaNFQTrkUQySBVFbl/FDYdxfbwArUET+coCt
+         mbWrzrVe/gZ8Vqbqh24aD424mqFGINO+wfu2y2bitRk1w1TV1CCLh5+64scipRtFrbb+
+         nnCBKFkFE37+9QnI/YBWFjmq7BjwGNzukrMqzXm29ZOxNPcxpW3hKHI6Am4H4PsxM3Ug
+         62Rw==
+X-Received: by 10.229.24.4 with SMTP id t4mr17848396qcb.13.1390116393991; Sat,
+ 18 Jan 2014 23:26:33 -0800 (PST)
+Received: by 10.96.22.229 with HTTP; Sat, 18 Jan 2014 23:26:33 -0800 (PST)
+In-Reply-To: <xmqqha9mozvc.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240673>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240674>
 
-The @{-N} syntax always referred to the N-th last thing checked out,
-which can be either a branch or a commit (for detached HEAD cases).
-However, the documentation only mentioned branches.
+On Thu, Jan 2, 2014 at 10:08 PM, Junio C Hamano <gitster@pobox.com> wrote:
 
-Edit in a "/commit" in the appropriate places.
+>> Seems like the path to clone to is taken as-is from argv in
+>> cmd_clone(). So maybe another solution would be to replace all
+>> backslashes with forward slashes already there?
+>
+> That sounds like a workable alternative, and it might even be a
+> preferable solution but if and only if clone's use of the function
+> to create paths that lead to a new working tree location is the only
+> (ab)use of the function.  That was what I meant when I said "it may
+> be that it is a bug in the specific caller".  AFAIK, the function
 
-Reported-by: Kevin <ikke@ikke.info>
-Signed-off-by: Thomas Rast <tr@thomasrast.ch>
----
+I think Dscho made valid points in his other mail that the better
+solution still is to make safe_create_leading_directories() actually
+safe, also regarding its arguments.
 
-This is the "minimal" edit.  I'd welcome better wording for the
-git-commit manpage, I can't come up with any right now.
-
-
- Documentation/git-checkout.txt | 4 ++--
- Documentation/revisions.txt    | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
-index 91294f8..33ad2ad 100644
---- a/Documentation/git-checkout.txt
-+++ b/Documentation/git-checkout.txt
-@@ -232,8 +232,8 @@ section of linkgit:git-add[1] to learn how to operate the `--patch` mode.
- 	commit, your HEAD becomes "detached" and you are no longer on
- 	any branch (see below for details).
- +
--As a special case, the `"@{-N}"` syntax for the N-th last branch
--checks out the branch (instead of detaching).  You may also specify
-+As a special case, the `"@{-N}"` syntax for the N-th last branch/commit
-+checks out branches (instead of detaching).  You may also specify
- `-` which is synonymous with `"@{-1}"`.
- +
- As a further special case, you may use `"A...B"` as a shortcut for the
-diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
-index 2c06ed3..5a286d0 100644
---- a/Documentation/revisions.txt
-+++ b/Documentation/revisions.txt
-@@ -88,7 +88,7 @@ some output processing may assume ref names in UTF-8.
-   branch 'blabla' then '@\{1\}' means the same as 'blabla@\{1\}'.
- 
- '@\{-<n>\}', e.g. '@\{-1\}'::
--  The construct '@\{-<n>\}' means the <n>th branch checked out
-+  The construct '@\{-<n>\}' means the <n>th branch/commit checked out
-   before the current one.
- 
- '<branchname>@\{upstream\}', e.g. 'master@\{upstream\}', '@\{u\}'::
 -- 
-1.9.rc0.162.g8980120
+Sebastian Schuberth
