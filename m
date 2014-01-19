@@ -1,8 +1,7 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v2 13/16] trailer: execute command from
- 'trailer.<name>.command'
-Date: Sun, 19 Jan 2014 09:53:51 +0100
-Message-ID: <20140119085355.2734.78893.chriscool@tuxfamily.org>
+Subject: [PATCH v2 05/16] strbuf: add strbuf_isspace()
+Date: Sun, 19 Jan 2014 09:53:43 +0100
+Message-ID: <20140119085355.2734.74428.chriscool@tuxfamily.org>
 References: <20140119083636.2734.14378.chriscool@tuxfamily.org>
 Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
 	Josh Triplett <josh@joshtriplett.org>,
@@ -11,149 +10,71 @@ Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
 	Dan Carpenter <dan.carpenter@oracle.com>,
 	Greg Kroah-Hartman <greg@kroah.com>, Jeff King <peff@peff.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jan 19 09:55:43 2014
+X-From: git-owner@vger.kernel.org Sun Jan 19 09:55:47 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W4oAP-0008R0-ND
-	for gcvg-git-2@plane.gmane.org; Sun, 19 Jan 2014 09:55:42 +0100
+	id 1W4oAL-0008R0-Nz
+	for gcvg-git-2@plane.gmane.org; Sun, 19 Jan 2014 09:55:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752058AbaASIzc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 Jan 2014 03:55:32 -0500
-Received: from [194.158.98.45] ([194.158.98.45]:39699 "EHLO mail-3y.bbox.fr"
+	id S1752034AbaASIzU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 Jan 2014 03:55:20 -0500
+Received: from [194.158.98.15] ([194.158.98.15]:49903 "EHLO mail-2y.bbox.fr"
 	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752020AbaASIyy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Jan 2014 03:54:54 -0500
+	id S1751996AbaASIyt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Jan 2014 03:54:49 -0500
 Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-3y.bbox.fr (Postfix) with ESMTP id 3C4C867;
-	Sun, 19 Jan 2014 09:54:33 +0100 (CET)
-X-git-sha1: 2bcb045453058efe4bfec4734e44ef4c7472c5b3 
+	by mail-2y.bbox.fr (Postfix) with ESMTP id 52E8751;
+	Sun, 19 Jan 2014 09:54:28 +0100 (CET)
+X-git-sha1: 0e059d27b46f4e726315a2123caa23aaeefb4cab 
 X-Mailer: git-mail-commits v0.5.2
 In-Reply-To: <20140119083636.2734.14378.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240681>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240682>
+
+This helper function checks if a strbuf
+contains only space chars or not.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- trailer.c | 57 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 57 insertions(+)
+ strbuf.c | 7 +++++++
+ strbuf.h | 1 +
+ 2 files changed, 8 insertions(+)
 
-diff --git a/trailer.c b/trailer.c
-index 43a3735..549d381 100644
---- a/trailer.c
-+++ b/trailer.c
-@@ -1,4 +1,5 @@
- #include "cache.h"
-+#include "run-command.h"
- /*
-  * Copyright (c) 2013 Christian Couder <chriscool@tuxfamily.org>
-  */
-@@ -12,11 +13,14 @@ struct conf_info {
- 	char *name;
- 	char *key;
- 	char *command;
-+	unsigned command_uses_arg : 1;
- 	enum action_where where;
- 	enum action_if_exist if_exist;
- 	enum action_if_missing if_missing;
- };
- 
-+#define TRAILER_ARG_STRING "$ARG"
-+
- struct trailer_item {
- 	struct trailer_item *previous;
- 	struct trailer_item *next;
-@@ -368,6 +372,7 @@ static int git_trailer_config(const char *conf_key, const char *value, void *cb)
- 			if (conf->command)
- 				warning(_("more than one %s"), orig_conf_key);
- 			conf->command = xstrdup(value);
-+			conf->command_uses_arg = !!strstr(conf->command, TRAILER_ARG_STRING);
- 		} else if (type == TRAILER_WHERE) {
- 			if (set_where(conf, value))
- 				warning(_("unknown value '%s' for key '%s'"), value, orig_conf_key);
-@@ -400,6 +405,45 @@ static void parse_trailer(struct strbuf *tok, struct strbuf *val, const char *tr
- 	}
+diff --git a/strbuf.c b/strbuf.c
+index 83caf4a..2124bb8 100644
+--- a/strbuf.c
++++ b/strbuf.c
+@@ -124,6 +124,13 @@ void strbuf_ltrim(struct strbuf *sb)
+ 	sb->buf[sb->len] = '\0';
  }
  
-+static int read_from_command(struct child_process *cp, struct strbuf *buf)
++int strbuf_isspace(struct strbuf *sb)
 +{
-+	if (run_command(cp))
-+		return error("running trailer command '%s' failed", cp->argv[0]);
-+	if (strbuf_read(buf, cp->out, 1024) < 1)
-+		return error("reading from trailer command '%s' failed", cp->argv[0]);
-+	strbuf_trim(buf);
-+	return 0;
++	char *b;
++	for (b = sb->buf; *b && isspace(*b); b++);
++	return !*b;
 +}
 +
-+static const char *apply_command(const char *command, const char *arg)
-+{
-+	struct strbuf cmd = STRBUF_INIT;
-+	struct strbuf buf = STRBUF_INIT;
-+	struct child_process cp;
-+	const char *argv[] = {NULL, NULL};
-+	const char *result = "";
-+
-+	strbuf_addstr(&cmd, command);
-+	if (arg)
-+		strbuf_replace(&cmd, TRAILER_ARG_STRING, arg);
-+
-+	argv[0] = cmd.buf;
-+	memset(&cp, 0, sizeof(cp));
-+	cp.argv = argv;
-+	cp.env = local_repo_env;
-+	cp.no_stdin = 1;
-+	cp.out = -1;
-+	cp.use_shell = 1;
-+
-+	if (read_from_command(&cp, &buf))
-+		strbuf_release(&buf);
-+	else
-+		result = strbuf_detach(&buf, NULL);
-+
-+	strbuf_release(&cmd);
-+	return result;
-+}
-+
- static struct trailer_item *new_trailer_item(struct trailer_item *conf_item,
- 					     const char* tok, const char* val)
+ struct strbuf **strbuf_split_buf(const char *str, size_t slen,
+ 				 int terminator, int max)
  {
-@@ -409,6 +453,8 @@ static struct trailer_item *new_trailer_item(struct trailer_item *conf_item,
- 	if (conf_item) {
- 		new->conf = conf_item->conf;
- 		new->token = xstrdup(conf_item->conf->key);
-+		if (conf_item->conf->command_uses_arg || !val)
-+			new->value = apply_command(conf_item->conf->command, val);
- 	} else {
- 		new->conf = xcalloc(sizeof(struct conf_info), 1);
- 		new->token = tok;
-@@ -459,12 +505,23 @@ static struct trailer_item *process_command_line_args(int argc, const char **arg
- 	int i;
- 	struct trailer_item *arg_tok_first = NULL;
- 	struct trailer_item *arg_tok_last = NULL;
-+	struct trailer_item *item;
+diff --git a/strbuf.h b/strbuf.h
+index 73e80ce..02bff3a 100644
+--- a/strbuf.h
++++ b/strbuf.h
+@@ -42,6 +42,7 @@ static inline void strbuf_setlen(struct strbuf *sb, size_t len) {
+ extern void strbuf_trim(struct strbuf *);
+ extern void strbuf_rtrim(struct strbuf *);
+ extern void strbuf_ltrim(struct strbuf *);
++extern int strbuf_isspace(struct strbuf *);
+ extern int strbuf_cmp(const struct strbuf *, const struct strbuf *);
  
- 	for (i = 0; i < argc; i++) {
- 		struct trailer_item *new = create_trailer_item(argv[i]);
- 		add_trailer_item(&arg_tok_first, &arg_tok_last, new);
- 	}
- 
-+	/* Add conf commands that don't use $ARG */
-+	for (item = first_conf_item; item; item = item->next)
-+	{
-+		if (item->conf->command && !item->conf->command_uses_arg)
-+		{
-+			struct trailer_item *new = new_trailer_item(item, NULL, NULL);
-+			add_trailer_item(&arg_tok_first, &arg_tok_last, new);
-+		}
-+	}
-+
- 	return arg_tok_first;
- }
- 
+ /*
 -- 
 1.8.5.2.201.gacc5987
