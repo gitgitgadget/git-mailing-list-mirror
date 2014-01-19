@@ -1,7 +1,7 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v2 05/16] strbuf: add strbuf_isspace()
-Date: Sun, 19 Jan 2014 09:53:43 +0100
-Message-ID: <20140119085355.2734.74428.chriscool@tuxfamily.org>
+Subject: [PATCH v2 10/16] trailer: if no input file is passed, read from stdin
+Date: Sun, 19 Jan 2014 09:53:48 +0100
+Message-ID: <20140119085355.2734.71887.chriscool@tuxfamily.org>
 References: <20140119083636.2734.14378.chriscool@tuxfamily.org>
 Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
 	Josh Triplett <josh@joshtriplett.org>,
@@ -10,71 +10,104 @@ Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
 	Dan Carpenter <dan.carpenter@oracle.com>,
 	Greg Kroah-Hartman <greg@kroah.com>, Jeff King <peff@peff.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jan 19 09:55:47 2014
+X-From: git-owner@vger.kernel.org Sun Jan 19 09:55:46 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W4oAL-0008R0-Nz
-	for gcvg-git-2@plane.gmane.org; Sun, 19 Jan 2014 09:55:38 +0100
+	id 1W4oAQ-0008R0-Rk
+	for gcvg-git-2@plane.gmane.org; Sun, 19 Jan 2014 09:55:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752034AbaASIzU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 Jan 2014 03:55:20 -0500
-Received: from [194.158.98.15] ([194.158.98.15]:49903 "EHLO mail-2y.bbox.fr"
+	id S1752067AbaASIzf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 Jan 2014 03:55:35 -0500
+Received: from [194.158.98.15] ([194.158.98.15]:50034 "EHLO mail-2y.bbox.fr"
 	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751996AbaASIyt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Jan 2014 03:54:49 -0500
+	id S1752023AbaASIzH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Jan 2014 03:55:07 -0500
 Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-2y.bbox.fr (Postfix) with ESMTP id 52E8751;
-	Sun, 19 Jan 2014 09:54:28 +0100 (CET)
-X-git-sha1: 0e059d27b46f4e726315a2123caa23aaeefb4cab 
+	by mail-2y.bbox.fr (Postfix) with ESMTP id 6E97C44;
+	Sun, 19 Jan 2014 09:54:31 +0100 (CET)
+X-git-sha1: 19d1792cf999c8e1633d21363e1d4ad5f5118a1f 
 X-Mailer: git-mail-commits v0.5.2
 In-Reply-To: <20140119083636.2734.14378.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240682>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240683>
 
-This helper function checks if a strbuf
-contains only space chars or not.
+It is simpler and more natural if the "git interpret-trailers"
+is made a filter as its output already goes to sdtout.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- strbuf.c | 7 +++++++
- strbuf.h | 1 +
- 2 files changed, 8 insertions(+)
+ builtin/interpret-trailers.c  |  2 +-
+ t/t7513-interpret-trailers.sh |  7 +++++++
+ trailer.c                     | 15 +++++++++------
+ 3 files changed, 17 insertions(+), 7 deletions(-)
 
-diff --git a/strbuf.c b/strbuf.c
-index 83caf4a..2124bb8 100644
---- a/strbuf.c
-+++ b/strbuf.c
-@@ -124,6 +124,13 @@ void strbuf_ltrim(struct strbuf *sb)
- 	sb->buf[sb->len] = '\0';
- }
+diff --git a/builtin/interpret-trailers.c b/builtin/interpret-trailers.c
+index f79bffa..37237f7 100644
+--- a/builtin/interpret-trailers.c
++++ b/builtin/interpret-trailers.c
+@@ -23,7 +23,7 @@ int cmd_interpret_trailers(int argc, const char **argv, const char *prefix)
  
-+int strbuf_isspace(struct strbuf *sb)
-+{
-+	char *b;
-+	for (b = sb->buf; *b && isspace(*b); b++);
-+	return !*b;
-+}
+ 	struct option options[] = {
+ 		OPT_BOOL(0, "trim-empty", &trim_empty, N_("trim empty trailers")),
+-		OPT_FILENAME(0, "infile", &infile, N_("use message from file")),
++		OPT_FILENAME(0, "infile", &infile, N_("use message from file, instead of stdin")),
+ 		OPT_END()
+ 	};
+ 
+diff --git a/t/t7513-interpret-trailers.sh b/t/t7513-interpret-trailers.sh
+index 8be333c..f5ef81f 100755
+--- a/t/t7513-interpret-trailers.sh
++++ b/t/t7513-interpret-trailers.sh
+@@ -205,4 +205,11 @@ test_expect_success 'using "ifMissing = doNothing"' '
+ 	test_cmp expected actual
+ '
+ 
++test_expect_success 'with input from stdin' '
++	cat complex_message_body >expected &&
++	printf "Bug #42\nFixes: \nAcked-by= \nAcked-by= Junio\nAcked-by= Peff\nReviewed-by: \nSigned-off-by: \n" >>expected &&
++	git interpret-trailers "review:" "fix=53" "cc=Linus" "ack: Junio" "fix=22" "bug: 42" "ack: Peff" < complex_message >actual &&
++	test_cmp expected actual
++'
 +
- struct strbuf **strbuf_split_buf(const char *str, size_t slen,
- 				 int terminator, int max)
+ test_done
+diff --git a/trailer.c b/trailer.c
+index d2a4427..9026337 100644
+--- a/trailer.c
++++ b/trailer.c
+@@ -465,8 +465,13 @@ static struct strbuf **read_input_file(const char *infile)
  {
-diff --git a/strbuf.h b/strbuf.h
-index 73e80ce..02bff3a 100644
---- a/strbuf.h
-+++ b/strbuf.h
-@@ -42,6 +42,7 @@ static inline void strbuf_setlen(struct strbuf *sb, size_t len) {
- extern void strbuf_trim(struct strbuf *);
- extern void strbuf_rtrim(struct strbuf *);
- extern void strbuf_ltrim(struct strbuf *);
-+extern int strbuf_isspace(struct strbuf *);
- extern int strbuf_cmp(const struct strbuf *, const struct strbuf *);
+ 	struct strbuf sb = STRBUF_INIT;
  
- /*
+-	if (strbuf_read_file(&sb, infile, 0) < 0)
+-		die_errno(_("could not read input file '%s'"), infile);
++	if (infile) {
++		if (strbuf_read_file(&sb, infile, 0) < 0)
++			die_errno(_("could not read input file '%s'"), infile);
++	} else {
++		if (strbuf_read(&sb, fileno(stdin), 0) < 0)
++			die_errno(_("could not read from stdin"));
++	}
+ 
+ 	return strbuf_split(&sb, '\n');
+ }
+@@ -531,10 +536,8 @@ void process_trailers(const char *infile, int trim_empty, int argc, const char *
+ 
+ 	git_config(git_trailer_config, NULL);
+ 
+-	/* Print the non trailer part of infile */
+-	if (infile) {
+-		process_input_file(infile, &infile_tok_first, &infile_tok_last);
+-	}
++	/* Print the non trailer part of infile (or stdin if infile is NULL) */
++	process_input_file(infile, &infile_tok_first, &infile_tok_last);
+ 
+ 	arg_tok_first = process_command_line_args(argc, argv);
+ 
 -- 
 1.8.5.2.201.gacc5987
