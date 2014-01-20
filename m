@@ -1,30 +1,30 @@
 From: Kirill Smelkov <kirr@mns.spb.ru>
-Subject: [PATCH 4/4] combine-diff: combine_diff_path.len is not needed anymore
-Date: Mon, 20 Jan 2014 20:20:41 +0400
-Message-ID: <81fdea65268f1d5cfe120ec37ee577f4639f9d74.1390234183.git.kirr@mns.spb.ru>
+Subject: [PATCH 3/4] combine-diff: Optimize combine_diff_path sets intersection
+Date: Mon, 20 Jan 2014 20:20:40 +0400
+Message-ID: <b97e63128093f6c5f5cab854b9b9487c4e6b955a.1390234183.git.kirr@mns.spb.ru>
 References: <cover.1390234183.git.kirr@mns.spb.ru>
 Cc: git@vger.kernel.org, Kirill Smelkov <kirr@mns.spb.ru>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 20 17:34:40 2014
+X-From: git-owner@vger.kernel.org Mon Jan 20 17:34:45 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W5Ho7-0003CR-OH
-	for gcvg-git-2@plane.gmane.org; Mon, 20 Jan 2014 17:34:40 +0100
+	id 1W5HoB-0003F1-Ss
+	for gcvg-git-2@plane.gmane.org; Mon, 20 Jan 2014 17:34:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754156AbaATQef (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Jan 2014 11:34:35 -0500
-Received: from mail.mnsspb.ru ([84.204.75.2]:60904 "EHLO mail.mnsspb.ru"
+	id S1754100AbaATQed (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Jan 2014 11:34:33 -0500
+Received: from mail.mnsspb.ru ([84.204.75.2]:60905 "EHLO mail.mnsspb.ru"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753392AbaATQe1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Jan 2014 11:34:27 -0500
+	id S1754007AbaATQe3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Jan 2014 11:34:29 -0500
 Received: from [192.168.0.127] (helo=tugrik.mns.mnsspb.ru)
-	by mail.mnsspb.ru with esmtps id 1W5HZF-0007Vv-TV; Mon, 20 Jan 2014 20:19:18 +0400
+	by mail.mnsspb.ru with esmtps id 1W5HZB-0007Vq-5D; Mon, 20 Jan 2014 20:19:13 +0400
 Received: from kirr by tugrik.mns.mnsspb.ru with local (Exim 4.72)
 	(envelope-from <kirr@tugrik.mns.mnsspb.ru>)
-	id 1W5HbA-0001Q5-6m; Mon, 20 Jan 2014 20:21:16 +0400
+	id 1W5Hb5-0001Q2-Ki; Mon, 20 Jan 2014 20:21:11 +0400
 X-Mailer: git-send-email 1.9.rc0.143.g6fd479e
 In-Reply-To: <cover.1390234183.git.kirr@mns.spb.ru>
 In-Reply-To: <cover.1390234183.git.kirr@mns.spb.ru>
@@ -33,128 +33,216 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240716>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240717>
 
-Brefore previous patch, ->len was used to speedup name compares and also
-to mark removed paths via len=0. Now we do significantly less strcmp and
-also just remove paths from list and free right after we know a path
-will not be needed, so ->len is not needed anymore.
+Currently, when generating combined diff, for a commit, we intersect
+diff paths from diff(parent_0,commit) to diff(parent_i,commit) comparing
+all paths pairs, i.e. doing it the quadratic way. That is correct, but
+could be optimized:
+
+Paths come from trees in sorted (= tree) order, and so does diff_tree()
+emits resulting paths in that order too. Now if we look at diffcore
+transformations, all of them, except diffcore_order, preserve resulting
+path ordering:
+
+    - skip_stat_unmatch, grep, pickaxe, filter
+                            -- just skip elements -> order stays preserved
+
+    - break                 -- just breaks diff for a path, adding path
+                               dup after the path -> order stays preserved
+
+    - detect rename/copy    -- resulting paths are emitted sorted
+                               (verified empirically)
+
+So only diffcore_order changes diff paths ordering.
+
+But diffcore_order meaning affects only presentation - i.e. only how to
+show the diff, so we could do all the internal computations without
+paths reordering, and order only resultant paths set. This is faster,
+since, if we know two paths sets are all ordered, their intersection
+could be done in linear time.
+
+This patch does just that.
+
+Timings for `git log --raw --no-abbrev --no-renames` without `-c` ("git log")
+and with `-c` ("git log -c") before and after the patch are as follows:
+
+                linux.git v3.10..v3.11
+
+            log     log -c
+
+    before  1.9s    20.4s
+    after   1.9s    16.6s
+
+                navy.git    (private repo)
+
+            log     log -c
+
+    before  0.83s   15.6s
+    after   0.83s    2.1s
+
+P.S.
+
+I think linux.git case is sped up not so much as the second one, since
+in navy.git, there are more exotic (subtree, etc) merges.
+
+P.P.S.
+
+My tracing showed that the rest of the time (16.6s vs 1.9s) is usually
+spent in computing huge diffs from commit to second parent. Will try to
+deal with it, if I'll have time.
+
+P.P.P.S.
+
+For combine_diff_path, ->len is not needed anymore - will remove it in
+the next noisy cleanup path, to maintain good signal/noise ratio here.
 
 Signed-off-by: Kirill Smelkov <kirr@mns.spb.ru>
 ---
- combine-diff.c | 30 +++++++++---------------------
- diff-lib.c     |  2 --
- diff.h         |  1 -
- 3 files changed, 9 insertions(+), 24 deletions(-)
+ combine-diff.c | 93 +++++++++++++++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 72 insertions(+), 21 deletions(-)
 
 diff --git a/combine-diff.c b/combine-diff.c
-index 98c2562..07faa96 100644
+index 3b92c448..98c2562 100644
 --- a/combine-diff.c
 +++ b/combine-diff.c
-@@ -31,7 +31,6 @@ static struct combine_diff_path *intersect_paths(struct combine_diff_path *curr,
- 			p->path = (char *) &(p->parent[num_parent]);
- 			memcpy(p->path, path, len);
- 			p->path[len] = 0;
--			p->len = len;
- 			p->next = NULL;
- 			memset(p->parent, 0,
- 			       sizeof(p->parent[0]) * num_parent);
-@@ -1234,8 +1233,6 @@ void show_combined_diff(struct combine_diff_path *p,
+@@ -15,8 +15,8 @@
+ static struct combine_diff_path *intersect_paths(struct combine_diff_path *curr, int n, int num_parent)
  {
- 	struct diff_options *opt = &rev->diffopt;
+ 	struct diff_queue_struct *q = &diff_queued_diff;
+-	struct combine_diff_path *p;
+-	int i;
++	struct combine_diff_path *p, *pprev, *ptmp;
++	int i, cmp;
  
--	if (!p->len)
--		return;
- 	if (opt->output_format & (DIFF_FORMAT_RAW |
- 				  DIFF_FORMAT_NAME |
- 				  DIFF_FORMAT_NAME_STATUS))
-@@ -1299,11 +1296,8 @@ static void handle_combined_callback(struct diff_options *opt,
- 	q.queue = xcalloc(num_paths, sizeof(struct diff_filepair *));
- 	q.alloc = num_paths;
- 	q.nr = num_paths;
--	for (i = 0, p = paths; p; p = p->next) {
+ 	if (!n) {
+ 		struct combine_diff_path *list = NULL, **tail = &list;
+@@ -47,28 +47,43 @@ static struct combine_diff_path *intersect_paths(struct combine_diff_path *curr,
+ 		return list;
+ 	}
+ 
+-	for (p = curr; p; p = p->next) {
+-		int found = 0;
 -		if (!p->len)
--			continue;
-+	for (i = 0, p = paths; p; p = p->next)
- 		q.queue[i++] = combined_pair(p, num_parent);
--	}
- 	opt->format_callback(&q, opt, opt->format_callback_data);
- 	for (i = 0; i < num_paths; i++)
- 		free_combined_pair(q.queue[i]);
-@@ -1369,11 +1363,9 @@ void diff_tree_combined(const unsigned char *sha1,
++	/*
++	 * NOTE paths are coming sorted here (= in tree order)
++	 */
++
++	pprev = NULL;
++	p = curr;
++	i = 0;
++
++	while (1) {
++		if (!p)
++			break;
++
++		cmp = (i >= q->nr) ? -1
++				   : strcmp(p->path, q->queue[i]->two->path);
++		if (cmp < 0) {
++			if (pprev)
++				pprev->next = p->next;
++			ptmp = p;
++			p = p->next;
++			free(ptmp);
++			if (curr == ptmp)
++				curr = p;
+ 			continue;
+-		for (i = 0; i < q->nr; i++) {
+-			const char *path;
+-			int len;
++		}
+ 
+-			if (diff_unmodified_pair(q->queue[i]))
+-				continue;
+-			path = q->queue[i]->two->path;
+-			len = strlen(path);
+-			if (len == p->len && !memcmp(path, p->path, len)) {
+-				found = 1;
+-				hashcpy(p->parent[n].sha1, q->queue[i]->one->sha1);
+-				p->parent[n].mode = q->queue[i]->one->mode;
+-				p->parent[n].status = q->queue[i]->status;
+-				break;
+-			}
++		if (cmp > 0) {
++			i++;
++			continue;
+ 		}
+-		if (!found)
+-			p->len = 0;
++
++		hashcpy(p->parent[n].sha1, q->queue[i]->one->sha1);
++		p->parent[n].mode = q->queue[i]->one->mode;
++		p->parent[n].status = q->queue[i]->status;
++
++		pprev = p;
++		p = p->next;
++		i++;
+ 	}
+ 	return curr;
+ }
+@@ -1295,6 +1310,13 @@ static void handle_combined_callback(struct diff_options *opt,
+ 	free(q.queue);
+ }
+ 
++static const char *path_path(void *obj)
++{
++	struct combine_diff_path *path = (struct combine_diff_path *)obj;
++
++	return path->path;
++}
++
+ void diff_tree_combined(const unsigned char *sha1,
+ 			const struct sha1_array *parents,
+ 			int dense,
+@@ -1310,6 +1332,8 @@ void diff_tree_combined(const unsigned char *sha1,
+ 	diffopts.output_format = DIFF_FORMAT_NO_OUTPUT;
+ 	DIFF_OPT_SET(&diffopts, RECURSIVE);
+ 	DIFF_OPT_CLR(&diffopts, ALLOW_EXTERNAL);
++	/* tell diff_tree to emit paths in sorted (=tree) order */
++	diffopts.orderfile = NULL;
+ 
+ 	show_log_first = !!rev->loginfo && !rev->no_commit_id;
+ 	needsep = 0;
+@@ -1335,6 +1359,13 @@ void diff_tree_combined(const unsigned char *sha1,
+ 				printf("%s%c", diff_line_prefix(opt),
+ 				       opt->line_termination);
+ 		}
++
++		/* if showing diff, show it in requested order */
++		if (diffopts.output_format != DIFF_FORMAT_NO_OUTPUT &&
++		    opt->orderfile) {
++			diffcore_order(opt->orderfile);
++		}
++
  		diff_flush(&diffopts);
  	}
  
--	/* find out surviving paths */
--	for (num_paths = 0, p = paths; p; p = p->next) {
--		if (p->len)
--			num_paths++;
--	}
-+	/* find out number of surviving paths */
-+	for (num_paths = 0, p = paths; p; p = p->next)
-+		num_paths++;
- 
- 	/* order paths according to diffcore_order */
- 	if (opt->orderfile && num_paths) {
-@@ -1398,10 +1390,8 @@ void diff_tree_combined(const unsigned char *sha1,
+@@ -1343,6 +1374,26 @@ void diff_tree_combined(const unsigned char *sha1,
+ 		if (p->len)
+ 			num_paths++;
+ 	}
++
++	/* order paths according to diffcore_order */
++	if (opt->orderfile && num_paths) {
++		struct obj_order *o;
++
++		o = xmalloc(sizeof(*o) * num_paths);
++		for (i = 0, p = paths; p; p = p->next, i++)
++			o[i].obj = p;
++		order_objects(opt->orderfile, path_path, o, num_paths);
++		for (i = 0; i < num_paths - 1; i++) {
++			p = o[i].obj;
++			p->next = o[i+1].obj;
++		}
++
++		p = o[num_paths-1].obj;
++		p->next = NULL;
++		paths = o[0].obj;
++	}
++
++
+ 	if (num_paths) {
  		if (opt->output_format & (DIFF_FORMAT_RAW |
  					  DIFF_FORMAT_NAME |
- 					  DIFF_FORMAT_NAME_STATUS)) {
--			for (p = paths; p; p = p->next) {
--				if (p->len)
--					show_raw_diff(p, num_parent, rev);
--			}
-+			for (p = paths; p; p = p->next)
-+				show_raw_diff(p, num_parent, rev);
- 			needsep = 1;
- 		}
- 		else if (opt->output_format &
-@@ -1414,11 +1404,9 @@ void diff_tree_combined(const unsigned char *sha1,
- 			if (needsep)
- 				printf("%s%c", diff_line_prefix(opt),
- 				       opt->line_termination);
--			for (p = paths; p; p = p->next) {
--				if (p->len)
--					show_patch_diff(p, num_parent, dense,
--							0, rev);
--			}
-+			for (p = paths; p; p = p->next)
-+				show_patch_diff(p, num_parent, dense,
-+						0, rev);
- 		}
- 	}
- 
-diff --git a/diff-lib.c b/diff-lib.c
-index e6d33b3..938869d 100644
---- a/diff-lib.c
-+++ b/diff-lib.c
-@@ -121,7 +121,6 @@ int run_diff_files(struct rev_info *revs, unsigned int option)
- 			dpath->path = (char *) &(dpath->parent[5]);
- 
- 			dpath->next = NULL;
--			dpath->len = path_len;
- 			memcpy(dpath->path, ce->name, path_len);
- 			dpath->path[path_len] = '\0';
- 			hashclr(dpath->sha1);
-@@ -323,7 +322,6 @@ static int show_modified(struct rev_info *revs,
- 		p = xmalloc(combine_diff_path_size(2, pathlen));
- 		p->path = (char *) &p->parent[2];
- 		p->next = NULL;
--		p->len = pathlen;
- 		memcpy(p->path, new->name, pathlen);
- 		p->path[pathlen] = 0;
- 		p->mode = mode;
-diff --git a/diff.h b/diff.h
-index 0e6898f..a24a767 100644
---- a/diff.h
-+++ b/diff.h
-@@ -198,7 +198,6 @@ extern int diff_root_tree_sha1(const unsigned char *new, const char *base,
- 
- struct combine_diff_path {
- 	struct combine_diff_path *next;
--	int len;
- 	char *path;
- 	unsigned int mode;
- 	unsigned char sha1[20];
 -- 
 1.9.rc0.143.g6fd479e
