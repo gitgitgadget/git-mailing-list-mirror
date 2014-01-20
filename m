@@ -1,52 +1,54 @@
 From: manjian2006@gmail.com
-Subject: [PATCH] improve git svn performance Hi,   I am trying to improve git svn's performance according to some profiling data.As the data showed,_rev_list subroutine and rebuild subroutine are consuming a large proportion of time.So I improve _rev_list's performance by memoize its results,and avoid subprocess invocation by memoize rebuild subroutine's key data.Here's my patch:
-Date: Mon, 20 Jan 2014 12:36:19 +0800
-Message-ID: <1390192579-3635-1-git-send-email-manjian2006@gmail.com>
+Subject: [PATCH] improve git svn performance
+Date: Mon, 20 Jan 2014 12:37:52 +0800
+Message-ID: <1390192672-3827-1-git-send-email-manjian2006@gmail.com>
 Cc: linzj <linzj@ucweb.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 20 05:36:40 2014
+X-From: git-owner@vger.kernel.org Mon Jan 20 05:38:15 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W56bH-0000lL-4n
-	for gcvg-git-2@plane.gmane.org; Mon, 20 Jan 2014 05:36:39 +0100
+	id 1W56cl-0001EO-7g
+	for gcvg-git-2@plane.gmane.org; Mon, 20 Jan 2014 05:38:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753334AbaATEgf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 Jan 2014 23:36:35 -0500
-Received: from mail-pa0-f43.google.com ([209.85.220.43]:64646 "EHLO
-	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753329AbaATEgd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Jan 2014 23:36:33 -0500
-Received: by mail-pa0-f43.google.com with SMTP id rd3so6531037pab.2
-        for <git@vger.kernel.org>; Sun, 19 Jan 2014 20:36:33 -0800 (PST)
+	id S1752644AbaATEiH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 Jan 2014 23:38:07 -0500
+Received: from mail-pa0-f51.google.com ([209.85.220.51]:35659 "EHLO
+	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752574AbaATEiG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Jan 2014 23:38:06 -0500
+Received: by mail-pa0-f51.google.com with SMTP id ld10so4218954pab.10
+        for <git@vger.kernel.org>; Sun, 19 Jan 2014 20:38:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id;
-        bh=xFHrY65OqBH80b4WUbtSiBJ1WlNxqe8N7CFdJos2N2A=;
-        b=kVh8WEVEuri9kd2lEO8HAVDyJA0fEB8538wuffEIRbTT/M8wT07mXqIcFzsUu5G243
-         Ok/OmrG+zjWbuQgTaw9oJw9q/5eKZ9PFOprCePX0U0ur+eCOfmj0pP40PNSVn/rHRe7P
-         FCFWmN3BZ8bDlwh0Y16maIuXnAjZMonxnsmIGdZRuyJGZPUbNLWs+zRimSpK5EYDoHzf
-         y5F+5o2aHyssIXgZ+wDoVKRviV24vV6xLPy8aM+lmQCq85W9hWOku1ofoXzft6aMDd15
-         lmU7Rtda9AbnpngSPhon7Vwd9YvqW1TDx3zsPcEY8n+PvbRW+c0Z6vmMk5vam7FmEJk9
-         /h+Q==
-X-Received: by 10.68.196.69 with SMTP id ik5mr1197443pbc.132.1390192592970;
-        Sun, 19 Jan 2014 20:36:32 -0800 (PST)
+        bh=2BPjKe3D6CCZrt4XpcTgO657zTPF1GdtU5Xhsm6AGfQ=;
+        b=cFJi3uHJwb22UXniCwOvaBuI06eiWfgGWMav+qp6sIYLhSrNyZLSKo8IEpp84A/5Mr
+         l8ylgBqeIpk4PIAumyA41n5aNcL5Ac/iNtLRgpJiyQ+HjC1bS2JynOJsPm47XWf7PfzX
+         izduHD/ls4gglcM4ijq/k62L/4zWooad9KbDv4h4ePAmm5h+fP+6qCAcmMsJ8iVeDMVF
+         Slcl7mVy9EpU9xG2es+32UWLYzvcPadRT7/iQ1CTPnaX9q9m42W867wUz74O8ymYLcfW
+         ObhV7xQMV2Cj7jk0uFwV7Hh1EzY7O9tczLCE1dBxIEihKalYpYo8FfWDJU0KqSQwYHF5
+         VIVA==
+X-Received: by 10.68.254.230 with SMTP id al6mr16465587pbd.3.1390192684863;
+        Sun, 19 Jan 2014 20:38:04 -0800 (PST)
 Received: from ubuntu.dhcp.ucweb.local ([70.39.187.196])
-        by mx.google.com with ESMTPSA id e6sm40858961pbg.4.2014.01.19.20.36.30
+        by mx.google.com with ESMTPSA id gn5sm40835421pbc.29.2014.01.19.20.38.02
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 19 Jan 2014 20:36:32 -0800 (PST)
+        Sun, 19 Jan 2014 20:38:04 -0800 (PST)
 X-Mailer: git-send-email 1.8.3.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240707>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240708>
 
 From: linzj <linzj@ucweb.com>
 
+Hi,
+  I am trying to improve git svn's performance according to some profiling data.As the data showed,_rev_list subroutine and rebuild subroutine are consuming a large proportion of time.So I improve _rev_list's performance by memoize its results,and avoid subprocess invocation by memoize rebuild subroutine's key data.Here's my patch:
 ---
  perl/Git/SVN.pm | 63 ++++++++++++++++++++++++++++++++++++++++++++-------------
  1 file changed, 49 insertions(+), 14 deletions(-)
