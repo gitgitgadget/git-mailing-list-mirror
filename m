@@ -1,62 +1,78 @@
 From: Kirill Smelkov <kirr@mns.spb.ru>
-Subject: [PATCH 0/4] `log -c` speedup
-Date: Mon, 20 Jan 2014 20:20:37 +0400
-Message-ID: <cover.1390234183.git.kirr@mns.spb.ru>
+Subject: [PATCH 2/4] diff test: Add tests for combine-diff with orderfile
+Date: Mon, 20 Jan 2014 20:20:39 +0400
+Message-ID: <0c3e9511a4ff373ecf432fcb4a5d00864e1d8b2a.1390234183.git.kirr@mns.spb.ru>
+References: <cover.1390234183.git.kirr@mns.spb.ru>
 Cc: git@vger.kernel.org, Kirill Smelkov <kirr@mns.spb.ru>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 20 17:34:27 2014
+X-From: git-owner@vger.kernel.org Mon Jan 20 17:34:38 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W5Hnu-00036L-Qt
-	for gcvg-git-2@plane.gmane.org; Mon, 20 Jan 2014 17:34:27 +0100
+	id 1W5Ho2-0003B2-EH
+	for gcvg-git-2@plane.gmane.org; Mon, 20 Jan 2014 17:34:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754005AbaATQeX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Jan 2014 11:34:23 -0500
-Received: from mail.mnsspb.ru ([84.204.75.2]:60901 "EHLO mail.mnsspb.ru"
+	id S1754093AbaATQe2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Jan 2014 11:34:28 -0500
+Received: from mail.mnsspb.ru ([84.204.75.2]:60903 "EHLO mail.mnsspb.ru"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753392AbaATQeV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Jan 2014 11:34:21 -0500
-X-Greylist: delayed 920 seconds by postgrey-1.27 at vger.kernel.org; Mon, 20 Jan 2014 11:34:21 EST
+	id S1754007AbaATQe0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Jan 2014 11:34:26 -0500
 Received: from [192.168.0.127] (helo=tugrik.mns.mnsspb.ru)
-	by mail.mnsspb.ru with esmtps id 1W5HYu-0007VY-4p; Mon, 20 Jan 2014 20:18:56 +0400
+	by mail.mnsspb.ru with esmtps id 1W5HZ6-0007Vl-Vj; Mon, 20 Jan 2014 20:19:09 +0400
 Received: from kirr by tugrik.mns.mnsspb.ru with local (Exim 4.72)
 	(envelope-from <kirr@tugrik.mns.mnsspb.ru>)
-	id 1W5Han-0001Ps-VT; Mon, 20 Jan 2014 20:20:54 +0400
+	id 1W5Hb1-0001Pz-8q; Mon, 20 Jan 2014 20:21:07 +0400
 X-Mailer: git-send-email 1.9.rc0.143.g6fd479e
+In-Reply-To: <cover.1390234183.git.kirr@mns.spb.ru>
+In-Reply-To: <cover.1390234183.git.kirr@mns.spb.ru>
+References: <cover.1390234183.git.kirr@mns.spb.ru>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240713>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240714>
 
-Hello up there,
+In the next patch combine-diff will have special code-path for taking
+orderfile into account. Prepare for making changes by introducing
+coverage tests for that case.
 
-I'm using `git log --raw` to reconstruct file dates (readonly filesystem for
-git archives) and, as it turned out, for --raw to emit diffs for merges we need
-to explicitly activate combine-diff via -c.
+Signed-off-by: Kirill Smelkov <kirr@mns.spb.ru>
+---
+ t/t4056-diff-order.sh | 21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
-The combined-diff turned out to be slow, I'm trying to optimize it. Please apply.
-
-Thanks beforehand,
-Kirill
-
-
-Kirill Smelkov (4):
-  diffcore-order: Export generic ordering interface
-  diff test: Add tests for combine-diff with orderfile
-  combine-diff: Optimize combine_diff_path sets intersection
-  combine-diff: combine_diff_path.len is not needed anymore
-
- combine-diff.c        | 121 +++++++++++++++++++++++++++++++++-----------------
- diff-lib.c            |   2 -
- diff.h                |   1 -
- diffcore-order.c      |  53 ++++++++++++++--------
- diffcore.h            |  15 +++++++
- t/t4056-diff-order.sh |  21 +++++++++
- 6 files changed, 151 insertions(+), 62 deletions(-)
-
+diff --git a/t/t4056-diff-order.sh b/t/t4056-diff-order.sh
+index 9e2b29e..c0460bb 100755
+--- a/t/t4056-diff-order.sh
++++ b/t/t4056-diff-order.sh
+@@ -97,4 +97,25 @@ do
+ 	'
+ done
+ 
++test_expect_success 'setup for testing combine-diff order' '
++	git checkout -b tmp HEAD~ &&
++	create_files 3 &&
++	git checkout master &&
++	git merge --no-commit -s ours tmp &&
++	create_files 5
++'
++
++test_expect_success "combine-diff: no order (=tree object order)" '
++	git diff --name-only HEAD HEAD^ HEAD^2 >actual &&
++	test_cmp expect_none actual
++'
++
++for i in 1 2
++do
++	test_expect_success "combine-diff: orderfile using option ($i)" '
++		git diff -Oorder_file_$i --name-only HEAD HEAD^ HEAD^2 >actual &&
++		test_cmp expect_$i actual
++	'
++done
++
+ test_done
 -- 
 1.9.rc0.143.g6fd479e
