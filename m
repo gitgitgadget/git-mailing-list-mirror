@@ -1,39 +1,39 @@
 From: =?windows-1252?Q?Damien_G=E9rard?= <damien@iwi.me>
 Subject: Re: git-p4: exception when cloning a perforce repository
-Date: Mon, 20 Jan 2014 13:14:15 +0100
-Message-ID: <864C1780-6231-4F47-BD86-380EED08C765@iwi.me>
+Date: Mon, 20 Jan 2014 15:01:47 +0100
+Message-ID: <2BB6F289-A5B2-4213-8B8C-0AAECF5CFB4C@iwi.me>
 References: <01EF41A4-533B-4A24-8952-CAEB49970272@iwi.me> <20140114001820.GA12058@padd.com> <20140114232432.GA31465@padd.com> <843E4B24-5EDD-4451-8849-425160576A99@iwi.me> <20140116130833.GA15613@padd.com> <4FE5D5E6-60F6-4111-B538-5CA01092A2F0@iwi.me> <20140116144519.GB15674@padd.com> <B6C98918-4339-4D14-8C52-4B3AEC2526E7@iwi.me> <20140118182225.GA6072@padd.com>
 Mime-Version: 1.0 (Mac OS X Mail 7.1 \(1827\))
 Content-Type: text/plain; charset=windows-1252
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org, Alexandru Juncu <alexj@rosedu.org>
 To: Pete Wyckoff <pw@padd.com>
-X-From: git-owner@vger.kernel.org Mon Jan 20 13:14:24 2014
+X-From: git-owner@vger.kernel.org Mon Jan 20 15:01:56 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W5DkF-0000gD-Jr
-	for gcvg-git-2@plane.gmane.org; Mon, 20 Jan 2014 13:14:23 +0100
+	id 1W5FQJ-00033i-BC
+	for gcvg-git-2@plane.gmane.org; Mon, 20 Jan 2014 15:01:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751740AbaATMOT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Jan 2014 07:14:19 -0500
-Received: from catkin.iwi.me ([91.121.49.159]:43163 "EHLO catkin.iwi.me"
+	id S1751825AbaATOBv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Jan 2014 09:01:51 -0500
+Received: from catkin.iwi.me ([91.121.49.159]:43917 "EHLO catkin.iwi.me"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751317AbaATMOS convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 20 Jan 2014 07:14:18 -0500
+	id S1753349AbaATOBu convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 20 Jan 2014 09:01:50 -0500
 Received: from imac-de-admin.private.4d.fr (unknown [194.98.194.79])
 	(Authenticated sender: damien@iwi.me)
-	by catkin.iwi.me (Postfix) with ESMTPSA id 7A327A265A;
-	Mon, 20 Jan 2014 13:14:16 +0100 (CET)
+	by catkin.iwi.me (Postfix) with ESMTPSA id 23D0BA1E69;
+	Mon, 20 Jan 2014 15:01:47 +0100 (CET)
 In-Reply-To: <20140118182225.GA6072@padd.com>
 X-Mailer: Apple Mail (2.1827)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240709>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240710>
 
 
 On 18 Jan 2014, at 19:22, Pete Wyckoff <pw@padd.com> wrote:
@@ -57,16 +57,24 @@ On 18 Jan 2014, at 19:22, Pete Wyckoff <pw@padd.com> wrote:
 > Any chance you can give this a go?  I've a bigger patch in
 > a longer series, but this should be the minimal fix.  If it
 > works, I'll ship it to Junio.
-
-Yeah it seems to work fine !
-I=92ve finally imported all 152620 changesets :)
-
-Thanks !
-
-(git pull from this morning + patch)
-
-
 >=20
+
+Just for info, it works but it seems there are still some issues when a=
+ git repository is present within the perforce repo :
+
+error: Invalid path 'Tools/Doc/bin/yuidoc/.git/FETCH_HEAD'
+error: Invalid path 'Tools/Doc/bin/yuidoc/.git/HEAD'
+error: Invalid path 'Tools/Doc/bin/yuidoc/.git/ORIG_HEAD=92
+[...]
+
+Those files have been added then removed in another commit
+
+I=92ve have to make git reset =97hard =91HEAD^=92 && git p4 sync to a c=
+lean staging area right after the "clone".
+
+
+
+
 > Thanks,
 >=20
 > 		-- Pete
