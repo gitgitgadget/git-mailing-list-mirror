@@ -1,60 +1,62 @@
-From: Abhishek Patil <abhishek@thezeroth.net>
-Subject: Bug archive
-Date: Mon, 20 Jan 2014 17:11:54 +0100
-Message-ID: <20140120161152.GA11252@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 20 17:12:09 2014
+From: Kirill Smelkov <kirr@mns.spb.ru>
+Subject: [PATCH 0/4] `log -c` speedup
+Date: Mon, 20 Jan 2014 20:20:37 +0400
+Message-ID: <cover.1390234183.git.kirr@mns.spb.ru>
+Cc: git@vger.kernel.org, Kirill Smelkov <kirr@mns.spb.ru>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jan 20 17:34:27 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W5HSL-0001pj-78
-	for gcvg-git-2@plane.gmane.org; Mon, 20 Jan 2014 17:12:09 +0100
+	id 1W5Hnu-00036L-Qt
+	for gcvg-git-2@plane.gmane.org; Mon, 20 Jan 2014 17:34:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753948AbaATQMF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Jan 2014 11:12:05 -0500
-Received: from mail-wg0-f52.google.com ([74.125.82.52]:44311 "EHLO
-	mail-wg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753579AbaATQMD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Jan 2014 11:12:03 -0500
-Received: by mail-wg0-f52.google.com with SMTP id b13so7105147wgh.7
-        for <git@vger.kernel.org>; Mon, 20 Jan 2014 08:12:02 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
-         :content-type:content-disposition:user-agent;
-        bh=khcYOG+Ng/4OMRP608PuG9zS14fCqzZqPX8qRh+f3VM=;
-        b=OKLY0spS8dnTbaXXwMOpgqoX+rIg5rMSVljdSIP7l2OZpovSVOEju7NZFeUBdOgqVS
-         GH3ghif+CpsBcZHVyUhuCur6uBtVGBS2/jSH+qJ2HvaZcFZY98IO+GxS1bPe9ZS+wHkJ
-         Yn9xwDiwz0ZPW44urjXATe/3Ki17FKKZUo7ZLFC7Vu4Exw/MPnMyqUYVhQoOu8JoC8aI
-         1lNQ2SCywplP7PVa4hmEbXW8ndrk/tCFv4wYcsG17uFa+eCgNwp0N9XliWPUTBlXZv2W
-         C1WupSRMVtmNMN2KvkM2tg7sVVvy6E15R4cfsS/3xyVbihiMRn5xcgPJ7HY/DPK8mvr8
-         s73Q==
-X-Gm-Message-State: ALoCoQlW2B4ZGbPfKZrn/+JsoKnGyPy5RWsA1pwxRGLvokFIQaVt1XT2dB7DL6hqiPw9NkL2Fu/c
-X-Received: by 10.194.1.238 with SMTP id 14mr14592279wjp.20.1390234322214;
-        Mon, 20 Jan 2014 08:12:02 -0800 (PST)
-Received: from gmail.com (58.158.198.77.rev.sfr.net. [77.198.158.58])
-        by mx.google.com with ESMTPSA id bj3sm2142622wjb.14.2014.01.20.08.12.00
-        for <git@vger.kernel.org>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 20 Jan 2014 08:12:01 -0800 (PST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754005AbaATQeX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Jan 2014 11:34:23 -0500
+Received: from mail.mnsspb.ru ([84.204.75.2]:60901 "EHLO mail.mnsspb.ru"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753392AbaATQeV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Jan 2014 11:34:21 -0500
+X-Greylist: delayed 920 seconds by postgrey-1.27 at vger.kernel.org; Mon, 20 Jan 2014 11:34:21 EST
+Received: from [192.168.0.127] (helo=tugrik.mns.mnsspb.ru)
+	by mail.mnsspb.ru with esmtps id 1W5HYu-0007VY-4p; Mon, 20 Jan 2014 20:18:56 +0400
+Received: from kirr by tugrik.mns.mnsspb.ru with local (Exim 4.72)
+	(envelope-from <kirr@tugrik.mns.mnsspb.ru>)
+	id 1W5Han-0001Ps-VT; Mon, 20 Jan 2014 20:20:54 +0400
+X-Mailer: git-send-email 1.9.rc0.143.g6fd479e
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240712>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240713>
 
-Hey Guys, 
-I am Abhishek, I am new here. 
-For now I just have one question is there any centralize DB place where 
-I can see Bugs reported on / about Git ? something like bugzilla of trac for Git-Scm ?
+Hello up there,
 
---
-Thanks
-Abhishek
-http://thezeroth.net
+I'm using `git log --raw` to reconstruct file dates (readonly filesystem for
+git archives) and, as it turned out, for --raw to emit diffs for merges we need
+to explicitly activate combine-diff via -c.
+
+The combined-diff turned out to be slow, I'm trying to optimize it. Please apply.
+
+Thanks beforehand,
+Kirill
+
+
+Kirill Smelkov (4):
+  diffcore-order: Export generic ordering interface
+  diff test: Add tests for combine-diff with orderfile
+  combine-diff: Optimize combine_diff_path sets intersection
+  combine-diff: combine_diff_path.len is not needed anymore
+
+ combine-diff.c        | 121 +++++++++++++++++++++++++++++++++-----------------
+ diff-lib.c            |   2 -
+ diff.h                |   1 -
+ diffcore-order.c      |  53 ++++++++++++++--------
+ diffcore.h            |  15 +++++++
+ t/t4056-diff-order.sh |  21 +++++++++
+ 6 files changed, 151 insertions(+), 62 deletions(-)
+
+-- 
+1.9.rc0.143.g6fd479e
