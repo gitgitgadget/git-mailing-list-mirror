@@ -1,72 +1,91 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/2] t/perf: time rev-list with UNINTERESTING commits
-Date: Mon, 20 Jan 2014 17:39:36 -0500
-Message-ID: <20140120223936.GA2350@sigill.intra.peff.net>
-References: <20140120212845.GA11451@sigill.intra.peff.net>
- <20140120213101.GA16095@sigill.intra.peff.net>
- <20140120221142.GA24320@sigill.intra.peff.net>
- <87ppnmb7yr.fsf@thomasrast.ch>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [msysGit] Consecutive git gc fails on Windows network share
+Date: Tue, 21 Jan 2014 00:25:22 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1401210002080.14982@s15462909.onlinehome-server.info>
+References: <d10603d6-7740-44f8-909f-7ba1ea77d3a2@googlegroups.com> <52D9701F.5070009@web.de> <11936e14-7442-4601-8e97-b2062894975b@googlegroups.com> <52DD59E0.4090301@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	git@vger.kernel.org
-To: Thomas Rast <tr@thomasrast.ch>
-X-From: git-owner@vger.kernel.org Mon Jan 20 23:39:42 2014
+Content-Type: MULTIPART/MIXED; BOUNDARY="1784107012-2041389300-1390260322=:14982"
+Cc: Jochen <zwanzig12@googlemail.com>, msysgit@googlegroups.com,
+	Git Mailing List <git@vger.kernel.org>,
+	stefanbeller@googlemail.com
+To: =?ISO-8859-15?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Tue Jan 21 00:25:30 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W5NVN-0003eA-RO
-	for gcvg-git-2@plane.gmane.org; Mon, 20 Jan 2014 23:39:42 +0100
+	id 1W5ODg-0003gI-SW
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Jan 2014 00:25:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752649AbaATWjj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Jan 2014 17:39:39 -0500
-Received: from cloud.peff.net ([50.56.180.127]:35890 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751760AbaATWjh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Jan 2014 17:39:37 -0500
-Received: (qmail 18389 invoked by uid 102); 20 Jan 2014 22:39:37 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 20 Jan 2014 16:39:37 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 20 Jan 2014 17:39:36 -0500
-Content-Disposition: inline
-In-Reply-To: <87ppnmb7yr.fsf@thomasrast.ch>
+	id S1753644AbaATXZZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Jan 2014 18:25:25 -0500
+Received: from mout.gmx.net ([212.227.17.21]:56471 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752161AbaATXZY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Jan 2014 18:25:24 -0500
+Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
+ mail.gmx.com (mrgmx003) with ESMTPSA (Nemesis) id 0LqiJO-1VSBqy2nWU-00eOAP
+ for <git@vger.kernel.org>; Tue, 21 Jan 2014 00:25:22 +0100
+X-X-Sender: schindelin@s15462909.onlinehome-server.info
+In-Reply-To: <52DD59E0.4090301@web.de>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Provags-ID: V03:K0:aZJC22YQtu/9X0/E2APADqrlexZdmtkf/NGTakUozWZfW+cJTGK
+ UGyeRUz9Ep4l/fyWkMEj59pTgOuSk+aHqSfGxThJI51mKLLpX4E+1IPrLF6D8nH5CODCiXI
+ bXST3TGm9gnFHndhJGiy7Fs2vBZGObczoot4pXcn0hyesLV8WkKY+qe1t0esRr5Bu1eEa6E
+ jLZ0PjPzZvrSgl3iVuO/Q==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240734>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240735>
 
-On Mon, Jan 20, 2014 at 11:32:12PM +0100, Thomas Rast wrote:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> > This is bad to be touching the repo and assuming it is non-bare. For
-> > some reason I assumed that the perf suite made a copy of the repo, but
-> > it doesn't. If you point to a bare repo via GIT_PERF_REPO, this part of
-> > the test fails.
-> 
-> It does make a copy, but with cp -Rl.  I haven't actually ever tried
-> what happens if you point it at a bare though.  It *should* fail because
-> it tries to cd $repo/.git, but if that was itself bare...
+--1784107012-2041389300-1390260322=:14982
+Content-Type: TEXT/PLAIN; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-Oh, hmph. I checked my linux repo, which I had used as GIT_PERF_REPO,
-and noticed that it had the test commit in its reflog. But I forgot that
-is because I did the test manually there right before writing up the
-t/perf script!  So yes, it copies, and it's totally fine to be modifying
-the repo.
+Hi Torsten,
 
-Bare repos seem to work just fine for me. It looks like we use `git
-rev-parse --git-dir` to get the source, and then copy that to `.git` in
-the temporary directory. So that works fine either way, and we do have a
-directory available as the working dir. But of course the config from
-the bare repo says `core.bare = true`, so some commands will bail.
+On Mon, 20 Jan 2014, Torsten B=C3=B6gershausen wrote:
 
-We could perhaps just set GIT_WORK_TREE in the perf scripts, which I
-believe would override the bare setting in the .git/config. And then we
-know the repos will be consistently non-bare.
+> (No top-posting, please see my comments below)
 
-Whether we do that or not, I think the update I posted is preferable, as
-it reproduces the problem in a much simpler manner.
+already very good! For extra brownie points, just edit the quoted part to
+reflect the abridged version needed to understand the context.
 
--Peff
+> On 2014-01-20 15.02, Jochen wrote:
+> >On 01/16/2014 10:55 AM, Jochen Haag wrote:
+> > The rename command replaces a mv -f command of the original shell scrip=
+t. Obviously the -f option can also override a read-only file but rename ca=
+n not on a network share.
+>=20
+> I allowed me to=20
+> a) reconstruct the original mail,
+
+Please note that together with an exceedingly flakey internet connection,
+not only having to scroll through the mail (most of which was actually not
+relevant to your reply) and having to delete most parts again ate up my
+complete Git time budget for today. Just something you might want to keep
+in mind.
+
+> b) add "+++" at the places where you added the stat() and chmod(),
+> c) and to send the question "is this a good implementation ?" to upstream=
+ git.
+>
+> I think your implementation makes sense.
+
+As I said in my other reply, I think that the problem would be addressed
+more generally in compat/mingw.c. It is to be doubted highly that upstream
+wants to handle cases such as "rename() cannot overwrite read-only files
+on Windows" everywhere they call rename() because the platforms upstream
+cares about do not have that problem.
+
+So we probably need just the same _wchmod we have in mingw_unlink also in
+mingw_rename.
+
+Ciao,
+Johannes
+--1784107012-2041389300-1390260322=:14982--
