@@ -1,121 +1,102 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: Consecutive git gc fails on Windows network share
-Date: Tue, 21 Jan 2014 00:53:29 +0100
-Message-ID: <CABPQNSafcpACtWGBenE8vAe_XEvJ=5_sxLw8PztrnWp1xJAcjw@mail.gmail.com>
-References: <d10603d6-7740-44f8-909f-7ba1ea77d3a2@googlegroups.com>
- <52D9701F.5070009@web.de> <11936e14-7442-4601-8e97-b2062894975b@googlegroups.com>
- <52DD59E0.4090301@web.de> <alpine.DEB.1.00.1401210002080.14982@s15462909.onlinehome-server.info>
-Reply-To: kusmabite@gmail.com
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH 2/2] list-objects: only look at cmdline trees with edge_hint
+Date: Tue, 21 Jan 2014 06:57:08 +0700
+Message-ID: <CACsJy8CBuW0dXgbSLgFHye9-aCDQCaK47MFpqeCh3m3JWHJOEw@mail.gmail.com>
+References: <20140120212845.GA11451@sigill.intra.peff.net> <20140120213250.GB16095@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
-Cc: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>, 
-	Jochen <zwanzig12@googlemail.com>, msysGit <msysgit@googlegroups.com>, 
-	Git Mailing List <git@vger.kernel.org>, stefanbeller@googlemail.com
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: msysgit+bncBDR53PPJ7YHRBIXO62LAKGQEXEMWUNQ@googlegroups.com Tue Jan 21 00:54:13 2014
-Return-path: <msysgit+bncBDR53PPJ7YHRBIXO62LAKGQEXEMWUNQ@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-qc0-f188.google.com ([209.85.216.188])
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jan 21 00:57:47 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDR53PPJ7YHRBIXO62LAKGQEXEMWUNQ@googlegroups.com>)
-	id 1W5OfU-0006Vd-Eg
-	for gcvm-msysgit@m.gmane.org; Tue, 21 Jan 2014 00:54:12 +0100
-Received: by mail-qc0-f188.google.com with SMTP id w7sf1637757qcr.5
-        for <gcvm-msysgit@m.gmane.org>; Mon, 20 Jan 2014 15:54:11 -0800 (PST)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1W5Oiu-00085v-OL
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Jan 2014 00:57:45 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751750AbaATX5m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Jan 2014 18:57:42 -0500
+Received: from mail-qc0-f173.google.com ([209.85.216.173]:56972 "EHLO
+	mail-qc0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750822AbaATX5k (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Jan 2014 18:57:40 -0500
+Received: by mail-qc0-f173.google.com with SMTP id i8so6486944qcq.18
+        for <git@vger.kernel.org>; Mon, 20 Jan 2014 15:57:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:x-original-sender:x-original-authentication-results
-         :precedence:mailing-list:list-id:list-post:list-help:list-archive
-         :sender:list-subscribe:list-unsubscribe:content-type
-         :content-transfer-encoding;
-        bh=1JXYDJ6PwsBH0DkXd3tOnR+Bl0R1hLZiI08Y5sC0yOA=;
-        b=th7SCNhGvaeZ9JOty9tpK7rOWp6FcwJuE+thS2M0Ydm/1BARJPXd0Ss538VVMuffmo
-         zTw9I5Ln5DVppxuh7ZiaRJWaIUPzbF88/jZDj+pljeIHzjQYmjOa0hnpgXX2w429lUBR
-         QCzsjOaFyb1vKD4IAwOxqTCKQEtbomT0E6mBF/7L1tmc23ZY6UzB8wLEIdEc1CLaUavJ
-         Tp5Bler2SXBYcRr/OmulOQQXSwNuX1MKp3Ma0Wk5wmkcOVwAtu4zdhEaN7IgaT763TIA
-         pMy5ypIY1TLFfgxG/46ZzJr9aCfRhKcqx0sBj412QZL9TAyJ5ThODbiLdPy4ySl37eFF
-         u7Pw==
-X-Received: by 10.50.79.130 with SMTP id j2mr287565igx.2.1390262051489;
-        Mon, 20 Jan 2014 15:54:11 -0800 (PST)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.51.17.39 with SMTP id gb7ls1993609igd.18.canary; Mon, 20 Jan
- 2014 15:54:10 -0800 (PST)
-X-Received: by 10.66.220.4 with SMTP id ps4mr7561720pac.18.1390262050672;
-        Mon, 20 Jan 2014 15:54:10 -0800 (PST)
-Received: from mail-ig0-x231.google.com (mail-ig0-x231.google.com [2607:f8b0:4001:c05::231])
-        by gmr-mx.google.com with ESMTPS id i24si950274yhe.6.2014.01.20.15.54.10
-        for <msysgit@googlegroups.com>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 20 Jan 2014 15:54:10 -0800 (PST)
-Received-SPF: pass (google.com: domain of kusmabite@gmail.com designates 2607:f8b0:4001:c05::231 as permitted sender) client-ip=2607:f8b0:4001:c05::231;
-Received: by mail-ig0-f177.google.com with SMTP id k19so9328662igc.4
-        for <msysgit@googlegroups.com>; Mon, 20 Jan 2014 15:54:10 -0800 (PST)
-X-Received: by 10.43.57.146 with SMTP id wg18mr7395209icb.42.1390262050177;
- Mon, 20 Jan 2014 15:54:10 -0800 (PST)
-Received: by 10.64.249.33 with HTTP; Mon, 20 Jan 2014 15:53:29 -0800 (PST)
-In-Reply-To: <alpine.DEB.1.00.1401210002080.14982@s15462909.onlinehome-server.info>
-X-Original-Sender: kusmabite@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of kusmabite@gmail.com designates 2607:f8b0:4001:c05::231
- as permitted sender) smtp.mail=kusmabite@gmail.com;       dkim=pass
- header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240736>
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=YEMKqxYCrF0ElselllkShBLsd01aMLJBB8py7iABebo=;
+        b=p1t+qDSWgx6nzefVxl6KAAjST/BRi3JaHJTa415gOHViBa4OotgbkfHtobYxuwCqIl
+         UdGRCMcvZJi3AQecE9r+Z5DJZD6QcwXBBBkIMoRuhF3HQwj7vFfkQPuwkWLkYLmWXncy
+         sA2PThUlNbQieNmo6BxHxJYJF8U9EVlHcPtbwT0It8ltrhQFDxRw9gVbnvMaW4h0jqAh
+         Tu+Vt6CW5Ae/SiCqh8z06249N/dkQcpavyE8FF9jJdmUVmHIdgVPE5KbPAy8GXA2pgP8
+         O64zgKtQoPF6fzcvf8QhCIydy9R9qiYdheWGYFRUCbXcOqUwkjDXUFmgXStjpJgKlXBx
+         OF0w==
+X-Received: by 10.224.98.147 with SMTP id q19mr9611765qan.8.1390262259906;
+ Mon, 20 Jan 2014 15:57:39 -0800 (PST)
+Received: by 10.96.136.98 with HTTP; Mon, 20 Jan 2014 15:57:08 -0800 (PST)
+In-Reply-To: <20140120213250.GB16095@sigill.intra.peff.net>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240737>
 
-On Tue, Jan 21, 2014 at 12:25 AM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
+On Tue, Jan 21, 2014 at 4:32 AM, Jeff King <peff@peff.net> wrote:
+> This patch therefore ties the extra tree examination to the
+> revs->edge_hint flag; it is the presence of that flag that
+> makes the tradeoff worthwhile.
 >
-> On Mon, 20 Jan 2014, Torsten B=F6gershausen wrote:
+> Here is output from the p0001-rev-list showing the
+> improvement in performance:
 >
->> b) add "+++" at the places where you added the stat() and chmod(),
->> c) and to send the question "is this a good implementation ?" to upstrea=
-m git.
->>
->> I think your implementation makes sense.
->
-> As I said in my other reply, I think that the problem would be addressed
-> more generally in compat/mingw.c. It is to be doubted highly that upstrea=
-m
-> wants to handle cases such as "rename() cannot overwrite read-only files
-> on Windows" everywhere they call rename() because the platforms upstream
-> cares about do not have that problem.
+> Test                                             HEAD^             HEAD
+> -----------------------------------------------------------------------------------------
+> 0001.1: rev-list --all                           0.69(0.65+0.02)   0.69(0.66+0.02) +0.0%
+> 0001.2: rev-list --all --objects                 3.22(3.19+0.03)   3.23(3.20+0.03) +0.3%
+> 0001.4: rev-list $commit --not --all             0.04(0.04+0.00)   0.04(0.04+0.00) +0.0%
+> 0001.5: rev-list --objects $commit --not --all   0.27(0.26+0.01)   0.04(0.04+0.00) -85.2%
 
-I'm not so sure. A quick test shows me that this is not the case for
-NTFS. Since this is over a network-share, the problem is probably
-server-side, and can affect other systems as well.
+You must have so much fun (or headache, depending on your view) with
+the variety of repos on github :)
 
-So a work-around might be appropriate for all systems, no?
+> diff --git a/list-objects.c b/list-objects.c
+> index 6cbedf0..43ce1d9 100644
+> --- a/list-objects.c
+> +++ b/list-objects.c
+> @@ -162,15 +162,17 @@ void mark_edges_uninteresting(struct rev_info *revs, show_edge_fn show_edge)
+>                 }
+>                 mark_edge_parents_uninteresting(commit, revs, show_edge);
+>         }
+> -       for (i = 0; i < revs->cmdline.nr; i++) {
+> -               struct object *obj = revs->cmdline.rev[i].item;
+> -               struct commit *commit = (struct commit *)obj;
+> -               if (obj->type != OBJ_COMMIT || !(obj->flags & UNINTERESTING))
+> -                       continue;
+> -               mark_tree_uninteresting(commit->tree);
+> -               if (revs->edge_hint && !(obj->flags & SHOWN)) {
+> -                       obj->flags |= SHOWN;
+> -                       show_edge(commit);
+> +       if (revs->edge_hint) {
+> +               for (i = 0; i < revs->cmdline.nr; i++) {
+> +                       struct object *obj = revs->cmdline.rev[i].item;
+> +                       struct commit *commit = (struct commit *)obj;
+> +                       if (obj->type != OBJ_COMMIT || !(obj->flags & UNINTERESTING))
+> +                               continue;
+> +                       mark_tree_uninteresting(commit->tree);
+> +                       if (revs->edge_hint && !(obj->flags & SHOWN)) {
 
---=20
---=20
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github =
-accounts are free.
+Not really important, but perhaps remove revs->edge_hint here because
+it's already checked?
 
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=3Den_US?hl=3Den
-
----=20
-You received this message because you are subscribed to the Google Groups "=
-msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an e=
-mail to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/groups/opt_out.
+> +                               obj->flags |= SHOWN;
+> +                               show_edge(commit);
+> +                       }
+>                 }
+>         }
+>  }
+-- 
+Duy
