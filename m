@@ -1,75 +1,106 @@
-From: Abhishek Patil <abhishek@thezeroth.net>
-Subject: Re: Bug archive
-Date: Mon, 20 Jan 2014 19:58:17 +0100
-Message-ID: <20140120185814.GA3870@gmail.com>
-References: <20140120161152.GA11252@gmail.com>
- <CAP8UFD0jv469MJ3cRL7V3WGQ18ruHc8PYsA9WRnoTXRr5mTVjQ@mail.gmail.com>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: [PATCH/RFC] Makefile: Fix compilation of windows resource file
+Date: Mon, 20 Jan 2014 20:22:20 +0000
+Message-ID: <52DD857C.6060005@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git <git@vger.kernel.org>
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 20 19:58:34 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: GIT Mailing-list <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jan 20 21:22:40 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W5K3M-0003YY-V8
-	for gcvg-git-2@plane.gmane.org; Mon, 20 Jan 2014 19:58:33 +0100
+	id 1W5LMl-0004VJ-Il
+	for gcvg-git-2@plane.gmane.org; Mon, 20 Jan 2014 21:22:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752613AbaATS62 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Jan 2014 13:58:28 -0500
-Received: from mail-we0-f174.google.com ([74.125.82.174]:61923 "EHLO
-	mail-we0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751896AbaATS6X (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Jan 2014 13:58:23 -0500
-Received: by mail-we0-f174.google.com with SMTP id x55so7356415wes.33
-        for <git@vger.kernel.org>; Mon, 20 Jan 2014 10:58:21 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=wsaecCO/7Y9z+zA435dbEATi5tMukmyCYUK8p3Rd5O4=;
-        b=HEVpE+CezPSnOarlLRz2DvReQ48IwndHQJAsxZJEN65LbcXz5Xj6hiPgntQzCZxIQL
-         x2tCeVj/vfMdNv/fnzb0vobUZSCeVOOIctmXU14fQ5OFyjQZ2zMGsDvVYQ+ntWO7HH45
-         Zr27X7ywhI0vSHf1cEnVR8jQ6aYMTPBz6pV8qQHqFMhP+haUmFEuE6vbXLRLICF6AF2/
-         ChqyUG+VZQWs0cJCRd5/nLz5Rxv7IJ/RvuoEOhslOmNfnEmRJ3asUl5cHsmdQCA5McCJ
-         1Q3XjjnTO9PpI0Ev98B51deGvy4KCWAItH2qfxsie17qXy51xGZPrEJEwEx96SIUoald
-         5pwg==
-X-Gm-Message-State: ALoCoQmDHnB0uC85utVYRx+VoCKUPYNwKKPVWHiJsL8PQAsBI+gV1QcUbhqfzsLYD9Iw7bFJOtjr
-X-Received: by 10.180.104.42 with SMTP id gb10mr11138399wib.51.1390244301728;
-        Mon, 20 Jan 2014 10:58:21 -0800 (PST)
-Received: from gmail.com ([37.163.204.75])
-        by mx.google.com with ESMTPSA id gd5sm4429158wic.0.2014.01.20.10.58.20
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 20 Jan 2014 10:58:21 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <CAP8UFD0jv469MJ3cRL7V3WGQ18ruHc8PYsA9WRnoTXRr5mTVjQ@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751990AbaATUW2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Jan 2014 15:22:28 -0500
+Received: from mdfmta005.mxout.tbr.inty.net ([91.221.168.46]:39302 "EHLO
+	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750773AbaATUW1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Jan 2014 15:22:27 -0500
+Received: from mdfmta005.tbr.inty.net (unknown [127.0.0.1])
+	by mdfmta005.tbr.inty.net (Postfix) with ESMTP id 5520CA647FE;
+	Mon, 20 Jan 2014 20:22:25 +0000 (GMT)
+Received: from mdfmta005.tbr.inty.net (unknown [127.0.0.1])
+	by mdfmta005.tbr.inty.net (Postfix) with ESMTP id 16B19A64773;
+	Mon, 20 Jan 2014 20:22:25 +0000 (GMT)
+Received: from [192.168.254.12] (unknown [80.176.147.220])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mdfmta005.tbr.inty.net (Postfix) with ESMTP;
+	Mon, 20 Jan 2014 20:22:24 +0000 (GMT)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.2.0
+X-MDF-HostID: 8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240724>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240725>
 
-Thanks Christian,
 
-Best,
-Abhishek
-On Mon, Jan 20, 2014 at 06:35:43PM +0100, Christian Couder wrote:
-> Hi,
-> 
-> On Mon, Jan 20, 2014 at 5:11 PM, Abhishek Patil <abhishek@thezeroth.net> wrote:
-> > Hey Guys,
-> > I am Abhishek, I am new here.
-> > For now I just have one question is there any centralize DB place where
-> > I can see Bugs reported on / about Git ? something like bugzilla of trac for Git-Scm ?
-> 
-> Please have a look at this thread:
-> 
-> http://thread.gmane.org/gmane.comp.version-control.git/237890/
-> 
-> Best,
-> Christian.
+If the git version number consists of less than three period
+separated numbers, then the windows resource file compilation
+issues a syntax error:
+
+  $ touch git.rc
+  $ make V=1 git.res
+  GIT_VERSION = 1.9.rc0
+  windres -O coff \
+            -DMAJOR=1 -DMINOR=9 -DPATCH=rc0 \
+            -DGIT_VERSION="\\\"1.9.rc0\\\"" git.rc -o git.res
+  C:\msysgit\msysgit\mingw\bin\windres.exe: git.rc:2: syntax error
+  make: *** [git.res] Error 1
+  $
+
+[Note that -DPATCH=rc0]
+
+In order to fix the syntax error, we replace any rcX with zero and
+include some additional 'zero' padding to the version number list.
+
+Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+---
+
+Hi Junio,
+
+This patch is marked RFC because, as I was just about to send this
+email, I realized it wouldn't always work:
+
+    $ touch git.rc
+    $ make V=1 GIT_VERSION=1.9.dirty git.res
+    windres -O coff \
+              -DMAJOR=1 -DMINOR=9 -DPATCH=dirty \
+              -DGIT_VERSION="\\\"1.9.dirty\\\"" git.rc -o git.res
+    C:\msysgit\msysgit\mingw\bin\windres.exe: git.rc:2: syntax error
+    make: *** [git.res] Error 1
+    $
+
+:-D
+
+I suspect it would be easier to change GIT-VERSION-GEN to also set, say,
+GIT_VERSION_MAJOR, GIT_VERSION_MINOR and GIT_VERSION_PATCH ...
+
+ATB,
+Ramsay Jones
+
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile b/Makefile
+index b4af1e2..308baaa 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1773,7 +1773,7 @@ $(SCRIPT_LIB) : % : %.sh GIT-SCRIPT-DEFINES
+ 
+ git.res: git.rc GIT-VERSION-FILE
+ 	$(QUIET_RC)$(RC) \
+-	  $(join -DMAJOR= -DMINOR= -DPATCH=, $(wordlist 1,3,$(subst -, ,$(subst ., ,$(GIT_VERSION))))) \
++	  $(join -DMAJOR= -DMINOR= -DPATCH=, $(wordlist 1,3,$(patsubst rc%,0,$(subst -, ,$(subst ., ,$(GIT_VERSION))) 0 0))) \
+ 	  -DGIT_VERSION="\\\"$(GIT_VERSION)\\\"" $< -o $@
+ 
+ ifndef NO_PERL
+-- 
+1.8.5
