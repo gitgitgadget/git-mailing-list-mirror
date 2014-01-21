@@ -1,167 +1,129 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: [PATCH/RFC] Makefile: Fix compilation of windows resource file
-Date: Tue, 21 Jan 2014 22:51:30 +0000
-Message-ID: <52DEF9F2.1000905@ramsay1.demon.co.uk>
-References: <52DD857C.6060005@ramsay1.demon.co.uk>	<xmqqy529t5bb.fsf@gitster.dls.corp.google.com> <xmqqppnlt3u3.fsf@gitster.dls.corp.google.com>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [PATCH 0/2] Two janitorial patches for builtin/blame.c
+Date: Tue, 21 Jan 2014 23:56:37 +0100
+Message-ID: <87iotdosey.fsf@fencepost.gnu.org>
+References: <1390157870-29795-1-git-send-email-dak@gnu.org>
+	<87d2jlqp7x.fsf@fencepost.gnu.org> <20140121165546.GE18964@google.com>
+	<874n4xqlly.fsf@fencepost.gnu.org> <20140121174448.GG18964@google.com>
+	<xmqqa9epulwq.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: GIT Mailing-list <git@vger.kernel.org>
+Content-Type: text/plain
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	"Shawn O. Pearce" <spearce@spearce.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 21 23:51:40 2014
+X-From: git-owner@vger.kernel.org Tue Jan 21 23:56:44 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W5kAU-0000pD-RA
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Jan 2014 23:51:39 +0100
+	id 1W5kFP-0002ci-Ep
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Jan 2014 23:56:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753514AbaAUWvf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Jan 2014 17:51:35 -0500
-Received: from mdfmta005.mxout.tch.inty.net ([91.221.169.46]:42999 "EHLO
-	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750862AbaAUWve (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Jan 2014 17:51:34 -0500
-Received: from mdfmta005.tch.inty.net (unknown [127.0.0.1])
-	by mdfmta005.tch.inty.net (Postfix) with ESMTP id 672F318C98A;
-	Tue, 21 Jan 2014 22:51:32 +0000 (GMT)
-Received: from mdfmta005.tch.inty.net (unknown [127.0.0.1])
-	by mdfmta005.tch.inty.net (Postfix) with ESMTP id 1A15018C985;
-	Tue, 21 Jan 2014 22:51:32 +0000 (GMT)
-Received: from [192.168.254.13] (unknown [80.176.147.220])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mdfmta005.tch.inty.net (Postfix) with ESMTP;
-	Tue, 21 Jan 2014 22:51:31 +0000 (GMT)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.2.0
-In-Reply-To: <xmqqppnlt3u3.fsf@gitster.dls.corp.google.com>
-X-MDF-HostID: 18
+	id S1752819AbaAUW4j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Jan 2014 17:56:39 -0500
+Received: from fencepost.gnu.org ([208.118.235.10]:46968 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752553AbaAUW4j (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Jan 2014 17:56:39 -0500
+Received: from localhost ([127.0.0.1]:46008 helo=lola)
+	by fencepost.gnu.org with esmtp (Exim 4.71)
+	(envelope-from <dak@gnu.org>)
+	id 1W5kFK-0006k2-1T; Tue, 21 Jan 2014 17:56:38 -0500
+Received: by lola (Postfix, from userid 1000)
+	id 054E2E051D; Tue, 21 Jan 2014 23:56:37 +0100 (CET)
+In-Reply-To: <xmqqa9epulwq.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Tue, 21 Jan 2014 12:20:37 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240786>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240787>
 
-On 21/01/14 21:36, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
->> Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Jonathan Nieder <jrnieder@gmail.com> writes:
+>
+>> David Kastrup wrote:
 >>
->>> If the git version number consists of less than three period
->>> separated numbers, then the windows resource file compilation
->>> issues a syntax error:
+>>> So my understanding is that when we are talking about _significant_
+>>> additions to builtin/blame.c (the current patches don't qualify as such
+>>> really) that
 >>>
->>>   $ touch git.rc
->>>   $ make V=1 git.res
->>>   GIT_VERSION = 1.9.rc0
->>>   windres -O coff \
->>>             -DMAJOR=1 -DMINOR=9 -DPATCH=rc0 \
->>>             -DGIT_VERSION="\\\"1.9.rc0\\\"" git.rc -o git.res
->>>   C:\msysgit\msysgit\mingw\bin\windres.exe: git.rc:2: syntax error
->>>   make: *** [git.res] Error 1
->>>   $
->>>
->>> [Note that -DPATCH=rc0]
+>>> a) builtin/blame.c is licensed under GPLv2
+>>> b) significant contributions to it will not be relicensed under
+>>> different licenses without the respective contributors' explicit
+>>> consent.
 >>
->> Thanks for a report.  I've been wondering how many distros and
->> packagers would have an issue like this when we go to 2-digit
->> release naming.  Of course we knew everybody can grok 3-or-4 ;-)
+>> Yep, that's how it works.
 >>
->>> In order to fix the syntax error, we replace any rcX with zero and
->>> include some additional 'zero' padding to the version number list.
->>>
->>> Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
->>> ---
->>>
->>> Hi Junio,
->>>
->>> This patch is marked RFC because, as I was just about to send this
->>> email, I realized it wouldn't always work:
+>> [...]
+>>> The combination of the SubmittingPatches text with the file notices in
+>>> builtin/blame.c is not really painting a full picture of the situation.
 >>
->> Yeah, and I suspect that with the use of $(wordlist 1,3,...) it is
->> not even working for maintenance releases.  Does it differenciate
->> between 1.8.5.1 and 1.8.5.2, for example?.  Or does "windres" always
->> assume that a package version is always 3-dewey-decimal (not 2, not
->> 4)?
+>> Any idea how this could be made more clear?  E.g., maybe we should
+>> bite the bullet and add a line to all source files that don't already
+>> state a license:
+>>
+>> 	/*
+>> 	 * License: GPLv2.  See COPYING for details.
+>> 	 */
+>
+> I vaguely recall that jgit folks at one point wanted to lift this
+> implementation and were interested in seeing it to be dual licensed
+> to BSD but that was a long time ago.
+>
+>   http://git.661346.n2.nabble.com/JGIT-Blame-functionality-for-jgit-td2142726.html
 
-I'm no expert on '.rc' file syntax, but the code certainly does not
-(currently) support four digit versions.
+Ok, let me state quite clearly before we waste time, energy and
+goodwill:
 
-> Perhaps like this?  Just grab digit-only segments that are separated
-> with either dot or dash (and stop when we see a non-digit like
-> 'dirty' or 'rcX'), and make them separated with comma.
+a) I am reworking the core logic of blame.c to make it produce the same
+results while being orders of magnitude faster.  Git's current
+implementation is a roadblock for serious use.  Keeping its current core
+algorithms and data flow, it would have been reasonably easy to speed
+the current code up by a factor of 2 or more by doing local
+optimizations.  But I've chosen _not_ to keep the current logic and data
+flow.  That means quite a bit more work, and it means completely
+understanding the existing code before being able to replace it.
 
-Oh, this is *much* better than my new (unsent) attempt to fix this! ;-)
+The core part of blame.c spends literally billions of iterations in
+real-life situations leafing through one large linear list for tiny bits
+of information.  One could use a better searchable data structure and
+speed up the access in that manner, but better than a fast search is no
+search at all.  I am separating the data so that at any given time I am
+only accessing actually relevant data.  O(n) beats O(n lg n), and the
+code remains almost as readable as the current O(n^2).
 
-> 
-> Note that I am merely guessing that "short-digit" version numbers
-> are acceptable by now after seeing
-> 
->     https://sourceware.org/ml/binutils/2012-07/msg00199.html
+b) This will require thoroughly reworking the core parts of the
+algorithm which will then be about 50/50 old and new code that cannot
+sensibly be separated since significant parts of the previous code will
+be gone completely as the data flow is fundamentally different.
 
-Ah, nice find!
+c) The "fine points" of blame.c, in particular all the various command
+line options and the implementation of their exact meaning would stay
+the same.  I hope I can avoid touching more than 50% of the code.
 
-I will test your patch (below) and let you know soon, but it looks
-good to me. (I can't test it tonight, unfortunately.)
+d) I am fine with distributing my work under the GPLv2 or later, but no
+other license will be implied.  While this does not affect the core Git
+distribution itself: for distribution under more permissive licenses for
+the purpose of making inclusion in proprietary software possible, I'd
+probably attach a big price tag that reflects the amount of work and
+quality of code going in and the fact that I have no other source of
+income.
 
-ATB,
-Ramsay Jones
+e) No idea whether this would affect JGIT: it depends on how much JGIT
+would be a literal translation of blame.c into Java (?) or a
+functionally equivalent rewrite employing different and/or native data
+structures to achieve the same effect.  To me it's irritating that
+something like the fine but boring points of option parsing might be
+more susceptible to copyright protection than doing a careful
+algorithmic design, but that's the way the world is wired.
 
-> 
-> without knowing the current state of affairs.  If that is not the
-> case you may have to count the iteration of the loop and append or
-> chop the resulting string as necessary.
-> 
->  Makefile              |  2 +-
->  gen-version-string.sh | 13 +++++++++++++
->  git.rc                |  4 ++--
->  3 files changed, 16 insertions(+), 3 deletions(-)
-> 
-> diff --git a/Makefile b/Makefile
-> index b4af1e2..329f942 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -1773,7 +1773,7 @@ $(SCRIPT_LIB) : % : %.sh GIT-SCRIPT-DEFINES
->  
->  git.res: git.rc GIT-VERSION-FILE
->  	$(QUIET_RC)$(RC) \
-> -	  $(join -DMAJOR= -DMINOR= -DPATCH=, $(wordlist 1,3,$(subst -, ,$(subst ., ,$(GIT_VERSION))))) \
-> +		-DVERSIONSTRING=$$(./gen-version-string.sh $(GIT_VERSION)) \
->  	  -DGIT_VERSION="\\\"$(GIT_VERSION)\\\"" $< -o $@
->  
->  ifndef NO_PERL
-> diff --git a/gen-version-string.sh b/gen-version-string.sh
-> new file mode 100755
-> index 0000000..00af718
-> --- /dev/null
-> +++ b/gen-version-string.sh
-> @@ -0,0 +1,13 @@
-> +#!/bin/sh
-> +
-> +IFS=.- result=
-> +for v in $1
-> +do
-> +	if expr "$v" : '[0-9][0-9]*$' >/dev/null
-> +	then
-> +		result=$result${result:+,}$v
-> +	else
-> +		break
-> +	fi
-> +done
-> +echo "$result"
-> diff --git a/git.rc b/git.rc
-> index bce6db9..6f2a8d2 100644
-> --- a/git.rc
-> +++ b/git.rc
-> @@ -1,6 +1,6 @@
->  1 VERSIONINFO
-> -FILEVERSION     MAJOR,MINOR,PATCH,0
-> -PRODUCTVERSION  MAJOR,MINOR,PATCH,0
-> +FILEVERSION     VERSIONSTRING,0
-> +PRODUCTVERSION  VERSIONSTRING,0
->  BEGIN
->    BLOCK "StringFileInfo"
->    BEGIN
-> .
-> 
+At any rate: JGIT or not, I'll be contributing work with the
+understanding that it will be licensed under the _current_ licensing
+scheme of Git.  And I think that's a reasonable expectation.
+
+-- 
+David Kastrup
