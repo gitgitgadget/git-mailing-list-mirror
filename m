@@ -1,102 +1,137 @@
-From: Cosmin Apreutesei <cosmin.apreutesei@gmail.com>
-Subject: Re: GIT_WORK_TREE and GIT_DIR with git clone
-Date: Tue, 21 Jan 2014 23:37:16 +0200
-Message-ID: <CAKJdRakBWR7ofvcc8uhQ09QwiAJs7uvRNwP3WyuF4ve7FWONgw@mail.gmail.com>
-References: <CAKJdRamFDDWRZDHBCe7GrXg0OWhLfBPq_ofsvowaW9d8VOGTMA@mail.gmail.com>
- <xmqq4n4xulrm.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] builtin/blame.c: struct blame_entry does not need a prev link
+Date: Tue, 21 Jan 2014 13:54:58 -0800
+Message-ID: <xmqqlhy9t2z1.fsf@gitster.dls.corp.google.com>
+References: <1390157870-29795-1-git-send-email-dak@gnu.org>
+	<1390157870-29795-2-git-send-email-dak@gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 21 22:37:47 2014
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Tue Jan 21 22:55:14 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W5j0y-00070D-MP
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Jan 2014 22:37:45 +0100
+	id 1W5jHs-0005Ky-4D
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Jan 2014 22:55:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755238AbaAUVhj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Jan 2014 16:37:39 -0500
-Received: from mail-pa0-f50.google.com ([209.85.220.50]:43552 "EHLO
-	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754706AbaAUVhg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Jan 2014 16:37:36 -0500
-Received: by mail-pa0-f50.google.com with SMTP id kp14so8987115pab.37
-        for <git@vger.kernel.org>; Tue, 21 Jan 2014 13:37:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=jXAv7vhrPJMGRT3tagC0RgLy9gSWDb8oXGt5h9vAOlo=;
-        b=TZrEw09JJeSvPDJs2ZiqxhiPcvay4VVEuoEriqk+G4e2z2mKkau1wCdML7n1NkoTDk
-         jJVqranKE3gi1PHBNMo+PMFkBUUzwtx54w3HBTG9b8cecq1r23lfWmR4e1mm2MZEFqpk
-         qQDJcRpE1efkGiiJ4tV1DXdLn9ObO+cg3Jw61x/0WTLUGGBnf3JPmfJN456BDMWA/3Hq
-         uI34v2IjNzGyOAsaP+CxNf9o1XhyuYfPMQAUq5wTD4dc03g0ZVgeF4R2aaAqAEQzp/9u
-         1BfU2sV4sanXQuUT88nT33N7WvkNCbR0gVyCPE4wOw5W9LVX6R96FZFhMvvYkKHQWOJ5
-         PB2Q==
-X-Received: by 10.66.189.193 with SMTP id gk1mr27330108pac.105.1390340256308;
- Tue, 21 Jan 2014 13:37:36 -0800 (PST)
-Received: by 10.70.42.228 with HTTP; Tue, 21 Jan 2014 13:37:16 -0800 (PST)
-In-Reply-To: <xmqq4n4xulrm.fsf@gitster.dls.corp.google.com>
+	id S1753861AbaAUVzH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Jan 2014 16:55:07 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35045 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751085AbaAUVzF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Jan 2014 16:55:05 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D8570636BA;
+	Tue, 21 Jan 2014 16:55:04 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=H8jY6RvdL1XPwyPjfaXZCfN3UIY=; b=tuRMQu
+	eptAovexJ7VCT3sD6J79lPy1W6r0IRXF8lpe1jxHYiWfOR5DzkvwD+I5tImHrqP2
+	zqGGk4xV6V0ECLs0jGh6j+mDgF7g7Mt8uIfi1qfOXmJc6NWRp01tYTALdPNqbF2A
+	MWAIaZxR+ml4MVWlrbhRMdFLs43ZgQ4Wx2qy0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=CJqtW8b3MDIk3ct7hUJOfGhLwO+GqTo8
+	AQ8aTDePvnvDOewv+fqGyDoNV+LOxEUFXII0BMXwEtmuZSntzZUbZye+ZFtxBvls
+	9LcBaOklTQRFamGtfBnSkyI1tYMKr8rfGyfEaIcWo3MPdxNq0zvbbb1xGqgjwDI1
+	+fwwXgkhRdk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C1945636B9;
+	Tue, 21 Jan 2014 16:55:04 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7203B636B2;
+	Tue, 21 Jan 2014 16:55:02 -0500 (EST)
+In-Reply-To: <1390157870-29795-2-git-send-email-dak@gnu.org> (David Kastrup's
+	message of "Sun, 19 Jan 2014 19:57:49 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: AE0505B2-82E6-11E3-A7CE-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240778>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240779>
 
-Hi, thanks for answering.
+David Kastrup <dak@gnu.org> writes:
 
->> I would like to be able to tell my users that they can simply do:
->>
->> git clone --git-dir=_/git/module1/.git module1-url
->> git clone --git-dir=_/git/module2/.git module2-url
->>
->> which will overlay the files from both modules into the current
->> directory, which from git's perspective is the work-tree for both
->> modules.
+> ---
+
+Thanks.  At some point during its development I must have thought
+that having it as a dual-linked list may make it easier when we have
+to split a block into pieces, but it seems that split_overlap() does
+not need to look at this information.
+
+Needs sign-off.
+
+
+>  builtin/blame.c | 13 ++-----------
+>  1 file changed, 2 insertions(+), 11 deletions(-)
 >
-> Would there be a sensible semantics in the resulting working tree?
-> Which repository would a new file in such a combined working tree
-> belong to?
-
-The developer would have to decide by way of `git add`.
-
-Ignoring other repos' files would be done by way of local config
-option `excludesfile` (.gitignore is out).
-
-To make it easier to work with git this way, a script that creates a
-subshell in the context of a repo can be done with something like
-`PS1="[$1 $PS1]" GIT_DIR=_git/$1/.git bash -i" -- git would then work
-as usual in that subshell for that specific repo, never leaving the
-working tree.
-
-
-I successfully employed the above scheme with luapower[1] packages,
-which are all different and mostly unrelated libraries, but which need
-to be overlaid over a common directory structure. And that's just an
-example. I can think of many projects that are modularized and yet the
-modules need to place many files in many places to make a working
-system (web frameworks, the linux filesystem, etc.)
-
-Currently, to clone a repo one has to do:
-
-export GIT_DIR=_git/submodule/.git
-git init
-git config --local core.worktree ../../..
-git remote add origin ssh://git@github.com/luapower/submodule.git
-git fetch
-git branch --track master origin/master
-git checkout
-
-That's 6 commands for what could be:
-
-    git clone --git-dir=_git/submodule/.git
-ssh://git@github.com/luapower/submodule.git
-
-Or even better:
-
-    git clone --git-dirs=_git ssh://git@github.com/luapower/submodule.git
-
-[1] http://luapower.com
+> diff --git a/builtin/blame.c b/builtin/blame.c
+> index e44a6bb..2195595 100644
+> --- a/builtin/blame.c
+> +++ b/builtin/blame.c
+> @@ -197,7 +197,6 @@ static void drop_origin_blob(struct origin *o)
+>   * scoreboard structure, sorted by the target line number.
+>   */
+>  struct blame_entry {
+> -	struct blame_entry *prev;
+>  	struct blame_entry *next;
+>  
+>  	/* the first line of this group in the final image;
+> @@ -282,8 +281,6 @@ static void coalesce(struct scoreboard *sb)
+>  		    ent->s_lno + ent->num_lines == next->s_lno) {
+>  			ent->num_lines += next->num_lines;
+>  			ent->next = next->next;
+> -			if (ent->next)
+> -				ent->next->prev = ent;
+>  			origin_decref(next->suspect);
+>  			free(next);
+>  			ent->score = 0;
+> @@ -534,7 +531,7 @@ static void add_blame_entry(struct scoreboard *sb, struct blame_entry *e)
+>  		prev = ent;
+>  
+>  	/* prev, if not NULL, is the last one that is below e */
+> -	e->prev = prev;
+> +
+>  	if (prev) {
+>  		e->next = prev->next;
+>  		prev->next = e;
+> @@ -543,8 +540,6 @@ static void add_blame_entry(struct scoreboard *sb, struct blame_entry *e)
+>  		e->next = sb->ent;
+>  		sb->ent = e;
+>  	}
+> -	if (e->next)
+> -		e->next->prev = e;
+>  }
+>  
+>  /*
+> @@ -555,14 +550,12 @@ static void add_blame_entry(struct scoreboard *sb, struct blame_entry *e)
+>   */
+>  static void dup_entry(struct blame_entry *dst, struct blame_entry *src)
+>  {
+> -	struct blame_entry *p, *n;
+> +	struct blame_entry *n;
+>  
+> -	p = dst->prev;
+>  	n = dst->next;
+>  	origin_incref(src->suspect);
+>  	origin_decref(dst->suspect);
+>  	memcpy(dst, src, sizeof(*src));
+> -	dst->prev = p;
+>  	dst->next = n;
+>  	dst->score = 0;
+>  }
+> @@ -2502,8 +2495,6 @@ parse_done:
+>  		ent->suspect = o;
+>  		ent->s_lno = bottom;
+>  		ent->next = next;
+> -		if (next)
+> -			next->prev = ent;
+>  		origin_incref(o);
+>  	}
+>  	origin_decref(o);
