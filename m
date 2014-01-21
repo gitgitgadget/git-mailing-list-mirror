@@ -1,99 +1,162 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [PATCH 0/6] Make 'git help everyday' work -> relnotes
-Date: Tue, 21 Jan 2014 22:25:26 -0000
-Organization: OPDS
-Message-ID: <BA4E87FA92ED4E8FB2C00F013BD7B3FF@PhilipOakley>
-References: <1389309192-5748-1-git-send-email-philipoakley@iee.org> <xmqqppo090m7.fsf@gitster.dls.corp.google.com> <52CFACBB.7000805@atlas-elektronik.com> <F11CD558C63947F9B4AA75501D2F9F62@PhilipOakley> <52D91B0E.6080000@atlas-elektronik.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 04/16] trailer: process command line trailer arguments
+Date: Tue, 21 Jan 2014 14:41:01 -0800
+Message-ID: <xmqqd2jlt0ua.fsf@gitster.dls.corp.google.com>
+References: <20140119083636.2734.14378.chriscool@tuxfamily.org>
+	<20140119085355.2734.58646.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8;
-	format=flowed	reply-type=original
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "GitList" <git@vger.kernel.org>
-To: =?utf-8?Q?Stefan_N=C3=A4we?= <stefan.naewe@atlas-elektronik.com>
-X-From: git-owner@vger.kernel.org Tue Jan 21 23:25:42 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
+	Josh Triplett <josh@joshtriplett.org>,
+	Thomas Rast <tr@thomasrast.ch>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Dan Carpenter <dan.carpenter@oracle.com>,
+	Greg Kroah-Hartman <greg@kroah.com>, Jeff King <peff@peff.net>
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Tue Jan 21 23:41:17 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W5jlM-0008Ly-N3
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Jan 2014 23:25:41 +0100
+	id 1W5k0S-0005Y0-Hp
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Jan 2014 23:41:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753382AbaAUWZh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 21 Jan 2014 17:25:37 -0500
-Received: from out1.ip04ir2.opaltelecom.net ([62.24.128.240]:3280 "EHLO
-	out1.ip04ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752353AbaAUWZg (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 21 Jan 2014 17:25:36 -0500
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AhtGALnz3lICYJZt/2dsb2JhbABagwtIA4NAhT6zLwECAQELgQoXdGkBAYEfAQEUAQQBAQEBAgEIAQEZBAsBBR4BASELAgMFAgEDFQUCBSECAhQBBBoGBxcGEwgCAQIDAYU4BwGCExkMplGcIxeBKY1WNYJBNYEUBI8mmxSDLTw
-X-IPAS-Result: AhtGALnz3lICYJZt/2dsb2JhbABagwtIA4NAhT6zLwECAQELgQoXdGkBAYEfAQEUAQQBAQEBAgEIAQEZBAsBBR4BASELAgMFAgEDFQUCBSECAhQBBBoGBxcGEwgCAQIDAYU4BwGCExkMplGcIxeBKY1WNYJBNYEUBI8mmxSDLTw
-X-IronPort-AV: E=Sophos;i="4.95,697,1384300800"; 
-   d="scan'208";a="433411793"
-Received: from host-2-96-150-109.as13285.net (HELO PhilipOakley) ([2.96.150.109])
-  by out1.ip04ir2.opaltelecom.net with SMTP; 21 Jan 2014 22:25:23 +0000
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1753274AbaAUWlM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Jan 2014 17:41:12 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34192 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751408AbaAUWlK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Jan 2014 17:41:10 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5083B6539A;
+	Tue, 21 Jan 2014 17:41:10 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=fOgArDY3frQd6EmALquHz2wrmqI=; b=ZP43Io
+	uw/TpcO3y9V0ZWD1s3YXB27yzz9BZUi18owwFUxEhjnDObkLEZm0+JeyMfhXsvKJ
+	cHHoVuqHGGQh/DI96yFp7BHMU5qkv5370yhY+ShbFmI688w4pRsg2pds7e5+CsPe
+	eCo3mir0qorAvAU4DjdVEwQc9R6hjNDN6vF8Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=WxQ8YfNgCbiSIU411+ForbMDnuqEnf+L
+	95dR3oJfJ8ZfXGpBE5A5BNdXWhoYplUoA8DThH3Mdgg6esPhxtmf+pkKqcsbEHAG
+	JfYdv2P74yVikfb70QiW0fgWcc1P8XqY6rX+QYaZAcAvDcJwc8xowdk0yjpBsY5A
+	VNaJsoMttQw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3B5A165399;
+	Tue, 21 Jan 2014 17:41:10 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 99C6E65397;
+	Tue, 21 Jan 2014 17:41:06 -0500 (EST)
+In-Reply-To: <20140119085355.2734.58646.chriscool@tuxfamily.org> (Christian
+	Couder's message of "Sun, 19 Jan 2014 09:53:42 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 1DDFFF80-82ED-11E3-B4D7-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240781>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240782>
 
-=46rom: "Stefan N=C3=A4we" <stefan.naewe@atlas-elektronik.com>
-> Am 16.01.2014 22:14, schrieb Philip Oakley:
->> From: "Stefan N=C3=A4we" <stefan.naewe@atlas-elektronik.com>
->> [...]
->>>
->>> I'd really like to see 'git help relnotes' working as well...
->>>
->>> Stefan
->>
->> Stefan,
->>
->> Were you thinking that all the release notes would be quoted verbati=
-m=20
->> in
->> the one long man page?
->>
->> Or that it would be a set of links to each of the individual text=20
->> files
->> (see the ifdef::stalenotes[] in git/Documentation/git.txt)?
->>
->> The latter allows individual release notes to be checked, but still
->> leaves folks with a difficult search problem if they want to find=20
->> when
->> some command was 'tweaked'.
->>
->> Obviously, any method would need to be easy to maintain. And the
->> RelNotes symlink would need handling.
+Christian Couder <chriscool@tuxfamily.org> writes:
+
+> This patch parses the trailer command line arguments
+> and put the result into an arg_tok doubly linked
+> list.
 >
-> 'git help relnotes' should show the current release note with
-> a link to the previous.
-
-OK, that seems very sensible, as the concatenated release notes run to=20
-15k lines!
-
-Determining which is the current release note is possibly more=20
-problematic, which should be when making the documentation.
-
+> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+> ---
+>  trailer.c | 77 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 77 insertions(+)
 >
-> And 'git help git' should link to the current release note.
->
-In some sense that 'current' should be the same as the 'git --version',=
-=20
-but through an assumption of a common distribution of git and the=20
-documentation, rather than any run time determination.
+> diff --git a/trailer.c b/trailer.c
+> index e7d8244..bb1fcfb 100644
+> --- a/trailer.c
+> +++ b/trailer.c
+> @@ -363,3 +363,80 @@ static int git_trailer_config(const char *conf_key, const char *value, void *cb)
+>  	}
+>  	return 0;
+>  }
+> +
+> +static void parse_trailer(struct strbuf *tok, struct strbuf *val, const char *trailer)
+> +{
+> +	char *end = strchr(trailer, '=');
+> +	if (!end)
+> +		end = strchr(trailer, ':');
+> +	if (end) {
+> +		strbuf_add(tok, trailer, end - trailer);
+> +		strbuf_trim(tok);
+> +		strbuf_addstr(val, end + 1);
+> +		strbuf_trim(val);
+> +	} else {
+> +		strbuf_addstr(tok, trailer);
+> +		strbuf_trim(tok);
+> +	}
+> +}
+> +
+> +static struct trailer_item *create_trailer_item(const char *string)
+> +{
+> +	struct strbuf tok = STRBUF_INIT;
+> +	struct strbuf val = STRBUF_INIT;
+> +	struct trailer_item *new;
+> +
+> +	parse_trailer(&tok, &val, string);
+> +
+> +	int tok_alnum_len = alnum_len(tok.buf, tok.len);
 
-At the moment the Documenation/git.txt 'stalenotes' section could be=20
-separated into its own file to act as the basis for the links, but as=20
-yet I don't have a good view as to how the current release notes (with =
-/=20
-without maint notes?) would be embedded without a maintenance burden fo=
-r=20
-Junio.
+decl-after-stmt.
 
-Philip=20
+> +
+> +	/* Lookup if the token matches something in the config */
+> +	struct trailer_item *item;
+> +	for (item = first_conf_item; item; item = item->next)
+> +	{
+> +		if (!strncasecmp(tok.buf, item->conf->key, tok_alnum_len) ||
+> +		    !strncasecmp(tok.buf, item->conf->name, tok_alnum_len)) {
+> +			new = xcalloc(sizeof(struct trailer_item), 1);
+> +			new->conf = item->conf;
+> +			new->token = xstrdup(item->conf->key);
+> +			new->value = strbuf_detach(&val, NULL);
+> +			strbuf_release(&tok);
+> +			return new;
+> +		}
+> +	}
+> +
+> +	new = xcalloc(sizeof(struct trailer_item), 1);
+> +	new->conf = xcalloc(sizeof(struct conf_info), 1);
+> +	new->token = strbuf_detach(&tok, NULL);
+> +	new->value = strbuf_detach(&val, NULL);
+> +
+> +	return new;
+> +}
+> +
+> +static void add_trailer_item(struct trailer_item **first,
+> +			     struct trailer_item **last,
+> +			     struct trailer_item *new)
+> +{
+> +	if (!*last) {
+> +		*first = new;
+> +		*last = new;
+> +	} else {
+> +		(*last)->next = new;
+> +		new->previous = *last;
+> +		*last = new;
+> +	}
+> +}
+> +
+> +static struct trailer_item *process_command_line_args(int argc, const char **argv)
+> +{
+> +	int i;
+> +	struct trailer_item *arg_tok_first = NULL;
+> +	struct trailer_item *arg_tok_last = NULL;
+> +
+> +	for (i = 0; i < argc; i++) {
+> +		struct trailer_item *new = create_trailer_item(argv[i]);
+> +		add_trailer_item(&arg_tok_first, &arg_tok_last, new);
+> +	}
+> +
+> +	return arg_tok_first;
+> +}
