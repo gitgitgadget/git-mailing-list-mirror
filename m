@@ -1,77 +1,115 @@
 From: Jeff King <peff@peff.net>
 Subject: Re: [PATCH 2/3] setup_pager: set MORE=R
-Date: Tue, 21 Jan 2014 00:30:26 -0500
-Message-ID: <20140121053026.GC5878@sigill.intra.peff.net>
+Date: Tue, 21 Jan 2014 00:49:27 -0500
+Message-ID: <20140121054927.GD5878@sigill.intra.peff.net>
 References: <20140117041430.GB19551@sigill.intra.peff.net>
  <20140117042153.GB23443@sigill.intra.peff.net>
- <398F146D-72F1-44CD-B205-729665FD8765@gmail.com>
+ <xmqqvbxiwh8y.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>, Yuri <yuri@rawbw.com>
-To: "Kyle J. McKay" <mackyle@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 21 06:30:33 2014
+Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+	Yuri <yuri@rawbw.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 21 06:49:54 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W5Tuy-0004lv-2W
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Jan 2014 06:30:32 +0100
+	id 1W5UDi-0003IM-3c
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Jan 2014 06:49:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750802AbaAUFa3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Jan 2014 00:30:29 -0500
-Received: from cloud.peff.net ([50.56.180.127]:36066 "HELO peff.net"
+	id S1750802AbaAUFta (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Jan 2014 00:49:30 -0500
+Received: from cloud.peff.net ([50.56.180.127]:36076 "HELO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750740AbaAUFa2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Jan 2014 00:30:28 -0500
-Received: (qmail 6255 invoked by uid 102); 21 Jan 2014 05:30:28 -0000
+	id S1750740AbaAUFt3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Jan 2014 00:49:29 -0500
+Received: (qmail 7239 invoked by uid 102); 21 Jan 2014 05:49:29 -0000
 Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 20 Jan 2014 23:30:28 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 21 Jan 2014 00:30:26 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 20 Jan 2014 23:49:29 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 21 Jan 2014 00:49:27 -0500
 Content-Disposition: inline
-In-Reply-To: <398F146D-72F1-44CD-B205-729665FD8765@gmail.com>
+In-Reply-To: <xmqqvbxiwh8y.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240744>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240745>
 
-On Thu, Jan 16, 2014 at 11:26:50PM -0800, Kyle J. McKay wrote:
+On Fri, Jan 17, 2014 at 11:17:01AM -0800, Junio C Hamano wrote:
 
-> >--- a/pager.c
-> >+++ b/pager.c
-> >@@ -87,6 +87,10 @@ void setup_pager(void)
-> >		argv_array_push(&env, "LESS=FRSX");
-> >	if (!getenv("LV"))
-> >		argv_array_push(&env, "LV=-c");
-> >+#ifdef PAGER_MORE_UNDERSTANDS_R
-> >+	if (!getenv("MORE"))
-> >+		argv_array_push(&env, "MORE=R");
-> >+#endif
+> > +#ifdef PAGER_MORE_UNDERSTANDS_R
+> > +	if (!getenv("MORE"))
+> > +		argv_array_push(&env, "MORE=R");
+> > +#endif
+> >  	pager_process.env = argv_array_detach(&env, NULL);
+> >  
+> >  	if (start_command(&pager_process))
 > 
-> How about adding a leading "-" to both the LESS and MORE settings?
-> Since you're in there patching... :)
-
-I do not have any problem with that, but would very much prefer it as a
-separate patch, in case there are any fallouts.
-
-> And while the less man page does not have that wording, it does show
-> this:
+> Let me repeat from $gmane/240110:
 > 
->   LESS="-options"; export LESS
+>  - Can we generalize this a bit so that a builder can pass a list
+>    of var=val pairs and demote the existing LESS=FRSX to just a
+>    canned setting of such a mechanism?
 > 
-> and this:
-> 
->   LESS="-Dn9.1$-Ds4.1"
+> As we need to maintain this "set these environments when unset" here
+> and also in git-sh-setup.sh, I think it is about time to do that
+> clean-up.  Duplicating two settings was borderline OK, but seeing
+> the third added fairly soon after the second was added tells me that
+> the clean-up must come before adding the third.
 
-Ugh. Having just read the LESS discussion, it makes me wonder if the
+Wow, I somehow _completely_ missed that thread. When I looked at the
+code with LV, I assumed it was just something that had happened long ago
+and I had forgotten about. I didn't even bother reading "git log".
 
-  strchr(getenv("LESS"), 'R')
+Yeah, I agree that git-sh-setup should be consistent with what the C
+porcelains do. However, adding build-time variables like:
 
-check I add elsewhere in the series is sufficient. I suspect in practice
-it is good enough, but I would not be surprised if there is a way to
-fool it with a sufficiently complex LESS variable. Maybe we should just
-assume it is enough, and people with crazy LESS settings can set
-color.pager as appropriate?
+  PAGER_ENV = LESS=-FRSX LV=-c
+
+does complicate the point of my series, which was to add more intimate
+logic about how we handle LESS. With the current code, I can know that
+an unset "LESS" variable means we will set "R" ourselves and turn on
+color. We can get around that with something like:
+
+  int pager_can_handle_color(void)
+  {
+        const char *pager = get_pager();
+
+        if (!strcmp(pager, "less")) {
+                const char *x = getenv("LESS");
+                if (!x) {
+                        const char *e;
+                        for (e = pager_env; *e; e++)
+                                if ((x = skip_prefix(e, "LESS=")))
+                                        break;
+                }
+                return !x || strchr(x, 'R');
+    }
+
+    [...]
+  }
+
+but we are still hard-coding a lot of intelligence about "less" here. I
+wonder if the abstraction provided by the Makefile variable is really
+worthwhile. Anybody adding a new line to it would also want to tweak
+pager_can_handle_color to add similar logic.
+
+Taking a step back for a moment, we are getting two things out of such a
+Makefile variable:
+
+  1. An easy way for packager to add intelligence about common pagers on
+     their system.
+
+  2. DRY between git-sh-setup and the C code.
+
+I do like (1), but I do not know if we want to try to encode the "can
+handle color" logic into a Makefile variable. What would it look like?
+
+For (2), an alternate method would be to simply provide "git pager" as C
+code, which spawns the appropriate pager as the C code would. Then
+git-sh-setup can easily build around that.
+
+-Peff
