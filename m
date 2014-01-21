@@ -1,162 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 04/16] trailer: process command line trailer arguments
-Date: Tue, 21 Jan 2014 14:41:01 -0800
-Message-ID: <xmqqd2jlt0ua.fsf@gitster.dls.corp.google.com>
-References: <20140119083636.2734.14378.chriscool@tuxfamily.org>
-	<20140119085355.2734.58646.chriscool@tuxfamily.org>
+From: Siddharth Agarwal <sid0@fb.com>
+Subject: git repack --max-pack-size broken in git-next
+Date: Tue, 21 Jan 2014 14:48:07 -0800
+Message-ID: <52DEF927.7090005@fb.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
-	Josh Triplett <josh@joshtriplett.org>,
-	Thomas Rast <tr@thomasrast.ch>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Dan Carpenter <dan.carpenter@oracle.com>,
-	Greg Kroah-Hartman <greg@kroah.com>, Jeff King <peff@peff.net>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Tue Jan 21 23:41:17 2014
+Content-Type: text/plain; charset="ISO-8859-1"; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: <stefanbeller@googlemail.com>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jan 21 23:48:23 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W5k0S-0005Y0-Hp
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Jan 2014 23:41:16 +0100
+	id 1W5k7G-00083v-Uj
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Jan 2014 23:48:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753274AbaAUWlM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Jan 2014 17:41:12 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34192 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751408AbaAUWlK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Jan 2014 17:41:10 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5083B6539A;
-	Tue, 21 Jan 2014 17:41:10 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=fOgArDY3frQd6EmALquHz2wrmqI=; b=ZP43Io
-	uw/TpcO3y9V0ZWD1s3YXB27yzz9BZUi18owwFUxEhjnDObkLEZm0+JeyMfhXsvKJ
-	cHHoVuqHGGQh/DI96yFp7BHMU5qkv5370yhY+ShbFmI688w4pRsg2pds7e5+CsPe
-	eCo3mir0qorAvAU4DjdVEwQc9R6hjNDN6vF8Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=WxQ8YfNgCbiSIU411+ForbMDnuqEnf+L
-	95dR3oJfJ8ZfXGpBE5A5BNdXWhoYplUoA8DThH3Mdgg6esPhxtmf+pkKqcsbEHAG
-	JfYdv2P74yVikfb70QiW0fgWcc1P8XqY6rX+QYaZAcAvDcJwc8xowdk0yjpBsY5A
-	VNaJsoMttQw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3B5A165399;
-	Tue, 21 Jan 2014 17:41:10 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 99C6E65397;
-	Tue, 21 Jan 2014 17:41:06 -0500 (EST)
-In-Reply-To: <20140119085355.2734.58646.chriscool@tuxfamily.org> (Christian
-	Couder's message of "Sun, 19 Jan 2014 09:53:42 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 1DDFFF80-82ED-11E3-B4D7-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753969AbaAUWsP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Jan 2014 17:48:15 -0500
+Received: from mx0b-00082601.pphosted.com ([67.231.153.30]:42272 "EHLO
+	mx0b-00082601.pphosted.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751038AbaAUWsO (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 21 Jan 2014 17:48:14 -0500
+Received: from pps.filterd (m0004060 [127.0.0.1])
+	by mx0b-00082601.pphosted.com (8.14.5/8.14.5) with SMTP id s0LMk9xQ007139;
+	Tue, 21 Jan 2014 14:48:11 -0800
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fb.com; h=message-id : date : from :
+ mime-version : to : cc : subject : content-type :
+ content-transfer-encoding; s=facebook;
+ bh=ravGaOx47Y4bGx+P47Qi86WDTiBbdpeTMXsHICWP7rE=;
+ b=YZeZklYuMUlQRUhcZ7rorLelwr/CbFk7H94LQ3ZIQ4o0rRmMNzpiDBQGOyKD5PC8zqGW
+ LavEW9Dqb4YR+x29ntUF4/NlxI8BFqhYMJNd7tzh2Qb9FykLSQ4m1xOdOS7BvmMq2JCW
+ N4T+gPphfcjrjjB5Sgf6So81dzjc7qHWFFw= 
+Received: from mail.thefacebook.com (mailwest.thefacebook.com [173.252.71.148])
+	by mx0b-00082601.pphosted.com with ESMTP id 1hj1f4g4pt-1
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=OK);
+	Tue, 21 Jan 2014 14:48:10 -0800
+Received: from [172.25.68.250] (192.168.57.29) by mail.thefacebook.com
+ (192.168.16.13) with Microsoft SMTP Server (TLS) id 14.3.174.1; Tue, 21 Jan
+ 2014 14:48:08 -0800
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.2.0
+X-Originating-IP: [192.168.57.29]
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:5.11.87,1.0.14,0.0.0000
+ definitions=2014-01-21_07:2014-01-21,2014-01-21,1970-01-01 signatures=0
+X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
+ kscore.is_bulkscore=1.71959319006376e-09 kscore.compositescore=0
+ circleOfTrustscore=287.009407511322 compositescore=0.999681428617885
+ urlsuspect_oldscore=0.999681428617885 suspectscore=13
+ recipient_domain_to_sender_totalscore=0 phishscore=0 bulkscore=0
+ kscore.is_spamscore=0 recipient_to_sender_totalscore=0
+ recipient_domain_to_sender_domain_totalscore=64355
+ rbsscore=0.999681428617885 spamscore=0
+ recipient_to_sender_domain_totalscore=0 urlsuspectscore=0.9 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=7.0.1-1305240000
+ definitions=main-1401210178
+X-FB-Internal: deliver
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240782>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240783>
 
-Christian Couder <chriscool@tuxfamily.org> writes:
+With git-next, the --max-pack-size option to git repack doesn't work.
 
-> This patch parses the trailer command line arguments
-> and put the result into an arg_tok doubly linked
-> list.
->
-> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-> ---
->  trailer.c | 77 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 77 insertions(+)
->
-> diff --git a/trailer.c b/trailer.c
-> index e7d8244..bb1fcfb 100644
-> --- a/trailer.c
-> +++ b/trailer.c
-> @@ -363,3 +363,80 @@ static int git_trailer_config(const char *conf_key, const char *value, void *cb)
->  	}
->  	return 0;
->  }
-> +
-> +static void parse_trailer(struct strbuf *tok, struct strbuf *val, const char *trailer)
-> +{
-> +	char *end = strchr(trailer, '=');
-> +	if (!end)
-> +		end = strchr(trailer, ':');
-> +	if (end) {
-> +		strbuf_add(tok, trailer, end - trailer);
-> +		strbuf_trim(tok);
-> +		strbuf_addstr(val, end + 1);
-> +		strbuf_trim(val);
-> +	} else {
-> +		strbuf_addstr(tok, trailer);
-> +		strbuf_trim(tok);
-> +	}
-> +}
-> +
-> +static struct trailer_item *create_trailer_item(const char *string)
-> +{
-> +	struct strbuf tok = STRBUF_INIT;
-> +	struct strbuf val = STRBUF_INIT;
-> +	struct trailer_item *new;
-> +
-> +	parse_trailer(&tok, &val, string);
-> +
-> +	int tok_alnum_len = alnum_len(tok.buf, tok.len);
+With git at b139ac2, `git repack --max-pack-size=1g` says
 
-decl-after-stmt.
+error: option `max-pack-size' expects a numerical value
 
-> +
-> +	/* Lookup if the token matches something in the config */
-> +	struct trailer_item *item;
-> +	for (item = first_conf_item; item; item = item->next)
-> +	{
-> +		if (!strncasecmp(tok.buf, item->conf->key, tok_alnum_len) ||
-> +		    !strncasecmp(tok.buf, item->conf->name, tok_alnum_len)) {
-> +			new = xcalloc(sizeof(struct trailer_item), 1);
-> +			new->conf = item->conf;
-> +			new->token = xstrdup(item->conf->key);
-> +			new->value = strbuf_detach(&val, NULL);
-> +			strbuf_release(&tok);
-> +			return new;
-> +		}
-> +	}
-> +
-> +	new = xcalloc(sizeof(struct trailer_item), 1);
-> +	new->conf = xcalloc(sizeof(struct conf_info), 1);
-> +	new->token = strbuf_detach(&tok, NULL);
-> +	new->value = strbuf_detach(&val, NULL);
-> +
-> +	return new;
-> +}
-> +
-> +static void add_trailer_item(struct trailer_item **first,
-> +			     struct trailer_item **last,
-> +			     struct trailer_item *new)
-> +{
-> +	if (!*last) {
-> +		*first = new;
-> +		*last = new;
-> +	} else {
-> +		(*last)->next = new;
-> +		new->previous = *last;
-> +		*last = new;
-> +	}
-> +}
-> +
-> +static struct trailer_item *process_command_line_args(int argc, const char **argv)
-> +{
-> +	int i;
-> +	struct trailer_item *arg_tok_first = NULL;
-> +	struct trailer_item *arg_tok_last = NULL;
-> +
-> +	for (i = 0; i < argc; i++) {
-> +		struct trailer_item *new = create_trailer_item(argv[i]);
-> +		add_trailer_item(&arg_tok_first, &arg_tok_last, new);
-> +	}
-> +
-> +	return arg_tok_first;
-> +}
+while `git repack --max-pack-size=1073741824` says
+
+error: unknown option `max_pack_size=1073741824'
+
+I bisected this down to a1bbc6c, which rewrote git repack in C.
