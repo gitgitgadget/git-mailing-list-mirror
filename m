@@ -1,94 +1,137 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 0/2] Two janitorial patches for builtin/blame.c
-Date: Tue, 21 Jan 2014 08:55:46 -0800
-Message-ID: <20140121165546.GE18964@google.com>
-References: <1390157870-29795-1-git-send-email-dak@gnu.org>
- <87d2jlqp7x.fsf@fencepost.gnu.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Consecutive git gc fails on Windows network share
+Date: Tue, 21 Jan 2014 17:57:59 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1401211755330.14982@s15462909.onlinehome-server.info>
+References: <d10603d6-7740-44f8-909f-7ba1ea77d3a2@googlegroups.com> <52D9701F.5070009@web.de> <11936e14-7442-4601-8e97-b2062894975b@googlegroups.com> <52DD59E0.4090301@web.de> <alpine.DEB.1.00.1401210002080.14982@s15462909.onlinehome-server.info>
+ <CABPQNSafcpACtWGBenE8vAe_XEvJ=5_sxLw8PztrnWp1xJAcjw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Tue Jan 21 17:56:00 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
+Cc: =?ISO-8859-15?Q?Torsten_B=F6gershausen?= <tboegi@web.de>, 
+    Jochen <zwanzig12@googlemail.com>, msysGit <msysgit@googlegroups.com>, 
+    Git Mailing List <git@vger.kernel.org>, stefanbeller@googlemail.com
+To: Erik Faye-Lund <kusmabite@gmail.com>
+X-From: msysgit+bncBCZPH74Q5YNRBGGO7KLAKGQETYGKKOQ@googlegroups.com Tue Jan 21 17:58:03 2014
+Return-path: <msysgit+bncBCZPH74Q5YNRBGGO7KLAKGQETYGKKOQ@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-bk0-f61.google.com ([209.85.214.61])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W5ecH-00062n-K4
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Jan 2014 17:55:57 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754922AbaAUQzy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Jan 2014 11:55:54 -0500
-Received: from mail-yh0-f54.google.com ([209.85.213.54]:46838 "EHLO
-	mail-yh0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754751AbaAUQzx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Jan 2014 11:55:53 -0500
-Received: by mail-yh0-f54.google.com with SMTP id z6so866079yhz.41
-        for <git@vger.kernel.org>; Tue, 21 Jan 2014 08:55:51 -0800 (PST)
+	(envelope-from <msysgit+bncBCZPH74Q5YNRBGGO7KLAKGQETYGKKOQ@googlegroups.com>)
+	id 1W5eeH-0006q0-IK
+	for gcvm-msysgit@m.gmane.org; Tue, 21 Jan 2014 17:58:01 +0100
+Received: by mail-bk0-f61.google.com with SMTP id d7sf597128bkh.6
+        for <gcvm-msysgit@m.gmane.org>; Tue, 21 Jan 2014 08:58:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=tl+LhxMVeIimw5OYA1uBPs9/HcaAcvAp+2WqGnvsLRE=;
-        b=0TTacbkCImxGdkSoMsccIDKoCmqAsGWbPC2ftAHL9qrACn0yZk1KU63dyvtE9UPYgx
-         Sm7CCaoie2Z1jVj8VOhUJJwqSzNm1DYYKtid1eiEvxOPfQeGAvXQZUSMlvhZOISEU9bJ
-         2PT9tW6ZHrkwHJ4hGDagyEjbuq+R198RUI97p7Snqd10aDQ5MuciosQK+kSPreb/+qAv
-         PC9Xg92nhBa87D8VD2AlSQkFXPscWdj8gxC8GqYYKlQr+9O1pBVpCZqs6JDnaYB5Ceiq
-         Miuws0Yph4xxSlQQDD44vVh7TjinaE2N1iokTauSXbx9x8aJAywE5gpWxhNHjdLhzuSZ
-         KxMw==
-X-Received: by 10.236.125.10 with SMTP id y10mr23919907yhh.58.1390323350581;
-        Tue, 21 Jan 2014 08:55:50 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id k3sm14627970yhc.13.2014.01.21.08.55.49
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 21 Jan 2014 08:55:50 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <87d2jlqp7x.fsf@fencepost.gnu.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240754>
+        d=googlegroups.com; s=20120806;
+        h=date:from:to:cc:subject:in-reply-to:message-id:references
+         :user-agent:mime-version:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type:content-transfer-encoding;
+        bh=PLU5dlDPrb1HgxUZAjKb0kphmVClQzmX72X/y35tWEM=;
+        b=l2otxDisUV9WYOdNevDXgAUvF3ha4N8GzCL2peb9pwaNuDmfAcvSI1ciMRALnr/80A
+         BjwwSywe2h5Rp33zvpnYFw5C8hnipZsFJ4N4waCta3voYbNMiuovGSj5OaO3nT09dn4I
+         bCzxaY4rU1jaDquRY/KIVMoC3LxWN86qDNozx3SA7FhSTGeOvL8BQaFPnvqeHmnck0TJ
+         qa8lW3WgDEQrgjmLFJ2Sh/tILSWoFSbcOWxOklDpeA8FcEa1IEDODBBPMdvncgUWbJmt
+         XtpRqZiF84uyfyyZbR/GRBpGk5Csaco1o7sTN6IWSXdKPilgHVn2umecSreifNTyDNZP
+         DGRw==
+X-Received: by 10.152.171.231 with SMTP id ax7mr30229lac.10.1390323481289;
+        Tue, 21 Jan 2014 08:58:01 -0800 (PST)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.152.42.138 with SMTP id o10ls496819lal.33.gmail; Tue, 21 Jan
+ 2014 08:58:00 -0800 (PST)
+X-Received: by 10.112.141.162 with SMTP id rp2mr11331216lbb.13.1390323480452;
+        Tue, 21 Jan 2014 08:58:00 -0800 (PST)
+Received: from mout.gmx.net (mout.gmx.net. [212.227.17.22])
+        by gmr-mx.google.com with ESMTPS id c48si1209884eeb.1.2014.01.21.08.58.00
+        for <msysgit@googlegroups.com>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 21 Jan 2014 08:58:00 -0800 (PST)
+Received-SPF: pass (google.com: domain of Johannes.Schindelin@gmx.de designates 212.227.17.22 as permitted sender) client-ip=212.227.17.22;
+Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
+ mail.gmx.com (mrgmx003) with ESMTPSA (Nemesis) id 0LnxQO-1VPkJr3s3U-00g38u
+ for <msysgit@googlegroups.com>; Tue, 21 Jan 2014 17:58:00 +0100
+X-X-Sender: schindelin@s15462909.onlinehome-server.info
+In-Reply-To: <CABPQNSafcpACtWGBenE8vAe_XEvJ=5_sxLw8PztrnWp1xJAcjw@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Provags-ID: V03:K0:nZ48xTm7nchoRjfMnqhGj06RPGyGUBrI6DJr0gtaak3zU792Giq
+ /BfzjFEpQLQFUFpGAFX05Lw95fey48DYX91XUTtRla9pdt4ew9aZ6P04PHUtciKbAaPq3p9
+ EKyjQvxGGyY2xKlsFrsOyVH2t1lbaFhwUznEFk+uSm/8vEqs9jWXWMwBAzfXiJpahg/C5mr
+ aYvCatSSf4FZp9NhDD4IQ==
+X-Original-Sender: johannes.schindelin@gmx.de
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of Johannes.Schindelin@gmx.de designates 212.227.17.22 as
+ permitted sender) smtp.mail=Johannes.Schindelin@gmx.de
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240755>
 
-David Kastrup wrote:
+Hi kusma,
 
-> Now I might have sent at an unopportune time: blame.c is mostly
-> attributed to Junio who seems to have been a few days absent now.
->
-> I also have seen quite a few mails and patch submissions on the list go
-> basically unanswered in the last few days.
+On Tue, 21 Jan 2014, Erik Faye-Lund wrote:
 
-In the U.S., yesterday was a federal holiday (Martin Luther King, Jr.
-day) and the two days before were the weekend.
+> On Tue, Jan 21, 2014 at 12:25 AM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> >
+> > On Mon, 20 Jan 2014, Torsten B=F6gershausen wrote:
+> >
+> >> b) add "+++" at the places where you added the stat() and chmod(),
+> >> c) and to send the question "is this a good implementation ?" to upstr=
+eam git.
+> >>
+> >> I think your implementation makes sense.
+> >
+> > As I said in my other reply, I think that the problem would be
+> > addressed more generally in compat/mingw.c. It is to be doubted highly
+> > that upstream wants to handle cases such as "rename() cannot overwrite
+> > read-only files on Windows" everywhere they call rename() because the
+> > platforms upstream cares about do not have that problem.
+>=20
+> I'm not so sure. A quick test shows me that this is not the case for
+> NTFS. Since this is over a network-share, the problem is probably
+> server-side, and can affect other systems as well.
+>=20
+> So a work-around might be appropriate for all systems, no?
 
-[...]
->             maintained indefinitely and may be redistributed consistent with
->             this project or the open source license(s) involved.
->
-> Now the file involved (builtin/blame.c) itself does not state _any_
-> license.
+I do not think that the problem occurs if you run the same commands on
+Linux, on a mounted Samba share. So I guess that upstream Git can enjoy
+their luxury of not having to care.
 
-Most of git is GPLv2-only.  (As an aside, if there's interest then I'd
-be happy to see most of it change to GPLv2-or-later since that makes
-it possible to link to code under the Apache License.  But I'm also
-happy with the status quo.)
+In any case, if we would need this also for Linux, doing it for only one
+user of rename() would probably not be good enough, either... so something
+similar to mingw_rename() would be needed (interfering with mingw_rename
+itself, of course).
 
-[...]
-> As far as I am concerned, I am willing to license my work under the
-> GPLv2 or any later version at the discretion of whoever wants to work
-> with it.  I think that should be compatible with the project goals.
->
-> Now the above passage states "you might note so in your copyright
-> message", but my patches do not even contain a copyright message and it
-> is not clear to me that they should, or that there is a sensible place
-> to place such "copyright messages".
+Ciao,
+Dscho
 
-Yeah, since these patches aren't adding a large new chunk of code
-there's no need for a new copyright notice and so no place to put that
-kind of thing unless Junio wants to relicense blame (which would be
-orthogonal to these patches).
+--=20
+--=20
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github =
+accounts are free.
 
-Thanks and hope that helps,
-Jonathan
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=3Den_US?hl=3Den
+
+---=20
+You received this message because you are subscribed to the Google Groups "=
+msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an e=
+mail to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/groups/opt_out.
