@@ -1,92 +1,68 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [PATCH 0/2] Two janitorial patches for builtin/blame.c
-Date: Tue, 21 Jan 2014 18:40:41 +0100
-Message-ID: <874n4xqlly.fsf@fencepost.gnu.org>
-References: <1390157870-29795-1-git-send-email-dak@gnu.org>
-	<87d2jlqp7x.fsf@fencepost.gnu.org> <20140121165546.GE18964@google.com>
+From: Astril Hayato <astrilhayato@gmail.com>
+Subject: Re: [PATCH] gitk: Comply with XDG base directory specification
+Date: Tue, 21 Jan 2014 17:40:58 +0000
+Message-ID: <CAFysofbwxb23or25vqh_JFLNU7Ksm9ch=YnvaFggPvdU_x2T7A@mail.gmail.com>
+References: <1386963996-5481-1-git-send-email-astrilhayato@gmail.com>
+	<20140121111041.GC8265@iris.ozlabs.ibm.com>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=ISO-8859-1
 Cc: git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 21 18:41:02 2014
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Tue Jan 21 18:41:06 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W5fJp-0006zF-Pv
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Jan 2014 18:40:58 +0100
+	id 1W5fJx-00073Z-O5
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Jan 2014 18:41:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754900AbaAURky (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Jan 2014 12:40:54 -0500
-Received: from fencepost.gnu.org ([208.118.235.10]:41369 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754261AbaAURkx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Jan 2014 12:40:53 -0500
-Received: from localhost ([127.0.0.1]:40411 helo=lola)
-	by fencepost.gnu.org with esmtp (Exim 4.71)
-	(envelope-from <dak@gnu.org>)
-	id 1W5fJk-00053c-Lo; Tue, 21 Jan 2014 12:40:52 -0500
-Received: by lola (Postfix, from userid 1000)
-	id E5F12E051D; Tue, 21 Jan 2014 18:40:41 +0100 (CET)
-In-Reply-To: <20140121165546.GE18964@google.com> (Jonathan Nieder's message of
-	"Tue, 21 Jan 2014 08:55:46 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3.50 (gnu/linux)
+	id S1755198AbaAURlA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Jan 2014 12:41:00 -0500
+Received: from mail-lb0-f169.google.com ([209.85.217.169]:39159 "EHLO
+	mail-lb0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755149AbaAURk7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Jan 2014 12:40:59 -0500
+Received: by mail-lb0-f169.google.com with SMTP id q8so6202001lbi.14
+        for <git@vger.kernel.org>; Tue, 21 Jan 2014 09:40:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=AQk/OZB+5EZ6GaZ4kwldYRSRSUBAIvpEL3dy0U6ENCY=;
+        b=n2dTfMzKovRoWUzKG1AiVpJFFLETpQ1JnvbU+Wmh1bY+hUiCxZyEhF/FMVTIK6LsF3
+         +ddUqPtd915jD1lT6ahhQrBgIHl7RCkH2d2Vshp/tojfwlX1sBOxmUrZq8T6gpsIMxZJ
+         MfeigvHtQtvIWXnhj1eBlzI1a423+sE/eHnNI+vPKiXaECySl9NF0yCUa/0iqDjHffyg
+         Iu6hIZmd/Rmnf37/tP1R4HRjAdeP5ZEdVoBCmUBtRl4LQ2S+I01+qtajs103Fy8f2bzv
+         pfRde1TA6224ULt6zgzCt6UZGra8KhiyUn4taeARvtrflY9rTB0nFDH6J88E+7KrdcT3
+         X5yg==
+X-Received: by 10.152.23.3 with SMTP id i3mr44242laf.78.1390326058277; Tue, 21
+ Jan 2014 09:40:58 -0800 (PST)
+Received: by 10.114.160.239 with HTTP; Tue, 21 Jan 2014 09:40:58 -0800 (PST)
+In-Reply-To: <20140121111041.GC8265@iris.ozlabs.ibm.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240758>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240759>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
-
-> David Kastrup wrote:
+On Tue, Jan 21, 2014 at 11:10 AM, Paul Mackerras <paulus@samba.org> wrote:
+>> +    if {![file exists $config_file]} {
+>> +     if {![file exists [file dirname $config_file]]} {
+>> +         file mkdir [file dirname $config_file]
+>> +     }
+>> +     # for backward compatability use the old config file if it exists
+>> +     if {[file exists "~/.gitk"]} {set config_file "~/.gitk"}
 >
->> Now I might have sent at an unopportune time: blame.c is mostly
->> attributed to Junio who seems to have been a few days absent now.
->>
->> I also have seen quite a few mails and patch submissions on the list go
->> basically unanswered in the last few days.
+> Don't we need to set config_file_tmp here too?
+
+Yeah it's probably best to keep the two files together.
+
 >
-> In the U.S., yesterday was a federal holiday (Martin Luther King, Jr.
-> day) and the two days before were the weekend.
+> And, do we really want to create the ~/.config/git directory if we are
+> using the old-style ~/.gitk as the config file?
 
-I see.
+Probably not. I'll prepare a new patch restoring the old behaviour.
 
->> Now the file involved (builtin/blame.c) itself does not state _any_
->> license.
->
-> Most of git is GPLv2-only.
-
-Does that include builtin/blame.c?
-
-> Yeah, since these patches aren't adding a large new chunk of code
-
-Well, _significant_ chunks of code are in the works already (and my
-question was really more about them).
-
-> there's no need for a new copyright notice and so no place to put that
-> kind of thing unless Junio wants to relicense blame (which would be
-> orthogonal to these patches).
-
-So my understanding is that when we are talking about _significant_
-additions to builtin/blame.c (the current patches don't qualify as such
-really) that
-
-a) builtin/blame.c is licensed under GPLv2
-b) significant contributions to it will not be relicensed under
-different licenses without the respective contributors' explicit
-consent.
-
-This question is not academical to me.  I don't have any source of
-income apart from people paying me to write free software (mainly
-LilyPond users), so if I'm writing significant pieces of code, I don't
-want to see them distributed as proprietary software (for example, by
-traveling through the very unrestrictively licensed libgit2) without
-being in the situation of negotiating recompensation for that.
-
-The combination of the SubmittingPatches text with the file notices in
-builtin/blame.c is not really painting a full picture of the situation.
-
--- 
-David Kastrup
+Regards,
+Astril.
