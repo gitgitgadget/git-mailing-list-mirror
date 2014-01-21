@@ -1,89 +1,141 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 0/2] Two janitorial patches for builtin/blame.c
-Date: Tue, 21 Jan 2014 12:01:49 -0800
-Message-ID: <20140121200149.GJ18964@google.com>
-References: <1390157870-29795-1-git-send-email-dak@gnu.org>
- <87d2jlqp7x.fsf@fencepost.gnu.org>
- <20140121165546.GE18964@google.com>
- <874n4xqlly.fsf@fencepost.gnu.org>
- <20140121174448.GG18964@google.com>
- <87zjmpp672.fsf@fencepost.gnu.org>
- <20140121191531.GH18964@google.com>
- <87r481p0rt.fsf@fencepost.gnu.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Fix safe_create_leading_directories() for Windows
+Date: Tue, 21 Jan 2014 12:09:08 -0800
+Message-ID: <xmqqeh41umfv.fsf@gitster.dls.corp.google.com>
+References: <52C5A039.6030408@gmail.com>
+	<alpine.DEB.1.00.1401021826120.1191@s15462909.onlinehome-server.info>
+	<xmqqtxdmp39a.fsf@gitster.dls.corp.google.com>
+	<52C5D0AB.7050309@gmail.com>
+	<xmqqha9mozvc.fsf@gitster.dls.corp.google.com>
+	<CAHGBnuNoTrRwnjp7ZqMgveLHZeV68cxOqawf7nWo7gnAAYfSOw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Tue Jan 21 21:07:31 2014
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Sebastian Schuberth <sschuberth@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 21 21:09:18 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W5hbd-0006Ty-1A
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Jan 2014 21:07:29 +0100
+	id 1W5hdO-0007DG-6l
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Jan 2014 21:09:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752074AbaAUUHX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Jan 2014 15:07:23 -0500
-Received: from mail-yh0-f49.google.com ([209.85.213.49]:39900 "EHLO
-	mail-yh0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753292AbaAUUHS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Jan 2014 15:07:18 -0500
-Received: by mail-yh0-f49.google.com with SMTP id b6so2952959yha.22
-        for <git@vger.kernel.org>; Tue, 21 Jan 2014 12:07:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=c5AdEcKYQ0zXg5yPJrNAtZl4xCceunJcz+EVO2g68uA=;
-        b=pTw3PwZsKdrNvoq6p3mfgS6kjVmIQQdhHBnCLH+Z1tTeuuOKdXQ1PEmu949iTfRaD4
-         fQ0GdK/OtsgOPkJLAV10XuPl14fOw1R4AQhIcSVCtzXvXSOK2bT/CqUDaRMAyrZv+Aqz
-         Ys6HX4KiXEDaK3S8mN2pdNuPw8ivphegaI/BC3+ZCRCMzMo/YvXg/AzC5k822YXGoH9r
-         EInWjfny2To0iFZ22Jd4eVqdhmNpNW5LB+8PJk/eIUGeBBONjHiOkPI/cLbyX9AvUEm3
-         g8V0MdqxeSPiE+l7yvDmad3WouBrCAzaVnYSYKAkyzL7+oEWB/5y3SiV8PXYpFPraCbE
-         /vbg==
-X-Received: by 10.236.81.237 with SMTP id m73mr25306227yhe.29.1390334512462;
-        Tue, 21 Jan 2014 12:01:52 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id w8sm16111856yhg.8.2014.01.21.12.01.51
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 21 Jan 2014 12:01:51 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <87r481p0rt.fsf@fencepost.gnu.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752329AbaAUUJP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Jan 2014 15:09:15 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41010 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750824AbaAUUJN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Jan 2014 15:09:13 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1F8DB63511;
+	Tue, 21 Jan 2014 15:09:12 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=0GDk6Ca+DRlFPrsp99Aocvk0F78=; b=bSAlLX
+	q7z/Chgwip0oKoiQCLzL5SL3RnR9x8yShhM+Ssz1DCnxIkU5425uFg4xhuTz5Q8F
+	Y8m8NqlzwHB1kSEikG6HCdmGRZfJ3YH8qaNK3g48yvivvjYns/KEPK/Y0dkvCvrf
+	8HS2GzTF8ChkaUhXpJNyP9E6bABiYYlC/0S3M=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Wi2affPF0v1KRigzw4qmiufYS2RAIKhg
+	F3qvb3az6PQM8e1ILqXMF2B6R/2BN6FvYZzkbi8clBM2+5T12t+9YOXKK3vUEJ/d
+	+HOCyvPbWA4xZHliChM3lCo8ujw3tZ8RswdyafRjJwD7cA37YHu04MWw8pbEpRfd
+	ZTwoGuAKf/g=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0EDB86350E;
+	Tue, 21 Jan 2014 15:09:12 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1AC356350D;
+	Tue, 21 Jan 2014 15:09:10 -0500 (EST)
+In-Reply-To: <CAHGBnuNoTrRwnjp7ZqMgveLHZeV68cxOqawf7nWo7gnAAYfSOw@mail.gmail.com>
+	(Sebastian Schuberth's message of "Sun, 19 Jan 2014 08:26:33 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: E44F1CF2-82D7-11E3-8102-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240770>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240771>
 
-David Kastrup wrote:
+Sebastian Schuberth <sschuberth@gmail.com> writes:
 
-> and contrib.  The README file states
+> On Thu, Jan 2, 2014 at 10:08 PM, Junio C Hamano <gitster@pobox.com> wrote:
 >
->     Git is an Open Source project covered by the GNU General Public
->     License version 2 (some parts of it are under different licenses,
->     compatible with the GPLv2). It was originally written by Linus
->     Torvalds with help of a group of hackers around the net.
+>>> Seems like the path to clone to is taken as-is from argv in
+>>> cmd_clone(). So maybe another solution would be to replace all
+>>> backslashes with forward slashes already there?
+>>
+>> That sounds like a workable alternative, and it might even be a
+>> preferable solution but if and only if clone's use of the function
+>> to create paths that lead to a new working tree location is the only
+>> (ab)use of the function.  That was what I meant when I said "it may
+>> be that it is a bug in the specific caller".  AFAIK, the function
 >
-> without mentioning _which_ parts are under different licenses.
+> I think Dscho made valid points in his other mail that the better
+> solution still is to make safe_create_leading_directories() actually
+> safe, also regarding its arguments.
 
-Okay, how about this patch?
+Sorry, but I think I misremebered the reason why we have that
+function.
 
-diff --git i/README w/README
-index 15a8e23..6745db5 100644
---- i/README
-+++ w/README
-@@ -21,8 +21,9 @@ and full access to internals.
- 
- Git is an Open Source project covered by the GNU General Public
- License version 2 (some parts of it are under different licenses,
--compatible with the GPLv2). It was originally written by Linus
--Torvalds with help of a group of hackers around the net.
-+compatible with the GPLv2, and have notices to that effect). It was
-+originally written by Linus Torvalds with help of a group of hackers
-+around the net.
- 
- Please read the file INSTALL for installation instructions.
- 
+There are two reasons we may need to do a rough equivalent of 
+
+	system("mkdir -p $(dirname a/b/c)")
+
+given an argument 'a/b/c' in our codebase.
+
+ 1. We would want to be able to create 'c' such that we can later
+    refer to "a/b/c" to retrieve what we wrote there, so we need to
+    make sure that "a/b/" refers to a writable directory.
+
+ 2. We were told by the index (or a caller that will then later
+    update the index in a consistent way) that 'a/b/c' must exist in
+    the working tree, so we need to make sure that "a/" and "a/b/"
+    are both directories (not a symlink to a directory elsewhere).
+
+Seeing hits "git grep safe_create_leading_directories" from apply
+and merge-recursive led me to incorrectly assume that this function
+was meant to do the latter [*1*].
+
+But the original purpose of safe_create_leading_directories() in
+sha1_file.c was to "mkdir -p" inside .git/ directories when writing
+to refs e.g. "refs/heads/foo/bar", and for this kind of use, we must
+honor existing symlinks.  ".git/refs" may be a symbolic link in a
+working tree managed by "new-workdir" to the real repository, and we
+do not want to unlink && mkdir it.
+
+We even have an "offset-1st-component" call in the function, which
+is a clear sign that we would want this as usable for the full path
+in the filesystem, which is an indication that this should not be
+used to create paths in the working tree.
+
+So I think it is the right thing to do to allow the function accept
+platform specific path here, and it is OK for "clone" to call it to
+create the path leading to the location of the new repository.
+
+A related tangent is that somebody needs to audit the callers to
+make sure this function is _not_ used to create leading paths in the
+working tree.  If a merge tells us to create "foo/bar/baz.test", we
+should not do an equivalent of "mkdir -p foo/bar && cat >baz.test";
+we must make sure foo/ and foo/bar are real directories without any
+symbolic link in the leading paths components (the same thing can be
+said for "apply").  I have a suspicion that the two hits from apply
+and merge-recursive are showing an existing bug that is not platform
+specific.
+
+Thanks.
+
+
+[Footnote]
+
+*1* In such a context, getting "a/b\c/d" and failing to make sure
+"a/" is a directory that has "b\c/" as its immediate subdirectory is
+a bug---especially, splitting at the backslash between 'b' and 'c'
+and creating 'a/b/c/' is not acceptable. The platform code should
+instead say "sorry, we cannot do that" if it cannot create a
+directory entry "b\c" in the directory "a/" (which would make sure
+such a non-portable path in projects will be detected).
