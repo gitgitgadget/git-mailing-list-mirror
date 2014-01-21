@@ -1,95 +1,122 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 0/2] Two janitorial patches for builtin/blame.c
-Date: Tue, 21 Jan 2014 11:15:31 -0800
-Message-ID: <20140121191531.GH18964@google.com>
-References: <1390157870-29795-1-git-send-email-dak@gnu.org>
- <87d2jlqp7x.fsf@fencepost.gnu.org>
- <20140121165546.GE18964@google.com>
- <874n4xqlly.fsf@fencepost.gnu.org>
- <20140121174448.GG18964@google.com>
- <87zjmpp672.fsf@fencepost.gnu.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/3] setup_pager: set MORE=R
+Date: Tue, 21 Jan 2014 11:23:30 -0800
+Message-ID: <xmqqwqhtuojx.fsf@gitster.dls.corp.google.com>
+References: <20140117041430.GB19551@sigill.intra.peff.net>
+	<20140117042153.GB23443@sigill.intra.peff.net>
+	<xmqqvbxiwh8y.fsf@gitster.dls.corp.google.com>
+	<20140121054927.GD5878@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Tue Jan 21 20:15:41 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+	Yuri <yuri@rawbw.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jan 21 20:23:53 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W5gnU-0001xo-LL
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Jan 2014 20:15:41 +0100
+	id 1W5gvQ-0003xy-CT
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Jan 2014 20:23:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751828AbaAUTPh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 21 Jan 2014 14:15:37 -0500
-Received: from mail-gg0-f169.google.com ([209.85.161.169]:64150 "EHLO
-	mail-gg0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751140AbaAUTPg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Jan 2014 14:15:36 -0500
-Received: by mail-gg0-f169.google.com with SMTP id j5so2770651ggn.28
-        for <git@vger.kernel.org>; Tue, 21 Jan 2014 11:15:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=SbE9U4l1vni2AUs3DjBESy+MD12EXaWdUIZlc+NM5S0=;
-        b=YQqk8pBmLl4MNtUNN6PcOGA9T0Vj4g+8T/ujr0gwm17eVtXjLZSrNddglREwEUcvVS
-         LJG93GV1vz4iXXyYfvn5O4M8idN2ZxuSFHH/fLwOZcueQrt88YaIvJDzxtUED1W6Hn6z
-         hQ1fECqReMQREtE1tC9Cmw094t8t11YxhTtaqcJtPzH6KDJ5OnE6u4KF8m3ir0schphc
-         1yyXhK6/iNwRhgBDFjpmfHBNOI1hf2pCSM0aZl2TyKTJns0tWNR1UyiHs+2OZEM4nNLq
-         0aVZN6ofArdqpBY6IRdJEHwpcmfla47pG5+QH6RDSLvZGXXFrXek0HIqJcJa0mfCvW+I
-         6veA==
-X-Received: by 10.236.150.45 with SMTP id y33mr2526487yhj.124.1390331735178;
-        Tue, 21 Jan 2014 11:15:35 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id c44sm15776296yho.20.2014.01.21.11.15.33
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 21 Jan 2014 11:15:34 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <87zjmpp672.fsf@fencepost.gnu.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754357AbaAUTXr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Jan 2014 14:23:47 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52619 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753140AbaAUTXl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Jan 2014 14:23:41 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0EE8164768;
+	Tue, 21 Jan 2014 14:23:38 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Qw2hFEHXUvkGjbXj+fT4ci/wXaI=; b=xYEEin
+	7+bilPeBX9mPlfpzLvqSB3p1W8VfsuIIsyQ64qzl8SEl9CFcb+yW2gkD+BhCDVXI
+	ogTQB7KsMly4YvKLWRSPEvksNFjqL7exCkskfBBwGaJTB5AjEqVu3X47CLiSOCWz
+	0kVzTpHSK/MklAJItkF8wWuoSlT3a+MlexMPM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=oIErmJ4PdZK7OL/BSwttvw+RJTWLckf0
+	uQGfCP4wZC0w3phQE24CvdCxV3ikIdX58A1Gh+ps/swdE+z6U8zqldu5LNcXGzPR
+	3qZpYdHLrJJBE9/7/ejXWMDDo8N3G1Z3XjjtCi3uPMc3hmv3hmaG1ldboiMjvH+j
+	9WxZ0abRgIM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D7BA264767;
+	Tue, 21 Jan 2014 14:23:37 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EDCD964764;
+	Tue, 21 Jan 2014 14:23:35 -0500 (EST)
+In-Reply-To: <20140121054927.GD5878@sigill.intra.peff.net> (Jeff King's
+	message of "Tue, 21 Jan 2014 00:49:27 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 860A6706-82D1-11E3-9A9E-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240763>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240764>
 
-David Kastrup wrote:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
->> Any idea how this could be made more clear?  E.g., maybe we should
->> bite the bullet and add a line to all source files that don't alread=
-y
->> state a license:
->>
->> 	/*
->> 	 * License: GPLv2.  See COPYING for details.
->> 	 */
+> ...
+> does complicate the point of my series, which was to add more intimate
+> logic about how we handle LESS.
+> ...
+>                 return !x || strchr(x, 'R');
+>     }
 >
-> Probably somewhat more verbose like "This file may be distributed und=
-er
-> the conditions of the GPLv2.  See the file COPYING for details".
-> I=A0think there are boilerplate texts for that.
+>     [...]
+>   }
+>
+> but we are still hard-coding a lot of intelligence about "less" here.
 
-All else being equal, longer is worse.
+I am not sure if it is even a good idea for us to have so intimate
+logic for various pagers in the first place.  I'd seriously wonder
+if it is better to take this position:
 
-> Whatever the exact wording, that would be the cleanest way I think.  =
-The
-> respective Documentation/SubmittingPatches text looks like it is quot=
-ed
-> from somewhere else, so adapting it to the realities of files without
-> clear copyright statement seems less straightforward.
+	A platform packager who sets the default pager and/or the
+	default environment for the pager at the build time, or an
+	individual user who tells your Git what pager you want to
+	use and/or with what setting that pager should be run under
+	with environment variables. These people ought to know far
+	better than Git what their specific choices do. Do not try
+	to second-guess them.
 
-Hm, the wording comes from the Linux kernel project, where it's also
-pretty normal not to have a license notice in every file (and where
-the default license is also GPLv2).
+The potential breakage caused by setting MORE=R unconditionally is a
+good example.  A careless "intimate logic" may think that any pager
+that is called 'more' would behave like traditional 'more', breaking
+half the 'more' user population while catering to the other half.
 
-Is the problem the phrase "indicated in the file", or is the problem
-e.g. the lack of a pointer to
-https://github.com/libgit2/libgit2/blob/development/git.git-authors?
+> I
+> wonder if the abstraction provided by the Makefile variable is really
+> worthwhile. Anybody adding a new line to it would also want to tweak
+> pager_can_handle_color to add similar logic.
 
-Jonathan
+And that is why I am not enthused by the idea of adding such logic
+in the first place.  I view the Makefile customization as a way for
+the packager to offer a sensible default for their platform without
+touching the code, which is slightly different from your 1. below.
+
+> Taking a step back for a moment, we are getting two things out of such a
+> Makefile variable:
+>
+>   1. An easy way for packager to add intelligence about common pagers on
+>      their system.
+>
+>   2. DRY between git-sh-setup and the C code.
+>
+> I do like (1), but I do not know if we want to try to encode the "can
+> handle color" logic into a Makefile variable. What would it look like?
+>
+> For (2), an alternate method would be to simply provide "git pager" as C
+> code, which spawns the appropriate pager as the C code would. Then
+> git-sh-setup can easily build around that.
+
+And as to 2., if the answer to the other issue "do we want our code
+to be intimately aware of pager-specific quirks, or do we just want
+to give packagers a knob to express their choice of the default?"
+resolves to the former, I would think that "git pager" would be not
+just a workable alternative, but would be the only viable one.
