@@ -1,77 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git repack --max-pack-size broken in git-next
-Date: Tue, 21 Jan 2014 15:01:29 -0800
-Message-ID: <xmqqzjmprlbq.fsf@gitster.dls.corp.google.com>
-References: <52DEF927.7090005@fb.com>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [PATCH 1/2] builtin/blame.c: struct blame_entry does not need a prev link
+Date: Wed, 22 Jan 2014 00:02:45 +0100
+Organization: Organization?!?
+Message-ID: <87eh41os4q.fsf@fencepost.gnu.org>
+References: <1390157870-29795-1-git-send-email-dak@gnu.org>
+	<1390157870-29795-2-git-send-email-dak@gnu.org>
+	<xmqqlhy9t2z1.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>, Siddharth Agarwal <sid0@fb.com>
-To: <stefanbeller@googlemail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 22 00:01:40 2014
+Content-Type: text/plain
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 22 00:03:08 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W5kKC-0004QC-2L
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Jan 2014 00:01:40 +0100
+	id 1W5kLZ-0004sv-ON
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Jan 2014 00:03:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753575AbaAUXBf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Jan 2014 18:01:35 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35627 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752187AbaAUXBe (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Jan 2014 18:01:34 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 41D4D65937;
-	Tue, 21 Jan 2014 18:01:34 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=HMzJzE5xF7CkszfOR3PYFZCsIkM=; b=KgqGAb
-	hleNeODwI7qXp4CZKo/1GQRftijYOY9Yhv8Ju1drAcsD0bb+YRvEvdEEHWNO8W6J
-	ZlI5Ag7k73LXZz0zx1xxmuSJNyqyYpORCbBuN94H+RTZXul6eY7nDbTYnK6GexSb
-	Ine5iE7egjrZ8dfomqpzrZuvmwThfycCKk96s=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=YaftXyWMoRZ18MtOFXtNk/bAUTIQy9R2
-	zqA2Bw2RR9Xes6+73JrSQa/KsdF3wrqW0RyQKoWJXaN8ykZirGRV/bl9RgTHKsOZ
-	4D9XyfLSSdOWU0lEtyA8Mz7yhRcnSV08UnR6W2PvdUPZ3dKPjAVAcduZ3EvbwhFV
-	zUAPEBk6WjY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3044465936;
-	Tue, 21 Jan 2014 18:01:34 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3657E65931;
-	Tue, 21 Jan 2014 18:01:33 -0500 (EST)
-In-Reply-To: <52DEF927.7090005@fb.com> (Siddharth Agarwal's message of "Tue,
-	21 Jan 2014 14:48:07 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: F8AFBB3A-82EF-11E3-936B-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752191AbaAUXDB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Jan 2014 18:03:01 -0500
+Received: from plane.gmane.org ([80.91.229.3]:45749 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750862AbaAUXDA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Jan 2014 18:03:00 -0500
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1W5kLS-0004q3-CR
+	for git@vger.kernel.org; Wed, 22 Jan 2014 00:02:58 +0100
+Received: from x2f444fe.dyn.telefonica.de ([2.244.68.254])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 22 Jan 2014 00:02:58 +0100
+Received: from dak by x2f444fe.dyn.telefonica.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 22 Jan 2014 00:02:58 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: x2f444fe.dyn.telefonica.de
+X-Face: 2FEFf>]>q>2iw=B6,xrUubRI>pR&Ml9=ao@P@i)L:\urd*t9M~y1^:+Y]'C0~{mAl`oQuAl
+ \!3KEIp?*w`|bL5qr,H)LFO6Q=qx~iH4DN;i";/yuIsqbLLCh/!U#X[S~(5eZ41to5f%E@'ELIi$t^
+ Vc\LWP@J5p^rst0+('>Er0=^1{]M9!p?&:\z]|;&=NP3AhB!B_bi^]Pfkw
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3.50 (gnu/linux)
+Cancel-Lock: sha1:MwavHXgzDj0U7oGpjTdRmunPCuA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240788>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240789>
 
-Siddharth Agarwal <sid0@fb.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> With git-next, the --max-pack-size option to git repack doesn't work.
+> David Kastrup <dak@gnu.org> writes:
 >
-> With git at b139ac2, `git repack --max-pack-size=1g` says
+>> ---
 >
-> error: option `max-pack-size' expects a numerical value
+> Thanks.  At some point during its development I must have thought
+> that having it as a dual-linked list may make it easier when we have
+> to split a block into pieces, but it seems that split_overlap() does
+> not need to look at this information.
+>
+> Needs sign-off.
 
-Thanks, Siddharth.
+Well, as I said: it's quite possible that the double-linking might be
+useful for some particular hypothetical rewrite of the code.  It isn't
+for the current code, and it's not useful for my own rewrite.
 
-It seems that we have a hand-crafted parser outside parse-options
-framework in pack-objects, and the scripted git-repack used to pass
-this option without interpreting itself.
+Will be posting a signed-off version presently.
 
-We probably should lift the OPT_ULONG() implementation out of
-builtin/pack-objects.c and move it to parse-options.[ch] and use it
-in the reimplementation of repack.
-
-And probably use it in other places where these "integers in
-human-friendly units" may make sense, but that is a separate topic.
+-- 
+David Kastrup
