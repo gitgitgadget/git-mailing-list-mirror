@@ -1,129 +1,77 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [PATCH 0/2] Two janitorial patches for builtin/blame.c
-Date: Tue, 21 Jan 2014 23:56:37 +0100
-Message-ID: <87iotdosey.fsf@fencepost.gnu.org>
-References: <1390157870-29795-1-git-send-email-dak@gnu.org>
-	<87d2jlqp7x.fsf@fencepost.gnu.org> <20140121165546.GE18964@google.com>
-	<874n4xqlly.fsf@fencepost.gnu.org> <20140121174448.GG18964@google.com>
-	<xmqqa9epulwq.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git repack --max-pack-size broken in git-next
+Date: Tue, 21 Jan 2014 15:01:29 -0800
+Message-ID: <xmqqzjmprlbq.fsf@gitster.dls.corp.google.com>
+References: <52DEF927.7090005@fb.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 21 23:56:44 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: <git@vger.kernel.org>, Siddharth Agarwal <sid0@fb.com>
+To: <stefanbeller@googlemail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 22 00:01:40 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W5kFP-0002ci-Ep
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Jan 2014 23:56:43 +0100
+	id 1W5kKC-0004QC-2L
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Jan 2014 00:01:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752819AbaAUW4j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Jan 2014 17:56:39 -0500
-Received: from fencepost.gnu.org ([208.118.235.10]:46968 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752553AbaAUW4j (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Jan 2014 17:56:39 -0500
-Received: from localhost ([127.0.0.1]:46008 helo=lola)
-	by fencepost.gnu.org with esmtp (Exim 4.71)
-	(envelope-from <dak@gnu.org>)
-	id 1W5kFK-0006k2-1T; Tue, 21 Jan 2014 17:56:38 -0500
-Received: by lola (Postfix, from userid 1000)
-	id 054E2E051D; Tue, 21 Jan 2014 23:56:37 +0100 (CET)
-In-Reply-To: <xmqqa9epulwq.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Tue, 21 Jan 2014 12:20:37 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3.50 (gnu/linux)
+	id S1753575AbaAUXBf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Jan 2014 18:01:35 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35627 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752187AbaAUXBe (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Jan 2014 18:01:34 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 41D4D65937;
+	Tue, 21 Jan 2014 18:01:34 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=HMzJzE5xF7CkszfOR3PYFZCsIkM=; b=KgqGAb
+	hleNeODwI7qXp4CZKo/1GQRftijYOY9Yhv8Ju1drAcsD0bb+YRvEvdEEHWNO8W6J
+	ZlI5Ag7k73LXZz0zx1xxmuSJNyqyYpORCbBuN94H+RTZXul6eY7nDbTYnK6GexSb
+	Ine5iE7egjrZ8dfomqpzrZuvmwThfycCKk96s=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=YaftXyWMoRZ18MtOFXtNk/bAUTIQy9R2
+	zqA2Bw2RR9Xes6+73JrSQa/KsdF3wrqW0RyQKoWJXaN8ykZirGRV/bl9RgTHKsOZ
+	4D9XyfLSSdOWU0lEtyA8Mz7yhRcnSV08UnR6W2PvdUPZ3dKPjAVAcduZ3EvbwhFV
+	zUAPEBk6WjY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3044465936;
+	Tue, 21 Jan 2014 18:01:34 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3657E65931;
+	Tue, 21 Jan 2014 18:01:33 -0500 (EST)
+In-Reply-To: <52DEF927.7090005@fb.com> (Siddharth Agarwal's message of "Tue,
+	21 Jan 2014 14:48:07 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: F8AFBB3A-82EF-11E3-936B-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240787>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240788>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Siddharth Agarwal <sid0@fb.com> writes:
 
-> Jonathan Nieder <jrnieder@gmail.com> writes:
+> With git-next, the --max-pack-size option to git repack doesn't work.
 >
->> David Kastrup wrote:
->>
->>> So my understanding is that when we are talking about _significant_
->>> additions to builtin/blame.c (the current patches don't qualify as such
->>> really) that
->>>
->>> a) builtin/blame.c is licensed under GPLv2
->>> b) significant contributions to it will not be relicensed under
->>> different licenses without the respective contributors' explicit
->>> consent.
->>
->> Yep, that's how it works.
->>
->> [...]
->>> The combination of the SubmittingPatches text with the file notices in
->>> builtin/blame.c is not really painting a full picture of the situation.
->>
->> Any idea how this could be made more clear?  E.g., maybe we should
->> bite the bullet and add a line to all source files that don't already
->> state a license:
->>
->> 	/*
->> 	 * License: GPLv2.  See COPYING for details.
->> 	 */
+> With git at b139ac2, `git repack --max-pack-size=1g` says
 >
-> I vaguely recall that jgit folks at one point wanted to lift this
-> implementation and were interested in seeing it to be dual licensed
-> to BSD but that was a long time ago.
->
->   http://git.661346.n2.nabble.com/JGIT-Blame-functionality-for-jgit-td2142726.html
+> error: option `max-pack-size' expects a numerical value
 
-Ok, let me state quite clearly before we waste time, energy and
-goodwill:
+Thanks, Siddharth.
 
-a) I am reworking the core logic of blame.c to make it produce the same
-results while being orders of magnitude faster.  Git's current
-implementation is a roadblock for serious use.  Keeping its current core
-algorithms and data flow, it would have been reasonably easy to speed
-the current code up by a factor of 2 or more by doing local
-optimizations.  But I've chosen _not_ to keep the current logic and data
-flow.  That means quite a bit more work, and it means completely
-understanding the existing code before being able to replace it.
+It seems that we have a hand-crafted parser outside parse-options
+framework in pack-objects, and the scripted git-repack used to pass
+this option without interpreting itself.
 
-The core part of blame.c spends literally billions of iterations in
-real-life situations leafing through one large linear list for tiny bits
-of information.  One could use a better searchable data structure and
-speed up the access in that manner, but better than a fast search is no
-search at all.  I am separating the data so that at any given time I am
-only accessing actually relevant data.  O(n) beats O(n lg n), and the
-code remains almost as readable as the current O(n^2).
+We probably should lift the OPT_ULONG() implementation out of
+builtin/pack-objects.c and move it to parse-options.[ch] and use it
+in the reimplementation of repack.
 
-b) This will require thoroughly reworking the core parts of the
-algorithm which will then be about 50/50 old and new code that cannot
-sensibly be separated since significant parts of the previous code will
-be gone completely as the data flow is fundamentally different.
-
-c) The "fine points" of blame.c, in particular all the various command
-line options and the implementation of their exact meaning would stay
-the same.  I hope I can avoid touching more than 50% of the code.
-
-d) I am fine with distributing my work under the GPLv2 or later, but no
-other license will be implied.  While this does not affect the core Git
-distribution itself: for distribution under more permissive licenses for
-the purpose of making inclusion in proprietary software possible, I'd
-probably attach a big price tag that reflects the amount of work and
-quality of code going in and the fact that I have no other source of
-income.
-
-e) No idea whether this would affect JGIT: it depends on how much JGIT
-would be a literal translation of blame.c into Java (?) or a
-functionally equivalent rewrite employing different and/or native data
-structures to achieve the same effect.  To me it's irritating that
-something like the fine but boring points of option parsing might be
-more susceptible to copyright protection than doing a careful
-algorithmic design, but that's the way the world is wired.
-
-At any rate: JGIT or not, I'll be contributing work with the
-understanding that it will be licensed under the _current_ licensing
-scheme of Git.  And I think that's a reasonable expectation.
-
--- 
-David Kastrup
+And probably use it in other places where these "integers in
+human-friendly units" may make sense, but that is a separate topic.
