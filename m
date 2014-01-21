@@ -1,127 +1,89 @@
-From: David Kastrup <dak@gnu.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
 Subject: Re: [PATCH 0/2] Two janitorial patches for builtin/blame.c
-Date: Tue, 21 Jan 2014 20:56:06 +0100
-Message-ID: <87r481p0rt.fsf@fencepost.gnu.org>
+Date: Tue, 21 Jan 2014 12:01:49 -0800
+Message-ID: <20140121200149.GJ18964@google.com>
 References: <1390157870-29795-1-git-send-email-dak@gnu.org>
-	<87d2jlqp7x.fsf@fencepost.gnu.org> <20140121165546.GE18964@google.com>
-	<874n4xqlly.fsf@fencepost.gnu.org> <20140121174448.GG18964@google.com>
-	<87zjmpp672.fsf@fencepost.gnu.org> <20140121191531.GH18964@google.com>
+ <87d2jlqp7x.fsf@fencepost.gnu.org>
+ <20140121165546.GE18964@google.com>
+ <874n4xqlly.fsf@fencepost.gnu.org>
+ <20140121174448.GG18964@google.com>
+ <87zjmpp672.fsf@fencepost.gnu.org>
+ <20140121191531.GH18964@google.com>
+ <87r481p0rt.fsf@fencepost.gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 21 20:56:13 2014
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Tue Jan 21 21:07:31 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W5hQj-0002EA-BA
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Jan 2014 20:56:13 +0100
+	id 1W5hbd-0006Ty-1A
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Jan 2014 21:07:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751887AbaAUT4K convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 21 Jan 2014 14:56:10 -0500
-Received: from fencepost.gnu.org ([208.118.235.10]:43958 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750841AbaAUT4I convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 21 Jan 2014 14:56:08 -0500
-Received: from localhost ([127.0.0.1]:43000 helo=lola)
-	by fencepost.gnu.org with esmtp (Exim 4.71)
-	(envelope-from <dak@gnu.org>)
-	id 1W5hQd-0006gP-Ik; Tue, 21 Jan 2014 14:56:07 -0500
-Received: by lola (Postfix, from userid 1000)
-	id F3FD0E051D; Tue, 21 Jan 2014 20:56:06 +0100 (CET)
-In-Reply-To: <20140121191531.GH18964@google.com> (Jonathan Nieder's message of
-	"Tue, 21 Jan 2014 11:15:31 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3.50 (gnu/linux)
+	id S1752074AbaAUUHX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Jan 2014 15:07:23 -0500
+Received: from mail-yh0-f49.google.com ([209.85.213.49]:39900 "EHLO
+	mail-yh0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753292AbaAUUHS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Jan 2014 15:07:18 -0500
+Received: by mail-yh0-f49.google.com with SMTP id b6so2952959yha.22
+        for <git@vger.kernel.org>; Tue, 21 Jan 2014 12:07:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=c5AdEcKYQ0zXg5yPJrNAtZl4xCceunJcz+EVO2g68uA=;
+        b=pTw3PwZsKdrNvoq6p3mfgS6kjVmIQQdhHBnCLH+Z1tTeuuOKdXQ1PEmu949iTfRaD4
+         fQ0GdK/OtsgOPkJLAV10XuPl14fOw1R4AQhIcSVCtzXvXSOK2bT/CqUDaRMAyrZv+Aqz
+         Ys6HX4KiXEDaK3S8mN2pdNuPw8ivphegaI/BC3+ZCRCMzMo/YvXg/AzC5k822YXGoH9r
+         EInWjfny2To0iFZ22Jd4eVqdhmNpNW5LB+8PJk/eIUGeBBONjHiOkPI/cLbyX9AvUEm3
+         g8V0MdqxeSPiE+l7yvDmad3WouBrCAzaVnYSYKAkyzL7+oEWB/5y3SiV8PXYpFPraCbE
+         /vbg==
+X-Received: by 10.236.81.237 with SMTP id m73mr25306227yhe.29.1390334512462;
+        Tue, 21 Jan 2014 12:01:52 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id w8sm16111856yhg.8.2014.01.21.12.01.51
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 21 Jan 2014 12:01:51 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <87r481p0rt.fsf@fencepost.gnu.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240769>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240770>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+David Kastrup wrote:
 
-> David Kastrup wrote:
->> Jonathan Nieder <jrnieder@gmail.com> writes:
+> and contrib.  The README file states
 >
->>> Any idea how this could be made more clear?  E.g., maybe we should
->>> bite the bullet and add a line to all source files that don't alrea=
-dy
->>> state a license:
->>>
->>> 	/*
->>> 	 * License: GPLv2.  See COPYING for details.
->>> 	 */
->>
->> Probably somewhat more verbose like "This file may be distributed un=
-der
->> the conditions of the GPLv2.  See the file COPYING for details".
->> I=A0think there are boilerplate texts for that.
+>     Git is an Open Source project covered by the GNU General Public
+>     License version 2 (some parts of it are under different licenses,
+>     compatible with the GPLv2). It was originally written by Linus
+>     Torvalds with help of a group of hackers around the net.
 >
-> All else being equal, longer is worse.
+> without mentioning _which_ parts are under different licenses.
 
-I am not sure that all else is equal.
+Okay, how about this patch?
 
->> Whatever the exact wording, that would be the cleanest way I think. =
- The
->> respective Documentation/SubmittingPatches text looks like it is quo=
-ted
->> from somewhere else, so adapting it to the realities of files withou=
-t
->> clear copyright statement seems less straightforward.
->
-> Hm, the wording comes from the Linux kernel project, where it's also
-> pretty normal not to have a license notice in every file (and where
-> the default license is also GPLv2).
->
-> Is the problem the phrase "indicated in the file",
-
-At least that's what I perceive as a problem in combination with the
-complete absence of any such notice in the file I am contributing to.
-
-git grep -i license
-
-actually shows a dearth of licensing information outside of subprojects
-and contrib.  The README file states
-
-    Git is an Open Source project covered by the GNU General Public
-    License version 2 (some parts of it are under different licenses,
-    compatible with the GPLv2). It was originally written by Linus
-    Torvalds with help of a group of hackers around the net.
-
-without mentioning _which_ parts are under different licenses.  The
-license file COPYING itself does not specify which files are covered,
-and there is _also_ LGPL-2.1 which has a statement
-
-     While most of this project is under the GPL (see COPYING), the
-     xdiff/ library and some libc code from compat/ are licensed under
-     the GNU LGPL, version 2.1 or (at your option) any later version an=
-d
-     some other files are under other licenses.  Check the individual
-     files to be sure.
-
-Well, and when checking the individual files, there is really nothing
-to be found for "being sure".
-
-The net result is that when signing off on a patch according to the
-rules in Documentation/SubmittingPatches, for most files you don't
-really have a definite statement just _what_ license you are agreeing
-your work to be distributed under.
-
-> or is the problem
-> e.g. the lack of a pointer to
-> https://github.com/libgit2/libgit2/blob/development/git.git-authors?
-
-No, not at all.  libgit2 is not in any way special among projects that
-might want to have access to Git code under different licenses.  It
-would be possible to state something like "Unless indicated otherwise,
-consent will be assumed for contributions to Git as being
-redistributable in the libgit2 project under its respective licenses" o=
-r
-something, but I think that would be seriously surprising, and not
-noticing such a clause could not be construed as implying consent.
-
---=20
-David Kastrup
+diff --git i/README w/README
+index 15a8e23..6745db5 100644
+--- i/README
++++ w/README
+@@ -21,8 +21,9 @@ and full access to internals.
+ 
+ Git is an Open Source project covered by the GNU General Public
+ License version 2 (some parts of it are under different licenses,
+-compatible with the GPLv2). It was originally written by Linus
+-Torvalds with help of a group of hackers around the net.
++compatible with the GPLv2, and have notices to that effect). It was
++originally written by Linus Torvalds with help of a group of hackers
++around the net.
+ 
+ Please read the file INSTALL for installation instructions.
+ 
