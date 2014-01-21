@@ -1,91 +1,167 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 04/16] trailer: process command line trailer arguments
-Date: Tue, 21 Jan 2014 14:50:52 -0800
-Message-ID: <xmqq4n4xt0dv.fsf@gitster.dls.corp.google.com>
-References: <20140119083636.2734.14378.chriscool@tuxfamily.org>
-	<20140119085355.2734.58646.chriscool@tuxfamily.org>
-	<xmqqd2jlt0ua.fsf@gitster.dls.corp.google.com>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: Re: [PATCH/RFC] Makefile: Fix compilation of windows resource file
+Date: Tue, 21 Jan 2014 22:51:30 +0000
+Message-ID: <52DEF9F2.1000905@ramsay1.demon.co.uk>
+References: <52DD857C.6060005@ramsay1.demon.co.uk>	<xmqqy529t5bb.fsf@gitster.dls.corp.google.com> <xmqqppnlt3u3.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
-	Josh Triplett <josh@joshtriplett.org>,
-	Thomas Rast <tr@thomasrast.ch>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Dan Carpenter <dan.carpenter@oracle.com>,
-	Greg Kroah-Hartman <greg@kroah.com>, Jeff King <peff@peff.net>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Tue Jan 21 23:51:01 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: GIT Mailing-list <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 21 23:51:40 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W5k9s-0000bJ-UE
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Jan 2014 23:51:01 +0100
+	id 1W5kAU-0000pD-RA
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Jan 2014 23:51:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753506AbaAUWu5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Jan 2014 17:50:57 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35909 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750862AbaAUWu4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Jan 2014 17:50:56 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CD6246560B;
-	Tue, 21 Jan 2014 17:50:55 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=13+JSxavpwYFVNrt3oqKdL7jUiw=; b=xKLgGY
-	Wu1UjyjxKpIL9YNzX5DVBGM1gKV2wHUqBWJo2MrTZF6w0WXjykwTetfIMQ6mqbsy
-	u8qpPHwDRMfLxhk6IW067jrCwvs9p/VBl5fe71usN+/rcriWPfif67/cxEKR2+fw
-	QSmyU2Q2FG/33chn/yIr36qtqArnO/8lSMA9E=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=L/h/kGuHvy6r2UWo50WHbpubugLXNUhC
-	B5wXMpa5r1hfSHhGng8kswTHw5uOBDgwTfGtw/lJDgr2CPob3gvSOkZDq2pSekOd
-	u/T9hDOtUcUJZHLKwGTHhGawVIBSPr0E+/srPJYDCU5wxskL3sA5udb5kuC9sUkX
-	6ViHQLR0iBM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BC6856560A;
-	Tue, 21 Jan 2014 17:50:55 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	id S1753514AbaAUWvf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Jan 2014 17:51:35 -0500
+Received: from mdfmta005.mxout.tch.inty.net ([91.221.169.46]:42999 "EHLO
+	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750862AbaAUWve (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Jan 2014 17:51:34 -0500
+Received: from mdfmta005.tch.inty.net (unknown [127.0.0.1])
+	by mdfmta005.tch.inty.net (Postfix) with ESMTP id 672F318C98A;
+	Tue, 21 Jan 2014 22:51:32 +0000 (GMT)
+Received: from mdfmta005.tch.inty.net (unknown [127.0.0.1])
+	by mdfmta005.tch.inty.net (Postfix) with ESMTP id 1A15018C985;
+	Tue, 21 Jan 2014 22:51:32 +0000 (GMT)
+Received: from [192.168.254.13] (unknown [80.176.147.220])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id ADB9E65609;
-	Tue, 21 Jan 2014 17:50:54 -0500 (EST)
-In-Reply-To: <xmqqd2jlt0ua.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Tue, 21 Jan 2014 14:41:01 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 7C341F66-82EE-11E3-907B-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	by mdfmta005.tch.inty.net (Postfix) with ESMTP;
+	Tue, 21 Jan 2014 22:51:31 +0000 (GMT)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.2.0
+In-Reply-To: <xmqqppnlt3u3.fsf@gitster.dls.corp.google.com>
+X-MDF-HostID: 18
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240785>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240786>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On 21/01/14 21:36, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+>> Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
+>>
+>>> If the git version number consists of less than three period
+>>> separated numbers, then the windows resource file compilation
+>>> issues a syntax error:
+>>>
+>>>   $ touch git.rc
+>>>   $ make V=1 git.res
+>>>   GIT_VERSION = 1.9.rc0
+>>>   windres -O coff \
+>>>             -DMAJOR=1 -DMINOR=9 -DPATCH=rc0 \
+>>>             -DGIT_VERSION="\\\"1.9.rc0\\\"" git.rc -o git.res
+>>>   C:\msysgit\msysgit\mingw\bin\windres.exe: git.rc:2: syntax error
+>>>   make: *** [git.res] Error 1
+>>>   $
+>>>
+>>> [Note that -DPATCH=rc0]
+>>
+>> Thanks for a report.  I've been wondering how many distros and
+>> packagers would have an issue like this when we go to 2-digit
+>> release naming.  Of course we knew everybody can grok 3-or-4 ;-)
+>>
+>>> In order to fix the syntax error, we replace any rcX with zero and
+>>> include some additional 'zero' padding to the version number list.
+>>>
+>>> Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+>>> ---
+>>>
+>>> Hi Junio,
+>>>
+>>> This patch is marked RFC because, as I was just about to send this
+>>> email, I realized it wouldn't always work:
+>>
+>> Yeah, and I suspect that with the use of $(wordlist 1,3,...) it is
+>> not even working for maintenance releases.  Does it differenciate
+>> between 1.8.5.1 and 1.8.5.2, for example?.  Or does "windres" always
+>> assume that a package version is always 3-dewey-decimal (not 2, not
+>> 4)?
 
->> +static struct trailer_item *create_trailer_item(const char *string)
->> +{
->> +	struct strbuf tok = STRBUF_INIT;
->> +	struct strbuf val = STRBUF_INIT;
->> +	struct trailer_item *new;
->> +
->> +	parse_trailer(&tok, &val, string);
->> +
->> +	int tok_alnum_len = alnum_len(tok.buf, tok.len);
->
-> decl-after-stmt.
->
->> +
->> +	/* Lookup if the token matches something in the config */
->> +	struct trailer_item *item;
+I'm no expert on '.rc' file syntax, but the code certainly does not
+(currently) support four digit versions.
 
-ditto.
+> Perhaps like this?  Just grab digit-only segments that are separated
+> with either dot or dash (and stop when we see a non-digit like
+> 'dirty' or 'rcX'), and make them separated with comma.
 
->> +	for (item = first_conf_item; item; item = item->next)
->> +	{
+Oh, this is *much* better than my new (unsent) attempt to fix this! ;-)
 
-Style.
+> 
+> Note that I am merely guessing that "short-digit" version numbers
+> are acceptable by now after seeing
+> 
+>     https://sourceware.org/ml/binutils/2012-07/msg00199.html
 
-I wonder if Cc list is being a bit too wide for this series, by the
-way.
+Ah, nice find!
+
+I will test your patch (below) and let you know soon, but it looks
+good to me. (I can't test it tonight, unfortunately.)
+
+ATB,
+Ramsay Jones
+
+> 
+> without knowing the current state of affairs.  If that is not the
+> case you may have to count the iteration of the loop and append or
+> chop the resulting string as necessary.
+> 
+>  Makefile              |  2 +-
+>  gen-version-string.sh | 13 +++++++++++++
+>  git.rc                |  4 ++--
+>  3 files changed, 16 insertions(+), 3 deletions(-)
+> 
+> diff --git a/Makefile b/Makefile
+> index b4af1e2..329f942 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -1773,7 +1773,7 @@ $(SCRIPT_LIB) : % : %.sh GIT-SCRIPT-DEFINES
+>  
+>  git.res: git.rc GIT-VERSION-FILE
+>  	$(QUIET_RC)$(RC) \
+> -	  $(join -DMAJOR= -DMINOR= -DPATCH=, $(wordlist 1,3,$(subst -, ,$(subst ., ,$(GIT_VERSION))))) \
+> +		-DVERSIONSTRING=$$(./gen-version-string.sh $(GIT_VERSION)) \
+>  	  -DGIT_VERSION="\\\"$(GIT_VERSION)\\\"" $< -o $@
+>  
+>  ifndef NO_PERL
+> diff --git a/gen-version-string.sh b/gen-version-string.sh
+> new file mode 100755
+> index 0000000..00af718
+> --- /dev/null
+> +++ b/gen-version-string.sh
+> @@ -0,0 +1,13 @@
+> +#!/bin/sh
+> +
+> +IFS=.- result=
+> +for v in $1
+> +do
+> +	if expr "$v" : '[0-9][0-9]*$' >/dev/null
+> +	then
+> +		result=$result${result:+,}$v
+> +	else
+> +		break
+> +	fi
+> +done
+> +echo "$result"
+> diff --git a/git.rc b/git.rc
+> index bce6db9..6f2a8d2 100644
+> --- a/git.rc
+> +++ b/git.rc
+> @@ -1,6 +1,6 @@
+>  1 VERSIONINFO
+> -FILEVERSION     MAJOR,MINOR,PATCH,0
+> -PRODUCTVERSION  MAJOR,MINOR,PATCH,0
+> +FILEVERSION     VERSIONSTRING,0
+> +PRODUCTVERSION  VERSIONSTRING,0
+>  BEGIN
+>    BLOCK "StringFileInfo"
+>    BEGIN
+> .
+> 
