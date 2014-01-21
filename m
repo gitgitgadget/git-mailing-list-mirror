@@ -1,114 +1,137 @@
-From: Marc Branchaud <marcnarc@xiplink.com>
-Subject: Re: [PATCHv2] gitk: Replace "next" and "prev" buttons with down and
- up arrows.
-Date: Tue, 21 Jan 2014 10:33:02 -0500
-Message-ID: <52DE932E.7090008@xiplink.com>
-References: <20131008193618.GE9464@google.com> <1387382653-8385-1-git-send-email-marcnarc@xiplink.com>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [PATCH 0/2] Two janitorial patches for builtin/blame.c
+Date: Tue, 21 Jan 2014 17:22:42 +0100
+Organization: Organization?!?
+Message-ID: <87d2jlqp7x.fsf@fencepost.gnu.org>
+References: <1390157870-29795-1-git-send-email-dak@gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	"Lucas Sandery [three am design]" <lucas@threeamdesign.com.au>,
-	Paul Mackerras <paulus@samba.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 21 16:41:41 2014
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 21 17:23:07 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W5dSP-0000rQ-3P
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Jan 2014 16:41:41 +0100
+	id 1W5e6U-000116-8L
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Jan 2014 17:23:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754661AbaAUPlh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Jan 2014 10:41:37 -0500
-Received: from smtp146.ord.emailsrvr.com ([173.203.6.146]:53254 "EHLO
-	smtp146.ord.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752265AbaAUPlg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Jan 2014 10:41:36 -0500
-X-Greylist: delayed 535 seconds by postgrey-1.27 at vger.kernel.org; Tue, 21 Jan 2014 10:41:35 EST
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by smtp31.relay.ord1a.emailsrvr.com (SMTP Server) with ESMTP id 0D9DE3A82B3;
-	Tue, 21 Jan 2014 10:32:40 -0500 (EST)
-X-Virus-Scanned: OK
-Received: by smtp31.relay.ord1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 693D03A8551;
-	Tue, 21 Jan 2014 10:32:39 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.2.0
-In-Reply-To: <1387382653-8385-1-git-send-email-marcnarc@xiplink.com>
+	id S1755136AbaAUQXA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 21 Jan 2014 11:23:00 -0500
+Received: from plane.gmane.org ([80.91.229.3]:58632 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755133AbaAUQW5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Jan 2014 11:22:57 -0500
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1W5e6K-0000v8-1F
+	for git@vger.kernel.org; Tue, 21 Jan 2014 17:22:56 +0100
+Received: from x2f444fe.dyn.telefonica.de ([2.244.68.254])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 21 Jan 2014 17:22:56 +0100
+Received: from dak by x2f444fe.dyn.telefonica.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 21 Jan 2014 17:22:56 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: x2f444fe.dyn.telefonica.de
+X-Face: 2FEFf>]>q>2iw=B6,xrUubRI>pR&Ml9=ao@P@i)L:\urd*t9M~y1^:+Y]'C0~{mAl`oQuAl
+ \!3KEIp?*w`|bL5qr,H)LFO6Q=qx~iH4DN;i";/yuIsqbLLCh/!U#X[S~(5eZ41to5f%E@'ELIi$t^
+ Vc\LWP@J5p^rst0+('>Er0=^1{]M9!p?&:\z]|;&=NP3AhB!B_bi^]Pfkw
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3.50 (gnu/linux)
+Cancel-Lock: sha1:o9A4FPKTK92cZAsTaJmY98N4E6A=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240752>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240753>
 
-On 13-12-18 11:04 AM, Marc Branchaud wrote:
-> Users often find that "next" and "prev" do the opposite of what they
-> expect.  For example, "next" moves to the next match down the list, but
-> that is almost always backwards in time.  Replacing the text with arrows
-> makes it clear where the buttons will take the user.
+David Kastrup <dak@gnu.org> writes:
 
-Any opinions on this, either way?
+> This is more a warmup than anything else: I'm actually doing a quite
+> more involved rewrite of git-blame right now.  But it's been a long
+> time since I=A0sent patches for Git, so I'm starting out with somethi=
+ng
+> reasonably uncontroversial.
 
-I've grown fond of the down/up arrows.  I find them much clearer than the
-current next/prev buttons.
+Ping?
 
-My only niggle about this patch is that the buttons are much smaller,
-requiring a bit more precision clicking.  But the smaller buttons allow more
-room for other widgets.
+Now I might have sent at an unopportune time: blame.c is mostly
+attributed to Junio who seems to have been a few days absent now.
 
-		M.
+I also have seen quite a few mails and patch submissions on the list go
+basically unanswered in the last few days.
 
+So it might just be that this is business as usual.  However, since
+I=A0have not been on this list for quite a while, I would want to avoid
+causing large delays by some oversight.
 
-> Signed-off-by: Marc Branchaud <marcnarc@xiplink.com>
-> ---
-> 
-> Finally got around to drawing some up and down arrows.
-> 
-> 		M.
-> 
->  gitk | 30 ++++++++++++++++++++++++++++--
->  1 file changed, 28 insertions(+), 2 deletions(-)
-> 
-> diff --git a/gitk b/gitk
-> index 33c3a6c..abd2ef3 100755
-> --- a/gitk
-> +++ b/gitk
-> @@ -2263,9 +2263,35 @@ proc makewindow {} {
->  
->      # build up the bottom bar of upper window
->      ${NS}::label .tf.lbar.flabel -text "[mc "Find"] "
-> -    ${NS}::button .tf.lbar.fnext -text [mc "next"] -command {dofind 1 1}
-> -    ${NS}::button .tf.lbar.fprev -text [mc "prev"] -command {dofind -1 1}
-> +
-> +    set bm_down_data {
-> +	#define down_width 16
-> +	#define down_height 16
-> +	static unsigned char down_bits[] = {
-> +	0x80, 0x01, 0x80, 0x01, 0x80, 0x01, 0x80, 0x01,
-> +	0x80, 0x01, 0x80, 0x01, 0x80, 0x01, 0x80, 0x01,
-> +	0x87, 0xe1, 0x8e, 0x71, 0x9c, 0x39, 0xb8, 0x1d,
-> +	0xf0, 0x0f, 0xe0, 0x07, 0xc0, 0x03, 0x80, 0x01};
-> +    }
-> +    image create bitmap bm-down -data $bm_down_data -foreground $uifgcolor
-> +    ${NS}::button .tf.lbar.fnext -width 26 -command {dofind 1 1}
-> +    .tf.lbar.fnext configure -image bm-down
-> +
-> +    set bm_up_data {
-> +	#define up_width 16
-> +	#define up_height 16
-> +	static unsigned char up_bits[] = {
-> +	0x80, 0x01, 0xc0, 0x03, 0xe0, 0x07, 0xf0, 0x0f,
-> +	0xb8, 0x1d, 0x9c, 0x39, 0x8e, 0x71, 0x87, 0xe1,
-> +	0x80, 0x01, 0x80, 0x01, 0x80, 0x01, 0x80, 0x01,
-> +	0x80, 0x01, 0x80, 0x01, 0x80, 0x01, 0x80, 0x01};
-> +    }
-> +    image create bitmap bm-up -data $bm_up_data -foreground $uifgcolor
-> +    ${NS}::button .tf.lbar.fprev -width 26 -command {dofind -1 1}
-> +    .tf.lbar.fprev configure -image bm-up
-> +
->      ${NS}::label .tf.lbar.flab2 -text " [mc "commit"] "
-> +
->      pack .tf.lbar.flabel .tf.lbar.fnext .tf.lbar.fprev .tf.lbar.flab2 \
->  	-side left -fill y
->      set gdttype [mc "containing:"]
-> 
+I have not so far signed off on the patches: it would appear that this
+is required.  The submission guidelines in
+Documentation/SubmittingPatches state for signing off:
+
+        (a) The contribution was created in whole or in part by me and =
+I
+            have the right to submit it under the open source license
+            indicated in the file; or
+
+[...]
+
+        (d) I understand and agree that this project and the contributi=
+on
+            are public and that a record of the contribution (including=
+ all
+            personal information I submit with it, including my sign-of=
+f) is
+            maintained indefinitely and may be redistributed consistent=
+ with
+            this project or the open source license(s) involved.
+
+Now the file involved (builtin/blame.c) itself does not state _any_
+license.  Instead it states
+
+    /*
+     * Blame
+     *
+     * Copyright (c) 2006, Junio C Hamano
+     */
+
+I do not intend my contribution to constitute a copyright assignment
+(and it hardly could be one).  The top file COPYING in Git states
+
+     Note that the only valid version of the GPL as far as this project
+     is concerned is _this_ particular version of the license (ie v2, n=
+ot
+     v2.2 or v3.x or whatever), unless explicitly otherwise stated.
+
+     HOWEVER, in order to allow a migration to GPLv3 if that seems like
+     a good idea, I also ask that people involved with the project make
+     their preferences known. In particular, if you trust me to make th=
+at
+     decision, you might note so in your copyright message, ie somethin=
+g
+     like
+
+            This file is licensed under the GPL v2, or a later version
+            at the discretion of Linus.
+
+      might avoid issues. But we can also just decide to synchronize an=
+d
+      contact all copyright holders on record if/when the occasion aris=
+es.
+
+As far as I am concerned, I am willing to license my work under the
+GPLv2 or any later version at the discretion of whoever wants to work
+with it.  I think that should be compatible with the project goals.
+
+Now the above passage states "you might note so in your copyright
+message", but my patches do not even contain a copyright message and it
+is not clear to me that they should, or that there is a sensible place
+to place such "copyright messages".
+
+So any guidance about that?
+
+--=20
+David Kastrup
