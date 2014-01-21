@@ -1,130 +1,101 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH v2 2/2] list-objects: only look at cmdline trees with
- edge_hint
-Date: Mon, 20 Jan 2014 21:25:40 -0500
-Message-ID: <20140121022540.GB4672@sigill.intra.peff.net>
-References: <20140121022431.GA4614@sigill.intra.peff.net>
+Subject: Re: Diagnosing stray/stale .keep files -- explore what is in a pack?
+Date: Tue, 21 Jan 2014 00:19:56 -0500
+Message-ID: <20140121051956.GA5878@sigill.intra.peff.net>
+References: <CACPiFCLa3X-Xt5GwrHHA-PFj-Bi9_sW+=y2xidZ7tDbFfM26rA@mail.gmail.com>
+ <CACPiFCJVx0dkkPQ=LosbAAKq7CvK6_yQL5QDHMYr5oJAS6wb6Q@mail.gmail.com>
+ <201401141236.44393.mfick@codeaurora.org>
+ <CACPiFCLxiCOqv=wLeq9LxisWn5T62hk8xDYwXmeFRNT05HY0iQ@mail.gmail.com>
+ <20140115091220.GB14335@sigill.intra.peff.net>
+ <CACPiFCKeOYHUb22d_Ea0PcbU-uAn=fVAn0QP1qbLAiNh1KEoqQ@mail.gmail.com>
+ <xmqqr4892l0u.fsf@gitster.dls.corp.google.com>
+ <CACPiFC+koU1Fan+tbE2YgOstWGsDtDihpK-7CMOct7XAEpwJ2A@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 21 03:25:48 2014
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Martin Fick <mfick@codeaurora.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Martin Langhoff <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 21 06:20:05 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W5R2B-0008Hp-3l
-	for gcvg-git-2@plane.gmane.org; Tue, 21 Jan 2014 03:25:47 +0100
+	id 1W5Tko-0000t9-Sm
+	for gcvg-git-2@plane.gmane.org; Tue, 21 Jan 2014 06:20:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752738AbaAUCZn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Jan 2014 21:25:43 -0500
-Received: from cloud.peff.net ([50.56.180.127]:35992 "HELO peff.net"
+	id S1750781AbaAUFT7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Jan 2014 00:19:59 -0500
+Received: from cloud.peff.net ([50.56.180.127]:36052 "HELO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752150AbaAUCZm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Jan 2014 21:25:42 -0500
-Received: (qmail 30142 invoked by uid 102); 21 Jan 2014 02:25:42 -0000
+	id S1750769AbaAUFT6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Jan 2014 00:19:58 -0500
+Received: (qmail 5743 invoked by uid 102); 21 Jan 2014 05:19:58 -0000
 Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 20 Jan 2014 20:25:42 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 20 Jan 2014 21:25:40 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 20 Jan 2014 23:19:58 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 21 Jan 2014 00:19:56 -0500
 Content-Disposition: inline
-In-Reply-To: <20140121022431.GA4614@sigill.intra.peff.net>
+In-Reply-To: <CACPiFC+koU1Fan+tbE2YgOstWGsDtDihpK-7CMOct7XAEpwJ2A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240741>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240742>
 
-When rev-list is given a command-line like:
+On Wed, Jan 15, 2014 at 06:50:33PM -0500, Martin Langhoff wrote:
 
-  git rev-list --objects $commit --not --all
+> On Wed, Jan 15, 2014 at 12:49 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> > As long as we can reliably determine that it is safe to do so
+> > without risking races, automatically cleaning .lock files is a good
+> > thing to do.
+> 
+> If the .lock file is a day old, it seems to me that it should be safe
+> to call it stale.
 
-the most accurate answer is the difference between the set
-of objects reachable from $commit and the set reachable from
-all of the existing refs. However, we have not historically
-provided that answer, because it is very expensive to
-calculate. We would have to open every tree of every commit
-in the entire history.
+Probably. The way our "lease" system works, nobody should be
+holding a ref lock for more than a few milliseconds.
 
-Instead, we find the accurate set difference of the
-reachable commits, and then mark the trees at the boundaries
-as uninteresting. This misses objects which appear in the
-trees of both the interesting commits and deep within the
-uninteresting history.
+That being said, we do lock other things, like the index. Generally I
+think the index lock should be quick, too. And similar for config file
+rewrites, and shallow files. And rerere files, it looks like. My, "git
+grep commit_lock_file" turns up a lot of hits. :)
 
-Commit fbd4a70 (list-objects: mark more commits as edges in
-mark_edges_uninteresting, 2013-08-16) noticed that we miss
-those objects during pack-objects, and added code to examine
-the trees of all of the "--not" refs given on the
-command-line.  Note that this is still not the complete set
-difference, because we look only at the tips of the
-command-line arguments, not all of their reachable commits.
-But it increases the set of boundary objects we consider,
-which is especially important for shallow fetches.  So we
-are trading extra CPU time for a larger set of boundary
-objects, which can improve the resulting pack size for a
---thin pack.
+So I think all of the existing uses are fine, and I suppose that most
+new cases should be fine, too, because git processes tend not to last a
+long time.
 
-This tradeoff probably makes sense in the context of
-pack-objects, where we have set revs->edge_hint to have the
-traversal feed us the set of boundary objects.  For a
-regular rev-list, though, it is probably not a good
-tradeoff. It is true that it makes our list slightly closer
-to a true set difference, but it is a rare case where this
-is important. And because we do not have revs->edge_hint
-set, we do nothing useful with the larger set of boundary
-objects.
+You asked earlier if I had a script for cleaning locks. No code worth
+sharing, but I'll give an outline of what we do at GitHub. We basically
+do:
 
-This patch therefore ties the extra tree examination to the
-revs->edge_hint flag; it is the presence of that flag that
-makes the tradeoff worthwhile.
+  find -name *.lock -mmin +60 | xargs rm
 
-Here is output from the p0001-rev-list showing the
-improvement in performance:
+I.e., we give only an hour.  For keep files, we give a day (since things
+like hooks may run for a while under the lock, though a day is probably
+excessive). And we check that it begins with "^receive-pack".
 
-Test                                             HEAD^             HEAD
------------------------------------------------------------------------------------------
-0001.1: rev-list --all                           0.69(0.65+0.02)   0.69(0.66+0.02) +0.0%
-0001.2: rev-list --all --objects                 3.22(3.19+0.03)   3.23(3.20+0.03) +0.3%
-0001.4: rev-list $commit --not --all             0.04(0.04+0.00)   0.04(0.04+0.00) +0.0%
-0001.5: rev-list --objects $commit --not --all   0.27(0.26+0.01)   0.04(0.04+0.00) -85.2%
+As far as I know, neither of these has ever caused any problems. Of
+course, any problems might not be immediately obvious.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- list-objects.c | 20 +++++++++++---------
- 1 file changed, 11 insertions(+), 9 deletions(-)
+> Can anyone "take the lock" if there is already a lock file?
 
-diff --git a/list-objects.c b/list-objects.c
-index 6cbedf0..206816f 100644
---- a/list-objects.c
-+++ b/list-objects.c
-@@ -162,15 +162,17 @@ void mark_edges_uninteresting(struct rev_info *revs, show_edge_fn show_edge)
- 		}
- 		mark_edge_parents_uninteresting(commit, revs, show_edge);
- 	}
--	for (i = 0; i < revs->cmdline.nr; i++) {
--		struct object *obj = revs->cmdline.rev[i].item;
--		struct commit *commit = (struct commit *)obj;
--		if (obj->type != OBJ_COMMIT || !(obj->flags & UNINTERESTING))
--			continue;
--		mark_tree_uninteresting(commit->tree);
--		if (revs->edge_hint && !(obj->flags & SHOWN)) {
--			obj->flags |= SHOWN;
--			show_edge(commit);
-+	if (revs->edge_hint) {
-+		for (i = 0; i < revs->cmdline.nr; i++) {
-+			struct object *obj = revs->cmdline.rev[i].item;
-+			struct commit *commit = (struct commit *)obj;
-+			if (obj->type != OBJ_COMMIT || !(obj->flags & UNINTERESTING))
-+				continue;
-+			mark_tree_uninteresting(commit->tree);
-+			if (!(obj->flags & SHOWN)) {
-+				obj->flags |= SHOWN;
-+				show_edge(commit);
-+			}
- 		}
- 	}
- }
--- 
-1.8.5.2.500.g8060133
+Git never takes an existing lock. It expects you to clean it up
+yourself.
+
+> For the keep files, I already drafted a script that looks inside the
+> keep file, if it reads 'receive-pack [pid] [host]' it checks whether
+> the hostname matches, and if so whether the pid matches a running
+> process.
+> 
+> Only if the host matches and the pid is dead we call it stale.
+
+That sounds reasonable.
+
+> Seems fairly conservative to me. Are there scenarios where we think
+> this can misfire?
+
+I cannot think of any.
+
+-Peff
