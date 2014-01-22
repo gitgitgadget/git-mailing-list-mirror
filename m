@@ -1,95 +1,69 @@
-From: John McIntyre <joh98.mac@gmail.com>
-Subject: Re: Conceptual Question for git usage ...
-Date: Wed, 22 Jan 2014 15:23:32 +0000
-Message-ID: <CABQ4iYjVSh_yG0jzc104LJ2hr9GhNnKrCZNw9337t+s4CiWryg@mail.gmail.com>
-References: <CABQ4iYjfa1X0KkMm=VtoRt2j65E1cce7TyY_PU8WFr8DPQEtjw@mail.gmail.com>
-	<CCFA1C8D-F0E3-43D9-87FD-B62807DB7EA8@kellerfarm.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [ANNOUNCE] Git v1.9-rc0
+Date: Wed, 22 Jan 2014 07:42:12 -0800
+Message-ID: <xmqqk3dsyqej.fsf@gitster.dls.corp.google.com>
+References: <xmqq61pjzljn.fsf@gitster.dls.corp.google.com>
+	<xmqqha8xt22p.fsf@gitster.dls.corp.google.com>
+	<CALZVapmqcFjjKeURHdP4chkB+T2--caJZYiJBzdwq7Ou=HzO5w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Andrew Keller <andrew@kellerfarm.com>
-X-From: git-owner@vger.kernel.org Wed Jan 22 16:23:39 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
+Content-Type: text/plain; charset=us-ascii
+Cc: "git\@vger.kernel.org" <git@vger.kernel.org>,
+	Linux Kernel <linux-kernel@vger.kernel.org>
+To: Javier Domingo Cansino <javierdo1@gmail.com>
+X-From: linux-kernel-owner@vger.kernel.org Wed Jan 22 16:42:41 2014
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W5zeU-0005FZ-7l
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Jan 2014 16:23:38 +0100
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1W5zwt-0005J4-Cv
+	for glk-linux-kernel-3@plane.gmane.org; Wed, 22 Jan 2014 16:42:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756024AbaAVPXe convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 22 Jan 2014 10:23:34 -0500
-Received: from mail-wi0-f177.google.com ([209.85.212.177]:59830 "EHLO
-	mail-wi0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755223AbaAVPXd convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 22 Jan 2014 10:23:33 -0500
-Received: by mail-wi0-f177.google.com with SMTP id m19so703212wiv.16
-        for <git@vger.kernel.org>; Wed, 22 Jan 2014 07:23:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=5yAnWtmENvnkwwcxBXkHHqFDZZgWzRucBjzSfOWTeoY=;
-        b=NtzeSJulIyenjpvxgOIIrt0SaQ5bTjZM0ZWtBSEFCl3vzwN/xdMYKKRA9CJe37Zt2c
-         7AFIaJ+ZpMJ7EVL+u6nlGh6J5dBbF+DNllXt6nEuCnfBGRvO0PS/n8QM8oWF2jBaulOY
-         Ljo/KdOdX4NUtQR45IogOjHIX/WNVqV0GtXv1Z787jMy9OUo5n9HrENOkr3RGul7J6WS
-         cWt8w4UjoJsBv2/Z1Y4E8eaZ1vUwEI4cbDQgJgqRuIS6KWul/YWn1gpN1ATKoG4T65rU
-         zlCnGfUYGS/r53Wf7TeyvgSKQCGnUEsv/u8D0vccifY5QXl8qLMkLIIDQ1Fa4LssxIrB
-         TIrg==
-X-Received: by 10.180.97.71 with SMTP id dy7mr8803610wib.35.1390404212731;
- Wed, 22 Jan 2014 07:23:32 -0800 (PST)
-Received: by 10.180.24.198 with HTTP; Wed, 22 Jan 2014 07:23:32 -0800 (PST)
-In-Reply-To: <CCFA1C8D-F0E3-43D9-87FD-B62807DB7EA8@kellerfarm.com>
-Sender: git-owner@vger.kernel.org
+	id S1756012AbaAVPmW (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Wed, 22 Jan 2014 10:42:22 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59734 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753148AbaAVPmQ (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
+	Wed, 22 Jan 2014 10:42:16 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7110662963;
+	Wed, 22 Jan 2014 10:42:15 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=792Y2a/Ps757CfluKzjktusKwXU=; b=vcX8Rn
+	iH77r0A9C8XMF7UvN9YBY+olUbuQRoa2XImeek1CRMDsVuSRQ+smE9g9Rh0dRb5L
+	Bn4zLOklMAlSUO7ru7PpLuwI63dQuP90uA1F9oQKsTakerOWAUpr3+LSzcYEwsJ2
+	DUrNNCArsbzabH1s5Ze5ZymN6IpM3vq8WVw9c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=p/nLHAFa5HavCXucX21tYqSgzsQYiRCt
+	QmNVyNnQsXJtDl+7DppRs2xt0UhiKNwrq2COvFgG4meFukwF/+Hk/tGxPxsnl3oD
+	1u4LofecasG8Z4FjE23l8tSqHHVWPRdtJqa81MmDSQj+DWpO3H/ZolkHkqd1tgmK
+	sBmRKsVj/yo=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5F1C462961;
+	Wed, 22 Jan 2014 10:42:15 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9D2A662960;
+	Wed, 22 Jan 2014 10:42:14 -0500 (EST)
+In-Reply-To: <CALZVapmqcFjjKeURHdP4chkB+T2--caJZYiJBzdwq7Ou=HzO5w@mail.gmail.com>
+	(Javier Domingo Cansino's message of "Wed, 22 Jan 2014 13:53:26
+	+0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: C429E156-837B-11E3-B748-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240830>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240831>
 
-Thank you for that, Andrew.
+Javier Domingo Cansino <javierdo1@gmail.com> writes:
 
-I'm going to follow your advice and just set up a test repository,
-which won't be a disaster, if it gets damaged or erased.
+> Will there be any change on how tarballs are distributed, taking into
+> account that Google will be shutting down Google Code Downloads
+> section[1][2]?
 
-I backup my /Users/john/Documents from my Mac to /home/john/Documents
-on the Linux server.  Except for my mail directory, which comes from
-$HOME/Library/Mail and lives on $HOME/.mac.mail.backup on the server.
-
-2014/1/22 Andrew Keller <andrew@kellerfarm.com>:
-> On Jan 22, 2014, at 9:20 AM, John McIntyre <joh98.mac@gmail.com> wrot=
-e:
->
->> =85
->>
->> So basically, what I'd like to do is this.  I want to write code,
->> write blg posts, write essays for university, whatever.  And I want =
-to
->> use git to maintain revisions, but where do I store them?  Do I make
->> the Mac my hub?  I have a git client on there.  Do I make the server
->> my 'hub'?  If I make the server the 'hub', then won't rsync back-ups
->> from the Mac to the server wipe them out?
->>
->> =85
->
-> Git's degree of flexibility in what is considered "the server" is val=
-uable here.  I advise that you simply try a configuration, and see how =
-it works.  It's easy to change where origin points later.
->
-> With that said, like you, I have a small ad-hoc setup of automated rs=
-ync backups between my various computers and servers, and I have found =
-some characteristics useful:
->
-> * I have rsync saving backups into dedicated backup folders on the re=
-mote machines.  This eliminates ambiguity of what to back up (server A =
-won't blow away server B's Documents folder, for example).
->
-> * Using a publicly accessible server has been useful.  I set up port =
-forwarding to the machine, and set up a domain name pointing to the ser=
-ver.  In general, when I have Internet access, I can access the server =
-that contains my repositories.  I always use the same domain name, even=
- if I'm in the same room as the server.
->
-> Hope that helps,
-> Andrew
->
+Aside from the obvious "we won't be able to use something that is no
+longer offered"?  They are not the only download site even now, so...
