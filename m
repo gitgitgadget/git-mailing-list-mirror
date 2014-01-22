@@ -1,82 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC PATCH] Make 'git request-pull' more strict about matching local/remote branches
-Date: Wed, 22 Jan 2014 14:27:03 -0800
-Message-ID: <xmqqsisfwt3c.fsf@gitster.dls.corp.google.com>
-References: <alpine.LFD.2.11.1401221243090.18459@i7.linux-foundation.org>
-	<xmqqwqhrwtoy.fsf@gitster.dls.corp.google.com>
+From: Stefan Beller <stefanbeller@googlemail.com>
+Subject: Re: [PATCH v2 0/2] Fix "repack --window-memory=4g" regression in
+ 1.8.4
+Date: Wed, 22 Jan 2014 23:33:37 +0100
+Message-ID: <52E04741.6040403@googlemail.com>
+References: <1390420685-18449-1-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Tejun Heo <tj@kernel.org>, Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Jan 22 23:27:21 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Siddharth Agarwal <sid0@fb.com>
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 22 23:33:48 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W66GT-00062d-Rx
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Jan 2014 23:27:18 +0100
+	id 1W66Mm-0008OI-0X
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Jan 2014 23:33:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756033AbaAVW1N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Jan 2014 17:27:13 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60562 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752213AbaAVW1L (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Jan 2014 17:27:11 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A16CE65BC3;
-	Wed, 22 Jan 2014 17:27:08 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=yj218n6rh/w2pi8MwbZDbqM3Hrs=; b=yBb0Mc
-	mcm1ugbdxb9e57Wyc1BFAyXaiI0HyhJfyEiwgKoXdA4TIAizN7Hg1myu8EibS4co
-	viBzJvVk/6qy0Uq7b0TUua1NCPwh4T4jDGZXdkEAkEoOX1iUk4js0DVGFQ953GkZ
-	tHwyZhNjSMstle81VwdfipMQqOr+3m1dLv2xg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=TxsDJYE6snDxU4o/2xQcY7YCidWQtoLi
-	oPySV0hQuTSUyaMHsm/IH0umJjA30ObhY4J7UaChaeDWtyu664Ef7+5WcLNhChL4
-	KBaVSmeAHpn2SEUDfYDsuZCgojecF992jU54fTzunVTrAwTXHVF5xEWPwORdOiXo
-	jiUi3jRbU+I=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8CB0E65BC2;
-	Wed, 22 Jan 2014 17:27:08 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A626565BC1;
-	Wed, 22 Jan 2014 17:27:07 -0500 (EST)
-In-Reply-To: <xmqqwqhrwtoy.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Wed, 22 Jan 2014 14:14:05 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 53F11D1C-83B4-11E3-B251-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753631AbaAVWdn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Jan 2014 17:33:43 -0500
+Received: from mail-ee0-f43.google.com ([74.125.83.43]:53696 "EHLO
+	mail-ee0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752845AbaAVWdl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Jan 2014 17:33:41 -0500
+Received: by mail-ee0-f43.google.com with SMTP id c41so65186eek.30
+        for <git@vger.kernel.org>; Wed, 22 Jan 2014 14:33:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=r6Xk365rShSHplezfR+VbF3SRG28Aq8caBBps9XtJBY=;
+        b=zbU2ImJMh5/P4tt4PSv5XMQaz2lKcg2qgrABi4PNzxr3utq/I/3XONOZvVpf9XpvSd
+         +o/9qcpnWVy7ptmAnbLxUZh44CUSXx7NwGUl0zNwDc7wqAzgjuIb6fcQgNC92E5uoWfT
+         eN0w/WNAkFdth3SapRPZkKhHfpy2/AAv2ttVlsWlmasJjTEqyqP4EnqDxIGFRgUQ4Ooc
+         mJi3JguD6UuVGBzgxG9QI17CbUkZVPMxjc1qSBc9ngFzAc29LjjTYSnoGlKdGOrBSESB
+         PDkcloqLuoueESUPd9mIHtfXNdKTvFCESBp+TlLUvUPY2h+v+9rFegzjcIlfoxZFdKVS
+         IRjQ==
+X-Received: by 10.14.218.135 with SMTP id k7mr4674eep.113.1390430020177;
+        Wed, 22 Jan 2014 14:33:40 -0800 (PST)
+Received: from [192.168.1.7] (ip-109-91-109-128.unitymediagroup.de. [109.91.109.128])
+        by mx.google.com with ESMTPSA id j46sm32267979eew.18.2014.01.22.14.33.38
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 22 Jan 2014 14:33:39 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.2.0
+In-Reply-To: <1390420685-18449-1-git-send-email-gitster@pobox.com>
+X-Enigmail-Version: 1.5.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240869>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240870>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On 22.01.2014 20:58, Junio C Hamano wrote:
+> The command line parser was broken when the command was
+> reimplemented in C in two ways.  It incorrectly limited the value
+> range of window-memory and max-pack-size to "int", and also stopped
+> grokking the unit suffixes like 2g/400m/8k.
+> 
+> These two patches apply on top of 35c14176 (Reword repack
+> documentation to no longer state it's a script, 2013-10-19) and
+> later can be merged down to maint-1.8.4 track and upwards.
+> 
+> Junio C Hamano (2):
+>   parse-options: refactor human-friendly-integer parser out of pack-objects
+>   repack: accept larger window-memory and max-pack-size
+> 
+>  builtin/pack-objects.c | 25 ++++---------------------
+>  builtin/repack.c       | 12 ++++++------
+>  parse-options.c        | 17 +++++++++++++++++
+>  parse-options.h        |  5 +++++
+>  4 files changed, 32 insertions(+), 27 deletions(-)
+> 
 
-> ... there is no 'for-linus' branch locally, so there is no way for
-> him to say
->
->         git request-pull initial origin for-linus
->
-> unless he creates it locally first.
+I recall we had a discussion about parsing as the shell script
+just passed them on without altering the argument, while the new
+c implementation parses the numbers already before passing them on.
 
-In real life on the kernel list, for-linus may have to be a signed
-tag, and pushed out 1-to-1 name mapping, so in that sense, "unless
-he creates it locally first" may not be a problem.
+Junio,
+thanks for such a quick patch. I'd currently have only little time
+for open source contributions.
 
-I'd throw this into "No, this is not the only way to do so and there
-are workarounds available if we suddenly tightened the rule and
-broke those who relied on this behaviour. But this is not a less
-good way compared to the alternative of creating the same-named ref
-first, so we _are_ breaking people deliberately---is that worth the
-safety for always-push-one-to-one people?" category.
+The patches seems reasonable to me.
 
-I'd throw the other one (i.e. 5150.5) into "that is crazy enough
-that a short apology in the Release Notes is sufficient before
-breaking those who relied on that behaviour" category, on the other
-hand ;-).
+Thanks,
+Stefan
