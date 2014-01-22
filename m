@@ -1,61 +1,77 @@
-From: Javier Domingo Cansino <javierdo1@gmail.com>
-Subject: Re: [ANNOUNCE] Git v1.9-rc0
-Date: Wed, 22 Jan 2014 13:53:26 +0100
-Message-ID: <CALZVapmqcFjjKeURHdP4chkB+T2--caJZYiJBzdwq7Ou=HzO5w@mail.gmail.com>
-References: <xmqq61pjzljn.fsf@gitster.dls.corp.google.com> <xmqqha8xt22p.fsf@gitster.dls.corp.google.com>
+From: John McIntyre <joh98.mac@gmail.com>
+Subject: Conceptual Question for git usage ...
+Date: Wed, 22 Jan 2014 14:20:41 +0000
+Message-ID: <CABQ4iYjfa1X0KkMm=VtoRt2j65E1cce7TyY_PU8WFr8DPQEtjw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Linux Kernel <linux-kernel@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: linux-kernel-owner@vger.kernel.org Wed Jan 22 13:53:56 2014
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@plane.gmane.org
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 22 15:20:49 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1W5xJc-0000IX-Dq
-	for glk-linux-kernel-3@plane.gmane.org; Wed, 22 Jan 2014 13:53:56 +0100
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1W5yff-0005BJ-19
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Jan 2014 15:20:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755573AbaAVMxu (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Wed, 22 Jan 2014 07:53:50 -0500
-Received: from mail-ve0-f172.google.com ([209.85.128.172]:64988 "EHLO
-	mail-ve0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755525AbaAVMxr (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Wed, 22 Jan 2014 07:53:47 -0500
-Received: by mail-ve0-f172.google.com with SMTP id c14so192531vea.17
-        for <multiple recipients>; Wed, 22 Jan 2014 04:53:46 -0800 (PST)
+	id S1755830AbaAVOUn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Jan 2014 09:20:43 -0500
+Received: from mail-we0-f193.google.com ([74.125.82.193]:34207 "EHLO
+	mail-we0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755234AbaAVOUm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Jan 2014 09:20:42 -0500
+Received: by mail-we0-f193.google.com with SMTP id u57so99506wes.8
+        for <git@vger.kernel.org>; Wed, 22 Jan 2014 06:20:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=Ce/bZyyPLFqktWhKivGC1tlMEqVn7jmN+EzKxLZ5QUQ=;
-        b=R7jDvSWdgzLp54d9SgaYPxTwXwHn1ZiKLW3TLlL/wDw4ll4iQpU4k2FRU8w9rZv2T3
-         vxhON6GiHgOaZUmi3yX1/SgBcrOV/q9Tk/shIujg4+D29aiYi683pK8UzMQdJAKPNXBo
-         xfq1nJVhBxz9La6yXsrpKBmzW4x8guv99hC8/fpxA0bQmvMMF8cl8X/Qf00ISzcXxkky
-         exVdhFe/VsKx8IK66Dbak9jNW5B1G6Za6vjPbzxEUZYaXiyOKomTT853ZHnzji5yo9xp
-         DGQOMwI1iJaFLULJfmBUKOv550dyiK6LS8YfaAhvvuyAGJQ2BE903aytDcqFcF8RYY3C
-         ddhg==
-X-Received: by 10.58.66.137 with SMTP id f9mr766984vet.11.1390395226904; Wed,
- 22 Jan 2014 04:53:46 -0800 (PST)
-Received: by 10.58.198.193 with HTTP; Wed, 22 Jan 2014 04:53:26 -0800 (PST)
-In-Reply-To: <xmqqha8xt22p.fsf@gitster.dls.corp.google.com>
-Sender: linux-kernel-owner@vger.kernel.org
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=549MKKH3yNXrDm7XuD5oWjHAO6cgb2rR3AXwBAAweIg=;
+        b=0+xsLAYxrOfPWPEITnaJwAjpMqb5bExMi0QUVJloZ4AWHbEcP8rrvBsDNZzl8XLRez
+         foPKaSPkEhvXvotFbou4wrOPbQ4uW6E3A+faKNyMM7XAAsvfXnV5gZk7QFZ9Jz65V/6B
+         4+qp2c7tL1ilpRvv3YwYfPtynm1eo92waEpk0udfFtNjsXSgFVU7JBIhOcvuoA86iH/L
+         WNgMypUTKq3ebrVLVrgcVu/q9Ll4O/B5IapA1wFj/XF5yG3r8DW4CNR2LiDemqcgK64x
+         U8Au3Pv3ZIoZEXZVpgrugUvcR+jK4hRokaXedGv/MOLFIUoKa9UPpVV9Junk0tZq0R87
+         dvkg==
+X-Received: by 10.194.93.193 with SMTP id cw1mr2097100wjb.72.1390400441358;
+ Wed, 22 Jan 2014 06:20:41 -0800 (PST)
+Received: by 10.180.24.198 with HTTP; Wed, 22 Jan 2014 06:20:41 -0800 (PST)
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240824>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240825>
 
-Will there be any change on how tarballs are distributed, taking into
-account that Google will be shutting down Google Code Downloads
-section[1][2]?
+Hi,
+I want to install git onto my home network - in fact, truth be told,
+it's already on my server, but I have some questions as to its
+implementation.
 
-Cheers
+First of all, my network.  At the 'centre' (practically, if not
+logically) is my Mac.  I consider this my 'central repository' of
+everything.  Mail, documents, blog posts etc.  Everything is on this
+machine.  The Mac is backed up i) to an external drive with Time
+Machine, ii) to my Linux server (more on that below) via rsync and
+iii) to my personal Linux laptop which sits on 27/7 at work via rsync.
 
-Javier Domingo Cansino
+My server.  This is a Linux server runing CentOS 6.5, and working as a
+webserver, fileserver, MySQL server, mail server (primary MX), and is
+the 'public face' of my domain name.
 
-[1] Google Code download service change announcement:
-http://google-opensource.blogspot.se/2013/05/a-change-to-google-code-download-service.html
-[2] Google Code download section FAQ:
-https://code.google.com/p/support/wiki/DownloadsFAQ
+Then there are two other Linux servers - one running MySQL
+replication, and the other as a publically-accessible 'sandbox' on
+which people whom I train can connect via a specific port, and mess
+around, with no possibility that what they do will damage other parts
+of the LAN.
+
+So basically, what I'd like to do is this.  I want to write code,
+write blg posts, write essays for university, whatever.  And I want to
+use git to maintain revisions, but where do I store them?  Do I make
+the Mac my hub?  I have a git client on there.  Do I make the server
+my 'hub'?  If I make the server the 'hub', then won't rsync back-ups
+from the Mac to the server wipe them out?
+
+I confess that my preference would be to use the server, because I
+occasionally bring the Linux laptop home from the office and use that,
+and don't want to connect it to the Mac.
+
+Anyway, basically .. that's it.  Any ideas would be appreciated.  Thanks.
