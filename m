@@ -1,139 +1,81 @@
-From: David Kastrup <dak@gnu.org>
-Subject: [PATCH 2/2] Eliminate same_suspect function in builtin/blame.c
-Date: Wed, 22 Jan 2014 01:20:15 +0100
-Message-ID: <1390350015-3040-3-git-send-email-dak@gnu.org>
-References: <1390350015-3040-1-git-send-email-dak@gnu.org>
-Cc: David Kastrup <dak@gnu.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 22 01:20:48 2014
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [PATCH 0/6] Make 'git help everyday' work -> relnotes
+Date: Wed, 22 Jan 2014 00:22:19 -0000
+Organization: OPDS
+Message-ID: <2D10AF8E0C024CC5A817528582FDE07D@PhilipOakley>
+References: <1389309192-5748-1-git-send-email-philipoakley@iee.org><xmqqppo090m7.fsf@gitster.dls.corp.google.com><52CFACBB.7000805@atlas-elektronik.com><F11CD558C63947F9B4AA75501D2F9F62@PhilipOakley><52D91B0E.6080000@atlas-elektronik.com><BA4E87FA92ED4E8FB2C00F013BD7B3FF@PhilipOakley> <xmqqob34synq.fsf@gitster.dls.corp.google.com>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+Mime-Version: 1.0
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: =?iso-8859-1?Q?Stefan_N=E4we?= <stefan.naewe@atlas-elektronik.com>,
+	"GitList" <git@vger.kernel.org>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 22 01:21:59 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W5lYl-0006ym-L9
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Jan 2014 01:20:48 +0100
+	id 1W5lZv-0007NC-Et
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Jan 2014 01:21:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752819AbaAVAUo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Jan 2014 19:20:44 -0500
-Received: from fencepost.gnu.org ([208.118.235.10]:47887 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752698AbaAVAUn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Jan 2014 19:20:43 -0500
-Received: from localhost ([127.0.0.1]:46929 helo=lola)
-	by fencepost.gnu.org with esmtp (Exim 4.71)
-	(envelope-from <dak@gnu.org>)
-	id 1W5lYg-0007iO-FM; Tue, 21 Jan 2014 19:20:42 -0500
-Received: by lola (Postfix, from userid 1000)
-	id 1B20BE051E; Wed, 22 Jan 2014 01:20:42 +0100 (CET)
-X-Mailer: git-send-email 1.8.3.2
-In-Reply-To: <1390350015-3040-1-git-send-email-dak@gnu.org>
+	id S1752872AbaAVAV4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Jan 2014 19:21:56 -0500
+Received: from out1.ip01ir2.opaltelecom.net ([62.24.128.237]:52551 "EHLO
+	out1.ip01ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750824AbaAVAVz (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 21 Jan 2014 19:21:55 -0500
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AghGADAO31ICYJZt/2dsb2JhbABagwtIA4h+sy8BAgEBC4EHF3RpAQGBHwEBFAEEAQEBAQMIAQEdER4BASELAgMFAgEDFQwlFAEEGgYHFwYTCAIBAgMBhTgHAYITJcJmF45/NYJ2gRQEiQ+GF5sUgy08
+X-IPAS-Result: AghGADAO31ICYJZt/2dsb2JhbABagwtIA4h+sy8BAgEBC4EHF3RpAQGBHwEBFAEEAQEBAQMIAQEdER4BASELAgMFAgEDFQwlFAEEGgYHFwYTCAIBAgMBhTgHAYITJcJmF45/NYJ2gRQEiQ+GF5sUgy08
+X-IronPort-AV: E=Sophos;i="4.95,697,1384300800"; 
+   d="scan'208";a="452827989"
+Received: from host-2-96-150-109.as13285.net (HELO PhilipOakley) ([2.96.150.109])
+  by out1.ip01ir2.opaltelecom.net with SMTP; 22 Jan 2014 00:21:53 +0000
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240808>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240809>
 
-Since the origin pointers are "interned" and reference-counted, comparing
-the pointers rather than the content is enough.  The only uninterned
-origins are cached values kept in commit->util, but same_suspect is not
-called on them.
+From: "Junio C Hamano" <gitster@pobox.com>
+> "Philip Oakley" <philipoakley@iee.org> writes:
+>
+>> Determining which is the current release note is possibly more
+>> problematic, which should be when making the documentation.
+>
+> Hmmm.... Why?
+>
+> You are already aware of the stale-notes section, no?  Isn't the top
+> one the latest?
 
-Signed-off-by: David Kastrup <dak@gnu.org>
----
- builtin/blame.c | 25 ++++++++-----------------
- 1 file changed, 8 insertions(+), 17 deletions(-)
+It's that the 'git help release-notes' would _include_ the latest 
+release notes, not just link to them (which is what the stalenotes 
+currently does). Or at least that was the idea.
 
-diff --git a/builtin/blame.c b/builtin/blame.c
-index 2195595..ead6148 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -255,15 +255,6 @@ struct scoreboard {
- 	int *lineno;
- };
- 
--static inline int same_suspect(struct origin *a, struct origin *b)
--{
--	if (a == b)
--		return 1;
--	if (a->commit != b->commit)
--		return 0;
--	return !strcmp(a->path, b->path);
--}
--
- static void sanity_check_refcnt(struct scoreboard *);
- 
- /*
-@@ -276,7 +267,7 @@ static void coalesce(struct scoreboard *sb)
- 	struct blame_entry *ent, *next;
- 
- 	for (ent = sb->ent; ent && (next = ent->next); ent = next) {
--		if (same_suspect(ent->suspect, next->suspect) &&
-+		if (ent->suspect == next->suspect &&
- 		    ent->guilty == next->guilty &&
- 		    ent->s_lno + ent->num_lines == next->s_lno) {
- 			ent->num_lines += next->num_lines;
-@@ -735,7 +726,7 @@ static int find_last_in_target(struct scoreboard *sb, struct origin *target)
- 	int last_in_target = -1;
- 
- 	for (e = sb->ent; e; e = e->next) {
--		if (e->guilty || !same_suspect(e->suspect, target))
-+		if (e->guilty || e->suspect != target)
- 			continue;
- 		if (last_in_target < e->s_lno + e->num_lines)
- 			last_in_target = e->s_lno + e->num_lines;
-@@ -755,7 +746,7 @@ static void blame_chunk(struct scoreboard *sb,
- 	struct blame_entry *e;
- 
- 	for (e = sb->ent; e; e = e->next) {
--		if (e->guilty || !same_suspect(e->suspect, target))
-+		if (e->guilty || e->suspect != target)
- 			continue;
- 		if (same <= e->s_lno)
- 			continue;
-@@ -985,7 +976,7 @@ static int find_move_in_parent(struct scoreboard *sb,
- 	while (made_progress) {
- 		made_progress = 0;
- 		for (e = sb->ent; e; e = e->next) {
--			if (e->guilty || !same_suspect(e->suspect, target) ||
-+			if (e->guilty || e->suspect != target ||
- 			    ent_score(sb, e) < blame_move_score)
- 				continue;
- 			find_copy_in_blob(sb, e, parent, split, &file_p);
-@@ -1020,14 +1011,14 @@ static struct blame_list *setup_blame_list(struct scoreboard *sb,
- 
- 	for (e = sb->ent, num_ents = 0; e; e = e->next)
- 		if (!e->scanned && !e->guilty &&
--		    same_suspect(e->suspect, target) &&
-+		    e->suspect == target &&
- 		    min_score < ent_score(sb, e))
- 			num_ents++;
- 	if (num_ents) {
- 		blame_list = xcalloc(num_ents, sizeof(struct blame_list));
- 		for (e = sb->ent, i = 0; e; e = e->next)
- 			if (!e->scanned && !e->guilty &&
--			    same_suspect(e->suspect, target) &&
-+			    e->suspect == target &&
- 			    min_score < ent_score(sb, e))
- 				blame_list[i++].ent = e;
- 	}
-@@ -1171,7 +1162,7 @@ static void pass_whole_blame(struct scoreboard *sb,
- 		origin->file.ptr = NULL;
- 	}
- 	for (e = sb->ent; e; e = e->next) {
--		if (!same_suspect(e->suspect, origin))
-+		if (e->suspect != origin)
- 			continue;
- 		origin_incref(porigin);
- 		origin_decref(e->suspect);
-@@ -1560,7 +1551,7 @@ static void assign_blame(struct scoreboard *sb, int opt)
- 
- 		/* Take responsibility for the remaining entries */
- 		for (ent = sb->ent; ent; ent = ent->next)
--			if (same_suspect(ent->suspect, suspect))
-+			if (ent->suspect == suspect)
- 				found_guilty_entry(ent);
- 		origin_decref(suspect);
- 
--- 
-1.8.3.2
+Trying to determine the latest version, and then include those release 
+notes, and the subsequent maint notes, into the putative 
+"release-notes(7)" man page, without causing you any maintenance hassle, 
+was the conceptual problem.
+
+I already have a local patch that creates a stalenote.txt file, and 
+includes that in a "release-notes(7)" man page, but it still leaves the 
+actual release notes in a separate plain text file, linked from the man 
+page, rather than being right at hand, which is what I think readers 
+would expect.
+
+
+My other question would be to ask how you normally manage the up-issue 
+of the stalenotes, and when you would normally create that section in 
+git(1) as I didn't see any ifdef::stalenotes[] being defined anywhere 
+else.
+
+Philip
