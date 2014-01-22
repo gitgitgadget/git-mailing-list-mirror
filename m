@@ -1,97 +1,121 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv2] gitk: Replace "next" and "prev" buttons with down and up arrows.
-Date: Wed, 22 Jan 2014 12:18:27 -0800
-Message-ID: <xmqqa9enydm4.fsf@gitster.dls.corp.google.com>
-References: <20131008193618.GE9464@google.com>
-	<1387382653-8385-1-git-send-email-marcnarc@xiplink.com>
-	<52DE932E.7090008@xiplink.com>
-	<20140122110448.GB7306@iris.ozlabs.ibm.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Marc Branchaud <marcnarc@xiplink.com>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	"Lucas Sandery \[three am design\]" <lucas@threeamdesign.com.au>
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Wed Jan 22 21:18:36 2014
+From: Brad King <brad.king@kitware.com>
+Subject: [PATCH] t3030-merge-recursive: Test known breakage with empty work tree
+Date: Wed, 22 Jan 2014 15:11:59 -0500
+Message-ID: <bee33fbfe83408a69085d58db302b3e72edf16a4.1390421446.git.brad.king@kitware.com>
+Cc: gitster@pobox.com, newren@gmail.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 22 21:20:15 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W64Fw-0007A7-5t
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Jan 2014 21:18:36 +0100
+	id 1W64HV-0007mH-Mw
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Jan 2014 21:20:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755459AbaAVUSc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Jan 2014 15:18:32 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49020 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752798AbaAVUSb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Jan 2014 15:18:31 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4361F64B5F;
-	Wed, 22 Jan 2014 15:18:31 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=drLcXc2J1fjwJ9fWJiPhJSb6/Os=; b=WK0262
-	sWoSaF4ly/an49tlR0f3Xv3SiA/uwM9KC4JeFHI9K8V0SKVPQ3DkHz4CkzR/pz/R
-	+n5g/51dkBAltYdz66b26majQXk6CKlMgS+V7g6GQKsBsCXyxTJg657+8LmC7mA8
-	dg+wwmF9dLDPXzjdNk4Kv/WJ0u4O8ESAb1mEI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=u10lix38cTJRmrnGma2QBJ9fhU9yUkxx
-	uMtDGbdUGUCBJCKFk8fQ0PvAeW5sJE0ueZZ0wfNW3HgzZ+kfrjx02HWMC2kT5mTI
-	1lP21bWfMRcsfhw19RifZifo0T5jZxpTnpF00wUhgC7H0newdvhsuv/fvAWQoWLp
-	khulNnWR3SQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 33AD364B5E;
-	Wed, 22 Jan 2014 15:18:31 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 25E6A64B5C;
-	Wed, 22 Jan 2014 15:18:29 -0500 (EST)
-In-Reply-To: <20140122110448.GB7306@iris.ozlabs.ibm.com> (Paul Mackerras's
-	message of "Wed, 22 Jan 2014 22:04:48 +1100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 5BF036C2-83A2-11E3-A0E4-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752711AbaAVUUH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Jan 2014 15:20:07 -0500
+Received: from tripoint.kitware.com ([66.194.253.20]:56057 "EHLO
+	vesper.kitware.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752408AbaAVUUG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Jan 2014 15:20:06 -0500
+X-Greylist: delayed 515 seconds by postgrey-1.27 at vger.kernel.org; Wed, 22 Jan 2014 15:20:06 EST
+Received: by vesper.kitware.com (Postfix, from userid 1000)
+	id A15BA9FBA1; Wed, 22 Jan 2014 15:11:59 -0500 (EST)
+X-Mailer: git-send-email 1.8.5.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240852>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240853>
 
-Paul Mackerras <paulus@samba.org> writes:
+Add test cases that use 'merge-recursive' plumbing with a temporary
+index and empty work tree.  Populate the index using 'read-tree' and
+'update-index --ignore-missing --refresh' to prepare for merge without
+actually checking all files out to disk.  Verify that each merge
+produces its expected tree while displaying no error diagnostics.
 
-> On Tue, Jan 21, 2014 at 10:33:02AM -0500, Marc Branchaud wrote:
->> On 13-12-18 11:04 AM, Marc Branchaud wrote:
->> > Users often find that "next" and "prev" do the opposite of what they
->> > expect.  For example, "next" moves to the next match down the list, but
->> > that is almost always backwards in time.  Replacing the text with arrows
->> > makes it clear where the buttons will take the user.
->> 
->> Any opinions on this, either way?
->> 
->> I've grown fond of the down/up arrows.  I find them much clearer than the
->> current next/prev buttons.
->> 
->> My only niggle about this patch is that the buttons are much smaller,
->> requiring a bit more precision clicking.  But the smaller buttons allow more
->> room for other widgets.
->
-> I showed it to a few colleagues who use gitk a lot.  One was
-> indifferent, the others liked it, so I have applied it.
->
-> Thanks,
-> Paul.
+This approach can be used to compute tree merges while checking out only
+conflicting files to disk (which is useful for server-side scripts).
+Prior to commit 5b448b85 (merge-recursive: When we detect we can skip an
+update, actually skip it, 2011-08-11) this worked cleanly in all cases.
+Since that commit, merge-recursive displays a diagnostic such as
 
-Is this a good time for me to pull from you?  I see these on your
-'master' branch.
+ error: addinfo_cache failed for path 'e'
 
-    8f86339 gitk: Comply with XDG base directory specification
-    786f15c gitk: Replace "next" and "prev" buttons with down and up arrows
-    c61f3a9 gitk: chmod +x po2msg.sh
-    6c626a0 gitk: Update copyright dates
-    45f884c gitk: Add Bulgarian translation (304t)
-    1f3c872 gitk: Fix mistype
+when "our" side has a rename (to 'e').  The diagnostic does not
+influence the return code and the merge appears to succeed, but it
+causes this test case to fail.
 
-Thanks.
+Signed-off-by: Brad King <brad.king@kitware.com>
+---
+ t/t3030-merge-recursive.sh | 47 ++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 47 insertions(+)
+
+diff --git a/t/t3030-merge-recursive.sh b/t/t3030-merge-recursive.sh
+index 2f96100..b6d3ed0 100755
+--- a/t/t3030-merge-recursive.sh
++++ b/t/t3030-merge-recursive.sh
+@@ -257,6 +257,7 @@ test_expect_success 'setup 8' '
+ 	git add e &&
+ 	test_tick &&
+ 	git commit -m "rename a->e" &&
++	c7=$(git rev-parse --verify HEAD) &&
+ 	git checkout rename-ln &&
+ 	git mv a e &&
+ 	test_ln_s_add e a &&
+@@ -517,6 +518,52 @@ test_expect_success 'reset and bind merge' '
+ 
+ '
+ 
++test_expect_failure 'merge-recursive w/ empty work tree - ours has rename' '
++	(
++	 GIT_WORK_TREE="$PWD/ours-has-rename-work" &&
++	 export GIT_WORK_TREE &&
++	 GIT_INDEX_FILE="$PWD/ours-has-rename-index" &&
++	 export GIT_INDEX_FILE &&
++	 mkdir "$GIT_WORK_TREE" &&
++	 git read-tree -i -m $c7 &&
++	 git update-index --ignore-missing --refresh &&
++	 git merge-recursive $c0 -- $c7 $c3 &&
++	 git ls-files -s >actual-files
++	) 2>actual-err &&
++	>expected-err &&
++	cat >expected-files <<-EOF &&
++	100644 $o3 0	b/c
++	100644 $o0 0	c
++	100644 $o0 0	d/e
++	100644 $o0 0	e
++	EOF
++	test_cmp expected-files actual-files &&
++	test_cmp expected-err actual-err
++'
++
++test_expect_success 'merge-recursive w/ empty work tree - theirs has rename' '
++	(
++	 GIT_WORK_TREE="$PWD/theirs-has-rename-work" &&
++	 export GIT_WORK_TREE &&
++	 GIT_INDEX_FILE="$PWD/theirs-has-rename-index" &&
++	 export GIT_INDEX_FILE &&
++	 mkdir "$GIT_WORK_TREE" &&
++	 git read-tree -i -m $c3 &&
++	 git update-index --ignore-missing --refresh &&
++	 git merge-recursive $c0 -- $c3 $c7 &&
++	 git ls-files -s >actual-files
++	) 2>actual-err &&
++	>expected-err &&
++	cat >expected-files <<-EOF &&
++	100644 $o3 0	b/c
++	100644 $o0 0	c
++	100644 $o0 0	d/e
++	100644 $o0 0	e
++	EOF
++	test_cmp expected-files actual-files &&
++	test_cmp expected-err actual-err
++'
++
+ test_expect_success 'merge removes empty directories' '
+ 
+ 	git reset --hard master &&
+-- 
+1.8.5.2
