@@ -1,155 +1,126 @@
-From: manjian2006@gmail.com
-Subject: [PATCH v2] improve git svn performance
-Date: Wed, 22 Jan 2014 16:08:23 +0800
-Message-ID: <1390378103-24392-1-git-send-email-manjian2006@gmail.com>
-Cc: manjian2006 <manjian2006@gmail.com>
-To: git@vger.kernel.org, normalperson@yhbt.net
-X-From: git-owner@vger.kernel.org Wed Jan 22 09:08:45 2014
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [PATCH 0/6] Make 'git help everyday' work -> relnotes
+Date: Wed, 22 Jan 2014 08:33:55 -0000
+Organization: OPDS
+Message-ID: <D97049A7BB5848B6ABA211DB7D941196@PhilipOakley>
+References: <1389309192-5748-1-git-send-email-philipoakley@iee.org><xmqqppo090m7.fsf@gitster.dls.corp.google.com><52CFACBB.7000805@atlas-elektronik.com><F11CD558C63947F9B4AA75501D2F9F62@PhilipOakley><52D91B0E.6080000@atlas-elektronik.com><BA4E87FA92ED4E8FB2C00F013BD7B3FF@PhilipOakley><xmqqob34synq.fsf@gitster.dls.corp.google.com><2D10AF8E0C024CC5A817528582FDE07D@PhilipOakley> <xmqqbnz4svb7.fsf@gitster.dls.corp.google.com>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+Mime-Version: 1.0
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: =?iso-8859-1?Q?Stefan_N=E4we?= <stefan.naewe@atlas-elektronik.com>,
+	"GitList" <git@vger.kernel.org>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 22 09:34:00 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W5srZ-00041o-Ph
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Jan 2014 09:08:42 +0100
+	id 1W5tG2-0004Y1-Qq
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Jan 2014 09:33:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752265AbaAVIIh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Jan 2014 03:08:37 -0500
-Received: from mail-pb0-f44.google.com ([209.85.160.44]:62545 "EHLO
-	mail-pb0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750850AbaAVIIg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Jan 2014 03:08:36 -0500
-Received: by mail-pb0-f44.google.com with SMTP id rq2so58573pbb.17
-        for <git@vger.kernel.org>; Wed, 22 Jan 2014 00:08:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=X7IO4Pox3SViOPoC14RS5B9U/ck8X2WQ5TB2reMKmnE=;
-        b=Lk2pY6NX9JPcg9qLR6Pr82/jMwkEPb0GS7YfuDwvVQMByCkYJ2mQOq8KtNyCPmwm0s
-         xHSd+lT5kuq6oL1aQX5JGgagT9sn7r9pgb5BhXhP5LTuyN36qJsp2nkDPf+xU9z833+8
-         Y+naQGWRFZbbrubwNBX441DbFbCMORWLmVxK19bYtFoWn5G3L50Uj2THMJmL6Zesg7B4
-         lMhpR3csROMQhy458jOPUar794ph8LiRdeO2cn2UicszVFVOwlbORWz5rZ9NhMJ3VNcE
-         Dg80nrLoZS6dfbxQo4MhaRnJQkNHB0RZrCszfNGx8KLeEOX5LGBptjX3XcABt26Of3fs
-         ITqw==
-X-Received: by 10.66.26.115 with SMTP id k19mr64639pag.87.1390378116381;
-        Wed, 22 Jan 2014 00:08:36 -0800 (PST)
-Received: from ubuntu.dhcp.ucweb.local ([70.39.187.196])
-        by mx.google.com with ESMTPSA id sg1sm19963800pbb.16.2014.01.22.00.08.34
-        for <multiple recipients>
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 22 Jan 2014 00:08:35 -0800 (PST)
-X-Mailer: git-send-email 1.8.3.2
+	id S1752265AbaAVIdz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Jan 2014 03:33:55 -0500
+Received: from out1.ip02ir2.opaltelecom.net ([62.24.128.238]:39755 "EHLO
+	out1.ip02ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750873AbaAVIdy (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 22 Jan 2014 03:33:54 -0500
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Aq0/AB+B31ICYJZt/2dsb2JhbABbgws4EAOIf7MjAQIBAQuBARd0giAFAQEBAQIBCAEBHREeAQEhBQYCAwUCAQMVDCUUAQQaBgcXBhMIAgECAwGHbAzBKI58NYJ2gRQEiQ+GF5sUgy08
+X-IPAS-Result: Aq0/AB+B31ICYJZt/2dsb2JhbABbgws4EAOIf7MjAQIBAQuBARd0giAFAQEBAQIBCAEBHREeAQEhBQYCAwUCAQMVDCUUAQQaBgcXBhMIAgECAwGHbAzBKI58NYJ2gRQEiQ+GF5sUgy08
+X-IronPort-AV: E=Sophos;i="4.95,698,1384300800"; 
+   d="scan'208";a="451984428"
+Received: from host-2-96-150-109.as13285.net (HELO PhilipOakley) ([2.96.150.109])
+  by out1.ip02ir2.opaltelecom.net with SMTP; 22 Jan 2014 08:33:52 +0000
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240816>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240817>
 
-From: manjian2006 <manjian2006@gmail.com>
+From: "Junio C Hamano" <gitster@pobox.com>
+> "Philip Oakley" <philipoakley@iee.org> writes:
+>
+>> I already have a local patch that creates a stalenote.txt file, and
+>> includes that in a "release-notes(7)" man page, but it still leaves
+>> the actual release notes in a separate plain text file, linked from
+>> the man page, rather than being right at hand, which is what I think
+>> readers would expect.
+>
+> Sorry, but I still do not get it.  If you have a script
 
+Ah, no, it's not a script.
 
-* perl/Git/SVN.pm
-  Modified according to Eric Wong <normalperson@yhbt.net>
+I had simply moved the content of the stalenotes section into its own 
+file 'stalenotes.txt' which could then be included both within the 
+git(1) section it came from, and a new release-notes(7) man page.
 
->Hi, I'm interested in this.  How much did performance improve by
->(and how many revisions is the repository)>
-Our svn server are built in a LAN,15152 revisions.Not optimized git-svn used 10 hours or more to accomplish,
-while optimized one using only 3-4 hours.
+With that set up the Documentation/Makefile would generate the man 
+pages, with their appropriate links, which can be accessed via the 'git 
+help' command.
 
+The big 'however' was that this would not actually include the latest 
+release notes as literal text for immediate reading into the 
+release-notes(7) man page, which would be my aim, and I think what 
+Stefan had suggested as a preferred style.
 
-According to some profiling data,_rev_list subroutine and rebuild subroutine are consuming a large proportion of time.
-So I improve _rev_list's performance by memoize its results,and avoid subprocess invocation by memoize rebuild subroutine's key data.
+>                      that reads
+> git.txt and extracts its stale-notes section to generate the source
+> to be processed into release-notes(7), why can't that script also
+> include the contents of the latest release notes inline into its
+> output?
+>
+> My release notes are _not_ written to be compatible with/processable
+> by AsciiDoc (they are meant to be mere plain text)---perhaps you are
+> wondering if that would make it harder to maintain your script that
+> produces release-notes.txt?
+>
+> Confused...
 
-Signed-off-by: manjian2006 <manjian2006@gmail.com>
----
- perl/Git/SVN.pm | 41 ++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 38 insertions(+), 3 deletions(-)
+My thought was that the latest release note would be included as literal 
+text, as noted above.
+Like you say, it may need to be a script, but I was being cautious about 
+what extra work that would entail for each release.
 
-diff --git a/perl/Git/SVN.pm b/perl/Git/SVN.pm
-index 5273ee8..dc7942b 100644
---- a/perl/Git/SVN.pm
-+++ b/perl/Git/SVN.pm
-@@ -1599,6 +1599,7 @@ sub tie_for_persistent_memoization {
- 		my %lookup_svn_merge_cache;
- 		my %check_cherry_pick_cache;
- 		my %has_no_changes_cache;
-+		my %_rev_list_cache;
- 
- 		tie_for_persistent_memoization(\%lookup_svn_merge_cache,
- 		    "$cache_path/lookup_svn_merge");
-@@ -1620,6 +1621,14 @@ sub tie_for_persistent_memoization {
- 			SCALAR_CACHE => ['HASH' => \%has_no_changes_cache],
- 			LIST_CACHE => 'FAULT',
- 		;
-+
-+		tie_for_persistent_memoization(\%_rev_list_cache,
-+		    "$cache_path/_rev_list");
-+		memoize '_rev_list',
-+			SCALAR_CACHE => 'FAULT',
-+			LIST_CACHE => ['HASH' => \%_rev_list_cache],
-+		;
-+
- 	}
- 
- 	sub unmemoize_svn_mergeinfo_functions {
-@@ -1629,6 +1638,7 @@ sub tie_for_persistent_memoization {
- 		Memoize::unmemoize 'lookup_svn_merge';
- 		Memoize::unmemoize 'check_cherry_pick';
- 		Memoize::unmemoize 'has_no_changes';
-+		Memoize::unmemoize '_rev_list';
- 	}
- 
- 	sub clear_memoized_mergeinfo_caches {
-@@ -1959,11 +1969,25 @@ sub rebuild_from_rev_db {
- 	unlink $path or croak "unlink: $!";
- }
- 
-+#define a global associate map to record rebuild status
-+my %rebuild_status;
-+#define a global associate map to record rebuild verify status
-+my %rebuild_verify_status;
-+
- sub rebuild {
- 	my ($self) = @_;
- 	my $map_path = $self->map_path;
- 	my $partial = (-e $map_path && ! -z $map_path);
--	return unless ::verify_ref($self->refname.'^0');
-+	my $verify_key = $self->refname.'^0';
-+	if (! exists $rebuild_verify_status{$verify_key} || ! defined $rebuild_verify_status{$verify_key} ) {
-+		my $verify_result = ::verify_ref($verify_key);
-+		if ($verify_result) {
-+			$rebuild_verify_status{$verify_key} = 1;
-+		}
-+	}
-+	if (! exists $rebuild_verify_status{$verify_key}) {
-+		return;
-+	}
- 	if (!$partial && ($self->use_svm_props || $self->no_metadata)) {
- 		my $rev_db = $self->rev_db_path;
- 		$self->rebuild_from_rev_db($rev_db);
-@@ -1977,10 +2001,21 @@ sub rebuild {
- 	print "Rebuilding $map_path ...\n" if (!$partial);
- 	my ($base_rev, $head) = ($partial ? $self->rev_map_max_norebuild(1) :
- 		(undef, undef));
-+	my $key_value = ($head ? "$head.." : "") . $self->refname;
-+	if (exists $rebuild_status{$key_value}) {
-+		print "Done rebuilding $map_path\n" if (!$partial || !$head);
-+		my $rev_db_path = $self->rev_db_path;
-+		if (-f $self->rev_db_path) {
-+			unlink $self->rev_db_path or croak "unlink: $!";
-+		}
-+		$self->unlink_rev_db_symlink;
-+		return;
-+	}
- 	my ($log, $ctx) =
--	    command_output_pipe(qw/rev-list --pretty=raw --reverse/,
--				($head ? "$head.." : "") . $self->refname,
-+		command_output_pipe(qw/rev-list --pretty=raw --reverse/,
-+				$key_value,	
- 				'--');
-+	$rebuild_status{$key_value} = 1;
- 	my $metadata_url = $self->metadata_url;
- 	remove_username($metadata_url);
- 	my $svn_uuid = $self->rewrite_uuid || $self->ra_uuid;
--- 
-1.8.3.2
+>
+>>
+>> My other question would be to ask how you normally manage the 
+>> up-issue
+>> of the stalenotes, and when you would normally create that section in
+>> git(1) as I didn't see any ifdef::stalenotes[] being defined anywhere
+>> else.
+>
+> I'm not sure if I am understanding the question right (up-issue?),
+> but it used to be that the preformatted and web-reachable manual
+> pages at k.org were processed with stalenotes defined (which by the
+> way was disabled with adaa3caf "Meta/dodoc.sh: adjust to the new
+> layout, 2011-11-15" on the todo branch), and 26cfcfbf "Add release
+> notes to the distribution., 2007-02-13" used that facility to
+> prepare something like this:
+>
+
+I hadn't looked back into that part of history. I was somehow expecting 
+to see 'stalenotes' being defined somewhere in the current documenation 
+preparation options, hence my question about when you would set 
+'stalenotes'.
+
+I'll have a look back at that to see how it was used back then.
+
+>    docs/git.html
+>        /git-cat-file.html
+>        ...
+>    docs/vX.Y.Z/git.html
+>    docs/vX.Y.Z/git-cat-file.html
+>                ...
+>
+> where the "latest" one lived immediately underneath docs/*, while
+> older ones were in versioned subdirectories.
+> 
