@@ -1,118 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC PATCH] Make 'git request-pull' more strict about matching local/remote branches
-Date: Wed, 22 Jan 2014 14:14:05 -0800
-Message-ID: <xmqqwqhrwtoy.fsf@gitster.dls.corp.google.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [RFC PATCH] Make 'git request-pull' more strict about matching
+ local/remote branches
+Date: Wed, 22 Jan 2014 14:20:34 -0800
+Message-ID: <CA+55aFxdNv+Y+OzSazY=yaEGkG57+HsiDCi93tBhvNHarSFyjA@mail.gmail.com>
 References: <alpine.LFD.2.11.1401221243090.18459@i7.linux-foundation.org>
+	<xmqqwqhrwtoy.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
 Cc: Tejun Heo <tj@kernel.org>, Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Jan 22 23:14:22 2014
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 22 23:20:44 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W663x-0001H8-A7
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Jan 2014 23:14:21 +0100
+	id 1W66A3-0003c5-UL
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Jan 2014 23:20:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756048AbaAVWOP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Jan 2014 17:14:15 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51911 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755989AbaAVWOM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Jan 2014 17:14:12 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 76FCE65852;
-	Wed, 22 Jan 2014 17:14:11 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=zx90GhtoIrzpuiNrNreI3/0rPVU=; b=nlOvQD
-	4u5pGTt2tbdmuIkhJsewKCy2WN0Z7SU9MaWYpceiN2DFVYRBoXwFHotxLcFcq3QE
-	ZOCSZUD1oiJXCZD9tC4gj1jGobw9MijPMtSWehv1KvN3mkA4eocDLHfaxmYrZB3m
-	RcU/+AvLIc18NM9EyQEWAkYizwEhm3MmS3Uq0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=aQgJ+2t2Gt+pNga+x+3BgDMgQ3lIqych
-	HJ9t75qO2OpwM4Khn3QJ5CbeIfEBox8Lt45FbhQkVRwl8KonHW7W+X6HU58/pNKf
-	yU4/+l7KROclCFzwncM37Mmauyms2/aMWp3Y43/484nMm+ZWsO25ZzdONsfsGFeI
-	01q3gDOzQiw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 46CB86584F;
-	Wed, 22 Jan 2014 17:14:11 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EEC286584B;
-	Wed, 22 Jan 2014 17:14:09 -0500 (EST)
-In-Reply-To: <alpine.LFD.2.11.1401221243090.18459@i7.linux-foundation.org>
-	(Linus Torvalds's message of "Wed, 22 Jan 2014 13:08:54 -0800 (PST)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 8464D24C-83B2-11E3-AA7D-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755811AbaAVWUg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Jan 2014 17:20:36 -0500
+Received: from mail-ve0-f172.google.com ([209.85.128.172]:62624 "EHLO
+	mail-ve0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753118AbaAVWUf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Jan 2014 17:20:35 -0500
+Received: by mail-ve0-f172.google.com with SMTP id c14so639996vea.31
+        for <git@vger.kernel.org>; Wed, 22 Jan 2014 14:20:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=VnORb3uVMmfRKC5nWOyEQGYiKP6uFkxgpNjHdaw8KUA=;
+        b=b1yRCyNPx3FLyO+Jjo2L5i7bPi09u0DgYaU3mxsco5BoQuMn8uQA2pMrkcFAahhLVm
+         exQmb0q0sqPM391B0XhQmqFM7OzaLFUzDywoObMkBh9WRQ8vGHARI0/BWhshZq+TcpVe
+         taLeJEOoUnaOXCMdQrT03/2XOFzQlDFSV6o9bEhRkbUypY7Ju6p3I5Ey4SAfBJuCX4zN
+         auENNvgkoBuA2j2Sau9tMbllf/FV1hzU3CmkM5VLPz5HOY6Ev8xV3XnNwDYtl+qbJHni
+         dSPtzFgG3tR30pZsaLfCcxDy5LMHAzA1KiC9fFgnKLpNwuJd5JECA6+e6lIhlUBWOwA5
+         sLMA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linux-foundation.org; s=google;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=VnORb3uVMmfRKC5nWOyEQGYiKP6uFkxgpNjHdaw8KUA=;
+        b=EFSp22mG4wVU1ANXBAhaVuAy8/Scylt/kUgDmxzN0IzAHmAM5a32e7rvA00ocePb+K
+         9jIRltGnzpXUxIhf0mVGfDTvRouIMGP9D+yESCzC2TX+QyaUWGO/ycqGYxzZ+Rq1t9cU
+         yVr4AqUeZOQrs+5b1dv4ibxvvldEvv/1KUaMY=
+X-Received: by 10.58.37.67 with SMTP id w3mr2631450vej.22.1390429234394; Wed,
+ 22 Jan 2014 14:20:34 -0800 (PST)
+Received: by 10.221.8.73 with HTTP; Wed, 22 Jan 2014 14:20:34 -0800 (PST)
+In-Reply-To: <xmqqwqhrwtoy.fsf@gitster.dls.corp.google.com>
+X-Google-Sender-Auth: Gl3I7bY01RbYUTi4_N-DEmkTZRU
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240867>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240868>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+On Wed, Jan 22, 2014 at 2:14 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> I looked at 5150.4 and found that what it attempts to do is halfway
+> sensible.
 
-> That may be very helpful if your local tree doesn't match the layout of 
-> the remote branches, but for the common case it's been a recurring 
-> disaster, when "request-pull" is done against a delayed remote update, and 
-> it rewrites the target branch randomly to some other branch name that 
-> happens to have the same expected SHA1 (or more commonly, leaves it 
-> blank).
+I agree that it is "half-way sensible". The important bit being the HALF part.
 
-Thinking about this a bit more...
+The half part is why we have the semantics we have. There's no
+question about that.
 
-> Comments? It passes the tests I put it through locally, but I did *not* 
-> make it pass the test-suite, since it very much does change the rules. 
-> Some of the test suite code literally tests for the old completely broken 
-> case (at least t5150, subtests 4 and 5).
+The problem is, the *other* half is pure and utter crap. The "half-way
+sensible" solution then generates pure and utter garbage in the
+"totally sensible" case.
 
-I looked at 5150.4 and found that what it attempts to do is halfway
-sensible.  The contributor works on the local 'master' branch,
-publishes the result to 'for-linus' in its 'origin' repository, and
-asks his state to be pulled, with:
+And that's why I think it needs to be fixed. Not because the existing
+behavior can never make sense in some circumstances, but because the
+existing behavior can screw up really really badly in other (arguably
+more common, and definitely real) circumstances.
 
-	git push origin master:for-linus
-        git request-pull initial origin
+For the kernel, the broken "missing branch name" situation has come up
+pretty regularly. This is definitely not a one-time event, it's more
+like "almost every merge window somebody gets screwed by this and I
+have to guess what the branch name should have been".
 
-The contributor could be more explicit in his request-pull and say 
+I think that we could potentially do a "local:remote" syntax for that
+half-way sensible case, so that if you do
 
-        git request-pull initial origin master
+   git push .. master:for-linus
 
-but there is no 'master' on the publishing repository in this case
-(or even if there is, it does not match what is being pushed out),
-and there is no 'for-linus' branch locally, so there is no way for
-him to say
+then you have to do
 
-        git request-pull initial origin for-linus
+   git request-pull .. master:for-linus
 
-unless he creates it locally first.
+to match the fact that you renamed your local branch on the remote.
 
-I am starting to wonder if it is a better fix to check potentially
-ambiguous cases (e.g. the publishing repository does have 'master'
-that does not point at the commit local 'master' points at, and
-'for-linus' that points at the same commit, and the user asks for
-'master' to be pulled) or clearly broken cases (e.g. the user gave
-something other than HEAD explicitly from the command line, but we
-ended up computing blank) and die loudly, without breaking cases
-this test tries to protect.
-
-On the other hand, I tend to think what 5150.5 wants is convoluted
-and expects a broken behaviour.  Its publishing repository has
-'master' and 'for-upstream', and also has 'tags/full' that is an
-annotated tag that points at the commit, runs request-pull with its
-local 'master', and expects the resulting message to ask 'tags/full'
-to be pulled.  If the contributor wants such a non-commit to be
-pulled, I think it should be made more explicit, i.e., not with
-
-	git request-pull initial $origin_url
-
-but with
-
-	git request-pull initial $origin_url tags/full
-
-or something.
+              Linus
