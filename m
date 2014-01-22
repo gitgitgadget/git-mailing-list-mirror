@@ -1,59 +1,87 @@
-From: salmansheikh <salmanisheikh@gmail.com>
-Subject: libz and RHEL 5.9 compile of Git
-Date: Wed, 22 Jan 2014 07:59:52 -0800 (PST)
-Message-ID: <1390406392415-7602374.post@n2.nabble.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [ANNOUNCE] Git v1.9-rc0
+Date: Wed, 22 Jan 2014 08:11:33 -0800
+Message-ID: <xmqq7g9syp1m.fsf@gitster.dls.corp.google.com>
+References: <xmqq61pjzljn.fsf@gitster.dls.corp.google.com>
+	<xmqqha8xt22p.fsf@gitster.dls.corp.google.com>
+	<CALZVapmqcFjjKeURHdP4chkB+T2--caJZYiJBzdwq7Ou=HzO5w@mail.gmail.com>
+	<52DFE882.2040605@atlas-elektronik.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 22 16:59:57 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Javier Domingo Cansino <javierdo1@gmail.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>,
+	Linux Kernel <linux-kernel@vger.kernel.org>
+To: Stefan =?utf-8?Q?N=C3=A4we?= <stefan.naewe@atlas-elektronik.com>
+X-From: linux-kernel-owner@vger.kernel.org Wed Jan 22 17:11:49 2014
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W60Dd-0004LM-15
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Jan 2014 16:59:57 +0100
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1W60P4-0001PT-CC
+	for glk-linux-kernel-3@plane.gmane.org; Wed, 22 Jan 2014 17:11:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752777AbaAVP7x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Jan 2014 10:59:53 -0500
-Received: from sam.nabble.com ([216.139.236.26]:37271 "EHLO sam.nabble.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752668AbaAVP7w (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Jan 2014 10:59:52 -0500
-Received: from jim.nabble.com ([192.168.236.80])
-	by sam.nabble.com with esmtp (Exim 4.72)
-	(envelope-from <salmanisheikh@gmail.com>)
-	id 1W60DY-0005zi-Dt
-	for git@vger.kernel.org; Wed, 22 Jan 2014 07:59:52 -0800
-Sender: git-owner@vger.kernel.org
+	id S1756141AbaAVQLk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Wed, 22 Jan 2014 11:11:40 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55264 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752136AbaAVQLh convert rfc822-to-8bit (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Wed, 22 Jan 2014 11:11:37 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D1CEF6421E;
+	Wed, 22 Jan 2014 11:11:36 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=i9/L/cxYYsY7
+	ou+nBpbXDUvfZGU=; b=U0xxSHvf3Nt5bWChWFvNuAExw0vct/hzlMoezn9atIY0
+	k6B2Cw0xXF7nSx8VGS5kGUHDz9QlD5zaHa7rHPKAT24NS+GW4GGpxwTmPAGo3DZ+
+	aMll+A3Qq+IJmBsFCXu6g4lMiylvDYHid8RxMZPDUaOPz9bMXmie+Ig4fzoVpJs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=yOQ4Xy
+	g+OeZQd/QaanEJvPPDkN9wEqwaUOWXsTwL+QRrKkvLVeXF8SrLTJUoJX145cArjY
+	yAJ/rzf671xBIcjeX1hAoXA1Zq9KMw8hLBMqy2Nu5v04pd2YeZ9iyS+XYOAYZQEN
+	VPv848nRBGcQz/JyfA6xPszYNinmrz3TzI9pM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B9AA16421D;
+	Wed, 22 Jan 2014 11:11:36 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CF99F6421A;
+	Wed, 22 Jan 2014 11:11:35 -0500 (EST)
+In-Reply-To: <52DFE882.2040605@atlas-elektronik.com> ("Stefan =?utf-8?Q?N?=
+ =?utf-8?Q?=C3=A4we=22's?= message
+	of "Wed, 22 Jan 2014 16:49:22 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: DDECA5A2-837F-11E3-95CA-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240835>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240836>
 
-Hello,
+Stefan N=C3=A4we <stefan.naewe@atlas-elektronik.com> writes:
 
-I have a RHEL system that I am not the admin of. I needed to install git and
-got the source. Everything is okay until I got to this point below. I
-downloaded and installed the latest libz (1.2.8) but i installed it under a
-local directory under my user name (i.e. /home/ssheikh/local). The problem
-is that git only looks in the locations below. I even have that directory in
-my $LD_LIBRARY_PATH. So, how can I force make to use that version of libz
-and not the old one that came with this RHEL 5.9 distro?
+> Am 22.01.2014 13:53, schrieb Javier Domingo Cansino:
+>> Will there be any change on how tarballs are distributed, taking int=
+o
+>> account that Google will be shutting down Google Code Downloads
+>> section[1][2]?
+>>=20
+>
+> Am I missing something or what's wrong with this:
+>
+>   https://github.com/gitster/git/archive/v1.9-rc0.tar.gz
+>
+> or any
+>
+>   https://github.com/gitster/git/archive/$TAG.tar.gz
+>
+> ??
 
-[ssheikh@gs-560g3080090e git-1.8.3.4]$ make
-    LINK git-credential-store
-/usr/bin/ld: skipping incompatible /lib/libz.so when searching for -lz
-/usr/bin/ld: skipping incompatible /usr/lib/libz.so when searching for -lz
-/usr/bin/ld: skipping incompatible /usr/lib/libz.a when searching for -lz
-/usr/bin/ld: cannot find -lz
-collect2: ld returned 1 exit status
-make: *** [git-credential-store] Error 1
-
-
-
-
---
-View this message in context: http://git.661346.n2.nabble.com/libz-and-RHEL-5-9-compile-of-Git-tp7602374.html
-Sent from the git mailing list archive at Nabble.com.
+Do these consume CPU every time somebody asks for a tarball?  That
+might be considered "wrong" depending on the view.
