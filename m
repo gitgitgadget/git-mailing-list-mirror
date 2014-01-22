@@ -1,66 +1,54 @@
-From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-Subject: Re: libz and RHEL 5.9 compile of Git
-Date: Wed, 22 Jan 2014 20:59:12 +0100
-Message-ID: <52E02310.9090609@web.de>
-References: <1390406392415-7602374.post@n2.nabble.com>
+From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+Subject: Re: Anomalous AUTHOR and DOCUMENTATION sections in manpages
+Date: Wed, 22 Jan 2014 22:15:07 +0200
+Message-ID: <20140122201507.GA15111@LK-Perkele-VII>
+References: <52DFA9EF.4080309@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: salmansheikh <salmanisheikh@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 22 20:59:28 2014
+Content-Type: text/plain; charset=utf-8
+Cc: git discussion list <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	Johan Herland <johan@herland.net>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Wed Jan 22 21:15:19 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W63xO-0007vq-Rs
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Jan 2014 20:59:27 +0100
+	id 1W64Ck-0005s2-OH
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Jan 2014 21:15:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755991AbaAVT7W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Jan 2014 14:59:22 -0500
-Received: from mout.web.de ([212.227.15.14]:50506 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755897AbaAVT7U (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Jan 2014 14:59:20 -0500
-Received: from [192.168.209.26] ([78.72.74.102]) by smtp.web.de (mrweb002)
- with ESMTPSA (Nemesis) id 0MZDki-1VrqUU1jdk-00KwBI for <git@vger.kernel.org>;
- Wed, 22 Jan 2014 20:59:18 +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:24.0) Gecko/20100101 Thunderbird/24.2.0
-In-Reply-To: <1390406392415-7602374.post@n2.nabble.com>
-X-Provags-ID: V03:K0:2HCXdLLWfm1pYRBsl1fZ48iD6ZVkgi/ORVq6QjBh+8vamt1D4tD
- vSmRNuw+WU8icUs8GJxcVIB/dY1nFyxmuz3UtRYzbLLJMgm2XavDsJP1IrzQvjntkooySs6
- Ob65dYdnerf2ZBm7f9ksxsWVfLZYVqgUGezbl8pldV7TS3jqMnSdflOkSCrToVakryM22zt
- ESau5RDpVDrb/E7OZQlIg==
+	id S1756147AbaAVUPO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Jan 2014 15:15:14 -0500
+Received: from emh03.mail.saunalahti.fi ([62.142.5.109]:40503 "EHLO
+	emh03.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752711AbaAVUPL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Jan 2014 15:15:11 -0500
+Received: from LK-Perkele-VII (a88-112-44-140.elisa-laajakaista.fi [88.112.44.140])
+	by emh03.mail.saunalahti.fi (Postfix) with ESMTP id 6E9AE1887A4;
+	Wed, 22 Jan 2014 22:15:07 +0200 (EET)
+Content-Disposition: inline
+In-Reply-To: <52DFA9EF.4080309@alum.mit.edu>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240849>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240850>
 
-On 2014-01-22 16.59, salmansheikh wrote:
-> Hello,
+On Wed, Jan 22, 2014 at 12:22:23PM +0100, Michael Haggerty wrote:
+> I just noticed that there are exactly four Git manpages with an "AUTHOR"
+> section and five with a "DOCUMENTATION" section:
 > 
-> I have a RHEL system that I am not the admin of. I needed to install git and
-> got the source. Everything is okay until I got to this point below. I
-> downloaded and installed the latest libz (1.2.8) but i installed it under a
-> local directory under my user name (i.e. /home/ssheikh/local). The problem
-> is that git only looks in the locations below. I even have that directory in
-> my $LD_LIBRARY_PATH. So, how can I force make to use that version of libz
-> and not the old one that came with this RHEL 5.9 distro?
-> 
-> [ssheikh@gs-560g3080090e git-1.8.3.4]$ make
->     LINK git-credential-store
-> /usr/bin/ld: skipping incompatible /lib/libz.so when searching for -lz
-> /usr/bin/ld: skipping incompatible /usr/lib/libz.so when searching for -lz
-> /usr/bin/ld: skipping incompatible /usr/lib/libz.a when searching for -lz
-> /usr/bin/ld: cannot find -lz
-> collect2: ld returned 1 exit status
-> make: *** [git-credential-store] Error 1
-> 
-You need to tell the linker where to search for the library.
-Please have a look at the Makefile:
+> These sections are inconsistent with the other manpages and seem
+> superfluous in a project that has, on the one hand, a public history
+> and, on the other hand, hundreds of contributors.  Would the mentioned
+> authors (CCed) consent to the removal of these sections?
+ 
+Sure (it has been copyedited a lot anyway).
 
-ifdef ZLIB_PATH
-	BASIC_CFLAGS += -I$(ZLIB_PATH)/include
-	EXTLIBS += -L$(ZLIB_PATH)/$(lib) $(CC_LD_DYNPATH)$(ZLIB_PATH)/$(lib)
-endif
+-Ilari
