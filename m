@@ -1,95 +1,98 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: Anomalous AUTHOR and DOCUMENTATION sections in manpages
-Date: Wed, 22 Jan 2014 22:41:49 +0100
-Message-ID: <52E03B1D.4060207@alum.mit.edu>
-References: <52DFA9EF.4080309@alum.mit.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC PATCH] Make 'git request-pull' more strict about matching local/remote branches
+Date: Wed, 22 Jan 2014 13:46:54 -0800
+Message-ID: <xmqq1tzzy9ip.fsf@gitster.dls.corp.google.com>
+References: <alpine.LFD.2.11.1401221243090.18459@i7.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu40=?= =?UTF-8?B?YyBEdXk=?= 
-	<pclouds@gmail.com>, Johan Herland <johan@herland.net>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-To: git discussion list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jan 22 22:42:03 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Tejun Heo <tj@kernel.org>, Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Jan 22 22:47:07 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W65Yf-0005RQ-Jn
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Jan 2014 22:42:01 +0100
+	id 1W65da-0007LM-PQ
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Jan 2014 22:47:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753344AbaAVVl5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Jan 2014 16:41:57 -0500
-Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:43654 "EHLO
-	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751527AbaAVVlz (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 22 Jan 2014 16:41:55 -0500
-X-AuditID: 1207440c-b7f566d000004272-86-52e03b22ebdd
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id 20.A9.17010.22B30E25; Wed, 22 Jan 2014 16:41:54 -0500 (EST)
-Received: from [192.168.69.148] (p57A248A5.dip0.t-ipconnect.de [87.162.72.165])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s0MLfoTK004117
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 22 Jan 2014 16:41:51 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20131103 Icedove/17.0.10
-In-Reply-To: <52DFA9EF.4080309@alum.mit.edu>
-X-Enigmail-Version: 1.6
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrAKsWRmVeSWpSXmKPExsUixO6iqKtk/SDIYOdzTYuuK91MFg29V5gt
-	Vq7Zw2wx7+4uJov+5V1sFm9vLmG06J7yltFi/qGJrA4cHivP1nrsnHWX3ePDxziPSy+/s3lc
-	vKTs8ef8HlaPz5vkAtijuG2SEkvKgjPT8/TtErgzfnS9ZS64xl1xtaeNsYHxOGcXIweHhICJ
-	xNE1Dl2MnECmmMSFe+vZuhi5OIQELjNKHFw5hQXCOc8kcW3/dBaQKl4BbYmGiQeYQGwWAVWJ
-	2/8+sIPYbAK6Eot6msHiogLBEqsvP4CqF5Q4OfMJmC0CVLPr2VU2EJtZoIVZYtJbAxBbWMBF
-	4v2DmYwgthDQ/LbeM2BzOAV0JNbf6WGFOFRcoqcxCMRkFlCXWD9PCGKKvMT2t3OYJzAKzkKy
-	bBZC1SwkVQsYmVcxyiXmlObq5iZm5hSnJusWJyfm5aUW6Rrq5WaW6KWmlG5ihMQIzw7Gb+tk
-	DjEKcDAq8fByfrofJMSaWFZcmXuIUZKDSUmUt9bsQZAQX1J+SmVGYnFGfFFpTmrxIUYJDmYl
-	Ed5lxkA53pTEyqrUonyYlDQHi5I4r+oSdT8hgfTEktTs1NSC1CKYrAwHh5IE72tLoEbBotT0
-	1Iq0zJwShDQTByfIcC4pkeLUvJTUosTSkox4UOzGFwOjFyTFA7RX0Apkb3FBYi5QFKL1FKMu
-	x4oNn/4wCrHk5eelSonzfgPZIQBSlFGaB7cClhBfMYoDfSzM+w+kigeYTOEmvQJawgS0JHrL
-	PZAlJYkIKakGxgBvi4V98g5swUynOFodZm1fOO3nWeu10oxe3Fppm9KnvhPc8JI/ 
+	id S1752980AbaAVVrB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Jan 2014 16:47:01 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40178 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751649AbaAVVrA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Jan 2014 16:47:00 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E179264F1F;
+	Wed, 22 Jan 2014 16:46:58 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=CAP5hvj1qLgrCKoKM+JBz3ACidA=; b=kRte/x
+	xGjH8mpMoWIvhir3jp8dI0PndWK5eupe8zbk5f2ipJ6E3yNxWGRxcr1pMLPwgN4g
+	PTxI4LL1ypB7XVLjR555kvNpG5Cnzj2oP98YM+9DuTZ+55IUh/TARjYwbj6BGhp4
+	y0kjLWYRJA5iFKUnfMA98Q6Ss1+B4F9WNMONw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=qmDmqP6Z2S/N5K/5Vspu8IIzefVOGuAN
+	TlfgnC+pbDCo8TpVbKWw5aSo/WpfjK8sQqzZAG+M9914Ag6oa97mrnnfaQOHcTEI
+	mwWhfqiPNiZNgu5w3Etfu6DXAAT+BgVwQUkqHGPSxFMPOV+goAfpisOXq5SIRYfU
+	vR/luM0w9wo=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B4E9D64F1E;
+	Wed, 22 Jan 2014 16:46:58 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9C52864F1C;
+	Wed, 22 Jan 2014 16:46:57 -0500 (EST)
+In-Reply-To: <alpine.LFD.2.11.1401221243090.18459@i7.linux-foundation.org>
+	(Linus Torvalds's message of "Wed, 22 Jan 2014 13:08:54 -0800 (PST)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: B77210AE-83AE-11E3-8A5D-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240863>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240864>
 
-On 01/22/2014 12:22 PM, Michael Haggerty wrote:
-> I just noticed that there are exactly four Git manpages with an "AUTHOR"
-> section and five with a "DOCUMENTATION" section:
-> 
->     $ make doc
->     $ grep -nIE -e '^\.SH "DOCUMENTATION|AUTHOR"' Documentation/*.[0-9]
->     Documentation/git-column.1:80:.SH "AUTHOR"
->     Documentation/git-for-each-ref.1:272:.SH "AUTHOR"
->     Documentation/git-for-each-ref.1:275:.SH "DOCUMENTATION"
->     Documentation/git-http-backend.1:404:.SH "AUTHOR"
->     Documentation/git-http-backend.1:407:.SH "DOCUMENTATION"
->     Documentation/git-notes.1:395:.SH "AUTHOR"
->     Documentation/git-notes.1:398:.SH "DOCUMENTATION"
->     Documentation/git-remote-ext.1:133:.SH "DOCUMENTATION"
->     Documentation/git-remote-fd.1:71:.SH "DOCUMENTATION"
-> 
-> These sections are inconsistent with the other manpages and seem
-> superfluous in a project that has, on the one hand, a public history
-> and, on the other hand, hundreds of contributors.  Would the mentioned
-> authors (CCed) consent to the removal of these sections?
-> 
-> I don't want to step on any feet here.  If you want to keep these
-> sections, I have no objection.  But my guess is that people added them
-> in these few instances without realizing that these sections are not
-> commonly used in Git documentation.
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-Thanks for the quick responses, everybody.  I'll prepare a patch.
+> This means that git request-pull will never rewrite the ref-name you gave 
+> it.  If the local branch name is "xyzzy", that is the only branch name 
+> that request-pull will ask the other side to fetch.
+>
+> If the remote has that branch under a different name, that's your problem 
+> and git request-pull will not try to fix it up (but git request-pull will 
+> warn about the fact that no exact matching branch is found, and you can 
+> edit the end result to then have the remote name you want if it doesn't 
+> match your local one).
+>
+> The new "find local ref" code will also complain loudly if you give an
+> ambiguous refname (eg you have both a tag and a branch with that same
+> name, and you don't specify "heads/name" or "tags/name").
 
-Michael
+I agree with the basic direction, especially the part "we will never
+rewrite", is quite attractive.
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+But this part might be a bit problematic.  $3=master will almost
+always have refs/heads/master and refs/remotes/origin/master listed
+because the call to "show-ref" comes before "rev-parse --verify",
+no?
+
+> +head=$(git symbolic-ref -q "${3-HEAD}")
+> +head=${head:-$(git show-ref "${3-HEAD}" | cut -d' ' -f2)}
+> +head=${head:-$(git rev-parse --quiet --verify "$3")}
+> +
+> +# None of the above? Bad.
+> +test -z "$head" && die "fatal: Not a valid revision: $3"
+> +
+> +# This also verifies that the resulting head is unique:
+> +# "git show-ref" could have shown multiple matching refs..
+>  headrev=$(git rev-parse --verify --quiet "$head"^0)
+> -if test -z "$headrev"
+> +test -z "$headrev" && die "fatal: Ambiguous revision: $3"
+
+... and it would die here.  $3=for-linus may be the most common case
+on the kernel list, and remotes/origin/for-linus may be unlikely to
+appear in the real life (hmph, really?  perhaps people keep track of
+what they pushed out the last time with it, I dunno).
