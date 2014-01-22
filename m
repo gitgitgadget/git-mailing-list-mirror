@@ -1,90 +1,93 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Anomalous AUTHOR and DOCUMENTATION sections in manpages
-Date: Wed, 22 Jan 2014 12:22:23 +0100
-Message-ID: <52DFA9EF.4080309@alum.mit.edu>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu40=?= =?UTF-8?B?YyBEdXk=?= 
-	<pclouds@gmail.com>, Johan Herland <johan@herland.net>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-To: git discussion list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jan 22 12:22:36 2014
+Subject: [PATCH] Add cross-references between docs for for-each-ref and show-ref
+Date: Wed, 22 Jan 2014 12:23:20 +0100
+Message-ID: <1390389800-26769-1-git-send-email-mhagger@alum.mit.edu>
+Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 22 12:23:51 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W5vtD-0001mJ-Eq
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Jan 2014 12:22:35 +0100
+	id 1W5vuR-0002Mk-Ge
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Jan 2014 12:23:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755150AbaAVLWc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Jan 2014 06:22:32 -0500
-Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:57619 "EHLO
-	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753600AbaAVLWb (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 22 Jan 2014 06:22:31 -0500
-X-AuditID: 12074411-b7f426d000005455-99-52dfa9f63851
+	id S1755285AbaAVLXs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Jan 2014 06:23:48 -0500
+Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:44204 "EHLO
+	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755277AbaAVLXr (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 22 Jan 2014 06:23:47 -0500
+X-AuditID: 12074412-b7fc96d0000023d5-ea-52dfaa42b40e
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id AD.52.21589.6F9AFD25; Wed, 22 Jan 2014 06:22:30 -0500 (EST)
-Received: from [192.168.69.148] (p57A248A5.dip0.t-ipconnect.de [87.162.72.165])
+	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id 25.5C.09173.24AAFD25; Wed, 22 Jan 2014 06:23:46 -0500 (EST)
+Received: from michael.fritz.box (p57A248A5.dip0.t-ipconnect.de [87.162.72.165])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s0MBMOT5007570
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 22 Jan 2014 06:22:26 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20131103 Icedove/17.0.10
-X-Enigmail-Version: 1.6
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrBKsWRmVeSWpSXmKPExsUixO6iqPtt5f0gg2UvBSy6rnQzWTT0XmG2
-	WLlmD7PFvLu7mCz6l3exWby9uYTRonvKW0aL+YcmsjpweKw8W+uxc9Zddo8PH+M8Lr38zuZx
-	8ZKyx5/ze1g9Pm+SC2CP4rZJSiwpC85Mz9O3S+DOODRpDXvBBq6K6y0nmRoYz3N0MXJySAiY
-	SKz8d5MNwhaTuHBvPZDNxSEkcJlR4mrrCVYI5zyTxKP574EyHBy8AtoSK6aZgjSwCKhK9Ox8
-	BdbMJqArsainmQnEFhUIllh9+QELiM0rIChxcuYTMFsEqGbXs6tg9cwCLcwSk94agNjCAg4S
-	f47dYwUZLyEgLtHTGARiMguoS6yfJwRRLS+x/e0c5gmM/LOQDJ2FUDULSdUCRuZVjHKJOaW5
-	urmJmTnFqcm6xcmJeXmpRbqmermZJXqpKaWbGCEhL7iDccZJuUOMAhyMSjy8AbvuBQmxJpYV
-	V+YeYpTkYFIS5d209H6QEF9SfkplRmJxRnxRaU5q8SFGCQ5mJRHehyuAcrwpiZVVqUX5MClp
-	DhYlcV6+Jep+QgLpiSWp2ampBalFMFkZDg4lCd6LII2CRanpqRVpmTklCGkmDk6Q4VxSIsWp
-	eSmpRYmlJRnxoFiMLwZGI0iKB2hvMdje4oLEXKAoROspRl2OFRs+/WEUYsnLz0uVEuedCVIk
-	AFKUUZoHtwKW4F4xigN9LMy7B6SKB5gc4Sa9AlrCBLQkess9kCUliQgpqQZGpsmX5q+ZEXDx
-	vdQ9jS3Ji//Vva08ciXneJ3PzBgHLnEG14cHX9asm3ZA9+0GpduKEYW3WOdEvP0V 
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s0MBNOGj007606
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+	Wed, 22 Jan 2014 06:23:45 -0500
+X-Mailer: git-send-email 1.8.5.2
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprJIsWRmVeSWpSXmKPExsUixO6iqOu06n6QwccWFYuuK91MFg29V5gt
+	bq+Yz+zA7PH3/Qcmj4uXlD0+b5ILYI7itklKLCkLzkzP07dL4M440/mLteAGV8X9YxNZGhib
+	OLsYOTkkBEwkbp+YzQphi0lcuLeerYuRi0NI4DKjRO/EiewgCSGBE0wSs78IgthsAroSi3qa
+	mUBsEQE1iYlth1hAbGYBB4nNnxsZQWxhgQCJaRM/gtWwCKhKnGqbzwZi8wq4SCz7thtoGQfQ
+	MgWJ1deFJjByL2BkWMUol5hTmqubm5iZU5yarFucnJiXl1qka6aXm1mil5pSuokR4nmhHYzr
+	T8odYhTgYFTi4Q3YdS9IiDWxrLgy9xCjJAeTkijvpqX3g4T4kvJTKjMSizPii0pzUosPMUpw
+	MCuJ8EatBMrxpiRWVqUW5cOkpDlYlMR5fy5W9xMSSE8sSc1OTS1ILYLJynBwKEnwsoM0Chal
+	pqdWpGXmlCCkmTg4QQQXyAYeoA3qYBuKCxJzizPTIYpOMSpKifP6gyQEQBIZpXlwA2Ax+opR
+	HOgfYV4LkCoeYHzDdb8CGswENDh6yz2QwSWJCCmpBkbHJY0pTy8+29i+fkub5qmj0zj3OHlv
+	zD9sfSFp56Hzj0+KLdN0Yuj5zBeZOaN1SiSH3UMtBomCX9ylK6UNrqx7tjJm8Z6Ium2i2Swf
+	zsxauD53h9HBSj5/mQx75n9K02LfvSmy9lMN6M5IE+8s+LMxpK5f8qbf+7YJpWvFTk1aN61S
+	9MRiPTMlluKMREMt5qLiRACUv57GrAIAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240820>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240821>
 
-I just noticed that there are exactly four Git manpages with an "AUTHOR"
-section and five with a "DOCUMENTATION" section:
+Add cross-references between the manpages for git-for-each-ref(1) and
+git-show-ref(1).
 
-    $ make doc
-    $ grep -nIE -e '^\.SH "DOCUMENTATION|AUTHOR"' Documentation/*.[0-9]
-    Documentation/git-column.1:80:.SH "AUTHOR"
-    Documentation/git-for-each-ref.1:272:.SH "AUTHOR"
-    Documentation/git-for-each-ref.1:275:.SH "DOCUMENTATION"
-    Documentation/git-http-backend.1:404:.SH "AUTHOR"
-    Documentation/git-http-backend.1:407:.SH "DOCUMENTATION"
-    Documentation/git-notes.1:395:.SH "AUTHOR"
-    Documentation/git-notes.1:398:.SH "DOCUMENTATION"
-    Documentation/git-remote-ext.1:133:.SH "DOCUMENTATION"
-    Documentation/git-remote-fd.1:71:.SH "DOCUMENTATION"
+Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+---
+There is a lot of overlap between the functionality of these two
+commands.  It might be handy to give the user some hints about when to
+use one command vs. the other, but honestly I don't have a gut feeling
+for this myself.  Maybe long-term the commands should converge into
+one?
 
-These sections are inconsistent with the other manpages and seem
-superfluous in a project that has, on the one hand, a public history
-and, on the other hand, hundreds of contributors.  Would the mentioned
-authors (CCed) consent to the removal of these sections?
+ Documentation/git-for-each-ref.txt | 4 ++++
+ Documentation/git-show-ref.txt     | 1 +
+ 2 files changed, 5 insertions(+)
 
-I don't want to step on any feet here.  If you want to keep these
-sections, I have no objection.  But my guess is that people added them
-in these few instances without realizing that these sections are not
-commonly used in Git documentation.
-
-Michael
-
+diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
+index 94f5c46..d639abe 100644
+--- a/Documentation/git-for-each-ref.txt
++++ b/Documentation/git-for-each-ref.txt
+@@ -227,6 +227,10 @@ Documentation
+ -------------
+ Documentation by Junio C Hamano and the git-list <git@vger.kernel.org>.
+ 
++SEE ALSO
++--------
++linkgit:git-show-ref[1]
++
+ GIT
+ ---
+ Part of the linkgit:git[1] suite
+diff --git a/Documentation/git-show-ref.txt b/Documentation/git-show-ref.txt
+index b0a309b..ffd1b03 100644
+--- a/Documentation/git-show-ref.txt
++++ b/Documentation/git-show-ref.txt
+@@ -175,6 +175,7 @@ FILES
+ 
+ SEE ALSO
+ --------
++linkgit:git-for-each-ref[1],
+ linkgit:git-ls-remote[1],
+ linkgit:git-update-ref[1],
+ linkgit:gitrepository-layout[5]
 -- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+1.8.5.2
