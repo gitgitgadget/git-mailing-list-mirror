@@ -1,191 +1,124 @@
 From: Pete Wyckoff <pw@padd.com>
-Subject: [PATCHv2 06/11] git p4 test: run as user "author"
-Date: Wed, 22 Jan 2014 17:47:24 -0500
-Message-ID: <1390430849-11436-6-git-send-email-pw@padd.com>
+Subject: [PATCHv2 07/11] git p4 test: do not pollute /tmp
+Date: Wed, 22 Jan 2014 17:47:25 -0500
+Message-ID: <1390430849-11436-7-git-send-email-pw@padd.com>
 References: <20140122224421.GB4047@padd.com>
 Cc: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 22 23:49:26 2014
+X-From: git-owner@vger.kernel.org Wed Jan 22 23:49:39 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W66bt-00061p-Gj
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Jan 2014 23:49:26 +0100
+	id 1W66c6-00067e-Ki
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Jan 2014 23:49:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753192AbaAVWtP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Jan 2014 17:49:15 -0500
-Received: from honk.padd.com ([74.3.171.149]:42265 "EHLO honk.padd.com"
+	id S1755991AbaAVWtd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Jan 2014 17:49:33 -0500
+Received: from honk.padd.com ([74.3.171.149]:41859 "EHLO honk.padd.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753648AbaAVWtM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Jan 2014 17:49:12 -0500
+	id S1753370AbaAVWtc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Jan 2014 17:49:32 -0500
 Received: from arf.padd.com (unknown [50.105.0.78])
-	by honk.padd.com (Postfix) with ESMTPSA id 174C3712D;
-	Wed, 22 Jan 2014 14:49:12 -0800 (PST)
+	by honk.padd.com (Postfix) with ESMTPSA id 1CFFB712D;
+	Wed, 22 Jan 2014 14:49:32 -0800 (PST)
 Received: by arf.padd.com (Postfix, from userid 7770)
-	id 7EDAE200AB; Wed, 22 Jan 2014 17:49:09 -0500 (EST)
+	id 8DA52200AB; Wed, 22 Jan 2014 17:49:29 -0500 (EST)
 X-Mailer: git-send-email 1.8.5.2.364.g6ac45cd
 In-Reply-To: <20140122224421.GB4047@padd.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240877>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240878>
 
-The tests use author@example.com as the canonical submitter, but
-he does not have an entry in the p4 users database.  This causes
-the generated change description to complain that the git and p4
-users disagree.  The complaint message is still valid, just isn't
-useful in tests.  It was introduced in 848de9c (git-p4: warn if
-git authorship won't be retained, 2011-05-13).
+Generating the submit template for p4 uses tempfile.mkstemp(),
+which by default puts files in /tmp.  For a test that fails,
+possibly on purpose, this is not cleaned up.  Run with TMPDIR
+pointing into the trash directory so the temp files go away
+with the test results.
 
-Fix t9813 to use @example.com instead of @localhost due to change
-in p4_add_user().  Move the function into the git p4 test library
-so author can be added at initialization time.
+To do this required some other minor changes.  First, the editor
+is launched using system(editor + " " + template_file), using
+shell expansion to build the command string.  This doesn't work
+if editor has a space in it.  And is generally unwise as it's
+easy to fool the shell into doing extra work.  Exec the args
+directly, without shell expansion.
+
+Second, without shell expansion, the trick of "P4EDITOR=:" used
+in the tests doesn't work.  Use a real command, true, as the
+non-interactive editor for testing.
 
 Signed-off-by: Pete Wyckoff <pw@padd.com>
 ---
- t/lib-git-p4.sh                  | 15 ++++++++++++++-
- t/t9813-git-p4-preserve-users.sh | 38 ++++++++++++++------------------------
- 2 files changed, 28 insertions(+), 25 deletions(-)
+ git-p4.py                          | 2 +-
+ t/lib-git-p4.sh                    | 8 +++++++-
+ t/t9805-git-p4-skip-submit-edit.sh | 6 ++++--
+ 3 files changed, 12 insertions(+), 4 deletions(-)
 
+diff --git a/git-p4.py b/git-p4.py
+index 3a20d15..f0a327d 100755
+--- a/git-p4.py
++++ b/git-p4.py
+@@ -1220,7 +1220,7 @@ class P4Submit(Command, P4UserMap):
+             editor = os.environ.get("P4EDITOR")
+         else:
+             editor = read_pipe("git var GIT_EDITOR").strip()
+-        system(editor + " " + template_file)
++        system([editor, template_file])
+ 
+         # If the file was not saved, prompt to see if this patch should
+         # be skipped.  But skip this verification step if configured so.
 diff --git a/t/lib-git-p4.sh b/t/lib-git-p4.sh
-index ccd918e..4ff2bb1 100644
+index 4ff2bb1..5aa8adc 100644
 --- a/t/lib-git-p4.sh
 +++ b/t/lib-git-p4.sh
-@@ -47,9 +47,10 @@ P4DPORT=$((10669 + ($testid - $git_p4_test_start)))
- 
+@@ -48,7 +48,7 @@ P4DPORT=$((10669 + ($testid - $git_p4_test_start)))
  P4PORT=localhost:$P4DPORT
  P4CLIENT=client
-+P4USER=author
- P4EDITOR=:
+ P4USER=author
+-P4EDITOR=:
++P4EDITOR=true
  unset P4CHARSET
--export P4PORT P4CLIENT P4EDITOR P4CHARSET
-+export P4PORT P4CLIENT P4USER P4EDITOR P4CHARSET
+ export P4PORT P4CLIENT P4USER P4EDITOR P4CHARSET
  
- db="$TRASH_DIRECTORY/db"
- cli="$TRASH_DIRECTORY/cli"
-@@ -96,12 +97,24 @@ start_p4d() {
- 		return 1
- 	fi
+@@ -57,6 +57,12 @@ cli="$TRASH_DIRECTORY/cli"
+ git="$TRASH_DIRECTORY/git"
+ pidfile="$TRASH_DIRECTORY/p4d.pid"
  
-+	# build a p4 user so author@example.com has an entry
-+	p4_add_user author
++# git p4 submit generates a temp file, which will
++# not get cleaned up if the submission fails.  Don't
++# clutter up /tmp on the test machine.
++TMPDIR="$TRASH_DIRECTORY"
++export TMPDIR
 +
- 	# build a client
- 	client_view "//depot/... //client/..." &&
- 
- 	return 0
- }
- 
-+p4_add_user() {
-+	name=$1 &&
-+	p4 user -f -i <<-EOF
-+	User: $name
-+	Email: $name@example.com
-+	FullName: Dr. $name
-+	EOF
-+}
-+
- kill_p4d() {
- 	pid=$(cat "$pidfile")
- 	# it had better exist for the first kill
-diff --git a/t/t9813-git-p4-preserve-users.sh b/t/t9813-git-p4-preserve-users.sh
-index f2e85e5..166b840 100755
---- a/t/t9813-git-p4-preserve-users.sh
-+++ b/t/t9813-git-p4-preserve-users.sh
-@@ -19,16 +19,6 @@ test_expect_success 'create files' '
+ start_p4d() {
+ 	mkdir -p "$db" "$cli" "$git" &&
+ 	rm -f "$pidfile" &&
+diff --git a/t/t9805-git-p4-skip-submit-edit.sh b/t/t9805-git-p4-skip-submit-edit.sh
+index ff2cc79..8931188 100755
+--- a/t/t9805-git-p4-skip-submit-edit.sh
++++ b/t/t9805-git-p4-skip-submit-edit.sh
+@@ -17,7 +17,7 @@ test_expect_success 'init depot' '
  	)
  '
  
--p4_add_user() {
--	name=$1 fullname=$2 &&
--	p4 user -f -i <<-EOF &&
--	User: $name
--	Email: $name@localhost
--	FullName: $fullname
--	EOF
--	p4 passwd -P secret $name
--}
--
- p4_grant_admin() {
- 	name=$1 &&
- 	{
-@@ -51,8 +41,8 @@ make_change_by_user() {
- 
- # Test username support, submitting as user 'alice'
- test_expect_success 'preserve users' '
--	p4_add_user alice Alice &&
--	p4_add_user bob Bob &&
-+	p4_add_user alice &&
-+	p4_add_user bob &&
- 	p4_grant_admin alice &&
+-# this works because EDITOR is set to :
++# this works because P4EDITOR is set to true
+ test_expect_success 'no config, unedited, say yes' '
  	git p4 clone --dest="$git" //depot &&
  	test_when_finished cleanup_git &&
-@@ -60,8 +50,8 @@ test_expect_success 'preserve users' '
+@@ -90,7 +90,9 @@ test_expect_success 'no config, edited' '
  		cd "$git" &&
- 		echo "username: a change by alice" >>file1 &&
- 		echo "username: a change by bob" >>file2 &&
--		git commit --author "Alice <alice@localhost>" -m "a change by alice" file1 &&
--		git commit --author "Bob <bob@localhost>" -m "a change by bob" file2 &&
-+		git commit --author "Alice <alice@example.com>" -m "a change by alice" file1 &&
-+		git commit --author "Bob <bob@example.com>" -m "a change by bob" file2 &&
- 		git config git-p4.skipSubmitEditCheck true &&
- 		P4EDITOR=touch P4USER=alice P4PASSWD=secret git p4 commit --preserve-user &&
- 		p4_check_commit_author file1 alice &&
-@@ -78,7 +68,7 @@ test_expect_success 'refuse to preserve users without perms' '
- 		cd "$git" &&
- 		git config git-p4.skipSubmitEditCheck true &&
- 		echo "username-noperms: a change by alice" >>file1 &&
--		git commit --author "Alice <alice@localhost>" -m "perms: a change by alice" file1 &&
-+		git commit --author "Alice <alice@example.com>" -m "perms: a change by alice" file1 &&
- 		P4EDITOR=touch P4USER=bob P4PASSWD=secret &&
- 		export P4EDITOR P4USER P4PASSWD &&
- 		test_must_fail git p4 commit --preserve-user &&
-@@ -94,9 +84,9 @@ test_expect_success 'preserve user where author is unknown to p4' '
- 		cd "$git" &&
- 		git config git-p4.skipSubmitEditCheck true &&
- 		echo "username-bob: a change by bob" >>file1 &&
--		git commit --author "Bob <bob@localhost>" -m "preserve: a change by bob" file1 &&
-+		git commit --author "Bob <bob@example.com>" -m "preserve: a change by bob" file1 &&
- 		echo "username-unknown: a change by charlie" >>file1 &&
--		git commit --author "Charlie <charlie@localhost>" -m "preserve: a change by charlie" file1 &&
-+		git commit --author "Charlie <charlie@example.com>" -m "preserve: a change by charlie" file1 &&
- 		P4EDITOR=touch P4USER=alice P4PASSWD=secret &&
- 		export P4EDITOR P4USER P4PASSWD &&
- 		test_must_fail git p4 commit --preserve-user &&
-@@ -121,24 +111,24 @@ test_expect_success 'not preserving user with mixed authorship' '
- 	(
- 		cd "$git" &&
- 		git config git-p4.skipSubmitEditCheck true &&
--		p4_add_user derek Derek &&
-+		p4_add_user derek &&
- 
--		make_change_by_user usernamefile3 Derek derek@localhost &&
-+		make_change_by_user usernamefile3 Derek derek@example.com &&
- 		P4EDITOR=cat P4USER=alice P4PASSWD=secret &&
- 		export P4EDITOR P4USER P4PASSWD &&
- 		git p4 commit |\
--		grep "git author derek@localhost does not match" &&
-+		grep "git author derek@example.com does not match" &&
- 
--		make_change_by_user usernamefile3 Charlie charlie@localhost &&
-+		make_change_by_user usernamefile3 Charlie charlie@example.com &&
- 		git p4 commit |\
--		grep "git author charlie@localhost does not match" &&
-+		grep "git author charlie@example.com does not match" &&
- 
--		make_change_by_user usernamefile3 alice alice@localhost &&
-+		make_change_by_user usernamefile3 alice alice@example.com &&
- 		git p4 commit |\
- 		test_must_fail grep "git author.*does not match" &&
- 
- 		git config git-p4.skipUserNameCheck true &&
--		make_change_by_user usernamefile3 Charlie charlie@localhost &&
-+		make_change_by_user usernamefile3 Charlie charlie@example.com &&
- 		git p4 commit |\
- 		test_must_fail grep "git author.*does not match" &&
- 
+ 		echo line >>file1 &&
+ 		git commit -a -m "change 5" &&
+-		P4EDITOR="" EDITOR="\"$TRASH_DIRECTORY/ed.sh\"" git p4 submit &&
++		P4EDITOR="$TRASH_DIRECTORY/ed.sh" &&
++		export P4EDITOR &&
++		git p4 submit &&
+ 		p4 changes //depot/... >wc &&
+ 		test_line_count = 5 wc
+ 	)
 -- 
 1.8.5.2.364.g6ac45cd
