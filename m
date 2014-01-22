@@ -1,82 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [ANNOUNCE] Git v1.9-rc0
-Date: Wed, 22 Jan 2014 13:04:02 -0800
-Message-ID: <xmqq61pbybi5.fsf@gitster.dls.corp.google.com>
-References: <xmqq61pjzljn.fsf@gitster.dls.corp.google.com>
-	<xmqqha8xt22p.fsf@gitster.dls.corp.google.com>
-	<CALZVapmqcFjjKeURHdP4chkB+T2--caJZYiJBzdwq7Ou=HzO5w@mail.gmail.com>
-	<52DFE882.2040605@atlas-elektronik.com>
-	<xmqq7g9syp1m.fsf@gitster.dls.corp.google.com>
-	<CAFFjANTNLnc4GcVeSEvuWpfYVXJchJqkHwvUVdREdXmWx6e4=Q@mail.gmail.com>
-	<xmqqlhy7yjjp.fsf@gitster.dls.corp.google.com>
-	<20140122203030.GB14211@milliways>
+From: Sebastian Schuberth <sschuberth@gmail.com>
+Subject: Re: [PATCH v2 3/4] Speed up is_git_command() by checking early for
+ internal commands
+Date: Wed, 22 Jan 2014 22:05:09 +0100
+Message-ID: <52E03285.2070305@gmail.com>
+References: <52C58FD7.6010608@gmail.com>	<52C59107.6080005@gmail.com>	<371D58A5-4640-4125-9B69-E9A7B03B347F@acm.org> <CAHGBnuNNaKNx7FzjoNhorryR5eO2c0VvbUgRc_p01mabOVr+EA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Vicent =?utf-8?Q?Mart=C3=AD?= <tanoku@gmail.com>,
-	Stefan =?utf-8?Q?N?= =?utf-8?Q?=C3=A4we?= 
-	<stefan.naewe@atlas-elektronik.com>,
-	Javier Domingo Cansino <javierdo1@gmail.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>,
-	Linux Kernel <linux-kernel@vger.kernel.org>
-To: Ken Moffat <zarniwhoop@ntlworld.com>
-X-From: linux-kernel-owner@vger.kernel.org Wed Jan 22 22:04:26 2014
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@plane.gmane.org
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Christian Couder <christian.couder@gmail.com>
+To: "Kent R. Spillner" <kspillner@acm.org>
+X-From: git-owner@vger.kernel.org Wed Jan 22 22:05:32 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1W64yI-0007Zg-86
-	for glk-linux-kernel-3@plane.gmane.org; Wed, 22 Jan 2014 22:04:26 +0100
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1W64zK-0007yF-W0
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Jan 2014 22:05:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753709AbaAVVEU (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Wed, 22 Jan 2014 16:04:20 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36967 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752886AbaAVVES (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
-	Wed, 22 Jan 2014 16:04:18 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2B59E65F2F;
-	Wed, 22 Jan 2014 16:04:17 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=weO0S1yroZ999vjqJWr6q20BWLA=; b=axWti/
-	Cai3/GXhjf7GJZ4v9ea3j1+dUUQlXtdXM9Li4CNwAc2Ctyj0aD28DBaNE51C92fC
-	PcTCxMajHW4606w5i1KKbISGSjyPz5969EVvcSa5GZaZrmEqmMvc5fZudWxIxAth
-	dQdYx1nIcR4PR5BDikePpXjP9088qani0a8BA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=nApRWNVGaGsVHgssGfoZ4KQzaKkAdZzM
-	mvfuFi7ufWYTewxgSj/coYb3pNg/j/8XGJ9SUz4/21dJGr5tiqioCbOhTB6nCjB8
-	k3I9KCoaQQ//G85M4Z52qgDWSIy54XDLPbUXEwAAjLkdreM2Jr7lyj1RtFHn4cPW
-	XkLosEeO0h4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0F7E665F2D;
-	Wed, 22 Jan 2014 16:04:17 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DE7FA65F2B;
-	Wed, 22 Jan 2014 16:04:15 -0500 (EST)
-In-Reply-To: <20140122203030.GB14211@milliways> (Ken Moffat's message of "Wed,
-	22 Jan 2014 20:30:30 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: C08A0C60-83A8-11E3-BDB2-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1753344AbaAVVFY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Jan 2014 16:05:24 -0500
+Received: from mail-bk0-f53.google.com ([209.85.214.53]:35119 "EHLO
+	mail-bk0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751876AbaAVVFV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Jan 2014 16:05:21 -0500
+Received: by mail-bk0-f53.google.com with SMTP id my13so64260bkb.40
+        for <git@vger.kernel.org>; Wed, 22 Jan 2014 13:05:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
+         :subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=5mNlOd9Z0OS/LfY3b1C86g7wpgvBxYQSaWfcLGpHrCk=;
+        b=ig1hh4xnVG9kI0h7Bvwd4NiGYD10rfmG4RiwFu+V0UQmXxw28Kj2WDPxnd3eqUN59P
+         jkvM26LdQU3frCJfYjb5mvtDOcHeO5L4Du4DSwtEtb8FIXGqaZ1RMlA5ipGQYVwk0Cz4
+         rj40oE6HWhDV4tE+yz1nXlFaw7YRlDvxBFV1hj9fPCcnB7VeGPRWNTfpeoq8132y9spq
+         gHQz0sjXlz/YP/hTVDA5s9UQJNxr2VqgWyl5v1ROj9CQDvTdsC6mlfNucF0/gj1ywVRW
+         l16/qVp/wldC3Vci1vtU8btdbiZaf/yiGDwiApsQJEXnVlnqU5Cmr2uuiW+mZhXeqEUg
+         CDzQ==
+X-Received: by 10.205.102.196 with SMTP id df4mr1283714bkc.2.1390424719516;
+        Wed, 22 Jan 2014 13:05:19 -0800 (PST)
+Received: from [192.168.188.20] (p4FC96989.dip0.t-ipconnect.de. [79.201.105.137])
+        by mx.google.com with ESMTPSA id o11sm7178488bkg.13.2014.01.22.13.05.18
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 22 Jan 2014 13:05:18 -0800 (PST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.12) Gecko/20080213 Thunderbird/2.0.0.12 Mnenhy/0.7.5.0
+Newsgroups: gmane.comp.version-control.git
+In-Reply-To: <CAHGBnuNNaKNx7FzjoNhorryR5eO2c0VvbUgRc_p01mabOVr+EA@mail.gmail.com>
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240857>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240858>
 
-Ken Moffat <zarniwhoop@ntlworld.com> writes:
+On 05.01.2014 14:42, Sebastian Schuberth wrote:
 
->  I note that all of these *are* still available at googlecode for
-> the moment : https://code.google.com/p/git-core/downloads/list
+>>> Since 2dce956 is_git_command() is a bit slow as it does file I/O in the
+>>> call to list_commands_in_dir(). Avoid the file I/O by adding an early
+>>> check for internal commands.
+>>
+>> Considering the purpose of the series is it better to say "builtin" instead of "internal" in the commit message?
+>
+> True, I'll fix this in a re-rool.
 
-As I said, Cgc is not the ony download site.  The end of
+Sorry for not coming up with the re-roll until now, but lucky Junio has 
+fixed this himself in c6127fa which already is on master.
 
-    http://git-blame.blogspot.com/p/git-public-repositories.html
-
-lists the two sites that currently have the material.  I may replace
-Cgc with something else (and add it/them to the list), but in the
-meantime I do not think k.org will go out of business in anytime
-soon, so...
+-- 
+Sebastian Schuberth
