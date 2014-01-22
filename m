@@ -1,109 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/6] Make 'git help everyday' work -> relnotes
-Date: Tue, 21 Jan 2014 16:40:28 -0800
-Message-ID: <xmqqbnz4svb7.fsf@gitster.dls.corp.google.com>
-References: <1389309192-5748-1-git-send-email-philipoakley@iee.org>
-	<xmqqppo090m7.fsf@gitster.dls.corp.google.com>
-	<52CFACBB.7000805@atlas-elektronik.com>
-	<F11CD558C63947F9B4AA75501D2F9F62@PhilipOakley>
-	<52D91B0E.6080000@atlas-elektronik.com>
-	<BA4E87FA92ED4E8FB2C00F013BD7B3FF@PhilipOakley>
-	<xmqqob34synq.fsf@gitster.dls.corp.google.com>
-	<2D10AF8E0C024CC5A817528582FDE07D@PhilipOakley>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 03/11] git p4: work around p4 bug that causes empty symlinks
+Date: Tue, 21 Jan 2014 20:26:16 -0500
+Message-ID: <CAPig+cTbC9HN3REb0Lib7pzUvkLSG6te2ka4zUzcA5y5bcK_hg@mail.gmail.com>
+References: <1390346208-9207-1-git-send-email-pw@padd.com>
+	<1390346208-9207-4-git-send-email-pw@padd.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Stefan =?utf-8?Q?N=C3=A4we?= <stefan.naewe@atlas-elektronik.com>,
-	"GitList" <git@vger.kernel.org>
-To: "Philip Oakley" <philipoakley@iee.org>
-X-From: git-owner@vger.kernel.org Wed Jan 22 01:40:57 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Pete Wyckoff <pw@padd.com>
+X-From: git-owner@vger.kernel.org Wed Jan 22 02:26:26 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W5lsG-00053J-H7
-	for gcvg-git-2@plane.gmane.org; Wed, 22 Jan 2014 01:40:56 +0100
+	id 1W5maI-00039y-0k
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Jan 2014 02:26:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750862AbaAVAkg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Jan 2014 19:40:36 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60144 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751996AbaAVAkg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Jan 2014 19:40:36 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2662465111;
-	Tue, 21 Jan 2014 19:40:33 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=+a8cX6i07xpMux4Wa061TwnOeqo=; b=RmeKJV
-	dBFGf6tV2SlwOMv63taSn9ixvgg7XKBYk5DcLUpCvMDt/t3KUhZP4vtKcRvNX04z
-	4sNFJzcy1LxTd/982/BOmxHTZn5g4gwCIFQx9fPPp4g86nCEd/ZIFma5jnI4tImB
-	yAKEHKl2PLopHNrFe6n5/eG9X+Rab4kbFXLVU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Vxr3ZBJU1CNaVqu6g4/yta7z/+VnzmOd
-	jHunb1FuIIQeeK9/yg1vBWT5q9zJ1SbIH1iyRId7l/a1vxAkbBNeQT7K/BaBQ2ZM
-	t0rKRlLFHEbQRfUhhJwTC3OJ4M9LTJ6AfaJe4IsLdpHt9rx5rU/kxk3gezuzRLrW
-	DFiTKpc98ds=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1807765110;
-	Tue, 21 Jan 2014 19:40:33 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 137AB6510F;
-	Tue, 21 Jan 2014 19:40:31 -0500 (EST)
-In-Reply-To: <2D10AF8E0C024CC5A817528582FDE07D@PhilipOakley> (Philip Oakley's
-	message of "Wed, 22 Jan 2014 00:22:19 -0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: CC85638A-82FD-11E3-85C3-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754527AbaAVB0T convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 21 Jan 2014 20:26:19 -0500
+Received: from mail-la0-f52.google.com ([209.85.215.52]:51935 "EHLO
+	mail-la0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754494AbaAVB0S convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 21 Jan 2014 20:26:18 -0500
+Received: by mail-la0-f52.google.com with SMTP id c6so7127882lan.39
+        for <git@vger.kernel.org>; Tue, 21 Jan 2014 17:26:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type:content-transfer-encoding;
+        bh=mmg/mDPYyW8Lw6qjm6HReVSAOp0S0nCsXFBLBiEHHx8=;
+        b=dxOSh1VCQabq6V9gGbR4LH1hZTCiBH6bhQzDlVtsCrIv5ANMUgM3qyozI6G1RIsa4M
+         9ux5RDh+dYGdB2WlQZICdt4Dw9xW7cVWs/UJNgzjawZwnxBtW/U/jZypYR9C+IXcpYlj
+         U3Ry6oCpwiHDP2VF8r5s0OVGk/4v7Mlyld3j2nsqFMcGjcG7BEqEQsJ1ZdrtR9aqj9zl
+         0DS+MoqUGpeVw0nPK91TQZUMmx+U6ikt+w6rg0RUT7Bi8nNZXf55ZWj7qhqSOG4vifBZ
+         VQM0R5MTAxM4T5M9CCeQlXf/ve2E3QxJEPRGfF8x/f4Ugu6Fgf6kLjuJ2M3z1Q7dnJU7
+         kdAQ==
+X-Received: by 10.152.28.230 with SMTP id e6mr18308676lah.3.1390353976938;
+ Tue, 21 Jan 2014 17:26:16 -0800 (PST)
+Received: by 10.114.81.106 with HTTP; Tue, 21 Jan 2014 17:26:16 -0800 (PST)
+In-Reply-To: <1390346208-9207-4-git-send-email-pw@padd.com>
+X-Google-Sender-Auth: ld78VTjUB6od0umncw3oEV-kDJk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240810>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240811>
 
-"Philip Oakley" <philipoakley@iee.org> writes:
-
-> I already have a local patch that creates a stalenote.txt file, and
-> includes that in a "release-notes(7)" man page, but it still leaves
-> the actual release notes in a separate plain text file, linked from
-> the man page, rather than being right at hand, which is what I think
-> readers would expect.
-
-Sorry, but I still do not get it.  If you have a script that reads
-git.txt and extracts its stale-notes section to generate the source
-to be processed into release-notes(7), why can't that script also
-include the contents of the latest release notes inline into its
-output?
-
-My release notes are _not_ written to be compatible with/processable
-by AsciiDoc (they are meant to be mere plain text)---perhaps you are
-wondering if that would make it harder to maintain your script that
-produces release-notes.txt?
-
-Confused...
-
+On Tue, Jan 21, 2014 at 6:16 PM, Pete Wyckoff <pw@padd.com> wrote:
+> Damien G=E9rard highlights an interesting problem.  Some p4
+> repositories end up with symlinks that have an empty target.  It
+> is not possible to create this with current p4, but they do
+> indeed exist.
 >
-> My other question would be to ask how you normally manage the up-issue
-> of the stalenotes, and when you would normally create that section in
-> git(1) as I didn't see any ifdef::stalenotes[] being defined anywhere
-> else.
+> The effect in git p4 is that "p4 print" on the symlink returns an
+> empty string, confusing the curret symlink-handling code.
+>
+> Such broken repositories cause problems in p4 as well, even with
+> no git involved.  In p4, syncing to a change that includes a
+> bogus symlink causes errors:
+>
+>     //depot/empty-symlink - updating /home/me/p4/empty-symlink
+>     rename: /home/me/p4/empty-symlink: No such file or directory
+>
+> and leaves no symlink.
+>
+> In git, replicate the p4 behavior by ignoring these bad symlinks.
+> If, in a later p4 revision, the symlink happens to point to
+> something non-null, the symlink will be replaced properly.
+>
+> Add a big test for all this too.
+>
+> This happens to be a regression introduced by 1292df1 (git-p4:
+> Fix occasional truncation of symlink contents., 2013-08-08) and
+> appeared first in 1.8.5.  But it only shows up only in p4
 
-I'm not sure if I am understanding the question right (up-issue?),
-but it used to be that the preformatted and web-reachable manual
-pages at k.org were processed with stalenotes defined (which by the
-way was disabled with adaa3caf "Meta/dodoc.sh: adjust to the new
-layout, 2011-11-15" on the todo branch), and 26cfcfbf "Add release
-notes to the distribution., 2007-02-13" used that facility to
-prepare something like this:
+Redundant "only".
 
-    docs/git.html
-        /git-cat-file.html
-        ...
-    docs/vX.Y.Z/git.html
-    docs/vX.Y.Z/git-cat-file.html
-                ...
-
-where the "latest" one lived immediately underneath docs/*, while
-older ones were in versioned subdirectories.
+> repositories of dubious character, so can wait for a proper
+> release.
+>
+> Tested-by: Damien G=E9rard <damien@iwi.me>
+> Signed-off-by: Pete Wyckoff <pw@padd.com>
