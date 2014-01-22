@@ -1,87 +1,120 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [ANNOUNCE] Git v1.9-rc0
-Date: Wed, 22 Jan 2014 08:11:33 -0800
-Message-ID: <xmqq7g9syp1m.fsf@gitster.dls.corp.google.com>
-References: <xmqq61pjzljn.fsf@gitster.dls.corp.google.com>
-	<xmqqha8xt22p.fsf@gitster.dls.corp.google.com>
-	<CALZVapmqcFjjKeURHdP4chkB+T2--caJZYiJBzdwq7Ou=HzO5w@mail.gmail.com>
-	<52DFE882.2040605@atlas-elektronik.com>
+Subject: Re: [PATCH/RFC] Makefile: Fix compilation of windows resource file
+Date: Wed, 22 Jan 2014 08:12:38 -0800
+Message-ID: <xmqq38kgyozt.fsf@gitster.dls.corp.google.com>
+References: <52DD857C.6060005@ramsay1.demon.co.uk>
+	<xmqqy529t5bb.fsf@gitster.dls.corp.google.com>
+	<xmqqppnlt3u3.fsf@gitster.dls.corp.google.com>
+	<52DEF9F2.1000905@ramsay1.demon.co.uk>
+	<xmqqk3dssxpb.fsf@gitster.dls.corp.google.com>
+	<52DF6B6C.4020708@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Javier Domingo Cansino <javierdo1@gmail.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>,
-	Linux Kernel <linux-kernel@vger.kernel.org>
-To: Stefan =?utf-8?Q?N=C3=A4we?= <stefan.naewe@atlas-elektronik.com>
-X-From: linux-kernel-owner@vger.kernel.org Wed Jan 22 17:11:49 2014
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@plane.gmane.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	GIT Mailing-list <git@vger.kernel.org>,
+	Pat Thoyts <patthoyts@users.sourceforge.net>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Wed Jan 22 17:12:50 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1W60P4-0001PT-CC
-	for glk-linux-kernel-3@plane.gmane.org; Wed, 22 Jan 2014 17:11:46 +0100
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1W60Q6-0001rD-2S
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Jan 2014 17:12:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756141AbaAVQLk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Wed, 22 Jan 2014 11:11:40 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55264 "EHLO
+	id S1753042AbaAVQMp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Jan 2014 11:12:45 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47367 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752136AbaAVQLh convert rfc822-to-8bit (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Wed, 22 Jan 2014 11:11:37 -0500
+	id S1752175AbaAVQMo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Jan 2014 11:12:44 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D1CEF6421E;
-	Wed, 22 Jan 2014 11:11:36 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0DFB2642C7;
+	Wed, 22 Jan 2014 11:12:44 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=i9/L/cxYYsY7
-	ou+nBpbXDUvfZGU=; b=U0xxSHvf3Nt5bWChWFvNuAExw0vct/hzlMoezn9atIY0
-	k6B2Cw0xXF7nSx8VGS5kGUHDz9QlD5zaHa7rHPKAT24NS+GW4GGpxwTmPAGo3DZ+
-	aMll+A3Qq+IJmBsFCXu6g4lMiylvDYHid8RxMZPDUaOPz9bMXmie+Ig4fzoVpJs=
+	:content-type; s=sasl; bh=fBGCZD30E+9wb5eCfvxqDigdMPw=; b=FgUuPE
+	E5WxG2yvP3rcPhNLzVEyn8FjCzg/Anqzm065gTN7TgM7+w9FFoqLlt70D8lMddXT
+	KeX6yWQP7tgJnpoa1OEjB4Y64j5N+Knq1R4ZHIZ8Ms5uYMTmAFj/gRJ9CMQrT3GN
+	6ju3An3G5ndltvOEYE8vmh0HerFuS7teVliwo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=yOQ4Xy
-	g+OeZQd/QaanEJvPPDkN9wEqwaUOWXsTwL+QRrKkvLVeXF8SrLTJUoJX145cArjY
-	yAJ/rzf671xBIcjeX1hAoXA1Zq9KMw8hLBMqy2Nu5v04pd2YeZ9iyS+XYOAYZQEN
-	VPv848nRBGcQz/JyfA6xPszYNinmrz3TzI9pM=
+	:content-type; q=dns; s=sasl; b=BYUgQJOOhy1A8ir9TXJxf6K7CijPkMkn
+	sEDkbETaxorsLABIE/1jIyoB1BYl1EisTh7JD97vI4NCp/VmGGrW4xhNATQhNJkE
+	2ce2MHHUvJyc6SfkChLI0R/FKHdYsfnySFvuWkBKRUQfhGlWXNYCQYIJ94fE71G7
+	GGfu+7qrgQc=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B9AA16421D;
-	Wed, 22 Jan 2014 11:11:36 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E7A16642C1;
+	Wed, 22 Jan 2014 11:12:43 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CF99F6421A;
-	Wed, 22 Jan 2014 11:11:35 -0500 (EST)
-In-Reply-To: <52DFE882.2040605@atlas-elektronik.com> ("Stefan =?utf-8?Q?N?=
- =?utf-8?Q?=C3=A4we=22's?= message
-	of "Wed, 22 Jan 2014 16:49:22 +0100")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0B5CC642BB;
+	Wed, 22 Jan 2014 11:12:41 -0500 (EST)
+In-Reply-To: <52DF6B6C.4020708@viscovery.net> (Johannes Sixt's message of
+	"Wed, 22 Jan 2014 07:55:40 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: DDECA5A2-837F-11E3-95CA-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
-Sender: linux-kernel-owner@vger.kernel.org
+X-Pobox-Relay-ID: 056135D0-8380-11E3-AB3D-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240836>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240837>
 
-Stefan N=C3=A4we <stefan.naewe@atlas-elektronik.com> writes:
+Johannes Sixt <j.sixt@viscovery.net> writes:
 
-> Am 22.01.2014 13:53, schrieb Javier Domingo Cansino:
->> Will there be any change on how tarballs are distributed, taking int=
-o
->> account that Google will be shutting down Google Code Downloads
->> section[1][2]?
->>=20
+> [Cc Pat, who added git.rc]
 >
-> Am I missing something or what's wrong with this:
+> Am 1/22/2014 0:48, schrieb Junio C Hamano:
+>> Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
+>> 
+>>>> Note that I am merely guessing that "short-digit" version numbers
+>>>> are acceptable by now after seeing
+>>>>
+>>>>     https://sourceware.org/ml/binutils/2012-07/msg00199.html
+>>>
+>>> Ah, nice find!
+>>>
+>>> I will test your patch (below) and let you know soon, but it looks
+>>> good to me. (I can't test it tonight, unfortunately.)
+>> 
+>> One thing to note is that I don't know why the existing code dropped
+>> the fourth digit from the maintenance series.
 >
->   https://github.com/gitster/git/archive/v1.9-rc0.tar.gz
->
-> or any
->
->   https://github.com/gitster/git/archive/$TAG.tar.gz
->
-> ??
+> I don't know either. But it does not really matter. When there are 4
+> digits in the FILEVERSION and PRODUCTVERSION statements, then the user
+> does not see them as-are, but, for example, 1.8.1283 for
+> FILEVERSION 1,8,5,3 (1283 = 5*256+3). Therefore, I think that there is
+> no point in providing 4 numbers, and the patch below should be
+> sufficient.
 
-Do these consume CPU every time somebody asks for a tarball?  That
-might be considered "wrong" depending on the view.
+Would that work well when we do 1.9.1, the first maintenance/bugfix
+release for 1.9?
+
+> diff --git a/Makefile b/Makefile
+> index b4af1e2..99b2b89 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -1773,7 +1773,7 @@ $(SCRIPT_LIB) : % : %.sh GIT-SCRIPT-DEFINES
+>  
+>  git.res: git.rc GIT-VERSION-FILE
+>  	$(QUIET_RC)$(RC) \
+> -	  $(join -DMAJOR= -DMINOR= -DPATCH=, $(wordlist 1,3,$(subst -, ,$(subst ., ,$(GIT_VERSION))))) \
+> +	  $(join -DMAJOR= -DMINOR=, $(wordlist 1,2,$(subst -, ,$(subst ., ,$(GIT_VERSION))))) \
+>  	  -DGIT_VERSION="\\\"$(GIT_VERSION)\\\"" $< -o $@
+>  
+>  ifndef NO_PERL
+> diff --git a/git.rc b/git.rc
+> index bce6db9..33aafb7 100644
+> --- a/git.rc
+> +++ b/git.rc
+> @@ -1,6 +1,6 @@
+>  1 VERSIONINFO
+> -FILEVERSION     MAJOR,MINOR,PATCH,0
+> -PRODUCTVERSION  MAJOR,MINOR,PATCH,0
+> +FILEVERSION     MAJOR,MINOR,0,0
+> +PRODUCTVERSION  MAJOR,MINOR,0,0
+>  BEGIN
+>    BLOCK "StringFileInfo"
+>    BEGIN
