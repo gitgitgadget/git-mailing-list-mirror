@@ -1,79 +1,103 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [ANNOUNCE] Git v1.9-rc0
-Date: Wed, 22 Jan 2014 10:10:18 -0800
-Message-ID: <xmqqlhy7yjjp.fsf@gitster.dls.corp.google.com>
-References: <xmqq61pjzljn.fsf@gitster.dls.corp.google.com>
-	<xmqqha8xt22p.fsf@gitster.dls.corp.google.com>
-	<CALZVapmqcFjjKeURHdP4chkB+T2--caJZYiJBzdwq7Ou=HzO5w@mail.gmail.com>
-	<52DFE882.2040605@atlas-elektronik.com>
-	<xmqq7g9syp1m.fsf@gitster.dls.corp.google.com>
-	<CAFFjANTNLnc4GcVeSEvuWpfYVXJchJqkHwvUVdREdXmWx6e4=Q@mail.gmail.com>
+From: Robert Hancock <hancock@sedsystems.ca>
+Subject: Re: Problem importing from SVN repository with branches/tags at multiple
+ levels using git-svn
+Date: Wed, 22 Jan 2014 13:03:29 -0600
+Organization: SED Systems
+Message-ID: <52E01601.8090705@sedsystems.ca>
+References: <52D6EB42.2060509@sedsystems.ca>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Stefan =?utf-8?Q?N=C3=A4we?= <stefan.naewe@atlas-elektronik.com>,
-	Javier Domingo Cansino <javierdo1@gmail.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>,
-	Linux Kernel <linux-kernel@vger.kernel.org>
-To: Vicent =?utf-8?Q?Mart=C3=AD?= <tanoku@gmail.com>
-X-From: linux-kernel-owner@vger.kernel.org Wed Jan 22 19:10:39 2014
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@plane.gmane.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 22 20:03:27 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1W62G6-0003hI-3Y
-	for glk-linux-kernel-3@plane.gmane.org; Wed, 22 Jan 2014 19:10:38 +0100
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1W635C-0001Ik-Rw
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Jan 2014 20:03:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755564AbaAVSKa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Wed, 22 Jan 2014 13:10:30 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33804 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752845AbaAVSK1 convert rfc822-to-8bit (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Wed, 22 Jan 2014 13:10:27 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 484E564340;
-	Wed, 22 Jan 2014 13:10:26 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=/+zQzF1wTcTO
-	xU3VIm5HW97thEo=; b=hT1rbiqGj3ZA0uGN9Zgplq2ldKAPXkI2+Ci4W8sT7tg8
-	QU2tLoeVR2hLAv4Tn0qAKWzDc3TkebUoqdMK+30H1/edBgL2IPUIIkmY0skEOi1B
-	NFMuSMyr+FZf/Xcs91P0Aade88J9RIqrX28S9fLWsjd7dxQyGrByjnntyvSGE/c=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=jnF5sP
-	4itRC9xHjE1qXMJweEG38MZzN25bS7s7kGQrKXyKiZCZxvJ5GXpdE8LyjvbFukHO
-	IUaQP+zcaYQkT1+L0qNQH4KvQ/BnVouUkG786RCgVuRk6Vv0UTlO8qjJVZqw8yBu
-	GietZhoj297Svn1cyTa/gMpBzw2MIBNWYmZvc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B528C6433E;
-	Wed, 22 Jan 2014 13:10:25 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4C86D6433D;
-	Wed, 22 Jan 2014 13:10:21 -0500 (EST)
-In-Reply-To: <CAFFjANTNLnc4GcVeSEvuWpfYVXJchJqkHwvUVdREdXmWx6e4=Q@mail.gmail.com>
-	("Vicent =?utf-8?Q?Mart=C3=AD=22's?= message of "Wed, 22 Jan 2014 18:26:23
- +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 750812D6-8390-11E3-B8BB-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1755707AbaAVTDQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Jan 2014 14:03:16 -0500
+Received: from sed198n136.SEDSystems.ca ([198.169.180.136]:9206 "EHLO
+	sed198n136.sedsystems.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755686AbaAVTDK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Jan 2014 14:03:10 -0500
+Received: from barney.sedsystems.ca (barney [198.169.180.121])
+	by sed198n136.sedsystems.ca  with ESMTP id s0MJ39xC021729
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT)
+	for <git@vger.kernel.org>; Wed, 22 Jan 2014 13:03:09 -0600 (CST)
+Received: from eng1n65.eng.sedsystems.ca (eng1n65.eng.sedsystems.ca [172.21.1.65])
+	by barney.sedsystems.ca (8.13.1/8.13.1) with ESMTP id s0MJ38nR001063
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO)
+	for <git@vger.kernel.org>; Wed, 22 Jan 2014 13:03:08 -0600
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.2.0
+In-Reply-To: <52D6EB42.2060509@sedsystems.ca>
+X-Enigmail-Version: 1.6
+X-Scanned-By: MIMEDefang 2.64 on 198.169.180.136
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240842>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240843>
 
-Vicent Mart=C3=AD <tanoku@gmail.com> writes:
+On 01/15/2014 02:10 PM, Robert Hancock wrote:
+> We have an SVN repository that has a structure for tags (likewise for
+> branches) like this:
+> 
+> tags/tag1
+> tags/tag2
+> tags/tag3/
+> tags/subdir/tag4
+> tags/subdir/tag5
+> 
+> The idea is that I want to have git-svn import everything inside subdir
+> as tags and everything else inside the root tags directory as tags, so I
+> end up with tag1-tag5 in Git. I've got tags= entries like this in the
+> Git configuration to try to achieve this:
+> 
+> tags = tags/subdir/*:refs/remotes/tags/*
+> tags = tags/*:refs/remotes/tags/*
+> 
+> My expectation was that everything inside subdir would match the first
+> line first and everything else would match the second line, so
+> everything would work out OK. Unfortunately it seems like for the tags
+> inside subdir, it's matching the second line and therefore trying to
+> import everything in there as directories inside one tag called subdir.
+> Changing the order of those lines doesn't seem to help either, it seems
+> determined to try to match to tags/* regardless of what order the lines
+> are in.
+> 
+> Clearly it would have been better if the repository had not been
+> structured this way. However, rearranging it now won't help since the
+> paths are like this in the SVN repository history.
+> 
+> The only solution I've found that kind of works is to use
+> tags/{tag1,tag2,tag3} instead of tags/*. Unfortunately there are a ton
+> of tags in that directory and adding in a giant list of tags there seems
+> to slow down the import process a great deal. Also, there are
+> potentially still tags being created in that root directory, so I would
+> have to keep regenerating and updating this list in the Git
+> configuration every time one was added. So this is not a good solution.
+> It would be much easier if I could get a wildcard solution to work here.
+> 
+> Any thoughts?
 
->> Do these consume CPU every time somebody asks for a tarball?  That
->> might be considered "wrong" depending on the view.
->
-> No, our infrastructure caches frequently requested tarballs so they
-> don't have to be regenerated on the fly.
+Just to respond to my own question, it appears that the ignore-refs
+configuration option allows one to deal with this situation. In this
+case one would add something like:
 
-Thanks.  That is certainly good enough for consumers, and better
-than having to manually create and upload for me ;-)
+ignore-refs = refs/remotes/tags/subdir$
+
+to prevent git-svn from trying to create a Git ref called subdir.
+
+Unfortunately there seems to be no documentation at all about this
+option other than in the source commit which introduced it, unlike all
+the other settings for git-svn - that seems like a bit of an oversight..
+
+-- 
+Robert Hancock
+System Analyst
+SED Systems
+Email: hancock@sedsystems.ca
