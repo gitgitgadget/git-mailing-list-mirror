@@ -1,181 +1,193 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] pack-objects: turn off bitmaps when skipping objects
-Date: Thu, 23 Jan 2014 17:52:39 -0500
-Message-ID: <20140123225238.GB2567@sigill.intra.peff.net>
-References: <52E080C1.4030402@fb.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC PATCH 2/1] Make request-pull able to take a refspec of form local:remote
+Date: Thu, 23 Jan 2014 14:58:31 -0800
+Message-ID: <xmqqsises3u0.fsf@gitster.dls.corp.google.com>
+References: <alpine.LFD.2.11.1401221535140.18207@i7.linux-foundation.org>
+	<xmqqlhy6trfp.fsf@gitster.dls.corp.google.com>
+	<CA+55aFyGaaMOL5pBhZ1BHMr07oDi2MuS-fPu4nnxhjoy+F0AQw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Siddharth Agarwal <sid0@fb.com>
-X-From: git-owner@vger.kernel.org Thu Jan 23 23:52:46 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Tejun Heo <tj@kernel.org>, Git Mailing List <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Jan 23 23:59:04 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W6T8f-0004zZ-Fn
-	for gcvg-git-2@plane.gmane.org; Thu, 23 Jan 2014 23:52:46 +0100
+	id 1W6TEk-00075o-43
+	for gcvg-git-2@plane.gmane.org; Thu, 23 Jan 2014 23:59:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932325AbaAWWwl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Jan 2014 17:52:41 -0500
-Received: from cloud.peff.net ([50.56.180.127]:37848 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932203AbaAWWwk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Jan 2014 17:52:40 -0500
-Received: (qmail 6249 invoked by uid 102); 23 Jan 2014 22:52:40 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 23 Jan 2014 16:52:40 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 23 Jan 2014 17:52:39 -0500
-Content-Disposition: inline
-In-Reply-To: <52E080C1.4030402@fb.com>
+	id S932183AbaAWW65 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Jan 2014 17:58:57 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41552 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932078AbaAWW65 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Jan 2014 17:58:57 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1A82767000;
+	Thu, 23 Jan 2014 17:58:55 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=1JBJke1aRVC8uD06QTU9wMQFW7c=; b=fLpQuP
+	xsOUkcB8BBfTT3V+qX1ZErJAbfm5u4Zmz3THvsOLigBP9/0RoogfR0uyG/u9PxQ9
+	LS6V4VTuXTFGnJ82yBNbWTazV1iC6Hy3/FEFjQ8Z4CWpPigpjHyNTz851n4rsOXL
+	6XlUXIcVb6ULXW+MEtjv5uuzjxxT7i2IH38gA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=H0fO9DL8564DJe389aI7fKmt0VbqhDxa
+	lmflA1a4JfWcpEGhIGvQ9NH3q2eO0q44csW+h5tkyEWNxYxZ24gVxR+JjXzgKVe8
+	Xp7KA/901oPdersyvxVfwzcW4Y2CZn37kPfW9BM7J7MXuIVF44scTgIANIBtj0i4
+	GST3MwzEPZU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D39F566FFE;
+	Thu, 23 Jan 2014 17:58:53 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EAAD966FF7;
+	Thu, 23 Jan 2014 17:58:51 -0500 (EST)
+In-Reply-To: <CA+55aFyGaaMOL5pBhZ1BHMr07oDi2MuS-fPu4nnxhjoy+F0AQw@mail.gmail.com>
+	(Linus Torvalds's message of "Thu, 23 Jan 2014 11:57:30 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: ED64D9E8-8481-11E3-9C07-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240969>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240970>
 
-On Wed, Jan 22, 2014 at 06:38:57PM -0800, Siddharth Agarwal wrote:
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> Running git-next, writing bitmap indexes fails if a keep file is
-> present from an earlier pack.
+> Yes, so you'll get a warning (or, if you get a partial match, maybe
+> not even that), but the important part about all these changes is that
+> it DOESN'T MATTER.
+>
+> Why? Because it no longer re-writes the target branch name based on
+> that match or non-match. So the pull request will be fine.
 
-Right, that's expected.
+Will be fine, provided if they always use local:remote syntax, I'd
+agree.
 
-The bitmap format cannot represent objects that are not present in the
-pack. So we cannot write a bitmap index if any object reachable from a
-packed commit is omitted from the pack.
+> In other words, the really fundamental change here i that the "oops, I
+> couldn't find things on the remote" no longer affects the output. It
+> only affects the warning. And I think that's important.
+>
+> It used to be that the remote matching actually changed the output of
+> the request-pull, and *THAT* was the fundamental problem.
 
-We could be nicer and downgrade it to a warning, though. The patch below
-does that.
+The fingers of users can be retrained to use the local:remote syntax
+after we apologize for this change in the Release Notes, I see only
+one issue (we seem to lose the message from the annotated/signed tag
+when asking to pull it) remaining, after looking at what updates are
+needed for t5150.
 
-> In our case we have .keep files lying around from ages ago (possibly
-> due to kill -9s run on the server).
-
-We ran into that problem at GitHub, too. We just turn off
-`--honor-pack-keep` during our repacks, as we never want them on anyway
-(and we would prefer to ignore the .keep than to abort the bitmap).
-
-> It also means that running repack -a with bitmap writing enabled on a
-> repo becomes problematic if a fetch is run concurrently.
-
-For the most part, no. The .keep file should generally only be set
-during the period between indexing the pack and updating the refs (so
-while checking connectivity and running hooks). But pack-objects starts
-from the ref tips and walks backwards. Until they are updated, it will
-not try to pack the objects in the .keep files, as nobody references
-them. There are two loopholes, though:
-
-  1. In some instances, a remote may send an object we already have
-     (e.g., because it is a blob referenced in an old commit, but newly
-     referenced again due to a revert; we do not do a full object
-     difference during the protocol negotiation, for reasons of
-     efficiency). If that is the case, we may omit it if pack-objects
-     starts during the period that the .pack and .keep files exist.
-
-  2. Once the fetch updates the refs, it removes the .keep file. But
-     this isn't atomic. A repack which starts between the two may pick
-     up the new ref values, but also see the .keep file.
-
-These are both unlikely, but possible on a very busy repository. The
-patch below will downgrade each to a warning, rather than aborting the
-repack.
-
-So this should just work out of the box with this patch.  But if bitmaps
-are important to you (say, you are running a very busy site and want
-to make sure you always have bitmaps turned on) and you do not otherwise
-care about .keep files, you may want to disable them, too.
-
--Peff
+Thanks.
 
 -- >8 --
-Subject: pack-objects: turn off bitmaps when skipping objects
+Subject: [PATCH] pull-request: test updates
 
-The pack bitmap format requires that we have a single bit
-for each object in the pack, and that each object's bitmap
-represents its complete set of reachable objects. Therefore
-we have no way to represent the bitmap of an object which
-references objects outside the pack.
+This illustrates behaviour changes that result from the recent
+change by Linus.  Most shows good changes, but there may be
+usability regressions:
 
-We notice this problem while generating the bitmaps, as we
-try to find the offset of a particular object and realize
-that we do not have it. In this case we die, and neither the
-bitmap nor the pack is generated. This is correct, but
-perhaps a little unfriendly. If you have bitmaps turned on
-in the config, many repacks will fail which would otherwise
-succeed. E.g., incremental repacks, repacks with "-l" when
-you have alternates, ".keep" files.
+ - The command continues to fail when the user forgot to push out
+   before running the command, but the wording of the message has
+   been slightly changed.
 
-Instead, this patch notices early that we are omitting some
-objects from the pack and turns off bitmaps (with a
-warning). Note that this is not strictly correct, as it's
-possible that the object being omitted is not reachable from
-any other object in the pack. In practice, this is almost
-never the case, and there are two advantages to doing it
-this way:
+ - The command no longer guesses when asked to request the commit at
+   the HEAD be pulled after pushing it to a branch 'for-upstream',
+   even when that branch points at the correct commit.  The user
+   must ask the command with the new "master:for-upstream" syntax.
 
-  1. The code is much simpler, as we do not have to cleanly
-     abort the bitmap-generation process midway through.
+ - The command no longer favours a tag that peels to the requested
+   commit over a branch that points at the same commit.  This needs
+   to be asked explicitly by specifying the tag object, not the
+   commit.  But somehow this does not see to work (yet); somewhere
+   the "tag-ness" of the requested ref seems to be lost.
 
-  2. We do not waste time partially generating bitmaps only
-     to find out that some object deep in the history is not
-     being packed.
+The new behaviour needs to be documented in any case, but we need to
+agree what the new behaviour should be before doing so, so...
 
-Signed-off-by: Jeff King <peff@peff.net>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
-I tried to keep the warning to an 80-character line without making it
-too confusing. Suggestions welcome if it doesn't make sense to people.
+ t/t5150-request-pull.sh | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
- builtin/pack-objects.c  | 12 +++++++++++-
- t/t5310-pack-bitmaps.sh |  5 ++++-
- 2 files changed, 15 insertions(+), 2 deletions(-)
-
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 8364fbd..76831d9 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -1000,6 +1000,10 @@ static void create_object_entry(const unsigned char *sha1,
- 	entry->no_try_delta = no_try_delta;
- }
+diff --git a/t/t5150-request-pull.sh b/t/t5150-request-pull.sh
+index 1afa0d5..412ee4f 100755
+--- a/t/t5150-request-pull.sh
++++ b/t/t5150-request-pull.sh
+@@ -86,7 +86,7 @@ test_expect_success 'setup: two scripts for reading pull requests' '
+ 	s/[-0-9]\{10\} [:0-9]\{8\} [-+][0-9]\{4\}/DATE/g
+ 	s/        [^ ].*/        SUBJECT/g
+ 	s/  [^ ].* (DATE)/  SUBJECT (DATE)/g
+-	s/for-upstream/BRANCH/g
++	s|tags/full|BRANCH|g
+ 	s/mnemonic.txt/FILENAME/g
+ 	s/^version [0-9]/VERSION/
+ 	/^ FILENAME | *[0-9]* [-+]*\$/ b diffstat
+@@ -127,7 +127,7 @@ test_expect_success 'pull request when forgot to push' '
+ 		test_must_fail git request-pull initial "$downstream_url" \
+ 			2>../err
+ 	) &&
+-	grep "No branch of.*is at:\$" err &&
++	grep "No match for commit .*" err &&
+ 	grep "Are you sure you pushed" err
  
-+static const char no_closure_warning[] = N_(
-+"disabling bitmap writing, as some objects are not being packed"
-+);
-+
- static int add_object_entry(const unsigned char *sha1, enum object_type type,
- 			    const char *name, int exclude)
- {
-@@ -1010,8 +1014,14 @@ static int add_object_entry(const unsigned char *sha1, enum object_type type,
- 	if (have_duplicate_entry(sha1, exclude, &index_pos))
- 		return 0;
+ '
+@@ -141,7 +141,7 @@ test_expect_success 'pull request after push' '
+ 		git checkout initial &&
+ 		git merge --ff-only master &&
+ 		git push origin master:for-upstream &&
+-		git request-pull initial origin >../request
++		git request-pull initial origin master:for-upstream >../request
+ 	) &&
+ 	sed -nf read-request.sed <request >digest &&
+ 	cat digest &&
+@@ -160,7 +160,7 @@ test_expect_success 'pull request after push' '
  
--	if (!want_object_in_pack(sha1, exclude, &found_pack, &found_offset))
-+	if (!want_object_in_pack(sha1, exclude, &found_pack, &found_offset)) {
-+		/* The pack is missing an object, so it will not have closure */
-+		if (write_bitmap_index) {
-+			warning(_(no_closure_warning));
-+			write_bitmap_index = 0;
-+		}
- 		return 0;
-+	}
- 
- 	create_object_entry(sha1, type, pack_name_hash(name),
- 			    exclude, name && no_try_delta(name),
-diff --git a/t/t5310-pack-bitmaps.sh b/t/t5310-pack-bitmaps.sh
-index d3a3afa..f13525c 100755
---- a/t/t5310-pack-bitmaps.sh
-+++ b/t/t5310-pack-bitmaps.sh
-@@ -91,7 +91,10 @@ test_expect_success 'fetch (partial bitmap)' '
- 
- test_expect_success 'incremental repack cannot create bitmaps' '
- 	test_commit more-1 &&
--	test_must_fail git repack -d
-+	find .git/objects/pack -name "*.bitmap" >expect &&
-+	git repack -d &&
-+	find .git/objects/pack -name "*.bitmap" >actual &&
-+	test_cmp expect actual
  '
  
- test_expect_success 'incremental repack can disable bitmaps' '
+-test_expect_success 'request names an appropriate branch' '
++test_expect_success 'request asks HEAD to be pulled' '
+ 
+ 	rm -fr downstream.git &&
+ 	git init --bare downstream.git &&
+@@ -179,11 +179,11 @@ test_expect_success 'request names an appropriate branch' '
+ 		read repository &&
+ 		read branch
+ 	} <digest &&
+-	test "$branch" = tags/full
++	test -z "$branch"
+ 
+ '
+ 
+-test_expect_success 'pull request format' '
++test_expect_failure 'pull request format' '
+ 
+ 	rm -fr downstream.git &&
+ 	git init --bare downstream.git &&
+@@ -212,8 +212,8 @@ test_expect_success 'pull request format' '
+ 		cd local &&
+ 		git checkout initial &&
+ 		git merge --ff-only master &&
+-		git push origin master:for-upstream &&
+-		git request-pull initial "$downstream_url" >../request
++		git push origin tags/full &&
++		git request-pull initial "$downstream_url" tags/full >../request
+ 	) &&
+ 	<request sed -nf fuzz.sed >request.fuzzy &&
+ 	test_i18ncmp expect request.fuzzy
+@@ -229,7 +229,7 @@ test_expect_success 'request-pull ignores OPTIONS_KEEPDASHDASH poison' '
+ 		git checkout initial &&
+ 		git merge --ff-only master &&
+ 		git push origin master:for-upstream &&
+-		git request-pull -- initial "$downstream_url" >../request
++		git request-pull -- initial "$downstream_url" master:for-upstream >../request
+ 	)
+ 
+ '
 -- 
-1.8.5.2.500.g8060133
+1.9-rc0-250-ge2d8c96
