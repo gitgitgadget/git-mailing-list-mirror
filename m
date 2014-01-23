@@ -1,136 +1,80 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] Makefile: Fix compilation of Windows
- resource file
-Date: Thu, 23 Jan 2014 10:02:46 -0800
-Message-ID: <xmqqlhy6vant.fsf@gitster.dls.corp.google.com>
-References: <52DD857C.6060005@ramsay1.demon.co.uk>
-	<xmqqy529t5bb.fsf@gitster.dls.corp.google.com>
-	<xmqqppnlt3u3.fsf@gitster.dls.corp.google.com>
-	<52DEF9F2.1000905@ramsay1.demon.co.uk>
-	<xmqqk3dssxpb.fsf@gitster.dls.corp.google.com>
-	<52DF6B6C.4020708@viscovery.net>
-	<xmqq38kgyozt.fsf@gitster.dls.corp.google.com>
-	<52DFF4E8.8060605@viscovery.net>
-	<xmqqppnjyl10.fsf@gitster.dls.corp.google.com>
-	<xmqqeh3zydrz.fsf@gitster.dls.corp.google.com>
-	<52E0C4BA.4080405@viscovery.net>
-	<CABNJ2GJRsqsr5+ga3-oKVU_H-HtsH+R14fBaVwV8jJcExkxr4g@mail.gmail.com>
-	<52E1244E.4010503@viscovery.net>
-	<CABNJ2GKA5PhzTfrhSCOTWtWAKMdT8+Sn6_Q54z=Dc0UVWgdmZQ@mail.gmail.com>
+Subject: Re: [ANNOUNCE] Git v1.9-rc0
+Date: Thu, 23 Jan 2014 10:15:33 -0800
+Message-ID: <xmqqha8uva2i.fsf@gitster.dls.corp.google.com>
+References: <xmqq61pjzljn.fsf@gitster.dls.corp.google.com>
+	<xmqqha8xt22p.fsf@gitster.dls.corp.google.com>
+	<CALZVapmqcFjjKeURHdP4chkB+T2--caJZYiJBzdwq7Ou=HzO5w@mail.gmail.com>
+	<52DFE882.2040605@atlas-elektronik.com>
+	<xmqq7g9syp1m.fsf@gitster.dls.corp.google.com>
+	<CAFFjANTNLnc4GcVeSEvuWpfYVXJchJqkHwvUVdREdXmWx6e4=Q@mail.gmail.com>
+	<xmqqlhy7yjjp.fsf@gitster.dls.corp.google.com>
+	<20140122203030.GB14211@milliways>
+	<20140123020913.GF17254@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Johannes Sixt <j.sixt@viscovery.net>,  msysGit <msysgit@googlegroups.com>,  Ramsay Jones <ramsay@ramsay1.demon.co.uk>,  GIT Mailing-list <git@vger.kernel.org>,  Pat Thoyts <patthoyts@users.sourceforge.net>
-To: Pat Thoyts <patthoyts@gmail.com>
-X-From: msysgit+bncBCG77UMM3EJRBTNSQWLQKGQELWF52HQ@googlegroups.com Thu Jan 23 19:02:55 2014
-Return-path: <msysgit+bncBCG77UMM3EJRBTNSQWLQKGQELWF52HQ@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-qc0-f189.google.com ([209.85.216.189])
+Content-Type: text/plain; charset=us-ascii
+Cc: Ken Moffat <zarniwhoop@ntlworld.com>,
+	Vicent =?utf-8?Q?Mart=C3=AD?= <tanoku@gmail.com>,
+	Stefan =?utf-8?Q?N=C3=A4we?= <stefan.naewe@atlas-elektronik.com>,
+	Javier Domingo Cansino <javierdo1@gmail.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>,
+	Linux Kernel <linux-kernel@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: linux-kernel-owner@vger.kernel.org Thu Jan 23 19:16:16 2014
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCG77UMM3EJRBTNSQWLQKGQELWF52HQ@googlegroups.com>)
-	id 1W6OcA-0006jL-Qs
-	for gcvm-msysgit@m.gmane.org; Thu, 23 Jan 2014 19:02:55 +0100
-Received: by mail-qc0-f189.google.com with SMTP id i8sf437389qcq.26
-        for <gcvm-msysgit@m.gmane.org>; Thu, 23 Jan 2014 10:02:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type;
-        bh=L6aOJeOY4Ytux0r7AknbVtOVkYdmp4HBiPniR6UT014=;
-        b=JkzD3S3NGaLktpMH/zRaKBewPHi60VqvUgFislDlbtlWLBg+2AdWTBZzSIuiOTli+N
-         30+SgMeSeOt+wvHVF5M7EiHRPmSEF+UYsDDkvxg14X/Q16O2yydvciVF2AKKMmbOaas5
-         duNLi9jCR132zNjSVPD0KTp0QUWLYsXKrJCoDl305tyIAfc6ui2UougEf5OPO9InLmk9
-         UIPeAAshyWart3iQp5TjG+dryge44qUMuYQdx+jJi6AOk779y27WcfuX21gJu6CdnvG+
-         EL93xI9GUY2E4lB+8NAsItBWB4N7l9Sm+ftKu5s6y9oBHRd6tO57VSrD0Q3DOw7V79ap
-         Sc4Q==
-X-Received: by 10.140.107.138 with SMTP id h10mr166258qgf.2.1390500173973;
-        Thu, 23 Jan 2014 10:02:53 -0800 (PST)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.49.94.210 with SMTP id de18ls362628qeb.87.gmail; Thu, 23 Jan
- 2014 10:02:53 -0800 (PST)
-X-Received: by 10.236.36.39 with SMTP id v27mr3321940yha.5.1390500173361;
-        Thu, 23 Jan 2014 10:02:53 -0800 (PST)
-Received: from smtp.pobox.com (b-pb-sasl-quonix.pobox.com. [208.72.237.35])
-        by gmr-mx.google.com with ESMTP id g1si2284991pbw.2.2014.01.23.10.02.51
-        for <msysgit@googlegroups.com>;
-        Thu, 23 Jan 2014 10:02:51 -0800 (PST)
-Received-SPF: pass (google.com: best guess record for domain of jch@b-sasl-quonix.pobox.com designates 208.72.237.35 as permitted sender) client-ip=208.72.237.35;
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1W6Op5-0004Fb-GK
+	for glk-linux-kernel-3@plane.gmane.org; Thu, 23 Jan 2014 19:16:15 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S932287AbaAWSPk (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Thu, 23 Jan 2014 13:15:40 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56633 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753675AbaAWSPi (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
+	Thu, 23 Jan 2014 13:15:38 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F3A5E6520F;
-	Thu, 23 Jan 2014 13:02:50 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 547436554F;
+	Thu, 23 Jan 2014 13:15:38 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=rtFwbXwlYvZXGVqSXnPSGU6bBpc=; b=VUbA84
+	q65ygjAYnMduKeZDP09Mcvl7Sv1m283WBRH1InWJtjdIrbO3OTIQhJaFHgcS1nxS
+	MONeXW2/7DCoylStxRiote7EauJNiZS0sBXfkVAy7jWXLQfhTH3V35vvFPEqRdsq
+	phEXZsbdcDcBjDob5h+8BwQTh3U646mtiOP54=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=PSi5Qh9kk0L0P2Q5w/xx3ImNZLRqCGFL
+	7RD0aYmbSkNSeuLMpgaKUEIrs7nlqg5ncwf0gp1y72QCeMcDdMKCkWdo8P/CvDOO
+	E3g/gkg2VROrQSt+yTtdWuJhSGMRhD7i0R5mVLthQZTFrmkuoWgOh56T49XNKrlL
+	eIbNHBu/U/c=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DD5BB6520E;
-	Thu, 23 Jan 2014 13:02:50 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 34E086554E;
+	Thu, 23 Jan 2014 13:15:38 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C84A365208;
-	Thu, 23 Jan 2014 13:02:49 -0500 (EST)
-In-Reply-To: <CABNJ2GKA5PhzTfrhSCOTWtWAKMdT8+Sn6_Q54z=Dc0UVWgdmZQ@mail.gmail.com>
-	(Pat Thoyts's message of "Thu, 23 Jan 2014 15:19:18 +0000")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D55C36554B;
+	Thu, 23 Jan 2014 13:15:35 -0500 (EST)
+In-Reply-To: <20140123020913.GF17254@sigill.intra.peff.net> (Jeff King's
+	message of "Wed, 22 Jan 2014 21:09:13 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 926DAD90-8458-11E3-B1C5-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
-X-Original-Sender: gitster@pobox.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: best guess record for domain of jch@b-sasl-quonix.pobox.com
- designates 208.72.237.35 as permitted sender) smtp.mail=jch@b-sasl-quonix.pobox.com;
-       dkim=pass header.i=@pobox.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240922>
+X-Pobox-Relay-ID: 5B085A88-845A-11E3-9D2F-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+Sender: linux-kernel-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240923>
 
-Pat Thoyts <patthoyts@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
->>> GIT_VERSION=1.9.rc0
->>> all:
->>>     echo $(join -DMAJOR= -DMINOR= -DPATCH=, \
->>>         $(wordlist 1,3,$(filter-out rc%,$(subst -, ,$(subst .,
->>> ,$(GIT_VERSION)))) 0 0))
->>>
->>> This removes any rc* parts and appends a couple of zeros so that all
->>> missing elements should appear as 0 in the final list.
->>
->> As Junio already pointed out, this records the wrong number in the 1.9
->> track before 1.9.1 is out because the third position is the commit count,
->> not the patch level.
->>
->> -- Hannes
->
-> OK - I cehcked and you are right in that the GIT_VERSION value is the
-> one showing up the properties dialog at least under Windows 7. As this
-> is the most likely to be examined I agree that just taking the first
-> two digits is the simplest fix here. So, fine by me then.
->
-> Acked-by: Pat Thoyts <patthoyts@users.sourceforge.net>
+> Junio, since you prepare such tarballs[1] anyway for kernel.org, it
+> might be worth uploading them to the "Releases" page of git/git.  I
+> imagine there is a programmatic way to do so via GitHub's API, but I
+> don't know offhand. I can look into it if you are interested.
 
-Thanks.
-
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/groups/opt_out.
+I already have a script that takes the three tarballs and uploads
+them to two places, so adding GitHub as the third destination should
+be a natural and welcome way to automate it.
