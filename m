@@ -1,61 +1,89 @@
-From: =?UTF-8?Q?Vicent_Mart=C3=AD?= <tanoku@gmail.com>
-Subject: Re: [PATCH 3/3] ewah: support platforms that require aligned reads
-Date: Fri, 24 Jan 2014 00:49:42 +0100
-Message-ID: <CAFFjANR=ZKmrf6QjkbiD3z1waoYjWV3eWR_1E-qJU9Nr65bFsw@mail.gmail.com>
-References: <20140123212036.GA21299@sigill.intra.peff.net> <20140123212752.GC21705@sigill.intra.peff.net>
- <20140123234456.GF18964@google.com>
+From: Siddharth Agarwal <sid0@fb.com>
+Subject: Re: [PATCH] pack-objects: turn off bitmaps when skipping objects
+Date: Thu, 23 Jan 2014 15:53:28 -0800
+Message-ID: <52E1AB78.1000504@fb.com>
+References: <52E080C1.4030402@fb.com> <20140123225238.GB2567@sigill.intra.peff.net> <52E1A99D.6010809@fb.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, git <git@vger.kernel.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 24 00:50:11 2014
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Jan 24 00:53:43 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W6U2F-00078c-5u
-	for gcvg-git-2@plane.gmane.org; Fri, 24 Jan 2014 00:50:11 +0100
+	id 1W6U5e-0008ID-Ut
+	for gcvg-git-2@plane.gmane.org; Fri, 24 Jan 2014 00:53:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752084AbaAWXuE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Jan 2014 18:50:04 -0500
-Received: from mail-ve0-f171.google.com ([209.85.128.171]:43618 "EHLO
-	mail-ve0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751490AbaAWXuD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Jan 2014 18:50:03 -0500
-Received: by mail-ve0-f171.google.com with SMTP id pa12so1568090veb.30
-        for <git@vger.kernel.org>; Thu, 23 Jan 2014 15:50:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=INisM3nvn1a9zQ6cDUecUQOeTTuYWx8BgyKwuZaRcvo=;
-        b=gM+pw49rryfYZ6hqAXJjRDocMqkU/JwCBwFoWoAX6wNQMUIJe5RrOW7ttGyXGp8B5z
-         f4bJ8bfgoXXawCc/wdZSfZGofI36x4P0YEuh1pt2fac3a11GDVKONT2648dPHbVP64KG
-         5ONOOKZcXvhrFBNj5Ce/Dd+e+QV6dVdz5BzL1qnU7atvCIWn9qqLwZ0hnz998bHg9h3W
-         AygYrRD5zdxaIGrxYOYhJzpFXodHya2Qq2Emib45ZDd9TjV5j/24k0KqcRwOdIaiTyQm
-         l43HLoxkYuIRPuaKvEiWnbbblPKa+Libq9c32lHCQhalOEGE25KlJjxMZnTxWSbfQBeF
-         1Vfg==
-X-Received: by 10.221.66.73 with SMTP id xp9mr5983914vcb.27.1390521002964;
- Thu, 23 Jan 2014 15:50:02 -0800 (PST)
-Received: by 10.220.133.73 with HTTP; Thu, 23 Jan 2014 15:49:42 -0800 (PST)
-In-Reply-To: <20140123234456.GF18964@google.com>
+	id S1752159AbaAWXxi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Jan 2014 18:53:38 -0500
+Received: from mx0a-00082601.pphosted.com ([67.231.145.42]:48545 "EHLO
+	mx0a-00082601.pphosted.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751083AbaAWXxh (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 23 Jan 2014 18:53:37 -0500
+Received: from pps.filterd (m0044012 [127.0.0.1])
+	by mx0a-00082601.pphosted.com (8.14.5/8.14.5) with SMTP id s0NNlA2T002289;
+	Thu, 23 Jan 2014 15:53:31 -0800
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fb.com; h=message-id : date : from :
+ mime-version : to : cc : subject : references : in-reply-to : content-type
+ : content-transfer-encoding; s=facebook;
+ bh=1NuLBDU+gtHR4/WbDEO1nNPescjv9fAHNl1H3kpiNUE=;
+ b=kKWur0sYqUYQLjB5BNp9fO36obvLD6A/VHR5UW/+2/SYSmAJrHK+ixWI4KT2hG0opoVF
+ wFYocaLEFnQao7NLcRdKli/wvxMATNdYGZmhG4h5dGUL3P+c4R+5U23PzRCZqIQdkzAn
+ TSMW6+DJpDl0flDAE1smGgsBEVKr3tYjkvs= 
+Received: from mail.thefacebook.com (mailwest.thefacebook.com [173.252.71.148])
+	by mx0a-00082601.pphosted.com with ESMTP id 1hk5vfhn2c-1
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=OK);
+	Thu, 23 Jan 2014 15:53:30 -0800
+Received: from [172.25.68.250] (192.168.57.29) by mail.thefacebook.com
+ (192.168.16.16) with Microsoft SMTP Server (TLS) id 14.3.174.1; Thu, 23 Jan
+ 2014 15:53:28 -0800
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.2.0
+In-Reply-To: <52E1A99D.6010809@fb.com>
+X-Originating-IP: [192.168.57.29]
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:5.11.87,1.0.14,0.0.0000
+ definitions=2014-01-23_05:2014-01-23,2014-01-23,1970-01-01 signatures=0
+X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
+ kscore.is_bulkscore=5.10702591327572e-15 kscore.compositescore=0
+ circleOfTrustscore=0 compositescore=0.997600857122248
+ urlsuspect_oldscore=0.997600857122248 suspectscore=0
+ recipient_domain_to_sender_totalscore=0 phishscore=0 bulkscore=0
+ kscore.is_spamscore=0 recipient_to_sender_totalscore=0
+ recipient_domain_to_sender_domain_totalscore=64355
+ rbsscore=0.997600857122248 spamscore=0
+ recipient_to_sender_domain_totalscore=0 urlsuspectscore=0.9 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=7.0.1-1305240000
+ definitions=main-1401230173
+X-FB-Internal: deliver
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240976>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240977>
 
-On Fri, Jan 24, 2014 at 12:44 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
->> --- a/ewah/ewah_io.c
->> +++ b/ewah/ewah_io.c
->> @@ -112,23 +112,38 @@ int ewah_serialize(struct ewah_bitmap *self, int fd)
-> [...]
->> +#if __BYTE_ORDER != __BIG_ENDIAN
+On 01/23/2014 03:45 PM, Siddharth Agarwal wrote:
 >
-> Is this portable?
+> The worry is less certain objects not being packed and more the old 
+> packs being deleted by git repack, isn't it? From the man page for 
+> git-index-pack:
 
-We explicitly set the __BYTE_ORDER macros in `compat/bswap.h`. In
-fact, this preprocessor conditional is the same one that we use when
-choosing what version of the `ntohl` macro to define, so that's why I
-decided to use it here.
+This should probably be "new pack" and not "old packs", I guess. Not 
+knowing much about how this actually works, I'm assuming the scenario 
+here is something like:
+
+(1) git receive-pack receives a pack P.pack and writes it to disk
+(2) git index-pack runs on P.pack
+(3) git repack runs separately, finds pack P.pack with no refs pointing 
+to it, and deletes it
+(4) everything goes wrong
+
+With a keep file, this would be averted because
+
+(1) git receive-pack receives a pack P.pack and writes it to disk
+(2) git index-pack writes a keep file for P.pack, called P.keep
+(3) git repack runs separately, finds pack P.pack with a keep file, 
+doesn't touch it
+(4) git index-pack finishes, and something updates refs to point to 
+P.pack and deletes P.keep
