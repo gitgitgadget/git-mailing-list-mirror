@@ -1,193 +1,64 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC PATCH 2/1] Make request-pull able to take a refspec of form local:remote
-Date: Thu, 23 Jan 2014 14:58:31 -0800
-Message-ID: <xmqqsises3u0.fsf@gitster.dls.corp.google.com>
-References: <alpine.LFD.2.11.1401221535140.18207@i7.linux-foundation.org>
-	<xmqqlhy6trfp.fsf@gitster.dls.corp.google.com>
-	<CA+55aFyGaaMOL5pBhZ1BHMr07oDi2MuS-fPu4nnxhjoy+F0AQw@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v2 0/3] unaligned reads from .bitmap files
+Date: Thu, 23 Jan 2014 15:17:38 -0800
+Message-ID: <20140123231738.GC18964@google.com>
+References: <20131221135651.GA20818@sigill.intra.peff.net>
+ <20131221135953.GH21145@sigill.intra.peff.net>
+ <20140123020536.GP18964@google.com>
+ <20140123183320.GA22995@sigill.intra.peff.net>
+ <20140123212036.GA21299@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Tejun Heo <tj@kernel.org>, Git Mailing List <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Jan 23 23:59:04 2014
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Jan 24 00:18:10 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W6TEk-00075o-43
-	for gcvg-git-2@plane.gmane.org; Thu, 23 Jan 2014 23:59:02 +0100
+	id 1W6TXF-0004tM-E6
+	for gcvg-git-2@plane.gmane.org; Fri, 24 Jan 2014 00:18:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932183AbaAWW65 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Jan 2014 17:58:57 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41552 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932078AbaAWW65 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Jan 2014 17:58:57 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1A82767000;
-	Thu, 23 Jan 2014 17:58:55 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=1JBJke1aRVC8uD06QTU9wMQFW7c=; b=fLpQuP
-	xsOUkcB8BBfTT3V+qX1ZErJAbfm5u4Zmz3THvsOLigBP9/0RoogfR0uyG/u9PxQ9
-	LS6V4VTuXTFGnJ82yBNbWTazV1iC6Hy3/FEFjQ8Z4CWpPigpjHyNTz851n4rsOXL
-	6XlUXIcVb6ULXW+MEtjv5uuzjxxT7i2IH38gA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=H0fO9DL8564DJe389aI7fKmt0VbqhDxa
-	lmflA1a4JfWcpEGhIGvQ9NH3q2eO0q44csW+h5tkyEWNxYxZ24gVxR+JjXzgKVe8
-	Xp7KA/901oPdersyvxVfwzcW4Y2CZn37kPfW9BM7J7MXuIVF44scTgIANIBtj0i4
-	GST3MwzEPZU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D39F566FFE;
-	Thu, 23 Jan 2014 17:58:53 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EAAD966FF7;
-	Thu, 23 Jan 2014 17:58:51 -0500 (EST)
-In-Reply-To: <CA+55aFyGaaMOL5pBhZ1BHMr07oDi2MuS-fPu4nnxhjoy+F0AQw@mail.gmail.com>
-	(Linus Torvalds's message of "Thu, 23 Jan 2014 11:57:30 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: ED64D9E8-8481-11E3-9C07-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751941AbaAWXRp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Jan 2014 18:17:45 -0500
+Received: from mail-bk0-f54.google.com ([209.85.214.54]:45829 "EHLO
+	mail-bk0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751490AbaAWXRp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Jan 2014 18:17:45 -0500
+Received: by mail-bk0-f54.google.com with SMTP id u14so751590bkz.13
+        for <git@vger.kernel.org>; Thu, 23 Jan 2014 15:17:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=Z+tSRj9DJFjHMB37efCCsDoS2BxKpt3fMx/BQEIK7tE=;
+        b=Xuf+NN8+DMfIOtLVCiTtjy6aEmz/VFNYkSDXWsWPSX6YlH4VWYQ2VQxZy288qfW2C4
+         WfRio2MU28zgfREcHp3nYR/q+h3oMchv+7IYWKW7TFtnhsBktOKFqTsmEQGbEx1+34qG
+         HcxT0pBYL/xmszvZMuEYmjGXcE6U4ULpdIoL3U3izm0dZeAdtDMmspN1YmkOLbx4WqfD
+         KyxFhHARdOHVzhRnetOntJD5j53O8sGSkckLJWTDDFADqN3pBIQA2n7xjYarEw8PVGQV
+         wYwDK+tmy++wNKyac9PxD5hvVdsvUbgqwVFrFR5x8aN+4ej7Doa6JJKhGZ2cItfQcDq6
+         ojxQ==
+X-Received: by 10.204.172.145 with SMTP id l17mr4836171bkz.26.1390519063921;
+        Thu, 23 Jan 2014 15:17:43 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id ch4sm619419bkc.8.2014.01.23.15.17.41
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 23 Jan 2014 15:17:43 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <20140123212036.GA21299@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240970>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240971>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+Jeff King wrote:
 
-> Yes, so you'll get a warning (or, if you get a partial match, maybe
-> not even that), but the important part about all these changes is that
-> it DOESN'T MATTER.
->
-> Why? Because it no longer re-writes the target branch name based on
-> that match or non-match. So the pull request will be fine.
+> Here it is again, fixing the issues we've discussed.
 
-Will be fine, provided if they always use local:remote syntax, I'd
-agree.
+Thanks!  Passes all tests.
 
-> In other words, the really fundamental change here i that the "oops, I
-> couldn't find things on the remote" no longer affects the output. It
-> only affects the warning. And I think that's important.
->
-> It used to be that the remote matching actually changed the output of
-> the request-pull, and *THAT* was the fundamental problem.
-
-The fingers of users can be retrained to use the local:remote syntax
-after we apologize for this change in the Release Notes, I see only
-one issue (we seem to lose the message from the annotated/signed tag
-when asking to pull it) remaining, after looking at what updates are
-needed for t5150.
-
-Thanks.
-
--- >8 --
-Subject: [PATCH] pull-request: test updates
-
-This illustrates behaviour changes that result from the recent
-change by Linus.  Most shows good changes, but there may be
-usability regressions:
-
- - The command continues to fail when the user forgot to push out
-   before running the command, but the wording of the message has
-   been slightly changed.
-
- - The command no longer guesses when asked to request the commit at
-   the HEAD be pulled after pushing it to a branch 'for-upstream',
-   even when that branch points at the correct commit.  The user
-   must ask the command with the new "master:for-upstream" syntax.
-
- - The command no longer favours a tag that peels to the requested
-   commit over a branch that points at the same commit.  This needs
-   to be asked explicitly by specifying the tag object, not the
-   commit.  But somehow this does not see to work (yet); somewhere
-   the "tag-ness" of the requested ref seems to be lost.
-
-The new behaviour needs to be documented in any case, but we need to
-agree what the new behaviour should be before doing so, so...
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- t/t5150-request-pull.sh | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
-
-diff --git a/t/t5150-request-pull.sh b/t/t5150-request-pull.sh
-index 1afa0d5..412ee4f 100755
---- a/t/t5150-request-pull.sh
-+++ b/t/t5150-request-pull.sh
-@@ -86,7 +86,7 @@ test_expect_success 'setup: two scripts for reading pull requests' '
- 	s/[-0-9]\{10\} [:0-9]\{8\} [-+][0-9]\{4\}/DATE/g
- 	s/        [^ ].*/        SUBJECT/g
- 	s/  [^ ].* (DATE)/  SUBJECT (DATE)/g
--	s/for-upstream/BRANCH/g
-+	s|tags/full|BRANCH|g
- 	s/mnemonic.txt/FILENAME/g
- 	s/^version [0-9]/VERSION/
- 	/^ FILENAME | *[0-9]* [-+]*\$/ b diffstat
-@@ -127,7 +127,7 @@ test_expect_success 'pull request when forgot to push' '
- 		test_must_fail git request-pull initial "$downstream_url" \
- 			2>../err
- 	) &&
--	grep "No branch of.*is at:\$" err &&
-+	grep "No match for commit .*" err &&
- 	grep "Are you sure you pushed" err
- 
- '
-@@ -141,7 +141,7 @@ test_expect_success 'pull request after push' '
- 		git checkout initial &&
- 		git merge --ff-only master &&
- 		git push origin master:for-upstream &&
--		git request-pull initial origin >../request
-+		git request-pull initial origin master:for-upstream >../request
- 	) &&
- 	sed -nf read-request.sed <request >digest &&
- 	cat digest &&
-@@ -160,7 +160,7 @@ test_expect_success 'pull request after push' '
- 
- '
- 
--test_expect_success 'request names an appropriate branch' '
-+test_expect_success 'request asks HEAD to be pulled' '
- 
- 	rm -fr downstream.git &&
- 	git init --bare downstream.git &&
-@@ -179,11 +179,11 @@ test_expect_success 'request names an appropriate branch' '
- 		read repository &&
- 		read branch
- 	} <digest &&
--	test "$branch" = tags/full
-+	test -z "$branch"
- 
- '
- 
--test_expect_success 'pull request format' '
-+test_expect_failure 'pull request format' '
- 
- 	rm -fr downstream.git &&
- 	git init --bare downstream.git &&
-@@ -212,8 +212,8 @@ test_expect_success 'pull request format' '
- 		cd local &&
- 		git checkout initial &&
- 		git merge --ff-only master &&
--		git push origin master:for-upstream &&
--		git request-pull initial "$downstream_url" >../request
-+		git push origin tags/full &&
-+		git request-pull initial "$downstream_url" tags/full >../request
- 	) &&
- 	<request sed -nf fuzz.sed >request.fuzzy &&
- 	test_i18ncmp expect request.fuzzy
-@@ -229,7 +229,7 @@ test_expect_success 'request-pull ignores OPTIONS_KEEPDASHDASH poison' '
- 		git checkout initial &&
- 		git merge --ff-only master &&
- 		git push origin master:for-upstream &&
--		git request-pull -- initial "$downstream_url" >../request
-+		git request-pull -- initial "$downstream_url" master:for-upstream >../request
- 	)
- 
- '
--- 
-1.9-rc0-250-ge2d8c96
+Tested-by: Jonathan Nieder <jrnieder@gmail.com> # ARMv5
