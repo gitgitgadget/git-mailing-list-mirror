@@ -1,150 +1,83 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [RFC PATCH 2/1] Make request-pull able to take a refspec of form local:remote
-Date: Thu, 23 Jan 2014 11:57:30 -0800
-Message-ID: <CA+55aFyGaaMOL5pBhZ1BHMr07oDi2MuS-fPu4nnxhjoy+F0AQw@mail.gmail.com>
-References: <alpine.LFD.2.11.1401221535140.18207@i7.linux-foundation.org>
-	<xmqqlhy6trfp.fsf@gitster.dls.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v4 08/23] ewah: compressed bitmap implementation
+Date: Thu, 23 Jan 2014 15:03:11 -0500
+Message-ID: <20140123200311.GA31920@sigill.intra.peff.net>
+References: <20131221135651.GA20818@sigill.intra.peff.net>
+ <20131221135953.GH21145@sigill.intra.peff.net>
+ <20140123020536.GP18964@google.com>
+ <20140123183320.GA22995@sigill.intra.peff.net>
+ <20140123195206.GU18964@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Tejun Heo <tj@kernel.org>, Git Mailing List <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 23 20:57:39 2014
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 23 21:03:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W6QPA-0006OV-1t
-	for gcvg-git-2@plane.gmane.org; Thu, 23 Jan 2014 20:57:36 +0100
+	id 1W6QUm-0000PW-Tx
+	for gcvg-git-2@plane.gmane.org; Thu, 23 Jan 2014 21:03:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751641AbaAWT5c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Jan 2014 14:57:32 -0500
-Received: from mail-vb0-f41.google.com ([209.85.212.41]:36576 "EHLO
-	mail-vb0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751535AbaAWT5b (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Jan 2014 14:57:31 -0500
-Received: by mail-vb0-f41.google.com with SMTP id g10so1344068vbg.0
-        for <git@vger.kernel.org>; Thu, 23 Jan 2014 11:57:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=8DWxHhgsAcD+2THoT2n/yeTpC7roBcI1slGiwOMYA0k=;
-        b=pZgAKYoRrgZmzBU+Dt37m4SqYX+f/rw//SQEOitt2KyPjl7dbvreI/Y0tCyu/rPsXH
-         mYPuwzmM+nWmX1LxWaQSPxWF+ejeH5KaPTww7K+jOosR44w4SN3YSKRq8OxQ3u+k9ztC
-         eVQNN2bRJhPIjI1oqmOx23ohjHpgGdLWGOXHm1NV94MMaceyJ/nwxnKFWCkX3wKQsAOW
-         VqHiTqCwW5gmzd4InGSHTqhYLQMmr2uX8/Eho/M5l+3UNVCrov7KziexcHZ+R0GuqtSh
-         yqpvoCAF+edNcrn0dhUIhw+PTyWebJrfsXmBVF6eqyNYA/CgbTA+N8WUQOvc8/izhO9+
-         MyzA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=8DWxHhgsAcD+2THoT2n/yeTpC7roBcI1slGiwOMYA0k=;
-        b=Z/RzuOjs6kYXCmiMzQa3NBpI6Czf7V2iVrC9QPZqnCveUTM6v51ARNR1Z6ZiD4q38E
-         EtFuGF+vUGh4f0CoQv5dklpwDYkrgx3IZ201TU6ps+JyvoZ0szkSH6kndhXcFrQVxg2F
-         oJs7oTznTQNqRn79Fsp0NYy0WZuBf/O2INEXM=
-X-Received: by 10.58.219.1 with SMTP id pk1mr28371vec.49.1390507050606; Thu,
- 23 Jan 2014 11:57:30 -0800 (PST)
-Received: by 10.221.8.73 with HTTP; Thu, 23 Jan 2014 11:57:30 -0800 (PST)
-In-Reply-To: <xmqqlhy6trfp.fsf@gitster.dls.corp.google.com>
-X-Google-Sender-Auth: t15AEDBiIrjQdBOFIfJozB49BW0
+	id S1752743AbaAWUDO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Jan 2014 15:03:14 -0500
+Received: from cloud.peff.net ([50.56.180.127]:37699 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752225AbaAWUDM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Jan 2014 15:03:12 -0500
+Received: (qmail 27750 invoked by uid 102); 23 Jan 2014 20:03:12 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 23 Jan 2014 14:03:12 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 23 Jan 2014 15:03:11 -0500
+Content-Disposition: inline
+In-Reply-To: <20140123195206.GU18964@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240936>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240937>
 
-On Thu, Jan 23, 2014 at 11:43 AM, Junio C Hamano <gitster@pobox.com> wrote:
->
-> I am not sure if it is a good idea to hand-craft "resulting head is
-> unique" constraint here.  We already have disambiguation rules (and
-> warning mechanism) we use in other places---this part should use the
-> same rule, I think.
+On Thu, Jan 23, 2014 at 11:52:06AM -0800, Jonathan Nieder wrote:
 
-If you can fix that, then yes, that would be lovely. As it is, I
-couldn't find any easily scriptable way to do that.
+> > After my patches, t5310 runs fine for me. I didn't try your patch, but
+> > mine are similar. Let me know if you still see the problem (there may
+> > simply be a bug in yours, but I didn't see it).
+> 
+> I had left out a cast to unsigned, producing an overflow.
+> 
+> My main worry about the patches is that they will probably run into
+> an analagous problem to the one that v1.7.12-rc0~1^2~2 (block-sha1:
+> avoid pointer conversion that violates alignment constraints,
+> 2012-07-22) solved.  By casting the pointer to (uint32_t *) we are
+> telling the compiler it is 32-bit aligned (C99 section 6.3.2.3).
 
->>  #
->>  # Otherwise find a random ref that matches $headrev.
->>  find_matching_ref='
->> +     my ($head,$headrev) = (@ARGV);
->> +     my ($found);
->> +
->>       while (<STDIN>) {
->> +             chomp;
->>               my ($sha1, $ref, $deref) = /^(\S+)\s+([^^]+)(\S*)$/;
->> +             my ($pattern);
->> +             next unless ($sha1 eq $headrev);
->> +
->> +             $pattern="/$head\$";
->
-> I think $head is constant inside the loop, so lift it outside?
+Yeah, maybe. We go via memcpy, which takes a "void *", so that part is
+good. However, the new code looks like:
 
-Yes. I'm not really a perl person, and this came from me trying to
-make the code more readable (and it used to do that magic quoting
-thing inside the loop, I just used a helper pattern variable).
+  foo = align_ntohl(*(uint32_t *)ptr);
 
->> +             if ($sha1 eq $head) {
->
-> I think this is $headrev ($head may be $remote or HEAD), but then
-> anything that does not point at $headrev has already been rejected
-> at the beginning of this loop, so...?
+I think this probably works in practice because align_ntohl is inlined,
+and any sane compiler will never actually load the variable. If we
+change the signature of align_ntohl, we can do this:
 
-No, this is for when "head" ends up not being a ref, but a SHA1 expression.
+  uint32_t align_ntohl(void *ptr)
+  {
+          uint32_t x;
+          memcpy(x, ptr, sizeof(x));
+          return ntohl(x);
+  }
 
-IOW, for when you do something odd like
+  ...
 
-    git request-pull HEAD^^ origin HEAD^
+  foo = align_ntohl(ptr);
 
-when hacking things together. It doesn't actually generate the right
-request-pull message (because there's no valid branch name), but it
-*works* in the sense that you can get the diffstat etc and edit things
-manually.
+The memcpy solution is taken from read-cache.c, but as we noted, it
+probably hasn't been used a lot. The blk_sha1 get_be may be faster, as
+it converts as it reads. However, the bulk of the data is copied via
+a single memcpy and then modified in place. I don't know if that would
+be faster or not (for a big-endian system it probably is, since we can
+omit the modification loop entirely).
 
-It's not a big deal - it has never really "worked", and I actually
-broke that when I then used "$remote" that doesn't actually have the
-SHA1 any more.
-
->> +     if ($found) {
->>               print "$found\n";
->>       }
->>  '
->
-> I somehow feel that this is inadequate to catch the "delayed
-> propagation" error in the opposite direction.  The publish
-> repository may have an unrelated ref pointing at the $headrev and we
-> may guess that is the ref to be fetched by the integrator based on
-> that, but by the time the integrator fetches from the repository,
-> the ref may have been updated to its new value that does not match
-> $headrev.  But I do not think of a way to solve that one.
-
-Yes, so you'll get a warning (or, if you get a partial match, maybe
-not even that), but the important part about all these changes is that
-it DOESN'T MATTER.
-
-Why? Because it no longer re-writes the target branch name based on
-that match or non-match. So the pull request will be fine.
-
-In other words, the really fundamental change here i that the "oops, I
-couldn't find things on the remote" no longer affects the output. It
-only affects the warning. And I think that's important.
-
-It used to be that the remote matching actually changed the output of
-the request-pull, and *THAT* was the fundamental problem.
-
-> In any case, shouldn't we be catching duplicate matches here, if the
-> real objective is to make it less likely for the users to make
-> mistakes?
-
-It would be good, yes. But my perl-fu is weak, and I really didn't
-want to worry about it. Also, as above: my primary issue was to not
-screw up the output, so the remote matching actually has become much
-less important, and now the warning about it is purely about being
-helpful, it no longer fundamentally alters any semantics.
-
-So I agree that there is room for improvement, but that's kind of
-separate from the immediate problem I was trying to solve.
-
-              Linus
+-Peff
