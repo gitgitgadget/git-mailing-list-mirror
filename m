@@ -1,137 +1,104 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 1/3] block-sha1: factor out get_be and put_be wrappers
-Date: Thu, 23 Jan 2014 16:23:09 -0500
-Message-ID: <20140123212308.GA21705@sigill.intra.peff.net>
-References: <20140123212036.GA21299@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] t7700: do not use "touch -r"
+Date: Thu, 23 Jan 2014 13:24:44 -0800
+Message-ID: <xmqq1tzytmqr.fsf@gitster.dls.corp.google.com>
+References: <20140123195404.GA31314@sigill.intra.peff.net>
+	<20140123195518.GB31871@sigill.intra.peff.net>
+	<xmqq61patnag.fsf@gitster.dls.corp.google.com>
+	<20140123211425.GA21377@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 23 22:23:16 2014
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jan 23 22:24:55 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W6Rk3-0002Aw-NM
-	for gcvg-git-2@plane.gmane.org; Thu, 23 Jan 2014 22:23:16 +0100
+	id 1W6Rle-0002vI-Uh
+	for gcvg-git-2@plane.gmane.org; Thu, 23 Jan 2014 22:24:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751971AbaAWVXL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Jan 2014 16:23:11 -0500
-Received: from cloud.peff.net ([50.56.180.127]:37789 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751141AbaAWVXK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Jan 2014 16:23:10 -0500
-Received: (qmail 1081 invoked by uid 102); 23 Jan 2014 21:23:10 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 23 Jan 2014 15:23:10 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 23 Jan 2014 16:23:09 -0500
-Content-Disposition: inline
-In-Reply-To: <20140123212036.GA21299@sigill.intra.peff.net>
+	id S1753352AbaAWVYu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Jan 2014 16:24:50 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40694 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751650AbaAWVYu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Jan 2014 16:24:50 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 03C1964DD9;
+	Thu, 23 Jan 2014 16:24:49 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=x8Fc++AdL0PffIX4F9j3IfnwkAM=; b=eeFIQN
+	5TtFEo8BDaB8hmq+MmnMHaSXBTu/paqKvq3MjfxVrDmjXs5rIiWZK3OLHvwynT2g
+	XMsKZo6pEM4fiPHRkoA3uiYjL5dtL5/Sdp7uZEYAR3WMVClR3O/+YSIqizLfzQJ3
+	IaoT57ABLpIx9b1kNBHXmPm43HJR/x2aOpXQA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=IrzOjNvWolhawQxcu8j2r298Fq/su70+
+	rRcUcTmwA9JnEly6NLzHfj/21pAj0vXWAQKmyF2hCEsHlL42K2IuKCVMwgs0rv9X
+	knQl3dG/JOezsj7+30D2OYuzOncEA6Qi0WKgPgY19RlvTgCTiNjfyuQCvgp0uOhj
+	8CPY0rxkQiA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C773C64DD8;
+	Thu, 23 Jan 2014 16:24:48 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C45AE64DD2;
+	Thu, 23 Jan 2014 16:24:47 -0500 (EST)
+In-Reply-To: <20140123211425.GA21377@sigill.intra.peff.net> (Jeff King's
+	message of "Thu, 23 Jan 2014 16:14:25 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: C936C516-8474-11E3-867F-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240957>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240958>
 
-The BLK_SHA1 code has optimized wrappers for doing endian
-conversions on memory that may not be aligned. Let's pull
-them out so that we can use them elsewhere, especially the
-time-tested list of platforms that prefer each strategy.
+Jeff King <peff@peff.net> writes:
+
+> Agreed. I was making the minimal change, but I think there is no reason
+> not to fix both while we are there. Do you want to just mark up the
+> patch in transit?
+
+Let's just queue this instead.
+
+-- >8 --
+From: Jeff King <peff@peff.net>
+Date: Thu, 23 Jan 2014 14:55:18 -0500
+Subject: [PATCH] t7700: do not use "touch" unnecessarily
+
+Some versions of touch (such as /usr/ucb/touch on Solaris)
+do not know about the "-r" option. This would make sense as
+a feature of test-chmtime, but fortunately this fix is even
+easier.
+
+The test does not care about the timestamp of the .keep file it
+creates at all, only that it exists. For such a use case, with or
+without portability issues around "-r", "touch" should not be used
+in the first place.
 
 Signed-off-by: Jeff King <peff@peff.net>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
-These short names might not be descriptive enough now that they are
-globals. However, they make sense to me. I'm open to suggestions if
-somebody disagrees.
+ t/t7700-repack.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
- block-sha1/sha1.c | 32 --------------------------------
- compat/bswap.h    | 32 ++++++++++++++++++++++++++++++++
- 2 files changed, 32 insertions(+), 32 deletions(-)
-
-diff --git a/block-sha1/sha1.c b/block-sha1/sha1.c
-index e1a1eb6..22b125c 100644
---- a/block-sha1/sha1.c
-+++ b/block-sha1/sha1.c
-@@ -62,38 +62,6 @@
-   #define setW(x, val) (W(x) = (val))
- #endif
- 
--/*
-- * Performance might be improved if the CPU architecture is OK with
-- * unaligned 32-bit loads and a fast ntohl() is available.
-- * Otherwise fall back to byte loads and shifts which is portable,
-- * and is faster on architectures with memory alignment issues.
-- */
--
--#if defined(__i386__) || defined(__x86_64__) || \
--    defined(_M_IX86) || defined(_M_X64) || \
--    defined(__ppc__) || defined(__ppc64__) || \
--    defined(__powerpc__) || defined(__powerpc64__) || \
--    defined(__s390__) || defined(__s390x__)
--
--#define get_be32(p)	ntohl(*(unsigned int *)(p))
--#define put_be32(p, v)	do { *(unsigned int *)(p) = htonl(v); } while (0)
--
--#else
--
--#define get_be32(p)	( \
--	(*((unsigned char *)(p) + 0) << 24) | \
--	(*((unsigned char *)(p) + 1) << 16) | \
--	(*((unsigned char *)(p) + 2) <<  8) | \
--	(*((unsigned char *)(p) + 3) <<  0) )
--#define put_be32(p, v)	do { \
--	unsigned int __v = (v); \
--	*((unsigned char *)(p) + 0) = __v >> 24; \
--	*((unsigned char *)(p) + 1) = __v >> 16; \
--	*((unsigned char *)(p) + 2) = __v >>  8; \
--	*((unsigned char *)(p) + 3) = __v >>  0; } while (0)
--
--#endif
--
- /* This "rolls" over the 512-bit array */
- #define W(x) (array[(x)&15])
- 
-diff --git a/compat/bswap.h b/compat/bswap.h
-index c18a78e..7d17953 100644
---- a/compat/bswap.h
-+++ b/compat/bswap.h
-@@ -122,3 +122,35 @@ static inline uint64_t git_bswap64(uint64_t x)
- #endif
- 
- #endif
-+
-+/*
-+ * Performance might be improved if the CPU architecture is OK with
-+ * unaligned 32-bit loads and a fast ntohl() is available.
-+ * Otherwise fall back to byte loads and shifts which is portable,
-+ * and is faster on architectures with memory alignment issues.
-+ */
-+
-+#if defined(__i386__) || defined(__x86_64__) || \
-+    defined(_M_IX86) || defined(_M_X64) || \
-+    defined(__ppc__) || defined(__ppc64__) || \
-+    defined(__powerpc__) || defined(__powerpc64__) || \
-+    defined(__s390__) || defined(__s390x__)
-+
-+#define get_be32(p)	ntohl(*(unsigned int *)(p))
-+#define put_be32(p, v)	do { *(unsigned int *)(p) = htonl(v); } while (0)
-+
-+#else
-+
-+#define get_be32(p)	( \
-+	(*((unsigned char *)(p) + 0) << 24) | \
-+	(*((unsigned char *)(p) + 1) << 16) | \
-+	(*((unsigned char *)(p) + 2) <<  8) | \
-+	(*((unsigned char *)(p) + 3) <<  0) )
-+#define put_be32(p, v)	do { \
-+	unsigned int __v = (v); \
-+	*((unsigned char *)(p) + 0) = __v >> 24; \
-+	*((unsigned char *)(p) + 1) = __v >> 16; \
-+	*((unsigned char *)(p) + 2) = __v >>  8; \
-+	*((unsigned char *)(p) + 3) = __v >>  0; } while (0)
-+
-+#endif
+diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
+index d954b84..b45bd1e 100755
+--- a/t/t7700-repack.sh
++++ b/t/t7700-repack.sh
+@@ -17,7 +17,7 @@ test_expect_success 'objects in packs marked .keep are not repacked' '
+ 	# The second pack will contain the excluded object
+ 	packsha1=$(git rev-list --objects --all | grep file2 |
+ 		git pack-objects pack) &&
+-	touch -r pack-$packsha1.pack pack-$packsha1.keep &&
++	>pack-$packsha1.keep &&
+ 	objsha1=$(git verify-pack -v pack-$packsha1.idx | head -n 1 |
+ 		sed -e "s/^\([0-9a-f]\{40\}\).*/\1/") &&
+ 	mv pack-* .git/objects/pack/ &&
 -- 
-1.8.5.2.500.g8060133
+1.9-rc0-234-g8e6341d
