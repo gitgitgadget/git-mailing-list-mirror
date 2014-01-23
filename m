@@ -1,69 +1,102 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH v3] git-svn: memoize _rev_list and rebuild
-Date: Thu, 23 Jan 2014 02:58:07 +0000
-Message-ID: <20140123025807.GA4370@dcvr.yhbt.net>
-References: <1390443319-11239-1-git-send-email-manjian2006@gmail.com>
+From: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
+Subject: Re: [PATCH 1/4] subtree: support split --rejoin --squash
+Date: Wed, 22 Jan 2014 20:59:23 -0700
+Message-ID: <20140123035923.GA4176@comcast.net>
+References: <20131207185853.GA3353@comcast.net>
+ <CAMzgWy18wH4_Ds00x7UASQjLgN8LiEucFSZFp-5PJio_pEwmnA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: manjian2006@gmail.com
-X-From: git-owner@vger.kernel.org Thu Jan 23 03:58:16 2014
+Cc: git@vger.kernel.org
+To: Pierre Penninckx <ibizapeanut@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 23 05:05:47 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W6AUh-0000Md-4A
-	for gcvg-git-2@plane.gmane.org; Thu, 23 Jan 2014 03:58:15 +0100
+	id 1W6BXz-00025D-28
+	for gcvg-git-2@plane.gmane.org; Thu, 23 Jan 2014 05:05:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752996AbaAWC6K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Jan 2014 21:58:10 -0500
-Received: from dcvr.yhbt.net ([64.71.152.64]:57616 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751467AbaAWC6J (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Jan 2014 21:58:09 -0500
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E1D8920972;
-	Thu, 23 Jan 2014 02:58:07 +0000 (UTC)
+	id S1752786AbaAWEFb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Jan 2014 23:05:31 -0500
+Received: from qmta06.emeryville.ca.mail.comcast.net ([76.96.30.56]:39738 "EHLO
+	qmta06.emeryville.ca.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752311AbaAWEFa (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 22 Jan 2014 23:05:30 -0500
+X-Greylist: delayed 365 seconds by postgrey-1.27 at vger.kernel.org; Wed, 22 Jan 2014 23:05:30 EST
+Received: from omta01.emeryville.ca.mail.comcast.net ([76.96.30.11])
+	by qmta06.emeryville.ca.mail.comcast.net with comcast
+	id HFNc1n0070EPchoA6FzReN; Thu, 23 Jan 2014 03:59:25 +0000
+Received: from mmogilvi.dynu.net ([50.183.100.68])
+	by omta01.emeryville.ca.mail.comcast.net with comcast
+	id HFzP1n00c1UYGSS8MFzQfV; Thu, 23 Jan 2014 03:59:24 +0000
+Received: by mmogilvi.dynu.net (Postfix, from userid 501)
+	id 669701E96261; Wed, 22 Jan 2014 20:59:23 -0700 (MST)
 Content-Disposition: inline
-In-Reply-To: <1390443319-11239-1-git-send-email-manjian2006@gmail.com>
+In-Reply-To: <CAMzgWy18wH4_Ds00x7UASQjLgN8LiEucFSZFp-5PJio_pEwmnA@mail.gmail.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
+	s=q20121106; t=1390449565;
+	bh=63VKcf/xsMfY/Ryu117vcPF4blsIbIoX6vtfEppVuWw=;
+	h=Received:Received:Received:Date:From:To:Subject:Message-ID:
+	 MIME-Version:Content-Type;
+	b=c/YdZtt5ZTjC7H+KajIu+ArMadfziJQoictUsT1WbjrUzaFrJkfBESpNaxzS3c3B0
+	 Ge5p61spyO36Ax9mX3t9cQsVqs0wjXbZbLc8pbBc7Nntj8+cPF3ps/44qX9fbgRARA
+	 kSYaZHVOQAG8Y/M+Ru3sFPFCyhVcSATFf/7db36PRN6Mdco4kw7y59tGFKdNIMAQ5m
+	 AUbBScjSz23F2nNSY7AXqij8KJBjPUgMZn9hhQDgxrfbCmSd7UVSHKZRboVSXxbffR
+	 9tOAvTCs5xk3up9T3tRjDocw1DHmPq+xqpAx2LfVgtMkJtDmmNF8SHoRwJcPXDMPq/
+	 IdZeu9QDs89VA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240900>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240901>
 
-manjian2006@gmail.com wrote:
-> According to profile data, _rev_list and rebuild consume a large
-> portion of time.  Memoize the results of _rev_list and memoize
-> rebuild internals to avoid subprocess invocation.
+On Wed, Jan 22, 2014 at 03:58:28PM +0100, Pierre Penninckx wrote:
+> 2013/12/7 Matthew Ogilvie <mmogilvi_git@miniinfo.net>
+> > Subject: [PATCH 1/4] subtree: support split --rejoin --squash
+> >
+> > Allow using --squash with "git subtree split --rejoin".  It
+> > will still split off (and save to --branch) the complete
+> > subtree history, but the merge done for the "--rejoin" will
+> > be merging a squashed representation of the new subtree
+> > commits, instead of the commits themselves (similar to
+> > how "git subtree merge --squash" works).
+> >
+> > Signed-off-by: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
+> > ---
+> >
+> > I can think of a couple of possible objections to this patch.
+> > Are these (or any others) worth fixing?
+> >
+> > 1. Perhaps someone want the saved subtree (--branch) to have
+> >    a squashed representation as well, as an option?  Maybe we
+> >    need two different --squash options?  Something
+> >    like "--rejoin-squash"?
+> > 2. It could definitely use some automated tests.  In fact,
+> >    pre-existing --squash functionality is hardly tested at
+> >    all, either.
+> >       See patch 4 comments for a script I use to help with
+> >    mostly-manual testing.
+>
+> Sorry to bother you with this again, but I was wondering if those patches
+> would be integrated into git anytime soon.
+> And if not, if there is something I can do to help.
 > 
-> When importing 15152 revisions on a LAN, time improved from 10
-> hours to 3-4 hours.
+> I found them by the way, thanks a lot!
 > 
-> Signed-off-by: lin zuojian <manjian2006@gmail.com>
+> Pierre
 
-Thanks!
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
-Pushed for Junio.
+I'm not sure when or if the patches will make it in.  Junio's
+weekly "What's cooking..." email has asked for "Comments?" about
+them for the past several weeks, but I have yet to see
+anyone actually comment about them.
 
-The following changes since commit d9bb4be53bc5185244b4be9860562a012803bacb:
+Searching throught the last couple of years of mailing list
+archives for "subtree" reveals a general lack of a active
+maintainer(s) to help review and improve patches for "git
+subtree".  Given the general lack of help and feedback, it is
+understandable that Junio has largely limited inclusion of
+subtree patches to trivially obvious bug fixes.
 
-  Merge tag 'gitgui-0.19.0' of http://repo.or.cz/r/git-gui (2014-01-21 13:16:17 -0800)
-
-are available in the git repository at:
-
-
-  git://git.bogomips.org/git-svn.git master
-
-for you to fetch changes up to ab0bcec9873f1fcef6c4b8825cc9e762c636ca9e:
-
-  git-svn: memoize _rev_list and rebuild (2014-01-23 02:54:26 +0000)
-
-----------------------------------------------------------------
-lin zuojian (1):
-      git-svn: memoize _rev_list and rebuild
-
- perl/Git/SVN.pm | 41 ++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 38 insertions(+), 3 deletions(-)
+                        - Matthew Ogilvie
