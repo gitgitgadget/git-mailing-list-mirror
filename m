@@ -1,83 +1,181 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v4 08/23] ewah: compressed bitmap implementation
-Date: Thu, 23 Jan 2014 14:33:18 -0800
-Message-ID: <20140123223318.GB18964@google.com>
-References: <20131221135651.GA20818@sigill.intra.peff.net>
- <20131221135953.GH21145@sigill.intra.peff.net>
- <20140123020536.GP18964@google.com>
- <20140123183320.GA22995@sigill.intra.peff.net>
- <CAJo=hJtQG_u4=SjPAgU8h4Wew9LjaXUxnHqTT3Q9E1=_5LJ6Sw@mail.gmail.com>
- <20140123202645.GA329@sigill.intra.peff.net>
- <20140123215325.GA28829@vauxhall.crustytoothpaste.net>
- <20140123220742.GA29357@sigill.intra.peff.net>
- <20140123221755.GA18964@google.com>
- <20140123222632.GA2311@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] pack-objects: turn off bitmaps when skipping objects
+Date: Thu, 23 Jan 2014 17:52:39 -0500
+Message-ID: <20140123225238.GB2567@sigill.intra.peff.net>
+References: <52E080C1.4030402@fb.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Shawn Pearce <spearce@spearce.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jan 23 23:33:30 2014
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Siddharth Agarwal <sid0@fb.com>
+X-From: git-owner@vger.kernel.org Thu Jan 23 23:52:46 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W6Sq1-0006Px-9i
-	for gcvg-git-2@plane.gmane.org; Thu, 23 Jan 2014 23:33:29 +0100
+	id 1W6T8f-0004zZ-Fn
+	for gcvg-git-2@plane.gmane.org; Thu, 23 Jan 2014 23:52:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753190AbaAWWdZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Jan 2014 17:33:25 -0500
-Received: from mail-bk0-f52.google.com ([209.85.214.52]:58683 "EHLO
-	mail-bk0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751783AbaAWWdZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Jan 2014 17:33:25 -0500
-Received: by mail-bk0-f52.google.com with SMTP id e11so710271bkh.25
-        for <git@vger.kernel.org>; Thu, 23 Jan 2014 14:33:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=OcnTYHoXrK64P+NjYuABRbPR+hyR13SXF+qAwhHiaHY=;
-        b=Pm4savXx4tEWlM9cUyN2WU3PNZHm1Dkqq45qTYmkAGkYkaRMZR+OCq4BfYSKlwuVXd
-         qyMDCeCJz6OK5yLULGETkg7qyDkM40MSJUiCkbYJ/12tKzIt1N1mUTWM6LUjKw+QGGLW
-         2Ghk+8OAp5pjZpeZnIq+e8NELZv/n6HHptAyqcMno0iMnLVcFlVl7k63jpJQd2dLD964
-         XYiA2xcm9Qxrmsfu5xoIAp/uXQYdHtIKNgBncKdoVgGT6jHkWH27F723xFkAIMy5UM1a
-         EXbpYfbBgr+n0yd08AGj2FcIq95rQeGLK+xOlchg/Ge8pUCAZtGQNa0kde+cU2uvssd+
-         vqYA==
-X-Received: by 10.204.225.204 with SMTP id it12mr2298523bkb.107.1390516403819;
-        Thu, 23 Jan 2014 14:33:23 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id tf11sm486241bkb.17.2014.01.23.14.33.21
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 23 Jan 2014 14:33:23 -0800 (PST)
+	id S932325AbaAWWwl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Jan 2014 17:52:41 -0500
+Received: from cloud.peff.net ([50.56.180.127]:37848 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932203AbaAWWwk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Jan 2014 17:52:40 -0500
+Received: (qmail 6249 invoked by uid 102); 23 Jan 2014 22:52:40 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 23 Jan 2014 16:52:40 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 23 Jan 2014 17:52:39 -0500
 Content-Disposition: inline
-In-Reply-To: <20140123222632.GA2311@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <52E080C1.4030402@fb.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240968>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240969>
 
-Jeff King wrote:
-> On Thu, Jan 23, 2014 at 02:17:55PM -0800, Jonathan Nieder wrote:
+On Wed, Jan 22, 2014 at 06:38:57PM -0800, Siddharth Agarwal wrote:
 
->> I don't think that's a big issue.  A pair of 4-byte reads would not be
->> too slow.
->
-> The header is actually two separate 4-byte values, so that's fine. But
-> between the header and trailer are a series of 8-byte data values, and
-> that is what we need the 8-byte alignment for.
+> Running git-next, writing bitmap indexes fails if a keep file is
+> present from an earlier pack.
 
-Sorry for the lack of clarity.  What I meant is that a 4-byte aligned
-8-byte value can be read using a pair of 4-byte reads, which is less
-of a performance issue than a completely unaligned value.
+Right, that's expected.
 
-[...]
-> Anyway, this is all academic until we are designing bitmap v2, which I
-> do not plan on doing anytime soon.
+The bitmap format cannot represent objects that are not present in the
+pack. So we cannot write a bitmap index if any object reachable from a
+packed commit is omitted from the pack.
 
-Sure, fair enough. :)
+We could be nicer and downgrade it to a warning, though. The patch below
+does that.
 
-Jonathan
+> In our case we have .keep files lying around from ages ago (possibly
+> due to kill -9s run on the server).
+
+We ran into that problem at GitHub, too. We just turn off
+`--honor-pack-keep` during our repacks, as we never want them on anyway
+(and we would prefer to ignore the .keep than to abort the bitmap).
+
+> It also means that running repack -a with bitmap writing enabled on a
+> repo becomes problematic if a fetch is run concurrently.
+
+For the most part, no. The .keep file should generally only be set
+during the period between indexing the pack and updating the refs (so
+while checking connectivity and running hooks). But pack-objects starts
+from the ref tips and walks backwards. Until they are updated, it will
+not try to pack the objects in the .keep files, as nobody references
+them. There are two loopholes, though:
+
+  1. In some instances, a remote may send an object we already have
+     (e.g., because it is a blob referenced in an old commit, but newly
+     referenced again due to a revert; we do not do a full object
+     difference during the protocol negotiation, for reasons of
+     efficiency). If that is the case, we may omit it if pack-objects
+     starts during the period that the .pack and .keep files exist.
+
+  2. Once the fetch updates the refs, it removes the .keep file. But
+     this isn't atomic. A repack which starts between the two may pick
+     up the new ref values, but also see the .keep file.
+
+These are both unlikely, but possible on a very busy repository. The
+patch below will downgrade each to a warning, rather than aborting the
+repack.
+
+So this should just work out of the box with this patch.  But if bitmaps
+are important to you (say, you are running a very busy site and want
+to make sure you always have bitmaps turned on) and you do not otherwise
+care about .keep files, you may want to disable them, too.
+
+-Peff
+
+-- >8 --
+Subject: pack-objects: turn off bitmaps when skipping objects
+
+The pack bitmap format requires that we have a single bit
+for each object in the pack, and that each object's bitmap
+represents its complete set of reachable objects. Therefore
+we have no way to represent the bitmap of an object which
+references objects outside the pack.
+
+We notice this problem while generating the bitmaps, as we
+try to find the offset of a particular object and realize
+that we do not have it. In this case we die, and neither the
+bitmap nor the pack is generated. This is correct, but
+perhaps a little unfriendly. If you have bitmaps turned on
+in the config, many repacks will fail which would otherwise
+succeed. E.g., incremental repacks, repacks with "-l" when
+you have alternates, ".keep" files.
+
+Instead, this patch notices early that we are omitting some
+objects from the pack and turns off bitmaps (with a
+warning). Note that this is not strictly correct, as it's
+possible that the object being omitted is not reachable from
+any other object in the pack. In practice, this is almost
+never the case, and there are two advantages to doing it
+this way:
+
+  1. The code is much simpler, as we do not have to cleanly
+     abort the bitmap-generation process midway through.
+
+  2. We do not waste time partially generating bitmaps only
+     to find out that some object deep in the history is not
+     being packed.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+I tried to keep the warning to an 80-character line without making it
+too confusing. Suggestions welcome if it doesn't make sense to people.
+
+ builtin/pack-objects.c  | 12 +++++++++++-
+ t/t5310-pack-bitmaps.sh |  5 ++++-
+ 2 files changed, 15 insertions(+), 2 deletions(-)
+
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 8364fbd..76831d9 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -1000,6 +1000,10 @@ static void create_object_entry(const unsigned char *sha1,
+ 	entry->no_try_delta = no_try_delta;
+ }
+ 
++static const char no_closure_warning[] = N_(
++"disabling bitmap writing, as some objects are not being packed"
++);
++
+ static int add_object_entry(const unsigned char *sha1, enum object_type type,
+ 			    const char *name, int exclude)
+ {
+@@ -1010,8 +1014,14 @@ static int add_object_entry(const unsigned char *sha1, enum object_type type,
+ 	if (have_duplicate_entry(sha1, exclude, &index_pos))
+ 		return 0;
+ 
+-	if (!want_object_in_pack(sha1, exclude, &found_pack, &found_offset))
++	if (!want_object_in_pack(sha1, exclude, &found_pack, &found_offset)) {
++		/* The pack is missing an object, so it will not have closure */
++		if (write_bitmap_index) {
++			warning(_(no_closure_warning));
++			write_bitmap_index = 0;
++		}
+ 		return 0;
++	}
+ 
+ 	create_object_entry(sha1, type, pack_name_hash(name),
+ 			    exclude, name && no_try_delta(name),
+diff --git a/t/t5310-pack-bitmaps.sh b/t/t5310-pack-bitmaps.sh
+index d3a3afa..f13525c 100755
+--- a/t/t5310-pack-bitmaps.sh
++++ b/t/t5310-pack-bitmaps.sh
+@@ -91,7 +91,10 @@ test_expect_success 'fetch (partial bitmap)' '
+ 
+ test_expect_success 'incremental repack cannot create bitmaps' '
+ 	test_commit more-1 &&
+-	test_must_fail git repack -d
++	find .git/objects/pack -name "*.bitmap" >expect &&
++	git repack -d &&
++	find .git/objects/pack -name "*.bitmap" >actual &&
++	test_cmp expect actual
+ '
+ 
+ test_expect_success 'incremental repack can disable bitmaps' '
+-- 
+1.8.5.2.500.g8060133
