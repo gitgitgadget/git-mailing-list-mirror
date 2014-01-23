@@ -1,89 +1,81 @@
-From: Siddharth Agarwal <sid0@fb.com>
-Subject: Re: [PATCH] pack-objects: turn off bitmaps when skipping objects
-Date: Thu, 23 Jan 2014 15:53:28 -0800
-Message-ID: <52E1AB78.1000504@fb.com>
-References: <52E080C1.4030402@fb.com> <20140123225238.GB2567@sigill.intra.peff.net> <52E1A99D.6010809@fb.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [RFC PATCH 2/1] Make request-pull able to take a refspec of form local:remote
+Date: Thu, 23 Jan 2014 15:56:14 -0800
+Message-ID: <CA+55aFyN7WWAF6pGfP+0j29nf6ETao0J5sUu+5UDaXUYC9_Geg@mail.gmail.com>
+References: <alpine.LFD.2.11.1401221535140.18207@i7.linux-foundation.org>
+	<xmqqlhy6trfp.fsf@gitster.dls.corp.google.com>
+	<CA+55aFyGaaMOL5pBhZ1BHMr07oDi2MuS-fPu4nnxhjoy+F0AQw@mail.gmail.com>
+	<xmqqsises3u0.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jan 24 00:53:43 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Tejun Heo <tj@kernel.org>, Git Mailing List <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jan 24 00:56:22 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W6U5e-0008ID-Ut
-	for gcvg-git-2@plane.gmane.org; Fri, 24 Jan 2014 00:53:43 +0100
+	id 1W6U8C-0000e5-U6
+	for gcvg-git-2@plane.gmane.org; Fri, 24 Jan 2014 00:56:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752159AbaAWXxi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Jan 2014 18:53:38 -0500
-Received: from mx0a-00082601.pphosted.com ([67.231.145.42]:48545 "EHLO
-	mx0a-00082601.pphosted.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751083AbaAWXxh (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 23 Jan 2014 18:53:37 -0500
-Received: from pps.filterd (m0044012 [127.0.0.1])
-	by mx0a-00082601.pphosted.com (8.14.5/8.14.5) with SMTP id s0NNlA2T002289;
-	Thu, 23 Jan 2014 15:53:31 -0800
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fb.com; h=message-id : date : from :
- mime-version : to : cc : subject : references : in-reply-to : content-type
- : content-transfer-encoding; s=facebook;
- bh=1NuLBDU+gtHR4/WbDEO1nNPescjv9fAHNl1H3kpiNUE=;
- b=kKWur0sYqUYQLjB5BNp9fO36obvLD6A/VHR5UW/+2/SYSmAJrHK+ixWI4KT2hG0opoVF
- wFYocaLEFnQao7NLcRdKli/wvxMATNdYGZmhG4h5dGUL3P+c4R+5U23PzRCZqIQdkzAn
- TSMW6+DJpDl0flDAE1smGgsBEVKr3tYjkvs= 
-Received: from mail.thefacebook.com (mailwest.thefacebook.com [173.252.71.148])
-	by mx0a-00082601.pphosted.com with ESMTP id 1hk5vfhn2c-1
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=OK);
-	Thu, 23 Jan 2014 15:53:30 -0800
-Received: from [172.25.68.250] (192.168.57.29) by mail.thefacebook.com
- (192.168.16.16) with Microsoft SMTP Server (TLS) id 14.3.174.1; Thu, 23 Jan
- 2014 15:53:28 -0800
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.2.0
-In-Reply-To: <52E1A99D.6010809@fb.com>
-X-Originating-IP: [192.168.57.29]
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:5.11.87,1.0.14,0.0.0000
- definitions=2014-01-23_05:2014-01-23,2014-01-23,1970-01-01 signatures=0
-X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
- kscore.is_bulkscore=5.10702591327572e-15 kscore.compositescore=0
- circleOfTrustscore=0 compositescore=0.997600857122248
- urlsuspect_oldscore=0.997600857122248 suspectscore=0
- recipient_domain_to_sender_totalscore=0 phishscore=0 bulkscore=0
- kscore.is_spamscore=0 recipient_to_sender_totalscore=0
- recipient_domain_to_sender_domain_totalscore=64355
- rbsscore=0.997600857122248 spamscore=0
- recipient_to_sender_domain_totalscore=0 urlsuspectscore=0.9 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=7.0.1-1305240000
- definitions=main-1401230173
-X-FB-Internal: deliver
+	id S1755187AbaAWX4Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Jan 2014 18:56:16 -0500
+Received: from mail-ve0-f180.google.com ([209.85.128.180]:36295 "EHLO
+	mail-ve0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754027AbaAWX4P (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Jan 2014 18:56:15 -0500
+Received: by mail-ve0-f180.google.com with SMTP id db12so1565773veb.11
+        for <git@vger.kernel.org>; Thu, 23 Jan 2014 15:56:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=X3iyHqVmtxix6ck5MKBmAiZmozaJ6cXbomiOd4LJAxI=;
+        b=npN5FtW52ojSNlqtvhlLMoMiee1nXNOZp+RV/ieEZWPRYEqmWR8CBfEiALNGtiS2Fc
+         na9/YgUUai1rBxlAZbPhXFMNnRzVB7FMrY790byooq1XeQaoUQpPuC9fGzwiNiufzcjf
+         4YF0xxHG07wOS5dNamUP+RPPraXzbWVehD8NHCOmz+gepaUoII/MitAIs64n30Dl2HqP
+         vnaMGLudi9n3UGsyeVCLdYGnjRC+ctwFkmrF44paqgdjEBTh3e32j5Af8ptQsOyq0NkU
+         B0AvPvM6SJF7x5k0Zl5w7eXwYkaT7ZfXFBNcw5nayd4y0E4lk3oRrBRHiy4nU/8SitrG
+         EeLw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linux-foundation.org; s=google;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=X3iyHqVmtxix6ck5MKBmAiZmozaJ6cXbomiOd4LJAxI=;
+        b=TF0DAO0YTiiOoShL1kl6+hESXUqHnFpDgg3jHtgnwR/knkGrUvN/Du8SwsDl+8lTRR
+         olo0145GUPPCQN19fMe8qT6LHB0nyGaHfkRjPGPZtPofctEpUn1Z62bTj8ZmTpt2IgQ6
+         qh0ujhzdzQ+m8tMhcaEzMXnG/sCfN9tshx8XE=
+X-Received: by 10.58.37.232 with SMTP id b8mr6067691vek.27.1390521374313; Thu,
+ 23 Jan 2014 15:56:14 -0800 (PST)
+Received: by 10.221.8.73 with HTTP; Thu, 23 Jan 2014 15:56:14 -0800 (PST)
+In-Reply-To: <xmqqsises3u0.fsf@gitster.dls.corp.google.com>
+X-Google-Sender-Auth: MePDID3fZaJvAQv2U5YSojqVNro
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240977>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240978>
 
-On 01/23/2014 03:45 PM, Siddharth Agarwal wrote:
+On Thu, Jan 23, 2014 at 2:58 PM, Junio C Hamano <gitster@pobox.com> wrote:
 >
-> The worry is less certain objects not being packed and more the old 
-> packs being deleted by git repack, isn't it? From the man page for 
-> git-index-pack:
+> Will be fine, provided if they always use local:remote syntax, I'd
+> agree.
 
-This should probably be "new pack" and not "old packs", I guess. Not 
-knowing much about how this actually works, I'm assuming the scenario 
-here is something like:
+Why? No sane user should actually need to use the local:remote syntax.
 
-(1) git receive-pack receives a pack P.pack and writes it to disk
-(2) git index-pack runs on P.pack
-(3) git repack runs separately, finds pack P.pack with no refs pointing 
-to it, and deletes it
-(4) everything goes wrong
+The normal situation should be that you create the correctly named
+branch or tag locally, and then push it out under that name.
 
-With a keep file, this would be averted because
+So I don't actually think anybody should need to be retrained, or
+"always use the local:remote" syntax. The local:remote syntax exists
+only for that special insane case where you used (the same)
+local:remote syntax to push out a branch under a different name.
 
-(1) git receive-pack receives a pack P.pack and writes it to disk
-(2) git index-pack writes a keep file for P.pack, called P.keep
-(3) git repack runs separately, finds pack P.pack with a keep file, 
-doesn't touch it
-(4) git index-pack finishes, and something updates refs to point to 
-P.pack and deletes P.keep
+[ And yeah, maybe that behavior is more common than I think, but even
+if it is, such behavior would always be among people who are *very*
+aware of the whole "local branch vs remote branch name is different"
+situation. ]
+
+                   Linus
