@@ -1,94 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC PATCH 2/1] Make request-pull able to take a refspec of form local:remote
-Date: Fri, 24 Jan 2014 12:16:24 -0800
-Message-ID: <xmqqvbx9qgo7.fsf@gitster.dls.corp.google.com>
-References: <alpine.LFD.2.11.1401221535140.18207@i7.linux-foundation.org>
-	<xmqqlhy6trfp.fsf@gitster.dls.corp.google.com>
-	<CA+55aFyGaaMOL5pBhZ1BHMr07oDi2MuS-fPu4nnxhjoy+F0AQw@mail.gmail.com>
-	<xmqqsises3u0.fsf@gitster.dls.corp.google.com>
-	<CA+55aFyN7WWAF6pGfP+0j29nf6ETao0J5sUu+5UDaXUYC9_Geg@mail.gmail.com>
+From: Markus Trippelsdorf <markus@trippelsdorf.de>
+Subject: Re: Globbing for ignored branches?
+Date: Fri, 24 Jan 2014 21:33:12 +0100
+Message-ID: <20140124203312.GF396@x4>
+References: <20140124090104.GA396@x4>
+ <0C723FEB5B4E5642B25B451BA57E273075148284@S1P5DAG3C.EXCHPROD.USA.NET>
+ <20140124170739.GC396@x4>
+ <20140124170909.GD396@x4>
+ <20140124182341.GB8202@sigill.intra.peff.net>
+ <20140124183222.GE396@x4>
+ <20140124185538.GA9836@sigill.intra.peff.net>
+ <xmqq4n4trvzj.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Tejun Heo <tj@kernel.org>, Git Mailing List <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri Jan 24 21:16:35 2014
+Cc: Jeff King <peff@peff.net>, Jim Garrison <jim.garrison@nwea.org>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jan 24 21:33:22 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W6nB3-0001NM-VK
-	for gcvg-git-2@plane.gmane.org; Fri, 24 Jan 2014 21:16:34 +0100
+	id 1W6nRH-0000bR-3n
+	for gcvg-git-2@plane.gmane.org; Fri, 24 Jan 2014 21:33:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751940AbaAXUQa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Jan 2014 15:16:30 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39266 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751157AbaAXUQ3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Jan 2014 15:16:29 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9DA72654B1;
-	Fri, 24 Jan 2014 15:16:28 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=U7p/xTli/7eL/YZSQtyabYMyG2M=; b=krqx/8
-	G7AciygdMxYYB21fb33iwfA2nhZKEXBL5AeRisUNeqe+z+CnpU0OMMbulNub+2lN
-	ux6vGD7bN+MCIUQPYWG8YLTOO+Y16RajNF3p0XAnEh0e4x66JnXDKjGLgVuNPu9j
-	OXM4Y+MpRNG5vIy67vZ8xOM2wYcTm6mIPjQNw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=LRYmoKY7/1eEZrdQrG2TwEbUVekiXPnX
-	f9tB3IK0hKFZiMZbOyjtMgxitWZkGbJ/crO9rIp98ZRif8DFBwTv1M8O8dCtDO5E
-	nohmASeMqqWFY2v5OdnwL9NWv0A+gzi6k11iF8Q7ozEQxeUaE7nnqN9/pn+yfpHn
-	yGM2it+lUa4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8BC46654B0;
-	Fri, 24 Jan 2014 15:16:28 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DBA0D654AF;
-	Fri, 24 Jan 2014 15:16:26 -0500 (EST)
-In-Reply-To: <CA+55aFyN7WWAF6pGfP+0j29nf6ETao0J5sUu+5UDaXUYC9_Geg@mail.gmail.com>
-	(Linus Torvalds's message of "Thu, 23 Jan 2014 15:56:14 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 674C41E4-8534-11E3-93B7-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752373AbaAXUdO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Jan 2014 15:33:14 -0500
+Received: from ud10.udmedia.de ([194.117.254.50]:47674 "EHLO
+	mail.ud10.udmedia.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751780AbaAXUdO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Jan 2014 15:33:14 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=simple; d=mail.ud10.udmedia.de; h=
+	date:from:to:cc:subject:message-id:references:mime-version
+	:content-type:in-reply-to; s=beta; bh=lxnDqI+XZ8tV6h/kuJd4r4F4jP
+	HgWL8pGab0zZOIWx8=; b=bQ2xkb33iGXzYSz3UDRsEnSf9xjvdyClIYYMNc1qFZ
+	Yo9Pa2Ao/8qKC4MadVvsHC33DIDvHHBQe1+YMhRbBywpbmgzdLqUjLSJT8Iqn4KT
+	R02fWFTVOrX/IkThYLwrr+aZjfftBGBbs56ZMvw0WQoLsvDwiHkgLOXbt16b72/4
+	o=
+Received: (qmail 20897 invoked from network); 24 Jan 2014 21:33:12 +0100
+Received: from unknown (HELO x4) (ud10?360p3@91.64.96.185)
+  by mail.ud10.udmedia.de with ESMTPSA (DHE-RSA-AES256-SHA encrypted, authenticated); 24 Jan 2014 21:33:12 +0100
+Content-Disposition: inline
+In-Reply-To: <xmqq4n4trvzj.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241033>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241034>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+On 2014.01.24 at 12:00 -0800, Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
+> 
+> > On Fri, Jan 24, 2014 at 07:32:22PM +0100, Markus Trippelsdorf wrote:
+> >
+> >> > However, you do have to specify each branch individually. You probably
+> >> > want to say "all branches except X", and you cannot currently specify
+> >> > a negative refspec like that.
+> >> 
+> >> Yes, that was the question I wanted to ask (, sorry for not formulating
+> >> it more clearly). 
+> >> Is this "negative refspec for branches" a feature that is planned for
+> >> the future?
+> >
+> > It is something that has been talked about before, but I do not think
+> > anybody is actively working on. It would probably not be too hard a
+> > feature if you are interested in getting your feet wet in git
+> > development. :)
+> 
+> The end result might be not so hard in the mechanical sense, but
+> designing the interface would be hard.  I do not offhand think of a
+> good way to do this.
 
-> So I don't actually think anybody should need to be retrained, or
-> "always use the local:remote" syntax. The local:remote syntax exists
-> only for that special insane case where you used (the same)
-> local:remote syntax to push out a branch under a different name.
->
-> [ And yeah, maybe that behavior is more common than I think, but even
-> if it is, such behavior would always be among people who are *very*
-> aware of the whole "local branch vs remote branch name is different"
-> situation. ]
+I don't know if the in-tree regex engine supports negative lookaheads.
+If it does, then something like the following should work (to use my
+"hjl" example):
 
-As the new default for "git push" would push to the same name, I
-agree that people who are now forced to use local:remote syntax
-would be the ones who know what they are doing [*1*].
+^(.(?!hjl))*
 
-So there are two remaining items, I think.
-
- - After creating a tags/for-linus signed tag and pushing it to
-   tags/for-linus, asking request-pull to request that tag to be
-   pulled seems to lose the tag message from the output.
-
- - Docs.
-
-
-[Footnote]
-
-*1* Not that it is always acceptable to break the existing users as
-    long as they are clueful ones and they are given an escape hatch.
-    But this time I know I won't be in the middle of firestorm like
-    the one we had immediately after 1.6.0, as long as I keep the
-    URL of the message I am responding to in the list archive ;-)
+-- 
+Markus
