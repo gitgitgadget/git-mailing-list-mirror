@@ -1,85 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Globbing for ignored branches?
-Date: Fri, 24 Jan 2014 12:00:16 -0800
-Message-ID: <xmqq4n4trvzj.fsf@gitster.dls.corp.google.com>
-References: <20140124090104.GA396@x4>
-	<0C723FEB5B4E5642B25B451BA57E273075148284@S1P5DAG3C.EXCHPROD.USA.NET>
-	<20140124170739.GC396@x4> <20140124170909.GD396@x4>
-	<20140124182341.GB8202@sigill.intra.peff.net>
-	<20140124183222.GE396@x4>
-	<20140124185538.GA9836@sigill.intra.peff.net>
+From: Brad King <brad.king@kitware.com>
+Subject: Re: [PATCH/RFC 3/3] merge-recursive: Tolerate missing file when HEAD
+ is up to date
+Date: Fri, 24 Jan 2014 15:02:34 -0500
+Message-ID: <CA+gQCGGRw7cTKH3zgPrsCWzMOs+FQZwt2xHU8FV-0s5x3QNZUw@mail.gmail.com>
+References: <CABPp-BGAsrrjcZxVirzKU_VEyUM1U=4TFj18CieKKE7==c7v2A@mail.gmail.com>
+	<cover.1390574980.git.brad.king@kitware.com>
+	<5e5bfe752655c39fca626811972af9d0a90ddab9.1390574981.git.brad.king@kitware.com>
+	<xmqq8uu5rwfk.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Markus Trippelsdorf <markus@trippelsdorf.de>,
-	Jim Garrison <jim.garrison@nwea.org>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jan 24 21:00:29 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org, newren@gmail.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jan 24 21:02:57 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W6mvV-0002du-Eb
-	for gcvg-git-2@plane.gmane.org; Fri, 24 Jan 2014 21:00:29 +0100
+	id 1W6mxt-0003mK-4V
+	for gcvg-git-2@plane.gmane.org; Fri, 24 Jan 2014 21:02:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751592AbaAXUAZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Jan 2014 15:00:25 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:39942 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751398AbaAXUAY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Jan 2014 15:00:24 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B6F056504A;
-	Fri, 24 Jan 2014 15:00:23 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=x9Q1rZJT3lRGstGhcEjaih3lwt0=; b=XNZUlO
-	f9WsFRYhwG/RbiTWC6fyLZK5ERUob5Iy+wIo7TlYZ1ZX5kCbuJQYVfneP7vLKGFz
-	BUIkxeOeRQlbWckpfyti8p1Kc9IN8tVCmH2zGj9ctMZI9noHbxg8oAuKU7BythE+
-	4PN8qprAtAMDi5+qREzfRfOpeOLmtOp3AqXYc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=LfyLJ+uEWNM6dKajWxu0rkmiOB6VhQ+n
-	H6pomcTUdtsfPbnL0G/Yo0eApT33T5t2e9zsTIhMjkX2/ESqbpxE0sexlbMCH5tK
-	xLRoEvSbjsmtAqqx/dUl2CizTuY5pr3bb9Vethi6K7RGANlo+OTl0hA5u4eokec/
-	WKPrt1KWwvc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 879C065049;
-	Fri, 24 Jan 2014 15:00:23 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6631265047;
-	Fri, 24 Jan 2014 15:00:21 -0500 (EST)
-In-Reply-To: <20140124185538.GA9836@sigill.intra.peff.net> (Jeff King's
-	message of "Fri, 24 Jan 2014 13:55:38 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 286BE3AA-8532-11E3-B925-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752826AbaAXUCk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Jan 2014 15:02:40 -0500
+Received: from na3sys009aog104.obsmtp.com ([74.125.149.73]:57497 "HELO
+	na3sys009aog104.obsmtp.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1751582AbaAXUCk (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 24 Jan 2014 15:02:40 -0500
+Received: from mail-bk0-f54.google.com ([209.85.214.54]) (using TLSv1) by na3sys009aob104.postini.com ([74.125.148.12]) with SMTP
+	ID DSNKUuLG32u9P1TUatMdI2PLH1wYfUjyHp1R@postini.com; Fri, 24 Jan 2014 12:02:39 PST
+Received: by mail-bk0-f54.google.com with SMTP id u14so1453961bkz.27
+        for <git@vger.kernel.org>; Fri, 24 Jan 2014 12:02:37 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=5Dovuq7uUiHaA5uHYW8SPsWvV5n4myL5fByuo5WDPMI=;
+        b=lONNP9mWrRJBnRj5/y2g3bROBs8zxZgFXhkJJUNDPiZ1OghGirZv+n4AMAMTvExVKs
+         LkoqQw/wAvjoqFfHCI2u27Tq/whteiF7Gg1t39z9SyvlSs0LpfXUbRlYchTzuBk/jQ5U
+         JUDiYD6nohYyDFbfqmCRETAJ8/zY9GR6iNOWJts87bq84H2pH7VyA554ijdeLsLJTCuB
+         nlv2mMYaztezK6ND3zB/H65vtzE1UZOSv0XeEbTqyIA7d/At3QJOeWIrQB34Yg8CaVr+
+         BHPWzVnvhaD+f6S8dkUbzZXzTgYU+6eqfPX17+08LWSjRqW4EqVr5y3415kmQrLSc7km
+         hhjA==
+X-Received: by 10.204.164.203 with SMTP id f11mr7661697bky.50.1390593757188;
+        Fri, 24 Jan 2014 12:02:37 -0800 (PST)
+X-Gm-Message-State: ALoCoQnkDChdjibFB3nINN+NJNUimS6tf7JVhwGoklZ8xKBbhIPu9j+gjUdWzq2zNKR4+Op87DS/9MnoUAqKZxTD5qJtETiDEdSzWuYQyW7FevYZLfTN7+axZ53/zdigar1UOhPEc6VHUpG5QS37mKEDXFqS8jmxNQ==
+X-Received: by 10.204.164.203 with SMTP id f11mr7661493bky.50.1390593754458;
+ Fri, 24 Jan 2014 12:02:34 -0800 (PST)
+Received: by 10.70.68.168 with HTTP; Fri, 24 Jan 2014 12:02:34 -0800 (PST)
+In-Reply-To: <xmqq8uu5rwfk.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241026>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241027>
 
-Jeff King <peff@peff.net> writes:
+On Fri, Jan 24, 2014 at 2:50 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> It somehow feels wrong to force callers of make_cache_entry() to be
+> so intimate with the implementation details of refresh_cache_ent()
+[snip]
+> option bit CE_MATCH_MISSING_OK that asks it to treat a path that is
+> missing from the working tree as if it is checked out unmodified.
 
-> On Fri, Jan 24, 2014 at 07:32:22PM +0100, Markus Trippelsdorf wrote:
->
->> > However, you do have to specify each branch individually. You probably
->> > want to say "all branches except X", and you cannot currently specify
->> > a negative refspec like that.
->> 
->> Yes, that was the question I wanted to ask (, sorry for not formulating
->> it more clearly). 
->> Is this "negative refspec for branches" a feature that is planned for
->> the future?
->
-> It is something that has been talked about before, but I do not think
-> anybody is actively working on. It would probably not be too hard a
-> feature if you are interested in getting your feet wet in git
-> development. :)
+I came to the same conclusion after reading Elijah's last response.
+My next series revision adds an argument to make_cache_entry to
+specify the refresh flags and honors REFRESH_IGNORE_MISSING.
 
-The end result might be not so hard in the mechanical sense, but
-designing the interface would be hard.  I do not offhand think of a
-good way to do this.
+Thanks,
+-Brad
