@@ -1,75 +1,57 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: [PATCH v2 5/9] rebase: remove useless arguments check
-Date: Fri, 24 Jan 2014 00:51:02 +0000
-Message-ID: <1390524666-51274-6-git-send-email-sandals@crustytoothpaste.net>
-References: <1390524666-51274-1-git-send-email-sandals@crustytoothpaste.net>
-Cc: Nicolas Vigier <boklm@mars-attacks.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 24 01:51:52 2014
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/3] read-cache: use get_be32 instead of hand-rolled
+ ntoh_l
+Date: Thu, 23 Jan 2014 21:22:28 -0500
+Message-ID: <20140124022228.GA4521@sigill.intra.peff.net>
+References: <20140123212036.GA21299@sigill.intra.peff.net>
+ <20140123212642.GB21705@sigill.intra.peff.net>
+ <20140123233416.GE18964@google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 24 03:22:36 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W6Uzv-0001nj-1R
-	for gcvg-git-2@plane.gmane.org; Fri, 24 Jan 2014 01:51:51 +0100
+	id 1W6WPj-0004zz-9P
+	for gcvg-git-2@plane.gmane.org; Fri, 24 Jan 2014 03:22:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932214AbaAXAvk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Jan 2014 19:51:40 -0500
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:51331 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752902AbaAXAvU (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 23 Jan 2014 19:51:20 -0500
-Received: from vauxhall.elevennetworks.com (unknown [209.118.237.69])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 85D9028082;
-	Fri, 24 Jan 2014 00:51:19 +0000 (UTC)
-X-Mailer: git-send-email 1.9.rc0.1002.gd081c64.dirty
-In-Reply-To: <1390524666-51274-1-git-send-email-sandals@crustytoothpaste.net>
+	id S1751690AbaAXCWb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Jan 2014 21:22:31 -0500
+Received: from cloud.peff.net ([50.56.180.127]:37964 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750969AbaAXCWa (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Jan 2014 21:22:30 -0500
+Received: (qmail 16927 invoked by uid 102); 24 Jan 2014 02:22:30 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 23 Jan 2014 20:22:30 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 23 Jan 2014 21:22:28 -0500
+Content-Disposition: inline
+In-Reply-To: <20140123233416.GE18964@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240991>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240992>
 
-From: Nicolas Vigier <boklm@mars-attacks.org>
+On Thu, Jan 23, 2014 at 03:34:16PM -0800, Jonathan Nieder wrote:
 
-Remove a check on the number of arguments for --onto and -x options.
-It is not possible for $# to be <= 2 at this point :
+> Line 1484 looks more problematic:
+> 
+> 		disk_ce = (struct ondisk_cache_entry *)((char *)mmap + src_offset);
+> 
+> In v4 indexes, src_offset doesn't have any particular alignment so
+> this conversion has undefined behavior.
+> 
+> Do you know if any tests exercise this code with paths that don't
+> have convenient length?
 
- - if --onto or -x has an argument, git rev-parse --parseopt will
-   provide something like this :
-     set -- --onto 'x' --
-   when parsing the "--onto" option, $# will be 3 or more if there are
-   other options.
+My impression was that we are not testing v4 index at all (and grepping
+for `--index-version`, which I think is the only way to write it,
+supports that).
 
- - if --onto or -x doesn't have an argument, git rev-parse --parseopt
-   will exit with an error and display usage information.
-
-Signed-off-by: Nicolas Vigier <boklm@mars-attacks.org>
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
- git-rebase.sh | 2 --
- 1 file changed, 2 deletions(-)
-
-diff --git a/git-rebase.sh b/git-rebase.sh
-index c1f98ae..d1835ba 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -238,12 +238,10 @@ do
- 		action=${1##--}
- 		;;
- 	--onto)
--		test 2 -le "$#" || usage
- 		onto="$2"
- 		shift
- 		;;
- 	-x)
--		test 2 -le "$#" || usage
- 		cmd="${cmd}exec $2${LF}"
- 		shift
- 		;;
--- 
-1.9.rc0.1002.gd081c64.dirty
+-Peff
