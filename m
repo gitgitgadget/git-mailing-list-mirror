@@ -1,90 +1,111 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 6/9] Pass directory indicator to match_pathspec_item()
-Date: Fri, 24 Jan 2014 16:22:58 -0500
-Message-ID: <CAPig+cRW5Fz62Qk22qiUo85jmqVK0Hvbb6v2GxK7V+wS+S8_qw@mail.gmail.com>
-References: <1390483326-32258-1-git-send-email-pclouds@gmail.com>
-	<1390570836-20394-1-git-send-email-pclouds@gmail.com>
-	<1390570836-20394-7-git-send-email-pclouds@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 5/5] implement @{publish} shorthand
+Date: Fri, 24 Jan 2014 16:35:21 -0500
+Message-ID: <20140124213521.GA26602@sigill.intra.peff.net>
+References: <20140108093338.GA15659@sigill.intra.peff.net>
+ <20140108093716.GE15720@sigill.intra.peff.net>
+ <xmqqob32s08p.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	pawel.sikora@agmk.net, Jens Lehmann <Jens.Lehmann@web.de>
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 24 22:23:06 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jan 24 22:35:29 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W6oDR-0005WC-3S
-	for gcvg-git-2@plane.gmane.org; Fri, 24 Jan 2014 22:23:05 +0100
+	id 1W6oPR-0002bU-5s
+	for gcvg-git-2@plane.gmane.org; Fri, 24 Jan 2014 22:35:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752913AbaAXVXA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 24 Jan 2014 16:23:00 -0500
-Received: from mail-la0-f53.google.com ([209.85.215.53]:57452 "EHLO
-	mail-la0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752397AbaAXVW7 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 24 Jan 2014 16:22:59 -0500
-Received: by mail-la0-f53.google.com with SMTP id e16so2937665lan.40
-        for <git@vger.kernel.org>; Fri, 24 Jan 2014 13:22:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type:content-transfer-encoding;
-        bh=x95v5uxe11kcuCMBQoFZ1eT9u7UDJPUeGwYSnjhYTns=;
-        b=ixcfRUOJne8tnXn5hc2LDEj3/clQeDCNQS0JKc7inqVU8x67osISNTWBpd5wLjzTaq
-         pOPRyp6Tlip4/SMeyKg3gS/LEMOjHBbYfA7Et5H7AVE2IDCR7ITVufVLfaG4teIveq0u
-         I3OKnjWjR/A5u+PZG35baXQyP8oz2IilgJrqUy+zjvLihxM74yQ/lafe0YlaSjhqOZh9
-         lUnbQ+ivJ5xH0XvPZDzazoaJdn+L5kyp2dyDYzPGRQUkRAd1aS92+fONvG4YqTX8SAcQ
-         OMNqP12W8pda9aowv3WNW2Ojj9Zerfb7I6ZgQpR5b6ZhG2oWi/n2p+MP2vfmTwqzAJ/s
-         uteA==
-X-Received: by 10.112.138.233 with SMTP id qt9mr9881752lbb.34.1390598578504;
- Fri, 24 Jan 2014 13:22:58 -0800 (PST)
-Received: by 10.114.81.106 with HTTP; Fri, 24 Jan 2014 13:22:58 -0800 (PST)
-In-Reply-To: <1390570836-20394-7-git-send-email-pclouds@gmail.com>
-X-Google-Sender-Auth: IDFkM4QPW0Z3X7k7oQeytSXapr8
+	id S1753334AbaAXVfZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Jan 2014 16:35:25 -0500
+Received: from cloud.peff.net ([50.56.180.127]:38402 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753203AbaAXVfX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Jan 2014 16:35:23 -0500
+Received: (qmail 11031 invoked by uid 102); 24 Jan 2014 21:35:23 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 24 Jan 2014 15:35:23 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 24 Jan 2014 16:35:21 -0500
+Content-Disposition: inline
+In-Reply-To: <xmqqob32s08p.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241043>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241044>
 
-On Fri, Jan 24, 2014 at 8:40 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc =
-Duy <pclouds@gmail.com> wrote:
-> diff --git a/t/t4010-diff-pathspec.sh b/t/t4010-diff-pathspec.sh
-> index af5134b..167af53 100755
-> --- a/t/t4010-diff-pathspec.sh
-> +++ b/t/t4010-diff-pathspec.sh
-> @@ -110,4 +110,21 @@ test_expect_success 'diff-tree -r with wildcard'=
- '
->         test_cmp expected result
->  '
->
-> +test_expect_success 'setup submodules' '
-> +       test_tick &&
-> +       git init submod &&
-> +       ( cd submod && test_commit first; ) &&
+On Thu, Jan 23, 2014 at 04:16:06PM -0800, Junio C Hamano wrote:
 
-Unnecessary semicolon might confuse the reader into thinking something
-unusual is going on here.
+> Jeff King <peff@peff.net> writes:
+> 
+> > In a triangular workflow, you may have a distinct
+> > @{upstream} that you pull changes from, but publish by
+> > default (if you typed "git push") to a different remote (or
+> > a different branch on the remote). It may sometimes be
+> > useful to be able to quickly refer to that publishing point
+> > (e.g., to see which changes you have that have not yet been
+> > published).
+> >
+> > This patch introduces the <branch>@{publish} shorthand (or
+> > "@{pu}" to be even shorter). It refers to the tracking
+> > branch of the remote branch to which you would push if you
+> > were to push the named branch. That's a mouthful to explain,
+> > so here's an example:
+> >
+> >   $ git checkout -b foo origin/master
+> >   $ git config remote.pushdefault github
+> >   $ git push
+> >
+> > Signed-off-by: Jeff King <peff@peff.net>
+> > ---
+> 
+> As there is no @{pu} in publish_mark() as far as I can see, and also
+> I found it is a bit unclear what the example in the last paragraph
+> wants to illustrate, I'll reword the above as the following before
+> merging it to 'next'.
 
-> +       git add submod &&
-> +       git commit -m first &&
-> +       ( cd submod && test_commit second; ) &&
+Yeah, I think the @{pu} was just a silly omission from the code, though
+I agree after our discussion that we should just stick with "@{publish}"
+for now.
 
-Ditto.
+I am not sure why I said "git push" at the end. I would have thought
+that:
 
-> +       git add submod &&
-> +       git commit -m second
-> +'
-> +
-> +test_expect_success 'diff-cache ignores trailing slash on submodule =
-path' '
-> +       git diff --name-only HEAD^ submod >expect &&
-> +       git diff --name-only HEAD^ submod/ >actual &&
-> +       test_cmp expect actual
-> +'
-> +
->  test_done
+  $ git rev-parse --symbolic-full-name @{publish}
+  refs/remotes/github/foo
+
+would have been the right command to demonstrate. The text you suggested
+is fine, though I think you can simply drop the "git push", as it does
+not add anything.
+
+As far as merging it to 'next', I had not really intended it to go that
+far. :) It was more for Ram to use as a base. I find some of the
+refactoring questionable, including:
+
+  1. The meaning of branch->pushremote is subtly different from that of
+     branch->remote. Ram's followup refactoring did a better job of
+     that (but he is missing the patches on top to finish out the
+     feature).
+
+  2. We are duplicating the "where to push" logic here. That should
+     probably be factored out so that "git push" and "@{publish}" use
+     the same logic.
+
+And of course there are no tests or documentation. It might work,
+though.
+
+I don't mind if you want to merge it and do more work in-tree, but I do
+not think it should graduate as-is. And you may want check from Ram that
+he is not in the middle of his own version based on the patches he sent
+earlier, as reworking them on top of mine would probably just be
+needless extra work.
+
+Are you planning on having request-pull use @{publish} as a default? I
+saw you cc'd me on that thread, but I didn't have any opinion besides
+"sounds like you could use it here".
+
+-Peff
