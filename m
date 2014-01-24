@@ -1,111 +1,132 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] repack.c: chmod +w before rename()
-Date: Fri, 24 Jan 2014 15:32:38 -0800
-Message-ID: <xmqqwqhpot0p.fsf@gitster.dls.corp.google.com>
-References: <201401242205.16313.tboegi@web.de>
-	<20140124214023.GB58260@vauxhall.crustytoothpaste.net>
-	<alpine.DEB.1.00.1401242318060.14982@s15462909.onlinehome-server.info>
+From: Jeff King <peff@peff.net>
+Subject: Re: [ANNOUNCE] Git v1.9-rc0
+Date: Fri, 24 Jan 2014 18:36:36 -0500
+Message-ID: <20140124233635.GA31371@sigill.intra.peff.net>
+References: <xmqq61pjzljn.fsf@gitster.dls.corp.google.com>
+ <xmqqha8xt22p.fsf@gitster.dls.corp.google.com>
+ <CALZVapmqcFjjKeURHdP4chkB+T2--caJZYiJBzdwq7Ou=HzO5w@mail.gmail.com>
+ <52DFE882.2040605@atlas-elektronik.com>
+ <xmqq7g9syp1m.fsf@gitster.dls.corp.google.com>
+ <CAFFjANTNLnc4GcVeSEvuWpfYVXJchJqkHwvUVdREdXmWx6e4=Q@mail.gmail.com>
+ <xmqqlhy7yjjp.fsf@gitster.dls.corp.google.com>
+ <20140122203030.GB14211@milliways>
+ <20140123020913.GF17254@sigill.intra.peff.net>
+ <xmqqha8uva2i.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,  Torsten
- =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,  git@vger.kernel.org,
-  zwanzig12@googlemail.com,  stefanbeller@googlemail.com,
-  kusmabite@gmail.com,  msysgit@googlegroups.com
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: msysgit+bncBCG77UMM3EJRBGPQROLQKGQENMHTGFI@googlegroups.com Sat Jan 25 00:32:47 2014
-Return-path: <msysgit+bncBCG77UMM3EJRBGPQROLQKGQENMHTGFI@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-yk0-f190.google.com ([209.85.160.190])
+Content-Type: text/plain; charset=utf-8
+Cc: Ken Moffat <zarniwhoop@ntlworld.com>,
+	Vicent =?utf-8?B?TWFydMOt?= <tanoku@gmail.com>,
+	Stefan =?utf-8?B?TsOkd2U=?= <stefan.naewe@atlas-elektronik.com>,
+	Javier Domingo Cansino <javierdo1@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Linux Kernel <linux-kernel@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: linux-kernel-owner@vger.kernel.org Sat Jan 25 00:36:53 2014
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCG77UMM3EJRBGPQROLQKGQENMHTGFI@googlegroups.com>)
-	id 1W6qEs-0008NV-VM
-	for gcvm-msysgit@m.gmane.org; Sat, 25 Jan 2014 00:32:43 +0100
-Received: by mail-yk0-f190.google.com with SMTP id 131sf2033879ykp.7
-        for <gcvm-msysgit@m.gmane.org>; Fri, 24 Jan 2014 15:32:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type;
-        bh=rIZR6LQxn+1V4BdH4dGiBTJ83CaxUqVOpRcBGjaWocI=;
-        b=qd6wgx4ShrBjoGW7JqRIsxrrCuBseRHjSBw2jJ3Lu5KQRBygi9pd+LmYZWx2qUcLoR
-         BuN9aiMLSX1OlJ5J6WhoMksFzBzY14CtSmu+gBaGetVlRH/kjIX5pZPObfrzWHFWbQBa
-         m9KodpAsct9vVnB3CCVhqNFa+AnroDWl6vS+/YxmwXQzQJLTiqCAPHBlPm2mxfjg/1n0
-         DD6cPyt8yDl2lHo8A8atUJHyt+8G3C+pB3cLQWPy1ufyHq9/UjzsBq+ipRpFCxuu4p9R
-         QIT0rxY8+6E22dgAJHpeWN016yYBN+kHx+oVI7ZAgTf14oYQrUV0eTpCw7Dy+RGXiNgN
-         2/Wg==
-X-Received: by 10.182.33.4 with SMTP id n4mr87791obi.9.1390606361990;
-        Fri, 24 Jan 2014 15:32:41 -0800 (PST)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.182.22.200 with SMTP id g8ls447649obf.30.gmail; Fri, 24 Jan
- 2014 15:32:41 -0800 (PST)
-X-Received: by 10.182.108.136 with SMTP id hk8mr6219160obb.11.1390606361132;
-        Fri, 24 Jan 2014 15:32:41 -0800 (PST)
-Received: from smtp.pobox.com (b-pb-sasl-quonix.pobox.com. [208.72.237.35])
-        by gmr-mx.google.com with ESMTP id g1si415555pbw.2.2014.01.24.15.32.40
-        for <msysgit@googlegroups.com>;
-        Fri, 24 Jan 2014 15:32:41 -0800 (PST)
-Received-SPF: pass (google.com: best guess record for domain of jch@b-sasl-quonix.pobox.com designates 208.72.237.35 as permitted sender) client-ip=208.72.237.35;
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6433864812;
-	Fri, 24 Jan 2014 18:32:40 -0500 (EST)
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 501EC64811;
-	Fri, 24 Jan 2014 18:32:40 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9433964810;
-	Fri, 24 Jan 2014 18:32:39 -0500 (EST)
-In-Reply-To: <alpine.DEB.1.00.1401242318060.14982@s15462909.onlinehome-server.info>
-	(Johannes Schindelin's message of "Fri, 24 Jan 2014 23:24:36 +0100
-	(CET)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: D06ECE24-854F-11E3-98BD-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
-X-Original-Sender: gitster@pobox.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: best guess record for domain of jch@b-sasl-quonix.pobox.com
- designates 208.72.237.35 as permitted sender) smtp.mail=jch@b-sasl-quonix.pobox.com;
-       dkim=pass header.i=@pobox.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241053>
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1W6qIt-0001Vn-Nv
+	for glk-linux-kernel-3@plane.gmane.org; Sat, 25 Jan 2014 00:36:52 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751532AbaAXXgl (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Fri, 24 Jan 2014 18:36:41 -0500
+Received: from cloud.peff.net ([50.56.180.127]:38457 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750903AbaAXXgi (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
+	Fri, 24 Jan 2014 18:36:38 -0500
+Received: (qmail 17099 invoked by uid 102); 24 Jan 2014 23:36:38 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 24 Jan 2014 17:36:38 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 24 Jan 2014 18:36:36 -0500
+Content-Disposition: inline
+In-Reply-To: <xmqqha8uva2i.fsf@gitster.dls.corp.google.com>
+Sender: linux-kernel-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241054>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Thu, Jan 23, 2014 at 10:15:33AM -0800, Junio C Hamano wrote:
 
-> In any case, I'd rather change the permissions only when the rename
-> failed. *And* I feel uncomfortable ignoring the return value...
+> Jeff King <peff@peff.net> writes:
+> 
+> > Junio, since you prepare such tarballs[1] anyway for kernel.org, it
+> > might be worth uploading them to the "Releases" page of git/git.  I
+> > imagine there is a programmatic way to do so via GitHub's API, but I
+> > don't know offhand. I can look into it if you are interested.
+> 
+> I already have a script that takes the three tarballs and uploads
+> them to two places, so adding GitHub as the third destination should
+> be a natural and welcome way to automate it.
 
-Good judgement I'd agree with 100%.
+I came up with the script below, which you can use like:
 
-Thanks.
+  ./script v1.8.2.3 git-1.8.2.3.tar.gz
 
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+It expects the tag to already be pushed up to GitHub.  I'll leave
+sticking it on the "todo" branch and integrating it into RelUpload to
+you. This can also be used to backfill the old releases (though I looked
+on k.org and it seems to have only partial coverage).
 
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
+It sets the "prerelease" flag for -rc releases, but I did not otherwise
+fill in any fields, including the summary and description. GitHub seems
+to display reasonably if they are not set.
 
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/groups/opt_out.
+-- >8 --
+#!/bin/sh
+#
+# usage: $0 <tag> <tarball>
+
+repo=git/git
+
+# replace this with however you store your oauth token
+# if you don't have one, make one here:
+# https://github.com/settings/tokens/new
+token() {
+  pass -n github.web.oauth
+}
+
+post() {
+  curl -H "Authorization: token $(token)" "$@"
+}
+
+# usage: create <tag-name>
+create() {
+  case "$1" in
+  *-rc*)
+    prerelease=true
+    ;;
+  *)
+    prerelease=false
+    ;;
+  esac
+
+  post -d '
+  {
+    "tag_name": "'"$1"'",
+    "prerelease": '"$prerelease"'
+  }' "https://api.github.com/repos/$repo/releases"
+}
+
+# use: upload <release-id> <filename>
+upload() {
+  url="https://uploads.github.com/repos/$repo/releases/$1/assets" &&
+  url="$url?name=$(basename $2)" &&
+  post -H "Content-Type: $(file -b --mime-type "$2")" \
+       --data-binary "@$2" \
+       "$url"
+}
+
+# This is a hack. If you don't mind a dependency on
+# perl's JSON (or another parser), we can do a lot better.
+extract_id() {
+  perl -lne '/"id":\s*(\d+)/ or next; print $1; exit 0'
+}
+
+create "$1" >release.json &&
+id=$(extract_id <release.json) &&
+upload "$id" "$2" >/dev/null &&
+rm -f release.json
