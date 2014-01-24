@@ -1,69 +1,83 @@
-From: Brad King <brad.king@kitware.com>
-Subject: Re: [PATCH/RFC 3/3] merge-recursive: Tolerate missing file when HEAD
- is up to date
-Date: Fri, 24 Jan 2014 15:02:34 -0500
-Message-ID: <CA+gQCGGRw7cTKH3zgPrsCWzMOs+FQZwt2xHU8FV-0s5x3QNZUw@mail.gmail.com>
-References: <CABPp-BGAsrrjcZxVirzKU_VEyUM1U=4TFj18CieKKE7==c7v2A@mail.gmail.com>
-	<cover.1390574980.git.brad.king@kitware.com>
-	<5e5bfe752655c39fca626811972af9d0a90ddab9.1390574981.git.brad.king@kitware.com>
-	<xmqq8uu5rwfk.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 0/9] add --gpg-sign to rebase and pull
+Date: Fri, 24 Jan 2014 12:06:09 -0800
+Message-ID: <xmqqzjmlqh5a.fsf@gitster.dls.corp.google.com>
+References: <1390524666-51274-1-git-send-email-sandals@crustytoothpaste.net>
+	<20140124091444.GM10748@mars-attacks.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, newren@gmail.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 24 21:02:57 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	git@vger.kernel.org
+To: Nicolas Vigier <boklm@mars-attacks.org>
+X-From: git-owner@vger.kernel.org Fri Jan 24 21:06:21 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W6mxt-0003mK-4V
-	for gcvg-git-2@plane.gmane.org; Fri, 24 Jan 2014 21:02:57 +0100
+	id 1W6n1A-0005H6-BP
+	for gcvg-git-2@plane.gmane.org; Fri, 24 Jan 2014 21:06:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752826AbaAXUCk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Jan 2014 15:02:40 -0500
-Received: from na3sys009aog104.obsmtp.com ([74.125.149.73]:57497 "HELO
-	na3sys009aog104.obsmtp.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1751582AbaAXUCk (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 24 Jan 2014 15:02:40 -0500
-Received: from mail-bk0-f54.google.com ([209.85.214.54]) (using TLSv1) by na3sys009aob104.postini.com ([74.125.148.12]) with SMTP
-	ID DSNKUuLG32u9P1TUatMdI2PLH1wYfUjyHp1R@postini.com; Fri, 24 Jan 2014 12:02:39 PST
-Received: by mail-bk0-f54.google.com with SMTP id u14so1453961bkz.27
-        for <git@vger.kernel.org>; Fri, 24 Jan 2014 12:02:37 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=5Dovuq7uUiHaA5uHYW8SPsWvV5n4myL5fByuo5WDPMI=;
-        b=lONNP9mWrRJBnRj5/y2g3bROBs8zxZgFXhkJJUNDPiZ1OghGirZv+n4AMAMTvExVKs
-         LkoqQw/wAvjoqFfHCI2u27Tq/whteiF7Gg1t39z9SyvlSs0LpfXUbRlYchTzuBk/jQ5U
-         JUDiYD6nohYyDFbfqmCRETAJ8/zY9GR6iNOWJts87bq84H2pH7VyA554ijdeLsLJTCuB
-         nlv2mMYaztezK6ND3zB/H65vtzE1UZOSv0XeEbTqyIA7d/At3QJOeWIrQB34Yg8CaVr+
-         BHPWzVnvhaD+f6S8dkUbzZXzTgYU+6eqfPX17+08LWSjRqW4EqVr5y3415kmQrLSc7km
-         hhjA==
-X-Received: by 10.204.164.203 with SMTP id f11mr7661697bky.50.1390593757188;
-        Fri, 24 Jan 2014 12:02:37 -0800 (PST)
-X-Gm-Message-State: ALoCoQnkDChdjibFB3nINN+NJNUimS6tf7JVhwGoklZ8xKBbhIPu9j+gjUdWzq2zNKR4+Op87DS/9MnoUAqKZxTD5qJtETiDEdSzWuYQyW7FevYZLfTN7+axZ53/zdigar1UOhPEc6VHUpG5QS37mKEDXFqS8jmxNQ==
-X-Received: by 10.204.164.203 with SMTP id f11mr7661493bky.50.1390593754458;
- Fri, 24 Jan 2014 12:02:34 -0800 (PST)
-Received: by 10.70.68.168 with HTTP; Fri, 24 Jan 2014 12:02:34 -0800 (PST)
-In-Reply-To: <xmqq8uu5rwfk.fsf@gitster.dls.corp.google.com>
+	id S1751562AbaAXUGQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Jan 2014 15:06:16 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58909 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751153AbaAXUGP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Jan 2014 15:06:15 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EBDF8651FD;
+	Fri, 24 Jan 2014 15:06:14 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=umKnRbDUX7myKWTmmIk86E6t1Sw=; b=eQdIba
+	J/WNFtr358vo1xm9LDtAIwTmHX2lhMTtHP0IRve0aI95LsMyFVukpAIsyPGSwRzt
+	G96ReLxCVZoX1pTdT2FtHCjn1E6e5pziHFaZvbnBvGtC39kyufRv11rwl8/F7Tgm
+	i+uW/76KLKZFadlXgt1cB4oY4F8zm9PoofSFc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=IBX5jQHUVGil53InbNUKLJBXlYo9TMfh
+	Si7MSiN+8wF7o8oHNguh9MlzE4d7j8v671Vo9JoJKRm/eIGw7pSnZ2m8nYct0BeN
+	9su7lyn3oU4TwF/OMsTabHEae2mlRtzojr7L95ep5ZqBzEEuCMX6ioAQbajUKGT6
+	Q/TRY1eGD3g=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B3679651FC;
+	Fri, 24 Jan 2014 15:06:14 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id ADC4E651F5;
+	Fri, 24 Jan 2014 15:06:12 -0500 (EST)
+In-Reply-To: <20140124091444.GM10748@mars-attacks.org> (Nicolas Vigier's
+	message of "Fri, 24 Jan 2014 10:14:44 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: F9369638-8532-11E3-97CF-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241027>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241028>
 
-On Fri, Jan 24, 2014 at 2:50 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> It somehow feels wrong to force callers of make_cache_entry() to be
-> so intimate with the implementation details of refresh_cache_ent()
-[snip]
-> option bit CE_MATCH_MISSING_OK that asks it to treat a path that is
-> missing from the working tree as if it is checked out unmodified.
+Nicolas Vigier <boklm@mars-attacks.org> writes:
 
-I came to the same conclusion after reading Elijah's last response.
-My next series revision adds an argument to make_cache_entry to
-specify the refresh flags and honors REFRESH_IGNORE_MISSING.
+> On Fri, 24 Jan 2014, brian m. carlson wrote:
+>
+>> This series was posted to the list some time back, but it fell through
+>> the cracks.  This is a re-send of Nicolas Vigier's work with an
+>> additional patch that adds --gpg-sign to pull as well.  I added my
+>> sign-off to his patches because SubmittingPatches (section (c)) seems to
+>> imply that I should, although I can rebase it out if it's a problem.
+>
+> Thanks!
+>
+> An improvement I was thinking to do on this series but had not time to
+> do yet is to make the '--no-gpg-sign' option disable gpg signing when
+> the commit.gpgsign config option is set to true.
 
-Thanks,
--Brad
+By the way, a configuration variable that has no way of getting
+overriden per invocation should not exist without a very good reason
+("core.bare" is an example of a exception with a good reason---the
+bareness of the repository does not change per command invocation).
+An escape hatch "--no-gpg-sign" is a must-have requirement, not a
+nice-to-have improvement.
+
+Thanks for not forgetting.
