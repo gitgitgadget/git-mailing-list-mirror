@@ -1,82 +1,164 @@
 From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: [PATCH v2 9/9] pull: add the --gpg-sign option.
-Date: Fri, 24 Jan 2014 00:51:06 +0000
-Message-ID: <1390524666-51274-10-git-send-email-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 7/9] rebase: parse options in stuck-long mode
+Date: Fri, 24 Jan 2014 00:51:04 +0000
+Message-ID: <1390524666-51274-8-git-send-email-sandals@crustytoothpaste.net>
 References: <1390524666-51274-1-git-send-email-sandals@crustytoothpaste.net>
 Cc: Nicolas Vigier <boklm@mars-attacks.org>,
 	Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 24 01:51:33 2014
+X-From: git-owner@vger.kernel.org Fri Jan 24 01:51:40 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W6Uzd-0001gn-5Z
-	for gcvg-git-2@plane.gmane.org; Fri, 24 Jan 2014 01:51:33 +0100
+	id 1W6Uzj-0001jP-DV
+	for gcvg-git-2@plane.gmane.org; Fri, 24 Jan 2014 01:51:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755818AbaAXAvZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Jan 2014 19:51:25 -0500
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:51348 "EHLO
+	id S1755832AbaAXAvc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Jan 2014 19:51:32 -0500
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:51342 "EHLO
 	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753836AbaAXAvX (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 23 Jan 2014 19:51:23 -0500
+	by vger.kernel.org with ESMTP id S1752980AbaAXAvV (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 23 Jan 2014 19:51:21 -0500
 Received: from vauxhall.elevennetworks.com (unknown [209.118.237.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 9655B2807A;
-	Fri, 24 Jan 2014 00:51:22 +0000 (UTC)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id D617D28084;
+	Fri, 24 Jan 2014 00:51:20 +0000 (UTC)
 X-Mailer: git-send-email 1.9.rc0.1002.gd081c64.dirty
 In-Reply-To: <1390524666-51274-1-git-send-email-sandals@crustytoothpaste.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240985>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/240986>
 
-git merge already allows us to sign commits, and git rebase has recently
-learned how to do so as well.  Teach git pull to parse the -S/--gpg-sign
-option and pass this along to merge or rebase, as appropriate.
+From: Nicolas Vigier <boklm@mars-attacks.org>
 
+There is no functionnal change. The reason for this change is to be able
+to add a new option taking an optional argument.
+
+Signed-off-by: Nicolas Vigier <boklm@mars-attacks.org>
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- git-pull.sh | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ git-rebase.sh | 50 ++++++++++++++++++++++----------------------------
+ 1 file changed, 22 insertions(+), 28 deletions(-)
 
-diff --git a/git-pull.sh b/git-pull.sh
-index 0a5aa2c..4164dac 100755
---- a/git-pull.sh
-+++ b/git-pull.sh
-@@ -138,6 +138,15 @@ do
- 	--no-verify-signatures)
- 		verify_signatures=--no-verify-signatures
+diff --git a/git-rebase.sh b/git-rebase.sh
+index 3b55211..842d7d4 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -5,7 +5,7 @@
+ 
+ SUBDIRECTORY_OK=Yes
+ OPTIONS_KEEPDASHDASH=
+-OPTIONS_STUCKLONG=
++OPTIONS_STUCKLONG=t
+ OPTIONS_SPEC="\
+ git rebase [-i] [options] [--exec <cmd>] [--onto <newbase>] [<upstream>] [<branch>]
+ git rebase [-i] [options] [--exec <cmd>] [--onto <newbase>] --root [<branch>]
+@@ -237,21 +237,19 @@ do
+ 		test $total_argc -eq 2 || usage
+ 		action=${1##--}
  		;;
-+	--gpg-sign|-S)
-+		gpg_sign_args=-S
-+		;;
-+	--gpg-sign=*)
-+		gpg_sign_args="-S${1#--gpg-sign=}"
-+		;;
-+	-S*)
-+		gpg_sign_args="-S${1#-S}"
-+		;;
- 	--d|--dr|--dry|--dry-|--dry-r|--dry-ru|--dry-run)
- 		dry_run=--dry-run
+-	--onto)
+-		onto="$2"
+-		shift
++	--onto=*)
++		onto="${1#--onto=}"
  		;;
-@@ -305,11 +314,13 @@ merge_name=$(git fmt-merge-msg $log_arg <"$GIT_DIR/FETCH_HEAD") || exit
- case "$rebase" in
- true)
- 	eval="git-rebase $diffstat $strategy_args $merge_args $rebase_args $verbosity"
-+	eval="$eval $gpg_sign_args"
- 	eval="$eval --onto $merge_head ${oldremoteref:-$merge_head}"
- 	;;
- *)
- 	eval="git-merge $diffstat $no_commit $verify_signatures $edit $squash $no_ff $ff_only"
--	eval="$eval  $log_arg $strategy_args $merge_args $verbosity $progress"
-+	eval="$eval $log_arg $strategy_args $merge_args $verbosity $progress"
-+	eval="$eval $gpg_sign_args"
- 	eval="$eval \"\$merge_name\" HEAD $merge_head"
- 	;;
- esac
+-	-x)
+-		cmd="${cmd}exec $2${LF}"
+-		shift
++	--exec=*)
++		cmd="${cmd}exec ${1#--exec=}${LF}"
+ 		;;
+-	-i)
++	--interactive)
+ 		interactive_rebase=explicit
+ 		;;
+-	-k)
++	--keep-empty)
+ 		keep_empty=yes
+ 		;;
+-	-p)
++	--preserve-merges)
+ 		preserve_merges=t
+ 		test -z "$interactive_rebase" && interactive_rebase=implied
+ 		;;
+@@ -267,21 +265,19 @@ do
+ 	--no-fork-point)
+ 		fork_point=
+ 		;;
+-	-m)
++	--merge)
+ 		do_merge=t
+ 		;;
+-	-X)
+-		shift
+-		strategy_opts="$strategy_opts $(git rev-parse --sq-quote "--$1")"
++	--strategy-option=*)
++		strategy_opts="$strategy_opts $(git rev-parse --sq-quote "--${1#--strategy-option=}")"
+ 		do_merge=t
+ 		test -z "$strategy" && strategy=recursive
+ 		;;
+-	-s)
+-		shift
+-		strategy="$1"
++	--strategy=*)
++		strategy="${1#--strategy=}"
+ 		do_merge=t
+ 		;;
+-	-n)
++	--no-stat)
+ 		diffstat=
+ 		;;
+ 	--stat)
+@@ -290,21 +286,20 @@ do
+ 	--autostash)
+ 		autostash=true
+ 		;;
+-	-v)
++	--verbose)
+ 		verbose=t
+ 		diffstat=t
+ 		GIT_QUIET=
+ 		;;
+-	-q)
++	--quiet)
+ 		GIT_QUIET=t
+ 		git_am_opt="$git_am_opt -q"
+ 		verbose=
+ 		diffstat=
+ 		;;
+-	--whitespace)
+-		shift
+-		git_am_opt="$git_am_opt --whitespace=$1"
+-		case "$1" in
++	--whitespace=*)
++		git_am_opt="$git_am_opt --whitespace=${1#--whitespace=}"
++		case "${1#--whitespace=}" in
+ 		fix|strip)
+ 			force_rebase=t
+ 			;;
+@@ -317,14 +312,13 @@ do
+ 		git_am_opt="$git_am_opt $1"
+ 		force_rebase=t
+ 		;;
+-	-C)
+-		shift
+-		git_am_opt="$git_am_opt -C$1"
++	-C*)
++		git_am_opt="$git_am_opt $1"
+ 		;;
+ 	--root)
+ 		rebase_root=t
+ 		;;
+-	-f|--no-ff)
++	--force-rebase|--no-ff)
+ 		force_rebase=t
+ 		;;
+ 	--rerere-autoupdate|--no-rerere-autoupdate)
 -- 
 1.9.rc0.1002.gd081c64.dirty
