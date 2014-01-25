@@ -1,90 +1,100 @@
 From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: 'git diff' command doesn't honor utf8 symbol boundaries, and
- doesn't use actual terminal width
-Date: Sat, 25 Jan 2014 11:02:12 +0700
-Message-ID: <CACsJy8Cgz+18F85408vKL-pBHPOLjxJjsbTF+pL4D2k=DbU0-g@mail.gmail.com>
-References: <52E330CC.10400@rawbw.com>
+Subject: Re: [PATCH v2 6/9] Pass directory indicator to match_pathspec_item()
+Date: Sat, 25 Jan 2014 11:24:11 +0700
+Message-ID: <CACsJy8Aj8EnDD5Qk=VStpDXTAV-WOh_utmiY+qXGyCwoXpQHog@mail.gmail.com>
+References: <1390483326-32258-1-git-send-email-pclouds@gmail.com>
+ <1390570836-20394-1-git-send-email-pclouds@gmail.com> <1390570836-20394-7-git-send-email-pclouds@gmail.com>
+ <CAPig+cRW5Fz62Qk22qiUo85jmqVK0Hvbb6v2GxK7V+wS+S8_qw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Yuri <yuri@rawbw.com>
-X-From: git-owner@vger.kernel.org Sat Jan 25 05:03:03 2014
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	pawel.sikora@agmk.net, Jens Lehmann <Jens.Lehmann@web.de>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Sat Jan 25 05:24:57 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W6uST-0006gm-NR
-	for gcvg-git-2@plane.gmane.org; Sat, 25 Jan 2014 05:03:02 +0100
+	id 1W6und-0005NP-0i
+	for gcvg-git-2@plane.gmane.org; Sat, 25 Jan 2014 05:24:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751269AbaAYECp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 24 Jan 2014 23:02:45 -0500
-Received: from mail-qa0-f43.google.com ([209.85.216.43]:44816 "EHLO
-	mail-qa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751082AbaAYECo convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 24 Jan 2014 23:02:44 -0500
-Received: by mail-qa0-f43.google.com with SMTP id o15so4863898qap.16
-        for <git@vger.kernel.org>; Fri, 24 Jan 2014 20:02:43 -0800 (PST)
+	id S1751178AbaAYEYm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 24 Jan 2014 23:24:42 -0500
+Received: from mail-qa0-f52.google.com ([209.85.216.52]:54937 "EHLO
+	mail-qa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751082AbaAYEYm convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 24 Jan 2014 23:24:42 -0500
+Received: by mail-qa0-f52.google.com with SMTP id j15so4982117qaq.11
+        for <git@vger.kernel.org>; Fri, 24 Jan 2014 20:24:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type:content-transfer-encoding;
-        bh=uaEI1sCI9RxUjp+kk8DbDOmfbXg1iCZVaPeHZwoZuEg=;
-        b=yexh814ldw+JoIwf9QYm7eZO9sVmjSLSCiTTX/td1vK1EMV4tkH0VI7LYsXvTZkLug
-         ngFhIdyfm83Zu+3ioh0K3oxn0meF/NC9uAE+C0YbimonbyFlR0Y6abM/rh4GizAO+XWW
-         owKtp5rILgZIXPscnUith2qgBkhgVzYBrBM32wgMQUjlPStpSB/REo38OoGKQquzBLwM
-         VxL8w3yt9OYrSsSHUwgKsNGghBxQsC0HaqXI/IcBPp47yT326CG7IbAO8L8UB2S79Izk
-         f0VyS327ndwYjhYJ7Q09NeJyVmoigBhiFoWFVxcJPzKdB4CABmF+Uj241kTFTGCBABz/
-         cJqA==
-X-Received: by 10.140.96.17 with SMTP id j17mr2521858qge.112.1390622563866;
- Fri, 24 Jan 2014 20:02:43 -0800 (PST)
-Received: by 10.96.136.98 with HTTP; Fri, 24 Jan 2014 20:02:12 -0800 (PST)
-In-Reply-To: <52E330CC.10400@rawbw.com>
+        bh=HHk7CGfVu6GGfKJkYbP/T2sm32/H1aNzBfsezZt77dk=;
+        b=GM1g9T3rqbHxoyqpPYEbzTxHk1ksERCQtgIlQrbZrhZEf2I/ClOQCYTQ6hZwQwfkCR
+         XE9HfGFaoteijNZwyZVjO//cOXtXJgBKIoPQyLqk5zs9zetGZpui8EVIfVdoWwDi4EHw
+         sTqubG7LxaFkQ8df6dAEbyX8kXge0OZxOC5yyBfZY38hUvlWwzk75iQZ8p2o4TXU2Dyo
+         yyKMHH3tnXwHWb+g9kU/9gAB6lJWvRhwgjAvmGSgcVc1n5jihZVzPCuPgPpl2/ljcu19
+         MaVCZKd+QyBnPeGtV9cEfqNjvQ9QOiQRkRE1eO5aWTePv2Ug4RUTQJT7T7m9vVmQQ6uD
+         PCSw==
+X-Received: by 10.229.10.197 with SMTP id q5mr25792682qcq.15.1390623881362;
+ Fri, 24 Jan 2014 20:24:41 -0800 (PST)
+Received: by 10.96.136.98 with HTTP; Fri, 24 Jan 2014 20:24:11 -0800 (PST)
+In-Reply-To: <CAPig+cRW5Fz62Qk22qiUo85jmqVK0Hvbb6v2GxK7V+wS+S8_qw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241060>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241061>
 
-On Sat, Jan 25, 2014 at 10:34 AM, Yuri <yuri@rawbw.com> wrote:
-> The fragment of 'git diff' output looks like this:
-> - <translation>=D0=9E=D1=88=D0=B8=D0=B1=D0=BA=D0=B0: =D0=B0=D0=B4=D1=80=
-=D0=B5=D1=81 %1 =D1=81=D0=BE=D0=B4=D0=B5=D1=80=D0=B6=D0=B8=D1=82 =D0=B7=
-=D0=B0=D0=BF=D1=80=D0=B5=D1=89=D0=B5=D0=BD=D0=BD=D1=8B=D0=B5 =D1=81=D0=B8=
-=D0=BC=D0=B2=D0=BE=D0=BB=D1=8B. =D0=9F=D0=BE=D0=B6=D0=B0=D0=BB=D1=83=D0=
-=B9=D1=81=D1=82=D0=B0,
-> =D0=BF=D0=B5=D1=80=D0=B5=D0=BF=D1=80=D0=BE=EF=BF=BD
-> + <translation>=D0=9E=D1=88=D0=B8=D0=B1=D0=BA=D0=B0: =D0=B0=D0=B4=D1=80=
-=D0=B5=D1=81 %1 =D1=81=D0=BE=D0=B4=D0=B5=D1=80=D0=B6=D0=B8=D1=82 =D0=B7=
-=D0=B0=D0=BF=D1=80=D0=B5=D1=89=D1=91=D0=BD=D0=BD=D1=8B=D0=B5 =D1=81=D0=B8=
-=D0=BC=D0=B2=D0=BE=D0=BB=D1=8B. =D0=9F=D0=BE=D0=B6=D0=B0=D0=BB=D1=83=D0=
-=B9=D1=81=D1=82=D0=B0,
-> =D0=BF=D0=B5=D1=80=D0=B5=D0=BF=D1=80=D0=BE=EF=BF=BD
->
-> Two issues here:
-> 1. Cyrilic text in utf8 got truncated not at utf8 boundary, causing t=
-his
-> garbage symbol in the end
-> 2. Truncation is done at somewhat ~70% of the actual screen width. gi=
-t could
-> go all the way to the whole screen with, but it didn't. Shrinking ter=
-minal
-> width causes the output truncation limit to shrink in the same propor=
-tion.
-> So some bad decision about truncation size is made somewhere in 'git =
-diff'
-> command.
->
-> Suggested behavior:
-> 1. git should respect utf8, and in case of truncation it should add =E2=
-=80=A6
-> symbol.
-> 2. truncation algorithm should read current terminal width and trunca=
-te at
-> width-1 length to allow for the above-mentioned symbol
+On Sat, Jan 25, 2014 at 4:22 AM, Eric Sunshine <sunshine@sunshineco.com=
+> wrote:
+> On Fri, Jan 24, 2014 at 8:40 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8D=
+c Duy <pclouds@gmail.com> wrote:
+>> diff --git a/t/t4010-diff-pathspec.sh b/t/t4010-diff-pathspec.sh
+>> index af5134b..167af53 100755
+>> --- a/t/t4010-diff-pathspec.sh
+>> +++ b/t/t4010-diff-pathspec.sh
+>> @@ -110,4 +110,21 @@ test_expect_success 'diff-tree -r with wildcard=
+' '
+>>         test_cmp expected result
+>>  '
+>>
+>> +test_expect_success 'setup submodules' '
+>> +       test_tick &&
 
-I don't think git diff truncates its output (it does truncate @@
-lines, but not the real diff). Perhaps your pager did that?
+Also the test_tick here. I thought I would need to match SHA-1 but I
+did not and still forgot to take this line out.
+
+>> +       git init submod &&
+>> +       ( cd submod && test_commit first; ) &&
+>
+> Unnecessary semicolon might confuse the reader into thinking somethin=
+g
+> unusual is going on here.
+>
+>> +       git add submod &&
+>> +       git commit -m first &&
+>> +       ( cd submod && test_commit second; ) &&
+>
+> Ditto.
+>
+>> +       git add submod &&
+>> +       git commit -m second
+>> +'
+>> +
+>> +test_expect_success 'diff-cache ignores trailing slash on submodule=
+ path' '
+>> +       git diff --name-only HEAD^ submod >expect &&
+>> +       git diff --name-only HEAD^ submod/ >actual &&
+>> +       test_cmp expect actual
+>> +'
+>> +
+>>  test_done
+
+
+
 --=20
 Duy
