@@ -1,87 +1,92 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: [PATCH] Makefile: remove redundant object in git-http{fetch,push}
-Date: Sat, 25 Jan 2014 13:11:44 +0000
-Message-ID: <9f32a674457f4016136fa4e214921e00a31032bd.1390655504.git.john@keeping.me.uk>
-Cc: John Keeping <john@keeping.me.uk>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 25 14:12:17 2014
+From: Markus Trippelsdorf <markus@trippelsdorf.de>
+Subject: Re: Globbing for ignored branches?
+Date: Sat, 25 Jan 2014 15:15:42 +0100
+Message-ID: <20140125141542.GA402@x4>
+References: <0C723FEB5B4E5642B25B451BA57E273075148284@S1P5DAG3C.EXCHPROD.USA.NET>
+ <20140124170739.GC396@x4>
+ <20140124170909.GD396@x4>
+ <20140124182341.GB8202@sigill.intra.peff.net>
+ <20140124183222.GE396@x4>
+ <20140124185538.GA9836@sigill.intra.peff.net>
+ <xmqq4n4trvzj.fsf@gitster.dls.corp.google.com>
+ <20140124204825.GA17167@sigill.intra.peff.net>
+ <xmqqeh3xqe91.fsf@gitster.dls.corp.google.com>
+ <20140125013433.GA22336@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jim Garrison <jim.garrison@nwea.org>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Jan 25 15:15:50 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W7321-00043R-1X
-	for gcvg-git-2@plane.gmane.org; Sat, 25 Jan 2014 14:12:17 +0100
+	id 1W741V-0004AD-Rq
+	for gcvg-git-2@plane.gmane.org; Sat, 25 Jan 2014 15:15:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751441AbaAYNMN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 25 Jan 2014 08:12:13 -0500
-Received: from coyote.aluminati.org ([72.9.247.114]:57808 "EHLO
-	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750932AbaAYNMM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Jan 2014 08:12:12 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by coyote.aluminati.org (Postfix) with ESMTP id 954DA19805D;
-	Sat, 25 Jan 2014 13:12:11 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -1
-X-Spam-Level: 
-X-Spam-Status: No, score=-1 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1] autolearn=disabled
-Received: from coyote.aluminati.org ([127.0.0.1])
-	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id qX8AJqJNrkOp; Sat, 25 Jan 2014 13:12:11 +0000 (GMT)
-Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
-	by coyote.aluminati.org (Postfix) with ESMTP id 4F89619805C;
-	Sat, 25 Jan 2014 13:12:11 +0000 (GMT)
-Received: from localhost (localhost [127.0.0.1])
-	by pichi.aluminati.org (Postfix) with ESMTP id 482BE161E3A8;
-	Sat, 25 Jan 2014 13:12:11 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at aluminati.org
-Received: from pichi.aluminati.org ([127.0.0.1])
-	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id UGIMyBTRhsdh; Sat, 25 Jan 2014 13:12:10 +0000 (GMT)
-Received: from river.lan (banza.aluminati.org [10.0.7.182])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by pichi.aluminati.org (Postfix) with ESMTPSA id DE866161E1A5;
-	Sat, 25 Jan 2014 13:12:07 +0000 (GMT)
-X-Mailer: git-send-email 1.9.rc0.187.g6292fff
+	id S1751558AbaAYOPp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 25 Jan 2014 09:15:45 -0500
+Received: from ud10.udmedia.de ([194.117.254.50]:59366 "EHLO
+	mail.ud10.udmedia.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751284AbaAYOPo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Jan 2014 09:15:44 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=simple; d=mail.ud10.udmedia.de; h=
+	date:from:to:cc:subject:message-id:references:mime-version
+	:content-type:in-reply-to; s=beta; bh=c3+rJB2cTf45yF8ad75oqT8DBr
+	ikhoC6qduximjdmSE=; b=hdl0u6H1Q3V0XqdjAxxCdW8g1H7LEkLhJSucJ+xWH4
+	49ih4dWaKAOJtGC1MmE1dsxGpEVylHUkipzIgKklEuvJ7p138Mg7UIBmN1uQfCs3
+	/jKRIxFmai4ZpPuLxvxVJwn/Lytpire3mOnM2Sf2rrKGjNpLhDCrbBtNB4O09pSi
+	8=
+Received: (qmail 9522 invoked from network); 25 Jan 2014 15:15:43 +0100
+Received: from unknown (HELO x4) (ud10?360p3@91.64.96.185)
+  by mail.ud10.udmedia.de with ESMTPSA (DHE-RSA-AES256-SHA encrypted, authenticated); 25 Jan 2014 15:15:43 +0100
+Content-Disposition: inline
+In-Reply-To: <20140125013433.GA22336@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241067>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241068>
 
-revision.o is included in libgit.a which is in $(GITLIBS), so we don't
-need to include is separately.  This fixes compilation with
-"-fwhole-program" which otherwise fails with messages like this:
+On 2014.01.24 at 20:34 -0500, Jeff King wrote:
+> On Fri, Jan 24, 2014 at 01:08:42PM -0800, Junio C Hamano wrote:
+> 
+> > Not really.  You do not have to view it as "'not refs/heads/foo' is
+> > affecting the previous '+refs/heads/*:refs/remotes/origin/*'".
+> > 
+> > You can think of two refspecs "refs/heads/foo refs/heads/bar" are
+> > both affecting the "end result"; so far we only had a single way for
+> > multiple refspecs to affect the end result and that was a "union".
+> > Introducing "subtract" as another mode of combining is not too bad,
+> > I would think, at the conceptual level.
+> 
+> > I tend to agree that "refs/heads/foo:" is being too cute and may be
+> > confusing, at least if it will be the only way to express this in
+> > the end-user-facing UI.  Even some people were confused enough on a
+> > very sensible "push nothing to ref means deletion" to make us add
+> > another explicit way, "push --delete", to ask for the same thing.
+> 
+> Agreed. I went with "^refs/heads/master" in the patch below, but I am
+> open to other suggestions.
 
-  libgit.a(revision.o): In function `mark_tree_uninteresting':
-  /home/john/src/git/revision.c:108: multiple definition of `mark_tree_uninteresting'
-  /tmp/ccKQRkZV.ltrans2.ltrans.o:/home/john/src/git/revision.c:108: first defined here
+Many thanks for the patch. It seems to work as advertised, but only if
+the negative refspec appears on a separate line. For example:
 
-Signed-off-by: John Keeping <john@keeping.me.uk>
----
- Makefile | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+[remote "origin"]
+        url = git://gcc.gnu.org/git/gcc.git
+        fetch = +refs/heads/*:refs/remotes/origin/*
+        fetch = ^refs/remotes/hjl
 
-diff --git a/Makefile b/Makefile
-index b4af1e2..b3a408d 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2050,10 +2050,10 @@ git-imap-send$X: imap-send.o GIT-LDFLAGS $(GITLIBS)
- 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
- 		$(LIBS) $(OPENSSL_LINK) $(OPENSSL_LIBSSL) $(LIB_4_CRYPTO)
- 
--git-http-fetch$X: revision.o http.o http-walker.o http-fetch.o GIT-LDFLAGS $(GITLIBS)
-+git-http-fetch$X: http.o http-walker.o http-fetch.o GIT-LDFLAGS $(GITLIBS)
- 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
- 		$(LIBS) $(CURL_LIBCURL)
--git-http-push$X: revision.o http.o http-push.o GIT-LDFLAGS $(GITLIBS)
-+git-http-push$X: http.o http-push.o GIT-LDFLAGS $(GITLIBS)
- 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
- 		$(LIBS) $(CURL_LIBCURL) $(EXPAT_LIBEXPAT)
- 
+works fine, but:
+
+[remote "origin"]
+        url = git://gcc.gnu.org/git/gcc.git
+        fetch = +refs/heads/*:refs/remotes/origin/* ^refs/remotes/hjl 
+
+doesn't. (I think this happens because bad_ref_char in refs.c checks for '^'.)
+
 -- 
-1.9.rc0.187.g6292fff
+Markus
