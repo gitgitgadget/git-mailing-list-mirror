@@ -1,7 +1,7 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v3 15/17] trailer: set author and committer env variables
-Date: Sun, 26 Jan 2014 18:00:08 +0100
-Message-ID: <20140126170011.24291.63913.chriscool@tuxfamily.org>
+Subject: [PATCH v3 10/17] trailer: if no input file is passed, read from stdin
+Date: Sun, 26 Jan 2014 18:00:03 +0100
+Message-ID: <20140126170011.24291.56679.chriscool@tuxfamily.org>
 References: <20140126165018.24291.47716.chriscool@tuxfamily.org>
 Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
 	Josh Triplett <josh@joshtriplett.org>,
@@ -10,106 +10,104 @@ Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
 	Dan Carpenter <dan.carpenter@oracle.com>,
 	Greg Kroah-Hartman <greg@kroah.com>, Jeff King <peff@peff.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jan 26 18:24:35 2014
+X-From: git-owner@vger.kernel.org Sun Jan 26 18:24:42 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W7TRi-0004W9-RK
-	for gcvg-git-2@plane.gmane.org; Sun, 26 Jan 2014 18:24:35 +0100
+	id 1W7TRq-0004Yr-0M
+	for gcvg-git-2@plane.gmane.org; Sun, 26 Jan 2014 18:24:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753164AbaAZRYY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Jan 2014 12:24:24 -0500
-Received: from mail-3y.bbox.fr ([194.158.98.45]:65157 "EHLO mail-3y.bbox.fr"
+	id S1753186AbaAZRYe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Jan 2014 12:24:34 -0500
+Received: from mail-1y.bbox.fr ([194.158.98.14]:43157 "EHLO mail-1y.bbox.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753050AbaAZRYE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Jan 2014 12:24:04 -0500
+	id S1752937AbaAZRYC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Jan 2014 12:24:02 -0500
 Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-3y.bbox.fr (Postfix) with ESMTP id 6F55361;
-	Sun, 26 Jan 2014 18:24:03 +0100 (CET)
-X-git-sha1: a8a3fa426ee26cdddb891fea941c714ce594e226 
+	by mail-1y.bbox.fr (Postfix) with ESMTP id 85C8F7F;
+	Sun, 26 Jan 2014 18:24:00 +0100 (CET)
+X-git-sha1: 46367b72a31b8491e54dfcc1323d0cb7d46e8773 
 X-Mailer: git-mail-commits v0.5.2
 In-Reply-To: <20140126165018.24291.47716.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241102>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241103>
+
+It is simpler and more natural if the "git interpret-trailers"
+is made a filter as its output already goes to sdtout.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- trailer.c | 30 +++++++++++++++++++++++++++++-
- 1 file changed, 29 insertions(+), 1 deletion(-)
+ builtin/interpret-trailers.c  |  2 +-
+ t/t7513-interpret-trailers.sh |  7 +++++++
+ trailer.c                     | 15 +++++++++------
+ 3 files changed, 17 insertions(+), 7 deletions(-)
 
+diff --git a/builtin/interpret-trailers.c b/builtin/interpret-trailers.c
+index f79bffa..37237f7 100644
+--- a/builtin/interpret-trailers.c
++++ b/builtin/interpret-trailers.c
+@@ -23,7 +23,7 @@ int cmd_interpret_trailers(int argc, const char **argv, const char *prefix)
+ 
+ 	struct option options[] = {
+ 		OPT_BOOL(0, "trim-empty", &trim_empty, N_("trim empty trailers")),
+-		OPT_FILENAME(0, "infile", &infile, N_("use message from file")),
++		OPT_FILENAME(0, "infile", &infile, N_("use message from file, instead of stdin")),
+ 		OPT_END()
+ 	};
+ 
+diff --git a/t/t7513-interpret-trailers.sh b/t/t7513-interpret-trailers.sh
+index 8be333c..f5ef81f 100755
+--- a/t/t7513-interpret-trailers.sh
++++ b/t/t7513-interpret-trailers.sh
+@@ -205,4 +205,11 @@ test_expect_success 'using "ifMissing = doNothing"' '
+ 	test_cmp expected actual
+ '
+ 
++test_expect_success 'with input from stdin' '
++	cat complex_message_body >expected &&
++	printf "Bug #42\nFixes: \nAcked-by= \nAcked-by= Junio\nAcked-by= Peff\nReviewed-by: \nSigned-off-by: \n" >>expected &&
++	git interpret-trailers "review:" "fix=53" "cc=Linus" "ack: Junio" "fix=22" "bug: 42" "ack: Peff" < complex_message >actual &&
++	test_cmp expected actual
++'
++
+ test_done
 diff --git a/trailer.c b/trailer.c
-index dc81a01..6c2a2b9 100644
+index 2678b3e..d581371 100644
 --- a/trailer.c
 +++ b/trailer.c
-@@ -1,5 +1,6 @@
- #include "cache.h"
- #include "run-command.h"
-+#include "argv-array.h"
- /*
-  * Copyright (c) 2013 Christian Couder <chriscool@tuxfamily.org>
-  */
-@@ -415,14 +416,40 @@ static int read_from_command(struct child_process *cp, struct strbuf *buf)
- 	return 0;
- }
- 
-+static void setup_ac_env(struct argv_array *env, const char *ac_name, const char *ac_mail, const char *(*read)(int))
-+{
-+	if (!getenv(ac_name) || !getenv(ac_mail)) {
-+		struct ident_split ident;
-+		const char *namebuf, *mailbuf;
-+		int namelen, maillen;
-+		const char *ac_info = read(IDENT_NO_DATE);
-+
-+		if (split_ident_line(&ident, ac_info, strlen(ac_info)))
-+			return;
-+
-+		namelen = ident.name_end - ident.name_begin;
-+		namebuf = ident.name_begin;
-+
-+		maillen = ident.mail_end - ident.mail_begin;
-+		mailbuf = ident.mail_begin;
-+
-+		argv_array_pushf(env, "%s=%.*s", ac_name, namelen, namebuf);
-+		argv_array_pushf(env, "%s=%.*s", ac_mail, maillen, mailbuf);
-+	}
-+}
-+
- static const char *apply_command(const char *command, const char *arg)
+@@ -465,8 +465,13 @@ static struct strbuf **read_input_file(const char *infile)
  {
-+	struct argv_array env = ARGV_ARRAY_INIT;
- 	struct strbuf cmd = STRBUF_INIT;
- 	struct strbuf buf = STRBUF_INIT;
- 	struct child_process cp;
- 	const char *argv[] = {NULL, NULL};
- 	const char *result = "";
+ 	struct strbuf sb = STRBUF_INIT;
  
-+	setup_ac_env(&env, "GIT_AUTHOR_NAME", "GIT_AUTHOR_EMAIL", git_author_info);
-+	setup_ac_env(&env, "GIT_COMMITTER_NAME", "GIT_COMMITTER_EMAIL", git_committer_info);
-+
- 	strbuf_addstr(&cmd, command);
- 	if (arg)
- 		strbuf_replace(&cmd, TRAILER_ARG_STRING, arg);
-@@ -430,7 +457,7 @@ static const char *apply_command(const char *command, const char *arg)
- 	argv[0] = cmd.buf;
- 	memset(&cp, 0, sizeof(cp));
- 	cp.argv = argv;
--	cp.env = local_repo_env;
-+	cp.env = env.argv;
- 	cp.no_stdin = 1;
- 	cp.out = -1;
- 	cp.use_shell = 1;
-@@ -441,6 +468,7 @@ static const char *apply_command(const char *command, const char *arg)
- 		result = strbuf_detach(&buf, NULL);
+-	if (strbuf_read_file(&sb, infile, 0) < 0)
+-		die_errno(_("could not read input file '%s'"), infile);
++	if (infile) {
++		if (strbuf_read_file(&sb, infile, 0) < 0)
++			die_errno(_("could not read input file '%s'"), infile);
++	} else {
++		if (strbuf_read(&sb, fileno(stdin), 0) < 0)
++			die_errno(_("could not read from stdin"));
++	}
  
- 	strbuf_release(&cmd);
-+	argv_array_clear(&env);
- 	return result;
+ 	return strbuf_split(&sb, '\n');
  }
+@@ -531,10 +536,8 @@ void process_trailers(const char *infile, int trim_empty, int argc, const char *
+ 
+ 	git_config(git_trailer_config, NULL);
+ 
+-	/* Print the non trailer part of infile */
+-	if (infile) {
+-		process_input_file(infile, &infile_tok_first, &infile_tok_last);
+-	}
++	/* Print the non trailer part of infile (or stdin if infile is NULL) */
++	process_input_file(infile, &infile_tok_first, &infile_tok_last);
+ 
+ 	arg_tok_first = process_command_line_args(argc, argv);
  
 -- 
 1.8.5.2.201.gacc5987
