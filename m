@@ -1,78 +1,112 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v2 04/16] trailer: process command line trailer
- arguments
-Date: Sun, 26 Jan 2014 18:28:41 +0100 (CET)
-Message-ID: <20140126.182841.788650091041834492.chriscool@tuxfamily.org>
-References: <20140119085355.2734.58646.chriscool@tuxfamily.org>
-	<xmqqd2jlt0ua.fsf@gitster.dls.corp.google.com>
-	<xmqq4n4xt0dv.fsf@gitster.dls.corp.google.com>
+From: "W. Trevor King" <wking@tremily.us>
+Subject: [PATCH v5 0/4] submodule: Local branch creation in module_clone
+Date: Sun, 26 Jan 2014 12:45:12 -0800
+Message-ID: <cover.1390768736.git.wking@tremily.us>
+References: <20140117023746.GJ7078@odin.tremily.us>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, johan@herland.net, josh@joshtriplett.org,
-	tr@thomasrast.ch, mhagger@alum.mit.edu, dan.carpenter@oracle.com,
-	greg@kroah.com, peff@peff.net
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sun Jan 26 18:28:48 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jens Lehmann <Jens.Lehmann@web.de>,
+	Francesco Pretto <ceztko@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Philip Oakley <philipoakley@iee.org>,
+	John Keeping <john@keeping.me.uk>,
+	"W. Trevor King" <wking@tremily.us>
+To: Git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Jan 26 21:46:20 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W7TVn-0006GQ-PV
-	for gcvg-git-2@plane.gmane.org; Sun, 26 Jan 2014 18:28:48 +0100
+	id 1W7Way-0002Yc-3d
+	for gcvg-git-2@plane.gmane.org; Sun, 26 Jan 2014 21:46:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752518AbaAZR2n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Jan 2014 12:28:43 -0500
-Received: from mail-1y.bbox.fr ([194.158.98.14]:44236 "EHLO mail-1y.bbox.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752225AbaAZR2m (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Jan 2014 12:28:42 -0500
-Received: from localhost (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-1y.bbox.fr (Postfix) with ESMTP id D428566;
-	Sun, 26 Jan 2014 18:28:41 +0100 (CET)
-In-Reply-To: <xmqq4n4xt0dv.fsf@gitster.dls.corp.google.com>
-X-Mailer: Mew version 6.3 on Emacs 23.3 / Mule 6.0 (HANACHIRUSATO)
+	id S1753277AbaAZUqM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 26 Jan 2014 15:46:12 -0500
+Received: from qmta15.westchester.pa.mail.comcast.net ([76.96.59.228]:40904
+	"EHLO qmta15.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753215AbaAZUqK (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 26 Jan 2014 15:46:10 -0500
+Received: from omta20.westchester.pa.mail.comcast.net ([76.96.62.71])
+	by qmta15.westchester.pa.mail.comcast.net with comcast
+	id Jjm81n0011YDfWL5Fkm9ca; Sun, 26 Jan 2014 20:46:09 +0000
+Received: from odin.tremily.us ([24.18.63.50])
+	by omta20.westchester.pa.mail.comcast.net with comcast
+	id Jkm61n00k152l3L3gkm7TN; Sun, 26 Jan 2014 20:46:09 +0000
+Received: from mjolnir.tremily.us (unknown [192.168.0.141])
+	by odin.tremily.us (Postfix) with ESMTPS id C8F89F1C335;
+	Sun, 26 Jan 2014 12:46:05 -0800 (PST)
+Received: (nullmailer pid 2836 invoked by uid 1000);
+	Sun, 26 Jan 2014 20:45:23 -0000
+X-Mailer: git-send-email 1.8.5.2.8.g0f6c0d1
+In-Reply-To: <20140117023746.GJ7078@odin.tremily.us>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
+	s=q20121106; t=1390769169;
+	bh=wezSCohjI1tmA7hm/ay4HJsf3VuJg0avCaAiPHrJ5Oo=;
+	h=Received:Received:Received:Received:From:To:Subject:Date:
+	 Message-Id:MIME-Version:Content-Type;
+	b=R648dhWhV6zkSqrrhA2/2noC7qCCZs2qy55kO8wVZwkHJc4sQ7/7oEjkIgtyA8J68
+	 FEbUpVuuCY+9VIHUlPUeWym3ktBFwba1y5k32c+kGyeqyj1E8/T9c3pVI5KAbISwy0
+	 Gn9hSagpSJ2xZEusYqzAang2+q8KbJJCwkcFgZMk+3Jx3lb8v5nt4OdsMficqH4tIp
+	 JLyKu6aEgYuGhTHGHsmVT8KXsymfWRdhjmSwivzMVJzdV+p0S5QENDMOviG/qqZ7UV
+	 hHxTWHs465YbKizFXlV34RvhhJUyDeo3xxhWChCkWAo7Pq5pWD0D+zwNg91XpAN3lN
+	 Cd0QqXvYwxhHw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241111>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241112>
 
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
->>> +static struct trailer_item *create_trailer_item(const char *string)
->>> +{
->>> +	struct strbuf tok = STRBUF_INIT;
->>> +	struct strbuf val = STRBUF_INIT;
->>> +	struct trailer_item *new;
->>> +
->>> +	parse_trailer(&tok, &val, string);
->>> +
->>> +	int tok_alnum_len = alnum_len(tok.buf, tok.len);
->>
->> decl-after-stmt.
->>
->>> +
->>> +	/* Lookup if the token matches something in the config */
->>> +	struct trailer_item *item;
-> 
-> ditto.
-> 
->>> +	for (item = first_conf_item; item; item = item->next)
->>> +	{
-> 
-> Style.
+Changes since v4:
 
-The decl-after-stmt and style problems are fixed in the new v3 series
-I just sent.
+In git-submodule.sh:
 
-> I wonder if Cc list is being a bit too wide for this series, by the
-> way.
+* Explicitly set an empty $local_branch in cmd_add if $branch is empty
+  [1].
+* Restore die-early checking for invalid $update_module [2].  This
+  check is now outside the load-from-config branch, ensuring we have a
+  valid update_module, regardless of how it was set.
 
-I included only people who where part of the discussions at some
-point. I guess that if they are not interested anymore they can ask to
-be removed from Cc.
+In Documentation/git-submodule.txt:
 
-Thanks,
-Christian.
+* Fix =E2=80=9Cbut be=E2=80=9D =E2=86=92 =E2=80=9Cbut can be=E2=80=9D [=
+3].
+* Fix =E2=80=9Ccheckout=E2=80=9D =E2=86=92 =E2=80=9C--checkout=E2=80=9D=
+ [4].
+* New text on why you'd use --remote [5] (new commit #4).
+
+In Documentation/git-submodule.txt and Documentation/gitmodules.txt:
+
+* Use backticks (instead of single quotes) for command line options
+  [6].
+
+I also squashed the implementation, testing fixes, new tests, and
+documentation for the new local_branch stuff (v4's #3, #4, #5, and #6)
+into a single commit (v5's #3) [7].
+
+[1]: http://article.gmane.org/gmane.comp.version-control.git/240524
+[2]: http://article.gmane.org/gmane.comp.version-control.git/240522
+[3]: http://article.gmane.org/gmane.comp.version-control.git/240543
+[4]: http://article.gmane.org/gmane.comp.version-control.git/240531
+[5]: http://article.gmane.org/gmane.comp.version-control.git/240529
+[6]: http://article.gmane.org/gmane.comp.version-control.git/240536
+[7]: http://article.gmane.org/gmane.comp.version-control.git/240530
+
+W. Trevor King (4):
+  submodule: Make 'checkout' update_module explicit
+  submodule: Document module_clone arguments in comments
+  submodule: Explicit local branch creation in module_clone
+  Documentation: Describe 'submodule update --remote' use case
+
+ Documentation/git-submodule.txt | 46 ++++++++++++++++-----
+ Documentation/gitmodules.txt    |  4 ++
+ git-submodule.sh                | 89 ++++++++++++++++++++++++++-------=
+--------
+ t/t7406-submodule-update.sh     | 39 +++++++++++++++++-
+ 4 files changed, 136 insertions(+), 42 deletions(-)
+
+--=20
+1.8.5.2.8.g0f6c0d1
