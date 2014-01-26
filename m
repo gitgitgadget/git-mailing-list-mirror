@@ -1,59 +1,61 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH] Added get sendmail from .mailrc
-Date: Sun, 26 Jan 2014 09:17:09 +0000
-Message-ID: <20140126091709.GA31073@dcvr.yhbt.net>
-References: <1390643210-5748-1-git-send-email-brilliantov@inbox.ru>
- <20140125223721.GA2684@dcvr.yhbt.net>
- <20140126073438.GA3858@kirill.netbynet.ru>
+From: Thomas Ackermann <th.acker@arcor.de>
+Subject: [PATCH v2 0/2] create HTML for http-protocol.txt
+Date: Sun, 26 Jan 2014 13:52:03 +0100 (CET)
+Message-ID: <735028458.1102653.1390740723616.JavaMail.ngmail@webmail18.arcor-online.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: gitster@pobox.com, spearce@spearce.org, th.acker@arcor.de
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 26 10:17:21 2014
+X-From: git-owner@vger.kernel.org Sun Jan 26 13:52:14 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W7LqD-0002n4-Ce
-	for gcvg-git-2@plane.gmane.org; Sun, 26 Jan 2014 10:17:21 +0100
+	id 1W7PC8-0001qO-0n
+	for gcvg-git-2@plane.gmane.org; Sun, 26 Jan 2014 13:52:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752628AbaAZJRP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Jan 2014 04:17:15 -0500
-Received: from dcvr.yhbt.net ([64.71.152.64]:57388 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751348AbaAZJRO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Jan 2014 04:17:14 -0500
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DFFA521655;
-	Sun, 26 Jan 2014 09:17:09 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <20140126073438.GA3858@kirill.netbynet.ru>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751972AbaAZMwH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Jan 2014 07:52:07 -0500
+Received: from mail-in-06.arcor-online.net ([151.189.21.46]:57454 "EHLO
+	mail-in-06.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751245AbaAZMwF (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 26 Jan 2014 07:52:05 -0500
+Received: from mail-in-17-z2.arcor-online.net (mail-in-17-z2.arcor-online.net [151.189.8.34])
+	by mx.arcor.de (Postfix) with ESMTP id A596810BA6A;
+	Sun, 26 Jan 2014 13:52:03 +0100 (CET)
+Received: from mail-in-09.arcor-online.net (mail-in-09.arcor-online.net [151.189.21.49])
+	by mail-in-17-z2.arcor-online.net (Postfix) with ESMTP id 9F56F366BA9;
+	Sun, 26 Jan 2014 13:52:03 +0100 (CET)
+Received: from webmail18.arcor-online.net (webmail18.arcor-online.net [151.189.8.76])
+	by mail-in-09.arcor-online.net (Postfix) with ESMTP id 952EC1978D1;
+	Sun, 26 Jan 2014 13:52:03 +0100 (CET)
+X-DKIM: Sendmail DKIM Filter v2.8.2 mail-in-09.arcor-online.net 952EC1978D1
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arcor.de; s=mail-in;
+	t=1390740723; bh=/WssKaVpg/vEz1Wr4/AwAA52bDAtGB0xIE6Ul8v8cJA=;
+	h=Date:From:To:Cc:Message-ID:Subject:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding;
+	b=qXkTK8hHznQ2n67QKDMziRN3QLzDFMDYsNz2bh8Tgk+FBmXSMXgaH/bZlp4q49FcH
+	 rCM9bWke9FMYorxxgAB5pgPP+Dvo+QG+kwfOU79+831MC0MDV+c25RKLAHuM0mYmj7
+	 6LTxB/6WTlXfm4pPCV8x2ETXwARB9mc0egVq71gQ=
+Received: from [94.217.129.144] by webmail18.arcor-online.net (151.189.8.76) with HTTP (Arcor Webmail); Sun, 26 Jan 2014 13:52:03 +0100 (CET)
+X-ngMessageSubType: MessageSubType_MAIL
+X-WebmailclientIP: 94.217.129.144
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241081>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241082>
 
-Brilliantov Kirill Vladimirovich <brilliantov@inbox.ru> wrote:
-> On 2014-01-25 22:37:21, Eric Wong wrote:
-> > Brilliantov Kirill Vladimirovich <brilliantov@inbox.ru> wrote:
-> > > --- a/git-send-email.perl
-> > > +++ b/git-send-email.perl
-> > > @@ -28,6 +28,7 @@ use File::Temp qw/ tempdir tempfile /;
-> > >  use File::Spec::Functions qw(catfile);
-> > >  use Error qw(:try);
-> > >  use Git;
-> > > +use File::HomeDir;
-> > 
-> > We should probably avoid a new dependency and also remain consistent
-> > with the rest of git handles home directories.
-> > 
-> > Unfortunately, expand_user_path()/git_config_pathname() isn't currently
-> > exposed to scripters right now...
-> 
-> Ok, if new dependency is not allowed I see next ways:
 
-Not saying it's not allowed.  I meant we should probably expose
-expand_user_path()/git_config_pathname() C functions to script helpers
-(so git-config or git-rev-parse can provide them to sh or perl scripts).
+This is a reroll of my attempt to create usable HTML for http-protocol.txt.
+
+The first patch addresses Junio's remarks regarding the conversion to better ASCIIDOC.
+The patch contains some whitespace-only changes so these shouldn't be ignored while applying.
+
+The second patch tries to fix one of the TODOs the original author has put into the document.
+
+
+---
+Thomas
