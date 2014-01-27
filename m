@@ -1,152 +1,154 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [PATCH 3/3] builtin/blame.c: large-scale rewrite
-Date: Mon, 27 Jan 2014 20:45:06 +0100
-Organization: Organization?!?
-Message-ID: <87a9eh8b0d.fsf@fencepost.gnu.org>
-References: <877g9ocjsk.fsf@fencepost.gnu.org>
-	<1390674221-25767-1-git-send-email-dak@gnu.org>
-	<1390674221-25767-4-git-send-email-dak@gnu.org>
-	<xmqq8uu1pdqq.fsf@gitster.dls.corp.google.com>
+From: Torsten =?utf-8?q?B=C3=B6gershausen?= <tboegi@web.de>
+Subject: [PATCH v2] repack.c: Use move_temp_to_file() instead of rename()
+Date: Mon, 27 Jan 2014 21:24:42 +0100
+Message-ID: <201401272124.42978.tboegi@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Cc: tboegi@web.de,
+ zwanzig12@googlemail.com,
+ stefanbeller@googlemail.com,
+ kusmabite@gmail.com,
+ Johannes.Schindelin@gmx.de,
+ msysgit@googlegroups.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 27 20:45:33 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+X-From: msysgit+bncBCUZ3EUT2ADRBE4BTOLQKGQEGVE6DUQ@googlegroups.com Mon Jan 27 21:24:53 2014
+Return-path: <msysgit+bncBCUZ3EUT2ADRBE4BTOLQKGQEGVE6DUQ@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-bk0-f63.google.com ([209.85.214.63])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W7s7g-0004aw-Sn
-	for gcvg-git-2@plane.gmane.org; Mon, 27 Jan 2014 20:45:33 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753941AbaA0Tp3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Jan 2014 14:45:29 -0500
-Received: from plane.gmane.org ([80.91.229.3]:35444 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753728AbaA0Tp2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Jan 2014 14:45:28 -0500
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1W7s7U-0004Ug-Nd
-	for git@vger.kernel.org; Mon, 27 Jan 2014 20:45:20 +0100
-Received: from x2f3d3f3.dyn.telefonica.de ([2.243.211.243])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 27 Jan 2014 20:45:20 +0100
-Received: from dak by x2f3d3f3.dyn.telefonica.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 27 Jan 2014 20:45:20 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: x2f3d3f3.dyn.telefonica.de
-X-Face: 2FEFf>]>q>2iw=B6,xrUubRI>pR&Ml9=ao@P@i)L:\urd*t9M~y1^:+Y]'C0~{mAl`oQuAl
- \!3KEIp?*w`|bL5qr,H)LFO6Q=qx~iH4DN;i";/yuIsqbLLCh/!U#X[S~(5eZ41to5f%E@'ELIi$t^
- Vc\LWP@J5p^rst0+('>Er0=^1{]M9!p?&:\z]|;&=NP3AhB!B_bi^]Pfkw
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3.50 (gnu/linux)
-Cancel-Lock: sha1:0XqYHQusrpZnNhsIrfHyJVoEkwc=
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241153>
+	(envelope-from <msysgit+bncBCUZ3EUT2ADRBE4BTOLQKGQEGVE6DUQ@googlegroups.com>)
+	id 1W7sjk-0004KN-E4
+	for gcvm-msysgit@m.gmane.org; Mon, 27 Jan 2014 21:24:52 +0100
+Received: by mail-bk0-f63.google.com with SMTP id w16sf968081bkz.28
+        for <gcvm-msysgit@m.gmane.org>; Mon, 27 Jan 2014 12:24:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=subject:to:cc:from:date:mime-version:message-id:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type:content-transfer-encoding;
+        bh=slG3zASh8Ch1TlRlkj6DmogOfSLJPxzJ2MYHN7RMj1k=;
+        b=R6AkXs81U3Tx6SV4EqPnbnPz2lGJL0KhDQd1U+RVugyTmKtPi1v9Tb2B2YOyWYHpEh
+         79LE79oTIBp6C2Nfj4dCNOM5Xx9RWIx84hPSw0aUVpyHxlfKmT8JDWlc02D8pO+SuKX8
+         YRH+GcAeX0oROCZP3GDHiXwifmvtIp6BBqn+WYcEA3wYS2iFkpSGQ1r09V9qlgxMLKJ1
+         7zdaucdeBFfzu0neVnZn4dFL//JhXygaOydI8LPVgRiseX5YawTYaBFdS3fChWnj96Vt
+         o7L+r4nJg++bg206lG27oKr3kCPdENnQOFltJprUjyuTQc1kK7zXkhz7+Ke/pDiyB81L
+         NO0w==
+X-Received: by 10.180.105.137 with SMTP id gm9mr281502wib.3.1390854292194;
+        Mon, 27 Jan 2014 12:24:52 -0800 (PST)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.180.160.146 with SMTP id xk18ls418099wib.48.gmail; Mon, 27 Jan
+ 2014 12:24:51 -0800 (PST)
+X-Received: by 10.180.211.34 with SMTP id mz2mr13207598wic.3.1390854291145;
+        Mon, 27 Jan 2014 12:24:51 -0800 (PST)
+Received: from mout.web.de (mout.web.de. [212.227.15.3])
+        by gmr-mx.google.com with ESMTPS id f47si1959704eem.0.2014.01.27.12.24.50
+        for <msysgit@googlegroups.com>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 27 Jan 2014 12:24:51 -0800 (PST)
+Received-SPF: pass (google.com: best guess record for domain of tboegi@web.de designates 212.227.15.3 as permitted sender) client-ip=212.227.15.3;
+Received: from appes.localnet ([78.72.74.102]) by smtp.web.de (mrweb102) with
+ ESMTPA (Nemesis) id 0LcPSk-1VO8bE2QDe-00juWS for <msysgit@googlegroups.com>;
+ Mon, 27 Jan 2014 21:24:50 +0100
+X-Provags-ID: V03:K0:/8Su9rHXs0HNpKXHx0GNJtMsOoy9FlXJ5tuwDuKhMkZwkokaDLT
+ APLt1TrymzsQQWGGmUQoQ96hlljwIq2J/y8diKW709Z7eTmCgKn3k26Dy5dJg0iRdvsv5nz
+ KOalF77pSPgqn22j0/kFl2+7e8vfynv+GbMSJHJ8s7oX1nSjyRVqnpbNwRSG1Ny22jEzeBv
+ LCEM1jnVrPcgQj3yBh4+g==
+X-Original-Sender: tboegi@web.de
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: best guess record for domain of tboegi@web.de designates
+ 212.227.15.3 as permitted sender) smtp.mail=tboegi@web.de
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241154>
 
-Junio C Hamano <gitster@pobox.com> writes:
+In a1bbc6c0 a shell command "mv -f" was replaced with the rename() function=
+.
 
-> David Kastrup <dak@gnu.org> writes:
->
->> The previous implementation uses a sorted linear list of struct
->> blame_entry in a struct scoreboard for organizing all partial or
->> completed work.  Every task that is done requires going through the
->> whole list where most entries are not relevant to the task at hand.
->>
->> This commit reorganizes the data structures in order to have each
->> remaining subtask work with its own sorted linear list it can work off
->> front to back.  Subtasks are organized into "struct origin" chains
->> hanging off particular commits.  Commits are organized into a priority
->> queue, processing them in commit date order in order to keep most of
->> the work affecting a particular blob collated even in the presence of
->> an extensive merge history.  In that manner, linear searches can be
->> basically avoided anywhere.  They still are done for identifying one
->> of multiple analyzed files in a given commit, but the degenerate case
->> of a single large file being assembled from a multitude of smaller
->> files in the past is not likely to occur often enough to warrant
->> special treatment.
->> ---
->
-> Sign-off?
+Use move_temp_to_file() from sha1_file.c instead of rename().
+This is in line with the handling of other Git internal tmp files,
+and calls adjust_shared_perm()
 
-Not while this is not fit for merging because of #if 0 etc and missing
-functionality.  This is just for review.
+Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+---
+Thanks for all comments.
+I haven't been able to reproduce the problem here.
+Tips and information how to reproduce it are wellcome.
 
-> Actually, I'd like to take my previous suggestion to add this as
-> blame2 (to replace blame in the future) back.  That was based on my
-> fear/hope to see an implementation based on a completely different
-> approach, but the basic premise of having one blame_entry record per
-> the lines of the final image in the scoreboard, using diff between
-> parents to the child to find common lines for passing the blame up,
-> etc. have not changed at all and the change is all about organizing
-> the pieces of data in a *much* *better* way to avoid needlessly
-> finding what we already have computed.
+I think this patch makes sense to support core.sharedRepository(),
+but I haven't made a test case for the pack/idx files.
 
-Yes.  Basically, the call graph outside of blame.c itself should be
-pretty much the same.
+Jochen, doess this patch fix your problem, or do we need
+another patch on top of this?
 
-> Style; please make /* and */ sit on their own line without anything
-> else in multi-line comments.
+ builtin/repack.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-Will do.
+diff --git a/builtin/repack.c b/builtin/repack.c
+index ba66c6e..4b6d663 100644
+--- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -271,7 +271,7 @@ int cmd_repack(int argc, const char **argv, const char =
+*prefix)
+ 				if (unlink(fname_old))
+ 					failed =3D 1;
+=20
+-			if (!failed && rename(fname, fname_old)) {
++			if (!failed && move_temp_to_file(fname, fname_old)) {
+ 				free(fname);
+ 				failed =3D 1;
+ 				break;
+@@ -288,7 +288,7 @@ int cmd_repack(int argc, const char **argv, const char =
+*prefix)
+ 			char *fname, *fname_old;
+ 			fname =3D mkpathdup("%s/%s", packdir, item->string);
+ 			fname_old =3D mkpath("%s/old-%s", packdir, item->string);
+-			if (rename(fname_old, fname))
++			if (move_temp_to_file(fname_old, fname))
+ 				string_list_append(&rollback_failure, fname);
+ 			free(fname);
+ 		}
+@@ -324,7 +324,7 @@ int cmd_repack(int argc, const char **argv, const char =
+*prefix)
+ 				statbuffer.st_mode &=3D ~(S_IWUSR | S_IWGRP | S_IWOTH);
+ 				chmod(fname_old, statbuffer.st_mode);
+ 			}
+-			if (rename(fname_old, fname))
++			if (move_temp_to_file(fname_old, fname))
+ 				die_errno(_("renaming '%s' failed"), fname_old);
+ 			free(fname);
+ 			free(fname_old);
+--=20
+1.8.5.2
 
->> +	struct origin *next;
->>  	struct commit *commit;
->> +	/* `suspects' contains blame entries that may be attributed to
->> +	 * this origin's commit or to parent commits.  When a commit
->> +	 * is being processed, all suspects will be moved, either by
->> +	 * assigning them to an origin in a different commit, or by
->> +	 * shipping them to the scoreboard's ent list because they
->> +	 * cannot be attributed to a different commit.
->> +	 */
->> +	struct blame_entry *suspects;
->>  	mmfile_t file;
->>  	unsigned char blob_sha1[20];
->>  	unsigned mode;
->> +	/* shipped gets set when shipping any suspects to the final
->> +	 * blame list instead of other commits
->> +	 */
->> +	char shipped;
->
-> Unused?
+--=20
+--=20
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github =
+accounts are free.
 
-More like "added, forgotten, added under yet another name":
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=3Den_US?hl=3Den
 
->> +	char guilty;
-
-I'll have to decide which one to keep.
-
->> +		/* Should be present exactly once in commit chain */
->> +		for (p = o->commit->util; p; l = p, p = p->next) {
->> +			if (p == o)
->> +			{
->
-> Style; please have { sit with the control structure that opens the
-> block, unless it is the opening brace of the function body or
-> struct/union definition.
-
-Ok.
-
->> +static struct blame_entry *
->> +blame_merge(struct blame_entry *list1,
->> +	    struct blame_entry *list2)
->
-> Style; we do not do GNU-ish "function name begins a line".  Even
-> though I personally find it easier to use for things like 'grep',
-> that is not the style we use around here.
-
-Ok.  I'm also certain to have a few "space between function name and
-arguments" left and will grep for those before submitting the next
-version.
-
-Next version will at least include -M option, possibly leaving -C for
-later.
-
--- 
-David Kastrup
+---=20
+You received this message because you are subscribed to the Google Groups "=
+msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an e=
+mail to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/groups/opt_out.
