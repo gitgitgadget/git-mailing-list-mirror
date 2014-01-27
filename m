@@ -1,177 +1,129 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH] doc: remote author/documentation sections from more pages
-Date: Mon, 27 Jan 2014 00:43:49 +0100
-Message-ID: <1390779829-24168-1-git-send-email-mhagger@alum.mit.edu>
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Johan Herland <johan@herland.net>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 27 00:44:24 2014
+From: Martin Erik Werner <martinerikwerner@gmail.com>
+Subject: Re: [PATCH 2/2] setup: Don't dereference in-tree symlinks for absolute paths
+Date: Mon, 27 Jan 2014 01:07:29 +0100
+Message-ID: <1390781250-20389-1-git-send-email-martinerikwerner@gmail.com>
+References: <52E5439D.7060002@web.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: richih@debian.org
+To: tboegi@web.de, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 27 01:08:18 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W7ZNI-0006lU-3o
-	for gcvg-git-2@plane.gmane.org; Mon, 27 Jan 2014 00:44:24 +0100
+	id 1W7ZkP-0007fv-4n
+	for gcvg-git-2@plane.gmane.org; Mon, 27 Jan 2014 01:08:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753496AbaAZXoU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Jan 2014 18:44:20 -0500
-Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:45092 "EHLO
-	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753401AbaAZXoS (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 26 Jan 2014 18:44:18 -0500
-X-AuditID: 1207440f-b7f306d000006d99-f7-52e59dd15104
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id 0B.0C.28057.1DD95E25; Sun, 26 Jan 2014 18:44:17 -0500 (EST)
-Received: from michael.fritz.box (p4FDD4D73.dip0.t-ipconnect.de [79.221.77.115])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s0QNhqBv019652
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Sun, 26 Jan 2014 18:44:13 -0500
+	id S1753241AbaA0AIM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 26 Jan 2014 19:08:12 -0500
+Received: from mail-la0-f53.google.com ([209.85.215.53]:57585 "EHLO
+	mail-la0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753121AbaA0AIM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Jan 2014 19:08:12 -0500
+Received: by mail-la0-f53.google.com with SMTP id e16so3921287lan.26
+        for <git@vger.kernel.org>; Sun, 26 Jan 2014 16:08:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=y40xphRF+7QjYnNlZuU1UIx1pV9evCdB2Rkkn3iId7M=;
+        b=yMspIMGK2PMpo7xVq9p6GNpvl7+Y6aigZQ5i1uizkekJOCB/PYtbMar+fCWvfsi7h8
+         Amx6KYqfbn0fX+BhNRokzgbjM0t/ZTKCTnoe/KJ32QUBrg0nvBAaUO6AdTNTbnlnk/uE
+         L1E3+Yc/iPFJ33topMHegWf/UJEcM0mnaaZkSRun1xUnkDhfAJagsze5zWgzqt6vhlFs
+         EwTHfMHZ1iK/ZlDN8NPqsi34z3kIvSZYR565w+cKkFkN77pFdnsvoKZS2QzUtEhRhteO
+         iJ2mzdauaJKhW9PeoyOIZfdTq4Q40/Ek8CLE3LNHebH7lt0bMZWDO6fIEiOvhfC2T4RK
+         ppIg==
+X-Received: by 10.112.45.108 with SMTP id l12mr15087521lbm.21.1390781290284;
+        Sun, 26 Jan 2014 16:08:10 -0800 (PST)
+Received: from mule.student.uu.se (nl116-226-21.student.uu.se. [130.243.226.21])
+        by mx.google.com with ESMTPSA id mx3sm10067695lbc.14.2014.01.26.16.08.08
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 26 Jan 2014 16:08:09 -0800 (PST)
 X-Mailer: git-send-email 1.8.5.2
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrAIsWRmVeSWpSXmKPExsUixO6iqHtx7tMgg6bjOhZdV7qZLBp6rzBb
-	rFyzh9li3t1dTBb9y7vYLN7eXMJocXvFfGaL7ilvGS3mH5rI6sDp8ff9ByaPlWdrPXbOusvu
-	8eFjnMell9/ZPC5eUvb4c34Pq8fnTXIBHFHcNkmJJWXBmel5+nYJ3BlnDi5jKTguW/F56XWm
-	BsbPEl2MnBwSAiYSZ97vZYOwxSQu3FsPZHNxCAlcZpQ4dPk5K4Rzgkni86c+ZpAqNgFdiUU9
-	zUwgtoiAmsTEtkMsIEXMAp+ZJPp/H2EBSQgLeEmsn7uFFcRmEVCVWHv2NzuIzSvgIrHs1V2g
-	FRxA6xQkVl8XmsDIvYCRYRWjXGJOaa5ubmJmTnFqsm5xcmJeXmqRrolebmaJXmpK6SZGSJjx
-	72DsWi9ziFGAg1GJh/eF1ZMgIdbEsuLK3EOMkhxMSqK8V+Y8DRLiS8pPqcxILM6ILyrNSS0+
-	xCjBwawkwpu3HqicNyWxsiq1KB8mJc3BoiTOq75E3U9IID2xJDU7NbUgtQgmK8PBoSTBuxBk
-	qGBRanpqRVpmTglCmomDE0RwgWzgAdpwCKSQt7ggMbc4Mx2i6BSjopQ4rzhIQgAkkVGaBzcA
-	lhBeMYoD/SPMmwdSxQNMJnDdr4AGMwENXrkP5PTikkSElFQD43rF6ep2Bcz7JTO3T0vYt7HQ
-	L/f9/gNfpGY9Frj+NGPfC7Xb2xZ9X3Z27rNLhel7N0YXr31WZdb46YmxmYtRbE7s3b+fj9/5
-	97p0noLDMePVq5RTv4g9OhzzaL7e13n/Qtj0ZH79/XUiTi+y20J1RdMU1l6m76o1 
+In-Reply-To: <52E5439D.7060002@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241118>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241119>
 
-We decided at 48bb914e (doc: drop author/documentation sections from
-most pages, 2011-03-11) to remove "author" and "documentation"
-sections from our documentation.  Remove a few stragglers.
+On Sun, Jan 26, 2014 at 06:19:25PM +0100, Torsten B=C3=B6gershausen wro=
+te:
+> On 2014-01-26 15.22, Martin Erik Werner wrote:
+> > The prefix_path_gently() function currently applies real_path to
+> > everything if given an absolute path, dereferencing symlinks both
+> > outside and inside the work tree. In order to manipulate symliks in=
+ the
+> > work tree using absolute paths, symlinks should only be dereference=
+d
+> > outside the work tree.
+> >=20
+> > Modify prefix_path_gently() to first normalize the path in order to
+> > make sure path levels are separated by '/', then use this separator=
+ to
+> > check the real path of each level of the path until it has found th=
+e
+> > length that corresponds to the work tree.
+> >=20
+> > For absolute paths, the function did not, nor does now do, any actu=
+al
+> > prefixing, hence we simply remove the path corresponding to the wor=
+k
+> > tree and return the remaining in-tree part of the path.
+> >=20
+> > Fixes t0060-82.
+> >=20
+> > Signed-off-by: Martin Erik Werner <martinerikwerner@gmail.com>
+> > ---
+> >  setup.c               | 54 ++++++++++++++++++++++++++++++++-------=
+------------
+> >  t/t0060-path-utils.sh |  2 +-
+> >  2 files changed, 35 insertions(+), 21 deletions(-)
+> >=20
+> > diff --git a/setup.c b/setup.c
+> > index 6c3f85f..bec587e 100644
+> > --- a/setup.c
+> > +++ b/setup.c
+> > @@ -22,11 +22,41 @@ char *prefix_path_gently(const char *prefix, in=
+t len,
+> >  	const char *orig =3D path;
+> >  	char *sanitized;
+> >  	if (is_absolute_path(orig)) {
+> > -		const char *temp =3D real_path(path);
+> > -		sanitized =3D xmalloc(len + strlen(temp) + 1);
+> > -		strcpy(sanitized, temp);
+> > +		char npath[strlen(path)];
+> Is this portable ?
+> This is variable-length array, isn't it ?
+> Using xmalloc() may be better
+Ah, right, that looks bad now that you mention it.
+> >  		if (remaining_prefix)
+> >  			*remaining_prefix =3D 0;
+> > +		if (normalize_path_copy_len(npath, path, remaining_prefix))
+> > +			return NULL;
+> > +		const char *work_tree =3D get_git_work_tree();
+> declaration after statements should be avoided (not only here)
+>=20
+Indeed, I somehow guessed that declaration-after-statement was ok and
+tried to keep them close to usage, bad guess, evidently.
 
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
----
-These deletions were assented to on the Git mailing list by the
-persons whose names are thereby removed.  (I mention this fact without
-implying that people mentioned in documentation hold a veto over their
-names' removal.)
+I've rerolled the last v1 patch accordingly:
+* Use xmalloc() when initializing char* from strlen()
+* Separate and move declarations to beginning of scope
+* Fix a strcpy that should've been a strcat (which would've nuked DOS
+  prefixes, I think)
 
- Documentation/git-column.txt       | 4 ----
- Documentation/git-for-each-ref.txt | 8 --------
- Documentation/git-http-backend.txt | 7 -------
- Documentation/git-notes.txt        | 9 ---------
- Documentation/git-remote-ext.txt   | 4 ----
- Documentation/git-remote-fd.txt    | 3 ---
- 6 files changed, 35 deletions(-)
+  [PATCH v2 2/2] setup: Don't dereference in-tree symlinks for absolute=
+ paths
 
-diff --git a/Documentation/git-column.txt b/Documentation/git-column.txt
-index 5d6f1cc..850449e 100644
---- a/Documentation/git-column.txt
-+++ b/Documentation/git-column.txt
-@@ -44,10 +44,6 @@ OPTIONS
- 	The number of spaces between columns. One space by default.
- 
- 
--Author
--------
--Written by Nguyen Thai Ngoc Duy <pclouds@gmail.com>
--
- GIT
- ---
- Part of the linkgit:git[1] suite
-diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-index d639abe..4240875 100644
---- a/Documentation/git-for-each-ref.txt
-+++ b/Documentation/git-for-each-ref.txt
-@@ -219,14 +219,6 @@ eval=`git for-each-ref --shell --format="$fmt" \
- eval "$eval"
- ------------
- 
--Author
--------
--Written by Junio C Hamano <gitster@pobox.com>.
--
--Documentation
---------------
--Documentation by Junio C Hamano and the git-list <git@vger.kernel.org>.
--
- SEE ALSO
- --------
- linkgit:git-show-ref[1]
-diff --git a/Documentation/git-http-backend.txt b/Documentation/git-http-backend.txt
-index e3bcdb5..16706cf 100644
---- a/Documentation/git-http-backend.txt
-+++ b/Documentation/git-http-backend.txt
-@@ -263,13 +263,6 @@ identifying information of the remote user who performed the push.
- All CGI environment variables are available to each of the hooks
- invoked by the 'git-receive-pack'.
- 
--Author
--------
--Written by Shawn O. Pearce <spearce@spearce.org>.
--
--Documentation
----------------
--Documentation by Shawn O. Pearce <spearce@spearce.org>.
- 
- GIT
- ---
-diff --git a/Documentation/git-notes.txt b/Documentation/git-notes.txt
-index 46ef046..ecf3fcf 100644
---- a/Documentation/git-notes.txt
-+++ b/Documentation/git-notes.txt
-@@ -376,15 +376,6 @@ If not set in the environment, the list of notes to copy depends
- on the `notes.rewrite.<command>` and `notes.rewriteRef` settings.
- 
- 
--Author
--------
--Written by Johannes Schindelin <johannes.schindelin@gmx.de> and
--Johan Herland <johan@herland.net>
--
--Documentation
---------------
--Documentation by Johannes Schindelin and Johan Herland
--
- GIT
- ---
- Part of the linkgit:git[7] suite
-diff --git a/Documentation/git-remote-ext.txt b/Documentation/git-remote-ext.txt
-index 8cfc748..e4d89a7 100644
---- a/Documentation/git-remote-ext.txt
-+++ b/Documentation/git-remote-ext.txt
-@@ -116,10 +116,6 @@ begins with `ext::`.  Examples:
- 	determined by the helper using environment variables (see
- 	above).
- 
--Documentation
----------------
--Documentation by Ilari Liusvaara, Jonathan Nieder and the Git list
--<git@vger.kernel.org>
- 
- GIT
- ---
-diff --git a/Documentation/git-remote-fd.txt b/Documentation/git-remote-fd.txt
-index 933c2ad..768b512 100644
---- a/Documentation/git-remote-fd.txt
-+++ b/Documentation/git-remote-fd.txt
-@@ -50,9 +50,6 @@ EXAMPLES
- `git push fd::7,8/bar master`::
- 	Same as above.
- 
--Documentation
----------------
--Documentation by Ilari Liusvaara and the Git list <git@vger.kernel.org>
- 
- GIT
- ---
--- 
-1.8.5.2
+ setup.c               | 64 +++++++++++++++++++++++++++++++++++--------=
+--------
+ t/t0060-path-utils.sh |  2 +-
+ 2 files changed, 45 insertions(+), 21 deletions(-)
+
+--
+Martin Erik Werner <martinerikwerner@gmail.com>
