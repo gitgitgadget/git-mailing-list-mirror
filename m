@@ -1,146 +1,184 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: How to substructure rewrites?
-Date: Mon, 27 Jan 2014 17:27:38 +0100
-Organization: Organization?!?
-Message-ID: <87eh3t8k5h.fsf@fencepost.gnu.org>
-References: <877g9ocjsk.fsf@fencepost.gnu.org>
-	<xmqqppndpgbg.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 2/2] setup: Don't dereference in-tree symlinks for absolute paths
+Date: Mon, 27 Jan 2014 08:31:37 -0800
+Message-ID: <xmqqd2jdpes6.fsf@gitster.dls.corp.google.com>
+References: <52E5439D.7060002@web.de>
+	<1390781250-20389-1-git-send-email-martinerikwerner@gmail.com>
+	<1390781250-20389-2-git-send-email-martinerikwerner@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 27 17:27:56 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: tboegi@web.de, git@vger.kernel.org, richih@debian.org
+To: Martin Erik Werner <martinerikwerner@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 27 17:31:49 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W7p2R-0002hb-IO
-	for gcvg-git-2@plane.gmane.org; Mon, 27 Jan 2014 17:27:55 +0100
+	id 1W7p6D-0003wu-2y
+	for gcvg-git-2@plane.gmane.org; Mon, 27 Jan 2014 17:31:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753808AbaA0Q1v convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 27 Jan 2014 11:27:51 -0500
-Received: from plane.gmane.org ([80.91.229.3]:53720 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753545AbaA0Q1u (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Jan 2014 11:27:50 -0500
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1W7p2L-0002em-MR
-	for git@vger.kernel.org; Mon, 27 Jan 2014 17:27:49 +0100
-Received: from x2f3d3f3.dyn.telefonica.de ([2.243.211.243])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 27 Jan 2014 17:27:49 +0100
-Received: from dak by x2f3d3f3.dyn.telefonica.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 27 Jan 2014 17:27:49 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: x2f3d3f3.dyn.telefonica.de
-X-Face: 2FEFf>]>q>2iw=B6,xrUubRI>pR&Ml9=ao@P@i)L:\urd*t9M~y1^:+Y]'C0~{mAl`oQuAl
- \!3KEIp?*w`|bL5qr,H)LFO6Q=qx~iH4DN;i";/yuIsqbLLCh/!U#X[S~(5eZ41to5f%E@'ELIi$t^
- Vc\LWP@J5p^rst0+('>Er0=^1{]M9!p?&:\z]|;&=NP3AhB!B_bi^]Pfkw
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3.50 (gnu/linux)
-Cancel-Lock: sha1:y1lethChXCW7ixGNUJJzktieKG0=
+	id S1753953AbaA0Qbq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Jan 2014 11:31:46 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55686 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753584AbaA0Qbp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Jan 2014 11:31:45 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 68ACF6720A;
+	Mon, 27 Jan 2014 11:31:43 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=K10/Kne1K8mD/ob6hI0XkYxZsv8=; b=v+KfIZ
+	S4NX2+Z4BphBfiRXzGEiiBC0+0Mtp5gVYNjU+y1iopq6mkB7N3F8+PZAciIKtuf4
+	ali3OwlEb8nO7SesBRh6awQEZFbpAUvgc4E67hlRxF+YMzlQ1MGq7hd8SefQzgD1
+	F9anAP9wp5d4pzosOrjl3qXOYqcNfH+l5WaHg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=T/3FT6743FXh18cvYK0Tn1t0vARgF+XP
+	zlQfMRR0N5MSzRwY04JDn3wAmN5B9Jr54tjmhwV19t4EtXkvLXa3lJAM55m6xfTP
+	DJklp5bP65UV3BPkHYcSB0r8ZAHjcUsdqTt1VUyUofnVkBbRgY8f+VT/JMhfC/X4
+	ZJXWYtkreQs=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4AC6167209;
+	Mon, 27 Jan 2014 11:31:43 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 134E867206;
+	Mon, 27 Jan 2014 11:31:41 -0500 (EST)
+In-Reply-To: <1390781250-20389-2-git-send-email-martinerikwerner@gmail.com>
+	(Martin Erik Werner's message of "Mon, 27 Jan 2014 01:07:30 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 80F57F46-8770-11E3-BDF1-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241145>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241146>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Martin Erik Werner <martinerikwerner@gmail.com> writes:
 
-> David Kastrup <dak@gnu.org> writes:
->
->> As it can easily be guessed, the "add xxx function" commits are
->> basically adding not-yet-used code (and so will not disrupt
->> compilation), but everything starting with "Reorganize blame data
->> structures" up until the final commit will not work or compile since=
- the
->> code does not match the data structures.
->>
->> So there is little point in substructing all that, right?  Even
->> something seemingly isolated like
->>
->> commit f64b41c472442ae9971321fe8f62c3885ba4d8b7
->> Author: David Kastrup <dak@gnu.org>
->> Date:   Sun Jan 19 02:16:21 2014 +0100
->>
->>     blame.c: Let output determine MORE_THAN_ONE_PATH more efficientl=
-y
->>
->> is not really useful as a separate commit since while it does implem=
-ent
->> a particular task, this is done starting with non-working code relyi=
-ng
->> on no-longer existent data structures.
->
-> Small pieces that are incrementally added with their own
-> documentation would certainly be a lot easier to read than one big
-> ball of wax.
+> In order to manipulate symliks in the
+> work tree using absolute paths, symlinks should only be dereferenced
+> outside the work tree.
 
-Sure.  The problem is that my rewrite is characterized by doing as
-little as possible in order to achieve identical results (with the
-conceivable exception of picking a different, equally scored variant in
-those parts of the algorithm choosing a maximum).  That also means that
-the basic logic and layout of the program stays the same while the data
-flow and parts of the data structures are replaced.
+I agree 100% with this reasoning (modulo s/symliks/symlinks/).
 
-> I am wondering if it would make it easier for everybody to tentativel=
-y
-> do "git-blame vs git-blame2" dance here, just like we did "git-blame
-> vs git-annotate" dance some years ago.  That is, to add a completely
-> new command and have them in parallel while cooking in 'next' (or we
-> could even keep them in a few releases if we are not absolutely
-> certain about the correctness of the result of the new code), aiming
-> to eventually retire the current implementation and replace it with
-> the new one.  We have already have test infrastructure to allow us to
-> run variants of blames, too, to help that kind of transition.
+As to the implementation, it looks a bit overly complicated,
+though.  I haven't tried writing the same myself, but 
 
-Well, the point is that the implementation is supposed to
-a) deliver identical results
-b) reuse as much code as possible
-so there is no real point in working with a separate source file.
+ * I suspect that strbuf would help simplifying the allocation and
+   deallocation;
 
-=46or the "if we are not absolutely certain about the correctness of th=
-e
-result of the new code" angle, this should be covered with the usual
-stable/unstable/proposed division most projects have in some way or
-another for quality assurance.  I=A0have absolutely no clue how Git
-organizes that, but it would usually mean that the new code is not
-placed in a different _file_ (or a differently named command) but rathe=
-r
-in a different _branch_ as compared with the current implementation.
+ * Also I suspect that use of string-list to split and then join is
+   making the code unnecessarily complex. In Python/Perl, that would
+   be a normal approach, but in C, it would be a lot simpler if you
+   prepare a writable temporary in wtpart[], walk from left to right
+   finding '/' and replacing it temporarily with NUL to terminate in
+   order to check with real_path(), restore the NUL back to '/' to
+   check deeper, and rinse and repeat.
 
->> In general, the rule is likely "any commit should not create a
->> non-working state" right?
->
-> Yes.
+   Having said that, I am not absolutely sure if the repeated
+   calls to real_path() are doing the right thing, though ;-)
 
-My current aim is to complete the code to the point where it is
-a) fully operative and delivering equivalent results to the current
-implementation
-b) in every aspect at least as efficient as the current implementation
-and in a state that is not basically less comprehensible than what I
-started with
-
-Since the change of the data structures and data flow requires changing
-all affected program parts to get to a working state, and since I=A0don=
-'t
-have ambitions to do more than that which is required to get there,
-I=A0don't see how the bulk of the work can sensibly avoid coming as one
-"omnibus" patch.  Most changes, however, will be understandable quite
-well locally.
-
-=46or example, currently the code has a number of loops traversing one
-global linked list, ignoring all entries not relevant to a particular
-target, and doing something with the rest.  Those loops generally are
-replaced with a simpler loop just running through a single _completely_
-relevant linked list.  Even while those replacements are scattered
-throughout the patch, they make sense without having to look at the res=
-t
-of the patch.
-
---=20
-David Kastrup
+> diff --git a/setup.c b/setup.c
+> index 5432a31..0789a96 100644
+> --- a/setup.c
+> +++ b/setup.c
+> @@ -22,11 +22,51 @@ char *prefix_path_gently(const char *prefix, int len,
+>  	const char *orig = path;
+>  	char *sanitized;
+>  	if (is_absolute_path(orig)) {
+> -		const char *temp = real_path(path);
+> -		sanitized = xmalloc(len + strlen(temp) + 1);
+> -		strcpy(sanitized, temp);
+> +		int i, match;
+> +		size_t wtpartlen;
+> +		char *npath, *wtpart;
+> +		struct string_list list = STRING_LIST_INIT_DUP;
+> +		const char *work_tree = get_git_work_tree();
+> +		if (!work_tree)
+> +			return NULL;
+> +		npath = xmalloc(strlen(path) + 1);
+>  		if (remaining_prefix)
+>  			*remaining_prefix = 0;
+> +		if (normalize_path_copy_len(npath, path, remaining_prefix)) {
+> +			free(npath);
+> +			return NULL;
+> +		}
+> +
+> +		string_list_split(&list, npath, '/', -1);
+> +		wtpart = xmalloc(strlen(npath) + 1);
+> +		i = 0;
+> +		match = 0;
+> +		strcpy(wtpart, list.items[i++].string);
+> +		strcat(wtpart, "/");
+> +		if (strcmp(real_path(wtpart), work_tree) == 0) {
+> +			match = 1;
+> +		} else {
+> +			while (i < list.nr) {
+> +				strcat(wtpart, list.items[i++].string);
+> +				if (strcmp(real_path(wtpart), work_tree) == 0) {
+> +					match = 1;
+> +					break;
+> +				}
+> +				strcat(wtpart, "/");
+> +			}
+> +		}
+> +		string_list_clear(&list, 0);
+> +		if (!match) {
+> +			free(npath);
+> +			free(wtpart);
+> +			return NULL;
+> +		}
+> +
+> +		wtpartlen = strlen(wtpart);
+> +		sanitized = xmalloc(strlen(npath) - wtpartlen);
+> +		strcpy(sanitized, npath + wtpartlen + 1);
+> +		free(npath);
+> +		free(wtpart);
+>  	} else {
+>  		sanitized = xmalloc(len + strlen(path) + 1);
+>  		if (len)
+> @@ -34,26 +74,10 @@ char *prefix_path_gently(const char *prefix, int len,
+>  		strcpy(sanitized + len, path);
+>  		if (remaining_prefix)
+>  			*remaining_prefix = len;
+> -	}
+> -	if (normalize_path_copy_len(sanitized, sanitized, remaining_prefix))
+> -		goto error_out;
+> -	if (is_absolute_path(orig)) {
+> -		size_t root_len, len, total;
+> -		const char *work_tree = get_git_work_tree();
+> -		if (!work_tree)
+> -			goto error_out;
+> -		len = strlen(work_tree);
+> -		root_len = offset_1st_component(work_tree);
+> -		total = strlen(sanitized) + 1;
+> -		if (strncmp(sanitized, work_tree, len) ||
+> -		    (len > root_len && sanitized[len] != '\0' && sanitized[len] != '/')) {
+> -		error_out:
+> +		if (normalize_path_copy_len(sanitized, sanitized, remaining_prefix)) {
+>  			free(sanitized);
+>  			return NULL;
+>  		}
+> -		if (sanitized[len] == '/')
+> -			len++;
+> -		memmove(sanitized, sanitized + len, total - len);
+>  	}
+>  	return sanitized;
+>  }
+> diff --git a/t/t0060-path-utils.sh b/t/t0060-path-utils.sh
+> index 3a0677a..03a12ac 100755
+> --- a/t/t0060-path-utils.sh
+> +++ b/t/t0060-path-utils.sh
+> @@ -190,7 +190,7 @@ test_expect_success SYMLINKS 'real path works on symlinks' '
+>  	test "$sym" = "$(test-path-utils real_path "$dir2/syml")"
+>  '
+>  
+> -test_expect_failure SYMLINKS 'prefix_path works with work tree symlinks' '
+> +test_expect_success SYMLINKS 'prefix_path works with work tree symlinks' '
+>  
+>  	ln -s target symlink &&
+>  	test "$(test-path-utils prefix_path prefix "$(pwd)/symlink")" = "symlink"
