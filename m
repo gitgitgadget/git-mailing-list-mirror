@@ -1,252 +1,127 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v3 17/17] Documentation: add documentation for 'git
- interpret-trailers'
-Date: Mon, 27 Jan 2014 21:33:44 +0100 (CET)
-Message-ID: <20140127.213344.212708599170084659.chriscool@tuxfamily.org>
-References: <20140126165018.24291.47716.chriscool@tuxfamily.org>
-	<20140126170011.24291.26146.chriscool@tuxfamily.org>
-	<CAPig+cQgq_2h+n8OeDsrmk_NqAA4RDNzkBAtNCNjOAGMrFN4jg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/3] builtin/blame.c: large-scale rewrite
+Date: Mon, 27 Jan 2014 12:51:33 -0800
+Message-ID: <xmqqtxcpno6i.fsf@gitster.dls.corp.google.com>
+References: <877g9ocjsk.fsf@fencepost.gnu.org>
+	<1390674221-25767-1-git-send-email-dak@gnu.org>
+	<1390674221-25767-4-git-send-email-dak@gnu.org>
+	<xmqq8uu1pdqq.fsf@gitster.dls.corp.google.com>
+	<87a9eh8b0d.fsf@fencepost.gnu.org>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: gitster@pobox.com, git@vger.kernel.org, johan@herland.net,
-	josh@joshtriplett.org, tr@thomasrast.ch, mhagger@alum.mit.edu,
-	dan.carpenter@oracle.com, greg@kroah.com, peff@peff.net
-To: sunshine@sunshineco.com
-X-From: git-owner@vger.kernel.org Mon Jan 27 21:34:15 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Mon Jan 27 21:51:47 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W7sso-0008Ik-O4
-	for gcvg-git-2@plane.gmane.org; Mon, 27 Jan 2014 21:34:15 +0100
+	id 1W7t9k-0006s3-Nc
+	for gcvg-git-2@plane.gmane.org; Mon, 27 Jan 2014 21:51:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753998AbaA0UeJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Jan 2014 15:34:09 -0500
-Received: from [194.158.98.45] ([194.158.98.45]:43961 "EHLO mail-3y.bbox.fr"
-	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1753860AbaA0UeH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Jan 2014 15:34:07 -0500
-Received: from localhost (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-3y.bbox.fr (Postfix) with ESMTP id D8EA85A;
-	Mon, 27 Jan 2014 21:33:44 +0100 (CET)
-In-Reply-To: <CAPig+cQgq_2h+n8OeDsrmk_NqAA4RDNzkBAtNCNjOAGMrFN4jg@mail.gmail.com>
-X-Mailer: Mew version 6.3 on Emacs 23.3 / Mule 6.0 (HANACHIRUSATO)
+	id S1754045AbaA0Uvk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Jan 2014 15:51:40 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63142 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753657AbaA0Uvj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Jan 2014 15:51:39 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B1D1B67672;
+	Mon, 27 Jan 2014 15:51:38 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=023RT7bIpBZm27R6nCAh69JRTrs=; b=Rp0zwc
+	8ZSPM0tkUU9NZZGehvr/RAOUvR+LZqe4tjLNcAvfReE/hM+etvJ3abA9o4Biof20
+	leMkJHDjV+6Qy+ZMzLE00unNCgfddDhOvVTXnQbBhvBWLQ+XrZ+X05fT6yw9ojKW
+	qDE8dzyzSMPXmfFfQLUsQ3uVw4ZklsJdSxUi0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=yTyIo8I32ujSGPmN0CmEhbGeceftgPUt
+	i7dUv1P0nq1PMVkAsloqMwoHzD5kMYYHASX27gE4y47zV/hbhoAkm1Hz8Db4BZSA
+	7Coy+VT2VZm3FGHpHo7BAyvXjsAICfUF6YOh8c9mTssbGQHTeVnWvohx7kOaY+k+
+	cS5ROJ7RaV8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9E74367671;
+	Mon, 27 Jan 2014 15:51:38 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AA3996766E;
+	Mon, 27 Jan 2014 15:51:37 -0500 (EST)
+In-Reply-To: <87a9eh8b0d.fsf@fencepost.gnu.org> (David Kastrup's message of
+	"Mon, 27 Jan 2014 20:45:06 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: D0AB5BAE-8794-11E3-95DD-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241155>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241156>
 
-From: Eric Sunshine <sunshine@sunshineco.com>
+David Kastrup <dak@gnu.org> writes:
+
+> Junio C Hamano <gitster@pobox.com> writes:
 >
-> On Sun, Jan 26, 2014 at 12:00 PM, Christian Couder
-> <chriscool@tuxfamily.org> wrote:
->> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
->> ---
->> diff --git a/Documentation/git-interpret-trailers.txt b/Documentation/git-interpret-trailers.txt
->> new file mode 100644
->> index 0000000..f74843e
->> --- /dev/null
->> +++ b/Documentation/git-interpret-trailers.txt
->> @@ -0,0 +1,137 @@
->> +git-interpret-trailers(1)
->> +=========================
->> +
->> +NAME
->> +----
->> +git-interpret-trailers - help add stuctured information into commit messages
->> +
->> +SYNOPSIS
->> +--------
->> +[verse]
->> +'git interpret-trailers' [--trim-empty] [--infile=file] [<token[=value]>...]
-> 
-> Would it be more consistent with existing documentation to format this as so?
-> 
->   [--infile=<file>] [<token>[=<value>]]...
+>> David Kastrup <dak@gnu.org> writes:
+>>
+>>> The previous implementation uses a sorted linear list of struct
+>>> blame_entry in a struct scoreboard for organizing all partial or
+>>> completed work.  Every task that is done requires going through the
+>>> whole list where most entries are not relevant to the task at hand.
+>>>
+>>> This commit reorganizes the data structures in order to have each
+>>> remaining subtask work with its own sorted linear list it can work off
+>>> front to back.  Subtasks are organized into "struct origin" chains
+>>> hanging off particular commits.  Commits are organized into a priority
+>>> queue, processing them in commit date order in order to keep most of
+>>> the work affecting a particular blob collated even in the presence of
+>>> an extensive merge history.  In that manner, linear searches can be
+>>> basically avoided anywhere.  They still are done for identifying one
+>>> of multiple analyzed files in a given commit, but the degenerate case
+>>> of a single large file being assembled from a multitude of smaller
+>>> files in the past is not likely to occur often enough to warrant
+>>> special treatment.
+>>> ---
+>>
+>> Sign-off?
+>
+> Not while this is not fit for merging because of #if 0 etc and missing
+> functionality.  This is just for review.
 
-No, it would be very inconsistent:
+That is not what Signing off a patch means, though ;-)
 
-$ grep '\.\.\.\]' *.txt | wc -l
-103
-$ grep '\]\.\.\.' *.txt | wc -l
-0
+>> Actually, I'd like to take my previous suggestion to add this as
+>> blame2 (to replace blame in the future) back.  That was based on my
+>> fear/hope to see an implementation based on a completely different
+>> approach, but the basic premise of having one blame_entry record per
+>> the lines of the final image in the scoreboard, using diff between
+>> parents to the child to find common lines for passing the blame up,
+>> etc. have not changed at all and the change is all about organizing
+>> the pieces of data in a *much* *better* way to avoid needlessly
+>> finding what we already have computed.
+>
+> Yes.  Basically, the call graph outside of blame.c itself should be
+> pretty much the same.
+> ...
+> Ok.  I'm also certain to have a few "space between function name and
+> arguments" left and will grep for those before submitting the next
+> version.
+>
+> Next version will at least include -M option, possibly leaving -C for
+> later.
 
->> +DESCRIPTION
->> +-----------
->> +Help add RFC 822 like headers, called 'trailers', at the end of the
-> 
-> s/822 like/822-like/
+OK.  As we do not want to break the build in the middle of the
+series, but we still want to keep the individual steps reviewable
+incrementally, I would think the best structure would be have the
+series that consists of multiple steps "the basic infrastructure is
+there, but no rename following, and neither -M or -C works", "now
+renames are followed", "now -M works", etc., with tests that are not
+yet working (in the beginning, most of "git blame" test may no
+longer work until the series is finished) marked with
 
-Ok.
+    s/test_expect_success/test_expect_failure/
 
-> Was the suggestion, early in the discussion, to use "footer" rather
-> than "trailer" dismissed?
-
-During the early discussions people initially talked about "footer"
-while Junio and others talked about "trailer".
-
-See:
-
-http://thread.gmane.org/gmane.comp.version-control.git/236429/
-http://thread.gmane.org/gmane.comp.version-control.git/236770/
-
-I have no preference for one or the other, but by default I use what
-Junio uses.
-
->> +otherwise free-form part of a commit message.
->> +
->> +Unless `--infile=file` is used, this command is a filter. It reads the
->> +standard input for a commit message and apply the `token` arguments,
-> 
-> s/apply/applies/
-
-Ok.
-
->> +if any, to this message. The resulting message is emited on the
->> +standard output.
->> +
->> +Some configuration variables control the way the `token` arguments are
->> +applied to the message and the way any existing trailer in the message
->> +is changed. They also make it possible to automatically add some
->> +trailers.
->> +
->> +By default, a 'token=value' or 'token:value' argument will be added
->> +only if no trailer with the same (token, value) pair is already in the
->> +message. The 'token' and 'value' parts will be trimmed to remove
->> +starting and trailing white spaces, and the resulting trimmed 'token'
-> 
-> Other git documentation uniformly spells it as "whitespace" rather
-> than "white spaces".
-
-You are right I will change that.
-
->> +and 'value' will appear in the message like this:
->> +
->> +------------------------------------------------
->> +token: value
->> +------------------------------------------------
->> +
->> +By default, if there are already trailers with the same 'token' the
->> +trailer will appear just after the last trailer with the same
-> 
-> It might be a bit clearer to say "the _new_ trailer will appear...".
-
-Ok.
-
->> +'token'. Otherwise it will appear at the end of the message.
->> +
->> +Note that 'trailers' do not follow and are not intended to follow many
->> +rules that are in RFC 822. For example they do not follow the line
->> +breaking rules, the encoding rules and probably many other rules.
->> +
->> +Trailers have become a de facto standard way to add helpful structured
->> +information into commit messages. For example the well known
->> +"Signed-off-by: " trailer is used by many projects like the Linux
->> +kernel and Git.
-> 
-> This "justification" paragraph might make more sense near or at the
-> very the top of the Description section.
-
-Yeah, or maybe I can remove it entirely.
-
->> +OPTIONS
->> +-------
->> +--trim-empty::
->> +       If the 'value' part of any trailer contains onlywhite spaces,
-> 
-> s/onlywhite spaces/only whitespace/
-
-Ok.
-
->> +       the whole trailer will be removed from the resulting message.
->> +
->> +----infile=file::
->> +       Read the commit message from `file` instead of the standard
->> +       input.
->> +
->> +CONFIGURATION VARIABLES
->> +-----------------------
->> +
->> +trailer.<token>.key::
->> +       This 'key' will be used instead of 'token' in the
->> +       trailer. After some alphanumeric characters, it can contain
->> +       some non alphanumeric characters like ':', '=' or '#' that will
->> +       be used instead of ':' to separate the token from the value in
->> +       the trailer, though the default ':' is more standard.
->> +
->> +trailer.<token>.where::
->> +       This can be either `after`, which is the default, or
->> +       `before`. If it is `before`, then a trailer with the specified
->> +       token, will appear before, instead of after, other trailers
->> +       with the same token, or otherwise at the beginning, instead of
->> +       at the end, of all the trailers.
->> +
->> +trailer.<token>.ifexist::
->> +       This option makes it possible to chose what action will be
-> 
-> s/chose/choose/
-
-Ok.
-
->> +       performed when there is already at least one trailer with the
->> +       same token in the message.
->> ++
->> +The valid values for this option are: `addIfDifferent` (this is the
->> +default), `addIfDifferentNeighbor`, `add`, `overwrite` or `doNothing`.
->> ++
->> +With `addIfDifferent`, a new trailer will be added only if no trailer
->> +with the same (token, value) pair is already in the message.
->> ++
->> +With `addIfDifferentNeighbor`, a new trailer will be added only if no
->> +trailer with the same (token, value) pair is above or below the line
->> +where the new trailer will be added.
->> ++
->> +With `add`, a new trailer will be added, even if some trailers with
->> +the same (token, value) pair are already in the message.
->> ++
->> +With `overwrite`, the new trailer will overwrite an existing trailer
->> +with the same token.
->> ++
->> +With `doNothing`, nothing will be done, that is no new trailer will be
->> +added if there is already one with the same token in the message.
->> +
->> +trailer.<token>.ifmissing::
->> +       This option makes it possible to chose what action will be
-> 
-> s/chose/choose/
-
-Ok.
-
->> +       performed when there is not yet any trailer with the same
->> +       token in the message.
->> ++
->> +The valid values for this option are: `add` (this is the default) and
->> +`doNothing`.
->> ++
->> +With `add`, a new trailer will be added.
->> ++
->> +With `doNothing`, nothing will be done.
->> +
->> +trailer.<token>.command::
->> +       This option can be used to specify a shell command that will
->> +       be used to automatically add or modify a trailer with the
->> +       specified 'token'.
->> ++
->> +When this option is specified, it is like if a special 'token=value'
->> +argument is added at the end of the command line, where 'value' will
->> +be given by the standard output of the specified command.
-> 
-> What happens if the text returned by the command has multiple lines?
-
-The 'value' part of trailer will be on multiple lines.
-
-> Should the documentation say something about this?
-
-I think it is better left as unspecified because we might want to
-print a warning, or perhaps error out in this case.
-
-Thanks,
-Christian.
+and turn expect_failure into expect_success as the series advances.
+That way, we may get a better picture of what each step achieves.  I
+dunno.
