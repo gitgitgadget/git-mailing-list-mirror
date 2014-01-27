@@ -1,130 +1,100 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v5 1/4] submodule: Make 'checkout' update_module explicit
-Date: Sun, 26 Jan 2014 20:32:04 -0500
-Message-ID: <CAPig+cQweMT6g+GLFfAWg=9hcU7EjQ7eMOjYiMDQ4rennJSsXw@mail.gmail.com>
-References: <20140117023746.GJ7078@odin.tremily.us>
-	<cover.1390768736.git.wking@tremily.us>
-	<43e8f3bfdaffefca9edd7a23574816630690e1e5.1390768736.git.wking@tremily.us>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: git blame vs git log --follow performance
+Date: Mon, 27 Jan 2014 08:33:11 +0700
+Message-ID: <CACsJy8B4dkjae3tL+_JvD63HCoi_-nNWYGvT3xRTqi8UpYX95g@mail.gmail.com>
+References: <1390770652.20150.25.camel@joe-AO722>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git <git@vger.kernel.org>, Jens Lehmann <Jens.Lehmann@web.de>,
-	Francesco Pretto <ceztko@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Philip Oakley <philipoakley@iee.org>,
-	John Keeping <john@keeping.me.uk>
-To: "W. Trevor King" <wking@tremily.us>
-X-From: git-owner@vger.kernel.org Mon Jan 27 02:32:18 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>, Ian Campbell <Ian.Campbell@citrix.com>
+To: Joe Perches <joe@perches.com>
+X-From: git-owner@vger.kernel.org Mon Jan 27 02:33:48 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W7b3d-0003sc-VS
-	for gcvg-git-2@plane.gmane.org; Mon, 27 Jan 2014 02:32:14 +0100
+	id 1W7b58-0004LI-G6
+	for gcvg-git-2@plane.gmane.org; Mon, 27 Jan 2014 02:33:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753195AbaA0BcI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Jan 2014 20:32:08 -0500
-Received: from mail-la0-f50.google.com ([209.85.215.50]:43893 "EHLO
-	mail-la0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753076AbaA0BcG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Jan 2014 20:32:06 -0500
-Received: by mail-la0-f50.google.com with SMTP id ec20so4092231lab.9
-        for <git@vger.kernel.org>; Sun, 26 Jan 2014 17:32:04 -0800 (PST)
+	id S1753241AbaA0Bdn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Jan 2014 20:33:43 -0500
+Received: from mail-qc0-f169.google.com ([209.85.216.169]:64725 "EHLO
+	mail-qc0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753121AbaA0Bdm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Jan 2014 20:33:42 -0500
+Received: by mail-qc0-f169.google.com with SMTP id w7so7248988qcr.14
+        for <git@vger.kernel.org>; Sun, 26 Jan 2014 17:33:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=8WCXqNFcK1Y9UGNEqK/1a2xyFMRMtiXsC8fd4pRz2bQ=;
-        b=d33Buf8qpsWbpw1ERCX1WXFOCRjEN2yzhX7ajh+GSg/IGA45ekJceX5Y1Yy7QLEnLM
-         WrnpImOz/0m53PVex+/dMaNGb3okJay83eN6HcAtX5U8veyR6w1g6i91W7NiBCiqeAlk
-         z67gVWTl0mS5TR+FIw7Qd4QaoHFrSzyA6Q/aDMEFZLbWLK7bzFDIrQEoor9CJ2LF8S8U
-         vYrZAPPONJAf81jz7u5MScYvp9zhB9RUam3r6eQSuwVAwQDTiHf+JFaFLjztjMrxASDQ
-         T16AXYI4Q9cWrDxOGCM8jxnKUGMujOWkGZobKdssVY1XtGDx+wzWDa4Pb71IMJU25RdV
-         q/sA==
-X-Received: by 10.112.173.6 with SMTP id bg6mr2259486lbc.17.1390786324234;
- Sun, 26 Jan 2014 17:32:04 -0800 (PST)
-Received: by 10.114.181.228 with HTTP; Sun, 26 Jan 2014 17:32:04 -0800 (PST)
-In-Reply-To: <43e8f3bfdaffefca9edd7a23574816630690e1e5.1390768736.git.wking@tremily.us>
-X-Google-Sender-Auth: RMot1vbX_uS34RJAAU7Uq615c3g
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=7fG/NhTbEXnJpKNlxa8kIUiXz3PVTLNF0XhUNLSIpQQ=;
+        b=xUCFgeJnj5bDzyImWgiPZ9W94D0gpGpf0H5z3j9xdZdaUS8E+mL2PgYbFodyLOKNmx
+         6/pTU4wNQgK9TPpbf9SC1qNdaiG50ipatAAZ/1UxVXHvWuILRRVQH9mmbNpTMXypMCUK
+         JFN8lJact9+St7mPmuoBXCEqzXrPKk6xLd5vCWgizEoVtf3EYpzsKfW4ZyiO2UiBtSUp
+         hdHKs6yIoDt6XXOOo8HKw4fVi8rw8qJDOO3SZ/VuewPDuLeMT5yi5QQz10VAMJjvA2ka
+         DvFOTUhie0qmtG6eIxwcu4dA1CyX5NkWQlDlbThWUjEhVe+pGD46aIiNdk94JGjBPSUA
+         vOzw==
+X-Received: by 10.224.103.131 with SMTP id k3mr147540qao.102.1390786421877;
+ Sun, 26 Jan 2014 17:33:41 -0800 (PST)
+Received: by 10.96.136.98 with HTTP; Sun, 26 Jan 2014 17:33:11 -0800 (PST)
+In-Reply-To: <1390770652.20150.25.camel@joe-AO722>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241125>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241126>
 
-On Sun, Jan 26, 2014 at 3:45 PM, W. Trevor King <wking@tremily.us> wrote:
-> This avoids the current awkwardness of having either '' or 'checkout'
-> for checkout-mode updates, which makes testing for checkout-mode
-> updates (or non-checkout-mode updates) easier.
+On Mon, Jan 27, 2014 at 4:10 AM, Joe Perches <joe@perches.com> wrote:
+> For instance (using the Linus' linux kernel git):
 >
-> Signed-off-by: W. Trevor King <wking@tremily.us>
-> ---
->  git-submodule.sh | 27 +++++++++++----------------
->  1 file changed, 11 insertions(+), 16 deletions(-)
+> $ time git log --follow -- drivers/firmware/google/Kconfig > /dev/null
 >
-> diff --git a/git-submodule.sh b/git-submodule.sh
-> index 5247f78..5e8776c 100755
-> --- a/git-submodule.sh
-> +++ b/git-submodule.sh
-> @@ -803,17 +803,10 @@ cmd_update()
->                         update_module=$update
->                 else
->                         update_module=$(git config submodule."$name".update)
-> -                       case "$update_module" in
-> -                       '')
-> -                               ;; # Unset update mode
-> -                       checkout | rebase | merge | none)
-> -                               ;; # Known update modes
-> -                       !*)
-> -                               ;; # Custom update command
-> -                       *)
-> -                               die "$(eval_gettext "Invalid update mode '$update_module' for submodule '$name'")"
-> -                               ;;
-> -                       esac
-> +                       if test -z "$update_module"
-> +                       then
-> +                               update_module="checkout"
+> real    0m42.329s
+> user    0m40.984s
+> sys     0m0.792s
+>
+> $ time git blame -- drivers/firmware/google/Kconfig > /dev/null
+>
+> real    0m0.963s
+> user    0m0.860s
+> sys     0m0.096s
+>
 
-Here, you (unnecessarily) quote 'checkout'...
+It's not fair to compare blame and log. If you compare, compare it to
+non follow version
 
-> +                       fi
->                 fi
->
->                 displaypath=$(relative_path "$prefix$sm_path")
-> @@ -882,11 +875,16 @@ Maybe you want to use 'update --init'?")"
->                         case ";$cloned_modules;" in
->                         *";$name;"*)
->                                 # then there is no local change to integrate
-> -                               update_module= ;;
-> +                               update_module=checkout ;;
+$ time git log --follow -- drivers/firmware/google/Kconfig > /dev/null
 
-But here you use bare (unquoted) 'checkout'. Bare is probably more idiomatic.
+real    0m35.552s
+user    0m35.120s
+sys     0m0.383s
 
->                         esac
+$ time git log -- drivers/firmware/google/Kconfig > /dev/null
+
+real    0m4.366s
+user    0m4.215s
+sys     0m0.144s
+
+Although because we need to detect rename, we can't really filter to
+one path. So the base line is more like
+
+$ time git log > /dev/null
+
+real    0m29.338s
+user    0m28.485s
+sys     0m0.813s
+
+with rename detection taking some more time.
+
+> Perhaps adding a whole-file rename option to the
+> "git log" history simplification mechanism could
+> help?
 >
->                         must_die_on_failure=
->                         case "$update_module" in
-> +                       checkout)
-> +                               command="git checkout $subforce -q"
-> +                               die_msg="$(eval_gettext "Unable to checkout '\$sha1' in submodule path '\$displaypath'")"
-> +                               say_msg="$(eval_gettext "Submodule path '\$displaypath': checked out '\$sha1'")"
-> +                               ;;
->                         rebase)
->                                 command="git rebase"
->                                 die_msg="$(eval_gettext "Unable to rebase '\$sha1' in submodule path '\$displaypath'")"
-> @@ -906,10 +904,7 @@ Maybe you want to use 'update --init'?")"
->                                 must_die_on_failure=yes
->                                 ;;
->                         *)
-> -                               command="git checkout $subforce -q"
-> -                               die_msg="$(eval_gettext "Unable to checkout '\$sha1' in submodule path '\$displaypath'")"
-> -                               say_msg="$(eval_gettext "Submodule path '\$displaypath': checked out '\$sha1'")"
-> -                               ;;
-> +                               die "$(eval_gettext "Invalid update mode '$update_module' for submodule '$name'")"
->                         esac
->
->                         if (clear_local_git_env; cd "$sm_path" && $command "$sha1")
-> --
-> 1.8.5.2.8.g0f6c0d1
+> Thoughts?
+
+I tested a version with rename detection logic removed. It did not
+change the timing significantly. To improve --follow I think we need
+to do something about path filtering.
+-- 
+Duy
