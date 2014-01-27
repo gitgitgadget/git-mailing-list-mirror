@@ -1,55 +1,63 @@
-From: Thomas Hochstein <thh@inter.net>
-Subject: Re: How to get notified of new releases?
-Date: Mon, 27 Jan 2014 07:20:34 +0100
-Message-ID: <gcvg.1401270720.151@landroval.ancalagon.de>
-References: <CAHd499C-BJJA6oPd5UcOqL8m8xGeL5GoAMtfF90AdKVvayTc7g@mail.gmail.com>
+From: David Kastrup <dak@gnu.org>
+Subject: What's with git blame --reverse ?
+Date: Mon, 27 Jan 2014 13:45:32 +0100
+Organization: Organization?!?
+Message-ID: <87y5218ufn.fsf@fencepost.gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 27 10:00:34 2014
+X-From: git-owner@vger.kernel.org Mon Jan 27 13:46:00 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W7i3R-0003bK-1h
-	for gcvg-git-2@plane.gmane.org; Mon, 27 Jan 2014 10:00:29 +0100
+	id 1W7lZc-0007QR-4j
+	for gcvg-git-2@plane.gmane.org; Mon, 27 Jan 2014 13:45:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751431AbaA0JAZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Jan 2014 04:00:25 -0500
-Received: from plane.gmane.org ([80.91.229.3]:47176 "EHLO plane.gmane.org"
+	id S1753762AbaA0Mpr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Jan 2014 07:45:47 -0500
+Received: from plane.gmane.org ([80.91.229.3]:40321 "EHLO plane.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751059AbaA0JAY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Jan 2014 04:00:24 -0500
+	id S1753743AbaA0Mpp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Jan 2014 07:45:45 -0500
 Received: from list by plane.gmane.org with local (Exim 4.69)
 	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1W7i3L-0003X3-5O
-	for git@vger.kernel.org; Mon, 27 Jan 2014 10:00:23 +0100
-Received: from p4fccf892.dip0.t-ipconnect.de ([79.204.248.146])
+	id 1W7lZQ-0007MH-87
+	for git@vger.kernel.org; Mon, 27 Jan 2014 13:45:44 +0100
+Received: from x2f3d3f3.dyn.telefonica.de ([2.243.211.243])
         by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 27 Jan 2014 10:00:23 +0100
-Received: from thh by p4fccf892.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
+        for <git@vger.kernel.org>; Mon, 27 Jan 2014 13:45:44 +0100
+Received: from dak by x2f3d3f3.dyn.telefonica.de with local (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 27 Jan 2014 10:00:23 +0100
+        for <git@vger.kernel.org>; Mon, 27 Jan 2014 13:45:44 +0100
 X-Injected-Via-Gmane: http://gmane.org/
 X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: p4fccf892.dip0.t-ipconnect.de
-User-Agent: ForteAgent/6.00-32.1186  Hamster/2.1.0.11
-X-Uptime: 0 day(s), 7 hour(s), 36 minute(s), 47 second(s) [landroval | 70899]
+X-Gmane-NNTP-Posting-Host: x2f3d3f3.dyn.telefonica.de
+X-Face: 2FEFf>]>q>2iw=B6,xrUubRI>pR&Ml9=ao@P@i)L:\urd*t9M~y1^:+Y]'C0~{mAl`oQuAl
+ \!3KEIp?*w`|bL5qr,H)LFO6Q=qx~iH4DN;i";/yuIsqbLLCh/!U#X[S~(5eZ41to5f%E@'ELIi$t^
+ Vc\LWP@J5p^rst0+('>Er0=^1{]M9!p?&:\z]|;&=NP3AhB!B_bi^]Pfkw
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3.50 (gnu/linux)
+Cancel-Lock: sha1:JcDH05496TkxGKB8OtETvbiLKXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241134>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241135>
 
-Robert Dailey schrieb:
 
-> Are there any dedicated mailing lists for git releases, or RSS feeds?
-> I am on Windows so I'd specifically be interested in notifications
-> when new releases or preview binaries are released on the Windows
-> platform. I'm constantly checking the website currently.
+The git blame manual page talks about using git blame --reverse to
+figure out when a particular change disappeared, but I cannot make it
+produce anything useful regardless of what range I give it.  Using
+--root delivers a different state of uselessness.
 
-You may want to subscribe to <msysgit@googlegroups.com>, which is
-low-traffic.
+Can anyone give a recipe for using git blame --reverse on the Git code
+base for figuring out anything of relevance?
+
+Since I am in the process of rewriting git-blame, of course I want to
+verify that everything works, but while I achieve the same results, they
+seem fabulously useless before and after my rewrite.
+
+-- 
+David Kastrup
