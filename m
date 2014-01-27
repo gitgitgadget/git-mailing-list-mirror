@@ -1,71 +1,159 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] doc: remote author/documentation sections from more pages
-Date: Sun, 26 Jan 2014 16:34:51 -0800
-Message-ID: <20140127003451.GC9450@google.com>
-References: <1390779829-24168-1-git-send-email-mhagger@alum.mit.edu>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v2 2/2] setup: Don't dereference in-tree symlinks for
+ absolute paths
+Date: Mon, 27 Jan 2014 07:49:42 +0700
+Message-ID: <CACsJy8AwBXtYTbQhcAfYgwuEGrzbMG9SDo8JOpSVF945O7VPyQ@mail.gmail.com>
+References: <52E5439D.7060002@web.de> <1390781250-20389-1-git-send-email-martinerikwerner@gmail.com>
+ <1390781250-20389-2-git-send-email-martinerikwerner@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Johan Herland <johan@herland.net>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Mon Jan 27 01:35:07 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+	Git Mailing List <git@vger.kernel.org>, richih@debian.org
+To: Martin Erik Werner <martinerikwerner@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 27 01:50:29 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W7aAM-0001rz-UU
-	for gcvg-git-2@plane.gmane.org; Mon, 27 Jan 2014 01:35:07 +0100
+	id 1W7aPB-0007L5-3Z
+	for gcvg-git-2@plane.gmane.org; Mon, 27 Jan 2014 01:50:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753725AbaA0AfB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Jan 2014 19:35:01 -0500
-Received: from mail-bk0-f43.google.com ([209.85.214.43]:36453 "EHLO
-	mail-bk0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753717AbaA0Ae7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Jan 2014 19:34:59 -0500
-Received: by mail-bk0-f43.google.com with SMTP id mx11so2487727bkb.16
-        for <git@vger.kernel.org>; Sun, 26 Jan 2014 16:34:58 -0800 (PST)
+	id S1753277AbaA0AuP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Jan 2014 19:50:15 -0500
+Received: from mail-qc0-f176.google.com ([209.85.216.176]:40481 "EHLO
+	mail-qc0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753121AbaA0AuN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Jan 2014 19:50:13 -0500
+Received: by mail-qc0-f176.google.com with SMTP id e16so7089993qcx.21
+        for <git@vger.kernel.org>; Sun, 26 Jan 2014 16:50:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=Pam1F8/LWZsa1D4+FwF339vMV/qzbRValI4sbypEFxs=;
-        b=KI08jk8gt3HinqcQgWhAcI2xzedA6WAaXN8hTPehHo6BCqz35/tiN3KF6ta6lzzkaF
-         iGiXSMAcSDxQQAYgIv9Eiald0S0+Evitr+vwTTVbsXylQYAXv3J8yNv17gSeOereFrBA
-         AHNxkDGPN3zSuO5Gj5tMpYZTNoo2tFAwT/+EvzFHKtEZmpZc8mQ7oIX1qz3bifPfBmKl
-         bT52v+CbTXEc/VzLz+aikE7c/gcZrRwYTfuMfjGJN0CK+F3kJuibUR2DdifttJHZyZ1/
-         9gHT3Y7rQ3bs7qnZ6LQRqV4w4gXonKgtp49DrRWfd1HCuyI/A2K1hxSUMg5530hq04EA
-         fTaA==
-X-Received: by 10.204.251.67 with SMTP id mr3mr20733739bkb.11.1390782898109;
-        Sun, 26 Jan 2014 16:34:58 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id kk3sm11622891bkb.12.2014.01.26.16.34.54
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Sun, 26 Jan 2014 16:34:57 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <1390779829-24168-1-git-send-email-mhagger@alum.mit.edu>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=47lYF+74WVLAvY5yFbMfaIpCFaknQwwtcy3uCw2IcWM=;
+        b=G4katvuqiqY0ICCmUDBIixm9LQb2BLKHANNOhRGDqIkinY7cXbwpWAFSn2Co/YjWMy
+         uMzSCzEQDQh9BFJ3b4DIfbm/eQ8mvHDsNBPI5WPvAURh18QMMSDQJ4CAt7r341iLBqkr
+         3zBSaYRVqvnZLKX5Sz2tmdsS3toPuUOdZjh2j3STx9aiEREB/r5xFxY1jqg6/0lS7/+y
+         /VR6+OzVDmq++MgfIe58dfWvqum4Va2e9Xw8NFCgyZYSZmLN/DHE+cSC2j16ttz2Qhsk
+         fEynBDcZeDwNiGhwOjH0xdAjdaXWMPIgL2N1cLBXTM60oslPmh4hnqscVXoS6+eT7r+5
+         a5OA==
+X-Received: by 10.229.56.200 with SMTP id z8mr38588421qcg.1.1390783813013;
+ Sun, 26 Jan 2014 16:50:13 -0800 (PST)
+Received: by 10.96.136.98 with HTTP; Sun, 26 Jan 2014 16:49:42 -0800 (PST)
+In-Reply-To: <1390781250-20389-2-git-send-email-martinerikwerner@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241122>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241123>
 
-Michael Haggerty wrote:
+On Mon, Jan 27, 2014 at 7:07 AM, Martin Erik Werner
+<martinerikwerner@gmail.com> wrote:
+> diff --git a/setup.c b/setup.c
+> index 5432a31..0789a96 100644
+> --- a/setup.c
+> +++ b/setup.c
+> @@ -22,11 +22,51 @@ char *prefix_path_gently(const char *prefix, int len,
+>         const char *orig = path;
+>         char *sanitized;
+>         if (is_absolute_path(orig)) {
+> -               const char *temp = real_path(path);
+> -               sanitized = xmalloc(len + strlen(temp) + 1);
+> -               strcpy(sanitized, temp);
+> +               int i, match;
+> +               size_t wtpartlen;
+> +               char *npath, *wtpart;
+> +               struct string_list list = STRING_LIST_INIT_DUP;
+> +               const char *work_tree = get_git_work_tree();
+> +               if (!work_tree)
+> +                       return NULL;
+> +               npath = xmalloc(strlen(path) + 1);
+>                 if (remaining_prefix)
+>                         *remaining_prefix = 0;
+> +               if (normalize_path_copy_len(npath, path, remaining_prefix)) {
+> +                       free(npath);
+> +                       return NULL;
+> +               }
+> +
+> +               string_list_split(&list, npath, '/', -1);
+> +               wtpart = xmalloc(strlen(npath) + 1);
+> +               i = 0;
+> +               match = 0;
 
-> We decided at 48bb914e (doc: drop author/documentation sections from
-> most pages, 2011-03-11) to remove "author" and "documentation"
-> sections from our documentation.  Remove a few stragglers.
+> +               strcpy(wtpart, list.items[i++].string);
+> +               strcat(wtpart, "/");
+> +               if (strcmp(real_path(wtpart), work_tree) == 0) {
+> +                       match = 1;
+> +               } else {
 
-Thanks.
+Could we remove this part and let the while loop handle the first path
+component too? The only difference I see is if this code matches, we
+have a trailing slash, while the "while" loop does not have a trailing
+slash in wtpart.
 
-This puts two blank lines where there was previously one in some cases
-in the source above the GIT ("part of the git suite") section.  I
-don't think that matters.
+> +                       while (i < list.nr) {
+> +                               strcat(wtpart, list.items[i++].string);
+> +                               if (strcmp(real_path(wtpart), work_tree) == 0) {
+> +                                       match = 1;
+> +                                       break;
+> +                               }
+> +                               strcat(wtpart, "/");
+> +                       }
+> +               }
+> +               string_list_clear(&list, 0);
+> +               if (!match) {
+> +                       free(npath);
+> +                       free(wtpart);
+> +                       return NULL;
+> +               }
+> +
+> +               wtpartlen = strlen(wtpart);
+> +               sanitized = xmalloc(strlen(npath) - wtpartlen);
+> +               strcpy(sanitized, npath + wtpartlen + 1);
 
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+This "+ 1" is to ignore '/', isn't it? If so we should not do if match
+is set 1 outside "while" loop.
+
+> +               free(npath);
+> +               free(wtpart);
+
+All this new code looks long enough to be a separate function with a
+meaningful name. And we could travese through each path component in
+npath without wtpart (replacing '/' with '\0' to terminate the string
+temporarily for real_path()). But it's up to you. Whichever way is
+easier to read to you.
+
+>         } else {
+>                 sanitized = xmalloc(len + strlen(path) + 1);
+>                 if (len)
+> @@ -34,26 +74,10 @@ char *prefix_path_gently(const char *prefix, int len,
+>                 strcpy(sanitized + len, path);
+>                 if (remaining_prefix)
+>                         *remaining_prefix = len;
+> -       }
+> -       if (normalize_path_copy_len(sanitized, sanitized, remaining_prefix))
+> -               goto error_out;
+> -       if (is_absolute_path(orig)) {
+> -               size_t root_len, len, total;
+> -               const char *work_tree = get_git_work_tree();
+> -               if (!work_tree)
+> -                       goto error_out;
+> -               len = strlen(work_tree);
+> -               root_len = offset_1st_component(work_tree);
+> -               total = strlen(sanitized) + 1;
+> -               if (strncmp(sanitized, work_tree, len) ||
+> -                   (len > root_len && sanitized[len] != '\0' && sanitized[len] != '/')) {
+> -               error_out:
+> +               if (normalize_path_copy_len(sanitized, sanitized, remaining_prefix)) {
+>                         free(sanitized);
+>                         return NULL;
+>                 }
+> -               if (sanitized[len] == '/')
+> -                       len++;
+> -               memmove(sanitized, sanitized + len, total - len);
+>         }
+>         return sanitized;
+>  }
+-- 
+Duy
