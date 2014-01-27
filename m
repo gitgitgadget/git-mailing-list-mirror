@@ -1,95 +1,80 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: How to substructure rewrites?
-Date: Mon, 27 Jan 2014 07:58:27 -0800
-Message-ID: <xmqqppndpgbg.fsf@gitster.dls.corp.google.com>
-References: <877g9ocjsk.fsf@fencepost.gnu.org>
+Subject: Re: [PATCH] send-email: If the ca path is not specified, use the defaults
+Date: Mon, 27 Jan 2014 08:02:31 -0800
+Message-ID: <xmqqlhy1pg4o.fsf@gitster.dls.corp.google.com>
+References: <1389807071-26746-1-git-send-email-i.gnatenko.brain@gmail.com>
+	<xmqqa9ex2gi6.fsf@gitster.dls.corp.google.com>
+	<7AD1C6ED-6177-415D-B342-D1FEA9F810B4@rubenkerkhof.com>
+	<xmqqob3d0w7g.fsf@gitster.dls.corp.google.com>
+	<20140115215024.GM18964@google.com>
+	<xmqqppnry0p9.fsf@gitster.dls.corp.google.com>
+	<CALkWK0ky2KCJuo==XRiNu+eb2+hHpgv+FAyZTd85=TYQxgSCbQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Mon Jan 27 16:58:53 2014
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Ruben Kerkhof <ruben@rubenkerkhof.com>,
+	Igor Gnatenko <i.gnatenko.brain@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 27 17:02:43 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W7oaK-0006Vi-1e
-	for gcvg-git-2@plane.gmane.org; Mon, 27 Jan 2014 16:58:52 +0100
+	id 1W7oe0-0008Ie-Av
+	for gcvg-git-2@plane.gmane.org; Mon, 27 Jan 2014 17:02:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754038AbaA0P6k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Jan 2014 10:58:40 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56114 "EHLO
+	id S1753628AbaA0QCg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Jan 2014 11:02:36 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42525 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753894AbaA0P6f (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Jan 2014 10:58:35 -0500
+	id S1753058AbaA0QCg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Jan 2014 11:02:36 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 91922679A6;
-	Mon, 27 Jan 2014 10:58:32 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6ACBF67AE2;
+	Mon, 27 Jan 2014 11:02:35 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=y9Rs6UFMPun6uKv/uwthvOXrZ+Q=; b=FhI+lZ
-	bleeGC46nT6HM6Ks8uoDeV26BDH+DeMhXfItSFCc9sWAjqK6B06e33IfzJD8lKrM
-	Z0RMiutgmqLNHIKgJqc9dKeIkksKA6dgKx0buzHZxWYBayYq2X6OFEcotydDFvck
-	ezAT95+ustK65p6vUTYFk0WTYdFdOC0RSvA2Q=
+	:content-type; s=sasl; bh=kMRSj9Zhl4BJ0PvgAPDCAXB/VTs=; b=O6pHfG
+	lSHbGLRrq23xUlCMHhGU4V7oicmHhyf9NWPHbCMEjFOshmXfz1gYMPPHWGIOowYT
+	qCd5KtJZnCAoKtWxHDOj7c55ZwQ546DMTtL2ZzWVdgmu6+1wJqzfE6LaHrtdYBfv
+	HylKNL0oYYgTAllYkM61lTCVOOiobV1giQ0Fs=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=SlsyGvXfNvcbLwY7yef6qV8GgElDgUK3
-	Xg5Fqzyt37fUcZ8lv9duU4fsb48lAy1IAT4hURzyuvpI2MK9gTFQe1+/4nGbBdVJ
-	YvK8Ky/iglRjSWkXzJ5vZV5m4JYDDEA/QoIjEs3xI8PIAu72pal2KKmTAres0Fw3
-	lhMh3bKnEHk=
+	:content-type; q=dns; s=sasl; b=sFiKIhBQn4iyBXvm62AuBdeRJkr2YvHu
+	KzhdqYgEU4xLziJ1KAm/QkfD+T/0sVN7gKGja1IyZ7MQFK62S+SM/bUDrECD6iiB
+	Aq2hCuyjwOZOoPpHELOjv9iJELnNhuhSmnyMu0HfhETzVz+4OMBv74mzexD9Mbr7
+	37pPgG9SFKA=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7F876679A5;
-	Mon, 27 Jan 2014 10:58:32 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4A8DB67AE1;
+	Mon, 27 Jan 2014 11:02:35 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8C109679A3;
-	Mon, 27 Jan 2014 10:58:31 -0500 (EST)
-In-Reply-To: <877g9ocjsk.fsf@fencepost.gnu.org> (David Kastrup's message of
-	"Sat, 25 Jan 2014 13:44:59 +0100")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 56DB467AE0;
+	Mon, 27 Jan 2014 11:02:34 -0500 (EST)
+In-Reply-To: <CALkWK0ky2KCJuo==XRiNu+eb2+hHpgv+FAyZTd85=TYQxgSCbQ@mail.gmail.com>
+	(Ramkumar Ramachandra's message of "Sun, 26 Jan 2014 12:17:14 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: DE86241C-876B-11E3-8E35-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 6F3C260A-876C-11E3-A246-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241142>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241143>
 
-David Kastrup <dak@gnu.org> writes:
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-> As it can easily be guessed, the "add xxx function" commits are
-> basically adding not-yet-used code (and so will not disrupt
-> compilation), but everything starting with "Reorganize blame data
-> structures" up until the final commit will not work or compile since the
-> code does not match the data structures.
+> Junio C Hamano wrote:
+>> This change could introduce a regression for people on a platform
+>> whose certificate directory is /etc/ssl/certs but its IO::Socket:SSL
+>> somehow fails to use it as SSL_ca_path without being told.
 >
-> So there is little point in substructing all that, right?  Even
-> something seemingly isolated like
->
-> commit f64b41c472442ae9971321fe8f62c3885ba4d8b7
-> Author: David Kastrup <dak@gnu.org>
-> Date:   Sun Jan 19 02:16:21 2014 +0100
->
->     blame.c: Let output determine MORE_THAN_ONE_PATH more efficiently
->
-> is not really useful as a separate commit since while it does implement
-> a particular task, this is done starting with non-working code relying
-> on no-longer existent data structures.
+> I can confirm that my git-send-email doesn't regress to the
+> pre-35035bbf state; my certificate directory is /etc/ssl/certs. I'm
+> somewhat surprised that IO::Socket::SSL picks the right file/
+> directory on every platform without being told explicitly. This change
+> definitely looks like the right fix.
 
-Small pieces that are incrementally added with their own
-documentation would certainly be a lot easier to read than one big
-ball of wax.  I am wondering if it would make it easier for
-everybody to tentatively do "git-blame vs git-blame2" dance here,
-just like we did "git-blame vs git-annotate" dance some years ago.
-That is, to add a completely new command and have them in parallel
-while cooking in 'next' (or we could even keep them in a few
-releases if we are not absolutely certain about the correctness of
-the result of the new code), aiming to eventually retire the current
-implementation and replace it with the new one.  We have already
-have test infrastructure to allow us to run variants of blames, too,
-to help that kind of transition.
-
-> In general, the rule is likely "any commit should not create a
-> non-working state" right?
-
-Yes.
+Thanks.
