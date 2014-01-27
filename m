@@ -1,159 +1,239 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v2 2/2] setup: Don't dereference in-tree symlinks for
- absolute paths
-Date: Mon, 27 Jan 2014 07:49:42 +0700
-Message-ID: <CACsJy8AwBXtYTbQhcAfYgwuEGrzbMG9SDo8JOpSVF945O7VPyQ@mail.gmail.com>
-References: <52E5439D.7060002@web.de> <1390781250-20389-1-git-send-email-martinerikwerner@gmail.com>
- <1390781250-20389-2-git-send-email-martinerikwerner@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v3 17/17] Documentation: add documentation for 'git interpret-trailers'
+Date: Sun, 26 Jan 2014 19:52:59 -0500
+Message-ID: <CAPig+cQgq_2h+n8OeDsrmk_NqAA4RDNzkBAtNCNjOAGMrFN4jg@mail.gmail.com>
+References: <20140126165018.24291.47716.chriscool@tuxfamily.org>
+	<20140126170011.24291.26146.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-	Git Mailing List <git@vger.kernel.org>, richih@debian.org
-To: Martin Erik Werner <martinerikwerner@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 27 01:50:29 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+	Johan Herland <johan@herland.net>,
+	Josh Triplett <josh@joshtriplett.org>,
+	Thomas Rast <tr@thomasrast.ch>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Dan Carpenter <dan.carpenter@oracle.com>,
+	Greg Kroah-Hartman <greg@kroah.com>, Jeff King <peff@peff.net>
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Mon Jan 27 01:53:07 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W7aPB-0007L5-3Z
-	for gcvg-git-2@plane.gmane.org; Mon, 27 Jan 2014 01:50:25 +0100
+	id 1W7aRm-0008I8-Hk
+	for gcvg-git-2@plane.gmane.org; Mon, 27 Jan 2014 01:53:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753277AbaA0AuP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Jan 2014 19:50:15 -0500
-Received: from mail-qc0-f176.google.com ([209.85.216.176]:40481 "EHLO
-	mail-qc0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753121AbaA0AuN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Jan 2014 19:50:13 -0500
-Received: by mail-qc0-f176.google.com with SMTP id e16so7089993qcx.21
-        for <git@vger.kernel.org>; Sun, 26 Jan 2014 16:50:13 -0800 (PST)
+	id S1753347AbaA0AxD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Jan 2014 19:53:03 -0500
+Received: from mail-la0-f43.google.com ([209.85.215.43]:37587 "EHLO
+	mail-la0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753121AbaA0AxB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Jan 2014 19:53:01 -0500
+Received: by mail-la0-f43.google.com with SMTP id pv20so3966953lab.2
+        for <git@vger.kernel.org>; Sun, 26 Jan 2014 16:52:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=47lYF+74WVLAvY5yFbMfaIpCFaknQwwtcy3uCw2IcWM=;
-        b=G4katvuqiqY0ICCmUDBIixm9LQb2BLKHANNOhRGDqIkinY7cXbwpWAFSn2Co/YjWMy
-         uMzSCzEQDQh9BFJ3b4DIfbm/eQ8mvHDsNBPI5WPvAURh18QMMSDQJ4CAt7r341iLBqkr
-         3zBSaYRVqvnZLKX5Sz2tmdsS3toPuUOdZjh2j3STx9aiEREB/r5xFxY1jqg6/0lS7/+y
-         /VR6+OzVDmq++MgfIe58dfWvqum4Va2e9Xw8NFCgyZYSZmLN/DHE+cSC2j16ttz2Qhsk
-         fEynBDcZeDwNiGhwOjH0xdAjdaXWMPIgL2N1cLBXTM60oslPmh4hnqscVXoS6+eT7r+5
-         a5OA==
-X-Received: by 10.229.56.200 with SMTP id z8mr38588421qcg.1.1390783813013;
- Sun, 26 Jan 2014 16:50:13 -0800 (PST)
-Received: by 10.96.136.98 with HTTP; Sun, 26 Jan 2014 16:49:42 -0800 (PST)
-In-Reply-To: <1390781250-20389-2-git-send-email-martinerikwerner@gmail.com>
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=+gR1mgpzxatozJS1raCfVuZsOmCDKRU/g0Qr93UqJ/s=;
+        b=xROIHAQQl8WDTUa2Iohi+kOUegVs+PAVblYRW+e+2Z1SeZJri7Ckh6Kj5t9AGQ5e5h
+         Xs0fkNLhXU/Njg+02gfB3VP7nBlTxMpMl/Loq4tIE99UNpzjykd1DrmnydP82kqo92B3
+         /vRKTIVJr4xk5y2BSKysfT6QgYBoUGtQUk8D33eAw83DyDvs4fMUr4ZqTPF73wdy5eWE
+         OZDcBasEJBRL3cbAUm3BHMW2THkkPduT+ardsC5gcA3uHGWO/IFr1Tmc67Cl31hT6tpy
+         MaUeKUuomRfAy+KbSiwq5qbOhcIVGlH6vFz3fOWZEI62Zhv437UgrL40PTqlrMfwd+l4
+         2CAw==
+X-Received: by 10.152.3.10 with SMTP id 10mr819288lay.35.1390783979741; Sun,
+ 26 Jan 2014 16:52:59 -0800 (PST)
+Received: by 10.114.181.228 with HTTP; Sun, 26 Jan 2014 16:52:59 -0800 (PST)
+In-Reply-To: <20140126170011.24291.26146.chriscool@tuxfamily.org>
+X-Google-Sender-Auth: 36HlETjCFtBk6XiTuxU1CH7ckeo
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241123>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241124>
 
-On Mon, Jan 27, 2014 at 7:07 AM, Martin Erik Werner
-<martinerikwerner@gmail.com> wrote:
-> diff --git a/setup.c b/setup.c
-> index 5432a31..0789a96 100644
-> --- a/setup.c
-> +++ b/setup.c
-> @@ -22,11 +22,51 @@ char *prefix_path_gently(const char *prefix, int len,
->         const char *orig = path;
->         char *sanitized;
->         if (is_absolute_path(orig)) {
-> -               const char *temp = real_path(path);
-> -               sanitized = xmalloc(len + strlen(temp) + 1);
-> -               strcpy(sanitized, temp);
-> +               int i, match;
-> +               size_t wtpartlen;
-> +               char *npath, *wtpart;
-> +               struct string_list list = STRING_LIST_INIT_DUP;
-> +               const char *work_tree = get_git_work_tree();
-> +               if (!work_tree)
-> +                       return NULL;
-> +               npath = xmalloc(strlen(path) + 1);
->                 if (remaining_prefix)
->                         *remaining_prefix = 0;
-> +               if (normalize_path_copy_len(npath, path, remaining_prefix)) {
-> +                       free(npath);
-> +                       return NULL;
-> +               }
+On Sun, Jan 26, 2014 at 12:00 PM, Christian Couder
+<chriscool@tuxfamily.org> wrote:
+> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+> ---
+> diff --git a/Documentation/git-interpret-trailers.txt b/Documentation/git-interpret-trailers.txt
+> new file mode 100644
+> index 0000000..f74843e
+> --- /dev/null
+> +++ b/Documentation/git-interpret-trailers.txt
+> @@ -0,0 +1,137 @@
+> +git-interpret-trailers(1)
+> +=========================
 > +
-> +               string_list_split(&list, npath, '/', -1);
-> +               wtpart = xmalloc(strlen(npath) + 1);
-> +               i = 0;
-> +               match = 0;
-
-> +               strcpy(wtpart, list.items[i++].string);
-> +               strcat(wtpart, "/");
-> +               if (strcmp(real_path(wtpart), work_tree) == 0) {
-> +                       match = 1;
-> +               } else {
-
-Could we remove this part and let the while loop handle the first path
-component too? The only difference I see is if this code matches, we
-have a trailing slash, while the "while" loop does not have a trailing
-slash in wtpart.
-
-> +                       while (i < list.nr) {
-> +                               strcat(wtpart, list.items[i++].string);
-> +                               if (strcmp(real_path(wtpart), work_tree) == 0) {
-> +                                       match = 1;
-> +                                       break;
-> +                               }
-> +                               strcat(wtpart, "/");
-> +                       }
-> +               }
-> +               string_list_clear(&list, 0);
-> +               if (!match) {
-> +                       free(npath);
-> +                       free(wtpart);
-> +                       return NULL;
-> +               }
+> +NAME
+> +----
+> +git-interpret-trailers - help add stuctured information into commit messages
 > +
-> +               wtpartlen = strlen(wtpart);
-> +               sanitized = xmalloc(strlen(npath) - wtpartlen);
-> +               strcpy(sanitized, npath + wtpartlen + 1);
+> +SYNOPSIS
+> +--------
+> +[verse]
+> +'git interpret-trailers' [--trim-empty] [--infile=file] [<token[=value]>...]
 
-This "+ 1" is to ignore '/', isn't it? If so we should not do if match
-is set 1 outside "while" loop.
+Would it be more consistent with existing documentation to format this as so?
 
-> +               free(npath);
-> +               free(wtpart);
+  [--infile=<file>] [<token>[=<value>]]...
 
-All this new code looks long enough to be a separate function with a
-meaningful name. And we could travese through each path component in
-npath without wtpart (replacing '/' with '\0' to terminate the string
-temporarily for real_path()). But it's up to you. Whichever way is
-easier to read to you.
+> +DESCRIPTION
+> +-----------
+> +Help add RFC 822 like headers, called 'trailers', at the end of the
 
->         } else {
->                 sanitized = xmalloc(len + strlen(path) + 1);
->                 if (len)
-> @@ -34,26 +74,10 @@ char *prefix_path_gently(const char *prefix, int len,
->                 strcpy(sanitized + len, path);
->                 if (remaining_prefix)
->                         *remaining_prefix = len;
-> -       }
-> -       if (normalize_path_copy_len(sanitized, sanitized, remaining_prefix))
-> -               goto error_out;
-> -       if (is_absolute_path(orig)) {
-> -               size_t root_len, len, total;
-> -               const char *work_tree = get_git_work_tree();
-> -               if (!work_tree)
-> -                       goto error_out;
-> -               len = strlen(work_tree);
-> -               root_len = offset_1st_component(work_tree);
-> -               total = strlen(sanitized) + 1;
-> -               if (strncmp(sanitized, work_tree, len) ||
-> -                   (len > root_len && sanitized[len] != '\0' && sanitized[len] != '/')) {
-> -               error_out:
-> +               if (normalize_path_copy_len(sanitized, sanitized, remaining_prefix)) {
->                         free(sanitized);
->                         return NULL;
->                 }
-> -               if (sanitized[len] == '/')
-> -                       len++;
-> -               memmove(sanitized, sanitized + len, total - len);
->         }
->         return sanitized;
->  }
--- 
-Duy
+s/822 like/822-like/
+
+Was the suggestion, early in the discussion, to use "footer" rather
+than "trailer" dismissed?
+
+> +otherwise free-form part of a commit message.
+> +
+> +Unless `--infile=file` is used, this command is a filter. It reads the
+> +standard input for a commit message and apply the `token` arguments,
+
+s/apply/applies/
+
+> +if any, to this message. The resulting message is emited on the
+> +standard output.
+> +
+> +Some configuration variables control the way the `token` arguments are
+> +applied to the message and the way any existing trailer in the message
+> +is changed. They also make it possible to automatically add some
+> +trailers.
+> +
+> +By default, a 'token=value' or 'token:value' argument will be added
+> +only if no trailer with the same (token, value) pair is already in the
+> +message. The 'token' and 'value' parts will be trimmed to remove
+> +starting and trailing white spaces, and the resulting trimmed 'token'
+
+Other git documentation uniformly spells it as "whitespace" rather
+than "white spaces".
+
+> +and 'value' will appear in the message like this:
+> +
+> +------------------------------------------------
+> +token: value
+> +------------------------------------------------
+> +
+> +By default, if there are already trailers with the same 'token' the
+> +trailer will appear just after the last trailer with the same
+
+It might be a bit clearer to say "the _new_ trailer will appear...".
+
+> +'token'. Otherwise it will appear at the end of the message.
+> +
+> +Note that 'trailers' do not follow and are not intended to follow many
+> +rules that are in RFC 822. For example they do not follow the line
+> +breaking rules, the encoding rules and probably many other rules.
+> +
+> +Trailers have become a de facto standard way to add helpful structured
+> +information into commit messages. For example the well known
+> +"Signed-off-by: " trailer is used by many projects like the Linux
+> +kernel and Git.
+
+This "justification" paragraph might make more sense near or at the
+very the top of the Description section.
+
+> +OPTIONS
+> +-------
+> +--trim-empty::
+> +       If the 'value' part of any trailer contains onlywhite spaces,
+
+s/onlywhite spaces/only whitespace/
+
+> +       the whole trailer will be removed from the resulting message.
+> +
+> +----infile=file::
+> +       Read the commit message from `file` instead of the standard
+> +       input.
+> +
+> +CONFIGURATION VARIABLES
+> +-----------------------
+> +
+> +trailer.<token>.key::
+> +       This 'key' will be used instead of 'token' in the
+> +       trailer. After some alphanumeric characters, it can contain
+> +       some non alphanumeric characters like ':', '=' or '#' that will
+> +       be used instead of ':' to separate the token from the value in
+> +       the trailer, though the default ':' is more standard.
+> +
+> +trailer.<token>.where::
+> +       This can be either `after`, which is the default, or
+> +       `before`. If it is `before`, then a trailer with the specified
+> +       token, will appear before, instead of after, other trailers
+> +       with the same token, or otherwise at the beginning, instead of
+> +       at the end, of all the trailers.
+> +
+> +trailer.<token>.ifexist::
+> +       This option makes it possible to chose what action will be
+
+s/chose/choose/
+
+> +       performed when there is already at least one trailer with the
+> +       same token in the message.
+> ++
+> +The valid values for this option are: `addIfDifferent` (this is the
+> +default), `addIfDifferentNeighbor`, `add`, `overwrite` or `doNothing`.
+> ++
+> +With `addIfDifferent`, a new trailer will be added only if no trailer
+> +with the same (token, value) pair is already in the message.
+> ++
+> +With `addIfDifferentNeighbor`, a new trailer will be added only if no
+> +trailer with the same (token, value) pair is above or below the line
+> +where the new trailer will be added.
+> ++
+> +With `add`, a new trailer will be added, even if some trailers with
+> +the same (token, value) pair are already in the message.
+> ++
+> +With `overwrite`, the new trailer will overwrite an existing trailer
+> +with the same token.
+> ++
+> +With `doNothing`, nothing will be done, that is no new trailer will be
+> +added if there is already one with the same token in the message.
+> +
+> +trailer.<token>.ifmissing::
+> +       This option makes it possible to chose what action will be
+
+s/chose/choose/
+
+> +       performed when there is not yet any trailer with the same
+> +       token in the message.
+> ++
+> +The valid values for this option are: `add` (this is the default) and
+> +`doNothing`.
+> ++
+> +With `add`, a new trailer will be added.
+> ++
+> +With `doNothing`, nothing will be done.
+> +
+> +trailer.<token>.command::
+> +       This option can be used to specify a shell command that will
+> +       be used to automatically add or modify a trailer with the
+> +       specified 'token'.
+> ++
+> +When this option is specified, it is like if a special 'token=value'
+> +argument is added at the end of the command line, where 'value' will
+> +be given by the standard output of the specified command.
+
+What happens if the text returned by the command has multiple lines?
+Should the documentation say something about this?
+
+> +If the command contains the `$ARG` string, this string will be
+> +replaced with the 'value' part of an existing trailer with the same
+> +token, if any, before the command is launched.
+> ++
+> +The following environment variables are set when the command is run:
+> +GIT_AUTHOR_NAME, GIT_AUTHOR_EMAIL, GIT_COMMITTER_NAME,
+> +GIT_COMMITTER_EMAIL.
+> +
+> +SEE ALSO
+> +--------
+> +linkgit:git-commit[1]
+> +
+> +GIT
+> +---
+> +Part of the linkgit:git[1] suite
+> --
+> 1.8.5.2.201.gacc5987
