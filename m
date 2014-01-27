@@ -1,154 +1,252 @@
-From: Torsten =?utf-8?q?B=C3=B6gershausen?= <tboegi@web.de>
-Subject: [PATCH v2] repack.c: Use move_temp_to_file() instead of rename()
-Date: Mon, 27 Jan 2014 21:24:42 +0100
-Message-ID: <201401272124.42978.tboegi@web.de>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v3 17/17] Documentation: add documentation for 'git
+ interpret-trailers'
+Date: Mon, 27 Jan 2014 21:33:44 +0100 (CET)
+Message-ID: <20140127.213344.212708599170084659.chriscool@tuxfamily.org>
+References: <20140126165018.24291.47716.chriscool@tuxfamily.org>
+	<20140126170011.24291.26146.chriscool@tuxfamily.org>
+	<CAPig+cQgq_2h+n8OeDsrmk_NqAA4RDNzkBAtNCNjOAGMrFN4jg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Cc: tboegi@web.de,
- zwanzig12@googlemail.com,
- stefanbeller@googlemail.com,
- kusmabite@gmail.com,
- Johannes.Schindelin@gmx.de,
- msysgit@googlegroups.com
-To: git@vger.kernel.org
-X-From: msysgit+bncBCUZ3EUT2ADRBE4BTOLQKGQEGVE6DUQ@googlegroups.com Mon Jan 27 21:24:53 2014
-Return-path: <msysgit+bncBCUZ3EUT2ADRBE4BTOLQKGQEGVE6DUQ@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-bk0-f63.google.com ([209.85.214.63])
+Content-Type: Text/Plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: gitster@pobox.com, git@vger.kernel.org, johan@herland.net,
+	josh@joshtriplett.org, tr@thomasrast.ch, mhagger@alum.mit.edu,
+	dan.carpenter@oracle.com, greg@kroah.com, peff@peff.net
+To: sunshine@sunshineco.com
+X-From: git-owner@vger.kernel.org Mon Jan 27 21:34:15 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCUZ3EUT2ADRBE4BTOLQKGQEGVE6DUQ@googlegroups.com>)
-	id 1W7sjk-0004KN-E4
-	for gcvm-msysgit@m.gmane.org; Mon, 27 Jan 2014 21:24:52 +0100
-Received: by mail-bk0-f63.google.com with SMTP id w16sf968081bkz.28
-        for <gcvm-msysgit@m.gmane.org>; Mon, 27 Jan 2014 12:24:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=subject:to:cc:from:date:mime-version:message-id:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type:content-transfer-encoding;
-        bh=slG3zASh8Ch1TlRlkj6DmogOfSLJPxzJ2MYHN7RMj1k=;
-        b=R6AkXs81U3Tx6SV4EqPnbnPz2lGJL0KhDQd1U+RVugyTmKtPi1v9Tb2B2YOyWYHpEh
-         79LE79oTIBp6C2Nfj4dCNOM5Xx9RWIx84hPSw0aUVpyHxlfKmT8JDWlc02D8pO+SuKX8
-         YRH+GcAeX0oROCZP3GDHiXwifmvtIp6BBqn+WYcEA3wYS2iFkpSGQ1r09V9qlgxMLKJ1
-         7zdaucdeBFfzu0neVnZn4dFL//JhXygaOydI8LPVgRiseX5YawTYaBFdS3fChWnj96Vt
-         o7L+r4nJg++bg206lG27oKr3kCPdENnQOFltJprUjyuTQc1kK7zXkhz7+Ke/pDiyB81L
-         NO0w==
-X-Received: by 10.180.105.137 with SMTP id gm9mr281502wib.3.1390854292194;
-        Mon, 27 Jan 2014 12:24:52 -0800 (PST)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.180.160.146 with SMTP id xk18ls418099wib.48.gmail; Mon, 27 Jan
- 2014 12:24:51 -0800 (PST)
-X-Received: by 10.180.211.34 with SMTP id mz2mr13207598wic.3.1390854291145;
-        Mon, 27 Jan 2014 12:24:51 -0800 (PST)
-Received: from mout.web.de (mout.web.de. [212.227.15.3])
-        by gmr-mx.google.com with ESMTPS id f47si1959704eem.0.2014.01.27.12.24.50
-        for <msysgit@googlegroups.com>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 27 Jan 2014 12:24:51 -0800 (PST)
-Received-SPF: pass (google.com: best guess record for domain of tboegi@web.de designates 212.227.15.3 as permitted sender) client-ip=212.227.15.3;
-Received: from appes.localnet ([78.72.74.102]) by smtp.web.de (mrweb102) with
- ESMTPA (Nemesis) id 0LcPSk-1VO8bE2QDe-00juWS for <msysgit@googlegroups.com>;
- Mon, 27 Jan 2014 21:24:50 +0100
-X-Provags-ID: V03:K0:/8Su9rHXs0HNpKXHx0GNJtMsOoy9FlXJ5tuwDuKhMkZwkokaDLT
- APLt1TrymzsQQWGGmUQoQ96hlljwIq2J/y8diKW709Z7eTmCgKn3k26Dy5dJg0iRdvsv5nz
- KOalF77pSPgqn22j0/kFl2+7e8vfynv+GbMSJHJ8s7oX1nSjyRVqnpbNwRSG1Ny22jEzeBv
- LCEM1jnVrPcgQj3yBh4+g==
-X-Original-Sender: tboegi@web.de
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: best guess record for domain of tboegi@web.de designates
- 212.227.15.3 as permitted sender) smtp.mail=tboegi@web.de
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241154>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1W7sso-0008Ik-O4
+	for gcvg-git-2@plane.gmane.org; Mon, 27 Jan 2014 21:34:15 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1753998AbaA0UeJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Jan 2014 15:34:09 -0500
+Received: from [194.158.98.45] ([194.158.98.45]:43961 "EHLO mail-3y.bbox.fr"
+	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1753860AbaA0UeH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Jan 2014 15:34:07 -0500
+Received: from localhost (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
+	by mail-3y.bbox.fr (Postfix) with ESMTP id D8EA85A;
+	Mon, 27 Jan 2014 21:33:44 +0100 (CET)
+In-Reply-To: <CAPig+cQgq_2h+n8OeDsrmk_NqAA4RDNzkBAtNCNjOAGMrFN4jg@mail.gmail.com>
+X-Mailer: Mew version 6.3 on Emacs 23.3 / Mule 6.0 (HANACHIRUSATO)
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241155>
 
-In a1bbc6c0 a shell command "mv -f" was replaced with the rename() function=
-.
+From: Eric Sunshine <sunshine@sunshineco.com>
+>
+> On Sun, Jan 26, 2014 at 12:00 PM, Christian Couder
+> <chriscool@tuxfamily.org> wrote:
+>> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+>> ---
+>> diff --git a/Documentation/git-interpret-trailers.txt b/Documentation/git-interpret-trailers.txt
+>> new file mode 100644
+>> index 0000000..f74843e
+>> --- /dev/null
+>> +++ b/Documentation/git-interpret-trailers.txt
+>> @@ -0,0 +1,137 @@
+>> +git-interpret-trailers(1)
+>> +=========================
+>> +
+>> +NAME
+>> +----
+>> +git-interpret-trailers - help add stuctured information into commit messages
+>> +
+>> +SYNOPSIS
+>> +--------
+>> +[verse]
+>> +'git interpret-trailers' [--trim-empty] [--infile=file] [<token[=value]>...]
+> 
+> Would it be more consistent with existing documentation to format this as so?
+> 
+>   [--infile=<file>] [<token>[=<value>]]...
 
-Use move_temp_to_file() from sha1_file.c instead of rename().
-This is in line with the handling of other Git internal tmp files,
-and calls adjust_shared_perm()
+No, it would be very inconsistent:
 
-Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
----
-Thanks for all comments.
-I haven't been able to reproduce the problem here.
-Tips and information how to reproduce it are wellcome.
+$ grep '\.\.\.\]' *.txt | wc -l
+103
+$ grep '\]\.\.\.' *.txt | wc -l
+0
 
-I think this patch makes sense to support core.sharedRepository(),
-but I haven't made a test case for the pack/idx files.
+>> +DESCRIPTION
+>> +-----------
+>> +Help add RFC 822 like headers, called 'trailers', at the end of the
+> 
+> s/822 like/822-like/
 
-Jochen, doess this patch fix your problem, or do we need
-another patch on top of this?
+Ok.
 
- builtin/repack.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+> Was the suggestion, early in the discussion, to use "footer" rather
+> than "trailer" dismissed?
 
-diff --git a/builtin/repack.c b/builtin/repack.c
-index ba66c6e..4b6d663 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -271,7 +271,7 @@ int cmd_repack(int argc, const char **argv, const char =
-*prefix)
- 				if (unlink(fname_old))
- 					failed =3D 1;
-=20
--			if (!failed && rename(fname, fname_old)) {
-+			if (!failed && move_temp_to_file(fname, fname_old)) {
- 				free(fname);
- 				failed =3D 1;
- 				break;
-@@ -288,7 +288,7 @@ int cmd_repack(int argc, const char **argv, const char =
-*prefix)
- 			char *fname, *fname_old;
- 			fname =3D mkpathdup("%s/%s", packdir, item->string);
- 			fname_old =3D mkpath("%s/old-%s", packdir, item->string);
--			if (rename(fname_old, fname))
-+			if (move_temp_to_file(fname_old, fname))
- 				string_list_append(&rollback_failure, fname);
- 			free(fname);
- 		}
-@@ -324,7 +324,7 @@ int cmd_repack(int argc, const char **argv, const char =
-*prefix)
- 				statbuffer.st_mode &=3D ~(S_IWUSR | S_IWGRP | S_IWOTH);
- 				chmod(fname_old, statbuffer.st_mode);
- 			}
--			if (rename(fname_old, fname))
-+			if (move_temp_to_file(fname_old, fname))
- 				die_errno(_("renaming '%s' failed"), fname_old);
- 			free(fname);
- 			free(fname_old);
---=20
-1.8.5.2
+During the early discussions people initially talked about "footer"
+while Junio and others talked about "trailer".
 
---=20
---=20
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github =
-accounts are free.
+See:
 
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=3Den_US?hl=3Den
+http://thread.gmane.org/gmane.comp.version-control.git/236429/
+http://thread.gmane.org/gmane.comp.version-control.git/236770/
 
----=20
-You received this message because you are subscribed to the Google Groups "=
-msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an e=
-mail to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/groups/opt_out.
+I have no preference for one or the other, but by default I use what
+Junio uses.
+
+>> +otherwise free-form part of a commit message.
+>> +
+>> +Unless `--infile=file` is used, this command is a filter. It reads the
+>> +standard input for a commit message and apply the `token` arguments,
+> 
+> s/apply/applies/
+
+Ok.
+
+>> +if any, to this message. The resulting message is emited on the
+>> +standard output.
+>> +
+>> +Some configuration variables control the way the `token` arguments are
+>> +applied to the message and the way any existing trailer in the message
+>> +is changed. They also make it possible to automatically add some
+>> +trailers.
+>> +
+>> +By default, a 'token=value' or 'token:value' argument will be added
+>> +only if no trailer with the same (token, value) pair is already in the
+>> +message. The 'token' and 'value' parts will be trimmed to remove
+>> +starting and trailing white spaces, and the resulting trimmed 'token'
+> 
+> Other git documentation uniformly spells it as "whitespace" rather
+> than "white spaces".
+
+You are right I will change that.
+
+>> +and 'value' will appear in the message like this:
+>> +
+>> +------------------------------------------------
+>> +token: value
+>> +------------------------------------------------
+>> +
+>> +By default, if there are already trailers with the same 'token' the
+>> +trailer will appear just after the last trailer with the same
+> 
+> It might be a bit clearer to say "the _new_ trailer will appear...".
+
+Ok.
+
+>> +'token'. Otherwise it will appear at the end of the message.
+>> +
+>> +Note that 'trailers' do not follow and are not intended to follow many
+>> +rules that are in RFC 822. For example they do not follow the line
+>> +breaking rules, the encoding rules and probably many other rules.
+>> +
+>> +Trailers have become a de facto standard way to add helpful structured
+>> +information into commit messages. For example the well known
+>> +"Signed-off-by: " trailer is used by many projects like the Linux
+>> +kernel and Git.
+> 
+> This "justification" paragraph might make more sense near or at the
+> very the top of the Description section.
+
+Yeah, or maybe I can remove it entirely.
+
+>> +OPTIONS
+>> +-------
+>> +--trim-empty::
+>> +       If the 'value' part of any trailer contains onlywhite spaces,
+> 
+> s/onlywhite spaces/only whitespace/
+
+Ok.
+
+>> +       the whole trailer will be removed from the resulting message.
+>> +
+>> +----infile=file::
+>> +       Read the commit message from `file` instead of the standard
+>> +       input.
+>> +
+>> +CONFIGURATION VARIABLES
+>> +-----------------------
+>> +
+>> +trailer.<token>.key::
+>> +       This 'key' will be used instead of 'token' in the
+>> +       trailer. After some alphanumeric characters, it can contain
+>> +       some non alphanumeric characters like ':', '=' or '#' that will
+>> +       be used instead of ':' to separate the token from the value in
+>> +       the trailer, though the default ':' is more standard.
+>> +
+>> +trailer.<token>.where::
+>> +       This can be either `after`, which is the default, or
+>> +       `before`. If it is `before`, then a trailer with the specified
+>> +       token, will appear before, instead of after, other trailers
+>> +       with the same token, or otherwise at the beginning, instead of
+>> +       at the end, of all the trailers.
+>> +
+>> +trailer.<token>.ifexist::
+>> +       This option makes it possible to chose what action will be
+> 
+> s/chose/choose/
+
+Ok.
+
+>> +       performed when there is already at least one trailer with the
+>> +       same token in the message.
+>> ++
+>> +The valid values for this option are: `addIfDifferent` (this is the
+>> +default), `addIfDifferentNeighbor`, `add`, `overwrite` or `doNothing`.
+>> ++
+>> +With `addIfDifferent`, a new trailer will be added only if no trailer
+>> +with the same (token, value) pair is already in the message.
+>> ++
+>> +With `addIfDifferentNeighbor`, a new trailer will be added only if no
+>> +trailer with the same (token, value) pair is above or below the line
+>> +where the new trailer will be added.
+>> ++
+>> +With `add`, a new trailer will be added, even if some trailers with
+>> +the same (token, value) pair are already in the message.
+>> ++
+>> +With `overwrite`, the new trailer will overwrite an existing trailer
+>> +with the same token.
+>> ++
+>> +With `doNothing`, nothing will be done, that is no new trailer will be
+>> +added if there is already one with the same token in the message.
+>> +
+>> +trailer.<token>.ifmissing::
+>> +       This option makes it possible to chose what action will be
+> 
+> s/chose/choose/
+
+Ok.
+
+>> +       performed when there is not yet any trailer with the same
+>> +       token in the message.
+>> ++
+>> +The valid values for this option are: `add` (this is the default) and
+>> +`doNothing`.
+>> ++
+>> +With `add`, a new trailer will be added.
+>> ++
+>> +With `doNothing`, nothing will be done.
+>> +
+>> +trailer.<token>.command::
+>> +       This option can be used to specify a shell command that will
+>> +       be used to automatically add or modify a trailer with the
+>> +       specified 'token'.
+>> ++
+>> +When this option is specified, it is like if a special 'token=value'
+>> +argument is added at the end of the command line, where 'value' will
+>> +be given by the standard output of the specified command.
+> 
+> What happens if the text returned by the command has multiple lines?
+
+The 'value' part of trailer will be on multiple lines.
+
+> Should the documentation say something about this?
+
+I think it is better left as unspecified because we might want to
+print a warning, or perhaps error out in this case.
+
+Thanks,
+Christian.
