@@ -1,61 +1,111 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 0/9] About the trailing slashes
-Date: Mon, 27 Jan 2014 14:47:57 -0800
-Message-ID: <xmqq38k9nisi.fsf@gitster.dls.corp.google.com>
-References: <1390483326-32258-1-git-send-email-pclouds@gmail.com>
-	<1390570836-20394-1-git-send-email-pclouds@gmail.com>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH v2 3/3] diff: turn skip_stat_unmatch on selectively
+Date: Tue, 28 Jan 2014 05:59:28 +0700
+Message-ID: <1390863568-22656-1-git-send-email-pclouds@gmail.com>
+References: <1390632411-3596-3-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, pawel.sikora@agmk.net, Jens.Lehmann@web.de
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 27 23:48:16 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 27 23:54:04 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W7uyV-00034A-RW
-	for gcvg-git-2@plane.gmane.org; Mon, 27 Jan 2014 23:48:16 +0100
+	id 1W7v46-0005NM-PE
+	for gcvg-git-2@plane.gmane.org; Mon, 27 Jan 2014 23:54:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754479AbaA0WsM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Jan 2014 17:48:12 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53817 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754205AbaA0WsL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Jan 2014 17:48:11 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A65EB67395;
-	Mon, 27 Jan 2014 17:48:08 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=HBnDwlJUpNW0PKwNF+n1x/rgcao=; b=LBtSnH
-	Gzmlgb5FyWbKqVYkE0TQmbiK5wH0YIs8oKOhyF3sz6QPmclLarCcEDvK7pBxH/zc
-	ec3EboE0Ujul5wlVLT5SMemkgFBSqw2n6JedK0JWIB3QI1z7uYAhg0CXBXuSLlXy
-	5qpex+u4eTSD2JfCvIIkof3MCnTHVTOem1hAk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=CvglrPClBMwG/oRdqAsT2fW2GrXYbGYN
-	SFDjFIemE7Q4Iyacxe7pWnrwuSJToMN5iZfxKJi+0bq6B5mTJ6doRFjFd/SLgtCl
-	4elYmdM3huRNDI2vPVoDxUtURe74EpKQbcXvRQrDr/SagonfJWhL/eYmzDK8551w
-	dsVFyCf9q0c=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7FBFF67394;
-	Mon, 27 Jan 2014 17:48:08 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D624F67390;
-	Mon, 27 Jan 2014 17:48:06 -0500 (EST)
-In-Reply-To: <1390570836-20394-1-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Fri, 24
- Jan 2014 20:40:27 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 168C26FC-87A5-11E3-992F-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754308AbaA0Wx6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 27 Jan 2014 17:53:58 -0500
+Received: from mail-pd0-f170.google.com ([209.85.192.170]:53987 "EHLO
+	mail-pd0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754132AbaA0Wx5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Jan 2014 17:53:57 -0500
+Received: by mail-pd0-f170.google.com with SMTP id p10so6316127pdj.29
+        for <git@vger.kernel.org>; Mon, 27 Jan 2014 14:53:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=R32K+tmbwVihDVxpZXBriCpvZ4J0TOL4o4YI2BEc4Zk=;
+        b=kRZXpgeBDR+LqlC/JkXP7YGUKzCRkmuEbKdRMNEVpmLFNan16kKUll8HmTUh4caOtr
+         WT5SKNIb9PYQCeBbtvfsXg3Tas03DgAqaP7vuPph5KuocZqxigcl1Pds7CguEWkM/uuj
+         wh1MHzkCiHeZ9kIcnExVmZ0GTxyMzfOgiXHkCP5zah9d89B+ojQzoroARN/Y8uewNGxD
+         PWnA4gNU5QL8gckvH5ljJcKFloamc8smuTtY/nggdK3wFntliUeaVdYNl3g4GAnapFff
+         qcHL9z0o7hBH0yjKNsM6QNjW/SqZZ7cerZRDjTm4hH4JO2vuRsJN026nRIixsqd+wi7v
+         ds+g==
+X-Received: by 10.68.136.162 with SMTP id qb2mr33235602pbb.88.1390863236744;
+        Mon, 27 Jan 2014 14:53:56 -0800 (PST)
+Received: from lanh ([115.73.231.188])
+        by mx.google.com with ESMTPSA id vp4sm94997148pab.8.2014.01.27.14.53.53
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 27 Jan 2014 14:53:56 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Tue, 28 Jan 2014 05:59:35 +0700
+X-Mailer: git-send-email 1.8.5.2.240.g8478abd
+In-Reply-To: <1390632411-3596-3-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241162>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241163>
 
-Thanks; will try to rebase on top of more recent codebase and then
-review.
+skip_stat_unmatch flag is added in fb13227 (git-diff: squelch "empty"
+diffs - 2007-08-03) to ignore empty diffs caused by stat-only
+dirtiness. In some diff case, stat is not involved at all. While
+the code is written in a way that no expensive I/O is done, we still
+need to move all file pairs from the old queue to the new queue in
+diffcore_skip_stat_unmatch().
+
+Only enable it when worktree is involved: "diff" and "diff <rev>".
+This should help track down how skip_stat_unmatch is actually used
+when bugs occur.
+
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ This replaces 'diff: turn off skip_stat_unmatch on "diff --cached"'
+ The previous patch obviously leaves skip_stat_unmatch on in "diff
+ <rev> <rev>" and maybe other cases.
+
+ builtin/diff.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/builtin/diff.c b/builtin/diff.c
+index 0f247d2..88542d9 100644
+--- a/builtin/diff.c
++++ b/builtin/diff.c
+@@ -150,6 +150,7 @@ static int builtin_diff_index(struct rev_info *revs=
+,
+ 			perror("read_cache_preload");
+ 			return -1;
+ 		}
++		revs->diffopt.skip_stat_unmatch =3D !!diff_auto_refresh_index;
+ 	} else if (read_cache() < 0) {
+ 		perror("read_cache");
+ 		return -1;
+@@ -252,6 +253,7 @@ static int builtin_diff_files(struct rev_info *revs=
+, int argc, const char **argv
+ 		perror("read_cache_preload");
+ 		return -1;
+ 	}
++	revs->diffopt.skip_stat_unmatch =3D !!diff_auto_refresh_index;
+ 	return run_diff_files(revs, options);
+ }
+=20
+@@ -343,7 +345,6 @@ int cmd_diff(int argc, const char **argv, const cha=
+r *prefix)
+ 		diff_no_index(&rev, argc, argv, prefix);
+=20
+ 	/* Otherwise, we are doing the usual "git" diff */
+-	rev.diffopt.skip_stat_unmatch =3D !!diff_auto_refresh_index;
+=20
+ 	/* Scale to real terminal size and respect statGraphWidth config */
+ 	rev.diffopt.stat_width =3D -1;
+--=20
+1.8.5.2.240.g8478abd
