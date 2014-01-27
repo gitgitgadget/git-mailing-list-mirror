@@ -1,97 +1,95 @@
-From: Brad King <brad.king@kitware.com>
-Subject: [PATCH v3 2/4] read-cache.c: Refactor --ignore-missing implementation
-Date: Mon, 27 Jan 2014 09:45:07 -0500
-Message-ID: <e8a33f2e20e9f2041bf5f0fa952536755dbdf34c.1390833624.git.brad.king@kitware.com>
-References: <cover.1390592626.git.brad.king@kitware.com> <cover.1390833624.git.brad.king@kitware.com>
-Cc: gitster@pobox.com, newren@gmail.com, jrnieder@gmail.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 27 15:45:26 2014
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: How to substructure rewrites?
+Date: Mon, 27 Jan 2014 07:58:27 -0800
+Message-ID: <xmqqppndpgbg.fsf@gitster.dls.corp.google.com>
+References: <877g9ocjsk.fsf@fencepost.gnu.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Mon Jan 27 16:58:53 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W7nRE-0008Je-HK
-	for gcvg-git-2@plane.gmane.org; Mon, 27 Jan 2014 15:45:24 +0100
+	id 1W7oaK-0006Vi-1e
+	for gcvg-git-2@plane.gmane.org; Mon, 27 Jan 2014 16:58:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753692AbaA0OpJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Jan 2014 09:45:09 -0500
-Received: from tripoint.kitware.com ([66.194.253.20]:35751 "EHLO
-	vesper.kitware.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753628AbaA0Ook (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Jan 2014 09:44:40 -0500
-Received: by vesper.kitware.com (Postfix, from userid 1000)
-	id 44BC79FBA6; Mon, 27 Jan 2014 09:45:09 -0500 (EST)
-X-Mailer: git-send-email 1.8.5.2
-In-Reply-To: <cover.1390833624.git.brad.king@kitware.com>
+	id S1754038AbaA0P6k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Jan 2014 10:58:40 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56114 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753894AbaA0P6f (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Jan 2014 10:58:35 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 91922679A6;
+	Mon, 27 Jan 2014 10:58:32 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=y9Rs6UFMPun6uKv/uwthvOXrZ+Q=; b=FhI+lZ
+	bleeGC46nT6HM6Ks8uoDeV26BDH+DeMhXfItSFCc9sWAjqK6B06e33IfzJD8lKrM
+	Z0RMiutgmqLNHIKgJqc9dKeIkksKA6dgKx0buzHZxWYBayYq2X6OFEcotydDFvck
+	ezAT95+ustK65p6vUTYFk0WTYdFdOC0RSvA2Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=SlsyGvXfNvcbLwY7yef6qV8GgElDgUK3
+	Xg5Fqzyt37fUcZ8lv9duU4fsb48lAy1IAT4hURzyuvpI2MK9gTFQe1+/4nGbBdVJ
+	YvK8Ky/iglRjSWkXzJ5vZV5m4JYDDEA/QoIjEs3xI8PIAu72pal2KKmTAres0Fw3
+	lhMh3bKnEHk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7F876679A5;
+	Mon, 27 Jan 2014 10:58:32 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8C109679A3;
+	Mon, 27 Jan 2014 10:58:31 -0500 (EST)
+In-Reply-To: <877g9ocjsk.fsf@fencepost.gnu.org> (David Kastrup's message of
+	"Sat, 25 Jan 2014 13:44:59 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: DE86241C-876B-11E3-8E35-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241141>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241142>
 
-Move lstat ENOENT handling from refresh_index to refresh_cache_ent and
-activate it with a new CE_MATCH_IGNORE_MISSING option.  This will allow
-other call paths into refresh_cache_ent to use the feature.
+David Kastrup <dak@gnu.org> writes:
 
-Signed-off-by: Brad King <brad.king@kitware.com>
----
- cache.h      | 2 ++
- read-cache.c | 8 +++++---
- 2 files changed, 7 insertions(+), 3 deletions(-)
+> As it can easily be guessed, the "add xxx function" commits are
+> basically adding not-yet-used code (and so will not disrupt
+> compilation), but everything starting with "Reorganize blame data
+> structures" up until the final commit will not work or compile since the
+> code does not match the data structures.
+>
+> So there is little point in substructing all that, right?  Even
+> something seemingly isolated like
+>
+> commit f64b41c472442ae9971321fe8f62c3885ba4d8b7
+> Author: David Kastrup <dak@gnu.org>
+> Date:   Sun Jan 19 02:16:21 2014 +0100
+>
+>     blame.c: Let output determine MORE_THAN_ONE_PATH more efficiently
+>
+> is not really useful as a separate commit since while it does implement
+> a particular task, this is done starting with non-working code relying
+> on no-longer existent data structures.
 
-diff --git a/cache.h b/cache.h
-index c9efe88..c96ada7 100644
---- a/cache.h
-+++ b/cache.h
-@@ -498,6 +498,8 @@ extern void *read_blob_data_from_index(struct index_state *, const char *, unsig
- #define CE_MATCH_RACY_IS_DIRTY		02
- /* do stat comparison even if CE_SKIP_WORKTREE is true */
- #define CE_MATCH_IGNORE_SKIP_WORKTREE	04
-+/* ignore non-existent files during stat update  */
-+#define CE_MATCH_IGNORE_MISSING		0x08
- extern int ie_match_stat(const struct index_state *, const struct cache_entry *, struct stat *, unsigned int);
- extern int ie_modified(const struct index_state *, const struct cache_entry *, struct stat *, unsigned int);
- 
-diff --git a/read-cache.c b/read-cache.c
-index 33dd676..d61846c 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -1031,6 +1031,7 @@ static struct cache_entry *refresh_cache_ent(struct index_state *istate,
- 	int changed, size;
- 	int ignore_valid = options & CE_MATCH_IGNORE_VALID;
- 	int ignore_skip_worktree = options & CE_MATCH_IGNORE_SKIP_WORKTREE;
-+	int ignore_missing = options & CE_MATCH_IGNORE_MISSING;
- 
- 	if (ce_uptodate(ce))
- 		return ce;
-@@ -1050,6 +1051,8 @@ static struct cache_entry *refresh_cache_ent(struct index_state *istate,
- 	}
- 
- 	if (lstat(ce->name, &st) < 0) {
-+		if (ignore_missing && errno == ENOENT)
-+			return ce;
- 		if (err)
- 			*err = errno;
- 		return NULL;
-@@ -1127,7 +1130,8 @@ int refresh_index(struct index_state *istate, unsigned int flags,
- 	int ignore_submodules = (flags & REFRESH_IGNORE_SUBMODULES) != 0;
- 	int first = 1;
- 	int in_porcelain = (flags & REFRESH_IN_PORCELAIN);
--	unsigned int options = really ? CE_MATCH_IGNORE_VALID : 0;
-+	unsigned int options = ((really ? CE_MATCH_IGNORE_VALID : 0) |
-+				(not_new ? CE_MATCH_IGNORE_MISSING : 0));
- 	const char *modified_fmt;
- 	const char *deleted_fmt;
- 	const char *typechange_fmt;
-@@ -1176,8 +1180,6 @@ int refresh_index(struct index_state *istate, unsigned int flags,
- 		if (!new) {
- 			const char *fmt;
- 
--			if (not_new && cache_errno == ENOENT)
--				continue;
- 			if (really && cache_errno == EINVAL) {
- 				/* If we are doing --really-refresh that
- 				 * means the index is not valid anymore.
--- 
-1.8.5.2
+Small pieces that are incrementally added with their own
+documentation would certainly be a lot easier to read than one big
+ball of wax.  I am wondering if it would make it easier for
+everybody to tentatively do "git-blame vs git-blame2" dance here,
+just like we did "git-blame vs git-annotate" dance some years ago.
+That is, to add a completely new command and have them in parallel
+while cooking in 'next' (or we could even keep them in a few
+releases if we are not absolutely certain about the correctness of
+the result of the new code), aiming to eventually retire the current
+implementation and replace it with the new one.  We have already
+have test infrastructure to allow us to run variants of blames, too,
+to help that kind of transition.
+
+> In general, the rule is likely "any commit should not create a
+> non-working state" right?
+
+Yes.
