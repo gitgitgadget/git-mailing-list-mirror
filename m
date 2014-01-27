@@ -1,184 +1,117 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 2/2] setup: Don't dereference in-tree symlinks for absolute paths
-Date: Mon, 27 Jan 2014 08:31:37 -0800
-Message-ID: <xmqqd2jdpes6.fsf@gitster.dls.corp.google.com>
-References: <52E5439D.7060002@web.de>
-	<1390781250-20389-1-git-send-email-martinerikwerner@gmail.com>
-	<1390781250-20389-2-git-send-email-martinerikwerner@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: How to get notified of new releases?
+Date: Mon, 27 Jan 2014 08:38:33 -0800
+Message-ID: <20140127163833.GD27577@google.com>
+References: <CAHd499C-BJJA6oPd5UcOqL8m8xGeL5GoAMtfF90AdKVvayTc7g@mail.gmail.com>
+ <1316300317.564216.1390810770505.JavaMail.zimbra@imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: tboegi@web.de, git@vger.kernel.org, richih@debian.org
-To: Martin Erik Werner <martinerikwerner@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 27 17:31:49 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Robert Dailey <rcdailey.lists@gmail.com>, Git <git@vger.kernel.org>,
+	msysgit@googlegroups.com
+To: Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+X-From: msysgit+bncBD6LRKOE4AIRBD4XTKLQKGQEZZJ5YOQ@googlegroups.com Mon Jan 27 17:38:41 2014
+Return-path: <msysgit+bncBD6LRKOE4AIRBD4XTKLQKGQEZZJ5YOQ@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-we0-f191.google.com ([74.125.82.191])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W7p6D-0003wu-2y
-	for gcvg-git-2@plane.gmane.org; Mon, 27 Jan 2014 17:31:49 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753953AbaA0Qbq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Jan 2014 11:31:46 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55686 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753584AbaA0Qbp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Jan 2014 11:31:45 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 68ACF6720A;
-	Mon, 27 Jan 2014 11:31:43 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=K10/Kne1K8mD/ob6hI0XkYxZsv8=; b=v+KfIZ
-	S4NX2+Z4BphBfiRXzGEiiBC0+0Mtp5gVYNjU+y1iopq6mkB7N3F8+PZAciIKtuf4
-	ali3OwlEb8nO7SesBRh6awQEZFbpAUvgc4E67hlRxF+YMzlQ1MGq7hd8SefQzgD1
-	F9anAP9wp5d4pzosOrjl3qXOYqcNfH+l5WaHg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=T/3FT6743FXh18cvYK0Tn1t0vARgF+XP
-	zlQfMRR0N5MSzRwY04JDn3wAmN5B9Jr54tjmhwV19t4EtXkvLXa3lJAM55m6xfTP
-	DJklp5bP65UV3BPkHYcSB0r8ZAHjcUsdqTt1VUyUofnVkBbRgY8f+VT/JMhfC/X4
-	ZJXWYtkreQs=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4AC6167209;
-	Mon, 27 Jan 2014 11:31:43 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 134E867206;
-	Mon, 27 Jan 2014 11:31:41 -0500 (EST)
-In-Reply-To: <1390781250-20389-2-git-send-email-martinerikwerner@gmail.com>
-	(Martin Erik Werner's message of "Mon, 27 Jan 2014 01:07:30 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 80F57F46-8770-11E3-BDF1-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241146>
+	(envelope-from <msysgit+bncBD6LRKOE4AIRBD4XTKLQKGQEZZJ5YOQ@googlegroups.com>)
+	id 1W7pCr-0007QL-2P
+	for gcvm-msysgit@m.gmane.org; Mon, 27 Jan 2014 17:38:41 +0100
+Received: by mail-we0-f191.google.com with SMTP id u57sf932090wes.18
+        for <gcvm-msysgit@m.gmane.org>; Mon, 27 Jan 2014 08:38:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :in-reply-to:user-agent:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type:content-disposition;
+        bh=lleG4R937x4d8qrBNs4IME/tCYvKOoyKKAONpR/AAwE=;
+        b=ayXK8VhmVSmcO2Ft6n8DetfCjMSU7xBBBCvFgBZwvKuPLSlMm9Su58gsPZqMuy8Jsp
+         RcyoQxoYkozjsEH/YrUZ5g6U+G8HEKSVQrawh1EN+I3Ykt2/na6gkNLMBoPAaPjv+uUu
+         YtCrUlMSTN6yYweiMZJsAYXV+dWaJ8VG4B+7YMnj0/vDguibXRQr76neGxp0ib6uGpF9
+         1vTrd62EMN2gkxkx0tRuv2LHndp8eZpi8Cvl1yspyrWx9KpSDqNSaITJTmPKVAjY71ff
+         qC7PzNzfGVG80hQEmMBCR1cm6J6o2JnefMHYzsZpg/5EVuI/17w4akU6c867gQ4yBJCv
+         +a/Q==
+X-Received: by 10.152.19.98 with SMTP id d2mr67199lae.19.1390840720565;
+        Mon, 27 Jan 2014 08:38:40 -0800 (PST)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.152.45.6 with SMTP id i6ls358584lam.106.gmail; Mon, 27 Jan
+ 2014 08:38:39 -0800 (PST)
+X-Received: by 10.112.185.6 with SMTP id ey6mr4411002lbc.22.1390840719361;
+        Mon, 27 Jan 2014 08:38:39 -0800 (PST)
+Received: from mail-bk0-x22f.google.com (mail-bk0-x22f.google.com [2a00:1450:4008:c01::22f])
+        by gmr-mx.google.com with ESMTPS id th6si1076511bkb.1.2014.01.27.08.38.39
+        for <msysgit@googlegroups.com>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 27 Jan 2014 08:38:39 -0800 (PST)
+Received-SPF: pass (google.com: domain of jrnieder@gmail.com designates 2a00:1450:4008:c01::22f as permitted sender) client-ip=2a00:1450:4008:c01::22f;
+Received: by mail-bk0-f47.google.com with SMTP id d7so2914346bkh.6
+        for <msysgit@googlegroups.com>; Mon, 27 Jan 2014 08:38:39 -0800 (PST)
+X-Received: by 10.204.51.8 with SMTP id b8mr23178283bkg.19.1390840719211;
+        Mon, 27 Jan 2014 08:38:39 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id dg4sm14009364bkc.10.2014.01.27.08.38.37
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 27 Jan 2014 08:38:38 -0800 (PST)
+In-Reply-To: <1316300317.564216.1390810770505.JavaMail.zimbra@imag.fr>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Original-Sender: jrnieder@gmail.com
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of jrnieder@gmail.com designates 2a00:1450:4008:c01::22f
+ as permitted sender) smtp.mail=jrnieder@gmail.com;       dkim=pass
+ header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Content-Disposition: inline
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241147>
 
-Martin Erik Werner <martinerikwerner@gmail.com> writes:
+Matthieu Moy wrote:
+> Robert Dailey wrote:
 
-> In order to manipulate symliks in the
-> work tree using absolute paths, symlinks should only be dereferenced
-> outside the work tree.
+>> Are there any dedicated mailing lists for git releases, or RSS feeds?
+>
+> Not sure if there's a Windows-dedicated list, but there's this:
+>
+>   http://gitrss.q42.co.uk/
+>
+> It filters the mailing-list posts starting with eg. [ANNOUNCE] and turns it into an RSS feed.
 
-I agree 100% with this reasoning (modulo s/symliks/symlinks/).
+There's also https://github.com/msysgit/msysgit/commits/master.atom,
+though that might be more activity than you're looking for (it would
+be the feed to follow if you want to build your own snapshots of git
+on Windows and try every change).
 
-As to the implementation, it looks a bit overly complicated,
-though.  I haven't tried writing the same myself, but 
+Perhaps https://github.com/msysgit/msysgit/tags.atom would do the
+trick.
 
- * I suspect that strbuf would help simplifying the allocation and
-   deallocation;
+Jonathan
 
- * Also I suspect that use of string-list to split and then join is
-   making the code unnecessarily complex. In Python/Perl, that would
-   be a normal approach, but in C, it would be a lot simpler if you
-   prepare a writable temporary in wtpart[], walk from left to right
-   finding '/' and replacing it temporarily with NUL to terminate in
-   order to check with real_path(), restore the NUL back to '/' to
-   check deeper, and rinse and repeat.
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
 
-   Having said that, I am not absolutely sure if the repeated
-   calls to real_path() are doing the right thing, though ;-)
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
 
-> diff --git a/setup.c b/setup.c
-> index 5432a31..0789a96 100644
-> --- a/setup.c
-> +++ b/setup.c
-> @@ -22,11 +22,51 @@ char *prefix_path_gently(const char *prefix, int len,
->  	const char *orig = path;
->  	char *sanitized;
->  	if (is_absolute_path(orig)) {
-> -		const char *temp = real_path(path);
-> -		sanitized = xmalloc(len + strlen(temp) + 1);
-> -		strcpy(sanitized, temp);
-> +		int i, match;
-> +		size_t wtpartlen;
-> +		char *npath, *wtpart;
-> +		struct string_list list = STRING_LIST_INIT_DUP;
-> +		const char *work_tree = get_git_work_tree();
-> +		if (!work_tree)
-> +			return NULL;
-> +		npath = xmalloc(strlen(path) + 1);
->  		if (remaining_prefix)
->  			*remaining_prefix = 0;
-> +		if (normalize_path_copy_len(npath, path, remaining_prefix)) {
-> +			free(npath);
-> +			return NULL;
-> +		}
-> +
-> +		string_list_split(&list, npath, '/', -1);
-> +		wtpart = xmalloc(strlen(npath) + 1);
-> +		i = 0;
-> +		match = 0;
-> +		strcpy(wtpart, list.items[i++].string);
-> +		strcat(wtpart, "/");
-> +		if (strcmp(real_path(wtpart), work_tree) == 0) {
-> +			match = 1;
-> +		} else {
-> +			while (i < list.nr) {
-> +				strcat(wtpart, list.items[i++].string);
-> +				if (strcmp(real_path(wtpart), work_tree) == 0) {
-> +					match = 1;
-> +					break;
-> +				}
-> +				strcat(wtpart, "/");
-> +			}
-> +		}
-> +		string_list_clear(&list, 0);
-> +		if (!match) {
-> +			free(npath);
-> +			free(wtpart);
-> +			return NULL;
-> +		}
-> +
-> +		wtpartlen = strlen(wtpart);
-> +		sanitized = xmalloc(strlen(npath) - wtpartlen);
-> +		strcpy(sanitized, npath + wtpartlen + 1);
-> +		free(npath);
-> +		free(wtpart);
->  	} else {
->  		sanitized = xmalloc(len + strlen(path) + 1);
->  		if (len)
-> @@ -34,26 +74,10 @@ char *prefix_path_gently(const char *prefix, int len,
->  		strcpy(sanitized + len, path);
->  		if (remaining_prefix)
->  			*remaining_prefix = len;
-> -	}
-> -	if (normalize_path_copy_len(sanitized, sanitized, remaining_prefix))
-> -		goto error_out;
-> -	if (is_absolute_path(orig)) {
-> -		size_t root_len, len, total;
-> -		const char *work_tree = get_git_work_tree();
-> -		if (!work_tree)
-> -			goto error_out;
-> -		len = strlen(work_tree);
-> -		root_len = offset_1st_component(work_tree);
-> -		total = strlen(sanitized) + 1;
-> -		if (strncmp(sanitized, work_tree, len) ||
-> -		    (len > root_len && sanitized[len] != '\0' && sanitized[len] != '/')) {
-> -		error_out:
-> +		if (normalize_path_copy_len(sanitized, sanitized, remaining_prefix)) {
->  			free(sanitized);
->  			return NULL;
->  		}
-> -		if (sanitized[len] == '/')
-> -			len++;
-> -		memmove(sanitized, sanitized + len, total - len);
->  	}
->  	return sanitized;
->  }
-> diff --git a/t/t0060-path-utils.sh b/t/t0060-path-utils.sh
-> index 3a0677a..03a12ac 100755
-> --- a/t/t0060-path-utils.sh
-> +++ b/t/t0060-path-utils.sh
-> @@ -190,7 +190,7 @@ test_expect_success SYMLINKS 'real path works on symlinks' '
->  	test "$sym" = "$(test-path-utils real_path "$dir2/syml")"
->  '
->  
-> -test_expect_failure SYMLINKS 'prefix_path works with work tree symlinks' '
-> +test_expect_success SYMLINKS 'prefix_path works with work tree symlinks' '
->  
->  	ln -s target symlink &&
->  	test "$(test-path-utils prefix_path prefix "$(pwd)/symlink")" = "symlink"
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/groups/opt_out.
