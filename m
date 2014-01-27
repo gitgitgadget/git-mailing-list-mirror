@@ -1,8 +1,8 @@
 From: Brad King <brad.king@kitware.com>
-Subject: [PATCH v3 1/4] t3030-merge-recursive: Test known breakage with empty work tree
-Date: Mon, 27 Jan 2014 09:45:06 -0500
-Message-ID: <bc20dc0a791ac6441fa564ed5df469e43376ab87.1390833624.git.brad.king@kitware.com>
-References: <cover.1390592626.git.brad.king@kitware.com> <cover.1390833624.git.brad.king@kitware.com>
+Subject: [PATCH v3 0/3] merge-recursive: Avoid diagnostic on empty work tree
+Date: Mon, 27 Jan 2014 09:45:05 -0500
+Message-ID: <cover.1390833624.git.brad.king@kitware.com>
+References: <cover.1390592626.git.brad.king@kitware.com>
 Cc: gitster@pobox.com, newren@gmail.com, jrnieder@gmail.com
 To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Mon Jan 27 15:45:17 2014
@@ -11,123 +11,54 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W7nR5-0008Dn-Fo
-	for gcvg-git-2@plane.gmane.org; Mon, 27 Jan 2014 15:45:15 +0100
+	id 1W7nR4-0008Dn-Cu
+	for gcvg-git-2@plane.gmane.org; Mon, 27 Jan 2014 15:45:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753733AbaA0Oom (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Jan 2014 09:44:42 -0500
-Received: from tripoint.kitware.com ([66.194.253.20]:35749 "EHLO
+	id S1753718AbaA0Ool (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Jan 2014 09:44:41 -0500
+Received: from tripoint.kitware.com ([66.194.253.20]:35750 "EHLO
 	vesper.kitware.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753577AbaA0Ooj (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1753500AbaA0Ooj (ORCPT <rfc822;git@vger.kernel.org>);
 	Mon, 27 Jan 2014 09:44:39 -0500
 Received: by vesper.kitware.com (Postfix, from userid 1000)
-	id 428479FBA1; Mon, 27 Jan 2014 09:45:09 -0500 (EST)
+	id 40B429FBA3; Mon, 27 Jan 2014 09:45:09 -0500 (EST)
 X-Mailer: git-send-email 1.8.5.2
-In-Reply-To: <cover.1390833624.git.brad.king@kitware.com>
+In-Reply-To: <cover.1390592626.git.brad.king@kitware.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241138>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241139>
 
-Sometimes when working with a large repository it can be useful to try
-out a merge and only check out conflicting files to disk (for example as
-a speed optimization on a server).  Until v1.7.7-rc1~28^2~20
-(merge-recursive: When we detect we can skip an update, actually skip
-it, 2011-08-11), it was possible to do so with the following idiom:
+Hi Folks,
 
-	# Prepare a temporary index and empty work tree.
-	GIT_INDEX_FILE="$PWD/tmp-$$-index" &&
-	export GIT_INDEX_FILE &&
-	GIT_WORK_TREE="$PWD/tmp-$$-work" &&
-	export GIT_WORK_TREE &&
-	mkdir "$GIT_WORK_TREE" &&
+Here is the third revision of this series.  The previous
+revisions can be found at $gmane/241009 and $gmane/241030.
 
-	# Convince the index that our side is on disk.
-	git read-tree -i -m $ours &&
-	git update-index --ignore-missing --refresh &&
+Updates since the previous revision of the series:
 
-	# Merge their side into our side.
-	bases=$(git merge-base --all $ours $theirs) &&
-	git merge-recursive $bases -- $ours $theirs &&
-	tree=$(git write-tree)
+* Handling of lstat ENOENT has been moved down into refresh_cache_ent
+  and activated by a new CE_MATCH_IGNORE_MISSING option.
 
-Nowadays, that still works and the exit status is the same, but
-merge-recursive produces a diagnostic if "our" side renamed a file:
+* Rather than adding a new argument to make_cache_entry, the existing
+  'refresh' boolean argument has been generalized to a set of options.
+  This required the addition of a new CE_MATCH_REFRESH option to
+  enable refresh with no other options.
 
-	error: addinfo_cache failed for path 'dst'
+Thanks,
+-Brad
 
-Add a test to document this regression.
+Brad King (4):
+  t3030-merge-recursive: Test known breakage with empty work tree
+  read-cache.c: Refactor --ignore-missing implementation
+  read-cache.c: Extend make_cache_entry refresh flag with options
+  merge-recursive.c: Tolerate missing files while refreshing index
 
-Signed-off-by: Brad King <brad.king@kitware.com>
----
+ cache.h                    |  6 +++++-
+ merge-recursive.c          |  4 +++-
+ read-cache.c               | 27 ++++++++++++++------------
  t/t3030-merge-recursive.sh | 47 ++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 47 insertions(+)
+ 4 files changed, 70 insertions(+), 14 deletions(-)
 
-diff --git a/t/t3030-merge-recursive.sh b/t/t3030-merge-recursive.sh
-index 2f96100..3db3bf6 100755
---- a/t/t3030-merge-recursive.sh
-+++ b/t/t3030-merge-recursive.sh
-@@ -257,6 +257,7 @@ test_expect_success 'setup 8' '
- 	git add e &&
- 	test_tick &&
- 	git commit -m "rename a->e" &&
-+	c7=$(git rev-parse --verify HEAD) &&
- 	git checkout rename-ln &&
- 	git mv a e &&
- 	test_ln_s_add e a &&
-@@ -517,6 +518,52 @@ test_expect_success 'reset and bind merge' '
- 
- '
- 
-+test_expect_failure 'merge-recursive w/ empty work tree - ours has rename' '
-+	(
-+		GIT_WORK_TREE="$PWD/ours-has-rename-work" &&
-+		export GIT_WORK_TREE &&
-+		GIT_INDEX_FILE="$PWD/ours-has-rename-index" &&
-+		export GIT_INDEX_FILE &&
-+		mkdir "$GIT_WORK_TREE" &&
-+		git read-tree -i -m $c7 &&
-+		git update-index --ignore-missing --refresh &&
-+		git merge-recursive $c0 -- $c7 $c3 &&
-+		git ls-files -s >actual-files
-+	) 2>actual-err &&
-+	>expected-err &&
-+	cat >expected-files <<-EOF &&
-+	100644 $o3 0	b/c
-+	100644 $o0 0	c
-+	100644 $o0 0	d/e
-+	100644 $o0 0	e
-+	EOF
-+	test_cmp expected-files actual-files &&
-+	test_cmp expected-err actual-err
-+'
-+
-+test_expect_success 'merge-recursive w/ empty work tree - theirs has rename' '
-+	(
-+		GIT_WORK_TREE="$PWD/theirs-has-rename-work" &&
-+		export GIT_WORK_TREE &&
-+		GIT_INDEX_FILE="$PWD/theirs-has-rename-index" &&
-+		export GIT_INDEX_FILE &&
-+		mkdir "$GIT_WORK_TREE" &&
-+		git read-tree -i -m $c3 &&
-+		git update-index --ignore-missing --refresh &&
-+		git merge-recursive $c0 -- $c3 $c7 &&
-+		git ls-files -s >actual-files
-+	) 2>actual-err &&
-+	>expected-err &&
-+	cat >expected-files <<-EOF &&
-+	100644 $o3 0	b/c
-+	100644 $o0 0	c
-+	100644 $o0 0	d/e
-+	100644 $o0 0	e
-+	EOF
-+	test_cmp expected-files actual-files &&
-+	test_cmp expected-err actual-err
-+'
-+
- test_expect_success 'merge removes empty directories' '
- 
- 	git reset --hard master &&
 -- 
 1.8.5.2
