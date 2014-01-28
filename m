@@ -1,171 +1,123 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] repack: add `repack.honorpackkeep` config var
-Date: Tue, 28 Jan 2014 01:09:54 -0500
-Message-ID: <20140128060954.GA26401@sigill.intra.peff.net>
-References: <52E080C1.4030402@fb.com>
- <20140123225238.GB2567@sigill.intra.peff.net>
- <52E1A99D.6010809@fb.com>
- <52E1AB78.1000504@fb.com>
- <20140124022822.GC4521@sigill.intra.peff.net>
- <52E1D39B.4050103@fb.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Vicent Marti <tanoku@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Siddharth Agarwal <sid0@fb.com>
-X-From: git-owner@vger.kernel.org Tue Jan 28 07:10:02 2014
+From: "Kyle J. McKay" <mackyle@gmail.com>
+Subject: Re: [PATCH] Added get sendmail from .mailrc
+Date: Mon, 27 Jan 2014 22:19:22 -0800
+Message-ID: <1B2852B7-5CDB-4C8E-AF0D-5375DB95A4AB@gmail.com>
+References: <1390643210-5748-1-git-send-email-brilliantov@inbox.ru> <20140128011512.GB17945@sigill.intra.peff.net>
+Mime-Version: 1.0 (Apple Message framework v936)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: Brilliantov Kirill Vladimirovich <brilliantov@inbox.ru>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jan 28 07:19:34 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W81s1-0005NK-Fa
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Jan 2014 07:10:01 +0100
+	id 1W821F-0000Qc-1P
+	for gcvg-git-2@plane.gmane.org; Tue, 28 Jan 2014 07:19:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751188AbaA1GJ5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Jan 2014 01:09:57 -0500
-Received: from cloud.peff.net ([50.56.180.127]:40144 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750866AbaA1GJ4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Jan 2014 01:09:56 -0500
-Received: (qmail 14887 invoked by uid 102); 28 Jan 2014 06:09:56 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 28 Jan 2014 00:09:56 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 28 Jan 2014 01:09:54 -0500
-Content-Disposition: inline
-In-Reply-To: <52E1D39B.4050103@fb.com>
+	id S1752582AbaA1GT0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Jan 2014 01:19:26 -0500
+Received: from mail-pd0-f177.google.com ([209.85.192.177]:52932 "EHLO
+	mail-pd0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750893AbaA1GTZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Jan 2014 01:19:25 -0500
+Received: by mail-pd0-f177.google.com with SMTP id x10so6575917pdj.8
+        for <git@vger.kernel.org>; Mon, 27 Jan 2014 22:19:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:in-reply-to:subject:references:message-id:content-type
+         :content-transfer-encoding:mime-version:date:cc;
+        bh=nb4R5HoK9WOyNkzf6Bs8o++Zyf7wUlz+wphbookh+VM=;
+        b=Q3sWnAwHy1gIjczCNb6yot4Mx6q0yACakSivs6iEY7U1AWwfaE6UiNUn6IBklduuyQ
+         DPhD0oj4maX4696DO62KplixX6WkvbLbFWI5gbMvTo+KslH2fLY9iX0w+P8xDmvHuX+B
+         nxzetBJoSQiDlkFebZ80FL1T+8bfzVt14oA/FZi9musC/Z2C4ozLIVece5fbEKzuvfGs
+         Irbf/5HDZJoQdzeovdeMg68YiZvtbHZFGnecy2zWLiJq1zZmWM8ipkGiJAc36YxQ6c7o
+         pO74AHtWrbai7eozuZBhUdybODaFPo3b1I9gREDPLDGIK8SL+0lrifiSI/hyexkl+bp7
+         L6iw==
+X-Received: by 10.68.130.234 with SMTP id oh10mr7829221pbb.136.1390889965353;
+        Mon, 27 Jan 2014 22:19:25 -0800 (PST)
+Received: from [172.16.16.105] (ip72-192-173-141.sd.sd.cox.net. [72.192.173.141])
+        by mx.google.com with ESMTPSA id de3sm38395545pbb.33.2014.01.27.22.19.24
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Mon, 27 Jan 2014 22:19:24 -0800 (PST)
+In-Reply-To: <20140128011512.GB17945@sigill.intra.peff.net>
+X-Mauler: Craptastic (2.936)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241179>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241180>
 
-On Thu, Jan 23, 2014 at 06:44:43PM -0800, Siddharth Agarwal wrote:
+On Jan 27, 2014, at 17:15, Jeff King wrote:
+> On Sat, Jan 25, 2014 at 01:46:50PM +0400, Brilliantov Kirill  
+> Vladimirovich wrote:
+>
+>> +	if (!defined $smtp_server) {
+>> +		my $mailrc = File::HomeDir->my_home . "/.mailrc";
 
-> On 01/23/2014 06:28 PM, Jeff King wrote:
-> >I think your understanding is accurate here. So we want repack to
-> >respect keep files for deletion, but we _not_ necessarily want
-> >pack-objects to avoid packing an object just because it's in a pack
-> >marked by .keep (see my other email).
-> 
-> Yes, that makes sense and sounds pretty safe.
-> 
-> So the right solution for us probably is to apply the patch Vicent
-> posted, set repack.honorpackkeep to false, and also have a cron job
-> that cleans up stale .keep files so that subsequent repacks clean it
-> up.
+Actually, based on the output of "man mail", this should probably be  
+something more like
 
-Yes, that matches what we do at GitHub.
+   my $mailrc = $ENV{'MAILRC'} || "$ENV{'HOME'}/.mailrc";
 
-Here's Vicent's patch, with documentation and an expanded commit
-message. I think it should be suitable for upstream git.
+which takes into account any MAILRC setting and also avoids the use of  
+File::HomeDir.
 
--- >8 --
-From: Vicent Marti <tanoku@gmail.com>
-Subject: repack: add `repack.honorpackkeep` config var
+>> +			while (<FILE>) {
+>> +			    chomp;
+>> +			    if (/set sendmail=.*/) {
+>> +				my @data = split '"';
+>> +				$smtp_server = $data[1];
+>> +				last;
+>> +			    }
+>
+> Your split is a rather unusual way to do the parsing, and it took me a
+> minute to figure it out. It might be more obvious as:
+>
+>  if (/set sendmail="(.*)"/) {
+>          $smtp_server = $1;
+>          last;
+>  }
+>
+> I do not know anything about the mailrc format, nor does it seem to be
+> well documented. Are the double-quotes required? If not, then the  
+> above
+> regex can easily make them optional. I also wonder if any whitespace  
+> is
+> allowed.
 
-The git-repack command always passes `--honor-pack-keep`
-to pack-objects. This has traditionally been a good thing,
-as we do not want to duplicate those objects in a new pack,
-and we are not going to delete the old pack.
+ From "man mail":
 
-However, when bitmaps are in use, it is important for a full
-repack to include all reachable objects, even if they may be
-duplicated in a .keep pack. Otherwise, we cannot generate
-the bitmaps, as the on-disk format requires the set of
-objects in the pack to be fully closed.
+    set   (se) With no arguments, prints all variable values.   
+Otherwise,
+          sets option.  Arguments are of the form option=value (no space
+          before or after `=') or option.  Quotation marks may be placed
+          around any part of the assignment statement to quote blanks or
+          tabs, i.e. ``set indentprefix="->"''
 
-Even if the repository does not generally have .keep files,
-a simultaneous push could cause a race condition in which a
-.keep file exists at the moment of a repack. The repack may
-try to include those objects in one of two situations:
+My version of "man mail" does not list all the variables that can be  
+set but it refers to "The Mail Reference Manual" document which  
+presumably does.  I did find this [1] that documents many of the  
+available variables including the sendmail one.  I then tried this:
 
-  1. The pushed .keep pack contains objects that were
-     already in the repository (e.g., blobs due to a revert of
-     an old commit).
+cat <<EOF > /tmp/shim
+#!/bin/sh
+exec cat
+EOF
+chmod a+x /tmp/shim
+cat <<EOF > /tmp/testrc
+   se   send"mail"=/tm"p/"shim
+EOF
+echo 'testing' | MAILRC=/tmp/testrc mail -s test nobody
 
-  2. Receive-pack updates the refs, making the objects
-     reachable, but before it removes the .keep file, the
-     repack runs.
+And to my surprise the contents of the new message were cat'd out to  
+the terminal rather than being sent.  So clearly there's some room for  
+improvement with the "set", white space and quote checking.
 
-In either case, we may prefer to duplicate some objects in
-the new, full pack, and let the next repack (after the .keep
-file is cleaned up) take care of removing them.
+[1] http://www.cs.fsu.edu/sysinfo/mail/mailrc.html
 
-This patch introduces an option to disable the
-`--honor-pack-keep` option.  It is not triggered by default,
-even when pack.writeBitmaps is turned on, because its use
-depends on your overall packing strategy and use of .keep
-files.
-
-Note that this option just disables the pack-objects
-behavior. We still leave packs with a .keep in place, as we
-do not necessarily know that we have duplicated all of their
-objects.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
-Intended for the jk/pack-bitmap topic.
-
- Documentation/config.txt | 8 ++++++++
- builtin/repack.c         | 8 +++++++-
- 2 files changed, 15 insertions(+), 1 deletion(-)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 947e6f8..5036a10 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -2128,6 +2128,14 @@ repack.usedeltabaseoffset::
- 	"false" and repack. Access from old Git versions over the
- 	native protocol are unaffected by this option.
- 
-+repack.honorPackKeep::
-+	If set to false, include objects in `.keep` files when repacking
-+	via `git repack`. Note that we still do not delete `.keep` packs
-+	after `pack-objects` finishes. This means that we may duplicate
-+	objects, but this makes the option safe to use when there are
-+	concurrent pushes or fetches. This option is generally only
-+	useful if you have set `pack.writeBitmaps`. Defaults to true.
-+
- rerere.autoupdate::
- 	When set to true, `git-rerere` updates the index with the
- 	resulting contents after it cleanly resolves conflicts using
-diff --git a/builtin/repack.c b/builtin/repack.c
-index a9c4593..585c41d 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -9,6 +9,7 @@
- #include "argv-array.h"
- 
- static int delta_base_offset = 1;
-+static int honor_pack_keep = 1;
- static char *packdir, *packtmp;
- 
- static const char *const git_repack_usage[] = {
-@@ -22,6 +23,10 @@ static int repack_config(const char *var, const char *value, void *cb)
- 		delta_base_offset = git_config_bool(var, value);
- 		return 0;
- 	}
-+	if (!strcmp(var, "repack.honorpackkeep")) {
-+		honor_pack_keep = git_config_bool(var, value);
-+		return 0;
-+	}
- 	return git_default_config(var, value, cb);
- }
- 
-@@ -190,10 +195,11 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 
- 	argv_array_push(&cmd_args, "pack-objects");
- 	argv_array_push(&cmd_args, "--keep-true-parents");
--	argv_array_push(&cmd_args, "--honor-pack-keep");
- 	argv_array_push(&cmd_args, "--non-empty");
- 	argv_array_push(&cmd_args, "--all");
- 	argv_array_push(&cmd_args, "--reflog");
-+	if (honor_pack_keep)
-+		argv_array_push(&cmd_args, "--honor-pack-keep");
- 	if (window)
- 		argv_array_pushf(&cmd_args, "--window=%u", window);
- 	if (window_memory)
--- 
-1.8.5.2.500.g8060133
+--Kyle
