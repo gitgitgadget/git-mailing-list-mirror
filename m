@@ -1,121 +1,87 @@
-From: Erez Zilber <erezzi.list@gmail.com>
-Subject: Running "make rpm" fails on a CentOS 6.3 machine
-Date: Tue, 28 Jan 2014 12:29:22 +0200
-Message-ID: <CALMr_pWHfaHq46418UPcqGKm6bFc61jw-VqGJYV8Ogc9yuHDFA@mail.gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH/WIP v2 00/14] inotify support
+Date: Tue, 28 Jan 2014 17:46:56 +0700
+Message-ID: <CACsJy8AuJQTYdHX0080DXWOWBr7MiDhYkNQ4mMAiPjLi3OTfQQ@mail.gmail.com>
+References: <1389524622-6702-1-git-send-email-pclouds@gmail.com>
+ <1389952060-12297-1-git-send-email-pclouds@gmail.com> <87mwirewd7.fsf@thomasrast.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jan 28 11:29:27 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Thomas Rast <tr@thomasrast.ch>
+X-From: git-owner@vger.kernel.org Tue Jan 28 11:47:32 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W85v5-0000nA-5l
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Jan 2014 11:29:27 +0100
+	id 1W86CZ-0008Q4-F1
+	for gcvg-git-2@plane.gmane.org; Tue, 28 Jan 2014 11:47:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754918AbaA1K3X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Jan 2014 05:29:23 -0500
-Received: from mail-oa0-f44.google.com ([209.85.219.44]:46781 "EHLO
-	mail-oa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754785AbaA1K3W (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Jan 2014 05:29:22 -0500
-Received: by mail-oa0-f44.google.com with SMTP id g12so189887oah.31
-        for <git@vger.kernel.org>; Tue, 28 Jan 2014 02:29:22 -0800 (PST)
+	id S1754497AbaA1Kr1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Jan 2014 05:47:27 -0500
+Received: from mail-qa0-f49.google.com ([209.85.216.49]:58475 "EHLO
+	mail-qa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750816AbaA1Kr0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Jan 2014 05:47:26 -0500
+Received: by mail-qa0-f49.google.com with SMTP id w8so219096qac.8
+        for <git@vger.kernel.org>; Tue, 28 Jan 2014 02:47:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=7L04vzjVC2wWy6zw36AyY/ut5P05fnnfgpucj0P+yCg=;
-        b=DminZFpS02vzbkzqsJuSpT41U1f6kx9HeMrZ/CEk2to447UiCWpULne/wgueOEQ4uB
-         0bc2sPsBKUO94+68/ICGhePqiAFa6rI+e2V0RDV/d31w3/A/KC9h5IAGG6JwXLjaasDw
-         LxuHw+Avdn+Do3BfQQsNoBlAKpY1upYcUhw6uKneS1/mtdP9ntMH2K29b6xGvNmp2rCp
-         32CCZWJpqsXhn+vRUejGzGwIgiuQHiCoc8FHTFBw2YefLOxXcRqh1Z6xsb9rkRAyhSTp
-         4pChC8g+q/t0JJyuMOyG9Ps2hPxKtOjBerXgq9xLqd6NehbW1Apalelbr1miL+BkDbNU
-         S0gA==
-X-Received: by 10.60.123.10 with SMTP id lw10mr529196oeb.24.1390904962169;
- Tue, 28 Jan 2014 02:29:22 -0800 (PST)
-Received: by 10.60.68.99 with HTTP; Tue, 28 Jan 2014 02:29:22 -0800 (PST)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=6mN0/E5ftwWzEif5XwQ7VarANQ3YRmoIa/8WcxCbQfA=;
+        b=cB6fIe/klue1GeqmUgTtM0GWcRSHfKOUaXNLgkN653UMPE9G7MV5QPPvs6ormSAqUC
+         B9dKEwMLPimw/TMnNM+ecQO+gQc7dqia2yDqwqiN5p+ebmBOmdbTFXS8vwt5tTBumpp7
+         +Cn7vNZuYb78YnpyBrK3hgN2zf6ifo7eqTpiA5bSfRc56uhg2YOuKcSVWd3VdgBOVmcP
+         hc1uxViebzgVA26QOkIt6HqZzle/qw3ngLbXi38TtWKhAdvZXm0lUyuGHNe7RKDMmZ3n
+         0FdvB1vxqNAd+UXvfW8EewpBW0xPiZEd96rLtH2qLYUPz+g7eSADwSLK7bPb2NkzWW/Z
+         Frbw==
+X-Received: by 10.229.219.5 with SMTP id hs5mr1089904qcb.9.1390906046252; Tue,
+ 28 Jan 2014 02:47:26 -0800 (PST)
+Received: by 10.96.136.98 with HTTP; Tue, 28 Jan 2014 02:46:56 -0800 (PST)
+In-Reply-To: <87mwirewd7.fsf@thomasrast.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241182>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241183>
 
-Hi,
+On Mon, Jan 20, 2014 at 12:04 AM, Thomas Rast <tr@thomasrast.ch> wrote:
+> There's also the problem of ordering guarantees between the socket and
+> inotify.  I haven't found any, so I would conservatively assume that the
+> socket messages may in fact arrive before inotify, which is a race in
+> the current code.  E.g., in the sequence 'touch foo; git status' the
+> daemon may see
+>
+>   socket                    inotify
+>   < hello...
+>   < status
+>   > new <empty list>
+>                             touch foo
+>
+> I think a clever way to handle this would be to add a new command:
+>
+>   Wait::
+>     This command serves synchronization.  Git creates a file of its
+>     choice in $GIT_DIR/watch (say, `.git/watch/wait.<random>`).  Then it
+>     sends "wait <path>".  The watcher MUST block until it has processed
+>     all change notifications up to and including <path>.
 
-I'm trying to build the git RPM (using tag v1.8.5.3) on a CentOS 6.3
-64 bit machine. I was able to run 'make', but then I fail when running
-'make rpm'. Can anyone help with the following error?
+Assuming that the time between foo is touched and the time an event is
+put in the daemon's queue is reasonably small, would emptying the
+event queue at "hello" be enough? To my innocent eyes (at the kernel),
+it seems inotify handling happens immediately after an fs event, and
+it's uninterruptable (or at least not interruptable by another user
+space process, I don't think we need to care about true interrupts).
+If that's true, by the time the "touch syscall" is finished, the event
+is already sitting in the daemon's queue.
 
-[erez.zilber@erez-lx:~/work/
-git]$ make rpm
-sed -e 's/@@VERSION@@/1.8.5.3/g' < git.spec.in > git.spec+
-mv git.spec+ git.spec
-    GEN configure
-./git-archive --format=tar \
-                --prefix=git-1.8.5.3/ HEAD^{tree} > git-1.8.5.3.tar
-make[1]: Entering directory `/khome/erez.zilber/work/git/git-gui'
-make[1]: Leaving directory `/khome/erez.zilber/work/git/git-gui'
-tar rf git-1.8.5.3.tar \
-                git-1.8.5.3/git.spec \
-                git-1.8.5.3/configure \
-                git-1.8.5.3/version \
-                git-1.8.5.3/git-gui/version
-gzip -f -9 git-1.8.5.3.tar
-rpmbuild \
-                --define "_source_filedigest_algorithm md5" \
-                --define "_binary_filedigest_algorithm md5" \
-                -ta git-1.8.5.3.tar.gz
-Executing(%prep): /bin/sh -e /var/tmp/rpm-tmp.GmHLGn
-+ umask 022
-+ cd /khome/erez.zilber/rpmbuild/BUILD
-+ cd /khome/erez.zilber/rpmbuild/BUILD
-+ rm -rf git-1.8.5.3
-+ /usr/bin/gzip -dc /khome/erez.zilber/work/git/git-1.8.5.3.tar.gz
-+ /bin/tar -xf -
-+ STATUS=0
-+ '[' 0 -ne 0 ']'
-+ cd git-1.8.5.3
-+ /bin/chmod -Rf a+rX,u+w,g-w,o-w .
-+ exit 0
-Executing(%build): /bin/sh -e /var/tmp/rpm-tmp.aVAwKk
-+ umask 022
-+ cd /khome/erez.zilber/rpmbuild/BUILD
-+ cd git-1.8.5.3
-+ make -j8 'CFLAGS=-O2 -g' ETC_GITCONFIG=/etc/gitconfig prefix=/usr
-mandir=/usr/share/man htmldir=/usr/share/doc/git-1.8.5.3 all doc
-make[1]: Entering directory `/khome/erez.zilber/rpmbuild/BUILD/git-1.8.5.3'
-GIT_VERSION = 1.8.5.3
-make[1]: Leaving directory `/khome/erez.zilber/rpmbuild/BUILD/git-1.8.5.3'
-make[1]: Entering directory `/khome/erez.zilber/rpmbuild/BUILD/git-1.8.5.3'
-
-...
-
-Writing perl.mak for Git
-Writing perl.mak for Git
-rename MakeMaker.tmp => perl.mak: No such file or directory at
-/usr/share/perl5/ExtUtils/MakeMaker.pm line 1024.
-make[3]: perl.mak: No such file or directory
-make[3]: perl.mak: No such file or directory
-make[3]: *** No rule to make target `perl.mak'.  Stop.
-make[2]: *** [instlibdir] Error 2
-make[1]: *** [git-difftool] Error 2
-make[1]: *** Waiting for unfinished jobs....
-make[3]: *** No rule to make target `perl.mak'.  Stop.
-make[2]: *** [instlibdir] Error 2
-make[1]: *** [git-add--interactive] Error 2
-Writing perl.mak for Git
-Writing perl.mak for Git
-Writing perl.mak for Git
-rename MakeMaker.tmp => perl.mak: No such file or directory at
-/usr/share/perl5/ExtUtils/MakeMaker.pm line 1024.
-make[3]: perl.mak: No such file or directory
-make[3]: perl.mak: No such file or directory
-make[3]: *** No rule to make target `perl.mak'.  Stop.
-make[2]: *** [instlibdir] Error 2
-make[1]: *** [git-cvsexportcommit] Error 2
-make[3]: *** No rule to make target `instlibdir'.  Stop.
-make[2]: *** [instlibdir] Error 2
-make[1]: *** [git-cvsserver] Error 2
-Writing perl.mak for Git
-mv: cannot stat `perl.mak': No such file or directory
+The problem with wait.<random> is we need to tell the daemon to expect
+it. Otherwise if the daemon processes the "wait.<random>" even before
+"wait" is sent, it would try to wait for the (lost) "wait.<random>"
+event forever. An extension is git touch wait.<random> regularly. Or
+to keep a queue of processed "wait.*" events. Both look ugly imo.
+Another option is send "expect wait.<random>" first, wait for ack,
+touch wait.<random>, then send "wait", which is too much.
+-- 
+Duy
