@@ -1,119 +1,180 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] rev-parse: Check argc before using argv[i+1]
-Date: Tue, 28 Jan 2014 13:43:56 -0800
-Message-ID: <xmqqmwiflr37.fsf@gitster.dls.corp.google.com>
-References: <CAJL_ekuMJByFDVLMCYD4fo9EQy3LKdohsw25WfHqJv9M=3S9Kw@mail.gmail.com>
-	<1390944060-783-1-git-send-email-dhsharp@google.com>
+Subject: Re: [PATCH 3/4] combine-diff: Optimize combine_diff_path sets intersection
+Date: Tue, 28 Jan 2014 13:55:09 -0800
+Message-ID: <xmqqbnyvlqki.fsf@gitster.dls.corp.google.com>
+References: <cover.1390234183.git.kirr@mns.spb.ru>
+	<b97e63128093f6c5f5cab854b9b9487c4e6b955a.1390234183.git.kirr@mns.spb.ru>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: David Sharp <dhsharp@google.com>
-X-From: git-owner@vger.kernel.org Tue Jan 28 22:44:24 2014
+To: Kirill Smelkov <kirr@mns.spb.ru>
+X-From: git-owner@vger.kernel.org Tue Jan 28 22:55:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W8GSG-0001Fx-0H
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Jan 2014 22:44:24 +0100
+	id 1W8Gcu-000581-3d
+	for gcvg-git-2@plane.gmane.org; Tue, 28 Jan 2014 22:55:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755612AbaA1VoI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Jan 2014 16:44:08 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50039 "EHLO
+	id S1755654AbaA1VzR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Jan 2014 16:55:17 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56151 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755212AbaA1VoG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Jan 2014 16:44:06 -0500
+	id S1755606AbaA1VzQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Jan 2014 16:55:16 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A356E68A59;
-	Tue, 28 Jan 2014 16:44:00 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5DCD968CC0;
+	Tue, 28 Jan 2014 16:55:15 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=kkrCzV7yo/M7eztAhZoh7TIJ6vA=; b=fmN8w5
-	p7gCcclHXQiigCJx4Zy8aYJSB+PHm9TeNmSqUlIeyxtV9bSHlBAEh5hKU6p3Z96B
-	8gzd4XnJ96sOLhH3D0DVRpyCT71M/66k/szUaYHmDQP49jwsB4R5UnI8jDMbjJoD
-	pUUzUd1KU6Vi7Joe22iL1+M7etyUk0P0d1pd4=
+	:content-type; s=sasl; bh=d24rmbHvpu5aYrdrz9VTSZP/o+c=; b=Riwkcn
+	O2SzR74BNR8EUIxDDhf2UAxIPka0TDPApoJH08//kHHvEz+6q0L5f825ZZn8qfwr
+	zUBOUYcmEUcbDI6jcq88gLIjNQU0I2tEqHDMRUmYGjIz7fz/ar3m3toGQ6v5aIpT
+	JzjOGKEBt6vXChB+nxQW+IFmyAKYIO2311sgk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=kCr3wv7a8NlHPTgBIR+LiLcvYlhmIbwy
-	UHCA45Hzi57Qc+TjXO0Al7NPBo8ek/TElB7NK7FLDiXJSqk+UnJ+IvYvpKnkQGFJ
-	uJUkpYo+oCx3DfVtVc76HXKzIlBI2jcUqt3xMijxAc5oIdtXA0yIp5xZqqKou8aU
-	nVAHxd+5WRE=
+	:content-type; q=dns; s=sasl; b=f/im45zOmgOHadYtp6m2AsBpNLHlNe9R
+	tlDHiYOApgJDyvbOiowy3hKrYoqAhe7Ix+omXIaXLFYJkVn1F3D1qAazMwU2FOko
+	BTAkTGU8c8YBx0515JIhradP7yYo8CPY80vYlrW68SfQ2oMBcelqk6OkqPMEjQop
+	+AapiI0BSh8=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6721E68A58;
-	Tue, 28 Jan 2014 16:44:00 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4884968CBF;
+	Tue, 28 Jan 2014 16:55:15 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9AF5368A57;
-	Tue, 28 Jan 2014 16:43:59 -0500 (EST)
-In-Reply-To: <1390944060-783-1-git-send-email-dhsharp@google.com> (David
-	Sharp's message of "Tue, 28 Jan 2014 13:21:00 -0800")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3E4B968CBE;
+	Tue, 28 Jan 2014 16:55:14 -0500 (EST)
+In-Reply-To: <b97e63128093f6c5f5cab854b9b9487c4e6b955a.1390234183.git.kirr@mns.spb.ru>
+	(Kirill Smelkov's message of "Mon, 20 Jan 2014 20:20:40 +0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 4BD2BAAE-8865-11E3-BDAD-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: DDEDEE44-8866-11E3-975B-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241193>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241194>
 
-David Sharp <dhsharp@google.com> writes:
+Kirill Smelkov <kirr@mns.spb.ru> writes:
 
-> Without this patch, git-rev-parse --prefix, --default, or
-> --resolve-git-dir, without a value argument, would result in a segfault.
-> Instead, die() with a message.
+> diff --git a/combine-diff.c b/combine-diff.c
+> index 3b92c448..98c2562 100644
+> --- a/combine-diff.c
+> +++ b/combine-diff.c
+> @@ -15,8 +15,8 @@
+> ...
+> +	while (1) {
+> ...
+> +		if (cmp < 0) {
+> +			if (pprev)
+> +				pprev->next = p->next;
+> +			ptmp = p;
+> +			p = p->next;
+> +			free(ptmp);
+> +			if (curr == ptmp)
+> +				curr = p;
+>  			continue;
+> ...
+> +		if (cmp > 0) {
+> +			i++;
+> +			continue;
+>  		}
+> ...
+> +
+> +		pprev = p;
+> +		p = p->next;
+> +		i++;
+>  	}
+>  	return curr;
+>  }
 
-When I sent the review message, I actually was on the fence between
-checking i vs argc and checking the nullness myself.  I realize,
-after seeing the actual patch below, that we are protecting against
-picking up a NULL and blindly passing it on in the codepaths that
-follow, so the updated code does look a lot better, at least to me.
+Thanks. I very much like the approach.
 
-Thanks.
+I was staring at the above part of the code, but couldn't help
+recalling this gem (look for "understand pointers" in the article):
 
->
-> Signed-off-by: David Sharp <dhsharp@google.com>
-> ---
->  builtin/rev-parse.c | 17 +++++++++++------
->  1 file changed, 11 insertions(+), 6 deletions(-)
->
-> diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
-> index aaeb611..45901df 100644
-> --- a/builtin/rev-parse.c
-> +++ b/builtin/rev-parse.c
-> @@ -547,15 +547,17 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
->  				continue;
->  			}
->  			if (!strcmp(arg, "--default")) {
-> -				def = argv[i+1];
-> -				i++;
-> +				def = argv[++i];
-> +				if (!def)
-> +					die("--default requires an argument");
->  				continue;
->  			}
->  			if (!strcmp(arg, "--prefix")) {
-> -				prefix = argv[i+1];
-> +				prefix = argv[++i];
-> +				if (!prefix)
-> +					die("--prefix requires an argument");
->  				startup_info->prefix = prefix;
->  				output_prefix = 1;
-> -				i++;
->  				continue;
->  			}
->  			if (!strcmp(arg, "--revs-only")) {
-> @@ -738,9 +740,12 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
->  				continue;
->  			}
->  			if (!strcmp(arg, "--resolve-git-dir")) {
-> -				const char *gitdir = resolve_gitdir(argv[i+1]);
-> +				const char *gitdir = argv[++i];
->  				if (!gitdir)
-> -					die("not a gitdir '%s'", argv[i+1]);
-> +					die("--resolve-git-dir requires an argument");
-> +				gitdir = resolve_gitdir(gitdir);
-> +				if (!gitdir)
-> +					die("not a gitdir '%s'", argv[i]);
->  				puts(gitdir);
->  				continue;
->  			}
+  http://meta.slashdot.org/story/12/10/11/0030249/linus-torvalds-answers-your-questions
+
+How about doing it this way (on top of your patch)?  It reduces 7
+lines even though it adds two comment lines ;-)
+
+ combine-diff.c | 37 +++++++++++++++----------------------
+ 1 file changed, 15 insertions(+), 22 deletions(-)
+
+diff --git a/combine-diff.c b/combine-diff.c
+index 2d79312..0809e79 100644
+--- a/combine-diff.c
++++ b/combine-diff.c
+@@ -15,11 +15,10 @@
+ static struct combine_diff_path *intersect_paths(struct combine_diff_path *curr, int n, int num_parent)
+ {
+ 	struct diff_queue_struct *q = &diff_queued_diff;
+-	struct combine_diff_path *p, *pprev, *ptmp;
++	struct combine_diff_path *p, **tail = &curr;
+ 	int i, cmp;
+ 
+ 	if (!n) {
+-		struct combine_diff_path *list = NULL, **tail = &list;
+ 		for (i = 0; i < q->nr; i++) {
+ 			int len;
+ 			const char *path;
+@@ -43,35 +42,30 @@ static struct combine_diff_path *intersect_paths(struct combine_diff_path *curr,
+ 			*tail = p;
+ 			tail = &p->next;
+ 		}
+-		return list;
++		return curr;
+ 	}
+ 
+ 	/*
+-	 * NOTE paths are coming sorted here (= in tree order)
++	 * paths in curr (linked list) and q->queue[] (array) are
++	 * both sorted in the tree order.
+ 	 */
+-
+-	pprev = NULL;
+-	p = curr;
+ 	i = 0;
++	while ((p = *tail) != NULL) {
++		cmp = ((i >= q->nr)
++		       ? -1 : strcmp(p->path, q->queue[i]->two->path));
+ 
+-	while (1) {
+-		if (!p)
+-			break;
+-
+-		cmp = (i >= q->nr) ? -1
+-				   : strcmp(p->path, q->queue[i]->two->path);
+ 		if (cmp < 0) {
+-			if (pprev)
+-				pprev->next = p->next;
+-			ptmp = p;
+-			p = p->next;
+-			free(ptmp);
+-			if (curr == ptmp)
+-				curr = p;
++			/* p->path not in q->queue[]; drop it */
++			struct combine_diff_path *next = p->next;
++
++			if ((*tail = next) != NULL)
++				tail = &next->next;
++			free(p);
+ 			continue;
+ 		}
+ 
+ 		if (cmp > 0) {
++			/* q->queue[i] not in p->path; skip it */
+ 			i++;
+ 			continue;
+ 		}
+@@ -80,8 +74,7 @@ static struct combine_diff_path *intersect_paths(struct combine_diff_path *curr,
+ 		p->parent[n].mode = q->queue[i]->one->mode;
+ 		p->parent[n].status = q->queue[i]->status;
+ 
+-		pprev = p;
+-		p = p->next;
++		tail = &p->next;
+ 		i++;
+ 	}
+ 	return curr;
