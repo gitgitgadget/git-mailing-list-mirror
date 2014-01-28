@@ -1,102 +1,121 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] repack: add `repack.honorpackkeep` config var
-Date: Tue, 28 Jan 2014 01:21:43 -0800
-Message-ID: <xmqq8uu0mpg8.fsf@gitster.dls.corp.google.com>
-References: <52E080C1.4030402@fb.com>
-	<20140123225238.GB2567@sigill.intra.peff.net>
-	<52E1A99D.6010809@fb.com> <52E1AB78.1000504@fb.com>
-	<20140124022822.GC4521@sigill.intra.peff.net>
-	<52E1D39B.4050103@fb.com>
-	<20140128060954.GA26401@sigill.intra.peff.net>
+From: Erez Zilber <erezzi.list@gmail.com>
+Subject: Running "make rpm" fails on a CentOS 6.3 machine
+Date: Tue, 28 Jan 2014 12:29:22 +0200
+Message-ID: <CALMr_pWHfaHq46418UPcqGKm6bFc61jw-VqGJYV8Ogc9yuHDFA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Siddharth Agarwal <sid0@fb.com>, Vicent Marti <tanoku@gmail.com>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jan 28 10:21:59 2014
+Content-Type: text/plain; charset=ISO-8859-1
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jan 28 11:29:27 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W84rm-00056f-Hu
-	for gcvg-git-2@plane.gmane.org; Tue, 28 Jan 2014 10:21:58 +0100
+	id 1W85v5-0000nA-5l
+	for gcvg-git-2@plane.gmane.org; Tue, 28 Jan 2014 11:29:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754643AbaA1JVw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Jan 2014 04:21:52 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:32872 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751569AbaA1JVs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Jan 2014 04:21:48 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 71DCA619DE;
-	Tue, 28 Jan 2014 04:21:47 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=6x+5eiiyYIlr4pIF8h1WQCpodO4=; b=GgGMMB
-	H0kQbaw+ZxKFLob70a/sZg7uteRzg5K0nkj4aoMJo/SozRT7XiXjLvq5rlQ/o/iQ
-	CSWkNiZgx2Gr3aJOycYGo2j7MqxjWTj59Z0uoDJrshMeSMP6fsHWsHEeUqrblO2h
-	L+Ia512bSdGYxXK91nmUcsACWTsSb+Yu7GwuI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=unEGu1IlbcIJG/hEL/aUd7kCz2tDBuwT
-	O94RCEok8aqSPVqzVRv0yvE/fgDos8aWW1fqZ7yvbGQTXdPIywdClYlK7OkWEiMY
-	blQizHP0mD/fqjj97YdJH6z1u5a11GPaqFr97nAM06VGkHRqSl1Y+vuF/hqLW7vd
-	deg9+24mwmw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6223D619DD;
-	Tue, 28 Jan 2014 04:21:47 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A85E3619DC;
-	Tue, 28 Jan 2014 04:21:46 -0500 (EST)
-In-Reply-To: <20140128060954.GA26401@sigill.intra.peff.net> (Jeff King's
-	message of "Tue, 28 Jan 2014 01:09:54 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 9C1EC934-87FD-11E3-950E-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754918AbaA1K3X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Jan 2014 05:29:23 -0500
+Received: from mail-oa0-f44.google.com ([209.85.219.44]:46781 "EHLO
+	mail-oa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754785AbaA1K3W (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Jan 2014 05:29:22 -0500
+Received: by mail-oa0-f44.google.com with SMTP id g12so189887oah.31
+        for <git@vger.kernel.org>; Tue, 28 Jan 2014 02:29:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=7L04vzjVC2wWy6zw36AyY/ut5P05fnnfgpucj0P+yCg=;
+        b=DminZFpS02vzbkzqsJuSpT41U1f6kx9HeMrZ/CEk2to447UiCWpULne/wgueOEQ4uB
+         0bc2sPsBKUO94+68/ICGhePqiAFa6rI+e2V0RDV/d31w3/A/KC9h5IAGG6JwXLjaasDw
+         LxuHw+Avdn+Do3BfQQsNoBlAKpY1upYcUhw6uKneS1/mtdP9ntMH2K29b6xGvNmp2rCp
+         32CCZWJpqsXhn+vRUejGzGwIgiuQHiCoc8FHTFBw2YefLOxXcRqh1Z6xsb9rkRAyhSTp
+         4pChC8g+q/t0JJyuMOyG9Ps2hPxKtOjBerXgq9xLqd6NehbW1Apalelbr1miL+BkDbNU
+         S0gA==
+X-Received: by 10.60.123.10 with SMTP id lw10mr529196oeb.24.1390904962169;
+ Tue, 28 Jan 2014 02:29:22 -0800 (PST)
+Received: by 10.60.68.99 with HTTP; Tue, 28 Jan 2014 02:29:22 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241181>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241182>
 
-Jeff King <peff@peff.net> writes:
+Hi,
 
-> The git-repack command always passes `--honor-pack-keep`
-> to pack-objects. This has traditionally been a good thing,
-> as we do not want to duplicate those objects in a new pack,
-> and we are not going to delete the old pack.
-> ...
-> Note that this option just disables the pack-objects
-> behavior. We still leave packs with a .keep in place, as we
-> do not necessarily know that we have duplicated all of their
-> objects.
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> Intended for the jk/pack-bitmap topic.
+I'm trying to build the git RPM (using tag v1.8.5.3) on a CentOS 6.3
+64 bit machine. I was able to run 'make', but then I fail when running
+'make rpm'. Can anyone help with the following error?
 
-Two comments.
+[erez.zilber@erez-lx:~/work/
+git]$ make rpm
+sed -e 's/@@VERSION@@/1.8.5.3/g' < git.spec.in > git.spec+
+mv git.spec+ git.spec
+    GEN configure
+./git-archive --format=tar \
+                --prefix=git-1.8.5.3/ HEAD^{tree} > git-1.8.5.3.tar
+make[1]: Entering directory `/khome/erez.zilber/work/git/git-gui'
+make[1]: Leaving directory `/khome/erez.zilber/work/git/git-gui'
+tar rf git-1.8.5.3.tar \
+                git-1.8.5.3/git.spec \
+                git-1.8.5.3/configure \
+                git-1.8.5.3/version \
+                git-1.8.5.3/git-gui/version
+gzip -f -9 git-1.8.5.3.tar
+rpmbuild \
+                --define "_source_filedigest_algorithm md5" \
+                --define "_binary_filedigest_algorithm md5" \
+                -ta git-1.8.5.3.tar.gz
+Executing(%prep): /bin/sh -e /var/tmp/rpm-tmp.GmHLGn
++ umask 022
++ cd /khome/erez.zilber/rpmbuild/BUILD
++ cd /khome/erez.zilber/rpmbuild/BUILD
++ rm -rf git-1.8.5.3
++ /usr/bin/gzip -dc /khome/erez.zilber/work/git/git-1.8.5.3.tar.gz
++ /bin/tar -xf -
++ STATUS=0
++ '[' 0 -ne 0 ']'
++ cd git-1.8.5.3
++ /bin/chmod -Rf a+rX,u+w,g-w,o-w .
++ exit 0
+Executing(%build): /bin/sh -e /var/tmp/rpm-tmp.aVAwKk
++ umask 022
++ cd /khome/erez.zilber/rpmbuild/BUILD
++ cd git-1.8.5.3
++ make -j8 'CFLAGS=-O2 -g' ETC_GITCONFIG=/etc/gitconfig prefix=/usr
+mandir=/usr/share/man htmldir=/usr/share/doc/git-1.8.5.3 all doc
+make[1]: Entering directory `/khome/erez.zilber/rpmbuild/BUILD/git-1.8.5.3'
+GIT_VERSION = 1.8.5.3
+make[1]: Leaving directory `/khome/erez.zilber/rpmbuild/BUILD/git-1.8.5.3'
+make[1]: Entering directory `/khome/erez.zilber/rpmbuild/BUILD/git-1.8.5.3'
 
- - It seems that this adds a configuration variable that cannot be
-   countermanded from the command line. It has to come with either a
-   very good justification in the documentation describing why it is
-   a bad idea to even allow overriding from the command line in a
-   repository that sets it, or a command line option to let the
-   users override it. I personally prefer the latter, because that
-   will be one less thing for users to remember (i.e. "usually you
-   can override the configured default from the command line, but
-   this variable cannot be because of these very good reasons").
+...
 
- - In the context of "pack-objects", the name "--honor-pack-keep"
-   makes sense; it is understood that pack-objects will _not_ remove
-   kept packfile, so "honoring" can only mean "do not attempt to
-   pick objects out of kept packs to add to the pack being
-   generated." and there is no room for --no-honor-pack-keep to be
-   mistaken as "you canremove the ones marked to be kept after
-   saving the still-used objects in it away."
-
-   But does the same name make sense in the context of "repack"?
-
-Thanks. 
+Writing perl.mak for Git
+Writing perl.mak for Git
+rename MakeMaker.tmp => perl.mak: No such file or directory at
+/usr/share/perl5/ExtUtils/MakeMaker.pm line 1024.
+make[3]: perl.mak: No such file or directory
+make[3]: perl.mak: No such file or directory
+make[3]: *** No rule to make target `perl.mak'.  Stop.
+make[2]: *** [instlibdir] Error 2
+make[1]: *** [git-difftool] Error 2
+make[1]: *** Waiting for unfinished jobs....
+make[3]: *** No rule to make target `perl.mak'.  Stop.
+make[2]: *** [instlibdir] Error 2
+make[1]: *** [git-add--interactive] Error 2
+Writing perl.mak for Git
+Writing perl.mak for Git
+Writing perl.mak for Git
+rename MakeMaker.tmp => perl.mak: No such file or directory at
+/usr/share/perl5/ExtUtils/MakeMaker.pm line 1024.
+make[3]: perl.mak: No such file or directory
+make[3]: perl.mak: No such file or directory
+make[3]: *** No rule to make target `perl.mak'.  Stop.
+make[2]: *** [instlibdir] Error 2
+make[1]: *** [git-cvsexportcommit] Error 2
+make[3]: *** No rule to make target `instlibdir'.  Stop.
+make[2]: *** [instlibdir] Error 2
+make[1]: *** [git-cvsserver] Error 2
+Writing perl.mak for Git
+mv: cannot stat `perl.mak': No such file or directory
