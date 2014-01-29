@@ -1,74 +1,82 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 6/6] builtin/fetch.c: reduce scope of variable
-Date: Wed, 29 Jan 2014 08:54:16 -0800
-Message-ID: <1391014456-12493-1-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 7/7] builtin/gc.c: reduce scope of variables
+Date: Wed, 29 Jan 2014 08:59:37 -0800
+Message-ID: <1391014777-13582-1-git-send-email-gitter.spiros@gmail.com>
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 29 17:54:26 2014
+X-From: git-owner@vger.kernel.org Wed Jan 29 17:59:49 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W8YPB-0000dW-R4
-	for gcvg-git-2@plane.gmane.org; Wed, 29 Jan 2014 17:54:26 +0100
+	id 1W8YUN-0003LH-A5
+	for gcvg-git-2@plane.gmane.org; Wed, 29 Jan 2014 17:59:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753287AbaA2QyV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Jan 2014 11:54:21 -0500
-Received: from mail-pb0-f53.google.com ([209.85.160.53]:41364 "EHLO
-	mail-pb0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752153AbaA2QyV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Jan 2014 11:54:21 -0500
-Received: by mail-pb0-f53.google.com with SMTP id md12so1950477pbc.26
-        for <git@vger.kernel.org>; Wed, 29 Jan 2014 08:54:20 -0800 (PST)
+	id S1752227AbaA2Q7n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Jan 2014 11:59:43 -0500
+Received: from mail-pd0-f182.google.com ([209.85.192.182]:46430 "EHLO
+	mail-pd0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751867AbaA2Q7n (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Jan 2014 11:59:43 -0500
+Received: by mail-pd0-f182.google.com with SMTP id v10so1912561pde.41
+        for <git@vger.kernel.org>; Wed, 29 Jan 2014 08:59:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id;
-        bh=y+wwMmKKDqWKlz6QidW9LWklJi5sJIrSqHCh6qVwMhg=;
-        b=Ru+7ozFgbGgMxwDkbNVErKJpBPJPh4W2qG7h/gDQzGymNIsj6AN9noyCDWJcQUpnFP
-         eIJ23CCbS1GMjbNVyCGa149CK8IHuvKPSjm+DXgcmToSs6io/phdSi0hhbGhECwrnObt
-         R9/Z8IjJ/qgNCA8le4/OsHYpfkiLf3TjFq+o6etJXm2qvU+Oey/IGLnf1KXwnY48BwQP
-         6+l1YZMo+CWV9rHFzd4wtpyuO9n6fdbTe5PrVbyx8ENe5cxKnaNjLqkSo8VhsMU2qk7h
-         8DEohpPzuSBaDh8rR0GeeZEh4ffe2yahLVTohog0QDumeYvtS00O/6R2M4R3hxzGYUoB
-         rlBw==
-X-Received: by 10.67.5.131 with SMTP id cm3mr9102572pad.92.1391014460676;
-        Wed, 29 Jan 2014 08:54:20 -0800 (PST)
+        bh=bmIjiqiYOyzyBEDC0E6rBBsXWd3pL+57SRNuuv3kLxc=;
+        b=BlAjdRCCWTTsERLqxRJhx4mX8wmQu+YcesiDS8xdYO59v7R96TYY19J6iOZN5zV1cl
+         tM3H3J7FOVnv1AZAKwTutLbrHUrU6GACXS/N9enLy58K3Q5KP8hduYf4YPdAGqN1mysf
+         L1Q0jQCySOEycyx1VE5v7XfVMRHzCTMGD2/UaniCFbi4foIF8pbBfWG+WBjUr7ey7LHs
+         cVXn470dAJokoWk2NzVEiKbmYcion/5wMirtv7j0Kd0hAZql3tUlaoPeiUwXpS7DLalu
+         ji/F6DnlyF/EGRf7rStiAkdJRFC534ikyKf1Iw8XIOcaam7d6Pf2SV3ZRZWgFOuOHq49
+         C70A==
+X-Received: by 10.68.182.165 with SMTP id ef5mr8930220pbc.169.1391014782564;
+        Wed, 29 Jan 2014 08:59:42 -0800 (PST)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id qq5sm8823465pbb.24.2014.01.29.08.54.19
+        by mx.google.com with ESMTPSA id xn12sm20786520pac.12.2014.01.29.08.59.40
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 29 Jan 2014 08:54:20 -0800 (PST)
+        Wed, 29 Jan 2014 08:59:40 -0800 (PST)
 X-Mailer: git-send-email 1.7.10.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241214>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241215>
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- builtin/fetch.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ builtin/gc.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 025bc3e..55f457c 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -1026,7 +1026,6 @@ static int fetch_multiple(struct string_list *list)
- 
- static int fetch_one(struct remote *remote, int argc, const char **argv)
+diff --git a/builtin/gc.c b/builtin/gc.c
+index c19545d..5bbb5e3 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -188,13 +188,12 @@ static int need_to_gc(void)
+ static const char *lock_repo_for_gc(int force, pid_t* ret_pid)
  {
--	int i;
- 	static const char **refs = NULL;
- 	struct refspec *refspec;
- 	int ref_nr = 0;
-@@ -1050,6 +1049,7 @@ static int fetch_one(struct remote *remote, int argc, const char **argv)
+ 	static struct lock_file lock;
+-	static char locking_host[128];
+ 	char my_host[128];
+ 	struct strbuf sb = STRBUF_INIT;
+ 	struct stat st;
+ 	uintmax_t pid;
+ 	FILE *fp;
+-	int fd, should_exit;
++	int fd;
  
- 	if (argc > 0) {
- 		int j = 0;
-+		int i;
- 		refs = xcalloc(argc + 1, sizeof(const char *));
- 		for (i = 0; i < argc; i++) {
- 			if (!strcmp(argv[i], "tag")) {
+ 	if (pidfile)
+ 		/* already locked */
+@@ -206,6 +205,8 @@ static const char *lock_repo_for_gc(int force, pid_t* ret_pid)
+ 	fd = hold_lock_file_for_update(&lock, git_path("gc.pid"),
+ 				       LOCK_DIE_ON_ERROR);
+ 	if (!force) {
++		static char locking_host[128];
++		int should_exit;
+ 		fp = fopen(git_path("gc.pid"), "r");
+ 		memset(locking_host, 0, sizeof(locking_host));
+ 		should_exit =
 -- 
 1.7.10.4
