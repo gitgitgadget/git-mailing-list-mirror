@@ -1,76 +1,85 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 5/5] builtin/commit.c: reduce scope of variables
-Date: Wed, 29 Jan 2014 15:17:07 -0500
-Message-ID: <CAPig+cR3DdPS3W_FNPnXG+NO0gUG2PSLH0qNmFUsoxJcy0MVsQ@mail.gmail.com>
-References: <1391003311-11126-1-git-send-email-gitter.spiros@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 17/17] Documentation: add documentation for 'git interpret-trailers'
+Date: Wed, 29 Jan 2014 12:30:12 -0800
+Message-ID: <xmqq1tzqjzu3.fsf@gitster.dls.corp.google.com>
+References: <CAPig+cQgq_2h+n8OeDsrmk_NqAA4RDNzkBAtNCNjOAGMrFN4jg@mail.gmail.com>
+	<20140127.213344.212708599170084659.chriscool@tuxfamily.org>
+	<xmqqfvo9nmul.fsf@gitster.dls.corp.google.com>
+	<20140129.210102.2157679962537036887.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>
-To: Elia Pinto <gitter.spiros@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 29 21:23:09 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: sunshine@sunshineco.com, git@vger.kernel.org, johan@herland.net,
+	josh@joshtriplett.org, tr@thomasrast.ch, mhagger@alum.mit.edu,
+	dan.carpenter@oracle.com, greg@kroah.com, peff@peff.net
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Wed Jan 29 21:30:34 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W8bfB-0002ee-3G
-	for gcvg-git-2@plane.gmane.org; Wed, 29 Jan 2014 21:23:09 +0100
+	id 1W8bmF-00075a-Vu
+	for gcvg-git-2@plane.gmane.org; Wed, 29 Jan 2014 21:30:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751872AbaA2UXE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Jan 2014 15:23:04 -0500
-Received: from mail-yk0-f177.google.com ([209.85.160.177]:51297 "EHLO
-	mail-yk0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751116AbaA2UXD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Jan 2014 15:23:03 -0500
-X-Greylist: delayed 355 seconds by postgrey-1.27 at vger.kernel.org; Wed, 29 Jan 2014 15:23:03 EST
-Received: by mail-yk0-f177.google.com with SMTP id 19so11457130ykq.8
-        for <git@vger.kernel.org>; Wed, 29 Jan 2014 12:23:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=ko7GEzkC225lc3bz8woUimmrTvZbH3HztjoLTjjv4ck=;
-        b=OTYSK5y/gvgDmvJjgp/nGh55rlEVifTfP/LwpRzaa+T3sATlHmhMetZDsTbCJv3eWI
-         TlggNnDls2Tx02fsXrSosTAZDqUWYeJs6Eg3zCN26iE4UUkiFeuZZBjyuaa6Iz+FYMD3
-         u8Ft89jLeEvimeMu/OIkmFNLcBn7QQDaMxxsIUSoPKOn4yakN4G3Mk295HRQaNXKmv4r
-         BQEODKjduxvrPwYdvLh/KFDHDWhwDxGcR5ohiU6xZEjwF7gs8nWewBOJVtwckxdarWCi
-         ABDLvuO8Va6kALiJp+NTSjP3zs4Br0KCmYbzra84lOmRyZyO9BK6vDZ4FZuTMlrwt3i9
-         29FA==
-X-Received: by 10.236.181.137 with SMTP id l9mr2635675yhm.97.1391026627885;
- Wed, 29 Jan 2014 12:17:07 -0800 (PST)
-Received: by 10.170.36.65 with HTTP; Wed, 29 Jan 2014 12:17:07 -0800 (PST)
-In-Reply-To: <1391003311-11126-1-git-send-email-gitter.spiros@gmail.com>
-X-Google-Sender-Auth: PumxojtAHB-NCgMw_pc_rgMtG2o
+	id S1751967AbaA2UaX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Jan 2014 15:30:23 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50734 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751831AbaA2UaW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Jan 2014 15:30:22 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CC98A68873;
+	Wed, 29 Jan 2014 15:30:21 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=/EYSd0bxa4wOiEThiCWy2+UVbIU=; b=EfvLPl
+	+rUl/XNrNtKs6b5/drMib0QHV5IIXPMU7u5qiiNxmUwpw6h8iII7wAhPNu3oViSr
+	kpDFxedC509+SL0azrIWAw94kWaN+51H0blM3lYYY2mjkQbDQXYm6t1l31HjYsAX
+	zdEuuNZLdE+Umxuy2Y7rpbZARSlP8xu9sZPq4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=kO5ZTl+Y4WStjQeHsw6BeBRMxF7HpOOR
+	RBBXL4QdF2pCogZ45xEUwMjAZyGpNUuVleZbTbbLU2VfOCFTt08Bc0CllWFr8TvV
+	YKlPYGWN+jxbPR2Y4P4ccX3uN3dfjOU42G2M3s858swPWKxogJjpGBHZ6UbDkCeQ
+	jMMbiHo2GIc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A01D26886C;
+	Wed, 29 Jan 2014 15:30:19 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EFE1268868;
+	Wed, 29 Jan 2014 15:30:17 -0500 (EST)
+In-Reply-To: <20140129.210102.2157679962537036887.chriscool@tuxfamily.org>
+	(Christian Couder's message of "Wed, 29 Jan 2014 21:01:02 +0100
+	(CET)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 2AC6359C-8924-11E3-9DD1-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241222>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241223>
 
-On Wed, Jan 29, 2014 at 8:48 AM, Elia Pinto <gitter.spiros@gmail.com> wrote:
-> diff --git a/builtin/commit.c b/builtin/commit.c
-> index 3767478..eea4421 100644
-> --- a/builtin/commit.c
-> +++ b/builtin/commit.c
-> @@ -1510,7 +1511,6 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
->         struct ref_lock *ref_lock;
->         struct commit_list *parents = NULL, **pptr = &parents;
->         struct stat statbuf;
-> -       int allow_fast_forward = 1;
->         struct commit *current_head = NULL;
->         struct commit_extra_header *extra = NULL;
+Christian Couder <chriscool@tuxfamily.org> writes:
+
+>> I find it a bad taste to allow unbound set of <token> on the LHS of
+>> '=' on the command line, but that is a separate issue in the design,
+>> not in the documentation of the design.
 >
-> @@ -1576,6 +1576,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
->                 }
->                 fclose(fp);
->                 strbuf_release(&m);
-> +               int allow_fast_forward = 1;
+> I don't understand this sentence, sorry.
 
-This introduces a declaration-after-statement, which is frowned upon
-in this project.
+It is a bad design taste to structure the command line argument in
+such a way that it takes
 
->                 if (!stat(git_path("MERGE_MODE"), &statbuf)) {
->                         if (strbuf_read_file(&sb, git_path("MERGE_MODE"), 0) < 0)
->                                 die_errno(_("could not read MERGE_MODE"));
-> --
-> 1.7.10.4
+	git cmd xyzzy=frotz nitfol=rezrov some other args
+
+where these 'xyzzy', 'nitfol', etc. form an unbound set.  It
+prevents future enhancements to the command from allowing anything
+that contain '=' in "some other args" part.
+
+Allowing not just '=' but also ':' makes it even worse.
+
+But these are issues in the design itself.  Not the issue in the
+patch 17/17 that is trying to document the design.  This patch under
+discussion documents the bad design correctly ;-)
