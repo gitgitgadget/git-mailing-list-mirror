@@ -1,76 +1,59 @@
-From: Mike Hommey <mh@glandium.org>
+From: Duy Nguyen <pclouds@gmail.com>
 Subject: Re: inotify support, nearly there
-Date: Wed, 29 Jan 2014 16:44:35 +0900
-Message-ID: <20140129074435.GA21044@glandium.org>
+Date: Wed, 29 Jan 2014 15:33:24 +0700
+Message-ID: <CACsJy8Bi-dFbWKOGw4C3fUXZ2p_0mc5CjhyMkL9p_F0H4V1rOg@mail.gmail.com>
 References: <CACsJy8CG5QUqYOM46mOHOWDKB-A45B2-fj1uS9OtgniV+P8Ktg@mail.gmail.com>
+ <20140129074435.GA21044@glandium.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
 Cc: Git Mailing List <git@vger.kernel.org>,
 	Thomas Rast <tr@thomasrast.ch>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 29 08:44:47 2014
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Wed Jan 29 09:34:00 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W8PpG-0001pC-G5
-	for gcvg-git-2@plane.gmane.org; Wed, 29 Jan 2014 08:44:46 +0100
+	id 1W8Qat-0002uv-UU
+	for gcvg-git-2@plane.gmane.org; Wed, 29 Jan 2014 09:34:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752249AbaA2Hom (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Jan 2014 02:44:42 -0500
-Received: from ks3293202.kimsufi.com ([5.135.186.141]:44088 "EHLO
-	jigen.glandium.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750924AbaA2Hom (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Jan 2014 02:44:42 -0500
-Received: from mh by jigen.glandium.org with local (Exim 4.82)
-	(envelope-from <mh@glandium.org>)
-	id 1W8Pp5-0005bQ-9C; Wed, 29 Jan 2014 16:44:35 +0900
-Content-Disposition: inline
-In-Reply-To: <CACsJy8CG5QUqYOM46mOHOWDKB-A45B2-fj1uS9OtgniV+P8Ktg@mail.gmail.com>
-X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1750908AbaA2Idz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Jan 2014 03:33:55 -0500
+Received: from mail-qc0-f178.google.com ([209.85.216.178]:55100 "EHLO
+	mail-qc0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750829AbaA2Idz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Jan 2014 03:33:55 -0500
+Received: by mail-qc0-f178.google.com with SMTP id m20so2296120qcx.9
+        for <git@vger.kernel.org>; Wed, 29 Jan 2014 00:33:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=4Kc6WHFErpqXD5h2q3FF/5m9jBgOro4hdhSC1n/+1d8=;
+        b=0Hf7r0LaAZQOQayRiAZ64DpJPtafOxJz6jdAjTopZOQEM4L7UylMV6CtdaFKEvMcbk
+         WRkqc6DWcbNQCsPx55R6+QdZqE3Gq8paqqdyoJhblnA8Oaf8SrRhSmX15Nfg/OKzFBEy
+         ysiz0w+uCfaCrGihK4GmndhiNFbA65nSHTn6OmvI2hLYN2AJVTLI2ha4s1Jg537thrub
+         vpx8ApiRlSaq2RJrtjWV6/95KwQ2umG9nEavGpyQHz0R9mkb9JS3iHCnNt3VRSyjcW9d
+         dXJYC3rqwhznJshTiWEHN7OF2qUHCZlplAaRG0HqsiC6jANhGFejwHPfHMPzHJuB2azz
+         A33g==
+X-Received: by 10.224.80.8 with SMTP id r8mr9879640qak.88.1390984434528; Wed,
+ 29 Jan 2014 00:33:54 -0800 (PST)
+Received: by 10.96.136.98 with HTTP; Wed, 29 Jan 2014 00:33:24 -0800 (PST)
+In-Reply-To: <20140129074435.GA21044@glandium.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241201>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241202>
 
-On Wed, Jan 29, 2014 at 01:47:30PM +0700, Duy Nguyen wrote:
-> Just a quick update for the enthusiasts. My branch file-watcher [1]
-> has got working per-user inotify support. It's a 20 patch series so
-> I'll refrain from spamming git@vger for a while, even though it hurts
-> your eyes a lot less than what I have posted so far. The test suite
-> ran fine with it so it's not that buggy. It has new tests too, even
-> though real inotify is not tested in the new tests. Documentation is
-> there, either in .txt or comments. Using it is simple:
-> 
-> $ mkdir ~/.watcher
-> $ git file-watcher --detach ~/.watcher
-> $ git config --global filewatcher.path $HOME/.watcher
-> 
-> There's still some polishing work to do. But I think the core logic is
-> done. I have some ideas what to be polished, but I'd appreciate
-> feedback if anyone uses it. We may need to make lookup code faster
-> later.
-> 
-> MacOS, FreeBSD and Windows contributors. If you have time and are
-> interested, have a look at the protocol, which is basically documented
-> in file-watcher.c:handle_command(), and see if something is
-> incompatible with your file notification mechanism. MacOS and FreeBSD
-> may reuse code from file-watcher.c, at least the unix socket part. I'm
-> not so sure about Windows. It probably needs a brand new daemon
-> because little could be shared, I don't know. I deliberately design
-> the daemon dumb so writing a completely new one won't be so hard. My
-> plan is focus on inotify and get it merged first, then new OS support
-> can come later (with refactoring if needed, but should not change the
-> protocol drastically).
-> 
-> [1] git clone https://github.com/pclouds/git.git file-watcher
+On Wed, Jan 29, 2014 at 2:44 PM, Mike Hommey <mh@glandium.org> wrote:
+> Haven't looked at the code, so I don't know if you've done that, but in
+> case you haven't, it would be nice to have an environment variable or a
+> config option to make git use the file-watcher *and* normal lstat
+> operations, to check consistency.
 
-Haven't looked at the code, so I don't know if you've done that, but in
-case you haven't, it would be nice to have an environment variable or a
-config option to make git use the file-watcher *and* normal lstat
-operations, to check consistency.
-
-Mike
+No I haven't. So far I depend on my manual tests and the test suite to
+check for consistency. Will do.
+-- 
+Duy
