@@ -1,80 +1,101 @@
-From: Gordon McGregor <gordon.mcgregor@nitero.com>
-Subject: inconsistent include behaviour for core.sharedRepository
-Date: Thu, 30 Jan 2014 12:52:38 -0600
-Message-ID: <CABJvL7duzsqH=3DLR6uhD05x2RmVJ=K53Up30K3sHOYzSfaLfw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 30 19:53:04 2014
+From: Brian Gernhardt <brian@gernhardtsoftware.com>
+Subject: [PATCH] Ensure __BYTE_ORDER is always set
+Date: Thu, 30 Jan 2014 14:55:41 -0500
+Message-ID: <1391111741-28994-1-git-send-email-brian@gernhardtsoftware.com>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jan 30 21:02:48 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W8wjY-000548-02
-	for gcvg-git-2@plane.gmane.org; Thu, 30 Jan 2014 19:53:04 +0100
+	id 1W8xp1-0002xr-RY
+	for gcvg-git-2@plane.gmane.org; Thu, 30 Jan 2014 21:02:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752954AbaA3Sw7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Jan 2014 13:52:59 -0500
-Received: from mail-qc0-f181.google.com ([209.85.216.181]:53277 "EHLO
-	mail-qc0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751168AbaA3Sw7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Jan 2014 13:52:59 -0500
-Received: by mail-qc0-f181.google.com with SMTP id e9so5472875qcy.26
-        for <git@vger.kernel.org>; Thu, 30 Jan 2014 10:52:58 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
-         :content-type;
-        bh=jAbFgxTshFZZ5Hb5BG2RPBzvzGQBiegb7uHVikG4DLk=;
-        b=BUddSydIdcm9tpPw2HiN3Z/Xgh8bpAyl2C+QWgD3zjYC2RK5uoNkVw7cM3E1v/QaEe
-         aMlGDeMVNFQQMlcWcz2l3pBWddzgzf9FQOVYsMb1mRtSOWXAUPtrczrhkC1oOJFAkHub
-         y8ebfeZHwP0Y+9l/rqQ4rZa33TA6v6gDr6Rp/1gxHDTv+0qiIKvRkS0wD/KknLpvcipS
-         cHPfGe9Px7AN849unf0/msbjthieKMpEM3WRTaamAMHugpqGtGxaZ73TbzENQ2zODJ5E
-         HZcc4lqHvqz3vZoPj10KuIpVX/o2HnjNiajte7PQjCZLlTyOA6Fydg/I55LE694ADsUF
-         uUKg==
-X-Gm-Message-State: ALoCoQlv4EuWgA/+SRyhw7KGHauTT/HBjM+zuKtaRD0+c4UPTbnWGa++MKT/H0kGkR/tXY0a25q0
-X-Received: by 10.140.105.35 with SMTP id b32mr23615601qgf.36.1391107978507;
- Thu, 30 Jan 2014 10:52:58 -0800 (PST)
-Received: by 10.96.87.34 with HTTP; Thu, 30 Jan 2014 10:52:38 -0800 (PST)
-X-Originating-IP: [24.173.27.250]
+	id S1753109AbaA3UCn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Jan 2014 15:02:43 -0500
+Received: from vs072.rosehosting.com ([216.114.78.72]:50521 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753049AbaA3UCm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Jan 2014 15:02:42 -0500
+X-Greylist: delayed 406 seconds by postgrey-1.27 at vger.kernel.org; Thu, 30 Jan 2014 15:02:42 EST
+Received: by silverinsanity.com (Postfix, from userid 5001)
+	id D5CB42736448; Thu, 30 Jan 2014 19:55:54 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on silverinsanity.com
+X-Spam-Level: 
+X-Spam-Status: No, score=-3.1 required=3.5 tests=ALL_TRUSTED,AWL,BAYES_20
+	autolearn=ham version=3.2.5
+Received: from localhost.localdomain (u-of-rochester-128-151-150-17.wireless.rochester.edu [128.151.150.17])
+	by silverinsanity.com (Postfix) with ESMTPA id 234782736189;
+	Thu, 30 Jan 2014 19:55:53 +0000 (UTC)
+X-Mailer: git-send-email 1.9.rc0.256.gbc3fa69
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241277>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241278>
 
-After several days of problems with directory permissions in the
-objects/ directory for shared users, I finally found the cause of an
-issue that we have been seeing.
+a201c20 (ewah: support platforms that require aligned reads) added a
+reliance on the existence of __BYTE_ORDER and __BIG_ENDIAN.  However,
+these macros are spelled without the leading __ on some platforms (OS
+X at least).  In this case, the endian-swapping code was added even
+when unnecessary, which caused assertion failures in
+t5310-pack-bitmaps.sh as the code that used the bitmap would read past
+the end.
 
-We are working with several shared repositories. We were trying to use
-a shared [include] configuration that contained
+We already had code to handle this case in compat/bswap.h, but it was
+only used if we couldn't already find a reasonable version of bswap64.
+Move the macro-defining and checking code out of a conditional so that
+either __BYTE_ORDER is defined or we get a compilation error instead
+of a runtime error in the bitmap code.
 
-[core]
-sharedRepository = group
+Signed-off-by: Brian Gernhardt <brian@gernhardtsoftware.com>
+---
+ compat/bswap.h | 24 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
 
-This was not being honoured, from an included config file.
-
-Using git config, would show that core.sharedRepository was set to
-'group', as expected.
-
-However, digging through setup.c I see that shared_repository is
-actually configured using git_config_early(), which does not use the
-include mechanism that git_config()/ git_config_with_options() uses.
-
-This is particularly difficult to debug given the git-config reports
-values that are not actually used internally.
-
-I think that git config should report the correct values, for features
-that are accessed via git_config_early. Otherwise it is quite
-difficult to understand the behaviour, without the source code.
-
-
-
-git version 1.8.2.1 on CentOS release 5.6 (Final)
-
-
+diff --git a/compat/bswap.h b/compat/bswap.h
+index 120c6c1..7db09d6 100644
+--- a/compat/bswap.h
++++ b/compat/bswap.h
+@@ -80,6 +80,18 @@ static inline uint64_t git_bswap64(uint64_t x)
+ 
+ #endif
+ 
++#if !defined(__BYTE_ORDER)
++# if defined(BYTE_ORDER) && defined(LITTLE_ENDIAN) && defined(BIG_ENDIAN)
++#  define __BYTE_ORDER BYTE_ORDER
++#  define __LITTLE_ENDIAN LITTLE_ENDIAN
++#  define __BIG_ENDIAN BIG_ENDIAN
++# endif
++#endif
++
++#if !defined(__BYTE_ORDER)
++# error "Cannot determine endianness"
++#endif
++
+ #if defined(bswap32)
+ 
+ #undef ntohl
+@@ -101,18 +113,6 @@ static inline uint64_t git_bswap64(uint64_t x)
+ #undef ntohll
+ #undef htonll
+ 
+-#if !defined(__BYTE_ORDER)
+-# if defined(BYTE_ORDER) && defined(LITTLE_ENDIAN) && defined(BIG_ENDIAN)
+-#  define __BYTE_ORDER BYTE_ORDER
+-#  define __LITTLE_ENDIAN LITTLE_ENDIAN
+-#  define __BIG_ENDIAN BIG_ENDIAN
+-# endif
+-#endif
+-
+-#if !defined(__BYTE_ORDER)
+-# error "Cannot determine endianness"
+-#endif
+-
+ #if __BYTE_ORDER == __BIG_ENDIAN
+ # define ntohll(n) (n)
+ # define htonll(n) (n)
 -- 
-Gordon McGregor
-+1 512 577 9712
+1.9.rc0.256.gbc3fa69
