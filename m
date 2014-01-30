@@ -1,7 +1,9 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v4 00/17] Add interpret-trailers builtin
-Date: Thu, 30 Jan 2014 07:49:03 +0100
-Message-ID: <20140130064217.7504.473.chriscool@tuxfamily.org>
+Subject: [PATCH v4 01/17] Add data structures and basic functions for commit
+ trailers
+Date: Thu, 30 Jan 2014 07:49:04 +0100
+Message-ID: <20140130064921.7504.87498.chriscool@tuxfamily.org>
+References: <20140130064217.7504.473.chriscool@tuxfamily.org>
 Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
 	Josh Triplett <josh@joshtriplett.org>,
 	Thomas Rast <tr@thomasrast.ch>,
@@ -10,131 +12,111 @@ Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
 	Dan Carpenter <dan.carpenter@oracle.com>,
 	Greg Kroah-Hartman <greg@kroah.com>, Jeff King <peff@peff.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 30 08:38:06 2014
+X-From: git-owner@vger.kernel.org Thu Jan 30 08:38:08 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W8mCM-00057Z-Cj
-	for gcvg-git-2@plane.gmane.org; Thu, 30 Jan 2014 08:38:06 +0100
+	id 1W8mCM-00057Z-Tp
+	for gcvg-git-2@plane.gmane.org; Thu, 30 Jan 2014 08:38:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752733AbaA3HiB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Jan 2014 02:38:01 -0500
-Received: from [194.158.98.15] ([194.158.98.15]:39102 "EHLO mail-2y.bbox.fr"
+	id S1752728AbaA3HiA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Jan 2014 02:38:00 -0500
+Received: from [194.158.98.14] ([194.158.98.14]:38309 "EHLO mail-1y.bbox.fr"
 	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751974AbaA3Hh7 (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1752718AbaA3Hh7 (ORCPT <rfc822;git@vger.kernel.org>);
 	Thu, 30 Jan 2014 02:37:59 -0500
 Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-2y.bbox.fr (Postfix) with ESMTP id 764F659;
-	Thu, 30 Jan 2014 08:37:34 +0100 (CET)
+	by mail-1y.bbox.fr (Postfix) with ESMTP id D8A125D;
+	Thu, 30 Jan 2014 08:37:37 +0100 (CET)
+X-git-sha1: 448b5ac136445a87465e5f84a4b3ef9b5d2e612a 
 X-Mailer: git-mail-commits v0.5.2
+In-Reply-To: <20140130064217.7504.473.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241241>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241242>
 
-This patch series implements a new command:
+We will use a doubly linked list to store all information
+about trailers and their configuration.
 
-        git interpret-trailers
+This way we can easily remove or add trailers to or from
+trailer lists while traversing the lists in either direction.
 
-and an infrastructure to process trailers that can be reused,
-for example in "commit.c".
-
-1) Rationale:
-
-This command should help with RFC 822 style headers, called
-"trailers", that are found at the end of commit messages.
-
-(Note that these headers do not follow and are not intended to
-follow many rules that are in RFC 822. For example they do not
-follow the line breaking rules, the encoding rules and probably
-many other rules.)
-
-For a long time, these trailers have become a de facto standard
-way to add helpful information into commit messages.
-
-Until now git commit has only supported the well known
-"Signed-off-by: " trailer, that is used by many projects like
-the Linux kernel and Git.
-
-It is better to implement features for these trailers first in a
-new command rather than in builtin/commit.c, because this way the
-prepare-commit-msg and commit-msg hooks can reuse this command.
-
-2) Current state:
-
-Currently the usage string of this command is:
-
-git interpret-trailers [--trim-empty] [--infile=<file>] [(<token>[(=|:)<value>])...]
-
-The following features are implemented:
-
-        - the result is printed on stdout
-        - the [<token>[=<value>]>] arguments are interpreted
-        - a commit message passed using the "--infile=file" option is interpreted
-        - if "--infile" is not used, a commit message is read from stdin
-        - the "trailer.<token>.key" options in the config are interpreted
-        - the "trailer.<token>.where" options are interpreted
-        - the "trailer.<token>.ifExist" options are interpreted
-        - the "trailer.<token>.ifMissing" options are interpreted
-        - the "trailer.<token>.command" config works
-        - $ARG can be used in commands
-        - ditto for GIT_{AUTHOR,COMMITTER}_{NAME,EMAIL} env variables
-        - there are some tests
-        - there is some documentation
-
-The following features are planned but not yet implemented:
-        - add more tests related to commands
-        - add examples in documentation
-        - integration with "git commit"
-
-Possible improvements:
-        - support GIT_COMMIT_PROTO env variable in commands
-
-3) Changes since version 3, thanks to Eric and Junio:
-
-* the usage string/synopsis of the command was improved
-* some spelling/wording mistakes in the doc were fixed
-* some style issues were fixed
-
-Christian Couder (17):
-  Add data structures and basic functions for commit trailers
-  trailer: process trailers from file and arguments
-  trailer: read and process config information
-  trailer: process command line trailer arguments
-  strbuf: add strbuf_isspace()
-  trailer: parse trailers from input file
-  trailer: put all the processing together and print
-  trailer: add interpret-trailers command
-  trailer: add tests for "git interpret-trailers"
-  trailer: if no input file is passed, read from stdin
-  trailer: add new_trailer_item() function
-  strbuf: add strbuf_replace()
-  trailer: execute command from 'trailer.<name>.command'
-  trailer: add tests for trailer command
-  trailer: set author and committer env variables
-  trailer: add tests for commands using env variables
-  Documentation: add documentation for 'git interpret-trailers'
-
- .gitignore                               |   1 +
- Documentation/git-interpret-trailers.txt | 132 +++++++
- Makefile                                 |   2 +
- builtin.h                                |   1 +
- builtin/interpret-trailers.c             |  36 ++
- git.c                                    |   1 +
- strbuf.c                                 |  14 +
- strbuf.h                                 |   4 +
- t/t7513-interpret-trailers.sh            | 262 +++++++++++++
- trailer.c                                | 637 +++++++++++++++++++++++++++++++
- trailer.h                                |   6 +
- 11 files changed, 1096 insertions(+)
- create mode 100644 Documentation/git-interpret-trailers.txt
- create mode 100644 builtin/interpret-trailers.c
- create mode 100755 t/t7513-interpret-trailers.sh
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ Makefile  |  1 +
+ trailer.c | 48 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 49 insertions(+)
  create mode 100644 trailer.c
- create mode 100644 trailer.h
 
+diff --git a/Makefile b/Makefile
+index b4af1e2..ec90feb 100644
+--- a/Makefile
++++ b/Makefile
+@@ -871,6 +871,7 @@ LIB_OBJS += submodule.o
+ LIB_OBJS += symlinks.o
+ LIB_OBJS += tag.o
+ LIB_OBJS += trace.o
++LIB_OBJS += trailer.o
+ LIB_OBJS += transport.o
+ LIB_OBJS += transport-helper.o
+ LIB_OBJS += tree-diff.o
+diff --git a/trailer.c b/trailer.c
+new file mode 100644
+index 0000000..aed25e1
+--- /dev/null
++++ b/trailer.c
+@@ -0,0 +1,48 @@
++#include "cache.h"
++/*
++ * Copyright (c) 2013 Christian Couder <chriscool@tuxfamily.org>
++ */
++
++enum action_where { WHERE_AFTER, WHERE_BEFORE };
++enum action_if_exist { EXIST_ADD_IF_DIFFERENT, EXIST_ADD_IF_DIFFERENT_NEIGHBOR,
++		       EXIST_ADD, EXIST_OVERWRITE, EXIST_DO_NOTHING };
++enum action_if_missing { MISSING_ADD, MISSING_DO_NOTHING };
++
++struct conf_info {
++	char *name;
++	char *key;
++	char *command;
++	enum action_where where;
++	enum action_if_exist if_exist;
++	enum action_if_missing if_missing;
++};
++
++struct trailer_item {
++	struct trailer_item *previous;
++	struct trailer_item *next;
++	const char *token;
++	const char *value;
++	struct conf_info *conf;
++};
++
++static int same_token(struct trailer_item *a, struct trailer_item *b, int alnum_len)
++{
++	return !strncasecmp(a->token, b->token, alnum_len);
++}
++
++static int same_value(struct trailer_item *a, struct trailer_item *b)
++{
++	return !strcasecmp(a->value, b->value);
++}
++
++static int same_trailer(struct trailer_item *a, struct trailer_item *b, int alnum_len)
++{
++	return same_token(a, b, alnum_len) && same_value(a, b);
++}
++
++/* Get the length of buf from its beginning until its last alphanumeric character */
++static size_t alnum_len(const char *buf, size_t len)
++{
++	while (--len >= 0 && !isalnum(buf[len]));
++	return len + 1;
++}
 -- 
 1.8.5.2.201.gacc5987
