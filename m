@@ -1,68 +1,68 @@
-From: Max Rahm <ac90b671@gmail.com>
-Subject: Feature Request Google Authenticator Support
-Date: Wed, 29 Jan 2014 22:07:03 -0600
-Message-ID: <20140130040702.GA77226@gmail.com>
+From: Andrew Ardill <andrew.ardill@gmail.com>
+Subject: Re: Feature Request Google Authenticator Support
+Date: Thu, 30 Jan 2014 15:18:45 +1100
+Message-ID: <CAH5451k9Urx+OSPZx33AFzqRcKeWJOM_rkHe3NVuS2CP6eNaZg@mail.gmail.com>
+References: <20140130040702.GA77226@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 30 05:07:45 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Max Rahm <ac90b671@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 30 05:19:35 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W8iun-0007S3-6u
-	for gcvg-git-2@plane.gmane.org; Thu, 30 Jan 2014 05:07:45 +0100
+	id 1W8j6E-0004YR-9V
+	for gcvg-git-2@plane.gmane.org; Thu, 30 Jan 2014 05:19:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751744AbaA3EHI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Jan 2014 23:07:08 -0500
-Received: from mail-ie0-f169.google.com ([209.85.223.169]:37100 "EHLO
-	mail-ie0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750879AbaA3EHH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Jan 2014 23:07:07 -0500
-Received: by mail-ie0-f169.google.com with SMTP id to1so3020646ieb.14
-        for <git@vger.kernel.org>; Wed, 29 Jan 2014 20:07:06 -0800 (PST)
+	id S1752313AbaA3ET1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Jan 2014 23:19:27 -0500
+Received: from mail-vc0-f173.google.com ([209.85.220.173]:34019 "EHLO
+	mail-vc0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752019AbaA3ET0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Jan 2014 23:19:26 -0500
+Received: by mail-vc0-f173.google.com with SMTP id ld13so1756329vcb.18
+        for <git@vger.kernel.org>; Wed, 29 Jan 2014 20:19:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:subject:message-id:mime-version:content-type
-         :content-disposition:user-agent;
-        bh=SBFXHosJvPJ7sQQH86vA637JbYqaWOLGUsx70BCJS+g=;
-        b=Qt6Pk3IGLKCzZ5kGtNbmRtSSrvmmW50lcq4hLuKQnO6BlBgs/uN0f6Gx1diCw7JaG5
-         KI9BIu7o9LioQ76j/fxdYYYPf/ySzg4hsWTnGraTSG3JCqW/2/r7wEymEtU7uNnOzXVg
-         gnmFx0mYb+iY6fLpLiMZgKuXHqDjXktQD5V6/JbKgOtcz/Xe5UJfh1lukeaI52kF+HA3
-         YlLKReWDceisLnVWkpjV6vR1sa6nmiGtXvjSAIFGYFr5MwGU4OlcH4IRlmz1KRp8mBPi
-         Wi2i1T8FDqKM5jKnSHy0n/dOsApvxrXCR5IwzuIT+1+TzXfJUf8AIs2oMlVlTvuURg4g
-         fIPg==
-X-Received: by 10.50.118.41 with SMTP id kj9mr31981590igb.37.1391054826016;
-        Wed, 29 Jan 2014 20:07:06 -0800 (PST)
-Received: from gmail.com (173-22-154-180.client.mchsi.com. [173.22.154.180])
-        by mx.google.com with ESMTPSA id ml2sm16070867igb.10.2014.01.29.20.07.05
-        for <git@vger.kernel.org>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Wed, 29 Jan 2014 20:07:05 -0800 (PST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.22 (2013-10-16)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=Sm+lqAtctXSCiUzxGeMZbnTdWUcTgTQCjIpup5l0vOM=;
+        b=r7a3xfU2CcDR5WZvboBtOMfqCI/UwofkSnOnXWnFTqNvXL7QZnHjUruBUmYRrdQDzW
+         OqGwcF2SKLA6NOCjq+xrGoHaCNgEawBg8snoE8+YwKrHJB7SjwN75ENGTfhA9HsE23Pv
+         YMsoKNhz/7AAO6HUPwavwzI7EU9TCpL8sdpdlCD7IBLD/znTUpRfCcdlFwbV9FCbnoMf
+         3cEzjzmow5JCwBAt4AKyebcgpzOi3Be5AUzKacwskrifbMrMQvkfcwaPDuZtDOotGpb4
+         1eijRLRonuxsM4r8Y83sM+WZpO4inFQpZhAognCMCD20LNdvvQJ0fPbjyLWpLOmblM4Z
+         Zs+w==
+X-Received: by 10.220.251.73 with SMTP id mr9mr9547490vcb.2.1391055566220;
+ Wed, 29 Jan 2014 20:19:26 -0800 (PST)
+Received: by 10.221.8.133 with HTTP; Wed, 29 Jan 2014 20:18:45 -0800 (PST)
+In-Reply-To: <20140130040702.GA77226@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241236>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241237>
 
-Github supports google authenticator 2-step authentication. I enabled it
-and how can't figure out how to connect to my github account through git.
-I've looked pretty hard in the man pages and on google and can't seem to
-find anything on how to set up git to work with a repository with 2-step
-verification. Here's a link to my stackoverflow question with my exact
-problem if there's something I'm missing.
+On 30 January 2014 15:07, Max Rahm <ac90b671@gmail.com> wrote:
+> Github supports google authenticator 2-step authentication. I enabled it
+> and how can't figure out how to connect to my github account through git.
+> I've looked pretty hard in the man pages and on google and can't seem to
+> find anything on how to set up git to work with a repository with 2-step
+> verification. Here's a link to my stackoverflow question with my exact
+> problem if there's something I'm missing.
+>
+> http://stackoverflow.com/questions/21447137/git-github-not-working-with-google-authenticator-osx
+>
+> As far as I can tell the feature is not supported. I'd like to be able to
+> use the 2-step authentication but obviously I'd like to be able to push my
+> code :D
 
-http://stackoverflow.com/questions/21447137/git-github-not-working-with-google-authenticator-osx
+I was under the impression that private key authentication worked
+regardless of two-factor authentication. Is using git over ssh an
+option for you?
 
-As far as I can tell the feature is not supported. I'd like to be able to
-use the 2-step authentication but obviously I'd like to be able to push my
-code :D
+Regards,
 
-Thanks in advance,
-Max Rahm
-
---
-:wq
+Andrew Ardill
