@@ -1,64 +1,68 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: Having Git follow symlinks
-Date: Thu, 30 Jan 2014 13:37:17 +0100
-Message-ID: <vpqa9ed1w8y.fsf@anie.imag.fr>
-References: <alpine.DEB.2.02.1401281443330.17426@perkele.intern.softwolves.pp.se>
-	<CALKQrgf5o-ZcaeqXLm3P7RpK2yPcFd_HnG4ewwoEGESduyDSjQ@mail.gmail.com>
-	<alpine.DEB.2.00.1401300958320.30100@ds9.cixit.se>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Johan Herland <johan@herland.net>,
-	Git mailing list <git@vger.kernel.org>
-To: Peter Krefting <peter@softwolves.pp.se>
-X-From: git-owner@vger.kernel.org Thu Jan 30 13:37:40 2014
+From: Andrew Keller <andrew@kellerfarm.com>
+Subject: Re: Questions on local clone and push back
+Date: Thu, 30 Jan 2014 09:13:10 -0500
+Message-ID: <B7DBC99A-910F-4BBF-90BB-7F0DBFF5E864@kellerfarm.com>
+References: <CACdn6eksz0q1+_JHwF=wKP_ziUFzhB5ij93A3-BEap3kosipFg@mail.gmail.com>
+Mime-Version: 1.0 (Mac OS X Mail 6.6 \(1510\))
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Arshavir Grigorian <grigorian@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 30 15:20:03 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W8qsG-0008JB-88
-	for gcvg-git-2@plane.gmane.org; Thu, 30 Jan 2014 13:37:40 +0100
+	id 1W8sTK-0005AA-I4
+	for gcvg-git-2@plane.gmane.org; Thu, 30 Jan 2014 15:20:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752988AbaA3Mhb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Jan 2014 07:37:31 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:43766 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752887AbaA3Mh3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Jan 2014 07:37:29 -0500
-Received: from globule.imag.fr (globule.imag.fr [129.88.34.238])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id s0UCbHid026185
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 30 Jan 2014 13:37:17 +0100
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	(authenticated bits=0)
-	by globule.imag.fr (8.13.8/8.13.8) with ESMTP id s0UCbHjm008803
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Thu, 30 Jan 2014 13:37:17 +0100
-In-Reply-To: <alpine.DEB.2.00.1401300958320.30100@ds9.cixit.se> (Peter
-	Krefting's message of "Thu, 30 Jan 2014 10:01:20 +0100 (CET)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 30 Jan 2014 13:37:17 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: s0UCbHid026185
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1391690241.08116@+n58zZBljPu93Sco/8yr1A
+	id S1753379AbaA3OTz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Jan 2014 09:19:55 -0500
+Received: from atl4mhfb02.myregisteredsite.com ([209.17.115.56]:41023 "EHLO
+	atl4mhfb02.myregisteredsite.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752846AbaA3OTy convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Jan 2014 09:19:54 -0500
+X-Greylist: delayed 402 seconds by postgrey-1.27 at vger.kernel.org; Thu, 30 Jan 2014 09:19:54 EST
+Received: from atl4mhob09.myregisteredsite.com (atl4mhob09.myregisteredsite.com [209.17.115.47])
+	by atl4mhfb02.myregisteredsite.com (8.14.4/8.14.4) with ESMTP id s0UEDMuh010922
+	for <git@vger.kernel.org>; Thu, 30 Jan 2014 09:13:22 -0500
+Received: from mailpod.hostingplatform.com ([10.30.71.209])
+	by atl4mhob09.myregisteredsite.com (8.14.4/8.14.4) with ESMTP id s0UEDBn5020951
+	for <git@vger.kernel.org>; Thu, 30 Jan 2014 09:13:11 -0500
+Received: (qmail 12182 invoked by uid 0); 30 Jan 2014 14:13:11 -0000
+X-TCPREMOTEIP: 69.41.14.217
+X-Authenticated-UID: andrew@kellerfarm.com
+Received: from unknown (HELO devnet.ces.cvnt.net) (andrew@kellerfarm.com@69.41.14.217)
+  by 0 with ESMTPA; 30 Jan 2014 14:13:11 -0000
+In-Reply-To: <CACdn6eksz0q1+_JHwF=wKP_ziUFzhB5ij93A3-BEap3kosipFg@mail.gmail.com>
+X-Mailer: Apple Mail (2.1510)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241268>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241269>
 
-Peter Krefting <peter@softwolves.pp.se> writes:
+On Jan 30, 2014, at 12:43 AM, Arshavir Grigorian <grigorian@gmail.com> wrote:
 
-> Yeah, but then I have copies of the files, instead of having the files
-> themselves under version control, meaning I need to copy them back to
-> push changes back, or to merge them. That is undesirable :-/
+> 1) is this a good approach to achieving what I need
 
-One option is to have the symlink in the other direction: make /etc/foo
-a symlink to $GIT_WORKTREE/foo and version the later.
+If you do not intend to track the parent projects in Git, then yes - that is a good approach.
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+With that said, I recommend tracking each parent project in its own Git repository, and track the shared code in yet another Git repository, and link them using submodule references.
+
+> 2) I was getting an error when I tied to run "git push" about the branch being checked out and
+
+What's the error when you use the more explicit syntax, `git push <remote> <branch>`?  Depending on configuration, simply `git push` might not have all the information it needs to work.
+
+> 3) how do I selectively push / merge only certain commits back to the "source" repository / branch?
+
+You can't.  When pushing, pulling, or merging, you can only deal with subsections of the commit graph.
+
+With that said, you can rebuild parts of the commit graph using selected commits.  Then, that result can be pushed, pulled, or merged.
+
+In my experience, you want to avoid picking and choosing commits in the shared repository for each parent project.  Maintaining the shared repository is difficult enough.  I advise that you find a way to make your shared code configurable for each project, such that you can have one "master" branch for all, and each project just uses or configures the code differently.  With that said, try to keep your configurations to a minimum (within reason) - in general, the more configurations you have, the more difficult the shared library will be to maintain.
+
+Hope that helps,
+ - Andrew
