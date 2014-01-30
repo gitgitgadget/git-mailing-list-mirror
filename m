@@ -1,7 +1,7 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v4 11/17] trailer: add new_trailer_item() function
-Date: Thu, 30 Jan 2014 07:49:14 +0100
-Message-ID: <20140130064921.7504.42810.chriscool@tuxfamily.org>
+Subject: [PATCH v4 07/17] trailer: put all the processing together and print
+Date: Thu, 30 Jan 2014 07:49:10 +0100
+Message-ID: <20140130064921.7504.20482.chriscool@tuxfamily.org>
 References: <20140130064217.7504.473.chriscool@tuxfamily.org>
 Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
 	Josh Triplett <josh@joshtriplett.org>,
@@ -11,96 +11,96 @@ Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
 	Dan Carpenter <dan.carpenter@oracle.com>,
 	Greg Kroah-Hartman <greg@kroah.com>, Jeff King <peff@peff.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 30 08:38:45 2014
+X-From: git-owner@vger.kernel.org Thu Jan 30 08:38:50 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W8mCy-0005TE-5O
-	for gcvg-git-2@plane.gmane.org; Thu, 30 Jan 2014 08:38:44 +0100
+	id 1W8mD3-0005XV-Be
+	for gcvg-git-2@plane.gmane.org; Thu, 30 Jan 2014 08:38:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752854AbaA3Hik (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Jan 2014 02:38:40 -0500
-Received: from [194.158.98.45] ([194.158.98.45]:37436 "EHLO mail-3y.bbox.fr"
+	id S1752859AbaA3Hip (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Jan 2014 02:38:45 -0500
+Received: from [194.158.98.14] ([194.158.98.14]:38384 "EHLO mail-1y.bbox.fr"
 	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751107AbaA3HiK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Jan 2014 02:38:10 -0500
+	id S1752169AbaA3HiI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Jan 2014 02:38:08 -0500
 Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-3y.bbox.fr (Postfix) with ESMTP id 7AF926F;
-	Thu, 30 Jan 2014 08:37:49 +0100 (CET)
-X-git-sha1: 9797e0b80e707e686b3b771ca09c33ed94f436e1 
+	by mail-1y.bbox.fr (Postfix) with ESMTP id E970853;
+	Thu, 30 Jan 2014 08:37:46 +0100 (CET)
+X-git-sha1: cd8f711db0da8058794242053776ddbc06c30b53 
 X-Mailer: git-mail-commits v0.5.2
 In-Reply-To: <20140130064217.7504.473.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241253>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241254>
 
-This is a small refactoring to prepare for the next steps.
+This patch adds the process_trailers() function that
+calls all the previously added processing functions
+and then prints the results on the standard output.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- trailer.c | 31 +++++++++++++++++++------------
- 1 file changed, 19 insertions(+), 12 deletions(-)
+ trailer.c | 40 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 40 insertions(+)
 
 diff --git a/trailer.c b/trailer.c
-index 73a65e0..430ff39 100644
+index 084b3e1..8681aed 100644
 --- a/trailer.c
 +++ b/trailer.c
-@@ -399,11 +399,27 @@ static void parse_trailer(struct strbuf *tok, struct strbuf *val, const char *tr
- 	}
+@@ -49,6 +49,26 @@ static size_t alnum_len(const char *buf, size_t len)
+ 	return len + 1;
  }
  
-+static struct trailer_item *new_trailer_item(struct trailer_item *conf_item,
-+					     const char* tok, const char* val)
++static void print_tok_val(const char *tok, const char *val)
 +{
-+	struct trailer_item *new = xcalloc(sizeof(struct trailer_item), 1);
-+	new->value = val;
-+
-+	if (conf_item) {
-+		new->conf = conf_item->conf;
-+		new->token = xstrdup(conf_item->conf->key);
-+	} else {
-+		new->conf = xcalloc(sizeof(struct conf_info), 1);
-+		new->token = tok;
-+	}
-+
-+	return new;
++	char c = tok[strlen(tok) - 1];
++	if (isalnum(c))
++		printf("%s: %s\n", tok, val);
++	else if (isspace(c) || c == '#')
++		printf("%s%s\n", tok, val);
++	else
++		printf("%s %s\n", tok, val);
 +}
 +
- static struct trailer_item *create_trailer_item(const char *string)
++static void print_all(struct trailer_item *first, int trim_empty)
++{
++	struct trailer_item *item;
++	for (item = first; item; item = item->next) {
++		if (!trim_empty || strlen(item->value) > 0)
++			print_tok_val(item->token, item->value);
++	}
++}
++
+ static void add_arg_to_infile(struct trailer_item *infile_tok,
+ 			      struct trailer_item *arg_tok)
  {
- 	struct strbuf tok = STRBUF_INIT;
- 	struct strbuf val = STRBUF_INIT;
--	struct trailer_item *new;
- 	struct trailer_item *item;
- 	int tok_alnum_len;
- 
-@@ -415,21 +431,12 @@ static struct trailer_item *create_trailer_item(const char *string)
- 	for (item = first_conf_item; item; item = item->next) {
- 		if (!strncasecmp(tok.buf, item->conf->key, tok_alnum_len) ||
- 		    !strncasecmp(tok.buf, item->conf->name, tok_alnum_len)) {
--			new = xcalloc(sizeof(struct trailer_item), 1);
--			new->conf = item->conf;
--			new->token = xstrdup(item->conf->key);
--			new->value = strbuf_detach(&val, NULL);
- 			strbuf_release(&tok);
--			return new;
-+			return new_trailer_item(item, NULL, strbuf_detach(&val, NULL));
- 		}
+@@ -501,3 +521,23 @@ static void process_input_file(const char *infile,
+ 		add_trailer_item(infile_tok_first, infile_tok_last, new);
  	}
- 
--	new = xcalloc(sizeof(struct trailer_item), 1);
--	new->conf = xcalloc(sizeof(struct conf_info), 1);
--	new->token = strbuf_detach(&tok, NULL);
--	new->value = strbuf_detach(&val, NULL);
--
--	return new;
-+	return new_trailer_item(NULL, strbuf_detach(&tok, NULL), strbuf_detach(&val, NULL));;
  }
- 
- static void add_trailer_item(struct trailer_item **first,
++
++void process_trailers(const char *infile, int trim_empty, int argc, const char **argv)
++{
++	struct trailer_item *infile_tok_first = NULL;
++	struct trailer_item *infile_tok_last = NULL;
++	struct trailer_item *arg_tok_first;
++
++	git_config(git_trailer_config, NULL);
++
++	/* Print the non trailer part of infile */
++	if (infile) {
++		process_input_file(infile, &infile_tok_first, &infile_tok_last);
++	}
++
++	arg_tok_first = process_command_line_args(argc, argv);
++
++	process_trailers_lists(&infile_tok_first, &infile_tok_last, &arg_tok_first);
++
++	print_all(infile_tok_first, trim_empty);
++}
 -- 
 1.8.5.2.201.gacc5987
