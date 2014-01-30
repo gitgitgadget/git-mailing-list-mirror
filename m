@@ -1,92 +1,140 @@
-From: Anders Kaseorg <andersk@MIT.EDU>
-Subject: Re: [PATCH] pager: set LV=-c alongside LESS=FRSX
-Date: Thu, 30 Jan 2014 02:15:47 -0500
-Message-ID: <52E9FC23.2030200@mit.edu>
-References: <874n6zbqlh.fsf@helix.nebula.avasys.jp> <20140106193339.GH3881@google.com> <874n5ghenr.fsf@helix.nebula.avasys.jp> <20140107021404.GK3881@google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>,
-	Olaf Meeuwissen <olaf.meeuwissen@avasys.jp>
-X-From: git-owner@vger.kernel.org Thu Jan 30 08:21:02 2014
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH v4 00/17] Add interpret-trailers builtin
+Date: Thu, 30 Jan 2014 07:49:03 +0100
+Message-ID: <20140130064217.7504.473.chriscool@tuxfamily.org>
+Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
+	Josh Triplett <josh@joshtriplett.org>,
+	Thomas Rast <tr@thomasrast.ch>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Dan Carpenter <dan.carpenter@oracle.com>,
+	Greg Kroah-Hartman <greg@kroah.com>, Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 30 08:38:06 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W8lvl-0005Fg-Fo
-	for gcvg-git-2@plane.gmane.org; Thu, 30 Jan 2014 08:20:57 +0100
+	id 1W8mCM-00057Z-Cj
+	for gcvg-git-2@plane.gmane.org; Thu, 30 Jan 2014 08:38:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751997AbaA3HUx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 30 Jan 2014 02:20:53 -0500
-Received: from dmz-mailsec-scanner-8.mit.edu ([18.7.68.37]:51100 "EHLO
-	dmz-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751107AbaA3HUw (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 30 Jan 2014 02:20:52 -0500
-X-Greylist: delayed 300 seconds by postgrey-1.27 at vger.kernel.org; Thu, 30 Jan 2014 02:20:52 EST
-X-AuditID: 12074425-f79906d000000cf9-8f-52e9fc27c65f
-Received: from mailhub-auth-4.mit.edu ( [18.7.62.39])
-	(using TLS with cipher AES256-SHA (256/256 bits))
-	(Client did not present a certificate)
-	by dmz-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id D6.FE.03321.72CF9E25; Thu, 30 Jan 2014 02:15:51 -0500 (EST)
-Received: from outgoing.mit.edu (outgoing-auth-1.mit.edu [18.9.28.11])
-	by mailhub-auth-4.mit.edu (8.13.8/8.9.2) with ESMTP id s0U7Fnnr029181;
-	Thu, 30 Jan 2014 02:15:50 -0500
-Received: from [18.208.1.204] ([18.208.1.204])
-	(authenticated bits=0)
-        (User authenticated as andersk@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.8/8.12.4) with ESMTP id s0U7Flch004146
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 30 Jan 2014 02:15:48 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.2.0
-In-Reply-To: <20140107021404.GK3881@google.com>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmpgleLIzCtJLcpLzFFi42IRYrdT11X/8zLIoLNV1qLrSjeTxdubSxgt
-	Wo8sZnJg9jjS3sfusXPWXXaPz5vkApijuGxSUnMyy1KL9O0SuDJ+ru9jKZjLVnHn7QLGBsb3
-	LF2MnBwSAiYSs3e9hLLFJC7cW8/WxcjFISQwm0li4/43UM5GRomeL8/BqoQEVjNJPJrpDWLz
-	CqhJLNn5BCzOIqAqcenHUjYQmw0oPnfDZHYQW1QgTOLu/7WMEPWCEidnQtSLCMRJNKyYCFTP
-	wcEsIC7R/w8sLCxgKbFs/mVmiFULGSWOrKkBsTkF9CVWHFkCNp5ZwFbiztzdzBC2vETz1tnM
-	ExgFZyHZMAtJ2SwkZQsYmVcxyqbkVunmJmbmFKcm6xYnJ+blpRbpWujlZpbopaaUbmIEB7SL
-	6g7GCYeUDjEKcDAq8fCumPwySIg1say4MvcQoyQHk5Io74WvQCG+pPyUyozE4oz4otKc1OJD
-	jBIczEoivHF3gXK8KYmVValF+TApaQ4WJXHeWxz2QUIC6YklqdmpqQWpRTBZGQ4OJQle+99A
-	jYJFqempFWmZOSUIaSYOTpDhPEDDHUBqeIsLEnOLM9Mh8qcYFaXEeXf9AkoIgCQySvPgemEJ
-	5xWjONArwryxIO08wGQF1/0KaDAT0GCxHS9ABpckIqSkGhgN+edslLo8IXddx1Q7492znSN4
-	ZQWXqwUKbphuPfPTnkU5we9Wnf16UvNOn0LIjQO+z7u5ZGd/6S8MiKq5xTnzcUPLT8XPPnP+
-	7r/R/s9f/miGyjpLYSm+vswE94J83cS7fjpFAdd3Xf/R3Cbh4z/xx+3mKR571+VO 
+	id S1752733AbaA3HiB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Jan 2014 02:38:01 -0500
+Received: from [194.158.98.15] ([194.158.98.15]:39102 "EHLO mail-2y.bbox.fr"
+	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751974AbaA3Hh7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Jan 2014 02:37:59 -0500
+Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
+	by mail-2y.bbox.fr (Postfix) with ESMTP id 764F659;
+	Thu, 30 Jan 2014 08:37:34 +0100 (CET)
+X-Mailer: git-mail-commits v0.5.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241240>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241241>
 
-On 01/06/2014 09:14 PM, Jonathan Nieder wrote:
-> +test_expect_success TTY 'LESS and LV envvars are set for pagination'=
- '
-> +	(
-> +		sane_unset LESS LV &&
-> +		PAGER=3D"env >pager-env.out" &&
-> +		export PAGER &&
-> +
-> +		test_terminal git log
-> +	) &&
-> +	grep ^LESS=3D pager-env.out &&
-> +	grep ^LV=3D pager-env.out
-> +'
-> +
+This patch series implements a new command:
 
-On the Ubuntu PPA builders, I=92m seeing this new test fail with SIGPIP=
-E=20
-about half the time:
+        git interpret-trailers
 
-died of signal 13 at /build/buildd/git-1.9~rc1/t/test-terminal.perl lin=
-e 33.
-not ok 6 - LESS and LV envvars are set for pagination
+and an infrastructure to process trailers that can be reused,
+for example in "commit.c".
 
-Although the test seems to work locally for me, I can reproduce a=20
-similar failure just by running
+1) Rationale:
 
-$ GIT_PAGER=3D'env >pager-env.out' ./test-terminal.perl git log
-died of signal 13 at ./test-terminal.perl line 33.
+This command should help with RFC 822 style headers, called
+"trailers", that are found at the end of commit messages.
 
-Anders
+(Note that these headers do not follow and are not intended to
+follow many rules that are in RFC 822. For example they do not
+follow the line breaking rules, the encoding rules and probably
+many other rules.)
+
+For a long time, these trailers have become a de facto standard
+way to add helpful information into commit messages.
+
+Until now git commit has only supported the well known
+"Signed-off-by: " trailer, that is used by many projects like
+the Linux kernel and Git.
+
+It is better to implement features for these trailers first in a
+new command rather than in builtin/commit.c, because this way the
+prepare-commit-msg and commit-msg hooks can reuse this command.
+
+2) Current state:
+
+Currently the usage string of this command is:
+
+git interpret-trailers [--trim-empty] [--infile=<file>] [(<token>[(=|:)<value>])...]
+
+The following features are implemented:
+
+        - the result is printed on stdout
+        - the [<token>[=<value>]>] arguments are interpreted
+        - a commit message passed using the "--infile=file" option is interpreted
+        - if "--infile" is not used, a commit message is read from stdin
+        - the "trailer.<token>.key" options in the config are interpreted
+        - the "trailer.<token>.where" options are interpreted
+        - the "trailer.<token>.ifExist" options are interpreted
+        - the "trailer.<token>.ifMissing" options are interpreted
+        - the "trailer.<token>.command" config works
+        - $ARG can be used in commands
+        - ditto for GIT_{AUTHOR,COMMITTER}_{NAME,EMAIL} env variables
+        - there are some tests
+        - there is some documentation
+
+The following features are planned but not yet implemented:
+        - add more tests related to commands
+        - add examples in documentation
+        - integration with "git commit"
+
+Possible improvements:
+        - support GIT_COMMIT_PROTO env variable in commands
+
+3) Changes since version 3, thanks to Eric and Junio:
+
+* the usage string/synopsis of the command was improved
+* some spelling/wording mistakes in the doc were fixed
+* some style issues were fixed
+
+Christian Couder (17):
+  Add data structures and basic functions for commit trailers
+  trailer: process trailers from file and arguments
+  trailer: read and process config information
+  trailer: process command line trailer arguments
+  strbuf: add strbuf_isspace()
+  trailer: parse trailers from input file
+  trailer: put all the processing together and print
+  trailer: add interpret-trailers command
+  trailer: add tests for "git interpret-trailers"
+  trailer: if no input file is passed, read from stdin
+  trailer: add new_trailer_item() function
+  strbuf: add strbuf_replace()
+  trailer: execute command from 'trailer.<name>.command'
+  trailer: add tests for trailer command
+  trailer: set author and committer env variables
+  trailer: add tests for commands using env variables
+  Documentation: add documentation for 'git interpret-trailers'
+
+ .gitignore                               |   1 +
+ Documentation/git-interpret-trailers.txt | 132 +++++++
+ Makefile                                 |   2 +
+ builtin.h                                |   1 +
+ builtin/interpret-trailers.c             |  36 ++
+ git.c                                    |   1 +
+ strbuf.c                                 |  14 +
+ strbuf.h                                 |   4 +
+ t/t7513-interpret-trailers.sh            | 262 +++++++++++++
+ trailer.c                                | 637 +++++++++++++++++++++++++++++++
+ trailer.h                                |   6 +
+ 11 files changed, 1096 insertions(+)
+ create mode 100644 Documentation/git-interpret-trailers.txt
+ create mode 100644 builtin/interpret-trailers.c
+ create mode 100755 t/t7513-interpret-trailers.sh
+ create mode 100644 trailer.c
+ create mode 100644 trailer.h
+
+-- 
+1.8.5.2.201.gacc5987
