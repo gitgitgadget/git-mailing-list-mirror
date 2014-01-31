@@ -1,89 +1,99 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 3/3] diff: turn skip_stat_unmatch on selectively
-Date: Fri, 31 Jan 2014 08:17:12 -0800
-Message-ID: <xmqqbnysi0s7.fsf@gitster.dls.corp.google.com>
-References: <1390632411-3596-3-git-send-email-pclouds@gmail.com>
-	<1390863568-22656-1-git-send-email-pclouds@gmail.com>
-	<xmqqd2jdm1jj.fsf@gitster.dls.corp.google.com>
-	<xmqq7g9jlny6.fsf@gitster.dls.corp.google.com>
-	<20140128235203.GA7788@lanh>
-	<xmqq61p2k2u5.fsf@gitster.dls.corp.google.com>
-	<CACsJy8Dd+baRUi0YjnqDXFi-Fv=K9NxwO=YbYuVEfQkdEXWWWQ@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: A few contributor's questions
+Date: Fri, 31 Jan 2014 08:19:24 -0800
+Message-ID: <20140131161924.GA4332@google.com>
+References: <8738k44808.fsf@fencepost.gnu.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 31 17:17:23 2014
+Cc: git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Fri Jan 31 17:19:36 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W9GmQ-0007n7-HS
-	for gcvg-git-2@plane.gmane.org; Fri, 31 Jan 2014 17:17:22 +0100
+	id 1W9GoZ-0000h2-Cd
+	for gcvg-git-2@plane.gmane.org; Fri, 31 Jan 2014 17:19:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932263AbaAaQRT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 Jan 2014 11:17:19 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60159 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753976AbaAaQRS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Jan 2014 11:17:18 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0E7B066F8D;
-	Fri, 31 Jan 2014 11:17:17 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=nh4CZdz8bhOUXA5TxYhW8O2zW1o=; b=qLtEmA
-	p2uX8CzgGdyQahpoZzNbhhc8e4SHMED2SIFHSqhaO3wIAQ5nhv/XBPrFhEqQ6E6x
-	BOdLw8LzIUHgFOFEOX1tZaVSfaodFd9jyhrWYTROyUi+saCm671hXd24kBMSbRPh
-	2v+6htt0behZwI8Y6fc9jNDEqt02tBwFbvRo4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=yJXuuz+UPgFlqLxrktClOyNRMOxF2gjB
-	yLJUfb48D1FIpFeR+mWs0sKEj/TJQmbhMqB+DAUjU0nX16vzgFONM6NIrfBXDksr
-	VW6B77HO1crjWvSZiy8QJIAckzEaYdV6EJc2x6/BPeIfXGik5yz9EDpSQvIrELp0
-	3xIW9DDe8Lw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C08DC66F8C;
-	Fri, 31 Jan 2014 11:17:16 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A99D466F8A;
-	Fri, 31 Jan 2014 11:17:15 -0500 (EST)
-In-Reply-To: <CACsJy8Dd+baRUi0YjnqDXFi-Fv=K9NxwO=YbYuVEfQkdEXWWWQ@mail.gmail.com>
-	(Duy Nguyen's message of "Thu, 30 Jan 2014 12:36:58 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 2634341E-8A93-11E3-98C6-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S932494AbaAaQTb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 Jan 2014 11:19:31 -0500
+Received: from mail-pb0-f54.google.com ([209.85.160.54]:39499 "EHLO
+	mail-pb0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932271AbaAaQTb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Jan 2014 11:19:31 -0500
+Received: by mail-pb0-f54.google.com with SMTP id uo5so4593505pbc.13
+        for <git@vger.kernel.org>; Fri, 31 Jan 2014 08:19:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=DseGoL0LUFaLcgjkbrF5+nNodT/+bnT+dCmxiJqvRgg=;
+        b=wWI3vuhfZFEkisQD1a+NSpYywjVV0ZxgXpfWkW7OqJs2pyZg6ARfxFZZ3SPHyLF+xA
+         fBjhADAHrFXIJNprbSnNZ1A8x0o3H6zbZe6801s1jHw9qqD/4VZUnzeg2EWpUXs0anIF
+         MFFD4BMRR91ZKesSk4leXVWt3aZmoOrvXNuu9eY3/0tItFE2/oEWP8gv/OxrRZptMZbZ
+         dZESAosLjMRfiiXTkjSLBOcy9ZvRTYXRh5/lKQV1W2z/LbWyMSlqBth0I6Q8M3OUdove
+         Aq4yrg+eTbXLtRImJ+bPV5/l/L99INa7HSTFp5dpIlGvBgXXS6UhnvhYV2oZ/OMcABYo
+         iGqQ==
+X-Received: by 10.66.189.129 with SMTP id gi1mr21578262pac.57.1391185170385;
+        Fri, 31 Jan 2014 08:19:30 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id bc4sm29021393pbb.2.2014.01.31.08.19.29
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 31 Jan 2014 08:19:29 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <8738k44808.fsf@fencepost.gnu.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241301>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241302>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+Hi,
 
-> On Thu, Jan 30, 2014 at 2:25 AM, Junio C Hamano <gitster@pobox.com> wrote:
->>> On Tue, Jan 28, 2014 at 02:51:45PM -0800, Junio C Hamano wrote:
->> This however shows that the existing test *KNEW* that it was enough
->> to check just a few cases (especially, there is no reason to make
->> sure that blob vs file-in-working-tree case behaves sanely), because
->> the auto-refresh would kick in for all codepaths.  Now you are
->> making that assumption invalid, shouldn't the patch also split the
->> tests to cover individual cases?
+David Kastrup wrote:
+
+>       builtin/blame.c merely states
 >
-> Drop the last patch, then. It's a "while at there" cleanup patch. If
-> it's non trivial then it could be taken up later...
+> /*
+>  * Blame
+>  *
+>  * Copyright (c) 2006, Junio C Hamano
+>  */
 
-I am leaning towards that because...
+I think you planned to make substantial changes, so
 
-> ... not sure I'll go through
-> diff.c to identify and write tests for all cases.
+> /*
+>  * Blame
+>  *
+>  * Copyright (c) 2006--2014, Junio C Hamano and others
+>  * Licensed under GPLv2.  See Git's COPYING file for details.
+>  */
 
-... the effort to ensure the correctness of the patch itself
-involves the same identification of the cases.
+towards the end of the series (or squashed into some patch that makes
+significant changes) looks fine to me.
 
-We know the single place skip-stat-unmatch was assigned used to
-cover all cases, and the patch was to stop covering cases the
-unnecessary assignments are made while making sure the resulting
-code still covers cases that assignments are necessary.
+Also keep in mind that you don't need a copyright notice to own
+copyright, that it would be crazy for someone to claim you've assigned
+copyright on your changes without an explicit reassignment, and that
+libgit2's git.git-authors file that keeps coming up includes a comment
+with a heuristic for delving into the history to find the authors of
+some code.
+
+[...]
+> Permissable-Licenses: GPL Version 2 or later
+
+Wouldn't a signed message on your website or some other public place
+(e.g., the mailing list) do the trick?
+
+Or a sentence in a commit message saying
+
+ "I'd be happy to have these changes relicensed under the GPL version 2
+ or later."
+
+sounds fine to me, at least.
+
+Thanks and hope that helps,
+Jonathan
