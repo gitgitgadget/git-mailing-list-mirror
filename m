@@ -1,140 +1,77 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v4 02/17] trailer: process trailers from file and arguments
-Date: Thu, 30 Jan 2014 23:02:18 -0500
-Message-ID: <CAPig+cSaYfsyx2YmxOqLxxYLhpgqhznwOzP5CpY7jw=p4sGgpw@mail.gmail.com>
-References: <20140130064217.7504.473.chriscool@tuxfamily.org>
-	<20140130064921.7504.60878.chriscool@tuxfamily.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-	Johan Herland <johan@herland.net>,
-	Josh Triplett <josh@joshtriplett.org>,
-	Thomas Rast <tr@thomasrast.ch>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Dan Carpenter <dan.carpenter@oracle.com>,
-	Greg Kroah-Hartman <greg@kroah.com>, Jeff King <peff@peff.net>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Fri Jan 31 05:02:48 2014
+From: Benoit Sigoure <tsunanet@gmail.com>
+Subject: [PATCH] Cleanly redefine (v)snprintf when needed.
+Date: Thu, 30 Jan 2014 22:25:12 -0800
+Message-ID: <1391149512-8705-1-git-send-email-tsunanet@gmail.com>
+Cc: Benoit Sigoure <tsunanet@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 31 07:26:46 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W95JW-0005Dc-RW
-	for gcvg-git-2@plane.gmane.org; Fri, 31 Jan 2014 05:02:47 +0100
+	id 1W97Yr-0003fx-Cz
+	for gcvg-git-2@plane.gmane.org; Fri, 31 Jan 2014 07:26:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932078AbaAaECU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Jan 2014 23:02:20 -0500
-Received: from mail-yk0-f178.google.com ([209.85.160.178]:45360 "EHLO
-	mail-yk0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753788AbaAaECT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Jan 2014 23:02:19 -0500
-Received: by mail-yk0-f178.google.com with SMTP id 79so21175265ykr.9
-        for <git@vger.kernel.org>; Thu, 30 Jan 2014 20:02:18 -0800 (PST)
+	id S1752969AbaAaG0l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 Jan 2014 01:26:41 -0500
+Received: from mail-qc0-f169.google.com ([209.85.216.169]:52972 "EHLO
+	mail-qc0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751340AbaAaG0k (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Jan 2014 01:26:40 -0500
+Received: by mail-qc0-f169.google.com with SMTP id w7so6584094qcr.0
+        for <git@vger.kernel.org>; Thu, 30 Jan 2014 22:26:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=ilppUShDWjl5BDAbxvNGtHdtBHZr93H6ynTHJ4uRaC0=;
-        b=ieZAepkR2iqo1gsI0dqJtbfgiBxkWL/BOko+X9D+FEpZ5LwUjFuluEFF7WZSz5UB43
-         FAhyXTxRwgPZ3ASLXTVMW/c9I0kKw6nnI2/73a8EuIsc1cJ/10ABmAiaMWDsDXJcRU4W
-         eEPwZhz9vyYLDGsEulzkPGjTcZAr+15E6trQDEGHyr/9h8vrmRk5S2kjWxMTiArNF5Jp
-         U6Il/lK4HkyBu+UCMUZv7V0DGz84mmd3flBoIqpB8I5KkQh1GKd2Hjo9vKaSwI8UUXuG
-         bz+LS/m0D61yBnSH3efjf2F3DBPt9xSvzlr1DwJ3Dnoi0T3RvQZb0XycrlmOf2HMxkPQ
-         4ocg==
-X-Received: by 10.236.98.39 with SMTP id u27mr17170690yhf.27.1391140938893;
- Thu, 30 Jan 2014 20:02:18 -0800 (PST)
-Received: by 10.170.36.65 with HTTP; Thu, 30 Jan 2014 20:02:18 -0800 (PST)
-In-Reply-To: <20140130064921.7504.60878.chriscool@tuxfamily.org>
-X-Google-Sender-Auth: HwRMIu_wBzly6BoORUoRaCpJp80
+        h=from:to:cc:subject:date:message-id;
+        bh=A/hv3YKzOXFD52fifcQSqgodjjEFyMaue/1/UEnTCm0=;
+        b=v1u6XVsAdjevN1REV5vgvKQ6SROaz7BPuirP+FTp/zjhM6jim0IDXD+BKovJxq3Kri
+         usLFvRHgP6p87tky+PZeLHxbDSsFLk4AlVpoOpH+vZZrMnMz/fsaHDIKBm/oBanvaZwF
+         JTzqrzkbhWpLSBxJbxxhR/6LeD2y9f+l4z8Eafv+ff6l0WYUxf7nC3rgZ0grL5CPRdY0
+         2rvjBFrHE5/lilbNtuO5r1hkbEPDfYWsIih714OQLQtVmrkDsirjtMD4nnqrv355KdhO
+         zscB0/kSO8ptyUE3bLNUEBb4rkDia7UpftxgV8+6J4/04ZhT96Ce8aXXg/Frrv309dzA
+         FFPw==
+X-Received: by 10.140.30.66 with SMTP id c60mr27054974qgc.13.1391149600295;
+        Thu, 30 Jan 2014 22:26:40 -0800 (PST)
+Received: from magrathea.tsunanet.net (magrathea.tsunanet.net. [142.4.212.106])
+        by mx.google.com with ESMTPSA id w7sm24402288qaj.23.2014.01.30.22.26.39
+        for <multiple recipients>
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 30 Jan 2014 22:26:39 -0800 (PST)
+X-Mailer: git-send-email 1.7.9.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241292>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241293>
 
-On Thu, Jan 30, 2014 at 1:49 AM, Christian Couder
-<chriscool@tuxfamily.org> wrote:
-> This patch implements the logic that process trailers
-> from file and arguments.
->
-> At the beginning trailers from file are in their own
-> infile_tok doubly linked list, and trailers from
-> arguments are in their own arg_tok doubly linked list.
->
-> The lists are traversed and when an arg_tok should be
-> "applied", it is removed from its list and inserted
-> into the infile_tok list.
->
-> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-> ---
-> diff --git a/trailer.c b/trailer.c
-> index aed25e1..e9ccfa5 100644
-> --- a/trailer.c
-> +++ b/trailer.c
-> @@ -46,3 +46,192 @@ static size_t alnum_len(const char *buf, size_t len)
-> +static void apply_arg_if_exist(struct trailer_item *infile_tok,
-> +                              struct trailer_item *arg_tok,
-> +                              int alnum_len)
-> +{
-> +       switch (arg_tok->conf->if_exist) {
-> +       case EXIST_DO_NOTHING:
-> +               free(arg_tok);
+When we detect that vsnprintf / snprintf are broken, we #define them to
+an alternative implementation.  On OS X, stdio.h already #define's them,
+which causes a warning to be issued at the point we re-define them in
+`git-compat-util.h'.
+---
+ git-compat-util.h | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-This is freeing arg_tok, but isn't it leaking arg_tok->conf, and
-conf->name, conf->key, conf->command? Ditto for all the other
-free(arg_tok) invocations elsewhere in the file.
-
- > +               break;
-> +       case EXIST_OVERWRITE:
-> +               free((char *)infile_tok->value);
-> +               infile_tok->value = xstrdup(arg_tok->value);
-> +               free(arg_tok);
-> +               break;
-> +       case EXIST_ADD:
-> +               add_arg_to_infile(infile_tok, arg_tok);
-> +               break;
-> +       case EXIST_ADD_IF_DIFFERENT:
-> +               if (check_if_different(infile_tok, arg_tok, alnum_len, 1))
-> +                       add_arg_to_infile(infile_tok, arg_tok);
-> +               else
-> +                       free(arg_tok);
-> +               break;
-> +       case EXIST_ADD_IF_DIFFERENT_NEIGHBOR:
-> +               if (check_if_different(infile_tok, arg_tok, alnum_len, 0))
-> +                       add_arg_to_infile(infile_tok, arg_tok);
-> +               else
-> +                       free(arg_tok);
-> +               break;
-> +       }
-> +}
-> +
-> +static void process_infile_tok(struct trailer_item *infile_tok,
-> +                              struct trailer_item **arg_tok_first,
-> +                              enum action_where where)
-> +{
-> +       struct trailer_item *arg_tok;
-> +       struct trailer_item *next_arg;
-> +
-> +       int tok_alnum_len = alnum_len(infile_tok->token, strlen(infile_tok->token));
-> +       for (arg_tok = *arg_tok_first; arg_tok; arg_tok = next_arg) {
-> +               next_arg = arg_tok->next;
-> +               if (same_token(infile_tok, arg_tok, tok_alnum_len) &&
-> +                   arg_tok->conf->where == where) {
-> +                       /* Remove arg_tok from list */
-> +                       remove_from_list(arg_tok, arg_tok_first);
-> +                       /* Apply arg */
-> +                       apply_arg_if_exist(infile_tok, arg_tok, tok_alnum_len);
-
-Redundant comments (saying the same thing as the code) can make the
-code slightly more difficult to read.
-
-> +                       /*
-> +                        * If arg has been added to infile,
-> +                        * then we need to process it too now.
-> +                        */
-> +                       if ((where == WHERE_AFTER ? infile_tok->next : infile_tok->previous) == arg_tok)
-> +                               infile_tok = arg_tok;
-> +               }
-> +       }
-> +}
+diff --git a/git-compat-util.h b/git-compat-util.h
+index cbd86c3..614a5e9 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -480,9 +480,15 @@ extern FILE *git_fopen(const char*, const char*);
+ #endif
+ 
+ #ifdef SNPRINTF_RETURNS_BOGUS
++#ifdef snprintf
++#undef snprintf
++#endif
+ #define snprintf git_snprintf
+ extern int git_snprintf(char *str, size_t maxsize,
+ 			const char *format, ...);
++#ifdef vsnprintf
++#undef vsnprintf
++#endif
+ #define vsnprintf git_vsnprintf
+ extern int git_vsnprintf(char *str, size_t maxsize,
+ 			 const char *format, va_list ap);
+-- 
+1.9.rc1.1.g186f0be.dirty
