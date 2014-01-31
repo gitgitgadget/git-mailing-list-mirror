@@ -1,145 +1,109 @@
-From: David Kastrup <dak@gnu.org>
-Subject: A few contributor's questions
-Date: Fri, 31 Jan 2014 14:04:55 +0100
-Organization: Organization?!?
-Message-ID: <8738k44808.fsf@fencepost.gnu.org>
+From: Matthew Ruffalo <mmr15@case.edu>
+Subject: Re: Having Git follow symlinks
+Date: Fri, 31 Jan 2014 08:20:04 -0500
+Message-ID: <52EBA304.3000205@case.edu>
+References: <alpine.DEB.2.02.1401281443330.17426@perkele.intern.softwolves.pp.se> <CALKQrgf5o-ZcaeqXLm3P7RpK2yPcFd_HnG4ewwoEGESduyDSjQ@mail.gmail.com> <alpine.DEB.2.00.1401300958320.30100@ds9.cixit.se> <vpqa9ed1w8y.fsf@anie.imag.fr> <alpine.DEB.2.00.1401311052370.3993@ds9.cixit.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 31 14:05:27 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Johan Herland <johan@herland.net>,
+	Git mailing list <git@vger.kernel.org>
+To: Peter Krefting <peter@softwolves.pp.se>
+X-From: git-owner@vger.kernel.org Fri Jan 31 14:26:18 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W9Dmf-00066D-Ms
-	for gcvg-git-2@plane.gmane.org; Fri, 31 Jan 2014 14:05:26 +0100
+	id 1W9E6r-0002Ju-VA
+	for gcvg-git-2@plane.gmane.org; Fri, 31 Jan 2014 14:26:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932432AbaAaNFR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 31 Jan 2014 08:05:17 -0500
-Received: from plane.gmane.org ([80.91.229.3]:40936 "EHLO plane.gmane.org"
+	id S932335AbaAaN0O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 Jan 2014 08:26:14 -0500
+Received: from mpv1.tis.CWRU.Edu ([129.22.105.36]:9201 "EHLO mpv1.tis.cwru.edu"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932409AbaAaNFH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Jan 2014 08:05:07 -0500
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1W9DmL-0005th-SX
-	for git@vger.kernel.org; Fri, 31 Jan 2014 14:05:05 +0100
-Received: from x2f510f7.dyn.telefonica.de ([2.245.16.247])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 31 Jan 2014 14:05:05 +0100
-Received: from dak by x2f510f7.dyn.telefonica.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 31 Jan 2014 14:05:05 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: x2f510f7.dyn.telefonica.de
-X-Face: 2FEFf>]>q>2iw=B6,xrUubRI>pR&Ml9=ao@P@i)L:\urd*t9M~y1^:+Y]'C0~{mAl`oQuAl
- \!3KEIp?*w`|bL5qr,H)LFO6Q=qx~iH4DN;i";/yuIsqbLLCh/!U#X[S~(5eZ41to5f%E@'ELIi$t^
- Vc\LWP@J5p^rst0+('>Er0=^1{]M9!p?&:\z]|;&=NP3AhB!B_bi^]Pfkw
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3.50 (gnu/linux)
-Cancel-Lock: sha1:uP0kTO678Rc0f9xbHEA7MimyKGE=
+	id S932269AbaAaN0N (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Jan 2014 08:26:13 -0500
+X-Greylist: delayed 361 seconds by postgrey-1.27 at vger.kernel.org; Fri, 31 Jan 2014 08:26:10 EST
+Received: from mpv5.tis.CWRU.Edu (EHLO mpv5.cwru.edu) ([129.22.105.51])
+	by mpv1.tis.cwru.edu (MOS 4.3.5-GA FastPath queued)
+	with ESMTP id BBU11954;
+	Fri, 31 Jan 2014 08:20:09 -0500 (EST)
+Received: from mail-qc0-f179.google.com (EHLO mail-qc0-f179.google.com) ([209.85.216.179])
+	by mpv5.cwru.edu (MOS 4.3.5-GA FastPath queued)
+	with ESMTP id APX42265;
+	Fri, 31 Jan 2014 08:20:06 -0500 (EST)
+Received: by mail-qc0-f179.google.com with SMTP id e16so6916262qcx.24
+        for <git@vger.kernel.org>; Fri, 31 Jan 2014 05:20:06 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
+         :cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=oHlNYuHyqwpkPjLVrxcLA9KweyV8DAGUJaE5UKrBjXs=;
+        b=NjgRSJOwYfedmAETChF5+JYgW3rKV9cFTS6Dxz28JX5AJFTywkK+JMbUBOY7eKArYE
+         9GOY/WZUAOjB8oC4IGGCj2/qtJcugHcRE0AX7rf++IuxuZSBTt4aOsr8dQztQGsziaq6
+         backvxYQHkFTRotOd4n3/dvDhdAXOEXRoms6lGU0Qx8a1vBeDSlX+Y9dXV9TpeB53/Rb
+         1OQENWXiMlmnhi0xogZ05vNLJmJsMoNwTC0aoRZ37FSEK2kCG67rrepRrYDQDKo0uFrS
+         OsYfwGREUAi/sYAFuKe5XNl3gVB+ZCUCyQUwzBmmaWMZNsi92WxeiJqLEYDqVz3VmMa3
+         2V6w==
+X-Gm-Message-State: ALoCoQmXX92ofcoZyH6EsSvpCOZOL+99JNt3DM/M7ENWLO8hQW8Gap/4yV6nQI2k55DFbPne5CoGxaVqMMq0Hdfody+n5XnIv3nTZgBVO50yq47BIRejHr4WxJ0GCBhT5IiK3q8dpALuEVXjiqI+XOqOHrO01aC1vw==
+X-Received: by 10.224.103.131 with SMTP id k3mr31621564qao.102.1391174406265;
+        Fri, 31 Jan 2014 05:20:06 -0800 (PST)
+X-Received: by 10.224.103.131 with SMTP id k3mr31621543qao.102.1391174406123;
+        Fri, 31 Jan 2014 05:20:06 -0800 (PST)
+Received: from [10.0.8.11] (cpe-107-10-52-68.neo.res.rr.com. [107.10.52.68])
+        by mx.google.com with ESMTPSA id j50sm13432630qgf.14.2014.01.31.05.20.05
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Fri, 31 Jan 2014 05:20:05 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.2.0
+In-Reply-To: <alpine.DEB.2.00.1401311052370.3993@ds9.cixit.se>
+X-Enigmail-Version: 1.6
+X-Junkmail-Whitelist: YES (by domain whitelist at mpv1.tis.cwru.edu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241296>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241297>
 
+On 01/31/2014 04:56 AM, Peter Krefting wrote:
+> Matthieu Moy:
+>
+>> One option is to have the symlink in the other direction: make
+>> /etc/foo a symlink to $GIT_WORKTREE/foo and version the later.
+>
+> I do that for the software that supports it, but ssh, for instance, is
+> very picky that ~/.ssh is a directory and such. And at least one of
+> the other files I version-control will be unlinked and overwritten in
+> such a way that that does not work.
+>
+> I could split the repo up (that seems to be what "vcsh" is doing) and
+> check the parts out in the corresponding directories, but I do like
+> the idea of having one single repo.
+>
+>
+> Oh, well, if I have the time, maybe I can come up with a patch. There
+> is already some hacks in the "core.symlinks" setting, so I guess it
+> should be possible.
+>
+This is now unrelated to Git, but I have .ssh symlinked to a
+version-controlled directory on all of my machines (Kubuntu 13.10,
+14.04, and recent Gentoo systems, but I've also done this on CentOS 5
+and 6).
 
-I'm still in the process of finishing the rewrite of the builtin/blame.=
-c
-internals.  Now there are various questions regarding the final patch
-proposals and commit messages.
+SSH doesn't care whether ~/.ssh is a symlink, but it *does* //care about
+permissions:
 
-Point 1) signing off implies that I'm fine with the licensing of the
-file. builtin/blame.c merely states
+"""
+mruffalo@giygas:~$ ls -ld .ssh
+lrwxrwxrwx 1 mruffalo mruffalo 13 Mar 17  2013 .ssh -> .home-git/ssh
+mruffalo@giygas:~$ ls -ld .home-git
+drwx------ 1 mruffalo mruffalo 116 Dec  8 01:26 .home-git
+"""
 
-/*
- * Blame
- *
- * Copyright (c) 2006, Junio C Hamano
- */
+If .home-git is mode 0755, SSH may refuse to use any private keys that
+it finds, though I was unable to reproduce this with a few quick tests.
 
-which obviously will not match the authorship of my contributions.
-Since Junio has given blanket permission to reuse his Git contributions
-under other licenses (see
-<URL:https://github.com/libgit2/libgit2/blob/development/git.git-author=
-s#L58>)
-that I=A0am not going to license my work under, the first commit in the
-respective series would replace this header with
-
-/*
- * Blame
- *
- * Copyright (c) 2006--2014, Junio C Hamano and others
- * Licensed under GPLv2.  See Git's COPYING file for details.
- */
-
-That should be reasonably accurate boilerplate, I think, and should
-avoid code from multiple authors to be erroneously assumed subjected to
-agreements other than the default Git project licensing.
-
-Which brings us to further nitty-gritty details.
-
-Personally, I'm fine with permitting licensing contributions of mine
-under GPLv2 or later.  Is there any clearing house where I can have thi=
-s
-sentiment recorded in a manner where potential heirs (which according t=
-o
-copyright law will retain control over my works even when born after my
-demise, so I=A0cannot in good conscience vouch for their common sense)
-cannot contest it?  Like putting
-
-Permissable-Licenses: GPL Version 2 or later
-
-in the commit message?
-
-
-And finally, the ugly: I don't have any income apart from volunteers
-paying me for writing Free Software, so a contribution like this one,
-having taken substantial time, will make for a rather tepid report of m=
-y
-GNU LilyPond activities in January and a corresponding slackening of
-volunteer payments for what I could have been doing instead.
-
-It's not the first performance shortcoming of Git I have worked on.  In
-contrast to most other contributors, I=A0won't be able to afford follow=
-ing
-a whim for addressing such deficiencies in future without a chance for
-recouping my losses.
-
-My experience with GNU LilyPond has led me to conclude that the best
-chance of getting voluntary payments is to appeal to those who are most
-invested in the well-being of the software.  It's a sad reality that
-they tend to be identical to those who are already investing substantia=
-l
-amounts of time and effort into the project themselves.  So I'll put th=
-e
-respective begging notice into the cover letter of the patch series:
-I=A0don't think it belongs in the commit messages, and it's not likely =
-to
-be effective anyway.
-
-While I could put a "Prepaid-by:" footer into the commit messages, the
-main effect would likely be to trigger the "somebody else's problem"
-effect.  My experience with this kind of polite notice is that it's goo=
-d
-for the equivalent of a case of beer every ten years.
-
-If the performance enhancements are mentioned in a release announcement=
-,
-adding a notice along the line "The performance of git blame has been
-significantly improved by David Kastrup <dak@gnu.org>.  If this affects
-you, consider contributing to his reimbursement."  would of course also
-be welcome.
-
-Ok, this should be about covering the bad and the ugly.  I'm still
-working on the -C and -M replacements given the new code.  Hopefully
-finished this weekend.
-
-All the best
-
---=20
-David Kastrup
+MMR...
