@@ -1,152 +1,103 @@
-From: Martin Erik Werner <martinerikwerner@gmail.com>
-Subject: [PATCH v3 4/4] setup: Don't dereference in-tree symlinks for
- absolute paths
-Date: Fri, 31 Jan 2014 21:23:13 +0100
-Message-ID: <20140131202313.GE9731@mule>
-References: <1390781250-20389-2-git-send-email-martinerikwerner@gmail.com>
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Performance regression in git fetch between 1.8.3.4 and 1.8.5.3
+Date: Fri, 31 Jan 2014 21:02:15 +0000
+Message-ID: <20140131210154.GA632399@vauxhall.crustytoothpaste.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: richih@debian.org, gitster@pobox.com, tboegi@web.de,
-	pclouds@gmail.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="gatW/ieO32f1wygP"
+Cc: brian.carlson@cpanel.net
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 31 21:23:25 2014
+X-From: git-owner@vger.kernel.org Fri Jan 31 22:02:30 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W9KcW-0006ce-RH
-	for gcvg-git-2@plane.gmane.org; Fri, 31 Jan 2014 21:23:25 +0100
+	id 1W9LEL-0007S4-Lc
+	for gcvg-git-2@plane.gmane.org; Fri, 31 Jan 2014 22:02:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932750AbaAaUXV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 Jan 2014 15:23:21 -0500
-Received: from mail-la0-f54.google.com ([209.85.215.54]:64240 "EHLO
-	mail-la0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754015AbaAaUXU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Jan 2014 15:23:20 -0500
-Received: by mail-la0-f54.google.com with SMTP id y1so3937206lam.27
-        for <git@vger.kernel.org>; Fri, 31 Jan 2014 12:23:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=emD1Nqo13v8pnBwiUido+qfFsYSOKMrL6uj1YL6EIy8=;
-        b=ZKVnZcesSzS8jvLT6nJNeCa5HJn0NQgr05kLBuyYAoUqaNTK9QfOpWDui6ZsYUvcMV
-         jPq8knG+/aDrPXTlSBWCEq2+ywPdlstC2RCPBY4wGx8S9FqxtAI6jal7Kcjdg9HqVIEv
-         Ec2OEJ28u65kMMHIuHHughAiNIwuC6fRH066vMH2AzsEfEWfFi93TtkjaVfBvCJOsQB1
-         lnGTg8FVP/rfAjfcXIjDsUBXEdEvswD1DPh9UEtdQoxDjLkcXgczgCtKx7K3AaF9Grla
-         bPFTux+sHDGr3QExOUIeb4CK9zeFGKFh9ju6yhbjgjSxGnt7F9UM5aFuv2d9KQBUQUcJ
-         CGFQ==
-X-Received: by 10.152.9.65 with SMTP id x1mr14982567laa.6.1391199799008;
-        Fri, 31 Jan 2014 12:23:19 -0800 (PST)
-Received: from mule (nl116-226-21.student.uu.se. [130.243.226.21])
-        by mx.google.com with ESMTPSA id gi5sm11386145lbc.4.2014.01.31.12.23.16
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 31 Jan 2014 12:23:17 -0800 (PST)
+	id S932409AbaAaVC0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 Jan 2014 16:02:26 -0500
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:51527 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754145AbaAaVCZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 31 Jan 2014 16:02:25 -0500
+Received: from vauxhall.crustytoothpaste.net (unknown [99.69.156.142])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id CE2AD28071;
+	Fri, 31 Jan 2014 21:02:21 +0000 (UTC)
+Mail-Followup-To: git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <1390781250-20389-2-git-send-email-martinerikwerner@gmail.com>
+X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
+ 3.12-1-amd64)
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241318>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241319>
 
-The 'prefix_path_gently' function currently applies real_path to
-everything if given an absolute path, dereferencing symlinks both
-outside and inside the work tree. In order to manipulate symlinks in the
-work tree using absolute paths, symlinks should only be dereferenced
-outside the work tree.
 
-Modify the 'prefix_path_gently' to first normalize the path in order to
-make sure path levels are separated by '/', then pass the result to
-'abspath_part_inside_repo' to find the in-repo part (without dereferencing
-any symlinks inside the work tree).
+--gatW/ieO32f1wygP
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-For absolute paths, 'prefix_path_gently' did not, nor does now do, any
-actual prefixing, hence the result from 'abspath_part_in_repo' is
-returned as-is.
+At work, we recently upgraded our git version from 1.8.3.4 to 1.8.5.3.
+We've noticed a significant performance regression in git fetch.  The
+numbers below are for an up-to-date branch (that is, no data is actually
+being fetched) for a git-over-ssh remote on our gitorious server.
 
-Fixes t0060-82.
+This is an auxiliary repository, so its size is probably between 6-7
+GiB.  It does not have an especially large number of refs, but is a
+clone of our main repository.
 
-Signed-off-by: Martin Erik Werner <martinerikwerner@gmail.com>
----
- setup.c               | 36 ++++++++++++++++--------------------
- t/t0060-path-utils.sh |  2 +-
- 2 files changed, 17 insertions(+), 21 deletions(-)
+Other than the new version, the only difference is that 1.8.5.3 is built
+against libpcre.  These are both running on the same CentOS 6 system;
+literally the only difference is installing one RPM or the other.
 
-diff --git a/setup.c b/setup.c
-index e606846..2e65b48 100644
---- a/setup.c
-+++ b/setup.c
-@@ -22,11 +22,23 @@ char *prefix_path_gently(const char *prefix, int len,
- 	const char *orig = path;
- 	char *sanitized;
- 	if (is_absolute_path(orig)) {
--		const char *temp = real_path(path);
--		sanitized = xmalloc(len + strlen(temp) + 1);
--		strcpy(sanitized, temp);
-+		char *npath;
-+
-+		npath = xmalloc(strlen(path) + 1);
- 		if (remaining_prefix)
- 			*remaining_prefix = 0;
-+		if (normalize_path_copy_len(npath, path, remaining_prefix)) {
-+			free(npath);
-+			return NULL;
-+		}
-+		if (abspath_part_inside_repo(npath, npath)) {
-+			free(npath);
-+			return NULL;
-+		}
-+
-+		sanitized = xmalloc(strlen(npath) + 1);
-+		strcpy(sanitized, npath);
-+		free(npath);
- 	} else {
- 		sanitized = xmalloc(len + strlen(path) + 1);
- 		if (len)
-@@ -34,26 +46,10 @@ char *prefix_path_gently(const char *prefix, int len,
- 		strcpy(sanitized + len, path);
- 		if (remaining_prefix)
- 			*remaining_prefix = len;
--	}
--	if (normalize_path_copy_len(sanitized, sanitized, remaining_prefix))
--		goto error_out;
--	if (is_absolute_path(orig)) {
--		size_t root_len, len, total;
--		const char *work_tree = get_git_work_tree();
--		if (!work_tree)
--			goto error_out;
--		len = strlen(work_tree);
--		root_len = offset_1st_component(work_tree);
--		total = strlen(sanitized) + 1;
--		if (strncmp(sanitized, work_tree, len) ||
--		    (len > root_len && sanitized[len] != '\0' && sanitized[len] != '/')) {
--		error_out:
-+		if (normalize_path_copy_len(sanitized, sanitized, remaining_prefix)) {
- 			free(sanitized);
- 			return NULL;
- 		}
--		if (sanitized[len] == '/')
--			len++;
--		memmove(sanitized, sanitized + len, total - len);
- 	}
- 	return sanitized;
- }
-diff --git a/t/t0060-path-utils.sh b/t/t0060-path-utils.sh
-index b8e92e1..f6f378b 100755
---- a/t/t0060-path-utils.sh
-+++ b/t/t0060-path-utils.sh
-@@ -190,7 +190,7 @@ test_expect_success SYMLINKS 'real path works on symlinks' '
- 	test "$sym" = "$(test-path-utils real_path "$dir2/syml")"
- '
- 
--test_expect_failure SYMLINKS 'prefix_path works with absolute paths to work tree symlinks' '
-+test_expect_success SYMLINKS 'prefix_path works with absolute paths to work tree symlinks' '
- 	ln -s target symlink &&
- 	test "$(test-path-utils prefix_path prefix "$(pwd)/symlink")" = "symlink"
- '
--- 
-1.8.5.2
+1.8.3.4:
+
+  brianc ok # for i in `seq 1 3`; do time git fetch; done
+  git fetch  0.86s user 0.18s system 78% cpu 1.314 total
+  git fetch  0.88s user 0.19s system 79% cpu 1.348 total
+  git fetch  0.84s user 0.18s system 78% cpu 1.299 total
+
+1.8.5.3:
+
+  brianc ok # for i in `seq 1 3`; do time git fetch; done
+  git fetch  17.11s user 1.22s system 98% cpu 18.652 total
+  git fetch  16.74s user 1.24s system 98% cpu 18.286 total
+  git fetch  17.78s user 1.35s system 98% cpu 19.446 total
+
+Does anyone have any idea what might be causing this?
+
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
+
+--gatW/ieO32f1wygP
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCgAGBQJS7A9UAAoJEL9TXYEfUvaL1w0QAMmEMgjLb/b0Av/m7M26WApa
+Ny+Z9oQsTGwhvx/zVCD1VXyzVqKU4+ynl+ZVgKr0t65CrltIdO7L8/GZBAcytZMC
+b4awRlFMyhq6RCnCxNFRQEshyEQglNbtXfq8uP8zewc3x/c+f1v9eXNwCxf4Dw/2
+hNn+CokhO93V+0sGXTLYJ9EeuFiv9qFvyqxIZcKIyxvWX3TQpxbxT5Lw9ct+GxRC
+DHeb1DLDYOUo1BMgSv2BYo5SC0Wdj1P0yk5VehEvPEH+ugnUv+8EuCQCOsZ2bD84
+rLRSVcIEkE1MWhUWOS54LDWX4yt3qzb7oTLeqrymlSIvSon5fV2aXJyXzH0LZWqG
+gg2YluPoD+BjDSNu1x8fvjV7JnoiupE7P0q/ppz+kCB8hxN2zMZc4vzLfcEKOYDA
+/mo/PL4Fu0OUE2eiSr+7r/J7wERQblgu3vsLFpxhIzU8X1GB2su6F4jQ7rHCnpRD
+7YcX/9S/uIe1KjEx4NQ2GYT9ugT/U2F8p4ezBIit7p0dbFdmat9bes0t3xR7q7OU
+3Na2gWySd6DlFGYa9Cnu1XPSS8KaIvZvnDWSwTViJZkF5UNTQB1JkuUEhw3unHgx
+emjR/Y1qfc96ULv0W90KlQgWc4nbiza4MOUGV0vDBOWqvjMOjQ0JZ4XaLCG8nIzv
+jzGQ2fWrYPgt1l0l0YfX
+=rhla
+-----END PGP SIGNATURE-----
+
+--gatW/ieO32f1wygP--
