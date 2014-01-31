@@ -1,83 +1,107 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] add: don't complain when adding empty project root
-Date: Fri, 31 Jan 2014 10:10:09 -0800
-Message-ID: <xmqqppn8ggzi.fsf@gitster.dls.corp.google.com>
-References: <CAEcj5uWHpem+5os+3Mc_a42pk6f30i4UiV=LRPdXkoqiy1jQ_w@mail.gmail.com>
-	<1387789361-29036-1-git-send-email-pclouds@gmail.com>
-	<52B87759.2090901@web.de>
-	<CACsJy8A7j_ERqH_TDuKDdssaLFCvM5yVT4eUjTqkN_qW4iXuGA@mail.gmail.com>
-	<52BA0110.4050003@web.de>
-	<CACsJy8ApEBq+G+swpBPPJwL1E94x-P+e+V_jYknG+rXybLxPgQ@mail.gmail.com>
-	<52EA3A07.2090203@web.de>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: A few contributor's questions
+Date: Fri, 31 Jan 2014 10:48:42 -0800
+Message-ID: <20140131184842.GA30398@google.com>
+References: <8738k44808.fsf@fencepost.gnu.org>
+ <20140131161924.GA4332@google.com>
+ <87mwic2ijo.fsf@fencepost.gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Thomas Ferris Nicolaisen <tfnico@gmail.com>
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Fri Jan 31 19:10:28 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Fri Jan 31 19:48:57 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W9IXq-0008C3-9a
-	for gcvg-git-2@plane.gmane.org; Fri, 31 Jan 2014 19:10:26 +0100
+	id 1W9J95-0000m6-Lk
+	for gcvg-git-2@plane.gmane.org; Fri, 31 Jan 2014 19:48:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932462AbaAaSKW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 31 Jan 2014 13:10:22 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35968 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932170AbaAaSKV convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 31 Jan 2014 13:10:21 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 90AF567C86;
-	Fri, 31 Jan 2014 13:10:18 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=vTW9hSFXWqHn
-	uz0fk7g/mz0nqvE=; b=t4DuKgk2sRZqIwiuQ/qiQ0sKLlQIVcbJDGTgoRgA1aa8
-	zuWQz6/lJ8ohyYmQu7T4NCasCdrh4bdPe1efClaq/V51bHDqBSsrZ8Iyi/Yw6M1n
-	Ia+GnMPzRBQRqe6NIaAwtWIHaA2vz9Fhu9ABFiDfVuWHDXZ/atfqG1gLxoZz1YI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=gVzR6d
-	3Lb5rs54kVYD20KyTolnUAMwFYFqWfV1Q/eoUqH5VmuUIEU2YthnfKlcHdKSxzWo
-	ytZ9IGTMd8Z5TKXc8Jv6DlQa2vrYEIcC8mEavcZeqBvpHA/DvRJ9qIrOe724w70T
-	FBg8yMF5hQ4OGMLZgmURVP86Q9/VoA44UQXc0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B79F667C85;
-	Fri, 31 Jan 2014 13:10:17 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E9CBB67C7C;
-	Fri, 31 Jan 2014 13:10:13 -0500 (EST)
-In-Reply-To: <52EA3A07.2090203@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershaus?=
- =?utf-8?Q?en=22's?= message of
-	"Thu, 30 Jan 2014 12:39:51 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: EE5DFBE6-8AA2-11E3-8B75-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S932515AbaAaSsv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 Jan 2014 13:48:51 -0500
+Received: from mail-pd0-f181.google.com ([209.85.192.181]:60279 "EHLO
+	mail-pd0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932236AbaAaSsu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Jan 2014 13:48:50 -0500
+Received: by mail-pd0-f181.google.com with SMTP id y10so4583921pdj.40
+        for <git@vger.kernel.org>; Fri, 31 Jan 2014 10:48:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=p9wZC4mZP15g703oER2XoCz6+dg3vWnf5FVDov7yw7s=;
+        b=i3VtthILd4Za1Fm9GiWzBTNtOISE2AIsWYt3DKwtx3qeGN61fp8F53aG0BAhl8C/BS
+         PTcPldFdMeixmc8QOGhwA6niaeqOas2Kg2QdHPyGmYCa/RcAwFLcfzaPTJHYdaUvpDGX
+         /djAEBp0V2sW0HPDjtCBgKhiku7yKrSSpY9TE+aKgkQyK6Kvh+4vSzco6LaEJW7S6R3j
+         w5q/iqgXT0Gkhk+qOhO7kmuWGISEUpPWfNLPPDa/pIYj89f79aO90B9kIC/MBYx93ZQu
+         xF8qHvv8fFbe4/1b4x2//aXOEn/95O0VC01EAmpjOPEErC/2r4nuniY7MLvPs8RP3Cw+
+         j73Q==
+X-Received: by 10.68.134.130 with SMTP id pk2mr10215578pbb.167.1391194129826;
+        Fri, 31 Jan 2014 10:48:49 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id tu3sm73432057pab.1.2014.01.31.10.48.48
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 31 Jan 2014 10:48:49 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <87mwic2ijo.fsf@fencepost.gnu.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241312>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241313>
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+Hi,
 
-> But, look at
-> https://www.kernel.org/pub/software/scm/git/docs/git-add.html
->
-> This page seems to need an update too, and I wonder why:
-> a) The makefile did'nt re-generate html even if it should have
-> b) That page is not owned or updated by the git.git maintainer
-> c) Any other reason?
+David Kastrup wrote:
 
-Sorry, but if I understand correctly, k.org these days requires each
-file to be GPG signed and uploaded individually (i.e. there is no
-way as far as I can tell to say "here is a tarball, and I've even
-signed it with my key to convince you that it is from me. Please
-accept it and then unpack the contents there").  There is no way I'd
-do that every time I update git-htmldocs repository for 500+ files.
+> Also whether or not this implies an assignment of copyright, it is a
+> reasonable assumption for
+[...]
+
+Since I think we've completely gone off the rails:
+
+I assume the problem you're trying to solve is that files don't have
+clear enough notices of their licensing.  That could be a real problem
+for people using the code, since if you no one gave you a license then
+you don't have a license at all.  It's also a problem in that it makes
+it harder to interpret the phrase "under the same open source license"
+(though I have no idea how that could be read as "I give up my
+copyright completely").
+
+The way git currently works in that area is the same as the Linux
+kernel:
+
+ * the code is copyright by the authors and we try not to waste fuss
+   on maintaining a comprehensive list in notices.  If you want to
+   find the authors to negotiate special licensing, you get to do the
+   work.
+
+ * license is GPLv2-only where not otherwise specified
+
+ * relicensing, when needed, happens by contacting all the copyright
+   holders and getting their consent
+
+I don't see anything weird about that.  But people using the code
+might like clearer notices, so I personally would not mind an extra
+line in most files stating the license.  (More than that and it
+becomes absurd.)  That's all just my opinion --- Junio might think
+differently, etc.
+
+[...]
+> It's verbose and cumbersome enough that I would not have been surprised
+> if there'd be an established way of getting this information on record,
+> preferably per-project rather than per-commit.
+
+For relicensing the existing practice is to just contact people.  That
+has the advantage that I can make a decision about whether to allow
+relicensing code I've written in the context of how I expect it to be
+used.  I expect that if you had a stance on GPLv2+ licensing of
+contributions to git published in some place easily found by search
+engines (for example a message on the mailing list), interested people
+would not have too much trouble finding it when the time comes.
+
+Hope that helps,
+Jonathan
