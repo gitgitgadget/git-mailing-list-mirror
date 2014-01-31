@@ -1,109 +1,110 @@
-From: Matthew Ruffalo <mmr15@case.edu>
-Subject: Re: Having Git follow symlinks
-Date: Fri, 31 Jan 2014 08:20:04 -0500
-Message-ID: <52EBA304.3000205@case.edu>
-References: <alpine.DEB.2.02.1401281443330.17426@perkele.intern.softwolves.pp.se> <CALKQrgf5o-ZcaeqXLm3P7RpK2yPcFd_HnG4ewwoEGESduyDSjQ@mail.gmail.com> <alpine.DEB.2.00.1401300958320.30100@ds9.cixit.se> <vpqa9ed1w8y.fsf@anie.imag.fr> <alpine.DEB.2.00.1401311052370.3993@ds9.cixit.se>
+From: =?UTF-8?B?VG9yYWxmIEbDtnJzdGVy?= <toralf.foerster-Mmb7MZpHnFY@public.gmane.org>
+Subject: git pull does no longer work due to a Cr-Lf issue
+Date: Fri, 31 Jan 2014 16:01:38 +0100
+Message-ID: <52EBBAD2.3020501@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Johan Herland <johan@herland.net>,
-	Git mailing list <git@vger.kernel.org>
-To: Peter Krefting <peter@softwolves.pp.se>
-X-From: git-owner@vger.kernel.org Fri Jan 31 14:26:18 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+To: "boinc_dev-C9EgComYM8RUAgJt6FLh2g@public.gmane.org" <boinc_dev-C9EgComYM8RUAgJt6FLh2g@public.gmane.org>,
+	"git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org" <git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>
+X-From: boinc_dev-bounces-C9EgComYM8RUAgJt6FLh2g@public.gmane.org Fri Jan 31 16:01:45 2014
+Return-path: <boinc_dev-bounces-C9EgComYM8RUAgJt6FLh2g@public.gmane.org>
+Envelope-to: gcdbd-boinc_dev-Uylq5CNFT+jYtjvyW6yDsg@public.gmane.org
+Received: from mailapps1.ssl.berkeley.edu ([128.32.13.237])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W9E6r-0002Ju-VA
-	for gcvg-git-2@plane.gmane.org; Fri, 31 Jan 2014 14:26:18 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932335AbaAaN0O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 Jan 2014 08:26:14 -0500
-Received: from mpv1.tis.CWRU.Edu ([129.22.105.36]:9201 "EHLO mpv1.tis.cwru.edu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932269AbaAaN0N (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Jan 2014 08:26:13 -0500
-X-Greylist: delayed 361 seconds by postgrey-1.27 at vger.kernel.org; Fri, 31 Jan 2014 08:26:10 EST
-Received: from mpv5.tis.CWRU.Edu (EHLO mpv5.cwru.edu) ([129.22.105.51])
-	by mpv1.tis.cwru.edu (MOS 4.3.5-GA FastPath queued)
-	with ESMTP id BBU11954;
-	Fri, 31 Jan 2014 08:20:09 -0500 (EST)
-Received: from mail-qc0-f179.google.com (EHLO mail-qc0-f179.google.com) ([209.85.216.179])
-	by mpv5.cwru.edu (MOS 4.3.5-GA FastPath queued)
-	with ESMTP id APX42265;
-	Fri, 31 Jan 2014 08:20:06 -0500 (EST)
-Received: by mail-qc0-f179.google.com with SMTP id e16so6916262qcx.24
-        for <git@vger.kernel.org>; Fri, 31 Jan 2014 05:20:06 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
-         :cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=oHlNYuHyqwpkPjLVrxcLA9KweyV8DAGUJaE5UKrBjXs=;
-        b=NjgRSJOwYfedmAETChF5+JYgW3rKV9cFTS6Dxz28JX5AJFTywkK+JMbUBOY7eKArYE
-         9GOY/WZUAOjB8oC4IGGCj2/qtJcugHcRE0AX7rf++IuxuZSBTt4aOsr8dQztQGsziaq6
-         backvxYQHkFTRotOd4n3/dvDhdAXOEXRoms6lGU0Qx8a1vBeDSlX+Y9dXV9TpeB53/Rb
-         1OQENWXiMlmnhi0xogZ05vNLJmJsMoNwTC0aoRZ37FSEK2kCG67rrepRrYDQDKo0uFrS
-         OsYfwGREUAi/sYAFuKe5XNl3gVB+ZCUCyQUwzBmmaWMZNsi92WxeiJqLEYDqVz3VmMa3
-         2V6w==
-X-Gm-Message-State: ALoCoQmXX92ofcoZyH6EsSvpCOZOL+99JNt3DM/M7ENWLO8hQW8Gap/4yV6nQI2k55DFbPne5CoGxaVqMMq0Hdfody+n5XnIv3nTZgBVO50yq47BIRejHr4WxJ0GCBhT5IiK3q8dpALuEVXjiqI+XOqOHrO01aC1vw==
-X-Received: by 10.224.103.131 with SMTP id k3mr31621564qao.102.1391174406265;
-        Fri, 31 Jan 2014 05:20:06 -0800 (PST)
-X-Received: by 10.224.103.131 with SMTP id k3mr31621543qao.102.1391174406123;
-        Fri, 31 Jan 2014 05:20:06 -0800 (PST)
-Received: from [10.0.8.11] (cpe-107-10-52-68.neo.res.rr.com. [107.10.52.68])
-        by mx.google.com with ESMTPSA id j50sm13432630qgf.14.2014.01.31.05.20.05
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 31 Jan 2014 05:20:05 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.2.0
-In-Reply-To: <alpine.DEB.2.00.1401311052370.3993@ds9.cixit.se>
+	(envelope-from <boinc_dev-bounces-C9EgComYM8RUAgJt6FLh2g@public.gmane.org>)
+	id 1W9FbE-0003XZ-Do
+	for gcdbd-boinc_dev-Uylq5CNFT+jYtjvyW6yDsg@public.gmane.org; Fri, 31 Jan 2014 16:01:44 +0100
+Received: from mailapps1.ssl.berkeley.edu (localhost [127.0.0.1])
+	by mailapps1.ssl.berkeley.edu (Postfix) with ESMTP id 8F1D92FEB95;
+	Fri, 31 Jan 2014 07:01:42 -0800 (PST)
+X-Original-To: boinc_dev-78qBGAPTb87tebjJPvK1cED9O10f7Vne@public.gmane.org
+Delivered-To: boinc_dev-78qBGAPTb87tebjJPvK1cED9O10f7Vne@public.gmane.org
+Received: from mail2.ssl.berkeley.edu (mail2.ssl.berkeley.edu [128.32.13.252])
+	by mailapps1.ssl.berkeley.edu (Postfix) with ESMTP id DE31A2FE81C
+	for <boinc_dev-78qBGAPTb87tebjJPvK1cED9O10f7Vne@public.gmane.org>;
+	Fri, 31 Jan 2014 07:01:41 -0800 (PST)
+Received: from mailwall2.ssl.berkeley.edu (mailwall2.ssl.berkeley.edu
+	[128.32.147.8])
+	by mail2.ssl.berkeley.edu (8.13.8/8.13.8) with ESMTP id s0VF1fej009433
+	for <boinc_dev-C9EgComYM8RUAgJt6FLh2g@public.gmane.org>; Fri, 31 Jan 2014 07:01:41 -0800
+X-ASG-Debug-ID: 1391180500-04b3971632d95d40001-LQ66t1
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.22]) by
+	mailwall2.ssl.berkeley.edu with ESMTP id ky2KWm7PpxEQGQwa for
+	<boinc_dev-C9EgComYM8RUAgJt6FLh2g@public.gmane.org>; Fri, 31 Jan 2014 07:01:40 -0800 (PST)
+X-Barracuda-Envelope-From: toralf.foerster-Mmb7MZpHnFY@public.gmane.org
+X-Barracuda-Apparent-Source-IP: 212.227.17.22
+Received: from [192.168.178.21] ([78.54.160.177]) by mail.gmx.com (mrgmx003)
+	with ESMTPSA (Nemesis) id 0MQQzk-1VhmZD3CxA-00TlhT for
+	<boinc_dev-C9EgComYM8RUAgJt6FLh2g@public.gmane.org>; Fri, 31 Jan 2014 16:01:40 +0100
+User-Agent: Mozilla/5.0 (X11; Linux i686;
+	rv:24.0) Gecko/20100101 Thunderbird/24.2.0
 X-Enigmail-Version: 1.6
-X-Junkmail-Whitelist: YES (by domain whitelist at mpv1.tis.cwru.edu)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241297>
+X-ASG-Orig-Subj: git pull does no longer work due to a Cr-Lf issue
+X-Provags-ID: V03:K0:4MIy45AgBeJGx4cjolFpi2/VWLlUw3iuS4keScLyRLa8Ktss5as
+	Ujhwj2q3b5iahUye9fTV7fVJFWJ5/XcxjOHoQYt9c2v5NW/jSKcM8DwIjRG6aN58d8uZlu7
+	UUvyjySWupgPELO8AvRA0lgRVoX8Dim6f42OjNfBIz8KyUMJhotQvXa92IH17B+aqxsWJnh
+	+SYpLClva+hxTys8HkndQ==
+X-Barracuda-Connect: mout.gmx.net[212.227.17.22]
+X-Barracuda-Start-Time: 1391180500
+X-Barracuda-URL: http://mailwall2.ssl.berkeley.edu:8000/cgi-mod/mark.cgi
+X-Virus-Scanned: by bsmtpd at ssl.berkeley.edu
+X-Barracuda-BRTS-Status: 1
+X-BeenThere: boinc_dev-C9EgComYM8RUAgJt6FLh2g@public.gmane.org
+X-Mailman-Version: 2.1.15
+Precedence: list
+List-Id: BOINC development <boinc_dev.ssl.berkeley.edu>
+List-Unsubscribe: <http://lists.ssl.berkeley.edu/mailman/options/boinc_dev>,
+	<mailto:boinc_dev-request-C9EgComYM8RUAgJt6FLh2g@public.gmane.org?subject=unsubscribe>
+List-Archive: <http://lists.ssl.berkeley.edu/pipermail/boinc_dev/>
+List-Post: <mailto:boinc_dev-C9EgComYM8RUAgJt6FLh2g@public.gmane.org>
+List-Help: <mailto:boinc_dev-request-C9EgComYM8RUAgJt6FLh2g@public.gmane.org?subject=help>
+List-Subscribe: <http://lists.ssl.berkeley.edu/mailman/listinfo/boinc_dev>,
+	<mailto:boinc_dev-request-C9EgComYM8RUAgJt6FLh2g@public.gmane.org?subject=subscribe>
+Errors-To: boinc_dev-bounces-C9EgComYM8RUAgJt6FLh2g@public.gmane.org
+Sender: "boinc_dev" <boinc_dev-bounces-C9EgComYM8RUAgJt6FLh2g@public.gmane.org>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241298>
 
-On 01/31/2014 04:56 AM, Peter Krefting wrote:
-> Matthieu Moy:
->
->> One option is to have the symlink in the other direction: make
->> /etc/foo a symlink to $GIT_WORKTREE/foo and version the later.
->
-> I do that for the software that supports it, but ssh, for instance, is
-> very picky that ~/.ssh is a directory and such. And at least one of
-> the other files I version-control will be unlinked and overwritten in
-> such a way that that does not work.
->
-> I could split the repo up (that seems to be what "vcsh" is doing) and
-> check the parts out in the corresponding directories, but I do like
-> the idea of having one single repo.
->
->
-> Oh, well, if I have the time, maybe I can come up with a patch. There
-> is already some hacks in the "core.symlinks" setting, so I guess it
-> should be possible.
->
-This is now unrelated to Git, but I have .ssh symlinked to a
-version-controlled directory on all of my machines (Kubuntu 13.10,
-14.04, and recent Gentoo systems, but I've also done this on CentOS 5
-and 6).
-
-SSH doesn't care whether ~/.ssh is a symlink, but it *does* //care about
-permissions:
-
-"""
-mruffalo@giygas:~$ ls -ld .ssh
-lrwxrwxrwx 1 mruffalo mruffalo 13 Mar 17  2013 .ssh -> .home-git/ssh
-mruffalo@giygas:~$ ls -ld .home-git
-drwx------ 1 mruffalo mruffalo 116 Dec  8 01:26 .home-git
-"""
-
-If .home-git is mode 0755, SSH may refuse to use any private keys that
-it finds, though I was unable to reproduce this with a few quick tests.
-
-MMR...
+LS0tLS1CRUdJTiBQR1AgU0lHTkVEIE1FU1NBR0UtLS0tLQpIYXNoOiBTSEEyNTYKCkljaywKCnRv
+ZGF5IEkgcnVuIGFnYWluIGludG8gYSBwcm9ibGVtIHdpdGggdGhlIGdpdCB0cmVlIG9mIHRoZSBC
+T0lOQyBwcm9qZWN0OgpodHRwOi8vYm9pbmMuYmVya2VsZXkuZWR1L2dpdC9ib2luYy12Mi5naXQK
+CkEgZ2l0IHB1bGwgd29uJ3Qgd29yayBhbnkgbG9uZ2VyIGR1ZSB0bzoKCiQgZ2l0IHB1bGwKVXBk
+YXRpbmcgMDg5NDU5ZC4uMDFmMGVhZAplcnJvcjogWW91ciBsb2NhbCBjaGFuZ2VzIHRvIHRoZSBm
+b2xsb3dpbmcgZmlsZXMgd291bGQgYmUgb3ZlcndyaXR0ZW4KYnkgbWVyZ2U6CiAgICAgICAgbGli
+L2JvaW5jX3dpbi5oClBsZWFzZSwgY29tbWl0IHlvdXIgY2hhbmdlcyBvciBzdGFzaCB0aGVtIGJl
+Zm9yZSB5b3UgY2FuIG1lcmdlLgpBYm9ydGluZwoKCkEgImdpdCBkaWZmIiBnYXZlIDoKCgpkaWZm
+IC0tZ2l0IGEvbGliL2JvaW5jX3dpbi5oIGIvbGliL2JvaW5jX3dpbi5oCmluZGV4IDA2NzYzNzIu
+LjRjNjJlZDUgMTAwNjQ0Ci0gLS0tIGEvbGliL2JvaW5jX3dpbi5oCisrKyBiL2xpYi9ib2luY193
+aW4uaApAQCAtMTM3LDcgKzEzNyw3IEBAIHR5cGVkZWYgc2l6ZV90IHNvY2tsZW5fdDsKICNpbmNs
+dWRlIDxzdGRpbnQuaD4KICNpbmNsdWRlIDxpbWFnZWhscC5oPgogI2Vsc2UKLSAtI2luY2x1ZGUg
+PHNlY3VyaXR5Lmg+CisjaW5jbHVkZSA8c2VjdXJpdHkuaD4KICNpbmNsdWRlIDxkYmdoZWxwLmg+
+CiAjZW5kaWYKICNpbmNsdWRlIDx0bGhlbHAzMi5oPgoKCndoaWNoIHBvaW50ZWQgbWUgdG8gYSBe
+TSBpbiBsaW5lIDEzNyBvZiB0aGF0IGZpbGUuIEkgcmVtb3ZlZCB0aGF0IF5NLApidXQgYSBwdWxs
+IHN0aWxsIHdvbsOkdCB3b3JrLiBUaGVuIEkgcmVtb3ZlZCB0aGUgZmlsZSBhbmQgY2hlY2tlZCBp
+dApvdXQgYWdhaW4gLSBubyBjaGFuY2UsIGdpdCBwdWxsIGFsd2F5cyBmYWlscyB3aXRoIHRoZSBz
+YW1lIG1hc3NhZ2UuCkZpbmFsbHkgSSB0cmllZCA6CgoKJCBnaXQgc3Rhc2gKd2FybmluZzogQ1JM
+RiB3aWxsIGJlIHJlcGxhY2VkIGJ5IExGIGluIGxpYi9ib2luY193aW4uaC4KVGhlIGZpbGUgd2ls
+bCBoYXZlIGl0cyBvcmlnaW5hbCBsaW5lIGVuZGluZ3MgaW4geW91ciB3b3JraW5nIGRpcmVjdG9y
+eS4Kd2FybmluZzogQ1JMRiB3aWxsIGJlIHJlcGxhY2VkIGJ5IExGIGluIGxpYi9ib2luY193aW4u
+aC4KVGhlIGZpbGUgd2lsbCBoYXZlIGl0cyBvcmlnaW5hbCBsaW5lIGVuZGluZ3MgaW4geW91ciB3
+b3JraW5nIGRpcmVjdG9yeS4KU2F2ZWQgd29ya2luZyBkaXJlY3RvcnkgYW5kIGluZGV4IHN0YXRl
+IFdJUCBvbiBtYXN0ZXI6IDA4OTQ1OWQgbG9jYWxlOgpVcGRhdGUgY29tcGlsZWQgbG9jYWxpemF0
+aW9uIGZpbGVzCkhFQUQgaXMgbm93IGF0IDA4OTQ1OWQgbG9jYWxlOiBVcGRhdGUgY29tcGlsZWQg
+bG9jYWxpemF0aW9uIGZpbGVzCgoKYnV0IGFnYWluIEkgcnVuIGludG8gOgoKCiQgZ2l0IHB1bGwK
+VXBkYXRpbmcgMDg5NDU5ZC4uMDFmMGVhZAplcnJvcjogWW91ciBsb2NhbCBjaGFuZ2VzIHRvIHRo
+ZSBmb2xsb3dpbmcgZmlsZXMgd291bGQgYmUgb3ZlcndyaXR0ZW4KYnkgbWVyZ2U6CiAgICAgICAg
+bGliL2JvaW5jX3dpbi5oClBsZWFzZSwgY29tbWl0IHlvdXIgY2hhbmdlcyBvciBzdGFzaCB0aGVt
+IGJlZm9yZSB5b3UgY2FuIG1lcmdlLgpBYm9ydGluZwoKCgovbWUgd29uZGVycyBob3cgdG8gc29s
+dmUgdGhpcyB3L28gY2xvbmluZyB0aGUgY29tcGxldGUgcmVwbyBhZ2Fpbi4KCi0gLS0gCk1mRy9T
+aW5jZXJlbHkKVG9yYWxmIEbDtnJzdGVyCnBncCBmaW5nZXIgcHJpbnQ6MUEzNyA2Rjk5IDRBOUQg
+MDI2RiAxM0UyIDREQ0YgQzRFQSBDRERFIDAwNzYgRTk0RQotLS0tLUJFR0lOIFBHUCBTSUdOQVRV
+UkUtLS0tLQpWZXJzaW9uOiBHbnVQRyB2Mi4wLjIyIChHTlUvTGludXgpCkNvbW1lbnQ6IFVzaW5n
+IEdudVBHIHdpdGggVGh1bmRlcmJpcmQgLSBodHRwOi8vd3d3LmVuaWdtYWlsLm5ldC8KCmlGNEVB
+UkVJQUFZRkFsTHJ1dElBQ2drUXhPck4zZ0IyNlU1Wkh3RC9lR0VyNGhSK0Y1VFZQN20wL0pPNktt
+K2oKVk42YWszMFdNUEs4RmU5cFdIWUJBSVdENEVESXNwSFVrTmZxNzZWYWtjNnVOYUxWbmU4TUZp
+aWtuaUg3V2poTAo9eHdHUwotLS0tLUVORCBQR1AgU0lHTkFUVVJFLS0tLS0KX19fX19fX19fX19f
+X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX18KYm9pbmNfZGV2IG1haWxpbmcgbGlz
+dApib2luY19kZXZAc3NsLmJlcmtlbGV5LmVkdQpodHRwOi8vbGlzdHMuc3NsLmJlcmtlbGV5LmVk
+dS9tYWlsbWFuL2xpc3RpbmZvL2JvaW5jX2RldgpUbyB1bnN1YnNjcmliZSwgdmlzaXQgdGhlIGFi
+b3ZlIFVSTCBhbmQKKG5lYXIgYm90dG9tIG9mIHBhZ2UpIGVudGVyIHlvdXIgZW1haWwgYWRkcmVz
+cy4=
