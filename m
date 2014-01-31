@@ -1,106 +1,145 @@
-From: Jiang Xin <worldhello.net@gmail.com>
-Subject: [GIT PULL] l10n updates for 1.9 round 1
-Date: Fri, 31 Jan 2014 20:47:36 +0800
-Message-ID: <CANYiYbGGbrbsKovT=4Qp=E4rusczXM3X4JkNRWkiyLfok3k+Dw@mail.gmail.com>
+From: David Kastrup <dak@gnu.org>
+Subject: A few contributor's questions
+Date: Fri, 31 Jan 2014 14:04:55 +0100
+Organization: Organization?!?
+Message-ID: <8738k44808.fsf@fencepost.gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>,
-	Alexander Shopov <ash@kambanaria.org>,
-	Ralf Thielow <ralf.thielow@googlemail.com>,
-	=?ISO-8859-1?Q?Jean=2DNo=EBl_Avila?= <jn.avila@free.fr>,
-	Marco Paolone <marcopaolone@gmail.com>,
-	Marco Sousa <marcomsousa@gmail.com>,
-	Peter Krefting <peter@softwolves.pp.se>,
-	=?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 31 13:47:46 2014
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 31 14:05:27 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W9DVW-0003YW-Ji
-	for gcvg-git-2@plane.gmane.org; Fri, 31 Jan 2014 13:47:42 +0100
+	id 1W9Dmf-00066D-Ms
+	for gcvg-git-2@plane.gmane.org; Fri, 31 Jan 2014 14:05:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754030AbaAaMri (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 Jan 2014 07:47:38 -0500
-Received: from mail-wg0-f48.google.com ([74.125.82.48]:62938 "EHLO
-	mail-wg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753989AbaAaMrh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Jan 2014 07:47:37 -0500
-Received: by mail-wg0-f48.google.com with SMTP id x13so8781411wgg.27
-        for <git@vger.kernel.org>; Fri, 31 Jan 2014 04:47:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        bh=QleWdLqyQvZoV2Z5vil/s42ntlf3CSbcp7EVE66Htpg=;
-        b=AFw6Fk9f3VvdPPUCjqEey2EPvUgX+dIK10AYBYkVms2O9uMT7pNSR4GqyN21YVPr/m
-         PftncXAeT3b9a2nq4cg5/j4/6OOxK/uJSYeUZ60vQXsPmOo8CPE3L33j6fRhJ0ubq2TC
-         zafib8iYT7rVKq/ibgeZctjIIoSijrLzPppsWMnJlWAWov0A5Cs0lGYrIUW4a+GrwEHz
-         McAezTW5J2GIkdG/HM1AHC7bgojF0ZX+WjkHZwlOZBtg9xcONHYygJGzP5zqvf3wVwSo
-         JOjOEETVIDz7IubAzN5H0ykbpxMKHqJTTGge/FJznNl/qlz19AY8p37bGbt1wzE2PR26
-         msDw==
-X-Received: by 10.180.81.38 with SMTP id w6mr13384930wix.27.1391172456086;
- Fri, 31 Jan 2014 04:47:36 -0800 (PST)
-Received: by 10.194.71.162 with HTTP; Fri, 31 Jan 2014 04:47:36 -0800 (PST)
+	id S932432AbaAaNFR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 31 Jan 2014 08:05:17 -0500
+Received: from plane.gmane.org ([80.91.229.3]:40936 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932409AbaAaNFH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Jan 2014 08:05:07 -0500
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1W9DmL-0005th-SX
+	for git@vger.kernel.org; Fri, 31 Jan 2014 14:05:05 +0100
+Received: from x2f510f7.dyn.telefonica.de ([2.245.16.247])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 31 Jan 2014 14:05:05 +0100
+Received: from dak by x2f510f7.dyn.telefonica.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 31 Jan 2014 14:05:05 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: x2f510f7.dyn.telefonica.de
+X-Face: 2FEFf>]>q>2iw=B6,xrUubRI>pR&Ml9=ao@P@i)L:\urd*t9M~y1^:+Y]'C0~{mAl`oQuAl
+ \!3KEIp?*w`|bL5qr,H)LFO6Q=qx~iH4DN;i";/yuIsqbLLCh/!U#X[S~(5eZ41to5f%E@'ELIi$t^
+ Vc\LWP@J5p^rst0+('>Er0=^1{]M9!p?&:\z]|;&=NP3AhB!B_bi^]Pfkw
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3.50 (gnu/linux)
+Cancel-Lock: sha1:uP0kTO678Rc0f9xbHEA7MimyKGE=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241295>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241296>
 
-Hi, Junio
 
-Please merge the following updates on l10n, and after your merge
-another round of l10n will start in order to translate one extra message
-introduced by commit b861e23 (repack: propagate pack-objects
-options as strings).
+I'm still in the process of finishing the rewrite of the builtin/blame.=
+c
+internals.  Now there are various questions regarding the final patch
+proposals and commit messages.
 
-The following changes since commit 79fcbf7e703ca5805ebd46b2c7e09d0703f1c1ff:
+Point 1) signing off implies that I'm fine with the licensing of the
+file. builtin/blame.c merely states
 
-  Git 1.9-rc0 (2014-01-17 12:30:14 -0800)
+/*
+ * Blame
+ *
+ * Copyright (c) 2006, Junio C Hamano
+ */
 
-are available in the git repository at:
+which obviously will not match the authorship of my contributions.
+Since Junio has given blanket permission to reuse his Git contributions
+under other licenses (see
+<URL:https://github.com/libgit2/libgit2/blob/development/git.git-author=
+s#L58>)
+that I=A0am not going to license my work under, the first commit in the
+respective series would replace this header with
 
-  git://github.com/git-l10n/git-po master
+/*
+ * Blame
+ *
+ * Copyright (c) 2006--2014, Junio C Hamano and others
+ * Licensed under GPLv2.  See Git's COPYING file for details.
+ */
 
-for you to fetch changes up to 25e2fbb4e2d99f2f1e04f0ae2588ab8396217ee4:
+That should be reasonably accurate boilerplate, I think, and should
+avoid code from multiple authors to be erroneously assumed subjected to
+agreements other than the default Git project licensing.
 
-  l10n: Bulgarian translation of git (222t21f1967u) (2014-01-29 14:29:15 +0200)
+Which brings us to further nitty-gritty details.
 
-----------------------------------------------------------------
-Alexander Shopov (2):
-      po/TEAMS: Added Bulgarian team
-      l10n: Bulgarian translation of git (222t21f1967u)
+Personally, I'm fine with permitting licensing contributions of mine
+under GPLv2 or later.  Is there any clearing house where I can have thi=
+s
+sentiment recorded in a manner where potential heirs (which according t=
+o
+copyright law will retain control over my works even when born after my
+demise, so I=A0cannot in good conscience vouch for their common sense)
+cannot contest it?  Like putting
 
-Jean-Noel Avila (1):
-      [fr] update french translation 2210/2210
+Permissable-Licenses: GPL Version 2 or later
 
-Jiang Xin (4):
-      l10n: git.pot: v1.9 round 1 (27 new, 11 removed)
-      Merge branch 'fr-po' of git://github.com/jnavila/git
-      l10n: zh_CN.po: translate 27 messages (2210t0f0u)
-      l10n: remove 2 blank translations on Danish, Dutch
+in the commit message?
 
-Peter Krefting (1):
-      l10n: Update Swedish translation (2210t0f0u)
 
-Tran Ngoc Quan (1):
-      l10n: vi.po (2210t): Updated git-core translation
+And finally, the ugly: I don't have any income apart from volunteers
+paying me for writing Free Software, so a contribution like this one,
+having taken substantial time, will make for a rather tepid report of m=
+y
+GNU LilyPond activities in January and a corresponding slackening of
+volunteer payments for what I could have been doing instead.
 
- po/TEAMS    |    10 +-
- po/bg.po    | 10404 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- po/da.po    |  3503 --------------------
- po/fr.po    |  1807 +++++-----
- po/git.pot  |  1704 +++++-----
- po/nl.po    |  3493 --------------------
- po/sv.po    |  1759 +++++-----
- po/vi.po    |  2389 +++++++-------
- po/zh_CN.po |  1809 +++++-----
- 9 files changed, 15408 insertions(+), 11470 deletions(-)
- create mode 100644 po/bg.po
- delete mode 100644 po/da.po
- delete mode 100644 po/nl.po
+It's not the first performance shortcoming of Git I have worked on.  In
+contrast to most other contributors, I=A0won't be able to afford follow=
+ing
+a whim for addressing such deficiencies in future without a chance for
+recouping my losses.
 
---
-Jiang Xin
+My experience with GNU LilyPond has led me to conclude that the best
+chance of getting voluntary payments is to appeal to those who are most
+invested in the well-being of the software.  It's a sad reality that
+they tend to be identical to those who are already investing substantia=
+l
+amounts of time and effort into the project themselves.  So I'll put th=
+e
+respective begging notice into the cover letter of the patch series:
+I=A0don't think it belongs in the commit messages, and it's not likely =
+to
+be effective anyway.
+
+While I could put a "Prepaid-by:" footer into the commit messages, the
+main effect would likely be to trigger the "somebody else's problem"
+effect.  My experience with this kind of polite notice is that it's goo=
+d
+for the equivalent of a case of beer every ten years.
+
+If the performance enhancements are mentioned in a release announcement=
+,
+adding a notice along the line "The performance of git blame has been
+significantly improved by David Kastrup <dak@gnu.org>.  If this affects
+you, consider contributing to his reimbursement."  would of course also
+be welcome.
+
+Ok, this should be about covering the bad and the ugly.  I'm still
+working on the -C and -M replacements given the new code.  Hopefully
+finished this weekend.
+
+All the best
+
+--=20
+David Kastrup
