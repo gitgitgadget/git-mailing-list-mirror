@@ -1,99 +1,129 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: A few contributor's questions
-Date: Fri, 31 Jan 2014 08:19:24 -0800
-Message-ID: <20140131161924.GA4332@google.com>
-References: <8738k44808.fsf@fencepost.gnu.org>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v4 04/17] trailer: process command line trailer arguments
+Date: Fri, 31 Jan 2014 11:30:17 -0500
+Message-ID: <CAPig+cS98QTH-CxpRtXUqf0jYPC5wEGcb-PEqdk8CQAtbxBkhQ@mail.gmail.com>
+References: <20140130064217.7504.473.chriscool@tuxfamily.org>
+	<20140130064921.7504.55916.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Fri Jan 31 17:19:36 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+	Johan Herland <johan@herland.net>,
+	Josh Triplett <josh@joshtriplett.org>,
+	Thomas Rast <tr@thomasrast.ch>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Dan Carpenter <dan.carpenter@oracle.com>,
+	Greg Kroah-Hartman <greg@kroah.com>, Jeff King <peff@peff.net>
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Fri Jan 31 17:30:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W9GoZ-0000h2-Cd
-	for gcvg-git-2@plane.gmane.org; Fri, 31 Jan 2014 17:19:35 +0100
+	id 1W9Gz2-0007Ui-9N
+	for gcvg-git-2@plane.gmane.org; Fri, 31 Jan 2014 17:30:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932494AbaAaQTb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 Jan 2014 11:19:31 -0500
-Received: from mail-pb0-f54.google.com ([209.85.160.54]:39499 "EHLO
-	mail-pb0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932271AbaAaQTb (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Jan 2014 11:19:31 -0500
-Received: by mail-pb0-f54.google.com with SMTP id uo5so4593505pbc.13
-        for <git@vger.kernel.org>; Fri, 31 Jan 2014 08:19:30 -0800 (PST)
+	id S1754110AbaAaQaT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 Jan 2014 11:30:19 -0500
+Received: from mail-yk0-f178.google.com ([209.85.160.178]:42588 "EHLO
+	mail-yk0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754073AbaAaQaS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Jan 2014 11:30:18 -0500
+Received: by mail-yk0-f178.google.com with SMTP id 79so24838351ykr.9
+        for <git@vger.kernel.org>; Fri, 31 Jan 2014 08:30:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=DseGoL0LUFaLcgjkbrF5+nNodT/+bnT+dCmxiJqvRgg=;
-        b=wWI3vuhfZFEkisQD1a+NSpYywjVV0ZxgXpfWkW7OqJs2pyZg6ARfxFZZ3SPHyLF+xA
-         fBjhADAHrFXIJNprbSnNZ1A8x0o3H6zbZe6801s1jHw9qqD/4VZUnzeg2EWpUXs0anIF
-         MFFD4BMRR91ZKesSk4leXVWt3aZmoOrvXNuu9eY3/0tItFE2/oEWP8gv/OxrRZptMZbZ
-         dZESAosLjMRfiiXTkjSLBOcy9ZvRTYXRh5/lKQV1W2z/LbWyMSlqBth0I6Q8M3OUdove
-         Aq4yrg+eTbXLtRImJ+bPV5/l/L99INa7HSTFp5dpIlGvBgXXS6UhnvhYV2oZ/OMcABYo
-         iGqQ==
-X-Received: by 10.66.189.129 with SMTP id gi1mr21578262pac.57.1391185170385;
-        Fri, 31 Jan 2014 08:19:30 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id bc4sm29021393pbb.2.2014.01.31.08.19.29
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 31 Jan 2014 08:19:29 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <8738k44808.fsf@fencepost.gnu.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=OW78/Ia+A5RrAKsOmrMQtPqKQp9KkxMfYHM9/b0cC9I=;
+        b=gmFWZ8cYhVP/af8MCmrCMy6DY/XGFHYum+Y2DYhzT6MLQ5xmiE/Cr8KXM2E9YHaVTd
+         KdT0I5hbR2fOe3jIo4hmIh5KKuMeZ1hMnf5N7MdrPtCXji2J1qX2CmAbofIJB5l6/acn
+         t4qV1uthItTfSYuNi5wRXm0V4RFQ14iXaBnFkHFpP6ZDornVBxb6l2PNyal48Eaas8GR
+         n1rDLQbXY0iAJHCp5pdjG7Gll9+vy+7Dy+FwTB8W85dMx8aISN7+csrP1XjGbB7tdbTa
+         mkK1sayBQr4/w/DQjUAtxS5rgdqbmquHy+L95pweoOjZp6MygK0p7z6Jkdhgs+TifWik
+         EgcA==
+X-Received: by 10.236.22.38 with SMTP id s26mr210254yhs.145.1391185817498;
+ Fri, 31 Jan 2014 08:30:17 -0800 (PST)
+Received: by 10.170.36.65 with HTTP; Fri, 31 Jan 2014 08:30:17 -0800 (PST)
+In-Reply-To: <20140130064921.7504.55916.chriscool@tuxfamily.org>
+X-Google-Sender-Auth: BTZidQID3FW4JZEQkmaZ5Ou-QU4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241302>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241303>
 
-Hi,
-
-David Kastrup wrote:
-
->       builtin/blame.c merely states
+On Thu, Jan 30, 2014 at 1:49 AM, Christian Couder
+<chriscool@tuxfamily.org> wrote:
+> This patch parses the trailer command line arguments
+> and put the result into an arg_tok doubly linked
+> list.
 >
-> /*
->  * Blame
->  *
->  * Copyright (c) 2006, Junio C Hamano
->  */
+> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+> ---
+> diff --git a/trailer.c b/trailer.c
+> index d979a0f..f48fd94 100644
+> --- a/trailer.c
+> +++ b/trailer.c
+> @@ -362,3 +362,80 @@ static int git_trailer_config(const char *conf_key, const char *value, void *cb)
+>         }
+>         return 0;
+>  }
+> +
+> +static void parse_trailer(struct strbuf *tok, struct strbuf *val, const char *trailer)
+> +{
+> +       char *end = strchr(trailer, '=');
 
-I think you planned to make substantial changes, so
+This can be 'const char *'.
 
-> /*
->  * Blame
->  *
->  * Copyright (c) 2006--2014, Junio C Hamano and others
->  * Licensed under GPLv2.  See Git's COPYING file for details.
->  */
+> +       if (!end)
+> +               end = strchr(trailer, ':');
+> +       if (end) {
+> +               strbuf_add(tok, trailer, end - trailer);
+> +               strbuf_trim(tok);
+> +               strbuf_addstr(val, end + 1);
+> +               strbuf_trim(val);
+> +       } else {
+> +               strbuf_addstr(tok, trailer);
+> +               strbuf_trim(tok);
+> +       }
+> +}
+> +
+> +static struct trailer_item *create_trailer_item(const char *string)
+> +{
+> +       struct strbuf tok = STRBUF_INIT;
+> +       struct strbuf val = STRBUF_INIT;
+> +       struct trailer_item *new;
+> +       struct trailer_item *item;
+> +       int tok_alnum_len;
+> +
+> +       parse_trailer(&tok, &val, string);
+> +
+> +       tok_alnum_len = alnum_len(tok.buf, tok.len);
+> +
+> +       /* Lookup if the token matches something in the config */
+> +       for (item = first_conf_item; item; item = item->next) {
+> +               if (!strncasecmp(tok.buf, item->conf->key, tok_alnum_len) ||
+> +                   !strncasecmp(tok.buf, item->conf->name, tok_alnum_len)) {
+> +                       new = xcalloc(sizeof(struct trailer_item), 1);
 
-towards the end of the series (or squashed into some patch that makes
-significant changes) looks fine to me.
+sizeof(*new) would be more future-proof.
 
-Also keep in mind that you don't need a copyright notice to own
-copyright, that it would be crazy for someone to claim you've assigned
-copyright on your changes without an explicit reassignment, and that
-libgit2's git.git-authors file that keeps coming up includes a comment
-with a heuristic for delving into the history to find the authors of
-some code.
+> +                       new->conf = item->conf;
+> +                       new->token = xstrdup(item->conf->key);
+> +                       new->value = strbuf_detach(&val, NULL);
+> +                       strbuf_release(&tok);
+> +                       return new;
+> +               }
+> +       }
+> +
+> +       new = xcalloc(sizeof(struct trailer_item), 1);
 
-[...]
-> Permissable-Licenses: GPL Version 2 or later
+Ditto.
 
-Wouldn't a signed message on your website or some other public place
-(e.g., the mailing list) do the trick?
-
-Or a sentence in a commit message saying
-
- "I'd be happy to have these changes relicensed under the GPL version 2
- or later."
-
-sounds fine to me, at least.
-
-Thanks and hope that helps,
-Jonathan
+> +       new->conf = xcalloc(sizeof(struct conf_info), 1);
+> +       new->token = strbuf_detach(&tok, NULL);
+> +       new->value = strbuf_detach(&val, NULL);
+> +
+> +       return new;
+> +}
