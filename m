@@ -1,118 +1,146 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [RFC/PATCH] howto/maintain-git.txt: new version numbering scheme
-Date: Fri, 31 Jan 2014 15:14:05 -0800
-Message-ID: <xmqqfvo3hhhe.fsf@gitster.dls.corp.google.com>
+From: David Lang <david@lang.hm>
+Subject: Re: A few contributor's questions
+Date: Fri, 31 Jan 2014 15:58:54 -0800 (PST)
+Message-ID: <alpine.DEB.2.02.1401311556410.2733@nftneq.ynat.uz>
+References: <8738k44808.fsf@fencepost.gnu.org> <20140131161924.GA4332@google.com> <87mwic2ijo.fsf@fencepost.gnu.org> <20140131184842.GA30398@google.com> <87iosz3lpz.fsf@fencepost.gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 01 00:14:19 2014
+Content-Type: MULTIPART/MIXED; BOUNDARY="680960-329727675-1391212734=:2733"
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Sat Feb 01 01:12:42 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W9NHu-0003wl-Dn
-	for gcvg-git-2@plane.gmane.org; Sat, 01 Feb 2014 00:14:18 +0100
+	id 1W9OCP-0004rM-Ff
+	for gcvg-git-2@plane.gmane.org; Sat, 01 Feb 2014 01:12:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933163AbaAaXON (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 Jan 2014 18:14:13 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43406 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933129AbaAaXOJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Jan 2014 18:14:09 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 34769683E0;
-	Fri, 31 Jan 2014 18:14:09 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=d
-	qTX8Rd7thvSyMfJzLLlw5lOvK8=; b=h2r0wDVeLLFcjRpn2HB3TmpbYb2z3osdW
-	bAm7ykRscIqZ160B7KBApyPLZL5Ryli+t+UtyyLDy1QgN7WahsBOlLxS+/UaBkJj
-	tdqYr6DFJmZBo8HoOBbO7BzEZx3tAhdzXszGbjthCfE4yXOKTolgf6ok4G0lqO+O
-	wXHLwsuF9M=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=KPO
-	UzNWwzMEN+aBx3MeChVwo8pF3dp8IzRAKSojYhmDofhirvxfC5PNY/+F7R7wtyqd
-	0L7w59KwgLcEVmZlD3eW858sNFECPYNPdbIjukP9CgYDKit8U604vBp+X+/GPHjm
-	UQQylc33oji7/B+k8tXOf0PmLdNUIvJC3b2DBvx4=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 290C7683DF;
-	Fri, 31 Jan 2014 18:14:09 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6FCE9683DE;
-	Fri, 31 Jan 2014 18:14:08 -0500 (EST)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 62F91BF0-8ACD-11E3-B1F1-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754220AbaBAAMM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 Jan 2014 19:12:12 -0500
+Received: from mail.lang.hm ([64.81.33.126]:46726 "EHLO bifrost.lang.hm"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753235AbaBAAMM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Jan 2014 19:12:12 -0500
+X-Greylist: delayed 787 seconds by postgrey-1.27 at vger.kernel.org; Fri, 31 Jan 2014 19:12:12 EST
+Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
+	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id s0VNwsN9016895;
+	Fri, 31 Jan 2014 15:58:54 -0800
+X-X-Sender: dlang@asgard.lang.hm
+In-Reply-To: <87iosz3lpz.fsf@fencepost.gnu.org>
+User-Agent: Alpine 2.02 (DEB 1266 2009-07-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241324>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241325>
 
-We wanted to call the upcoming release "Git 1.9", with its
-maintenance track being "Git 1.9.1", "Git 1.9.2", etc., but various
-third-party tools are reported to assume that there are at least
-three dewey-decimal components in our version number.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Adjust the plan so that vX.Y.0 are feature releases while vX.Y.Z
-(Z > 0) are maintenance releases.
+--680960-329727675-1391212734=:2733
+Content-Type: TEXT/PLAIN; charset=iso-8859-1; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
+when relicensing, people use git blame, not header copyright notices to track 
+down the authors.
 
- * Haven't committed to this outline, but I am raising a
-   weather-balloon to see reaction from the list.  Comments?
+if you are bothered by the copyright notice at the top, modify it as part of 
+your patchset, it's very unlikely that anyone will care enough to object.
 
- Documentation/howto/maintain-git.txt | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+But copyright assignment has very strict requirements, it can't just be implicit 
+or in e-mail, it requires a signed document, so unless you sign a document 
+stating that you are transferring copyright, you don't have to worry about that.
 
-diff --git a/Documentation/howto/maintain-git.txt b/Documentation/howto/maintain-git.txt
-index 33ae69c..ca43787 100644
---- a/Documentation/howto/maintain-git.txt
-+++ b/Documentation/howto/maintain-git.txt
-@@ -39,26 +39,26 @@ The policy on Integration is informally mentioned in "A Note
- from the maintainer" message, which is periodically posted to
- this mailing list after each feature release is made.
- 
-- - Feature releases are numbered as vX.Y.Z and are meant to
-+ - Feature releases are numbered as vX.Y.0 and are meant to
-    contain bugfixes and enhancements in any area, including
-    functionality, performance and usability, without regression.
- 
-  - One release cycle for a feature release is expected to last for
-    eight to ten weeks.
- 
-- - Maintenance releases are numbered as vX.Y.Z.W and are meant
--   to contain only bugfixes for the corresponding vX.Y.Z feature
--   release and earlier maintenance releases vX.Y.Z.V (V < W).
-+ - Maintenance releases are numbered as vX.Y.Z and are meant
-+   to contain only bugfixes for the corresponding vX.Y.0 feature
-+   release and earlier maintenance releases vX.Y.W (W < Z).
- 
-  - 'master' branch is used to prepare for the next feature
-    release. In other words, at some point, the tip of 'master'
--   branch is tagged with vX.Y.Z.
-+   branch is tagged with vX.Y.0.
- 
-  - 'maint' branch is used to prepare for the next maintenance
--   release.  After the feature release vX.Y.Z is made, the tip
-+   release.  After the feature release vX.Y.0 is made, the tip
-    of 'maint' branch is set to that release, and bugfixes will
-    accumulate on the branch, and at some point, the tip of the
--   branch is tagged with vX.Y.Z.1, vX.Y.Z.2, and so on.
-+   branch is tagged with vX.Y.1, vX.Y.2, and so on.
- 
-  - 'next' branch is used to publish changes (both enhancements
-    and fixes) that (1) have worthwhile goal, (2) are in a fairly
-@@ -86,6 +86,10 @@ this mailing list after each feature release is made.
-    users are encouraged to test it so that regressions and bugs
-    are found before new topics are merged to 'master'.
- 
-+Note that before v1.9.0 release, the version numbers used to be
-+structured slightly differently.  vX.Y.Z were feature releases while
-+vX.Y.Z.W were maintenance releases for vX.Y.Z.
-+
- 
- A Typical Git Day
- -----------------
+David Lang
+
+
+  On Fri, 31 Jan 2014, David Kastrup wrote:
+
+> Date: Fri, 31 Jan 2014 22:06:16 +0100
+> From: David Kastrup <dak@gnu.org>
+> To: Jonathan Nieder <jrnieder@gmail.com>
+> Cc: git@vger.kernel.org
+> Subject: Re: A few contributor's questions
+> 
+> Jonathan Nieder <jrnieder@gmail.com> writes:
+>
+>> I assume the problem you're trying to solve is that files don't have
+>> clear enough notices of their licensing.
+>
+> No, just the file that I'm contributing to.  It has a single copyright
+> attribution that arguably is already less than accurate _unless_ the
+> respective authors can be considered to have been acting with the intent
+> of letting Junio do whatever he wants to do with their contribution.
+>
+>> That could be a real problem for people using the code, since if you
+>> no one gave you a license then you don't have a license at all.
+>
+> In that case, it is reasonably to revert to the general license.
+>
+>> It's also a problem in that it makes it harder to interpret the phrase
+>> "under the same open source license" (though I have no idea how that
+>> could be read as "I give up my copyright completely").
+>
+> If the existing notice is "(c) Junio Hamano" that means that Junio is
+> fully able to license at his will.  And in the case of his work on Git,
+> this includes his expressive permission to relicense under the
+> conditions of libgit2, including a no-modification binary-only licensing
+> option.
+>
+> So my problem is not as much that people might get the idea they might
+> not use/copy my work at all (which would be silly), but rather that they
+> have reasonable expectation to use it under the licensing scheme of
+> libgit2 without getting back to me.
+>
+>>  * the code is copyright by the authors and we try not to waste fuss
+>>    on maintaining a comprehensive list in notices.
+>
+> That's fine, but we are talking not about a list but a single named
+> copyright holder.  I was proposing adding "and others" to clarify that
+> the list is not exhaustive.
+>
+>>  * relicensing, when needed, happens by contacting all the copyright
+>>    holders and getting their consent
+>>
+>> I don't see anything weird about that.
+>
+> Neither do I.
+>
+>> But people using the code might like clearer notices, so I personally
+>> would not mind an extra line in most files stating the license.
+>
+> I was more concerned about amending the copyright attribution, though a
+> single line pointing out GPLv2 and referring the reader to the general
+> COPYING file does not seem excessive, either.
+>
+>>> It's verbose and cumbersome enough that I would not have been
+>>> surprised if there'd be an established way of getting this
+>>> information on record, preferably per-project rather than per-commit.
+>>
+>> For relicensing the existing practice is to just contact people.
+>
+> Well, that stops working once they are dead.  And it's probably rather
+> tricky to locate their heirs even in case they have placed instructions
+> concerning their copyrights into their last will.  While I am not in a
+> rush here, I am still likely to turn decomposing into a fulltime
+> occupation earlier than most other contributors: I started working with
+> computers at a time when the single most imminent danger to long-term
+> data archival were mice.
+>
+>> That has the advantage that I can make a decision about whether to
+>> allow relicensing code I've written in the context of how I expect it
+>> to be used.  I expect that if you had a stance on GPLv2+ licensing of
+>> contributions to git published in some place easily found by search
+>> engines (for example a message on the mailing list), interested people
+>> would not have too much trouble finding it when the time comes.
+>
+> Maybe, maybe not.  There is a big hole in the indexing of the Google
+> News history that was taken over from what once was Dejanews.  Putting
+> the information regarding prospective licensing close to the actual
+> source seems like a smart move.
+>
+> At any rate, if there is no stock procedure for that, that's it.
+>
+>
+--680960-329727675-1391212734=:2733--
