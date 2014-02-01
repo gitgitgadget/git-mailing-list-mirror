@@ -1,137 +1,138 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v3 3/4] setup: Add 'abspath_part_inside_repo' function
-Date: Sat, 1 Feb 2014 09:31:26 +0700
-Message-ID: <CACsJy8CaA6-4qc3BjNi0BCKPLBzh7Ttu6n7wpcj1ZknmEZW-MA@mail.gmail.com>
-References: <1390781250-20389-2-git-send-email-martinerikwerner@gmail.com> <20140131202248.GD9731@mule>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>, richih@debian.org,
-	Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-To: Martin Erik Werner <martinerikwerner@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 01 03:32:07 2014
+From: Reuben Hawkins <reubenhwk@gmail.com>
+Subject: [PATCH 1/2] init-db.c: honor case on case preserving fs
+Date: Sat,  1 Feb 2014 03:14:26 -0600
+Message-ID: <1391246067-30499-1-git-send-email-reubenhwk@gmail.com>
+Cc: dpotapov@gmail.com, Reuben Hawkins <reubenhwk@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 01 10:16:52 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W9QNK-0007N6-DR
-	for gcvg-git-2@plane.gmane.org; Sat, 01 Feb 2014 03:32:06 +0100
+	id 1W9Wh0-0005EM-OG
+	for gcvg-git-2@plane.gmane.org; Sat, 01 Feb 2014 10:16:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754426AbaBACb6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 Jan 2014 21:31:58 -0500
-Received: from mail-qc0-f179.google.com ([209.85.216.179]:65246 "EHLO
-	mail-qc0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754378AbaBACb5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Jan 2014 21:31:57 -0500
-Received: by mail-qc0-f179.google.com with SMTP id e16so8231134qcx.24
-        for <git@vger.kernel.org>; Fri, 31 Jan 2014 18:31:56 -0800 (PST)
+	id S1751329AbaBAJQO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Feb 2014 04:16:14 -0500
+Received: from mail-ob0-f178.google.com ([209.85.214.178]:51985 "EHLO
+	mail-ob0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751300AbaBAJQL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Feb 2014 04:16:11 -0500
+Received: by mail-ob0-f178.google.com with SMTP id wn1so6023846obc.37
+        for <git@vger.kernel.org>; Sat, 01 Feb 2014 01:16:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=hN+0qLGi/GzNmk8NcFY7zZW72HYNJAYCpq/7pfUWsbU=;
-        b=J3muCF1xhqcfyXGt5wJ7ZXs9xQo9rFoRAjUJrYqSHJKIthwx1DCZSXYKyMkgqBPvjV
-         R4a8wtSzg6kDzvxNddBsuXDVthPFJwSRhZCl9WVabgAnA4FVWJgVFrpgELKtLGCPClFy
-         vu/4EPhqLdsW32EyexAbGQxDoglFMLv7OyJouqWIzchXbKwZ6zJU5Hiv+K0J8bC5F5X+
-         bvsIe5PKZYF7JqAADqkLgVAuMJltaemDx864MUBxfI8Ov6hIfFKSJ0owQtX1pIEmg54F
-         /ueULnLnYYQW7ZvJpyOhuho0vY6S9PreVTz7+Hu7Yi5Q+v3iCwqL12cv/U64KtMu9NAO
-         Xp1A==
-X-Received: by 10.140.107.138 with SMTP id h10mr34727429qgf.30.1391221916830;
- Fri, 31 Jan 2014 18:31:56 -0800 (PST)
-Received: by 10.96.136.98 with HTTP; Fri, 31 Jan 2014 18:31:26 -0800 (PST)
-In-Reply-To: <20140131202248.GD9731@mule>
+        h=from:to:cc:subject:date:message-id;
+        bh=RMzWYkIE5/PZq0J0fvl2lM2I0whVEKy+5uQ5vaJgqTQ=;
+        b=i8/4RPUFeucnonwl4g5BaCL79+6djP45tFw9+iURiYr/fN5iy485vMdWwquDM4aG6D
+         /3ZMUCatZveb5tFzSO7ip6IaV6JPM7RWeMb5J2vh2CbHg3kRCiCUq2hjVtlFf6PUcuXG
+         +clbjfUAlSYQIkhNlY9wpMjTnaZfLxlFq8rDPX/KzI6AM7vxPDPGqv/8+MoPBFMkQuBq
+         TpTDmdlIZXJNhGnj47a5CwuPL7TYYR1d5q9DQm9PeeJ3fywbGkvWbJS3q4kLet/YC0N5
+         439D8Y7Uw4Z4jZLD50vZzfeaQD58eGK361Yxyb5yVse//PIhcWkhvWJ8liRensT6UZJd
+         vGXw==
+X-Received: by 10.60.50.202 with SMTP id e10mr20793453oeo.39.1391246170580;
+        Sat, 01 Feb 2014 01:16:10 -0800 (PST)
+Received: from zoidberg.austin.rr.com ([72.183.120.155])
+        by mx.google.com with ESMTPSA id b2sm75269034oed.7.2014.02.01.01.16.10
+        for <multiple recipients>
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sat, 01 Feb 2014 01:16:10 -0800 (PST)
+Received: from zoidberg (localhost [127.0.0.1])
+	by zoidberg.austin.rr.com (8.14.4/8.14.4/Debian-2ubuntu2.1) with ESMTP id s119G8fn004928;
+	Sat, 1 Feb 2014 03:16:08 -0600
+Received: (from reuben@localhost)
+	by zoidberg (8.14.4/8.14.4/Submit) id s119G8P2000385;
+	Sat, 1 Feb 2014 03:16:08 -0600
+X-Mailer: git-send-email 1.8.5.3.3.g8f06fb8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241341>
 
-On Sat, Feb 1, 2014 at 3:22 AM, Martin Erik Werner
-<martinerikwerner@gmail.com> wrote:
-> diff --git a/setup.c b/setup.c
-> index 5432a31..e606846 100644
-> --- a/setup.c
-> +++ b/setup.c
-> @@ -77,6 +77,69 @@ int path_inside_repo(const char *prefix, const char *path)
->         return 0;
->  }
->
-> +/*
-> + * It is ok if dst == src, but they should not overlap otherwise.
-> + * No checking if the path is in fact an absolute path is done, and it must
-> + * already be normalized.
-> + *
-> + * Find the part of an absolute path that lies inside the work tree by
-> + * dereferencing symlinks outside the work tree, for example:
-> + * /dir1/repo/dir2/file   (work tree is /dir1/repo)      -> dir2/file
-> + * /dir/file              (work tree is /)               -> dir/file
-> + * /dir/symlink1/symlink2 (symlink1 points to work tree) -> symlink2
-> + * /dir/repo              (exactly equal to work tree)   -> (empty string)
-> + */
-> +int abspath_part_inside_repo(char *dst, const char* src)
-> +{
-> +       size_t len;
-> +       char *dst0;
-> +       char temp;
-> +
-> +       const char* work_tree = get_git_work_tree();
-> +       if (!work_tree)
-> +               return -1;
-> +       len = strlen(src);
-> +       dst0 = dst;
-> +
-> +       // check root level
+Most case-insensitive filesystems are case-preserving. In these
+filesystems (such as HFS+ on OS X) you can name a file Filename.txt,
+then rename the file to FileName.txt.  That file will be accessible
+by both filenames, but the case is otherwise honored.  We don't want
+to have git ignore case on these case-preserving filesystem
+implementations.
 
-Um.. no C++ style comments. And there should be a test that work_tree
-is the prefix of src (common case). If so we can return early and do
-not need to do real_path() on every path component.
+This change adds an additional check in init-db.c before
+automatically setting core.ignorecase to true.
 
-> +       if (has_dos_drive_prefix(src)) {
-> +               *dst++ = *src++;
-> +               *dst++ = *src++;
-> +               *dst++ = *src++;
-> +       } else {
-> +               *dst++ = *src++;
-> +       }
-> +       temp = *dst;
-> +       *dst = '\0';
-> +       if (strcmp(real_path(dst0), work_tree) == 0) {
-> +               *dst = temp;
-> +               memmove(dst0, src, len - (dst - dst0) + 1);
-> +               return 0;
-> +       }
-> +       *dst = temp;
-> +
-> +       // check each level
-> +       while (*dst != '\0') {
-> +               *dst++ = *src++;
-> +               if (*dst == '/') {
-> +                       *dst = '\0';
-> +                       if (strcmp(real_path(dst0), work_tree) == 0) {
-> +                               memmove(dst0, src + 1, len - (dst - dst0));
-> +                               return 0;
-> +                       }
-> +                       *dst = '/';
-> +               }
-> +       }
-> +
-> +       // check whole path
-> +       if (strcmp(real_path(dst0), work_tree) == 0) {
-> +               *dst0 = '\0';
-> +               return 0;
-> +       }
-> +
-> +       return -1;
-> +}
-> +
->  int check_filename(const char *prefix, const char *arg)
->  {
->         const char *name;
-> --
-> 1.8.5.2
+This fixes a problem where if you import an hg repository, using
+git-remote-hg, on two OSX systems, one with a case-sensitive fs and
+the other with case-insensitive fs, the sha1 commit ids of the
+repositories diverge on commits where a file was renamed, but only
+the case in the filename changes (for example renaming
+Filename.cpp -> FileName.cpp).
 
+The alternative solutions are
+* to set ignore_case to 0 in fast-import.c at runtime
+* explicitly use strcmp, rather than strcmp_icase (also in
+  fast-import.c)
+* completely rework ignorecase into something that can handle more
+  options (true, false, sometimes, maybe, partially, etc...)
 
+Signed-off-by: Reuben Hawkins <reubenhwk@gmail.com>
+---
+ builtin/init-db.c |   43 +++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 41 insertions(+), 2 deletions(-)
 
+diff --git a/builtin/init-db.c b/builtin/init-db.c
+index 78aa387..34f09d8 100644
+--- a/builtin/init-db.c
++++ b/builtin/init-db.c
+@@ -288,8 +288,47 @@ static int create_default_files(const char *template_path)
+ 		/* Check if the filesystem is case-insensitive */
+ 		path[len] = 0;
+ 		strcpy(path + len, "CoNfIg");
+-		if (!access(path, F_OK))
+-			git_config_set("core.ignorecase", "true");
++		if (!access(path, F_OK)) {
++			/*
++			 * This filesystem is at least partially case-insensitive.  Let's
++			 * find out if this filesystem is completely case-insensitive.
++			 *
++			 * Create a CamelCase file here, make sure readdir reads a
++			 * CamelCase file below.
++			 */
++			int completely_insensitive_fs = 1;
++			char const * const case_check_filename = ".CaseCheck";
++			struct dirent *dirent;
++			FILE *case_file;
++			DIR *dir;
++
++			path[len] = 0;
++			strcpy(path + len, case_check_filename);
++			case_file = fopen(path, "w");
++			if (!case_file)
++				die_errno(_("cannot open '%s'"), path);
++			fclose(case_file);
++
++			path[len] = 0;
++			dir = opendir(path);
++			if (!dir)
++				die_errno(_("cannot opendir '%s'"), path);
++
++			while ( (dirent = readdir(dir)) ) {
++				if (0 == strcmp(case_check_filename, dirent->d_name)) {
++					completely_insensitive_fs = 0;
++					break;
++				}
++			}
++
++			closedir(dir);
++			path[len] = 0;
++			strcpy(path + len, case_check_filename);
++			unlink(path);
++
++			if (completely_insensitive_fs)
++				git_config_set("core.ignorecase", "true");
++		}
+ 		probe_utf8_pathname_composition(path, len);
+ 	}
+ 
 -- 
-Duy
+1.7.9.5
