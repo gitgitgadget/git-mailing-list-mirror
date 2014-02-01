@@ -1,51 +1,66 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: splitting a commit that adds new files
-Date: Sat, 1 Feb 2014 17:48:34 +0700
-Message-ID: <CACsJy8BXGZ+1Oqrpcky5JPCtZRwvxmxhXGfuEqY9Ct4Pt8FmJg@mail.gmail.com>
+From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCH 1/2] init-db.c: honor case on case preserving fs
+Date: Sat, 01 Feb 2014 13:17:47 +0100
+Message-ID: <52ECE5EB.6090304@web.de>
+References: <1391246067-30499-1-git-send-email-reubenhwk@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Feb 01 11:49:37 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: dpotapov@gmail.com
+To: Reuben Hawkins <reubenhwk@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 01 13:17:55 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W9Y8n-0007BU-7r
-	for gcvg-git-2@plane.gmane.org; Sat, 01 Feb 2014 11:49:37 +0100
+	id 1W9ZWE-0004yi-JS
+	for gcvg-git-2@plane.gmane.org; Sat, 01 Feb 2014 13:17:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751608AbaBAKtI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Feb 2014 05:49:08 -0500
-Received: from mail-qc0-f170.google.com ([209.85.216.170]:44642 "EHLO
-	mail-qc0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751479AbaBAKtG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Feb 2014 05:49:06 -0500
-Received: by mail-qc0-f170.google.com with SMTP id e9so8664496qcy.15
-        for <git@vger.kernel.org>; Sat, 01 Feb 2014 02:49:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=3DArARG4CfYbnbcn39L7Y0RVA57avMLDVlZwEXp1Uf0=;
-        b=ph18BVQcn+Bsqha+yPvBuwkb1wCVB3hNwctKHlVSIWivqe2PR8sgXeOBoIjhp3qSCC
-         b86Nk3sUML9BVxqHQ2+XmgEqFRV3UruzDP8w9l2SzYGEv/BZFp40ezRTWlfTUtZTNqim
-         p1L2nozDKnpCJVg2rfBxqSsJpaitZ4NmhhemQDTEY0LhJQDUUwSlLGgAuU7UynOA9fVF
-         999uNzUhxlGQyE7dWO1rbU43ZaA367W8fZXLDzVuv77PTMR0C/F3X4DQ9YApzGXH588y
-         aIIRS/PgEX1Z+Wc1aSaK4WElP9vSITAbnUeL9gEItPx7l/qWyBxfE2QkKQfPhPbh4GhQ
-         Eceg==
-X-Received: by 10.140.47.212 with SMTP id m78mr37182143qga.21.1391251745314;
- Sat, 01 Feb 2014 02:49:05 -0800 (PST)
-Received: by 10.96.136.98 with HTTP; Sat, 1 Feb 2014 02:48:34 -0800 (PST)
+	id S1751804AbaBAMRu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Feb 2014 07:17:50 -0500
+Received: from mout.web.de ([212.227.17.11]:50821 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751717AbaBAMRt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Feb 2014 07:17:49 -0500
+Received: from [192.168.209.26] ([78.72.74.102]) by smtp.web.de (mrweb103)
+ with ESMTPSA (Nemesis) id 0MbQOe-1VqneB1yku-00Ijum for <git@vger.kernel.org>;
+ Sat, 01 Feb 2014 13:17:47 +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:24.0) Gecko/20100101 Thunderbird/24.2.0
+In-Reply-To: <1391246067-30499-1-git-send-email-reubenhwk@gmail.com>
+X-Provags-ID: V03:K0:AGhil30kIAmdkT7pQpnOisdmthATKbCZea+iQ5vdk7YY2Lh72/D
+ VgYJLT7KcUWcA7+MdspXbTZ8iPkCjHyzWHu+ulLcxkQJbYg8tjQrTSyWqE7IgQXEiQeNpO6
+ fLftkfgPB+9ZuQspXr+Lukqnkiybj+BaE1m0WY5+qQmpvV/uLvJvwQGxa1/SDlXd50+fvyY
+ a9vNwYqawttDhsipnoCtg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241343>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241344>
 
-I usually start splitting a commit with "reset @^" then "add -p" back.
-The problem is "reset @^" does not keep track of new files added in
-HEAD, so I often end up forgetting to add new files back (with "add
--p"). I'm thinking of making "reset" to do "add -N" automatically for
-me so I won't miss changes in "add -p". But maybe people already know
-how to deal with this case without adding more code?
--- 
-Duy
+On 2014-02-01 10.14, Reuben Hawkins wrote:
+> Most case-insensitive filesystems are case-preserving. In these
+> filesystems (such as HFS+ on OS X) you can name a file Filename.txt,
+> then rename the file to FileName.txt.  That file will be accessible
+> by both filenames, but the case is otherwise honored.  We don't want
+> to have git ignore case on these case-preserving filesystem
+> implementations.
+
+Yes, we want.
+Because the file system will treat "Filename.txt" and "FileName.txt"
+the same.
+Whatever is on disc, the OS will not distinguish them.
+(On a case-insensitive HFS+ partition).
+
+And when core.ignorecase == true, Git does the same what the OS does,
+ignore the case.
+
+Could you describe the problems more in detail ?
+
+Could you supply a test case, (or a short script) which shows
+the problem and makes it reproducable for others?
+
+Which problems does your patch solve, which can not be solved
+by setting core.ignorecase==false manually?
+ 
+/Torsten
