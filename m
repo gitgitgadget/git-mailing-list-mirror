@@ -1,138 +1,142 @@
-From: Erez Zilber <erezzi.list@gmail.com>
+From: Todd Zullinger <tmz@pobox.com>
 Subject: Re: Running "make rpm" fails on a CentOS 6.3 machine
-Date: Sun, 2 Feb 2014 22:38:15 +0200
-Message-ID: <CALMr_pVP-YVJ9K7ZpQxk3d5YBFQmCZBonFeUYY1fxdZNHHZJHA@mail.gmail.com>
+Date: Sun, 2 Feb 2014 16:07:24 -0500
+Message-ID: <20140202210724.GX3241@zaya.teonanacatl.net>
 References: <CALMr_pWHfaHq46418UPcqGKm6bFc61jw-VqGJYV8Ogc9yuHDFA@mail.gmail.com>
-	<20140130181643.GG27577@google.com>
-	<20140130185104.GV3241@zaya.teonanacatl.net>
+ <20140130181643.GG27577@google.com>
+ <20140130185104.GV3241@zaya.teonanacatl.net>
+ <CALMr_pVP-YVJ9K7ZpQxk3d5YBFQmCZBonFeUYY1fxdZNHHZJHA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="NNF9FXNTY80mBlY+"
 Cc: Jonathan Nieder <jrnieder@gmail.com>,
 	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Todd Zullinger <tmz@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Feb 02 21:38:44 2014
+To: Erez Zilber <erezzi.list@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 02 22:07:36 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WA3oS-0003Yb-6I
-	for gcvg-git-2@plane.gmane.org; Sun, 02 Feb 2014 21:38:44 +0100
+	id 1WA4GM-0004D5-Fj
+	for gcvg-git-2@plane.gmane.org; Sun, 02 Feb 2014 22:07:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752439AbaBBUiR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Feb 2014 15:38:17 -0500
-Received: from mail-ob0-f173.google.com ([209.85.214.173]:39185 "EHLO
-	mail-ob0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752414AbaBBUiQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Feb 2014 15:38:16 -0500
-Received: by mail-ob0-f173.google.com with SMTP id vb8so7156588obc.32
-        for <git@vger.kernel.org>; Sun, 02 Feb 2014 12:38:16 -0800 (PST)
+	id S1752462AbaBBVH3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Feb 2014 16:07:29 -0500
+Received: from mail-qa0-f50.google.com ([209.85.216.50]:50585 "EHLO
+	mail-qa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752445AbaBBVH2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Feb 2014 16:07:28 -0500
+Received: by mail-qa0-f50.google.com with SMTP id cm18so8894390qab.37
+        for <git@vger.kernel.org>; Sun, 02 Feb 2014 13:07:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=8LnH0AifvDpfPMTdBLq3YaK6d921QS77Wk+12h+I49c=;
-        b=WOodrd8gXOUGH6c/zmIhgcpWZiBAQmAor2SyUR1X9NBPTmoHKIOB3u8GoJ6YItOcSt
-         Jm87VY+k7kQ/ZGFRlk30w6vyCwvOvAyHoxCMNrxYIdlO+kvFnGQk8SLy0aP0R2SRdU7X
-         4CcyIEo59kLkRgfsy4ZqYZWAoVrdysipjKCDepAhjwz1MmqyR0aOml/yPRk7eSJTJj9I
-         kj9NqxMMt1jWS2RRzbyAGiTXwfw99Yxo6PL83kklHCJhByPuN2P+1XQFrZAfY8lHrgnE
-         tN2JpIe2qwaLP+IWLK/1oSzBGXKgADvtjdNghtITegV5cLWCMAAMMA4nwMrn/rSbpGGM
-         MGSg==
-X-Received: by 10.182.194.78 with SMTP id hu14mr26900911obc.8.1391373496039;
- Sun, 02 Feb 2014 12:38:16 -0800 (PST)
-Received: by 10.60.68.99 with HTTP; Sun, 2 Feb 2014 12:38:15 -0800 (PST)
-In-Reply-To: <20140130185104.GV3241@zaya.teonanacatl.net>
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=Zas2Y4QGtsyiSU7rhC6aIUkWJvT4yXogOIgwsCdwYmk=;
+        b=HGh+tilOHRiWpX4nKi4sBYTTHSBD4dIxjttfp+qJ+ruh63/mpbrDRSWnoL7H/jvDQl
+         Z1+hbP687NWqHWXrOffKfgEo8L4TS15blsxgZEbUFZXqb4leboqihCxxsNDMmmwcZ9WW
+         tTpd0Gioe0/cYUSVQaSKDDKiRgoGANUQEwM//Y8cYjEfcv0ucMVclXvwqHsf68iP9ug5
+         MNd1v05e2UlmMd5Y5PjaznmSqzYbHPE+55PPSbzfSyrbRi4SxqUEYsMFEiEK+bnVr4nW
+         RfbcF/bqEIPUXw475AqMksLtAD8m0/1zE+AYezo/6lkBA6EkTmqM275hdVU5Wr23Avw3
+         G0nQ==
+X-Received: by 10.224.4.130 with SMTP id 2mr15118732qar.83.1391375247627;
+        Sun, 02 Feb 2014 13:07:27 -0800 (PST)
+Received: from zaya.teonanacatl.net (zaya.teonanacatl.net. [2001:470:5:873:862b:2bff:fe5e:698b])
+        by mx.google.com with ESMTPSA id p3sm49897843qat.5.2014.02.02.13.07.26
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Sun, 02 Feb 2014 13:07:27 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <CALMr_pVP-YVJ9K7ZpQxk3d5YBFQmCZBonFeUYY1fxdZNHHZJHA@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241383>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241384>
 
-Thanks. I will try to use the rpm from Todd's build. BTW - if I want
-to create such a build on Fedora that will create el6 packages (e.g.
-git-1.8.5.3-2.el6.x86_64.rpm), what's the procedure?
 
-Thanks,
-Erez
+--NNF9FXNTY80mBlY+
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jan 30, 2014 at 8:51 PM, Todd Zullinger <tmz@pobox.com> wrote:
-> Hello,
->
->
-> Jonathan Nieder wrote:
->>
->> Erez Zilber wrote:
->>
->>> Writing perl.mak for Git Writing perl.mak for Git rename MakeMaker.tmp =>
->>> perl.mak: No such file or directory at
->>> /usr/share/perl5/ExtUtils/MakeMaker.pm line 1024. make[3]: perl.mak: No such
->>> file or directory make[3]: perl.mak: No such file or directory make[3]: ***
->>> No rule to make target `perl.mak'.  Stop.
->>
->>
->> Looks like MakeMaker is racing against itself.  Alas, (on a fairly current
->> Debian system, with perl 5.14.2) I'm not able to reproduce that.
->>
->> Instead, I get this:
->>
->> | $ make -j8 rpm [...]
->> | make[2]: Leaving directory
->> `$HOME/rpmbuild/BUILD/git-1.8.5.3/Documentation' | make[1]: Leaving
->> directory `$HOME/rpmbuild/BUILD/git-1.8.5.3' | + exit 0 |
->> Executing(%install): /bin/sh -e /var/tmp/rpm-tmp.WqNYnx | + umask 022 | + cd
->> $HOME/rpmbuild/BUILD | + cd git-1.8.5.3 | + rm -rf
->> $HOME/rpmbuild/BUILDROOT/git-1.8.5.3-1.x86_64 | + make -j12 'CFLAGS=-O2 -g'
->> \        DESTDIR=$HOME/rpmbuild/BUILDROOT/git-1.8.5.3-1.x86_64 \
->> ETC_GITCONFIG=/etc/gitconfig prefix=/usr \      mandir=/usr/share/man
->> htmldir=/usr/share/doc/git-1.8.5.3 \      INSTALLDIRS=vendor install
->> install-doc | make[1]: Entering directory `$HOME/rpmbuild/BUILD/git-1.8.5.3'
->> | make[1]: warning: -jN forced in submake: disabling jobserver mode. |
->> make[1]: *** write jobserver: Bad file descriptor.  Stop. | make[1]: ***
->> Waiting for unfinished jobs.... | make[1]: *** write jobserver: Bad file
->> descriptor.  Stop. | error: Bad exit status from /var/tmp/rpm-tmp.WqNYnx
->> (%install) | | | RPM build errors:
->> |     Bad exit status from /var/tmp/rpm-tmp.WqNYnx (%install) | make: ***
->> [rpm] Error 1
->>
->> Known problem?  A build without -j8 gets further.
->
->
-> It seems like it's not a problem with el6 or git's Makefiles themselves.  I
-> haven't used the spec file from git.git in ages, but I have tried to ensure
-> that the one we use in Fedora builds cleanly on el{5,6}.  I use this myself
-> to keep an update git on el6, where Red Hat has left git at 1.7.1 since the
-> release of el6 however many years ago. :(
->
-> Here's a build I ran just now using the latest Fedora SRPM, showing it
-> succeeds with make -j5:
->
-> http://kojipkgs.fedoraproject.org//work/tasks/3049/6473049/build.log
->
-> The build task, with all of the resulting rpms and logs is here:
->
-> http://koji.fedoraproject.org/koji/taskinfo?taskID=6473049
->
-> (That will remain for a few days or so, at least.  Scratch builds like this
-> aren't kept indefinitely.)
->
-> This makes me think that there's something in the git.spec in git.git that
-> differs from what we use in Fedora/EPEL.  I don't have time to dig into that
-> now, but perhaps someone with time and inclination can diff the spec files
-> and find the cause.
->
-> I know the Fedora/EPEL spec file and what's in git.git have grown apart a
-> good bit, unfortunately.  That's the cost of having a spec file that is
-> meant to work across a very wide array of RPM-based systems, I guess.  The
-> Fedora/EPEL spec file is fairly specific to the Fedora/EPEL build tools
-> (mock is the primary build tool).
->
-> Hope this helps a little in narrowing down the issue.  I'm sorry I can't be
-> of more assistance at the moment.
->
-> --
-> Todd        OpenPGP -> KeyID: 0xBEAF0CE3 | URL: www.pobox.com/~tmz/pgp
-> ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> How am I supposed to hallucinate with all these swirling colors
-> distracting me?
->     -- Lisa Simpson
->
+Hi Erez,
+
+Erez Zilber wrote:
+> Thanks. I will try to use the rpm from Todd's build. BTW - if I want=20
+> to create such a build on Fedora that will create el6 packages (e.g.=20
+> git-1.8.5.3-2.el6.x86_64.rpm), what's the procedure?
+
+Something like this (this is from memory):
+
+# Install fedpkg
+$ yum install fedpkg
+
+# Checkout the fedora git package (anonymously)
+$ fedpkg clone -a git && cd git
+
+Verify the git tarball.  This is optional, but I would be remiss to=20
+suggest you skip it.  We used to include the tarball .asc file in the=20
+fedora git repo, but that is no longer available for download. =20
+Instead, it must be copied and pasted from Google Code (I'd love to=20
+see the .asc files return, FWIW).
+
+# To verify the tarball, have fedpkg download the sources first -- if=20
+# you don't want to verify the tarball, you can skip this command and=20
+# the gpg/sha1sum commands that follow
+$ fedpkg sources
+
+# Copy and paste the gpg signature from=20
+# http://code.google.com/p/git-core/downloads/detail?name=3Dgit-1.8.5.3.tar=
+=2Egz&can=3D2&q=3D=20
+# to a local file and use gpg to verify it, then sha1sum to check the=20
+# tarballs
+$ gpg --verify sha1.asc
+=2E..
+$ sha1sum -c sha1.asc
+
+# Create an el6 srpm
+$ fedpkg --dist el6 srpm
+
+# Build that package in mock, adding yourself or your build user to=20
+# the mock group first
+$ sudo useradd -a -G mock $USER
+$ mock -r epel-6-x86_64 git-1.8.5.3-2.el6.src.rpm
+
+The first time you build for a given release in mock will take longer=20
+than subsequent builds, because mock needs to download a lot of=20
+packages for the build root.  These packages will be cached for future=20
+runs builds.
+
+In the end, you should end up with a set of packages and build logs=20
+under /var/lib/mock/epel-6-x86_64/result/.
+
+Hope this helps,
+
+--=20
+Todd        OpenPGP -> KeyID: 0xBEAF0CE3 | URL: www.pobox.com/~tmz/pgp
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Anyone who is capable of getting themselves made President should on
+no account be allowed to do the job.
+     -- Douglas Adams, "The Hitchhiker's Guide to the Galaxy"
+
+
+--NNF9FXNTY80mBlY+
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.14 (GNU/Linux)
+
+iQFDBAEBCAAtBQJS7rOMJhhodHRwOi8vd3d3LnBvYm94LmNvbS9+dG16L3BncC90
+bXouYXNjAAoJEEMlk4u+rwzj7A4H/1a3TIr+0A2hEfYZvcEP0rUJfmHGtCWQ2Rxc
+tzZztWrrCuSM3eg/SygSBk9J2v0/LzVvLfXaXxH5Mw6iW3O53fr75xLgIkndZhA7
+wS959T8k+BrjuekHvtU/HEXaC9KW0MWBmSH5bYssuovn8xSn77B0RgZTEcr/LUDM
+JbvWzAunVmnZ/2CNGa0HFw2ZBA3pfxMh64rsHB+4AKQS0N3ZUhPBe/wmEb9fUFke
+/7j1ujzcn6oU7IcMhXZoSTC4+NZKLzy5kRm26dsLzLu1huYjxXC+1/vRG2C8tv4c
+M1C0uATPLtWGVsUHVXSuqVVFY3oj/2ddr8DyC8m9q4ght/T9rTM=
+=AjKl
+-----END PGP SIGNATURE-----
+
+--NNF9FXNTY80mBlY+--
