@@ -1,166 +1,85 @@
 From: Martin Erik Werner <martinerikwerner@gmail.com>
-Subject: [PATCH v4 0/4] Handling of in-tree symlinks for absolute paths
-Date: Sun,  2 Feb 2014 02:59:07 +0100
-Message-ID: <1391306351-13237-1-git-send-email-martinerikwerner@gmail.com>
+Subject: [PATCH v4 1/4] t0060: Add test for manipulating symlinks via absolute paths
+Date: Sun,  2 Feb 2014 02:59:08 +0100
+Message-ID: <1391306351-13237-2-git-send-email-martinerikwerner@gmail.com>
 References: <20140131202142.GA9731@mule>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+ <1391306351-13237-1-git-send-email-martinerikwerner@gmail.com>
 Cc: richih@debian.org, tboegi@web.de, gitster@pobox.com,
 	pclouds@gmail.com, Martin Erik Werner <martinerikwerner@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 02 02:59:58 2014
+X-From: git-owner@vger.kernel.org Sun Feb 02 03:00:05 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W9mLl-0007jg-Fm
-	for gcvg-git-2@plane.gmane.org; Sun, 02 Feb 2014 02:59:57 +0100
+	id 1W9mLs-0007oe-Uu
+	for gcvg-git-2@plane.gmane.org; Sun, 02 Feb 2014 03:00:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751427AbaBBB7x convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 1 Feb 2014 20:59:53 -0500
-Received: from mail-lb0-f177.google.com ([209.85.217.177]:63372 "EHLO
-	mail-lb0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751107AbaBBB7w (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Feb 2014 20:59:52 -0500
-Received: by mail-lb0-f177.google.com with SMTP id z5so4467162lbh.36
-        for <git@vger.kernel.org>; Sat, 01 Feb 2014 17:59:51 -0800 (PST)
+	id S1751438AbaBBB76 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Feb 2014 20:59:58 -0500
+Received: from mail-la0-f52.google.com ([209.85.215.52]:54468 "EHLO
+	mail-la0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751107AbaBBB75 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Feb 2014 20:59:57 -0500
+Received: by mail-la0-f52.google.com with SMTP id c6so4383821lan.25
+        for <git@vger.kernel.org>; Sat, 01 Feb 2014 17:59:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=BWFXqTjAxjq1GpdobCC1dIRVc4mv6Q/K8dOINxVFj8M=;
-        b=gTEQs7kZ/XXJs1VL7bJoec42ZDt1I/Q0EMnKTYoARExCOVlqGUWzifpbkCgN59t2Df
-         hqq5SzbojdfOo6et9reIcqOvU54INY5K/R0FtCJED7f8bVWrB5AqIamgqR8hP20IIEoy
-         ZFO9aSQT4znox+62PEytrRY2fpKI+NiGR82gJ/IJNN6m5pJcmNLiRece4Zvf0bbP2RwB
-         mQ1vRqQIfcRp2nnCFi+IR2TXrhjA069FqZDOSO3pHjrMqc9JQB1ARzBDHQpzaa4Gh5oG
-         fvrDOlpf8/2Eft+dg/3NXQiMlKctkwuWioTt3fAWsWcVzIX3mkhaWDLBI9smB7pvg1kP
-         qtfg==
-X-Received: by 10.152.205.163 with SMTP id lh3mr19692634lac.10.1391306391680;
-        Sat, 01 Feb 2014 17:59:51 -0800 (PST)
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=DNjq++SfCA2rF1vdWEGyZg+cRhmMkq4GOujz225BzUY=;
+        b=ZsLNGZfvXlQCW4Mj9l476b6PYnu+30M0vKErrYA033kVnKaXsaxpTnrwQaU2Qdt/eT
+         L/Q8SicuJ8QbgQaZh/sqZa1MRken7g9daeFQIA24vN0eRffWbWMjXlrP0CkbHQusDoFU
+         EI7jr2IRKUMSdGm8tvpbyCvVFFS0zCJCIG930SfBq3LX/yyeezbWGORcOeqDHA3zpP5z
+         +96SWAIReOVOV7rlTNR6/4xfbJ1axfVvgxIGOShgCWcWctDAYvYvk+m/6eRDhvNjmp20
+         q+LoQcPKC4LsT/tKaWAXfrB8OyFwztfDt+u7HoRF90pACTLAHJ4e+TXX7gRs+dl684vv
+         O/6Q==
+X-Received: by 10.112.125.225 with SMTP id mt1mr7375421lbb.35.1391306396000;
+        Sat, 01 Feb 2014 17:59:56 -0800 (PST)
 Received: from mule.student.uu.se (nl116-226-21.student.uu.se. [130.243.226.21])
-        by mx.google.com with ESMTPSA id g8sm22136585lae.1.2014.02.01.17.59.49
+        by mx.google.com with ESMTPSA id g8sm22136585lae.1.2014.02.01.17.59.54
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 01 Feb 2014 17:59:50 -0800 (PST)
+        Sat, 01 Feb 2014 17:59:55 -0800 (PST)
 X-Mailer: git-send-email 1.8.5.2
-In-Reply-To: <20140131202142.GA9731@mule>
+In-Reply-To: <1391306351-13237-1-git-send-email-martinerikwerner@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241346>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241347>
 
-Hmm, maybe fourth time's the ch...nevermind.
+When symlinks in the working tree are manipulated using the absolute
+path, git dereferences them, and tries to manipulate the link target
+instead.
 
-On Sat, Feb 01, 2014 at 02:31:21AM +0100, Martin Erik Werner wrote:
-> On Fri, Jan 31, 2014 at 11:37:29PM +0100, Torsten B=C3=B6gershausen w=
-rote:
-> > On 2014-01-31 21.22, Martin Erik Werner wrote:
-(...)
-> > > diff --git a/cache.h b/cache.h
-> > > index ce377e1..242f27d 100644
-> > > --- a/cache.h
-> > > +++ b/cache.h
-> > > @@ -426,6 +426,7 @@ extern void verify_filename(const char *prefi=
-x,
-> > >                       int diagnose_misspelt_rev);
-> > >  extern void verify_non_filename(const char *prefix, const char *=
-name);
-> > >  extern int path_inside_repo(const char *prefix, const char *path=
-);
-> > > +extern int abspath_part_inside_repo(char *dst, const char *path)=
-;
-> > abspath_part_inside_repo() is only used in setup.c, isn't it?
-> > In this case we don't need it in cache.h, it can be declared inside=
- setup.c as
-> >=20
-> > static int abspath_part_inside_repo(char *dst, const char *path);
-> > (or "static inline" )
-> >=20
-> > -----------------
-> > (And not in this patch: see the final setup.c:)
-> >=20
-> >         if (g) {
-> >             free(npath);
-> >             return NULL;
-> >         }
-> >=20
-> > If this is the only caller of abspath_part_inside_repo(),
-> > then  do we need npath 2 times as a parameter ?
-> > Or can we re-write it to look like this:
-> >=20
-> > static inline int abspath_part_inside_repo(char *path)
-> > [
-> > ]
->=20
-> I guess I've over-generalised it a bit too much, that should rather b=
-e
-> done if-and-when, I presume?
->=20
-> It is indeed only used in setup.c and only by the prefix_path_gently
-> function so static inline then?
->=20
-> Hmm, for single-parameter it should suffice to simply move the parame=
-ter
-> down into the function, like so?:
->   const char* src;
->   src =3D dst;
-> and carry on as before (obviously also renaming the variables sensibl=
-y),
-> or did you have something else in mind?
->=20
-> (I added two parameters since I was glancing at 'normalize_path_copy_=
-len'
-> for inspiration, and was thinking about (purely theoretical) re-use i=
-n
-> other cases rather than minimizing it for the time being.)
->=20
-> What do you mean with the "(And not in this patch"... bit; what "fina=
-l
-> setup.c"?
+This is a regression introduced by 18e051a:
+  setup: translate symlinks in filename when using absolute paths
+(which did not take symlinks in the work tree into consideration).
 
-As per Torsten's suggestions I've re-worked abspath_part_inside_repo fu=
-nction
-to only take one parameter and also put it as 'static inline' before
-'prefix_path_gently' since currently only used once. (The change turned
-out larger/nicer than I first guessed, since the 'src' pointer and copy=
-ing
-could be dropped completely.)
+Add a known-breakage tests using the prefix_path function, which
+currently uses real_path, causing the dereference.
 
-On Sat, Feb 01, 2014 at 09:31:26AM +0700, Duy Nguyen wrote:
-> On Sat, Feb 1, 2014 at 3:22 AM, Martin Erik Werner
-> <martinerikwerner@gmail.com> wrote:
-(...)
-> > +       // check root level
->=20
-> Um.. no C++ style comments. And there should be a test that work_tree
-> is the prefix of src (common case). If so we can return early and do
-> not need to do real_path() on every path component.
-(...)
+Signed-off-by: Martin Erik Werner <martinerikwerner@gmail.com>
+---
+ t/t0060-path-utils.sh | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-Oops, comments fixed.
-
-I've added the check for work tree as existing prefix, which also had t=
-he nice
-side-effect of checking the case of the work tree being the root of the
-filesystem as a bonus.
-
-This new single-buffer version also uses 'offset_1st_component' to move=
- past
-the root (since not having to worry about copying).
-
-Martin Erik Werner (4):
-  t0060: Add test for manipulating symlinks via absolute paths
-  t0060: Add test for prefix_path when path =3D=3D work tree
-  setup: Add 'abspath_part_inside_repo' function
-  setup: Don't dereference in-tree symlinks for absolute paths
-
- setup.c               | 93 ++++++++++++++++++++++++++++++++++++++++---=
---------
- t/t0060-path-utils.sh | 11 ++++++
- 2 files changed, 84 insertions(+), 20 deletions(-)
-
---=20
+diff --git a/t/t0060-path-utils.sh b/t/t0060-path-utils.sh
+index 07c10c8..0bba988 100755
+--- a/t/t0060-path-utils.sh
++++ b/t/t0060-path-utils.sh
+@@ -190,6 +190,11 @@ test_expect_success SYMLINKS 'real path works on symlinks' '
+ 	test "$sym" = "$(test-path-utils real_path "$dir2/syml")"
+ '
+ 
++test_expect_failure SYMLINKS 'prefix_path works with absolute paths to work tree symlinks' '
++	ln -s target symlink &&
++	test "$(test-path-utils prefix_path prefix "$(pwd)/symlink")" = "symlink"
++'
++
+ relative_path /foo/a/b/c/	/foo/a/b/	c/
+ relative_path /foo/a/b/c/	/foo/a/b	c/
+ relative_path /foo/a//b//c/	///foo/a/b//	c/		POSIX
+-- 
 1.8.5.2
