@@ -1,85 +1,91 @@
-From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH v4 3/4] setup: Add 'abspath_part_inside_repo' function
-Date: Sun, 02 Feb 2014 12:37:16 +0100
-Message-ID: <52EE2DEC.4030400@web.de>
-References: <20140131202142.GA9731@mule>	<1391306351-13237-1-git-send-email-martinerikwerner@gmail.com>	<1391306351-13237-4-git-send-email-martinerikwerner@gmail.com>	<CACsJy8A8hardH7EaopY2Xu5Ob50mew3pJdqAr6fJsqyyhLQYMg@mail.gmail.com>	<20140202111330.GB14729@mule> <871tzl2209.fsf@fencepost.gnu.org>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: Creating own hierarchies under $GITDIR/refs ?
+Date: Sun, 02 Feb 2014 12:42:52 +0100
+Message-ID: <87wqhdzqo3.fsf@fencepost.gnu.org>
+References: <87a9e92424.fsf@fencepost.gnu.org>
+	<CACsJy8CdKRQ_au3QqVoUdedvPpkPh_2vodKJwLZ7VrrwRJSDXQ@mail.gmail.com>
+	<8761ox2240.fsf@fencepost.gnu.org>
+	<20140202113141.GB29976@serenity.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: David Kastrup <dak@gnu.org>, git@vger.kernel.org,
-	"martinerikwerner@gmail.com >> Martin Erik Werner" 
-	<martinerikwerner@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 02 12:37:52 2014
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Sun Feb 02 12:43:27 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W9vN1-0004Kv-Fz
-	for gcvg-git-2@plane.gmane.org; Sun, 02 Feb 2014 12:37:51 +0100
+	id 1W9vSP-0006mg-EN
+	for gcvg-git-2@plane.gmane.org; Sun, 02 Feb 2014 12:43:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751235AbaBBLh2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Feb 2014 06:37:28 -0500
-Received: from mout.web.de ([212.227.17.11]:61407 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751204AbaBBLhU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Feb 2014 06:37:20 -0500
-Received: from [192.168.209.26] ([78.72.74.102]) by smtp.web.de (mrweb101)
- with ESMTPSA (Nemesis) id 0Leca2-1VSaO31NYk-00qSM8 for <git@vger.kernel.org>;
- Sun, 02 Feb 2014 12:37:17 +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:24.0) Gecko/20100101 Thunderbird/24.2.0
-In-Reply-To: <871tzl2209.fsf@fencepost.gnu.org>
-X-Provags-ID: V03:K0:Jhfq9cQ4zqJlFlds8uIPbXcIkwUVJkRt0s1D1HAI8BZhLFPv3+Y
- 2IAYlmxii5xHKdnxCPFG0fKxBKqxvbLn4TqqZ2mghlS51pRaixzrcfcEucMg37OFZXOtjlP
- jsQFIj4P/eMpxt97Q9V99+oUFTTSSqy7WxD+N0K5yFeW1Fbpwk1iKNVDhX80yPg+e337Jun
- u5mSttOtkmGhb/uu72hIw==
+	id S1751241AbaBBLmz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 2 Feb 2014 06:42:55 -0500
+Received: from fencepost.gnu.org ([208.118.235.10]:57089 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751075AbaBBLmy convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 2 Feb 2014 06:42:54 -0500
+Received: from localhost ([127.0.0.1]:56130 helo=lola)
+	by fencepost.gnu.org with esmtp (Exim 4.71)
+	(envelope-from <dak@gnu.org>)
+	id 1W9vRt-0002C1-9Z; Sun, 02 Feb 2014 06:42:53 -0500
+Received: by lola (Postfix, from userid 1000)
+	id C2C45DF68C; Sun,  2 Feb 2014 12:42:52 +0100 (CET)
+In-Reply-To: <20140202113141.GB29976@serenity.lan> (John Keeping's message of
+	"Sun, 2 Feb 2014 11:31:41 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241364>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241365>
 
-On 2014-02-02 12.21, David Kastrup wrote:
-> Martin Erik Werner <martinerikwerner@gmail.com> writes:
-> 
->> On Sun, Feb 02, 2014 at 09:19:04AM +0700, Duy Nguyen wrote:
->>> On Sun, Feb 2, 2014 at 8:59 AM, Martin Erik Werner
->>> <martinerikwerner@gmail.com> wrote:
->>>> +       /* check if work tree is already the prefix */
->>>> +       if (strncmp(path, work_tree, wtlen) == 0) {
->>>> +               if (path[wtlen] == '/')
->>>> +                       memmove(path, path + wtlen + 1, len - wtlen);
->>>> +               else
->>>> +                       /* work tree is the root, or the whole path */
->>>> +                       memmove(path, path + wtlen, len - wtlen + 1);
->>>> +               return 0;
->>>> +       }
->>>
->>> No the 4th time is not the charm yet :) if path is "/abc/defghi" and
->>> work_tree is "/abc/def" you don't want to return "ghi" as the prefix
->>> here.
->>
->> Ah indeed, this should catch that:
->>
->> diff --git a/setup.c b/setup.c
->> index 2270bd4..5817875 100644
->> --- a/setup.c
->> +++ b/setup.c
->> @@ -32,9 +32,11 @@ static inline int abspath_part_inside_repo(char *path)
->>  	if (strncmp(path, work_tree, wtlen) == 0) {
->>  		if (path[wtlen] == '/')
->>  			memmove(path, path + wtlen + 1, len - wtlen);
->> -		else
->> +		else if (path[wtlen - 1] == '/' || path[wtlen] == '\0')
-> 
-> Is wtlen guaranteed to be nonzero?
-> 
-Another comment:
-The "raw" comparison with '/' is probably working well on all
-POSIX/Linux/Unix systems.
+John Keeping <john@keeping.me.uk> writes:
 
-To be more portable, the macro
-is_dir_sep()
-can be used:
+> On Sun, Feb 02, 2014 at 12:19:43PM +0100, David Kastrup wrote:
+>> Duy Nguyen <pclouds@gmail.com> writes:
+>>=20
+>> > The file is for past commits only.
+>>=20
+>> > New commits can contain these info in their messages.
+>>=20
+>> If it's not forgotten.  Experience shows that things like issue numb=
+ers
+>> have a tendency to be omitted, and then they stay missing.
+>>=20
+>> At any rate, this is exactly the kind of stuff that tags are useful =
+for,
+>> except that using them for all that would render the "tag space"
+>> overcrowded.
+>
+> Actually, I would say this is exactly the sort of thing notes are for=
+=2E
+>
+> git.git uses them to map commits back to mailing list discussions:
 
-if (is_dir_sep(path[wtlen]))
+But that's the wrong direction.  What is needed in the Emacs case is
+mapping the Bazaar reference numbers (and bug numbers) to commits.
+
+While it is true that the history rewriting approach would not deliver
+this either (short of git log --grep with suitable patterns), I=A0was
+looking for something less of a crutch here.
+
+> Notes aren't fetch by default, but it's not hard for those interested
+> to add a remote.*.fetch line to their config.
+
+If we are talking about measures everybody has to actively take before
+getting access to functionality, this does not cross the convenience
+threshold making it a solution preferred over others.  But it's probabl=
+y
+feasible to configure a fetch line doing this that will get cloned when
+first cloning a repository.  That's not too hot for people with existin=
+g
+repositories, but since we are talking about a migration from Bazaar
+anyway, Git users currently are so by choice and so might be more
+willing to update their configuration if it helps with avoiding a fully
+new clone.
+
+--=20
+David Kastrup
