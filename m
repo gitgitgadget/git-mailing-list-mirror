@@ -1,134 +1,118 @@
-From: Martin Erik Werner <martinerikwerner@gmail.com>
-Subject: [PATCH v4 4/4] setup: Don't dereference in-tree symlinks for absolute paths
-Date: Sun,  2 Feb 2014 02:59:11 +0100
-Message-ID: <1391306351-13237-5-git-send-email-martinerikwerner@gmail.com>
-References: <20140131202142.GA9731@mule>
- <1391306351-13237-1-git-send-email-martinerikwerner@gmail.com>
-Cc: richih@debian.org, tboegi@web.de, gitster@pobox.com,
-	pclouds@gmail.com, Martin Erik Werner <martinerikwerner@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 02 03:00:20 2014
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v4 3/4] setup: Add 'abspath_part_inside_repo' function
+Date: Sun, 2 Feb 2014 09:19:04 +0700
+Message-ID: <CACsJy8A8hardH7EaopY2Xu5Ob50mew3pJdqAr6fJsqyyhLQYMg@mail.gmail.com>
+References: <20140131202142.GA9731@mule> <1391306351-13237-1-git-send-email-martinerikwerner@gmail.com>
+ <1391306351-13237-4-git-send-email-martinerikwerner@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>, richih@debian.org,
+	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+	Junio C Hamano <gitster@pobox.com>
+To: Martin Erik Werner <martinerikwerner@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 02 03:20:05 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W9mM7-0007yW-FX
-	for gcvg-git-2@plane.gmane.org; Sun, 02 Feb 2014 03:00:19 +0100
+	id 1W9mfE-0003EC-LL
+	for gcvg-git-2@plane.gmane.org; Sun, 02 Feb 2014 03:20:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751475AbaBBCAL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Feb 2014 21:00:11 -0500
-Received: from mail-la0-f54.google.com ([209.85.215.54]:53032 "EHLO
-	mail-la0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751468AbaBBCAG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Feb 2014 21:00:06 -0500
-Received: by mail-la0-f54.google.com with SMTP id y1so4611889lam.27
-        for <git@vger.kernel.org>; Sat, 01 Feb 2014 18:00:05 -0800 (PST)
+	id S1750894AbaBBCTg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Feb 2014 21:19:36 -0500
+Received: from mail-qc0-f170.google.com ([209.85.216.170]:38586 "EHLO
+	mail-qc0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750846AbaBBCTf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Feb 2014 21:19:35 -0500
+Received: by mail-qc0-f170.google.com with SMTP id e9so9499800qcy.1
+        for <git@vger.kernel.org>; Sat, 01 Feb 2014 18:19:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=ZhKpUf/k+NOV8hKlzBJyoI5gaTC+PIB4v8fJf3qS2F8=;
-        b=CgZL0nBx0BiG2AuIc3jeFpRPpgX614WbD7FrkLzhf5ABJro5W39HD/enwNYo4EjBXC
-         4ODc5H6VFYMnssEMNwvB4TSHKsHeaPozlxf3gsI9oLBSvNjZzuMsCjhlsdv0GfxIkmBV
-         Th7ew5ey0BqQQRU/hVBFrsCXgUIsvx7vvGfRxo9J2mo3N7VnAkMHfHLBpRnIBmnL8vX6
-         qtg4cMnCM2UCu9463K3ELKUo3ItqBdB7UnNL7VFDibPnr8kvBAZ9k8vs5OibUbjd7HaX
-         5Q3lg81uFyb2ht6jyXOz43n+/IjdRW46phaVTYXuoA8zAzS41nSKYtDI5Bczb2VtMdZf
-         LoZg==
-X-Received: by 10.112.236.3 with SMTP id uq3mr7506161lbc.14.1391306405274;
-        Sat, 01 Feb 2014 18:00:05 -0800 (PST)
-Received: from mule.student.uu.se (nl116-226-21.student.uu.se. [130.243.226.21])
-        by mx.google.com with ESMTPSA id g8sm22136585lae.1.2014.02.01.18.00.02
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 01 Feb 2014 18:00:04 -0800 (PST)
-X-Mailer: git-send-email 1.8.5.2
-In-Reply-To: <1391306351-13237-1-git-send-email-martinerikwerner@gmail.com>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=mOs0JWqB8faY1/Oq1q5HzrcU8tGD98A/4Peb2V41BFI=;
+        b=W39S0oUTZtkG6Ij+NP5RJaSpc4pzjz85djjva9vFKAnFNWirqmQp6JEik6ig3EVBpQ
+         F1MpweShO4kG2TJlHAO4if1ZBNw406A6NusCjt8MaaOtdN8jXjY95/1S1Yp6JdP7e6RH
+         JgRaTIvAdjj6q4oI+sVCqK17A39m8PP42fcESI8fsuQGAo+YpvjZj6WG48XL+n9SQe6V
+         65QBYJCnRvZokPmd6tDpiSh7uRtOwBbtoiteugwKxyuH98cx/YEG8rxoVBuiZqRULetY
+         YuQrM8w/gwbjF87L7tqUdJ0JXyjIq3v9qa7aEFxOFz9gMIOwgontDcKgrU2wjr9OVar8
+         N68Q==
+X-Received: by 10.140.40.5 with SMTP id w5mr42211047qgw.65.1391307574990; Sat,
+ 01 Feb 2014 18:19:34 -0800 (PST)
+Received: by 10.96.136.98 with HTTP; Sat, 1 Feb 2014 18:19:04 -0800 (PST)
+In-Reply-To: <1391306351-13237-4-git-send-email-martinerikwerner@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241350>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241351>
 
-The 'prefix_path_gently' function currently applies real_path to
-everything if given an absolute path, dereferencing symlinks both
-outside and inside the work tree. In order to manipulate symlinks in the
-work tree using absolute paths, symlinks should only be dereferenced
-outside the work tree.
+On Sun, Feb 2, 2014 at 8:59 AM, Martin Erik Werner
+<martinerikwerner@gmail.com> wrote:
+> +       /* check if work tree is already the prefix */
+> +       if (strncmp(path, work_tree, wtlen) == 0) {
+> +               if (path[wtlen] == '/')
+> +                       memmove(path, path + wtlen + 1, len - wtlen);
+> +               else
+> +                       /* work tree is the root, or the whole path */
+> +                       memmove(path, path + wtlen, len - wtlen + 1);
+> +               return 0;
+> +       }
 
-Modify the 'prefix_path_gently' to first normalize the path in order to
-make sure path levels are separated by '/', then pass the result to
-'abspath_part_inside_repo' to find the in-repo part (without dereferencing
-any symlinks inside the work tree).
+No the 4th time is not the charm yet :) if path is "/abc/defghi" and
+work_tree is "/abc/def" you don't want to return "ghi" as the prefix
+here.
 
-For absolute paths, 'prefix_path_gently' did not, nor does now do, any
-actual prefixing, hence the result from 'abspath_part_in_repo' is
-returned as-is.
+> +       path0 = path;
+> +       path += offset_1st_component(path);
+> +
+> +       /* check each level */
+> +       while (*path != '\0') {
+> +               path++;
 
-Fixes t0060-82.
+To me it looks like we could write
 
-Signed-off-by: Martin Erik Werner <martinerikwerner@gmail.com>
----
- setup.c | 36 ++++++++++++++++--------------------
- 1 file changed, 16 insertions(+), 20 deletions(-)
+for (; *path; path++) {
 
-diff --git a/setup.c b/setup.c
-index e938785..2270bd4 100644
---- a/setup.c
-+++ b/setup.c
-@@ -79,11 +79,23 @@ char *prefix_path_gently(const char *prefix, int len,
- 	const char *orig = path;
- 	char *sanitized;
- 	if (is_absolute_path(orig)) {
--		const char *temp = real_path(path);
--		sanitized = xmalloc(len + strlen(temp) + 1);
--		strcpy(sanitized, temp);
-+		char *npath;
-+
-+		npath = xmalloc(strlen(path) + 1);
- 		if (remaining_prefix)
- 			*remaining_prefix = 0;
-+		if (normalize_path_copy_len(npath, path, remaining_prefix)) {
-+			free(npath);
-+			return NULL;
-+		}
-+		if (abspath_part_inside_repo(npath)) {
-+			free(npath);
-+			return NULL;
-+		}
-+
-+		sanitized = xmalloc(strlen(npath) + 1);
-+		strcpy(sanitized, npath);
-+		free(npath);
- 	} else {
- 		sanitized = xmalloc(len + strlen(path) + 1);
- 		if (len)
-@@ -91,26 +103,10 @@ char *prefix_path_gently(const char *prefix, int len,
- 		strcpy(sanitized + len, path);
- 		if (remaining_prefix)
- 			*remaining_prefix = len;
--	}
--	if (normalize_path_copy_len(sanitized, sanitized, remaining_prefix))
--		goto error_out;
--	if (is_absolute_path(orig)) {
--		size_t root_len, len, total;
--		const char *work_tree = get_git_work_tree();
--		if (!work_tree)
--			goto error_out;
--		len = strlen(work_tree);
--		root_len = offset_1st_component(work_tree);
--		total = strlen(sanitized) + 1;
--		if (strncmp(sanitized, work_tree, len) ||
--		    (len > root_len && sanitized[len] != '\0' && sanitized[len] != '/')) {
--		error_out:
-+		if (normalize_path_copy_len(sanitized, sanitized, remaining_prefix)) {
- 			free(sanitized);
- 			return NULL;
- 		}
--		if (sanitized[len] == '/')
--			len++;
--		memmove(sanitized, sanitized + len, total - len);
- 	}
- 	return sanitized;
- }
+or even
+
+for (path += offset_1st_component(path); *path; path++) {
+
+but it's personal taste..
+
+> +               if (*path == '/') {
+> +                       *path = '\0';
+> +                       if (strcmp(real_path(path0), work_tree) == 0) {
+> +                               memmove(path0, path + 1, len - (path - path0));
+> +                               return 0;
+> +                       }
+> +                       *path = '/';
+> +               }
+> +       }
+> +
+> +       /* check whole path */
+> +       if (strcmp(real_path(path0), work_tree) == 0) {
+> +               *path0 = '\0';
+> +               return 0;
+> +       }
+
+I think this is already handled by the "check if work tree is already
+the prefix" block.
+
+> +
+> +       return -1;
+> +}
+> +
+> +/*
+>   * Normalize "path", prepending the "prefix" for relative paths. If
+>   * remaining_prefix is not NULL, return the actual prefix still
+>   * remains in the path. For example, prefix = sub1/sub2/ and path is
+> --
+> 1.8.5.2
+>
+
+
+
 -- 
-1.8.5.2
+Duy
