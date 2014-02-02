@@ -1,81 +1,75 @@
 From: Martin Erik Werner <martinerikwerner@gmail.com>
-Subject: [PATCH v4 1/4] t0060: Add test for manipulating symlinks via absolute paths
-Date: Sun,  2 Feb 2014 02:59:08 +0100
-Message-ID: <1391306351-13237-2-git-send-email-martinerikwerner@gmail.com>
+Subject: [PATCH v4 2/4] t0060: Add test for prefix_path when path == work tree
+Date: Sun,  2 Feb 2014 02:59:09 +0100
+Message-ID: <1391306351-13237-3-git-send-email-martinerikwerner@gmail.com>
 References: <20140131202142.GA9731@mule>
  <1391306351-13237-1-git-send-email-martinerikwerner@gmail.com>
 Cc: richih@debian.org, tboegi@web.de, gitster@pobox.com,
 	pclouds@gmail.com, Martin Erik Werner <martinerikwerner@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 02 03:00:05 2014
+X-From: git-owner@vger.kernel.org Sun Feb 02 03:00:11 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1W9mLs-0007oe-Uu
-	for gcvg-git-2@plane.gmane.org; Sun, 02 Feb 2014 03:00:05 +0100
+	id 1W9mLz-0007u1-6o
+	for gcvg-git-2@plane.gmane.org; Sun, 02 Feb 2014 03:00:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751438AbaBBB76 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Feb 2014 20:59:58 -0500
-Received: from mail-la0-f52.google.com ([209.85.215.52]:54468 "EHLO
-	mail-la0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751107AbaBBB75 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Feb 2014 20:59:57 -0500
-Received: by mail-la0-f52.google.com with SMTP id c6so4383821lan.25
-        for <git@vger.kernel.org>; Sat, 01 Feb 2014 17:59:56 -0800 (PST)
+	id S1751446AbaBBCAB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Feb 2014 21:00:01 -0500
+Received: from mail-lb0-f171.google.com ([209.85.217.171]:56212 "EHLO
+	mail-lb0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751107AbaBBCAA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Feb 2014 21:00:00 -0500
+Received: by mail-lb0-f171.google.com with SMTP id c11so4432650lbj.2
+        for <git@vger.kernel.org>; Sat, 01 Feb 2014 17:59:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=DNjq++SfCA2rF1vdWEGyZg+cRhmMkq4GOujz225BzUY=;
-        b=ZsLNGZfvXlQCW4Mj9l476b6PYnu+30M0vKErrYA033kVnKaXsaxpTnrwQaU2Qdt/eT
-         L/Q8SicuJ8QbgQaZh/sqZa1MRken7g9daeFQIA24vN0eRffWbWMjXlrP0CkbHQusDoFU
-         EI7jr2IRKUMSdGm8tvpbyCvVFFS0zCJCIG930SfBq3LX/yyeezbWGORcOeqDHA3zpP5z
-         +96SWAIReOVOV7rlTNR6/4xfbJ1axfVvgxIGOShgCWcWctDAYvYvk+m/6eRDhvNjmp20
-         q+LoQcPKC4LsT/tKaWAXfrB8OyFwztfDt+u7HoRF90pACTLAHJ4e+TXX7gRs+dl684vv
-         O/6Q==
-X-Received: by 10.112.125.225 with SMTP id mt1mr7375421lbb.35.1391306396000;
-        Sat, 01 Feb 2014 17:59:56 -0800 (PST)
+        bh=RkWJN/rasDWmg835phTWFAN11Te+fXG/o/+wBb5Y5Ww=;
+        b=Nyfz9Im1qwHfEuQvNXv0Xeo45/dTpXS7G4MUZuP19mkw294tkHOaB4JQDVuoIuKiUL
+         D3f/aPHkT2i1efOSy9iOyTnNtEuCC1FnTaGGkwLMwNZyaQye3Fb73pV82zAbqcVfwBd5
+         Np5NfbD818TU80BXaCaTXGdZ38AdU1sIDcmzCDxXNLNbhVYU0ZpLhvbsuhEb96RV0p/F
+         qj8Yy3oPrlplb+TxvKBH2VZaq3p7KR/DHrBjjUOV7DHv7/ONwhvka7qUeihSE3RlChOh
+         12Hhv9kYuwl7NgDA6QH+FLKhg4wTJT9i9vc10EjHdb4gf21E//4PmrtljuqTu3nNXRbm
+         OWog==
+X-Received: by 10.112.172.8 with SMTP id ay8mr67132lbc.41.1391306398802;
+        Sat, 01 Feb 2014 17:59:58 -0800 (PST)
 Received: from mule.student.uu.se (nl116-226-21.student.uu.se. [130.243.226.21])
-        by mx.google.com with ESMTPSA id g8sm22136585lae.1.2014.02.01.17.59.54
+        by mx.google.com with ESMTPSA id g8sm22136585lae.1.2014.02.01.17.59.57
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 01 Feb 2014 17:59:55 -0800 (PST)
+        Sat, 01 Feb 2014 17:59:58 -0800 (PST)
 X-Mailer: git-send-email 1.8.5.2
 In-Reply-To: <1391306351-13237-1-git-send-email-martinerikwerner@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241347>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241348>
 
-When symlinks in the working tree are manipulated using the absolute
-path, git dereferences them, and tries to manipulate the link target
-instead.
-
-This is a regression introduced by 18e051a:
-  setup: translate symlinks in filename when using absolute paths
-(which did not take symlinks in the work tree into consideration).
-
-Add a known-breakage tests using the prefix_path function, which
-currently uses real_path, causing the dereference.
+The current behaviour of prefix_path is to return an empty string if
+prefixing and absolute path that only contains exactly the work tree.
+This behaviour is a potential regression point.
 
 Signed-off-by: Martin Erik Werner <martinerikwerner@gmail.com>
 ---
- t/t0060-path-utils.sh | 5 +++++
- 1 file changed, 5 insertions(+)
+ t/t0060-path-utils.sh | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
 diff --git a/t/t0060-path-utils.sh b/t/t0060-path-utils.sh
-index 07c10c8..0bba988 100755
+index 0bba988..b8e92e1 100755
 --- a/t/t0060-path-utils.sh
 +++ b/t/t0060-path-utils.sh
-@@ -190,6 +190,11 @@ test_expect_success SYMLINKS 'real path works on symlinks' '
- 	test "$sym" = "$(test-path-utils real_path "$dir2/syml")"
+@@ -195,6 +195,12 @@ test_expect_failure SYMLINKS 'prefix_path works with absolute paths to work tree
+ 	test "$(test-path-utils prefix_path prefix "$(pwd)/symlink")" = "symlink"
  '
  
-+test_expect_failure SYMLINKS 'prefix_path works with absolute paths to work tree symlinks' '
-+	ln -s target symlink &&
-+	test "$(test-path-utils prefix_path prefix "$(pwd)/symlink")" = "symlink"
++test_expect_success 'prefix_path works with only absolute path to work tree' '
++	echo "" >expected &&
++	test-path-utils prefix_path prefix "$(pwd)" >actual &&
++	test_cmp expected actual
 +'
 +
  relative_path /foo/a/b/c/	/foo/a/b/	c/
