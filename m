@@ -1,88 +1,109 @@
-From: Stephen Leake <stephen_leake@stephe-leake.org>
-Subject: Determining update/merge/current state of a workspace
-Date: Sun, 02 Feb 2014 16:15:09 -0600
-Message-ID: <85ppn540wi.fsf@stephe-leake.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: Determining update/merge/current state of a workspace
+Date: Sun, 2 Feb 2014 17:44:54 -0500
+Message-ID: <20140202224453.GA16196@sigill.intra.peff.net>
+References: <85ppn540wi.fsf@stephe-leake.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 02 23:15:26 2014
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Stephen Leake <stephen_leake@stephe-leake.org>
+X-From: git-owner@vger.kernel.org Sun Feb 02 23:45:40 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WA5Jz-0000KN-Ol
-	for gcvg-git-2@plane.gmane.org; Sun, 02 Feb 2014 23:15:24 +0100
+	id 1WA5nI-0001QN-72
+	for gcvg-git-2@plane.gmane.org; Sun, 02 Feb 2014 23:45:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752495AbaBBWPP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Feb 2014 17:15:15 -0500
-Received: from cdptpa-outbound-snat.email.rr.com ([107.14.166.226]:51495 "EHLO
-	cdptpa-oedge-vip.email.rr.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1752462AbaBBWPO (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 2 Feb 2014 17:15:14 -0500
-Received: from [70.94.38.149] ([70.94.38.149:49660] helo=TAKVER)
-	by cdptpa-oedge03 (envelope-from <stephen_leake@stephe-leake.org>)
-	(ecelerity 3.5.0.35861 r(Momo-dev:tip)) with ESMTP
-	id F8/55-05632-F63CEE25; Sun, 02 Feb 2014 22:15:12 +0000
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (windows-nt)
-X-RR-Connecting-IP: 107.14.168.142:25
-X-Cloudmark-Score: 0
+	id S1752495AbaBBWo5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Feb 2014 17:44:57 -0500
+Received: from cloud.peff.net ([50.56.180.127]:43340 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752476AbaBBWo4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Feb 2014 17:44:56 -0500
+Received: (qmail 30188 invoked by uid 102); 2 Feb 2014 22:44:56 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 02 Feb 2014 16:44:56 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 02 Feb 2014 17:44:54 -0500
+Content-Disposition: inline
+In-Reply-To: <85ppn540wi.fsf@stephe-leake.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241385>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241386>
 
-I'm working on the DVC Emacs front-end for git
-(http://www.emacswiki.org/emacs/DistributedVersionControl), adding
-features similar to the ones I added for monotone
-(http://www.monotone.ca). I'm used to monotone and new to git, so this
-may seem like an odd workflow.
+On Sun, Feb 02, 2014 at 04:15:09PM -0600, Stephen Leake wrote:
 
-I always do 'fetch' and 'merge' separately, never 'pull'. So after a
-'fetch', the DVC Emacs front end must determine what needs to happen
-next. I think there are three cases:
+> I always do 'fetch' and 'merge' separately, never 'pull'. So after a
+> 'fetch', the DVC Emacs front end must determine what needs to happen
+> next. I think there are three cases:
 
-1) 'fetch' did not retrieve any revisions from remote; the last local
-   commit is the head of the branch.
+Doing the two steps separately is common in git, too. The cases you
+mention are also something people commonly care about. Both "git
+checkout" and "git status" will print out the relationship between the
+current branch and its "upstream". These are sometimes referred to as
+ahead/behind messages in the manual (because they are of the form "You
+are N commits ahead of origin/master", etc).
 
-    The workspace is up to date (it may need to be comitted).
+> 3) fetch retrieved revisions, and there were local commits since
+>    the previous fetch.
+> 
+>    There are two heads for the branch (the two described above), they
+>    need to be merged, then the workspace updated.
+> 
+> I'm not sure how 'git fetch' handles case 3); I have not tested that
+> case yet.
 
-2) 'fetch' retrieved revisions, and there were no local commits since
-   the previous fetch.
+Git's fetch does not have to care about this case. It is responsible
+only for updating the ref that keeps track of the remote side (e.g.,
+refs/remotes/origin/master). Unlike in some other DVCSs, there is no
+global concept of a "branch" in git. The ref "refs/heads/master" refers
+to your local branch named "master", and the ref "refs/remotes/origin/master"
+refers to some remote's branch with the same name. You can reconcile
+them whenever and however you like, and do not have to do so immediately
+(or at all).
 
-    The last fetch is the head of the branch; if not equal to HEAD, the
-    workspace needs to be updated (via 'merge').
+> The question I have is:
+> 
+> What git queries can I run to determine which of the three states the
+> current workspace is in?
 
-3) fetch retrieved revisions, and there were local commits since
-   the previous fetch.
+If you want to know the relationship between two (or more) commits, you
+can use `git rev-list` to enumerate them. You can use the symmetric
+difference operator ("...") to walk both sides down to their merge-base.
+The `--left-right` option will label them according to which side each
+commit comes from. So try:
 
-   There are two heads for the branch (the two described above), they
-   need to be merged, then the workspace updated.
+  git rev-list --left-right @{upstream}...HEAD
 
-I'm not sure how 'git fetch' handles case 3); I have not tested that
-case yet.
+to see the commits, or just:
 
-The question I have is:
+  git rev-list --left-right --count @{upstream}...HEAD
 
-What git queries can I run to determine which of the three states the
-current workspace is in?
+to just get the counts on each side. Note that I used "@{upstream}"
+there instead of naming the branch specifically. The default remote
+branch with which a local branch will merge can be configured, and does
+not have to have the same name (or even be a remote branch).
 
-'rev-parse HEAD' gives the last workspace commit.
+> But to distinguish among the cases, I need to determine if one of these
+> two revs is a child of the other or not. I don't see a git query to
+> determine that directly.
 
-'rev-parse refs/remotes/<remote>/<branch>' gives the head of the branch
-in the remote repository as of the most recent fetch.
+I think what I gave above matches what you are looking for most
+directly. But as you may have already guessed, you can also use rev-list
+to find whether one rev is a child of the other (e.g., "git rev-list
+--count a..b" != 0).
 
-But to distinguish among the cases, I need to determine if one of these
-two revs is a child of the other or not. I don't see a git query to
-determine that directly.
+> I could try parsing a 'log' output; I have not investigated that.
 
-I could try parsing a 'log' output; I have not investigated that.
+Don't do that. As you might expect, `git log` is built on top of the
+traversals done by `rev-list`. The latter is preferred as a building
+block, because it is "plumbing" whose output is guaranteed not to change
+in later git versions.
 
-This is easy in monotone; there is a command 'mtn heads' that gives this
-result directly (it returns either one or two revs), and another command
-'mtn automate toposort' that orders revs topologically (by parent/child
-relationships).
+I hope that helps,
 
--- 
--- Stephe
+-Peff
