@@ -1,7 +1,7 @@
 From: Kirill Smelkov <kirr@mns.spb.ru>
-Subject: [PATCH 2/8] tests: add checking that combine-diff emits only correct paths
-Date: Mon,  3 Feb 2014 16:47:16 +0400
-Message-ID: <9ee3e17af9a8da1f47423a74171d5cb95293f677.1391430523.git.kirr@mns.spb.ru>
+Subject: [PATCH 1/8] fixup! combine_diff: simplify intersect_paths() further
+Date: Mon,  3 Feb 2014 16:47:15 +0400
+Message-ID: <60ec61bdd2ef3cba7537e29c42f9c8a810da245d.1391430523.git.kirr@mns.spb.ru>
 References: <cover.1391430523.git.kirr@mns.spb.ru>
 Cc: git@vger.kernel.org, Kirill Smelkov <kirr@mns.spb.ru>
 To: Junio C Hamano <gitster@pobox.com>
@@ -11,20 +11,20 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WAIuZ-0006tq-NW
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Feb 2014 13:46:04 +0100
+	id 1WAIuY-0006tq-L4
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Feb 2014 13:46:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751451AbaBCMpz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Feb 2014 07:45:55 -0500
-Received: from mail.mnsspb.ru ([84.204.75.2]:37374 "EHLO mail.mnsspb.ru"
+	id S1751376AbaBCMpv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Feb 2014 07:45:51 -0500
+Received: from mail.mnsspb.ru ([84.204.75.2]:37320 "EHLO mail.mnsspb.ru"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751134AbaBCMpy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Feb 2014 07:45:54 -0500
+	id S1751134AbaBCMpu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Feb 2014 07:45:50 -0500
 Received: from [192.168.0.127] (helo=tugrik.mns.mnsspb.ru)
-	by mail.mnsspb.ru with esmtps id 1WAIuO-0004Zd-I4; Mon, 03 Feb 2014 16:45:52 +0400
+	by mail.mnsspb.ru with esmtps id 1WAIuK-0004ZY-DH; Mon, 03 Feb 2014 16:45:48 +0400
 Received: from kirr by tugrik.mns.mnsspb.ru with local (Exim 4.72)
 	(envelope-from <kirr@tugrik.mns.mnsspb.ru>)
-	id 1WAIwC-0007Fj-3L; Mon, 03 Feb 2014 16:47:44 +0400
+	id 1WAIw7-0007Fg-W0; Mon, 03 Feb 2014 16:47:39 +0400
 X-Mailer: git-send-email 1.9.rc1.181.g641f458
 In-Reply-To: <cover.1391430523.git.kirr@mns.spb.ru>
 In-Reply-To: <cover.1391430523.git.kirr@mns.spb.ru>
@@ -33,135 +33,80 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241427>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241428>
 
-where "correct paths" stands for paths that are different to all
-parents.
+That cleanup patch is good, but I've found a bug in it. In the item removal
+code
 
-Up until now, we were testing combined diff only on one file, or on
-several files which were all different (t4038-diff-combined.sh).
+> +                      /* p->path not in q->queue[]; drop it */
+> +                      struct combine_diff_path *next = p->next;
+> +
+> +                      if ((*tail = next) != NULL)
+> +                              tail = &next->next;
+> +                      free(p);
+>                        continue;
 
-As recent thinko in "simplify intersect_paths() further" showed, and
-also, since we are going to rework code for finding paths different to
-all parents, lets write at least basic tests.
+        *tail = next
+
+is right, but
+
+        tail = &next->next
+
+is wrong, because it will lead to skipping the element after removed
+one. Proof:
+
+    tail        p
+      |         |
+      |         |
+      v         v
+     +-+       +------+-+       +------+-+       +------+-+
+     | |       |      | |       |      | |       |      | |
+     |o------->|      |o------->|      |o------->|      |o------->
+     |0|       |     1| |       |     2| |       |     3| |
+     +-+       +------+-+       +------+-+       +------+-+
+
+suppose, we are removing element 1. p->next points to 2, after
+
+    *tail = next
+
+0 points to 2, which != NULL. After
+
+    tail = &next->next
+
+tail points to &2->next.
+
+On the next cycle iteration, after
+
+    p = *tail
+
+we'll have
+
+    p = *2->next = 3
+
+so 2 was skipped, oops.
+
+I've actually hit the bug - when generating combine-diff, for merges with
+should-be empty `log -c` output, every second path was present in the diff.
+That, by the way, means we need to extend combine-diff tests somewhat.
 
 Signed-off-by: Kirill Smelkov <kirr@mns.spb.ru>
 ---
- t/t4057-diff-combined-paths.sh | 106 +++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 106 insertions(+)
- create mode 100755 t/t4057-diff-combined-paths.sh
+ combine-diff.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/t/t4057-diff-combined-paths.sh b/t/t4057-diff-combined-paths.sh
-new file mode 100755
-index 0000000..e6e457d
---- /dev/null
-+++ b/t/t4057-diff-combined-paths.sh
-@@ -0,0 +1,106 @@
-+#!/bin/sh
-+
-+test_description='combined diff show only paths that are different to all parents'
-+
-+. ./test-lib.sh
-+
-+# verify that diffc.expect matches output of
-+# `git diff -c --name-only HEAD HEAD^ HEAD^2`
-+diffc_verify() {
-+	git diff -c --name-only HEAD HEAD^ HEAD^2 >diffc.actual &&
-+	test_cmp diffc.expect diffc.actual
-+}
-+
-+test_expect_success 'trivial merge - combine-diff empty' '
-+	for i in `test_seq 1 9`
-+	do
-+		echo $i >$i.txt	&&
-+		git add $i.txt
-+	done &&
-+	git commit -m "init" &&
-+	git checkout -b side &&
-+	for i in `test_seq 2 9`
-+	do
-+		echo $i/2 >>$i.txt
-+	done &&
-+	git commit -a -m "side 2-9" &&
-+	git checkout master &&
-+	echo 1/2 >1.txt &&
-+	git commit -a -m "master 1" &&
-+	git merge side &&
-+	>diffc.expect &&
-+	diffc_verify
-+'
-+
-+
-+test_expect_success 'only one trully conflicting path' '
-+	git checkout side &&
-+	for i in `test_seq 2 9`
-+	do
-+		echo $i/3 >>$i.txt
-+	done &&
-+	echo "4side" >>4.txt &&
-+	git commit -a -m "side 2-9 +4" &&
-+	git checkout master &&
-+	for i in `test_seq 1 9`
-+	do
-+		echo $i/3 >>$i.txt
-+	done &&
-+	echo "4master" >>4.txt &&
-+	git commit -a -m "master 1-9 +4" &&
-+	test_must_fail git merge side &&
-+	cat <<-\EOF >4.txt &&
-+	4
-+	4/2
-+	4/3
-+	4master
-+	4side
-+	EOF
-+	git add 4.txt &&
-+	git commit -m "merge side (2)" &&
-+	echo 4.txt >diffc.expect &&
-+	diffc_verify
-+'
-+
-+test_expect_success 'merge introduces new file' '
-+	git checkout side &&
-+	for i in `test_seq 5 9`
-+	do
-+		echo $i/4 >>$i.txt
-+	done &&
-+	git commit -a -m "side 5-9" &&
-+	git checkout master &&
-+	for i in `test_seq 1 3`
-+	do
-+		echo $i/4 >>$i.txt
-+	done &&
-+	git commit -a -m "master 1-3 +4hello" &&
-+	git merge side &&
-+	echo "Hello World" >4hello.txt &&
-+	git add 4hello.txt &&
-+	git commit --amend &&
-+	echo 4hello.txt >diffc.expect &&
-+	diffc_verify
-+'
-+
-+test_expect_success 'merge removed a file' '
-+	git checkout side &&
-+	for i in `test_seq 5 9`
-+	do
-+		echo $i/5 >>$i.txt
-+	done &&
-+	git commit -a -m "side 5-9" &&
-+	git checkout master &&
-+	for i in `test_seq 1 3`
-+	do
-+		echo $i/4 >>$i.txt
-+	done &&
-+	git commit -a -m "master 1-3" &&
-+	git merge side &&
-+	git rm 4.txt &&
-+	git commit --amend &&
-+	echo 4.txt >diffc.expect &&
-+	diffc_verify
-+'
-+
-+test_done
+diff --git a/combine-diff.c b/combine-diff.c
+index 0809e79..a03147c 100644
+--- a/combine-diff.c
++++ b/combine-diff.c
+@@ -58,8 +58,7 @@ static struct combine_diff_path *intersect_paths(struct combine_diff_path *curr,
+ 			/* p->path not in q->queue[]; drop it */
+ 			struct combine_diff_path *next = p->next;
+ 
+-			if ((*tail = next) != NULL)
+-				tail = &next->next;
++			*tail = next;
+ 			free(p);
+ 			continue;
+ 		}
 -- 
 1.9.rc1.181.g641f458
