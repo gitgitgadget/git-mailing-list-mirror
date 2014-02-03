@@ -1,239 +1,145 @@
-From: Max Kirillov <max@max630.net>
-Subject: [PATCH 3/3 v2] gitk: show latest change to region
-Date: Tue, 4 Feb 2014 00:48:11 +0200
-Message-ID: <20140203224811.GD5136@wheezy.local>
-References: <20140203205352.GA5136@wheezy.local>
- <20140203223346.GA14202@wheezy.local>
- <20140203224236.GC5136@wheezy.local>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [WIP/PATCH 3/9] Teach checkout the --[no-]recurse-submodules option
+Date: Mon, 03 Feb 2014 14:56:54 -0800
+Message-ID: <xmqq8utrdcuh.fsf@gitster.dls.corp.google.com>
+References: <xmqqd2k4hh4p.fsf@gitster.dls.corp.google.com>
+	<52CC3E16.4060909@web.de>
+	<xmqqvbxvekwv.fsf@gitster.dls.corp.google.com>
+	<52EFF25E.6080306@web.de> <52EFF2EA.9060709@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Mon Feb 03 23:48:33 2014
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	"W. Trevor King" <wking@tremily.us>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Mon Feb 03 23:57:03 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WASJc-0001jO-Tc
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Feb 2014 23:48:33 +0100
+	id 1WASRr-0005ZF-3I
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Feb 2014 23:57:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753310AbaBCWs3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Feb 2014 17:48:29 -0500
-Received: from p3plsmtpa08-06.prod.phx3.secureserver.net ([173.201.193.107]:51304
-	"EHLO p3plsmtpa08-06.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752419AbaBCWs2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 3 Feb 2014 17:48:28 -0500
-Received: from wheezy.local ([89.27.29.195])
-	by p3plsmtpa08-06.prod.phx3.secureserver.net with 
-	id MyoN1n00F4CavkR01yoRnE; Mon, 03 Feb 2014 15:48:27 -0700
-Content-Disposition: inline
-In-Reply-To: <20140203224236.GC5136@wheezy.local>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752715AbaBCW47 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Feb 2014 17:56:59 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41536 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751864AbaBCW46 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Feb 2014 17:56:58 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7DD336955A;
+	Mon,  3 Feb 2014 17:56:57 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=60TQx/DaAZ3wEfVgKiqI7jhXX5Q=; b=H150Zn
+	GYigqo1eKJMfkxg5pf33ry+L5IcgnB9sA1Dfm1H7sPkpuwLYfcVDc4q0oi7ZU5oI
+	Ml236NWwcFr599c8aShDTzcm9W+Dbfd/z6YYsohPg9wZu+MXxHa8SLdESznEwJlg
+	fjRaKzzkpl7TAg7Aes0k4fENSuoL/SjEEg1Ss=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=X99g5ZMOjXXNnDmsWgQXTkEySemE7pUH
+	pOrhhEtDOEFWAZhf44Dh6pVkjxDiHktI7eYLnRSxD0QOXOdIdHLBzx5BW8P3cPpA
+	/WmAIIJMHXrAjG+e/dnMxsV7aUYC0uTPXksC2U0PVtQsvtkLBQuoshluAH+pbWLw
+	EtnjuGNjmeA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 65F3B69559;
+	Mon,  3 Feb 2014 17:56:57 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A6EFA69558;
+	Mon,  3 Feb 2014 17:56:56 -0500 (EST)
+In-Reply-To: <52EFF2EA.9060709@web.de> (Jens Lehmann's message of "Mon, 03 Feb
+	2014 20:50:02 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 7B3A4A3A-8D26-11E3-8090-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241487>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241488>
 
-Add a new command to the diffmenu, "Show the latest change of selected
-region".  The menu command picks selection, and if it exists and covers
-a single hunk, locates the latest change which has been made to the
-selected lines in the file.
+Jens Lehmann <Jens.Lehmann@web.de> writes:
 
-The menu command is disabled if the region blame is impossible, for
-example if nothing is selected or the selection does not lie fully in a
-single diff hunk.
+> +	set_config_update_recurse_submodules(
+> +		parse_update_recurse_submodules_arg("--recurse-submodules-default",
+> +						    recurse_submodules_default),
+> +		recurse_submodules);
 
-The search is implemented by use of "git log -L..." command. Unlike git
-blame, it can locate merges which brings together changes to the region
-from different branches. This is what is desired, actually.
+I think I saw these exact lines in another patch.  Perhaps the whole
+thing can become a helper function that lets the caller avoid typing
+the whole long strings that needs a strange/unfortunate line break? 
 
-Unfortunally, using git log -L for finding a single line origin is
-suboptimal, because (a) it does not support the "--contents" commandline
-argument, or any other way to blame uncommitted changes, and (b) it is
-noticeably slower. Hopely in some future git log -L will be mature
-enough to be used for picking the single line origin, for now the best
-option is to implement region logic separately, reusing the blame's basic io.
+> diff --git a/t/t2013-checkout-submodule.sh b/t/t2013-checkout-submodule.sh
+> index 06b18f8..bc3e1ca 100755
+> --- a/t/t2013-checkout-submodule.sh
+> +++ b/t/t2013-checkout-submodule.sh
+> @@ -4,17 +4,57 @@ test_description='checkout can handle submodules'
+>
+>  . ./test-lib.sh
+>
+> +submodule_creation_must_succeed() {
 
-For diffs, the first parent is always searched. This decision is quite
-voluntary, just to avoid complications to UI.
+Style: SP before (), i.e.
 
-Signed-off-by: Max Kirillov <max@max630.net>
----
-Fixed comment, same code
- gitk | 138 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 138 insertions(+)
+	submodule_creation_must_succeed () {
 
-diff --git a/gitk b/gitk
-index eef88a1..676c990 100755
---- a/gitk
-+++ b/gitk
-@@ -2650,6 +2650,7 @@ proc makewindow {} {
-     makemenu $diff_menu {
- 	{mc "Show origin of this line" command show_line_source}
- 	{mc "Run git gui blame on this line" command {external_blame_diff}}
-+	{mc "Show the latest change of selected region" command show_selection_source}
-     }
-     $diff_menu configure -tearoff 0
- }
-@@ -3464,6 +3465,7 @@ proc pop_diff_menu {w X Y x y} {
-     global ctext diff_menu flist_menu_file
-     global diff_menu_txtpos diff_menu_line
-     global diff_menu_filebase
-+    global selection_source_data
- 
-     set diff_menu_txtpos [split [$w index "@$x,$y"] "."]
-     set diff_menu_line [lindex $diff_menu_txtpos 0]
-@@ -3476,6 +3478,12 @@ proc pop_diff_menu {w X Y x y} {
-     if {$f eq {}} return
-     set flist_menu_file [lindex $f 0]
-     set diff_menu_filebase [lindex $f 1]
-+    prepare_show_selection_source
-+    if {$selection_source_data ne {}} {
-+	$diff_menu entryconf 2 -state normal
-+    } else {
-+	$diff_menu entryconf 2 -state disabled
-+    }
-     tk_popup $diff_menu $X $Y
- }
- 
-@@ -3918,6 +3926,136 @@ proc read_line_source {} {
-     return 0
- }
- 
-+proc show_selection_source {} {
-+    global selection_source_data
-+    global blameinst blamestuff
-+
-+    if {$selection_source_data eq {}} {
-+	return
-+    }
-+
-+    foreach var {id fname lnum lnumber} val $selection_source_data { set $var $val }
-+    set args [list | git log --pretty=format:%H "-L$lnum,+$lnumber:$fname" -M -n1 $id]
-+
-+    startblaming $args selsource_read
-+}
-+
-+proc selsource_read {} {
-+    global blamestuff
-+    global curview
-+
-+    set id {}
-+    set lnum {}
-+    set state start
-+    foreach l $blamestuff {
-+	switch -- $state {
-+	    start { if {[regexp {^([0-9a-f]{40})$} $l _ id_match]} {
-+			set id $id_match
-+			set state diff_header_diff
-+		    } else {
-+			break
-+		    }
-+	    }
-+	    diff_header_diff { if {[regexp {^diff --git} $l]} { set state diff_header_oldfile } else { break } }
-+	    diff_header_oldfile { if {[regexp {^---} $l]} {set state diff_header_newfile} else { break } }
-+	    diff_header_newfile {
-+		if {[regexp {^\+\+\+ b/(.*)$} $l _ fname_match]} {
-+		    set fname $fname_match
-+		    set state diff_hunk_header
-+		} else {
-+		    break
-+		}
-+	    }
-+	    diff_hunk_header {
-+		if {[regexp {^@@@*.* \+([0-9]+),[0-9]+ @@@*$} $l _ lnum_matched]} {
-+		    set lnum $lnum_matched
-+		    break
-+		}
-+	    }
-+	}
-+    }
-+
-+    if {$id eq {}} {
-+	error_popup [mc "Parsing output of git log failed"]
-+	return 0
-+    }
-+
-+    if {![commitinview $id $curview]} {
-+	error_popup [mc "The latest change is in commit %s, \
-+			 which is not in this view" [shortids $id]]
-+	return 0
-+    }
-+
-+    selectline [rowofcommit $id] 1 [list $fname $lnum]
-+}
-+
-+proc prepare_show_selection_source {} {
-+    global ctext
-+    global selection_source_data
-+
-+    set selection [$ctext tag ranges sel]
-+    if {[llength $selection] != 2} {
-+	set selection_source_data {}
-+	return
-+    }
-+    set start_line [lindex [split [lindex $selection 0] "."] 0]
-+    set end_index [split [lindex $selection 1] "."]
-+    if {[lindex $end_index 1] eq 0} {
-+	set end_line [expr [lindex $end_index 0] - 1]
-+    } else {
-+	set end_line [lindex $end_index 0]
-+    }
-+    set selection_source_data [prepare_show_region_source $start_line $end_line]
-+}
-+
-+proc prepare_show_region_source {start_line end_line} {
-+    global cmitmode
-+    global currentid parents curview
-+    global nullid
-+    if {$start_line > $end_line} {
-+	error_popup "Cannot blame region: $start_line > $end_line"
-+	return {}
-+    }
-+    set f [find_ctext_fileinfo $start_line]
-+    if {$f eq {}} {
-+	return {}
-+    }
-+    if {$currentid eq $nullid} {
-+	return {}
-+    }
-+    set fname [lindex $f 0]
-+    set filebase [lindex $f 1]
-+    if {$cmitmode eq "tree"} {
-+	set id $currentid
-+	set start_lnum [expr $start_line - $filebase]
-+	set end_lnum [expr $end_line - $filebase]
-+    } else {
-+	set id [lindex $parents($curview,$currentid) 0]
-+	set start_lnum {}
-+	set end_lnum {}
-+	foreach cl_spec [resolve_hunk_lines $filebase $start_line $end_line] {
-+	    set diffline [lindex $cl_spec 0]
-+	    if {$diffline > $end_line} {
-+		break
-+	    } elseif {$diffline >= $start_line} {
-+		foreach branch [lindex $cl_spec 1] {
-+		    if {[lindex $branch 0] == 1} {
-+			if {$start_lnum eq {}} {
-+			    set start_lnum [lindex $branch 1]
-+			}
-+			set end_lnum [lindex $branch 1]
-+		    }
-+		}
-+	    }
-+	}
-+    }
-+    if {$start_lnum ne {} && $end_lnum ne {}} {
-+	return [list $id $fname $start_lnum [expr $end_lnum - $start_lnum + 1]]
-+    } else {
-+	return {}
-+    }
-+}
-+
- # delete $dir when we see eof on $f (presumably because the child has exited)
- proc delete_at_eof {f dir} {
-     while {[gets $f line] >= 0} {}
--- 
-1.8.5.2.421.g4cdf8d0
+> +	# checkout base ($1)
+> +	git checkout -f --recurse-submodules $1 &&
+> +	git diff-files --quiet &&
+> +	git diff-index --quiet --cached $1 &&
+
+Please make it a habit to quote a parameter that is intended not to
+be split at $IFS (e.g. write these as "$1" not as $1).  Otherwise
+the reader has to wonder if this can be called with a "foo bar" and
+the expects it to be split into two.
+
+> +	# checkout target ($2)
+> +	if test -d submodule; then
+
+Style: no semicolons in standard control structure, i.e.
+
+	if test -d submodule
+	then
+
+> +		echo change>>submodule/first.t &&
+
+Style: SP before but not after redirection operator, i.e.
+
+	echo foo >>bar
+
+> +submodule_removal_must_succeed() {
+
+Likewise.
+
+> +	# checkout base ($1)
+> +	git checkout -f --recurse-submodules $1 &&
+
+Likewise.
+
+> +	echo first > file &&
+
+Likewise.
+
+> +test_expect_success '"checkout --recurse-submodules" replaces submodule with files' '
+> +	git checkout -f base &&
+> +	git checkout -b replace_submodule_with_dir &&
+> +	git update-index --force-remove submodule &&
+> +	rm -rf submodule/.git .gitmodules &&
+> +	git add .gitmodules submodule/* &&
+> +	git commit -m "submodule replaced" &&
+> +	git checkout -f base &&
+> +	git submodule update -f &&
+> +	git checkout --recurse-submodules replace_submodule_with_dir &&
+> +	test -d submodule &&
+> +	! test -e submodule/.git &&
+> +	test -f submodule/first.t &&
+> +	test -f submodule/second.t
+> +'
+
+Hmmmm.  Is it sufficient for these files to just exist, or do we
+want to make sure they have expected contents?
+
+Thanks.
