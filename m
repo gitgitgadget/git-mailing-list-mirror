@@ -1,42 +1,42 @@
 From: Max Kirillov <max@max630.net>
-Subject: [PATCH 3/3] gitk: pick selection for region blame
-Date: Tue, 4 Feb 2014 00:42:36 +0200
-Message-ID: <20140203224236.GC5136@wheezy.local>
+Subject: [PATCH 3/3 v2] gitk: show latest change to region
+Date: Tue, 4 Feb 2014 00:48:11 +0200
+Message-ID: <20140203224811.GD5136@wheezy.local>
 References: <20140203205352.GA5136@wheezy.local>
  <20140203223346.GA14202@wheezy.local>
+ <20140203224236.GC5136@wheezy.local>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Mon Feb 03 23:43:00 2014
+X-From: git-owner@vger.kernel.org Mon Feb 03 23:48:33 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WASEF-0007iI-GA
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Feb 2014 23:43:00 +0100
+	id 1WASJc-0001jO-Tc
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Feb 2014 23:48:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752955AbaBCWmz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Feb 2014 17:42:55 -0500
-Received: from m1plsmtpa01-06.prod.mesa1.secureserver.net ([64.202.165.34]:37296
-	"EHLO m1plsmtpa01-06.prod.mesa1.secureserver.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752173AbaBCWmy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Feb 2014 17:42:54 -0500
+	id S1753310AbaBCWs3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Feb 2014 17:48:29 -0500
+Received: from p3plsmtpa08-06.prod.phx3.secureserver.net ([173.201.193.107]:51304
+	"EHLO p3plsmtpa08-06.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752419AbaBCWs2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 3 Feb 2014 17:48:28 -0500
 Received: from wheezy.local ([89.27.29.195])
-	by m1plsmtpa01-06.prod.mesa1.secureserver.net with 
-	id Myin1n00F4CavkR01yiqmG; Mon, 03 Feb 2014 15:42:53 -0700
+	by p3plsmtpa08-06.prod.phx3.secureserver.net with 
+	id MyoN1n00F4CavkR01yoRnE; Mon, 03 Feb 2014 15:48:27 -0700
 Content-Disposition: inline
-In-Reply-To: <20140203223346.GA14202@wheezy.local>
+In-Reply-To: <20140203224236.GC5136@wheezy.local>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241486>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241487>
 
-Add the new command to the diffmenu, "Show the latest change of selected
+Add a new command to the diffmenu, "Show the latest change of selected
 region".  The menu command picks selection, and if it exists and covers
 a single hunk, locates the latest change which has been made to the
 selected lines in the file.
@@ -54,13 +54,14 @@ suboptimal, because (a) it does not support the "--contents" commandline
 argument, or any other way to blame uncommitted changes, and (b) it is
 noticeably slower. Hopely in some future git log -L will be mature
 enough to be used for picking the single line origin, for now the best
-option is to implement region logic separately, reusing their basic io.
+option is to implement region logic separately, reusing the blame's basic io.
 
 For diffs, the first parent is always searched. This decision is quite
 voluntary, just to avoid complications to UI.
 
 Signed-off-by: Max Kirillov <max@max630.net>
 ---
+Fixed comment, same code
  gitk | 138 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  1 file changed, 138 insertions(+)
 
