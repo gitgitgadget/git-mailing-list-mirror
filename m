@@ -1,85 +1,90 @@
-From: Jed Brown <jed@59A2.org>
-Subject: Re: Creating own hierarchies under $GITDIR/refs ?
-Date: Sun, 02 Feb 2014 16:44:56 -0700
-Message-ID: <878utt84g7.fsf@jedbrown.org>
-References: <87a9e92424.fsf@fencepost.gnu.org> <CACsJy8CdKRQ_au3QqVoUdedvPpkPh_2vodKJwLZ7VrrwRJSDXQ@mail.gmail.com> <8761ox2240.fsf@fencepost.gnu.org> <20140202113141.GB29976@serenity.lan> <87wqhdzqo3.fsf@fencepost.gnu.org> <20140202122432.GC29976@serenity.lan>
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: Determining update/merge/current state of a workspace
+Date: Mon, 3 Feb 2014 00:50:29 +0000
+Message-ID: <20140203005029.GF635004@vauxhall.crustytoothpaste.net>
+References: <85ppn540wi.fsf@stephe-leake.org>
+ <20140202230456.GA56790@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-	micalg=pgp-sha1; protocol="application/pgp-signature"
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: John Keeping <john@keeping.me.uk>, David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Mon Feb 03 00:51:14 2014
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="O98KdSgI27dgYlM5"
+Cc: Stephen Leake <stephen_leake@stephe-leake.org>, git@vger.kernel.org
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 03 01:51:01 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WA6ok-0006oJ-3F
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Feb 2014 00:51:14 +0100
+	id 1WA7ka-0001qX-09
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Feb 2014 01:51:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752570AbaBBXvJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Feb 2014 18:51:09 -0500
-Received: from jedbrown.org ([198.199.121.66]:50482 "EHLO jedbrown.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752558AbaBBXvI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Feb 2014 18:51:08 -0500
-X-Greylist: delayed 331 seconds by postgrey-1.27 at vger.kernel.org; Sun, 02 Feb 2014 18:51:08 EST
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	id S1752609AbaBCAuh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Feb 2014 19:50:37 -0500
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:51609 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752604AbaBCAug (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 2 Feb 2014 19:50:36 -0500
+Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:fd82:88d3:586c:5bd8])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by jedbrown.org (Postfix) with ESMTPSA id 1351E80D8A;
-	Sun,  2 Feb 2014 23:45:34 +0000 (UTC)
-In-Reply-To: <20140202122432.GC29976@serenity.lan>
-User-Agent: Notmuch/0.17~rc2+3~g5fa88cb (http://notmuchmail.org) Emacs/24.3.1 (x86_64-unknown-linux-gnu)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 1D42C28074;
+	Mon,  3 Feb 2014 00:50:34 +0000 (UTC)
+Mail-Followup-To: David Aguilar <davvid@gmail.com>,
+	Stephen Leake <stephen_leake@stephe-leake.org>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20140202230456.GA56790@gmail.com>
+X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
+ 3.12-1-amd64)
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241392>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241393>
 
---=-=-=
-Content-Type: text/plain
 
-John Keeping <john@keeping.me.uk> writes:
-> I actually wonder if you could do this with notes and git-grep; for
-> example:
->
->     git grep -l keeping.me.uk refs/notes/amlog |
->     sed -e 's/.*://' -e 's!/!!g'
->
-> That should be relatively efficient since you're only looking at the
-> current notes tree.
+--O98KdSgI27dgYlM5
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I added notes handling to gitifyhg and would search it similar to this.
-Since gitifyhg is two-way, I could not modify the commits.  Later, when
-we converted several repositories (up to 50k commits/80 MB), I appended
+On Sun, Feb 02, 2014 at 03:04:59PM -0800, David Aguilar wrote:
+> I think you're looking for "git merge-base".
+>=20
+> If you do `git merge-base HEAD origin/master`
+> and its result is equal to `git rev-parse HEAD`
+> then you know that master is an ancestor of origin/master
+> and can be trivially fast-forwarded to origin/master.
 
-  Hg-commit: $Hg_commit_hash
+In newer versions of git (1.8.0+), you can use "git merge-base
+--is-ancestor" for this instead.  The commit message for 5907cda implies
+that it is more efficient than the old way.
 
-to all the commit messages.  This way it shows up on the web interface,
-users don't have to obtain the notes specially, and "git log --grep"
-works naturally.  I think it's worth considering this simple solution;
-existing Git users won't mind recloning once.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
 
---=-=-=
-Content-Type: application/pgp-signature
+--O98KdSgI27dgYlM5
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (GNU/Linux)
+Version: GnuPG v1
 
-iQIcBAEBAgAGBQJS7th4AAoJEM+2iNHeMalNJS8QALpmt+TVIiJobZ0RyOUi6x+f
-HHaotUfodLHSyOXBeauZ5U54MOSYKT0+w4KqHCpTT1Vu/lhFBmn0uRGV8o29AcgZ
-m1kdtPAtoeI7buzfwcglGC+70XorPBfHETD3RLJma9cohM0aOHA29MMkXkQ+8lRI
-8I8WW0/sSkRR7SzhR7o7iWUEPPwp9PdS4wpNGqBWINMVMWqogwIFrRLbXk0uvaHB
-UVqWICwsITAZaTQViRbfGRk+S58AsKKRE2eRTJ0Y/ygIjIY0HwKWfJamyFabNzot
-ia/q2vh80vJTtCP+WUKOp1cn/nrLUEmBKgyAiWwimOy2jJG8v2e3nznFbjMhx2qW
-V3VUHlySObjVJ9892f+W1CeLo1t8qwKtO1K7RA0+gD3ZWaEF3WL1F+NxRoKzaz5z
-HYLu4h6oC53QjeVZc02rQ58CLevRh4Iw1e0gD4+DatO6qE2eWDusFzkRzMmu2Kz1
-/0BeW77O2+LJDl0dovQvn5NwUjnHOF+TVsLxZpQm/u4JAucqJcHpgnY6g6DqpTr/
-NNCewEqKnSaf3g/wUt04a3EU7mMdYIBeGzXbqI1H7TuMKgfG1YycfWSNG4jPeroP
-iHQhrRFuSDmMm8xXAtF35ferZEd5x4xbC3zxTVl19GiIrzggwQ4EP6LnwQZkru8D
-R1z1Y1WOomOfOjaNBpiH
-=2bMP
+iQIcBAEBCgAGBQJS7ufVAAoJEL9TXYEfUvaLQOkP/iOgo8hsbyxKq917Etxn9ES8
+sEjSN5607DtnJ4NXZBOv8yLRIxTcVi5uisVR6nrcrlLuFtJP/w20ATBDP07xDcnF
+PdLeVlGFEJG/8eixYrluKZwElHajf67SgTmaytqUw8DRKmDAIx0EtwUxqy7X7XCV
+avLnygI9MYeudpWEXIpmENpOsOmgE/QAk8AIJXI1qEs6KU3bopPGYN2dgviIZ0LW
+QrxFOQIOpNsMbJ1oClpv5SebEvRfCSrJRa5BGYTvgHrqZwjKWvRWMiEgZOt6xLqB
+8wBl/AnHAGrk/ySV0q/fKO9NHWwa16PzBA5e1QcTLLxywmYTmPk71MqHiegCU0jd
+S1fF4Ow2neTLTZqL0Be8pdCaaV/5/xIfkvKQsxUkrtR75jHdwlK9JyOWQ5jvBwKl
+yxEsIchTNEM2lKtFq8UkvDkChSp6CzCJTIY7VldX9/O9kNLFfHVr64j7SdV7DcCq
+8rQ2Q5woUl3EXaQV91PujHUIeVok+11tqk443RZcwovsHNWrOrwkGRL5hPnqY8xV
+UTiqyCRFLQkK9JTvDhlxROLR+u/VidD/fAIfuY03bVJEu2yHT5VXilAQmcZOBn8B
+ABcanzdlDQtGRWWkP+DAzNIRp7JThMNfebpU8ridffYOqZL4KFwWU4kjyg567P7e
+7r6x6kc5xiMvufcifxsw
+=K7dD
 -----END PGP SIGNATURE-----
---=-=-=--
+
+--O98KdSgI27dgYlM5--
