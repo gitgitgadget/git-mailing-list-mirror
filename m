@@ -1,201 +1,133 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 1/3] gitk: refactor: separate generic hunk parsing out of find_hunk_blamespecs{}
-Date: Mon, 3 Feb 2014 18:20:36 -0500
-Message-ID: <CAPig+cRv6851TWgRU6sBorKYZ0ABXv+a3oi=hrGjxYz9P6T7mg@mail.gmail.com>
-References: <20140203205352.GA5136@wheezy.local>
-	<20140203223346.GA14202@wheezy.local>
-	<20140203224152.GA14305@wheezy.local>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 5/8] combine-diff: move show_log_first logic/action out of paths scanning
+Date: Mon, 03 Feb 2014 15:21:13 -0800
+Message-ID: <xmqqr47jbx5i.fsf@gitster.dls.corp.google.com>
+References: <cover.1391430523.git.kirr@mns.spb.ru>
+	<3f729b3cac37e11e8ec74d88b4caac79f037194b.1391430523.git.kirr@mns.spb.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Paul Mackerras <paulus@samba.org>, Git List <git@vger.kernel.org>
-To: Max Kirillov <max@max630.net>
-X-From: git-owner@vger.kernel.org Tue Feb 04 00:20:43 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Kirill Smelkov <kirr@mns.spb.ru>
+X-From: git-owner@vger.kernel.org Tue Feb 04 00:21:27 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WASoj-0008E9-Oq
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Feb 2014 00:20:42 +0100
+	id 1WASpS-00009K-QZ
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Feb 2014 00:21:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752735AbaBCXUi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Feb 2014 18:20:38 -0500
-Received: from mail-yk0-f171.google.com ([209.85.160.171]:41891 "EHLO
-	mail-yk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752160AbaBCXUh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Feb 2014 18:20:37 -0500
-Received: by mail-yk0-f171.google.com with SMTP id 142so42910734ykq.2
-        for <git@vger.kernel.org>; Mon, 03 Feb 2014 15:20:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=9sTQ2mkNWRP97QOpBWeVC5s9OrdCHAZGAvLjgVwDI/0=;
-        b=qv7DF/pLptyk2P6hy7I8fX5r704qq3YWTo3chB5EtG9tJlOfLgSaW6lTVsDA0spq0U
-         W9Nxp6M/f3vB/ICMvDy7/6lqgCrpnnfuiLMW+j49IyDCcy+5U3iuHWMZIisDcwwCPdfj
-         eq7neqS8g8+oZoaITiyk2wx6oL+xyVDiH8WeIViGJ4i7D2cW4oPTwzP9WUWOFKzUHUzX
-         CcfyUk8LYz/Z1nbx3x7dkGgNfIrL8tUR4Ld3Tio4UnDCcITKrr5ZjiudSNQjXJmZuGIU
-         HZY+M4mJEUR/1HiiveHyZvdIJNgRPard6PMc2c9UcQHzYm8Abheu9Kt8PVoHJTpIv3P4
-         wHHA==
-X-Received: by 10.236.127.39 with SMTP id c27mr2772312yhi.120.1391469636684;
- Mon, 03 Feb 2014 15:20:36 -0800 (PST)
-Received: by 10.170.36.65 with HTTP; Mon, 3 Feb 2014 15:20:36 -0800 (PST)
-In-Reply-To: <20140203224152.GA14305@wheezy.local>
-X-Google-Sender-Auth: uRy_ePjsoTtIYa_sl89pTHBARSQ
+	id S1753323AbaBCXVV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Feb 2014 18:21:21 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64193 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750759AbaBCXVU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Feb 2014 18:21:20 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D18C969CD6;
+	Mon,  3 Feb 2014 18:21:19 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Mv6cgBYcjJPxDDfAsvcUG7XmxwU=; b=q7msHs
+	goXAsJWpOj4e8V1yxmCXEslQRcCaFJGerLqc7tMmfaiXPbiwFy3HpHbSBCzEQhU6
+	j6jqxtgPOqHt8lmHK/+W3hLO9exabkhsGYLm8a66kmTEglHMaaERQD5G7xj42HdN
+	r5gHKe3M801tjZ+YGqQLYydaSpufVFzh6Ox0A=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=PH/YmOg/LfU/NL6LnTJQPulXHqoqi//Z
+	7tD3ltxaz/Jr3DRVGplFuxENPqtINmcmgE4geUnQV7t9+FqmgmAg2mP7/zE4Po9e
+	HUyn+2N2rkyPDiiHYUPX4gqRdFGlgv6WhY2C+iQpt2kCcQ6WYdzNA8RqKmtWOB9g
+	56/ajHf3luU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 84ACB69CD3;
+	Mon,  3 Feb 2014 18:21:19 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8EBE569CD1;
+	Mon,  3 Feb 2014 18:21:16 -0500 (EST)
+In-Reply-To: <3f729b3cac37e11e8ec74d88b4caac79f037194b.1391430523.git.kirr@mns.spb.ru>
+	(Kirill Smelkov's message of "Mon, 3 Feb 2014 16:47:19 +0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: E16654C2-8D29-11E3-A69C-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241493>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241494>
 
-On Mon, Feb 3, 2014 at 5:41 PM, Max Kirillov <max@max630.net> wrote:
-> For requesting a region blame, it is necessary to parse a hunk and
-> find the region in the parent file corresponding to the selected region.
-> There is already hunk parsin functionality in the find_hunk_blamespec{},
+Kirill Smelkov <kirr@mns.spb.ru> writes:
 
-s/parsin/parsing/
-s/in the/in/
+> Judging from sample outputs and tests nothing changes in diff -c output,
 
-> but returns only information for a single line.
+Yuck.
 
-s/but/but it/
+I do not think the processing done inside the loop for the first
+path (i.e. i==0) before we call show_log(rev) affects what that
+called show_log(rev) does, so it probably is a good readability
+change.
 
-> The new function, resolve_hunk_lines{}, scans the hunk once and returns
-> for all hunk lines between $start_diffline and $end_diffline, in which parent
-> each of them exists and which is its number there.
+Thanks.
+
+> and this change will help later patches, when we'll be refactoring paths
+> scanning into its own function with several variants - the
+> show_log_first logic / code will stay common to all of them.
 >
-> Signed-off-by: Max Kirillov <max@max630.net>
+> NOTE: only now we have to take care to explicitly not show anything if
+>     parents array is empty, as in fact there are some clients in Git code,
+>     which calls diff_tree_combined() in such a way.
+>
+> Signed-off-by: Kirill Smelkov <kirr@mns.spb.ru>
 > ---
->  gitk | 93 ++++++++++++++++++++++++++++++++++++++++++--------------------------
->  1 file changed, 57 insertions(+), 36 deletions(-)
+>  combine-diff.c | 24 ++++++++++++++----------
+>  1 file changed, 14 insertions(+), 10 deletions(-)
 >
-> diff --git a/gitk b/gitk
-> index dfac4fd..7699a66 100755
-> --- a/gitk
-> +++ b/gitk
-> @@ -3590,11 +3590,11 @@ proc external_diff {} {
->      }
->  }
->
-> -proc find_hunk_blamespec {base line} {
-> +proc resolve_hunk_lines {base start_diffline end_diffline} {
->      global ctext
->
->      # Find and parse the hunk header
-> -    set s_lix [$ctext search -backwards -regexp ^@@ "$line.0 lineend" $base.0]
-> +    set s_lix [$ctext search -backwards -regexp ^@@ "$start_diffline.0 lineend" $base.0]
->      if {$s_lix eq {}} return
->
->      set s_line [$ctext get $s_lix "$s_lix + 1 lines"]
-> @@ -3614,49 +3614,70 @@ proc find_hunk_blamespec {base line} {
->      }
->
->      # Now scan the lines to determine offset within the hunk
-> -    set max_parent [expr {[llength $base_lines]-2}]
-> -    set dline 0
-> +    set max_parent [expr {[llength $base_lines]-1}]
->      set s_lno [lindex [split $s_lix "."] 0]
->
-> -    # Determine if the line is removed
-> -    set chunk [$ctext get $line.0 "$line.1 + $max_parent chars"]
-> -    if {[string match {[-+ ]*} $chunk]} {
-> -       set removed_idx [string first "-" $chunk]
-> -       # Choose a parent index
-> -       if {$removed_idx >= 0} {
-> -           set parent $removed_idx
-> +    set commitlines_by_diffline {}
-> +    array unset commit_lines
-> +    for {set p 0} {$p <= $max_parent} {incr p} {
-> +       set commit_lines($p) [expr [lindex $base_lines $p] - 1]
-> +    }
-> +    for {set diffline [expr $s_lno + 1]} {$diffline <= $end_diffline} {incr diffline} {
-> +       set chunk [$ctext get $diffline.0 "$diffline.0 + $max_parent chars"]
-> +       if {$chunk eq {} || [string match "\[\n@\]*" $chunk]} {
-> +           # region is larger than hunk
-> +           return {}
-> +       }
-> +       set is_removed [expr [string first "-" $chunk] >= 0]
-> +       if {!$is_removed} {
-> +           incr commit_lines(0)
-> +           set commitlines [list [list 0 $commit_lines(0)]]
->         } else {
-> -           set unchanged_idx [string first " " $chunk]
-> -           if {$unchanged_idx >= 0} {
-> -               set parent $unchanged_idx
-> -           } else {
-> -               # blame the current commit
-> -               set parent -1
-> -           }
-> -       }
-> -       # then count other lines that belong to it
-> -       for {set i $line} {[incr i -1] > $s_lno} {} {
-> -           set chunk [$ctext get $i.0 "$i.1 + $max_parent chars"]
-> -           # Determine if the line is removed
-> -           set removed_idx [string first "-" $chunk]
-> -           if {$parent >= 0} {
-> -               set code [string index $chunk $parent]
-> -               if {$code eq "-" || ($removed_idx < 0 && $code ne "+")} {
-> -                   incr dline
-> +           set commitlines {}
-> +       }
-> +       for {set p 1} {$p <= $max_parent} {incr p} {
-> +           switch -- [string index $chunk "$p-1"] {
-> +               "+" {
->                 }
-> -           } else {
-> -               if {$removed_idx < 0} {
-> -                   incr dline
-> +               "-" {
-> +                   incr commit_lines($p)
-> +                   lappend commitlines [list $p $commit_lines($p)]
-> +               }
-> +               " " {
-> +                   if {!$is_removed} {
-> +                       incr commit_lines($p)
-> +                       lappend commitlines [list $p $commit_lines($p)]
-> +                   }
-> +               }
-> +               default {
-> +                   error_popup "resolve_hunk_lines: unexpected diff line($diffline): $chunk"
-> +                   break
->                 }
->             }
->         }
-> -       incr parent
-> -    } else {
-> -       set parent 0
-> +       if {$diffline >= $start_diffline} {
-> +           lappend commitlines_by_diffline [list $diffline $commitlines]
-> +       }
->      }
-> +    return $commitlines_by_diffline
-> +}
->
-> -    incr dline [lindex $base_lines $parent]
-> -    return [list $parent $dline]
-> +proc find_hunk_blamespec {base line} {
-> +    foreach cl_spec [resolve_hunk_lines $base $line $line] {
-> +       if {[lindex $cl_spec 0] == $line} {
-> +           set commitlines [lindex $cl_spec 1]
-> +           if {[llength $commitlines] > 0} {
-> +               if {[llength $commitlines] > 1 && [lindex $commitlines 0 0] eq 0} {
-> +                   return [lindex $commitlines 1]
-> +               } else {
-> +                   return [lindex $commitlines 0]
-> +               }
-> +           } else {
-> +               error_popup "find_hunk_blamespec: invalid commitlines: $commitlines"
-> +           }
-> +       }
-> +    }
-> +    return {}
->  }
->
->  proc external_blame_diff {} {
-> --
-> 1.8.5.2.421.g4cdf8d0
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> diff --git a/combine-diff.c b/combine-diff.c
+> index a03147c..272931f 100644
+> --- a/combine-diff.c
+> +++ b/combine-diff.c
+> @@ -1313,6 +1313,20 @@ void diff_tree_combined(const unsigned char *sha1,
+>  	struct combine_diff_path *p, *paths = NULL;
+>  	int i, num_paths, needsep, show_log_first, num_parent = parents->nr;
+>  
+> +	/* nothing to do, if no parents */
+> +	if (!num_parent)
+> +		return;
+> +
+> +	show_log_first = !!rev->loginfo && !rev->no_commit_id;
+> +	needsep = 0;
+> +	if (show_log_first) {
+> +		show_log(rev);
+> +
+> +		if (rev->verbose_header && opt->output_format)
+> +			printf("%s%c", diff_line_prefix(opt),
+> +			       opt->line_termination);
+> +	}
+> +
+>  	diffopts = *opt;
+>  	copy_pathspec(&diffopts.pathspec, &opt->pathspec);
+>  	diffopts.output_format = DIFF_FORMAT_NO_OUTPUT;
+> @@ -1321,8 +1335,6 @@ void diff_tree_combined(const unsigned char *sha1,
+>  	/* tell diff_tree to emit paths in sorted (=tree) order */
+>  	diffopts.orderfile = NULL;
+>  
+> -	show_log_first = !!rev->loginfo && !rev->no_commit_id;
+> -	needsep = 0;
+>  	/* find set of paths that everybody touches */
+>  	for (i = 0; i < num_parent; i++) {
+>  		/* show stat against the first parent even
+> @@ -1338,14 +1350,6 @@ void diff_tree_combined(const unsigned char *sha1,
+>  		diffcore_std(&diffopts);
+>  		paths = intersect_paths(paths, i, num_parent);
+>  
+> -		if (show_log_first && i == 0) {
+> -			show_log(rev);
+> -
+> -			if (rev->verbose_header && opt->output_format)
+> -				printf("%s%c", diff_line_prefix(opt),
+> -				       opt->line_termination);
+> -		}
+> -
+>  		/* if showing diff, show it in requested order */
+>  		if (diffopts.output_format != DIFF_FORMAT_NO_OUTPUT &&
+>  		    opt->orderfile) {
