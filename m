@@ -1,8 +1,7 @@
 From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: [WIP/PATCH 5/9] Teach bisect--helper the --[no-]recurse-submodules
- option
-Date: Mon, 03 Feb 2014 20:51:19 +0100
-Message-ID: <52EFF337.3060308@web.de>
+Subject: [WIP/PATCH 6/9] Teach bisect the --[no-]recurse-submodules option
+Date: Mon, 03 Feb 2014 20:51:57 +0100
+Message-ID: <52EFF35D.7070908@web.de>
 References: <xmqqd2k4hh4p.fsf@gitster.dls.corp.google.com>	<52CC3E16.4060909@web.de> <xmqqvbxvekwv.fsf@gitster.dls.corp.google.com> <52EFF25E.6080306@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
@@ -12,266 +11,152 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Heiko Voigt <hvoigt@hvoigt.net>,
 	"W. Trevor King" <wking@tremily.us>
 To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Feb 03 20:51:27 2014
+X-From: git-owner@vger.kernel.org Mon Feb 03 20:52:05 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WAPYF-0001FP-CR
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Feb 2014 20:51:27 +0100
+	id 1WAPYp-0001ZX-OI
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Feb 2014 20:52:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752954AbaBCTvX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Feb 2014 14:51:23 -0500
-Received: from mout.web.de ([212.227.17.12]:50436 "EHLO mout.web.de"
+	id S1753251AbaBCTwA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Feb 2014 14:52:00 -0500
+Received: from mout.web.de ([212.227.15.3]:61665 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751912AbaBCTvW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Feb 2014 14:51:22 -0500
+	id S1752559AbaBCTv7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Feb 2014 14:51:59 -0500
 Received: from [192.168.178.41] ([84.132.165.229]) by smtp.web.de (mrweb103)
- with ESMTPA (Nemesis) id 0LaCbS-1VOP4g01yY-00m3zW for <git@vger.kernel.org>;
- Mon, 03 Feb 2014 20:51:20 +0100
+ with ESMTPA (Nemesis) id 0LnS8Q-1VbcV12GA2-00hiNV for <git@vger.kernel.org>;
+ Mon, 03 Feb 2014 20:51:58 +0100
 User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.2.0
 In-Reply-To: <52EFF25E.6080306@web.de>
 X-Enigmail-Version: 1.6
-X-Provags-ID: V03:K0:uNTXWvSCZ+2NKNJl5R8JrcfEphb3dkDpwsp4qzxS8qIuQZ5+SyS
- 3h8OUGVU+KaWOatUm/qysgDKo5NbWkA/hvV4gzKLf6pJKZc7kV/OrKAfvhtstt+L4MnUFpU
- bOgP/lWPpmMjn+hyZlprxzJnpnTbvBarM3OvRtLWee7V9xZwNwBzpDidW83/C22PL0FS6fE
- umeaBDCkqK0ETK2uZVCgA==
+X-Provags-ID: V03:K0:m6ui2Ce2HNMVr7FvEvxgARp4v4PwvZXg6/BVW2zPFwzPSLOVfZy
+ VKtnguhB4r2Wzavnu2obS0j1E52+FXBaWWTW6aQ7xcNFETfZ52H6iuV4hwZrkwVbKFUAZb+
+ 1pJ4OXyHZxK4OGoN6bH0tw8SQnlr0PRKEki76Iy3pmhHhSoe3XPSv3N3yRp/qmMSrYLFaiK
+ 6Ab2T0UZOXwPumxgzweIA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241460>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241461>
 
-This is necessary before we can teach 'git bisect' this option, as that
-calls the bisect--helper to do the actual work which then in turn calls
-'git checkout'. The helper just passes the option given on the command
-line on to checkout. The new recurse_submodules_enum_to_option() is added
-to avoid having the helper learn the command line representation of the
-different option values himself.
+When using this option 'git bisect' will automatically update the work
+tree of all initialized submodules (so they match the SHA-1 recorded in
+the superproject) in each bisection step. This makes calling 'git
+submodule update' eacht time obsolete, which was tedious and error prone.
+If the option is given it is stored in the BISECT_RECURSE_SUBMODULES file
+in the git directory so that later bisection steps can reuse it. But this
+commit only adds the option without any functionality, that will be added
+to unpack_trees() in subsequent commits.
 
 Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
 ---
- bisect.c                 | 33 ++++++++++++++++++++++-----------
- bisect.h                 |  3 ++-
- builtin/bisect--helper.c |  9 ++++++++-
- submodule.c              | 21 +++++++++++++++++++++
- submodule.h              |  1 +
- 5 files changed, 54 insertions(+), 13 deletions(-)
+ Documentation/git-bisect.txt |  5 +++++
+ git-bisect.sh                | 29 ++++++++++++++++++++++++-----
+ 2 files changed, 29 insertions(+), 5 deletions(-)
 
-diff --git a/bisect.c b/bisect.c
-index 37200b4..b84e607 100644
---- a/bisect.c
-+++ b/bisect.c
-@@ -11,13 +11,13 @@
- #include "bisect.h"
- #include "sha1-array.h"
- #include "argv-array.h"
-+#include "submodule.h"
+diff --git a/Documentation/git-bisect.txt b/Documentation/git-bisect.txt
+index f986c5c..c0aaba8 100644
+--- a/Documentation/git-bisect.txt
++++ b/Documentation/git-bisect.txt
+@@ -276,6 +276,11 @@ does not require a checked out tree.
+ +
+ If the repository is bare, `--no-checkout` is assumed.
 
- static struct sha1_array good_revs;
- static struct sha1_array skipped_revs;
-
- static unsigned char *current_bad_sha1;
-
--static const char *argv_checkout[] = {"checkout", "-q", NULL, "--", NULL};
- static const char *argv_show_branch[] = {"show-branch", NULL, NULL};
- static const char *argv_update_ref[] = {"update-ref", "--no-deref", "BISECT_HEAD", NULL, NULL};
-
-@@ -683,22 +683,30 @@ static void mark_expected_rev(char *bisect_rev_hex)
- 		die("closing file %s: %s", filename, strerror(errno));
- }
-
--static int bisect_checkout(char *bisect_rev_hex, int no_checkout)
-+static int bisect_checkout(char *bisect_rev_hex, int no_checkout,
-+			   const char *recurse_submodules)
- {
- 	int res;
-
- 	mark_expected_rev(bisect_rev_hex);
-
--	argv_checkout[2] = bisect_rev_hex;
- 	if (no_checkout) {
- 		argv_update_ref[3] = bisect_rev_hex;
- 		if (run_command_v_opt(argv_update_ref, RUN_GIT_CMD))
- 			die("update-ref --no-deref HEAD failed on %s",
- 			    bisect_rev_hex);
- 	} else {
--		res = run_command_v_opt(argv_checkout, RUN_GIT_CMD);
-+		struct argv_array argv = ARGV_ARRAY_INIT;
-+		argv_array_push(&argv, "checkout");
-+		argv_array_push(&argv, "-q");
-+		if (recurse_submodules)
-+		    argv_array_push(&argv, recurse_submodules);
-+		argv_array_push(&argv, bisect_rev_hex);
-+		argv_array_push(&argv, "--");
-+		res = run_command_v_opt(argv.argv, RUN_GIT_CMD);
- 		if (res)
- 			exit(res);
-+		argv_array_clear(&argv);
- 	}
-
- 	argv_show_branch[1] = bisect_rev_hex;
-@@ -771,7 +779,7 @@ static void handle_skipped_merge_base(const unsigned char *mb)
-  * - If one is "skipped", we can't know but we should warn.
-  * - If we don't know, we should check it out and ask the user to test.
-  */
--static void check_merge_bases(int no_checkout)
-+static void check_merge_bases(int no_checkout, const char *recurse_submodules)
- {
- 	struct commit_list *result;
- 	int rev_nr;
-@@ -789,7 +797,8 @@ static void check_merge_bases(int no_checkout)
- 			handle_skipped_merge_base(mb);
- 		} else {
- 			printf("Bisecting: a merge base must be tested\n");
--			exit(bisect_checkout(sha1_to_hex(mb), no_checkout));
-+			exit(bisect_checkout(sha1_to_hex(mb), no_checkout,
-+					     recurse_submodules));
- 		}
- 	}
-
-@@ -832,7 +841,8 @@ static int check_ancestors(const char *prefix)
-  * If a merge base must be tested by the user, its source code will be
-  * checked out to be tested by the user and we will exit.
-  */
--static void check_good_are_ancestors_of_bad(const char *prefix, int no_checkout)
-+static void check_good_are_ancestors_of_bad(const char *prefix, int no_checkout,
-+					    const char *recurse_submodules)
- {
- 	char *filename = git_pathdup("BISECT_ANCESTORS_OK");
- 	struct stat st;
-@@ -851,7 +861,7 @@ static void check_good_are_ancestors_of_bad(const char *prefix, int no_checkout)
-
- 	/* Check if all good revs are ancestor of the bad rev. */
- 	if (check_ancestors(prefix))
--		check_merge_bases(no_checkout);
-+		check_merge_bases(no_checkout, recurse_submodules);
-
- 	/* Create file BISECT_ANCESTORS_OK. */
- 	fd = open(filename, O_CREAT | O_TRUNC | O_WRONLY, 0600);
-@@ -897,7 +907,8 @@ static void show_diff_tree(const char *prefix, struct commit *commit)
-  * If no_checkout is non-zero, the bisection process does not
-  * checkout the trial commit but instead simply updates BISECT_HEAD.
-  */
--int bisect_next_all(const char *prefix, int no_checkout)
-+int bisect_next_all(const char *prefix, int no_checkout,
-+		    const char *recurse_submodules)
- {
- 	struct rev_info revs;
- 	struct commit_list *tried;
-@@ -908,7 +919,7 @@ int bisect_next_all(const char *prefix, int no_checkout)
- 	if (read_bisect_refs())
- 		die("reading bisect refs failed");
-
--	check_good_are_ancestors_of_bad(prefix, no_checkout);
-+	check_good_are_ancestors_of_bad(prefix, no_checkout, recurse_submodules);
-
- 	bisect_rev_setup(&revs, prefix, "%s", "^%s", 1);
- 	revs.limited = 1;
-@@ -954,7 +965,7 @@ int bisect_next_all(const char *prefix, int no_checkout)
- 	       "(roughly %d step%s)\n", nr, (nr == 1 ? "" : "s"),
- 	       steps, (steps == 1 ? "" : "s"));
-
--	return bisect_checkout(bisect_rev_hex, no_checkout);
-+	return bisect_checkout(bisect_rev_hex, no_checkout, recurse_submodules);
- }
-
- static inline int log2i(int n)
-diff --git a/bisect.h b/bisect.h
-index 2a6c831..5c1ea9c 100644
---- a/bisect.h
-+++ b/bisect.h
-@@ -22,7 +22,8 @@ struct rev_list_info {
- 	const char *header_prefix;
- };
-
--extern int bisect_next_all(const char *prefix, int no_checkout);
-+extern int bisect_next_all(const char *prefix, int no_checkout,
-+			   const char *recurse_submodules);
-
- extern int estimate_bisect_steps(int all);
-
-diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index 3324229..b30087a 100644
---- a/builtin/bisect--helper.c
-+++ b/builtin/bisect--helper.c
-@@ -2,6 +2,7 @@
- #include "cache.h"
- #include "parse-options.h"
- #include "bisect.h"
-+#include "submodule.h"
-
- static const char * const git_bisect_helper_usage[] = {
- 	N_("git bisect--helper --next-all [--no-checkout]"),
-@@ -12,11 +13,16 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- {
- 	int next_all = 0;
- 	int no_checkout = 0;
-+	int recurse_submodules = RECURSE_SUBMODULES_DEFAULT;
++include::recurse-submodules-update.txt[]
+++
++This option is passed to linkgit:git-checkout[1] when checking out the next
++to be tested commit and is ignored when used together with `--no-checkout`.
 +
- 	struct option options[] = {
- 		OPT_BOOL(0, "next-all", &next_all,
- 			 N_("perform 'git bisect next'")),
- 		OPT_BOOL(0, "no-checkout", &no_checkout,
- 			 N_("update BISECT_HEAD instead of checking out the current commit")),
-+		{ OPTION_CALLBACK, 0, "recurse-submodules", &recurse_submodules,
-+			"checkout", "control recursive updating of submodules",
-+			PARSE_OPT_OPTARG, option_parse_update_submodules },
- 		OPT_END()
- 	};
+ EXAMPLES
+ --------
 
-@@ -27,5 +33,6 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 		usage_with_options(git_bisect_helper_usage, options);
+diff --git a/git-bisect.sh b/git-bisect.sh
+index 73b4c14..ba64a21 100755
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -3,7 +3,7 @@
+ USAGE='[help|start|bad|good|skip|next|reset|visualize|replay|log|run]'
+ LONG_USAGE='git bisect help
+ 	print this long help message.
+-git bisect start [--no-checkout] [<bad> [<good>...]] [--] [<pathspec>...]
++git bisect start [--no-checkout] [--[no-]recurse-submodules[=<mode>]] [<bad> [<good>...]] [--] [<pathspec>...]
+ 	reset bisect state and start bisection.
+ git bisect bad [<rev>]
+ 	mark <rev> a known-bad revision.
+@@ -91,6 +91,12 @@ bisect_start() {
+ 		--no-checkout)
+ 			mode=--no-checkout
+ 			shift ;;
++		--no-recurse-submodules)
++			recurse_submodules="$1"
++			shift ;;
++		--recurse-submodules*)
++			recurse_submodules="$1"
++			shift ;;
+ 		--*)
+ 			die "$(eval_gettext "unrecognised option: '\$arg'")" ;;
+ 		*)
+@@ -124,9 +130,13 @@ bisect_start() {
+ 	then
+ 		# Reset to the rev from where we started.
+ 		start_head=$(cat "$GIT_DIR/BISECT_START")
++		if test -s "$GIT_DIR/BISECT_RECURSE_SUBMODULES"
++		then
++			recurse_submodules=$(cat "$GIT_DIR/BISECT_RECURSE_SUBMODULES")
++		fi
+ 		if test "z$mode" != "z--no-checkout"
+ 		then
+-			git checkout "$start_head" -- ||
++			git checkout ${recurse_submodules:+"$recurse_submodules"} "$start_head" -- ||
+ 			die "$(eval_gettext "Checking out '\$start_head' failed. Try 'git bisect reset <validbranch>'.")"
+ 		fi
+ 	else
+@@ -168,7 +178,10 @@ bisect_start() {
+ 		test "z$mode" != "z--no-checkout" ||
+ 		git update-ref --no-deref BISECT_HEAD "$start_head"
+ 	} &&
+-	git rev-parse --sq-quote "$@" >"$GIT_DIR/BISECT_NAMES" &&
++	git rev-parse --sq-quote "$@" >"$GIT_DIR/BISECT_NAMES" && {
++		test -z "$recurse_submodules" ||
++		echo "$recurse_submodules" >"$GIT_DIR/BISECT_RECURSE_SUBMODULES"
++	} &&
+ 	eval "$eval true" &&
+ 	echo "git bisect start$orig_args" >>"$GIT_DIR/BISECT_LOG" || exit
+ 	#
+@@ -306,8 +319,13 @@ bisect_next() {
+ 	bisect_autostart
+ 	bisect_next_check good
 
- 	/* next-all */
--	return bisect_next_all(prefix, no_checkout);
-+	return bisect_next_all(prefix, no_checkout,
-+			       recurse_submodules_enum_to_option(recurse_submodules));
- }
-diff --git a/submodule.c b/submodule.c
-index b3eb28d..448b645 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -44,6 +44,27 @@ static int gitmodules_is_unmerged;
- static int gitmodules_is_modified;
-
-
-+/*
-+ * Convert values defined in the RECURSE_SUBMODULES_* enum to the string
-+ * representation usable as command parameter. Returns NULL if no parameter
-+ * is necessary.
-+ */
-+const char *recurse_submodules_enum_to_option(int recurse_submodules)
-+{
-+	switch(recurse_submodules) {
-+	case RECURSE_SUBMODULES_ON_DEMAND:
-+		return "--recurse-submodules=on-demand";
-+	case RECURSE_SUBMODULES_OFF:
-+		return "--no-recurse-submodules";
-+	case RECURSE_SUBMODULES_ON:
-+		return "--recurse-submodules";
-+	case RECURSE_SUBMODULES_DEFAULT:
-+		return NULL;
-+	default:
-+		die("Invalid recurse submodule value: %d", recurse_submodules);
-+	}
-+}
++	if test -f "$GIT_DIR/BISECT_RECURSE_SUBMODULES"
++	then
++		recurse_submodules=$(cat "$GIT_DIR/BISECT_RECURSE_SUBMODULES")
++	fi
 +
- int is_staging_gitmodules_ok(void)
- {
- 	return !gitmodules_is_modified;
-diff --git a/submodule.h b/submodule.h
-index 79b336b..5958010 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -11,6 +11,7 @@ enum {
- 	RECURSE_SUBMODULES_DEFAULT = 1,
- 	RECURSE_SUBMODULES_ON = 2
- };
-+const char *recurse_submodules_enum_to_option(int recurse_submodules);
+ 	# Perform all bisection computation, display and checkout
+-	git bisect--helper --next-all $(test -f "$GIT_DIR/BISECT_HEAD" && echo --no-checkout)
++	git bisect--helper --next-all $(test -f "$GIT_DIR/BISECT_HEAD" && echo --no-checkout) ${recurse_submodules:+"$recurse_submodules"}
+ 	res=$?
 
- int is_staging_gitmodules_ok(void);
- int update_path_in_gitmodules(const char *oldpath, const char *newpath);
+ 	# Check if we should exit because bisection is finished
+@@ -374,7 +392,7 @@ bisect_reset() {
+ 		usage ;;
+ 	esac
+
+-	if ! test -f "$GIT_DIR/BISECT_HEAD" && ! git checkout "$branch" --
++	if ! test -f "$GIT_DIR/BISECT_HEAD" && ! git checkout ${recurse_submodules:+"$recurse_submodules"} "$branch" --
+ 	then
+ 		die "$(eval_gettext "Could not check out original HEAD '\$branch'.
+ Try 'git bisect reset <commit>'.")"
+@@ -397,6 +415,7 @@ bisect_clean_state() {
+ 	# Cleanup head-name if it got left by an old version of git-bisect
+ 	rm -f "$GIT_DIR/head-name" &&
+ 	git update-ref -d --no-deref BISECT_HEAD &&
++	rm -f "$GIT_DIR/BISECT_RECURSE_SUBMODULES" &&
+ 	# clean up BISECT_START last
+ 	rm -f "$GIT_DIR/BISECT_START"
+ }
 -- 
 1.9.rc0.28.ge3363ff
