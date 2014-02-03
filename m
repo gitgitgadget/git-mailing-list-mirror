@@ -1,70 +1,107 @@
 From: David Kastrup <dak@gnu.org>
-Subject: [PATCH 0/5] git-blame: further performance preview
-Date: Mon,  3 Feb 2014 20:14:04 +0100
-Message-ID: <1391454849-26558-1-git-send-email-dak@gnu.org>
+Subject: [PATCH 1/5] builtin/blame.c: struct blame_entry does not need a prev link
+Date: Mon,  3 Feb 2014 20:14:05 +0100
+Message-ID: <1391454849-26558-2-git-send-email-dak@gnu.org>
+References: <1391454849-26558-1-git-send-email-dak@gnu.org>
 Cc: David Kastrup <dak@gnu.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 03 20:14:22 2014
+X-From: git-owner@vger.kernel.org Mon Feb 03 20:14:31 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WAOyM-0008GR-2a
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Feb 2014 20:14:22 +0100
+	id 1WAOyV-0008LG-3h
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Feb 2014 20:14:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753521AbaBCTOS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Feb 2014 14:14:18 -0500
-Received: from fencepost.gnu.org ([208.118.235.10]:57345 "EHLO
+	id S1753570AbaBCTOV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Feb 2014 14:14:21 -0500
+Received: from fencepost.gnu.org ([208.118.235.10]:57351 "EHLO
 	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752954AbaBCTOR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Feb 2014 14:14:17 -0500
-Received: from localhost ([127.0.0.1]:56388 helo=lola)
+	with ESMTP id S1752954AbaBCTOU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Feb 2014 14:14:20 -0500
+Received: from localhost ([127.0.0.1]:56390 helo=lola)
 	by fencepost.gnu.org with esmtp (Exim 4.71)
 	(envelope-from <dak@gnu.org>)
-	id 1WAOyG-0007Fr-6E; Mon, 03 Feb 2014 14:14:16 -0500
+	id 1WAOyJ-0007Fx-BO; Mon, 03 Feb 2014 14:14:19 -0500
 Received: by lola (Postfix, from userid 1000)
-	id CF2D9E09B1; Mon,  3 Feb 2014 20:14:15 +0100 (CET)
+	id DCE47E09B1; Mon,  3 Feb 2014 20:14:18 +0100 (CET)
 X-Mailer: git-send-email 1.8.3.2
+In-Reply-To: <1391454849-26558-1-git-send-email-dak@gnu.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241448>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241449>
 
-Ok, I'm progressing rather like molasses with getting -M and -C
-options back to work.  In the mean time, here is another performance
-preview without them.  The main patch in the middle has basically
-gotten some formatting/style fixes as opposed to last time round and
-one small bug fix (concerning incremental output).
+Signed-off-by: David Kastrup <dak@gnu.org>
+---
+ builtin/blame.c | 13 ++-----------
+ 1 file changed, 2 insertions(+), 11 deletions(-)
 
-It still contains a significant amount of dead code: this series is
-not supposed to be merged, it's just supposed to be exciting to see
-how it performs.
-
-There are two simple performance patches on top of the main patch, the
-first of which offers somewhat significant savings in I/O time (which
-was quite unaffected by the main rewrite so far).  The gist of that
-patch makes convenient use of the changed data layout to avoid
-discarding blob data predictably required again right away.
-
-It's likely that this is not the only opportunity to save performance
-by better data management.
-
-The second "performance" patch is not likely to measurably affect
-overall performance.  Avoiding irrelevant iterations might make
-debugging more pleasant, however.
-
-David Kastrup (5):
-  builtin/blame.c: struct blame_entry does not need a prev link
-  Eliminate same_suspect function in builtin/blame.c
-  builtin/blame.c: large-scale rewrite
-  Performance improvement: don't drop origin blobs that are going to get
-    tested next.
-  Avoid queuing commits multiple times for the same origin
-
- builtin/blame.c | 595 +++++++++++++++++++++++++++++++++++---------------------
- 1 file changed, 371 insertions(+), 224 deletions(-)
-
+diff --git a/builtin/blame.c b/builtin/blame.c
+index e44a6bb..2195595 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -197,7 +197,6 @@ static void drop_origin_blob(struct origin *o)
+  * scoreboard structure, sorted by the target line number.
+  */
+ struct blame_entry {
+-	struct blame_entry *prev;
+ 	struct blame_entry *next;
+ 
+ 	/* the first line of this group in the final image;
+@@ -282,8 +281,6 @@ static void coalesce(struct scoreboard *sb)
+ 		    ent->s_lno + ent->num_lines == next->s_lno) {
+ 			ent->num_lines += next->num_lines;
+ 			ent->next = next->next;
+-			if (ent->next)
+-				ent->next->prev = ent;
+ 			origin_decref(next->suspect);
+ 			free(next);
+ 			ent->score = 0;
+@@ -534,7 +531,7 @@ static void add_blame_entry(struct scoreboard *sb, struct blame_entry *e)
+ 		prev = ent;
+ 
+ 	/* prev, if not NULL, is the last one that is below e */
+-	e->prev = prev;
++
+ 	if (prev) {
+ 		e->next = prev->next;
+ 		prev->next = e;
+@@ -543,8 +540,6 @@ static void add_blame_entry(struct scoreboard *sb, struct blame_entry *e)
+ 		e->next = sb->ent;
+ 		sb->ent = e;
+ 	}
+-	if (e->next)
+-		e->next->prev = e;
+ }
+ 
+ /*
+@@ -555,14 +550,12 @@ static void add_blame_entry(struct scoreboard *sb, struct blame_entry *e)
+  */
+ static void dup_entry(struct blame_entry *dst, struct blame_entry *src)
+ {
+-	struct blame_entry *p, *n;
++	struct blame_entry *n;
+ 
+-	p = dst->prev;
+ 	n = dst->next;
+ 	origin_incref(src->suspect);
+ 	origin_decref(dst->suspect);
+ 	memcpy(dst, src, sizeof(*src));
+-	dst->prev = p;
+ 	dst->next = n;
+ 	dst->score = 0;
+ }
+@@ -2502,8 +2495,6 @@ parse_done:
+ 		ent->suspect = o;
+ 		ent->s_lno = bottom;
+ 		ent->next = next;
+-		if (next)
+-			next->prev = ent;
+ 		origin_incref(o);
+ 	}
+ 	origin_decref(o);
 -- 
 1.8.3.2
