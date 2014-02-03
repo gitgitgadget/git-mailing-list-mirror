@@ -1,146 +1,110 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v3 00/26] inotify support
-Date: Mon,  3 Feb 2014 11:28:48 +0700
-Message-ID: <1391401754-15347-1-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v3 01/26] pkt-line.c: rename global variable buffer[] to something less generic
+Date: Mon,  3 Feb 2014 11:28:49 +0700
+Message-ID: <1391401754-15347-2-git-send-email-pclouds@gmail.com>
 References: <1389952060-12297-1-git-send-email-pclouds@gmail.com>
+ <1391401754-15347-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 03 05:29:23 2014
+X-From: git-owner@vger.kernel.org Mon Feb 03 05:29:29 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WAB9u-0000lO-Hx
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Feb 2014 05:29:23 +0100
+	id 1WABA1-0000pq-67
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Feb 2014 05:29:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752782AbaBCE3S convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 2 Feb 2014 23:29:18 -0500
-Received: from mail-pb0-f49.google.com ([209.85.160.49]:38270 "EHLO
-	mail-pb0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752512AbaBCE3R (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Feb 2014 23:29:17 -0500
-Received: by mail-pb0-f49.google.com with SMTP id up15so6580217pbc.36
-        for <git@vger.kernel.org>; Sun, 02 Feb 2014 20:29:17 -0800 (PST)
+	id S1752834AbaBCE3Y convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 2 Feb 2014 23:29:24 -0500
+Received: from mail-pd0-f181.google.com ([209.85.192.181]:55023 "EHLO
+	mail-pd0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752512AbaBCE3X (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Feb 2014 23:29:23 -0500
+Received: by mail-pd0-f181.google.com with SMTP id y10so6358181pdj.26
+        for <git@vger.kernel.org>; Sun, 02 Feb 2014 20:29:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=a+3lFpzPbzMU+iasQ5ib3pQbuQE0OCZ1DsaYJ7ZC1cQ=;
-        b=MO1AS2KVIXvqTCVpTJso0TaQXYS0B0Y5lsAqUpO83a4E+E4Ouy6s4nYFAhIYH35mKW
-         WuWBvO6yuVuqo6hBbRJ6em0fFFAA91acdXTgEhjgL/eAkg9Wii8HDs/V2NF+ziLb5DR8
-         A6tVscpO8ROxehvxfxQRZzbaXckma0WPOeykXkF6aUTKfPiv8pJyKn+uH0MK4mQt4UwU
-         VBsV0CrlKQt1BXKzYP/tFRr85MZeaQpKzxbZ43S8rtXEcfoAgX5IYPJFqDSV/sxf4xK4
-         rtUeRAA1SOCJoN+g/m7ToX4fRJDdRUKqBO53AwTdgZ42hRmURMLr+lYszwCG152jjYJf
-         nEmg==
-X-Received: by 10.68.143.34 with SMTP id sb2mr25353445pbb.135.1391401757242;
-        Sun, 02 Feb 2014 20:29:17 -0800 (PST)
+        bh=yn8nYCKFiDUtAHrUFdP0aGXGxEdAqeo8aw/SCmn+7Sw=;
+        b=W6Jh4jRY3fWwrUn/RC+v0A1/Y16Co6Sd7diJyfhMOIfzyF08HK0OIlo2mTwHKYNlz4
+         GVkMoKu5F7wvzXQHV8ERQ/Ii8y+vmHu6daCNsUcaWOv/T9uTvkSUj2N/naIZQhwxX7fe
+         Uqas/qMOqoPyRr9DW+v8JYbooXStma7wEdzlvMES1e6LeMXr+5pJgyXUqkHbj2OnqKhW
+         Gn4dEYpaIawCUA4jvRj8gcIUc1CkFSbLSzyIavCkQAPkbAMYKDTam73R95g6yiCPpsPu
+         mx61LfiK/pzfGTYu/32DdtF3La/7LQOIeEkhWwixUQkC0nCMsRYp8RvGqQx4KkLAT+bW
+         qZuw==
+X-Received: by 10.66.13.138 with SMTP id h10mr1045296pac.148.1391401762756;
+        Sun, 02 Feb 2014 20:29:22 -0800 (PST)
 Received: from lanh ([115.73.226.68])
-        by mx.google.com with ESMTPSA id lh13sm134193905pab.4.2014.02.02.20.29.14
+        by mx.google.com with ESMTPSA id hb10sm51405940pbd.1.2014.02.02.20.29.19
         for <multiple recipients>
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 02 Feb 2014 20:29:16 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Mon, 03 Feb 2014 11:29:15 +0700
+        Sun, 02 Feb 2014 20:29:22 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Mon, 03 Feb 2014 11:29:20 +0700
 X-Mailer: git-send-email 1.8.5.2.240.g8478abd
-In-Reply-To: <1389952060-12297-1-git-send-email-pclouds@gmail.com>
+In-Reply-To: <1391401754-15347-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241395>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241396>
 
-I'm happy with this now. The only things left are applying ewah on the
-watch index extension and maybe improve lookup performance a bit. The
-former needs jk/pack-bitmap graduated. The latter is not urgent. Oh
-and maybe address "BUGS" section (more like known limitations) in
-git-file-watcher.txt.
+"buffer" is a local variable in some other functions. Rename the
+global one to make it less confusing.
 
-=46or early adopters that fear a buggy file-watcher may cause update
-loss, set GIT_TEST_WATCHED=3D1 (or 2). It'll do lstat() to verify
-file-watcher results (so no perf. gain). Beware of race condition
-that may lead to false positives, mentioned in 20/26 (maybe I should
-do something about it).
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ pkt-line.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-The series can also be fetched from
-
-https://github.com/pclouds/git.git file-watcher
-
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (26):
-  pkt-line.c: rename global variable buffer[] to something less generic
-  pkt-line.c: add packet_write_timeout()
-  pkt-line.c: add packet_read_line_timeout()
-  unix-socket: make unlink() optional in unix_stream_listen()
-  Add git-file-watcher and basic connection handling logic
-  file-watcher: check socket directory permission
-  file-watcher: remove socket on exit
-  file-watcher: add --detach
-  read-cache: save trailing sha-1
-  read-cache: new flag CE_WATCHED to mark what file is watched
-  Clear CE_WATCHED when set CE_VALID alone
-  read-cache: basic hand shaking to the file watcher
-  read-cache: ask file watcher to watch files
-  read-cache: put some limits on file watching
-  read-cache: get changed file list from file watcher
-  git-compat-util.h: add inotify stubs on non-Linux platforms
-  file-watcher: inotify support, watching part
-  file-watcher: inotify support, notification part
-  Wrap CE_VALID test with ce_valid()
-  read-cache: new variable to verify file-watcher results
-  Support running file watcher with the test suite
-  file-watcher: quit if $WATCHER/socket is gone
-  file-watcher: tests for the daemon
-  ls-files: print CE_WATCHED as W (or "w" with CE_VALID)
-  file-watcher: tests for the client side
-  Disable file-watcher with system inotify on some tests
-
- .gitignore                               |    2 +
- Documentation/config.txt                 |   19 +
- Documentation/git-file-watcher.txt (new) |   54 ++
- Documentation/git-ls-files.txt           |    1 +
- Documentation/technical/index-format.txt |    9 +
- Makefile                                 |    3 +
- builtin/grep.c                           |    2 +-
- builtin/ls-files.c                       |   14 +-
- builtin/update-index.c                   |   12 +-
- cache.h                                  |   17 +
- config.mak.uname                         |    1 +
- credential-cache--daemon.c               |    2 +-
- daemon.c                                 |   30 +-
- diff-lib.c                               |    4 +-
- diff.c                                   |    2 +-
- file-watcher-lib.c (new)                 |  321 +++++++++
- file-watcher-lib.h (new)                 |    8 +
- file-watcher.c (new)                     | 1149 ++++++++++++++++++++++=
-++++++++
- git-compat-util.h                        |   43 ++
- pkt-line.c                               |   61 +-
- pkt-line.h                               |    2 +
- read-cache.c                             |  119 +++-
- setup.c                                  |   25 +
- t/t1011-read-tree-sparse-checkout.sh     |    2 +
- t/t2104-update-index-skip-worktree.sh    |    2 +
- t/t7011-skip-worktree-reading.sh         |    2 +
- t/t7012-skip-worktree-writing.sh         |    2 +
- t/t7513-file-watcher.sh (new +x)         |  382 ++++++++++
- t/t7514-file-watcher-lib.sh (new +x)     |  190 +++++
- test-file-watcher.c (new)                |  111 +++
- unix-socket.c                            |    5 +-
- unix-socket.h                            |    2 +-
- unpack-trees.c                           |    2 +-
- wrapper.c                                |   47 ++
- 34 files changed, 2591 insertions(+), 56 deletions(-)
- create mode 100644 Documentation/git-file-watcher.txt
- create mode 100644 file-watcher-lib.c
- create mode 100644 file-watcher-lib.h
- create mode 100644 file-watcher.c
- create mode 100755 t/t7513-file-watcher.sh
- create mode 100755 t/t7514-file-watcher-lib.sh
- create mode 100644 test-file-watcher.c
-
+diff --git a/pkt-line.c b/pkt-line.c
+index bc63b3b..eac45ad 100644
+--- a/pkt-line.c
++++ b/pkt-line.c
+@@ -64,14 +64,15 @@ void packet_buf_flush(struct strbuf *buf)
+ }
+=20
+ #define hex(a) (hexchar[(a) & 15])
+-static char buffer[1000];
++static char write_buffer[1000];
+ static unsigned format_packet(const char *fmt, va_list args)
+ {
+ 	static char hexchar[] =3D "0123456789abcdef";
++	char *buffer =3D write_buffer;
+ 	unsigned n;
+=20
+-	n =3D vsnprintf(buffer + 4, sizeof(buffer) - 4, fmt, args);
+-	if (n >=3D sizeof(buffer)-4)
++	n =3D vsnprintf(buffer + 4, sizeof(write_buffer) - 4, fmt, args);
++	if (n >=3D sizeof(write_buffer)-4)
+ 		die("protocol error: impossibly long line");
+ 	n +=3D 4;
+ 	buffer[0] =3D hex(n >> 12);
+@@ -90,7 +91,7 @@ void packet_write(int fd, const char *fmt, ...)
+ 	va_start(args, fmt);
+ 	n =3D format_packet(fmt, args);
+ 	va_end(args);
+-	write_or_die(fd, buffer, n);
++	write_or_die(fd, write_buffer, n);
+ }
+=20
+ void packet_buf_write(struct strbuf *buf, const char *fmt, ...)
+@@ -101,7 +102,7 @@ void packet_buf_write(struct strbuf *buf, const cha=
+r *fmt, ...)
+ 	va_start(args, fmt);
+ 	n =3D format_packet(fmt, args);
+ 	va_end(args);
+-	strbuf_add(buf, buffer, n);
++	strbuf_add(buf, write_buffer, n);
+ }
+=20
+ static int get_packet_data(int fd, char **src_buf, size_t *src_size,
 --=20
 1.8.5.2.240.g8478abd
