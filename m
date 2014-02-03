@@ -1,102 +1,52 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 7/8] combine-diff: Fast changed-to-all-parents paths scanning
-Date: Mon, 03 Feb 2014 15:39:02 -0800
-Message-ID: <xmqqeh3jbwbt.fsf@gitster.dls.corp.google.com>
-References: <cover.1391430523.git.kirr@mns.spb.ru>
-	<c0ad49d850377aedffa0a593fef8738112019b01.1391430523.git.kirr@mns.spb.ru>
-	<xmqqk3dbbwwf.fsf@gitster.dls.corp.google.com>
+From: Varun Agrawal <varun@varunagw.com>
+Subject: Broken link on Git SCM E-Book
+Date: Tue, 4 Feb 2014 05:14:19 +0530
+Message-ID: <CAF+VQp8K3bKdzmPTPfuz-7zHhehYXYCgERTEp_qaca_k2+AoFw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Kirill Smelkov <kirr@mns.spb.ru>
-X-From: git-owner@vger.kernel.org Tue Feb 04 00:39:16 2014
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 04 00:44:29 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WAT6i-0000AA-0O
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Feb 2014 00:39:16 +0100
+	id 1WATBk-0002Vl-6u
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Feb 2014 00:44:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753880AbaBCXjI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Feb 2014 18:39:08 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:41870 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753958AbaBCXjF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Feb 2014 18:39:05 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C2BBA69287;
-	Mon,  3 Feb 2014 18:39:04 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=6vcYnZ3+ceuPpybAYxQjq6Z6Qsc=; b=WdLhcv
-	f2uVt87H4Go+Qjr3OzA2bA74lyh9rYvLJIutXyd7k2SdYWYIFhJaLKETmnZgGY/5
-	5RcHipzr41LfL3UOYKIfiy7HPTQGRUTDiTsjGB66/AOStiy0FOQwcomcT14Dv2+T
-	L6ssu7ITKERxD/cNvMZ2/T5xm1W8bd8LBbNlY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=qRgqBWyD+seVk5plyFZpH/34MyJnVktl
-	a7zigJ8HcFX+L+hb6aYuvP6rRKhdj5jpguaX6Py7jsABgrrxF3KWubhS/uRVdt/c
-	IH926bctwSXc0KlBPUlV8g4YEACY9gGXOeT6ZxIpM5mwUy95gQRjCZ5SFrPiskjZ
-	t9EGkk/b3FY=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B0F2869286;
-	Mon,  3 Feb 2014 18:39:04 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 13AFE69285;
-	Mon,  3 Feb 2014 18:39:03 -0500 (EST)
-In-Reply-To: <xmqqk3dbbwwf.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Mon, 03 Feb 2014 15:26:40 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 5DABFF94-8D2C-11E3-9DFF-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753808AbaBCXoW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Feb 2014 18:44:22 -0500
+Received: from mail-ea0-f172.google.com ([209.85.215.172]:62859 "EHLO
+	mail-ea0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753770AbaBCXoV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Feb 2014 18:44:21 -0500
+Received: by mail-ea0-f172.google.com with SMTP id l9so2518453eaj.31
+        for <git@vger.kernel.org>; Mon, 03 Feb 2014 15:44:20 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=sWUdHV6B1pIHx0cM3rCip6kiUpyHZoX+NxggQ2UyXTo=;
+        b=aW4bWFti6n2CpqPWOaaJmtcccd9cq7M0CbvHahwmcbfSPc5zv5m0cLy2Y3mQStH+2F
+         VT9GFBkxoQk00x9tfVkj5R40vKYM007sZNtgulbglLA8bNjLo7cmI2TrNg8R2LaSA4ih
+         AFWCWPPv98u1VoA3gqQfC/YWs01RfxetjmmrtkQdBIqEuaNAmEAxEdqH9TNaJqbTKzLJ
+         nLmnFukuTWRBlfc7WXzbCDa558ovWDO9P1kn/oNQ3fc/HfySpx25C06fc0pIrRVEjPJj
+         1gJ56jp/eWT3VjQnPLw6hvaf900fbJJMKJqc0t9cbdgs4Qi3SPxAK4KxWbuHC1KT/oZ+
+         1lrA==
+X-Gm-Message-State: ALoCoQlPGe9YjwCapaaJCPhd+DAwQn07058s/IrsuQYKT3gPT25/ceZU8vUd5LwPOJPRLYLyQk+P
+X-Received: by 10.14.2.193 with SMTP id 41mr10785536eef.55.1391471059933; Mon,
+ 03 Feb 2014 15:44:19 -0800 (PST)
+Received: by 10.14.200.133 with HTTP; Mon, 3 Feb 2014 15:44:19 -0800 (PST)
+X-Originating-IP: [49.14.109.78]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241496>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241497>
 
-Junio C Hamano <gitster@pobox.com> writes:
+In the footer, both links on the text are giving 404
 
-> Kirill Smelkov <kirr@mns.spb.ru> writes:
->
->> As was recently shown (c839f1bd "combine-diff: optimize
->> combine_diff_path sets intersection"), combine-diff runs very slowly. In
->> that commit we optimized paths sets intersection, but that accounted
->> only for ~ 25% of the slowness, and as my tracing showed, for linux.git
->> v3.10..v3.11, for merges a lot of time is spent computing
->> diff(commit,commit^2) just to only then intersect that huge diff to
->> almost small set of files from diff(commit,commit^1).
->>
->> That's because at present, to compute combine-diff, for first finding
->> paths, that "every parent touches", we use the following combine-diff
->> property/definition:
->>
->>     D(A,P1...Pn) = D(A,P1) ^ ... ^ D(A,Pn)      (w.r.t. paths)
->>
->> where
->>
->>     D(A,P1...Pn) is combined diff between commit A, and parents Pi
->>
->> and
->>
->>     D(A,Pi) is usual two-tree diff Pi..A
->
-> and A ^ B means what???
+Text is
 
-Silly me; obviously it is the "set intersection" operator.
-
-We probably could instead use the "current" set of paths as literal
-pathspec to compute subsequent paths, i.e.
-
-	D(A,Pi,PS) is two tree diff P1..A limited to paths PS
-
-	D(A,P1...Pn) = D(A,P1,[]) ^
-        	       D(A,P2,D(A,P1,[])) ^
-                       ...
-        	       D(A,Pn,D(A,P1...Pn-1))
-
-if we did not want to reinvent the whole tree walking thing, which
-would add risks for new bugs and burden to maintain this and the
-usual two-tree diff tree walking in sync.
+This open sourced site is hosted on GitHub.
+Patches, suggestions, and comments are welcome
