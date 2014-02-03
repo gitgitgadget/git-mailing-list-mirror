@@ -1,86 +1,89 @@
-From: "George Spelvin" <linux@horizon.com>
-Subject: Re: [PATCH v2] userdiff: update Ada patterns
-Date: 3 Feb 2014 13:33:01 -0500
-Message-ID: <20140203183301.3642.qmail@science.horizon.com>
-Cc: git@vger.kernel.org, linux@horizon.com
-To: ajohnson@redneon.com
-X-From: git-owner@vger.kernel.org Mon Feb 03 19:33:10 2014
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v5 1/5] t0060: Add test for manipulating symlinks via absolute paths
+Date: Mon, 03 Feb 2014 10:50:17 -0800
+Message-ID: <xmqq7g9cf2ty.fsf@gitster.dls.corp.google.com>
+References: <1391306351-13237-1-git-send-email-martinerikwerner@gmail.com>
+	<1391358940-17373-1-git-send-email-martinerikwerner@gmail.com>
+	<1391358940-17373-2-git-send-email-martinerikwerner@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, richih@debian.org, tboegi@web.de,
+	pclouds@gmail.com, dak@gnu.org
+To: Martin Erik Werner <martinerikwerner@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 03 19:50:27 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WAOKT-0004qG-V4
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Feb 2014 19:33:10 +0100
+	id 1WAObD-00055V-EH
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Feb 2014 19:50:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753004AbaBCSdF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Feb 2014 13:33:05 -0500
-Received: from science.horizon.com ([71.41.210.146]:44641 "HELO
-	science.horizon.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1752559AbaBCSdE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Feb 2014 13:33:04 -0500
-Received: (qmail 3643 invoked by uid 1000); 3 Feb 2014 13:33:01 -0500
+	id S1753033AbaBCSuX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Feb 2014 13:50:23 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55914 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752639AbaBCSuW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Feb 2014 13:50:22 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3DED069F96;
+	Mon,  3 Feb 2014 13:50:21 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=FjuOHGVZtFVrjgMpTU0M+SEGppw=; b=LyO2Re
+	aUTtZssoG8kvlc2xOwbFJ16N9BOT7/Z/ec359UMQYcbsxD1T1rrzGY70tygKv8/S
+	vLCdloVflvOeFWaffShpneHRmt7ai7m7QfJdKId4OV2+Q6LcpP9MngQ622XwbggG
+	KtugePtXs26QDeTNaauG+KVqBXhpqqu2pCd6I=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=jnJ4CuuJ/dMqJyOWEAX1LCovzeSXXyWR
+	LcdyzFCJcIext/cM5D+65lQiVYh6BPZkSR1oV4slU3nKZfwwJgXo/hl4RU+TY/B6
+	TLUoypxOXtVVc57cE5Ro4RWNGXAlA35bY8HbHA5KaZlCg21sCxKqqnLSDFSKag+O
+	oGKSlDslgqM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2B8BA69F95;
+	Mon,  3 Feb 2014 13:50:21 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 376A369F94;
+	Mon,  3 Feb 2014 13:50:20 -0500 (EST)
+In-Reply-To: <1391358940-17373-2-git-send-email-martinerikwerner@gmail.com>
+	(Martin Erik Werner's message of "Sun, 2 Feb 2014 17:35:36 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 07E59D7C-8D04-11E3-9332-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241446>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241447>
 
-Looking at the grammar at http://www.adahome.com/rm95/rm9x-P.html
-and http://www.adaic.org/resources/add_content/standards/05rm/html/RM-2-4.html
-I see the following restrictions apply:
+Martin Erik Werner <martinerikwerner@gmail.com> writes:
 
-- A number must begin and end with a digit.  There must be at least one
-  digit on either side of each underscore and decimal point.
-- There may be at most one decimal point in a number.
-- The base must be between 2 and 16, inclusive.
+> When symlinks in the working tree are manipulated using the absolute
+> path, git dereferences them, and tries to manipulate the link target
+> instead.
 
-[-+]?(
-        [0-9](_?[0-9])*([.][0-9](_?[0-9])*)?|
-        ([2-9]|1[0-6])#[0-9a-fA-F](_?[0-9a-fA-F])*([.][0-9a-fA-F](_?[0-9a-fA-F])*)?#
-)([eE][+-]?[0-9](_?[0-9])*)?
+The above may a very good description of the root cause, but
+can we have description of a symptom that is visible by end-users
+that is caused by the bug being fixed with the series here, by
+ending the above like so:
 
-If you want a slightly smaller version, we can drop the "only one decimal
-point" rule and get
+	... link target instead.  This causes "git foo bar" to
+	misbehave in this and that way.
 
-[-+]?(
-        [0-9]([._]?[0-9])*|
-        ([2-9]|1[0-6])#[0-9a-fA-F]([._]?[0-9a-fA-F])*#
-)([eE][+-]?[0-9](_?[0-9])*)?
+Testing the low-level underlying machinery like this patch does is
+not wrong per-se, but I suspect that this series was triggered by
+somebody noticing breakage in a end-user command "git foo $path"
+with $path being a full pathname to an in-tree symbolic link.  It
+wouldn't be like somebody who was bored and ran "test-path-utils"
+for fun noticed the root cause without realizing how the fix would
+affect the behaviour that would be visible to end-users, right?
 
-Ideally, for a based number, the range of acceptable digits would
-depend on the base.  Which is possible for a finite-state machine since
-the number of bases is finite, but laeds to a bit of a state explosion.
-Here's an approximation that separates bases 2-9 and 10-16:
+Can we have that "git foo $path" to the testsuite as well?  That is
+the breakage we do not want to repeat in the future by regressing.
 
-[-+]?(
-        [0-9](_?[0-9])*([.][0-9](_?[0-9])*)?|
-        [2-9]#[0-8](_?[0-8])*([.][0-8](_?[0-8])*)?#|
-        1[0-6]#[0-9a-fA-F](_?[0-9a-fA-F])*([.][0-9a-fA-F](_?[0-9a-fA-F])*)?#
-)([eE][+-]?[0-9](_?[0-9])*)?
+I am guessing "foo" is "add", but I wasn't closely following the
+progression of the series.
 
-because I think that this is overdoing it:
-
-[-+]?(
-        [0-9](_?[0-9])*([.][0-9](_?[0-9])*)?|
-        2#[0-1](_?[0-1])*([.][0-1](_?[0-1])*)?#|
-        3#[0-2](_?[0-2])*([.][0-2](_?[0-2])*)?#|
-        4#[0-3](_?[0-3])*([.][0-3](_?[0-3])*)?#|
-        5#[0-4](_?[0-4])*([.][0-4](_?[0-4])*)?#|
-        6#[0-5](_?[0-5])*([.][0-5](_?[0-5])*)?#|
-        7#[0-5](_?[0-5])*([.][0-5](_?[0-5])*)?#|
-        8#[0-7](_?[0-7])*([.][0-7](_?[0-7])*)?#|
-        9#[0-8](_?[0-8])*([.][0-8](_?[0-8])*)?#|
-        10#[0-9](_?[0-9])*([.][0-9](_?[0-9])*)?#|
-        11#[0-9aA](_?[0-9aA])*([.][0-9aA](_?[0-9aA])*)?#|
-        12#[0-9abAB](_?[0-9abAB])*([.][0-9abAB](_?[0-9abAB])*)?#|
-        13#[0-9a-cA-C](_?[0-9a-cA-C])*([.][0-9a-cA-C](_?[0-9a-cA-C])*)?#|
-        14#[0-9a-dA-D](_?[0-9a-dA-D])*([.][0-9a-dA-D](_?[0-9a-dA-D])*)?#|
-        15#[0-9a-eA-E](_?[0-9a-eA-E])*([.][0-9a-eA-E](_?[0-9a-eA-E])*)?#|
-        16#[0-9a-fA-F](_?[0-9a-fA-F])*([.][0-9a-fA-F](_?[0-9a-fA-F])*)?#|
-)([eE][+-]?[0-9](_?[0-9])*)?
-
-Another point is that Ada doesn't actually include leading + or -
-signs in the syntax for "number", but rather makes them unary operators.
-This means that spaces are allowed, and whether you want to include them
-in the "number" pattern is a judgement call.
+Thanks.
