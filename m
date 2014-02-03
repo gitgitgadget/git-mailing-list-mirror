@@ -1,117 +1,109 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 1/9] cherry-pick, revert: add the --gpg-sign option
-Date: Mon, 03 Feb 2014 12:50:55 -0800
-Message-ID: <xmqq8utrex8w.fsf@gitster.dls.corp.google.com>
-References: <1391221086-1044384-1-git-send-email-sandals@crustytoothpaste.net>
-	<1391221086-1044384-2-git-send-email-sandals@crustytoothpaste.net>
+From: Max Kirillov <max@max630.net>
+Subject: [PATCH] gitk: use single blamestuff for all show_line_source{} calls
+Date: Mon, 3 Feb 2014 22:53:52 +0200
+Message-ID: <20140203205352.GA5136@wheezy.local>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Nicolas Vigier <boklm@mars-attacks.org>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-X-From: git-owner@vger.kernel.org Mon Feb 03 21:51:27 2014
+Cc: git@vger.kernel.org
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Mon Feb 03 21:54:17 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WAQUH-0004aZ-1k
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Feb 2014 21:51:25 +0100
+	id 1WAQX1-0005v4-WA
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Feb 2014 21:54:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750836AbaBCUvB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Feb 2014 15:51:01 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35389 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750750AbaBCUvA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Feb 2014 15:51:00 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id EC48469B20;
-	Mon,  3 Feb 2014 15:50:59 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=qnswHnm9tNg4itG7g9ZUbr8COWA=; b=NkRLh0
-	+hxloZsZfg8mx3DSYkw0UT+EwqLxWDUhpJH7wLH+0vyHyt5uFGiyTAQikGHbXBA1
-	GFDNP2xon2uJ6QEpc2o0iV3KHZRlUCRR6J+UUOHg5k36yFA1MQN1xkhrD+q8JWMA
-	Mtg10Xl99YMVmk6fSx9tsdRMlws+rCKL/ir5w=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=do/kZb0f4HrA2qO2y6vUw4y9XtyVA3+s
-	OXf438WMfaV0Jk4RSykzstyJHTN3sULLDtGCSi9HEwkcOe0wDK7FkSYbWzHFQyXf
-	Lo5jaBf6hbeGzCGOtUiLzlDLx82JxHdBbuxE/JJgKJR5cvK7cZgCo6xuH0JLWjSm
-	+WOVf7PDy2E=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9DD2F69B1D;
-	Mon,  3 Feb 2014 15:50:59 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E616269B13;
-	Mon,  3 Feb 2014 15:50:57 -0500 (EST)
-In-Reply-To: <1391221086-1044384-2-git-send-email-sandals@crustytoothpaste.net>
-	(brian m. carlson's message of "Sat, 1 Feb 2014 02:17:58 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: E1DDE074-8D14-11E3-BA82-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752819AbaBCUyM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Feb 2014 15:54:12 -0500
+Received: from p3plsmtpa08-04.prod.phx3.secureserver.net ([173.201.193.105]:33821
+	"EHLO p3plsmtpa08-04.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750784AbaBCUyL (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 3 Feb 2014 15:54:11 -0500
+Received: from wheezy.local ([89.27.29.195])
+	by p3plsmtpa08-04.prod.phx3.secureserver.net with 
+	id Mwu31n00K4CavkR01wu9me; Mon, 03 Feb 2014 13:54:11 -0700
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241476>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241477>
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+There seems to be no point to search for several origins at once.
+I doubt it is even fully working (because there is one blameinst),
+but blamestuff for some reason is an array. Also, it is not cleaned
+after blame is completed
 
-> diff --git a/sequencer.c b/sequencer.c
-> index 90cac7b..bde5f04 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -392,11 +392,18 @@ static int run_git_commit(const char *defmsg, struct replay_opts *opts,
->  {
->  	struct argv_array array;
->  	int rc;
-> +	char *gpg_sign;
->  
->  	argv_array_init(&array);
->  	argv_array_push(&array, "commit");
->  	argv_array_push(&array, "-n");
->  
-> +	if (opts->gpg_sign) {
-> +		gpg_sign = xmalloc(3 + strlen(opts->gpg_sign));
-> +		sprintf(gpg_sign, "-S%s", opts->gpg_sign);
-> +		argv_array_push(&array, gpg_sign);
-> +		free(gpg_sign);
+Signed-off-by: Max Kirillov <max@max630.net>
+---
+ gitk | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-Perhaps
-
-	argv_array_pushf(&array, "-S%s", opts->gpg_sign);
-
-without any temporary?  That would save 5 lines in total.
-
-> +	}
->  	if (opts->signoff)
->  		argv_array_push(&array, "-s");
->  	if (!opts->edit) {
-
-
-diff --git a/sequencer.c b/sequencer.c
-index bde5f04..b200dce 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -392,18 +392,13 @@ static int run_git_commit(const char *defmsg, struct replay_opts *opts,
- {
- 	struct argv_array array;
- 	int rc;
--	char *gpg_sign;
+diff --git a/gitk b/gitk
+index 90764e8..dfac4fd 100755
+--- a/gitk
++++ b/gitk
+@@ -3815,17 +3815,18 @@ proc show_line_source {} {
+     nowbusy blaming [mc "Searching"]
+     fconfigure $f -blocking 0
+     set i [reg_instance $f]
+-    set blamestuff($i) {}
++    set blamestuff {}
+     set blameinst $i
+     filerun $f [list read_line_source $f $i]
+ }
  
- 	argv_array_init(&array);
- 	argv_array_push(&array, "commit");
- 	argv_array_push(&array, "-n");
+ proc stopblaming {} {
+-    global blameinst
++    global blameinst blamestuff
  
--	if (opts->gpg_sign) {
--		gpg_sign = xmalloc(3 + strlen(opts->gpg_sign));
--		sprintf(gpg_sign, "-S%s", opts->gpg_sign);
--		argv_array_push(&array, gpg_sign);
--		free(gpg_sign);
--	}
-+	if (opts->gpg_sign)
-+		argv_array_pushf(&array, "-S%s", opts->gpg_sign);
- 	if (opts->signoff)
- 		argv_array_push(&array, "-s");
- 	if (!opts->edit) {
+     if {[info exists blameinst]} {
+ 	stop_instance $blameinst
+ 	unset blameinst
++	unset blamestuff
+ 	notbusy blaming
+     }
+ }
+@@ -3834,7 +3835,7 @@ proc read_line_source {fd inst} {
+     global blamestuff curview commfd blameinst nullid nullid2
+ 
+     while {[gets $fd line] >= 0} {
+-	lappend blamestuff($inst) $line
++	lappend blamestuff $line
+     }
+     if {![eof $fd]} {
+ 	return 1
+@@ -3845,17 +3846,18 @@ proc read_line_source {fd inst} {
+     fconfigure $fd -blocking 1
+     if {[catch {close $fd} err]} {
+ 	error_popup [mc "Error running git blame: %s" $err]
++	unset blamestuff
+ 	return 0
+     }
+ 
+     set fname {}
+-    set line [split [lindex $blamestuff($inst) 0] " "]
++    set line [split [lindex $blamestuff 0] " "]
+     set id [lindex $line 0]
+     set lnum [lindex $line 1]
+     if {[string length $id] == 40 && [string is xdigit $id] &&
+ 	[string is digit -strict $lnum]} {
+ 	# look for "filename" line
+-	foreach l $blamestuff($inst) {
++	foreach l $blamestuff {
+ 	    if {[string match "filename *" $l]} {
+ 		set fname [string range $l 9 end]
+ 		break
+@@ -3878,6 +3880,7 @@ proc read_line_source {fd inst} {
+     } else {
+ 	puts "oops couldn't parse git blame output"
+     }
++    unset blamestuff
+     return 0
+ }
+ 
+-- 
+1.8.5.2.421.g4cdf8d0
