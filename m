@@ -1,147 +1,132 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [RFC/PATCH] howto/maintain-git.txt: new version numbering scheme
-Date: Mon, 3 Feb 2014 22:03:36 -0000
-Organization: OPDS
-Message-ID: <9E6F99D96D124571897121E4227508EF@PhilipOakley>
-References: <xmqqfvo3hhhe.fsf@gitster.dls.corp.google.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [WIP/PATCH 1/9] submodule: prepare for recursive checkout of submodules
+Date: Mon, 03 Feb 2014 14:23:15 -0800
+Message-ID: <xmqqha8fdeek.fsf@gitster.dls.corp.google.com>
+References: <xmqqd2k4hh4p.fsf@gitster.dls.corp.google.com>
+	<52CC3E16.4060909@web.de>
+	<xmqqvbxvekwv.fsf@gitster.dls.corp.google.com>
+	<52EFF25E.6080306@web.de> <52EFF290.5090501@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1;
-	format=flowed	reply-type=original
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: "Junio C Hamano" <gitster@pobox.com>,
-	"Git List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Feb 03 23:03:44 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	"W. Trevor King" <wking@tremily.us>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Mon Feb 03 23:23:44 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WARcF-0005rd-2k
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Feb 2014 23:03:43 +0100
+	id 1WARvc-00073C-BK
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Feb 2014 23:23:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752173AbaBCWDi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 3 Feb 2014 17:03:38 -0500
-Received: from out1.ip04ir2.opaltelecom.net ([62.24.128.240]:5525 "EHLO
-	out1.ip04ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750750AbaBCWDi (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 3 Feb 2014 17:03:38 -0500
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AtU3ANMR8FICYJ+4/2dsb2JhbABZgww4EAOJA7VMAQECAQiBBxd0aQEBgR8BARQBBAEBBAEIAQEdCwEFFggBARYWAgMFAgEDFQELJRQBBBgCBgcXBgEHCwgCAQIDAQwEhSgHAYITGQwJzX2PPoJ2gRQEiRGGGYoykG+DLTw
-X-IPAS-Result: AtU3ANMR8FICYJ+4/2dsb2JhbABZgww4EAOJA7VMAQECAQiBBxd0aQEBgR8BARQBBAEBBAEIAQEdCwEFFggBARYWAgMFAgEDFQELJRQBBBgCBgcXBgEHCwgCAQIDAQwEhSgHAYITGQwJzX2PPoJ2gRQEiRGGGYoykG+DLTw
-X-IronPort-AV: E=Sophos;i="4.95,774,1384300800"; 
-   d="scan'208";a="434750789"
-Received: from host-2-96-159-184.as13285.net (HELO PhilipOakley) ([2.96.159.184])
-  by out1.ip04ir2.opaltelecom.net with SMTP; 03 Feb 2014 22:03:34 +0000
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1751322AbaBCWXT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Feb 2014 17:23:19 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33304 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751114AbaBCWXS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Feb 2014 17:23:18 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C4ADB69BB0;
+	Mon,  3 Feb 2014 17:23:17 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ypt1tnhYEyn9aPv0KdvspyeVhSE=; b=Y4+7o2
+	rjmUr45HnDT/SZDLwV1FKNojIPSaL0FiguWEcwn9/JT6RLVmWeG1oR7QrcbxUMl3
+	M4I0LoddDaaiyY4n1jX+BWbDnVz+kUAY94zaX5RNImmNErZKNdYQgRuVmChDol/M
+	NhoJBRbZ78D7vJJak1kHOMrSfEHcGHbt7EF9k=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=yUqyxfGVfd8CNeR8ZaoxHmhUQ77zaeqD
+	kuJQ3iN5X3vCM7BuSzENJQRswtraTuBKQwY1yoXsFOPC89JojVN7wb+Kp7ODr1DV
+	eMGqokFpD76wJXQbusZrX2rooo9UyKn0pRMsfGXBDPYiUnZwlv9cOB+h0X0BOKwn
+	zp812nLD8B8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B4E2569BAF;
+	Mon,  3 Feb 2014 17:23:17 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id ECA0E69BAD;
+	Mon,  3 Feb 2014 17:23:16 -0500 (EST)
+In-Reply-To: <52EFF290.5090501@web.de> (Jens Lehmann's message of "Mon, 03 Feb
+	2014 20:48:32 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: C7624BC4-8D21-11E3-BDE3-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241480>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241481>
 
-=46rom: "Junio C Hamano" <gitster@pobox.com>
-Sent: Friday, January 31, 2014 11:14 PM
-> We wanted to call the upcoming release "Git 1.9", with its
-> maintenance track being "Git 1.9.1", "Git 1.9.2", etc., but various
-> third-party tools are reported to assume that there are at least
-> three dewey-decimal components in our version number.
->
-> Adjust the plan so that vX.Y.0 are feature releases while vX.Y.Z
-> (Z > 0) are maintenance releases.
->
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->
-> * Haven't committed to this outline, but I am raising a
->   weather-balloon to see reaction from the list.  Comments?
+Jens Lehmann <Jens.Lehmann@web.de> writes:
 
-=46rom a familiarity viewpoint the (my) expectation would be that a
-colloquial "V1.9" would be 1.9.0 under the hood (that is, the version
-string would say that).
+> This commit adds the functions and files needed for configuration,
 
-If we are progressing from V1.9 to V2.0 quickly (one cycle?), which I
-understand is the plan, then mixing the minor development items (patch
-series which progress to master) with the maintenance fixes over the
-next few months, thus only having 1.9.x releases, sounds reasonable.
+Please just say "Add the functions and files needed for ...".
 
-If there is going to be separate maintenance fixes from the patch serie=
-s
-developments then keeping to the previous 1.9.x.y for maintenance would
-be better.
+> +++ b/Documentation/recurse-submodules-update.txt
+> @@ -0,0 +1,8 @@
+> +--[no-]recurse-submodules::
+> +	Using --recurse-submodules will update the work tree of all
+> +	initialized submodules according to the commit recorded in the
+> +	superproject if their update configuration is set to checkout'. If
 
-Will the new rapid counting continue after V2.0, such that we get to
-V2.9 -> V3.0 rather more quickly than V1.0 -> V2.0 ?
+That single quote does not seem to be closing any matching quote.
 
-The key discriminator would be to say when V2.0 will be out for decidin=
-g
-the V1.9 sequence.
+The phrase "according to" feels a bit too fuzzy.  Merging the commit
+to what is checked out is one possible implementation of "according to".
+Applying the diff between the commit and what is checked out to work
+tree is another.  Resetting the work tree files to exactly match the
+commit would be yet another.
 
-My =A30.02p
+I think "update the work trees to the commit" (i.e. lose the
+"according") would be the closest to what you are trying to say
+here.
 
-Philip
+> +	local modifications in a submodule would be overwritten the checkout
+> +	will fail unless forced. Without this option or with
+> +	--no-recurse-submodules is, the work trees of submodules will not be
+> +	updated, only the hash recorded in the superproject will be updated.
 
->
-> Documentation/howto/maintain-git.txt | 18 +++++++++++-------
-> 1 file changed, 11 insertions(+), 7 deletions(-)
->
-> diff --git a/Documentation/howto/maintain-git.txt
-> b/Documentation/howto/maintain-git.txt
-> index 33ae69c..ca43787 100644
-> --- a/Documentation/howto/maintain-git.txt
-> +++ b/Documentation/howto/maintain-git.txt
-> @@ -39,26 +39,26 @@ The policy on Integration is informally mentioned
-> in "A Note
-> from the maintainer" message, which is periodically posted to
-> this mailing list after each feature release is made.
->
-> - - Feature releases are numbered as vX.Y.Z and are meant to
-> + - Feature releases are numbered as vX.Y.0 and are meant to
->    contain bugfixes and enhancements in any area, including
->    functionality, performance and usability, without regression.
->
->  - One release cycle for a feature release is expected to last for
->    eight to ten weeks.
->
-> - - Maintenance releases are numbered as vX.Y.Z.W and are meant
-> -   to contain only bugfixes for the corresponding vX.Y.Z feature
-> -   release and earlier maintenance releases vX.Y.Z.V (V < W).
-> + - Maintenance releases are numbered as vX.Y.Z and are meant
-> +   to contain only bugfixes for the corresponding vX.Y.0 feature
-> +   release and earlier maintenance releases vX.Y.W (W < Z).
->
->  - 'master' branch is used to prepare for the next feature
->    release. In other words, at some point, the tip of 'master'
-> -   branch is tagged with vX.Y.Z.
-> +   branch is tagged with vX.Y.0.
->
->  - 'maint' branch is used to prepare for the next maintenance
-> -   release.  After the feature release vX.Y.Z is made, the tip
-> +   release.  After the feature release vX.Y.0 is made, the tip
->    of 'maint' branch is set to that release, and bugfixes will
->    accumulate on the branch, and at some point, the tip of the
-> -   branch is tagged with vX.Y.Z.1, vX.Y.Z.2, and so on.
-> +   branch is tagged with vX.Y.1, vX.Y.2, and so on.
->
->  - 'next' branch is used to publish changes (both enhancements
->    and fixes) that (1) have worthwhile goal, (2) are in a fairly
-> @@ -86,6 +86,10 @@ this mailing list after each feature release is
-> made.
->    users are encouraged to test it so that regressions and bugs
->    are found before new topics are merged to 'master'.
->
-> +Note that before v1.9.0 release, the version numbers used to be
-> +structured slightly differently.  vX.Y.Z were feature releases while
-> +vX.Y.Z.W were maintenance releases for vX.Y.Z.
-> +
->
-> A Typical Git Day
-> -----------------
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
+It is unclear what happens if their update configuration is set to
+something other than 'checkout'.
+
+> diff --git a/submodule.c b/submodule.c
+> index 613857e..b3eb28d 100644
+> --- a/submodule.c
+> +++ b/submodule.c
+> @@ -382,6 +384,48 @@ int parse_fetch_recurse_submodules_arg(const char *opt, const char *arg)
+> ...
+> +int option_parse_update_submodules(const struct option *opt,
+> +				   const char *arg, int unset)
+> +{
+> +	if (unset) {
+> +		*(int *)opt->value = RECURSE_SUBMODULES_OFF;
+> +	} else {
+> +		if (arg)
+> +			*(int *)opt->value = parse_update_recurse_submodules_arg(opt->long_name, arg);
+> +		else
+> +			*(int *)opt->value = RECURSE_SUBMODULES_ON;
+> +	}
+
+You can easily unnest to lose {}
+
+    if (unset)
+            value = off;
+    else if (arg)
+            value = parse...;
+    else
+            value = on;
+
+Also I suspect that git_config_maybe_bool() natively knows how to
+handle arg==NULL, so
+
+    if (unset)
+	value = off;
+    else
+	value = parse...;
+
+is sufficient?
