@@ -1,90 +1,93 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: Determining update/merge/current state of a workspace
-Date: Mon, 3 Feb 2014 00:50:29 +0000
-Message-ID: <20140203005029.GF635004@vauxhall.crustytoothpaste.net>
-References: <85ppn540wi.fsf@stephe-leake.org>
- <20140202230456.GA56790@gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v5 5/5] setup: Don't dereference in-tree symlinks for
+ absolute paths
+Date: Mon, 3 Feb 2014 11:15:57 +0700
+Message-ID: <CACsJy8DX8bh2cAx+a_cJafAOYB7Ly=y28jAGo1L8NEmkWaZv=Q@mail.gmail.com>
+References: <1391306351-13237-1-git-send-email-martinerikwerner@gmail.com>
+ <1391358940-17373-1-git-send-email-martinerikwerner@gmail.com> <1391358940-17373-6-git-send-email-martinerikwerner@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="O98KdSgI27dgYlM5"
-Cc: Stephen Leake <stephen_leake@stephe-leake.org>, git@vger.kernel.org
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 03 01:51:01 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>, richih@debian.org,
+	=?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	David Kastrup <dak@gnu.org>
+To: Martin Erik Werner <martinerikwerner@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 03 05:16:44 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WA7ka-0001qX-09
-	for gcvg-git-2@plane.gmane.org; Mon, 03 Feb 2014 01:51:00 +0100
+	id 1WAAxf-0004sZ-3u
+	for gcvg-git-2@plane.gmane.org; Mon, 03 Feb 2014 05:16:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752609AbaBCAuh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Feb 2014 19:50:37 -0500
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:51609 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752604AbaBCAug (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 2 Feb 2014 19:50:36 -0500
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:fd82:88d3:586c:5bd8])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 1D42C28074;
-	Mon,  3 Feb 2014 00:50:34 +0000 (UTC)
-Mail-Followup-To: David Aguilar <davvid@gmail.com>,
-	Stephen Leake <stephen_leake@stephe-leake.org>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20140202230456.GA56790@gmail.com>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 3.12-1-amd64)
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752800AbaBCEQg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Feb 2014 23:16:36 -0500
+Received: from mail-qa0-f47.google.com ([209.85.216.47]:36649 "EHLO
+	mail-qa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752695AbaBCEQ1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Feb 2014 23:16:27 -0500
+Received: by mail-qa0-f47.google.com with SMTP id j5so9417472qaq.34
+        for <git@vger.kernel.org>; Sun, 02 Feb 2014 20:16:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=7cyYaP09VyyViAJCGfYj1MIbxmTKbMPfR3mmMgZ0jCI=;
+        b=q+ybKpwDGb61O3YPLvxSb+jzuIonbigrF+vNFjdKQRDiXWQ7D7flfPsLqOtUul04nE
+         xCCGbT4+mjcnNNEkyf1uXS5MaUxTc6GumKmRod9VvWWKJr9aOTAwxd7ljcPmMrdzNfXW
+         toFdJGLsEIAQ53ZoUIsu8i6G/DsePApNCn4TWbOSbIHUwAByQqvDMkDxX4pe7srU7hXF
+         DWQZSwr+nuTd0BKU1aUaD83spFTbAFe9bQBGLh6IbyqQQlCThm88i3aK55HxftpO1Y5A
+         Y9mT/xHmdwvjHXYPoNbKhIAKRkbDNzGx8ySB3WLa+1GcXgbdtbK4pWvaGcBnV39hjbBJ
+         S5qg==
+X-Received: by 10.140.47.212 with SMTP id m78mr49696819qga.21.1391400987092;
+ Sun, 02 Feb 2014 20:16:27 -0800 (PST)
+Received: by 10.96.136.98 with HTTP; Sun, 2 Feb 2014 20:15:57 -0800 (PST)
+In-Reply-To: <1391358940-17373-6-git-send-email-martinerikwerner@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241393>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241394>
 
+On Sun, Feb 2, 2014 at 11:35 PM, Martin Erik Werner
+<martinerikwerner@gmail.com> wrote:
+> diff --git a/setup.c b/setup.c
+> index a2e60ab..230505c 100644
+> --- a/setup.c
+> +++ b/setup.c
+> @@ -86,11 +86,23 @@ char *prefix_path_gently(const char *prefix, int len,
+>         const char *orig = path;
+>         char *sanitized;
+>         if (is_absolute_path(orig)) {
+> -               const char *temp = real_path(path);
+> -               sanitized = xmalloc(len + strlen(temp) + 1);
+> -               strcpy(sanitized, temp);
+> +               char *npath;
+> +
+> +               npath = xmalloc(strlen(path) + 1);
+>                 if (remaining_prefix)
+>                         *remaining_prefix = 0;
+> +               if (normalize_path_copy_len(npath, path, remaining_prefix)) {
+> +                       free(npath);
+> +                       return NULL;
+> +               }
+> +               if (abspath_part_inside_repo(npath)) {
+> +                       free(npath);
+> +                       return NULL;
+> +               }
+> +
+> +               sanitized = xmalloc(strlen(npath) + 1);
+> +               strcpy(sanitized, npath);
+> +               free(npath);
 
---O98KdSgI27dgYlM5
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+We could replace these three lines with "sanitized = npath;". But it's
+not a big deal imo. The rest of the series looks good.
 
-On Sun, Feb 02, 2014 at 03:04:59PM -0800, David Aguilar wrote:
-> I think you're looking for "git merge-base".
->=20
-> If you do `git merge-base HEAD origin/master`
-> and its result is equal to `git rev-parse HEAD`
-> then you know that master is an ancestor of origin/master
-> and can be trivially fast-forwarded to origin/master.
+Reviewed-by: Duy Nguyen <pclouds@gmail.com>
 
-In newer versions of git (1.8.0+), you can use "git merge-base
---is-ancestor" for this instead.  The commit message for 5907cda implies
-that it is more efficient than the old way.
-
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
-
---O98KdSgI27dgYlM5
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCgAGBQJS7ufVAAoJEL9TXYEfUvaLQOkP/iOgo8hsbyxKq917Etxn9ES8
-sEjSN5607DtnJ4NXZBOv8yLRIxTcVi5uisVR6nrcrlLuFtJP/w20ATBDP07xDcnF
-PdLeVlGFEJG/8eixYrluKZwElHajf67SgTmaytqUw8DRKmDAIx0EtwUxqy7X7XCV
-avLnygI9MYeudpWEXIpmENpOsOmgE/QAk8AIJXI1qEs6KU3bopPGYN2dgviIZ0LW
-QrxFOQIOpNsMbJ1oClpv5SebEvRfCSrJRa5BGYTvgHrqZwjKWvRWMiEgZOt6xLqB
-8wBl/AnHAGrk/ySV0q/fKO9NHWwa16PzBA5e1QcTLLxywmYTmPk71MqHiegCU0jd
-S1fF4Ow2neTLTZqL0Be8pdCaaV/5/xIfkvKQsxUkrtR75jHdwlK9JyOWQ5jvBwKl
-yxEsIchTNEM2lKtFq8UkvDkChSp6CzCJTIY7VldX9/O9kNLFfHVr64j7SdV7DcCq
-8rQ2Q5woUl3EXaQV91PujHUIeVok+11tqk443RZcwovsHNWrOrwkGRL5hPnqY8xV
-UTiqyCRFLQkK9JTvDhlxROLR+u/VidD/fAIfuY03bVJEu2yHT5VXilAQmcZOBn8B
-ABcanzdlDQtGRWWkP+DAzNIRp7JThMNfebpU8ridffYOqZL4KFwWU4kjyg567P7e
-7r6x6kc5xiMvufcifxsw
-=K7dD
------END PGP SIGNATURE-----
-
---O98KdSgI27dgYlM5--
+>         } else {
+>                 sanitized = xmalloc(len + strlen(path) + 1);
+>                 if (len)
+-- 
+Duy
