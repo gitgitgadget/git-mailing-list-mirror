@@ -1,113 +1,136 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 5/5] setup: Don't dereference in-tree symlinks for absolute paths
-Date: Mon, 03 Feb 2014 16:05:08 -0800
-Message-ID: <xmqq1tzjbv4b.fsf@gitster.dls.corp.google.com>
-References: <1391306351-13237-1-git-send-email-martinerikwerner@gmail.com>
-	<1391358940-17373-1-git-send-email-martinerikwerner@gmail.com>
-	<1391358940-17373-6-git-send-email-martinerikwerner@gmail.com>
-	<CACsJy8DX8bh2cAx+a_cJafAOYB7Ly=y28jAGo1L8NEmkWaZv=Q@mail.gmail.com>
-	<20140203131700.GA15607@mule>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [WIP/PATCH 9/9] submodule: teach unpack_trees() to update submodules
+Date: Tue, 4 Feb 2014 07:11:32 +0700
+Message-ID: <CACsJy8CiAPnatithenDKBBKVGFHQZsu4mJLEjuWFD2GXqO56Lw@mail.gmail.com>
+References: <xmqqd2k4hh4p.fsf@gitster.dls.corp.google.com> <52CC3E16.4060909@web.de>
+ <xmqqvbxvekwv.fsf@gitster.dls.corp.google.com> <52EFF25E.6080306@web.de> <52EFF3E9.2060403@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>, richih@debian.org,
-	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-	David Kastrup <dak@gnu.org>
-To: Martin Erik Werner <martinerikwerner@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 04 01:05:31 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	"W. Trevor King" <wking@tremily.us>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Tue Feb 04 01:12:10 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WATW6-0003h5-Jp
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Feb 2014 01:05:30 +0100
+	id 1WATcX-0006WC-6e
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Feb 2014 01:12:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752854AbaBDAF0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Feb 2014 19:05:26 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53841 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752464AbaBDAFZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Feb 2014 19:05:25 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1FB33699EC;
-	Mon,  3 Feb 2014 19:05:25 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=y7+JJAP9oc1ISGQrt3ka8IWLjnY=; b=Jw+3js
-	WGPga4tjXp2ilXRA9LfJAeppbi1H8kPp34GwQ+6nkBEbhKNnSfRFWeP2T+aNHo7s
-	qdv2GNH/QwkASBR5huy8ODLaPUICr4KBuUTdZorUbharUim5hwMoono/dIrHU1IM
-	pFkWNebwXhT/676f6Z6DREjYlXJWCFI2Frvmk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Lu4Jd+B6WtqR52gUwQ2ZO20x0/W6sWyh
-	axZ80bfUkw7fE/Ony4kWosfSOOy1FoSUT6yaFcshuhh8rUj/jFJ6JOGJvXIdtIiw
-	ptkS6f1YQ5sJoq9Z58SbsYL1THZw9XSED0Rid85vHwHcnAoOuAlR9N1gK8VrxjjI
-	9tuA388L1lQ=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5C53C699DC;
-	Mon,  3 Feb 2014 19:05:13 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 825F8699DA;
-	Mon,  3 Feb 2014 19:05:10 -0500 (EST)
-In-Reply-To: <20140203131700.GA15607@mule> (Martin Erik Werner's message of
-	"Mon, 3 Feb 2014 14:17:00 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 035BC746-8D30-11E3-853F-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752999AbaBDAME (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Feb 2014 19:12:04 -0500
+Received: from mail-qa0-f41.google.com ([209.85.216.41]:56212 "EHLO
+	mail-qa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752427AbaBDAMD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Feb 2014 19:12:03 -0500
+Received: by mail-qa0-f41.google.com with SMTP id w8so11256753qac.28
+        for <git@vger.kernel.org>; Mon, 03 Feb 2014 16:12:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=S67ED3zvv15Kup/+0CR0jaeP6YLDwCwXyCJaXaxUsNQ=;
+        b=cVtx7AVZcgpBdh1I3/hM61eGW++KYKRomq2yCYRxZPZ2XplKI/tDQZVD3a0PDSfXbT
+         vSRHav83XzOBgIjjCjtX0qXdmFqq+L1e6W9rccS+iUCAkGwMmDZ0TArqXPucWMZP9n1h
+         NH918yPHKZHvpum2iDXOM5ZhJ13ifIOVDvppv0Nb8iW/ZSihUOJxHimphpd4YVCmMMLq
+         KAUk9R6keLOZs0gt+fz+kytp91askwtwtkNJqLGxaU4atqQo/Djl1cdgBCYLH46En/f+
+         gbhUM3u3OB4jbVIzSWDzQLOHEp+pfjFTKIXNDfpqB0mQerToq1/qCHYWYKGzr68TmwoY
+         PKYQ==
+X-Received: by 10.140.84.19 with SMTP id k19mr57778185qgd.98.1391472722378;
+ Mon, 03 Feb 2014 16:12:02 -0800 (PST)
+Received: by 10.96.136.98 with HTTP; Mon, 3 Feb 2014 16:11:32 -0800 (PST)
+In-Reply-To: <52EFF3E9.2060403@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241501>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241502>
 
-Martin Erik Werner <martinerikwerner@gmail.com> writes:
-
-> Then it seems like one could get rid of npath completely:
-
-Yes.  And you need to remove its definition as well to avoid "unused
-variable" warning.
-
-Will queue with an obvious fix-up.
-
-Thanks.
-
+On Tue, Feb 4, 2014 at 2:54 AM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
+> Implement the functionality needed to enable work tree manipulating
+> commands so that an changed submodule does not only affect the index but
+> it also updates the work tree of any initialized submodule according to
+> the SHA-1 recorded in the superproject.
 >
-> diff --git a/setup.c b/setup.c
-> index 230505c..dd120cd 100644
-> --- a/setup.c
-> +++ b/setup.c
-> @@ -88,21 +88,17 @@ char *prefix_path_gently(const char *prefix, int len,
->  	if (is_absolute_path(orig)) {
->  		char *npath;
->  
-> -		npath = xmalloc(strlen(path) + 1);
-> +		sanitized = xmalloc(strlen(path) + 1);
->  		if (remaining_prefix)
->  			*remaining_prefix = 0;
-> -		if (normalize_path_copy_len(npath, path, remaining_prefix)) {
-> -			free(npath);
-> +		if (normalize_path_copy_len(sanitized, path, remaining_prefix)) {
-> +			free(sanitized);
->  			return NULL;
->  		}
-> -		if (abspath_part_inside_repo(npath)) {
-> -			free(npath);
-> +		if (abspath_part_inside_repo(sanitized)) {
-> +			free(sanitized);
->  			return NULL;
->  		}
-> -
-> -		sanitized = xmalloc(strlen(npath) + 1);
-> -		strcpy(sanitized, npath);
-> -		free(npath);
->  	} else {
->  		sanitized = xmalloc(len + strlen(path) + 1);
->  		if (len)
+> Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
+> ---
+>  entry.c        | 15 ++++++++--
+>  submodule.c    | 86 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+>  submodule.h    |  3 ++
+>  unpack-trees.c | 69 ++++++++++++++++++++++++++++++++++++----------
+>  unpack-trees.h |  1 +
+>  5 files changed, 157 insertions(+), 17 deletions(-)
 >
-> at the cost of 'sanitized' always being the length of path, regardless
-> if it's shorter, or even a NUL string.
+> diff --git a/entry.c b/entry.c
+> index d1bf6ec..61a2767 100644
+> --- a/entry.c
+> +++ b/entry.c
+> @@ -265,7 +265,7 @@ int checkout_entry(struct cache_entry *ce,
 >
-> --
-> Martin Erik Werner <martinerikwerner@gmail.com>
+>         if (!check_path(path, len, &st, state->base_dir_len)) {
+>                 unsigned changed = ce_match_stat(ce, &st, CE_MATCH_IGNORE_VALID|CE_MATCH_IGNORE_SKIP_WORKTREE);
+> -               if (!changed)
+> +               if (!changed && (!S_ISDIR(st.st_mode) || !S_ISGITLINK(ce->ce_mode)))
+>                         return 0;
+
+Should we report something when ce is a gitlink, but path is not a
+directory, instead of siliently exit?
+
+> diff --git a/submodule.c b/submodule.c
+> index 3907034..83e7595 100644
+> --- a/submodule.c
+> +++ b/submodule.c
+> @@ -520,6 +520,42 @@ int depopulate_submodule(const char *path)
+>         return 0;
+>  }
+>
+> +int update_submodule(const char *path, const unsigned char sha1[20], int force)
+> +{
+> +       struct strbuf buf = STRBUF_INIT;
+> +       struct child_process cp;
+> +       const char *hex_sha1 = sha1_to_hex(sha1);
+> +       const char *argv[] = {
+> +               "checkout",
+> +               force ? "-fq" : "-q",
+
+respect "state->quiet" in checkout_entry() as well?
+
+> +               hex_sha1,
+> +               NULL,
+> +       };
+> +       const char *git_dir;
+> +
+> +       strbuf_addf(&buf, "%s/.git", path);
+> +       git_dir = read_gitfile(buf.buf);
+> +       if (!git_dir)
+> +               git_dir = buf.buf;
+> +       if (!is_directory(git_dir)) {
+> +               strbuf_release(&buf);
+> +               /* The submodule is not populated, so we can't check it out */
+> +               return 0;
+> +       }
+> +       strbuf_release(&buf);
+> +
+> +       memset(&cp, 0, sizeof(cp));
+> +       cp.argv = argv;
+> +       cp.env = local_repo_env;
+> +       cp.git_cmd = 1;
+> +       cp.no_stdin = 1;
+> +       cp.dir = path;   /* GIT_WORK_TREE doesn't work for git checkout */
+
+And if we do respect --quiet and it's not specified, paths printed by
+this process is relative to "dir", not to user cwd. Could be
+confusing.
+
+> +       if (run_command(&cp))
+> +               return error("Could not checkout submodule %s", path);
+> +
+> +       return 0;
+> +}
+> +
+-- 
+Duy
