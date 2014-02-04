@@ -1,72 +1,110 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 7/8] combine-diff: Fast changed-to-all-parents paths scanning
-Date: Tue, 04 Feb 2014 10:37:24 -0800
-Message-ID: <xmqq4n4eafmj.fsf@gitster.dls.corp.google.com>
-References: <cover.1391430523.git.kirr@mns.spb.ru>
-	<c0ad49d850377aedffa0a593fef8738112019b01.1391430523.git.kirr@mns.spb.ru>
-	<xmqqk3dbbwwf.fsf@gitster.dls.corp.google.com>
-	<xmqqeh3jbwbt.fsf@gitster.dls.corp.google.com>
-	<20140204163400.GA20436@tugrik.mns.mnsspb.ru>
+From: Miklos Vajna <vmiklos@collabora.co.uk>
+Subject: Re: git log history simplification problem
+Date: Tue, 4 Feb 2014 20:05:18 +0100
+Message-ID: <20140204190516.GD17861@collabora.co.uk>
+References: <20140204173713.GC17861@collabora.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Kirill Smelkov <kirr@mns.spb.ru>
-X-From: git-owner@vger.kernel.org Tue Feb 04 19:37:34 2014
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="XWOWbaMNXpFDWE00"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 04 20:00:08 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WAksH-0006Vy-Fd
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Feb 2014 19:37:33 +0100
+	id 1WAlE6-0000jP-Tt
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Feb 2014 20:00:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754936AbaBDSh3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Feb 2014 13:37:29 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:50314 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754914AbaBDSh1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Feb 2014 13:37:27 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D1A5068412;
-	Tue,  4 Feb 2014 13:37:26 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=KDR/WUFcjg/ALgdmjKvAGWoDiag=; b=qeguux
-	/fcbY4Pd7Zl/EdE1C9LMpixEmolZyJiCAlFM6Wu8SwmF11bgk55XLJl+ioM7b3mg
-	x1wvmyxi8WzKjL3z1tIz+0GnzDwJnaxbuQQPMeGVeRAWJ3ct+WMIQQ3uDM9ViZ6d
-	aAdS2f8JsvJ8q4t1ITTavIsYEnLf8rqQhQZYA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=HRaZpFMzRhmak4dHykIyEIZrSldYXDJR
-	9ZJsQVqILqt+2Ypo65DfjwT46+qPiIQzNkUoZVK5ERpcTPWje2UOdOHb5HJQAwBm
-	o8IDRq0yHVh9+ZY7aFjCiU2nzFGEMFvbMbvPQR2n63Cj16JSvXaDC7LmM7+/B7Gc
-	rmfrFG/Q44A=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C166C68411;
-	Tue,  4 Feb 2014 13:37:26 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EBB8D6840E;
-	Tue,  4 Feb 2014 13:37:25 -0500 (EST)
-In-Reply-To: <20140204163400.GA20436@tugrik.mns.mnsspb.ru> (Kirill Smelkov's
-	message of "Tue, 4 Feb 2014 20:34:00 +0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 64C50D94-8DCB-11E3-ACB3-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S932156AbaBDS77 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Feb 2014 13:59:59 -0500
+Received: from bhuna.collabora.co.uk ([93.93.135.160]:34482 "EHLO
+	bhuna.collabora.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752165AbaBDS75 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Feb 2014 13:59:57 -0500
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+	(Authenticated sender: vmiklos)
+	with ESMTPSA id 03785608CAA
+Content-Disposition: inline
+In-Reply-To: <20140204173713.GC17861@collabora.co.uk>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241538>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241539>
 
-Kirill Smelkov <kirr@mns.spb.ru> writes:
 
->> if we did not want to reinvent the whole tree walking thing, which
->> would add risks for new bugs and burden to maintain this and the
->> usual two-tree diff tree walking in sync.
->
-> Junio, I understand it is not good to duplicate code and increase
-> maintenance risks....
-> Instead I propose we switch to the new tree walker completely.
+--XWOWbaMNXpFDWE00
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I am not fundamentally opposed to the idea. We'll see what happens.
+On Tue, Feb 04, 2014 at 06:37:13PM +0100, Miklos Vajna <vmiklos@collabora.c=
+o.uk> wrote:
+> But then I run:
+>=20
+> git grep 'mnTitleBarHeight =3D' sd
+>=20
+> and it's not there. Am I missing something, as in e.g. even with
+> --full-history git-log does some simplification?
+
+I tried to reproduce this with a repo from scratch, and it seems my
+problem is the following:
+
+1) "A" creates a feature branch
+2) "A" works on it, and in the meantime master progresses as well
+3) "A" merges master to the feature branch
+4) "A" does some additional changes, and -- in an evil way -- uses "git
+commit -a --amend" to squeeze these into the merge commit
+5) "B" (that's me) comes and try to find out where a string got deleted,
+but can't.
+
+Here is a reproducer script:
+
+----
+rm -rf scratch
+mkdir scratch
+cd scratch
+git init
+echo -e "a\na\na\na\na\na\na\na\n" > a
+git add a
+git commit -m init
+git branch feature
+echo "b" >> a
+git add a
+git commit -m "more master changes"
+git checkout feature
+sed -i '1iXXX' a # insert first row
+git add a
+git commit -m "feature"
+git merge -m merge master
+sed -i '1d' a # delete first row
+git add a
+git commit --amend -m "merge"
+----
+
+I now know that the XXX got removed by the merge commit, but how can I
+see it that I'm right? If I run 'git log --all -p' in the result, I see
+that XXX got inserted by one commit, now I don't have it, but I don't
+see any deletion, which confuses me.
+
+Any ideas? :-)
+
+Thanks,
+
+Miklos
+
+--XWOWbaMNXpFDWE00
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (GNU/Linux)
+
+iEYEARECAAYFAlLxOewACgkQe81tAgORUJa4vACfYAM8RrtfqGPpgIDq+K9ZcmNh
+HxgAoIPH7ytZKeWIvL9Sgtp7/denkhIK
+=u3bJ
+-----END PGP SIGNATURE-----
+
+--XWOWbaMNXpFDWE00--
