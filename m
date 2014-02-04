@@ -1,90 +1,108 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: bug? git push triggers auto pack when gc.auto = 0
-Date: Tue, 04 Feb 2014 12:11:12 +0100
-Organization: Organization?!?
-Message-ID: <87iosvxhdb.fsf@fencepost.gnu.org>
-References: <loom.20140204T030158-758@post.gmane.org>
-	<CACsJy8Bo4XgA-g2hy+_pVEKLnerL9WNhpWe==zJANmCMdGXuow@mail.gmail.com>
-	<loom.20140204T055040-646@post.gmane.org>
-	<87r47jxp6k.fsf@fencepost.gnu.org>
-	<loom.20140204T094437-148@post.gmane.org>
-	<87mwi7xm04.fsf@fencepost.gnu.org>
-	<loom.20140204T104753-1@post.gmane.org>
-Mime-Version: 1.0
-Content-Type: text/plain
+From: Martin Erik Werner <martinerikwerner@gmail.com>
+Subject: [PATCH v6 1/6] t3004: Add test for ls-files on symlinks via absolute paths
+Date: Tue,  4 Feb 2014 15:25:15 +0100
+Message-ID: <1391523920-26946-2-git-send-email-martinerikwerner@gmail.com>
+References: <1391358940-17373-1-git-send-email-martinerikwerner@gmail.com>
+ <1391523920-26946-1-git-send-email-martinerikwerner@gmail.com>
+Cc: richih@debian.org, tboegi@web.de, gitster@pobox.com,
+	pclouds@gmail.com, dak@gnu.org,
+	Martin Erik Werner <martinerikwerner@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 04 12:11:35 2014
+X-From: git-owner@vger.kernel.org Tue Feb 04 15:27:32 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WAdug-0002tj-Jf
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Feb 2014 12:11:34 +0100
+	id 1WAgwr-0002hc-Iv
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Feb 2014 15:26:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754050AbaBDLLa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Feb 2014 06:11:30 -0500
-Received: from plane.gmane.org ([80.91.229.3]:35672 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752994AbaBDLL2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Feb 2014 06:11:28 -0500
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1WAduX-0002oq-6m
-	for git@vger.kernel.org; Tue, 04 Feb 2014 12:11:25 +0100
-Received: from x2f46198.dyn.telefonica.de ([2.244.97.152])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 04 Feb 2014 12:11:25 +0100
-Received: from dak by x2f46198.dyn.telefonica.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 04 Feb 2014 12:11:25 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: x2f46198.dyn.telefonica.de
-X-Face: 2FEFf>]>q>2iw=B6,xrUubRI>pR&Ml9=ao@P@i)L:\urd*t9M~y1^:+Y]'C0~{mAl`oQuAl
- \!3KEIp?*w`|bL5qr,H)LFO6Q=qx~iH4DN;i";/yuIsqbLLCh/!U#X[S~(5eZ41to5f%E@'ELIi$t^
- Vc\LWP@J5p^rst0+('>Er0=^1{]M9!p?&:\z]|;&=NP3AhB!B_bi^]Pfkw
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3.50 (gnu/linux)
-Cancel-Lock: sha1:Eityp1ieV4zZtvbErAIUcQwuKeY=
+	id S1752629AbaBDOZm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Feb 2014 09:25:42 -0500
+Received: from mail-ee0-f43.google.com ([74.125.83.43]:45134 "EHLO
+	mail-ee0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751214AbaBDOZl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Feb 2014 09:25:41 -0500
+Received: by mail-ee0-f43.google.com with SMTP id c41so4284502eek.2
+        for <git@vger.kernel.org>; Tue, 04 Feb 2014 06:25:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=Lk+bw9mqz4WmfLuraK858oaBKPjZcjwhkZhqgT1qlaQ=;
+        b=PlAb6+8CS7Dd9Oj/UF1woD10rjsYyk3NtbEuUr0675iyX8KtloP4vLgJ6B6MYPuq2L
+         WpRFLVAcBMGCYy9RjgakjS7YZcFHs2k6jafTNue0mxiZNthV0McBbjcrvf3htwJWiTEz
+         lIsor3LxzVVfi7zeQDmWpYkfrEoCK8dYAPkvn1i3ADH+o0CVMh2fC/o9KZxSurpFMx/e
+         zSMqZl+s0/90HyFXk51mTepC+b3aWlz+2Xs+mPFNESQ+5qCwIsoPfM7MceX9+ySUMc6u
+         K/GQCy0KVBmpnobuEMh+wgnl+aGHzIhFiF95OOMXNuYPN9C4QbGaZSbn8OjwXTzY6QC3
+         9scQ==
+X-Received: by 10.14.3.130 with SMTP id 2mr50234614eeh.36.1391523940258;
+        Tue, 04 Feb 2014 06:25:40 -0800 (PST)
+Received: from localhost.localdomain ([194.150.18.52])
+        by mx.google.com with ESMTPSA id u7sm89446218eep.11.2014.02.04.06.25.38
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 04 Feb 2014 06:25:39 -0800 (PST)
+X-Mailer: git-send-email 1.8.5.2
+In-Reply-To: <1391523920-26946-1-git-send-email-martinerikwerner@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241521>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241523>
 
-chris <jugg@hotmail.com> writes:
+From: Junio C Hamano <gitster@pobox.com>
 
-> Ok, given your full response, I understand how this is being
-> conceptualized now, thanks.  However, if you look at it purely from a
-> user's perspective who is manually invoking these commands for the
-> command's primary purpose, the current behavior is annoying.
->
-> If we assume Git is right in implementing that no server async actions
-> are executed on behalf of a client action, then this falls under the
-> category of an ill-behaved server in my opinion.  Anything a server
-> does that is not directly related to fulfilling the requested client
-> action is now considered bad behavior as it blocks the client from
-> continuing whatever it needs to get on with.  I see such
-> implementation in Git as favoring server's needs over clients.
+When symlinks in the working tree are manipulated using the absolute
+path, git dereferences them, and tries to manipulate the link target
+instead.
 
-There are no "server's needs" at all.  Git only reacts to client
-requests.  It is in the clients' own interest when garbage collection is
-periodically done since it improves response time.
+This causes most high-level functions to misbehave when acting on
+symlinks given via absolute paths. For example
 
-It's arguable that it would be nicer to use an incremental compaction
-process that hides the periodic costs by distributing them over the
-request totality.  That replaces the periodic "why does it have to
-garbage collect when _I_ am using it" annoyance with "why is this
-generally slow".  There is no net benefit to that approach safe for
+  $ git add /dir/repo/symlink
 
-a) avoiding complaints of "smart" people who have discovered that they
-can speed up git by disabling garbage collection, but eventually find
-that git is becoming slow for them but not for others.
-b) avoiding these mailing list discussions.
+attempts to add the target of the symlink rather than the symlink
+itself, which is usually not what the user intends to do.
 
-The second benefit could likely be achieved by displaying "Server
-unreachable... retrying..." instead of reporting about git gc.
+This is a regression introduced by 18e051a:
+  setup: translate symlinks in filename when using absolute paths
+(which did not take symlinks inside the work tree into consideration).
 
+Add a known-breakage test using the ls-files function, checking both if
+the symlink leads to a target in the same directory, and a target in the
+above directory.
+
+Signed-off-by: Martin Erik Werner <martinerikwerner@gmail.com>
+Tested-by: Martin Erik Werner <martinerikwerner@gmail.com>
+---
+ t/t3004-ls-files-basic.sh | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
+
+diff --git a/t/t3004-ls-files-basic.sh b/t/t3004-ls-files-basic.sh
+index 8d9bc3c..e20c077 100755
+--- a/t/t3004-ls-files-basic.sh
++++ b/t/t3004-ls-files-basic.sh
+@@ -36,4 +36,21 @@ test_expect_success 'ls-files -h in corrupt repository' '
+ 	test_i18ngrep "[Uu]sage: git ls-files " broken/usage
+ '
+ 
++test_expect_failure SYMLINKS 'ls-files with absolute paths to symlinks' '
++	mkdir subs &&
++	ln -s nosuch link &&
++	ln -s ../nosuch subs/link &&
++	git add link subs/link &&
++	git ls-files -s link subs/link >expect &&
++	git ls-files -s "$(pwd)/link" "$(pwd)/subs/link" >actual &&
++	test_cmp expect actual &&
++
++	(
++		cd subs &&
++		git ls-files -s link >../expect &&
++		git ls-files -s "$(pwd)/link" >../actual
++	) &&
++	test_cmp expect actual
++'
++
+ test_done
 -- 
-David Kastrup
+1.8.5.2
