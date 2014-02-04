@@ -1,106 +1,99 @@
-From: Daniel Hahler <genml+git-2014@thequod.de>
-Subject: Bug: relative core.worktree is resolved from symlink and not its
- target
-Date: Tue, 04 Feb 2014 11:20:39 +0100
-Message-ID: <52F0BEF7.5020600@thequod.de>
+From: chris <jugg@hotmail.com>
+Subject: Re: bug? git push triggers auto pack when gc.auto = 0
+Date: Tue, 4 Feb 2014 10:35:53 +0000 (UTC)
+Message-ID: <loom.20140204T104753-1@post.gmane.org>
+References: <loom.20140204T030158-758@post.gmane.org> <CACsJy8Bo4XgA-g2hy+_pVEKLnerL9WNhpWe==zJANmCMdGXuow@mail.gmail.com> <loom.20140204T055040-646@post.gmane.org> <87r47jxp6k.fsf@fencepost.gnu.org> <loom.20140204T094437-148@post.gmane.org> <87mwi7xm04.fsf@fencepost.gnu.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="XWOQsdQH578dIbRCIJhwFbQkX3k33HN3b"
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 04 11:29:27 2014
+X-From: git-owner@vger.kernel.org Tue Feb 04 11:36:35 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WAdFu-0006iP-Gu
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Feb 2014 11:29:26 +0100
+	id 1WAdMj-0002aO-OZ
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Feb 2014 11:36:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751314AbaBDK3X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Feb 2014 05:29:23 -0500
-Received: from hahler.de ([188.40.33.212]:54034 "EHLO elfe.thequod.de"
+	id S932065AbaBDKg0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Feb 2014 05:36:26 -0500
+Received: from plane.gmane.org ([80.91.229.3]:58890 "EHLO plane.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753167AbaBDK3U (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Feb 2014 05:29:20 -0500
-X-Greylist: delayed 516 seconds by postgrey-1.27 at vger.kernel.org; Tue, 04 Feb 2014 05:29:20 EST
-Received: from localhost (amavis [10.122.1.24])
-	by elfe.thequod.de (Postfix) with ESMTP id DE1BB62116
-	for <git@vger.kernel.org>; Tue,  4 Feb 2014 11:20:42 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=thequod.de; h=
-	content-type:content-type:subject:subject:mime-version
-	:user-agent:from:from:date:date:message-id:received:received; s=
-	postfix2; t=1391509239; bh=hFf2tDZxxBBonTOmRH4UIpXktKilXH+cNwc+H
-	ngVPoY=; b=Mf3mVvEj4AxifGbV6lAx8K6l7pFKBFRHEMqh9YS7PFOPBUw8APyEk
-	cYxi5A1TwX7+mXwbDQmz8nrtsSpG4YFnbz/0LidD+kT9jKavmkMzMi19hAUblyz3
-	KPRC+nSu8ccqE3TCZbOflfdqluiPVCD/knlzIysgqpq6ODt6/OHjKA=
-X-Virus-Scanned: Debian amavisd-new at amavis.thequod.de
-Received: from elfe.thequod.de ([10.122.1.25])
-	by localhost (amavis.thequod.de [10.122.1.24]) (amavisd-new, port 10026)
-	with ESMTP id EY5LLnsvVq2J for <git@vger.kernel.org>;
-	Tue,  4 Feb 2014 11:20:39 +0100 (CET)
-Received: from lenny.thequod.de (24-134-92-193-dynip.superkabel.de [24.134.92.193])
-	(Authenticated sender: daniel@hahler.de)
-	by elfe.thequod.de (Postfix) with ESMTPSA
-	for <git@vger.kernel.org>; Tue,  4 Feb 2014 11:20:39 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.2.0
-X-Enigmail-Version: 1.6
+	id S1754250AbaBDKgY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Feb 2014 05:36:24 -0500
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1WAdMX-0002RL-VH
+	for git@vger.kernel.org; Tue, 04 Feb 2014 11:36:17 +0100
+Received: from 1-165-180-147.dynamic.hinet.net ([1.165.180.147])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 04 Feb 2014 11:36:17 +0100
+Received: from jugg by 1-165-180-147.dynamic.hinet.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 04 Feb 2014 11:36:17 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 1.165.180.147 (Mozilla/5.0 (X11; Linux i686; rv:26.0) Gecko/20100101 Firefox/26.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241519>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241520>
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---XWOQsdQH578dIbRCIJhwFbQkX3k33HN3b
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
+David Kastrup <dak <at> gnu.org> writes:
+> chris <jugg <at> hotmail.com> writes:
+> > That said I would naively assume that a server side house keeping
+> > operation that does not get invoked with every client request be a
+> > nice candidate for asynchronous handling without any need to tell the
+> > client about it.
+> 
+> Except that there are _no_ asynchronously handled repository actions
+> executed on behalf of a client action.  If the repository owner decided
+> to disable demand-based garbage collection in favor of a cron job,
+> that's his call to make.  It makes some sense when there are frequent
+> and multiple accesses to the repository since it avoids getting denied
+> access because of somebody _else_ triggering garbage collection
+> predominantly when times are busiest.
+> 
+> Usually you are not denied access by your _own_ garbage collection since
+> the client waits until completion.
+> 
+> It would be quite bad for scripting git if you constantly had to check
+> after every action whether any associated garbage collection might or
+> might not have completed.
 
-Hi,
+I can't comment for every use case, but I find it strange that a client
+script should need to care whether the server is currently garbage
+collecting or not.  If such a detail must be exposed to a client, then I'd
+put forth that there is a deeper issue here.  But any details there are
+moving well beyond the scope I'm able to comment on.
 
-when using a submodule "sm", there is a relative worktree in its config:
+That said, I think I understand you that it currently does matter in the
+sense that a client can't perform other actions while garbage collection is
+running.
 
-   .git/modules/sm/config:
-   [core]
-    worktree =3D ../../../smworktree
+> Note also that when pushing without a separate server process (like when
+> pushing into a local repository), there is no other job which could be
+> responsible for packing the repository rather than the one doing the
+> push.
 
-git-new-worktree (from contrib) symlinks this config the new worktree.
+Ok, given your full response, I understand how this is being conceptualized
+now, thanks.  However, if you look at it purely from a user's perspective
+who is manually invoking these commands for the command's primary purpose,
+the current behavior is annoying.
 
-=46rom inside the new worktree, git reads the config, but resolves the
-relative worktree setting based on the symlink's location.
+If we assume Git is right in implementing that no server async actions are
+executed on behalf of a client action, then this falls under the category of
+an ill-behaved server in my opinion.  Anything a server does that is not
+directly related to fulfilling the requested client action is now considered
+bad behavior as it blocks the client from continuing whatever it needs to
+get on with.  I see such implementation in Git as favoring server's needs
+over clients.
 
-A fix would be to resolve any relative worktree setting based on the
-symlink target's location (the actual config file), and not from the
-symlink.
+Regards,
 
-This is with git version 1.8.5.3.
-
-Please consider fixing this.
-
-(I know about various workarounds, e.g. copying and adjusting "config"
-or manually setting $GIT_WORK_TREE; more relevant discussion would be
-at http://comments.gmane.org/gmane.comp.version-control.git/196019)
-
-
-Thanks,
-Daniel.
-
---=20
-http://daniel.hahler.de/
-
-
---XWOQsdQH578dIbRCIJhwFbQkX3k33HN3b
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
-Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
-
-iD8DBQFS8L73fAK/hT/mPgARAuSXAJsE0+ixTsGJvzL5lKppvZPxsfKsgACdG/U4
-uZ5iaJTD7yYa+JuhWFv6czg=
-=Vszf
------END PGP SIGNATURE-----
-
---XWOQsdQH578dIbRCIJhwFbQkX3k33HN3b--
+Chris
