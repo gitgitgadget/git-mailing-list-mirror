@@ -1,136 +1,95 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [WIP/PATCH 9/9] submodule: teach unpack_trees() to update submodules
-Date: Tue, 4 Feb 2014 07:11:32 +0700
-Message-ID: <CACsJy8CiAPnatithenDKBBKVGFHQZsu4mJLEjuWFD2GXqO56Lw@mail.gmail.com>
-References: <xmqqd2k4hh4p.fsf@gitster.dls.corp.google.com> <52CC3E16.4060909@web.de>
- <xmqqvbxvekwv.fsf@gitster.dls.corp.google.com> <52EFF25E.6080306@web.de> <52EFF3E9.2060403@web.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] fast-import.c: always honor the filename case
+Date: Mon, 03 Feb 2014 16:14:14 -0800
+Message-ID: <xmqqwqhbag4p.fsf@gitster.dls.corp.google.com>
+References: <1391346784-11891-1-git-send-email-reubenhwk@gmail.com>
+	<52EEA5D3.9000502@web.de>
+	<CAD_8n+RZACW0380co75gWSwVmCJdcH4COsySTF3BFCyKEumXNA@mail.gmail.com>
+	<52EFFA36.8090305@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	"W. Trevor King" <wking@tremily.us>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Tue Feb 04 01:12:10 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Reuben Hawkins <reubenhwk@gmail.com>, git@vger.kernel.org,
+	Dmitry Potapov <dpotapov@gmail.com>,
+	Joshua Jensen <jjensen@workspacewhiz.com>
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Tue Feb 04 01:14:24 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WATcX-0006WC-6e
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Feb 2014 01:12:09 +0100
+	id 1WATeh-0007WB-6t
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Feb 2014 01:14:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752999AbaBDAME (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Feb 2014 19:12:04 -0500
-Received: from mail-qa0-f41.google.com ([209.85.216.41]:56212 "EHLO
-	mail-qa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752427AbaBDAMD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Feb 2014 19:12:03 -0500
-Received: by mail-qa0-f41.google.com with SMTP id w8so11256753qac.28
-        for <git@vger.kernel.org>; Mon, 03 Feb 2014 16:12:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=S67ED3zvv15Kup/+0CR0jaeP6YLDwCwXyCJaXaxUsNQ=;
-        b=cVtx7AVZcgpBdh1I3/hM61eGW++KYKRomq2yCYRxZPZ2XplKI/tDQZVD3a0PDSfXbT
-         vSRHav83XzOBgIjjCjtX0qXdmFqq+L1e6W9rccS+iUCAkGwMmDZ0TArqXPucWMZP9n1h
-         NH918yPHKZHvpum2iDXOM5ZhJ13ifIOVDvppv0Nb8iW/ZSihUOJxHimphpd4YVCmMMLq
-         KAUk9R6keLOZs0gt+fz+kytp91askwtwtkNJqLGxaU4atqQo/Djl1cdgBCYLH46En/f+
-         gbhUM3u3OB4jbVIzSWDzQLOHEp+pfjFTKIXNDfpqB0mQerToq1/qCHYWYKGzr68TmwoY
-         PKYQ==
-X-Received: by 10.140.84.19 with SMTP id k19mr57778185qgd.98.1391472722378;
- Mon, 03 Feb 2014 16:12:02 -0800 (PST)
-Received: by 10.96.136.98 with HTTP; Mon, 3 Feb 2014 16:11:32 -0800 (PST)
-In-Reply-To: <52EFF3E9.2060403@web.de>
+	id S1753037AbaBDAOT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 3 Feb 2014 19:14:19 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58657 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752326AbaBDAOS convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 3 Feb 2014 19:14:18 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1873069C61;
+	Mon,  3 Feb 2014 19:14:18 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=A4wwwhBmjbEJ
+	54GJ0SC9yfyBw+s=; b=Q/56pgeZxCyEFUBnOPZixbW0g1PhBWBnFeOZSxBYwxqw
+	ZM2UbwuZ1NlZqiBGshDQDmxFXwlk3ob2uXTQwPByuLsvOW1snnNBPzZC1FMymMxL
+	FBYbn2XfmdzyHgxsN20dQXGpV36nl+5Jj8am+IieJMFuikhqPffN6NLjNfZ3Rjg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=aj4fK8
+	VhtVDtPPTQQC+yK26HJhuE43NCqnNQ1c3nSalh9YVCOd8JYGxe7Qr4m8HEmpVrZs
+	LU0CMNfuHU9eCToIUeiRrVdeMc/qFdVOxANr28rvgQ3GA1/8XHxzBWjKWY5z1Ues
+	CGPLTb0LEUQ8SIOmtXLUKdqOLmC+cx73BMR7k=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0745469C60;
+	Mon,  3 Feb 2014 19:14:18 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5C0D069C5F;
+	Mon,  3 Feb 2014 19:14:17 -0500 (EST)
+In-Reply-To: <52EFFA36.8090305@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershaus?=
+ =?utf-8?Q?en=22's?= message of
+	"Mon, 03 Feb 2014 21:21:10 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 494C1F7A-8D31-11E3-9EB4-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241502>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241503>
 
-On Tue, Feb 4, 2014 at 2:54 AM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
-> Implement the functionality needed to enable work tree manipulating
-> commands so that an changed submodule does not only affect the index but
-> it also updates the work tree of any initialized submodule according to
-> the SHA-1 recorded in the superproject.
->
-> Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
-> ---
->  entry.c        | 15 ++++++++--
->  submodule.c    | 86 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
->  submodule.h    |  3 ++
->  unpack-trees.c | 69 ++++++++++++++++++++++++++++++++++++----------
->  unpack-trees.h |  1 +
->  5 files changed, 157 insertions(+), 17 deletions(-)
->
-> diff --git a/entry.c b/entry.c
-> index d1bf6ec..61a2767 100644
-> --- a/entry.c
-> +++ b/entry.c
-> @@ -265,7 +265,7 @@ int checkout_entry(struct cache_entry *ce,
->
->         if (!check_path(path, len, &st, state->base_dir_len)) {
->                 unsigned changed = ce_match_stat(ce, &st, CE_MATCH_IGNORE_VALID|CE_MATCH_IGNORE_SKIP_WORKTREE);
-> -               if (!changed)
-> +               if (!changed && (!S_ISDIR(st.st_mode) || !S_ISGITLINK(ce->ce_mode)))
->                         return 0;
+Torsten B=C3=B6gershausen <tboegi@web.de> writes:
 
-Should we report something when ce is a gitlink, but path is not a
-directory, instead of siliently exit?
+> []
+>> So to summarize, when fast-import uses strncmp_icase (what fast-impo=
+rt does now) import on a repository where ignorecase=3Dtrue is wrong.  =
+My patch, "fast-import.c: always honor the filename case" fixes this.  =
+Can you verify?
+>>
+>> Thanks in advance,
+>> Reuben
+>>
+> Yes, I can verify. My feeling is that
+> a) the fast-export should generate the rename the other way around.
+>    Would that be feasable ?
+>    Or generate a real rename ?
+>   (I'm not using fast-export or import myself)
 
-> diff --git a/submodule.c b/submodule.c
-> index 3907034..83e7595 100644
-> --- a/submodule.c
-> +++ b/submodule.c
-> @@ -520,6 +520,42 @@ int depopulate_submodule(const char *path)
->         return 0;
->  }
->
-> +int update_submodule(const char *path, const unsigned char sha1[20], int force)
-> +{
-> +       struct strbuf buf = STRBUF_INIT;
-> +       struct child_process cp;
-> +       const char *hex_sha1 = sha1_to_hex(sha1);
-> +       const char *argv[] = {
-> +               "checkout",
-> +               force ? "-fq" : "-q",
+I do not think this matters.  Or at least, it should not matter.  As
+Peff said in the nearby message, core.ignorecase is completely about
+the _filesystem_, and that git should generally be case-sensitive
+internally.
 
-respect "state->quiet" in checkout_entry() as well?
+And fast-import is about reading internal representation of paths
+and data to populate the repository, without having to guess what
+pathnames were meant to be used---the guess is only needed if we
+need to consult the filesystem that loses case information.
 
-> +               hex_sha1,
-> +               NULL,
-> +       };
-> +       const char *git_dir;
-> +
-> +       strbuf_addf(&buf, "%s/.git", path);
-> +       git_dir = read_gitfile(buf.buf);
-> +       if (!git_dir)
-> +               git_dir = buf.buf;
-> +       if (!is_directory(git_dir)) {
-> +               strbuf_release(&buf);
-> +               /* The submodule is not populated, so we can't check it out */
-> +               return 0;
-> +       }
-> +       strbuf_release(&buf);
-> +
-> +       memset(&cp, 0, sizeof(cp));
-> +       cp.argv = argv;
-> +       cp.env = local_repo_env;
-> +       cp.git_cmd = 1;
-> +       cp.no_stdin = 1;
-> +       cp.dir = path;   /* GIT_WORK_TREE doesn't work for git checkout */
-
-And if we do respect --quiet and it's not specified, paths printed by
-this process is relative to "dir", not to user cwd. Could be
-confusing.
-
-> +       if (run_command(&cp))
-> +               return error("Could not checkout submodule %s", path);
-> +
-> +       return 0;
-> +}
-> +
--- 
-Duy
+The change made by 50906e04 (Support case folding in git fast-import
+when core.ignorecase=3Dtrue, 2010-10-03) should probably be half
+reverted by making the case-squashing an optional feature, that
+could be used even on a system with case sensitive filesystems.
