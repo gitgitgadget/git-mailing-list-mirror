@@ -1,223 +1,87 @@
-From: Thomas Rast <tr@thomasrast.ch>
-Subject: [PATCH 6/9] combine-diff: do not pass revs->dense_combined_merges redundantly
-Date: Tue,  4 Feb 2014 23:17:35 +0100
-Message-ID: <e91b1c369bc8c77fb0627f2c053977cd8bcf5897.1391549294.git.tr@thomasrast.ch>
-References: <cover.1391549294.git.tr@thomasrast.ch>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 04 23:18:27 2014
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/3] setup_pager: set MORE=R
+Date: Tue, 04 Feb 2014 14:17:57 -0800
+Message-ID: <xmqqiosu7ca2.fsf@gitster.dls.corp.google.com>
+References: <20140117041430.GB19551@sigill.intra.peff.net>
+	<20140117042153.GB23443@sigill.intra.peff.net>
+	<xmqqvbxiwh8y.fsf@gitster.dls.corp.google.com>
+	<20140121054927.GD5878@sigill.intra.peff.net>
+	<xmqqwqhtuojx.fsf@gitster.dls.corp.google.com>
+	<20140204221220.GA5457@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+	Yuri <yuri@rawbw.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Feb 04 23:18:31 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WAoK2-0001w8-3i
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Feb 2014 23:18:26 +0100
+	id 1WAoK1-0001w8-JE
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Feb 2014 23:18:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935214AbaBDWSW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Feb 2014 17:18:22 -0500
-Received: from ip1.thgersdorf.net ([148.251.9.194]:54788 "EHLO mail.psioc.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S935029AbaBDWSA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Feb 2014 17:18:00 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by localhost.psioc.net (Postfix) with ESMTP id A8F1A4D65EB
-	for <git@vger.kernel.org>; Tue,  4 Feb 2014 23:17:54 +0100 (CET)
-X-Virus-Scanned: amavisd-new at psioc.net
-Received: from mail.psioc.net ([127.0.0.1])
-	by localhost (mail.psioc.net [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id Iyw7Vdlww9f1 for <git@vger.kernel.org>;
-	Tue,  4 Feb 2014 23:17:50 +0100 (CET)
-Received: from linux.local (46-126-8-85.dynamic.hispeed.ch [46.126.8.85])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(Client did not present a certificate)
-	by mail.psioc.net (Postfix) with ESMTPSA id 721E24D65EA
-	for <git@vger.kernel.org>; Tue,  4 Feb 2014 23:17:42 +0100 (CET)
-X-Mailer: git-send-email 1.9.rc2.232.gdd31389
-In-Reply-To: <cover.1391549294.git.tr@thomasrast.ch>
+	id S934972AbaBDWSU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Feb 2014 17:18:20 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49483 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S934443AbaBDWSC (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Feb 2014 17:18:02 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5A6CD69B78;
+	Tue,  4 Feb 2014 17:18:01 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=DrhCFHbGMiIze5O9dMcq4u6W1KM=; b=umcuo+
+	Epvt7CiCKp8/ofJByz581FzU7JEgIrDwjo5dbOCV9RtvO3xZNjlUwKRMhbEmqBNA
+	dOLYwvcLxdt1Ro8ZM1lzUh7QkExsOjwl7dukP9ZWV6G+eoRINnFh2UDFWtiwPIKU
+	3JA44+SISn9A16cF7QgEsLMzCOoc/Zxwa9aA4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Z10RIoAnpZHNYhfhkM3saCXlxMf4yiie
+	lBn/WkronBfkZMBPFcRLaHUrBhzYCHC/fLLDhl9WyBPpAJAxkpyv7wMSPiUP0YaS
+	mB88abcByRK6r1iGlfCkVMAz6YtmIn8qTbYDTjaJPsg95qllEElb+ksuMBkf+9uQ
+	cKHOE3cgzyc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4538E69B77;
+	Tue,  4 Feb 2014 17:18:01 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B8C9469B72;
+	Tue,  4 Feb 2014 17:17:59 -0500 (EST)
+In-Reply-To: <20140204221220.GA5457@sigill.intra.peff.net> (Jeff King's
+	message of "Tue, 4 Feb 2014 17:12:20 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 34B9AED8-8DEA-11E3-B3BB-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241571>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241572>
 
-The existing code passed revs->dense_combined_merges along revs itself
-into the combine-diff functions, which is rather redundant.  Remove
-the 'dense' argument until much further down the callchain to simplify
-callers.
+Jeff King <peff@peff.net> writes:
 
-Note that while the caller in submodule.c needs to do extra work now,
-the next commit will simplify this to a single setting again.
+> But there's another set of people that I was intending to help with the
+> patch, which is people that have set up LESS, and did not necessarily
+> care about the "R" flag in the past (e.g., for many years before git
+> came along, I set LESS=giM, and never even knew that "R" existed). Since
+> git comes out of the box these days with color and the pager turned on,
+> that means people with such a setup see broken output from day one.
+>
+> And I think it is Git's fault here, not the user or the packager.
 
-Signed-off-by: Thomas Rast <tr@thomasrast.ch>
----
- builtin/diff.c |  3 +--
- combine-diff.c | 13 ++++++-------
- diff-lib.c     |  6 ++----
- diff.h         |  6 +++---
- log-tree.c     |  2 +-
- submodule.c    |  5 ++++-
- 6 files changed, 17 insertions(+), 18 deletions(-)
+I am not particularly itnterested in whose fault it is ;-)  If the
+user sets LESS himself, he knows how to set it (and if he is setting
+it automatically for all of his sessions, he knows where to do so),
+and would know better than Git about "less", his pager of choice.
 
-diff --git a/builtin/diff.c b/builtin/diff.c
-index 0f247d2..47f663b 100644
---- a/builtin/diff.c
-+++ b/builtin/diff.c
-@@ -196,8 +196,7 @@ static int builtin_diff_combined(struct rev_info *revs,
- 		revs->dense_combined_merges = revs->combine_merges = 1;
- 	for (i = 1; i < ents; i++)
- 		sha1_array_append(&parents, ent[i].item->sha1);
--	diff_tree_combined(ent[0].item->sha1, &parents,
--			   revs->dense_combined_merges, revs);
-+	diff_tree_combined(ent[0].item->sha1, &parents, revs);
- 	sha1_array_clear(&parents);
- 	return 0;
- }
-diff --git a/combine-diff.c b/combine-diff.c
-index 3b92c448..6e80a73 100644
---- a/combine-diff.c
-+++ b/combine-diff.c
-@@ -952,7 +952,7 @@ static void show_combined_header(struct combine_diff_path *elem,
- }
- 
- static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
--			    int dense, int working_tree_file,
-+			    int working_tree_file,
- 			    struct rev_info *rev)
- {
- 	struct diff_options *opt = &rev->diffopt;
-@@ -967,6 +967,7 @@ static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
- 	struct userdiff_driver *textconv = NULL;
- 	int is_binary;
- 	const char *line_prefix = diff_line_prefix(opt);
-+	int dense = rev->dense_combined_merges;
- 
- 	context = opt->context;
- 	userdiff = userdiff_find_by_path(elem->path);
-@@ -1214,7 +1215,6 @@ static void show_raw_diff(struct combine_diff_path *p, int num_parent, struct re
-  */
- void show_combined_diff(struct combine_diff_path *p,
- 		       int num_parent,
--		       int dense,
- 		       struct rev_info *rev)
- {
- 	struct diff_options *opt = &rev->diffopt;
-@@ -1226,7 +1226,7 @@ void show_combined_diff(struct combine_diff_path *p,
- 				  DIFF_FORMAT_NAME_STATUS))
- 		show_raw_diff(p, num_parent, rev);
- 	else if (opt->output_format & DIFF_FORMAT_PATCH)
--		show_patch_diff(p, num_parent, dense, 1, rev);
-+		show_patch_diff(p, num_parent, 1, rev);
- }
- 
- static void free_combined_pair(struct diff_filepair *pair)
-@@ -1297,7 +1297,6 @@ static void handle_combined_callback(struct diff_options *opt,
- 
- void diff_tree_combined(const unsigned char *sha1,
- 			const struct sha1_array *parents,
--			int dense,
- 			struct rev_info *rev)
- {
- 	struct diff_options *opt = &rev->diffopt;
-@@ -1365,7 +1364,7 @@ void diff_tree_combined(const unsigned char *sha1,
- 				       opt->line_termination);
- 			for (p = paths; p; p = p->next) {
- 				if (p->len)
--					show_patch_diff(p, num_parent, dense,
-+					show_patch_diff(p, num_parent,
- 							0, rev);
- 			}
- 		}
-@@ -1381,7 +1380,7 @@ void diff_tree_combined(const unsigned char *sha1,
- 	free_pathspec(&diffopts.pathspec);
- }
- 
--void diff_tree_combined_merge(const struct commit *commit, int dense,
-+void diff_tree_combined_merge(const struct commit *commit,
- 			      struct rev_info *rev)
- {
- 	struct commit_list *parent = get_saved_parents(rev, commit);
-@@ -1391,6 +1390,6 @@ void diff_tree_combined_merge(const struct commit *commit, int dense,
- 		sha1_array_append(&parents, parent->item->object.sha1);
- 		parent = parent->next;
- 	}
--	diff_tree_combined(commit->object.sha1, &parents, dense, rev);
-+	diff_tree_combined(commit->object.sha1, &parents, rev);
- 	sha1_array_clear(&parents);
- }
-diff --git a/diff-lib.c b/diff-lib.c
-index 346cac6..8d0f572 100644
---- a/diff-lib.c
-+++ b/diff-lib.c
-@@ -174,9 +174,7 @@ int run_diff_files(struct rev_info *revs, unsigned int option)
- 			i--;
- 
- 			if (revs->combine_merges && num_compare_stages == 2) {
--				show_combined_diff(dpath, 2,
--						   revs->dense_combined_merges,
--						   revs);
-+				show_combined_diff(dpath, 2, revs);
- 				free(dpath);
- 				continue;
- 			}
-@@ -338,7 +336,7 @@ static int show_modified(struct rev_info *revs,
- 		p->parent[1].status = DIFF_STATUS_MODIFIED;
- 		p->parent[1].mode = old->ce_mode;
- 		hashcpy(p->parent[1].sha1, old->sha1);
--		show_combined_diff(p, 2, revs->dense_combined_merges, revs);
-+		show_combined_diff(p, 2, revs);
- 		free(p);
- 		return 0;
- 	}
-diff --git a/diff.h b/diff.h
-index ce123fa..ff77802 100644
---- a/diff.h
-+++ b/diff.h
-@@ -213,11 +213,11 @@ struct combine_diff_path {
- 	 sizeof(struct combine_diff_parent) * (n) + (l) + 1)
- 
- extern void show_combined_diff(struct combine_diff_path *elem, int num_parent,
--			      int dense, struct rev_info *);
-+			       struct rev_info *);
- 
--extern void diff_tree_combined(const unsigned char *sha1, const struct sha1_array *parents, int dense, struct rev_info *rev);
-+extern void diff_tree_combined(const unsigned char *sha1, const struct sha1_array *parents, struct rev_info *rev);
- 
--extern void diff_tree_combined_merge(const struct commit *commit, int dense, struct rev_info *rev);
-+extern void diff_tree_combined_merge(const struct commit *commit, struct rev_info *rev);
- 
- void diff_set_mnemonic_prefix(struct diff_options *options, const char *a, const char *b);
- 
-diff --git a/log-tree.c b/log-tree.c
-index 080f412..2fcca45 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -721,7 +721,7 @@ int log_tree_diff_flush(struct rev_info *opt)
- 
- static int do_diff_combined(struct rev_info *opt, struct commit *commit)
- {
--	diff_tree_combined_merge(commit, opt->dense_combined_merges, opt);
-+	diff_tree_combined_merge(commit, opt);
- 	return !opt->loginfo;
- }
- 
-diff --git a/submodule.c b/submodule.c
-index 613857e..83b80fb 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -505,10 +505,13 @@ static void find_unpushed_submodule_commits(struct commit *commit,
- 	struct rev_info rev;
- 
- 	init_revisions(&rev, NULL);
-+	rev.ignore_merges = 0;
-+	rev.combined_merges = 1;
-+	rev.dense_combined_merges = 1;
- 	rev.diffopt.output_format |= DIFF_FORMAT_CALLBACK;
- 	rev.diffopt.format_callback = collect_submodules_from_diff;
- 	rev.diffopt.format_callback_data = needs_pushing;
--	diff_tree_combined_merge(commit, 1, &rev);
-+	diff_tree_combined_merge(commit, &rev);
- }
- 
- int find_unpushed_submodules(unsigned char new_sha1[20],
--- 
-1.9.rc2.232.gdd31389
+If he did not know about R and did not see color, that is even
+better.  Now he knows and his update to his LESS settings will let
+him view colors in outputs from programs that are not Git.
+
+> So I think there is nothing to be done.  But I did want to mention it in
+> case somebody else can come up with some clever solution. :)
+
+Sure.
