@@ -1,88 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC 2/2] receive-pack: hint that the user can stop "git push" at auto gc time
-Date: Tue, 04 Feb 2014 10:25:31 -0800
-Message-ID: <xmqqha8eag6c.fsf@gitster.dls.corp.google.com>
-References: <CACsJy8B0WKfxSYBSgRZQYz6_h+S9pGd03A=rrWM0_twRdKvyZw@mail.gmail.com>
-	<1391496765-29564-1-git-send-email-pclouds@gmail.com>
-	<1391496765-29564-2-git-send-email-pclouds@gmail.com>
+From: Martin Erik Werner <martinerikwerner@gmail.com>
+Subject: Re: [PATCH v5 4/5] setup: Add 'abspath_part_inside_repo' function
+Date: Tue, 04 Feb 2014 19:32:47 +0100
+Message-ID: <1391538767.4905.30.camel@mule>
+References: <1391306351-13237-1-git-send-email-martinerikwerner@gmail.com>
+	 <1391358940-17373-1-git-send-email-martinerikwerner@gmail.com>
+	 <1391358940-17373-5-git-send-email-martinerikwerner@gmail.com>
+	 <xmqq1tzjewsf.fsf@gitster.dls.corp.google.com>
+	 <20140203231659.GC15607@mule>
+	 <xmqqlhxqagwt.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, jugg@hotmail.com
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 04 19:26:42 2014
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 04 19:32:58 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WAkhi-0001MV-5Q
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Feb 2014 19:26:38 +0100
+	id 1WAknn-0004TN-ON
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Feb 2014 19:32:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754652AbaBDS0e convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 4 Feb 2014 13:26:34 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45064 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751056AbaBDS0d convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 4 Feb 2014 13:26:33 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5A85368075;
-	Tue,  4 Feb 2014 13:26:27 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=/xFHq2Sm4Bvx
-	L/YTjBWzlfh+vyU=; b=ZaEufdzF7RbkxG2bXV6sAvc6KWV/Bki3Ly2cPBR/+Whh
-	Akpij0qI11jtB8wT9p0OuNo19G3Y8NWmQRmyAhdsTU/qcYZPSPWQ2AQN3XzKI8rB
-	l9UrDokNL7WiHJJ+Cw7HYd1V6Kic78Epny649BPErKaBYyjqidpdi801NuEpnSU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=pwMms5
-	H7MMQspdUXz/x9K2d7x0KqeJuhYL6C2MG5N6pRMVeXDcrfyWMc8dUBd4bYVx2FKo
-	u/PfA/BOlkCR6aOSqXGJ+IVnd2BZaA9Xd4f5xpG77UlAXFNWiXA0i8AHDgx9AT8+
-	OoDbXPzKSkkNvF3cEM27VVuFmoEHCeibbVi6Y=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4582A68074;
-	Tue,  4 Feb 2014 13:26:27 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 49A4E67FD0;
-	Tue,  4 Feb 2014 13:25:35 -0500 (EST)
-In-Reply-To: <1391496765-29564-2-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Tue, 4 Feb
- 2014 13:52:45 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: BD2E3B88-8DC9-11E3-8C8B-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754848AbaBDScx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Feb 2014 13:32:53 -0500
+Received: from mail-lb0-f173.google.com ([209.85.217.173]:64265 "EHLO
+	mail-lb0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752629AbaBDScv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Feb 2014 13:32:51 -0500
+Received: by mail-lb0-f173.google.com with SMTP id y6so6728426lbh.18
+        for <git@vger.kernel.org>; Tue, 04 Feb 2014 10:32:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :content-type:mime-version:content-transfer-encoding;
+        bh=M8EOAfcxXNdO+H4HfiEZ8cvlPxffcUGCGr+ox2hQgnE=;
+        b=jhYZXM4thtCp37ew7K0qaFoweFb5WY+tkkdpv9am5j+TjXH1UTBKQy0N0ZkUfIONWY
+         u1eGJYzi/djcZUQuchMabtJKonwzOBPFlyS0UHWFWs7NS205d4pjYZr/dMJ6gloXOD3n
+         OShesOtTPZgOz28cDL8+d32A6M2D5mnL3ZfWsySFOe8Lx8rrVlU+B7TGQCIUzeCsK8Rp
+         s0/oWhkwWjOeyoN4fUcrGBQZDolYjzfI/qzrAC134fLJvhaVitF3UiTmaIWcqreba9Wo
+         8bDib1jAfuevb5GduRpJ87y27rI9EXT5e96mwOdkGn5XKr4NrB0NalXYw0ClAVB9e5SE
+         Msgg==
+X-Received: by 10.112.33.108 with SMTP id q12mr4869484lbi.8.1391538770118;
+        Tue, 04 Feb 2014 10:32:50 -0800 (PST)
+Received: from [192.168.0.101] (nl116-226-21.student.uu.se. [130.243.226.21])
+        by mx.google.com with ESMTPSA id h7sm26150355lbj.1.2014.02.04.10.32.48
+        for <multiple recipients>
+        (version=SSLv3 cipher=RC4-SHA bits=128/128);
+        Tue, 04 Feb 2014 10:32:49 -0800 (PST)
+In-Reply-To: <xmqqlhxqagwt.fsf@gitster.dls.corp.google.com>
+X-Mailer: Evolution 3.8.5-2+b1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241534>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241535>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+On Tue, 2014-02-04 at 10:09 -0800, Junio C Hamano wrote:
+> Martin Erik Werner <martinerikwerner@gmail.com> writes:
+(...)
+> > I was trying to convey that if path is simply "/dir/repo", then the while
+> > loop method of replacing a '/' and checking from the beginning won't
+> > work for the last level, since it has no terminating '/' to replace, so
+> > hence it's a special case, mentioning the "part inside the work tree"
+> > is arguably confusing in that case, since there isn't really one, maybe
+> > it should be left out completely, since the "check each level"
+> > explanation covers it already?
+> 
+> I dunno about the explanation, but it still looks strange to have
+> the special case to deal with "/dir/repo" before you enter the while
+> loop, and then also have code immediately after the loop that seems
+> to handle the same case.  Isn't the latter one redundant?
 
-> Housekeeping jobs like auto gc generally should not get in the way.
-> Users who are pushing may not want to wait until auto gc is done on
-> the server. Give a hint for those users that it's safe now to break
-> "git push" and stop waiting.
->
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
-> ---
->  This bandage patch may be a good compromise between running auto gc
->  and not annoying users much.
-> =20
->  If I'm not mistaken, when ^C on "git push" this way, gc will still b=
-e
->  running until it needs to print something out (which it should not
->  normally because of --quiet). The user won't see gc errors, but the
->  user generally can't do much anyway.
+The check before the loop doesn't use 'real_path', the one after does:
+"/dir/repo" vs "/dir/repolink"
 
-If you are over local transport, I would think you would kill the
-both ends.  Also, wouldn't killing "git push" before it is done
-talking with the receive-pack stop it before it has a chance to
-update the remote tracking refs to pretend as if it fetched from
-there immediately after a push?
-
-So, no. I do not think we should ever encourage "if this bothers
-you, you can ^C it".  Making it not to bother is fine, though.
+-- 
+Martin Erik Werner <martinerikwerner@gmail.com>
