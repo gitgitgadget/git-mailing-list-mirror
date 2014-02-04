@@ -1,345 +1,200 @@
 From: Thomas Rast <tr@thomasrast.ch>
-Subject: [PATCH 7/9] Fold all merge diff variants into an enum
-Date: Tue,  4 Feb 2014 23:17:36 +0100
-Message-ID: <00547f8d781b2635f3917554a9e65d16ba443780.1391549294.git.tr@thomasrast.ch>
+Subject: [POC PATCH 5/9] log: add a merge base inspection option
+Date: Tue,  4 Feb 2014 23:17:34 +0100
+Message-ID: <b21890769d387293182b74f0b06e3e19ab9cfada.1391549294.git.tr@thomasrast.ch>
 References: <cover.1391549294.git.tr@thomasrast.ch>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 04 23:18:24 2014
+X-From: git-owner@vger.kernel.org Tue Feb 04 23:18:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WAoJz-0001w8-Mg
+	id 1WAoK0-0001w8-D2
 	for gcvg-git-2@plane.gmane.org; Tue, 04 Feb 2014 23:18:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935282AbaBDWSH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Feb 2014 17:18:07 -0500
-Received: from ip1.thgersdorf.net ([148.251.9.194]:54787 "EHLO mail.psioc.net"
+	id S935306AbaBDWSJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Feb 2014 17:18:09 -0500
+Received: from ip1.thgersdorf.net ([148.251.9.194]:54786 "EHLO mail.psioc.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S935752AbaBDWR6 (ORCPT <rfc822;git@vger.kernel.org>);
+	id S935750AbaBDWR6 (ORCPT <rfc822;git@vger.kernel.org>);
 	Tue, 4 Feb 2014 17:17:58 -0500
 Received: from localhost (localhost [127.0.0.1])
-	by localhost.psioc.net (Postfix) with ESMTP id A83DE4D65E8
+	by localhost.psioc.net (Postfix) with ESMTP id 6B6034D65D0
 	for <git@vger.kernel.org>; Tue,  4 Feb 2014 23:17:53 +0100 (CET)
 X-Virus-Scanned: amavisd-new at psioc.net
 Received: from mail.psioc.net ([127.0.0.1])
 	by localhost (mail.psioc.net [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 48jni2hD50Eg for <git@vger.kernel.org>;
-	Tue,  4 Feb 2014 23:17:51 +0100 (CET)
+	with LMTP id RkScB1El--xr for <git@vger.kernel.org>;
+	Tue,  4 Feb 2014 23:17:50 +0100 (CET)
 Received: from linux.local (46-126-8-85.dynamic.hispeed.ch [46.126.8.85])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(Client did not present a certificate)
-	by mail.psioc.net (Postfix) with ESMTPSA id C536F4D65EB
-	for <git@vger.kernel.org>; Tue,  4 Feb 2014 23:17:42 +0100 (CET)
+	by mail.psioc.net (Postfix) with ESMTPSA id 0BDEA4D65E8
+	for <git@vger.kernel.org>; Tue,  4 Feb 2014 23:17:41 +0100 (CET)
 X-Mailer: git-send-email 1.9.rc2.232.gdd31389
 In-Reply-To: <cover.1391549294.git.tr@thomasrast.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241567>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241568>
 
-The four ways of displaying merge diffs,
+With the new --bases, print merge commits' parents' merge bases.  This
+is mostly a proof of viability, in particular wrt. revision walk
+decoupling and speed.
 
-* none: no diff
-* -m: against each parent
-* -c: combined
-* --cc: combined-condensed
+We can do "inline" get_merge_bases() (via get_octopus_merge_bases)
+because the walks in get_merge_bases() only use flag bits 16-19, and
+we reset them after use.  The get_revision()/log display walk OTOH
+uses only flag bits 0-15 (actually only 0-10 as of this commit).
 
-were encoded in three flag bits in struct rev_info.  Fold them all
-into a single enum field that captures the variants.
-
-This makes it easier to add new merge diff variants without yet more
-special casing.  It should also be slightly easier to read because one
-does not have to ensure that the flag bits are set in an expected
-combination.
+Speed-wise it turns out to be better than attempting to compute merge
+bases in one go, mostly because the latter approach would require
+extensive data structures to track flags.  This commit does not have
+to: the commit graph will be loaded anyway, and the room for flags is
+already there.  As a big plus, this approach also works in a streaming
+fashion, showing the first few commits very quickly.
 
 Signed-off-by: Thomas Rast <tr@thomasrast.ch>
 ---
- builtin/diff-files.c    |  5 +++--
- builtin/diff-tree.c     |  2 +-
- builtin/diff.c          |  9 +++++----
- builtin/fmt-merge-msg.c |  2 +-
- builtin/log.c           |  9 ++++-----
- builtin/merge.c         |  1 -
- combine-diff.c          |  2 +-
- diff-lib.c              |  7 ++++---
- log-tree.c              |  4 ++--
- revision.c              | 13 +++----------
- revision.h              | 22 +++++++++++++++++++---
- submodule.c             |  4 +---
- 12 files changed, 44 insertions(+), 36 deletions(-)
 
-diff --git a/builtin/diff-files.c b/builtin/diff-files.c
-index 9200069..172b50d 100644
---- a/builtin/diff-files.c
-+++ b/builtin/diff-files.c
-@@ -57,9 +57,10 @@ int cmd_diff_files(int argc, const char **argv, const char *prefix)
- 	 * was not asked to.  "diff-files -c -p" should not densify
- 	 * (the user should ask with "diff-files --cc" explicitly).
- 	 */
--	if (rev.max_count == -1 && !rev.combine_merges &&
-+	if (rev.max_count == -1 &&
-+	    !merge_diff_mode_is_any_combined(&rev) &&
- 	    (rev.diffopt.output_format & DIFF_FORMAT_PATCH))
--		rev.combine_merges = rev.dense_combined_merges = 1;
-+		rev.merge_diff_mode = MERGE_DIFF_COMBINED_CONDENSED;
+As indicated in the cover letter, this is cute, but I'm not married to
+it.  It's probably just a useless instance of feature creep.
+
+ Documentation/rev-list-options.txt |  7 +++++++
+ log-tree.c                         |  3 +++
+ pretty.c                           |  3 +++
+ revision.c                         |  2 ++
+ revision.h                         |  2 ++
+ t/t4202-log.sh                     | 31 +++++++++++++++++++++++++++++++
+ 6 files changed, 48 insertions(+)
+
+diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+index 03533af..d023290 100644
+--- a/Documentation/rev-list-options.txt
++++ b/Documentation/rev-list-options.txt
+@@ -705,6 +705,13 @@ endif::git-rev-list[]
+ 	Print also the children of the commit (in the form "commit child...").
+ 	Also enables parent rewriting, see 'History Simplification' below.
  
- 	if (read_cache_preload(&rev.diffopt.pathspec) < 0) {
- 		perror("read_cache_preload");
-diff --git a/builtin/diff-tree.c b/builtin/diff-tree.c
-index be6417d..2950f80 100644
---- a/builtin/diff-tree.c
-+++ b/builtin/diff-tree.c
-@@ -96,7 +96,7 @@ static int diff_tree_stdin(char *line)
- static void diff_tree_tweak_rev(struct rev_info *rev, struct setup_revision_opt *opt)
- {
- 	if (!rev->diffopt.output_format) {
--		if (rev->dense_combined_merges)
-+		if (rev->merge_diff_mode == MERGE_DIFF_COMBINED_CONDENSED)
- 			rev->diffopt.output_format = DIFF_FORMAT_PATCH;
- 		else
- 			rev->diffopt.output_format = DIFF_FORMAT_RAW;
-diff --git a/builtin/diff.c b/builtin/diff.c
-index 47f663b..fd4c75f 100644
---- a/builtin/diff.c
-+++ b/builtin/diff.c
-@@ -192,8 +192,8 @@ static int builtin_diff_combined(struct rev_info *revs,
- 	if (argc > 1)
- 		usage(builtin_diff_usage);
- 
--	if (!revs->dense_combined_merges && !revs->combine_merges)
--		revs->dense_combined_merges = revs->combine_merges = 1;
-+	if (!merge_diff_mode_is_any_combined(revs))
-+		revs->merge_diff_mode = MERGE_DIFF_COMBINED_CONDENSED;
- 	for (i = 1; i < ents; i++)
- 		sha1_array_append(&parents, ent[i].item->sha1);
- 	diff_tree_combined(ent[0].item->sha1, &parents, revs);
-@@ -242,9 +242,10 @@ static int builtin_diff_files(struct rev_info *revs, int argc, const char **argv
- 	 * dense one, --cc can be explicitly asked for, or just rely
- 	 * on the default).
- 	 */
--	if (revs->max_count == -1 && !revs->combine_merges &&
-+	if (revs->max_count == -1 &&
-+	    !merge_diff_mode_is_any_combined(revs) &&
- 	    (revs->diffopt.output_format & DIFF_FORMAT_PATCH))
--		revs->combine_merges = revs->dense_combined_merges = 1;
-+		revs->merge_diff_mode = MERGE_DIFF_COMBINED_CONDENSED;
- 
- 	setup_work_tree();
- 	if (read_cache_preload(&revs->diffopt.pathspec) < 0) {
-diff --git a/builtin/fmt-merge-msg.c b/builtin/fmt-merge-msg.c
-index 3906eda..2deeacd 100644
---- a/builtin/fmt-merge-msg.c
-+++ b/builtin/fmt-merge-msg.c
-@@ -637,7 +637,7 @@ int fmt_merge_msg(struct strbuf *in, struct strbuf *out,
- 		head = lookup_commit_or_die(head_sha1, "HEAD");
- 		init_revisions(&rev, NULL);
- 		rev.commit_format = CMIT_FMT_ONELINE;
--		rev.ignore_merges = 1;
-+		rev.merge_diff_mode = MERGE_DIFF_IGNORE;
- 		rev.limited = 1;
- 
- 		strbuf_complete_line(out);
-diff --git a/builtin/log.c b/builtin/log.c
-index b97373d..cebebea 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -499,13 +499,12 @@ static int show_tree_object(const unsigned char *sha1,
- 
- static void show_rev_tweak_rev(struct rev_info *rev, struct setup_revision_opt *opt)
- {
--	if (rev->ignore_merges) {
-+	if (!rev->merge_diff_mode) {
- 		/* There was no "-m" on the command line */
--		rev->ignore_merges = 0;
--		if (!rev->first_parent_only && !rev->combine_merges) {
-+		rev->merge_diff_mode = MERGE_DIFF_EACH;
-+		if (!rev->first_parent_only) {
- 			/* No "--first-parent", "-c", nor "--cc" */
--			rev->combine_merges = 1;
--			rev->dense_combined_merges = 1;
-+			rev->merge_diff_mode = MERGE_DIFF_COMBINED_CONDENSED;
- 		}
- 	}
- 	if (!rev->diffopt.output_format)
-diff --git a/builtin/merge.c b/builtin/merge.c
-index e576a7f..6977af7 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -343,7 +343,6 @@ static void squash_message(struct commit *commit, struct commit_list *remotehead
- 		die_errno(_("Could not write to '%s'"), filename);
- 
- 	init_revisions(&rev, NULL);
--	rev.ignore_merges = 1;
- 	rev.commit_format = CMIT_FMT_MEDIUM;
- 
- 	commit->object.flags |= UNINTERESTING;
-diff --git a/combine-diff.c b/combine-diff.c
-index 6e80a73..3fae2dd 100644
---- a/combine-diff.c
-+++ b/combine-diff.c
-@@ -967,7 +967,7 @@ static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
- 	struct userdiff_driver *textconv = NULL;
- 	int is_binary;
- 	const char *line_prefix = diff_line_prefix(opt);
--	int dense = rev->dense_combined_merges;
-+	int dense = (rev->merge_diff_mode == MERGE_DIFF_COMBINED_CONDENSED);
- 
- 	context = opt->context;
- 	userdiff = userdiff_find_by_path(elem->path);
-diff --git a/diff-lib.c b/diff-lib.c
-index 8d0f572..e2700eb 100644
---- a/diff-lib.c
-+++ b/diff-lib.c
-@@ -173,7 +173,8 @@ int run_diff_files(struct rev_info *revs, unsigned int option)
- 			 */
- 			i--;
- 
--			if (revs->combine_merges && num_compare_stages == 2) {
-+			if (merge_diff_mode_is_any_combined(revs) &&
-+			    num_compare_stages == 2) {
- 				show_combined_diff(dpath, 2, revs);
- 				free(dpath);
- 				continue;
-@@ -316,7 +317,7 @@ static int show_modified(struct rev_info *revs,
- 		return -1;
- 	}
- 
--	if (revs->combine_merges && !cached &&
-+	if (merge_diff_mode_is_any_combined(revs) && !cached &&
- 	    (hashcmp(sha1, old->sha1) || hashcmp(old->sha1, new->sha1))) {
- 		struct combine_diff_path *p;
- 		int pathlen = ce_namelen(new);
-@@ -375,7 +376,7 @@ static void do_oneway_diff(struct unpack_trees_options *o,
- 	 * But with the revision flag parsing, that's found in
- 	 * "!revs->ignore_merges".
- 	 */
--	match_missing = !revs->ignore_merges;
-+	match_missing = (revs->merge_diff_mode == MERGE_DIFF_EACH);
- 
- 	if (cached && idx && ce_stage(idx)) {
- 		struct diff_filepair *pair;
++ifndef::git-rev-list[]
++--bases::
++	For merge commits, print the merge bases of the commit's
++	parents.  (These are the bases that were used in the creation
++	of the merge itself.)
++endif::git-rev-list[]
++
+ ifdef::git-rev-list[]
+ --timestamp::
+ 	Print the raw commit timestamp.
 diff --git a/log-tree.c b/log-tree.c
-index 2fcca45..4ab3ffe 100644
+index 08970bf..080f412 100644
 --- a/log-tree.c
 +++ b/log-tree.c
-@@ -754,9 +754,9 @@ static int log_tree_diff(struct rev_info *opt, struct commit *commit, struct log
+@@ -622,6 +622,8 @@ void show_log(struct rev_info *opt)
+ 	ctx.output_encoding = get_log_output_encoding();
+ 	if (opt->from_ident.mail_begin && opt->from_ident.name_begin)
+ 		ctx.from_ident = &opt->from_ident;
++	if (opt->show_merge_bases && commit->parents && commit->parents->next)
++		ctx.merge_bases = get_octopus_merge_bases(commit->parents);
+ 	pretty_print_commit(&ctx, commit, &msgbuf);
  
- 	/* More than one parent? */
- 	if (parents && parents->next) {
--		if (opt->ignore_merges)
-+		if (opt->merge_diff_mode == MERGE_DIFF_IGNORE)
- 			return 0;
--		else if (opt->combine_merges)
-+		else if (merge_diff_mode_is_any_combined(opt))
- 			return do_diff_combined(opt, commit);
- 		else if (opt->first_parent_only) {
- 			/*
+ 	if (opt->add_signoff)
+@@ -662,6 +664,7 @@ void show_log(struct rev_info *opt)
+ 
+ 	strbuf_release(&msgbuf);
+ 	free(ctx.notes_message);
++	free(ctx.merge_bases);
+ }
+ 
+ int log_tree_diff_flush(struct rev_info *opt)
+diff --git a/pretty.c b/pretty.c
+index 5e44cf8..8b28664 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -552,6 +552,9 @@ static void add_merge_info(const struct pretty_print_context *pp,
+ 		return;
+ 
+ 	pp_commit_list(pp, sb, "Merge:", parent);
++
++	if (pp->merge_bases)
++		pp_commit_list(pp, sb, "Bases:", pp->merge_bases);
+ }
+ 
+ static char *get_header(const struct commit *commit, const char *msg,
 diff --git a/revision.c b/revision.c
-index 72255fb..3a1a810 100644
+index a0df72f..72255fb 100644
 --- a/revision.c
 +++ b/revision.c
-@@ -1329,7 +1329,6 @@ void init_revisions(struct rev_info *revs, const char *prefix)
- 	memset(revs, 0, sizeof(*revs));
- 
- 	revs->abbrev = DEFAULT_ABBREV;
--	revs->ignore_merges = 1;
- 	revs->simplify_history = 1;
- 	DIFF_OPT_SET(&revs->pruning, RECURSIVE);
- 	DIFF_OPT_SET(&revs->pruning, QUICK);
-@@ -1809,15 +1808,11 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
- 		DIFF_OPT_SET(&revs->diffopt, RECURSIVE);
- 		DIFF_OPT_SET(&revs->diffopt, TREE_IN_RECURSIVE);
- 	} else if (!strcmp(arg, "-m")) {
--		revs->ignore_merges = 0;
-+		revs->merge_diff_mode = MERGE_DIFF_EACH;
- 	} else if (!strcmp(arg, "-c")) {
--		revs->diff = 1;
--		revs->dense_combined_merges = 0;
--		revs->combine_merges = 1;
-+		revs->merge_diff_mode = MERGE_DIFF_COMBINED;
- 	} else if (!strcmp(arg, "--cc")) {
--		revs->diff = 1;
--		revs->dense_combined_merges = 1;
--		revs->combine_merges = 1;
-+		revs->merge_diff_mode = MERGE_DIFF_COMBINED_CONDENSED;
- 	} else if (!strcmp(arg, "-v")) {
- 		revs->verbose_header = 1;
- 	} else if (!strcmp(arg, "--pretty")) {
-@@ -2230,8 +2225,6 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
- 			copy_pathspec(&revs->diffopt.pathspec,
- 				      &revs->prune_data);
- 	}
--	if (revs->combine_merges)
--		revs->ignore_merges = 0;
- 	revs->diffopt.abbrev = revs->abbrev;
- 
- 	if (revs->line_level_traverse) {
+@@ -1729,6 +1729,8 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+ 	} else if (!strcmp(arg, "--parents")) {
+ 		revs->rewrite_parents = 1;
+ 		revs->print_parents = 1;
++	} else if (!strcmp(arg, "--merge-bases")) {
++		revs->show_merge_bases = 1;
+ 	} else if (!strcmp(arg, "--dense")) {
+ 		revs->dense = 1;
+ 	} else if (!strcmp(arg, "--sparse")) {
 diff --git a/revision.h b/revision.h
-index 3111228..2ec596f 100644
+index 88967d6..3111228 100644
 --- a/revision.h
 +++ b/revision.h
-@@ -51,6 +51,17 @@ struct rev_cmdline_info {
- #define REVISION_WALK_NO_WALK_SORTED 1
- #define REVISION_WALK_NO_WALK_UNSORTED 2
+@@ -19,6 +19,7 @@
+ #define PATCHSAME	(1u<<9)
+ #define BOTTOM		(1u<<10)
+ #define ALL_REV_FLAGS	((1u<<11)-1)
++/* merge-base.c uses bits 16-19.  --merge-bases will break if they overlap! */
  
-+enum merge_diff_mode {
-+	/* default: do not show diffs for merge */
-+	MERGE_DIFF_IGNORE = 0,
-+	/* diff against each side (-m) */
-+	MERGE_DIFF_EACH,
-+	/* combined format (-c) */
-+	MERGE_DIFF_COMBINED,
-+	/* combined-condensed format (-cc) */
-+	MERGE_DIFF_COMBINED_CONDENSED
-+};
-+
- struct rev_info {
- 	/* Starting list */
- 	struct commit_list *commits;
-@@ -117,11 +128,10 @@ struct rev_info {
- 			show_root_diff:1,
- 			no_commit_id:1,
- 			verbose_header:1,
--			ignore_merges:1,
--			combine_merges:1,
--			dense_combined_merges:1,
- 			always_show_header:1;
+ #define DECORATE_SHORT_REFS	1
+ #define DECORATE_FULL_REFS	2
+@@ -137,6 +138,7 @@ struct rev_info {
+ 			preserve_subject:1;
+ 	unsigned int	disable_stdin:1;
+ 	unsigned int	leak_pending:1;
++	unsigned int	show_merge_bases:1;
  
-+	enum merge_diff_mode merge_diff_mode;
-+
- 	/* Format info */
- 	unsigned int	shown_one:1,
- 			shown_dashes:1,
-@@ -199,6 +209,12 @@ struct rev_info {
- 	struct saved_parents *saved_parents_slab;
- };
+ 	enum date_mode date_mode;
  
-+static inline int merge_diff_mode_is_any_combined(struct rev_info *revs)
-+{
-+	return (revs->merge_diff_mode == MERGE_DIFF_COMBINED ||
-+		revs->merge_diff_mode == MERGE_DIFF_COMBINED_CONDENSED);
+diff --git a/t/t4202-log.sh b/t/t4202-log.sh
+index cb03d28..64f34a6 100755
+--- a/t/t4202-log.sh
++++ b/t/t4202-log.sh
+@@ -841,4 +841,35 @@ test_expect_success 'dotdot is a parent directory' '
+ 	test_cmp expect actual
+ '
+ 
++shorten () {
++	for arg; do
++		git rev-parse --short "$arg"
++	done
 +}
 +
- extern int ref_excluded(struct string_list *, const char *path);
- void clear_ref_exclusion(struct string_list **);
- void add_ref_exclusion(struct string_list **, const char *exclude);
-diff --git a/submodule.c b/submodule.c
-index 83b80fb..38973f2 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -505,9 +505,7 @@ static void find_unpushed_submodule_commits(struct commit *commit,
- 	struct rev_info rev;
- 
- 	init_revisions(&rev, NULL);
--	rev.ignore_merges = 0;
--	rev.combined_merges = 1;
--	rev.dense_combined_merges = 1;
-+	rev.merge_diff_mode = MERGE_DIFF_COMBINED_CONDENSED;
- 	rev.diffopt.output_format |= DIFF_FORMAT_CALLBACK;
- 	rev.diffopt.format_callback = collect_submodules_from_diff;
- 	rev.diffopt.format_callback_data = needs_pushing;
++fill_in_merge_bases () {
++	while IFS= read line; do
++		case "$line" in
++		Merge:*)
++			printf "%s\n" "$line"
++			printf "%s" "Bases:"
++			printf " %s" $(shorten \
++			    $(git merge-base --all --octopus \
++				${line##Merge:}))
++			printf "\n"
++			;;
++		*)
++			printf "%s\n" "$line"
++			;;
++		esac
++	done
++}
++
++test_expect_success '--merge-bases' '
++	git log |
++	fill_in_merge_bases >expect
++	git log --merge-bases >actual &&
++	test_cmp expect actual
++'
++
+ test_done
 -- 
 1.9.rc2.232.gdd31389
