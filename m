@@ -1,148 +1,212 @@
 From: Thomas Rast <tr@thomasrast.ch>
-Subject: [PATCH 8/9] merge-recursive: allow storing conflict hunks in index
-Date: Tue,  4 Feb 2014 23:17:37 +0100
-Message-ID: <adf5e5bd91a6441f0fea7412a6507ac5fd9f9a6f.1391549294.git.tr@thomasrast.ch>
+Subject: [PATCH 2/9] merge-recursive: internal flag to avoid touching the worktree
+Date: Tue,  4 Feb 2014 23:17:31 +0100
+Message-ID: <b2b2191a4099bc2635e17dbb22f1b2993f24ff05.1391549294.git.tr@thomasrast.ch>
 References: <cover.1391549294.git.tr@thomasrast.ch>
+Cc: Thomas Rast <trast@inf.ethz.ch>, Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 04 23:18:57 2014
+X-From: git-owner@vger.kernel.org Tue Feb 04 23:19:00 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WAoKU-0002Bf-7X
-	for gcvg-git-2@plane.gmane.org; Tue, 04 Feb 2014 23:18:54 +0100
+	id 1WAoKU-0002Bf-PH
+	for gcvg-git-2@plane.gmane.org; Tue, 04 Feb 2014 23:18:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934746AbaBDWSe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Feb 2014 17:18:34 -0500
-Received: from ip1.thgersdorf.net ([148.251.9.194]:54777 "EHLO mail.psioc.net"
+	id S935221AbaBDWSg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Feb 2014 17:18:36 -0500
+Received: from ip1.thgersdorf.net ([148.251.9.194]:54761 "EHLO mail.psioc.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S935410AbaBDWRy (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Feb 2014 17:17:54 -0500
+	id S934576AbaBDWRw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Feb 2014 17:17:52 -0500
 Received: from localhost (localhost [127.0.0.1])
-	by localhost.psioc.net (Postfix) with ESMTP id 5244E4D658C
-	for <git@vger.kernel.org>; Tue,  4 Feb 2014 23:17:52 +0100 (CET)
+	by localhost.psioc.net (Postfix) with ESMTP id 07FDD4D64BD;
+	Tue,  4 Feb 2014 23:17:51 +0100 (CET)
 X-Virus-Scanned: amavisd-new at psioc.net
 Received: from mail.psioc.net ([127.0.0.1])
 	by localhost (mail.psioc.net [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id Dt2Uxu4TJd08 for <git@vger.kernel.org>;
-	Tue,  4 Feb 2014 23:17:51 +0100 (CET)
+	with LMTP id M6fNFsjc2XHK; Tue,  4 Feb 2014 23:17:41 +0100 (CET)
 Received: from linux.local (46-126-8-85.dynamic.hispeed.ch [46.126.8.85])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(Client did not present a certificate)
-	by mail.psioc.net (Postfix) with ESMTPSA id 3AE764D65EC
-	for <git@vger.kernel.org>; Tue,  4 Feb 2014 23:17:43 +0100 (CET)
+	by mail.psioc.net (Postfix) with ESMTPSA id B3B514D6594;
+	Tue,  4 Feb 2014 23:17:40 +0100 (CET)
 X-Mailer: git-send-email 1.9.rc2.232.gdd31389
 In-Reply-To: <cover.1391549294.git.tr@thomasrast.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241573>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241574>
 
-Add a --conflicts-in-index option to merge-recursive, which instructs
-it to always store the 3-way merged result in the index.  (Normally it
-only does so in recursive invocations, but not for the final result.)
+From: Thomas Rast <trast@inf.ethz.ch>
 
-This serves as a building block for the "remerge diff" feature coming
-up in a subsequent patch.  The external option lets us easily use it
-from tests, where we'd otherwise need a new test-* helper to access
-the feature.
+o->call_depth has a double function: a nonzero call_depth means we
+want to construct virtual merge bases, but it also means we want to
+avoid touching the worktree.  Introduce a new flag o->no_worktree to
+trigger only the latter.
 
-Furthermore, it might occasionally be useful for scripts that want to
-look at the result of invoking git-merge without tampering with the
-worktree.  They could already get the _conflicts_ with --index-only,
-but not (conveniently) the conflict-hunk formatted files that would
-normally be written to the worktree.
-
-Signed-off-by: Thomas Rast <tr@thomasrast.ch>
+Signed-off-by: Thomas Rast <trast@inf.ethz.ch>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- Documentation/merge-strategies.txt |  5 +++++
- merge-recursive.c                  |  4 ++++
- merge-recursive.h                  |  1 +
- t/t3030-merge-recursive.sh         | 20 ++++++++++++++++++++
- 4 files changed, 30 insertions(+)
+ merge-recursive.c | 37 +++++++++++++++++++++----------------
+ merge-recursive.h |  1 +
+ 2 files changed, 22 insertions(+), 16 deletions(-)
 
-diff --git a/Documentation/merge-strategies.txt b/Documentation/merge-strategies.txt
-index 2934e99..3468d99 100644
---- a/Documentation/merge-strategies.txt
-+++ b/Documentation/merge-strategies.txt
-@@ -96,6 +96,11 @@ index-only;;
- 	Write the merge result only to the index; do not touch the
- 	worktree.
- 
-+conflicts-in-index;;
-+	For conflicted files, write 3-way merged contents with
-+	conflict hunks to the index, instead of leaving their entries
-+	unresolved.
-+
- octopus::
- 	This resolves cases with more than two heads, but refuses to do
- 	a complex merge that needs manual resolution.  It is
 diff --git a/merge-recursive.c b/merge-recursive.c
-index f59c1d3..b682812 100644
+index c36dc79..35be144 100644
 --- a/merge-recursive.c
 +++ b/merge-recursive.c
-@@ -724,6 +724,8 @@ static void update_file_flags(struct merge_options *o,
+@@ -408,10 +408,10 @@ static void record_df_conflict_files(struct merge_options *o,
+ 	int i;
+ 
+ 	/*
+-	 * If we're merging merge-bases, we don't want to bother with
+-	 * any working directory changes.
++	 * If we're working in-core only (e.g., merging merge-bases),
++	 * we don't want to bother with any working directory changes.
+ 	 */
+-	if (o->call_depth)
++	if (o->call_depth || o->no_worktree)
+ 		return;
+ 
+ 	/* Ensure D/F conflicts are adjacent in the entries list. */
+@@ -724,7 +724,7 @@ static void update_file_flags(struct merge_options *o,
  			      int update_cache,
  			      int update_wd)
  {
-+	if (o->conflicts_in_index)
-+		update_cache = 1;
- 	if (o->call_depth || o->no_worktree)
+-	if (o->call_depth)
++	if (o->call_depth || o->no_worktree)
  		update_wd = 0;
  
-@@ -2098,6 +2100,8 @@ int parse_merge_opt(struct merge_options *o, const char *s)
+ 	if (update_wd) {
+@@ -931,7 +931,8 @@ static struct merge_file_info merge_file_1(struct merge_options *o,
+ 			result.clean = merge_submodule(result.sha,
+ 						       one->path, one->sha1,
+ 						       a->sha1, b->sha1,
+-						       !o->call_depth);
++						       !(o->call_depth ||
++							 o->no_worktree));
+ 		} else if (S_ISLNK(a->mode)) {
+ 			hashcpy(result.sha, a->sha1);
+ 
+@@ -1003,7 +1004,7 @@ static void handle_change_delete(struct merge_options *o,
+ 				 const char *change, const char *change_past)
+ {
+ 	char *renamed = NULL;
+-	if (dir_in_way(path, !o->call_depth)) {
++	if (dir_in_way(path, !(o->call_depth || o->no_worktree))) {
+ 		renamed = unique_path(o, path, a_sha ? o->branch1 : o->branch2);
  	}
- 	else if (!strcmp(s, "index-only"))
- 		o->no_worktree = 1;
-+	else if (!strcmp(s, "conflicts-in-index"))
-+		o->conflicts_in_index = 1;
- 	else
- 		return -1;
- 	return 0;
+ 
+@@ -1128,10 +1129,10 @@ static void handle_file(struct merge_options *o,
+ 		char *add_name = unique_path(o, rename->path, other_branch);
+ 		update_file(o, 0, add->sha1, add->mode, add_name);
+ 
+-		remove_file(o, 0, rename->path, 0);
++		remove_file(o, 0, rename->path, o->call_depth || o->no_worktree);
+ 		dst_name = unique_path(o, rename->path, cur_branch);
+ 	} else {
+-		if (dir_in_way(rename->path, !o->call_depth)) {
++		if (dir_in_way(rename->path, !(o->call_depth || o->no_worktree))) {
+ 			dst_name = unique_path(o, rename->path, cur_branch);
+ 			output(o, 1, _("%s is a directory in %s adding as %s instead"),
+ 			       rename->path, other_branch, dst_name);
+@@ -1238,7 +1239,7 @@ static void conflict_rename_rename_2to1(struct merge_options *o,
+ 		 * merge base just undo the renames; they can be detected
+ 		 * again later for the non-recursive merge.
+ 		 */
+-		remove_file(o, 0, path, 0);
++		remove_file(o, 0, path, o->call_depth || o->no_worktree);
+ 		update_file(o, 0, mfi_c1.sha, mfi_c1.mode, a->path);
+ 		update_file(o, 0, mfi_c2.sha, mfi_c2.mode, b->path);
+ 	} else {
+@@ -1246,7 +1247,7 @@ static void conflict_rename_rename_2to1(struct merge_options *o,
+ 		char *new_path2 = unique_path(o, path, ci->branch2);
+ 		output(o, 1, _("Renaming %s to %s and %s to %s instead"),
+ 		       a->path, new_path1, b->path, new_path2);
+-		remove_file(o, 0, path, 0);
++		remove_file(o, 0, path, o->call_depth || o->no_worktree);
+ 		update_file(o, 0, mfi_c1.sha, mfi_c1.mode, new_path1);
+ 		update_file(o, 0, mfi_c2.sha, mfi_c2.mode, new_path2);
+ 		free(new_path2);
+@@ -1405,6 +1406,7 @@ static int process_renames(struct merge_options *o,
+ 			 * add-source case).
+ 			 */
+ 			remove_file(o, 1, ren1_src,
++				    o->call_depth || o->no_worktree ||
+ 				    renamed_stage == 2 || !was_tracked(ren1_src));
+ 
+ 			hashcpy(src_other.sha1, ren1->src_entry->stages[other_stage].sha);
+@@ -1601,7 +1603,7 @@ static int merge_content(struct merge_options *o,
+ 			 o->branch2 == rename_conflict_info->branch1) ?
+ 			pair1->two->path : pair1->one->path;
+ 
+-		if (dir_in_way(path, !o->call_depth))
++		if (dir_in_way(path, !(o->call_depth || o->no_worktree)))
+ 			df_conflict_remains = 1;
+ 	}
+ 	mfi = merge_file_special_markers(o, &one, &a, &b,
+@@ -1621,7 +1623,7 @@ static int merge_content(struct merge_options *o,
+ 		path_renamed_outside_HEAD = !path2 || !strcmp(path, path2);
+ 		if (!path_renamed_outside_HEAD) {
+ 			add_cacheinfo(mfi.mode, mfi.sha, path,
+-				      0, (!o->call_depth), 0);
++				      0, !(o->call_depth || o->no_worktree), 0);
+ 			return mfi.clean;
+ 		}
+ 	} else
+@@ -1722,7 +1724,8 @@ static int process_entry(struct merge_options *o,
+ 			if (a_sha)
+ 				output(o, 2, _("Removing %s"), path);
+ 			/* do not touch working file if it did not exist */
+-			remove_file(o, 1, path, !a_sha);
++			remove_file(o, 1, path,
++				    o->call_depth || o->no_worktree || !a_sha);
+ 		} else {
+ 			/* Modify/delete; deleted side may have put a directory in the way */
+ 			clean_merge = 0;
+@@ -1753,7 +1756,7 @@ static int process_entry(struct merge_options *o,
+ 			sha = b_sha;
+ 			conf = _("directory/file");
+ 		}
+-		if (dir_in_way(path, !o->call_depth)) {
++		if (dir_in_way(path, !(o->call_depth || o->no_worktree))) {
+ 			char *new_path = unique_path(o, path, add_branch);
+ 			clean_merge = 0;
+ 			output(o, 1, _("CONFLICT (%s): There is a directory with name %s in %s. "
+@@ -1781,7 +1784,8 @@ static int process_entry(struct merge_options *o,
+ 		 * this entry was deleted altogether. a_mode == 0 means
+ 		 * we had that path and want to actively remove it.
+ 		 */
+-		remove_file(o, 1, path, !a_mode);
++		remove_file(o, 1, path,
++			    o->call_depth || o->no_worktree || !a_mode);
+ 	} else
+ 		die(_("Fatal merge failure, shouldn't happen."));
+ 
+@@ -1807,7 +1811,8 @@ int merge_trees(struct merge_options *o,
+ 		return 1;
+ 	}
+ 
+-	code = git_merge_trees(o->call_depth, common, head, merge);
++	code = git_merge_trees(o->call_depth || o->no_worktree,
++			       common, head, merge);
+ 
+ 	if (code != 0) {
+ 		if (show(o, 4) || o->call_depth)
 diff --git a/merge-recursive.h b/merge-recursive.h
-index d8dd7a1..9b8e20b 100644
+index 9e090a3..d8dd7a1 100644
 --- a/merge-recursive.h
 +++ b/merge-recursive.h
-@@ -16,6 +16,7 @@ struct merge_options {
+@@ -15,6 +15,7 @@ struct merge_options {
+ 	const char *subtree_shift;
  	unsigned buffer_output : 1;
  	unsigned renormalize : 1;
- 	unsigned no_worktree : 1; /* do not touch worktree */
-+	unsigned conflicts_in_index : 1; /* index will contain conflict hunks */
++	unsigned no_worktree : 1; /* do not touch worktree */
  	long xdl_opts;
  	int verbosity;
  	int diff_rename_limit;
-diff --git a/t/t3030-merge-recursive.sh b/t/t3030-merge-recursive.sh
-index 2f3a16c..4192fd3 100755
---- a/t/t3030-merge-recursive.sh
-+++ b/t/t3030-merge-recursive.sh
-@@ -309,6 +309,26 @@ test_expect_success 'merge-recursive --index-only' '
- 	test_cmp expected-diff actual-diff
- '
- 
-+test_expect_success 'merge-recursive --index-only --conflicts-in-index' '
-+	# first pass: do a merge as usual to obtain "expected"
-+	rm -fr [abcd] &&
-+	git checkout -f "$c2" &&
-+	test_expect_code 1 git merge-recursive "$c0" -- "$c2" "$c1" &&
-+	git add [abcd] &&
-+	git ls-files -s >expected &&
-+	# second pass: actual test
-+	rm -fr [abcd] &&
-+	git checkout -f "$c2" &&
-+	test_expect_code 1 \
-+		git merge-recursive --index-only --conflicts-in-index \
-+		"$c0" -- "$c2" "$c1" &&
-+	git ls-files -s >actual &&
-+	test_cmp expected actual &&
-+	git diff HEAD >actual-diff &&
-+	: >expected-diff &&
-+	test_cmp expected-diff actual-diff
-+'
-+
- test_expect_success 'fail if the index has unresolved entries' '
- 
- 	rm -fr [abcd] &&
 -- 
 1.9.rc2.232.gdd31389
