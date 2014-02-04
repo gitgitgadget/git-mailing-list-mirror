@@ -1,98 +1,175 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/9] remerge diff proof of concept/RFC
-Date: Tue, 04 Feb 2014 15:04:35 -0800
-Message-ID: <xmqq1tzi7a4c.fsf@gitster.dls.corp.google.com>
-References: <cover.1391549294.git.tr@thomasrast.ch>
+Subject: [PATCH] repack.c: rename and unlink pack file if it exists
+Date: Tue, 04 Feb 2014 15:40:15 -0800
+Message-ID: <xmqqwqha5twg.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Thomas Rast <tr@thomasrast.ch>
-X-From: git-owner@vger.kernel.org Wed Feb 05 00:05:18 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+	git@vger.kernel.org
+To: Stefan Beller <stefanbeller@googlemail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 05 00:40:28 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WAp3O-0006lQ-4X
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Feb 2014 00:05:18 +0100
+	id 1WApbP-00054l-1y
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Feb 2014 00:40:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934222AbaBDXFH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Feb 2014 18:05:07 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:42687 "EHLO
+	id S1754885AbaBDXkW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 4 Feb 2014 18:40:22 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53973 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S964778AbaBDXEj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Feb 2014 18:04:39 -0500
+	id S1754830AbaBDXkU convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 4 Feb 2014 18:40:20 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C7F9A67E6C;
-	Tue,  4 Feb 2014 18:04:38 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7E0A369B36;
+	Tue,  4 Feb 2014 18:40:19 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=MhGGer/LPGCJT4yry40R+AqGoho=; b=LtoQ2C
-	4zIxWGuLwZr/18b5f8D4nKINX53LBnkDrzRrmZtyK8QvimSTFTCZJsh5Bhw3ffc6
-	ABH/JgALvcyBxljLVz56OWh22ubBegqd6a2wYMMC+sJoEIDnC1osMeizblOWJj0J
-	e7xfhCIq85A9CQZnSPWKBvtrABiYF2ZRJO7nA=
+	:subject:date:message-id:mime-version:content-type
+	:content-transfer-encoding; s=sasl; bh=wSNmsM+ZKzSxcy8YkgWoN45ry
+	+g=; b=TjMHSNZ0P84ms6rnOjQcpZiodhLxYQllr9jhdCS201dSJpJH3jZeZxMpA
+	iCuDjejqba/AsSff4A/T9tGzjhTfFJn4jfPI3uLNefRRpLlH1IzCa2jiJ+aQ5HCl
+	2lyZkCWjhnAPZKtTyO2RI0yu6ZP0EanKsUT+TPx1LFmIL76B3o=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=nTihiQfpIZZO7MyCbORHuH/iDBMUAnO5
-	lfN8zBaqYY3WxTz6IhBORk4szrY/7paxeyhdU2SaQ0i++ia7JaNaJfGG89Kb+uyA
-	txvIvf/tzTrHzoos5SeuF22jhW1psEqk9I6QGC5rifzE18OeCAwbAc6F4ywELM2R
-	TTH8udicJm0=
+	:subject:date:message-id:mime-version:content-type
+	:content-transfer-encoding; q=dns; s=sasl; b=E6zcoOCub0ARqg84Dax
+	kShCMrN8E+T0WWLEKFrdV12MSAhsf/Uj7VI8kkY6Htem9Hwd9fBol21gCdoNxxJQ
+	Yx4bgdVZoTtY2RcgK0f1ydx55eKuwFpmgUViWYtYbPgwFiIMVPC3AvpCTMPtfDs3
+	6DHFpDs7FHliMOn91QaasObI=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B35D367E6A;
-	Tue,  4 Feb 2014 18:04:38 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6B25C69B35;
+	Tue,  4 Feb 2014 18:40:19 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C388A67E68;
-	Tue,  4 Feb 2014 18:04:37 -0500 (EST)
-In-Reply-To: <cover.1391549294.git.tr@thomasrast.ch> (Thomas Rast's message of
-	"Tue, 4 Feb 2014 23:17:29 +0100")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 96D5E69B31;
+	Tue,  4 Feb 2014 18:40:18 -0500 (EST)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: B87CE414-8DF0-11E3-B002-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: B483853E-8DF5-11E3-8BEB-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241585>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241586>
 
-Thomas Rast <tr@thomasrast.ch> writes:
+This comment in builtin/repack.c:
 
->   log --remerge-diff: show what the conflict resolution changed
+    First see if there are packs of the same name and if so
+    if we can move them out of the way (this can happen if we
+    repacked immediately after packing fully).
 
-Yay ;-)
+When a repo was fully repacked, and is repacked again, we may run
+into the situation that "new" packfiles have the same name as
+already existing ones (traditionally packfiles have been named after
+the list of names of objects in them, so repacking all the objects
+in a single pack would have produced a packfile with the same name).
 
-> This series explores another angle, which I call "remerge diff".  It
-> works by re-doing the merge in core, using features from patches 1-3
-> and 7.  Likely that will result in conflicts, which are formatted in
-> the usual <<<<<<< way.  Then it diffs this "remerge" against the
-> merge's tree that is recorded in history.
+The logic is to rename the existing ones into filename like
+"old-XXX", create the new ones and then remove the "old-" ones.
+When something went wrong in the middle, this sequence is rolled
+back by renaming the "old-" files back.
 
-Yup, that is the obvious way to recreate what would have been shown
-to the person who recorded the merge result.  I like that approach.
+The renaming into "old-" did not work as designed, because
+file_exists() was done on the wrong file name.  This could give
+problems for a repo on a network share under Windows, as reported by
+Jochen Haag <zwanzig12@googlemail.com>.
 
-> So I would welcome comments, and/or better ideas, on the following
-> proposed resolution:
->
-> * Implement what I described last, to take care of delete/modify
->   conflicts.
+=46ormulate the filenames objects/pack/pack-XXXX.{pack,idx} correctly
+(the code originally lacked "pack-" prefix when checking if the file
+exists).
 
-Naively, I would have thought that
+Also rename the variables to match what they are used for:
+fname for the final name of the new packfile, fname_old for the name
+of the existing one, and fname_tmp for the temporary name pack-objects
+created the new packfile in.
 
- - If the recorded result of the merge does not have the path, then
-   show the deletion of the contents relative to the side that
-   modified it.
+Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
- - If the recorded result of the merge has the path, then show the
-   change between the side that modified it and the recorded result.
+ * Somehow this came to my private mailbox without Cc to list, so I
+   am forwarding it.
 
-might be more useful.  Then we will know what we lost in full (if
-the recorded result is to "delete" it), but it is very likely that
-we won't see anything if the recorded result blindly took what the
-modifying side left.  Comparing with the synthetic stages 2+3 will
-at least show us there was something funky going on, so your
-approach would be reasonable in this case.
+   I think with 1190a1ac (pack-objects: name pack files after
+   trailer hash, 2013-12-05), repacking the same set of objects may
+   have less chance of producing colliding names, especially if you
+   are on a box with more than one core, but it still would be a
+   good idea to get this part right in the upcoming release.
 
-> * Punt on more complex conflicts, by removing those files from the
->   index, and emitting a warning about those files instead.
+   The bug in the first hunk will cause us not to find any existing
+   file, even when there is a name clash.  And then we try to
+   immediately the final rename without any provision for rolling
+   back.  The other two hunks are pure noise renaming variables.
 
-Sensible.
+   I think the patch looks correct, but I'd appreciate a second set
+   of eyeballs.
+
+   Thanks.
+
+ builtin/repack.c | 24 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
+
+diff --git a/builtin/repack.c b/builtin/repack.c
+index bca7710..3b01353 100644
+--- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -260,7 +260,7 @@ int cmd_repack(int argc, const char **argv, const c=
+har *prefix)
+ 	for_each_string_list_item(item, &names) {
+ 		for (ext =3D 0; ext < 2; ext++) {
+ 			char *fname, *fname_old;
+-			fname =3D mkpathdup("%s/%s%s", packdir,
++			fname =3D mkpathdup("%s/pack-%s%s", packdir,
+ 						item->string, exts[ext]);
+ 			if (!file_exists(fname)) {
+ 				free(fname);
+@@ -316,33 +316,33 @@ int cmd_repack(int argc, const char **argv, const=
+ char *prefix)
+ 	/* Now the ones with the same name are out of the way... */
+ 	for_each_string_list_item(item, &names) {
+ 		for (ext =3D 0; ext < 2; ext++) {
+-			char *fname, *fname_old;
++			char *fname, *fname_tmp;
+ 			struct stat statbuffer;
+ 			fname =3D mkpathdup("%s/pack-%s%s",
+ 					packdir, item->string, exts[ext]);
+-			fname_old =3D mkpathdup("%s-%s%s",
++			fname_tmp =3D mkpathdup("%s-%s%s",
+ 					packtmp, item->string, exts[ext]);
+-			if (!stat(fname_old, &statbuffer)) {
++			if (!stat(fname_tmp, &statbuffer)) {
+ 				statbuffer.st_mode &=3D ~(S_IWUSR | S_IWGRP | S_IWOTH);
+-				chmod(fname_old, statbuffer.st_mode);
++				chmod(fname_tmp, statbuffer.st_mode);
+ 			}
+-			if (rename(fname_old, fname))
+-				die_errno(_("renaming '%s' failed"), fname_old);
++			if (rename(fname_tmp, fname))
++				die_errno(_("renaming '%s' into '%s' failed"), fname_tmp, fname);
+ 			free(fname);
+-			free(fname_old);
++			free(fname_tmp);
+ 		}
+ 	}
+=20
+ 	/* Remove the "old-" files */
+ 	for_each_string_list_item(item, &names) {
+ 		for (ext =3D 0; ext < 2; ext++) {
+-			char *fname;
+-			fname =3D mkpath("%s/old-pack-%s%s",
++			char *fname_old;
++			fname_old =3D mkpath("%s/old-%s%s",
+ 					packdir,
+ 					item->string,
+ 					exts[ext]);
+-			if (remove_path(fname))
+-				warning(_("removing '%s' failed"), fname);
++			if (remove_path(fname_old))
++				warning(_("removing '%s' failed"), fname_old);
+ 		}
+ 	}
+=20
+--=20
+1.9-rc2-217-g24a8b2e
