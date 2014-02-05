@@ -1,53 +1,71 @@
-From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+From: Jeff King <peff@peff.net>
 Subject: Re: [PATCH] repack.c: rename and unlink pack file if it exists
-Date: Wed, 05 Feb 2014 22:01:16 +0100
-Message-ID: <52F2A69C.50000@web.de>
-References: <xmqqwqha5twg.fsf@gitster.dls.corp.google.com>	<20140205011632.GA3923@sigill.intra.peff.net>	<xmqq1tzh494e.fsf@gitster.dls.corp.google.com>	<20140205201243.GA16899@sigill.intra.peff.net> <xmqqsirx2teh.fsf@gitster.dls.corp.google.com>
+Date: Wed, 5 Feb 2014 16:01:29 -0500
+Message-ID: <20140205210129.GA24314@sigill.intra.peff.net>
+References: <xmqqwqha5twg.fsf@gitster.dls.corp.google.com>
+ <20140205011632.GA3923@sigill.intra.peff.net>
+ <xmqq1tzh494e.fsf@gitster.dls.corp.google.com>
+ <20140205201243.GA16899@sigill.intra.peff.net>
+ <xmqqsirx2teh.fsf@gitster.dls.corp.google.com>
+ <20140205203740.GA17077@sigill.intra.peff.net>
+ <xmqqfvnx2s7p.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
 Cc: Stefan Beller <stefanbeller@googlemail.com>,
-	=?ISO-8859-1?Q?Torsten_?= =?ISO-8859-1?Q?B=F6gershausen?= 
-	<tboegi@web.de>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Feb 05 22:01:36 2014
+	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 05 22:01:42 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WB9bC-00061g-EQ
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Feb 2014 22:01:34 +0100
+	id 1WB9bJ-00066I-Eg
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Feb 2014 22:01:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756175AbaBEVBY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Feb 2014 16:01:24 -0500
-Received: from mout.web.de ([212.227.15.4]:51425 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754449AbaBEVBT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Feb 2014 16:01:19 -0500
-Received: from [192.168.209.26] ([78.72.74.102]) by smtp.web.de (mrweb002)
- with ESMTPSA (Nemesis) id 0LpfJW-1VXykl2rJu-00fVQX for <git@vger.kernel.org>;
- Wed, 05 Feb 2014 22:01:17 +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:24.0) Gecko/20100101 Thunderbird/24.3.0
-In-Reply-To: <xmqqsirx2teh.fsf@gitster.dls.corp.google.com>
-X-Provags-ID: V03:K0:TjLV3AXpWXC0I6eJzeM+1IK0gdliZof9JDl2ZxmJxL+blgKqDM5
- 3oZJgNzDxN9Pkn5o40d4jx75l1MX3FqqAu2gVViFCs1Fq48PBfNrotwITQ9hm5on9WrVwrH
- lbQcpdnf+ey2T+gIQAC2djMnm95i9KeV/K9n5WJDXZHZfZqBfXe/Ff0eVPT9ObKeHBS1MbR
- OuMAji4j1AUvRqznPBppw==
+	id S1756180AbaBEVBe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Feb 2014 16:01:34 -0500
+Received: from cloud.peff.net ([50.56.180.127]:45314 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756164AbaBEVBb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Feb 2014 16:01:31 -0500
+Received: (qmail 19426 invoked by uid 102); 5 Feb 2014 21:01:31 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 05 Feb 2014 15:01:31 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 05 Feb 2014 16:01:29 -0500
+Content-Disposition: inline
+In-Reply-To: <xmqqfvnx2s7p.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241661>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241662>
 
-On 2014-02-05 21.31, Junio C Hamano wrote:
-> Jeff King <peff@peff.net> writes:
+On Wed, Feb 05, 2014 at 12:57:14PM -0800, Junio C Hamano wrote:
+
+> > ...does not seem to fail, and it does not seem to leave any cruft in
+> > place. So maybe I am misunderstanding the thing the patch is meant to
+> > fix. Is it that we simply do not replace the pack in this instance?
 > 
->> The minimal fix you posted below does make sense to me as a stopgap, and
->> we can look into dropping the code entirely during the next cycle. It
->> would be nice to have a test to cover this case, though.
-> 
-> Sounds sensible.  Run "repack -a -d" once, and then another while
-> forcing it to be single threaded, or something?
-I can put a test case on my todo list,
-and thanks for the minimal patch.
+> Yes.  Not just the command finishing OK, but the packfile left by
+> the first repack needs to be left intact. [...]
+
+Thanks for the explanation. Having looked at this now, I'm thinking a
+test may not be worth the trouble. Due to 1190a1ac, we effectively don't
+care whether we get the old pack or the new one. So the fact that this
+bug exists doesn't really produce any user-visible behavior, and
+hopefully post-release we would drop the code entirely, and the test
+would have no reason to exist.
+
+> We could use test-chmtime to reset the timestamp of the packfile
+> generated by the first repack to somewhere reasonably old and then
+> rerun the repack to see that it is a different file, which may be
+> more portable than inspecting the inum of the packfile.
+
+Yeah, I think that would work. But it sounds like we also need a
+filesystem in which rename() does not overwrite. So the test would not
+be portable.
+
+-Peff
