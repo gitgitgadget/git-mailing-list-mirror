@@ -1,108 +1,82 @@
-From: Martin Erik Werner <martinerikwerner@gmail.com>
-Subject: [BUG] t9151: Unreliable test/test setup
-Date: Thu, 6 Feb 2014 00:46:21 +0100
-Message-ID: <20140205234621.GA4777@mule>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH 2/2] reset: support "--mixed --intent-to-add" mode
+Date: Thu, 6 Feb 2014 06:48:45 +0700
+Message-ID: <CACsJy8Aj-5MzRjDxfWkOVtqxjo+w7v6uEjGfGAj_9s59t5eiYA@mail.gmail.com>
+References: <CACsJy8BXGZ+1Oqrpcky5JPCtZRwvxmxhXGfuEqY9Ct4Pt8FmJg@mail.gmail.com>
+ <1391480409-25727-1-git-send-email-pclouds@gmail.com> <1391480409-25727-2-git-send-email-pclouds@gmail.com>
+ <xmqqvbwu8zjx.fsf@gitster.dls.corp.google.com> <xmqqeh3i7bxm.fsf@gitster.dls.corp.google.com>
+ <20140205002725.GA3858@lanh> <xmqqob2l5vl2.fsf@gitster.dls.corp.google.com> <xmqqbnyl5sde.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: amyrick@apple.com, tuomas.suutari@gmail.com, sam@vilain.net
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 06 00:46:33 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 06 00:49:21 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WBCAq-0004Zy-ED
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Feb 2014 00:46:32 +0100
+	id 1WBCDY-00060V-7t
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Feb 2014 00:49:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752390AbaBEXq2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Feb 2014 18:46:28 -0500
-Received: from mail-la0-f48.google.com ([209.85.215.48]:56116 "EHLO
-	mail-la0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752035AbaBEXq1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Feb 2014 18:46:27 -0500
-Received: by mail-la0-f48.google.com with SMTP id mc6so900319lab.35
-        for <git@vger.kernel.org>; Wed, 05 Feb 2014 15:46:26 -0800 (PST)
+	id S1753687AbaBEXtR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Feb 2014 18:49:17 -0500
+Received: from mail-qa0-f46.google.com ([209.85.216.46]:60810 "EHLO
+	mail-qa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753669AbaBEXtQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Feb 2014 18:49:16 -0500
+Received: by mail-qa0-f46.google.com with SMTP id ii20so1695754qab.33
+        for <git@vger.kernel.org>; Wed, 05 Feb 2014 15:49:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:mime-version:content-type
-         :content-disposition:user-agent;
-        bh=W3ipNVgpuWHdQ63pHONl4BUtGaSLzK454JaDNb5W5A0=;
-        b=roRA/McxK7C0rXgbdt9njzcmMgVXy1tX6gNWmLVddlrx4wBTevalJ+sNZh4oGIgQ3f
-         ZeAaGzOVHtkuGPRWT162EAYzpXYqIF+2tW+6pCmF9Ko84hla2vUNU0skbH1UPLpXzZnS
-         EyMucXfR2prXdBuBQo6+ZKkrLzgiAYdUvOL1faHqppBxOXTJZmKjSKi8MZfvsJXLt3kk
-         XdzrI0WyQ90VO5RLoh958USH3zb6XAFko+9uSZtnzxHqhyKOj+XQAfJUvRX61aKJ2BEn
-         Nzyro+9Iq3y/yOaLUQY/ylETQghpkPsg+Wg173hV5trOlnji7WDmOIMBgEoTp1yUnz9f
-         aJ1Q==
-X-Received: by 10.112.189.68 with SMTP id gg4mr2810309lbc.18.1391643986470;
-        Wed, 05 Feb 2014 15:46:26 -0800 (PST)
-Received: from mule (nl116-226-21.student.uu.se. [130.243.226.21])
-        by mx.google.com with ESMTPSA id t5sm43014970lat.6.2014.02.05.15.46.24
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 05 Feb 2014 15:46:25 -0800 (PST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=l8PE5AENgv+dkd5CML4NFB9Zug/pronEI386C/ybTak=;
+        b=AhvaRaiV+v0+tVRyO8n/FCl5l1QYrs7pIV2nRW+4YLsUCKg05Rt/q4dbkuvn3THX0C
+         kt7srGYBRasKUNeHBPGoUFQaQhRunn0TMxCuA+vVrGSuKcQk8MkMdUA+VlUDDr8ycr9K
+         zd1fd5AtsGrUwEtHNFBrKOUbabHhuX/RaPCSteBUC2VqPqUgQVAHDHo01cXhK+svQsVH
+         2M9V3o2Sj0kqx2fZPgFcO48ToSfhAvPUug5Q0pKI+DYzljm2P6lkXnZMbAe9X0gYG9jp
+         urIj4fjfJK5MIbAb1oAOGLecQ517XCXU3y6iWw92eMT2Hl41L4QpKZv4i0yOkMzE+Fvm
+         6eng==
+X-Received: by 10.140.47.212 with SMTP id m78mr7042348qga.21.1391644156060;
+ Wed, 05 Feb 2014 15:49:16 -0800 (PST)
+Received: by 10.96.215.102 with HTTP; Wed, 5 Feb 2014 15:48:45 -0800 (PST)
+In-Reply-To: <xmqqbnyl5sde.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241677>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241678>
 
-Hi,
+On Thu, Feb 6, 2014 at 1:25 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Yes, indeed.  I wonder why your new test did not notice it, though
+>> ;-)
+>
+> ... and the answer turns out to be that it was not testing the right
+> thing.  On top of that faulty version, this will fix it.
 
-It appears that the last test in t9151-svn-mergeinfo.sh:
+Yes, write-tree should test that well.
 
-	test_expect_failure 'everything got merged in the end' '
-		unmerged=$(git rev-list --all --not master) &&
-		[ -z "$unmerged" ]
-		'
+> Your suggestion to move CE_INTENT_TO_ADD to mark-intent-to-add makes
+> sense but a caller needs to be adjusted to drop the duplicated flag
+> manipulation.
 
-reports "known breakage" or "breakage vanished" seemingly at random:
+No no. I found that duplicate, but I did not suggest removing it
+because it is needed there..
 
-	$ while true; do (cd t && sh t9151-svn-mergeinfo.sh | \
-		grep -q vanished && printf "f" || printf "b"); done
-	bbbffffbbffbffbbbffbfffbbbffffffffbffbbbfbbffffffbbfbfff
+> @@ -613,8 +614,6 @@ int add_to_index(struct index_state *istate, const char *path, struct stat *st,
+>         ce->ce_namelen = namelen;
+>         if (!intent_only)
+>                 fill_stat_cache_info(ce, st);
+> -       else
+> -               ce->ce_flags |= CE_INTENT_TO_ADD;
+>
+>         if (trust_executable_bit && has_symlinks)
+>                 ce->ce_mode = create_ce_mode(st_mode);
 
-I would guess that it might not be the test itself that is unreliable,
-but rather the svn setup done prior, looking at test logs:
-
-	(cd t && mkdir -p logs; i=0; \
-	while true; do sh t9151-svn-mergeinfo.sh --verbose 2>&1 | tee logs/cur \
-	| grep -q vanished && \
-		(printf "f" && mv logs/cur logs/fixed-"$i") || \
-		(printf "b" && mv logs/cur logs/broken-"$i"); \
-	i=$((i+1)); done)
-	bbffbff
-
-the only consistent difference between broken and fixed seems to be in
-the svn setup stage and more specifically the bit below, with r44
-becoming different SHA1s in "broken" and "fixed" imports:
-
---- broken-0    2014-02-05 23:40:21.412967698 +0100
-+++ fixed-2     2014-02-05 23:40:44.441536583 +0100
-(...)
-@@ -176,12 +176,12 @@
-        M       subdir/palindromes
- r43 = a671eec900764a4ab85a6166def3e0d30f1a2664 (refs/remotes/bugfix)
-        M       subdir/palindromes
--Couldn't find revmap for file:///home/arand/utv/git/git/t/trash%20directory.t9151-svn-mergeinfo/svnrepo/branches/bugfix/subdir
--Couldn't find revmap for file:///home/arand/utv/git/git/t/trash%20directory.t9151-svn-mergeinfo/svnrepo/tags/v1.0/subdir
--W: Cannot find common ancestor between 90411e1b2118e11664e368a24a1eaa5e8749d150 and fdb537791ee8ba532e49c3d5a34a30feeb87bd59. Ignoring merge info.
- Couldn't find revmap for file:///home/arand/utv/git/git/t/trash%20directory.t9151-svn-mergeinfo/svnrepo/tags/v1.0
- Found merge parent (svn:mergeinfo prop): a671eec900764a4ab85a6166def3e0d30f1a2664
--r44 = a110dec28a4b152b394906b1303fbf19174f7d26 (refs/remotes/trunk)
-+Couldn't find revmap for file:///home/arand/utv/git/git/t/trash%20directory.t9151-svn-mergeinfo/svnrepo/branches/bugfix/subdir
-+Couldn't find revmap for file:///home/arand/utv/git/git/t/trash%20directory.t9151-svn-mergeinfo/svnrepo/tags/v1.0/subdir
-+Found merge parent (svn:mergeinfo prop): fdb537791ee8ba532e49c3d5a34a30feeb87bd59
-+r44 = 8b619659a5126105c0a9765b655b6a1add9db4c1 (refs/remotes/trunk)
- Checked out HEAD:
-   file:///home/arand/utv/git/git/t/trash%20directory.t9151-svn-mergeinfo/svnrepo/trunk r44
- ok 1 - load svn dump
-
-Does anyone who is more familiar with the test know what's going on
-here? Is there any way to fix it, or should the test maybe be disabled
-completely for the time being?
-
---
-Martin Erik Werner <martinerikwerner@gmail.com>
+A few lines down, there's ie_match_stat() call that will check
+CE_INTENT_TO_ADD and returns "changed" immediately without looking at
+stat data. If stat info is used, it may (not so sure) return "not
+changed", the exit path is taken and mark_intent_to_add() is ignored.
+-- 
+Duy
