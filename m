@@ -1,198 +1,371 @@
-From: "Kyle J. McKay" <mackyle@gmail.com>
-Subject: Re: [PATCH 2/3] setup_pager: set MORE=R
-Date: Tue, 4 Feb 2014 18:11:01 -0800
-Message-ID: <62DB6DEF-8B39-4481-BA06-245BF45233E5@gmail.com>
-References: <20140117041430.GB19551@sigill.intra.peff.net> <20140117042153.GB23443@sigill.intra.peff.net> <xmqqvbxiwh8y.fsf@gitster.dls.corp.google.com> <20140121054927.GD5878@sigill.intra.peff.net> <xmqqwqhtuojx.fsf@gitster.dls.corp.google.com> <20140204221220.GA5457@sigill.intra.peff.net>
-Mime-Version: 1.0 (Apple Message framework v936)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jonathan Nieder <jrnieder@gmail.com>, Yuri <yuri@rawbw.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Feb 05 03:11:39 2014
+From: Ralf Thielow <ralf.thielow@gmail.com>
+Subject: [PATCH v3] l10n: de.po: translate 28 new messages
+Date: Wed,  5 Feb 2014 07:19:01 +0100
+Message-ID: <1391581141-4609-1-git-send-email-ralf.thielow@gmail.com>
+References: <1390803525-3075-1-git-send-email-ralf.thielow@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: tr@thomasrast.ch, jk@jk.gs, stimming@tuhh.de,
+	Ralf Thielow <ralf.thielow@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 05 07:19:35 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WArxh-00062K-L8
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Feb 2014 03:11:38 +0100
+	id 1WAvpe-0002Cx-46
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Feb 2014 07:19:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750936AbaBECLH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Feb 2014 21:11:07 -0500
-Received: from mail-pa0-f41.google.com ([209.85.220.41]:62720 "EHLO
-	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751339AbaBECLG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Feb 2014 21:11:06 -0500
-Received: by mail-pa0-f41.google.com with SMTP id fa1so9371497pad.28
-        for <git@vger.kernel.org>; Tue, 04 Feb 2014 18:11:05 -0800 (PST)
+	id S1751715AbaBEGT1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 5 Feb 2014 01:19:27 -0500
+Received: from mail-ee0-f54.google.com ([74.125.83.54]:46618 "EHLO
+	mail-ee0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751693AbaBEGTZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Feb 2014 01:19:25 -0500
+Received: by mail-ee0-f54.google.com with SMTP id e53so4697034eek.41
+        for <git@vger.kernel.org>; Tue, 04 Feb 2014 22:19:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:in-reply-to:subject:references:message-id:content-type
-         :content-transfer-encoding:mime-version:date:cc;
-        bh=VS1TAj2WspMr0316ifopyJxKHWmGoIZxxUssxxtOgU0=;
-        b=XunB6TU5eVJTC83Kc048WmM9lN3EHXlkywE4peOZ57mm/zZhLz9S/mYPT55nhzdiu5
-         Yf1fAQavtzaTEz4hEK0KsF/xfncH095pAtv4IPaZYFsxLHMfDPJmOtUrcIuTGxnzmAj/
-         W0r7lKSzpJtTCNt477AGYX08ag/bfLFkUOW/r7ds7kxAfII8RbmmZo/iEYarCbGTeEuP
-         LrBKO8qYlx/anbANNV5YVTMhPqQt43f+flbDPJ/tKRyC7HzTCsXzX+gzljeOigTWiuEx
-         YVq3DW/+d6l5xaDvcar/WVMtc1VGrXkydFhV2B78SUUbHLEp6zyxUDjoNUA412BfCAIi
-         dm7g==
-X-Received: by 10.68.14.130 with SMTP id p2mr48134467pbc.17.1391566265237;
-        Tue, 04 Feb 2014 18:11:05 -0800 (PST)
-Received: from [172.16.16.105] (ip72-192-173-141.sd.sd.cox.net. [72.192.173.141])
-        by mx.google.com with ESMTPSA id oa3sm70716163pbb.15.2014.02.04.18.11.03
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=WdNKvjU/iNMk6hl3zh7fTW3V48YKmhNB/0ULJws7DSE=;
+        b=tS8epiE7hY94M86K+OtHMjEy3ueAPmIzhBF9Pl0QfWi7alQtk56ovpdUN/RNWbkjh3
+         y+wdpHR+O34RAxI3323+0UwRR3tdwlMEesORpXlSBHA2NasSfRJ1vqNpV7vrOvpDNZSx
+         IQXi9qFa1SCK1Q4N1WZqmxS+u1oESH8inq7F2vsAqhJX1hCS+SUWKnWK9ZgCg9efvewn
+         Egc5/LanjcBvhAkqiSKds2atEZGwAh3SfpXJEy/12ubj6Fj9qQN5h+3PQ1+JB+icE/iu
+         INo0co7eYxFZG5dvJ9PbKNM6CuaLUujKU4ThJSviQafXxIO1oyhHHPvl1/rXZOEFPKx5
+         wR+Q==
+X-Received: by 10.14.211.71 with SMTP id v47mr55585514eeo.37.1391581164412;
+        Tue, 04 Feb 2014 22:19:24 -0800 (PST)
+Received: from localhost (dslb-178-008-120-172.pools.arcor-ip.net. [178.8.120.172])
+        by mx.google.com with ESMTPSA id j42sm98881768eep.21.2014.02.04.22.19.22
         for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Tue, 04 Feb 2014 18:11:04 -0800 (PST)
-In-Reply-To: <20140204221220.GA5457@sigill.intra.peff.net>
-X-Mauler: Craptastic (2.936)
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 04 Feb 2014 22:19:23 -0800 (PST)
+X-Mailer: git-send-email 1.9.rc2.184.g7e3b7e4
+In-Reply-To: <1390803525-3075-1-git-send-email-ralf.thielow@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241592>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241593>
 
-On Feb 4, 2014, at 14:12, Jeff King wrote:
-> On Tue, Jan 21, 2014 at 11:23:30AM -0800, Junio C Hamano wrote:
->
->>> does complicate the point of my series, which was to add more  
->>> intimate
->>> logic about how we handle LESS.
->>> ...
->>>                return !x || strchr(x, 'R');
->> [...]
->>
->> I am not sure if it is even a good idea for us to have so intimate
->> logic for various pagers in the first place.  I'd seriously wonder
->> if it is better to take this position:
->>
->> 	A platform packager who sets the default pager and/or the
->> 	default environment for the pager at the build time, or an
->> 	individual user who tells your Git what pager you want to
->> 	use and/or with what setting that pager should be run under
->> 	with environment variables. These people ought to know far
->> 	better than Git what their specific choices do. Do not try
->> 	to second-guess them.
->
-> Sorry for letting this topic lapse; I wanted to look at some possible
-> Makefile improvements, which I'll be posting in a moment. I did want  
-> to
-> address this point, though.
->
-> If we are just talking about packagers and defaults (e.g., setting
-> MORE=R on FreeBSD), then I agree that the right tool for the job is
-> empowering the packagers, and the Makefile knob we've discussed does
-> that.
->
-[snip]
->
-> It seems a shame to me that we cannot do better for such users.
-> However, the level of intimacy with the pager is getting to be a bit  
-> too
-> much for my taste, and the saving grace is that not that many people  
-> set
-> LESS themselves (and git is widely enough known that "R" is a common
-> recommendation when people do). So it's probably the lesser of two  
-> evils
-> to ignore the situation, and let people who run into it find the  
-> answers
-> on the web.
->
-> So I think there is nothing to be done.  But I did want to mention  
-> it in
-> case somebody else can come up with some clever solution. :)
+Translate 28 new messages came from git.pot update in
+df49095 (l10n: git.pot: v1.9 round 1 (27 new, 11 removed)
+and d57b24b (l10n: git.pot: v1.9 round 2 (1 new)).
 
-I think we can do better without adding intimate pager knowledge.  And  
-at the same time make it a simple matter of tweaking the Makefile to  
-deal with new pagers on specific systems.
+Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+---
 
-There are two parts to the proposal.
+v3 adds one new message from l10n rnd 2.
 
-Part 1
+ po/de.po | 92 ++++++++++++++++++++++++++++++++------------------------=
+--------
+ 1 file changed, 46 insertions(+), 46 deletions(-)
 
-Add a new configuration item which I will call "pager.env" for now  
-that can have multiple values of the form ENV=value (whether multiple  
-lines or whitespace separated on a single line to be decided later).
-
-On a system where more can support color by setting MORE=-R it might  
-look like this:
-
-[pager]
-         env = LESS=-FRSX LV=-c MORE=-R
-
-On a system where more does not it might look like this:
-
-[pager]
-         env = LESS=-FRSX LV=-c
-
-The default value of pager.env is to be configured in a system- 
-specific way (i.e. Makefile knob) at build time.
-
-Then, if Git is going to output color AND start a pager (that logic  
-remains unchanged by this proposal), then it processes the pager.env  
-value by examining each ENV=value setting and if the environment  
-variable ENV is NOT already set, then sets it to value before starting  
-the pager.
-
-This is mostly a clean up and shouldn't really be controversial since  
-before commit e54c1f2d2 the system basically behaved like this where  
-pager.env was always set to "LESS=FRSX" and after it behaves as though  
-pager.env is always set to "LESS=FRSX LV=-c".
-
-Part 2
-
-Alongside the current false/never, always, true/auto settings for  
-"color.ui" a new "carefully" setting is introduced and the color.ui  
-default if not set is changed from auto (commit 4c7f1819) to the new  
-"carefully" setting.
-
-Why a new setting?  So that people who have explicitly set color.ui to  
-auto (or one of the other values) will not be affected by the proposed  
-new logic.
-
-Another new configuration item which I will call "pager.carefully" for  
-now is introduced that again can have multiple values of the form  
-name=ENV.  It might look like this:
-
-[pager]
-         carefully = less=LESS LV=lv more=MORE
-
-Again the default value of pager.carefully can be configured in a  
-system-specific way (i.e. Makefile knob) at build time.
-
-If color.ui is set to "carefully", then the logic is as follows:
-
-a) Decide whether to output color the same way as for color.ui=auto
-b) Select the pager the same way as for color.ui=auto
-c) If (a) and (b) have selected a pager AND enabled color output then  
-check to see if the selected pager appears in pager.carefully as one  
-of the name values (perhaps a suffix match on the first whitespace- 
-separated word of the selected pager value).
-d) If the selected pager does not appear in pager.carefully, disable  
-color output.
-e) If the selected pager appears in pager.carefully, but the ENV  
-associated with it does NOT appear in pager.env, disable color output.
-f) If the pager appears in pager.carefully, but the ENV associated  
-with it is already set, disable color output.
-g) Otherwise, go ahead with color output as the change in Part 1 above  
-will properly set the pager's options to enable it.
-
-This has the following advantages:
-
-1. No intimate pager knowledge.
-2. Color output will be selected on supported systems by default  
-assuming the user has not set any pager-specific environment variables.
-3. This should prevent the user from ever seeing the ugly ESC[33 and  
-ESC[m sequences with the default settings.
-4. A user who has color.ui=auto set is not affected by this change.
-5. Support for additional color pagers is easily added by tweaking the  
-Makefile.
-
-It has the following disadvantage:
-
-1. A user who has a pager-specific environment variable set for the  
-default pager will not get color by default even if color would be  
-supported without first setting color.ui=auto or using an equivalent.   
-Essentially they will get the pre-1.8.4 behavior.
-
---Kyle
+diff --git a/po/de.po b/po/de.po
+index 7f8aa75..432a2b5 100644
+--- a/po/de.po
++++ b/po/de.po
+@@ -442,9 +442,9 @@ msgstr[0] "vor %lu Jahr"
+ msgstr[1] "vor %lu Jahren"
+=20
+ #: diffcore-order.c:24
+-#, fuzzy, c-format
++#, c-format
+ msgid "failed to read orderfile '%s'"
+-msgstr "Fehler beim Lesen des Objektes '%s'."
++msgstr "Fehler beim Lesen der Reihenfolgedatei '%s'."
+=20
+ #: diff.c:113
+ #, c-format
+@@ -975,21 +975,23 @@ msgid ""
+ "There is nothing to exclude from by :(exclude) patterns.\n"
+ "Perhaps you forgot to add either ':/' or '.' ?"
+ msgstr ""
++"Es gibt nichts, was durch :(exclude) Muster ausgeschlossen wird.\n"
++"Vielleicht haben Sie vergessen entweder ':/' oder '.' hinzuzuf=C3=BCg=
+en?"
+=20
+ #: remote.c:753
+-#, fuzzy, c-format
++#, c-format
+ msgid "Cannot fetch both %s and %s to %s"
+-msgstr "Kann keine Commit-Beschreibung f=C3=BCr %s bekommen"
++msgstr "Kann 'fetch' nicht f=C3=BCr %s und %s nach %s ausf=C3=BChren."
+=20
+ #: remote.c:757
+ #, c-format
+ msgid "%s usually tracks %s, not %s"
+-msgstr ""
++msgstr "%s folgt =C3=BCblicherweise %s, nicht %s"
+=20
+ #: remote.c:761
+ #, c-format
+ msgid "%s tracks both %s and %s"
+-msgstr ""
++msgstr "%s folgt %s und %s"
+=20
+ #.
+ #. * This last possibility doesn't occur because
+@@ -997,9 +999,8 @@ msgstr ""
+ #. * the end of the list.
+ #.
+ #: remote.c:769
+-#, fuzzy
+ msgid "Internal error"
+-msgstr "interner Fehler"
++msgstr "Interner Fehler"
+=20
+ #: remote.c:1871
+ #, c-format
+@@ -1575,33 +1576,28 @@ msgid "both modified:"
+ msgstr "von beiden ge=C3=A4ndert:"
+=20
+ #: wt-status.c:275
+-#, fuzzy
+ msgid "new file"
+-msgstr "neue Datei:   %s"
++msgstr "neue Datei"
+=20
+ #: wt-status.c:277
+ msgid "copied"
+-msgstr ""
++msgstr "kopiert"
+=20
+ #: wt-status.c:279
+-#, fuzzy
+ msgid "deleted"
+ msgstr "gel=C3=B6scht"
+=20
+ #: wt-status.c:285
+-#, fuzzy
+ msgid "typechange"
+-msgstr "Typ=C3=A4nderung: %s"
++msgstr "Typ=C3=A4nderung"
+=20
+ #: wt-status.c:287
+-#, fuzzy
+ msgid "unknown"
+-msgstr "unbekannt:    %s"
++msgstr "unbekannt"
+=20
+ #: wt-status.c:289
+-#, fuzzy
+ msgid "unmerged"
+-msgstr "zusammenf=C3=BChren"
++msgstr "nicht zusammengef=C3=BChrt"
+=20
+ #: wt-status.c:336
+ msgid "new commits, "
+@@ -1633,6 +1629,8 @@ msgid ""
+ "Do not touch the line above.\n"
+ "Everything below will be removed."
+ msgstr ""
++"=C3=84ndern Sie nicht die Zeile oberhalb.\n"
++"Alles unterhalb wird entfernt."
+=20
+ #: wt-status.c:899
+ msgid "You have unmerged paths."
+@@ -3991,14 +3989,14 @@ msgid "reference repository '%s' is not a local=
+ repository."
+ msgstr "Referenziertes Repository '%s' ist kein lokales Repository."
+=20
+ #: builtin/clone.c:256
+-#, fuzzy, c-format
++#, c-format
+ msgid "reference repository '%s' is shallow"
+-msgstr "Referenziertes Repository '%s' ist kein lokales Repository."
++msgstr "Referenziertes Repository '%s' ist unvollst=C3=A4ndig (shallow=
+)."
+=20
+ #: builtin/clone.c:259
+-#, fuzzy, c-format
++#, c-format
+ msgid "reference repository '%s' is grafted"
+-msgstr "referenziert Repository"
++msgstr "Referenziertes Repository '%s' ist gesondert eingeh=C3=A4ngt (=
+graft)."
+=20
+ #: builtin/clone.c:321
+ #, c-format
+@@ -4099,16 +4097,16 @@ msgstr ""
+=20
+ #: builtin/clone.c:805
+ msgid "source repository is shallow, ignoring --local"
+-msgstr ""
++msgstr "Quelle ist ein unvollst=C3=A4ndiges Repository (shallow), igno=
+riere --local"
+=20
+ #: builtin/clone.c:810
+ msgid "--local is ignored"
+ msgstr "--local wird ignoriert"
+=20
+ #: builtin/clone.c:814 builtin/fetch.c:1119
+-#, fuzzy, c-format
++#, c-format
+ msgid "depth %s is not a positive number"
+-msgstr "Objekt %s ist kein Blob"
++msgstr "Tiefe %s ist keine positive Zahl"
+=20
+ #: builtin/clone.c:824
+ #, c-format
+@@ -5215,9 +5213,8 @@ msgid "default mode for recursion"
+ msgstr "Standard-Modus f=C3=BCr Rekursion"
+=20
+ #: builtin/fetch.c:109
+-#, fuzzy
+ msgid "accept refs that update .git/shallow"
+-msgstr "Konnte aktualisierte .gitmodules-Datei nicht lesen"
++msgstr "akzeptiert Referenzen die .git/shallow aktualisieren"
+=20
+ #: builtin/fetch.c:347
+ msgid "Couldn't find remote ref HEAD"
+@@ -5287,7 +5284,8 @@ msgstr "%s hat nicht alle erforderlichen Objekte =
+gesendet\n"
+ #: builtin/fetch.c:579
+ #, c-format
+ msgid "reject %s because shallow roots are not allowed to be updated"
+-msgstr ""
++msgstr "%s wurde zur=C3=BCckgewiesen, da Ursprungs-Commits von unvolls=
+t=C3=A4ndigen\n"
++"Repositories (shallow) nicht aktualisiert werden d=C3=BCrfen."
+=20
+ #: builtin/fetch.c:667 builtin/fetch.c:750
+ #, c-format
+@@ -7182,9 +7180,8 @@ msgid "git merge-base --is-ancestor <commit> <com=
+mit>"
+ msgstr "git merge-base --is-ancestor <Commit> <Commit>"
+=20
+ #: builtin/merge-base.c:33
+-#, fuzzy
+ msgid "git merge-base --fork-point <ref> [<commit>]"
+-msgstr "git merge-base --is-ancestor <Commit> <Commit>"
++msgstr "git merge-base --fork-point <Referenz> [<Commit>]"
+=20
+ #: builtin/merge-base.c:214
+ msgid "output all common ancestors"
+@@ -7204,7 +7201,7 @@ msgstr "ist der Erste ein Vorg=C3=A4nger-Commit v=
+on dem Anderen?"
+=20
+ #: builtin/merge-base.c:222
+ msgid "find where <commit> forked from reflog of <ref>"
+-msgstr ""
++msgstr "findet wo <Commit> von Reflog von <Referenz> abgespalten wurde=
+"
+=20
+ #: builtin/merge-file.c:8
+ msgid ""
+@@ -7334,9 +7331,8 @@ msgid "multiple sources for the same target"
+ msgstr "mehrere Quellen f=C3=BCr das selbe Ziel"
+=20
+ #: builtin/mv.c:218
+-#, fuzzy
+ msgid "destination directory does not exist"
+-msgstr "Repository '%s' existiert nicht."
++msgstr "Zielverzeichnis existiert nicht"
+=20
+ #: builtin/mv.c:233
+ #, c-format
+@@ -8009,7 +8005,6 @@ msgstr ""
+ "Remote-Branch zu aktualisieren."
+=20
+ #: builtin/push.c:207
+-#, fuzzy
+ msgid ""
+ "push.default is unset; its implicit value is changing in\n"
+ "Git 2.0 from 'matching' to 'simple'. To squelch this message\n"
+@@ -8045,11 +8040,18 @@ msgstr ""
+ "\n"
+ "  git config --global push.default simple\n"
+ "\n"
+-"F=C3=BChren Sie 'git help config' aus und suchen Sie nach 'push.defau=
+lt' f=C3=BCr "
++"Wenn 'push.default' auf den Wert 'matching' gesetzt ist, werden lokal=
+e\n"
++"Branches zu den Remote-Branches mit den selben Namen versendet.\n"
++"\n"
++"In Git 2.0 wird das Standardverhalten zu 'simple' ge=C3=A4ndert. Hier=
+bei wird\n"
++"der aktuelle Branch zu dem entsprechenden Remote-Branch versendet, de=
+n\n"
++"'git pull' zur Aktualisierung des aktuellen Branches verwendet.\n"
++"\n"
++"F=C3=BChren Sie 'git help config' aus und suchen Sie nach 'push.defau=
+lt' f=C3=BCr\n"
+ "weitere Informationen.\n"
+-"(Der Modus 'simple' wurde in Git 1.7.11 eingef=C3=BChrt. Benutze den =
+=C3=A4hnlichen "
+-"Modus 'current' anstatt 'simple', falls Sie gelegentlich =C3=A4ltere =
+Versionen "
+-"von Git benutzen.)"
++"(Der Modus 'simple' wurde in Git 1.7.11 eingef=C3=BChrt. Benutzen Sie=
+ den =C3=A4hnlichen\n"
++"Modus 'current' anstatt 'simple', falls Sie gelegentlich =C3=A4ltere =
+Versionen von\n"
++"Git benutzen.)"
+=20
+ #: builtin/push.c:274
+ msgid ""
+@@ -8908,7 +8910,7 @@ msgstr "Gr=C3=B6=C3=9Fe des Fensters f=C3=BCr die=
+ Delta-Kompression"
+=20
+ #: builtin/repack.c:162 builtin/repack.c:166
+ msgid "bytes"
+-msgstr ""
++msgstr "Bytes"
+=20
+ #: builtin/repack.c:163
+ msgid "same as the above, but limit memory size instead of entries cou=
+nt"
+@@ -8938,9 +8940,8 @@ msgid "git replace -d <object>..."
+ msgstr "git replace -d <Objekt>..."
+=20
+ #: builtin/replace.c:19
+-#, fuzzy
+ msgid "git replace [--format=3D<format>] [-l [<pattern>]]"
+-msgstr "git replace -l [<Muster>]"
++msgstr "git replace [--format=3D<Format>] [-l [<Muster>]]"
+=20
+ #: builtin/replace.c:174
+ msgid "list replace refs"
+@@ -8955,9 +8956,8 @@ msgid "replace the ref if it exists"
+ msgstr "ersetzt die Referenz, wenn sie existiert"
+=20
+ #: builtin/replace.c:177
+-#, fuzzy
+ msgid "use this format"
+-msgstr "verwendet kleinere Pakete"
++msgstr "benutzt das angegebene Format"
+=20
+ #: builtin/rerere.c:12
+ msgid "git rerere [clear | forget path... | status | remaining | diff =
+| gc]"
+@@ -9106,7 +9106,7 @@ msgstr "stoppt das Parsen nach dem ersten Argumen=
+t was keine Option ist"
+=20
+ #: builtin/rev-parse.c:369
+ msgid "output in stuck long form"
+-msgstr ""
++msgstr "Ausgabe in Langform mit Argumenten an den Optionen (getrennt d=
+urch '=3D')"
+=20
+ #: builtin/rev-parse.c:486
+ msgid ""
+@@ -10246,9 +10246,9 @@ msgstr ""
+ "<gueltigerbranch>'."
+=20
+ #: git-bisect.sh:140
+-#, fuzzy
+ msgid "won't bisect on cg-seek'ed tree"
+-msgstr "bin=C3=A4re Suche auf gesuchtem Branch nicht m=C3=B6glich"
++msgstr ""
++"bin=C3=A4re Suche auf einem durch 'cg-seek' ge=C3=A4ndertem Verzeichn=
+is nicht m=C3=B6glich"
+=20
+ #: git-bisect.sh:144
+ msgid "Bad HEAD - strange symbolic ref"
+--=20
+1.9.rc2.184.g7e3b7e4
