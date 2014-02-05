@@ -1,81 +1,70 @@
-From: Kirill Smelkov <kirr@navytux.spb.ru>
-Subject: Re: [PATCH 7/8] combine-diff: Fast changed-to-all-parents paths
- scanning
-Date: Thu, 6 Feb 2014 00:22:48 +0400
-Organization: NAVYTUX.SPB.RU
-Message-ID: <20140205202248.GB4695@mini.zxlink>
-References: <cover.1391430523.git.kirr@mns.spb.ru>
- <c0ad49d850377aedffa0a593fef8738112019b01.1391430523.git.kirr@mns.spb.ru>
- <xmqqk3dbbwwf.fsf@gitster.dls.corp.google.com>
- <xmqqeh3jbwbt.fsf@gitster.dls.corp.google.com>
- <20140204163400.GA20436@tugrik.mns.mnsspb.ru>
- <xmqq4n4eafmj.fsf@gitster.dls.corp.google.com>
- <20140205165119.GA18558@tugrik.mns.mnsspb.ru>
- <xmqqfvnx5umg.fsf@gitster.dls.corp.google.com>
- <20140205191427.GA3923@mini.zxlink>
- <xmqq61ot4a8e.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] repack.c: rename and unlink pack file if it exists
+Date: Wed, 05 Feb 2014 12:31:34 -0800
+Message-ID: <xmqqsirx2teh.fsf@gitster.dls.corp.google.com>
+References: <xmqqwqha5twg.fsf@gitster.dls.corp.google.com>
+	<20140205011632.GA3923@sigill.intra.peff.net>
+	<xmqq1tzh494e.fsf@gitster.dls.corp.google.com>
+	<20140205201243.GA16899@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, kirr@mns.spb.ru
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 05 21:30:49 2014
+Cc: Stefan Beller <stefanbeller@googlemail.com>,
+	Torsten =?utf-8?Q?B?= =?utf-8?Q?=C3=B6gershausen?= 
+	<tboegi@web.de>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Feb 05 21:31:49 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WB97R-0003C8-6H
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Feb 2014 21:30:49 +0100
+	id 1WB98M-0003q4-F1
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Feb 2014 21:31:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932704AbaBEUal (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Feb 2014 15:30:41 -0500
-Received: from forward9.mail.yandex.net ([77.88.61.48]:53979 "EHLO
-	forward9.mail.yandex.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932433AbaBEUai (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Feb 2014 15:30:38 -0500
-X-Greylist: delayed 625 seconds by postgrey-1.27 at vger.kernel.org; Wed, 05 Feb 2014 15:30:38 EST
-Received: from smtp9.mail.yandex.net (smtp9.mail.yandex.net [77.88.61.35])
-	by forward9.mail.yandex.net (Yandex) with ESMTP id B9B84CE0B2E;
-	Thu,  6 Feb 2014 00:20:08 +0400 (MSK)
-Received: from smtp9.mail.yandex.net (localhost [127.0.0.1])
-	by smtp9.mail.yandex.net (Yandex) with ESMTP id 61BD61520084;
-	Thu,  6 Feb 2014 00:20:08 +0400 (MSK)
-Received: from unknown (unknown [78.25.120.235])
-	by smtp9.mail.yandex.net (nwsmtp/Yandex) with ESMTPSA id d4pmfaZBhQ-K7CaUQHO;
-	Thu,  6 Feb 2014 00:20:07 +0400
-	(using TLSv1 with cipher AES256-SHA (256/256 bits))
-	(Client certificate not present)
-X-Yandex-Uniq: e6aecf4a-a923-4a11-9fd0-990c52c3a3cb
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=navytux.spb.ru; s=mail;
-	t=1391631607; bh=yahpnHRsENEuz6zEXhznBRklUF10Z3TSym0+ciuzfeE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To:Organization:
-	 User-Agent;
-	b=htgHjCduqYmFCkPc+yMJ4Va0H4IalP3EHlzHRt/nZy8vxx8pWKEysL6IkgFhVq05q
-	 Ad/AxsMwFhuLxHLFzL06VvNkRZu649acXw5v+bFLmH/gh6fneiLDRufwtN5tCREoiU
-	 ipZy74yHR4pI/vHVVXrGq/Rf3xjQASwzjwO8Ypec=
-Authentication-Results: smtp9.mail.yandex.net; dkim=pass header.i=@navytux.spb.ru
-Received: from kirr by mini.zxlink with local (Exim 4.82)
-	(envelope-from <kirr@mini.zxlink>)
-	id 1WB8zg-0001E2-CF; Thu, 06 Feb 2014 00:22:48 +0400
-Content-Disposition: inline
-In-Reply-To: <xmqq61ot4a8e.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S932801AbaBEUbm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Feb 2014 15:31:42 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56572 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932718AbaBEUbj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Feb 2014 15:31:39 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ADE3B67C74;
+	Wed,  5 Feb 2014 15:31:38 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=3/Jaqf3B+n+LAE/hHMgwX0Fc+9c=; b=x43dMw
+	rXFgAzt61qZ2/r+BS1kN0pW9G32bUUMwswVX9igrqUfH6mEeBwR9ohIxFRwZTic4
+	W2Zrmsg16xBlgzdVAXQVguSyd24LczE4XOtLYOC/0OWPiQzDbHIkkHs6tb1GW+/k
+	vjzM9qRu1pt7QSU204yb6wrJywkN4eEvf3tHo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=G+YvP3t/SiVyfZCnYK68u1c/voVAbT1L
+	7WAJZWqHJad2MCnFCepPB/PPKa8FknzU9q3WDemzPKMuS/5zm9NmyZuid5ypNO6D
+	CdCc94ZzmbwSN1tQq7sVYIZN5WnYPOZcZlyIzyMGHlJm2Z/PmEvFYONZ0Ax0xNWg
+	EfkXeWm5XMo=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7684267C73;
+	Wed,  5 Feb 2014 15:31:38 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5DA8A67C6C;
+	Wed,  5 Feb 2014 15:31:37 -0500 (EST)
+In-Reply-To: <20140205201243.GA16899@sigill.intra.peff.net> (Jeff King's
+	message of "Wed, 5 Feb 2014 15:12:43 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 82F1E2F4-8EA4-11E3-A9BD-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241652>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241653>
 
-On Wed, Feb 05, 2014 at 11:42:41AM -0800, Junio C Hamano wrote:
-> Kirill Smelkov <kirr@navytux.spb.ru> writes:
-> 
-> > I agree object data should be immutable for good. The only thing I'm talking
-> > about here is mode, which is parsed from a tree buffer and is stored in
-> > separate field:
-> 
-> Ah, I do not see any problem in that case, then.
-> 
-> Thanks.
+Jeff King <peff@peff.net> writes:
 
-Thanks, that simplifies things for me.
+> The minimal fix you posted below does make sense to me as a stopgap, and
+> we can look into dropping the code entirely during the next cycle. It
+> would be nice to have a test to cover this case, though.
+
+Sounds sensible.  Run "repack -a -d" once, and then another while
+forcing it to be single threaded, or something?
