@@ -1,149 +1,97 @@
-From: Jeff King <peff@peff.net>
-Subject: [RFH] hackday and GSoC topic suggestions
-Date: Wed, 5 Feb 2014 17:57:02 -0500
-Message-ID: <20140205225702.GA12589@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 7/8] combine-diff: Fast changed-to-all-parents paths scanning
+Date: Wed, 05 Feb 2014 14:58:36 -0800
+Message-ID: <xmqqfvnx180z.fsf@gitster.dls.corp.google.com>
+References: <cover.1391430523.git.kirr@mns.spb.ru>
+	<c0ad49d850377aedffa0a593fef8738112019b01.1391430523.git.kirr@mns.spb.ru>
+	<xmqqk3dbbwwf.fsf@gitster.dls.corp.google.com>
+	<xmqqeh3jbwbt.fsf@gitster.dls.corp.google.com>
+	<20140204163400.GA20436@tugrik.mns.mnsspb.ru>
+	<xmqq4n4eafmj.fsf@gitster.dls.corp.google.com>
+	<20140205165119.GA18558@tugrik.mns.mnsspb.ru>
+	<xmqqfvnx5umg.fsf@gitster.dls.corp.google.com>
+	<20140205191427.GA3923@mini.zxlink>
+	<xmqq61ot4a8e.fsf@gitster.dls.corp.google.com>
+	<20140205202248.GB4695@mini.zxlink>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 05 23:57:14 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, kirr@mns.spb.ru
+To: Kirill Smelkov <kirr@navytux.spb.ru>
+X-From: git-owner@vger.kernel.org Wed Feb 05 23:58:51 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WBBP6-0005JS-Ha
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Feb 2014 23:57:12 +0100
+	id 1WBBQd-0006R6-HJ
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Feb 2014 23:58:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752981AbaBEW5I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Feb 2014 17:57:08 -0500
-Received: from cloud.peff.net ([50.56.180.127]:45373 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751085AbaBEW5F (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Feb 2014 17:57:05 -0500
-Received: (qmail 26000 invoked by uid 102); 5 Feb 2014 22:57:04 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 05 Feb 2014 16:57:04 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 05 Feb 2014 17:57:02 -0500
-Content-Disposition: inline
+	id S1753261AbaBEW6n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Feb 2014 17:58:43 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45818 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753124AbaBEW6m (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Feb 2014 17:58:42 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ACB0F67E52;
+	Wed,  5 Feb 2014 17:58:40 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=DSRdWqZYCh07ywElSW1Q8tz+DC8=; b=ByeWaX
+	22f9SSmpWHtco+E1GPo+4l1vkD2i9wGH88SSGs49zFG+Za65LEQyS/zRRchvGKDb
+	z+Q044aLENfAWfxw5KpOG7Q+Lm71v4IiUlZtiYBsjghnEGOOU1W6uetriGrxu73u
+	p4WNSX/siazZdEg3yc9LeIqbyG9oDLpmUBZDM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=mYCxJRc08w257rCLav6ScFkqClYX5mVw
+	S8iShU2mn1nOj8r4WxC2bsD9e9eByWlKRbIxe3tSdQRlkqMI6nHkX5LdUYVxb0gA
+	jHfKRIWMcyLsPquOLhDWE4Qh0Aeq+upvuUBVUyvPWmwBmoIcXZyJo+6Bsqy6Xg8n
+	c+SkFkpxO4U=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 98A4967E50;
+	Wed,  5 Feb 2014 17:58:40 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EA12A67E4D;
+	Wed,  5 Feb 2014 17:58:39 -0500 (EST)
+In-Reply-To: <20140205202248.GB4695@mini.zxlink> (Kirill Smelkov's message of
+	"Thu, 6 Feb 2014 00:22:48 +0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 0D9C0006-8EB9-11E3-B2DD-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241671>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241672>
 
-This Saturday I'm going to be attending a Git hackday held by Bloomberg
-in New York. The participants will be eager C coders who have experience
-using git, but not contributing to it. As somebody who has read The
-Mythical Man Month, I don't expect huge productivity, but I'm hoping to
-do some bug triage and fixes, and maybe get some people involved who
-might join the community. I'm hoping some of the folks will have
-features _they_ want to work on, and I can help get them started. But
-I'd like to have a list of potential projects to direct people towards
-as a backup.
+Kirill Smelkov <kirr@navytux.spb.ru> writes:
 
-On a similar note, the GSoC application deadline is Feb 14th. I am
-happy to be admin again and put together the application, but we will
-need an idea page. I'll set up a page to collect them, but in the
-meantime, please dump any ideas/discussion in this thread.
+> On Wed, Feb 05, 2014 at 11:42:41AM -0800, Junio C Hamano wrote:
+>> Kirill Smelkov <kirr@navytux.spb.ru> writes:
+>> 
+>> > I agree object data should be immutable for good. The only thing I'm talking
+>> > about here is mode, which is parsed from a tree buffer and is stored in
+>> > separate field:
+>> 
+>> Ah, I do not see any problem in that case, then.
+>> 
+>> Thanks.
+>
+> Thanks, that simplifies things for me.
 
-Below is a list of features / bugs that I am taking to the hackday. The
-bug list was collected by grepping the mailing list for items without
-responses. They haven't been triaged at all, so I'm sure some of them
-are "not a bug" or "won't fix".  But the triage process is part of what
-we'll be doing on Saturday.
+Surely.
 
-I don't think the list below and the potential GSoC list really have any
-overlap, as the project scales are completely different. But I'd be
-happy to take suggestions for either.
+Be careful when traversing N-trees in parallel---you may have to
+watch out for the entry ordering rules that sorts the following
+paths in the order shown:
 
----
-features:
+	a
+	a-b
+        a/b
+        a_b
 
- - negative refspecs
-   http://thread.gmane.org/gmane.comp.version-control.git/240997/focus=241019
-
- - optionally remove tempfiles on failed pack-objects (especially when
-   we get ENOSPC)
-   http://article.gmane.org/gmane.comp.version-control.git/241466
-
- - previewing "git pull"
-   http://article.gmane.org/gmane.comp.version-control.git/236732
-
-bugs:
-
- - branch.*.merge interpreted too strictly by tracking logic
-   http://article.gmane.org/gmane.comp.version-control.git/241582
-
- - relative core.worktree is resolved from symlink and not its target
-   http://article.gmane.org/gmane.comp.version-control.git/241519
-
- - Branch rename breaks local downstream branches
-   http://article.gmane.org/gmane.comp.version-control.git/241228
-
- - git clone on out-of-space device causes incorrect errors
-   http://article.gmane.org/gmane.comp.version-control.git/241206
-
- - commit-msg hook and merges
-   http://article.gmane.org/gmane.comp.version-control.git/241203
-
- - inconsistent include behaviour for core.sharedRepository
-   http://article.gmane.org/gmane.comp.version-control.git/241277
-
- - Rebase options '--whitespace=fix' and '--keep-empty' are incompatible
-   http://article.gmane.org/gmane.comp.version-control.git/238055
-
- - git stash doesn't use --index as default
-   http://article.gmane.org/gmane.comp.version-control.git/235892
-
- - git describe --contains --abbrev=0 <sha1> doesn't work as expected
-   http://article.gmane.org/gmane.comp.version-control.git/236707
-
- - using git commit-tree with "-F -" adds trailing newlines
-   http://article.gmane.org/gmane.comp.version-control.git/236583
-
- - Pull and fetch don't honor `--progress` flag
-   http://thread.gmane.org/gmane.comp.version-control.git/236257/focus=236262
-
- - Unexpected outputs of git pull on stdout v.s. stderr
-   http://article.gmane.org/gmane.comp.version-control.git/235716
-
- - MERGE_HEAD lost with git checkout master
-   http://article.gmane.org/gmane.comp.version-control.git/233806
-
- - git stash doesn't always save work dir as-is: bug?
-   http://article.gmane.org/gmane.comp.version-control.git/234153
-
- - Well-past commit dates unsupported
-   http://article.gmane.org/gmane.comp.version-control.git/236827
-
- - we do not handle integer overflow in commit/author timestamps
-   [no reference, but something I have noticed; we should probably
-   return a sentinel "0" rather than a random overflow value, and
-   we should probably detect and warn in git-fsck]
-
- - git stash does not work when directory is replaced by a symlink to itself
-   http://article.gmane.org/gmane.comp.version-control.git/236798
-
- - rebase not recovering gracefully from repack error
-   http://article.gmane.org/gmane.comp.version-control.git/234261
-
- - (broken ?) output of "git diff --color-word"
-   http://article.gmane.org/gmane.comp.version-control.git/237370
-
- - git filter-branch does not make tree replacements permanent
-   http://article.gmane.org/gmane.comp.version-control.git/220931
-
- - 'git show' gives duplicate errors for ambiguous args
-   http://article.gmane.org/gmane.comp.version-control.git/205023
-
- - (git commit --patch --message $MESSAGE) disallows hunk editing
-   http://article.gmane.org/gmane.comp.version-control.git/208213
-
- - filter-branch --parent-filter in bare repository
-   http://article.gmane.org/gmane.comp.version-control.git/203619
-
-insanely hard bugs:
-
- - shallow clones over http
-   http://article.gmane.org/gmane.comp.version-control.git/223682
+Inside a single tree, you cannot have 'a' and 'a/b' at the same
+time, but one tree may have 'a' (without 'a/b') while another one
+may have 'a/b' (without 'a'), and walking them in parallel has
+historically been one source of funny bugs.
