@@ -1,84 +1,87 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] repack.c: rename and unlink pack file if it exists
-Date: Wed, 5 Feb 2014 15:37:40 -0500
-Message-ID: <20140205203740.GA17077@sigill.intra.peff.net>
-References: <xmqqwqha5twg.fsf@gitster.dls.corp.google.com>
- <20140205011632.GA3923@sigill.intra.peff.net>
- <xmqq1tzh494e.fsf@gitster.dls.corp.google.com>
- <20140205201243.GA16899@sigill.intra.peff.net>
- <xmqqsirx2teh.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] blame.c: prepare_lines should not call xrealloc for every line
+Date: Wed, 05 Feb 2014 12:39:40 -0800
+Message-ID: <xmqqk3d92t0z.fsf@gitster.dls.corp.google.com>
+References: <1391544367-14599-1-git-send-email-dak@gnu.org>
+	<xmqqd2j28w3h.fsf@gitster.dls.corp.google.com>
+	<874n4ewouz.fsf@fencepost.gnu.org>
+	<xmqqr47i7dt4.fsf@gitster.dls.corp.google.com>
+	<87zjm6v99y.fsf@fencepost.gnu.org>
+	<xmqqmwi67cty.fsf@gitster.dls.corp.google.com>
+	<87vbwuuf5g.fsf@fencepost.gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Stefan Beller <stefanbeller@googlemail.com>,
-	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 05 21:37:57 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Wed Feb 05 21:39:53 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WB9EK-0007vd-Jt
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Feb 2014 21:37:56 +0100
+	id 1WB9GC-0000n0-Tb
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Feb 2014 21:39:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932270AbaBEUhq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Feb 2014 15:37:46 -0500
-Received: from cloud.peff.net ([50.56.180.127]:45284 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755617AbaBEUhm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Feb 2014 15:37:42 -0500
-Received: (qmail 17191 invoked by uid 102); 5 Feb 2014 20:37:42 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 05 Feb 2014 14:37:42 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 05 Feb 2014 15:37:40 -0500
-Content-Disposition: inline
-In-Reply-To: <xmqqsirx2teh.fsf@gitster.dls.corp.google.com>
+	id S933054AbaBEUjq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Feb 2014 15:39:46 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49960 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932178AbaBEUjn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Feb 2014 15:39:43 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F0E8969087;
+	Wed,  5 Feb 2014 15:39:42 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=LrtDe2MbGse8Uq/eYayE/lPGtjM=; b=rgy0pp
+	EoMgrNibBF0h82eUV/RzENKAgIP7CpFzsWTUU7JVRIMVI6EymaTifj20AMvFQ1zV
+	IiHJ44P6R2UDOd9FW8WoZmBqdz2GoXhTkm0PbaUYy/00qxeiTmsESdMRBU1bGDCg
+	pablNSKeT4UWTDYhTPqJ8NruUTXOGOhUsLdNw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=naOP7sJ1WjDL8VSezQVXtaNeKZqOBjLE
+	WAY0OElFEXUgDH6uX7NEGwbk4WhsdnkPJ2h3kIJOkMc/QPZXNJJ3BE8SQNxav8Di
+	HasiPLFk22vMp7g9jEEsQaxv2ebmfrpc9mLwQ5R/gcZFoQS2B8FAer4Py3DQm4H7
+	4CzLsXoDMW0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E08D769085;
+	Wed,  5 Feb 2014 15:39:42 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2ADB669082;
+	Wed,  5 Feb 2014 15:39:42 -0500 (EST)
+In-Reply-To: <87vbwuuf5g.fsf@fencepost.gnu.org> (David Kastrup's message of
+	"Wed, 05 Feb 2014 09:39:39 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: A3E7CDC4-8EA5-11E3-9B32-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241656>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241657>
 
-On Wed, Feb 05, 2014 at 12:31:34PM -0800, Junio C Hamano wrote:
+David Kastrup <dak@gnu.org> writes:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > The minimal fix you posted below does make sense to me as a stopgap, and
-> > we can look into dropping the code entirely during the next cycle. It
-> > would be nice to have a test to cover this case, though.
-> 
-> Sounds sensible.  Run "repack -a -d" once, and then another while
-> forcing it to be single threaded, or something?
+> It's snake oil making debugging harder.
 
-Certainly that's the way to trigger the code, but doing this:
+OK, that is a sensible argument.
 
-diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
-index b45bd1e..6647ba1 100755
---- a/t/t7700-repack.sh
-+++ b/t/t7700-repack.sh
-@@ -162,7 +162,12 @@ test_expect_success 'objects made unreachable by grafts only are kept' '
- 	git reflog expire --expire=$test_tick --expire-unreachable=$test_tick --all &&
- 	git repack -a -d &&
- 	git cat-file -t $H1
--	'
-+'
-+
-+test_expect_success 'repack can handle generating the same pack again' '
-+	git -c pack.threads=1 repack -ad &&
-+	git -c pack.threads=1 repack -ad
-+'
- 
- test_done
- 
+>> This was fun ;-)
+>
+> At the expense of seriously impacting my motivation to do any further
+> code cleanup on Git.
 
-...does not seem to fail, and it does not seem to leave any cruft in
-place. So maybe I am misunderstanding the thing the patch is meant to
-fix. Is it that we simply do not replace the pack in this instance?
+Well, I said it was "fun" because I was learning from a new person
+who haven't made much technical or code aethesitics discussion here
+so far.  If teaching others frustrates you and stops contributing to
+the project, that is a loss.
 
-I guess we would have to generate a pack with the identical set of
-objects, then, but somehow different in its pack parameters (perhaps
-turning off deltas?).
-
--Peff
+But the styles matter, as the known pattern in the existing code is
+what lets our eyes coast over unimportant details of the code while
+reviewing and understanding.  I tend to be pickier when reviewing
+code from new people who are going to make large contributions for
+exactly that reason---new blood bringing in new ideas is fine, but
+I'd want to see those new ideas backed by solid thiniking, and that
+means they may have to explain themselves to those who are new to
+their ideas.
