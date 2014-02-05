@@ -1,106 +1,158 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 10/13] Makefile: drop *_SQ variables
-Date: Wed, 5 Feb 2014 12:58:59 -0500
-Message-ID: <20140205175859.GJ15218@sigill.intra.peff.net>
+Subject: [PATCH 11/13] Makefile: auto-build C strings from make variables
+Date: Wed, 5 Feb 2014 13:02:06 -0500
+Message-ID: <20140205180206.GK15218@sigill.intra.peff.net>
 References: <20140205174823.GA15070@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 05 18:59:07 2014
+X-From: git-owner@vger.kernel.org Wed Feb 05 19:02:16 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WB6kd-0005Lv-37
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Feb 2014 18:59:07 +0100
+	id 1WB6nf-0007ff-Pk
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Feb 2014 19:02:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753369AbaBER7B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Feb 2014 12:59:01 -0500
-Received: from cloud.peff.net ([50.56.180.127]:45157 "HELO peff.net"
+	id S1753590AbaBESCK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Feb 2014 13:02:10 -0500
+Received: from cloud.peff.net ([50.56.180.127]:45161 "HELO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753029AbaBER7B (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Feb 2014 12:59:01 -0500
-Received: (qmail 8118 invoked by uid 102); 5 Feb 2014 17:59:00 -0000
+	id S1753510AbaBESCI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Feb 2014 13:02:08 -0500
+Received: (qmail 8317 invoked by uid 102); 5 Feb 2014 18:02:08 -0000
 Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 05 Feb 2014 11:59:00 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 05 Feb 2014 12:58:59 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 05 Feb 2014 12:02:08 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 05 Feb 2014 13:02:06 -0500
 Content-Disposition: inline
 In-Reply-To: <20140205174823.GA15070@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241629>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241630>
 
-Now that all uses of the SQ variables have been dropped, we
-can stop setting the variables.
+We already insert the values of some make variables into
+files in MAKE/*. We can therefore build a simple pattern
+rule for converting such a value into a C string in a header
+file, which can then be included and used as normal.
+
+The new system is demonstrated on version.c, where it can
+replace the use of "-D" on the command-line. Note that we
+still have to manually specify a dependency in the
+Makefile. In an ideal world, we would auto-detect the header
+dependency; however, there are two holdups:
+
+  1. We cannot rely on having automatic header dependency
+     generation on all platforms.
+
+  2. Even when we do generate the dependencies, we rely on
+     being able to compile the file once, which means our
+     system cannot handle generated headers without a manual
+     dependency to bootstrap it.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- Makefile | 28 ----------------------------
- 1 file changed, 28 deletions(-)
+This is a technique that I have used in other projects with great
+success, as the make variable dependencies are represented as file
+dependencies (which is the only type of dependency make knows about).
+
+_But_ it ends up a lot less nice here because of the way we do
+auto-dependencies. I'm totally open to revamping the way we handle our
+header dependencies, but I didn't do that in this series.
+
+ Makefile         | 11 +++++++----
+ script/mkcstring | 18 ++++++++++++++++++
+ version.c        |  6 ++++--
+ 3 files changed, 29 insertions(+), 6 deletions(-)
+ create mode 100644 script/mkcstring
 
 diff --git a/Makefile b/Makefile
-index b1c3fb4..cd07a70 100644
+index cd07a70..203171d 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -1039,7 +1039,6 @@ endif
- endif
- 
- ifdef SANE_TOOL_PATH
--SANE_TOOL_PATH_SQ = $(subst ','\'',$(SANE_TOOL_PATH))
- BROKEN_PATH_FIX = 's|^\# @@BROKEN_PATH_FIX@@$$|git_broken_path_fix $(call sqi,$(SANE_TOOL_PATH)|'
- PATH := $(SANE_TOOL_PATH):${PATH}
- else
-@@ -1594,31 +1593,6 @@ MAKE/$1: FORCE
+@@ -1593,6 +1593,11 @@ MAKE/$1: FORCE
  	fi
  endef
  
--# Shell quote (do not use $(call) to accommodate ancient setups);
--
--SHA1_HEADER_SQ = $(subst ','\'',$(SHA1_HEADER))
--ETC_GITCONFIG_SQ = $(subst ','\'',$(ETC_GITCONFIG))
--ETC_GITATTRIBUTES_SQ = $(subst ','\'',$(ETC_GITATTRIBUTES))
--
--DESTDIR_SQ = $(subst ','\'',$(DESTDIR))
--bindir_SQ = $(subst ','\'',$(bindir))
--bindir_relative_SQ = $(subst ','\'',$(bindir_relative))
--mandir_relative_SQ = $(subst ','\'',$(mandir_relative))
--infodir_relative_SQ = $(subst ','\'',$(infodir_relative))
--localedir_SQ = $(subst ','\'',$(localedir))
--gitexecdir_SQ = $(subst ','\'',$(gitexecdir))
--template_dir_SQ = $(subst ','\'',$(template_dir))
--htmldir_relative_SQ = $(subst ','\'',$(htmldir_relative))
--prefix_SQ = $(subst ','\'',$(prefix))
--gitwebdir_SQ = $(subst ','\'',$(gitwebdir))
--
--SHELL_PATH_SQ = $(subst ','\'',$(SHELL_PATH))
--PERL_PATH_SQ = $(subst ','\'',$(PERL_PATH))
--PYTHON_PATH_SQ = $(subst ','\'',$(PYTHON_PATH))
--TCLTK_PATH_SQ = $(subst ','\'',$(TCLTK_PATH))
--DIFF_SQ = $(subst ','\'',$(DIFF))
--PERLLIB_EXTRA_SQ = $(subst ','\'',$(PERLLIB_EXTRA))
--
++MAKE/%-string.h: MAKE/% script/mkcstring
++	$(QUIET_GEN)$(SHELL_PATH) script/mkcstring \
++		$(subst -,_,$*) <$< >$@+ && \
++		mv $@+ $@
++
  LIBS = $(GITLIBS) $(EXTLIBS)
  
  BASIC_CFLAGS += -DSHA1_HEADER=$(call sq,$(SHA1_HEADER)) \
-@@ -2302,7 +2276,6 @@ gitexec_instdir = $(gitexecdir)
- else
- gitexec_instdir = $(prefix)/$(gitexecdir)
+@@ -1614,6 +1619,7 @@ BASIC_CFLAGS += -DSHELL_PATH=$(call scq,$(SHELL_PATH))
  endif
--gitexec_instdir_SQ = $(subst ','\'',$(gitexec_instdir))
- export gitexec_instdir
  
- ifneq ($(filter /%,$(firstword $(mergetoolsdir))),)
-@@ -2310,7 +2283,6 @@ mergetools_instdir = $(mergetoolsdir)
- else
- mergetools_instdir = $(prefix)/$(mergetoolsdir)
- endif
--mergetools_instdir_SQ = $(subst ','\'',$(mergetools_instdir))
+ $(eval $(call make-var,USER-AGENT,user agent string,$(GIT_USER_AGENT)))
++$(eval $(call make-var,VERSION,version,$(GIT_VERSION)))
  
- install_bindir_programs := $(patsubst %,%$X,$(BINDIR_PROGRAMS_NEED_X)) $(BINDIR_PROGRAMS_NO_X)
+ ifdef DEFAULT_HELP_FORMAT
+ BASIC_CFLAGS += -DDEFAULT_HELP_FORMAT='"$(DEFAULT_HELP_FORMAT)"'
+@@ -1713,10 +1719,7 @@ builtin/help.sp builtin/help.s builtin/help.o: EXTRA_CPPFLAGS = \
+ 	-DGIT_MAN_PATH=$(call scq,$(mandir_relative)) \
+ 	-DGIT_INFO_PATH=$(call scq,$(infodir_relative))
  
+-version.sp version.s version.o: GIT-VERSION-FILE MAKE/USER-AGENT
+-version.sp version.s version.o: EXTRA_CPPFLAGS = \
+-	-DGIT_VERSION=$(call scq,$(GIT_VERSION)) \
+-	-DGIT_USER_AGENT=$(call scq,$(GIT_USER_AGENT))
++version.sp version.s version.o: MAKE/VERSION-string.h MAKE/USER-AGENT-string.h
+ 
+ $(BUILT_INS): git$X
+ 	$(QUIET_BUILT_IN)$(RM) $@ && \
+diff --git a/script/mkcstring b/script/mkcstring
+new file mode 100644
+index 0000000..c01f430
+--- /dev/null
++++ b/script/mkcstring
+@@ -0,0 +1,18 @@
++#!/bin/sh
++
++name=$1; shift
++
++c_quote() {
++	sed 's/\\/\\\\/g; s/"/\\"/'
++}
++
++cat <<-EOF
++#ifndef MAKE_${name}_H
++#define MAKE_${name}_H
++
++/* Auto-generated by mkcstring */
++
++#define MAKE_${name} "$(c_quote)"
++
++#endif /* MAKE_${name}_H */
++EOF
+diff --git a/version.c b/version.c
+index 6106a80..f68a93b 100644
+--- a/version.c
++++ b/version.c
+@@ -1,8 +1,10 @@
+ #include "git-compat-util.h"
+ #include "version.h"
+ #include "strbuf.h"
++#include "MAKE/USER-AGENT-string.h"
++#include "MAKE/VERSION-string.h"
+ 
+-const char git_version_string[] = GIT_VERSION;
++const char git_version_string[] = MAKE_VERSION;
+ 
+ const char *git_user_agent(void)
+ {
+@@ -11,7 +13,7 @@ const char *git_user_agent(void)
+ 	if (!agent) {
+ 		agent = getenv("GIT_USER_AGENT");
+ 		if (!agent)
+-			agent = GIT_USER_AGENT;
++			agent = MAKE_USER_AGENT;
+ 	}
+ 
+ 	return agent;
 -- 
 1.8.5.2.500.g8060133
