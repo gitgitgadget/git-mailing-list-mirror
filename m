@@ -1,87 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] blame.c: prepare_lines should not call xrealloc for every line
-Date: Wed, 05 Feb 2014 12:39:40 -0800
-Message-ID: <xmqqk3d92t0z.fsf@gitster.dls.corp.google.com>
-References: <1391544367-14599-1-git-send-email-dak@gnu.org>
-	<xmqqd2j28w3h.fsf@gitster.dls.corp.google.com>
-	<874n4ewouz.fsf@fencepost.gnu.org>
-	<xmqqr47i7dt4.fsf@gitster.dls.corp.google.com>
-	<87zjm6v99y.fsf@fencepost.gnu.org>
-	<xmqqmwi67cty.fsf@gitster.dls.corp.google.com>
-	<87vbwuuf5g.fsf@fencepost.gnu.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [Bug] branch.*.merge interpreted too strictly by tracking logic
+Date: Wed, 5 Feb 2014 15:50:30 -0500
+Message-ID: <20140205205030.GA16394@sigill.intra.peff.net>
+References: <xmqqa9e67atv.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Wed Feb 05 21:39:53 2014
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 05 21:50:52 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WB9GC-0000n0-Tb
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Feb 2014 21:39:53 +0100
+	id 1WB9Qp-0007Hy-9Q
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Feb 2014 21:50:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933054AbaBEUjq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Feb 2014 15:39:46 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49960 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932178AbaBEUjn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Feb 2014 15:39:43 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F0E8969087;
-	Wed,  5 Feb 2014 15:39:42 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=LrtDe2MbGse8Uq/eYayE/lPGtjM=; b=rgy0pp
-	EoMgrNibBF0h82eUV/RzENKAgIP7CpFzsWTUU7JVRIMVI6EymaTifj20AMvFQ1zV
-	IiHJ44P6R2UDOd9FW8WoZmBqdz2GoXhTkm0PbaUYy/00qxeiTmsESdMRBU1bGDCg
-	pablNSKeT4UWTDYhTPqJ8NruUTXOGOhUsLdNw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=naOP7sJ1WjDL8VSezQVXtaNeKZqOBjLE
-	WAY0OElFEXUgDH6uX7NEGwbk4WhsdnkPJ2h3kIJOkMc/QPZXNJJ3BE8SQNxav8Di
-	HasiPLFk22vMp7g9jEEsQaxv2ebmfrpc9mLwQ5R/gcZFoQS2B8FAer4Py3DQm4H7
-	4CzLsXoDMW0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E08D769085;
-	Wed,  5 Feb 2014 15:39:42 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2ADB669082;
-	Wed,  5 Feb 2014 15:39:42 -0500 (EST)
-In-Reply-To: <87vbwuuf5g.fsf@fencepost.gnu.org> (David Kastrup's message of
-	"Wed, 05 Feb 2014 09:39:39 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: A3E7CDC4-8EA5-11E3-9B32-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755097AbaBEUug (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Feb 2014 15:50:36 -0500
+Received: from cloud.peff.net ([50.56.180.127]:45298 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754190AbaBEUuc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Feb 2014 15:50:32 -0500
+Received: (qmail 18254 invoked by uid 102); 5 Feb 2014 20:50:32 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 05 Feb 2014 14:50:32 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 05 Feb 2014 15:50:30 -0500
+Content-Disposition: inline
+In-Reply-To: <xmqqa9e67atv.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241657>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241658>
 
-David Kastrup <dak@gnu.org> writes:
+On Tue, Feb 04, 2014 at 02:49:16PM -0800, Junio C Hamano wrote:
 
-> It's snake oil making debugging harder.
+> Let's tell these branches that they are both supposed to be building
+> on top of 'master'.
+> 
+>     : gitster track/master; git config branch.foo.remote .
+>     : gitster track/master; git config branch.foo.merge refs/heads/master
+>     : gitster track/master; git config branch.bar.remote .
+>     : gitster track/master; git config branch.bar.merge master
+> 
+> The difference between the two is that 'foo' spells the @{upstream}
+> branch in full (which is the recommended practice), while 'bar' is
+> loose and asks for 'master'.
 
-OK, that is a sensible argument.
+Is it legal to put an unqualified ref there? A wise man once said[1]:
 
->> This was fun ;-)
->
-> At the expense of seriously impacting my motivation to do any further
-> code cleanup on Git.
+  > Actually, it is broken in a lot of places. for-each-ref relies on
+  > the same code as "git status", "git checkout", etc, which will all
+  > fail to display tracking info. I believe the same code is also used
+  > for updating tracking branches on push. So I'm not sure if it was
+  > ever intended to be a valid setting.
 
-Well, I said it was "fun" because I was learning from a new person
-who haven't made much technical or code aethesitics discussion here
-so far.  If teaching others frustrates you and stops contributing to
-the project, that is a loss.
+  It wasn't.  Some places may accept them gracefully by either being
+  extra nice or by accident.
 
-But the styles matter, as the known pattern in the existing code is
-what lets our eyes coast over unimportant details of the code while
-reviewing and understanding.  I tend to be pickier when reviewing
-code from new people who are going to make large contributions for
-exactly that reason---new blood bringing in new ideas is fine, but
-I'd want to see those new ideas backed by solid thiniking, and that
-means they may have to explain themselves to those who are new to
-their ideas.
+I don't recall us ever doing anything after that. I don't have a problem
+with making it work, of course, but I am not sure if it is really a bug.
+
+-Peff
+
+[1] http://thread.gmane.org/gmane.comp.version-control.git/121671
