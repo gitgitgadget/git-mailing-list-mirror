@@ -1,112 +1,51 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 11/13] Makefile: auto-build C strings from make variables
-Date: Wed, 05 Feb 2014 11:17:13 -0800
-Message-ID: <xmqqeh3h4beu.fsf@gitster.dls.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 09/13] Makefile: add c-quote helper function
+Date: Wed, 5 Feb 2014 14:17:28 -0500
+Message-ID: <20140205191728.GA15489@sigill.intra.peff.net>
 References: <20140205174823.GA15070@sigill.intra.peff.net>
-	<20140205180206.GK15218@sigill.intra.peff.net>
+ <20140205175809.GI15218@sigill.intra.peff.net>
+ <xmqqmwi54bl7.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Feb 05 20:17:28 2014
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 05 20:17:35 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WB7yR-0007rc-P4
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Feb 2014 20:17:28 +0100
+	id 1WB7yZ-0007vS-Ci
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Feb 2014 20:17:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751427AbaBETRX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Feb 2014 14:17:23 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62728 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750994AbaBETRX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Feb 2014 14:17:23 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DA37B670FD;
-	Wed,  5 Feb 2014 14:17:21 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=1rlo6Ch1blJcYWHUZDg6EvEZado=; b=vxkur4
-	NUYtFt152k8/uSU0AWULy0pueRTXIRhKTohSWhn1uPZ/SbanFJyvSMJfZZJ1PzOC
-	oArb3Vy3lDrk65TBxZZyYGWm2oNfaXQpbatBgALRCspgxxofWJLIkYJuB+IBpxDa
-	mcnINQ+qMFTDtRiVNolTAlIM7z+h0tyky9K4E=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=KCE1EULR4L3sOTYcOD0GrUtdajYW4EiX
-	F5OPSQtj77oi6v3nBi0rbj0iK1bnDJCGqet3FLxnDrvWH9JfV/FVRzoBIcyAHiHA
-	SrEBJe2woevneq+lShTsKg7gDNsS/9qezT8tVeqXw+EGxwK4O/NXidkh8bRO8PK6
-	vA5vzLfK2oI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 46FD3670FA;
-	Wed,  5 Feb 2014 14:17:21 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B5224670E1;
-	Wed,  5 Feb 2014 14:17:15 -0500 (EST)
-In-Reply-To: <20140205180206.GK15218@sigill.intra.peff.net> (Jeff King's
-	message of "Wed, 5 Feb 2014 13:02:06 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 1F99AAA2-8E9A-11E3-A102-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751531AbaBETRb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Feb 2014 14:17:31 -0500
+Received: from cloud.peff.net ([50.56.180.127]:45215 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750994AbaBETRa (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Feb 2014 14:17:30 -0500
+Received: (qmail 12241 invoked by uid 102); 5 Feb 2014 19:17:30 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 05 Feb 2014 13:17:30 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 05 Feb 2014 14:17:28 -0500
+Content-Disposition: inline
+In-Reply-To: <xmqqmwi54bl7.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241641>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241642>
 
-Jeff King <peff@peff.net> writes:
+On Wed, Feb 05, 2014 at 11:13:24AM -0800, Junio C Hamano wrote:
 
-> diff --git a/script/mkcstring b/script/mkcstring
-> new file mode 100644
-> index 0000000..c01f430
-> --- /dev/null
-> +++ b/script/mkcstring
-> @@ -0,0 +1,18 @@
-> +#!/bin/sh
-> +
-> +name=$1; shift
-> +
-> +c_quote() {
-> +	sed 's/\\/\\\\/g; s/"/\\"/'
+> > +# Quote the value as C string inside a shell string. Good for passing strings
+> > +# on the command line via "-DFOO=$(call # scq,$(FOO))".
+> 
+> "call # scq"???
 
-No 'g' for the second one?
+Whoops. Bad rewrapping of the comment. It should obviously just be
 
-> +}
-> +
-> +cat <<-EOF
-> +#ifndef MAKE_${name}_H
-> +#define MAKE_${name}_H
-> +
-> +/* Auto-generated by mkcstring */
-> +
-> +#define MAKE_${name} "$(c_quote)"
-> +
-> +#endif /* MAKE_${name}_H */
-> +EOF
-> diff --git a/version.c b/version.c
-> index 6106a80..f68a93b 100644
-> --- a/version.c
-> +++ b/version.c
-> @@ -1,8 +1,10 @@
->  #include "git-compat-util.h"
->  #include "version.h"
->  #include "strbuf.h"
-> +#include "MAKE/USER-AGENT-string.h"
-> +#include "MAKE/VERSION-string.h"
->  
-> -const char git_version_string[] = GIT_VERSION;
-> +const char git_version_string[] = MAKE_VERSION;
->  
->  const char *git_user_agent(void)
->  {
-> @@ -11,7 +13,7 @@ const char *git_user_agent(void)
->  	if (!agent) {
->  		agent = getenv("GIT_USER_AGENT");
->  		if (!agent)
-> -			agent = GIT_USER_AGENT;
-> +			agent = MAKE_USER_AGENT;
->  	}
->  
->  	return agent;
+  -DFOO=$(call scq,$(FOO))
+
+-Peff
