@@ -1,87 +1,112 @@
-From: Kirill Smelkov <kirr@mns.spb.ru>
-Subject: [PATCH 4/4] revision: convert to using diff_tree_sha1()
-Date: Wed,  5 Feb 2014 20:57:12 +0400
-Message-ID: <975fbde9bdd2c5aad7376e398ca8001b9a41d2d6.1391619218.git.kirr@mns.spb.ru>
-References: <cover.1391619218.git.kirr@mns.spb.ru>
-Cc: git@vger.kernel.org, Kirill Smelkov <kirr@mns.spb.ru>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 05 17:56:03 2014
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] reset: support "--mixed --intent-to-add" mode
+Date: Wed, 05 Feb 2014 09:16:09 -0800
+Message-ID: <xmqqob2l5vl2.fsf@gitster.dls.corp.google.com>
+References: <CACsJy8BXGZ+1Oqrpcky5JPCtZRwvxmxhXGfuEqY9Ct4Pt8FmJg@mail.gmail.com>
+	<1391480409-25727-1-git-send-email-pclouds@gmail.com>
+	<1391480409-25727-2-git-send-email-pclouds@gmail.com>
+	<xmqqvbwu8zjx.fsf@gitster.dls.corp.google.com>
+	<xmqqeh3i7bxm.fsf@gitster.dls.corp.google.com>
+	<20140205002725.GA3858@lanh>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 05 18:16:27 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WB5lU-0000Zb-VB
-	for gcvg-git-2@plane.gmane.org; Wed, 05 Feb 2014 17:55:57 +0100
+	id 1WB65K-0007oJ-9l
+	for gcvg-git-2@plane.gmane.org; Wed, 05 Feb 2014 18:16:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753199AbaBEQzr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Feb 2014 11:55:47 -0500
-Received: from mail.mnsspb.ru ([84.204.75.2]:60083 "EHLO mail.mnsspb.ru"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753096AbaBEQzq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Feb 2014 11:55:46 -0500
-Received: from [192.168.0.127] (helo=tugrik.mns.mnsspb.ru)
-	by mail.mnsspb.ru with esmtps id 1WB5lI-0004Cw-L0; Wed, 05 Feb 2014 20:55:44 +0400
-Received: from kirr by tugrik.mns.mnsspb.ru with local (Exim 4.72)
-	(envelope-from <kirr@tugrik.mns.mnsspb.ru>)
-	id 1WB5n5-0004zR-C1; Wed, 05 Feb 2014 20:57:35 +0400
-X-Mailer: git-send-email 1.9.rc1.181.g641f458
-In-Reply-To: <cover.1391619218.git.kirr@mns.spb.ru>
-In-Reply-To: <cover.1391619218.git.kirr@mns.spb.ru>
-References: <cover.1391619218.git.kirr@mns.spb.ru>
+	id S1753270AbaBERQW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Feb 2014 12:16:22 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58891 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752903AbaBERQV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Feb 2014 12:16:21 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E8AB567750;
+	Wed,  5 Feb 2014 12:16:19 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=4Z7ET4vQeeFZWCJUblaTcxpQYHI=; b=WAE6Ac
+	1nnxCPgnG43ekxaOQjrKjsxjN5vLr8c8gFI4xNuoj+CxxL5GKZtCv2xhBI7Awdlr
+	r3a+65TyEBvaH3+87cJyw/agpBiti2ueDyBxFv5bHovfQiaqliqlAaZC4YYuAJUJ
+	ox85i6pju/vwG9o9eHIiGME7tt0IrMUsQZ+HQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Y6OAsAM+hDPfag1f/aUPzSq0drX5bxQL
+	5BLGVzHsFoKyOVsvFyOFxpd1XvpqFq03+Ho2vXN+hTTKUzYDQhOl0LGekmTvasnQ
+	FJhGByNCyJPd/uRRBOm3ET8lO55c3JMxlBhl4v5ZGM2mmidS3fEFmX+I46/Kw+Hy
+	AOsPpDNBcYo=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 327E16774D;
+	Wed,  5 Feb 2014 12:16:18 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B9DA867738;
+	Wed,  5 Feb 2014 12:16:12 -0500 (EST)
+In-Reply-To: <20140205002725.GA3858@lanh> (Duy Nguyen's message of "Wed, 5 Feb
+	2014 07:27:26 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 36874DA2-8E89-11E3-BE72-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241610>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241611>
 
-Since diff_tree_sha1() can now accept empty trees via NULL sha1, we
-could just call it without manually reading trees into tree_desc and
-duplicating code.
+Duy Nguyen <pclouds@gmail.com> writes:
 
-Besides, that
+> On Tue, Feb 04, 2014 at 02:25:25PM -0800, Junio C Hamano wrote:
+>> Junio C Hamano <gitster@pobox.com> writes:
+>> 
+>> > While I do not have any problem with adding an optional "keep lost
+>> > paths as intent-to-add entries" feature, I am not sure why this has
+>> > to be so different from the usual add-cache-entry codepath.  The
+>> > if/elseif chain you are touching inside this loop does:
+>> >
+>> >  - If the tree you are resetting to has something at the path
+>> >    (which is different from the current index, obviously), create
+>> >    a cache entry to represent that state from the tree and stuff
+>> >    it in the index;
+>> >
+>> >  - Otherwise, the tree you are resetting to does not have that
+>> >    path.  We used to say "remove it from the index", but now we have
+>> >    an option to instead add it as an intent-to-add entry.
+>> >
+>> > So, why doesn't the new codepath do exactly the same thing as the
+>> > first branch of the if/else chain and call add_cache_entry but with
+>> > a ce marked with CE_INTENT_TO_ADD?  That would parallel what happens
+>> > in "git add -N" better, I would think, no?
+>> 
+>> In other words, something along this line, perhaps?
+>
+> <snip>
+>
+> Yes. But you need something like this on top to actually set
+> CE_INTENT_TO_ADD
 
-	if (!tree)
-		return 0;
+Yes, indeed.  I wonder why your new test did not notice it, though
+;-)
 
-looked suspect - we were saying an invalid tree != empty tree, but maybe it is
-better to just say the tree is invalid here, which is what diff_tree_sha1()
-does for such case.
 
-Signed-off-by: Kirill Smelkov <kirr@mns.spb.ru>
----
- revision.c | 12 +-----------
- 1 file changed, 1 insertion(+), 11 deletions(-)
-
-diff --git a/revision.c b/revision.c
-index 082dae6..bd027bc 100644
---- a/revision.c
-+++ b/revision.c
-@@ -497,24 +497,14 @@ static int rev_compare_tree(struct rev_info *revs,
- static int rev_same_tree_as_empty(struct rev_info *revs, struct commit *commit)
- {
- 	int retval;
--	void *tree;
--	unsigned long size;
--	struct tree_desc empty, real;
- 	struct tree *t1 = commit->tree;
- 
- 	if (!t1)
- 		return 0;
- 
--	tree = read_object_with_reference(t1->object.sha1, tree_type, &size, NULL);
--	if (!tree)
--		return 0;
--	init_tree_desc(&real, tree, size);
--	init_tree_desc(&empty, "", 0);
--
- 	tree_difference = REV_TREE_SAME;
- 	DIFF_OPT_CLR(&revs->pruning, HAS_CHANGES);
--	retval = diff_tree(&empty, &real, "", &revs->pruning);
--	free(tree);
-+	retval = diff_tree_sha1(NULL, t1->object.sha1, "", &revs->pruning);
- 
- 	return retval >= 0 && (tree_difference == REV_TREE_SAME);
- }
--- 
-1.9.rc1.181.g641f458
+>
+> -- 8< --
+> diff --git a/read-cache.c b/read-cache.c
+> index 325d193..87f1367 100644
+> --- a/read-cache.c
+> +++ b/read-cache.c
+> @@ -585,6 +585,7 @@ void mark_intent_to_add(struct cache_entry *ce)
+>  	if (write_sha1_file("", 0, blob_type, sha1))
+>  		die("cannot create an empty blob in the object database");
+>  	hashcpy(ce->sha1, sha1);
+> +	ce->ce_flags |= CE_INTENT_TO_ADD;
+>  }
+>  
+>  int add_to_index(struct index_state *istate, const char *path, struct stat *st, int flags)
+> -- 8< --
