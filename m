@@ -1,234 +1,108 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [PATCH] blame.c: prepare_lines should not call xrealloc for every line
-Date: Thu, 06 Feb 2014 00:45:50 +0100
-Message-ID: <87vbwtjf81.fsf@fencepost.gnu.org>
-References: <1391544367-14599-1-git-send-email-dak@gnu.org>
-	<xmqqd2j28w3h.fsf@gitster.dls.corp.google.com>
-	<87r47hvrqt.fsf@fencepost.gnu.org>
-	<xmqqob2l2ta7.fsf@gitster.dls.corp.google.com>
+From: Martin Erik Werner <martinerikwerner@gmail.com>
+Subject: [BUG] t9151: Unreliable test/test setup
+Date: Thu, 6 Feb 2014 00:46:21 +0100
+Message-ID: <20140205234621.GA4777@mule>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 06 00:46:18 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: amyrick@apple.com, tuomas.suutari@gmail.com, sam@vilain.net
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 06 00:46:33 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WBCAX-0004OO-Vd
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Feb 2014 00:46:14 +0100
+	id 1WBCAq-0004Zy-ED
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Feb 2014 00:46:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751769AbaBEXqI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Feb 2014 18:46:08 -0500
-Received: from fencepost.gnu.org ([208.118.235.10]:50222 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750952AbaBEXqG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Feb 2014 18:46:06 -0500
-Received: from localhost ([127.0.0.1]:49262 helo=lola)
-	by fencepost.gnu.org with esmtp (Exim 4.71)
-	(envelope-from <dak@gnu.org>)
-	id 1WBCAP-0007Jw-KL; Wed, 05 Feb 2014 18:46:06 -0500
-Received: by lola (Postfix, from userid 1000)
-	id 6434DE8721; Thu,  6 Feb 2014 00:45:50 +0100 (CET)
-In-Reply-To: <xmqqob2l2ta7.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Wed, 05 Feb 2014 12:34:08 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3.50 (gnu/linux)
+	id S1752390AbaBEXq2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Feb 2014 18:46:28 -0500
+Received: from mail-la0-f48.google.com ([209.85.215.48]:56116 "EHLO
+	mail-la0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752035AbaBEXq1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Feb 2014 18:46:27 -0500
+Received: by mail-la0-f48.google.com with SMTP id mc6so900319lab.35
+        for <git@vger.kernel.org>; Wed, 05 Feb 2014 15:46:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent;
+        bh=W3ipNVgpuWHdQ63pHONl4BUtGaSLzK454JaDNb5W5A0=;
+        b=roRA/McxK7C0rXgbdt9njzcmMgVXy1tX6gNWmLVddlrx4wBTevalJ+sNZh4oGIgQ3f
+         ZeAaGzOVHtkuGPRWT162EAYzpXYqIF+2tW+6pCmF9Ko84hla2vUNU0skbH1UPLpXzZnS
+         EyMucXfR2prXdBuBQo6+ZKkrLzgiAYdUvOL1faHqppBxOXTJZmKjSKi8MZfvsJXLt3kk
+         XdzrI0WyQ90VO5RLoh958USH3zb6XAFko+9uSZtnzxHqhyKOj+XQAfJUvRX61aKJ2BEn
+         Nzyro+9Iq3y/yOaLUQY/ylETQghpkPsg+Wg173hV5trOlnji7WDmOIMBgEoTp1yUnz9f
+         aJ1Q==
+X-Received: by 10.112.189.68 with SMTP id gg4mr2810309lbc.18.1391643986470;
+        Wed, 05 Feb 2014 15:46:26 -0800 (PST)
+Received: from mule (nl116-226-21.student.uu.se. [130.243.226.21])
+        by mx.google.com with ESMTPSA id t5sm43014970lat.6.2014.02.05.15.46.24
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 05 Feb 2014 15:46:25 -0800 (PST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241676>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241677>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi,
 
-> David Kastrup <dak@gnu.org> writes:
->
->> Junio C Hamano <gitster@pobox.com> writes:
->>
->>> which I think is the prevalent style in our codebase.  The same for
->>> the other loop we see in the new code below.
->>>
->>>  - avoid assignments in conditionals when you do not have to.
->>
->> commit a77a48c259d9adbe7779ca69a3432e493116b3fd
->> Author: Junio C Hamano <gitster@pobox.com>
->> Date:   Tue Jan 28 13:55:59 2014 -0800
->>
->>     combine-diff: simplify intersect_paths() further
->> [...]
->>
->> +       while ((p = *tail) != NULL) {
->>
->> Because we can.
->
-> Be reasonable.  You cannot sensibly rewrite it to
->
-> 	p = *tail;
->         while (p) {
->         	...
-> 		p = *tail;
-> 	}
->
-> when you do not know how ... part would evolve in the future.
+It appears that the last test in t9151-svn-mergeinfo.sh:
 
-The only unknown here is the potential presence of "continue;" in
-... and that can be addressed by writing
+	test_expect_failure 'everything got merged in the end' '
+		unmerged=$(git rev-list --all --not master) &&
+		[ -z "$unmerged" ]
+		'
 
-    for (p = *tail; p; p = *tail) {
-       ...
-    }
+reports "known breakage" or "breakage vanished" seemingly at random:
 
-However, that only makes sense where ... is rather large and diverse and
-the assignment in question provides a unifying point.  In this case, the
-loop is rather small and perfectly fits on one screen.  It turns out
-that the assignment only serves for _obfuscating_ the various code
-paths.  We have:
+	$ while true; do (cd t && sh t9151-svn-mergeinfo.sh | \
+		grep -q vanished && printf "f" || printf "b"); done
+	bbbffffbbffbffbbbffbfffbbbffffffffbffbbbfbbffffffbbfbfff
 
-        while ((p = *tail) != NULL) {
-                cmp = ((i >= q->nr)
-                       ? -1 : strcmp(p->path, q->queue[i]->two->path));
+I would guess that it might not be the test itself that is unreliable,
+but rather the svn setup done prior, looking at test logs:
 
-                if (cmp < 0) {
-                        /* p->path not in q->queue[]; drop it */
-                        *tail = p->next;
-                        free(p);
-                        continue;
-                }
+	(cd t && mkdir -p logs; i=0; \
+	while true; do sh t9151-svn-mergeinfo.sh --verbose 2>&1 | tee logs/cur \
+	| grep -q vanished && \
+		(printf "f" && mv logs/cur logs/fixed-"$i") || \
+		(printf "b" && mv logs/cur logs/broken-"$i"); \
+	i=$((i+1)); done)
+	bbffbff
 
-                if (cmp > 0) {
-                        /* q->queue[i] not in p->path; skip it */
-                        i++;
-                        continue;
-                }
+the only consistent difference between broken and fixed seems to be in
+the svn setup stage and more specifically the bit below, with r44
+becoming different SHA1s in "broken" and "fixed" imports:
 
-                hashcpy(p->parent[n].sha1, q->queue[i]->one->sha1);
-                p->parent[n].mode = q->queue[i]->one->mode;
-                p->parent[n].status = q->queue[i]->status;
+--- broken-0    2014-02-05 23:40:21.412967698 +0100
++++ fixed-2     2014-02-05 23:40:44.441536583 +0100
+(...)
+@@ -176,12 +176,12 @@
+        M       subdir/palindromes
+ r43 = a671eec900764a4ab85a6166def3e0d30f1a2664 (refs/remotes/bugfix)
+        M       subdir/palindromes
+-Couldn't find revmap for file:///home/arand/utv/git/git/t/trash%20directory.t9151-svn-mergeinfo/svnrepo/branches/bugfix/subdir
+-Couldn't find revmap for file:///home/arand/utv/git/git/t/trash%20directory.t9151-svn-mergeinfo/svnrepo/tags/v1.0/subdir
+-W: Cannot find common ancestor between 90411e1b2118e11664e368a24a1eaa5e8749d150 and fdb537791ee8ba532e49c3d5a34a30feeb87bd59. Ignoring merge info.
+ Couldn't find revmap for file:///home/arand/utv/git/git/t/trash%20directory.t9151-svn-mergeinfo/svnrepo/tags/v1.0
+ Found merge parent (svn:mergeinfo prop): a671eec900764a4ab85a6166def3e0d30f1a2664
+-r44 = a110dec28a4b152b394906b1303fbf19174f7d26 (refs/remotes/trunk)
++Couldn't find revmap for file:///home/arand/utv/git/git/t/trash%20directory.t9151-svn-mergeinfo/svnrepo/branches/bugfix/subdir
++Couldn't find revmap for file:///home/arand/utv/git/git/t/trash%20directory.t9151-svn-mergeinfo/svnrepo/tags/v1.0/subdir
++Found merge parent (svn:mergeinfo prop): fdb537791ee8ba532e49c3d5a34a30feeb87bd59
++r44 = 8b619659a5126105c0a9765b655b6a1add9db4c1 (refs/remotes/trunk)
+ Checked out HEAD:
+   file:///home/arand/utv/git/git/t/trash%20directory.t9151-svn-mergeinfo/svnrepo/trunk r44
+ ok 1 - load svn dump
 
-                tail = &p->next;
-                i++;
-        }
+Does anyone who is more familiar with the test know what's going on
+here? Is there any way to fix it, or should the test maybe be disabled
+completely for the time being?
 
-While we could instead have:
-      p = curr;
-      while (p) {
-                cmp = ((i >= q->nr)
-                       ? -1 : strcmp(p->path, q->queue[i]->two->path));
-
-                if (cmp < 0) {
-                        struct combine_diff_path *n = p->next;
-                        /* p->path not in q->queue[]; drop it */
-                        free(p);
-                        p = *tail = n;
-                        continue;
-                }
-
-                if (cmp > 0) {
-                        /* q->queue[i] not in p->path; skip it */
-                        i++;
-                        continue;
-                }
-
-                hashcpy(p->parent[n].sha1, q->queue[i]->one->sha1);
-                p->parent[n].mode = q->queue[i]->one->mode;
-                p->parent[n].status = q->queue[i]->status;
-
-                p = *(tail = &p->next);
-                i++;
-        }
-
-Of course, it only makes limited sense to recheck p after the second if, so
-it would be clearer to write
-
-      p = curr;
-      while (p) {
-                cmp = ((i >= q->nr)
-                       ? -1 : strcmp(p->path, q->queue[i]->two->path));
-
-                if (cmp < 0) {
-                        struct combine_diff_path *n = p->next;
-                        /* p->path not in q->queue[]; drop it */
-                        free(p);
-                        p = *tail = n;
-                        continue;
-                }
-
-                if (cmp > 0) {
-                        /* q->queue[i] not in p->path; skip it */
-                        i++;
-                        continue;
-                }
-
-                hashcpy(p->parent[n].sha1, q->queue[i]->one->sha1);
-                p->parent[n].mode = q->queue[i]->one->mode;
-                p->parent[n].status = q->queue[i]->status;
-
-                p = *(tail = &p->next);
-                i++;
-        }
-
-But that's sort of a red herring since the actual loop structure is
-hidden in conditions where it does not belong.  (i >= q->nr) is a
-_terminal_ condition.
-
-So it's more like
-
-    p = curr;
-    while (p) {
-        if (i >= q->nr) {
-            *tail = NULL;
-            do {
-                struct combine_diff_path *n = p->next;
-                free(p);
-                p = n;
-            } while (p);
-            break;
-        }
-        cmp = strcmp(p->path, q->queue[i]->two->path));
-        if (cmp < 0) {
-                struct combine_diff_path *n = p->next;
-                /* p->path not in q->queue[]; drop it */
-                free(p);
-                p = *tail = n;
-                continue;
-        }
-        if (cmp == 0) {
-                hashcpy(p->parent[n].sha1, q->queue[i]->one->sha1);
-                p->parent[n].mode = q->queue[i]->one->mode;
-                p->parent[n].status = q->queue[i]->status;
-
-                p = *(tail = &p->next);
-        }
-        i++;
-    }
-
-> 	if ((p = *tail) != NULL) {
->         	...
->
-> is a totally different issue.
-
-Yes: it was just a matter of style instead of preventing _other_ code to
-be rewritten in a clearer manner.
-
-For a "don't look elsewhere" solution,
-
-        while ((p = *tail) != NULL)
-
-can _always_ be equivalently replaced with
-
-        for (p = *tail; p; p = *tail)
-
-and in this case already trivially improved with
-
-        for (p = curr; p; p = *tail)
-
-which meets your style prescription "avoid assignments in conditionals
-when you do not have to." but in this particular case, the "don't look
-elsewhere" solution was not called for.  It unifies code paths that
-deserve to stay separate: we don't _want_ the assignment to take place
-for every path leading to the loop control.  It makes it less clear to
-see what happens.
-
--- 
-David Kastrup
+--
+Martin Erik Werner <martinerikwerner@gmail.com>
