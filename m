@@ -1,7 +1,7 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v5 13/14] trailer: add tests for commands using env variables
-Date: Thu, 06 Feb 2014 21:20:02 +0100
-Message-ID: <20140206202004.325.2983.chriscool@tuxfamily.org>
+Subject: [PATCH v5 07/14] trailer: add interpret-trailers command
+Date: Thu, 06 Feb 2014 21:19:56 +0100
+Message-ID: <20140206202004.325.48784.chriscool@tuxfamily.org>
 References: <20140206194123.325.99451.chriscool@tuxfamily.org>
 Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
 	Josh Triplett <josh@joshtriplett.org>,
@@ -11,68 +11,150 @@ Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
 	Dan Carpenter <dan.carpenter@oracle.com>,
 	Greg Kroah-Hartman <greg@kroah.com>, Jeff King <peff@peff.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 06 21:21:43 2014
+X-From: git-owner@vger.kernel.org Thu Feb 06 21:21:42 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WBVSA-0003tK-Ko
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Feb 2014 21:21:43 +0100
+	id 1WBVSA-0003tK-1r
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Feb 2014 21:21:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756034AbaBFUVj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Feb 2014 15:21:39 -0500
-Received: from mail-2y.bbox.fr ([194.158.98.15]:43415 "EHLO mail-2y.bbox.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755537AbaBFUV1 (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1755663AbaBFUV1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Thu, 6 Feb 2014 15:21:27 -0500
+Received: from mail-2y.bbox.fr ([194.158.98.15]:43393 "EHLO mail-2y.bbox.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755150AbaBFUVX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Feb 2014 15:21:23 -0500
 Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-2y.bbox.fr (Postfix) with ESMTP id 4B2D14F;
-	Thu,  6 Feb 2014 21:21:26 +0100 (CET)
-X-git-sha1: c1628e64419f77a9468880d66b8f6e3afb51caf1 
+	by mail-2y.bbox.fr (Postfix) with ESMTP id 6A6CA5E;
+	Thu,  6 Feb 2014 21:21:22 +0100 (CET)
+X-git-sha1: 1956a0f0d85cf6aa2b2dbe8262ff5cdbd69a7e59 
 X-Mailer: git-mail-commits v0.5.2
 In-Reply-To: <20140206194123.325.99451.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241730>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241731>
+
+This patch adds the "git interpret-trailers" command.
+This command uses the previously added process_trailers()
+function in trailer.c.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- t/t7513-interpret-trailers.sh | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ .gitignore                   |  1 +
+ Makefile                     |  1 +
+ builtin.h                    |  1 +
+ builtin/interpret-trailers.c | 36 ++++++++++++++++++++++++++++++++++++
+ git.c                        |  1 +
+ trailer.h                    |  6 ++++++
+ 6 files changed, 46 insertions(+)
+ create mode 100644 builtin/interpret-trailers.c
+ create mode 100644 trailer.h
 
-diff --git a/t/t7513-interpret-trailers.sh b/t/t7513-interpret-trailers.sh
-index 2d50b7a..00894a8 100755
---- a/t/t7513-interpret-trailers.sh
-+++ b/t/t7513-interpret-trailers.sh
-@@ -223,6 +223,26 @@ test_expect_success 'with simple command' '
- 	test_cmp expected actual
- '
- 
-+test_expect_success 'with command using commiter information' '
-+	git config trailer.sign.ifExist "addIfDifferent" &&
-+	git config trailer.sign.command "echo \"\$GIT_COMMITTER_NAME <\$GIT_COMMITTER_EMAIL>\"" &&
-+	cat complex_message_body >expected &&
-+	printf "Fixes: \nAcked-by= \nReviewed-by: \nSigned-off-by: \nSigned-off-by: C O Mitter <committer@example.com>\n" >>expected &&
-+	git interpret-trailers "review:" "fix=22" < complex_message >actual &&
-+	test_cmp expected actual
-+'
+diff --git a/.gitignore b/.gitignore
+index b5f9def..c870ada 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -74,6 +74,7 @@
+ /git-index-pack
+ /git-init
+ /git-init-db
++/git-interpret-trailers
+ /git-instaweb
+ /git-log
+ /git-ls-files
+diff --git a/Makefile b/Makefile
+index ec90feb..a91465e 100644
+--- a/Makefile
++++ b/Makefile
+@@ -935,6 +935,7 @@ BUILTIN_OBJS += builtin/hash-object.o
+ BUILTIN_OBJS += builtin/help.o
+ BUILTIN_OBJS += builtin/index-pack.o
+ BUILTIN_OBJS += builtin/init-db.o
++BUILTIN_OBJS += builtin/interpret-trailers.o
+ BUILTIN_OBJS += builtin/log.o
+ BUILTIN_OBJS += builtin/ls-files.o
+ BUILTIN_OBJS += builtin/ls-remote.o
+diff --git a/builtin.h b/builtin.h
+index d4afbfe..30f4c30 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -71,6 +71,7 @@ extern int cmd_hash_object(int argc, const char **argv, const char *prefix);
+ extern int cmd_help(int argc, const char **argv, const char *prefix);
+ extern int cmd_index_pack(int argc, const char **argv, const char *prefix);
+ extern int cmd_init_db(int argc, const char **argv, const char *prefix);
++extern int cmd_interpret_trailers(int argc, const char **argv, const char *prefix);
+ extern int cmd_log(int argc, const char **argv, const char *prefix);
+ extern int cmd_log_reflog(int argc, const char **argv, const char *prefix);
+ extern int cmd_ls_files(int argc, const char **argv, const char *prefix);
+diff --git a/builtin/interpret-trailers.c b/builtin/interpret-trailers.c
+new file mode 100644
+index 0000000..04b0ae2
+--- /dev/null
++++ b/builtin/interpret-trailers.c
+@@ -0,0 +1,36 @@
++/*
++ * Builtin "git interpret-trailers"
++ *
++ * Copyright (c) 2013 Christian Couder <chriscool@tuxfamily.org>
++ *
++ */
 +
-+test_expect_success 'with command using author information' '
-+	git config trailer.sign.key "Signed-off-by: " &&
-+	git config trailer.sign.where "after" &&
-+	git config trailer.sign.ifExist "addIfDifferentNeighbor" &&
-+	git config trailer.sign.command "echo \"\$GIT_AUTHOR_NAME <\$GIT_AUTHOR_EMAIL>\"" &&
-+	cat complex_message_body >expected &&
-+	printf "Fixes: \nAcked-by= \nReviewed-by: \nSigned-off-by: \nSigned-off-by: A U Thor <author@example.com>\n" >>expected &&
-+	git interpret-trailers "review:" "fix=22" < complex_message >actual &&
-+	test_cmp expected actual
-+'
++#include "cache.h"
++#include "builtin.h"
++#include "parse-options.h"
++#include "strbuf.h"
++#include "trailer.h"
 +
- test_expect_success 'setup a commit' '
- 	echo "Content of the first commit." > a.txt &&
- 	git add a.txt &&
++static const char * const git_interpret_trailers_usage[] = {
++	N_("git interpret-trailers [--trim-empty] [--infile=<file>] [(<token>[(=|:)<value>])...]"),
++	NULL
++};
++
++int cmd_interpret_trailers(int argc, const char **argv, const char *prefix)
++{
++	const char *infile = NULL;
++	int trim_empty = 0;
++
++	struct option options[] = {
++		OPT_BOOL(0, "trim-empty", &trim_empty, N_("trim empty trailers")),
++		OPT_FILENAME(0, "infile", &infile, N_("use message from file")),
++		OPT_END()
++	};
++
++	argc = parse_options(argc, argv, prefix, options,
++			     git_interpret_trailers_usage, 0);
++
++	process_trailers(infile, trim_empty, argc, argv);
++
++	return 0;
++}
+diff --git a/git.c b/git.c
+index 3799514..1420b58 100644
+--- a/git.c
++++ b/git.c
+@@ -383,6 +383,7 @@ static void handle_internal_command(int argc, const char **argv)
+ 		{ "index-pack", cmd_index_pack, RUN_SETUP_GENTLY },
+ 		{ "init", cmd_init_db },
+ 		{ "init-db", cmd_init_db },
++		{ "interpret-trailers", cmd_interpret_trailers, RUN_SETUP },
+ 		{ "log", cmd_log, RUN_SETUP },
+ 		{ "ls-files", cmd_ls_files, RUN_SETUP },
+ 		{ "ls-remote", cmd_ls_remote, RUN_SETUP_GENTLY },
+diff --git a/trailer.h b/trailer.h
+new file mode 100644
+index 0000000..9db4459
+--- /dev/null
++++ b/trailer.h
+@@ -0,0 +1,6 @@
++#ifndef TRAILER_H
++#define TRAILER_H
++
++void process_trailers(const char *infile, int trim_empty, int argc, const char **argv);
++
++#endif /* TRAILER_H */
 -- 
 1.8.5.2.206.g98f5689.dirty
