@@ -1,103 +1,145 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: attr.c doesn't honor --work-tree option
-Date: Thu, 06 Feb 2014 09:54:19 -0800
-Message-ID: <xmqqvbwsyvn8.fsf@gitster.dls.corp.google.com>
-References: <CAB7pA0_2kLJmRZb8Z_9+xOcrbwMZLgnZwC5f7etbE4OuJ1wgmA@mail.gmail.com>
+From: =?ISO-8859-1?Q?R=FCdiger?= Sonderfeld <ruediger@c-plusplus.de>
+Subject: git-remote-bzr: fatal: mark :399654 not declared
+Date: Thu, 06 Feb 2014 19:05:07 +0100
+Message-ID: <8513837.uWFUjXk7Vu@descartes>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Lasse Makholm <lasse.makholm@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 06 18:55:04 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 06 19:14:44 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WBTA7-000361-T0
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Feb 2014 18:54:56 +0100
+	id 1WBTTH-0002pT-T4
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Feb 2014 19:14:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754377AbaBFRyv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Feb 2014 12:54:51 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52455 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752593AbaBFRyu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Feb 2014 12:54:50 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A20D168F28;
-	Thu,  6 Feb 2014 12:54:49 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=YK+DMrM02RQCTdZgWLcK9snDbX8=; b=c7P/A/
-	ewzC/keBPP+gLplPekpUN3hAYi+/KxwqyibaQietLZ/0+NFTD5hGiXmYqSShxSau
-	wCElG9osRAHfZ/gijE7lgYJeZ7EeG+SrjCe7LtDK0jAWkUCerErcCPoeMaOhvb9i
-	9BX1XNSodC63Ob/sudv/mzVxdldE48KyzLOaA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=TDyzxl7iBG0LKeKYRPKuJ3KRmwSI0Z5t
-	ukT3YcoVIchsxbvYsh4H7Sel0XRjNIlHPoiYz8q0ttiZxo0+gumCWKm4CMRwKjgm
-	0uLXKHutRatz6h6qU4lV2rmI4hRu2NSvvolvdfS8atacb1gNWc+Y2iguIv5nUrCK
-	j30XUxN3//M=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4FE3E68F27;
-	Thu,  6 Feb 2014 12:54:49 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 50E0A68F16;
-	Thu,  6 Feb 2014 12:54:22 -0500 (EST)
-In-Reply-To: <CAB7pA0_2kLJmRZb8Z_9+xOcrbwMZLgnZwC5f7etbE4OuJ1wgmA@mail.gmail.com>
-	(Lasse Makholm's message of "Thu, 6 Feb 2014 13:48:43 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: B5A0E16A-8F57-11E3-B575-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752471AbaBFSOj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 6 Feb 2014 13:14:39 -0500
+Received: from ptmx.org ([178.63.28.110]:35320 "EHLO ptmx.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751956AbaBFSOi convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 6 Feb 2014 13:14:38 -0500
+X-Greylist: delayed 560 seconds by postgrey-1.27 at vger.kernel.org; Thu, 06 Feb 2014 13:14:38 EST
+Received: from localhost (localhost [127.0.0.1])
+	by ptmx.org (Postfix) with ESMTP id B145B258C4;
+	Thu,  6 Feb 2014 19:05:15 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at ptmx.org
+Received: from ptmx.org ([127.0.0.1])
+	by localhost (ptmx.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id xi22sACmIRkN; Thu,  6 Feb 2014 19:05:13 +0100 (CET)
+Received: from descartes.localnet (chello080108246092.7.14.vie.surfer.at [80.108.246.92])
+	by ptmx.org (Postfix) with ESMTPSA id 71FAD252EA;
+	Thu,  6 Feb 2014 19:05:13 +0100 (CET)
+User-Agent: KMail/4.11.3 (Linux/3.11.0-15-generic; KDE/4.11.3; x86_64; ; )
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241705>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241707>
 
-Lasse Makholm <lasse.makholm@gmail.com> writes:
+Hello,
+I'm using git-remote-bzr to access the GNU Emacs Bazaar repo.  I follow=
+ed the=20
+guideline described here:=20
+https://lists.gnu.org/archive/html/emacs-devel/2013-05/msg00008.html
 
-> Here's a repro with -DDEBUG_ATTR=1 and a printf() in read_attr_from_file():
->
-> $ cd /tmp/
-> $ mkdir -p attr-test/repo
-> $ cd attr-test/repo
-> $ git init
-> Initialized empty Git repository in /tmp/attr-test/repo/.git/
-> $ echo 'dir/* filter=foo' >.gitattributes
-> $
->
-> Inside the working tree, it works:
->
-> $ ~/src/git.git/git check-attr -a dir/file
+Pulling and pushing worked flawless for several month.  But recently gi=
+t=20
+bzr stopped working with the following error message:
 
-Does check-ignore misbehave the same way?
+$ git pull
+fatal: mark :399654 not declared
+fast-import: dumping crash report to .git/fast_import_crash_16173
+fatal: Error while running fast-import
+Traceback (most recent call last):
+  File "/usr/bin/git-remote-bzr", line 947, in <module>
+    sys.exit(main(sys.argv))
+  File "/usr/bin/git-remote-bzr", line 931, in main
+    do_import(parser)
+  File "/usr/bin/git-remote-bzr", line 399, in do_import
+    export_branch(repo, name)
+  File "/usr/bin/git-remote-bzr", line 327, in export_branch
+    modified_final =3D export_files(cur_tree, modified)
+  File "/usr/bin/git-remote-bzr", line 272, in export_files
+    print d
+IOError: [Errno 32] Broken pipe
 
-I suspect that is this because check-attr is not a command that
-requires a working tree.  The command was written primarily as a
-debugging aid that can be used anywhere as long as you have a
-repository to read strings from either its standard input or its
-arguments, and gives them directly to check_attr(), but it does so
-without first going to the top of the real working tree like
-check-ignore does.
+And the crash report
 
-Forcing it to go to the top of the working tree (see the attached
-one-liner, but note that I didn't test it) may give you want you
-want.
+$ cat .git/fast_import_crash_16173
+fast-import crash report:
+    fast-import process: 16173
+    parent process     : 16172
+    at Thu Feb 6 18:38:00 2014
 
- git.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+fatal: mark :399654 not declared
 
-diff --git a/git.c b/git.c
-index 7cf2953..314ec9f 100644
---- a/git.c
-+++ b/git.c
-@@ -342,7 +342,7 @@ static struct cmd_struct commands[] = {
- 	{ "branch", cmd_branch, RUN_SETUP },
- 	{ "bundle", cmd_bundle, RUN_SETUP_GENTLY },
- 	{ "cat-file", cmd_cat_file, RUN_SETUP },
--	{ "check-attr", cmd_check_attr, RUN_SETUP },
-+	{ "check-attr", cmd_check_attr, RUN_SETUP | NEED_WORK_TREE },
- 	{ "check-ignore", cmd_check_ignore, RUN_SETUP | NEED_WORK_TREE },
- 	{ "check-mailmap", cmd_check_mailmap, RUN_SETUP },
- 	{ "check-ref-format", cmd_check_ref_format },
+Most Recent Commands Before Crash
+---------------------------------
+  feature done
+  feature import-marks=3D.git/bzr/origin/marks-git
+  feature export-marks=3D.git/bzr/origin/marks-git
+  feature force
+  blob
+  mark :399656
+  data 145827
+  blob
+  mark :399657
+  data 19785
+  blob
+  mark :399658
+  data 228415
+  commit refs/bzr/origin/heads/trunk
+  mark :399659
+  author Glenn Morris <rgm@gnu.org> 1391150391 -0800
+  committer Glenn Morris <rgm@gnu.org> 1391150391 -0800
+  data 101
+* from :399654
+
+Active Branch LRU
+-----------------
+    active_branches =3D 0 cur, 5 max
+
+  pos  clock name
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Inactive Branches
+-----------------
+refs/bzr/origin/heads/trunk:
+  status      : dirty
+  tip commit  : 0000000000000000000000000000000000000000
+  old tree    : 0000000000000000000000000000000000000000
+  cur tree    : 0000000000000000000000000000000000000000
+  commit clock: 0
+  last pack   :
+
+
+Marks
+-----
+  exported to .git/bzr/origin/marks-git
+
+-------------------
+END OF CRASH REPORT
+
+$ tail .git/bzr/origin/marks-git
+:399643 b535a54e6bd1b98953aacda8e0c0bd4ffa4348e8
+:399646 2c7d42a26b8984b4492b205f28b0de2ff8548a16
+:399647 408cc787f4764481e8ca10861895970e579dec07
+:399648 798ea0615d18b41dfe0dee321b286fd3570a4352
+:399651 dfba6da980cfe657cb1be302131325011f5eb97d
+:399652 5964046e0475262b27157e39ceb7516b1222330c
+:399653 52dd3850ce599215898f5358997dd07f08c4d607
+:399656 230b94e2fe9c6443b2ada399d8d985c7ae438727
+:399657 8d0fc723f14c9b4a9de30754170b5ca5be21a05a
+:399658 102818c18b5a0724dc1c11dc5dcf5e2ba5b72b22
+
+I'm using git version 1.8.5.3 on Kubuntu 13.10 installed from=20
+https://launchpad.net/~git-core/+archive/ppa.
+
+What's wrong and how can I fix this?
+
+Regards,
+R=C3=BCdiger
