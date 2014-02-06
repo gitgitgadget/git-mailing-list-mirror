@@ -1,7 +1,8 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v5 09/14] trailer: if no input file is passed, read from stdin
-Date: Thu, 06 Feb 2014 21:19:58 +0100
-Message-ID: <20140206202004.325.76199.chriscool@tuxfamily.org>
+Subject: [PATCH v5 01/14] Add data structures and basic functions for commit
+ trailers
+Date: Thu, 06 Feb 2014 21:19:50 +0100
+Message-ID: <20140206202004.325.80557.chriscool@tuxfamily.org>
 References: <20140206194123.325.99451.chriscool@tuxfamily.org>
 Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
 	Josh Triplett <josh@joshtriplett.org>,
@@ -11,104 +12,111 @@ Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
 	Dan Carpenter <dan.carpenter@oracle.com>,
 	Greg Kroah-Hartman <greg@kroah.com>, Jeff King <peff@peff.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 06 21:22:31 2014
+X-From: git-owner@vger.kernel.org Thu Feb 06 21:22:30 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WBVSw-0004d4-JQ
+	id 1WBVSw-0004d4-1G
 	for gcvg-git-2@plane.gmane.org; Thu, 06 Feb 2014 21:22:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756782AbaBFUWJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Feb 2014 15:22:09 -0500
-Received: from mail-1y.bbox.fr ([194.158.98.14]:64782 "EHLO mail-1y.bbox.fr"
+	id S1755098AbaBFUVW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Feb 2014 15:21:22 -0500
+Received: from mail-3y.bbox.fr ([194.158.98.45]:40464 "EHLO mail-3y.bbox.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755202AbaBFUVY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Feb 2014 15:21:24 -0500
+	id S1754297AbaBFUVU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Feb 2014 15:21:20 -0500
 Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-1y.bbox.fr (Postfix) with ESMTP id C497471;
-	Thu,  6 Feb 2014 21:21:23 +0100 (CET)
-X-git-sha1: 2f34c42e9b740fe75c41d948504ff43531d19a03 
+	by mail-3y.bbox.fr (Postfix) with ESMTP id 967D33A;
+	Thu,  6 Feb 2014 21:21:18 +0100 (CET)
+X-git-sha1: bfafa1a5ea78db84973a2bce1f85a401c05fe6a1 
 X-Mailer: git-mail-commits v0.5.2
 In-Reply-To: <20140206194123.325.99451.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241735>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241736>
 
-It is simpler and more natural if the "git interpret-trailers"
-is made a filter as its output already goes to sdtout.
+We will use a doubly linked list to store all information
+about trailers and their configuration.
+
+This way we can easily remove or add trailers to or from
+trailer lists while traversing the lists in either direction.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/interpret-trailers.c  |  2 +-
- t/t7513-interpret-trailers.sh |  7 +++++++
- trailer.c                     | 15 +++++++++------
- 3 files changed, 17 insertions(+), 7 deletions(-)
+ Makefile  |  1 +
+ trailer.c | 48 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 49 insertions(+)
+ create mode 100644 trailer.c
 
-diff --git a/builtin/interpret-trailers.c b/builtin/interpret-trailers.c
-index 04b0ae2..ae8e561 100644
---- a/builtin/interpret-trailers.c
-+++ b/builtin/interpret-trailers.c
-@@ -23,7 +23,7 @@ int cmd_interpret_trailers(int argc, const char **argv, const char *prefix)
- 
- 	struct option options[] = {
- 		OPT_BOOL(0, "trim-empty", &trim_empty, N_("trim empty trailers")),
--		OPT_FILENAME(0, "infile", &infile, N_("use message from file")),
-+		OPT_FILENAME(0, "infile", &infile, N_("use message from file, instead of stdin")),
- 		OPT_END()
- 	};
- 
-diff --git a/t/t7513-interpret-trailers.sh b/t/t7513-interpret-trailers.sh
-index 8be333c..f5ef81f 100755
---- a/t/t7513-interpret-trailers.sh
-+++ b/t/t7513-interpret-trailers.sh
-@@ -205,4 +205,11 @@ test_expect_success 'using "ifMissing = doNothing"' '
- 	test_cmp expected actual
- '
- 
-+test_expect_success 'with input from stdin' '
-+	cat complex_message_body >expected &&
-+	printf "Bug #42\nFixes: \nAcked-by= \nAcked-by= Junio\nAcked-by= Peff\nReviewed-by: \nSigned-off-by: \n" >>expected &&
-+	git interpret-trailers "review:" "fix=53" "cc=Linus" "ack: Junio" "fix=22" "bug: 42" "ack: Peff" < complex_message >actual &&
-+	test_cmp expected actual
-+'
-+
- test_done
+diff --git a/Makefile b/Makefile
+index b4af1e2..ec90feb 100644
+--- a/Makefile
++++ b/Makefile
+@@ -871,6 +871,7 @@ LIB_OBJS += submodule.o
+ LIB_OBJS += symlinks.o
+ LIB_OBJS += tag.o
+ LIB_OBJS += trace.o
++LIB_OBJS += trailer.o
+ LIB_OBJS += transport.o
+ LIB_OBJS += transport-helper.o
+ LIB_OBJS += tree-diff.o
 diff --git a/trailer.c b/trailer.c
-index 186316f..108e104 100644
---- a/trailer.c
+new file mode 100644
+index 0000000..f129b5a
+--- /dev/null
 +++ b/trailer.c
-@@ -483,8 +483,13 @@ static struct strbuf **read_input_file(const char *infile)
- {
- 	struct strbuf sb = STRBUF_INIT;
- 
--	if (strbuf_read_file(&sb, infile, 0) < 0)
--		die_errno(_("could not read input file '%s'"), infile);
-+	if (infile) {
-+		if (strbuf_read_file(&sb, infile, 0) < 0)
-+			die_errno(_("could not read input file '%s'"), infile);
-+	} else {
-+		if (strbuf_read(&sb, fileno(stdin), 0) < 0)
-+			die_errno(_("could not read from stdin"));
-+	}
- 
- 	return strbuf_split(&sb, '\n');
- }
-@@ -551,10 +556,8 @@ void process_trailers(const char *infile, int trim_empty, int argc, const char *
- 
- 	git_config(git_trailer_config, NULL);
- 
--	/* Print the non trailer part of infile */
--	if (infile) {
--		process_input_file(infile, &infile_tok_first, &infile_tok_last);
--	}
-+	/* Print the non trailer part of infile (or stdin if infile is NULL) */
-+	process_input_file(infile, &infile_tok_first, &infile_tok_last);
- 
- 	arg_tok_first = process_command_line_args(argc, argv);
- 
+@@ -0,0 +1,48 @@
++#include "cache.h"
++/*
++ * Copyright (c) 2013 Christian Couder <chriscool@tuxfamily.org>
++ */
++
++enum action_where { WHERE_AFTER, WHERE_BEFORE };
++enum action_if_exist { EXIST_ADD_IF_DIFFERENT, EXIST_ADD_IF_DIFFERENT_NEIGHBOR,
++		       EXIST_ADD, EXIST_OVERWRITE, EXIST_DO_NOTHING };
++enum action_if_missing { MISSING_ADD, MISSING_DO_NOTHING };
++
++struct conf_info {
++	char *name;
++	char *key;
++	char *command;
++	enum action_where where;
++	enum action_if_exist if_exist;
++	enum action_if_missing if_missing;
++};
++
++struct trailer_item {
++	struct trailer_item *previous;
++	struct trailer_item *next;
++	const char *token;
++	const char *value;
++	struct conf_info *conf;
++};
++
++static inline int same_token(struct trailer_item *a, struct trailer_item *b, int alnum_len)
++{
++	return !strncasecmp(a->token, b->token, alnum_len);
++}
++
++static inline int same_value(struct trailer_item *a, struct trailer_item *b)
++{
++	return !strcasecmp(a->value, b->value);
++}
++
++static inline int same_trailer(struct trailer_item *a, struct trailer_item *b, int alnum_len)
++{
++	return same_token(a, b, alnum_len) && same_value(a, b);
++}
++
++/* Get the length of buf from its beginning until its last alphanumeric character */
++static inline size_t alnum_len(const char *buf, int len)
++{
++	while (--len >= 0 && !isalnum(buf[len]));
++	return (size_t) len + 1;
++}
 -- 
 1.8.5.2.206.g98f5689.dirty
