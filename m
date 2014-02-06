@@ -1,67 +1,68 @@
-From: Christian Couder <christian.couder@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 Subject: Re: [RFH] hackday and GSoC topic suggestions
-Date: Thu, 6 Feb 2014 10:10:05 +0100
-Message-ID: <CAP8UFD1B+108EyyhFQh6RnVVpOUCLiK+oNPONrNJqkNftLFYLA@mail.gmail.com>
+Date: Thu, 06 Feb 2014 10:51:54 +0100
+Message-ID: <vpqr47gin5x.fsf@anie.imag.fr>
 References: <20140205225702.GA12589@sigill.intra.peff.net>
+	<CAP8UFD1B+108EyyhFQh6RnVVpOUCLiK+oNPONrNJqkNftLFYLA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git <git@vger.kernel.org>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Feb 06 10:10:17 2014
+Content-Type: text/plain
+Cc: Jeff King <peff@peff.net>, git <git@vger.kernel.org>
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 06 10:52:18 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WBKyO-0006Fp-L5
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Feb 2014 10:10:17 +0100
+	id 1WBLd3-0000lK-8p
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Feb 2014 10:52:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932192AbaBFJKJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Feb 2014 04:10:09 -0500
-Received: from mail-vc0-f181.google.com ([209.85.220.181]:47751 "EHLO
-	mail-vc0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932179AbaBFJKH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Feb 2014 04:10:07 -0500
-Received: by mail-vc0-f181.google.com with SMTP id ie18so1197911vcb.40
-        for <git@vger.kernel.org>; Thu, 06 Feb 2014 01:10:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=PufykxA3FDDXEcLanFgXaijjqyTSenklDC9ZrtmMl18=;
-        b=BgZd1A3SbOl8QSPJm6ZGEVnlI4FRgfZ5myjyWYmRVcRsTXQ9a7bufWS/U05716Byp/
-         tQlf6OzOM9boewytlO9IjprAD649+wiKaJfTUeFNPT9Y89Oeg1fIj07FNkjYQTwmAOBd
-         vic3UNX5GIbV2IDSlYBf1J3pF6gj12JtfNz4IGfNi3CXmDoL7/GywC09VlSMxWjvtCMq
-         5//OwqqjJalZS34XRCtb6SelaGyvoPQPHXtlWf3BKrTAgUwW3xv83MWtGBSuXbbiVBiY
-         TmJ26F8cSGOmcOWscH4OP2uHA3iTLJKWFpnhqX6lJb9kJigU4u568c1Wi0ROGbXB0jFj
-         2MLw==
-X-Received: by 10.52.30.230 with SMTP id v6mr4156543vdh.6.1391677805637; Thu,
- 06 Feb 2014 01:10:05 -0800 (PST)
-Received: by 10.58.173.231 with HTTP; Thu, 6 Feb 2014 01:10:05 -0800 (PST)
-In-Reply-To: <20140205225702.GA12589@sigill.intra.peff.net>
+	id S1755813AbaBFJwL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Feb 2014 04:52:11 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:33301 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755537AbaBFJwJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Feb 2014 04:52:09 -0500
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id s169prhx005749
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 6 Feb 2014 10:51:53 +0100
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s169pskR031794;
+	Thu, 6 Feb 2014 10:51:54 +0100
+In-Reply-To: <CAP8UFD1B+108EyyhFQh6RnVVpOUCLiK+oNPONrNJqkNftLFYLA@mail.gmail.com>
+	(Christian Couder's message of "Thu, 6 Feb 2014 10:10:05 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 06 Feb 2014 10:51:53 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: s169prhx005749
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1392285117.32071@ToCN7EtmBXn1gZNtncA/iQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241684>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241685>
 
-On Wed, Feb 5, 2014 at 11:57 PM, Jeff King <peff@peff.net> wrote:
->
-> On a similar note, the GSoC application deadline is Feb 14th. I am
-> happy to be admin again and put together the application, but we will
-> need an idea page. I'll set up a page to collect them, but in the
-> meantime, please dump any ideas/discussion in this thread.
+Christian Couder <christian.couder@gmail.com> writes:
 
-Matthieu Moy created this nice page some time ago in the wiki:
+> I would be interested in mentoring a GSoC student working on the "git
+> bisect fix/unfixed" feature.
 
-https://git.wiki.kernel.org/index.php/SmallProjectsIdeas
+Interestingly, I used the feature in real-life last week, and had to
+think upside-down to type the right "good"/"bad" keywords ;-).
 
-and I think there is good stuff in it.
+> Some of Matthieu's students worked on it a few years ago but didn't finish.
 
-I would be interested in mentoring a GSoC student working on the "git
-bisect fix/unfixed" feature.
-Some of Matthieu's students worked on it a few years ago but didn't finish.
+Right. There was still quite some work to do, but this is most likely
+too small for a GSoC project. But that could be a part of it. I'm not
+sure how google welcomes GSoC projects made of multiple small tasks, but
+my experience with students is that it's much better than a single (too)
+big task, and I think that was the general feeling on this list when we
+discussed it last year.
 
-Thanks,
-Christian.
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
