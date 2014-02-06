@@ -1,105 +1,53 @@
-From: Lasse Makholm <lasse.makholm@gmail.com>
-Subject: attr.c doesn't honor --work-tree option
-Date: Thu, 6 Feb 2014 13:48:43 +0100
-Message-ID: <CAB7pA0_2kLJmRZb8Z_9+xOcrbwMZLgnZwC5f7etbE4OuJ1wgmA@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: "Sparse checkout leaves no entry on working directory" all the
+ time on Windows 7 on Git 1.8.5.2.msysgit.0
+Date: Thu, 06 Feb 2014 14:20:29 +0100
+Message-ID: <52F38C1D.709@viscovery.net>
+References: <web-57771132@mx45.intranet.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Feb 06 13:48:51 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: konstunn@ngs.ru, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 06 14:20:40 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WBONu-000778-Ii
-	for gcvg-git-2@plane.gmane.org; Thu, 06 Feb 2014 13:48:50 +0100
+	id 1WBOsi-0007pW-Jj
+	for gcvg-git-2@plane.gmane.org; Thu, 06 Feb 2014 14:20:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932562AbaBFMsq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Feb 2014 07:48:46 -0500
-Received: from mail-we0-f177.google.com ([74.125.82.177]:43942 "EHLO
-	mail-we0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932326AbaBFMsp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Feb 2014 07:48:45 -0500
-Received: by mail-we0-f177.google.com with SMTP id t61so1220110wes.8
-        for <git@vger.kernel.org>; Thu, 06 Feb 2014 04:48:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=jmIfeBOBmyqiLDxDX2c9xYy6c0ft5AJEMFXqEUqvrzg=;
-        b=YNnNj/r/0bdzlCEXB81E4h9KrIiqr6/MiK6q4HYUo7PthwpQxCB/zQnLH2tfbRu4Zm
-         gmK5zgJB1nFRqmHMuz9nt/APm42fOTrA+e8Xh49U37C72HgF/ikFm2fsAXpmVtfYT3+q
-         pemN1a9gs3mmwKBvWut7b+i3/3F3LocZqrED78GwHMtilTzinlNLU9u6t1lnj3Ddlwpl
-         /nwgRjmzxZ+OjGhc6k9m3mEwJtcHYe44x4JiD8wzlwHSbhY8bfBKe9huyjH09Mn2sLwq
-         GC+BFKyf41dCCNo7+dNZdDBwRnujvza4BPFRtAMZMFu6jkFoA+UPHNX145ap/c+BIUVa
-         z2BQ==
-X-Received: by 10.180.12.115 with SMTP id x19mr21341121wib.19.1391690923664;
- Thu, 06 Feb 2014 04:48:43 -0800 (PST)
-Received: by 10.194.90.161 with HTTP; Thu, 6 Feb 2014 04:48:43 -0800 (PST)
+	id S1756542AbaBFNUg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Feb 2014 08:20:36 -0500
+Received: from so.liwest.at ([212.33.55.18]:50317 "EHLO so.liwest.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756522AbaBFNUf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Feb 2014 08:20:35 -0500
+Received: from [81.10.228.254] (helo=theia.linz.viscovery)
+	by so.liwest.at with esmtpa (Exim 4.80.1)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1WBOsX-0001wu-Rh; Thu, 06 Feb 2014 14:20:30 +0100
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 97AF816613;
+	Thu,  6 Feb 2014 14:20:29 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:24.0) Gecko/20100101 Thunderbird/24.1.0
+In-Reply-To: <web-57771132@mx45.intranet.ru>
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241690>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241691>
 
-Hi,
+Am 2/6/2014 12:54, schrieb konstunn@ngs.ru:
+> However I typed the checkout directory in file
+> ..git/info/sparse-checkout by using different formats with
+> and without the leading and the trailing slashes, with and
+> without asterisk after trailing slash, having tried all
+> the possible combinations, but, all the same,
+> nevertheless, the error occured.
 
-It seems that code in attr.c does not honor the current work tree path
-(set by e.g. --work-tree ...) and simply always assumes CWD. When the
-current dir is not in the work tree, git will attempt to find
-.gitattributes under ./ instead of under the correct work tree.
+Make sure that you do not use CRLF line terminators in the sparse-checkout
+file.
 
-Here's a repro with -DDEBUG_ATTR=1 and a printf() in read_attr_from_file():
-
-$ cd /tmp/
-$ mkdir -p attr-test/repo
-$ cd attr-test/repo
-$ git init
-Initialized empty Git repository in /tmp/attr-test/repo/.git/
-$ echo 'dir/* filter=foo' >.gitattributes
-$
-
-Inside the working tree, it works:
-
-$ ~/src/git.git/git check-attr -a dir/file
-read_attr_from_file: /home/lasse/etc/gitattributes
-read_attr_from_file: /home/lasse/.config/git/attributes
-read_attr_from_file: .gitattributes
-push:
-read_attr_from_file: .git/info/attributes
-read_attr_from_file: dir/.gitattributes
-push: dir
-fill: filter => foo (dir/*)
-dir/file: filter: foo
-$
-
-Outside, it fails to find the .gitattributes file:
-
-$ cd ..
-$ ~/src/git.git/git --work-tree /tmp/attr-test/repo --git-dir
-/tmp/attr-test/repo/.git check-attr -a dir/file
-read_attr_from_file: /home/lasse/etc/gitattributes
-read_attr_from_file: /home/lasse/.config/git/attributes
-read_attr_from_file: .gitattributes
-push:
-read_attr_from_file: /tmp/attr-test/repo/.git/info/attributes
-read_attr_from_file: dir/.gitattributes
-push: dir
-$
-
-This is with the latest rev on master:
-
-$ ~/src/git.git/git --version
-git version 1.8.5.2.192.g7794a68.dirty
-$
-
-It (sort of) works with a committed .gitattributes file because git
-will find it in the index, but that will still yield incorrect results
-if the .gitattributes file happens to be dirty.
-
-Looking at the code, I'm not really sure if this can be fixed in
-read_attr_from_file() by resolving relative paths against
-get_git_work_tree(). I doubt it's that simple though...
-
-Thoughts?
-
-/Lasse
+-- Hannes
