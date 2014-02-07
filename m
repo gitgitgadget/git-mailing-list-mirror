@@ -1,9 +1,8 @@
 From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [WIP/PATCH 3/9] Teach checkout the --[no-]recurse-submodules
- option
-Date: Fri, 07 Feb 2014 22:12:54 +0100
-Message-ID: <52F54C56.5020604@web.de>
-References: <xmqqd2k4hh4p.fsf@gitster.dls.corp.google.com>	<52CC3E16.4060909@web.de>	<xmqqvbxvekwv.fsf@gitster.dls.corp.google.com>	<52EFF25E.6080306@web.de> <52EFF2EA.9060709@web.de> <xmqq8utrdcuh.fsf@gitster.dls.corp.google.com>
+Subject: Re: [WIP/PATCH 4/9] Teach merge the --[no-]recurse-submodules option
+Date: Fri, 07 Feb 2014 22:23:35 +0100
+Message-ID: <52F54ED7.2010302@web.de>
+References: <xmqqd2k4hh4p.fsf@gitster.dls.corp.google.com>	<52CC3E16.4060909@web.de>	<xmqqvbxvekwv.fsf@gitster.dls.corp.google.com>	<52EFF25E.6080306@web.de> <52EFF311.1090202@web.de> <xmqq4n4fdcnd.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
@@ -12,120 +11,73 @@ Cc: Git Mailing List <git@vger.kernel.org>,
 	Heiko Voigt <hvoigt@hvoigt.net>,
 	"W. Trevor King" <wking@tremily.us>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 07 22:13:01 2014
+X-From: git-owner@vger.kernel.org Fri Feb 07 22:23:44 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WBsjN-0002HW-AT
-	for gcvg-git-2@plane.gmane.org; Fri, 07 Feb 2014 22:13:01 +0100
+	id 1WBsti-00020z-Hy
+	for gcvg-git-2@plane.gmane.org; Fri, 07 Feb 2014 22:23:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752815AbaBGVM5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Feb 2014 16:12:57 -0500
-Received: from mout.web.de ([212.227.17.12]:62601 "EHLO mout.web.de"
+	id S1751705AbaBGVXj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Feb 2014 16:23:39 -0500
+Received: from mout.web.de ([212.227.17.12]:63222 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751689AbaBGVM4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Feb 2014 16:12:56 -0500
-Received: from [192.168.178.41] ([84.132.186.180]) by smtp.web.de (mrweb103)
- with ESMTPA (Nemesis) id 0LudP2-1VCOBz05Fg-00zjmP for <git@vger.kernel.org>;
- Fri, 07 Feb 2014 22:12:55 +0100
+	id S1751617AbaBGVXi (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Feb 2014 16:23:38 -0500
+Received: from [192.168.178.41] ([84.132.186.180]) by smtp.web.de (mrweb102)
+ with ESMTPA (Nemesis) id 0LwYs7-1V9Mwx1I35-018JFq for <git@vger.kernel.org>;
+ Fri, 07 Feb 2014 22:23:36 +0100
 User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.3.0
-In-Reply-To: <xmqq8utrdcuh.fsf@gitster.dls.corp.google.com>
+In-Reply-To: <xmqq4n4fdcnd.fsf@gitster.dls.corp.google.com>
 X-Enigmail-Version: 1.6
-X-Provags-ID: V03:K0:uAdse4rngHyVBOsIGkcMzKGZBuVn4esc9OZd4rTu/xBfh0cWKdQ
- EJ8KxVheZR9W36aEtMgQrW1w1inr3LhCWY22abBojGaZOdD1Tp/g3wY6M7vDVsVh7paFFPO
- 1QzHx571d+Ck55hTR1yg58Aar53uTsqWaAz1MV1xAgwarXxOymadbHQSpg2PbRH97Ubg55r
- 0FEOFraIveYDFRBjTfPmQ==
+X-Provags-ID: V03:K0:NqLmSCkyJnpZtqme6LxObgBprsLwhZxgFtnKJgsgFMmYsR3osyp
+ Loyv/KjO2wZW95As15KWR51Ho7uQZQSP91BrXyzGvngh6OsOessC2Aic26vxu4YZoLeqG1C
+ ENIPklD/eYeuQUqmXHDZntj4++hkBq6wyOsv52jrdLeXYJExfMxNvVIH+ZC8LKlaSzv0onh
+ TzZxAgqZlcQZuP4HWbmKQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241801>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241802>
 
-Am 03.02.2014 23:56, schrieb Junio C Hamano:
+Am 04.02.2014 00:01, schrieb Junio C Hamano:
 > Jens Lehmann <Jens.Lehmann@web.de> writes:
 > 
->> +	set_config_update_recurse_submodules(
->> +		parse_update_recurse_submodules_arg("--recurse-submodules-default",
->> +						    recurse_submodules_default),
->> +		recurse_submodules);
+>> This new option will allow the user to not only update the work tree of
+>> the superproject according to the merge result but to also update the
+>> work tree of all initialized submodules (so they match the SHA-1 recorded
+>> in the superproject). But this commit only adds the option without any
+>> functionality, that will be added to unpack_trees() in subsequent commits.
 > 
-> I think I saw these exact lines in another patch.  Perhaps the whole
-> thing can become a helper function that lets the caller avoid typing
-> the whole long strings that needs a strange/unfortunate line break? 
+> When the two branches of the superproject being merged wants to put
+> a submodule project to commit A and B, that conflict needs to be
+> resolved, but if they agree that the submodule project should be at
+> C (which is different from what the current superproject HEAD has
+> for the submodule in its gitlink), then we want a checkout of that
+> commit to happen in that submodule.  Makes sense.
+> 
+> After resolving such a conflict between A and B, who is responsible
+> to adjust the working tree state of the submodule involved, by the
+> way?  "git merge --continue" does not exist and its moral equivalent
+> to conclude such an interrupted merge is "git commit".  Should it
+> learn to do "recurse-submodule", or should the user run a separate
+> "checkout --recurse-submodule"?
 
-Right, that'd be better.
+I think the user needs to sort things out, just like she has to do
+when a file has a merge conflict. But unfortunately we cannot use
+conflict markers here, so I'd propose the following:
 
->> diff --git a/t/t2013-checkout-submodule.sh b/t/t2013-checkout-submodule.sh
->> index 06b18f8..bc3e1ca 100755
->> --- a/t/t2013-checkout-submodule.sh
->> +++ b/t/t2013-checkout-submodule.sh
->> @@ -4,17 +4,57 @@ test_description='checkout can handle submodules'
->>
->>  . ./test-lib.sh
->>
->> +submodule_creation_must_succeed() {
-> 
-> Style: SP before (), i.e.
-> 
-> 	submodule_creation_must_succeed () {
-> 
->> +	# checkout base ($1)
->> +	git checkout -f --recurse-submodules $1 &&
->> +	git diff-files --quiet &&
->> +	git diff-index --quiet --cached $1 &&
-> 
-> Please make it a habit to quote a parameter that is intended not to
-> be split at $IFS (e.g. write these as "$1" not as $1).  Otherwise
-> the reader has to wonder if this can be called with a "foo bar" and
-> the expects it to be split into two.
-> 
->> +	# checkout target ($2)
->> +	if test -d submodule; then
-> 
-> Style: no semicolons in standard control structure, i.e.
-> 
-> 	if test -d submodule
-> 	then
-> 
->> +		echo change>>submodule/first.t &&
-> 
-> Style: SP before but not after redirection operator, i.e.
-> 
-> 	echo foo >>bar
-> 
->> +submodule_removal_must_succeed() {
-> 
-> Likewise.
-> 
->> +	# checkout base ($1)
->> +	git checkout -f --recurse-submodules $1 &&
-> 
-> Likewise.
-> 
->> +	echo first > file &&
-> 
-> Likewise.
-> 
->> +test_expect_success '"checkout --recurse-submodules" replaces submodule with files' '
->> +	git checkout -f base &&
->> +	git checkout -b replace_submodule_with_dir &&
->> +	git update-index --force-remove submodule &&
->> +	rm -rf submodule/.git .gitmodules &&
->> +	git add .gitmodules submodule/* &&
->> +	git commit -m "submodule replaced" &&
->> +	git checkout -f base &&
->> +	git submodule update -f &&
->> +	git checkout --recurse-submodules replace_submodule_with_dir &&
->> +	test -d submodule &&
->> +	! test -e submodule/.git &&
->> +	test -f submodule/first.t &&
->> +	test -f submodule/second.t
->> +'
-> 
-> Hmmmm.  Is it sufficient for these files to just exist, or do we
-> want to make sure they have expected contents?
+* When merge proposes a merge resolution (which it does today by
+  telling the user "Found a possible merge resolution for the
+  submodule ... [use] git update-index --cacheinfo 160000 ...")
+  that commit should be checked out in the submodule but not
+  staged. Then the user can simply add and commit.
 
-Thanks, will consider all you remarks above in the ongoing work for
-testing framework which should replace these tests.
+* If the merge resolution is not obvious to merge, it leaves the
+  submodule in an unmerged state, the local commit still being
+  checked out. The user has to manually do the merge in the
+  submodule and commits that in the superproject.
+
+Does that make sense?
