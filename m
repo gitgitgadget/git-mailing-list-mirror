@@ -1,78 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 10/14] trailer: execute command from 'trailer.<name>.command'
-Date: Fri, 07 Feb 2014 10:17:34 -0800
-Message-ID: <xmqqfvnuvlc1.fsf@gitster.dls.corp.google.com>
-References: <20140206194123.325.99451.chriscool@tuxfamily.org>
-	<20140206202004.325.54178.chriscool@tuxfamily.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 0/6] Fix the shallow deepen bug with no-done
+Date: Fri, 7 Feb 2014 11:20:31 -0800
+Message-ID: <20140207192031.GY30398@google.com>
+References: <1391699439-22781-1-git-send-email-pclouds@gmail.com>
+ <xmqq4n4cyr61.fsf@gitster.dls.corp.google.com>
+ <CACsJy8AdOdVCma8FYeDM0kTd=Bgo-atpXmxFvmK4rzH6jOZEzQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
-	Josh Triplett <josh@joshtriplett.org>,
-	Thomas Rast <tr@thomasrast.ch>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Dan Carpenter <dan.carpenter@oracle.com>,
-	Greg Kroah-Hartman <greg@kroah.com>, Jeff King <peff@peff.net>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Fri Feb 07 19:17:44 2014
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 07 20:20:42 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WBpzj-0007bf-Jf
-	for gcvg-git-2@plane.gmane.org; Fri, 07 Feb 2014 19:17:43 +0100
+	id 1WBqye-000795-Mi
+	for gcvg-git-2@plane.gmane.org; Fri, 07 Feb 2014 20:20:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751705AbaBGSRj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Feb 2014 13:17:39 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:47627 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751512AbaBGSRi (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Feb 2014 13:17:38 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 291E369A31;
-	Fri,  7 Feb 2014 13:17:38 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=yB8JdYi4VUizoEivFkqDWcdw8pU=; b=vISvUa
-	dV6EKLJCCtYdZOO83yU+9j69lloMXKoFIQiQkZSw/WHmydoH7JuS9HXGk5iJCD7C
-	xbxfZC/7pSGicvyWE4mtP/SJDXiSlksomlw4LCk+4QtmUP4g/2B8Qpw19eMh1W5Z
-	qWY4yJyW+KQCOVcRqcGuFbajvIgu0FD7Gk9us=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=hl8Aq6Ke2gHabIa+PA3CrO0sSATRuW5c
-	9FISHoC/4YPtiiEH03DxhSxKjDXCNWcr4ls7JjTJAgQHpzQopPqHuxnBZ8HfD4z3
-	RinPQoW1CQLT4JJr8pnYobPkhaGQoAPvXuBzQjp7+OJCzHVX9bardYE7OOcUMQvb
-	41bdE08Sh08=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1646769A30;
-	Fri,  7 Feb 2014 13:17:38 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CC44869A2C;
-	Fri,  7 Feb 2014 13:17:36 -0500 (EST)
-In-Reply-To: <20140206202004.325.54178.chriscool@tuxfamily.org> (Christian
-	Couder's message of "Thu, 06 Feb 2014 21:19:59 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 1F4667B2-9024-11E3-835B-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751426AbaBGTUg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Feb 2014 14:20:36 -0500
+Received: from mail-pd0-f173.google.com ([209.85.192.173]:39212 "EHLO
+	mail-pd0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750993AbaBGTUf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Feb 2014 14:20:35 -0500
+Received: by mail-pd0-f173.google.com with SMTP id y10so3522832pdj.4
+        for <git@vger.kernel.org>; Fri, 07 Feb 2014 11:20:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=qKtkC39DWyyXKYHWv1aSZ/SBtrxzRULOflGarRrP0U8=;
+        b=psSWeYzZqlBpoK9lgmjFr5tZmi27gixRircr9jp1cG0+SULtSd1PJ4WNU8E8szBl2A
+         ZQ2yC1GjrCyFNyMuanY9lvX0iX6ChZG9r7WzrM+RO0A7ytaQC77GP7kDmmLc3tWweST3
+         7kUskvUalKdmKCpTWS7w2X2GMDYHLa87sBoktwzfd3tXhQ6+YfVUWf0lC8ijaXpoDiv8
+         Om8wxfFiKXqLe4IOySDb6hZKPc2CIi35LhEHwbWkUg+Wb55OQ4tXnQp/mt4HgiAHJlw3
+         2hRqkQvlJv3/cVlM393T7KpenUMUzb2NVDHXUt3wKcWmWvvJ2G3JODvA599OETTdkqb7
+         fEMQ==
+X-Received: by 10.66.156.137 with SMTP id we9mr9977534pab.30.1391800834918;
+        Fri, 07 Feb 2014 11:20:34 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id bz4sm16236689pbb.12.2014.02.07.11.20.33
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 07 Feb 2014 11:20:34 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <CACsJy8AdOdVCma8FYeDM0kTd=Bgo-atpXmxFvmK4rzH6jOZEzQ@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241790>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241791>
 
-Christian Couder <chriscool@tuxfamily.org> writes:
+Duy Nguyen wrote:
 
-> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+> Don't take it the wrong way. I was just summarizing the last round. It
+> surprised me though that this went under my radar. Perhaps a bug
+> tracker is not a bad idea after all (if Jeff went missing, this bug
+> could fall under the crack)
 
-"execute command from ..." is fine, but I wish there were more
-details before S-o-b line.  Is is not worth explaining what happens
-to the output, and what the facility is used for in general?
-
-Is it to give a string used for the value part?  "Key: Value"
-string?  Is the command allowed to say "Put an entry with this
-string before the existing one, after the existing one, or replace
-the existing one"?  Can it say "Upon inspection of the existing
-entry, it is no longer necessary to have it in the footer---remove
-it"?
+I'm happy to plug
+- http://bugs.debian.org/cgi-bin/pkgreport.cgi?src=git;include=tags:upstream
+- http://packages.qa.debian.org/common/index.html (email subscription link:
+  source package = git; under "Advanced" it's possible to subscribe to
+  bug-tracking system emails and skip e.g. the automated build stuff)
+- https://www.debian.org/Bugs/Reporting (bug reporting interface -
+  unfortunately the important part is buried under "Sending the bug
+  report via e-mail")
+again. :)
