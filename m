@@ -1,58 +1,72 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [WIP/PATCH 2/9] Teach reset the --[no-]recurse-submodules option
-Date: Fri, 07 Feb 2014 22:09:00 +0100
-Message-ID: <52F54B6C.7040906@web.de>
-References: <xmqqd2k4hh4p.fsf@gitster.dls.corp.google.com>	<52CC3E16.4060909@web.de>	<xmqqvbxvekwv.fsf@gitster.dls.corp.google.com>	<52EFF25E.6080306@web.de> <52EFF2C5.3090705@web.de> <xmqqd2j3ddlw.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	"W. Trevor King" <wking@tremily.us>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 07 22:09:10 2014
+From: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
+Subject: [PATCH] gitweb: Added syntax highlight support for golang
+Date: Sat,  8 Feb 2014 02:40:41 +0530
+Message-ID: <1391807441-23049-1-git-send-email-pavan.sss1991@gmail.com>
+Cc: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 07 22:11:03 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WBsfe-0007kN-GP
-	for gcvg-git-2@plane.gmane.org; Fri, 07 Feb 2014 22:09:10 +0100
+	id 1WBshR-0000jf-Ls
+	for gcvg-git-2@plane.gmane.org; Fri, 07 Feb 2014 22:11:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753436AbaBGVJF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Feb 2014 16:09:05 -0500
-Received: from mout.web.de ([212.227.15.14]:63207 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752140AbaBGVJE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Feb 2014 16:09:04 -0500
-Received: from [192.168.178.41] ([84.132.186.180]) by smtp.web.de (mrweb103)
- with ESMTPA (Nemesis) id 0Lba35-1VWWEH1E1z-00lErj for <git@vger.kernel.org>;
- Fri, 07 Feb 2014 22:09:02 +0100
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.3.0
-In-Reply-To: <xmqqd2j3ddlw.fsf@gitster.dls.corp.google.com>
-X-Enigmail-Version: 1.6
-X-Provags-ID: V03:K0:dvOswQMZYl/OFauPQhlsb63slNlfLDoYPoA93xrNvVbNW1iTOdT
- s3E8+Ry68wzd+M7HHZYIWUrfV58MHcxGzZFHMDbH6wI7yZCHBDeWse9HYg4GzlEXiPWQesT
- 4Isz2reEcGGFX0FnNIcqKs2BKCjO27XuTAd8zsyhk0q4ierhJH6Yh/+8GPiVLUThumV2cbi
- RWa8E6dZU7a2o1bF+mt+g==
+	id S1752148AbaBGVK5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Feb 2014 16:10:57 -0500
+Received: from mail-pa0-f42.google.com ([209.85.220.42]:65496 "EHLO
+	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751854AbaBGVK4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Feb 2014 16:10:56 -0500
+Received: by mail-pa0-f42.google.com with SMTP id kl14so3686142pab.29
+        for <git@vger.kernel.org>; Fri, 07 Feb 2014 13:10:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=YBEOynphxV4rfmtFhyNYSe6fREjO2+ixrD1G9E/npdM=;
+        b=g0AS+w0u/AHP/4QsuKwKJq+gy+jvjUExXHmSTaR8534hO4XmTCeQBLdjtCOKgw99jv
+         0z7LTwrlCmySsz6bC+6YJXMRgM2B/qJPWtf1EGwQBEQGFJ82AG5MgQ5IKkbtrgjfuTZg
+         niNIpQpUmny+Jq4fJD+6UTAxJCjqdZjlmWRypKJ/fzYTxMCf65wujdHV9HnfzVFQT+6J
+         ZNNYBfTijMwnZOYKZ2FxaLPsvhxnGyF9OeEbWPsdzfm0riJEF5vHoDAuw/rgye4unWco
+         tWbjK/j+fx43A9pwWtk8Kl6kn2NpF6ALWGpc3wNffCqXY/u48UKGqsXK/Zj5j8ksELyM
+         +5aw==
+X-Received: by 10.67.4.169 with SMTP id cf9mr10379880pad.45.1391807455373;
+        Fri, 07 Feb 2014 13:10:55 -0800 (PST)
+Received: from localhost.localdomain ([119.235.50.12])
+        by mx.google.com with ESMTPSA id nu10sm16781190pbb.16.2014.02.07.13.10.53
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 07 Feb 2014 13:10:54 -0800 (PST)
+X-Mailer: git-send-email 1.7.10.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241799>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241800>
 
-Am 03.02.2014 23:40, schrieb Junio C Hamano:
-> Jens Lehmann <Jens.Lehmann@web.de> writes:
-> 
->> This new option will allow the user to not only reset the work tree of
->> the superproject but to also update the work tree of all initialized
->> submodules (so they match the SHA-1 recorded in the superproject) when
->> used together with --hard or --merge. But this commit only adds the
-> 
-> I agree that --soft and --mixed should not do anything.  I am not
-> sure why --keep should not do anything to submodule working trees
-> when asked to recurse, though.
+Golang is quickly becoming one of the major programming languages.
 
-Correct, I missed that option. I think it should update submodules
-too.
+This change switches on golang syntax highlight support by default
+in gitweb rather than asking the users to do it using config files.
+
+Signed-off-by: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
+---
+ gitweb/gitweb.perl |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index bf7fd67..aa6fcfd 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -273,7 +273,7 @@ our %highlight_basename = (
+ our %highlight_ext = (
+ 	# main extensions, defining name of syntax;
+ 	# see files in /usr/share/highlight/langDefs/ directory
+-	(map { $_ => $_ } qw(py rb java css js tex bib xml awk bat ini spec tcl sql)),
++	(map { $_ => $_ } qw(py rb java go css js tex bib xml awk bat ini spec tcl sql)),
+ 	# alternate extensions, see /etc/highlight/filetypes.conf
+ 	(map { $_ => 'c'   } qw(c h)),
+ 	(map { $_ => 'sh'  } qw(sh bash zsh ksh)),
+-- 
+1.7.10.4
