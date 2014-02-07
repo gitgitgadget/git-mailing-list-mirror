@@ -1,130 +1,95 @@
-From: "W. Trevor King" <wking@tremily.us>
-Subject: Re: Re: [WIP/PATCH 4/9] Teach merge the
- --[no-]recurse-submodules option
-Date: Fri, 7 Feb 2014 14:08:53 -0800
-Message-ID: <20140207220853.GZ14197@odin.tremily.us>
-References: <xmqqd2k4hh4p.fsf@gitster.dls.corp.google.com>
- <52CC3E16.4060909@web.de>
- <xmqqvbxvekwv.fsf@gitster.dls.corp.google.com>
- <52EFF25E.6080306@web.de>
- <52EFF311.1090202@web.de>
- <xmqq4n4fdcnd.fsf@gitster.dls.corp.google.com>
- <52F54ED7.2010302@web.de>
- <xmqqeh3etwg8.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] gitweb: Added syntax highlight support for golang
+Date: Fri, 07 Feb 2014 15:01:56 -0800
+Message-ID: <xmqqa9e2ttln.fsf@gitster.dls.corp.google.com>
+References: <1391807441-23049-1-git-send-email-pavan.sss1991@gmail.com>
+	<xmqqiosqtwqk.fsf@gitster.dls.corp.google.com>
+	<CAK9CXBXXge+ZGN_ocWMH5jkPJcTg74rhtWsDiOuqAeeGXDW_tg@mail.gmail.com>
+	<CAK9CXBUewMhr19KarmymOXmoq1ijPuU2mq4hqc6a-W0TCq5SRg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="DTeHUGp76GcuSc2J"
-Cc: Jens Lehmann <Jens.Lehmann@web.de>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 07 23:09:12 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>
+To: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 08 00:02:18 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WBtbi-0003st-Eo
-	for gcvg-git-2@plane.gmane.org; Fri, 07 Feb 2014 23:09:10 +0100
+	id 1WBuR6-0002O4-5v
+	for gcvg-git-2@plane.gmane.org; Sat, 08 Feb 2014 00:02:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752007AbaBGWI5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Feb 2014 17:08:57 -0500
-Received: from qmta03.westchester.pa.mail.comcast.net ([76.96.62.32]:41397
-	"EHLO qmta03.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751750AbaBGWI4 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 7 Feb 2014 17:08:56 -0500
-Received: from omta02.westchester.pa.mail.comcast.net ([76.96.62.19])
-	by qmta03.westchester.pa.mail.comcast.net with comcast
-	id PYdC1n00G0QuhwU53a8v9T; Fri, 07 Feb 2014 22:08:55 +0000
-Received: from odin.tremily.us ([24.18.63.50])
-	by omta02.westchester.pa.mail.comcast.net with comcast
-	id Pa8u1n00F152l3L3Na8vel; Fri, 07 Feb 2014 22:08:55 +0000
-Received: by odin.tremily.us (Postfix, from userid 1000)
-	id F37FAFFB6C2; Fri,  7 Feb 2014 14:08:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
-	t=1391810934; bh=8LooPNjiyB1gffzqljeRWAJQjy2eLIDpgSB8HeaIHrI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=rb+fVoKFXQweHleHY9HfT5p0fRNoSR4XVZrlPHrUaGPHWAYI0b2IiTYtlPTTXDS8H
-	 aRPYSrQhH+d4vZ+iFTkQQWRwi/2sKFY5+ILu7A6CjjY2EgFypyiGjI99g26y7kP5ku
-	 E2DLMih6peklbFJbjdlK9FvP7qdALIAprYiIXn/g=
-Content-Disposition: inline
-In-Reply-To: <xmqqeh3etwg8.fsf@gitster.dls.corp.google.com>
-OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
- url=http://tremily.us/pubkey.txt
-User-Agent: Mutt/1.5.22 (2013-10-16)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-	s=q20121106; t=1391810935;
-	bh=HczRtsnPEYk/fNmTPd9p7SxSJbbtVqxq5wV99C9SKlM=;
-	h=Received:Received:Received:Date:From:To:Subject:Message-ID:
-	 MIME-Version:Content-Type;
-	b=IDRZCbz8Qt6i5YvDrBVCVSQ2tFLA0U+lxnNinXt3Jn8z+9ox3h5c5QlXix9Z90b9y
-	 rsDSzue/QsWDX7zzZMRyhjweCURFbMFMA4/Vx/3ZlCESlqYkGI51NXXvG+xECQQWy+
-	 s7d7qk2K1LdtuGxRr0FhoXCJxHGTU/W+1MVqoQxQ5Qyr+w5iFtrqX6kvd6RZ4UJEcA
-	 KYL0tWWlRR64NyYpdP0kJf9ecZByCvNYEBBf9AoF4U40lpvATFTaYSPzjZxWm+sWOl
-	 +uGSamR0vR7eiYfYiHwo9HeKhF7ObRGIhg4/Ju1wVnofwFP++ROEOwI6hWXbvgfaBN
-	 IBG23xYIBzy7A==
+	id S1751481AbaBGXCB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Feb 2014 18:02:01 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48758 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751125AbaBGXCA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Feb 2014 18:02:00 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 79BB66B9B2;
+	Fri,  7 Feb 2014 18:01:59 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=RN8bS2g+EL5f+bP73AyzBRbdggg=; b=GrFOed
+	/S0Oj5Nm4W0rMHUv+ZiUBnme5woxfqYmXSoFGdfcpx5MnucIJ1yGEaD8bWJmFUTR
+	y2lbGI5On6ZA3q9UBKJ3smxD9PvwTfKtdgyr8weMH9ZHfkys21cgHtrBYOyupJnC
+	6wal+GDpa/wC/t6BoUmmXSWFgPo/dBm0drTrI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=DLGkt8BzgO3A11wy/qxPwtAHKmowIslD
+	5UMk7HcXJ9XzbFiEL3dD0rg+69YQDE7oOO7ay30XuPpz+1TR5CwGAMLoofm4F4Ir
+	siJQpT6eNnLl1Urwd0McmTIKVDjcPrDOqA9T5xpLG+7F736bEvNEUR13TjNkaMb6
+	qjNHVT0xY6Y=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 570556B9B1;
+	Fri,  7 Feb 2014 18:01:59 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AADD76B9AE;
+	Fri,  7 Feb 2014 18:01:58 -0500 (EST)
+In-Reply-To: <CAK9CXBUewMhr19KarmymOXmoq1ijPuU2mq4hqc6a-W0TCq5SRg@mail.gmail.com>
+	(Pavan Kumar Sunkara's message of "Sat, 8 Feb 2014 03:28:44 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: D8E51C78-904B-11E3-81EB-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241810>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241811>
 
+Pavan Kumar Sunkara <pavan.sss1991@gmail.com> writes:
 
---DTeHUGp76GcuSc2J
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Sorry. I misunderstood your message. Yes, I guess lazy loading the
+> supported file extensions would be better. But not all highlighters
+> support `-p` option. So, I think its better to leave it to the user.
 
-On Fri, Feb 07, 2014 at 02:00:23PM -0800, Junio C Hamano wrote:
-> Jens Lehmann <Jens.Lehmann@web.de> writes:
-> > I think the user needs to sort things out, just like she has to do
-> > when a file has a merge conflict. But unfortunately we cannot use
-> > conflict markers here, so I'd propose the following:
-> >
-> > * When merge proposes a merge resolution (which it does today by
-> >   telling the user "Found a possible merge resolution for the
-> >   submodule ... [use] git update-index --cacheinfo 160000 ...")
-> >   that commit should be checked out in the submodule but not
-> >   staged. Then the user can simply add and commit.
-> > =E2=80=A6
-> =E2=80=A6
->=20
-> For the former, "add and commit" at the top-level makes perfect
-> sense, =E2=80=A6
+Yes, those highlighters that do not support `-p` may have to rely on
+the hard-coded list %highlight_ext.
 
-This still works if the merge issue is in a grandchild submodule, but
-it's going to be a bit tedious if the user has to add-and-commit at
-each level from the troublesome sub-sub-=E2=80=A6-module on up to the
-top-level superproject.  I can't think of a cleaner solution though.
+But with the same line of reasoning, not all versions of highligher
+supports 'go' language, so it's better to leave that to the user,
+no?  The version of 'highlight' you may have may know about 'go',
+and somebody else's 'highlight' may not yet.  A hard-coded list that
+appears in %highlight_ext will be correct for only one of you while
+the other between you two needs to customize it to his system.
 
-Cheers,
-Trevor
+Note that I was not talking about removing the configurability.
+Even with lazy loading and/or auto-genearting at build-install time
+when 'highlight -p' is available, the users still want to be able to
+customize, and supporting that is fine.
 
---=20
-This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
-For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
+But for those whose 'highlight' does support '-p', it will help to
+lazily discover the list of supported languages and/or enumarate
+them at build-install time.  They do not have to keep adding new
+language (or removing it from the list we give as the upstream) to
+adjust it to their system.
 
---DTeHUGp76GcuSc2J
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (GNU/Linux)
-
-iQIcBAEBAgAGBQJS9Vl0AAoJEKKfehoaNkbtlPQP/RFldXBQf+VvGaAEf32F9G21
-0YISrJTC97M7PjxxaqfNJFTcgnogsW43EATzQdHrjuxw9qeygcp/nq73hBfnytC7
-Sp291HnRTJxZuhN0wx5qO255/XZMTTUCLVRCjOFrMOZPVX3uB2U350R9fEsEwEZU
-JsJSR1uBn8wGKTrrUxEUjCeSDD8UhbklBW3YF74uPgV8RrKuROBSSmhaFer6djx0
-ROGcMsVgMmJ9jDxqZxPjcyXYFuFRwT4J0bMOxpEcN5jGH8dqkRIZ5sGg2L7YQNrr
-olofY0ACAbte/2glGPTUSVSdF3lPlNf0rNJJwJLHR7bAhoFoYvbNYIyL1eaRzfAY
-Xp6ccsSpSgj80wfNv8glevv6RyJQVquI+nuj5kYP9a2m9QqNo8QPSwEoI6AgkThq
-37BAAJUvBo0hi3Fu+E/eIn/cNLk74qsA6ZUEcgCNHOHjD8OH+I/uaSKfjw6plGjJ
-NZEQxxlh7ZMehlkL8S+Z9/IJVu1flW6FcGvBNW0QbfXbIhZjrg+/n25cQs2AWZYe
-DzAvfOzcdRVWkM9W8bNs7k+fYApgYB/1hkHMhHwJSd4nViF8/H+uuK/WDXNdfcj6
-JkJDT89RDsfMC/ZxWMbFKqVNhBqtWKBeo5ae6ZSyGloeflrWhUt1aYQ3x3rdh7qH
-/P5bHL0Ed+GDTgVON0wW
-=Een5
------END PGP SIGNATURE-----
-
---DTeHUGp76GcuSc2J--
+In any case, the comment was not about this patch from you, but
+about the future direction for the code it touches in general.  In
+other words, it did not mean "because it does not update the
+mechanism to lazily discover the list of languages, and instead
+added yet another language to the existing one, it is not an
+acceptable solution to start supporting 'go'".
