@@ -1,9 +1,9 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 08/14] trailer: add tests for "git interpret-trailers"
-Date: Thu, 06 Feb 2014 16:11:56 -0800
-Message-ID: <xmqqeh3fwzlf.fsf@gitster.dls.corp.google.com>
+Subject: Re: [PATCH v5 09/14] trailer: if no input file is passed, read from stdin
+Date: Thu, 06 Feb 2014 16:12:53 -0800
+Message-ID: <xmqqa9e3wzju.fsf@gitster.dls.corp.google.com>
 References: <20140206194123.325.99451.chriscool@tuxfamily.org>
-	<20140206202004.325.20315.chriscool@tuxfamily.org>
+	<20140206202004.325.76199.chriscool@tuxfamily.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
@@ -14,80 +14,129 @@ Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
 	Dan Carpenter <dan.carpenter@oracle.com>,
 	Greg Kroah-Hartman <greg@kroah.com>, Jeff King <peff@peff.net>
 To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Fri Feb 07 01:12:11 2014
+X-From: git-owner@vger.kernel.org Fri Feb 07 01:13:02 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WBZ36-0001vl-O9
-	for gcvg-git-2@plane.gmane.org; Fri, 07 Feb 2014 01:12:05 +0100
+	id 1WBZ41-0002dU-7d
+	for gcvg-git-2@plane.gmane.org; Fri, 07 Feb 2014 01:13:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751463AbaBGAMA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Feb 2014 19:12:00 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64377 "EHLO
+	id S1751574AbaBGAM5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Feb 2014 19:12:57 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:32884 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750968AbaBGAL7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Feb 2014 19:11:59 -0500
+	id S1750968AbaBGAM5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Feb 2014 19:12:57 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2BB266A28D;
-	Thu,  6 Feb 2014 19:11:59 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 62C636A2DD;
+	Thu,  6 Feb 2014 19:12:56 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=nJwT5H+51devIZzvpgxWdleH7hs=; b=pxhxAk
-	7fp7i1dovHVfCUV5MzVJSk14iEtXy77j6WLyleoTRTllzulEIRtr11QVNiZ4Zg+7
-	d7gkhgCqYJEVj891jRC+kMuL2mlMrdnu7QQgCei9hDLMbHKt8oDxJXvlH+/2DA1H
-	vImH8nwVhEaoiUKb9vkVI6CezrLRA18ivRhBE=
+	:content-type; s=sasl; bh=cy35z3XTMXLinj6BYF+4hEZrZnY=; b=gaAE0Z
+	uL+qZv0XD6X58HhDxnC3B4rL3E+UtYFNsHfSGjj+txZ4t+/xzZcIBiD7ocBZbwcd
+	SCAnJH98d6a8U5U0OI1PkpCeU51lqL2vUirAjRB1tfHK5T/wli0hv698NtfessMO
+	XiDZcQoFxUuP/iLJqjsH/wByJB85EOEpSZ8Yg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=rxWv/aWWr5pm5Jg3VzaLOtK+3E645iCs
-	BUIikm05FV1oES2HOVoYSZMK+2mCIeWkWPCUbK2z9ZhLjQYT9HegcZhF+Shm9a0k
-	G2TbsMm4lg5JUoRiI8j5g8gfruQhUmiSVBzr7CR0z/O8T3EgXibLm5mbxisIWiN7
-	sQl/O64jRZo=
+	:content-type; q=dns; s=sasl; b=Eq9fqOrzFcO0zojeAD3qIV/oZdyVPMRj
+	kct5JCLJzHA/pMyRJWBPIC/PTFHhZyHvXKnPE+H9+2RulDiUcz5yFQB38f3fP1ZB
+	NVIHFGM05ivhwG/Mn8ECPytZ7bqutvNbOq+6V3IFR9f17svz88Od5QT+QkFyUcft
+	fFn62TrV26I=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 158956A28C;
-	Thu,  6 Feb 2014 19:11:59 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3C9A76A2DC;
+	Thu,  6 Feb 2014 19:12:56 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5365D6A28B;
-	Thu,  6 Feb 2014 19:11:58 -0500 (EST)
-In-Reply-To: <20140206202004.325.20315.chriscool@tuxfamily.org> (Christian
-	Couder's message of "Thu, 06 Feb 2014 21:19:57 +0100")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 497AF6A2D9;
+	Thu,  6 Feb 2014 19:12:55 -0500 (EST)
+In-Reply-To: <20140206202004.325.76199.chriscool@tuxfamily.org> (Christian
+	Couder's message of "Thu, 06 Feb 2014 21:19:58 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 75B4E774-8F8C-11E3-90A6-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 97A8AD34-8F8C-11E3-B868-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241753>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241754>
 
 Christian Couder <chriscool@tuxfamily.org> writes:
 
-> +
-> +cat >basic_message <<'EOF'
-> +subject
-> +
-> +body
-> +EOF
-> +
-> +cat >complex_message_body <<'EOF'
-> +my subject
-> +
-> +my body which is long
-> +and contains some special
-> +chars like : = ? !
-> +
-> +EOF
-> +
-> +# We want one trailing space at the end of each line.
-> +# Let's use sed to make sure that these spaces are not removed
-> +# by any automatic tool.
-> +sed -e 's/ Z$/ /' >complex_message_trailers <<-\EOF
-> +Fixes: Z
-> +Acked-by: Z
-> +Reviewed-by: Z
-> +Signed-off-by: Z
-> +EOF
+> It is simpler and more natural if the "git interpret-trailers"
+> is made a filter as its output already goes to sdtout.
 
-Please put things like these inside the first "setup" test.
+sdtout?
+
+Why isn't this a pure filter without any "infile" parameter in the
+first place?
+
+> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+> ---
+>  builtin/interpret-trailers.c  |  2 +-
+>  t/t7513-interpret-trailers.sh |  7 +++++++
+>  trailer.c                     | 15 +++++++++------
+>  3 files changed, 17 insertions(+), 7 deletions(-)
+>
+> diff --git a/builtin/interpret-trailers.c b/builtin/interpret-trailers.c
+> index 04b0ae2..ae8e561 100644
+> --- a/builtin/interpret-trailers.c
+> +++ b/builtin/interpret-trailers.c
+> @@ -23,7 +23,7 @@ int cmd_interpret_trailers(int argc, const char **argv, const char *prefix)
+>  
+>  	struct option options[] = {
+>  		OPT_BOOL(0, "trim-empty", &trim_empty, N_("trim empty trailers")),
+> -		OPT_FILENAME(0, "infile", &infile, N_("use message from file")),
+> +		OPT_FILENAME(0, "infile", &infile, N_("use message from file, instead of stdin")),
+>  		OPT_END()
+>  	};
+>  
+> diff --git a/t/t7513-interpret-trailers.sh b/t/t7513-interpret-trailers.sh
+> index 8be333c..f5ef81f 100755
+> --- a/t/t7513-interpret-trailers.sh
+> +++ b/t/t7513-interpret-trailers.sh
+> @@ -205,4 +205,11 @@ test_expect_success 'using "ifMissing = doNothing"' '
+>  	test_cmp expected actual
+>  '
+>  
+> +test_expect_success 'with input from stdin' '
+> +	cat complex_message_body >expected &&
+> +	printf "Bug #42\nFixes: \nAcked-by= \nAcked-by= Junio\nAcked-by= Peff\nReviewed-by: \nSigned-off-by: \n" >>expected &&
+> +	git interpret-trailers "review:" "fix=53" "cc=Linus" "ack: Junio" "fix=22" "bug: 42" "ack: Peff" < complex_message >actual &&
+> +	test_cmp expected actual
+> +'
+> +
+>  test_done
+> diff --git a/trailer.c b/trailer.c
+> index 186316f..108e104 100644
+> --- a/trailer.c
+> +++ b/trailer.c
+> @@ -483,8 +483,13 @@ static struct strbuf **read_input_file(const char *infile)
+>  {
+>  	struct strbuf sb = STRBUF_INIT;
+>  
+> -	if (strbuf_read_file(&sb, infile, 0) < 0)
+> -		die_errno(_("could not read input file '%s'"), infile);
+> +	if (infile) {
+> +		if (strbuf_read_file(&sb, infile, 0) < 0)
+> +			die_errno(_("could not read input file '%s'"), infile);
+> +	} else {
+> +		if (strbuf_read(&sb, fileno(stdin), 0) < 0)
+> +			die_errno(_("could not read from stdin"));
+> +	}
+>  
+>  	return strbuf_split(&sb, '\n');
+>  }
+> @@ -551,10 +556,8 @@ void process_trailers(const char *infile, int trim_empty, int argc, const char *
+>  
+>  	git_config(git_trailer_config, NULL);
+>  
+> -	/* Print the non trailer part of infile */
+> -	if (infile) {
+> -		process_input_file(infile, &infile_tok_first, &infile_tok_last);
+> -	}
+> +	/* Print the non trailer part of infile (or stdin if infile is NULL) */
+> +	process_input_file(infile, &infile_tok_first, &infile_tok_last);
+>  
+>  	arg_tok_first = process_command_line_args(argc, argv);
