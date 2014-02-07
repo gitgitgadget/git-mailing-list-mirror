@@ -1,93 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
 Subject: Re: [PATCH] gitweb: Added syntax highlight support for golang
-Date: Fri, 07 Feb 2014 13:54:11 -0800
-Message-ID: <xmqqiosqtwqk.fsf@gitster.dls.corp.google.com>
-References: <1391807441-23049-1-git-send-email-pavan.sss1991@gmail.com>
+Date: Sat, 8 Feb 2014 03:26:05 +0530
+Message-ID: <CAK9CXBXXge+ZGN_ocWMH5jkPJcTg74rhtWsDiOuqAeeGXDW_tg@mail.gmail.com>
+References: <1391807441-23049-1-git-send-email-pavan.sss1991@gmail.com> <xmqqiosqtwqk.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git List <git@vger.kernel.org>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>
-To: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 07 22:54:47 2014
+	=?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 07 22:56:30 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WBtNm-00015f-H6
-	for gcvg-git-2@plane.gmane.org; Fri, 07 Feb 2014 22:54:46 +0100
+	id 1WBtPS-0002VK-9R
+	for gcvg-git-2@plane.gmane.org; Fri, 07 Feb 2014 22:56:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751942AbaBGVyk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Feb 2014 16:54:40 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37384 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751617AbaBGVyU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Feb 2014 16:54:20 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C6FAB69F7D;
-	Fri,  7 Feb 2014 16:54:19 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=PsFIC0nM5CMGhQRflllw6U7zCe4=; b=q7tUwj
-	9U3CZwx8G8pWyWLrs5VBkHFV1BCg9fegLTkhVJ7yXCW5O0ZNxQH6Xiy4VogCbpBc
-	G/ykhLw+VlX6mcD+//QlZE7BF21M6kZMAs9eMIuoy37iWfS+TwMdiwbIn40DI8Qh
-	T63U0rKIEASMGhAYKe0xTpHkobkCP2g7x8ih4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=brv7OfkNeFDGBH8R61aCd84HTiJZbFYL
-	MnVaTlH1yDjs+sDM4x1tlRkMkCuUZ2i+jNb46iAeh0A821u74Bg2Ikj1u9A6JDoW
-	4vMWIeHKYsjW2Yq0dQHjM5n3HqDtzASzGpGOxZNq5uzBX1cRSmLIhX1cV34yTeWJ
-	JC4mlaPTxPg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D8BA569F77;
-	Fri,  7 Feb 2014 16:54:18 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 295BE69F6A;
-	Fri,  7 Feb 2014 16:54:15 -0500 (EST)
-In-Reply-To: <1391807441-23049-1-git-send-email-pavan.sss1991@gmail.com>
-	(Pavan Kumar Sunkara's message of "Sat, 8 Feb 2014 02:40:41 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 62D916D2-9042-11E3-918B-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752309AbaBGV40 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Feb 2014 16:56:26 -0500
+Received: from mail-qa0-f44.google.com ([209.85.216.44]:64956 "EHLO
+	mail-qa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751689AbaBGV4Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Feb 2014 16:56:25 -0500
+Received: by mail-qa0-f44.google.com with SMTP id w5so6160320qac.17
+        for <git@vger.kernel.org>; Fri, 07 Feb 2014 13:56:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=Qn5sIweVdTlvVQASL+AwQfJnbpZKUVOf4qvJ/xBVBGU=;
+        b=eZDIH2s6ZwQuVmcifA5f87nByr9WCFEtcFzQm7PSoHdZ5+hxihUBhwT/vH74wxoA7N
+         rSIzMVxu9j4UpW1kLLR4H/jyVZiJjk1iiy2Yk3RgS7AQxXch62TOUtdLgxcTT4bJQEo+
+         mWuuZZK9LulOuQ0y8+0XEmYaRDn20PNjc1vAtK9UjlIfEb9fBBwWbLdt/3zC9XACHJYz
+         DaOk9NULWrXyXwxN+Eio/qRnkDXjEBF1iPpL2zVBc37yZO3Yg7FSWbXQt0PizHQjDroK
+         ArWBcpo665RTZwt1HYtEyK0WeO+dgvCcs00iUYAKpWaWzwJaoGNQRnhdWrH9wWHukVQD
+         PPgQ==
+X-Received: by 10.140.31.75 with SMTP id e69mr24922045qge.76.1391810185058;
+ Fri, 07 Feb 2014 13:56:25 -0800 (PST)
+Received: by 10.224.121.211 with HTTP; Fri, 7 Feb 2014 13:56:05 -0800 (PST)
+In-Reply-To: <xmqqiosqtwqk.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241806>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241807>
 
-Pavan Kumar Sunkara <pavan.sss1991@gmail.com> writes:
+The highlight project which is being used by gitweb supports this. I
+checked it before submitting the patch.
 
-> Golang is quickly becoming one of the major programming languages.
+Thanks
+
+On Sat, Feb 8, 2014 at 3:24 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Pavan Kumar Sunkara <pavan.sss1991@gmail.com> writes:
 >
-> This change switches on golang syntax highlight support by default
-> in gitweb rather than asking the users to do it using config files.
-
-Looks trivially harmless ;-)
-
-I haven't touched this part of our system, but the patch makes me
-wonder if there is a way for us to _ask_ the installed 'highlight'
-binary what languages it knows about.  This hash is used only in
-guess_file_syntax sub, and it may not be unreasonable to populate it
-lazily there, or at least generate this part by parsing output from
-'highlight -p' at build-install time.
-
-> Signed-off-by: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
-> ---
->  gitweb/gitweb.perl |    2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>> Golang is quickly becoming one of the major programming languages.
+>>
+>> This change switches on golang syntax highlight support by default
+>> in gitweb rather than asking the users to do it using config files.
 >
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index bf7fd67..aa6fcfd 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -273,7 +273,7 @@ our %highlight_basename = (
->  our %highlight_ext = (
->  	# main extensions, defining name of syntax;
->  	# see files in /usr/share/highlight/langDefs/ directory
-> -	(map { $_ => $_ } qw(py rb java css js tex bib xml awk bat ini spec tcl sql)),
-> +	(map { $_ => $_ } qw(py rb java go css js tex bib xml awk bat ini spec tcl sql)),
->  	# alternate extensions, see /etc/highlight/filetypes.conf
->  	(map { $_ => 'c'   } qw(c h)),
->  	(map { $_ => 'sh'  } qw(sh bash zsh ksh)),
+> Looks trivially harmless ;-)
+>
+> I haven't touched this part of our system, but the patch makes me
+> wonder if there is a way for us to _ask_ the installed 'highlight'
+> binary what languages it knows about.  This hash is used only in
+> guess_file_syntax sub, and it may not be unreasonable to populate it
+> lazily there, or at least generate this part by parsing output from
+> 'highlight -p' at build-install time.
+>
+>> Signed-off-by: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
+>> ---
+>>  gitweb/gitweb.perl |    2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+>> index bf7fd67..aa6fcfd 100755
+>> --- a/gitweb/gitweb.perl
+>> +++ b/gitweb/gitweb.perl
+>> @@ -273,7 +273,7 @@ our %highlight_basename = (
+>>  our %highlight_ext = (
+>>       # main extensions, defining name of syntax;
+>>       # see files in /usr/share/highlight/langDefs/ directory
+>> -     (map { $_ => $_ } qw(py rb java css js tex bib xml awk bat ini spec tcl sql)),
+>> +     (map { $_ => $_ } qw(py rb java go css js tex bib xml awk bat ini spec tcl sql)),
+>>       # alternate extensions, see /etc/highlight/filetypes.conf
+>>       (map { $_ => 'c'   } qw(c h)),
+>>       (map { $_ => 'sh'  } qw(sh bash zsh ksh)),
+
+
+
+-- 
+- Pavan Kumar Sunkara
