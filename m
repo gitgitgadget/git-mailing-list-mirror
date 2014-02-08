@@ -1,64 +1,65 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFH] hackday and GSoC topic suggestions
-Date: Sat, 8 Feb 2014 13:55:20 -0500
-Message-ID: <20140208185519.GA26306@sigill.intra.peff.net>
-References: <20140205225702.GA12589@sigill.intra.peff.net>
- <8738jtmomb.fsf@thomasrast.ch>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [PATCH] l10n: de.po: translate 27 new messages
+Date: Sat, 08 Feb 2014 20:01:48 +0100
+Message-ID: <874n49ctsz.fsf@fencepost.gnu.org>
+References: <1390511452-6553-1-git-send-email-ralf.thielow@gmail.com>
+	<877g95motv.fsf@thomasrast.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Ralf Thielow <ralf.thielow@gmail.com>, jk@jk.gs, stimming@tuhh.de,
+	git@vger.kernel.org, worldhello.net@gmail.com
 To: Thomas Rast <tr@thomasrast.ch>
-X-From: git-owner@vger.kernel.org Sat Feb 08 19:55:27 2014
+X-From: git-owner@vger.kernel.org Sat Feb 08 20:02:21 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WCD3m-0002Y8-DP
-	for gcvg-git-2@plane.gmane.org; Sat, 08 Feb 2014 19:55:26 +0100
+	id 1WCDAS-0008Oa-Bg
+	for gcvg-git-2@plane.gmane.org; Sat, 08 Feb 2014 20:02:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752119AbaBHSzW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Feb 2014 13:55:22 -0500
-Received: from cloud.peff.net ([50.56.180.127]:47096 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751991AbaBHSzW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Feb 2014 13:55:22 -0500
-Received: (qmail 5282 invoked by uid 102); 8 Feb 2014 18:55:21 -0000
-Received: from Unknown (HELO sigill.intra.peff.net) (65.115.226.27)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 08 Feb 2014 12:55:21 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 08 Feb 2014 13:55:20 -0500
-Content-Disposition: inline
-In-Reply-To: <8738jtmomb.fsf@thomasrast.ch>
+	id S1752030AbaBHTCQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 8 Feb 2014 14:02:16 -0500
+Received: from fencepost.gnu.org ([208.118.235.10]:50002 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752002AbaBHTCQ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 8 Feb 2014 14:02:16 -0500
+Received: from localhost ([127.0.0.1]:49041 helo=lola)
+	by fencepost.gnu.org with esmtp (Exim 4.71)
+	(envelope-from <dak@gnu.org>)
+	id 1WCDAL-00069M-0W; Sat, 08 Feb 2014 14:02:13 -0500
+Received: by lola (Postfix, from userid 1000)
+	id 42184E12E5; Sat,  8 Feb 2014 20:01:48 +0100 (CET)
+In-Reply-To: <877g95motv.fsf@thomasrast.ch> (Thomas Rast's message of "Sat, 08
+	Feb 2014 19:39:08 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241843>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241844>
 
-On Sat, Feb 08, 2014 at 07:43:40PM +0100, Thomas Rast wrote:
+Thomas Rast <tr@thomasrast.ch> writes:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > On a similar note, the GSoC application deadline is Feb 14th. I am
-> > happy to be admin again and put together the application, but we will
-> > need an idea page. I'll set up a page to collect them, but in the
-> > meantime, please dump any ideas/discussion in this thread.
-> 
-> Sorry for being so procrastinative :-(
-> 
-> I suggest we make it a rule that old projects cannot be proposed from
-> year to year.
+> I see you are defining new glossary terms:
+>
+>   shallow     unvollst=E4ndig
+>   grafted     gesondert eingeh=E4ngt
+>
+> I guess the first one is reasonable if we don't call anything
+> "incomplete"?  (I don't think we do, just checking.)
 
-I would very much agree with that. There are projects that I have posted
-multiple years, and nobody ever selects them. I should take that as a
-hint that they are not appealing to students for whatever reason, and
-are probably just clogging up the ideas list.
+"oberfl=E4chlich" seems better: a shallow clone is not "incomplete": th=
+e
+cloning process ran to completion.
 
-I'd make an exception for somebody who wants to substantially rework the
-proposal in an attempt to make it more appealing, or who has a reason
-why it is being re-proposed (e.g., we had student interest, but we ended
-up not selecting it due to running out of slots or something). But those
-should be the exception.
+> I don't really like 'gesondert eingeh=E4ngt', how about 'transplantie=
+rt'
+> instead?
 
--Peff
+I suggest using the actual translation here as it is perfectly fitting
+for both literal and figurative meaning: "aufgepfropft".
+
+--=20
+David Kastrup
