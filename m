@@ -1,96 +1,83 @@
-From: Jiang Xin <worldhello.net@gmail.com>
-Subject: [GIT PULL] l10n updates for 1.9.0 round 2
-Date: Sat, 8 Feb 2014 08:01:22 +0800
-Message-ID: <CANYiYbGV7aPd300Bwkm9yWAZR-crtk8Jk2TCckuGvkmrQGe+rQ@mail.gmail.com>
+From: Carlos Pereira <jose.carlos.pereira@ist.utl.pt>
+Subject: git best strategy for two version development
+Date: Sat, 08 Feb 2014 02:06:41 +0000
+Message-ID: <52F59131.5000808@ist.utl.pt>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>,
-	Alexander Shopov <ash@kambanaria.org>,
-	Ralf Thielow <ralf.thielow@googlemail.com>,
-	=?ISO-8859-1?Q?Jean=2DNo=EBl_Avila?= <jn.avila@free.fr>,
-	Marco Paolone <marcopaolone@gmail.com>,
-	Marco Sousa <marcomsousa@gmail.com>,
-	Peter Krefting <peter@softwolves.pp.se>,
-	=?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 08 01:01:30 2014
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 08 03:03:50 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WBvMP-0007Yy-PL
-	for gcvg-git-2@plane.gmane.org; Sat, 08 Feb 2014 01:01:30 +0100
+	id 1WBxGo-0004lJ-28
+	for gcvg-git-2@plane.gmane.org; Sat, 08 Feb 2014 03:03:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751289AbaBHABY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Feb 2014 19:01:24 -0500
-Received: from mail-we0-f169.google.com ([74.125.82.169]:46503 "EHLO
-	mail-we0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751246AbaBHABX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Feb 2014 19:01:23 -0500
-Received: by mail-we0-f169.google.com with SMTP id t61so2814464wes.14
-        for <git@vger.kernel.org>; Fri, 07 Feb 2014 16:01:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        bh=yArnyECXG+EYNC9911uqFFNPLyE0o1F4BnH3Xw0Acwg=;
-        b=sSvRFuhzP1kKwHJIw5IriVbNmMS8QSJco7F8N2ygGd6ErtC7wwHE42+FgTAnImJPLr
-         3Jdt0+G1w/PIEytJtiJtBj6/0rQQpClN3Yc9fVvKCO1z2JfqvsO6qGUMZdItQ6Br2e8z
-         1CYY1G8K9xFOfxiqpAnZtF9kOFpHzIqjMLzZHkn0067HOfr8nf8i0IWwBtNRnIU6K+QA
-         lvyL+TSVrol6F+CG5330tPpa8tznIqFHUr0zYwENgInFcXfkD7KjnxojM4dw3UaRhFyi
-         7bfmjnJIuzhAI7W5rBiZvpe9ihnIqwMe1lQpZUfHDZfGiYNmAOpI4IuLQfMuyGxD1ku7
-         hZEQ==
-X-Received: by 10.180.91.164 with SMTP id cf4mr1761903wib.37.1391817682839;
- Fri, 07 Feb 2014 16:01:22 -0800 (PST)
-Received: by 10.194.71.162 with HTTP; Fri, 7 Feb 2014 16:01:22 -0800 (PST)
+	id S1751052AbaBHCDa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Feb 2014 21:03:30 -0500
+Received: from smtp2.ist.utl.pt ([193.136.128.22]:55036 "EHLO smtp2.ist.utl.pt"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750898AbaBHCD3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Feb 2014 21:03:29 -0500
+X-Greylist: delayed 555 seconds by postgrey-1.27 at vger.kernel.org; Fri, 07 Feb 2014 21:03:29 EST
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by smtp2.ist.utl.pt (Postfix) with ESMTP id 24F8E70003D6
+	for <git@vger.kernel.org>; Sat,  8 Feb 2014 01:54:12 +0000 (WET)
+X-Virus-Scanned: by amavisd-new-2.6.4 (20090625) (Debian) at ist.utl.pt
+Received: from smtp2.ist.utl.pt ([127.0.0.1])
+	by localhost (smtp2.ist.utl.pt [127.0.0.1]) (amavisd-new, port 10025)
+	with LMTP id NMuffr7JfpSJ for <git@vger.kernel.org>;
+	Sat,  8 Feb 2014 01:54:12 +0000 (WET)
+Received: from mail2.ist.utl.pt (mail.ist.utl.pt [IPv6:2001:690:2100:1::8])
+	by smtp2.ist.utl.pt (Postfix) with ESMTP id ECA0770003CC
+	for <git@vger.kernel.org>; Sat,  8 Feb 2014 01:54:11 +0000 (WET)
+Received: from [IPv6:2001:690:2100:1c0:7aac:c0ff:feff:eff7] (unknown [IPv6:2001:690:2100:1c0:7aac:c0ff:feff:eff7])
+	(Authenticated sender: ist12604)
+	by mail2.ist.utl.pt (Postfix) with ESMTPSA id AB8762003A3D
+	for <git@vger.kernel.org>; Sat,  8 Feb 2014 01:54:11 +0000 (WET)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.16) Gecko/20121215 Icedove/3.0.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241816>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241817>
 
-2014-02-08 Junio C Hamano <gitster@pobox.com>:
-> A release candidate Git v1.9.0-rc3 is now available for testing
-> at the usual places.  Hopefully this will be the last one before the
-> final, scheduled to happen sometime late next week.
->
+Hello,
 
-The following changes since commit be961c292f1d36097afa1690df68cf90f655c855:
+I am a git and CVS newbie, I bought and red most of the excellent Pro 
+Git book by Scott Chacon, but I still have a doubt. I have a package 
+that I distribute in two versions differing only in one library: 
+version_A uses this library, version_B uses my own code to replace it. 
+For strategic reasons I want to keep it this way for the time being. 
+Both versions have the same documentation, the same data files, and 99% 
+of the source code is the same (a few makefile changes, two additional 
+files in version_B and some minor changes: a diff -r has only 170 
+lines). The question is what is the best strategy to manage a situation 
+like this with git?
 
-  Git 1.9-rc2 (2014-01-31 14:16:06 -0800)
+Shall I maintain two different repositories? I don't think so...
 
-are available in the git repository at:
+Apparently the best solution would be to maintain two long term 
+branches, say mater_A and master_B, and merge all later developments in 
+both branches, keeping the initial difference... Specifically:
 
-  git://github.com/git-l10n/git-po master
+1) do some new work in branch master_A, commit, etc.
+2) checkout master_B and merge the new work in master_B, without merging 
+the initial diff between the two versions.
 
-for you to fetch changes up to 98b2761d5efaf559d67e7ed5694f3a2bddf3e868:
+What is the better way to do that?
 
-  l10n: zh_CN.po: Disambiguation for rebase (2014-02-06 23:15:33 +0800)
+I suppose this is a fairly common situation, for example, some 
+standalone code distributed with two different GUI toolkits. I could 
+carefully choose which commits should be merged in both branches (the 
+changes in standalone code) and which should not (the changes in GUI 
+code), but that is error-prone and seems to miss the whole point of 
+using a managment system...
 
-----------------------------------------------------------------
-Jean-Noel Avila (1):
-      l10n: fr: 1.9rc2 2211t
+How shall I handle this? Thanks for your help!
 
-Jiang Xin (5):
-      l10n: git.pot: v1.9 round 2 (1 new)
-      Merge branch 'master' of git://github.com/vnwildman/git
-      Merge branch 'master' of git://github.com/nafmo/git-l10n-sv
-      l10n: zh_CN.po: translate 1 new message (2211t0f0u)
-      l10n: zh_CN.po: Disambiguation for rebase
-
-Peter Krefting (1):
-      l10n: Update Swedish translation (2211t0f0u)
-
-Tran Ngoc Quan (1):
-      l10n: vi.po (2211t): Updated one new string
-
- po/fr.po    |  58 ++++++++++++++++------------
- po/git.pot  |  29 ++++++++------
- po/sv.po    |  31 ++++++++-------
- po/vi.po    | 123 ++++++++++++++++++++++++++++++------------------------------
- po/zh_CN.po |  63 +++++++++++++++++--------------
- 5 files changed, 165 insertions(+), 139 deletions(-)
-
-
--- 
-Jiang Xin
+Regards,
+Carlos Pereira,
+http://www.gamgi.org/
