@@ -1,95 +1,102 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH 2/2] dir: ignore trailing spaces in exclude patterns
-Date: Sat,  8 Feb 2014 15:10:04 +0700
-Message-ID: <1391847004-22810-3-git-send-email-pclouds@gmail.com>
-References: <1391847004-22810-1-git-send-email-pclouds@gmail.com>
+From: Carlos Pereira <jose.carlos.pereira@ist.utl.pt>
+Subject: Re: git best strategy for two version development
+Date: Sat, 08 Feb 2014 08:55:38 +0000
+Message-ID: <52F5F10A.2080708@ist.utl.pt>
+References: <52F59131.5000808@ist.utl.pt> <20140208035610.GK635004@vauxhall.crustytoothpaste.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 08 09:10:31 2014
+X-From: git-owner@vger.kernel.org Sat Feb 08 09:43:42 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WC2ze-0007E1-CB
-	for gcvg-git-2@plane.gmane.org; Sat, 08 Feb 2014 09:10:30 +0100
+	id 1WC3Vl-0007zS-AB
+	for gcvg-git-2@plane.gmane.org; Sat, 08 Feb 2014 09:43:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751193AbaBHIKV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 8 Feb 2014 03:10:21 -0500
-Received: from mail-pa0-f43.google.com ([209.85.220.43]:59467 "EHLO
-	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751258AbaBHIKS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Feb 2014 03:10:18 -0500
-Received: by mail-pa0-f43.google.com with SMTP id rd3so4162480pab.30
-        for <git@vger.kernel.org>; Sat, 08 Feb 2014 00:10:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=QSsnqLcLgk/yBITVGRax5V6CLFrtZ59ut9NTWTkdh+8=;
-        b=Let8xwK+aWKael0WDqY8dkAE7AhoBAxgwcdQYomNxt+0dVO5t28DrjaBLaSYPFRY1m
-         v1wcjhDCiiFNduClIL4wg1NonOLMqUSHB4GyvJVRnPBaxjr+NdnsoAMtAwPEaVF+634f
-         3ixHEXf7z2ArijNsw4iVgxQnNFrkdcxPDh4TYmbcvmzpw9z7kbgypKksObP4G+9cwZbt
-         muloBR+Qu2iUTuydjF1yf0nQsR3RbVmYQZhBzjqG4JppVYrc2Yg+F0FoxEKwEVFIIzvm
-         Sx7l5Vwo14YgqG7dhEUkDVdybrYa4Xcu3RZwhyuIhgzuvSIGysknvl2U1gFc8D/cEt3E
-         WVSg==
-X-Received: by 10.66.144.227 with SMTP id sp3mr13039513pab.100.1391847017541;
-        Sat, 08 Feb 2014 00:10:17 -0800 (PST)
-Received: from lanh ([115.73.239.36])
-        by mx.google.com with ESMTPSA id qf7sm53618796pac.14.2014.02.08.00.10.14
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 08 Feb 2014 00:10:16 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Sat, 08 Feb 2014 15:10:21 +0700
-X-Mailer: git-send-email 1.8.5.2.240.g8478abd
-In-Reply-To: <1391847004-22810-1-git-send-email-pclouds@gmail.com>
+	id S1750837AbaBHInN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Feb 2014 03:43:13 -0500
+Received: from smtp2.ist.utl.pt ([193.136.128.22]:40240 "EHLO smtp2.ist.utl.pt"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750773AbaBHInM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Feb 2014 03:43:12 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by smtp2.ist.utl.pt (Postfix) with ESMTP id 50CD470003D3
+	for <git@vger.kernel.org>; Sat,  8 Feb 2014 08:43:09 +0000 (WET)
+X-Virus-Scanned: by amavisd-new-2.6.4 (20090625) (Debian) at ist.utl.pt
+Received: from smtp2.ist.utl.pt ([127.0.0.1])
+	by localhost (smtp2.ist.utl.pt [127.0.0.1]) (amavisd-new, port 10025)
+	with LMTP id 8yfhqc0rDukT for <git@vger.kernel.org>;
+	Sat,  8 Feb 2014 08:43:09 +0000 (WET)
+Received: from mail2.ist.utl.pt (mail.ist.utl.pt [IPv6:2001:690:2100:1::8])
+	by smtp2.ist.utl.pt (Postfix) with ESMTP id C77E9700045F
+	for <git@vger.kernel.org>; Sat,  8 Feb 2014 08:43:08 +0000 (WET)
+Received: from [IPv6:2001:690:2100:1c0:7aac:c0ff:feff:eff7] (unknown [IPv6:2001:690:2100:1c0:7aac:c0ff:feff:eff7])
+	(Authenticated sender: ist12604)
+	by mail2.ist.utl.pt (Postfix) with ESMTPSA id 7792A200731A
+	for <git@vger.kernel.org>; Sat,  8 Feb 2014 08:43:08 +0000 (WET)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.16) Gecko/20121215 Icedove/3.0.11
+In-Reply-To: <20140208035610.GK635004@vauxhall.crustytoothpaste.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241827>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241828>
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- Documentation/gitignore.txt | 3 +++
- dir.c                       | 4 +---
- 2 files changed, 4 insertions(+), 3 deletions(-)
+On 02/08/2014 03:56 AM, brian m. carlson wrote:
+> On Sat, Feb 08, 2014 at 02:06:41AM +0000, Carlos Pereira wrote:
+>    
+>> Hello,
+>>
+>> I am a git and CVS newbie, I bought and red most of the excellent
+>> Pro Git book by Scott Chacon, but I still have a doubt. I have a
+>> package that I distribute in two versions differing only in one
+>> library: version_A uses this library, version_B uses my own code to
+>> replace it. For strategic reasons I want to keep it this way for the
+>> time being. Both versions have the same documentation, the same data
+>> files, and 99% of the source code is the same (a few makefile
+>> changes, two additional files in version_B and some minor changes: a
+>> diff -r has only 170 lines). The question is what is the best
+>> strategy to manage a situation like this with git?
+>>
+>> Shall I maintain two different repositories? I don't think so...
+>>
+>> Apparently the best solution would be to maintain two long term
+>> branches, say mater_A and master_B, and merge all later developments
+>> in both branches, keeping the initial difference... Specifically:
+>>
+>> 1) do some new work in branch master_A, commit, etc.
+>> 2) checkout master_B and merge the new work in master_B, without
+>> merging the initial diff between the two versions.
+>>
+>> What is the better way to do that?
+>>      
+> That's pretty much the way to do it.  If you check in master-A, then
+> create the master-B branch off of that, copying in the code from B and
+> checking it in, then when you merge from master-A to master-B, git will
+> basically do the right thing.  Changes you make on master-A that are
+> specific to that version will probably conflict, but they should be easy
+> to fix up.
+>    
+You are right! git does not try to merge everything, only changes 
+commited on the other branch (branch-A), after creating branch-B... 
+otherwise it would be reverting the work done on the current branch, 
+which does not make much sense...
 
-diff --git a/Documentation/gitignore.txt b/Documentation/gitignore.txt
-index b08d34d..8734c15 100644
---- a/Documentation/gitignore.txt
-+++ b/Documentation/gitignore.txt
-@@ -77,6 +77,9 @@ PATTERN FORMAT
-    Put a backslash ("`\`") in front of the first hash for patterns
-    that begin with a hash.
-=20
-+ - Trailing spaces are ignored unless they are quoted with backlash
-+   ("`\`").
-+
-  - An optional prefix "`!`" which negates the pattern; any
-    matching file excluded by a previous pattern will become
-    included again. It is not possible to re-include a file if a parent
-diff --git a/dir.c b/dir.c
-index 9edde44..7dee5ca 100644
---- a/dir.c
-+++ b/dir.c
-@@ -496,9 +496,7 @@ static void check_trailing_spaces(const char *fname=
-, char *buf)
- 	int len =3D strlen(buf);
- 	while (len && buf[len - 1] =3D=3D ' ')
- 		len--;
--	if (buf[len] !=3D '\0')
--		warning(_("%s: trailing spaces in '%s'. Please quote them."),
--			fname, buf);
-+	buf[len] =3D '\0';
- }
-=20
- int add_excludes_from_file_to_list(const char *fname,
---=20
-1.8.5.2.240.g8478abd
+Thank you very much...
+C
+> I basically do this for a consulting project for a client: there's
+> generic code in master, and a special branch for the client.  Since most
+> changes don't touch the modified code, conflicts are infrequent, and I
+> can fix them up when they occur.  I also do it for my dotfiles, which
+> vary slightly between home and work.
+>
+> You could also make the changes to master-B as a set of commits on top
+> of master-A, and always rebase master-B on master-A, but this isn't a
+> good solution if other people are going to be using your code.  It has
+> the benefits of keeping the history free of frequent merges, which may
+> or may not be important to you; it doesn't really bother me very much.
+>
+>    
