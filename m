@@ -1,71 +1,82 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: git: problematic git status output with some translations (such
- as fr_FR)
-Date: Sat, 8 Feb 2014 16:51:47 +0700
-Message-ID: <CACsJy8AvnYsWCxwJbiSVtva7Evbn9Y4sPi3jgav1Ke2GirBQvQ@mail.gmail.com>
-References: <20131008085036.11434.25160.reportbug@x230-buxy.home.ouaza.com>
- <20131219104613.GA18379@x230-buxy.home.ouaza.com> <20131219194319.GB20443@google.com>
- <xmqqk3f0efhe.fsf@gitster.dls.corp.google.com> <20131219205049.GE20443@google.com>
+From: =?utf-8?b?w5h5c3RlaW4=?= Walle <oystwa@gmail.com>
+Subject: Re: git best strategy for two version development
+Date: Sat, 8 Feb 2014 12:09:15 +0000 (UTC)
+Message-ID: <loom.20140208T130440-803@post.gmane.org>
+References: <52F59131.5000808@ist.utl.pt>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Raphael Hertzog <hertzog@debian.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 08 10:52:29 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 08 13:09:47 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WC4aH-0003Sd-W5
-	for gcvg-git-2@plane.gmane.org; Sat, 08 Feb 2014 10:52:26 +0100
+	id 1WC6jB-0002TV-0o
+	for gcvg-git-2@plane.gmane.org; Sat, 08 Feb 2014 13:09:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751393AbaBHJwV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Feb 2014 04:52:21 -0500
-Received: from mail-qa0-f48.google.com ([209.85.216.48]:47844 "EHLO
-	mail-qa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751063AbaBHJwR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Feb 2014 04:52:17 -0500
-Received: by mail-qa0-f48.google.com with SMTP id f11so6770981qae.21
-        for <git@vger.kernel.org>; Sat, 08 Feb 2014 01:52:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=M56KuGJrGvdUrq9PjfgAVZ+1yguN9r+MxrcXBbDRvH8=;
-        b=t1vj1w/dHm3nJol7eWuu2xG0R4amjyMF9b+X3TuFfSA7QvDRBcbqBR1zqGFypOEUUS
-         0fofFgNBNnvu+l88nwYvKY2oI5muc8UZahIpj0kHCaChoa3g+L8CLjBLeZZidj+AdpG4
-         CLB2l8mgOtZ0EbUSoIQdV+Tj9G+v8bruKNeKhzUvI39RD0noKH7M0ZqqCMIebpX8nNrj
-         FyhKGBXc49mzt2yLB7XqiEpCGOVLvHEIQbpTKRX6dK1KOroRd4vpagyvkPFYO9AreiHP
-         ogYH196a/hlJI1n248I0cZgbNhs59aUNLEnL5xbu+4ezp+nesQ1sUAfA2Bk9SGFMIipk
-         VX7w==
-X-Received: by 10.224.26.71 with SMTP id d7mr30035943qac.89.1391853137140;
- Sat, 08 Feb 2014 01:52:17 -0800 (PST)
-Received: by 10.96.215.102 with HTTP; Sat, 8 Feb 2014 01:51:47 -0800 (PST)
-In-Reply-To: <20131219205049.GE20443@google.com>
+	id S1751435AbaBHMJk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 8 Feb 2014 07:09:40 -0500
+Received: from plane.gmane.org ([80.91.229.3]:37166 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751386AbaBHMJj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Feb 2014 07:09:39 -0500
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1WC6j3-0002LZ-OC
+	for git@vger.kernel.org; Sat, 08 Feb 2014 13:09:38 +0100
+Received: from 80.156.189.109.customer.cdi.no ([109.189.156.80])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 08 Feb 2014 13:09:37 +0100
+Received: from oystwa by 80.156.189.109.customer.cdi.no with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 08 Feb 2014 13:09:37 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 109.189.156.80 (Mozilla/5.0 (Windows NT 6.1; WOW64; rv:26.0) Gecko/20100101 Firefox/26.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241832>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241833>
 
-On Fri, Dec 20, 2013 at 3:50 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Junio C Hamano wrote:
->> Jonathan Nieder <jrnieder@gmail.com> writes:
->
->>> This includes the colon in the translated string, to make it easier to
->>> remember to keep the non-breaking space before it.
->>
->> Hmph, recent 3651e45c (wt-status: take the alignment burden off
->> translators, 2013-11-05) seems to have gone in the different
->> direction when it updated similar code for the non-unmerged paths.
->
-> Yes, if this seems to go in the right direction, I'd add a follow-up
-> for that when rerolling.
+Carlos Pereira <jose.carlos.pereira <at> ist.utl.pt> writes:
 
-Just checking. Did you reroll it or did my filters move some mails to
-spam/trash folder again?
--- 
-Duy
+>=20
+> Hello,
+>=20
+> I am a git and CVS newbie, I bought and red most of the excellent Pro=
+=20
+> Git book by Scott Chacon, but I still have a doubt. I have a package=20
+> that I distribute in two versions differing only in one library:=20
+> version_A uses this library, version_B uses my own code to replace it=
+=2E=20
+> For strategic reasons I want to keep it this way for the time being.=20
+> Both versions have the same documentation, the same data files, and 9=
+9%=20
+> of the source code is the same (a few makefile changes, two additiona=
+l=20
+> files in version_B and some minor changes: a diff -r has only 170=20
+> lines). The question is what is the best strategy to manage a situati=
+on=20
+> like this with git?
+>=20
+> Shall I maintain two different repositories? I don't think so...
+>=20
+
+If the changes are as small as you say, is it an option to use just one
+branch but have two possible build configurations? That seems like the
+easiest way to do it, in my opinion. E.g.:
+
+    $ make LIB=3DversionA
+    $ make LIB=3DversionB
+
+Consider the above as pseudo-code, though. I don't know what build
+system you use or even if your package is even something that is
+"built". But you get the idea.
+
+=C3=98sse
