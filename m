@@ -1,98 +1,210 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: Bug: relative core.worktree is resolved from symlink and not its
- target
-Date: Sun, 9 Feb 2014 16:08:03 +0700
-Message-ID: <20140209090803.GA24578@lanh>
-References: <52F0BEF7.5020600@thequod.de>
+From: "Stefan-W. Hahn" <stefan.hahn@s-hahn.de>
+Subject: Bug: Problem with CRLF line ending in git-diff with coloring
+Date: Sun, 9 Feb 2014 12:01:55 +0100
+Organization: -no organization-
+Message-ID: <20140209110155.GB16189@scotty.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Daniel Hahler <genml+git-2014@thequod.de>
-X-From: git-owner@vger.kernel.org Sun Feb 09 10:14:15 2014
+Content-Type: text/plain; charset=utf-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Feb 09 12:02:10 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WCQSt-00081o-1D
-	for gcvg-git-2@plane.gmane.org; Sun, 09 Feb 2014 10:14:15 +0100
+	id 1WCS9J-0002GT-Eb
+	for gcvg-git-2@plane.gmane.org; Sun, 09 Feb 2014 12:02:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751831AbaBIJOF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Feb 2014 04:14:05 -0500
-Received: from mail-pd0-f169.google.com ([209.85.192.169]:49386 "EHLO
-	mail-pd0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751403AbaBIJN6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Feb 2014 04:13:58 -0500
-Received: by mail-pd0-f169.google.com with SMTP id v10so4890130pde.14
-        for <git@vger.kernel.org>; Sun, 09 Feb 2014 01:13:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=uphZnr36vmgnlVMvJXZmZH7Vms4I5XFSZN4CY0iKYvg=;
-        b=V9+OgfmjavTQLajgPUnPta20M9wUE/gr23vTF4RVhu5x9Vdynay8Z6Zh343wtVI/eq
-         p1TQJVJXH47xEiwtEn0ewGuvGUOnHu3HjzgyP5AX2A9t4jybb+M5nq3kZfD4C3rqxhtI
-         oY1JD2CP1C2kPUcoCPoG4c00/NCrs7P6HtCTOs4/ta99b1Ir+B0W50P8eO9ZM5yqqtQY
-         kS3paSee3fSybBiFqG7z/S8JLZ8136hClT9KD0t0uk0ahSyix8btprk7arnT86IHFFyW
-         yCrE7kM7liNwYqRP8dfyBDGMbr+q/BX0EjdgR+NmZGmc+9Ec6Gxrg2iiRqpyoMjmG/Xr
-         QDPQ==
-X-Received: by 10.66.164.70 with SMTP id yo6mr18867026pab.85.1391936880578;
-        Sun, 09 Feb 2014 01:08:00 -0800 (PST)
-Received: from lanh ([115.73.239.36])
-        by mx.google.com with ESMTPSA id vf7sm30783082pbc.5.2014.02.09.01.07.57
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 09 Feb 2014 01:07:59 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Sun, 09 Feb 2014 16:08:03 +0700
+	id S1751886AbaBILCB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Feb 2014 06:02:01 -0500
+Received: from moutng.kundenserver.de ([212.227.126.171]:62891 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751696AbaBILB6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Feb 2014 06:01:58 -0500
+Received: from scotty.home (port-92-201-60-154.dynamic.qsc.de [92.201.60.154])
+	by mrelayeu.kundenserver.de (node=mreue003) with ESMTP (Nemesis)
+	id 0M4VfU-1VISLo2pwK-00yfs2; Sun, 09 Feb 2014 12:01:56 +0100
+Received: from scotty.home (hs@localhost [127.0.0.1])
+	by scotty.home (8.14.4/8.14.4/Debian-4) with ESMTP id s19B1txx023649
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sun, 9 Feb 2014 12:01:55 +0100
+Received: (from hs@localhost)
+	by scotty.home (8.14.4/8.14.4/Submit) id s19B1tQD023648;
+	Sun, 9 Feb 2014 12:01:55 +0100
+X-Authentication-Warning: scotty.home: hs set sender to stefan.hahn@s-hahn.de using -f
 Content-Disposition: inline
-In-Reply-To: <52F0BEF7.5020600@thequod.de>
+X-Mailer: Mutt http://www.mutt.org/
+X-Editor: GNU Emacs http://www.gnu.org/
+X-Accept-Language: de en
+X-Location: Europe, Germany, Wolfenbuettel
+X-GPG-Public-Key: gpg --keyserver keys.gnupg.net --recv-keys E4FCD563
+X-GPG-Fingerprint: 0xE4FCD563 / EF09 97BB 3731 7DC7 25BA 5C39 185C F986 E4FC
+ D563
 User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Virus-Scanned: clamav-milter 0.97.8 at scotty
+X-Virus-Status: Clean
+X-Provags-ID: V02:K0:6aIYVwTnoppasqaIUdE1yQs+4v9SDw+zQORiI92+Dgy
+ +SSwaSAfpjVFdq/KCCv8hUe6x4M12Ewerb2U9P5jXqw6kivXAZ
+ N11yYQAxeuUNiQrWglBiphZ+uSGcNTPSJI6WNTgUox5yknvKed
+ XYAgSODDdhEKER6ljSVwTWzlEY7C3gNhIfJ88wrw+xY5VjxyZx
+ 0qOemj5eD3lASfWDLqPpsqjRyqVvytJ/a2KiRaWNqAZiD+HBA5
+ 3mx//2sxKRGK6zH32UqR3gK1HuK9LzN1f7DxyU8JdAdO+E0nAD
+ oJJF0pJs9/auaijDTwYivW5FDqbAYiaM0fF5ECqCwnQqulxTWg
+ ob5idx/Cj80MyT+T0Ht4=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241872>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241873>
 
-On Tue, Feb 04, 2014 at 11:20:39AM +0100, Daniel Hahler wrote:
-> Hi,
-> 
-> when using a submodule "sm", there is a relative worktree in its config:
-> 
->    .git/modules/sm/config:
->    [core]
->     worktree = ../../../smworktree
-> 
-> git-new-worktree (from contrib) symlinks this config the new worktree.
-> 
-> From inside the new worktree, git reads the config, but resolves the
-> relative worktree setting based on the symlink's location.
+Good morning,
 
-Hmm.. core.worktree is relative to $GIT_DIR. Whether "config" is a
-symlink should have no effects.
+when diffing output where files have CRLF line ending, the coloring
+seems wrong, because in changed lines the CR (^M) is highlighted,
+even if the line ending has not changed.
 
-$ pwd
-/tmp/abc
-$ ls -l .git/config 
-lrwxrwxrwx 1 pclouds users 11 Feb  9 15:57 .git/config -> /tmp/config
-$ cat /tmp/config 
-[core]
-        repositoryformatversion = 0
-        filemode = true
-        bare = false
-        logallrefupdates = true
-        worktree = ../../worktree
-$ ls -l /tmp/worktree/
-total 4
--rw-r--r-- 1 pclouds users 5 Feb  9 15:59 abc
-$ ~/w/git/git ls-files -o
-abc
+The diff engine itself is correct.
 
-Maybe it's something else. Could you produce a small test case?
+I added a test case to show this behaviour.
 
-> A fix would be to resolve any relative worktree setting based on the
-> symlink target's location (the actual config file), and not from the
-> symlink.
-> 
-> This is with git version 1.8.5.3.
---
-Duy
+The problem seems to come from emit_add_line() where ws_check_emit() is
+called.  The parameter ecbdata->ws_rule has not set WS_CR_AT_EOL. In this
+case ws_check_emit() handles the CR at eol as whitespace character and
+therfore highlights it. This seems wrong for files with CRLF lineending.
+
+,----
+| static void emit_add_line(const char *reset,
+| 			  struct emit_callback *ecbdata,
+| 			  const char *line, int len)
+| {
+|         const char *ws = diff_get_color(ecbdata->color_diff, DIFF_WHITESPACE);
+|         ...
+|         
+| 	if (!*ws)
+|         ...
+| 	else {
+| 		/* Emit just the prefix, then the rest. */
+| 		emit_line_0(ecbdata->opt, set, reset, '+', "", 0);
+| 		ws_check_emit(line, len, ecbdata->ws_rule,
+| 			      ecbdata->opt->file, set, reset, ws);
+| 	}
+| }
+`----
+
+If WS_CR_AT_EOL is set in ecbdata->ws_rule, it works correctly, but this seems
+not the right solutions. (Sorry, but I'm not deep enough in the code to
+propose a solution.)
+
+Another nitpick: While writing the test it was unclear for me where the color
+start and end sequences will be put. Here is a difference between old lines and
+new lines, because old lines will be printed with emit_line_0() and new lines
+with emit_line_0() + ws_check_emit(). So in case of new lines the "+" itself
+is enclosed by the color sequences, where in case of the old lines the whole
+line is enclosed by the color sequences.
+
+I tested this with 6a7071958620dad (Git 1.9.0-rc3), but this is also wrong
+in older versions.
+
+With kind regards,
+Stefan
+
+---
+ t/t4060-diff-eol.sh | 81 +++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 81 insertions(+), 0 deletion(-)
+ create mode 100755 t/t4060-diff-eol.sh
+
+diff --git a/t/t4060-diff-eol.sh b/t/t4060-diff-eol.sh
+new file mode 100755
+index 0000000..8cf9a69
+--- /dev/null
++++ b/t/t4060-diff-eol.sh
+@@ -0,0 +1,81 @@
++#!/bin/sh
++#
++# Copyright (c) 2014 Stefan-W. Hahn
++#
++
++test_description='Test coloring of diff with CRLF line ending.
++
++'
++. ./test-lib.sh
++
++get_color ()
++{
++	git config --get-color "$1"
++}
++
++tr 'Q' '\015' << EOF > x
++Zeile 1Q
++Zeile 2Q
++Zeile 3Q
++EOF
++
++git update-index --add x
++
++tr 'Q' '\015' << EOF > x
++Zeile 1Q
++Zeile 22Q
++Zeile 3Q
++EOF
++
++tr 'Q' '\015' << EOF > expect
++diff --git a/x b/x
++index 3411cc1..68a4b2c 100644
++--- a/x
+++++ b/x
++@@ -1,3 +1,3 @@
++ Zeile 1Q
++-Zeile 2Q
+++Zeile 22Q
++ Zeile 3Q
++EOF
++
++
++git -c color.diff=false diff > out
++test_expect_success "diff files ending with CRLF without color" '
++        test_cmp expect out'
++
++test_expect_success setup '
++        git config color.diff.plain black &&
++        git config color.diff.meta blue &&
++        git config color.diff.frag yellow &&
++        git config color.diff.func normal &&
++        git config color.diff.old red &&
++        git config color.diff.new green &&
++        git config color.diff.commit normal &&
++	c_reset=$(git config --get-color no.such.color reset) &&
++	c_plain=$(get_color color.diff.plain) &&
++	c_meta=$(get_color color.diff.meta) &&
++	c_frag=$(get_color color.diff.frag) &&
++	c_func=$(get_color color.diff.func) &&
++	c_old=$(get_color color.diff.old) &&
++	c_new=$(get_color color.diff.new) &&
++	c_commit=$(get_color color.diff.commit) &&
++	c_whitespace=$(get_color color.diff.whitespace)
++'
++
++tr 'Q' '\015' << EOF > expect
++${c_meta}diff --git a/x b/x${c_reset}
++${c_meta}index 3411cc1..68a4b2c 100644${c_reset}
++${c_meta}--- a/x${c_reset}
++${c_meta}+++ b/x${c_reset}
++${c_frag}@@ -1,3 +1,3 @@${c_reset}
++${c_plain} Zeile 1${c_reset}Q
++${c_old}-Zeile 2${c_reset}Q
++${c_new}+${c_reset}${c_new}Zeile 22${c_reset}Q
++${c_plain} Zeile 3${c_reset}Q
++EOF
++
++git -c color.diff=always diff > out
++test_expect_success "diff files ending with CRLF with color coding" 'test_cmp expect out'
++
++test_done
+-- 
+1.8.3.2.733.gf8abaeb
+
+
+
+-- 
+Stefan-W. Hahn                          It is easy to make things.
+                                        It is hard to make things simple.
