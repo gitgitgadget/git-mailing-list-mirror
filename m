@@ -1,88 +1,107 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 02/14] trailer: process trailers from file and arguments
-Date: Mon, 10 Feb 2014 10:14:34 -0800
-Message-ID: <xmqq61omu96d.fsf@gitster.dls.corp.google.com>
-References: <20140206194123.325.99451.chriscool@tuxfamily.org>
-	<20140206202004.325.96525.chriscool@tuxfamily.org>
-	<xmqqr47fx001.fsf@gitster.dls.corp.google.com>
-	<20140209.145205.1882309246743951569.chriscool@tuxfamily.org>
+Subject: Re: [PATCH 6/6] fetch-pack: fix deepen shallow over smart http with no-done cap
+Date: Mon, 10 Feb 2014 10:18:52 -0800
+Message-ID: <xmqq1tzau8z7.fsf@gitster.dls.corp.google.com>
+References: <1391699439-22781-1-git-send-email-pclouds@gmail.com>
+	<1391699439-22781-7-git-send-email-pclouds@gmail.com>
+	<xmqqppmyvm3f.fsf@gitster.dls.corp.google.com>
+	<20140207233906.GA5791@lanh>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, johan@herland.net, josh@joshtriplett.org,
-	tr@thomasrast.ch, mhagger@alum.mit.edu, sunshine@sunshineco.com,
-	dan.carpenter@oracle.com, greg@kroah.com, peff@peff.net
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Mon Feb 10 19:14:48 2014
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 10 19:19:07 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WCvNV-0008QX-Dd
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Feb 2014 19:14:45 +0100
+	id 1WCvRg-0001Sr-N8
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Feb 2014 19:19:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752559AbaBJSOl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Feb 2014 13:14:41 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43601 "EHLO
+	id S1752960AbaBJSTA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Feb 2014 13:19:00 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65051 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752292AbaBJSOk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Feb 2014 13:14:40 -0500
+	id S1752238AbaBJSS6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Feb 2014 13:18:58 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 05C7269A81;
-	Mon, 10 Feb 2014 13:14:39 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3156E69CA5;
+	Mon, 10 Feb 2014 13:18:58 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=IZglT2ZvBCcLYW+eP0FcbEe19XA=; b=WO8YVK
-	qMXwSVB/myILxXB9xv1diZHzWnzrEtUJUAkhhv80yUzqJIt+nF6cVjJO032+Y34p
-	QvXcprbY0SsoNuab5Zws1SWrNzaTzblhjmLRKTl/b/JoWgeXP9tRqVy9rW15lytw
-	/G7BHEJqf5O+aQRETmY6RCqtSnRaIvqFLM03U=
+	:content-type; s=sasl; bh=TuT1c5rlc5OTt+gMEcLNQG67ptU=; b=muykN4
+	/+sOa95o0JM8FjbDVkcRFcNMY8Cp7TOtmNSE9q2lSwTnzpj4TNeIF3HZ61tRzAV4
+	ILhDIIEZrwkWfm93FxWvJxXbz30ns6cmbeaH5rqWj6zOfJYbTq2BtM8UKw5cb/rz
+	8TrfO8WhUgaBVOm/4+qBe9IxzwxPRpGQdNXqA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=vtFZt8TmPAf75QqmSFUbjEr4Is9q3jaz
-	aAiULb/ldgCWPdRF8gLGCtdr7v3kG0npHwA7SaGNPWYP/h0qX9potjD+qTK5A5MI
-	7RgGJQA0XgpciS8NEZsGUXKpb04TGPU+XBkySYhx0BlSzvbQnuyybiBTayKhG1SX
-	ZZvnDvvOm10=
+	:content-type; q=dns; s=sasl; b=lIm7MFVaeXtr2dbPW08N6GOP2qEfE11Y
+	eudYT30yGART8F5xioalzREo7HBGqoLmrDZAqGANGRPy1cBFCiEUsXWmlSMsFynA
+	yzDJrAr576o9lBnBR9U+ZQnta+RspHCVju16J6KCeOcdQ9SqtBSkDbQ6Bejm/gTw
+	uIpDRvS4BTI=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D82F669A80;
-	Mon, 10 Feb 2014 13:14:38 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 02D2D69CA2;
+	Mon, 10 Feb 2014 13:18:58 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0BB7869A7C;
-	Mon, 10 Feb 2014 13:14:38 -0500 (EST)
-In-Reply-To: <20140209.145205.1882309246743951569.chriscool@tuxfamily.org>
-	(Christian Couder's message of "Sun, 09 Feb 2014 14:52:05 +0100
-	(CET)")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8B88C69C9A;
+	Mon, 10 Feb 2014 13:18:55 -0500 (EST)
+In-Reply-To: <20140207233906.GA5791@lanh> (Duy Nguyen's message of "Sat, 8 Feb
+	2014 06:39:06 +0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 33F5DF0A-927F-11E3-BD79-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: CD66B8D0-927F-11E3-B7E5-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241917>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241918>
 
-Christian Couder <chriscool@tuxfamily.org> writes:
+Duy Nguyen <pclouds@gmail.com> writes:
 
-> This is what "if_exists" and "if_missing" are all about.
+> On Fri, Feb 07, 2014 at 10:01:08AM -0800, Junio C Hamano wrote:
+>> Here is the difference between the posted series and what I queued
+>> after applying the changes suggested during the review.
+>> 
+>> Thanks.
 >
-> Either:
+> I was going to send a reroll after the received comments. Could you
+> put this on top of 6/6, just to make sure future changes in t5537
+> (maybe more or less commits created..) does not change the test
+> behavior?
 >
-> 	the same key already exists regardless of the value
->
-> and, in this case, what happens depends on what has been specified using
-> the "if_exists" configuration variable.
->
-> Or:
->
-> 	the same key DOES NOT already exists regardless of the value
->
-> and in this case, what happens depends on what has been specified
-> using the "if_missing" configuration variable.
+> It fixes the test name too. I originally thought, ok let's create
+> commits in one test and do fetch in another. But it ended up in the
+> same test and I forgot to update test name.
 
-Hmm, how should things like signed-off-by be handled?  You may want
-to allow many entries with the same key with distinct values, but
-duplicated values may want to be handled differently (currently we
-only avoid to place a duplicate <key, value> consecutively, but keys
-with different semantics (e.g. "fixes-bug: #bugid") may want to say
-"unless the same key with the same value exists, append it at the
-end".
+Surely, and thanks for being careful.  Will squash it in.
+
+
+> -- 8< --
+> diff --git a/t/t5537-fetch-shallow.sh b/t/t5537-fetch-shallow.sh
+> index 1413caf..b300383 100755
+> --- a/t/t5537-fetch-shallow.sh
+> +++ b/t/t5537-fetch-shallow.sh
+> @@ -203,7 +203,7 @@ EOF
+>  # This test is tricky. We need large enough "have"s that fetch-pack
+>  # will put pkt-flush in between. Then we need a "have" the server
+>  # does not have, it'll send "ACK %s ready"
+> -test_expect_success 'add more commits' '
+> +test_expect_success 'no shallow lines after receiving ACK ready' '
+>  	(
+>  		cd shallow &&
+>  		for i in $(test_seq 10)
+> @@ -224,7 +224,9 @@ test_expect_success 'add more commits' '
+>  		cd clone &&
+>  		git checkout --orphan newnew &&
+>  		test_commit new-too &&
+> -		git fetch --depth=2
+> +		GIT_TRACE_PACKET="$TRASH_DIRECTORY/trace" git fetch --depth=2 &&
+> +		grep "fetch-pack< ACK .* ready" ../trace &&
+> +		! grep "fetch-pack> done" ../trace
+>  	)
+>  '
+>  
+> -- 8< -- 
