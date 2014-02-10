@@ -1,94 +1,145 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v5 01/14] Add data structures and basic functions for
- commit trailers
-Date: Mon, 10 Feb 2014 02:27:33 -0500
-Message-ID: <CAPig+cQpCSMeZg=vj1Hawu_RuDG3j6uWqj2_wSfhCw8-jsdrcQ@mail.gmail.com>
-References: <20140206194123.325.99451.chriscool@tuxfamily.org>
-	<20140206202004.325.80557.chriscool@tuxfamily.org>
-	<xmqqzjm3x0v3.fsf@gitster.dls.corp.google.com>
-	<20140209.144809.1747063529382396154.chriscool@tuxfamily.org>
+From: =?ISO-8859-1?B?R+Fib3IgTGlwdOFr?= <gabor.liptak@gmail.com>
+Subject: Re: Fwd: Git Directory Diff for submodule
+Date: Mon, 10 Feb 2014 08:33:27 +0100
+Message-ID: <CAN-m_UnSqTnLydyVF2TLxOia9vzmQr9e4+xWh8aVNBosfCq5nA@mail.gmail.com>
+References: <CAN-m_UmNudmxJnA95h1nYqi7GGxtzKqqpgFHmJZ+MTnxRoEd6g@mail.gmail.com>
+	<CAN-m_UnQ7Yzuq7n6mxmsd3XcfLSVxMdnLiGFDiN1Ph3ZiFqwew@mail.gmail.com>
+	<CAN-m_U=eYSEXfVBcD1Rfx-YvGx5Wu+hB2uAc=6xX_HO7bS0FUg@mail.gmail.com>
+	<52F54441.6090209@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-	Johan Herland <johan@herland.net>,
-	Josh Triplett <josh@joshtriplett.org>,
-	Thomas Rast <tr@thomasrast.ch>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Dan Carpenter <dan.carpenter@oracle.com>,
-	Greg Kroah-Hartman <greg@kroah.com>, Jeff King <peff@peff.net>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Mon Feb 10 08:27:39 2014
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: Jens Lehmann <Jens.Lehmann@web.de>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 10 08:33:34 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WClHG-0000mo-Mn
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Feb 2014 08:27:39 +0100
+	id 1WClMz-0002kH-N0
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Feb 2014 08:33:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750927AbaBJH1f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Feb 2014 02:27:35 -0500
-Received: from mail-yh0-f46.google.com ([209.85.213.46]:43206 "EHLO
-	mail-yh0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750797AbaBJH1e (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Feb 2014 02:27:34 -0500
-Received: by mail-yh0-f46.google.com with SMTP id v1so4683781yhn.5
-        for <git@vger.kernel.org>; Sun, 09 Feb 2014 23:27:33 -0800 (PST)
+	id S1752429AbaBJHda convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 10 Feb 2014 02:33:30 -0500
+Received: from mail-vc0-f178.google.com ([209.85.220.178]:60083 "EHLO
+	mail-vc0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752419AbaBJHd2 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 10 Feb 2014 02:33:28 -0500
+Received: by mail-vc0-f178.google.com with SMTP id ik5so4466301vcb.37
+        for <git@vger.kernel.org>; Sun, 09 Feb 2014 23:33:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=9s1LKSf4r4dQzHzrNmR9H4aDOQDiOEtOXgJrPARcRa8=;
-        b=T08z6vWBqi/1amNTWW1jF85HsXdz6Wo+YH3/qazEV1BRIX4A5ysI7CttX53uvOjD6Y
-         /ANu3ZJeUpBQdulO26k+Nb1FRztybqfIKNk0pybWznUxXe2cFLVpwS1MYNkHtJ/7fwtQ
-         qui9iSMb0n7ID8Dq1Txyk3c3tz3fYi26EFcjckHKdPEUDlsycw3qDGHSJuusZGwxc9eu
-         M19hufyiZMlF+dKxL4BUTX+D2MI3oPgf9/awm9XYwoLAr2Far5FbnkCtUoMndGZMkKC0
-         BcKz61klfyHZe2KNn29h9VkH2FPmAltk4/3F0IGG/6CG4kFuX5SS6T/Dz9VhxcyDKIQG
-         vCsQ==
-X-Received: by 10.236.122.99 with SMTP id s63mr16394499yhh.19.1392017253932;
- Sun, 09 Feb 2014 23:27:33 -0800 (PST)
-Received: by 10.170.189.143 with HTTP; Sun, 9 Feb 2014 23:27:33 -0800 (PST)
-In-Reply-To: <20140209.144809.1747063529382396154.chriscool@tuxfamily.org>
-X-Google-Sender-Auth: _6NRAYUrm3GipCV3C9unfCS-8lw
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type:content-transfer-encoding;
+        bh=+itVpRgq0181bLCSDSgiE/fSyGd+DvGOX/4Twk2n70g=;
+        b=DQPV9cXrIZkeg0gr8r/9dv4HPu51TmJHLpDT5nfOSXmX7cOuxZxLks8TuhHpkK4J+J
+         6aat5SsmfBUCg17OWSoDMX9dwrreLlndbS7jSQgGDH7tM+eXpid+Xu1MOvdKAldr522L
+         wD9s77d4ZeA9yGnw/cjej7tOCBeH7By9lYvCFO9Zvi/sU3rbpoRIUFuRcrVBrYT6d3Xf
+         z/2/oP4ayzZedrqvVKKiFlumFblu41ftMYByNdefIv0mQCJ55XwdQScQz29QshxqN2VT
+         Nxk2b/VjdXuXKxS/l/pvxOIszjRCK0bdUla78zW0Jf4hm5ZQ8SmahuYeWcGtzpu26zuG
+         SRPA==
+X-Received: by 10.52.164.39 with SMTP id yn7mr4392132vdb.25.1392017607812;
+ Sun, 09 Feb 2014 23:33:27 -0800 (PST)
+Received: by 10.58.186.232 with HTTP; Sun, 9 Feb 2014 23:33:27 -0800 (PST)
+In-Reply-To: <52F54441.6090209@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241904>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241905>
 
-On Sun, Feb 9, 2014 at 8:48 AM, Christian Couder
-<chriscool@tuxfamily.org> wrote:
-> From: Junio C Hamano <gitster@pobox.com>
->>
->> Christian Couder <chriscool@tuxfamily.org> writes:
->>
->>> +static inline int same_trailer(struct trailer_item *a, struct trailer_item *b, int alnum_len)
->>> +{
->>> +    return same_token(a, b, alnum_len) && same_value(a, b);
->>> +}
->>
->> All these "inlines" look premature optimization that can be
->> delegated to any decent compiler, don't they?
+Hi Jens,
+
+So "git status" says:
+
+liptak@liptak-kubuntu:~/Projects/MAIN_MODULE/platform/SUBMODULE
+[master]$ git status
+# On branch master
+# Your branch is up-to-date with 'origin/master'.
+#
+# Changes not staged for commit:
+#   (use "git add <file>..." to update what will be committed)
+#   (use "git checkout -- <file>..." to discard changes in working
+directory)
+#
+#       modified:   xxxxxx.java
+#       modified:   xxxxxxx.java
+# ...
+# ...
+# ...
+# ...
+# ...
+#
+no changes added to commit (use "git add" and/or "git commit -a")
+
+git config core.worktree gives back: "../../../../platform/SUBMODULE"
+
+The submodule was inited simply with "git submodule init" +
+"git.submodule update"
+
+MAINMODULE/.gitsubmodules file contains similar entry:
+[submodule "platform/SUBMODULE"]
+path =3D platform/SUBMODULE
+url =3D ssh://git@somehost/foo/bar.git
+
+MAINMODULE/.git/config:
+[submodule "platform/SUBMODULE"]
+url =3D ssh://git@somehost/foo/bar.git
+
+MAINMODULE/platform/SUBMODULE/.git:
+gitdir: ../../.git/modules/platform/SUBMODULE
+
+MAINMODULE/.git/modules/platform/SUBMODULE/config:
+[core]
+repositoryformatversion =3D 0
+filemode =3D true
+bare =3D false
+logallrefupdates =3D true
+worktree =3D ../../../../platform/SUBMODULE
+[remote "origin"]
+url =3D ssh://git@somehost/foo/bar.git
+fetch =3D +refs/heads/*:refs/remotes/origin/*
+
+So for me it seems that somehow the relative path inside
+MAINMODULE/.git/modules/platform/SUBMODULE/config gets configuread
+wrong during submodule init+update.
+
+I tried to update the
+MAINMODULE/.git/modules/platform/SUBMODULE/config to contain
+=2E./../platform/SUBMODULE as worktree path, then meld was correctly
+started, but the compare tree was not usable. For file changes it
+displayed always: XXXXX.java: Dangling symlink. So this is still not a
+complete solution somehow.
+
+Regards,
+
+G=E1bor Lipt=E1k
+
+2014-02-07 Jens Lehmann <Jens.Lehmann@web.de>:
+> Am 07.02.2014 10:15, schrieb G=E1bor Lipt=E1k:
+>> I think I have found a bug related to submodules and directory diff.
+>> See the details at hXXp://stackoverflow.com/q/21623155/337621.
 >
-> Yeah, but as Eric suggested to add them like in header files and you
-> did not reply to him, I thought you agreed with him.
-> I will remove them.
-
-If these functions are used only by trailer.c, then it would make
-sense to move them from trailer.h to trailer.c so that they don't get
-defined unnecessarily by each .c file which includes trailer.h.
-
->>> +/* Get the length of buf from its beginning until its last alphanumeric character */
->>> +static inline size_t alnum_len(const char *buf, int len)
->>> +{
->>> +    while (--len >= 0 && !isalnum(buf[len]));
->>> +    return (size_t) len + 1;
->>
->> This is somewhat unfortunate.  if the caller wants to receive
->> size_t, perhaps it should be passing in size_t (or ssize_t) to the
->> function?  Hard to guess without an actual caller, though.
+> Let's inline the recipe one finds after decrypting this link:
 >
-> Ok, I will make it return an int.
-
-Why not adjust the loop condition slightly instead so that you can
-continue to accept and return size_t?
+> ~/Projects/MAINMODULE/platform/SUBMODULE [master]$ git difftool -tool=
+=3Dmeld --dir-diff --cached
+>   fatal: Could not switch to '../../../../platform/': No such file or=
+ directory
+>   diff --raw --no-abbrev -z --cached: command returned error: 128
+> ~/Projects/MAINMODULE/platform/SUBMODULE [master]$ cd ..
+> ~/Projects/MAINMODULE/platform [master]$ cd ..
+> ~/Projects/MAINMODULE [master]$ git difftool -tool=3Dmeld --dir-diff =
+--cached
+>   // NO PROBLEM, works.
+> ~/Projects/MAINMODULE [master]$ git version
+>   git version 1.8.4
+>
+>
+>> If you need any further details, just ask.
+>
+> - Does this only happen when you use difftool? E.g. what does
+>   "git status" inside the submodule say?
+>
+> - What does "git config core.worktree" print when run in the
+>   submodule?
