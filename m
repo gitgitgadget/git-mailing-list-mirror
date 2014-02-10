@@ -1,63 +1,80 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v4 7/9] rebase: parse options in stuck-long mode
-Date: Mon, 10 Feb 2014 01:59:02 -0500
-Message-ID: <CAPig+cT-SptdV_rargSgJLMANQaJqnq8g+DjgdNwMvwHXC_NUA@mail.gmail.com>
-References: <1391994218-639101-1-git-send-email-sandals@crustytoothpaste.net>
-	<1391994218-639101-8-git-send-email-sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v5 14/14] Documentation: add documentation for 'git interpret-trailers'
+Date: Mon, 10 Feb 2014 02:17:50 -0500
+Message-ID: <CAPig+cQePC+ozQL9RqGhU8kJL=JOauuJHSSTJZXLP5m7Qhc-Pw@mail.gmail.com>
+References: <20140206194123.325.99451.chriscool@tuxfamily.org>
+	<20140206202004.325.93939.chriscool@tuxfamily.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>,
-	Nicolas Vigier <boklm@mars-attacks.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-X-From: git-owner@vger.kernel.org Mon Feb 10 07:59:39 2014
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+	Johan Herland <johan@herland.net>,
+	Josh Triplett <josh@joshtriplett.org>,
+	Thomas Rast <tr@thomasrast.ch>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Dan Carpenter <dan.carpenter@oracle.com>,
+	Greg Kroah-Hartman <greg@kroah.com>, Jeff King <peff@peff.net>
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Mon Feb 10 08:17:55 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WCkq8-000097-Gf
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Feb 2014 07:59:36 +0100
+	id 1WCl7r-00068J-9a
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Feb 2014 08:17:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750835AbaBJG7F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Feb 2014 01:59:05 -0500
-Received: from mail-yk0-f172.google.com ([209.85.160.172]:60774 "EHLO
-	mail-yk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750795AbaBJG7E (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Feb 2014 01:59:04 -0500
-Received: by mail-yk0-f172.google.com with SMTP id 200so6065317ykr.3
-        for <git@vger.kernel.org>; Sun, 09 Feb 2014 22:59:03 -0800 (PST)
+	id S1751449AbaBJHRv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Feb 2014 02:17:51 -0500
+Received: from mail-yh0-f53.google.com ([209.85.213.53]:41440 "EHLO
+	mail-yh0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750797AbaBJHRu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Feb 2014 02:17:50 -0500
+Received: by mail-yh0-f53.google.com with SMTP id v1so4728138yhn.12
+        for <git@vger.kernel.org>; Sun, 09 Feb 2014 23:17:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
          :from:to:cc:content-type;
-        bh=ORdXevepwRFTnVvWwr3rORqRugTZkU+nN4D0X3ofmtg=;
-        b=RWqTuUhMzF8nwPKGigxtWjVeTxHAOmQIT9COZgeHF4peBYLSjj+b1woYnBESDwBU3J
-         x/YyxVmQtwy9rA81x7mgsVtAGjhxSH0RUF1K4eWCcVKvw9rTwlDFRtpOfcOQilXGDLhd
-         bb45Yhlo6x177mAVuYmrcZovMrq2Kl4Jm7NGS85MkvC8ikwdSHPjYdF3BJYhUjpuFMI8
-         2wdalwy+I3aFYA7VPcRNbcIWMlok9YXaFpMqSlCZuSJLXnG3Oys+LlvqAYKRp3+RGMMa
-         LB+MQ0E66lq9qcvqwPtIoRdXINXDIZXa05FjzDLWcZmqMiG9Twc8GcoeLyjci2zs34xJ
-         er/g==
-X-Received: by 10.236.157.102 with SMTP id n66mr12644656yhk.41.1392015542915;
- Sun, 09 Feb 2014 22:59:02 -0800 (PST)
-Received: by 10.170.189.143 with HTTP; Sun, 9 Feb 2014 22:59:02 -0800 (PST)
-In-Reply-To: <1391994218-639101-8-git-send-email-sandals@crustytoothpaste.net>
-X-Google-Sender-Auth: GJtrmdG6VZAYqUumO7cEKGBYz_4
+        bh=s9KthUjQHWB3vdN+XJyu51RA32hsajYccPQSEGB2FvQ=;
+        b=KqtoagzD2FEhNKG89+UC3XazbqKc7CkOcb+PC43LHE8d/WB3qO5rkVio6I4vRr7RBj
+         HNlz8Ak/6+snvlNmCwI1VZDPrhIsrQwatJeQl6A/LdscUvhqZklWoMBLuvflAwFnlmFE
+         JgLG8EiRUQgQalsMnzdNEjuw8tXkMnK5Hx/IiWDeRXMWASpiRbZiBfwFA4WCYUPzKAPv
+         B02xSKITRorgKe5aJX/g/kJ/GW5oSx4KA7E4lz5LYYDIs1+KTTSRMBGbJxDJDGTb8wTK
+         EHA+HYzw8E9USSX3HJHeSwq1uDMpIsMH6qd7Vdypa2Kq3fsQ86pBMFrkx9jP0q4Pg+MI
+         ylkg==
+X-Received: by 10.236.174.37 with SMTP id w25mr26258923yhl.36.1392016670203;
+ Sun, 09 Feb 2014 23:17:50 -0800 (PST)
+Received: by 10.170.189.143 with HTTP; Sun, 9 Feb 2014 23:17:50 -0800 (PST)
+In-Reply-To: <20140206202004.325.93939.chriscool@tuxfamily.org>
+X-Google-Sender-Auth: C8DPGEAjIYv5_jBc11OnEmB6NXw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241902>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241903>
 
-On Sun, Feb 9, 2014 at 8:03 PM, brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
-> From: Nicolas Vigier <boklm@mars-attacks.org>
->
-> There is no functionnal change. The reason for this change is to be able
+On Thu, Feb 6, 2014 at 3:20 PM, Christian Couder
+<chriscool@tuxfamily.org> wrote:
+> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+> ---
+> diff --git a/Documentation/git-interpret-trailers.txt b/Documentation/git-interpret-trailers.txt
+> new file mode 100644
+> index 0000000..0617941
+> --- /dev/null
+> +++ b/Documentation/git-interpret-trailers.txt
+> @@ -0,0 +1,132 @@
+> +OPTIONS
+> +-------
+> +--trim-empty::
+> +       If the 'value' part of any trailer contains only whitespace,
+> +       the whole trailer will be removed from the resulting message.
+> +
+> +----infile=<file>::
+> +       Read the commit message from `file` instead of the standard
+> +       input.
 
-s/functionnal/functional/
+s/----/--/
 
-> to add a new option taking an optional argument.
->
-> Signed-off-by: Nicolas Vigier <boklm@mars-attacks.org>
-> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> +
+> +CONFIGURATION VARIABLES
+> +-----------------------
