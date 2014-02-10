@@ -1,60 +1,55 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: Re: [PATCH v3 00/26] inotify support
-Date: Mon, 10 Feb 2014 17:55:31 +0100
-Message-ID: <52F90483.7050206@web.de>
-References: <1389952060-12297-1-git-send-email-pclouds@gmail.com> <1391401754-15347-1-git-send-email-pclouds@gmail.com> <52F5E521.4090707@web.de> <CACsJy8C0x1FL_6KtYj4MMnhtR6RrPSxR6_yysnZykubdotT9GA@mail.gmail.com> <52F7E2BC.5030905@web.de> <CACsJy8A9JxDWhEWpdUUL_6tTJZvmf93Ga_nPt09yUzG44mc-Qg@mail.gmail.com>
+From: Keshav Kini <keshav.kini@gmail.com>
+Subject: Re: [PATCH] bash completion: Add --recurse-submodules
+Date: Mon, 10 Feb 2014 11:21:51 -0600
+Message-ID: <874n466fyo.fsf@gmail.com>
+References: <1391956531-6039-1-git-send-email-ch3cooli@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>,
-	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Mon Feb 10 17:55:39 2014
+Content-Type: text/plain
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 10 18:22:11 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WCu8w-0005uU-Hp
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Feb 2014 17:55:38 +0100
+	id 1WCuYd-0006nr-3t
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Feb 2014 18:22:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752380AbaBJQze (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Feb 2014 11:55:34 -0500
-Received: from mout.web.de ([212.227.15.3]:64152 "EHLO mout.web.de"
+	id S1752309AbaBJRWH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Feb 2014 12:22:07 -0500
+Received: from plane.gmane.org ([80.91.229.3]:47955 "EHLO plane.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751807AbaBJQzd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Feb 2014 11:55:33 -0500
-Received: from [192.168.209.26] ([78.72.74.102]) by smtp.web.de (mrweb101)
- with ESMTPSA (Nemesis) id 0M5fsK-1VFjx60C2i-00xd3e for <git@vger.kernel.org>;
- Mon, 10 Feb 2014 17:55:32 +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:24.0) Gecko/20100101 Thunderbird/24.3.0
-In-Reply-To: <CACsJy8A9JxDWhEWpdUUL_6tTJZvmf93Ga_nPt09yUzG44mc-Qg@mail.gmail.com>
-X-Provags-ID: V03:K0:yFGW58FgBZlJfX1yMmkwyPkppswtwdz3BIJcJ1ol5pAIyHtiB75
- U1DPMrfuW03yJlBFLgKe2/MXm8H7O1YZRw1o19H0zWJSvGG5sgH51M+NRDLU45vZ8+YX+x+
- +zNnhHjFkLXqPjIez9KPzcOuzDq1BThK2l6fNmO4uAot2BG/BStCFY9WyqzZbByE5iDzQRd
- DGiVqk0l4X+10aJiuFxUA==
+	id S1751889AbaBJRWF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Feb 2014 12:22:05 -0500
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1WCuYV-0006lo-A1
+	for git@vger.kernel.org; Mon, 10 Feb 2014 18:22:03 +0100
+Received: from nat-128-62-37-224.public.utexas.edu ([128.62.37.224])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 10 Feb 2014 18:22:03 +0100
+Received: from keshav.kini by nat-128-62-37-224.public.utexas.edu with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 10 Feb 2014 18:22:03 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: nat-128-62-37-224.public.utexas.edu
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+Cancel-Lock: sha1:zSsF1PiV27gpEAO1Coi6ioEK6Yg=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241915>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241916>
 
-On 2014-02-10 11.37, Duy Nguyen wrote:
->>
->> Could we use relative path names internally, relative to $GIT_DIR ?
-> 
-> No because this is when the client tell the server about $GIT_DIR. I
-> guess we can use realpath(1) here.
-Good.
+Sup Yut Sum <ch3cooli@gmail.com> writes:
 
-I realized that the watcher can watch several repos at the same time.
+> Signed-off-by: Sup Yut Sum <ch3cooli@gmail.com>
+> ---
+>  contrib/completion/git-completion.bash | 19 ++++++++++++++++++-
+>  1 file changed, 18 insertions(+), 1 deletion(-)
 
-However, we could allow relative path names, which will be relative to $SOCKET_DIR,
-and loosen the demand for an absolut path name a little bit.
-And $SOCKET_DIR can be the same as $GIT_DIR, when we are watching only one repo.
-> If you want I can update test-file-watcher to accept "send<" and
-> "recv>" instead of "<" and ">", respectively. The only command with
-> the same name for response and request is "hello". I can make it
-> "hello" and "helloack" (or "bonjour" as response?).
+Aren't you missing a commit message?
 
-helloack looks good. 
+-Keshav
