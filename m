@@ -1,66 +1,84 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: Re: [PATCH] fast-import.c: always honor the filename case
-Date: Sun, 09 Feb 2014 21:34:26 +0100
-Message-ID: <52F7E652.4030102@web.de>
-References: <1391346784-11891-1-git-send-email-reubenhwk@gmail.com>	<52EEA5D3.9000502@web.de>	<CAD_8n+RZACW0380co75gWSwVmCJdcH4COsySTF3BFCyKEumXNA@mail.gmail.com>	<52EFFA36.8090305@web.de>	<CAD_8n+RuwQEXJRCOr+B_PqA7z6LkFdbcRZkiiVJsEhJ=+YjRDg@mail.gmail.com>	<52F2AAFA.1090507@web.de> <CAD_8n+Thn3tNTYxLK49mDOGdLpWRCFUCJo9b76UbAjnCdqXsRQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Dmitry Potapov <dpotapov@gmail.com>
-To: Reuben Hawkins <reubenhwk@gmail.com>,
-	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaA==?= =?UTF-8?B?YXVzZW4=?= 
-	<tboegi@web.de>
-X-From: git-owner@vger.kernel.org Sun Feb 09 21:34:38 2014
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: [PATCH v4 0/9] add --gpg-sign to rebase and pull
+Date: Mon, 10 Feb 2014 01:03:29 +0000
+Message-ID: <1391994218-639101-1-git-send-email-sandals@crustytoothpaste.net>
+Cc: Nicolas Vigier <boklm@mars-attacks.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 10 02:03:52 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WCb5K-0006qF-2J
-	for gcvg-git-2@plane.gmane.org; Sun, 09 Feb 2014 21:34:38 +0100
+	id 1WCfHq-0001D8-BY
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Feb 2014 02:03:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752124AbaBIUed (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Feb 2014 15:34:33 -0500
-Received: from mout.web.de ([212.227.17.12]:53520 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751969AbaBIUed (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Feb 2014 15:34:33 -0500
-Received: from [192.168.209.26] ([78.72.74.102]) by smtp.web.de (mrweb103)
- with ESMTPSA (Nemesis) id 0MS2D8-1VnkgG2PCk-00T9y5 for <git@vger.kernel.org>;
- Sun, 09 Feb 2014 21:34:31 +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:24.0) Gecko/20100101 Thunderbird/24.3.0
-In-Reply-To: <CAD_8n+Thn3tNTYxLK49mDOGdLpWRCFUCJo9b76UbAjnCdqXsRQ@mail.gmail.com>
-X-Provags-ID: V03:K0:0XiHN/YFnHEPF8wNSyRZqCmiVRks6lj1B17R2OZ3CS95+vgbjU3
- dj7H5UaF5NF7/rbAsetDz1gwHGJCz59AtZid0P4O5WCiG2yNBb6TDhDFHHlQ8zDUGrPXfs8
- EI2adc6Rj24PfmvRrah6D0nTz3pzxp5VcSj/m/FjocloYeUs5OkoPGefN3iWI29RCx63RRT
- KkCTK2EbP1ezHLkcCCMOA==
+	id S1752157AbaBJBDq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Feb 2014 20:03:46 -0500
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:51730 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752047AbaBJBDp (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 9 Feb 2014 20:03:45 -0500
+Received: from vauxhall.crustytoothpaste.net (unknown [172.16.2.247])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 09DCA2807A;
+	Mon, 10 Feb 2014 01:03:43 +0000 (UTC)
+X-Mailer: git-send-email 1.9.0.rc3.1008.gd08b47c.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241885>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241886>
 
-On 2014-02-06 12.24, Reuben Hawkins wrote:
-[snipped away minor interesting stuff]
+This series was posted to the list some time back.  This is a re-send of
+Nicolas Vigier's work with an additional patch that adds --gpg-sign to
+pull as well, as well as the fixes that Junio suggested in review for
+v3.
 
-    Reading the answers from Peff and Junio, I am convinced that the fast-import should
-    not look at core.ignorecase at all.
+There is also one additional merge call that was not previously given a
+signature option that is now provided one.  I believe this was an
+oversight, so I fixed it.
 
+The major change in this version is fixed quoting for the arguments.
+All the quoting should now be correct.  I reverted the change that
+placed quoting around only the argument to -S, as this was too difficult
+to get consistently right and nobody objected to '-S1F52F68B!' as being
+too ugly to display to the user.
 
-Agreed, but my patch 0001-fast-import.c-ignorecase-iff-... is working very well (for me anyway), and the ignore-case option may be useful to the git-p4 importer (which I guess is something that should be determined for sure).
+Nicolas Vigier (8):
+  cherry-pick, revert: add the --gpg-sign option
+  git-sh-setup.sh: add variable to use the stuck-long mode
+  am: parse options in stuck-long mode
+  am: add the --gpg-sign option
+  rebase: remove useless arguments check
+  rebase: don't try to match -M option
+  rebase: parse options in stuck-long mode
+  rebase: add the --gpg-sign option
 
-If you want, you can turn this into a real patch and send it to the list.
-I think  Pete Wyckoff <pw@padd.com> is one of the experts about p4.
+brian m. carlson (1):
+  pull: add the --gpg-sign option.
 
-And the same is for fast-export fixes you have made: If you have the time,
-convert it into a patch and send it to the list.
+ Documentation/git-am.txt          |  6 +++-
+ Documentation/git-cherry-pick.txt |  7 ++++-
+ Documentation/git-rebase.txt      |  4 +++
+ Documentation/git-revert.txt      |  6 +++-
+ builtin/revert.c                  |  2 ++
+ contrib/git-resurrect.sh          |  1 +
+ git-am.sh                         | 26 ++++++++++------
+ git-instaweb.sh                   |  1 +
+ git-pull.sh                       | 13 +++++++-
+ git-quiltimport.sh                |  1 +
+ git-rebase--am.sh                 |  8 +++--
+ git-rebase--interactive.sh        | 39 ++++++++++++++++--------
+ git-rebase--merge.sh              |  2 +-
+ git-rebase.sh                     | 62 +++++++++++++++++++++------------------
+ git-request-pull.sh               |  1 +
+ git-sh-setup.sh                   |  2 ++
+ sequencer.c                       | 11 +++++++
+ sequencer.h                       |  2 ++
+ 18 files changed, 135 insertions(+), 59 deletions(-)
 
-[]
-> BTW, if you can, can you give me a quick overview of testing it git?  I can run 'make tests' easy enough, but there seems to be a well defined framework of testing written in bash and c..  Is there a doc on that framework anywhere?
-I'm not sure if there is a document, and yes, it's a nice framework.
-You can have a look at t0050, it gives a good overview over the most important
-feattures in the framework, I would say.
-
-(And the shell scripts uses a subset of the POSIX shell, which means we avoid
-bash-ism things like "[[ ]]" or "==")
-/Torsten
+-- 
+1.9.0.rc3.1008.gd08b47c.dirty
