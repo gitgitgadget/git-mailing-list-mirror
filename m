@@ -1,88 +1,67 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Documentation about "push.default=upstream" is confusing
-Date: Mon, 10 Feb 2014 11:06:00 -0800
-Message-ID: <xmqqd2iuss87.fsf@gitster.dls.corp.google.com>
-References: <20140209163157.GA7652@localhost>
+Subject: Re: [PATCH v2 2/2] gc: config option for running --auto in background
+Date: Mon, 10 Feb 2014 11:11:07 -0800
+Message-ID: <CAPc5daW3VwLutU8JZu9fBbGtihw5X_bE9M31ugzqN9mEnFYNNQ@mail.gmail.com>
+References: <xmqqd2j2afup.fsf@gitster.dls.corp.google.com> <1391843332-20583-1-git-send-email-pclouds@gmail.com>
+ <1391843332-20583-2-git-send-email-pclouds@gmail.com> <CABPQNSb3=i8F+vPEG3RmH+snZVZ-xrPtcVY2Nx9uvyTCLXcy6g@mail.gmail.com>
+ <CACsJy8BBQ3Bh6q6JM8V-QVKfzwp1w99+u4_55jjGbHLV3c62gA@mail.gmail.com> <xmqqob2est9c.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Ingo Rohloff <lundril@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Feb 10 20:06:24 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Erik Faye-Lund <kusmabite@gmail.com>,
+	GIT Mailing-list <git@vger.kernel.org>,
+	chris <jugg@hotmail.com>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 10 20:11:36 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WCwBT-0007qx-CA
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Feb 2014 20:06:23 +0100
+	id 1WCwGU-00017H-UU
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Feb 2014 20:11:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752575AbaBJTGS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Feb 2014 14:06:18 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64040 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752474AbaBJTGR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Feb 2014 14:06:17 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A99106B19D;
-	Mon, 10 Feb 2014 14:06:16 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=7SSJFqRoB9ayKjD59TkX2+EUQx8=; b=jj753a
-	POQINgIbY4+Gvk3W6DE8qxxNH3HiEs95q/DfDo6Gnis2i0ttl03sR16F6PH3QojE
-	cVvHeau/Vk/gPJelljGUy7SecYuIE1bQpl5btL0Oxw28gxNPKLOCcyZfDKZWMWVT
-	deOlnP03VvSywsdc8WabJouku6stM5ahWOuBE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=h545FHOQiKVn8FuSpJ5soXZoTn7rW/FD
-	8SNF4oJEEoFVZ53HqYVZ92eftMaLGK1off9S2B4Ejf2kh5yz4ddFpawtDwiF1V4S
-	2Jq/OYgC9uIlRAbix3NhsR1jIRWElil8usqBNzZDnph3JuTIXMhFVnHVR6FNB2Z+
-	xNQGXcmL8dM=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4AC326B19C;
-	Mon, 10 Feb 2014 14:06:16 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 975336B197;
-	Mon, 10 Feb 2014 14:06:14 -0500 (EST)
-In-Reply-To: <20140209163157.GA7652@localhost> (Ingo Rohloff's message of
-	"Sun, 9 Feb 2014 17:31:57 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 69A8140E-9286-11E3-BB60-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753136AbaBJTLa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Feb 2014 14:11:30 -0500
+Received: from mail-la0-f41.google.com ([209.85.215.41]:53262 "EHLO
+	mail-la0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752622AbaBJTL3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Feb 2014 14:11:29 -0500
+Received: by mail-la0-f41.google.com with SMTP id mc6so5124761lab.14
+        for <git@vger.kernel.org>; Mon, 10 Feb 2014 11:11:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=0cCj5Hp6ftBRhWTZnXYdHxzbF+n4OEw4ISG2yjQDJog=;
+        b=VTxAEg9s136nXZ7yHkcQMhT7pScXdgTeiVcIOxAWlgjnBkh8+cOSz4FY4jBWaw6RXl
+         hygN4w/33IVKa0w5rtrm+hMgKePoa/bnZOOpDDr6J9nYi0PMOPTqZsS4UME6mZ8MtsLN
+         t+89WF6EkkeE5dUpZ68z4sliGZ5YKRtKHMRMBRjdXrC8/VoVw/+q7I1OImz99V6uS4zL
+         COzkwXtPI5+BNsBq1Agt7OAQeK+LyLyFLI0VnUl1P0liH3BdIlSXLi+uoEJza0tctEg7
+         2bep6fHwRt0nbyQcuoSx1ulF8UWLkM7dghjFDxf1Qi2hEAymkP0Zcn7IQjT9YQEOZGxf
+         I9CQ==
+X-Received: by 10.112.201.164 with SMTP id kb4mr6758194lbc.32.1392059487796;
+ Mon, 10 Feb 2014 11:11:27 -0800 (PST)
+Received: by 10.112.180.130 with HTTP; Mon, 10 Feb 2014 11:11:07 -0800 (PST)
+In-Reply-To: <xmqqob2est9c.fsf@gitster.dls.corp.google.com>
+X-Google-Sender-Auth: XQ6tgGQ5PSuxsUYqhnAOSbDW1YE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241923>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241924>
 
-Ingo Rohloff <lundril@gmx.de> writes:
-
-> To handle that I setup several remote tracking branches called:
->   repo1_master   (tracks repo1/master)
->   repo2_master   (tracks repo2/master)
->   reap3_master   (tracks repo3/master)
+On Mon, Feb 10, 2014 at 10:43 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> If --quiet is set, we should not be printing anyway. If not, I thinkg
+>> we could only print "auto packing in background.." when we actually
+>> can do that, else just print the old message. It means an #ifdef
+>> NO_POSIX_GOODIES here again though..
 >
-> Now without "push.default=upstream" I would have to either always explicitly
-> do something like:
->   git push repo1 repo1_master:master
->   git push repo2 repo2_master:master
+> Didn't you change it not to die but return nosys or something?
 
-If you think about your interaction with people who are only looking
-at "repo1" alone, you _are_ using a centralized workflow.  You are
-not the only one who update their 'master'; other people push there
-to update that 'master' and you pull it in to keep you up to date
-and further build your changes on top.  Such an interaction with
-other people by using repo1 as the shared meeting point is well
-served by the push-to-upstream mechanism, and that kind of
-interaction is called "centralized workflow".  The illustration from
-you is running one centralized workflow with each of the three
-repositories.
+Ah, the problem is that it is too late to take back "... will do so in
+the background" when you noticed that daemonize() did not succeed, so
+you would need a way to see if we can daemonize() before actually
+doing so if you want to give different messages.
 
-The de-centralized workflow the message hints (but does not talk
-about) is different.  It is not uncommon to pull from one place and
-then to push the result out to your own publishing branch
-(e.g. clone from anna, fetch to keep up to date with her, work on
-it, publish to your repository to tell her to fetch from you), and
-push-to-upstream is not very well suited for that topology.  You may
-clone her "for-bob" branch, but you do not push it back to her
-repository to update her "for-bob" branch.
+"int can_daemonize(void)" could be an answer that is nicer than
+NO_POSIX_GOODIES, but I am not sure if it is worth it.
