@@ -1,100 +1,94 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: bash completion patch
-Date: Mon, 10 Feb 2014 10:38:21 -0800
-Message-ID: <xmqqsirqstia.fsf@gitster.dls.corp.google.com>
-References: <CAHtLG6Qgxq84Eo__vaXw5RAmyRuPnK-pt6n36+cjT8nVnRQN=w@mail.gmail.com>
-	<vpqk3d9o83t.fsf@anie.imag.fr>
-	<xmqq4n4d5rcn.fsf@gitster.dls.corp.google.com>
-	<874n48ll1i.fsf@thomasrast.ch>
+Subject: Re: [PATCH v2 2/2] gc: config option for running --auto in background
+Date: Mon, 10 Feb 2014 10:43:43 -0800
+Message-ID: <xmqqob2est9c.fsf@gitster.dls.corp.google.com>
+References: <xmqqd2j2afup.fsf@gitster.dls.corp.google.com>
+	<1391843332-20583-1-git-send-email-pclouds@gmail.com>
+	<1391843332-20583-2-git-send-email-pclouds@gmail.com>
+	<CABPQNSb3=i8F+vPEG3RmH+snZVZ-xrPtcVY2Nx9uvyTCLXcy6g@mail.gmail.com>
+	<CACsJy8BBQ3Bh6q6JM8V-QVKfzwp1w99+u4_55jjGbHLV3c62gA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	=?utf-8?B?5LmZ6YW46Yuw?= <ch3cooli@gmail.com>,
-	git <git@vger.kernel.org>
-To: Thomas Rast <tr@thomasrast.ch>
-X-From: git-owner@vger.kernel.org Mon Feb 10 19:38:35 2014
+Cc: Erik Faye-Lund <kusmabite@gmail.com>,
+	GIT Mailing-list <git@vger.kernel.org>,
+	chris <jugg@hotmail.com>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 10 19:43:56 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WCvkY-0007fR-MF
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Feb 2014 19:38:35 +0100
+	id 1WCvph-0000wI-Vx
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Feb 2014 19:43:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752731AbaBJSia (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Feb 2014 13:38:30 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:63225 "EHLO
+	id S1753056AbaBJSnt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Feb 2014 13:43:49 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62296 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752124AbaBJSi3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Feb 2014 13:38:29 -0500
+	id S1752608AbaBJSns (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Feb 2014 13:43:48 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 61E866A5D4;
-	Mon, 10 Feb 2014 13:38:28 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C93B96A825;
+	Mon, 10 Feb 2014 13:43:47 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=xal3NQa3lGp/zCcUY8lln0QsVew=; b=aDXbG8
-	secDNSfzzUnIiNw9QbnvDhZKpHpNw2WQFGxfznfpUKbxkuwfM50RWYMYx0W9Zo9h
-	SR+A8STYSbQfSPf0t6aKDmCg3UrErX6/4jzuldDxsaduYfy0mdSIbnUJE4LNMhkn
-	is/q6dXXMKNvX5lU46Lgq8CI7zMehNpCO3sz4=
+	:content-type; s=sasl; bh=Yn/nODhNihoVjFDGUNNMrOsX6Wc=; b=VMZGVH
+	sRM3AJR8rCK12kGa7wuT4TzAR84anWJDqgxAr4J11cYdVP53xJpNApCL4G4DXJLk
+	pvBvbMSZ6pRSv8APHUEwU1eJPd5DScc443Qlp6jPPL17lFrOqCsBP0LrejYzYhJk
+	RUpHCUirMeHrvlm5lH9hkCW2uTp98mT1OR1Kg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=HuS/BClsJRFdmcPyaF6JjoQ+qYFk77y7
-	A8Utf4NgrdwWX5esTlHpBKbEOxPjo//qpI33TiTnVWXBBQhW6sbWE7Qowtlll5Ph
-	oAFiILfs6xOURNXlgP8zwuwYYn0NH2G4jxUniMl4n3TQDQHj2BPq9burQFsfeyev
-	AY0UGSC8I44=
+	:content-type; q=dns; s=sasl; b=vgsCT4e9Y3rgHqZ6qkuqFq8kYugLvmz4
+	xd76WyXgU5XUzsvC1DS+TpaTZZcWR4sUKsl/DsEXSvk6vFWHfM8N/8lQkxCztIV5
+	cTjbXoHxrQKE9bG9kY6dNivkQJQ0voQeslQEvQq6Ki/8E1U9RFs2yKSoWfjyuMdq
+	R+V4vAmzju0=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3A49E6A5D2;
-	Mon, 10 Feb 2014 13:38:27 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CBC526A81E;
+	Mon, 10 Feb 2014 13:43:46 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 844E06A5CD;
-	Mon, 10 Feb 2014 13:38:24 -0500 (EST)
-In-Reply-To: <874n48ll1i.fsf@thomasrast.ch> (Thomas Rast's message of "Sun, 09
-	Feb 2014 09:58:33 +0100")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 246926A810;
+	Mon, 10 Feb 2014 13:43:45 -0500 (EST)
+In-Reply-To: <CACsJy8BBQ3Bh6q6JM8V-QVKfzwp1w99+u4_55jjGbHLV3c62gA@mail.gmail.com>
+	(Duy Nguyen's message of "Mon, 10 Feb 2014 20:17:28 +0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 86298774-9282-11E3-94B6-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 454415AC-9283-11E3-B8D7-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241920>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241921>
 
-Thomas Rast <tr@thomasrast.ch> writes:
+Duy Nguyen <pclouds@gmail.com> writes:
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+> On Mon, Feb 10, 2014 at 6:03 PM, Erik Faye-Lund <kusmabite@gmail.com> wrote:
+>>> `gc --auto` takes time and can block the user temporarily (but not any
+>>> -               if (!quiet)
+>>> -                       fprintf(stderr,
+>>> -                                       _("Auto packing the repository for optimum performance. You may also\n"
+>>> -                                       "run \"git gc\" manually. See "
+>>> -                                       "\"git help gc\" for more information.\n"));
+>>> +               if (!quiet) {
+>>> +                       if (detach_auto)
+>>> +                               fprintf(stderr, _("Auto packing the repository in background for optimum performance.\n"));
+>>> +                       else
+>>> +                               fprintf(stderr, _("Auto packing the repository for optimum performance.\n"));
+>>> +                       fprintf(stderr, _("See \"git help gc\" for manual housekeeping.\n"));
+>>> +               }
+>>> +               if (detach_auto)
+>>> +                       /*
+>>> +                        * failure to daemonize is ok, we'll continue
+>>> +                        * in foreground
+>>> +                        */
+>>> +                       daemonize();
 >>
-> [...]
->>> don't forget to Cc Junio if
->>> you think your patch is ready for inclusion.
->>
->> Heh, thanks.  Everybody seems to think anything they send out to the
->> list is ready for inclusion, so the last part may not be a piece of
->> advice that is practically very useful, though ;-)
+>> While I agree that it should be OK, shouldn't we warn the user?
 >
-> That happens to me a lot, too.  Perhaps it would be a clearer signal if
-> you had an alias (or just something like gitster+patch) that we can send
-> it to if we mean "please include" instead of "what do you think of this"?
+> If --quiet is set, we should not be printing anyway. If not, I thinkg
+> we could only print "auto packing in background.." when we actually
+> can do that, else just print the old message. It means an #ifdef
+> NO_POSIX_GOODIES here again though..
 
-The intention from regulars like you I can read from the tone of the
-message (or if you want to you can mention it in the log message).
-
-If a clearer signal is really needed, perhaps we should say
-something like:
-
-    Send any patch that has not been reviewed on the list fist to
-    the list and area experts (you can learn who they are by running
-    "git blame" and "git shortlog" on the part of the system you are
-    touching) for review.  Once the patch gains list consensus that
-    it is a good change, and the maintainer hasn't picked it up
-    (perhaps it fell through cracks), resend it to the maintainer
-    with Cc: to the list.
-
-We could phrase it more brutally:
-
-    If it is the first time a particular patch is sent to the list, it
-    almost always is not ready for inclusion.
-
-but I do not think that is a good idea.
+Didn't you change it not to die but return nosys or something?
