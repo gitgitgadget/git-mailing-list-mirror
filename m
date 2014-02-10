@@ -1,82 +1,112 @@
 From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: [PATCH v4 9/9] pull: add the --gpg-sign option.
-Date: Mon, 10 Feb 2014 01:03:38 +0000
-Message-ID: <1391994218-639101-10-git-send-email-sandals@crustytoothpaste.net>
+Subject: [PATCH v4 4/9] am: add the --gpg-sign option
+Date: Mon, 10 Feb 2014 01:03:33 +0000
+Message-ID: <1391994218-639101-5-git-send-email-sandals@crustytoothpaste.net>
 References: <1391994218-639101-1-git-send-email-sandals@crustytoothpaste.net>
 Cc: Nicolas Vigier <boklm@mars-attacks.org>,
 	Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 10 02:04:02 2014
+X-From: git-owner@vger.kernel.org Mon Feb 10 02:04:05 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WCfI2-0001Gz-8R
-	for gcvg-git-2@plane.gmane.org; Mon, 10 Feb 2014 02:04:02 +0100
+	id 1WCfI3-0001Gz-Tx
+	for gcvg-git-2@plane.gmane.org; Mon, 10 Feb 2014 02:04:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752186AbaBJBDv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Feb 2014 20:03:51 -0500
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:51753 "EHLO
+	id S1752175AbaBJBDr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Feb 2014 20:03:47 -0500
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:51731 "EHLO
 	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752060AbaBJBDr (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 9 Feb 2014 20:03:47 -0500
+	by vger.kernel.org with ESMTP id S1752060AbaBJBDp (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 9 Feb 2014 20:03:45 -0500
 Received: from vauxhall.crustytoothpaste.net (unknown [172.16.2.247])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 0AEB628083;
-	Mon, 10 Feb 2014 01:03:47 +0000 (UTC)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id C6EEA28085;
+	Mon, 10 Feb 2014 01:03:44 +0000 (UTC)
 X-Mailer: git-send-email 1.9.0.rc3.1008.gd08b47c.dirty
 In-Reply-To: <1391994218-639101-1-git-send-email-sandals@crustytoothpaste.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241890>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241891>
 
-git merge already allows us to sign commits, and git rebase has recently
-learned how to do so as well.  Teach git pull to parse the -S/--gpg-sign
-option and pass this along to merge or rebase, as appropriate.
+From: Nicolas Vigier <boklm@mars-attacks.org>
 
+Signed-off-by: Nicolas Vigier <boklm@mars-attacks.org>
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- git-pull.sh | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ Documentation/git-am.txt | 6 +++++-
+ git-am.sh                | 9 ++++++++-
+ 2 files changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/git-pull.sh b/git-pull.sh
-index 0a5aa2c..6986e0f 100755
---- a/git-pull.sh
-+++ b/git-pull.sh
-@@ -138,6 +138,15 @@ do
- 	--no-verify-signatures)
- 		verify_signatures=--no-verify-signatures
- 		;;
-+	--gpg-sign|-S)
-+		gpg_sign_args=-S
-+		;;
+diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
+index 54d8461..17924d0 100644
+--- a/Documentation/git-am.txt
++++ b/Documentation/git-am.txt
+@@ -14,7 +14,7 @@ SYNOPSIS
+ 	 [--ignore-date] [--ignore-space-change | --ignore-whitespace]
+ 	 [--whitespace=<option>] [-C<n>] [-p<n>] [--directory=<dir>]
+ 	 [--exclude=<path>] [--include=<path>] [--reject] [-q | --quiet]
+-	 [--[no-]scissors]
++	 [--[no-]scissors] [-S[<keyid>]]
+ 	 [(<mbox> | <Maildir>)...]
+ 'git am' (--continue | --skip | --abort)
+ 
+@@ -119,6 +119,10 @@ default.   You can use `--no-utf8` to override this.
+ 	Skip the current patch.  This is only meaningful when
+ 	restarting an aborted patch.
+ 
++-S[<keyid>]::
++--gpg-sign[=<keyid>]::
++	GPG-sign commits.
++
+ --continue::
+ -r::
+ --resolved::
+diff --git a/git-am.sh b/git-am.sh
+index 020abf6..78517f2 100755
+--- a/git-am.sh
++++ b/git-am.sh
+@@ -38,6 +38,7 @@ abort           restore the original branch and abort the patching operation.
+ committer-date-is-author-date    lie about committer date
+ ignore-date     use current timestamp for author date
+ rerere-autoupdate update the index with reused conflict resolution if possible
++S,gpg-sign?     GPG-sign commits
+ rebasing*       (internal use for git-rebase)"
+ 
+ . git-sh-setup
+@@ -375,6 +376,7 @@ git_apply_opt=
+ committer_date_is_author_date=
+ ignore_date=
+ allow_rerere_autoupdate=
++gpg_sign_opt=
+ 
+ if test "$(git config --bool --get am.keepcr)" = true
+ then
+@@ -436,6 +438,10 @@ it will be removed. Please do not use it anymore."
+ 		keepcr=t ;;
+ 	--no-keep-cr)
+ 		keepcr=f ;;
++	--gpg-sign)
++		gpg_sign_opt=-S ;;
 +	--gpg-sign=*)
-+		gpg_sign_args=$(git rev-parse --sq-quote "-S${1#--gpg-sign=}")
-+		;;
-+	-S*)
-+		gpg_sign_args=$(git rev-parse --sq-quote "$1")
-+		;;
- 	--d|--dr|--dry|--dry-|--dry-r|--dry-ru|--dry-run)
- 		dry_run=--dry-run
- 		;;
-@@ -305,11 +314,13 @@ merge_name=$(git fmt-merge-msg $log_arg <"$GIT_DIR/FETCH_HEAD") || exit
- case "$rebase" in
- true)
- 	eval="git-rebase $diffstat $strategy_args $merge_args $rebase_args $verbosity"
-+	eval="$eval $gpg_sign_args"
- 	eval="$eval --onto $merge_head ${oldremoteref:-$merge_head}"
- 	;;
- *)
- 	eval="git-merge $diffstat $no_commit $verify_signatures $edit $squash $no_ff $ff_only"
--	eval="$eval  $log_arg $strategy_args $merge_args $verbosity $progress"
-+	eval="$eval $log_arg $strategy_args $merge_args $verbosity $progress"
-+	eval="$eval $gpg_sign_args"
- 	eval="$eval \"\$merge_name\" HEAD $merge_head"
- 	;;
- esac
++		gpg_sign_opt="-S${1#--gpg-sign=}" ;;
+ 	--)
+ 		shift; break ;;
+ 	*)
+@@ -900,7 +906,8 @@ did you forget to use 'git add'?"
+ 			GIT_COMMITTER_DATE="$GIT_AUTHOR_DATE"
+ 			export GIT_COMMITTER_DATE
+ 		fi &&
+-		git commit-tree $tree ${parent:+-p} $parent <"$dotest/final-commit"
++		git commit-tree ${parent:+-p} $parent ${gpg_sign_opt:+"$gpg_sign_opt"} $tree  \
++			<"$dotest/final-commit"
+ 	) &&
+ 	git update-ref -m "$GIT_REFLOG_ACTION: $FIRSTLINE" HEAD $commit $parent ||
+ 	stop_here $this
 -- 
 1.9.0.rc3.1008.gd08b47c.dirty
