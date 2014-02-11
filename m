@@ -1,91 +1,105 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: Re: [PATCH] fast-import.c: always honor the filename case
-Date: Tue, 11 Feb 2014 18:29:19 +0100
-Message-ID: <52FA5DEF.30407@web.de>
-References: <1391346784-11891-1-git-send-email-reubenhwk@gmail.com>	<52EEA5D3.9000502@web.de>	<CAD_8n+RZACW0380co75gWSwVmCJdcH4COsySTF3BFCyKEumXNA@mail.gmail.com>	<52EFFA36.8090305@web.de>	<CAD_8n+RuwQEXJRCOr+B_PqA7z6LkFdbcRZkiiVJsEhJ=+YjRDg@mail.gmail.com>	<52F2AAFA.1090507@web.de>	<CAD_8n+Thn3tNTYxLK49mDOGdLpWRCFUCJo9b76UbAjnCdqXsRQ@mail.gmail.com>	<52F7E652.4030102@web.de> <CAD_8n+ToUDbXrVuru7GV7toYKHXuQb8vL3B_-sfzQdXZFqzD2A@mail.gmail.com>
+From: Joachim Breitner <mail@joachim-breitner.de>
+Subject: git-note -C changes commit type?
+Date: Tue, 11 Feb 2014 17:23:27 +0000
+Message-ID: <1392139407.12790.7.camel@kirk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Dmitry Potapov <dpotapov@gmail.com>
-To: Reuben Hawkins <reubenhwk@gmail.com>,
-	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaA==?= =?UTF-8?B?YXVzZW4=?= 
-	<tboegi@web.de>
-X-From: git-owner@vger.kernel.org Tue Feb 11 18:29:36 2014
+Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature";
+	boundary="=-5wJajMjS7UWj+QTRQO09"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 11 18:46:40 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WDH9H-00018A-Dg
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Feb 2014 18:29:31 +0100
+	id 1WDHPd-0007J4-05
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Feb 2014 18:46:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751638AbaBKR30 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Feb 2014 12:29:26 -0500
-Received: from mout.web.de ([212.227.15.14]:60079 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751285AbaBKR30 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Feb 2014 12:29:26 -0500
-Received: from [192.168.209.26] ([78.72.74.102]) by smtp.web.de (mrweb102)
- with ESMTPSA (Nemesis) id 0MRlIL-1VkuM919gX-00SvsS for <git@vger.kernel.org>;
- Tue, 11 Feb 2014 18:29:24 +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:24.0) Gecko/20100101 Thunderbird/24.3.0
-In-Reply-To: <CAD_8n+ToUDbXrVuru7GV7toYKHXuQb8vL3B_-sfzQdXZFqzD2A@mail.gmail.com>
-X-Provags-ID: V03:K0:M8MDjFfX92XRBNLog8D4fzXiBkK1+MlC+KsEjwnA13mXoAvKe6k
- u0SVk21234hTsx9OtgkgO+zROk84zp/P58UlRRKLxvo5y7/lEBU7TnvJsB8oHJiiKJYXYZY
- dQOVA7La8Qu2g8OyUZX5qkVMAJWdZRUmgYX9gfmTcZTXBep1wXz82lrjR3SOiGfaOR1ZsJa
- 3xuN8zFgo0sKdK9HOsP4Q==
+	id S1752252AbaBKRqK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Feb 2014 12:46:10 -0500
+Received: from hermes.serverama.de ([78.47.178.158]:60931 "EHLO
+	hermes.serverama.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751358AbaBKRqG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Feb 2014 12:46:06 -0500
+X-Greylist: delayed 1352 seconds by postgrey-1.27 at vger.kernel.org; Tue, 11 Feb 2014 12:46:06 EST
+Received: from [10.254.1.12] (helo=kirk)
+	by hermes.serverama.de with esmtps (TLS1.2:DHE_RSA_AES_128_CBC_SHA1:128)
+	(Exim 4.80)
+	(envelope-from <mail@joachim-breitner.de>)
+	id 1WDH3Q-0008K7-Mm
+	for git@vger.kernel.org; Tue, 11 Feb 2014 18:23:31 +0100
+Received: from jojo by kirk with local (Exim 4.82)
+	(envelope-from <mail@joachim-breitner.de>)
+	id 1WDH3P-0003wt-K2
+	for git@vger.kernel.org; Tue, 11 Feb 2014 17:23:27 +0000
+X-Mailer: Evolution 3.8.5-2+b1 
+X-Spam-Score: -7.6 (-------)
+X-Spam-Report: Status No, score=-7.6 required=5.0 bayes=0.0000 tests=ALL_TRUSTED=-1,BAYES_00=-6.599 autolearn=ham version=3.3.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241949>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241950>
 
-On 2014-02-10 15.24, Reuben Hawkins wrote:
->
->
->
-> On Sun, Feb 9, 2014 at 2:34 PM, Torsten B=C3=B6gershausen <tboegi@web=
-=2Ede <mailto:tboegi@web.de>> wrote:
->
->     On 2014-02-06 12 <tel:2014-02-06%2012>.24, Reuben Hawkins wrote:
->     [snipped away minor interesting stuff]
->
->         Reading the answers from Peff and Junio, I am convinced that =
-the fast-import should
->         not look at core.ignorecase at all.
->
->
->     Agreed, but my patch 0001-fast-import.c-ignorecase-iff-... is wor=
-king very well (for me anyway), and the ignore-case option may be usefu=
-l to the git-p4 importer (which I guess is something that should be det=
-ermined for sure).
->
->     If you want, you can turn this into a real patch and send it to t=
-he list.
->     I think  Pete Wyckoff <pw@padd.com <mailto:pw@padd.com>> is one o=
-f the experts about p4.
->
->
-> hehe. I thought it was a real patch....so I guess I'm not sure what y=
-ou mean.  What do I need to do to make the patch more real (pardon my i=
-gnorance)?
-> /Reuben
-I have found a patch which was send as an attachment,
-and that's why it got the file name 0001-fast-import.c-ignorecase-iff..=
-=2E. here
-So yes, it was a real patch. Please re-send it inline, not as an attach=
-ment, as you did in
-"[PATCH] fast-import.c: always honor the filename case"
->
->
->     And the same is for fast-export fixes you have made: If you have =
-the time,
->     convert it into a patch and send it to the list.
->
->     =20
->
->
-> Do you mean the fast-export fixes where I pushed all the delete opera=
-tions to the front of the list?
-Yes
-/Torsten
+
+--=-5wJajMjS7UWj+QTRQO09
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Hi,
+
+judging from the documentation I got the impression that I can pass any
+git object has to "git note -C <hash>" and it would stored as-is. But it
+seems the objects gets mangled somehow...
+
+(I want to attach a commit object as a note, to reference the history of
+a feature before the final cleanup rebase. For that I turn the reflog
+into a series of commits, and the final commit is the one I want to
+store there.)
+
+$ mkdir foo
+$ cd foo/
+$ echo foo > a
+$ git init
+Initialisierte leeres Git-Repository in /tmp/foo/.git/
+$ git add a
+$ git commit -m 'A commit'
+[master (Basis-Commit) 3d7de37] A commit
+ 1 file changed, 1 insertion(+)
+ create mode 100644 a
+$ echo foo2 > a
+$ git commit -m 'A commit 2' -a
+[master e1bfac4] A commit 2
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+$ git notes --ref history add -C 3d7de37 e1bfac4
+$ git ls-tree notes/history
+100644 blob 5b73d5152e6207e3a2b67e57ca3a2cb94d12061e e1bfac434ebd3135a3784f=
+6fc802f235098eebd0
+
+I was expecting 3d7de37 to be referenced here.
+
+Is that a bug, or is storing commits as notes not supported?
+
+Thanks,
+Joachim
+
+
+--=20
+Joachim =E2=80=9Cnomeata=E2=80=9D Breitner
+  mail@joachim-breitner.de =E2=80=A2 http://www.joachim-breitner.de/
+  Jabber: nomeata@joachim-breitner.de  =E2=80=A2 GPG-Key: 0x4743206C
+  Debian Developer: nomeata@debian.org
+
+--=-5wJajMjS7UWj+QTRQO09
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iEYEABECAAYFAlL6XI8ACgkQ9ijrk0dDIGx6iQCfRMw30Zhn0VLUv3KgWxiEGqU+
+iPcAoICpAAbs2tDGwzHxwMP87/BP5/J3
+=DaYU
+-----END PGP SIGNATURE-----
+
+--=-5wJajMjS7UWj+QTRQO09--
