@@ -1,132 +1,88 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] contrib/diff-highlight: multibyte characters diff
-Date: Tue, 11 Feb 2014 11:30:33 -0800
-Message-ID: <xmqqioslphuu.fsf@gitster.dls.corp.google.com>
-References: <1392109750-47852-1-git-send-email-sugi1982@gmail.com>
+Subject: Re: [RFH] hackday and GSoC topic suggestions
+Date: Tue, 11 Feb 2014 11:38:09 -0800
+Message-ID: <xmqqeh39phi6.fsf@gitster.dls.corp.google.com>
+References: <20140205225702.GA12589@sigill.intra.peff.net>
+	<xmqq1tz9qxyl.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Yoshihiro Sugi <sugi1982@gmail.com>
+Cc: git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Feb 11 20:30:46 2014
+X-From: git-owner@vger.kernel.org Tue Feb 11 20:38:32 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WDJ2c-0007gH-4a
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Feb 2014 20:30:46 +0100
+	id 1WDJA5-0001rA-8m
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Feb 2014 20:38:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754304AbaBKTak (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Feb 2014 14:30:40 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49488 "EHLO
+	id S932193AbaBKTiR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Feb 2014 14:38:17 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:62851 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754071AbaBKTag (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Feb 2014 14:30:36 -0500
+	id S1754263AbaBKTiN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Feb 2014 14:38:13 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C4EFD69C2E;
-	Tue, 11 Feb 2014 14:30:35 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E1A8C69EE8;
+	Tue, 11 Feb 2014 14:38:12 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=YhjRmWP9j4lKhzCYZYuiSu000aw=; b=MsiaAU
-	UpJ+e6KUDBwl7Vg80joKd77QskxU+i/+Rbhm4OZQjRqpsjXKq6Ci3uI2oXQQHaMs
-	45Sc1+v4wDBv0O6vTrcnUYlMcTT7yRLyWDG8rNOMGvscokAHhtQ7PcnoQu6X3wWX
-	3F8ijFapL9PJOcmcORiKY+RkqmGNWWM6mQMvA=
+	:content-type; s=sasl; bh=Vu5jRNEkXrCk6gO1sTvAyCpjLCE=; b=Gpy5C/
+	gnDUdyGatTd7/C868rirbWFRLtSRFynLkqe7+vbYmSLro/yLdX1o7eBuf2pvlWbq
+	Xfruubflz7bZnd8ETWmXJ3pMS1aXGLOBdX5Xv8Bn5bsM6bUbrvhXt8yYtnKELRO/
+	l2PoF36TP6iYjfskly1pGg+0LOZahJZG+AYVo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=IsRPPvuRJ9GyTs6X9/NGFAZQp/8D8wQI
-	eUcBIJPqFN4l+TimGsUKC5K0fxfmvEQgBMkWGvy3/tNu2i9RqZvwMogqisGS5XC4
-	uo0cMjRKEyIe+JVmm58k3ucDzGeyySlqaND5YHcGK6+s5gm2Rq2c97b0VCSlAM/S
-	NwfdBG8oMWg=
+	:content-type; q=dns; s=sasl; b=q08ouFlJnsqARtjK1AJojxENQO7fZ6Za
+	28p2rDcygvIkvUMN1fADhphAZa9FQd4nW6AxifrZzyTjJ+JP2axjCWb2HMJ6TFSX
+	QfWka6rgwSL74M2D2wuWBJ0eBFHua4ApxxbnABB13W8YObMgXaOOHUw5ZIqBJBFN
+	6esvjQYTqk8=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ABD5869C2D;
-	Tue, 11 Feb 2014 14:30:35 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C42BF69EE7;
+	Tue, 11 Feb 2014 14:38:12 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D5EC069C2B;
-	Tue, 11 Feb 2014 14:30:34 -0500 (EST)
-In-Reply-To: <1392109750-47852-1-git-send-email-sugi1982@gmail.com> (Yoshihiro
-	Sugi's message of "Tue, 11 Feb 2014 18:09:10 +0900")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BDAE569EE4;
+	Tue, 11 Feb 2014 14:38:10 -0500 (EST)
+In-Reply-To: <xmqq1tz9qxyl.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Tue, 11 Feb 2014 10:57:22 -0800")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: FA662158-9352-11E3-837D-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 0A2311B8-9354-11E3-B02A-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241956>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241957>
 
-Yoshihiro Sugi <sugi1982@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Signed-off-by: Yoshihiro Sugi <sugi1982@gmail.com>
+> Jeff King <peff@peff.net> writes:
 >
-> diff-highlight split each hunks and compare them as byte sequences.
-> it causes problems when diff hunks include multibyte characters.
-> This change enable to work on such cases by decoding inputs and encoding output as utf8 string.
-> ---
->  contrib/diff-highlight/diff-highlight | 16 ++++++++++------
->  1 file changed, 10 insertions(+), 6 deletions(-)
+>>  - Branch rename breaks local downstream branches
+>>    http://article.gmane.org/gmane.comp.version-control.git/241228
 >
-> diff --git a/contrib/diff-highlight/diff-highlight b/contrib/diff-highlight/diff-highlight
-> index c4404d4..49b4f53 100755
-> --- a/contrib/diff-highlight/diff-highlight
-> +++ b/contrib/diff-highlight/diff-highlight
-> @@ -2,6 +2,7 @@
->  
->  use warnings FATAL => 'all';
->  use strict;
-> +use Encode qw(decode_utf8 encode_utf8);
->  
->  # Highlight by reversing foreground and background. You could do
->  # other things like bold or underline if you prefer.
-> @@ -15,8 +16,9 @@ my @added;
->  my $in_hunk;
->  
->  while (<>) {
-> +	$_ = decode_utf8($_);
->  	if (!$in_hunk) {
-> -		print;
-> +		print encode_utf8($_);
->  		$in_hunk = /^$COLOR*\@/;
->  	}
->  	elsif (/^$COLOR*-/) {
-> @@ -30,7 +32,7 @@ while (<>) {
->  		@removed = ();
->  		@added = ();
->  
-> -		print;
-> +		print encode_utf8($_);
->  		$in_hunk = /^$COLOR*[\@ ]/;
->  	}
->  
-> @@ -58,7 +60,8 @@ sub show_hunk {
->  
->  	# If one side is empty, then there is nothing to compare or highlight.
->  	if (!@$a || !@$b) {
-> -		print @$a, @$b;
-> +		print encode_utf8($_) for @$a;
-> +		print encode_utf8($_) for @$b;
->  		return;
->  	}
->  
-> @@ -67,17 +70,18 @@ sub show_hunk {
->  	# stupid, and only handle multi-line hunks that remove and add the same
->  	# number of lines.
->  	if (@$a != @$b) {
-> -		print @$a, @$b;
-> +		print encode_utf8($_) for @$a;
-> +		print encode_utf8($_) for @$b;
->  		return;
->  	}
->  
->  	my @queue;
->  	for (my $i = 0; $i < @$a; $i++) {
->  		my ($rm, $add) = highlight_pair($a->[$i], $b->[$i]);
-> -		print $rm;
-> +		print encode_utf8($rm);
->  		push @queue, $add;
->  	}
-> -	print @queue;
-> +	print encode_utf8($_) for @queue;
->  }
->  
->  sub highlight_pair {
+> If you have a branch B that builds on A, if you are renaming A to C,
+> you may want B to automatically set to build on C in some cases, and
+> in other cases your renaming A is done explicitly in order to severe
+> the tie between A and B and setting the latter to build on C can be
+> a bad thing---after all, the user's intention may be to create a
+> branch A starting at some commit immediately after this rename so
+> that B will keep building on that updated A.
+>
+> So I am not sure if this is a bug.
+
+Having said that, the current behaviour of leaving B half-configured
+to build on a missing branch is undesirable. If we were to change
+this so that any branch B that used to build on branch A being
+renamed to build on the branch under the new name C, the user may
+have to do an extra "--set-upstream-to A" on B after recreating A if
+this was done to save away the current state of A to C and then keep
+building B on an updated A, so we may have to give _some_ clue what
+we are doing behind their back when we rename, e.g.
+
+	$ git branch -m A C
+        warning: branch B is set to build on C now.
+
+or something.
