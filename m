@@ -1,65 +1,87 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] tests: turn on network daemon tests by default
-Date: Tue, 11 Feb 2014 15:04:45 -0500
-Message-ID: <20140211200445.GA27946@sigill.intra.peff.net>
-References: <20140210191521.GA3112@sigill.intra.peff.net>
- <20140210212931.GA16154@sigill.intra.peff.net>
- <xmqqa9dxpgw9.fsf@gitster.dls.corp.google.com>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: Profiling support?
+Date: Tue, 11 Feb 2014 21:53:31 +0100
+Message-ID: <87zjlx9xro.fsf@fencepost.gnu.org>
+References: <87d2itc2zv.fsf@fencepost.gnu.org>
+	<CACsJy8BAD3cm2BLSapJ2fhkGiYjDKqW1TQ1yu0XPwTyEfL2oLQ@mail.gmail.com>
+	<878uthbtjg.fsf@fencepost.gnu.org>
+	<20140211151451.GA15032@serenity.lan>
+	<874n45brs4.fsf@fencepost.gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain
 Cc: Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 11 21:04:55 2014
+	Git Mailing List <git@vger.kernel.org>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Tue Feb 11 21:54:30 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WDJZf-0001tv-6x
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Feb 2014 21:04:55 +0100
+	id 1WDKLW-0001Mu-PK
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Feb 2014 21:54:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755902AbaBKUEu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Feb 2014 15:04:50 -0500
-Received: from cloud.peff.net ([50.56.180.127]:48791 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755901AbaBKUEs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Feb 2014 15:04:48 -0500
-Received: (qmail 24583 invoked by uid 102); 11 Feb 2014 20:04:47 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 11 Feb 2014 14:04:47 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 11 Feb 2014 15:04:45 -0500
-Content-Disposition: inline
-In-Reply-To: <xmqqa9dxpgw9.fsf@gitster.dls.corp.google.com>
+	id S1753504AbaBKUyQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Feb 2014 15:54:16 -0500
+Received: from fencepost.gnu.org ([208.118.235.10]:60930 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753211AbaBKUyM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Feb 2014 15:54:12 -0500
+Received: from localhost ([127.0.0.1]:59971 helo=lola)
+	by fencepost.gnu.org with esmtp (Exim 4.71)
+	(envelope-from <dak@gnu.org>)
+	id 1WDKLL-00064S-M0; Tue, 11 Feb 2014 15:54:11 -0500
+Received: by lola (Postfix, from userid 1000)
+	id E734EE0846; Tue, 11 Feb 2014 21:53:31 +0100 (CET)
+In-Reply-To: <874n45brs4.fsf@fencepost.gnu.org> (David Kastrup's message of
+	"Tue, 11 Feb 2014 16:19:55 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241960>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241961>
 
-On Tue, Feb 11, 2014 at 11:51:18AM -0800, Junio C Hamano wrote:
+David Kastrup <dak@gnu.org> writes:
 
-> Those who run buildfarms may want to disable the networking test if
-> the buildfarms are not isolated well, for example.  They have to be
-> told somewhere that now they need to explicitly disable these tests
-> and how.
+> John Keeping <john@keeping.me.uk> writes:
+>
+>> On Tue, Feb 11, 2014 at 03:41:55PM +0100, David Kastrup wrote:
+>>> Duy Nguyen <pclouds@gmail.com> writes:
+>>>
+>>> > Would perf help? No changes required, and almost no overhead, I think.
+>>> 
+>>> Not useful.  It would be probably nice for nailing down the performance
+>>> gains when the work is finished so that future regressions will be
+>>> noticeable.  It's reasonable easy to create a test case that will take
+>>> hours with the current git-blame and would finish in seconds with the
+>>> improved one.
+>>> 
+>>> But it's not useful at all for figuring out the hotspots within the
+>>> git-blame binary.
+>>
+>> I would have thought the annotation described at [1] is exactly what
+>> you're looking for, isn't it?
+>>
+>> Alternatively, I've had some success with callgrind and kCachegrind in
+>> the past.
+>>
+>> [1]
+>> https://perf.wiki.kernel.org/index.php/Tutorial#Source_level_analysis_with_perf_annotate
+>
+> Misunderstanding on my part.  I thought this was about the "make perf"
+> Makefile target.  I'll have to take a look at what the perf utility
+> does.
+>
+> Thanks for the clarification.
 
-I think they should be OK. The daemons run on the loopback interface, so
-there is hopefully not a security implication. If multiple buildfarms
-are sharing the same loopback space (e.g., running in separate
-directories on the same machine), the "auto" setting should degrade
-gracefully. One daemon will "win" the setup, and the tests will run, and
-on the other, they will be skipped.
+Looks indeed like it could be useful.  In the currently working code
+from me (last of the complex patch series), significant time is spent in
+moving and allocating memory.  It might make sense not to continue
+ignoring the patch I proposed to get rid of the absurd realloc series in
+builtin/blame.c.  While it may not be responsible for all of avoidable
+allocation churn, it's still large and untypical enough to mask further
+culprits.
 
-> I am in favor of this change but just pointing out possible fallouts
-> might be larger than we think.
-
-Agreed, but I think the only way to know the size of those fallouts is
-to try it and see who complains.  I would not normally be so cavalier
-with git itself, but I think for the test infrastructure, we have a
-small, tech-savvy audience that can help us iterate on it without too
-much pain.
-
--Peff
+-- 
+David Kastrup
