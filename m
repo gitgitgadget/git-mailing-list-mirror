@@ -1,128 +1,132 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Introduce experimental remote object access mode
-Date: Tue, 11 Feb 2014 11:29:15 -0800
-Message-ID: <xmqqppmtphx0.fsf@gitster.dls.corp.google.com>
-References: <CAJo=hJsO=FBkiOo5fuPbToxE1SR3Lh8oim0eTAR6bH1a-TcdPA@mail.gmail.com>
+Subject: Re: [PATCH] contrib/diff-highlight: multibyte characters diff
+Date: Tue, 11 Feb 2014 11:30:33 -0800
+Message-ID: <xmqqioslphuu.fsf@gitster.dls.corp.google.com>
+References: <1392109750-47852-1-git-send-email-sugi1982@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git <git@vger.kernel.org>
-To: Shawn Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Feb 11 20:29:32 2014
+Cc: git@vger.kernel.org, Yoshihiro Sugi <sugi1982@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Feb 11 20:30:46 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WDJ1M-0007F8-Nx
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Feb 2014 20:29:29 +0100
+	id 1WDJ2c-0007gH-4a
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Feb 2014 20:30:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754496AbaBKT3W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Feb 2014 14:29:22 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44673 "EHLO
+	id S1754304AbaBKTak (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Feb 2014 14:30:40 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49488 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752998AbaBKT3T (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Feb 2014 14:29:19 -0500
+	id S1754071AbaBKTag (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Feb 2014 14:30:36 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8EC4469BCC;
-	Tue, 11 Feb 2014 14:29:18 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C4EFD69C2E;
+	Tue, 11 Feb 2014 14:30:35 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=bxe7W/WtwtEhkw7hMsJrIvy8RZs=; b=WkpeCz
-	Bt2XhiikN9Rxan7DkPQp+E91T0QxhUQhGiPPuJ6asiXKsZiIMQbIcOZAar819uXB
-	XwkQX3RzKxBurch9rm+aucbQQHZoNjFH/8HWedCD9v6GLOHppeiKkxPrmVnu+ORg
-	leuS5pSyTaVOPHAmc/YoE736tyKTejxC3Mrcs=
+	:content-type; s=sasl; bh=YhjRmWP9j4lKhzCYZYuiSu000aw=; b=MsiaAU
+	UpJ+e6KUDBwl7Vg80joKd77QskxU+i/+Rbhm4OZQjRqpsjXKq6Ci3uI2oXQQHaMs
+	45Sc1+v4wDBv0O6vTrcnUYlMcTT7yRLyWDG8rNOMGvscokAHhtQ7PcnoQu6X3wWX
+	3F8ijFapL9PJOcmcORiKY+RkqmGNWWM6mQMvA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=qfYgn+YY+8XWX9iF+o7MGBrCyLl8X9C6
-	L84+TOsut8KR27AqCx9uzWgN/usFnWOFeCTgeaEda0aU03vlXmSs9KGpQVMn5+y9
-	Kv/oWJY9pODePQpWo8Gk4yZ/zIdyRuCpLY42bIgy86Uln9j0WsquaZZTUiFtXlnp
-	o77Yas/tlLQ=
+	:content-type; q=dns; s=sasl; b=IsRPPvuRJ9GyTs6X9/NGFAZQp/8D8wQI
+	eUcBIJPqFN4l+TimGsUKC5K0fxfmvEQgBMkWGvy3/tNu2i9RqZvwMogqisGS5XC4
+	uo0cMjRKEyIe+JVmm58k3ucDzGeyySlqaND5YHcGK6+s5gm2Rq2c97b0VCSlAM/S
+	NwfdBG8oMWg=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 1217269BC4;
-	Tue, 11 Feb 2014 14:29:18 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id ABD5869C2D;
+	Tue, 11 Feb 2014 14:30:35 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 22D4869BC3;
-	Tue, 11 Feb 2014 14:29:17 -0500 (EST)
-In-Reply-To: <CAJo=hJsO=FBkiOo5fuPbToxE1SR3Lh8oim0eTAR6bH1a-TcdPA@mail.gmail.com>
-	(Shawn Pearce's message of "Tue, 11 Feb 2014 00:54:54 -0800")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D5EC069C2B;
+	Tue, 11 Feb 2014 14:30:34 -0500 (EST)
+In-Reply-To: <1392109750-47852-1-git-send-email-sugi1982@gmail.com> (Yoshihiro
+	Sugi's message of "Tue, 11 Feb 2014 18:09:10 +0900")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: CC1259FC-9352-11E3-B282-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: FA662158-9352-11E3-837D-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241955>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241956>
 
-Shawn Pearce <spearce@spearce.org> writes:
+Yoshihiro Sugi <sugi1982@gmail.com> writes:
 
-> Why would you do this? Perhaps you need more time in your day
-> to consume tea or coffee. Set GIT_RTT and enjoy a beverage.
-
-So the conclusion is that it is not practical to do a lazy fetch if
-it is done extremely naively at "we want this object --- wait a bit
-and we'll give you" level?
-
-I am wondering if we can do a bit better, like "we want this object
---- wait a bit, ah that's a commit, so it is likely that you may
-want the trees and blobs associated with it, too, if not right now
-but in a near future, let me push a pack that holds them to you"?
-
+> Signed-off-by: Yoshihiro Sugi <sugi1982@gmail.com>
 >
-> So-not-signed-off-by: this author or anyone else
+> diff-highlight split each hunks and compare them as byte sequences.
+> it causes problems when diff hunks include multibyte characters.
+> This change enable to work on such cases by decoding inputs and encoding output as utf8 string.
 > ---
+>  contrib/diff-highlight/diff-highlight | 16 ++++++++++------
+>  1 file changed, 10 insertions(+), 6 deletions(-)
 >
->   :-)
->
->  sha1_file.c | 14 ++++++++++++++
->  1 file changed, 14 insertions(+)
->
-> diff --git a/sha1_file.c b/sha1_file.c
-> index 6e8c05d..9bdcbc3 100644
-> --- a/sha1_file.c
-> +++ b/sha1_file.c
-> @@ -38,6 +38,7 @@ const unsigned char null_sha1[20];
->
->  static const char *no_log_pack_access = "no_log_pack_access";
->  static const char *log_pack_access;
-> +static useconds_t rtt;
->
->  /*
->   * This is meant to hold a *small* number of objects that you would
-> @@ -436,9 +437,20 @@ void prepare_alt_odb(void)
->   read_info_alternates(get_object_directory(), 0);
+> diff --git a/contrib/diff-highlight/diff-highlight b/contrib/diff-highlight/diff-highlight
+> index c4404d4..49b4f53 100755
+> --- a/contrib/diff-highlight/diff-highlight
+> +++ b/contrib/diff-highlight/diff-highlight
+> @@ -2,6 +2,7 @@
+>  
+>  use warnings FATAL => 'all';
+>  use strict;
+> +use Encode qw(decode_utf8 encode_utf8);
+>  
+>  # Highlight by reversing foreground and background. You could do
+>  # other things like bold or underline if you prefer.
+> @@ -15,8 +16,9 @@ my @added;
+>  my $in_hunk;
+>  
+>  while (<>) {
+> +	$_ = decode_utf8($_);
+>  	if (!$in_hunk) {
+> -		print;
+> +		print encode_utf8($_);
+>  		$in_hunk = /^$COLOR*\@/;
+>  	}
+>  	elsif (/^$COLOR*-/) {
+> @@ -30,7 +32,7 @@ while (<>) {
+>  		@removed = ();
+>  		@added = ();
+>  
+> -		print;
+> +		print encode_utf8($_);
+>  		$in_hunk = /^$COLOR*[\@ ]/;
+>  	}
+>  
+> @@ -58,7 +60,8 @@ sub show_hunk {
+>  
+>  	# If one side is empty, then there is nothing to compare or highlight.
+>  	if (!@$a || !@$b) {
+> -		print @$a, @$b;
+> +		print encode_utf8($_) for @$a;
+> +		print encode_utf8($_) for @$b;
+>  		return;
+>  	}
+>  
+> @@ -67,17 +70,18 @@ sub show_hunk {
+>  	# stupid, and only handle multi-line hunks that remove and add the same
+>  	# number of lines.
+>  	if (@$a != @$b) {
+> -		print @$a, @$b;
+> +		print encode_utf8($_) for @$a;
+> +		print encode_utf8($_) for @$b;
+>  		return;
+>  	}
+>  
+>  	my @queue;
+>  	for (my $i = 0; $i < @$a; $i++) {
+>  		my ($rm, $add) = highlight_pair($a->[$i], $b->[$i]);
+> -		print $rm;
+> +		print encode_utf8($rm);
+>  		push @queue, $add;
+>  	}
+> -	print @queue;
+> +	print encode_utf8($_) for @queue;
 >  }
->
-> +static void apply_rtt()
-> +{
-> + if (!rtt) {
-> + char *rtt_str = getenv("GIT_RTT");
-> + rtt = rtt_str ? strtoul(rtt_str, NULL, 10) * 1000 : 1;
-> + }
-> + if (rtt > 1)
-> + usleep(rtt);
-> +}
-> +
->  static int has_loose_object_local(const unsigned char *sha1)
->  {
->   char *name = sha1_file_name(sha1);
-> + apply_rtt();
->   return !access(name, F_OK);
->  }
->
-> @@ -1303,6 +1315,7 @@ void prepare_packed_git(void)
->
->   if (prepare_packed_git_run_once)
->   return;
-> +
->   prepare_packed_git_one(get_object_directory(), 1);
->   prepare_alt_odb();
->   for (alt = alt_odb_list; alt; alt = alt->next) {
-> @@ -1439,6 +1452,7 @@ static int open_sha1_file(const unsigned char *sha1)
->   struct alternate_object_database *alt;
->
->   fd = git_open_noatime(name);
-> + apply_rtt();
->   if (fd >= 0)
->   return fd;
+>  
+>  sub highlight_pair {
