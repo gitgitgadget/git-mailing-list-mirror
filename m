@@ -1,166 +1,155 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: git-note -C changes commit type?
-Date: Wed, 12 Feb 2014 00:52:51 +0100
-Message-ID: <CALKQrgcM7JpZCk4amjo_rwg5uuuWNg-5yd1NXB5p7EtrU9WBGg@mail.gmail.com>
-References: <1392139407.12790.7.camel@kirk>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] tests: turn on network daemon tests by default
+Date: Tue, 11 Feb 2014 15:58:27 -0800
+Message-ID: <xmqqzjlxnqvw.fsf@gitster.dls.corp.google.com>
+References: <20140210191521.GA3112@sigill.intra.peff.net>
+	<20140210212931.GA16154@sigill.intra.peff.net>
+	<xmqqa9dxpgw9.fsf@gitster.dls.corp.google.com>
+	<20140211200445.GA27946@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git mailing list <git@vger.kernel.org>
-To: Joachim Breitner <mail@joachim-breitner.de>
-X-From: git-owner@vger.kernel.org Wed Feb 12 00:53:09 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Feb 12 00:58:39 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WDN8T-0003YW-8T
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Feb 2014 00:53:05 +0100
+	id 1WDNDq-0005KU-Mc
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Feb 2014 00:58:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752136AbaBKXxA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Feb 2014 18:53:00 -0500
-Received: from mail12.copyleft.no ([188.94.218.224]:34471 "EHLO
-	mail12.copyleft.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751585AbaBKXw7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Feb 2014 18:52:59 -0500
-Received: from locusts.copyleft.no ([188.94.218.116] helo=mail.mailgateway.no)
-	by mail12.copyleft.no with esmtp (Exim 4.76)
-	(envelope-from <johan@herland.net>)
-	id 1WDN8K-0004QL-QL
-	for git@vger.kernel.org; Wed, 12 Feb 2014 00:52:56 +0100
-Received: from mail-pb0-f46.google.com ([209.85.160.46])
-	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
-	(Exim 4.72 (FreeBSD))
-	(envelope-from <johan@herland.net>)
-	id 1WDN8J-0000Kl-SI
-	for git@vger.kernel.org; Wed, 12 Feb 2014 00:52:56 +0100
-Received: by mail-pb0-f46.google.com with SMTP id um1so8448863pbc.33
-        for <git@vger.kernel.org>; Tue, 11 Feb 2014 15:52:51 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=BgODI9OObwyEOzbUUlSqJvjnQKtrATBFo+xwhUf507E=;
-        b=WRX5Vu7TLEFTQ74bLVZ2GjQXOsdO9WT5hjaLshOiOM8tpTB+Qv1KXXy17DFWNpchPn
-         VRRprC2WqbLmd29a2qyqZW0CJwtEvhGI1LuT3Negflk+DlHuxVT80se0ttyDdvfh91mg
-         dEZhAyLm506BYf9IB7Jquv2eS+JZ47xW+YtiEpqk90oUhGLHVVh3VQJdqvR+RsYNhZOZ
-         1a3b6+CfOGX49pFxNBrmGfIzHvfk1MgzlfFr0kSubnyUS33qMsedKcluzqppdz9DguBF
-         PkTXVR+KzqHAyfKWby2ULWFepdywrY7M148qJdzESpNRx2l8UEJG8rJEpfz/Es4GKQPn
-         /6wA==
-X-Received: by 10.68.138.165 with SMTP id qr5mr48066677pbb.123.1392162771946;
- Tue, 11 Feb 2014 15:52:51 -0800 (PST)
-Received: by 10.70.48.228 with HTTP; Tue, 11 Feb 2014 15:52:51 -0800 (PST)
-In-Reply-To: <1392139407.12790.7.camel@kirk>
+	id S1752270AbaBKX6e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Feb 2014 18:58:34 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:58887 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752002AbaBKX6d (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Feb 2014 18:58:33 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DCA2F6C473;
+	Tue, 11 Feb 2014 18:58:32 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=r4NoWAeNvq2AFbT7Zq/jpwZpT5o=; b=sxtiLF
+	LI8sjtuXscrTnFqiGMBe6+V/uru+fXO1OuA2WTwj2XlASXBmLM0XUCu72aI/8Pqd
+	tozWXhetZjMFJJaNd8rT4ockEc61LFcJgsfgVb/vQsJzDh7MqLHv1HTOgOtvv3Gb
+	iqDrHk/A8bm2gEEWaReL1hi06BN2bku+6L3wM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=WReZVdkS1DksogcX1u4MykdYLLpIDa2Z
+	BHrH773EH0ZKMZZZDZyY99fHEzyPrg9dpjQt4LRXjb+tQOmzqLc47tdfpGDxi3MN
+	hwnuAnybcVhS6o4qchHG6dcjMoabSh/glaTdxT3ePCBG3lngI47HmbvXxVykMv4i
+	cuHAy6//hIw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id BC2D06C472;
+	Tue, 11 Feb 2014 18:58:32 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E0C886C46D;
+	Tue, 11 Feb 2014 18:58:31 -0500 (EST)
+In-Reply-To: <20140211200445.GA27946@sigill.intra.peff.net> (Jeff King's
+	message of "Tue, 11 Feb 2014 15:04:45 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 69106D78-9378-11E3-BBFB-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241962>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241963>
 
-On Tue, Feb 11, 2014 at 6:23 PM, Joachim Breitner
-<mail@joachim-breitner.de> wrote:
-> Hi,
+Jeff King <peff@peff.net> writes:
+
+> On Tue, Feb 11, 2014 at 11:51:18AM -0800, Junio C Hamano wrote:
 >
-> judging from the documentation I got the impression that I can pass any
-> git object has to "git note -C <hash>" and it would stored as-is. But it
-> seems the objects gets mangled somehow...
-
-...well... the documentation does not say "any object", it actually
-explicitly says "blob object"... ;)
-
-> (I want to attach a commit object as a note, to reference the history of
-> a feature before the final cleanup rebase. For that I turn the reflog
-> into a series of commits, and the final commit is the one I want to
-> store there.)
+>> Those who run buildfarms may want to disable the networking test if
+>> the buildfarms are not isolated well, for example.  They have to be
+>> told somewhere that now they need to explicitly disable these tests
+>> and how.
 >
-> $ mkdir foo
-> $ cd foo/
-> $ echo foo > a
-> $ git init
-> Initialisierte leeres Git-Repository in /tmp/foo/.git/
-> $ git add a
-> $ git commit -m 'A commit'
-> [master (Basis-Commit) 3d7de37] A commit
->  1 file changed, 1 insertion(+)
->  create mode 100644 a
-> $ echo foo2 > a
-> $ git commit -m 'A commit 2' -a
-> [master e1bfac4] A commit 2
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> $ git notes --ref history add -C 3d7de37 e1bfac4
-> $ git ls-tree notes/history
-> 100644 blob 5b73d5152e6207e3a2b67e57ca3a2cb94d12061e e1bfac434ebd3135a3784f6fc802f235098eebd0
+> I think they should be OK. The daemons run on the loopback interface, so
+> there is hopefully not a security implication. If multiple buildfarms
+> are sharing the same loopback space (e.g., running in separate
+> directories on the same machine), the "auto" setting should degrade
+> gracefully. One daemon will "win" the setup, and the tests will run, and
+> on the other, they will be skipped.
 >
-> I was expecting 3d7de37 to be referenced here.
+>> I am in favor of this change but just pointing out possible fallouts
+>> might be larger than we think.
 >
-> Is that a bug, or is storing commits as notes not supported?
+> Agreed, but I think the only way to know the size of those fallouts is
+> to try it and see who complains.  I would not normally be so cavalier
+> with git itself, but I think for the test infrastructure, we have a
+> small, tech-savvy audience that can help us iterate on it without too
+> much pain.
 
-I guess it depends on your POV... The current documentation says "blob
-object", and what actually happens (in builtin/notes.c) is that the
-given object (3d7de37 in your example) is read into a strbuf (in
-parse_reuse_arg()) and stored back into a note object (in
-create_note()), without preserving the object type ("blob" type is
-hardcoded). This means an incoming blob object (as documented) will be
-preserved (i.e. reuse the same SHA-1), but for any other object type,
-the object bits will be read, and stored back into a blob object. This
-is why your commit (or any other non-blob) ends up with a different
-SHA-1 when stored as a note: It is the same bytes, but in a blob
-object instead of a commit object.
+Sure. One immediate complaint is that I would probably need to do
+something like this in the build automation:
 
-There is currently no way the "git notes" commands will allow you to
-store the 3d7de37 commit object directly as a note. There is also
-(AFAICS) no easy workaround (git fast-import could've been a
-workaround if it did not already require the first N/notemodify
-argument to be a blob object). The best alternative, off the top of my
-head, would be to write your own program using the notes.h API to
-manipulate the notes tree directly (or - suboptimally - use other
-low-level Git operations to do the same).
+	if testing a branch without this patch
+        then
+		: do nothing
+	else
+		GIT_TEST_GIT_DAEMON=false
+	fi
 
-However before you go there, let's take a step back, and look at what
-the result would look like (if you were allowed to store a commit
-object directly as a note):
+Arguably, it is the fault of the current/original code that treated
+*any* non-empty value that is set in the environment variable as
+"true"---if it paid attention to GIT_TEST_GIT_DAEMON=NoThanks, we
+wouldn't have to have a workaround like this.
 
-You would have a notes ref "refs/notes/history" whose tree would
-contain an entry named e1bfac434ebd3135a3784f6fc802f235098eebd0
-pointing to a _commit_ (3d7de37...). Obviously, it would not make
-sense to use refs/notes/history while displaying the commit log ("git
-log --notes=history"), as the raw commit object would be shown in the
-log. However, more fundamentally: a tree referring to a _commit_ is
-usually how Git stores _submodule_ links (i.e. which revision of the
-named submodule is to be used by this super-repo tree), and I'm (off
-the top of my head) not at all sure that such a submodule link in a
-notes tree is handled "sanely" by Git - or even that it makes sense at
-all. For one, I'm not sure that Git requires (or even expects) the
-commit object referenced by a tree to be present in the same object
-DB. So if you share your notes, I don't know whether or not the
-fetch/push machinery will include the commit object in the shared
-notes... These are questions that should be answered before we decide
-whether using commits directly as notes makes sense.
+I wonder if GIT_TEST_X=$(test_tristate "$GIT_TEST_X") pattern can be
+made a bit more friendly, though.  For example, can we behave
+differently depending on the reason why $GIT_TEST_X is empty?
 
-If we do figure out that storing commits as note objects is desirable
-(and does not have too nasty side-effects), then I am not opposed to
-fixing builtin/notes.c to preserve type of the object passed in -C.
-Certainly, the current behavior for non-blobs (i.e. copy the object
-bytes, but not the object type) is probably not useful to anyone...
+ - People who have *not* been opting in to the expensive tests have
+   not done anything special; GIT_TEST_X environment variable did
+   not exist for them (i.e. unset), and we used to skip when
+   "$GIT_TEST_X" is an empty string.
 
-That said, there may be other ways to solve your immediate problem:
-Instead of storing the commit object directly as a note, you could
-store the commit SHA-1 into a blob, and use that as the blob object.
-That would also allow you to store multiple commits in the note for
-e1bfac4 (in case you had several cleanup rebases leading to the final
-commit), or you could store other kinds of metadata in the same note.
-Or do you have a requirement that the reflog history (presumably
-reachable from 3d7de37) need to be shared (or otherwise kept
-reachable)? In that case, you might be better off using an explicit
-ref to keep that history alive; e.g. you could create
-refs/history/e1bfac4 to point to 3d7de37 ("git update-ref
-refs/history/e1bfac4 3d7de37"), and keep everything
-alive/reachable/shareable that way...
+ - We want to encourage people who do not care to run these tests.
+   If people do not do anything, their $GIT_TEST_X will continue to
+   be an empty string without GIT_TEST_X variable in the
+   environment.
 
+If we let people who *do* want to opt out of the expensive tests by
+explicitly setting $GIT_TEST_X to an empty string in the new scheme,
+wouldn't the transition go a lot smoother?
 
-Hope this helps,
+The caller may have to pass the name of the variable:
 
-...Johan
+	GIT_TEST_DAEMON=$(test_tristate GIT_TEST_DAEMON)
 
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+and then the callee may become
+
+	test_tristate () {
+		variable=$1
+                if eval "test x\"\${$variable+isset}\" = xisset"
+		then
+			# explicitly set
+                        eval "value=\$$variable"
+                        case "$value" in
+			"")
+				echo false ;;
+                        false | auto)
+				echo "$value" ;;
+			*)
+				echo true ;;
+   			esac
+		else
+			echo auto
+		fi
+	}
+
+so that
+
+ - Any non-empty string other than the magic strings "false" and
+   "auto" continue to mean "please I want to test";
+
+ - Setting the variable explicitly to an empty string will continue
+   to mean "no I do not want to test";
+
+ - Leaving the variable unset will continue to mean "I don't really
+   care; just follow the default the project gives me".
