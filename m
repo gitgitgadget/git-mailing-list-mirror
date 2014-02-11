@@ -1,69 +1,97 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 00/11] More preparatory work for multiparent tree-walker
-Date: Mon, 10 Feb 2014 16:28:33 -0800
-Message-ID: <xmqqeh3aqyq6.fsf@gitster.dls.corp.google.com>
-References: <cover.1391794688.git.kirr@mns.spb.ru>
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v4 7/9] rebase: parse options in stuck-long mode
+Date: Tue, 11 Feb 2014 00:32:04 +0000
+Message-ID: <20140211003204.GB4582@vauxhall.crustytoothpaste.net>
+References: <1391994218-639101-1-git-send-email-sandals@crustytoothpaste.net>
+ <1391994218-639101-8-git-send-email-sandals@crustytoothpaste.net>
+ <CAPig+cT-SptdV_rargSgJLMANQaJqnq8g+DjgdNwMvwHXC_NUA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Kirill Smelkov <kirr@mns.spb.ru>
-X-From: git-owner@vger.kernel.org Tue Feb 11 01:28:58 2014
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="4ZLFUWh1odzi/v6L"
+Cc: Git List <git@vger.kernel.org>,
+	Nicolas Vigier <boklm@mars-attacks.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Tue Feb 11 01:32:15 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WD1Db-0004lC-Do
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Feb 2014 01:28:55 +0100
+	id 1WD1Go-0005sg-HT
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Feb 2014 01:32:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752635AbaBKA2h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Feb 2014 19:28:37 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61097 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752111AbaBKA2h (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Feb 2014 19:28:37 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 749666B16F;
-	Mon, 10 Feb 2014 19:28:36 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=9+WCdWALgUG6ckmiIAYZjuXwHgo=; b=jYoTSr
-	YgQ+gF/Ovxu3IxA6YhOVQkPl1dVVDEldfCmC/YUWQAWCILlblhLnX0FPAQBpQ6WR
-	qvH3oslYX2jO425pFLNg9iMJmJGVD2I55idHHEmoM1rK3YEpKbu4jzAVM8BXqIdu
-	/6Nwung5UPtPLl1FFy7WNDpJFfsV1yFd3i59A=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ZS86UcA7yit0dUKOxejMuluGGE1qAebX
-	K3JYNjv4QXancHbzFWa97HMPpOT9vnFoLnWmWQ5P8LL5dZ4tOr5NH5ADsr9ulW0H
-	XL+5Vby28BZOaGY+wgdsUf7e2kUm40HlSPeikZjXlFqnfX7aj5GyQrLWBNDlUvaE
-	O7V6rWDOFqs=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4EC056B16D;
-	Mon, 10 Feb 2014 19:28:36 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	id S1752706AbaBKAcL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Feb 2014 19:32:11 -0500
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:51794 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752111AbaBKAcJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 10 Feb 2014 19:32:09 -0500
+Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:485c:27a1:8772:5ef8])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7CA326B16B;
-	Mon, 10 Feb 2014 19:28:35 -0500 (EST)
-In-Reply-To: <cover.1391794688.git.kirr@mns.spb.ru> (Kirill Smelkov's message
-	of "Fri, 7 Feb 2014 21:48:41 +0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 71AC9972-92B3-11E3-B1C5-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 54B3F2807A;
+	Tue, 11 Feb 2014 00:32:08 +0000 (UTC)
+Mail-Followup-To: Eric Sunshine <sunshine@sunshineco.com>,
+	Git List <git@vger.kernel.org>,
+	Nicolas Vigier <boklm@mars-attacks.org>,
+	Junio C Hamano <gitster@pobox.com>
+Content-Disposition: inline
+In-Reply-To: <CAPig+cT-SptdV_rargSgJLMANQaJqnq8g+DjgdNwMvwHXC_NUA@mail.gmail.com>
+X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
+ 3.12-1-amd64)
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241937>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241938>
 
-Kirill Smelkov <kirr@mns.spb.ru> writes:
 
-> Here I'm preparing tree-diff.c to be ready for the new tree-walker, so that the
-> final change is tractable and looks good and non noisy. Some small speedups
-> are gained along the way. The final bits are almost ready, but I don't want to
-> release them in a hurry.
+--4ZLFUWh1odzi/v6L
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-No worries.  We are not in a hurry to apply non-regression-fix
-changes during a pre-release feature freeze period anyway.
+On Mon, Feb 10, 2014 at 01:59:02AM -0500, Eric Sunshine wrote:
+> On Sun, Feb 9, 2014 at 8:03 PM, brian m. carlson
+> <sandals@crustytoothpaste.net> wrote:
+> > From: Nicolas Vigier <boklm@mars-attacks.org>
+> >
+> > There is no functionnal change. The reason for this change is to be able
+>=20
+> s/functionnal/functional/
 
-This seems to somehow conflict with other topics and does not
-cleanly apply on top of your other tree-diff topic, by the way.
+I could have sworn I fixed that typo in the commit message.  No, that
+was a different patch with the same typo.  Sorry about that; I should
+have double-checked.  I'm going to wait another day or so to see if
+anyone thinks other changes are needed, and then I'll do a reroll.
+
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
+
+--4ZLFUWh1odzi/v6L
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCgAGBQJS+W+EAAoJEL9TXYEfUvaLRuUP/Rz4PIT+8sQRxGdDPRidb6M3
+YaslyLetzThehtG9mqcEGdrjAfbto/enFKmPkd6o49rb64gxrs4A4a/aG6LNE1RQ
+1wbKj/v5JD+L/5AufuMdnpUfw9m2C65TwASHzEjwwSft3pFTsVqadPTl/SB9Nd3Q
+b1SThSlu3Gr1M/FANnM3cVaEPnJ+IRc9tecVJ/kPPVWXbOJMsNGnaDpUAXGubCv2
+yRUhV6hly3xFRFhQDfJe4bgNoOPrtx71zMfLikDxHwn+6ZuY0Fxr6gtwMQEP0G0d
+3Ihl3cBlFHO+eMYTmNfdEpvn1Rfk1KtTP7akX0xo2T1xAKOBCOH1Wv8hqnRnCN4+
+3SzhAbL5YpQpNWssLPkQZE2HfCCT8bL3fmVZCdVXbSkc6luVwbcbuqiLx+ZL0LtF
+Rmy+Bhx3w2pki0x2VIF/CbFIxIMFDO6KJFCQQhE3Kh+QxXbYzOn/+bI0YJmumTVn
+ZvIIoylSP358HMOlZBGlmdNHtUjFsH6h7N+8rEq/RK7DmwV6gklRKMCg88G7d6P1
+PTK6yYk+u6sHIQA7WDMDV7UBhR/PKmt0HHRhCvXPZaYn2XfHHevAg87Wz9OLzI7h
+D0bpPgv1N4/txnPgxutwita6Qr2XNs0woxTcWCFNriwJbNu8YSwhQR6c+P26qXnq
+WlScSHyRdx+YjhRGb5V0
+=HcnX
+-----END PGP SIGNATURE-----
+
+--4ZLFUWh1odzi/v6L--
