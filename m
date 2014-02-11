@@ -1,78 +1,99 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v3 00/26] inotify support
-Date: Tue, 11 Feb 2014 06:34:52 +0700
-Message-ID: <CACsJy8ACvd6QaqUySiZSuJmMkJiM1QWr5+jsutPKuajPY_spEg@mail.gmail.com>
-References: <1389952060-12297-1-git-send-email-pclouds@gmail.com>
- <1391401754-15347-1-git-send-email-pclouds@gmail.com> <52F5E521.4090707@web.de>
- <CACsJy8C0x1FL_6KtYj4MMnhtR6RrPSxR6_yysnZykubdotT9GA@mail.gmail.com>
- <52F7E2BC.5030905@web.de> <CACsJy8A9JxDWhEWpdUUL_6tTJZvmf93Ga_nPt09yUzG44mc-Qg@mail.gmail.com>
- <52F90483.7050206@web.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/4] docs/git-clone: clarify use of --no-hardlinks option
+Date: Mon, 10 Feb 2014 16:20:23 -0800
+Message-ID: <xmqqmwhyqz3s.fsf@gitster.dls.corp.google.com>
+References: <1391892097-16169-1-git-send-email-alash3@bloomberg.net>
+	<1391892097-16169-3-git-send-email-alash3@bloomberg.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Tue Feb 11 00:35:31 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, "Albert L. Lash\, IV" <alash3@bloomberg.net>
+To: "Albert L. Lash\, IV" <albert.lash@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 11 01:20:35 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WD0Nv-0005LD-GE
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Feb 2014 00:35:31 +0100
+	id 1WD15X-0002HS-82
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Feb 2014 01:20:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753229AbaBJXf1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 10 Feb 2014 18:35:27 -0500
-Received: from mail-qa0-f51.google.com ([209.85.216.51]:59618 "EHLO
-	mail-qa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753217AbaBJXfX convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 10 Feb 2014 18:35:23 -0500
-Received: by mail-qa0-f51.google.com with SMTP id f11so10793865qae.10
-        for <git@vger.kernel.org>; Mon, 10 Feb 2014 15:35:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=DORROJ71paQ2+YRCkFLKcVuu4iw/iMgDAcF8D7Gf258=;
-        b=a+hxbbwzW29hO8y05CYi64neZJnzQKdFSVHGG90eaH3A90Bp5NTXmZ0Oxxu585PHuq
-         sr05tYkWhPgkuEA9nprI04VTBVAgFgTV1alVuw2g8fLmN+59hJaDAXivUaGsX+DdX9sS
-         EnkJfbemQ/GD5r73fVtTrI5OdIvtcNrw7qJG7GWuhJRk1G1XzgA+ZrkfCmiAYtvMOlt7
-         0B9JQyArhwO78rS+7PdkFWXCInAcPfPwGmSDmBNGgiiRzYeuLfQ1+B66rsjtlZuvP2+Y
-         ouUOwyhuQp1EVpiTGPl9NVyFsW3GtC3fSbgcVFjsq91gtcsjtacMbKkMwcWP7O1zOnwh
-         Y5ng==
-X-Received: by 10.140.40.5 with SMTP id w5mr49523772qgw.65.1392075322444; Mon,
- 10 Feb 2014 15:35:22 -0800 (PST)
-Received: by 10.96.215.102 with HTTP; Mon, 10 Feb 2014 15:34:52 -0800 (PST)
-In-Reply-To: <52F90483.7050206@web.de>
+	id S1753284AbaBKAU3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Feb 2014 19:20:29 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35172 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752850AbaBKAU2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Feb 2014 19:20:28 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4DC356BE64;
+	Mon, 10 Feb 2014 19:20:27 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=0/YaARNXZijo+q3gkOMALdmR3Fw=; b=gqgkSk
+	PpAWkkkr2QTyi5D4ljmdY1xedZVDs7xvN5+5+WfU7gdmCMDQLDqP7/lRHxTQ5fp5
+	TY6Z/E0P2ZIjRBNkyas5cvlkDlqW5/LFV/9fW5nOsFdghntn4lZQfMOGxHpJLw5d
+	coCQkFA/ntxSWwcunhjxSk01/9BFpd9fUJ5P8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=FGHsTcyl4M7V23f3I1Zxor7sZCvHXAIz
+	S9w4bzU9ZqQXHrimtWbZkY+jBGCd6MpTs7QrkPUGIBFik/xSp9CjDlwlGdKftWud
+	6mYQ61HMMavyuEk6MQn0ugeSfwzRqL8zyBLcpmmxoydYM9Z3qOvPllyiGm3//Xs2
+	5virhRJdJUs=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 348BA6BE62;
+	Mon, 10 Feb 2014 19:20:27 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C78DC6BE60;
+	Mon, 10 Feb 2014 19:20:25 -0500 (EST)
+In-Reply-To: <1391892097-16169-3-git-send-email-alash3@bloomberg.net> (Albert
+	L. Lash, IV's message of "Sat, 8 Feb 2014 15:41:36 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 4DCC5142-92B2-11E3-B3DF-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241934>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241935>
 
-On Mon, Feb 10, 2014 at 11:55 PM, Torsten B=C3=B6gershausen <tboegi@web=
-=2Ede> wrote:
-> On 2014-02-10 11.37, Duy Nguyen wrote:
->>>
->>> Could we use relative path names internally, relative to $GIT_DIR ?
->>
->> No because this is when the client tell the server about $GIT_DIR. I
->> guess we can use realpath(1) here.
-> Good.
->
-> I realized that the watcher can watch several repos at the same time.
->
-> However, we could allow relative path names, which will be relative t=
-o $SOCKET_DIR,
-> and loosen the demand for an absolut path name a little bit.
-> And $SOCKET_DIR can be the same as $GIT_DIR, when we are watching onl=
-y one repo.
+"Albert L. Lash, IV" <albert.lash@gmail.com> writes:
 
-It does not help much anyway because file-watcher-lib.c sends
-get_git_work_tree(), which is absolute/normalized path, to
-file-watcher. There's no sources of sending $GIT_DIR relative to
-$SOCKET_DIR (and I don't think we want to make get_git_work_tree()
-relative before sending, it's more work on both sides we no benefits,
-except for tracing).
---=20
-Duy
+> Current text claims optimization, implying the use of
+> hardlinks, when this option ratchets down the level of
+> efficiency. This change explains the difference made by
+> using this option, namely copying instead of hardlinking,
+> and why it may be useful.
+>
+> Signed-off-by: Albert L. Lash, IV <alash3@bloomberg.net>
+> ---
+>  Documentation/git-clone.txt | 11 ++++-------
+>  1 file changed, 4 insertions(+), 7 deletions(-)
+>
+> diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+> index bf3dac0..0363d00 100644
+> --- a/Documentation/git-clone.txt
+> +++ b/Documentation/git-clone.txt
+> @@ -55,15 +55,12 @@ repository is specified as a URL, then this flag is ignored (and we
+>  never use the local optimizations).  Specifying `--no-local` will
+>  override the default when `/path/to/repo` is given, using the regular
+>  Git transport instead.
+> -+
+> -To force copying instead of hardlinking (which may be desirable if you
+> -are trying to make a back-up of your repository), but still avoid the
+> -usual "Git aware" transport mechanism, `--no-hardlinks` can be used.
+>  
+>  --no-hardlinks::
+> -	Optimize the cloning process from a repository on a
+> -	local filesystem by copying files under `.git/objects`
+> -	directory.
+> +	Force the cloning process from a repository on a local
+> +	filesystem to copy the files under the `.git/objects`
+> +	directory instead of using hardlinks. This may be desirable
+> +	if you are trying to make a back-up of your repository.
+
+Makes sense, and it is kind of embarrassing (I have to suspect that
+this was originally the description of "--hardlinks" option).
+
+[PATCH {1,2}/4] looked trivially correct, too.
+
+Thanks.
