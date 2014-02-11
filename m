@@ -1,105 +1,144 @@
-From: Joachim Breitner <mail@joachim-breitner.de>
-Subject: git-note -C changes commit type?
-Date: Tue, 11 Feb 2014 17:23:27 +0000
-Message-ID: <1392139407.12790.7.camel@kirk>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v5 02/14] trailer: process trailers from file and arguments
+Date: Tue, 11 Feb 2014 10:07:35 -0800
+Message-ID: <xmqqa9dxr09k.fsf@gitster.dls.corp.google.com>
+References: <xmqqr47fx001.fsf@gitster.dls.corp.google.com>
+	<20140209.145205.1882309246743951569.chriscool@tuxfamily.org>
+	<xmqq61omu96d.fsf@gitster.dls.corp.google.com>
+	<20140210.205936.813126606054805390.chriscool@tuxfamily.org>
+	<xmqq38jqsnc2.fsf@gitster.dls.corp.google.com>
+	<CAP8UFD1Nq-LkE=FW5dnBZKKd7-ORJPo1BFs3sY+MLGxuXEWuTw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature";
-	boundary="=-5wJajMjS7UWj+QTRQO09"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 11 18:46:40 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Christian Couder <chriscool@tuxfamily.org>,
+	git <git@vger.kernel.org>, Johan Herland <johan@herland.net>,
+	Josh Triplett <josh@joshtriplett.org>,
+	Thomas Rast <tr@thomasrast.ch>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Dan Carpenter <dan.carpenter@oracle.com>,
+	Greg Kroah-Hartman <greg@kroah.com>, Jeff King <peff@peff.net>
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 11 19:07:48 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WDHPd-0007J4-05
-	for gcvg-git-2@plane.gmane.org; Tue, 11 Feb 2014 18:46:25 +0100
+	id 1WDHkH-0006MM-IJ
+	for gcvg-git-2@plane.gmane.org; Tue, 11 Feb 2014 19:07:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752252AbaBKRqK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Feb 2014 12:46:10 -0500
-Received: from hermes.serverama.de ([78.47.178.158]:60931 "EHLO
-	hermes.serverama.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751358AbaBKRqG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Feb 2014 12:46:06 -0500
-X-Greylist: delayed 1352 seconds by postgrey-1.27 at vger.kernel.org; Tue, 11 Feb 2014 12:46:06 EST
-Received: from [10.254.1.12] (helo=kirk)
-	by hermes.serverama.de with esmtps (TLS1.2:DHE_RSA_AES_128_CBC_SHA1:128)
-	(Exim 4.80)
-	(envelope-from <mail@joachim-breitner.de>)
-	id 1WDH3Q-0008K7-Mm
-	for git@vger.kernel.org; Tue, 11 Feb 2014 18:23:31 +0100
-Received: from jojo by kirk with local (Exim 4.82)
-	(envelope-from <mail@joachim-breitner.de>)
-	id 1WDH3P-0003wt-K2
-	for git@vger.kernel.org; Tue, 11 Feb 2014 17:23:27 +0000
-X-Mailer: Evolution 3.8.5-2+b1 
-X-Spam-Score: -7.6 (-------)
-X-Spam-Report: Status No, score=-7.6 required=5.0 bayes=0.0000 tests=ALL_TRUSTED=-1,BAYES_00=-6.599 autolearn=ham version=3.3.2
+	id S1751367AbaBKSHl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Feb 2014 13:07:41 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:48302 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751014AbaBKSHk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Feb 2014 13:07:40 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7634969C11;
+	Tue, 11 Feb 2014 13:07:38 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=9fn2zqdgJ78spG/m/iNH6dTGQPo=; b=D109zi
+	3O3Teal7Wv7ncqftD4jMSsOi9Da6ZjEMF+9OKXQvek6/4AacAUsDuEW9XUozpC/x
+	5gsukdWaj1WwHz9jpNVdp/ehkTfTv0zVjGVC4Q9jC9RDCHVVDu0tC9rjuUXJNDqW
+	zzRySvk9uKFM/tUAPkeD55iIfnhVKYqstVgm0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=xdN8QvwN+iJZiuPxIzUH5u92NhDva1yp
+	oshgFN2QmOhPu3Qk569wqCtBqOuKqPUkP3eP+NfXoYCW2QbGX1MB1WHj8PHDODv7
+	FSVfEb77RP5FKhYU7T1bAo4H5mOT62ubSe+geUEMcyUdT7ZDz9zIpSExyC86JtL8
+	AiU3C0ZDsjk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 586DB69C10;
+	Tue, 11 Feb 2014 13:07:38 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4564E69C0C;
+	Tue, 11 Feb 2014 13:07:37 -0500 (EST)
+In-Reply-To: <CAP8UFD1Nq-LkE=FW5dnBZKKd7-ORJPo1BFs3sY+MLGxuXEWuTw@mail.gmail.com>
+	(Christian Couder's message of "Tue, 11 Feb 2014 16:02:40 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 6390CE50-9347-11E3-BE4E-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241950>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241951>
 
+Christian Couder <christian.couder@gmail.com> writes:
 
---=-5wJajMjS7UWj+QTRQO09
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+>> Even if we assume, for the sake of discussion, that it *is* a good
+>> idea to separate "under this condition" part and "do this" part, I
+>> do not think the above is the only or the best way to express
+>> "distinct values allowed for the same key".  How do we argue that
+>> this from your example
+>>
+>>   if_exists = add_if_different
+>>   if_missing = add
+>>
+>> is a better design than this, for example?
+>>
+>>   if_key_value_exists = ignore ; exact matching <key,val> exists
+>>   if_key_exists = add          ; otherwise
+>>   if_missing = add
+>
+> The question is what happens if we want to say "if the same <key,
+> value> pair exists but not near where we would add.
+>
+> With the solution I implemented, that is:
+> ...
+> With the solution you suggest, should we have:
+> ...
+>   if_key_value_exists_not_neighbor = add ; exact matching <key,val>
+> ...
+> or:
+>   if_key_value_exists = ignore_if_neighbor ; exact matching <key,val> exists
+> ...
+>
+> And what happens if we want to say "if key exists and value matches
+> <regex>", how do we express that then?
+> Or what happens when we want to say "if key exists and <command> succeeds"?
+> ...
+> With what I suggest, we can still say:
+> ...
+> And then people might ask if they can also use something like this:
+> ...
+> and it will look like we are trying too much to do what should be done
+> in only one script.
 
-Hi,
+I think the above illustrates my point very clearly.
 
-judging from the documentation I got the impression that I can pass any
-git object has to "git note -C <hash>" and it would stored as-is. But it
-seems the objects gets mangled somehow...
+These numerous questions you have to ask are indications why
+choosing "this condition goes to the left hand side of the equal
+sign (e.g. exists)" and "this condition goes to the right hand side
+(e.g. do-this-if_neighbor)" is not working well.  The user has to
+remember which conditions go to the variable name and which
+conditions go to the action part.
 
-(I want to attach a commit object as a note, to reference the history of
-a feature before the final cleanup rebase. For that I turn the reflog
-into a series of commits, and the final commit is the one I want to
-store there.)
+And the made-up alternative you listed above is not a solution I
+suggest to begin with---it is a strawman "if we assume such a
+splitting were a good idea" in the first place ;-).
 
-$ mkdir foo
-$ cd foo/
-$ echo foo > a
-$ git init
-Initialisierte leeres Git-Repository in /tmp/foo/.git/
-$ git add a
-$ git commit -m 'A commit'
-[master (Basis-Commit) 3d7de37] A commit
- 1 file changed, 1 insertion(+)
- create mode 100644 a
-$ echo foo2 > a
-$ git commit -m 'A commit 2' -a
-[master e1bfac4] A commit 2
- 1 file changed, 1 insertion(+), 1 deletion(-)
-$ git notes --ref history add -C 3d7de37 e1bfac4
-$ git ls-tree notes/history
-100644 blob 5b73d5152e6207e3a2b67e57ca3a2cb94d12061e e1bfac434ebd3135a3784f=
-6fc802f235098eebd0
+What I was wondering if it is an better alternative was the below.
 
-I was expecting 3d7de37 to be referenced here.
+>> The latter splits remaining conditional logic from "do this" part
+>> (no more "add_if_different" that causes "add" action to see if there
+>> is the same key and act differently) and moves it to "under this
+>> condition" part.
+>> ...
+>> I am trying to illustrate that the line to split the "under this
+>> condition" and "do this" looks arbitrary and fuzzy here, and because
+>> of this arbitrary-ness and fuzziness, it is not very obvious to me
+>> why it is a good idea to have "under this condition" as a separate
+>> concept from "do this" settings.
 
-Is that a bug, or is storing commits as notes not supported?
+That is, not splitting the logic into two parts like you did,
+i.e. "if_X = do_Y_if_Z", which invites "why is it not if_true =
+do_Y_if_X_and_Z, if_X_and_Z = do_Y, if_Z = do_Y_if_X"?
 
-Thanks,
-Joachim
-
-
---=20
-Joachim =E2=80=9Cnomeata=E2=80=9D Breitner
-  mail@joachim-breitner.de =E2=80=A2 http://www.joachim-breitner.de/
-  Jabber: nomeata@joachim-breitner.de  =E2=80=A2 GPG-Key: 0x4743206C
-  Debian Developer: nomeata@debian.org
-
---=-5wJajMjS7UWj+QTRQO09
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iEYEABECAAYFAlL6XI8ACgkQ9ijrk0dDIGx6iQCfRMw30Zhn0VLUv3KgWxiEGqU+
-iPcAoICpAAbs2tDGwzHxwMP87/BP5/J3
-=DaYU
------END PGP SIGNATURE-----
-
---=-5wJajMjS7UWj+QTRQO09--
+One possible way to avoid the confusion is to say "do_Y_if_X_and_Z"
+without making the rule split into conditions and actions---I am
+NOT saying that is _better_, there may be other solutions to avoid
+this two-part logic in a cleaner way.
