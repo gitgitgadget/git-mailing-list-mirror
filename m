@@ -1,91 +1,121 @@
-From: Stefan Zager <szager@google.com>
-Subject: Re: Make the git codebase thread-safe
-Date: Wed, 12 Feb 2014 11:30:29 -0800
-Message-ID: <CAHOQ7J9A7zPV-kYe1WiQrVuWXXTNDVOQJEbnB+_jzEQ2_4Umxw@mail.gmail.com>
-References: <CA+TurHgyUK5sfCKrK+3xY8AeOg0t66vEvFxX=JiA9wXww7eZXQ@mail.gmail.com>
-	<CABPQNSZ_LLg5i+mpwUj7pzXVQMY1tcXz2gJ+PWG-mP1iyjxoaw@mail.gmail.com>
-	<CAHOQ7J8QxfvtrS2KdgzUPvkDzJ1Od0CMvdWxrF_bNacVRYOa5Q@mail.gmail.com>
-	<CABPQNSZtQd51gQY7oK8B-BbpNEhxR-onQtiXSfW9sv1t2YW_nw@mail.gmail.com>
-	<CAHOQ7J_Jrj1NJ_tZaCioskQU_xGR2FQPt8=JrWpR6rfs=c847w@mail.gmail.com>
-	<CABPQNSYVGc9m0_xfAWe=3b7CXyGZ-2FfTMRbTJ=UECeZUtdgmg@mail.gmail.com>
-	<52FBC9E5.6010609@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] blame.c: prepare_lines should not call xrealloc for every line
+Date: Wed, 12 Feb 2014 11:36:44 -0800
+Message-ID: <xmqqvbwkm8c3.fsf@gitster.dls.corp.google.com>
+References: <1392215244-26785-1-git-send-email-dak@gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: kusmabite@gmail.com, Stefan Zager <szager@chromium.org>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: Karsten Blees <karsten.blees@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 12 20:30:36 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Wed Feb 12 20:36:53 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WDfVz-00008M-G7
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Feb 2014 20:30:35 +0100
+	id 1WDfc4-0002eI-6w
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Feb 2014 20:36:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753004AbaBLTac (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Feb 2014 14:30:32 -0500
-Received: from mail-ob0-f169.google.com ([209.85.214.169]:33443 "EHLO
-	mail-ob0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752357AbaBLTab (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Feb 2014 14:30:31 -0500
-Received: by mail-ob0-f169.google.com with SMTP id wo20so11123862obc.0
-        for <git@vger.kernel.org>; Wed, 12 Feb 2014 11:30:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=mQ4IFaFo81O/oKZP9MeXD4a8KFMT0SlxIhScJc1wlfM=;
-        b=hCKXXiYDFYs/JecY0lkPA3GKNNzZNP/7Tyb+iNifWGLYQPP6SSuGAkahLNgRAjdPv/
-         IkGfZCCPfs8S/y/CfiBsyAnYfNbnWYfzD5uKcnv0YvpbAZaGMWtDc3memicRwPehpXyf
-         1UWTT/IL013Gyic5YW/jhu+BwCfxq9SiPn5fc1Q6Cp2kX/F3b7BwKlr2bzo8vTUP1itF
-         +NsdmudNyGHvFvrvIHjPb61y9qBAOq8w3HPzXjIqUjr0Wz9lR4ryQ5SQy8zqieo688kZ
-         DeqGQ2BNbOREg8FfvZ9gzS4enmFbv2IXcQUe+FIjyGxqRf60RH4v8Y9dAX+D5G9LLrmN
-         dxDw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=mQ4IFaFo81O/oKZP9MeXD4a8KFMT0SlxIhScJc1wlfM=;
-        b=Y5xXDEa+POMQd5lq/SKi83wcoDTsDDEr9V9dpa27e5wrOUA+yhTPepOgkioy2cy2Zn
-         4KAqhw9dXCbGiEaEVxk0301LuDKk7uK/11A2nSdtb5IKsScdMvyqdUU/rApuyEEamAMI
-         Fhhhv0npzzzFMVMfLIabDgKWpO98dCjhhdf9vKuh15H1J8vjdn9xCssdwde51EnT4Y1t
-         MROZhiDRsPoBiL3SF0vRTjGysgICcV6cLI0DMioxT7ZMMnBKi8VcLWixODphjAey6n7L
-         60wCW2pCpEZvmt3txp57ptAKVqX05/iJuQwhDJh3Kq61os1447wXSHJdLVd87nuaVSZZ
-         hRUw==
-X-Gm-Message-State: ALoCoQkMSRf3+EoGss6f1tceGsCQyz9mBbN+fBp8rxQ66wSRPZCJZToq+gNf/vkKxE3N1OHoExpupMYiI+Yo41WOSsoFZZFxw4zfYCI15rIspRiMHk0IGZNXCENPvEy9wheYuhAvUtLUOCR/s75gVk9CgDom+kqhosSIQ9AdxQ63NPpmsNLuLPUhEbqBf5jk4k74tXuOQ1f1
-X-Received: by 10.182.87.69 with SMTP id v5mr1433939obz.77.1392233430041; Wed,
- 12 Feb 2014 11:30:30 -0800 (PST)
-Received: by 10.182.233.201 with HTTP; Wed, 12 Feb 2014 11:30:29 -0800 (PST)
-In-Reply-To: <52FBC9E5.6010609@gmail.com>
+	id S1753761AbaBLTgs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Feb 2014 14:36:48 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49425 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752774AbaBLTgr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Feb 2014 14:36:47 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 25DFD6A7AE;
+	Wed, 12 Feb 2014 14:36:47 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=J257Wq1ws+Xa8ESTmXXBh65eSQw=; b=QKfcW2
+	zq26Bz4lfFC+dOMoZNAsxwkz8Q1Vx3EEVhQ9qZ5tYFMWZyieWLSj2v6J5eva1Vch
+	tSCxV9YyIux7eDTe0zv07ktOEE8awBxU19IE/m+uLgDh9/Sx/xItwm3hS2BHb+c3
+	sIoRorrbeheOKpCzUBDH39scCu+gGLcu0QAS4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=x2/HfgIhL6z422x4NojL586RbW6JG6Ud
+	tV2qWr2zqW/reoZLQh6OXzsgyoIsSsfHFa2gCNDlENdIOih/MNppC5FJBlgIPIfK
+	BZGCqbsANOrOpzO4KQjIAf90ij3z+wJ8hkWCblyuWv4wYpOCjAQNaXhjok5OiPZy
+	ktwyVZULQWU=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 161E06A7AC;
+	Wed, 12 Feb 2014 14:36:47 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 59AF46A7AB;
+	Wed, 12 Feb 2014 14:36:46 -0500 (EST)
+In-Reply-To: <1392215244-26785-1-git-send-email-dak@gnu.org> (David Kastrup's
+	message of "Wed, 12 Feb 2014 15:27:24 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 023CA814-941D-11E3-9B44-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242017>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242018>
 
-On Wed, Feb 12, 2014 at 11:22 AM, Karsten Blees <karsten.blees@gmail.com> wrote:
-> Am 12.02.2014 19:37, schrieb Erik Faye-Lund:
->> On Wed, Feb 12, 2014 at 7:34 PM, Stefan Zager <szager@google.com> wrote:
->>> On Wed, Feb 12, 2014 at 10:27 AM, Erik Faye-Lund <kusmabite@gmail.com> wrote:
->>>> On Wed, Feb 12, 2014 at 7:20 PM, Stefan Zager <szager@google.com> wrote:
->>>>>
->>>>> I don't want to steal the thunder of my coworker, who wrote the
->>>>> implementation.  He plans to submit it upstream soon-ish.  It relies
->>>>> on using the lpOverlapped argument to ReadFile(), with some additional
->>>>> tomfoolery to make sure that the implicit position pointer for the
->>>>> file descriptor doesn't get modified.
->>>>
->>>> Is the code available somewhere? I'm especially interested in the
->>>> "additional tomfoolery to make sure that the implicit position pointer
->>>> for the file descriptor doesn't get modified"-part, as this was what I
->>>> ended up butting my head into when trying to do this myself.
->>>
->>> https://chromium-review.googlesource.com/#/c/186104/
->>
->> ReOpenFile, that's fantastic. Thanks a lot!
+David Kastrup <dak@gnu.org> writes:
+
+> Making a single preparation run for counting the lines will avoid memory
+> fragmentation.  Also, fix the allocated memory size which was wrong
+> when sizeof(int *) != sizeof(int), and would have been too small
+> for sizeof(int *) < sizeof(int), admittedly unlikely.
 >
-> ...but should be loaded dynamically via GetProcAddress, or are we ready to drop XP support?
+> Signed-off-by: David Kastrup <dak@gnu.org>
+> ---
 
-Right, that is an issue.  From our perspective, it's well past time to
-drop XP support.
+I think I took sizeof(int*)->sizeof(int) patch to the 'next' branch
+already, which might have to conflict with this clean-up, but it
+should be trivial to resolve.
+
+Thanks for resending.  I was busy elsewhere (i.e. "no feedback" does
+not mean "silent rejection" nor "silent agreement" at least from
+me), and such a resend does help prevent patches fall thru cracks.
+
+> diff --git a/builtin/blame.c b/builtin/blame.c
+> index e44a6bb..1aefedf 100644
+> --- a/builtin/blame.c
+> +++ b/builtin/blame.c
+> @@ -1772,25 +1772,41 @@ static int prepare_lines(struct scoreboard *sb)
+>  {
+>  	const char *buf = sb->final_buf;
+>  	unsigned long len = sb->final_buf_size;
+> +	const char *end = buf + len;
+> +	const char *p;
+> +	int *lineno;
+> +	int num = 0, incomplete = 0;
+>  
+> +	for (p = buf;;) {
+> +		p = memchr(p, '\n', end - p);
+> +		if (p) {
+> +			p++;
+>  			num++;
+> +			continue;
+>  		}
+> +		break;
+>  	}
+> +
+> +	if (len && end[-1] != '\n')
+> +		incomplete++; /* incomplete line at the end */
+> +
+> +	sb->lineno = xmalloc(sizeof(*sb->lineno) * (num + incomplete + 1));
+> +	lineno = sb->lineno;
+> +
+> +	*lineno++ = 0;
+> +	for (p = buf;;) {
+> +		p = memchr(p, '\n', end - p);
+> +		if (p) {
+> +			p++;
+> +			*lineno++ = p - buf;
+> +			continue;
+> +		}
+> +		break;
+> +	}
+> +
+> +	if (incomplete)
+> +		*lineno++ = len;
+> +
+>  	sb->num_lines = num + incomplete;
+>  	return sb->num_lines;
+>  }
