@@ -1,131 +1,161 @@
 From: Johan Herland <johan@herland.net>
-Subject: [PATCH] notes: Disallow reusing non-blob as a note object
-Date: Wed, 12 Feb 2014 10:54:16 +0100
-Message-ID: <1392198856-3908-1-git-send-email-johan@herland.net>
-References: <CALKQrgdnGhc-y3WMf+zej4M+O4NMhLKusE-N6dX_xKVViZmQzA@mail.gmail.com>
-Cc: git@vger.kernel.org, Joachim Breitner <mail@joachim-breitner.de>,
-	"Kyle J. McKay" <mackyle@gmail.com>,
-	Johan Herland <johan@herland.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 12 10:56:06 2014
+Subject: Re: git-note -C changes commit type?
+Date: Wed, 12 Feb 2014 11:26:46 +0100
+Message-ID: <CALKQrgfRD2_Z4u3QoqoONv_Ydp-YAv66oXrPda=YDBX-Dn145w@mail.gmail.com>
+References: <1392139407.12790.7.camel@kirk>
+	<CALKQrgcM7JpZCk4amjo_rwg5uuuWNg-5yd1NXB5p7EtrU9WBGg@mail.gmail.com>
+	<1392195218.2546.7.camel@kirk>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git mailing list <git@vger.kernel.org>
+To: Joachim Breitner <mail@joachim-breitner.de>
+X-From: git-owner@vger.kernel.org Wed Feb 12 11:27:09 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WDWXv-0000pg-KA
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Feb 2014 10:55:59 +0100
+	id 1WDX24-0002sT-KN
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Feb 2014 11:27:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752146AbaBLJyt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Feb 2014 04:54:49 -0500
-Received: from mail-ee0-f41.google.com ([74.125.83.41]:58147 "EHLO
-	mail-ee0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751065AbaBLJyj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Feb 2014 04:54:39 -0500
-Received: by mail-ee0-f41.google.com with SMTP id e51so3635282eek.0
-        for <git@vger.kernel.org>; Wed, 12 Feb 2014 01:54:38 -0800 (PST)
+	id S1751917AbaBLK1A convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 12 Feb 2014 05:27:00 -0500
+Received: from mail12.copyleft.no ([188.94.218.224]:35850 "EHLO
+	mail12.copyleft.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751252AbaBLK0y convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 12 Feb 2014 05:26:54 -0500
+Received: from locusts.copyleft.no ([188.94.218.116] helo=mail.mailgateway.no)
+	by mail12.copyleft.no with esmtp (Exim 4.76)
+	(envelope-from <johan@herland.net>)
+	id 1WDX1n-00032G-Db
+	for git@vger.kernel.org; Wed, 12 Feb 2014 11:26:51 +0100
+Received: from mail-pd0-f175.google.com ([209.85.192.175])
+	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
+	(Exim 4.72 (FreeBSD))
+	(envelope-from <johan@herland.net>)
+	id 1WDX1n-000CyA-4q
+	for git@vger.kernel.org; Wed, 12 Feb 2014 11:26:51 +0100
+Received: by mail-pd0-f175.google.com with SMTP id w10so8854259pde.20
+        for <git@vger.kernel.org>; Wed, 12 Feb 2014 02:26:47 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=AVujFvPKp1yWtKYgStyX745pFxlT1KcveDmhgDgkHEM=;
-        b=ZSgfcJrE89gt0kZXl64YoDcv7fBj1W5taYg5pTJrt5zxj2rVt/JastC+a0vkWoVq7c
-         4DCsWHkA+NWcZNBy9XSkszkJlqHcAAoOuGqqkeSIOc5h0r8UUAsK2dU3vCo6PlzDc2sJ
-         l9QDdAfx1slXoR4gMDFG8TgeuewwbXKYeldr1KIbld8ht9hhaC9S56pZPo+nIUxQz+7z
-         khI+FMiqhVWWwTbWyw/fWYJTq4hJOjRdpGKjiBsOWApjugeyVBYhTf0huH8VUAdN7Yeo
-         NNPToms4IhxjC6MlDwBQFHZGBDLQrEqnAz7jZaU0o0tuJXo/lFBnhNYAf3Xu+UdfhpEW
-         XfxA==
-X-Received: by 10.14.88.2 with SMTP id z2mr2920811eee.60.1392198878154;
-        Wed, 12 Feb 2014 01:54:38 -0800 (PST)
-Received: from beta.cisco.com (173-38-208-169.cisco.com. [173.38.208.169])
-        by mx.google.com with ESMTPSA id y47sm79344982eel.14.2014.02.12.01.54.36
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 12 Feb 2014 01:54:37 -0800 (PST)
-X-Mailer: git-send-email 1.8.4.653.g2df02b3
-In-Reply-To: <CALKQrgdnGhc-y3WMf+zej4M+O4NMhLKusE-N6dX_xKVViZmQzA@mail.gmail.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=P+wgtoTAdldpnokIeDxpC2I61Fu0VEqlfzktIXQBbDo=;
+        b=je0RowTEwWENRlfAWoj262BRJ/N5hrV7jRdj5/6MmHeH2XM01VlCIB6Az33flmPX3Z
+         uUL8gUKEcXaDBUXlUSFC/B1uo4fdbcZaJgvr9kVnXMVD+03HAipfyEyO8NU2uiM6OK6r
+         AQaPgAzfaGA8HbYDEX3zGDR1KJx2urZCvvIE+KJKIGiEgfSAjwJrDwha7X19/XQuEDp7
+         0TjRzwgNstPcKPol1nfT64jq2qp0Ud4jNdqD/Ovj7nZDrqFx7e9ASgzX2AjnJFOMUWXj
+         DlNBwWmm0gVIsaUMbVX+SrOOV1Zr4UXMYSHbANmLFVxewG8AB4FQ60yKCuigSqLrqHMc
+         QIKQ==
+X-Received: by 10.66.216.129 with SMTP id oq1mr38227999pac.75.1392200807084;
+ Wed, 12 Feb 2014 02:26:47 -0800 (PST)
+Received: by 10.70.48.228 with HTTP; Wed, 12 Feb 2014 02:26:46 -0800 (PST)
+In-Reply-To: <1392195218.2546.7.camel@kirk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241979>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241981>
 
-Currently "git notes add -C $object" will read the raw bytes from $object,
-and then copy those bytes into the note object, which is hardcoded to be
-of type blob. This means that if the given $object is a non-blob (e.g.
-tree or commit), the raw bytes from that object is copied into a blob
-object. This is probably not useful, and certainly not what any sane
-user would expect. So disallow it, by erroring out if the $object passed
-to the -C option is not a blob.
+On Wed, Feb 12, 2014 at 9:53 AM, Joachim Breitner
+<mail@joachim-breitner.de> wrote:
+> Am Mittwoch, den 12.02.2014, 00:52 +0100 schrieb Johan Herland:
+>> You would have a notes ref "refs/notes/history" whose tree would
+>> contain an entry named e1bfac434ebd3135a3784f6fc802f235098eebd0
+>> pointing to a _commit_ (3d7de37...). Obviously, it would not make
+>> sense to use refs/notes/history while displaying the commit log ("gi=
+t
+>> log --notes=3Dhistory"), as the raw commit object would be shown in =
+the
+>> log. However, more fundamentally: a tree referring to a _commit_ is
+>> usually how Git stores _submodule_ links (i.e. which revision of the
+>> named submodule is to be used by this super-repo tree), and I'm (off
+>> the top of my head) not at all sure that such a submodule link in a
+>> notes tree is handled "sanely" by Git - or even that it makes sense =
+at
+>> all. For one, I'm not sure that Git requires (or even expects) the
+>> commit object referenced by a tree to be present in the same object
+>> DB. So if you share your notes, I don't know whether or not the
+>> fetch/push machinery will include the commit object in the shared
+>> notes... These are questions that should be answered before we decid=
+e
+>> whether using commits directly as notes makes sense.
+>
+> If that is the case, then my approach is indeed flawed. The main poin=
+t
+> of the exercise is to have a tree that follows another commit (or, as=
+ a
+> next-best approximation, a note attached to that commit) around.
+>
+>> In that case, you might be better off using an explicit
+>> ref to keep that history alive; e.g. you could create
+>> refs/history/e1bfac4 to point to 3d7de37 ("git update-ref
+>> refs/history/e1bfac4 3d7de37"), and keep everything
+>> alive/reachable/shareable that way...
+>
+> That=E2=80=99s an interesting idea; instead of relying on the notes f=
+eature
+> putting the hash in the ref name. But I wonder how that scales =E2=80=
+=93 imagine
+> every second feature merged into Linux=C2=B9 also having such a histo=
+ry ref?
 
-The fix also applies to the -c option (in which the user is prompted to
-edit/verify the note contents in a text editor), and also when -c/-C is
-passed to "git notes append" (which appends the $object contents to an
-existing note object). In both cases, passing a non-blob $object does not
-make sense.
+Ah, that will probably not scale very well.
 
-Also add a couple of tests demonstrating expected behavior.
+> I guess having a way for a tree to reference commits in a way that is
+> followed by git gc, i.e. separate from submodules, would allow a less
+> noisy implementation, and possibly create the opportunity for many ot=
+her
+> strange uses of git :-)
 
-Suggested-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Johan Herland <johan@herland.net>
----
- builtin/notes.c  |  6 +++++-
- t/t3301-notes.sh | 27 +++++++++++++++++++++++++++
- 2 files changed, 32 insertions(+), 1 deletion(-)
+Here's another way to solve your problem, which should be fairly
+transparent and performant:
 
-diff --git a/builtin/notes.c b/builtin/notes.c
-index 2b24d05..bb89930 100644
---- a/builtin/notes.c
-+++ b/builtin/notes.c
-@@ -269,7 +269,11 @@ static int parse_reuse_arg(const struct option *opt, const char *arg, int unset)
- 		die(_("Failed to resolve '%s' as a valid ref."), arg);
- 	if (!(buf = read_sha1_file(object, &type, &len)) || !len) {
- 		free(buf);
--		die(_("Failed to read object '%s'."), arg);;
-+		die(_("Failed to read object '%s'."), arg);
-+	}
-+	if (type != OBJ_BLOB) {
-+		free(buf);
-+		die(_("Cannot read note data from non-blob object '%s'."), arg);
- 	}
- 	strbuf_add(&(msg->buf), buf, len);
- 	free(buf);
-diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
-index 16de05a..3bb79a4 100755
---- a/t/t3301-notes.sh
-+++ b/t/t3301-notes.sh
-@@ -812,6 +812,33 @@ test_expect_success 'create note from non-existing note with "git notes add -C"
- 	test_must_fail git notes list HEAD
- '
- 
-+test_expect_success 'create note from non-blob with "git notes add -C" fails' '
-+	commit=$(git rev-parse --verify HEAD) &&
-+	tree=$(git rev-parse --verify HEAD:) &&
-+	test_must_fail git notes add -C $commit &&
-+	test_must_fail git notes add -C $tree &&
-+	test_must_fail git notes list HEAD
-+'
-+
-+cat > expect << EOF
-+commit 80d796defacd5db327b7a4e50099663902fbdc5c
-+Author: A U Thor <author@example.com>
-+Date:   Thu Apr 7 15:20:13 2005 -0700
-+
-+    8th
-+
-+Notes (other):
-+    This is a blob object
-+EOF
-+
-+test_expect_success 'create note from blob with "git notes add -C" reuses blob id' '
-+	blob=$(echo "This is a blob object" | git hash-object -w --stdin) &&
-+	git notes add -C $blob &&
-+	git log -1 > actual &&
-+	test_cmp expect actual &&
-+	test "$(git notes list HEAD)" = "$blob"
-+'
-+
- cat > expect << EOF
- commit 016e982bad97eacdbda0fcbd7ce5b0ba87c81f1b
- Author: A U Thor <author@example.com>
--- 
-1.8.4.653.g2df02b3
+Whenever you want to reference "history" of a commit (I'm using quotes
+here, because we're not talking about the "regular" git sense of
+history, i.e. the commit graph), you perform the following two steps:
+
+1. Append the "historical" commit SHA-1 (3d7de37 in your example) to a
+note on the "current" commit (e1bfac4). E.g.:
+
+    git notes --ref history append -m 3d7de37... e1bfac4...
+
+2. Perform some automated merge into a "history"-tracking ref (e.g.
+refs/history), to keep the "historical" commits reachable.
+
+(You can easily wrap both steps into a script to automate things.)
+
+Step #1 encodes the "history" of a commit in a note, but does not keep
+the "history" reachable.
+
+Step #2 keeps all "historical" commits reachable by making them part
+of the history (in the git sense - without quotes) of a proper ref
+(refs/history). The actual result/outcome of the merge is not
+interesting. It only exists to insert the "historical" commit
+(3d7de37) into the ancestry for refs/history. Since the actual merge
+itself is uninteresting, you should probably use a merge strategy that
+never yields conflicts, e.g. "-s ours"
+
+You can now share the "history" by pushing/fetching the two refs
+refs/notes/history and refs/history.
+
+(In theory, you might even be able to combine the two refs, by
+performing the merge directly into refs/notes/history, always taking
+care to retain the notes tree contents as the result of the merge. In
+other words, after you do step #1 (append the note), you manually
+rewrite the just-created tip of refs/notes/history to include 3d7de37
+as a second parent. This keeps 3d7de37 reachable (and it will be
+shared when you share refs/notes/history), and it should not interfere
+with the notes infrastructure, as they only look at the current state
+of the notes tree.)
+
+
+Hope this helps,
+
+=2E..Johan
+
+--=20
+Johan Herland, <johan@herland.net>
+www.herland.net
