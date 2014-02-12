@@ -1,75 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Mike Hommey <mh@glandium.org>
 Subject: Re: Make the git codebase thread-safe
-Date: Wed, 12 Feb 2014 15:05:43 -0800
-Message-ID: <CAPc5daVcAq2jb2-R32HVEG_GY4=JZLG-AmgZKNdQMzZZX2LOCg@mail.gmail.com>
+Date: Thu, 13 Feb 2014 08:09:09 +0900
+Message-ID: <20140212230909.GB7208@glandium.org>
 References: <CA+TurHgyUK5sfCKrK+3xY8AeOg0t66vEvFxX=JiA9wXww7eZXQ@mail.gmail.com>
  <CACsJy8Bsc6sywL9L5QC-SKKmh9J+CKnoG5i78WfUbAG9BdZ8Rw@mail.gmail.com>
  <CAHOQ7J8gvwpwJV2mBPDaARu3cQ54-ZDQ6iGOwKuJRr9Z+XBL7g@mail.gmail.com>
- <xmqqr478m6xx.fsf@gitster.dls.corp.google.com> <CAHOQ7J8Q1905pVwx9QVib1BM-Xxg8vTL=hDUjT7garX++VXm3g@mail.gmail.com>
+ <87y51g88sc.fsf@fencepost.gnu.org>
+ <CAHOQ7J_pg6Nqc5TdU9OA81=d+ZG_JpLFQ5-eFLY3uW8CuAQrUQ@mail.gmail.com>
+ <87ppms87n7.fsf@fencepost.gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Duy Nguyen <pclouds@gmail.com>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Stefan Zager <szager@chromium.org>, Duy Nguyen <pclouds@gmail.com>,
 	Git Mailing List <git@vger.kernel.org>
-To: Stefan Zager <szager@chromium.org>
-X-From: git-owner@vger.kernel.org Thu Feb 13 00:06:11 2014
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Thu Feb 13 00:09:36 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WDisc-0007c8-TC
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Feb 2014 00:06:11 +0100
+	id 1WDivu-0000vp-MH
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Feb 2014 00:09:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754141AbaBLXGG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Feb 2014 18:06:06 -0500
-Received: from mail-la0-f48.google.com ([209.85.215.48]:36655 "EHLO
-	mail-la0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753525AbaBLXGF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Feb 2014 18:06:05 -0500
-Received: by mail-la0-f48.google.com with SMTP id mc6so7628682lab.35
-        for <git@vger.kernel.org>; Wed, 12 Feb 2014 15:06:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=BtYl+Ds28vpCoJy6Ro2Cxf2YaoY5NPtAjWRe8c92wrI=;
-        b=xnCSMmJvou5cPpunIm8ZAJ1mof/BjZYJm1iaExDeulSFWwvz9URD83iRKSU/PPhogB
-         jX8I9ezCIZpuoyvZtqRU9v/cwQy/CFOkWa8noYSJlpKXK/HGHOZJwt3hs1P6KzqAkv9f
-         9vM74sScXjfhJLMGMeaOT7BtMYJB12mnpjflAOfbUctXnddWjlfEwUWlaKlLxPNTe4xm
-         X3rZEj/QdoEWzb646Te+0fSDSFaxOJsq7/KWt35hUUQWMQtkt9QOP2oHZiQL3CifOolA
-         BfdOplFkQZ3QiK6WPD5nW1Rm2C1Zx1B0nqaXZmULyhFbE1EUoJyL7TuILjRtDX55Wo8M
-         1aPA==
-X-Received: by 10.152.28.200 with SMTP id d8mr18181lah.59.1392246363100; Wed,
- 12 Feb 2014 15:06:03 -0800 (PST)
-Received: by 10.112.180.130 with HTTP; Wed, 12 Feb 2014 15:05:43 -0800 (PST)
-In-Reply-To: <CAHOQ7J8Q1905pVwx9QVib1BM-Xxg8vTL=hDUjT7garX++VXm3g@mail.gmail.com>
-X-Google-Sender-Auth: eYHFD-A1yE134zg74jpy-OLwK5I
+	id S1754563AbaBLXJa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Feb 2014 18:09:30 -0500
+Received: from ks3293202.kimsufi.com ([5.135.186.141]:37192 "EHLO
+	zenigata.glandium.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754647AbaBLXJa (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Feb 2014 18:09:30 -0500
+X-Greylist: delayed 327 seconds by postgrey-1.27 at vger.kernel.org; Wed, 12 Feb 2014 18:09:29 EST
+Received: from glandium by zenigata.glandium.org with local (Exim 4.82)
+	(envelope-from <glandium@glandium.org>)
+	id 1WDivV-0002Cn-Up; Thu, 13 Feb 2014 08:09:09 +0900
+Content-Disposition: inline
+In-Reply-To: <87ppms87n7.fsf@fencepost.gnu.org>
+X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242031>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242032>
 
-On Wed, Feb 12, 2014 at 12:27 PM, Stefan Zager <szager@chromium.org> wrote:
-> On Wed, Feb 12, 2014 at 12:06 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Stefan Zager <szager@chromium.org> writes:
->>
->> Calls to write (and preparation of data to be written) will then
->> remain single-threaded, but it sounds like that codepath is not the
->> bottleneck in your measurement, so....
->
-> Yes, I considered that as well.  At a minimum, that would still
-> require attr.c to implement thread locking, since attribute files must
-> be parsed to look for stream filters.  I have already done that work.
+On Wed, Feb 12, 2014 at 08:15:24PM +0100, David Kastrup wrote:
+> Stefan Zager <szager@chromium.org> writes:
+> 
+> > On Wed, Feb 12, 2014 at 10:50 AM, David Kastrup <dak@gnu.org> wrote:
+> >
+> >> Really, give the above patch a try.  I am taking longer to finish it
+> >> than anticipated (with a lot due to procrastination but that is,
+> >> unfortunately, a large part of my workflow), and it's cutting into my
+> >> "paychecks" (voluntary donations which to a good degree depend on timely
+> >> and nontrivial progress reports for my freely available work on GNU
+> >> LilyPond).
+> >
+> > I will give that a try.  How much of a performance improvement have
+> > you clocked?
+> 
+> Depends on file type and size.  With large files with lots of small
+> changes, performance improvements get more impressive.
+> 
+> Some ugly real-world examples are the Emacs repository, src/xdisp.c
+> (performance improvement about a factor of 3), a large file in the style
+> of /usr/share/dict/words clocking in at a factor of about 5.
+> 
+> Again, that's with an SSD and ext4 filesystem on GNU/Linux, and there
+> are no improvements in system time (I/O) except for patch 4 of the
+> series which helps perhaps 20% or so.
+> 
+> So the benefits of the patch will come into play mostly for big, bad
+> files on Windows: other than that, the I/O time is likely to be the
+> dominant player anyway.
 
-I would have imagined that use of the attribute system belongs to "write and
-preparation of data to be written" category, i.e. the single threaded
-part of the
-kludge I outlined.
+How much fragmentation does that add to the files, though?
 
-> But I'm not sure it's the best long-term approach to add convoluted
-> custom threading solutions to each git operation as it appears on the
-> performance radar.
-
-Yeah, it depends on how clean and non-intrusive an abstraction we can make.
-The kludge I outlined is certainly not very pretty.
+Mike
