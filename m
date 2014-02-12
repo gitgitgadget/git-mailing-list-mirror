@@ -1,101 +1,90 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] tree-walk: be more specific about corrupt tree errors
-Date: Wed, 12 Feb 2014 14:49:57 -0500
-Message-ID: <20140212194956.GA3850@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Make the git codebase thread-safe
+Date: Wed, 12 Feb 2014 12:06:50 -0800
+Message-ID: <xmqqr478m6xx.fsf@gitster.dls.corp.google.com>
+References: <CA+TurHgyUK5sfCKrK+3xY8AeOg0t66vEvFxX=JiA9wXww7eZXQ@mail.gmail.com>
+	<CACsJy8Bsc6sywL9L5QC-SKKmh9J+CKnoG5i78WfUbAG9BdZ8Rw@mail.gmail.com>
+	<CAHOQ7J8gvwpwJV2mBPDaARu3cQ54-ZDQ6iGOwKuJRr9Z+XBL7g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Michael Haggerty <mhagger@alum.mit.edu>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 12 20:50:07 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Stefan Zager <szager@chromium.org>
+X-From: git-owner@vger.kernel.org Wed Feb 12 21:07:01 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WDfoq-00081i-8N
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Feb 2014 20:50:04 +0100
+	id 1WDg5D-0006BY-VU
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Feb 2014 21:07:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753769AbaBLTt7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Feb 2014 14:49:59 -0500
-Received: from cloud.peff.net ([50.56.180.127]:49358 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752013AbaBLTt7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Feb 2014 14:49:59 -0500
-Received: (qmail 637 invoked by uid 102); 12 Feb 2014 19:49:59 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 12 Feb 2014 13:49:59 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 12 Feb 2014 14:49:57 -0500
-Content-Disposition: inline
+	id S1754086AbaBLUGz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Feb 2014 15:06:55 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38482 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753599AbaBLUGy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Feb 2014 15:06:54 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id F27B36B6F4;
+	Wed, 12 Feb 2014 15:06:53 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=yID2ZKikkmAf+7Fp6q69shyzvac=; b=s5VVlF
+	dF2l3fteSzUTzX+uMTM8sT5V7YNqp4XLqYYLT/UPW+xpePRd6LOwuq4WZFzCNmQO
+	GShYIj5DH1RqFcOVl59UFCm0DbQyTNzop5KeG258G1HHBdBjQKBAMFVKjlBoeGC0
+	heYZvfGzfH/JZ10/Mwyd73Z6sQ92u7/aJw3AY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=TyigSnPZpNQJzBSpw26BUXYmMU9igFK9
+	xbVxhsVuIuOQSbFv3HH+nsae3QB+ba05hjeWo7ZRyzUwreCMHDry8jDZv5I3SE+4
+	2c5lJkWUUGq1vFuJwysEP4ld4OIho8fm1k2/8RGkU2vQngWoy/BXdy1KNjqtixrf
+	xe1v0jAFul4=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DBE526B6F1;
+	Wed, 12 Feb 2014 15:06:53 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id ED9696B6ED;
+	Wed, 12 Feb 2014 15:06:52 -0500 (EST)
+In-Reply-To: <CAHOQ7J8gvwpwJV2mBPDaARu3cQ54-ZDQ6iGOwKuJRr9Z+XBL7g@mail.gmail.com>
+	(Stefan Zager's message of "Wed, 12 Feb 2014 10:12:20 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 370F7AEA-9421-11E3-82C6-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242019>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242020>
 
-When the tree-walker runs into an error, it just calls
-die(), and the message is always "corrupt tree file".
-However, we are actually covering several cases here; let's
-give the user a hint about what happened.
+Stefan Zager <szager@chromium.org> writes:
 
-Let's also avoid using the word "corrupt", which makes it
-seem like the data bit-rotted on disk. Our sha1 check would
-already have found that. These errors are ones of data that
-is malformed in the first place.
+> ...  I used the Very Sleepy profiler
+> to see where all the time was spent on Windows: 55% of the time was
+> spent in OpenFile, and 25% in CloseFile (both in win32).
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-Michael and I have been looking off-list at some bogus trees (created by
-a non-git.git implementation). git-fsck unhelpfully dies during the
-tree-walk:
+This is somewhat interesting.
 
-  $ git fsck
-  Checking object directories: 100% (256/256), done.
-  fatal: corrupt tree file
+When we check things out, checkout_paths() has a list of paths to be
+checked out, and iterates over them and call checkout_entry().
 
-I think in the long run we want to either teach fsck to avoid the
-regular tree-walker or to set a special "continue as much as you can"
-flag. That will let us keep going to find more errors, do our usual fsck
-error checks (which are more strict), and especially report on _which_
-object was broken (we can't do that here because we are deep in the call
-stack and may not even have a real object yet).
+I wonder if you can:
 
-This patch at least gives us slightly more specific error messages (both
-for fsck and for other commands). And it may provide a first step in
-clarity if we follow the "continue as much as you can" path.
+ - introduce a version of checkout_entry() that takes file
+   descriptors to write to;
 
- tree-walk.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ - have an asynchronous helper threads that pre-open the paths to be
+   written out and feed <ce, file descriptor to be written> to a
+   queue;
 
-diff --git a/tree-walk.c b/tree-walk.c
-index 79dba1d..d53b084 100644
---- a/tree-walk.c
-+++ b/tree-walk.c
-@@ -28,11 +28,13 @@ static void decode_tree_entry(struct tree_desc *desc, const char *buf, unsigned
- 	unsigned int mode, len;
- 
- 	if (size < 24 || buf[size - 21])
--		die("corrupt tree file");
-+		die("truncated tree file");
- 
- 	path = get_mode(buf, &mode);
--	if (!path || !*path)
--		die("corrupt tree file");
-+	if (!path)
-+		die("malformed mode in tree entry");
-+	if (!*path)
-+		die("empty filename in tree entry");
- 	len = strlen(path) + 1;
- 
- 	/* Initialize the descriptor entry */
-@@ -81,7 +83,7 @@ void update_tree_entry(struct tree_desc *desc)
- 	unsigned long len = end - (const unsigned char *)buf;
- 
- 	if (size < len)
--		die("corrupt tree file");
-+		die("truncated tree file");
- 	buf = end;
- 	size -= len;
- 	desc->buffer = buf;
--- 
-1.8.5.2.500.g8060133
+ - restructure that loop so that it reads the <ce, file descriptor
+   to be written> from the queue, performs the actual writing out,
+   and then feeds <file descriptor to be closed> to another queue; and
+
+ - have another asynchronous helper threads that reads <file
+   descriptor to be closed> from the queue and close them.
+
+Calls to write (and preparation of data to be written) will then
+remain single-threaded, but it sounds like that codepath is not the
+bottleneck in your measurement, so....
