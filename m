@@ -1,104 +1,130 @@
-From: Chris Packham <judge.packham@gmail.com>
-Subject: Re: [PATCH] Make the global packed_git variable static to sha1_file.c.
-Date: Wed, 12 Feb 2014 20:29:55 +1300
-Message-ID: <52FB22F3.8070100@gmail.com>
-References: <20140212015727.1D63A403D3@wince.sfo.corp.google.com>
+From: Joachim Breitner <mail@joachim-breitner.de>
+Subject: Re: git-note -C changes commit type?
+Date: Wed, 12 Feb 2014 08:53:38 +0000
+Message-ID: <1392195218.2546.7.camel@kirk>
+References: <1392139407.12790.7.camel@kirk>
+	 <CALKQrgcM7JpZCk4amjo_rwg5uuuWNg-5yd1NXB5p7EtrU9WBGg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: Stefan Zager <szager@google.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 12 08:30:06 2014
+Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature";
+	boundary="=-a9/GC/MkkhJFRqKzXzb+"
+Cc: Git mailing list <git@vger.kernel.org>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Wed Feb 12 09:53:51 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WDUGj-0008K8-0O
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Feb 2014 08:30:05 +0100
+	id 1WDVZl-0006pP-Qn
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Feb 2014 09:53:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751133AbaBLH37 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Feb 2014 02:29:59 -0500
-Received: from mail-pb0-f53.google.com ([209.85.160.53]:42455 "EHLO
-	mail-pb0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750726AbaBLH36 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Feb 2014 02:29:58 -0500
-Received: by mail-pb0-f53.google.com with SMTP id md12so8817365pbc.26
-        for <git@vger.kernel.org>; Tue, 11 Feb 2014 23:29:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:subject:references
-         :in-reply-to:content-type:content-transfer-encoding;
-        bh=9TYAcUKSuq7vjM8APxj4YoLguP1/FEwlrMqI2sT2cjk=;
-        b=UarsnovEafrBPuaNJ69nshaaAejOpu8PAekta/w0yD/TgTQK3lKx1ZvOgove/tgF2Y
-         gF8+ZVQa3nWguubxz1K68Gxgbd9AgyCRU0FgneaueaNr8ad4JwikvXWlyZQ6LIyJwSOt
-         fskRVJ4Gnw2Tsj1D14vYdL+QjXqdp5H6i0obPyTzAsTAvjGpSv/SW51WjzaSZqct+6tk
-         K5Lhcwm+jKJ2XQpvllap4xMO6EY+0rnsD9C7zzCiFAiov+DPdWIkHnDWgCROI0d04irN
-         6M2RK4gVn/Q5XfSFw1WBI+WKq9aNapKZUL4mYwufVsITKjHPRhmgYheT38mSFRhuHoR5
-         K0IQ==
-X-Received: by 10.66.141.165 with SMTP id rp5mr37762851pab.90.1392190198469;
-        Tue, 11 Feb 2014 23:29:58 -0800 (PST)
-Received: from linux.site (115-188-15-163.jetstream.xtra.co.nz. [115.188.15.163])
-        by mx.google.com with ESMTPSA id i10sm154372780pat.11.2014.02.11.23.29.56
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 11 Feb 2014 23:29:58 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.2.0
-In-Reply-To: <20140212015727.1D63A403D3@wince.sfo.corp.google.com>
+	id S1751943AbaBLIxp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Feb 2014 03:53:45 -0500
+Received: from hermes.serverama.de ([78.47.178.158]:34176 "EHLO
+	hermes.serverama.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751547AbaBLIxo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Feb 2014 03:53:44 -0500
+Received: from [10.254.1.12] (helo=kirk)
+	by hermes.serverama.de with esmtps (TLS1.2:DHE_RSA_AES_128_CBC_SHA1:128)
+	(Exim 4.80)
+	(envelope-from <mail@joachim-breitner.de>)
+	id 1WDVZd-0000lo-In; Wed, 12 Feb 2014 09:53:42 +0100
+Received: from jojo by kirk with local (Exim 4.82)
+	(envelope-from <mail@joachim-breitner.de>)
+	id 1WDVZd-0000tT-1l; Wed, 12 Feb 2014 08:53:41 +0000
+In-Reply-To: <CALKQrgcM7JpZCk4amjo_rwg5uuuWNg-5yd1NXB5p7EtrU9WBGg@mail.gmail.com>
+X-Mailer: Evolution 3.8.5-2+b1 
+X-Spam-Score: -7.6 (-------)
+X-Spam-Report: Status No, score=-7.6 required=5.0 bayes=0.0000 tests=ALL_TRUSTED=-1,BAYES_00=-6.599 autolearn=ham version=3.3.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241975>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241976>
 
-Hi,
 
-On 12/02/14 14:57, Stefan Zager wrote:
-> From b4796d9d99c03b0b7cddd50808a41413e45f1129 Mon Sep 17 00:00:00 2001
-> From: Stefan Zager <szager@chromium.org>
-> Date: Mon, 10 Feb 2014 16:55:12 -0800
-> Subject: [PATCH] Make the global packed_git variable static to sha1_file.c.
-> 
-> This is a first step in making the codebase thread-safe.  By and
-> large, the operations which might benefit from threading are those
-> that work with pack files (e.g., checkout, blame), so the focus of
-> this patch is stop leaking the global list of pack files outside of
-> sha1_file.c.
-> 
-> The next step will be to control access to the list of pack files
-> with a mutex.  However, that alone is not enough to make pack file
-> access thread safe.  Even in a read-only operation, the window list
-> associated with each pack file will need to be controlled.
-> Additionally, the global counters in sha1_file.c will need to be
-> controlled.
-> 
-> This patch is a pure refactor with no functional changes, so it
-> shouldn't require any additional tests.  Adding the actual locks
-> will be a functional change, and will require additional tests.
-> 
-> Signed-off-by: Stefan Zager <szager@chromium.org>
-> ---
->  builtin/count-objects.c  |  44 ++++++-----
->  builtin/fsck.c           |  46 +++++++-----
->  builtin/gc.c             |  26 +++----
->  builtin/pack-objects.c   | 188 ++++++++++++++++++++++++++++-------------------
->  builtin/pack-redundant.c |  37 +++++++---
->  cache.h                  |  16 +++-
->  fast-import.c            |   4 +-
->  http-backend.c           |  28 ++++---
->  http-push.c              |   4 +-
->  http-walker.c            |   2 +-
->  pack-revindex.c          |  20 ++---
->  server-info.c            |  35 +++++----
->  sha1_file.c              |  35 ++++++++-
->  sha1_name.c              |  18 ++++-
->  14 files changed, 315 insertions(+), 188 deletions(-)
+--=-a9/GC/MkkhJFRqKzXzb+
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-I'm not really qualified to comment on substance but there are some
-basic style issues w.r.t. whitespace namely using 4 spaces for indent
-and mixing tabs/spaces. This might seem pedantic for the first round of
-a patch but it does put off reviewers.
+Dear Johan,
 
->From Documentation/CodingGuidelines:
+Am Mittwoch, den 12.02.2014, 00:52 +0100 schrieb Johan Herland:
+> On Tue, Feb 11, 2014 at 6:23 PM, Joachim Breitner
+> <mail@joachim-breitner.de> wrote:
+> > judging from the documentation I got the impression that I can pass any
+> > git object has to "git note -C <hash>" and it would stored as-is. But i=
+t
+> > seems the objects gets mangled somehow...
+>=20
+> ...well... the documentation does not say "any object", it actually
+> explicitly says "blob object"... ;)
 
- - We use tabs to indent, and interpret tabs as taking up to
-   8 spaces.
+ok, my bad; guess I=E2=80=99m not fully versed with gits terminology.
+
+> You would have a notes ref "refs/notes/history" whose tree would
+> contain an entry named e1bfac434ebd3135a3784f6fc802f235098eebd0
+> pointing to a _commit_ (3d7de37...). Obviously, it would not make
+> sense to use refs/notes/history while displaying the commit log ("git
+> log --notes=3Dhistory"), as the raw commit object would be shown in the
+> log. However, more fundamentally: a tree referring to a _commit_ is
+> usually how Git stores _submodule_ links (i.e. which revision of the
+> named submodule is to be used by this super-repo tree), and I'm (off
+> the top of my head) not at all sure that such a submodule link in a
+> notes tree is handled "sanely" by Git - or even that it makes sense at
+> all. For one, I'm not sure that Git requires (or even expects) the
+> commit object referenced by a tree to be present in the same object
+> DB. So if you share your notes, I don't know whether or not the
+> fetch/push machinery will include the commit object in the shared
+> notes... These are questions that should be answered before we decide
+> whether using commits directly as notes makes sense.
+
+If that is the case, then my approach is indeed flawed. The main point
+of the exercise is to have a tree that follows another commit (or, as a
+next-best approximation, a note attached to that commit) around.
+
+> In that case, you might be better off using an explicit
+> ref to keep that history alive; e.g. you could create
+> refs/history/e1bfac4 to point to 3d7de37 ("git update-ref
+> refs/history/e1bfac4 3d7de37"), and keep everything
+> alive/reachable/shareable that way...
+
+That=E2=80=99s an interesting idea; instead of relying on the notes feature
+putting the hash in the ref name. But I wonder how that scales =E2=80=93 im=
+agine
+every second feature merged into Linux=C2=B9 also having such a history ref=
+?=20
+
+I guess having a way for a tree to reference commits in a way that is
+followed by git gc, i.e. separate from submodules, would allow a less
+noisy implementation, and possibly create the opportunity for many other
+strange uses of git :-)
+
+Greetings,
+Joachim
+
+=C2=B9 I=E2=80=99m not proposing for anyone else but me to use this, at the=
+ moment,
+don=E2=80=99t worry :-). But I am considering to use it in the context of G=
+HC,
+which isn=E2=80=99t a small project either.
+
+--=20
+Joachim =E2=80=9Cnomeata=E2=80=9D Breitner
+  mail@joachim-breitner.de =E2=80=A2 http://www.joachim-breitner.de/
+  Jabber: nomeata@joachim-breitner.de  =E2=80=A2 GPG-Key: 0x4743206C
+  Debian Developer: nomeata@debian.org
+
+--=-a9/GC/MkkhJFRqKzXzb+
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iEYEABECAAYFAlL7NpIACgkQ9ijrk0dDIGxhFQCfVqx7Edxzb8Whu5o/ozWoHkUn
+R0YAoLw3+XH8+VRCA31qyarnm+aKA4vT
+=TBEr
+-----END PGP SIGNATURE-----
+
+--=-a9/GC/MkkhJFRqKzXzb+--
