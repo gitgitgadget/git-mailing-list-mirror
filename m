@@ -1,142 +1,93 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: pack bitmap woes on Windows
-Date: Wed, 12 Feb 2014 11:48:28 -0500
-Message-ID: <20140212164828.GA24484@sigill.intra.peff.net>
-References: <52FB2268.7080906@viscovery.net>
- <87mwhwa3s1.fsf@fencepost.gnu.org>
- <52FB7196.7060209@viscovery.net>
- <87ioska2iu.fsf@fencepost.gnu.org>
- <CACsJy8CW0shw5JYtXScQHMYJ+D18-UJ6HanP-5OCuv87kHbnBg@mail.gmail.com>
- <CABPQNSabAcHEO0+ht7te9ScVigGOoCLdtiD10ye8AqqeLMagLw@mail.gmail.com>
- <CABPQNSZRfnp8aZuKBc=y=iDVdMUo8mKPsLsqg0E+bK1TdNvfkA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 00/11] More preparatory work for multiparent tree-walker
+Date: Wed, 12 Feb 2014 09:25:51 -0800
+Message-ID: <xmqqr478nsyo.fsf@gitster.dls.corp.google.com>
+References: <cover.1391794688.git.kirr@mns.spb.ru>
+	<xmqqeh3aqyq6.fsf@gitster.dls.corp.google.com>
+	<20140211081716.GA4455@tugrik.mns.mnsspb.ru>
+	<xmqq61olpgjd.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Brian Gernhardt <brian@gernhardtsoftware.com>,
-	Duy Nguyen <pclouds@gmail.com>, David Kastrup <dak@gnu.org>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Vicent =?utf-8?B?TWFydMOt?= <tanoku@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Erik Faye-Lund <kusmabite@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 12 17:48:37 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Kirill Smelkov <kirr@mns.spb.ru>
+X-From: git-owner@vger.kernel.org Wed Feb 12 18:26:15 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WDczD-0002np-VA
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Feb 2014 17:48:36 +0100
+	id 1WDdZd-0008RT-3B
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Feb 2014 18:26:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752729AbaBLQsc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Feb 2014 11:48:32 -0500
-Received: from cloud.peff.net ([50.56.180.127]:49274 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752339AbaBLQsb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Feb 2014 11:48:31 -0500
-Received: (qmail 23556 invoked by uid 102); 12 Feb 2014 16:48:30 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 12 Feb 2014 10:48:30 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 12 Feb 2014 11:48:28 -0500
-Content-Disposition: inline
-In-Reply-To: <CABPQNSZRfnp8aZuKBc=y=iDVdMUo8mKPsLsqg0E+bK1TdNvfkA@mail.gmail.com>
+	id S1752631AbaBLR0I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Feb 2014 12:26:08 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40572 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752471AbaBLR0H (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Feb 2014 12:26:07 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7E76D6A1D0;
+	Wed, 12 Feb 2014 12:25:57 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=5nTr5w72MFyURzsigsWNY4sGcmk=; b=W7qa6L
+	i+x43if5mZve/mLcuLeQnMoZos2+4eodriIW/La3dGXxTizGL341Ppvk8SA+elft
+	4DzZY8A8Svmkn6vbieltxR0woGgBYD1W35fk1RCHbcYsI9uewaMWYwLFjv9wEgHA
+	S21aJrA5xjEbGYgoVMmbVtOPaPHleK211yX+o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=o36N0zUFNoPDxYtAJPnRSgiFaHIJcU6J
+	VpVZADJm8NzWo019qyXX/UbeEr7n0ZNPMSRk77GFY5G+sgkSVneLO0W0LiTU8iBG
+	pBvst5HlZBM75V09Nx8OxQ+cHM0bx0U8CZ0ovb4mu4cppJ0NoPG5Y/QaCgKkYYgz
+	5ZDt92KM0QA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 51BC26A1CF;
+	Wed, 12 Feb 2014 12:25:57 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 707566A1CA;
+	Wed, 12 Feb 2014 12:25:56 -0500 (EST)
+In-Reply-To: <xmqq61olpgjd.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Tue, 11 Feb 2014 11:59:02 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: BB545EF4-940A-11E3-988B-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241997>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241998>
 
-On Wed, Feb 12, 2014 at 03:49:24PM +0100, Erik Faye-Lund wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> It seems the author of a201c20b41a2f0725977bcb89a2a66135d776ba2
-> assumes __BYTE_ORDER was guaranteed to always be defined, probably
-> fooled by the following check:
-> 
-> #if !defined(__BYTE_ORDER)
-> # error "Cannot determine endianness"
-> #endif
-> 
-> However, that check is only performed if we're NOT building with GCC
-> on x86/x64 nor MSVC (which I don't think defined __BYTE_ORDER either)
-> 
-> The following would make __BYTE_ORDER a guarantee, and show that MinGW
-> does not define it:
+> Kirill Smelkov <kirr@mns.spb.ru> writes:
+>
+>> Sorry for the confusion. Could you please do the following:
+>>
+>> Patches should be applied over to ks/tree-diff-walk
+>> (74aa4a18). Before applying the patches, please cherry-pick
+>>
+>>     c90483d9    (tree-diff: no need to manually verify that there is no
+>>                  mode change for a path)
+>>
+>>     ef4f0928    (tree-diff: no need to pass match to
+>>                  skip_uninteresting())
+>>
+>> into that branch, and drop them from ks/combine-diff - we'll have one
+>> branch reworking the diff tree-walker, and the other taking advantage of
+>> it for combine-diff.
+>
+> As long as that does not lose changes to tests and clean-ups, I'm
+> fine with that direction.  For example, I do not know if you want to
+> lose e3f62d12 (diffcore-order: export generic ordering interface,
+> 2014-01-20), which is part of the combine-diff topic.
 
-Yes, that is the problem. Sorry, this got brought up earlier[1], but the
-discussion went on and I did not notice that Brian's patch did not get
-applied.
+Ahh, sorry, I misread the "drop" as "salvage these two and drop the
+rest".  The new series does apply cleanly on a commit in master..pu
+that has both ks/tree-diff-walk and ks/combine-diff, and the latter
+is not yet in 'next' so we are free to reorganize.
 
-After re-reading the discussion, I think the patch below is the best
-solution. Can you confirm that it fixes the problem for you?
+Let me flip the latter topic around, also queue these updates and
+push the result out on 'pu'.
 
--Peff
-
-[1] http://thread.gmane.org/gmane.comp.version-control.git/241278
-
--- >8 --
-Subject: ewah: unconditionally ntohll ewah data
-
-Commit a201c20 tried to optimize out a loop like:
-
-  for (i = 0; i < len; i++)
-	  data[i] = ntohll(data[i]);
-
-in the big-endian case, because we know that ntohll is a
-noop, and we do not need to pay the cost of the loop at all.
-However, it mistakenly assumed that __BYTE_ORDER was always
-defined, whereas it may not be on systems which do not
-define it by default, and where we did not need to define it
-to set up the ntohll macro. This includes OS X and Windows.
-
-We could muck with the ordering in compat/bswap.h to make
-sure it is defined unconditionally, but it is simpler to
-still to just execute the loop unconditionally. That avoids
-the application code knowing anything about these magic
-macros, and lets it depend only on having ntohll defined.
-
-And since the resulting loop looks like (on a big-endian
-system):
-
-  for (i = 0; i < len; i++)
-	  data[i] = data[i];
-
-any decent compiler can probably optimize it out.
-
-Original report and analysis by Brian Gernhardt.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- ewah/ewah_io.c | 10 +++-------
- 1 file changed, 3 insertions(+), 7 deletions(-)
-
-diff --git a/ewah/ewah_io.c b/ewah/ewah_io.c
-index 4a7fae6..f7f700e 100644
---- a/ewah/ewah_io.c
-+++ b/ewah/ewah_io.c
-@@ -113,6 +113,7 @@ int ewah_serialize(struct ewah_bitmap *self, int fd)
- int ewah_read_mmap(struct ewah_bitmap *self, void *map, size_t len)
- {
- 	uint8_t *ptr = map;
-+	size_t i;
- 
- 	self->bit_size = get_be32(ptr);
- 	ptr += sizeof(uint32_t);
-@@ -135,13 +136,8 @@ int ewah_read_mmap(struct ewah_bitmap *self, void *map, size_t len)
- 	memcpy(self->buffer, ptr, self->buffer_size * sizeof(uint64_t));
- 	ptr += self->buffer_size * sizeof(uint64_t);
- 
--#if __BYTE_ORDER != __BIG_ENDIAN
--	{
--		size_t i;
--		for (i = 0; i < self->buffer_size; ++i)
--			self->buffer[i] = ntohll(self->buffer[i]);
--	}
--#endif
-+	for (i = 0; i < self->buffer_size; ++i)
-+		self->buffer[i] = ntohll(self->buffer[i]);
- 
- 	self->rlw = self->buffer + get_be32(ptr);
- 
--- 
-1.8.5.2.500.g8060133
+Thanks.
