@@ -1,75 +1,86 @@
-From: Karsten Blees <karsten.blees@gmail.com>
-Subject: Re: Make the git codebase thread-safe
-Date: Wed, 12 Feb 2014 20:22:13 +0100
-Message-ID: <52FBC9E5.6010609@gmail.com>
-References: <CA+TurHgyUK5sfCKrK+3xY8AeOg0t66vEvFxX=JiA9wXww7eZXQ@mail.gmail.com> <CABPQNSZ_LLg5i+mpwUj7pzXVQMY1tcXz2gJ+PWG-mP1iyjxoaw@mail.gmail.com> <CAHOQ7J8QxfvtrS2KdgzUPvkDzJ1Od0CMvdWxrF_bNacVRYOa5Q@mail.gmail.com> <CABPQNSZtQd51gQY7oK8B-BbpNEhxR-onQtiXSfW9sv1t2YW_nw@mail.gmail.com> <CAHOQ7J_Jrj1NJ_tZaCioskQU_xGR2FQPt8=JrWpR6rfs=c847w@mail.gmail.com> <CABPQNSYVGc9m0_xfAWe=3b7CXyGZ-2FfTMRbTJ=UECeZUtdgmg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Make the global packed_git variable static to sha1_file.c.
+Date: Wed, 12 Feb 2014 11:28:55 -0800
+Message-ID: <xmqq1tz8nn9k.fsf@gitster.dls.corp.google.com>
+References: <20140212015727.1D63A403D3@wince.sfo.corp.google.com>
+	<52FB22F3.8070100@gmail.com>
+	<CAHOQ7J-2BkQOr+_BF42ja4pWaUWkt8OC-YE0ETwHAYsmrubi=A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Stefan Zager <szager@chromium.org>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: kusmabite@gmail.com, Stefan Zager <szager@google.com>
-X-From: git-owner@vger.kernel.org Wed Feb 12 20:22:25 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Chris Packham <judge.packham@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Stefan Zager <szager@google.com>
+X-From: git-owner@vger.kernel.org Wed Feb 12 20:29:12 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WDfNz-0004vS-Aj
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Feb 2014 20:22:19 +0100
+	id 1WDfUd-00081t-VJ
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Feb 2014 20:29:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754099AbaBLTWP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Feb 2014 14:22:15 -0500
-Received: from mail-bk0-f50.google.com ([209.85.214.50]:64237 "EHLO
-	mail-bk0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753756AbaBLTWO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Feb 2014 14:22:14 -0500
-Received: by mail-bk0-f50.google.com with SMTP id w16so2821561bkz.9
-        for <git@vger.kernel.org>; Wed, 12 Feb 2014 11:22:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=6K3BZDtT7gYcisk7blR2ndmwRYsv4ki/krGR6eBCII8=;
-        b=NZAMsS1UUBsEWYY0k91ussoi2/zpEm3c2G242WPIPj9e82X8LX3m5tp8BlZb2KqrKw
-         vxowKsX3nVVByyah1+0gdyPvvBfRMc/RmvKKqks0PUnRCQvafT6Z3y63HqoQ8+0Mencq
-         wXU4mjbqxYTHYXOLBbAAkmqLb93CTB7V/wASFRIBvqR7oOalPKcU+HAdbhCljem09Rjk
-         nDL6foR258R1I4jgpJevR2BD/HrhkwJZ+ig16XBjkrV2RZnFHoBuW1hGZVZZ0neXcCcm
-         B4uyUaFgrztWSdajxvNxsh+71C9jkt+U0mG03q54g0C7jP7xz5mMeK9hmmV0ZElEoBAQ
-         +okg==
-X-Received: by 10.204.167.81 with SMTP id p17mr258323bky.59.1392232933053;
-        Wed, 12 Feb 2014 11:22:13 -0800 (PST)
-Received: from [10.1.100.54] (ns.dcon.de. [77.244.111.149])
-        by mx.google.com with ESMTPSA id dj6sm18539786bkc.5.2014.02.12.11.22.11
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 12 Feb 2014 11:22:12 -0800 (PST)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.3.0
-In-Reply-To: <CABPQNSYVGc9m0_xfAWe=3b7CXyGZ-2FfTMRbTJ=UECeZUtdgmg@mail.gmail.com>
+	id S1754122AbaBLT3B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Feb 2014 14:29:01 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:43424 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754040AbaBLT3A (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Feb 2014 14:29:00 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A9C9A6A272;
+	Wed, 12 Feb 2014 14:28:59 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=vjFFCASGWJ+hMjJBwiRVbUWdQ5k=; b=N5CEq9
+	Gxjc9xSjH7I87HJ6fsEqXz+t0rP/dV7XvPjTtH4wwsh5w7CQzS4j0sUWYma1Mfqs
+	qOuWU+Z62x3fzMkasSHoC9IahQTRqSRJ2MtD446CK0ACNGUxLg+TnLnORDpPuPfv
+	k+LFE2cH/6V961G53iDOdqxy6T7Fg/o9ZKJEc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=X6HjAG8Jz3ixSUyTfUip5SwpctJVmbGh
+	RFSfRFLC8FThSvvw5VNSNOlnN0vLelxgxr7KE0nTV7iczwZycSkuXdAb1iO0FEVU
+	LHzFGpgr5esm5iSbRNo1bOeW0jGlvv/bEDHCBXIjDQe6DxBYmVoC2M7nOSWszb3R
+	+kPEbVC8Y54=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8EC4F6A271;
+	Wed, 12 Feb 2014 14:28:59 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 705C96A26F;
+	Wed, 12 Feb 2014 14:28:57 -0500 (EST)
+In-Reply-To: <CAHOQ7J-2BkQOr+_BF42ja4pWaUWkt8OC-YE0ETwHAYsmrubi=A@mail.gmail.com>
+	(Stefan Zager's message of "Wed, 12 Feb 2014 10:26:22 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: EABFAC5A-941B-11E3-8928-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242015>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242016>
 
-Am 12.02.2014 19:37, schrieb Erik Faye-Lund:
-> On Wed, Feb 12, 2014 at 7:34 PM, Stefan Zager <szager@google.com> wrote:
->> On Wed, Feb 12, 2014 at 10:27 AM, Erik Faye-Lund <kusmabite@gmail.com> wrote:
->>> On Wed, Feb 12, 2014 at 7:20 PM, Stefan Zager <szager@google.com> wrote:
->>>>
->>>> I don't want to steal the thunder of my coworker, who wrote the
->>>> implementation.  He plans to submit it upstream soon-ish.  It relies
->>>> on using the lpOverlapped argument to ReadFile(), with some additional
->>>> tomfoolery to make sure that the implicit position pointer for the
->>>> file descriptor doesn't get modified.
->>>
->>> Is the code available somewhere? I'm especially interested in the
->>> "additional tomfoolery to make sure that the implicit position pointer
->>> for the file descriptor doesn't get modified"-part, as this was what I
->>> ended up butting my head into when trying to do this myself.
->>
->> https://chromium-review.googlesource.com/#/c/186104/
-> 
-> ReOpenFile, that's fantastic. Thanks a lot!
+Stefan Zager <szager@google.com> writes:
 
-...but should be loaded dynamically via GetProcAddress, or are we ready to drop XP support?
+> If anyone has a recommendation for a less labor-intensive way to do
+> this in emacs, I'd be very grateful.
+
+This is not "do this in emacs", but here is a possible approach.
+
+You can ask "git diff" about what you changed, and actually apply
+the change while fixing whitespace errors.  I.e.
+
+	git diff sha1_file.c | git apply --cached --whitespace=fix
+	git diff
+	git checkout sha1_file.c
+
+The first step will add a cleaned-up version to your index.
+
+The second "diff" (optional) is to see what whitespace errors are
+introduced when going from that cleaned-up version to what you have
+in the working tree.
+
+With the last step you would update the working tree version to the
+cleaned-up version from the index.
+
+	[alias]
+	wsadd = "!sh -c 'git diff -- \"$@\" | git apply --cached --whitespace=fix;\
+		git co -- ${1-.} \"$@\"' -"
