@@ -1,99 +1,131 @@
 From: Johan Herland <johan@herland.net>
-Subject: Re: git-note -C changes commit type?
-Date: Wed, 12 Feb 2014 10:50:50 +0100
-Message-ID: <CALKQrgdnGhc-y3WMf+zej4M+O4NMhLKusE-N6dX_xKVViZmQzA@mail.gmail.com>
-References: <1392139407.12790.7.camel@kirk>
-	<CALKQrgcM7JpZCk4amjo_rwg5uuuWNg-5yd1NXB5p7EtrU9WBGg@mail.gmail.com>
-	<xmqqvbwlnqi1.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Joachim Breitner <mail@joachim-breitner.de>,
-	Git mailing list <git@vger.kernel.org>
+Subject: [PATCH] notes: Disallow reusing non-blob as a note object
+Date: Wed, 12 Feb 2014 10:54:16 +0100
+Message-ID: <1392198856-3908-1-git-send-email-johan@herland.net>
+References: <CALKQrgdnGhc-y3WMf+zej4M+O4NMhLKusE-N6dX_xKVViZmQzA@mail.gmail.com>
+Cc: git@vger.kernel.org, Joachim Breitner <mail@joachim-breitner.de>,
+	"Kyle J. McKay" <mackyle@gmail.com>,
+	Johan Herland <johan@herland.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 12 10:51:04 2014
+X-From: git-owner@vger.kernel.org Wed Feb 12 10:56:06 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WDWT9-0007af-9a
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Feb 2014 10:51:03 +0100
+	id 1WDWXv-0000pg-KA
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Feb 2014 10:55:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751337AbaBLJu6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Feb 2014 04:50:58 -0500
-Received: from mail12.copyleft.no ([188.94.218.224]:35724 "EHLO
-	mail12.copyleft.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751218AbaBLJu4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Feb 2014 04:50:56 -0500
-Received: from locusts.copyleft.no ([188.94.218.116] helo=mail.mailgateway.no)
-	by mail12.copyleft.no with esmtp (Exim 4.76)
-	(envelope-from <johan@herland.net>)
-	id 1WDWT0-00013y-8c
-	for git@vger.kernel.org; Wed, 12 Feb 2014 10:50:54 +0100
-Received: from mail-pb0-f53.google.com ([209.85.160.53])
-	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
-	(Exim 4.72 (FreeBSD))
-	(envelope-from <johan@herland.net>)
-	id 1WDWSz-000Bfr-I1
-	for git@vger.kernel.org; Wed, 12 Feb 2014 10:50:54 +0100
-Received: by mail-pb0-f53.google.com with SMTP id md12so8988435pbc.40
-        for <git@vger.kernel.org>; Wed, 12 Feb 2014 01:50:50 -0800 (PST)
+	id S1752146AbaBLJyt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Feb 2014 04:54:49 -0500
+Received: from mail-ee0-f41.google.com ([74.125.83.41]:58147 "EHLO
+	mail-ee0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751065AbaBLJyj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Feb 2014 04:54:39 -0500
+Received: by mail-ee0-f41.google.com with SMTP id e51so3635282eek.0
+        for <git@vger.kernel.org>; Wed, 12 Feb 2014 01:54:38 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=LRxKBueq9bwsdJCfJm33d6C5lGoRjwES+41r0A2C3kE=;
-        b=VGHzg6eFBYlytoT0WWu/4leN/7W8ddYQzdh3tVcdhDP7z58v+M/u2ykUp4HPAX7bUG
-         oMFPyCyZrKGq4YJ0OFc2aPNvYBzH7O9Swx3cQNze2FUMoplIk3y6EWODqdE1UmovY3xe
-         2XZp6mPCOAKweejxcVfDyOHgyIy4p+WqcxU3ZG85SoY874Y1UgHyRZoLNTJlwaJ3Y1lW
-         GXohRwUZQbW1A0wrGRJOkbZFA0B6y5d+e/GeDc9VWAr9OSlglRFzQRpQN/G0R4jH8kW2
-         btImcZAtcGZthmfoE0DBzFQL+WW3fFskcr9WW4MFr8WTzNuKgyya3wwL8VcGGp/Uo6Tq
-         i4rw==
-X-Received: by 10.68.138.165 with SMTP id qr5mr50739480pbb.123.1392198650498;
- Wed, 12 Feb 2014 01:50:50 -0800 (PST)
-Received: by 10.70.48.228 with HTTP; Wed, 12 Feb 2014 01:50:50 -0800 (PST)
-In-Reply-To: <xmqqvbwlnqi1.fsf@gitster.dls.corp.google.com>
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=AVujFvPKp1yWtKYgStyX745pFxlT1KcveDmhgDgkHEM=;
+        b=ZSgfcJrE89gt0kZXl64YoDcv7fBj1W5taYg5pTJrt5zxj2rVt/JastC+a0vkWoVq7c
+         4DCsWHkA+NWcZNBy9XSkszkJlqHcAAoOuGqqkeSIOc5h0r8UUAsK2dU3vCo6PlzDc2sJ
+         l9QDdAfx1slXoR4gMDFG8TgeuewwbXKYeldr1KIbld8ht9hhaC9S56pZPo+nIUxQz+7z
+         khI+FMiqhVWWwTbWyw/fWYJTq4hJOjRdpGKjiBsOWApjugeyVBYhTf0huH8VUAdN7Yeo
+         NNPToms4IhxjC6MlDwBQFHZGBDLQrEqnAz7jZaU0o0tuJXo/lFBnhNYAf3Xu+UdfhpEW
+         XfxA==
+X-Received: by 10.14.88.2 with SMTP id z2mr2920811eee.60.1392198878154;
+        Wed, 12 Feb 2014 01:54:38 -0800 (PST)
+Received: from beta.cisco.com (173-38-208-169.cisco.com. [173.38.208.169])
+        by mx.google.com with ESMTPSA id y47sm79344982eel.14.2014.02.12.01.54.36
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 12 Feb 2014 01:54:37 -0800 (PST)
+X-Mailer: git-send-email 1.8.4.653.g2df02b3
+In-Reply-To: <CALKQrgdnGhc-y3WMf+zej4M+O4NMhLKusE-N6dX_xKVViZmQzA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241978>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241979>
 
-On Wed, Feb 12, 2014 at 1:06 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Johan Herland <johan@herland.net> writes:
->> There is currently no way the "git notes" commands will allow you to
->> store the 3d7de37 commit object directly as a note. There is also
->> (AFAICS) no easy workaround (git fast-import could've been a
->> workaround if it did not already require the first N/notemodify
->> argument to be a blob object). The best alternative, off the top of my
->> head, would be to write your own program using the notes.h API to
->> manipulate the notes tree directly (or - suboptimally - use other
->> low-level Git operations to do the same).
->
-> Even worse. I do not think such a non-blob object in the notes tree
-> does not participate in the reachability at all, so you won't be
-> able to fetch "refs/notes/whatever" and expect to get a useful
-> result.
+Currently "git notes add -C $object" will read the raw bytes from $object,
+and then copy those bytes into the note object, which is hardcoded to be
+of type blob. This means that if the given $object is a non-blob (e.g.
+tree or commit), the raw bytes from that object is copied into a blob
+object. This is probably not useful, and certainly not what any sane
+user would expect. So disallow it, by erroring out if the $object passed
+to the -C option is not a blob.
 
-s/non-blob/non-(blob-or-tree)/
+The fix also applies to the -c option (in which the user is prompted to
+edit/verify the note contents in a text editor), and also when -c/-C is
+passed to "git notes append" (which appends the $object contents to an
+existing note object). In both cases, passing a non-blob $object does not
+make sense.
 
-Any object type that is deemed reachable by reference from a regular
-git tree object will also be usable (as far as reachability goes) in a
-notes tree.
+Also add a couple of tests demonstrating expected behavior.
 
-> I do not think storing the raw bits of commit object as a
-> blob in the notes tree is useful behaviour, either.  The command
-> probably should refuse to get anything non-blob via that option.
+Suggested-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Johan Herland <johan@herland.net>
+---
+ builtin/notes.c  |  6 +++++-
+ t/t3301-notes.sh | 27 +++++++++++++++++++++++++++
+ 2 files changed, 32 insertions(+), 1 deletion(-)
 
-Patch coming up...
-
-> Perhaps the notes entry should just note the object name of whatever
-> commit it wants to refer to in a *blob*?
-
-Agreed.
-
-...Johan
-
+diff --git a/builtin/notes.c b/builtin/notes.c
+index 2b24d05..bb89930 100644
+--- a/builtin/notes.c
++++ b/builtin/notes.c
+@@ -269,7 +269,11 @@ static int parse_reuse_arg(const struct option *opt, const char *arg, int unset)
+ 		die(_("Failed to resolve '%s' as a valid ref."), arg);
+ 	if (!(buf = read_sha1_file(object, &type, &len)) || !len) {
+ 		free(buf);
+-		die(_("Failed to read object '%s'."), arg);;
++		die(_("Failed to read object '%s'."), arg);
++	}
++	if (type != OBJ_BLOB) {
++		free(buf);
++		die(_("Cannot read note data from non-blob object '%s'."), arg);
+ 	}
+ 	strbuf_add(&(msg->buf), buf, len);
+ 	free(buf);
+diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
+index 16de05a..3bb79a4 100755
+--- a/t/t3301-notes.sh
++++ b/t/t3301-notes.sh
+@@ -812,6 +812,33 @@ test_expect_success 'create note from non-existing note with "git notes add -C"
+ 	test_must_fail git notes list HEAD
+ '
+ 
++test_expect_success 'create note from non-blob with "git notes add -C" fails' '
++	commit=$(git rev-parse --verify HEAD) &&
++	tree=$(git rev-parse --verify HEAD:) &&
++	test_must_fail git notes add -C $commit &&
++	test_must_fail git notes add -C $tree &&
++	test_must_fail git notes list HEAD
++'
++
++cat > expect << EOF
++commit 80d796defacd5db327b7a4e50099663902fbdc5c
++Author: A U Thor <author@example.com>
++Date:   Thu Apr 7 15:20:13 2005 -0700
++
++    8th
++
++Notes (other):
++    This is a blob object
++EOF
++
++test_expect_success 'create note from blob with "git notes add -C" reuses blob id' '
++	blob=$(echo "This is a blob object" | git hash-object -w --stdin) &&
++	git notes add -C $blob &&
++	git log -1 > actual &&
++	test_cmp expect actual &&
++	test "$(git notes list HEAD)" = "$blob"
++'
++
+ cat > expect << EOF
+ commit 016e982bad97eacdbda0fcbd7ce5b0ba87c81f1b
+ Author: A U Thor <author@example.com>
 -- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+1.8.4.653.g2df02b3
