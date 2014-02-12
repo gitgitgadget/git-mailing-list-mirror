@@ -1,114 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] tests: turn on network daemon tests by default
-Date: Wed, 12 Feb 2014 11:06:43 -0800
-Message-ID: <xmqq61oknoak.fsf@gitster.dls.corp.google.com>
-References: <20140210191521.GA3112@sigill.intra.peff.net>
-	<20140210212931.GA16154@sigill.intra.peff.net>
-	<xmqqa9dxpgw9.fsf@gitster.dls.corp.google.com>
-	<20140211200445.GA27946@sigill.intra.peff.net>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: Make the git codebase thread-safe
+Date: Wed, 12 Feb 2014 20:15:24 +0100
+Message-ID: <87ppms87n7.fsf@fencepost.gnu.org>
+References: <CA+TurHgyUK5sfCKrK+3xY8AeOg0t66vEvFxX=JiA9wXww7eZXQ@mail.gmail.com>
+	<CACsJy8Bsc6sywL9L5QC-SKKmh9J+CKnoG5i78WfUbAG9BdZ8Rw@mail.gmail.com>
+	<CAHOQ7J8gvwpwJV2mBPDaARu3cQ54-ZDQ6iGOwKuJRr9Z+XBL7g@mail.gmail.com>
+	<87y51g88sc.fsf@fencepost.gnu.org>
+	<CAHOQ7J_pg6Nqc5TdU9OA81=d+ZG_JpLFQ5-eFLY3uW8CuAQrUQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain
 Cc: Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Feb 12 20:06:53 2014
+	Git Mailing List <git@vger.kernel.org>
+To: Stefan Zager <szager@chromium.org>
+X-From: git-owner@vger.kernel.org Wed Feb 12 20:15:33 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WDf93-0007Ft-CI
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Feb 2014 20:06:53 +0100
+	id 1WDfHP-0002EZ-Nl
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Feb 2014 20:15:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753769AbaBLTGt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Feb 2014 14:06:49 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36650 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752204AbaBLTGs (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Feb 2014 14:06:48 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B5D026B599;
-	Wed, 12 Feb 2014 14:06:47 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=zG0KD689ONFvagWpeQ5rGss37Ls=; b=rRtnXC
-	JeiIMZjCrvZt4RHbWEOgeTl3xczW6h2r9IGh0+vmSUTgQs+xXfyOT2CamnNnWhN2
-	w9tGubpYoJZdzDYvAIPB6h9Zl/1dtYAmh6kXWc0xnldO5SSwR9l6ONjX42cUCTdM
-	4MsTh8tZbGMaYNHovBaHEwy5ut4p77Lbc14Rc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=NXVggsmBwjDiMMqDRUHLcE+UF6uv5Kl8
-	/dQHxc0b+AeflsbICboZ4Y/DblolGOQYHmZpH7j6eTTGR56WTUuBYsR8mnT6Xbjk
-	cjP2itIrfqPeenS/Tk8TXHGg0/6GK8wUt0aorF3xUKCEQhXPdoZ0bzhlCLKtM44g
-	RpJRjOXF958=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9F65D6B596;
-	Wed, 12 Feb 2014 14:06:47 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CAA4C6B594;
-	Wed, 12 Feb 2014 14:06:46 -0500 (EST)
-In-Reply-To: <20140211200445.GA27946@sigill.intra.peff.net> (Jeff King's
-	message of "Tue, 11 Feb 2014 15:04:45 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: D1A16A5E-9418-11E3-B3FF-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753735AbaBLTP1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Feb 2014 14:15:27 -0500
+Received: from fencepost.gnu.org ([208.118.235.10]:56696 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752071AbaBLTP0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Feb 2014 14:15:26 -0500
+Received: from localhost ([127.0.0.1]:55737 helo=lola)
+	by fencepost.gnu.org with esmtp (Exim 4.71)
+	(envelope-from <dak@gnu.org>)
+	id 1WDfHJ-0001zv-AS; Wed, 12 Feb 2014 14:15:25 -0500
+Received: by lola (Postfix, from userid 1000)
+	id EDCE4E047A; Wed, 12 Feb 2014 20:15:24 +0100 (CET)
+In-Reply-To: <CAHOQ7J_pg6Nqc5TdU9OA81=d+ZG_JpLFQ5-eFLY3uW8CuAQrUQ@mail.gmail.com>
+	(Stefan Zager's message of "Wed, 12 Feb 2014 11:02:37 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242013>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242014>
 
-Jeff King <peff@peff.net> writes:
+Stefan Zager <szager@chromium.org> writes:
 
-> Agreed, but I think the only way to know the size of those fallouts is
-> to try it and see who complains.  I would not normally be so cavalier
-> with git itself, but I think for the test infrastructure, we have a
-> small, tech-savvy audience that can help us iterate on it without too
-> much pain.
+> On Wed, Feb 12, 2014 at 10:50 AM, David Kastrup <dak@gnu.org> wrote:
+>
+>> Really, give the above patch a try.  I am taking longer to finish it
+>> than anticipated (with a lot due to procrastination but that is,
+>> unfortunately, a large part of my workflow), and it's cutting into my
+>> "paychecks" (voluntary donations which to a good degree depend on timely
+>> and nontrivial progress reports for my freely available work on GNU
+>> LilyPond).
+>
+> I will give that a try.  How much of a performance improvement have
+> you clocked?
 
-There is another.
+Depends on file type and size.  With large files with lots of small
+changes, performance improvements get more impressive.
 
-$ GIT_TEST_HTTPD=false sh t5537-fetch-shallow.sh 
-ok 1 - setup
-ok 2 - setup shallow clone
-ok 3 - clone from shallow clone
-ok 4 - fetch from shallow clone
-ok 5 - fetch --depth from shallow clone
-ok 6 - fetch --unshallow from shallow clone
-ok 7 - fetch something upstream has but hidden by clients shallow boundaries
-ok 8 - fetch that requires changes in .git/shallow is filtered
-ok 9 - fetch --update-shallow
-error: Can't use skip_all after running some tests
+Some ugly real-world examples are the Emacs repository, src/xdisp.c
+(performance improvement about a factor of 3), a large file in the style
+of /usr/share/dict/words clocking in at a factor of about 5.
 
-Under 'prove' test target, the way it exits causes:
+Again, that's with an SSD and ext4 filesystem on GNU/Linux, and there
+are no improvements in system time (I/O) except for patch 4 of the
+series which helps perhaps 20% or so.
 
-*** prove ***
-t5537-fetch-shallow.sh .. Dubious, test returned 1 (wstat 256, 0x100)
-All 9 subtests passed
+So the benefits of the patch will come into play mostly for big, bad
+files on Windows: other than that, the I/O time is likely to be the
+dominant player anyway.
 
-which leads to:
+If you have benchmarked the stuff, for annoying cases expect I/O time to
+go down maybe 10-20%, and user time to drop by a factor of 4.  Under
+GNU/Linux, that makes for a significant overall improvement.  On
+Windows, the payback is likely quite less because of the worse I/O
+performance.  Pity.
 
-Test Summary Report
--------------------
-t5537-fetch-shallow.sh (Wstat: 256 Tests: 9 Failed: 0)
-  Non-zero exit status: 1
-  Parse errors: No plan found in TAP output
-
-
-On the 'master' branch without these "auto opt-in" patches,
-
-$ GIT_TEST_HTTPD= sh t5537-fetch-shallow.sh 
-ok 1 - setup
-ok 2 - setup shallow clone
-ok 3 - clone from shallow clone
-ok 4 - fetch from shallow clone
-ok 5 - fetch --depth from shallow clone
-ok 6 - fetch --unshallow from shallow clone
-ok 7 - fetch something upstream has but hidden by clients shallow boundaries
-ok 8 - fetch that requires changes in .git/shallow is filtered
-ok 9 - fetch --update-shallow
-skipping remaining tests, git built without http support
-# passed all 9 test(s)
-1..9
+-- 
+David Kastrup
