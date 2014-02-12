@@ -1,77 +1,52 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: Make the git codebase thread-safe
-Date: Thu, 13 Feb 2014 08:03:38 +0900
-Message-ID: <20140212230338.GA7208@glandium.org>
-References: <CA+TurHgyUK5sfCKrK+3xY8AeOg0t66vEvFxX=JiA9wXww7eZXQ@mail.gmail.com>
- <robbat2-20140212T015847-248245854Z@orbis-terrarum.net>
- <CACsJy8AStrZBtSqRiwBtonfW5y0ar=9Z371fE2Krwj=P-w7ERw@mail.gmail.com>
- <52FB5443.8030200@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] contrib/diff-highlight: multibyte characters diff
+Date: Wed, 12 Feb 2014 18:27:40 -0500
+Message-ID: <20140212232740.GA11098@sigill.intra.peff.net>
+References: <1392109750-47852-1-git-send-email-sugi1982@gmail.com>
+ <20140212205948.GA4453@sigill.intra.peff.net>
+ <CA+39Oz5TSPNzYVvFytJwwUhRYjbEp5f_BdBWKT2tcYzpbF1WyQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	"Robin H. Johnson" <robbat2@gentoo.org>,
-	Stefan Zager <szager@chromium.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Karsten Blees <karsten.blees@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 13 00:28:00 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Yoshihiro Sugi <sugi1982@gmail.com>, git list <git@vger.kernel.org>
+To: Thomas Adam <thomas@xteddy.org>
+X-From: git-owner@vger.kernel.org Thu Feb 13 00:28:07 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WDjDi-0001GU-UH
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Feb 2014 00:27:59 +0100
+	id 1WDjDo-0001JZ-Lb
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Feb 2014 00:28:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754039AbaBLX1l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Feb 2014 18:27:41 -0500
-Received: from ks3293202.kimsufi.com ([5.135.186.141]:37254 "EHLO
-	zenigata.glandium.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752878AbaBLX1k (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Feb 2014 18:27:40 -0500
-Received: from glandium by zenigata.glandium.org with local (Exim 4.82)
-	(envelope-from <glandium@glandium.org>)
-	id 1WDiqA-0002CE-GQ; Thu, 13 Feb 2014 08:03:38 +0900
+	id S1752922AbaBLX15 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Feb 2014 18:27:57 -0500
+Received: from cloud.peff.net ([50.56.180.127]:49477 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752878AbaBLX1m (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Feb 2014 18:27:42 -0500
+Received: (qmail 12251 invoked by uid 102); 12 Feb 2014 23:27:42 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 12 Feb 2014 17:27:42 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 12 Feb 2014 18:27:40 -0500
 Content-Disposition: inline
-In-Reply-To: <52FB5443.8030200@gmail.com>
-X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <CA+39Oz5TSPNzYVvFytJwwUhRYjbEp5f_BdBWKT2tcYzpbF1WyQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242034>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242035>
 
-On Wed, Feb 12, 2014 at 12:00:19PM +0100, Karsten Blees wrote:
-> Am 12.02.2014 04:43, schrieb Duy Nguyen:
-> > On Wed, Feb 12, 2014 at 9:02 AM, Robin H. Johnson <robbat2@gentoo.org> wrote:
-> >> On Tue, Feb 11, 2014 at 05:54:51PM -0800,  Stefan Zager wrote:
-> >>> We in the chromium project have a keen interest in adding threading to
-> >>> git in the pursuit of performance for lengthy operations (checkout,
-> >>> status, blame, ...).  Our motivation comes from hitting some
-> >>> performance walls when working with repositories the size of chromium
-> >>> and blink:
-> >> +1 from Gentoo on performance improvements for large repos.
-> >>
-> >> The main repository in the ongoing Git migration project looks to be in
-> >> the 1.5GB range (and for those that want to propose splitting it up, we
-> >> have explored that option and found it lacking), with very deep history
-> >> (but no branches of note, and very few tags).
-> > 
-> > From v1.9 shallow clone should work for all push/pull/clone... so
-> > history depth does not matter (on the client side). As for
-> > gentoo-x86's large worktree, using index v4 and avoid full-tree
-> > operations (e.g. "status .", not "status"..) should make all
-> > operations reasonably fast. I plan to make "status" fast even without
-> > path limiting with the help of inotify, but that's not going to be
-> > finished soon. Did I miss anything else?
-> > 
+On Wed, Feb 12, 2014 at 11:10:49PM +0000, Thomas Adam wrote:
+
+> On 12 February 2014 20:59, Jeff King <peff@peff.net> wrote:
+> > +sub decode {
+> > +       my $orig = shift;
+> > +       my $decoded = eval { decode_utf8($orig, Encode::FB_CROAK) };
+> > +       return defined $decoded ?
 > 
-> Regarding git-status on msysgit, enable core.preloadindex and core.fscache (as of 1.8.5.2).
-> 
-> There's no inotify on Windows, and I gave up using ReadDirectoryChangesW to
-> keep fscache up to date, as it _may_ report DOS file names (e.g. C:\PROGRA~1
-> instead of C:\Program Files).
+> I'd still advocate checking $@ here, rather than the defined $decoded check.
 
-You can use GetLongPathNameW to get the latter from the former.
+I don't mind changing it, but for my edification, what is the advantage?
 
-Mike
+-Peff
