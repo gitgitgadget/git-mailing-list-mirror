@@ -1,73 +1,57 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v2 2/2] gc: config option for running --auto in background
-Date: Wed, 12 Feb 2014 08:53:05 +0700
-Message-ID: <CACsJy8CyAsA5VA-s_c7juaRyToRU+QzJsYZDvzD5ggaR6=9FOg@mail.gmail.com>
-References: <xmqqd2j2afup.fsf@gitster.dls.corp.google.com> <1391843332-20583-1-git-send-email-pclouds@gmail.com>
- <1391843332-20583-2-git-send-email-pclouds@gmail.com> <CABPQNSb3=i8F+vPEG3RmH+snZVZ-xrPtcVY2Nx9uvyTCLXcy6g@mail.gmail.com>
- <CACsJy8BBQ3Bh6q6JM8V-QVKfzwp1w99+u4_55jjGbHLV3c62gA@mail.gmail.com>
- <xmqqob2est9c.fsf@gitster.dls.corp.google.com> <CAPc5daW3VwLutU8JZu9fBbGtihw5X_bE9M31ugzqN9mEnFYNNQ@mail.gmail.com>
+From: "Robin H. Johnson" <robbat2@gentoo.org>
+Subject: Re: Make the git codebase thread-safe
+Date: Wed, 12 Feb 2014 02:02:06 +0000
+Message-ID: <robbat2-20140212T015847-248245854Z@orbis-terrarum.net>
+References: <CA+TurHgyUK5sfCKrK+3xY8AeOg0t66vEvFxX=JiA9wXww7eZXQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Erik Faye-Lund <kusmabite@gmail.com>,
-	GIT Mailing-list <git@vger.kernel.org>,
-	chris <jugg@hotmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 12 02:59:15 2014
+Content-Type: text/plain; charset=us-ascii
+To: Stefan Zager <szager@chromium.org>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Feb 12 03:02:14 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WDP6Z-0003qM-75
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Feb 2014 02:59:15 +0100
+	id 1WDP9S-0004Zs-8y
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Feb 2014 03:02:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752685AbaBLB7L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Feb 2014 20:59:11 -0500
-Received: from mail-qa0-f54.google.com ([209.85.216.54]:35527 "EHLO
-	mail-qa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752062AbaBLB7K (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Feb 2014 20:59:10 -0500
-Received: by mail-qa0-f54.google.com with SMTP id i13so13028696qae.27
-        for <git@vger.kernel.org>; Tue, 11 Feb 2014 17:59:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=3kVq9XyNuD7R5u2BR0dENXkmOa1FNPRbcR5AyMR6TbU=;
-        b=ZnpIR1xBjxqPF3Nsu2K+K2kwvHN39ahOcSaadRDrYrSeXED49V10wjJetnQAWtnKb/
-         oSRythiXy2U06wI2OphnCv1EJPaL7H3lzq4jNVVlumdgyaPrlAfYpxWjd7CdDI1qAwbu
-         3iToXNVF7liPqD2+YHxwMadDwILUsH3YNeBU6BzuFYH3JmgR+cJ0uvGIinkwmR0s9bS1
-         Qfw1v/HP62l+/dYWa1xmdvq1F7mKQIQaF0jldBH6p1KfNYdR1wfUgfTHfJbBQ9y3Jh/5
-         tEjwiSt2UM/jLkl8IylEJgY7qi0bKRLTuE/H87UkdpzDUN0NbIeuRooUXbEePK1CD+jN
-         3WRA==
-X-Received: by 10.140.47.212 with SMTP id m78mr59441883qga.21.1392170015368;
- Tue, 11 Feb 2014 17:53:35 -0800 (PST)
-Received: by 10.96.215.102 with HTTP; Tue, 11 Feb 2014 17:53:05 -0800 (PST)
-In-Reply-To: <CAPc5daW3VwLutU8JZu9fBbGtihw5X_bE9M31ugzqN9mEnFYNNQ@mail.gmail.com>
+	id S1752086AbaBLCCJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Feb 2014 21:02:09 -0500
+Received: from smtp.gentoo.org ([140.211.166.183]:44755 "EHLO smtp.gentoo.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750978AbaBLCCI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Feb 2014 21:02:08 -0500
+Received: from grubbs.orbis-terrarum.net (localhost [127.0.0.1])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by smtp.gentoo.org (Postfix) with ESMTPS id E498233F99F
+	for <git@vger.kernel.org>; Wed, 12 Feb 2014 02:02:07 +0000 (UTC)
+Received: (qmail 17339 invoked by uid 10000); 12 Feb 2014 02:02:06 -0000
+Content-Disposition: inline
+In-Reply-To: <CA+TurHgyUK5sfCKrK+3xY8AeOg0t66vEvFxX=JiA9wXww7eZXQ@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241967>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241968>
 
-On Tue, Feb 11, 2014 at 2:11 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> On Mon, Feb 10, 2014 at 10:43 AM, Junio C Hamano <gitster@pobox.com> wrote:
->>> If --quiet is set, we should not be printing anyway. If not, I thinkg
->>> we could only print "auto packing in background.." when we actually
->>> can do that, else just print the old message. It means an #ifdef
->>> NO_POSIX_GOODIES here again though..
->>
->> Didn't you change it not to die but return nosys or something?
->
-> Ah, the problem is that it is too late to take back "... will do so in
-> the background" when you noticed that daemonize() did not succeed, so
-> you would need a way to see if we can daemonize() before actually
-> doing so if you want to give different messages.
->
-> "int can_daemonize(void)" could be an answer that is nicer than
-> NO_POSIX_GOODIES, but I am not sure if it is worth it.
+On Tue, Feb 11, 2014 at 05:54:51PM -0800,  Stefan Zager wrote:
+> We in the chromium project have a keen interest in adding threading to
+> git in the pursuit of performance for lengthy operations (checkout,
+> status, blame, ...).  Our motivation comes from hitting some
+> performance walls when working with repositories the size of chromium
+> and blink:
++1 from Gentoo on performance improvements for large repos.
 
-Or we could pass the "quiet" flag to daemonize() and let it print
-something in the #ifdef NO_POSIX_GOODIES part.
+The main repository in the ongoing Git migration project looks to be in
+the 1.5GB range (and for those that want to propose splitting it up, we
+have explored that option and found it lacking), with very deep history
+(but no branches of note, and very few tags).
+
 -- 
-Duy
+Robin Hugh Johnson
+Gentoo Linux: Developer, Infrastructure Lead
+E-Mail     : robbat2@gentoo.org
+GnuPG FP   : 11ACBA4F 4778E3F6 E4EDF38E B27B944E 34884E85
