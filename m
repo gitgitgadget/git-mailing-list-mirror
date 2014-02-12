@@ -1,79 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git-note -C changes commit type?
-Date: Tue, 11 Feb 2014 16:06:46 -0800
-Message-ID: <xmqqvbwlnqi1.fsf@gitster.dls.corp.google.com>
-References: <1392139407.12790.7.camel@kirk>
-	<CALKQrgcM7JpZCk4amjo_rwg5uuuWNg-5yd1NXB5p7EtrU9WBGg@mail.gmail.com>
+From: Stefan Zager <szager@chromium.org>
+Subject: Make the git codebase thread-safe
+Date: Tue, 11 Feb 2014 17:54:51 -0800
+Message-ID: <CA+TurHgyUK5sfCKrK+3xY8AeOg0t66vEvFxX=JiA9wXww7eZXQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Joachim Breitner <mail@joachim-breitner.de>,
-	Git mailing list <git@vger.kernel.org>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Wed Feb 12 01:06:56 2014
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 12 02:54:58 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WDNLr-0007Vq-63
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Feb 2014 01:06:55 +0100
+	id 1WDP2P-0002nl-BQ
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Feb 2014 02:54:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751745AbaBLAGv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Feb 2014 19:06:51 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:54433 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751435AbaBLAGu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Feb 2014 19:06:50 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C52C06CCA9;
-	Tue, 11 Feb 2014 19:06:49 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ZKgzTWa8ohbvnNvWCtPy35P1eUc=; b=DdA8fp
-	se6ZX10uTyt3G3aADdZcjD60dt2Fdx0OANKOuzSbu6xWPR1RQ0jVnPrB7nzMU9/A
-	yePEc/0FTIZncCnRqArqJAG1E5M/4Gx3JdGBK8DE+CU6sWytp8nONAt9YGBKECrX
-	t0M4GUnvHyDNP3FB52aT1m0Ws5uvj6nwKrG+A=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=iLooWmHA6pFTjtI/e5fq5lwA9Wm2PH9C
-	0STOrHL73Y215x9FEH7J4k0Ht0Lz/yLaDYG92NZz8v5uNp0xQ16k+G+/JL1prHdJ
-	SojA1XUHmVlrlpysRxiejExSkLVjBD2UlMkWPCEinhhslKvmrd1TfxBIUVpc4z3M
-	4VnFRcTOv6A=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AB0CF6CCA8;
-	Tue, 11 Feb 2014 19:06:49 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EE9F86CC9A;
-	Tue, 11 Feb 2014 19:06:48 -0500 (EST)
-In-Reply-To: <CALKQrgcM7JpZCk4amjo_rwg5uuuWNg-5yd1NXB5p7EtrU9WBGg@mail.gmail.com>
-	(Johan Herland's message of "Wed, 12 Feb 2014 00:52:51 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 91558718-9379-11E3-B064-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752214AbaBLByw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Feb 2014 20:54:52 -0500
+Received: from mail-oa0-f41.google.com ([209.85.219.41]:57042 "EHLO
+	mail-oa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752037AbaBLByv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Feb 2014 20:54:51 -0500
+Received: by mail-oa0-f41.google.com with SMTP id j17so10309774oag.28
+        for <git@vger.kernel.org>; Tue, 11 Feb 2014 17:54:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=tVEaGZTd+79pOHqPbttNM8u+gWG0ztpwTa4jLRvAQWU=;
+        b=mVrN6GnlgqK0NJI/9SxuPeNJ7qNKgl1AZkARRVBJ3lPcO8za2FZ2Ga5KgTSbo3wNN9
+         NvQxqg3uwM06+zOKOJnnJQbs53ov+vFRO3N+k+BLcr+eQxkE2hs5Z/sC1zNoceB3roB7
+         2YRt18X4k4z+shP8DenC1Ck5j726Fg6/7mwnE=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=tVEaGZTd+79pOHqPbttNM8u+gWG0ztpwTa4jLRvAQWU=;
+        b=I7N2oY+TaE84kLDtregM9xaMTwBRcz9Uvtml0yD2pIjg0nPAES6qR6f+huN+TolNME
+         jLAao9e7IUT79w4noqYqHGNQY0/45Qa7sQ7sVY18WuATSDCPqxUOySGWpDzEzqHGzUdl
+         orshF7hlRGJxNwahgv7gbffpqBoHnDrDzyFNW31mxBOmAI1Mhn4d8i+CqayPaOBJa6UR
+         EbFexQjaHbaifXXMLNbzfgDjgE4lXZlOFhtF4ieoKF8ueTdV5NbSPsfKqIxxaI/COuVm
+         16srZmu2JYPkXGxbg1eRLq6Fhlt4As/apU3/vSOvSWCJYYYaJw6kFqhUzqtuKdqE2x8Q
+         +ylw==
+X-Gm-Message-State: ALoCoQmxX5o8BRYR3INKt09GDzVh+2RwGnI903txofUHEyaoD2WQLZyH3qClyai49AwFiQXYIpVg
+X-Received: by 10.60.103.134 with SMTP id fw6mr34886807oeb.34.1392170091142;
+ Tue, 11 Feb 2014 17:54:51 -0800 (PST)
+Received: by 10.76.69.229 with HTTP; Tue, 11 Feb 2014 17:54:51 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241964>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/241965>
 
-Johan Herland <johan@herland.net> writes:
+We in the chromium project have a keen interest in adding threading to
+git in the pursuit of performance for lengthy operations (checkout,
+status, blame, ...).  Our motivation comes from hitting some
+performance walls when working with repositories the size of chromium
+and blink:
 
-> There is currently no way the "git notes" commands will allow you to
-> store the 3d7de37 commit object directly as a note. There is also
-> (AFAICS) no easy workaround (git fast-import could've been a
-> workaround if it did not already require the first N/notemodify
-> argument to be a blob object). The best alternative, off the top of my
-> head, would be to write your own program using the notes.h API to
-> manipulate the notes tree directly (or - suboptimally - use other
-> low-level Git operations to do the same).
+https://chromium.googlesource.com/chromium/src
+https://chromium.googlesource.com/chromium/blink
 
-Even worse. I do not think such a non-blob object in the notes tree
-does not participate in the reachability at all, so you won't be
-able to fetch "refs/notes/whatever" and expect to get a useful
-result.  I do not think storing the raw bits of commit object as a
-blob in the notes tree is useful behaviour, either.  The command
-probably should refuse to get anything non-blob via that option.
+We are particularly concerned with the performance of msysgit, and we
+have already chalked up a significant performance gain by turning on
+the threading code in pack-objects (which was already enabled for
+posix platforms, but not on msysgit, owing to the lack of a correct
+pread implementation).
 
-Perhaps the notes entry should just note the object name of whatever
-commit it wants to refer to in a *blob*?
+To this end, I'd like to start submitting patches that make the code
+base generally more thread-safe and thread-friendly.  Right after this
+email, I'm going to send the first such patch, which makes the global
+list of pack files (packed_git) internal to sha1_file.c.
+
+I realize this may be a contentious topic, and I'd like to get
+feedback on the general effort to add more threading to git.  I'd
+appreciate any feedback you'd like to give up front.
+
+Thanks!
+
+Stefan Zager
