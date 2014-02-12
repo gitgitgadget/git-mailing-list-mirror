@@ -1,77 +1,62 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: Make the git codebase thread-safe
-Date: Thu, 13 Feb 2014 08:09:09 +0900
-Message-ID: <20140212230909.GB7208@glandium.org>
-References: <CA+TurHgyUK5sfCKrK+3xY8AeOg0t66vEvFxX=JiA9wXww7eZXQ@mail.gmail.com>
- <CACsJy8Bsc6sywL9L5QC-SKKmh9J+CKnoG5i78WfUbAG9BdZ8Rw@mail.gmail.com>
- <CAHOQ7J8gvwpwJV2mBPDaARu3cQ54-ZDQ6iGOwKuJRr9Z+XBL7g@mail.gmail.com>
- <87y51g88sc.fsf@fencepost.gnu.org>
- <CAHOQ7J_pg6Nqc5TdU9OA81=d+ZG_JpLFQ5-eFLY3uW8CuAQrUQ@mail.gmail.com>
- <87ppms87n7.fsf@fencepost.gnu.org>
+From: Thomas Adam <thomas@xteddy.org>
+Subject: Re: [PATCH] contrib/diff-highlight: multibyte characters diff
+Date: Wed, 12 Feb 2014 23:10:49 +0000
+Message-ID: <CA+39Oz5TSPNzYVvFytJwwUhRYjbEp5f_BdBWKT2tcYzpbF1WyQ@mail.gmail.com>
+References: <1392109750-47852-1-git-send-email-sugi1982@gmail.com> <20140212205948.GA4453@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Stefan Zager <szager@chromium.org>, Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Thu Feb 13 00:09:36 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Yoshihiro Sugi <sugi1982@gmail.com>, git list <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Feb 13 00:11:14 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WDivu-0000vp-MH
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Feb 2014 00:09:35 +0100
+	id 1WDixT-0001gy-KK
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Feb 2014 00:11:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754563AbaBLXJa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Feb 2014 18:09:30 -0500
-Received: from ks3293202.kimsufi.com ([5.135.186.141]:37192 "EHLO
-	zenigata.glandium.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754647AbaBLXJa (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Feb 2014 18:09:30 -0500
-X-Greylist: delayed 327 seconds by postgrey-1.27 at vger.kernel.org; Wed, 12 Feb 2014 18:09:29 EST
-Received: from glandium by zenigata.glandium.org with local (Exim 4.82)
-	(envelope-from <glandium@glandium.org>)
-	id 1WDivV-0002Cn-Up; Thu, 13 Feb 2014 08:09:09 +0900
-Content-Disposition: inline
-In-Reply-To: <87ppms87n7.fsf@fencepost.gnu.org>
-X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754667AbaBLXLG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Feb 2014 18:11:06 -0500
+Received: from mail-yh0-f50.google.com ([209.85.213.50]:45387 "EHLO
+	mail-yh0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754039AbaBLXLF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Feb 2014 18:11:05 -0500
+Received: by mail-yh0-f50.google.com with SMTP id 29so9350848yhl.37
+        for <git@vger.kernel.org>; Wed, 12 Feb 2014 15:11:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=SRS1mLCgViKlkA5UeStowF7YEdopUyOyug/l0xm8mZU=;
+        b=pejmfWzPShFBSiIiusQ4WmfwXl8B/SUg6/W896EdAtReKQCiqMNxW2ayufevvd2sVa
+         bELlak+QalL0oUBwkzA9eg7vmNgra1xyhIC7BnSaP0d0ld4iMDVyxaECsHtoPj6Iv7LT
+         UFdDpfqlVsB9uyX6yYgBL+VzgLESG4JfIGHntDweiS+Yti9EL6//4pclEOndJHeDT3IL
+         S4JeGfmdPOOTF8sTt2eJfAYVnB9RQcVYCH685PjELBZgAvXzCurq92+dtnDifdFvpyA/
+         jFNcxVd4Cqx3QGcvhnqyt8J/q2CCGS3skwIisI/dK20UY6DXkmc1+NEFtubxiFfSBFJF
+         KJkg==
+X-Received: by 10.236.168.166 with SMTP id k26mr4809714yhl.64.1392246664340;
+ Wed, 12 Feb 2014 15:11:04 -0800 (PST)
+Received: by 10.170.173.194 with HTTP; Wed, 12 Feb 2014 15:10:49 -0800 (PST)
+In-Reply-To: <20140212205948.GA4453@sigill.intra.peff.net>
+X-Google-Sender-Auth: 3qJ-mfBpv7MIU54xdkbJx2EQ1uA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242032>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242033>
 
-On Wed, Feb 12, 2014 at 08:15:24PM +0100, David Kastrup wrote:
-> Stefan Zager <szager@chromium.org> writes:
-> 
-> > On Wed, Feb 12, 2014 at 10:50 AM, David Kastrup <dak@gnu.org> wrote:
-> >
-> >> Really, give the above patch a try.  I am taking longer to finish it
-> >> than anticipated (with a lot due to procrastination but that is,
-> >> unfortunately, a large part of my workflow), and it's cutting into my
-> >> "paychecks" (voluntary donations which to a good degree depend on timely
-> >> and nontrivial progress reports for my freely available work on GNU
-> >> LilyPond).
-> >
-> > I will give that a try.  How much of a performance improvement have
-> > you clocked?
-> 
-> Depends on file type and size.  With large files with lots of small
-> changes, performance improvements get more impressive.
-> 
-> Some ugly real-world examples are the Emacs repository, src/xdisp.c
-> (performance improvement about a factor of 3), a large file in the style
-> of /usr/share/dict/words clocking in at a factor of about 5.
-> 
-> Again, that's with an SSD and ext4 filesystem on GNU/Linux, and there
-> are no improvements in system time (I/O) except for patch 4 of the
-> series which helps perhaps 20% or so.
-> 
-> So the benefits of the patch will come into play mostly for big, bad
-> files on Windows: other than that, the I/O time is likely to be the
-> dominant player anyway.
+On 12 February 2014 20:59, Jeff King <peff@peff.net> wrote:
+> +sub decode {
+> +       my $orig = shift;
+> +       my $decoded = eval { decode_utf8($orig, Encode::FB_CROAK) };
+> +       return defined $decoded ?
 
-How much fragmentation does that add to the files, though?
+I'd still advocate checking $@ here, rather than the defined $decoded check.
 
-Mike
+> +              ($decoded, sub { encode_utf8(shift) }) :
+> +              ($orig, sub { shift });
+> +}
+> +
+
+-- Thomas Adam
