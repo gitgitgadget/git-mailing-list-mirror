@@ -1,154 +1,290 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] contrib/diff-highlight: multibyte characters diff
-Date: Wed, 12 Feb 2014 15:59:48 -0500
-Message-ID: <20140212205948.GA4453@sigill.intra.peff.net>
-References: <1392109750-47852-1-git-send-email-sugi1982@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] Make the global packed_git variable static to sha1_file.c.
+Date: Wed, 12 Feb 2014 13:19:17 -0800
+Message-ID: <xmqqioskm3l6.fsf@gitster.dls.corp.google.com>
+References: <52fbc2d6.7kJdh2GOdWTzNcPK%szager@chromium.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Yoshihiro Sugi <sugi1982@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 12 21:59:56 2014
+To: szager@chromium.org
+X-From: git-owner@vger.kernel.org Wed Feb 12 22:19:32 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WDguS-0001fL-5I
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Feb 2014 21:59:56 +0100
+	id 1WDhDN-00011h-5S
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Feb 2014 22:19:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753832AbaBLU7v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Feb 2014 15:59:51 -0500
-Received: from cloud.peff.net ([50.56.180.127]:49393 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753956AbaBLU7u (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Feb 2014 15:59:50 -0500
-Received: (qmail 4249 invoked by uid 102); 12 Feb 2014 20:59:50 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 12 Feb 2014 14:59:49 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 12 Feb 2014 15:59:48 -0500
-Content-Disposition: inline
-In-Reply-To: <1392109750-47852-1-git-send-email-sugi1982@gmail.com>
+	id S1753822AbaBLVTZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Feb 2014 16:19:25 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37102 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753067AbaBLVTY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Feb 2014 16:19:24 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 088D06C96F;
+	Wed, 12 Feb 2014 16:19:23 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=mhD85OYHxm7li1vaZF1tZzwPHJI=; b=eWJdUD
+	zr53Y9LWYCxPYB2W1kQ2poF4W/sZhGqAfDq3wZgRkUwtDRIwE7TiMqWkRvAlV140
+	06dez1x9T3+9d7m4lTMj7gx6PjTY0Jes1K9pZ9v/hyw2CsQ5z0b2I8yyvn4SQYuy
+	+RocSw4t1d8qE8koaXsQhTul0H9J8XU8tXPlw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=CZ9mJTEUSo35NYkFhoQkfsp40ORRakMo
+	vyRqabH2vu26MTUzSdydy9Ov+adfrbiDE4euxhPen49dR55As9QUJRXVz1Uhp2B7
+	d1yw8M7vX2OuOr99hCq0+/1w/Xv6bDDnDcSiPbMOtrZFybi315co0RNY8SqAXZlp
+	fEUOhY3sTaA=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 023716C96D;
+	Wed, 12 Feb 2014 16:19:22 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2E6CE6C96C;
+	Wed, 12 Feb 2014 16:19:20 -0500 (EST)
+In-Reply-To: <52fbc2d6.7kJdh2GOdWTzNcPK%szager@chromium.org>
+	(szager@chromium.org's message of "Wed, 12 Feb 2014 10:52:06 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 5633B238-942B-11E3-9569-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242024>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242025>
 
-On Tue, Feb 11, 2014 at 06:09:10PM +0900, Yoshihiro Sugi wrote:
+szager@chromium.org writes:
 
-> diff-highlight split each hunks and compare them as byte sequences.
-> it causes problems when diff hunks include multibyte characters.
-> This change enable to work on such cases by decoding inputs and encoding output as utf8 string.
+> From 0a59547f3e95ddecf7606c5f259ae6177c5a104f Mon Sep 17 00:00:00 2001
 
-Thanks for looking at this. I didn't consider multibyte characters at
-all when I wrote the original.
+Please drop this line.
 
-Sadly, applying your patch seems to cause diff-highlight to take about
-1.5x as much CPU (I just tried it on the complete output of "git log
---all -p" in my git.git repository, which went from ~60s to ~90s). That
-is not necessarily a deal-breaker, as it is more important to be
-correct. But I wonder if there is any way we can optimize it. From my
-understanding, it may not be the encoding/decoding itself, but rather
-that the utf8-aware text routines are slower. More on that below.
+> From: Stefan Zager <szager@chromium.org>
 
->  # Highlight by reversing foreground and background. You could do
->  # other things like bold or underline if you prefer.
-> @@ -15,8 +16,9 @@ my @added;
->  my $in_hunk;
+Please drop this line and instead have it in your e-mail header.
+
+> Date: Mon, 10 Feb 2014 16:55:12 -0800
+
+The date in your e-mail header, which is the first time general
+public saw this particular version of the patch, is used by default
+as the author time.  Unless there is a compelling reason to override
+that with an in-body header, please drop this line.
+
+> Subject: [PATCH] Make the global packed_git variable static to sha1_file.c.
+
+Please drop this line and instead have it in your e-mail header.
+
+> This patch is a pure refactor with no functional changes,...
+>
+> diff --git a/builtin/count-objects.c b/builtin/count-objects.c
+> index a7f70cb..6554dfe 100644
+> --- a/builtin/count-objects.c
+> +++ b/builtin/count-objects.c
+> @@ -83,14 +83,32 @@ static char const * const count_objects_usage[] = {
+>  	NULL
+>  };
 >  
->  while (<>) {
-> +	$_ = decode_utf8($_);
+> +struct pack_data {
+> +	unsigned long packed;
+> +	off_t size_pack;
+> +	unsigned long num_pack;
+> +};
+> +
+> +int pack_data_fn(struct packed_git *p, void *data)
 
-What happens when the diff content is not utf8 at all? The default
-failure mode for decode_utf8 seems to be to replace non-utf8 sequences
-with a substitution character. Which means we would corrupt something
-like iso8859-1, which works fine in the current code.
+Can't/shouldn't this be static?
 
->  	if (!$in_hunk) {
-> -		print;
-> +		print encode_utf8($_);
+Also I'd suggest s/pack_data_fn/collect_pack_data/ or something.
+"_fn" may be a good suffix for typedef'ed typename used in a
+callback function, but for a concrete function, it only adds noise
+without giving us anything new.
 
-And we have the opposite question here. We know that what we have in the
-string is perl's internal format. But how do we know that what the
-user's terminal wants is utf8?
+	Yes, I know there are a few existing violators, but we
+	shouldn't make the codebase worse, using their existence due
+	to past carelessness as an excuse.
 
-I think in the most general case, we would need to auto-detect the
-encoding for each string (since there is no guarantee that a file even
-retains the same encoding through its history). And then probably punt on
-highlighting when comparing two lines in different encodings, and if
-they are in the same encoding, treat them as a sequence of code points
-rather than octets when comparing.
+> diff --git a/cache.h b/cache.h
+> index dc040fb..542a9d9 100644
+> --- a/cache.h
+> +++ b/cache.h
+> ...
+> +/* The 'hint' argument is for the commonly-used 'last found pack' optimization.
+> + * It can be NULL.
+> + */
 
-That's probably way too slow and complicated to worry about. And
-frankly, I am OK with making the tool work _best_ with UTF-8, as long as
-it can fail gracefully for other encodings (i.e., if you can turn off
-the utf8 magic when you have another encoding, and we will pass it
-through blindly as octets).
+/*
+ * Please try to have opening slash-asterisk and closing
+ * asterisk-slash in a multi-line comment block on their
+ * own lines by themselves.
+ */
 
-Would it be enough to do something like the patch below? The specific
-things I am shooting for are:
+> +extern void foreach_packed_git(packed_git_foreach_fn fn, struct packed_git *hint, void *data);
+> +
+> +extern size_t packed_git_count();
+> +extern size_t packed_git_local_count();
 
-  - the only part of the code that cares about the sequence is the
-    split/highlight bit, and most lines do not get highlighted at all.
-    Therefore it tries to lazily do the decode step, which gets back our
-    lost performance (I measured ~12% slowdown).
+extern size_t packed_git_count(void);
+extern size_t packed_git_local_count(void);
 
-  - we try the utf8 decode and if it fails, fall back to treating it
-    like a sequence of bytes. That doesn't help people with other
-    multibyte encodings, but at least lets single-byte encodings besides
-    utf8 continue to work.
+> diff --git a/sha1_file.c b/sha1_file.c
+> index 6e8c05d..aeeb7e6 100644
+> --- a/sha1_file.c
+> +++ b/sha1_file.c
+> @@ -60,6 +60,7 @@ static struct cached_object empty_tree = {
+>  	0
+>  };
+>  
+> +static struct packed_git *packed_git;
+>  static struct packed_git *last_found_pack;
+>  
+>  static struct cached_object *find_cached_object(const unsigned char *sha1)
+> @@ -468,7 +469,6 @@ static unsigned int pack_open_fds;
+>  static unsigned int pack_max_fds;
+>  static size_t peak_pack_mapped;
+>  static size_t pack_mapped;
+> -struct packed_git *packed_git;
 
-I constructed a very simple test of:
+Hmm, any particular reason why only this variable and not others are
+moved up?
 
-  git init &&
-  printf 'cont\xc3\xa9nt\n' >file &&
-  git add file &&
-  printf 'cont\xc3\xb6nt\n' >file &&
-  git diff
+> @@ -1091,6 +1091,37 @@ struct packed_git *add_packed_git(const char *path, int path_len, int local)
+>  	return p;
+>  }
+>  
+> +void foreach_packed_git(packed_git_foreach_fn fn, struct packed_git *hint, void *data)
+> +{
+> +	struct packed_git *p;
+> +	if (hint && ((*fn)(hint, data)))
+> +		return;
+> +	for (p = packed_git; p; p = p->next)
+> +		if (p != hint && (*fn)(p, data))
+> +			return;
 
-and it seemed to work. Can you confirm that it does the right thing on
-your more complicated cases?
+(mental note) In the new API, a non-zero return signals an early
+return/break from the loop.
 
--Peff
+> +}
+> +
+> +size_t packed_git_count()
 
----
-diff --git a/contrib/diff-highlight/diff-highlight b/contrib/diff-highlight/diff-highlight
-index c4404d4..9447ba2 100755
---- a/contrib/diff-highlight/diff-highlight
-+++ b/contrib/diff-highlight/diff-highlight
-@@ -2,6 +2,7 @@
- 
- use warnings FATAL => 'all';
- use strict;
-+use Encode qw(decode_utf8 encode_utf8);
- 
- # Highlight by reversing foreground and background. You could do
- # other things like bold or underline if you prefer.
-@@ -73,13 +74,23 @@ sub show_hunk {
- 
- 	my @queue;
- 	for (my $i = 0; $i < @$a; $i++) {
--		my ($rm, $add) = highlight_pair($a->[$i], $b->[$i]);
--		print $rm;
--		push @queue, $add;
-+		my ($a_dec, $encode_rm) = decode($a->[$i]);
-+		my ($b_dec, $encode_add) = decode($b->[$i]);
-+		my ($rm, $add) = highlight_pair($a_dec, $b_dec);
-+		print $encode_rm->($rm);
-+		push @queue, $encode_add->($add);
- 	}
- 	print @queue;
- }
- 
-+sub decode {
-+	my $orig = shift;
-+	my $decoded = eval { decode_utf8($orig, Encode::FB_CROAK) };
-+	return defined $decoded ?
-+	       ($decoded, sub { encode_utf8(shift) }) :
-+	       ($orig, sub { shift });
-+}
-+
- sub highlight_pair {
- 	my @a = split_line(shift);
- 	my @b = split_line(shift);
+size_t packed_git_count(void)
+
+> +{
+> +	size_t res = 0;
+> +	struct packed_git *p;
+> +
+> +	for (p = packed_git; p; p = p->next)
+> +		++res;
+
+When pre- or post- increment does not make any difference (i.e. you
+do not use its value), please stick to post-increment.  pre-increment
+looks unusual in our codebase and becomes distracting while reading
+it through.
+
+Same comments for packed-git-local-count.
+
+> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+> index 541667f..bc3074b 100644
+> --- a/builtin/pack-objects.c
+> +++ b/builtin/pack-objects.c
+> @@ -900,14 +900,45 @@ static int no_try_delta(const char *path)
+>  	return 0;
+>  }
+>  
+> +struct find_pack_data {
+> +	const unsigned char *sha1;
+> +	off_t offset;
+> +	struct packed_git *found_pack;
+> +	int exclude;
+> +	int found_non_local_pack;
+> +	int found_pack_keep;
+> +};
+> +
+> +static int find_pack_fn(struct packed_git *p, void *data)
+> +{
+> +	struct find_pack_data *fpd = (struct find_pack_data *) data;
+> +	off_t offset = find_pack_entry_one(fpd->sha1, p);
+> +	if (offset) {
+> +		if (!fpd->found_pack) {
+> +			if (!is_pack_valid(p)) {
+> +				warning("packfile %s cannot be accessed", p->pack_name);
+> +				return 0;
+> +			}
+> +			fpd->offset = offset;
+> +			fpd->found_pack = p;
+> +		}
+> +		if (fpd->exclude)
+> +			return 1;
+> +		if (!p->pack_local)
+> +			fpd->found_non_local_pack = 1;
+> +		else if (p->pack_keep)
+> +			fpd->found_pack_keep = 1;
+> +	}
+> +	return 0;
+> +}
+> +
+>  static int add_object_entry(const unsigned char *sha1, enum object_type type,
+>  			    const char *name, int exclude)
+>  {
+>  	struct object_entry *entry;
+> -	struct packed_git *p, *found_pack = NULL;
+> -	off_t found_offset = 0;
+>  	int ix;
+>  	uint32_t hash = name_hash(name);
+> +	struct find_pack_data fpd;
+>  
+>  	ix = nr_objects ? locate_object_entry_hash(sha1) : -1;
+>  	if (ix >= 0) {
+> @@ -923,27 +954,18 @@ static int add_object_entry(const unsigned char *sha1, enum object_type type,
+>  	if (!exclude && local && has_loose_object_nonlocal(sha1))
+>  		return 0;
+>  
+> -	for (p = packed_git; p; p = p->next) {
+> -		off_t offset = find_pack_entry_one(sha1, p);
+> -		if (offset) {
+> -			if (!found_pack) {
+> -				if (!is_pack_valid(p)) {
+> -					warning("packfile %s cannot be accessed", p->pack_name);
+> -					continue;
+> -				}
+> -				found_offset = offset;
+> -				found_pack = p;
+> -			}
+> -			if (exclude)
+> -				break;
+> -			if (incremental)
+> -				return 0;
+> -			if (local && !p->pack_local)
+> -				return 0;
+> -			if (ignore_packed_keep && p->pack_local && p->pack_keep)
+> -				return 0;
+> -		}
+> -	}
+> +	fpd.sha1 = sha1;
+> +	fpd.offset = 0;
+> +	fpd.found_pack = NULL;
+> +	fpd.exclude = exclude;
+> +	fpd.found_non_local_pack = fpd.found_pack_keep = 0;
+
+I am debating myself if this should be the usual
+
+	memset(&fpd, 0, sizeof(fpd);
+
+followed by assignments to the fields that matter.
+
+> +	foreach_packed_git(find_pack_fn, NULL, &fpd);
+> +	if (fpd.found_pack && !exclude &&
+> +	    (incremental ||
+> +	     (local && fpd.found_non_local_pack) ||
+> +	     (ignore_packed_keep && fpd.found_pack_keep)))
+> +		return 0;
+
+When told to do --incremental, we used to return 0 from this
+function immediately once we find the object in one pack, without
+going thru the list of packs.  Now we let foreach to loop thru all
+of them and then return 0.  Does this difference matter?  A similar
+difference may exist for local/keep but I did not think it through.
+
+I'd stop here for now.  Thanks for starting this.
