@@ -1,120 +1,76 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] tests: turn on network daemon tests by default
-Date: Wed, 12 Feb 2014 16:47:53 -0500
-Message-ID: <20140212214753.GA6799@sigill.intra.peff.net>
-References: <20140210191521.GA3112@sigill.intra.peff.net>
- <20140210212931.GA16154@sigill.intra.peff.net>
- <xmqqa9dxpgw9.fsf@gitster.dls.corp.google.com>
- <20140211200445.GA27946@sigill.intra.peff.net>
- <xmqqzjlxnqvw.fsf@gitster.dls.corp.google.com>
+From: Robert Dailey <rcdailey.lists@gmail.com>
+Subject: Process of updating a local branch from another with tracking
+Date: Wed, 12 Feb 2014 15:55:01 -0600
+Message-ID: <CAHd499CQK7Mmd+vWb74Nj4usX8KhmurJNd31MrAMUs6Vb2zOOw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 12 22:48:01 2014
+Content-Type: text/plain; charset=ISO-8859-1
+To: Git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Feb 12 22:55:22 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WDhey-0005N2-E3
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Feb 2014 22:48:00 +0100
+	id 1WDhlx-0000EC-Jh
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Feb 2014 22:55:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751933AbaBLVr4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Feb 2014 16:47:56 -0500
-Received: from cloud.peff.net ([50.56.180.127]:49414 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751218AbaBLVrz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Feb 2014 16:47:55 -0500
-Received: (qmail 6858 invoked by uid 102); 12 Feb 2014 21:47:55 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 12 Feb 2014 15:47:55 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 12 Feb 2014 16:47:53 -0500
-Content-Disposition: inline
-In-Reply-To: <xmqqzjlxnqvw.fsf@gitster.dls.corp.google.com>
+	id S1753566AbaBLVzG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Feb 2014 16:55:06 -0500
+Received: from mail-vc0-f177.google.com ([209.85.220.177]:52799 "EHLO
+	mail-vc0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753304AbaBLVzC (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Feb 2014 16:55:02 -0500
+Received: by mail-vc0-f177.google.com with SMTP id if11so7433803vcb.36
+        for <git@vger.kernel.org>; Wed, 12 Feb 2014 13:55:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:date:message-id:subject:from:to:content-type;
+        bh=voT9Y7o5skG3F22LJZpe71vO6Ahyj8EGre2VdF4XCjA=;
+        b=HoAyVaMlIQ6r/Jk7FvqAy2ZnqCE9VvLfbeZ1TDn48Wj23jnD0cCJsA5qtmgJbEGUxW
+         TtnQaRfGK5IoakvYtIEN0te3sK6Pe9URgZZISVI3sQeRM7/8/7rhm0MSMIO2V/zcxSoj
+         L4ri9+THAhTMrESH3D8MrtgmfH+39nfVtqMOdMlES6gjsN2HSzV7oAmNbM2dOih5Lbym
+         v0zsgZRFzzVWXBeAhOle+DCqggTRkq8Oj6DPau033Gja0fehpNev65DxuPSa2vY3FTaN
+         lIbCsNmiyThJe7HM3F47cjPktUbfguGX+b0t/6OudVCqc/7gMR1TskvFa4f9ChWAvWGB
+         /oUw==
+X-Received: by 10.58.168.142 with SMTP id zw14mr1704494veb.33.1392242101086;
+ Wed, 12 Feb 2014 13:55:01 -0800 (PST)
+X-Google-Sender-Delegation: rcdailey@gmail.com
+Received: by 10.220.202.3 with HTTP; Wed, 12 Feb 2014 13:55:01 -0800 (PST)
+X-Google-Sender-Auth: OwiRAvYiHMyZ6Sjr4kchV_QSong
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242026>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242027>
 
-On Tue, Feb 11, 2014 at 03:58:27PM -0800, Junio C Hamano wrote:
+I have the following alias defined:
+sync = "!f() { cbr=$(git rev-parse --abbrev-ref HEAD); git co $1 &&
+git pull && git co $cbr && git rebase $1; }; f"
 
-> Sure. One immediate complaint is that I would probably need to do
-> something like this in the build automation:
-> 
-> 	if testing a branch without this patch
->         then
-> 		: do nothing
-> 	else
-> 		GIT_TEST_GIT_DAEMON=false
-> 	fi
-> 
-> Arguably, it is the fault of the current/original code that treated
-> *any* non-empty value that is set in the environment variable as
-> "true"---if it paid attention to GIT_TEST_GIT_DAEMON=NoThanks, we
-> wouldn't have to have a workaround like this.
+The goal is to basically update a local branch which tracks a branch
+on a remote, and then rebase my local topic branch onto that updated
+local branch.
 
-Yes, I didn't really think about build config that works reliably
-between both versions (though personally, I think you should be building
-with GIT_TEST_GIT_DAEMON=true :) ).
+I do this instead of just rebasing onto origin/master. Example:
 
-> I wonder if GIT_TEST_X=$(test_tristate "$GIT_TEST_X") pattern can be
-> made a bit more friendly, though.  For example, can we behave
-> differently depending on the reason why $GIT_TEST_X is empty?
-> 
->  - People who have *not* been opting in to the expensive tests have
->    not done anything special; GIT_TEST_X environment variable did
->    not exist for them (i.e. unset), and we used to skip when
->    "$GIT_TEST_X" is an empty string.
-> 
->  - We want to encourage people who do not care to run these tests.
->    If people do not do anything, their $GIT_TEST_X will continue to
->    be an empty string without GIT_TEST_X variable in the
->    environment.
-> 
-> If we let people who *do* want to opt out of the expensive tests by
-> explicitly setting $GIT_TEST_X to an empty string in the new scheme,
-> wouldn't the transition go a lot smoother?
+git checkout master
+git pull --rebase origin master
+git checkout topic1
+git rebase master
 
-Hmm. So you are suggesting that the old code treated "undefined" and
-"empty" the same (as "false"). But that in the new code, we would treat
-them _differently_, taking undefined to mean "auto" and empty to mean
-"false". I suppose that works, but it is rather unfortunate that the end
-state we are left with (for all time) makes such a confusing and subtle
-distinction.
+I could do this instead but not sure if it is recommended:
 
-I think this should work OK with the existing Makefile conventions. That
-is, we do not ever set GIT_TEST_HTTPD in the Makefile ourselves, but
-rely on it being either unset or set to whatever the user likes (this is
-opposed to something like CFLAGS, where the distinction is long gone).
+git checkout topic1
+git fetch
+git rebase origin/master
 
-So I'm not excited about it, but I do not think there is any other
-loophole through which we can maintain compatibility. If that's
-important, I think we have to do it.
+Any thoughts on the alias I created? I'm a Windows user and still new
+to linux stuff, so if it sucks or could be simplified just let me
+know.
 
-> The caller may have to pass the name of the variable:
-> 
-> 	GIT_TEST_DAEMON=$(test_tristate GIT_TEST_DAEMON)
-
-I don't think that's a big deal. I actually was tempted to just make
-this:
-
-  test_normalize_tristate GIT_TEST_DAEMON
-
-in the first place, since you would always want to look at the
-normalized value from there on out.
-
-> and then the callee may become
-> 
-> 	test_tristate () {
-> 		variable=$1
->                 if eval "test x\"\${$variable+isset}\" = xisset"
-
-Hmm, today I learned about "{foo:+bar}" versus "${foo+bar}". I'm not
-sure how that bit of shell trivia escaped me for so many years.
-
--Peff
+And as a secondary question, just curious what people think about
+rebasing onto a remote tracking branch. When I do merges I usually
+refer to the remote branch, but during rebase I use the local branch
+instead, but I don't know if there is any functional reason to not
+skip the local branch and go straight to the remote tracking branch
+(it saves a step).
