@@ -1,164 +1,75 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] tests: turn on network daemon tests by default
-Date: Wed, 12 Feb 2014 14:34:52 -0800
-Message-ID: <xmqq38jom037.fsf@gitster.dls.corp.google.com>
-References: <20140210191521.GA3112@sigill.intra.peff.net>
-	<20140210212931.GA16154@sigill.intra.peff.net>
-	<xmqqa9dxpgw9.fsf@gitster.dls.corp.google.com>
-	<20140211200445.GA27946@sigill.intra.peff.net>
-	<xmqqzjlxnqvw.fsf@gitster.dls.corp.google.com>
-	<20140212214753.GA6799@sigill.intra.peff.net>
+Subject: Re: Make the git codebase thread-safe
+Date: Wed, 12 Feb 2014 15:05:43 -0800
+Message-ID: <CAPc5daVcAq2jb2-R32HVEG_GY4=JZLG-AmgZKNdQMzZZX2LOCg@mail.gmail.com>
+References: <CA+TurHgyUK5sfCKrK+3xY8AeOg0t66vEvFxX=JiA9wXww7eZXQ@mail.gmail.com>
+ <CACsJy8Bsc6sywL9L5QC-SKKmh9J+CKnoG5i78WfUbAG9BdZ8Rw@mail.gmail.com>
+ <CAHOQ7J8gvwpwJV2mBPDaARu3cQ54-ZDQ6iGOwKuJRr9Z+XBL7g@mail.gmail.com>
+ <xmqqr478m6xx.fsf@gitster.dls.corp.google.com> <CAHOQ7J8Q1905pVwx9QVib1BM-Xxg8vTL=hDUjT7garX++VXm3g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
 Cc: Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Feb 12 23:35:11 2014
+	Git Mailing List <git@vger.kernel.org>
+To: Stefan Zager <szager@chromium.org>
+X-From: git-owner@vger.kernel.org Thu Feb 13 00:06:11 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WDiOc-0001jx-Tk
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Feb 2014 23:35:11 +0100
+	id 1WDisc-0007c8-TC
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Feb 2014 00:06:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754477AbaBLWfF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Feb 2014 17:35:05 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64272 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754435AbaBLWfD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Feb 2014 17:35:03 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 01FA46C419;
-	Wed, 12 Feb 2014 17:35:02 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=7Fuvewj5FbHIcVrxSnXgCd6rwYI=; b=XTnpj/
-	bJgo3jQLJ2l4C+g2q1D5VU+O8P8nOg12l7yTc2S6eMT+D+DKXEix68SGg1vP/JSJ
-	Ktbg0vapKITe8M44hSk3joCRpJxW6WO8RyItGMw5IVX0Z0+YwUcG4GU58OonIj0y
-	rZxXyK41xnCiuqdHnLQbPe6iDGJklr8q+ak5s=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=OkcnG0O1ZIIPkZOMBSZsmCLd7XSQPYPb
-	invPipxDJGwjk41LCgL5ED6x9b31Z48lbwBZjvNyu5d8bIdIaJR33bVlMgheIo41
-	s5FusJIOjqUB7P447WHQ/Db9zPYJlM3yqd4Rt5nuQIU05sNR9rneKp7buV1/xjp5
-	9FcTU1klj5Y=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 39F676C416;
-	Wed, 12 Feb 2014 17:35:00 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6750F6C414;
-	Wed, 12 Feb 2014 17:34:56 -0500 (EST)
-In-Reply-To: <20140212214753.GA6799@sigill.intra.peff.net> (Jeff King's
-	message of "Wed, 12 Feb 2014 16:47:53 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: E6026FF8-9435-11E3-8D39-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754141AbaBLXGG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Feb 2014 18:06:06 -0500
+Received: from mail-la0-f48.google.com ([209.85.215.48]:36655 "EHLO
+	mail-la0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753525AbaBLXGF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Feb 2014 18:06:05 -0500
+Received: by mail-la0-f48.google.com with SMTP id mc6so7628682lab.35
+        for <git@vger.kernel.org>; Wed, 12 Feb 2014 15:06:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=BtYl+Ds28vpCoJy6Ro2Cxf2YaoY5NPtAjWRe8c92wrI=;
+        b=xnCSMmJvou5cPpunIm8ZAJ1mof/BjZYJm1iaExDeulSFWwvz9URD83iRKSU/PPhogB
+         jX8I9ezCIZpuoyvZtqRU9v/cwQy/CFOkWa8noYSJlpKXK/HGHOZJwt3hs1P6KzqAkv9f
+         9vM74sScXjfhJLMGMeaOT7BtMYJB12mnpjflAOfbUctXnddWjlfEwUWlaKlLxPNTe4xm
+         X3rZEj/QdoEWzb646Te+0fSDSFaxOJsq7/KWt35hUUQWMQtkt9QOP2oHZiQL3CifOolA
+         BfdOplFkQZ3QiK6WPD5nW1Rm2C1Zx1B0nqaXZmULyhFbE1EUoJyL7TuILjRtDX55Wo8M
+         1aPA==
+X-Received: by 10.152.28.200 with SMTP id d8mr18181lah.59.1392246363100; Wed,
+ 12 Feb 2014 15:06:03 -0800 (PST)
+Received: by 10.112.180.130 with HTTP; Wed, 12 Feb 2014 15:05:43 -0800 (PST)
+In-Reply-To: <CAHOQ7J8Q1905pVwx9QVib1BM-Xxg8vTL=hDUjT7garX++VXm3g@mail.gmail.com>
+X-Google-Sender-Auth: eYHFD-A1yE134zg74jpy-OLwK5I
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242030>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242031>
 
-Jeff King <peff@peff.net> writes:
+On Wed, Feb 12, 2014 at 12:27 PM, Stefan Zager <szager@chromium.org> wrote:
+> On Wed, Feb 12, 2014 at 12:06 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Stefan Zager <szager@chromium.org> writes:
+>>
+>> Calls to write (and preparation of data to be written) will then
+>> remain single-threaded, but it sounds like that codepath is not the
+>> bottleneck in your measurement, so....
+>
+> Yes, I considered that as well.  At a minimum, that would still
+> require attr.c to implement thread locking, since attribute files must
+> be parsed to look for stream filters.  I have already done that work.
 
->   test_normalize_tristate GIT_TEST_DAEMON
+I would have imagined that use of the attribute system belongs to "write and
+preparation of data to be written" category, i.e. the single threaded
+part of the
+kludge I outlined.
 
-Heh, great minds think alike.  This is what I am playing with,
-without committing (because I do like your "ask config if this is a
-kind of various boolean 'false' representations, which I haven't
-managed to add to it).
+> But I'm not sure it's the best long-term approach to add convoluted
+> custom threading solutions to each git operation as it appears on the
+> performance radar.
 
-
- t/lib-git-daemon.sh     |  2 +-
- t/lib-httpd.sh          |  2 +-
- t/test-lib-functions.sh | 45 +++++++++++++++++++++++++++------------------
- 3 files changed, 29 insertions(+), 20 deletions(-)
-
-diff --git a/t/lib-git-daemon.sh b/t/lib-git-daemon.sh
-index 36106de..615bf5d 100644
---- a/t/lib-git-daemon.sh
-+++ b/t/lib-git-daemon.sh
-@@ -16,7 +16,7 @@
- #	stop_git_daemon
- #	test_done
- 
--GIT_TEST_GIT_DAEMON=$(test_tristate "$GIT_TEST_GIT_DAEMON")
-+test_tristate GIT_TEST_GIT_DAEMON
- if test "$GIT_TEST_GIT_DAEMON" = false
- then
- 	skip_all="git-daemon testing disabled (unset GIT_TEST_GIT_DAEMON to enable)"
-diff --git a/t/lib-httpd.sh b/t/lib-httpd.sh
-index 583fb14..f9c2e22 100644
---- a/t/lib-httpd.sh
-+++ b/t/lib-httpd.sh
-@@ -30,7 +30,7 @@
- # Copyright (c) 2008 Clemens Buchacher <drizzd@aon.at>
- #
- 
--GIT_TEST_HTTPD=$(test_tristate "$GIT_TEST_HTTPD")
-+test_tristate GIT_TEST_HTTPD
- if test "$GIT_TEST_HTTPD" = false
- then
- 	skip_all="Network testing disabled (unset GIT_TEST_HTTPD to enable)"
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 3cc09c0..21c5214 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -716,27 +716,36 @@ perl () {
- 	command "$PERL_PATH" "$@"
- }
- 
--# Normalize the value given in $1 to one of "true", "false", or "auto". The
--# result is written to stdout. E.g.:
-+# Given a variable $1, normalize the value of it to one of "true",
-+# "false", or "auto" and store the result to it.
- #
--#     GIT_TEST_HTTPD=$(test_tristate "$GIT_TEST_HTTPD")
-+#     test_tristate GIT_TEST_HTTPD
- #
-+# A variable set to an empty string is set to 'false'.
-+# A variable set to 'false' or 'auto' keeps its value.
-+# Anything else is set to 'true'.
-+# An unset variable defaults to 'auto'.
-+#
-+# The last rule is to allow people to set the variable to an empty
-+# string and export it to decline testing the particular feature
-+# for versions both before and after this change.  We used to treat
-+# both unset and empty variable as a signal for "do not test" and
-+# took any non-empty string as "please test".
-+
- test_tristate () {
--	case "$1" in
--	""|auto)
--		echo auto
--		;;
--	*)
--		# Rely on git-config to handle all the variants of
--		# true/1/on/etc that we allow.
--		if ! git -c magic.hack="$1" config --bool magic.hack 2>/dev/null
--		then
--			# If git-config failed, it was some non-bool value like
--			# YesPlease. Default this to "true" for historical
--			# compatibility.
--			echo true
--		fi
--	esac
-+	if eval "test x\"\${$1+isset}\" = xisset"
-+	then
-+		# explicitly set
-+		eval "
-+			case \"\$$1\" in
-+			'')	$1=false ;;
-+			false | auto) ;;
-+			*)	$1=true ;;
-+			esac
-+		"
-+	else
-+		eval "$1=auto"
-+	fi
- }
- 
- # Exit the test suite, either by skipping all remaining tests or by
+Yeah, it depends on how clean and non-intrusive an abstraction we can make.
+The kludge I outlined is certainly not very pretty.
