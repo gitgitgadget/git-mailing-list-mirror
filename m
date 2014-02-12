@@ -1,127 +1,154 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [PATCH] Introduce experimental remote object access mode
-Date: Wed, 12 Feb 2014 12:55:20 -0800
-Message-ID: <CAJo=hJvx7vRcNk0ZtAtM99gfc-b1k9xjk_cOHco=-GgRMy55qg@mail.gmail.com>
-References: <CAJo=hJsO=FBkiOo5fuPbToxE1SR3Lh8oim0eTAR6bH1a-TcdPA@mail.gmail.com>
- <xmqqppmtphx0.fsf@gitster.dls.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] contrib/diff-highlight: multibyte characters diff
+Date: Wed, 12 Feb 2014 15:59:48 -0500
+Message-ID: <20140212205948.GA4453@sigill.intra.peff.net>
+References: <1392109750-47852-1-git-send-email-sugi1982@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 12 21:55:48 2014
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Yoshihiro Sugi <sugi1982@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 12 21:59:56 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WDgqQ-0008L8-Rq
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Feb 2014 21:55:47 +0100
+	id 1WDguS-0001fL-5I
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Feb 2014 21:59:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754181AbaBLUzm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Feb 2014 15:55:42 -0500
-Received: from mail-we0-f178.google.com ([74.125.82.178]:56227 "EHLO
-	mail-we0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753803AbaBLUzl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Feb 2014 15:55:41 -0500
-Received: by mail-we0-f178.google.com with SMTP id q59so6420540wes.23
-        for <git@vger.kernel.org>; Wed, 12 Feb 2014 12:55:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spearce.org; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=6BqtL6Yq8ypswrKkaouo7o/4LuSeV2uUnUUxC8JPiyY=;
-        b=I5wej8jk4KMw3pjQuA2Jh1ktqmXhLfu/mjwO53xIHhPVlpQ+wDE2rX5DQat4zAkV0N
-         h8DnXi7fnkAlE2SHQuZ/MCc8wM7HFVlMVUx98Q++uQp65V21b+b4q5ytrMjuLXqwGfGV
-         wKnG0zVD/Th6eU8bKGU+dIHuNkCO0ovSSU95E=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=6BqtL6Yq8ypswrKkaouo7o/4LuSeV2uUnUUxC8JPiyY=;
-        b=F3G88HpDYB19MxntBtok4njpZfxOLsG+kci3s45IRCoEmgoIkyLCzpR53OcSxwr0rQ
-         DoGQiERyEGYQ10Vs4yT7O4GC4crn0HbEru+6MEH8FQJRvn3wsgfDwjsuiAbsiaa+QFOG
-         yxOIkXzStKAuaKuKlsXg7tbLl36AGygdSEFBnzQB+ZatEayTZSk/Nha+1+fg4qaLwTrK
-         6iINZHbqHStQL5I8Tyr1BSUcAt8NMNTSqbJ/Akm+kzxR//45aCgMbKDtE6dYQ4ql9bdI
-         WHuDP/L01Avx+AxNOt2jR+bPVnY+5KkfuJFf/Y3ObJNn/e6et8BAsA+yP1+HHRS6vd99
-         etVg==
-X-Gm-Message-State: ALoCoQmoZ4JpCncsevICqT5WUx4hYEFTvnst0WZfwJfAGfnFjLgwV0fk3zJuWk6YJEz2du6IfytM
-X-Received: by 10.180.73.141 with SMTP id l13mr3652656wiv.60.1392238540269;
- Wed, 12 Feb 2014 12:55:40 -0800 (PST)
-Received: by 10.227.7.132 with HTTP; Wed, 12 Feb 2014 12:55:20 -0800 (PST)
-In-Reply-To: <xmqqppmtphx0.fsf@gitster.dls.corp.google.com>
+	id S1753832AbaBLU7v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Feb 2014 15:59:51 -0500
+Received: from cloud.peff.net ([50.56.180.127]:49393 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753956AbaBLU7u (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Feb 2014 15:59:50 -0500
+Received: (qmail 4249 invoked by uid 102); 12 Feb 2014 20:59:50 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 12 Feb 2014 14:59:49 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 12 Feb 2014 15:59:48 -0500
+Content-Disposition: inline
+In-Reply-To: <1392109750-47852-1-git-send-email-sugi1982@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242023>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242024>
 
-On Tue, Feb 11, 2014 at 11:29 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Shawn Pearce <spearce@spearce.org> writes:
->
->> Why would you do this? Perhaps you need more time in your day
->> to consume tea or coffee. Set GIT_RTT and enjoy a beverage.
->
-> So the conclusion is that it is not practical to do a lazy fetch if
-> it is done extremely naively at "we want this object --- wait a bit
-> and we'll give you" level?
+On Tue, Feb 11, 2014 at 06:09:10PM +0900, Yoshihiro Sugi wrote:
 
-Yes, this is what I thought when someone proposed this hack in
-sha1_file.c to me on Monday. So I ran a quick experiment to see if my
-instinct was right.
+> diff-highlight split each hunks and compare them as byte sequences.
+> it causes problems when diff hunks include multibyte characters.
+> This change enable to work on such cases by decoding inputs and encoding output as utf8 string.
 
-> I am wondering if we can do a bit better, like "we want this object
-> --- wait a bit, ah that's a commit, so it is likely that you may
-> want the trees and blobs associated with it, too, if not right now
-> but in a near future, let me push a pack that holds them to you"?
+Thanks for looking at this. I didn't consider multibyte characters at
+all when I wrote the original.
 
-Ah, smart observation. That might work. However I doubt it.
+Sadly, applying your patch seems to cause diff-highlight to take about
+1.5x as much CPU (I just tried it on the complete output of "git log
+--all -p" in my git.git repository, which went from ~60s to ~90s). That
+is not necessarily a deal-breaker, as it is more important to be
+correct. But I wonder if there is any way we can optimize it. From my
+understanding, it may not be the encoding/decoding itself, but rather
+that the utf8-aware text routines are slower. More on that below.
 
-I implemented a version of Git on top of Google Bigtable (and Apache
-HBase and Apache Cassandra) multiple times using JGit. tl;dr: this
-approach doesn't work in practice.
+>  # Highlight by reversing foreground and background. You could do
+>  # other things like bold or underline if you prefer.
+> @@ -15,8 +16,9 @@ my @added;
+>  my $in_hunk;
+>  
+>  while (<>) {
+> +	$_ = decode_utf8($_);
 
+What happens when the diff content is not utf8 at all? The default
+failure mode for decode_utf8 seems to be to replace non-utf8 sequences
+with a substitution character. Which means we would corrupt something
+like iso8859-1, which works fine in the current code.
 
-The naive implementation for these distributed NoSQL systems is to
-store each object in its own row keyed by SHA-1, and lookup the object
-when you want it. This is very slow and is more or less what this
-stupid patch shows. Worse, none of them were able to even get close to
-the 1ms latency I used in this example.
+>  	if (!$in_hunk) {
+> -		print;
+> +		print encode_utf8($_);
 
-In another implementation (which I published into JGit as the "DHT"
-backend) I stored a group of related commits together in a row. Row
-target sizes were in the 1-2 MiB range when using pack style
-compression for commits, so the average row held hundreds of commits.
-Reading one commit would actually slurp back a number of related
-commits. The idea was if we need commit A now we will need B, C, D, E
-(its parents and ancestors) soon as the application walks the revision
-history, like rev-list or pack-objects.
+And we have the opposite question here. We know that what we have in the
+string is perl's internal format. But how do we know that what the
+user's terminal wants is utf8?
 
-For a process like pack-objects this almost seems to work. If commits
-are together we can slurp a group at a time to amortize the round trip
-latency. Unfortunately the application can still go through hundreds
-of commits faster than the real world RTT is. So I tried to fix this
-by storing an extra metadata pointer in each row to identify the next
-row, so next block of commits could start loading right away. Its
-still slow, as the application can scan through data faster than the
-RTT.
+I think in the most general case, we would need to auto-detect the
+encoding for each string (since there is no guarantee that a file even
+retains the same encoding through its history). And then probably punt on
+highlighting when comparing two lines in different encodings, and if
+they are in the same encoding, treat them as a sequence of code points
+rather than octets when comparing.
 
-At least for pack generation the traversal code does commits and
-builds up a list of all root trees. The root trees can be async loaded
-in batches, but the depth first traversal is still a killer. There are
-stalls while the application waits for the next subtree, even if you
-cluster the trees also into groups using depth first traversal the way
-the packer produces pack files today.
+That's probably way too slow and complicated to worry about. And
+frankly, I am OK with making the tool work _best_ with UTF-8, as long as
+it can fail gracefully for other encodings (i.e., if you can turn off
+the utf8 magic when you have another encoding, and we will pass it
+through blindly as octets).
 
+Would it be enough to do something like the patch below? The specific
+things I am shooting for are:
 
-Junio's idea to cluster data by commit and its related trees and blobs
-is just a different data organization. It may be necessary to make two
-copies of the data, one clustered by commits and another by
-commit+tree+blob to satisfy different access patterns. And in the
-commit+tree+blob case you may need multiple redundant copies of blobs
-near commits that use them if those commits are frequently accessed.
-Its a lot of redundant disk space.
+  - the only part of the code that cares about the sequence is the
+    split/highlight bit, and most lines do not get highlighted at all.
+    Therefore it tries to lazily do the decode step, which gets back our
+    lost performance (I measured ~12% slowdown).
 
-We always say disk is cheap, but disk is slow and not getting faster.
-SSDs are helping, but SSDs are expensive and have size limitations
-compared to spinning disk. Just making many copies of data isn't
-necessarily a solution.
+  - we try the utf8 decode and if it fails, fall back to treating it
+    like a sequence of bytes. That doesn't help people with other
+    multibyte encodings, but at least lets single-byte encodings besides
+    utf8 continue to work.
+
+I constructed a very simple test of:
+
+  git init &&
+  printf 'cont\xc3\xa9nt\n' >file &&
+  git add file &&
+  printf 'cont\xc3\xb6nt\n' >file &&
+  git diff
+
+and it seemed to work. Can you confirm that it does the right thing on
+your more complicated cases?
+
+-Peff
+
+---
+diff --git a/contrib/diff-highlight/diff-highlight b/contrib/diff-highlight/diff-highlight
+index c4404d4..9447ba2 100755
+--- a/contrib/diff-highlight/diff-highlight
++++ b/contrib/diff-highlight/diff-highlight
+@@ -2,6 +2,7 @@
+ 
+ use warnings FATAL => 'all';
+ use strict;
++use Encode qw(decode_utf8 encode_utf8);
+ 
+ # Highlight by reversing foreground and background. You could do
+ # other things like bold or underline if you prefer.
+@@ -73,13 +74,23 @@ sub show_hunk {
+ 
+ 	my @queue;
+ 	for (my $i = 0; $i < @$a; $i++) {
+-		my ($rm, $add) = highlight_pair($a->[$i], $b->[$i]);
+-		print $rm;
+-		push @queue, $add;
++		my ($a_dec, $encode_rm) = decode($a->[$i]);
++		my ($b_dec, $encode_add) = decode($b->[$i]);
++		my ($rm, $add) = highlight_pair($a_dec, $b_dec);
++		print $encode_rm->($rm);
++		push @queue, $encode_add->($add);
+ 	}
+ 	print @queue;
+ }
+ 
++sub decode {
++	my $orig = shift;
++	my $decoded = eval { decode_utf8($orig, Encode::FB_CROAK) };
++	return defined $decoded ?
++	       ($decoded, sub { encode_utf8(shift) }) :
++	       ($orig, sub { shift });
++}
++
+ sub highlight_pair {
+ 	my @a = split_line(shift);
+ 	my @b = split_line(shift);
