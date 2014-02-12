@@ -1,116 +1,114 @@
-From: Stefan Zager <szager@chromium.org>
-Subject: Re: Make the git codebase thread-safe
-Date: Wed, 12 Feb 2014 11:02:37 -0800
-Message-ID: <CAHOQ7J_pg6Nqc5TdU9OA81=d+ZG_JpLFQ5-eFLY3uW8CuAQrUQ@mail.gmail.com>
-References: <CA+TurHgyUK5sfCKrK+3xY8AeOg0t66vEvFxX=JiA9wXww7eZXQ@mail.gmail.com>
-	<CACsJy8Bsc6sywL9L5QC-SKKmh9J+CKnoG5i78WfUbAG9BdZ8Rw@mail.gmail.com>
-	<CAHOQ7J8gvwpwJV2mBPDaARu3cQ54-ZDQ6iGOwKuJRr9Z+XBL7g@mail.gmail.com>
-	<87y51g88sc.fsf@fencepost.gnu.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] tests: turn on network daemon tests by default
+Date: Wed, 12 Feb 2014 11:06:43 -0800
+Message-ID: <xmqq61oknoak.fsf@gitster.dls.corp.google.com>
+References: <20140210191521.GA3112@sigill.intra.peff.net>
+	<20140210212931.GA16154@sigill.intra.peff.net>
+	<xmqqa9dxpgw9.fsf@gitster.dls.corp.google.com>
+	<20140211200445.GA27946@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Stefan Zager <szager@chromium.org>, Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Wed Feb 12 20:02:44 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Feb 12 20:06:53 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WDf51-0005d5-D6
-	for gcvg-git-2@plane.gmane.org; Wed, 12 Feb 2014 20:02:43 +0100
+	id 1WDf93-0007Ft-CI
+	for gcvg-git-2@plane.gmane.org; Wed, 12 Feb 2014 20:06:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753868AbaBLTCj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Feb 2014 14:02:39 -0500
-Received: from mail-vc0-f176.google.com ([209.85.220.176]:43189 "EHLO
-	mail-vc0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752204AbaBLTCi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Feb 2014 14:02:38 -0500
-Received: by mail-vc0-f176.google.com with SMTP id la4so7375824vcb.35
-        for <git@vger.kernel.org>; Wed, 12 Feb 2014 11:02:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=RmXfg5XCZ4mQGVxoAn/AGxVT5HmYqm9x/z9QScQ9XVg=;
-        b=OJJh8sN789gv+nFHMIi4SAQd07HEagUFLzKbrqK3kosJnnuP4XVfdF+G79RgUhT4Kx
-         fkkk1B8HVwIyrZbus6So0HW2uMGNBUwsGJTqeE57fBDE6ktJ2JcgyqKISbFhgryYsJhu
-         gX+0k8xWcpzVWB77GRnMaG3mx0I/Awy1woGzEQ4hCSLMoEQCbqOY1IBW+EwC7hOWXenh
-         gZpr+T6VsY6CrZFaq8LtWPsA7g2I1vPOHIQb7+sbHNgZua+gS+mILk2nfWHKOSexA99o
-         Z7ITYQ9De/yIyy2wNjOKcZPIbBMddwBcpZQP5ZSzL18aC545Xj8pCOENLRAghVkJy8UC
-         Z6cw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=RmXfg5XCZ4mQGVxoAn/AGxVT5HmYqm9x/z9QScQ9XVg=;
-        b=UvWTj3wN9QyE+jerocJsPq0gbX9GSwQC+z1WwjjU0P/NkgdZtWcfCcVjvgg12lwnuo
-         ogHdNoTA40Ru4wtme7BI/yqnc9JJRkObv/Jk5/sM3vPF460GY/e6pdN9KMPedYqQF8nm
-         X22zLv8xhTDXhtkUpIvA3XN9Ku4benmxqCWfI=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=RmXfg5XCZ4mQGVxoAn/AGxVT5HmYqm9x/z9QScQ9XVg=;
-        b=isF82NnSobObUCrE2OoRouMs8EYWwxNuEzyg/mgcOxruyQjO/Saz5R3qUyOuyAEr9G
-         Ufw2fEIjEcJplnyaKiXoRxmpXbeqIseCktsPhk9sA91lTMJ2ZsxFMBkdbZ5tUUiBJ0Um
-         yt45ujlx4F2pcNPuHPZlmiRsJjst4i7D3eHEegO0hPqWn/YIJG0iFbihTXB1aHDMTQrC
-         7vtXWncyaqJxREGVJMQSi/Op1auWks5WkoB+drj7GOxUzefc20guWFGEuaamrVdkO3wk
-         CEMOu/uBcPZ5Q6f9afOkwT+qfsnLXr298AxgadAobinSF214eIB7uY/SigR0Cp5kTb2+
-         /Dcg==
-X-Gm-Message-State: ALoCoQnvVKmlAXOfIjEL++tt1faMp7iOgoTwMzH6TLIX+MlIYldsfMgVRdAFprV5J6syVStGPsR5HhHd5uf1fnsM4wBSCUwrFvJBTdoYnrdCYoDnJBbqqiz9vuD8V5zNbuTIZhpT/91IzfMWJmBrDlglW5TEM0r+3d6nompwdq9xyjbcm7/aYqrK0eCd1GE8bm7G4HiPBjqC
-X-Received: by 10.52.247.231 with SMTP id yh7mr1717938vdc.34.1392231757562;
- Wed, 12 Feb 2014 11:02:37 -0800 (PST)
-Received: by 10.52.168.226 with HTTP; Wed, 12 Feb 2014 11:02:37 -0800 (PST)
-In-Reply-To: <87y51g88sc.fsf@fencepost.gnu.org>
-X-Google-Sender-Auth: GHCzdrSAiK0WGRtd6F03bRUgqHU
+	id S1753769AbaBLTGt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Feb 2014 14:06:49 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:36650 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752204AbaBLTGs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Feb 2014 14:06:48 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B5D026B599;
+	Wed, 12 Feb 2014 14:06:47 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=zG0KD689ONFvagWpeQ5rGss37Ls=; b=rRtnXC
+	JeiIMZjCrvZt4RHbWEOgeTl3xczW6h2r9IGh0+vmSUTgQs+xXfyOT2CamnNnWhN2
+	w9tGubpYoJZdzDYvAIPB6h9Zl/1dtYAmh6kXWc0xnldO5SSwR9l6ONjX42cUCTdM
+	4MsTh8tZbGMaYNHovBaHEwy5ut4p77Lbc14Rc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=NXVggsmBwjDiMMqDRUHLcE+UF6uv5Kl8
+	/dQHxc0b+AeflsbICboZ4Y/DblolGOQYHmZpH7j6eTTGR56WTUuBYsR8mnT6Xbjk
+	cjP2itIrfqPeenS/Tk8TXHGg0/6GK8wUt0aorF3xUKCEQhXPdoZ0bzhlCLKtM44g
+	RpJRjOXF958=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9F65D6B596;
+	Wed, 12 Feb 2014 14:06:47 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CAA4C6B594;
+	Wed, 12 Feb 2014 14:06:46 -0500 (EST)
+In-Reply-To: <20140211200445.GA27946@sigill.intra.peff.net> (Jeff King's
+	message of "Tue, 11 Feb 2014 15:04:45 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: D1A16A5E-9418-11E3-B3FF-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242012>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242013>
 
-On Wed, Feb 12, 2014 at 10:50 AM, David Kastrup <dak@gnu.org> wrote:
-> Stefan Zager <szager@chromium.org> writes:
->
->> Anything on Windows that touches a lot of files is miserable due to
->> the usual file system slowness on Windows, and luafv.sys (the UAC file
->> virtualization driver) seems to make it much worse.
->
-> There is an obvious solution here...  Dedicated hardware is not that
-> expensive.  Virtualization will always have a price.
+Jeff King <peff@peff.net> writes:
 
-Not sure I follow you.  We need to support people developing,
-building, and testing on natively Windows machines.  And we need to
-support users with reasonable hardware, including spinning disks.  If
-we were only interested in optimizing for Google employees, each of
-whom has one or more small nuclear reactors under their desk, this
-would be easy.
+> Agreed, but I think the only way to know the size of those fallouts is
+> to try it and see who complains.  I would not normally be so cavalier
+> with git itself, but I think for the test infrastructure, we have a
+> small, tech-savvy audience that can help us iterate on it without too
+> much pain.
 
->> Blame is something that chromium and blink developers use heavily, and
->> it is not unusual for a blame invocation on the blink repository to
->> run for 30 seconds.  It seems like it should be possible to
->> parallelize blame, but it requires pack file operations to be
->> thread-safe.
->
-> Really, give the above patch a try.  I am taking longer to finish it
-> than anticipated (with a lot due to procrastination but that is,
-> unfortunately, a large part of my workflow), and it's cutting into my
-> "paychecks" (voluntary donations which to a good degree depend on timely
-> and nontrivial progress reports for my freely available work on GNU
-> LilyPond).
+There is another.
 
-I will give that a try.  How much of a performance improvement have you clocked?
+$ GIT_TEST_HTTPD=false sh t5537-fetch-shallow.sh 
+ok 1 - setup
+ok 2 - setup shallow clone
+ok 3 - clone from shallow clone
+ok 4 - fetch from shallow clone
+ok 5 - fetch --depth from shallow clone
+ok 6 - fetch --unshallow from shallow clone
+ok 7 - fetch something upstream has but hidden by clients shallow boundaries
+ok 8 - fetch that requires changes in .git/shallow is filtered
+ok 9 - fetch --update-shallow
+error: Can't use skip_all after running some tests
 
-> Note that it looks like the majority of the remaining time on GNU/Linux
-> tends to be spent in system time: I/O time, memory management.  And I
-> have an SSD drive.  When using packed repositories of considerable size,
-> decompression comes into play as well.  I don't think that you can hope
-> to get noticeably higher I/O throughput by multithreading, so really,
-> really, really consider dedicated hardware running on a native Linux
-> file system.
+Under 'prove' test target, the way it exits causes:
 
-I have a background in hardware, and I have much more faith in modern
-disk schedulers :)
+*** prove ***
+t5537-fetch-shallow.sh .. Dubious, test returned 1 (wstat 256, 0x100)
+All 9 subtests passed
 
-Stefan
+which leads to:
+
+Test Summary Report
+-------------------
+t5537-fetch-shallow.sh (Wstat: 256 Tests: 9 Failed: 0)
+  Non-zero exit status: 1
+  Parse errors: No plan found in TAP output
+
+
+On the 'master' branch without these "auto opt-in" patches,
+
+$ GIT_TEST_HTTPD= sh t5537-fetch-shallow.sh 
+ok 1 - setup
+ok 2 - setup shallow clone
+ok 3 - clone from shallow clone
+ok 4 - fetch from shallow clone
+ok 5 - fetch --depth from shallow clone
+ok 6 - fetch --unshallow from shallow clone
+ok 7 - fetch something upstream has but hidden by clients shallow boundaries
+ok 8 - fetch that requires changes in .git/shallow is filtered
+ok 9 - fetch --update-shallow
+skipping remaining tests, git built without http support
+# passed all 9 test(s)
+1..9
