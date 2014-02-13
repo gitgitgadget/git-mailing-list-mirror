@@ -1,58 +1,86 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFH] hackday and GSoC topic suggestions
-Date: Thu, 13 Feb 2014 03:50:39 -0500
-Message-ID: <20140213085039.GA29152@sigill.intra.peff.net>
-References: <20140205225702.GA12589@sigill.intra.peff.net>
- <CAP8UFD1B+108EyyhFQh6RnVVpOUCLiK+oNPONrNJqkNftLFYLA@mail.gmail.com>
- <vpqr47gin5x.fsf@anie.imag.fr>
+From: Ephrim Khong <dr.khong@gmail.com>
+Subject: git blame: "Not Committed Yet" with clean WD
+Date: Thu, 13 Feb 2014 10:08:55 +0100
+Message-ID: <52FC8BA7.30102@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Christian Couder <christian.couder@gmail.com>,
-	git <git@vger.kernel.org>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Thu Feb 13 09:50:47 2014
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 13 10:09:12 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WDs0L-0005oJ-Vb
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Feb 2014 09:50:46 +0100
+	id 1WDsI9-0002vp-PN
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Feb 2014 10:09:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753042AbaBMIul (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Feb 2014 03:50:41 -0500
-Received: from cloud.peff.net ([50.56.180.127]:49695 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752676AbaBMIul (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Feb 2014 03:50:41 -0500
-Received: (qmail 7829 invoked by uid 102); 13 Feb 2014 08:50:41 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 13 Feb 2014 02:50:41 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 13 Feb 2014 03:50:39 -0500
-Content-Disposition: inline
-In-Reply-To: <vpqr47gin5x.fsf@anie.imag.fr>
+	id S1753246AbaBMJJB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Feb 2014 04:09:01 -0500
+Received: from mail-bk0-f54.google.com ([209.85.214.54]:40981 "EHLO
+	mail-bk0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752519AbaBMJI6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Feb 2014 04:08:58 -0500
+Received: by mail-bk0-f54.google.com with SMTP id u14so2953217bkz.41
+        for <git@vger.kernel.org>; Thu, 13 Feb 2014 01:08:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:subject
+         :content-type:content-transfer-encoding;
+        bh=jh7Z7a/Oo1diAR6jAz3GR5PtBd9voyjGwe1ac8p6mk4=;
+        b=jxZrW7lta4X2LraXh/wElvnt/bLHFob+ny/HCpwdgRXzYY1J4oxUsiey7szfvWb/2F
+         kkRVbWtEwyHYnDNvDf9AIMryGBvXUT8n425cObWjp8UowqQ7X9OcWpf9/vY6DPPnSngi
+         D+3lngTkODqjFvKRRp/oqSGfAYFibeE/zSGwvlDatZiAankITCXJZlsyn/TSrtjr02QZ
+         CEjKYvwRoRMs4cPxlcQI7+nFJRpptbCtCEH6LDo/p4eUs8E/9cy531UKRFDTPxCNLXqQ
+         0AczC53dUtZOImWvDBVGN84KV+PYOcGmNbYYJaqMnUQ4F+ag85Mm2AWvfFgC/EK7wh4L
+         8Xgw==
+X-Received: by 10.205.107.129 with SMTP id dy1mr28500bkc.48.1392282536955;
+        Thu, 13 Feb 2014 01:08:56 -0800 (PST)
+Received: from [192.168.32.40] (merlin.mvtec.com. [62.245.183.130])
+        by mx.google.com with ESMTPSA id zf3sm1396114bkb.4.2014.02.13.01.08.55
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 13 Feb 2014 01:08:56 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.3.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242051>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242052>
 
-On Thu, Feb 06, 2014 at 10:51:54AM +0100, Matthieu Moy wrote:
+Hi,
 
-> > Some of Matthieu's students worked on it a few years ago but didn't finish.
-> 
-> Right. There was still quite some work to do, but this is most likely
-> too small for a GSoC project. But that could be a part of it. I'm not
-> sure how google welcomes GSoC projects made of multiple small tasks, but
-> my experience with students is that it's much better than a single (too)
-> big task, and I think that was the general feeling on this list when we
-> discussed it last year.
+for files that contain windows line endings in a repository with 
+core.autocrlf=input, git blame will show lines as "Not Committed Yet", 
+even though they were not modified.
 
-I think Google leaves it up to us to decide. I'd be OK with a project
-made of multiple small tasks, as I think it would be an interesting
-experiment.  I'd rather not do all of them like that, though. And bonus
-points if they are on a theme that will let the student use the ramp-up
-time from one for another.
+Example:
 
--Peff
+--
+git init
+git config core.autocrlf false
+echo "foo" > a
+unix2dos a
+git add a
+git commit -m "initial commit"
+git config core.autocrlf input
+git status
+git blame a
+--
+
+Output:
+
+--
+Reinitialized existing Git repository in /.../testblame2/.git/
+unix2dos: converting file a to DOS format ...
+On branch master
+nothing to commit, working directory clean
+On branch master
+nothing to commit, working directory clean
+00000000 (Not Committed Yet 2014-02-13 10:02:43 +0100 1) foo
+--
+
+Is there an easy way to work around this; is this desired behaviour or 
+mor a bug?
+
+Thanks - Eph
