@@ -1,75 +1,72 @@
-From: Jeff King <peff@peff.net>
-Subject: Git GSoC 2014
-Date: Thu, 13 Feb 2014 04:10:37 -0500
-Message-ID: <20140213091037.GA28927@sigill.intra.peff.net>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [RFH] hackday and GSoC topic suggestions
+Date: Thu, 13 Feb 2014 10:28:02 +0100
+Message-ID: <CAP8UFD3pqW119xjY0Wci7bJ6UL4ZLsT_vYZJ=zMsnK_7C8-_KQ@mail.gmail.com>
+References: <20140205225702.GA12589@sigill.intra.peff.net>
+	<CAP8UFD1B+108EyyhFQh6RnVVpOUCLiK+oNPONrNJqkNftLFYLA@mail.gmail.com>
+	<vpqr47gin5x.fsf@anie.imag.fr>
+	<20140213085039.GA29152@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Shawn Pearce <spearce@spearce.org>, Thomas Rast <tr@thomasrast.ch>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 13 10:11:14 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Feb 13 10:28:33 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WDsK7-0004TA-27
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Feb 2014 10:11:11 +0100
+	id 1WDsau-0000tX-I7
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Feb 2014 10:28:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753275AbaBMJLA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Feb 2014 04:11:00 -0500
-Received: from cloud.peff.net ([50.56.180.127]:49709 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753254AbaBMJKj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Feb 2014 04:10:39 -0500
-Received: (qmail 8854 invoked by uid 102); 13 Feb 2014 09:10:39 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 13 Feb 2014 03:10:39 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 13 Feb 2014 04:10:37 -0500
-Content-Disposition: inline
+	id S1752367AbaBMJ2G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Feb 2014 04:28:06 -0500
+Received: from mail-ve0-f173.google.com ([209.85.128.173]:62394 "EHLO
+	mail-ve0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751506AbaBMJ2D (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Feb 2014 04:28:03 -0500
+Received: by mail-ve0-f173.google.com with SMTP id jw12so1086140veb.4
+        for <git@vger.kernel.org>; Thu, 13 Feb 2014 01:28:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=JVZasjo8hmJnBQ79Sv0Mzp6wHiEMWW1Kq0HQRnm7EYw=;
+        b=MlN0rRD60w+RDtmFOKJWijljy/juHi62eGMlxqXQ24H0LRnM+plJbt+OJj+sjY/cs9
+         X+oOQ9kLYFuBTkf5bpv38R4T/3US92HP4o+4Ny0Vlxp3YPPR/aktJCLtBXOjM4QQgup2
+         MEJ5J5ooxoqfbEkO61VKibniBKUKTQef1b/m46BQD1MKhuwDqLlKh7FfNTBRDDQAOQod
+         bmP1XaahDqGJB4qwc0goUH6fyJcpZNyBqFoVUtJLOKwKNUQ7yZoJXFt3t8kbPxj01EyG
+         FtSjSIm1UAOcBB07+9na2WnpO3TKEAmTII1rCGniCiLSc3BoiYHRaN5gvX6G+0tt3PK4
+         hMGw==
+X-Received: by 10.52.84.102 with SMTP id x6mr141441vdy.49.1392283682810; Thu,
+ 13 Feb 2014 01:28:02 -0800 (PST)
+Received: by 10.58.104.129 with HTTP; Thu, 13 Feb 2014 01:28:02 -0800 (PST)
+In-Reply-To: <20140213085039.GA29152@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242053>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242054>
 
-The Google Summer of Code application process is upon us. We have about
-34 hours until the deadline (2014-02-14T19:00 UTC) . That's not very
-much time, but I know some people have been thinking about projects for
-a while, so I have hope that we can put together an ideas page.
+On Thu, Feb 13, 2014 at 9:50 AM, Jeff King <peff@peff.net> wrote:
+> On Thu, Feb 06, 2014 at 10:51:54AM +0100, Matthieu Moy wrote:
+>
+>> > Some of Matthieu's students worked on it a few years ago but didn't finish.
+>>
+>> Right. There was still quite some work to do, but this is most likely
+>> too small for a GSoC project. But that could be a part of it. I'm not
+>> sure how google welcomes GSoC projects made of multiple small tasks, but
+>> my experience with students is that it's much better than a single (too)
+>> big task, and I think that was the general feeling on this list when we
+>> discussed it last year.
+>
+> I think Google leaves it up to us to decide. I'd be OK with a project
+> made of multiple small tasks, as I think it would be an interesting
+> experiment.  I'd rather not do all of them like that, though. And bonus
+> points if they are on a theme that will let the student use the ramp-up
+> time from one for another.
 
-What we need immediately is:
-
-  - somebody to be the backup admin (I am assuming I'll be the primary
-    admin, but as always, if somebody else wants to...)
-
-  - ideas ideas ideas
-
-    The email I sent out last week generated some response, but what I
-    really need are people to write up full ideas as they would be read
-    by students (and by GSoC personnel who are reading our application).
-
-    As mentioned in a related thread, I'd really like to avoid just
-    reposting proposals that didn't get any traction in previous years.
-
-    Tomorrow I'll try to look through some of the links that have been
-    posted, or collect stuff from the list. But I really need other
-    people to contribute, or it's going to be a lame list.
-
-I've put the application draft here:
-
-  http://git.github.io/SoC-2014-Org-Application.html
-
-You can make suggestions in this thread, or edit it by cloning:
-
-  https://github.com/git/git.github.io
-
-and post a patch, or send a pull request, or I should be able to give
-people push access to the repo. It's a bit of an experiment, in the same
-realm as the wiki we've used in the past.
-
-The idea page is there, too, but there's nothing good on it yet:
-
-  http://git.github.io/SoC-2014-Ideas.html
-
--Peff
+Yeah, a student working on the "git bisect fix/unfixed" feature, could
+fix git bisect testing too many merge bases, and if there is still
+time work on moving more code from shell to C.
