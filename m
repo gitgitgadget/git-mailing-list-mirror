@@ -1,72 +1,94 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [RFH] hackday and GSoC topic suggestions
-Date: Thu, 13 Feb 2014 10:28:02 +0100
-Message-ID: <CAP8UFD3pqW119xjY0Wci7bJ6UL4ZLsT_vYZJ=zMsnK_7C8-_KQ@mail.gmail.com>
-References: <20140205225702.GA12589@sigill.intra.peff.net>
-	<CAP8UFD1B+108EyyhFQh6RnVVpOUCLiK+oNPONrNJqkNftLFYLA@mail.gmail.com>
-	<vpqr47gin5x.fsf@anie.imag.fr>
-	<20140213085039.GA29152@sigill.intra.peff.net>
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: Make the git codebase thread-safe
+Date: Thu, 13 Feb 2014 18:34:39 +0900
+Message-ID: <20140213093439.GA15366@glandium.org>
+References: <CA+TurHgyUK5sfCKrK+3xY8AeOg0t66vEvFxX=JiA9wXww7eZXQ@mail.gmail.com>
+ <CACsJy8Bsc6sywL9L5QC-SKKmh9J+CKnoG5i78WfUbAG9BdZ8Rw@mail.gmail.com>
+ <CAHOQ7J8gvwpwJV2mBPDaARu3cQ54-ZDQ6iGOwKuJRr9Z+XBL7g@mail.gmail.com>
+ <87y51g88sc.fsf@fencepost.gnu.org>
+ <CAHOQ7J_pg6Nqc5TdU9OA81=d+ZG_JpLFQ5-eFLY3uW8CuAQrUQ@mail.gmail.com>
+ <87ppms87n7.fsf@fencepost.gnu.org>
+ <20140212230909.GB7208@glandium.org>
+ <87lhxf8s6l.fsf@fencepost.gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	git <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Feb 13 10:28:33 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Stefan Zager <szager@chromium.org>, Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Thu Feb 13 10:35:03 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WDsau-0000tX-I7
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Feb 2014 10:28:32 +0100
+	id 1WDshC-0005mA-4Y
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Feb 2014 10:35:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752367AbaBMJ2G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Feb 2014 04:28:06 -0500
-Received: from mail-ve0-f173.google.com ([209.85.128.173]:62394 "EHLO
-	mail-ve0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751506AbaBMJ2D (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Feb 2014 04:28:03 -0500
-Received: by mail-ve0-f173.google.com with SMTP id jw12so1086140veb.4
-        for <git@vger.kernel.org>; Thu, 13 Feb 2014 01:28:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=JVZasjo8hmJnBQ79Sv0Mzp6wHiEMWW1Kq0HQRnm7EYw=;
-        b=MlN0rRD60w+RDtmFOKJWijljy/juHi62eGMlxqXQ24H0LRnM+plJbt+OJj+sjY/cs9
-         X+oOQ9kLYFuBTkf5bpv38R4T/3US92HP4o+4Ny0Vlxp3YPPR/aktJCLtBXOjM4QQgup2
-         MEJ5J5ooxoqfbEkO61VKibniBKUKTQef1b/m46BQD1MKhuwDqLlKh7FfNTBRDDQAOQod
-         bmP1XaahDqGJB4qwc0goUH6fyJcpZNyBqFoVUtJLOKwKNUQ7yZoJXFt3t8kbPxj01EyG
-         FtSjSIm1UAOcBB07+9na2WnpO3TKEAmTII1rCGniCiLSc3BoiYHRaN5gvX6G+0tt3PK4
-         hMGw==
-X-Received: by 10.52.84.102 with SMTP id x6mr141441vdy.49.1392283682810; Thu,
- 13 Feb 2014 01:28:02 -0800 (PST)
-Received: by 10.58.104.129 with HTTP; Thu, 13 Feb 2014 01:28:02 -0800 (PST)
-In-Reply-To: <20140213085039.GA29152@sigill.intra.peff.net>
+	id S1753190AbaBMJe6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Feb 2014 04:34:58 -0500
+Received: from ks3293202.kimsufi.com ([5.135.186.141]:37534 "EHLO
+	zenigata.glandium.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751506AbaBMJez (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Feb 2014 04:34:55 -0500
+Received: from glandium by zenigata.glandium.org with local (Exim 4.82)
+	(envelope-from <glandium@glandium.org>)
+	id 1WDsgp-000402-JD; Thu, 13 Feb 2014 18:34:39 +0900
+Content-Disposition: inline
+In-Reply-To: <87lhxf8s6l.fsf@fencepost.gnu.org>
+X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242054>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242055>
 
-On Thu, Feb 13, 2014 at 9:50 AM, Jeff King <peff@peff.net> wrote:
-> On Thu, Feb 06, 2014 at 10:51:54AM +0100, Matthieu Moy wrote:
->
->> > Some of Matthieu's students worked on it a few years ago but didn't finish.
->>
->> Right. There was still quite some work to do, but this is most likely
->> too small for a GSoC project. But that could be a part of it. I'm not
->> sure how google welcomes GSoC projects made of multiple small tasks, but
->> my experience with students is that it's much better than a single (too)
->> big task, and I think that was the general feeling on this list when we
->> discussed it last year.
->
-> I think Google leaves it up to us to decide. I'd be OK with a project
-> made of multiple small tasks, as I think it would be an interesting
-> experiment.  I'd rather not do all of them like that, though. And bonus
-> points if they are on a theme that will let the student use the ramp-up
-> time from one for another.
+On Thu, Feb 13, 2014 at 07:04:02AM +0100, David Kastrup wrote:
+> Mike Hommey <mh@glandium.org> writes:
+> 
+> > On Wed, Feb 12, 2014 at 08:15:24PM +0100, David Kastrup wrote:
+> >> Stefan Zager <szager@chromium.org> writes:
+> >> 
+> >> > On Wed, Feb 12, 2014 at 10:50 AM, David Kastrup <dak@gnu.org> wrote:
+> >> >
+> >> >> Really, give the above patch a try.  I am taking longer to finish it
+> >> >> than anticipated (with a lot due to procrastination but that is,
+> >> >> unfortunately, a large part of my workflow), and it's cutting into my
+> >> >> "paychecks" (voluntary donations which to a good degree depend on timely
+> >> >> and nontrivial progress reports for my freely available work on GNU
+> >> >> LilyPond).
+> >> >
+> >> > I will give that a try.  How much of a performance improvement have
+> >> > you clocked?
+> >> 
+> >> Depends on file type and size.  With large files with lots of small
+> >> changes, performance improvements get more impressive.
+> >> 
+> >> Some ugly real-world examples are the Emacs repository, src/xdisp.c
+> >> (performance improvement about a factor of 3), a large file in the style
+> >> of /usr/share/dict/words clocking in at a factor of about 5.
+> >> 
+> >> Again, that's with an SSD and ext4 filesystem on GNU/Linux, and there
+> >> are no improvements in system time (I/O) except for patch 4 of the
+> >> series which helps perhaps 20% or so.
+> >> 
+> >> So the benefits of the patch will come into play mostly for big, bad
+> >> files on Windows: other than that, the I/O time is likely to be the
+> >> dominant player anyway.
+> >
+> > How much fragmentation does that add to the files, though?
+> 
+> Uh, git-blame is a read-only operation.  It does not add fragmentation
+> to any file.  The patch will add a diff of probably a few dozen hunks to
+> builtin/blame.c.  Do you call that "fragmentation"?  It is small enough
+> that I expect even
+> 
+>     git blame builtin/blame.c
+> 
+> to be faster than before.  But that interpretation of your question
+> probably tries to make too much sense out of what is just nonsense in
+> the given context.
 
-Yeah, a student working on the "git bisect fix/unfixed" feature, could
-fix git bisect testing too many merge bases, and if there is still
-time work on moving more code from shell to C.
+Sorry, I thought you were talking about write operations, not reads.
+
+Mike
