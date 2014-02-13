@@ -1,56 +1,93 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
+From: David Kastrup <dak@gnu.org>
 Subject: Re: Make the git codebase thread-safe
-Date: Thu, 13 Feb 2014 09:27:59 +0100
-Message-ID: <52FC820F.3030707@viscovery.net>
-References: <CA+TurHgyUK5sfCKrK+3xY8AeOg0t66vEvFxX=JiA9wXww7eZXQ@mail.gmail.com>	<CABPQNSZ_LLg5i+mpwUj7pzXVQMY1tcXz2gJ+PWG-mP1iyjxoaw@mail.gmail.com>	<CAHOQ7J8QxfvtrS2KdgzUPvkDzJ1Od0CMvdWxrF_bNacVRYOa5Q@mail.gmail.com>	<CABPQNSZtQd51gQY7oK8B-BbpNEhxR-onQtiXSfW9sv1t2YW_nw@mail.gmail.com>	<CAHOQ7J_Jrj1NJ_tZaCioskQU_xGR2FQPt8=JrWpR6rfs=c847w@mail.gmail.com>	<CABPQNSYVGc9m0_xfAWe=3b7CXyGZ-2FfTMRbTJ=UECeZUtdgmg@mail.gmail.com>	<52FBC9E5.6010609@gmail.com> <CAHOQ7J9A7zPV-kYe1WiQrVuWXXTNDVOQJEbnB+_jzEQ2_4Umxw@mail.gmail.com>
+Date: Thu, 13 Feb 2014 07:04:02 +0100
+Message-ID: <87lhxf8s6l.fsf@fencepost.gnu.org>
+References: <CA+TurHgyUK5sfCKrK+3xY8AeOg0t66vEvFxX=JiA9wXww7eZXQ@mail.gmail.com>
+	<CACsJy8Bsc6sywL9L5QC-SKKmh9J+CKnoG5i78WfUbAG9BdZ8Rw@mail.gmail.com>
+	<CAHOQ7J8gvwpwJV2mBPDaARu3cQ54-ZDQ6iGOwKuJRr9Z+XBL7g@mail.gmail.com>
+	<87y51g88sc.fsf@fencepost.gnu.org>
+	<CAHOQ7J_pg6Nqc5TdU9OA81=d+ZG_JpLFQ5-eFLY3uW8CuAQrUQ@mail.gmail.com>
+	<87ppms87n7.fsf@fencepost.gnu.org>
+	<20140212230909.GB7208@glandium.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Karsten Blees <karsten.blees@gmail.com>, kusmabite@gmail.com,
-	Stefan Zager <szager@chromium.org>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: Stefan Zager <szager@google.com>
-X-From: git-owner@vger.kernel.org Thu Feb 13 09:28:09 2014
+Content-Type: text/plain
+Cc: Stefan Zager <szager@chromium.org>, Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Thu Feb 13 09:30:34 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WDreS-0006iN-D3
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Feb 2014 09:28:08 +0100
+	id 1WDrgn-0008Sa-TP
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Feb 2014 09:30:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752878AbaBMI2E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Feb 2014 03:28:04 -0500
-Received: from so.liwest.at ([212.33.55.18]:45050 "EHLO so.liwest.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751990AbaBMI2D (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Feb 2014 03:28:03 -0500
-Received: from [81.10.228.254] (helo=theia.linz.viscovery)
-	by so.liwest.at with esmtpa (Exim 4.80.1)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1WDreK-0006rA-ER; Thu, 13 Feb 2014 09:28:00 +0100
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 302CC16613;
-	Thu, 13 Feb 2014 09:28:00 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:24.0) Gecko/20100101 Thunderbird/24.1.0
-In-Reply-To: <CAHOQ7J9A7zPV-kYe1WiQrVuWXXTNDVOQJEbnB+_jzEQ2_4Umxw@mail.gmail.com>
-X-Spam-Score: -1.0 (-)
+	id S1753000AbaBMIaa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Feb 2014 03:30:30 -0500
+Received: from fencepost.gnu.org ([208.118.235.10]:41696 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752119AbaBMIa3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Feb 2014 03:30:29 -0500
+Received: from localhost ([127.0.0.1]:40731 helo=lola)
+	by fencepost.gnu.org with esmtp (Exim 4.71)
+	(envelope-from <dak@gnu.org>)
+	id 1WDrgh-0008MO-TK; Thu, 13 Feb 2014 03:30:28 -0500
+Received: by lola (Postfix, from userid 1000)
+	id C1369E047C; Thu, 13 Feb 2014 07:04:02 +0100 (CET)
+In-Reply-To: <20140212230909.GB7208@glandium.org> (Mike Hommey's message of
+	"Thu, 13 Feb 2014 08:09:09 +0900")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242044>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242045>
 
-Am 2/12/2014 20:30, schrieb Stefan Zager:
-> On Wed, Feb 12, 2014 at 11:22 AM, Karsten Blees <karsten.blees@gmail.com> wrote:
->> Am 12.02.2014 19:37, schrieb Erik Faye-Lund:
->>> ReOpenFile, that's fantastic. Thanks a lot!
->>
->> ...but should be loaded dynamically via GetProcAddress, or are we ready to drop XP support?
-> 
-> Right, that is an issue.  From our perspective, it's well past time to
-> drop XP support.
+Mike Hommey <mh@glandium.org> writes:
 
-Not from mine.
+> On Wed, Feb 12, 2014 at 08:15:24PM +0100, David Kastrup wrote:
+>> Stefan Zager <szager@chromium.org> writes:
+>> 
+>> > On Wed, Feb 12, 2014 at 10:50 AM, David Kastrup <dak@gnu.org> wrote:
+>> >
+>> >> Really, give the above patch a try.  I am taking longer to finish it
+>> >> than anticipated (with a lot due to procrastination but that is,
+>> >> unfortunately, a large part of my workflow), and it's cutting into my
+>> >> "paychecks" (voluntary donations which to a good degree depend on timely
+>> >> and nontrivial progress reports for my freely available work on GNU
+>> >> LilyPond).
+>> >
+>> > I will give that a try.  How much of a performance improvement have
+>> > you clocked?
+>> 
+>> Depends on file type and size.  With large files with lots of small
+>> changes, performance improvements get more impressive.
+>> 
+>> Some ugly real-world examples are the Emacs repository, src/xdisp.c
+>> (performance improvement about a factor of 3), a large file in the style
+>> of /usr/share/dict/words clocking in at a factor of about 5.
+>> 
+>> Again, that's with an SSD and ext4 filesystem on GNU/Linux, and there
+>> are no improvements in system time (I/O) except for patch 4 of the
+>> series which helps perhaps 20% or so.
+>> 
+>> So the benefits of the patch will come into play mostly for big, bad
+>> files on Windows: other than that, the I/O time is likely to be the
+>> dominant player anyway.
+>
+> How much fragmentation does that add to the files, though?
 
--- Hannes
+Uh, git-blame is a read-only operation.  It does not add fragmentation
+to any file.  The patch will add a diff of probably a few dozen hunks to
+builtin/blame.c.  Do you call that "fragmentation"?  It is small enough
+that I expect even
+
+    git blame builtin/blame.c
+
+to be faster than before.  But that interpretation of your question
+probably tries to make too much sense out of what is just nonsense in
+the given context.
+
+-- 
+David Kastrup
