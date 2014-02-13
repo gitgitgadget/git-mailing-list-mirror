@@ -1,98 +1,64 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: Make the git codebase thread-safe
-Date: Thu, 13 Feb 2014 18:48:46 +0900
-Message-ID: <20140213094846.GB15366@glandium.org>
-References: <CA+TurHgyUK5sfCKrK+3xY8AeOg0t66vEvFxX=JiA9wXww7eZXQ@mail.gmail.com>
- <CACsJy8Bsc6sywL9L5QC-SKKmh9J+CKnoG5i78WfUbAG9BdZ8Rw@mail.gmail.com>
- <CAHOQ7J8gvwpwJV2mBPDaARu3cQ54-ZDQ6iGOwKuJRr9Z+XBL7g@mail.gmail.com>
- <87y51g88sc.fsf@fencepost.gnu.org>
- <CAHOQ7J_pg6Nqc5TdU9OA81=d+ZG_JpLFQ5-eFLY3uW8CuAQrUQ@mail.gmail.com>
- <87ppms87n7.fsf@fencepost.gnu.org>
- <20140212230909.GB7208@glandium.org>
- <87lhxf8s6l.fsf@fencepost.gnu.org>
- <20140213093439.GA15366@glandium.org>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [RFH] hackday and GSoC topic suggestions
+Date: Thu, 13 Feb 2014 10:55:34 +0100
+Message-ID: <87sirn72w9.fsf@fencepost.gnu.org>
+References: <20140205225702.GA12589@sigill.intra.peff.net>
+	<CAP8UFD1B+108EyyhFQh6RnVVpOUCLiK+oNPONrNJqkNftLFYLA@mail.gmail.com>
+	<vpqr47gin5x.fsf@anie.imag.fr>
+	<20140213085039.GA29152@sigill.intra.peff.net>
+	<CAP8UFD3pqW119xjY0Wci7bJ6UL4ZLsT_vYZJ=zMsnK_7C8-_KQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Stefan Zager <szager@chromium.org>, Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Thu Feb 13 10:49:13 2014
+Content-Type: text/plain
+Cc: Jeff King <peff@peff.net>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	git <git@vger.kernel.org>
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 13 10:55:54 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WDsut-0008IE-Qx
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Feb 2014 10:49:12 +0100
+	id 1WDt1N-0005Jk-Fb
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Feb 2014 10:55:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753813AbaBMJtE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Feb 2014 04:49:04 -0500
-Received: from ks3293202.kimsufi.com ([5.135.186.141]:37565 "EHLO
-	zenigata.glandium.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753808AbaBMJtB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Feb 2014 04:49:01 -0500
-Received: from glandium by zenigata.glandium.org with local (Exim 4.82)
-	(envelope-from <glandium@glandium.org>)
-	id 1WDsuV-00043H-7k; Thu, 13 Feb 2014 18:48:47 +0900
-Content-Disposition: inline
-In-Reply-To: <20140213093439.GA15366@glandium.org>
-X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753494AbaBMJzs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Feb 2014 04:55:48 -0500
+Received: from fencepost.gnu.org ([208.118.235.10]:43207 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751440AbaBMJzp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Feb 2014 04:55:45 -0500
+Received: from localhost ([127.0.0.1]:42240 helo=lola)
+	by fencepost.gnu.org with esmtp (Exim 4.71)
+	(envelope-from <dak@gnu.org>)
+	id 1WDt1D-0002KS-6t; Thu, 13 Feb 2014 04:55:43 -0500
+Received: by lola (Postfix, from userid 1000)
+	id C54ACE087D; Thu, 13 Feb 2014 10:55:34 +0100 (CET)
+In-Reply-To: <CAP8UFD3pqW119xjY0Wci7bJ6UL4ZLsT_vYZJ=zMsnK_7C8-_KQ@mail.gmail.com>
+	(Christian Couder's message of "Thu, 13 Feb 2014 10:28:02 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242056>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242057>
 
-On Thu, Feb 13, 2014 at 06:34:39PM +0900, Mike Hommey wrote:
-> On Thu, Feb 13, 2014 at 07:04:02AM +0100, David Kastrup wrote:
-> > Mike Hommey <mh@glandium.org> writes:
-> > 
-> > > On Wed, Feb 12, 2014 at 08:15:24PM +0100, David Kastrup wrote:
-> > >> Stefan Zager <szager@chromium.org> writes:
-> > >> 
-> > >> > On Wed, Feb 12, 2014 at 10:50 AM, David Kastrup <dak@gnu.org> wrote:
-> > >> >
-> > >> >> Really, give the above patch a try.  I am taking longer to finish it
-> > >> >> than anticipated (with a lot due to procrastination but that is,
-> > >> >> unfortunately, a large part of my workflow), and it's cutting into my
-> > >> >> "paychecks" (voluntary donations which to a good degree depend on timely
-> > >> >> and nontrivial progress reports for my freely available work on GNU
-> > >> >> LilyPond).
-> > >> >
-> > >> > I will give that a try.  How much of a performance improvement have
-> > >> > you clocked?
-> > >> 
-> > >> Depends on file type and size.  With large files with lots of small
-> > >> changes, performance improvements get more impressive.
-> > >> 
-> > >> Some ugly real-world examples are the Emacs repository, src/xdisp.c
-> > >> (performance improvement about a factor of 3), a large file in the style
-> > >> of /usr/share/dict/words clocking in at a factor of about 5.
-> > >> 
-> > >> Again, that's with an SSD and ext4 filesystem on GNU/Linux, and there
-> > >> are no improvements in system time (I/O) except for patch 4 of the
-> > >> series which helps perhaps 20% or so.
-> > >> 
-> > >> So the benefits of the patch will come into play mostly for big, bad
-> > >> files on Windows: other than that, the I/O time is likely to be the
-> > >> dominant player anyway.
-> > >
-> > > How much fragmentation does that add to the files, though?
-> > 
-> > Uh, git-blame is a read-only operation.  It does not add fragmentation
-> > to any file.  The patch will add a diff of probably a few dozen hunks to
-> > builtin/blame.c.  Do you call that "fragmentation"?  It is small enough
-> > that I expect even
-> > 
-> >     git blame builtin/blame.c
-> > 
-> > to be faster than before.  But that interpretation of your question
-> > probably tries to make too much sense out of what is just nonsense in
-> > the given context.
-> 
-> Sorry, I thought you were talking about write operations, not reads.
+Christian Couder <christian.couder@gmail.com> writes:
 
-Specifically, I thought you were talking about git checkout.
+> On Thu, Feb 13, 2014 at 9:50 AM, Jeff King <peff@peff.net> wrote:
+>
+>> I think Google leaves it up to us to decide. I'd be OK with a project
+>> made of multiple small tasks, as I think it would be an interesting
+>> experiment.  I'd rather not do all of them like that, though. And
+>> bonus points if they are on a theme that will let the student use the
+>> ramp-up time from one for another.
+>
+> Yeah, a student working on the "git bisect fix/unfixed" feature, could
+> fix git bisect testing too many merge bases, and if there is still
+> time work on moving more code from shell to C.
 
-Mike
+In the context of programming tasks, "if there is still time" is a prime
+candidate for the successful application of branch prediction.
+
+-- 
+David Kastrup
