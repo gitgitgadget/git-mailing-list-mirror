@@ -1,55 +1,86 @@
-From: =?utf-8?b?w5h5c3RlaW4=?= Walle <oystwa@gmail.com>
-Subject: Re: [PATCH] for-each-ref: add option to omit newlines
-Date: Thu, 13 Feb 2014 18:15:58 +0000 (UTC)
-Message-ID: <loom.20140213T191510-515@post.gmane.org>
-References: <1392314429-15281-1-git-send-email-oystwa@gmail.com>
+From: Matthias Beyer <mail@beyermatthias.de>
+Subject: Why is there no execution of the pre-commit hook while rebasing?
+Date: Thu, 13 Feb 2014 19:15:04 +0100
+Message-ID: <20140213181504.GC28173@fu.3gs>
+Reply-To: Matthias Beyer <mail@beyermatthias.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="O3RTKUHj+75w1tg5"
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 13 19:16:32 2014
+X-From: git-owner@vger.kernel.org Thu Feb 13 19:23:12 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WE0pq-0001px-O0
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Feb 2014 19:16:31 +0100
+	id 1WE0wF-0008A6-Lr
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Feb 2014 19:23:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752484AbaBMSQ1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 13 Feb 2014 13:16:27 -0500
-Received: from plane.gmane.org ([80.91.229.3]:48152 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752452AbaBMSQZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Feb 2014 13:16:25 -0500
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1WE0pj-0001hK-B6
-	for git@vger.kernel.org; Thu, 13 Feb 2014 19:16:23 +0100
-Received: from 80.156.189.109.customer.cdi.no ([109.189.156.80])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 13 Feb 2014 19:16:23 +0100
-Received: from oystwa by 80.156.189.109.customer.cdi.no with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 13 Feb 2014 19:16:23 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 109.189.156.80 (Mozilla/5.0 (Windows NT 6.1; WOW64; rv:26.0) Gecko/20100101 Firefox/26.0)
+	id S1752722AbaBMSXA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Feb 2014 13:23:00 -0500
+Received: from libra.uberspace.de ([95.143.172.171]:42628 "HELO
+	libra.uberspace.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1752540AbaBMSW7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Feb 2014 13:22:59 -0500
+X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Thu, 13 Feb 2014 13:22:59 EST
+Received: (qmail 30521 invoked from network); 13 Feb 2014 18:16:17 -0000
+Received: from unknown (HELO localhost) (141.28.134.26)
+  by libra.uberspace.de with SMTP; 13 Feb 2014 18:16:17 -0000
+Content-Disposition: inline
+User-Agent: Mutt/1.5.22 (2013-10-16)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242069>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242070>
 
-=C3=98ystein Walle <oystwa <at> gmail.com> writes:
 
->=20
-> splitting the output on newlines, for example.
->=20
+--O3RTKUHj+75w1tg5
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Ugh, I mean on null bytes, naturally.
+Hi,
 
-=C3=98sse.
+I'm wondering why there is no execution of the pre-commit hook when
+rebasing.
+
+When I do a rebase of N commits (say, 3 or so) onto another branch,
+each of the rebased commits gets "recommitted" to the branch, am I
+right?
+
+If yes, wouldn't it make sense to run the pre-commit hook after each
+applied commit?
+
+Just wondering...
+
+--=20
+Mit freundlichen Gr=FC=DFen,
+Kind regards,
+Matthias Beyer
+
+Proudly sent with mutt.
+Happily signed with gnupg.
+
+--O3RTKUHj+75w1tg5
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (GNU/Linux)
+
+iQIcBAEBAgAGBQJS/QuoAAoJEJi+S08gyg+UipkQANIMQTp/7VAfQGaYtP2kOkk4
+1/aKhbgYA1tUOtp5HEdPIQ3Poq1oIVNkPb4fL7AohxwftQqfY7dIDdT3c8QTisn5
+di+thTeuTaVKkzqnX4Tee7aYGgsmJU/KOwLs/LjbUHk2qnj9ldkvzqTvFM7JdZ7H
+3AqOBO3OZN8gK6M1B+XqZEegbgYA/E15vofKh1xr8Px6k9zkQX943xN6/xLyohPE
+tMBQFQHm0RWPfYY7bX4F1yLIfv7W1bDo5iFBlBrV8sWYAeSSXge7WIKMfbnm353P
+XL098lIN8VPdI4oyGXw1plCFSDelW8txWFT3bDu6c3q4tYSMhdHQTM+NQtef1MRw
+yKKIobcn3gpjvndlQmmywjBV1+3J3VC5JMxUxpLMvQyYRTmdvvifKmdIo6d3GGER
+Z6b0NiJpt9Zzxg8zBmSfBJ3agb2a2sTSzjAAelp/fRlXvKQtioPXYSFAcKRWELAj
+sVuPxqf9GyIbiGT5VA2cAIkIYZeISGwaFWUrS0fd1vX9kP/m85apgzleUX7cb2iL
+8DS5B5qNHa1Bm9OO/XpRCyS1eGkbqM799p5Yovp6UfPPq6oH+x0gOSfBNZ31Qd0C
+fDE/e2/ogKayLW3/NtZ3mwlNRqhZJezRK+td3QlAv5FFJ4rGFLlrbycOuvnRpy7W
+Geam1mbua7ghfD+Coe6T
+=CT8d
+-----END PGP SIGNATURE-----
+
+--O3RTKUHj+75w1tg5--
