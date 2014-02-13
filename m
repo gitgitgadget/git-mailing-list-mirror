@@ -1,71 +1,88 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] contrib/diff-highlight: multibyte characters diff
-Date: Wed, 12 Feb 2014 20:37:51 -0500
-Message-ID: <20140213013751.GA11355@sigill.intra.peff.net>
-References: <1392109750-47852-1-git-send-email-sugi1982@gmail.com>
- <20140212205948.GA4453@sigill.intra.peff.net>
- <CA+39Oz5TSPNzYVvFytJwwUhRYjbEp5f_BdBWKT2tcYzpbF1WyQ@mail.gmail.com>
- <20140212232740.GA11098@sigill.intra.peff.net>
- <20140213011753.GD4582@vauxhall.crustytoothpaste.net>
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: Make the git codebase thread-safe
+Date: Thu, 13 Feb 2014 01:42:30 +0000
+Message-ID: <20140213014229.GE4582@vauxhall.crustytoothpaste.net>
+References: <CA+TurHgyUK5sfCKrK+3xY8AeOg0t66vEvFxX=JiA9wXww7eZXQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-To: Thomas Adam <thomas@xteddy.org>,
-	Yoshihiro Sugi <sugi1982@gmail.com>,
-	git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Feb 13 02:37:58 2014
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="K/NRh952CO+2tg14"
+Cc: git@vger.kernel.org
+To: Stefan Zager <szager@chromium.org>
+X-From: git-owner@vger.kernel.org Thu Feb 13 02:42:39 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WDlFV-0000s6-Vd
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Feb 2014 02:37:58 +0100
+	id 1WDlK2-000353-Pr
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Feb 2014 02:42:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753006AbaBMBhx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Feb 2014 20:37:53 -0500
-Received: from cloud.peff.net ([50.56.180.127]:49525 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752676AbaBMBhx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Feb 2014 20:37:53 -0500
-Received: (qmail 18532 invoked by uid 102); 13 Feb 2014 01:37:53 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 12 Feb 2014 19:37:53 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 12 Feb 2014 20:37:51 -0500
+	id S1751719AbaBMBme (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Feb 2014 20:42:34 -0500
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:51832 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751256AbaBMBme (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 12 Feb 2014 20:42:34 -0500
+Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:485c:27a1:8772:5ef8])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 9B5562807A;
+	Thu, 13 Feb 2014 01:42:33 +0000 (UTC)
+Mail-Followup-To: Stefan Zager <szager@chromium.org>, git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <20140213011753.GD4582@vauxhall.crustytoothpaste.net>
+In-Reply-To: <CA+TurHgyUK5sfCKrK+3xY8AeOg0t66vEvFxX=JiA9wXww7eZXQ@mail.gmail.com>
+X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
+ 3.12-1-amd64)
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242039>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242040>
 
-On Thu, Feb 13, 2014 at 01:17:54AM +0000, brian m. carlson wrote:
 
-> On Wed, Feb 12, 2014 at 06:27:40PM -0500, Jeff King wrote:
-> > On Wed, Feb 12, 2014 at 11:10:49PM +0000, Thomas Adam wrote:
-> > 
-> > > On 12 February 2014 20:59, Jeff King <peff@peff.net> wrote:
-> > > > +sub decode {
-> > > > +       my $orig = shift;
-> > > > +       my $decoded = eval { decode_utf8($orig, Encode::FB_CROAK) };
-> > > > +       return defined $decoded ?
-> > > 
-> > > I'd still advocate checking $@ here, rather than the defined $decoded check.
-> > 
-> > I don't mind changing it, but for my edification, what is the advantage?
-> 
-> The documentation for decode_utf8 isn't clear, but I don't know if it
-> can ever return undef.  What, for example, does it return if $orig is
-> not defined?  That's the benefit: it's immediately clear to the user
-> that you're interested in whether it threw an exception, rather than
-> whether it produced a given value.
+--K/NRh952CO+2tg14
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I'd argue that I am more interested in whether it returned a value. Let
-us imagine for a moment that decode_utf8 could return undef without
-throwing an exception. What should the function return in such a case?
+On Tue, Feb 11, 2014 at 05:54:51PM -0800, Stefan Zager wrote:
+> To this end, I'd like to start submitting patches that make the code
+> base generally more thread-safe and thread-friendly.  Right after this
+> email, I'm going to send the first such patch, which makes the global
+> list of pack files (packed_git) internal to sha1_file.c.
 
-I think the only sensible thing is the original (and to indicate that
-the result was not converted).
+I'm definitely interested in this if it also works on POSIX systems.  At
+work, we have a 7.6 GiB repo (packed)[0], so while performance is not
+bad, I certainly wouldn't object if it were better.
 
--Peff
+[0] Using du -sh.  For comparison, the Linux kernel repo is 1.4 GiB.
+
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
+
+--K/NRh952CO+2tg14
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCgAGBQJS/CMFAAoJEL9TXYEfUvaLQEAQAKfNZVR03GTiq6PgMLOvhaai
+zehfy5QksJdNsbV9qtvyezTbofbSyowmvG8Hgww6oRccT+sbx3XOBr5RnU588kbm
+me+dtiGF9U5GiLwLLbKsXBUs+7AYngfOJi3OSuHhbDQzLZV1N/rlj7oRO+JNxji/
+cEOv2b8z5HsxLbSikeKJANB+07I6ic1PMWz4vlty/gxz1RfU7kRPI3WihRzRzE6p
+xworQe68zL3mvRLosyS580zSqBeaZ4DXsK2Y7t/dXee+hyBTH8jOMln9HDGmFx9O
+lD2m+zOlz57lxw4zcojE8Pb5cIz2atyEhq0JBz7Whlz3W5gcp+mn0gyIA2lYVaeC
+jZM7eibkwHsejcVfnvIPzIzwlPA0vB3cXX6r6TJDVjoT1HmO6FmZVwPIcnSoM3rm
+MUO1ZMU2dUvaC4i47yvg6YgFrG+mqbEuPh9hnQKiNvFsirJus3TJIm9+6vL2jhCA
+drpsVySmsP0CxweMUkB3e7kNRGHRNd3f8ZmDtVUENpbx2si8AmDxUDz9Gv6YE1fW
+6+F0yRsM+iR86gxxD/gP33WlSbi8CC8Sm9iGBwP4ka6Zr9hZgAWbPTNg/RxoR4mW
+eyfeQ7KumjmIpGW8DwSxa14sP9KINbxKBvVBlOV0sASdNtjl4x6/o37+BCG0mz3l
+ZdzZHYKIOLrQhVp8I204
+=Mjkc
+-----END PGP SIGNATURE-----
+
+--K/NRh952CO+2tg14--
