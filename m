@@ -1,109 +1,115 @@
-From: Zachary Turner <zturner@chromium.org>
-Subject: Re: Make the git codebase thread-safe
-Date: Thu, 13 Feb 2014 15:09:41 -0800
-Message-ID: <CAAErz9hzeiJ9f9tJ+Z-kOHvrPqgcZrpvrpBpa_tMjnKm4YWSXA@mail.gmail.com>
-References: <CA+TurHgyUK5sfCKrK+3xY8AeOg0t66vEvFxX=JiA9wXww7eZXQ@mail.gmail.com>
-	<CABPQNSZ_LLg5i+mpwUj7pzXVQMY1tcXz2gJ+PWG-mP1iyjxoaw@mail.gmail.com>
-	<CAHOQ7J8QxfvtrS2KdgzUPvkDzJ1Od0CMvdWxrF_bNacVRYOa5Q@mail.gmail.com>
-	<CABPQNSZtQd51gQY7oK8B-BbpNEhxR-onQtiXSfW9sv1t2YW_nw@mail.gmail.com>
-	<CAHOQ7J_Jrj1NJ_tZaCioskQU_xGR2FQPt8=JrWpR6rfs=c847w@mail.gmail.com>
-	<CABPQNSYVGc9m0_xfAWe=3b7CXyGZ-2FfTMRbTJ=UECeZUtdgmg@mail.gmail.com>
-	<52FBC9E5.6010609@gmail.com>
-	<loom.20140213T193220-631@post.gmane.org>
-	<52FD4C84.7060209@gmail.com>
-	<CAHOQ7J8syoQLGwwkwPEX3wZir8sWDQ+k8sgHAKn=n_-Q_S8ipA@mail.gmail.com>
+From: Stefan Zager <szager@chromium.org>
+Subject: Re: [PATCH v2] Make the global packed_git variable static to sha1_file.c.
+Date: Thu, 13 Feb 2014 15:15:06 -0800
+Message-ID: <CAHOQ7J_06UBEgitY7G8DTwvWToq2qfVyRYrzdBos4bsL7i7oew@mail.gmail.com>
+References: <52fbc2d6.7kJdh2GOdWTzNcPK%szager@chromium.org>
+	<xmqqioskm3l6.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Karsten Blees <karsten.blees@gmail.com>,
+Cc: Stefan Zager <szager@chromium.org>,
 	Git Mailing List <git@vger.kernel.org>
-To: Stefan Zager <szager@google.com>
-X-From: git-owner@vger.kernel.org Fri Feb 14 00:09:48 2014
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 14 00:15:17 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WE5Pe-0005bu-Ts
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Feb 2014 00:09:47 +0100
+	id 1WE5Uy-0002Dr-FV
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Feb 2014 00:15:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752253AbaBMXJn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Feb 2014 18:09:43 -0500
-Received: from mail-oa0-f49.google.com ([209.85.219.49]:42995 "EHLO
-	mail-oa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751517AbaBMXJm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Feb 2014 18:09:42 -0500
-Received: by mail-oa0-f49.google.com with SMTP id i7so13389358oag.8
-        for <git@vger.kernel.org>; Thu, 13 Feb 2014 15:09:41 -0800 (PST)
+	id S1751813AbaBMXPJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Feb 2014 18:15:09 -0500
+Received: from mail-oa0-f53.google.com ([209.85.219.53]:41656 "EHLO
+	mail-oa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751795AbaBMXPH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Feb 2014 18:15:07 -0500
+Received: by mail-oa0-f53.google.com with SMTP id m1so13614525oag.40
+        for <git@vger.kernel.org>; Thu, 13 Feb 2014 15:15:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
          :from:to:cc:content-type;
-        bh=MQ6S6RU8El38UrCObZXLLMGrbJLhaBD4mS+vaacRaCQ=;
-        b=ZjQ6mNVIDMcW5iih+iatgsRweog9X95nwpsj6QOjy5a38Nwna8A2HqZUKVtD+fIk1Z
-         lV9Or0p997Kco2NoTReM4q8dNR3PQphX/3P6WCS0B2FopVkMeUaC5xzHxl28YM024rLE
-         wS3VhpAkAQRPalKZRfGUQG6SVrP/Wxbl7BADe6sLvzh3J37li0KMuHcS4hWEUoEJ/Fck
-         mxpvTEngpEnKo72h/32of1l9zHDDbmddM83lwc8PbjzsHX2pmPGvgggwRd6HwmOa4Udm
-         eZzaw1mXfZt5/L/3hVsxf72t1d6zCmYSP0FGZUCDq6QSoHZdpJal7Vz+R6J7iWi1IvVG
-         65Xw==
+        bh=/zXDalaISLUJN3PNEyDc1VTtvV345yR9uVb2mizGAjk=;
+        b=Of7a0PCtC8ClBW3EBRzYqyxfayvwRPwFty2XseKyCpCwBosTU9MvIrzk8D1B9cfb3l
+         EP1FWpeei1jxfcPyFRHMnk8940xoVfdcJtoiPn11VXm8aJXcY1oBPx1pZ8Ayi+AYCLdj
+         UmBR57ptBeARUpsIMOpGWdwDFCUmxek8yy7OAyal0EcTixg+REGUnXpP4QkHX3upSfz4
+         YVQ9bYPKoCOb1C6yY42eypuhfxp8WQlgAjRGQILYMOGebvAftrhK2Jv4tO5JOTzXamGW
+         oRXh06+GT45ZLC5MSYY8Yxk1OGJLb7EhPW5D+y8WB4xdSkM98tBk9/csHpyzp6d/hwsp
+         DDIw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
          :from:to:cc:content-type;
-        bh=MQ6S6RU8El38UrCObZXLLMGrbJLhaBD4mS+vaacRaCQ=;
-        b=achw8pfixPr0qhD9s5Lfe4Fmxvf2vc1ks37GHU/h/oGt9qLxuiqTwwZOF3ohZO/BWu
-         U8O6v1k4i0ZWf1E9XWMW5IGvSIVoufZaOr/v3JEUKxsupe9kDVRtslXUeXW9CxUOU9xY
-         Ijlrmskw+V9c0bv5aYOCprCzRCtIxRxrjsYDs=
+        bh=/zXDalaISLUJN3PNEyDc1VTtvV345yR9uVb2mizGAjk=;
+        b=FNLHmZ0nCwepUbHw73Ry3iDZN022aK90lDd9ngXJe6L1sT1bTnkzyDO0TNSFw1laQ9
+         GzSnki7wGwMMwNuXrS6TAWDbBL+eIuxBCOS8vxMfzaooBV0VAX8STgpFCnqUgiJhiIkR
+         pjlnoYA1n24FrSz2wRJrM2fMsCF5TMvKJZSKE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
          :message-id:subject:from:to:cc:content-type;
-        bh=MQ6S6RU8El38UrCObZXLLMGrbJLhaBD4mS+vaacRaCQ=;
-        b=Sp4IoC74MoAhDeU1JYu5BIl3EG1zdCtt0ZaSCXRCd4wiDlk7juFk+UA5yLpACEIFwp
-         AHXpGLzXG5d72HtRXR2MNgX+ZjbSCn2ixvFHaiTYsopvi/Vx/1SC0HdFogxDJNpGkEH6
-         /jLgi/t/zCTMTvqzy4pPDnUIQN3if0Ts/m0vLKlI5YntDjXSidoXQl8wfelRsNZHM4nZ
-         354b9SzemXBM5jbfNUnGFctwrlxy2533RW74VXrAXykU+K0PNTRi2yBuDVburQR0qRb1
-         6E6BxviXQDIMorpQPnW1g8bjri2McG1kPmBl5eOaM38NqsEq8RARP6SvNUt4hy0izEMH
-         CMfA==
-X-Gm-Message-State: ALoCoQn8uAcSjgodUn1sOtzR+Kjy2MV8D7d4yzJ7uodWS3pG9pT3ZFOIcbGAZ5CniI7DNpe8qMfiT7CqWIVTVD3TV+O9Hy8YxJF+c9eDtrHBi/KvNlkqoU3WoL4HFBYn/AiJ8RpDBUlxzDcqV3lv/A+gcm4TKWTMOQqHxpmfQ7HpOKPG2o3DiC3Yufd1bGm8/3N6jacGxsrQ
-X-Received: by 10.182.232.4 with SMTP id tk4mr3560027obc.9.1392332981772; Thu,
- 13 Feb 2014 15:09:41 -0800 (PST)
-Received: by 10.182.118.41 with HTTP; Thu, 13 Feb 2014 15:09:41 -0800 (PST)
-In-Reply-To: <CAHOQ7J8syoQLGwwkwPEX3wZir8sWDQ+k8sgHAKn=n_-Q_S8ipA@mail.gmail.com>
-X-Google-Sender-Auth: C07E_yKxekPW885GZHaAF2Dz7PM
+        bh=/zXDalaISLUJN3PNEyDc1VTtvV345yR9uVb2mizGAjk=;
+        b=AFLAObzke5kh8VMm2/b1p7B8fM8w3iBwsQzYLesHVIzeVZfBlcJ1LfMm9yRLnnKmdW
+         R8akeOkuA214lA4AoCMjL00rJjIOcOJA4/iu3i8niPs81sOIUsn7NDNDsb6vqj8CL3W5
+         We6LE4EsIhPqRGnLp9Mx+wubLJLphUraXJGqU7wVHHr3gitW0ok3RaRUbqphvs5mtBxB
+         yCwtaktpZVT4GPwEBUEkkiXZBQqGvtlwYZTPU/Hl1sqMZM6Vto/k+5UWeaisXdZzlxj0
+         RZeRYYKNaF03LW9Yv0++a/d5z+Qz8JDSBu4QKNbLzy/19YQP7WVFmQ/YsNRyHVNJRA0+
+         00lQ==
+X-Gm-Message-State: ALoCoQnQjm9WupMOsHGMnTsp8UG13EVC+eLmSyhRfsKt5xraP1rXGQQ7cHQN2vumB+/NA86+4eKB2AZl9aKKfTLGH+9wSF4hxz3yMi4+J0F1hKUVfnQrrdnx2c5p/YPkUfo8MjnrRVs+68du4dQnnUcS3HK7W5EdxCEElxxJoOfjeyvD7vipfaMuOz2yJga9Unp0SJtPQesl
+X-Received: by 10.182.142.5 with SMTP id rs5mr3468206obb.39.1392333307089;
+ Thu, 13 Feb 2014 15:15:07 -0800 (PST)
+Received: by 10.182.233.201 with HTTP; Thu, 13 Feb 2014 15:15:06 -0800 (PST)
+In-Reply-To: <xmqqioskm3l6.fsf@gitster.dls.corp.google.com>
+X-Google-Sender-Auth: FhDsxkMmylsqMABKPDg00xEpKEc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242085>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242086>
 
-To elaborate a little bit more, you can verify with a sample program
-that ReadFile with OVERLAPPED does in fact modify the HANDLE's file
-position.  The documentation doesn't actually state one way or
-another.   My original attempt at a patch didn't have the ReOpenFile,
-and we experienced regular read corruption.  We scratched our heads
-over it for a bit, and then hypothesized that someone must be mixing
-read styles, which led to this ReOpenFile workaround, which
-incidentally also solved the corruption problems.  We wrote a similar
-sample program to verify that when using ReOpenHandle, and changing
-the file pointer of the duplicated handle, that the file pointer of
-the original handle is not modified.
+I uploaded a new patch; a few comments inline below...
 
-We did not actually try to identify the source of the mixed read
-styles, but it seems like the only possible explanation.
-
-On Thu, Feb 13, 2014 at 2:53 PM, Stefan Zager <szager@google.com> wrote:
-> On Thu, Feb 13, 2014 at 2:51 PM, Karsten Blees <karsten.blees@gmail.com> wrote:
->> Am 13.02.2014 19:38, schrieb Zachary Turner:
->>
->>> The only reason ReOpenFile is necessary at
->>> all is because some code somewhere is mixing read-styles against the same
->>> fd.
->>>
->>
->> I don't understand...ReadFile with OVERLAPPED parameter doesn't modify the HANDLE's file position, so you should be able to mix read()/pread() however you like (as long as read() is only called from one thread).
+On Wed, Feb 12, 2014 at 1:19 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> szager@chromium.org writes:
 >
-> That is, apparently, a bald-faced lie in the ReadFile API doc.  First
-> implementation didn't use ReOpenFile, and it crashed all over the
-> place.  ReOpenFile fixed it.
+> Also I'd suggest s/pack_data_fn/collect_pack_data/ or something.
+> "_fn" may be a good suffix for typedef'ed typename used in a
+> callback function, but for a concrete function, it only adds noise
+> without giving us anything new.
+
+Fixed this everywhere.
+
+>>  static struct cached_object *find_cached_object(const unsigned char *sha1)
+>> @@ -468,7 +469,6 @@ static unsigned int pack_open_fds;
+>>  static unsigned int pack_max_fds;
+>>  static size_t peak_pack_mapped;
+>>  static size_t pack_mapped;
+>> -struct packed_git *packed_git;
 >
-> Stefan
+> Hmm, any particular reason why only this variable and not others are
+> moved up?
+
+No, just need packed_git declared before use.  I moved all the static
+variables up, for clarity.
+
+>> +     foreach_packed_git(find_pack_fn, NULL, &fpd);
+>> +     if (fpd.found_pack && !exclude &&
+>> +         (incremental ||
+>> +          (local && fpd.found_non_local_pack) ||
+>> +          (ignore_packed_keep && fpd.found_pack_keep)))
+>> +             return 0;
+>
+> When told to do --incremental, we used to return 0 from this
+> function immediately once we find the object in one pack, without
+> going thru the list of packs.  Now we let foreach to loop thru all
+> of them and then return 0.  Does this difference matter?  A similar
+> difference may exist for local/keep but I did not think it through.
+
+Fixed.
+
+
+
+Thanks,
+
+Stefan
