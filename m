@@ -1,86 +1,75 @@
-From: Ephrim Khong <dr.khong@gmail.com>
-Subject: git blame: "Not Committed Yet" with clean WD
-Date: Thu, 13 Feb 2014 10:08:55 +0100
-Message-ID: <52FC8BA7.30102@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Git GSoC 2014
+Date: Thu, 13 Feb 2014 04:10:37 -0500
+Message-ID: <20140213091037.GA28927@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Cc: Shawn Pearce <spearce@spearce.org>, Thomas Rast <tr@thomasrast.ch>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 13 10:09:12 2014
+X-From: git-owner@vger.kernel.org Thu Feb 13 10:11:14 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WDsI9-0002vp-PN
-	for gcvg-git-2@plane.gmane.org; Thu, 13 Feb 2014 10:09:10 +0100
+	id 1WDsK7-0004TA-27
+	for gcvg-git-2@plane.gmane.org; Thu, 13 Feb 2014 10:11:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753246AbaBMJJB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Feb 2014 04:09:01 -0500
-Received: from mail-bk0-f54.google.com ([209.85.214.54]:40981 "EHLO
-	mail-bk0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752519AbaBMJI6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Feb 2014 04:08:58 -0500
-Received: by mail-bk0-f54.google.com with SMTP id u14so2953217bkz.41
-        for <git@vger.kernel.org>; Thu, 13 Feb 2014 01:08:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:subject
-         :content-type:content-transfer-encoding;
-        bh=jh7Z7a/Oo1diAR6jAz3GR5PtBd9voyjGwe1ac8p6mk4=;
-        b=jxZrW7lta4X2LraXh/wElvnt/bLHFob+ny/HCpwdgRXzYY1J4oxUsiey7szfvWb/2F
-         kkRVbWtEwyHYnDNvDf9AIMryGBvXUT8n425cObWjp8UowqQ7X9OcWpf9/vY6DPPnSngi
-         D+3lngTkODqjFvKRRp/oqSGfAYFibeE/zSGwvlDatZiAankITCXJZlsyn/TSrtjr02QZ
-         CEjKYvwRoRMs4cPxlcQI7+nFJRpptbCtCEH6LDo/p4eUs8E/9cy531UKRFDTPxCNLXqQ
-         0AczC53dUtZOImWvDBVGN84KV+PYOcGmNbYYJaqMnUQ4F+ag85Mm2AWvfFgC/EK7wh4L
-         8Xgw==
-X-Received: by 10.205.107.129 with SMTP id dy1mr28500bkc.48.1392282536955;
-        Thu, 13 Feb 2014 01:08:56 -0800 (PST)
-Received: from [192.168.32.40] (merlin.mvtec.com. [62.245.183.130])
-        by mx.google.com with ESMTPSA id zf3sm1396114bkb.4.2014.02.13.01.08.55
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 13 Feb 2014 01:08:56 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.3.0
+	id S1753275AbaBMJLA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Feb 2014 04:11:00 -0500
+Received: from cloud.peff.net ([50.56.180.127]:49709 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753254AbaBMJKj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Feb 2014 04:10:39 -0500
+Received: (qmail 8854 invoked by uid 102); 13 Feb 2014 09:10:39 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 13 Feb 2014 03:10:39 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 13 Feb 2014 04:10:37 -0500
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242052>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242053>
 
-Hi,
+The Google Summer of Code application process is upon us. We have about
+34 hours until the deadline (2014-02-14T19:00 UTC) . That's not very
+much time, but I know some people have been thinking about projects for
+a while, so I have hope that we can put together an ideas page.
 
-for files that contain windows line endings in a repository with 
-core.autocrlf=input, git blame will show lines as "Not Committed Yet", 
-even though they were not modified.
+What we need immediately is:
 
-Example:
+  - somebody to be the backup admin (I am assuming I'll be the primary
+    admin, but as always, if somebody else wants to...)
 
---
-git init
-git config core.autocrlf false
-echo "foo" > a
-unix2dos a
-git add a
-git commit -m "initial commit"
-git config core.autocrlf input
-git status
-git blame a
---
+  - ideas ideas ideas
 
-Output:
+    The email I sent out last week generated some response, but what I
+    really need are people to write up full ideas as they would be read
+    by students (and by GSoC personnel who are reading our application).
 
---
-Reinitialized existing Git repository in /.../testblame2/.git/
-unix2dos: converting file a to DOS format ...
-On branch master
-nothing to commit, working directory clean
-On branch master
-nothing to commit, working directory clean
-00000000 (Not Committed Yet 2014-02-13 10:02:43 +0100 1) foo
---
+    As mentioned in a related thread, I'd really like to avoid just
+    reposting proposals that didn't get any traction in previous years.
 
-Is there an easy way to work around this; is this desired behaviour or 
-mor a bug?
+    Tomorrow I'll try to look through some of the links that have been
+    posted, or collect stuff from the list. But I really need other
+    people to contribute, or it's going to be a lame list.
 
-Thanks - Eph
+I've put the application draft here:
+
+  http://git.github.io/SoC-2014-Org-Application.html
+
+You can make suggestions in this thread, or edit it by cloning:
+
+  https://github.com/git/git.github.io
+
+and post a patch, or send a pull request, or I should be able to give
+people push access to the repo. It's a bit of an experiment, in the same
+realm as the wiki we've used in the past.
+
+The idea page is there, too, but there's nothing good on it yet:
+
+  http://git.github.io/SoC-2014-Ideas.html
+
+-Peff
