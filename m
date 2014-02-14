@@ -1,83 +1,126 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] for-each-ref: add option to omit newlines
-Date: Fri, 14 Feb 2014 15:24:51 -0800
-Message-ID: <xmqq1tz5gtvg.fsf@gitster.dls.corp.google.com>
-References: <1392314429-15281-1-git-send-email-oystwa@gmail.com>
-	<xmqq38jmlqo6.fsf@gitster.dls.corp.google.com>
-	<loom.20140214T085928-630@post.gmane.org>
-	<xmqq38jlk6a1.fsf@gitster.dls.corp.google.com>
-	<loom.20140215T000328-538@post.gmane.org>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v5 02/14] trailer: process trailers from file and
+ arguments
+Date: Sat, 15 Feb 2014 00:29:50 +0100 (CET)
+Message-ID: <20140215.002950.97819205213642217.chriscool@tuxfamily.org>
+References: <xmqqa9dxr09k.fsf@gitster.dls.corp.google.com>
+	<20140214.224133.484636406629780362.chriscool@tuxfamily.org>
+	<xmqqfvnlgyel.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?Q?=C3=98ystein?= Walle <oystwa@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 15 00:25:06 2014
+Content-Type: Text/Plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: christian.couder@gmail.com, git@vger.kernel.org, johan@herland.net,
+	josh@joshtriplett.org, tr@thomasrast.ch, mhagger@alum.mit.edu,
+	sunshine@sunshineco.com, dan.carpenter@oracle.com, greg@kroah.com,
+	peff@peff.net
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Sat Feb 15 00:30:24 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WES81-00023h-EF
-	for gcvg-git-2@plane.gmane.org; Sat, 15 Feb 2014 00:25:05 +0100
+	id 1WESDA-00072E-2L
+	for gcvg-git-2@plane.gmane.org; Sat, 15 Feb 2014 00:30:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752947AbaBNXY7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 Feb 2014 18:24:59 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45305 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752934AbaBNXY6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 14 Feb 2014 18:24:58 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B4A6F6DA50;
-	Fri, 14 Feb 2014 18:24:57 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=OFS/Q0vFbYzI
-	ddmXDZQuyzDPMe8=; b=TfB8XTsNhiTuo/RD4tRfZA24zEJcWS439l/5x4lq9ViK
-	5JH4ZKM1c2z93KpcOJtv4gCnzWL7iS6OZzF8UsShv639028bSeTUae8O6uvv1bVC
-	Vel40oUu68JIeXVI1ANKk2XL5WgPyiGgZN1+SjrIJ+TwIRST9OxDvXw9AM2PcdQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=OsJxPt
-	nGPAHXbHh2Uy/orXY8j8tSgydwP93Gs25TMrbA/XmKM1a1hIaaGtQXlapQbJ5kbe
-	4Pj5p+vZ+9B3WnPkyhi294B1nJN2QftNqrBGSrihQKGvhZRyRQVZC904r3rnQTDA
-	3k8JHNNjBFfeaaUVmmcFhNpgKV2n1N4BoIWfw=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9C17C6DA4F;
-	Fri, 14 Feb 2014 18:24:57 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E6B736DA4D;
-	Fri, 14 Feb 2014 18:24:55 -0500 (EST)
-In-Reply-To: <loom.20140215T000328-538@post.gmane.org> (=?utf-8?Q?=22?=
- =?utf-8?Q?=C3=98ystein?= Walle"'s
-	message of "Fri, 14 Feb 2014 23:03:21 +0000 (UTC)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 36B022C0-95CF-11E3-A1D2-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752738AbaBNXaQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Feb 2014 18:30:16 -0500
+Received: from [194.158.98.14] ([194.158.98.14]:57444 "EHLO mail-1y.bbox.fr"
+	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751460AbaBNXaP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Feb 2014 18:30:15 -0500
+Received: from localhost (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
+	by mail-1y.bbox.fr (Postfix) with ESMTP id 7362674;
+	Sat, 15 Feb 2014 00:29:51 +0100 (CET)
+In-Reply-To: <xmqqfvnlgyel.fsf@gitster.dls.corp.google.com>
+X-Mailer: Mew version 6.3 on Emacs 23.3 / Mule 6.0 (HANACHIRUSATO)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242158>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242159>
 
-=C3=98ystein Walle <oystwa@gmail.com> writes:
+From: Junio C Hamano <gitster@pobox.com>
+>
+> Christian Couder <chriscool@tuxfamily.org> writes:
+> 
+>> For example some people might want:
+>>
+>>     if_exists = overwrite
+>>     if_missing = add
+>>
+>> while others might want:
+>>
+>>     if_exists = overwrite
+>>     if_missing = do_nothing
+>>
+>> and I don't see how we can say that with just:
+>>
+>>     action = do_Y_if_X_and_Z
+> 
+> Yes, but then we go back to my original question: why exists and
+> missing are so special,
 
-> Maybe it's all subjective... I'm okay with just leaving things as the=
-y
-> are.
+Because they are completely disjoint, easy to understand, and they can
+avoid a lot of combinatorial explosion we would have if we used only
+one "action" variable, while still providing lot of expressiveness.
 
-Lack of "-z" in for-each-ref can be called an inconsistency that
-already exists you may want to fix in any case.
+They are just a good tradeoff for the special problem we have.
 
-As an extension to that, I would not be fundamentally against a new
-option, e.g. "--terminiator=3D7", that causes us to use putchar(7)
-instead of putchar('\n') or putchar('\0') to terminate each records.
-At that point, "-z" becomes a synonym for "--terminator=3D0".
+> and why there aren't two kinds of exists
+> (i.e. "there exists an entry with the same <key, value>" vs "there
+> exists an entry with the same <key>").
 
-And "--terminator=3D''" might even be a natural extension to that
-option to cause us not to call any putchar() there.
+Because it doesn't improve expressiveness much, doesn't remove much
+combinatorial explosion and make it significantly more difficult to
+understand, compared to only "if_exists" and "if_missing".
 
-If we were to do that, we should do them for all commands that let
-you use "-z", not just for-each-ref, for consistency reasons, I
-would think.
+> I would have understood your
+> "this is not too hard to understand for users" if you had three
+> (i.e. "missing", in addition to these two flavours of "exists"), but
+> with only two, I do not see how it is useful in a hypothetical
+> situation like above.
+
+You mean that you do not see why:
+
+     if_exists = overwrite
+     if_missing = do_nothing
+
+is simple and expressive?
+
+> For example, how would you express something like this only with
+> "if-exists" vs "if-missing"?
+> 
+> 	if_exists_exactly = ignore
+>         if_exists_with_different_value = append
+>         if_missng = prepend_to_the_beginning
+
+First, previously in the discussion you said that you didn't want us
+to talk about the "where = (after | before)" part, because you could
+see that it was orthogonal to the other stuff, but now it looks like
+you want again to put that on the table.
+
+Then yes, it is not possible to express the above with what I
+implemented. But it could be possible with only "if-exists" vs
+"if-missing" like this:
+
+	if_exists = append_if_different
+	if_missing = prepend
+
+And yes I think it is much better than:
+
+	if_exists_exactly = ignore
+	if_exists_with_different_value = append
+	if_missng = prepend_to_the_beginning
+
+because we can still easily express things like:
+
+	if_exists = append_if_different_neighbor
+	if_missing = prepend
+
+while it would be more difficult to understand with
+"if_exists_exactly", "if_exists_with_different_value" and
+"if_missing".
+
+Thanks,
+Christian.
