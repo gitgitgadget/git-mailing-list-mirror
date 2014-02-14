@@ -1,54 +1,66 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: Bug: Problem with CRLF line ending in git-diff with coloring
-Date: Fri, 14 Feb 2014 22:19:03 +0100
-Message-ID: <52FE8847.8020101@kdbg.org>
-References: <20140209110155.GB16189@scotty.home> <20140214164709.GI7560@pille.home>
+From: Andrew Eikum <aeikum@codeweavers.com>
+Subject: Re: What's cooking in git.git (Feb 2014, #04; Wed, 12)
+Date: Fri, 14 Feb 2014 15:28:44 -0600
+Message-ID: <20140214212844.GE743@foghorn.codeweavers.com>
+References: <xmqqd2ism1pu.fsf@gitster.dls.corp.google.com>
+ <20140214194436.GB743@foghorn.codeweavers.com>
+ <xmqq4n41ihgi.fsf@gitster.dls.corp.google.com>
+ <20140214205038.GC743@foghorn.codeweavers.com>
+ <xmqqr475h06n.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: "Stefan-W. Hahn" <stefan.hahn@s-hahn.de>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 14 22:19:28 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Andrew Eikum <aeikum@codeweavers.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 14 22:29:17 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WEQAQ-0001Fh-5y
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Feb 2014 22:19:26 +0100
+	id 1WEQJu-0002Ps-Pl
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Feb 2014 22:29:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753030AbaBNVTV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Feb 2014 16:19:21 -0500
-Received: from bsmtp4.bon.at ([195.3.86.186]:35938 "EHLO lbmfmo03.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1753019AbaBNVTT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Feb 2014 16:19:19 -0500
-Received: from bsmtp.bon.at (unknown [192.168.181.104])
-	by lbmfmo03.bon.at (Postfix) with ESMTP id 4DDABCE1BE
-	for <git@vger.kernel.org>; Fri, 14 Feb 2014 22:19:17 +0100 (CET)
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id ADD2A13004A;
-	Fri, 14 Feb 2014 22:19:04 +0100 (CET)
-Received: from dx.sixt.local (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id 7DEF819F3C5;
-	Fri, 14 Feb 2014 22:19:03 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.3.0
-In-Reply-To: <20140214164709.GI7560@pille.home>
+	id S1753195AbaBNV2r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Feb 2014 16:28:47 -0500
+Received: from mail.codeweavers.com ([216.251.189.131]:33864 "EHLO
+	mail.codeweavers.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752786AbaBNV2q (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Feb 2014 16:28:46 -0500
+Received: from foghorn.codeweavers.com ([216.251.189.130])
+	by mail.codeweavers.com with esmtpsa (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.72)
+	(envelope-from <aeikum@codeweavers.com>)
+	id 1WEQJR-0007qo-Hy; Fri, 14 Feb 2014 15:28:45 -0600
+Content-Disposition: inline
+In-Reply-To: <xmqqr475h06n.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242147>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242148>
 
-Am 14.02.2014 17:47, schrieb Stefan-W. Hahn:
->> It's the right solution. IOW, you should place something like this in
->> your .gitattributes:
->>  *.html whitespace=cr-at-eol
+On Fri, Feb 14, 2014 at 01:08:32PM -0800, Junio C Hamano wrote:
+> Andrew Eikum <aeikum@codeweavers.com> writes:
 > 
-> Sorry, but this is not possible, because I have files of both sorts (mainly
-> C/C++) files in my repository and cannot change the files as I wish.
+> > My worry is having "2." hang around for another decade or longer. I'd
+> > rather see X.0.0 denote a major feature release (currently represented
+> > as 1.X.0), with X.Y.0 for minor enhancements and X.Y.Z for bugfix.
+> 
+> We need three categories: (1) potentially incompatible, (2) feature,
+> (3) fixes-only.  We have been doing two levels of features by having
+> both second and third numbers and we are flattening by removing the
+> second one.
+> 
+> > It seems reasonable to expect fewer backwards incompatible changes in
+> > the future as Git has become more mature. This reduces the utility of
+> > reserving X.0.0 for major backwards incompatible changes, especially
+> > considering it's already been eight years for the first increment.
+> 
+> We are not done yet, far from it.  If we can stay at 2.X longer,
+> that is a very good thing.
+> 
 
-I'm confused. This setting does not change your files, but instructs git
-diff and git apply to not report the trailing CR as white-space error.
-Didn't you try it?
+Okay, fair enough. Thanks for explaining :)
 
--- Hannes
+Andrew
