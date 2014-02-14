@@ -1,124 +1,80 @@
-From: "Kirill A. Shutemov" <kirill@shutemov.name>
-Subject: [PATCH 1/3] builtin/config.c: rename check_blob_write() -> check_write()
-Date: Sat, 15 Feb 2014 01:37:31 +0200
-Message-ID: <1392421053-937-1-git-send-email-kirill@shutemov.name>
-Cc: "Kirill A. Shutemov" <kirill@shutemov.name>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 15 00:37:56 2014
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v5 02/14] trailer: process trailers from file and arguments
+Date: Fri, 14 Feb 2014 15:39:31 -0800
+Message-ID: <CAPc5daUsKaKfDD4AN10Az4HGAdLWnDkSYmLEOCMBrEkQtuRtAQ@mail.gmail.com>
+References: <xmqqa9dxr09k.fsf@gitster.dls.corp.google.com> <20140214.224133.484636406629780362.chriscool@tuxfamily.org>
+ <xmqqfvnlgyel.fsf@gitster.dls.corp.google.com> <20140215.002950.97819205213642217.chriscool@tuxfamily.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: christian.couder@gmail.com, Git Mailing List <git@vger.kernel.org>,
+	Johan Herland <johan@herland.net>, josh@joshtriplett.org,
+	tr@thomasrast.ch, Michael Haggerty <mhagger@alum.mit.edu>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	dan.carpenter@oracle.com, greg@kroah.com, Jeff King <peff@peff.net>
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Sat Feb 15 00:39:57 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WESKR-0005ec-Ru
-	for gcvg-git-2@plane.gmane.org; Sat, 15 Feb 2014 00:37:56 +0100
+	id 1WESMO-0007Y9-Mf
+	for gcvg-git-2@plane.gmane.org; Sat, 15 Feb 2014 00:39:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752883AbaBNXhx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Feb 2014 18:37:53 -0500
-Received: from mta-out.inet.fi ([195.156.147.13]:33676 "EHLO jenni2.inet.fi"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751692AbaBNXhx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Feb 2014 18:37:53 -0500
-Received: from node.shutemov.name (80.220.224.16) by jenni2.inet.fi (8.5.140.03)
-        id 52775C99088FBA23 for git@vger.kernel.org; Sat, 15 Feb 2014 01:37:51 +0200
-Received: by node.shutemov.name (Postfix, from userid 1000)
-	id B532D40647; Sat, 15 Feb 2014 01:37:34 +0200 (EET)
-X-Mailer: git-send-email 1.8.5.3
+	id S1752902AbaBNXjx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Feb 2014 18:39:53 -0500
+Received: from mail-lb0-f170.google.com ([209.85.217.170]:38198 "EHLO
+	mail-lb0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752054AbaBNXjw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Feb 2014 18:39:52 -0500
+Received: by mail-lb0-f170.google.com with SMTP id u14so9823728lbd.15
+        for <git@vger.kernel.org>; Fri, 14 Feb 2014 15:39:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=j6O8wILb1JrN3PJAoFKpYRxsqPgl3t1khpndoILaUpo=;
+        b=LGJA9FWWTgZvGfJo1A8sKbeygxpUZ5o5+A/yLBCoNfy5n/F3HhP0tf1ojUodyTvCDT
+         seIsCP4TqXHQVevvGfc70+aHet2vkd2FqClol5OlWSqaPVvMDe8wC8Sf382gJLPjE7ud
+         u11PqbGihMsoy8jN0Vz4TpTIJlsx+myJsaGxNhyysH9rJO7qAky6wv7mHPVqgMXqs3VK
+         1Uf7ZwqtMi4AoRKZBK/kWyocu+AboRaMgzWhSF+TCOoAHike7TZFizCphcF4BQzTq6iA
+         hvuo6YU9dJt0Lw2sNzpV97ym1dvLurmmXjzDPQ8ZlzNrMoftQFixEseY1vVplgQv/Mfk
+         FAHg==
+X-Received: by 10.112.128.170 with SMTP id np10mr7141512lbb.22.1392421191201;
+ Fri, 14 Feb 2014 15:39:51 -0800 (PST)
+Received: by 10.112.180.130 with HTTP; Fri, 14 Feb 2014 15:39:31 -0800 (PST)
+In-Reply-To: <20140215.002950.97819205213642217.chriscool@tuxfamily.org>
+X-Google-Sender-Auth: 8RkHTJC7gxJomvyak72aqJo_oQA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242162>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242163>
 
-The function will be reused to check for other conditions which prevent
-write.
+>> For example, how would you express something like this only with
+>> "if-exists" vs "if-missing"?
+>>
+>>       if_exists_exactly = ignore
+>>         if_exists_with_different_value = append
+>>         if_missng = prepend_to_the_beginning
+>
+> First, previously in the discussion you said that you didn't want us
+> to talk about the "where = (after | before)" part, because you could
+> see that it was orthogonal to the other stuff, but now it looks like
+> you want again to put that on the table.
 
-Signed-off-by: Kirill A. Shutemov <kirill@shutemov.name>
----
- builtin/config.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+Oh, then replace both "append" and "prepend" with "append" (it was a mistake).
+Can you express that without having two kinds of if-exists?
 
-diff --git a/builtin/config.c b/builtin/config.c
-index 92ebf23f0a9a..a7c55e68883c 100644
---- a/builtin/config.c
-+++ b/builtin/config.c
-@@ -362,7 +362,7 @@ static int get_colorbool(int print)
- 		return get_colorbool_found ? 0 : 1;
- }
- 
--static void check_blob_write(void)
-+static void check_write(void)
- {
- 	if (given_config_blob)
- 		die("writing config blobs is not supported");
-@@ -572,7 +572,7 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 	}
- 	else if (actions == ACTION_SET) {
- 		int ret;
--		check_blob_write();
-+		check_write();
- 		check_argc(argc, 2, 2);
- 		value = normalize_value(argv[0], argv[1]);
- 		ret = git_config_set_in_file(given_config_file, argv[0], value);
-@@ -582,21 +582,21 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 		return ret;
- 	}
- 	else if (actions == ACTION_SET_ALL) {
--		check_blob_write();
-+		check_write();
- 		check_argc(argc, 2, 3);
- 		value = normalize_value(argv[0], argv[1]);
- 		return git_config_set_multivar_in_file(given_config_file,
- 						       argv[0], value, argv[2], 0);
- 	}
- 	else if (actions == ACTION_ADD) {
--		check_blob_write();
-+		check_write();
- 		check_argc(argc, 2, 2);
- 		value = normalize_value(argv[0], argv[1]);
- 		return git_config_set_multivar_in_file(given_config_file,
- 						       argv[0], value, "^$", 0);
- 	}
- 	else if (actions == ACTION_REPLACE_ALL) {
--		check_blob_write();
-+		check_write();
- 		check_argc(argc, 2, 3);
- 		value = normalize_value(argv[0], argv[1]);
- 		return git_config_set_multivar_in_file(given_config_file,
-@@ -623,7 +623,7 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 		return get_urlmatch(argv[0], argv[1]);
- 	}
- 	else if (actions == ACTION_UNSET) {
--		check_blob_write();
-+		check_write();
- 		check_argc(argc, 1, 2);
- 		if (argc == 2)
- 			return git_config_set_multivar_in_file(given_config_file,
-@@ -633,14 +633,14 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 						      argv[0], NULL);
- 	}
- 	else if (actions == ACTION_UNSET_ALL) {
--		check_blob_write();
-+		check_write();
- 		check_argc(argc, 1, 2);
- 		return git_config_set_multivar_in_file(given_config_file,
- 						       argv[0], NULL, argv[1], 1);
- 	}
- 	else if (actions == ACTION_RENAME_SECTION) {
- 		int ret;
--		check_blob_write();
-+		check_write();
- 		check_argc(argc, 2, 2);
- 		ret = git_config_rename_section_in_file(given_config_file,
- 							argv[0], argv[1]);
-@@ -651,7 +651,7 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 	}
- 	else if (actions == ACTION_REMOVE_SECTION) {
- 		int ret;
--		check_blob_write();
-+		check_write();
- 		check_argc(argc, 1, 1);
- 		ret = git_config_rename_section_in_file(given_config_file,
- 							argv[0], NULL);
--- 
-1.8.5.2
+> But it could be possible with only "if-exists" vs
+> "if-missing" like this:
+>
+>         if_exists = append_if_different
+>         if_missing = prepend
+> ...
+> because we can still easily express things like:
+>
+>         if_exists = append_if_different_neighbor
+
+The proliferation of these random "if_X" on the action part _is_ exactly
+what I find the proposal confusing.
