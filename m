@@ -1,84 +1,75 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Git GSoC 2014
-Date: Fri, 14 Feb 2014 05:41:39 -0500
-Message-ID: <20140214104139.GA28570@sigill.intra.peff.net>
-References: <20140213091037.GA28927@sigill.intra.peff.net>
- <CALkWK0mR=9ZD256bHx9d=W9ayqn5bOETWBQLW_kvRSy-GeQK4Q@mail.gmail.com>
+From: Josef Wolf <jw@raven.inka.de>
+Subject: error: src refspec refs/heads/master matches more than one.
+Date: Fri, 14 Feb 2014 12:31:36 +0100
+Message-ID: <20140214113136.GA17817@raven.inka.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git List <git@vger.kernel.org>, Shawn Pearce <spearce@spearce.org>,
-	Thomas Rast <tr@thomasrast.ch>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 14 11:42:00 2014
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 14 13:00:28 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WEGDV-0002jH-PK
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Feb 2014 11:41:58 +0100
+	id 1WEHRT-0000C6-L9
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Feb 2014 13:00:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752090AbaBNKlu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Feb 2014 05:41:50 -0500
-Received: from cloud.peff.net ([50.56.180.127]:50457 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751959AbaBNKlt (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Feb 2014 05:41:49 -0500
-Received: (qmail 25842 invoked by uid 102); 14 Feb 2014 10:41:48 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 14 Feb 2014 04:41:48 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 14 Feb 2014 05:41:39 -0500
+	id S1752546AbaBNMAX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Feb 2014 07:00:23 -0500
+Received: from quechua.inka.de ([193.197.184.2]:53290 "EHLO mail.inka.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752373AbaBNMAW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Feb 2014 07:00:22 -0500
+X-Greylist: delayed 1209 seconds by postgrey-1.27 at vger.kernel.org; Fri, 14 Feb 2014 07:00:22 EST
+Received: from raven.inka.de (uucp@[127.0.0.1])
+	by mail.inka.de with uucp (rmailwrap 0.5) 
+	id 1WEH7s-0004FE-0v; Fri, 14 Feb 2014 12:40:12 +0100
+Received: by raven.inka.de (Postfix, from userid 1000)
+	id 3992D7629A; Fri, 14 Feb 2014 12:31:36 +0100 (CET)
+Mail-Followup-To: Josef Wolf <jw@raven.inka.de>, git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <CALkWK0mR=9ZD256bHx9d=W9ayqn5bOETWBQLW_kvRSy-GeQK4Q@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242095>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242096>
 
-On Thu, Feb 13, 2014 at 06:17:17PM -0500, Ramkumar Ramachandra wrote:
+Hello folks,
 
-> I'll throw in a few ideas from half-finished work.
+after some commits to my master branch, I tried to push to the bare upstream
+repository and got this error message:
 
-Thanks. A few comments:
+  error: src refspec refs/heads/master matches more than one.
 
-> 1. Speed up git-rebase--am.sh
-> 
-> Currently, git-rebase--am.sh is really slow because it dumps each
-> patch to a file using git-format-patch, and picks it up to apply
-> subsequently using git-am. Find a way to speed this up, without
-> sacrificing safety. You can use the continuation features of
-> cherry-pick, and dump to file only to persist state in the case of a
-> failure.
+A quick check shows that there's indeed something wrong:
 
-Isn't the merge backend faster? I thought that was the point of it.
+  jw@kiste:/git/scan$ git branch -a | grep master
+  * master
+    refs/heads/master
+    remotes/origin/HEAD -> origin/master
+    remotes/origin/master
+  jw@kiste:/git/scan$ find .git -name master
+  .git/refs/heads/master
+  .git/logs/refs/remotes/origin/master
+  .git/logs/refs/heads/master
+  .git/logs/refs/heads/refs/heads/master
+  jw@kiste:/git/scan$ find .git -name master
+  .git/refs/heads
+  .git/refs/heads/refs/heads
+  .git/logs/refs/heads
+  .git/logs/refs/heads/refs/heads
+  jw@kiste:/git/scan$ find .git -name master
 
-> 3. Rewrite git-branch to use git-for-each-ref
-> 
-> For higher flexibility in command-line options and output format, use
-> git for-each-ref to re-implement git-branch. The first task is to grow
-> features that are in branch but not fer into fer (like --column,
-> --merged, --contains). The second task is to refactor fer so that an
-> external program can call into it.
+Notice the refs/heads _within_ refs/heads!
 
-I actually have this about 95% done, waiting for the patches to be
-polished. So I don't think it makes a good GSoC project (it would be
-stupid to start from scratch, and polishing my patches is a lame
-project).
+Now I wonder how I managed to get into this situation and what's the best way
+to recover?
 
-> 4. Implement @{publish}
-> (I just can't find the time to finish this)
-> 
-> @{publish} is a feature like @{upstream}, showing the state of the
-> publish-point in the case of triangular workflows. Implement this
-> while sharing code with git-push, and polish it until the prompt shows
-> publish-state.
+Any ideas?
 
-I think this could be a good GSoC-sized topic. I'm going to adjust the
-title to be "better support for triangular workflows". I think they may
-want to examine other issues in the area, rather than drilling down on
-@{publish} in particular (but ultimately, it is up to the student to
-propose what they want to do).
+PS: this is git-1.8.1.4.
 
--Peff
+-- 
+Josef Wolf
+jw@raven.inka.de
