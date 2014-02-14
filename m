@@ -1,95 +1,295 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Feb 2014, #04; Wed, 12)
-Date: Fri, 14 Feb 2014 13:08:32 -0800
-Message-ID: <xmqqr475h06n.fsf@gitster.dls.corp.google.com>
-References: <xmqqd2ism1pu.fsf@gitster.dls.corp.google.com>
-	<20140214194436.GB743@foghorn.codeweavers.com>
-	<xmqq4n41ihgi.fsf@gitster.dls.corp.google.com>
-	<20140214205038.GC743@foghorn.codeweavers.com>
+From: "Stefan-W. Hahn" <stefan.hahn@s-hahn.de>
+Subject: Re: Bug: Problem with CRLF line ending in git-diff with coloring
+Date: Fri, 14 Feb 2014 22:17:13 +0100
+Message-ID: <20140214211712.GJ7560@pille.home>
+References: <20140209110155.GB16189@scotty.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Andrew Eikum <aeikum@codeweavers.com>
-X-From: git-owner@vger.kernel.org Fri Feb 14 22:09:09 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8BIT
+Cc: Johannes Sixt <j6t@kdbg.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 14 22:17:34 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WEQ0O-0008EW-VR
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Feb 2014 22:09:05 +0100
+	id 1WEQ8b-0007rY-W4
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Feb 2014 22:17:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752158AbaBNVIh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Feb 2014 16:08:37 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64508 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751838AbaBNVIg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Feb 2014 16:08:36 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8018E6D0D0;
-	Fri, 14 Feb 2014 16:08:35 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ZbDOJ+DC92Wyi72uhmd2myVuQEA=; b=OEy6ig
-	HzIVlg8p6jev0yJrFLvM0jvvh9ffPW+MjvbbW98v+6xxYy5H/elAdAXouCFmW1Nb
-	1WGABFoRy2WNwQ0Mrvfn/A0wfDZJIXJaCtpvp17kq9GYO2mJUcYIUhy+GUqIc08R
-	NJ0XC1cz4wSPE0uJA5paj/ZaPVkri3W2Z5Evk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=dk4LkCMj9vQsUGpt0ppqyt1B2IZJWGaZ
-	N94VG1IEPYgcGzvwYEP5DrdtR6C9BCfyXqr+sC3tuk3JJYPh5+oLjixmfSDRwWrH
-	UYiPdJ6VaSNwngf85RxnQ8jUGqe6jVy4/Ae6ZtSVx3dA4MbU/kAMUl3FJ4FLcqhb
-	Ka8VNwllvk8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6FFA36D0CF;
-	Fri, 14 Feb 2014 16:08:35 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A749C6D0CB;
-	Fri, 14 Feb 2014 16:08:34 -0500 (EST)
-In-Reply-To: <20140214205038.GC743@foghorn.codeweavers.com> (Andrew Eikum's
-	message of "Fri, 14 Feb 2014 14:50:38 -0600")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 2A470354-95BC-11E3-924C-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752673AbaBNVRa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Feb 2014 16:17:30 -0500
+Received: from moutng.kundenserver.de ([212.227.17.10]:63985 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752158AbaBNVR3 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 14 Feb 2014 16:17:29 -0500
+Received: from pille.home (port-92-205-19-133.dynamic.qsc.de [92.205.19.133])
+	by mrelayeu.kundenserver.de (node=mreue104) with ESMTP (Nemesis)
+	id 0MOiCE-1W8Nic3kUo-0065nO; Fri, 14 Feb 2014 22:17:17 +0100
+Received: from pille.home (localhost [127.0.0.1])
+	by pille.home (8.14.4/8.14.4/Debian-4) with ESMTP id s1ELHEVI000952
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 14 Feb 2014 22:17:15 +0100
+Received: (from hs@localhost)
+	by pille.home (8.14.4/8.14.4/Submit) id s1ELHDxL000951;
+	Fri, 14 Feb 2014 22:17:13 +0100
+X-Authentication-Warning: pille.home: hs set sender to stefan.hahn@s-hahn.de using -f
+Content-Disposition: inline
+In-Reply-To: <20140209110155.GB16189@scotty.home>
+X-Mailer: Mutt http://www.mutt.org/
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Provags-ID: V02:K0:yENCAVXdb7eq0T3bNz7QiXbmqWrCxWUj7HEaCllFSMw
+ RmIPh3aGR+ptazTzHyNJ25zyywppvxejHMI5DLz8pYhlvj0i+H
+ 84jf9N6ad3CMS5/Drm9QcjhAoZ0LT7XytFh+wMVj2kknXRCqu5
+ +bCJnPLaT/IijdyXdr5JBd6TUFflgd6SNEjpctboLVsrsiI0JO
+ mbwYCBrcrUoc24U8Rl+BMhT9QZrYxrZJ+iJDUXlSXmXU/uY4FC
+ 01/8PZtrutYAJJBWbptdoAy+JC7bFCTOrf6vd4CfD3GjAyrTWa
+ NJv/m+JNpILO2SwUm4UJU2SMhxcAmkEn57l1x5cX5F93uMp5Qq
+ AOhAmRGD9gAKuALZR7XQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242145>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242146>
 
-Andrew Eikum <aeikum@codeweavers.com> writes:
+Mail von Stefan-W. Hahn, Sun, 09 Feb 2014 at 12:01:55 +0100:
 
-> My worry is having "2." hang around for another decade or longer. I'd
-> rather see X.0.0 denote a major feature release (currently represented
-> as 1.X.0), with X.Y.0 for minor enhancements and X.Y.Z for bugfix.
+Good afternoon,
 
-We need three categories: (1) potentially incompatible, (2) feature,
-(3) fixes-only.  We have been doing two levels of features by having
-both second and third numbers and we are flattening by removing the
-second one.
+I updated the test a little bit. Test 3 and 7 are going wrong.
+Both tests have a CRLF line ending in the changed line.
 
-> It seems reasonable to expect fewer backwards incompatible changes in
-> the future as Git has become more mature. This reduces the utility of
-> reserving X.0.0 for major backwards incompatible changes, especially
-> considering it's already been eight years for the first increment.
+I you redirect the output of the test to a file you see the main
+problem:
 
-We are not done yet, far from it.  If we can stay at 2.X longer,
-that is a very good thing.
+,----
+| -[32m+[m[32mZeile 22[m[32m
+[m
+| +[32m+[m[32mZeile 22[m[41m
+[m
+`----
 
-If we followed your numbering scheme, you rob from the users a way
-to learn about a rare event, a potentially backward-incompatible
-change.  How would you tell your users when the version gap really
-matters?  After hearing "You need to plan carefully when you update
-to version 47" and then updating to version 47 (or the user may skip
-that version), the user will learn about a new version 48 and does
-not hear such a "you need to be careful".  What should he think?  No
-news is a good news?  He should refrain from updating because the
-last one was a big one?  What if the last time he updated was to
-version 43, stayed at that version for a long time without paying
-much attention (as Git grows more and more mature), and now we have
-version 50 after having a large compatibility gap at version 47 he
-did not pay much attention because he was skipping?
+> It's the right solution. IOW, you should place something like this in
+> your .gitattributes:
+>  *.html whitespace=cr-at-eol
 
-The rarer the important event is, the more necessary that the
-importance is communicated clearly.
+Sorry, but this is not possible, because I have files of both sorts (mainly
+C/C++) files in my repository and cannot change the files as I wish.
+
+Second try, the mail was blocked because of the attachment blocked the mail,
+so not as attachment.
+
+,----
+| Date: Fri, 14 Feb 2014 11:50:37 -0500
+| From: Administrator <scanmail@arrisi.com>
+| To: stefan.hahn@s-hahn.de
+| Subject: [MailServer Notification]Attachment Blocking Notification
+| From prvs=81222a4311=scanmail@arrisi.com  Fri Feb 14 22:03:58 2014
+| X-Mailer: Microsoft CDO for Windows 2000
+| 
+| The t4060-diff-eol.sh has been blocked since it violated the Microsoft
+| Exchange attachment policy and Replace with text/file has been taken on
+| 2/14/2014 11:49:56 AM.
+| Please zip the attachment and send it again. If you have any questions,
+| please contact IT. Thank you
+| 
+| Message details:
+| Server: ATLOWA1
+| Sender: stefan.hahn@s-hahn.de;
+| Recipient: git@vger.kernel.org;
+| Subject: Re: Bug: Problem with CRLF line ending in git-diff with coloring
+| Attachment name: t4060-diff-eol.sh
+| ~
+`----
+
+
+With kind regards,
+Stefan
+
+#!/bin/sh
+#
+# Copyright (c) 2014 Stefan-W. Hahn
+#
+
+test_description='Test coloring of diff with CRLF line ending.
+
+'
+. ./test-lib.sh
+
+get_color ()
+{
+	git config --get-color "$1"
+}
+
+test_expect_success setup '
+        git config color.diff.plain black &&
+        git config color.diff.meta blue &&
+        git config color.diff.frag yellow &&
+        git config color.diff.func normal &&
+        git config color.diff.old red &&
+        git config color.diff.new green &&
+        git config color.diff.commit normal &&
+	c_reset=$(git config --get-color no.such.color reset) &&
+	c_plain=$(get_color color.diff.plain) &&
+	c_meta=$(get_color color.diff.meta) &&
+	c_frag=$(get_color color.diff.frag) &&
+	c_func=$(get_color color.diff.func) &&
+	c_old=$(get_color color.diff.old) &&
+	c_new=$(get_color color.diff.new) &&
+	c_commit=$(get_color color.diff.commit) &&
+	c_whitespace=$(get_color color.diff.whitespace)
+'
+
+# Test cases
+# - DOS line ending
+#   - change one line
+#   - change one line ending to UNIX
+# - UNIX line ending
+#   - change one line (trivial not tested here)
+#   - change one line ending to DOS
+
+tr 'Q' '\015' << EOF > x
+Zeile 1Q
+Zeile 2Q
+Zeile 3Q
+EOF
+
+git update-index --add x
+
+tr 'Q' '\015' << EOF > x
+Zeile 1Q
+Zeile 22Q
+Zeile 3Q
+EOF
+
+tr 'Q' '\015' << EOF > expect
+diff --git a/x b/x
+index 3411cc1..68a4b2c 100644
+--- a/x
++++ b/x
+@@ -1,3 +1,3 @@
+ Zeile 1Q
+-Zeile 2Q
++Zeile 22Q
+ Zeile 3Q
+EOF
+
+tr 'Q' '\015' << EOF > expect_color
+${c_meta}diff --git a/x b/x${c_reset}
+${c_meta}index 3411cc1..68a4b2c 100644${c_reset}
+${c_meta}--- a/x${c_reset}
+${c_meta}+++ b/x${c_reset}
+${c_frag}@@ -1,3 +1,3 @@${c_reset}
+${c_plain} Zeile 1${c_reset}Q
+${c_old}-Zeile 2${c_reset}Q
+${c_new}+${c_reset}${c_new}Zeile 22${c_reset}${c_new}Q${c_reset}
+${c_plain} Zeile 3${c_reset}Q
+EOF
+
+git -c color.diff=false diff > out
+test_expect_success "diff files: change line in DOS file without color" '
+        test_cmp expect out'
+
+git -c color.diff=always diff > out
+test_expect_success "diff files: change line in DOS file with color" '
+        test_cmp expect_color out'
+
+
+tr 'Q' '\015' << EOF > x
+Zeile 1Q
+Zeile 2Q
+Zeile 3Q
+EOF
+
+git update-index --add x
+
+tr 'Q' '\015' << EOF > x
+Zeile 1Q
+Zeile 2
+Zeile 3Q
+EOF
+
+tr 'Q' '\015' << EOF > expect
+diff --git a/x b/x
+index 3411cc1..c040c67 100644
+--- a/x
++++ b/x
+@@ -1,3 +1,3 @@
+ Zeile 1Q
+-Zeile 2Q
++Zeile 2
+ Zeile 3Q
+EOF
+
+tr 'Q' '\015' << EOF > expect_color
+${c_meta}diff --git a/x b/x${c_reset}
+${c_meta}index 3411cc1..c040c67 100644${c_reset}
+${c_meta}--- a/x${c_reset}
+${c_meta}+++ b/x${c_reset}
+${c_frag}@@ -1,3 +1,3 @@${c_reset}
+${c_plain} Zeile 1${c_reset}Q
+${c_old}-Zeile 2${c_reset}Q
+${c_new}+${c_reset}${c_new}Zeile 2${c_reset}
+${c_plain} Zeile 3${c_reset}Q
+EOF
+
+git -c color.diff=false diff > out
+test_expect_success "diff files: change line ending in DOS file to LF ending without color" '
+        test_cmp expect out'
+
+git -c color.diff=always diff > out
+test_expect_success "diff files: change line ending in DOS file to LF ending with color" '
+        test_cmp expect_color out'
+
+tr 'Q' '\015' << EOF > x
+Zeile 1
+Zeile 2
+Zeile 3
+EOF
+
+git update-index --add x
+
+tr 'Q' '\015' << EOF > x
+Zeile 1
+Zeile 2Q
+Zeile 3
+EOF
+
+tr 'Q' '\015' << EOF > expect
+diff --git a/x b/x
+index a385875..63416d7 100644
+--- a/x
++++ b/x
+@@ -1,3 +1,3 @@
+ Zeile 1
+-Zeile 2
++Zeile 2Q
+ Zeile 3
+EOF
+
+tr 'Q' '\015' << EOF > expect_color
+${c_meta}diff --git a/x b/x${c_reset}
+${c_meta}index a385875..63416d7 100644${c_reset}
+${c_meta}--- a/x${c_reset}
+${c_meta}+++ b/x${c_reset}
+${c_frag}@@ -1,3 +1,3 @@${c_reset}
+${c_plain} Zeile 1${c_reset}
+${c_old}-Zeile 2${c_reset}
+${c_new}+${c_reset}${c_new}Zeile 2${c_reset}${c_new}Q${c_reset}
+${c_plain} Zeile 3${c_reset}
+EOF
+
+git -c color.diff=false diff > out
+test_expect_success "diff files: change line ending in UNIX file to CRLF ending without color" '
+        test_cmp expect out'
+
+git -c color.diff=always diff > out
+test_expect_success "diff files: change line ending in UNIX file to CRLF ending with color" '
+        test_cmp expect_color out'
+
+test_done
+
+
+-- 
+Stefan-W. Hahn                          It is easy to make things.
+                                        It is hard to make things simple.
