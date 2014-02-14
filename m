@@ -1,66 +1,83 @@
-From: Josef Wolf <jw@raven.inka.de>
-Subject: Re: error: src refspec refs/heads/master matches more than one.
-Date: Fri, 14 Feb 2014 16:16:19 +0100
-Message-ID: <20140214151619.GB17817@raven.inka.de>
-References: <20140214113136.GA17817@raven.inka.de>
- <87a9dt981o.fsf@igel.home>
- <CACsJy8BevKQaRLYMMv7bTjf_ZAOnkrimws519OyhGZz6_Vr_-A@mail.gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: Git GSoC 2014
+Date: Fri, 14 Feb 2014 10:30:28 -0500
+Message-ID: <CALkWK0nXbfoe7697m27o7b+vepkOWj+vpJJWRy9EkJeZkTyekw@mail.gmail.com>
+References: <20140213091037.GA28927@sigill.intra.peff.net> <CALkWK0mR=9ZD256bHx9d=W9ayqn5bOETWBQLW_kvRSy-GeQK4Q@mail.gmail.com>
+ <20140214104139.GA28570@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Feb 14 16:20:25 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Shawn Pearce <spearce@spearce.org>,
+	Thomas Rast <tr@thomasrast.ch>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Feb 14 16:31:18 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WEKYu-0001Q2-3U
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Feb 2014 16:20:20 +0100
+	id 1WEKjV-0003XB-Ba
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Feb 2014 16:31:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752390AbaBNPUO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Feb 2014 10:20:14 -0500
-Received: from quechua.inka.de ([193.197.184.2]:57940 "EHLO mail.inka.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751763AbaBNPUN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Feb 2014 10:20:13 -0500
-Received: from raven.inka.de (uucp@[127.0.0.1])
-	by mail.inka.de with uucp (rmailwrap 0.5) 
-	id 1WEKYl-0001Yd-Ug; Fri, 14 Feb 2014 16:20:11 +0100
-Received: by raven.inka.de (Postfix, from userid 1000)
-	id 112667629A; Fri, 14 Feb 2014 16:16:19 +0100 (CET)
-Mail-Followup-To: Josef Wolf <jw@raven.inka.de>,
-	Git Mailing List <git@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <CACsJy8BevKQaRLYMMv7bTjf_ZAOnkrimws519OyhGZz6_Vr_-A@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1752724AbaBNPbL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Feb 2014 10:31:11 -0500
+Received: from mail-qc0-f178.google.com ([209.85.216.178]:49763 "EHLO
+	mail-qc0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752063AbaBNPbJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Feb 2014 10:31:09 -0500
+Received: by mail-qc0-f178.google.com with SMTP id m20so20056195qcx.37
+        for <git@vger.kernel.org>; Fri, 14 Feb 2014 07:31:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=Orw2r8L79vOGOK3RUqZx4PxXu6uleMsQ5y3ef7Lda0U=;
+        b=Jdd1SFQ0tja8jLfBspyfUQX+pqjYhoKtO69AEgNuHr337wReXsRpu49ufZZYew4p0e
+         4MRGI/rJojHQvj4aZeNC5mlEWMmGHTpFpW6216BpUTXhZQtjwmrhMem4Km3ZWAiHuV78
+         kIc25ea/BmL82MLuGMgvoQyPgmrc4l1BbJCe6YJR8SWcNgXHVyF9O4ZjbtR06yytOt/1
+         rfBltGRZNw0Jw0f0e62m33jAlqn5A1B/3L1fqSJlnI0KFCd4X+6+wRsovPh8a9cT5jVl
+         ia7uZwSAObNODYFRGwruFXaLDkI0U/YlZGau4lLvzyE3OLZwjUmqpcwpi5+Zo7oSpgCW
+         9q1Q==
+X-Received: by 10.224.115.143 with SMTP id i15mr14192564qaq.57.1392391868454;
+ Fri, 14 Feb 2014 07:31:08 -0800 (PST)
+Received: by 10.96.126.198 with HTTP; Fri, 14 Feb 2014 07:30:28 -0800 (PST)
+In-Reply-To: <20140214104139.GA28570@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242104>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242105>
 
-On Fri, Feb 14, 2014 at 07:59:18PM +0700, Duy Nguyen wrote:
-> On Fri, Feb 14, 2014 at 7:45 PM, Andreas Schwab <schwab@linux-m68k.org> wrote:
-> > Josef Wolf <jw@raven.inka.de> writes:
-> >
-> >> Notice the refs/heads _within_ refs/heads!
-> > Probably you did something like "git branch refs/heads/master".  You can
-> > remove it again with "git branch -d refs/heads/master".
-> As a porcelain, "git branch" should prevent (or at least warn) users
-> from creating such refs, I think.
+Jeff King wrote:
+>> 1. Speed up git-rebase--am.sh
+>
+> Isn't the merge backend faster? I thought that was the point of it.
 
-I don't think I did it the way Andreas thinks. This repository is maintained
-by a script, I don't create branches manually. The only command in this script
-that uses "heads" is
+I suppose, but I thought git-rebase--am.sh (the default flavor) could
+be improved by leveraging relatively new cherry-pick features; I
+assumed that the reason it was using format-patch/ am was because it
+was written before cherry-pick matured. Alternatively, can you think
+of a project that involves working on the sequencer?
 
-  git symbolic-ref HEAD "refs/heads/$new_branch"
+>> 3. Rewrite git-branch to use git-for-each-ref
+>
+> I actually have this about 95% done, waiting for the patches to be
+> polished. So I don't think it makes a good GSoC project (it would be
+> stupid to start from scratch, and polishing my patches is a lame
+> project).
 
-to create new branches without any ancestry. And I double-checked that this
-command is _not_ resposible for those ghost branches.
+Oh. I look forward to using a nicer git-branch soon.
 
-BTW: I see such ghost branches reappearing again and again, so it must be
-     something systematic.
+>> 4. Implement @{publish}
+>
+> I think this could be a good GSoC-sized topic. I'm going to adjust the
+> title to be "better support for triangular workflows". I think they may
+> want to examine other issues in the area, rather than drilling down on
+> @{publish} in particular (but ultimately, it is up to the student to
+> propose what they want to do).
 
--- 
-Josef Wolf
-jw@raven.inka.de
+That makes the project a little more open-ended then. I like it.
+
+I was hoping you'd have more comments on "3. Invent new conflict
+style". Although I'm not sure the conflict style I proposed would be
+terribly useful in the general case, it'll give the student an
+opportunity to look at older/ lesser-known portions of the codebase.
