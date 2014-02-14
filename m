@@ -1,384 +1,85 @@
-From: "Kirill A. Shutemov" <kirill@shutemov.name>
-Subject: Re: [PATCH] config: git_config_from_file(): handle "-" filename as
- stdin
-Date: Fri, 14 Feb 2014 22:04:35 +0200
-Message-ID: <20140214200435.GA13633@node.dhcp.inet.fi>
-References: <1392384878-7080-1-git-send-email-kirill@shutemov.name>
- <xmqqlhxdim80.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Feb 2014, #04; Wed, 12)
+Date: Fri, 14 Feb 2014 12:10:05 -0800
+Message-ID: <xmqq4n41ihgi.fsf@gitster.dls.corp.google.com>
+References: <xmqqd2ism1pu.fsf@gitster.dls.corp.google.com>
+	<20140214194436.GB743@foghorn.codeweavers.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 14 21:04:53 2014
+To: Andrew Eikum <aeikum@codeweavers.com>
+X-From: git-owner@vger.kernel.org Fri Feb 14 21:10:19 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WEP0E-0006e3-1G
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Feb 2014 21:04:50 +0100
+	id 1WEP5W-0003WV-VT
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Feb 2014 21:10:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752762AbaBNUEq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Feb 2014 15:04:46 -0500
-Received: from mta-out.inet.fi ([195.156.147.13]:49516 "EHLO kirsi1.inet.fi"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751965AbaBNUEp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Feb 2014 15:04:45 -0500
-Received: from node.shutemov.name (80.220.224.16) by kirsi1.inet.fi (8.5.140.03)
-        id 529734CF067DDDCD; Fri, 14 Feb 2014 22:04:39 +0200
-Received: by node.shutemov.name (Postfix, from userid 1000)
-	id DEFFA40647; Fri, 14 Feb 2014 22:04:35 +0200 (EET)
-Content-Disposition: inline
-In-Reply-To: <xmqqlhxdim80.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.22.1-rc1 (2013-10-16)
+	id S1752735AbaBNUKL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Feb 2014 15:10:11 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:59873 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752260AbaBNUKJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Feb 2014 15:10:09 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 672066C808;
+	Fri, 14 Feb 2014 15:10:09 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=JBzH1zgCHL9vnzaqDZtModR8NWw=; b=sDsD23
+	KuGaxf+NlvKCN4y+dcehO9PNjIBDZKj96sVb+PaD0O8VJOl6F5BdItb9B3Pt9N02
+	vdPvObvDJI/nMjcXfxk3Tvk5UZEcpZKCmHS5sdsCbcmfVxe9MKZUkimmX2Dkq3Vw
+	DVYQFzIz1qcB3QLro/Qak+wA3lonLWcrrwQus=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=aY4LOUzBdVZ+yg0o+5KlyJywe553cUfv
+	HG4S7gf0L9gZXbdNCNHiBhugmpnAQz4XYRLFulHD7wwOtfF0LyxrZDZQnNk7F+LQ
+	VkT12/ZtlWJ/wEeXyHnmkJovy1BvUUQ6od2ZiXxBpfHIx6IdgsyRsWaxMaBdvyLk
+	UD0Ynf2KVoE=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 273866C806;
+	Fri, 14 Feb 2014 15:10:09 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CA7DF6C804;
+	Fri, 14 Feb 2014 15:10:07 -0500 (EST)
+In-Reply-To: <20140214194436.GB743@foghorn.codeweavers.com> (Andrew Eikum's
+	message of "Fri, 14 Feb 2014 13:44:36 -0600")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 00072BBC-95B4-11E3-B5B3-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242141>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242142>
 
-On Fri, Feb 14, 2014 at 10:27:11AM -0800, Junio C Hamano wrote:
-> "Kirill A. Shutemov" <kirill@shutemov.name> writes:
-> 
-> > The patch extends git config --file interface to allow read config from
-> > stdin.
-> 
-> Thanks.  The external interface proposed by this change that behaves
-> the way your new test expects is a good addition to the system.  I
-> would describe it as:
-> 
->   Subject: config: teach "git config --file -" to read from the standard input
-> 
-> I however think the patch implements it at the level that is too low
-> in the callchain.  It will affect a lot more than the dash given to
-> "git config --file -".  Fortunately, it does not make it possible
-> for users to make this mistake
-> 
-> 	[include]
->         	path = -
-> 
-> and scratch their heads, wondering why "git config" is not answering
-> until they hit ^D.  But that is _only_ because we check if a file
-> whose name is "-" actually exists in the current directory before
-> falling into this codepath (and usually no such file exists).  If
-> such a funnily-named file does exist, we read from that file, not
-> the standard input.  So that "include" codepath happens to be safe,
-> but who knows what dragons lie in other codepaths that call this
-> function.
-> 
-> I recall that an earlier implementation of "git diff --no-index"
-> that made "-" read one side to be compared from the standard input
-> had exactly the same issue of comparing filename with "-", which we
-> had to fix with code reorganization recently.  I'd prefer to see
-> this update to "git config --file -" done the right way from the
-> start.
+Andrew Eikum <aeikum@codeweavers.com> writes:
 
-Okay, reworked version is below. It's slightly more invasive then the
-original.
+> On Wed, Feb 12, 2014 at 01:59:41PM -0800, Junio C Hamano wrote:
+>> As a workaround to make life easier for third-party tools, the
+>> upcoming major release will be called "Git 1.9.0" (not "Git 1.9").
+>> The first maintenance release for it will be "Git 1.9.1", and the
+>> major release after "Git 1.9.0" will either be "Git 2.0.0" or "Git
+>> 1.10.0".
+>> 
+>
+> Apologies if this ground has been tread before, but has there been a
+> version numbering discussion? A quick google didn't seem to turn
+> anything up.
+>
+> This seems to be an opportune time to drop the useless first digit.
+> Explicitly, the major release numbers would be: 1.8, 1.9, then 2.0,
+> 3.0, 4.0, etc, with the 2nd digit would take the meaning of the
+> current 3rd digit and so on.
 
->From 199e6a995bb5228578e66189ef586421a4d8d9ba Mon Sep 17 00:00:00 2001
-From: "Kirill A. Shutemov" <kirill@shutemov.name>
-Date: Fri, 14 Feb 2014 21:59:39 +0200
-Subject: [PATCH] config: teach "git config --file -" to read from the standard
- input
+Considered, and discarded.
 
-The patch extends git config --file interface to allow read config from
-stdin.
+cf. http://article.gmane.org/gmane.comp.version-control.git/241498
 
-Editing stdin or setting value in stdin is an error.
-
-Signed-off-by: Kirill A. Shutemov <kirill@shutemov.name>
----
- builtin/config.c       | 39 ++++++++++++++++++++++++++-------------
- cache.h                |  1 +
- config.c               | 41 +++++++++++++++++++++++++++--------------
- t/t1300-repo-config.sh | 17 +++++++++++++++--
- 4 files changed, 69 insertions(+), 29 deletions(-)
-
-diff --git a/builtin/config.c b/builtin/config.c
-index 92ebf23f0a9a..625f914c44a0 100644
---- a/builtin/config.c
-+++ b/builtin/config.c
-@@ -21,6 +21,7 @@ static char key_delim = ' ';
- static char term = '\n';
- 
- static int use_global_config, use_system_config, use_local_config;
-+static int use_stdin;
- static const char *given_config_file;
- static const char *given_config_blob;
- static int actions, types;
-@@ -224,7 +225,7 @@ static int get_value(const char *key_, const char *regex_)
- 	}
- 
- 	git_config_with_options(collect_config, &values,
--				given_config_file, given_config_blob,
-+				use_stdin, given_config_file, given_config_blob,
- 				respect_includes);
- 
- 	ret = !values.nr;
-@@ -309,7 +310,7 @@ static void get_color(const char *def_color)
- 	get_color_found = 0;
- 	parsed_color[0] = '\0';
- 	git_config_with_options(git_get_color_config, NULL,
--				given_config_file, given_config_blob,
-+				use_stdin, given_config_file, given_config_blob,
- 				respect_includes);
- 
- 	if (!get_color_found && def_color)
-@@ -339,7 +340,7 @@ static int get_colorbool(int print)
- 	get_diff_color_found = -1;
- 	get_color_ui_found = -1;
- 	git_config_with_options(git_get_colorbool_config, NULL,
--				given_config_file, given_config_blob,
-+				use_stdin, given_config_file, given_config_blob,
- 				respect_includes);
- 
- 	if (get_colorbool_found < 0) {
-@@ -362,8 +363,11 @@ static int get_colorbool(int print)
- 		return get_colorbool_found ? 0 : 1;
- }
- 
--static void check_blob_write(void)
-+static void check_write(void)
- {
-+	if (use_stdin)
-+		die("writing to stdin is not supported");
-+
- 	if (given_config_blob)
- 		die("writing config blobs is not supported");
- }
-@@ -435,7 +439,8 @@ static int get_urlmatch(const char *var, const char *url)
- 	}
- 
- 	git_config_with_options(urlmatch_config_entry, &config,
--				given_config_file, NULL, respect_includes);
-+				use_stdin, given_config_file, NULL,
-+				respect_includes);
- 
- 	for_each_string_list_item(item, &values) {
- 		struct urlmatch_current_candidate_value *matched = item->util;
-@@ -476,6 +481,11 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 		usage_with_options(builtin_config_usage, builtin_config_options);
- 	}
- 
-+	if (given_config_file && !strcmp(given_config_file, "-")) {
-+		given_config_file = NULL;
-+		use_stdin = 1;
-+	}
-+
- 	if (use_global_config) {
- 		char *user_config = NULL;
- 		char *xdg_config = NULL;
-@@ -549,6 +559,7 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 	if (actions == ACTION_LIST) {
- 		check_argc(argc, 0, 0);
- 		if (git_config_with_options(show_all_config, NULL,
-+					    use_stdin,
- 					    given_config_file,
- 					    given_config_blob,
- 					    respect_includes) < 0) {
-@@ -563,6 +574,8 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 		check_argc(argc, 0, 0);
- 		if (!given_config_file && nongit)
- 			die("not in a git directory");
-+		if (use_stdin)
-+			die("editing stdin is not supported");
- 		if (given_config_blob)
- 			die("editing blobs is not supported");
- 		git_config(git_default_config, NULL);
-@@ -572,7 +585,7 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 	}
- 	else if (actions == ACTION_SET) {
- 		int ret;
--		check_blob_write();
-+		check_write();
- 		check_argc(argc, 2, 2);
- 		value = normalize_value(argv[0], argv[1]);
- 		ret = git_config_set_in_file(given_config_file, argv[0], value);
-@@ -582,21 +595,21 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 		return ret;
- 	}
- 	else if (actions == ACTION_SET_ALL) {
--		check_blob_write();
-+		check_write();
- 		check_argc(argc, 2, 3);
- 		value = normalize_value(argv[0], argv[1]);
- 		return git_config_set_multivar_in_file(given_config_file,
- 						       argv[0], value, argv[2], 0);
- 	}
- 	else if (actions == ACTION_ADD) {
--		check_blob_write();
-+		check_write();
- 		check_argc(argc, 2, 2);
- 		value = normalize_value(argv[0], argv[1]);
- 		return git_config_set_multivar_in_file(given_config_file,
- 						       argv[0], value, "^$", 0);
- 	}
- 	else if (actions == ACTION_REPLACE_ALL) {
--		check_blob_write();
-+		check_write();
- 		check_argc(argc, 2, 3);
- 		value = normalize_value(argv[0], argv[1]);
- 		return git_config_set_multivar_in_file(given_config_file,
-@@ -623,7 +636,7 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 		return get_urlmatch(argv[0], argv[1]);
- 	}
- 	else if (actions == ACTION_UNSET) {
--		check_blob_write();
-+		check_write();
- 		check_argc(argc, 1, 2);
- 		if (argc == 2)
- 			return git_config_set_multivar_in_file(given_config_file,
-@@ -633,14 +646,14 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 						      argv[0], NULL);
- 	}
- 	else if (actions == ACTION_UNSET_ALL) {
--		check_blob_write();
-+		check_write();
- 		check_argc(argc, 1, 2);
- 		return git_config_set_multivar_in_file(given_config_file,
- 						       argv[0], NULL, argv[1], 1);
- 	}
- 	else if (actions == ACTION_RENAME_SECTION) {
- 		int ret;
--		check_blob_write();
-+		check_write();
- 		check_argc(argc, 2, 2);
- 		ret = git_config_rename_section_in_file(given_config_file,
- 							argv[0], argv[1]);
-@@ -651,7 +664,7 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 	}
- 	else if (actions == ACTION_REMOVE_SECTION) {
- 		int ret;
--		check_blob_write();
-+		check_write();
- 		check_argc(argc, 1, 1);
- 		ret = git_config_rename_section_in_file(given_config_file,
- 							argv[0], NULL);
-diff --git a/cache.h b/cache.h
-index dc040fb1aa99..538c28a1564a 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1155,6 +1155,7 @@ extern void git_config_push_parameter(const char *text);
- extern int git_config_from_parameters(config_fn_t fn, void *data);
- extern int git_config(config_fn_t fn, void *);
- extern int git_config_with_options(config_fn_t fn, void *,
-+				   int use_stdin,
- 				   const char *filename,
- 				   const char *blob_ref,
- 				   int respect_includes);
-diff --git a/config.c b/config.c
-index d969a5aefc2b..53dd39f0b9ef 100644
---- a/config.c
-+++ b/config.c
-@@ -1030,24 +1030,34 @@ static int do_config_from(struct config_source *top, config_fn_t fn, void *data)
- 	return ret;
- }
- 
--int git_config_from_file(config_fn_t fn, const char *filename, void *data)
-+static int do_config_from_file(config_fn_t fn, const char *filename, FILE *f,
-+			       void *data)
- {
--	int ret;
--	FILE *f = fopen(filename, "r");
-+	struct config_source top;
- 
--	ret = -1;
--	if (f) {
--		struct config_source top;
-+	top.u.file = f;
-+	top.name = filename;
-+	top.die_on_error = 1;
-+	top.do_fgetc = config_file_fgetc;
-+	top.do_ungetc = config_file_ungetc;
-+	top.do_ftell = config_file_ftell;
-+
-+	return do_config_from(&top, fn, data);
-+}
- 
--		top.u.file = f;
--		top.name = filename;
--		top.die_on_error = 1;
--		top.do_fgetc = config_file_fgetc;
--		top.do_ungetc = config_file_ungetc;
--		top.do_ftell = config_file_ftell;
-+static int git_config_from_stdin(config_fn_t fn, void *data)
-+{
-+	return do_config_from_file(fn, "<stdin>", stdin, data);
-+}
- 
--		ret = do_config_from(&top, fn, data);
-+int git_config_from_file(config_fn_t fn, const char *filename, void *data)
-+{
-+	int ret = -1;
-+	FILE *f;
- 
-+	f = fopen(filename, "r");
-+	if (f) {
-+		ret = do_config_from_file(fn, filename, f, data);
- 		fclose(f);
- 	}
- 	return ret;
-@@ -1170,6 +1180,7 @@ int git_config_early(config_fn_t fn, void *data, const char *repo_config)
- }
- 
- int git_config_with_options(config_fn_t fn, void *data,
-+			    int use_stdin,
- 			    const char *filename,
- 			    const char *blob_ref,
- 			    int respect_includes)
-@@ -1189,6 +1200,8 @@ int git_config_with_options(config_fn_t fn, void *data,
- 	 * If we have a specific filename, use it. Otherwise, follow the
- 	 * regular lookup sequence.
- 	 */
-+	if (use_stdin)
-+		return git_config_from_stdin(fn, data);
- 	if (filename)
- 		return git_config_from_file(fn, filename, data);
- 	else if (blob_ref)
-@@ -1203,7 +1216,7 @@ int git_config_with_options(config_fn_t fn, void *data,
- 
- int git_config(config_fn_t fn, void *data)
- {
--	return git_config_with_options(fn, data, NULL, NULL, 1);
-+	return git_config_with_options(fn, data, 0, NULL, NULL, 1);
- }
- 
- /*
-diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
-index 967359344dab..c9c426c273e5 100755
---- a/t/t1300-repo-config.sh
-+++ b/t/t1300-repo-config.sh
-@@ -475,15 +475,28 @@ ein.bahn=strasse
- EOF
- 
- test_expect_success 'alternative GIT_CONFIG' '
--	GIT_CONFIG=other-config git config -l >output &&
-+	GIT_CONFIG=other-config git config --list >output &&
- 	test_cmp expect output
- '
- 
- test_expect_success 'alternative GIT_CONFIG (--file)' '
--	git config --file other-config -l > output &&
-+	git config --file other-config --list >output &&
- 	test_cmp expect output
- '
- 
-+test_expect_success 'alternative GIT_CONFIG (--file=-)' '
-+	git config --file - --list <other-config >output &&
-+	test_cmp expect output
-+'
-+
-+test_expect_success 'setting a value in stdin is an error' '
-+	test_must_fail git config --file - some.value foo
-+'
-+
-+test_expect_success 'editing stdin is an error' '
-+	test_must_fail git config --file - --edit
-+'
-+
- test_expect_success 'refer config from subdirectory' '
- 	mkdir x &&
- 	(
--- 
- Kirill A. Shutemov
+When you see a version number vX.Y.0 next time, think of it as just
+play vX.Y without the third digit, and you will be fine.  People's
+script cannot learn the "think of it as ..." part overnight, and
+that is why we have the .0 there.
