@@ -1,103 +1,84 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] tests: turn on network daemon tests by default
-Date: Fri, 14 Feb 2014 04:58:42 -0500
-Message-ID: <20140214095841.GA27161@sigill.intra.peff.net>
-References: <20140210191521.GA3112@sigill.intra.peff.net>
- <20140210212931.GA16154@sigill.intra.peff.net>
- <xmqqa9dxpgw9.fsf@gitster.dls.corp.google.com>
- <20140211200445.GA27946@sigill.intra.peff.net>
- <xmqqzjlxnqvw.fsf@gitster.dls.corp.google.com>
- <20140212214753.GA6799@sigill.intra.peff.net>
- <xmqq38jom037.fsf@gitster.dls.corp.google.com>
- <xmqqfvnmlsb2.fsf@gitster.dls.corp.google.com>
+Subject: Re: Git GSoC 2014
+Date: Fri, 14 Feb 2014 05:41:39 -0500
+Message-ID: <20140214104139.GA28570@sigill.intra.peff.net>
+References: <20140213091037.GA28927@sigill.intra.peff.net>
+ <CALkWK0mR=9ZD256bHx9d=W9ayqn5bOETWBQLW_kvRSy-GeQK4Q@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 14 10:58:53 2014
+Cc: Git List <git@vger.kernel.org>, Shawn Pearce <spearce@spearce.org>,
+	Thomas Rast <tr@thomasrast.ch>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 14 11:42:00 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WEFXn-0004Dj-Qg
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Feb 2014 10:58:52 +0100
+	id 1WEGDV-0002jH-PK
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Feb 2014 11:41:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751757AbaBNJ6r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Feb 2014 04:58:47 -0500
-Received: from cloud.peff.net ([50.56.180.127]:50436 "HELO peff.net"
+	id S1752090AbaBNKlu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Feb 2014 05:41:50 -0500
+Received: from cloud.peff.net ([50.56.180.127]:50457 "HELO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751199AbaBNJ6o (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Feb 2014 04:58:44 -0500
-Received: (qmail 23553 invoked by uid 102); 14 Feb 2014 09:58:44 -0000
+	id S1751959AbaBNKlt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Feb 2014 05:41:49 -0500
+Received: (qmail 25842 invoked by uid 102); 14 Feb 2014 10:41:48 -0000
 Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 14 Feb 2014 03:58:44 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 14 Feb 2014 04:58:42 -0500
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 14 Feb 2014 04:41:48 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 14 Feb 2014 05:41:39 -0500
 Content-Disposition: inline
-In-Reply-To: <xmqqfvnmlsb2.fsf@gitster.dls.corp.google.com>
+In-Reply-To: <CALkWK0mR=9ZD256bHx9d=W9ayqn5bOETWBQLW_kvRSy-GeQK4Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242094>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242095>
 
-On Thu, Feb 13, 2014 at 11:35:13AM -0800, Junio C Hamano wrote:
+On Thu, Feb 13, 2014 at 06:17:17PM -0500, Ramkumar Ramachandra wrote:
 
-> >>   test_normalize_tristate GIT_TEST_DAEMON
-> >
-> > Heh, great minds think alike.  This is what I am playing with,
-> > without committing (because I do like your "ask config if this is a
-> > kind of various boolean 'false' representations, which I haven't
-> > managed to add to it).
+> I'll throw in a few ideas from half-finished work.
+
+Thanks. A few comments:
+
+> 1. Speed up git-rebase--am.sh
 > 
-> And this is with the "ask config" helper.
+> Currently, git-rebase--am.sh is really slow because it dumps each
+> patch to a file using git-format-patch, and picks it up to apply
+> subsequently using git-am. Find a way to speed this up, without
+> sacrificing safety. You can use the continuation features of
+> cherry-pick, and dump to file only to persist state in the case of a
+> failure.
 
-Thanks for picking this up.
+Isn't the merge backend faster? I thought that was the point of it.
 
-> Two tangents.
+> 3. Rewrite git-branch to use git-for-each-ref
 > 
->  - We may want to do something similar in cvsserver and git-gui to
->    make them more robust.
+> For higher flexibility in command-line options and output format, use
+> git for-each-ref to re-implement git-branch. The first task is to grow
+> features that are in branch but not fer into fer (like --column,
+> --merged, --contains). The second task is to refactor fer so that an
+> external program can call into it.
+
+I actually have this about 95% done, waiting for the patches to be
+polished. So I don't think it makes a good GSoC project (it would be
+stupid to start from scratch, and polishing my patches is a lame
+project).
+
+> 4. Implement @{publish}
+> (I just can't find the time to finish this)
 > 
->    $ git grep -e true --and -e 1 --and -e yes
+> @{publish} is a feature like @{upstream}, showing the state of the
+> publish-point in the case of triangular workflows. Implement this
+> while sharing code with git-push, and polish it until the prompt shows
+> publish-state.
 
-I assume the "something" here is to respect bool options more
-consistently? I have no problem with that, but nor do I care too much
-about those programs (that is partially laziness, but also partially
-that I do not want to deal with introducing a regression).
-
->  - Do we want to do something similar to GIT_TEST_CREDENTIAL_HELPER?
-
-No, it is not a boolean. It is a bit of a hack, but it is meant to be
-used like:
-
-  GIT_TEST_CREDENTIAL_HELPER=foo ./t0303-*
-
-to test some random git-credential-foo you have in your PATH. There is
-nothing to run "by default" there. It would be sensible to hook
-contrib/credential to it, though.
-
-> -- >8 --
-> From: Jeff King <peff@peff.net>
-> Date: Mon, 10 Feb 2014 16:29:37 -0500
-> Subject: [PATCH] tests: turn on network daemon tests by default
-> [...]
-> In addition, we are forgiving of common setup failures (e.g., you do
-> not have apache installed, or have an old version) when the
-> tri-state is "auto" (or empty), but report an error when it is
-
-You probably want to drop this "or empty" or change it to "or unset",
-given the magic we do with empty-but-set variables in this version.
-
-> ---
->  t/lib-git-daemon.sh     |  8 ++++---
->  t/lib-httpd.sh          | 22 +++++++++----------
->  t/test-lib-functions.sh | 58 +++++++++++++++++++++++++++++++++++++++++++++++++
->  3 files changed, 74 insertions(+), 14 deletions(-)
-
-Patch looks good to me.
+I think this could be a good GSoC-sized topic. I'm going to adjust the
+title to be "better support for triangular workflows". I think they may
+want to examine other issues in the area, rather than drilling down on
+@{publish} in particular (but ultimately, it is up to the student to
+propose what they want to do).
 
 -Peff
