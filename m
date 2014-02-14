@@ -1,88 +1,95 @@
-From: Andrew Eikum <aeikum@codeweavers.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: What's cooking in git.git (Feb 2014, #04; Wed, 12)
-Date: Fri, 14 Feb 2014 14:50:38 -0600
-Message-ID: <20140214205038.GC743@foghorn.codeweavers.com>
+Date: Fri, 14 Feb 2014 13:08:32 -0800
+Message-ID: <xmqqr475h06n.fsf@gitster.dls.corp.google.com>
 References: <xmqqd2ism1pu.fsf@gitster.dls.corp.google.com>
- <20140214194436.GB743@foghorn.codeweavers.com>
- <xmqq4n41ihgi.fsf@gitster.dls.corp.google.com>
+	<20140214194436.GB743@foghorn.codeweavers.com>
+	<xmqq4n41ihgi.fsf@gitster.dls.corp.google.com>
+	<20140214205038.GC743@foghorn.codeweavers.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Andrew Eikum <aeikum@codeweavers.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 14 21:50:48 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Andrew Eikum <aeikum@codeweavers.com>
+X-From: git-owner@vger.kernel.org Fri Feb 14 22:09:09 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WEPif-0007Y0-PK
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Feb 2014 21:50:46 +0100
+	id 1WEQ0O-0008EW-VR
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Feb 2014 22:09:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752752AbaBNUul (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Feb 2014 15:50:41 -0500
-Received: from mail.codeweavers.com ([216.251.189.131]:32896 "EHLO
-	mail.codeweavers.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752533AbaBNUuk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Feb 2014 15:50:40 -0500
-Received: from foghorn.codeweavers.com ([216.251.189.130])
-	by mail.codeweavers.com with esmtpsa (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.72)
-	(envelope-from <aeikum@codeweavers.com>)
-	id 1WEPiZ-0007Nl-Df; Fri, 14 Feb 2014 14:50:39 -0600
-Content-Disposition: inline
-In-Reply-To: <xmqq4n41ihgi.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752158AbaBNVIh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Feb 2014 16:08:37 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:64508 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751838AbaBNVIg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Feb 2014 16:08:36 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8018E6D0D0;
+	Fri, 14 Feb 2014 16:08:35 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ZbDOJ+DC92Wyi72uhmd2myVuQEA=; b=OEy6ig
+	HzIVlg8p6jev0yJrFLvM0jvvh9ffPW+MjvbbW98v+6xxYy5H/elAdAXouCFmW1Nb
+	1WGABFoRy2WNwQ0Mrvfn/A0wfDZJIXJaCtpvp17kq9GYO2mJUcYIUhy+GUqIc08R
+	NJ0XC1cz4wSPE0uJA5paj/ZaPVkri3W2Z5Evk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=dk4LkCMj9vQsUGpt0ppqyt1B2IZJWGaZ
+	N94VG1IEPYgcGzvwYEP5DrdtR6C9BCfyXqr+sC3tuk3JJYPh5+oLjixmfSDRwWrH
+	UYiPdJ6VaSNwngf85RxnQ8jUGqe6jVy4/Ae6ZtSVx3dA4MbU/kAMUl3FJ4FLcqhb
+	Ka8VNwllvk8=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6FFA36D0CF;
+	Fri, 14 Feb 2014 16:08:35 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A749C6D0CB;
+	Fri, 14 Feb 2014 16:08:34 -0500 (EST)
+In-Reply-To: <20140214205038.GC743@foghorn.codeweavers.com> (Andrew Eikum's
+	message of "Fri, 14 Feb 2014 14:50:38 -0600")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 2A470354-95BC-11E3-924C-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242144>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242145>
 
-On Fri, Feb 14, 2014 at 12:10:05PM -0800, Junio C Hamano wrote:
-> Andrew Eikum <aeikum@codeweavers.com> writes:
-> 
-> > On Wed, Feb 12, 2014 at 01:59:41PM -0800, Junio C Hamano wrote:
-> >> As a workaround to make life easier for third-party tools, the
-> >> upcoming major release will be called "Git 1.9.0" (not "Git 1.9").
-> >> The first maintenance release for it will be "Git 1.9.1", and the
-> >> major release after "Git 1.9.0" will either be "Git 2.0.0" or "Git
-> >> 1.10.0".
-> >> 
-> >
-> > Apologies if this ground has been tread before, but has there been a
-> > version numbering discussion? A quick google didn't seem to turn
-> > anything up.
-> >
-> > This seems to be an opportune time to drop the useless first digit.
-> > Explicitly, the major release numbers would be: 1.8, 1.9, then 2.0,
-> > 3.0, 4.0, etc, with the 2nd digit would take the meaning of the
-> > current 3rd digit and so on.
-> 
-> Considered, and discarded.
-> 
-> cf. http://article.gmane.org/gmane.comp.version-control.git/241498
-> 
+Andrew Eikum <aeikum@codeweavers.com> writes:
 
-Thank you for the link, it hadn't turned up in my searching.
+> My worry is having "2." hang around for another decade or longer. I'd
+> rather see X.0.0 denote a major feature release (currently represented
+> as 1.X.0), with X.Y.0 for minor enhancements and X.Y.Z for bugfix.
 
-> When you see a version number vX.Y.0 next time, think of it as just
-> play vX.Y without the third digit, and you will be fine.  People's
-> script cannot learn the "think of it as ..." part overnight, and
-> that is why we have the .0 there.
+We need three categories: (1) potentially incompatible, (2) feature,
+(3) fixes-only.  We have been doing two levels of features by having
+both second and third numbers and we are flattening by removing the
+second one.
 
-Sorry if I wasn't clear, I meant the useless digit is the first one,
-which is currently "1." and has been hanging around for a bit over
-eight years.
+> It seems reasonable to expect fewer backwards incompatible changes in
+> the future as Git has become more mature. This reduces the utility of
+> reserving X.0.0 for major backwards incompatible changes, especially
+> considering it's already been eight years for the first increment.
 
-My worry is having "2." hang around for another decade or longer. I'd
-rather see X.0.0 denote a major feature release (currently represented
-as 1.X.0), with X.Y.0 for minor enhancements and X.Y.Z for bugfix. So
-the major release version sequence would become 1.8.0, 1.9.0, 2.0.0,
-3.0.0, with minor releases like 2.1.0, and bugfix releases like 2.1.1.
+We are not done yet, far from it.  If we can stay at 2.X longer,
+that is a very good thing.
 
-It seems reasonable to expect fewer backwards incompatible changes in
-the future as Git has become more mature. This reduces the utility of
-reserving X.0.0 for major backwards incompatible changes, especially
-considering it's already been eight years for the first increment.
+If we followed your numbering scheme, you rob from the users a way
+to learn about a rare event, a potentially backward-incompatible
+change.  How would you tell your users when the version gap really
+matters?  After hearing "You need to plan carefully when you update
+to version 47" and then updating to version 47 (or the user may skip
+that version), the user will learn about a new version 48 and does
+not hear such a "you need to be careful".  What should he think?  No
+news is a good news?  He should refrain from updating because the
+last one was a big one?  What if the last time he updated was to
+version 43, stayed at that version for a long time without paying
+much attention (as Git grows more and more mature), and now we have
+version 50 after having a large compatibility gap at version 47 he
+did not pay much attention because he was skipping?
 
-Andrew
+The rarer the important event is, the more necessary that the
+importance is communicated clearly.
