@@ -1,95 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 02/14] trailer: process trailers from file and arguments
-Date: Fri, 14 Feb 2014 13:46:58 -0800
-Message-ID: <xmqqfvnlgyel.fsf@gitster.dls.corp.google.com>
-References: <xmqq38jqsnc2.fsf@gitster.dls.corp.google.com>
-	<CAP8UFD1Nq-LkE=FW5dnBZKKd7-ORJPo1BFs3sY+MLGxuXEWuTw@mail.gmail.com>
-	<xmqqa9dxr09k.fsf@gitster.dls.corp.google.com>
-	<20140214.224133.484636406629780362.chriscool@tuxfamily.org>
+From: Stefan Zager <szager@google.com>
+Subject: Re: Make the git codebase thread-safe
+Date: Fri, 14 Feb 2014 13:49:34 -0800
+Message-ID: <CAHOQ7J9QFWAY+12RSwgp3a6VwSOWnwRsP=R8Tf2JA2yG+Ay84Q@mail.gmail.com>
+References: <CA+TurHgyUK5sfCKrK+3xY8AeOg0t66vEvFxX=JiA9wXww7eZXQ@mail.gmail.com>
+	<CABPQNSZ_LLg5i+mpwUj7pzXVQMY1tcXz2gJ+PWG-mP1iyjxoaw@mail.gmail.com>
+	<CAHOQ7J8QxfvtrS2KdgzUPvkDzJ1Od0CMvdWxrF_bNacVRYOa5Q@mail.gmail.com>
+	<CABPQNSZtQd51gQY7oK8B-BbpNEhxR-onQtiXSfW9sv1t2YW_nw@mail.gmail.com>
+	<CAHOQ7J_Jrj1NJ_tZaCioskQU_xGR2FQPt8=JrWpR6rfs=c847w@mail.gmail.com>
+	<CABPQNSYVGc9m0_xfAWe=3b7CXyGZ-2FfTMRbTJ=UECeZUtdgmg@mail.gmail.com>
+	<52FBC9E5.6010609@gmail.com>
+	<loom.20140213T193220-631@post.gmane.org>
+	<52FD4C84.7060209@gmail.com>
+	<CAHOQ7J8syoQLGwwkwPEX3wZir8sWDQ+k8sgHAKn=n_-Q_S8ipA@mail.gmail.com>
+	<CAAErz9hzeiJ9f9tJ+Z-kOHvrPqgcZrpvrpBpa_tMjnKm4YWSXA@mail.gmail.com>
+	<52FE68C9.3060403@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: christian.couder@gmail.com, git@vger.kernel.org, johan@herland.net,
-	josh@joshtriplett.org, tr@thomasrast.ch, mhagger@alum.mit.edu,
-	sunshine@sunshineco.com, dan.carpenter@oracle.com, greg@kroah.com,
-	peff@peff.net
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Fri Feb 14 22:47:15 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Zachary Turner <zturner@chromium.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Karsten Blees <karsten.blees@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 14 22:49:44 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WEQbJ-0002hz-G4
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Feb 2014 22:47:13 +0100
+	id 1WEQdi-00053j-1f
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Feb 2014 22:49:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752909AbaBNVrI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Feb 2014 16:47:08 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:65349 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752481AbaBNVrH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Feb 2014 16:47:07 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A23FC6DD75;
-	Fri, 14 Feb 2014 16:47:05 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=gXsj1T7AT3GF2apn0PAg3C/f3W4=; b=JahFgE
-	aBlQsD9co1eY3s5QvCKKc2dASlY69Mh88U9HXXGeeDgle5DrTBRVU97Bnw06sDei
-	gqkZah3hKwS1UqfT20JqOF4C/u70kX6agJX4HwE/PR8Gr/f2YQtc+VevxmLcRrqw
-	ac1SnCsIzRphmQagKcZHLpK+IWtp2htWpjq/c=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=LNcc0F8oDAn+/w6LauRhDeOJO8YPvG5m
-	dmI4hymoenFDO3d5r6m3GydMes9s4CglMnw3eQzrdZ0hdd/V5DI48N48nvdiQ6Mw
-	i1gDoN60W1RwjUbU5fM+3vkKphRfVe8xR6DB6z7lh/DoIBbGPjajXVvRLJBAg+Cy
-	Xs0E9Y1PCW8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8E49D6DD74;
-	Fri, 14 Feb 2014 16:47:05 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 954D46DD72;
-	Fri, 14 Feb 2014 16:47:03 -0500 (EST)
-In-Reply-To: <20140214.224133.484636406629780362.chriscool@tuxfamily.org>
-	(Christian Couder's message of "Fri, 14 Feb 2014 22:41:33 +0100
-	(CET)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 8A8D9F3E-95C1-11E3-8185-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752862AbaBNVth (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Feb 2014 16:49:37 -0500
+Received: from mail-oa0-f42.google.com ([209.85.219.42]:53749 "EHLO
+	mail-oa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752496AbaBNVtf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Feb 2014 16:49:35 -0500
+Received: by mail-oa0-f42.google.com with SMTP id i7so15192997oag.15
+        for <git@vger.kernel.org>; Fri, 14 Feb 2014 13:49:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=hgOfveNnW7cU7QBhFspsWHYDJAmFZb2LO8+N+4HFMik=;
+        b=jXuJHGdHSfglnFgEXRnUV3lVRgvxonnV6NwMwkP9TnQX4fQo3B3dyjjzaM+xVSHTNo
+         coUWaqh+ljvVAlZ373eQDwEv31CS0bs3Yo2WDIRu3v+rd9AWk4zaVqGVr/kNlwDpDDn/
+         a4smeQh5weWtot39D0kLmvEIpluwWLRo2GDEZcoe1u+ahVhsxbQW0xsyX8RVAIKyok6J
+         g5e9e5aWLo6t8IbIQ/YDHlbHnY/hkk+FI+xmF/PNAo0R99RkV9iEkdq7F0G7EKGXDQjr
+         e0x7X8rbO7xFb7LjkGiodaWHwAjX44LnVHARMgwcHs/ZhXjVmmA3X9bDSUgemDhaCEOT
+         uYnQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=hgOfveNnW7cU7QBhFspsWHYDJAmFZb2LO8+N+4HFMik=;
+        b=SbUiEL17xTk/zqCppdF0RL6WYY/c4MIzNwprZlujOWVat52/cL3wBM95nd1SwgANXc
+         fSZ/WHDE4iu+Uz7NbXHGMWJvMmdtUQ5Jh6RIdzSN+vJQWHXBNEAVSdgQRr5sui9YIgdh
+         kNybouFCxQ9ZDP5QmsQ3pAzN//t9AMdjormDWUTqoHgqguYGFWEdjVvA1SLydS2mMWrz
+         q9QgANNGu/gYpA0M7DmhKyGcNikp6ZhQZY+gKRUL5r2+MiSopb1xRapLILN3xRSXKCLj
+         NF6WsO3TN0XIWGmxAZGNFAMdKk25fFYvKo8W3kCar6fxlB+Jmf1BOpKFpoFHxpqTAW+Q
+         YJWA==
+X-Gm-Message-State: ALoCoQlQva0fAU6e5Sw6mFhMw+kMD8lDLcE48ZJIhvmaiIXScBBZsEhunAsI3B56fZHL/PwFWiiT8ik2RyZzuxEPWM8EEfgmVM4ibNO80sdofQUyIO5HRHzA1TxgGSbe4anEGyncGLBvANMZ6+MxsqtrUCXgNtHKCl0A9hpBLthNeA8DSWwxlai3Ecu+ZFAxN1CCI7EkB6ta
+X-Received: by 10.60.228.135 with SMTP id si7mr8564386oec.4.1392414575073;
+ Fri, 14 Feb 2014 13:49:35 -0800 (PST)
+Received: by 10.182.233.201 with HTTP; Fri, 14 Feb 2014 13:49:34 -0800 (PST)
+In-Reply-To: <52FE68C9.3060403@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242150>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242151>
 
-Christian Couder <chriscool@tuxfamily.org> writes:
+On Fri, Feb 14, 2014 at 11:04 AM, Karsten Blees <karsten.blees@gmail.com> wrote:
+>
+> Damn...you're right, multi-threaded git-index-pack works fine, but some tests fail badly. Mixed reads would have to be from git_mmap, which is the only other caller of pread().
 
-> For example some people might want:
->
->     if_exists = overwrite
->     if_missing = add
->
-> while others might want:
->
->     if_exists = overwrite
->     if_missing = do_nothing
->
-> and I don't see how we can say that with just:
->
->     action = do_Y_if_X_and_Z
+msysgit used git_mmap() as defined in compat/win32mmap.c, which does
+not use pread.
 
-Yes, but then we go back to my original question: why exists and
-missing are so special, and why there aren't two kinds of exists
-(i.e. "there exists an entry with the same <key, value>" vs "there
-exists an entry with the same <key>").  I would have understood your
-"this is not too hard to understand for users" if you had three
-(i.e. "missing", in addition to these two flavours of "exists"), but
-with only two, I do not see how it is useful in a hypothetical
-situation like above.
-
-For example, how would you express something like this only with
-"if-exists" vs "if-missing"?
-
-	if_exists_exactly = ignore
-        if_exists_with_different_value = append
-        if_missng = prepend_to_the_beginning
+Stefan
