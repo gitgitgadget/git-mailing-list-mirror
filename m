@@ -1,65 +1,72 @@
-From: Josef Wolf <jw@raven.inka.de>
-Subject: Re: error: src refspec refs/heads/master matches more than one.
-Date: Fri, 14 Feb 2014 23:53:48 +0100
-Message-ID: <20140214225348.GD17817@raven.inka.de>
-References: <20140214113136.GA17817@raven.inka.de>
- <87a9dt981o.fsf@igel.home>
- <CACsJy8BevKQaRLYMMv7bTjf_ZAOnkrimws519OyhGZz6_Vr_-A@mail.gmail.com>
- <xmqqy51dirjs.fsf@gitster.dls.corp.google.com>
+From: =?utf-8?b?w5h5c3RlaW4=?= Walle <oystwa@gmail.com>
+Subject: Re: [PATCH] for-each-ref: add option to omit newlines
+Date: Fri, 14 Feb 2014 23:03:21 +0000 (UTC)
+Message-ID: <loom.20140215T000328-538@post.gmane.org>
+References: <1392314429-15281-1-git-send-email-oystwa@gmail.com> <xmqq38jmlqo6.fsf@gitster.dls.corp.google.com> <loom.20140214T085928-630@post.gmane.org> <xmqq38jlk6a1.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Feb 15 00:00:19 2014
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 15 00:03:52 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WERk2-0004A2-TQ
-	for gcvg-git-2@plane.gmane.org; Sat, 15 Feb 2014 00:00:19 +0100
+	id 1WERnR-0007Ts-Qd
+	for gcvg-git-2@plane.gmane.org; Sat, 15 Feb 2014 00:03:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752831AbaBNXAL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Feb 2014 18:00:11 -0500
-Received: from quechua.inka.de ([193.197.184.2]:37848 "EHLO mail.inka.de"
+	id S1752885AbaBNXDq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Feb 2014 18:03:46 -0500
+Received: from plane.gmane.org ([80.91.229.3]:54237 "EHLO plane.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752470AbaBNXAL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Feb 2014 18:00:11 -0500
-Received: from raven.inka.de (uucp@[127.0.0.1])
-	by mail.inka.de with uucp (rmailwrap 0.5) 
-	id 1WERjt-0005vJ-LP; Sat, 15 Feb 2014 00:00:09 +0100
-Received: by raven.inka.de (Postfix, from userid 1000)
-	id 9C0EA7629A; Fri, 14 Feb 2014 23:53:48 +0100 (CET)
-Mail-Followup-To: Josef Wolf <jw@raven.inka.de>,
-	Git Mailing List <git@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <xmqqy51dirjs.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1752367AbaBNXDp (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Feb 2014 18:03:45 -0500
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1WERnM-0007Kd-A0
+	for git@vger.kernel.org; Sat, 15 Feb 2014 00:03:44 +0100
+Received: from 80.156.189.109.customer.cdi.no ([109.189.156.80])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 15 Feb 2014 00:03:44 +0100
+Received: from oystwa by 80.156.189.109.customer.cdi.no with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 15 Feb 2014 00:03:44 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 109.189.156.80 (Mozilla/5.0 (Windows NT 6.1; WOW64; rv:26.0) Gecko/20100101 Firefox/26.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242155>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242156>
 
-On Fri, Feb 14, 2014 at 08:32:07AM -0800, Junio C Hamano wrote:
->  A. You are not allowed to call your branch with a string that begins with
->     'refs/heads/'.
->  B. Why?
->  A. Because it will confuse you.
->  B. I know what I am doing.
->  A. ???
+Junio C Hamano <gitster <at> pobox.com> writes:
 
-Your reply in
-http://git.661346.n2.nabble.com/1-8-0-git-checkout-refs-heads-foo-checks-out-branch-foo-td5999936.html
-suggests that one should explicitly use the refs/heads prefix to to work
-around ambiguities in some situations.
+> 
+> I very well understand that.  All other commands that support "-z"
+> to give you NUL terminated output do not consider that a downside.
+> Why should for-each-ref be special?
+> 
 
-Are there any best-practices sugestions out there about when to use the
-refs/heads prefix and when not? It looks like git delibaretly cuts off this
-prefix in some situations.
+After I discovered log also has this there is nothing special about
+for-each-ref any longer, so my patch as-is would only make things less
+consistent. What is "special" is that they give you the option of
+supplying a format string.
 
-I don't think my problem stems from something like "git branch refs/heads/master"
-Anyway, some clarifications about the usage of this prefix would be great!
+ls-files, diff and others print a specific list of items (paths, shas,
+...) and there's no question about how they are presented other than the
+delimiter between each item, to which a selection of either a newline or
+a null byte is plenty.
 
--- 
-Josef Wolf
-jw@raven.inka.de
+With log, for-each-ref and rev-list (any others?) that sort of breaks
+down. With the format string you're given the power to make the command
+print basically anything you like, however you like; no longer only a
+question of mere delimiters. It only makes sense then (to me, at least)
+that the command does not meddle with the format the user has chosen.
+
+Maybe it's all subjective... I'm okay with just leaving things as they
+are. There are ways around it.
