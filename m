@@ -1,64 +1,67 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Git GSoC 2014
-Date: Fri, 14 Feb 2014 13:56:28 -0500
-Message-ID: <20140214185628.GA18696@sigill.intra.peff.net>
-References: <20140213091037.GA28927@sigill.intra.peff.net>
+From: Patrick Palka <patrick@parcs.ath.cx>
+Subject: git-reset does not seem to respect GIT_WORK_TREE
+Date: Fri, 14 Feb 2014 13:57:36 -0500
+Message-ID: <CA+C-WL_x=+OPn4Ec-6Y13w1+dd5G5v8W6=i15WH47pyP3ggjuw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Shawn Pearce <spearce@spearce.org>, Thomas Rast <tr@thomasrast.ch>
+Content-Type: text/plain; charset=ISO-8859-1
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 14 19:56:35 2014
+X-From: git-owner@vger.kernel.org Fri Feb 14 19:57:43 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WENwB-00087h-0L
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Feb 2014 19:56:35 +0100
+	id 1WENxF-0000kr-U5
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Feb 2014 19:57:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751833AbaBNS4b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Feb 2014 13:56:31 -0500
-Received: from cloud.peff.net ([50.56.180.127]:50678 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751460AbaBNS4a (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Feb 2014 13:56:30 -0500
-Received: (qmail 24074 invoked by uid 102); 14 Feb 2014 18:56:30 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 14 Feb 2014 12:56:30 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 14 Feb 2014 13:56:28 -0500
-Content-Disposition: inline
-In-Reply-To: <20140213091037.GA28927@sigill.intra.peff.net>
+	id S1752341AbaBNS5i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Feb 2014 13:57:38 -0500
+Received: from mail-pb0-f41.google.com ([209.85.160.41]:64870 "EHLO
+	mail-pb0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751525AbaBNS5h (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Feb 2014 13:57:37 -0500
+Received: by mail-pb0-f41.google.com with SMTP id up15so12709675pbc.14
+        for <git@vger.kernel.org>; Fri, 14 Feb 2014 10:57:37 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=/S+xzROruan0aAd5Os9z6vVh8vICxCrbJi1MkFAE2CI=;
+        b=XfTa03Dtmb93SnWneHDJM3IVuxr3OhoqoMx4hIhTlge1oJysMKDerVg3gRkD5v61fX
+         hZd44WrRAdxE7mQxN6L1ECmy2DBeuvMWQhOn95QpK5NFtpcpyCp2sPcPkGREWQw2cBeo
+         IJM4EeOluxmmbZN/CkdRJJJvkD5POGR+I0q/jvYSPAAdMq0ws/9Viwbi6FnFlO9kJORb
+         yn+m0x+Wj75cBizq0N051mmEkigJQV1F5c1nLSJtqGyzvgX83xj5vOJjGRpRbXTqnCHw
+         934wqzvyB2Dm6VCaQj7bMZd/dHwZIxuS8vmSk6uBzKFA5PcMItfzT5cTHxMZUbt5fVEs
+         0q7w==
+X-Gm-Message-State: ALoCoQme4Kg75bDq28dVVmma7LNI8BmF86edsc7wp6tZiJhUHhNBR36pufZvg/zG3tfhSbNHTlVa
+X-Received: by 10.68.139.73 with SMTP id qw9mr10722581pbb.121.1392404256923;
+ Fri, 14 Feb 2014 10:57:36 -0800 (PST)
+Received: by 10.70.54.162 with HTTP; Fri, 14 Feb 2014 10:57:36 -0800 (PST)
+X-Originating-IP: [67.83.169.196]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242118>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242119>
 
-On Thu, Feb 13, 2014 at 04:10:37AM -0500, Jeff King wrote:
+Hi everyone,
 
-> The Google Summer of Code application process is upon us. We have about
-> 34 hours until the deadline (2014-02-14T19:00 UTC) . That's not very
-> much time, but I know some people have been thinking about projects for
-> a while, so I have hope that we can put together an ideas page.
+I noticed that git-reset does not seem to respect GIT_WORK_TREE.  Here
+is a simplified test case:
 
-Just to let everybody know, the application is submitted. For reference,
-I've updated the submitted application text here:
+$ mkdir src_dir && cd src_dir
+$ git init
+$ touch A && git add A && git commit -m "Dummy commit."
+$ mkdir ../build_dir && cd ../build_dir
+$ export GIT_WORK_TREE=../src_dir
+$ export GIT_DIR=../src_dir/.git
+$ git reset
+Unstaged changes after reset:
+D       A
 
-  http://git.github.io/SoC-2014-Org-Application.html
+The final command "git reset" erroneously suggests that the file "A"
+does not exist in the working tree.  Does anybody know why git-reset
+behaves this way?
 
-I've collected the discussion on the list on the ideas page:
-
-  http://git.github.io/SoC-2014-Ideas.html
-
-Google folks will be looking at it over the next week, but prospective
-students probably won't see it until we are accepted to the program,
-which would happen Feb 24th.
-
-Please feel free to continue discussing or updating the ideas page in
-the meantime. I think there is enough there already to show Google what
-we are thinking about, but ultimately the students are the ones whom the
-page is meant to serve.  Anything we can do to improve it before they
-read it is a good thing.
-
--Peff
+Thanks,
+Patrick
