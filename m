@@ -1,65 +1,100 @@
-From: "Peter Marx" <marx.tholey@online.de>
-Subject: Download of the latest release of git 1.8.5.5 does not work
-Date: Fri, 14 Feb 2014 10:21:35 +0100 (CET)
-Message-ID: <trinity-0bf03514-306b-4d2b-a3fa-f34ef84f4e66-1392369695708@3capp-1and1-bs01>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: Git GSoC 2014
+Date: Fri, 14 Feb 2014 10:44:35 +0100
+Message-ID: <87d2iq58qk.fsf@fencepost.gnu.org>
+References: <20140213091037.GA28927@sigill.intra.peff.net>
+	<87bnya8z6q.fsf@thomasrast.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 14 10:21:45 2014
+Content-Type: text/plain
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
+	Shawn Pearce <spearce@spearce.org>
+To: Thomas Rast <tr@thomasrast.ch>
+X-From: git-owner@vger.kernel.org Fri Feb 14 10:44:47 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WEExt-0002sB-7l
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Feb 2014 10:21:45 +0100
+	id 1WEFK9-0007kI-Pq
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Feb 2014 10:44:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752367AbaBNJVk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Feb 2014 04:21:40 -0500
-Received: from moutng.kundenserver.de ([212.227.126.171]:57105 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751825AbaBNJVh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Feb 2014 04:21:37 -0500
-Received: from 3capp-1and1-bs01.server.lan (3capp-1and1-bs01.server.lan [172.19.170.158])
-	by mrelayeu.kundenserver.de (node=mreue007) with ESMTP (Nemesis)
-	id 0MICfi-1WBVPS083q-003yiL; Fri, 14 Feb 2014 10:21:36 +0100
-Received: from [212.202.224.149] by 3capp-1and1-bs01.server.lan with HTTP;
- Fri Feb 14 10:21:35 CET 2014
-Importance: normal
-Sensitivity: Normal
-X-Priority: 3
-X-Provags-ID: V02:K0:Mc+1/HjD8kUBiwdxb6Xg5YlmxJhrbDYm4QGL7Z1wVzS
- PjpW/xQ6l6QQgAVm5ySli26mQpcumwJCvDm4B3jMOd0rOKm76Q
- by0Snm6nhDqmMsRw+wkuc9PaM41uXMvYOo/MbTTiSVm5XIioi+
- Fq4OkLNa9lE8k9FbJH+amWkOA1Q1Ut3iu4SjTFJPQ2fsKDRnmJ
- EVucAO4U2SHsBvPDb9oXUk5Z/+y7+wBCqesPRXSQTQq/GSKtyD
- Z74zK/VdOlbyuVH0cIGtxCca5311QNAmWlmL4BLPh1STjYpZwU
- aHbqCjxATPnu+SOSjWmh1e/C48axTOuk2mMQpsM6uwCGu+fjow
- 7tPpQ3si58EzuVrjo0WzUDUqRmG2a4+DBK8hCDKYKQu7UBmHRQ
- QEjYjM+l7KZM6WdFQbmxW+rv0Mt2y4od3hitfX1RnXRtqx2ZtZ
- zk4rczyAQbZjib2WbXhL7SOEwBw==
+	id S1752066AbaBNJol (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Feb 2014 04:44:41 -0500
+Received: from fencepost.gnu.org ([208.118.235.10]:38581 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751661AbaBNJoh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Feb 2014 04:44:37 -0500
+Received: from localhost ([127.0.0.1]:37621 helo=lola)
+	by fencepost.gnu.org with esmtp (Exim 4.71)
+	(envelope-from <dak@gnu.org>)
+	id 1WEFJz-0003wP-K4; Fri, 14 Feb 2014 04:44:35 -0500
+Received: by lola (Postfix, from userid 1000)
+	id 26D5FE04F7; Fri, 14 Feb 2014 10:44:35 +0100 (CET)
+In-Reply-To: <87bnya8z6q.fsf@thomasrast.ch> (Thomas Rast's message of "Thu, 13
+	Feb 2014 22:45:01 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242092>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242093>
 
-Hello,
+Thomas Rast <tr@thomasrast.ch> writes:
 
-On your web-side  http://git-scm.com I see following information 
-Latest stable release 
-1.8.5.5
-Release Notes (2014-02-13)
+> Here's my moonshot:
+>
+> --- 8< ---
+> Replace object loading/writing layer by libgit2
+>
+> Git reads objects from storage (loose and packed) through functions in
+> sha1_file.c.  Most commands only require very simple, opaque read and
+> write access to the object storage.  As a weatherballoon, show that it
+> is feasible to use libgit2 git_odb_* routines for these simple callers.
+>
+> Aim for passing the git test suite using git_odb_* object storage
+> access, except for tests that verify behavior in the face of storage
+> corruption, replacement objects, alternate storage locations, and
+> similar quirks.  Of course it is even better if you pass the test suite
+> without exception.
 
-When I click on the link Download for Windows the page "http://git-scm.com/download/win" is opened 
-and the download of file "Git-1.8.5.2-preview20131230.exe" started.
+[...]
 
-I would like to download the latest release 1.8.5.5 but this is not possible.
+> That absolutely requires a co-mentor from the libgit2 side to do,
+> however.  Perhaps you could talk someone into it? ;-)
+>
+> Motivation: I believe that migrating to libgit2 is the better approach,
+> medium term, than rewriting everything ourselves to be nice, clean and
+> thread-safe.  I took a shot a while ago at making the pack reading code
+> thread-safe, but it's adding mess when we could simply replace it all by
+> the already thread-safe libgit2 calls.  It also helps shake out
+> incompatibilities in libgit2.
 
-Could you check your web-side and add the latest release to it.
+That would either require forking libgit2 for Git use or stop dead any
+contributions to that rather central part of the git codebase from
+contributors not wanting their contributions to get reused in binary
+proprietary software.
 
-Thanks a lot.
+It would also mean that no serious forward-going work (like developing
+new packing formats or network protocols) can be done on a pure GPLv2
+codebase any more.  So anybody insisting on contributing work under the
+current Git license only would be locked out from working on significant
+parts of Git and could no longer propose changes in central parts.
 
+Now this can all be repealed by the "developing the atomic bomb does not
+mean that one has to use it" argument but even if one does not use it,
+the world with and without it are different worlds and occupy mindshare
+and suggest "solutions" and "diplomacy" involving it.
 
-Best Regards,
-Peter 
+So this is definitely a large step towards a situation where erosion of
+the existing license and related parts of the community becomes more
+attractive.
+
+There is the rationale "we can always say "no" at the end".  How do you
+explain this "no" to the student who invested significant amounts of
+work into this, in a project proposed by the Git developers?
+
+This definitely should not be "we'll think about it if and when that
+project is finished" material.
+
+-- 
+David Kastrup
