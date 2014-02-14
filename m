@@ -1,109 +1,83 @@
-From: Karsten Blees <karsten.blees@gmail.com>
-Subject: Re: Make the git codebase thread-safe
-Date: Sat, 15 Feb 2014 00:10:41 +0100
-Message-ID: <52FEA271.2030405@gmail.com>
-References: <CA+TurHgyUK5sfCKrK+3xY8AeOg0t66vEvFxX=JiA9wXww7eZXQ@mail.gmail.com>	<CABPQNSZ_LLg5i+mpwUj7pzXVQMY1tcXz2gJ+PWG-mP1iyjxoaw@mail.gmail.com>	<CAHOQ7J8QxfvtrS2KdgzUPvkDzJ1Od0CMvdWxrF_bNacVRYOa5Q@mail.gmail.com>	<CABPQNSZtQd51gQY7oK8B-BbpNEhxR-onQtiXSfW9sv1t2YW_nw@mail.gmail.com>	<CAHOQ7J_Jrj1NJ_tZaCioskQU_xGR2FQPt8=JrWpR6rfs=c847w@mail.gmail.com>	<CABPQNSYVGc9m0_xfAWe=3b7CXyGZ-2FfTMRbTJ=UECeZUtdgmg@mail.gmail.com>	<52FBC9E5.6010609@gmail.com>	<loom.20140213T193220-631@post.gmane.org>	<52FD4C84.7060209@gmail.com>	<CAHOQ7J8syoQLGwwkwPEX3wZir8sWDQ+k8sgHAKn=n_-Q_S8ipA@mail.gmail.com>	<CAAErz9hzeiJ9f9tJ+Z-kOHvrPqgcZrpvrpBpa_tMjnKm4YWSXA@mail.gmail.com>	<52FE68C9.3060403@gmail.com>	<CAAErz9g7ND1htfk=yxRJJLbSEgBi4EV_AHC9uDRptugGWFWcXw@mail.gmail.com> <CAAErz9j=_FpWLSyUk43pp8A6e7Ej0crT8ghW
- 5-yxBEbGkd6O+A@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] for-each-ref: add option to omit newlines
+Date: Fri, 14 Feb 2014 15:24:51 -0800
+Message-ID: <xmqq1tz5gtvg.fsf@gitster.dls.corp.google.com>
+References: <1392314429-15281-1-git-send-email-oystwa@gmail.com>
+	<xmqq38jmlqo6.fsf@gitster.dls.corp.google.com>
+	<loom.20140214T085928-630@post.gmane.org>
+	<xmqq38jlk6a1.fsf@gitster.dls.corp.google.com>
+	<loom.20140215T000328-538@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Stefan Zager <szager@google.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Zachary Turner <zturner@chromium.org>
-X-From: git-owner@vger.kernel.org Sat Feb 15 00:10:45 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?Q?=C3=98ystein?= Walle <oystwa@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 15 00:25:06 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WERu7-0005Xm-HV
-	for gcvg-git-2@plane.gmane.org; Sat, 15 Feb 2014 00:10:43 +0100
+	id 1WES81-00023h-EF
+	for gcvg-git-2@plane.gmane.org; Sat, 15 Feb 2014 00:25:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752954AbaBNXKk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Feb 2014 18:10:40 -0500
-Received: from mail-ee0-f51.google.com ([74.125.83.51]:33948 "EHLO
-	mail-ee0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752757AbaBNXKj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Feb 2014 18:10:39 -0500
-Received: by mail-ee0-f51.google.com with SMTP id b57so5976655eek.38
-        for <git@vger.kernel.org>; Fri, 14 Feb 2014 15:10:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=ZArdq91yFc41pIcl+W8kb8BXgmgViyZzq2Zse9QFNWM=;
-        b=xpeWKFxYEXbyL2QwWlb47fOoya0d5/qKksgQk1+mmYCniUJCWJCL/RWYhbmvJE8XsS
-         87gwdwwbozCW8u424wO5ru5SY5nZ0Ty4Dc0bIZDMMSlsTtEeY0MjY42b+HNmOoFLPcTR
-         HpqPHN8HzF9MODIaxkXgQNQg813hob6dDtireu5v/j1JxPJFNuCsFxWgrjshgmzOzu53
-         Zz8qGhHnFecPP4zJNuTBd56V+0AWUOn/NrplG7vTFgehaA4tyet9dm3dRbfqz69xL2Xk
-         nKsRDq1O2M5cY56E8LH5Ud0UDWaqi6MoRX26jCX7amjH+3zn1Jj1mGVbxwgKj+PWXoWL
-         87kA==
-X-Received: by 10.14.119.197 with SMTP id n45mr2436209eeh.93.1392419437916;
-        Fri, 14 Feb 2014 15:10:37 -0800 (PST)
-Received: from [10.1.100.54] (ns.dcon.de. [77.244.111.149])
-        by mx.google.com with ESMTPSA id v6sm25142119eef.2.2014.02.14.15.10.36
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 14 Feb 2014 15:10:36 -0800 (PST)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.3.0
-In-Reply-To: <CAAErz9j=_FpWLSyUk43pp8A6e7Ej0crT8ghW5-yxBEbGkd6O+A@mail.gmail.com>
+	id S1752947AbaBNXY7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 Feb 2014 18:24:59 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45305 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752934AbaBNXY6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 14 Feb 2014 18:24:58 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B4A6F6DA50;
+	Fri, 14 Feb 2014 18:24:57 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=OFS/Q0vFbYzI
+	ddmXDZQuyzDPMe8=; b=TfB8XTsNhiTuo/RD4tRfZA24zEJcWS439l/5x4lq9ViK
+	5JH4ZKM1c2z93KpcOJtv4gCnzWL7iS6OZzF8UsShv639028bSeTUae8O6uvv1bVC
+	Vel40oUu68JIeXVI1ANKk2XL5WgPyiGgZN1+SjrIJ+TwIRST9OxDvXw9AM2PcdQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=OsJxPt
+	nGPAHXbHh2Uy/orXY8j8tSgydwP93Gs25TMrbA/XmKM1a1hIaaGtQXlapQbJ5kbe
+	4Pj5p+vZ+9B3WnPkyhi294B1nJN2QftNqrBGSrihQKGvhZRyRQVZC904r3rnQTDA
+	3k8JHNNjBFfeaaUVmmcFhNpgKV2n1N4BoIWfw=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9C17C6DA4F;
+	Fri, 14 Feb 2014 18:24:57 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E6B736DA4D;
+	Fri, 14 Feb 2014 18:24:55 -0500 (EST)
+In-Reply-To: <loom.20140215T000328-538@post.gmane.org> (=?utf-8?Q?=22?=
+ =?utf-8?Q?=C3=98ystein?= Walle"'s
+	message of "Fri, 14 Feb 2014 23:03:21 +0000 (UTC)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 36B022C0-95CF-11E3-A1D2-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242157>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242158>
 
-Am 14.02.2014 20:16, schrieb Zachary Turner:
-> For the mixed read, we wouldn't be looking for another caller of
-> pread() (since it doesn't care what the file pointer is), but instead
-> a caller of read() or lseek() (since those do depend on the current
-> file pointer).  In index-pack.c, I see two possible culprits:
-> 
-> 1) A call to xread() from inside fill()
-> 2) A call to lseek in parse_pack_objects()
-> 
-> Do you think these could be related?  If so, maybe that opens up some
-> other solutions?
-> 
+=C3=98ystein Walle <oystwa@gmail.com> writes:
 
-Yeah, I think that's it. The problem is that the single-threaded part (parse_pack_objects/parse_pack_header) _also_ calls pread (via sha1_object -> get_data_from_pack -> unpack_data). So a pread() that modifies the file position would naturally be bad in this single-threaded scenario. Incidentally, that's exactly what the lstat64 in the version below fixes (similar to git_pread).
+> Maybe it's all subjective... I'm okay with just leaving things as the=
+y
+> are.
 
-> BTW, the version you posted isn't thread safe.
+Lack of "-z" in for-each-ref can be called an inconsistency that
+already exists you may want to fix in any case.
 
-It is true that, in a multi-threaded scenario, my version modifies the file position in some indeterministic way. However, as you noted above, the file position is irrelevant to pread(), so that's perfectly thread-safe, as long as all threads use pread() exclusively.
+As an extension to that, I would not be fundamentally against a new
+option, e.g. "--terminiator=3D7", that causes us to use putchar(7)
+instead of putchar('\n') or putchar('\0') to terminate each records.
+At that point, "-z" becomes a synonym for "--terminator=3D0".
 
-Using [x]read() in one of the threads would _not_ be thread-safe, but we're not doing that here. Both fill()/xread() and parse_pack_objects()/lseek() are unreachable from threaded_second_pass(), and the main thread just waits for the background threads to complete...
+And "--terminator=3D''" might even be a natural extension to that
+option to cause us not to call any putchar() there.
 
->>> A simple alternative to ReOpenHandle is to reset the file pointer to its
->>> original position, as in compat/pread.c::git_pread. Thus single-theaded code
->>> can mix read()/pread() at will, but multi-threaded code has to use pread()
->>> exclusively (which is usually the case anyway). A main thread using read()
->>> and background threads using pread() (which is technically allowed by POSIX)
->>> will fail with this solution.
->>>
->>> This version passes the test suite on msysgit:
->>>
->>> ----8<----
->>> ssize_t mingw_pread(int fd, void *buf, size_t count, off64_t offset)
->>> {
->>>         DWORD bytes_read;
->>>         OVERLAPPED overlapped;
->>>         off64_t current;
->>>         memset(&overlapped, 0, sizeof(overlapped));
->>>         overlapped.Offset = (DWORD) offset;
->>>         overlapped.OffsetHigh = (DWORD) (offset >> 32);
->>>
->>>         current = lseek64(fd, 0, SEEK_CUR);
->>>
->>>         if (!ReadFile((HANDLE)_get_osfhandle(fd), buf, count, &bytes_read,
->>> &overlapped)) {
->>>                 errno = err_win_to_posix(GetLastError());
->>>                 return -1;
->>>         }
->>>
->>>         lseek64(fd, current, SEEK_SET);
->>>
->>>         return (ssize_t) bytes_read;
->>> }
->>>
->>
+If we were to do that, we should do them for all commands that let
+you use "-z", not just for-each-ref, for consistency reasons, I
+would think.
