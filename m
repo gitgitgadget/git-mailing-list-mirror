@@ -1,72 +1,112 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Feb 2014, #04; Wed, 12)
-Date: Fri, 14 Feb 2014 11:47:12 -0800
-Message-ID: <xmqqd2ipiiin.fsf@gitster.dls.corp.google.com>
-References: <xmqqd2ism1pu.fsf@gitster.dls.corp.google.com>
-	<20140214193131.GI4582@vauxhall.crustytoothpaste.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-X-From: git-owner@vger.kernel.org Fri Feb 14 20:47:26 2014
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: [PATCH v5 4/9] am: add the --gpg-sign option
+Date: Fri, 14 Feb 2014 19:51:48 +0000
+Message-ID: <1392407513-37443-5-git-send-email-sandals@crustytoothpaste.net>
+References: <1392407513-37443-1-git-send-email-sandals@crustytoothpaste.net>
+Cc: Nicolas Vigier <boklm@mars-attacks.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 14 20:52:07 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WEOjL-0006a7-BZ
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Feb 2014 20:47:23 +0100
+	id 1WEOnu-0002dg-PQ
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Feb 2014 20:52:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752317AbaBNTrT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Feb 2014 14:47:19 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56069 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751790AbaBNTrS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Feb 2014 14:47:18 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 42A3B6CEB8;
-	Fri, 14 Feb 2014 14:47:17 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=wqlmhZmzwrKvYRyhCFYqw8dN0JY=; b=GFwhrw
-	BdallLEnKEyO7B9bXn4xuwSN30YmozcyM48B9WLth2Cps8khe90WNUoZhni4XUYK
-	Trs9J7lyOKkZdKJYEcP3em3h5j7EiuBNMvJPhprHLiKPV8uKFcJZBI0uQcbWyNs9
-	oVLxu1DzJKKkmazZcVHgkjSJcl+nvqrbNHCyM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=DRFS4Xxo+zDyxdqO51ew9qdw8LlHgRly
-	Xwok4KN2ipVIEcD3+Jx8HhQO3qYaCTlsMRQhP2Jg8DjOboHPocYFnbDGmwkj0JVM
-	whwRrn4XN9b5/H1Yewymr65BUrSRzPD5IR4qn3cLDqpG1/ftA82JbY2sqpQ+OFS2
-	KEyW22Vco7A=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A79236CEB7;
-	Fri, 14 Feb 2014 14:47:16 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	id S1752829AbaBNTwB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Feb 2014 14:52:01 -0500
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:51927 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752788AbaBNTwA (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 14 Feb 2014 14:52:00 -0500
+Received: from vauxhall.crustytoothpaste.net (unknown [172.16.2.247])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 228AF6CEB5;
-	Fri, 14 Feb 2014 14:47:15 -0500 (EST)
-In-Reply-To: <20140214193131.GI4582@vauxhall.crustytoothpaste.net> (brian
-	m. carlson's message of "Fri, 14 Feb 2014 19:31:31 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: CDD80718-95B0-11E3-889E-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id F208E28085;
+	Fri, 14 Feb 2014 19:51:58 +0000 (UTC)
+X-Mailer: git-send-email 1.9.0.rc3.1008.gd08b47c.dirty
+In-Reply-To: <1392407513-37443-1-git-send-email-sandals@crustytoothpaste.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242127>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242128>
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+From: Nicolas Vigier <boklm@mars-attacks.org>
 
->>  Changes to some scripted Porcelains use unsafe variable
->>  substitutions and still need to be tightened.
->> 
->>  Will merge to 'next'.
->
-> Junio, did you want a reroll with that fixed commit message, or will you
-> fix it up yourself?
+Signed-off-by: Nicolas Vigier <boklm@mars-attacks.org>
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+---
+ Documentation/git-am.txt | 6 +++++-
+ git-am.sh                | 9 ++++++++-
+ 2 files changed, 13 insertions(+), 2 deletions(-)
 
-I haven't merged them yet---if there are need to update any one of
-them, please reroll a replacement set.
-
-Thanks.
+diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
+index 54d8461..17924d0 100644
+--- a/Documentation/git-am.txt
++++ b/Documentation/git-am.txt
+@@ -14,7 +14,7 @@ SYNOPSIS
+ 	 [--ignore-date] [--ignore-space-change | --ignore-whitespace]
+ 	 [--whitespace=<option>] [-C<n>] [-p<n>] [--directory=<dir>]
+ 	 [--exclude=<path>] [--include=<path>] [--reject] [-q | --quiet]
+-	 [--[no-]scissors]
++	 [--[no-]scissors] [-S[<keyid>]]
+ 	 [(<mbox> | <Maildir>)...]
+ 'git am' (--continue | --skip | --abort)
+ 
+@@ -119,6 +119,10 @@ default.   You can use `--no-utf8` to override this.
+ 	Skip the current patch.  This is only meaningful when
+ 	restarting an aborted patch.
+ 
++-S[<keyid>]::
++--gpg-sign[=<keyid>]::
++	GPG-sign commits.
++
+ --continue::
+ -r::
+ --resolved::
+diff --git a/git-am.sh b/git-am.sh
+index 020abf6..78517f2 100755
+--- a/git-am.sh
++++ b/git-am.sh
+@@ -38,6 +38,7 @@ abort           restore the original branch and abort the patching operation.
+ committer-date-is-author-date    lie about committer date
+ ignore-date     use current timestamp for author date
+ rerere-autoupdate update the index with reused conflict resolution if possible
++S,gpg-sign?     GPG-sign commits
+ rebasing*       (internal use for git-rebase)"
+ 
+ . git-sh-setup
+@@ -375,6 +376,7 @@ git_apply_opt=
+ committer_date_is_author_date=
+ ignore_date=
+ allow_rerere_autoupdate=
++gpg_sign_opt=
+ 
+ if test "$(git config --bool --get am.keepcr)" = true
+ then
+@@ -436,6 +438,10 @@ it will be removed. Please do not use it anymore."
+ 		keepcr=t ;;
+ 	--no-keep-cr)
+ 		keepcr=f ;;
++	--gpg-sign)
++		gpg_sign_opt=-S ;;
++	--gpg-sign=*)
++		gpg_sign_opt="-S${1#--gpg-sign=}" ;;
+ 	--)
+ 		shift; break ;;
+ 	*)
+@@ -900,7 +906,8 @@ did you forget to use 'git add'?"
+ 			GIT_COMMITTER_DATE="$GIT_AUTHOR_DATE"
+ 			export GIT_COMMITTER_DATE
+ 		fi &&
+-		git commit-tree $tree ${parent:+-p} $parent <"$dotest/final-commit"
++		git commit-tree ${parent:+-p} $parent ${gpg_sign_opt:+"$gpg_sign_opt"} $tree  \
++			<"$dotest/final-commit"
+ 	) &&
+ 	git update-ref -m "$GIT_REFLOG_ACTION: $FIRSTLINE" HEAD $commit $parent ||
+ 	stop_here $this
+-- 
+1.9.0.rc3.1008.gd08b47c.dirty
