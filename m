@@ -1,118 +1,424 @@
-From: Mark Lodato <lodato@google.com>
-Subject: [PATCH] git-completion.zsh: do not clobber complete()
-Date: Fri, 14 Feb 2014 16:24:00 -0500
-Message-ID: <1392413040-28436-1-git-send-email-lodato@google.com>
-Cc: Mark Lodato <lodato@google.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [ANNOUNCE] Git v1.9.0
+Date: Fri, 14 Feb 2014 14:10:52 -0800
+Message-ID: <xmqqa9dtgxar.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Linux Kernel <linux-kernel@vger.kernel.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 14 22:49:48 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
+X-From: linux-kernel-owner@vger.kernel.org Fri Feb 14 23:11:15 2014
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WEQdn-00058u-I1
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Feb 2014 22:49:47 +0100
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1WEQyT-0008Ur-QG
+	for glk-linux-kernel-3@plane.gmane.org; Fri, 14 Feb 2014 23:11:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752981AbaBNVtk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Feb 2014 16:49:40 -0500
-Received: from mail-qa0-f73.google.com ([209.85.216.73]:49865 "EHLO
-	mail-qa0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752887AbaBNVti (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Feb 2014 16:49:38 -0500
-Received: by mail-qa0-f73.google.com with SMTP id w5so1555756qac.4
-        for <git@vger.kernel.org>; Fri, 14 Feb 2014 13:49:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=CmVewQcmz3314TEKieNiAkwZLTiCjo4jsOiPBC7c0jQ=;
-        b=OWnME1R1tPPqryLELM1X77G+w8C/ZW+kC6UwLVfro3zaFTNuLhWqOsWP3SMdomMZHp
-         tUJW3Jvd0+77fV4a/epkmSj5lK6Z49/yr2JUHt4fRjfUKaUjk9UmqUdZaDnARPoj4kwU
-         3sq1i+OZxS3Qoax28+9Og9PkRSdOeIX9ARtRNSZ+8KpcpFGyxak5hnaCTbOll1HdNub1
-         lFPXo5Ex0eGp9vEnzdHeC8LzPB/ShhKMKk/a7HwWSPMhg2N4baBusSAivmsQTPDm5XYk
-         b8ZRwO7DpYM1KkqGheQo0ViLbK/ksBvIsBRH/auJEPlTR2WOcMrPtcOiIa2Yl2Sffhwb
-         PTAQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=CmVewQcmz3314TEKieNiAkwZLTiCjo4jsOiPBC7c0jQ=;
-        b=f+An4UVFHS4M7p+13Xfdv6B47MhWp5sXC3fSQKukYrvhvFBM14J9QbSvzcUxwlagBW
-         KmufE2zACZckB651G++/Z7wQwTf9DSgtrVjNXhj1scPR94P6J8mFZm7srnKio6cT4WIn
-         GWz0ggu5J53wiZEofBhaeXR7X/lum/brvrDkvh/LGpuK/JSuH2Gi1p/M5Vkf6V3JgEb/
-         8xysz7z4lfjbhrc6MILivczXmofI9bqRxpRPFPde7VpqfwClbLBjI4nG/21GLW4aQH8b
-         DyzkVKo9bgyPD0gCaXFh3nVub7IgeJwsrdG5JsoTw0rH0qTNHb8OWvmjztnR73ObpCmp
-         9Oig==
-X-Gm-Message-State: ALoCoQkV30PfhMVmNbRlMhNZVN2t1XF4vS5wP0Yn9QCkB9ylryMvYfeDNw2QVZHN+8shQyto1yn0TsJn0N1bPiOR8LriO/EZ/VceZKdXz4d+ne/PiunQ0Qq0hE/9ryrwDmRfDNmqF0p+az8brorKfbphjnWUwwZcO1MBnHGNo4iBpj7L4FVOjykfvzkEUOwAvXJpVn3ILUaX
-X-Received: by 10.224.20.133 with SMTP id f5mr4161676qab.8.1392413048141;
-        Fri, 14 Feb 2014 13:24:08 -0800 (PST)
-Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
-        by gmr-mx.google.com with ESMTPS id i24si1081498yhe.6.2014.02.14.13.24.08
-        for <multiple recipients>
-        (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 14 Feb 2014 13:24:08 -0800 (PST)
-Received: from lodato.nyc.corp.google.com (lodato.nyc.corp.google.com [172.26.77.41])
-	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id 0BCBD31C230;
-	Fri, 14 Feb 2014 13:24:08 -0800 (PST)
-Received: by lodato.nyc.corp.google.com (Postfix, from userid 169858)
-	id 7524440369; Fri, 14 Feb 2014 16:24:07 -0500 (EST)
-X-Mailer: git-send-email 1.9.0.rc1.175.g0b1dcb5
-Sender: git-owner@vger.kernel.org
+	id S1752954AbaBNWK7 (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Fri, 14 Feb 2014 17:10:59 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:53133 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751833AbaBNWK4 (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
+	Fri, 14 Feb 2014 17:10:56 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 220686C575;
+	Fri, 14 Feb 2014 17:10:56 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=g
+	QXLj/+yilO8f9FwR5RA7p8IcHc=; b=KgJmDDRXW4SiPawQJmuvOrqa5fr/3pTgo
+	vnxhpF4jBBhOFbw1XNk6sTc2B+rYYbPLjZktCbp9jhCa4wZyslSNB8FXAcFwujn+
+	DHvLZ4XmVl9d9MpYxgBrPhzoMm/mZH1whl4bUuIrfz42/vq/B3QYR31l3PJRykRJ
+	xHLZkyTWH8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:mime-version:content-type; q=dns; s=
+	sasl; b=Sb8+x35CbYOwx3xDbzS6aAG0vy7XpWmd0SDXZa5w3V4sMjMGkArY1W5G
+	nm1/CUx/3Vv1hgSNf1jqKpiAEhWVa5Ji7tbPy0goLKg+2JjNKL9jNQi8c/nVGmKS
+	3Femem8cvq8xbvOBKF56OgNj3Y0Gyt1g8C+y+2uDuuBHF5+P24w=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 0F4A46C574;
+	Fri, 14 Feb 2014 17:10:56 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1C2E36C571;
+	Fri, 14 Feb 2014 17:10:54 -0500 (EST)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: DF26D080-95C4-11E3-A263-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242152>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242153>
 
-Previously, git-completion.zsh redefined complete() to make __git_complete()
-a no-op. This broke zsh's built-in bash completion compatibility layer
-(bashcompinit), which defines its own complete().
+The latest feature release Git v1.9.0 is now available at the
+usual places.
 
-Sadly, since there is no way in zsh to restore the original defintion of
-complete() after bash-completion.bash is sourced, we must pass in a flag to
-git-completion.bash to change its behavior.
+The release tarballs are found at:
 
-Signed-off-by: Mark Lodato <lodato@google.com>
----
- contrib/completion/git-completion.bash | 1 +
- contrib/completion/git-completion.zsh  | 8 +-------
- 2 files changed, 2 insertions(+), 7 deletions(-)
+    http://code.google.com/p/git-core/downloads/list
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 9525343..36aa8bb 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -2650,6 +2650,7 @@ __git_func_wrap ()
- # This is NOT a public function; use at your own risk.
- __git_complete ()
- {
-+	[[ -n $GIT_DO_NOT_CALL_COMPLETE ]] && return
- 	local wrapper="__git_wrap${2}"
- 	eval "$wrapper () { __git_func_wrap $2 ; }"
- 	complete -o bashdefault -o default -o nospace -F $wrapper $1 2>/dev/null \
-diff --git a/contrib/completion/git-completion.zsh b/contrib/completion/git-completion.zsh
-index 6b77968..9f68d63 100644
---- a/contrib/completion/git-completion.zsh
-+++ b/contrib/completion/git-completion.zsh
-@@ -16,12 +16,6 @@
- #
- #  fpath=(~/.zsh $fpath)
- 
--complete ()
--{
--	# do nothing
--	return 0
--}
--
- zstyle -T ':completion:*:*:git:*' tag-order && \
- 	zstyle ':completion:*:*:git:*' tag-order 'common-commands'
- 
-@@ -39,7 +33,7 @@ if [ -z "$script" ]; then
- 		test -f $e && script="$e" && break
- 	done
- fi
--ZSH_VERSION='' . "$script"
-+GIT_DO_NOT_CALL_COMPLETE=1 ZSH_VERSION='' . "$script"
- 
- __gitcomp ()
- {
--- 
-1.9.0.rc1.175.g0b1dcb5
+and their SHA-1 checksums are:
+
+e60667fc16e5a5f1cde46616b0458cc802707743  git-1.9.0.tar.gz
+65eb3f411f4699695c7081a7c716cabb9ce23d75  git-htmldocs-1.9.0.tar.gz
+cff590c92b4d1c8a143c078473140b653cc5d56a  git-manpages-1.9.0.tar.gz
+
+The following public repositories all have a copy of the v1.9.0
+tag and the master branch that the tag points at:
+
+  url = https://kernel.googlesource.com/pub/scm/git/git
+  url = git://repo.or.cz/alt-git.git
+  url = https://code.google.com/p/git-core/
+  url = git://git.sourceforge.jp/gitroot/git-core/git.git
+  url = git://git-core.git.sourceforge.net/gitroot/git-core/git-core
+  url = https://github.com/gitster/git
+
+Also, http://www.kernel.org/pub/software/scm/git/ has copies of the
+release tarballs.
+
+Git v1.9.0 Release Notes
+========================
+
+Backward compatibility notes
+----------------------------
+
+"git submodule foreach $cmd $args" used to treat "$cmd $args" the same
+way "ssh" did, concatenating them into a single string and letting the
+shell unquote. Careless users who forget to sufficiently quote $args
+get their argument split at $IFS whitespaces by the shell, and got
+unexpected results due to this. Starting from this release, the
+command line is passed directly to the shell, if it has an argument.
+
+Read-only support for experimental loose-object format, in which users
+could optionally choose to write their loose objects for a short
+while between v1.4.3 and v1.5.3 era, has been dropped.
+
+The meanings of the "--tags" option to "git fetch" has changed; the
+command fetches tags _in addition to_ what is fetched by the same
+command line without the option.
+
+The way "git push $there $what" interprets the $what part given on the
+command line, when it does not have a colon that explicitly tells us
+what ref at the $there repository is to be updated, has been enhanced.
+
+A handful of ancient commands that have long been deprecated are
+finally gone (repo-config, tar-tree, lost-found, and peek-remote).
+
+
+Backward compatibility notes (for Git 2.0.0)
+--------------------------------------------
+
+When "git push [$there]" does not say what to push, we have used the
+traditional "matching" semantics so far (all your branches were sent
+to the remote as long as there already are branches of the same name
+over there).  In Git 2.0, the default will change to the "simple"
+semantics, which pushes:
+
+ - only the current branch to the branch with the same name, and only
+   when the current branch is set to integrate with that remote
+   branch, if you are pushing to the same remote as you fetch from; or
+
+ - only the current branch to the branch with the same name, if you
+   are pushing to a remote that is not where you usually fetch from.
+
+Use the user preference configuration variable "push.default" to
+change this.  If you are an old-timer who is used to the "matching"
+semantics, you can set the variable to "matching" to keep the
+traditional behaviour.  If you want to live in the future early, you
+can set it to "simple" today without waiting for Git 2.0.
+
+When "git add -u" (and "git add -A") is run inside a subdirectory and
+does not specify which paths to add on the command line, it
+will operate on the entire tree in Git 2.0 for consistency
+with "git commit -a" and other commands.  There will be no
+mechanism to make plain "git add -u" behave like "git add -u .".
+Current users of "git add -u" (without a pathspec) should start
+training their fingers to explicitly say "git add -u ."
+before Git 2.0 comes.  A warning is issued when these commands are
+run without a pathspec and when you have local changes outside the
+current directory, because the behaviour in Git 2.0 will be different
+from today's version in such a situation.
+
+In Git 2.0, "git add <path>" will behave as "git add -A <path>", so
+that "git add dir/" will notice paths you removed from the directory
+and record the removal.  Versions before Git 2.0, including this
+release, will keep ignoring removals, but the users who rely on this
+behaviour are encouraged to start using "git add --ignore-removal <path>"
+now before 2.0 is released.
+
+The default prefix for "git svn" will change in Git 2.0.  For a long
+time, "git svn" created its remote-tracking branches directly under
+refs/remotes, but it will place them under refs/remotes/origin/ unless
+it is told otherwise with its --prefix option.
+
+
+Updates since v1.8.5
+--------------------
+
+Foreign interfaces, subsystems and ports.
+
+ * The HTTP transport, when talking GSS-Negotiate, uses "100
+   Continue" response to avoid having to rewind and resend a large
+   payload, which may not be always doable.
+
+ * Various bugfixes to remote-bzr and remote-hg (in contrib/).
+
+ * The build procedure is aware of MirBSD now.
+
+ * Various "git p4", "git svn" and "gitk" updates.
+
+
+UI, Workflows & Features
+
+ * Fetching from a shallowly-cloned repository used to be forbidden,
+   primarily because the codepaths involved were not carefully vetted
+   and we did not bother supporting such usage. This release attempts
+   to allow object transfer out of a shallowly-cloned repository in a
+   more controlled way (i.e. the receiver becomes a shallow repository
+   with a truncated history).
+
+ * Just like we give a reasonable default for "less" via the LESS
+   environment variable, we now specify a reasonable default for "lv"
+   via the "LV" environment variable when spawning the pager.
+
+ * Two-level configuration variable names in "branch.*" and "remote.*"
+   hierarchies, whose variables are predominantly three-level, were
+   not completed by hitting a <TAB> in bash and zsh completions.
+
+ * Fetching a 'frotz' branch with "git fetch", while a 'frotz/nitfol'
+   remote-tracking branch from an earlier fetch was still there, would
+   error out, primarily because the command was not told that it is
+   allowed to lose any information on our side.  "git fetch --prune"
+   now can be used to remove 'frotz/nitfol' to make room for fetching and
+   storing the 'frotz' remote-tracking branch.
+
+ * "diff.orderfile=<file>" configuration variable can be used to
+   pretend as if the "-O<file>" option were given from the command
+   line of "git diff", etc.
+
+ * The negative pathspec syntax allows "git log -- . ':!dir'" to tell
+   us "I am interested in everything but 'dir' directory".
+
+ * "git difftool" shows how many different paths there are in total,
+   and how many of them have been shown so far, to indicate progress.
+
+ * "git push origin master" used to push our 'master' branch to update
+   the 'master' branch at the 'origin' repository.  This has been
+   enhanced to use the same ref mapping "git push origin" would use to
+   determine what ref at the 'origin' to be updated with our 'master'.
+   For example, with this configuration
+
+   [remote "origin"]
+      push = refs/heads/*:refs/review/*
+
+   that would cause "git push origin" to push out our local branches
+   to corresponding refs under refs/review/ hierarchy at 'origin',
+   "git push origin master" would update 'refs/review/master' over
+   there.  Alternatively, if push.default is set to 'upstream' and our
+   'master' is set to integrate with 'topic' from the 'origin' branch,
+   running "git push origin" while on our 'master' would update their
+   'topic' branch, and running "git push origin master" while on any
+   of our branches does the same.
+
+ * "gitweb" learned to treat ref hierarchies other than refs/heads as
+   if they are additional branch namespaces (e.g. refs/changes/ in
+   Gerrit).
+
+ * "git for-each-ref --format=..." learned a few formatting directives;
+   e.g. "%(color:red)%(HEAD)%(color:reset) %(refname:short) %(subject)".
+
+ * The command string given to "git submodule foreach" is passed
+   directly to the shell, without being eval'ed.  This is a backward
+   incompatible change that may break existing users.
+
+ * "git log" and friends learned the "--exclude=<glob>" option, to
+   allow people to say "list history of all branches except those that
+   match this pattern" with "git log --exclude='*/*' --branches".
+
+ * "git rev-parse --parseopt" learned a new "--stuck-long" option to
+   help scripts parse options with an optional parameter.
+
+ * The "--tags" option to "git fetch" no longer tells the command to
+   fetch _only_ the tags. It instead fetches tags _in addition to_
+   what are fetched by the same command line without the option.
+
+
+Performance, Internal Implementation, etc.
+
+ * When parsing a 40-hex string into the object name, the string is
+   checked to see if it can be interpreted as a ref so that a warning
+   can be given for ambiguity. The code kicked in even when the
+   core.warnambiguousrefs is set to false to squelch this warning, in
+   which case the cycles spent to look at the ref namespace were an
+   expensive no-op, as the result was discarded without being used.
+
+ * The naming convention of the packfiles has been updated; it used to
+   be based on the enumeration of names of the objects that are
+   contained in the pack, but now it also depends on how the packed
+   result is represented---packing the same set of objects using
+   different settings (or delta order) would produce a pack with
+   different name.
+
+ * "git diff --no-index" mode used to unnecessarily attempt to read
+   the index when there is one.
+
+ * The deprecated parse-options macro OPT_BOOLEAN has been removed;
+   use OPT_BOOL or OPT_COUNTUP in new code.
+
+ * A few duplicate implementations of prefix/suffix string comparison
+   functions have been unified to starts_with() and ends_with().
+
+ * The new PERLLIB_EXTRA makefile variable can be used to specify
+   additional directories Perl modules (e.g. the ones necessary to run
+   git-svn) are installed on the platform when building.
+
+ * "git merge-base" learned the "--fork-point" mode, that implements
+   the same logic used in "git pull --rebase" to find a suitable fork
+   point out of the reflog entries for the remote-tracking branch the
+   work has been based on.  "git rebase" has the same logic that can be
+   triggered with the "--fork-point" option.
+
+ * A third-party "receive-pack" (the responder to "git push") can
+   advertise the "no-thin" capability to tell "git push" not to use
+   the thin-pack optimization. Our receive-pack has always been
+   capable of accepting and fattening a thin-pack, and will continue
+   not to ask "git push" to use a non-thin pack.
+
+
+Also contains various documentation updates and code clean-ups.
+
+
+Fixes since v1.8.5
+------------------
+
+Unless otherwise noted, all the fixes since v1.8.5 in the maintenance
+track are contained in this release (see the maintenance releases' notes
+for details).
+
+ * The pathspec matching code, while comparing two trees (e.g. "git
+   diff A B -- path1 path2") was too aggressive and failed to match
+   some paths when multiple pathspecs were involved.
+
+ * "git repack --max-pack-size=8g" stopped being parsed correctly when
+   the command was reimplemented in C.
+
+ * An earlier update in v1.8.4.x to "git rev-list --objects" with
+   negative ref had a performance regression.
+   (merge 200abe7 jk/mark-edges-uninteresting later to maint).
+
+ * A recent update to "git send-email" broke platforms where
+   /etc/ssl/certs/ directory exists but cannot be used as SSL_ca_path
+   (e.g. Fedora rawhide).
+
+ * A handful of bugs around interpreting $branch@{upstream} notation
+   and its lookalike, when $branch part has interesting characters,
+   e.g. "@", and ":", have been fixed.
+
+ * "git clone" would fail to clone from a repository that has a ref
+   directly under "refs/", e.g. "refs/stash", because different
+   validation paths do different things on such a refname.  Loosen the
+   client side's validation to allow such a ref.
+
+ * "git log --left-right A...B" lost the "leftness" of commits
+   reachable from A when A is a tag as a side effect of a recent
+   bugfix.  This is a regression in 1.8.4.x series.
+
+ * documentations to "git pull" hinted there is an "-m" option because
+   it incorrectly shared the documentation with "git merge".
+
+ * "git diff A B submod" and "git diff A B submod/" ought to have done
+   the same for a submodule "submod", but didn't.
+
+ * "git clone $origin foo\bar\baz" on Windows failed to create the
+   leading directories (i.e. a moral-equivalent of "mkdir -p").
+
+ * "submodule.*.update=checkout", when propagated from .gitmodules to
+   .git/config, turned into a "submodule.*.update=none", which did not
+   make much sense.
+   (merge efa8fd7 fp/submodule-checkout-mode later to maint).
+
+ * The implementation of 'git stash $cmd "stash@{...}"' did not quote
+   the stash argument properly and left it split at IFS whitespace.
+
+ * The "--[no-]informative-errors" options to "git daemon" were parsed
+   a bit too loosely, allowing any other string after these option
+   names.
+
+ * There is no reason to have a hardcoded upper limit for the number of
+   parents of an octopus merge, created via the graft mechanism, but
+   there was.
+
+ * The basic test used to leave unnecessary trash directories in the
+   t/ directory.
+   (merge 738a8be jk/test-framework-updates later to maint).
+
+ * "git merge-base --octopus" used to leave cleaning up suboptimal
+   result to the caller, but now it does the clean-up itself.
+
+ * A "gc" process running as a different user should be able to stop a
+   new "gc" process from starting, but it didn't.
+
+ * An earlier "clean-up" introduced an unnecessary memory leak.
+
+ * "git add -A" (no other arguments) in a totally empty working tree
+   used to emit an error.
+
+ * "git log --decorate" did not handle a tag pointed by another tag
+   nicely.
+
+ * When we figure out how many file descriptors to allocate for
+   keeping packfiles open, a system with non-working getrlimit() could
+   cause us to die(), but because we make this call only to get a
+   rough estimate of how many are available and we do not even attempt
+   to use up all available file descriptors ourselves, it is nicer to
+   fall back to a reasonable low value rather than dying.
+
+ * read_sha1_file(), that is the workhorse to read the contents given
+   an object name, honoured object replacements, but there was no
+   corresponding mechanism to sha1_object_info() that was used to
+   obtain the metainfo (e.g. type & size) about the object.  This led
+   callers to weird inconsistencies.
+   (merge 663a856 cc/replace-object-info later to maint).
+
+ * "git cat-file --batch=", an admittedly useless command, did not
+   behave very well.
+
+ * "git rev-parse <revs> -- <paths>" did not implement the usual
+   disambiguation rules the commands in the "git log" family used in
+   the same way.
+
+ * "git mv A B/", when B does not exist as a directory, should error
+   out, but it didn't.
+
+ * A workaround to an old bug in glibc prior to glibc 2.17 has been
+   retired; this would remove a side effect of the workaround that
+   corrupts system error messages in non-C locales.
+
+ * SSL-related options were not passed correctly to underlying socket
+   layer in "git send-email".
+
+ * "git commit -v" appends the patch to the log message before
+   editing, and then removes the patch when the editor returned
+   control. However, the patch was not stripped correctly when the
+   first modified path was a submodule.
+
+ * "git fetch --depth=0" was a no-op, and was silently ignored.
+   Diagnose it as an error.
+
+ * Remote repository URLs expressed in scp-style host:path notation are
+   parsed more carefully (e.g. "foo/bar:baz" is local, "[::1]:/~user" asks
+   to connect to user's home directory on host at address ::1.
+
+ * "git diff -- ':(icase)makefile'" was unnecessarily rejected at the
+   command line parser.
+
+ * "git cat-file --batch-check=ok" did not check the existence of
+   the named object.
+
+ * "git am --abort" sometimes complained about not being able to write
+   a tree with an 0{40} object in it.
+
+ * Two processes creating loose objects at the same time could have
+   failed unnecessarily when the name of their new objects started
+   with the same byte value, due to a race condition.
