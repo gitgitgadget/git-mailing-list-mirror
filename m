@@ -1,103 +1,94 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] tests: turn on network daemon tests by default
-Date: Fri, 14 Feb 2014 08:13:24 -0800
-Message-ID: <xmqqbny9k6zf.fsf@gitster.dls.corp.google.com>
-References: <20140210191521.GA3112@sigill.intra.peff.net>
-	<20140210212931.GA16154@sigill.intra.peff.net>
-	<xmqqa9dxpgw9.fsf@gitster.dls.corp.google.com>
-	<20140211200445.GA27946@sigill.intra.peff.net>
-	<xmqqzjlxnqvw.fsf@gitster.dls.corp.google.com>
-	<20140212214753.GA6799@sigill.intra.peff.net>
-	<xmqq38jom037.fsf@gitster.dls.corp.google.com>
-	<xmqqfvnmlsb2.fsf@gitster.dls.corp.google.com>
-	<20140214095841.GA27161@sigill.intra.peff.net>
+Subject: Re: [PATCH] notes: Disallow reusing non-blob as a note object
+Date: Fri, 14 Feb 2014 08:19:44 -0800
+Message-ID: <xmqq7g8xk6ov.fsf@gitster.dls.corp.google.com>
+References: <CALKQrgdnGhc-y3WMf+zej4M+O4NMhLKusE-N6dX_xKVViZmQzA@mail.gmail.com>
+	<1392198856-3908-1-git-send-email-johan@herland.net>
+	<CAPig+cSQ12Ga4kEnNrspzru2F3p0jWb2i=1GRX84k0am5AA6Bw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Feb 14 17:13:47 2014
+Cc: Johan Herland <johan@herland.net>, Git List <git@vger.kernel.org>,
+	Joachim Breitner <mail@joachim-breitner.de>,
+	"Kyle J. McKay" <mackyle@gmail.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Fri Feb 14 17:20:04 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WELOW-0002RS-5v
-	for gcvg-git-2@plane.gmane.org; Fri, 14 Feb 2014 17:13:40 +0100
+	id 1WELUX-0008So-QA
+	for gcvg-git-2@plane.gmane.org; Fri, 14 Feb 2014 17:19:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751855AbaBNQNf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Feb 2014 11:13:35 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55674 "EHLO
+	id S1752605AbaBNQTt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Feb 2014 11:19:49 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35190 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751053AbaBNQNe (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Feb 2014 11:13:34 -0500
+	id S1752583AbaBNQTs (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Feb 2014 11:19:48 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8C7BB6C02E;
-	Fri, 14 Feb 2014 11:13:33 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 99BFD6C238;
+	Fri, 14 Feb 2014 11:19:47 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=rDiV6Sc8jpud3rOspe9RBhxmPrQ=; b=LgAhX2
-	3YBp0o9E+8VDM46wsa8alu0+rZ95yHUDmhwfnYTdG5MEmeSDsQN4Yjm0GPm+GHv7
-	hxQkkUQRGNegR9D0cBqlucJqwoY6tm2IV1TSNQ4VieCmH8QvDrhXTvL29minNphs
-	erGYB8WICFHBaXbcAwreFcN5m5h0dZo9pS0gc=
+	:content-type; s=sasl; bh=z94qeNaguLpBzig8T17SOYf0d7s=; b=Cqqj3h
+	Woi/eEtRk25V1eRzyKKYWbuXPt+NWij/IWbIw3yzQIEQnw6qqXYCl3ho995WnnWV
+	DJphww7CyftfllxVQTS7xOqq0wVQ0zx/bB2SnndKORc4lipnQu7RKTFCsRti4Gha
+	wk1Oh45CrKyLmsffW5dAIleKCHbwBo7/lUS1g=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Sn/mLbQSMtf2L/s0CEaG+v0WsJVngY9K
-	LEhNDW+EJ8WMKxtcR44mLC8cKJ8mqyagRka8aW8fgoFpHmrSTS3k6RQ/UPSeAtMV
-	/ey9GhfWqFt4CzGrb+3BZCylfWTuBnBTRzG8Q10uQWWDYF22aa8dmFJcj1C2EVND
-	mpNekeVxhBA=
+	:content-type; q=dns; s=sasl; b=I18Q8ugIOkbpgHApVP/LYNVMq+rwBlk3
+	zDC8hbeeGWJEXj9Ot4trcWqwQ6XeAZTG4LokTvwdZXpbNXWXSKvPXamEd+RYAo9E
+	BwvcT3TQpiq5oPuWMYo4HpfpaD6ExJSfPgVMByyfRNauZCWZNI0rrcd0CZMqGBY2
+	KdpjD3u/fkg=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 492F36C02C;
-	Fri, 14 Feb 2014 11:13:33 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5FF636C236;
+	Fri, 14 Feb 2014 11:19:47 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E3B1C6C026;
-	Fri, 14 Feb 2014 11:13:26 -0500 (EST)
-In-Reply-To: <20140214095841.GA27161@sigill.intra.peff.net> (Jeff King's
-	message of "Fri, 14 Feb 2014 04:58:42 -0500")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6DB3A6C231;
+	Fri, 14 Feb 2014 11:19:46 -0500 (EST)
+In-Reply-To: <CAPig+cSQ12Ga4kEnNrspzru2F3p0jWb2i=1GRX84k0am5AA6Bw@mail.gmail.com>
+	(Eric Sunshine's message of "Fri, 14 Feb 2014 10:19:22 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: EFA2A81C-9592-11E3-B5EE-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: D1D847AA-9593-11E3-A283-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242107>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242108>
 
-Jeff King <peff@peff.net> writes:
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
->>  - We may want to do something similar in cvsserver and git-gui to
->>    make them more robust.
->> 
->>    $ git grep -e true --and -e 1 --and -e yes
+>> +       if (type != OBJ_BLOB) {
+>> +               free(buf);
+>> +               die(_("Cannot read note data from non-blob object '%s'."), arg);
 >
-> I assume the "something" here is to respect bool options more
-> consistently?
+> The way this diagnostic is worded, it sound as if the 'read' failed
+> rather than that the user specified an incorrect object type. Perhaps
+> "Object is not a blob '%s'" or "Expected blob but '%s' has type '%s'"
+> or something along those lines?
 
-Yeah, mostly by employing your 'git -c magic.var=X config --bool'
-trick and check only for 'false' and 'true', instead of keeping a
-hard-coded logic like the lines that hit the above query do.
+Yeah, sounds good.  You also need to say what expects a blob, too.
+Perhaps something like this?
 
-> I have no problem with that, but nor do I care too much
-> about those programs (that is partially laziness, but also partially
-> that I do not want to deal with introducing a regression).
+ builtin/notes.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-True, too ;-)
-
->>  - Do we want to do something similar to GIT_TEST_CREDENTIAL_HELPER?
->
-> No, it is not a boolean. It is a bit of a hack, but it is meant to be
-> used like:
->
->   GIT_TEST_CREDENTIAL_HELPER=foo ./t0303-*
->
-> to test some random git-credential-foo you have in your PATH. There is
-> nothing to run "by default" there.
-
-Ah, OK.  I was only grepping for "test -z .*GIT_TEST_".
->> tri-state is "auto" (or empty), but report an error when it is
->
-> You probably want to drop this "or empty" or change it to "or unset",
-
-Thanks, I totally missed that.
+diff --git a/builtin/notes.c b/builtin/notes.c
+index c11d6e6..a16bc00 100644
+--- a/builtin/notes.c
++++ b/builtin/notes.c
+@@ -272,8 +272,10 @@ static int parse_reuse_arg(const struct option *opt, const char *arg, int unset)
+ 		die(_("Failed to read object '%s'."), arg);
+ 	}
+ 	if (type != OBJ_BLOB) {
++		struct msg_arg *msg = opt->value;
+ 		free(buf);
+-		die(_("Cannot read note data from non-blob object '%s'."), arg);
++		die(_("The -%c option takes a blob, which '%s' is not.",
++		      msg->use_editor ? 'c' : 'C', arg));
+ 	}
+ 	strbuf_add(&(msg->buf), buf, len);
+ 	free(buf);
