@@ -1,169 +1,85 @@
-From: Roberto Tyley <roberto.tyley@gmail.com>
-Subject: [PATCH] Fix documentation AsciiDoc links for external urls
-Date: Sat, 15 Feb 2014 14:39:37 +0000
-Message-ID: <1392475177-31358-1-git-send-email-roberto.tyley@gmail.com>
-Cc: Roberto Tyley <roberto.tyley@gmail.com>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sat Feb 15 15:40:23 2014
+From: larsbj@gullik.org (Lars Gullik =?iso-8859-1?Q?Bj=F8nnes?=)
+Subject: [PATCH] git-contacts: do not fail parsing of good diffs
+Date: Sat, 15 Feb 2014 18:24:50 +0100
+Organization: LyX Developer http://www.lyx.org/
+Message-ID: <m3wqgw2srh.fsf@black.gullik.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 15 18:25:00 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WEgPl-0003KY-Oy
-	for gcvg-git-2@plane.gmane.org; Sat, 15 Feb 2014 15:40:22 +0100
+	id 1WEiz5-0006ZI-AC
+	for gcvg-git-2@plane.gmane.org; Sat, 15 Feb 2014 18:24:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753357AbaBOOkM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Feb 2014 09:40:12 -0500
-Received: from mail-we0-f173.google.com ([74.125.82.173]:34838 "EHLO
-	mail-we0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753311AbaBOOkL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Feb 2014 09:40:11 -0500
-Received: by mail-we0-f173.google.com with SMTP id x48so3772971wes.4
-        for <git@vger.kernel.org>; Sat, 15 Feb 2014 06:40:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=GSU2wzCKL8RHwjWjk3+JaDWClE6cf3FPWvflAx682W4=;
-        b=T7vqNIYUAkboWGOSLzHlXRJvniinsGysjKrJk1tekvcyBXTWRGAal/pr13G1KTAhqP
-         SMaNjVGsjB8LuNEztggojVJai6ij+gz0k6yAgMIJt2M6rIrolhyQS/L9Rc2SRJIWcy4q
-         /aE/g19IIsuxc37ibgDSrEGBKmvjhMNk+wtuSczh+/pJTI4YL78uXb6hdrPBtx4KjYBQ
-         hbFg6xkc2o0GmIJuiDy3zj850zWmj5jF7sHkx5rnFM/oHyXwnQzfnjqv890FfMJ6kNF9
-         quCmVJ04gPB7ZwWgtWjAHe4rEGawJOtPwnE5EGEcaDIV8rfDwZ8yg7TscOTCd+BEUS6b
-         MFhw==
-X-Received: by 10.194.86.200 with SMTP id r8mr303750wjz.49.1392475209425;
-        Sat, 15 Feb 2014 06:40:09 -0800 (PST)
-Received: from localhost.localdomain ([82.28.36.37])
-        by mx.google.com with ESMTPSA id v6sm13822901wif.0.2014.02.15.06.40.07
-        for <multiple recipients>
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 15 Feb 2014 06:40:08 -0800 (PST)
-X-Mailer: git-send-email 1.8.3.2
+	id S1753474AbaBORYy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 15 Feb 2014 12:24:54 -0500
+Received: from mail-ea0-f169.google.com ([209.85.215.169]:34259 "EHLO
+	mail-ea0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753442AbaBORYy convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 15 Feb 2014 12:24:54 -0500
+Received: by mail-ea0-f169.google.com with SMTP id h10so6445743eak.28
+        for <git@vger.kernel.org>; Sat, 15 Feb 2014 09:24:52 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:subject:organization:date:message-id
+         :user-agent:mime-version:content-type:content-transfer-encoding;
+        bh=WOI2Kb4qHEII/zq3Fru+jBGiQoQ+Q0MuTgHL41hHTB8=;
+        b=iBA0qt0TJLDIhR7y1eFdIk6JD7YOoej5D1Z29J284t5oTuu49g0sVLIUAJqWkKqR5m
+         fM79m4gZ8ttAMX15XX11rEX+YmVTAL6e6jRzmOOJF5C2gj+bVdhyPwcJw4PC6wJVW2Vg
+         53nmDIph7BOzMNZx9woSSdIN6jZRJMbjH2xgHPdA7WQLk6vh26g4MuHazZutHpSUW/UY
+         Lu9/vi1QCnGzoIypzwnFZAtZ5iMVwYrjT1SuyWOrsGR8cktDKL6fJKfuv1P98aLYDQQJ
+         +2zM06HCArrTnVb8ccoUqbsr27aOS7dj7pJGDcK7ZxM/iPG9pRF6Su6Lq5LIUvHFh3ZX
+         7Jug==
+X-Gm-Message-State: ALoCoQlZiyev8M6u7b07/XmMkuLGr2gm1w5kru350QuzPTSz/yr0ZYuErxdwa2+N3CRFIfUyI1Ac
+X-Received: by 10.14.0.132 with SMTP id 4mr386313eeb.95.1392485092737;
+        Sat, 15 Feb 2014 09:24:52 -0800 (PST)
+Received: from black.gullik.net.gullik.org (cm-84.208.110.57.getinternet.no. [84.208.110.57])
+        by mx.google.com with ESMTPSA id j42sm34551124eep.21.2014.02.15.09.24.51
+        for <git@vger.kernel.org>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 15 Feb 2014 09:24:52 -0800 (PST)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242194>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242195>
 
-Turns out that putting 'link:' before the 'http' is actually superfluous
-in AsciiDoc, as there's already a predefined macro to handle it.
 
-"http, https, [etc] URLs are rendered using predefined inline macros."
-http://www.methods.co.nz/asciidoc/userguide.html#_urls
+If a line in a patch starts with "--- " it will be deemed
+malformed unless it also contains the proper diff header
+format. This situation can happen with a valid patch if
+it has a line starting with "-- " and that line is removed.
 
-"Hypertext links to files on the local file system are specified
-using the link inline macro."
-http://www.methods.co.nz/asciidoc/userguide.html#_linking_to_local_documents
+This patch just removes the check in git-contacts.
 
-Despite being superfluous, the reference implementation of AsciiDoc
-tolerates the extra 'link:' and silently removes it, giving a functioning
-link in the generated HTML. However, AsciiDoctor (the Ruby implementation
-of AsciiDoc used to render the http://git-scm.com/ site) does /not/ have
-this behaviour, and so generates broken links, as can be seen here:
-
-http://git-scm.com/docs/git-cvsimport (links to cvs2git & parsecvs)
-http://git-scm.com/docs/git-filter-branch (link to The BFG)
-
-It's worth noting that after this change, the html generated by 'make html'
-in the git project is identical, and all links still work.
+Signed-off-by: Lars Gullik Bj=F8nnes <larsbj@gullik.org>
 ---
- Documentation/git-cvsimport.txt           | 4 ++--
- Documentation/git-filter-branch.txt       | 4 ++--
- Documentation/gitcore-tutorial.txt        | 2 +-
- Documentation/gitcvs-migration.txt        | 2 +-
- Documentation/gitweb.txt                  | 2 +-
- Documentation/technical/http-protocol.txt | 4 ++--
- 6 files changed, 9 insertions(+), 9 deletions(-)
+ contrib/contacts/git-contacts | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/Documentation/git-cvsimport.txt b/Documentation/git-cvsimport.txt
-index 2df9953..260f39f 100644
---- a/Documentation/git-cvsimport.txt
-+++ b/Documentation/git-cvsimport.txt
-@@ -21,8 +21,8 @@ DESCRIPTION
- *WARNING:* `git cvsimport` uses cvsps version 2, which is considered
- deprecated; it does not work with cvsps version 3 and later.  If you are
- performing a one-shot import of a CVS repository consider using
--link:http://cvs2svn.tigris.org/cvs2git.html[cvs2git] or
--link:https://github.com/BartMassey/parsecvs[parsecvs].
-+http://cvs2svn.tigris.org/cvs2git.html[cvs2git] or
-+https://github.com/BartMassey/parsecvs[parsecvs].
- 
- Imports a CVS repository into Git. It will either create a new
- repository, or incrementally import into an existing one.
-diff --git a/Documentation/git-filter-branch.txt b/Documentation/git-filter-branch.txt
-index 2eba627..09535f2 100644
---- a/Documentation/git-filter-branch.txt
-+++ b/Documentation/git-filter-branch.txt
-@@ -436,7 +436,7 @@ git-filter-branch allows you to make complex shell-scripted rewrites
- of your Git history, but you probably don't need this flexibility if
- you're simply _removing unwanted data_ like large files or passwords.
- For those operations you may want to consider
--link:http://rtyley.github.io/bfg-repo-cleaner/[The BFG Repo-Cleaner],
-+http://rtyley.github.io/bfg-repo-cleaner/[The BFG Repo-Cleaner],
- a JVM-based alternative to git-filter-branch, typically at least
- 10-50x faster for those use-cases, and with quite different
- characteristics:
-@@ -455,7 +455,7 @@ characteristics:
-   _is_ possible to write filters that include their own parallellism,
-   in the scripts executed against each commit.
- 
--* The link:http://rtyley.github.io/bfg-repo-cleaner/#examples[command options]
-+* The http://rtyley.github.io/bfg-repo-cleaner/#examples[command options]
-   are much more restrictive than git-filter branch, and dedicated just
-   to the tasks of removing unwanted data- e.g:
-   `--strip-blobs-bigger-than 1M`.
-diff --git a/Documentation/gitcore-tutorial.txt b/Documentation/gitcore-tutorial.txt
-index 058a352..d2d7c21 100644
---- a/Documentation/gitcore-tutorial.txt
-+++ b/Documentation/gitcore-tutorial.txt
-@@ -1443,7 +1443,7 @@ Although Git is a truly distributed system, it is often
- convenient to organize your project with an informal hierarchy
- of developers. Linux kernel development is run this way. There
- is a nice illustration (page 17, "Merges to Mainline") in
--link:http://www.xenotime.net/linux/mentor/linux-mentoring-2006.pdf[Randy Dunlap's presentation].
-+http://www.xenotime.net/linux/mentor/linux-mentoring-2006.pdf[Randy Dunlap's presentation].
- 
- It should be stressed that this hierarchy is purely *informal*.
- There is nothing fundamental in Git that enforces the "chain of
-diff --git a/Documentation/gitcvs-migration.txt b/Documentation/gitcvs-migration.txt
-index 5ea94cb..5f4e890 100644
---- a/Documentation/gitcvs-migration.txt
-+++ b/Documentation/gitcvs-migration.txt
-@@ -117,7 +117,7 @@ Importing a CVS archive
- -----------------------
- 
- First, install version 2.1 or higher of cvsps from
--link:http://www.cobite.com/cvsps/[http://www.cobite.com/cvsps/] and make
-+http://www.cobite.com/cvsps/[http://www.cobite.com/cvsps/] and make
- sure it is in your path.  Then cd to a checked out CVS working directory
- of the project you are interested in and run linkgit:git-cvsimport[1]:
- 
-diff --git a/Documentation/gitweb.txt b/Documentation/gitweb.txt
-index cca14b8..cd9c895 100644
---- a/Documentation/gitweb.txt
-+++ b/Documentation/gitweb.txt
-@@ -84,7 +84,7 @@ separator (rules for Perl's "`split(" ", $line)`").
- 
- * Fields use modified URI encoding, defined in RFC 3986, section 2.1
- (Percent-Encoding), or rather "Query string encoding" (see
--link:http://en.wikipedia.org/wiki/Query_string#URL_encoding[]), the difference
-+http://en.wikipedia.org/wiki/Query_string#URL_encoding[]), the difference
- being that SP (" ") can be encoded as "{plus}" (and therefore "{plus}" has to be
- also percent-encoded).
- +
-diff --git a/Documentation/technical/http-protocol.txt b/Documentation/technical/http-protocol.txt
-index 544373b..20525d9 100644
---- a/Documentation/technical/http-protocol.txt
-+++ b/Documentation/technical/http-protocol.txt
-@@ -500,7 +500,7 @@ TODO: Document this further.
- References
- ----------
- 
--link:http://www.ietf.org/rfc/rfc1738.txt[RFC 1738: Uniform Resource Locators (URL)]
--link:http://www.ietf.org/rfc/rfc2616.txt[RFC 2616: Hypertext Transfer Protocol -- HTTP/1.1]
-+http://www.ietf.org/rfc/rfc1738.txt[RFC 1738: Uniform Resource Locators (URL)]
-+http://www.ietf.org/rfc/rfc2616.txt[RFC 2616: Hypertext Transfer Protocol -- HTTP/1.1]
- link:technical/pack-protocol.html
- link:technical/protocol-capabilities.html
--- 
-1.8.3.2
+diff --git a/contrib/contacts/git-contacts b/contrib/contacts/git-conta=
+cts
+index 428cc1a..dbe2abf 100755
+--- a/contrib/contacts/git-contacts
++++ b/contrib/contacts/git-contacts
+@@ -96,8 +96,6 @@ sub scan_patches {
+                next unless $id;
+                if (m{^--- (?:a/(.+)|/dev/null)$}) {
+                        $source =3D $1;
+-               } elsif (/^--- /) {
+-                       die "Cannot parse hunk source: $_\n";
+                } elsif (/^@@ -(\d+)(?:,(\d+))?/ && $source) {
+                        my $len =3D defined($2) ? $2 : 1;
+                        push @{$sources->{$source}{$id}}, [$1, $len] if=
+ $len;
+--=20
+1.9.0
+
+--=20
+	Lgb
