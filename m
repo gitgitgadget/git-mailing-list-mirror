@@ -1,137 +1,278 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH/RESEND] attr: allow pattern escape using backslashes
-Date: Sat, 15 Feb 2014 09:05:04 +0700
-Message-ID: <1392429904-11559-1-git-send-email-pclouds@gmail.com>
+From: "Stefan-W. Hahn" <stefan.hahn@s-hahn.de>
+Subject: Re: Bug: Problem with CRLF line ending in git-diff with coloring
+Date: Sat, 15 Feb 2014 08:21:58 +0100
+Organization: -no organization-
+Message-ID: <20140215072158.GK7560@pille.home>
+References: <20140209110155.GB16189@scotty.home>
+ <20140214164709.GI7560@pille.home>
+ <52FE8847.8020101@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 15 03:05:08 2014
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Sat Feb 15 08:22:45 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WEUcs-0007Az-G2
-	for gcvg-git-2@plane.gmane.org; Sat, 15 Feb 2014 03:05:06 +0100
+	id 1WEZaH-0006mn-CW
+	for gcvg-git-2@plane.gmane.org; Sat, 15 Feb 2014 08:22:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751800AbaBOCFA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 Feb 2014 21:05:00 -0500
-Received: from mail-pb0-f47.google.com ([209.85.160.47]:47777 "EHLO
-	mail-pb0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751416AbaBOCE7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Feb 2014 21:04:59 -0500
-Received: by mail-pb0-f47.google.com with SMTP id rp16so13118306pbb.20
-        for <git@vger.kernel.org>; Fri, 14 Feb 2014 18:04:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:mime-version:content-type
-         :content-transfer-encoding;
-        bh=RwDRC5zspye3AydqXko1kEcCujgb+YwvRT6UMHJb0XU=;
-        b=bo7Tcg2JzKA5FpVKqGsNBFDboFBRsQ6m2u3HNiLP86c/2ih15DTtcSkpIMWMXdTjlt
-         nyeidZY+aIhU7Lk4ygKrbU+KuOjbpvVhbk6uv91L5MSIMsoNiJFaJTOK7jop10iXDrHS
-         ik5PbqOTf+Ut5qPdFUK1eSxraYTw3V3Dk5eTn9jnbAAWY9uk/E3Ojt4PJ7tuzaAaBpe/
-         m4pFDgppDyaJEAJlJqZsyKV5sHolu4SaJZXoZRtXtDwfLpmgxl/qEcWM+RU+Vs0BrLee
-         ymRLKebTS8oiH2BzsJEPvUYKBt0i70QpNSjalURx7h3pBTXVRaLyQ4xVYcaTq0uIslOr
-         HUAw==
-X-Received: by 10.66.197.164 with SMTP id iv4mr12817763pac.18.1392429899104;
-        Fri, 14 Feb 2014 18:04:59 -0800 (PST)
-Received: from lanh ([115.73.215.60])
-        by mx.google.com with ESMTPSA id js7sm21840262pbc.35.2014.02.14.18.04.56
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 14 Feb 2014 18:04:58 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Sat, 15 Feb 2014 09:05:09 +0700
-X-Mailer: git-send-email 1.8.5.2.240.g8478abd
+	id S1752518AbaBOHWS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Feb 2014 02:22:18 -0500
+Received: from moutng.kundenserver.de ([212.227.17.9]:65217 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752153AbaBOHWQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Feb 2014 02:22:16 -0500
+Received: from pille.home (port-92-205-53-192.dynamic.qsc.de [92.205.53.192])
+	by mrelayeu.kundenserver.de (node=mreue003) with ESMTP (Nemesis)
+	id 0MKMjK-1WCv9B0AK6-001gT3; Sat, 15 Feb 2014 08:22:03 +0100
+Received: from pille.home (localhost [127.0.0.1])
+	by pille.home (8.14.4/8.14.4/Debian-4) with ESMTP id s1F7M0oB006372
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 15 Feb 2014 08:22:00 +0100
+Received: (from hs@localhost)
+	by pille.home (8.14.4/8.14.4/Submit) id s1F7Lwri006371;
+	Sat, 15 Feb 2014 08:21:58 +0100
+X-Authentication-Warning: pille.home: hs set sender to stefan.hahn@s-hahn.de using -f
+Content-Disposition: inline
+In-Reply-To: <52FE8847.8020101@kdbg.org>
+X-Mailer: Mutt http://www.mutt.org/
+X-Editor: GNU Emacs http://www.gnu.org/
+X-Accept-Language: de en
+X-Location: Europe, Germany, Wolfenbuettel
+X-GPG-Public-Key: gpg --keyserver keys.gnupg.net --recv-keys E4FCD563
+X-GPG-Fingerprint: 0xE4FCD563 / EF09 97BB 3731 7DC7 25BA 5C39 185C F986 E4FC
+ D563
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Provags-ID: V02:K0:NgiEfQfHnY3MImznZDeoXDzVvd9YPfde6IzqbCHPRix
+ Wa4WMvaa2lOwWsvbRvqbNJsUlInm9Sz5+1q0UdLPSqAXpR+7j3
+ DLMNw6ko1dQYuGESXWaZqQVW62UoNGfot7Py2v9JxhOJf89yjg
+ k+VHVHveh8NTLE+wrFQ21c7PWmHrvcZ8QX4n0Su8dBUPzgziws
+ Dq2/qfczc0XOuY8zxFiHZUXJHWBtThDDYCvoYiZQzvRiyBAtBh
+ gPaT6PWu8MP2xWP3WM4IUn3H8aGYWhFU3OuYIFKicUcx1ICtNa
+ WSThFIAeAqr6ERr3Ros1bp92KG3HPGe+QdzReQruGvKST7E6hX
+ 1vY4509auPkTGXNZgj78=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242176>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242177>
 
-Patterns in .gitattributes are separated by whitespaces, which makes
-it impossible to specify exact spaces in the pattern. '?' can be used
-as a workaround, but it matches other characters too. This patch makes
-a space following a backslash part of the pattern, not a pattern
-separator.
+Mail von Johannes Sixt, Fri, 14 Feb 2014 at 22:19:03 +0100:
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- Last discussion is [1] although the thread went off topic, so no
- actual discussion.
-=20
- [1] http://thread.gmane.org/gmane.comp.version-control.git/212631
+Good morning,
 
- Documentation/gitattributes.txt | 6 +++---
- attr.c                          | 8 +++++++-
- t/t0003-attributes.sh           | 5 +++++
- 3 files changed, 15 insertions(+), 4 deletions(-)
+> Am 14.02.2014 17:47, schrieb Stefan-W. Hahn:
+> >> It's the right solution. IOW, you should place something like this in
+> >> your .gitattributes:
+> >>  *.html whitespace=cr-at-eol
+> > 
+> > Sorry, but this is not possible, because I have files of both sorts (mainly
+> > C/C++) files in my repository and cannot change the files as I wish.
+> 
+> I'm confused. This setting does not change your files, but instructs git
+> diff and git apply to not report the trailing CR as white-space error.
+> Didn't you try it?
 
-diff --git a/Documentation/gitattributes.txt b/Documentation/gitattribu=
-tes.txt
-index 643c1ba..5d4d386 100644
---- a/Documentation/gitattributes.txt
-+++ b/Documentation/gitattributes.txt
-@@ -20,9 +20,9 @@ Each line in `gitattributes` file is of form:
-=20
- 	pattern	attr1 attr2 ...
-=20
--That is, a pattern followed by an attributes list,
--separated by whitespaces.  When the pattern matches the
--path in question, the attributes listed on the line are given to
-+That is, a pattern followed by an attributes list, separated by
-+whitespaces that are not quoted by a backslash. When the pattern match=
-es
-+the path in question, the attributes listed on the line are given to
- the path.
-=20
- Each attribute can be in one of these states for a given path:
-diff --git a/attr.c b/attr.c
-index 8d13d70..699716d 100644
---- a/attr.c
-+++ b/attr.c
-@@ -209,7 +209,13 @@ static struct match_attr *parse_attr_line(const ch=
-ar *line, const char *src,
- 	if (!*cp || *cp =3D=3D '#')
- 		return NULL;
- 	name =3D cp;
--	namelen =3D strcspn(name, blank);
-+	namelen =3D 0;
-+	while (name[namelen] !=3D '\0' && !strchr(blank, name[namelen])) {
-+		if (name[namelen] =3D=3D '\\' && name[namelen + 1] !=3D '\0')
-+			namelen +=3D 2;
-+		else
-+			namelen++;
-+	}
- 	if (strlen(ATTRIBUTE_MACRO_PREFIX) < namelen &&
- 	    starts_with(name, ATTRIBUTE_MACRO_PREFIX)) {
- 		if (!macro_ok) {
-diff --git a/t/t0003-attributes.sh b/t/t0003-attributes.sh
-index b9d7947..2f16805 100755
---- a/t/t0003-attributes.sh
-+++ b/t/t0003-attributes.sh
-@@ -23,6 +23,7 @@ test_expect_success 'setup' '
- 		echo "offon -test test"
- 		echo "no notest"
- 		echo "A/e/F test=3DA/e/F"
-+		echo "A\\ b test=3Dspace"
- 	) >.gitattributes &&
- 	(
- 		echo "g test=3Da/g" &&
-@@ -195,6 +196,10 @@ test_expect_success 'root subdir attribute test' '
- 	attr_check subdir/a/i unspecified
- '
-=20
-+test_expect_success 'quoting in pattern' '
-+	attr_check "A b" space
-+'
-+
- test_expect_success 'negative patterns' '
- 	echo "!f test=3Dbar" >.gitattributes &&
- 	git check-attr test -- '"'"'!f'"'"' 2>errors &&
---=20
-1.8.5.2.240.g8478abd
+You are right, if I configure
+
+        git config core.whitespace cr-at-eol
+
+then the CR is not highlighted.
+
+I try to work with it; I hope there are no other traps with it.
+
+I changed the test to regard this, here it is.
+
+With kind regards,
+Stefan
+
+#!/bin/sh
+#
+# Copyright (c) 2014 Stefan-W. Hahn
+#
+
+test_description='Test coloring of diff with CRLF line ending.
+
+'
+. ./test-lib.sh
+
+get_color ()
+{
+	git config --get-color "$1"
+}
+
+test_expect_success setup '
+        git config color.diff.plain black &&
+        git config color.diff.meta blue &&
+        git config color.diff.frag yellow &&
+        git config color.diff.func normal &&
+        git config color.diff.old red &&
+        git config color.diff.new green &&
+        git config color.diff.commit normal &&
+	c_reset=$(git config --get-color no.such.color reset) &&
+	c_plain=$(get_color color.diff.plain) &&
+	c_meta=$(get_color color.diff.meta) &&
+	c_frag=$(get_color color.diff.frag) &&
+	c_func=$(get_color color.diff.func) &&
+	c_old=$(get_color color.diff.old) &&
+	c_new=$(get_color color.diff.new) &&
+	c_commit=$(get_color color.diff.commit) &&
+	c_whitespace=$(get_color color.diff.whitespace)
+'
+
+# Test cases
+# - DOS line ending
+#   - change one line
+#   - change one line ending to UNIX
+# - UNIX line ending
+#   - change one line (trivial not tested here)
+#   - change one line ending to DOS
+
+tr 'Q' '\015' << EOF > x
+Zeile 1Q
+Zeile 2Q
+Zeile 3Q
+EOF
+
+git update-index --add x
+
+tr 'Q' '\015' << EOF > x
+Zeile 1Q
+Zeile 22Q
+Zeile 3Q
+EOF
+
+tr 'Q' '\015' << EOF > expect
+diff --git a/x b/x
+index 3411cc1..68a4b2c 100644
+--- a/x
++++ b/x
+@@ -1,3 +1,3 @@
+ Zeile 1Q
+-Zeile 2Q
++Zeile 22Q
+ Zeile 3Q
+EOF
+
+tr 'Q' '\015' << EOF > expect_color
+${c_meta}diff --git a/x b/x${c_reset}
+${c_meta}index 3411cc1..68a4b2c 100644${c_reset}
+${c_meta}--- a/x${c_reset}
+${c_meta}+++ b/x${c_reset}
+${c_frag}@@ -1,3 +1,3 @@${c_reset}
+${c_plain} Zeile 1${c_reset}Q
+${c_old}-Zeile 2${c_reset}Q
+${c_new}+${c_reset}${c_new}Zeile 22${c_reset}Q
+${c_plain} Zeile 3${c_reset}Q
+EOF
+
+git -c color.diff=false diff > out
+test_expect_success "diff files: change line in DOS file without color" '
+        test_cmp expect out'
+
+git -c color.diff=always -c core.whitespace=cr-at-eol diff > out
+test_expect_success "diff files: change line in DOS file with color" '
+        test_cmp expect_color out'
+
+
+tr 'Q' '\015' << EOF > x
+Zeile 1Q
+Zeile 2Q
+Zeile 3Q
+EOF
+
+git update-index --add x
+
+tr 'Q' '\015' << EOF > x
+Zeile 1Q
+Zeile 2
+Zeile 3Q
+EOF
+
+tr 'Q' '\015' << EOF > expect
+diff --git a/x b/x
+index 3411cc1..c040c67 100644
+--- a/x
++++ b/x
+@@ -1,3 +1,3 @@
+ Zeile 1Q
+-Zeile 2Q
++Zeile 2
+ Zeile 3Q
+EOF
+
+tr 'Q' '\015' << EOF > expect_color
+${c_meta}diff --git a/x b/x${c_reset}
+${c_meta}index 3411cc1..c040c67 100644${c_reset}
+${c_meta}--- a/x${c_reset}
+${c_meta}+++ b/x${c_reset}
+${c_frag}@@ -1,3 +1,3 @@${c_reset}
+${c_plain} Zeile 1${c_reset}Q
+${c_old}-Zeile 2${c_reset}Q
+${c_new}+${c_reset}${c_new}Zeile 2${c_reset}
+${c_plain} Zeile 3${c_reset}Q
+EOF
+
+git -c color.diff=false diff > out
+test_expect_success "diff files: change line ending in DOS file to LF ending without color" '
+        test_cmp expect out'
+
+git -c color.diff=always diff > out
+test_expect_success "diff files: change line ending in DOS file to LF ending with color" '
+        test_cmp expect_color out'
+
+tr 'Q' '\015' << EOF > x
+Zeile 1
+Zeile 2
+Zeile 3
+EOF
+
+git update-index --add x
+
+tr 'Q' '\015' << EOF > x
+Zeile 1
+Zeile 2Q
+Zeile 3
+EOF
+
+tr 'Q' '\015' << EOF > expect
+diff --git a/x b/x
+index a385875..63416d7 100644
+--- a/x
++++ b/x
+@@ -1,3 +1,3 @@
+ Zeile 1
+-Zeile 2
++Zeile 2Q
+ Zeile 3
+EOF
+
+tr 'Q' '\015' << EOF > expect_color
+${c_meta}diff --git a/x b/x${c_reset}
+${c_meta}index a385875..63416d7 100644${c_reset}
+${c_meta}--- a/x${c_reset}
+${c_meta}+++ b/x${c_reset}
+${c_frag}@@ -1,3 +1,3 @@${c_reset}
+${c_plain} Zeile 1${c_reset}
+${c_old}-Zeile 2${c_reset}
+${c_new}+${c_reset}${c_new}Zeile 2${c_reset}Q
+${c_plain} Zeile 3${c_reset}
+EOF
+
+git -c color.diff=false diff > out
+test_expect_success "diff files: change line ending in UNIX file to CRLF ending without color" '
+        test_cmp expect out'
+
+git -c color.diff=always -c core.whitespace=cr-at-eol diff > out
+test_expect_success "diff files: change line ending in UNIX file to CRLF ending with color" '
+        test_cmp expect_color out'
+
+test_done
+
+
+-- 
+Stefan-W. Hahn                          It is easy to make things.
+                                        It is hard to make things simple.
