@@ -1,7 +1,7 @@
 From: Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH 2/3] test-lib: allow setting the index format version
-Date: Sat, 15 Feb 2014 20:23:14 +0100
-Message-ID: <1392492197-7724-3-git-send-email-t.gummerer@gmail.com>
+Subject: [PATCH 1/3] introduce GIT_INDEX_VERSION environment variable
+Date: Sat, 15 Feb 2014 20:23:13 +0100
+Message-ID: <1392492197-7724-2-git-send-email-t.gummerer@gmail.com>
 References: <1392492197-7724-1-git-send-email-t.gummerer@gmail.com>
 Cc: Thomas Gummerer <t.gummerer@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
@@ -13,128 +13,137 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WEkqY-0006N8-2o
-	for gcvg-git-2@plane.gmane.org; Sat, 15 Feb 2014 20:24:18 +0100
+	id 1WEkqX-0006N8-GV
+	for gcvg-git-2@plane.gmane.org; Sat, 15 Feb 2014 20:24:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753850AbaBOTYP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Feb 2014 14:24:15 -0500
-Received: from mail-la0-f51.google.com ([209.85.215.51]:48517 "EHLO
-	mail-la0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753722AbaBOTYM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Feb 2014 14:24:12 -0500
-Received: by mail-la0-f51.google.com with SMTP id c6so10119244lan.38
-        for <git@vger.kernel.org>; Sat, 15 Feb 2014 11:24:11 -0800 (PST)
+	id S1753846AbaBOTYJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Feb 2014 14:24:09 -0500
+Received: from mail-lb0-f176.google.com ([209.85.217.176]:33418 "EHLO
+	mail-lb0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753722AbaBOTYG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Feb 2014 14:24:06 -0500
+Received: by mail-lb0-f176.google.com with SMTP id w7so10064137lbi.7
+        for <git@vger.kernel.org>; Sat, 15 Feb 2014 11:24:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=TnpUmA8k1BBo2stG+17oILrEg273llNi+vzHsGYjIEo=;
-        b=vvX4ixZZJTah3mcNxE9lysh01ZtS69eXsktkc1VqZelwralMVAiPIymYhBJNNZiuYr
-         ZBE53AOIXPWrM0PcKzezTHN04Ky+ZzPGyKL409nGoQNcLq50HZhCbuuiZhIYvG+h+wBL
-         Q42wuF4NBZn21rWvWnN8Z4/UpuKNiCviq/FTM1uvOZCgvSW75NF4iLgVdx4cwBGWgrpJ
-         KDwbmwhRKyZXTzwQBySPZMPNvKO910Nbs/jddmDpMzEl4u1/l/cN1faDVFMzO7wni8JU
-         DRKMZdrWPVm5YX+Iau9xYzO5rAXyPWyTZzEmdVBn2q7PYccKhjtPx8tlad78PMxdoBGF
-         Oupw==
-X-Received: by 10.112.151.146 with SMTP id uq18mr10297416lbb.38.1392492250961;
-        Sat, 15 Feb 2014 11:24:10 -0800 (PST)
+        bh=Z+pwpahLeqXcDWyQOeIfRzlstx/89N2B4nmeiqWoYI0=;
+        b=k12oRw8FV5LkV03Nyuoa/jEgj2qG04JbtuNZ4s2iBHsFd+FO7evr0P+XMvhV719BpX
+         danHU3izjiM6vwA6ZElGdBCJLOT9AvpRorqpOidCDthISMjIelLHkQB0JwwV33TsW6Q2
+         lk/+kzM+Sc5uvc2L32WN63XPOBwOmHBPV6WWEGHZR7ruJlFOOlBS6dGi1/+Ti7OkMXXb
+         5yysgEvfqbTjWJz3L0dhLPKO9I8R6ADswVq8YCbQrBumuI8DbuVdJJMLeHbkyUqlejJY
+         1qt3iVyZIOtV5cejWcEknBA7US329eJpgof2TACT8hZQfj05Yg5jzLc3lvIDEZwG7poe
+         Nfng==
+X-Received: by 10.152.242.131 with SMTP id wq3mr11049692lac.12.1392492245413;
+        Sat, 15 Feb 2014 11:24:05 -0800 (PST)
 Received: from localhost (213-66-41-37-no99.tbcn.telia.com. [213.66.41.37])
-        by mx.google.com with ESMTPSA id cl5sm11022371lbb.14.2014.02.15.11.24.09
+        by mx.google.com with ESMTPSA id g8sm15282430lae.1.2014.02.15.11.24.04
         for <multiple recipients>
         (version=TLSv1.2 cipher=AES128-GCM-SHA256 bits=128/128);
-        Sat, 15 Feb 2014 11:24:10 -0800 (PST)
+        Sat, 15 Feb 2014 11:24:04 -0800 (PST)
 X-Mailer: git-send-email 1.8.5.2.300.gb39ba80
 In-Reply-To: <1392492197-7724-1-git-send-email-t.gummerer@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242199>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242200>
 
-Allow adding a TEST_GIT_INDEX_VERSION variable to config.mak to set the
-index version with which the test suite should be run.
-
-If it isn't set, the default version given in the source code is
-used (currently version 3).
-
-To avoid breakages with index versions other than [23], also set the
-index version under which t2104 is run to 3.  This test only tests
-functionality specific to version 2 and 3 of the index file and would
-fail if the test suite is run with any other version.
+Respect a GIT_INDEX_VERSION environment variable, when a new index is
+initialized.  Setting the environment variable will not cause existing
+index files to be converted to another format, but will only affect
+newly written index files.  This can be used to initialize repositories
+with index-v4.
 
 Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
 ---
- Makefile                              | 7 +++++++
- t/t2104-update-index-skip-worktree.sh | 2 ++
- t/test-lib-functions.sh               | 5 +++++
- t/test-lib.sh                         | 3 +++
- 4 files changed, 17 insertions(+)
+ Documentation/git.txt |  5 +++++
+ read-cache.c          | 18 +++++++++++++++++-
+ t/t1600-index.sh      | 24 ++++++++++++++++++++++++
+ 3 files changed, 46 insertions(+), 1 deletion(-)
+ create mode 100755 t/t1600-index.sh
 
-diff --git a/Makefile b/Makefile
-index 287e6f8..c98d28f 100644
---- a/Makefile
-+++ b/Makefile
-@@ -342,6 +342,10 @@ all::
- # Define DEFAULT_HELP_FORMAT to "man", "info" or "html"
- # (defaults to "man") if you want to have a different default when
- # "git help" is called without a parameter specifying the format.
-+#
-+# Define TEST_GIT_INDEX_FORMAT to 2, 3 or 4 to run the test suite
-+# with a different indexfile format.  If it isn't set the index file
-+# format used is index-v[23].
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index aec3726..bc9eeea 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -712,6 +712,11 @@ Git so take care if using Cogito etc.
+ 	index file. If not specified, the default of `$GIT_DIR/index`
+ 	is used.
  
- GIT-VERSION-FILE: FORCE
- 	@$(SHELL_PATH) ./GIT-VERSION-GEN
-@@ -2223,6 +2227,9 @@ endif
- ifdef GIT_PERF_MAKE_OPTS
- 	@echo GIT_PERF_MAKE_OPTS=\''$(subst ','\'',$(subst ','\'',$(GIT_PERF_MAKE_OPTS)))'\' >>$@
- endif
-+ifdef TEST_GIT_INDEX_VERSION
-+	@echo TEST_GIT_INDEX_VERSION=\''$(subst ','\'',$(subst ','\'',$(TEST_GIT_INDEX_VERSION)))'\' >>$@
-+endif
- 
- ### Detect Python interpreter path changes
- ifndef NO_PYTHON
-diff --git a/t/t2104-update-index-skip-worktree.sh b/t/t2104-update-index-skip-worktree.sh
-index 1d0879b..29c1fb1 100755
---- a/t/t2104-update-index-skip-worktree.sh
-+++ b/t/t2104-update-index-skip-worktree.sh
-@@ -7,6 +7,8 @@ test_description='skip-worktree bit test'
- 
- . ./test-lib.sh
- 
-+test_set_index_version 3
++'GIT_INDEX_VERSION'::
++	This environment variable allows the specification of an index
++	version for new repositories.  It won't affect existing index
++	files.  By default index file version 3 is used.
 +
- cat >expect.full <<EOF
- H 1
- H 2
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index aeae3ca..0bf1e63 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -32,6 +32,11 @@ test_set_editor () {
- 	export EDITOR
- }
+ 'GIT_OBJECT_DIRECTORY'::
+ 	If the object storage directory is specified via this
+ 	environment variable then the sha1 directories are created
+diff --git a/read-cache.c b/read-cache.c
+index 3f735f3..3993e12 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -1223,6 +1223,22 @@ static struct cache_entry *refresh_cache_entry(struct cache_entry *ce, int reall
  
-+test_set_index_version () {
-+    GIT_INDEX_VERSION="$1"
-+    export GIT_INDEX_VERSION
+ #define INDEX_FORMAT_DEFAULT 3
+ 
++static unsigned int get_index_format_default()
++{
++	char *envversion = getenv("GIT_INDEX_VERSION");
++	if (!envversion) {
++		return INDEX_FORMAT_DEFAULT;
++	} else {
++		unsigned int version = strtol(envversion, NULL, 10);
++		if (version < INDEX_FORMAT_LB || version > INDEX_FORMAT_UB) {
++			warning(_("GIT_INDEX_VERSION set, but the value is invalid.\n"
++				  "Using version %i"), INDEX_FORMAT_DEFAULT);
++			version = INDEX_FORMAT_DEFAULT;
++		}
++		return version;
++	}
 +}
 +
- test_decode_color () {
- 	awk '
- 		function name(n) {
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 1cf78d5..e6cf5b0 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -108,6 +108,9 @@ export GIT_AUTHOR_EMAIL GIT_AUTHOR_NAME
- export GIT_COMMITTER_EMAIL GIT_COMMITTER_NAME
- export EDITOR
+ /*
+  * dev/ino/uid/gid/size are also just tracked to the low 32 bits
+  * Again - this is just a (very strong in practice) heuristic that
+@@ -1799,7 +1815,7 @@ int write_index(struct index_state *istate, int newfd)
+ 	}
  
-+GIT_INDEX_VERSION="$TEST_GIT_INDEX_VERSION"
-+export GIT_INDEX_VERSION
+ 	if (!istate->version)
+-		istate->version = INDEX_FORMAT_DEFAULT;
++		istate->version = get_index_format_default();
+ 
+ 	/* demote version 3 to version 2 when the latter suffices */
+ 	if (istate->version == 3 || istate->version == 2)
+diff --git a/t/t1600-index.sh b/t/t1600-index.sh
+new file mode 100755
+index 0000000..37fd84d
+--- /dev/null
++++ b/t/t1600-index.sh
+@@ -0,0 +1,24 @@
++#!/bin/sh
 +
- # Add libc MALLOC and MALLOC_PERTURB test
- # only if we are not executing the test with valgrind
- if expr " $GIT_TEST_OPTS " : ".* --valgrind " >/dev/null ||
++test_description='index file specific tests'
++
++. ./test-lib.sh
++
++test_expect_success 'setup' '
++	echo 1 >a
++'
++
++test_expect_success 'out of bounds GIT_INDEX_VERSION issues warning' '
++	(
++		GIT_INDEX_VERSION=1 &&
++		export GIT_INDEX_VERSION &&
++		git add a 2>&1 | sed "s/[0-9]//" >actual.err &&
++		sed -e "s/ Z$/ /" <<-\EOF >expect.err &&
++			warning: GIT_INDEX_VERSION set, but the value is invalid.
++			Using version Z
++		EOF
++		test_i18ncmp expect.err actual.err
++	)
++'
++
++test_done
 -- 
 1.8.5.2.300.ge613be6.dirty
