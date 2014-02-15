@@ -1,107 +1,70 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: Git GSoC 2014
-Date: Sat, 15 Feb 2014 14:03:57 +0100
-Message-ID: <87fvnk1q9u.fsf@fencepost.gnu.org>
-References: <20140213091037.GA28927@sigill.intra.peff.net>
-	<87bnya8z6q.fsf@thomasrast.ch> <87d2iq58qk.fsf@fencepost.gnu.org>
-	<87fvnk4ljl.fsf@thomasrast.ch>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
-	Shawn Pearce <spearce@spearce.org>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-To: Thomas Rast <tr@thomasrast.ch>
-X-From: git-owner@vger.kernel.org Sat Feb 15 14:04:07 2014
+From: Philip Oakley <philipoakley@iee.org>
+Subject: [PATCH] provide a Git user-manual man page
+Date: Sat, 15 Feb 2014 13:51:38 +0000
+Message-ID: <1392472299-3780-1-git-send-email-philipoakley@iee.org>
+Cc: Thomas Ackermann <th.acker@arcor.de>,
+	"W. Trevor King" <wking@tremily.us>,
+	David Aguilar <davvid@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Kevin Bracey <kevin@bracey.fi>,
+	=?UTF-8?q?Ondrej=20B=C3=ADlka?= <neleai@seznam.cz>,
+	Phil Hord <hordp@cisco.com>,
+	Sebastian Schuberth <sschuberth@gmail.com>,
+	=?UTF-8?q?=C3=98ystein=20Walle?= <oystwa@gmail.com>
+To: GitList <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Feb 15 14:52:01 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WEeuc-0005U2-Bk
-	for gcvg-git-2@plane.gmane.org; Sat, 15 Feb 2014 14:04:06 +0100
+	id 1WEfex-00044x-As
+	for gcvg-git-2@plane.gmane.org; Sat, 15 Feb 2014 14:51:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753269AbaBONEA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Feb 2014 08:04:00 -0500
-Received: from fencepost.gnu.org ([208.118.235.10]:53042 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753050AbaBOND7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Feb 2014 08:03:59 -0500
-Received: from localhost ([127.0.0.1]:52080 helo=lola)
-	by fencepost.gnu.org with esmtp (Exim 4.71)
-	(envelope-from <dak@gnu.org>)
-	id 1WEeuT-0000cF-OG; Sat, 15 Feb 2014 08:03:58 -0500
-Received: by lola (Postfix, from userid 1000)
-	id 541D8E7EF7; Sat, 15 Feb 2014 14:03:57 +0100 (CET)
-In-Reply-To: <87fvnk4ljl.fsf@thomasrast.ch> (Thomas Rast's message of "Sat, 15
-	Feb 2014 13:17:50 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3.50 (gnu/linux)
+	id S1753162AbaBONv3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Feb 2014 08:51:29 -0500
+Received: from out1.ip02ir2.opaltelecom.net ([62.24.128.238]:48469 "EHLO
+	out1.ip02ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753046AbaBONv2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 15 Feb 2014 08:51:28 -0500
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AjAQAJ1w/1JZ8YjN/2dsb2JhbABZgwYBgUu3Soc1gQ0XdIMCIxiBAiSIHMkZF48BhD8Eqk+DLTw
+X-IPAS-Result: AjAQAJ1w/1JZ8YjN/2dsb2JhbABZgwYBgUu3Soc1gQ0XdIMCIxiBAiSIHMkZF48BhD8Eqk+DLTw
+X-IronPort-AV: E=Sophos;i="4.95,850,1384300800"; 
+   d="scan'208";a="454318326"
+Received: from host-89-241-136-205.as13285.net (HELO localhost) ([89.241.136.205])
+  by out1.ip02ir2.opaltelecom.net with ESMTP; 15 Feb 2014 13:51:26 +0000
+X-Mailer: git-send-email 1.8.3.msysgit.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242191>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242192>
 
-Thomas Rast <tr@thomasrast.ch> writes:
+This is a resend of my original patch ($gman/240486), which disappeared
+without comment. I've cc'd those who have touched the User-Manual in
+the last year for comment on the provision of this access mechanism.
 
-> David Kastrup <dak@gnu.org> writes:
->
->> This definitely should not be "we'll think about it if and when that
->> project is finished" material.
->
-> Yes, all of this is true.  However, you are painting a big devil on
-> the wall.
+The Git User Manual is formatted as a doc book, rather than as
+a man page so isn't directly accessible via the usual 'git help
+<guide>' command.
 
-[...]
+This patch provides a simple man page with onward links to the true
+User-Manual. 
 
-> Your scenario above mostly applies if and when we really go the way of
-> my dream and scrap the code that is in git.
+The man page is based directly on a very cut down version of the git(1)
+page.
 
-So it's not "a big devil" I am painting but rather the consequences if
-everything goes according to plan.
+This patch is based on 1.9.0 master.
 
-> (I have similar long-term dreams for other git components like ref
-> storage and diffs, but that's just me.)
->
-> Second, how many contributions would actually have been prevented by
-> GPLv2+LE licensing?
+Philip Oakley (1):
+  Provide a 'git help user-manual' route to the docbook
 
-That's not as much the question as to how many will be prevented in
-future by such a step.
-
-The libgit2 community is different from that of Git and with a different
-focus.  If you take a look at its front page, you'll see statements like
-"Link with open and proprietary software.  No strings attached." and
-"Trusted and used in production by GitHub, Microsoft, [...]".
-
-A fusion with this project and its aims and licensing will have
-consequences regarding which developers and users are attracted to Git.
-
-The "act first, think later" approach is not really doing anybody
-favors, and I don't consider it fair to GSoC students to employ them for
-making this proposal gain leverage: one should first think this through
-on behalf of the project before putting students to work on this so that
-they know reasonably well what will happen with their work.
-
-The kind of "Now that we made $x do $y, we are obliged to do $z."
-scenario is easy to avoid by _first_ contemplating whether or not $z is
-where one wants to go.
-
-That's not "painting a devil" but common sense.  I'm not saying that the
-answer is in any way self-evident.  Merely that the best time to answer
-it is _before_ getting invested.
-
-> The only data I have on this is libgit2/git.git-authors, which records
-> who has consented for their _existing_ code to be relicensed.  I
-> consider this to be a higher barrier than contributing new code, since
-> there's no clear gain for the author in the relicensing.
-
-I consider it a lower barrier since the work is already done, and the
-authors did not when doing it think about proprietary spinoffs.
-
-But that's a minor point.  All I am saying is that there are different
-opinions possible, and picking a particular path for future development
-will in either way influence who wants to be part of the respective
-communities.
+ Documentation/Makefile           |  1 +
+ Documentation/gituser-manual.txt | 34 ++++++++++++++++++++++++++++++++++
+ builtin/help.c                   |  1 +
+ 3 files changed, 36 insertions(+)
+ create mode 100644 Documentation/gituser-manual.txt
 
 -- 
-David Kastrup
+1.8.3.msysgit.0
