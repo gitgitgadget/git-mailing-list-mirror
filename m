@@ -1,162 +1,113 @@
-From: Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH 3/3] read-cache: add index.version config variable
-Date: Sat, 15 Feb 2014 20:23:15 +0100
-Message-ID: <1392492197-7724-4-git-send-email-t.gummerer@gmail.com>
-References: <1392492197-7724-1-git-send-email-t.gummerer@gmail.com>
-Cc: Thomas Gummerer <t.gummerer@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 15 20:24:30 2014
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: Git GSoC 2014
+Date: Sat, 15 Feb 2014 15:47:15 -0800
+Message-ID: <CAJo=hJsk=m-R+pGf3rT+7BLBnAYsXd-xw-ztbjw4uHd_mO=-cQ@mail.gmail.com>
+References: <20140213091037.GA28927@sigill.intra.peff.net> <87bnya8z6q.fsf@thomasrast.ch>
+ <87d2iq58qk.fsf@fencepost.gnu.org> <87fvnk4ljl.fsf@thomasrast.ch>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: David Kastrup <dak@gnu.org>, Jeff King <peff@peff.net>,
+	git <git@vger.kernel.org>,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>
+To: Thomas Rast <tr@thomasrast.ch>
+X-From: git-owner@vger.kernel.org Sun Feb 16 00:47:53 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WEkqf-0006Vv-CN
-	for gcvg-git-2@plane.gmane.org; Sat, 15 Feb 2014 20:24:25 +0100
+	id 1WEoxc-0005SR-Qn
+	for gcvg-git-2@plane.gmane.org; Sun, 16 Feb 2014 00:47:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753853AbaBOTYR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Feb 2014 14:24:17 -0500
-Received: from mail-lb0-f173.google.com ([209.85.217.173]:47045 "EHLO
-	mail-lb0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753722AbaBOTYQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Feb 2014 14:24:16 -0500
-Received: by mail-lb0-f173.google.com with SMTP id s7so8802276lbd.32
-        for <git@vger.kernel.org>; Sat, 15 Feb 2014 11:24:15 -0800 (PST)
+	id S1752126AbaBOXri (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Feb 2014 18:47:38 -0500
+Received: from mail-wi0-f176.google.com ([209.85.212.176]:40276 "EHLO
+	mail-wi0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751800AbaBOXrh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Feb 2014 18:47:37 -0500
+Received: by mail-wi0-f176.google.com with SMTP id hi5so1413501wib.9
+        for <git@vger.kernel.org>; Sat, 15 Feb 2014 15:47:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=NeHw4n8Uvcmyx/CpDaXk7NOho3wRq/Kswgd4qHqZta0=;
-        b=fADrNXpOPPG54VpqRwGniFAw3AMY6fW9Go5U76OD2OaJefCc/j2KRov4LwsORAf6QB
-         hjy/VMk5dlY0pt0JD1fXPvkdsoZqLT3cp6xFkEhVD9txOPzjExu766FC3pQHeqp4Aq7i
-         3wY/B98nYPtDr17tf/ULQKMNWXkQufDOwYXrojsw91+vgeD5BOfHeikQ8guEehetzE+T
-         8flosuNOsDJRrDL1FF+0RAWJ86P3nSQp9DCzouP7P4JF8cP+SvD9uk/O8AWaK+tVm+fQ
-         5wLnEBYwmtHIMIaBTWo1fX8u9hMZVzRfsSI5GArN1RntSJbKao41JmPngNKsI2kt/R7Q
-         DIqA==
-X-Received: by 10.152.219.37 with SMTP id pl5mr2918218lac.36.1392492255290;
-        Sat, 15 Feb 2014 11:24:15 -0800 (PST)
-Received: from localhost (213-66-41-37-no99.tbcn.telia.com. [213.66.41.37])
-        by mx.google.com with ESMTPSA id ir3sm15262167lac.9.2014.02.15.11.24.14
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=AES128-GCM-SHA256 bits=128/128);
-        Sat, 15 Feb 2014 11:24:14 -0800 (PST)
-X-Mailer: git-send-email 1.8.5.2.300.gb39ba80
-In-Reply-To: <1392492197-7724-1-git-send-email-t.gummerer@gmail.com>
+        d=spearce.org; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=7aWs3FTBIq5wzDVdU+xlPne+HU0xEOFbxBFN0eeyA1E=;
+        b=GWi4YKmzBQ/Da4BqTg5Vyt7eAHIAXx0e4at45BTInBZ7Oc3FJ/CTkKnXyLlm5j9d9A
+         6wTpaqsz/JjJDCPDelOBmDCBUhktC+pWBE6djNmh2nQp6enhhIXrM5YfBpSN3xFjW9G0
+         7VBaOwMdpJU4OShGcVtS9d7K8g8uoHzy608ZY=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=7aWs3FTBIq5wzDVdU+xlPne+HU0xEOFbxBFN0eeyA1E=;
+        b=HQ1MAi22Cz1kli/70mpA+5dSxLadrjIuFYoyIMJzA7WQOqobQjBcyRWdvQZTsNBH5n
+         ZnXz24R6zGTKvMMlTNP8kztO8K3W/Hm26zgnCVTTR3rnrKqZAo7YJRBdfHbdT3QZBAdx
+         PjcUEvn/TnygEsiw4YebvB2R26yJfFJH7mAndOlfuTJfh7FfY8ItUKzRpBPDz5h9yIAj
+         NR6V74WY+5aeJdmnoJ/MSAJWTz9EddNrzM4fLyhA7gjBGleYOjFh1kq3hdEoy88FqE0O
+         BHo6l+qiZ0YI1JMfphy1yFbeu/4yyLCzslBbJmRWmUReoTop3XUxuxOWtP1BfVvk4+t3
+         CW9Q==
+X-Gm-Message-State: ALoCoQlfEaRFruz5f909ktofW6RJgc/bNIMXcs2ReeDYG2GBevdlp5fV9bct5jiDhIsEwC1ZG/W5
+X-Received: by 10.180.101.166 with SMTP id fh6mr7465872wib.2.1392508056199;
+ Sat, 15 Feb 2014 15:47:36 -0800 (PST)
+Received: by 10.227.7.132 with HTTP; Sat, 15 Feb 2014 15:47:15 -0800 (PST)
+In-Reply-To: <87fvnk4ljl.fsf@thomasrast.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242201>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242202>
 
-Add a config variable that allows setting the default index version when
-initializing a new index file.  Similar to the GIT_INDEX_VERSION
-environment variable this only affects new index files.
+On Sat, Feb 15, 2014 at 4:17 AM, Thomas Rast <tr@thomasrast.ch> wrote:
+> David Kastrup <dak@gnu.org> writes:
+>
+>> Thomas Rast <tr@thomasrast.ch> writes:
+>>
+>>> Motivation: I believe that migrating to libgit2 is the better approach,
+>>> medium term, than rewriting everything ourselves to be nice, clean and
+>>> thread-safe.  I took a shot a while ago at making the pack reading code
+>>> thread-safe, but it's adding mess when we could simply replace it all by
+>>> the already thread-safe libgit2 calls.  It also helps shake out
+>>> incompatibilities in libgit2.
+>>
+>> That would either require forking libgit2 for Git use or stop dead any
+>> contributions to that rather central part of the git codebase from
+>> contributors not wanting their contributions to get reused in binary
+>> proprietary software.
+>>
+>> It would also mean that no serious forward-going work (like developing
+>> new packing formats or network protocols) can be done on a pure GPLv2
+>> codebase any more.  So anybody insisting on contributing work under the
+>> current Git license only would be locked out from working on significant
+>> parts of Git and could no longer propose changes in central parts.
+>>
+>> Now this can all be repealed by the "developing the atomic bomb does not
+>> mean that one has to use it" argument but even if one does not use it,
+>> the world with and without it are different worlds and occupy mindshare
+>> and suggest "solutions" and "diplomacy" involving it.
+>>
+>> So this is definitely a large step towards a situation where erosion of
+>> the existing license and related parts of the community becomes more
+>> attractive.
+>>
+>> There is the rationale "we can always say "no" at the end".  How do you
+>> explain this "no" to the student who invested significant amounts of
+>> work into this, in a project proposed by the Git developers?
+>>
+>> This definitely should not be "we'll think about it if and when that
+>> project is finished" material.
+>
+> Yes, all of this is true.  However, you are painting a big devil on the
+> wall.
+...
+> Second, how many contributions would actually have been prevented by
+> GPLv2+LE licensing?
 
-Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
----
- Documentation/config.txt |  4 ++++
- read-cache.c             | 27 ++++++++++++++++++++++-----
- t/t1600-index.sh         | 27 +++++++++++++++++++++++++++
- 3 files changed, 53 insertions(+), 5 deletions(-)
+Interesting data point, I helped get libgit2 started in the first few
+days of its existence and discussed the license on the mailing list. I
+eventually stopped contributing, partly because of the GPLv2+LE
+license it uses.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 1655455..033939a 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1591,6 +1591,10 @@ imap::
- 	The configuration variables in the 'imap' section are described
- 	in linkgit:git-imap-send[1].
- 
-+index.version::
-+	Specify the version with which new index files should be
-+	initialized.  This does not affect existing repositories.
-+
- init.templatedir::
- 	Specify the directory from which templates will be copied.
- 	(See the "TEMPLATE DIRECTORY" section of linkgit:git-init[1].)
-diff --git a/read-cache.c b/read-cache.c
-index 3993e12..ca9b68c 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -1223,20 +1223,37 @@ static struct cache_entry *refresh_cache_entry(struct cache_entry *ce, int reall
- 
- #define INDEX_FORMAT_DEFAULT 3
- 
-+static int index_format_config(const char *var, const char *value, void *cb)
-+{
-+	unsigned int *version = cb;
-+	if (!strcmp(var, "index.version")) {
-+		*version = git_config_int(var, value);
-+		return 0;
-+	}
-+	return 1;
-+}
-+
-+
- static unsigned int get_index_format_default()
- {
- 	char *envversion = getenv("GIT_INDEX_VERSION");
-+	unsigned int version = INDEX_FORMAT_DEFAULT;
- 	if (!envversion) {
--		return INDEX_FORMAT_DEFAULT;
--	} else {
--		unsigned int version = strtol(envversion, NULL, 10);
-+		git_config(index_format_config, &version);
- 		if (version < INDEX_FORMAT_LB || version > INDEX_FORMAT_UB) {
--			warning(_("GIT_INDEX_VERSION set, but the value is invalid.\n"
-+			warning(_("index.version set, but the value is invalid.\n"
- 				  "Using version %i"), INDEX_FORMAT_DEFAULT);
--			version = INDEX_FORMAT_DEFAULT;
-+			return INDEX_FORMAT_DEFAULT;
- 		}
- 		return version;
- 	}
-+	version = strtol(envversion, NULL, 10);
-+	if (version < INDEX_FORMAT_LB || version > INDEX_FORMAT_UB) {
-+		warning(_("GIT_INDEX_VERSION set, but the value is invalid.\n"
-+			  "Using version %i"), INDEX_FORMAT_DEFAULT);
-+		version = INDEX_FORMAT_DEFAULT;
-+	}
-+	return version;
- }
- 
- /*
-diff --git a/t/t1600-index.sh b/t/t1600-index.sh
-index 37fd84d..bf34985 100755
---- a/t/t1600-index.sh
-+++ b/t/t1600-index.sh
-@@ -21,4 +21,31 @@ test_expect_success 'out of bounds GIT_INDEX_VERSION issues warning' '
- 	)
- '
- 
-+test_expect_success 'out of bounds index.version issuses warning' '
-+	(
-+		unset GIT_INDEX_VERSION &&
-+		rm .git/index &&
-+		git config --add index.version 1 &&
-+		git add a 2>&1 | sed "s/[0-9]//" >actual.err &&
-+		sed -e "s/ Z$/ /" <<-\EOF >expect.err &&
-+			warning: index.version set, but the value is invalid.
-+			Using version Z
-+		EOF
-+		test_i18ncmp expect.err actual.err
-+	)
-+'
-+
-+test_expect_success 'GIT_INDEX_VERSION takes precedence over config' '
-+	(
-+		rm .git/index &&
-+		GIT_INDEX_VERSION=4 &&
-+		export GIT_INDEX_VERSION &&
-+		git config --add index.version 2 &&
-+		git add a 2>&1 &&
-+		echo 4 >expect &&
-+		test-index-version <.git/index >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
- test_done
--- 
-1.8.5.2.300.ge613be6.dirty
+:-)
+
+I am not as interested in using the GPL for my work as David Kastrup
+is, but I wasn't really thrilled with GPLv2+LE.
