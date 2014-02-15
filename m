@@ -1,106 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 02/14] trailer: process trailers from file and arguments
-Date: Fri, 14 Feb 2014 16:16:26 -0800
-Message-ID: <xmqqppmpfcx1.fsf@gitster.dls.corp.google.com>
-References: <xmqq38jqsnc2.fsf@gitster.dls.corp.google.com>
-	<CAP8UFD1Nq-LkE=FW5dnBZKKd7-ORJPo1BFs3sY+MLGxuXEWuTw@mail.gmail.com>
-	<xmqqa9dxr09k.fsf@gitster.dls.corp.google.com>
-	<20140214.224133.484636406629780362.chriscool@tuxfamily.org>
-	<xmqqtxc1fdsk.fsf@gitster.dls.corp.google.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: Make the git codebase thread-safe
+Date: Sat, 15 Feb 2014 07:45:45 +0700
+Message-ID: <CACsJy8Dzj5iyaUseNyU76ojG1C0VYR=v7xsc=6TSGxTh=Xh3Ag@mail.gmail.com>
+References: <CA+TurHgyUK5sfCKrK+3xY8AeOg0t66vEvFxX=JiA9wXww7eZXQ@mail.gmail.com>
+ <CABPQNSZ_LLg5i+mpwUj7pzXVQMY1tcXz2gJ+PWG-mP1iyjxoaw@mail.gmail.com>
+ <CAHOQ7J8QxfvtrS2KdgzUPvkDzJ1Od0CMvdWxrF_bNacVRYOa5Q@mail.gmail.com>
+ <CABPQNSZtQd51gQY7oK8B-BbpNEhxR-onQtiXSfW9sv1t2YW_nw@mail.gmail.com>
+ <CAHOQ7J_Jrj1NJ_tZaCioskQU_xGR2FQPt8=JrWpR6rfs=c847w@mail.gmail.com>
+ <CABPQNSYVGc9m0_xfAWe=3b7CXyGZ-2FfTMRbTJ=UECeZUtdgmg@mail.gmail.com>
+ <52FBC9E5.6010609@gmail.com> <loom.20140213T193220-631@post.gmane.org>
+ <52FD4C84.7060209@gmail.com> <CAHOQ7J8syoQLGwwkwPEX3wZir8sWDQ+k8sgHAKn=n_-Q_S8ipA@mail.gmail.com>
+ <CAAErz9hzeiJ9f9tJ+Z-kOHvrPqgcZrpvrpBpa_tMjnKm4YWSXA@mail.gmail.com>
+ <52FE68C9.3060403@gmail.com> <CAAErz9g7ND1htfk=yxRJJLbSEgBi4EV_AHC9uDRptugGWFWcXw@mail.gmail.com>
+ <CAAErz9j=_FpWLSyUk43pp8A6e7Ej0crT8ghW5-yxBEbGkd6O+A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: christian.couder@gmail.com, git@vger.kernel.org, johan@herland.net,
-	josh@joshtriplett.org, tr@thomasrast.ch, mhagger@alum.mit.edu,
-	sunshine@sunshineco.com, dan.carpenter@oracle.com, greg@kroah.com,
-	peff@peff.net
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Sat Feb 15 01:16:37 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Karsten Blees <karsten.blees@gmail.com>,
+	Stefan Zager <szager@google.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Zachary Turner <zturner@chromium.org>
+X-From: git-owner@vger.kernel.org Sat Feb 15 01:46:22 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WESvs-0007uF-HY
-	for gcvg-git-2@plane.gmane.org; Sat, 15 Feb 2014 01:16:36 +0100
+	id 1WETOf-0001kc-QK
+	for gcvg-git-2@plane.gmane.org; Sat, 15 Feb 2014 01:46:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752896AbaBOAQd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Feb 2014 19:16:33 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38445 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751788AbaBOAQc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Feb 2014 19:16:32 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A20B86C6E3;
-	Fri, 14 Feb 2014 19:16:31 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=3dvYxoqvZDxMtmSfvpkyTTVGG2w=; b=ilV7Cp
-	CoFkpK8RyJO77i9PnTnT8eLh3JvZcF9oQUwYLbcgx/C4CCHz9rrktkmjr9L8sQyJ
-	WXvev07WWHBkM+TljOg9ZB2imuIgbDuOEJFKXvtMIgCuW2y7ZlUWovbpZHZkPI8m
-	c64yxK7drorJDil3DGkhH24H1Gt15PBB2zj6g=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=d24WVpEiTyjqb2U6OhFpymQpdthp0gJd
-	f7U3WvV+iCtl/ZovdJc0XER10wIqX5Rym32tssX20K68UxsMPhM5bQv3xXRNrZgu
-	V+ZQX09lbBfTsuS34ybumMIxjuFX2yM74elmxUHp67eGnIlqxPuEZI3oK2h0DSzr
-	XEh+WJ90L3s=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 763556C6E2;
-	Fri, 14 Feb 2014 19:16:31 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 97EB56C6E1;
-	Fri, 14 Feb 2014 19:16:29 -0500 (EST)
-In-Reply-To: <xmqqtxc1fdsk.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Fri, 14 Feb 2014 15:57:31 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 6AB55BC4-95D6-11E3-B9B5-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753104AbaBOAqR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Feb 2014 19:46:17 -0500
+Received: from mail-qc0-f177.google.com ([209.85.216.177]:43104 "EHLO
+	mail-qc0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752954AbaBOAqQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Feb 2014 19:46:16 -0500
+Received: by mail-qc0-f177.google.com with SMTP id i8so20911072qcq.22
+        for <git@vger.kernel.org>; Fri, 14 Feb 2014 16:46:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=zhX4G8TGNY7WV1vM0n6BqZ9kUiRgUJDmDfd3UqxVjWA=;
+        b=wY3ltKtTQCHkRolGvC8P3xhDNsbacfVMhp6lhAfP6UqI/Ti0IqEoRlqfUlFsdcctZS
+         lgUvg8HhhlW5I6C/8AD3Ensf/PphfqO7Dn2k2GvyxY+m3OBnzrUONWy5Q9q+CDT97QtG
+         2TGrrUGJIMW1voeoQ7fDf1N8mdMZjQdbAHdvXZzkQFkiBGVeHU0vZzh13pFZ62+A/5Nb
+         xWoorl5tuPZUFe2235Jo85YB3ePcZROnfskgbFzcWPPCi1teVx3GP+eUdM/uOYSkIrDl
+         MnuA08YPl/T0J9kkPXtYWK4zD9ao13Bh5JZm8Q9U2ko4m2RHG3H3trywkbqrY6fewl2e
+         AAGA==
+X-Received: by 10.224.136.195 with SMTP id s3mr18482297qat.95.1392425176060;
+ Fri, 14 Feb 2014 16:46:16 -0800 (PST)
+Received: by 10.96.215.102 with HTTP; Fri, 14 Feb 2014 16:45:45 -0800 (PST)
+In-Reply-To: <CAAErz9j=_FpWLSyUk43pp8A6e7Ej0crT8ghW5-yxBEbGkd6O+A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242165>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242166>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> That is, you are saying with the above
+On Sat, Feb 15, 2014 at 2:16 AM, Zachary Turner <zturner@chromium.org> wrote:
+> (Gah, sorry if you're receiving multiple emails to your personal
+> addresses, I need to get used to manually setting Plain-text mode
+> every time I send a message).
 >
->      if_exists = add_if_different AND ignore_if_same
+> For the mixed read, we wouldn't be looking for another caller of
+> pread() (since it doesn't care what the file pointer is), but instead
+> a caller of read() or lseek() (since those do depend on the current
+> file pointer).  In index-pack.c, I see two possible culprits:
 >
-> So you already have to support more than one actions depending on
-> the condition, ...
-> of conditions, I think.  Which is essentially the same as saying
-> that you need this:
+> 1) A call to xread() from inside fill()
+> 2) A call to lseek in parse_pack_objects()
 >
->>     action = do_Y_if_X_and_Z AND do_U_if_V
->
-> Again, unless all the U's are limited to "ignore", that is.
+> Do you think these could be related?  If so, maybe that opens up some
+> other solutions?
 
-Oh by the way, don't get me wrong.  I am not saying that the last
-one is necessarily better or worse.  I am only saying that the
-semantics proposed seems to be hard to explain and we need to do
-find a way to do better.
-
-If you have these existing ones:
-
-	Sob: A
-        Sob: B
-        Sob: C
-        Sob: D
-
-and you have "Sob: B" at hand, "Sob.if-missing" would not fire
-(because if-exists/if-missing is only about keys) ans
-"Sob.if-exists" will.  What happens is now up to the action part
-(i.e. what follows "if_exists =", e.g. "add_if_different").
-
-The conditional part of "add_if_different" action is explainable as
-a conditon on the value (as opposed to condition on keys, which is
-the left-hand-side).  But what does a condition with "neighbour" in
-its name really mean?  It is not a condition about the value, but
-also is a condition about the order of the existing records.
-
-What is the right mental model the end-user needs to form when
-understanding these?  Conditions on keys go on the left, and any
-other random conditions can come as a modifier after action
-e.g. add_if_same_value_is_not_at_the_end?
+For index-pack alone, what's wrong with open one file handle per thread?
+-- 
+Duy
