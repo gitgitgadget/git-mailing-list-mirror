@@ -1,96 +1,86 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: [PATCH 4/5] builtin/mv: don't use memory after free
-Date: Sun, 16 Feb 2014 16:06:05 +0000
-Message-ID: <4df594e05741b2bec1201556d34eb22bab2c235a.1392565571.git.john@keeping.me.uk>
-References: <cover.1392565571.git.john@keeping.me.uk>
-Cc: John Keeping <john@keeping.me.uk>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 16 17:16:51 2014
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH 1/3] wt-status.c: make cut_lines[] const to shrink .data
+ section a bit
+Date: Sun, 16 Feb 2014 16:21:48 +0000
+Message-ID: <20140216162147.GL4582@vauxhall.crustytoothpaste.net>
+References: <1392521840-21628-1-git-send-email-pclouds@gmail.com>
+ <1392521840-21628-2-git-send-email-pclouds@gmail.com>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="c8UbHMnQwI7BF+TB"
+Cc: git@vger.kernel.org
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 16 17:22:00 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WF4Oh-0002WO-EU
-	for gcvg-git-2@plane.gmane.org; Sun, 16 Feb 2014 17:16:51 +0100
+	id 1WF4Tg-00081F-Df
+	for gcvg-git-2@plane.gmane.org; Sun, 16 Feb 2014 17:22:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752640AbaBPQQY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Feb 2014 11:16:24 -0500
-Received: from hyena.aluminati.org ([64.22.123.221]:43316 "EHLO
-	hyena.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752474AbaBPQQX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Feb 2014 11:16:23 -0500
-X-Greylist: delayed 586 seconds by postgrey-1.27 at vger.kernel.org; Sun, 16 Feb 2014 11:16:23 EST
-Received: from localhost (localhost [127.0.0.1])
-	by hyena.aluminati.org (Postfix) with ESMTP id 3D02B2149C;
-	Sun, 16 Feb 2014 16:06:37 +0000 (GMT)
-X-Quarantine-ID: <flpkKLXCYzG5>
-X-Virus-Scanned: Debian amavisd-new at hyena.aluminati.org
-X-Amavis-Alert: BAD HEADER SECTION, Duplicate header field: "References"
-X-Spam-Flag: NO
-X-Spam-Score: -1
-X-Spam-Level: 
-X-Spam-Status: No, score=-1 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1] autolearn=disabled
-Received: from hyena.aluminati.org ([127.0.0.1])
-	by localhost (hyena.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id flpkKLXCYzG5; Sun, 16 Feb 2014 16:06:36 +0000 (GMT)
-Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
-	by hyena.aluminati.org (Postfix) with ESMTP id EB70C1FE06;
-	Sun, 16 Feb 2014 16:06:36 +0000 (GMT)
-Received: from localhost (localhost [127.0.0.1])
-	by pichi.aluminati.org (Postfix) with ESMTP id D5C22161E545;
-	Sun, 16 Feb 2014 16:06:36 +0000 (GMT)
-X-Quarantine-ID: <qMdkVLyt0gRM>
-X-Virus-Scanned: Debian amavisd-new at aluminati.org
-X-Amavis-Alert: BAD HEADER SECTION, Duplicate header field: "References"
-Received: from pichi.aluminati.org ([127.0.0.1])
-	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id qMdkVLyt0gRM; Sun, 16 Feb 2014 16:06:36 +0000 (GMT)
-Received: from river.lan (banza.aluminati.org [10.0.7.182])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	id S1752885AbaBPQV4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Feb 2014 11:21:56 -0500
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:51991 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752508AbaBPQVz (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 16 Feb 2014 11:21:55 -0500
+Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:3559:ce18:7c4e:2abc])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pichi.aluminati.org (Postfix) with ESMTPSA id BB6E9161E4CB;
-	Sun, 16 Feb 2014 16:06:32 +0000 (GMT)
-X-Mailer: git-send-email 1.9.rc0.187.g6292fff
-In-Reply-To: <cover.1392565571.git.john@keeping.me.uk>
-In-Reply-To: <cover.1392565571.git.john@keeping.me.uk>
-References: <cover.1392565571.git.john@keeping.me.uk>
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 8274528074;
+	Sun, 16 Feb 2014 16:21:53 +0000 (UTC)
+Mail-Followup-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <1392521840-21628-2-git-send-email-pclouds@gmail.com>
+X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
+ 3.12-1-amd64)
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242233>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242234>
 
-If 'src' already ends with a slash, then add_slash() will just return
-it, meaning that 'free(src_with_slash)' is actually 'free(src)'.  Since
-we use 'src' later, this will result in use-after-free.
 
-In fact, this cannot happen because 'src' comes from
-internal_copy_pathspec() without the KEEP_TRAILING_SLASH flag, so any
-trailing '/' will have been stripped; but static analysis tools are not
-clever enough to realise this and so warn that 'src' could be used after
-having been free'd.  Fix this by checking that 'src_w_slash' is indeed
-newly allocated memory.
+--c8UbHMnQwI7BF+TB
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: John Keeping <john@keeping.me.uk>
----
- builtin/mv.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+On Sun, Feb 16, 2014 at 10:37:18AM +0700, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=
+=8Dc Duy wrote:
+> -static char cut_line[] =3D
+> +static const char cut_line[] =3D
 
-diff --git a/builtin/mv.c b/builtin/mv.c
-index 21c46d1..7e26eb5 100644
---- a/builtin/mv.c
-+++ b/builtin/mv.c
-@@ -162,7 +162,8 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 					if (strncmp(path, src_w_slash, len_w_slash))
- 						break;
- 				}
--				free((char *)src_w_slash);
-+				if (src_w_slash != src)
-+					free((char *)src_w_slash);
- 
- 				if (last - first < 1)
- 					bad = _("source directory is empty");
--- 
-1.9.rc0.187.g6292fff
+Your subject says cut_lines[], but the variable is cut_line[] (no "s").
+
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
+
+--c8UbHMnQwI7BF+TB
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCgAGBQJTAOWbAAoJEL9TXYEfUvaL4GMQALJtAMsVKw9HPI/IOflqzuYc
+YfdKCA5GsfvZtI/slMBkZj+BIJHqbRRFdPMTXyBtAjLDZh1OUrGGZag01ttvcFZA
+mRHRW+m2U+sRjl6FexbSQH9T/gvC3LtvJdHxhh3Hm8Q4SKriOiPUN/ie1w/mdzYQ
+3KfBc9T1P5fKqsQPXfd139d6Y9Q8rOvbczbtMIPkiNQj87L9O6PWOsvA+zfOtVGG
+nF3ObAyQ1FVAcpAkLOLAho0V7BxzMP+gPZnpx034QTQFGS+8OV6EFwYIzeD/dhq2
+dxVIDcuYFc6D2IPW5ft+Gr6Ed1B5h/NEspzIJzo9SEvXDuqRb3MNhZAuV2NZheDl
+asQfqEGHhx5ABQeS01zf02/l56yvUgkIxp/nswIn8UF4YOnI1idUEpHPYqZzR0Gm
+GBtWk+uUYR3TOGAvpQ3QDkrhwlxYjf+GqOhpaTuk3ukEXinifwYSBiIRHrPNQR5J
+CiTt/OZNnYUbAF/3KrnW2C5vMKYjr68vx2mxEMYjv7763w7KeslvHfXcKbFwOAPV
+Jr+8KpZ5XuofBaX9v9zW65G1HirJ3qRynbkl8t+3VhFq2iSbfUiTYrNjOdG72iP7
+x8pMhUUzyB6OrMSNA5eJkuSOLuRGriwxMxcTBk0XGNNipyEPSe2RvnVo+NZNggNt
+YyKaESmGRgmz3rQdA4vk
+=4eaN
+-----END PGP SIGNATURE-----
+
+--c8UbHMnQwI7BF+TB--
