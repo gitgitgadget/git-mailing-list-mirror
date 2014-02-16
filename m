@@ -1,97 +1,98 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 3/3] read-cache: add index.version config variable
-Date: Sat, 15 Feb 2014 21:10:00 -0500
-Message-ID: <CAPig+cTAd4DL3WaCBJ82q5i-7EObER5BrQX92LQozeJqKTaOZQ@mail.gmail.com>
-References: <1392492197-7724-1-git-send-email-t.gummerer@gmail.com>
-	<1392492197-7724-4-git-send-email-t.gummerer@gmail.com>
+Subject: Re: [PATCH 3/3] config: teach "git config --file -" to read from the
+ standard input
+Date: Sat, 15 Feb 2014 21:12:29 -0500
+Message-ID: <CAPig+cSRgpABwzC36FoBst52hCOPieMBTvsTx9CPFoHifHG9yg@mail.gmail.com>
+References: <1392421053-937-1-git-send-email-kirill@shutemov.name>
+	<1392421053-937-3-git-send-email-kirill@shutemov.name>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Thomas Gummerer <t.gummerer@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 16 03:10:34 2014
+Cc: Git List <git@vger.kernel.org>
+To: "Kirill A. Shutemov" <kirill@shutemov.name>
+X-From: git-owner@vger.kernel.org Sun Feb 16 03:12:37 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WErBh-0005Mr-2l
-	for gcvg-git-2@plane.gmane.org; Sun, 16 Feb 2014 03:10:33 +0100
+	id 1WErDe-0007QW-Al
+	for gcvg-git-2@plane.gmane.org; Sun, 16 Feb 2014 03:12:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752586AbaBPCKY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Feb 2014 21:10:24 -0500
-Received: from mail-yk0-f176.google.com ([209.85.160.176]:61104 "EHLO
-	mail-yk0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752516AbaBPCKB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Feb 2014 21:10:01 -0500
-Received: by mail-yk0-f176.google.com with SMTP id 19so27690746ykq.7
-        for <git@vger.kernel.org>; Sat, 15 Feb 2014 18:10:00 -0800 (PST)
+	id S1752587AbaBPCMa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Feb 2014 21:12:30 -0500
+Received: from mail-yh0-f50.google.com ([209.85.213.50]:54029 "EHLO
+	mail-yh0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752503AbaBPCMa (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Feb 2014 21:12:30 -0500
+Received: by mail-yh0-f50.google.com with SMTP id 29so13032244yhl.23
+        for <git@vger.kernel.org>; Sat, 15 Feb 2014 18:12:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
          :from:to:cc:content-type;
-        bh=MBi6mnv62BMvMIx08NbCIKs70rvAE2AvQ0G7RrCuo4g=;
-        b=uub/oj55E8h57M0cGT+5JM1opnjYrCd6qjkjiiqftCBriGDv9YnWi3Jykc02RynQCC
-         ooUghsDbwId96z7u+CpKSk8H+H+BwVZ6HdfLRq9mnLiCpbOKxIk9CzjNgcqXym9WgLY8
-         5EZ+eiXNu9C7nTEFRuLZcMDUjbR6Xvp1Gu9VpszyHzCq1diKoQ6zJvgLatp/ito9Gr92
-         YnfwiusOGDj765dYqai6hOsBv3oLIYaB4qiYALz8n0tQRtEypWcM4RWbJTrL9lMGGbG3
-         nCykFq2kHNr8J8jTI3dBPQtlWFfy18hP0//8WFCI08uGXtRUDRCwmyb+lysp0WVhf1BV
-         C4Yw==
-X-Received: by 10.236.7.231 with SMTP id 67mr12746434yhp.30.1392516600351;
- Sat, 15 Feb 2014 18:10:00 -0800 (PST)
-Received: by 10.170.189.143 with HTTP; Sat, 15 Feb 2014 18:10:00 -0800 (PST)
-In-Reply-To: <1392492197-7724-4-git-send-email-t.gummerer@gmail.com>
-X-Google-Sender-Auth: nL2DFTR6GWRmDYC03gm8fAAFyp0
+        bh=CoSzKVe8hIHVBGfJwj/YExShXf8KuEEtDHBapT00L4A=;
+        b=H5CC62fI76kngLQLMFgDUFVIt6a9xL4GwmfKRjngd4luPd88HUkWNE3Z3l5CNGUDhE
+         JevXA7Ad6Y7N8H7YPYEWJnxmp0gLVhYzioYh1fUB6wLApboFDLIZJQ1lUxFFrwMOGQBB
+         bTL6DgRV8w2TfMUebq3juVofSk36l2uYuiBJi7Fm3/32eeYcqghnaJCYT/vgLLDC7awc
+         rtJGxVjGaNzLPIjL1/g+B2XZRjXjrZ/twJubuoeH0W/FhUx2XlmFFYBoN7sDIqxvraq+
+         brMs9ri2SN7ymVk71ODhBKpH08PHPZSI4vOzMOCCgbZBFuzXGOEb/m2MDIYKYea36LTU
+         yRmA==
+X-Received: by 10.236.122.99 with SMTP id s63mr17230026yhh.19.1392516749537;
+ Sat, 15 Feb 2014 18:12:29 -0800 (PST)
+Received: by 10.170.189.143 with HTTP; Sat, 15 Feb 2014 18:12:29 -0800 (PST)
+In-Reply-To: <1392421053-937-3-git-send-email-kirill@shutemov.name>
+X-Google-Sender-Auth: Cokn-xpsyFGu86DjtqYIs_913d4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242204>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242205>
 
-On Sat, Feb 15, 2014 at 2:23 PM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
-> Add a config variable that allows setting the default index version when
-> initializing a new index file.  Similar to the GIT_INDEX_VERSION
-> environment variable this only affects new index files.
+On Fri, Feb 14, 2014 at 6:37 PM, Kirill A. Shutemov
+<kirill@shutemov.name> wrote:
+> The patch extends git config --file interface to allow read config from
+> stdin.
 >
-> Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
+> Editing stdin or setting value in stdin is an error.
+>
+> Include by absolute path is allowed in stdin config, but not by relative
+> path.
+>
+> Signed-off-by: Kirill A. Shutemov <kirill@shutemov.name>
 > ---
-> index 37fd84d..bf34985 100755
-> --- a/t/t1600-index.sh
-> +++ b/t/t1600-index.sh
-> @@ -21,4 +21,31 @@ test_expect_success 'out of bounds GIT_INDEX_VERSION issues warning' '
->         )
+> diff --git a/t/t1305-config-include.sh b/t/t1305-config-include.sh
+> index a70707620f14..fda6555024c5 100755
+> --- a/t/t1305-config-include.sh
+> +++ b/t/t1305-config-include.sh
+> @@ -122,6 +122,20 @@ test_expect_success 'relative includes from command line fail' '
+>         test_must_fail git -c include.path=one config test.one
 >  '
 >
-> +test_expect_success 'out of bounds index.version issuses warning' '
+> +test_expect_success 'absolute includes from stdin work' '
+> +       echo "[test]one = 1" >one &&
+> +       echo 1 >expect &&
+> +       echo "[include]path=\"$PWD/one\"" |
 
-s/issuses/issues/
+To be Windows-friendly, you may want to use $(pwd). Quoting from t/README:
 
-> +       (
-> +               unset GIT_INDEX_VERSION &&
-> +               rm .git/index &&
-> +               git config --add index.version 1 &&
-> +               git add a 2>&1 | sed "s/[0-9]//" >actual.err &&
-> +               sed -e "s/ Z$/ /" <<-\EOF >expect.err &&
-> +                       warning: index.version set, but the value is invalid.
-> +                       Using version Z
-> +               EOF
-> +               test_i18ncmp expect.err actual.err
-> +       )
+   When a test checks for an absolute path that a git command generated,
+   construct the expected value using $(pwd) rather than $PWD,
+   $TEST_DIRECTORY, or $TRASH_DIRECTORY. It makes a difference on
+   Windows, where the shell (MSYS bash) mangles absolute path names.
+   For details, see the commit message of 4114156ae9.
+
+> +       git config --file - test.one >actual &&
+> +       test_cmp expect actual
 > +'
 > +
-> +test_expect_success 'GIT_INDEX_VERSION takes precedence over config' '
-> +       (
-> +               rm .git/index &&
-> +               GIT_INDEX_VERSION=4 &&
-> +               export GIT_INDEX_VERSION &&
-> +               git config --add index.version 2 &&
-> +               git add a 2>&1 &&
-> +               echo 4 >expect &&
-> +               test-index-version <.git/index >actual &&
-> +               test_cmp expect actual
-> +       )
+> +test_expect_success 'relative includes from stdin line fail' '
+> +       echo "[test]one = 1" >one &&
+> +       echo "[include]path=one" |
+> +       test_must_fail git config --file - test.one
 > +'
 > +
->  test_done
+>  test_expect_success 'include cycles are detected' '
+>         cat >.gitconfig <<-\EOF &&
+>         [test]value = gitconfig
 > --
-> 1.8.5.2.300.ge613be6.dirty
+> 1.8.5.2
