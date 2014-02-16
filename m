@@ -1,126 +1,96 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] web--browse: Use powershell on Windows
-Date: Sun, 16 Feb 2014 11:07:30 -0500
-Message-ID: <CAPig+cSJZE9dedQY2YToJ62kFBtjZhpU9b8qjtMDJqGcZvkBSQ@mail.gmail.com>
-References: <1392535347-3008-1-git-send-email-svnpenn@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>
-To: Steven Penny <svnpenn@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 16 17:07:37 2014
+From: John Keeping <john@keeping.me.uk>
+Subject: [PATCH 4/5] builtin/mv: don't use memory after free
+Date: Sun, 16 Feb 2014 16:06:05 +0000
+Message-ID: <4df594e05741b2bec1201556d34eb22bab2c235a.1392565571.git.john@keeping.me.uk>
+References: <cover.1392565571.git.john@keeping.me.uk>
+Cc: John Keeping <john@keeping.me.uk>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Feb 16 17:16:51 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WF4Fk-0000Px-Pn
-	for gcvg-git-2@plane.gmane.org; Sun, 16 Feb 2014 17:07:37 +0100
+	id 1WF4Oh-0002WO-EU
+	for gcvg-git-2@plane.gmane.org; Sun, 16 Feb 2014 17:16:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752801AbaBPQHd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Feb 2014 11:07:33 -0500
-Received: from mail-la0-f54.google.com ([209.85.215.54]:46417 "EHLO
-	mail-la0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752049AbaBPQHc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Feb 2014 11:07:32 -0500
-Received: by mail-la0-f54.google.com with SMTP id y1so10821575lam.27
-        for <git@vger.kernel.org>; Sun, 16 Feb 2014 08:07:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=CysLc0e7bmxGYwLbll4hgHQW+TdPpcbc5lfKxKKlkGE=;
-        b=Tal9XIY/z1zzgTAvLu88QYCMRLugKbyFhxZERozqNdfjWU8FmH8gtU7cv1OzQWkhad
-         SvH4H9TJOeJRgpo91Wr5GgNtI3uzH4PMD/r2v6F600KOz2eamrPdLNTX351/KcogFZ1I
-         Z5uA1qEutHbFUfX8QURp5VRBh9AS/D2W54c2Q4DG6dcZBbl7ANOaoOk1hVDIQuspPtCV
-         aqcfcvRogMz0AuQn8zBZAeW7vQUMidvbdSF26RHYd0p705ilNF+UmIqB53XBTdTcJTXl
-         WgBouIxdqUE9WGS2wd5K+FPxpAnUHYPHn7Hx127fayW4Nep/VVp+C1DuMJJYiXPsoaCD
-         MttA==
-X-Received: by 10.112.45.108 with SMTP id l12mr13194293lbm.21.1392566850594;
- Sun, 16 Feb 2014 08:07:30 -0800 (PST)
-Received: by 10.114.181.228 with HTTP; Sun, 16 Feb 2014 08:07:30 -0800 (PST)
-In-Reply-To: <1392535347-3008-1-git-send-email-svnpenn@gmail.com>
-X-Google-Sender-Auth: -GMHk2O5Gy1PyKXrFwFNzFpNgn4
+	id S1752640AbaBPQQY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Feb 2014 11:16:24 -0500
+Received: from hyena.aluminati.org ([64.22.123.221]:43316 "EHLO
+	hyena.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752474AbaBPQQX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Feb 2014 11:16:23 -0500
+X-Greylist: delayed 586 seconds by postgrey-1.27 at vger.kernel.org; Sun, 16 Feb 2014 11:16:23 EST
+Received: from localhost (localhost [127.0.0.1])
+	by hyena.aluminati.org (Postfix) with ESMTP id 3D02B2149C;
+	Sun, 16 Feb 2014 16:06:37 +0000 (GMT)
+X-Quarantine-ID: <flpkKLXCYzG5>
+X-Virus-Scanned: Debian amavisd-new at hyena.aluminati.org
+X-Amavis-Alert: BAD HEADER SECTION, Duplicate header field: "References"
+X-Spam-Flag: NO
+X-Spam-Score: -1
+X-Spam-Level: 
+X-Spam-Status: No, score=-1 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1] autolearn=disabled
+Received: from hyena.aluminati.org ([127.0.0.1])
+	by localhost (hyena.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id flpkKLXCYzG5; Sun, 16 Feb 2014 16:06:36 +0000 (GMT)
+Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
+	by hyena.aluminati.org (Postfix) with ESMTP id EB70C1FE06;
+	Sun, 16 Feb 2014 16:06:36 +0000 (GMT)
+Received: from localhost (localhost [127.0.0.1])
+	by pichi.aluminati.org (Postfix) with ESMTP id D5C22161E545;
+	Sun, 16 Feb 2014 16:06:36 +0000 (GMT)
+X-Quarantine-ID: <qMdkVLyt0gRM>
+X-Virus-Scanned: Debian amavisd-new at aluminati.org
+X-Amavis-Alert: BAD HEADER SECTION, Duplicate header field: "References"
+Received: from pichi.aluminati.org ([127.0.0.1])
+	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id qMdkVLyt0gRM; Sun, 16 Feb 2014 16:06:36 +0000 (GMT)
+Received: from river.lan (banza.aluminati.org [10.0.7.182])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pichi.aluminati.org (Postfix) with ESMTPSA id BB6E9161E4CB;
+	Sun, 16 Feb 2014 16:06:32 +0000 (GMT)
+X-Mailer: git-send-email 1.9.rc0.187.g6292fff
+In-Reply-To: <cover.1392565571.git.john@keeping.me.uk>
+In-Reply-To: <cover.1392565571.git.john@keeping.me.uk>
+References: <cover.1392565571.git.john@keeping.me.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242232>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242233>
 
-On Sun, Feb 16, 2014 at 2:22 AM, Steven Penny <svnpenn@gmail.com> wrote:
-> On Windows you can have either MinGW or Cygwin. As has been shown in this script
-> MinGW uses "start" while Cygwin uses "cygstart". The "cygstart" command is
-> robust but the "start" command breaks on certain URLs
->
->     $ git web--browse 'http://wikipedia.org/wiki/Key_&_Peele'
->     '_Peele' is not recognized as an internal or external command,
->     operable program or batch file.
->
-> An alternative is to use PowerShell. PowerShell is a component of Windows and
-> will work with both MinGW and Cygwin.
->
-> Signed-off-by: Steven Penny <svnpenn@gmail.com>
-> ---
-> diff --git a/Documentation/git-web--browse.txt b/Documentation/git-web--browse.txt
-> index 2de575f..02cccf9 100644
-> --- a/Documentation/git-web--browse.txt
-> +++ b/Documentation/git-web--browse.txt
-> @@ -33,8 +33,7 @@ The following browsers (or commands) are currently supported:
->  * lynx
->  * dillo
->  * open (this is the default under Mac OS X GUI)
-> -* start (this is the default under MinGW)
-> -* cygstart (this is the default under Cygwin)
-> +* powershell (this is the default under Windows)
->  * xdg-open
->
->  Custom commands may also be specified.
-> diff --git a/git-web--browse.sh b/git-web--browse.sh
-> index ebdfba6..72fbe32 100755
-> --- a/git-web--browse.sh
-> +++ b/git-web--browse.sh
-> @@ -34,7 +34,7 @@ valid_tool() {
->         firefox | iceweasel | seamonkey | iceape | \
->         chrome | google-chrome | chromium | chromium-browser | \
->         konqueror | opera | w3m | elinks | links | lynx | dillo | open | \
-> -       start | cygstart | xdg-open)
-> +       powershell | xdg-open)
->                 ;; # happy
->         *)
->                 valid_custom_tool "$1" || return 1
-> @@ -124,13 +124,10 @@ if test -z "$browser" ; then
->         then
->                 browser_candidates="open $browser_candidates"
->         fi
-> -       # /bin/start indicates MinGW
-> -       if test -x /bin/start; then
-> -               browser_candidates="start $browser_candidates"
-> -       fi
-> -       # /usr/bin/cygstart indicates Cygwin
-> -       if test -x /usr/bin/cygstart; then
-> -               browser_candidates="cygstart $browser_candidates"
-> +       # OS indicates Windows
-> +       if test -n "$OS"
-> +       then
-> +               browser_candidates="powershell $browser_candidates"
->         fi
+If 'src' already ends with a slash, then add_slash() will just return
+it, meaning that 'free(src_with_slash)' is actually 'free(src)'.  Since
+we use 'src' later, this will result in use-after-free.
 
-Doesn't this penalize users who don't have powershell installed?
+In fact, this cannot happen because 'src' comes from
+internal_copy_pathspec() without the KEEP_TRAILING_SLASH flag, so any
+trailing '/' will have been stripped; but static analysis tools are not
+clever enough to realise this and so warn that 'src' could be used after
+having been free'd.  Fix this by checking that 'src_w_slash' is indeed
+newly allocated memory.
 
->         for i in $browser_candidates; do
-> @@ -179,11 +176,11 @@ konqueror)
->                 ;;
->         esac
->         ;;
-> -w3m|elinks|links|lynx|open|cygstart|xdg-open)
-> +w3m|elinks|links|lynx|open|xdg-open)
->         "$browser_path" "$@"
->         ;;
-> -start)
-> -       exec "$browser_path" '"web-browse"' "$@"
-> +powershell)
-> +       "$browser_path" saps "'$@'"
->         ;;
->  opera|dillo)
->         "$browser_path" "$@" &
-> --
-> 1.8.5.3
+Signed-off-by: John Keeping <john@keeping.me.uk>
+---
+ builtin/mv.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/builtin/mv.c b/builtin/mv.c
+index 21c46d1..7e26eb5 100644
+--- a/builtin/mv.c
++++ b/builtin/mv.c
+@@ -162,7 +162,8 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
+ 					if (strncmp(path, src_w_slash, len_w_slash))
+ 						break;
+ 				}
+-				free((char *)src_w_slash);
++				if (src_w_slash != src)
++					free((char *)src_w_slash);
+ 
+ 				if (last - first < 1)
+ 					bad = _("source directory is empty");
+-- 
+1.9.rc0.187.g6292fff
