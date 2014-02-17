@@ -1,171 +1,84 @@
-From: Daniel Hahler <genml+git-2014@thequod.de>
-Subject: Re: Bug: relative core.worktree is resolved from symlink and not
- its target
-Date: Mon, 17 Feb 2014 10:36:53 +0100
-Message-ID: <5301D835.1060301@thequod.de>
-References: <52F0BEF7.5020600@thequod.de> <20140209090803.GA24578@lanh>
+From: Thomas Rast <tr@thomasrast.ch>
+Subject: Re: diff weirdness (bug?)
+Date: Mon, 17 Feb 2014 11:20:10 +0100
+Message-ID: <87r472ujl1.fsf@thomasrast.ch>
+References: <52FE6C64.4060700@gmail.com>
+	<xmqq8utdihqx.fsf@gitster.dls.corp.google.com>
+	<53014A43.6080505@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="VXFnp4Bmq65WF324mkOC1K5BdM5iaHLXC"
-Cc: git@vger.kernel.org
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 17 10:37:02 2014
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Dario Bertini <berdario@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 17 11:20:28 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WFKdI-0000BV-VK
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Feb 2014 10:37:01 +0100
+	id 1WFLJK-0006zz-E4
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Feb 2014 11:20:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752006AbaBQJg4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Feb 2014 04:36:56 -0500
-Received: from hahler.de ([188.40.33.212]:47606 "EHLO elfe.thequod.de"
+	id S1751567AbaBQKUP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Feb 2014 05:20:15 -0500
+Received: from ip1.thgersdorf.net ([148.251.9.194]:51939 "EHLO mail.psioc.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750939AbaBQJgz (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Feb 2014 04:36:55 -0500
-Received: from localhost (amavis [10.122.1.24])
-	by elfe.thequod.de (Postfix) with ESMTP id E8BC462105;
-	Mon, 17 Feb 2014 10:36:53 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=thequod.de; h=
-	content-type:content-type:in-reply-to:references:subject:subject
-	:mime-version:user-agent:from:from:date:date:message-id:received
-	:received; s=postfix2; t=1392629812; bh=1SHIpCg29yfmVlBWYEkb4hyn
-	JV7dUNLr80YU7vgWhCk=; b=sUGQgXeqfRSVbawqghFYjEl478WKNEKapI6lFzQs
-	VDIOR5a+zGgKWV22Irn8OGDPDqdjZjVpxgFrK+YhTVjKm8KfJ2plu1kHOfbMgmrm
-	Cjnw3rQ8/mks38kV7YnEe0MZBZRBGcci6AVCINpWRbSD/XM+1lOpNpRsiGiVRGU5
-	wN8=
-X-Virus-Scanned: Debian amavisd-new at amavis.thequod.de
-Received: from elfe.thequod.de ([10.122.1.25])
-	by localhost (amavis.thequod.de [10.122.1.24]) (amavisd-new, port 10026)
-	with ESMTP id mR9EyoMNWQ+2; Mon, 17 Feb 2014 10:36:52 +0100 (CET)
-Received: from lenny.thequod.de (91-65-218-186-dynip.superkabel.de [91.65.218.186])
-	(Authenticated sender: daniel@hahler.de)
-	by elfe.thequod.de (Postfix) with ESMTPSA;
-	Mon, 17 Feb 2014 10:36:52 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.2.0
-In-Reply-To: <20140209090803.GA24578@lanh>
-X-Enigmail-Version: 1.6
+	id S1751074AbaBQKUO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Feb 2014 05:20:14 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by localhost.psioc.net (Postfix) with ESMTP id 972094D6594;
+	Mon, 17 Feb 2014 11:20:11 +0100 (CET)
+X-Virus-Scanned: amavisd-new at psioc.net
+Received: from mail.psioc.net ([127.0.0.1])
+	by localhost (mail.psioc.net [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id aQZQX_GfAB95; Mon, 17 Feb 2014 11:20:10 +0100 (CET)
+Received: from linux-1gf2.thomasrast.ch (80-219-153-229.dclient.hispeed.ch [80.219.153.229])
+	(using TLSv1.2 with cipher AES128-GCM-SHA256 (128/128 bits))
+	(Client did not present a certificate)
+	by mail.psioc.net (Postfix) with ESMTPSA id B202D4D64BD;
+	Mon, 17 Feb 2014 11:20:10 +0100 (CET)
+In-Reply-To: <53014A43.6080505@gmail.com> (Dario Bertini's message of "Mon, 17
+	Feb 2014 00:31:15 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242249>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242250>
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---VXFnp4Bmq65WF324mkOC1K5BdM5iaHLXC
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: quoted-printable
+Dario Bertini <berdario@gmail.com> writes:
 
-On 09.02.2014 10:08, Duy Nguyen wrote:
-> On Tue, Feb 04, 2014 at 11:20:39AM +0100, Daniel Hahler wrote:
+> On 02/14/2014 09:03 PM, Junio C Hamano wrote:
+>> This is a combined diff, and yaml-related lines are added relative
+>> to your _other_ branch you are merging (notice these + are indented
+>> by one place).  Relative to what you had at the tip of your branch
+>> before you started this operation that ended up conflicted, the
+>> half-merged result removes if/else that sets DIST_MODULE_PATH and
+>> replaces it with a single line (their +/- are on the first column,
+>> signifying that these are differences relative to the first parent,
+>> i.e. your state before you started the operation).
+>> 
+>>> if we remove these 3 lines, we'll get this diff:
+>> 
+>> With that understanding, I think the output after removing these
+>> three lines is perfectlyh understandable and correct.  You are
+>> looking at the three lines that used to exist in the version you
+>> started from, that were missing from the other side.  If you remoe
+>> them, it will show as removal from _your_ version (notice these -
+>> that shows what _you_ did manually are on the first column, saying
+>> that that is relative to _your_ version).
+>> 
+>
+> Thank you, I was completely unaware of combined diffs. Still: I can't
+> see how this would explain the empty diff when deleting 4 lines instead
+> of 3.
 
-Thanks for looking into this.
+With a --cc diff (which it is: it says 'diff --cc' in the file headers)
+git doesn't show the combined diff for hunks that fully agree with one
+side.
 
->> when using a submodule "sm", there is a relative worktree in its confi=
-g:
->>
->>    .git/modules/sm/config:
->>    [core]
->>     worktree =3D ../../../smworktree
->>
->> git-new-worktree (from contrib) symlinks this config the new worktree.=
+So if you (even manually) resolve the merge so that it fully matches one
+side, that will not show up in a --cc diff.
 
->>
->> From inside the new worktree, git reads the config, but resolves the
->> relative worktree setting based on the symlink's location.
->=20
-> Hmm.. core.worktree is relative to $GIT_DIR. Whether "config" is a
-> symlink should have no effects.
-
-If "config" is a symlink, the relative path for worktree is meant to be
-resolved based on the config file's location, and not from the symlink
-($GIT_DIR).
-
-Here is a test case to reproduce it:
-
-  # Create a submodule repo
-  mkdir /tmp/t-sm
-  cd /tmp/t-sm
-  git init
-  touch foo
-  git add foo
-  git commit -m init
-
-  # Create the root repo
-  mkdir /tmp/t-root
-  cd /tmp/t-root
-  git init
-  mkdir submodules
-  git submodule add /tmp/t-sm submodules/sm
-  git commit -m init
-
-  # Create a new worktree from the submodule
-  cd /tmp/t-root/submodules/sm
-  git-new-workdir . /tmp/new-workdir
-
-This then fails when checking out:
-+ git checkout -f
-fatal: Could not chdir to '../../../../submodules/sm': No such file or di=
-rectory
-
-% ls -l /tmp/new-workdir/.git/config=20
-[=85] /tmp/new-workdir/.git/config -> /tmp/t-root/.git/modules/submodules=
-/sm/config
-
-% cat /tmp/new-workdir/.git/config=20
-[core]
-	repositoryformatversion =3D 0
-	filemode =3D true
-	bare =3D false
-	logallrefupdates =3D true
-	worktree =3D ../../../../submodules/sm
-
-
-=46rom inside of /tmp/new-workdir `git rev-parse --git-dir` fails already=
-
-(with the same "cannot chdir" error).
-
-The problem appears to be that it tries to chdir based on
-/tmp/new-workdir/.git, but should do so based on
-$(readlink -f .git/config).
-
-I recognize that this case is constructed anyway, because even if
-`worktree` would get resolved correctly, it would not be what you'd
-expect: the point of git-new-workdir is to get a separate worktree, and
-not use the existing one.
-
-Therefore I see two problems here:
-1. worktree is not resolved correctly by git itself (with .git/config
-   being a symlink)
-2. git-new-workdir should handle this better, e.g. by creating a copy of
-   the "config" file with the worktree setting removed and printing a
-   warning about it.
-
-The workaround appears to be to explicitly set
-GIT_WORK_TREE=3D/tmp/new-workdir.
-
-
-Regards,
-Daniel.
-
---=20
-http://daniel.hahler.de/
-
-
---VXFnp4Bmq65WF324mkOC1K5BdM5iaHLXC
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (GNU/Linux)
-Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
-
-iD8DBQFTAdg1fAK/hT/mPgARAhVrAKCDhXxMYkVNW+AzYABMsBKd8bWGJACfcMg0
-sg9d7+hpqG8lFN87pBz+/84=
-=Pu26
------END PGP SIGNATURE-----
-
---VXFnp4Bmq65WF324mkOC1K5BdM5iaHLXC--
+-- 
+Thomas Rast
+tr@thomasrast.ch
