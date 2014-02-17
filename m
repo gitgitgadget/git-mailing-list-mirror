@@ -1,99 +1,64 @@
-From: "Dr. Torsten Thurow" <torsten.thurow@tum.de>
-Subject: Wrong version of Git on your download website for windows
-Date: Mon, 17 Feb 2014 16:45:20 +0100
-Organization: TU =?ISO-8859-15?Q?M=FCnchen_?=
-Message-ID: <53022E90.90702@tum.de>
-Reply-To: torsten.thurow@tum.de
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [msysGit] Re: git svn clone not work. It's stop with no error
+ message.
+Date: Mon, 17 Feb 2014 16:51:47 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1402171649490.14982@s15462909.onlinehome-server.info>
+References: <1392623113974-7603785.post@n2.nabble.com> <CALUzUxp=h-5mK-=YjvFRzyGGLp_-HxT661-P2yaqT9_6jPGnwA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------000800030501060304070903"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 17 16:50:55 2014
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: "msysgit@googlegroups.com" <msysgit@googlegroups.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	youngseonkim <1.youngsun.kim@gmail.com>
+To: Tay Ray Chuan <rctay89@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 17 16:51:55 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WFQT2-0000B7-T3
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Feb 2014 16:50:49 +0100
+	id 1WFQU6-0001WM-45
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Feb 2014 16:51:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752885AbaBQPup (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Feb 2014 10:50:45 -0500
-Received: from postout1.mail.lrz.de ([129.187.255.137]:39787 "EHLO
-	postout1.mail.lrz.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751622AbaBQPuo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Feb 2014 10:50:44 -0500
-X-Greylist: delayed 319 seconds by postgrey-1.27 at vger.kernel.org; Mon, 17 Feb 2014 10:50:43 EST
-Received: from lxmhs51.srv.lrz.de (localhost [127.0.0.1])
-	by postout1.mail.lrz.de (Postfix) with ESMTP id 3fSTzh5TQRzySF
-	for <git@vger.kernel.org>; Mon, 17 Feb 2014 16:45:20 +0100 (CET)
-X-Virus-Scanned: by amavisd-new at lrz.de in lxmhs51.srv.lrz.de
-Received: from postout1.mail.lrz.de ([127.0.0.1])
-	by lxmhs51.srv.lrz.de (lxmhs51.srv.lrz.de [127.0.0.1]) (amavisd-new, port 20024)
-	with LMTP id 9Jo_9SqlblMv for <git@vger.kernel.org>;
-	Mon, 17 Feb 2014 16:45:20 +0100 (CET)
-Received: from [IPv6:2001:4ca0:2503:1:51b5:898:eb31:f7c8] (unknown [IPv6:2001:4ca0:2503::11])
-	(using TLSv1 with cipher ECDHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by postout1.mail.lrz.de (Postfix) with ESMTPSA id 3fSTzh3V98zyS5
-	for <git@vger.kernel.org>; Mon, 17 Feb 2014 16:45:20 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.3.0
+	id S1753116AbaBQPvu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Feb 2014 10:51:50 -0500
+Received: from mout.gmx.net ([212.227.15.18]:64730 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750838AbaBQPvt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Feb 2014 10:51:49 -0500
+Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
+ mail.gmx.com (mrgmx003) with ESMTPSA (Nemesis) id 0Lugbo-1XFC9T3HBA-00zqzB
+ for <git@vger.kernel.org>; Mon, 17 Feb 2014 16:51:47 +0100
+X-X-Sender: schindelin@s15462909.onlinehome-server.info
+In-Reply-To: <CALUzUxp=h-5mK-=YjvFRzyGGLp_-HxT661-P2yaqT9_6jPGnwA@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Provags-ID: V03:K0:IaFno/t1hfGvnaOB3SRrG0zJYK8Sw/dqO/cUQGO8rxSbY1GsICl
+ BE3cHIqMTIp8uY0boQ02Avabe/yc84DHYx4X4+ycv+T8YfatAw4c9I+K4NSIkdSCLmKlAle
+ eLPSC1+xA1uNhAl5W9hcFxsl7NlgcfeRCR/cTTLX/8/FgsUZ4tNoOBg+hQ+7zJv3bGX9ZTt
+ Qur+N8i7MWLiiFXgsWL4w==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242261>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242262>
 
-This is a multi-part message in MIME format.
---------------000800030501060304070903
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 8bit
+Hi Tay,
 
-Hello,
+On Mon, 17 Feb 2014, Tay Ray Chuan wrote:
 
-many thanks for all your working. Git is a very good help tool. A smal 
-bug is on your download website for windows. Here we can read:
-"Latest stable release 1.9.0 Release Notes (2014-02-14) Download for 
-Windows", but the link loads Git-1.8.5.2.preview20131230.exe
+> Posting to msysgit since this was on Windows.
 
--- 
-Mit freundlichen Grüßen
-Torsten Thurow
+Thanks.
 
-______________________________________________________________________
+> On Mon, Feb 17, 2014 at 3:45 PM, youngseonkim <1.youngsun.kim@gmail.com> wrote:
+> > git svn clone https://my.svn.repo/url --stdlayout
+> >
+> > When I test a small svn repository and 'real working repository 1' with same
+> > this command, it's complete successfully.
+> > But it's not work in a 'real working repository 2', it just stop suddenly.
 
-Dr. Ing. Torsten Thurow | computer scientist
+The git-svn we have on Windows is really old. As an easy way out, you can
+use Vagrant (https://github.com/msysgit/msysgit/wiki/Vagrant) to run a
+Linux Git on your machine. That should fix your issue.
 
-Technische Universität München | Faculty of Architecture
-Chair for Architectural Informatics | Prof. Dr.-Ing. Frank Petzold
-Arcisstr. 21 | 80333 Munich | Germany
-fon: +49 (0) 89 289 22-184
-fax: +49 (0) 89 289 22-179
-email:  torsten.thurow@tum.de
-web: www.ai.ar.tum.de
-______________________________________________________________________
-
-
---------------000800030501060304070903
-Content-Type: text/x-vcard; charset=utf-8;
- name="torsten_thurow.vcf"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
- filename="torsten_thurow.vcf"
-
-begin:vcard
-fn:Dr. Torsten Thurow
-n:Thurow;Torsten
-org;quoted-printable;quoted-printable:TU M=C3=BCnchen;Lehrstuhl f=C3=BCr Architekturinformatik, Fakult=C3=A4t f=C3=BCr Architek=
-	tur
-adr;quoted-printable:;;Arcisstr. 21(0501)/IV, Raum 0501.04.167;M=C3=BCnchen;Bayern;80333;Germany
-email;internet:torsten.thurow@tum.de
-title:wissenschaftlicher Mitarbeiter
-tel;work:+49 (0)89- 298 22184 
-tel;fax:+49 (0)89- 289 22179
-url:http://www.ai.ar.tum.de/index.php?id=5
-version:2.1
-end:vcard
-
-
---------------000800030501060304070903--
+Ciao,
+Johannes
