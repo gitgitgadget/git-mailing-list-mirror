@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v2 3/3] commit: add --cleanup=scissors
-Date: Mon, 17 Feb 2014 19:15:32 +0700
-Message-ID: <1392639332-7703-4-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v2 2/3] wt-status.c: move cut-line print code out to wt_status_add_cut_line
+Date: Mon, 17 Feb 2014 19:15:31 +0700
+Message-ID: <1392639332-7703-3-git-send-email-pclouds@gmail.com>
 References: <1392521840-21628-1-git-send-email-pclouds@gmail.com>
  <1392639332-7703-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
@@ -11,165 +11,110 @@ Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 17 13:16:22 2014
+X-From: git-owner@vger.kernel.org Mon Feb 17 13:16:23 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WFN7U-00014D-LL
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Feb 2014 13:16:21 +0100
+	id 1WFN7U-00014D-3X
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Feb 2014 13:16:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752595AbaBQMQL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 Feb 2014 07:16:11 -0500
-Received: from mail-pb0-f52.google.com ([209.85.160.52]:36817 "EHLO
-	mail-pb0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752470AbaBQMQK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Feb 2014 07:16:10 -0500
-Received: by mail-pb0-f52.google.com with SMTP id jt11so15222196pbb.25
-        for <git@vger.kernel.org>; Mon, 17 Feb 2014 04:16:09 -0800 (PST)
+	id S1751594AbaBQMQF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 Feb 2014 07:16:05 -0500
+Received: from mail-pb0-f44.google.com ([209.85.160.44]:63186 "EHLO
+	mail-pb0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752321AbaBQMQD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Feb 2014 07:16:03 -0500
+Received: by mail-pb0-f44.google.com with SMTP id rq2so15250276pbb.31
+        for <git@vger.kernel.org>; Mon, 17 Feb 2014 04:16:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=EXOb3rVOz1iY3H62riAbVvbR4VmQVISKbk3Ly7Ac+9c=;
-        b=R74QLN4rrYvtU+BUg04wOcHcEhRC/3E+7up8S8G4DSvftfUAhUcSWCXYT+Lu8oWe9G
-         9JcJEgMtlk1qK6zVyT9D/MfaN5n97V1UEc+ItI3yzdu/swIxsPhdN3qVunPAs3CWQDm8
-         QifoJLi9uMx1OT49vMHADRarigELOqqjD+ONpeT7+IcjXqlvvIp1JgQjWfa46QF8l7fD
-         HQEPx8pgdWWhJm0d5auA6KYqu4NbxGXSFBeYW1ew7DCeWBNIfhTZMqXS2owGnePAIL1W
-         8ZmKprIeoVzPVE3VWTQQ2g+bdwsgXS8BNi30EzwZF6R8+X3m0LF5kCWP75ECvKhu315f
-         NkXA==
-X-Received: by 10.66.232.68 with SMTP id tm4mr25887148pac.114.1392639369385;
-        Mon, 17 Feb 2014 04:16:09 -0800 (PST)
+        bh=4iiDbQr33ZVZJrwRayFVRDImgJpOla4UXBN/UEc+T1Y=;
+        b=BcfZLuLgcL5QO3O0kM5j3AwR5f39Z25jrV0Rg2icED33jvQ64V0/QpmwNITCcATKfi
+         ikQQMH6kM0/4dQT9i39WjTwGzc0dVesH6J4WbxQ9mxbmg8ZSeAstCgHeJTIYEN8KnV7T
+         Ofjdgjq+Swtr/uqZLkPU/Njs0f5Eb/1ZviCcN3+f7iyvvuHOmk/MROAd+rR8XqVSYMrQ
+         9PN47fVomo7xTnJKwV8SJQicbwR9aZfSVNlPEnsObX1ZfAo18zKDAnE4AKlY09bwADhi
+         Jy65ooFI81+ub0IwYPp46PTXS3xPyJLdavzzYJnOBs2nSEgNi7fzoFmR8dfs2frjwkr6
+         hCfQ==
+X-Received: by 10.66.164.165 with SMTP id yr5mr25771414pab.63.1392639363440;
+        Mon, 17 Feb 2014 04:16:03 -0800 (PST)
 Received: from lanh ([115.73.228.211])
-        by mx.google.com with ESMTPSA id q7sm45240446pbc.20.2014.02.17.04.16.06
+        by mx.google.com with ESMTPSA id q7sm45239227pbc.20.2014.02.17.04.16.00
         for <multiple recipients>
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 17 Feb 2014 04:16:08 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Mon, 17 Feb 2014 19:16:21 +0700
+        Mon, 17 Feb 2014 04:16:02 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Mon, 17 Feb 2014 19:16:14 +0700
 X-Mailer: git-send-email 1.8.5.2.240.g8478abd
 In-Reply-To: <1392639332-7703-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242256>
-
-Since 1a72cfd (commit -v: strip diffs and submodule shortlogs from the
-commit message - 2013-12-05) we have a less fragile way to cut out
-"git status" at the end of a commit message but it's only enabled for
-stripping submodule shortlogs. Add new cleanup option that reuses the
-same mechanism for the entire "git status" without accidentally
-removing lines starting with '#'
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242257>
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- Documentation/git-commit.txt |  8 +++++++-
- builtin/commit.c             |  9 +++++++--
- t/t7502-commit.sh            | 16 ++++++++++++++++
- 3 files changed, 30 insertions(+), 3 deletions(-)
+ wt-status.c | 19 ++++++++++++-------
+ wt-status.h |  1 +
+ 2 files changed, 13 insertions(+), 7 deletions(-)
 
-diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.tx=
-t
-index 1a7616c..7948233 100644
---- a/Documentation/git-commit.txt
-+++ b/Documentation/git-commit.txt
-@@ -176,7 +176,7 @@ OPTIONS
- --cleanup=3D<mode>::
- 	This option determines how the supplied commit message should be
- 	cleaned up before committing.  The '<mode>' can be `strip`,
--	`whitespace`, `verbatim`, or `default`.
-+	`whitespace`, `verbatim`, `scissors` or `default`.
- +
- --
- strip::
-@@ -186,6 +186,12 @@ whitespace::
- 	Same as `strip` except #commentary is not removed.
- verbatim::
- 	Do not change the message at all.
-+scissors::
-+	Same as `whitespace`, except that everything from (and
-+	including) the line
-+	"`# ------------------------ >8 ------------------------`"
-+	is truncated if the message is to be edited. "`#`" can be
-+	customized with core.commentChar.
- default::
- 	Same as `strip` if the message is to be edited.
- 	Otherwise `whitespace`.
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 3767478..ea2912f 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -113,6 +113,7 @@ static char *sign_commit;
- static enum {
- 	CLEANUP_SPACE,
- 	CLEANUP_NONE,
-+	CLEANUP_SCISSORS,
- 	CLEANUP_ALL
- } cleanup_mode;
- static const char *cleanup_arg;
-@@ -777,6 +778,8 @@ static int prepare_to_commit(const char *index_file=
-, const char *prefix,
- 				_("Please enter the commit message for your changes."
- 				  " Lines starting\nwith '%c' will be ignored, and an empty"
- 				  " message aborts the commit.\n"), comment_line_char);
-+		else if (cleanup_mode =3D=3D CLEANUP_SCISSORS)
-+			wt_status_add_cut_line(s->fp);
- 		else /* CLEANUP_SPACE, that is. */
- 			status_printf(s, GIT_COLOR_NORMAL,
- 				_("Please enter the commit message for your changes."
-@@ -1132,6 +1135,8 @@ static int parse_and_validate_options(int argc, c=
-onst char *argv[],
- 		cleanup_mode =3D CLEANUP_SPACE;
- 	else if (!strcmp(cleanup_arg, "strip"))
- 		cleanup_mode =3D CLEANUP_ALL;
-+	else if (!strcmp(cleanup_arg, "scissors"))
-+		cleanup_mode =3D use_editor ? CLEANUP_SCISSORS : CLEANUP_SPACE;
- 	else
- 		die(_("Invalid cleanup mode %s"), cleanup_arg);
+diff --git a/wt-status.c b/wt-status.c
+index 65e35c3..ed31b6a 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -808,6 +808,17 @@ void wt_status_truncate_message_at_cut_line(struct=
+ strbuf *buf)
+ 	strbuf_release(&pattern);
+ }
 =20
-@@ -1600,8 +1605,8 @@ int cmd_commit(int argc, const char **argv, const=
- char *prefix)
- 		die(_("could not read commit message: %s"), strerror(saved_errno));
++void wt_status_add_cut_line(FILE *fp)
++{
++	const char *explanation =3D _("Do not touch the line above.\nEverythi=
+ng below will be removed.");
++	struct strbuf buf =3D STRBUF_INIT;
++
++	fprintf(fp, "%c %s", comment_line_char, cut_line);
++	strbuf_add_commented_lines(&buf, explanation, strlen(explanation));
++	fputs(buf.buf, fp);
++	strbuf_release(&buf);
++}
++
+ static void wt_status_print_verbose(struct wt_status *s)
+ {
+ 	struct rev_info rev;
+@@ -833,14 +844,8 @@ static void wt_status_print_verbose(struct wt_stat=
+us *s)
+ 	 * diff before committing.
+ 	 */
+ 	if (s->fp !=3D stdout) {
+-		const char *explanation =3D _("Do not touch the line above.\nEveryth=
+ing below will be removed.");
+-		struct strbuf buf =3D STRBUF_INIT;
+-
+ 		rev.diffopt.use_color =3D 0;
+-		fprintf(s->fp, "%c %s", comment_line_char, cut_line);
+-		strbuf_add_commented_lines(&buf, explanation, strlen(explanation));
+-		fputs(buf.buf, s->fp);
+-		strbuf_release(&buf);
++		wt_status_add_cut_line(s->fp);
  	}
+ 	run_diff_index(&rev, 1);
+ }
+diff --git a/wt-status.h b/wt-status.h
+index 30a4812..b56ce3f 100644
+--- a/wt-status.h
++++ b/wt-status.h
+@@ -92,6 +92,7 @@ struct wt_status_state {
+ };
 =20
--	/* Truncate the message just before the diff, if any. */
--	if (verbose)
-+	if (verbose || /* Truncate the message just before the diff, if any. =
-*/
-+	    cleanup_mode =3D=3D CLEANUP_SCISSORS)
- 		wt_status_truncate_message_at_cut_line(&sb);
-=20
- 	if (cleanup_mode !=3D CLEANUP_NONE)
-diff --git a/t/t7502-commit.sh b/t/t7502-commit.sh
-index 6313da2..9a3f3a1 100755
---- a/t/t7502-commit.sh
-+++ b/t/t7502-commit.sh
-@@ -223,6 +223,22 @@ test_expect_success 'cleanup commit messages (whit=
-espace option,-F)' '
-=20
- '
-=20
-+test_expect_success 'cleanup commit messages (scissors option,-F,-e)' =
-'
-+
-+	echo >>negative &&
-+	cat >text <<EOF &&
-+
-+# to be kept
-+# ------------------------ >8 ------------------------
-+to be removed
-+EOF
-+	echo "# to be kept" >expect &&
-+	git commit --cleanup=3Dscissors -e -F text -a &&
-+	git cat-file -p HEAD |sed -e "1,/^\$/d">actual &&
-+	test_cmp expect actual
-+
-+'
-+
- test_expect_success 'cleanup commit messages (strip option,-F)' '
-=20
- 	echo >>negative &&
+ void wt_status_truncate_message_at_cut_line(struct strbuf *);
++void wt_status_add_cut_line(FILE *fp);
+ void wt_status_prepare(struct wt_status *s);
+ void wt_status_print(struct wt_status *s);
+ void wt_status_collect(struct wt_status *s);
 --=20
 1.8.5.2.240.g8478abd
