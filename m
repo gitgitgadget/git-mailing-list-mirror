@@ -1,65 +1,62 @@
-From: Ingo Rohloff <lundril@gmx.de>
-Subject: Re: error: src refspec refs/heads/master matches more than one.
-Date: Mon, 17 Feb 2014 14:25:53 +0000 (UTC)
-Message-ID: <loom.20140217T152313-730@post.gmane.org>
-References: <20140214113136.GA17817@raven.inka.de> <87a9dt981o.fsf@igel.home> <CACsJy8BevKQaRLYMMv7bTjf_ZAOnkrimws519OyhGZz6_Vr_-A@mail.gmail.com> <xmqqy51dirjs.fsf@gitster.dls.corp.google.com> <20140215085355.GA15461@lanh>
+From: "Paul Lotz" <plotz@lsst.org>
+Subject: difftool sends malformed path to exernal tool on Windows
+Date: Mon, 17 Feb 2014 15:14:01 -0700
+Message-ID: <011301cf2c2d$90442810$b0cc7830$@lsst.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 17 21:35:14 2014
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Feb 17 23:14:33 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WFUuH-0007iJ-Gt
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Feb 2014 21:35:13 +0100
+	id 1WFWSL-00069m-LV
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Feb 2014 23:14:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753688AbaBQUfH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Feb 2014 15:35:07 -0500
-Received: from plane.gmane.org ([80.91.229.3]:50521 "EHLO plane.gmane.org"
+	id S1754372AbaBQWOF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 Feb 2014 17:14:05 -0500
+Received: from mail.lsstcorp.org ([140.252.15.63]:13209 "EHLO mail.lsst.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751847AbaBQUfG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Feb 2014 15:35:06 -0500
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1WFUu7-0007YK-V0
-	for git@vger.kernel.org; Mon, 17 Feb 2014 21:35:04 +0100
-Received: from fw-hk.lauterbach.com ([194.25.174.98])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 17 Feb 2014 21:35:03 +0100
-Received: from lundril by fw-hk.lauterbach.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 17 Feb 2014 21:35:03 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 194.25.174.98 (Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:27.0) Gecko/20100101 Firefox/27.0)
+	id S1752903AbaBQWOE convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 17 Feb 2014 17:14:04 -0500
+Received: from PaulLaptop ([140.252.119.210]) by mail.lsst.org with Microsoft SMTPSVC(6.0.3790.3959);
+	 Mon, 17 Feb 2014 15:14:02 -0700
+X-Mailer: Microsoft Outlook 15.0
+Thread-Index: AQEufHkGEOiHV2v+DzDiyf0qz7tl4w==
+Content-Language: en-us
+X-OriginalArrivalTime: 17 Feb 2014 22:14:02.0282 (UTC) FILETIME=[9047F8A0:01CF2C2D]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242267>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242268>
 
-Duy Nguyen <pclouds <at> gmail.com> writes:
-> Prevent is a strong word. I meant we only do it if they force
-> it. Something like this..
-> 
+=46rom the Git Bash command line, I enter
+$ git difftool
 
-I would propose to make this even stronger:
-Forbid to create any branches which start with any of:
-- "refs/"
-- "heads/"
-- "remotes/"
-- "tags/"
+and type =91y=92 when the file I want to difference appears.=A0 Git cor=
+rectly
+calls the external diff tool (LVCompare.exe), but the path for the remo=
+te
+file Git passes to that tool is malformed (e.g.,
+C:\/Users/Paul/AppData/Local/Temp/QCpqLa_calcLoadCellExcitation.vi).=A0
+Obviously the \/ (backslash forwardslash) combination is incorrect.
 
-as long as you do not use the "force" option.
+=46or the record, I have successfully made calls to LVCompare.exe manua=
+lly
+from a Windows command prompt directly (without Git).
 
-The idea here is that you also will not get ambiguities later when you pull
-new branches into your repository.
+The relevant portion of the .gitconfig file is:
+[diff]
+=A0=A0=A0=A0 tool =3D "LVCompare"
+[difftool "LVCompare"]
+=A0=A0=A0=A0 cmd =3D 'C:/Program Files (x86)/National Instruments/Share=
+d/LabVIEW
+Compare/LVCompare.exe' \"$LOCAL\"=A0 \"$REMOTE\"
 
-so long
-  Ingo
+
+=46or the record, the operating system is Windows 8.1.
+
+Paul
