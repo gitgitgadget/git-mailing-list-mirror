@@ -1,96 +1,112 @@
-From: Dario Bertini <berdario@gmail.com>
-Subject: Re: diff weirdness (bug?)
-Date: Mon, 17 Feb 2014 00:31:15 +0100
-Message-ID: <53014A43.6080505@gmail.com>
-References: <52FE6C64.4060700@gmail.com> <xmqq8utdihqx.fsf@gitster.dls.corp.google.com>
+From: Mojca Miklavec <mojca.miklavec.lists@gmail.com>
+Subject: Serious flaws in "git cvsimport"
+Date: Mon, 17 Feb 2014 01:10:38 +0100
+Message-ID: <CALBOmsZR2qjCAvUeUqJL4U3BHwanugTGdMrdNQs-wnPXzgDjug@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 17 00:31:26 2014
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 17 01:10:45 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WFBBE-0008SK-Ln
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Feb 2014 00:31:25 +0100
+	id 1WFBnH-0003h8-TF
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Feb 2014 01:10:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753395AbaBPXbV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Feb 2014 18:31:21 -0500
-Received: from mail-ee0-f54.google.com ([74.125.83.54]:45710 "EHLO
-	mail-ee0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752737AbaBPXbU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Feb 2014 18:31:20 -0500
-Received: by mail-ee0-f54.google.com with SMTP id e53so6759808eek.27
-        for <git@vger.kernel.org>; Sun, 16 Feb 2014 15:31:19 -0800 (PST)
+	id S1753156AbaBQAKk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 16 Feb 2014 19:10:40 -0500
+Received: from mail-vc0-f180.google.com ([209.85.220.180]:33329 "EHLO
+	mail-vc0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752381AbaBQAKj convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 16 Feb 2014 19:10:39 -0500
+Received: by mail-vc0-f180.google.com with SMTP id ks9so10748351vcb.25
+        for <git@vger.kernel.org>; Sun, 16 Feb 2014 16:10:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=oCre7AIzz3qPseirPAw4rxPTNIcrMZiJ3AXs7QIBVy8=;
-        b=xHxYjSBI8bl667h70WwCsY7CDZ/ccUwk4EgGcg2gMdSJejD2TEL4Zj+4812gVevqmb
-         GxUjczs4zN0NpwkiB8AOvd4k626m5i5Tucm/ByMO0V0/lC+5Dbis2knnPTd2EL9TqzEJ
-         eSlkvpoEIqvK59FW9QjB9Z2fbdHkJFglNecON7Jo85A+2wOEJfKGfqQwMyFzy5o7CZpz
-         IDJs8tAQnli3O3r47sxiel0GNIfoOKhi/i+0+33FEQEtRAdw3PgUs2BKPunt1OxbVx8m
-         g4eto2klyGIA7MiLnilTIFAkozy+iGUCXrRNPWYordZ34k2xyYc9ixnOjQ06jetmB5rd
-         H6KA==
-X-Received: by 10.14.9.134 with SMTP id 6mr5016981eet.70.1392593479337;
-        Sun, 16 Feb 2014 15:31:19 -0800 (PST)
-Received: from [192.168.1.34] (host105-68-dynamic.54-79-r.retail.telecomitalia.it. [79.54.68.105])
-        by mx.google.com with ESMTPSA id s46sm50220786eeb.0.2014.02.16.15.31.17
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 16 Feb 2014 15:31:18 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.2.0
-In-Reply-To: <xmqq8utdihqx.fsf@gitster.dls.corp.google.com>
-X-Enigmail-Version: 1.6
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=FWWPhjMDb3YZOz8yQud1bhSzL4mEllsGL3KSTu886X4=;
+        b=oWnLLKYrvJ78UwvFheUzw+zbfpBrYHgvS4B6/jG6giEqIS1oUqknxcxIEPVKnBWhOE
+         6KGtKDiSHLdWFuge4OOBzHgS2/NKyxrobwso9Xz/1+XFa/dDDaJoHQG/UGrtijy9WmfE
+         p/Ypzhr3n2vFt9viqL7dEXO3mSgbz88eLqnKoTw8gRE256R3yooDDzhh5RM2o9mwsPgG
+         y+GIbzSpLPXJpSPKvuDJPz3CYoBURGPoza24Tg6GBmMuu3kYbL0f0owXUMs4aiAoUsMq
+         cqR3I2kYsgt0bbmo7bKLHcxqw+6BfsIp9w0JdCAhG+8g+9iSxYsiwCwOGI72Al4Qzctu
+         p2sA==
+X-Received: by 10.221.66.73 with SMTP id xp9mr10562956vcb.27.1392595838519;
+ Sun, 16 Feb 2014 16:10:38 -0800 (PST)
+Received: by 10.58.218.34 with HTTP; Sun, 16 Feb 2014 16:10:38 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242244>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242245>
 
-On 02/14/2014 09:03 PM, Junio C Hamano wrote:
-> This is a combined diff, and yaml-related lines are added relative
-> to your _other_ branch you are merging (notice these + are indented
-> by one place).  Relative to what you had at the tip of your branch
-> before you started this operation that ended up conflicted, the
-> half-merged result removes if/else that sets DIST_MODULE_PATH and
-> replaces it with a single line (their +/- are on the first column,
-> signifying that these are differences relative to the first parent,
-> i.e. your state before you started the operation).
-> 
->> if we remove these 3 lines, we'll get this diff:
-> 
-> With that understanding, I think the output after removing these
-> three lines is perfectlyh understandable and correct.  You are
-> looking at the three lines that used to exist in the version you
-> started from, that were missing from the other side.  If you remoe
-> them, it will show as removal from _your_ version (notice these -
-> that shows what _you_ did manually are on the first column, saying
-> that that is relative to _your_ version).
-> 
+Hello,
 
-Thank you, I was completely unaware of combined diffs. Still: I can't
-see how this would explain the empty diff when deleting 4 lines instead
-of 3.
+I really hate working with CVS, so I have set up a cronjob running
+"git cvsimport" on regular basis to create a mirror of gnuplot
+sources. I would use another tool, but until a few days ago I wasn't
+aware of anything else that supported incremental updates, so that I
+could run the conversion every few hours without the need to trash the
+old conversions and make all my local/testing branches incompatible
+with future development.
 
-Also: in the diff output I get 2 hashes, but these are not the hashes of
-the commits, but the contents of the files apparently. One should be
-HEAD (but if I run sha1sum over the file the hash doesn't match), but
-the other can't be the commit which I reverted: the diff is too small...
-or at least this is what I understand
+I had a lot of problems with the tool, but I was tolerating it (in the
+spirit of numerous warnings that the tool isn't working properly):
+- Files that have been deleted from CVS long ago don't get removed
+from git (that's very very very annoying)
+- I have numerous problems with file permissions (executable vs. non-ex=
+ecutable)
+- The first time when I do the import, all seems fine. But soon after
+that I start getting numerous warnings during conversion in the spirit
+of
+    revision 1.X of file Y is tagged but not present
+But maybe that's a bug in CVS.
 
-By the way, in the man of git diff there's the briefly mentioned '-m'
-flag. If anyone else reading this mail in the archives is confused by
-the combined diff output, just use "git diff -m HEAD"... I'll probably
-add this in my git aliases
+But recently I discovered that a commit in the main branch of CVS
+(trunk/master/whatever-they-call-it-in-cvs) which was important to me
+was simply ignored by "git cvsimport". The commit modified three
+files. Immediately after the commit, cvsimport claimed the repository
+was already up-to-date. After other changes have been done in CVS,
+bits and pieces from that important commit started appearing randomly,
+together with other commits to CVS =E2=80=93 for example when the same =
+file
+was modified in another commit, changes from that "important" commit
+to the same file were included as well in that later commit (but they
+didn't belong to each other).
 
+My understanding was that warnings about bad behaviour of "git
+cvsimport" were related mostly to inability to reproduce complicated
+branching and merging with zillions of branches. That would be
+acceptable to me because I wasn't interested in those zillions of
+branches and tags anyway.
 
--- 
-xmpp: berdario@gmail.com
-bitmessage: BM-2cTYXfGiSTsnx3righ6aHcJSWe4MV17jDP
-gpg fingerprint: 3F8D53518012716C4EEF7DF67B498306B3BF75A0 (used just
-for signing commits)
+But it turned out that whatever is currently in the master branch of
+the repository created by "git cvsimport" isn't even corresponding to
+what's currently in CVS and some commits are simply missing from
+history along with their commit messages. The git repository contains
+too many files (those that have been deleted in CVS) and random other
+differences in random files, so that I'm not even able to compile the
+project any longer as a consequence.
+
+I'm willing to provide the exact details about the failures, but from
+what I understand the previous maintainer of the underlying tool
+(cvsps) deprecated it due to too numerous problems and flawed design,
+so I'm not sure if anyone would be willing to fix the bugs I'm running
+into.
+
+I'm currently testing cvs-fast-export of which I only heard a few days
+ago in the desperate search for a replacement for "git cvsimport".
+
+It would be nice to see if manuals of cvsimport would at least mention
+the existence of that tool in the same way as it mentions cvs2git (it
+took me a while to learn about cvs-fast-export) or even better, to
+consider it as an alternative for cvsps via a special argument to
+cvsimport if that's possible.
+
+Thank you very much,
+    Mojca
+
+(Please CC me in replies.)
