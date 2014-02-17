@@ -1,86 +1,74 @@
-From: Robert Dailey <rcdailey.lists@gmail.com>
-Subject: Re: Wrong version of Git on your download website for windows
-Date: Mon, 17 Feb 2014 10:17:27 -0600
-Message-ID: <CAHd499BK6r5ydvOYrNqtihu3dePgDrxBkp1-BcTWi+-LB_V-Hg@mail.gmail.com>
-References: <53022E90.90702@tum.de>
+From: Thomas Rast <tr@thomasrast.ch>
+Subject: Re: Is there something like a blamed diff?
+Date: Mon, 17 Feb 2014 18:41:13 +0100
+Message-ID: <87ppmltz5y.fsf@thomasrast.ch>
+References: <8738jk1as7.fsf@fencepost.gnu.org> <87ioseujej.fsf@thomasrast.ch>
+	<8761oeuhmg.fsf@fencepost.gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git <git@vger.kernel.org>
-To: torsten.thurow@tum.de
-X-From: git-owner@vger.kernel.org Mon Feb 17 17:17:38 2014
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Mon Feb 17 18:41:30 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WFQsv-0006df-Tv
-	for gcvg-git-2@plane.gmane.org; Mon, 17 Feb 2014 17:17:34 +0100
+	id 1WFSCA-0002nW-4Q
+	for gcvg-git-2@plane.gmane.org; Mon, 17 Feb 2014 18:41:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752056AbaBQQRa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 Feb 2014 11:17:30 -0500
-Received: from mail-ve0-f176.google.com ([209.85.128.176]:65371 "EHLO
-	mail-ve0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750958AbaBQQR3 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 17 Feb 2014 11:17:29 -0500
-Received: by mail-ve0-f176.google.com with SMTP id jx11so5162141veb.35
-        for <git@vger.kernel.org>; Mon, 17 Feb 2014 08:17:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type:content-transfer-encoding;
-        bh=g6j6NpkLnMaq1z9Nl3PcJs19qdbC01EI347YBywD4Xg=;
-        b=xW9hXM9DmLMTkjQ7R71TgGwyKdCB/XWMUhq37BNWYh1UQlVVqZMlN0Zb9PFjjYCwmN
-         9t2+V3/qZdC8iTqNg/jgZKfiaAtGg569ii6GkmD/AC/ym56kTjYzmisjCu+Lxp3Hlwky
-         JcxqxvLFx5jxlmmthm5lgawPbzfP8xAvuIGKl6IHD3BCWrzzmx3G6QiYM3q0XIbdXFGQ
-         QDmDbIdbbYxQNNq6UNeSxzZ5nUQ6Aco3WJMextNx0kRqZ9C/2/2JCtr6SnkAhkggH4c8
-         vRDGyxDX7VpznOI0m4sa+3LzG4CBOfZrpZ4z6b0f1hgyLIuhiTb94GreSOihV+qzTeWY
-         Tp3w==
-X-Received: by 10.52.157.8 with SMTP id wi8mr1489936vdb.46.1392653847413; Mon,
- 17 Feb 2014 08:17:27 -0800 (PST)
-X-Google-Sender-Delegation: rcdailey@gmail.com
-Received: by 10.221.49.68 with HTTP; Mon, 17 Feb 2014 08:17:27 -0800 (PST)
-In-Reply-To: <53022E90.90702@tum.de>
-X-Google-Sender-Auth: DGmLiQsalvHevZskfr1W1EXJduE
+	id S1753346AbaBQRlR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Feb 2014 12:41:17 -0500
+Received: from ip1.thgersdorf.net ([148.251.9.194]:52764 "EHLO mail.psioc.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752945AbaBQRlQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Feb 2014 12:41:16 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by localhost.psioc.net (Postfix) with ESMTP id EFECB4D65D8;
+	Mon, 17 Feb 2014 18:41:14 +0100 (CET)
+X-Virus-Scanned: amavisd-new at psioc.net
+Received: from mail.psioc.net ([127.0.0.1])
+	by localhost (mail.psioc.net [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id oRN10kYqameg; Mon, 17 Feb 2014 18:41:14 +0100 (CET)
+Received: from linux-1gf2.thomasrast.ch (84-73-49-17.dclient.hispeed.ch [84.73.49.17])
+	(using TLSv1.2 with cipher AES128-GCM-SHA256 (128/128 bits))
+	(Client did not present a certificate)
+	by mail.psioc.net (Postfix) with ESMTPSA id D996F4D64BD;
+	Mon, 17 Feb 2014 18:41:13 +0100 (CET)
+In-Reply-To: <8761oeuhmg.fsf@fencepost.gnu.org> (David Kastrup's message of
+	"Mon, 17 Feb 2014 12:02:31 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242264>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242265>
 
-I looked into this and they seem to be deliberately holding off onto a
-release due to some max path issues on Windows:
-https://github.com/msysgit/git/pull/122
+David Kastrup <dak@gnu.org> writes:
 
-Also there are some unofficial builds for 1.8.5.4 I think, you just
-have to Google for it.
+> Thomas Rast <tr@thomasrast.ch> writes:
+>
+>> David Kastrup <dak@gnu.org> writes:
+>>
+>>> When comparing two branches, decorating the flat diff with the
+>>> respectively responsible commits seems like it would be nice to do/have
+>>> (the blame on the identical parts, in contrast, is not really
+>>> interesting).  Is there any tool that provides something like that?
+>>
+>> This seems to come up every year or so:
+>>
+>> http://thread.gmane.org/gmane.comp.version-control.git/110369/focus=110383
+>
+> Nice.  That one could likely be sped up by calling git-blame just once
+> on each file with multiple -L options.
 
-On Mon, Feb 17, 2014 at 9:45 AM, Dr. Torsten Thurow
-<torsten.thurow@tum.de> wrote:
-> Hello,
->
-> many thanks for all your working. Git is a very good help tool. A sma=
-l bug
-> is on your download website for windows. Here we can read:
-> "Latest stable release 1.9.0 Release Notes (2014-02-14) Download for
-> Windows", but the link loads Git-1.8.5.2.preview20131230.exe
->
-> --
-> Mit freundlichen Gr=FC=DFen
-> Torsten Thurow
->
-> _____________________________________________________________________=
-_
->
-> Dr. Ing. Torsten Thurow | computer scientist
->
-> Technische Universit=E4t M=FCnchen | Faculty of Architecture
-> Chair for Architectural Informatics | Prof. Dr.-Ing. Frank Petzold
-> Arcisstr. 21 | 80333 Munich | Germany
-> fon: +49 (0) 89 289 22-184
-> fax: +49 (0) 89 289 22-179
-> email:  torsten.thurow@tum.de
-> web: www.ai.ar.tum.de
-> _____________________________________________________________________=
-_
->
+Yes.  You'll note that the email predates the support for multiple -L
+options by a few years :-)
+
+I never had a need for such a script, I just wrote that in response to
+someone asking about it.  If you find it useful, please clean it up for
+inclusion in contrib/.
+
+-- 
+Thomas Rast
+tr@thomasrast.ch
