@@ -1,101 +1,94 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH] revert.c: Allow to specify -x via git-config
-Date: Tue, 18 Feb 2014 18:38:43 +0000
-Message-ID: <20140218183842.GA163138@vauxhall.crustytoothpaste.net>
-References: <20140218065620.GA3448@bogon.m.sigxcpu.org>
- <20140218174913.GB7855@google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: error: src refspec refs/heads/master matches more than one.
+Date: Tue, 18 Feb 2014 11:03:10 -0800
+Message-ID: <xmqqha7wfdld.fsf@gitster.dls.corp.google.com>
+References: <20140214113136.GA17817@raven.inka.de> <87a9dt981o.fsf@igel.home>
+	<CACsJy8BevKQaRLYMMv7bTjf_ZAOnkrimws519OyhGZz6_Vr_-A@mail.gmail.com>
+	<xmqqy51dirjs.fsf@gitster.dls.corp.google.com>
+	<20140215085355.GA15461@lanh>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="LQksG6bCIzRHxTLp"
-Cc: Guido =?utf-8?Q?G=C3=BCnther?= <agx@sigxcpu.org>,
-	git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 18 19:38:58 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Andreas Schwab <schwab@linux-m68k.org>,
+	Josef Wolf <jw@raven.inka.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 18 20:03:38 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WFpZJ-0004ee-GG
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Feb 2014 19:38:57 +0100
+	id 1WFpxC-0000D9-3d
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Feb 2014 20:03:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751154AbaBRSix (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Feb 2014 13:38:53 -0500
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:52022 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750838AbaBRSiw (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 18 Feb 2014 13:38:52 -0500
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:d86c:b4e1:ccc3:cb33])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	id S1751716AbaBRTDe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Feb 2014 14:03:34 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38940 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751126AbaBRTDd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Feb 2014 14:03:33 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 837FE6DFD6;
+	Tue, 18 Feb 2014 14:03:32 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=jYLhhE9VXCjGO2klzHERvkifqM4=; b=KXFuVF
+	7mH+HM1RRrC0r6I40yu69RygXkdf+MTFzTyKgCRsi9I3ma6QyMwatOiAZrEv8LId
+	/eOAoY5pv+9sC9GiDxPT509u/Q1vrEB4zOHI3+Bk+6fsTyRaapP0VcFvfySglHO/
+	lnAGqHWf9/UkBKuPcPCHx46vhvo+nVu4azTtM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=m1dyWAKudFjL0kv81Qvq9GJtLy61ONM7
+	Wz0YclSW0vAsC9PPgk1ZI1qje7WzPJgglvjoAKAd5D/wOM0T9SM7Hex8QFkNcDIN
+	/nA5XK83AblxEFlM/dsTIvSeSWoxfDee4P2ZLAETCkvAwDZc0gyTidrpt0IwtjOg
+	d9iawBoISic=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 8E55D6DFCC;
+	Tue, 18 Feb 2014 14:03:27 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id E6F9628074;
-	Tue, 18 Feb 2014 18:38:48 +0000 (UTC)
-Mail-Followup-To: Jonathan Nieder <jrnieder@gmail.com>,
-	Guido =?utf-8?Q?G=C3=BCnther?= <agx@sigxcpu.org>,
-	git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20140218174913.GB7855@google.com>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 3.12-1-amd64)
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 664B46DFC4;
+	Tue, 18 Feb 2014 14:03:17 -0500 (EST)
+In-Reply-To: <20140215085355.GA15461@lanh> (Duy Nguyen's message of "Sat, 15
+	Feb 2014 15:53:55 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 56EAC146-98CF-11E3-97BE-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242336>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242337>
 
+Duy Nguyen <pclouds@gmail.com> writes:
 
---LQksG6bCIzRHxTLp
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Prevent is a strong word. I meant we only do it if they force
+> it. Something like this..
+>
+> -- 8< --
+> diff --git a/branch.c b/branch.c
+> index 723a36b..3f0540f 100644
+> --- a/branch.c
+> +++ b/branch.c
+> @@ -251,6 +251,11 @@ void create_branch(const char *head,
+>  			forcing = 1;
+>  	}
+>  
+> +	if (!force && dwim_ref(name, strlen(name), sha1, &real_ref))
+> +		die(_("creating ref refs/heads/%s makes %s ambiguous.\n"
+> +		      "Use -f to create it anyway."),
+> +		    name, name);
 
-On Tue, Feb 18, 2014 at 09:49:13AM -0800, Jonathan Nieder wrote:
-> Can you say more about the context?  Why is it important to record the
-> original commit id?  Is it a matter of keeping a reminder of the
-> commits' similarity (which cherry-pick without '-x' does ok by reusing
-> the same message) or are people reviewing the change downstream going
-> to be judging the change based on the recorded upstream commit id?
-> (Like linux's stable-<version> branches --- but those have other
-> requirements so I don't think this configuration would work as is
-> there.)
+Does this check still allow you to create a branch "refs/heads/next"
+and then later create a branch "next"?  The latter will introduce an
+ambiguity without any prevention, even though the prevention would
+trigger if the order in which these two branches are created is
+swapped--- the end result has ambiguity but the safety covers only
+one avenue to the confusing situation.
 
-I can provide a use case.  At work, we merge into the maintenance and
-development branches and cherry-pick from the maintenance to the stable
-branches.  We want committers to always use -x -s because we need to
-know which reviewer backported the change and we want to be able to
-track which commits have been backported and whether any reverts also
-need to be cherry-picked.  We also have automated tools that want this
-information.
+And the only way I can think of to avoid that kind of confusion is
+to forbid creation of a subset of possible names by reserving a set
+of known (but arbitrary) prefixes---which I am not sure is a good
+way to go.  At least not yet.
 
-I usually solve this with an alias (backport =3D cherry-pick -x -s), but I
-can see how this might be a useful option.
-
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
-
---LQksG6bCIzRHxTLp
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCgAGBQJTA6iyAAoJEL9TXYEfUvaLED4P/A5FDYzj0pylAVWv0oOu9rql
-F+iLMvKqPE8CCcYag8MseIAT3wboeeq2f8B5KOopP8l+yfiCBQpYHm5AaJjlkDg+
-P7wvVuZgJ6jTF+N0dPKHE5ZIiTT1M2LgY44ot9ekPZfG+79MRBV/JySVilRB2POU
-mkBqR5a3KQYuj3xUC5MoqshajHp3h3OXCoufrBUcS7gzuVMR2Pnuijl4g9cyZwGy
-tNjpsuh6qUCAJOCZeLgX2QbWP1AD+JXXX+lzPTv8ENFhDV8L51aQyYyBtK+MIhyP
-DYSs2hrXO+u5CCi0FMUSHHuNcYod4d5hbXjX2MqyeSUAqxoOXHKE25llig4MRzaq
-YFvP6OF47MxStaZs+0PuO5sE95G7yemDm7xTyZ5BrBu2Dl1xATBJF868fZPk7Glg
-R0I1oZP19atEAsWGCl65v4k6RZTTz/cluTsw5ycjitVVivWuWQZD/FSoXiYUqu6T
-Id/UgpNb56ENSXyPg56m5QNQj/OSPyGv991zZlPd4ivOd/0YozmhNNHAtiXFAYwM
-7vICZgFu8Dxhzzf65jwRiE+JPCeTKInnlOzRZ9eV5320lsvjsPDhWCFOxPL/MvUi
-0+NpwUFgsp6FCLZ1wAAI1EaKVRL1hpUCrYyk56oBCULKtBRINT30g6z9wQI5ftNr
-lR/VjYaSo717toDOdOXD
-=eI1d
------END PGP SIGNATURE-----
-
---LQksG6bCIzRHxTLp--
+So...
