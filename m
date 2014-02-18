@@ -1,187 +1,63 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Fix documentation AsciiDoc links for external urls
-Date: Tue, 18 Feb 2014 12:19:15 -0800
-Message-ID: <xmqqd2ikdvi4.fsf@gitster.dls.corp.google.com>
-References: <1392475177-31358-1-git-send-email-roberto.tyley@gmail.com>
+From: Jonathan Silverman <jsilverman2@gmail.com>
+Subject: Question about the relationship between Star Wars and Git
+Date: Tue, 18 Feb 2014 13:42:22 -0700
+Message-ID: <CADH22k8QxPiPJycJZC1QM9Y=B+D_UyeYtJ5pisHvp6mZ22LhRQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Stuart Rackham <srackham@gmail.com>
-To: Roberto Tyley <roberto.tyley@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 18 21:19:28 2014
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 18 21:42:28 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WFr8Y-00074Q-Kk
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Feb 2014 21:19:27 +0100
+	id 1WFrUp-0001kW-MG
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Feb 2014 21:42:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750950AbaBRUTW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Feb 2014 15:19:22 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:52693 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750838AbaBRUTV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Feb 2014 15:19:21 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A69C36B571;
-	Tue, 18 Feb 2014 15:19:20 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=LurIX8kayo0a9ev8JRXRsItp5nA=; b=W3WPZt
-	qL7S0RNT/JgF21PQ0vGUwZwYoP+Bfm5YSP//S/DhxxIWXzkJfCkBtUL2/bmQvF5b
-	c2bMZ+LrE/PvKOIiTI4k2lz5Jw2H/AYLsDRlcChwzcwUU150ap1AVLctr6IAfVST
-	LQxemcSewnIuPZK1x0mv3UccuejMWh9JfoZG8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=qIEi4IERyfj4HshEg8HwPmb3Sxl4rl4y
-	OBdp/a+QA6nuwJfarJLlTQ6/BcdGsoUtBkUtNOks+9FHlO6YQh40NYKYM7z4Luv4
-	7BEGmj8IYa0p1qIxJmkLpQilSi4XBEwEuaI33x+SB0IKayXQWtnXJn/OvG1CQhZ4
-	iiCTpFEJTXg=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6D0276B570;
-	Tue, 18 Feb 2014 15:19:20 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 992A06B56A;
-	Tue, 18 Feb 2014 15:19:17 -0500 (EST)
-In-Reply-To: <1392475177-31358-1-git-send-email-roberto.tyley@gmail.com>
-	(Roberto Tyley's message of "Sat, 15 Feb 2014 14:39:37 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: F1647960-98D9-11E3-8304-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751144AbaBRUmX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Feb 2014 15:42:23 -0500
+Received: from mail-pb0-f45.google.com ([209.85.160.45]:43731 "EHLO
+	mail-pb0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751099AbaBRUmX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Feb 2014 15:42:23 -0500
+Received: by mail-pb0-f45.google.com with SMTP id un15so17190351pbc.18
+        for <git@vger.kernel.org>; Tue, 18 Feb 2014 12:42:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=yCLZe3kAACDSKgMzSA4iLQlziIXyXLG3PLIXlZdxp40=;
+        b=xnqjxO6lY2IdMiIY+iVDlMFpyexOT33LT6FsLl2FNqw0OB9TyVjTPoxlCoH6LSqRix
+         k9pjpuY6PlSsYEB/jb8KywCAykkfKpsoXaDu/KZBbbnKRd+eJVC9FHt0HU1O9xnBuipP
+         oVbWO1Z33jCsATqwxwjn6MZi+/HI25i4ydvGdQYdkU+pu9uDSw20hXdXjXa7qvlgpqR6
+         3O9CxpfBnaOg+Ca0XcSGQrrElx5ujTxD/Cm98Yw2fw6VAhHGE6Qi7EV5hlzmStc34dXT
+         TKLlbgQxlHwsG4w+bWClj2uNdfPzOXiNuhMpp7F2aWTEkAMkT9DdNKGY8yvbwT6FvAlO
+         ijuw==
+X-Received: by 10.66.121.234 with SMTP id ln10mr35300219pab.20.1392756142657;
+ Tue, 18 Feb 2014 12:42:22 -0800 (PST)
+Received: by 10.68.224.69 with HTTP; Tue, 18 Feb 2014 12:42:22 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242350>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242351>
 
-Roberto Tyley <roberto.tyley@gmail.com> writes:
+Hi,
 
-> Turns out that putting 'link:' before the 'http' is actually superfluous
-> in AsciiDoc, as there's already a predefined macro to handle it.
->
-> "http, https, [etc] URLs are rendered using predefined inline macros."
-> http://www.methods.co.nz/asciidoc/userguide.html#_urls
->
-> "Hypertext links to files on the local file system are specified
-> using the link inline macro."
-> http://www.methods.co.nz/asciidoc/userguide.html#_linking_to_local_documents
->
-> Despite being superfluous, the reference implementation of AsciiDoc
-> tolerates the extra 'link:' and silently removes it, giving a functioning
-> link in the generated HTML. However, AsciiDoctor (the Ruby implementation
-> of AsciiDoc used to render the http://git-scm.com/ site) does /not/ have
-> this behaviour, and so generates broken links, as can be seen here:
->
-> http://git-scm.com/docs/git-cvsimport (links to cvs2git & parsecvs)
-> http://git-scm.com/docs/git-filter-branch (link to The BFG)
->
-> It's worth noting that after this change, the html generated by 'make html'
-> in the git project is identical, and all links still work.
-> ---
+Are "git push" and "git pull" based on force push and force pull from Star
+Wars?
 
-Sign-off?
+See: http://starwars.wikia.com/wiki/Telekinesis
 
-The overall reasoning sounds good, and the patch also looks sensible.
+Also, is the --force option another reference to The Force?
 
-Thanks.
+The similarity seems striking, especially when you realize that when you
+google "force push" you get Star Wars *and* Git related links.
 
+To me, Git usage represents one facet of being a Jedi and allows greater
+control of The Force present in your code and the internet.
 
->  Documentation/git-cvsimport.txt           | 4 ++--
->  Documentation/git-filter-branch.txt       | 4 ++--
->  Documentation/gitcore-tutorial.txt        | 2 +-
->  Documentation/gitcvs-migration.txt        | 2 +-
->  Documentation/gitweb.txt                  | 2 +-
->  Documentation/technical/http-protocol.txt | 4 ++--
->  6 files changed, 9 insertions(+), 9 deletions(-)
->
-> diff --git a/Documentation/git-cvsimport.txt b/Documentation/git-cvsimport.txt
-> index 2df9953..260f39f 100644
-> --- a/Documentation/git-cvsimport.txt
-> +++ b/Documentation/git-cvsimport.txt
-> @@ -21,8 +21,8 @@ DESCRIPTION
->  *WARNING:* `git cvsimport` uses cvsps version 2, which is considered
->  deprecated; it does not work with cvsps version 3 and later.  If you are
->  performing a one-shot import of a CVS repository consider using
-> -link:http://cvs2svn.tigris.org/cvs2git.html[cvs2git] or
-> -link:https://github.com/BartMassey/parsecvs[parsecvs].
-> +http://cvs2svn.tigris.org/cvs2git.html[cvs2git] or
-> +https://github.com/BartMassey/parsecvs[parsecvs].
->  
->  Imports a CVS repository into Git. It will either create a new
->  repository, or incrementally import into an existing one.
-> diff --git a/Documentation/git-filter-branch.txt b/Documentation/git-filter-branch.txt
-> index 2eba627..09535f2 100644
-> --- a/Documentation/git-filter-branch.txt
-> +++ b/Documentation/git-filter-branch.txt
-> @@ -436,7 +436,7 @@ git-filter-branch allows you to make complex shell-scripted rewrites
->  of your Git history, but you probably don't need this flexibility if
->  you're simply _removing unwanted data_ like large files or passwords.
->  For those operations you may want to consider
-> -link:http://rtyley.github.io/bfg-repo-cleaner/[The BFG Repo-Cleaner],
-> +http://rtyley.github.io/bfg-repo-cleaner/[The BFG Repo-Cleaner],
->  a JVM-based alternative to git-filter-branch, typically at least
->  10-50x faster for those use-cases, and with quite different
->  characteristics:
-> @@ -455,7 +455,7 @@ characteristics:
->    _is_ possible to write filters that include their own parallellism,
->    in the scripts executed against each commit.
->  
-> -* The link:http://rtyley.github.io/bfg-repo-cleaner/#examples[command options]
-> +* The http://rtyley.github.io/bfg-repo-cleaner/#examples[command options]
->    are much more restrictive than git-filter branch, and dedicated just
->    to the tasks of removing unwanted data- e.g:
->    `--strip-blobs-bigger-than 1M`.
-> diff --git a/Documentation/gitcore-tutorial.txt b/Documentation/gitcore-tutorial.txt
-> index 058a352..d2d7c21 100644
-> --- a/Documentation/gitcore-tutorial.txt
-> +++ b/Documentation/gitcore-tutorial.txt
-> @@ -1443,7 +1443,7 @@ Although Git is a truly distributed system, it is often
->  convenient to organize your project with an informal hierarchy
->  of developers. Linux kernel development is run this way. There
->  is a nice illustration (page 17, "Merges to Mainline") in
-> -link:http://www.xenotime.net/linux/mentor/linux-mentoring-2006.pdf[Randy Dunlap's presentation].
-> +http://www.xenotime.net/linux/mentor/linux-mentoring-2006.pdf[Randy Dunlap's presentation].
->  
->  It should be stressed that this hierarchy is purely *informal*.
->  There is nothing fundamental in Git that enforces the "chain of
-> diff --git a/Documentation/gitcvs-migration.txt b/Documentation/gitcvs-migration.txt
-> index 5ea94cb..5f4e890 100644
-> --- a/Documentation/gitcvs-migration.txt
-> +++ b/Documentation/gitcvs-migration.txt
-> @@ -117,7 +117,7 @@ Importing a CVS archive
->  -----------------------
->  
->  First, install version 2.1 or higher of cvsps from
-> -link:http://www.cobite.com/cvsps/[http://www.cobite.com/cvsps/] and make
-> +http://www.cobite.com/cvsps/[http://www.cobite.com/cvsps/] and make
->  sure it is in your path.  Then cd to a checked out CVS working directory
->  of the project you are interested in and run linkgit:git-cvsimport[1]:
->  
-> diff --git a/Documentation/gitweb.txt b/Documentation/gitweb.txt
-> index cca14b8..cd9c895 100644
-> --- a/Documentation/gitweb.txt
-> +++ b/Documentation/gitweb.txt
-> @@ -84,7 +84,7 @@ separator (rules for Perl's "`split(" ", $line)`").
->  
->  * Fields use modified URI encoding, defined in RFC 3986, section 2.1
->  (Percent-Encoding), or rather "Query string encoding" (see
-> -link:http://en.wikipedia.org/wiki/Query_string#URL_encoding[]), the difference
-> +http://en.wikipedia.org/wiki/Query_string#URL_encoding[]), the difference
->  being that SP (" ") can be encoded as "{plus}" (and therefore "{plus}" has to be
->  also percent-encoded).
->  +
-> diff --git a/Documentation/technical/http-protocol.txt b/Documentation/technical/http-protocol.txt
-> index 544373b..20525d9 100644
-> --- a/Documentation/technical/http-protocol.txt
-> +++ b/Documentation/technical/http-protocol.txt
-> @@ -500,7 +500,7 @@ TODO: Document this further.
->  References
->  ----------
->  
-> -link:http://www.ietf.org/rfc/rfc1738.txt[RFC 1738: Uniform Resource Locators (URL)]
-> -link:http://www.ietf.org/rfc/rfc2616.txt[RFC 2616: Hypertext Transfer Protocol -- HTTP/1.1]
-> +http://www.ietf.org/rfc/rfc1738.txt[RFC 1738: Uniform Resource Locators (URL)]
-> +http://www.ietf.org/rfc/rfc2616.txt[RFC 2616: Hypertext Transfer Protocol -- HTTP/1.1]
->  link:technical/pack-protocol.html
->  link:technical/protocol-capabilities.html
+Upon meeting a fellow Git user, it is always immediately obvious that "The
+Force is strong within this one."
+
+Respectfully,
+Jonathan Silverman
