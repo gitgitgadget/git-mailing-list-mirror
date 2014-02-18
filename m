@@ -1,111 +1,118 @@
-From: =?UTF-8?q?Guido=20G=C3=BCnther?= <agx@sigxcpu.org>
-Subject: [PATCH v2 3/3] revert.c Allow to override cherrypick.recordOrigin
-Date: Tue, 18 Feb 2014 22:27:42 +0100
-Message-ID: <9f4f6718ac3a4feadafc2c9a95173ee5c308b70e.1392758057.git.agx@sigxcpu.org>
-References: <20140218192039.GC7855@google.com>
- <cover.1392758057.git.agx@sigxcpu.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 18 22:28:30 2014
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] tree-diff: rework diff_tree() to generate diffs for multiparent cases as well
+Date: Tue, 18 Feb 2014 13:29:30 -0800
+Message-ID: <xmqqtxbwcdol.fsf@gitster.dls.corp.google.com>
+References: <cover.1392299516.git.kirr@mns.spb.ru>
+	<1dd9ca564e00ef235875aae4944675f53dcd25a3.1392299516.git.kirr@mns.spb.ru>
+	<xmqqbnyalrk8.fsf@gitster.dls.corp.google.com>
+	<20140214121529.GB3416@tugrik.mns.mnsspb.ru>
+	<xmqqppmpiojn.fsf@gitster.dls.corp.google.com>
+	<20140216080829.GA3820@mini.zxlink>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: kirr@mns.spb.ru, git@vger.kernel.org
+To: Kirill Smelkov <kirr@navytux.spb.ru>
+X-From: git-owner@vger.kernel.org Tue Feb 18 22:29:55 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WFsDI-0004wn-I6
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Feb 2014 22:28:24 +0100
+	id 1WFsEj-0007Cq-M6
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Feb 2014 22:29:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751993AbaBRV2P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Feb 2014 16:28:15 -0500
-Received: from xvm-169-183.ghst.net ([95.142.169.183]:44670 "EHLO
-	photon.sigxcpu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751970AbaBRV2F (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Feb 2014 16:28:05 -0500
-Received: from honk.sigxcpu.org (localhost [IPv6:::1])
-	by photon.sigxcpu.org (Postfix) with ESMTPS id 5AA6F695
-	for <git@vger.kernel.org>; Tue, 18 Feb 2014 22:28:04 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by honk.sigxcpu.org (Postfix) with ESMTP id EAE53FB03
-	for <git@vger.kernel.org>; Tue, 18 Feb 2014 22:28:03 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at honk.sigxcpu.org
-X-Amavis-Alert: BAD HEADER SECTION, Duplicate header field: "References"
-Received: from honk.sigxcpu.org ([127.0.0.1])
-	by localhost (honk.sigxcpu.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 3EWALmJlSbIz for <git@vger.kernel.org>;
-	Tue, 18 Feb 2014 22:28:03 +0100 (CET)
-X-Mailer: git-send-email 1.9.0.rc3
-In-Reply-To: <cover.1392758057.git.agx@sigxcpu.org>
-In-Reply-To: <cover.1392758057.git.agx@sigxcpu.org>
-References: <cover.1392758057.git.agx@sigxcpu.org>
+	id S1751411AbaBRV3t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Feb 2014 16:29:49 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57317 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751216AbaBRV3s (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Feb 2014 16:29:48 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 601CE6E95A;
+	Tue, 18 Feb 2014 16:29:47 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=nvMtrKTmZGuqftUOVgxCOCGCBHA=; b=gCU3G0
+	D+71g7OVXD0QZxXUsGzgp6BSwWAClxxzWzrEaXzkgD2658fgN5RZslO5evaRUZRd
+	dSQ5oFIVIVKMPI86AxpRPHDaHkwr6/weKgnSDQmo2I6pPIBSD/8ae9DljI+fvJm0
+	OQ6fBsOJnTeHVxpXkNISNId8DHLNHVqSiRVcs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=IT5l/JhTiiA/XyM62/4ZZC6ODP8i/DdV
+	lfwn7lrcaGYpQZNTnKe5C4lF4nV55XvskszC1kJaC4yryUlbqOjmCkVIUycergha
+	crOlwTLuAoTaC4Xr9iH7nERJNMw6mOYmj90erctNAhvjnz/i5d6SFj4gB5Pk6hHj
+	BEoshK+ohBc=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B4A856E958;
+	Tue, 18 Feb 2014 16:29:46 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A50B56E939;
+	Tue, 18 Feb 2014 16:29:32 -0500 (EST)
+In-Reply-To: <20140216080829.GA3820@mini.zxlink> (Kirill Smelkov's message of
+	"Sun, 16 Feb 2014 12:08:29 +0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: C1C05288-98E3-11E3-BE19-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242358>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242359>
 
---no-record-origin can be used by scripts to be sure to not record
-origin information when cherry-picking.
----
- Documentation/git-cherry-pick.txt | 4 ++++
- builtin/revert.c                  | 6 ++++++
- 2 files changed, 10 insertions(+)
+Kirill Smelkov <kirr@navytux.spb.ru> writes:
 
-diff --git a/Documentation/git-cherry-pick.txt b/Documentation/git-cherry-pick.txt
-index 63db07d..b063b76 100644
---- a/Documentation/git-cherry-pick.txt
-+++ b/Documentation/git-cherry-pick.txt
-@@ -58,6 +58,7 @@ OPTIONS
- 
- -x::
- --record-origin::
-+--no-record-origin::
- 	When recording the commit, append a line that says
- 	"(cherry picked from commit ...)" to the original commit
- 	message in order to indicate which commit this change was
-@@ -70,6 +71,9 @@ OPTIONS
- 	maintenance branch for an older release from a
- 	development branch), adding this information can be
- 	useful.
-++
-+Use `--no-record-origin` if you want to avoid recording the commit id
-+even when the `cherrypick.recordOrigin` option is in effect.
- 
- -r::
- 	It used to be that the command defaulted to do `-x`
-diff --git a/builtin/revert.c b/builtin/revert.c
-index 899f3e4..14d90ba 100644
---- a/builtin/revert.c
-+++ b/builtin/revert.c
-@@ -76,6 +76,7 @@ static void parse_args(int argc, const char **argv, struct replay_opts *opts)
- 	const char * const * usage_str = revert_or_cherry_pick_usage(opts);
- 	const char *me = action_name(opts);
- 	int cmd = 0;
-+	int no_record_origin = 0;
- 	struct option options[] = {
- 		OPT_CMDMODE(0, "quit", &cmd, N_("end revert or cherry-pick sequence"), 'q'),
- 		OPT_CMDMODE(0, "continue", &cmd, N_("resume revert or cherry-pick sequence"), 'c'),
-@@ -95,11 +96,13 @@ static void parse_args(int argc, const char **argv, struct replay_opts *opts)
- 		OPT_END(),
- 		OPT_END(),
- 		OPT_END(),
-+		OPT_END(),
- 	};
- 
- 	if (opts->action == REPLAY_PICK) {
- 		struct option cp_extra[] = {
- 			OPT_BOOL('x', "record-origin", &opts->record_origin, N_("append commit name")),
-+			OPT_BOOL(0, "no-record-origin", &no_record_origin, N_("don't append commit name")),
- 			OPT_BOOL(0, "ff", &opts->allow_ff, N_("allow fast-forward")),
- 			OPT_BOOL(0, "allow-empty", &opts->allow_empty, N_("preserve initially empty commits")),
- 			OPT_BOOL(0, "allow-empty-message", &opts->allow_empty_message, N_("allow commits with empty messages")),
-@@ -118,6 +121,9 @@ static void parse_args(int argc, const char **argv, struct replay_opts *opts)
- 	if (opts->keep_redundant_commits)
- 		opts->allow_empty = 1;
- 
-+	if (no_record_origin)
-+		opts->record_origin = 0;
-+
- 	/* Set the subcommand */
- 	if (cmd == 'q')
- 		opts->subcommand = REPLAY_REMOVE_STATE;
--- 
-1.9.0.rc3
+>> > 2) alloca(), for small arrays, is used for the same reason - if we change
+>> > it to xmalloc()/free() the timings get worse
+>> 
+>> Do you see any use of it outside compat/?
+>> 
+>> I thought we specifically avoid alloca() for portability.  Also we
+>> do not use variable-length-arrays on the stack either, I think.
+>
+> No, no usage outside compat/ and I knew alloca and VLAs are not used in
+> Git codebase for portability, and I understand alloca will be
+> criticized, but wanted to start the discussion rolling.
+>
+> I've actually started without alloca, and used xmalloc/free for
+> [nparent] vectors, but the impact was measurable, so it just had to be
+> changed to something more optimal.
+>
+> For me, personally, alloca is ok, but I understand there could be
+> portability issues (by the way, what compiler/system Git cares about
+> does not have working alloca?). Thats why I propose we do the following
+>
+> 1. at configure time, determine, do we have working alloca, and define
+>
+>     #define HAVE_ALLOCA
+>
+>    if yes.
+>
+> 2. in code
+>
+>     #ifdef HAVE_ALLOCA
+>     # define xalloca(size)      (alloca(size))
+>     # define xalloca_free(p)    do {} while(0)
+>     #else
+>     # define xalloca(size)      (xmalloc(size))
+>     # define xalloca_free(p)    (free(p))
+>     #endif
+>
+>    and use it like
+>
+>    func() {
+>        p = xalloca(size);
+>        ...
+>
+>        xalloca_free(p);
+>    }
+>
+> This way, for systems, where alloca is available, we'll have optimal
+> on-stack allocations with fast executions. On the other hand, on
+> systems, where alloca is not available, this gracefully fallbacks to
+> xmalloc/free.
+>
+> Please tell me what you think.
+
+I guess the above is clean enough, and we cannot do better than that,
+if we want to use alloca() on platforms where we can.
