@@ -1,113 +1,101 @@
-From: Zachary Turner <zturner@chromium.org>
-Subject: Re: Make the git codebase thread-safe
-Date: Tue, 18 Feb 2014 10:14:27 -0800
-Message-ID: <CAAErz9iApJ=og65zoctJLfR8PqO2g3PZVJZ76m=ZGzt3TeMHbw@mail.gmail.com>
-References: <CA+TurHgyUK5sfCKrK+3xY8AeOg0t66vEvFxX=JiA9wXww7eZXQ@mail.gmail.com>
-	<CABPQNSZ_LLg5i+mpwUj7pzXVQMY1tcXz2gJ+PWG-mP1iyjxoaw@mail.gmail.com>
-	<CAHOQ7J8QxfvtrS2KdgzUPvkDzJ1Od0CMvdWxrF_bNacVRYOa5Q@mail.gmail.com>
-	<CABPQNSZtQd51gQY7oK8B-BbpNEhxR-onQtiXSfW9sv1t2YW_nw@mail.gmail.com>
-	<CAHOQ7J_Jrj1NJ_tZaCioskQU_xGR2FQPt8=JrWpR6rfs=c847w@mail.gmail.com>
-	<CABPQNSYVGc9m0_xfAWe=3b7CXyGZ-2FfTMRbTJ=UECeZUtdgmg@mail.gmail.com>
-	<52FBC9E5.6010609@gmail.com>
-	<loom.20140213T193220-631@post.gmane.org>
-	<52FD4C84.7060209@gmail.com>
-	<CAHOQ7J8syoQLGwwkwPEX3wZir8sWDQ+k8sgHAKn=n_-Q_S8ipA@mail.gmail.com>
-	<CAAErz9hzeiJ9f9tJ+Z-kOHvrPqgcZrpvrpBpa_tMjnKm4YWSXA@mail.gmail.com>
-	<52FE68C9.3060403@gmail.com>
-	<CAAErz9g7ND1htfk=yxRJJLbSEgBi4EV_AHC9uDRptugGWFWcXw@mail.gmail.com>
-	<CAAErz9j=_FpWLSyUk43pp8A6e7Ej0crT8ghW5-yxBEbGkd6O+A@mail.gmail.com>
-	<CACsJy8Dzj5iyaUseNyU76ojG1C0VYR=v7xsc=6TSGxTh=Xh3Ag@mail.gmail.com>
-	<CAHOQ7J-gGbnADQ+3TGy6b6LJSLH8jvAbdTrc20Ybh=p0D2FmsQ@mail.gmail.com>
-	<CACsJy8AQNmmW40R-H7kz1dmwiaSKVgu+GP=Jt1qTKgfbZoMkMA@mail.gmail.com>
-	<CAAErz9gO3NrAF5Zhu277NLqBv-4otQVWGBP6fX00x2OJ3v0_fg@mail.gmail.com>
-	<CACsJy8BdRd8yLjtYqGqQd2b1f550GLq6duZCD3JNiTO+K3GK6w@mail.gmail.com>
-	<xmqqlhx8fgqs.fsf@gitster.dls.corp.google.com>
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH] revert.c: Allow to specify -x via git-config
+Date: Tue, 18 Feb 2014 18:38:43 +0000
+Message-ID: <20140218183842.GA163138@vauxhall.crustytoothpaste.net>
+References: <20140218065620.GA3448@bogon.m.sigxcpu.org>
+ <20140218174913.GB7855@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Duy Nguyen <pclouds@gmail.com>, Stefan Zager <szager@google.com>,
-	Karsten Blees <karsten.blees@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 18 19:14:35 2014
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="LQksG6bCIzRHxTLp"
+Cc: Guido =?utf-8?Q?G=C3=BCnther?= <agx@sigxcpu.org>,
+	git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 18 19:38:58 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WFpBg-0001N3-V6
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Feb 2014 19:14:33 +0100
+	id 1WFpZJ-0004ee-GG
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Feb 2014 19:38:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750866AbaBRSO3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Feb 2014 13:14:29 -0500
-Received: from mail-ie0-f172.google.com ([209.85.223.172]:47729 "EHLO
-	mail-ie0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750800AbaBRSO2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Feb 2014 13:14:28 -0500
-Received: by mail-ie0-f172.google.com with SMTP id rd18so3883442iec.17
-        for <git@vger.kernel.org>; Tue, 18 Feb 2014 10:14:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=HCQ65oKaHENCXuUsFRABJFT6dt+/v1T+c13mHvZQ/Uk=;
-        b=bE9d+D/yO+fbz8wzxDXZ+iQNclAEiLGZjhua33Lifi9myXOxOZMA6+NdgN7HNXos8g
-         JztbPuPvLQ3nnYe6tcdDHVkaLq7I1b6lJuswNmT3pnFgiPT2uJDBiP/w50G38IyM0OJa
-         l6H5iKI9uKoMEGCCk5NDW3ktpFVuxpogmlD95/EaGh8+KuB/MeFXAYYqijIwVXNqLryo
-         xoEWnr3ftBQGqvkIs9v4o/oS1mzXeg/e41K7P41bWdxJofaC32nFb1a3nR5jsMckzBbP
-         +A+ZTWz4iLpXEvkDJoJn78VfkYPnQIbeTgzbGXMbHdTeG7ZgGkMEsm5HQp649cYM+HDz
-         f4Sg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=HCQ65oKaHENCXuUsFRABJFT6dt+/v1T+c13mHvZQ/Uk=;
-        b=aE2zVFc6gf4ElHYqbKwtk+Q7SlMTrznt+C1EkqMpRsuVDXJnUkxFk2IbYc179TViD4
-         +Zyh/3qRRFzHFVJctSMeQWwA3k34xuS2/z0M7TiKuPln69USqyVqY8EEtmlazRrdRlkw
-         IjZa4Rq5m1Bg6SIrFdXK+jQ7n6a8D8aqEZ8pw=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=HCQ65oKaHENCXuUsFRABJFT6dt+/v1T+c13mHvZQ/Uk=;
-        b=LmNP3MXIwHdBOcKmvNfDkYjfC5xnp9dSRtjzurVOCXnMn3Y+Zj67LIQ8xFyx026tri
-         yGE2trqOTk/Z5TaH6dwqlb6S+qwo+ZCcxmMw/Kfsn271nHQXJK4utddpE07cxUC0Xwg5
-         leBww6RzaREX1h3F5n+t1jcHg/BIVMk0K9FwVcL/w6dWulWmDMiz1U4dUwKOfau/fEA+
-         FrZ9Aldxlz6e14x/1X4oa8UEnkP1miEHLkYCb4WQA1DL8eevT/zZPqOE3aIAe4n/MPJl
-         R8dEGI+WSYLdgsn5lYvF+jVapvIri0Doihi6a6oCHvKpmNnSBe3WesNgfOGv+KTz86LS
-         LExA==
-X-Gm-Message-State: ALoCoQlC8mXp72pnkczMIeOan84NoG48B8UR9L3gKiyTl7tP1Qj+1ni9DnWmyC0blCYNZiArc9C1KTgIUPyye1zP+DfyNe5Y08VGSbmX8RQqIP/rsVC4xBhOHVPnleI1wulhHovTlrdTID/bPauuMFxWgfD6sFuWUfE/jmtSXNhTRC3R/Yzjs58U8+UAMLHpxQa4LYPpPv1l
-X-Received: by 10.43.145.137 with SMTP id ju9mr4336621icc.36.1392747267579;
- Tue, 18 Feb 2014 10:14:27 -0800 (PST)
-Received: by 10.64.23.9 with HTTP; Tue, 18 Feb 2014 10:14:27 -0800 (PST)
-In-Reply-To: <xmqqlhx8fgqs.fsf@gitster.dls.corp.google.com>
-X-Google-Sender-Auth: aFSkJXyLDE9yfDE5f8jb877CJUc
+	id S1751154AbaBRSix (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Feb 2014 13:38:53 -0500
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:52022 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750838AbaBRSiw (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 18 Feb 2014 13:38:52 -0500
+Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:d86c:b4e1:ccc3:cb33])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id E6F9628074;
+	Tue, 18 Feb 2014 18:38:48 +0000 (UTC)
+Mail-Followup-To: Jonathan Nieder <jrnieder@gmail.com>,
+	Guido =?utf-8?Q?G=C3=BCnther?= <agx@sigxcpu.org>,
+	git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20140218174913.GB7855@google.com>
+X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
+ 3.12-1-amd64)
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242335>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242336>
 
-It shouldn't be hard for us to run some tests with this patch applied.
- Will report back in a day or two.
 
-On Tue, Feb 18, 2014 at 9:55 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Duy Nguyen <pclouds@gmail.com> writes:
->
->> On Sat, Feb 15, 2014 at 8:15 AM, Zachary Turner <zturner@chromium.org> wrote:
->> ...
->>> 2) Use TLS as you suggest and have one fd per pack thread.  Probably
->>> the most complicated code change (at least for me, being a first-time
->>> contributor)
->>
->> It's not so complicated. I suggested a patch [1] before (surprise!).
->> ...
->> [1] http://article.gmane.org/gmane.comp.version-control.git/196042
->
-> That message is at the tail end of the discussion. I wonder why
-> nothing came out of it back then.
->
-> While I do not see anything glaringly wrong with the change from a
-> quick glance over it, it would be nice to hear how well it performs
-> on their platform from Windows folks.
->
-> Thanks.
+--LQksG6bCIzRHxTLp
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Tue, Feb 18, 2014 at 09:49:13AM -0800, Jonathan Nieder wrote:
+> Can you say more about the context?  Why is it important to record the
+> original commit id?  Is it a matter of keeping a reminder of the
+> commits' similarity (which cherry-pick without '-x' does ok by reusing
+> the same message) or are people reviewing the change downstream going
+> to be judging the change based on the recorded upstream commit id?
+> (Like linux's stable-<version> branches --- but those have other
+> requirements so I don't think this configuration would work as is
+> there.)
+
+I can provide a use case.  At work, we merge into the maintenance and
+development branches and cherry-pick from the maintenance to the stable
+branches.  We want committers to always use -x -s because we need to
+know which reviewer backported the change and we want to be able to
+track which commits have been backported and whether any reverts also
+need to be cherry-picked.  We also have automated tools that want this
+information.
+
+I usually solve this with an alias (backport =3D cherry-pick -x -s), but I
+can see how this might be a useful option.
+
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
+
+--LQksG6bCIzRHxTLp
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCgAGBQJTA6iyAAoJEL9TXYEfUvaLED4P/A5FDYzj0pylAVWv0oOu9rql
+F+iLMvKqPE8CCcYag8MseIAT3wboeeq2f8B5KOopP8l+yfiCBQpYHm5AaJjlkDg+
+P7wvVuZgJ6jTF+N0dPKHE5ZIiTT1M2LgY44ot9ekPZfG+79MRBV/JySVilRB2POU
+mkBqR5a3KQYuj3xUC5MoqshajHp3h3OXCoufrBUcS7gzuVMR2Pnuijl4g9cyZwGy
+tNjpsuh6qUCAJOCZeLgX2QbWP1AD+JXXX+lzPTv8ENFhDV8L51aQyYyBtK+MIhyP
+DYSs2hrXO+u5CCi0FMUSHHuNcYod4d5hbXjX2MqyeSUAqxoOXHKE25llig4MRzaq
+YFvP6OF47MxStaZs+0PuO5sE95G7yemDm7xTyZ5BrBu2Dl1xATBJF868fZPk7Glg
+R0I1oZP19atEAsWGCl65v4k6RZTTz/cluTsw5ycjitVVivWuWQZD/FSoXiYUqu6T
+Id/UgpNb56ENSXyPg56m5QNQj/OSPyGv991zZlPd4ivOd/0YozmhNNHAtiXFAYwM
+7vICZgFu8Dxhzzf65jwRiE+JPCeTKInnlOzRZ9eV5320lsvjsPDhWCFOxPL/MvUi
+0+NpwUFgsp6FCLZ1wAAI1EaKVRL1hpUCrYyk56oBCULKtBRINT30g6z9wQI5ftNr
+lR/VjYaSo717toDOdOXD
+=eI1d
+-----END PGP SIGNATURE-----
+
+--LQksG6bCIzRHxTLp--
