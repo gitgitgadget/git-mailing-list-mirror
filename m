@@ -1,74 +1,107 @@
-From: Christian Jaeger <chrjae@gmail.com>
-Subject: git gc --aggressive led to about 40 times slower "git log --raw"
-Date: Tue, 18 Feb 2014 07:25:10 +0000
-Message-ID: <CAEjYwfU==yYtQBDzZzEPdvbqz1N=gZtbMr5ccRaC_U7NfViQLA@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/5] notes-utils: handle boolean notes.rewritemode
+ correctly
+Date: Tue, 18 Feb 2014 02:46:32 -0500
+Message-ID: <20140218074632.GA29804@sigill.intra.peff.net>
+References: <cover.1392565571.git.john@keeping.me.uk>
+ <be9b384ec77fc39b939b8c5505862a6e1c641faa.1392565571.git.john@keeping.me.uk>
+ <87txbzvxgq.fsf@fencepost.gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 18 08:25:41 2014
+Content-Type: text/plain; charset=utf-8
+Cc: John Keeping <john@keeping.me.uk>, git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Tue Feb 18 08:46:40 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WFf3i-00064a-6c
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Feb 2014 08:25:38 +0100
+	id 1WFfO3-0001GX-M4
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Feb 2014 08:46:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753814AbaBRHZd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Feb 2014 02:25:33 -0500
-Received: from mail-wg0-f50.google.com ([74.125.82.50]:50159 "EHLO
-	mail-wg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751239AbaBRHZd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Feb 2014 02:25:33 -0500
-Received: by mail-wg0-f50.google.com with SMTP id z12so2930677wgg.17
-        for <git@vger.kernel.org>; Mon, 17 Feb 2014 23:25:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=RJEtIMu3rFHe0CKPdiLiiIH3f+srajI7uWk5BBSO4ks=;
-        b=pw570B+vGdci5Zujxi6aIhbp0P+VYdsDl+SONCoS6tw5FZ4z1gCCk6MRKMsXFf935D
-         49K46qiRVATa0uniMBp02tnApQK2yA1mb5E1d9lZpmfBqFMOdOqzaLtE6Tm/hFU2BxCX
-         T/rdPsmEfjzjfowo7RuZ2V1qAW0RMgR6D7JBEAYfrT6+YGsk7w8No6FP1VhDn9c/IhX/
-         Dn8WkHvGnO/0HVuJ04qnUTSBLvFY6J1B0y8IlYfghPuJxdVo3ETb3Pfj9dMSeOgqgeb7
-         QNx/aRiSfYCwsQGt+J1mQpe6jgjYzzllZYNB4dYeOLj9PlyjWndORKuTlwjBAp6RY50j
-         3VXg==
-X-Received: by 10.180.107.1 with SMTP id gy1mr16364692wib.47.1392708330781;
- Mon, 17 Feb 2014 23:25:30 -0800 (PST)
-Received: by 10.180.101.168 with HTTP; Mon, 17 Feb 2014 23:25:10 -0800 (PST)
+	id S1753963AbaBRHqf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Feb 2014 02:46:35 -0500
+Received: from cloud.peff.net ([50.56.180.127]:52480 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753573AbaBRHqf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Feb 2014 02:46:35 -0500
+Received: (qmail 17303 invoked by uid 102); 18 Feb 2014 07:46:35 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 18 Feb 2014 01:46:35 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 18 Feb 2014 02:46:32 -0500
+Content-Disposition: inline
+In-Reply-To: <87txbzvxgq.fsf@fencepost.gnu.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242277>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242278>
 
-Hi
+On Sun, Feb 16, 2014 at 05:22:45PM +0100, David Kastrup wrote:
 
-I've got a repository where "git log --raw > _somefile" took a few
-seconds in the past, but after an attempt at merging some commits that
-were collected in a clone of the same repo that was created about a
-year ago, I noticed that this command was now taking 3 minutes 7
-seconds. "git gc", "git fsck", "git clone file:///the/repo/.git" also
-now each took between ~4-10 minutes, also "git log --raw somefile" got
-equally unusably slow. With the help of the people on the IRC, I
-tracked it down to my recent use of "git gc --aggressive" in this
-repo. Running "git repack -a -d -f" solved it, now it's again taking
-4-5 seconds. After running "git gc --aggressive" again for
-confirmation, "git log --raw > _somefile" was again slowed down,
-although now 'only' to 1 minute 34 seconds; did perhaps my "git remote
-add -f other-repo", which I remember was also running rather slowly,
-exacerbate the problem (to the > 3 minutes I was seeing)?
+> Not really relevant to this patch, but looking at the output of
+> 
+> git grep config_error_nonbool
+> 
+> seems like a serious amount of ridiculousness going on.  The header
+> shows
+> 
+> cache.h:extern int config_error_nonbool(const char *);
+> cache.h:#define config_error_nonbool(s) (config_error_nonbool(s), -1)
+> 
+> and the implementation
+> 
+> config.c:#undef config_error_nonbool
+> config.c:int config_error_nonbool(const char *var)
 
-The repo has about 6000 commits, about 12'000 files in the current
-HEAD, and about 43 MB packed .git contents. The files are (almost) all
-plain text, about half of them are about 42 bytes long, the rest up to
-about 2 MB although most of them are just around 5-50 KB. Most files
-mostly grow at the end. The biggest files (500KB-2MB) are quite
-long-lived and don't stop growing, again mostly at the end. Also,
-about 2*5K files are each in the same directory, meaning that the tree
-objects representing those 2 directories are big but changing only in
-a few places.
+You could always look in the commit history:
 
-I've now learned to avoid "git gc --aggressive". Perhaps there are
-some other conclusions to be drawn, I don't know.
+  $ git log -S'#define config_error_nonbool' cache.h
 
-Christian.
+or search the mailing list:
+
+  http://thread.gmane.org/gmane.comp.version-control.git/211505
+
+> Presumably this was done so that the uses of config_error_nonbool can be
+> recognized as returning -1 unconditionally.
+
+Yes, it helps prevent false positives in gcc's flow analysis
+(specifically, -Wuninitialized warnings).
+
+> But is that worth the obfuscation?
+
+Yes?
+
+> Why not let config_error_nonbool return -1 in the first place?
+
+It originally did, but callers do not get to see the static return, so
+they miss some analysis opportunities.
+
+> It does not appear like any caller would call the function rather than
+> the macro, so why declare the function as returning an int at all?
+
+Because we don't use these macros on non-gnu compilers; they actually
+see the real function return.
+
+> And why give it the same name as the macro (risking human/computer
+> confusion and requiring an explicit #undef for the definition or was
+> that declaration?) instead of config_error_nonbool_internal or
+> whatever else?
+
+This particular case is simple, but see error() for another use of the
+same technique which requires variadic macros, which are not available
+everywhere. Callers want to say just "error(...)", so we have to name
+the macro that. If we call the matching function "error_internal", then
+non-gnu compilers would need a macro to convert "error(...)" to
+"error_internal(...)". But they can't do so, because it would be a
+variadic macro.
+
+So you could adjust config_error_nonbool(), but not error(). But that
+introduces its own confusion, because the technique is not applied
+consistently.
+
+I agree the #define is ugly. But it's confined to a small area, and it
+does solve an actual problem.
+
+-Peff
