@@ -1,118 +1,75 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] tree-diff: rework diff_tree() to generate diffs for multiparent cases as well
-Date: Tue, 18 Feb 2014 13:29:30 -0800
-Message-ID: <xmqqtxbwcdol.fsf@gitster.dls.corp.google.com>
-References: <cover.1392299516.git.kirr@mns.spb.ru>
-	<1dd9ca564e00ef235875aae4944675f53dcd25a3.1392299516.git.kirr@mns.spb.ru>
-	<xmqqbnyalrk8.fsf@gitster.dls.corp.google.com>
-	<20140214121529.GB3416@tugrik.mns.mnsspb.ru>
-	<xmqqppmpiojn.fsf@gitster.dls.corp.google.com>
-	<20140216080829.GA3820@mini.zxlink>
+Subject: Re: [PATCH] Rename read_replace_refs to check_replace_refs
+Date: Tue, 18 Feb 2014 13:30:54 -0800
+Message-ID: <xmqqppmkcdm9.fsf@gitster.dls.corp.google.com>
+References: <1392722695-31815-1-git-send-email-mhagger@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: kirr@mns.spb.ru, git@vger.kernel.org
-To: Kirill Smelkov <kirr@navytux.spb.ru>
-X-From: git-owner@vger.kernel.org Tue Feb 18 22:29:55 2014
+Cc: git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Tue Feb 18 22:31:12 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WFsEj-0007Cq-M6
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Feb 2014 22:29:54 +0100
+	id 1WFsFu-0000XG-It
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Feb 2014 22:31:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751411AbaBRV3t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Feb 2014 16:29:49 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57317 "EHLO
+	id S1752349AbaBRVa7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Feb 2014 16:30:59 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34893 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751216AbaBRV3s (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Feb 2014 16:29:48 -0500
+	id S1752127AbaBRVa6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Feb 2014 16:30:58 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 601CE6E95A;
-	Tue, 18 Feb 2014 16:29:47 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AFCF66E9A8;
+	Tue, 18 Feb 2014 16:30:57 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=nvMtrKTmZGuqftUOVgxCOCGCBHA=; b=gCU3G0
-	D+71g7OVXD0QZxXUsGzgp6BSwWAClxxzWzrEaXzkgD2658fgN5RZslO5evaRUZRd
-	dSQ5oFIVIVKMPI86AxpRPHDaHkwr6/weKgnSDQmo2I6pPIBSD/8ae9DljI+fvJm0
-	OQ6fBsOJnTeHVxpXkNISNId8DHLNHVqSiRVcs=
+	:content-type; s=sasl; bh=Btcw+klvtsp++VLWN6rKtyg6Iko=; b=KytALX
+	BKt2CP8tNPhOA417HU/l1gf0wHyygMMabcpmpBgbvjHNis8i5qYh4QapuQOGYX0n
+	ruT7wZoVOyFQ463jLRlJ/r4Rv+S1TEEduZEwLTWm2MXqsnkbPz/oPFOI8fhA59wq
+	4GwznbPJRGx72Y2K47RYfk9OQ0GGa5EwxDLGs=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=IT5l/JhTiiA/XyM62/4ZZC6ODP8i/DdV
-	lfwn7lrcaGYpQZNTnKe5C4lF4nV55XvskszC1kJaC4yryUlbqOjmCkVIUycergha
-	crOlwTLuAoTaC4Xr9iH7nERJNMw6mOYmj90erctNAhvjnz/i5d6SFj4gB5Pk6hHj
-	BEoshK+ohBc=
+	:content-type; q=dns; s=sasl; b=vN50h+3IjrXDkecnJuGw6AmQ34jMVhbN
+	ZKs61ayhYHtQH+t1hVORiS0vAiCF5nMU+TdUp01l7mlUL+fqIIaV20WFADbFjLrm
+	WktkK3t3k3ErDRH7LPjlUToNgN8yMBQ16sK8vFLz3kwZuFpiF011KjMxtyGuq2VW
+	n3T58ghqaYQ=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B4A856E958;
-	Tue, 18 Feb 2014 16:29:46 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9A28F6E9A6;
+	Tue, 18 Feb 2014 16:30:57 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A50B56E939;
-	Tue, 18 Feb 2014 16:29:32 -0500 (EST)
-In-Reply-To: <20140216080829.GA3820@mini.zxlink> (Kirill Smelkov's message of
-	"Sun, 16 Feb 2014 12:08:29 +0400")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DE3366E9A0;
+	Tue, 18 Feb 2014 16:30:56 -0500 (EST)
+In-Reply-To: <1392722695-31815-1-git-send-email-mhagger@alum.mit.edu> (Michael
+	Haggerty's message of "Tue, 18 Feb 2014 12:24:55 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: C1C05288-98E3-11E3-BE19-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: F3F56B12-98E3-11E3-9FAC-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242359>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242360>
 
-Kirill Smelkov <kirr@navytux.spb.ru> writes:
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
->> > 2) alloca(), for small arrays, is used for the same reason - if we change
->> > it to xmalloc()/free() the timings get worse
->> 
->> Do you see any use of it outside compat/?
->> 
->> I thought we specifically avoid alloca() for portability.  Also we
->> do not use variable-length-arrays on the stack either, I think.
+> The semantics of this flag was changed in commit
 >
-> No, no usage outside compat/ and I knew alloca and VLAs are not used in
-> Git codebase for portability, and I understand alloca will be
-> criticized, but wanted to start the discussion rolling.
+>     e1111cef23 inline lookup_replace_object() calls
 >
-> I've actually started without alloca, and used xmalloc/free for
-> [nparent] vectors, but the impact was measurable, so it just had to be
-> changed to something more optimal.
+> but wasn't renamed at the time to minimize code churn.  Rename it now,
+> and add a comment explaining its use.
 >
-> For me, personally, alloca is ok, but I understand there could be
-> portability issues (by the way, what compiler/system Git cares about
-> does not have working alloca?). Thats why I propose we do the following
->
-> 1. at configure time, determine, do we have working alloca, and define
->
->     #define HAVE_ALLOCA
->
->    if yes.
->
-> 2. in code
->
->     #ifdef HAVE_ALLOCA
->     # define xalloca(size)      (alloca(size))
->     # define xalloca_free(p)    do {} while(0)
->     #else
->     # define xalloca(size)      (xmalloc(size))
->     # define xalloca_free(p)    (free(p))
->     #endif
->
->    and use it like
->
->    func() {
->        p = xalloca(size);
->        ...
->
->        xalloca_free(p);
->    }
->
-> This way, for systems, where alloca is available, we'll have optimal
-> on-stack allocations with fast executions. On the other hand, on
-> systems, where alloca is not available, this gracefully fallbacks to
-> xmalloc/free.
->
-> Please tell me what you think.
+> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+> ---
+> This change doesn't conflict with anything in pu; perhaps we can
+> squeeze it in now?
 
-I guess the above is clean enough, and we cannot do better than that,
-if we want to use alloca() on platforms where we can.
+I think it is a good time to do this kind of clean-up once the
+post-release dusts settle.
+
+Thanks.
