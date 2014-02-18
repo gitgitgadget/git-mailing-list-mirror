@@ -1,78 +1,129 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: git gc --aggressive led to about 40 times slower "git log --raw"
-Date: Tue, 18 Feb 2014 11:25:03 +0100
-Message-ID: <87ioscsoow.fsf@fencepost.gnu.org>
-References: <CAEjYwfU==yYtQBDzZzEPdvbqz1N=gZtbMr5ccRaC_U7NfViQLA@mail.gmail.com>
-	<87r470ssuc.fsf@fencepost.gnu.org>
-	<CACsJy8D9tws_gu6yWVdz3t+Vfg5-9iorptn4BLnTL3b+YWcHzQ@mail.gmail.com>
+From: Mathy Vanvoorden <mathy@vanvoorden.be>
+Subject: Problems while converting complex repository from SVN
+Date: Tue, 18 Feb 2014 11:27:33 +0100
+Message-ID: <197e3eca78fa1e827466d2a9387db48e@webmail.mvision.be>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Christian Jaeger <chrjae@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 18 11:25:16 2014
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Feb 18 11:27:43 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WFhrV-0003Qt-Fs
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Feb 2014 11:25:14 +0100
+	id 1WFhtu-0006gi-HE
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Feb 2014 11:27:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754895AbaBRKZH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Feb 2014 05:25:07 -0500
-Received: from fencepost.gnu.org ([208.118.235.10]:33583 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754622AbaBRKZF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Feb 2014 05:25:05 -0500
-Received: from localhost ([127.0.0.1]:60858 helo=lola)
-	by fencepost.gnu.org with esmtp (Exim 4.71)
-	(envelope-from <dak@gnu.org>)
-	id 1WFhrM-00011J-8I; Tue, 18 Feb 2014 05:25:04 -0500
-Received: by lola (Postfix, from userid 1000)
-	id DE411E0487; Tue, 18 Feb 2014 11:25:03 +0100 (CET)
-In-Reply-To: <CACsJy8D9tws_gu6yWVdz3t+Vfg5-9iorptn4BLnTL3b+YWcHzQ@mail.gmail.com>
-	(Duy Nguyen's message of "Tue, 18 Feb 2014 16:45:25 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3.50 (gnu/linux)
+	id S1754948AbaBRK1g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Feb 2014 05:27:36 -0500
+Received: from mvision01.dco.fusa.be ([81.95.115.46]:55346 "EHLO
+	mvision01.dco.fusa.be" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754919AbaBRK1e (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Feb 2014 05:27:34 -0500
+Received: from localhost ([127.0.0.1] helo=webmail.mvision.be)
+	by mvision01.dco.fusa.be with esmtpa (Exim 4.82)
+	(envelope-from <mathy@vanvoorden.be>)
+	id 1WFhtl-0003SX-Dp
+	for git@vger.kernel.org; Tue, 18 Feb 2014 11:27:33 +0100
+X-Sender: mathy@vanvoorden.be
+User-Agent: Roundcube Webmail/0.8.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242293>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242294>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+Hi,
 
-> On Tue, Feb 18, 2014 at 3:55 PM, David Kastrup <dak@gnu.org> wrote:
->
->> I've seen the same with my ongoing work on git-blame with the current
->> Emacs Git mirror.  Aggressive packing reduces the repository size to
->> about a quarter, but it blows up the system time (mainly I/O)
->> significantly, quite reducing the total benefits of my algorithmic
->> improvements there.
->
-> Likely because --aggressive passes --depth=250 to pack-objects. Long
-> delta chains could reduce pack size and increase I/O as well as zlib
-> processing signficantly.
+I had some issues while converting our current SVN repository to a GIT 
+repository. The old repository has a lot of strange history in it making 
+it far from easy to convert it but for some issues I had to modify the 
+convert scripts.
 
-Increased zlib processing time is one thing, but if it _increases_ I/O,
-then it would seem there is a serious impedance mismatch between the
-compression scheme and the code relying on it, leading to repeated reads
-of blocks only needed for reconstructing dynamic compression
-dictionaries.
+As I don't know the internals of GIT or git-svn enough I don't know if 
+these are actually bugs or not. I will also not produce and submit 
+patches to fix this as I don't know enough Perl to know if maybe it can 
+be solved in a better way or that it should be solved at all.
 
-Compression should reduce rather than increase the total amount of
-reads.  So it would seem that either better caching and/or smaller
-independent block sizes and/or strategies for sorting the delta chain to
-make its resolution require mostly linear reads, and then make sure to
-do this in a manner that does not reinitialize the decompression for
-accessing each delta that happens to be more or less "in sequence".
+1. issue with git-svn dying because git could not find the refname. I 
+noticed that in the function resolve_local_globs it was actually passing 
+desanitized names to the cmt_metadata function, so I changed the code to 
+use sanitized names, trying to keep the rest of the script (which I 
+don't pretend to understand) intact:
 
-Of course, this is assuming that the additional time is spent
-uncompressing data rather than navigating directories.
+sub resolve_local_globs {
+     my ($url, $fetch, $glob_spec) = @_;
+     return unless defined $glob_spec;
+     my $ref = $glob_spec->{ref};
+     my $path = $glob_spec->{path};
+     foreach (command(qw#for-each-ref --format=%(refname) refs/#)) {
+         next unless m#^$ref->{regex}$#;
+         my $p = $1;
+         my $pathname = $path->full_path($p);
+         my $svnpathname = desanitize_refname($pathname);
+         my $refname = $ref->full_path($p);
+         my $svnrefname = desanitize_refname($refname);
+         if (my $existing = $fetch->{$svnpathname}) {
+             if ($existing ne $svnrefname) {
+                 die "Refspec conflict:\n",
+                     "existing: $existing\n",
+                     " globbed: $svnrefname\n";
+             }
+             my $u = (::cmt_metadata("$refname"))[0];
+             $u =~ s!^\Q$url\E(/|$)!! or die
+               "$svnrefname: '$url' not found in '$u'\n";
+             if ($pathname ne $u) {
+                 warn "W: Refspec glob conflict ",
+                      "(ref: $svnrefname):\n",
+                      "expected path: $pathname\n",
+                      "    real path: $u\n",
+                      "Continuing ahead with $u\n";
+                 next;
+             }
+         } else {
+             $fetch->{$svnpathname} = $svnrefname;
+         }
+     }
+}
 
-It's actually conceivable that there is quite a bit of potential to get
-better performance from unchanged readers by packing stuff in a
-different order while still using the same delta chain depth.
+
+2. issue with an @ being present in a branch name. A first branch was 
+created just fine, but a second branch was created from that branch 
+which failed.
+
+The following message (simplified for confidentiality reasons) was 
+shown while trying to branch 'blabla bla@bla blabla' to 'blabla blabla'
+
+Found possible branch point: 
+svn://localhost/path/to/branch/blabla%20bla@bla%20blabla => 
+svn://localhost/path/to/branches/blabla%20blabla, 13486
+refs/remotes/origin/branches/blabla bla@bla blabla: 'svn://localhost' 
+not found in 'svn://bla%20blabla'
+
+I found out that the git-svn-id was actually being wrongly initiated to 
+'svn://bla%20blabla'. This is due to a mistake in the regex that is used 
+in remove_username.
+
+It was:
+	$_[0] =~ s{^([^:]*://)[^@]+@}{$1};
+I changed it to
+	$_[0] =~ s{^([^:]*://)[^@/]+@}{$1};
+
+And it works.
+
+
+I did all this using the standard Git package for Windows, release 
+1.8.5.2
+
+PS: I tried to send this from my work email several times but I think 
+the mail server can't handle the greylisting so I apologize if the mails 
+still end up in the list.
 
 -- 
-David Kastrup
+
+Met vriendelijke groeten,
+Best regards,
+
+Mathy Vanvoorden
