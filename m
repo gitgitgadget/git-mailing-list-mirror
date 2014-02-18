@@ -1,67 +1,88 @@
-From: Dongsheng Song <dongsheng.song@gmail.com>
-Subject: gitweb.cgi bug - XML Parsing Error: not well-formed
-Date: Tue, 18 Feb 2014 19:41:47 +0800
-Message-ID: <CAE8XmWp3uTW7wGrVryC6ECTkkJRcc=ruC=B6PhOURGifnh90Sw@mail.gmail.com>
+From: Dan Porter <dpreid@gmail.com>
+Subject: Fwd: git p4: feature request - branch check filtering
+Date: Tue, 18 Feb 2014 12:42:47 +0000
+Message-ID: <CADtnS+weco6Lvk3hHuM7BcaRsvMkeDCmqH26s19TrgWvBYXAvA@mail.gmail.com>
+References: <CADtnS+zWzPY6ftwxWUE+Gb-OKq_Kzf9y+fFfgJ-demWyX3azCg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
-Cc: Git List <git@vger.kernel.org>
-To: Andrew Keller <andrew@kellerfarm.com>
-X-From: git-owner@vger.kernel.org Tue Feb 18 12:42:17 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Philip Herron <redbrain@gcc.gnu.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 18 13:42:56 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WFj43-0007Gr-Tf
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Feb 2014 12:42:16 +0100
+	id 1WFk0l-0004E4-JQ
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Feb 2014 13:42:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754848AbaBRLmK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Feb 2014 06:42:10 -0500
-Received: from mail-ob0-f171.google.com ([209.85.214.171]:63292 "EHLO
-	mail-ob0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752497AbaBRLmJ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 18 Feb 2014 06:42:09 -0500
-Received: by mail-ob0-f171.google.com with SMTP id wp4so18396212obc.16
-        for <git@vger.kernel.org>; Tue, 18 Feb 2014 03:42:08 -0800 (PST)
+	id S1755272AbaBRMmt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Feb 2014 07:42:49 -0500
+Received: from mail-ig0-f179.google.com ([209.85.213.179]:48060 "EHLO
+	mail-ig0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755265AbaBRMms (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Feb 2014 07:42:48 -0500
+Received: by mail-ig0-f179.google.com with SMTP id c10so7071252igq.0
+        for <git@vger.kernel.org>; Tue, 18 Feb 2014 04:42:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=ffLgcGSwP9JXn5l77zcL4hIKrRmy3KGKaWxXoJZUuMU=;
-        b=yOMKsPjfSutUCYGrEF03XxYEaVKbDFhuVGM2XM6rMV5ExCysM6MNB+FsqbptvNKlSN
-         77sG0TG0jzLC0X0aISV+wzSYDemTb+ukedRpXoYEJv+ozkvBSr0kLGhTxmwAwg7dEsH8
-         vhw+Ednijt4g8xcnicsYHitdA3pTm/OBsoIMTkUX1dQDy8B62AR7+/c4M9gMhGKSxONQ
-         MZ+FwmZ0h6bSWWdr0nXhp08Zejnp/TA84qY0WKf9ex+OuvGIK9rr0ANkgL0WbOUBBHTd
-         K1jF1R2Mmom4z1Z24Sh2EPgS8bQx9eh1GFGTyNoqi2Xt159P6eO8Em21IWw3h3QS3W06
-         0lZA==
-X-Received: by 10.182.131.170 with SMTP id on10mr25607581obb.2.1392723727222;
- Tue, 18 Feb 2014 03:42:07 -0800 (PST)
-Received: by 10.182.240.16 with HTTP; Tue, 18 Feb 2014 03:41:47 -0800 (PST)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=Ut9sAkYewB5a230bsPaJbIq885eZ/I4NhXOx/kPq7s8=;
+        b=STSK4wxNWinppCIg58q4/wAuJRvTM1R/YWF7xEEKh00jxAbya9fQQ9nOML50ybkBjR
+         aYxXvSbwRGLA+eQz/0axhghccfUmWh/zMelHJZKgvQcb1qkTnO7lNCgKRJeH1f3HitZF
+         TPRmBPLx8zjA+eOIxv+b1eub3X4y5IHBOoIDR4ZlO9wbOdJCnTATQj2AwHZByh12wRpw
+         uvj+QYgFFNP9sEUlpl6krnmlmUbpuzjUGnPXgGgL4K7XnMB+nQ1cah5NDyDIGdC0On12
+         tukHzZ65KdLrTUduj+SCufh3I4dgIERuauCUv6Jso1GIzxEHaBRhZjcLH5PEe7itTBLS
+         QpRw==
+X-Received: by 10.50.57.1 with SMTP id e1mr21340441igq.42.1392727367919; Tue,
+ 18 Feb 2014 04:42:47 -0800 (PST)
+Received: by 10.64.225.175 with HTTP; Tue, 18 Feb 2014 04:42:47 -0800 (PST)
+In-Reply-To: <CADtnS+zWzPY6ftwxWUE+Gb-OKq_Kzf9y+fFfgJ-demWyX3azCg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242297>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242298>
 
-Here is gitweb generated XHTML fragment:
+Hi,
 
-<div class="patch" id="patch19">
-<div class="diff header">diff --git a/RFC/2010/DRE-2010-004 RFC for
-Update Synchronization Program &amp; Solve the Balance Adjustment
-Issue v2.doc <a class="path"
-href="/repo/git?p=DRE/Reference.git;a=blob;f=RFC/2010/DRE-2010-004+RFC+for+Update+Synchronization+Program+%26+Solve+the+Balance+Adjustment+Issue+v2.doc;h=3074448e2e68235e891ebd1301e6277d993973a5;hb=fbd4e74c867214062ad39282a899f1d14a2e89ba">b/RFC/2010/DRE-2010-004
-RFC for Update Synchronization Program &amp; Solve the Balance
-Adjustment Issue v2.doc</a></div>
-<div class="diff extended_header">
-new file mode 100644<span class="info"> (file)</span><br/>
-index 0000000..<a class="hash"
-href="/repo/git?p=DRE/Reference.git;a=blob;f=RFC/2010/DRE-2010-004+RFC+for+Update+Synchronization+Program+%26+Solve+the+Balance+Adjustment+Issue+v2.doc;h=3074448e2e68235e891ebd1301e6277d993973a5;hb=fbd4e74c867214062ad39282a899f1d14a2e89ba">3074448</a><br/>
-Binary files /dev/null and b/RFC/2010/DRE-2010-004 RFC for Update
-Synchronization Program & Solve the Balance Adjustment Issue v2.doc
-differ<br/>
-</div>
-</div>
+I'm unable to find a similar issue, and if it's raised on the mailing
+list I apologize.
 
---
-Dongsheng
+I work at a company that has recently moved all CVS, SVN, and git
+repositories to Perforce.  Depots have not been setup correctly in
+every case, and there is one depot that contains literally hundreds of
+projects under commercial development (and hundreds of branches as a
+result)
+
+My project may be in //stupid_depot/commercial/teamporter/rok.  This
+is the path I clone with git-p4.  The only branches in this depot that
+contain files at this path are titled as
+'rok_porter_branch/release_1.x' or similar.
+
+When using '--detect-branches' git-p4 checks each key of branches to
+see if any of them have files in the path I've cloned.  Whilst this is
+good in practice there is unfortunately 6,809 branches, git-p4
+processes about 2 a second and just under an hour to perform any
+git-p4 rebase, submit, or similar operation.
+
+I propose the addition of a branch list filtering option
+(--filter-branches) that takes either a regular expression or list of
+branches it should check.  This may be useful in sane situations where
+you don't want to scan every branch in a Perforce repository, or
+blacklist branches that have undesirable content (for example, one of
+the branches is called 'svn-backup'.  It contains a single, multi-GB
+tarball.)
+
+It would be ideal to have this information (after initial clone or
+sync) stored somewhere in the git config where is appropriate so that
+future submit/rebase operations adhere to this list.
+
+Has something like this been worked on, or has been considered in the
+past?  If not I will consider implementing this after reading up on
+the Git code guidelines.
+
+Thanks for keeping the Git workflow accessible in painful areas.
+
+Dan
