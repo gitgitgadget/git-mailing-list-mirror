@@ -1,88 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Git release notes man page
-Date: Tue, 18 Feb 2014 15:05:58 -0800
-Message-ID: <xmqqtxbwaund.fsf@gitster.dls.corp.google.com>
-References: <1392460179-776-1-git-send-email-philipoakley@iee.org>
-	<xmqqha7wcbkz.fsf@gitster.dls.corp.google.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [RFC/PATCH] Supporting non-blob notes
+Date: Wed, 19 Feb 2014 06:10:17 +0700
+Message-ID: <CACsJy8C5Hxyj27cX=Jh60ouWpXf-iEeMd9PigKaJTp3rNZrydQ@mail.gmail.com>
+References: <OF23F26261.C9E4823A-ONC1257C82.0032DA0B-C1257C82.0040D57A@local> <CALKQrgff4tnekfkQn9JpJbGrNJzNBYNv=sW6vc3FE+hySkjf3g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: GitList <git@vger.kernel.org>,
-	Stefan Nwe <stefan.naewe@atlas-elektronik.com>
-To: Philip Oakley <philipoakley@iee.org>
-X-From: git-owner@vger.kernel.org Wed Feb 19 00:06:56 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: yann.dirson@bertin.fr, git list <git@vger.kernel.org>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Wed Feb 19 00:11:01 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WFtkb-0002nj-7G
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Feb 2014 00:06:53 +0100
+	id 1WFtoU-0000od-OY
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Feb 2014 00:10:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754090AbaBRXGc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Feb 2014 18:06:32 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:49398 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752968AbaBRXGM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Feb 2014 18:06:12 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C9C506EDFE;
-	Tue, 18 Feb 2014 18:06:01 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=WgIB7CQ0lUx0IivdRIyS4CzndQE=; b=FCjJZo
-	rMKo59AqYBLf3lEcHlnRX7/Mfz47tT3JBvRY8H9X3DXIGQqKsfk786a8GGNXVS6Q
-	cAlAo/GYPJkvGo7DLZyRSvTtOu81U3SH4UsmKYL585+XZMAV83jj3P0Xy9EyGQ73
-	zKw25lwMqUx2YC3zxxI7KLLgjd2SOUCrk9GHs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=jDLklqudekyBEWxAKPxru7Qf3m9o89iF
-	PBGe7GxG7MBpqdNku5BI9cdGOAMMR5bEKZ++q/9RMmfCLif9jZbu/dJ7bydl5Auu
-	3EOiwHRJVhRFQ/LlLPcUxPRaJRP93wLocYrVTDQUGtcvBV2nS4DzVxq9YECGvOjR
-	NmQKpqHFmv0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A33436EDFC;
-	Tue, 18 Feb 2014 18:06:01 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 934476EDFA;
-	Tue, 18 Feb 2014 18:06:00 -0500 (EST)
-In-Reply-To: <xmqqha7wcbkz.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Tue, 18 Feb 2014 14:14:52 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 3B9FEEA8-98F1-11E3-8F62-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1754184AbaBRXKv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Feb 2014 18:10:51 -0500
+Received: from mail-qc0-f174.google.com ([209.85.216.174]:58587 "EHLO
+	mail-qc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754179AbaBRXKs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Feb 2014 18:10:48 -0500
+Received: by mail-qc0-f174.google.com with SMTP id x13so26699499qcv.33
+        for <git@vger.kernel.org>; Tue, 18 Feb 2014 15:10:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=E8fRyGBkjjCyUdT8EIismp5MO9yMsvMmCgXymck9g/U=;
+        b=Lst4wx1JB2pO2Cor/Di445sL8gjZOSyJx5KF4zrjPfDRvyo1W2QTlUzRtue2B4/FOc
+         WbuSo4LTk0JGnb8jqtEbuDpEJOzU9ucCmN52bIQ5deulJ9KLziukw+Ehd5XcQJoYsFBW
+         1W9o/OTtB7rVH6r5EmmgyqjkxudCGY2U3I166JnTSGsg1JELr4XsNygUAT3S6JDKC/IF
+         LE2ZRe9NOy/tjF6gTB0CvJ8AqnTnRjJr5FxVJhRWl1oIvV8UK4Tch9Qk2hr2T1hONyX6
+         icihg1ZYPQrIErhb1QYi1Isohuf+dJmPR20dW+qlSSJa3t59WtR+azU/2eRx8BOy9SoS
+         pibg==
+X-Received: by 10.140.84.19 with SMTP id k19mr6178899qgd.98.1392765047576;
+ Tue, 18 Feb 2014 15:10:47 -0800 (PST)
+Received: by 10.96.215.102 with HTTP; Tue, 18 Feb 2014 15:10:17 -0800 (PST)
+In-Reply-To: <CALKQrgff4tnekfkQn9JpJbGrNJzNBYNv=sW6vc3FE+hySkjf3g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242372>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242373>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Philip Oakley <philipoakley@iee.org> writes:
+On Tue, Feb 18, 2014 at 9:46 PM, Johan Herland <johan@herland.net> wrote:
+> On Mon, Feb 17, 2014 at 11:48 AM,  <yann.dirson@bertin.fr> wrote:
+>> The recent "git-note -C changes commit type?" thread
+>> (http://thread.gmane.org/gmane.comp.version-control.git/241950) looks
+>> like a good occasion to discuss possible uses of non-blob notes.
+>>
+>> The use-case we're thinking about is the storage of testrun logs as
+>> notes (think: being able to justify that a given set of tests were
+>> successfully run on a given revision).
 >
->> A few days too late for the 1.9.0 release cycle :(
->>
->> This responds to Stefan Nwe's request for a 'git help' command that would
->> access the release notes. ($gmane/240595 17 Jan 2014).
->>
->> I've used the full name "release-notes" for the help guide rather than
->> Stefan's original 'git help relnotes'.
->>
->> The release-notes man page lists just the notes for the current release.
->> The combined notes for all releases is nearing 15k lines.
->
-> RelNotes are incremental and only useful for those who know what the
-> immediately previous release contained, but for most people who get
-> their Git from distros, I have this impression that the versions of
-> Git they get skip versions, and seeing the notable changes since the
-> previous source release will not give them wrong information---they
+> I think this is a good use of notes, and organizing the testrun logs
+> into a tree of files seems like a natural way to proceed.
 
-Ehh,, s/will not give them/will give them/; obviously...
+Notes from the previous attempt to store trees as notes (something to
+watch out maybe, when you do it again)
 
-> may have this warm fuzzy feeling that they know what is going on,
-> but they are missing information on all the accumulated changes that
-> were added in earlier versions their distro skipped---these changes
-> are still in the version they are running.  I do not understand why
-> it is even a good idea to show release notes from the command line
-> "git" interface.
+http://article.gmane.org/gmane.comp.version-control.git/197712
+-- 
+Duy
