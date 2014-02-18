@@ -1,147 +1,78 @@
-From: =?UTF-8?B?U3RlZmFuIE7DpHdl?= <stefan.naewe@atlas-elektronik.com>
-Subject: Re: Git for Windows 1.9.0
-Date: Tue, 18 Feb 2014 10:10:25 +0100
-Message-ID: <53032381.2090001@atlas-elektronik.com>
-References: <alpine.DEB.1.00.1402180036150.14982@s15462909.onlinehome-server.info>
+From: Daniel Stenberg <daniel@haxx.se>
+Subject: Re: [BUG?] git http connection reuse
+Date: Tue, 18 Feb 2014 10:09:29 +0100 (CET)
+Message-ID: <alpine.DEB.2.00.1402181001540.15465@tvnag.unkk.fr>
+References: <20140216040538.GA4754@sigill.intra.peff.net> <377DF3F4-1F9B-4CB0-A9BF-658E561F4349@gmail.com> <alpine.DEB.2.00.1402161307160.10435@tvnag.unkk.fr> <20140217235625.GB20499@sigill.intra.peff.net> <alpine.DEB.2.00.1402180806070.15465@tvnag.unkk.fr>
+ <20140218075534.GB29804@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	"msysgit@googlegroups.com" <msysgit@googlegroups.com>
-X-From: msysgit+bncBDK4H2WVWYLBBTWGRSMAKGQEDKKVQFY@googlegroups.com Tue Feb 18 10:09:35 2014
-Return-path: <msysgit+bncBDK4H2WVWYLBBTWGRSMAKGQEDKKVQFY@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-fa0-f58.google.com ([209.85.161.58])
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: "Kyle J. McKay" <mackyle@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Feb 18 10:09:49 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDK4H2WVWYLBBTWGRSMAKGQEDKKVQFY@googlegroups.com>)
-	id 1WFggI-0004hT-W6
-	for gcvm-msysgit@m.gmane.org; Tue, 18 Feb 2014 10:09:35 +0100
-Received: by mail-fa0-f58.google.com with SMTP id n1sf76220fan.3
-        for <gcvm-msysgit@m.gmane.org>; Tue, 18 Feb 2014 01:09:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type;
-        bh=dSaPaFzofOllaQIYnlEJ0R4HSaS2Fw27G1OKSq5o2k4=;
-        b=FNrAjOkhECnT4jXI+lPjnuQ/eIrfdS7aKN5nsGEBOQqIRJG9qLS/XNxnuIlmr6yEYm
-         HBq2R5qGTRVqKxMRbcC0SrV0gQMC41GKuW4iUkeRB05r0F4f4kjoLslmj0FwCDcmzd65
-         MFYMzuSaE+xCCWNiOXIDQx0y+FWM+IyH36/dAu2wxXUaERliBFfM2kcCM6CulSP16jPr
-         uRBQ1A5FotFdOQ9pXbBBFHWbIkJL0vfyjRtK88OnYwiiuwKMZdhj9Tp6FyMaRyukMaMT
-         CRUPocRUh+Q20jV3CpzpI2+vohTmF7MCjLuJe0jSSwj5xXSuvyzIN/QSHo06KXMTowkr
-         1owA==
-X-Received: by 10.153.4.8 with SMTP id ca8mr273313lad.1.1392714574596;
-        Tue, 18 Feb 2014 01:09:34 -0800 (PST)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.37.226 with SMTP id b2ls266647lak.56.gmail; Tue, 18 Feb
- 2014 01:09:33 -0800 (PST)
-X-Received: by 10.112.126.138 with SMTP id my10mr15814863lbb.17.1392714573753;
-        Tue, 18 Feb 2014 01:09:33 -0800 (PST)
-Received: from mail96.atlas.de (mail96.atlas.de. [194.156.172.86])
-        by gmr-mx.google.com with ESMTPS id n42si1420975eep.1.2014.02.18.01.09.33
-        for <msysgit@googlegroups.com>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Tue, 18 Feb 2014 01:09:33 -0800 (PST)
-Received-SPF: neutral (google.com: 194.156.172.86 is neither permitted nor denied by best guess record for domain of stefan.naewe@atlas-elektronik.com) client-ip=194.156.172.86;
-Received: from localhost (localhost [127.0.0.1])
-	by mail96.atlas.de (Postfix) with ESMTP id 694021075B;
-	Tue, 18 Feb 2014 10:09:33 +0100 (CET)
-X-Virus-Scanned: amavisd-new at mail96.atlas.de
-Received: from mail96.atlas.de ([127.0.0.1])
-	by localhost (mail96.atlas.de [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 3cDnoxec0fUd; Tue, 18 Feb 2014 10:09:32 +0100 (CET)
-Received: from mgsrv01.atlas.de (mail01.atlas.mailrelays.atlas.de [10.200.101.16])
-	by mail96.atlas.de (Postfix) with ESMTP;
-	Tue, 18 Feb 2014 10:09:32 +0100 (CET)
-Received: from MSSRVS1.atlas.de (mssrvs1.atlas.de [10.200.101.71])
-	by mgsrv01.atlas.de (Postfix) with ESMTP id 05F7F27169;
-	Tue, 18 Feb 2014 10:09:31 +0100 (CET)
-Received: from [10.200.54.97] (10.200.54.97) by MSSRVS1.atlas.de
- (10.200.101.71) with Microsoft SMTP Server (TLS) id 8.3.279.5; Tue, 18 Feb
- 2014 10:09:31 +0100
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:24.0) Gecko/20100101 Thunderbird/24.3.0
-In-Reply-To: <alpine.DEB.1.00.1402180036150.14982@s15462909.onlinehome-server.info>
-X-Enigmail-Version: 1.6
-X-Original-Sender: stefan.naewe@atlas-elektronik.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
- (google.com: 194.156.172.86 is neither permitted nor denied by best guess
- record for domain of stefan.naewe@atlas-elektronik.com) smtp.mail=stefan.naewe@atlas-elektronik.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242286>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1WFggV-00051J-Pu
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Feb 2014 10:09:48 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1754594AbaBRJJl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Feb 2014 04:09:41 -0500
+Received: from giant.haxx.se ([80.67.6.50]:58097 "EHLO giant.haxx.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754468AbaBRJJj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Feb 2014 04:09:39 -0500
+Received: from giant.haxx.se (dast@localhost.localdomain [127.0.0.1])
+	by giant.haxx.se (8.14.4/8.14.4/Debian-4.1) with ESMTP id s1I99TxW007598
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 18 Feb 2014 10:09:29 +0100
+Received: from localhost (dast@localhost)
+	by giant.haxx.se (8.14.4/8.14.4/Submit) with ESMTP id s1I99Tww007593;
+	Tue, 18 Feb 2014 10:09:29 +0100
+X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
+X-X-Sender: dast@giant.haxx.se
+In-Reply-To: <20140218075534.GB29804@sigill.intra.peff.net>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+X-fromdanielhimself: yes
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242287>
 
-Am 18.02.2014 00:38, schrieb Johannes Schindelin:
-> Dear Git fanbois,
-> 
-> this announcement informs you that the small team of volunteers who keep
-> the Git ship afloat for the most prevalent desktop operating system
-> managed to release yet another version of Git for Windows:
-> 
-> Git Release Notes (Git-1.9.0-preview20140217)
-> Last update: 17 February 2013
-> 
-> Changes since Git-1.8.5.2-preview20131230
-> 
-> New Features
-> - Comes with Git 1.9.0 plus Windows-specific patches.
-> - Better work-arounds for Windows-specific path length limitations (pull
->   request #122)
-> - Uses optimized TortoiseGitPLink when detected (msysGit pull request
->   #154)
-> - Allow Windows users to use Linux Git on their files, using Vagrant
->   http://www.vagrantup.com/ (msysGit pull request #159)
-> - InnoSetup 5.5.4 is now used to generate the installer (msysGit pull
->   request #167)
-> 
-> Bugfixes
-> - Fixed regression with interactive password prompt for remotes using the
->   HTTPS protocol (issue #111)
-> - We now work around Subversion servers printing non-ISO-8601-compliant
->   time stamps (pull request #126)
-> - The installer no longer sets the HOME environment variable (msysGit pull
->   request #166)
-> - Perl no longer creates empty sys$command files when no stdin is
->   connected (msysGit pull request #152)
-> 
-> Ciao,
-> Johannes
-> 
+On Tue, 18 Feb 2014, Jeff King wrote:
 
-Thanks to all involved!
+> I'm not clear whether you mean by this that it is _expected_ in my test 
+> program for curl not to reuse the connection. Or that curl may simply have 
+> to do a little more work, and it is still a bug that the connection is not 
+> reused.
 
+Okey, I checked this closer now and this is the full explanation to what 
+happens. It seems to work as intended:
 
-Stefan
--- 
-----------------------------------------------------------------
-/dev/random says: I didn't cheat, I just changed the Rules!
-python -c "print '73746566616e2e6e616577654061746c61732d656c656b74726f6e696b2e636f6d'.decode('hex')"
+It's all about where the connection cache is held by libcurl. When you create 
+a multi handle, it will create a connection cache that will automatically be 
+shared by all easy handles that are added to it.
+
+If you create an easy handle and make a curl_easy_perform() on that, it will 
+create its own connection cache and keep it associated with this easy handle.
+
+When first using an easy handle within a multi handle it will use the shared 
+connection cache in there as long as it is in that multi handle family, but as 
+soon as you remove it from there it will be detached from that connection 
+cache.
+
+Then, when doing a fresh request with easy_perform using the handle that was 
+detached from the multi handle, it will create and use its own private cache 
+as it can't re-use the previous connection that is cached within the multi 
+handle.
+
+> We can certainly teach git to use the multi interface, even when doing a 
+> single blocking request.
+
+For connection re-use purposes, that may make a lot of sense.
 
 -- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
 
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/groups/opt_out.
+  / daniel.haxx.se
