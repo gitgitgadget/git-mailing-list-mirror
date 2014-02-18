@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v3 18/25] setup.c: support multi-checkout repo setup
-Date: Tue, 18 Feb 2014 20:40:07 +0700
-Message-ID: <1392730814-19656-19-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v3 23/25] checkout: detach if the branch is already checked out elsewhere
+Date: Tue, 18 Feb 2014 20:40:12 +0700
+Message-ID: <1392730814-19656-24-git-send-email-pclouds@gmail.com>
 References: <1392730814-19656-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -10,368 +10,218 @@ Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 18 14:43:46 2014
+X-From: git-owner@vger.kernel.org Tue Feb 18 14:43:49 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WFkxc-0002Ii-TQ
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Feb 2014 14:43:45 +0100
+	id 1WFkxb-0002Ii-Pm
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Feb 2014 14:43:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755580AbaBRNnd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 18 Feb 2014 08:43:33 -0500
-Received: from mail-pd0-f176.google.com ([209.85.192.176]:64447 "EHLO
-	mail-pd0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755615AbaBRNmD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Feb 2014 08:42:03 -0500
-Received: by mail-pd0-f176.google.com with SMTP id w10so16194503pde.21
-        for <git@vger.kernel.org>; Tue, 18 Feb 2014 05:42:03 -0800 (PST)
+	id S1755789AbaBRNnB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 18 Feb 2014 08:43:01 -0500
+Received: from mail-pb0-f53.google.com ([209.85.160.53]:52771 "EHLO
+	mail-pb0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755316AbaBRNmc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Feb 2014 08:42:32 -0500
+Received: by mail-pb0-f53.google.com with SMTP id md12so16701033pbc.40
+        for <git@vger.kernel.org>; Tue, 18 Feb 2014 05:42:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=BkshB1jGB7Wq5/UxLMr6dnXQFBoIIbhoTWbQvOyiwlI=;
-        b=ZqhszBckZv5xW0JKL6jaFTeGA38Ch44ExHktv7z5As3y+U39aww+zeNR65LKY4KwlR
-         cWLytMTwCjdMhzOJSJl+HWrpBiMelrLbX0sqKoAmcPRCrZ+fwNyleLPtDsaXQOuJJf5I
-         6GE8pmjh9yh0ZeWnYeX0QoHeK6kWa92IfW5DylBAAh/Tipf+4Q+uEjYdrc2g45eUsTJH
-         FLPM/cEwOKGrbfx0fRuLvhubExnd6PjD74anFv4xPeiswBpcFVLKMjI37eVXh+UY8BmG
-         ntqYcKsH8ea/YzDCAz//dCWnQoAzAp6IJxB1Ard8StB5jkyOGsKunvrzX4/YRwRfcTvf
-         uP1Q==
-X-Received: by 10.69.0.10 with SMTP id au10mr33421795pbd.48.1392730922933;
-        Tue, 18 Feb 2014 05:42:02 -0800 (PST)
+        bh=atJF4cdCoLjdgaMCm4sfK64U0zyVyqlyC3odVQMcHMk=;
+        b=c3gGfCyxyYIXADKGTj8o1WbMzfngyrdDY2QJBiQYiwW5gPLwjPypDXfrUiDywrclY+
+         NcWyP69zZOUncUauawoPJOQ7sUSPFF7n5R/UGHVmx6DVJW7K2mj6Jvqj1pd+GzPYXIv6
+         MJNN7baxwfklYygjE/HEJNwrSOSYLPquIDRHocF+fjB5E640E+X7PO3xXJhDBEuhU0f+
+         qIBGuxxfmJ3760X5sKu3CKpint5xRSvFqOwTviF6NNC66g9GezzzdUgiTbJVMMqrc9GE
+         650NsLULk02kUn+uXOOcDRfoukUIG0NSFR0hOpfGcPyD1+aALN5r5TVMwP1QS5JEub+2
+         48GA==
+X-Received: by 10.66.160.2 with SMTP id xg2mr32796458pab.23.1392730951676;
+        Tue, 18 Feb 2014 05:42:31 -0800 (PST)
 Received: from lanh ([115.73.228.211])
-        by mx.google.com with ESMTPSA id lh13sm142566180pab.4.2014.02.18.05.41.59
+        by mx.google.com with ESMTPSA id qw8sm56104424pbb.27.2014.02.18.05.42.28
         for <multiple recipients>
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 18 Feb 2014 05:42:02 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Tue, 18 Feb 2014 20:42:15 +0700
+        Tue, 18 Feb 2014 05:42:31 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Tue, 18 Feb 2014 20:42:44 +0700
 X-Mailer: git-send-email 1.8.5.2.240.g8478abd
 In-Reply-To: <1392730814-19656-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242323>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242324>
 
-The repo setup procedure is updated to detect $GIT_DIR/commondir and
-set $GIT_COMMON_DIR properly.
+The normal rule is anything outside refs/heads/ is detached. This
+strictens the rule a bit more: if the branch is checked out (either in
+$GIT_COMMON_DIR/HEAD or any $GIT_DIR/repos/.../HEAD) then it's
+detached as well.
 
-The core.worktree is ignored when $GIT_DIR/commondir presents. This is
-because "commondir" repos are intended for separate/linked checkouts
-and pointing them back to a fixed core.worktree just does not make
-sense.
+A hint is given so the user knows where to go and do something there
+if they still want to checkout undetached here.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- Documentation/config.txt        |  3 +-
- Documentation/git-rev-parse.txt |  3 ++
- builtin/rev-parse.c             |  4 +++
- cache.h                         |  1 +
- environment.c                   |  8 ++---
- setup.c                         | 33 +++++++++++++-----
- t/t1501-worktree.sh             | 76 +++++++++++++++++++++++++++++++++=
+ builtin/checkout.c     | 78 ++++++++++++++++++++++++++++++++++++++++++=
 ++++++++
- t/t1510-repo-setup.sh           |  1 +
- trace.c                         |  1 +
- 9 files changed, 115 insertions(+), 15 deletions(-)
+ t/t2025-checkout-to.sh | 15 ++++++++--
+ 2 files changed, 90 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 5f4d793..cbf4d97 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -381,7 +381,8 @@ false), while all other repositories are assumed to=
- be bare (bare
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index f961604..7b86f2b 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -433,6 +433,11 @@ struct branch_info {
+ 	const char *name; /* The short name used */
+ 	const char *path; /* The full name of a real branch */
+ 	struct commit *commit; /* The named commit */
++	/*
++	 * if not null the branch is detached because it's alrady
++	 * checked out in this checkout
++	 */
++	char *checkout;
+ };
 =20
- core.worktree::
- 	Set the path to the root of the working tree.
--	This can be overridden by the GIT_WORK_TREE environment
-+	This can be overridden by the GIT_WORK_TREE
-+	or GIT_COMMON_DIR environment
- 	variable and the '--work-tree' command line option.
- 	The value can be an absolute path or relative to the path to
- 	the .git directory, which is either specified by --git-dir
-diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-pa=
-rse.txt
-index 33e4e90..8e6ad32 100644
---- a/Documentation/git-rev-parse.txt
-+++ b/Documentation/git-rev-parse.txt
-@@ -215,6 +215,9 @@ If `$GIT_DIR` is not defined and the current direct=
-ory
- is not detected to lie in a Git repository or work tree
- print a message to stderr and exit with nonzero status.
-=20
-+--git-common-dir::
-+	Show `$GIT_COMMON_DIR` if defined, else `$GIT_DIR`.
-+
- --is-inside-git-dir::
- 	When the current working directory is below the repository
- 	directory print "true", otherwise "false".
-diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
-index e50bc65..c7057ce 100644
---- a/builtin/rev-parse.c
-+++ b/builtin/rev-parse.c
-@@ -744,6 +744,10 @@ int cmd_rev_parse(int argc, const char **argv, con=
-st char *prefix)
- 				printf("%s%s.git\n", cwd, len && cwd[len-1] !=3D '/' ? "/" : "");
- 				continue;
- 			}
-+			if (!strcmp(arg, "--git-common-dir")) {
-+				puts(get_git_common_dir());
-+				continue;
-+			}
- 			if (!strcmp(arg, "--resolve-git-dir")) {
- 				const char *gitdir =3D resolve_gitdir(argv[i+1]);
- 				if (!gitdir)
-diff --git a/cache.h b/cache.h
-index 51ade32..98b5dd3 100644
---- a/cache.h
-+++ b/cache.h
-@@ -407,6 +407,7 @@ extern char *get_object_directory(void);
- extern char *get_index_file(void);
- extern char *get_graft_file(void);
- extern int set_git_dir(const char *path);
-+extern int get_common_dir(struct strbuf *sb, const char *gitdir);
- extern const char *get_git_namespace(void);
- extern const char *strip_namespace(const char *namespaced_ref);
- extern const char *get_git_work_tree(void);
-diff --git a/environment.c b/environment.c
-index c998120..0999fc1 100644
---- a/environment.c
-+++ b/environment.c
-@@ -126,6 +126,7 @@ static char *expand_namespace(const char *raw_names=
-pace)
-=20
- static void setup_git_env(void)
- {
-+	struct strbuf sb =3D STRBUF_INIT;
- 	const char *gitfile;
- 	const char *shallow_file;
-=20
-@@ -134,12 +135,9 @@ static void setup_git_env(void)
- 		git_dir =3D DEFAULT_GIT_DIR_ENVIRONMENT;
- 	gitfile =3D read_gitfile(git_dir);
- 	git_dir =3D xstrdup(gitfile ? gitfile : git_dir);
--	git_common_dir =3D getenv(GIT_COMMON_DIR_ENVIRONMENT);
--	if (git_common_dir) {
-+	if (get_common_dir(&sb, git_dir))
- 		git_common_dir_env =3D 1;
--		git_common_dir =3D xstrdup(git_common_dir);
--	} else
--		git_common_dir =3D git_dir;
-+	git_common_dir =3D strbuf_detach(&sb, NULL);
- 	git_object_dir =3D getenv(DB_ENVIRONMENT);
- 	if (!git_object_dir) {
- 		git_object_dir =3D xmalloc(strlen(git_common_dir) + 9);
-diff --git a/setup.c b/setup.c
-index e56ec11..d4ac878 100644
---- a/setup.c
-+++ b/setup.c
-@@ -170,14 +170,15 @@ void verify_non_filename(const char *prefix, cons=
-t char *arg)
- 	    "'git <command> [<revision>...] -- [<file>...]'", arg);
+ static void setup_branch_path(struct branch_info *branch)
+@@ -640,6 +645,11 @@ static void update_refs_for_switch(const struct ch=
+eckout_opts *opts,
+ 			if (old->path && advice_detached_head)
+ 				detach_advice(new->name);
+ 			describe_detached_head(_("HEAD is now at"), new->commit);
++			if (new->checkout && !*new->checkout)
++				fprintf(stderr, _("hint: the main checkout is holding this branch\=
+n"));
++			else if (new->checkout)
++				fprintf(stderr, _("hint: the linked checkout %s is holding this br=
+anch\n"),
++					new->checkout);
+ 		}
+ 	} else if (new->path) {	/* Switch branches. */
+ 		create_symref("HEAD", new->path, msg.buf);
+@@ -982,6 +992,71 @@ static const char *unique_tracking_name(const char=
+ *name, unsigned char *sha1)
+ 	return NULL;
  }
 =20
--static void get_common_dir(struct strbuf *sb, const char *gitdir)
-+int get_common_dir(struct strbuf *sb, const char *gitdir)
- {
- 	struct strbuf data =3D STRBUF_INIT;
- 	struct strbuf path =3D STRBUF_INIT;
- 	const char *git_common_dir =3D getenv(GIT_COMMON_DIR_ENVIRONMENT);
-+	int ret =3D 0;
- 	if (git_common_dir) {
- 		strbuf_addstr(sb, git_common_dir);
--		return;
-+		return 1;
- 	}
- 	strbuf_addf(&path, "%s/commondir", gitdir);
- 	if (file_exists(path.buf)) {
-@@ -189,10 +190,12 @@ static void get_common_dir(struct strbuf *sb, con=
-st char *gitdir)
- 			strbuf_addf(&path, "%s/", gitdir);
- 		strbuf_addbuf(&path, &data);
- 		strbuf_addstr(sb, real_path(path.buf));
-+		ret =3D 1;
- 	} else
- 		strbuf_addstr(sb, gitdir);
- 	strbuf_release(&data);
- 	strbuf_release(&path);
-+	return ret;
- }
-=20
- /*
-@@ -279,13 +282,26 @@ void setup_work_tree(void)
- 	initialized =3D 1;
- }
-=20
-+static int check_repo_format(const char *var, const char *value, void =
-*cb)
++static int check_linked_checkout(struct branch_info *new,
++				  const char *name, const char *path)
 +{
-+	if (strcmp(var, "core.repositoryformatversion") =3D=3D 0)
-+		repository_format_version =3D git_config_int(var, value);
-+	else if (strcmp(var, "core.sharedrepository") =3D=3D 0)
-+		shared_repository =3D git_config_perm(var, value);
++	struct strbuf sb =3D STRBUF_INIT;
++	char *start, *end;
++	if (strbuf_read_file(&sb, path, 0) < 0)
++		return 0;
++	if (!starts_with(sb.buf, "ref:")) {
++		strbuf_release(&sb);
++		return 0;
++	}
++
++	start =3D sb.buf + 4;
++	while (isspace(*start))
++		start++;
++	end =3D start;
++	while (*end && !isspace(*end))
++		end++;
++	if (!strncmp(start, new->path, end - start) &&
++	    new->path[end - start] =3D=3D '\0') {
++		strbuf_release(&sb);
++		new->path =3D NULL; /* detach */
++		new->checkout =3D xstrdup(name); /* reason */
++		return 1;
++	}
++	strbuf_release(&sb);
 +	return 0;
 +}
 +
- static int check_repository_format_gently(const char *gitdir, int *non=
-git_ok)
- {
- 	struct strbuf sb =3D STRBUF_INIT;
- 	const char *repo_config;
-+	config_fn_t fn;
- 	int ret =3D 0;
++static void check_linked_checkouts(struct branch_info *new)
++{
++	struct strbuf path =3D STRBUF_INIT;
++	DIR *dir;
++	struct dirent *d;
++
++	strbuf_addf(&path, "%s/repos", get_git_common_dir());
++	if ((dir =3D opendir(path.buf)) =3D=3D NULL)
++		return;
++
++	strbuf_reset(&path);
++	strbuf_addf(&path, "%s/HEAD", get_git_common_dir());
++	/*
++	 * $GIT_COMMON_DIR/HEAD is practically outside
++	 * $GIT_DIR so resolve_ref_unsafe() won't work (it
++	 * uses git_path). Parse the ref ourselves.
++	 */
++	if (check_linked_checkout(new, "", path.buf)) {
++		strbuf_release(&path);
++		closedir(dir);
++		return;
++	}
++
++	while ((d =3D readdir(dir)) !=3D NULL) {
++		if (!strcmp(d->d_name, ".") || !strcmp(d->d_name, ".."))
++			continue;
++		strbuf_reset(&path);
++		strbuf_addf(&path, "%s/repos/%s/HEAD",
++			    get_git_common_dir(), d->d_name);
++		if (check_linked_checkout(new, d->d_name, path.buf))
++			break;
++	}
++	strbuf_release(&path);
++	closedir(dir);
++}
++
+ static int parse_branchname_arg(int argc, const char **argv,
+ 				int dwim_new_local_branch_ok,
+ 				struct branch_info *new,
+@@ -1109,6 +1184,9 @@ static int parse_branchname_arg(int argc, const c=
+har **argv,
+ 	else
+ 		new->path =3D NULL; /* not an existing branch */
 =20
--	get_common_dir(&sb, gitdir);
-+	if (get_common_dir(&sb, gitdir))
-+		fn =3D check_repo_format;
-+	else
-+		fn =3D check_repository_format_version;
- 	strbuf_addstr(&sb, "/config");
- 	repo_config =3D sb.buf;
-=20
-@@ -298,7 +314,7 @@ static int check_repository_format_gently(const cha=
-r *gitdir, int *nongit_ok)
- 	 * Use a gentler version of git_config() to check if this repo
- 	 * is a good one.
- 	 */
--	git_config_early(check_repository_format_version, NULL, repo_config);
-+	git_config_early(fn, NULL, repo_config);
- 	if (GIT_REPO_VERSION < repository_format_version) {
- 		if (!nongit_ok)
- 			die ("Expected git repo version <=3D %d, found %d",
-@@ -770,11 +786,10 @@ int git_config_perm(const char *var, const char *=
-value)
-=20
- int check_repository_format_version(const char *var, const char *value=
-, void *cb)
- {
--	if (strcmp(var, "core.repositoryformatversion") =3D=3D 0)
--		repository_format_version =3D git_config_int(var, value);
--	else if (strcmp(var, "core.sharedrepository") =3D=3D 0)
--		shared_repository =3D git_config_perm(var, value);
--	else if (strcmp(var, "core.bare") =3D=3D 0) {
-+	int ret =3D check_repo_format(var, value, cb);
-+	if (ret)
-+		return ret;
-+	if (strcmp(var, "core.bare") =3D=3D 0) {
- 		is_bare_repository_cfg =3D git_config_bool(var, value);
- 		if (is_bare_repository_cfg =3D=3D 1)
- 			inside_work_tree =3D -1;
-diff --git a/t/t1501-worktree.sh b/t/t1501-worktree.sh
-index 8f36aa9..d8bdaf4 100755
---- a/t/t1501-worktree.sh
-+++ b/t/t1501-worktree.sh
-@@ -346,4 +346,80 @@ test_expect_success 'relative $GIT_WORK_TREE and g=
-it subprocesses' '
- 	test_cmp expected actual
++	if (new->path)
++		check_linked_checkouts(new);
++
+ 	new->commit =3D lookup_commit_reference_gently(rev, 1);
+ 	if (!new->commit) {
+ 		/* not a commit */
+diff --git a/t/t2025-checkout-to.sh b/t/t2025-checkout-to.sh
+index 76eae4a..f6a5c47 100755
+--- a/t/t2025-checkout-to.sh
++++ b/t/t2025-checkout-to.sh
+@@ -13,13 +13,14 @@ test_expect_success 'checkout --to not updating pat=
+hs' '
  '
 =20
-+test_expect_success 'Multi-worktree setup' '
-+	mkdir work &&
-+	mkdir -p repo.git/repos/foo &&
-+	cp repo.git/HEAD repo.git/index repo.git/repos/foo &&
-+	unset GIT_DIR GIT_CONFIG GIT_WORK_TREE
-+'
-+
-+test_expect_success 'GIT_DIR set (1)' '
-+	echo "gitdir: repo.git/repos/foo" >gitfile &&
-+	echo ../.. >repo.git/repos/foo/commondir &&
+ test_expect_success 'checkout --to a new worktree' '
++	git rev-parse HEAD >expect &&
+ 	git checkout --to here master &&
+ 	(
+ 		cd here &&
+ 		test_cmp ../init.t init.t &&
+-		git symbolic-ref HEAD >actual &&
+-		echo refs/heads/master >expect &&
+-		test_cmp expect actual &&
++		! git symbolic-ref HEAD &&
++		git rev-parse HEAD >actual &&
++		test_cmp ../expect actual &&
+ 		git fsck
+ 	)
+ '
+@@ -36,4 +37,12 @@ test_expect_success 'checkout --to a new worktree cr=
+eating new branch' '
+ 	)
+ '
+=20
++test_expect_success 'detach if the same branch is already checked out'=
+ '
 +	(
-+		cd work &&
-+		GIT_DIR=3D../gitfile git rev-parse --git-common-dir >actual &&
-+		echo "$TRASH_DIRECTORY/repo.git" >expect &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'GIT_DIR set (2)' '
-+	echo "gitdir: repo.git/repos/foo" >gitfile &&
-+	echo "$TRASH_DIRECTORY/repo.git" >repo.git/repos/foo/commondir &&
-+	(
-+		cd work &&
-+		GIT_DIR=3D../gitfile git rev-parse --git-common-dir >actual &&
-+		echo "$TRASH_DIRECTORY/repo.git" >expect &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'Auto discovery' '
-+	echo "gitdir: repo.git/repos/foo" >.git &&
-+	echo ../.. >repo.git/repos/foo/commondir &&
-+	(
-+		cd work &&
-+		git rev-parse --git-common-dir >actual &&
-+		echo "$TRASH_DIRECTORY/repo.git" >expect &&
-+		test_cmp expect actual &&
-+		echo haha >data1 &&
-+		git add data1 &&
-+		git ls-files --full-name :/ | grep data1 >actual &&
-+		echo work/data1 >expect &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success '$GIT_DIR/common overrides core.worktree' '
-+	mkdir elsewhere &&
-+	git --git-dir=3Drepo.git config core.worktree "$TRASH_DIRECTORY/elsew=
-here" &&
-+	echo "gitdir: repo.git/repos/foo" >.git &&
-+	echo ../.. >repo.git/repos/foo/commondir &&
-+	(
-+		cd work &&
-+		git rev-parse --git-common-dir >actual &&
-+		echo "$TRASH_DIRECTORY/repo.git" >expect &&
-+		test_cmp expect actual &&
-+		echo haha >data2 &&
-+		git add data2 &&
-+		git ls-files --full-name :/ | grep data2 >actual &&
-+		echo work/data2 >expect &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success '$GIT_WORK_TREE overrides $GIT_DIR/common' '
-+	echo "gitdir: repo.git/repos/foo" >.git &&
-+	echo ../.. >repo.git/repos/foo/commondir &&
-+	(
-+		cd work &&
-+		echo haha >data3 &&
-+		git --git-dir=3D../.git --work-tree=3D. add data3 &&
-+		git ls-files --full-name -- :/ | grep data3 >actual &&
-+		echo data3 >expect &&
-+		test_cmp expect actual
++		cd here &&
++		git checkout newmaster &&
++		test_must_fail git symbolic-ref HEAD
 +	)
 +'
 +
  test_done
-diff --git a/t/t1510-repo-setup.sh b/t/t1510-repo-setup.sh
-index cf2ee78..c211ef5 100755
---- a/t/t1510-repo-setup.sh
-+++ b/t/t1510-repo-setup.sh
-@@ -106,6 +106,7 @@ setup_env () {
- expect () {
- 	cat >"$1/expected" <<-EOF
- 	setup: git_dir: $2
-+	setup: git_common_dir: $2
- 	setup: worktree: $3
- 	setup: cwd: $4
- 	setup: prefix: $5
-diff --git a/trace.c b/trace.c
-index 08180a9..a594761 100644
---- a/trace.c
-+++ b/trace.c
-@@ -173,6 +173,7 @@ void trace_repo_setup(const char *prefix)
- 		prefix =3D "(null)";
-=20
- 	trace_printf_key(key, "setup: git_dir: %s\n", quote_crnl(get_git_dir(=
-)));
-+	trace_printf_key(key, "setup: git_common_dir: %s\n", quote_crnl(get_g=
-it_common_dir()));
- 	trace_printf_key(key, "setup: worktree: %s\n", quote_crnl(git_work_tr=
-ee));
- 	trace_printf_key(key, "setup: cwd: %s\n", quote_crnl(cwd));
- 	trace_printf_key(key, "setup: prefix: %s\n", quote_crnl(prefix));
 --=20
 1.8.5.2.240.g8478abd
