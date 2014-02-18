@@ -1,105 +1,105 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] revert.c: Allow to specify -x via git-config
-Date: Tue, 18 Feb 2014 11:20:39 -0800
-Message-ID: <20140218192039.GC7855@google.com>
-References: <20140218065620.GA3448@bogon.m.sigxcpu.org>
- <20140218174913.GB7855@google.com>
- <20140218183842.GA163138@vauxhall.crustytoothpaste.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/4] Good bye fnmatch
+Date: Tue, 18 Feb 2014 11:28:06 -0800
+Message-ID: <xmqq38jgfcft.fsf@gitster.dls.corp.google.com>
+References: <1392429709-9237-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Guido =?iso-8859-1?Q?G=FCnther?= <agx@sigxcpu.org>,
-	git@vger.kernel.org
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-X-From: git-owner@vger.kernel.org Tue Feb 18 20:20:48 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 18 20:28:33 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WFqDn-0000Li-Hk
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Feb 2014 20:20:47 +0100
+	id 1WFqLD-0003cz-FM
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Feb 2014 20:28:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752004AbaBRTUn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Feb 2014 14:20:43 -0500
-Received: from mail-pb0-f44.google.com ([209.85.160.44]:50159 "EHLO
-	mail-pb0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751126AbaBRTUm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Feb 2014 14:20:42 -0500
-Received: by mail-pb0-f44.google.com with SMTP id rq2so17142973pbb.31
-        for <git@vger.kernel.org>; Tue, 18 Feb 2014 11:20:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=LjdhMHqIgXLc863w4YhRho2XcVW2bMZlI9nHPJCnMLY=;
-        b=LhcpdTi6STFb26zw3ki849CbFg50QPv10jgeNOK43QYVdas1VoYJOHpEQLKdp0pIms
-         K0LYVJyNb/Gvvg7my6o8usB/W8Vd//+joKUxFbsKXqKcGApJ5Bra8I4LVkh/ti060R9s
-         XILOAdupAScRaUQ8L4e+ottfk6dRtIKqRI8EzNEH1UUKFvmT12k1Rh+pmoczvaTAIoi9
-         AgTgbtsZpS47yuYI20Ps51b2Zkvt9wcjomNVkyuSjubGWXI/pOM5ypUyc6c4xJak4msA
-         TeCl3O7toHkaZZg/O/gcdG6H02/zP2dH+gVU7EyZ7iqA2czIy3DJULnefF+ZXfxA6xO8
-         AJGw==
-X-Received: by 10.68.197.66 with SMTP id is2mr34826941pbc.96.1392751241976;
-        Tue, 18 Feb 2014 11:20:41 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id yz5sm148440160pac.9.2014.02.18.11.20.40
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 18 Feb 2014 11:20:41 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20140218183842.GA163138@vauxhall.crustytoothpaste.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751947AbaBRT2U convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 18 Feb 2014 14:28:20 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:57520 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751918AbaBRT2T convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 18 Feb 2014 14:28:19 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E44126BB81;
+	Tue, 18 Feb 2014 14:28:11 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=36JuQZUkHUXq
+	cKUtYHYGXAykzd0=; b=O6kNH4FkO+C4o+eIO02Yv5L9S9c301M44RArGxte9pGN
+	7vcp5YMlEMGbzqb6LHXOnrvezlnHpQxfyTru68fa2/KbGNlA48TjmrelXfvX/Mx6
+	XWJLXeh5s/lBa7rsobihkXDF9CPz3kYwx+yx9b3BZx37/B6WLHIpTRdgBk6t18Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=hgwQlR
+	ZMB0FiGSHvs6Ht9pvg/9Xeu2rbN/s0y82wlsQHVz3hemh9iNLc2cRY0Iz17zxA+x
+	G+gJAENUvtDrWzKx3KmGaPCDykRm82J9/J/ma9CL6CAEPHnv0gCfaHVHsH3T5UHl
+	kz25NlVGEJp+e9oR9MqcgT6mp/FmQFh+jHcMk=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 62D7B6BB80;
+	Tue, 18 Feb 2014 14:28:11 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 64D156BB7D;
+	Tue, 18 Feb 2014 14:28:10 -0500 (EST)
+In-Reply-To: <1392429709-9237-1-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Sat, 15
+ Feb 2014 09:01:45 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: CD2F1188-98D2-11E3-B82D-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242340>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242341>
 
-brian m. carlson wrote:
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-> I can provide a use case.  At work, we merge into the maintenance and
-> development branches and cherry-pick from the maintenance to the stable
-> branches.  We want committers to always use -x -s because we need to
-> know which reviewer backported the change and we want to be able to
-> track which commits have been backported and whether any reverts also
-> need to be cherry-picked.  We also have automated tools that want this
-> information.
+> Long story short, we wanted globbing wildcard "**" so I ripped
+> wildmatch library from rsync to do it. And it opened a possibility
+> to replace fnmatch completely, which would provide consistent behavio=
+r
+> across platforms (native fnmatch behaves differently on many corner
+> cases), and some performance gains. I started fnmatch replacement wit=
+h
+> 4917e1e (Makefile: promote wildmatch to be the default fnmatch
+> implementation - 2013-05-30). This is the final step.
+
+Nice.
+
 >
-> I usually solve this with an alias (backport = cherry-pick -x -s), but I
-> can see how this might be a useful option.
-
-Thanks for the example.
-
-Here the alias seems like a nicer solution than a configuration
-changing the default behavior of "git cherry-pick" because
-
- (1) it is easy to temporarily turn the effect off, by using cherry-pick
-     directly instead of using the alias
-
- (2) it doesn't affect scripts that use cherry-pick
-
- (3) The caller explicitly specifies their intent by running "git
-     backport".  It doesn't affect unrelated uses of cherry-pick on
-     other branches.
-
- (4) it can be set up globally and takes effect when appropriate
-     without needing any special setup per repository
-
- (5) it also implements the other part of your backporting policy (-s)
-     and if in the future you had more backporting rules (e.g., requirement
-     to specify which commit introduced the regression that this backport
-     solves) then it could be easily tweaked
-
-All that said, I wouldn't mind some magic that changes the default
-behavior of "git cherry-pick" as long as (1), (2), and (3) are
-resolved somehow.  E.g.
-
- (i)   a working --no-record-origin option that overrides this config
-
- (ii)  a --porcelain or similar option or just better documentation
-       about how scripts can protect themselves from further changes
-       to 'git cherry-pick' behavior
-
- (iii) config applying per destination branch instead of globally
-
-Hope that helps,
-Jonathan
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (4):
+>   Use wildmatch() directly without fnmatch() wrapper
+>   Revert "test-wildmatch: add "perf" command to compare wildmatch and=
+ fnmatch"
+>   Stop using fnmatch (either native or compat)
+>   Actually remove compat fnmatch source code
+>
+>  Makefile                        |  22 --
+>  builtin/apply.c                 |   2 +-
+>  builtin/branch.c                |   2 +-
+>  builtin/describe.c              |   2 +-
+>  builtin/for-each-ref.c          |   2 +-
+>  builtin/ls-remote.c             |   2 +-
+>  builtin/name-rev.c              |   2 +-
+>  builtin/reflog.c                |   2 +-
+>  builtin/replace.c               |   2 +-
+>  builtin/show-branch.c           |   2 +-
+>  builtin/tag.c                   |   2 +-
+>  compat/fnmatch/fnmatch.c (gone) | 494 ------------------------------=
+----------
+>  compat/fnmatch/fnmatch.h (gone) |  84 -------
+>  config.mak.uname                |  10 -
+>  configure.ac                    |  28 ---
+>  diffcore-order.c                |   2 +-
+>  dir.c                           |  11 +-
+>  git-compat-util.h               |  12 -
+>  refs.c                          |   2 +-
+>  revision.c                      |   2 +-
+>  t/t3070-wildmatch.sh            |  13 --
+>  test-wildmatch.c                |  79 -------
+>  22 files changed, 20 insertions(+), 759 deletions(-)
