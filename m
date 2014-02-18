@@ -1,79 +1,98 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: git gc --aggressive led to about 40 times slower "git log --raw"
-Date: Wed, 19 Feb 2014 05:46:10 +0700
-Message-ID: <CACsJy8AEXP45K+r3gGVTWbn4uuPLeHOkf-an20rj77QSfG1-ew@mail.gmail.com>
-References: <CAEjYwfU==yYtQBDzZzEPdvbqz1N=gZtbMr5ccRaC_U7NfViQLA@mail.gmail.com>
- <87r470ssuc.fsf@fencepost.gnu.org> <CACsJy8D9tws_gu6yWVdz3t+Vfg5-9iorptn4BLnTL3b+YWcHzQ@mail.gmail.com>
- <87ioscsoow.fsf@fencepost.gnu.org> <20140218155842.GA7855@google.com> <xmqqzjlocf28.fsf@gitster.dls.corp.google.com>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [PATCH] Git release notes man page
+Date: Tue, 18 Feb 2014 22:54:15 -0000
+Organization: OPDS
+Message-ID: <1EC26D492ABB45FF8C399F84B1E30817@PhilipOakley>
+References: <1392460179-776-1-git-send-email-philipoakley@iee.org> <xmqqha7wcbkz.fsf@gitster.dls.corp.google.com>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>, David Kastrup <dak@gnu.org>,
-	Christian Jaeger <chrjae@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 18 23:53:51 2014
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: "GitList" <git@vger.kernel.org>,
+	"Stefan Nwe" <stefan.naewe@atlas-elektronik.com>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 18 23:54:52 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WFtXx-0007Cc-Iv
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Feb 2014 23:53:49 +0100
+	id 1WFtYv-0000NG-O4
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Feb 2014 23:54:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752596AbaBRWxp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Feb 2014 17:53:45 -0500
-Received: from mail-qa0-f50.google.com ([209.85.216.50]:61083 "EHLO
-	mail-qa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752519AbaBRWxn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Feb 2014 17:53:43 -0500
-Received: by mail-qa0-f50.google.com with SMTP id cm18so23980404qab.37
-        for <git@vger.kernel.org>; Tue, 18 Feb 2014 14:53:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=OpwXpIDum7yYaf/jopoA2quGOtbi1tDfeQ56YnQI7zY=;
-        b=qBPxZrevvL1lxKD3PIFKC5C+AIHwVN1WXhzGasr+Tdq5DoTsV4RKMzmxtm8Egh4deU
-         zuMDYtgTgJDbxaidt+GPL+0d55DIYUudilbvd38Kq7dyr4XV5761EJm7ls9wTwgruPzG
-         srsvXIv+QNr6DmFoA5l+bV82MAnyntTe+VByyLmhsFvwavCQLEt/Z6Qb8pj7UAelAcCs
-         IMtEvrIRFbjn90C+9qO8bYZM13sVw7qt5HDDRg4gCcEHYq1PuwTJULx9PozWjNcEaGCU
-         ObFcOQ+y4i2MB6ZRaPQJCUfLd2F+BBsBePg9OQ7eABot0QebNABGOPauh2VtT9H9zafd
-         gqJQ==
-X-Received: by 10.229.241.9 with SMTP id lc9mr5622985qcb.15.1392763600157;
- Tue, 18 Feb 2014 14:46:40 -0800 (PST)
-Received: by 10.96.215.102 with HTTP; Tue, 18 Feb 2014 14:46:10 -0800 (PST)
-In-Reply-To: <xmqqzjlocf28.fsf@gitster.dls.corp.google.com>
+	id S1752207AbaBRWy2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Feb 2014 17:54:28 -0500
+Received: from out1.ip01ir2.opaltelecom.net ([62.24.128.237]:53286 "EHLO
+	out1.ip01ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751217AbaBRWy0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 18 Feb 2014 17:54:26 -0500
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: ApVHAFvkA1MCYJCb/2dsb2JhbABZgwZIA4kEt3wBAgEBC4EVF3SCIAUBAQQBCAEBLh4BASEFBgIDBQIBAxUMJRQBBBoGBxcGEwgCAQIDAYdsDMV5hnGOZDWCdoEUBIkQhhqbKoMtPA
+X-IPAS-Result: ApVHAFvkA1MCYJCb/2dsb2JhbABZgwZIA4kEt3wBAgEBC4EVF3SCIAUBAQQBCAEBLh4BASEFBgIDBQIBAxUMJRQBBBoGBxcGEwgCAQIDAYdsDMV5hnGOZDWCdoEUBIkQhhqbKoMtPA
+X-IronPort-AV: E=Sophos;i="4.97,503,1389744000"; 
+   d="scan'208";a="455538721"
+Received: from host-2-96-144-155.as13285.net (HELO PhilipOakley) ([2.96.144.155])
+  by out1.ip01ir2.opaltelecom.net with SMTP; 18 Feb 2014 22:54:12 +0000
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242365>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242366>
 
-On Wed, Feb 19, 2014 at 3:59 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Let's do something like this first and then later make --depth
-> configurable just like --width, perhaps?  For "aggressive", I think
-> the default width (hardcoded to 250 but configurable) is a bit too
-> narrow.
+From: "Junio C Hamano" <gitster@pobox.com>
+> Philip Oakley <philipoakley@iee.org> writes:
 >
->  builtin/gc.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>> A few days too late for the 1.9.0 release cycle :(
+>>
+>> This responds to Stefan Nwe's request for a 'git help' command that 
+>> would
+>> access the release notes. ($gmane/240595 17 Jan 2014).
+>>
+>> I've used the full name "release-notes" for the help guide rather 
+>> than
+>> Stefan's original 'git help relnotes'.
+>>
+>> The release-notes man page lists just the notes for the current 
+>> release.
+>> The combined notes for all releases is nearing 15k lines.
 >
-> diff --git a/builtin/gc.c b/builtin/gc.c
-> index 6be6c8d..0d010f0 100644
-> --- a/builtin/gc.c
-> +++ b/builtin/gc.c
-> @@ -204,7 +204,7 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
->
->         if (aggressive) {
->                 argv_array_push(&repack, "-f");
-> -               argv_array_push(&repack, "--depth=250");
-> +               argv_array_push(&repack, "--depth=20");
->                 if (aggressive_window > 0)
->                         argv_array_pushf(&repack, "--window=%d", aggressive_window);
->         }
+> RelNotes are incremental and only useful for those who know what the
+> immediately previous release contained, but for most people who get
+> their Git from distros, I have this impression that the versions of
+> Git they get skip versions, and seeing the notable changes since the
+> previous source release will not give them wrong information---they
+> may have this warm fuzzy feeling that they know what is going on,
+> but they are missing information on all the accumulated changes that
+> were added in earlier versions their distro skipped---these changes
+> are still in the version they are running.
 
-Lower depth than default (50) does not sound "aggressive" to me, at
-least from disk space utilization. I agree it should be configurable
-though.
+That's a reasonable argument. I did look at trying to get the 
+"stalenotes" to work as an alternative, that is extract the stalenotes 
+section from the git.txt, and create a release notes man page from that. 
+However there were two issues there that I couldn't solve (noted in the 
+cover letter).
+
+The first is that the man page generator does not expect more than 99 
+references so the link numbers repeat themselves. I'm sure that is 
+fixable by someone who knows the insides of acsiidoc.
+
+The other was that the links for the main version documentation appear 
+to been to be made at kernel.org, so that links back there are created. 
+Again I wasn't sure how that should be resolved.
+
+>   I do not understand why
+> it is even a good idea to show release notes from the command line
+> "git" interface.
+
+My looking at this came from Stefan's suggestion noted above 
+$gmane/240595. So it had at least one follower ;-)
+
+Philip
 -- 
-Duy
