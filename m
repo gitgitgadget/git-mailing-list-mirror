@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v3 20/25] use new wrapper write_file() for simple file writing
-Date: Tue, 18 Feb 2014 20:40:09 +0700
-Message-ID: <1392730814-19656-21-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v3 25/25] gc: support prune --repos
+Date: Tue, 18 Feb 2014 20:40:14 +0700
+Message-ID: <1392730814-19656-26-git-send-email-pclouds@gmail.com>
 References: <1392730814-19656-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -10,195 +10,132 @@ Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 18 14:42:53 2014
+X-From: git-owner@vger.kernel.org Tue Feb 18 14:43:44 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WFkwg-0000pO-Oe
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Feb 2014 14:42:47 +0100
+	id 1WFkxa-0002Ii-L7
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Feb 2014 14:43:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932107AbaBRNmR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 18 Feb 2014 08:42:17 -0500
-Received: from mail-pa0-f45.google.com ([209.85.220.45]:47109 "EHLO
-	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932099AbaBRNmP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Feb 2014 08:42:15 -0500
-Received: by mail-pa0-f45.google.com with SMTP id lf10so16714790pab.4
-        for <git@vger.kernel.org>; Tue, 18 Feb 2014 05:42:14 -0800 (PST)
+	id S1755776AbaBRNmr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 18 Feb 2014 08:42:47 -0500
+Received: from mail-pd0-f182.google.com ([209.85.192.182]:39595 "EHLO
+	mail-pd0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755773AbaBRNmo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Feb 2014 08:42:44 -0500
+Received: by mail-pd0-f182.google.com with SMTP id v10so16253717pde.13
+        for <git@vger.kernel.org>; Tue, 18 Feb 2014 05:42:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=5tX0Onr19n/Z75lTrGMu+kblHIoTkaOp+/qZOaKdXUA=;
-        b=LGZLAIWefKx7JmCZ87ppiAcgvjIvw4Zhpiu5kHPhEVQ3gm2/ypixsegtXttSHUlnbJ
-         WjX4P2S4pZZieg3GqNLbQ2hBpHgiE7Zf3CVvromtzb7+ma8iYf4cLMmWIdtFzWQTZPst
-         qR2yofyKE/Mr7dhRfkOL+0k8XBcwNRF8P9bJW3xUwArlWgkpezPZTpZD5uNiHy+N81Vl
-         shrZLmQJZFF9zByfC81wYN06dZwGEdM/M3VBYR9WQVwVQhGti5N3c9bweFiar+9qyL8d
-         wy68G92j3a0yUtq2JwkJRJ4F+Jk2QpThtE9UtSOnYdkgQK8h4F7uqdvcO5meceOsGs/y
-         TtAw==
-X-Received: by 10.66.25.101 with SMTP id b5mr33346419pag.101.1392730934344;
-        Tue, 18 Feb 2014 05:42:14 -0800 (PST)
+        bh=Pj/wb3WgrgevZTDp5s39pnTz8i/PJVZGaClvHK7Sogg=;
+        b=SYqh4IB1c70Pml1DdoKGwxq5vH+5VwmWmR7uRo+sJuV1qHNPB4zNujKZ3IYNfg4/cM
+         mPKlcMqTs7O100XDHJvmHxEyxweR8gw4Al9bNxJ343iJHXhLGc/KNwM5grZ9r7eqIDrg
+         sbqjTXizVuAd8oyySyHJSyNGVxNPCX+dtF2c8mvPq2JYXkG5m6z2XsKPF8h5kCA7ybpH
+         vY7UWlxQtUrL4qYJbmrxhDHZE5HEIawWNhNMD0b4H7dMPw5JhzwrsiL3wq4rMTGXv2H0
+         225c3OyisutwCsU7qX91OB3Zklw3iq/z0ivuMKODtSjks27+Vd7bqwOpG6ZDENN+rhCF
+         f5ig==
+X-Received: by 10.66.250.202 with SMTP id ze10mr10212319pac.153.1392730964154;
+        Tue, 18 Feb 2014 05:42:44 -0800 (PST)
 Received: from lanh ([115.73.228.211])
-        by mx.google.com with ESMTPSA id om6sm56089549pbc.43.2014.02.18.05.42.11
+        by mx.google.com with ESMTPSA id qh2sm142635495pab.13.2014.02.18.05.42.41
         for <multiple recipients>
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 18 Feb 2014 05:42:13 -0800 (PST)
-Received: by lanh (sSMTP sendmail emulation); Tue, 18 Feb 2014 20:42:27 +0700
+        Tue, 18 Feb 2014 05:42:43 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Tue, 18 Feb 2014 20:42:56 +0700
 X-Mailer: git-send-email 1.8.5.2.240.g8478abd
 In-Reply-To: <1392730814-19656-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242321>
-
-This fixes common problems in these code about error handling,
-forgetting to close the file handle after fprintf() fails, or not
-printing out the error string..
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242322>
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- builtin/branch.c  |  4 +---
- builtin/init-db.c |  7 +------
- daemon.c          | 11 +----------
- submodule.c       |  9 ++-------
- transport.c       |  8 +++-----
- 5 files changed, 8 insertions(+), 31 deletions(-)
+ Documentation/config.txt |  6 ++++++
+ builtin/gc.c             | 17 +++++++++++++++++
+ 2 files changed, 23 insertions(+)
 
-diff --git a/builtin/branch.c b/builtin/branch.c
-index b4d7716..3eebdbc 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -754,7 +754,6 @@ static const char edit_description[] =3D "BRANCH_DE=
-SCRIPTION";
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index cbf4d97..eec2d05 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1182,6 +1182,12 @@ gc.pruneexpire::
+ 	"now" may be used to disable this  grace period and always prune
+ 	unreachable objects immediately.
 =20
- static int edit_branch_description(const char *branch_name)
- {
--	FILE *fp;
- 	int status;
- 	struct strbuf buf =3D STRBUF_INIT;
- 	struct strbuf name =3D STRBUF_INIT;
-@@ -767,8 +766,7 @@ static int edit_branch_description(const char *bran=
-ch_name)
- 		    "  %s\n"
- 		    "Lines starting with '%c' will be stripped.\n",
- 		    branch_name, comment_line_char);
--	fp =3D fopen(git_path(edit_description), "w");
--	if ((fwrite(buf.buf, 1, buf.len, fp) < buf.len) || fclose(fp)) {
-+	if (write_file(git_path(edit_description), 0, "%s", buf.buf)) {
- 		strbuf_release(&buf);
- 		return error(_("could not write branch description template: %s"),
- 			     strerror(errno));
-diff --git a/builtin/init-db.c b/builtin/init-db.c
-index c7c76bb..081e512 100644
---- a/builtin/init-db.c
-+++ b/builtin/init-db.c
-@@ -342,7 +342,6 @@ int set_git_dir_init(const char *git_dir, const cha=
-r *real_git_dir,
- static void separate_git_dir(const char *git_dir)
- {
- 	struct stat st;
--	FILE *fp;
++gc.prunereposexpire::
++	When 'git gc' is run, it will call 'prune --repos --expire 3.months.a=
+go'.
++	Override the grace period with this config variable.  The value
++	"now" may be used to disable this  grace period and always prune
++	$GIT_DIR/repos immediately.
++
+ gc.reflogexpire::
+ gc.<pattern>.reflogexpire::
+ 	'git reflog expire' removes reflog entries older than
+diff --git a/builtin/gc.c b/builtin/gc.c
+index c19545d..fbeba86 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -30,11 +30,13 @@ static int aggressive_window =3D 250;
+ static int gc_auto_threshold =3D 6700;
+ static int gc_auto_pack_limit =3D 50;
+ static const char *prune_expire =3D "2.weeks.ago";
++static const char *prune_repos_expire =3D "3.months.ago";
 =20
- 	if (!stat(git_link, &st)) {
- 		const char *src;
-@@ -358,11 +357,7 @@ static void separate_git_dir(const char *git_dir)
- 			die_errno(_("unable to move %s to %s"), src, git_dir);
+ static struct argv_array pack_refs_cmd =3D ARGV_ARRAY_INIT;
+ static struct argv_array reflog =3D ARGV_ARRAY_INIT;
+ static struct argv_array repack =3D ARGV_ARRAY_INIT;
+ static struct argv_array prune =3D ARGV_ARRAY_INIT;
++static struct argv_array prune_repos =3D ARGV_ARRAY_INIT;
+ static struct argv_array rerere =3D ARGV_ARRAY_INIT;
+=20
+ static char *pidfile;
+@@ -81,6 +83,14 @@ static int gc_config(const char *var, const char *va=
+lue, void *cb)
+ 		}
+ 		return git_config_string(&prune_expire, var, value);
+ 	}
++	if (!strcmp(var, "gc.prunereposexpire")) {
++		if (value && strcmp(value, "now")) {
++			unsigned long now =3D approxidate("now");
++			if (approxidate(value) >=3D now)
++				return error(_("Invalid %s: '%s'"), var, value);
++		}
++		return git_config_string(&prune_repos_expire, var, value);
++	}
+ 	return git_default_config(var, value, cb);
+ }
+=20
+@@ -274,6 +284,7 @@ int cmd_gc(int argc, const char **argv, const char =
+*prefix)
+ 	argv_array_pushl(&reflog, "reflog", "expire", "--all", NULL);
+ 	argv_array_pushl(&repack, "repack", "-d", "-l", NULL);
+ 	argv_array_pushl(&prune, "prune", "--expire", NULL );
++	argv_array_pushl(&prune_repos, "prune", "--repos", "--expire", NULL )=
+;
+ 	argv_array_pushl(&rerere, "rerere", "gc", NULL);
+=20
+ 	git_config(gc_config, NULL);
+@@ -334,6 +345,12 @@ int cmd_gc(int argc, const char **argv, const char=
+ *prefix)
+ 			return error(FAILED_RUN, prune.argv[0]);
  	}
 =20
--	fp =3D fopen(git_link, "w");
--	if (!fp)
--		die(_("Could not create git link %s"), git_link);
--	fprintf(fp, "gitdir: %s\n", git_dir);
--	fclose(fp);
-+	write_file(git_link, 1, "gitdir: %s\n", git_dir);
- }
++	if (prune_repos_expire) {
++		argv_array_push(&prune_repos, prune_repos_expire);
++		if (run_command_v_opt(prune_repos.argv, RUN_GIT_CMD))
++			return error(FAILED_RUN, prune_repos.argv[0]);
++	}
++
+ 	if (run_command_v_opt(rerere.argv, RUN_GIT_CMD))
+ 		return error(FAILED_RUN, rerere.argv[0]);
 =20
- int init_db(const char *template_dir, unsigned int flags)
-diff --git a/daemon.c b/daemon.c
-index 503e039..b880d30 100644
---- a/daemon.c
-+++ b/daemon.c
-@@ -1122,15 +1122,6 @@ static void daemonize(void)
- }
- #endif
-=20
--static void store_pid(const char *path)
--{
--	FILE *f =3D fopen(path, "w");
--	if (!f)
--		die_errno("cannot open pid file '%s'", path);
--	if (fprintf(f, "%"PRIuMAX"\n", (uintmax_t) getpid()) < 0 || fclose(f)=
- !=3D 0)
--		die_errno("failed to write pid file '%s'", path);
--}
--
- static int serve(struct string_list *listen_addr, int listen_port,
-     struct credentials *cred)
- {
-@@ -1339,7 +1330,7 @@ int main(int argc, char **argv)
- 		sanitize_stdfds();
-=20
- 	if (pid_file)
--		store_pid(pid_file);
-+		write_file(pid_file, 1, "%"PRIuMAX"\n", (uintmax_t) getpid());
-=20
- 	/* prepare argv for serving-processes */
- 	cld_argv =3D xmalloc(sizeof (char *) * (argc + 2));
-diff --git a/submodule.c b/submodule.c
-index 613857e..fe5748d 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -1135,16 +1135,11 @@ void connect_work_tree_and_git_dir(const char *=
-work_tree, const char *git_dir)
- 	struct strbuf file_name =3D STRBUF_INIT;
- 	struct strbuf rel_path =3D STRBUF_INIT;
- 	const char *real_work_tree =3D xstrdup(real_path(work_tree));
--	FILE *fp;
-=20
- 	/* Update gitfile */
- 	strbuf_addf(&file_name, "%s/.git", work_tree);
--	fp =3D fopen(file_name.buf, "w");
--	if (!fp)
--		die(_("Could not create git link %s"), file_name.buf);
--	fprintf(fp, "gitdir: %s\n", relative_path(git_dir, real_work_tree,
--						  &rel_path));
--	fclose(fp);
-+	write_file(file_name.buf, 1, "gitdir: %s\n",
-+		   relative_path(git_dir, real_work_tree, &rel_path));
-=20
- 	/* Update core.worktree setting */
- 	strbuf_reset(&file_name);
-diff --git a/transport.c b/transport.c
-index ca7bb44..2df8a15 100644
---- a/transport.c
-+++ b/transport.c
-@@ -294,7 +294,6 @@ static int write_one_ref(const char *name, const un=
-signed char *sha1,
- {
- 	struct strbuf *buf =3D data;
- 	int len =3D buf->len;
--	FILE *f;
-=20
- 	/* when called via for_each_ref(), flags is non-zero */
- 	if (flags && !starts_with(name, "refs/heads/") &&
-@@ -303,10 +302,9 @@ static int write_one_ref(const char *name, const u=
-nsigned char *sha1,
-=20
- 	strbuf_addstr(buf, name);
- 	if (safe_create_leading_directories(buf->buf) ||
--			!(f =3D fopen(buf->buf, "w")) ||
--			fprintf(f, "%s\n", sha1_to_hex(sha1)) < 0 ||
--			fclose(f))
--		return error("problems writing temporary file %s", buf->buf);
-+	    write_file(buf->buf, 0, "%s\n", sha1_to_hex(sha1)))
-+		return error("problems writing temporary file %s: %s",
-+			     buf->buf, strerror(errno));
- 	strbuf_setlen(buf, len);
- 	return 0;
- }
 --=20
 1.8.5.2.240.g8478abd
