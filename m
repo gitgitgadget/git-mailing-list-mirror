@@ -1,78 +1,72 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: error: src refspec refs/heads/master matches more than one.
-Date: Tue, 18 Feb 2014 20:37:36 +0100
-Message-ID: <871tz0rz3z.fsf@fencepost.gnu.org>
-References: <20140214113136.GA17817@raven.inka.de> <87a9dt981o.fsf@igel.home>
-	<CACsJy8BevKQaRLYMMv7bTjf_ZAOnkrimws519OyhGZz6_Vr_-A@mail.gmail.com>
-	<xmqqy51dirjs.fsf@gitster.dls.corp.google.com>
-	<20140215085355.GA15461@lanh>
-	<xmqqha7wfdld.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Andreas Schwab <schwab@linux-m68k.org>,
-	Josef Wolf <jw@raven.inka.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 18 20:41:11 2014
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: [PATCH] blame: add a failing test for a CRLF issue.
+Date: Tue, 18 Feb 2014 19:45:35 +0000
+Message-ID: <1392752735-168203-1-git-send-email-sandals@crustytoothpaste.net>
+References: <20140214191015.GG4582@vauxhall.crustytoothpaste.net>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 18 20:46:15 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WFqXS-0006FA-PT
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Feb 2014 20:41:07 +0100
+	id 1WFqcP-0005Xe-5o
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Feb 2014 20:46:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752746AbaBRTk6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Feb 2014 14:40:58 -0500
-Received: from fencepost.gnu.org ([208.118.235.10]:49186 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752700AbaBRTk5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Feb 2014 14:40:57 -0500
-Received: from localhost ([127.0.0.1]:48226 helo=lola)
-	by fencepost.gnu.org with esmtp (Exim 4.71)
-	(envelope-from <dak@gnu.org>)
-	id 1WFqXH-0003Ge-QD; Tue, 18 Feb 2014 14:40:56 -0500
-Received: by lola (Postfix, from userid 1000)
-	id 6CD7BE06E5; Tue, 18 Feb 2014 20:37:36 +0100 (CET)
-In-Reply-To: <xmqqha7wfdld.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Tue, 18 Feb 2014 11:03:10 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3.50 (gnu/linux)
+	id S1752552AbaBRTqH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Feb 2014 14:46:07 -0500
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:52025 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752359AbaBRTqG (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 18 Feb 2014 14:46:06 -0500
+Received: from vauxhall.crustytoothpaste.net (unknown [172.16.2.247])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 9172428074;
+	Tue, 18 Feb 2014 19:46:03 +0000 (UTC)
+X-Mailer: git-send-email 1.9.0.rc3.1008.gd08b47c.dirty
+In-Reply-To: <20140214191015.GG4582@vauxhall.crustytoothpaste.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242344>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242345>
 
-Junio C Hamano <gitster@pobox.com> writes:
+If a file contains CRLF line endings in a repository with
+core.autocrlf=input, then blame always marks the lines as "Not Committed
+Yet", even if they are unmodified.  Add a failing test for this case, so we
+are at least aware of this issue.
 
-> Duy Nguyen <pclouds@gmail.com> writes:
->
->> +	if (!force && dwim_ref(name, strlen(name), sha1, &real_ref))
->> +		die(_("creating ref refs/heads/%s makes %s ambiguous.\n"
->> +		      "Use -f to create it anyway."),
->> +		    name, name);
->
-> Does this check still allow you to create a branch "refs/heads/next"
-> and then later create a branch "next"?  The latter will introduce an
-> ambiguity without any prevention, even though the prevention would
-> trigger if the order in which these two branches are created is
-> swapped--- the end result has ambiguity but the safety covers only one
-> avenue to the confusing situation.
->
-> And the only way I can think of to avoid that kind of confusion is
-> to forbid creation of a subset of possible names by reserving a set
-> of known (but arbitrary) prefixes---which I am not sure is a good
-> way to go.  At least not yet.
+Reported-by: Ephrim Khong <dr.khong@gmail.com>
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+---
 
-Just for the record: after seeing the respective arguments, I consider
-it the sanest way.
+Obviously, this doesn't actually fix the issue, but at least we're aware of it
+so we don't lose track of it and can fix it.  A future patch can mark the test
+passing.
 
-It's conceivable to give a configuration option for augmenting the set
-of reserved prefixes.  That would allow to adapt the arbitrariness to
-match the policies or ref name choices of a particular project while
-keeping the set of references addressed by the standard git commands in
-check automagically.
+ t/t8003-blame-corner-cases.sh | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
+diff --git a/t/t8003-blame-corner-cases.sh b/t/t8003-blame-corner-cases.sh
+index e7cac1d..903f775 100755
+--- a/t/t8003-blame-corner-cases.sh
++++ b/t/t8003-blame-corner-cases.sh
+@@ -191,4 +191,14 @@ test_expect_success 'indent of line numbers, ten lines' '
+ 	test $(grep -c "  " actual) = 9
+ '
+ 
++test_expect_failure 'blaming files with CRLF newlines' '
++	git config core.autocrlf false &&
++	printf "testcase\r\n" >crlffile &&
++	git add crlffile &&
++	git commit -m testcase &&
++	git config core.autocrlf input &&
++	git blame crlffile >actual &&
++	grep "A U Thor" actual
++'
++
+ test_done
 -- 
-David Kastrup
+1.9.0.rc3.1008.gd08b47c.dirty
