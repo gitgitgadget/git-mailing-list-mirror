@@ -1,78 +1,74 @@
-From: Daniel Stenberg <daniel@haxx.se>
-Subject: Re: [BUG?] git http connection reuse
-Date: Tue, 18 Feb 2014 08:13:16 +0100 (CET)
-Message-ID: <alpine.DEB.2.00.1402180806070.15465@tvnag.unkk.fr>
-References: <20140216040538.GA4754@sigill.intra.peff.net> <377DF3F4-1F9B-4CB0-A9BF-658E561F4349@gmail.com> <alpine.DEB.2.00.1402161307160.10435@tvnag.unkk.fr> <20140217235625.GB20499@sigill.intra.peff.net>
+From: Christian Jaeger <chrjae@gmail.com>
+Subject: git gc --aggressive led to about 40 times slower "git log --raw"
+Date: Tue, 18 Feb 2014 07:25:10 +0000
+Message-ID: <CAEjYwfU==yYtQBDzZzEPdvbqz1N=gZtbMr5ccRaC_U7NfViQLA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: "Kyle J. McKay" <mackyle@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Feb 18 08:13:51 2014
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 18 08:25:41 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WFesI-0006Zm-Eg
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Feb 2014 08:13:50 +0100
+	id 1WFf3i-00064a-6c
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Feb 2014 08:25:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754009AbaBRHNn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Feb 2014 02:13:43 -0500
-Received: from giant.haxx.se ([80.67.6.50]:46803 "EHLO giant.haxx.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754162AbaBRHN1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Feb 2014 02:13:27 -0500
-Received: from giant.haxx.se (dast@localhost.localdomain [127.0.0.1])
-	by giant.haxx.se (8.14.4/8.14.4/Debian-4.1) with ESMTP id s1I7DGX7009528
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 18 Feb 2014 08:13:16 +0100
-Received: from localhost (dast@localhost)
-	by giant.haxx.se (8.14.4/8.14.4/Submit) with ESMTP id s1I7DGJL009522;
-	Tue, 18 Feb 2014 08:13:16 +0100
-X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
-X-X-Sender: dast@giant.haxx.se
-In-Reply-To: <20140217235625.GB20499@sigill.intra.peff.net>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-X-fromdanielhimself: yes
+	id S1753814AbaBRHZd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Feb 2014 02:25:33 -0500
+Received: from mail-wg0-f50.google.com ([74.125.82.50]:50159 "EHLO
+	mail-wg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751239AbaBRHZd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Feb 2014 02:25:33 -0500
+Received: by mail-wg0-f50.google.com with SMTP id z12so2930677wgg.17
+        for <git@vger.kernel.org>; Mon, 17 Feb 2014 23:25:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=RJEtIMu3rFHe0CKPdiLiiIH3f+srajI7uWk5BBSO4ks=;
+        b=pw570B+vGdci5Zujxi6aIhbp0P+VYdsDl+SONCoS6tw5FZ4z1gCCk6MRKMsXFf935D
+         49K46qiRVATa0uniMBp02tnApQK2yA1mb5E1d9lZpmfBqFMOdOqzaLtE6Tm/hFU2BxCX
+         T/rdPsmEfjzjfowo7RuZ2V1qAW0RMgR6D7JBEAYfrT6+YGsk7w8No6FP1VhDn9c/IhX/
+         Dn8WkHvGnO/0HVuJ04qnUTSBLvFY6J1B0y8IlYfghPuJxdVo3ETb3Pfj9dMSeOgqgeb7
+         QNx/aRiSfYCwsQGt+J1mQpe6jgjYzzllZYNB4dYeOLj9PlyjWndORKuTlwjBAp6RY50j
+         3VXg==
+X-Received: by 10.180.107.1 with SMTP id gy1mr16364692wib.47.1392708330781;
+ Mon, 17 Feb 2014 23:25:30 -0800 (PST)
+Received: by 10.180.101.168 with HTTP; Mon, 17 Feb 2014 23:25:10 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242276>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242277>
 
-On Mon, 17 Feb 2014, Jeff King wrote:
+Hi
 
-> Right; I'd expect multiple connections for parallel requests, but in this 
-> case we are completing the first and removing the handle before starting the 
-> second. Digging further, I was able to reproduce the behavior with a simple 
-> program:
+I've got a repository where "git log --raw > _somefile" took a few
+seconds in the past, but after an attempt at merging some commits that
+were collected in a clone of the same repo that was created about a
+year ago, I noticed that this command was now taking 3 minutes 7
+seconds. "git gc", "git fsck", "git clone file:///the/repo/.git" also
+now each took between ~4-10 minutes, also "git log --raw somefile" got
+equally unusably slow. With the help of the people on the IRC, I
+tracked it down to my recent use of "git gc --aggressive" in this
+repo. Running "git repack -a -d -f" solved it, now it's again taking
+4-5 seconds. After running "git gc --aggressive" again for
+confirmation, "git log --raw > _somefile" was again slowed down,
+although now 'only' to 1 minute 34 seconds; did perhaps my "git remote
+add -f other-repo", which I remember was also running rather slowly,
+exacerbate the problem (to the > 3 minutes I was seeing)?
 
-Yeah, given your description I had no problems to repeat it either. Turns out 
-we had no decent test case that checked for this so in our eagerness to fix a 
-security problem involving "over-reuse" we broke this simpler reuse case. Two 
-steps forward, one step backward... :-/
+The repo has about 6000 commits, about 12'000 files in the current
+HEAD, and about 43 MB packed .git contents. The files are (almost) all
+plain text, about half of them are about 42 bytes long, the rest up to
+about 2 MB although most of them are just around 5-50 KB. Most files
+mostly grow at the end. The biggest files (500KB-2MB) are quite
+long-lived and don't stop growing, again mostly at the end. Also,
+about 2*5K files are each in the same directory, meaning that the tree
+objects representing those 2 directories are big but changing only in
+a few places.
 
-> The manpage for curl_multi_add_handle does say:
->
->  When an easy handle has been added to a multi stack, you can not
->  and you must not use curl_easy_perform(3) on that handle!
->
-> Does that apply to the handle after it has finished its transaction and been 
-> removed from the multi object (in which case git is Doing It Wrong)?
+I've now learned to avoid "git gc --aggressive". Perhaps there are
+some other conclusions to be drawn, I don't know.
 
-No it doesn't. The man page should probably be clarified to express that 
-slightly better. It just means that _while_ a handle is added to a multi 
-handle it cannot be used with curl_easy_perform().
-
-So yes, you can remove indeed it from the handle and then do 
-curl_easy_perform(). It works just fine!
-
-Several internal caches are kept in the multi handle when that's used though, 
-so when getting the easy handle out after having used it with the multi 
-interface and then using it with the easy interface may cause libcurl to do a 
-little more work than if you would be able to re-add it to the same multi 
-handle do to the operation with that...
-
--- 
-
-  / daniel.haxx.se
+Christian.
