@@ -1,63 +1,96 @@
-From: Jonathan Silverman <jsilverman2@gmail.com>
-Subject: Question about the relationship between Star Wars and Git
-Date: Tue, 18 Feb 2014 13:42:22 -0700
-Message-ID: <CADH22k8QxPiPJycJZC1QM9Y=B+D_UyeYtJ5pisHvp6mZ22LhRQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] rev-parse: fix --resolve-git-dir argument handling
+Date: Tue, 18 Feb 2014 12:42:02 -0800
+Message-ID: <xmqq61ocdug5.fsf@gitster.dls.corp.google.com>
+References: <5301C4B4.5070503@thequod.de>
+	<65ea2c8ce4f0d60f0d93f730aac50183ba63bd1c.1392626780.git.john@keeping.me.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 18 21:42:28 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Daniel Hahler <genml+git-2014@thequod.de>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Tue Feb 18 21:42:43 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WFrUp-0001kW-MG
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Feb 2014 21:42:28 +0100
+	id 1WFrV0-00023n-Id
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Feb 2014 21:42:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751144AbaBRUmX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Feb 2014 15:42:23 -0500
-Received: from mail-pb0-f45.google.com ([209.85.160.45]:43731 "EHLO
-	mail-pb0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751099AbaBRUmX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Feb 2014 15:42:23 -0500
-Received: by mail-pb0-f45.google.com with SMTP id un15so17190351pbc.18
-        for <git@vger.kernel.org>; Tue, 18 Feb 2014 12:42:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=yCLZe3kAACDSKgMzSA4iLQlziIXyXLG3PLIXlZdxp40=;
-        b=xnqjxO6lY2IdMiIY+iVDlMFpyexOT33LT6FsLl2FNqw0OB9TyVjTPoxlCoH6LSqRix
-         k9pjpuY6PlSsYEB/jb8KywCAykkfKpsoXaDu/KZBbbnKRd+eJVC9FHt0HU1O9xnBuipP
-         oVbWO1Z33jCsATqwxwjn6MZi+/HI25i4ydvGdQYdkU+pu9uDSw20hXdXjXa7qvlgpqR6
-         3O9CxpfBnaOg+Ca0XcSGQrrElx5ujTxD/Cm98Yw2fw6VAhHGE6Qi7EV5hlzmStc34dXT
-         TKLlbgQxlHwsG4w+bWClj2uNdfPzOXiNuhMpp7F2aWTEkAMkT9DdNKGY8yvbwT6FvAlO
-         ijuw==
-X-Received: by 10.66.121.234 with SMTP id ln10mr35300219pab.20.1392756142657;
- Tue, 18 Feb 2014 12:42:22 -0800 (PST)
-Received: by 10.68.224.69 with HTTP; Tue, 18 Feb 2014 12:42:22 -0800 (PST)
+	id S1751277AbaBRUme (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Feb 2014 15:42:34 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44811 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751099AbaBRUmd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Feb 2014 15:42:33 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B5AF36D3A9;
+	Tue, 18 Feb 2014 15:42:32 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=M9kiB5PpbNdKJOTZ/p1cZLA7TcY=; b=Tag34E
+	FLlcP2MJicFVJdlR6EvzOZ+sMCiXt11dzSmFwzyujZ/DizoCqdfyIrlo6xcIJToD
+	qDzOUbnsu6atY+vFCLUnD4ANJofLQ7aoMFjP35rEgFpXZDRCkokA+bjD3DK/9U76
+	sMYZuD1oa3PcG6IShFht0VCf+zdzXjyXtrzXM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=KYBO6AQCrzJey1ryaHKgMmwn7qMLqaXD
+	w70k29BXyTiACe4UY5Tu9gB4PDyb1B2QCD5hySub56bR/K/ltXmuILNoz+THGYRG
+	JxpVBton87/6YQqE5eFwHyUEeP+gKAs4AmTPHUEBxPXgIVtZ4twks2yTJzd8KR88
+	kySzLFSBGOM=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C86836D3A2;
+	Tue, 18 Feb 2014 15:42:31 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A110B6D36F;
+	Tue, 18 Feb 2014 15:42:09 -0500 (EST)
+In-Reply-To: <65ea2c8ce4f0d60f0d93f730aac50183ba63bd1c.1392626780.git.john@keeping.me.uk>
+	(John Keeping's message of "Mon, 17 Feb 2014 08:46:20 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 29CA31D4-98DD-11E3-91AE-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242351>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242352>
 
-Hi,
+John Keeping <john@keeping.me.uk> writes:
 
-Are "git push" and "git pull" based on force push and force pull from Star
-Wars?
+> There are two problems here:
+>
+> 1) If no argument is provided, then the command segfaults
+> 2) The argument is not consumed, so there will be excess output
+>
+> Fix both of these in one go by restructuring the handler for this
+> option.
+>
+> Reported-by: Daniel Hahler <genml+git-2014@thequod.de>
+> Signed-off-by: John Keeping <john@keeping.me.uk>
+> ---
 
-See: http://starwars.wikia.com/wiki/Telekinesis
+Looks sensible; thanks.
 
-Also, is the --force option another reference to The Force?
-
-The similarity seems striking, especially when you realize that when you
-google "force push" you get Star Wars *and* Git related links.
-
-To me, Git usage represents one facet of being a Jedi and allows greater
-control of The Force present in your code and the internet.
-
-Upon meeting a fellow Git user, it is always immediately obvious that "The
-Force is strong within this one."
-
-Respectfully,
-Jonathan Silverman
+>  builtin/rev-parse.c | 7 +++++--
+>  1 file changed, 5 insertions(+), 2 deletions(-)
+>
+> diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
+> index aaeb611..645cc4a 100644
+> --- a/builtin/rev-parse.c
+> +++ b/builtin/rev-parse.c
+> @@ -738,9 +738,12 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
+>  				continue;
+>  			}
+>  			if (!strcmp(arg, "--resolve-git-dir")) {
+> -				const char *gitdir = resolve_gitdir(argv[i+1]);
+> +				const char *gitdir;
+> +				if (++i >= argc)
+> +					die("--resolve-git-dir requires an argument");
+> +				gitdir = resolve_gitdir(argv[i]);
+>  				if (!gitdir)
+> -					die("not a gitdir '%s'", argv[i+1]);
+> +					die("not a gitdir '%s'", argv[i]);
+>  				puts(gitdir);
+>  				continue;
+>  			}
