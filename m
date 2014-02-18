@@ -1,96 +1,108 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Fwd: git-reviewed: linking commits to review discussion in git
-Date: Tue, 18 Feb 2014 00:28:27 -0500
-Message-ID: <20140218052827.GA25291@sigill.intra.peff.net>
-References: <CANx4bCB5tTzKusbfcqQ=eoeOGJ-WxWvF3QNpfa5rTq7oOSG-5w@mail.gmail.com>
- <CANx4bCAWVoCQdYQQ5cGXF-Z6Evck=Oeb2Shghkcuf7PMvSZBOA@mail.gmail.com>
+From: Guido =?iso-8859-1?Q?G=FCnther?= <agx@sigxcpu.org>
+Subject: [PATCH] revert.c: Allow to specify -x via git-config
+Date: Tue, 18 Feb 2014 07:56:20 +0100
+Message-ID: <20140218065620.GA3448@bogon.m.sigxcpu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Peter Rigby <peter.rigby@concordia.ca>
-To: Murtuza Mukadam <murtuza.i.mukadam@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 18 06:28:35 2014
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 18 08:05:02 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WFdEQ-0005q8-Jy
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Feb 2014 06:28:34 +0100
+	id 1WFejm-0002sa-4S
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Feb 2014 08:05:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751227AbaBRF2a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Feb 2014 00:28:30 -0500
-Received: from cloud.peff.net ([50.56.180.127]:52422 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750981AbaBRF23 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Feb 2014 00:28:29 -0500
-Received: (qmail 9119 invoked by uid 102); 18 Feb 2014 05:28:30 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 17 Feb 2014 23:28:30 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 18 Feb 2014 00:28:27 -0500
+	id S1753605AbaBRHE6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 18 Feb 2014 02:04:58 -0500
+Received: from xvm-169-183.ghst.net ([95.142.169.183]:41139 "EHLO
+	photon.sigxcpu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751239AbaBRHE5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Feb 2014 02:04:57 -0500
+X-Greylist: delayed 507 seconds by postgrey-1.27 at vger.kernel.org; Tue, 18 Feb 2014 02:04:57 EST
+Received: from honk.sigxcpu.org (localhost [IPv6:::1])
+	by photon.sigxcpu.org (Postfix) with ESMTPS id 33D42695
+	for <git@vger.kernel.org>; Tue, 18 Feb 2014 07:56:28 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by honk.sigxcpu.org (Postfix) with ESMTP id B899AFB03
+	for <git@vger.kernel.org>; Tue, 18 Feb 2014 07:56:27 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at honk.sigxcpu.org
+Received: from honk.sigxcpu.org ([127.0.0.1])
+	by localhost (honk.sigxcpu.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id yiXwSMAKB8TD for <git@vger.kernel.org>;
+	Tue, 18 Feb 2014 07:56:26 +0100 (CET)
+Received: by bogon.sigxcpu.org (Postfix, from userid 1000)
+	id AB32041B74; Tue, 18 Feb 2014 07:56:20 +0100 (CET)
 Content-Disposition: inline
-In-Reply-To: <CANx4bCAWVoCQdYQQ5cGXF-Z6Evck=Oeb2Shghkcuf7PMvSZBOA@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242274>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242275>
 
-On Mon, Feb 17, 2014 at 03:12:48PM -0500, Murtuza Mukadam wrote:
+Without this when maintaining stable branches it's easy to forget to us=
+e
+-x to track where a patch was cherry-picked from.
 
-> We have linked peer review discussions on
-> git@vger.kernel.org to their respective commits within the main
-> git.git repository. You can view the linked reviews from 2012
-> until present in the GitHub repo at:
-> https://github.com/mmukadam/git/tree/review
+Signed-off-by: Guido G=FCnther <agx@sigxcpu.org>
+---
+ Documentation/git-cherry-pick.txt |  8 ++++++++
+ builtin/revert.c                  | 10 ++++++++++
+ 2 files changed, 18 insertions(+)
 
-Neat. We've experimented in the past with mapping commits back to
-mailing list discussions.  Thomas (cc'd) has a script that creates
-git-notes trees mapping commits to the relevant message-id, which can
-then be found in the list archive.
-
-To me, the interesting bits of such a project are:
-
-  1. How do we decide which messages led to which commits? There is
-     definitely some room for heuristics here, as patches are sometimes
-     tweaked in transit, or come in multiple stages (e.g., the original
-     patch, then somebody suggests a fixup on top). You might want to
-     compare your work with the script from Thomas here:
-
-       http://repo.or.cz/w/trackgit.git
-
-  2. How do we store the mapping? I think git-notes are a natural fit
-     here, but you don't seem to use them. Is there a reason?
-
-  3. How do we present the emails to the user (including showing
-     threads, letting them dig deeper, etc)?
-
-     The existing solution has no support at all for 3. Personally, I
-     keep my own git-list archive locally, so I can search it (by
-     message-id or other features), dump the result into an mbox
-     (optionally including the surrounding thread), and then view the
-     result in mutt.
-
-Having had this solution for a while, my experience has been that I
-don't use it that often. It's not that I don't refer to the archive to
-see more backstory on a commit; I probably do that once a week or so.
-But since I have a decent searchable archive, I tend to just do it "by
-hand", searching for keywords from the commit message, and limiting by
-date if necessary.
-
-Going straight to the message by id might be a little faster, but I
-often pick up stray bits in my search that were not part of the original
-thread. E.g., somebody reports a bug, then 3 days later, somebody else
-posts a patch (but does not do it as a reply to the bug). There's
-nothing in the message headers or the commit mapping to say that those
-two messages are related. But because a search of the relevant terms
-finds both, and because the result is date-sorted, they end up near each
-other and it's easy for me to peruse.
-
-It would be interesting to apply some kind of clustering algorithm that
-automatically determines the messages related to a commit, including
-both the patch but also any discussion leading up to it. I realize that
-may be getting far afield of your original goals, but hey, you said you
-wanted feedback. I can reach for the stars. :)
-
--Peff
+diff --git a/Documentation/git-cherry-pick.txt b/Documentation/git-cher=
+ry-pick.txt
+index c205d23..c35064f 100644
+--- a/Documentation/git-cherry-pick.txt
++++ b/Documentation/git-cherry-pick.txt
+@@ -215,6 +215,14 @@ the working tree.
+ spending extra time to avoid mistakes based on incorrectly matching
+ context lines.
+=20
++CONFIGURATION
++-------------
++
++See linkgit:git-config[1] for core variables.
++
++cherrypick.record-origin::
++	Default for the `-x` option. Defaults to `false`.
++
+ SEE ALSO
+ --------
+ linkgit:git-revert[1]
+diff --git a/builtin/revert.c b/builtin/revert.c
+index 87659c9..df9718f 100644
+--- a/builtin/revert.c
++++ b/builtin/revert.c
+@@ -196,6 +196,15 @@ int cmd_revert(int argc, const char **argv, const =
+char *prefix)
+ 	return res;
+ }
+=20
++static int git_cherry_pick_config(const char *var, const char *value, =
+void *cb)
++{
++	struct replay_opts *opts =3D cb;
++
++	if (!strcmp(var, "cherrypick.record-origin"))
++		opts->record_origin =3D git_config_bool (var, value);
++	return 0;
++}
++
+ int cmd_cherry_pick(int argc, const char **argv, const char *prefix)
+ {
+ 	struct replay_opts opts;
+@@ -204,6 +213,7 @@ int cmd_cherry_pick(int argc, const char **argv, co=
+nst char *prefix)
+ 	memset(&opts, 0, sizeof(opts));
+ 	opts.action =3D REPLAY_PICK;
+ 	git_config(git_default_config, NULL);
++	git_config(git_cherry_pick_config, &opts);
+ 	parse_args(argc, argv, &opts);
+ 	res =3D sequencer_pick_revisions(&opts);
+ 	if (res < 0)
+--=20
+1.9.0.rc3
