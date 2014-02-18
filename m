@@ -1,201 +1,261 @@
-From: Jeff King <peff@peff.net>
-Subject: http: never use curl_easy_perform
-Date: Tue, 18 Feb 2014 05:34:20 -0500
-Message-ID: <20140218103420.GA2848@sigill.intra.peff.net>
-References: <20140216040538.GA4754@sigill.intra.peff.net>
- <377DF3F4-1F9B-4CB0-A9BF-658E561F4349@gmail.com>
- <alpine.DEB.2.00.1402161307160.10435@tvnag.unkk.fr>
- <20140217235625.GB20499@sigill.intra.peff.net>
- <alpine.DEB.2.00.1402180806070.15465@tvnag.unkk.fr>
- <20140218075534.GB29804@sigill.intra.peff.net>
- <alpine.DEB.2.00.1402181001540.15465@tvnag.unkk.fr>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: "Kyle J. McKay" <mackyle@gmail.com>, git@vger.kernel.org
-To: Daniel Stenberg <daniel@haxx.se>
-X-From: git-owner@vger.kernel.org Tue Feb 18 11:34:30 2014
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [PATCH] Rename read_replace_refs to check_replace_refs
+Date: Tue, 18 Feb 2014 12:24:55 +0100
+Message-ID: <1392722695-31815-1-git-send-email-mhagger@alum.mit.edu>
+Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 18 12:25:26 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WFi0R-0007Vs-FE
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Feb 2014 11:34:27 +0100
+	id 1WFinl-000102-0w
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Feb 2014 12:25:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754570AbaBRKeX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Feb 2014 05:34:23 -0500
-Received: from cloud.peff.net ([50.56.180.127]:52586 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754135AbaBRKeW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Feb 2014 05:34:22 -0500
-Received: (qmail 27494 invoked by uid 102); 18 Feb 2014 10:34:22 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 18 Feb 2014 04:34:22 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 18 Feb 2014 05:34:20 -0500
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.2.00.1402181001540.15465@tvnag.unkk.fr>
+	id S1755080AbaBRLZU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Feb 2014 06:25:20 -0500
+Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:53089 "EHLO
+	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752047AbaBRLZS (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 18 Feb 2014 06:25:18 -0500
+X-AuditID: 12074413-f79076d000002d17-b2-5303431d23b5
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 73.D5.11543.D1343035; Tue, 18 Feb 2014 06:25:17 -0500 (EST)
+Received: from michael.fritz.box (p4FDD42DF.dip0.t-ipconnect.de [79.221.66.223])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s1IBOvml015881
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+	Tue, 18 Feb 2014 06:25:16 -0500
+X-Mailer: git-send-email 1.8.5.3
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrPIsWRmVeSWpSXmKPExsUixO6iqCvnzBxs8IfXoutKN5NFQ+8VZovb
+	K+YzOzB7/H3/gcnj4iVlj8+b5AKYo7htkhJLyoIz0/P07RK4M5Y8m89W8MC8Yn9rM1sD43Td
+	LkZODgkBE4nV+2+xQdhiEhfurQeyuTiEBC4zSjS93sMI4Zxgkti05i9YFZuArsSinmYmEFtE
+	QE1iYtshFhCbWcBBYvPnRqAGDg5hAXuJ0ycjQMIsAqoSW9Y+ZQaxeQVcJJp+NrNALFOQaFm2
+	i30CI/cCRoZVjHKJOaW5urmJmTnFqcm6xcmJeXmpRbrmermZJXqpKaWbGCGeF97BuOuk3CFG
+	AQ5GJR7eH1pMwUKsiWXFlbmHGCU5mJREeU86MgcL8SXlp1RmJBZnxBeV5qQWH2KU4GBWEuH1
+	MwPK8aYkVlalFuXDpKQ5WJTEedWWqPsJCaQnlqRmp6YWpBbBZGU4OJQkeL2cgBoFi1LTUyvS
+	MnNKENJMHJwgw7mkRIpT81JSixJLSzLiQYEeXwwMdZAUD9BeJ5B23uKCxFygKETrKUZFKXHe
+	RSDHCoAkMkrz4MbC4vkVozjQl8K8EiDtPMBUANf9CmgwE9Bgr72MIINLEhFSUg2MhrPXfSvp
+	dHQ62mb9eE76kVnf3Ln8cy5ca9/8wNB1esDjNQGyOWaCCmumi9Qv3Mq05FTZ7hdnbP/PEbh8
+	+npO76/H62VX1j20nJB4YPWM9xmuS2NNUsplpk0qNmf7mxt4j7XN9qXPeZ5vFxv2FnSz/G0M
+	mt69Pu1+5+w/l/d3+mq3b5jQslW/V4mlOCPRUIu5qDgRAHHqG9nCAgAA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242295>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242296>
 
-On Tue, Feb 18, 2014 at 10:09:29AM +0100, Daniel Stenberg wrote:
+The semantics of this flag was changed in commit
 
-> Okey, I checked this closer now and this is the full explanation to
-> what happens. It seems to work as intended:
+    e1111cef23 inline lookup_replace_object() calls
 
-Thanks, your explanation makes perfect sense.
+but wasn't renamed at the time to minimize code churn.  Rename it now,
+and add a comment explaining its use.
 
-I think we should apply the patch below for git to consistently use the
-multi interface. With this (and the recent patch for the NTLM issue), I
-can do a whole smart-http clone over a single connection. This doesn't
-make a huge difference for github.com, because the ssl session cache
-eliminates most of the repeated work, but for servers which do not
-implement ssl session caching, it may be more noticeable.
-
--- >8 --
-Subject: http: never use curl_easy_perform
-
-We currently don't reuse http connections when fetching via
-the smart-http protocol. This is bad because the TCP
-handshake introduces latency, and especially because SSL
-connection setup may be non-trivial.
-
-We can fix it by consistently using curl's "multi"
-interface.  The reason is rather complicated:
-
-Our http code has two ways of being used: queuing many
-"slots" to be fetched in parallel, or fetching a single
-request in a blocking manner. The parallel code is built on
-curl's "multi" interface. Most of the single-request code
-uses http_request, which is built on top of the parallel
-code (we just feed it one slot, and wait until it finishes).
-
-However, one could also accomplish the single-request scheme
-by avoiding curl's multi interface entirely and just using
-curl_easy_perform. This is simpler, and is used by post_rpc
-in the smart-http protocol.
-
-It does work to use the same curl handle in both contexts,
-as long as it is not at the same time.  However, internally
-curl may not share all of the cached resources between both
-contexts. In particular, a connection formed using the
-"multi" code will go into a reuse pool connected to the
-"multi" object. Further requests using the "easy" interface
-will not be able to reuse that connection.
-
-The smart http protocol does ref discovery via http_request,
-which uses the "multi" interface, and then follows up with
-the "easy" interface for its rpc calls. As a result, we make
-two HTTP connections rather than reusing a single one.
-
-We could teach the ref discovery to use the "easy"
-interface. But it is only once we have done this discovery
-that we know whether the protocol will be smart or dumb. If
-it is dumb, then our further requests, which want to fetch
-objects in parallel, will not be able to reuse the same
-connection.
-
-Instead, this patch switches post_rpc to build on the
-parallel interface, which means that we use it consistently
-everywhere. It's a little more complicated to use, but since
-we have the infrastructure already, it doesn't add any code;
-we can just factor out the relevant bits from http_request.
-
-Signed-off-by: Jeff King <peff@peff.net>
+Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- http.c        | 24 +++++++++++++++---------
- http.h        |  9 +++++++++
- remote-curl.c |  5 +----
- 3 files changed, 25 insertions(+), 13 deletions(-)
+This change doesn't conflict with anything in pu; perhaps we can
+squeeze it in now?
 
-diff --git a/http.c b/http.c
-index 70eaa26..1212c58 100644
---- a/http.c
-+++ b/http.c
-@@ -880,6 +880,20 @@ int handle_curl_result(struct slot_results *results)
- 	}
+ builtin/fsck.c           |  2 +-
+ builtin/index-pack.c     |  2 +-
+ builtin/pack-objects.c   |  2 +-
+ builtin/prune.c          |  2 +-
+ builtin/replace.c        |  2 +-
+ builtin/unpack-objects.c |  2 +-
+ cache.h                  | 14 ++++++++++++--
+ environment.c            |  4 ++--
+ git.c                    |  2 +-
+ log-tree.c               |  2 +-
+ replace_object.c         |  2 +-
+ upload-pack.c            |  2 +-
+ 12 files changed, 24 insertions(+), 14 deletions(-)
+
+diff --git a/builtin/fsck.c b/builtin/fsck.c
+index 1affdd5..3d42978 100644
+--- a/builtin/fsck.c
++++ b/builtin/fsck.c
+@@ -630,7 +630,7 @@ int cmd_fsck(int argc, const char **argv, const char *prefix)
+ 	struct alternate_object_database *alt;
+ 
+ 	errors_found = 0;
+-	read_replace_refs = 0;
++	check_replace_refs = 0;
+ 
+ 	argc = parse_options(argc, argv, prefix, fsck_opts, fsck_usage, 0);
+ 
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index 2f37a38..a6b1c17 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -1502,7 +1502,7 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
+ 	if (argc == 2 && !strcmp(argv[1], "-h"))
+ 		usage(index_pack_usage);
+ 
+-	read_replace_refs = 0;
++	check_replace_refs = 0;
+ 
+ 	reset_pack_idx_option(&opts);
+ 	git_config(git_index_pack_config, &opts);
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 541667f..124015d 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -2507,7 +2507,7 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
+ 		OPT_END(),
+ 	};
+ 
+-	read_replace_refs = 0;
++	check_replace_refs = 0;
+ 
+ 	reset_pack_idx_option(&pack_idx_opts);
+ 	git_config(git_pack_config, NULL);
+diff --git a/builtin/prune.c b/builtin/prune.c
+index de43b26..68adc1c 100644
+--- a/builtin/prune.c
++++ b/builtin/prune.c
+@@ -150,7 +150,7 @@ int cmd_prune(int argc, const char **argv, const char *prefix)
+ 
+ 	expire = ULONG_MAX;
+ 	save_commit_buffer = 0;
+-	read_replace_refs = 0;
++	check_replace_refs = 0;
+ 	init_revisions(&revs, prefix);
+ 
+ 	argc = parse_options(argc, argv, prefix, options, prune_usage, 0);
+diff --git a/builtin/replace.c b/builtin/replace.c
+index 2336325..8b59775 100644
+--- a/builtin/replace.c
++++ b/builtin/replace.c
+@@ -178,7 +178,7 @@ int cmd_replace(int argc, const char **argv, const char *prefix)
+ 		OPT_END()
+ 	};
+ 
+-	read_replace_refs = 0;
++	check_replace_refs = 0;
+ 
+ 	argc = parse_options(argc, argv, prefix, options, git_replace_usage, 0);
+ 
+diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
+index 62ff673..df2d3e3 100644
+--- a/builtin/unpack-objects.c
++++ b/builtin/unpack-objects.c
+@@ -497,7 +497,7 @@ int cmd_unpack_objects(int argc, const char **argv, const char *prefix)
+ 	int i;
+ 	unsigned char sha1[20];
+ 
+-	read_replace_refs = 0;
++	check_replace_refs = 0;
+ 
+ 	git_config(git_default_config, NULL);
+ 
+diff --git a/cache.h b/cache.h
+index dc040fb..b039abc 100644
+--- a/cache.h
++++ b/cache.h
+@@ -580,7 +580,17 @@ extern size_t packed_git_limit;
+ extern size_t delta_base_cache_limit;
+ extern unsigned long big_file_threshold;
+ extern unsigned long pack_size_limit_cfg;
+-extern int read_replace_refs;
++
++/*
++ * Do replace refs need to be checked this run?  This variable is
++ * initialized to true unless --no-replace-object is used or
++ * $GIT_NO_REPLACE_OBJECTS is set, but is set to false by some
++ * commands that do not want replace references to be active.  As an
++ * optimization it is also set to false if replace references have
++ * been sought but there were none.
++ */
++extern int check_replace_refs;
++
+ extern int fsync_object_files;
+ extern int core_preload_index;
+ extern int core_apply_sparse_checkout;
+@@ -791,7 +801,7 @@ static inline void *read_sha1_file(const unsigned char *sha1, enum object_type *
+ extern const unsigned char *do_lookup_replace_object(const unsigned char *sha1);
+ static inline const unsigned char *lookup_replace_object(const unsigned char *sha1)
+ {
+-	if (!read_replace_refs)
++	if (!check_replace_refs)
+ 		return sha1;
+ 	return do_lookup_replace_object(sha1);
+ }
+diff --git a/environment.c b/environment.c
+index 4a3437d..c3c8606 100644
+--- a/environment.c
++++ b/environment.c
+@@ -45,7 +45,7 @@ const char *editor_program;
+ const char *askpass_program;
+ const char *excludes_file;
+ enum auto_crlf auto_crlf = AUTO_CRLF_FALSE;
+-int read_replace_refs = 1; /* NEEDSWORK: rename to use_replace_refs */
++int check_replace_refs = 1;
+ enum eol core_eol = EOL_UNSET;
+ enum safe_crlf safe_crlf = SAFE_CRLF_WARN;
+ unsigned whitespace_rule_cfg = WS_DEFAULT_RULE;
+@@ -147,7 +147,7 @@ static void setup_git_env(void)
+ 	if (!git_graft_file)
+ 		git_graft_file = git_pathdup("info/grafts");
+ 	if (getenv(NO_REPLACE_OBJECTS_ENVIRONMENT))
+-		read_replace_refs = 0;
++		check_replace_refs = 0;
+ 	namespace = expand_namespace(getenv(GIT_NAMESPACE_ENVIRONMENT));
+ 	namespace_len = strlen(namespace);
+ 	shallow_file = getenv(GIT_SHALLOW_FILE_ENVIRONMENT);
+diff --git a/git.c b/git.c
+index 7cf2953..9efd1a3 100644
+--- a/git.c
++++ b/git.c
+@@ -78,7 +78,7 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
+ 			if (envchanged)
+ 				*envchanged = 1;
+ 		} else if (!strcmp(cmd, "--no-replace-objects")) {
+-			read_replace_refs = 0;
++			check_replace_refs = 0;
+ 			setenv(NO_REPLACE_OBJECTS_ENVIRONMENT, "1", 1);
+ 			if (envchanged)
+ 				*envchanged = 1;
+diff --git a/log-tree.c b/log-tree.c
+index 08970bf..5ce217d 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -100,7 +100,7 @@ static int add_ref_decoration(const char *refname, const unsigned char *sha1, in
+ 
+ 	if (starts_with(refname, "refs/replace/")) {
+ 		unsigned char original_sha1[20];
+-		if (!read_replace_refs)
++		if (!check_replace_refs)
+ 			return 0;
+ 		if (get_sha1_hex(refname + 13, original_sha1)) {
+ 			warning("invalid replace ref %s", refname);
+diff --git a/replace_object.c b/replace_object.c
+index cdcaf8c..c5cf9f4 100644
+--- a/replace_object.c
++++ b/replace_object.c
+@@ -86,7 +86,7 @@ static void prepare_replace_object(void)
+ 	for_each_replace_ref(register_replace_ref, NULL);
+ 	replace_object_prepared = 1;
+ 	if (!replace_object_nr)
+-		read_replace_refs = 0;
++		check_replace_refs = 0;
  }
  
-+int run_one_slot(struct active_request_slot *slot,
-+		 struct slot_results *results)
-+{
-+	slot->results = results;
-+	if (!start_active_slot(slot)) {
-+		snprintf(curl_errorstr, sizeof(curl_errorstr),
-+			 "failed to start HTTP request");
-+		return HTTP_START_FAILED;
-+	}
-+
-+	run_active_slot(slot);
-+	return handle_curl_result(results);
-+}
-+
- static CURLcode curlinfo_strbuf(CURL *curl, CURLINFO info, struct strbuf *buf)
- {
- 	char *ptr;
-@@ -907,7 +921,6 @@ static int http_request(const char *url,
- 	int ret;
+ /* We allow "recursive" replacement. Only within reason, though */
+diff --git a/upload-pack.c b/upload-pack.c
+index 0c44f6b..9314c25 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -796,7 +796,7 @@ int main(int argc, char **argv)
  
- 	slot = get_active_slot();
--	slot->results = &results;
- 	curl_easy_setopt(slot->curl, CURLOPT_HTTPGET, 1);
+ 	packet_trace_identity("upload-pack");
+ 	git_extract_argv0_path(argv[0]);
+-	read_replace_refs = 0;
++	check_replace_refs = 0;
  
- 	if (result == NULL) {
-@@ -942,14 +955,7 @@ static int http_request(const char *url,
- 	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, headers);
- 	curl_easy_setopt(slot->curl, CURLOPT_ENCODING, "gzip");
- 
--	if (start_active_slot(slot)) {
--		run_active_slot(slot);
--		ret = handle_curl_result(&results);
--	} else {
--		snprintf(curl_errorstr, sizeof(curl_errorstr),
--			 "failed to start HTTP request");
--		ret = HTTP_START_FAILED;
--	}
-+	ret = run_one_slot(slot, &results);
- 
- 	if (options && options->content_type)
- 		curlinfo_strbuf(slot->curl, CURLINFO_CONTENT_TYPE,
-diff --git a/http.h b/http.h
-index cd37d58..a828884 100644
---- a/http.h
-+++ b/http.h
-@@ -90,6 +90,15 @@ extern void finish_active_slot(struct active_request_slot *slot);
- extern void finish_all_active_slots(void);
- extern int handle_curl_result(struct slot_results *results);
- 
-+/*
-+ * This will run one slot to completion in a blocking manner, similar to how
-+ * curl_easy_perform would work (but we don't want to use that, because
-+ * we do not want to intermingle calls to curl_multi and curl_easy).
-+ *
-+ */
-+int run_one_slot(struct active_request_slot *slot,
-+		 struct slot_results *results);
-+
- #ifdef USE_CURL_MULTI
- extern void fill_active_slots(void);
- extern void add_fill_function(void *data, int (*fill)(void *));
-diff --git a/remote-curl.c b/remote-curl.c
-index 10cb011..52c2d96 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -423,11 +423,8 @@ static int run_slot(struct active_request_slot *slot,
- 	if (!results)
- 		results = &results_buf;
- 
--	slot->results = results;
--	slot->curl_result = curl_easy_perform(slot->curl);
--	finish_active_slot(slot);
-+	err = run_one_slot(slot, results);
- 
--	err = handle_curl_result(results);
- 	if (err != HTTP_OK && err != HTTP_REAUTH) {
- 		error("RPC failed; result=%d, HTTP code = %ld",
- 		      results->curl_result, results->http_code);
+ 	for (i = 1; i < argc; i++) {
+ 		char *arg = argv[i];
 -- 
-1.8.5.2.500.g8060133
+1.8.5.3
