@@ -1,157 +1,111 @@
-From: Christian Jaeger <chrjae@gmail.com>
-Subject: Re: git gc --aggressive led to about 40 times slower "git log --raw"
-Date: Tue, 18 Feb 2014 16:43:26 +0000
-Message-ID: <CAEjYwfUfOo1huAJE2oLrMorV0tQy0Y79y2WPGEK8R0T_wq4k9g@mail.gmail.com>
-References: <CAEjYwfU==yYtQBDzZzEPdvbqz1N=gZtbMr5ccRaC_U7NfViQLA@mail.gmail.com>
- <87r470ssuc.fsf@fencepost.gnu.org> <CACsJy8D9tws_gu6yWVdz3t+Vfg5-9iorptn4BLnTL3b+YWcHzQ@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] revert.c: Allow to specify -x via git-config
+Date: Tue, 18 Feb 2014 09:49:13 -0800
+Message-ID: <20140218174913.GB7855@google.com>
+References: <20140218065620.GA3448@bogon.m.sigxcpu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: David Kastrup <dak@gnu.org>, Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 18 17:43:53 2014
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Guido =?iso-8859-1?Q?G=FCnther?= <agx@sigxcpu.org>
+X-From: git-owner@vger.kernel.org Tue Feb 18 18:49:23 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WFnlx-0003Za-0H
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Feb 2014 17:43:53 +0100
+	id 1WFonK-00046R-Ql
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Feb 2014 18:49:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755245AbaBRQns (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Feb 2014 11:43:48 -0500
-Received: from mail-oa0-f43.google.com ([209.85.219.43]:56764 "EHLO
-	mail-oa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751774AbaBRQnr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Feb 2014 11:43:47 -0500
-Received: by mail-oa0-f43.google.com with SMTP id h16so19593884oag.2
-        for <git@vger.kernel.org>; Tue, 18 Feb 2014 08:43:47 -0800 (PST)
+	id S1754015AbaBRRtS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 18 Feb 2014 12:49:18 -0500
+Received: from mail-pb0-f44.google.com ([209.85.160.44]:41235 "EHLO
+	mail-pb0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753548AbaBRRtR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Feb 2014 12:49:17 -0500
+Received: by mail-pb0-f44.google.com with SMTP id rq2so17123240pbb.3
+        for <git@vger.kernel.org>; Tue, 18 Feb 2014 09:49:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=5puhovPHf2GrAQz9Mi955Wbd8H8lFifr7pnBdVDPk1A=;
-        b=yCc3QgpAGI2maPxcf++24t9ioEcAwb8liDlsjQtN6NFQ1eZpf6+2Kp8qUFLjheUOHl
-         9oUEhRPX5QomI/N3pN279j4EH3ImMEaJwE8fEm5Yl/ezm2EVA07+uxIDe1fYpt6S+202
-         RHTgwpVz4n2gd2G8xuNml0wjVyjVEkNknmDV9uSb00Z+uUDJYpmk+sSyGBWJVR/H70n2
-         ApvD667qQvN8wjtc/aAPFxE6IkVgGFPUIuZnB0RSpvdwExQGfxpdHYb3lQaLzhvg7rQC
-         gnTS4TmRNFUSn9spL8Bi5GN5Df+XWcWGQyTc46G3I1TTjBgPg2H/au09QScUAXWFhGl2
-         qAtA==
-X-Received: by 10.182.126.167 with SMTP id mz7mr1675378obb.69.1392741826979;
- Tue, 18 Feb 2014 08:43:46 -0800 (PST)
-Received: by 10.76.27.73 with HTTP; Tue, 18 Feb 2014 08:43:26 -0800 (PST)
-In-Reply-To: <CACsJy8D9tws_gu6yWVdz3t+Vfg5-9iorptn4BLnTL3b+YWcHzQ@mail.gmail.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=81gWtZ51I8iSanV1VE6hoDK9OAySxJLGy91uunyV6V4=;
+        b=k2ud5dQWxQjvlakYXBZoxfzmIIxgvreIwk/d+BL9gmO9a4sbhJHz3fbNtX5vNOc152
+         VyjbWojCwGppZGw2EMmjfW2HWIQsU54lNVCqwKt0Bx2rl+2gdRz6TFeqxC9kZtdKhkzH
+         l9IeRBYw8pSAqF9jhC5kEfvLtnIwebDJp1w5svfCzcEGBni4A4pUs+weiVyhgaii7j5Y
+         DRgT4httjhLNeXNN1OQA/dAEcpZr+zWsi3T5WxE56gVOVB4Hy68dfhfxDvPYCX9ISoqL
+         RnUCXEbdqP+BKnciJQ4IzF2Qv98D1SE4NnHuiz9RJe4ky4xR1VQeiqP9WIlP0JL5PiOo
+         JR1Q==
+X-Received: by 10.66.164.70 with SMTP id yo6mr34860828pab.85.1392745757278;
+        Tue, 18 Feb 2014 09:49:17 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id q7sm57969307pbc.20.2014.02.18.09.49.15
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 18 Feb 2014 09:49:16 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <20140218065620.GA3448@bogon.m.sigxcpu.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242330>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242332>
 
-2014-02-18 9:45 GMT+00:00 Duy Nguyen <pclouds@gmail.com>:
-> Christian can try "git repack -adf"
+Hi,
 
-That's what I already mentioned in my first mail is what I used to fix
-the problem.
+Guido G=FCnther wrote:
 
-Here are some 'hard' numbers, FWIW:
+> Without this when maintaining stable branches it's easy to forget to =
+use
+> -x to track where a patch was cherry-picked from.
+[...]
+> --- a/Documentation/git-cherry-pick.txt
+> +++ b/Documentation/git-cherry-pick.txt
+> @@ -215,6 +215,14 @@ the working tree.
+>  spending extra time to avoid mistakes based on incorrectly matching
+>  context lines.
+> =20
+> +CONFIGURATION
+> +-------------
+> +
+> +See linkgit:git-config[1] for core variables.
+> +
+> +cherrypick.record-origin::
+> +	Default for the `-x` option. Defaults to `false`.
 
-- both ~/scr and swap are on the same SSD;
+I'm not convinced this is a good idea.  Even if I always want -x when
+cherry-picking to stable, isn't this going to add the extra clutter
+line when I cherry-pick on other branches?  It's especially worrying
+because there would be no way to override the configuration with a
+flag on the command line.  ("-r" which used to do that is now a
+no-op.)
 
-$ free
-             total       used       free     shared    buffers     cached
-Mem:       3996748    3800828     195920          0     377176    1078848
--/+ buffers/cache:    2344804    1651944
-Swap:      2097148     169760    1927388
+I would be more easily convinced by a '[branch "foo"]
+recordcherrypickorigins' option that makes cherry-pick default to '-x'
+when and only when on the "foo" branch.
 
-git only used up to about 100 MB of VIRT or RSS when I checked, there
-was an ulimit of "-S -v 1200000".
+Can you say more about the context?  Why is it important to record the
+original commit id?  Is it a matter of keeping a reminder of the
+commits' similarity (which cherry-pick without '-x' does ok by reusing
+the same message) or are people reviewing the change downstream going
+to be judging the change based on the recorded upstream commit id?
+(Like linux's stable-<version> branches --- but those have other
+requirements so I don't think this configuration would work as is
+there.)
 
-- this is git version 1.7.10.4 (1:1.7.10.4-1+wheezy1 i386 Debian)
+[...]
+> +++ b/builtin/revert.c
+> @@ -196,6 +196,15 @@ int cmd_revert(int argc, const char **argv, cons=
+t char *prefix)
+[...]
+> +	if (!strcmp(var, "cherrypick.record-origin"))
+> +		opts->record_origin =3D git_config_bool (var, value);
 
-- after my attempted merge (which had conflicts and I had then
-cancelled by way of git reset --hard), and then a "git gc", the times
-were:
+More nitpicky: git uses camelCase, not dash-delimited, for multiword
+configuration items.  The config parsing machinery normalizes to
+lowercase, so this would then be "cherrypick.recordorigin".
 
-~/scr$ time git log --raw > _THELOG
-
-real 3m7.002s
-user 2m0.252s
-sys 1m6.008s
-
-- on a copy:
-
-/dev/shm/scr$ time git repack -a -d -f
-Counting objects: 34917, done.
-Delta compression using up to 2 threads.
-Compressing objects: 100% (27038/27038), done.
-Writing objects: 100% (34917/34917), done.
-Total 34917 (delta 13928), reused 0 (delta 0)
-
-real 4m33.193s
-user 3m42.950s
-sys 1m13.821s
-
-/dev/shm/scr$ time git log --raw > _THELOG2
-
-real 0m8.276s
-user 0m7.192s
-sys 0m1.052s
-
-(not sure why it took 8s here, perhaps I had another process running
-at the same time? Compare with the "0m4.913s" below.)
-
-/dev/shm/scr$ time g-gc --aggressive
-Counting objects: 36066, done.
-Delta compression using up to 2 threads.
-Compressing objects: 100% (27812/27812), done.
-Writing objects: 100% (36066/36066), done.
-Total 36066 (delta 14367), reused 21699 (delta 0)
-Checking connectivity: 36066, done.
-
-real 5m52.013s
-user 8m28.652s
-sys 1m4.308s
-
-/dev/shm/scr$ time git log --raw > _THELOG2
-
-real 1m34.430s
-user 0m47.291s
-sys 0m46.615s
-
-/dev/shm/scr$ time git repack -adf
-Counting objects: 36066, done.
-Delta compression using up to 2 threads.
-Compressing objects: 100% (27812/27812), done.
-Writing objects: 100% (36066/36066), done.
-Total 36066 (delta 14256), reused 21699 (delta 0)
-
-real 2m32.083s
-user 1m51.295s
-sys 1m4.940s
-
-/dev/shm/scr$ time git log --raw > _THELOG3
-
-real 0m4.913s
-user 0m3.944s
-sys 0m0.944s
-
-/dev/shm/scr$ du -s .git
-43728 .git
-
-- back in the original place:
-
-~/scr$ time git repack -a -d -f
-Counting objects: 36066, done.
-Delta compression using up to 2 threads.
-Compressing objects: 100% (27812/27812), done.
-Writing objects: 100% (36066/36066), done.
-Total 36066 (delta 14257), reused 21700 (delta 0)
-
-real 4m6.503s
-user 3m16.568s
-sys 1m11.640s
-
-~/scr$ time git log --raw > _THELOG2
-
-real 0m5.002s
-user 0m4.032s
-sys 0m0.952s
+Hope that helps,
+Jonathan
