@@ -1,104 +1,78 @@
-From: Duy Nguyen <pclouds@gmail.com>
+From: David Kastrup <dak@gnu.org>
 Subject: Re: git gc --aggressive led to about 40 times slower "git log --raw"
-Date: Tue, 18 Feb 2014 16:45:25 +0700
-Message-ID: <CACsJy8D9tws_gu6yWVdz3t+Vfg5-9iorptn4BLnTL3b+YWcHzQ@mail.gmail.com>
+Date: Tue, 18 Feb 2014 11:25:03 +0100
+Message-ID: <87ioscsoow.fsf@fencepost.gnu.org>
 References: <CAEjYwfU==yYtQBDzZzEPdvbqz1N=gZtbMr5ccRaC_U7NfViQLA@mail.gmail.com>
- <87r470ssuc.fsf@fencepost.gnu.org>
+	<87r470ssuc.fsf@fencepost.gnu.org>
+	<CACsJy8D9tws_gu6yWVdz3t+Vfg5-9iorptn4BLnTL3b+YWcHzQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
 Cc: Christian Jaeger <chrjae@gmail.com>,
 	Git Mailing List <git@vger.kernel.org>
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Tue Feb 18 10:46:11 2014
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 18 11:25:16 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WFhFi-000425-VI
-	for gcvg-git-2@plane.gmane.org; Tue, 18 Feb 2014 10:46:11 +0100
+	id 1WFhrV-0003Qt-Fs
+	for gcvg-git-2@plane.gmane.org; Tue, 18 Feb 2014 11:25:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754715AbaBRJqE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Feb 2014 04:46:04 -0500
-Received: from mail-qc0-f173.google.com ([209.85.216.173]:37269 "EHLO
-	mail-qc0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754630AbaBRJp5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Feb 2014 04:45:57 -0500
-Received: by mail-qc0-f173.google.com with SMTP id i8so25134212qcq.18
-        for <git@vger.kernel.org>; Tue, 18 Feb 2014 01:45:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=xeYUzccXDK6xqCIUE6CveNrfC1C7eYyYsjWUBIdF2Vc=;
-        b=X6MhK0t2MkafKihlViioK6TV79ePr5/3ZHBPIcQYF2L0gnyOYSQcILnrAug5th9vo/
-         07qqnmn8Q+Bk1VauoW/jMNG6nI2CChmK53HXmtO2Av6fpjPfbQEQXcmOnYyvukFpY0m1
-         1+tPBcdTndIaGJNMHqxZJPwDoMzIi2m8oOuvNmdo8wn3F5XopvbHDJYwqVa4Y6dkr8of
-         oMOsq7KMuCEukdpDgJPDPRG+nWV5v+syRK9/qGwbVZD02n8g5OqYfzFUVJGItFkJGwlg
-         IRtHQpvUE4QbHnsetGtaTCAiX+UsjC/qIV88CAVnh4Fs5LuMbDVWF8/NOYJC/P/wd9bV
-         1drA==
-X-Received: by 10.224.19.199 with SMTP id c7mr8999331qab.78.1392716756834;
- Tue, 18 Feb 2014 01:45:56 -0800 (PST)
-Received: by 10.96.215.102 with HTTP; Tue, 18 Feb 2014 01:45:25 -0800 (PST)
-In-Reply-To: <87r470ssuc.fsf@fencepost.gnu.org>
+	id S1754895AbaBRKZH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Feb 2014 05:25:07 -0500
+Received: from fencepost.gnu.org ([208.118.235.10]:33583 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754622AbaBRKZF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Feb 2014 05:25:05 -0500
+Received: from localhost ([127.0.0.1]:60858 helo=lola)
+	by fencepost.gnu.org with esmtp (Exim 4.71)
+	(envelope-from <dak@gnu.org>)
+	id 1WFhrM-00011J-8I; Tue, 18 Feb 2014 05:25:04 -0500
+Received: by lola (Postfix, from userid 1000)
+	id DE411E0487; Tue, 18 Feb 2014 11:25:03 +0100 (CET)
+In-Reply-To: <CACsJy8D9tws_gu6yWVdz3t+Vfg5-9iorptn4BLnTL3b+YWcHzQ@mail.gmail.com>
+	(Duy Nguyen's message of "Tue, 18 Feb 2014 16:45:25 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242292>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242293>
 
-On Tue, Feb 18, 2014 at 3:55 PM, David Kastrup <dak@gnu.org> wrote:
-> Christian Jaeger <chrjae@gmail.com> writes:
->
->> I've got a repository where "git log --raw > _somefile" took a few
->> seconds in the past, but after an attempt at merging some commits that
->> were collected in a clone of the same repo that was created about a
->> year ago, I noticed that this command was now taking 3 minutes 7
->> seconds. "git gc", "git fsck", "git clone file:///the/repo/.git" also
->> now each took between ~4-10 minutes, also "git log --raw somefile" got
->> equally unusably slow. With the help of the people on the IRC, I
->> tracked it down to my recent use of "git gc --aggressive" in this
->> repo. Running "git repack -a -d -f" solved it, now it's again taking
->> 4-5 seconds. After running "git gc --aggressive" again for
->> confirmation, "git log --raw > _somefile" was again slowed down,
->> although now 'only' to 1 minute 34 seconds;
->
-> [...]
->
->> I've now learned to avoid "git gc --aggressive". Perhaps there are
->> some other conclusions to be drawn, I don't know.
->
-> I've seen the same with my ongoing work on git-blame with the current
-> Emacs Git mirror.  Aggressive packing reduces the repository size to
-> about a quarter, but it blows up the system time (mainly I/O)
-> significantly, quite reducing the total benefits of my algorithmic
-> improvements there.
+Duy Nguyen <pclouds@gmail.com> writes:
 
-Likely because --aggressive passes --depth=250 to pack-objects. Long
-delta chains could reduce pack size and increase I/O as well as zlib
-processing signficantly. Christian can try "git repack -adf" which is
-really close to --aggressive (except it uses default --depth=50) and
-see if it makes any difference.
-
-> There is also some quite visible additional time spent in zlib, so a
-> wild guess would be that zlib is not really suited to the massive amount
-> of directory entries of a Git object store.  Since the system time still
-> dominates, this guess would only make sense if Git over zlib kept
-> rereading the directory section of whatever compressed file we are
-> talking about.  But that's really a rather handwavy wild guess without
-> anything better than a hunch to back it up.  I don't even know what kind
-> of compression and/or packs are used: I've only ever messed myself with
-> the delta coding of the normal "unpacked" operation (there are a few
-> older commits from me on that).
+> On Tue, Feb 18, 2014 at 3:55 PM, David Kastrup <dak@gnu.org> wrote:
 >
-> --
-> David Kastrup
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>> I've seen the same with my ongoing work on git-blame with the current
+>> Emacs Git mirror.  Aggressive packing reduces the repository size to
+>> about a quarter, but it blows up the system time (mainly I/O)
+>> significantly, quite reducing the total benefits of my algorithmic
+>> improvements there.
+>
+> Likely because --aggressive passes --depth=250 to pack-objects. Long
+> delta chains could reduce pack size and increase I/O as well as zlib
+> processing signficantly.
 
+Increased zlib processing time is one thing, but if it _increases_ I/O,
+then it would seem there is a serious impedance mismatch between the
+compression scheme and the code relying on it, leading to repeated reads
+of blocks only needed for reconstructing dynamic compression
+dictionaries.
 
+Compression should reduce rather than increase the total amount of
+reads.  So it would seem that either better caching and/or smaller
+independent block sizes and/or strategies for sorting the delta chain to
+make its resolution require mostly linear reads, and then make sure to
+do this in a manner that does not reinitialize the decompression for
+accessing each delta that happens to be more or less "in sequence".
+
+Of course, this is assuming that the additional time is spent
+uncompressing data rather than navigating directories.
+
+It's actually conceivable that there is quite a bit of potential to get
+better performance from unchanged readers by packing stuff in a
+different order while still using the same delta chain depth.
 
 -- 
-Duy
+David Kastrup
