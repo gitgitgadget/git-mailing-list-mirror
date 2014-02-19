@@ -1,86 +1,70 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: git gc --aggressive led to about 40 times slower "git log --raw"
-Date: Wed, 19 Feb 2014 10:01:08 +0100
-Message-ID: <87bny3qxwr.fsf@fencepost.gnu.org>
-References: <CAEjYwfU==yYtQBDzZzEPdvbqz1N=gZtbMr5ccRaC_U7NfViQLA@mail.gmail.com>
-	<87r470ssuc.fsf@fencepost.gnu.org>
-	<CACsJy8D9tws_gu6yWVdz3t+Vfg5-9iorptn4BLnTL3b+YWcHzQ@mail.gmail.com>
-	<87ioscsoow.fsf@fencepost.gnu.org> <20140218155842.GA7855@google.com>
-	<xmqqzjlocf28.fsf@gitster.dls.corp.google.com>
-	<CACsJy8AEXP45K+r3gGVTWbn4uuPLeHOkf-an20rj77QSfG1-ew@mail.gmail.com>
-	<xmqq4n3warni.fsf@gitster.dls.corp.google.com>
-	<CACsJy8C+wGd9WxnsML6-_G_S5GtN2pCPf09kcFtBVu-SDfP8YA@mail.gmail.com>
-	<CAGK7Mr4wpwUK6UF6vTmgszX4sajPDvQazY2QagFfH9BEJx_9Ow@mail.gmail.com>
+From: =?UTF-8?B?U3RlZmFuIE7DpHdl?= <stefan.naewe@atlas-elektronik.com>
+Subject: Re: [PATCH] Git release notes man page
+Date: Wed, 19 Feb 2014 10:06:57 +0100
+Message-ID: <53047431.7070909@atlas-elektronik.com>
+References: <1392460179-776-1-git-send-email-philipoakley@iee.org> <xmqqha7wcbkz.fsf@gitster.dls.corp.google.com> <1EC26D492ABB45FF8C399F84B1E30817@PhilipOakley>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Duy Nguyen <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Christian Jaeger <chrjae@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Philippe Vaucher <philippe.vaucher@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 19 10:01:21 2014
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: GitList <git@vger.kernel.org>
+To: Philip Oakley <philipoakley@iee.org>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 19 10:06:23 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WG31r-0001OE-0c
-	for gcvg-git-2@plane.gmane.org; Wed, 19 Feb 2014 10:01:19 +0100
+	id 1WG36k-0001SF-2Q
+	for gcvg-git-2@plane.gmane.org; Wed, 19 Feb 2014 10:06:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752122AbaBSJBL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Feb 2014 04:01:11 -0500
-Received: from fencepost.gnu.org ([208.118.235.10]:35559 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751375AbaBSJBJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Feb 2014 04:01:09 -0500
-Received: from localhost ([127.0.0.1]:34600 helo=lola)
-	by fencepost.gnu.org with esmtp (Exim 4.71)
-	(envelope-from <dak@gnu.org>)
-	id 1WG31g-0002WJ-Hh; Wed, 19 Feb 2014 04:01:08 -0500
-Received: by lola (Postfix, from userid 1000)
-	id 08141E0683; Wed, 19 Feb 2014 10:01:08 +0100 (CET)
-In-Reply-To: <CAGK7Mr4wpwUK6UF6vTmgszX4sajPDvQazY2QagFfH9BEJx_9Ow@mail.gmail.com>
-	(Philippe Vaucher's message of "Wed, 19 Feb 2014 09:38:31 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3.50 (gnu/linux)
+	id S1752708AbaBSJGN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Feb 2014 04:06:13 -0500
+Received: from mail96.atlas.de ([194.156.172.86]:26269 "EHLO mail96.atlas.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752304AbaBSJGI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Feb 2014 04:06:08 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by mail96.atlas.de (Postfix) with ESMTP id AD5DC10838;
+	Wed, 19 Feb 2014 10:06:05 +0100 (CET)
+X-Virus-Scanned: amavisd-new at mail96.atlas.de
+Received: from mail96.atlas.de ([127.0.0.1])
+	by localhost (mail96.atlas.de [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id rrdxQEDgwZXK; Wed, 19 Feb 2014 10:06:04 +0100 (CET)
+Received: from mgsrv01.atlas.de (mail01.atlas.mailrelays.atlas.de [10.200.101.16])
+	by mail96.atlas.de (Postfix) with ESMTP;
+	Wed, 19 Feb 2014 10:06:04 +0100 (CET)
+Received: from MSSRVS1.atlas.de (mssrvs1.atlas.de [10.200.101.71])
+	by mgsrv01.atlas.de (Postfix) with ESMTP id ECE5427169;
+	Wed, 19 Feb 2014 10:06:02 +0100 (CET)
+Received: from [10.200.54.97] (10.200.54.97) by MSSRVS1.atlas.de
+ (10.200.101.71) with Microsoft SMTP Server (TLS) id 8.3.279.5; Wed, 19 Feb
+ 2014 10:06:02 +0100
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:24.0) Gecko/20100101 Thunderbird/24.3.0
+In-Reply-To: <1EC26D492ABB45FF8C399F84B1E30817@PhilipOakley>
+X-Enigmail-Version: 1.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242384>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242385>
 
-Philippe Vaucher <philippe.vaucher@gmail.com> writes:
+Am 18.02.2014 23:54, schrieb Philip Oakley:
+> From: "Junio C Hamano" <gitster@pobox.com>
+>>   I do not understand why
+>> it is even a good idea to show release notes from the command line
+>> "git" interface.
+> 
+> My looking at this came from Stefan's suggestion noted above 
+> $gmane/240595. So it had at least one follower ;-)
 
->> fwiw this is the thread that added --depth=250
->>
->> http://thread.gmane.org/gmane.comp.gcc.devel/94565/focus=94626
->
-> This post is quite interesting:
-> http://article.gmane.org/gmane.comp.gcc.devel/94637
+Yes, but I could definitely live without it.
+I compile git myself on most systems and that would just be a
+convenient way to get an overview of the latest changes.
 
-Yes.  Of course I am prejudiced because I volunteered fixing git-blame
-on the Emacs developer list in order to make it more feasible to
-transfer the Emacs repository to Git.
-
-Calling git blame via C-x v g is a rather important part of the
-workflow, and it's currently intolerable to work with on a number of
-files.
-
-While I'm fixing the basic shortcomings in builtin/blame.c itself, the
-operation "fetch the objects" is necessary for all objects at least
-once.  It's conceivable that some nice caching strategy would help with
-avoiding the repeated traversal of long delta chain tails.  That could
-also help defusing the operation of basic stuff like git-log.
-
-But the short and long end of it is that there are valid operations
-accessing a large amount of past history, and one point of having a
-distributed version control system with non-shallow repository by
-default is to have history and ways of working with it at one's hand.
-
-And git's default modus of operation is _not_ to store things like
-copies and moves and renames in commits, but deduce them from looking at
-the stored data.  So making looking at stored data including old data
-expensive means that Git does not work well in the way it is designed to
-operate.
-
+Regards,
+  Stefan
 -- 
-David Kastrup
+----------------------------------------------------------------
+/dev/random says: It is bad luck to be superstitious.
+python -c "print '73746566616e2e6e616577654061746c61732d656c656b74726f6e696b2e636f6d'.decode('hex')"
