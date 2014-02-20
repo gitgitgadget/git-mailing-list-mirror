@@ -1,95 +1,108 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 02/25] Convert git_snpath() to strbuf_git_path()
-Date: Thu, 20 Feb 2014 10:54:50 -0800
-Message-ID: <xmqq1tyx7gxx.fsf@gitster.dls.corp.google.com>
-References: <1392730814-19656-1-git-send-email-pclouds@gmail.com>
-	<1392730814-19656-3-git-send-email-pclouds@gmail.com>
-	<xmqqeh2y7jff.fsf@gitster.dls.corp.google.com>
-	<CACsJy8BJ=OKzGDFwWQF_k_Gp9XeNwf7pe7c6_ebduJXN=xeOxw@mail.gmail.com>
-	<xmqqa9dm78n3.fsf@gitster.dls.corp.google.com>
-	<CACsJy8DB+OP6_vwZKWXjq4YbtiKDg2NE2zRsAuz1ER6oTmyGag@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 20 19:55:07 2014
+From: Max Horn <max@quendi.de>
+Subject: Re: What's cooking in git.git (Feb 2014, #06; Wed, 19)
+Date: Thu, 20 Feb 2014 19:39:14 +0100
+Message-ID: <BCF58F31-7130-4F4B-BE53-D917C4D50D96@quendi.de>
+References: <xmqqppmi7pbn.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0 (Mac OS X Mail 6.6 \(1510\))
+Content-Type: multipart/signed; boundary="Apple-Mail=_C2BD2A2C-6CFD-4A5C-B11E-8E0BBF1AB16F"; protocol="application/pgp-signature"; micalg=pgp-sha256
+Cc: git@vger.kernel.org, Felipe Contreras <felipe.contreras@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 20 20:05:32 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WGYm0-0004T9-4W
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Feb 2014 19:55:04 +0100
+	id 1WGYw7-0003ep-TA
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Feb 2014 20:05:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755466AbaBTSy7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Feb 2014 13:54:59 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56248 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754739AbaBTSy6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Feb 2014 13:54:58 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 538126DEF8;
-	Thu, 20 Feb 2014 13:54:57 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=gqPsLquzkpyM3ReZVsyKI0euE84=; b=uVi9zm
-	fyLXjWbi12eWTGwWMyVeIn8uGcK5SsD658N8l9/5H8f8agLm559SE22z7sh7O1/8
-	/54ucXoOs8GnwvUB2XRHGtrW63p00RbwrlPoS9Vs3UoefVOjgboY200MrYAoKpRw
-	dFcKSAwSvyjrY+SONmq5G2gwTn5Vl+tkBqo58=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=tK7+JbL3pW8FKRbYVI6GlKr5AGwwtIzO
-	msFHMpXKE5QRU2C1p/IUrxyJtqf7aNhTdKDgvPcHr4MdlTEVAG/8TfJKBboKoCL3
-	h2SOuv/64wJDIWmgUHcNLaF7utObpWR/dDpV4bPbijSnrWxWa79bOMZcELtrghPH
-	Tkk+LPQs8dI=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B19936DEF5;
-	Thu, 20 Feb 2014 13:54:56 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1309D6DEF3;
-	Thu, 20 Feb 2014 13:54:52 -0500 (EST)
-In-Reply-To: <CACsJy8DB+OP6_vwZKWXjq4YbtiKDg2NE2zRsAuz1ER6oTmyGag@mail.gmail.com>
-	(Duy Nguyen's message of "Thu, 20 Feb 2014 10:55:29 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 7B818386-9A60-11E3-9523-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1755431AbaBTTF2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Feb 2014 14:05:28 -0500
+Received: from wp256.webpack.hosteurope.de ([80.237.133.25]:40489 "EHLO
+	wp256.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754700AbaBTTF1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 20 Feb 2014 14:05:27 -0500
+X-Greylist: delayed 1571 seconds by postgrey-1.27 at vger.kernel.org; Thu, 20 Feb 2014 14:05:26 EST
+Received: from vpn-1-allg-03.hrz.uni-giessen.de ([134.176.250.3]); authenticated
+	by wp256.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:RSA_AES_128_CBC_SHA1:16)
+	id 1WGYWf-0005pa-FV; Thu, 20 Feb 2014 19:39:13 +0100
+In-Reply-To: <xmqqppmi7pbn.fsf@gitster.dls.corp.google.com>
+X-Mailer: Apple Mail (2.1510)
+X-bounce-key: webpack.hosteurope.de;max@quendi.de;1392923127;9ce0b41f;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242439>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242440>
 
-Duy Nguyen <pclouds@gmail.com> writes:
 
-> OK so your question was if there was a git_path() or mkpath() call
-> earlier in update_refs_for_switch() and the result was expected to
-> remain stable till the end of update_refs_for_switch(), then this
-> conversion could ruin it, correct? I didn't think about that,...
+--Apple-Mail=_C2BD2A2C-6CFD-4A5C-B11E-8E0BBF1AB16F
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=us-ascii
 
-Yeah, I couldn't tell if you thought about it, and that was why I
-asked.
 
-If a (recursively) caller does this:
+On 19.02.2014, at 22:41, Junio C Hamano <gitster@pobox.com> wrote:
 
-	caller () {
-		const char *path1 = git_path(...);
-                const char *path2 = mkpath(...);
-                const char *path3 = git_path_submodule(...);
-		callee();
-                use(path1, path2, path3);
-	}
+> * fc/transport-helper-fixes (2013-12-09) 6 commits
+> - remote-bzr: support the new 'force' option
+> - test-hg.sh: tests are now expected to pass
+> - transport-helper: check for 'forced update' message
+> - transport-helper: add 'force' to 'export' helpers
+> - transport-helper: don't update refs in dry-run
+> - transport-helper: mismerge fix
+>=20
+> Updates transport-helper, fast-import and fast-export to allow the
+> ref mapping and ref deletion in a way similar to the natively
+> supported transports.
+>=20
+> Reported to break t5541, and has been stalled for a while without
+> fixes.
+>=20
+> Will discard.
 
-it was safe back when the callee() did not mess with the round-robin
-pathname buffer, but it will be broken once callee() does.  While
-looking at the patch I didn't check what the caller was doing hence
-my question.
+Since I somewhat care about transport-helpers, I had a closer look at =
+this failure. Torsten already narrowed it down to f9e3c6bebb89de12 =
+(transport-helper: check for 'forced update' message).
 
-In general, in order to reduce that kind of hard-to-debug bugs, we
-should be reducing the uses of these functions when we do not have
-to (which applies equally to such a caller that expects multiple
-temporary paths to persist, and to a callee as well).  Adding
-multiple repeated calls to git_path(), especially two of them
-formatting the same string into two separate round-robin pathname
-buffer, looked strange in a patch that was supposed to be a
-preparatory code-cleanup stage.
+Looking at that commit, the problem is the new line
+
+   (*ref)->forced_update =3D forced;
+
+which is supposed to set forced_update to 1 in certain cases; but the =
+code which sets "forced =3D 1" ever triggered (at least in my limited =
+tests). Worse, it seems forced_update can be set to 1 before we ever get =
+there, and in these casss, we end up reseting forced_update from 1 back =
+to 0. This triggers the test failure.
+
+So a simple fix for the test failure is to drop that patch. Another =
+would be to change the assignment to
+
+   (*ref)->forced_update |=3D forced;
+
+But I haven't spent enough time to look at the patch to determine if one =
+of these two possible changes is correct. All I can say is that dropping =
+that single commit fixes the test failure for me and seems to cause now =
+new failures.
+
+
+Cheers,
+Max
+
+--Apple-Mail=_C2BD2A2C-6CFD-4A5C-B11E-8E0BBF1AB16F
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+	filename=signature.asc
+Content-Type: application/pgp-signature;
+	name=signature.asc
+Content-Description: Message signed with OpenPGP using GPGMail
+
+-----BEGIN PGP SIGNATURE-----
+Comment: GPGTools - http://gpgtools.org
+
+iF4EAREIAAYFAlMGS9YACgkQIpJVslrhe1nwpwD+JOCUxnGdy950QTlL1LK0BDok
+1HSwH0cWsgzPsJb+T1AA/2ROaId8/CRsACrVPbXwIyDmgPwodOdFlr3FKT79q+C+
+=9qC9
+-----END PGP SIGNATURE-----
+
+--Apple-Mail=_C2BD2A2C-6CFD-4A5C-B11E-8E0BBF1AB16F--
