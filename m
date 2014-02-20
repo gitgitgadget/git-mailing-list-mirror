@@ -1,132 +1,95 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: error: src refspec refs/heads/master matches more than one.
-Date: Thu, 20 Feb 2014 10:22:19 -0800
-Message-ID: <xmqq61o97ig4.fsf@gitster.dls.corp.google.com>
-References: <20140214113136.GA17817@raven.inka.de> <87a9dt981o.fsf@igel.home>
-	<CACsJy8BevKQaRLYMMv7bTjf_ZAOnkrimws519OyhGZz6_Vr_-A@mail.gmail.com>
-	<xmqqy51dirjs.fsf@gitster.dls.corp.google.com>
-	<20140215085355.GA15461@lanh>
-	<xmqqha7wfdld.fsf@gitster.dls.corp.google.com>
-	<20140218193520.GB1048@serenity.lan>
-	<xmqqtxbwdwt2.fsf@gitster.dls.corp.google.com>
-	<530581D5.4040507@alum.mit.edu>
+Subject: Re: [PATCH v3 02/25] Convert git_snpath() to strbuf_git_path()
+Date: Thu, 20 Feb 2014 10:54:50 -0800
+Message-ID: <xmqq1tyx7gxx.fsf@gitster.dls.corp.google.com>
+References: <1392730814-19656-1-git-send-email-pclouds@gmail.com>
+	<1392730814-19656-3-git-send-email-pclouds@gmail.com>
+	<xmqqeh2y7jff.fsf@gitster.dls.corp.google.com>
+	<CACsJy8BJ=OKzGDFwWQF_k_Gp9XeNwf7pe7c6_ebduJXN=xeOxw@mail.gmail.com>
+	<xmqqa9dm78n3.fsf@gitster.dls.corp.google.com>
+	<CACsJy8DB+OP6_vwZKWXjq4YbtiKDg2NE2zRsAuz1ER6oTmyGag@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: John Keeping <john@keeping.me.uk>, Duy Nguyen <pclouds@gmail.com>,
-	Andreas Schwab <schwab@linux-m68k.org>,
-	Josef Wolf <jw@raven.inka.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Thu Feb 20 19:23:13 2014
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 20 19:55:07 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WGYHA-0005mY-0e
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Feb 2014 19:23:12 +0100
+	id 1WGYm0-0004T9-4W
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Feb 2014 19:55:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754621AbaBTSXH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Feb 2014 13:23:07 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35013 "EHLO
+	id S1755466AbaBTSy7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Feb 2014 13:54:59 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56248 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754109AbaBTSXE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Feb 2014 13:23:04 -0500
+	id S1754739AbaBTSy6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Feb 2014 13:54:58 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 901BE6D069;
-	Thu, 20 Feb 2014 13:22:58 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 538126DEF8;
+	Thu, 20 Feb 2014 13:54:57 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=bxDV8grBti58AF1DcWIPPIWbRJs=; b=LiAUnJ
-	Q1zd2U7j/gSiDvNbL2Qcf/s94IpsnCGxQwmiHl9Z820Jrj24uB5PPNXB41HFVhwu
-	wwPkY1X8LLoK+qoka0+bKJKfWWAbFup9UwPn+pXNtE8TSZYbT6d875g4HOTQwx/0
-	bUfhppu4h8TsyfDvguVqRVCkYTO2liDcAv51E=
+	:content-type; s=sasl; bh=gqPsLquzkpyM3ReZVsyKI0euE84=; b=uVi9zm
+	fyLXjWbi12eWTGwWMyVeIn8uGcK5SsD658N8l9/5H8f8agLm559SE22z7sh7O1/8
+	/54ucXoOs8GnwvUB2XRHGtrW63p00RbwrlPoS9Vs3UoefVOjgboY200MrYAoKpRw
+	dFcKSAwSvyjrY+SONmq5G2gwTn5Vl+tkBqo58=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=xrX49oRk/ws2pczggEQADJJZmIDByCBB
-	5mAsmDfCmGEYVKa3VVQ8uUv1jg3XtuGKsYNxXbw28bVc/mZDvrBYweg2DkIDKFY3
-	j9nkYV5kCR3eCbBpQiiPdr7muk3bz8dk3PZAvnrAkjkIW/KwYDMOj1RwdlG5eH9r
-	BUSq56CuMjI=
+	:content-type; q=dns; s=sasl; b=tK7+JbL3pW8FKRbYVI6GlKr5AGwwtIzO
+	msFHMpXKE5QRU2C1p/IUrxyJtqf7aNhTdKDgvPcHr4MdlTEVAG/8TfJKBboKoCL3
+	h2SOuv/64wJDIWmgUHcNLaF7utObpWR/dDpV4bPbijSnrWxWa79bOMZcELtrghPH
+	Tkk+LPQs8dI=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 14A506D033;
-	Thu, 20 Feb 2014 13:22:36 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id B19936DEF5;
+	Thu, 20 Feb 2014 13:54:56 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AB5486D002;
-	Thu, 20 Feb 2014 13:22:27 -0500 (EST)
-In-Reply-To: <530581D5.4040507@alum.mit.edu> (Michael Haggerty's message of
-	"Thu, 20 Feb 2014 05:17:25 +0100")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1309D6DEF3;
+	Thu, 20 Feb 2014 13:54:52 -0500 (EST)
+In-Reply-To: <CACsJy8DB+OP6_vwZKWXjq4YbtiKDg2NE2zRsAuz1ER6oTmyGag@mail.gmail.com>
+	(Duy Nguyen's message of "Thu, 20 Feb 2014 10:55:29 +0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: F4057ED4-9A5B-11E3-A319-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 7B818386-9A60-11E3-9523-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242438>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242439>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+Duy Nguyen <pclouds@gmail.com> writes:
 
-> I wonder whether we could give a way to specify a reference in an
-> unambiguous, canonical fashion like I expected, for example by using a
-> leading slash: "/refs/heads/mybranch".  This could be a way for the user
-> to ask for DWIMming to be turned off without having to resort to
-> plumbing commands like update-ref.  This wouldn't necessarily solve the
-> problem, but it would at least lead the new user to type
->
->     git branch /refs/heads/mybranch
->
-> instead of the ambiguous command above, which Git could either accept or
-> reject in good conscience rather than having to speculate about what the
-> user *really* meant.  I think that supporting absolute reference names
-> like this would also be useful for scripts, which otherwise probably
-> often have subtle failure modes if the user has defined reference names
-> that are ambiguous, modulo DWIM, with the reference that the script
-> intended.
+> OK so your question was if there was a git_path() or mkpath() call
+> earlier in update_refs_for_switch() and the result was expected to
+> remain stable till the end of update_refs_for_switch(), then this
+> conversion could ruin it, correct? I didn't think about that,...
 
-I do agree that things start to become confusing to the end users
-when we tell refnames and object names apart and behave differently,
-e.g. "git checkout master" vs "git checkout master^0" (this example
-uses a disambiguation syntax that is related to but different from
-what you brought up).
+Yeah, I couldn't tell if you thought about it, and that was why I
+asked.
 
-For the <name> in "git branch <name> [<commit>]" (but not <commit>),
-I do not see much value in allowing the users to say "refs/heads/"
-in the first place---all the local branch refs are to be created in
-refs/heads/ anyway and "git branch /refs/tags/bar" (if we were to
-allow your notation to name an absolute ref) will have to be checked
-and signaled as an error.
+If a (recursively) caller does this:
 
-Even though there is no reason to forbid a ref to be named in such a
-way at the lowest machinery level (read: at the sha1_name.c layer)
-[*1*], I would say it would be better to at least warn users when
-they create such a ref with Porcelain commands like "branch",
-"checkout -b", etc., or even outright forbid.
+	caller () {
+		const char *path1 = git_path(...);
+                const char *path2 = mkpath(...);
+                const char *path3 = git_path_submodule(...);
+		callee();
+                use(path1, path2, path3);
+	}
 
-In other contexts, however, it _might_ make sense, but I am somewhat
-skeptical.  For example, if you have a branch 'foo' (whose ref being
-refs/heads/foo) and a branch 'refs/heads/foo' (whose ref being
-refs/heads/refs/heads/foo) at the same time, you need some way to
-clarify that you mean the former, and one way to do so may be
+it was safe back when the callee() did not mess with the round-robin
+pathname buffer, but it will be broken once callee() does.  While
+looking at the patch I didn't check what the caller was doing hence
+my question.
 
-	git branch newfoo /refs/heads/foo
-
-and removing the latter would be
-
-	git branch -D /refs/heads/refs/heads/foo
-
-perhaps.  But this starts to sound like a workaround to a problem
-that the user ended up having such a strangely named branch in the
-first place, not a useful feature.
-
-[Footnote]
-
-*1* The way refs are used and the specific meanings given to some of
-    the hierarchies under refs/ by the core-git Porcelain is not
-    fundamental to the data model of Git.  Git the SCM by convention
-    uses refs/heads/ for branches, and it is perfectly fine for Git
-    the SCM to enforce its own policy like that to its end users and
-    forbid creating and using any ref outside that hierarchy as a
-    local branch (e.g. checking it out), but I'd prefer it if we can
-    keep the lower level "a general filesystem to build SCM on top"
-    layer as separate from such policy decision as possible.
+In general, in order to reduce that kind of hard-to-debug bugs, we
+should be reducing the uses of these functions when we do not have
+to (which applies equally to such a caller that expects multiple
+temporary paths to persist, and to a callee as well).  Adding
+multiple repeated calls to git_path(), especially two of them
+formatting the same string into two separate round-robin pathname
+buffer, looked strange in a patch that was supposed to be a
+preparatory code-cleanup stage.
