@@ -1,70 +1,89 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH v2 3/3] push: Add the --no-recurse-submodules option
-Date: Thu, 20 Feb 2014 13:12:34 +0000
-Message-ID: <5305FF42.9000402@web.de>
-References: <A67F2B72-5398-4035-B79B-0568CA4BB0B4@gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v3 24/25] prune: strategies for linked checkouts
+Date: Thu, 20 Feb 2014 20:15:06 +0700
+Message-ID: <CACsJy8B11ZjLgLiE=S1sqZ09z2GtbwGfdJRuQ0AC_ppnQsQvcQ@mail.gmail.com>
+References: <1392730814-19656-1-git-send-email-pclouds@gmail.com>
+ <1392730814-19656-25-git-send-email-pclouds@gmail.com> <xmqq38je9739.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: Semyon Perepelitsa <semaperepelitsa@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 20 14:12:52 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 20 14:15:43 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WGTQp-0007aZ-5Z
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Feb 2014 14:12:51 +0100
+	id 1WGTTa-0003wH-0j
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Feb 2014 14:15:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754132AbaBTNMq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Feb 2014 08:12:46 -0500
-Received: from mout.web.de ([212.227.17.12]:62831 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754100AbaBTNMq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Feb 2014 08:12:46 -0500
-Received: from [192.168.1.102] ([90.174.2.85]) by smtp.web.de (mrweb101) with
- ESMTPA (Nemesis) id 0MIeQO-1WIfHm2r16-002KHK for <git@vger.kernel.org>; Thu,
- 20 Feb 2014 14:12:43 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.2.0
-In-Reply-To: <A67F2B72-5398-4035-B79B-0568CA4BB0B4@gmail.com>
-X-Enigmail-Version: 1.6
-X-Provags-ID: V03:K0:RBrnk59A7U+mMSAJ9D7fN/OWHy5815smA7HEnrlEEp1Gls1QrpS
- 7GHUsqTpUW4CnIByvVB6zwl27ElCvoTHw+xoB0L8mnV5HpW4vnLARzX6RO+3OR+zADRM5YG
- LARFHOJofS2kDp1FCVW6tF4HKa0zJAfWf3QtUaUcFeSVEjvayg8YJUzVRGYqLLwMqSDUnl4
- dLIf+Ry1I91A9fFM25sog==
+	id S1754333AbaBTNPi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 20 Feb 2014 08:15:38 -0500
+Received: from mail-qc0-f176.google.com ([209.85.216.176]:56473 "EHLO
+	mail-qc0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753431AbaBTNPh convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 20 Feb 2014 08:15:37 -0500
+Received: by mail-qc0-f176.google.com with SMTP id e16so3181306qcx.35
+        for <git@vger.kernel.org>; Thu, 20 Feb 2014 05:15:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=+i9DbR/YKzvT5uIrbznw/EeTBhZ+l4GC5v2hs5wLMfA=;
+        b=TcCQpTEvfixCa9rndMCHnnDpNEQzetIPEA8IdWyc22lwtJx2FiWBPvlEShe5725a5J
+         dMaxyZRZwWFcBfXYFErhiFxW3RS7haZwP7iloO1ODmLMSd1WbyUcO7g6/YgxCuERpBpc
+         EGzNsqZ8sUF45/YsHczaS6O5HjYZrkqx2GFBMxxrMMTi9k5Z/YuNQW6ffEmURnNqY2D4
+         bfpdAVn01rrGsbM1on+B3c3FfVgTnf273pNJYn+iQlmXHGETlBtjaxHTvaabMhd+DRb3
+         muG5Xf73SsUSb4fL/D2Fd8BH2H54ARRLleGRTaQHKgBRzUpJcHFX/kuEBUsqZFxsX5xM
+         woXg==
+X-Received: by 10.224.19.199 with SMTP id c7mr1390632qab.78.1392902136774;
+ Thu, 20 Feb 2014 05:15:36 -0800 (PST)
+Received: by 10.96.215.102 with HTTP; Thu, 20 Feb 2014 05:15:06 -0800 (PST)
+In-Reply-To: <xmqq38je9739.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242431>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242432>
 
-Hi Semyon,
+On Thu, Feb 20, 2014 at 3:32 AM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
+:
+>
+> (Only nitpicks during this round of review).
+>
+>> +     if (get_device_or_die(path) !=3D get_device_or_die(get_git_dir=
+())) {
+>> +             strbuf_reset(&sb);
+>> +             strbuf_addf(&sb, "%s/locked", sb_repo.buf);
+>> +             write_file(sb.buf, 1, "located on a different file sys=
+tem\n");
+>> +             keep_locked =3D 1;
+>> +     } else {
+>> +             strbuf_reset(&sb);
+>> +             strbuf_addf(&sb, "%s/link", sb_repo.buf);
+>> +             link(sb_git.buf, sb.buf); /* it's ok to fail */
+>
+> If so, perhaps tell that to the code by saying something like
+>
+>                 (void) link(...);
+>
+> ?
+>
+> But why is it OK to fail in the first place?  If we couldn't link,
+> don't you want to fall back to the lock codepath?  After all, the
+> "are we on the same device?" check is to cope with the case where
+> we cannot link and that alternate codepath is supposed to be
+> prepared to handle the "ah, we cannot link" case correctly, no?
 
-Am 18.02.2014 18:49, schrieb Semyon Perepelitsa:
-> I noticed the option in the man-page but there is still no configuration option available. Did you forget to add it after all?
-
-Nope, we just didn't implement it yet. ;-)
-
-It's one of the topics on my submodule ToDo list:
-
-  https://github.com/jlehmann/git-submod-enhancements/wiki
-
-> Right now --recurse-submodules has little use by itself as the problem it solves is forgetting to push a submodule which is no different from forgetting to specify the option.
-
-I'm currently busy working on another submodule related topic. But
-if you are interested, adding the "fetch.recurseSubmodules" config
-option in be254a0e and the "submodule.<name>.fetchRecurseSubmodules"
-option in c1a3c364 should be good examples of how to add the
-"push.recurseSubmodules" and "submodule.<name>.pushRecurseSubmodules"
-config options.
-
-I'll be glad to help in bringing this topic forward by discussing
-ideas and reviewing patches. And I believe we should change the
-default behavior of push (which is currently quiet about unpushed
-submodule commits as you noticed) to either "check" or "on-demand"
-(with my preference currently being slightly on the former, but I'm
-happy to be convinced otherwise ;-).
-
-
-Thanks
-Jens
+=46ilesystems not supporting hardlinks are one reason. The idea behind
+"locked" is that the new checkout could be on a portable device and we
+don't want to prune its metadata just because the device is not
+plugged in. Checking same device help but even that can't guarantee no
+false positives, unless your only mount point is /. So no I don't
+really think we should go lock whenever link() fails, that would just
+make fewer checkouts prunable.
+--=20
+Duy
