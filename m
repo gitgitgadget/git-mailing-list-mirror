@@ -1,81 +1,88 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: git gc --aggressive led to about 40 times slower "git log --raw"
-Date: Fri, 21 Feb 2014 06:35:06 +0700
-Message-ID: <CACsJy8AeZWPz=39ySQr9MrSUiLyJDQbs02sumS9VjbbGWzP9pw@mail.gmail.com>
-References: <CAEjYwfU==yYtQBDzZzEPdvbqz1N=gZtbMr5ccRaC_U7NfViQLA@mail.gmail.com>
- <87r470ssuc.fsf@fencepost.gnu.org> <CACsJy8D9tws_gu6yWVdz3t+Vfg5-9iorptn4BLnTL3b+YWcHzQ@mail.gmail.com>
- <87ioscsoow.fsf@fencepost.gnu.org> <20140218155842.GA7855@google.com>
- <xmqqzjlocf28.fsf@gitster.dls.corp.google.com> <CACsJy8AEXP45K+r3gGVTWbn4uuPLeHOkf-an20rj77QSfG1-ew@mail.gmail.com>
- <xmqq4n3warni.fsf@gitster.dls.corp.google.com> <CACsJy8C+wGd9WxnsML6-_G_S5GtN2pCPf09kcFtBVu-SDfP8YA@mail.gmail.com>
- <CAGK7Mr4wpwUK6UF6vTmgszX4sajPDvQazY2QagFfH9BEJx_9Ow@mail.gmail.com> <xmqqd2ij9be1.fsf@gitster.dls.corp.google.com>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH] sha1_file: fix delta_stack memory leak in unpack_entry
+Date: Fri, 21 Feb 2014 06:47:47 +0700
+Message-ID: <1392940067-4830-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Philippe Vaucher <philippe.vaucher@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	David Kastrup <dak@gnu.org>,
-	Christian Jaeger <chrjae@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 21 00:35:44 2014
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 21 00:47:39 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WGd9Z-0004uO-Sy
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Feb 2014 00:35:42 +0100
+	id 1WGdL8-0003kH-9b
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Feb 2014 00:47:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753057AbaBTXfi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Feb 2014 18:35:38 -0500
-Received: from mail-yh0-f46.google.com ([209.85.213.46]:60158 "EHLO
-	mail-yh0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752569AbaBTXfh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Feb 2014 18:35:37 -0500
-Received: by mail-yh0-f46.google.com with SMTP id v1so1546073yhn.33
-        for <git@vger.kernel.org>; Thu, 20 Feb 2014 15:35:36 -0800 (PST)
+	id S1753999AbaBTXre convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 20 Feb 2014 18:47:34 -0500
+Received: from mail-pd0-f171.google.com ([209.85.192.171]:37516 "EHLO
+	mail-pd0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752898AbaBTXrd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Feb 2014 18:47:33 -0500
+Received: by mail-pd0-f171.google.com with SMTP id g10so2479057pdj.16
+        for <git@vger.kernel.org>; Thu, 20 Feb 2014 15:47:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=KOuN/vzkDbn6kZKUfEVFN8WUtJEUy4v2c2V9UufBbcU=;
-        b=yLSMypRshugK8prSeiJ00QNyiAtsIEyND66CBA2whx52QyA8m79v7UMeMCTFgIFWkB
-         y4Z/W5Dg6jlLTOx5pEcOWh0jEGZN3rQcaWxtKtPsIdDzF0vxxGXd6PbPKqKSEk69bjz4
-         Kq2u4Ahxcw8iX5TPjYA8gFQQjU2MuX80CXwQgCoXG4yihKGZeGsp1m1hB05an8rU3SXS
-         N656AzCQCF4wOyfGDnwh17AwZqXiKHVGfTZ7C46RYE5y/W33EzsKlr6GcmTdz9ev8JAW
-         ABYXIvUTL3gH/4zGw3R9ECbjGr9jsnCTR5fmKXiefgPfqqPO3QSBQIVI+O7oFiGdgP7U
-         HNOQ==
-X-Received: by 10.236.61.136 with SMTP id w8mr7292663yhc.14.1392939336820;
- Thu, 20 Feb 2014 15:35:36 -0800 (PST)
-Received: by 10.170.115.65 with HTTP; Thu, 20 Feb 2014 15:35:06 -0800 (PST)
-In-Reply-To: <xmqqd2ij9be1.fsf@gitster.dls.corp.google.com>
+        h=from:to:cc:subject:date:message-id:mime-version:content-type
+         :content-transfer-encoding;
+        bh=LT1Q6OYzAptxO8hT1L1l7nc03t1D1+51PW6iKsJ/CbQ=;
+        b=Ir4d7d429+4R01peYI9EB5Vdl6+1gAp2vypWDzMoVLDdTX4e4jDECYeFQ8HfrDO9gx
+         /0B9nLpxwmk37yW/dcymiymHzAOly/yRsHx85IbVGgGluVUOuUKaZSbYIa/E9qvKU1GD
+         q0FSI3JGyGzNkJKKC+R73Tc01YN28upIOkgEIljGv+5Sajt+DfBg8g4/u6s0vQtb6L3s
+         8H26ohMcT/qIVKrzqWdASeMSj7yix/Kb/6x9zQhG9pXc4vs/tEbF/F/K2vSJpOipYiuI
+         Iy2mwJR4IGbqUNBNt7SDwtgmLXOObGTJ5ztR5Dj7ez96yT0Oiemfqwl1W4YJbRV76pGk
+         kxWA==
+X-Received: by 10.68.162.66 with SMTP id xy2mr5402022pbb.46.1392940052751;
+        Thu, 20 Feb 2014 15:47:32 -0800 (PST)
+Received: from lanh ([115.73.201.165])
+        by mx.google.com with ESMTPSA id fk4sm35611639pab.23.2014.02.20.15.47.29
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 20 Feb 2014 15:47:31 -0800 (PST)
+Received: by lanh (sSMTP sendmail emulation); Fri, 21 Feb 2014 06:47:48 +0700
+X-Mailer: git-send-email 1.9.0.40.gaa8c3ea
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242451>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242452>
 
-On Thu, Feb 20, 2014 at 1:59 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Philippe Vaucher <philippe.vaucher@gmail.com> writes:
->
->>> fwiw this is the thread that added --depth=250
->>>
->>> http://thread.gmane.org/gmane.comp.gcc.devel/94565/focus=94626
->>
->> This post is quite interesting:
->> http://article.gmane.org/gmane.comp.gcc.devel/94637
->
-> Yes, it most clearly says that --depth=250 was *not* a
-> recommendation, with technical background to explain why such a long
-> delta chain is a bad idea.
+This delta_stack array can grow to any length depending on the actual
+delta chain, but we forget to free it. Normally it does not matter
+because we use small_delta_stack[] from stack and small_delta_stack
+can hold 64-delta chains, more than standard --depth=3D50 in pack-objec=
+ts.
 
-On the other hand, the size reduction is really nice (320MB vs 500MB).
-I don't know if we can do this, but does it make sense to apply
---depth=250 for old commits only and shallow depth for recent commits?
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ Found when trying to see if making some objects loose at this phase
+ could help git-blame and how many objects will be loosened. Gotta go
+ soon, didn't really test it, but I bet it'll work.
 
-For old projects, commits older than 1-2 years is probably less often
-accessed and could use some aggressive packing. This still hits
-git-blame badly. We could even make sure all objects "on the blame
-surface" have short delta chain. But that may be pushing pack-objects
-too much.
--- 
-Duy
+ sha1_file.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/sha1_file.c b/sha1_file.c
+index 6e8c05d..57ab15d 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -2289,6 +2289,10 @@ void *unpack_entry(struct packed_git *p, off_t o=
+bj_offset,
+ 	*final_size =3D size;
+=20
+ 	unuse_pack(&w_curs);
++
++	if (delta_stack !=3D small_delta_stack)
++		free(delta_stack);
++
+ 	return data;
+ }
+=20
+--=20
+1.9.0.40.gaa8c3ea
