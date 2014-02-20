@@ -1,208 +1,101 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: Fwd: Git Directory Diff for submodule
-Date: Thu, 20 Feb 2014 14:41:23 -0800
-Message-ID: <CAJDDKr5czZezBZC1HtS9EjKvpPn-sxQTJOWLABRBVw2ei2BFVg@mail.gmail.com>
-References: <CAN-m_UmNudmxJnA95h1nYqi7GGxtzKqqpgFHmJZ+MTnxRoEd6g@mail.gmail.com>
-	<CAN-m_UnQ7Yzuq7n6mxmsd3XcfLSVxMdnLiGFDiN1Ph3ZiFqwew@mail.gmail.com>
-	<CAN-m_U=eYSEXfVBcD1Rfx-YvGx5Wu+hB2uAc=6xX_HO7bS0FUg@mail.gmail.com>
-	<52F54441.6090209@web.de>
-	<CAN-m_UnSqTnLydyVF2TLxOia9vzmQr9e4+xWh8aVNBosfCq5nA@mail.gmail.com>
-	<53066D8A.6070909@web.de>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: git gc --aggressive led to about 40 times slower "git log --raw"
+Date: Thu, 20 Feb 2014 19:07:54 +0100
+Message-ID: <87ppmhr72d.fsf@fencepost.gnu.org>
+References: <CAEjYwfU==yYtQBDzZzEPdvbqz1N=gZtbMr5ccRaC_U7NfViQLA@mail.gmail.com>
+	<87r470ssuc.fsf@fencepost.gnu.org>
+	<CACsJy8D9tws_gu6yWVdz3t+Vfg5-9iorptn4BLnTL3b+YWcHzQ@mail.gmail.com>
+	<87ioscsoow.fsf@fencepost.gnu.org> <20140218155842.GA7855@google.com>
+	<xmqqzjlocf28.fsf@gitster.dls.corp.google.com>
+	<CACsJy8AEXP45K+r3gGVTWbn4uuPLeHOkf-an20rj77QSfG1-ew@mail.gmail.com>
+	<xmqq4n3warni.fsf@gitster.dls.corp.google.com>
+	<CACsJy8C+wGd9WxnsML6-_G_S5GtN2pCPf09kcFtBVu-SDfP8YA@mail.gmail.com>
+	<CAGK7Mr4wpwUK6UF6vTmgszX4sajPDvQazY2QagFfH9BEJx_9Ow@mail.gmail.com>
+	<CACsJy8DsC9X=13iEpONcT6bw6qTw_O586_vZ2W_3O42ajEPF4A@mail.gmail.com>
+	<8738jdspbe.fsf@fencepost.gnu.org> <87y515r9wb.fsf@fencepost.gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?R8OhYm9yIExpcHTDoWs=?= <gabor.liptak@gmail.com>,
+Content-Type: text/plain
+Cc: Philippe Vaucher <philippe.vaucher@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Christian Jaeger <chrjae@gmail.com>,
 	Git Mailing List <git@vger.kernel.org>
-To: Jens Lehmann <Jens.Lehmann@web.de>,
-	John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Thu Feb 20 23:41:59 2014
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 20 23:53:15 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WGcJa-0001rv-Nf
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Feb 2014 23:41:59 +0100
+	id 1WGcUU-0008Mg-Bd
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Feb 2014 23:53:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753108AbaBTWl2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 20 Feb 2014 17:41:28 -0500
-Received: from mail-qc0-f181.google.com ([209.85.216.181]:45339 "EHLO
-	mail-qc0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752994AbaBTWlY convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 20 Feb 2014 17:41:24 -0500
-Received: by mail-qc0-f181.google.com with SMTP id c9so4045692qcz.26
-        for <git@vger.kernel.org>; Thu, 20 Feb 2014 14:41:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=YVRVK2E80tK0HG5uGxRWdH/KxhnBAUaiKEJ+9ThpRJs=;
-        b=NXV+evlMNfi2VB6316s49NcNJE8YPHK1cNankCKPDgvJJg2MFdBqiLZ/lHS77QXnqu
-         zfC/ntWgyO/4NVEV9xd2tEBBPapKk1JDD8HKJDPiSrmHcFdelu/3Hj1tP/hF3Cnu1SIu
-         ikSTrjhjr8LoddJeiQHgbPz3inMGKCkd4RDPn8bOGWoFsGbw+OeugHYPjKHuOPiun59M
-         ghDYCxJtyZFPMmzarV91Nc65ix4ecL3eXYWMSnIni/1kcWfdrNCQ8mV3jw3kDMQcJS3J
-         VzyQv9ARnultt4UPP1T4ffB4GKqS8bdUQJBkQ458wpmiYvTyCRvWAA5n3nyGdNYjYuX+
-         G/2Q==
-X-Received: by 10.140.100.135 with SMTP id s7mr4907828qge.114.1392936083788;
- Thu, 20 Feb 2014 14:41:23 -0800 (PST)
-Received: by 10.229.176.194 with HTTP; Thu, 20 Feb 2014 14:41:23 -0800 (PST)
-In-Reply-To: <53066D8A.6070909@web.de>
+	id S1752299AbaBTWwq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Feb 2014 17:52:46 -0500
+Received: from fencepost.gnu.org ([208.118.235.10]:54575 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751522AbaBTWwp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Feb 2014 17:52:45 -0500
+Received: from localhost ([127.0.0.1]:53611 helo=lola)
+	by fencepost.gnu.org with esmtp (Exim 4.71)
+	(envelope-from <dak@gnu.org>)
+	id 1WGcU0-00022p-NY; Thu, 20 Feb 2014 17:52:44 -0500
+Received: by lola (Postfix, from userid 1000)
+	id C8DF8E067D; Thu, 20 Feb 2014 19:07:54 +0100 (CET)
+In-Reply-To: <87y515r9wb.fsf@fencepost.gnu.org> (David Kastrup's message of
+	"Thu, 20 Feb 2014 18:06:44 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242449>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242450>
 
-On Thu, Feb 20, 2014 at 1:03 PM, Jens Lehmann <Jens.Lehmann@web.de> wro=
-te:
-> Sorry for the late reply, but here we go ...
+David Kastrup <dak@gnu.org> writes:
+
+> David Kastrup <dak@gnu.org> writes:
 >
-> Am 10.02.2014 07:33, schrieb G=C3=A1bor Lipt=C3=A1k:
->> Hi Jens,
+>> Duy Nguyen <pclouds@gmail.com> writes:
 >>
->> So "git status" says:
+>> Something's _really_ fishy about that cache behavior.  Note that the
+>> _system_ time goes up considerably, not just user time.  Since the
+>> packs are zlib-packed, it's reasonable that more I/O time is also
+>> associated with more user time and it is well possible that the user
+>> time increase is entirely explainable by the larger amount of
+>> compressed data to access.
 >>
->> liptak@liptak-kubuntu:~/Projects/MAIN_MODULE/platform/SUBMODULE
->> [master]$ git status
->> # On branch master
->> # Your branch is up-to-date with 'origin/master'.
->> #
->> # Changes not staged for commit:
->> #   (use "git add <file>..." to update what will be committed)
->> #   (use "git checkout -- <file>..." to discard changes in working
->> directory)
->> #
->> #       modified:   xxxxxx.java
->> #       modified:   xxxxxxx.java
->> # ...
->> # ...
->> # ...
->> # ...
->> # ...
->> #
->> no changes added to commit (use "git add" and/or "git commit -a")
->>
->> git config core.worktree gives back: "../../../../platform/SUBMODULE=
-"
+>> But this stinks.
 >
-> Which looks a bit strange but is perfectly ok for a repository
-> that uses a gitfile, as the core.worktree setting is relative
-> to the git directory the gitfile references and not the directory
-> the gitfile lives in. A quick glance at the find_worktree
-> subroutine in git-difftool.perl makes me think that difftool is
-> not aware of that fact. David, does that make sense?
+> And an obvious contender for the stinking is that the "LRU" scheme used
+> here is _strictly_ freeing memory based on which cache entry has been
+> _created_ the longest time ago, not which cache entry has been
+> _accessed_ the longest time ago.  Which means a pure round-robin
+> strategy for freeing memory rather than LRU.
+>
+> Let's see what happens when changing this.
 
-That does make sense. It sounds like that may need to be adjusted.
+Not much.  With any cache size, using a "true" LRU scheme does not buy
+more than 2%.  On the other hand, increasing core.deltaBaseCacheLimit
+from its default of 16m to 128m in the config file results in the
+following difference (with default #define MAX_DELTA_CACHE (256)):
 
-What does `git rev-parse --show-toplevel` print? It seems like the
-find_worktree() logic needs to be extended to handle .git files.
+dak@lola:/usr/local/tmp/emacs$ time ../git/git blame src/xdisp.c >/dev/null
 
->> The submodule was inited simply with "git submodule init" +
->> "git.submodule update"
+real	1m17.446s
+user	0m30.696s
+sys	0m46.332s
+dak@lola:/usr/local/tmp/emacs$ time ../git/git blame src/xdisp.c >/dev/null
 
-Or possibly, as you mention below, it could be that "git submodule
-init" ended up writing the wrong core.worktree value. I'm not very
-familiar with how they are initialized, but the paths do seem sane, so
-I doesn't seem like that's the issue.
+real	0m27.519s
+user	0m20.248s
+sys	0m7.156s
 
-If it's a problem in difftool we can probably find a way to do the
-right thing. It looks like the core.worktree is relative to the
-=2Egit/modules/XXX directory rather than the submodule (and
-super-project)'s worktree.
+So it would seem that the default available cache slots are not utilized
+anyway when operating on this file (about 1MB in size) with the default
+of core.deltaBaseCacheLimit.
 
-Here's our current logic:
+It is still irritating that the performance drops quite a bit with a
+considerably larger number of cache slots.
 
-sub find_worktree
-{
-    my ($repo) =3D @_;
-
-    # Git->repository->wc_path() does not honor changes to the working
-    # tree location made by $ENV{GIT_WORK_TREE} or the 'core.worktree'
-    # config variable.
-    my $worktree;
-    my $env_worktree =3D $ENV{GIT_WORK_TREE};
-    my $core_worktree =3D Git::config('core.worktree');
-
-    if (defined($env_worktree) and (length($env_worktree) > 0)) {
-        $worktree =3D $env_worktree;
-    } elsif (defined($core_worktree) and (length($core_worktree) > 0)) =
-{
-        $worktree =3D $core_worktree;
-    } else {
-        $worktree =3D $repo->wc_path();
-    }
-    return $worktree;
-}
-
-John, any thoughts?
-
->> MAINMODULE/.gitsubmodules file contains similar entry:
->> [submodule "platform/SUBMODULE"]
->> path =3D platform/SUBMODULE
->> url =3D ssh://git@somehost/foo/bar.git
->>
->> MAINMODULE/.git/config:
->> [submodule "platform/SUBMODULE"]
->> url =3D ssh://git@somehost/foo/bar.git
->>
->> MAINMODULE/platform/SUBMODULE/.git:
->> gitdir: ../../.git/modules/platform/SUBMODULE
->>
->> MAINMODULE/.git/modules/platform/SUBMODULE/config:
->> [core]
->> repositoryformatversion =3D 0
->> filemode =3D true
->> bare =3D false
->> logallrefupdates =3D true
->> worktree =3D ../../../../platform/SUBMODULE
->> [remote "origin"]
->> url =3D ssh://git@somehost/foo/bar.git
->> fetch =3D +refs/heads/*:refs/remotes/origin/*
->>
->> So for me it seems that somehow the relative path inside
->> MAINMODULE/.git/modules/platform/SUBMODULE/config gets configuread
->> wrong during submodule init+update.
->>
->> I tried to update the
->> MAINMODULE/.git/modules/platform/SUBMODULE/config to contain
->> ../../platform/SUBMODULE as worktree path, then meld was correctly
->> started, but the compare tree was not usable. For file changes it
->> displayed always: XXXXX.java: Dangling symlink. So this is still not=
- a
->> complete solution somehow.
->>
->> Regards,
->>
->> G=C3=A1bor Lipt=C3=A1k
->>
->> 2014-02-07 Jens Lehmann <Jens.Lehmann@web.de>:
->>> Am 07.02.2014 10:15, schrieb G=C3=A1bor Lipt=C3=A1k:
->>>> I think I have found a bug related to submodules and directory dif=
-f.
->>>> See the details at hXXp://stackoverflow.com/q/21623155/337621.
->>>
->>> Let's inline the recipe one finds after decrypting this link:
->>>
->>> ~/Projects/MAINMODULE/platform/SUBMODULE [master]$ git difftool -to=
-ol=3Dmeld --dir-diff --cached
->>>   fatal: Could not switch to '../../../../platform/': No such file =
-or directory
->>>   diff --raw --no-abbrev -z --cached: command returned error: 128
->>> ~/Projects/MAINMODULE/platform/SUBMODULE [master]$ cd ..
->>> ~/Projects/MAINMODULE/platform [master]$ cd ..
->>> ~/Projects/MAINMODULE [master]$ git difftool -tool=3Dmeld --dir-dif=
-f --cached
->>>   // NO PROBLEM, works.
->>> ~/Projects/MAINMODULE [master]$ git version
->>>   git version 1.8.4
->>>
->>>
->>>> If you need any further details, just ask.
->>>
->>> - Does this only happen when you use difftool? E.g. what does
->>>   "git status" inside the submodule say?
->>>
->>> - What does "git config core.worktree" print when run in the
->>>   submodule?
---=20
-David
+-- 
+David Kastrup
