@@ -1,102 +1,122 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-Subject: $(git notes merge FETCH_HEAD) doesn't work
-Date: Thu, 20 Feb 2014 16:30:45 +0100
-Message-ID: <20140220153045.GI6988@pengutronix.de>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: git gc --aggressive led to about 40 times slower "git log --raw"
+Date: Thu, 20 Feb 2014 17:48:21 +0100
+Message-ID: <8738jdspbe.fsf@fencepost.gnu.org>
+References: <CAEjYwfU==yYtQBDzZzEPdvbqz1N=gZtbMr5ccRaC_U7NfViQLA@mail.gmail.com>
+	<87r470ssuc.fsf@fencepost.gnu.org>
+	<CACsJy8D9tws_gu6yWVdz3t+Vfg5-9iorptn4BLnTL3b+YWcHzQ@mail.gmail.com>
+	<87ioscsoow.fsf@fencepost.gnu.org> <20140218155842.GA7855@google.com>
+	<xmqqzjlocf28.fsf@gitster.dls.corp.google.com>
+	<CACsJy8AEXP45K+r3gGVTWbn4uuPLeHOkf-an20rj77QSfG1-ew@mail.gmail.com>
+	<xmqq4n3warni.fsf@gitster.dls.corp.google.com>
+	<CACsJy8C+wGd9WxnsML6-_G_S5GtN2pCPf09kcFtBVu-SDfP8YA@mail.gmail.com>
+	<CAGK7Mr4wpwUK6UF6vTmgszX4sajPDvQazY2QagFfH9BEJx_9Ow@mail.gmail.com>
+	<CACsJy8DsC9X=13iEpONcT6bw6qTw_O586_vZ2W_3O42ajEPF4A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: kernel@pengutronix.de, Johan Herland <johan@herland.net>,
-	Stephen Boyd <bebarino@gmail.com>,
+Content-Type: text/plain
+Cc: Philippe Vaucher <philippe.vaucher@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
 	Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 20 16:31:14 2014
+	Christian Jaeger <chrjae@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 20 17:48:42 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WGVaj-0001Ig-J2
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Feb 2014 16:31:14 +0100
+	id 1WGWni-0005EL-34
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Feb 2014 17:48:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755310AbaBTPa4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 20 Feb 2014 10:30:56 -0500
-Received: from metis.ext.pengutronix.de ([92.198.50.35]:48645 "EHLO
-	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755204AbaBTPay (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Feb 2014 10:30:54 -0500
-Received: from dude.hi.pengutronix.de ([2001:6f8:1178:2:21e:67ff:fe11:9c5c])
-	by metis.ext.pengutronix.de with esmtp (Exim 4.72)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1WGVaM-0005uN-0P; Thu, 20 Feb 2014 16:30:50 +0100
-Received: from ukl by dude.hi.pengutronix.de with local (Exim 4.82)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1WGVaH-0006zU-64; Thu, 20 Feb 2014 16:30:45 +0100
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-SA-Exim-Connect-IP: 2001:6f8:1178:2:21e:67ff:fe11:9c5c
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: git@vger.kernel.org
+	id S1754988AbaBTQsh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Feb 2014 11:48:37 -0500
+Received: from fencepost.gnu.org ([208.118.235.10]:48117 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754868AbaBTQsh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Feb 2014 11:48:37 -0500
+Received: from localhost ([127.0.0.1]:47157 helo=lola)
+	by fencepost.gnu.org with esmtp (Exim 4.71)
+	(envelope-from <dak@gnu.org>)
+	id 1WGWnb-0004Ou-Jn; Thu, 20 Feb 2014 11:48:36 -0500
+Received: by lola (Postfix, from userid 1000)
+	id 850D7E067D; Thu, 20 Feb 2014 17:48:21 +0100 (CET)
+In-Reply-To: <CACsJy8DsC9X=13iEpONcT6bw6qTw_O586_vZ2W_3O42ajEPF4A@mail.gmail.com>
+	(Duy Nguyen's message of "Wed, 19 Feb 2014 17:14:46 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242434>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242435>
 
-Hello,
+Duy Nguyen <pclouds@gmail.com> writes:
 
-I started playing around with sharing git notes and so was happy to see
-that git-notes learned about merging since I last tried.
+> I can think of two improvements we could make, either increase cache
+> size dynamically (within limits) or make it configurable. If we have N
+> entries in worktree (both trees and blobs) and depth M, then we might
+> need to cache N*M objects for it to be effective. Christian, if you
+> want to experiment this, update MAX_DELTA_CACHE in sha1_file.c and
+> rebuild.
 
-My first try looked as follows (using git 1:1.9.0-1 from Debian):
+Well, my optimized "git-blame" code is considerably hit by an
+aggressively packed Emacs repository so I took a look at it with the
+MAX_DELTA_CACHE value set to the default 256, and then 512, 1024, 2048.
 
-	$ git fetch $someremote refs/notes/commits
-	...
-	$ git notes merge FETCH_HEAD
-	$ echo $?
-	0
-	$ git log --oneline refs/notes/commits..FETCH_HEAD | wc -l
-	2
+Here are the results:
 
-Looking at the source I see:
+dak@lola:/usr/local/tmp/emacs$ time ../git/git blame src/xdisp.c >/dev/null
 
-	/* argv[0] holds "FETCH_HEAD" here */
-	strbuf_addstr(&remote_ref, argv[0]);
-	expand_notes_ref(&remote_ref);
+real	1m17.496s
+user	0m30.552s
+sys	0m46.496s
+dak@lola:/usr/local/tmp/emacs$ time ../git/git blame src/xdisp.c >/dev/null
 
-After the call to expand_notes_ref remote_ref contains
-"refs/notes/FETCH_HEAD" which isn't what I intended and I'm quite
-surprised by. The problem seems to be:
+real	1m13.888s
+user	0m30.060s
+sys	0m43.420s
+dak@lola:/usr/local/tmp/emacs$ time ../git/git blame src/xdisp.c >/dev/null
 
-	/* Dereference o->remote_ref into remote_sha1 */
-	if (get_sha1(o->remote_ref, remote_sha1)) {
-		/*
-		 * Failed to get remote_sha1. If o->remote_ref looks like an
-		 * unborn ref, perform the merge using an empty notes tree.
-		 */
-		if (!check_refname_format(o->remote_ref, 0)) {
-			hashclr(remote_sha1);
-			remote =3D NULL;
-		} else {
-			die("Failed to resolve remote notes ref '%s'",
-			    o->remote_ref);
-		}
-	} ...
+real	1m16.415s
+user	0m31.436s
+sys	0m44.564s
+dak@lola:/usr/local/tmp/emacs$ time ../git/git blame src/xdisp.c >/dev/null
 
-The workaround is obvious (i.e. git update-ref refs/notes/somestring
-=46ETCH_HEAD; git notes merge somestring), but still I think this
-behaviour is not optimal. I don't know why one might want to treat a
-broken remote side as empty but at least a diagnostic message would be
-nice. The same happens if I pass an explicit sha1 instead of
-"FETCH_HEAD".
+real	1m24.732s
+user	0m34.416s
+sys	0m49.808s
 
-Best regards
-Uwe
+So using a value of 512 helps a bit (7% or so), but further increases
+already cause a hit.  My machine has 4G of memory (32bit x86), so it is
+unlikely that memory is running out.  I have no idea why this would be
+so: either memory locality plays a role here, or the cache for some
+reason gets reinitialized or scanned/copied/accessed as a whole
+repeatedly, defeating the idea of a cache.  Or the access pattern are
+such that it's entirely useless as a cache even at this size.
 
---=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig        =
-    |
-Industrial Linux Solutions                 | http://www.pengutronix.de/=
-  |
+Trying with 16384:
+dak@lola:/usr/local/tmp/emacs$ time ../git/git blame src/xdisp.c >/dev/null
+
+real	2m8.000s
+user	0m54.968s
+sys	1m12.624s
+
+And memory consumption did not exceed about 200m all the while, so is
+far lower than what would have been available.
+
+Something's _really_ fishy about that cache behavior.  Note that the
+_system_ time goes up considerably, not just user time.  Since the packs
+are zlib-packed, it's reasonable that more I/O time is also associated
+with more user time and it is well possible that the user time increase
+is entirely explainable by the larger amount of compressed data to
+access.
+
+But this stinks.  I doubt that the additional time is spent in memory
+allocation: most of that would register only as user time.  And the
+total allocated memory is not large enough that one can explain this
+away with fewer available disk buffers for the kernel: the aggressively
+packed repo takes about 300m so it would fine into memory together with
+the git process.
+
+-- 
+David Kastrup
