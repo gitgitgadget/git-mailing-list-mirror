@@ -1,88 +1,50 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v3 02/25] Convert git_snpath() to strbuf_git_path()
-Date: Thu, 20 Feb 2014 06:54:39 +0700
-Message-ID: <CACsJy8BJ=OKzGDFwWQF_k_Gp9XeNwf7pe7c6_ebduJXN=xeOxw@mail.gmail.com>
-References: <1392730814-19656-1-git-send-email-pclouds@gmail.com>
- <1392730814-19656-3-git-send-email-pclouds@gmail.com> <xmqqeh2y7jff.fsf@gitster.dls.corp.google.com>
+From: Bozhidar Bozhev <bbozhev@gmail.com>
+Subject: (unknown)
+Date: Thu, 20 Feb 2014 02:55:40 +0200
+Message-ID: <5305528C.7090403@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 20 00:55:45 2014
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 20 01:55:54 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WGGzQ-0001Ip-G9
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Feb 2014 00:55:44 +0100
+	id 1WGHvd-0001l8-T4
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Feb 2014 01:55:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751566AbaBSXzL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 19 Feb 2014 18:55:11 -0500
-Received: from mail-qa0-f46.google.com ([209.85.216.46]:59450 "EHLO
-	mail-qa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751300AbaBSXzK convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 19 Feb 2014 18:55:10 -0500
-Received: by mail-qa0-f46.google.com with SMTP id k15so1831899qaq.5
-        for <git@vger.kernel.org>; Wed, 19 Feb 2014 15:55:10 -0800 (PST)
+	id S1752460AbaBTAzs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Feb 2014 19:55:48 -0500
+Received: from mail-ee0-f49.google.com ([74.125.83.49]:63122 "EHLO
+	mail-ee0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752332AbaBTAzr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Feb 2014 19:55:47 -0500
+Received: by mail-ee0-f49.google.com with SMTP id d17so625772eek.8
+        for <git@vger.kernel.org>; Wed, 19 Feb 2014 16:55:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=MlYo4qi+PeK75aSui7LSbUVY4Mmi6c2x4pN2+Iv/k2I=;
-        b=KXxqysLa3BLnkzxTHVjqgUPfhjr52mGQgvR/bX/zxX3LgT9Q6Uyvo2r3AVo1LUKKHk
-         dME2hWMvoxhFrfDoF+F6BXaHnLoKVhp3yZqUjhfnHqNV7mMgtHs9HH68M9F9sL9gV8IY
-         yZg6vZfVnk9TM16I4qmScrmyu2d0wnVY1pg6isQgWUCo7AzKKvoXvcu4AoSO3Sx2V2Sw
-         RbfAmnUJctxPeEiDrgVl/8TuDleox4QrPv3NXmsYvqGdon3AfGx2aPvouvdQG71/sMik
-         9LIB5USn9YVLCnWF85evWRROwtsudkrJqFMZUkQOQ4QJPEJCdtaXagcWq8w5sRmmTfQj
-         Ffuw==
-X-Received: by 10.224.26.71 with SMTP id d7mr5743754qac.89.1392854109975; Wed,
- 19 Feb 2014 15:55:09 -0800 (PST)
-Received: by 10.96.215.102 with HTTP; Wed, 19 Feb 2014 15:54:39 -0800 (PST)
-In-Reply-To: <xmqqeh2y7jff.fsf@gitster.dls.corp.google.com>
+        h=message-id:date:from:user-agent:mime-version:to:content-type
+         :content-transfer-encoding;
+        bh=47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=;
+        b=ts0Mclxyjfoy8HW+mpwQmVT9eRHX1PY29/sTInXD1uR6pLhzCV5XdanTGC4G3HnDLf
+         XQqNJNKEMb4EayUirkhIhy28brhzoQYJ4d5ASLK7twZi0bCNopbNPtINWZqLq3MW87gs
+         pP3FGrmeV5ph1t20h1LEQtntnOwV+3SGnlGY2/B5GKJkeq3Rn7Af/KJvy7L7f6igNKvT
+         BPaNL6TPiK9Zpduibovu+hrgifq529BAfE2BVe1dqJquiUW6Hqw0t55fDeYG7LorNZOZ
+         8HYbRT2GPeJlanmd6S86hWE/1HFRop6nan5y+g4GKZVczFFrOagCANXeD1aRAZcBzsQJ
+         Kflw==
+X-Received: by 10.15.77.130 with SMTP id p2mr18162830eey.60.1392857746782;
+        Wed, 19 Feb 2014 16:55:46 -0800 (PST)
+Received: from [127.0.0.1] ([78.130.211.167])
+        by mx.google.com with ESMTPSA id y47sm7036234eel.14.2014.02.19.16.55.45
+        for <git@vger.kernel.org>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 19 Feb 2014 16:55:45 -0800 (PST)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.3.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242420>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242421>
 
-On Thu, Feb 20, 2014 at 6:48 AM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
-:
->
->> @@ -651,14 +653,10 @@ static void update_refs_for_switch(const struc=
-t checkout_opts *opts,
->>                                       new->name);
->>                       }
->>               }
->> -             if (old->path && old->name) {
->> -                     char log_file[PATH_MAX], ref_file[PATH_MAX];
->> -
->> -                     git_snpath(log_file, sizeof(log_file), "logs/%=
-s", old->path);
->> -                     git_snpath(ref_file, sizeof(ref_file), "%s", o=
-ld->path);
->> -                     if (!file_exists(ref_file) && file_exists(log_=
-file))
->> -                             remove_path(log_file);
->> -             }
->> +             if (old->path && old->name &&
->> +                 !file_exists(git_path("%s", old->path)) &&
->> +                  file_exists(git_path("logs/%s", old->path)))
->> +                     remove_path(git_path("logs/%s", old->path));
->
-> Hmph.  Is this conversion safe?
->
-> This adds three uses of the round-robin path buffer; if a caller of
-> this function used two or more path buffers obtained from
-> get_pathname() and expected their contents to remain stable across
-> the call to this, it will silently break.
-
-three round-robin buffers but not all required at the same time, once
-the first file_exists() returns the first round-robin buffer could be
-free, and remove_path() calls git_path again, not reusing the result
-from the second file_exists, so the second buffer is free to go too.
---=20
-Duy
