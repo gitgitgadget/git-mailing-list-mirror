@@ -1,108 +1,87 @@
-From: Max Horn <max@quendi.de>
-Subject: Re: What's cooking in git.git (Feb 2014, #06; Wed, 19)
-Date: Thu, 20 Feb 2014 19:39:14 +0100
-Message-ID: <BCF58F31-7130-4F4B-BE53-D917C4D50D96@quendi.de>
-References: <xmqqppmi7pbn.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0 (Mac OS X Mail 6.6 \(1510\))
-Content-Type: multipart/signed; boundary="Apple-Mail=_C2BD2A2C-6CFD-4A5C-B11E-8E0BBF1AB16F"; protocol="application/pgp-signature"; micalg=pgp-sha256
-Cc: git@vger.kernel.org, Felipe Contreras <felipe.contreras@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 20 20:05:32 2014
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 14/25] setup.c: convert is_git_directory() to use strbuf
+Date: Thu, 20 Feb 2014 11:06:46 -0800
+Message-ID: <xmqqwqgp61tl.fsf@gitster.dls.corp.google.com>
+References: <1392730814-19656-1-git-send-email-pclouds@gmail.com>
+	<1392730814-19656-15-git-send-email-pclouds@gmail.com>
+	<xmqqppmi97s3.fsf@gitster.dls.corp.google.com>
+	<CACsJy8Ab0OVQw4ATgv6E7rv-B3OwbhyrJBbXiXjYiUvtMknMrg@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 20 20:08:08 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WGYw7-0003ep-TA
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Feb 2014 20:05:32 +0100
+	id 1WGYyb-0007ZW-Ge
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Feb 2014 20:08:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755431AbaBTTF2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Feb 2014 14:05:28 -0500
-Received: from wp256.webpack.hosteurope.de ([80.237.133.25]:40489 "EHLO
-	wp256.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754700AbaBTTF1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 20 Feb 2014 14:05:27 -0500
-X-Greylist: delayed 1571 seconds by postgrey-1.27 at vger.kernel.org; Thu, 20 Feb 2014 14:05:26 EST
-Received: from vpn-1-allg-03.hrz.uni-giessen.de ([134.176.250.3]); authenticated
-	by wp256.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:RSA_AES_128_CBC_SHA1:16)
-	id 1WGYWf-0005pa-FV; Thu, 20 Feb 2014 19:39:13 +0100
-In-Reply-To: <xmqqppmi7pbn.fsf@gitster.dls.corp.google.com>
-X-Mailer: Apple Mail (2.1510)
-X-bounce-key: webpack.hosteurope.de;max@quendi.de;1392923127;9ce0b41f;
+	id S1755388AbaBTTIA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Feb 2014 14:08:00 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:35054 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754799AbaBTTH7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Feb 2014 14:07:59 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 3A9C56C43F;
+	Thu, 20 Feb 2014 14:07:59 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=LvvebUIlOM0uwisJdiVHi9FpSgo=; b=Zp7lMo
+	WDXkItp7FIO/Wsek79QnPdXZxsVbLfZbvamkgQ0EmxzkqEvbbKRy6TpCf+85iEV7
+	8GM7TbpqRBA7KLaK9xRCA8oXKJ3EKi8/Jtax66wj0i43HwthZ156ggvWBEu9Y+KN
+	NG5gy/HfPLXm7DJaBqtIqgmrtZJJpjTiz6UyQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=oDYdgV3Oowbz4ckQeeWGT8JeWeXoytD/
+	XlPKQcdnJd1UVwXwpy0W+Gq1yelzASrqMxj5RyfmISLk7g2SOzBxqP7h4XwJtYKJ
+	CpZUTQ7AEEAcN3BrES99e3r1i2BJqrZYf1P7idUmEiP8UsTeDtA+Wl/SUk8XOHOf
+	xrIooTjZPHY=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 673A56C43D;
+	Thu, 20 Feb 2014 14:07:58 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 58CFB6C3A3;
+	Thu, 20 Feb 2014 14:06:50 -0500 (EST)
+In-Reply-To: <CACsJy8Ab0OVQw4ATgv6E7rv-B3OwbhyrJBbXiXjYiUvtMknMrg@mail.gmail.com>
+	(Duy Nguyen's message of "Thu, 20 Feb 2014 20:04:31 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 270AE3CC-9A62-11E3-ADE7-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242440>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242441>
 
+Duy Nguyen <pclouds@gmail.com> writes:
 
---Apple-Mail=_C2BD2A2C-6CFD-4A5C-B11E-8E0BBF1AB16F
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=us-ascii
+> On Thu, Feb 20, 2014 at 3:17 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>>> +     strbuf_setlen(sb, len);
+>>> +     strbuf_add(sb, s, strlen(s));
+>>
+>> I am not sure addstr_at() gives us a good abstraction, or at least
+>> the name conveys what it does well not to confuse readers.
+>>
+>> At first after only seeing its name, I would have expected that it
+>> would splice the given string into an existing strbuf at the
+>> location, not chopping the existing strbuf at the location and
+>> appending.
+>
+> I think I invented a few new strbuf_* in this series and this is one
+> of them. We have about ~14 other places in current code that do
+> similar pattern: set length back, then add something on top.
 
+Yes, and you can count getline/getwholeline as a special case to
+chomp to empty at the beginning.  I am not opposed to a helper to
+give us an easy access to this common pattern.
 
-On 19.02.2014, at 22:41, Junio C Hamano <gitster@pobox.com> wrote:
+It was just the name "addstr-at" did not sound, at least to me, what
+it does, i.e. "replace with s from the pos to the end", which I
+think is the same thing as a single-liner:
 
-> * fc/transport-helper-fixes (2013-12-09) 6 commits
-> - remote-bzr: support the new 'force' option
-> - test-hg.sh: tests are now expected to pass
-> - transport-helper: check for 'forced update' message
-> - transport-helper: add 'force' to 'export' helpers
-> - transport-helper: don't update refs in dry-run
-> - transport-helper: mismerge fix
->=20
-> Updates transport-helper, fast-import and fast-export to allow the
-> ref mapping and ref deletion in a way similar to the natively
-> supported transports.
->=20
-> Reported to break t5541, and has been stalled for a while without
-> fixes.
->=20
-> Will discard.
-
-Since I somewhat care about transport-helpers, I had a closer look at =
-this failure. Torsten already narrowed it down to f9e3c6bebb89de12 =
-(transport-helper: check for 'forced update' message).
-
-Looking at that commit, the problem is the new line
-
-   (*ref)->forced_update =3D forced;
-
-which is supposed to set forced_update to 1 in certain cases; but the =
-code which sets "forced =3D 1" ever triggered (at least in my limited =
-tests). Worse, it seems forced_update can be set to 1 before we ever get =
-there, and in these casss, we end up reseting forced_update from 1 back =
-to 0. This triggers the test failure.
-
-So a simple fix for the test failure is to drop that patch. Another =
-would be to change the assignment to
-
-   (*ref)->forced_update |=3D forced;
-
-But I haven't spent enough time to look at the patch to determine if one =
-of these two possible changes is correct. All I can say is that dropping =
-that single commit fixes the test failure for me and seems to cause now =
-new failures.
-
-
-Cheers,
-Max
-
---Apple-Mail=_C2BD2A2C-6CFD-4A5C-B11E-8E0BBF1AB16F
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
-	filename=signature.asc
-Content-Type: application/pgp-signature;
-	name=signature.asc
-Content-Description: Message signed with OpenPGP using GPGMail
-
------BEGIN PGP SIGNATURE-----
-Comment: GPGTools - http://gpgtools.org
-
-iF4EAREIAAYFAlMGS9YACgkQIpJVslrhe1nwpwD+JOCUxnGdy950QTlL1LK0BDok
-1HSwH0cWsgzPsJb+T1AA/2ROaId8/CRsACrVPbXwIyDmgPwodOdFlr3FKT79q+C+
-=9qC9
------END PGP SIGNATURE-----
-
---Apple-Mail=_C2BD2A2C-6CFD-4A5C-B11E-8E0BBF1AB16F--
+    strbuf_splice(sb, pos, sb->len - pos, s, strlen(s))
