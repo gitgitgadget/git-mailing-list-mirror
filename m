@@ -1,68 +1,85 @@
-From: shawn wilson <ag4ve.us@gmail.com>
-Subject: filter clean leaves uncommitted file
-Date: Wed, 19 Feb 2014 23:46:25 -0500
-Message-ID: <CAH_OBieMx3tv3Ld74cChEvFsG3NNb-cPmBLDjsAK_-OLVkC+5w@mail.gmail.com>
+From: Ephrim Khong <dr.khong@gmail.com>
+Subject: git log omits deleting merges
+Date: Thu, 20 Feb 2014 08:35:33 +0100
+Message-ID: <5305B045.2060503@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Feb 20 05:46:52 2014
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 20 08:35:44 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WGLX9-0005Km-5w
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Feb 2014 05:46:51 +0100
+	id 1WGOAX-0007LN-7M
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Feb 2014 08:35:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753439AbaBTEqr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Feb 2014 23:46:47 -0500
-Received: from mail-ve0-f178.google.com ([209.85.128.178]:62826 "EHLO
-	mail-ve0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753230AbaBTEqq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Feb 2014 23:46:46 -0500
-Received: by mail-ve0-f178.google.com with SMTP id oy12so1357484veb.23
-        for <git@vger.kernel.org>; Wed, 19 Feb 2014 20:46:46 -0800 (PST)
+	id S1751624AbaBTHfh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Feb 2014 02:35:37 -0500
+Received: from mail-bk0-f50.google.com ([209.85.214.50]:39893 "EHLO
+	mail-bk0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750883AbaBTHfg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Feb 2014 02:35:36 -0500
+Received: by mail-bk0-f50.google.com with SMTP id d7so502687bkh.23
+        for <git@vger.kernel.org>; Wed, 19 Feb 2014 23:35:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=H6xEK0QDEYIEYkQ6mjbBjkrcpMRjn8+TRfg1vGNK33o=;
-        b=S6+A549krJQR0cDsXrJIUf9ox3LM2u95zOgJCsMLbQxlaIe6nQytZPEjjgL/uJrMRE
-         kxaKVK5lt/oqJwXteYhe1f3U/yxqKGo+k8HbMR0F9JkGOtOqjbW8leIz6YOemgiYn0cv
-         PgyJcw5+NTuQxy8Sy9jlCkjywGI4itiUiJtkEONISxIkUivKI8YmHSR46DPrboer9t6H
-         4brUImKOcltSJAmMIIODxP24kPQRu54S5AtLuus23escmQ0LFuiOrLIFv123CwxteXSO
-         RkRNNG1Z1rJ2LpfAMP6ymiB2BvRZZ9nMKSMpIjJwmSHro1aylHLPSfhterRu8Vuaw2Kb
-         V5Mg==
-X-Received: by 10.221.29.196 with SMTP id rz4mr27754429vcb.8.1392871605949;
- Wed, 19 Feb 2014 20:46:45 -0800 (PST)
-Received: by 10.52.170.209 with HTTP; Wed, 19 Feb 2014 20:46:25 -0800 (PST)
+        h=message-id:date:from:user-agent:mime-version:to:subject
+         :content-type:content-transfer-encoding;
+        bh=eNG2S35bJVKsTimWLiLkWCWUddhHVN33MrOFT4v3fcs=;
+        b=JtOICntXlCPeVERoZV+D5vDtyVmLa8d1BFsr1ws9YdsFmNbsaE/yJrH2ORS4wsbs9d
+         8mnWZgH1ifm9dWUh2F/dRwROtDLgl29T/4bKfVvijWbThrF9T4jLaliuszVnEUlz4vyg
+         ubW6p8AcxlGHuKMKHsOfRVgpsgaJEj3jD4kNdASdZoEfNCHTWl2nvm6jfX6h/YoYgKcn
+         4wE4fqn0rmGDUw/aDelGKCUqFSGCh5AVGPbF1peVqRp5po2HBbMJ4QaYlLisYhx7074h
+         yCkNWUJffqI7sHxw11FlcrGroNOFf8dOsQ5pR8ezJ1F8zqK8Jgiq7eoySlp2uPikHdnT
+         IPyg==
+X-Received: by 10.204.100.199 with SMTP id z7mr187094bkn.73.1392881735568;
+        Wed, 19 Feb 2014 23:35:35 -0800 (PST)
+Received: from [192.168.32.40] (merlin.mvtec.com. [62.245.183.130])
+        by mx.google.com with ESMTPSA id i8sm2838896bko.10.2014.02.19.23.35.34
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 19 Feb 2014 23:35:34 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.3.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242426>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242427>
 
-So, I want a way of sharing parts of a gitconfig organizationally, so
-I change and comment out some parts with a filter:
+Hi, git log seems to omit merge commits that delete a file if --follow 
+or --diff-filter=D is given. Below is a testcase. I'm not sure if it is 
+desired behaviour for --diff-filter=D, but it's probably not correct 
+that --follow _removes_ the merge commit from the log output.
 
-[filter "gitconfig-rmuser"]
-  clean = sed -e \"s/^\\( *email =\\).*/\\1 <email address>/\" -e
-\"s/^\\( *name =\\).*/\\1 <real name>/\" -e \"s/^\\( *signingkey
-=\\).*/\\1 <gpg key>/\"
+Thanks - Eph
 
-And then:
-$ cat .gitattributes
-* filter=ident-line
-gitconfig filter=gitconfig-rmuser
+--
+git init
+touch some_file
+git add some_file
+git commit -m "initial"
+git branch other_branch
+echo foo > some_file
+git commit -a -m "commit in master"
+git checkout other_branch
+echo bar > some_file
+git commit -a -m "commit in other_branch"
 
-Which works. The only problem is that if I change it again after the
-commit, I get:
-$ git status
-# HEAD detached at e872204
-# Changes not staged for commit:
-#       modified:   gitconfig
-#
-no changes added to commit
-$ git diff gitconfig
-$
+git merge master --no-commit
+rm some_file
+git rm some_file
+git commit -m "merge"
 
-So the repo remains dirty and I can't do anything with it.
+echo "log 1 - no output"
+# note that --diff-filter=A and M work as expected
+# the merge does not show up for --diff-filter=ACDMRTUXB either
+git log --pretty=oneline --diff-filter=D -- some_file
+
+echo "log 2 - merge is missing"
+git log --pretty=oneline --follow --all -- some_file
+
+echo "log 3 - complete"
+git log --pretty=oneline --all -- some_file
+--
