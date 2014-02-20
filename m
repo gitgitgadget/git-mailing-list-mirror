@@ -1,74 +1,102 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v3 24/25] prune: strategies for linked checkouts
-Date: Thu, 20 Feb 2014 20:19:40 +0700
-Message-ID: <CACsJy8Bxp2sfP0M6htwNg-LP1CcFMpZbhE=sgR6xXJkj-5shcw@mail.gmail.com>
-References: <1392730814-19656-1-git-send-email-pclouds@gmail.com>
- <1392730814-19656-25-git-send-email-pclouds@gmail.com> <CAPig+cQgphSBA6iAYqLJ7RnEwSzBA1dApcLWAydZEXarQRcTKQ@mail.gmail.com>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<u.kleine-koenig@pengutronix.de>
+Subject: $(git notes merge FETCH_HEAD) doesn't work
+Date: Thu, 20 Feb 2014 16:30:45 +0100
+Message-ID: <20140220153045.GI6988@pengutronix.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Thu Feb 20 14:20:19 2014
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: kernel@pengutronix.de, Johan Herland <johan@herland.net>,
+	Stephen Boyd <bebarino@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 20 16:31:14 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WGTY3-00039c-7B
-	for gcvg-git-2@plane.gmane.org; Thu, 20 Feb 2014 14:20:19 +0100
+	id 1WGVaj-0001Ig-J2
+	for gcvg-git-2@plane.gmane.org; Thu, 20 Feb 2014 16:31:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754592AbaBTNUM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Feb 2014 08:20:12 -0500
-Received: from mail-qc0-f182.google.com ([209.85.216.182]:55712 "EHLO
-	mail-qc0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754586AbaBTNUL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Feb 2014 08:20:11 -0500
-Received: by mail-qc0-f182.google.com with SMTP id w7so950955qcr.13
-        for <git@vger.kernel.org>; Thu, 20 Feb 2014 05:20:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=2/XPn+Wvhk0qGINYi4hhvrqrngQX1K4X72uMWE0z4Ws=;
-        b=HGgXPPmNAX6QMf+D+D3igYl5f06P9DVx3Ij4t+XZLmFIn98iChbAeDeGBZX1hseuTj
-         xu1FUNmk5UkHMVKLmicdluTSsO6bDbfQ+bM31YJyj9yOIgvRR87JjrdLI5c/b2ybgptb
-         QH5nZbXAu8ENpKuk/sAyHxwkmCA4GesgpV5c+b/uoHGlMm0alcx1Dmnk5oPru7Ql/ZCl
-         8STz8DIoxPZYIo2p3tzW13hYWp6TdTFwJqtmB50cLGEZ0VWi1wHWrQyOrNTa0tC73Bhs
-         gBYqvFpGS5TZumI2y5m4L4NTGg0Fvp/ytvAeyBcvWQk7ax5HJhfH2L1/gu0HDHPIHAr4
-         qPdw==
-X-Received: by 10.224.36.129 with SMTP id t1mr1479732qad.8.1392902410240; Thu,
- 20 Feb 2014 05:20:10 -0800 (PST)
-Received: by 10.96.215.102 with HTTP; Thu, 20 Feb 2014 05:19:40 -0800 (PST)
-In-Reply-To: <CAPig+cQgphSBA6iAYqLJ7RnEwSzBA1dApcLWAydZEXarQRcTKQ@mail.gmail.com>
+	id S1755310AbaBTPa4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 20 Feb 2014 10:30:56 -0500
+Received: from metis.ext.pengutronix.de ([92.198.50.35]:48645 "EHLO
+	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755204AbaBTPay (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Feb 2014 10:30:54 -0500
+Received: from dude.hi.pengutronix.de ([2001:6f8:1178:2:21e:67ff:fe11:9c5c])
+	by metis.ext.pengutronix.de with esmtp (Exim 4.72)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1WGVaM-0005uN-0P; Thu, 20 Feb 2014 16:30:50 +0100
+Received: from ukl by dude.hi.pengutronix.de with local (Exim 4.82)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1WGVaH-0006zU-64; Thu, 20 Feb 2014 16:30:45 +0100
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-SA-Exim-Connect-IP: 2001:6f8:1178:2:21e:67ff:fe11:9c5c
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242433>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242434>
 
-On Thu, Feb 20, 2014 at 5:08 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->> +static dev_t get_device_or_die(const char *path)
->> +{
->> +       struct stat buf;
->> +       if (stat(path, &buf))
->> +               die_errno("failed to stat '%s'", path);
->> +       /* Ah Windows! Make different drives different "partitions" */
->> +       if (buf.st_dev == 0 && has_dos_drive_prefix("c:\\"))
->> +               buf.st_dev = toupper(real_path(path)[0]);
->
-> This invocation of has_dos_drive_prefix() with hardcoded "c:\\" at
-> first looks like an error until the reader realizes that it's an
-> #ifdef-less check if the platforms is Windows. Would it make more
-> sense to encapsulate this anomaly and abstract it away by fixing
-> compat/mingw.c:do_lstat() to instead set 'st_dev' automatically like
-> you do here? In particular, this line in mingw.c:
->
->     buf->st_dev = buf->st_rdev = 0; /* not used by Git */
->
+Hello,
 
-I don't want to hide too much magic behind compat curtain, especially
-when these magic is just about 90% as real, the rest is mysterious
-corner cases. I guess we could just add an inline function
-is_windows() that always returns 0 or 1 based on #ifdef.
--- 
-Duy
+I started playing around with sharing git notes and so was happy to see
+that git-notes learned about merging since I last tried.
+
+My first try looked as follows (using git 1:1.9.0-1 from Debian):
+
+	$ git fetch $someremote refs/notes/commits
+	...
+	$ git notes merge FETCH_HEAD
+	$ echo $?
+	0
+	$ git log --oneline refs/notes/commits..FETCH_HEAD | wc -l
+	2
+
+Looking at the source I see:
+
+	/* argv[0] holds "FETCH_HEAD" here */
+	strbuf_addstr(&remote_ref, argv[0]);
+	expand_notes_ref(&remote_ref);
+
+After the call to expand_notes_ref remote_ref contains
+"refs/notes/FETCH_HEAD" which isn't what I intended and I'm quite
+surprised by. The problem seems to be:
+
+	/* Dereference o->remote_ref into remote_sha1 */
+	if (get_sha1(o->remote_ref, remote_sha1)) {
+		/*
+		 * Failed to get remote_sha1. If o->remote_ref looks like an
+		 * unborn ref, perform the merge using an empty notes tree.
+		 */
+		if (!check_refname_format(o->remote_ref, 0)) {
+			hashclr(remote_sha1);
+			remote =3D NULL;
+		} else {
+			die("Failed to resolve remote notes ref '%s'",
+			    o->remote_ref);
+		}
+	} ...
+
+The workaround is obvious (i.e. git update-ref refs/notes/somestring
+=46ETCH_HEAD; git notes merge somestring), but still I think this
+behaviour is not optimal. I don't know why one might want to treat a
+broken remote side as empty but at least a diagnostic message would be
+nice. The same happens if I pass an explicit sha1 instead of
+"FETCH_HEAD".
+
+Best regards
+Uwe
+
+--=20
+Pengutronix e.K.                           | Uwe Kleine-K=F6nig        =
+    |
+Industrial Linux Solutions                 | http://www.pengutronix.de/=
+  |
