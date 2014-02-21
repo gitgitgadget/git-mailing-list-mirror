@@ -1,136 +1,140 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] demonstrate git-commit --dry-run exit code behaviour
-Date: Fri, 21 Feb 2014 12:21:13 -0800
-Message-ID: <xmqqa9dk43pi.fsf@gitster.dls.corp.google.com>
-References: <1393010214-32306-1-git-send-email-rctay89@gmail.com>
+From: Thomas Gummerer <t.gummerer@gmail.com>
+Subject: Re: [PATCH 1/3] introduce GIT_INDEX_VERSION environment variable
+Date: Fri, 21 Feb 2014 23:02:53 +0100
+Message-ID: <87d2ig5dki.fsf@hank.lan>
+References: <1392492197-7724-1-git-send-email-t.gummerer@gmail.com> <1392492197-7724-2-git-send-email-t.gummerer@gmail.com> <xmqqsirg9c4z.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: Tay Ray Chuan <rctay89@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 21 21:21:24 2014
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 21 23:02:53 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WGwb5-0005bU-SB
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Feb 2014 21:21:24 +0100
+	id 1WGyBJ-0001KU-0A
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Feb 2014 23:02:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753951AbaBUUVT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Feb 2014 15:21:19 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:60371 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752769AbaBUUVS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Feb 2014 15:21:18 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7AEB76C071;
-	Fri, 21 Feb 2014 15:21:17 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=KCEo/TZb5Ekc0wKdVgjziK3HYFE=; b=NYBPQu
-	4evT+lCFBhMFllM68vjA2w5Oa2osK6ZG/LH0Fpa4MqETWacGoOv7NWadN3VOwQRY
-	CxWCWt/oyZNoIMJWOPnQIVUUZBmjjDe6a0X/yHCWXBEWLgb0DdMhfmkUzBo7i5Z/
-	awKAayDX89ikGRhuIo0w1VO4Su8udk8WmzOb4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=cMWHQHlbawoCgda81r37TrEYsNTWGEuL
-	jy076nGwtLTAfcVs79FV2XJCy1gxU2ayCUhofwDtfMnVZsD6v5dsAujGHcYlqZuV
-	D0JPp8mysk3b2NiHG+FZzS0su1N/uuXTs1IiAmYthRQQETLbm+Q4XukPIcGrk21i
-	TR9XtMYKNg8=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 6AD626C070;
-	Fri, 21 Feb 2014 15:21:17 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9F1946C06E;
-	Fri, 21 Feb 2014 15:21:15 -0500 (EST)
-In-Reply-To: <1393010214-32306-1-git-send-email-rctay89@gmail.com> (Tay Ray
-	Chuan's message of "Sat, 22 Feb 2014 03:16:54 +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: B6F90404-9B35-11E3-B66E-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753332AbaBUWCs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Feb 2014 17:02:48 -0500
+Received: from mail-la0-f51.google.com ([209.85.215.51]:59038 "EHLO
+	mail-la0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752884AbaBUWCr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Feb 2014 17:02:47 -0500
+Received: by mail-la0-f51.google.com with SMTP id c6so2817741lan.38
+        for <git@vger.kernel.org>; Fri, 21 Feb 2014 14:02:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:in-reply-to:references:user-agent:date
+         :message-id:mime-version:content-type;
+        bh=BKVX+NojcZXl0YC09xDz9fhpxZm5nKcFznumYhtSvcs=;
+        b=MDoTvBLu1Fkk5RFBXfTbLJzU6+UUVLbBgFmsvEoXccjVf19oezTLSWTB+h/uXnGXcJ
+         HPz3f9XzWZls8nmhiBQSrowk/2yQwt8fq6RfnUxKGKigPG+oWpmzapdkWBEPWL93SACC
+         T79c16FtxiJm37FVaXpEYZ5W8AASp68S6RoEgbC5mbspp5rcaT4MifqE93WAHwQR0cb2
+         eEL1PmxCGVVanvtuJBDEKBRxggs2pv+tMhvDubSZToccrP40dXQY1sHYKzLV03/JcTNr
+         P1lJgRbsTvY+qH1wnOKZhvtGA92dxLpmXzGbAyozpLxPPDNw/9CsTJ8NRht2jlNhZOAu
+         Ezfg==
+X-Received: by 10.152.1.130 with SMTP id 2mr5502869lam.88.1393020166330;
+        Fri, 21 Feb 2014 14:02:46 -0800 (PST)
+Received: from localhost (213-66-41-37-no99.tbcn.telia.com. [213.66.41.37])
+        by mx.google.com with ESMTPSA id 10sm12560904lan.5.2014.02.21.14.02.44
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=AES128-GCM-SHA256 bits=128/128);
+        Fri, 21 Feb 2014 14:02:45 -0800 (PST)
+In-Reply-To: <xmqqsirg9c4z.fsf@gitster.dls.corp.google.com>
+User-Agent: Notmuch/0.17+57~g9c1bc97 (http://notmuchmail.org) Emacs/24.3.1 (x86_64-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242492>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242493>
 
-Tay Ray Chuan <rctay89@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> In particular, show that --short and --porcelain, while implying
-> --dry-run, do not return the same exit code as --dry-run. This is due to
-> the wt_status.commitable flag being set only when a long status is
-> requested.
-
-I am not sure if --short/--porcelain should even be accepted by "git
-commit" in the first place.  It used to be that "git status" and
-"git commit" were the same program in a different guise and "git
-status <anything>" were merely a "git commit --dry-run <anything>",
-but the recent push is in the direction of making them totally
-separate in the end-user's minds.  So if we want a proper fix, I
-would actually think that these options should *error out* at the
-command line parser level, way before checking if there is anything
-to commit.
-
-> No fix is provided here; with [1], it should be trivial to fix though -
-> just a matter of calling wt_status_mark_commitable().
+> Thomas Gummerer <t.gummerer@gmail.com> writes:
 >
-> [1] http://article.gmane.org/gmane.comp.version-control.git/242489
+>> diff --git a/Documentation/git.txt b/Documentation/git.txt
+>> index aec3726..bc9eeea 100644
+>> --- a/Documentation/git.txt
+>> +++ b/Documentation/git.txt
+>> @@ -712,6 +712,11 @@ Git so take care if using Cogito etc.
+>>  	index file. If not specified, the default of `$GIT_DIR/index`
+>>  	is used.
+>>  
+>> +'GIT_INDEX_VERSION'::
+>> +	This environment variable allows the specification of an index
+>> +	version for new repositories.  It won't affect existing index
+>> +	files.  By default index file version 3 is used.
+>> +
 >
-> Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
-> ---
->  t/t7501-commit.sh | 36 ++++++++++++++++++++++++++++++++++++
->  1 file changed, 36 insertions(+)
+> This is half-correct, isn't it?  In-code variable may say version 3
+> but we demote it to version 2 unless we absolutely need to use the
+> version 3 ugliness.
+
+Yes, you're right, to be correct we should say [23] instead of 3 here
+maybe?
+
+>> diff --git a/read-cache.c b/read-cache.c
+>> index 3f735f3..3993e12 100644
+>> --- a/read-cache.c
+>> +++ b/read-cache.c
+>> @@ -1223,6 +1223,22 @@ static struct cache_entry *refresh_cache_entry(struct cache_entry *ce, int reall
+>>  
+>>  #define INDEX_FORMAT_DEFAULT 3
+>>  
+>> +static unsigned int get_index_format_default()
+>> +{
+>> +	char *envversion = getenv("GIT_INDEX_VERSION");
+>> +	if (!envversion) {
+>> +		return INDEX_FORMAT_DEFAULT;
+>> +	} else {
+>> +		unsigned int version = strtol(envversion, NULL, 10);
 >
-> diff --git a/t/t7501-commit.sh b/t/t7501-commit.sh
-> index 94eec83..d58b097 100755
-> --- a/t/t7501-commit.sh
-> +++ b/t/t7501-commit.sh
-> @@ -61,11 +61,47 @@ test_expect_success 'nothing to commit' '
->  	test_must_fail git commit -m initial
->  '
->  
-> +test_expect_success '--dry-run fails with nothing to commit' '
-> +	test_must_fail git commit -m initial --dry-run
-> +'
-> +
-> +test_expect_success '--short fails with nothing to commit' '
-> +	test_must_fail git commit -m initial --short
-> +'
-> +
-> +test_expect_success '--porcelain fails with nothing to commit' '
-> +	test_must_fail git commit -m initial --porcelain
-> +'
-> +
-> +test_expect_success '--long fails with nothing to commit' '
-> +	test_must_fail git commit -m initial --long
-> +'
-> +
->  test_expect_success 'setup: non-initial commit' '
->  	echo bongo bongo bongo >file &&
->  	git commit -m next -a
->  '
->  
-> +test_expect_success '--dry-run with stuff to commit returns ok' '
-> +	echo bongo bongo bongo >>file &&
-> +	git commit -m next -a --dry-run
-> +'
-> +
-> +test_expect_failure '--short with stuff to commit returns ok' '
-> +	echo bongo bongo bongo >>file &&
-> +	git commit -m next -a --short
-> +'
-> +
-> +test_expect_failure '--porcelain with stuff to commit returns ok' '
-> +	echo bongo bongo bongo >>file &&
-> +	git commit -m next -a --porcelain
-> +'
-> +
-> +test_expect_success '--long with stuff to commit returns ok' '
-> +	echo bongo bongo bongo >>file &&
-> +	git commit -m next -a --long
-> +'
-> +
->  test_expect_success 'commit message from non-existing file' '
->  	echo more bongo: bongo bongo bongo bongo >file &&
->  	test_must_fail git commit -F gah -a
+> If we are using strtol() to parse it carefully, we should make sure
+> it parses to the end by giving a non-NULL second argument and
+> checking where the parsing stopped.
+
+Thanks, makes sense, will fix it in the re-roll.
+
+>> diff --git a/t/t1600-index.sh b/t/t1600-index.sh
+>> new file mode 100755
+>> index 0000000..37fd84d
+>> --- /dev/null
+>> +++ b/t/t1600-index.sh
+>> @@ -0,0 +1,24 @@
+>> +#!/bin/sh
+>> +
+>> +test_description='index file specific tests'
+>> +
+>> +. ./test-lib.sh
+>> +
+>> +test_expect_success 'setup' '
+>> +	echo 1 >a
+>> +'
+>> +
+>> +test_expect_success 'out of bounds GIT_INDEX_VERSION issues warning' '
+>> +	(
+>> +		GIT_INDEX_VERSION=1 &&
+>> +		export GIT_INDEX_VERSION &&
+>> +		git add a 2>&1 | sed "s/[0-9]//" >actual.err &&
+>> +		sed -e "s/ Z$/ /" <<-\EOF >expect.err &&
+>> +			warning: GIT_INDEX_VERSION set, but the value is invalid.
+>> +			Using version Z
+>> +		EOF
+>> +		test_i18ncmp expect.err actual.err
+>> +	)
+>> +'
+>
+> If we already have an index in version N when this test starts, what
+> should happen?
+
+I think we shouldn't print anything, since we won't change the file
+format.  I'll add another test for that.
+
+> Will queue on 'pu', with some suggested fixups.
+
+Thanks, I think both fixups in 'pu' make sense, so I'll include them in
+the re-roll.
+
+> Thanks.
