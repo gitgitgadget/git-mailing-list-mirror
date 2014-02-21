@@ -1,64 +1,82 @@
-From: Robert Dailey <rcdailey.lists@gmail.com>
-Subject: git-svn fetch after tag conversion?
-Date: Fri, 21 Feb 2014 08:42:37 -0600
-Message-ID: <CAHd499AnhD9V46uokx6Waj5XwBZCh-N8ms3ihkY99USej+GDOw@mail.gmail.com>
+From: Daniel Liew <delcypher@gmail.com>
+Subject: [PATCH] git-remote-hg : Enable use of, $GIT_DIR/hg/origin/clone/.hg/hgrc
+Date: Fri, 21 Feb 2014 15:17:16 +0000
+Message-ID: <53076DFC.1000602@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-To: Git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Feb 21 15:42:43 2014
+Content-Transfer-Encoding: 7bit
+Cc: felipe.contreras@gmail.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 21 16:17:26 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WGrJL-0004gM-Ey
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Feb 2014 15:42:43 +0100
+	id 1WGrqu-00013Z-1O
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Feb 2014 16:17:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755398AbaBUOmj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Feb 2014 09:42:39 -0500
-Received: from mail-vc0-f181.google.com ([209.85.220.181]:48216 "EHLO
-	mail-vc0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754396AbaBUOmi (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Feb 2014 09:42:38 -0500
-Received: by mail-vc0-f181.google.com with SMTP id ie18so3268834vcb.40
-        for <git@vger.kernel.org>; Fri, 21 Feb 2014 06:42:37 -0800 (PST)
+	id S932079AbaBUPRU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Feb 2014 10:17:20 -0500
+Received: from mail-wg0-f43.google.com ([74.125.82.43]:47168 "EHLO
+	mail-wg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755941AbaBUPRT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Feb 2014 10:17:19 -0500
+Received: by mail-wg0-f43.google.com with SMTP id a1so2578775wgh.34
+        for <git@vger.kernel.org>; Fri, 21 Feb 2014 07:17:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:date:message-id:subject:from:to:content-type;
-        bh=Zw6b6q+qmNWAndfShkFAp/eT0tqxU//QlGdQ852lCG4=;
-        b=qAQ4NN6jmzuYD6BmtgWOV6tGxWWiboO/Ip8vhOCqOh7NvLcTd50KPgf7kCNqJnLe2m
-         bs2fnDn2r/GXwpmQUjfKuDypkTBs3kYzMVddfDsiEGTsppHc6nClU3sQgFx6v1mB8C20
-         dDNgHZv040+UCSQlQSEUjNyeQdJiRkx7A//LWLDTmiaALr18guaMxM5xpxqYK56ymGN4
-         wJgRuVmOET8GHzOm2pCAdPZ9WG7IbPSfGIW0sLwb9VIJ4HEE6TEAiaPeNaIcKeziLh1Y
-         AuPQWieb+XoLvOAGSt1G4DRaCBkz43GuQNKJtt9WMdvF1XXYByiRx92Hsph6JSJNORc9
-         +dWg==
-X-Received: by 10.52.246.42 with SMTP id xt10mr4190878vdc.9.1392993757243;
- Fri, 21 Feb 2014 06:42:37 -0800 (PST)
-X-Google-Sender-Delegation: rcdailey@gmail.com
-Received: by 10.221.49.68 with HTTP; Fri, 21 Feb 2014 06:42:37 -0800 (PST)
-X-Google-Sender-Auth: KgVHc-LeDNkQ5P6cqW9OJeszGE0
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :content-type:content-transfer-encoding;
+        bh=Es3TAs2VeyrawtMd64z7l88wEQ8xo8wvhyGLpoaB2Kc=;
+        b=cxBAx/A7iDqkri8/2YoM6VtGsTNDZvVMdVt867bK6mM4wuk1HCaXDiXpNRaWeeL/8c
+         nEUAGATP3h0v66YZCPkibTyZ9w/fBPNBcyqYJfZ0e16vlhkkhehpx1DJTz/vKFic8XXt
+         acmNaQ+d8GJn3JSmyc6kWAVH3j+MsyLGTtmBfUwdiJyDvzf7TKbh7XdEOVa9r+WrAoUM
+         +T+vaIe7vWf7YGKdAyjO3KKlfjODTy9dBlTlD7o4gsEzhr6/J+gyWdAEFKY72ERgmd49
+         uAVTxwMlT2Cr0d56U5SahzXR/xYYlkiHaNWEU4LlFhSiQs9XBEdJtjXSVlAqVJBT7/Lu
+         gk7Q==
+X-Received: by 10.194.84.144 with SMTP id z16mr7700175wjy.23.1392995837777;
+        Fri, 21 Feb 2014 07:17:17 -0800 (PST)
+Received: from icarus.doc.ic.ac.uk (icarus.doc.ic.ac.uk. [146.169.15.49])
+        by mx.google.com with ESMTPSA id r1sm8593484wia.5.2014.02.21.07.17.16
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Fri, 21 Feb 2014 07:17:16 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.2.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242464>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242465>
 
-I'm converting a large SVN repository to a Git repository. I've run
-the first step of `git svn fetch` and now I have all of my branches,
-tags, and trunk. However my tags are still just branches, I have not
-converted them yet.
+git-remote-hg : Enable use of, $GIT_DIR/hg/origin/clone/.hg/hgrc
 
-As I transition my team over to use Git, I wonder if it is possible to
-convert the tag-branches to real tags and still be able to do `git svn
-fetch` afterwards to continue to pull in changes. My goal is to have
-the git repository as ready as possible so that everyone can swap to
-it at once (and it'll be less downtime before i can push it to
-github). There are some scenarios I worry about:
+Use the hgrc configuration file in the internal mercurial repository in
+addition to the other system wide hgrc files. This is done by using the
+'ui' object from the 'repository' object which will have loaded the
+repository hgrc file if it exists.
 
-- Will git re-fetch the tag-branches if they technically don't exist
-anymore (they would be real tags)?
-- What if a change is made to a tag, what will git-svn do?
-- New tags created, will those just create new tag-branches and I can
-convert them later?
+Prior to this patch the mercurial repository's hgrc file was ignored
+which I consider to be a bug.
 
-Thanks in advance.
+Signed-off-by: Dan Liew <delcypher@gmail.com>
+---
+ contrib/remote-helpers/git-remote-hg | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/contrib/remote-helpers/git-remote-hg
+b/contrib/remote-helpers/git-remote-hg
+index eb89ef6..451842a 100755
+--- a/contrib/remote-helpers/git-remote-hg
++++ b/contrib/remote-helpers/git-remote-hg
+@@ -421,7 +421,7 @@ def get_repo(url, alias):
+
+         repo = hg.repository(myui, local_path)
+         try:
+-            peer = hg.peer(myui, {}, url)
++            peer = hg.peer(repo._unfilteredrepo.ui, {}, url)
+         except:
+             die('Repository error')
+         repo.pull(peer, heads=None, force=True)
+-- 
+1.9.0
