@@ -1,67 +1,67 @@
-From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-Subject: Re: git-svn fetch after tag conversion?
-Date: Fri, 21 Feb 2014 16:53:54 +0100
-Message-ID: <53077692.4010408@web.de>
-References: <CAHd499AnhD9V46uokx6Waj5XwBZCh-N8ms3ihkY99USej+GDOw@mail.gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: What's cooking in git.git (Feb 2014, #06; Wed, 19)
+Date: Fri, 21 Feb 2014 11:18:34 -0500
+Message-ID: <CALkWK0ktd1c-KGc6AqqYNE=_skQGdA0bu4T7yx-2iiPOibSfuA@mail.gmail.com>
+References: <xmqqppmi7pbn.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: Robert Dailey <rcdailey.lists@gmail.com>, Git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Feb 21 16:54:02 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 21 17:19:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WGsQM-00006S-27
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Feb 2014 16:54:02 +0100
+	id 1WGsos-0002qV-2G
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Feb 2014 17:19:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932320AbaBUPx6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Feb 2014 10:53:58 -0500
-Received: from mout.web.de ([212.227.15.14]:57685 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932276AbaBUPx5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Feb 2014 10:53:57 -0500
-Received: from [192.168.209.26] ([78.72.74.102]) by smtp.web.de (mrweb103)
- with ESMTPSA (Nemesis) id 0M6DyQ-1XDmSv1wCI-00y8xj for <git@vger.kernel.org>;
- Fri, 21 Feb 2014 16:53:55 +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:24.0) Gecko/20100101 Thunderbird/24.3.0
-In-Reply-To: <CAHd499AnhD9V46uokx6Waj5XwBZCh-N8ms3ihkY99USej+GDOw@mail.gmail.com>
-X-Provags-ID: V03:K0:3HKeg311BWnm5icf3qcDOfKS90Eajb1rPfXsn5skdjVO8GG82Ys
- ed91o4eHzeOZzbcdp5681XnguBaniYvqmhtE+0KKMkXSv5BEH5meB9u++uHNkfOFvYDy0tb
- vwOyR7FakB9bD//4Dh6GgLmIdTN8wyORAUcduziIAuOxGaCRIXXSUiBuOFq2vbCd4BM+P8k
- 0SIxFgGejTFBnBEzxRUZw==
+	id S1755964AbaBUQTQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Feb 2014 11:19:16 -0500
+Received: from mail-oa0-f47.google.com ([209.85.219.47]:35030 "EHLO
+	mail-oa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755810AbaBUQTP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Feb 2014 11:19:15 -0500
+Received: by mail-oa0-f47.google.com with SMTP id m1so4567597oag.34
+        for <git@vger.kernel.org>; Fri, 21 Feb 2014 08:19:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=kFRSjKAn6xLzxKNa1cFoH3dobKuK0rDWf3RDQ2ipln0=;
+        b=y61og65H+B46BUgWIpU+C6M5irDcVjfdml+5mwDVwBnrIaQZ07iY5nEmMpp0kliAki
+         7GdVTjB39V5hdaPPUfatThBAfw9myFu49IdxnWdmoNAhL9LOMlFVtw526T9VeOLUHshq
+         /i7jU/qvCTlodhoezTrGNhjL5AlYrFrTPbOf4MgNItxRGgYDDA159mY0f5stwmyc+BqR
+         k8WUBDGW9RoDh46IWZywjj1ufnSRVB4yxdr0bbyGu9LbaVGh8qF2ULAkZBOSj0EGlHE3
+         TDgvNNOzeXt0HKSstOOwt7PcwkhQcIQcSGAm9GTGonta7oJnllqLu2OA7O7CZU5jTSCt
+         3r5g==
+X-Received: by 10.42.40.83 with SMTP id k19mr3610970ice.3.1392999554483; Fri,
+ 21 Feb 2014 08:19:14 -0800 (PST)
+Received: by 10.64.10.42 with HTTP; Fri, 21 Feb 2014 08:18:34 -0800 (PST)
+In-Reply-To: <xmqqppmi7pbn.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242467>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242468>
 
-On 2014-02-21 15.42, Robert Dailey wrote:
-> I'm converting a large SVN repository to a Git repository. I've run
-> the first step of `git svn fetch` and now I have all of my branches,
-> tags, and trunk. However my tags are still just branches, I have not
-> converted them yet.
-> 
-> As I transition my team over to use Git, I wonder if it is possible to
-> convert the tag-branches to real tags and still be able to do `git svn
-> fetch` afterwards to continue to pull in changes. My goal is to have
-> the git repository as ready as possible so that everyone can swap to
-> it at once (and it'll be less downtime before i can push it to
-> github). There are some scenarios I worry about:
-> 
-> - Will git re-fetch the tag-branches if they technically don't exist
-> anymore (they would be real tags)?
-> - What if a change is made to a tag, what will git-svn do?
-> - New tags created, will those just create new tag-branches and I can
-> convert them later?
-> 
-> Thanks in advance.
-I stumbled over this as well.
-As a tag and a branch is "the same" in svn, the best thing we can do
-is to keep the svn tags as git branches, in the same way svn does.
+Junio C Hamano wrote:
+> * jk/branch-at-publish-rebased (2014-01-17) 5 commits
+>  - t1507 (rev-parse-upstream): fix typo in test title
+>  - implement @{publish} shorthand
+>  - branch_get: provide per-branch pushremote pointers
+>  - branch_get: return early on error
+>  - sha1_name: refactor upstream_mark
+>
+>  Give an easier access to the tracking branches from "other" side in
+>  a triangular workflow by introducing B@{publish} that works in a
+>  similar way to how B@{upstream} does.
+>
+>  Meant to be used as a basis for whatever Ram wants to build on.
+>
+>  Will hold.
 
-Would it work if you make a script to tag the svn tags with a different name,
-like "git_tag_v1.0" or so ?
-
-Otherwise: just set up a test repo and see what happens ;-)
+Since I've decided that I don't have the time to work on this, we've
+added this to the list of project ideas for GSoC 2014
+(http://git.github.io/SoC-2014-Ideas.html). Hopefully, a student will
+come along and volunteer to finish this.
