@@ -1,103 +1,83 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: difftool sends malformed path to exernal tool on Windows
-Date: Fri, 21 Feb 2014 02:38:22 -0800
-Message-ID: <20140221103821.GA21414@gmail.com>
-References: <011301cf2c2d$90442810$b0cc7830$@lsst.org>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH] tag: support --sort=version
+Date: Fri, 21 Feb 2014 18:58:16 +0700
+Message-ID: <CACsJy8BrfKckHzgwRnW_UMTjipuYWGVcumvCmQC9EG1Eq-MScA@mail.gmail.com>
+References: <1392817167-29802-1-git-send-email-pclouds@gmail.com>
+ <20140219140909.GA20128@sigill.intra.peff.net> <CACsJy8CL3rQx=QHf_eABCUqS+9kZXEmopUuCMiNCL+UPyvtbyw@mail.gmail.com>
+ <20140220204345.GA3374@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Paul Lotz <plotz@lsst.org>
-X-From: git-owner@vger.kernel.org Fri Feb 21 11:38:44 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Feb 21 12:58:53 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WGnVB-00023t-Jj
-	for gcvg-git-2@plane.gmane.org; Fri, 21 Feb 2014 11:38:41 +0100
+	id 1WGokm-00071D-JV
+	for gcvg-git-2@plane.gmane.org; Fri, 21 Feb 2014 12:58:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754709AbaBUKig convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 21 Feb 2014 05:38:36 -0500
-Received: from mail-pb0-f45.google.com ([209.85.160.45]:52785 "EHLO
-	mail-pb0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754655AbaBUKif (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Feb 2014 05:38:35 -0500
-Received: by mail-pb0-f45.google.com with SMTP id un15so3266265pbc.4
-        for <git@vger.kernel.org>; Fri, 21 Feb 2014 02:38:34 -0800 (PST)
+	id S1755207AbaBUL6s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Feb 2014 06:58:48 -0500
+Received: from mail-qc0-f170.google.com ([209.85.216.170]:43350 "EHLO
+	mail-qc0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755156AbaBUL6r (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Feb 2014 06:58:47 -0500
+Received: by mail-qc0-f170.google.com with SMTP id c9so5401642qcz.15
+        for <git@vger.kernel.org>; Fri, 21 Feb 2014 03:58:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=dcAbMxCeEcc6nDKLFqNu9lDjcifKviqiE/Ol2gMnxjQ=;
-        b=gaTHdkjXb5YpJzu9DLVFW8pDRoP33PebLhD2kB5mox8+XqDXLg9C+wwpqfuk+snWyA
-         eI3tsiwMFP6rPsm4ZUe95wWJ3Dt8Rc8IdlqmNUbn2N6F0ST1BJiPJYA/ItKWorbmu1O9
-         rmEtifyBOSojEKYgQs0OFIaa6kicrmPeJaAZBUvkajOgWjiNefHTBsYHzZB9ThkncD8D
-         K/hHfHn1uIbib5upFGU6KuTcm/UGk3evNXGH8RtkfRnCoaxrGqsykyqO9OHXsB8FIC4T
-         MeDkEiiS8IvK2hBhCVix03nsystxwtCxcuieK9caeA5v5vNmTw/fwSqAfR5/kxCWLBdq
-         KgLA==
-X-Received: by 10.68.163.3 with SMTP id ye3mr8473323pbb.78.1392979114454;
-        Fri, 21 Feb 2014 02:38:34 -0800 (PST)
-Received: from gmail.com (208-106-56-2.static.sonic.net. [208.106.56.2])
-        by mx.google.com with ESMTPSA id kc9sm20001075pbc.25.2014.02.21.02.38.33
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Fri, 21 Feb 2014 02:38:33 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <011301cf2c2d$90442810$b0cc7830$@lsst.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=aFLW+RN8na+adhFypaQWBemk3LIuKQZiW4Da6nZBqaA=;
+        b=tw/J1nh5FY8/dHYJt+zop9aDZ0pK40dFVK+FjhafTiK+ErCP+JsFUeeX+RSB2BHF8t
+         sPHfRtbnpwPDzvymwGw63u/kwXTeYbHhzsSoZCjDUlwEsGLD4RVcJwAp5IDQU4saJYKs
+         a9ux63V049oqlhwG53oqH1/RxKeovHxxZNPYHPNHb9ZNYAItw3Mgyu8TwZOBa+1JMbOn
+         BPDDFtiLdmytkqZ64OCtCZ1NGfvfsJP4Xjhuayn9ZsBHGDRMwehvM6CLcPxglhEGcJsk
+         SVUF4jI7MOJcrTyRo/91ASY4NRBxxlrEiLL8+psKdL7wGR98jjsTEoU2phAATq+5+nXp
+         MyNA==
+X-Received: by 10.224.161.5 with SMTP id p5mr9120530qax.88.1392983926889; Fri,
+ 21 Feb 2014 03:58:46 -0800 (PST)
+Received: by 10.96.215.102 with HTTP; Fri, 21 Feb 2014 03:58:16 -0800 (PST)
+In-Reply-To: <20140220204345.GA3374@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242461>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242462>
 
-On Mon, Feb 17, 2014 at 03:14:01PM -0700, Paul Lotz wrote:
-> From the Git Bash command line, I enter
-> $ git difftool
->=20
-> and type =C2=91y=C2=92 when the file I want to difference appears.=C2=
-=A0 Git correctly
-> calls the external diff tool (LVCompare.exe), but the path for the re=
-mote
-> file Git passes to that tool is malformed (e.g.,
-> C:\/Users/Paul/AppData/Local/Temp/QCpqLa_calcLoadCellExcitation.vi).=C2=
-=A0
-> Obviously the \/ (backslash forwardslash) combination is incorrect.
+On Fri, Feb 21, 2014 at 3:43 AM, Jeff King <peff@peff.net> wrote:
+> I think I actually prefer the full word "version", as you have already.
+> It's clear what it means, and we can extend the syntax generally to:
 
-If this is the case then difftool is not the only one with this problem=
-=2E
+Agreed. It's hard to find a letter that reminds you about "version".
 
-We use the GIT_EXTERNAL_DIFF mechanism to run difftool under "git diff"=
-,
-so it may be that the paths are mangled by "git diff" itself.
-I don't really know enough about msysgit to know for sure, though.
+>
+>   --sort=[-][comparison:]field
+>
+> like:
+>
+>   --sort=-version:subject
+>
+> for descending version-sort by subject.  And then as a special-case
+> convenience, make "version" without a field default to
+> "version:refname". There's no ambiguity because the set of comparison
+> names and field-names is fixed, and we know there is no overlap.
+>
+> If want to, we can _also_ give a one-letter abbreviation to the
+> comparison field, like:
+>
+>   --sort=v:subject
+>
+> but that is not necessary.
 
-What do you see if you create a dummy tool which just does "echo"?
+Why not reversed order? So its syntax could be
 
-[difftool "test"]
-	cmd =3D echo \"$LOCAL\" \"$REMOTE\"
+[ "-" ] FIELD [ ":" [ "version" | "v" ] ]
 
-Then run:
-
-$ git difftool -t test
-
-> For the record, I have successfully made calls to LVCompare.exe manua=
-lly
-> from a Windows command prompt directly (without Git).
->=20
-> The relevant portion of the .gitconfig file is:
-> [diff]
-> =C2=A0=C2=A0=C2=A0=C2=A0 tool =3D "LVCompare"
-> [difftool "LVCompare"]
-> =C2=A0=C2=A0=C2=A0=C2=A0 cmd =3D 'C:/Program Files (x86)/National Ins=
-truments/Shared/LabVIEW
-> Compare/LVCompare.exe' \"$LOCAL\"=C2=A0 \"$REMOTE\"
->=20
->=20
-> For the record, the operating system is Windows 8.1.
-
-Do any msysgit folks know whether GIT_EXTERNAL_DIFF is a known issue?
---=20
-David
+It fits better to current f-e-r syntax where modifiers are after the
+colon. And it avoids the possibility that someone adds field "version"
+and we can't tell what "version" is what.
+-- 
+Duy
