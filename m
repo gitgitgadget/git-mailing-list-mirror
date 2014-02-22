@@ -1,141 +1,102 @@
-From: Thomas Rast <tr@thomasrast.ch>
-Subject: Re: [PATCH] diff: do not reuse_worktree_file for submodules
-Date: Sat, 22 Feb 2014 12:27:29 +0100
-Message-ID: <8738jbtmji.fsf@thomasrast.ch>
-References: <CAC_01E0Pu+_UeSniFVhaqfu90d=iaFDqLrKZ1zjM6GMA4BvcGQ@mail.gmail.com>
-	<d08b7e5a36ee13226d1ad56a731016762ae89938.1392569505.git.tr@thomasrast.ch>
-	<xmqqy518cezh.fsf@gitster.dls.corp.google.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: git gc --aggressive led to about 40 times slower "git log --raw"
+Date: Sat, 22 Feb 2014 20:00:47 +0700
+Message-ID: <CACsJy8AS6FMqMXcsDtUvrC2bgZ90irMXDCh58KjmgQK8+yFwVA@mail.gmail.com>
+References: <CAEjYwfU==yYtQBDzZzEPdvbqz1N=gZtbMr5ccRaC_U7NfViQLA@mail.gmail.com>
+ <87r470ssuc.fsf@fencepost.gnu.org> <CACsJy8D9tws_gu6yWVdz3t+Vfg5-9iorptn4BLnTL3b+YWcHzQ@mail.gmail.com>
+ <87ioscsoow.fsf@fencepost.gnu.org> <20140218155842.GA7855@google.com>
+ <xmqqzjlocf28.fsf@gitster.dls.corp.google.com> <CACsJy8DnjQyzY2ym7=fAQzThuhMuFzGLuKc35JJXn5FfB7r4Gg@mail.gmail.com>
+ <87fvnbhdn7.fsf@fencepost.gnu.org> <877g8nh6k8.fsf@fencepost.gnu.org> <CACsJy8Cyf6Mu3q1VWH7srCK4m=+UgR4m7RiNkMv-nr8eF4YAJA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org,
-	=?utf-8?Q?Gr=C3=A9gory?= Pakosz <gregory.pakosz@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 22 12:28:14 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Christian Jaeger <chrjae@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Sat Feb 22 14:01:40 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WHAkf-0002P8-Dx
-	for gcvg-git-2@plane.gmane.org; Sat, 22 Feb 2014 12:28:13 +0100
+	id 1WHCD5-0003Jd-PK
+	for gcvg-git-2@plane.gmane.org; Sat, 22 Feb 2014 14:01:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750764AbaBVL1p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Feb 2014 06:27:45 -0500
-Received: from ip1.thgersdorf.net ([148.251.9.194]:35087 "EHLO mail.psioc.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750705AbaBVL1o (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Feb 2014 06:27:44 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by localhost.psioc.net (Postfix) with ESMTP id 21D044D6590;
-	Sat, 22 Feb 2014 12:27:40 +0100 (CET)
-X-Virus-Scanned: amavisd-new at psioc.net
-Received: from mail.psioc.net ([127.0.0.1])
-	by localhost (mail.psioc.net [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id a-A-ZOH1By7d; Sat, 22 Feb 2014 12:27:30 +0100 (CET)
-Received: from linux-1gf2.thomasrast.ch (46-126-8-85.dynamic.hispeed.ch [46.126.8.85])
-	(using TLSv1.2 with cipher AES128-GCM-SHA256 (128/128 bits))
-	(Client did not present a certificate)
-	by mail.psioc.net (Postfix) with ESMTPSA id DFE1C4D64BD;
-	Sat, 22 Feb 2014 12:27:29 +0100 (CET)
-In-Reply-To: <xmqqy518cezh.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Tue, 18 Feb 2014 13:01:22 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1751350AbaBVNBV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 Feb 2014 08:01:21 -0500
+Received: from mail-qg0-f51.google.com ([209.85.192.51]:50371 "EHLO
+	mail-qg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751173AbaBVNBU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Feb 2014 08:01:20 -0500
+Received: by mail-qg0-f51.google.com with SMTP id q108so10195328qgd.10
+        for <git@vger.kernel.org>; Sat, 22 Feb 2014 05:01:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=+VuYHcr77BRO8mzt7x3kfi8s1gzeWqDCmj48TUDfOpI=;
+        b=w/J+5ExX5jldF0wczWzns/Dd9e6Ml9ZITksi3lFI2FKAzWM9JTi3jTtZYeAg2X0XAJ
+         Q9rhyBrtuBJCcbVk/MpjDtcRgdbYFcJUIKjUFtyze0bytLl7sym+/9hJtCY5ykBS35db
+         dRxX2Svse+ZHO8c3A12DN9RZZqXy6hQLfW0KMGjFa2eLuznCc+xjG+mQ99BRR2gb31Zp
+         fHi6JakuS4cotnPs2faMFyyg1A5uqF8rZ3kgTMp1iftxOPWgdzgPhb8gEFBudl1cbKcz
+         TvO0NWIFwIzSFxFPEMTEmO1dZ7Qvbx81BYYHsP6ls0XwAM2vSc0IswxhGM8Sd9hoCHAt
+         j3mA==
+X-Received: by 10.224.36.129 with SMTP id t1mr17179133qad.8.1393074078375;
+ Sat, 22 Feb 2014 05:01:18 -0800 (PST)
+Received: by 10.96.215.102 with HTTP; Sat, 22 Feb 2014 05:00:47 -0800 (PST)
+In-Reply-To: <CACsJy8Cyf6Mu3q1VWH7srCK4m=+UgR4m7RiNkMv-nr8eF4YAJA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242524>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242526>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Thomas Rast <tr@thomasrast.ch> writes:
+On Sat, Feb 22, 2014 at 4:14 PM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Sat, Feb 22, 2014 at 3:53 PM, David Kastrup <dak@gnu.org> wrote:
+>> David Kastrup <dak@gnu.org> writes:
+>>
+>>> Duy Nguyen <pclouds@gmail.com> writes:
+>>>
+>>>> OK with git://git.savannah.gnu.org/emacs.git we have
+>>>>
+>>>>  - a 209MB pack with --aggressive
+>>>>  - 1.3GB with --depth=50
+>>>>  - 1.3GB with --window=4000 --depth=32
+>>>>  - 1.3GB with --depth=20
+>>>>  - 821MB with --depth=250 for commits --before=2.years.ago, --depth=50
+>>>> for the rest
+...
+>>>>
+>>>> I'm not really happy with --depth=250 producing 209MB while
+>>>> --depth=250 --before=2.year.ago a 800MB pack. It looks wrong (or maybe
+>>>> I did something wrong)
+....
+>> Another thing: did you really use --depth=250 here or did you use
+>> --aggressive?  It may be that the latter also sets other options?
 >
->> @@ -2845,8 +2845,9 @@ static struct diff_tempfile *prepare_temp_file(const char *name,
->>  		remove_tempfile_installed = 1;
->>  	}
->>  
->> -	if (!one->sha1_valid ||
->> -	    reuse_worktree_file(name, one->sha1, 1)) {
->> +	if (!S_ISGITLINK(one->mode) &&
->> +	    (!one->sha1_valid ||
->> +	     reuse_worktree_file(name, one->sha1, 1))) {
->
-> I agree with the goal/end result, but I have to wonder if the
-> reuse_worktree_file() be the helper function that ought to
-> encapsulate such a logic?
->
-> Instead of feeding it an object name and a path, if we passed a
-> diff_filespec to the helper, it would have access to the mode as
-> well.  It would result in a more intrusive change, so I'd prefer to
-> see your patch applied first and then build such a refactor on top,
-> perhaps like the attached.
+> I can't use --aggressive because I need to feed revisions directly to
+> pack-objects. --aggressive also sets --window=250. Thanks for
+> checking. My machine will have another workout session.
 
-I see that you already queued 721e727, which has the change you
-described plus moving the S_ISGITLINK test into reuse_worktree_file.
-The change looks good to me.  However, two nits about the comments:
-diff.c now says
+And 800MB is reduced to 177MB, containing history older than 2 years.
+The final pack is 199MB, within the size range of current --aggressive
+and should be reasonably fast on most operations. Again blame could
+still hit long delta chains but I think we should just unpack some
+trees/blobs when we hit long delta chains.
 
-  /*
-   * Given a name and sha1 pair, if the index tells us the file in
-   * the work tree has that object contents, return true, so that
-   * prepare_temp_file() does not have to inflate and extract.
-   */
-  static int reuse_worktree_file(const struct diff_filespec *spec, int want_file)
-  {
-          const struct cache_entry *ce;
-          struct stat st;
-          int pos, len;
-          const char *name = spec->path;
-          const unsigned char *sha1 = spec->sha1;
+I think we should update --aggressive to do it this way. So
 
-          /* reading the directory will not give us "Submodule commit XYZ" */
-          if (S_ISGITLINK(spec->mode))
-                  return 0;
+ - gc.aggressiveDepth defaults to 50 (or 20?), this is used for recent history
+ - gc.aggressiveDeepDepth defaults to 250 (or smaller??), used for
+ancient history
+ - gc.aggressiveDeepOption is rev-list a rev-list option to define
+"ancient history", default to --before=2.years.ago. This option could
+be specified multiple times.
 
-But the function comment is no longer accurate, and the comment about
-the S_ISGITLINK exit is rather obscure if one doesn't know what the
-callers want.  So how about this on top?
+Both packing phases use the same gc.aggressiveWindow. We could add
+gc.aggressiveDeepWindow too.
 
- diff.c | 17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
-
-diff --git i/diff.c w/diff.c
-index a342ea6..dabf913 100644
---- i/diff.c
-+++ w/diff.c
-@@ -2578,9 +2578,14 @@ void fill_filespec(struct diff_filespec *spec, const unsigned char *sha1,
- }
- 
- /*
-- * Given a name and sha1 pair, if the index tells us the file in
-- * the work tree has that object contents, return true, so that
-- * prepare_temp_file() does not have to inflate and extract.
-+ * Given a diff_filespec, determine if the corresponding worktree file
-+ * can be used for diffing instead of reading the object from the
-+ * repository.
-+ *
-+ * We normally try packfiles, worktree, loose objects in this order.
-+ *
-+ * If want_file=1 or git was compiled with NO_FAST_WORKING_DIRECTORY,
-+ * the order is: worktree, packfiles, loose objects.
-  */
- static int reuse_worktree_file(const struct diff_filespec *spec, int want_file)
- {
-@@ -2590,7 +2595,11 @@ static int reuse_worktree_file(const struct diff_filespec *spec, int want_file)
- 	const char *name = spec->path;
- 	const unsigned char *sha1 = spec->sha1;
- 
--	/* reading the directory will not give us "Submodule commit XYZ" */
-+	/*
-+	 * The diff representation of a submodule is "Submodule commit
-+	 * XYZ", but in the worktree we have a directory.  So they
-+	 * never match.
-+	 */
- 	if (S_ISGITLINK(spec->mode))
- 		return 0;
- 
-
-
+GSoC project?
 -- 
-Thomas Rast
-tr@thomasrast.ch
+Duy
