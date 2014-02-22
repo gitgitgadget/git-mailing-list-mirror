@@ -1,83 +1,67 @@
-From: Thomas Rast <tr@thomasrast.ch>
-Subject: Re: [PATCH] sha1_file: fix delta_stack memory leak in unpack_entry
-Date: Sat, 22 Feb 2014 16:44:05 +0100
-Message-ID: <87ob1zrw3e.fsf@thomasrast.ch>
-References: <1392940067-4830-1-git-send-email-pclouds@gmail.com>
-	<20140221054148.GA24882@sigill.intra.peff.net>
-	<xmqqmwhk49sy.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 22 16:44:28 2014
+From: David Kastrup <dak@gnu.org>
+Subject: [PATCH] builtin/blame.c::find_copy_in_blob: no need to scan for line end
+Date: Sat, 22 Feb 2014 16:49:17 +0100
+Message-ID: <1393084157-23137-1-git-send-email-dak@gnu.org>
+Cc: David Kastrup <dak@gnu.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 22 16:49:48 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WHEkd-00033J-A8
-	for gcvg-git-2@plane.gmane.org; Sat, 22 Feb 2014 16:44:27 +0100
+	id 1WHEpn-0006UG-5S
+	for gcvg-git-2@plane.gmane.org; Sat, 22 Feb 2014 16:49:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751644AbaBVPoV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 22 Feb 2014 10:44:21 -0500
-Received: from ip1.thgersdorf.net ([148.251.9.194]:35386 "EHLO mail.psioc.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751395AbaBVPoV convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 22 Feb 2014 10:44:21 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by localhost.psioc.net (Postfix) with ESMTP id D807F4D6590;
-	Sat, 22 Feb 2014 16:44:15 +0100 (CET)
-X-Virus-Scanned: amavisd-new at psioc.net
-Received: from mail.psioc.net ([127.0.0.1])
-	by localhost (mail.psioc.net [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id eTk4NCRolPfe; Sat, 22 Feb 2014 16:44:06 +0100 (CET)
-Received: from linux-1gf2.thomasrast.ch (46-126-8-85.dynamic.hispeed.ch [46.126.8.85])
-	(using TLSv1.2 with cipher AES128-GCM-SHA256 (128/128 bits))
-	(Client did not present a certificate)
-	by mail.psioc.net (Postfix) with ESMTPSA id E616B4D64BD;
-	Sat, 22 Feb 2014 16:44:05 +0100 (CET)
-In-Reply-To: <xmqqmwhk49sy.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Fri, 21 Feb 2014 10:09:33 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1751514AbaBVPtm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 Feb 2014 10:49:42 -0500
+Received: from fencepost.gnu.org ([208.118.235.10]:45558 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751300AbaBVPtm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Feb 2014 10:49:42 -0500
+Received: from localhost ([127.0.0.1]:44601 helo=lola)
+	by fencepost.gnu.org with esmtp (Exim 4.71)
+	(envelope-from <dak@gnu.org>)
+	id 1WHEpg-0001Yo-Or; Sat, 22 Feb 2014 10:49:41 -0500
+Received: by lola (Postfix, from userid 1000)
+	id 7C29CE04F5; Sat, 22 Feb 2014 16:49:30 +0100 (CET)
+X-Mailer: git-send-email 1.8.3.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242527>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242528>
 
-Junio C Hamano <gitster@pobox.com> writes:
+---
+ builtin/blame.c | 9 +--------
+ 1 file changed, 1 insertion(+), 8 deletions(-)
 
-> Jeff King <peff@peff.net> writes:
->
->> On Fri, Feb 21, 2014 at 06:47:47AM +0700, Nguy=E1=BB=85n Th=C3=A1i N=
-g=E1=BB=8Dc Duy wrote:
->>
->>> This delta_stack array can grow to any length depending on the actu=
-al
->>> delta chain, but we forget to free it. Normally it does not matter
->>> because we use small_delta_stack[] from stack and small_delta_stack
->>> can hold 64-delta chains, more than standard --depth=3D50 in pack-o=
-bjects.
->>>=20
->>> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@g=
-mail.com>
->>> ---
->>>  Found when trying to see if making some objects loose at this phas=
-e
->>>  could help git-blame and how many objects will be loosened. Gotta =
-go
->>>  soon, didn't really test it, but I bet it'll work.
->>
->> This looks correct to me.
->
-> This comes from abe601bb, right?  The change looks correct to me, too=
-=2E
-
-Ow, sorry about that.  Thanks for the fix!
-
---=20
-Thomas Rast
-tr@thomasrast.ch
+diff --git a/builtin/blame.c b/builtin/blame.c
+index e44a6bb..96716dd 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -939,7 +939,6 @@ static void find_copy_in_blob(struct scoreboard *sb,
+ 			      mmfile_t *file_p)
+ {
+ 	const char *cp;
+-	int cnt;
+ 	mmfile_t file_o;
+ 	struct handle_split_cb_data d;
+ 
+@@ -950,13 +949,7 @@ static void find_copy_in_blob(struct scoreboard *sb,
+ 	 */
+ 	cp = nth_line(sb, ent->lno);
+ 	file_o.ptr = (char *) cp;
+-	cnt = ent->num_lines;
+-
+-	while (cnt && cp < sb->final_buf + sb->final_buf_size) {
+-		if (*cp++ == '\n')
+-			cnt--;
+-	}
+-	file_o.size = cp - file_o.ptr;
++	file_o.size = nth_line(sb, ent->lno + ent->num_lines) - cp;
+ 
+ 	/*
+ 	 * file_o is a part of final image we are annotating.
+-- 
+1.8.3.2
