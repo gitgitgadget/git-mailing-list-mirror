@@ -1,81 +1,82 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: git gc --aggressive led to about 40 times slower "git log --raw"
-Date: Sat, 22 Feb 2014 09:53:27 +0100
-Message-ID: <877g8nh6k8.fsf@fencepost.gnu.org>
-References: <CAEjYwfU==yYtQBDzZzEPdvbqz1N=gZtbMr5ccRaC_U7NfViQLA@mail.gmail.com>
-	<87r470ssuc.fsf@fencepost.gnu.org>
-	<CACsJy8D9tws_gu6yWVdz3t+Vfg5-9iorptn4BLnTL3b+YWcHzQ@mail.gmail.com>
-	<87ioscsoow.fsf@fencepost.gnu.org> <20140218155842.GA7855@google.com>
-	<xmqqzjlocf28.fsf@gitster.dls.corp.google.com>
-	<CACsJy8DnjQyzY2ym7=fAQzThuhMuFzGLuKc35JJXn5FfB7r4Gg@mail.gmail.com>
-	<87fvnbhdn7.fsf@fencepost.gnu.org>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH] tag: support --sort=version
+Date: Sat, 22 Feb 2014 16:07:49 +0700
+Message-ID: <CACsJy8B5UL+nsDxMCUj5+Cp7-me_R2T1etMTh+_JpW8Fqkt9DQ@mail.gmail.com>
+References: <1392817167-29802-1-git-send-email-pclouds@gmail.com>
+ <20140219140909.GA20128@sigill.intra.peff.net> <CACsJy8CL3rQx=QHf_eABCUqS+9kZXEmopUuCMiNCL+UPyvtbyw@mail.gmail.com>
+ <20140220204345.GA3374@sigill.intra.peff.net> <CACsJy8BrfKckHzgwRnW_UMTjipuYWGVcumvCmQC9EG1Eq-MScA@mail.gmail.com>
+ <20140222075935.GA1576@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Christian Jaeger <chrjae@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 22 09:53:46 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Feb 22 10:09:22 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WH8L6-00076D-RK
-	for gcvg-git-2@plane.gmane.org; Sat, 22 Feb 2014 09:53:41 +0100
+	id 1WH8aE-0003vA-94
+	for gcvg-git-2@plane.gmane.org; Sat, 22 Feb 2014 10:09:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751484AbaBVIxg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Feb 2014 03:53:36 -0500
-Received: from fencepost.gnu.org ([208.118.235.10]:40811 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750736AbaBVIxg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Feb 2014 03:53:36 -0500
-Received: from localhost ([127.0.0.1]:39852 helo=lola)
-	by fencepost.gnu.org with esmtp (Exim 4.71)
-	(envelope-from <dak@gnu.org>)
-	id 1WH8L1-0004Ri-QP; Sat, 22 Feb 2014 03:53:36 -0500
-Received: by lola (Postfix, from userid 1000)
-	id 424B2E04FF; Sat, 22 Feb 2014 09:53:27 +0100 (CET)
-In-Reply-To: <87fvnbhdn7.fsf@fencepost.gnu.org> (David Kastrup's message of
-	"Sat, 22 Feb 2014 07:20:28 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3.50 (gnu/linux)
+	id S1752204AbaBVJIn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 Feb 2014 04:08:43 -0500
+Received: from mail-qc0-f172.google.com ([209.85.216.172]:61786 "EHLO
+	mail-qc0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752160AbaBVJIU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Feb 2014 04:08:20 -0500
+Received: by mail-qc0-f172.google.com with SMTP id w7so4964172qcr.17
+        for <git@vger.kernel.org>; Sat, 22 Feb 2014 01:08:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=70p3b5X6GSNb8EiTf2vcZrBU+hq8tbVUt9hioWK4xE4=;
+        b=V1SyPR7/tYb4QwwkWEfYLm5MtS2Sd/GUGaKEv6NjDmB5wXPm/DSEPeQmNDkzCYH7VK
+         8diuf4azTPbMI6mqoPRb1fm7WpZQ2OjHQFIJVg6I478uY2lTHzJgtZAAMYVY9Ix8vF96
+         Zdzp67aaNoT8IGFqPqCxfEDkiOgPNjn2pN/p0UjzGLJq9pJbcT47dU4O67ZYFNxSx+j8
+         Ec97rZQHnu6pE3hvBDE2Z8bQOv6e0FuEeTfigehMBctaLErDS6elJ6l7S6/GRWW65jFB
+         9Wcp0KXr9gRKu+YhmtzUi3oqOE+oYouwCPgxu282mDW+t38k4/z3W93tGLfLthYu/nDo
+         XvpQ==
+X-Received: by 10.229.118.4 with SMTP id t4mr16144929qcq.9.1393060099627; Sat,
+ 22 Feb 2014 01:08:19 -0800 (PST)
+Received: by 10.96.215.102 with HTTP; Sat, 22 Feb 2014 01:07:49 -0800 (PST)
+In-Reply-To: <20140222075935.GA1576@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242511>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242512>
 
-David Kastrup <dak@gnu.org> writes:
-
-> Duy Nguyen <pclouds@gmail.com> writes:
+On Sat, Feb 22, 2014 at 2:59 PM, Jeff King <peff@peff.net> wrote:
+> On Fri, Feb 21, 2014 at 06:58:16PM +0700, Duy Nguyen wrote:
 >
->> OK with git://git.savannah.gnu.org/emacs.git we have
+>> >   --sort=[-][comparison:]field
+>> [...]
+>> Why not reversed order? So its syntax could be
 >>
->>  - a 209MB pack with --aggressive
->>  - 1.3GB with --depth=50
->>  - 1.3GB with --window=4000 --depth=32
->>  - 1.3GB with --depth=20
->>  - 821MB with --depth=250 for commits --before=2.years.ago, --depth=50
->> for the rest
+>> [ "-" ] FIELD [ ":" [ "version" | "v" ] ]
 >>
->> So I don't think we should go with your following patch because the
->> size explosion is just too much no matter how faster it could be. An
->> immediate action could be just make --depth=250 configurable and let
->> people deal with it. A better option is something like "3 repack
->> steps" you described where we pack deep depth first, mark .keep, pack
->> shallower depth and combine them all into one.
->>
->> I'm not really happy with --depth=250 producing 209MB while
->> --depth=250 --before=2.year.ago a 800MB pack. It looks wrong (or maybe
->> I did something wrong)
+>> It fits better to current f-e-r syntax where modifiers are after the
+>> colon. And it avoids the possibility that someone adds field "version"
+>> and we can't tell what "version" is what.
 >
-> That does look strange: Emacs has a history of more than 30 years.  But
-> the Git mirror is quite younger.  Maybe one needs to make sure to use
-> the author date rather than the commit date here?
+> I find my version a bit more obvious, for two reasons:
+>
+>   1. "version" here is not a modifier of the field name, it is a
+>      modifier of the sort. You cannot use it in non-sort contexts (like
+>      --format), and you cannot order it like other modifiers (you cannot
+>      say "refname:version:short", only "refname:short:version").
 
-Another thing: did you really use --depth=250 here or did you use
---aggressive?  It may be that the latter also sets other options?
+Or you can read it like "type cast this field as a version", where
+sorting is affected but formatting, not so much. So you can specify it
+with --format (but it's no-op, unless we find a fancy way to color
+versions). I don't see a problem with accepting both
+refname:version:short and refname:short:version in future for-each-ref
+either. It will be the first time we accept multiple modifiers though.
 
+>   2. There are actually two sort-modifiers: "-" for ordering, and then a
+>      comparator. In your proposal, they are split, whereas in mine, they
+>      are next to each other.
 -- 
-David Kastrup
+Duy
