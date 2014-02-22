@@ -1,102 +1,83 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: git gc --aggressive led to about 40 times slower "git log --raw"
-Date: Sat, 22 Feb 2014 20:00:47 +0700
-Message-ID: <CACsJy8AS6FMqMXcsDtUvrC2bgZ90irMXDCh58KjmgQK8+yFwVA@mail.gmail.com>
-References: <CAEjYwfU==yYtQBDzZzEPdvbqz1N=gZtbMr5ccRaC_U7NfViQLA@mail.gmail.com>
- <87r470ssuc.fsf@fencepost.gnu.org> <CACsJy8D9tws_gu6yWVdz3t+Vfg5-9iorptn4BLnTL3b+YWcHzQ@mail.gmail.com>
- <87ioscsoow.fsf@fencepost.gnu.org> <20140218155842.GA7855@google.com>
- <xmqqzjlocf28.fsf@gitster.dls.corp.google.com> <CACsJy8DnjQyzY2ym7=fAQzThuhMuFzGLuKc35JJXn5FfB7r4Gg@mail.gmail.com>
- <87fvnbhdn7.fsf@fencepost.gnu.org> <877g8nh6k8.fsf@fencepost.gnu.org> <CACsJy8Cyf6Mu3q1VWH7srCK4m=+UgR4m7RiNkMv-nr8eF4YAJA@mail.gmail.com>
+From: Thomas Rast <tr@thomasrast.ch>
+Subject: Re: [PATCH] sha1_file: fix delta_stack memory leak in unpack_entry
+Date: Sat, 22 Feb 2014 16:44:05 +0100
+Message-ID: <87ob1zrw3e.fsf@thomasrast.ch>
+References: <1392940067-4830-1-git-send-email-pclouds@gmail.com>
+	<20140221054148.GA24882@sigill.intra.peff.net>
+	<xmqqmwhk49sy.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Christian Jaeger <chrjae@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Sat Feb 22 14:01:40 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Feb 22 16:44:28 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WHCD5-0003Jd-PK
-	for gcvg-git-2@plane.gmane.org; Sat, 22 Feb 2014 14:01:40 +0100
+	id 1WHEkd-00033J-A8
+	for gcvg-git-2@plane.gmane.org; Sat, 22 Feb 2014 16:44:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751350AbaBVNBV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Feb 2014 08:01:21 -0500
-Received: from mail-qg0-f51.google.com ([209.85.192.51]:50371 "EHLO
-	mail-qg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751173AbaBVNBU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Feb 2014 08:01:20 -0500
-Received: by mail-qg0-f51.google.com with SMTP id q108so10195328qgd.10
-        for <git@vger.kernel.org>; Sat, 22 Feb 2014 05:01:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=+VuYHcr77BRO8mzt7x3kfi8s1gzeWqDCmj48TUDfOpI=;
-        b=w/J+5ExX5jldF0wczWzns/Dd9e6Ml9ZITksi3lFI2FKAzWM9JTi3jTtZYeAg2X0XAJ
-         Q9rhyBrtuBJCcbVk/MpjDtcRgdbYFcJUIKjUFtyze0bytLl7sym+/9hJtCY5ykBS35db
-         dRxX2Svse+ZHO8c3A12DN9RZZqXy6hQLfW0KMGjFa2eLuznCc+xjG+mQ99BRR2gb31Zp
-         fHi6JakuS4cotnPs2faMFyyg1A5uqF8rZ3kgTMp1iftxOPWgdzgPhb8gEFBudl1cbKcz
-         TvO0NWIFwIzSFxFPEMTEmO1dZ7Qvbx81BYYHsP6ls0XwAM2vSc0IswxhGM8Sd9hoCHAt
-         j3mA==
-X-Received: by 10.224.36.129 with SMTP id t1mr17179133qad.8.1393074078375;
- Sat, 22 Feb 2014 05:01:18 -0800 (PST)
-Received: by 10.96.215.102 with HTTP; Sat, 22 Feb 2014 05:00:47 -0800 (PST)
-In-Reply-To: <CACsJy8Cyf6Mu3q1VWH7srCK4m=+UgR4m7RiNkMv-nr8eF4YAJA@mail.gmail.com>
+	id S1751644AbaBVPoV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 22 Feb 2014 10:44:21 -0500
+Received: from ip1.thgersdorf.net ([148.251.9.194]:35386 "EHLO mail.psioc.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751395AbaBVPoV convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 22 Feb 2014 10:44:21 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by localhost.psioc.net (Postfix) with ESMTP id D807F4D6590;
+	Sat, 22 Feb 2014 16:44:15 +0100 (CET)
+X-Virus-Scanned: amavisd-new at psioc.net
+Received: from mail.psioc.net ([127.0.0.1])
+	by localhost (mail.psioc.net [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id eTk4NCRolPfe; Sat, 22 Feb 2014 16:44:06 +0100 (CET)
+Received: from linux-1gf2.thomasrast.ch (46-126-8-85.dynamic.hispeed.ch [46.126.8.85])
+	(using TLSv1.2 with cipher AES128-GCM-SHA256 (128/128 bits))
+	(Client did not present a certificate)
+	by mail.psioc.net (Postfix) with ESMTPSA id E616B4D64BD;
+	Sat, 22 Feb 2014 16:44:05 +0100 (CET)
+In-Reply-To: <xmqqmwhk49sy.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Fri, 21 Feb 2014 10:09:33 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242526>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242527>
 
-On Sat, Feb 22, 2014 at 4:14 PM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Sat, Feb 22, 2014 at 3:53 PM, David Kastrup <dak@gnu.org> wrote:
->> David Kastrup <dak@gnu.org> writes:
->>
->>> Duy Nguyen <pclouds@gmail.com> writes:
->>>
->>>> OK with git://git.savannah.gnu.org/emacs.git we have
->>>>
->>>>  - a 209MB pack with --aggressive
->>>>  - 1.3GB with --depth=50
->>>>  - 1.3GB with --window=4000 --depth=32
->>>>  - 1.3GB with --depth=20
->>>>  - 821MB with --depth=250 for commits --before=2.years.ago, --depth=50
->>>> for the rest
-...
->>>>
->>>> I'm not really happy with --depth=250 producing 209MB while
->>>> --depth=250 --before=2.year.ago a 800MB pack. It looks wrong (or maybe
->>>> I did something wrong)
-....
->> Another thing: did you really use --depth=250 here or did you use
->> --aggressive?  It may be that the latter also sets other options?
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Jeff King <peff@peff.net> writes:
 >
-> I can't use --aggressive because I need to feed revisions directly to
-> pack-objects. --aggressive also sets --window=250. Thanks for
-> checking. My machine will have another workout session.
+>> On Fri, Feb 21, 2014 at 06:47:47AM +0700, Nguy=E1=BB=85n Th=C3=A1i N=
+g=E1=BB=8Dc Duy wrote:
+>>
+>>> This delta_stack array can grow to any length depending on the actu=
+al
+>>> delta chain, but we forget to free it. Normally it does not matter
+>>> because we use small_delta_stack[] from stack and small_delta_stack
+>>> can hold 64-delta chains, more than standard --depth=3D50 in pack-o=
+bjects.
+>>>=20
+>>> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@g=
+mail.com>
+>>> ---
+>>>  Found when trying to see if making some objects loose at this phas=
+e
+>>>  could help git-blame and how many objects will be loosened. Gotta =
+go
+>>>  soon, didn't really test it, but I bet it'll work.
+>>
+>> This looks correct to me.
+>
+> This comes from abe601bb, right?  The change looks correct to me, too=
+=2E
 
-And 800MB is reduced to 177MB, containing history older than 2 years.
-The final pack is 199MB, within the size range of current --aggressive
-and should be reasonably fast on most operations. Again blame could
-still hit long delta chains but I think we should just unpack some
-trees/blobs when we hit long delta chains.
+Ow, sorry about that.  Thanks for the fix!
 
-I think we should update --aggressive to do it this way. So
-
- - gc.aggressiveDepth defaults to 50 (or 20?), this is used for recent history
- - gc.aggressiveDeepDepth defaults to 250 (or smaller??), used for
-ancient history
- - gc.aggressiveDeepOption is rev-list a rev-list option to define
-"ancient history", default to --before=2.years.ago. This option could
-be specified multiple times.
-
-Both packing phases use the same gc.aggressiveWindow. We could add
-gc.aggressiveDeepWindow too.
-
-GSoC project?
--- 
-Duy
+--=20
+Thomas Rast
+tr@thomasrast.ch
