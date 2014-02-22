@@ -1,90 +1,59 @@
-From: Thomas Rast <tr@thomasrast.ch>
-Subject: Re: Fwd: git-reviewed: linking commits to review discussion in git
-Date: Sat, 22 Feb 2014 17:47:54 +0100
-Message-ID: <871tyvrt51.fsf@thomasrast.ch>
-References: <CANx4bCB5tTzKusbfcqQ=eoeOGJ-WxWvF3QNpfa5rTq7oOSG-5w@mail.gmail.com>
-	<CANx4bCAWVoCQdYQQ5cGXF-Z6Evck=Oeb2Shghkcuf7PMvSZBOA@mail.gmail.com>
-	<20140218052827.GA25291@sigill.intra.peff.net>
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: Re: [PATCH] i18n: mark all progress lines for translation
+Date: Sat, 22 Feb 2014 22:45:55 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <alpine.DEB.2.00.1402222244450.1524@ds9.cixit.se>
+References: <1392987018-16598-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Murtuza Mukadam <murtuza.i.mukadam@gmail.com>, git@vger.kernel.org,
-	Peter Rigby <peter.rigby@concordia.ca>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Feb 22 17:48:23 2014
+Content-Type: TEXT/PLAIN; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?VISCII?Q?Nguy=ADn_Th=E1i_Ng=F7c_Duy?= <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 22 22:46:09 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WHFkU-0001mn-MU
-	for gcvg-git-2@plane.gmane.org; Sat, 22 Feb 2014 17:48:23 +0100
+	id 1WHKOe-0006LH-4W
+	for gcvg-git-2@plane.gmane.org; Sat, 22 Feb 2014 22:46:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751911AbaBVQsN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Feb 2014 11:48:13 -0500
-Received: from ip1.thgersdorf.net ([148.251.9.194]:35517 "EHLO mail.psioc.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751893AbaBVQsH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Feb 2014 11:48:07 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by localhost.psioc.net (Postfix) with ESMTP id 6476F4D6590;
-	Sat, 22 Feb 2014 17:48:05 +0100 (CET)
-X-Virus-Scanned: amavisd-new at psioc.net
-Received: from mail.psioc.net ([127.0.0.1])
-	by localhost (mail.psioc.net [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id D43u5haTk-yP; Sat, 22 Feb 2014 17:47:55 +0100 (CET)
-Received: from linux-1gf2.thomasrast.ch (46-126-8-85.dynamic.hispeed.ch [46.126.8.85])
-	(using TLSv1.2 with cipher AES128-GCM-SHA256 (128/128 bits))
-	(Client did not present a certificate)
-	by mail.psioc.net (Postfix) with ESMTPSA id F142D4D64BD;
-	Sat, 22 Feb 2014 17:47:54 +0100 (CET)
-In-Reply-To: <20140218052827.GA25291@sigill.intra.peff.net> (Jeff King's
-	message of "Tue, 18 Feb 2014 00:28:27 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1752225AbaBVVqB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 22 Feb 2014 16:46:01 -0500
+Received: from upper-gw.cixit.se ([92.43.32.133]:43849 "EHLO mail.cixit.se"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751550AbaBVVqB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Feb 2014 16:46:01 -0500
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+	by mail.cixit.se (8.14.3/8.14.3/Debian-9.4) with ESMTP id s1MLjtRD001644
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Sat, 22 Feb 2014 22:45:55 +0100
+Received: from localhost (peter@localhost)
+	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id s1MLjtoN001641;
+	Sat, 22 Feb 2014 22:45:55 +0100
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+In-Reply-To: <1392987018-16598-1-git-send-email-pclouds@gmail.com>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.3.7 (mail.cixit.se [127.0.0.1]); Sat, 22 Feb 2014 22:45:55 +0100 (CET)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242531>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242532>
 
-Jeff King <peff@peff.net> writes:
+Nguy?n Th=C3=A1i Ng?c Duy:
 
-> On Mon, Feb 17, 2014 at 03:12:48PM -0500, Murtuza Mukadam wrote:
->
->> We have linked peer review discussions on
->> git@vger.kernel.org to their respective commits within the main
->> git.git repository. You can view the linked reviews from 2012
->> until present in the GitHub repo at:
->> https://github.com/mmukadam/git/tree/review
->
-> Neat. We've experimented in the past with mapping commits back to
-> mailing list discussions.  Thomas (cc'd) has a script that creates
-> git-notes trees mapping commits to the relevant message-id, which can
-> then be found in the list archive.
->
-> To me, the interesting bits of such a project are:
->
->   1. How do we decide which messages led to which commits? There is
->      definitely some room for heuristics here, as patches are sometimes
->      tweaked in transit, or come in multiple stages (e.g., the original
->      patch, then somebody suggests a fixup on top). You might want to
->      compare your work with the script from Thomas here:
->
->        http://repo.or.cz/w/trackgit.git
+> I can't think of any case that progress lines are for machine. It=20
+> started because of the only local untranslated line in "git clone".=20
+> But I think we should do all at once.
 
-Eh, or don't.  My script nowadays uses Junio's suggestion of matching on
-(author, authordate) with a little bit of tweaking in case there is no
-match.  The name/date match works for most cases even in slightly
-tweaked forms.
+Indeed, a good move. Anything that is to be displayed to the end user=20
+should be subject to localization; if it is part of a protocol, then=20
+it needs to be translated on the receiving end.
 
-(The very first version elaborately tried all sorts of things, including
-attempting to patch on master, next etc. to see where it applies, and
-turned out to be waaaay too slow.)
-
-I'm no longer convinced that there's anything a computer can do beyond
-(author, authordate), anyway.  Perhaps someone with a clue in UIs --
-that's definitely not me -- could make a website where users can
-complete or correct the autogenerated mappings to go further.
-
--- 
-Thomas Rast
-tr@thomasrast.ch
+--=20
+\\// Peter - http://www.softwolves.pp.se/
