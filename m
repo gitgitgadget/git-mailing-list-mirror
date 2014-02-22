@@ -1,107 +1,66 @@
-From: Ryan Schmitt <rschmitt@pobox.com>
-Subject: [PATCH] rm: Accept --staged as a synonym of --cached
-Date: Fri, 21 Feb 2014 21:30:09 -0800
-Message-ID: <1393047009-30168-1-git-send-email-rschmitt@pobox.com>
-Cc: Ryan Schmitt <rschmitt@u.rochester.edu>,
-	Ryan Schmitt <rschmitt@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 22 06:30:41 2014
+From: Chris Packham <judge.packham@gmail.com>
+Subject: Re: Cygwin + git log = no pager!
+Date: Sat, 22 Feb 2014 20:39:32 +1300
+Message-ID: <53085434.4060106@gmail.com>
+References: <CAHd499BT1Q308+q0NB9Dpx=ncQZwRn0tg=q_PE8RutaVqH+xQQ@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: Robert Dailey <rcdailey.lists@gmail.com>, Git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Feb 22 08:44:19 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WH5Ae-0001Xv-9P
-	for gcvg-git-2@plane.gmane.org; Sat, 22 Feb 2014 06:30:40 +0100
+	id 1WH7BU-0006cr-Oj
+	for gcvg-git-2@plane.gmane.org; Sat, 22 Feb 2014 08:39:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751353AbaBVFae (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Feb 2014 00:30:34 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56020 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751265AbaBVFad (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Feb 2014 00:30:33 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 4585D6EA68;
-	Sat, 22 Feb 2014 00:30:33 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id; s=sasl; bh=NYkwl+sydf01/0ymWbEpF1s03q0
-	=; b=arGTIYPySaCn+VDZYlRO2999i10+MyLQxDgpjktYZ7IKosmMRUlgvwZEGRj
-	6ymt479Kz3Qitafbr0A1P1yShJ6qj48r2XJ8QFB4YJgINvEoWMtPGtv9ScmsAAqS
-	mC+YPFBOjEaIYK+TFNRhb9VbH+ItFolkLPob543GvKlwasMs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:date:message-id; q=dns; s=sasl; b=xsWjo/xxsmvcXO7V9FXOl
-	Gt5ZXa2QbPtXrc0ZoNavNOyPllvag7NbqUb+qGS3oTy/L2EPFQWnNGDBSIbKspJj
-	/j1Wq2YcQBkqh0ZEmpTT3vpzY8e3ZW7pgfB5XcfxhOd/e7qlmDhMIUfxzJ2M/J7N
-	3tkANdWZ1O3iQ/Od8FPBao=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 2944A6EA67;
-	Sat, 22 Feb 2014 00:30:33 -0500 (EST)
-Received: from localhost.localdomain (unknown [76.121.230.109])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8879E6EA63;
-	Sat, 22 Feb 2014 00:30:30 -0500 (EST)
-X-Mailer: git-send-email 1.8.3.2
-X-Pobox-Relay-ID: 72B6A22C-9B82-11E3-B418-1B26802839F8-18705681!b-pb-sasl-quonix.pobox.com
+	id S1751534AbaBVHjh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 Feb 2014 02:39:37 -0500
+Received: from mail-pa0-f41.google.com ([209.85.220.41]:55241 "EHLO
+	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751215AbaBVHjg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Feb 2014 02:39:36 -0500
+Received: by mail-pa0-f41.google.com with SMTP id fa1so4470396pad.28
+        for <git@vger.kernel.org>; Fri, 21 Feb 2014 23:39:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:subject:references
+         :in-reply-to:content-type:content-transfer-encoding;
+        bh=WuFPuj3sb710Pqi3ZjgWVJYoikVyMRcuSFW8KCUGzGw=;
+        b=xz3Qq9lOEA0XcxAx7wU7YvPZoZo0dkoXKw2iq3L9FsNrZoAGRctDB6hPJVqZKxbsfL
+         ayuSea37+v4dJEB87a2n1yI/5DtLhUPxRJxIuK9AeqOQReMfcFUpUqDRgtTY2b8f9UwL
+         RoCDiZxoKTQDGAuUk2eApa3sAwt5ab3agh7mFE46q6hwFG5AXfEgNck9TAd3LDvamC0k
+         OSENRw6vNXYodCup7+8ivvjP/Jp6bUHBA0crmAYqn+WrwuJCwnKoVPgxvUz4al82WG4R
+         nTK5Clm1j8KA2ELOsx4Wy15nLn40XXLKunUnus0KDvvuO10nTdNkKgc5RKQ2iWRrsBe1
+         +0lg==
+X-Received: by 10.68.130.234 with SMTP id oh10mr13726638pbb.136.1393054775748;
+        Fri, 21 Feb 2014 23:39:35 -0800 (PST)
+Received: from linux.site (115-188-15-163.jetstream.xtra.co.nz. [115.188.15.163])
+        by mx.google.com with ESMTPSA id oz7sm6110065pbc.41.2014.02.21.23.39.34
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Fri, 21 Feb 2014 23:39:35 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.2.0
+In-Reply-To: <CAHd499BT1Q308+q0NB9Dpx=ncQZwRn0tg=q_PE8RutaVqH+xQQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242501>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242502>
 
-From: Ryan Schmitt <rschmitt@u.rochester.edu>
+On 22/02/14 18:18, Robert Dailey wrote:
+> So it seems that the pager doesn't work by default when running `git
+> log` from Cygwin like it does in msysgit for Windows.
+> 
+> I know I can pipe to `less` but that requires the additional typing
+> obviously. Does anyone know how I can get the pager to work in Cygwin
+> for git log, reflog, and other commands like it does in msysgit?
+> 
+> Thanks in advance.
 
-This makes git-rm more consistent with git-diff, which also accepts
---staged as a synonym of --cached.
-
-Signed-off-by: Ryan Schmitt <rschmitt@pobox.com>
----
- Documentation/git-rm.txt | 2 +-
- builtin/rm.c             | 1 +
- t/t3600-rm.sh            | 6 ++++++
- 3 files changed, 8 insertions(+), 1 deletion(-)
-
-diff --git Documentation/git-rm.txt Documentation/git-rm.txt
-index f1efc11..8635e67 100644
---- Documentation/git-rm.txt
-+++ Documentation/git-rm.txt
-@@ -58,7 +58,7 @@ OPTIONS
- --cached::
- 	Use this option to unstage and remove paths only from the index.
- 	Working tree files, whether modified or not, will be
--	left alone.
-+	left alone. --staged is a synonym for --cached.
- 
- --ignore-unmatch::
- 	Exit with a zero status even if no files matched.
-diff --git builtin/rm.c builtin/rm.c
-index 960634d..a88697b 100644
---- builtin/rm.c
-+++ builtin/rm.c
-@@ -269,6 +269,7 @@ static struct option builtin_rm_options[] = {
- 	OPT__DRY_RUN(&show_only, N_("dry run")),
- 	OPT__QUIET(&quiet, N_("do not list removed files")),
- 	OPT_BOOL( 0 , "cached",         &index_only, N_("only remove from the index")),
-+	OPT_BOOL( 0 , "staged",         &index_only, N_("synonym for --cached")),
- 	OPT__FORCE(&force, N_("override the up-to-date check")),
- 	OPT_BOOL('r', NULL,             &recursive,  N_("allow recursive removal")),
- 	OPT_BOOL( 0 , "ignore-unmatch", &ignore_unmatch,
-diff --git t/t3600-rm.sh t/t3600-rm.sh
-index 3d30581..c32dbf4 100755
---- t/t3600-rm.sh
-+++ t/t3600-rm.sh
-@@ -72,6 +72,12 @@ test_expect_success \
-      git rm --cached -f foo'
- 
- test_expect_success \
-+    'Test that git rm --staged foo is synonymous with git rm --cached foo' \
-+    'echo content > foo
-+     git add foo
-+     git rm --staged foo'
-+
-+test_expect_success \
-     'Post-check that foo exists but is not in index after git rm foo' \
-     '[ -f foo ] && test_must_fail git ls-files --error-unmatch foo'
- 
--- 
-1.8.3.2
+Add GIT_PAGER=less to your environment. I don't know if you were using
+the cygwin packaged git or building from source but I'm surprised the
+pager is not set by default as you actually have to define the use of
+something other than less.
