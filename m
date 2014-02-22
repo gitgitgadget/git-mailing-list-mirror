@@ -1,95 +1,106 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: git gc --aggressive led to about 40 times slower "git log --raw"
-Date: Sat, 22 Feb 2014 16:14:33 +0700
-Message-ID: <CACsJy8Cyf6Mu3q1VWH7srCK4m=+UgR4m7RiNkMv-nr8eF4YAJA@mail.gmail.com>
-References: <CAEjYwfU==yYtQBDzZzEPdvbqz1N=gZtbMr5ccRaC_U7NfViQLA@mail.gmail.com>
- <87r470ssuc.fsf@fencepost.gnu.org> <CACsJy8D9tws_gu6yWVdz3t+Vfg5-9iorptn4BLnTL3b+YWcHzQ@mail.gmail.com>
- <87ioscsoow.fsf@fencepost.gnu.org> <20140218155842.GA7855@google.com>
- <xmqqzjlocf28.fsf@gitster.dls.corp.google.com> <CACsJy8DnjQyzY2ym7=fAQzThuhMuFzGLuKc35JJXn5FfB7r4Gg@mail.gmail.com>
- <87fvnbhdn7.fsf@fencepost.gnu.org> <877g8nh6k8.fsf@fencepost.gnu.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Christian Jaeger <chrjae@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Sat Feb 22 10:16:00 2014
+From: Thomas Rast <tr@thomasrast.ch>
+Subject: [PATCH v2 0/8] log --remerge-diff
+Date: Sat, 22 Feb 2014 10:17:48 +0100
+Message-ID: <cover.1393059605.git.tr@thomasrast.ch>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 22 10:18:13 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WH8gg-0001XD-32
-	for gcvg-git-2@plane.gmane.org; Sat, 22 Feb 2014 10:15:58 +0100
+	id 1WH8iq-0003Ns-V9
+	for gcvg-git-2@plane.gmane.org; Sat, 22 Feb 2014 10:18:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751470AbaBVJPK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Feb 2014 04:15:10 -0500
-Received: from mail-qg0-f46.google.com ([209.85.192.46]:48755 "EHLO
-	mail-qg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751009AbaBVJPG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Feb 2014 04:15:06 -0500
-Received: by mail-qg0-f46.google.com with SMTP id e89so9908642qgf.5
-        for <git@vger.kernel.org>; Sat, 22 Feb 2014 01:15:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=meb/NjuTWl7nlF25g68+0wmzYroNBgFgXcSz2y1Uz1c=;
-        b=Y7msOFNSjc9p3Bi5w4XNAJCbJJLU2gjmt03TtNK9fK6/SIgQhnjTnj3RIBzyjmOVDB
-         xWrqv7WCtgVJ9MTI2m8JxTIcxiQumUaMKzT1gvvRq6cKfHIlyLS0e8tAhGL7pLZmygaw
-         oZPmtQlBEJBzkc76MmK1K7syJCi8IZL4WXyh6/w6bhaGNqw79iwpJ3hkcqUwsKud3vp4
-         wIs0VK2q4ruqpTRI6uQSBbZE281CaBNIwZQz2ahxyTjMjKAAeYNPVaYM6Rl4TVRAyvIZ
-         J51ahPv79UYPfDdyf/sL+A9nlobSXzbZcjeerfNNGtDYL3cNG1T90s0HgZ8apagoSm8a
-         hpKw==
-X-Received: by 10.140.84.40 with SMTP id k37mr8860066qgd.98.1393060503318;
- Sat, 22 Feb 2014 01:15:03 -0800 (PST)
-Received: by 10.96.215.102 with HTTP; Sat, 22 Feb 2014 01:14:33 -0800 (PST)
-In-Reply-To: <877g8nh6k8.fsf@fencepost.gnu.org>
+	id S1751640AbaBVJSH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 Feb 2014 04:18:07 -0500
+Received: from ip1.thgersdorf.net ([148.251.9.194]:34823 "EHLO mail.psioc.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751009AbaBVJSB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Feb 2014 04:18:01 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by localhost.psioc.net (Postfix) with ESMTP id 6A3BC4D6593;
+	Sat, 22 Feb 2014 10:17:59 +0100 (CET)
+X-Virus-Scanned: amavisd-new at psioc.net
+Received: from mail.psioc.net ([127.0.0.1])
+	by localhost (mail.psioc.net [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id f2v2HGP0Hp22; Sat, 22 Feb 2014 10:17:58 +0100 (CET)
+Received: from linux.local (46-126-8-85.dynamic.hispeed.ch [46.126.8.85])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(Client did not present a certificate)
+	by mail.psioc.net (Postfix) with ESMTPSA id E78A44D64BD;
+	Sat, 22 Feb 2014 10:17:57 +0100 (CET)
+X-Mailer: git-send-email 1.9.0.313.g3d0a325
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242513>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242514>
 
-On Sat, Feb 22, 2014 at 3:53 PM, David Kastrup <dak@gnu.org> wrote:
-> David Kastrup <dak@gnu.org> writes:
->
->> Duy Nguyen <pclouds@gmail.com> writes:
->>
->>> OK with git://git.savannah.gnu.org/emacs.git we have
->>>
->>>  - a 209MB pack with --aggressive
->>>  - 1.3GB with --depth=50
->>>  - 1.3GB with --window=4000 --depth=32
->>>  - 1.3GB with --depth=20
->>>  - 821MB with --depth=250 for commits --before=2.years.ago, --depth=50
->>> for the rest
->>>
->>> So I don't think we should go with your following patch because the
->>> size explosion is just too much no matter how faster it could be. An
->>> immediate action could be just make --depth=250 configurable and let
->>> people deal with it. A better option is something like "3 repack
->>> steps" you described where we pack deep depth first, mark .keep, pack
->>> shallower depth and combine them all into one.
->>>
->>> I'm not really happy with --depth=250 producing 209MB while
->>> --depth=250 --before=2.year.ago a 800MB pack. It looks wrong (or maybe
->>> I did something wrong)
->>
->> That does look strange: Emacs has a history of more than 30 years.  But
->> the Git mirror is quite younger.  Maybe one needs to make sure to use
->> the author date rather than the commit date here?
+This is the second iteration of
 
-I think commit date is fine because it covers a large portion of
-objects (649946 per total 739990) and it does not (or should not)
-affect object ordering in pack-objects/rev-list.
+  http://thread.gmane.org/gmane.comp.version-control.git/241565
 
-> Another thing: did you really use --depth=250 here or did you use
-> --aggressive?  It may be that the latter also sets other options?
+Changes since the last version:
 
-I can't use --aggressive because I need to feed revisions directly to
-pack-objects. --aggressive also sets --window=250. Thanks for
-checking. My machine will have another workout session.
+* Dropped patches 4 and 5 (log --merge-bases)
+
+* Implemented the "full-file conflict" scheme explained in the
+  previous cover letter: if the conflicted version is lacking one
+  stage of a file, it synthesizes a conflict file of the form
+
+    <<<<<<<
+    =======
+    content of the stage that exists
+    >>>>>>>
+
+  (or the other way around if stage3 is missing).  This occurs at
+  least with delete/modify conflicts.
+
+* Implemented some basic handling of directory/file conflicts.  I'm
+  not completely happy yet -- see the NEEDSWORK comments -- but at
+  least it gives consistent input to the diffing stage.
+
+  This required access to the dir hash, so there's a new patch 7 that
+  makes this possible.
+
+Patches 1-6 (used to be 1-3 and 6-8) are unchanged.
+
+
+Thomas Rast (8):
+  merge-recursive: remove dead conditional in update_stages()
+  merge-recursive: internal flag to avoid touching the worktree
+  merge-recursive: -Xindex-only to leave worktree unchanged
+  combine-diff: do not pass revs->dense_combined_merges redundantly
+  Fold all merge diff variants into an enum
+  merge-recursive: allow storing conflict hunks in index
+  name-hash: allow dir hashing even when !ignore_case
+  log --remerge-diff: show what the conflict resolution changed
+
+ Documentation/merge-strategies.txt |   9 ++
+ Documentation/rev-list-options.txt |   7 +
+ builtin/diff-files.c               |   5 +-
+ builtin/diff-tree.c                |   2 +-
+ builtin/diff.c                     |  12 +-
+ builtin/fmt-merge-msg.c            |   2 +-
+ builtin/log.c                      |   9 +-
+ builtin/merge.c                    |   1 -
+ cache.h                            |   2 +
+ combine-diff.c                     |  13 +-
+ diff-lib.c                         |  13 +-
+ diff.h                             |   6 +-
+ log-tree.c                         | 304 ++++++++++++++++++++++++++++++++++++-
+ merge-recursive.c                  |  52 ++++---
+ merge-recursive.h                  |   3 +
+ name-hash.c                        |  19 ++-
+ revision.c                         |  15 +-
+ revision.h                         |  24 ++-
+ submodule.c                        |   3 +-
+ t/t3030-merge-recursive.sh         |  33 ++++
+ t/t4213-log-remerge-diff.sh        | 222 +++++++++++++++++++++++++++
+ 21 files changed, 678 insertions(+), 78 deletions(-)
+ create mode 100755 t/t4213-log-remerge-diff.sh
+
 -- 
-Duy
+1.9.0.313.g3d0a325
