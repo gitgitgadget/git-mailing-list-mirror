@@ -1,124 +1,106 @@
-From: Thomas Rast <tr@thomasrast.ch>
-Subject: Re: [PATCH] diff: do not reuse_worktree_file for submodules
-Date: Sun, 23 Feb 2014 13:46:37 +0100
-Message-ID: <87bnxyq9n6.fsf@thomasrast.ch>
-References: <CAC_01E0Pu+_UeSniFVhaqfu90d=iaFDqLrKZ1zjM6GMA4BvcGQ@mail.gmail.com>
-	<d08b7e5a36ee13226d1ad56a731016762ae89938.1392569505.git.tr@thomasrast.ch>
-	<xmqqy518cezh.fsf@gitster.dls.corp.google.com>
-	<8738jbtmji.fsf@thomasrast.ch>
+From: Pete Wyckoff <pw@padd.com>
+Subject: Re: Fwd: git p4: feature request - branch check filtering
+Date: Sun, 23 Feb 2014 10:12:47 -0500
+Message-ID: <20140223151247.GA1272@padd.com>
+References: <CADtnS+zWzPY6ftwxWUE+Gb-OKq_Kzf9y+fFfgJ-demWyX3azCg@mail.gmail.com>
+ <CADtnS+weco6Lvk3hHuM7BcaRsvMkeDCmqH26s19TrgWvBYXAvA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org,
-	=?utf-8?Q?Gr=C3=A9gory?= Pakosz <gregory.pakosz@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Feb 23 13:47:20 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Philip Herron <redbrain@gcc.gnu.org>
+To: Dan Porter <dpreid@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 23 16:13:23 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WHYSj-0001YL-OM
-	for gcvg-git-2@plane.gmane.org; Sun, 23 Feb 2014 13:47:18 +0100
+	id 1WHak5-0004zR-Pj
+	for gcvg-git-2@plane.gmane.org; Sun, 23 Feb 2014 16:13:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751092AbaBWMqw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 23 Feb 2014 07:46:52 -0500
-Received: from ip1.thgersdorf.net ([148.251.9.194]:36725 "EHLO mail.psioc.net"
+	id S1751238AbaBWPMw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 23 Feb 2014 10:12:52 -0500
+Received: from honk.padd.com ([74.3.171.149]:60092 "EHLO honk.padd.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750884AbaBWMqw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 23 Feb 2014 07:46:52 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by localhost.psioc.net (Postfix) with ESMTP id A34154D6564;
-	Sun, 23 Feb 2014 13:46:47 +0100 (CET)
-X-Virus-Scanned: amavisd-new at psioc.net
-Received: from mail.psioc.net ([127.0.0.1])
-	by localhost (mail.psioc.net [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 7Iu3BQq6PTw6; Sun, 23 Feb 2014 13:46:37 +0100 (CET)
-Received: from linux-1gf2.thomasrast.ch (9-226.197-178.cust.bluewin.ch [178.197.226.9])
-	(using TLSv1.2 with cipher AES128-GCM-SHA256 (128/128 bits))
-	(Client did not present a certificate)
-	by mail.psioc.net (Postfix) with ESMTPSA id 83E8D4D64BD;
-	Sun, 23 Feb 2014 13:46:37 +0100 (CET)
-In-Reply-To: <8738jbtmji.fsf@thomasrast.ch> (Thomas Rast's message of "Sat, 22
-	Feb 2014 12:27:29 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S1751182AbaBWPMv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 Feb 2014 10:12:51 -0500
+Received: from arf.padd.com (unknown [50.105.0.78])
+	by honk.padd.com (Postfix) with ESMTPSA id 56CD324FF;
+	Sun, 23 Feb 2014 07:12:50 -0800 (PST)
+Received: by arf.padd.com (Postfix, from userid 7770)
+	id 6B31820450; Sun, 23 Feb 2014 10:12:47 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <CADtnS+weco6Lvk3hHuM7BcaRsvMkeDCmqH26s19TrgWvBYXAvA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242543>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242544>
 
-Thomas Rast <tr@thomasrast.ch> writes:
+dpreid@gmail.com wrote on Tue, 18 Feb 2014 12:42 +0000:
+> I work at a company that has recently moved all CVS, SVN, and git
+> repositories to Perforce.  Depots have not been setup correctly in
+> every case, and there is one depot that contains literally hundreds of
+> projects under commercial development (and hundreds of branches as a
+> result)
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> Thomas Rast <tr@thomasrast.ch> writes:
->>
->>> @@ -2845,8 +2845,9 @@ static struct diff_tempfile *prepare_temp_file(const char *name,
->>>  		remove_tempfile_installed = 1;
->>>  	}
->>>  
->>> -	if (!one->sha1_valid ||
->>> -	    reuse_worktree_file(name, one->sha1, 1)) {
->>> +	if (!S_ISGITLINK(one->mode) &&
->>> +	    (!one->sha1_valid ||
->>> +	     reuse_worktree_file(name, one->sha1, 1))) {
->>
->> I agree with the goal/end result, but I have to wonder if the
->> reuse_worktree_file() be the helper function that ought to
->> encapsulate such a logic?
->>
->> Instead of feeding it an object name and a path, if we passed a
->> diff_filespec to the helper, it would have access to the mode as
->> well.  It would result in a more intrusive change, so I'd prefer to
->> see your patch applied first and then build such a refactor on top,
->> perhaps like the attached.
->
-> I see that you already queued 721e727, which has the change you
-> described plus moving the S_ISGITLINK test into reuse_worktree_file.
-> The change looks good to me.
+My condolences.
 
-I spoke too soon; it breaks the test I wrote to cover this case, for a
-reason that gives me a headache.
+> My project may be in //stupid_depot/commercial/teamporter/rok.  This
+> is the path I clone with git-p4.  The only branches in this depot that
+> contain files at this path are titled as
+> 'rok_porter_branch/release_1.x' or similar.
+> 
+> When using '--detect-branches' git-p4 checks each key of branches to
+> see if any of them have files in the path I've cloned.  Whilst this is
+> good in practice there is unfortunately 6,809 branches, git-p4
+> processes about 2 a second and just under an hour to perform any
+> git-p4 rebase, submit, or similar operation.
 
-When we hit the conditional
+This is in getBranchMapping() presumably.  Where it loops
+over each branch doing "p4 branch -o".  Yuk.
 
->>> -	if (!one->sha1_valid ||
->>> -	    reuse_worktree_file(name, one->sha1, 1)) {
->>> +	if (!S_ISGITLINK(one->mode) &&
->>> +	    (!one->sha1_valid ||
->>> +	     reuse_worktree_file(name, one->sha1, 1))) {
+You could always avoid the --detect-branches if you don't really
+need it, instead doing, say, multiple "git p4 sync" for the
+different areas of the repo that interest you, each with its own
+destination branch in git ("p4/depot-part1", "p4/depot-part3",
+...).  Or --use-client-spec to cobble together an exact mapping
+of where p4 files should land in git, all in a single git branch
+then.
 
-sha1_valid=0 for the submodule on the worktree side of the diff.  The
-reason is that we start out with sha1_valid=0 and sha1=000..000 for the
-worktree side of all dirty entries, which makes sense at that point.  We
-later set the sha1 by looking inside the submodule in
-diff_fill_sha1_info(), but we never set sha1_valid.  So the above
-conditional will now trigger on the !one->sha1_valid arm, completely
-defeating the change to reuse_worktree_file().
+> I propose the addition of a branch list filtering option
+> (--filter-branches) that takes either a regular expression or list of
+> branches it should check.  This may be useful in sane situations where
+> you don't want to scan every branch in a Perforce repository, or
+> blacklist branches that have undesirable content (for example, one of
+> the branches is called 'svn-backup'.  It contains a single, multi-GB
+> tarball.)
 
-We can fix it like below, but it feels a bit wrong to me.  Are
-submodules the only case where it makes sense to set sha1_valid when we
-fill the sha1?
+There is the existing git-p4.branchList option that explicitly
+adds (or overrides) branch information, beyond the ones auto-discovered.
 
+You might be able to use that option, but change its behavior
+to avoid the scan.  So that if that option is set in the config,
+p4 is not asked anything about its branches.  Not sure if this
+would break anyone's setup though.
 
- diff.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+Another approach would be to add a config option
+git-p4.branchScan that defaults to True.  You could turn it off
+and use branchList.
 
-diff --git i/diff.c w/diff.c
-index dabf913..cf7281d 100644
---- i/diff.c
-+++ w/diff.c
-@@ -3081,6 +3082,8 @@ static void diff_fill_sha1_info(struct diff_filespec *one)
- 				die_errno("stat '%s'", one->path);
- 			if (index_path(one->sha1, one->path, &st, 0))
- 				die("cannot hash %s", one->path);
-+			if (S_ISGITLINK(one->mode))
-+				one->sha1_valid = 1;
- 		}
- 	}
- 	else
+> It would be ideal to have this information (after initial clone or
+> sync) stored somewhere in the git config where is appropriate so that
+> future submit/rebase operations adhere to this list.
+> 
+> Has something like this been worked on, or has been considered in the
+> past?  If not I will consider implementing this after reading up on
+> the Git code guidelines.
+> 
+> Thanks for keeping the Git workflow accessible in painful areas.
 
+It would be great if you could get something like this to work.
+Start in getBranchMapping() and don't forget to write up your
+work in Documentation/git-p4.txt.  Also, this is sort of a messy
+area of the code, unfortunately.  t/t9801 tries to make sure some
+of it keeps working.
 
--- 
-Thomas Rast
-tr@thomasrast.ch
+		-- Pete
