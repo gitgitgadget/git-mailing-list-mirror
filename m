@@ -1,124 +1,132 @@
-From: Brandon McCaig <bamccaig@gmail.com>
-Subject: Re: `git stash pop` UX Problem
-Date: Mon, 24 Feb 2014 11:04:25 -0500
-Message-ID: <CANUGeEbPrPp8Sa-KEKSxNDWJShdkDBTkQyXv7tDJ6ReH6MXrHw@mail.gmail.com>
-References: <530B0395.5030407@booking.com>
+From: Kirill Smelkov <kirr@mns.spb.ru>
+Subject: [PATCH v2 00/19] Multiparent diff tree-walker + combine-diff speedup
+Date: Mon, 24 Feb 2014 20:21:32 +0400
+Message-ID: <cover.1393257006.git.kirr@mns.spb.ru>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Omar Othman <omar.othman@booking.com>
-X-From: git-owner@vger.kernel.org Mon Feb 24 17:04:52 2014
+Content-Transfer-Encoding: 8bit
+Cc: git@vger.kernel.org, Kirill Smelkov <kirr@mns.spb.ru>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 24 17:20:36 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WHy1T-0000r7-Lq
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Feb 2014 17:04:52 +0100
+	id 1WHyGh-0002ya-8h
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Feb 2014 17:20:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751994AbaBXQEr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Feb 2014 11:04:47 -0500
-Received: from mail-wi0-f171.google.com ([209.85.212.171]:51008 "EHLO
-	mail-wi0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751568AbaBXQEq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Feb 2014 11:04:46 -0500
-Received: by mail-wi0-f171.google.com with SMTP id cc10so3264242wib.4
-        for <git@vger.kernel.org>; Mon, 24 Feb 2014 08:04:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=l/EbS+PPLCzYwNOanmXsthKU7N+QTBtlMNkQOf/5j+4=;
-        b=l5dyz5S46qfxS+aIeSTIjuyeF8UDVArkZY1Sda8KBiH3mZ7bTLAsRSomVRXt5Lh1ZD
-         k/t0lexgUBcX8ux3qVe7we4HHt/fY/6tK3cVbLaVSDlnmQR3sEKPUl1Lv/unqscfdHqc
-         T8NsdCtGrRsOqGsQJ5YmIUWKlO55/g+WEj5mQeS3Y/VBtUBCSuOxlG8PG+XQcxdn4mja
-         606K+5BFi/z1h6q+GOY6zeTvFycG87uhXRz5QqOotbHIlluokpNw1kd1/d3yz9zBezXr
-         LLzudcgU6hftS0VBOaj0oY1wkl93ZWEZ63afT1iaTaQmVcZSNifS7oUi2Z4HsFPU07OJ
-         ws8w==
-X-Received: by 10.180.105.65 with SMTP id gk1mr15319956wib.12.1393257885260;
- Mon, 24 Feb 2014 08:04:45 -0800 (PST)
-Received: by 10.216.176.65 with HTTP; Mon, 24 Feb 2014 08:04:25 -0800 (PST)
-In-Reply-To: <530B0395.5030407@booking.com>
+	id S1753025AbaBXQU2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Feb 2014 11:20:28 -0500
+Received: from mail.mnsspb.ru ([84.204.75.2]:33995 "EHLO mail.mnsspb.ru"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752918AbaBXQU1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Feb 2014 11:20:27 -0500
+Received: from [192.168.0.127] (helo=tugrik.mns.mnsspb.ru)
+	by mail.mnsspb.ru with esmtps id 1WHyGS-0003z9-6E; Mon, 24 Feb 2014 20:20:20 +0400
+Received: from kirr by tugrik.mns.mnsspb.ru with local (Exim 4.72)
+	(envelope-from <kirr@tugrik.mns.mnsspb.ru>)
+	id 1WHyI6-00079Q-Vm; Mon, 24 Feb 2014 20:22:03 +0400
+X-Mailer: git-send-email 1.9.rc1.181.g641f458
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242588>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242589>
 
-Omar:
+Hello up there.
 
-On Mon, Feb 24, 2014 at 3:32 AM, Omar Othman <omar.othman@booking.com> wrote:
-> In general, whenever something a user "should" do, git always tells. So, for
-> example, when things go wrong with a merge, you have the option to abort.
-> When you are doing a rebase, git tells you to do git commit --amend, and
-> then git rebase --continue... and so on.
->
-> The point is: Because of this, git is expected to always instruct you on
-> what to do next in a multilevel operation, or instructing you what to do
-> when an operation has gone wrong.
->
-> Now comes the problem. When you do a git stash pop, and a merge conflict
-> happens, git correctly tells you to fix the problems and then git add to
-> resolve the conflict. But once that happens, and the internal status of git
-> tells you that there are no more problems (I have a prompt that tells me
-> git's internal status), the operation is not culminated by dropping the
-> stash reference, which what normally happens automatically after a git stash
-> pop. This has actually confused me for a lot of time, till I ran into a git
-> committer and asked him, and only then were I 100% confident that I did
-> nothing wrong and it is indeed a UX problem. I wasted a lot of time to know
-> why the operation is not completed as expected (since I trusted that git
-> just does the right thing), and it turned out that it is git's fault.
->
-> If this is accepted, please reply to this email and tell me to start working
-> on it. I've read the Documenation/SubmittingPatches guidelines, but I'll
-> appreciate also telling me where to base my change. My guess is maint, since
-> it's a "bug" in the sense of UX.
+Here go combine-diff speedup patches in form of first reworking diff
+tree-walker to work in general case - when a commit have several parents, not
+only one - we are traversing all 1+nparent trees in parallel.
 
-Unlike a merge, when you pop a stash that history is lost. If you
-screw up the merge and the stash is dropped then there's generally no
-reliable way to get it back. I think that it's correct behavior for
-the stash to not be dropped if the merge conflicts. The user is
-expected to manually drop the stash when they're done with it. It's
-been a while since I've relied much on the stash (commits and branches
-are more powerful to work with) so I'm not really familiar with what
-help the UI gives when a conflict occurs now. Git's UI never really
-expects the user to be negligent. It does help to hint to you what is
-needed, but for the most part it still expects you to know what you're
-doing and does what you say, not what you mean.
+Then we are taking advantage of the new diff tree-walker for speeding up
+combine-diff, which for linux.git results in ~14 times speedup.
 
-If there's any change that should be made it should be purely
-providing more detailed instructions to the user about how to deal
-with it. Either resolve the merge conflicts and git-add the
-conflicting files, or use git-reset to either reset the index
-(unstaging files nad clear) or reset index and working tree back to
-HEAD. In general, I almost always git-reset after a git-stash pop
-because I'm probably not ready to commit those changes yet and
-generally want to still see those changes with git diff (without
---staged). Or perhaps just direct them to the appropriate sections of
-the man pages.
+This is the second posting for the whole series - sent here patches should go
+instead of already-in-pu ks/diff-tree-more and ks/tree-diff-nway into
+ks/tree-diff-nway - patches are related and seeing them all at once is more
+logical to me.
 
-I'm not really in favor of "dumbing down" Git in any way and I think
-that any step in that direction would be for the worst... Software
-should do what you say, not what you mean, because it's impossible to
-reliably guess what you meant. When a git-stash pop operation fails
-that might make the user rethink popping that stash. That's why it
-becomes a manual operation to drop it if still desired. And unlike
-git-reset --continue, which is explicitly the user saying "it is fixed
-and I accept the consequences, let's move on", there is no such option
-to git-stash to acknowledge that the merge conflicts have been
-resolved and you no longer need that stash (aside from git-stash drop,
-of course). It's not a UI problem. It's maybe a documentation problem,
-but again I'm not familiar with the current state of that.
+I've tried to do my homework based on review feedback and the changes compared
+to v1 are:
 
-/not a git dev...yet
+- fixed last-minute thinko/bug last time introduced on my side (sorry) with
+  opt->pathchange manipulation in __diff_tree_sha1() - we were forgetting to
+  restore opt->pathchange, which led to incorrect log -c (merges _and_ plain
+  diff-tree) output;
 
-Regards,
+  This time, I've verified several times, log output stays really the same.
 
+- direct use of alloca() changed to portability wrappers xalloca/xalloca_free
+  which gracefully degrade to xmalloc/free on systems, where alloca is not
+  available (see new patch 17).
+
+- "i = 0; do { ... } while (++i < nparent)" is back to usual looping
+  "for (i = 0; i < nparent; ++)", as I've re-measured timings and the
+  difference is negligible.
+
+  ( Initially, when I was fighting for every cycle it made sense, but real
+    no-slowdown turned out to be related to avoiding mallocs, load trees in correct
+    order and reducing register pressure. )
+
+- S_IFXMIN_NEQ definition moved out to cache.h, to have all modes registry in one place;
+
+
+- diff_tree() becomes static (new patch 13), as nobody is using it outside
+  tree-diff.c (and is later renamed to __diff_tree_sha1);
+
+- p0 -> first_parent; corrected comments about how emit_diff_first_parent_only
+  behaves;
+
+
+not changed:
+
+- low-level helpers are still named with "__" prefix as, imho, that is the best
+  convention to name such helpers, without sacrificing signal/noise ratio. All
+  of them are now static though.
+
+
+Signoffs were left intact, if a patch was already applied to pu with one, and
+had not changed.
+
+Please apply and thanks,
+Kirill
+
+P.S. Sorry for the delay - I was very busy.
+
+
+Kirill Smelkov (19):
+  combine-diff: move show_log_first logic/action out of paths scanning
+  combine-diff: move changed-paths scanning logic into its own function
+  tree-diff: no need to manually verify that there is no mode change for a path
+  tree-diff: no need to pass match to skip_uninteresting()
+  tree-diff: show_tree() is not needed
+  tree-diff: consolidate code for emitting diffs and recursion in one place
+  tree-diff: don't assume compare_tree_entry() returns -1,0,1
+  tree-diff: move all action-taking code out of compare_tree_entry()
+  tree-diff: rename compare_tree_entry -> tree_entry_pathcmp
+  tree-diff: show_path prototype is not needed anymore
+  tree-diff: simplify tree_entry_pathcmp
+  tree-diff: remove special-case diff-emitting code for empty-tree cases
+  tree-diff: diff_tree() should now be static
+  tree-diff: rework diff_tree interface to be sha1 based
+  tree-diff: no need to call "full" diff_tree_sha1 from show_path()
+  tree-diff: reuse base str(buf) memory on sub-tree recursion
+  Portable alloca for Git
+  tree-diff: rework diff_tree() to generate diffs for multiparent cases as well
+  combine-diff: speed it up, by using multiparent diff tree-walker directly
+
+ Makefile          |   6 +
+ cache.h           |  15 ++
+ combine-diff.c    | 170 +++++++++++---
+ config.mak.uname  |  10 +-
+ configure.ac      |   8 +
+ diff.c            |   2 +
+ diff.h            |  12 +-
+ git-compat-util.h |   8 +
+ tree-diff.c       | 666 +++++++++++++++++++++++++++++++++++++++++++-----------
+ 9 files changed, 724 insertions(+), 173 deletions(-)
 
 -- 
-Brandon McCaig <bamccaig@gmail.com> <bamccaig@castopulence.org>
-Castopulence Software <https://www.castopulence.org/>
-Blog <http://www.bamccaig.com/>
-perl -E '$_=q{V zrna gur orfg jvgu jung V fnl. }.
-q{Vg qbrfa'\''g nyjnlf fbhaq gung jnl.};
-tr/A-Ma-mN-Zn-z/N-Zn-zA-Ma-m/;say'
+1.9.rc1.181.g641f458
