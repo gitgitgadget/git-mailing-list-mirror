@@ -1,95 +1,114 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] remote: handle pushremote config in any order order
-Date: Mon, 24 Feb 2014 12:32:32 -0800
-Message-ID: <xmqq7g8k8d5r.fsf@gitster.dls.corp.google.com>
-References: <CAMYxyaUwPXXdvGv786_p5n7-biMLOFbur-gQ1pxXOttc0R0=eg@mail.gmail.com>
-	<20140224085903.GA10698@sigill.intra.peff.net>
-	<xmqqvbw49z0f.fsf@gitster.dls.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 4/5] log: handle integer overflow in timestamps
+Date: Mon, 24 Feb 2014 15:37:09 -0500
+Message-ID: <20140224203709.GA25506@sigill.intra.peff.net>
+References: <20140224073348.GA20221@sigill.intra.peff.net>
+ <20140224074637.GD9969@sigill.intra.peff.net>
+ <xmqqsir88f4n.fsf@gitster.dls.corp.google.com>
+ <20140224195829.GA11940@sigill.intra.peff.net>
+ <xmqqeh2s8do2.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jack Nagel <jacknagel@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Feb 24 21:32:47 2014
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 24 21:37:20 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WI2Cg-0001Oq-45
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Feb 2014 21:32:42 +0100
+	id 1WI2H9-00062O-Qq
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Feb 2014 21:37:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752816AbaBXUch (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Feb 2014 15:32:37 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56616 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752655AbaBXUcg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Feb 2014 15:32:36 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 94B326E96D;
-	Mon, 24 Feb 2014 15:32:35 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=wCHl68jT2MgCoyHznC/bTJJ4Ztw=; b=mLFqQwLV7YEwZpFHAEMt
-	xSFAiPOwXsOUQvoNMEe5dqxN94fTSRCO1EKQgcHHSc5Ikg1X8qDOossCCcXCIU2k
-	e7DTlvukZaK44n/ABYbBusNRN5n1dGn6pz47eHR57mXhG0wwfR2+hQZCCYGIY1vc
-	5UOviW3xhIrOLrTT4WyB/00=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=Zzhb2w/8es/+XPB8LR4+WPruVk2PUfnwWpMrgUDNiVy74J
-	0mdSIPqudOrcoTU26WxN2w9HCxswmGXRWw9NFP78NGtgu7cnXL4XNV1QdGxSJnHN
-	M+/llV33vdCBxLpUnhCxwDAzmuoWpyhbVIsruLfHuqV2Vjs6PgcwO7TYd6SLc=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 716AE6E967;
-	Mon, 24 Feb 2014 15:32:35 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 965B66E964;
-	Mon, 24 Feb 2014 15:32:34 -0500 (EST)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: CAE80B18-9D92-11E3-B99C-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752834AbaBXUhM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Feb 2014 15:37:12 -0500
+Received: from cloud.peff.net ([50.56.180.127]:56257 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752649AbaBXUhL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Feb 2014 15:37:11 -0500
+Received: (qmail 21341 invoked by uid 102); 24 Feb 2014 20:37:11 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 24 Feb 2014 14:37:11 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 24 Feb 2014 15:37:09 -0500
+Content-Disposition: inline
+In-Reply-To: <xmqqeh2s8do2.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242642>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242643>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Mon, Feb 24, 2014 at 12:21:33PM -0800, Junio C Hamano wrote:
 
-> Jeff King <peff@peff.net> writes:
->
->> Yes, with a few exceptions, we usually try to make the ordering in the
->> config file irrelevant. This is a bug. The patch below should fix it.
->
-> Looks good.  Thanks.
+> >> > +	if (date_overflows(date))
+> >> > +		date = 0;
+> >> > +	else {
+> >> > +		if (ident->tz_begin && ident->tz_end)
+> >> > +			tz = strtol(ident->tz_begin, NULL, 10);
+> >> > +		if (tz == LONG_MAX || tz == LONG_MIN)
+> >> > +			tz = 0;
+> >> > +	}
+> >> 
+> >> ... don't we want to fix an input having a bogus timestamp and also
+> >> a bogus tz recorded in it?
+> >
+> > If there is a bogus timestamp, then we do not want to look at tz at all.
+> > We leave it at "0", so that we get a true sentinel:
+> 
+> Ah, OK, I missed the initialization to 0 at the beginning.
+> 
+> It might have been more clear if "int tz" declaration were left
+> uninitialized, and the variable were explicitly cleared to 0 in the
+> "date-overflows" error codepath, but it is not a big deal.
 
->> diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
->> index 926e7f6..1309c4d 100755
->> --- a/t/t5516-fetch-push.sh
->> +++ b/t/t5516-fetch-push.sh
->> @@ -536,6 +536,18 @@ test_expect_success 'push with config branch.*.pushremote' '
->>  	check_push_result down_repo $the_commit heads/master
->>  '
->>  
->> +test_expect_success 'branch.*.pushremote config order is irrelevant' '
->> +	mk_test one_repo heads/master &&
->> +	mk_test two_repo heads/master &&
->> +	test_config remote.one.url one_repo &&
->> +	test_config remote.two.url two_repo &&
->> +	test_config branch.master.pushremote two_repo &&
->> +	test_config remote.pushdefault one_repo &&
->> +	git push &&
->> +	check_push_result one_repo $the_first_commit heads/master &&
->> +	check_push_result two_repo $the_commit heads/master
->> +'
->> +
+It might be, but I think it would end up cumbersome. The initialization
+was already there from the previous version, which was hitting the else
+for "ident->tz_begin". Without fallback initializations, you end up with:
 
-This test however does not pass in the Git 2.0 world, without having
-this line:
+  if (ident->date_begin && ident->date_end) {
+          date = strtoul(ident->date_begin, NULL, 10);
+          if (date_overflows(date)) {
+                  date = 0;
+                  tz = 0;
+          } else {
+                  if (ident->tz_begin && ident->tz_end) {
+                          tz = strtol(ident->tz_begin, NULL, 10);
+                          if (tz == LONG_MAX || tz == LONG_MIN)
+                                  tz = 0;
+                  } else
+                          tz = 0;
+          }
+  } else {
+          date = 0;
+          tz = 0;
+  }
 
-       test_config push.default matching &&
+which I think is much more confusing (and hard to verify that the
+variables are always set). Checking !date as an error condition would
+make it a little more readable:
 
-immediately before "git push".
+  if (ident->date_begin && ident->date_end) {
+          date = strtoul(ident->date_begin, NULL, 10);
+          if (date_overflows(date))
+                  date = 0;
+  } else
+          date = 0;
 
-Am I missing something?
+  if (date) {
+          if (ident->tz_begin && ident->tz_end) {
+                  tz = strtol(ident->tz_begin, NULL, 10);
+                  if (tz == LONG_MAX || tz == LONG_MIN)
+                          tz = 0;
+          } else
+                  tz = 0;
+  } else
+          tz = 0;
+
+but then we treat date==0 as a sentinel, and can never correctly parse
+dates on Jan 1, 1970.
+
+So I'd be in favor of keeping it as-is, but feel free to mark it up if
+you feel strongly.
+
+-Peff
