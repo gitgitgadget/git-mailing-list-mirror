@@ -1,30 +1,39 @@
 From: Kirill Smelkov <kirr@mns.spb.ru>
-Subject: [PATCH 19/19] combine-diff: speed it up, by using multiparent diff tree-walker directly
-Date: Mon, 24 Feb 2014 20:21:51 +0400
-Message-ID: <7636e51f1efa3ca7e651e9a51ce5810aa9f5693b.1393257006.git.kirr@mns.spb.ru>
+Subject: [PATCH 17/19] Portable alloca for Git
+Date: Mon, 24 Feb 2014 20:21:49 +0400
+Message-ID: <f08867ee212e27074dbb4cbb06af408b16dba0a1.1393257006.git.kirr@mns.spb.ru>
 References: <cover.1393257006.git.kirr@mns.spb.ru>
-Cc: git@vger.kernel.org, Kirill Smelkov <kirr@mns.spb.ru>
+Cc: git@vger.kernel.org, Kirill Smelkov <kirr@mns.spb.ru>,
+	Brandon Casey <drafnel@gmail.com>,
+	Marius Storm-Olsen <mstormo@gmail.com>,
+	Johannes Sixt <j6t@kdbg.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	Gerrit Pape <pape@smarden.org>,
+	Petr Salinger <Petr.Salinger@seznam.cz>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Thomas Schwinge <tschwinge@gnu.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 24 17:22:38 2014
+X-From: git-owner@vger.kernel.org Mon Feb 24 17:22:42 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WHyId-0004bE-G0
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Feb 2014 17:22:35 +0100
+	id 1WHyIc-0004bE-6T
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Feb 2014 17:22:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753276AbaBXQWV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Feb 2014 11:22:21 -0500
-Received: from mail.mnsspb.ru ([84.204.75.2]:34331 "EHLO mail.mnsspb.ru"
+	id S1753260AbaBXQWL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Feb 2014 11:22:11 -0500
+Received: from mail.mnsspb.ru ([84.204.75.2]:34280 "EHLO mail.mnsspb.ru"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753273AbaBXQWT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Feb 2014 11:22:19 -0500
+	id S1752653AbaBXQWJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Feb 2014 11:22:09 -0500
 Received: from [192.168.0.127] (helo=tugrik.mns.mnsspb.ru)
-	by mail.mnsspb.ru with esmtps id 1WHyIL-00041V-Q2; Mon, 24 Feb 2014 20:22:17 +0400
+	by mail.mnsspb.ru with esmtps id 1WHyI9-000417-Qz; Mon, 24 Feb 2014 20:22:05 +0400
 Received: from kirr by tugrik.mns.mnsspb.ru with local (Exim 4.72)
 	(envelope-from <kirr@tugrik.mns.mnsspb.ru>)
-	id 1WHyK0-0007AN-VR; Mon, 24 Feb 2014 20:24:00 +0400
+	id 1WHyJo-0007AH-VR; Mon, 24 Feb 2014 20:23:48 +0400
 X-Mailer: git-send-email 1.9.rc1.181.g641f458
 In-Reply-To: <cover.1393257006.git.kirr@mns.spb.ru>
 In-Reply-To: <cover.1393257006.git.kirr@mns.spb.ru>
@@ -33,192 +42,211 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242606>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242607>
 
-As was recently shown in "combine-diff: optimize
-combine_diff_path sets intersection", combine-diff runs very slowly. In
-that commit we optimized paths sets intersection, but that accounted
-only for ~ 25% of the slowness, and as my tracing showed, for linux.git
-v3.10..v3.11, for merges a lot of time is spent computing
-diff(commit,commit^2) just to only then intersect that huge diff to
-almost small set of files from diff(commit,commit^1).
+In the next patch we'll have to use alloca() for performance reasons,
+but since alloca is non-standardized and is not portable, let's have a
+trick with compatibility wrappers:
 
-In previous commit, we described the problem in more details, and
-reworked the diff tree-walker to be general one - i.e. to work in
-multiple parent case too. Now is the time to take advantage of it for
-finding paths for combine diff.
+1. at configure time, determine, do we have working alloca() through
+   alloca.h, and define
 
-The implementation is straightforward - if we know, we can get generated
-diff paths directly, and at present that means no diff filtering or
-rename/copy detection was requested(*), we can call multiparent tree-walker
-directly and get ready paths.
+    #define HAVE_ALLOCA_H
 
-(*) because e.g. at present, all diffcore transformations work on
-    diff_filepair queues, but in the future, that limitation can be
-    lifted, if filters would operate directly on combine_diff_paths.
+   if yes.
 
-Timings for `git log --raw --no-abbrev --no-renames` without `-c` ("git log")
-and with `-c` ("git log -c") and with `-c --merges` ("git log -c --merges")
-before and after the patch are as follows:
+2. in code
 
-                linux.git v3.10..v3.11
+    #ifdef HAVE_ALLOCA_H
+    # include <alloca.h>
+    # define xalloca(size)      (alloca(size))
+    # define xalloca_free(p)    do {} while(0)
+    #else
+    # define xalloca(size)      (xmalloc(size))
+    # define xalloca_free(p)    (free(p))
+    #endif
 
-            log     log -c     log -c --merges
+   and use it like
 
-    before  1.9s    16.4s      15.2s
-    after   1.9s     2.4s       1.1s
+   func() {
+       p = xalloca(size);
+       ...
 
-The result stayed the same.
+       xalloca_free(p);
+   }
 
+This way, for systems, where alloca is available, we'll have optimal
+on-stack allocations with fast executions. On the other hand, on
+systems, where alloca is not available, this gracefully fallbacks to
+xmalloc/free.
+
+Both autoconf and config.mak.uname configurations were updated. For
+autoconf, we are not bothering considering cases, when no alloca.h is
+available, but alloca() works some other way - its simply alloca.h is
+available and works or not, everything else is deep legacy.
+
+For config.mak.uname, I've tried to make my almost-sure guess for where
+alloca() is available, but since I only have access to Linux it is the
+only change I can be sure about myself, with relevant to other changed
+systems people Cc'ed.
+
+NOTE
+
+SunOS and Windows had explicit -DHAVE_ALLOCA_H in their configurations.
+I've changed that to now-common HAVE_ALLOCA_H=YesPlease which should be
+correct.
+
+Cc: Brandon Casey <drafnel@gmail.com>
+Cc: Marius Storm-Olsen <mstormo@gmail.com>
+Cc: Johannes Sixt <j6t@kdbg.org>
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Cc: Gerrit Pape <pape@smarden.org>
+Cc: Petr Salinger <Petr.Salinger@seznam.cz>
+Cc: Jonathan Nieder <jrnieder@gmail.com>
+Cc: Thomas Schwinge <tschwinge@gnu.org>
 Signed-off-by: Kirill Smelkov <kirr@mns.spb.ru>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
 
-( re-posting without change )
+( new patch )
 
- combine-diff.c | 88 ++++++++++++++++++++++++++++++++++++++++++++++++++++++----
- diff.c         |  1 +
- 2 files changed, 84 insertions(+), 5 deletions(-)
+ Makefile          |  6 ++++++
+ config.mak.uname  | 10 ++++++++--
+ configure.ac      |  8 ++++++++
+ git-compat-util.h |  8 ++++++++
+ 4 files changed, 30 insertions(+), 2 deletions(-)
 
-diff --git a/combine-diff.c b/combine-diff.c
-index 1732dfd..12764fb 100644
---- a/combine-diff.c
-+++ b/combine-diff.c
-@@ -1303,7 +1303,7 @@ static const char *path_path(void *obj)
+diff --git a/Makefile b/Makefile
+index dddaf4f..0334806 100644
+--- a/Makefile
++++ b/Makefile
+@@ -30,6 +30,8 @@ all::
+ # Define LIBPCREDIR=/foo/bar if your libpcre header and library files are in
+ # /foo/bar/include and /foo/bar/lib directories.
+ #
++# Define HAVE_ALLOCA_H if you have working alloca(3) defined in that header.
++#
+ # Define NO_CURL if you do not have libcurl installed.  git-http-fetch and
+ # git-http-push are not built, and you cannot use http:// and https://
+ # transports (neither smart nor dumb).
+@@ -1099,6 +1101,10 @@ ifdef USE_LIBPCRE
+ 	EXTLIBS += -lpcre
+ endif
  
++ifdef HAVE_ALLOCA_H
++	BASIC_CFLAGS += -DHAVE_ALLOCA_H
++endif
++
+ ifdef NO_CURL
+ 	BASIC_CFLAGS += -DNO_CURL
+ 	REMOTE_CURL_PRIMARY =
+diff --git a/config.mak.uname b/config.mak.uname
+index 7d31fad..71602ee 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -28,6 +28,7 @@ ifeq ($(uname_S),OSF1)
+ 	NO_NSEC = YesPlease
+ endif
+ ifeq ($(uname_S),Linux)
++	HAVE_ALLOCA_H = YesPlease
+ 	NO_STRLCPY = YesPlease
+ 	NO_MKSTEMPS = YesPlease
+ 	HAVE_PATHS_H = YesPlease
+@@ -35,6 +36,7 @@ ifeq ($(uname_S),Linux)
+ 	HAVE_DEV_TTY = YesPlease
+ endif
+ ifeq ($(uname_S),GNU/kFreeBSD)
++	HAVE_ALLOCA_H = YesPlease
+ 	NO_STRLCPY = YesPlease
+ 	NO_MKSTEMPS = YesPlease
+ 	HAVE_PATHS_H = YesPlease
+@@ -103,6 +105,7 @@ ifeq ($(uname_S),SunOS)
+ 	NEEDS_NSL = YesPlease
+ 	SHELL_PATH = /bin/bash
+ 	SANE_TOOL_PATH = /usr/xpg6/bin:/usr/xpg4/bin
++	HAVE_ALLOCA_H = YesPlease
+ 	NO_STRCASESTR = YesPlease
+ 	NO_MEMMEM = YesPlease
+ 	NO_MKDTEMP = YesPlease
+@@ -146,7 +149,7 @@ ifeq ($(uname_S),SunOS)
+ 	endif
+ 	INSTALL = /usr/ucb/install
+ 	TAR = gtar
+-	BASIC_CFLAGS += -D__EXTENSIONS__ -D__sun__ -DHAVE_ALLOCA_H
++	BASIC_CFLAGS += -D__EXTENSIONS__ -D__sun__
+ endif
+ ifeq ($(uname_O),Cygwin)
+ 	ifeq ($(shell expr "$(uname_R)" : '1\.[1-6]\.'),4)
+@@ -166,6 +169,7 @@ ifeq ($(uname_O),Cygwin)
+ 	else
+ 		NO_REGEX = UnfortunatelyYes
+ 	endif
++	HAVE_ALLOCA_H = YesPlease
+ 	NEEDS_LIBICONV = YesPlease
+ 	NO_FAST_WORKING_DIRECTORY = UnfortunatelyYes
+ 	NO_ST_BLOCKS_IN_STRUCT_STAT = YesPlease
+@@ -239,6 +243,7 @@ ifeq ($(uname_S),AIX)
+ endif
+ ifeq ($(uname_S),GNU)
+ 	# GNU/Hurd
++	HAVE_ALLOCA_H = YesPlease
+ 	NO_STRLCPY = YesPlease
+ 	NO_MKSTEMPS = YesPlease
+ 	HAVE_PATHS_H = YesPlease
+@@ -316,6 +321,7 @@ endif
+ ifeq ($(uname_S),Windows)
+ 	GIT_VERSION := $(GIT_VERSION).MSVC
+ 	pathsep = ;
++	HAVE_ALLOCA_H = YesPlease
+ 	NO_PREAD = YesPlease
+ 	NEEDS_CRYPTO_WITH_SSL = YesPlease
+ 	NO_LIBGEN_H = YesPlease
+@@ -363,7 +369,7 @@ ifeq ($(uname_S),Windows)
+ 	COMPAT_OBJS = compat/msvc.o compat/winansi.o \
+ 		compat/win32/pthread.o compat/win32/syslog.o \
+ 		compat/win32/dirent.o
+-	COMPAT_CFLAGS = -D__USE_MINGW_ACCESS -DNOGDI -DHAVE_STRING_H -DHAVE_ALLOCA_H -Icompat -Icompat/regex -Icompat/win32 -DSTRIP_EXTENSION=\".exe\"
++	COMPAT_CFLAGS = -D__USE_MINGW_ACCESS -DNOGDI -DHAVE_STRING_H -Icompat -Icompat/regex -Icompat/win32 -DSTRIP_EXTENSION=\".exe\"
+ 	BASIC_LDFLAGS = -IGNORE:4217 -IGNORE:4049 -NOLOGO -SUBSYSTEM:CONSOLE -NODEFAULTLIB:MSVCRT.lib
+ 	EXTLIBS = user32.lib advapi32.lib shell32.lib wininet.lib ws2_32.lib
+ 	PTHREAD_LIBS =
+diff --git a/configure.ac b/configure.ac
+index 2f43393..0eae704 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -272,6 +272,14 @@ AS_HELP_STRING([],           [ARG can be also prefix for libpcre library and hea
+ 	GIT_CONF_SUBST([LIBPCREDIR])
+     fi)
+ #
++# Define HAVE_ALLOCA_H if you have working alloca(3) defined in that header.
++AC_FUNC_ALLOCA
++case $ac_cv_working_alloca_h in
++    yes)    HAVE_ALLOCA_H=YesPlease;;
++    *)      HAVE_ALLOCA_H='';;
++esac
++GIT_CONF_SUBST([HAVE_ALLOCA_H])
++#
+ # Define NO_CURL if you do not have curl installed.  git-http-pull and
+ # git-http-push are not built, and you cannot use http:// and https://
+ # transports.
+diff --git a/git-compat-util.h b/git-compat-util.h
+index cbd86c3..63b2b3b 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -526,6 +526,14 @@ extern void release_pack_memory(size_t);
+ typedef void (*try_to_free_t)(size_t);
+ extern try_to_free_t set_try_to_free_routine(try_to_free_t);
  
- /* find set of paths that every parent touches */
--static struct combine_diff_path *find_paths(const unsigned char *sha1,
-+static struct combine_diff_path *find_paths_generic(const unsigned char *sha1,
- 	const struct sha1_array *parents, struct diff_options *opt)
- {
- 	struct combine_diff_path *paths = NULL;
-@@ -1316,6 +1316,7 @@ static struct combine_diff_path *find_paths(const unsigned char *sha1,
- 	/* tell diff_tree to emit paths in sorted (=tree) order */
- 	opt->orderfile = NULL;
- 
-+	/* D(A,P1...Pn) = D(A,P1) ^ ... ^ D(A,Pn)  (wrt paths) */
- 	for (i = 0; i < num_parent; i++) {
- 		/*
- 		 * show stat against the first parent even when doing
-@@ -1346,6 +1347,35 @@ static struct combine_diff_path *find_paths(const unsigned char *sha1,
- }
- 
- 
-+/*
-+ * find set of paths that everybody touches, assuming diff is run without
-+ * rename/copy detection, etc, comparing all trees simultaneously (= faster).
-+ */
-+static struct combine_diff_path *find_paths_multitree(
-+	const unsigned char *sha1, const struct sha1_array *parents,
-+	struct diff_options *opt)
-+{
-+	int i, nparent = parents->nr;
-+	const unsigned char **parents_sha1;
-+	struct combine_diff_path paths_head;
-+	struct strbuf base;
-+
-+	parents_sha1 = xmalloc(nparent * sizeof(parents_sha1[0]));
-+	for (i = 0; i < nparent; i++)
-+		parents_sha1[i] = parents->sha1[i];
-+
-+	/* fake list head, so worker can assume it is non-NULL */
-+	paths_head.next = NULL;
-+
-+	strbuf_init(&base, PATH_MAX);
-+	diff_tree_paths(&paths_head, sha1, parents_sha1, nparent, &base, opt);
-+
-+	strbuf_release(&base);
-+	free(parents_sha1);
-+	return paths_head.next;
-+}
-+
-+
- void diff_tree_combined(const unsigned char *sha1,
- 			const struct sha1_array *parents,
- 			int dense,
-@@ -1355,6 +1385,7 @@ void diff_tree_combined(const unsigned char *sha1,
- 	struct diff_options diffopts;
- 	struct combine_diff_path *p, *paths;
- 	int i, num_paths, needsep, show_log_first, num_parent = parents->nr;
-+	int need_generic_pathscan;
- 
- 	/* nothing to do, if no parents */
- 	if (!num_parent)
-@@ -1377,11 +1408,58 @@ void diff_tree_combined(const unsigned char *sha1,
- 
- 	/* find set of paths that everybody touches
- 	 *
--	 * NOTE find_paths() also handles --stat, as it computes
--	 * diff(sha1,parent_i) for all i to do the job, specifically
--	 * for parent0.
-+	 * NOTE
-+	 *
-+	 * Diffcore transformations are bound to diff_filespec and logic
-+	 * comparing two entries - i.e. they do not apply directly to combine
-+	 * diff.
-+	 *
-+	 * If some of such transformations is requested - we launch generic
-+	 * path scanning, which works significantly slower compared to
-+	 * simultaneous all-trees-in-one-go scan in find_paths_multitree().
-+	 *
-+	 * TODO some of the filters could be ported to work on
-+	 * combine_diff_paths - i.e. all functionality that skips paths, so in
-+	 * theory, we could end up having only multitree path scanning.
-+	 *
-+	 * NOTE please keep this semantically in sync with diffcore_std()
- 	 */
--	paths = find_paths(sha1, parents, &diffopts);
-+	need_generic_pathscan = opt->skip_stat_unmatch	||
-+			DIFF_OPT_TST(opt, FOLLOW_RENAMES)	||
-+			opt->break_opt != -1	||
-+			opt->detect_rename	||
-+			opt->pickaxe		||
-+			opt->filter;
-+
-+
-+	if (need_generic_pathscan) {
-+		/*
-+		 * NOTE generic case also handles --stat, as it computes
-+		 * diff(sha1,parent_i) for all i to do the job, specifically
-+		 * for parent0.
-+		 */
-+		paths = find_paths_generic(sha1, parents, &diffopts);
-+	}
-+	else {
-+		int stat_opt;
-+		paths = find_paths_multitree(sha1, parents, &diffopts);
-+
-+		/*
-+		 * show stat against the first parent even
-+		 * when doing combined diff.
-+		 */
-+		stat_opt = (opt->output_format &
-+				(DIFF_FORMAT_NUMSTAT|DIFF_FORMAT_DIFFSTAT));
-+		if (stat_opt) {
-+			diffopts.output_format = stat_opt;
-+
-+			diff_tree_sha1(parents->sha1[0], sha1, "", &diffopts);
-+			diffcore_std(&diffopts);
-+			if (opt->orderfile)
-+				diffcore_order(opt->orderfile);
-+			diff_flush(&diffopts);
-+		}
-+	}
- 
- 	/* find out number of surviving paths */
- 	for (num_paths = 0, p = paths; p; p = p->next)
-diff --git a/diff.c b/diff.c
-index cda4aa8..f2fff46 100644
---- a/diff.c
-+++ b/diff.c
-@@ -4764,6 +4764,7 @@ void diffcore_fix_diff_index(struct diff_options *options)
- 
- void diffcore_std(struct diff_options *options)
- {
-+	/* NOTE please keep the following in sync with diff_tree_combined() */
- 	if (options->skip_stat_unmatch)
- 		diffcore_skip_stat_unmatch(options);
- 	if (!options->found_follow) {
++#ifdef HAVE_ALLOCA_H
++# include <alloca.h>
++# define xalloca(size)      (alloca(size))
++# define xalloca_free(p)    do {} while (0)
++#else
++# define xalloca(size)      (xmalloc(size))
++# define xalloca_free(p)    (free(p))
++#endif
+ extern char *xstrdup(const char *str);
+ extern void *xmalloc(size_t size);
+ extern void *xmallocz(size_t size);
 -- 
 1.9.rc1.181.g641f458
