@@ -1,86 +1,94 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Cygwin + git log = no pager!
-Date: Mon, 24 Feb 2014 04:06:18 -0500
-Message-ID: <20140224090618.GB10698@sigill.intra.peff.net>
-References: <CAHd499BT1Q308+q0NB9Dpx=ncQZwRn0tg=q_PE8RutaVqH+xQQ@mail.gmail.com>
- <53085434.4060106@gmail.com>
- <CAHd499AbsUwmA0HWu31jW2n8eUNnRtU7URKPfBU7EhU6-F48zg@mail.gmail.com>
- <530AFAFD.2060504@gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH 1/6] Add docstrings for lookup_replace_object() and do_lookup_replace_object()
+Date: Mon, 24 Feb 2014 10:24:50 +0100
+Message-ID: <CAP8UFD1Fz_cPSBPAZ2DwoiXKAXxEvoBAj6fiBRz3FH0nfi+OvA@mail.gmail.com>
+References: <1393000327-11402-1-git-send-email-mhagger@alum.mit.edu>
+	<1393000327-11402-2-git-send-email-mhagger@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Robert Dailey <rcdailey.lists@gmail.com>, Git <git@vger.kernel.org>
-To: Chris Packham <judge.packham@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 24 10:06:27 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Nicolas Pitre <nico@fluxnic.net>, git <git@vger.kernel.org>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Mon Feb 24 10:25:00 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WHrUZ-0000YO-Gw
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Feb 2014 10:06:27 +0100
+	id 1WHrmR-0008Ml-K8
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Feb 2014 10:24:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751472AbaBXJGX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Feb 2014 04:06:23 -0500
-Received: from cloud.peff.net ([50.56.180.127]:55913 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751216AbaBXJGU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Feb 2014 04:06:20 -0500
-Received: (qmail 19401 invoked by uid 102); 24 Feb 2014 09:06:21 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 24 Feb 2014 03:06:21 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 24 Feb 2014 04:06:18 -0500
-Content-Disposition: inline
-In-Reply-To: <530AFAFD.2060504@gmail.com>
+	id S1751472AbaBXJYw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Feb 2014 04:24:52 -0500
+Received: from mail-vc0-f170.google.com ([209.85.220.170]:38538 "EHLO
+	mail-vc0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750786AbaBXJYu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Feb 2014 04:24:50 -0500
+Received: by mail-vc0-f170.google.com with SMTP id hu8so5534681vcb.15
+        for <git@vger.kernel.org>; Mon, 24 Feb 2014 01:24:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=NBrZsYnUPmLp5JICk3rnLYTJLAMmLdLKlKxWvJEoDnI=;
+        b=bLJUPotH3KDGpUFdydNSsFh6kRFf7EjDKl96QGjP/Wpmqh2ejKsFfmRtYdL5tVAZr1
+         CJLr+b5k8n4JGWkTL6x/antPAVSrirNLeJDDTtNI+9mHND+lxEuhG3qixiYxVRj2/DzV
+         Gfc3QQNE1VpMS6KX8LjEqxkj8CG05evObP/hv3SJTxDVZaVf3KLLEL8q4YM0PRNqbNWs
+         Z2you6oN2WRY8smOxhLDWA2yOEdIgDqpxR2PY++DruzTjKAhNFb64SdvkZVuu8zPV9wf
+         rikYMaDu1bZFC7qKkPcLkJGkfV5DrUAngrzZHU11r8wkuQD6bR/Pnf37aq9PEncF2Cpq
+         9kFw==
+X-Received: by 10.52.116.171 with SMTP id jx11mr3931299vdb.88.1393233890301;
+ Mon, 24 Feb 2014 01:24:50 -0800 (PST)
+Received: by 10.58.104.129 with HTTP; Mon, 24 Feb 2014 01:24:50 -0800 (PST)
+In-Reply-To: <1393000327-11402-2-git-send-email-mhagger@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242582>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242583>
 
-On Mon, Feb 24, 2014 at 08:55:41PM +1300, Chris Packham wrote:
+On Fri, Feb 21, 2014 at 5:32 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+> ---
+>  cache.h | 16 ++++++++++++++++
+>  1 file changed, 16 insertions(+)
+>
+> diff --git a/cache.h b/cache.h
+> index dc040fb..0ecd1c8 100644
+> --- a/cache.h
+> +++ b/cache.h
+> @@ -788,13 +788,29 @@ static inline void *read_sha1_file(const unsigned char *sha1, enum object_type *
+>  {
+>         return read_sha1_file_extended(sha1, type, size, LOOKUP_REPLACE_OBJECT);
+>  }
+> +
+> +/*
+> + * If a replacement for object sha1 has been set up, return the
+> + * replacement object's name (replaced recursively, if necessary).
+> + * The return value is either sha1 or a pointer to a
+> + * permanently-allocated value.  This function always respects replace
+> + * references, regardless of the value of check_replace_refs.
 
-> > Thanks for the response. I did set this environment variable in my
-> > .bashrc like so:
-> > 
-> > export GIT_PAGER=less
-> > 
-> > However after I do a 'git log' it is just spitting it out all at once
-> > and not entering the pager.
-> > 
-> 
-> Um OK that was the obvious thing to try. There is also the config
-> variable core.pager but GIT_PAGER should take precedence.
+Here you talk about "check_replace_refs" ...
 
-Presumably we are actually running what's in GIT_PAGER, but we can
-double-check with:
+> + */
+>  extern const unsigned char *do_lookup_replace_object(const unsigned char *sha1);
+> +
+> +/*
+> + * If object sha1 should be replaced, return the replacement object's
+> + * name.  This function is similar to do_lookup_replace_object(),
+> + * except that it when object replacement is suppressed, it always
+> + * returns its argument unchanged.
+> + */
+>  static inline const unsigned char *lookup_replace_object(const unsigned char *sha1)
+>  {
+>         if (!read_replace_refs)
 
-  GIT_PAGER='echo custom pager' git log
+... but here "read_replace_refs" is used.
 
-You can also try:
+>                 return sha1;
+>         return do_lookup_replace_object(sha1);
+>  }
 
-  GIT_TRACE=1 git log
-
-which should describe the pager being run.
-
-> Could something be setting the environment variable LESS? Reading the
-> git-config man page for core.pager git wants to set LESS to FRSX but if
-> it is already set git takes that as an indication that you don't want to
-> set LESS automatically.
-
-We can also double-check the LESS setting in the executed pager:
-
-  GIT_PAGER='echo LESS=$LESS' git log
-
-If we are running less, and it is using FRSX, I'd suspect some kind of
-terminal weirdness with less itself. With "-F", less will quit if the
-whole output can be displayed; it's possible it thinks the screen is
-bigger than it is.
-
-Trying:
-
-  GIT_PAGER=less LESS=RSX git log
-
-might help.
-
--Peff
+Thanks,
+Christian.
