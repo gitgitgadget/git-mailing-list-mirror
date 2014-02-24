@@ -1,100 +1,67 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH 5/6] Document a bunch of functions defined in sha1_file.c
-Date: Mon, 24 Feb 2014 21:01:52 +0100
-Message-ID: <530BA530.3070603@alum.mit.edu>
-References: <1393000327-11402-1-git-send-email-mhagger@alum.mit.edu> <1393000327-11402-6-git-send-email-mhagger@alum.mit.edu> <530B8CEB.5040903@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: git am and mangled subject lines
+Date: Mon, 24 Feb 2014 12:05:56 -0800
+Message-ID: <20140224200556.GH7855@google.com>
+References: <530B9D50.6020705@ubuntu.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: =?UTF-8?B?SmFrdWIgTmFyxJlic2tp?= <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 24 21:02:04 2014
+To: Phillip Susi <psusi@ubuntu.com>
+X-From: git-owner@vger.kernel.org Mon Feb 24 21:06:14 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WI1j0-0005dQ-5t
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Feb 2014 21:02:02 +0100
+	id 1WI1mz-00019g-RY
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Feb 2014 21:06:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753064AbaBXUB5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 24 Feb 2014 15:01:57 -0500
-Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:57570 "EHLO
-	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752981AbaBXUB4 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 24 Feb 2014 15:01:56 -0500
-X-AuditID: 1207440e-f79c76d000003e2c-b8-530ba533e4d3
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id F6.DE.15916.335AB035; Mon, 24 Feb 2014 15:01:55 -0500 (EST)
-Received: from [192.168.69.148] (p57A25CCF.dip0.t-ipconnect.de [87.162.92.207])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s1OK1rFH018560
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Mon, 24 Feb 2014 15:01:54 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20131103 Icedove/17.0.10
-In-Reply-To: <530B8CEB.5040903@gmail.com>
-X-Enigmail-Version: 1.6
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprNKsWRmVeSWpSXmKPExsUixO6iqGu8lDvY4NYUZYuuK91MFiuuzmF2
-	YPLYOesuu8fnTXIBTFHcNkmJJWXBmel5+nYJ3BnNZxoZC7p5Kg6cu8TWwHiYs4uRg0NCwETi
-	3f3gLkZOIFNM4sK99WwgtpDAZUaJpityXYxcQPZ5JonXF48ygyR4BbQlji37wwJiswioStzu
-	/MMOYrMJ6Eos6mlmArFFBYIlVl9+wAJRLyhxcuYTMFtEwFzixP7lbCB7mQXEJfr/gYWFBXwl
-	vm2+wwaxaxajRPPbNrA5nAKaEnuePmOCuFNcoqcxCKJVXWL9PCGQCmYBeYnmrbOZJzAKzkKy
-	bBZC1SwkVQsYmVcxyiXmlObq5iZm5hSnJusWJyfm5aUW6Rrr5WaW6KWmlG5ihAQu3w7G9vUy
-	hxgFOBiVeHg7irmDhVgTy4orcw8xSnIwKYnyfl4AFOJLyk+pzEgszogvKs1JLT7EKMHBrCTC
-	yz8JKMebklhZlVqUD5OS5mBREudVW6LuJySQnliSmp2aWpBaBJOV4eBQkuBVXALUKFiUmp5a
-	kZaZU4KQZuLgBBnOJSVSnJqXklqUWFqSEQ+K3PhiYOyCpHiA9rqBtPMWFyTmAkUhWk8x6nLc
-	bvv1iVGIJS8/L1VKnPfIYqAiAZCijNI8uBWwNPWKURzoY2FePZBRPMAUBzfpFdASJqAlhRYc
-	IEtKEhFSUg2Mwg+Zu9hPHyh5tsopynPSknW6xyYK7te7fuf2ttRlq0/MW9z8RWptrzmjnUei
-	6dcf0noGAnfEDSRi9Xhnx6+vebhBvnLR5Lm3nR1K+5IWHXI4fVj3+Of0WIN5m3av 
+	id S1753180AbaBXUGE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Feb 2014 15:06:04 -0500
+Received: from mail-pb0-f48.google.com ([209.85.160.48]:46602 "EHLO
+	mail-pb0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752873AbaBXUGD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Feb 2014 15:06:03 -0500
+Received: by mail-pb0-f48.google.com with SMTP id md12so2823518pbc.7
+        for <git@vger.kernel.org>; Mon, 24 Feb 2014 12:06:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=1hZJNm6tspXi9mBdgLr5Y/wOxUVC8rc7F9s+1LU5QK8=;
+        b=yqlUaxLQkDVIfKN2KjZiDFmMpNaVTC6yVTF6i8QmtbgplOsP6ln3lxFEGCOfiAM8XX
+         Sjmj+rCz02XkopZ8wvPR/GHT8onwfmofIajH3CuS3zn6fSu9ofItjPp24han6/TeRbv6
+         j+8fAkQkIEZWCibL1F+V4hhqIeW2H2QJylknBMyMQqKb55v8Krs0if7yPKGZirX5+sqd
+         FNWWsQhgN+LgLl38UnPStkrYktTBZMP76VPWBp4elMogSvJRWKcMiNIAMv4nKC9OG6qb
+         LUMBNcWwkFIdsFdHb+eMJ3gyEQwA85ZXn2iojy2d0oiaZ9R7fKjN9lNR26sqxgnK8zJP
+         hEZg==
+X-Received: by 10.67.12.171 with SMTP id er11mr27521963pad.123.1393272359622;
+        Mon, 24 Feb 2014 12:05:59 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id dk1sm2761934pbc.46.2014.02.24.12.05.58
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 24 Feb 2014 12:05:58 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <530B9D50.6020705@ubuntu.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242636>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242637>
 
-On 02/24/2014 07:18 PM, Jakub Nar=C4=99bski wrote:
-> Michael Haggerty wrote:
->=20
->> -/*
->> - * NOTE! This returns a statically allocated buffer, so you have to=
- be
->> - * careful about using it. Do an "xstrdup()" if you need to save th=
-e
->> - * filename.
->> - *
->> - * Also note that this returns the location for creating.  Reading
->> - * SHA1 file can happen from any alternate directory listed in the
->> - * DB_ENVIRONMENT environment variable if it is not found in
->> - * the primary object database.
->> - */
->>   const char *sha1_file_name(const unsigned char *sha1)
->=20
-> Has this changed?
+Hi Phillip,
 
-No, this hasn't changed.  I've been documenting public functions in the
-header files above the declaration, and private ones where they are
-defined.  So I moved the documentation for this function to cache.h:
+Phillip Susi wrote:
 
-+/*
-+ * Return the name of the file in the local object database that would
-+ * be used to store a loose object with the specified sha1.  The
-+ * return value is a pointer to a statically allocated buffer that is
-+ * overwritten each time the function is called.
-+ */
- extern const char *sha1_file_name(const unsigned char *sha1);
+> git am already ignores the "[PATCH X/Y]" prefix that format-patch
+> adds.  Is it possible to get it to ignore any additional prefix that a
+> bug tracker mangles into the subject line?  i.e. "bug #nnnn:"?
 
-I also rewrite the comment, as you can see.  The "NOTE!" seemed a bit
-overboard to me, given that there are a lot of functions in our codebas=
-e
-that behave similarly.  So I toned the warning down, and tightened up
-the comment overall.
+builtin/mailinfo.c is the place to start (see git-mailinfo(1)).
+This is a little tricky because some people *like* the "bug #nnnn:"
+in the subject line for a commit.
 
-Let me know if you think I've made it less helpful.
-
-Michael
-
---=20
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+Hope that helps,
+Jonathan
