@@ -1,30 +1,30 @@
 From: Kirill Smelkov <kirr@mns.spb.ru>
-Subject: [PATCH 03/19] tree-diff: no need to manually verify that there is no mode change for a path
-Date: Mon, 24 Feb 2014 20:21:35 +0400
-Message-ID: <22aebb863fb2a5a556e68d57f3a1095d3c502d4e.1393257006.git.kirr@mns.spb.ru>
+Subject: [PATCH 05/19] tree-diff: show_tree() is not needed
+Date: Mon, 24 Feb 2014 20:21:37 +0400
+Message-ID: <4555386618c18b40ee9e06ebaae23e2eb5eb0d1e.1393257006.git.kirr@mns.spb.ru>
 References: <cover.1393257006.git.kirr@mns.spb.ru>
 Cc: git@vger.kernel.org, Kirill Smelkov <kirr@mns.spb.ru>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 24 17:21:04 2014
+X-From: git-owner@vger.kernel.org Mon Feb 24 17:21:06 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WHyH8-0003IB-SQ
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Feb 2014 17:21:03 +0100
+	id 1WHyHA-0003IB-1F
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Feb 2014 17:21:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753113AbaBXQUv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Feb 2014 11:20:51 -0500
-Received: from mail.mnsspb.ru ([84.204.75.2]:34149 "EHLO mail.mnsspb.ru"
+	id S1753129AbaBXQU5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Feb 2014 11:20:57 -0500
+Received: from mail.mnsspb.ru ([84.204.75.2]:34160 "EHLO mail.mnsspb.ru"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753089AbaBXQUu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Feb 2014 11:20:50 -0500
+	id S1752256AbaBXQU4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Feb 2014 11:20:56 -0500
 Received: from [192.168.0.127] (helo=tugrik.mns.mnsspb.ru)
-	by mail.mnsspb.ru with esmtps id 1WHyGv-0003zi-80; Mon, 24 Feb 2014 20:20:49 +0400
+	by mail.mnsspb.ru with esmtps id 1WHyH0-0003zu-Uz; Mon, 24 Feb 2014 20:20:55 +0400
 Received: from kirr by tugrik.mns.mnsspb.ru with local (Exim 4.72)
 	(envelope-from <kirr@tugrik.mns.mnsspb.ru>)
-	id 1WHyIa-00079Z-DR; Mon, 24 Feb 2014 20:22:32 +0400
+	id 1WHyIg-00079f-37; Mon, 24 Feb 2014 20:22:38 +0400
 X-Mailer: git-send-email 1.9.rc1.181.g641f458
 In-Reply-To: <cover.1393257006.git.kirr@mns.spb.ru>
 In-Reply-To: <cover.1393257006.git.kirr@mns.spb.ru>
@@ -33,58 +33,99 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242593>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242594>
 
-Because if there is, such two tree entries would never be compared as
-equal - the code in base_name_compare() explicitly compares modes, if
-there is a change for dir bit, even for equal paths, entries would
-compare as different.
+We don't need special code for showing added/removed subtree, because we
+can do the same via diff_tree_sha1, just passing NULL for absent tree.
 
-The code I'm removing here is from 2005 April 262e82b4 (Fix diff-tree
-recursion), which pre-dates base_name_compare() introduction in 958ba6c9
-(Introduce "base_name_compare()" helper function) by a month.
+And compared to show_tree(), which was calling show_entry() for every
+tree entry, that would lead to the same show_entry() callings:
+
+    show_tree(t):
+        for e in t.entries:
+            show_entry(e)
+
+    diff_tree_sha1(NULL, new):  /* the same applies to (old, NULL) */
+        diff_tree(t1=NULL, t2)
+            ...
+            if (!t1->size)
+                show_entry(t2)
+            ...
+
+and possible overhead is negligible, since after the patch, timing for
+
+    `git log --raw --no-abbrev --no-renames`
+
+for navy.git and `linux.git v3.10..v3.11` is practically the same.
+
+So let's say goodbye to show_tree() - it removes some code, but also,
+and what is important, consolidates more code for showing/recursing into
+trees into one place.
 
 Signed-off-by: Kirill Smelkov <kirr@mns.spb.ru>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
 
 ( re-posting without change )
 
- tree-diff.c | 15 +++++----------
- 1 file changed, 5 insertions(+), 10 deletions(-)
+ tree-diff.c | 35 +++--------------------------------
+ 1 file changed, 3 insertions(+), 32 deletions(-)
 
 diff --git a/tree-diff.c b/tree-diff.c
-index 11c3550..5810b00 100644
+index a8c2aec..2ad7788 100644
 --- a/tree-diff.c
 +++ b/tree-diff.c
-@@ -23,6 +23,11 @@ static int compare_tree_entry(struct tree_desc *t1, struct tree_desc *t2,
+@@ -55,25 +55,7 @@ static int compare_tree_entry(struct tree_desc *t1, struct tree_desc *t2,
+ 	return 0;
+ }
  
- 	pathlen1 = tree_entry_len(&t1->entry);
- 	pathlen2 = tree_entry_len(&t2->entry);
-+
-+	/*
-+	 * NOTE files and directories *always* compare differently,
-+	 * even when having the same name.
-+	 */
- 	cmp = base_name_compare(path1, pathlen1, mode1, path2, pathlen2, mode2);
- 	if (cmp < 0) {
- 		show_entry(opt, "-", t1, base);
-@@ -35,16 +40,6 @@ static int compare_tree_entry(struct tree_desc *t1, struct tree_desc *t2,
- 	if (!DIFF_OPT_TST(opt, FIND_COPIES_HARDER) && !hashcmp(sha1, sha2) && mode1 == mode2)
- 		return 0;
- 
--	/*
--	 * If the filemode has changed to/from a directory from/to a regular
--	 * file, we need to consider it a remove and an add.
--	 */
--	if (S_ISDIR(mode1) != S_ISDIR(mode2)) {
--		show_entry(opt, "-", t1, base);
--		show_entry(opt, "+", t2, base);
--		return 0;
+-/* A whole sub-tree went away or appeared */
+-static void show_tree(struct diff_options *opt, const char *prefix,
+-		      struct tree_desc *desc, struct strbuf *base)
+-{
+-	enum interesting match = entry_not_interesting;
+-	for (; desc->size; update_tree_entry(desc)) {
+-		if (match != all_entries_interesting) {
+-			match = tree_entry_interesting(&desc->entry, base, 0,
+-						       &opt->pathspec);
+-			if (match == all_entries_not_interesting)
+-				break;
+-			if (match == entry_not_interesting)
+-				continue;
+-		}
+-		show_entry(opt, prefix, desc, base);
 -	}
+-}
 -
- 	strbuf_add(base, path1, pathlen1);
- 	if (DIFF_OPT_TST(opt, RECURSIVE) && S_ISDIR(mode1)) {
- 		if (DIFF_OPT_TST(opt, TREE_IN_RECURSIVE)) {
+-/* A file entry went away or appeared */
++/* An entry went away or appeared */
+ static void show_entry(struct diff_options *opt, const char *prefix,
+ 		       struct tree_desc *desc, struct strbuf *base)
+ {
+@@ -85,23 +67,12 @@ static void show_entry(struct diff_options *opt, const char *prefix,
+ 
+ 	strbuf_add(base, path, pathlen);
+ 	if (DIFF_OPT_TST(opt, RECURSIVE) && S_ISDIR(mode)) {
+-		enum object_type type;
+-		struct tree_desc inner;
+-		void *tree;
+-		unsigned long size;
+-
+-		tree = read_sha1_file(sha1, &type, &size);
+-		if (!tree || type != OBJ_TREE)
+-			die("corrupt tree sha %s", sha1_to_hex(sha1));
+-
+ 		if (DIFF_OPT_TST(opt, TREE_IN_RECURSIVE))
+ 			opt->add_remove(opt, *prefix, mode, sha1, 1, base->buf, 0);
+ 
+ 		strbuf_addch(base, '/');
+-
+-		init_tree_desc(&inner, tree, size);
+-		show_tree(opt, prefix, &inner, base);
+-		free(tree);
++		diff_tree_sha1(*prefix == '-' ? sha1 : NULL,
++			       *prefix == '+' ? sha1 : NULL, base->buf, opt);
+ 	} else
+ 		opt->add_remove(opt, prefix[0], mode, sha1, 1, base->buf, 0);
+ 
 -- 
 1.9.rc1.181.g641f458
