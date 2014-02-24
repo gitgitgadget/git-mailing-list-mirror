@@ -1,128 +1,118 @@
-From: =?UTF-8?B?6YOR5ZCR5piV?= <pandazxx@gmail.com>
-Subject: Re: [Bug report] too many open files while cvsimport
-Date: Mon, 24 Feb 2014 10:12:35 +0800
-Message-ID: <CABAQQMni8BY5AWZm_reH3e3nf8zkTCJYqzewrjcHg-jW82FaYA@mail.gmail.com>
-References: <CABAQQMkSe6k9nNk3m6HSYmguuOvzp7n06dWNBRbaCxqGO=WEAQ@mail.gmail.com>
+From: David Aguilar <davvid@gmail.com>
+Subject: [PATCH] difftool: support repositories with .git-files
+Date: Sun, 23 Feb 2014 19:12:35 -0800
+Message-ID: <1393211555-50270-1-git-send-email-davvid@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 24 03:13:02 2014
+Cc: git@vger.kernel.org,
+	=?UTF-8?q?G=C3=A1bor=20Lipt=C3=A1k?= <gabor.liptak@gmail.com>,
+	Jens Lehmann <jens.lehmann@web.de>,
+	John Keeping <john@keeping.me.uk>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 24 04:12:47 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WHl2T-0003aJ-6s
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Feb 2014 03:13:01 +0100
+	id 1WHlyG-0008WS-KU
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Feb 2014 04:12:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752043AbaBXCM5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 23 Feb 2014 21:12:57 -0500
-Received: from mail-wg0-f65.google.com ([74.125.82.65]:42827 "EHLO
-	mail-wg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751042AbaBXCM4 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 23 Feb 2014 21:12:56 -0500
-Received: by mail-wg0-f65.google.com with SMTP id l18so1559218wgh.8
-        for <git@vger.kernel.org>; Sun, 23 Feb 2014 18:12:55 -0800 (PST)
+	id S1751868AbaBXDMk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 23 Feb 2014 22:12:40 -0500
+Received: from mail-pd0-f173.google.com ([209.85.192.173]:37184 "EHLO
+	mail-pd0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751484AbaBXDMj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 Feb 2014 22:12:39 -0500
+Received: by mail-pd0-f173.google.com with SMTP id z10so514712pdj.4
+        for <git@vger.kernel.org>; Sun, 23 Feb 2014 19:12:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-type:content-transfer-encoding;
-        bh=8m9VSOo3A/QanI4xvIxoZGKg/GJ6DT2ycRtxlvLM6Mk=;
-        b=enLvoyzZyVf6uSx+9zfDJQlIGKQfZ1HZZwUl8h4JL5PlCR88l6i+8hUrUPJaM8qzBG
-         k7WwYIcD4czWOWx+N/RptyOEUAhWPDmQxffYgDpey/YVTo5no0/R0wCpGPioAycq7U9d
-         OFKoVM+8263tOC2kcBbS3CWQiY4TEt/uS2SD3mnSiQZnRc9D5DxNPyWFVWXVpKmmdGRG
-         j/FH/zp3z1w0Jar+cCAcunNlWH3gL5K5vdWeO6NZ3Za2B5B8Yr18InJpUjC5xoNM9qNr
-         rYtp8nqq3+/IPoa7zN3wvyC4R4XxD+qmRCng4M+VTpoybZY2R/JrxRaKrTudYlagWS8h
-         dMFw==
-X-Received: by 10.180.87.9 with SMTP id t9mr11719159wiz.36.1393207975254; Sun,
- 23 Feb 2014 18:12:55 -0800 (PST)
-Received: by 10.180.5.10 with HTTP; Sun, 23 Feb 2014 18:12:35 -0800 (PST)
-In-Reply-To: <CABAQQMkSe6k9nNk3m6HSYmguuOvzp7n06dWNBRbaCxqGO=WEAQ@mail.gmail.com>
+        h=from:to:cc:subject:date:message-id:mime-version:content-type
+         :content-transfer-encoding;
+        bh=t5l3ObUapqocdBdj/M0+duzcgu6Voz5Qtq8o8OpkR4I=;
+        b=DsiVjoLYL9yhHTUtkx9cYgctD8LSXoRJxGX+1R09k637FzNDkgdU1EuYVfMTqLuJvK
+         x/Ggu+K+AKXvDSODKUhojq90xFd+98fEm9V9nAt4eGb4/euNcJQdWl4p2CvP76RhwZaR
+         goftyktRv4ynlaLR3gkqlZfpW/1atTg4DA6NHBeiwIezmbK9OUIaElZi9EDVWSeqkq87
+         Rz2IAxx6uqCqCgZYck/WaMtZsGOTIWA/8vceDDOMLIEwtHVkTptRMG09/EnRBp3IbzW4
+         IEfwgceZbn84wUFM9+sGGYWwUK4ynxXupGSweix5s198nqq5xbDc2zCN3Nzz/C2oy1QY
+         iydQ==
+X-Received: by 10.66.102.4 with SMTP id fk4mr22022542pab.59.1393211559505;
+        Sun, 23 Feb 2014 19:12:39 -0800 (PST)
+Received: from lustrous.fas.fa.disney.com (208-106-56-2.static.sonic.net. [208.106.56.2])
+        by mx.google.com with ESMTPSA id bc4sm44861825pbb.2.2014.02.23.19.12.37
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Sun, 23 Feb 2014 19:12:38 -0800 (PST)
+X-Mailer: git-send-email 1.9.0.1.gd20a678
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242555>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242556>
 
-Hi
+Modern versions of "git submodule" use .git-files to setup the
+submodule directory.  When run in a "git submodule"-created
+repository "git difftool --dir-diff" dies with the following
+error:
 
-git reports "Unknown: error  Too many open files" when importing cvs
-repository using cvsimport. The repository is kind of middle size one,
-around 5000 files, thousands commits.
+	$ git difftool -d HEAD~
+	fatal: This operation must be run in a work tree
+	diff --raw --no-abbrev -z HEAD~: command returned error: 128
 
-Command line is:
-# git cvsimport -k -L 2
+core.worktree is relative to the .git directory but the logic
+in find_worktree() does not account for it.
 
-current ulimit:
+Use `git rev-parse --show-toplevel` to find the worktree so that
+the dir-diff feature works inside a submodule.
 
-# ulimit -a
--t: cpu time (seconds)              unlimited
--f: file size (blocks)              unlimited
--d: data seg size (kbytes)          unlimited
--s: stack size (kbytes)             10240
--c: core file size (blocks)         0
--m: resident set size (kbytes)      unlimited
--u: processes                       32767
--n: file descriptors                10000
--l: locked-in-memory size (kbytes)  32
--v: address space (kbytes)          unlimited
--x: file locks                      unlimited
--i: pending signals                 32767
--q: bytes in POSIX msg queues       819200
--e: max nice                        0
--r: max rt priority                 0
+Reported-by: G=C3=A1bor Lipt=C3=A1k <gabor.liptak@gmail.com>
+Helped-by: Jens Lehmann <jens.lehmann@web.de>
+Helped-by: John Keeping <john@keeping.me.uk>
+Signed-off-by: David Aguilar <davvid@gmail.com>
+---
+ git-difftool.perl | 18 ++----------------
+ 1 file changed, 2 insertions(+), 16 deletions(-)
 
-System: RHEL i386
-
-# git --version
-git version 1.9.0
-
-I build git from source.
-
-Best Regards,
-Xiangxin Zheng
-Best Regards,
-Xiangxin Zheng
-
-
-2014-02-21 13:48 GMT+08:00 =E9=83=91=E5=90=91=E6=98=95 <pandazxx@gmail.=
-com>:
-> Hi
->
-> git reports "Unknown: error  Too many open files" when importing cvs
-> repository using cvsimport. The repository is kind of middle size one=
-,
-> around 5000 files, thousands commits.
->
-> Command line is:
-> # git cvsimport -k -L 2
->
-> current ulimit:
->
-> # ulimit -a
-> -t: cpu time (seconds)              unlimited
-> -f: file size (blocks)              unlimited
-> -d: data seg size (kbytes)          unlimited
-> -s: stack size (kbytes)             10240
-> -c: core file size (blocks)         0
-> -m: resident set size (kbytes)      unlimited
-> -u: processes                       32767
-> -n: file descriptors                10000
-> -l: locked-in-memory size (kbytes)  32
-> -v: address space (kbytes)          unlimited
-> -x: file locks                      unlimited
-> -i: pending signals                 32767
-> -q: bytes in POSIX msg queues       819200
-> -e: max nice                        0
-> -r: max rt priority                 0
->
-> System: RHEL i386
->
-> # git --version
-> git version 1.9.0
->
-> I build git from source.
->
-> Best Regards,
-> Xiangxin Zheng
+diff --git a/git-difftool.perl b/git-difftool.perl
+index e57d3d1..18ca61e 100755
+--- a/git-difftool.perl
++++ b/git-difftool.perl
+@@ -39,24 +39,10 @@ USAGE
+=20
+ sub find_worktree
+ {
+-	my ($repo) =3D @_;
+-
+ 	# Git->repository->wc_path() does not honor changes to the working
+ 	# tree location made by $ENV{GIT_WORK_TREE} or the 'core.worktree'
+ 	# config variable.
+-	my $worktree;
+-	my $env_worktree =3D $ENV{GIT_WORK_TREE};
+-	my $core_worktree =3D Git::config('core.worktree');
+-
+-	if (defined($env_worktree) and (length($env_worktree) > 0)) {
+-		$worktree =3D $env_worktree;
+-	} elsif (defined($core_worktree) and (length($core_worktree) > 0)) {
+-		$worktree =3D $core_worktree;
+-	} else {
+-		$worktree =3D $repo->wc_path();
+-	}
+-
+-	return $worktree;
++	return Git::command_oneline('rev-parse', '--show-toplevel');
+ }
+=20
+ sub print_tool_help
+@@ -418,7 +404,7 @@ sub dir_diff
+ 	my $rc;
+ 	my $error =3D 0;
+ 	my $repo =3D Git->repository();
+-	my $workdir =3D find_worktree($repo);
++	my $workdir =3D find_worktree();
+ 	my ($a, $b, $tmpdir, @worktree) =3D
+ 		setup_dir_diff($repo, $workdir, $symlinks);
+=20
+--=20
+1.9.0.1.gd20a678
