@@ -1,65 +1,76 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2] tag: support --sort=<spec>
-Date: Mon, 24 Feb 2014 18:33:03 -0500
-Message-ID: <20140224233303.GA27689@sigill.intra.peff.net>
-References: <1392817167-29802-1-git-send-email-pclouds@gmail.com>
- <1393039762-4843-1-git-send-email-pclouds@gmail.com>
- <20140222080404.GB1576@sigill.intra.peff.net>
- <xmqqy510bh2g.fsf@gitster.dls.corp.google.com>
- <CACsJy8CRe4MmkTnuChOi2SHG52tx_LZ+51vWXN9ooGmcRUN7bQ@mail.gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v2 00/19] Multiparent diff tree-walker + combine-diff speedup
+Date: Tue, 25 Feb 2014 06:43:24 +0700
+Message-ID: <CACsJy8BXMVNVAyqPEbHTkGxSSEJ6DpYUVwZqthiMQfO7Tj9T8A@mail.gmail.com>
+References: <cover.1393257006.git.kirr@mns.spb.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 25 00:33:13 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Kirill Smelkov <kirr@mns.spb.ru>
+X-From: git-owner@vger.kernel.org Tue Feb 25 00:44:03 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WI51L-0006jo-Me
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Feb 2014 00:33:12 +0100
+	id 1WI5Bp-0007KH-9c
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Feb 2014 00:44:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752639AbaBXXdH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Feb 2014 18:33:07 -0500
-Received: from cloud.peff.net ([50.56.180.127]:56375 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752446AbaBXXdG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Feb 2014 18:33:06 -0500
-Received: (qmail 30214 invoked by uid 102); 24 Feb 2014 23:33:05 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 24 Feb 2014 17:33:05 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 24 Feb 2014 18:33:03 -0500
-Content-Disposition: inline
-In-Reply-To: <CACsJy8CRe4MmkTnuChOi2SHG52tx_LZ+51vWXN9ooGmcRUN7bQ@mail.gmail.com>
+	id S1753237AbaBXXn4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Feb 2014 18:43:56 -0500
+Received: from mail-qc0-f170.google.com ([209.85.216.170]:59325 "EHLO
+	mail-qc0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752903AbaBXXnz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Feb 2014 18:43:55 -0500
+Received: by mail-qc0-f170.google.com with SMTP id c9so9749459qcz.15
+        for <git@vger.kernel.org>; Mon, 24 Feb 2014 15:43:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=AJRsmVjxIaVm6dRGR0cHW8bwZCkZMoJIWtrW8lijZCE=;
+        b=X0+PzSx9ervEInMJiKU1Ud0HzXB7bzfgMZCPx1jOvAOp0r3zbeJx4ubz0F4h1RTbxH
+         gumMcCyHzBkJWh8RRRiKda4CEmgqgD5J6FoHhtF5KwzkXCN5OQo95TU41a07n+tWz7Og
+         /v41uT8WJNQDYTkesJargCosZNRtIlFM7DNF+hGvLOaOqr5/cUiC3E8Y300xs2TI6URq
+         +SjoOnWgWs0Dg30p/zu0fjApVfSxpIEBPGDGFUK3iMzUsTkcfuBFlnbQcNObs1dAAFaF
+         D/ps/kQZ255zd9H0wzSl+dyPM3RO82j6xntzBovzzL9O/Wmi+9xJCzTJgictLu8qxjwc
+         u+ow==
+X-Received: by 10.224.36.129 with SMTP id t1mr33795825qad.8.1393285434755;
+ Mon, 24 Feb 2014 15:43:54 -0800 (PST)
+Received: by 10.96.215.102 with HTTP; Mon, 24 Feb 2014 15:43:24 -0800 (PST)
+In-Reply-To: <cover.1393257006.git.kirr@mns.spb.ru>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242654>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242655>
 
-On Tue, Feb 25, 2014 at 06:30:35AM +0700, Duy Nguyen wrote:
+On Mon, Feb 24, 2014 at 11:21 PM, Kirill Smelkov <kirr@mns.spb.ru> wrote:
+> Hello up there.
+>
+> Here go combine-diff speedup patches in form of first reworking diff
+> tree-walker to work in general case - when a commit have several parents, not
+> only one - we are traversing all 1+nparent trees in parallel.
+>
+> Then we are taking advantage of the new diff tree-walker for speeding up
+> combine-diff, which for linux.git results in ~14 times speedup.
 
-> >>> +[ "$(uname -o)" = "GNU/Linux" ] && test_set_prereq GNULINUX
-> >>> +
-> >>
-> >> can pick up the value from GIT-BUILD-OPTIONS as a prerequisite (see the
-> >> way we handle NO_PERL for an example). Though if we can just grab the
-> >> glibc version as a fallback, we can do away with that completely.
-> >
-> > ;-)  I like that.
-> >
-> 
-> Jeff, I'm still waiting if you agree to go with this syntax or put
-> version before refname before rerolling (either with build time option
-> like this, or implement the compat function myself).
+I think there is another use case for this n-tree walker (but I'm not
+entirely sure yet as I haven't really read the series). In git-log
+(either with pathspec or --patch) we basically do this
 
-Sorry. I didn't respond because I was trying to think of something to
-say besides "no, I still like mine better". I admit that it's mostly a
-gut feeling, and I don't have any argument beyond what I've already
-made (your "it's like a typecast" does make some sense, but I think that
-is a convoluted way of thinking about it).
+diff HEAD^ HEAD
+diff HEAD^^ HEAD^
+diff HEAD^^^ HEAD^^
+diff HEAD^^^^ HEAD^^^
+...
 
--Peff
+so except HEAD (and the last commit), all commits' tree will be
+read/diff'd twice. With n-tree walker I think we may be able to diff
+them in batch to reduce extra processing: commit lists are split into
+16-commit blocks where 16 trees are fed to the new tree walker at the
+same time. I hope it would make git-log a bit faster (especially for
+-S). Maybe not much.
+-- 
+Duy
