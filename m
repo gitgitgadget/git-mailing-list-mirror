@@ -1,93 +1,95 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/5] log: handle integer overflow in timestamps
-Date: Mon, 24 Feb 2014 13:01:57 -0800
-Message-ID: <xmqqy5106x8a.fsf@gitster.dls.corp.google.com>
-References: <20140224073348.GA20221@sigill.intra.peff.net>
-	<20140224074637.GD9969@sigill.intra.peff.net>
-	<xmqqsir88f4n.fsf@gitster.dls.corp.google.com>
-	<20140224195829.GA11940@sigill.intra.peff.net>
-	<xmqqeh2s8do2.fsf@gitster.dls.corp.google.com>
-	<20140224203709.GA25506@sigill.intra.peff.net>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH] difftool: support repositories with .git-files
+Date: Mon, 24 Feb 2014 21:10:32 +0000
+Message-ID: <530BB548.3050603@web.de>
+References: <1393211555-50270-1-git-send-email-davvid@gmail.com> <xmqqr46s9yzx.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Feb 24 22:02:16 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	=?UTF-8?B?R8OhYm9yIExpcHTDoWs=?= <gabor.liptak@gmail.com>,
+	John Keeping <john@keeping.me.uk>
+To: Junio C Hamano <gitster@pobox.com>,
+	David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 24 22:10:53 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WI2fD-0002B1-6C
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Feb 2014 22:02:11 +0100
+	id 1WI2nX-0003BV-8c
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Feb 2014 22:10:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753212AbaBXVCG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Feb 2014 16:02:06 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:40421 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752565AbaBXVCF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Feb 2014 16:02:05 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 9B01B6F4FD;
-	Mon, 24 Feb 2014 16:02:00 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=hwih8ocgmmjFPc7jV+6sNAm0SFY=; b=mkxJP8
-	ZoHtuJoLVH2vZhuZ5gor8MI/6cfweOnikvVy4EUL5iUjkfgvDUaf011x478hNTg4
-	STCCh+5nXNRh1ZwSdYU0TtuhvnrZz1X/Hfbpt/aU0xhgH0uLrOe3cH97Zz6qlVkY
-	HmBOAVz4TT0BfKSwBFWaASn/2nnQvLh1R63OI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=n5PqAOJs3IOMzVHi4vAdk8Tv5WPAmf3O
-	+AhXrHQEyVsRxInzuy1IMO/tsmwBf1SSIGe1woZynJUMKRYL3teu6PU1fbNu5pSg
-	prliYV6pv+6F4Y4y/yqqWYis5ZyF+UucD4fR3fbjgliAyiEqkWqb9s1af6N0fyy2
-	Wj7yfswNDMs=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 54B086F4FC;
-	Mon, 24 Feb 2014 16:02:00 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3C81B6F4FA;
-	Mon, 24 Feb 2014 16:01:59 -0500 (EST)
-In-Reply-To: <20140224203709.GA25506@sigill.intra.peff.net> (Jeff King's
-	message of "Mon, 24 Feb 2014 15:37:09 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: E6B5B74C-9D96-11E3-A1EC-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1752212AbaBXVKj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 24 Feb 2014 16:10:39 -0500
+Received: from mout.web.de ([212.227.17.11]:54168 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751844AbaBXVKi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Feb 2014 16:10:38 -0500
+Received: from [192.168.1.102] ([90.174.2.98]) by smtp.web.de (mrweb004) with
+ ESMTPA (Nemesis) id 0MNx4F-1WJPZh36TL-007XXr for <git@vger.kernel.org>; Mon,
+ 24 Feb 2014 22:10:36 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.2.0
+In-Reply-To: <xmqqr46s9yzx.fsf@gitster.dls.corp.google.com>
+X-Enigmail-Version: 1.6
+X-Provags-ID: V03:K0:8xKaaYEB5dd95NTo7dI5IjJWTQUgMV+fMovYsV0gtZcgmKbpVc8
+ ZtV215GCuASlt7t9qARmC9Q3mygNR9ZxvvS2fc1192xTJ6SwtXQOXFvy3ApyC5y/L6DTaps
+ wRcnwOHq/bl4uhWhp886FUoerbvw2Ki3qPP09VShKlgoxchY+/o/sgSQ3K7YWjy2fTXoZ29
+ l+F1EbzhM/JrefQ8C3Kag==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242647>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242648>
 
-Jeff King <peff@peff.net> writes:
+Am 24.02.2014 17:55, schrieb Junio C Hamano:
+> David Aguilar <davvid@gmail.com> writes:
+>=20
+>> Modern versions of "git submodule" use .git-files to setup the
+>> submodule directory.  When run in a "git submodule"-created
+>> repository "git difftool --dir-diff" dies with the following
+>> error:
+>>
+>> 	$ git difftool -d HEAD~
+>> 	fatal: This operation must be run in a work tree
+>> 	diff --raw --no-abbrev -z HEAD~: command returned error: 128
+>>
+>> core.worktree is relative to the .git directory but the logic
+>> in find_worktree() does not account for it.
+>>
+>> Use `git rev-parse --show-toplevel` to find the worktree so that
+>> the dir-diff feature works inside a submodule.
+>>
+>> Reported-by: G=C3=A1bor Lipt=C3=A1k <gabor.liptak@gmail.com>
+>> Helped-by: Jens Lehmann <jens.lehmann@web.de>
+>> Helped-by: John Keeping <john@keeping.me.uk>
+>> Signed-off-by: David Aguilar <davvid@gmail.com>
+>> ---
+>=20
+> Looks good; thanks.
 
-> On Mon, Feb 24, 2014 at 12:21:33PM -0800, Junio C Hamano wrote:
->
->> >> > +	if (date_overflows(date))
->> >> > +		date = 0;
->> >> > +	else {
->> >> > +		if (ident->tz_begin && ident->tz_end)
->> >> > +			tz = strtol(ident->tz_begin, NULL, 10);
->> >> > +		if (tz == LONG_MAX || tz == LONG_MIN)
->> >> > +			tz = 0;
->> >> > +	}
->> >> 
->> >> ... don't we want to fix an input having a bogus timestamp and also
->> >> a bogus tz recorded in it?
->> >
->> > If there is a bogus timestamp, then we do not want to look at tz at all.
->> > We leave it at "0", so that we get a true sentinel:
->> 
->> Ah, OK, I missed the initialization to 0 at the beginning.
->> 
->> It might have been more clear if "int tz" declaration were left
->> uninitialized, and the variable were explicitly cleared to 0 in the
->> "date-overflows" error codepath, but it is not a big deal.
->
-> It might be, but I think it would end up cumbersome.
-> ...
-> So I'd be in favor of keeping it as-is, but feel free to mark it up if
-> you feel strongly.
 
-I'd be in favor of keeping it as-is.
+=46WIW:
+Tested-by: Jens Lehmann <jens.lehmann@web.de>
+
+What about squashing this in to detect any future regressions?
+
+diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
+index 2418528..d86ad68 100755
+--- a/t/t7800-difftool.sh
++++ b/t/t7800-difftool.sh
+@@ -434,4 +434,12 @@ test_expect_success PERL 'difftool --no-symlinks d=
+etects conflict ' '
+ 	)
+ '
+
++test_expect_success PERL 'difftool properly honours gitlink and core.w=
+orktree' '
++	git submodule add ./. submod/ule &&
++	(
++		cd submod/ule &&
++		git difftool --tool=3Decho  --dir-diff --cached
++	)
++'
++
+ test_done
