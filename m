@@ -1,118 +1,86 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: [PATCH] difftool: support repositories with .git-files
-Date: Sun, 23 Feb 2014 19:12:35 -0800
-Message-ID: <1393211555-50270-1-git-send-email-davvid@gmail.com>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: [PATCH 3/3] make commit --verbose work with --no-status
+Date: Mon, 24 Feb 2014 12:24:42 +0800
+Message-ID: <CALUzUxrO-=a5u-NpPVcQdnc2sp9dq3St0PZm=QOWr7oMWDz-Jw@mail.gmail.com>
+References: <1393009762-31133-1-git-send-email-rctay89@gmail.com>
+ <1393009762-31133-2-git-send-email-rctay89@gmail.com> <1393009762-31133-3-git-send-email-rctay89@gmail.com>
+ <1393009762-31133-4-git-send-email-rctay89@gmail.com> <20140222083110.GE1576@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?UTF-8?q?G=C3=A1bor=20Lipt=C3=A1k?= <gabor.liptak@gmail.com>,
-	Jens Lehmann <jens.lehmann@web.de>,
-	John Keeping <john@keeping.me.uk>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 24 04:12:47 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Feb 24 05:25:46 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WHlyG-0008WS-KU
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Feb 2014 04:12:45 +0100
+	id 1WHn6u-0001fK-PQ
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Feb 2014 05:25:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751868AbaBXDMk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 23 Feb 2014 22:12:40 -0500
-Received: from mail-pd0-f173.google.com ([209.85.192.173]:37184 "EHLO
-	mail-pd0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751484AbaBXDMj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 23 Feb 2014 22:12:39 -0500
-Received: by mail-pd0-f173.google.com with SMTP id z10so514712pdj.4
-        for <git@vger.kernel.org>; Sun, 23 Feb 2014 19:12:39 -0800 (PST)
+	id S1751538AbaBXEZF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 23 Feb 2014 23:25:05 -0500
+Received: from mail-la0-f52.google.com ([209.85.215.52]:50380 "EHLO
+	mail-la0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751402AbaBXEZE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 Feb 2014 23:25:04 -0500
+Received: by mail-la0-f52.google.com with SMTP id c6so5013044lan.11
+        for <git@vger.kernel.org>; Sun, 23 Feb 2014 20:25:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:mime-version:content-type
-         :content-transfer-encoding;
-        bh=t5l3ObUapqocdBdj/M0+duzcgu6Voz5Qtq8o8OpkR4I=;
-        b=DsiVjoLYL9yhHTUtkx9cYgctD8LSXoRJxGX+1R09k637FzNDkgdU1EuYVfMTqLuJvK
-         x/Ggu+K+AKXvDSODKUhojq90xFd+98fEm9V9nAt4eGb4/euNcJQdWl4p2CvP76RhwZaR
-         goftyktRv4ynlaLR3gkqlZfpW/1atTg4DA6NHBeiwIezmbK9OUIaElZi9EDVWSeqkq87
-         Rz2IAxx6uqCqCgZYck/WaMtZsGOTIWA/8vceDDOMLIEwtHVkTptRMG09/EnRBp3IbzW4
-         IEfwgceZbn84wUFM9+sGGYWwUK4ynxXupGSweix5s198nqq5xbDc2zCN3Nzz/C2oy1QY
-         iydQ==
-X-Received: by 10.66.102.4 with SMTP id fk4mr22022542pab.59.1393211559505;
-        Sun, 23 Feb 2014 19:12:39 -0800 (PST)
-Received: from lustrous.fas.fa.disney.com (208-106-56-2.static.sonic.net. [208.106.56.2])
-        by mx.google.com with ESMTPSA id bc4sm44861825pbb.2.2014.02.23.19.12.37
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Sun, 23 Feb 2014 19:12:38 -0800 (PST)
-X-Mailer: git-send-email 1.9.0.1.gd20a678
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=QAdO/wxnOCrCjotwWwLapfruMXo+HJ9BsIzdbh9SyP0=;
+        b=t5R69k0r2QWcvg90+z6+S6ZSDa/6gRYHxJuCan2fiLfPkPujFY1ra6sFxyjO3eUDeC
+         aayNkhy0k67IglFHPvbYE5MB+DHFj8x2EXmWBci+UTI5b61tQ0X13kFE4hxzHPW8FZIO
+         yYqTn+y5Mu4HwBTgy+rnKdr3uMc2R0UREsam2c7oVtggEqibFNnZMFW+wR4EU+x6iVec
+         zTHOzCOKLN3zMzyyUnC8u57VeuXz0F5NR+jK9mGqXfE+FYIYm7zoubhLxcZVw1fEitSD
+         Cdpyy1eG5dkUZbCKZ2d9rXkdvbw/73Q4IsvZFn36nl5L3vW+oC+Z2E+KnlDDezZgM43D
+         UH3w==
+X-Received: by 10.112.99.74 with SMTP id eo10mr10190874lbb.15.1393215902429;
+ Sun, 23 Feb 2014 20:25:02 -0800 (PST)
+Received: by 10.114.64.15 with HTTP; Sun, 23 Feb 2014 20:24:42 -0800 (PST)
+In-Reply-To: <20140222083110.GE1576@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242556>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242557>
 
-Modern versions of "git submodule" use .git-files to setup the
-submodule directory.  When run in a "git submodule"-created
-repository "git difftool --dir-diff" dies with the following
-error:
+On Sat, Feb 22, 2014 at 4:31 PM, Jeff King <peff@peff.net> wrote:
+> On Sat, Feb 22, 2014 at 03:09:22AM +0800, Tay Ray Chuan wrote:
+>
+>> @@ -1141,7 +1146,12 @@ static int parse_and_validate_options(int argc, const char *argv[],
+>>       if (all && argc > 0)
+>>               die(_("Paths with -a does not make sense."));
+>>
+>> -     if (status_format != STATUS_FORMAT_DEFAULT)
+>> +     if (verbose && !include_status) {
+>> +             include_status = 1;
+>> +             status_format = STATUS_FORMAT_NONE;
+>> +     }
+>> +
+>> +     if (status_format != STATUS_FORMAT_DEFAULT && !verbose)
+>>               dry_run = 1;
+>
+> What happens here when there is an alternate status format _and_
+> --verbose is used? If I say "git commit --porcelain" it should imply
+> --dry-run. But "git commit --porcelain --verbose" no longer does so
+> after your patch.
 
-	$ git difftool -d HEAD~
-	fatal: This operation must be run in a work tree
-	diff --raw --no-abbrev -z HEAD~: command returned error: 128
+I should have just left the --dry-run inference alone, like this.
 
-core.worktree is relative to the .git directory but the logic
-in find_worktree() does not account for it.
+-->8--
 
-Use `git rev-parse --show-toplevel` to find the worktree so that
-the dir-diff feature works inside a submodule.
+@@ -1141,7 +1146,12 @@ static int parse_and_validate_options
+        if (all && argc > 0)
+                die(_("Paths with -a does not make sense."));
 
-Reported-by: G=C3=A1bor Lipt=C3=A1k <gabor.liptak@gmail.com>
-Helped-by: Jens Lehmann <jens.lehmann@web.de>
-Helped-by: John Keeping <john@keeping.me.uk>
-Signed-off-by: David Aguilar <davvid@gmail.com>
----
- git-difftool.perl | 18 ++----------------
- 1 file changed, 2 insertions(+), 16 deletions(-)
+-       if (status_format != STATUS_FORMAT_DEFAULT)
++       if (verbose && !include_status) {
++               include_status = 1;
++               status_format = STATUS_FORMAT_NONE;
++       } else if (status_format != STATUS_FORMAT_DEFAULT)
+                dry_run = 1;
 
-diff --git a/git-difftool.perl b/git-difftool.perl
-index e57d3d1..18ca61e 100755
---- a/git-difftool.perl
-+++ b/git-difftool.perl
-@@ -39,24 +39,10 @@ USAGE
-=20
- sub find_worktree
- {
--	my ($repo) =3D @_;
--
- 	# Git->repository->wc_path() does not honor changes to the working
- 	# tree location made by $ENV{GIT_WORK_TREE} or the 'core.worktree'
- 	# config variable.
--	my $worktree;
--	my $env_worktree =3D $ENV{GIT_WORK_TREE};
--	my $core_worktree =3D Git::config('core.worktree');
--
--	if (defined($env_worktree) and (length($env_worktree) > 0)) {
--		$worktree =3D $env_worktree;
--	} elsif (defined($core_worktree) and (length($core_worktree) > 0)) {
--		$worktree =3D $core_worktree;
--	} else {
--		$worktree =3D $repo->wc_path();
--	}
--
--	return $worktree;
-+	return Git::command_oneline('rev-parse', '--show-toplevel');
- }
-=20
- sub print_tool_help
-@@ -418,7 +404,7 @@ sub dir_diff
- 	my $rc;
- 	my $error =3D 0;
- 	my $repo =3D Git->repository();
--	my $workdir =3D find_worktree($repo);
-+	my $workdir =3D find_worktree();
- 	my ($a, $b, $tmpdir, @worktree) =3D
- 		setup_dir_diff($repo, $workdir, $symlinks);
-=20
---=20
-1.9.0.1.gd20a678
+        return argc;
