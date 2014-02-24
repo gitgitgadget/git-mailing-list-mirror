@@ -1,72 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] clone: allow initial sparse checkouts
-Date: Mon, 24 Feb 2014 09:47:16 -0800
-Message-ID: <xmqqzjlg9zdn.fsf@gitster.dls.corp.google.com>
-References: <1393122713-4308-1-git-send-email-robbat2@gentoo.org>
-	<CACsJy8BKJ4HzXLcajC8cXviD4hboRPOYhWSen7H5Ta=_JuXNjw@mail.gmail.com>
-	<robbat2-20140223T072340-334493350Z@orbis-terrarum.net>
-	<CACsJy8ApmVPAnhQmVAsFyXtV49S+9VULsEYZ7W3x7HMMoVtDzA@mail.gmail.com>
-	<robbat2-20140223T204934-225383635Z@orbis-terrarum.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Robin H. Johnson" <robbat2@gentoo.org>
-X-From: git-owner@vger.kernel.org Mon Feb 24 18:49:18 2014
+From: Max Horn <max@quendi.de>
+Subject: Re: What's cooking in git.git (Feb 2014, #06; Wed, 19)
+Date: Mon, 24 Feb 2014 18:55:13 +0100
+Message-ID: <420A7160-BA6E-4FB4-9323-55DA8EAA1E9F@quendi.de>
+References: <xmqqppmi7pbn.fsf@gitster.dls.corp.google.com> <BCF58F31-7130-4F4B-BE53-D917C4D50D96@quendi.de> <xmqqsird6137.fsf@gitster.dls.corp.google.com> <FB0B19C8-65BF-49CF-8EE4-5B9D55BBCE7C@quendi.de> <xmqqr46w4a24.fsf@gitster.dls.corp.google.com> <8732A8C8-145E-47F5-BD9A-ECD6E9DE07EF@quendi.de> <xmqqtxbobg98.fsf@gitster.dls.corp.google.com> <xmqqppmcbfuo.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0 (1.0)
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 24 18:55:26 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WHzck-00082S-Tz
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Feb 2014 18:47:27 +0100
+	id 1WHzkT-0002vw-7G
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Feb 2014 18:55:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753061AbaBXRrW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Feb 2014 12:47:22 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:38350 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752579AbaBXRrV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Feb 2014 12:47:21 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CCE2B6B944;
-	Mon, 24 Feb 2014 12:47:20 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=MjHxLnLn1Jy6C6NcnVn3oxuKMZk=; b=Y2x4F3
-	UoheKcQaPFMjc1uq1MEJLW/VZZed8qfwKRS4RNNRW6W/eMzUVXnd0TV4GK+y8o8m
-	ilYVKfnywDuMoIoQvVefYwW7kMK7xbosQEW66Z34YMTlmGboyKfBuIxO0kWs8oEH
-	UBU0qw6p5LXfwasnT4RyywxPkK2BImULNxrHE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=YxWrNxFAHh1XOu+YCnUYWDky9icMWuSx
-	WdRg+J/qzL3IKyc+7hpuv7FX2MUAtiBuhLLf1J7QmHNHfwJqFL3ULtuVl90mFVPO
-	2neYVqe8Y3FD9d9Fl0xSWPYwNWTKTmdFCkzwPyRiST+FWuwViG6lQhIJhntUGDCP
-	D3DJzzcNXmE=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A4CD76B943;
-	Mon, 24 Feb 2014 12:47:20 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9683C6B940;
-	Mon, 24 Feb 2014 12:47:19 -0500 (EST)
-In-Reply-To: <robbat2-20140223T204934-225383635Z@orbis-terrarum.net> (Robin
-	H. Johnson's message of "Sun, 23 Feb 2014 20:58:07 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: B51B5004-9D7B-11E3-8269-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753239AbaBXRzR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Feb 2014 12:55:17 -0500
+Received: from wp256.webpack.hosteurope.de ([80.237.133.25]:39674 "EHLO
+	wp256.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753136AbaBXRzP (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 24 Feb 2014 12:55:15 -0500
+Received: from ip-95-223-14-124.unitymediagroup.de ([95.223.14.124] helo=[192.168.178.35]); authenticated
+	by wp256.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:RSA_AES_128_CBC_SHA1:16)
+	id 1WHzkH-00051D-IP; Mon, 24 Feb 2014 18:55:13 +0100
+X-Mailer: iPhone Mail (11B651)
+In-Reply-To: <xmqqppmcbfuo.fsf@gitster.dls.corp.google.com>
+X-bounce-key: webpack.hosteurope.de;max@quendi.de;1393264515;78ff1ad8;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242619>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242620>
 
-"Robin H. Johnson" <robbat2@gentoo.org> writes:
 
-> The only other clean alternative would be implementing ONLY
-> --sparse-checkout-from, and letting uses use fds creatively:
-> --sparse-checkout-from <(echo X; echo Y)
 
-Not all POSIX shells have such an abomination that is process
-substitution.  You can easily work it around by adopting the usual
-convention to use "-" to read from the standasrd input, though.
+> Am 24.02.2014 um 18:06 schrieb Junio C Hamano <gitster@pobox.com>:
+> 
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+>> But I think I was worried too much into the future---I agree that
+>> the code can stay as you proposed until such a remote-helper needs
+>> more support, because "overwrite with zero" is necessary but is
+>> probably not sufficient---it also may need to be able to tell us
+>> what the final resulting commit of the push is, for example.
+> 
+> So, here is what I'll queue (with forged s-o-b).
 
-	(echo X; echo Y) | cmd --sparse-checkout-from -
+Thank you, I hereby declare the forged s-o-b as legit ;-)
+
+> 
+> Thanks.
+> 
+> -- >8 --
+> From: Max Horn <max@quendi.de>
+> Date: Fri, 21 Feb 2014 10:55:59 +0100
+> Subject: [PATCH] transport-helper.c: do not overwrite forced bit
+> 
+> If the the transport helper says it was a forced update, then it is
+> a forced update.  It is however possible that an update is forced
+> without the transport-helper knowing about it, namely because some
+> higher up code had objections to the update and needed forcing in
+> order to let it through to the transport helper.  In other words, it
+> does not necessarily mean the update was *not* forced, when the
+> helper did not say "forced update".
+> 
+> Signed-off-by: Max Horn <max@quendi.de>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+> transport-helper.c | 2 +-
+> 1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/transport-helper.c b/transport-helper.c
+> index abe4c3c..705dce7 100644
+> --- a/transport-helper.c
+> +++ b/transport-helper.c
+> @@ -727,7 +727,7 @@ static int push_update_ref_status(struct strbuf *buf,
+>    }
+> 
+>    (*ref)->status = status;
+> -    (*ref)->forced_update = forced;
+> +    (*ref)->forced_update |= forced;
+>    (*ref)->remote_status = msg;
+>    return !(status == REF_STATUS_OK);
+> }
+> -- 
+> 1.9.0-291-g027825b
+> 
+> 
