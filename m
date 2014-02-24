@@ -1,81 +1,136 @@
-From: Omar Othman <omar.othman@booking.com>
-Subject: `git stash pop` UX Problem
-Date: Mon, 24 Feb 2014 09:32:21 +0100
-Message-ID: <530B0395.5030407@booking.com>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] remote: handle pushremote config in any order order
+Date: Mon, 24 Feb 2014 03:59:03 -0500
+Message-ID: <20140224085903.GA10698@sigill.intra.peff.net>
+References: <CAMYxyaUwPXXdvGv786_p5n7-biMLOFbur-gQ1pxXOttc0R0=eg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 24 09:48:40 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jack Nagel <jacknagel@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 24 09:59:13 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WHrDK-000141-1g
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Feb 2014 09:48:38 +0100
+	id 1WHrNY-0005nI-4i
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Feb 2014 09:59:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752426AbaBXIsd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Feb 2014 03:48:33 -0500
-Received: from mail-out6.booking.com ([5.57.20.183]:38147 "EHLO
-	mail-out6.booking.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751175AbaBXIsc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Feb 2014 03:48:32 -0500
-X-Greylist: delayed 968 seconds by postgrey-1.27 at vger.kernel.org; Mon, 24 Feb 2014 03:48:32 EST
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=booking.com; s=bk;
-	h=Content-Transfer-Encoding:Content-Type:Subject:To:MIME-Version:From:Date:Message-ID; bh=m0lR6Wsi4Iodg+wL/J8sVzMhvwL8Vdy7WEt4zapk7SQ=;
-	b=puF8/kt02EKkUK+gqwxOBDmzgHfkbCZTddBfXNqE2ozxbTwFJySTKIwoDGtD9Jb3FkFaj82AEhvyvfyniglqveD2lx4RvzTbXf7lFeypcHkWQHCbai/klWBXR2KcwstOxAzdKxkfMc75zaVONlCXTE0zPYKxW77b/gXYlfZ5Om8=;
-Received: from corpds-202.lhr4.corp.booking.com ([10.186.68.14]:45673)
-	by mtx-202.lhr4.prod.booking.com with esmtps (TLSv1:DHE-RSA-AES256-SHA:256)
-	(Exim 4.80.1)
-	(envelope-from <omar.othman@booking.com>)
-	id 1WHqxa-000F1K-IL
-	for git@vger.kernel.org; Mon, 24 Feb 2014 09:32:22 +0100
-Received: from [10.155.74.57] (port=52382)
-	by corpds-202.lhr4.corp.booking.com with esmtpsa (TLSv1:DHE-RSA-AES128-SHA:128)
-	(Exim 4.80.1)
-	(envelope-from <omar.othman@booking.com>)
-	id 1WHqxa-0005VB-DI
-	for git@vger.kernel.org; Mon, 24 Feb 2014 09:32:22 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.3.0
+	id S1752023AbaBXI7H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Feb 2014 03:59:07 -0500
+Received: from cloud.peff.net ([50.56.180.127]:55906 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751568AbaBXI7G (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Feb 2014 03:59:06 -0500
+Received: (qmail 19043 invoked by uid 102); 24 Feb 2014 08:59:05 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 24 Feb 2014 02:59:05 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 24 Feb 2014 03:59:03 -0500
+Content-Disposition: inline
+In-Reply-To: <CAMYxyaUwPXXdvGv786_p5n7-biMLOFbur-gQ1pxXOttc0R0=eg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242580>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242581>
 
-Hi there,
+On Mon, Feb 24, 2014 at 12:10:04AM -0500, Jack Nagel wrote:
 
-I'm fairly new to git and I wanted to ask about a certain behavior that 
-I want to fix myself (if you agree with me that it is a misbehavior)... 
-since I've never contributed to open source and it'll be an important 
-step for me to start and get something done.
+> There seems to be a difference in the behavior of "git push" depending
+> on whether remote.pushdefault is defined before or after
+> branch.<name>.pushremote in .git/config.
+> [...]
+> I would expect the order that things are defined in the config file to
+> have no effect on the behavior of "git push".
 
-In general, whenever something a user "should" do, git always tells. So, 
-for example, when things go wrong with a merge, you have the option to 
-abort. When you are doing a rebase, git tells you to do git commit 
---amend, and then git rebase --continue... and so on.
+Yes, with a few exceptions, we usually try to make the ordering in the
+config file irrelevant. This is a bug. The patch below should fix it.
 
-The point is: Because of this, git is expected to always instruct you on 
-what to do next in a multilevel operation, or instructing you what to do 
-when an operation has gone wrong.
+-- >8 --
+Subject: remote: handle pushremote config in any order
 
-Now comes the problem. When you do a git stash pop, and a merge conflict 
-happens, git correctly tells you to fix the problems and then git add to 
-resolve the conflict. But once that happens, and the internal status of 
-git tells you that there are no more problems (I have a prompt that 
-tells me git's internal status), the operation is not culminated by 
-dropping the stash reference, which what normally happens automatically 
-after a git stash pop. This has actually confused me for a lot of time, 
-till I ran into a git committer and asked him, and only then were I 100% 
-confident that I did nothing wrong and it is indeed a UX problem. I 
-wasted a lot of time to know why the operation is not completed as 
-expected (since I trusted that git just does the right thing), and it 
-turned out that it is git's fault.
+The remote we push can be defined either by
+remote.pushdefault or by branch.*.pushremote for the current
+branch. The order in which they appear in the config file
+should not matter to precedence (which should be to prefer
+the branch-specific config).
 
-If this is accepted, please reply to this email and tell me to start 
-working on it. I've read the Documenation/SubmittingPatches guidelines, 
-but I'll appreciate also telling me where to base my change. My guess is 
-maint, since it's a "bug" in the sense of UX.
+The current code parses the config linearly and uses a
+single string to store both values, overwriting any
+previous value. Thus, config like:
 
-Thanks and sorry for the long email.
+  [branch "master"]
+  pushremote = foo
+  [remote]
+  pushdefault = bar
+
+erroneously ends up pushing to "bar" from the master branch.
+
+We can fix this by storing both values and resolving the
+correct value after all config is read.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ remote.c              |  7 ++++++-
+ t/t5516-fetch-push.sh | 12 ++++++++++++
+ 2 files changed, 18 insertions(+), 1 deletion(-)
+
+diff --git a/remote.c b/remote.c
+index e41251e..7232a33 100644
+--- a/remote.c
++++ b/remote.c
+@@ -49,6 +49,7 @@ static int branches_nr;
+ 
+ static struct branch *current_branch;
+ static const char *default_remote_name;
++static const char *branch_pushremote_name;
+ static const char *pushremote_name;
+ static int explicit_default_remote_name;
+ 
+@@ -352,7 +353,7 @@ static int handle_config(const char *key, const char *value, void *cb)
+ 			}
+ 		} else if (!strcmp(subkey, ".pushremote")) {
+ 			if (branch == current_branch)
+-				if (git_config_string(&pushremote_name, key, value))
++				if (git_config_string(&branch_pushremote_name, key, value))
+ 					return -1;
+ 		} else if (!strcmp(subkey, ".merge")) {
+ 			if (!value)
+@@ -492,6 +493,10 @@ static void read_config(void)
+ 			make_branch(head_ref + strlen("refs/heads/"), 0);
+ 	}
+ 	git_config(handle_config, NULL);
++	if (branch_pushremote_name) {
++		free(pushremote_name);
++		pushremote_name = branch_pushremote_name;
++	}
+ 	alias_all_urls();
+ }
+ 
+diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+index 926e7f6..1309c4d 100755
+--- a/t/t5516-fetch-push.sh
++++ b/t/t5516-fetch-push.sh
+@@ -536,6 +536,18 @@ test_expect_success 'push with config branch.*.pushremote' '
+ 	check_push_result down_repo $the_commit heads/master
+ '
+ 
++test_expect_success 'branch.*.pushremote config order is irrelevant' '
++	mk_test one_repo heads/master &&
++	mk_test two_repo heads/master &&
++	test_config remote.one.url one_repo &&
++	test_config remote.two.url two_repo &&
++	test_config branch.master.pushremote two_repo &&
++	test_config remote.pushdefault one_repo &&
++	git push &&
++	check_push_result one_repo $the_first_commit heads/master &&
++	check_push_result two_repo $the_commit heads/master
++'
++
+ test_expect_success 'push with dry-run' '
+ 
+ 	mk_test testrepo heads/master &&
+-- 
+1.8.5.2.500.g8060133
