@@ -1,81 +1,84 @@
-From: "Robin H. Johnson" <robbat2@gentoo.org>
-Subject: Re: [PATCH] clone: allow initial sparse checkouts
-Date: Sun, 23 Feb 2014 20:58:07 +0000
-Message-ID: <robbat2-20140223T204934-225383635Z@orbis-terrarum.net>
-References: <1393122713-4308-1-git-send-email-robbat2@gentoo.org>
- <CACsJy8BKJ4HzXLcajC8cXviD4hboRPOYhWSen7H5Ta=_JuXNjw@mail.gmail.com>
- <robbat2-20140223T072340-334493350Z@orbis-terrarum.net>
- <CACsJy8ApmVPAnhQmVAsFyXtV49S+9VULsEYZ7W3x7HMMoVtDzA@mail.gmail.com>
+From: Richard Lowe <richlowe@richlowe.net>
+Subject: [PATCH] diffcore.h: be explicit about the signedness of is_binary
+Date: Sun, 23 Feb 2014 19:54:47 -0500
+Message-ID: <m2ob1xba94.fsf@richlowe.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain
+Cc: Jeff King <peff@peff.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 23 21:58:17 2014
+X-From: git-owner@vger.kernel.org Mon Feb 24 02:01:55 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WHg7r-0002Rh-LB
-	for gcvg-git-2@plane.gmane.org; Sun, 23 Feb 2014 21:58:16 +0100
+	id 1WHjve-0002wz-Ot
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Feb 2014 02:01:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751948AbaBWU6L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 23 Feb 2014 15:58:11 -0500
-Received: from smtp.gentoo.org ([140.211.166.183]:46634 "EHLO smtp.gentoo.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751796AbaBWU6K (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 23 Feb 2014 15:58:10 -0500
-Received: from grubbs.orbis-terrarum.net (localhost [127.0.0.1])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by smtp.gentoo.org (Postfix) with ESMTPS id 7451933F91F
-	for <git@vger.kernel.org>; Sun, 23 Feb 2014 20:58:09 +0000 (UTC)
-Received: (qmail 17243 invoked by uid 10000); 23 Feb 2014 20:58:07 -0000
-Content-Disposition: inline
-In-Reply-To: <CACsJy8ApmVPAnhQmVAsFyXtV49S+9VULsEYZ7W3x7HMMoVtDzA@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751484AbaBXBBt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 23 Feb 2014 20:01:49 -0500
+Received: from mail-qc0-f180.google.com ([209.85.216.180]:51828 "EHLO
+	mail-qc0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750976AbaBXBBs (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 Feb 2014 20:01:48 -0500
+Received: by mail-qc0-f180.google.com with SMTP id i17so8441736qcy.39
+        for <git@vger.kernel.org>; Sun, 23 Feb 2014 17:01:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=richlowe.net; s=mail;
+        h=from:to:cc:subject:date:message-id:user-agent:mime-version
+         :content-type;
+        bh=xmUguPtI0c1ABuhvzrNMWwYKQhjsn5z/dK/Np5pZq5g=;
+        b=fYh0+ck1rI6aMgns4Uuje0k73LXWaPonp1H6dAACu66ZX1jF7Qyqs5P6myBedorBQp
+         GX+PUu9ylnVu69IwEOt4ntKKvJ9e7fCbnnKX7FK2EtsS1xpE5s7yEo2f5bGO8teMd+e1
+         knQLrU1EpVE2WsBXT86GrCSWO//DEjK72c4aE=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:user-agent
+         :mime-version:content-type;
+        bh=xmUguPtI0c1ABuhvzrNMWwYKQhjsn5z/dK/Np5pZq5g=;
+        b=dAuU5ZIZKF0prosQoBHugU8hIwcrc6zKnlLhD9eC2fQTODSrCzf3Th2OX4FucB2lGg
+         xaAx1eRngGAF0+bQONL26o+q4S1HpXOMSDs2tlr3VBHlPw9UuvirXDbx0LVwL91PltbZ
+         35BDQsFdVvfRdqSwRgTmIglDXklz8bAN9oUklhLuK5PNBeZIJoQaOhKdmPfNBbMzE0fY
+         7hEEoEMCyW6THE6Nv9I1DjTvatVrsDfML1o0l292BgRhqgWT/OKSyuee6mHG2PnmuYxA
+         KjaZhJn5Y1c407uXgIYnQb037ZQRf7YKOoSqhK6930Dfak7Ueh6spvWq7bcQzc1bot0E
+         elLg==
+X-Gm-Message-State: ALoCoQnRSL0ndsMtjdJfla0T/xtm1i9uIiii+4t73ZwNh1UKvHoN7g1Fx4klCR3Ge483u5Bb7Sjw
+X-Received: by 10.224.167.84 with SMTP id p20mr26387006qay.24.1393203289699;
+        Sun, 23 Feb 2014 16:54:49 -0800 (PST)
+Received: from quisling.home.richlowe.net (pool-108-48-40-195.washdc.fios.verizon.net. [108.48.40.195])
+        by mx.google.com with ESMTPSA id q10sm44864757qah.22.2014.02.23.16.54.48
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 23 Feb 2014 16:54:49 -0800 (PST)
+User-Agent: Gnus/5.110018 (No Gnus v0.18) Emacs/24.3 (darwin)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242551>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242552>
 
-On Sun, Feb 23, 2014 at 03:43:47PM +0700,  Duy Nguyen wrote:
-> On Sun, Feb 23, 2014 at 2:32 PM, Robin H. Johnson <robbat2@gentoo.org> wrote:
-> >> > This patch implements easily accessible sparse checkouts during clone,
-> >> > in the --sparse-checkout option.
-> >> >
-> >> > $ git clone REPO --sparse-checkout PATH
-> >> Or take a file as input if there are lots of paths/rules.
-> > How much demand for taking a file of rules,
-> I don't know. I guess it depends on each repo's layout. If the layout
-> is simple, usually you would need one or two rules so it's ok to type
-> again and again. If it's more complicated and starts using '!' rules,
-> it's probably best to save in a file.
-> 
-> > and opinions of syntax to do
-> > that vs specify on the commandline?
-> >
-> > --sparse-checkout-from FILE
-> 
-> I think this one is better. But if you don't see a need for it, we can
-> always delay implementing it until an actual use case comes up.
-I think I'd prefer to delay that part then.
-What I'm concerned about if we do have it, is what ordering semantics
-there should be, eg for something like:
---sparse-checkout '!X' --sparse-checkout-from F --sparse-checkout Y
+Bitfields need to specify their signedness explicitly or the compiler is
+free to default as it sees fit.  With compilers that default 'unsigned'
+(SUNWspro 12 seems to do this) the tri-state nature of is_binary
+vanishes and all files are treated as binary.
 
-Should that be [!X, *F, Y], or [*F, !X, Y], or something else?
-Would the option parser need to be modified to handle this?
-Or do we just make them mutually exclusive?
+Signed-off-by: Richard Lowe <richlowe@richlowe.net>
+---
+ diffcore.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-The only other clean alternative would be implementing ONLY
---sparse-checkout-from, and letting uses use fds creatively:
---sparse-checkout-from <(echo X; echo Y)
-But the msysgit crowd would probably mumble complaints under their
-breath at me.
-
+diff --git a/diffcore.h b/diffcore.h
+index 79de8cf..7c6f391 100644
+--- a/diffcore.h
++++ b/diffcore.h
+@@ -46,7 +46,7 @@ struct diff_filespec {
+ 	unsigned is_stdin : 1;
+ 	unsigned has_more_entries : 1; /* only appear in combined diff */
+ 	/* data should be considered "binary"; -1 means "don't know yet" */
+-	int is_binary : 2;
++	signed int is_binary : 2;
+ 	struct userdiff_driver *driver;
+ };
+ 
 -- 
-Robin Hugh Johnson
-Gentoo Linux: Developer, Infrastructure Lead
-E-Mail     : robbat2@gentoo.org
-GnuPG FP   : 11ACBA4F 4778E3F6 E4EDF38E B27B944E 34884E85
+1.8.5.5
