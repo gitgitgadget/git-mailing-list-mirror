@@ -1,91 +1,64 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 5/6] Document a bunch of functions defined in sha1_file.c
-Date: Mon, 24 Feb 2014 12:08:55 -0800
-Message-ID: <20140224200855.GI7855@google.com>
-References: <1393000327-11402-1-git-send-email-mhagger@alum.mit.edu>
- <1393000327-11402-6-git-send-email-mhagger@alum.mit.edu>
- <530B8CEB.5040903@gmail.com>
- <530BA530.3070603@alum.mit.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git am and mangled subject lines
+Date: Mon, 24 Feb 2014 12:19:18 -0800
+Message-ID: <xmqqios48drt.fsf@gitster.dls.corp.google.com>
+References: <530B9D50.6020705@ubuntu.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>,
-	git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Mon Feb 24 21:09:08 2014
+Cc: git@vger.kernel.org
+To: Phillip Susi <psusi@ubuntu.com>
+X-From: git-owner@vger.kernel.org Mon Feb 24 21:19:34 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WI1pr-00015h-6M
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Feb 2014 21:09:07 +0100
+	id 1WI1zr-0005HS-V0
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Feb 2014 21:19:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753317AbaBXUJA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Feb 2014 15:09:00 -0500
-Received: from mail-pd0-f171.google.com ([209.85.192.171]:34271 "EHLO
-	mail-pd0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753126AbaBXUI7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Feb 2014 15:08:59 -0500
-Received: by mail-pd0-f171.google.com with SMTP id r10so1223957pdi.30
-        for <git@vger.kernel.org>; Mon, 24 Feb 2014 12:08:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=5rTLpp5QmwSXHo64f3ApJdeiYE6+C++s3kEnpBZ8T7s=;
-        b=A5ktd2IYPaYEoO424t9wj+Jhw2xQUtbxJgxo3nagJoFs0tU4dnL/lWuRB4S3KvNSwH
-         qlXNQvyy0Z1fD7S8nw38idNl5hrb9k0c0HLZ7GvuruukVVwwKubO9kUuadYtOGe8/bzo
-         RsLtLu3B1ThraQykMegGwaWMr6XFSrlmDJbORixZWWQdySU4eeffUA5XmE9jYlJN3UFe
-         QF237SG6xcK9flTWCjDaoOW7ChI6IkPnFJQ6v8l3rO0ep7Q9svT2JQ5Bxg1TOjr3vViR
-         dvc5L6aez6uaxqW+i+YT7N11X/xLLkCrQYs8imlmXmF+AitFC1Kv7f1sJQRySXfgOcYo
-         fFYQ==
-X-Received: by 10.68.135.67 with SMTP id pq3mr50880pbb.63.1393272538796;
-        Mon, 24 Feb 2014 12:08:58 -0800 (PST)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id hb10sm2851380pbd.1.2014.02.24.12.08.57
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 24 Feb 2014 12:08:58 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <530BA530.3070603@alum.mit.edu>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752906AbaBXUTY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Feb 2014 15:19:24 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:33507 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752720AbaBXUTX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Feb 2014 15:19:23 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C0B606E1A2;
+	Mon, 24 Feb 2014 15:19:22 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ULIwULVEujouEEIEJf/xCK6l8Yo=; b=MhaDkT
+	vo9HvHQXEVQcKNqRFAtQ6E50YMsyW6fPK70wvEsriVanDEgYbjf5Nkfr57AU29sL
+	+Dtf1IEnYTQdoY3u7exiL60GJ61fUaS8mTdF+RzDVWTAzXhlU8F+J9c1fjRFSguB
+	Z5SQ1pd+hmkwniRODSvluuGTzPZvlC9jNCf8c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=nYadGx57wqbNbFeVkqlsLN2KXAJt7yIX
+	fp+MvUut9O9lGGXV/UUq0P6CdhEqUJpUlw9wBEtuc1C1qvzHZgD9511PEraRZdWk
+	tvpwxmy0WdmtGxGC3J0K9oyHBg1otpPEzk/itdru7ihf+TU9MXzUAsgQbS7xkPvt
+	EtkaIqZlkeI=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id AB5376E1A1;
+	Mon, 24 Feb 2014 15:19:22 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BB7BF6E19E;
+	Mon, 24 Feb 2014 15:19:21 -0500 (EST)
+In-Reply-To: <530B9D50.6020705@ubuntu.com> (Phillip Susi's message of "Mon, 24
+	Feb 2014 14:28:16 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: F255089C-9D90-11E3-B0F7-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242638>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242639>
 
-Hi,
+Phillip Susi <psusi@ubuntu.com> writes:
 
-Michael Haggerty wrote:
+> git am already ignores the "[PATCH X/Y]" prefix that format-patch
+> adds.  Is it possible to get it to ignore any additional prefix that a
+> bug tracker mangles into the subject line?  i.e. "bug #nnnn:"?
 
-> No, this hasn't changed.  I've been documenting public functions in the
-> header files above the declaration, and private ones where they are
-> defined.  So I moved the documentation for this function to cache.h:
->
-> +/*
-> + * Return the name of the file in the local object database that would
-> + * be used to store a loose object with the specified sha1.  The
-> + * return value is a pointer to a statically allocated buffer that is
-> + * overwritten each time the function is called.
-> + */
->  extern const char *sha1_file_name(const unsigned char *sha1);
->
-> I also rewrite the comment, as you can see.  The "NOTE!" seemed a bit
-> overboard to me, given that there are a lot of functions in our codebase
-> that behave similarly.  So I toned the warning down, and tightened up
-> the comment overall.
->
-> Let me know if you think I've made it less helpful.
-
-In the present state of the codebase, where many important functions
-have no documentation or out-of-date documentation, the first place I
-look to understand a function is its point of definition.  So I do
-think that moving docs to the header file makes it less helpful.  I'd
-prefer a mass move in the opposite direction (from header files to the
-point of definition).
-
-On the other hand I don't feel strongly about it.
-
-Hope that helps,
-Jonathan
+I think applypatch-msg hook is your friend in a case like this.
