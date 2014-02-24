@@ -1,114 +1,110 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 4/5] log: handle integer overflow in timestamps
-Date: Mon, 24 Feb 2014 15:37:09 -0500
-Message-ID: <20140224203709.GA25506@sigill.intra.peff.net>
-References: <20140224073348.GA20221@sigill.intra.peff.net>
- <20140224074637.GD9969@sigill.intra.peff.net>
- <xmqqsir88f4n.fsf@gitster.dls.corp.google.com>
- <20140224195829.GA11940@sigill.intra.peff.net>
- <xmqqeh2s8do2.fsf@gitster.dls.corp.google.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: git am and mangled subject lines
+Date: Mon, 24 Feb 2014 12:38:29 -0800
+Message-ID: <20140224203829.GJ7855@google.com>
+References: <530B9D50.6020705@ubuntu.com>
+ <xmqqios48drt.fsf@gitster.dls.corp.google.com>
+ <530BAA6F.4030401@ubuntu.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 24 21:37:20 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Phillip Susi <psusi@ubuntu.com>
+X-From: git-owner@vger.kernel.org Mon Feb 24 21:38:53 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WI2H9-00062O-Qq
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Feb 2014 21:37:20 +0100
+	id 1WI2Ie-0002Fy-KW
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Feb 2014 21:38:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752834AbaBXUhM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Feb 2014 15:37:12 -0500
-Received: from cloud.peff.net ([50.56.180.127]:56257 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752649AbaBXUhL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Feb 2014 15:37:11 -0500
-Received: (qmail 21341 invoked by uid 102); 24 Feb 2014 20:37:11 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 24 Feb 2014 14:37:11 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 24 Feb 2014 15:37:09 -0500
+	id S1753183AbaBXUie (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Feb 2014 15:38:34 -0500
+Received: from mail-pb0-f51.google.com ([209.85.160.51]:39065 "EHLO
+	mail-pb0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752837AbaBXUid (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Feb 2014 15:38:33 -0500
+Received: by mail-pb0-f51.google.com with SMTP id un15so7049310pbc.10
+        for <git@vger.kernel.org>; Mon, 24 Feb 2014 12:38:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=j7pAcOPOT+xidLRLOX2uDggHLZIWNq4fsY1CuBPlpwQ=;
+        b=yRkGcLdza6xEz81XdBylKjmmCROM2B8/x3MzHQsCAZ78zewG8ZieE0Rcl+TOhJSxOu
+         6yFUg0nEZyYfxCZZos3sJmtyXhFMMA5tT10SIXaTTLNLJYOjAGI4OzJw8j0vIikKUylc
+         yeG9ckmro3ha0pKarmtSDGobt8fX4lUzbqCSD+7fxhRz1dWEWLrItdkm0U1KHBI7XPK0
+         QWGk8CyLR7vsMVodajQFNQy4govDodtWM2MDH6FnDk/8SUNyyYXl9RzyofO0kfApGsBu
+         CEmB75lXm0qUZqVs8kHhPiGuH9IZimhedjVVHQtImwRHxTjw8hj9+dovqAxlfnTWHXre
+         1rEw==
+X-Received: by 10.66.163.164 with SMTP id yj4mr27260178pab.91.1393274312768;
+        Mon, 24 Feb 2014 12:38:32 -0800 (PST)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id ug2sm126871312pac.21.2014.02.24.12.38.31
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 24 Feb 2014 12:38:32 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <xmqqeh2s8do2.fsf@gitster.dls.corp.google.com>
+In-Reply-To: <530BAA6F.4030401@ubuntu.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242643>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242644>
 
-On Mon, Feb 24, 2014 at 12:21:33PM -0800, Junio C Hamano wrote:
+Hi,
 
-> >> > +	if (date_overflows(date))
-> >> > +		date = 0;
-> >> > +	else {
-> >> > +		if (ident->tz_begin && ident->tz_end)
-> >> > +			tz = strtol(ident->tz_begin, NULL, 10);
-> >> > +		if (tz == LONG_MAX || tz == LONG_MIN)
-> >> > +			tz = 0;
-> >> > +	}
-> >> 
-> >> ... don't we want to fix an input having a bogus timestamp and also
-> >> a bogus tz recorded in it?
-> >
-> > If there is a bogus timestamp, then we do not want to look at tz at all.
-> > We leave it at "0", so that we get a true sentinel:
-> 
-> Ah, OK, I missed the initialization to 0 at the beginning.
-> 
-> It might have been more clear if "int tz" declaration were left
-> uninitialized, and the variable were explicitly cleared to 0 in the
-> "date-overflows" error codepath, but it is not a big deal.
+Phillip Susi wrote:
+> On 2/24/2014 3:19 PM, Junio C Hamano wrote:
+>> Phillip Susi <psusi@ubuntu.com> writes:
 
-It might be, but I think it would end up cumbersome. The initialization
-was already there from the previous version, which was hitting the else
-for "ident->tz_begin". Without fallback initializations, you end up with:
+>>> git am already ignores the "[PATCH X/Y]" prefix that
+>>> format-patch adds.  Is it possible to get it to ignore any
+>>> additional prefix that a bug tracker mangles into the subject
+>>> line?  i.e. "bug #nnnn:"?
+>>
+>> I think applypatch-msg hook is your friend in a case like this.
+>
+> Can you point me in the direction of some documentation on this?  I
+> don't see it mentioned in the man pages for git am or mailinfo ( I
+> would think that would be the place to have it ).
 
-  if (ident->date_begin && ident->date_end) {
-          date = strtoul(ident->date_begin, NULL, 10);
-          if (date_overflows(date)) {
-                  date = 0;
-                  tz = 0;
-          } else {
-                  if (ident->tz_begin && ident->tz_end) {
-                          tz = strtol(ident->tz_begin, NULL, 10);
-                          if (tz == LONG_MAX || tz == LONG_MIN)
-                                  tz = 0;
-                  } else
-                          tz = 0;
-          }
-  } else {
-          date = 0;
-          tz = 0;
-  }
+Gladly.
 
-which I think is much more confusing (and hard to verify that the
-variables are always set). Checking !date as an error condition would
-make it a little more readable:
+Thanks for noticing.
 
-  if (ident->date_begin && ident->date_end) {
-          date = strtoul(ident->date_begin, NULL, 10);
-          if (date_overflows(date))
-                  date = 0;
-  } else
-          date = 0;
+-- >8 --
+Subject: am doc: add a pointer to relevant hooks
 
-  if (date) {
-          if (ident->tz_begin && ident->tz_end) {
-                  tz = strtol(ident->tz_begin, NULL, 10);
-                  if (tz == LONG_MAX || tz == LONG_MIN)
-                          tz = 0;
-          } else
-                  tz = 0;
-  } else
-          tz = 0;
+It is not obvious when looking at a new command what hooks will affect
+it.  Add a HOOKS section to the git-am(1) page, imitating
+git-commit(1), to make it easier for people to discover e.g. the
+applypatch-msg hook that can implement a custom subject-mangling
+strategy (e.g., removing a "bug #nnnn:" prefix introduced by a bug
+tracker).
 
-but then we treat date==0 as a sentinel, and can never correctly parse
-dates on Jan 1, 1970.
+Reported-by: Phillip Susi <psusi@ubuntu.com>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+ Documentation/git-am.txt | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-So I'd be in favor of keeping it as-is, but feel free to mark it up if
-you feel strongly.
-
--Peff
+diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
+index 54d8461..abcffb6 100644
+--- a/Documentation/git-am.txt
++++ b/Documentation/git-am.txt
+@@ -189,6 +189,11 @@ commits, like running 'git am' on the wrong branch or an error in the
+ commits that is more easily fixed by changing the mailbox (e.g.
+ errors in the "From:" lines).
+ 
++HOOKS
++-----
++This command can run `applypatch-msg`, `pre-applypatch`,
++and `post-applypatch` hooks.  See linkgit:githooks[5] for more
++information.
+ 
+ SEE ALSO
+ --------
+-- 
+1.9.0.rc1.175.g0b1dcb5
