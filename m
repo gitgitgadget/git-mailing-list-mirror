@@ -1,75 +1,93 @@
-From: =?UTF-8?B?SmFrdWIgTmFyxJlic2tp?= <jnareb@gmail.com>
-Subject: Re: [PATCH 5/6] Document a bunch of functions defined in sha1_file.c
-Date: Mon, 24 Feb 2014 19:18:19 +0100
-Message-ID: <530B8CEB.5040903@gmail.com>
-References: <1393000327-11402-1-git-send-email-mhagger@alum.mit.edu> <1393000327-11402-6-git-send-email-mhagger@alum.mit.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] repack: add `repack.honorpackkeep` config var
+Date: Mon, 24 Feb 2014 11:10:49 -0800
+Message-ID: <xmqq1tys9vie.fsf@gitster.dls.corp.google.com>
+References: <52E080C1.4030402@fb.com>
+	<20140123225238.GB2567@sigill.intra.peff.net>
+	<52E1A99D.6010809@fb.com> <52E1AB78.1000504@fb.com>
+	<20140124022822.GC4521@sigill.intra.peff.net>
+	<52E1D39B.4050103@fb.com>
+	<20140128060954.GA26401@sigill.intra.peff.net>
+	<xmqq8uu0mpg8.fsf@gitster.dls.corp.google.com>
+	<20140224082459.GA32594@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Mon Feb 24 19:18:30 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Siddharth Agarwal <sid0@fb.com>, Vicent Marti <tanoku@gmail.com>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Feb 24 20:11:01 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WI06o-0008Ub-1o
-	for gcvg-git-2@plane.gmane.org; Mon, 24 Feb 2014 19:18:30 +0100
+	id 1WI0vb-0000L2-CA
+	for gcvg-git-2@plane.gmane.org; Mon, 24 Feb 2014 20:10:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752837AbaBXSS0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 24 Feb 2014 13:18:26 -0500
-Received: from mail-ea0-f170.google.com ([209.85.215.170]:54864 "EHLO
-	mail-ea0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752362AbaBXSSZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Feb 2014 13:18:25 -0500
-Received: by mail-ea0-f170.google.com with SMTP id g15so3315169eak.1
-        for <git@vger.kernel.org>; Mon, 24 Feb 2014 10:18:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
-         :subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=fcKuNR/hTQ7DFEvef7EdSRRj4Jf2mZ0Btgf1hWpaA/s=;
-        b=JmTEXr6oyBXPvaos/9UKmzAspeDG5ZiYeW2SiH5gjJQpk2M56yEnATE5nzwU0rb7iA
-         YgvYNrQeN6Vl9dkMkIIqOsXJBiEbVo1CES7smb8vU0S7YOyAEInr36sP9gLW3mv6M+UC
-         SD/EGj7AGlDzA/U8Fia1Bs3FaqT9OQESis4mjQH6sVIt9LUtCNFAGsSOrnKkAt3rb8cI
-         q5qZCX7rug599f/T/hwQwvRqJilH4AeZ+5l0wK2pRTereDJFdssdbDuR+TObNcBkqCCc
-         vbchl0C/TlvwffQWBuhA0JrTddUvay/4M8LNTWW9por6LY6FDY0WKOZzwinvPnxVwUJG
-         Df9w==
-X-Received: by 10.15.56.130 with SMTP id y2mr26169591eew.17.1393265904507;
-        Mon, 24 Feb 2014 10:18:24 -0800 (PST)
-Received: from [192.168.130.241] ([158.75.2.130])
-        by mx.google.com with ESMTPSA id j41sm66594985eeg.10.2014.02.24.10.18.22
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 24 Feb 2014 10:18:23 -0800 (PST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:24.0) Gecko/20100101 Thunderbird/24.3.0
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <1393000327-11402-6-git-send-email-mhagger@alum.mit.edu>
+	id S1752994AbaBXTKy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Feb 2014 14:10:54 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:34931 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752965AbaBXTKx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Feb 2014 14:10:53 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id DF58A6DCB9;
+	Mon, 24 Feb 2014 14:10:52 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=bhCdbK8omzyrhEJwDqfonN0OnMY=; b=yR/5PQ
+	CMRgY9zxWdgWez4kRpoV02OBUgDRbTyFV2TkwIfgtaVv2E36ELSzQ+MiV96OD5AO
+	uFJT61MXXBswG1QhtdKJ8HyHW2ufkBgg2miDIopjNp55D5Ic9lsR+QWneRERPBnG
+	w7OzvP+j7WJwEpL4pOdC1p+jDFa1/7QqZTssc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=rnzQUyyYDUf9QIIBpisrTYZJSSbUE4C1
+	kyj7vmtEqOGclB3o97wirwPwY4DB1qmsqq7acrQVZvew4gYtuAQ5dRw/6jkaDIk1
+	pK9P99NOISetJwuT1yHg0sN1ZrZLmNaAhtyQbi/60M+54v/nEM7sFysFk+6119+z
+	VAVQV3H5xo0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id C83286DCB8;
+	Mon, 24 Feb 2014 14:10:52 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E14866DCB2;
+	Mon, 24 Feb 2014 14:10:51 -0500 (EST)
+In-Reply-To: <20140224082459.GA32594@sigill.intra.peff.net> (Jeff King's
+	message of "Mon, 24 Feb 2014 03:24:59 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 60AC85FE-9D87-11E3-A3C6-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242628>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242629>
 
-Michael Haggerty wrote:
+Jeff King <peff@peff.net> writes:
 
-> -/*
-> - * NOTE! This returns a statically allocated buffer, so you have to =
-be
-> - * careful about using it. Do an "xstrdup()" if you need to save the
-> - * filename.
-> - *
-> - * Also note that this returns the location for creating.  Reading
-> - * SHA1 file can happen from any alternate directory listed in the
-> - * DB_ENVIRONMENT environment variable if it is not found in
-> - * the primary object database.
-> - */
->   const char *sha1_file_name(const unsigned char *sha1)
+> Sorry, this one slipped through the cracks. Here's a re-roll addressing
+> your comments.
+> ...
+>>  - In the context of "pack-objects", the name "--honor-pack-keep"
+>>    makes sense; it is understood that pack-objects will _not_ remove
+>>    kept packfile, so "honoring" can only mean "do not attempt to
+>>    pick objects out of kept packs to add to the pack being
+>>    generated." and there is no room for --no-honor-pack-keep to be
+>>    mistaken as "you canremove the ones marked to be kept after
+>>    saving the still-used objects in it away."
+>> 
+>>    But does the same name make sense in the context of "repack"?
+>
+> I think the distinction you are making is to capture the second second
+> from the docs:
+>
+>   If set to false, include objects in `.keep` files when repacking via
+>   `git repack`. Note that we still do not delete `.keep` packs after
+>   `pack-objects` finishes.
+>
+> The best name I could come up with is "--pack-keep-objects", since that
+> is literally what it is doing. I'm not wild about the name because it is
+> easy to read "keep" as a verb (and "pack" as a noun). I think it's OK,
+> but suggestions are welcome.
 
-Has this changed?
-
---=20
-Jakub Nar=C4=99bski
+pack-kept-objects then?
