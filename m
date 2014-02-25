@@ -1,77 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: `git stash pop` UX Problem
-Date: Tue, 25 Feb 2014 14:23:04 -0800
-Message-ID: <xmqqvbw24yt3.fsf@gitster.dls.corp.google.com>
-References: <530B0395.5030407@booking.com>
-	<CANUGeEbPrPp8Sa-KEKSxNDWJShdkDBTkQyXv7tDJ6ReH6MXrHw@mail.gmail.com>
-	<530C953F.9050805@booking.com> <vpqlhwz5o58.fsf@anie.imag.fr>
-	<530CA4C9.60601@booking.com> <vpqeh2r43kx.fsf@anie.imag.fr>
-	<85mwhe52zp.fsf@stephe-leake.org>
+From: Joel Nothman <joel.nothman@gmail.com>
+Subject: Re: [PATCH] help: include list of aliases in git-help --all
+Date: Wed, 26 Feb 2014 09:32:28 +1100
+Message-ID: <CAAkaFLX49C5CoXcPL9ZBLvNuHnCNg+0QSMfWLzJ0VU_wxOH5zw@mail.gmail.com>
+References: <1393289315-28982-1-git-send-email-joel.nothman@gmail.com>
+	<xmqqsir757hy.fsf@gitster.dls.corp.google.com>
+	<CAAkaFLVRP3WF=2hyBo9uxutJ8iLPyBVkiBs=29xN13762r32Bg@mail.gmail.com>
+	<xmqqk3ci6eun.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
 Cc: git@vger.kernel.org
-To: Stephen Leake <stephen_leake@stephe-leake.org>
-X-From: git-owner@vger.kernel.org Tue Feb 25 23:23:16 2014
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 25 23:32:35 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WIQPC-00087K-CO
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Feb 2014 23:23:14 +0100
+	id 1WIQYE-0007Sc-83
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Feb 2014 23:32:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752732AbaBYWXJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Feb 2014 17:23:09 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:61259 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752072AbaBYWXH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Feb 2014 17:23:07 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 34CF96F308;
-	Tue, 25 Feb 2014 17:23:07 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=MiLgXC0/wDCobFNSOort+n9yhdk=; b=C/zTtBBmE9jPo2GgSEsm
-	AQ8nwgxjiRwhKVJfvKD78ILuourqhTN/dFV+o+qx3F1I6PV7r/NC+7UZZ91Ao1Sh
-	PHWrs+FTVdD0Zn64Qze+yLavYEV6D9ciL7p6tpp3/hpNOOsceN9kbA/1ig9kVu5o
-	o846d6acWgWca7CytotE3iE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=ROEJtZC8bl4+neTHfE4V9O2tVTg7uaq4m1Tb4To867NBYx
-	wQCGD/a3xVWNg/qXRmF4BtYVhUjMYD278Hm65v1Uq4moGyKLto3oaOND0i7pEb5D
-	PDR2QYp5axECUEdDXPV94R9ZUQ5A7EReAzJOsbQA8ynCnnsviI5X8fe7CE9IU=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 22B8D6F307;
-	Tue, 25 Feb 2014 17:23:07 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 218F76F306;
-	Tue, 25 Feb 2014 17:23:06 -0500 (EST)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 66038F7C-9E6B-11E3-AF78-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1751539AbaBYWca (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Feb 2014 17:32:30 -0500
+Received: from mail-qc0-f180.google.com ([209.85.216.180]:56779 "EHLO
+	mail-qc0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750941AbaBYWc3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Feb 2014 17:32:29 -0500
+Received: by mail-qc0-f180.google.com with SMTP id i17so114298qcy.25
+        for <git@vger.kernel.org>; Tue, 25 Feb 2014 14:32:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=MC1cJDXKzMqLTYN30ptCycIuey78IhO7m9YCZJMB0qU=;
+        b=Q4nyOlpymw0LRTVjx7hG+OHjzP+05bZJgptfkLohmXKENOV95UQ7M1bdfPkgDcdLSy
+         24y4PHigSXUA6JYtz/OthiHxpoOhBL0uSFvjwntHfak+YGJ26DRTEldq0RW+FlXPQFjI
+         dKuXR8tB2J2snrWawNTRk5TW2aTw27pSFviz3h6hvKHO4ABwP1pw8bjZba/NXsiLWprE
+         mcUm/wyEvk2a3EF8s4DwYHKGQzT3k7OojQMFWtFwiqCHGEsKVHuDA3rMFecfiGIevUoj
+         R+r//KJb4nj8hV3KU+cfVz4FNBbYbuylVvH7pLD/AbmnIFNsufnxY3quoV0MslFKfy16
+         xBOw==
+X-Received: by 10.224.67.193 with SMTP id s1mr3463954qai.53.1393367548926;
+ Tue, 25 Feb 2014 14:32:28 -0800 (PST)
+Received: by 10.140.92.161 with HTTP; Tue, 25 Feb 2014 14:32:28 -0800 (PST)
+In-Reply-To: <xmqqk3ci6eun.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242689>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242690>
 
-Stephen Leake <stephen_leake@stephe-leake.org> writes:
-
->> Dropping the stash on a "git add" operation would be really, really
->> weird...
+On 26 February 2014 08:51, Junio C Hamano <gitster@pobox.com> wrote:
+> Joel Nothman <joel.nothman@gmail.com> writes:
 >
-> Why? That is when the merge conflicts are resolved, which is what
-> logically indicates that the stash is no longer needed,...
+>> arguments to git help. They are also like commands in that it is
+>> possible to forget their name, or whether they are defined on a
+>> particular workstation, and to hence want a listing.
+>
+> I did envision that it would be useful for the last case, but then
+> the users would be helped even more if they can get a list of ONLY
+> aliases, not buried in many standard commands they already know
+> about.
 
-Not necessarily.  Imagine a case where you used stash to quickly
-save away a tangled mess that was not ready for a logically single
-commit and now you are in the process of creating the first commit
-by applying it piece-by-piece to create multiple resulting ones.
-After you commit the result, you would still want to keep the parts
-of that stashed change you did not include in the first commit so
-that you can go back, no?
+The list is partitioned. It is partitioned already between
+git-installed commands and others on the path. This patch adds a third
+partition when required. So they *do* see only aliases... after all
+the commands.
 
-You may run "git add", but that does not say anything about what you
-are going to use the rest of the stash for.  Not even "git commit"
-may be a good enough sign.
+Note also that any command on the path will override an alias with the
+same name. So in order to list (effective) aliases, you need to
+calculate the list of commands as well. If someone defines an alias
+overridden by a command, git help -a now makes that apparent by
+excluding the alias and including the command above it, while `git
+config --get-regexp ^alias` does not.
+
+> In other words, I was not fundamentally opposed to *a* way to get a
+> list that includes aliases, but I was not convinced if it is a good
+> idea to *change* the output, which people knew would consist of
+> commands but not aliases, to suddenly start including aliases.
+
+I don't think this will concern most users for whom aliases are
+non-existent, and hence no section will be shown.
