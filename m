@@ -1,81 +1,96 @@
-From: Joel Nothman <joel.nothman@gmail.com>
-Subject: Re: [PATCH] help: include list of aliases in git-help --all
-Date: Wed, 26 Feb 2014 09:32:28 +1100
-Message-ID: <CAAkaFLX49C5CoXcPL9ZBLvNuHnCNg+0QSMfWLzJ0VU_wxOH5zw@mail.gmail.com>
-References: <1393289315-28982-1-git-send-email-joel.nothman@gmail.com>
-	<xmqqsir757hy.fsf@gitster.dls.corp.google.com>
-	<CAAkaFLVRP3WF=2hyBo9uxutJ8iLPyBVkiBs=29xN13762r32Bg@mail.gmail.com>
-	<xmqqk3ci6eun.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 07/25] reflog: avoid constructing .lock path with git_path
+Date: Tue, 25 Feb 2014 14:44:37 -0800
+Message-ID: <xmqqr46q4xt6.fsf@gitster.dls.corp.google.com>
+References: <1392730814-19656-1-git-send-email-pclouds@gmail.com>
+	<1392730814-19656-8-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 25 23:32:35 2014
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 25 23:44:46 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WIQYE-0007Sc-83
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Feb 2014 23:32:34 +0100
+	id 1WIQk1-0003Ii-W3
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Feb 2014 23:44:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751539AbaBYWca (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Feb 2014 17:32:30 -0500
-Received: from mail-qc0-f180.google.com ([209.85.216.180]:56779 "EHLO
-	mail-qc0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750941AbaBYWc3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Feb 2014 17:32:29 -0500
-Received: by mail-qc0-f180.google.com with SMTP id i17so114298qcy.25
-        for <git@vger.kernel.org>; Tue, 25 Feb 2014 14:32:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=MC1cJDXKzMqLTYN30ptCycIuey78IhO7m9YCZJMB0qU=;
-        b=Q4nyOlpymw0LRTVjx7hG+OHjzP+05bZJgptfkLohmXKENOV95UQ7M1bdfPkgDcdLSy
-         24y4PHigSXUA6JYtz/OthiHxpoOhBL0uSFvjwntHfak+YGJ26DRTEldq0RW+FlXPQFjI
-         dKuXR8tB2J2snrWawNTRk5TW2aTw27pSFviz3h6hvKHO4ABwP1pw8bjZba/NXsiLWprE
-         mcUm/wyEvk2a3EF8s4DwYHKGQzT3k7OojQMFWtFwiqCHGEsKVHuDA3rMFecfiGIevUoj
-         R+r//KJb4nj8hV3KU+cfVz4FNBbYbuylVvH7pLD/AbmnIFNsufnxY3quoV0MslFKfy16
-         xBOw==
-X-Received: by 10.224.67.193 with SMTP id s1mr3463954qai.53.1393367548926;
- Tue, 25 Feb 2014 14:32:28 -0800 (PST)
-Received: by 10.140.92.161 with HTTP; Tue, 25 Feb 2014 14:32:28 -0800 (PST)
-In-Reply-To: <xmqqk3ci6eun.fsf@gitster.dls.corp.google.com>
+	id S1753369AbaBYWol convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Feb 2014 17:44:41 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:44507 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752452AbaBYWol convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 25 Feb 2014 17:44:41 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 7AC817012A;
+	Tue, 25 Feb 2014 17:44:40 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=uHh/ePAO1s9J
+	YOYtfkDPcFwSfoU=; b=QhbElHzKOdoBiux6jXt/u2bYpvhNjJi9rO7ciLFUw3XF
+	G0Zc5lAyuKClu9SYRVjv8AgtQYRSywvXJ16jr+IeoBSwzVf5WroZZr1B1EuqfIa9
+	jJZVcDFCks5iJK6nruVft4yrVHFOZcosVgnJ/m+TQ6Lybclr7YlHivgrtTSaZ2o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=FDmZix
+	4AJ0xJtUuh2Ih1FxWKhB1DHgwfFc2vPts8ynNXjyYCGAypKg5hcRce6XN7aorpGX
+	VnmpkJGH2YrZOLytEga85bK2XOJYkR5x0lOwlWrQ7jPItMorXad0DtLx1xUFuYx8
+	2p2E3Ah5yfgbG/knulKZeo3RUnnh4VNzHsbp0=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 642F170129;
+	Tue, 25 Feb 2014 17:44:40 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A552770126;
+	Tue, 25 Feb 2014 17:44:39 -0500 (EST)
+In-Reply-To: <1392730814-19656-8-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Tue, 18
+ Feb 2014 20:39:56 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 6906397E-9E6E-11E3-8E5E-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242690>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242691>
 
-On 26 February 2014 08:51, Junio C Hamano <gitster@pobox.com> wrote:
-> Joel Nothman <joel.nothman@gmail.com> writes:
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+
+> git_path() soon understands the path given to it. Some paths "abc" ma=
+y
+> become "def" while other "ghi" may become "ijk". We don't want
+> git_path() to interfere with .lock path construction. Concatenate
+> ".lock" after the path has been resolved by git_path() so if "abc"
+> becomes "def", we'll have "def.lock", not "ijk".
+
+Hmph.  I am not sure if the above is readable (or if I am reading it
+correctly).
+
+If "abc" becomes "def", it would take deliberate work to make
+"abc.lock" into "ijk", and it would be natural to expect that
+"abc.lock" would become "def.lock" without any fancy trick, no?
+
+
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
+> ---
+>  builtin/reflog.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
->> arguments to git help. They are also like commands in that it is
->> possible to forget their name, or whether they are defined on a
->> particular workstation, and to hence want a listing.
->
-> I did envision that it would be useful for the last case, but then
-> the users would be helped even more if they can get a list of ONLY
-> aliases, not buried in many standard commands they already know
-> about.
-
-The list is partitioned. It is partitioned already between
-git-installed commands and others on the path. This patch adds a third
-partition when required. So they *do* see only aliases... after all
-the commands.
-
-Note also that any command on the path will override an alias with the
-same name. So in order to list (effective) aliases, you need to
-calculate the list of commands as well. If someone defines an alias
-overridden by a command, git help -a now makes that apparent by
-excluding the alias and including the command above it, while `git
-config --get-regexp ^alias` does not.
-
-> In other words, I was not fundamentally opposed to *a* way to get a
-> list that includes aliases, but I was not convinced if it is a good
-> idea to *change* the output, which people knew would consist of
-> commands but not aliases, to suddenly start including aliases.
-
-I don't think this will concern most users for whom aliases are
-non-existent, and hence no section will be shown.
+> diff --git a/builtin/reflog.c b/builtin/reflog.c
+> index 852cff6..ccf2cf6 100644
+> --- a/builtin/reflog.c
+> +++ b/builtin/reflog.c
+> @@ -372,7 +372,7 @@ static int expire_reflog(const char *ref, const u=
+nsigned char *sha1, int unused,
+>  	if (!file_exists(log_file))
+>  		goto finish;
+>  	if (!cmd->dry_run) {
+> -		newlog_path =3D git_pathdup("logs/%s.lock", ref);
+> +		newlog_path =3D mkpathdup("%s.lock", log_file);
+>  		cb.newlog =3D fopen(newlog_path, "w");
+>  	}
