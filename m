@@ -1,231 +1,170 @@
-From: Joel Nothman <joel.nothman@gmail.com>
-Subject: [PATCH] help: include list of aliases in git-help --all
-Date: Tue, 25 Feb 2014 11:48:34 +1100
-Message-ID: <1393289315-28982-1-git-send-email-joel.nothman@gmail.com>
-Cc: Joel Nothman <joel.nothman@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 25 01:55:09 2014
+From: Kirill Smelkov <kirr@mns.spb.ru>
+Subject: Re: [PATCH v2 00/19] Multiparent diff tree-walker + combine-diff
+ speedup
+Date: Tue, 25 Feb 2014 14:38:38 +0400
+Organization: Marine Bridge & Navigation Systems
+Message-ID: <20140225103838.GB3844@tugrik.mns.mnsspb.ru>
+References: <cover.1393257006.git.kirr@mns.spb.ru>
+ <CACsJy8BXMVNVAyqPEbHTkGxSSEJ6DpYUVwZqthiMQfO7Tj9T8A@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 25 11:37:22 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WI6Id-0004TE-78
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Feb 2014 01:55:07 +0100
+	id 1WIFO2-0003pR-Eh
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Feb 2014 11:37:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752312AbaBYAyw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Feb 2014 19:54:52 -0500
-Received: from mail1.bemta4.messagelabs.com ([85.158.143.250]:55477 "EHLO
-	mail1.bemta4.messagelabs.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751489AbaBYAyv (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 24 Feb 2014 19:54:51 -0500
-X-Greylist: delayed 371 seconds by postgrey-1.27 at vger.kernel.org; Mon, 24 Feb 2014 19:54:50 EST
-Received: from [85.158.143.35:56935] by server-3.bemta-4.messagelabs.com id D9/62-11539-568EB035; Tue, 25 Feb 2014 00:48:37 +0000
-X-Env-Sender: joel@schwa02.cs.usyd.edu.au
-X-Msg-Ref: server-4.tower-21.messagelabs.com!1393289316!7995405!1
-X-Originating-IP: [129.78.4.12]
-X-StarScan-Received: 
-X-StarScan-Version: 6.9.16; banners=-,-,-
-X-VirusChecked: Checked
-Received: (qmail 21538 invoked from network); 25 Feb 2014 00:48:36 -0000
-Received: from em-gw1-pro-2.ucc.usyd.edu.au (HELO em-gw1-pro-2.ucc.usyd.edu.au) (129.78.4.12)
-  by server-4.tower-21.messagelabs.com with SMTP; 25 Feb 2014 00:48:36 -0000
-Received: from schwa02.cs.usyd.edu.au (dmz5-snt-21.ucc.usyd.edu.au [172.20.34.21])
-	by em-gw1-pro-2.ucc.usyd.edu.au (Postfix) with ESMTP id 533AF4000B;
-	Tue, 25 Feb 2014 11:48:35 +1100 (EST)
-Received: by schwa02.cs.usyd.edu.au (Postfix, from userid 5005)
-	id BCACB121294; Tue, 25 Feb 2014 11:48:36 +1100 (EST)
-X-Mailer: git-send-email 1.9.0.1.gb5ab0fa
+	id S1752560AbaBYKhL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Feb 2014 05:37:11 -0500
+Received: from mail.mnsspb.ru ([84.204.75.2]:52893 "EHLO mail.mnsspb.ru"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751784AbaBYKhH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Feb 2014 05:37:07 -0500
+Received: from [192.168.0.127] (helo=tugrik.mns.mnsspb.ru)
+	by mail.mnsspb.ru with esmtps id 1WIFNf-0005iA-Oe; Tue, 25 Feb 2014 14:36:56 +0400
+Received: from kirr by tugrik.mns.mnsspb.ru with local (Exim 4.72)
+	(envelope-from <kirr@tugrik.mns.mnsspb.ru>)
+	id 1WIFPK-0005yg-3d; Tue, 25 Feb 2014 14:38:38 +0400
+Content-Disposition: inline
+In-Reply-To: <CACsJy8BXMVNVAyqPEbHTkGxSSEJ6DpYUVwZqthiMQfO7Tj9T8A@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242659>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242660>
 
-Git help --all had listed all git commands, but no configured aliases.
-This includes aliases as a separate listing, after commands in the main
-git directory and other $PATH directories.
+On Tue, Feb 25, 2014 at 06:43:24AM +0700, Duy Nguyen wrote:
+> On Mon, Feb 24, 2014 at 11:21 PM, Kirill Smelkov <kirr@mns.spb.ru> wrote:
+> > Hello up there.
+> >
+> > Here go combine-diff speedup patches in form of first reworking diff
+> > tree-walker to work in general case - when a commit have several parents, not
+> > only one - we are traversing all 1+nparent trees in parallel.
+> >
+> > Then we are taking advantage of the new diff tree-walker for speeding up
+> > combine-diff, which for linux.git results in ~14 times speedup.
+> 
+> I think there is another use case for this n-tree walker (but I'm not
+> entirely sure yet as I haven't really read the series). In git-log
+> (either with pathspec or --patch) we basically do this
+> 
+> diff HEAD^ HEAD
+> diff HEAD^^ HEAD^
+> diff HEAD^^^ HEAD^^
+> diff HEAD^^^^ HEAD^^^
+> ...
+> 
+> so except HEAD (and the last commit), all commits' tree will be
+> read/diff'd twice. With n-tree walker I think we may be able to diff
+> them in batch to reduce extra processing: commit lists are split into
+> 16-commit blocks where 16 trees are fed to the new tree walker at the
+> same time. I hope it would make git-log a bit faster (especially for
+> -S). Maybe not much.
 
-Signed-off-by: Joel Nothman <joel.nothman <at> gmail.com>
----
- Documentation/git-help.txt |  4 +--
- builtin/help.c             |  7 ++---
- help.c                     | 64 +++++++++++++++++++++++++++++++++++-----------
- help.h                     |  7 ++++-
- 4 files changed, 61 insertions(+), 21 deletions(-)
+Thanks for commenting.
 
-diff --git a/Documentation/git-help.txt b/Documentation/git-help.txt
-index b21e9d7..c9fe791 100644
---- a/Documentation/git-help.txt
-+++ b/Documentation/git-help.txt
-@@ -40,8 +40,8 @@ OPTIONS
- -------
- -a::
- --all::
--	Prints all the available commands on the standard output. This
--	option overrides any given command or guide name.
-+	Prints all the available commands and aliases on the standard output.
-+	This option overrides any given command or guide name.
- 
- -g::
- --guides::
-diff --git a/builtin/help.c b/builtin/help.c
-index 1fdefeb..d1dfecd 100644
---- a/builtin/help.c
-+++ b/builtin/help.c
-@@ -38,7 +38,7 @@ static int show_guides = 0;
- static unsigned int colopts;
- static enum help_format help_format = HELP_FORMAT_NONE;
- static struct option builtin_help_options[] = {
--	OPT_BOOL('a', "all", &show_all, N_("print all available commands")),
-+	OPT_BOOL('a', "all", &show_all, N_("print all available commands and aliases")),
- 	OPT_BOOL('g', "guides", &show_guides, N_("print list of useful guides")),
- 	OPT_SET_INT('m', "man", &help_format, N_("show man page"), HELP_FORMAT_MAN),
- 	OPT_SET_INT('w', "web", &help_format, N_("show manual in web browser"),
-@@ -453,6 +453,7 @@ int cmd_help(int argc, const char **argv, const char *prefix)
- 	int nongit;
- 	const char *alias;
- 	enum help_format parsed_help_format;
-+	struct cmdnames alias_cmds;
- 
- 	argc = parse_options(argc, argv, prefix, builtin_help_options,
- 			builtin_help_usage, 0);
-@@ -461,8 +462,8 @@ int cmd_help(int argc, const char **argv, const char *prefix)
- 	if (show_all) {
- 		git_config(git_help_config, NULL);
- 		printf(_("usage: %s%s"), _(git_usage_string), "\n\n");
--		load_command_list("git-", &main_cmds, &other_cmds);
--		list_commands(colopts, &main_cmds, &other_cmds);
-+		load_commands_and_aliases("git-", &main_cmds, &other_cmds, &alias_cmds);
-+		list_commands(colopts, &main_cmds, &other_cmds, &alias_cmds);
- 	}
- 
- 	if (show_guides)
-diff --git a/help.c b/help.c
-index df7d16d..3c14af4 100644
---- a/help.c
-+++ b/help.c
-@@ -86,7 +86,7 @@ static void pretty_print_string_list(struct cmdnames *cmds,
- 	int i;
- 
- 	for (i = 0; i < cmds->cnt; i++)
--		string_list_append(&list, cmds->names[i]->name);
-+	    string_list_append(&list, cmds->names[i]->name);
- 	/*
- 	 * always enable column display, we only consult column.*
- 	 * about layout strategy and stuff
-@@ -202,8 +202,48 @@ void load_command_list(const char *prefix,
- 	exclude_cmds(other_cmds, main_cmds);
- }
- 
-+static struct cmdnames aliases;
-+
-+static void add_cmd_list(struct cmdnames *cmds, struct cmdnames *old)
-+{
-+	int i;
-+	ALLOC_GROW(cmds->names, cmds->cnt + old->cnt, cmds->alloc);
-+
-+	for (i = 0; i < old->cnt; i++)
-+		cmds->names[cmds->cnt++] = old->names[i];
-+	free(old->names);
-+	old->cnt = 0;
-+	old->names = NULL;
-+}
-+
-+static int load_aliases_cb(const char *var, const char *value, void *cb)
-+{
-+	if (starts_with(var, "alias."))
-+		add_cmdname(&aliases, var + 6, strlen(var + 6));
-+	return 0;
-+}
-+
-+void load_commands_and_aliases(const char *prefix,
-+		struct cmdnames *main_cmds,
-+		struct cmdnames *other_cmds,
-+		struct cmdnames *alias_cmds)
-+{
-+	load_command_list(prefix, main_cmds, other_cmds);
-+
-+	/* reuses global aliases from unknown command functionality */
-+	git_config(load_aliases_cb, NULL);
-+
-+	add_cmd_list(alias_cmds, &aliases);
-+	qsort(alias_cmds->names, alias_cmds->cnt,
-+		  sizeof(*alias_cmds->names), cmdname_compare);
-+	uniq(alias_cmds);
-+	exclude_cmds(alias_cmds, main_cmds);
-+	exclude_cmds(alias_cmds, other_cmds);
-+}
-+
- void list_commands(unsigned int colopts,
--		   struct cmdnames *main_cmds, struct cmdnames *other_cmds)
-+		   struct cmdnames *main_cmds, struct cmdnames *other_cmds,
-+		   struct cmdnames *alias_cmds)
- {
- 	if (main_cmds->cnt) {
- 		const char *exec_path = git_exec_path();
-@@ -219,6 +259,13 @@ void list_commands(unsigned int colopts,
- 		pretty_print_string_list(other_cmds, colopts);
- 		putchar('\n');
- 	}
-+
-+	if (alias_cmds->cnt) {
-+		printf_ln(_("aliases defined in git configuration"));
-+		putchar('\n');
-+		pretty_print_string_list(alias_cmds, colopts);
-+		putchar('\n');
-+	}
- }
- 
- void list_common_cmds_help(void)
-@@ -248,7 +295,6 @@ int is_in_cmdlist(struct cmdnames *c, const char *s)
- }
- 
- static int autocorrect;
--static struct cmdnames aliases;
- 
- static int git_unknown_cmd_config(const char *var, const char *value, void *cb)
- {
-@@ -270,18 +316,6 @@ static int levenshtein_compare(const void *p1, const void *p2)
- 	return l1 != l2 ? l1 - l2 : strcmp(s1, s2);
- }
- 
--static void add_cmd_list(struct cmdnames *cmds, struct cmdnames *old)
--{
--	int i;
--	ALLOC_GROW(cmds->names, cmds->cnt + old->cnt, cmds->alloc);
--
--	for (i = 0; i < old->cnt; i++)
--		cmds->names[cmds->cnt++] = old->names[i];
--	free(old->names);
--	old->cnt = 0;
--	old->names = NULL;
--}
--
- /* An empirically derived magic number */
- #define SIMILARITY_FLOOR 7
- #define SIMILAR_ENOUGH(x) ((x) < SIMILARITY_FLOOR)
-diff --git a/help.h b/help.h
-index b21d7c9..3939bc6 100644
---- a/help.h
-+++ b/help.h
-@@ -21,11 +21,16 @@ extern const char *help_unknown_cmd(const char *cmd);
- extern void load_command_list(const char *prefix,
- 			      struct cmdnames *main_cmds,
- 			      struct cmdnames *other_cmds);
-+extern void load_commands_and_aliases(const char *prefix,
-+			      struct cmdnames *main_cmds,
-+			      struct cmdnames *other_cmds,
-+			      struct cmdnames *alias_cmds);
- extern void add_cmdname(struct cmdnames *cmds, const char *name, int len);
- /* Here we require that excludes is a sorted list. */
- extern void exclude_cmds(struct cmdnames *cmds, struct cmdnames *excludes);
- extern int is_in_cmdlist(struct cmdnames *cmds, const char *name);
--extern void list_commands(unsigned int colopts, struct cmdnames *main_cmds, struct cmdnames *other_cmds);
-+extern void list_commands(unsigned int colopts, struct cmdnames *main_cmds,
-+			  struct cmdnames *other_cmds, struct cmdnames *alias_cmds);
- 
- /*
-  * call this to die(), when it is suspected that the user mistyped a
--- 
-1.8.3.4 (Apple Git-47)
+Unfortunately, as it is now, no, and I doubt savings will be
+significant. The real speedup comes from the fact that for combined
+diff, we can omit recursing into subdirectories, if we know some diff
+D(commit,parent_i) is empty. Let me quote myself from
+
+http://article.gmane.org/gmane.comp.version-control.git/242217
+
+On Sun, Feb 16, 2014 at 12:08:29PM +0400, Kirill Smelkov wrote:
+> On Fri, Feb 14, 2014 at 09:37:00AM -0800, Junio C Hamano wrote:
+> > I wonder if this machinery can be reused for "log -m" as well (or
+> > perhaps you do that already?).  After all, by performing a single
+> > parallel scan, you are gathering all the necessary information to
+> > let you pretend that you did N pairwise diff-tree.
+> 
+> Unfortunately, as it is now, no, and let me explain why:
+> 
+> The reason that is not true, is that we omit recursing into directories,
+> if we know D(A,some-parent) for that path is empty. That means we don't
+> calculate D(A,any-other-parents) for that path and subpaths.
+> 
+> More structured description is that combined diff and "log -m", which
+> could be though as all diffs D(A,Pi) are different things:
+> 
+>     - the combined diff is D(A,B) generalization based on "^" (sets
+>       intersection) operator, and
+> 
+>     - log -m, aka "all diffs" is D(A,B) generalization based on "v"
+>       (sets union) operator.
+> 
+> Intersection means, we can omit calculating parts from other sets, if we
+> know some set does not have an element (remember "don't recurse into
+> subdirectories"?), and unioning does not have this property.
+> 
+> It does so happen, that "^" case (combine-diff) is more interesting,
+> because in the end it allows to see new information - the diff a merge
+> itself introduces. "log -m" does not have this property and is no more
+> interesting to what plain diff(HEAD,HEAD^n) can provide - in other words
+> it's just a convenience.
+> 
+> Now, the diff tree-walker could be generalized once more, to allow
+> clients specify, which diffs combination operator to use - intersection
+> or unioning, but I doubt that for unioning case that would add
+> significant speedup - we can't reduce any diff generation based on
+> another diff and the only saving is that we traverse resulting commit
+> tree once, but for some cases that could be maybe slower, say if result
+> and some parents don't have a path and some parent does, we'll be
+> recursing into that path and do more work compared to plain D(A,Pi) for
+> Pi that lacks the path.
+> 
+> In short: it could be generalized more, if needed, but I propose we
+> first establish the ground with generalizing to just combine-diff.
+
+besides
+
+    D(HEAD~,  HEAD)
+    D(HEAD~2, HEAD~)
+    ...
+    D(HEAD~{n}, HEAD~{n-1})
+
+is different even from "log -m" case as now there is no single commit
+with several parents.
+
+On a related note, while developing this n-tree walker, I've learned
+that it is important to load trees in correct order. Quoting patch 18:
+
+-       t1tree = fill_tree_descriptor(&t1, old);
+-       t2tree = fill_tree_descriptor(&t2, new);
++       /*
++        * load parents first, as they are probably already cached.
++        *
++        * ( log_tree_diff() parses commit->parent before calling here via
++        *   diff_tree_sha1(parent, commit) )
++        */
++       for (i = 0; i < nparent; ++i)
++               tptree[i] = fill_tree_descriptor(&tp[i], parents_sha1[i]);
++       ttree = fill_tree_descriptor(&t, sha1);
+
+so it loads parent's tree first. If we change this to be the other way,
+i.e. load commit's tree first, and then parent's tree, there will be up
+to 4% slowdown for whole plain `git log` (without -c).
+
+So maybe what could be done to speedup plain log is for diff tree-walker
+to populate some form of recently-loaded trees while walking, and drop
+trees from will not-be used anymore commits - e.g. after doing
+HEAD~..HEAD for next diff for HEAD~~..HEAD~ HEAD~ trees will be there
+and HEAD trees should be dropped (many of them coincides, so reference
+counting could help).
+
+This way, we'll leave the walker logic intact, and only there will be
+more handy trees-pool supported by fill_tree_descriptor, which imho is a
+better design. And this way we could indeed add some not-big, but
+noticeable speedup.
+
+Though it is another topic, and at present my time is limited to only go
+with combined diff speedup.
+
+Thanks,
+Kirill
