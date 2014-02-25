@@ -1,101 +1,91 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: Git in GSoC 2014
-Date: Tue, 25 Feb 2014 18:15:28 +0100
-Message-ID: <530CCFB0.5050406@alum.mit.edu>
-References: <20140225154158.GA9038@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3] tag: support --sort=<spec>
+Date: Tue, 25 Feb 2014 09:42:52 -0800
+Message-ID: <xmqqa9df6qcj.fsf@gitster.dls.corp.google.com>
+References: <1393039762-4843-1-git-send-email-pclouds@gmail.com>
+	<1393330935-22229-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Feb 25 18:15:43 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 25 18:43:08 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WILbZ-0006m7-Ik
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Feb 2014 18:15:41 +0100
+	id 1WIM24-0003pR-5o
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Feb 2014 18:43:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753238AbaBYRPd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Feb 2014 12:15:33 -0500
-Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:52121 "EHLO
-	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752960AbaBYRPc (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 25 Feb 2014 12:15:32 -0500
-X-AuditID: 12074413-f79076d000002d17-b2-530ccfb2ede8
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 08.E4.11543.2BFCC035; Tue, 25 Feb 2014 12:15:30 -0500 (EST)
-Received: from [192.168.69.148] (p57A2448A.dip0.t-ipconnect.de [87.162.68.138])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s1PHFSM6011290
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Tue, 25 Feb 2014 12:15:30 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20131103 Icedove/17.0.10
-In-Reply-To: <20140225154158.GA9038@sigill.intra.peff.net>
-X-Enigmail-Version: 1.6
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprDKsWRmVeSWpSXmKPExsUixO6iqLvpPE+wQfceA4uuK91MFj9aepgd
-	mDye9e5h9Pi8SS6AKYrbJimxpCw4Mz1P3y6BO+NbTzdbwQn+ig97HzE3MB7j6WLk5JAQMJG4
-	+P8/I4QtJnHh3nq2LkYuDiGBy4wSndM7mCCc80wSxw9vYAep4hXQlrj85BhYB4uAqkTT8YVM
-	IDabgK7Eop5mMFtUIFhi9eUHLBD1ghInZz4Bs0UEZCW+H94I1MvBwSwgLtH/DywsDBS+f281
-	G4gtJGApcbz3OdgqTgEriRdb37KDlEsAlfc0BkF0qkusnycEUsEsIC+x/e0c5gmMgrOQ7JqF
-	UDULSdUCRuZVjHKJOaW5urmJmTnFqcm6xcmJeXmpRbrmermZJXqpKaWbGCGhK7yDcddJuUOM
-	AhyMSjy8HcXcwUKsiWXFlbmHGCU5mJREefce4QkW4kvKT6nMSCzOiC8qzUktPsQowcGsJMJ7
-	dRVQjjclsbIqtSgfJiXNwaIkzqu2RN1PSCA9sSQ1OzW1ILUIJivDwaEkwbvhHFCjYFFqempF
-	WmZOCUKaiYMTZDiXlEhxal5KalFiaUlGPCh244uB0QuS4gHaewyknbe4IDEXKArReopRl+N2
-	269PjEIsefl5qVLivGwgRQIgRRmleXArYInqFaM40MfCvGUgVTzAJAc36RXQEiagJUelwZaU
-	JCKkpBoYrVIDp3n/kXx0zq/I50Dz2gVrFf47cL5auTddRuh5haehw+yX7T8tX1WFJLY3TrQU
-	+7gz46yvuyfTtEwJlgRx7XevUtYHSeyxafow4Xh17/Tzy79Ypi3dMT9kE/PF3XfZ 
+	id S1753058AbaBYRm7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Feb 2014 12:42:59 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:55181 "EHLO
+	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752653AbaBYRm7 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 25 Feb 2014 12:42:59 -0500
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 06FDF6D84B;
+	Tue, 25 Feb 2014 12:42:58 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=WlY0XTMFG56b
+	r3U1hD27akR/usA=; b=aIpwICezraaxJ+WIEbk+hFXKDWUFsaj2qlAw9RqUCbZc
+	8i3oCrWKHVTe8o8akmnQo3mmdWT6zIeYmblfB4LtsgGp8iahNsH/+zeUys7Khxs1
+	+1RMncWHnp9kQSbxSAFQ2wwdS+1wroMWlGxcqWjAYaw+Lj8nF+fQRIietc7JV9A=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=irx7mi
+	rL/pCj+nkS26fqP06WUUH3x+k1T4vsK/ylbUd9yKHTXhQZUXx8Lp7xm/ULliPGfO
+	3ot5f6K7O7H8esGQ0W3hY/WuLr88RwhPz9OqoqD10m4XhMFsRD4XasEPglRI6W3C
+	m8iElqiAW+a6pGT33ikAkLRdMaa93y+rc1x2g=
+Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E49516D84A;
+	Tue, 25 Feb 2014 12:42:57 -0500 (EST)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4C6356D843;
+	Tue, 25 Feb 2014 12:42:55 -0500 (EST)
+In-Reply-To: <1393330935-22229-1-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Tue, 25
+ Feb 2014 19:22:15 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 41FBFA5A-9E44-11E3-B604-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242675>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242676>
 
-On 02/25/2014 04:41 PM, Jeff King wrote:
-> I'm pleased to announce that Git has been accepted to this year's Google
-> Summer of Code.
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-Cool!  Thanks to Peff and Thomas and Vicent and whomever else was
-involved in getting our application done!  For those who don't know, the
-application covers both Git core and libgit2.
+> versioncmp() is copied from string/strverscmp.c in glibc commit
+> ee9247c38a8def24a59eb5cfb7196a98bef8cfdc, reformatted to Git coding
+> style. The implementation is under LGPL-2.1 and according to [1] I ca=
+n
+> relicense it to GPLv2.
 
-> We didn't discuss earlier whether we would have any specific
-> requirements for students during the proposal period (e.g., having a
-> patch accepted). It would be good to put together rules (or barring any
-> specific requirements, guidelines to help students put together a good
-> proposal) as soon as possible. Suggestions are welcome.
+I'd propose this trivial change squashed in to record the above
+in the file in question.
 
-Requiring students to submit a reasonable patch and follow up on review
-comments seems like it would be a good way to filter out non-serious
-students.  (I hesitate to require that the patch be accepted because it
-can take quite a while for a patch to make it to master, despite of the
-student's efforts.)
+Thanks.
 
-Does anybody know whether other organizations have had good experience
-with criteria like that?  Does it chase *all* the applicants away?
-
-If we wanted to impose such a hurdle, then we would definitely have to
-make up a list of microprojects so that the students don't have to start
-from nothing.  I imagine it shouldn't be too hard to find tiny projects
-estimated at 10-30 minutes of actual work, which should be plenty
-difficult for a student who also has to figure out how to check out the
-code, conform to our coding standards, run the unit tests, create a
-patch submission, etc.
-
-If the reaction is positive to this idea then I volunteer to spend
-several hours tomorrow looking for microprojects, and I suggest other
-core developers do so as well.  They should presumably be submitted as
-patches to the ideas repository [1].
-
-What do you think?
-
-Michael
-
-[1] https://github.com/git/git.github.io
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+diff --git a/versioncmp.c b/versioncmp.c
+index 18a9632..8f5a388 100644
+--- a/versioncmp.c
++++ b/versioncmp.c
+@@ -1,6 +1,13 @@
+ #include "git-compat-util.h"
+=20
+ /*
++ * versioncmp(): copied from string/strverscmp.c in glibc commit
++ * ee9247c38a8def24a59eb5cfb7196a98bef8cfdc, reformatted to Git coding
++ * style. The implementation is under LGPL-2.1 and Git relicenses it
++ * to GPLv2.
++ */
++
++/*
+  * states: S_N: normal, S_I: comparing integral part, S_F: comparing
+  * fractionnal parts, S_Z: idem but with leading Zeroes only
+  */
