@@ -1,118 +1,75 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH] difftool: support repositories with .git-files
-Date: Tue, 25 Feb 2014 20:34:30 +0000
-Message-ID: <530CFE56.6040807@web.de>
-References: <1393211555-50270-1-git-send-email-davvid@gmail.com>	<xmqqr46s9yzx.fsf@gitster.dls.corp.google.com>	<530BB548.3050603@web.de> <xmqq1tyr6pfw.fsf@gitster.dls.corp.google.com>
+From: Stephen Leake <stephen_leake@stephe-leake.org>
+Subject: Re: `git stash pop` UX Problem
+Date: Tue, 25 Feb 2014 14:52:42 -0600
+Message-ID: <85mwhe52zp.fsf@stephe-leake.org>
+References: <530B0395.5030407@booking.com>
+	<CANUGeEbPrPp8Sa-KEKSxNDWJShdkDBTkQyXv7tDJ6ReH6MXrHw@mail.gmail.com>
+	<530C953F.9050805@booking.com> <vpqlhwz5o58.fsf@anie.imag.fr>
+	<530CA4C9.60601@booking.com> <vpqeh2r43kx.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: David Aguilar <davvid@gmail.com>, git@vger.kernel.org,
-	=?UTF-8?B?R8Oh?= =?UTF-8?B?Ym9yIExpcHTDoWs=?= 
-	<gabor.liptak@gmail.com>, John Keeping <john@keeping.me.uk>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 25 21:34:53 2014
+Content-Type: text/plain
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 25 21:52:50 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WIOiJ-00039C-Lz
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Feb 2014 21:34:52 +0100
+	id 1WIOzh-0005Uz-TS
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Feb 2014 21:52:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753571AbaBYUeq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Feb 2014 15:34:46 -0500
-Received: from mout.web.de ([212.227.17.11]:58455 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753512AbaBYUeo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Feb 2014 15:34:44 -0500
-Received: from [192.168.1.102] ([90.174.2.76]) by smtp.web.de (mrweb004) with
- ESMTPA (Nemesis) id 0LrYLd-1XEiV13NAz-013Kt1 for <git@vger.kernel.org>; Tue,
- 25 Feb 2014 21:34:42 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.2.0
-In-Reply-To: <xmqq1tyr6pfw.fsf@gitster.dls.corp.google.com>
-X-Enigmail-Version: 1.6
-X-Provags-ID: V03:K0:YPBEnKDNr8+zyWqUYiunwU6eCVx3nIoz3PAB3cp4XMQUenKtB14
- 4dlCStC/8PG+L4nmjuC1mg6f6K6jng6DitlT/anDCQ89wfjfbCKN6Z82KaPPArL+tGmRYZj
- SbuCw+c48NehXRMgPjRW79hBeFO5hXDH3mWgL9aJGxmpaGL+oK7uFVnzVm2X8bhCZwyP+Ec
- Rstd5zZy+KoZnNihtF4/w==
+	id S1752724AbaBYUwq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Feb 2014 15:52:46 -0500
+Received: from cdptpa-outbound-snat.email.rr.com ([107.14.166.225]:5115 "EHLO
+	cdptpa-oedge-vip.email.rr.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1750712AbaBYUwp (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 25 Feb 2014 15:52:45 -0500
+Received: from [75.87.81.6] ([75.87.81.6:50485] helo=TAKVER)
+	by cdptpa-oedge03 (envelope-from <stephen_leake@stephe-leake.org>)
+	(ecelerity 3.5.0.35861 r(Momo-dev:tip)) with ESMTP
+	id 57/E5-02678-C920D035; Tue, 25 Feb 2014 20:52:44 +0000
+In-Reply-To: <vpqeh2r43kx.fsf@anie.imag.fr> (Matthieu Moy's message of "Tue,
+	25 Feb 2014 16:25:18 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (windows-nt)
+X-RR-Connecting-IP: 107.14.168.142:25
+X-Cloudmark-Score: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242681>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242682>
 
-Am 25.02.2014 18:02, schrieb Junio C Hamano:
-> Jens Lehmann <Jens.Lehmann@web.de> writes:
->=20
->> Am 24.02.2014 17:55, schrieb Junio C Hamano:
->>> David Aguilar <davvid@gmail.com> writes:
->>>
->>>> Modern versions of "git submodule" use .git-files to setup the
->>>> submodule directory.  When run in a "git submodule"-created
->>>> repository "git difftool --dir-diff" dies with the following
->>>> error:
->>>>
->>>> 	$ git difftool -d HEAD~
->>>> 	fatal: This operation must be run in a work tree
->>>> 	diff --raw --no-abbrev -z HEAD~: command returned error: 128
->>>>
->>>> core.worktree is relative to the .git directory but the logic
->>>> in find_worktree() does not account for it.
->>>>
->>>> Use `git rev-parse --show-toplevel` to find the worktree so that
->>>> the dir-diff feature works inside a submodule.
->>>>
->>>> Reported-by: G=C3=A1bor Lipt=C3=A1k <gabor.liptak@gmail.com>
->>>> Helped-by: Jens Lehmann <jens.lehmann@web.de>
->>>> Helped-by: John Keeping <john@keeping.me.uk>
->>>> Signed-off-by: David Aguilar <davvid@gmail.com>
->>>> ---
->>>
->>> Looks good; thanks.
->>
->>
->> FWIW:
->> Tested-by: Jens Lehmann <jens.lehmann@web.de>
->>
->> What about squashing this in to detect any future regressions?
->>
->> diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
->> index 2418528..d86ad68 100755
->> --- a/t/t7800-difftool.sh
->> +++ b/t/t7800-difftool.sh
->> @@ -434,4 +434,12 @@ test_expect_success PERL 'difftool --no-symlink=
-s detects conflict ' '
->>  	)
->>  '
->>
->> +test_expect_success PERL 'difftool properly honours gitlink and cor=
-e.worktree' '
->> +	git submodule add ./. submod/ule &&
->> +	(
->> +		cd submod/ule &&
->> +		git difftool --tool=3Decho  --dir-diff --cached
->=20
-> In the context of this fix, finishing with 0 exit status may be all
-> we care about, but do we also care about things like in what
-> directory the tool is invoked in, what arguments and extra
-> environment settings (if any) it is given, and stuff like that?
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-Sure. But I just intended to test the fix (and the test can easily
-be extended by people who know more about difftool than I do).
+> Omar Othman <omar.othman@booking.com> writes:
+>
+>> [omar_othman main (trunk|MERGING*)]$ git add path/to/file.txt
+>> [omar_othman main (trunk*)]$
+>>
+>> Note how the status message has changed to show that git is now happy.
+>> It is at that moment that the stash reference should be dropped
+>
+> Dropping the stash on a "git add" operation would be really, really
+> weird...
 
-> In fact, the "echo" in the above is very misleading.  The test
-> relies on the fact that immediately after the submod/ule is cloned,
-> "diff --cached" does not have to call any tool backend---if you
-> modify some tracked file in its working tree and dropped --cached
-> on the command line, the command will fail with "Huh?  I do not know
-> what 'echo' diff/merge backend is", no?
+Why? That is when the merge conflicts are resolved, which is what
+logically indicates that the stash is no longer needed, _if_ the merge
+conflicts are related to the stash, which is true in this use case.
 
-Right, using echo was not the best choice here. I used it to avoid
-the dependency to meld in the example of the OP (maybe using "true"
-as tool would have indicated that the tool is not important here,
-but looking into this again a simple "git difftool --dir-diff"
-without any further arguments also shows that the fix is working).
+There are other uses for 'git add' that don't indicate that; we'd have
+to be very careful to not throw away the stash at the wrong time.
 
-Aas mentioned above, I'm not familiar with difftool and just wanted
-to share an easy way to test the fix. But I do not care too deeply
-about this test, so feel free to ignore it.
+>> (or the user (somehow) is notified to do that herself if desired),
+>> because this means that the popping operation has succeeded.
+>
+> But how would you expect to "be notified"?
+
+When 'git add' checks to see if all merge conflicts are now resolved,
+and those merge conflicts were related to the stash, it can either pop
+the stash, or issue a message telling the user it is now safe to do so.
+We would need a config setting to indicate which to do.
+
+Maybe that check is hard to do in general?
+
+-- 
+-- Stephe
