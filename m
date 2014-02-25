@@ -1,128 +1,101 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] difftool: support repositories with .git-files
-Date: Tue, 25 Feb 2014 10:02:27 -0800
-Message-ID: <xmqq1tyr6pfw.fsf@gitster.dls.corp.google.com>
-References: <1393211555-50270-1-git-send-email-davvid@gmail.com>
-	<xmqqr46s9yzx.fsf@gitster.dls.corp.google.com>
-	<530BB548.3050603@web.de>
+Subject: Re: `git stash pop` UX Problem
+Date: Tue, 25 Feb 2014 11:12:10 -0800
+Message-ID: <xmqqwqgj57n9.fsf@gitster.dls.corp.google.com>
+References: <530B0395.5030407@booking.com>
+	<CANUGeEbPrPp8Sa-KEKSxNDWJShdkDBTkQyXv7tDJ6ReH6MXrHw@mail.gmail.com>
+	<vpqlhx0a3cb.fsf@anie.imag.fr> <530C893D.7000108@ira.uka.de>
+	<vpqzjlf5q2z.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: David Aguilar <davvid@gmail.com>, git@vger.kernel.org,
-	=?utf-8?B?R8OhYm9yIExpcHTDoWs=?= <gabor.liptak@gmail.com>,
-	John Keeping <john@keeping.me.uk>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Tue Feb 25 19:02:37 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Holger Hellmuth <hellmuth@ira.uka.de>,
+	Brandon McCaig <bamccaig@gmail.com>,
+	Omar Othman <omar.othman@booking.com>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue Feb 25 20:12:30 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WIMKy-00019P-K6
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Feb 2014 19:02:36 +0100
+	id 1WINQZ-0005fC-K4
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Feb 2014 20:12:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753350AbaBYSCc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Feb 2014 13:02:32 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:56064 "EHLO
+	id S1753513AbaBYTMX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Feb 2014 14:12:23 -0500
+Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:37338 "EHLO
 	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753258AbaBYSCb convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 25 Feb 2014 13:02:31 -0500
+	id S1752598AbaBYTMW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Feb 2014 14:12:22 -0500
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id CF2656F650;
-	Tue, 25 Feb 2014 13:02:30 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 428C66D457;
+	Tue, 25 Feb 2014 14:12:21 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=zjL2yWgMjac+
-	aN3qnCStTZS2dI8=; b=JuALB1PYoKB/v70CpZE47r34G9vNw9RqK4sp2F7UjCxY
-	uiMip8XrGtYi3vgTnRGEglQP0as/zRfAq8gkUNfH5wsZ0iTekkA/rmjWj/Ugl5AI
-	q3j6Qy18Y/TkA+wJY+tEDr52lp5V5O2oVjuwJ17rZVqmuIZStZgKJWWp8cEbMn0=
+	:content-type; s=sasl; bh=GSDOXBuTiIh7INY2AfOely/WnO8=; b=yagiT2
+	c17FA+bLZvhei5vDW5U9nRJ/5cB05RJqZP6BCKgeExoi+atYK+WOjEINrLJ3CfSn
+	RdfIPagXWA/CVrWk3t5lyVpiyMF3oSNk/bIiyz4geBV2Jp1/6CEefGPokQ34mipu
+	a5ayVWxSzTm4Z2OHl2MjI2DKz4Q+6khsi3+4M=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=Gcmj1E
-	8yWmk7eQhkqwDfraaybl5xf6EIG8hiqcjZR+4i4qg6f7Gdo3tU9pkqsEc+vtqkDi
-	LSywiI+LXdEgNvr4qg5XgPw6BRIfFJ3grsUf+3L0BwysZ02MbwKhCNccPK6pSR7W
-	KSWObtftTsl1m/hEd6oivMhBUbaBEVuMXH0zQ=
+	:content-type; q=dns; s=sasl; b=BsUyxWO+65dTFU1+TiLhP1LH5BGEjNID
+	54JycA0ljMN1FQfP0YoFkgA8cmSwa5id/Ropu9MFWf+B0yHuWp3POMnbaZ1CtCiV
+	jZD0yJTEafwcFulFCnSPWkU/+Kqd2r5WquUus+8k2l9SH9+um4C/FobfJoyN6/yp
+	4n4ifdk1VVg=
 Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id A39B56F64F;
-	Tue, 25 Feb 2014 13:02:30 -0500 (EST)
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 291626D454;
+	Tue, 25 Feb 2014 14:12:21 -0500 (EST)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id ADBBE6F64E;
-	Tue, 25 Feb 2014 13:02:29 -0500 (EST)
-In-Reply-To: <530BB548.3050603@web.de> (Jens Lehmann's message of "Mon, 24 Feb
-	2014 21:10:32 +0000")
+	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5961B6D42C;
+	Tue, 25 Feb 2014 14:12:15 -0500 (EST)
+In-Reply-To: <vpqzjlf5q2z.fsf@anie.imag.fr> (Matthieu Moy's message of "Tue,
+	25 Feb 2014 13:33:56 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: FDFA75E0-9E46-11E3-BEAB-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: BD6B9446-9E50-11E3-83FA-1B26802839F8-77302942!b-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242678>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242679>
 
-Jens Lehmann <Jens.Lehmann@web.de> writes:
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-> Am 24.02.2014 17:55, schrieb Junio C Hamano:
->> David Aguilar <davvid@gmail.com> writes:
->>=20
->>> Modern versions of "git submodule" use .git-files to setup the
->>> submodule directory.  When run in a "git submodule"-created
->>> repository "git difftool --dir-diff" dies with the following
->>> error:
+> Holger Hellmuth <hellmuth@ira.uka.de> writes:
+>
+>> Am 24.02.2014 17:21, schrieb Matthieu Moy:
+>>> $ git add foo.txt
+>>> $ git status
+>>> On branch master
+>>> Changes to be committed:
+>>>    (use "git reset HEAD <file>..." to unstage)
 >>>
->>> 	$ git difftool -d HEAD~
->>> 	fatal: This operation must be run in a work tree
->>> 	diff --raw --no-abbrev -z HEAD~: command returned error: 128
->>>
->>> core.worktree is relative to the .git directory but the logic
->>> in find_worktree() does not account for it.
->>>
->>> Use `git rev-parse --show-toplevel` to find the worktree so that
->>> the dir-diff feature works inside a submodule.
->>>
->>> Reported-by: G=C3=A1bor Lipt=C3=A1k <gabor.liptak@gmail.com>
->>> Helped-by: Jens Lehmann <jens.lehmann@web.de>
->>> Helped-by: John Keeping <john@keeping.me.uk>
->>> Signed-off-by: David Aguilar <davvid@gmail.com>
->>> ---
->>=20
->> Looks good; thanks.
+>>>          modified:   foo.txt
+>>
+>> Maybe status should display a stash count if that count is > 0, as
+>> this is part of the state of the repo.
 >
+> Maybe it would help some users, but not me for example. My main use of
+> "git stash" is a safe replacement for "git reset --hard": when I want to
+> discard changes, but keep them safe just in case.
 >
-> FWIW:
-> Tested-by: Jens Lehmann <jens.lehmann@web.de>
->
-> What about squashing this in to detect any future regressions?
->
-> diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
-> index 2418528..d86ad68 100755
-> --- a/t/t7800-difftool.sh
-> +++ b/t/t7800-difftool.sh
-> @@ -434,4 +434,12 @@ test_expect_success PERL 'difftool --no-symlinks=
- detects conflict ' '
->  	)
->  '
->
-> +test_expect_success PERL 'difftool properly honours gitlink and core=
-=2Eworktree' '
-> +	git submodule add ./. submod/ule &&
-> +	(
-> +		cd submod/ule &&
-> +		git difftool --tool=3Decho  --dir-diff --cached
+> So, my stash count is almost always >0, and I don't want to hear about
+> it.
 
-In the context of this fix, finishing with 0 exit status may be all
-we care about, but do we also care about things like in what
-directory the tool is invoked in, what arguments and extra
-environment settings (if any) it is given, and stuff like that?
+"status" is about reminding the user what changes are already in the
+index (i.e. what you would commit) and what changes are in the
+working tree, from which you could further update the index with
+(i.e. what you could commit).
 
-In fact, the "echo" in the above is very misleading.  The test
-relies on the fact that immediately after the submod/ule is cloned,
-"diff --cached" does not have to call any tool backend---if you
-modify some tracked file in its working tree and dropped --cached
-on the command line, the command will fail with "Huh?  I do not know
-what 'echo' diff/merge backend is", no?
+One _could_ argue that stashed changes are what could be reflected
+to the working tree and form the source of the latter, but my gut
+feeling is that it is a rather weak argument.  At that point you are
+talking about what you could potentially change in the working tree,
+and the way to do so is not limited to "stash pop" (i.e. you can
+"git cherry-pick --no-commit $a_commit", or "edit" any file in the
+working tree for that matter, with the same ease).
 
-> +	)
-> +'
-> +
->  test_done
+So, I tend to agree with you, while I do understand where "I want to
+know about what is in stash" is coming from (and that is why we do
+have "git stash list" command).
