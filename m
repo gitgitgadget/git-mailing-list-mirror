@@ -1,75 +1,73 @@
 From: Stephen Leake <stephen_leake@stephe-leake.org>
 Subject: Re: `git stash pop` UX Problem
-Date: Tue, 25 Feb 2014 14:52:42 -0600
-Message-ID: <85mwhe52zp.fsf@stephe-leake.org>
+Date: Tue, 25 Feb 2014 14:48:09 -0600
+Message-ID: <85r46q537a.fsf@stephe-leake.org>
 References: <530B0395.5030407@booking.com>
 	<CANUGeEbPrPp8Sa-KEKSxNDWJShdkDBTkQyXv7tDJ6ReH6MXrHw@mail.gmail.com>
-	<530C953F.9050805@booking.com> <vpqlhwz5o58.fsf@anie.imag.fr>
-	<530CA4C9.60601@booking.com> <vpqeh2r43kx.fsf@anie.imag.fr>
+	<vpqlhx0a3cb.fsf@anie.imag.fr> <530C893D.7000108@ira.uka.de>
+	<vpqzjlf5q2z.fsf@anie.imag.fr>
+	<xmqqwqgj57n9.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 25 21:52:50 2014
+X-From: git-owner@vger.kernel.org Tue Feb 25 21:55:28 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WIOzh-0005Uz-TS
-	for gcvg-git-2@plane.gmane.org; Tue, 25 Feb 2014 21:52:50 +0100
+	id 1WIP2E-0007yr-Aj
+	for gcvg-git-2@plane.gmane.org; Tue, 25 Feb 2014 21:55:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752724AbaBYUwq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Feb 2014 15:52:46 -0500
-Received: from cdptpa-outbound-snat.email.rr.com ([107.14.166.225]:5115 "EHLO
+	id S1753812AbaBYUzP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Feb 2014 15:55:15 -0500
+Received: from cdptpa-outbound-snat.email.rr.com ([107.14.166.232]:7030 "EHLO
 	cdptpa-oedge-vip.email.rr.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1750712AbaBYUwp (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 25 Feb 2014 15:52:45 -0500
-Received: from [75.87.81.6] ([75.87.81.6:50485] helo=TAKVER)
-	by cdptpa-oedge03 (envelope-from <stephen_leake@stephe-leake.org>)
+	by vger.kernel.org with ESMTP id S1753469AbaBYUzO (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 25 Feb 2014 15:55:14 -0500
+X-Greylist: delayed 421 seconds by postgrey-1.27 at vger.kernel.org; Tue, 25 Feb 2014 15:55:14 EST
+Received: from [75.87.81.6] ([75.87.81.6:50482] helo=TAKVER)
+	by cdptpa-oedge02 (envelope-from <stephen_leake@stephe-leake.org>)
 	(ecelerity 3.5.0.35861 r(Momo-dev:tip)) with ESMTP
-	id 57/E5-02678-C920D035; Tue, 25 Feb 2014 20:52:44 +0000
-In-Reply-To: <vpqeh2r43kx.fsf@anie.imag.fr> (Matthieu Moy's message of "Tue,
-	25 Feb 2014 16:25:18 +0100")
+	id 39/37-30151-B810D035; Tue, 25 Feb 2014 20:48:11 +0000
+In-Reply-To: <xmqqwqgj57n9.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Tue, 25 Feb 2014 11:12:10 -0800")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (windows-nt)
-X-RR-Connecting-IP: 107.14.168.142:25
+X-RR-Connecting-IP: 107.14.168.130:25
 X-Cloudmark-Score: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242682>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242683>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Omar Othman <omar.othman@booking.com> writes:
->
->> [omar_othman main (trunk|MERGING*)]$ git add path/to/file.txt
->> [omar_othman main (trunk*)]$
->>
->> Note how the status message has changed to show that git is now happy.
->> It is at that moment that the stash reference should be dropped
->
-> Dropping the stash on a "git add" operation would be really, really
-> weird...
+> "status" is about reminding the user what changes are already in the
+> index (i.e. what you would commit) and what changes are in the
+> working tree, from which you could further update the index with
+> (i.e. what you could commit).
 
-Why? That is when the merge conflicts are resolved, which is what
-logically indicates that the stash is no longer needed, _if_ the merge
-conflicts are related to the stash, which is true in this use case.
+I believe "status" should tell me everything git knows about the current
+workspace in a resonably concise way. That includes the stash.
 
-There are other uses for 'git add' that don't indicate that; we'd have
-to be very careful to not throw away the stash at the wrong time.
+> One _could_ argue that stashed changes are what could be reflected
+> to the working tree and form the source of the latter, but my gut
+> feeling is that it is a rather weak argument.  At that point you are
+> talking about what you could potentially change in the working tree,
 
->> (or the user (somehow) is notified to do that herself if desired),
->> because this means that the popping operation has succeeded.
->
-> But how would you expect to "be notified"?
+No, I saved things in the stash on purpose. For example, I had changes
+that were not ready to commit, but I wanted to do a merge from upstream.
 
-When 'git add' checks to see if all merge conflicts are now resolved,
-and those merge conflicts were related to the stash, it can either pop
-the stash, or issue a message telling the user it is now safe to do so.
-We would need a config setting to indicate which to do.
+There are workflows where the stash is not important; provide an option
+to 'git status' that means "ignore stash". 
 
-Maybe that check is hard to do in general?
+> So, I tend to agree with you, while I do understand where "I want to
+> know about what is in stash" is coming from (and that is why we do
+> have "git stash list" command).
+
+My Emacs front end currently checks both 'git status' and 'git stash
+list' to build "the status of the current workspace".
 
 -- 
 -- Stephe
