@@ -1,121 +1,119 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Cygwin + git log = no pager!
-Date: Wed, 26 Feb 2014 04:26:10 -0500
-Message-ID: <20140226092610.GB32537@sigill.intra.peff.net>
-References: <CAHd499BT1Q308+q0NB9Dpx=ncQZwRn0tg=q_PE8RutaVqH+xQQ@mail.gmail.com>
- <53085434.4060106@gmail.com>
- <CAHd499AbsUwmA0HWu31jW2n8eUNnRtU7URKPfBU7EhU6-F48zg@mail.gmail.com>
- <530AFAFD.2060504@gmail.com>
- <20140224090618.GB10698@sigill.intra.peff.net>
- <CAHd499BDBgaAZFkoc=S9i9hG=NifAmqhaW86fqgkzjShZd07ww@mail.gmail.com>
+From: "Dmitry S. Dolzhenko" <dmitrys.dolzhenko@yandex.ru>
+Subject: [PATCH] commit.c: use the generic "sha1_pos" function for lookup
+ sha1
+Date: Wed, 26 Feb 2014 14:07:47 +0400
+Message-ID: <530DBCF3.9060801@yandex.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Chris Packham <judge.packham@gmail.com>, Git <git@vger.kernel.org>
-To: Robert Dailey <rcdailey.lists@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 26 10:26:24 2014
+Content-Type: multipart/mixed;
+ boundary="------------020405000504030006080905"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 26 11:08:51 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WIaku-00007i-8C
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Feb 2014 10:26:20 +0100
+	id 1WIbQ1-0002Ta-PB
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Feb 2014 11:08:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751170AbaBZJ0P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Feb 2014 04:26:15 -0500
-Received: from cloud.peff.net ([50.56.180.127]:57216 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750799AbaBZJ0M (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Feb 2014 04:26:12 -0500
-Received: (qmail 4509 invoked by uid 102); 26 Feb 2014 09:26:12 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 26 Feb 2014 03:26:12 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 26 Feb 2014 04:26:10 -0500
-Content-Disposition: inline
-In-Reply-To: <CAHd499BDBgaAZFkoc=S9i9hG=NifAmqhaW86fqgkzjShZd07ww@mail.gmail.com>
+	id S1751192AbaBZKIp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Feb 2014 05:08:45 -0500
+Received: from forward2h.mail.yandex.net ([84.201.187.147]:59703 "EHLO
+	forward2h.mail.yandex.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750799AbaBZKIn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Feb 2014 05:08:43 -0500
+Received: from smtp2h.mail.yandex.net (smtp2h.mail.yandex.net [84.201.187.145])
+	by forward2h.mail.yandex.net (Yandex) with ESMTP id 8885C702269
+	for <git@vger.kernel.org>; Wed, 26 Feb 2014 14:08:25 +0400 (MSK)
+Received: from smtp2h.mail.yandex.net (localhost [127.0.0.1])
+	by smtp2h.mail.yandex.net (Yandex) with ESMTP id 504EB1703CAE
+	for <git@vger.kernel.org>; Wed, 26 Feb 2014 14:08:25 +0400 (MSK)
+Received: from unknown (unknown [31.181.66.29])
+	by smtp2h.mail.yandex.net (nwsmtp/Yandex) with ESMTPSA id o8vVf0HrVn-8OMOog3b;
+	Wed, 26 Feb 2014 14:08:24 +0400
+	(using TLSv1 with cipher CAMELLIA256-SHA (256/256 bits))
+	(Client certificate not present)
+X-Yandex-Uniq: 381e04dd-c989-444b-810e-490a82d2470d
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail; t=1393409304;
+	bh=Xq4s2D2SrIYj4JufkDlASFseNgFJwy5f7BJEqye555M=;
+	h=Message-ID:Date:From:User-Agent:MIME-Version:To:Subject:
+	 Content-Type;
+	b=UBhUL3iOHwu4Y/uF189QVpcx2y83KQDgEl2LhWw8FkjtBJo/epWJB0SO5DJbbDYjT
+	 /c3BFIRnguiKCokSPaYOYjygUfwIQXIqAsidJ76j/TgTylvs6KCUt6UnnibBAzAhiS
+	 94nqTtGa2TiAqQoo7Ahg3doqhzI3PX3G0NSIyu44=
+Authentication-Results: smtp2h.mail.yandex.net; dkim=pass header.i=@yandex.ru
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:17.0) Gecko/20131103 Icedove/17.0.10
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242705>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242706>
 
-On Mon, Feb 24, 2014 at 01:34:34PM -0600, Robert Dailey wrote:
+This is a multi-part message in MIME format.
+--------------020405000504030006080905
+Content-Type: text/plain; charset=windows-1251
+Content-Transfer-Encoding: 7bit
 
-> So I set GIT_PAGER to 'echo custom pager' as you instructed, and I
-> noticed that wasn't being printed when I ran my git log alias. So what
-> I did after that was set GIT_TRACE=1 and here is the output I see
-> before my logs start printing:
-> [...]
-> Does using an alias have something to do with this?
+Refactor binary search in "commit_graft_pos" function: use
+generic "sha1_pos" function.
 
-The aliases shouldn't matter (and I constructed a scenario like the one
-you showed and it starts the pager for me on Linux). It's more like git
-is deciding not to show a pager at all (e.g., it thinks your stdout is
-not a tty). Does running:
-
-  git log
-
-not use a pager, but:
-
-  git -p log
-
-does? In that case, I think that your stdout is not a tty for some
-reason.
-
-If that is the case, try:
-
-  git -p lg
-
-That _should_ turn on the pager, but I think it does not due to a bug
-with setup_pager and aliases. Something like the patch below would make
-it work (but if you are having to use "-p" manually, there is something
-to fix in your cygwin environment, which does not think you are on a
-terminal).
-
--Peff
-
+Signed-off-by: Dmitry S. Dolzhenko <dmitrys.dolzhenko@yandex.ru>
 ---
-diff --git a/cache.h b/cache.h
-index dc040fb..ecc410e 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1238,6 +1238,7 @@ static inline ssize_t write_str_in_full(int fd, const char *str)
- 
- /* pager.c */
- extern void setup_pager(void);
-+extern void setup_pager_with_options(int stdout_is_tty);
- extern const char *pager_program;
- extern int pager_in_use(void);
- extern int pager_use_color;
-diff --git a/git.c b/git.c
-index 7cf2953..ad54891 100644
---- a/git.c
-+++ b/git.c
-@@ -27,7 +27,7 @@ static void commit_pager_choice(void) {
- 		setenv("GIT_PAGER", "cat", 1);
- 		break;
- 	case 1:
--		setup_pager();
-+		setup_pager_with_options(1);
- 		break;
- 	default:
- 		break;
-diff --git a/pager.c b/pager.c
-index 0cc75a8..b28125d 100644
---- a/pager.c
-+++ b/pager.c
-@@ -62,7 +62,12 @@ const char *git_pager(int stdout_is_tty)
- 
- void setup_pager(void)
- {
--	const char *pager = git_pager(isatty(1));
-+	setup_pager_with_options(isatty(1));
+ commit.c | 24 +++++++++---------------
+ 1 file changed, 9 insertions(+), 15 deletions(-)
+
+diff --git a/commit.c b/commit.c
+index 6bf4fe0..8edaeb7 100644
+--- a/commit.c
++++ b/commit.c
+@@ -10,6 +10,7 @@
+ #include "mergesort.h"
+ #include "commit-slab.h"
+ #include "prio-queue.h"
++#include "sha1-lookup.h"
+  static struct commit_extra_header *read_commit_extra_header_lines(const char *buf, size_t len, const char **);
+ @@ -114,23 +115,16 @@ static unsigned long parse_commit_date(const char *buf, const char *tail)
+ static struct commit_graft **commit_graft;
+ static int commit_graft_alloc, commit_graft_nr;
+ +static const unsigned char *commit_graft_sha1_access(size_t index, void *table)
++{
++	struct commit_graft **commit_graft_table = table;
++	return commit_graft_table[index]->sha1;
 +}
 +
-+void setup_pager_with_options(int stdout_is_tty)
-+{
-+	const char *pager = git_pager(stdout_is_tty);
- 
- 	if (!pager || pager_in_use())
- 		return;
+ static int commit_graft_pos(const unsigned char *sha1)
+ {
+-	int lo, hi;
+-	lo = 0;
+-	hi = commit_graft_nr;
+-	while (lo < hi) {
+-		int mi = (lo + hi) / 2;
+-		struct commit_graft *graft = commit_graft[mi];
+-		int cmp = hashcmp(sha1, graft->sha1);
+-		if (!cmp)
+-			return mi;
+-		if (cmp < 0)
+-			hi = mi;
+-		else
+-			lo = mi + 1;
+-	}
+-	return -lo - 1;
++	return sha1_pos(sha1, commit_graft, commit_graft_nr,
++			   commit_graft_sha1_access);
+ }
+  int register_commit_graft(struct commit_graft *graft, int ignore_dups)
+-- 
+1.8.5.3
+
+
+--------------020405000504030006080905
+Content-Type: text/plain; charset=UTF-8;
+ name="=?windows-1251?Q?=D7=E0=F1=F2=FC_=E2=EB=EE=E6=E5=ED=ED=EE=E3=EE_=F1=EE?=
+ =?windows-1251?Q?=EE=E1=F9=E5=ED=E8=FF?="
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment;
+ filename*0*=windows-1251''%D7%E0%F1%F2%FC%20%E2%EB%EE%E6%E5%ED%ED%EE%E3%EE;
+ filename*1*=%20%F1%EE%EE%E1%F9%E5%ED%E8%FF
+
+
+--------------020405000504030006080905--
