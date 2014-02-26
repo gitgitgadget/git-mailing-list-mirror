@@ -1,70 +1,76 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: `git stash pop` UX Problem
-Date: Wed, 26 Feb 2014 09:27:07 +0100
-Message-ID: <vpqzjlez3c4.fsf@anie.imag.fr>
-References: <530B0395.5030407@booking.com>
-	<CANUGeEbPrPp8Sa-KEKSxNDWJShdkDBTkQyXv7tDJ6ReH6MXrHw@mail.gmail.com>
-	<530C953F.9050805@booking.com> <vpqlhwz5o58.fsf@anie.imag.fr>
-	<530CA4C9.60601@booking.com> <vpqeh2r43kx.fsf@anie.imag.fr>
-	<530D97BA.1080107@booking.com>
+From: Jacopo Notarstefano <jacopo.notarstefano@gmail.com>
+Subject: An idea for "git bisect" and a GSoC enquiry
+Date: Wed, 26 Feb 2014 09:28:32 +0100
+Message-ID: <CAL0uuq0=Zo0X8mYRD6q-Q+QAcZhfmxOwKiRegDrRm3O_i0Q+EA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Brandon McCaig <bamccaig@gmail.com>, git@vger.kernel.org
-To: Omar Othman <omar.othman@booking.com>
-X-From: git-owner@vger.kernel.org Wed Feb 26 09:27:33 2014
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 26 09:28:41 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WIZpz-0002Hz-Jj
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Feb 2014 09:27:31 +0100
+	id 1WIZr5-0006sR-KI
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Feb 2014 09:28:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750907AbaBZI1S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Feb 2014 03:27:18 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:54714 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750799AbaBZI1R (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Feb 2014 03:27:17 -0500
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id s1Q8R7xm013581
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 26 Feb 2014 09:27:07 +0100
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s1Q8R7B7014223;
-	Wed, 26 Feb 2014 09:27:07 +0100
-In-Reply-To: <530D97BA.1080107@booking.com> (Omar Othman's message of "Wed, 26
-	Feb 2014 08:28:58 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 26 Feb 2014 09:27:07 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: s1Q8R7xm013581
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1394008030.754@1uFzySTkgX3xemwCgKmiXA
+	id S1750971AbaBZI2d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Feb 2014 03:28:33 -0500
+Received: from mail-ve0-f179.google.com ([209.85.128.179]:46897 "EHLO
+	mail-ve0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750801AbaBZI2d (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Feb 2014 03:28:33 -0500
+Received: by mail-ve0-f179.google.com with SMTP id oz11so1832315veb.10
+        for <git@vger.kernel.org>; Wed, 26 Feb 2014 00:28:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=d5rPaN/C+OjKMXIGJ9jGO8GPD6ayJ1NDC2eZsduLSq4=;
+        b=NnTq2ESGAOA4i1zdZXMLNxXKHytyjdSti3WurDty6f0oYvGD/OGVjUppl3FjKpiM6m
+         o/376uQfxRX1fRpNvgag8WorRYBoKNFKuVw1hh9SPMZxgLWUxsIARzbT0PKvDG4I4kRm
+         dYRc6jwmpSzrsnLl2LCDX7/ELXoNH96jq3pgAYp6I7Rdp3OKJ71qPq5OpBDT+ZAiVot2
+         nRqzQuVz9mgE6iM9hohUULtNkGZpynuSsLU4cBAh17/zbYiyA7Ar2oiXnIFMpdX4nWTd
+         haLh0PHANWwveaFslHehy8Jq527G1yhtHoRmpgI+oktEUFBh32Fgg2VBZBRxZNwscD9E
+         br0A==
+X-Received: by 10.58.59.100 with SMTP id y4mr4906079veq.4.1393403312183; Wed,
+ 26 Feb 2014 00:28:32 -0800 (PST)
+Received: by 10.52.73.161 with HTTP; Wed, 26 Feb 2014 00:28:32 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242702>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242703>
 
-Omar Othman <omar.othman@booking.com> writes:
+Hey everyone,
 
-> Though I don't know why you think this is important:
->> Now, the real question is: when would Git stop showing this advice. I
->> don't see a real way to answer this, and I'd rather avoid doing just a
->> guess.
-> If it is really annoying for the user, we can just have a
-> configuration parameter to switch this message on/off.
+my name is Jacopo, a student developer from Italy, and I'm interested
+in applying to this years' Google Summer of Code. I set my eyes on the
+project called "git-bisect improvements", in particular the subtask
+about swapping the "good" and "bad" labels when looking for a
+bug-fixing release.
 
-Just saying "You have X stash" is OK to me as long as there is an option
-to deactivate it.
+I have a very simple proposal for that: add a new "mark" subcommand.
+Here is an example of how it should work:
 
-Hinting "You should now run "git stash drop"." OTOH is far more dangerous
-if guessed wrong. Keeping a stash active when you don't need it does no
-real harm, but droping one you actually needed is data loss.
+1) A developer wants to find in which commit a past regression was
+fixed. She start bisecting as usual with "git bisect start".
+2) The current HEAD has the bugfix, so she marks it as fixed with "git
+bisect mark fixed".
+3) She knows that HEAD~100 had the regression, so she marks it as
+unfixed with "git bisect mark unfixed".
+4) Now that git knows what the two labels are, it starts bisecting as usual.
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+For compatibility with already written scripts, "git bisect good" and
+"git bisect bad" will alias to "git bisect mark good" and "git bisect
+mark bad" respectively.
+
+Does this make sense? Did I overlook some details?
+
+There were already several proposals on this topic, among which those
+listed at https://git.wiki.kernel.org/index.php/SmallProjectsIdeas#git_bisect_fix.2Funfixed.
+I'm interested in contacting the prospective mentor, Christian Couder,
+to go over these. What's the proper way to ask for an introduction? I
+tried asking on IRC, but had no success.
+
+Cheers,
+Jacopo Notarstefano
