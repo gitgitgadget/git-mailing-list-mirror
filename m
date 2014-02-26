@@ -1,134 +1,116 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: `git stash pop` UX Problem
-Date: Wed, 26 Feb 2014 11:36:09 -0800
-Message-ID: <xmqqd2i94qfq.fsf@gitster.dls.corp.google.com>
-References: <530B0395.5030407@booking.com>
-	<CANUGeEbPrPp8Sa-KEKSxNDWJShdkDBTkQyXv7tDJ6ReH6MXrHw@mail.gmail.com>
-	<530C953F.9050805@booking.com> <vpqlhwz5o58.fsf@anie.imag.fr>
-	<530CA4C9.60601@booking.com> <vpqeh2r43kx.fsf@anie.imag.fr>
-	<530D97BA.1080107@booking.com> <vpqzjlez3c4.fsf@anie.imag.fr>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: Compiling git for Windows
+Date: Wed, 26 Feb 2014 19:37:59 -0000
+Organization: OPDS
+Message-ID: <70BA74432D4449F2895535E6314C37A2@PhilipOakley>
+References: <CAHd499Cr2g0MZs2XBCC-zZqjHeffqO0LXoP1ViaFOjQhTuPKzw@mail.gmail.com>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Omar Othman <omar.othman@booking.com>,
-	Brandon McCaig <bamccaig@gmail.com>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Feb 26 20:36:30 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; format=flowed; charset=ISO-8859-1; reply-type=original
+Cc: "Git MsysGit" <msysgit@googlegroups.com>
+To: "Robert Dailey" <rcdailey.lists@gmail.com>,
+	"Git" <git@vger.kernel.org>
+X-From: msysgit+bncBDSOTWHYX4PBBDUFXGMAKGQE7EMU6BI@googlegroups.com Wed Feb 26 20:37:56 2014
+Return-path: <msysgit+bncBDSOTWHYX4PBBDUFXGMAKGQE7EMU6BI@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-wi0-f184.google.com ([209.85.212.184])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WIkHH-00059M-Su
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Feb 2014 20:36:24 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754008AbaBZTgS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Feb 2014 14:36:18 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:45242 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753570AbaBZTgP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Feb 2014 14:36:15 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 058BD6DD0E;
-	Wed, 26 Feb 2014 14:36:14 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=cM5H9id0Af6b36E07VVViGz5mVg=; b=YgcGya
-	iUImp9+p4ckumjMkpO7yejwvghGrqksoVTfCL20/hrpqadN9AIswXl4C+5HvAsZI
-	r/wp8uCCOL9z/fgSy9QqR0Cc6f4C408yAnf50sgnTPfP5OP2cVhciHOlhBiUJGdZ
-	Scw8dJaFzeJXm0lT8l1HhPiQPGGTGJt4NY1dk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ADp99cLuF0E7z0Kb/TjDS1XAkx3VDT7r
-	ZidH51CxX4ospQcTVX7ki1ia+cHog5lGH/js4+aGadLi/GdGTbAbXobblm9xUfs1
-	lmz1Vvklf7vBPFYqg14dRTAKMeiw++3cXob5v5ytasuXANvGoIVGfZ6LlfW7oFGW
-	yHmvWmzZMf0=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id E19736DD0D;
-	Wed, 26 Feb 2014 14:36:13 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2C4EA6DD0A;
-	Wed, 26 Feb 2014 14:36:13 -0500 (EST)
-In-Reply-To: <vpqzjlez3c4.fsf@anie.imag.fr> (Matthieu Moy's message of "Wed,
-	26 Feb 2014 09:27:07 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 403DFB58-9F1D-11E3-BB09-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242748>
+	(envelope-from <msysgit+bncBDSOTWHYX4PBBDUFXGMAKGQE7EMU6BI@googlegroups.com>)
+	id 1WIkIh-0002bk-KM
+	for gcvm-msysgit@m.gmane.org; Wed, 26 Feb 2014 20:37:51 +0100
+Received: by mail-wi0-f184.google.com with SMTP id bs8sf190927wib.1
+        for <gcvm-msysgit@m.gmane.org>; Wed, 26 Feb 2014 11:37:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=message-id:reply-to:from:to:cc:references:subject:date:organization
+         :mime-version:x-original-sender:x-original-authentication-results
+         :precedence:mailing-list:list-id:list-post:list-help:list-archive
+         :sender:list-subscribe:list-unsubscribe:content-type;
+        bh=h2T7nEb19LGaehwvctWkCRwSIgQZO0cfUw6zDO9qp2o=;
+        b=yywh1wuzCkj6LFMBxYiZ14NiRiJxf9fOq5PcH0/35Fzqmk9NdIgsIl6103SsR3BeM6
+         Zpr8HnGI0Z0JxMzUoQfT2Fj53FUKSlUlGgxhP0utS1ihbXxVyNZQWmHzcPfyvt8IDiw+
+         sgHtVQelqs6Q+bwqe4LLukjNryQPzV6jn6BBbUwBQGI4J3QBr5nwHGogqIEcfwyhWBlt
+         rfputpWjRktj3D+5f300vHJ1Y/lpqOVAjl4FRV/uP3gtk95zddOHhVH5+AcI0/UAMaqa
+         zUlxsM1v+BdUetB2Zy5gCNxfZHVCWGCxsFimzfrCjF1Cy7Z+KDE6rkUB+jTlUpK5IvHM
+         7hUA==
+X-Received: by 10.180.84.229 with SMTP id c5mr48793wiz.4.1393443471275;
+        Wed, 26 Feb 2014 11:37:51 -0800 (PST)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.180.36.138 with SMTP id q10ls153599wij.31.gmail; Wed, 26 Feb
+ 2014 11:37:50 -0800 (PST)
+X-Received: by 10.180.82.35 with SMTP id f3mr17884919wiy.0.1393443470319;
+        Wed, 26 Feb 2014 11:37:50 -0800 (PST)
+Received: from out1.ip03ir2.opaltelecom.net (out1.ip03ir2.opaltelecom.net. [62.24.128.239])
+        by gmr-mx.google.com with ESMTP id jb4si1058639wic.0.2014.02.26.11.37.50
+        for <msysgit@googlegroups.com>;
+        Wed, 26 Feb 2014 11:37:50 -0800 (PST)
+Received-SPF: softfail (google.com: domain of transitioning philipoakley@iee.org does not designate 62.24.128.239 as permitted sender) client-ip=62.24.128.239;
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Ah0YABxCDlNZ8Yi5/2dsb2JhbABagwY7iRi4JgUBAgEBgRkXdGkBAYEfAQEWAQQBAQEBAwECBQEBLh4BASELAgMFAgEDDgcMJRQBBAgHCwYHFwYBEggCAQIDAYU4BwGCBw0DFQnCBQ2HMxMEjD6CFoMqgRQEiRGGHIYzaY5OhUeDLTw
+X-IPAS-Result: Ah0YABxCDlNZ8Yi5/2dsb2JhbABagwY7iRi4JgUBAgEBgRkXdGkBAYEfAQEWAQQBAQEBAwECBQEBLh4BASELAgMFAgEDDgcMJRQBBAgHCwYHFwYBEggCAQIDAYU4BwGCBw0DFQnCBQ2HMxMEjD6CFoMqgRQEiRGGHIYzaY5OhUeDLTw
+X-IronPort-AV: E=Sophos;i="4.97,549,1389744000"; 
+   d="scan'208";a="451029540"
+Received: from host-89-241-136-185.as13285.net (HELO PhilipOakley) ([89.241.136.185])
+  by out1.ip03ir2.opaltelecom.net with SMTP; 26 Feb 2014 19:37:49 +0000
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-Original-Sender: philipoakley@iee.org
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=softfail
+ (google.com: domain of transitioning philipoakley@iee.org does not designate
+ 62.24.128.239 as permitted sender) smtp.mail=philipoakley@iee.org
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242749>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
-
-> Omar Othman <omar.othman@booking.com> writes:
+From: "Robert Dailey" <rcdailey.lists@gmail.com>
+> Oddly I'm not able to find any instructions on how to build Git for
+> Windows. I've done a clone of the repository here:
 >
->> Though I don't know why you think this is important:
->>> Now, the real question is: when would Git stop showing this advice. I
->>> don't see a real way to answer this, and I'd rather avoid doing just a
->>> guess.
->> If it is really annoying for the user, we can just have a
->> configuration parameter to switch this message on/off.
+> https://github.com/msysgit/git
 >
-> Just saying "You have X stash" is OK to me as long as there is an option
-> to deactivate it.
+> I did attempt to try doing it myself. I installed 'make' and mingw-gcc
+> in Cygwin and attempted 'make' from the git directory but it fails
+> immediately (I can post information on the failure if needed, but I'm
+> assuming I'm not taking the correct approach).
 >
-> Hinting "You should now run "git stash drop"." OTOH is far more dangerous
-> if guessed wrong. Keeping a stash active when you don't need it does no
-> real harm, but droping one you actually needed is data loss.
+> Can someone point me to some instructions on how to build Git for
+> Windows? Thanks.
+> --
 
-Yes, definitely.
+Try the wiki  https://github.com/msysgit/msysgit/wiki
 
-I'm inclined to say that we should go in the direction you suggested
-earlier in Message-ID: <vpqlhx0a3cb.fsf@anie.imag.fr>, that is:
+The dev list is at msysgit@googlegroups.com;
 
->> One easy thing to do OTOH would be to show a hint at the end of "git
->> stash pop"'s output, like
->> 
->> $ git stash pop
->> Auto-merging foo.txt
->> CONFLICT (content): Merge conflict in foo.txt
->> 'stash pop' failed. Please, resolve the conflicts manually. The stash
->> was not dropped in case you need to restart the operation. When you are
->> done resolving the merge, you may run the following to drop the stash:
->> 
->>   git stash drop
->> 
->> or so (I couldn't find a concise yet accurate wording).
+--
 
-I'd however have to say that even "please resolve the conflicts
-manually" is over-assuming.
+Philip 
 
-I often start some WIP of a fix, realize that the fix should apply
-to a lot older maintenance branch than where I happened to have
-started the WIP (which typically is at the tip of somebody else's
-branch where I received the series from the list---and then noticed
-some existing breakage that needs to be fixed), stash the WIP, and
-then repeat:
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
 
- (1) checkout an old maintenance track;
- (2) try to pop;
- (3) if it succeeds, stop the iteration;
- (4) otherwise, reset and go back to (1) to checkout a bit newer
-     maintenance track.
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
 
-to decide.  So "resolve the conflicts" is assuming the intention of
-the user who issued "pop" too much (let alone "manually"---it does
-not matter how the user resolves conflicts---the only thing we want
-to say is Git did all it would and no further automated help in
-resolving is availble, but "manually" is not quite the word).
-
-"The stash was not dropped" is the most important thing in your
-additional text.  How about rephrasing like this?
-
-    $ git stash pop
-    Auto-merging foo.txt
-    CONFLICT (content): Merge conflict in foo.txt
-
-    The stashed change could not be replayed cleanly, leaving
-    conflicts in the working tree. The stash was not dropped in case
-    you need it again.
-
-    After you are done with the stash, you may want to "git stash
-    drop" to discard it.
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/groups/opt_out.
