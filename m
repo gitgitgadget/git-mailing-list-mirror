@@ -1,106 +1,76 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] commit.c: use the generic "sha1_pos" function for lookup
- sha1
-Date: Wed, 26 Feb 2014 05:41:51 -0500
-Message-ID: <20140226104150.GD25711@sigill.intra.peff.net>
-References: <530DBCF3.9060801@yandex.ru>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: `git stash pop` UX Problem
+Date: Wed, 26 Feb 2014 11:45:13 +0100
+Message-ID: <vpqmwhexidi.fsf@anie.imag.fr>
+References: <1lho9x8.1qh70zkp477M%lists@haller-berlin.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: "Dmitry S. Dolzhenko" <dmitrys.dolzhenko@yandex.ru>
-X-From: git-owner@vger.kernel.org Wed Feb 26 11:42:09 2014
+Content-Type: text/plain
+Cc: gitster@pobox.com (Junio C Hamano),
+	stephen_leake@stephe-leake.org (Stephen Leake),
+	git@vger.kernel.org
+To: lists@haller-berlin.de (Stefan Haller)
+X-From: git-owner@vger.kernel.org Wed Feb 26 11:45:32 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WIbwG-00036D-1u
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Feb 2014 11:42:08 +0100
+	id 1WIbzW-0001N2-VO
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Feb 2014 11:45:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750941AbaBZKmD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Feb 2014 05:42:03 -0500
-Received: from cloud.peff.net ([50.56.180.127]:57255 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750774AbaBZKmC (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Feb 2014 05:42:02 -0500
-Received: (qmail 9335 invoked by uid 102); 26 Feb 2014 10:42:01 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 26 Feb 2014 04:42:01 -0600
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 26 Feb 2014 05:41:51 -0500
-Content-Disposition: inline
-In-Reply-To: <530DBCF3.9060801@yandex.ru>
+	id S1751003AbaBZKp1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Feb 2014 05:45:27 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:58908 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750888AbaBZKp0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Feb 2014 05:45:26 -0500
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id s1QAjCta024846
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 26 Feb 2014 11:45:12 +0100
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s1QAjDqw016593;
+	Wed, 26 Feb 2014 11:45:13 +0100
+In-Reply-To: <1lho9x8.1qh70zkp477M%lists@haller-berlin.de> (Stefan Haller's
+	message of "Wed, 26 Feb 2014 11:24:00 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 26 Feb 2014 11:45:13 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: s1QAjCta024846
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1394016313.18149@kr9ETesaOJn3qClBvgG0Ng
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242711>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242712>
 
-On Wed, Feb 26, 2014 at 02:07:47PM +0400, Dmitry S. Dolzhenko wrote:
+lists@haller-berlin.de (Stefan Haller) writes:
 
-> Refactor binary search in "commit_graft_pos" function: use
-> generic "sha1_pos" function.
+> Your intention was clearly to drop the stash, it just wasn't dropped
+> because of the conflict. Dropping it automatically once the conflict
+> is resolved would be nice.
 
-Sounds sensible.
+Your intention when you ran "git stash pop", yes. Your intention when
+you ran "git add", I call that guessing.
 
-A few administrative points for your patch:
+The condition for dropping the stash should be more "conflits
+resolutions are done AND the user is happy with it". Otherwise, if you
+mess up your conflict resolution, and notice it after running "git add",
+then you're screwed because Git just happily discarded your important
+data. The point of keeping the stash is to leave it up to the user to
+decide between "I'm happy, I can drop" or "I'm not, I should re-apply",
+and Git cannot tell which is which.
 
-  - we usually try to send patches inline, rather than as attachments.
-    It almost looks like your mailer or a server on the path converted
-    your mail to a multipart/mixed and stuck a useless empty attachment
-    on the end.
+Hinting the user to run "stash pop" would be more acceptable, but
+talking about "git stash" in "git add"'s code is somehow a dependency
+order violation (stash is normally implemented on top of Git's basic
+features, not the other way around). Does not seem serious from at first
+from the user point of view, but this pushes the codebase one step in
+the direction of an unmaintainable mess.
 
-  - Your patch did not apply for me, nor to the blobs mentioned in its
-    header. Did you modify it after it was generated? I think this part
-    in particular looks suspicious:
-
-
-> diff --git a/commit.c b/commit.c
-> index 6bf4fe0..8edaeb7 100644
-> --- a/commit.c
-> +++ b/commit.c
-> @@ -10,6 +10,7 @@
->  #include "mergesort.h"
->  #include "commit-slab.h"
->  #include "prio-queue.h"
-> +#include "sha1-lookup.h"
->   static struct commit_extra_header *read_commit_extra_header_lines(const char *buf, size_t len, const char **);
-
-There are 3 context lines above, but only one below?
-
->  @@ -114,23 +115,16 @@ static unsigned long parse_commit_date(const char *buf, const char *tail)
->  static struct commit_graft **commit_graft;
->  static int commit_graft_alloc, commit_graft_nr;
->  +static const unsigned char *commit_graft_sha1_access(size_t index, void *table)
-> +{
-> +	struct commit_graft **commit_graft_table = table;
-> +	return commit_graft_table[index]->sha1;
-> +}
-> +
-
-And here we have only two context lines, and the first addition line is
-indented (making it look like a context line).
-
->  static int commit_graft_pos(const unsigned char *sha1)
->  {
-> -	int lo, hi;
-> -	lo = 0;
-> -	hi = commit_graft_nr;
-> -	while (lo < hi) {
-> -		int mi = (lo + hi) / 2;
-> -		struct commit_graft *graft = commit_graft[mi];
-> -		int cmp = hashcmp(sha1, graft->sha1);
-> -		if (!cmp)
-> -			return mi;
-> -		if (cmp < 0)
-> -			hi = mi;
-> -		else
-> -			lo = mi + 1;
-> -	}
-> -	return -lo - 1;
-> +	return sha1_pos(sha1, commit_graft, commit_graft_nr,
-> +			   commit_graft_sha1_access);
-
-The patch itself looks correct.
-
--Peff
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
