@@ -1,76 +1,93 @@
-From: Jacopo Notarstefano <jacopo.notarstefano@gmail.com>
-Subject: An idea for "git bisect" and a GSoC enquiry
-Date: Wed, 26 Feb 2014 09:28:32 +0100
-Message-ID: <CAL0uuq0=Zo0X8mYRD6q-Q+QAcZhfmxOwKiRegDrRm3O_i0Q+EA@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v3] tag: support --sort=<spec>
+Date: Wed, 26 Feb 2014 04:05:11 -0500
+Message-ID: <20140226090511.GA32537@sigill.intra.peff.net>
+References: <1393039762-4843-1-git-send-email-pclouds@gmail.com>
+ <1393330935-22229-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 26 09:28:41 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 26 10:05:34 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WIZr5-0006sR-KI
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Feb 2014 09:28:39 +0100
+	id 1WIaQm-0004iY-R2
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Feb 2014 10:05:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750971AbaBZI2d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Feb 2014 03:28:33 -0500
-Received: from mail-ve0-f179.google.com ([209.85.128.179]:46897 "EHLO
-	mail-ve0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750801AbaBZI2d (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Feb 2014 03:28:33 -0500
-Received: by mail-ve0-f179.google.com with SMTP id oz11so1832315veb.10
-        for <git@vger.kernel.org>; Wed, 26 Feb 2014 00:28:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=d5rPaN/C+OjKMXIGJ9jGO8GPD6ayJ1NDC2eZsduLSq4=;
-        b=NnTq2ESGAOA4i1zdZXMLNxXKHytyjdSti3WurDty6f0oYvGD/OGVjUppl3FjKpiM6m
-         o/376uQfxRX1fRpNvgag8WorRYBoKNFKuVw1hh9SPMZxgLWUxsIARzbT0PKvDG4I4kRm
-         dYRc6jwmpSzrsnLl2LCDX7/ELXoNH96jq3pgAYp6I7Rdp3OKJ71qPq5OpBDT+ZAiVot2
-         nRqzQuVz9mgE6iM9hohUULtNkGZpynuSsLU4cBAh17/zbYiyA7Ar2oiXnIFMpdX4nWTd
-         haLh0PHANWwveaFslHehy8Jq527G1yhtHoRmpgI+oktEUFBh32Fgg2VBZBRxZNwscD9E
-         br0A==
-X-Received: by 10.58.59.100 with SMTP id y4mr4906079veq.4.1393403312183; Wed,
- 26 Feb 2014 00:28:32 -0800 (PST)
-Received: by 10.52.73.161 with HTTP; Wed, 26 Feb 2014 00:28:32 -0800 (PST)
+	id S1752241AbaBZJFV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 26 Feb 2014 04:05:21 -0500
+Received: from cloud.peff.net ([50.56.180.127]:57191 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751223AbaBZJFO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Feb 2014 04:05:14 -0500
+Received: (qmail 3570 invoked by uid 102); 26 Feb 2014 09:05:14 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 26 Feb 2014 03:05:14 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 26 Feb 2014 04:05:11 -0500
+Content-Disposition: inline
+In-Reply-To: <1393330935-22229-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242703>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242704>
 
-Hey everyone,
+On Tue, Feb 25, 2014 at 07:22:15PM +0700, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=
+=BB=8Dc Duy wrote:
 
-my name is Jacopo, a student developer from Italy, and I'm interested
-in applying to this years' Google Summer of Code. I set my eyes on the
-project called "git-bisect improvements", in particular the subtask
-about swapping the "good" and "bad" labels when looking for a
-bug-fixing release.
+> versioncmp() is copied from string/strverscmp.c in glibc commit
+> ee9247c38a8def24a59eb5cfb7196a98bef8cfdc, reformatted to Git coding
+> style. The implementation is under LGPL-2.1 and according to [1] I ca=
+n
+> relicense it to GPLv2.
 
-I have a very simple proposal for that: add a new "mark" subcommand.
-Here is an example of how it should work:
+Cool. I think doing this makes the most sense, as we do not have to
+worry about build-time config (and I do not see any particular reason
+why we would want to use the system strverscmp on glibc systems).
 
-1) A developer wants to find in which commit a past regression was
-fixed. She start bisecting as usual with "git bisect start".
-2) The current HEAD has the bugfix, so she marks it as fixed with "git
-bisect mark fixed".
-3) She knows that HEAD~100 had the regression, so she marks it as
-unfixed with "git bisect mark unfixed".
-4) Now that git knows what the two labels are, it starts bisecting as usual.
+> +static int parse_opt_sort(const struct option *opt, const char *arg,=
+ int unset)
+> +{
+> +	int *sort =3D opt->value;
+> +	if (*arg =3D=3D '-') {
+> +		*sort =3D REVERSE_SORT;
+> +		arg++;
+> +	} else
+> +		*sort =3D STRCMP_SORT;
+> +	if (starts_with(arg, "version:")) {
+> +		*sort |=3D VERCMP_SORT;
+> +		arg +=3D 8;
+> +	} else if (starts_with(arg, "v:")) {
+> +		*sort |=3D VERCMP_SORT;
+> +		arg +=3D 2;
+> +	}
+> +	if (strcmp(arg, "refname"))
+> +		die(_("unsupported sort specification %s"), arg);
 
-For compatibility with already written scripts, "git bisect good" and
-"git bisect bad" will alias to "git bisect mark good" and "git bisect
-mark bad" respectively.
+I found this logic a bit weird, as STRCMP_SORT and VERCMP_SORT are not
+mutually exclusive flags, but REVERSE and STRCMP are. I would have
+thought REVERSE is the flag, and the other two are selections. Like:
 
-Does this make sense? Did I overlook some details?
+  int flags =3D 0;
 
-There were already several proposals on this topic, among which those
-listed at https://git.wiki.kernel.org/index.php/SmallProjectsIdeas#git_bisect_fix.2Funfixed.
-I'm interested in contacting the prospective mentor, Christian Couder,
-to go over these. What's the proper way to ask for an introduction? I
-tried asking on IRC, but had no success.
+  if (*arg =3D=3D '-') {
+          flags |=3D REVERSE_SORT;
+          arg++;
+  }
+  if (starts_with(arg, "version:")) {
+          *sort =3D VERCMP_SORT;
+          arg +=3D 8;
+  } else
+          *sort =3D STRCMP_SORT;
 
-Cheers,
-Jacopo Notarstefano
+  *sort |=3D flags;
+
+I think they end up doing the same thing, but maybe I am missing
+something.
+
+-Peff
