@@ -1,107 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: `git stash pop` UX Problem
-Date: Wed, 26 Feb 2014 14:17:10 -0800
-Message-ID: <xmqq4n3l34ex.fsf@gitster.dls.corp.google.com>
-References: <530B0395.5030407@booking.com>
-	<CANUGeEbPrPp8Sa-KEKSxNDWJShdkDBTkQyXv7tDJ6ReH6MXrHw@mail.gmail.com>
-	<530C953F.9050805@booking.com> <vpqlhwz5o58.fsf@anie.imag.fr>
-	<530CA4C9.60601@booking.com> <vpqeh2r43kx.fsf@anie.imag.fr>
-	<530D97BA.1080107@booking.com> <vpqzjlez3c4.fsf@anie.imag.fr>
-	<xmqqd2i94qfq.fsf@gitster.dls.corp.google.com>
-	<vpqy50xd5cr.fsf@anie.imag.fr> <87ha7l62d6.fsf@fencepost.gnu.org>
+From: Andrew Wong <andrew.kw.w@gmail.com>
+Subject: Re: [RFC 1/3] wt-status: Make conflict hint message more consistent
+ with other hints
+Date: Wed, 26 Feb 2014 18:07:45 -0500
+Message-ID: <CADgNjan+2kS-L4KwS4-wBMHcuQdW4cuHTNj4TA3yqExtr=dCUQ@mail.gmail.com>
+References: <1393437985-31401-1-git-send-email-andrew.kw.w@gmail.com>
+	<1393437985-31401-2-git-send-email-andrew.kw.w@gmail.com>
+	<xmqqmwhd391s.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Omar Othman <omar.othman@booking.com>,
-	Brandon McCaig <bamccaig@gmail.com>, git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Wed Feb 26 23:17:28 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 27 00:07:54 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WImn9-0005dT-7l
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Feb 2014 23:17:27 +0100
+	id 1WInZv-00016j-70
+	for gcvg-git-2@plane.gmane.org; Thu, 27 Feb 2014 00:07:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752040AbaBZWRT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Feb 2014 17:17:19 -0500
-Received: from b-pb-sasl-quonix.pobox.com ([208.72.237.35]:51322 "EHLO
-	smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752816AbaBZWRR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Feb 2014 17:17:17 -0500
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id 5DFB56DB18;
-	Wed, 26 Feb 2014 17:17:16 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=fsaF4T0dQNb1v19Jmv0HcEnNz5s=; b=hpUjdb
-	C2ekdgQm2D2DLkE7vqwIuJ8E5G49riWMZc0PeoUnLSYKhwAmQ8g1HEc3TyCUiiU9
-	xVs5DkQJLc6bKWLLIpw/Fqnu6MFe5TRRF/adQu8DeWDG81QA83tw1zNV/e+QOJ3j
-	r6B79qy4pI2x4a3ynrNfoCTXCslYup3XYb5nM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=pvzPKb5QGc0gWjSblm5M+b/qPkeKO0WJ
-	7Tk8CX8IQwsVD/EICfORG0SCcBRqmjhf32+yEy1J1cwCsqZLubnfI32Vv1qtf71T
-	lps3CZy0ND3VTiZSPwQUjjdRUcZqChJoKhrQ97ud6pSat9kLOt1Ab2lazV4xAtGF
-	VGQCXMDWE6k=
-Received: from b-pb-sasl-quonix.pobox.com (unknown [127.0.0.1])
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTP id D01EC6DB15;
-	Wed, 26 Feb 2014 17:17:15 -0500 (EST)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by b-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 553A56DB0E;
-	Wed, 26 Feb 2014 17:17:13 -0500 (EST)
-In-Reply-To: <87ha7l62d6.fsf@fencepost.gnu.org> (David Kastrup's message of
-	"Wed, 26 Feb 2014 21:33:09 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: BE26ABC6-9F33-11E3-8A77-8D19802839F8-77302942!b-pb-sasl-quonix.pobox.com
+	id S1753352AbaBZXHr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Feb 2014 18:07:47 -0500
+Received: from mail-we0-f173.google.com ([74.125.82.173]:53683 "EHLO
+	mail-we0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753269AbaBZXHq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Feb 2014 18:07:46 -0500
+Received: by mail-we0-f173.google.com with SMTP id x48so2220000wes.18
+        for <git@vger.kernel.org>; Wed, 26 Feb 2014 15:07:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=Q/ZqWJ6CxtCqDwfqGceG561TSKIjNxSAraQEX2Hu/UQ=;
+        b=yHT5zqvojWUVg9ZxG9lB4SXVk6rVc1bFR9qdI0mnztuJcYHuzft88k+ZDJVggRVCHX
+         s8Mo7NUSrGeOo2d5mv5UVP2QSkb6OjUYyXPRfTZz5zpots+qmQEliUKvJU7+fKLhcZ1y
+         lt6OElLQdtOnFnMpo231G/hANyrDJWTcR6kwdthT9SvMyINTzIrBp9bwNMhg36QSZ+LT
+         r81fbvAfR0ksOfUMbGSiq+rhg4S4A1T3iaXrjdZMFT4tC6Lv04U7VuA59iJSnHwzwtH0
+         9NlNEaZqa8FFhsmP4xcfclQ9nf5qyauKlWc4r8Bx3t3iDgMLie84z65GbXhUxJWIYW3J
+         /tuw==
+X-Received: by 10.180.97.72 with SMTP id dy8mr9897413wib.5.1393456065524; Wed,
+ 26 Feb 2014 15:07:45 -0800 (PST)
+Received: by 10.194.81.65 with HTTP; Wed, 26 Feb 2014 15:07:45 -0800 (PST)
+In-Reply-To: <xmqqmwhd391s.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242769>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242770>
 
-David Kastrup <dak@gnu.org> writes:
+On Wed, Feb 26, 2014 at 3:37 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> I see that you are trying to match the phrasing used in the other
+> side of this if/else (which is outside the context of the posted
+> patch).  Over there we say "... to conclude merge" while the new
+> text says "... to conclude THE merge".  Don't we want to match them?
 
-> All that verbosity...
->
-> $ git stash pop
-> Auto-merging foo.txt
-> CONFLICT (content): Merge conflict in foo.txt
-> Cowardly refusing to drop stash.
-> $
+Ah, good catch. My mind just read it as "conclude THE merge", even
+though the word wasn't there. Let's add the "the" in. :)
 
-Actually, modulo "Cowardly", that may be the most harmless phrasing,
-as apply_stash may try to signal an error for reasons not related to
-an inability to apply the change cleanly (e.g. we may have failed to
-refresh the index).
+> For those who did not look beyond the context of the patch text, as
+> I had to look these up to convince myself that the proposed change
+> is a good one.  This function is only called when we see MERGE_HEAD,
+> so "unmerged" here can come only from a failed merge, not other
+> mergy operations like am, cherry-pick, revert, etc. and telling the
+> user that 'commit' will conclude the merge will not be misleading
+> (unless you count "'git commit' will conclude a conflicted 'git pull'"
+> as misleading, and I of course do not).
 
-Whatever phrasing we may end up choosing, the change itself should
-be trivial in any case.
-
- git-stash.sh | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
-
-diff --git a/git-stash.sh b/git-stash.sh
-index f0a94ab..4798bcf 100755
---- a/git-stash.sh
-+++ b/git-stash.sh
-@@ -512,8 +512,14 @@ apply_stash () {
- pop_stash() {
- 	assert_stash_ref "$@"
- 
--	apply_stash "$@" &&
--	drop_stash "$@"
-+	if apply_stash "$@"
-+	then
-+		drop_stash "$@"
-+	else
-+		status=$?
-+		say "The stash is kept in case you need it again."
-+		exit $status
-+	fi
- }
- 
- drop_stash () {
+I'll update the commit message to explain that I'm match the other
+side of the if/else.
