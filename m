@@ -1,83 +1,98 @@
-From: Faiz Kothari <faiz.off93@gmail.com>
-Subject: [PATCH] GSoC 2014 Microproject 1 rewrite skip_prefix() as loop
-Date: Wed, 26 Feb 2014 22:16:35 +0530
-Message-ID: <1393433195.4629.4.camel@dj-pc>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: Git in GSoC 2014
+Date: Wed, 26 Feb 2014 08:48:13 -0800
+Message-ID: <CAJo=hJs-SaDEmbdWO_NqWQNQBVDszPYx6b50ARytCNwVDZaRwg@mail.gmail.com>
+References: <20140225154158.GA9038@sigill.intra.peff.net> <CACsJy8Bw7JqokgGt46T7Xivk08F-DS4Dj-j1PWxoStu=cVzo5w@mail.gmail.com>
+ <CAFFjANRqKqq_f9SCR4vP3YKUpfk1J2RQdB9G4gnY2OcZivzhXQ@mail.gmail.com> <20140226113028.GB3599@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: Faiz Kothari <faiz.off93@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 26 17:46:51 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?ISO-8859-1?Q?Vicent_Mart=ED?= <tanoku@gmail.com>,
+	Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Feb 26 17:48:43 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WIhd8-00024W-Ki
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Feb 2014 17:46:47 +0100
+	id 1WIhf0-0000xe-VE
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Feb 2014 17:48:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753228AbaBZQqo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Feb 2014 11:46:44 -0500
-Received: from mail-pb0-f49.google.com ([209.85.160.49]:58406 "EHLO
-	mail-pb0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751879AbaBZQqm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Feb 2014 11:46:42 -0500
-Received: by mail-pb0-f49.google.com with SMTP id jt11so1212770pbb.8
-        for <git@vger.kernel.org>; Wed, 26 Feb 2014 08:46:42 -0800 (PST)
+	id S1752995AbaBZQsi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 26 Feb 2014 11:48:38 -0500
+Received: from mail-wi0-f175.google.com ([209.85.212.175]:65509 "EHLO
+	mail-wi0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751986AbaBZQsh convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 26 Feb 2014 11:48:37 -0500
+Received: by mail-wi0-f175.google.com with SMTP id hm4so6145231wib.14
+        for <git@vger.kernel.org>; Wed, 26 Feb 2014 08:48:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:subject:from:to:cc:date:content-type:mime-version
-         :content-transfer-encoding;
-        bh=+z6u5TLGjh8GnY+AP0rsnJRfM96jiR83k21/T4bn2Xc=;
-        b=hClBvmojRpQwATXVCxdEVPtdOzFZ+0iuJSRTwInOeMpB28eKr75vucq95HIGNncWxO
-         onAPdi4X8QHqpKl83LcDg9jVOm6Uxqgc77HlBMVdTCHsknP+BXVy3D7PQSKvVHHtCayB
-         evla64I0x97n7C+KT8vB3S1tXe1Pzq9Bbs3mbmOZDwV+q0G/Hq/3MVpz8eEM0ru0OdNl
-         jOU7+Aw48YqCzpj5NUkWWkwNTWgUihRt5gbdTt5w+SCWcpwimsHNxvq3uPsRNgzuPpWC
-         Cne7yoKCISLICIquxusJ0G9bi2aP1wRAwdFaeHJ2pq05o1arWG5Vdjpq7VcTjL2s42w9
-         hY6w==
-X-Received: by 10.68.36.41 with SMTP id n9mr7675639pbj.99.1393433202402;
-        Wed, 26 Feb 2014 08:46:42 -0800 (PST)
-Received: from [10.3.1.100] ([115.248.130.148])
-        by mx.google.com with ESMTPSA id kc9sm4926112pbc.25.2014.02.26.08.46.39
-        for <multiple recipients>
-        (version=SSLv3 cipher=RC4-SHA bits=128/128);
-        Wed, 26 Feb 2014 08:46:41 -0800 (PST)
-X-Mailer: Evolution 3.10.4 (3.10.4-1.fc20) 
+        d=spearce.org; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=hkS1b9GcQLs2r6Y/V8gJX8xxO2/i9yY7GVaDIr/PY+g=;
+        b=WobOCsLVDZ2BtbzuLbk9gQo1Xxz3bgpRzgEIxznhuyilJiBgqeQJS4GarMZ1ivXNTk
+         7h86q+WBEPDc4u6gVO+4Tp7wyiy1zJ06QpWIhP3DlZmxbWUSJZbfffVLDrRoMKnzp0pn
+         hWMbdZRlq0qqZtosDggvQho45ohm9R0R0Ci3Y=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=hkS1b9GcQLs2r6Y/V8gJX8xxO2/i9yY7GVaDIr/PY+g=;
+        b=IoqUpdDgcp5nA3eaRybyNQavUfm8X4Qv5XhDSpJ94iJ3wOSf7xW1CpKppHa5nHddE0
+         2Ze/R9fUTLIpp/UMpa+qjWWZvbKb+7aJBT4xwiXXsX1AOK5WPe3m4+CNAtrctJfKJ6w6
+         792BAVqZd8cLe51tJVdt0lOpVvkAwGNKl8TXYoYlE9U+EpOm+bB5R7xSGpcCK8K6BWUw
+         CLAnfk/FBEfoYWzBwCGUEYl13wcb+UgHKveWLIYJOSXNYollRu+ltJsfRCbcv3Gn5CWp
+         XaJsXcn5w6hmIbRYJsEsXtAl6SsmGAWxK3Mgq4goGpx0TjcK3yls9Q4AFtYOj4rJpBR5
+         XfZg==
+X-Gm-Message-State: ALoCoQlCXXgehNvDJDLmzagTRpjImFH5aA1zDV7aA7nrlVt+DFaqKQ+WHLpQGjNmTNSj+TnAOJ0v
+X-Received: by 10.194.90.177 with SMTP id bx17mr773635wjb.91.1393433313587;
+ Wed, 26 Feb 2014 08:48:33 -0800 (PST)
+Received: by 10.227.7.132 with HTTP; Wed, 26 Feb 2014 08:48:13 -0800 (PST)
+In-Reply-To: <20140226113028.GB3599@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242736>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242737>
 
-Hi,
-I am Faiz Kothari, I am a GSoC aspirant and want to contribute to git.
-I am submitting the patch in reponse to Microproject 1,
-rewrite git-compat-util.h:skip_prefix() as a loop.
+On Wed, Feb 26, 2014 at 3:30 AM, Jeff King <peff@peff.net> wrote:
+> On Wed, Feb 26, 2014 at 12:24:13PM +0100, Vicent Mart=ED wrote:
+>
+>> > One thing I noticed after tg/index-v4-format is both libgit2 and j=
+git
+>> > do not seem to support index v4. So we could add "index v4 support=
+ on
+>> > libgit2" to the idea page. It's a relatively small task though onc=
+e
+>> > you get a hang on index format.
+>>
+>> That sounds like a nice task for the Summer of Code too, specially
+>> with the current effort to make Index v4 more visible in Core Git.
+>
+> Yeah, I'd agree. Want to write it up?
+>
+>> I wonder if anybody from JGit would also be interested on mentoring
+>> for the equivalent task (index v4 on JGit). I've CC'ed Shawn Pearce.
+>
+> A project that added to both libgit2 and JGit would be cool, but I do=
+n't
+> know if that is asking too much of the student (multiple languages an=
+d
+> projects is going to increase the time spent on non-code friction).
 
-Signed-off-by: Faiz Kothari <faiz.off93@gmail.com>
----
- git-compat-util.h | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+I agree, its too much to ask from a single student to add it to both pr=
+ojects.
 
-diff --git a/git-compat-util.h b/git-compat-util.h
-index cbd86c3..bb2582a 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -357,8 +357,11 @@ extern int suffixcmp(const char *str, const char
-*suffix);
- 
- static inline const char *skip_prefix(const char *str, const char
-*prefix)
- {
--	size_t len = strlen(prefix);
--	return strncmp(str, prefix, len) ? NULL : str + len;
-+	for (; ; str++, prefix++)
-+		if (!*prefix)
-+			return str;//code same as strbuf.c:starts_with()
-+		else if (*str != *prefix)
-+			return NULL;
- }
- 
- #if defined(NO_MMAP) || defined(USE_WIN32_MMAP)
--- 
-1.9.0.1.ge8df331
+
+As far as JGit supporting index v4, I am holding my breath and waiting
+for index v5. We keep spinning through dircache versions with
+relatively little gain for each one, but a lot of complexity. As it
+was a prior version was sort of a disaster with the fixed length
+portion of records being either 62 or 64 bytes depending on a bit set
+per record. Yuck. I haven't been reading every message in the v4 topic
+but nothing impressed me as being worth my time to implement in JGit,
+other than to be compatible with a version of git-core that won't land
+in Debian stable for at least 2 more years.
