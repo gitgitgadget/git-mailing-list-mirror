@@ -1,89 +1,102 @@
-From: Theodore Ts'o <tytso@mit.edu>
-Subject: Re: `git stash pop` UX Problem
-Date: Wed, 26 Feb 2014 10:17:46 -0500
-Message-ID: <20140226151746.GA7422@thunk.org>
-References: <530B0395.5030407@booking.com>
- <CANUGeEbPrPp8Sa-KEKSxNDWJShdkDBTkQyXv7tDJ6ReH6MXrHw@mail.gmail.com>
- <vpqlhx0a3cb.fsf@anie.imag.fr>
- <530C893D.7000108@ira.uka.de>
- <vpqzjlf5q2z.fsf@anie.imag.fr>
- <xmqqwqgj57n9.fsf@gitster.dls.corp.google.com>
+From: Robert Dailey <rcdailey.lists@gmail.com>
+Subject: Re: Cygwin + git log = no pager!
+Date: Wed, 26 Feb 2014 09:54:39 -0600
+Message-ID: <CAHd499Co9Amdf_gWnY81dkRa2uDTH0fVM8HSb99VHhrb1AAKhA@mail.gmail.com>
+References: <CAHd499BT1Q308+q0NB9Dpx=ncQZwRn0tg=q_PE8RutaVqH+xQQ@mail.gmail.com>
+	<53085434.4060106@gmail.com>
+	<CAHd499AbsUwmA0HWu31jW2n8eUNnRtU7URKPfBU7EhU6-F48zg@mail.gmail.com>
+	<530AFAFD.2060504@gmail.com>
+	<20140224090618.GB10698@sigill.intra.peff.net>
+	<CAHd499BDBgaAZFkoc=S9i9hG=NifAmqhaW86fqgkzjShZd07ww@mail.gmail.com>
+	<20140226092610.GB32537@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Holger Hellmuth <hellmuth@ira.uka.de>,
-	Brandon McCaig <bamccaig@gmail.com>,
-	Omar Othman <omar.othman@booking.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 26 16:18:04 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Chris Packham <judge.packham@gmail.com>, Git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Feb 26 16:54:46 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WIgFF-00030M-RR
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Feb 2014 16:18:02 +0100
+	id 1WIgom-0004DK-SE
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Feb 2014 16:54:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752159AbaBZPR5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Feb 2014 10:17:57 -0500
-Received: from imap.thunk.org ([74.207.234.97]:34341 "EHLO imap.thunk.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751439AbaBZPR4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Feb 2014 10:17:56 -0500
-Received: from root (helo=closure.thunk.org)
-	by imap.thunk.org with local-esmtp (Exim 4.80)
-	(envelope-from <tytso@thunk.org>)
-	id 1WIgF0-00014j-O4; Wed, 26 Feb 2014 15:17:46 +0000
-Received: by closure.thunk.org (Postfix, from userid 15806)
-	id 1AB165803C4; Wed, 26 Feb 2014 10:17:46 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=thunk.org; s=mail;
-	t=1393427866; bh=Fu/9EMTGrxqwKIQCCYHS+wsbIwROCZ7kWvS6pIc/Lz0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=SqPkppRAggi9ggmzRze4y1X03yUjXKOGVZLX4hLpMeZ6nDlqjxYTtfLpFbgK9Z3Ov
-	 aJcD0VUKxEtXLG9OgAsQKH9aCSQMzqWPjTDnkO+LpIVqrpXGKcpBuMGUFp1cJ3hkrj
-	 u/9yKrQJu7CrkhNOq6lB3cbU40/jMLCDgibYrMUc=
-Content-Disposition: inline
-In-Reply-To: <xmqqwqgj57n9.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on imap.thunk.org); SAEximRunCond expanded to false
+	id S1751336AbaBZPyk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Feb 2014 10:54:40 -0500
+Received: from mail-vc0-f181.google.com ([209.85.220.181]:43174 "EHLO
+	mail-vc0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751164AbaBZPyk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Feb 2014 10:54:40 -0500
+Received: by mail-vc0-f181.google.com with SMTP id lg15so1127181vcb.12
+        for <git@vger.kernel.org>; Wed, 26 Feb 2014 07:54:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=+TU3LOQFNpajBgcp1buDaD4E8OMeKIaGloQ8v9aShGA=;
+        b=d7dPSEACW5WTme0m5e6MLiy8ppEK4Lr/WVrNXG8wyhvCCfUydeQTbseR2J61lud7tD
+         aWgJ70aedNRiX43nZP5B8XfI1uK6ltibjruKciRkUcvqZAUL6BF+NntcRMcCQaPzePvc
+         NbiWWCI1a/5oYdVl7TTuDNy+Ycr5N2h2/UUQ70Tbz92aOhetvQFJMVBBTnw96NM9+JFo
+         406MHbuIwiEIrpGJu1rKzgpSxTIhOnixq6l5/J5LJ6Vh3XIHszr10mhw6thnOw866qo+
+         awaiLcXwR+yL1nRA/ZF61DHOzQ/1d3OTSbnThbqvrJCdOyfyS5YTM0JF2XK7zwUucTw2
+         TWzA==
+X-Received: by 10.220.147.16 with SMTP id j16mr6516834vcv.28.1393430079189;
+ Wed, 26 Feb 2014 07:54:39 -0800 (PST)
+X-Google-Sender-Delegation: rcdailey@gmail.com
+Received: by 10.221.49.68 with HTTP; Wed, 26 Feb 2014 07:54:39 -0800 (PST)
+In-Reply-To: <20140226092610.GB32537@sigill.intra.peff.net>
+X-Google-Sender-Auth: srpPR_mRusZoJ2J4dnxWr45Im3Y
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242731>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242732>
 
-On Tue, Feb 25, 2014 at 11:12:10AM -0800, Junio C Hamano wrote:
-> So, I tend to agree with you, while I do understand where "I want to
-> know about what is in stash" is coming from (and that is why we do
-> have "git stash list" command).
+On Wed, Feb 26, 2014 at 3:26 AM, Jeff King <peff@peff.net> wrote:
+> On Mon, Feb 24, 2014 at 01:34:34PM -0600, Robert Dailey wrote:
+>
+>> So I set GIT_PAGER to 'echo custom pager' as you instructed, and I
+>> noticed that wasn't being printed when I ran my git log alias. So what
+>> I did after that was set GIT_TRACE=1 and here is the output I see
+>> before my logs start printing:
+>> [...]
+>> Does using an alias have something to do with this?
+>
+> The aliases shouldn't matter (and I constructed a scenario like the one
+> you showed and it starts the pager for me on Linux). It's more like git
+> is deciding not to show a pager at all (e.g., it thinks your stdout is
+> not a tty). Does running:
+>
+>   git log
+>
+> not use a pager, but:
+>
+>   git -p log
+>
+> does? In that case, I think that your stdout is not a tty for some
+> reason.
+>
+> If that is the case, try:
+>
+>   git -p lg
+>
+> That _should_ turn on the pager, but I think it does not due to a bug
+> with setup_pager and aliases. Something like the patch below would make
+> it work (but if you are having to use "-p" manually, there is something
+> to fix in your cygwin environment, which does not think you are on a
+> terminal).
+>
+> -Peff
+>
+> <snip>
 
-One thing that would be nice is if there was built-in "git stash list"
-option which only shows the stash items which match the current
-branch.  The discussion on this thread inspired me to create the
-following:
+I have tried `git -p log` and `git log` and neither use the pager.
+Should I apply the provided patch to the Git for Windows master
+branch? Also I'm not sure if there is a convenient way to apply a
+patch via email, so should I copy & paste it to a file & then apply
+the file?
 
-#!/bin/sh
-
-b=$(git symbolic-ref HEAD | sed -e 's;refs/heads/;;')
-git stash list --pretty="%gd %cr on: %s" | grep "WIP on $b" | \
-    sed -e "s/ WIP on $b: [0-9a-f]*//"
-
-This results in:
-
-stash@{0} 4 weeks ago on: mke2fs: add make_hugefile feature
-stash@{1} 5 weeks ago on: e2fsck, mke2fs: enable octal integers in the profile/config file
-stash@{2} 5 weeks ago on: e2fsck, mke2fs: enable octal integers in the profile/config file
-stash@{3} 5 weeks ago on: mke2fs: optimize fix_cluster_bg_counts()
-stash@{4} 8 weeks ago on: e4defrag: choose the best available posix_fadvise variant
-stash@{5} 9 weeks ago on: e2image: add -c option to optimize file system copying for flash devices
-stash@{6} 9 weeks ago on: e2image: clean up gcc -Wall and sparse nits
-stash@{7} 9 weeks ago on: e2fsck: fix printf conversion specs in ea_refcount.c
-
-(Yes, I have a lot of junk on my git stash; showing the relative time
-is going to help my GC what I have left on my git stash list.)
-
-Cheers,
-
-						- Ted
+I'm assuming your patch depended on -p working but not without it, so
+I'm not sure if you still think the patch might help. Let me know!
+Thanks for your help.
