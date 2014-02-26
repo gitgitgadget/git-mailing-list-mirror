@@ -1,61 +1,107 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v3] tag: support --sort=<spec>
-Date: Wed, 26 Feb 2014 18:31:58 +0700
-Message-ID: <CACsJy8An3GH7LMx4=s-7hO3waphcC2nGK1N-CvPYbh+=Zzngqw@mail.gmail.com>
-References: <1393039762-4843-1-git-send-email-pclouds@gmail.com>
- <1393330935-22229-1-git-send-email-pclouds@gmail.com> <20140226090511.GA32537@sigill.intra.peff.net>
- <CACsJy8CW9p-PDJC9zXBwXrxOk9GhBFk1nVtG1Xn76g3FN+KgaA@mail.gmail.com> <20140226110803.GG25711@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: GSoC idea: allow "git rebase --interactive" todo lines to take
+ options
+Date: Wed, 26 Feb 2014 06:42:01 -0500
+Message-ID: <20140226114200.GA3779@sigill.intra.peff.net>
+References: <530DA00E.4090402@alum.mit.edu>
+ <20140226105249.GE25711@sigill.intra.peff.net>
+ <530DCC83.1060805@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Feb 26 12:32:35 2014
+Content-Type: text/plain; charset=utf-8
+Cc: git discussion list <git@vger.kernel.org>,
+	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Wed Feb 26 12:42:13 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WIcj4-0002NI-LV
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Feb 2014 12:32:35 +0100
+	id 1WIcsO-0001qu-DF
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Feb 2014 12:42:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752046AbaBZLca (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Feb 2014 06:32:30 -0500
-Received: from mail-qa0-f46.google.com ([209.85.216.46]:43050 "EHLO
-	mail-qa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752042AbaBZLc3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Feb 2014 06:32:29 -0500
-Received: by mail-qa0-f46.google.com with SMTP id k15so2083552qaq.33
-        for <git@vger.kernel.org>; Wed, 26 Feb 2014 03:32:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=6zLiYxpDHRqHpArNu4XQ8KWuuLkd+9eaOVsHy1HKNAI=;
-        b=jTDktCBrCFAnoXWaV8A/pjbtmirlyE/ZtEcZMf6lyak7/1hnlPuHKAMPRcmPgr2AE3
-         04DZ2jViTbu6gPmfC2rI1sQjOOnOnO9K2NR7D3BNrvifeHNoDaU4ckD6+Pq3T7OiyIuV
-         dA98rWl992iOFtvpoI44IElyzmPChBVOv/h1vqXK6IDvxZ4I1DEDLkLk8U4im8twR701
-         PieCaqdHsJ6gRsIbmtc5CySO2K8RIgHUsLze8V+qvKb6MYTDzwgiDi+6FSLjhDQKQV8Z
-         1nnk0OQyAMoNPWdGbRB6iHGonKKCtr8zMjQ5ibznoG/bXdqBNdcVChFs10fWB0KXpTNk
-         Efhw==
-X-Received: by 10.224.19.199 with SMTP id c7mr7135728qab.78.1393414348411;
- Wed, 26 Feb 2014 03:32:28 -0800 (PST)
-Received: by 10.96.215.102 with HTTP; Wed, 26 Feb 2014 03:31:58 -0800 (PST)
-In-Reply-To: <20140226110803.GG25711@sigill.intra.peff.net>
+	id S1752168AbaBZLmF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Feb 2014 06:42:05 -0500
+Received: from cloud.peff.net ([50.56.180.127]:57323 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751393AbaBZLmD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Feb 2014 06:42:03 -0500
+Received: (qmail 13643 invoked by uid 102); 26 Feb 2014 11:42:03 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 26 Feb 2014 05:42:03 -0600
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 26 Feb 2014 06:42:01 -0500
+Content-Disposition: inline
+In-Reply-To: <530DCC83.1060805@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242727>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242728>
 
-On Wed, Feb 26, 2014 at 6:08 PM, Jeff King <peff@peff.net> wrote:
-> But before thinking about that, I'd want to know why
-> glibc behaves as it does.
+On Wed, Feb 26, 2014 at 12:14:11PM +0100, Michael Haggerty wrote:
 
-Pure guess. It may be because it targets more than software version.
-In strverscmp man page, the example is "jan1, jan10, jan2...".
-versionsort() in glibc might be the reason that strverscmp was added
-and it's used to compare/sort dir entries, so the target might be
-numbered log files.
--- 
-Duy
+> > [1] The one feature I would like in this vein is that editing the title
+> >     in the instruction-sheet would modify the commit message of the
+> >     relevant commit. For some reason I try to do this every few weeks,
+> >     but of course the changes are just thrown away.
+> 
+> Given that commit messages can be more than one line long, a feature
+> like this would be confusing, I think, and perhaps subtly encourage
+> people to limit their commit messages to a single line, which would be a
+> bad thing.
+
+Right, I was assuming it would just modify the subject-line, and leave
+the rest intact (I often want to use it to just replace one word or fix
+a typo, since I am starting right at it in the insn sheet).
+
+> Plus, until now such edits were thrown away, so there are
+> backwards compatibility problems if we suddenly start preserving such edits.
+
+Good point. For true interactive use it probably wouldn't be that big a
+deal, but people do weird things with GIT_EDITOR and auto-munging the
+list of commits. A heuristic like "is there any message there at all"
+might work, as you mentioned, but heuristics make me nervous.
+
+> But using the other ideas discussed here one could do
+> 
+>     pick -m "New log message" <sha1>
+
+Yeah, that would work, though you have to retype the whole thing, which
+is potentially annoying (clever use of your editor can pull it over from
+the other side, but it's not super-friendly).
+
+Something like:
+
+  pick --subject <sha1> <modified message...>
+
+would be simpler.
+
+>     amend -m "Revised log message"
+
+That would replace the whole message, which I definitely don't want (and
+would encourage bad habits).
+
+> Another, more wonkish idea I though of would be
+> 
+>     pick --tree=<treeish> <sha1>
+> 
+> to force the tree of the commit to be set to that of the specified
+> <treeish> while keeping the commit metadata from <sha1>.
+
+I think there's a large foot-shooting capacity there. Any commit you've
+reordered from after the "--tree" to before it will mysteriously get
+undone in the "--tree" commit. E.g.:
+
+  pick aaaaaaa
+  pick bbbbbbb
+  pick ccccccc
+
+being done as:
+
+  pick ccccccc
+  pick bbbbbbb
+  pick --tree=bbbbbbb aaaaaaa
+
+-Peff
