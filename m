@@ -1,132 +1,70 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: GSoC idea: allow "git rebase --interactive" todo lines to take options
-Date: Wed, 26 Feb 2014 09:04:30 +0100
-Message-ID: <530DA00E.4090402@alum.mit.edu>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: `git stash pop` UX Problem
+Date: Wed, 26 Feb 2014 09:27:07 +0100
+Message-ID: <vpqzjlez3c4.fsf@anie.imag.fr>
+References: <530B0395.5030407@booking.com>
+	<CANUGeEbPrPp8Sa-KEKSxNDWJShdkDBTkQyXv7tDJ6ReH6MXrHw@mail.gmail.com>
+	<530C953F.9050805@booking.com> <vpqlhwz5o58.fsf@anie.imag.fr>
+	<530CA4C9.60601@booking.com> <vpqeh2r43kx.fsf@anie.imag.fr>
+	<530D97BA.1080107@booking.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: git discussion list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Feb 26 09:04:47 2014
+Content-Type: text/plain
+Cc: Brandon McCaig <bamccaig@gmail.com>, git@vger.kernel.org
+To: Omar Othman <omar.othman@booking.com>
+X-From: git-owner@vger.kernel.org Wed Feb 26 09:27:33 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WIZTr-0002OV-Ke
-	for gcvg-git-2@plane.gmane.org; Wed, 26 Feb 2014 09:04:39 +0100
+	id 1WIZpz-0002Hz-Jj
+	for gcvg-git-2@plane.gmane.org; Wed, 26 Feb 2014 09:27:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751864AbaBZIEf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Feb 2014 03:04:35 -0500
-Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:54638 "EHLO
-	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751017AbaBZIEe (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 26 Feb 2014 03:04:34 -0500
-X-AuditID: 1207440f-f79326d000003c9f-73-530da0118f0e
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id D6.20.15519.110AD035; Wed, 26 Feb 2014 03:04:33 -0500 (EST)
-Received: from [192.168.69.148] (p57A2498D.dip0.t-ipconnect.de [87.162.73.141])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s1Q84VSY020285
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Wed, 26 Feb 2014 03:04:32 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20131103 Icedove/17.0.10
-X-Enigmail-Version: 1.6
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprCKsWRmVeSWpSXmKPExsUixO6iqCu4gDfYoO+rnEXXlW4mi/7lXWwW
-	E+43MDswe+ycdZfd48PHOI/Pm+QCmKO4bZISS8qCM9Pz9O0SuDPuLioomCpa0bRzE0sD4wmB
-	LkZODgkBE4kFnUuZIWwxiQv31rN1MXJxCAlcZpRYveQjO0hCSOA8k8SNz2kgNq+AtsTyl8uY
-	QGwWAVWJyy3rwZrZBHQlFvU0g8VFBYIlVl9+wAJRLyhxcuYTMFsEqGbXs6tsIDazQJnE9/5r
-	YL3CAv4S/7pXAtVwAB0hLtHTGARRoiPxru8BM4QtL7H97RzmCYz8s5BMnYWkbBaSsgWMzKsY
-	5RJzSnN1cxMzc4pTk3WLkxPz8lKLdE30cjNL9FJTSjcxQsKTfwdj13qZQ4wCHIxKPLwBLLzB
-	QqyJZcWVuYcYJTmYlER5i2YDhfiS8lMqMxKLM+KLSnNSiw8xSnAwK4nwvq4AyvGmJFZWpRbl
-	w6SkOViUxHnVl6j7CQmkJ5akZqemFqQWwWRlODiUJHjZ5wM1ChalpqdWpGXmlCCkmTg4QYZz
-	SYkUp+alpBYllpZkxIOiMb4YGI8gKR6gvRzzQPYWFyTmAkUhWk8xGnPcbvv1iZHj6vZ/nxiF
-	WPLy81KlxHm9QUoFQEozSvPgFsES0ytGcaC/hXkFQe7hASY1uHmvgFYxAa06Ks0DsqokESEl
-	1cC4TXxGzAe3iS5/t38PYgwM9Iw8+EWZT9/R8YFxQdGtgqMnT3kf7Nu2Z5NE0MzYr2Lzb6td
-	nxv4302uaoPopSdCDMwu2usmZfQF2XN++6lukGVz5E/uJMMKA+uFvatu61//o7Fv 
+	id S1750907AbaBZI1S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Feb 2014 03:27:18 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:54714 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750799AbaBZI1R (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Feb 2014 03:27:17 -0500
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id s1Q8R7xm013581
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 26 Feb 2014 09:27:07 +0100
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s1Q8R7B7014223;
+	Wed, 26 Feb 2014 09:27:07 +0100
+In-Reply-To: <530D97BA.1080107@booking.com> (Omar Othman's message of "Wed, 26
+	Feb 2014 08:28:58 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 26 Feb 2014 09:27:07 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: s1Q8R7xm013581
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1394008030.754@1uFzySTkgX3xemwCgKmiXA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242701>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/242702>
 
-I just submitted the idea below as a pull request [1] to the GSoC ideas
-page, but I'd like to get some mailing list feedback first that the idea
-is sensible...
+Omar Othman <omar.othman@booking.com> writes:
 
-And, is there anybody else willing to volunteer as a mentor for this
-project?  (There should be at least two.)
+> Though I don't know why you think this is important:
+>> Now, the real question is: when would Git stop showing this advice. I
+>> don't see a real way to answer this, and I'd rather avoid doing just a
+>> guess.
+> If it is really annoying for the user, we can just have a
+> configuration parameter to switch this message on/off.
 
-Michael
+Just saying "You have X stash" is OK to me as long as there is an option
+to deactivate it.
 
-[1] https://github.com/git/git.github.io/pull/5
-
-
-## Line options for `git rebase --interactive`
-
-One of the more powerful features in Git is the command `git rebase
---interactive`, which allows recent commits to be reordered, squashed
-together, or even revised completely.  The command creates a todo list
-and opens it in an editor.  The original todo list might look like:
-
-    pick deadbee Implement feature XXX
-    pick c0ffeee The oneline of the next commit
-    pick 01a01a0 This change is questionable
-    pick f1a5c00 Fix to feature XXX
-    pick deadbab The oneline of the commit after
-
-The user can edit the list to make changes to the history, for example
-to
-
-    pick deadbee Implement feature XXX
-    squash f1a5c00 Fix to feature XXX
-    exec make
-    edit c0ffeee The oneline of the next commit
-    pick deadbab The oneline of the commit after
-
-This would cause commits `deadbee` and `f1a5c00` to be squashed
-together into one commit followed by running `make` to test-compile
-the results, delete commit `01a01a0` altogether, and stop after
-committing commit `c0ffeee` to allow the user to make changes.
-
-It would be nice to support more flexibility in the todo-list commands
-by allowing the commands to take options.  Maybe
-
-* Convert a commit into a merge commit:
-
-      pick -p c0ffeee -p e1ee712 deadbab The oneline of the commit after
-
-* After squashing two commits, add a "Signed-off-by" line to the
-  commit log message:
-
-    pick deadbee Implement feature XXX
-    squash --signoff f1a5c00 Fix to feature XXX
-
-  or GPG-sign a commit:
-
-    pick --gpg-sign=<keyid> deadbee Implement feature XXX
-
-* Reset the author of the commit to the current user or a specified
-  user:
-
-    pick --reset-author deadbee Implement feature XXX
-    pick --author="A U Thor <author@example.com>" deadbab The oneline of
-the commit after
-
-The goal of this project would be (1) to add the infrastructure for
-handling options on todo-list lines, and (2) implement some concrete
-options.  A big part of the difficulty of this project is that `git
-rebase --interactive` is implemented via a sparsely-commented shell
-script.  Adding comments and cleaning up the script as you go would be
-very welcome.
-
- - Language: sh
- - Difficulty: medium
- - Possible mentors: Michael Haggerty
+Hinting "You should now run "git stash drop"." OTOH is far more dangerous
+if guessed wrong. Keeping a stash active when you don't need it does no
+real harm, but droping one you actually needed is data loss.
 
 -- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
